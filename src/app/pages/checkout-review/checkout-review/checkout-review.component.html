@@ -2,7 +2,7 @@
   <h1 class="d-flex flex-wrap align-items-baseline">
     <span class="cart-header-title">{{ 'checkout.order_review.heading.title' | translate }}</span>
     <span class="cart-header-note">
-      <span>{{ 'shopping_cart.transaction.text' | translate }}</span>
+      <span>{{ 'shopping_cart.transaction.text' | translate }} </span>
       <ish-modal-dialog-link
         linkText="shopping_cart.read_more.link"
         [options]="{ titleText: 'checkout.safeandsecure.details.title' | translate, size: 'lg' }"
@@ -28,6 +28,7 @@
         <a routerLink="/basket">{{ 'checkout.widget.return_to_cart.link' | translate }}</a>
       </p>
     </div>
+    <ish-basket-approval-info *ngIf="basket.approval" [approval]="basket.approval"></ish-basket-approval-info>
     <div class="row d-flex">
       <!-- Invoice Address -->
       <ish-info-box

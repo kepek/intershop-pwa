@@ -111,3 +111,10 @@
     padding-left: 30px;
   }
 }
+
+.approval-required {
+  display: inline-block;
+  padding-left: 25px;
+  margin-bottom: $space-default / 2;
+  background: url('/assets/img/ic_approver_16.png') no-repeat;
+}
