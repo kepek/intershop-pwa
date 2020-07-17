@@ -101,6 +101,7 @@ export const ENVIRONMENT_DEFAULTS: Environment = {
   defaultDeviceType: 'mobile',
   locales: [
     { lang: 'en_US', currency: 'USD', value: 'en', displayName: 'English', displayLong: 'English (United States)' },
+    { lang: 'sv_SE', currency: 'SEK', value: 'se', displayName: 'Swedish', displayLong: 'Swedish (Sweden)' },
     { lang: 'de_DE', currency: 'EUR', value: 'de', displayName: 'German', displayLong: 'German (Germany)' },
     { lang: 'fr_FR', currency: 'EUR', value: 'fr', displayName: 'French', displayLong: 'French (France)' },
   ],
