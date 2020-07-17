@@ -995,7 +995,7 @@ describe('Shopping Store', () => {
           categoryId: "A.123"
         @ngrx/router-store/cancel:
           routerState: {"url":"","params":{},"queryParams":{},"data":{}}
-          storeState: {"configuration":{"locales":[3],"_deviceType":"mobile"},"sho...
+          storeState: {"configuration":{"locales":[4],"_deviceType":"mobile"},"sho...
           event: {"id":1,"url":"/category/A.123.456/product/P3"}
         @ngrx/router-store/request:
           routerState: {"url":"","params":{},"queryParams":{},"data":{}}
@@ -1048,7 +1048,7 @@ describe('Shopping Store', () => {
           error: {"message":"error loading category A.123.XXX"}
         @ngrx/router-store/cancel:
           routerState: {"url":"","params":{},"queryParams":{},"data":{}}
-          storeState: {"configuration":{"locales":[3],"_deviceType":"mobile"},"sho...
+          storeState: {"configuration":{"locales":[4],"_deviceType":"mobile"},"sho...
           event: {"id":1,"url":"/category/A.123.XXX"}
         @ngrx/router-store/request:
           routerState: {"url":"","params":{},"queryParams":{},"data":{}}
