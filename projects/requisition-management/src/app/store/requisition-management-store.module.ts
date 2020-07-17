@@ -20,12 +20,12 @@ const metaReducers = [resetOnLogoutMeta];
 @NgModule({
   imports: [
     EffectsModule.forFeature(requisitionManagementEffects),
-    StoreModule.forFeature('RequisitionManagement', requisitionManagementReducers, { metaReducers }),
+    StoreModule.forFeature('requisitionManagement', requisitionManagementReducers, { metaReducers }),
   ],
 })
 export class RequisitionManagementStoreModule {
   static forTesting(...reducers: (keyof ActionReducerMap<RequisitionManagementState>)[]) {
-    return StoreModule.forFeature('RequisitionManagement', pick(requisitionManagementReducers, reducers), {
+    return StoreModule.forFeature('requisitionManagement', pick(requisitionManagementReducers, reducers), {
       metaReducers,
     });
   }

@@ -6,4 +6,4 @@ export interface RequisitionManagementState {
   requisitions: RequisitionsState;
 }
 
-export const getRequisitionManagementState = createFeatureSelector<RequisitionManagementState>('RequisitionManagement');
+export const getRequisitionManagementState = createFeatureSelector<RequisitionManagementState>('requisitionManagement');
