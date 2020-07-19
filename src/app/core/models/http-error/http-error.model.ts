@@ -2,7 +2,8 @@ export interface HttpHeader {
   [key: string]: string;
 }
 
-export interface HttpError extends Error {
+export interface HttpError {
+  name: string;
   message: string;
   error: string;
   errorCode: string;

@@ -1,8 +1,6 @@
-import { HttpErrorResponse } from '@angular/common/http';
 import { MonoTypeOperatorFunction, Observable, OperatorFunction, of } from 'rxjs';
 import { catchError, distinctUntilChanged, filter, map, withLatestFrom } from 'rxjs/operators';
 
-import { HttpErrorMapper } from 'ish-core/models/http-error/http-error.mapper';
 import { HttpError } from 'ish-core/models/http-error/http-error.model';
 
 /**
@@ -22,8 +20,7 @@ export function distinctCompareWith<T>(observable: Observable<T>): OperatorFunct
 export function mapErrorToAction<S, T>(actionType: (props: { error: HttpError }) => T, extras?: any) {
   return (source$: Observable<S | T>) =>
     source$.pipe(
-      // tslint:disable-next-line:ban ban-types
-      catchError((err: HttpErrorResponse) => {
+      catchError((error: HttpError) => {
         /*
           display error in certain circumstances:
           typeof window === 'undefined' -- universal mode
@@ -35,11 +32,11 @@ export function mapErrorToAction<S, T>(actionType: (props: { error: HttpError })
           typeof window === 'undefined' ||
           (typeof process !== 'undefined' && !process.env.JEST_WORKER_ID) ||
           (typeof process !== 'undefined' && process.env.DEBUG) ||
-          err instanceof Error
+          error instanceof Error
         ) {
-          console.error(err);
+          console.error(error);
         }
-        const errorAction = actionType({ error: HttpErrorMapper.fromError(err), ...extras });
+        const errorAction = actionType({ error, ...extras });
         return of(errorAction);
       })
     );

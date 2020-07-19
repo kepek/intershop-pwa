@@ -69,7 +69,9 @@ describe('Authorization Effects', () => {
     });
 
     it('should map to error action when service call fails', done => {
-      when(authorizationService.getRolesAndPermissions(anything(), anything())).thenReturn(throwError('ERROR'));
+      when(authorizationService.getRolesAndPermissions(anything(), anything())).thenReturn(
+        throwError({ message: 'ERROR' })
+      );
 
       actions$ = of(loadRolesAndPermissions());
 
@@ -77,7 +79,7 @@ describe('Authorization Effects', () => {
         verify(authorizationService.getRolesAndPermissions(anything(), anything())).once();
         expect(action).toMatchInlineSnapshot(`
           [Authorization API] Load Roles and Permissions Fail:
-            error: {}
+            error: {"message":"ERROR"}
         `);
         done();
       });

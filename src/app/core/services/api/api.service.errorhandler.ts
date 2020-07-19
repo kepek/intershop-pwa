@@ -24,6 +24,6 @@ export class ApiServiceErrorHandler {
       this.store.dispatch(serverError({ error: mappedError }));
       return EMPTY;
     }
-    return throwError(error);
+    return throwError(mappedError);
   }
 }
