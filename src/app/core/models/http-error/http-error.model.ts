@@ -3,11 +3,11 @@ export interface HttpHeader {
 }
 
 export interface HttpError {
-  name: string;
-  message: string;
-  error: string;
-  errorCode: string;
-  status: number;
-  statusText: string;
-  headers: HttpHeader;
+  name: 'HttpErrorResponse';
+  message?: string;
+  error?: string;
+  errorCode?: string;
+  status?: number;
+  statusText?: string;
+  headers?: HttpHeader;
 }

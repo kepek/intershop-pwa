@@ -7,7 +7,7 @@ export function payload<P>() {
 }
 
 export function httpError<P = {}>() {
-  return (args: { error: Partial<HttpError> } & P) => ({ payload: { ...args } });
+  return (args: { error: HttpError } & P) => ({ payload: { ...args } });
 }
 
 export function setLoadingOn<S extends { loading: boolean }>(...actionCreators: ActionCreator[]): On<S> {

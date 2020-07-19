@@ -114,11 +114,8 @@ export class ApiService {
 
   private execute<T>(options: AvailableOptions, httpCall$: Observable<T>): Observable<T> {
     const wrappedCall$ = options?.skipApiErrorHandling
-      ? httpCall$
-      : httpCall$.pipe(
-          // tslint:disable-next-line:ban
-          catchError(error => this.apiServiceErrorHandler.dispatchCommunicationErrors<T>(error))
-        );
+      ? httpCall$.pipe(catchError(error => this.apiServiceErrorHandler.mapError<T>(error)))
+      : httpCall$.pipe(catchError(error => this.apiServiceErrorHandler.dispatchCommunicationErrors<T>(error)));
 
     if (options?.runExclusively) {
       // setup a barrier for other calls

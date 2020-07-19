@@ -12,6 +12,7 @@ import { anything, instance, mock, verify, when } from 'ts-mockito';
 import { CoreStoreModule } from 'ish-core/store/core/core-store.module';
 import { displaySuccessMessage } from 'ish-core/store/core/messages';
 import { CustomerStoreModule } from 'ish-core/store/customer/customer-store.module';
+import { makeHttpError } from 'ish-core/utils/dev/api-service-utils';
 
 import { B2bUser } from '../../models/b2b-user/b2b-user.model';
 import { UsersService } from '../../services/users/users.service';
@@ -105,7 +106,7 @@ describe('Users Effects', () => {
     });
 
     it('should dispatch a loadUsersFail action on failed users load', () => {
-      const error = { status: 401, headers: { 'error-key': 'feld' } };
+      const error = makeHttpError({ status: 401, headers: { 'error-key': 'feld' } });
       when(usersService.getUsers()).thenReturn(throwError(error));
 
       const action = loadUsers();
@@ -184,7 +185,7 @@ describe('Users Effects', () => {
     }));
 
     it('should dispatch an UpdateUserFail action on failed user update', () => {
-      const error = { status: 401, headers: { 'error-key': 'feld' } };
+      const error = makeHttpError({ status: 401, headers: { 'error-key': 'feld' } });
       when(usersService.addUser(anything())).thenReturn(throwError(error));
 
       const action = addUser({ user: users[0] });
@@ -223,7 +224,7 @@ describe('Users Effects', () => {
     });
 
     it('should dispatch an UpdateUserFail action on failed user update', () => {
-      const error = { status: 401, headers: { 'error-key': 'feld' } };
+      const error = makeHttpError({ status: 401, headers: { 'error-key': 'feld' } });
       when(usersService.updateUser(anything())).thenReturn(throwError(error));
 
       const action = updateUser({ user: users[0] });

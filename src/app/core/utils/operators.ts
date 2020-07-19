@@ -1,4 +1,4 @@
-import { MonoTypeOperatorFunction, Observable, OperatorFunction, of } from 'rxjs';
+import { MonoTypeOperatorFunction, Observable, OperatorFunction, of, throwError } from 'rxjs';
 import { catchError, distinctUntilChanged, filter, map, withLatestFrom } from 'rxjs/operators';
 
 import { HttpError } from 'ish-core/models/http-error/http-error.model';
@@ -21,6 +21,10 @@ export function mapErrorToAction<S, T>(actionType: (props: { error: HttpError })
   return (source$: Observable<S | T>) =>
     source$.pipe(
       catchError((error: HttpError) => {
+        if (error.name !== 'HttpErrorResponse') {
+          // rethrow runtime errors
+          return throwError(error);
+        }
         /*
           display error in certain circumstances:
           typeof window === 'undefined' -- universal mode
@@ -31,8 +35,7 @@ export function mapErrorToAction<S, T>(actionType: (props: { error: HttpError })
         if (
           typeof window === 'undefined' ||
           (typeof process !== 'undefined' && !process.env.JEST_WORKER_ID) ||
-          (typeof process !== 'undefined' && process.env.DEBUG) ||
-          error instanceof Error
+          (typeof process !== 'undefined' && process.env.DEBUG)
         ) {
           console.error(error);
         }
