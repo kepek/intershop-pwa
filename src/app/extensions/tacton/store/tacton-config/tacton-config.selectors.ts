@@ -9,7 +9,7 @@ import { getSelectedProduct } from 'ish-core/store/shopping/products';
 
 import { getTactonState } from '../tacton-store';
 
-export const getTactonConfig = createSelector(getTactonState, state => state.tactonConfig);
+export const getTactonConfig = createSelector(getTactonState, state => state?.tactonConfig);
 
 export const getSelfServiceApiConfiguration = createSelector(getTactonConfig, config => config?.selfService);
 
