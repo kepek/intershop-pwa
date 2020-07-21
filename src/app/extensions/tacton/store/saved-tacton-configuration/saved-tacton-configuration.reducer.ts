@@ -21,7 +21,7 @@ export const savedTactonConfigurationReducer = createReducer(
         externalId: action.payload.externalId,
         ...pick(action.payload.configuration, 'configId', 'configState'),
       },
-      state
+      state || initialState
     )
   )
 );
