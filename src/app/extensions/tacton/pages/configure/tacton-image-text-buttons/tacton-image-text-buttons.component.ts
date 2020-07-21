@@ -1,6 +1,6 @@
-import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import { whenTruthy } from 'ish-core/utils/operators';
 
@@ -12,33 +12,22 @@ import { TactonProductConfigurationParameter } from '../../../models/tacton-prod
   templateUrl: './tacton-image-text-buttons.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TactonImageTextButtonsComponent implements OnInit, OnDestroy {
+export class TactonImageTextButtonsComponent {
   @Input() parameter: TactonProductConfigurationParameter;
 
-  apiKey: string;
-  endPoint: string;
-
-  private destroy$ = new Subject();
-
   constructor(private facade: TactonFacade) {}
-
-  ngOnInit() {
-    this.facade.selfServiceApiConfiguration$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(config => {
-      this.apiKey = config.apiKey;
-      this.endPoint = config.endPoint;
-    });
-  }
 
   change(value) {
     this.facade.commitValue(this.parameter, value);
   }
 
-  getImageUrl(picture: string) {
-    return `${this.endPoint.replace('/self-service-api', '')}${picture}?_key=${this.apiKey}`;
-  }
-
-  ngOnDestroy() {
-    this.destroy$.next();
-    this.destroy$.complete();
+  getImageUrl(picture: string): Observable<string> {
+    return this.facade.selfServiceApiConfiguration$.pipe(
+      whenTruthy(),
+      map(
+        ({ apiKey, endPoint }) =>
+          `${endPoint.replace('/self-service-api', '')}${picture}${picture.includes('?') ? '&' : '?'}_key=${apiKey}`
+      )
+    );
   }
 }

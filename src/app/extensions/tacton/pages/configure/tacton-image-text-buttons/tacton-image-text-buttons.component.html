@@ -7,7 +7,7 @@
     <div class="col-8" class="d-flex align-items-end">
       <div *ngFor="let opt of parameter.domain?.elements" class="m-3">
         <div class="border" [ngClass]="{ 'border-primary': opt.selected, 'border-info': !opt.selected }">
-          <img [src]="getImageUrl(opt.properties.tc_component_picture)" />
+          <img [src]="getImageUrl(opt.properties.tc_component_picture) | async" />
         </div>
         <label>
           <input
