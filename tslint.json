@@ -137,7 +137,9 @@
     "rxjs-no-ignored-replay-buffer": true,
     "rxjs-no-ignored-subscribe": true,
     "rxjs-no-internal": true,
-    "rxjs-no-nested-subscribe": { "severity": "warning" },
+    "rxjs-no-nested-subscribe": {
+      "severity": "warning"
+    },
     "rxjs-no-subclass": true,
     "rxjs-no-subject-unsubscribe": true,
     "rxjs-no-subject-value": true,
@@ -152,14 +154,30 @@
         "checkDecorators": ["Component", "Pipe", "Directive"]
       }
     },
-    "rxjs-no-explicit-generics": { "severity": "off" },
-    "rxjs-no-ignored-observable": { "severity": "off" },
-    "rxjs-no-exposed-subjects": { "severity": "off" },
-    "rxjs-no-ignored-subscription": { "severity": "off" },
-    "rxjs-no-unsafe-first": { "severity": "off" },
-    "rxjs-no-unsafe-scope": { "severity": "off" },
-    "rxjs-prefer-angular-async-pipe": { "severity": "off" },
-    "rxjs-throw-error": { "severity": "off" },
+    "rxjs-no-explicit-generics": {
+      "severity": "off"
+    },
+    "rxjs-no-ignored-observable": {
+      "severity": "off"
+    },
+    "rxjs-no-exposed-subjects": {
+      "severity": "off"
+    },
+    "rxjs-no-ignored-subscription": {
+      "severity": "off"
+    },
+    "rxjs-no-unsafe-first": {
+      "severity": "off"
+    },
+    "rxjs-no-unsafe-scope": {
+      "severity": "off"
+    },
+    "rxjs-prefer-angular-async-pipe": {
+      "severity": "off"
+    },
+    "rxjs-throw-error": {
+      "severity": "off"
+    },
     "private-destroy-field": true,
     "ngrx-use-empty-store-type": true,
     "semicolon": [true, "always"],
@@ -189,8 +207,8 @@
       "check-separator",
       "check-type"
     ],
-    "directive-selector": [true, "attribute", ["ish"], "camelCase"],
-    "component-selector": [true, "element", ["ish"], "kebab-case"],
+    "directive-selector": [true, "attribute", ["ish", "camfil"], "camelCase"],
+    "component-selector": [true, "element", ["ish", "camfil"], "kebab-case"],
     "no-inputs-metadata-property": true,
     "no-assignement-to-inputs": true,
     "no-outputs-metadata-property": true,
@@ -219,7 +237,9 @@
     },
     "ish-ordered-imports": true,
     "ish-useful-imports": true,
-    "force-jsdoc-comments": { "severity": "warning" },
+    "force-jsdoc-comments": {
+      "severity": "warning"
+    },
     "newline-before-root-members": true,
     "no-duplicate-imports": true,
     "ban": [
@@ -516,7 +536,9 @@
         }
       }
     },
-    "no-star-imports-in-store": { "severity": "warning" },
+    "no-star-imports-in-store": {
+      "severity": "warning"
+    },
     "initialize-observables-in-ngoninit": true,
     "project-structure": {
       "severity": "warning",
