@@ -15,7 +15,7 @@
       },
       "root": "",
       "sourceRoot": "src",
-      "prefix": "ish",
+      "prefix": "camfil",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
@@ -38,6 +38,11 @@
                 "inject": false,
                 "input": "src/styles/themes/blue/style.scss",
                 "bundleName": "blue"
+              },
+              {
+                "input": "src/styles/themes/camfil/style.scss",
+                "inject": true,
+                "bundleName": "camfil"
               }
             ],
             "scripts": []
