@@ -16,22 +16,22 @@ import { TactonState } from './tacton-store';
 const tactonReducers: ActionReducerMap<TactonState> = {
   productConfiguration: productConfigurationReducer,
   tactonConfig: tactonConfigReducer,
-  savedTactonConfiguration: savedTactonConfigurationReducer,
+  _savedTactonConfiguration: savedTactonConfigurationReducer,
 };
 
 const tactonEffects = [ProductConfigurationEffects, TactonConfigEffects, SavedTactonConfigurationEffects];
 
-const metaReducers = [localStorageSaveMeta<TactonState>('tacton', 'savedTactonConfiguration')];
+const metaReducers = [localStorageSaveMeta<TactonState>('tacton', '_savedTactonConfiguration')];
 
 // not-dead-code
 @NgModule({
   imports: [
     EffectsModule.forFeature(tactonEffects),
-    StoreModule.forFeature('_tacton', tactonReducers, { metaReducers }),
+    StoreModule.forFeature('tacton', tactonReducers, { metaReducers }),
   ],
 })
 export class TactonStoreModule {
   static forTesting(...reducers: (keyof ActionReducerMap<TactonState>)[]) {
-    return StoreModule.forFeature('_tacton', pick(tactonReducers, reducers));
+    return StoreModule.forFeature('tacton', pick(tactonReducers, reducers));
   }
 }

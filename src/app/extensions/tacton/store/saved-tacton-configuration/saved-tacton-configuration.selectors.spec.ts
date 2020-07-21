@@ -14,7 +14,7 @@ describe('Saved Tacton Configuration Selectors', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [CoreStoreModule.forTesting(), TactonStoreModule.forTesting('savedTactonConfiguration')],
+      imports: [CoreStoreModule.forTesting(), TactonStoreModule.forTesting('_savedTactonConfiguration')],
       providers: [provideStoreSnapshots()],
     });
 

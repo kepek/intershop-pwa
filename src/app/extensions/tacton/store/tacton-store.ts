@@ -8,7 +8,7 @@ import { SavedTactonConfigurationState } from './saved-tacton-configuration/save
 export interface TactonState {
   productConfiguration: ProductConfigurationState;
   tactonConfig: TactonConfig;
-  savedTactonConfiguration: SavedTactonConfigurationState;
+  _savedTactonConfiguration: SavedTactonConfigurationState;
 }
 
-export const getTactonState = createFeatureSelector<TactonState>('_tacton');
+export const getTactonState = createFeatureSelector<TactonState>('tacton');
