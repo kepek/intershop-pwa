@@ -37,7 +37,9 @@
     "analyze": "ng build --prod --stats-json && npx webpack-bundle-analyzer --host 0.0.0.0 dist/browser/stats.json dist/browser",
     "serve": "node dist/server/main.js",
     "start": "npm run build && npm run serve",
-    "start:local": "ng run intershop-pwa:serve-ssr:local"
+    "start:local": "ng run intershop-pwa:serve-ssr:local",
+    "dev": "cross-env PROXY_ICM=true TRUST_ICM=true SSR_HYBRID=true ng run intershop-pwa:serve:local",
+    "dev:local": "cross-env PROXY_ICM=true TRUST_ICM=true SSR_HYBRID=true ng run intershop-pwa:serve:local --configuration=local"
   },
   "dependencies": {
     "@angular/animations": "~10.0.4",
@@ -108,6 +110,7 @@
     "commitizen": "^4.1.2",
     "commitlint-config-cz": "^0.13.1",
     "conventional-changelog-cli": "2.0.34",
+    "cross-env": "^7.0.2",
     "cz-customizable": "^6.2.1",
     "husky": "^4.2.5",
     "intershop-schematics": "file:schematics/src",
