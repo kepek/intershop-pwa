@@ -20,6 +20,7 @@ import { WishlistsExportsModule } from '../extensions/wishlists/exports/wishlist
 
 import { CamfilFooterComponent } from './footer/camfil-footer/camfil-footer.component';
 import { FooterComponent } from './footer/footer/footer.component';
+import { CamfilHeaderComponent } from './header/camfil-header/camfil-header.component';
 import { HeaderCheckoutComponent } from './header/header-checkout/header-checkout.component';
 import { HeaderDefaultComponent } from './header/header-default/header-default.component';
 import { HeaderNavigationComponent } from './header/header-navigation/header-navigation.component';
@@ -44,7 +45,7 @@ const importExportModules = [
 
 const exportedComponents = [
   CamfilFooterComponent,
-  HeaderComponent,
+  CamfilHeaderComponent,
   ProductImageComponent,
   SearchBoxComponent,
   ServerHtmlDirective,
@@ -70,6 +71,7 @@ const exportedComponents = [
     ClickOutsideDirective,
     FooterComponent,
     HeaderCheckoutComponent,
+    HeaderComponent,
     HeaderDefaultComponent,
     HeaderNavigationComponent,
     HeaderSimpleComponent,
