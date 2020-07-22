@@ -15,7 +15,7 @@
       },
       "root": "",
       "sourceRoot": "src",
-      "prefix": "camfil",
+      "prefix": "ish",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
