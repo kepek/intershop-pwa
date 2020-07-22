@@ -28,12 +28,12 @@
         ></ish-product-promotion>
 
         <div class="product-tile-actions btn-group">
-          <ish-lazy-product-add-to-quote
+          <camfil-lazy-product-add-to-quote
             *ngIf="configuration.displayAddToQuote"
             [product]="product"
             displayType="icon"
             class="btn-link"
-          ></ish-lazy-product-add-to-quote>
+          ></camfil-lazy-product-add-to-quote>
           <ish-product-add-to-compare
             *ngIf="configuration.displayAddToCompare"
             [isInCompareList]="isInCompareList"
@@ -41,19 +41,19 @@
             class="btn-link"
             (compareToggle)="toggleCompare()"
           ></ish-product-add-to-compare>
-          <ish-lazy-product-add-to-wishlist
+          <camfil-lazy-product-add-to-wishlist
             *ngIf="configuration.displayAddToWishlist"
             displayType="icon"
             class="btn-link"
             [product]="product"
-          ></ish-lazy-product-add-to-wishlist>
-          <ish-lazy-product-add-to-order-template
+          ></camfil-lazy-product-add-to-wishlist>
+          <camfil-lazy-product-add-to-order-template
             *ngIf="configuration.displayAddToOrderTemplate"
             displayType="icon"
             [quantity]="1"
             class="btn-link"
             [product]="product"
-          ></ish-lazy-product-add-to-order-template>
+          ></camfil-lazy-product-add-to-order-template>
         </div>
       </div>
 
