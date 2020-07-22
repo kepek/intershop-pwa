@@ -18,6 +18,7 @@
     "ng": "ng",
     "test": "jest --ci",
     "test:watch": "jest --watch",
+    "test:update-snapshot": "jest --updateSnapshot",
     "e2e": "cd e2e && npm install && node open-cypress",
     "lint": "ng lint",
     "format": "node docs/check-sentence-newline && stylelint \"**/*.{css,scss}\" --fix && prettier --loglevel warn --write \"**/*.*\"",
