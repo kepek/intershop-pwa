@@ -18,6 +18,7 @@ import { QuickorderExportsModule } from '../extensions/quickorder/exports/quicko
 import { QuotingExportsModule } from '../extensions/quoting/exports/quoting-exports.module';
 import { WishlistsExportsModule } from '../extensions/wishlists/exports/wishlists-exports.module';
 
+import { CamfilFooterComponent } from './footer/camfil-footer/camfil-footer.component';
 import { FooterComponent } from './footer/footer/footer.component';
 import { HeaderCheckoutComponent } from './header/header-checkout/header-checkout.component';
 import { HeaderDefaultComponent } from './header/header-default/header-default.component';
@@ -42,7 +43,7 @@ const importExportModules = [
 ];
 
 const exportedComponents = [
-  FooterComponent,
+  CamfilFooterComponent,
   HeaderComponent,
   ProductImageComponent,
   SearchBoxComponent,
@@ -67,6 +68,7 @@ const exportedComponents = [
   declarations: [
     ...exportedComponents,
     ClickOutsideDirective,
+    FooterComponent,
     HeaderCheckoutComponent,
     HeaderDefaultComponent,
     HeaderNavigationComponent,

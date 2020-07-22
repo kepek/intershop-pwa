@@ -11,7 +11,7 @@ import { AppFacade } from 'ish-core/facades/app.facade';
 import { findAllIshElements } from 'ish-core/utils/dev/html-query-utils';
 
 import { AppComponent } from './app.component';
-import { FooterComponent } from './shell/footer/footer/footer.component';
+import { CamfilFooterComponent } from './shell/footer/camfil-footer/camfil-footer.component';
 import { HeaderComponent } from './shell/header/header/header.component';
 
 let translate: TranslateService;
@@ -25,7 +25,7 @@ describe('App Component', () => {
     TestBed.configureTestingModule({
       declarations: [
         AppComponent,
-        MockComponent(FooterComponent),
+        MockComponent(CamfilFooterComponent),
         MockComponent(HeaderComponent),
         MockDirective(ServerHtmlDirective),
       ],
