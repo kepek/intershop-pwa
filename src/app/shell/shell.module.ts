@@ -12,7 +12,6 @@ import { FeatureToggleModule } from 'ish-core/feature-toggle.module';
 import { IconModule } from 'ish-core/icon.module';
 import { PipesModule } from 'ish-core/pipes.module';
 
-import { CamfilOrderTemplatesExportsModule } from '../extensions/camfil-order-templates/exports/camfil-order-templates-exports.module';
 import { CaptchaExportsModule } from '../extensions/captcha/exports/captcha-exports.module';
 import { OrderTemplatesExportsModule } from '../extensions/order-templates/exports/order-templates-exports.module';
 import { QuickorderExportsModule } from '../extensions/quickorder/exports/quickorder-exports.module';
@@ -37,7 +36,6 @@ import { SubCategoryNavigationComponent } from './header/sub-category-navigation
 import { UserInformationMobileComponent } from './header/user-information-mobile/user-information-mobile.component';
 
 const importExportModules = [
-  CamfilOrderTemplatesExportsModule,
   CaptchaExportsModule,
   OrderTemplatesExportsModule,
   QuickorderExportsModule,

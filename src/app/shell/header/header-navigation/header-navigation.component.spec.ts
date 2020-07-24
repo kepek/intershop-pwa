@@ -71,6 +71,8 @@ describe('Header Navigation Component', () => {
             CAT_C
           </a>
         </li>
+        <li class="dropdown"><a>|</a></li>
+        <li class="dropdown"><a ng-reflect-router-link="/camfil" href="/camfil">Camfil</a></li>
       </ul>
     `);
   });
