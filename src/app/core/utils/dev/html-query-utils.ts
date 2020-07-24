@@ -12,28 +12,20 @@ function getAllElementTagsRecursively(el: Element): string[] {
   return returnList;
 }
 
-function findAllElementsByPrefix(el: HTMLElement, prefix: string): string[] {
+export function findAllIshElements(el: HTMLElement): string[] {
   const returnList = [];
   const tagList = getAllElementTagsRecursively(el);
 
   for (let index = 0; index < tagList.length; index++) {
     const element = tagList[index];
     const tagName = element.toLocaleLowerCase();
-    if (!tagName.startsWith(prefix)) {
+    if (!tagName.startsWith('ish-')) {
       continue;
     }
     returnList.push(tagName);
   }
 
   return returnList.sort();
-}
-
-export function findAllIshElements(el: HTMLElement): string[] {
-  return findAllElementsByPrefix(el, 'ish-');
-}
-
-export function findAllCamfilElements(el: HTMLElement): string[] {
-  return findAllElementsByPrefix(el, 'camfil-');
 }
 
 export function findAllDataTestingIDs(fixture: ComponentFixture<unknown>) {
