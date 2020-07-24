@@ -19,8 +19,8 @@ module.exports = {
   transformIgnorePatterns: [`node_modules/(?!${esModules.join('|')})`],
   moduleNameMapper: {
     '^ish-(.*)$': '<rootDir>/src/app/$1',
-    '^camfil-(.*)$': '<rootDir>/src/app/$1',
     '^organization-management$': '<rootDir>/projects/organization-management/src/app/exports',
+    '^camfil/(.*)$': '<rootDir>/src/app/camfil/$1',
   },
   snapshotSerializers: [
     './src/jest-serializer/AngularHTMLSerializer.js',
