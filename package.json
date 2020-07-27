@@ -69,6 +69,7 @@
     "@ngrx/store-devtools": "^9.2.0",
     "@nguniversal/express-engine": "^10.0.1",
     "@ngx-formly/core": "^5.9.0",
+    "@ngx-formly/schematics": "^5.9.3",
     "@ngx-meta/core": "^9.0.0",
     "@ngx-translate/core": "^13.0.0",
     "@ngx-translate/http-loader": "^6.0.0",
@@ -95,7 +96,8 @@
     "typeface-roboto": "0.0.75",
     "typeface-roboto-condensed": "0.0.75",
     "url-polyfill": "^1.1.9",
-    "zone.js": "~0.10.2"
+    "zone.js": "~0.10.2",
+    "@ngx-formly/material": "^5.0.0"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.1000.3",
