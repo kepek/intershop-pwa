@@ -6,10 +6,12 @@ import { pick } from 'lodash-es';
 import { resetOnLogoutMeta } from 'ish-core/utils/meta-reducers';
 
 import { CamfilState } from './camfil-store';
+import { OrderTemplatesEffects } from './order-templates/order-templates.effects';
+import { orderTemplatesReducer } from './order-templates/order-templates.reducer';
 
-const camfilReducers: ActionReducerMap<CamfilState> = {};
+const camfilReducers: ActionReducerMap<CamfilState> = { orderTemplates: orderTemplatesReducer };
 
-const camfilEffects = [];
+const camfilEffects = [OrderTemplatesEffects];
 
 const metaReducers = [resetOnLogoutMeta];
 
