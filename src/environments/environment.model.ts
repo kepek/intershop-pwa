@@ -79,7 +79,7 @@ export interface Environment {
 export const ENVIRONMENT_DEFAULTS: Environment = {
   /* INTERSHOP COMMERCE MANAGEMENT REST API CONFIGURATION */
   icmBaseURL: 'NOT SET',
-  icmChannel: 'inSPIRED-inTRONICS-Site',
+  icmChannel: 'inSPIRED-inTRONICS_Business-Site',
   icmServer: 'INTERSHOP/rest/WFS',
   icmServerStatic: 'INTERSHOP/static/WFS',
   icmApplication: 'rest',
@@ -88,9 +88,19 @@ export const ENVIRONMENT_DEFAULTS: Environment = {
   mockServerAPI: false,
 
   /* FEATURE TOOGLES */
-  features: ['compare', 'recently', 'rating', 'wishlists'],
+  features: [
+    'compare',
+    'rating',
+    'recently',
+    /* B2B features */
+    'advancedVariationHandling',
+    'businessCustomerRegistration',
+    'quoting',
+    'orderTemplates',
+  ],
 
   /* PROGRESSIVE WEB APP CONFIGURATIONS */
+  theme: 'camfil|00673E',
   serviceWorker: false,
   smallBreakpointWidth: 576,
   mediumBreakpointWidth: 768,
