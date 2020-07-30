@@ -23,6 +23,7 @@
 .gitattributes
 .editorconfig
 .createMockdata.table
+.DS_Store
 package*.json
 Dockerfile*
 .browserslistrc
