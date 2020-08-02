@@ -244,7 +244,7 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "projects/camfil/tsconfig.app.json",
             "aot": false,
-            "styles": ["src/styles/themes/default/style.scss"],
+            "styles": ["src/styles/themes/camfil/style.scss"],
             "assets": [
               {
                 "glob": "**/*",
