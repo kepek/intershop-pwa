@@ -1,24 +1,19 @@
 /**
 * Generated theme by Material Theme Generator
-* https://materialtheme.arcsine.dev
+* https://materialtheme.arcsine.dev/?c=eyJwYWxldHRlIjp7InByaW1hcnkiOnsibWFpbiI6IiMwMDZhM2EiLCJsaWdodGVyIjoiI2IzZDJjNCIsImRhcmtlciI6IiMwMDRkMjUifSwiYWNjZW50Ijp7Im1haW4iOiIjMDA2NzNlIiwibGlnaHRlciI6IiNjMWQ5ZjYiLCJkYXJrZXIiOiIjMzMzZjQ4In0sIndhcm4iOnsibWFpbiI6IiNmZjY5NjEiLCJsaWdodGVyIjoiI2ZmZDJkMCIsImRhcmtlciI6IiNmZjRjNDUifSwibGlnaHRUZXh0IjoiIzMzMzMzMyIsImxpZ2h0QmFja2dyb3VuZCI6IiNmYWZhZmEiLCJkYXJrVGV4dCI6IiNmZmZmZmYiLCJkYXJrQmFja2dyb3VuZCI6IiMzMzMzMzMifSwiZm9udHMiOlt7InRhcmdldCI6ImRpc3BsYXktNCIsInNwYWNpbmciOjB9LHsidGFyZ2V0IjoiZGlzcGxheS0zIiwic3BhY2luZyI6MH0seyJ0YXJnZXQiOiJkaXNwbGF5LTIifSx7InRhcmdldCI6ImRpc3BsYXktMSJ9LHsidGFyZ2V0IjoiaGVhZGxpbmUifSx7InRhcmdldCI6InRpdGxlIn0seyJ0YXJnZXQiOiJzdWJoZWFkaW5nLTIifSx7InRhcmdldCI6InN1YmhlYWRpbmctMSJ9LHsidGFyZ2V0IjoiYm9keS0yIiwic3BhY2luZyI6MH0seyJ0YXJnZXQiOiJib2R5LTEiLCJzcGFjaW5nIjowfSx7InRhcmdldCI6ImJ1dHRvbiJ9LHsidGFyZ2V0IjoiY2FwdGlvbiJ9LHsidGFyZ2V0IjoiaW5wdXQiLCJsaW5lSGVpZ2h0IjoxLjQsInNpemUiOm51bGx9XSwiaWNvbnMiOiJGaWxsZWQiLCJsaWdodG5lc3MiOnRydWV9
 */
 
 @import '~@angular/material/theming';
 // Include the common styles for Angular Material. We include this here so that you only
 // have to load a single css file for Angular Material in your app.
 
-// Fonts
-@import 'https://fonts.googleapis.com/css?family=Material+Icons';
-@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500');
-@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,500');
-
 $fontConfig: (
   display-4: mat-typography-level(56px, 64px, 400, 'Roboto', 0),
   display-3: mat-typography-level(48px, 56px, 400, 'Roboto', 0),
   display-2: mat-typography-level(40px, 48px, 400, 'Roboto', 0),
   display-1: mat-typography-level(32px, 40px, 400, 'Roboto', 0),
-  headline: mat-typography-level(24px, 32px, 500, 'Source Sans Pro', 0),
-  title: mat-typography-level(16px, 24px, 500, 'Source Sans Pro', 0),
+  headline: mat-typography-level(24px, 32px, 900, 'brandon_grotesqueblack', 0),
+  title: mat-typography-level(16px, 24px, 900, 'brandon_grotesqueblack', 0),
   subheading-2: mat-typography-level(14px, 24px, 500, 'Source Sans Pro', 0),
   subheading-1: mat-typography-level(12px, 24px, 500, 'Source Sans Pro', 0),
   body-2: mat-typography-level(16px, 24px, 400, 'Source Sans Pro', 0),
@@ -186,21 +181,47 @@ $mat-warn: (
     ),
 );
 
-$camfil-pwa-theme-primary: mat-palette($mat-primary, main, lighter, darker);
-$camfil-pwa-theme-accent: mat-palette($mat-accent, main, lighter, darker);
-$camfil-pwa-theme-warn: mat-palette($mat-warn, main, lighter, darker);
+body {
+  --primary-color: #006a3a;
+  --primary-lighter-color: #b3d2c4;
+  --primary-darker-color: #004d25;
+  --text-primary-color: #{$light-primary-text};
+  --text-primary-lighter-color: #{$dark-primary-text};
+  --text-primary-darker-color: #{$light-primary-text};
+  --accent-color: #00673e;
+  --accent-lighter-color: #c1d9f6;
+  --accent-darker-color: #333f48;
+  --text-accent-color: #{$light-primary-text};
+  --text-accent-lighter-color: #{$dark-primary-text};
+  --text-accent-darker-color: #{$light-primary-text};
+  --warn-color: #ff6961;
+  --warn-lighter-color: #ffd2d0;
+  --warn-darker-color: #ff4c45;
+  --text-warn-color: #{$dark-primary-text};
+  --text-warn-lighter-color: #{$dark-primary-text};
+  --text-warn-darker-color: #{$dark-primary-text};
+}
 
-$camfil-theme: mat-light-theme($camfil-pwa-theme-primary, $camfil-pwa-theme-accent, $camfil-pwa-theme-warn);
-$camfil-altTheme: mat-dark-theme($camfil-pwa-theme-primary, $camfil-pwa-theme-accent, $camfil-pwa-theme-warn);
+$theme-primary: mat-palette($mat-primary, main, lighter, darker);
+$theme-accent: mat-palette($mat-accent, main, lighter, darker);
+$theme-warn: mat-palette($mat-warn, main, lighter, darker);
+
+$theme: mat-light-theme($theme-primary, $theme-accent, $theme-warn);
+$altTheme: mat-dark-theme($theme-primary, $theme-accent, $theme-warn);
 
 // Theme Init
-@include angular-material-theme($camfil-theme);
+@include angular-material-theme($theme);
 
 .theme-alternate {
-  @include angular-material-theme($camfil-altTheme);
+  @include angular-material-theme($altTheme);
 }
 
 // Specific component overrides, pieces that are not in line with the general theming
+.mat-button-base:focus,
+.mat-raised-button:focus,
+.mat-button {
+  outline: 0;
+}
 
 // Handle buttons appropriately, with respect to line-height
 .mat-raised-button,
