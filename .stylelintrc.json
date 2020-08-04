@@ -5,7 +5,12 @@
     "stylelint-config-recess-order",
     "stylelint-prettier/recommended"
   ],
-  "ignoreFiles": ["**/node_modules/**", "**/dist/**", "**/compodoc/**"],
+  "ignoreFiles": [
+    "**/node_modules/**",
+    "**/dist/**",
+    "**/compodoc/**",
+    "**/specimen_files/**/*.css"
+  ],
   "rules": {
     "at-rule-no-vendor-prefix": true,
     "color-named": "never",
