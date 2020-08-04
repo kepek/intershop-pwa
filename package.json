@@ -105,6 +105,7 @@
     "@angular/compiler-cli": "~10.0.4",
     "@angular/language-service": "~10.0.4",
     "@commitlint/cli": "^8.3.5",
+    "@ngrx/schematics": "^9.2.0",
     "@nguniversal/builders": "^10.0.1",
     "@phenomnomnominal/tsquery": "^4.1.0",
     "@schematics/angular": "^10.0.3",
