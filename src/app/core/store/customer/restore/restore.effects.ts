@@ -18,16 +18,22 @@ import {
 } from 'rxjs/operators';
 
 import { CookiesService } from 'ish-core/services/cookies/cookies.service';
+import { setCurrentLocale } from 'ish-core/store/core/configuration';
+import { selectRouteParam } from 'ish-core/store/core/router';
 import { getCurrentBasket, loadBasket, loadBasketByAPIToken } from 'ish-core/store/customer/basket';
 import { getSelectedOrderId, loadOrderByAPIToken } from 'ish-core/store/customer/orders';
 import { getAPIToken, getLoggedInUser, loadUserByAPIToken, logoutUser } from 'ish-core/store/customer/user';
 import { whenTruthy } from 'ish-core/utils/operators';
 import { SfeAdapterService } from 'ish-shared/cms/sfe-adapter/sfe-adapter.service';
 
-interface CookieType {
+interface ApiTokenCookieType {
   apiToken: string;
   type: 'user' | 'basket' | 'order';
   orderId?: string;
+}
+
+interface LangCookieType {
+  lang: string;
 }
 
 @Injectable()
@@ -41,6 +47,36 @@ export class RestoreEffects {
     private appRef: ApplicationRef,
     private sfeAdapterService: SfeAdapterService
   ) {}
+
+  /**
+   * set Language In Cookie After Select Lang
+   */
+  setLanguageTokenInCookieAfterSelectLang$ = createEffect(
+    () =>
+      this.store$.pipe(
+        select(selectRouteParam('lang')),
+        whenTruthy(),
+        map(lang => this.persistLangTokenInCookie(lang))
+      ),
+    { dispatch: false }
+  );
+
+  /**
+   * loads Language In Cookie After Select Lang
+   */
+  loadLanguageTokenInCookieAfterSelectLang$ = createEffect(() =>
+    iif(
+      () => isPlatformBrowser(this.platformId),
+      this.actions$.pipe(
+        ofType(routerNavigationAction),
+        first(),
+        map(() => this.cookieService.get('langToken')),
+        whenTruthy(),
+        map(c => this.parseLangTokenCookie(c)),
+        map(langToken => setCurrentLocale({ lang: langToken.lang }))
+      )
+    )
+  );
 
   /**
    * Saves the latest API token with a type information as a cookie in case there is a logged in user, a basket or a selected order.
@@ -59,7 +95,7 @@ export class RestoreEffects {
         filter(() => isPlatformBrowser(this.platformId)),
         filter(([user, basket, orderId]) => !!user || !!basket || !!orderId),
         map(([user, basket, orderId, apiToken]) =>
-          this.makeCookie({ apiToken, type: user ? 'user' : basket ? 'basket' : 'order', orderId })
+          this.makeApiTokenCookie({ apiToken, type: user ? 'user' : basket ? 'basket' : 'order', orderId })
         ),
         tap(cookie => {
           const options = {
@@ -83,6 +119,17 @@ export class RestoreEffects {
     { dispatch: false }
   );
 
+  destroyLangTokenInCookieOnLogout$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(logoutUser),
+        tap(() => {
+          this.cookieService.remove('langToken');
+        })
+      ),
+    { dispatch: false }
+  );
+
   /**
    * Triggers actions to restore a user login, a basket or an order based on previously set cookie (see also effect saveAPITokenToCookie$).
    */
@@ -94,7 +141,7 @@ export class RestoreEffects {
         first(),
         map(() => this.cookieService.get('apiToken')),
         whenTruthy(),
-        map(c => this.parseCookie(c)),
+        map(c => this.parseApiTokenCookie(c)),
         map(cookie => {
           switch (cookie.type) {
             case 'basket': {
@@ -162,13 +209,30 @@ export class RestoreEffects {
     )
   );
 
-  private makeCookie(cookie: CookieType): string {
+  private makeApiTokenCookie(cookie: ApiTokenCookieType): string {
     return cookie && cookie.apiToken
       ? JSON.stringify({ apiToken: cookie.apiToken, type: cookie.type, orderId: cookie.orderId })
       : undefined;
   }
 
-  private parseCookie(cookie: string) {
-    return JSON.parse(cookie) as CookieType;
+  private parseApiTokenCookie(cookie: string) {
+    return JSON.parse(cookie) as ApiTokenCookieType;
+  }
+
+  private parseLangTokenCookie(cookie: string) {
+    return JSON.parse(cookie) as LangCookieType;
+  }
+
+  private persistLangTokenInCookie(lang: string) {
+    const cookie = this.makeCookieLang({ lang });
+    const options = {
+      expires: new Date(Date.now() + 3600000),
+      secure: (isPlatformBrowser(this.platformId) && location.protocol === 'https:') || false,
+    };
+    this.cookieService.put('langToken', cookie, options);
+  }
+
+  private makeCookieLang(cookie: LangCookieType): string {
+    return cookie && cookie.lang ? JSON.stringify({ lang: cookie.lang }) : undefined;
   }
 }
