@@ -40,9 +40,9 @@
     "start": "npm run build && npm run serve",
     "start:local": "ng run intershop-pwa:serve-ssr:local",
     "dev": "cross-env PROXY_ICM=true TRUST_ICM=true ng run intershop-pwa:serve",
-    "dev:local": "cross-env PROXY_ICM=true TRUST_ICM=true ng run intershop-pwa:serve:local",
-    "dev-ssr": "cross-env PROXY_ICM=true TRUST_ICM=true ng run intershop-pwa:serve-ssr",
-    "dev-ssr:local": "cross-env PROXY_ICM=true TRUST_ICM=true ng run intershop-pwa:serve-ssr:local"
+    "dev:local": "cross-env LOGGING=true SSR_HYBRID=true PROXY_ICM=true TRUST_ICM=true ng run intershop-pwa:serve:local",
+    "dev:ssr": "cross-env LOGGING=true SSR_HYBRID=true PROXY_ICM=true TRUST_ICM=true ng run intershop-pwa:serve-ssr",
+    "dev:ssr:local": "cross-env LOGGING=true SSR_HYBRID=true PROXY_ICM=true TRUST_ICM=true ng run intershop-pwa:serve-ssr:local"
   },
   "dependencies": {
     "@angular/animations": "~10.0.4",
