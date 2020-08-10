@@ -91,7 +91,7 @@ export const HYBRID_MAPPING_TABLE: HybridMappingEntry[] = [
     pwaBuild: `page/$<id>${PWA_CONFIG_BUILD}`,
     pwa: '^/page/(.*)$',
     icmBuild: 'ViewContent-Start?PageletEntryPointID=$1',
-    handledBy: 'icm',
+    handledBy: 'pwa',
   },
   {
     id: 'My Account',
@@ -99,6 +99,6 @@ export const HYBRID_MAPPING_TABLE: HybridMappingEntry[] = [
     pwaBuild: `account${PWA_CONFIG_BUILD}`,
     pwa: '^/account.*$',
     icmBuild: 'ViewUserAccount-Start',
-    handledBy: 'icm',
+    handledBy: 'pwa',
   },
 ];
