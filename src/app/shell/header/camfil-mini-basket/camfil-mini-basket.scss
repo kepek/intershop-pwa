@@ -1,0 +1,31 @@
+@import '~src/styles/themes/camfil/colors.scss';
+
+.quick-cart-link {
+  margin-left: 5px;
+  background: unset;
+
+  &.mini-cart-active {
+    background: unset;
+  }
+
+  ::ng-deep .header-icon {
+    svg {
+      width: 14px;
+      height: 14px;
+      margin-top: -3px;
+    }
+  }
+
+  .counter {
+    position: static;
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    margin-left: 13px;
+    font-size: 14px;
+    line-height: 1.8;
+    color: $grey88;
+    background: $camfil-color-white;
+    border-radius: 50%;
+  }
+}

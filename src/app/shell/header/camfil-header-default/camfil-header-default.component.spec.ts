@@ -18,18 +18,18 @@ import { UserInformationMobileComponent } from 'ish-shell/header/user-informatio
 import { LazyHeaderQuickorderComponent } from '../../../extensions/quickorder/exports/header/lazy-header-quickorder/lazy-header-quickorder.component';
 import { LazyWishlistsLinkComponent } from '../../../extensions/wishlists/exports/wishlists/lazy-wishlists-link/lazy-wishlists-link.component';
 
-import { HeaderDefaultComponent } from './header-default.component';
+import { CamfilHeaderDefaultComponent } from './camfil-header-default.component';
 
-describe('Header Default Component', () => {
-  let fixture: ComponentFixture<HeaderDefaultComponent>;
+describe('Camfil Header Default Component', () => {
+  let fixture: ComponentFixture<CamfilHeaderDefaultComponent>;
   let element: HTMLElement;
-  let component: HeaderDefaultComponent;
+  let component: CamfilHeaderDefaultComponent;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [FeatureToggleModule.forTesting('compare'), RouterTestingModule, TranslateModule.forRoot()],
       declarations: [
-        HeaderDefaultComponent,
+        CamfilHeaderDefaultComponent,
         MockComponent(CamfilMiniBasketComponent),
         MockComponent(CamfilProductCompareStatusComponent),
         MockComponent(CamfilSearchBoxComponent),
@@ -46,7 +46,7 @@ describe('Header Default Component', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(HeaderDefaultComponent);
+    fixture = TestBed.createComponent(CamfilHeaderDefaultComponent);
     component = fixture.componentInstance;
     element = fixture.nativeElement;
   });
@@ -57,21 +57,9 @@ describe('Header Default Component', () => {
     expect(() => fixture.detectChanges()).not.toThrow();
   });
 
-  it('should render Language Switch on template', () => {
+  it('should render User Links on template', () => {
     fixture.detectChanges();
-    expect(findAllIshElements(element)).toContain('ish-language-switch');
-  });
-
-  it('should render Header Navigation on template', () => {
-    fixture.detectChanges();
-    expect(findAllIshElements(element)).toContain('ish-header-navigation');
-  });
-
-  it('should render normal header adequately for mobile devices', () => {
-    component.deviceType = 'mobile';
-    fixture.detectChanges();
-
-    expect(element).toMatchSnapshot();
+    expect(findAllIshElements(element)).toIncludeAllMembers(['ish-login-status']);
   });
 
   it('should render sticky header adequately for mobile devices', () => {

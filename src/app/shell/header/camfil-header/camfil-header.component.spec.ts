@@ -7,8 +7,8 @@ import { instance, mock, when } from 'ts-mockito';
 import { AppFacade } from 'ish-core/facades/app.facade';
 import { FeatureToggleModule } from 'ish-core/feature-toggle.module';
 import { findAllIshElements } from 'ish-core/utils/dev/html-query-utils';
+import { CamfilHeaderDefaultComponent } from 'ish-shell/header/camfil-header-default/camfil-header-default.component';
 import { HeaderCheckoutComponent } from 'ish-shell/header/header-checkout/header-checkout.component';
-import { HeaderDefaultComponent } from 'ish-shell/header/header-default/header-default.component';
 import { HeaderSimpleComponent } from 'ish-shell/header/header-simple/header-simple.component';
 
 import { CamfilHeaderComponent } from './camfil-header.component';
@@ -27,8 +27,8 @@ describe('Camfil Header Component', () => {
       imports: [FeatureToggleModule, RouterTestingModule],
       declarations: [
         CamfilHeaderComponent,
+        MockComponent(CamfilHeaderDefaultComponent),
         MockComponent(HeaderCheckoutComponent),
-        MockComponent(HeaderDefaultComponent),
         MockComponent(HeaderSimpleComponent),
       ],
       providers: [{ provide: AppFacade, useFactory: () => instance(appFacade) }],
@@ -49,11 +49,7 @@ describe('Camfil Header Component', () => {
 
   it('should render default header component if no headerType is set', () => {
     fixture.detectChanges();
-    expect(findAllIshElements(element)).toMatchInlineSnapshot(`
-      Array [
-        "ish-header-default",
-      ]
-    `);
+    expect(findAllIshElements(element)).toMatchInlineSnapshot(`Array []`);
   });
 
   it('should render simple header component if set', () => {
