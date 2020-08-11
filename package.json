@@ -1,7 +1,7 @@
 {
   "name": "intershop-pwa",
   "description": "Intershop Progressive Web App",
-  "version": "0.21.0",
+  "version": "0.22.0",
   "license": "Intershop Standard Software End User License Agreement Intershop 7",
   "keywords": [
     "intershop"
@@ -39,18 +39,20 @@
     "serve": "node dist/server/main.js",
     "start": "npm run build && npm run serve",
     "start:local": "ng run intershop-pwa:serve-ssr:local",
-    "dev": "cross-env PROXY_ICM=true TRUST_ICM=true SSR_HYBRID=true ng run intershop-pwa:serve",
-    "dev:local": "cross-env PROXY_ICM=true TRUST_ICM=true SSR_HYBRID=true ng run intershop-pwa:serve:local",
-    "dev-ssr": "cross-env PROXY_ICM=true TRUST_ICM=true SSR_HYBRID=true ng run intershop-pwa:serve-ssr",
-    "dev-ssr:local": "cross-env PROXY_ICM=true TRUST_ICM=true SSR_HYBRID=true ng run intershop-pwa:serve-ssr:local"
+    "dev": "cross-env PROXY_ICM=true TRUST_ICM=true ng run intershop-pwa:serve",
+    "dev:local": "cross-env PROXY_ICM=true TRUST_ICM=true ng run intershop-pwa:serve:local",
+    "dev-ssr": "cross-env PROXY_ICM=true TRUST_ICM=true ng run intershop-pwa:serve-ssr",
+    "dev-ssr:local": "cross-env PROXY_ICM=true TRUST_ICM=true ng run intershop-pwa:serve-ssr:local"
   },
   "dependencies": {
     "@angular/animations": "~10.0.4",
+    "@angular/cdk": "~10.1.0-sha-4fa9eb9d2",
     "@angular/common": "~10.0.4",
     "@angular/compiler": "~10.0.4",
     "@angular/core": "~10.0.4",
     "@angular/forms": "~10.0.4",
     "@angular/localize": "^10.0.4",
+    "@angular/material": "~10.1.0-sha-4fa9eb9d2",
     "@angular/platform-browser": "~10.0.4",
     "@angular/platform-browser-dynamic": "~10.0.4",
     "@angular/platform-server": "~10.0.4",
@@ -67,6 +69,7 @@
     "@ngrx/store-devtools": "^9.2.0",
     "@nguniversal/express-engine": "^10.0.1",
     "@ngx-formly/core": "^5.9.0",
+    "@ngx-formly/schematics": "^5.9.3",
     "@ngx-meta/core": "^9.0.0",
     "@ngx-translate/core": "^13.0.0",
     "@ngx-translate/http-loader": "^6.0.0",
@@ -93,7 +96,8 @@
     "typeface-roboto": "0.0.75",
     "typeface-roboto-condensed": "0.0.75",
     "url-polyfill": "^1.1.9",
-    "zone.js": "~0.10.2"
+    "zone.js": "~0.10.2",
+    "@ngx-formly/material": "^5.0.0"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.1000.3",
@@ -101,6 +105,7 @@
     "@angular/compiler-cli": "~10.0.4",
     "@angular/language-service": "~10.0.4",
     "@commitlint/cli": "^8.3.5",
+    "@ngrx/schematics": "^9.2.0",
     "@nguniversal/builders": "^10.0.1",
     "@phenomnomnominal/tsquery": "^4.1.0",
     "@schematics/angular": "^10.0.3",

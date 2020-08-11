@@ -8,7 +8,9 @@
 *.svg
 *.groovy
 *.woff
+*.woff2
 *.ttf
+*.otf
 *.ico
 *.txt
 *.jar
@@ -22,6 +24,7 @@
 .gitattributes
 .editorconfig
 .createMockdata.table
+.DS_Store
 package*.json
 Dockerfile*
 .browserslistrc

@@ -21,6 +21,7 @@ module.exports = {
     '^ish-(.*)$': '<rootDir>/src/app/$1',
     '^camfil-(.*)$': '<rootDir>/src/app/$1',
     '^organization-management$': '<rootDir>/projects/organization-management/src/app/exports',
+    '^camfil$': '<rootDir>/projects/camfil/src/app/exports',
   },
   snapshotSerializers: [
     './src/jest-serializer/AngularHTMLSerializer.js',

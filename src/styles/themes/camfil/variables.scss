@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //
-// DEFAULT THEME VARIABLES
+// CAMFIL STOREFRONT THEME VARIABLES
 //
 // supposed to reflect the style guide of the storefront
 //
@@ -9,10 +9,10 @@
 //
 // LOGOS
 
-$logo: url('/assets/themes/default/img/logo.png');
+$logo: url('/assets/themes/camfil/img/logo.svg');
 $logo-width: 114px;
 $logo-height: 40px;
-$logo-mobile: url('/assets/themes/default/img/logo_mobile.png');
+$logo-mobile: url('/assets/themes/camfil/img/logo_mobile.png');
 $logo-mobile-width: 41px;
 $logo-mobile-height: 41px;
 
@@ -38,38 +38,38 @@ $font-size-corporate: 0.875rem; // 14px is the bootstrap 3 default font size (1r
 //
 //CORPORATE DESIGN COLORS
 
-$CORPORATE-PRIMARY: #ff6d00; // ORANGE
-$CORPORATE-SECONDARY: darken($CORPORATE-PRIMARY, 10%);
+$CORPORATE-PRIMARY: #006a3a; // GREEN
+$CORPORATE-SECONDARY: #00673e; // GREEN-ISH
 
 //
 //TEXT COLORS
 
 $text-color-corporate: $CORPORATE-PRIMARY;
 
-$text-color-primary: #222;
-$text-color-secondary: #555;
+$text-color-primary: #333;
+$text-color-secondary: #666;
 $text-color-tertiary: #8b8b8b;
 $text-color-quarternary: #999;
 $text-color-quinary: #eee;
 
 $text-color-inverse: #fff;
-$text-color-special: #ea1919; //RED
+$text-color-special: #ff4c45; //RED
 
 //
 //GENERAL COLORS
 
 $color-corporate: $CORPORATE-PRIMARY;
 
-$color-primary: #222;
+$color-primary: #333;
 $color-secondary: #2c2d2e;
 $color-tertiary: #eee;
 
 $color-dark: #000;
-$color-inverse: #fff;
-$color-special-primary: #e74c3c; //RED
-$color-special-secondary: #f39c12; //ORANGE
-$color-special-tertiary: #00abea; //BLUE
-$color-special-quarternary: #5cb85c; // GREEN
+$color-inverse: #fafafa;
+$color-special-primary: #ff4c45; //RED
+$color-special-secondary: #ffa545; //ORANGE
+$color-special-tertiary: #c1d9f6; //BLUE
+$color-special-quarternary: #333f48; // BLUE-ISH
 
 //
 // BORDERS
@@ -97,8 +97,8 @@ $button-default-border: $CORPORATE-PRIMARY;
 // datepicker
 $datepicker-border-radius: 15px;
 
-$datepicker-today-bg: #ff9800;
-$datepicker-today-hover: #e65100;
+$datepicker-today-bg: #ffa545;
+$datepicker-today-hover: #ff4c45;
 
 $datepicker-active-bg: $CORPORATE-PRIMARY;
 $datepicker-active-hover: $CORPORATE-SECONDARY;
@@ -150,13 +150,6 @@ $toast-success-color: rgba(21, 87, 36, 0.999999);
 //
 // Color system
 //
-
-// @gray-darker:            lighten(#000, 13.5%); // #222
-// @gray-dark:              lighten(#000, 20%);   // #333
-// @gray:                   lighten(#000, 33.5%); // #555
-// @gray-light:             lighten(#000, 60%);   // #999
-// @gray-lighter:           lighten(#000, 93.5%); // #eee
-// TODO: add propper intershop custom colors
 $white: #fff;
 $gray-100: #f8f9fa;
 $gray-200: #e9ecef;

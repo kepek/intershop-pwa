@@ -79,17 +79,28 @@ export interface Environment {
 export const ENVIRONMENT_DEFAULTS: Environment = {
   /* INTERSHOP COMMERCE MANAGEMENT REST API CONFIGURATION */
   icmBaseURL: 'NOT SET',
-  icmChannel: 'inSPIRED-inTRONICS-Site',
+  icmChannel: 'Camfil-SE-Site',
   icmServer: 'INTERSHOP/rest/WFS',
   icmServerStatic: 'INTERSHOP/static/WFS',
+  icmApplication: 'rest',
 
   production: false,
   mockServerAPI: false,
 
   /* FEATURE TOOGLES */
-  features: ['compare', 'recently', 'rating', 'wishlists'],
+  features: [
+    'compare',
+    'rating',
+    'recently',
+    /* B2B features */
+    'advancedVariationHandling',
+    'businessCustomerRegistration',
+    'quoting',
+    'orderTemplates',
+  ],
 
   /* PROGRESSIVE WEB APP CONFIGURATIONS */
+  theme: 'camfil|00673E',
   serviceWorker: false,
   smallBreakpointWidth: 576,
   mediumBreakpointWidth: 768,
@@ -100,9 +111,9 @@ export const ENVIRONMENT_DEFAULTS: Environment = {
   defaultProductListingViewType: 'grid',
   defaultDeviceType: 'mobile',
   locales: [
+    { lang: 'de_DE', currency: 'EUR', value: 'de', displayName: 'German', displayLong: 'German (Germany)' },
     { lang: 'en_US', currency: 'USD', value: 'en', displayName: 'English', displayLong: 'English (United States)' },
     { lang: 'sv_SE', currency: 'SEK', value: 'se', displayName: 'Swedish', displayLong: 'Swedish (Sweden)' },
-    { lang: 'de_DE', currency: 'EUR', value: 'de', displayName: 'German', displayLong: 'German (Germany)' },
     { lang: 'fr_FR', currency: 'EUR', value: 'fr', displayName: 'French', displayLong: 'French (France)' },
   ],
 };

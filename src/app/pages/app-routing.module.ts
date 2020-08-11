@@ -141,6 +141,18 @@ const routes: Routes = [
       breadcrumbData: [{ key: 'helpdesk.contact_us.link' }],
     },
   },
+  {
+    path: 'camfil',
+    // TODO (extMlk): Verify why `import('camfil')` fails cuz of chunk names.
+    loadChildren: () => import('camfil-app').then(m => m.CamfilModule),
+    data: {
+      meta: {
+        title: 'camfil.home_page.heading',
+        robots: 'index, nofollow',
+      },
+      breadcrumbData: [{ key: 'camfil.home_page.link' }],
+    },
+  },
 ];
 
 @NgModule({

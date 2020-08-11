@@ -1,6 +1,9 @@
 import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FormlyModule } from '@ngx-formly/core';
+import { FormlyMaterialModule } from '@ngx-formly/material';
 
 import { CoreModule } from 'ish-core/core.module';
 
@@ -20,6 +23,9 @@ import { ShellModule } from './shell/shell.module';
     AppRoutingModule,
     QuickorderRoutingModule,
     AppLastRoutingModule,
+    ReactiveFormsModule,
+    FormlyModule.forRoot(),
+    FormlyMaterialModule,
   ],
   bootstrap: [AppComponent],
 })

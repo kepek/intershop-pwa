@@ -12,3 +12,7 @@ export const setGTMToken = createAction(
   '[Configuration] Set Google Tag Manager Token',
   payload<{ gtmToken: string }>()
 );
+
+export const setCurrentLocale = createAction('[Configuration] Set Current Locale', payload<{ lang: string }>());
+
+export const hasSetCurrentLocale = createAction('[Configuration] Has Set Current Locale');

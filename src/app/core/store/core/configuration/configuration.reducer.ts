@@ -5,7 +5,7 @@ import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
 
 import { environment } from '../../../../../environments/environment';
 
-import { applyConfiguration, setGTMToken } from './configuration.actions';
+import { applyConfiguration, setCurrentLocale, setGTMToken } from './configuration.actions';
 
 export interface ConfigurationState {
   baseURL?: string;
@@ -42,5 +42,9 @@ export const configurationReducer = createReducer(
   on(setGTMToken, (state: ConfigurationState, action) => {
     const { gtmToken } = action.payload;
     return { ...state, gtmToken };
+  }),
+  on(setCurrentLocale, (state: ConfigurationState, action) => {
+    const { lang } = action.payload;
+    return { ...state, lang };
   })
 );
