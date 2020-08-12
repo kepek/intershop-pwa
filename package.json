@@ -39,10 +39,10 @@
     "serve": "node dist/server/main.js",
     "start": "npm run build && npm run serve",
     "start:local": "ng run intershop-pwa:serve-ssr:local",
-    "dev": "cross-env PROXY_ICM=true TRUST_ICM=true ng run intershop-pwa:serve",
-    "dev:local": "cross-env LOGGING=true SSR_HYBRID=true PROXY_ICM=true TRUST_ICM=true ng run intershop-pwa:serve:local",
-    "dev:ssr": "cross-env LOGGING=true SSR_HYBRID=true PROXY_ICM=true TRUST_ICM=true ng run intershop-pwa:serve-ssr",
-    "dev:ssr:local": "cross-env LOGGING=true SSR_HYBRID=true PROXY_ICM=true TRUST_ICM=true ng run intershop-pwa:serve-ssr:local"
+    "dev": "ng run intershop-pwa:serve",
+    "dev:local": "ng run intershop-pwa:serve:local",
+    "dev:ssr": "ng run intershop-pwa:serve-ssr",
+    "dev:ssr:local": "ng run intershop-pwa:serve-ssr:local"
   },
   "dependencies": {
     "@angular/animations": "~10.0.4",
@@ -118,7 +118,6 @@
     "commitizen": "^4.1.2",
     "commitlint-config-cz": "^0.13.1",
     "conventional-changelog-cli": "2.0.34",
-    "cross-env": "^7.0.2",
     "cz-customizable": "^6.2.1",
     "husky": "^4.2.5",
     "intershop-schematics": "file:schematics/src",
