@@ -28,6 +28,9 @@
             "aot": true,
             "extractCss": true,
             "assets": ["src/assets"],
+            "stylePreprocessorOptions": {
+              "includePaths": ["src/styles"]
+            },
             "styles": [
               {
                 "inject": false,
@@ -40,8 +43,8 @@
                 "bundleName": "blue"
               },
               {
+                "inject": false,
                 "input": "src/styles/themes/camfil/style.scss",
-                "inject": true,
                 "bundleName": "camfil"
               }
             ],
@@ -130,7 +133,10 @@
           "options": {
             "outputPath": "dist/server",
             "main": "server.ts",
-            "tsConfig": "tsconfig.server.json"
+            "tsConfig": "tsconfig.server.json",
+            "stylePreprocessorOptions": {
+              "includePaths": ["src/styles"]
+            }
           },
           "configurations": {
             "production": {
@@ -194,6 +200,9 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "projects/organization-management/tsconfig.app.json",
             "aot": false,
+            "stylePreprocessorOptions": {
+              "includePaths": ["src/styles"]
+            },
             "styles": ["src/styles/themes/default/style.scss"],
             "assets": [
               {
@@ -244,6 +253,9 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "projects/camfil/tsconfig.app.json",
             "aot": false,
+            "stylePreprocessorOptions": {
+              "includePaths": ["src/styles"]
+            },
             "styles": ["src/styles/themes/camfil/style.scss"],
             "assets": [
               {
