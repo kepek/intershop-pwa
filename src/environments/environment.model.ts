@@ -78,8 +78,8 @@ export interface Environment {
 
 export const ENVIRONMENT_DEFAULTS: Environment = {
   /* INTERSHOP COMMERCE MANAGEMENT REST API CONFIGURATION */
-  icmBaseURL: 'NOT SET',
-  icmChannel: 'Camfil-SE-Site',
+  icmBaseURL: 'http://localhost:4200',
+  icmChannel: 'Camfil-CamfilSE-Site',
   icmServer: 'INTERSHOP/rest/WFS',
   icmServerStatic: 'INTERSHOP/static/WFS',
   icmApplication: 'rest',
