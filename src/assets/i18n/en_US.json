@@ -1590,6 +1590,7 @@
   "common.user.language.text": "LANGUAGE",
   "common.user.locale.text": "EN",
   "common.view_all.link": "View All",
+  "camfil.common.home.link": "Start",
   "dialog.close.text": "Close",
   "email.address.message": "<table width=\"100%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\"><tr><td class=\"footerAddressItem\" width=\"50%\">Max Mustermann<br />Pattern Street 15<br />99999 Patterncity</td><td class=\"footerAddressItem\" width=\"50%\">Max Mustermann<br />Pattern Street 15<br />99999 Patterncity</td></tr></table>",
   "email.approve_customer.button": "<a href=\"{{0}}\">Approve Customer</a>",
@@ -2029,6 +2030,12 @@
   "product.warranty.text": "Protect Your Purchase:",
   "product.zoom.button.label": "Zoom",
   "product.available_in_different_configuration": "Not Available",
+  "camfil.product.items.label": {
+    "=0": "0 products",
+    "=1": "1 product",
+    "other": "# products"
+  },
+  "camfil.product.items.showing.text": "Showing",
   "promotion.content.file_not_found.text": "Sorry. File not found.",
   "promotion.content.file_not_found.title": "File not found",
   "promotion.detaillist.pagination.text": "Viewing",

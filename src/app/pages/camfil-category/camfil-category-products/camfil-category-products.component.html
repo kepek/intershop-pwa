@@ -1,0 +1,60 @@
+<div
+  class="family-page product-search-result box-shadow"
+  [attr.data-testing-id]="'family-page-' + category.uniqueId"
+  id="family-page-top"
+>
+  <div class="row">
+    <div class="col-12">
+      <camfil-breadcrumb></camfil-breadcrumb>
+    </div>
+  </div>
+  <div class="row no-gutters">
+    <div class="col-md-3 navigation-panel">
+      <mat-toolbar color="primary">
+        <span>My sidebar</span>
+      </mat-toolbar>
+      <div class="navigation-panel--container">
+        <div class="" [ngbCollapse]="isCollapsed">
+          <camfil-category-navigation [uniqueId]="category.categoryPath[0]"></camfil-category-navigation>
+          <br />
+          <ish-filter-navigation [showCategoryFilter]="false"></ish-filter-navigation>
+        </div>
+        <a class="d-md-none mobile-filter-toggle" (click)="toggle()">
+          {{ 'search.mobile.filter.trigger' | translate }}
+          <fa-icon [icon]="['fas', isCollapsed ? 'angle-down' : 'angle-up']"></fa-icon>
+        </a>
+      </div>
+    </div>
+    <div class="col-md-9">
+      <div class="col-12 box-shadow box-container">
+        <div class="row">
+          <div class="col-md-9">
+            <h1>{{ category.name }}</h1>
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut beatae perferendis, nobis nulla, tempore
+              facilis qui magni eos voluptate asperiores libero rerum dicta porro necessitatibus sed ipsam quibusdam
+              esse magnam.<br />
+              <a href="#" class="read-more">Read more</a>
+            </p>
+          </div>
+          <div class="col-md-3">
+            <strong>
+              Guides
+              <fa-icon [icon]="['fas', 'info-circle']"></fa-icon> </strong
+            ><br />
+            <a href="#">How to measure a bag filter</a><br />
+            <a href="#">How to find the correct gasket</a><br />
+            <a href="#">Another guide here</a><br />
+            <a href="#">Another guide here</a><br />
+          </div>
+        </div>
+      </div>
+
+      <camfil-product-listing
+        [category]="category"
+        [id]="{ type: 'category', value: category.uniqueId }"
+        fragmentOnRouting="family-page-top"
+      ></camfil-product-listing>
+    </div>
+  </div>
+</div>

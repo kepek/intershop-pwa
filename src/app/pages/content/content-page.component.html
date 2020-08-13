@@ -1,5 +1,5 @@
 <ng-container *ngIf="contentPage$ | async as contentPage">
-  <ish-breadcrumb></ish-breadcrumb>
+  <camfil-breadcrumb></camfil-breadcrumb>
   <ish-content-pagelet
     *ngIf="contentPage.pageletIDs.length"
     [pageletId]="contentPage.pageletIDs[0]"

@@ -1,0 +1,8 @@
+.filters-row {
+  background-color: transparent;
+  margin: 0;
+
+  .filters-row + & {
+    padding-top: 0;
+  }
+}

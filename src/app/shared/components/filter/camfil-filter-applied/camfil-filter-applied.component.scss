@@ -1,0 +1,15 @@
+@import '~src/styles/themes/camfil/colors';
+@import '~src/styles/themes/camfil/variables';
+
+.applied-filters {
+  padding-top: $space-box/2;
+  padding-bottom: $space-box/2;
+}
+:host {
+  .mat-chip {
+    background-color: $white;
+  }
+  .bg-primary {
+    background-color: rgba($CORPORATE-PRIMARY, 0.1) !important;
+  }
+}

@@ -1,0 +1,21 @@
+@import '~src/styles/themes/camfil/colors';
+@import '~src/styles/themes/camfil/variables';
+
+.breadcrumbs {
+  background-color: $breadcrumbs-bg;
+  padding: $space-default;
+  overflow: hidden;
+
+  &-list {
+    text-transform: none;
+    color: $text-color-quarternary;
+
+    &-link {
+      color: $text-color-primary;
+      font-weight: 600;
+    }
+    &-separator {
+      color: $text-color-primary;
+    }
+  }
+}

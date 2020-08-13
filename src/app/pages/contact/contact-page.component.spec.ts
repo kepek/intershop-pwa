@@ -5,7 +5,7 @@ import { MockComponent } from 'ng-mocks';
 import { instance, mock } from 'ts-mockito';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
-import { BreadcrumbComponent } from 'ish-shared/components/common/breadcrumb/breadcrumb.component';
+import { CamfilBreadcrumbComponent } from 'ish-shared/components/common/camfil-breadcrumb/camfil-breadcrumb.component';
 import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
 
 import { ContactConfirmationComponent } from './contact-confirmation/contact-confirmation.component';
@@ -22,7 +22,7 @@ describe('Contact Page Component', () => {
       imports: [RouterTestingModule, TranslateModule.forRoot()],
       declarations: [
         ContactPageComponent,
-        MockComponent(BreadcrumbComponent),
+        MockComponent(CamfilBreadcrumbComponent),
         MockComponent(ContactConfirmationComponent),
         MockComponent(ContactFormComponent),
         MockComponent(LoadingComponent),

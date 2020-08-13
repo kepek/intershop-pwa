@@ -4,9 +4,9 @@ import { NgbCollapse } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MockComponent } from 'ng-mocks';
 
-import { BreadcrumbComponent } from 'ish-shared/components/common/breadcrumb/breadcrumb.component';
+import { CamfilBreadcrumbComponent } from 'ish-shared/components/common/camfil-breadcrumb/camfil-breadcrumb.component';
 import { FilterNavigationComponent } from 'ish-shared/components/filter/filter-navigation/filter-navigation.component';
-import { ProductListingComponent } from 'ish-shared/components/product/product-listing/product-listing.component';
+import { CamfilProductListingComponent } from 'ish-shared/components/product/camfil-product-listing/camfil-product-listing.component';
 
 import { SearchResultComponent } from './search-result.component';
 
@@ -20,11 +20,11 @@ describe('Search Result Component', () => {
     TestBed.configureTestingModule({
       imports: [TranslateModule.forRoot()],
       declarations: [
-        MockComponent(BreadcrumbComponent),
+        MockComponent(CamfilBreadcrumbComponent),
         MockComponent(FaIconComponent),
         MockComponent(FilterNavigationComponent),
         MockComponent(NgbCollapse),
-        MockComponent(ProductListingComponent),
+        MockComponent(CamfilProductListingComponent),
         SearchResultComponent,
       ],
     }).compileComponents();

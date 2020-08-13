@@ -1,3 +1,6 @@
+.main-container {
+  background: transparent;
+}
 header {
   &::before {
     background-color: $camfil-color-primary;
