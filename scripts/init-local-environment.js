@@ -21,39 +21,12 @@ if (!fs.existsSync(environmentLocalPath) || force) {
     environmentLocalPath,
     `import { ENVIRONMENT_DEFAULTS, Environment } from './environment.model';
 
-// tslint:disable
+    export const environment: Environment = {
+      ...ENVIRONMENT_DEFAULTS,
+      /* INTERSHOP COMMERCE MANAGEMENT REST API CONFIGURATION */
+      icmBaseURL: 'https://camfil.local',
+    };
 
-// running out of memory?
-// NODE_OPTIONS=--max_old_space_size=8192
-
-const b2b = 0;
-
-const extraFeatures: typeof environment.features =
-  // default
-  b2b ? ['advancedVariationHandling', 'businessCustomerRegistration', 'quoting', 'quickorder', 'orderTemplates'] : ['wishlists'];
-  // none
-  // [];
-
-export const environment: Environment = {
-  ...ENVIRONMENT_DEFAULTS,
-
-  production: false,
-  serviceWorker: false,
-  mockServerAPI: false,
-  defaultDeviceType: 'desktop',
-
-  icmBaseURL: 'https://intershoppwa.azurewebsites.net',
-  icmChannel: b2b ? 'inSPIRED-inTRONICS_Business-Site' : 'inSPIRED-inTRONICS-Site',
-
-  theme: b2b ? 'blue' : 'default',
-
-  features: [
-    'compare',
-    'recently',
-    'rating',
-    ...extraFeatures
-  ],
-};
 `
   );
 }
