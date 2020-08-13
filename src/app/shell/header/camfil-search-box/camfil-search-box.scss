@@ -1,0 +1,55 @@
+@import '~src/styles/themes/camfil/colors.scss';
+
+.search-container {
+  position: relative;
+
+  :host button {
+    &[type='submit'] {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      padding-right: 26px;
+      padding-left: 26px;
+    }
+
+    &.btn-reset {
+      display: none;
+    }
+  }
+
+  :host .search-input {
+    width: 100%;
+    height: 48px;
+    padding: 8px 8px 8px 56px;
+    border: none;
+    border-radius: 30px;
+
+    &:focus {
+      outline: none;
+
+      + .buttons {
+        button {
+          color: $camfil-color-white;
+        }
+      }
+    }
+  }
+
+  :host .background-icon {
+    position: absolute;
+    top: 15px;
+    left: 19px;
+
+    svg {
+      width: 16px;
+      height: 16px;
+    }
+  }
+
+  :host ul {
+    &.search-suggest-results {
+      position: absolute;
+      top: 57px;
+    }
+  }
+}

@@ -1,0 +1,106 @@
+@import '~src/styles/themes/camfil/colors.scss';
+@import '~src/styles/themes/camfil/mixins.scss';
+
+.user-links {
+  li {
+    position: relative;
+    padding: 12px 16px;
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 12px;
+    font-weight: 300;
+    line-height: 16px;
+    color: $greyF9;
+    text-transform: none;
+
+    &::after {
+      position: absolute;
+      top: 12px;
+      right: 0;
+      display: block;
+      width: 0;
+      width: 1px;
+      height: 16px;
+      content: '';
+      background-color: $camfil-color-white;
+      opacity: 0.6;
+    }
+  }
+
+  .dropdown {
+    color: #333;
+    background-color: $greyC9;
+
+    &::after {
+      @include triangle(bottom, 4px, 4px, $camfil-color-primary);
+
+      position: relative;
+      top: -2px;
+      display: inline-block;
+      margin-left: 4px;
+      content: '';
+      background-color: unset;
+    }
+  }
+}
+
+.language-switch-container {
+  padding: 11px 16px;
+  font-family: 'Source Sans Pro', sans-serif;
+  font-size: 12px;
+  font-weight: 300;
+  line-height: 16px;
+  text-transform: none;
+  background-color: $greyC9;
+
+  &::after {
+    @include triangle(right, 4px, 4px, $camfil-color-primary);
+
+    position: static;
+    display: inline-block;
+    margin-left: 15px;
+    content: '';
+    background-color: unset;
+  }
+
+  a {
+    color: $camfil-text-color-primary;
+  }
+}
+
+:host ::ng-deep .main-navigation {
+  height: 50px;
+
+  .main-navigation-list {
+    a {
+      font-size: 14px;
+      font-weight: 600;
+      color: $camfil-color-primary;
+      text-transform: none;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    > li {
+      &.dropdown {
+        padding: 0 20px;
+        line-height: 50px;
+      }
+    }
+  }
+
+  .sticky-header & {
+    height: 40px;
+
+    .main-navigation-list {
+      > li {
+        &.dropdown {
+          line-height: 40px;
+        }
+      }
+    }
+  }
+}
+
+:host ::ng-deep .navbar-nav {
+  border-top: 1px solid $greyEF;
+}

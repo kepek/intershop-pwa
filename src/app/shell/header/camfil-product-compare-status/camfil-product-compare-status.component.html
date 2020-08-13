@@ -1,0 +1,6 @@
+<a class="compare-status item-count-container" routerLink="/compare" rel="nofollow">
+  <span class="badge badge-pill" data-testing-id="product-compare-count">{{ productCompareCount$ | async }}</span>
+  <span [ngClass]="{ 'd-none': view === 'auto' || view === 'small', 'd-md-inline': view === 'auto' }">{{
+    'product.compare.link' | translate
+  }}</span>
+</a>

@@ -1,0 +1,15 @@
+@import '~src/styles/themes/camfil/colors.scss';
+
+.compare-status {
+  display: flex;
+  color: $grey79;
+  .badge {
+    position: static;
+    width: 24px;
+    height: 24px;
+    margin-right: 6px;
+    font-size: 14px;
+    color: $grey79;
+    background: $greyCC;
+  }
+}

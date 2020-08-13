@@ -2,34 +2,31 @@
   <camfil-search-box
     data-testing-id="search-box-desktop"
     [configuration]="{
-      placeholder: 'search.searchbox.instructional_text' | translate,
+      placeholder: 'camfil.search.searchbox.instructional_text' | translate,
       autoSuggest: true,
       maxAutoSuggests: 10,
       icon: icon,
-      showLastSearchTerm: true
+      showLastSearchTerm: true,
+      buttonText: 'Search'
     }"
   ></camfil-search-box>
 </ng-template>
 
 <div class="header container" [ngClass]="deviceType">
   <ul *ngIf="!isSticky" class="user-links">
-    <li *ngIf="!isSticky && deviceType !== 'mobile'">
-      <ish-login-status data-testing-id="user-status-desktop"></ish-login-status>
-    </li>
-    <li *ishFeature="'compare'" class="d-none d-md-block">
-      <camfil-product-compare-status data-testing-id="compare-status-desktop"> </camfil-product-compare-status>
-    </li>
-    <li *ishFeature="'wishlists'" class="d-none d-md-block">
-      <camfil-lazy-wishlists-link></camfil-lazy-wishlists-link>
-    </li>
+    <li class="dropdown">Webshop</li>
+    <li>Customer support</li>
+    <li>Filter guide</li>
+    <li>Top link 3</li>
+    <li>Top link 4</li>
   </ul>
 
-  <div class="header-utility">
+  <div class="header-utility" *ngIf="!isSticky">
     <a class="search-toggler" [ngClass]="{ 'active-search': showSearch }">
       <fa-icon *ngIf="isSticky" class="header-icon" [icon]="['fas', 'search']" (click)="toggle('search')"></fa-icon>
       <div
         *ngIf="isSticky || showSearch"
-        class="search-container header-search-container"
+        class="search-container"
         [ngbCollapse]="!showSearch"
         [ngClass]="{ show: !isSticky }"
       >
@@ -37,16 +34,11 @@
       </div>
     </a>
     <div class="language-switch-container d-none d-md-block">
-      <ish-language-switch *ngIf="!isSticky" data-testing-id="language-switch-desktop"> </ish-language-switch>
+      <!-- <ish-language-switch *ngIf="!isSticky" data-testing-id="language-switch-desktop"> </ish-language-switch> -->
+      <ish-login-status data-testing-id="user-status-desktop"></ish-login-status>
     </div>
     <ish-login-status *ngIf="isSticky || deviceType === 'mobile'" view="small"></ish-login-status>
 
-    <camfil-mini-basket
-      data-testing-id="mini-basket-desktop"
-      view="full"
-      class="d-none"
-      [ngClass]="isSticky ? 'd-lg-block' : 'd-md-block'"
-    ></camfil-mini-basket>
     <camfil-mini-basket
       data-testing-id="mini-basket-mobile"
       view="small"
@@ -72,13 +64,24 @@
         ></a>
       </div>
     </div>
-    <div class="col-md-5 text-right">
+    <div class="col-md-1 text-right">
       <camfil-lazy-header-quickorder></camfil-lazy-header-quickorder>
     </div>
-    <div class="col-md-4">
-      <div *ngIf="!isSticky && deviceType !== 'mobile'" class="search-container header-search-container">
+    <div class="col-md-5">
+      <div *ngIf="!isSticky && deviceType !== 'mobile'" class="search-container">
         <ng-container *ngTemplateOutlet="searchBoxTemplate"></ng-container>
       </div>
+    </div>
+    <div class="col-md-1" *ngIf="!isSticky">
+      <camfil-product-compare-status data-testing-id="compare-status-desktop"> </camfil-product-compare-status>
+    </div>
+    <div class="col-md-2" *ngIf="!isSticky">
+      <camfil-mini-basket
+        data-testing-id="mini-basket-desktop"
+        view="full"
+        class="d-none"
+        [ngClass]="isSticky ? 'd-lg-block' : 'd-md-block'"
+      ></camfil-mini-basket>
     </div>
   </div>
 

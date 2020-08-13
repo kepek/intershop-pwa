@@ -26,7 +26,7 @@ $fontConfig: (
 // Foreground Elements
 
 // Light Theme Text
-$dark-text: #333;
+$dark-text: $camfil-text-color-primary;
 $dark-primary-text: rgba($dark-text, 0.87);
 $dark-accent-text: rgba($dark-primary-text, 0.54);
 $dark-disabled-text: rgba($dark-primary-text, 0.38);
@@ -87,9 +87,9 @@ $light-bg-darker-10: darken($light-background, 10%);
 $light-bg-darker-20: darken($light-background, 20%);
 $light-bg-darker-30: darken($light-background, 30%);
 $light-bg-lighter-5: lighten($light-background, 5%);
-$dark-bg-tooltip: lighten(#333, 20%);
-$dark-bg-alpha-4: rgba(#333, 0.04);
-$dark-bg-alpha-12: rgba(#333, 0.12);
+$dark-bg-tooltip: lighten($camfil-text-color-primary, 20%);
+$dark-bg-alpha-4: rgba($camfil-text-color-primary, 0.04);
+$dark-bg-alpha-12: rgba($camfil-text-color-primary, 0.12);
 
 $mat-light-theme-background: (
   background: $light-background,
@@ -110,7 +110,7 @@ $mat-light-theme-background: (
 );
 
 // Dark bg
-$dark-background: #333;
+$dark-background: $camfil-text-color-primary;
 $dark-bg-lighter-5: lighten($dark-background, 5%);
 $dark-bg-lighter-10: lighten($dark-background, 10%);
 $dark-bg-lighter-20: lighten($dark-background, 20%);
@@ -142,10 +142,10 @@ $mat-dark-theme-background: (
 
 // Theme Config
 $mat-primary: (
-  main: #006a3a,
+  main: $camfil-color-primary,
   lighter: #b3d2c4,
   darker: #004d25,
-  200: #006a3a,
+  200: $camfil-color-primary,
   // For slide toggle,
     contrast:
     (
@@ -155,10 +155,10 @@ $mat-primary: (
     ),
 );
 $mat-accent: (
-  main: #00673e,
-  lighter: #c1d9f6,
+  main: $camfil-color-secondary,
+  lighter: $camfil-color-special-tertiary,
   darker: #333f48,
-  200: #00673e,
+  200: $camfil-color-secondary,
   // For slide toggle,
     contrast:
     (
@@ -170,7 +170,7 @@ $mat-accent: (
 $mat-warn: (
   main: #ff6961,
   lighter: #ffd2d0,
-  darker: #ff4c45,
+  darker: $camfil-color-special-primary,
   200: #ff6961,
   // For slide toggle,
     contrast:
@@ -182,21 +182,21 @@ $mat-warn: (
 );
 
 body {
-  --primary-color: #006a3a;
+  --primary-color: $camfil-color-primary;
   --primary-lighter-color: #b3d2c4;
   --primary-darker-color: #004d25;
   --text-primary-color: #{$light-primary-text};
   --text-primary-lighter-color: #{$dark-primary-text};
   --text-primary-darker-color: #{$light-primary-text};
-  --accent-color: #00673e;
-  --accent-lighter-color: #c1d9f6;
-  --accent-darker-color: #333f48;
+  --accent-color: $camfil-color-secondary;
+  --accent-lighter-color: $camfil-color-special-tertiary;
+  --accent-darker-color: $camfil-color-special-quarternary;
   --text-accent-color: #{$light-primary-text};
   --text-accent-lighter-color: #{$dark-primary-text};
   --text-accent-darker-color: #{$light-primary-text};
   --warn-color: #ff6961;
   --warn-lighter-color: #ffd2d0;
-  --warn-darker-color: #ff4c45;
+  --warn-darker-color: $camfil-color-special-primary;
   --text-warn-color: #{$dark-primary-text};
   --text-warn-lighter-color: #{$dark-primary-text};
   --text-warn-darker-color: #{$dark-primary-text};
@@ -231,6 +231,15 @@ $altTheme: mat-dark-theme($theme-primary, $theme-accent, $theme-warn);
   padding: 0 1.15em;
   margin: 0 0.65em;
   line-height: 41.6px;
+}
+
+button {
+  &.mat-raised-button,
+  &.mat-stroked-button,
+  &.mat-flat-button {
+    font-size: 14px;
+    border-radius: 20px;
+  }
 }
 
 .mat-standard-chip {

@@ -1,5 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
 import { RouterModule } from '@angular/router';
 import { NgbCollapseModule, NgbDropdownModule, NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
@@ -20,7 +22,11 @@ import { WishlistsExportsModule } from '../extensions/wishlists/exports/wishlist
 
 import { CamfilFooterComponent } from './footer/camfil-footer/camfil-footer.component';
 import { FooterComponent } from './footer/footer/footer.component';
+import { CamfilHeaderDefaultComponent } from './header/camfil-header-default/camfil-header-default.component';
 import { CamfilHeaderComponent } from './header/camfil-header/camfil-header.component';
+import { CamfilMiniBasketComponent } from './header/camfil-mini-basket/camfil-mini-basket.component';
+import { CamfilProductCompareStatusComponent } from './header/camfil-product-compare-status/camfil-product-compare-status.component';
+import { CamfilSearchBoxComponent } from './header/camfil-search-box/camfil-search-box.component';
 import { HeaderCheckoutComponent } from './header/header-checkout/header-checkout.component';
 import { HeaderDefaultComponent } from './header/header-default/header-default.component';
 import { HeaderNavigationComponent } from './header/header-navigation/header-navigation.component';
@@ -46,8 +52,8 @@ const importExportModules = [
 const exportedComponents = [
   CamfilFooterComponent,
   CamfilHeaderComponent,
+  CamfilSearchBoxComponent,
   ProductImageComponent,
-  SearchBoxComponent,
   ServerHtmlDirective,
 ];
 
@@ -59,6 +65,8 @@ const exportedComponents = [
     DeferLoadModule,
     FeatureToggleModule,
     IconModule,
+    MatButtonModule,
+    MatInputModule,
     NgbCollapseModule,
     NgbDropdownModule,
     NgbModalModule,
@@ -68,6 +76,9 @@ const exportedComponents = [
   ],
   declarations: [
     ...exportedComponents,
+    CamfilHeaderDefaultComponent,
+    CamfilMiniBasketComponent,
+    CamfilProductCompareStatusComponent,
     ClickOutsideDirective,
     FooterComponent,
     HeaderCheckoutComponent,
@@ -79,6 +90,7 @@ const exportedComponents = [
     LoginStatusComponent,
     MiniBasketComponent,
     ProductCompareStatusComponent,
+    SearchBoxComponent,
     SubCategoryNavigationComponent,
     UserInformationMobileComponent,
   ],

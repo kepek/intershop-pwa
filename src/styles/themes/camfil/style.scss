@@ -8,6 +8,8 @@
 @import 'fonts';
 
 // set theme specific variables
+@import 'colors';
+@import 'mixins';
 @import 'variables';
 
 // import Bootstrap styles
@@ -32,3 +34,5 @@
 @import 'material';
 
 // customizations
+
+@import 'custom';

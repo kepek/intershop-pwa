@@ -9,9 +9,9 @@
 //
 // LOGOS
 
-$logo: url('/assets/themes/camfil/img/logo.svg');
-$logo-width: 114px;
-$logo-height: 40px;
+$logo: url('/assets/themes/camfil/img/logo.png');
+$logo-width: 329px;
+$logo-height: 97px;
 $logo-mobile: url('/assets/themes/camfil/img/logo_mobile.png');
 $logo-mobile-width: 41px;
 $logo-mobile-height: 41px;
@@ -38,38 +38,38 @@ $font-size-corporate: 0.875rem; // 14px is the bootstrap 3 default font size (1r
 //
 //CORPORATE DESIGN COLORS
 
-$CORPORATE-PRIMARY: #006a3a; // GREEN
-$CORPORATE-SECONDARY: #00673e; // GREEN-ISH
+$CORPORATE-PRIMARY: $camfil-color-primary; // GREEN
+$CORPORATE-SECONDARY: $camfil-color-secondary; // GREEN-ISH
 
 //
 //TEXT COLORS
 
 $text-color-corporate: $CORPORATE-PRIMARY;
 
-$text-color-primary: #333;
-$text-color-secondary: #666;
+$text-color-primary: $camfil-text-color-primary;
+$text-color-secondary: $camfil-text-color-secondary;
 $text-color-tertiary: #8b8b8b;
 $text-color-quarternary: #999;
 $text-color-quinary: #eee;
 
 $text-color-inverse: #fff;
-$text-color-special: #ff4c45; //RED
+$text-color-special: $camfil-color-special-primary; //RED
 
 //
 //GENERAL COLORS
 
 $color-corporate: $CORPORATE-PRIMARY;
 
-$color-primary: #333;
+$color-primary: $camfil-text-color-primary;
 $color-secondary: #2c2d2e;
 $color-tertiary: #eee;
 
 $color-dark: #000;
 $color-inverse: #fafafa;
-$color-special-primary: #ff4c45; //RED
-$color-special-secondary: #ffa545; //ORANGE
-$color-special-tertiary: #c1d9f6; //BLUE
-$color-special-quarternary: #333f48; // BLUE-ISH
+$color-special-primary: $camfil-color-special-primary; //RED
+$color-special-secondary: $camfil-color-special-secondary; //ORANGE
+$color-special-tertiary: $camfil-color-special-tertiary; //BLUE
+$color-special-quarternary: $camfil-color-special-quarternary; // BLUE-ISH
 
 //
 // BORDERS
@@ -97,8 +97,8 @@ $button-default-border: $CORPORATE-PRIMARY;
 // datepicker
 $datepicker-border-radius: 15px;
 
-$datepicker-today-bg: #ffa545;
-$datepicker-today-hover: #ff4c45;
+$datepicker-today-bg: $camfil-color-special-secondary;
+$datepicker-today-hover: $camfil-color-special-primary;
 
 $datepicker-active-bg: $CORPORATE-PRIMARY;
 $datepicker-active-hover: $CORPORATE-SECONDARY;
@@ -240,7 +240,7 @@ $grid-breakpoints: (
   sm: 576px,
   md: 768px,
   lg: 992px,
-  xl: 1200px,
+  xl: 1440px,
 );
 
 // Grid columns

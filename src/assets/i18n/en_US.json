@@ -2182,6 +2182,7 @@
   "search.searchbox.button.title": "Start search",
   "search.searchbox.button.reset.title": "Remove search term",
   "search.searchbox.instructional_text": "Search",
+  "camfil.search.searchbox.instructional_text": "Search for air filters names. SKUs, dimensions",
   "search.searchbox.label": "Search",
   "search.searchbox.label.alternative": "Try a new search:",
   "search.searchlist.heading": "Searches",
@@ -2298,6 +2299,8 @@
   "shopping_cart.ministatus.close.button.label": "Close",
   "shopping_cart.ministatus.empty_cart.text": "Your cart is currently empty.",
   "shopping_cart.ministatus.heading": "Shopping Cart:",
+  "shopping_cart.ministatus.items.label": "Shopping Cart:",
+  "camfil.shopping_cart.ministatus.items.label": "Go to checkout",
   "shopping_cart.ministatus.items.text": {
     "=0": "0 items",
     "=1": "1 item",
