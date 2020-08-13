@@ -20,5 +20,22 @@
 
   "ngschematics.schematics": ["intershop-schematics"],
   "workbench.iconTheme": "vscode-icons",
-  "typescript.tsdk": "node_modules/typescript/lib"
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "sqltools.connections": [
+    {
+      "database": "intershop",
+      "driver": "MSSQL",
+      "mssqlOptions": {
+        "appName": "SQLTools",
+        "encrypt": true,
+        "useUTC": true
+      },
+      "name": "camfil-mssql",
+      "password": "Us3r!@#$",
+      "port": 1433,
+      "previewLimit": 50,
+      "server": "camfil.local",
+      "username": "SA"
+    }
+  ]
 }
