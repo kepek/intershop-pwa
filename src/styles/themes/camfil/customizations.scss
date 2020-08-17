@@ -2,7 +2,22 @@
   background: transparent;
 }
 header {
+  position: relative;
+  z-index: $cover-index-header;
+  margin-bottom: 0;
+  box-shadow: $header-shadow;
+
   &::before {
     background-color: $camfil-color-primary;
+  }
+}
+
+.sidebar {
+  z-index: $cover-index;
+  background: $white;
+
+  &--container {
+    padding: $space-box;
+    box-shadow: $sidebar-shadow;
   }
 }

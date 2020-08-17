@@ -1,0 +1,31 @@
+<div class="product-search-result box-shadow">
+  <camfil-breadcrumb></camfil-breadcrumb>
+  <div class="row product-search-result no-gutters" data-testing-id="search-result-page" id="search-page-top">
+    <aside class="col-md-3 sidebar">
+      <div class="sidebar--container">
+        <div [ngbCollapse]="isCollapsed">
+          <ish-filter-navigation></ish-filter-navigation>
+        </div>
+        <a class="d-md-none mobile-filter-toggle" (click)="toggle()">
+          {{ 'search.mobile.filter.trigger' | translate }}
+          <fa-icon [icon]="['fas', isCollapsed ? 'angle-down' : 'angle-up']"></fa-icon>
+        </a>
+      </div>
+    </aside>
+
+    <div class="col-md-9">
+      <div class="col-12 box-shadow box-container">
+        <h1>
+          {{
+            'search.title.text'
+              | translate: { '1': searchTerm, '2': totalItems | i18nPlural: ('search.title.items.text' | translate) }
+          }}
+        </h1>
+      </div>
+      <camfil-product-listing
+        [id]="{ type: 'search', value: searchTerm }"
+        fragmentOnRouting="search-page-top"
+      ></camfil-product-listing>
+    </div>
+  </div>
+</div>

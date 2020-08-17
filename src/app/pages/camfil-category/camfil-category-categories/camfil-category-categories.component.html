@@ -1,0 +1,27 @@
+<div class="category-page box-shadow" [attr.data-testing-id]="category.uniqueId">
+  <div class="row">
+    <div class="col-12">
+      <camfil-breadcrumb></camfil-breadcrumb>
+    </div>
+  </div>
+  <div class="row no-gutters">
+    <aside class="col-md-3 sidebar">
+      <div class="sidebar--container">
+        <div [ngbCollapse]="isCollapsed">
+          <camfil-category-navigation [uniqueId]="category.categoryPath[0]"></camfil-category-navigation>
+        </div>
+        <a class="d-md-none mobile-filter-toggle" (click)="toggle()">
+          {{ 'search.mobile.filter.trigger' | translate }}
+          <fa-icon [icon]="['fas', isCollapsed ? 'angle-down' : 'angle-up']"></fa-icon>
+        </a>
+      </div>
+    </aside>
+
+    <div class="col-md-9">
+      <div class="col-12 box-shadow box-container">
+        <h1>{{ category.name }}</h1>
+      </div>
+      <ish-category-list [categories]="category.children"></ish-category-list>
+    </div>
+  </div>
+</div>

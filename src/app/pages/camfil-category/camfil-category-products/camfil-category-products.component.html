@@ -9,11 +9,11 @@
     </div>
   </div>
   <div class="row no-gutters">
-    <div class="col-md-3 navigation-panel">
+    <aside class="col-md-3 sidebar">
       <mat-toolbar color="primary">
         <span>My sidebar</span>
       </mat-toolbar>
-      <div class="navigation-panel--container">
+      <div class="sidebar--container">
         <div class="" [ngbCollapse]="isCollapsed">
           <camfil-category-navigation [uniqueId]="category.categoryPath[0]"></camfil-category-navigation>
           <br />
@@ -24,7 +24,7 @@
           <fa-icon [icon]="['fas', isCollapsed ? 'angle-down' : 'angle-up']"></fa-icon>
         </a>
       </div>
-    </div>
+    </aside>
     <div class="col-md-9">
       <div class="col-12 box-shadow box-container">
         <div class="row">

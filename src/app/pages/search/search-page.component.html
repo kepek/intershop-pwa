@@ -1,11 +1,11 @@
 <ng-container *ngIf="searchTerm$ | async as searchTerm">
   <!-- search result with products -->
   <ng-container *ngIf="(numberOfItems$ | async) || (filterParams$ | async); else noResult">
-    <ish-search-result
+    <camfil-search-result
       [searchTerm]="searchTerm"
       [totalItems]="numberOfItems$ | async"
       [deviceType]="deviceType$ | async"
-    ></ish-search-result>
+    ></camfil-search-result>
   </ng-container>
 
   <!-- empty search result -->

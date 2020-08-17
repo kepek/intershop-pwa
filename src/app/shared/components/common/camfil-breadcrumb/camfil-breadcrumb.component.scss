@@ -2,19 +2,20 @@
 @import '~src/styles/themes/camfil/variables';
 
 .breadcrumbs {
-  background-color: $breadcrumbs-bg;
-  padding: $space-default;
+  padding: $space-sm $space-default;
   overflow: hidden;
+  background-color: $breadcrumbs-bg;
 
   &-list {
-    text-transform: none;
     color: $text-color-quarternary;
+    text-transform: none;
 
     &-link {
-      color: $text-color-primary;
       font-weight: 600;
+      color: $text-color-primary;
     }
     &-separator {
+      margin: 0 10px;
       color: $text-color-primary;
     }
   }
