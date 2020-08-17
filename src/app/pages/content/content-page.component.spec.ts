@@ -9,7 +9,7 @@ import { CMSFacade } from 'ish-core/facades/cms.facade';
 import { createContentPageletEntryPointView } from 'ish-core/models/content-view/content-view.model';
 import { findAllIshElements } from 'ish-core/utils/dev/html-query-utils';
 import { ContentPageletComponent } from 'ish-shared/cms/components/content-pagelet/content-pagelet.component';
-import { BreadcrumbComponent } from 'ish-shared/components/common/breadcrumb/breadcrumb.component';
+import { CamfilBreadcrumbComponent } from 'ish-shared/components/common/camfil-breadcrumb/camfil-breadcrumb.component';
 import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
 
 import { ContentPageComponent } from './content-page.component';
@@ -37,7 +37,7 @@ describe('Content Page Component', () => {
     TestBed.configureTestingModule({
       declarations: [
         ContentPageComponent,
-        MockComponent(BreadcrumbComponent),
+        MockComponent(CamfilBreadcrumbComponent),
         MockComponent(ContentPageletComponent),
         MockComponent(LoadingComponent),
       ],
@@ -75,7 +75,7 @@ describe('Content Page Component', () => {
 
     expect(findAllIshElements(element)).toMatchInlineSnapshot(`
       Array [
-        "ish-breadcrumb",
+        "camfil-breadcrumb",
         "ish-content-pagelet",
       ]
     `);

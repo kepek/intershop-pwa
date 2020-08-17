@@ -12,7 +12,7 @@ const routes: Routes = [
   },
   {
     matcher: matchCategoryRoute,
-    loadChildren: () => import('./category/category-page.module').then(m => m.CategoryPageModule),
+    loadChildren: () => import('./camfil-category/camfil-category-page.module').then(m => m.CamfilCategoryPageModule),
   },
   { path: '**', children: [], canActivate: [NotFoundStatusGuard] },
 ];

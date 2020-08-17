@@ -54,7 +54,6 @@ import { BasketInvoiceAddressWidgetComponent } from './components/checkout/baske
 import { BasketShippingAddressWidgetComponent } from './components/checkout/basket-shipping-address-widget/basket-shipping-address-widget.component';
 import { AccordionItemComponent } from './components/common/accordion-item/accordion-item.component';
 import { AccordionComponent } from './components/common/accordion/accordion.component';
-import { BreadcrumbComponent } from './components/common/breadcrumb/breadcrumb.component';
 import { ErrorMessageComponent } from './components/common/error-message/error-message.component';
 import { InfoBoxComponent } from './components/common/info-box/info-box.component';
 import { LoadingComponent } from './components/common/loading/loading.component';
@@ -84,9 +83,7 @@ import { ProductInventoryComponent } from './components/product/product-inventor
 import { ProductItemComponent } from './components/product/product-item/product-item.component';
 import { ProductLabelComponent } from './components/product/product-label/product-label.component';
 import { ProductListPagingComponent } from './components/product/product-list-paging/product-list-paging.component';
-import { ProductListToolbarComponent } from './components/product/product-list-toolbar/product-list-toolbar.component';
 import { ProductListComponent } from './components/product/product-list/product-list.component';
-import { ProductListingComponent } from './components/product/product-listing/product-listing.component';
 import { ProductPriceComponent } from './components/product/product-price/product-price.component';
 import { ProductPromotionComponent } from './components/product/product-promotion/product-promotion.component';
 import { ProductQuantityComponent } from './components/product/product-quantity/product-quantity.component';
@@ -102,6 +99,22 @@ import { PromotionRemoveComponent } from './components/promotion/promotion-remov
 import { RecentlyViewedComponent } from './components/recently/recently-viewed/recently-viewed.component';
 import { FormsDynamicModule } from './forms-dynamic/forms-dynamic.module';
 import { FormsSharedModule } from './forms/forms.module';
+
+import { CamfilProductListToolbarComponent } from './components/product/camfil-product-list-toolbar/camfil-product-list-toolbar.component';
+import { CamfilProductListingComponent } from './components/product/camfil-product-listing/camfil-product-listing.component';
+import { CamfilFilterAppliedComponent } from './components/filter/camfil-filter-applied/camfil-filter-applied.component';
+import { CamfilBreadcrumbComponent } from './components/common/camfil-breadcrumb/camfil-breadcrumb.component';
+
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSliderModule } from '@angular/material/slider';
+import { MatSortModule } from '@angular/material/sort';
+import { MatTableModule } from '@angular/material/table';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 const importExportModules = [
   AddressFormsSharedModule,
@@ -126,6 +139,18 @@ const importExportModules = [
   ShellModule,
   SwiperModule,
   TranslateModule,
+  MatButtonModule,
+  MatCardModule,
+  MatCheckboxModule,
+  MatChipsModule,
+  MatDividerModule,
+  MatIconModule,
+  MatSliderModule,
+  MatSortModule,
+  MatTableModule,
+  MatChipsModule,
+  MatIconModule,
+  MatToolbarModule,
 ];
 
 const declaredComponents = [
@@ -160,7 +185,7 @@ const declaredComponents = [
   ProductLabelComponent,
   ProductListComponent,
   ProductListPagingComponent,
-  ProductListToolbarComponent,
+  CamfilProductListToolbarComponent,
   ProductRatingStarComponent,
   ProductRowComponent,
   ProductTileComponent,
@@ -179,7 +204,7 @@ const exportedComponents = [
   BasketPromotionComponent,
   BasketShippingAddressWidgetComponent,
   BasketValidationResultsComponent,
-  BreadcrumbComponent,
+  CamfilBreadcrumbComponent,
   ContentIncludeComponent,
   ContentPageletComponent,
   ErrorMessageComponent,
@@ -200,7 +225,7 @@ const exportedComponents = [
   ProductInventoryComponent,
   ProductItemComponent,
   ProductLabelComponent,
-  ProductListingComponent,
+  CamfilProductListingComponent,
   ProductPriceComponent,
   ProductPromotionComponent,
   ProductQuantityComponent,
@@ -215,7 +240,7 @@ const exportedComponents = [
 
 @NgModule({
   imports: [...importExportModules],
-  declarations: [...declaredComponents, ...exportedComponents],
+  declarations: [...declaredComponents, ...exportedComponents, CamfilFilterAppliedComponent],
   exports: [...exportedComponents, ...importExportModules],
 })
 export class SharedModule {}

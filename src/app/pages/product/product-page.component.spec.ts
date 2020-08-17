@@ -23,7 +23,7 @@ import { Product, ProductCompletenessLevel } from 'ish-core/models/product/produ
 import { ProductRoutePipe } from 'ish-core/routing/product/product-route.pipe';
 import { findAllIshElements } from 'ish-core/utils/dev/html-query-utils';
 import { categoryTree } from 'ish-core/utils/dev/test-data-utils';
-import { BreadcrumbComponent } from 'ish-shared/components/common/breadcrumb/breadcrumb.component';
+import { CamfilBreadcrumbComponent } from 'ish-shared/components/common/camfil-breadcrumb/camfil-breadcrumb.component';
 import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
 import { RecentlyViewedComponent } from 'ish-shared/components/recently/recently-viewed/recently-viewed.component';
 
@@ -54,7 +54,7 @@ describe('Product Page Component', () => {
         RouterTestingModule.withRoutes([{ path: '**', component: ProductPageComponent }]),
       ],
       declarations: [
-        MockComponent(BreadcrumbComponent),
+        MockComponent(CamfilBreadcrumbComponent),
         MockComponent(LoadingComponent),
         MockComponent(ProductBundlePartsComponent),
         MockComponent(ProductDetailComponent),
@@ -97,7 +97,7 @@ describe('Product Page Component', () => {
     fixture.detectChanges();
 
     expect(findAllIshElements(element)).toEqual([
-      'ish-breadcrumb',
+      'camfil-breadcrumb',
       'ish-product-detail',
       'ish-product-links',
       'ish-recently-viewed',

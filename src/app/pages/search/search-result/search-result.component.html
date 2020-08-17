@@ -10,16 +10,16 @@
   </div>
 
   <div class="col-md-9">
-    <ish-breadcrumb></ish-breadcrumb>
+    <camfil-breadcrumb></camfil-breadcrumb>
     <h1>
       {{
         'search.title.text'
           | translate: { '1': searchTerm, '2': totalItems | i18nPlural: ('search.title.items.text' | translate) }
       }}
     </h1>
-    <ish-product-listing
+    <camfil-product-listing
       [id]="{ type: 'search', value: searchTerm }"
       fragmentOnRouting="search-page-top"
-    ></ish-product-listing>
+    ></camfil-product-listing>
   </div>
 </div>

@@ -1,0 +1,13 @@
+.read-more {
+  font-weight: 600;
+}
+
+.box {
+  &-container {
+    padding: $space-default $space-default $space-sm;
+  }
+  &-shadow {
+    box-shadow: $main-box-shadow;
+    overflow: hidden;
+  }
+}

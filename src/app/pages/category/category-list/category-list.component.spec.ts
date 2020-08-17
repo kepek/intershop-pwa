@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MockComponent } from 'ng-mocks';
 
-import { CategoryTileComponent } from '../category-tile/category-tile.component';
+import { CamfilCategoryTileComponent } from '../camfil-category-tile/camfil-category-tile.component';
 
 import { CategoryListComponent } from './category-list.component';
 
@@ -14,7 +14,7 @@ describe('Category List Component', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [RouterTestingModule],
-      declarations: [CategoryListComponent, MockComponent(CategoryTileComponent)],
+      declarations: [CategoryListComponent, MockComponent(CamfilCategoryTileComponent)],
     }).compileComponents();
   }));
 
@@ -32,10 +32,10 @@ describe('Category List Component', () => {
     expect(element).toMatchInlineSnapshot(`
       <ul class="category-list row">
         <li class="category-list-item col-6 col-lg-4">
-          <ish-category-tile ng-reflect-category-unique-id="uid1"></ish-category-tile>
+          <camfil-category-tile ng-reflect-category-unique-id="uid1"></camfil-category-tile>
         </li>
         <li class="category-list-item col-6 col-lg-4">
-          <ish-category-tile ng-reflect-category-unique-id="uid2"></ish-category-tile>
+          <camfil-category-tile ng-reflect-category-unique-id="uid2"></camfil-category-tile>
         </li>
       </ul>
     `);

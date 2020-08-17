@@ -8,11 +8,11 @@ import { createCategoryView } from 'ish-core/models/category-view/category-view.
 import { Category } from 'ish-core/models/category/category.model';
 import { findAllIshElements } from 'ish-core/utils/dev/html-query-utils';
 import { categoryTree } from 'ish-core/utils/dev/test-data-utils';
-import { BreadcrumbComponent } from 'ish-shared/components/common/breadcrumb/breadcrumb.component';
+import { CamfilBreadcrumbComponent } from 'ish-shared/components/common/camfil-breadcrumb/camfil-breadcrumb.component';
 import { FilterNavigationComponent } from 'ish-shared/components/filter/filter-navigation/filter-navigation.component';
-import { ProductListingComponent } from 'ish-shared/components/product/product-listing/product-listing.component';
+import { CamfilProductListingComponent } from 'ish-shared/components/product/camfil-product-listing/camfil-product-listing.component';
 
-import { CategoryNavigationComponent } from '../category-navigation/category-navigation.component';
+import { CamfilCategoryNavigationComponent } from '../../camfil-category/camfil-category-navigation/camfil-category-navigation.component';
 
 import { CategoryProductsComponent } from './category-products.component';
 
@@ -26,12 +26,12 @@ describe('Category Products Component', () => {
       imports: [TranslateModule.forRoot()],
       declarations: [
         CategoryProductsComponent,
-        MockComponent(BreadcrumbComponent),
-        MockComponent(CategoryNavigationComponent),
+        MockComponent(CamfilBreadcrumbComponent),
+        MockComponent(CamfilCategoryNavigationComponent),
         MockComponent(FaIconComponent),
         MockComponent(FilterNavigationComponent),
         MockComponent(NgbCollapse),
-        MockComponent(ProductListingComponent),
+        MockComponent(CamfilProductListingComponent),
       ],
     }).compileComponents();
   }));
@@ -52,8 +52,8 @@ describe('Category Products Component', () => {
 
   it('should display all components on the page', () => {
     expect(findAllIshElements(element)).toIncludeAllMembers([
-      'ish-breadcrumb',
-      'ish-product-listing',
+      'camfil-breadcrumb',
+      'camfil-product-listing',
       'ish-filter-navigation',
     ]);
   });

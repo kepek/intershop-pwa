@@ -5,7 +5,7 @@ import { MockComponent } from 'ng-mocks';
 
 import { VariationProductMasterView } from 'ish-core/models/product-view/product-view.model';
 import { FilterNavigationComponent } from 'ish-shared/components/filter/filter-navigation/filter-navigation.component';
-import { ProductListingComponent } from 'ish-shared/components/product/product-listing/product-listing.component';
+import { CamfilProductListingComponent } from 'ish-shared/components/product/camfil-product-listing/camfil-product-listing.component';
 
 import { ProductMasterVariationsComponent } from './product-master-variations.component';
 
@@ -19,7 +19,7 @@ describe('Product Master Variations Component', () => {
       imports: [RouterTestingModule],
       declarations: [
         MockComponent(FilterNavigationComponent),
-        MockComponent(ProductListingComponent),
+        MockComponent(CamfilProductListingComponent),
         ProductMasterVariationsComponent,
       ],
     }).compileComponents();
@@ -43,19 +43,19 @@ describe('Product Master Variations Component', () => {
         orientation="horizontal"
         ng-reflect-orientation="horizontal"
       ></ish-filter-navigation
-      ><ish-product-listing
+      ><camfil-product-listing
         fragmentonrouting="variation-list-top"
         mode="paging"
         ng-reflect-mode="paging"
         ng-reflect-fragment-on-routing="variation-list-top"
-      ></ish-product-listing>
+      ></camfil-product-listing>
     `);
   });
 
   it('should set the correct id for the underlying product list', () => {
     fixture.detectChanges();
-    const productList = fixture.debugElement.query(By.css('ish-product-listing'))
-      .componentInstance as ProductListingComponent;
+    const productList = fixture.debugElement.query(By.css('camfil-product-listing'))
+      .componentInstance as CamfilProductListingComponent;
 
     expect(productList.id).toMatchInlineSnapshot(`
       Object {

@@ -13,7 +13,7 @@ import { LoadingComponent } from 'ish-shared/components/common/loading/loading.c
 
 import { CategoryCategoriesComponent } from './category-categories/category-categories.component';
 import { CategoryPageComponent } from './category-page.component';
-import { CategoryProductsComponent } from './category-products/category-products.component';
+import { CamfilCategoryProductsComponent } from '../camfil-category/camfil-category-products/camfil-category-products.component';
 
 describe('Category Page Component', () => {
   let component: CategoryPageComponent;
@@ -27,7 +27,7 @@ describe('Category Page Component', () => {
       declarations: [
         CategoryPageComponent,
         MockComponent(CategoryCategoriesComponent),
-        MockComponent(CategoryProductsComponent),
+        MockComponent(CamfilCategoryProductsComponent),
         MockComponent(LoadingComponent),
       ],
       providers: [
@@ -76,6 +76,6 @@ describe('Category Page Component', () => {
     );
 
     fixture.detectChanges();
-    expect(findAllIshElements(element)).toEqual(['ish-category-products']);
+    expect(findAllIshElements(element)).toEqual(['camfil-category-products']);
   });
 });
