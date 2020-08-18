@@ -37,7 +37,6 @@
       "skipFiles": ["<node_internals>/**"],
       "type": "pwa-node",
       "env": {
-        "NODE_OPTIONS": "--max_old_space_size=8192",
         "PORT": "4200",
         "LOGGING": "true",
         "PROXY_ICM": "true",
@@ -57,7 +56,6 @@
       "skipFiles": ["<node_internals>/**"],
       "type": "pwa-node",
       "env": {
-        "NODE_OPTIONS": "--max_old_space_size=8192",
         "PORT": "4200",
         "LOGGING": "true",
         "PROXY_ICM": "true",
