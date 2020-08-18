@@ -1,0 +1,18 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Develop Local" type="js.build_tools.npm">
+    <package-json value="$PROJECT_DIR$/package.json" />
+    <command value="run" />
+    <scripts>
+      <script value="dev:local" />
+    </scripts>
+    <node-interpreter value="project" />
+    <envs>
+      <env name="PORT" value="4200" />
+      <env name="LOGGING" value="true" />
+      <env name="PROXY_ICM" value="true" />
+      <env name="TRUST_ICM" value="true" />
+      <env name="SSR_HYBRID" value="true" />
+    </envs>
+    <method v="2" />
+  </configuration>
+</component>
