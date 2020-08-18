@@ -91,7 +91,7 @@
     "ngx-swiper-wrapper": "^9.0.1",
     "ngx-toastr": "^13.0.0",
     "ngx-utils-cookies-port": "^1.0.1",
-    "rxjs": "~6.6.0",
+    "rxjs": "~6.6.2",
     "tslib": "^2.0.0",
     "typeface-roboto": "0.0.75",
     "typeface-roboto-condensed": "0.0.75",
