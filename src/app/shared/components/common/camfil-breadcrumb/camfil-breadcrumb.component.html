@@ -4,13 +4,13 @@
       <a class="breadcrumbs-list-link breadcrumbs-list-link-home" rel="home" routerLink="/home">{{
         'camfil.common.home.link' | translate
       }}</a
-      ><span class="breadcrumb-list-separator">{{ separator }}</span>
+      ><span class="breadcrumbs-list-separator">{{ separator }}</span>
     </li>
 
     <li *ngIf="account" class="breadcrumbs-list">
       <ng-container *ngIf="(trail$ | async)?.length; else AccountOverview">
         <a class="breadcrumbs-list-link" routerLink="/account">{{ 'account.my_account.link' | translate }}</a
-        ><span class="breadcrumb-list-separator">{{ separator }}</span>
+        ><span class="breadcrumbs-list-separator">{{ separator }}</span>
       </ng-container>
       <ng-template #AccountOverview>
         {{ 'account.my_account.link' | translate }}
@@ -26,7 +26,7 @@
         item.text || (item.key | translate)
       }}</a>
       <ng-template #noLink>{{ item.text || (item.key | translate) }}</ng-template>
-      <span *ngIf="!last" class="breadcrumb-list-separator">{{ separator }}</span>
+      <span *ngIf="!last" class="breadcrumbs-list-separator">{{ separator }}</span>
     </li>
   </ol>
 </div>

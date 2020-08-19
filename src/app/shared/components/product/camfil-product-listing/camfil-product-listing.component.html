@@ -13,7 +13,7 @@
       [sortKeys]="listing.sortKeys"
       [viewType]="viewType$ | async"
       [sortBy]="sortBy$ | async"
-      [categoryName]="category.name"
+      [categoryName]="category ? category.name : null"
       [fragmentOnRouting]="fragmentOnRouting"
     ></camfil-product-list-toolbar>
 

@@ -11,7 +11,7 @@ import { CamfilBreadcrumbComponent } from 'ish-shared/components/common/camfil-b
 
 import { SearchNoResultComponent } from './search-no-result/search-no-result.component';
 import { SearchPageComponent } from './search-page.component';
-import { SearchResultComponent } from './search-result/search-result.component';
+import { CamfilSearchResultComponent } from './camfil-search-result/camfil-search-result.component';
 
 describe('Search Page Component', () => {
   let component: SearchPageComponent;
@@ -28,7 +28,7 @@ describe('Search Page Component', () => {
       declarations: [
         MockComponent(CamfilBreadcrumbComponent),
         MockComponent(SearchNoResultComponent),
-        MockComponent(SearchResultComponent),
+        MockComponent(CamfilSearchResultComponent),
         SearchPageComponent,
       ],
       providers: [
@@ -71,7 +71,7 @@ describe('Search Page Component', () => {
 
     expect(findAllIshElements(element)).toMatchInlineSnapshot(`
       Array [
-        "ish-search-result",
+        "camfil-search-result",
       ]
     `);
   });

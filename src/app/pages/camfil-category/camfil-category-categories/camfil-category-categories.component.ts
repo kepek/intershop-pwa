@@ -5,14 +5,11 @@ import { CategoryView } from 'ish-core/models/category-view/category-view.model'
 import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
 
 @Component({
-  selector: 'camfil-category-products',
-  templateUrl: './camfil-category-products.component.html',
+  selector: 'camfil-category-categories',
+  templateUrl: './camfil-category-categories.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CamfilCategoryProductsComponent implements OnInit, OnChanges {
-  /**
-   * The the category leading to the displayed result.
-   */
+export class CamfilCategoryCategoriesComponent implements OnInit, OnChanges {
   @Input() category: CategoryView;
   @Input() deviceType: DeviceType;
 

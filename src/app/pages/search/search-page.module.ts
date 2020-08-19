@@ -5,6 +5,7 @@ import { SharedModule } from 'ish-shared/shared.module';
 
 import { SearchNoResultComponent } from './search-no-result/search-no-result.component';
 import { SearchPageComponent } from './search-page.component';
+import { CamfilSearchResultComponent } from './camfil-search-result/camfil-search-result.component';
 import { SearchResultComponent } from './search-result/search-result.component';
 
 const searchPageRoutes: Routes = [
@@ -16,6 +17,6 @@ const searchPageRoutes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forChild(searchPageRoutes), SharedModule],
-  declarations: [SearchNoResultComponent, SearchPageComponent, SearchResultComponent],
+  declarations: [SearchNoResultComponent, SearchPageComponent, CamfilSearchResultComponent, SearchResultComponent],
 })
 export class SearchPageModule {}

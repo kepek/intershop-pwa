@@ -11,7 +11,7 @@ import { findAllIshElements } from 'ish-core/utils/dev/html-query-utils';
 import { categoryTree } from 'ish-core/utils/dev/test-data-utils';
 import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
 
-import { CategoryCategoriesComponent } from '../category/category-categories/category-categories.component';
+import { CamfilCategoryCategoriesComponent } from './camfil-category-categories/camfil-category-categories.component';
 import { CategoryPageComponent } from './camfil-category-page.component';
 import { CamfilCategoryProductsComponent } from './camfil-category-products/camfil-category-products.component';
 
@@ -26,7 +26,7 @@ describe('Category Page Component', () => {
     TestBed.configureTestingModule({
       declarations: [
         CategoryPageComponent,
-        MockComponent(CategoryCategoriesComponent),
+        MockComponent(CamfilCategoryCategoriesComponent),
         MockComponent(CamfilCategoryProductsComponent),
         MockComponent(LoadingComponent),
       ],
@@ -64,7 +64,7 @@ describe('Category Page Component', () => {
     );
 
     fixture.detectChanges();
-    expect(findAllIshElements(element)).toEqual(['ish-category-categories']);
+    expect(findAllIshElements(element)).toEqual(['camfil-category-categories']);
   });
 
   it('should display products when category has products', () => {

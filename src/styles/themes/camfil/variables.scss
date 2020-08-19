@@ -16,6 +16,10 @@ $logo-mobile: url('/assets/themes/camfil/img/logo_mobile.png');
 $logo-mobile-width: 41px;
 $logo-mobile-height: 41px;
 
+// General variables
+$cover-index: 5;
+$cover-index-header: $cover-index * 2;
+
 // General adjustment variables
 $default-color-adjust: 10%;
 
@@ -113,6 +117,7 @@ $toggler-width: 64px;
 // Header
 $top-header-height: 40px;
 $header-height-mobile: 55px;
+$header-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 2px 1px -1px rgba(0, 0, 0, 0.12), 0 1px 3px 0 rgba(0, 0, 0, 0.2);
 
 //search container
 $search-container-height: 38px;
@@ -126,8 +131,7 @@ $font-size-navbar-item-mobile: $font-size-corporate * 1.14; // ~16px
 $font-size-menu-item-mobile: $font-size-corporate; // ~14px
 $font-size-sub-menu-item-mobile: $font-size-corporate; // ~14px
 
-$navigation-panel-index: 2;
-$navigation-panel-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.37);
+$sidebar-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.37);
 
 // filter
 $swatch-image-diameter: 28px;
@@ -288,6 +292,7 @@ $close-text-shadow: none;
 
 // Main box
 $main-box-shadow: 0 2px 2px 0 rgb(0, 0, 0, 0.14), 0 3px 1px -2px rgb(0, 0, 0, 0.12);
+$main-box-margin: 3px;
 
 ///////////////////////////////////////////////////////////////////////////////
 //

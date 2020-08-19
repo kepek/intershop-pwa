@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { SharedModule } from 'ish-shared/shared.module';
 
-import { CategoryCategoriesComponent } from './category-categories/category-categories.component';
+import { CamfilCategoryCategoriesComponent } from '../camfil-category/camfil-category-categories/camfil-category-categories.component';
 import { CategoryImageComponent } from './category-image/category-image.component';
 import { CategoryListComponent } from './category-list/category-list.component';
 import { CamfilCategoryNavigationComponent } from '../camfil-category/camfil-category-navigation/camfil-category-navigation.component';
@@ -13,6 +13,7 @@ import { CamfilCategoryTileComponent } from '../camfil-category/camfil-category-
 import { CategoryTileComponent } from './category-tile/category-tile.component';
 import { CategoryProductsComponent } from './category-products/category-products.component';
 import { CategoryNavigationComponent } from './category-navigation/category-navigation.component';
+import { CategoryCategoriesComponent } from './category-categories/category-categories.component';
 
 const categoryPageRoutes: Routes = [
   {
@@ -26,7 +27,7 @@ const categoryPageRoutes: Routes = [
 @NgModule({
   imports: [RouterModule.forChild(categoryPageRoutes), SharedModule],
   declarations: [
-    CategoryCategoriesComponent,
+    CamfilCategoryCategoriesComponent,
     CategoryImageComponent,
     CategoryListComponent,
     CamfilCategoryNavigationComponent,
@@ -36,6 +37,7 @@ const categoryPageRoutes: Routes = [
     CategoryTileComponent,
     CategoryProductsComponent,
     CategoryNavigationComponent,
+    CategoryCategoriesComponent,
   ],
 })
 export class CategoryPageModule {}
