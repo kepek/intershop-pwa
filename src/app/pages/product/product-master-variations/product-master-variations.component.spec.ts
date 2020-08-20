@@ -20,7 +20,6 @@ describe('Product Master Variations Component', () => {
       declarations: [
         MockComponent(CamfilFilterNavigationComponent),
         MockComponent(CamfilProductListingComponent),
-        MockComponent(FilterNavigationComponent),
         ProductMasterVariationsComponent,
       ],
     }).compileComponents();

@@ -264,3 +264,11 @@ button {
     font-weight: 700;
   }
 }
+
+.mat-read-more {
+  .mat-expansion-panel {
+    &-body {
+      padding: 0;
+    }
+  }
+}

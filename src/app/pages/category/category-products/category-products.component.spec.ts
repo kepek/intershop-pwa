@@ -52,7 +52,10 @@ describe('Category Products Component', () => {
   });
 
   it('should display all components on the page', () => {
-    expect(findAllCamfilElements(element)).toIncludeAllMembers(['camfil-breadcrumb', 'camfil-product-listing']);
-    expect(findAllIshElements(element)).toIncludeAllMembers(['ish-filter-navigation']);
+    expect(findAllCamfilElements(element)).toIncludeAllMembers([
+      'camfil-breadcrumb',
+      'camfil-product-listing',
+      'camfil-filter-navigation',
+    ]);
   });
 });

@@ -1,8 +1,71 @@
-.filters-row {
-  margin: 0;
-  background-color: transparent;
+@import '~src/styles/themes/camfil/colors';
+@import '~src/styles/themes/camfil/variables';
 
-  .filters-row + & {
-    padding-top: 0;
+:host ::ng-deep {
+  .filters-row {
+    margin: 0;
+    font-size: $camfil-toolbar-font-size;
+    color: $text-color-tertiary;
+    background-color: transparent;
+
+    & + .filters-row {
+      padding-top: 0;
+    }
+    b,
+    strong {
+      color: $text-color-primary;
+    }
+
+    &__showing {
+      padding-right: $space-default;
+      margin-right: $space-default;
+      border-right: 1px solid $border-color-light;
+    }
+    .sort-by {
+      padding-left: 0;
+      label {
+        margin-right: $space-sm / 2;
+        line-height: inherit;
+      }
+    }
+  }
+  .mat-form-field {
+    width: 100%;
+    letter-spacing: inherit;
+
+    &-wrapper,
+    &-flex {
+      padding: 0;
+      font-weight: 600;
+      background-color: transparent;
+    }
+    &-appearance-fill .mat-form-field-flex {
+      padding: 0;
+    }
+    &-infix {
+      width: 100%;
+      padding: 0;
+      border: none;
+    }
+    &-underline,
+    .mat-form-field-label:not(.mat-form-field-empty) {
+      display: none;
+    }
+    .mat-select-arrow-wrapper {
+      transform: none;
+
+      .mat-select-arrow {
+        color: $text-color-corporate;
+      }
+    }
+    &-label-wrapper {
+      top: -0.9em;
+    }
+  }
+  .mat-radio {
+    &-button {
+      margin-right: 5px;
+      vertical-align: middle;
+    }
   }
 }

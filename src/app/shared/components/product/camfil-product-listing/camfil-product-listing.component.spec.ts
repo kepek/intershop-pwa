@@ -113,13 +113,11 @@ describe('Camfil Product Listing Component', () => {
       component.mode = 'paging';
       fixture.detectChanges();
 
-      expect(findAllIshElements(element)).toMatchInlineSnapshot(`Array []`);
       expect(findAllCamfilElements(element)).toMatchInlineSnapshot(`
         Array [
           "camfil-product-list",
           "camfil-product-list-toolbar",
           "camfil-product-list-toolbar",
-          "ish-product-list",
         ]
       `);
     });

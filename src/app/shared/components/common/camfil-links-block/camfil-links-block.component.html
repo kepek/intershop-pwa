@@ -1,0 +1,9 @@
+<strong>
+  {{ title }}
+  <mat-icon aria-hidden="false" aria-label="Example home icon">help_outline</mat-icon>
+</strong>
+<ul class="list-unstyled">
+  <li *ngFor="let link of links">
+    <a target="_blank" href="{{ link.href }}">{{ link.name }}</a>
+  </li>
+</ul>

@@ -1,62 +1,68 @@
 <div class="filters-row row align-items-center">
-  <div class="col-md-7 col-sm-10">
-    <div class="row align-items-center">
-      <div class="col-12">
-        {{ 'camfil.product.items.showing.text' | translate }} <strong>{{ categoryName }}</strong> |
-        <span *ngIf="itemCount >= 0" class="pagination-total text-nowrap">
-          {{ itemCount | i18nPlural: ('camfil.product.items.label' | translate) || { other: '#' } }}
-        </span>
-      </div>
-      <div class="col-12">
-        <ish-product-list-paging
-          *ngIf="pageIndices && pageIndices.length && currentPage"
-          [currentPage]="currentPage"
-          [pageIndices]="pageIndices"
-          [fragmentOnRouting]="fragmentOnRouting"
-        ></ish-product-list-paging>
-      </div>
-    </div>
+  <div class="col-md-5 col-sm-8">
+    <ng-container *ngIf="categoryName">
+      {{ 'camfil.product.items.showing.text' | translate }}
+      <strong class="filters-row__showing">{{ categoryName }}</strong>
+    </ng-container>
+    <span
+      *ngIf="itemCount >= 0"
+      class="pagination-total text-nowrap"
+      [innerHTML]="itemCount | i18nPlural: ('camfil.product.items.label' | translate) || { other: '#' }"
+    ></span>
   </div>
-  <div
-    class="col-4 col-xs-3 col-sm-2 switch-layout"
-    [ngClass]="{ 'col-md-2': sortOptions.length, 'col-md-5': !sortOptions.length }"
-  >
+  <div class="col-5 col-xs-3 switch-layout">
+    <!--
+    [ngClass]="{ 'col-md-5': sortOptions.length, 'col-md-5': !sortOptions.length }"
+  > -->
     <div class="sort-by align-items-center justify-content-end">
-      <a
-        class="simple-view-link"
-        [ngClass]="{ 'simple-active': simpleView }"
-        data-testing-id="simple-view-link"
-        [routerLink]="[]"
-        queryParamsHandling="merge"
-        [queryParams]="{ view: 'simple' }"
-        replaceUrl
-        [fragment]="fragmentOnRouting"
-      >
-        {{ 'camfil.product.list.toolbar.simpleView.text' | translate }}
-      </a>
-      <a
-        class="detailed-view-link"
-        [ngClass]="{ 'detailed-active': simpleView }"
-        data-testing-id="detailed-view-link"
-        [routerLink]="[]"
-        queryParamsHandling="merge"
-        [queryParams]="{ view: 'detailed' }"
-        replaceUrl
-        [fragment]="fragmentOnRouting"
-      >
-        {{ 'camfil.product.list.toolbar.detailedView.text' | translate }}
-      </a>
+      <mat-radio-group aria-label="Select an option">
+        <mat-radio-button
+          value="simple"
+          checked="{{simpleView}}"
+          class="simple-view-link"
+          data-testing-id="simple-view-link"
+          [routerLink]="[]"
+          queryParamsHandling="merge"
+          [queryParams]="{ view: 'simple' }"
+          replaceUrl
+          [fragment]="fragmentOnRouting"
+        >
+          <b>{{ 'camfil.product.list.toolbar.simpleView.text' | translate }}</b>
+        </mat-radio-button>
+        <mat-radio-button
+          value="detailed"
+          checked="{{detailedView}}"
+          class="detailed-view-link"
+          data-testing-id="detailed-view-link"
+          [routerLink]="[]"
+          queryParamsHandling="merge"
+          [queryParams]="{ view: 'detailed' }"
+          replaceUrl
+          [fragment]="fragmentOnRouting"
+        >
+          <b>{{ 'camfil.product.list.toolbar.detailedView.text' | translate }}</b>
+        </mat-radio-button>
+      </mat-radio-group>
+      <span class="text-nowrap">
+        <i class="point point--primary"></i>
+        {{ 'camfil.product.list.toolbar.quickDelivery.text' | translate }}
+      </span>
     </div>
   </div>
-  <div *ngIf="sortOptions.length" class="col-8 col-xs-9 col-sm-12 col-md-3 pull-right sort-by">
-    <select
-      [formControl]="sortDropdown"
-      class="form-control sort-by-filter"
-      id="SortingAttribute"
-      name="SortingAttribute"
-    >
-      <option *ngFor="let o of sortOptions" [value]="o.value">{{ o.label }}</option>
-    </select>
+  <div *ngIf="sortOptions.length" class="col-8 col-xs-9 col-sm-12 col-md-2 pull-right sort-by">
+    <div class="row no-gutters">
+      <div class="col-6">
+        <label>{{ 'product.sorting.label' | translate }}:</label>
+      </div>
+      <div class="col-6">
+        <mat-form-field appearance="fill">
+          <mat-label>{{ 'camfil.product.list.toolbar.choose.option' | translate }}</mat-label>
+          <mat-select [formControl]="sortDropdown" id="SortingAttribute" name="SortingAttribute">
+            <mat-option *ngFor="let o of sortOptions" [value]="o.value">{{ o.label }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
   </div>
 </div>
 <div class="filters-row row">

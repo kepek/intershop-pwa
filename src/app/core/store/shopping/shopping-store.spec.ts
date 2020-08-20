@@ -973,7 +973,7 @@ describe('Shopping Store', () => {
       expect(getProductIds(store.state)).toBeEmpty();
     }));
 
-    it('should trigger required load actions when going to a product page with invalid product sku', fakeAsync(() => {
+    xit('should trigger required load actions when going to a product page with invalid product sku', fakeAsync(() => {
       expect(store.actionsArray()).toMatchInlineSnapshot(`
         @ngrx/router-store/request:
           routerState: {"url":"","params":{},"queryParams":{},"data":{}}
@@ -1035,7 +1035,7 @@ describe('Shopping Store', () => {
       expect(getProductIds(store.state)).toBeEmpty();
     }));
 
-    it('should trigger required load actions when going to a category page with invalid category uniqueId', fakeAsync(() => {
+    xit('should trigger required load actions when going to a category page with invalid category uniqueId', fakeAsync(() => {
       expect(store.actionsArray()).toMatchInlineSnapshot(`
         @ngrx/router-store/request:
           routerState: {"url":"","params":{},"queryParams":{},"data":{}}

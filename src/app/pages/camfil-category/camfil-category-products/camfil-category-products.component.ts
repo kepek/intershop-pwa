@@ -7,6 +7,7 @@ import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
 @Component({
   selector: 'camfil-category-products',
   templateUrl: './camfil-category-products.component.html',
+  styleUrls: ['./camfil-category-products.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CamfilCategoryProductsComponent implements OnInit, OnChanges {
@@ -16,6 +17,10 @@ export class CamfilCategoryProductsComponent implements OnInit, OnChanges {
   @Input() category: CategoryView;
   @Input() deviceType: DeviceType;
 
+  longOpen = false;
+  tmpDescription = `Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Utbeatae perferendis, nobis nulla, tempore facilis qui magni eos voluptate asperiores
+                    libero rerum dicta porro necessitatibus sed ipsam quibusda esse magnam.`;
   isCollapsed = false;
 
   constructor(@Inject(PLATFORM_ID) private platformId: string) {}

@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed, async, fakeAsync, tick } from '@angular/core
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
 import { MockComponent } from 'ng-mocks';
+import { MatIconModule } from '@angular/material/icon';
 
 import { CamfilFilterCollapsableComponent } from './camfil-filter-collapsable.component';
 
@@ -12,7 +13,7 @@ describe('Filter Collapsable Component', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [NgbCollapseModule],
+      imports: [NgbCollapseModule, MatIconModule],
       declarations: [CamfilFilterCollapsableComponent, MockComponent(FaIconComponent)],
     }).compileComponents();
   }));

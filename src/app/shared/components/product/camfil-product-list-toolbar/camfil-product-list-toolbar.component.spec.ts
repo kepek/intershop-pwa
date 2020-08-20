@@ -7,8 +7,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { TranslateModule } from '@ngx-translate/core';
-
-import { CamfilFilterAppliedComponent } from 'ish-shared/components/filter/camfil-filter-applied/camfil-filter-applied.component';
+import { MockComponent } from 'ng-mocks';
+import {MatSelectModule} from '@angular/material/select';
+import {MatRadioModule} from '@angular/material/radio';
 import { ProductListPagingComponent } from 'ish-shared/components/product/product-list-paging/product-list-paging.component';
 
 import { CamfilFilterAppliedComponent } from '../../filter/camfil-filter-applied/camfil-filter-applied.component';
@@ -24,13 +25,11 @@ describe('Camfil Product List Toolbar Component', () => {
     TestBed.configureTestingModule({
       declarations: [
         CamfilProductListToolbarComponent,
-        CamfilFilterAppliedComponent,
-        CamfilProductListToolbarComponent,
         MockComponent(CamfilFilterAppliedComponent),
         MockComponent(FaIconComponent),
         MockComponent(ProductListPagingComponent),
       ],
-      imports: [MatChipsModule, MatIconModule, ReactiveFormsModule, RouterTestingModule, TranslateModule.forRoot()],
+      imports: [MatChipsModule, MatIconModule, ReactiveFormsModule, RouterTestingModule, MatSelectModule, MatRadioModule, TranslateModule.forRoot()],
     }).compileComponents();
   }));
 

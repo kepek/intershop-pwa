@@ -3,7 +3,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { of } from 'rxjs';
 import { instance, mock, when } from 'ts-mockito';
-
+import {MatIconModule} from '@angular/material/icon';
 import { AppFacade } from 'ish-core/facades/app.facade';
 
 import { CamfilBreadcrumbComponent } from './camfil-breadcrumb.component';
@@ -19,7 +19,7 @@ describe('Camfil Breadcrumb Component', () => {
     appFacade = mock(AppFacade);
     TestBed.configureTestingModule({
       declarations: [CamfilBreadcrumbComponent],
-      imports: [RouterTestingModule, TranslateModule.forRoot()],
+      imports: [RouterTestingModule, MatIconModule, TranslateModule.forRoot()],
       providers: [{ provide: AppFacade, useFactory: () => instance(appFacade) }],
     });
     fixture = TestBed.createComponent(CamfilBreadcrumbComponent);
