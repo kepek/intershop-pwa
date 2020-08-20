@@ -5,7 +5,7 @@ import { of } from 'rxjs';
 import { instance, mock, when } from 'ts-mockito';
 
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
-import { ProductItemComponent } from 'ish-shared/components/product/product-item/product-item.component';
+import { CamfilProductItemComponent } from 'ish-shared/components/product/camfil-product-item/camfil-product-item.component';
 
 import { RecentlyViewedComponent } from './recently-viewed.component';
 
@@ -19,7 +19,7 @@ describe('Recently Viewed Component', () => {
     shoppingFacade = mock(ShoppingFacade);
 
     TestBed.configureTestingModule({
-      declarations: [MockComponent(ProductItemComponent), RecentlyViewedComponent],
+      declarations: [MockComponent(CamfilProductItemComponent), RecentlyViewedComponent],
       imports: [TranslateModule.forRoot()],
       providers: [{ provide: ShoppingFacade, useFactory: () => instance(shoppingFacade) }],
     }).compileComponents();
@@ -46,13 +46,13 @@ describe('Recently Viewed Component', () => {
         <h2>recentlyViewed.component.heading</h2>
         <div class="product-list row">
           <div class="col-6 col-lg-3 product-list-item">
-            <ish-product-item ng-reflect-product-sku="A"></ish-product-item>
+            <camfil-product-item ng-reflect-product-sku="A"></camfil-product-item>
           </div>
           <div class="col-6 col-lg-3 product-list-item">
-            <ish-product-item ng-reflect-product-sku="B"></ish-product-item>
+            <camfil-product-item ng-reflect-product-sku="B"></camfil-product-item>
           </div>
           <div class="col-6 col-lg-3 product-list-item">
-            <ish-product-item ng-reflect-product-sku="C"></ish-product-item>
+            <camfil-product-item ng-reflect-product-sku="C"></camfil-product-item>
           </div>
         </div>
         <a class="view-all" data-testing-id="view-all" routerlink="/recently">common.view_all.link</a>

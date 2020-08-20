@@ -7,7 +7,7 @@ import { EMPTY } from 'rxjs';
 import { instance, mock, when } from 'ts-mockito';
 
 import { LARGE_BREAKPOINT_WIDTH } from 'ish-core/configurations/injection-keys';
-import { ProductItemComponent } from 'ish-shared/components/product/product-item/product-item.component';
+import { CamfilProductItemComponent } from 'ish-shared/components/product/camfil-product-item/camfil-product-item.component';
 
 import { WishlistsFacade } from '../../../facades/wishlists.facade';
 
@@ -23,7 +23,7 @@ describe('Wishlist Widget Component', () => {
     when(wishlistFacadeMock.allWishlistsItemsSkus$).thenReturn(EMPTY);
 
     TestBed.configureTestingModule({
-      declarations: [MockComponent(ProductItemComponent), WishlistWidgetComponent],
+      declarations: [MockComponent(CamfilProductItemComponent), WishlistWidgetComponent],
       imports: [RouterTestingModule, SwiperModule, TranslateModule.forRoot()],
       providers: [
         { provide: WishlistsFacade, useFactory: () => instance(wishlistFacadeMock) },

@@ -70,7 +70,6 @@ export class CamfilMiniBasketComponent implements OnInit, OnDestroy {
    */
   toggleCollapse() {
     this.isCollapsed = !this.isCollapsed;
-    console.log(this.itemCount$);
   }
 
   /**

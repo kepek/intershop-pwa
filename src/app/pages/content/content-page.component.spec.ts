@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
+import { findAllCamfilElements } from 'camfil-core/utils/dev/html-query-utils';
 import { MockComponent } from 'ng-mocks';
 import { EMPTY, of } from 'rxjs';
 import { instance, mock, when } from 'ts-mockito';
@@ -75,8 +76,13 @@ describe('Content Page Component', () => {
 
     expect(findAllIshElements(element)).toMatchInlineSnapshot(`
       Array [
-        "camfil-breadcrumb",
         "ish-content-pagelet",
+      ]
+    `);
+
+    expect(findAllCamfilElements(element)).toMatchInlineSnapshot(`
+      Array [
+        "camfil-breadcrumb",
       ]
     `);
 

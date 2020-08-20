@@ -3,7 +3,7 @@ import { MockComponent } from 'ng-mocks';
 import { SwiperModule } from 'ngx-swiper-wrapper';
 
 import { ProductLinkView } from 'ish-core/models/product-links/product-links.model';
-import { ProductItemComponent } from 'ish-shared/components/product/product-item/product-item.component';
+import { CamfilProductItemComponent } from 'ish-shared/components/product/camfil-product-item/camfil-product-item.component';
 
 import { ProductLinksCarouselComponent } from './product-links-carousel.component';
 
@@ -15,7 +15,7 @@ describe('Product Links Carousel Component', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [SwiperModule],
-      declarations: [MockComponent(ProductItemComponent), ProductLinksCarouselComponent],
+      declarations: [MockComponent(CamfilProductItemComponent), ProductLinksCarouselComponent],
     }).compileComponents();
   }));
 

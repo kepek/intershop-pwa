@@ -20,7 +20,7 @@ exports[`Product Links Carousel Component should be created 1`] = `
           "
         >
           <div class="swiper-slide">
-            <ish-product-item ng-reflect-product-sku="sku"></ish-product-item>
+            <camfil-product-item ng-reflect-product-sku="sku"></camfil-product-item>
           </div>
         </div>
         <div class="swiper-scrollbar" hidden=""></div>

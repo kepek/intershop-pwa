@@ -25,7 +25,7 @@ import { SelectOption } from 'ish-shared/forms/components/select/select.componen
 })
 export class CamfilProductListToolbarComponent implements OnInit, OnChanges, OnDestroy {
   @Input() itemCount: number;
-  @Input() viewType: ViewType = 'grid';
+  @Input() viewType: ViewType = 'simple';
   @Input() sortBy = 'default';
   @Input() sortKeys: string[];
   @Input() currentPage: number;
@@ -81,11 +81,11 @@ export class CamfilProductListToolbarComponent implements OnInit, OnChanges, OnD
     return sortKeys.map(sk => ({ value: sk, label: sk }));
   }
 
-  get listView() {
-    return this.viewType === 'list';
+  get simpleView() {
+    return this.viewType === 'simple';
   }
 
-  get gridView() {
-    return !this.listView;
+  get detailedView() {
+    return this.viewType === 'detailed';
   }
 }

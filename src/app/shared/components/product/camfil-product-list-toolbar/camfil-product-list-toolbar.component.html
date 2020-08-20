@@ -23,28 +23,28 @@
   >
     <div class="sort-by align-items-center justify-content-end">
       <a
-        class="list-view-link"
-        [ngClass]="{ 'list-active': listView }"
-        data-testing-id="list-view-link"
+        class="simple-view-link"
+        [ngClass]="{ 'simple-active': simpleView }"
+        data-testing-id="simple-view-link"
         [routerLink]="[]"
         queryParamsHandling="merge"
-        [queryParams]="{ view: 'list' }"
+        [queryParams]="{ view: 'simple' }"
         replaceUrl
         [fragment]="fragmentOnRouting"
       >
-        <fa-icon [icon]="['fas', 'list']"></fa-icon>
+        {{ 'camfil.product.list.toolbar.simpleView.text' | translate }}
       </a>
       <a
-        class="grid-view-link"
-        [ngClass]="{ 'grid-active': gridView }"
-        data-testing-id="grid-view-link"
+        class="detailed-view-link"
+        [ngClass]="{ 'detailed-active': simpleView }"
+        data-testing-id="detailed-view-link"
         [routerLink]="[]"
         queryParamsHandling="merge"
-        [queryParams]="{ view: 'grid' }"
+        [queryParams]="{ view: 'detailed' }"
         replaceUrl
         [fragment]="fragmentOnRouting"
       >
-        <fa-icon [icon]="['fas', 'th']"></fa-icon>
+        {{ 'camfil.product.list.toolbar.detailedView.text' | translate }}
       </a>
     </div>
   </div>

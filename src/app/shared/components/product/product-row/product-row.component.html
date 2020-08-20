@@ -58,11 +58,11 @@
       </div>
 
       <div class="col-12 col-md-5 text-md-right">
-        <ish-product-price
+        <camfil-product-price
           *ngIf="configuration.displayPrice"
           [product]="product"
           [showInformationalPrice]="true"
-        ></ish-product-price>
+        ></camfil-product-price>
         <ish-product-inventory
           *ngIf="configuration.displayInventory && !isMasterProduct(product)"
           [product]="product"

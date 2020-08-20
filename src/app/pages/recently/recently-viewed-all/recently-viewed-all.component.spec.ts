@@ -3,7 +3,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MockComponent } from 'ng-mocks';
 
 import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
-import { ProductItemComponent } from 'ish-shared/components/product/product-item/product-item.component';
+import { CamfilProductItemComponent } from 'ish-shared/components/product/camfil-product-item/camfil-product-item.component';
 
 import { RecentlyViewedAllComponent } from './recently-viewed-all.component';
 
@@ -14,7 +14,11 @@ describe('Recently Viewed All Component', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [MockComponent(LoadingComponent), MockComponent(ProductItemComponent), RecentlyViewedAllComponent],
+      declarations: [
+        MockComponent(CamfilProductItemComponent),
+        MockComponent(LoadingComponent),
+        RecentlyViewedAllComponent,
+      ],
       imports: [TranslateModule.forRoot()],
     }).compileComponents();
   }));

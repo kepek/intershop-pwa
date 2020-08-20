@@ -18,8 +18,8 @@ describe('Product Master Variations Component', () => {
     TestBed.configureTestingModule({
       imports: [RouterTestingModule],
       declarations: [
-        MockComponent(FilterNavigationComponent),
         MockComponent(CamfilProductListingComponent),
+        MockComponent(FilterNavigationComponent),
         ProductMasterVariationsComponent,
       ],
     }).compileComponents();

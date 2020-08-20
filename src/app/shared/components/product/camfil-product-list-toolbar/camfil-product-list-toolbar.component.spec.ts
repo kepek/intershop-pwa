@@ -5,11 +5,12 @@ import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { TranslateModule } from '@ngx-translate/core';
 import { MockComponent } from 'ng-mocks';
 
+import { CamfilFilterAppliedComponent } from 'ish-shared/components/filter/camfil-filter-applied/camfil-filter-applied.component';
 import { ProductListPagingComponent } from 'ish-shared/components/product/product-list-paging/product-list-paging.component';
 
 import { CamfilProductListToolbarComponent } from './camfil-product-list-toolbar.component';
 
-describe('Product List Toolbar Component', () => {
+describe('Camfil Product List Toolbar Component', () => {
   let component: CamfilProductListToolbarComponent;
   let fixture: ComponentFixture<CamfilProductListToolbarComponent>;
   let element: HTMLElement;
@@ -17,9 +18,10 @@ describe('Product List Toolbar Component', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
+        CamfilProductListToolbarComponent,
+        MockComponent(CamfilFilterAppliedComponent),
         MockComponent(FaIconComponent),
         MockComponent(ProductListPagingComponent),
-        CamfilProductListToolbarComponent,
       ],
       imports: [ReactiveFormsModule, RouterTestingModule, TranslateModule.forRoot()],
     }).compileComponents();

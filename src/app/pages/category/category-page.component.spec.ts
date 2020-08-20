@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { findAllCamfilElements } from 'camfil-core/utils/dev/html-query-utils';
 import { MockComponent } from 'ng-mocks';
 import { of } from 'rxjs';
 import { instance, mock, when } from 'ts-mockito';
@@ -12,8 +13,10 @@ import { categoryTree } from 'ish-core/utils/dev/test-data-utils';
 import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
 
 import { CamfilCategoryCategoriesComponent } from '../camfil-category/camfil-category-categories/camfil-category-categories.component';
-import { CategoryPageComponent } from './category-page.component';
 import { CamfilCategoryProductsComponent } from '../camfil-category/camfil-category-products/camfil-category-products.component';
+
+import { CategoryCategoriesComponent } from './category-categories/category-categories.component';
+import { CategoryPageComponent } from './category-page.component';
 
 describe('Category Page Component', () => {
   let component: CategoryPageComponent;
@@ -28,6 +31,7 @@ describe('Category Page Component', () => {
         CategoryPageComponent,
         MockComponent(CamfilCategoryCategoriesComponent),
         MockComponent(CamfilCategoryProductsComponent),
+        MockComponent(CategoryCategoriesComponent),
         MockComponent(LoadingComponent),
       ],
       providers: [
@@ -64,7 +68,7 @@ describe('Category Page Component', () => {
     );
 
     fixture.detectChanges();
-    expect(findAllIshElements(element)).toEqual(['camfil-category-categories']);
+    expect(findAllCamfilElements(element)).toEqual(['camfil-category-categories']);
   });
 
   it('should display products when category has products', () => {
@@ -76,6 +80,6 @@ describe('Category Page Component', () => {
     );
 
     fixture.detectChanges();
-    expect(findAllIshElements(element)).toEqual(['camfil-category-products']);
+    expect(findAllCamfilElements(element)).toEqual(['camfil-category-products']);
   });
 });

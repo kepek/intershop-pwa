@@ -143,8 +143,7 @@ const routes: Routes = [
   },
   {
     path: 'camfil',
-    // TODO (extMlk): Verify why `import('camfil')` fails cuz of chunk names.
-    loadChildren: () => import('camfil-app').then(m => m.CamfilModule),
+    loadChildren: () => import('camfil-exports').then(m => m.CamfilModule),
     data: {
       meta: {
         title: 'camfil.home_page.heading',

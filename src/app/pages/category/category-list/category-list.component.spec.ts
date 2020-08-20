@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MockComponent } from 'ng-mocks';
 
-import { CamfilCategoryTileComponent } from '../camfil-category-tile/camfil-category-tile.component';
+import { CamfilCategoryTileComponent } from '../../camfil-category/camfil-category-tile/camfil-category-tile.component';
 
 import { CategoryListComponent } from './category-list.component';
 

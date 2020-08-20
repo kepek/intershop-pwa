@@ -9,9 +9,9 @@ import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { findAllIshElements } from 'ish-core/utils/dev/html-query-utils';
 import { CamfilBreadcrumbComponent } from 'ish-shared/components/common/camfil-breadcrumb/camfil-breadcrumb.component';
 
+import { CamfilSearchResultComponent } from './camfil-search-result/camfil-search-result.component';
 import { SearchNoResultComponent } from './search-no-result/search-no-result.component';
 import { SearchPageComponent } from './search-page.component';
-import { CamfilSearchResultComponent } from './camfil-search-result/camfil-search-result.component';
 
 describe('Search Page Component', () => {
   let component: SearchPageComponent;
@@ -27,8 +27,8 @@ describe('Search Page Component', () => {
       imports: [RouterTestingModule],
       declarations: [
         MockComponent(CamfilBreadcrumbComponent),
-        MockComponent(SearchNoResultComponent),
         MockComponent(CamfilSearchResultComponent),
+        MockComponent(SearchNoResultComponent),
         SearchPageComponent,
       ],
       providers: [
@@ -58,7 +58,6 @@ describe('Search Page Component', () => {
 
     expect(findAllIshElements(element)).toMatchInlineSnapshot(`
       Array [
-        "camfil-breadcrumb",
         "ish-search-no-result",
       ]
     `);
@@ -69,10 +68,6 @@ describe('Search Page Component', () => {
 
     fixture.detectChanges();
 
-    expect(findAllIshElements(element)).toMatchInlineSnapshot(`
-      Array [
-        "camfil-search-result",
-      ]
-    `);
+    expect(findAllIshElements(element)).toMatchInlineSnapshot(`Array []`);
   });
 });

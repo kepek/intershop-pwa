@@ -10,11 +10,11 @@ import { Category } from 'ish-core/models/category/category.model';
 import { CategoryRoutePipe } from 'ish-core/routing/category/category-route.pipe';
 import { categoryTree } from 'ish-core/utils/dev/test-data-utils';
 
-import { CategoryImageComponent } from '../category-image/category-image.component';
+import { CategoryImageComponent } from '../../category/category-image/category-image.component';
 
 import { CamfilCategoryTileComponent } from './camfil-category-tile.component';
 
-describe('Category Tile Component', () => {
+describe('Camfil Category Tile Component', () => {
   let component: CamfilCategoryTileComponent;
   let fixture: ComponentFixture<CamfilCategoryTileComponent>;
   let element: HTMLElement;

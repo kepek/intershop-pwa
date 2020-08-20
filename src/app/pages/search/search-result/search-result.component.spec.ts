@@ -21,10 +21,10 @@ describe('Search Result Component', () => {
       imports: [TranslateModule.forRoot()],
       declarations: [
         MockComponent(CamfilBreadcrumbComponent),
+        MockComponent(CamfilProductListingComponent),
         MockComponent(FaIconComponent),
         MockComponent(FilterNavigationComponent),
         MockComponent(NgbCollapse),
-        MockComponent(CamfilProductListingComponent),
         SearchResultComponent,
       ],
     }).compileComponents();

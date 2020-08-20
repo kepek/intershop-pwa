@@ -7,7 +7,7 @@ import { GenerateLazyComponent } from 'ish-core/utils/module-loader/generate-laz
 import {
   DEFAULT_CONFIGURATION,
   ProductItemContainerConfiguration,
-} from 'ish-shared/components/product/product-item/product-item.component';
+} from 'ish-shared/components/product/camfil-product-item/camfil-product-item.component';
 
 import { WishlistsFacade } from '../../../facades/wishlists.facade';
 
