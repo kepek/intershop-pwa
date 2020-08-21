@@ -1,0 +1,40 @@
+<!--- TODO: implement Show All-->
+<ul class="filter-list">
+  <ng-container *ngFor="let facet of getFacets()">
+    <li class="filter-item filter-layer{{ facet.level }}" [ngClass]="{ 'filter-selected': facet.selected }">
+      <!-- selected -->
+      <ng-container *ngIf="facet.selected; else notSelectedBox">
+        <a (click)="filter(facet)" [attr.data-testing-id]="'filter-link-' + (facet.name | sanitize)">
+          <span class="filter-item-name"> {{ facet.displayName }} </span>
+          <mat-checkbox class="example-margin" [(ngModel)]="checked"> </mat-checkbox>
+        </a>
+      </ng-container>
+
+      <!-- not selected -->
+      <ng-template #notSelectedBox>
+        <a
+          class="filter-item-name"
+          (click)="filter(facet)"
+          [attr.data-testing-id]="'filter-link-' + (facet.name | sanitize)"
+        >
+          {{ facet.displayName }}
+          <mat-checkbox class="example-margin" [(ngModel)]="unchecked"> </mat-checkbox>
+        </a>
+      </ng-template>
+    </li>
+  </ng-container>
+  <!-- show all/less -->
+  <li
+    class="filter-item filter-show"
+    *ngIf="filterElement.limitCount !== -1 && facets.length > filterElement.limitCount"
+  >
+    <a class="btn-link" (click)="showAll = !showAll">
+      {{
+        showAll
+          ? ('search.filter.show_less.link' | translate)
+          : (facets.length - filterElement.limitCount
+            | i18nPlural: ('camfil.search.filter.show.link' | translate) || { other: '#' })
+      }}
+    </a>
+  </li>
+</ul>

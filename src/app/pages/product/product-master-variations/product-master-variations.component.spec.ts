@@ -4,7 +4,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { MockComponent } from 'ng-mocks';
 
 import { VariationProductMasterView } from 'ish-core/models/product-view/product-view.model';
-import { FilterNavigationComponent } from 'ish-shared/components/filter/filter-navigation/filter-navigation.component';
+import { CamfilFilterNavigationComponent } from 'ish-shared/components/filter/camfil-filter-navigation/camfil-filter-navigation.component';
 import { CamfilProductListingComponent } from 'ish-shared/components/product/camfil-product-listing/camfil-product-listing.component';
 
 import { ProductMasterVariationsComponent } from './product-master-variations.component';
@@ -18,6 +18,7 @@ describe('Product Master Variations Component', () => {
     TestBed.configureTestingModule({
       imports: [RouterTestingModule],
       declarations: [
+        MockComponent(CamfilFilterNavigationComponent),
         MockComponent(CamfilProductListingComponent),
         MockComponent(FilterNavigationComponent),
         ProductMasterVariationsComponent,
@@ -39,10 +40,10 @@ describe('Product Master Variations Component', () => {
     expect(() => fixture.detectChanges()).not.toThrow();
     expect(element).toMatchInlineSnapshot(`
       <a id="variation-list-top"></a
-      ><ish-filter-navigation
+      ><camfil-filter-navigation
         orientation="horizontal"
         ng-reflect-orientation="horizontal"
-      ></ish-filter-navigation
+      ></camfil-filter-navigation
       ><camfil-product-listing
         fragmentonrouting="variation-list-top"
         mode="paging"

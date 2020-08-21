@@ -1,0 +1,30 @@
+<div ngbDropdown autoClose="outside">
+  <a
+    ngbDropdownToggle
+    class="form-control"
+    role="button"
+    id="dropdownMenuLink"
+    data-toggle="dropdown"
+    aria-haspopup="true"
+    aria-expanded="false"
+    [attr.title]="placeholder !== filterElement.name ? placeholder : null"
+  >
+    <span>{{ placeholder }}</span>
+  </a>
+  <div ngbDropdownMenu aria-labelledby="dropdownMenuLink">
+    test
+    <a
+      class="dropdown-item"
+      [ngClass]="{ selected: facet.selected }"
+      (click)="apply(facet)"
+      *ngFor="let facet of filterElement.facets; trackBy: trackByFn"
+    >
+      <mat-checkbox class="example-margin">
+        test
+      </mat-checkbox>
+      {{ facet.displayName }}
+      <ng-container *ngIf="facet.count"> ({{ facet.count }})</ng-container>
+      <fa-icon *ngIf="facet.selected" [icon]="['fas', 'check']" class="icon-checked"></fa-icon>
+    </a>
+  </div>
+</div>

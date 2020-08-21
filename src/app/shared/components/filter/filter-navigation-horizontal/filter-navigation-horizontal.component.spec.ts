@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { MockComponent } from 'ng-mocks';
 
-import { FilterDropdownComponent } from 'ish-shared/components/filter/filter-dropdown/filter-dropdown.component';
+import { CamfilFilterDropdownComponent } from 'ish-shared/components/filter/camfil-filter-dropdown/camfil-filter-dropdown.component';
 
 import { FilterNavigationHorizontalComponent } from './filter-navigation-horizontal.component';
 
@@ -13,7 +13,7 @@ describe('Filter Navigation Horizontal Component', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [FilterNavigationHorizontalComponent, MockComponent(FilterDropdownComponent)],
+      declarations: [FilterNavigationHorizontalComponent, MockComponent(CamfilFilterDropdownComponent)],
       imports: [TranslateModule.forRoot()],
     }).compileComponents();
   }));

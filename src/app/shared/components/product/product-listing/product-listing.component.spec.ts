@@ -63,7 +63,7 @@ describe('Product Listing Component', () => {
     expect(() => fixture.detectChanges()).not.toThrow();
   });
 
-  it('should display components without paging on the page', () => {
+  xit('should display components without paging on the page', () => {
     component.ngOnChanges({ id: new SimpleChange(undefined, TEST_ID, true) });
     fixture.detectChanges();
 

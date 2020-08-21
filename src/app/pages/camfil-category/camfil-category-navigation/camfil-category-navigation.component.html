@@ -1,14 +1,26 @@
-<div *ngIf="currentCategoryId$ | async as currentCategoryId" class="non-parametric-panel">
+<div *ngIf="currentCategoryId$ | async as currentCategoryId" class="non-parametric-panel navigation-container">
   <div class="filter-group">
     <ul class="filter-list">
       <li *ngFor="let category of navigationCategories$ | async" class="filter-item">
-        <a
-          class="filter-item-name"
-          [ngClass]="{ 'filter-selected': category.uniqueId === currentCategoryId }"
-          [routerLink]="category.url"
-        >
-          {{ category.name }}
-        </a>
+        <ng-container *ngIf="trail$ | async as user">
+          <a
+            class="filter-item-name"
+            [ngClass]="{ 'filter-selected': category.uniqueId === currentCategoryId || user.includes(category.name) }"
+            [routerLink]="category.url"
+          >
+            <span>{{ category.name }}</span>
+            <ng-container *ngIf="!user.includes(category.name)">
+              <fa-icon
+                *ngIf="category.uniqueId !== currentCategoryId && category.hasChildren"
+                [icon]="['fas', 'plus']"
+                [styles]="{ stroke: 'transparent' }"
+              ></fa-icon>
+            </ng-container>
+            <ng-container *ngIf="user.includes(category.name) && category.hasChildren">
+              <fa-icon [icon]="['fas', 'minus']" [styles]="{ stroke: 'transparent' }"></fa-icon>
+            </ng-container>
+          </a>
+        </ng-container>
         <camfil-category-navigation
           *ngIf="currentCategoryId.startsWith(category.uniqueId)"
           [uniqueId]="category.uniqueId"

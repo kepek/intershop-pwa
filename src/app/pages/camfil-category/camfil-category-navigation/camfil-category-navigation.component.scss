@@ -1,0 +1,58 @@
+@import '~src/styles/themes/camfil/colors';
+
+:host {
+  .navigation-container {
+    .filter-item-name {
+      font-size: 16px;
+    }
+    .navigation-container {
+      padding-right: 30px;
+      .filter-item-name {
+        font-size: 14px;
+      }
+      .filter-group {
+        li {
+          &.filter-item {
+            padding: 0;
+          }
+        }
+      }
+      .navigation-container {
+        position: relative;
+        padding-bottom: 5px;
+
+        &::after {
+          position: absolute;
+          top: -25px;
+          bottom: 0;
+          left: -15px;
+          display: block;
+          width: 2px;
+          content: '';
+          background-color: $camfil-color-secondary;
+        }
+
+        .filter-list {
+          padding-top: 0;
+        }
+      }
+    }
+  }
+
+  .filter-item-name {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  ::ng-deep {
+    fa-icon {
+      height: 12px;
+      color: $camfil-color-primary;
+      svg {
+        width: 12px;
+        height: 12px;
+      }
+    }
+  }
+}

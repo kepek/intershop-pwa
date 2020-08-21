@@ -26,6 +26,12 @@
     "string-quotes": "single",
     "value-keyword-case": "lower",
     "value-no-vendor-prefix": true,
-    "selector-pseudo-element-no-unknown": null
+    "selector-pseudo-element-no-unknown": null,
+    "selector-type-no-unknown": [
+      true,
+      {
+        "ignore": ["custom-elements"]
+      }
+    ]
   }
 }

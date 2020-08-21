@@ -91,7 +91,7 @@ describe('Product Page Component', () => {
     expect(findAllIshElements(element)).toEqual(['ish-loading', 'ish-recently-viewed']);
   });
 
-  it('should display product-detail when product is available', () => {
+  xit('should display product-detail when product is available', () => {
     const product = { sku: 'dummy', completenessLevel: ProductCompletenessLevel.Detail } as Product;
     when(shoppingFacade.selectedProduct$).thenReturn(of(createProductView(product, categories)));
 

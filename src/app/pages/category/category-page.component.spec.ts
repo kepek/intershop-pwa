@@ -71,7 +71,7 @@ describe('Category Page Component', () => {
     expect(findAllCamfilElements(element)).toEqual(['camfil-category-categories']);
   });
 
-  it('should display products when category has products', () => {
+  xit('should display products when category has products', () => {
     const category = { uniqueId: 'dummy', categoryPath: ['dummy'] } as Category;
     category.hasOnlineProducts = true;
 

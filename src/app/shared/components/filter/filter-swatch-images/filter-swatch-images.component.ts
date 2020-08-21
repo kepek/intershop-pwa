@@ -8,10 +8,10 @@ import { URLFormParams } from 'ish-core/utils/url-form-params';
  * The Filter Swatch Images Component displays filter group for colors. The facets of the filter group are presented as swatch images.
  *
  * @example
- * <ish-filter-dropdown
+ * <camfil-filter-dropdown
  *               [filterElement]="element"
  *               (applyFilter)="applyFilter($event)"
- * </ish-filter-dropdown>
+ * </camfil-filter-dropdown>
  */
 @Component({
   selector: 'ish-filter-swatch-images',

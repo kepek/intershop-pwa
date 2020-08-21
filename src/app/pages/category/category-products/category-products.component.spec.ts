@@ -10,7 +10,7 @@ import { Category } from 'ish-core/models/category/category.model';
 import { findAllIshElements } from 'ish-core/utils/dev/html-query-utils';
 import { categoryTree } from 'ish-core/utils/dev/test-data-utils';
 import { CamfilBreadcrumbComponent } from 'ish-shared/components/common/camfil-breadcrumb/camfil-breadcrumb.component';
-import { FilterNavigationComponent } from 'ish-shared/components/filter/filter-navigation/filter-navigation.component';
+import { CamfilFilterNavigationComponent } from 'ish-shared/components/filter/camfil-filter-navigation/camfil-filter-navigation.component';
 import { CamfilProductListingComponent } from 'ish-shared/components/product/camfil-product-listing/camfil-product-listing.component';
 
 import { CamfilCategoryNavigationComponent } from '../../camfil-category/camfil-category-navigation/camfil-category-navigation.component';
@@ -31,7 +31,7 @@ describe('Category Products Component', () => {
         MockComponent(CamfilCategoryNavigationComponent),
         MockComponent(CamfilProductListingComponent),
         MockComponent(FaIconComponent),
-        MockComponent(FilterNavigationComponent),
+        MockComponent(CamfilFilterNavigationComponent),
         MockComponent(NgbCollapse),
       ],
     }).compileComponents();

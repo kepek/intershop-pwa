@@ -2140,6 +2140,10 @@
   "search.filter.remove_filter.link": "Remove Filter",
   "search.filter.select_option.text": "Please select...",
   "search.filter.show_all.link": "Show all",
+  "camfil.search.filter.show.link": {
+    "other": "Show # more"
+  },
+  "camfil.search.filter.more.link": "more",
   "search.filter.show_less.link": "Show less",
   "search.filterlist.edit.menu": "Edit",
   "search.find_simple.button.label": "Search",
