@@ -1,9 +1,8 @@
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { TranslateModule } from '@ngx-translate/core';
 import { MockComponent } from 'ng-mocks';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { FormsModule } from '@angular/forms';
 
 import { Filter } from 'ish-core/models/filter/filter.model';
 import { SanitizePipe } from 'ish-core/pipes/sanitize.pipe';
@@ -17,7 +16,7 @@ describe('Camfil Filter Text Component', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [FormsModule, MatCheckboxModule, TranslateModule.forRoot()],
+      imports: [FormsModule, TranslateModule.forRoot()],
       declarations: [CamfilFilterTextComponent, MockComponent(FaIconComponent), SanitizePipe],
     }).compileComponents();
   }));

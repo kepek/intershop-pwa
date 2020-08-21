@@ -1,10 +1,6 @@
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { MatChipsModule } from '@angular/material/chips';
-import { MatIconModule } from '@angular/material/icon';
 
 import { CamfilFilterAppliedComponent } from './camfil-filter-applied.component';
-import { MatIconModule } from '@angular/material/icon';
-import { MatChipsModule } from '@angular/material/chips';
 
 describe('Camfil Filter Applied Component', () => {
   let component: CamfilFilterAppliedComponent;
@@ -13,7 +9,6 @@ describe('Camfil Filter Applied Component', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [MatChipsModule, MatIconModule],
       declarations: [CamfilFilterAppliedComponent],
     }).compileComponents();
   }));

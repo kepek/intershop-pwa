@@ -1,4 +1,7 @@
 import { NgModule } from '@angular/core';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatIconModule } from '@angular/material/icon';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterModule, Routes } from '@angular/router';
 
 import { SharedModule } from 'ish-shared/shared.module';
@@ -26,7 +29,13 @@ const categoryPageRoutes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(categoryPageRoutes), SharedModule],
+  imports: [
+    MatExpansionModule,
+    MatIconModule,
+    MatToolbarModule,
+    RouterModule.forChild(categoryPageRoutes),
+    SharedModule,
+  ],
   declarations: [
     CamfilCategoryCategoriesComponent,
     CamfilCategoryNavigationComponent,

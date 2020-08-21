@@ -20,8 +20,8 @@ import { URLFormParams } from 'ish-core/utils/url-form-params';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CamfilFilterTextComponent implements OnInit {
-  checked: boolean = true;
-  unchecked: boolean = false;
+  checked = true;
+  unchecked = false;
   @Input() filterElement: Filter;
   @Output() applyFilter: EventEmitter<{ searchParameter: URLFormParams }> = new EventEmitter();
 

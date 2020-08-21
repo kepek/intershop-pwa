@@ -7,7 +7,6 @@ import { MockComponent } from 'ng-mocks';
 
 import { createCategoryView } from 'ish-core/models/category-view/category-view.model';
 import { Category } from 'ish-core/models/category/category.model';
-import { findAllIshElements } from 'ish-core/utils/dev/html-query-utils';
 import { categoryTree } from 'ish-core/utils/dev/test-data-utils';
 import { CamfilBreadcrumbComponent } from 'ish-shared/components/common/camfil-breadcrumb/camfil-breadcrumb.component';
 import { CamfilFilterNavigationComponent } from 'ish-shared/components/filter/camfil-filter-navigation/camfil-filter-navigation.component';
@@ -29,9 +28,9 @@ describe('Category Products Component', () => {
         CategoryProductsComponent,
         MockComponent(CamfilBreadcrumbComponent),
         MockComponent(CamfilCategoryNavigationComponent),
+        MockComponent(CamfilFilterNavigationComponent),
         MockComponent(CamfilProductListingComponent),
         MockComponent(FaIconComponent),
-        MockComponent(CamfilFilterNavigationComponent),
         MockComponent(NgbCollapse),
       ],
     }).compileComponents();

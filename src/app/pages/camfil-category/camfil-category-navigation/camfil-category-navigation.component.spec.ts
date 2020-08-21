@@ -1,11 +1,9 @@
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MockPipe } from 'ng-mocks';
 import { of } from 'rxjs';
 import { instance, mock, when } from 'ts-mockito';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-
-import { MatIconModule } from '@angular/material/icon';
 
 import { AppFacade } from 'ish-core/facades/app.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
@@ -38,7 +36,7 @@ describe('Camfil Category Navigation Component', () => {
     when(shoppingFacade.navigationCategories$('B')).thenReturn(of([] as NavigationCategory[]));
 
     TestBed.configureTestingModule({
-      imports: [FontAwesomeModule, MatIconModule, RouterTestingModule],
+      imports: [FontAwesomeModule, RouterTestingModule],
       declarations: [CamfilCategoryNavigationComponent, MockPipe(CategoryRoutePipe)],
       providers: [
         { provide: ShoppingFacade, useFactory: () => instance(shoppingFacade) },

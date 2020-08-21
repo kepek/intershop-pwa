@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { MatInputModule } from '@angular/material/input';
 import { RouterModule } from '@angular/router';
 import { NgbCollapseModule, NgbDropdownModule, NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
@@ -66,7 +65,6 @@ const exportedComponents = [
     FeatureToggleModule,
     IconModule,
     MatButtonModule,
-    MatInputModule,
     NgbCollapseModule,
     NgbDropdownModule,
     NgbModalModule,
