@@ -21,7 +21,7 @@
     "test:update-snapshot": "jest --updateSnapshot",
     "e2e": "cd e2e && npm install && node open-cypress",
     "lint": "ng lint",
-    "format": "node docs/check-sentence-newline && stylelint \"**/*.{css,scss}\" --fix && prettier --loglevel warn --write \"**/*.*\"",
+    "format": "node docs/check-sentence-newline && stylelint \"**/*.{css,scss}\" --fix && prettier --loglevel warn --write \"**/*.*\" && tslint --project tsconfig.base.json --fix",
     "dead-code": "npx ts-node scripts/find-dead-code.ts",
     "clean": "git clean -xdf -e \"*environment.local.ts\" && npm ci",
     "check": "npm run lint -- --fix && npm run format && tsc --project tsconfig.all.json && npm run build && npm run test && npm run dead-code",

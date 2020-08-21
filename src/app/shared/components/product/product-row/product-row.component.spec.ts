@@ -8,13 +8,13 @@ import { FeatureToggleDirective } from 'ish-core/directives/feature-toggle.direc
 import { ProductView } from 'ish-core/models/product-view/product-view.model';
 import { ProductRoutePipe } from 'ish-core/routing/product/product-route.pipe';
 import { findAllIshElements } from 'ish-core/utils/dev/html-query-utils';
+import { DEFAULT_CONFIGURATION } from 'ish-shared/components/product/camfil-product-item/camfil-product-item.component';
+import { CamfilProductPriceComponent } from 'ish-shared/components/product/camfil-product-price/camfil-product-price.component';
 import { ProductAddToBasketComponent } from 'ish-shared/components/product/product-add-to-basket/product-add-to-basket.component';
 import { ProductAddToCompareComponent } from 'ish-shared/components/product/product-add-to-compare/product-add-to-compare.component';
 import { ProductIdComponent } from 'ish-shared/components/product/product-id/product-id.component';
 import { ProductInventoryComponent } from 'ish-shared/components/product/product-inventory/product-inventory.component';
-import { DEFAULT_CONFIGURATION } from 'ish-shared/components/product/product-item/product-item.component';
 import { ProductLabelComponent } from 'ish-shared/components/product/product-label/product-label.component';
-import { ProductPriceComponent } from 'ish-shared/components/product/product-price/product-price.component';
 import { ProductPromotionComponent } from 'ish-shared/components/product/product-promotion/product-promotion.component';
 import { ProductQuantityComponent } from 'ish-shared/components/product/product-quantity/product-quantity.component';
 import { ProductRatingComponent } from 'ish-shared/components/product/product-rating/product-rating.component';
@@ -37,6 +37,7 @@ describe('Product Row Component', () => {
     TestBed.configureTestingModule({
       imports: [ReactiveFormsModule, RouterTestingModule, TranslateModule.forRoot()],
       declarations: [
+        MockComponent(CamfilProductPriceComponent),
         MockComponent(LazyProductAddToOrderTemplateComponent),
         MockComponent(LazyProductAddToQuoteComponent),
         MockComponent(LazyProductAddToWishlistComponent),
@@ -46,7 +47,6 @@ describe('Product Row Component', () => {
         MockComponent(ProductImageComponent),
         MockComponent(ProductInventoryComponent),
         MockComponent(ProductLabelComponent),
-        MockComponent(ProductPriceComponent),
         MockComponent(ProductPromotionComponent),
         MockComponent(ProductQuantityComponent),
         MockComponent(ProductRatingComponent),
@@ -83,7 +83,6 @@ describe('Product Row Component', () => {
         "ish-product-image",
         "ish-product-inventory",
         "ish-product-label",
-        "ish-product-price",
         "ish-product-promotion",
         "ish-product-quantity",
       ]

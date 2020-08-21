@@ -2,18 +2,18 @@ import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { NgbCollapse } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
+import { findAllCamfilElements } from 'camfil-core/utils/dev/html-query-utils';
 import { MockComponent } from 'ng-mocks';
 
 import { createCategoryView } from 'ish-core/models/category-view/category-view.model';
 import { Category } from 'ish-core/models/category/category.model';
-import { findAllIshElements } from 'ish-core/utils/dev/html-query-utils';
 import { categoryTree } from 'ish-core/utils/dev/test-data-utils';
-
-import { CategoryListComponent } from '../category-list/category-list.component';
-import { CategoryCategoriesComponent } from './category-categories.component';
-
 import { CamfilBreadcrumbComponent } from 'ish-shared/components/common/camfil-breadcrumb/camfil-breadcrumb.component';
+
 import { CamfilCategoryNavigationComponent } from '../../camfil-category/camfil-category-navigation/camfil-category-navigation.component';
+import { CategoryListComponent } from '../category-list/category-list.component';
+
+import { CategoryCategoriesComponent } from './category-categories.component';
 
 describe('Category Categories Component', () => {
   let component: CategoryCategoriesComponent;
@@ -26,8 +26,8 @@ describe('Category Categories Component', () => {
       declarations: [
         CategoryCategoriesComponent,
         MockComponent(CamfilBreadcrumbComponent),
-        MockComponent(CategoryListComponent),
         MockComponent(CamfilCategoryNavigationComponent),
+        MockComponent(CategoryListComponent),
         MockComponent(FaIconComponent),
         MockComponent(NgbCollapse),
       ],
@@ -59,6 +59,6 @@ describe('Category Categories Component', () => {
   });
 
   it('should display all components on the page', () => {
-    expect(findAllIshElements(element)).toIncludeAllMembers(['camfil-breadcrumb']);
+    expect(findAllCamfilElements(element)).toIncludeAllMembers(['camfil-breadcrumb']);
   });
 });

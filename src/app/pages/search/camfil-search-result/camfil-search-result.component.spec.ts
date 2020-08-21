@@ -10,7 +10,7 @@ import { CamfilProductListingComponent } from 'ish-shared/components/product/cam
 
 import { CamfilSearchResultComponent } from './camfil-search-result.component';
 
-describe('Search Result Component', () => {
+describe('Camfil Search Result Component', () => {
   let component: CamfilSearchResultComponent;
   let fixture: ComponentFixture<CamfilSearchResultComponent>;
   let element: HTMLElement;
@@ -20,12 +20,12 @@ describe('Search Result Component', () => {
     TestBed.configureTestingModule({
       imports: [TranslateModule.forRoot()],
       declarations: [
+        CamfilSearchResultComponent,
         MockComponent(CamfilBreadcrumbComponent),
+        MockComponent(CamfilProductListingComponent),
         MockComponent(FaIconComponent),
         MockComponent(FilterNavigationComponent),
         MockComponent(NgbCollapse),
-        MockComponent(CamfilProductListingComponent),
-        CamfilSearchResultComponent,
       ],
     }).compileComponents();
   }));

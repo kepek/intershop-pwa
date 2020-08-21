@@ -108,7 +108,7 @@ export const ENVIRONMENT_DEFAULTS: Environment = {
   extralargeBreakpointWidth: 1200,
   mainNavigationMaxSubCategoriesDepth: 2,
   productListingItemsPerPage: 9,
-  defaultProductListingViewType: 'grid',
+  defaultProductListingViewType: 'simple',
   defaultDeviceType: 'mobile',
   locales: [
     { lang: 'en_US', currency: 'USD', value: 'en', displayName: 'English', displayLong: 'English (United States)' },

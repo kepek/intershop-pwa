@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { findAllCamfilElements } from 'camfil-core/utils/dev/html-query-utils';
 import { MockComponent } from 'ng-mocks';
 import { of } from 'rxjs';
 import { instance, mock, when } from 'ts-mockito';
@@ -11,13 +12,15 @@ import { findAllIshElements } from 'ish-core/utils/dev/html-query-utils';
 import { categoryTree } from 'ish-core/utils/dev/test-data-utils';
 import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
 
+import { CategoryCategoriesComponent } from '../category/category-categories/category-categories.component';
+
 import { CamfilCategoryCategoriesComponent } from './camfil-category-categories/camfil-category-categories.component';
-import { CategoryPageComponent } from './camfil-category-page.component';
+import { CamfilCategoryPageComponent } from './camfil-category-page.component';
 import { CamfilCategoryProductsComponent } from './camfil-category-products/camfil-category-products.component';
 
-describe('Category Page Component', () => {
-  let component: CategoryPageComponent;
-  let fixture: ComponentFixture<CategoryPageComponent>;
+describe('Camfil Category Page Component', () => {
+  let component: CamfilCategoryPageComponent;
+  let fixture: ComponentFixture<CamfilCategoryPageComponent>;
   let element: HTMLElement;
   let shoppingFacade: ShoppingFacade;
 
@@ -25,9 +28,10 @@ describe('Category Page Component', () => {
     shoppingFacade = mock(ShoppingFacade);
     TestBed.configureTestingModule({
       declarations: [
-        CategoryPageComponent,
+        CamfilCategoryPageComponent,
         MockComponent(CamfilCategoryCategoriesComponent),
         MockComponent(CamfilCategoryProductsComponent),
+        MockComponent(CategoryCategoriesComponent),
         MockComponent(LoadingComponent),
       ],
       providers: [
@@ -38,7 +42,7 @@ describe('Category Page Component', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CategoryPageComponent);
+    fixture = TestBed.createComponent(CamfilCategoryPageComponent);
     component = fixture.componentInstance;
     element = fixture.nativeElement;
   });
@@ -64,7 +68,7 @@ describe('Category Page Component', () => {
     );
 
     fixture.detectChanges();
-    expect(findAllIshElements(element)).toEqual(['camfil-category-categories']);
+    expect(findAllCamfilElements(element)).toEqual(['camfil-category-categories']);
   });
 
   it('should display products when category has products', () => {
@@ -76,6 +80,6 @@ describe('Category Page Component', () => {
     );
 
     fixture.detectChanges();
-    expect(findAllIshElements(element)).toEqual(['camfil-category-products']);
+    expect(findAllCamfilElements(element)).toEqual(['camfil-category-products']);
   });
 });

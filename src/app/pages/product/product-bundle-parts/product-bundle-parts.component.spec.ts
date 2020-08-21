@@ -4,8 +4,8 @@ import { MockComponent } from 'ng-mocks';
 
 import { ProductBundle } from 'ish-core/models/product/product-bundle.model';
 import { findAllIshElements } from 'ish-core/utils/dev/html-query-utils';
+import { CamfilProductItemComponent } from 'ish-shared/components/product/camfil-product-item/camfil-product-item.component';
 import { ProductAddToBasketComponent } from 'ish-shared/components/product/product-add-to-basket/product-add-to-basket.component';
-import { ProductItemComponent } from 'ish-shared/components/product/product-item/product-item.component';
 
 import { ProductBundlePartsComponent } from './product-bundle-parts.component';
 
@@ -18,8 +18,8 @@ describe('Product Bundle Parts Component', () => {
     TestBed.configureTestingModule({
       imports: [TranslateModule.forRoot()],
       declarations: [
+        MockComponent(CamfilProductItemComponent),
         MockComponent(ProductAddToBasketComponent),
-        MockComponent(ProductItemComponent),
         ProductBundlePartsComponent,
       ],
     }).compileComponents();
@@ -45,8 +45,6 @@ describe('Product Bundle Parts Component', () => {
     expect(findAllIshElements(element)).toMatchInlineSnapshot(`
       Array [
         "ish-product-add-to-basket",
-        "ish-product-item",
-        "ish-product-item",
       ]
     `);
   });

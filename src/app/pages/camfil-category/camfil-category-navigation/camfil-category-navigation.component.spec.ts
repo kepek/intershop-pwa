@@ -10,7 +10,7 @@ import { CategoryRoutePipe } from 'ish-core/routing/category/category-route.pipe
 
 import { CamfilCategoryNavigationComponent } from './camfil-category-navigation.component';
 
-describe('Category Navigation Component', () => {
+describe('Camfil Category Navigation Component', () => {
   let component: CamfilCategoryNavigationComponent;
   let fixture: ComponentFixture<CamfilCategoryNavigationComponent>;
   let element: HTMLElement;

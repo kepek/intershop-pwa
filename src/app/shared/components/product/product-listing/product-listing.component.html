@@ -8,13 +8,13 @@
     alwaysCallback="true"
     immediateCheck="true"
   >
-    <camfil-product-list-toolbar
+    <ish-product-list-toolbar
       [itemCount]="listing.itemCount"
       [sortKeys]="listing.sortKeys"
       [viewType]="viewType$ | async"
       [sortBy]="sortBy$ | async"
       [fragmentOnRouting]="fragmentOnRouting"
-    ></camfil-product-list-toolbar>
+    ></ish-product-list-toolbar>
 
     <ish-product-list
       [products]="listing.products()"
@@ -35,7 +35,7 @@
   <div *ngIf="isPaging">
     <ng-container *ngIf="currentPage$ | async as currentPage">
       <ng-template #pagingToolbar>
-        <camfil-product-list-toolbar
+        <ish-product-list-toolbar
           [itemCount]="listing.itemCount"
           [sortKeys]="listing.sortKeys"
           [viewType]="viewType$ | async"
@@ -44,7 +44,7 @@
           [pageIndices]="listing.pageIndices(currentPage)"
           [fragmentOnRouting]="fragmentOnRouting"
           [isPaging]="true"
-        ></camfil-product-list-toolbar>
+        ></ish-product-list-toolbar>
       </ng-template>
 
       <ng-container *ngTemplateOutlet="pagingToolbar"></ng-container>

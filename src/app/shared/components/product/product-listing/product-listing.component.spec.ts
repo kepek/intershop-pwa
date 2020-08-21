@@ -11,7 +11,7 @@ import { ProductListingView } from 'ish-core/models/product-listing/product-list
 import { findAllIshElements } from 'ish-core/utils/dev/html-query-utils';
 import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
 import { ProductListPagingComponent } from 'ish-shared/components/product/product-list-paging/product-list-paging.component';
-import { CamfilProductListToolbarComponent } from 'ish-shared/components/product/camfil-product-list-toolbar/camfil-product-list-toolbar.component';
+import { ProductListToolbarComponent } from 'ish-shared/components/product/product-list-toolbar/product-list-toolbar.component';
 import { ProductListComponent } from 'ish-shared/components/product/product-list/product-list.component';
 
 import { ProductListingComponent } from './product-listing.component';
@@ -42,7 +42,7 @@ describe('Product Listing Component', () => {
         MockComponent(LoadingComponent),
         MockComponent(ProductListComponent),
         MockComponent(ProductListPagingComponent),
-        MockComponent(CamfilProductListToolbarComponent),
+        MockComponent(ProductListToolbarComponent),
         ProductListingComponent,
       ],
       providers: [{ provide: ShoppingFacade, useFactory: () => instance(shoppingFacade) }],
@@ -67,7 +67,7 @@ describe('Product Listing Component', () => {
     component.ngOnChanges({ id: new SimpleChange(undefined, TEST_ID, true) });
     fixture.detectChanges();
 
-    expect(findAllIshElements(element)).toIncludeAllMembers(['ish-product-list', 'camfil-product-list-toolbar']);
+    expect(findAllIshElements(element)).toIncludeAllMembers(['ish-product-list', 'ish-product-list-toolbar']);
   });
 
   describe('display modes', () => {
@@ -83,7 +83,7 @@ describe('Product Listing Component', () => {
         Array [
           "ish-product-list",
           "ish-product-list-paging",
-          "camfil-product-list-toolbar",
+          "ish-product-list-toolbar",
         ]
       `);
     });
@@ -95,8 +95,8 @@ describe('Product Listing Component', () => {
       expect(findAllIshElements(element)).toMatchInlineSnapshot(`
         Array [
           "ish-product-list",
-          "camfil-product-list-toolbar",
-          "camfil-product-list-toolbar",
+          "ish-product-list-toolbar",
+          "ish-product-list-toolbar",
         ]
       `);
     });

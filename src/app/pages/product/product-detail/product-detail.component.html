@@ -21,11 +21,11 @@
       <ish-product-promotion [product]="product"></ish-product-promotion>
 
       <div class="price-container" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
-        <ish-product-price
+        <camfil-product-price
           [product]="price || product"
           [showInformationalPrice]="true"
           [showPriceSavings]="true"
-        ></ish-product-price>
+        ></camfil-product-price>
 
         <ish-product-inventory
           *ngIf="!isRetailSet(product) && !isMasterProduct(product)"

@@ -11,7 +11,7 @@ import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
   templateUrl: './camfil-category-page.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CategoryPageComponent implements OnInit {
+export class CamfilCategoryPageComponent implements OnInit {
   category$: Observable<CategoryView>;
   deviceType$: Observable<DeviceType>;
 

@@ -2,6 +2,7 @@ import { Location } from '@angular/common';
 import { ComponentFixture, TestBed, async, fakeAsync, tick } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
+import { findAllCamfilElements } from 'camfil-core/utils/dev/html-query-utils';
 import { MockComponent } from 'ng-mocks';
 import { EMPTY, noop, of } from 'rxjs';
 import { anything, instance, mock, verify, when } from 'ts-mockito';
@@ -96,12 +97,8 @@ describe('Product Page Component', () => {
 
     fixture.detectChanges();
 
-    expect(findAllIshElements(element)).toEqual([
-      'camfil-breadcrumb',
-      'ish-product-detail',
-      'ish-product-links',
-      'ish-recently-viewed',
-    ]);
+    expect(findAllIshElements(element)).toEqual(['ish-product-detail', 'ish-product-links', 'ish-recently-viewed']);
+    expect(findAllCamfilElements(element)).toEqual(['camfil-breadcrumb']);
   });
 
   it('should redirect to product page when variation is selected', fakeAsync(() => {

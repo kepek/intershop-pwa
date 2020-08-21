@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { NgbCollapse } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
+import { findAllCamfilElements } from 'camfil-core/utils/dev/html-query-utils';
 import { MockComponent } from 'ng-mocks';
 
 import { createCategoryView } from 'ish-core/models/category-view/category-view.model';
@@ -28,10 +29,10 @@ describe('Category Products Component', () => {
         CategoryProductsComponent,
         MockComponent(CamfilBreadcrumbComponent),
         MockComponent(CamfilCategoryNavigationComponent),
+        MockComponent(CamfilProductListingComponent),
         MockComponent(FaIconComponent),
         MockComponent(FilterNavigationComponent),
         MockComponent(NgbCollapse),
-        MockComponent(CamfilProductListingComponent),
       ],
     }).compileComponents();
   }));
@@ -51,10 +52,7 @@ describe('Category Products Component', () => {
   });
 
   it('should display all components on the page', () => {
-    expect(findAllIshElements(element)).toIncludeAllMembers([
-      'camfil-breadcrumb',
-      'camfil-product-listing',
-      'ish-filter-navigation',
-    ]);
+    expect(findAllCamfilElements(element)).toIncludeAllMembers(['camfil-breadcrumb', 'camfil-product-listing']);
+    expect(findAllIshElements(element)).toIncludeAllMembers(['ish-filter-navigation']);
   });
 });

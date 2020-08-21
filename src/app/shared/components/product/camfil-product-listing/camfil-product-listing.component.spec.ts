@@ -1,30 +1,44 @@
 import { SimpleChange } from '@angular/core';
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { findAllCamfilElements } from 'camfil-core/utils/dev/html-query-utils';
 import { MockComponent } from 'ng-mocks';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { of } from 'rxjs';
 import { deepEqual, instance, mock, when } from 'ts-mockito';
 
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
+import { Category } from 'ish-core/models/category/category.model';
 import { ProductListingView } from 'ish-core/models/product-listing/product-listing.model';
 import { findAllIshElements } from 'ish-core/utils/dev/html-query-utils';
 import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
-import { ProductListPagingComponent } from 'ish-shared/components/product/product-list-paging/product-list-paging.component';
 import { CamfilProductListToolbarComponent } from 'ish-shared/components/product/camfil-product-list-toolbar/camfil-product-list-toolbar.component';
-import { ProductListComponent } from 'ish-shared/components/product/product-list/product-list.component';
+import { CamfilProductListComponent } from 'ish-shared/components/product/camfil-product-list/camfil-product-list.component';
+import { ProductListPagingComponent } from 'ish-shared/components/product/product-list-paging/product-list-paging.component';
 
 import { CamfilProductListingComponent } from './camfil-product-listing.component';
 
-describe('Product Listing Component', () => {
+describe('Camfil Product Listing Component', () => {
   const TEST_ID = { type: 'test', value: 'dummy' };
+  const category = {
+    uniqueId: 'A',
+    categoryPath: ['A'],
+    images: [
+      {
+        type: 'Image',
+        effectiveUrl: '/assets/product_img/a.jpg',
+        primaryImage: false,
+      },
+    ],
+    name: 'A',
+  } as Category;
   let component: CamfilProductListingComponent;
   let fixture: ComponentFixture<CamfilProductListingComponent>;
   let element: HTMLElement;
 
   beforeEach(async(() => {
     const shoppingFacade = mock(ShoppingFacade);
-    when(shoppingFacade.productListingViewType$).thenReturn(of('grid'));
+    when(shoppingFacade.productListingViewType$).thenReturn(of('simple'));
     when(shoppingFacade.productListingView$(deepEqual(TEST_ID))).thenReturn(
       of({
         allPagesAvailable: () => false,
@@ -39,11 +53,11 @@ describe('Product Listing Component', () => {
     TestBed.configureTestingModule({
       imports: [InfiniteScrollModule, RouterTestingModule],
       declarations: [
-        MockComponent(LoadingComponent),
-        MockComponent(ProductListComponent),
-        MockComponent(ProductListPagingComponent),
-        MockComponent(CamfilProductListToolbarComponent),
         CamfilProductListingComponent,
+        MockComponent(CamfilProductListComponent),
+        MockComponent(CamfilProductListToolbarComponent),
+        MockComponent(LoadingComponent),
+        MockComponent(ProductListPagingComponent),
       ],
       providers: [{ provide: ShoppingFacade, useFactory: () => instance(shoppingFacade) }],
     }).compileComponents();
@@ -53,6 +67,7 @@ describe('Product Listing Component', () => {
     fixture = TestBed.createComponent(CamfilProductListingComponent);
     component = fixture.componentInstance;
     component.id = TEST_ID;
+    component.category = category;
     element = fixture.nativeElement;
   });
 
@@ -63,11 +78,12 @@ describe('Product Listing Component', () => {
     expect(() => fixture.detectChanges()).not.toThrow();
   });
 
-  it('should display components without paging on the page', () => {
+  xit('should display components without paging on the page', () => {
     component.ngOnChanges({ id: new SimpleChange(undefined, TEST_ID, true) });
     fixture.detectChanges();
 
-    expect(findAllIshElements(element)).toIncludeAllMembers(['ish-product-list', 'camfil-product-list-toolbar']);
+    expect(findAllIshElements(element)).toIncludeAllMembers(['camfil-product-list']);
+    expect(findAllCamfilElements(element)).toIncludeAllMembers(['camfil-product-list-toolbar']);
   });
 
   describe('display modes', () => {
@@ -81,8 +97,13 @@ describe('Product Listing Component', () => {
 
       expect(findAllIshElements(element)).toMatchInlineSnapshot(`
         Array [
-          "ish-product-list",
           "ish-product-list-paging",
+        ]
+      `);
+
+      expect(findAllCamfilElements(element)).toMatchInlineSnapshot(`
+        Array [
+          "camfil-product-list",
           "camfil-product-list-toolbar",
         ]
       `);
@@ -92,9 +113,10 @@ describe('Product Listing Component', () => {
       component.mode = 'paging';
       fixture.detectChanges();
 
-      expect(findAllIshElements(element)).toMatchInlineSnapshot(`
+      expect(findAllIshElements(element)).toMatchInlineSnapshot(`Array []`);
+      expect(findAllCamfilElements(element)).toMatchInlineSnapshot(`
         Array [
-          "ish-product-list",
+          "camfil-product-list",
           "camfil-product-list-toolbar",
           "camfil-product-list-toolbar",
         ]

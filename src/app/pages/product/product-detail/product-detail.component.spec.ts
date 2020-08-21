@@ -8,11 +8,11 @@ import { FeatureToggleDirective } from 'ish-core/directives/feature-toggle.direc
 import { ProductView } from 'ish-core/models/product-view/product-view.model';
 import { AccordionItemComponent } from 'ish-shared/components/common/accordion-item/accordion-item.component';
 import { AccordionComponent } from 'ish-shared/components/common/accordion/accordion.component';
+import { CamfilProductPriceComponent } from 'ish-shared/components/product/camfil-product-price/camfil-product-price.component';
 import { ProductAddToBasketComponent } from 'ish-shared/components/product/product-add-to-basket/product-add-to-basket.component';
 import { ProductAttributesComponent } from 'ish-shared/components/product/product-attributes/product-attributes.component';
 import { ProductIdComponent } from 'ish-shared/components/product/product-id/product-id.component';
 import { ProductInventoryComponent } from 'ish-shared/components/product/product-inventory/product-inventory.component';
-import { ProductPriceComponent } from 'ish-shared/components/product/product-price/product-price.component';
 import { ProductPromotionComponent } from 'ish-shared/components/product/product-promotion/product-promotion.component';
 import { ProductQuantityComponent } from 'ish-shared/components/product/product-quantity/product-quantity.component';
 import { ProductRatingComponent } from 'ish-shared/components/product/product-rating/product-rating.component';
@@ -47,6 +47,7 @@ describe('Product Detail Component', () => {
       declarations: [
         MockComponent(AccordionComponent),
         MockComponent(AccordionItemComponent),
+        MockComponent(CamfilProductPriceComponent),
         MockComponent(LazyProductAddToOrderTemplateComponent),
         MockComponent(LazyProductAddToQuoteComponent),
         MockComponent(ProductAddToBasketComponent),
@@ -55,7 +56,6 @@ describe('Product Detail Component', () => {
         MockComponent(ProductIdComponent),
         MockComponent(ProductImagesComponent),
         MockComponent(ProductInventoryComponent),
-        MockComponent(ProductPriceComponent),
         MockComponent(ProductPromotionComponent),
         MockComponent(ProductQuantityComponent),
         MockComponent(ProductRatingComponent),

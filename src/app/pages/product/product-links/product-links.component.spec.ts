@@ -5,7 +5,7 @@ import { instance, mock } from 'ts-mockito';
 
 import { LARGE_BREAKPOINT_WIDTH } from 'ish-core/configurations/injection-keys';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
-import { ProductItemComponent } from 'ish-shared/components/product/product-item/product-item.component';
+import { CamfilProductItemComponent } from 'ish-shared/components/product/camfil-product-item/camfil-product-item.component';
 
 import { ProductLinksCarouselComponent } from '../product-links-carousel/product-links-carousel.component';
 import { ProductLinksListComponent } from '../product-links-list/product-links-list.component';
@@ -21,7 +21,7 @@ describe('Product Links Component', () => {
     TestBed.configureTestingModule({
       imports: [TranslateModule.forRoot()],
       declarations: [
-        MockComponent(ProductItemComponent),
+        MockComponent(CamfilProductItemComponent),
         MockComponent(ProductLinksCarouselComponent),
         MockComponent(ProductLinksListComponent),
         ProductLinksComponent,

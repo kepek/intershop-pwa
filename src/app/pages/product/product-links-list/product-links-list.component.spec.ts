@@ -3,7 +3,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MockComponent } from 'ng-mocks';
 
 import { ProductLinkView } from 'ish-core/models/product-links/product-links.model';
-import { ProductItemComponent } from 'ish-shared/components/product/product-item/product-item.component';
+import { CamfilProductItemComponent } from 'ish-shared/components/product/camfil-product-item/camfil-product-item.component';
 
 import { ProductLinksListComponent } from './product-links-list.component';
 
@@ -15,7 +15,7 @@ describe('Product Links List Component', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [TranslateModule.forRoot()],
-      declarations: [MockComponent(ProductItemComponent), ProductLinksListComponent],
+      declarations: [MockComponent(CamfilProductItemComponent), ProductLinksListComponent],
     }).compileComponents();
   }));
 
@@ -37,7 +37,7 @@ describe('Product Links List Component', () => {
         <h2></h2>
         <div class="product-list">
           <div class="product-list-item list-view">
-            <ish-product-item ng-reflect-product-sku="sku"></ish-product-item>
+            <camfil-product-item ng-reflect-product-sku="sku"></camfil-product-item>
           </div>
         </div>
       </div>
