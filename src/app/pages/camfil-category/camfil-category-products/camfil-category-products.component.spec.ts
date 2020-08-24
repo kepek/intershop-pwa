@@ -1,5 +1,7 @@
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { NgbCollapse } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
@@ -8,10 +10,10 @@ import { MockComponent } from 'ng-mocks';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { createCategoryView } from 'ish-core/models/category-view/category-view.model';
 import { Category } from 'ish-core/models/category/category.model';
-import { findAllIshElements } from 'ish-core/utils/dev/html-query-utils';
 import { categoryTree } from 'ish-core/utils/dev/test-data-utils';
 import { CamfilBreadcrumbComponent } from 'ish-shared/components/common/camfil-breadcrumb/camfil-breadcrumb.component';
 import { CamfilFilterNavigationComponent } from 'ish-shared/components/filter/camfil-filter-navigation/camfil-filter-navigation.component';
+import { CamfilLinksBlockComponent } from 'ish-shared/components/common/camfil-links-block/camfil-links-block.component';
 import { CamfilProductListingComponent } from 'ish-shared/components/product/camfil-product-listing/camfil-product-listing.component';
 
 import { CamfilCategoryNavigationComponent } from '../camfil-category-navigation/camfil-category-navigation.component';
@@ -25,11 +27,12 @@ describe('Camfil Category Products Component', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [MatToolbarModule, TranslateModule.forRoot()],
+      imports: [BrowserAnimationsModule, MatExpansionModule, MatToolbarModule, TranslateModule.forRoot()],
       declarations: [
         CamfilCategoryProductsComponent,
         MockComponent(CamfilBreadcrumbComponent),
         MockComponent(CamfilCategoryNavigationComponent),
+        MockComponent(CamfilLinksBlockComponent),
         MockComponent(CamfilProductListingComponent),
         MockComponent(FaIconComponent),
         MockComponent(CamfilFilterNavigationComponent),
@@ -52,10 +55,11 @@ describe('Camfil Category Products Component', () => {
     expect(() => fixture.detectChanges()).not.toThrow();
   });
 
-  xit('should display all components on the page', () => {
-    expect(findAllIshElements(element)).toIncludeAllMembers([
+  it('should display all components on the page', () => {
+    expect(findAllCamfilElements(element)).toIncludeAllMembers([
       'camfil-breadcrumb',
       'camfil-product-listing',
+      'camfil-links-block',
       'camfil-filter-navigation',
     ]);
   });

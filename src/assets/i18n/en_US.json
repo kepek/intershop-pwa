@@ -2031,9 +2031,9 @@
   "product.zoom.button.label": "Zoom",
   "product.available_in_different_configuration": "Not Available",
   "camfil.product.items.label": {
-    "=0": "0 products",
-    "=1": "1 product",
-    "other": "# products"
+    "=0": "<b>0</b> products",
+    "=1": "<b>1</b> product",
+    "other": "<b>#</b> products"
   },
   "camfil.product.items.showing.text": "Showing",
   "promotion.content.file_not_found.text": "Sorry. File not found.",
@@ -2891,5 +2891,9 @@
   "user.not.authenticated": "You are not authenticated to access this page.",
   "search.noresult.filtered_products.message": "We are sorry, we could not find any products that match your filter choice.",
   "camfil.product.list.toolbar.simpleView.text": "Simple product info",
-  "camfil.product.list.toolbar.detailedView.text": "Detailed product info"
+  "camfil.product.list.toolbar.detailedView.text": "Detailed product info",
+  "camfil.product.list.toolbar.choose.option": "Choose an option",
+  "camfil.read_more.text": "Read more",
+  "camfil.show_less.text": "Show less",
+  "camfil.product.list.toolbar.quickDelivery.text": "= Quick delivery"
 }

@@ -3,14 +3,18 @@
     <li *ngIf="showHome" class="breadcrumbs-list breadcrumbs-list-home">
       <a class="breadcrumbs-list-link breadcrumbs-list-link-home" rel="home" routerLink="/home">{{
         'camfil.common.home.link' | translate
-      }}</a
-      ><span class="breadcrumbs-list-separator">{{ separator }}</span>
+      }}</a>
+      <mat-icon class="breadcrumbs-list-separator" aria-hidden="false">navigate_next</mat-icon>
+      <!-- {{ separator }} -->
     </li>
 
     <li *ngIf="account" class="breadcrumbs-list">
       <ng-container *ngIf="(trail$ | async)?.length; else AccountOverview">
         <a class="breadcrumbs-list-link" routerLink="/account">{{ 'account.my_account.link' | translate }}</a
-        ><span class="breadcrumbs-list-separator">{{ separator }}</span>
+        ><span class="breadcrumbs-list-separator">
+          <mat-icon aria-hidden="false">navigate_next</mat-icon>
+          <!-- {{ separator }} -->
+        </span>
       </ng-container>
       <ng-template #AccountOverview>
         {{ 'account.my_account.link' | translate }}
@@ -26,7 +30,8 @@
         item.text || (item.key | translate)
       }}</a>
       <ng-template #noLink>{{ item.text || (item.key | translate) }}</ng-template>
-      <span *ngIf="!last" class="breadcrumbs-list-separator">{{ separator }}</span>
+      <mat-icon *ngIf="!last" class="breadcrumbs-list-separator" aria-hidden="false">navigate_next</mat-icon>
+      <!-- {{ separator }} -->
     </li>
   </ol>
 </div>

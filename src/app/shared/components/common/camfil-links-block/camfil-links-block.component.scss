@@ -1,0 +1,13 @@
+@import '~src/styles/themes/camfil/colors';
+@import '~src/styles/themes/camfil/variables';
+
+:host {
+  display: block;
+  padding-left: 40px;
+  margin-left: $space-default * -1;
+  border-left: 1px solid $camfil-color-primary;
+
+  strong {
+    font-size: $font-size-lg;
+  }
+}

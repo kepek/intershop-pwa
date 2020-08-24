@@ -14,7 +14,7 @@
         <span>My sidebar</span>
       </mat-toolbar>
       <div class="sidebar--container">
-        <div class="" [ngbCollapse]="isCollapsed">
+        <div [ngbCollapse]="isCollapsed">
           <camfil-category-navigation [uniqueId]="category.categoryPath[0]"></camfil-category-navigation>
           <br />
           <camfil-filter-navigation [showCategoryFilter]="false"></camfil-filter-navigation>
@@ -28,24 +28,31 @@
     <div class="col-md-9">
       <div class="col-12 box-shadow box-container">
         <div class="row">
-          <div class="col-md-9">
+          <div class="col-lg-9 col-md-7">
             <h1>{{ category.name }}</h1>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut beatae perferendis, nobis nulla, tempore
-              facilis qui magni eos voluptate asperiores libero rerum dicta porro necessitatibus sed ipsam quibusdam
-              esse magnam.<br />
-              <a href="#" class="read-more">Read more</a>
+
+            <p *ngIf="tmpDescription.length < 200; else readMore">
+              {{ tmpDescription }}
             </p>
+
+            <ng-template #readMore>
+              <mat-accordion class="mat-read-more">
+                <mat-expansion-panel [expanded]="!longOpen">
+                  {{ tmpDescription | slice: 0:200 }}...
+                </mat-expansion-panel>
+                <mat-expansion-panel [expanded]="longOpen">
+                  {{ tmpDescription }}
+                </mat-expansion-panel>
+              </mat-accordion>
+              <mat-action-row>
+                <a (click)="longOpen = !longOpen">
+                  {{ (longOpen ? 'camfil.show_less.text' : 'camfil.read_more.text') | translate }}
+                </a>
+              </mat-action-row>
+            </ng-template>
           </div>
-          <div class="col-md-3">
-            <strong>
-              Guides
-              <fa-icon [icon]="['fas', 'info-circle']"></fa-icon> </strong
-            ><br />
-            <a href="#">How to measure a bag filter</a><br />
-            <a href="#">How to find the correct gasket</a><br />
-            <a href="#">Another guide here</a><br />
-            <a href="#">Another guide here</a><br />
+          <div class="col-lg-3 col-md-5">
+            <camfil-links-block title="Guides"></camfil-links-block>
           </div>
         </div>
       </div>

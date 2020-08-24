@@ -6,7 +6,10 @@ import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatSelectModule } from '@angular/material/select';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
@@ -65,6 +68,7 @@ import { BasketShippingAddressWidgetComponent } from './components/checkout/bask
 import { AccordionItemComponent } from './components/common/accordion-item/accordion-item.component';
 import { AccordionComponent } from './components/common/accordion/accordion.component';
 import { CamfilBreadcrumbComponent } from './components/common/camfil-breadcrumb/camfil-breadcrumb.component';
+import { CamfilLinksBlockComponent } from './components/common/camfil-links-block/camfil-links-block.component';
 import { ErrorMessageComponent } from './components/common/error-message/error-message.component';
 import { InfoBoxComponent } from './components/common/info-box/info-box.component';
 import { LoadingComponent } from './components/common/loading/loading.component';
@@ -141,7 +145,10 @@ const importExportModules = [
   MatCheckboxModule,
   MatChipsModule,
   MatDividerModule,
+  MatExpansionModule,
   MatIconModule,
+  MatRadioModule,
+  MatSelectModule,
   MatSliderModule,
   MatSortModule,
   MatTableModule,
@@ -222,6 +229,7 @@ const exportedComponents = [
   BasketValidationResultsComponent,
   CamfilBreadcrumbComponent,
   CamfilFilterNavigationComponent,
+  CamfilLinksBlockComponent,
   CamfilProductItemComponent,
   CamfilProductListingComponent,
   CamfilProductPriceComponent,
