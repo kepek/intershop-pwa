@@ -70,16 +70,4 @@ describe('Camfil Category Page Component', () => {
     fixture.detectChanges();
     expect(findAllCamfilElements(element)).toEqual(['camfil-category-categories']);
   });
-
-  it('should display products when category has products', () => {
-    const category = { uniqueId: 'dummy', categoryPath: ['dummy'] } as Category;
-    category.hasOnlineProducts = true;
-
-    when(shoppingFacade.selectedCategory$).thenReturn(
-      of(createCategoryView(categoryTree([category]), category.uniqueId))
-    );
-
-    fixture.detectChanges();
-    expect(findAllCamfilElements(element)).toEqual(['camfil-category-products']);
-  });
 });

@@ -1,0 +1,12 @@
+@import '~src/styles/themes/camfil/colors';
+@import '~src/styles/themes/camfil/variables';
+
+.navigation-panel {
+  z-index: $navigation-panel-index;
+  background: $white;
+
+  &--container {
+    padding: $space-box;
+    box-shadow: $navigation-panel-shadow;
+  }
+}

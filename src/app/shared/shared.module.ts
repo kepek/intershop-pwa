@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -71,6 +71,10 @@ import { LoadingComponent } from './components/common/loading/loading.component'
 import { ModalDialogLinkComponent } from './components/common/modal-dialog-link/modal-dialog-link.component';
 import { ModalDialogComponent } from './components/common/modal-dialog/modal-dialog.component';
 import { CamfilFilterAppliedComponent } from './components/filter/camfil-filter-applied/camfil-filter-applied.component';
+import { CamfilFilterCollapsableComponent } from './components/filter/camfil-filter-collapsable/camfil-filter-collapsable.component';
+import { CamfilFilterDropdownComponent } from './components/filter/camfil-filter-dropdown/camfil-filter-dropdown.component';
+import { CamfilFilterNavigationComponent } from './components/filter/camfil-filter-navigation/camfil-filter-navigation.component';
+import { CamfilFilterTextComponent } from './components/filter/camfil-filter-text/camfil-filter-text.component';
 import { FilterCheckboxComponent } from './components/filter/filter-checkbox/filter-checkbox.component';
 import { FilterCollapsableComponent } from './components/filter/filter-collapsable/filter-collapsable.component';
 import { FilterDropdownComponent } from './components/filter/filter-dropdown/filter-dropdown.component';
@@ -128,6 +132,7 @@ const importExportModules = [
   FeatureToggleModule,
   FormlyModule,
   FormsDynamicModule,
+  FormsModule,
   FormsSharedModule,
   IconModule,
   InfiniteScrollModule,
@@ -170,6 +175,9 @@ const declaredComponents = [
   CMSTextComponent,
   CMSVideoComponent,
   CamfilFilterAppliedComponent,
+  CamfilFilterCollapsableComponent,
+  CamfilFilterDropdownComponent,
+  CamfilFilterTextComponent,
   CamfilProductItemDetailedComponent,
   CamfilProductItemSimpleComponent,
   CamfilProductListComponent,
@@ -179,6 +187,7 @@ const declaredComponents = [
   FilterCollapsableComponent,
   FilterDropdownComponent,
   FilterNavigationBadgesComponent,
+  FilterNavigationComponent,
   FilterNavigationHorizontalComponent,
   FilterNavigationSidebarComponent,
   FilterSwatchImagesComponent,
@@ -212,13 +221,13 @@ const exportedComponents = [
   BasketShippingAddressWidgetComponent,
   BasketValidationResultsComponent,
   CamfilBreadcrumbComponent,
+  CamfilFilterNavigationComponent,
   CamfilProductItemComponent,
   CamfilProductListingComponent,
   CamfilProductPriceComponent,
   ContentIncludeComponent,
   ContentPageletComponent,
   ErrorMessageComponent,
-  FilterNavigationComponent,
   InfoBoxComponent,
   LineItemListComponent,
   LoadingComponent,
@@ -234,6 +243,7 @@ const exportedComponents = [
   ProductIdComponent,
   ProductInventoryComponent,
   ProductLabelComponent,
+  ProductPriceComponent,
   ProductPromotionComponent,
   ProductQuantityComponent,
   ProductRatingComponent,

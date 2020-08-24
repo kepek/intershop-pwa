@@ -1,14 +1,14 @@
 <div *ngIf="filterNavigation" class="filter-panel">
   <div *ngFor="let element of filterNavigation.filter" [ngSwitch]="element.displayType">
-    <ish-filter-collapsable [title]="element.name" [(collapsed)]="collapsedElements[element.name]">
+    <camfil-filter-collapsable [title]="element.name" [(collapsed)]="collapsedElements[element.name]">
       <!-- default: text & text_clear -->
-      <ish-filter-text
+      <camfil-filter-text
         *ngSwitchDefault
         [filterElement]="element"
         (applyFilter)="applyFilter.emit($event)"
         [(showAll)]="showAllElements[element.name]"
       >
-      </ish-filter-text>
+      </camfil-filter-text>
 
       <!-- checkbox -->
       <ish-filter-checkbox
@@ -30,14 +30,14 @@
       <!-- dropdown -->
       <ng-container *ngSwitchCase="'dropdown'">
         <div class="filter-dropdown">
-          <ish-filter-dropdown
+          <camfil-filter-dropdown
             [filterElement]="element"
             [placeholderType]="'selectedFacets'"
             (applyFilter)="applyFilter.emit($event)"
           >
-          </ish-filter-dropdown>
+          </camfil-filter-dropdown>
         </div>
       </ng-container>
-    </ish-filter-collapsable>
+    </camfil-filter-collapsable>
   </div>
 </div>

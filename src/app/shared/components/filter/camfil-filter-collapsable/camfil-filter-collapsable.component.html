@@ -1,0 +1,9 @@
+<div class="filter-group" [ngClass]="{ collapsed: isCollapsed }">
+  <h3 (click)="toggle()" [attr.aria-expanded]="!isCollapsed" aria-controls="collapseFilter">
+    {{ title }}
+    <mat-icon *ngIf="isCollapsed" class="float-right">add</mat-icon>
+    <mat-icon *ngIf="!isCollapsed" class="float-right">remove</mat-icon>
+  </h3>
+
+  <ng-content></ng-content>
+</div>

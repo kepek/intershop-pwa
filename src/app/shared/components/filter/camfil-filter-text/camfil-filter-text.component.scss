@@ -1,0 +1,25 @@
+:host {
+  li {
+    padding: 0;
+  }
+
+  a {
+    display: flex !important;
+    align-items: center;
+    justify-content: space-between;
+    height: 40px;
+    border-bottom: 1px solid #ebebeb;
+
+    .mat-checkbox {
+      height: 18px;
+      pointer-events: none;
+    }
+
+    ::ng-deep {
+      .mat-checkbox-inner-container {
+        width: 18px;
+        height: 18px;
+      }
+    }
+  }
+}

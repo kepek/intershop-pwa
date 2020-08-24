@@ -34,6 +34,11 @@ export class AppFacade {
   generalErrorType$ = this.store.pipe(select(getGeneralErrorType));
   breadcrumbData$ = this.store.pipe(select(getBreadcrumbData));
 
+  breadcrumbCategoryNames$ = this.store.pipe(
+    select(getBreadcrumbData),
+    map(item => item.map(element => element.text))
+  );
+
   appWrapperClasses$ = combineLatest([
     this.store.pipe(select(getWrapperClass)),
     this.store.pipe(

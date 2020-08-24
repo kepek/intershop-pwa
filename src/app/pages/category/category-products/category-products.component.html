@@ -8,7 +8,7 @@
       <div class="navigation-panel" [ngbCollapse]="isCollapsed">
         <camfil-category-navigation [uniqueId]="category.categoryPath[0]"></camfil-category-navigation>
         <br />
-        <ish-filter-navigation [showCategoryFilter]="false"></ish-filter-navigation>
+        <camfil-filter-navigation [showCategoryFilter]="false"></camfil-filter-navigation>
       </div>
       <a class="d-md-none mobile-filter-toggle" (click)="toggle()">
         {{ 'search.mobile.filter.trigger' | translate }}

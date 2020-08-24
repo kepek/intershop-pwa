@@ -1,0 +1,22 @@
+@import '~src/styles/themes/camfil/colors';
+
+:host {
+  ::ng-deep {
+    .filter-panel {
+      position: relative;
+      padding-top: 20px;
+      padding-right: 0;
+
+      &::before {
+        position: absolute;
+        top: 0;
+        right: -16px;
+        left: -16px;
+        display: block;
+        height: 1px;
+        content: '';
+        background-color: $greyD9;
+      }
+    }
+  }
+}
