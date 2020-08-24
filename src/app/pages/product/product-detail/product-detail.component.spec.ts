@@ -21,6 +21,8 @@ import { ProductVariationSelectComponent } from 'ish-shared/components/product/p
 
 import { LazyProductAddToOrderTemplateComponent } from '../../../extensions/order-templates/exports/lazy-product-add-to-order-template/lazy-product-add-to-order-template.component';
 import { LazyProductAddToQuoteComponent } from '../../../extensions/quoting/exports/lazy-product-add-to-quote/lazy-product-add-to-quote.component';
+import { IsTactonProductDirective } from '../../../extensions/tacton/directives/is-tacton-product.directive';
+import { LazyTactonConfigureProductComponent } from '../../../extensions/tacton/exports/lazy-tacton-configure-product/lazy-tacton-configure-product.component';
 import { ProductDetailActionsComponent } from '../product-detail-actions/product-detail-actions.component';
 import { ProductImagesComponent } from '../product-images/product-images.component';
 
@@ -50,6 +52,7 @@ describe('Product Detail Component', () => {
         MockComponent(CamfilProductPriceComponent),
         MockComponent(LazyProductAddToOrderTemplateComponent),
         MockComponent(LazyProductAddToQuoteComponent),
+        MockComponent(LazyTactonConfigureProductComponent),
         MockComponent(ProductAddToBasketComponent),
         MockComponent(ProductAttributesComponent),
         MockComponent(ProductDetailActionsComponent),
@@ -62,6 +65,7 @@ describe('Product Detail Component', () => {
         MockComponent(ProductShipmentComponent),
         MockComponent(ProductVariationSelectComponent),
         MockDirective(FeatureToggleDirective),
+        MockDirective(IsTactonProductDirective),
         ProductDetailComponent,
       ],
     })
