@@ -10,14 +10,10 @@
           >
             <span>{{ category.name }}</span>
             <ng-container *ngIf="!user.includes(category.name)">
-              <fa-icon
-                *ngIf="category.uniqueId !== currentCategoryId && category.hasChildren"
-                [icon]="['fas', 'plus']"
-                [styles]="{ stroke: 'transparent' }"
-              ></fa-icon>
+              <mat-icon *ngIf="category.uniqueId !== currentCategoryId && category.hasChildren">add</mat-icon>
             </ng-container>
             <ng-container *ngIf="user.includes(category.name) && category.hasChildren">
-              <fa-icon [icon]="['fas', 'minus']" [styles]="{ stroke: 'transparent' }"></fa-icon>
+              <mat-icon>remove</mat-icon>
             </ng-container>
           </a>
         </ng-container>

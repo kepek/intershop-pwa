@@ -8,7 +8,6 @@ import { URLFormParams } from 'ish-core/utils/url-form-params';
   selector: 'camfil-filter-dropdown',
   templateUrl: './camfil-filter-dropdown.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  styleUrls: ['./camfil-filter-dropdown.component.scss'],
 })
 export class CamfilFilterDropdownComponent implements OnInit {
   @Input() filterElement: Filter;
