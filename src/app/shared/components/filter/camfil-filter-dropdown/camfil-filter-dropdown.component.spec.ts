@@ -4,18 +4,16 @@ import { MockComponent } from 'ng-mocks';
 
 import { Facet } from 'ish-core/models/facet/facet.model';
 import { Filter } from 'ish-core/models/filter/filter.model';
-import { MatCheckboxModule } from '@angular/material/checkbox';
 
 import { CamfilFilterDropdownComponent } from './camfil-filter-dropdown.component';
 
-describe('Filter Dropdown Component', () => {
+describe('Camfil Filter Dropdown Component', () => {
   let component: CamfilFilterDropdownComponent;
   let fixture: ComponentFixture<CamfilFilterDropdownComponent>;
   let element: HTMLElement;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [MatCheckboxModule],
       declarations: [CamfilFilterDropdownComponent, MockComponent(FaIconComponent)],
     }).compileComponents();
   }));

@@ -45,3 +45,4 @@ Dockerfile*
 /charts/**/templates/*
 *~
 /src/environments/environment.local.ts
+.run

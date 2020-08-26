@@ -1,8 +1,6 @@
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { MockComponent } from 'ng-mocks';
 
-import { FilterNavigation } from 'ish-core/models/filter-navigation/filter-navigation.model';
-import { Filter } from 'ish-core/models/filter/filter.model';
 import { findAllIshElements } from 'ish-core/utils/dev/html-query-utils';
 import { CamfilFilterCollapsableComponent } from 'ish-shared/components/filter/camfil-filter-collapsable/camfil-filter-collapsable.component';
 import { CamfilFilterDropdownComponent } from 'ish-shared/components/filter/camfil-filter-dropdown/camfil-filter-dropdown.component';

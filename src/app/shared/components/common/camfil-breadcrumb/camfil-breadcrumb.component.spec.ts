@@ -3,7 +3,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { of } from 'rxjs';
 import { instance, mock, when } from 'ts-mockito';
-import {MatIconModule} from '@angular/material/icon';
+
 import { AppFacade } from 'ish-core/facades/app.facade';
 
 import { CamfilBreadcrumbComponent } from './camfil-breadcrumb.component';
@@ -19,7 +19,7 @@ describe('Camfil Breadcrumb Component', () => {
     appFacade = mock(AppFacade);
     TestBed.configureTestingModule({
       declarations: [CamfilBreadcrumbComponent],
-      imports: [RouterTestingModule, MatIconModule, TranslateModule.forRoot()],
+      imports: [RouterTestingModule, TranslateModule.forRoot()],
       providers: [{ provide: AppFacade, useFactory: () => instance(appFacade) }],
     });
     fixture = TestBed.createComponent(CamfilBreadcrumbComponent);
@@ -43,13 +43,13 @@ describe('Camfil Breadcrumb Component', () => {
     it('should render trail from home and trail with translation keys if set', () => {
       when(appFacade.breadcrumbData$).thenReturn(of([{ key: 'KEY' }, { key: 'KEY2' }]));
       fixture.detectChanges();
-      expect(element.textContent).toMatchInlineSnapshot(`"camfil.common.home.link❭KEY❭KEY2"`);
+      expect(element.textContent).toMatchInlineSnapshot(`"camfil.common.home.linknavigate_nextKEYnavigate_nextKEY2"`);
     });
 
     it('should render trail from home and trail with text if set', () => {
       when(appFacade.breadcrumbData$).thenReturn(of([{ text: 'TEXT' }, { text: 'TEXT2' }]));
       fixture.detectChanges();
-      expect(element.textContent).toMatchInlineSnapshot(`"camfil.common.home.link❭TEXT❭TEXT2"`);
+      expect(element.textContent).toMatchInlineSnapshot(`"camfil.common.home.linknavigate_nextTEXTnavigate_nextTEXT2"`);
     });
 
     it('should render trail from home and with link if set', () => {
@@ -60,7 +60,7 @@ describe('Camfil Breadcrumb Component', () => {
         ])
       );
       fixture.detectChanges();
-      expect(element.textContent).toMatchInlineSnapshot(`"camfil.common.home.link❭L1❭L2"`);
+      expect(element.textContent).toMatchInlineSnapshot(`"camfil.common.home.linknavigate_nextL1navigate_nextL2"`);
     });
   });
 
@@ -70,14 +70,16 @@ describe('Camfil Breadcrumb Component', () => {
       component.account = true;
       when(appFacade.breadcrumbData$).thenReturn(of([{ key: 'account.order_history.link' }]));
       fixture.detectChanges();
-      expect(element.textContent).toMatchInlineSnapshot(`"My Account❭Orders"`);
+      expect(element.textContent).toMatchInlineSnapshot(`"My Accountnavigate_nextOrders"`);
     });
 
     it('should render breadcrumbtrail from home and account and trail when account is active', () => {
       component.account = true;
       when(appFacade.breadcrumbData$).thenReturn(of([{ key: 'account.order_history.link' }]));
       fixture.detectChanges();
-      expect(element.textContent).toMatchInlineSnapshot(`"camfil.common.home.link❭My Account❭Orders"`);
+      expect(element.textContent).toMatchInlineSnapshot(
+        `"camfil.common.home.linknavigate_nextMy Accountnavigate_nextOrders"`
+      );
       expect(element.textContent).toContain('My Account');
     });
   });

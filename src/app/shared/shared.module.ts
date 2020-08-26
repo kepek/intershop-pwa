@@ -1,19 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatChipsModule } from '@angular/material/chips';
-import { MatDividerModule } from '@angular/material/divider';
-import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
-import { MatSliderModule } from '@angular/material/slider';
-import { MatSortModule } from '@angular/material/sort';
-import { MatTableModule } from '@angular/material/table';
-import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterModule } from '@angular/router';
 import {
   NgbCarouselModule,
@@ -140,19 +132,6 @@ const importExportModules = [
   FormsSharedModule,
   IconModule,
   InfiniteScrollModule,
-  MatButtonModule,
-  MatCardModule,
-  MatCheckboxModule,
-  MatChipsModule,
-  MatDividerModule,
-  MatExpansionModule,
-  MatIconModule,
-  MatRadioModule,
-  MatSelectModule,
-  MatSliderModule,
-  MatSortModule,
-  MatTableModule,
-  MatToolbarModule,
   NgbCarouselModule,
   NgbCollapseModule,
   NgbDropdownModule,
@@ -264,7 +243,7 @@ const exportedComponents = [
 ];
 
 @NgModule({
-  imports: [...importExportModules],
+  imports: [...importExportModules, MatCardModule, MatChipsModule, MatIconModule, MatRadioModule, MatSelectModule],
   declarations: [...declaredComponents, ...exportedComponents],
   exports: [...exportedComponents, ...importExportModules],
 })

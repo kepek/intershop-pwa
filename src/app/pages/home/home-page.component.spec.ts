@@ -1,14 +1,5 @@
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatChipsModule } from '@angular/material/chips';
-import { MatDividerModule } from '@angular/material/divider';
-import { MatIconModule } from '@angular/material/icon';
-import { MatSliderModule } from '@angular/material/slider';
-import { MatSortModule } from '@angular/material/sort';
-import { MatTableModule } from '@angular/material/table';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MockComponent } from 'ng-mocks';
 
@@ -24,19 +15,7 @@ describe('Home Page Component', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [HomePageComponent, MockComponent(ContentIncludeComponent)],
-      imports: [
-        BrowserAnimationsModule,
-        FormsModule,
-        MatButtonModule,
-        MatCardModule,
-        MatCheckboxModule,
-        MatChipsModule,
-        MatDividerModule,
-        MatIconModule,
-        MatSliderModule,
-        MatSortModule,
-        MatTableModule,
-      ],
+      imports: [BrowserAnimationsModule, FormsModule],
     }).compileComponents();
   }));
 

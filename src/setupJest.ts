@@ -4,10 +4,15 @@ require('jest-preset-angular');
 require('jest-extended');
 
 import { getTestBed } from '@angular/core/testing';
+import { MaterialModule } from 'camfil-shared/material/material.module';
 
 beforeEach(() => {
+  const testBed = getTestBed();
   // tslint:disable-next-line: no-any
-  getTestBed().configureCompiler({ preserveWhitespaces: false } as any);
+  testBed.configureCompiler({ preserveWhitespaces: false } as any);
+  testBed.configureTestingModule({
+    imports: [MaterialModule],
+  });
 
   jest.spyOn(global.console, 'warn').mockImplementation(arg => {
     if (typeof arg !== 'string' || !arg.startsWith('Navigation triggered outside Angular zone')) {

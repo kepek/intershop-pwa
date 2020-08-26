@@ -14,7 +14,7 @@ import { FilterNavigationSidebarComponent } from 'ish-shared/components/filter/f
 
 import { CamfilFilterNavigationComponent } from './camfil-filter-navigation.component';
 
-describe('Filter Navigation Component', () => {
+describe('Camfil Filter Navigation Component', () => {
   let component: CamfilFilterNavigationComponent;
   let fixture: ComponentFixture<CamfilFilterNavigationComponent>;
   let element: HTMLElement;

@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { MatIconModule } from '@angular/material/icon';
 
 import { CamfilLinksBlockComponent } from './camfil-links-block.component';
 
@@ -10,7 +9,6 @@ describe('Camfil Links Block Component', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [MatIconModule],
       declarations: [CamfilLinksBlockComponent],
     }).compileComponents();
   }));

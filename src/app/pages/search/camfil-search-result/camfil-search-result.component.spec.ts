@@ -22,9 +22,9 @@ describe('Camfil Search Result Component', () => {
       declarations: [
         CamfilSearchResultComponent,
         MockComponent(CamfilBreadcrumbComponent),
+        MockComponent(CamfilFilterNavigationComponent),
         MockComponent(CamfilProductListingComponent),
         MockComponent(FaIconComponent),
-        MockComponent(CamfilFilterNavigationComponent),
         MockComponent(NgbCollapse),
       ],
     }).compileComponents();
