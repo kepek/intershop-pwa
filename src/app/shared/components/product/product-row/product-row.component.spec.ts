@@ -4,7 +4,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { MockComponent, MockDirective, MockPipe } from 'ng-mocks';
 
-import { FeatureToggleDirective } from 'ish-core/directives/feature-toggle.directive';
+import { FeatureToggleModule } from 'ish-core/feature-toggle.module';
 import { ProductView } from 'ish-core/models/product-view/product-view.model';
 import { ProductRoutePipe } from 'ish-core/routing/product/product-route.pipe';
 import { findAllIshElements } from 'ish-core/utils/dev/html-query-utils';
@@ -37,7 +37,7 @@ describe('Product Row Component', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ReactiveFormsModule, RouterTestingModule, TranslateModule.forRoot()],
+      imports: [FeatureToggleModule.forTesting(), ReactiveFormsModule, RouterTestingModule, TranslateModule.forRoot()],
       declarations: [
         MockComponent(CamfilProductPriceComponent),
         MockComponent(LazyProductAddToOrderTemplateComponent),
@@ -55,7 +55,6 @@ describe('Product Row Component', () => {
         MockComponent(ProductRatingComponent),
         MockComponent(ProductShipmentComponent),
         MockComponent(ProductVariationSelectComponent),
-        MockDirective(FeatureToggleDirective),
         MockDirective(IsTactonProductDirective),
         MockPipe(ProductRoutePipe),
         ProductRowComponent,
@@ -88,6 +87,7 @@ describe('Product Row Component', () => {
         "ish-product-inventory",
         "ish-product-label",
         "ish-product-promotion",
+        "ish-product-quantity",
       ]
     `);
   });
