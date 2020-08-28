@@ -36,7 +36,7 @@ export class AppFacade {
 
   breadcrumbCategoryNames$ = this.store.pipe(
     select(getBreadcrumbData),
-    map(item => item.map(element => element.text))
+    map(item => item && item.map(element => element.text))
   );
 
   appWrapperClasses$ = combineLatest([
