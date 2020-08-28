@@ -15,8 +15,8 @@ import { LanguageSwitchComponent } from 'ish-shell/header/language-switch/langua
 import { LoginStatusComponent } from 'ish-shell/header/login-status/login-status.component';
 import { UserInformationMobileComponent } from 'ish-shell/header/user-information-mobile/user-information-mobile.component';
 
-import { LazyHeaderQuickorderComponent } from '../../../extensions/quickorder/exports/header/lazy-header-quickorder/lazy-header-quickorder.component';
-import { LazyWishlistsLinkComponent } from '../../../extensions/wishlists/exports/wishlists/lazy-wishlists-link/lazy-wishlists-link.component';
+import { LazyHeaderQuickorderComponent } from '../../../extensions/quickorder/exports/lazy-header-quickorder/lazy-header-quickorder.component';
+import { LazyWishlistsLinkComponent } from '../../../extensions/wishlists/exports/lazy-wishlists-link/lazy-wishlists-link.component';
 
 import { CamfilHeaderDefaultComponent } from './camfil-header-default.component';
 
