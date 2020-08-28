@@ -106,7 +106,7 @@ export const ENVIRONMENT_DEFAULTS: Environment = {
   mediumBreakpointWidth: 768,
   largeBreakpointWidth: 992,
   extralargeBreakpointWidth: 1200,
-  mainNavigationMaxSubCategoriesDepth: 2,
+  mainNavigationMaxSubCategoriesDepth: 5,
   productListingItemsPerPage: 9,
   defaultProductListingViewType: 'simple',
   defaultDeviceType: 'mobile',
