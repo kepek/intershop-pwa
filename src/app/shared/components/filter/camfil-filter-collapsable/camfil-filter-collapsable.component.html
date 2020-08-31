@@ -5,5 +5,5 @@
     <mat-icon *ngIf="!isCollapsed" class="float-right">remove</mat-icon>
   </h3>
 
-  <ng-content></ng-content>
+  <ng-content *ngIf="!isCollapsed"></ng-content>
 </div>

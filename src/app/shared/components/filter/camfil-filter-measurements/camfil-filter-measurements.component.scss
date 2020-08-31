@@ -1,0 +1,54 @@
+@import '~src/styles/themes/camfil/colors';
+@import '~src/styles/themes/camfil/variables';
+
+:host {
+  ::ng-deep {
+    .filter-group {
+      position: relative;
+
+      &::before {
+        position: absolute;
+        top: -16px;
+        right: -16px;
+        bottom: -16px;
+        left: -16px;
+        z-index: -1;
+        display: block;
+        content: '';
+        background-color: $greyF5;
+      }
+    }
+  }
+}
+.form {
+  display: flex;
+  align-items: flex-start;
+  height: 80px;
+  padding-left: 8px;
+  margin: 0 -8px;
+  border-left: 2px solid $camfil-color-primary;
+}
+
+input {
+  display: inline-block;
+  max-width: 70px;
+  height: 32px;
+  text-align: center;
+  border: 0;
+}
+
+label {
+  margin-bottom: 0;
+  font-weight: 700;
+
+  span {
+    font-weight: 500;
+    color: $grey88;
+  }
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin: 8px;
+}
