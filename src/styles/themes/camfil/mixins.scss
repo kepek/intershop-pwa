@@ -39,3 +39,23 @@
     border-width: $sizeH $sizeV 0 0;
   }
 }
+
+@mixin nav-back-separator($location, $color: $greyD9) {
+  position: relative;
+
+  &::before {
+    position: absolute;
+    top: 8px;
+    width: 1px;
+    height: 24px;
+    content: '';
+    background: $color;
+
+    @if $location == right {
+      right: 0;
+    }
+    @if $location == left {
+      left: 0;
+    }
+  }
+}

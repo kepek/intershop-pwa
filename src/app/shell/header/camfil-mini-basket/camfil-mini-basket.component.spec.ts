@@ -83,7 +83,7 @@ describe('Camfil Mini Basket Component', () => {
   it('should display summary when collapsed', () => {
     fixture.detectChanges();
     expect(element.textContent.replace(/ /g, '')).toMatchInlineSnapshot(
-      `"camfil.shopping_cart.ministatus.items.label30/$141,796.98"`
+      `"  camfil.shopping_cart.ministatus.items.label  30/$141,796.98"`
     );
   });
 
@@ -91,7 +91,7 @@ describe('Camfil Mini Basket Component', () => {
     component.open();
     fixture.detectChanges();
     expect(element.textContent.replace(/ /g, '')).toMatchInlineSnapshot(
-      `"camfil.shopping_cart.ministatus.items.label30/$141,796.98pliname$3.00x10pliname$3.00x10pliname$3.00x10VIEWCART"`
+      `"  camfil.shopping_cart.ministatus.items.label  30/$141,796.98pliname$3.00x10pliname$3.00x10pliname$3.00x10VIEWCART"`
     );
   });
 

@@ -1,27 +1,26 @@
 @import '~src/styles/themes/camfil/colors.scss';
+@import '~src/styles/themes/camfil/variables.scss';
 
 .quick-cart-link {
-  margin-left: 5px;
-  background: unset;
+  padding: 0;
 
+  &,
   &.mini-cart-active {
     background: unset;
   }
 
-  ::ng-deep .header-icon {
-    svg {
-      width: 14px;
-      height: 14px;
-      margin-top: -3px;
+  @media (max-width: $screen-sm-max) {
+    height: $top-header-height-mobile;
+    .mat-button-wrapper {
+      display: flex;
+      align-items: center;
     }
   }
 
   .counter {
-    position: static;
     display: inline-block;
     width: 24px;
     height: 24px;
-    margin-left: 13px;
     font-size: 14px;
     line-height: 1.8;
     color: $grey88;

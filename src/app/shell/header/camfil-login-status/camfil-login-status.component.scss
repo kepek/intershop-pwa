@@ -1,0 +1,27 @@
+@import '~src/styles/themes/camfil/colors.scss';
+@import '~src/styles/themes/camfil/mixins.scss';
+@import '~src/styles/themes/camfil/variables.scss';
+
+:host {
+  padding: 0 $space-box;
+  font-size: $font-size-sm;
+  font-weight: 300;
+  line-height: $top-header-height;
+  white-space: nowrap;
+  background-color: $greyC9;
+
+  @media (max-width: $screen-sm-max) {
+    line-height: $top-header-height-mobile;
+  }
+
+  &::after {
+    @include triangle(right, 4px, 4px, $camfil-color-primary);
+
+    display: inline-block;
+    margin-left: $space-box;
+  }
+
+  .mat-icon {
+    margin-right: $space-box / 2;
+  }
+}

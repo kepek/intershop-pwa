@@ -1,10 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
 import { NgbCollapseModule, NgbDropdownModule, NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 import { DeferLoadModule } from '@trademe/ng-defer-load';
+import { IconModule as CamfilIconModule } from 'camfil-shared/icon/icon.module';
+import { MaterialModule } from 'camfil-shared/material/material.module';
 
 import { AuthorizationToggleModule } from 'ish-core/authorization-toggle.module';
 import { DirectivesModule } from 'ish-core/directives.module';
@@ -22,11 +25,15 @@ import { WishlistsExportsModule } from '../extensions/wishlists/exports/wishlist
 import { CamfilFooterComponent } from './footer/camfil-footer/camfil-footer.component';
 import { FooterComponent } from './footer/footer/footer.component';
 import { CamfilHeaderDefaultComponent } from './header/camfil-header-default/camfil-header-default.component';
+import { CamfilHeaderNavigationComponent } from './header/camfil-header-navigation/camfil-header-navigation.component';
 import { CamfilHeaderComponent } from './header/camfil-header/camfil-header.component';
+import { CamfilLanguageSwitchComponent } from './header/camfil-language-switch/camfil-language-switch.component';
+import { CamfilLoginStatusComponent } from './header/camfil-login-status/camfil-login-status.component';
 import { CamfilMiniBasketComponent } from './header/camfil-mini-basket/camfil-mini-basket.component';
 import { CamfilProductCompareStatusComponent } from './header/camfil-product-compare-status/camfil-product-compare-status.component';
 import { CamfilProductImageComponent } from './header/camfil-product-image/camfil-product-image.component';
 import { CamfilSearchBoxComponent } from './header/camfil-search-box/camfil-search-box.component';
+import { CamfilUserLinksComponent } from './header/camfil-user-links/camfil-user-links.component';
 import { HeaderCheckoutComponent } from './header/header-checkout/header-checkout.component';
 import { HeaderDefaultComponent } from './header/header-default/header-default.component';
 import { HeaderNavigationComponent } from './header/header-navigation/header-navigation.component';
@@ -62,11 +69,14 @@ const exportedComponents = [
   imports: [
     ...importExportModules,
     AuthorizationToggleModule,
+    CamfilIconModule,
     CommonModule,
     DeferLoadModule,
     FeatureToggleModule,
     IconModule,
     MatButtonModule,
+    MatIconModule,
+    MaterialModule,
     NgbCollapseModule,
     NgbDropdownModule,
     NgbModalModule,
@@ -77,8 +87,12 @@ const exportedComponents = [
   declarations: [
     ...exportedComponents,
     CamfilHeaderDefaultComponent,
+    CamfilHeaderNavigationComponent,
+    CamfilLanguageSwitchComponent,
+    CamfilLoginStatusComponent,
     CamfilMiniBasketComponent,
     CamfilProductCompareStatusComponent,
+    CamfilUserLinksComponent,
     FooterComponent,
     HeaderCheckoutComponent,
     HeaderComponent,

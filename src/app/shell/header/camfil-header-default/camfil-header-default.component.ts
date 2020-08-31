@@ -1,6 +1,6 @@
-import { ChangeDetectionStrategy, Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnChanges } from '@angular/core';
 
-import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
+import { DeviceType, NextOpenLevelOnMobileNavType } from 'ish-core/models/viewtype/viewtype.types';
 
 type CollapsibleComponent = 'search' | 'navbar' | 'minibasket';
 
@@ -21,47 +21,42 @@ type CollapsibleComponent = 'search' | 'navbar' | 'minibasket';
 @Component({
   selector: 'camfil-header-default',
   templateUrl: './camfil-header-default.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['./camfil-header-default.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CamfilHeaderDefaultComponent implements OnChanges {
   @Input() isSticky = false;
   @Input() deviceType: DeviceType;
   @Input() reset: void;
 
-  activeComponent: CollapsibleComponent = 'search';
+  activeComponent: CollapsibleComponent = undefined;
+  nextOpenLevelOnMobileNav: NextOpenLevelOnMobileNavType = '';
 
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes.reset) {
-      this.activeComponent = 'search';
-    }
+  ngOnChanges() {
+    this.activeComponent = 'search';
     this.toggleSpecialStatusOfSearch();
   }
 
   get showSearch() {
-    return (
-      this.activeComponent === 'search' &&
-      // always show for sticky header
-      (this.deviceType === 'mobile' || this.isSticky)
-    );
+    return (this.deviceType === 'mobile' && this.activeComponent !== 'navbar') || this.activeComponent === 'search';
   }
 
   get showNavBar() {
     return (
-      this.activeComponent === 'navbar' ||
-      // always show for desktop
+      // always show for desktop and tablet
       this.deviceType === 'desktop' ||
-      // always show for tablet on top
-      (this.deviceType === 'tablet' && !this.isSticky)
+      this.deviceType === 'tablet' ||
+      // always show for mobile on top
+      (this.deviceType === 'mobile' && this.activeComponent === 'navbar')
     );
   }
 
   get showDesktopLogoLink() {
-    return (!this.isSticky && this.deviceType === 'tablet') || this.deviceType === 'desktop';
+    return this.deviceType === 'tablet' || this.deviceType === 'desktop';
   }
 
   get showMobileLogoLink() {
-    return (this.isSticky && this.deviceType !== 'desktop') || this.deviceType === 'mobile';
+    return this.deviceType === 'mobile';
   }
 
   private toggleSpecialStatusOfSearch() {
@@ -76,11 +71,10 @@ export class CamfilHeaderDefaultComponent implements OnChanges {
   }
 
   toggle(component: CollapsibleComponent) {
-    if (this.activeComponent === component) {
-      // activate search bar when on top and no other is active
-      this.activeComponent = !this.isSticky ? 'search' : undefined;
-    } else {
-      this.activeComponent = component;
-    }
+    this.activeComponent = this.activeComponent === component ? 'search' : component;
+  }
+
+  isClosedNav(value: NextOpenLevelOnMobileNavType) {
+    this.nextOpenLevelOnMobileNav = value;
   }
 }

@@ -1,106 +1,87 @@
 @import '~src/styles/themes/camfil/colors.scss';
 @import '~src/styles/themes/camfil/mixins.scss';
+@import '~src/styles/themes/camfil/variables.scss';
 
-.user-links {
-  li {
-    position: relative;
-    padding: 12px 16px;
-    font-family: 'Source Sans Pro', sans-serif;
-    font-size: 12px;
-    font-weight: 300;
-    line-height: 16px;
-    color: $greyF9;
-    text-transform: none;
+:host {
+  header & .header {
+    background: transparent;
 
-    &::after {
-      position: absolute;
-      top: 12px;
-      right: 0;
-      display: block;
-      width: 0;
-      width: 1px;
-      height: 16px;
-      content: '';
-      background-color: $camfil-color-white;
-      opacity: 0.6;
-    }
-  }
+    .navbar-toggler {
+      order: 0;
+      margin: 0 $space-box 0 0;
+      color: $primary;
 
-  .dropdown {
-    color: #333;
-    background-color: $greyC9;
-
-    &::after {
-      @include triangle(bottom, 4px, 4px, $camfil-color-primary);
-
-      position: relative;
-      top: -2px;
-      display: inline-block;
-      margin-left: 4px;
-      content: '';
-      background-color: unset;
-    }
-  }
-}
-
-.language-switch-container {
-  padding: 11px 16px;
-  font-family: 'Source Sans Pro', sans-serif;
-  font-size: 12px;
-  font-weight: 300;
-  line-height: 16px;
-  text-transform: none;
-  background-color: $greyC9;
-
-  &::after {
-    @include triangle(right, 4px, 4px, $camfil-color-primary);
-
-    position: static;
-    display: inline-block;
-    margin-left: 15px;
-    content: '';
-    background-color: unset;
-  }
-
-  a {
-    color: $camfil-text-color-primary;
-  }
-}
-
-:host ::ng-deep .main-navigation {
-  height: 50px;
-
-  .main-navigation-list {
-    a {
-      font-size: 14px;
-      font-weight: 600;
-      color: $camfil-color-primary;
-      text-transform: none;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-    }
-
-    > li {
-      &.dropdown {
-        padding: 0 20px;
-        line-height: 50px;
+      @media (max-width: $screen-xs) {
+        margin-right: $space-box / 2;
       }
     }
-  }
 
-  .sticky-header & {
-    height: 40px;
+    .logo-wrapper {
+      padding: 0;
 
-    .main-navigation-list {
-      > li {
-        &.dropdown {
-          line-height: 40px;
+      .mat-icon {
+        &.logo {
+          position: relative;
+          width: $logo-width;
+          height: $logo-height;
+          background: none;
+
+          &--cart {
+            width: 80px;
+            height: 80px;
+            margin-left: $space-box;
+          }
+        }
+      }
+      .mobile-logo {
+        margin: 0;
+        background-size: $logo-mobile-width;
+
+        @media (max-width: $screen-xs) {
+          width: $logo-mobile-width - 20;
+          background-size: $logo-mobile-width - 20;
+        }
+
+        @media (min-width: $screen-md-min) {
+          margin: $space-box / 2 0;
         }
       }
     }
-  }
-}
 
-:host ::ng-deep .navbar-nav {
-  border-top: 1px solid $greyEF;
+    .search-container {
+      order: 10;
+      margin: $space-box / 2 0;
+      @media (min-width: $screen-md-max) {
+        order: inherit;
+        padding: 0;
+      }
+    }
+
+    .sticky-header & {
+      @media (min-width: $screen-md-min) {
+        align-items: center;
+      }
+    }
+
+    .header-utility {
+      line-height: $top-header-height-mobile;
+      background: transparent;
+    }
+  }
+
+  .sticky-header & .global-nav-container {
+    @media (max-width: $screen-sm-max) {
+      top: 90px;
+    }
+  }
+
+  .main-navigation {
+    @media (max-width: $screen-sm-max) {
+      width: calc(100% - #{$space-sm});
+      height: auto;
+      max-height: calc(100vh - 55px);
+      background: $white;
+      box-shadow: $navbar-shadow-mobile;
+    }
+  }
 }

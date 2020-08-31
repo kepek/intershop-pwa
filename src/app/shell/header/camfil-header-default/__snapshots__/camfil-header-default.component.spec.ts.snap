@@ -2,71 +2,89 @@
 
 exports[`Camfil Header Default Component should render normal header adequately for desktop 1`] = `
 <div class="header container desktop" ng-reflect-ng-class="desktop">
-  <ul class="user-links">
-    <li class="dropdown">Webshop</li>
-    <li>Customer support</li>
-    <li>Filter guide</li>
-    <li>Top link 3</li>
-    <li>Top link 4</li>
-  </ul>
-  <div class="header-utility">
-    <a class="search-toggler"></a>
-    <div class="language-switch-container d-none d-md-block">
-      <ish-login-status data-testing-id="user-status-desktop"></ish-login-status>
+  <div class="row align-items-center header__first">
+    <div class="col-7 col-md-8 d-flex align-items-center">
+      <camfil-user-links ng-reflect-device-type="desktop"></camfil-user-links>
     </div>
-    <camfil-mini-basket
-      data-testing-id="mini-basket-mobile"
-      view="small"
-      class="d-md-none"
-      ng-reflect-ng-class="d-md-none"
-      ng-reflect-view="small"
-    ></camfil-mini-basket>
+    <div class="col-5 col-md-4">
+      <div class="header-utility">
+        <div class="language-switch-container d-flex align-items-center">
+          <camfil-language-switch data-testing-id="language-switch-desktop"></camfil-language-switch
+          ><camfil-login-status data-testing-id="user-status-desktop"></camfil-login-status>
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="row align-items-center">
-    <div class="col-md-3 logo-col">
+  <div class="row align-items-center header__second">
+    <div class="col-9 col-md-6 col-lg-4 col-xl-3 logo-col d-flex">
+      <button
+        class="navbar-toggler mat-focus-indicator mat-stroked-button mat-button-base mat-accent"
+        color="accent"
+        mat-stroked-button=""
+        ng-reflect-color="accent"
+        aria-label="camfil.common.button.navbarCollapsed.menu.aria_label"
+      >
+        <span class="mat-button-wrapper"
+          ><mat-icon
+            class="mat-icon notranslate material-icons mat-icon-no-color"
+            role="img"
+            aria-hidden="true"
+            >close</mat-icon
+          >
+          camfil.common.button.navbarCollapsed.close.text
+        </span>
+        <div
+          class="mat-button-ripple mat-ripple"
+          matripple=""
+          ng-reflect-centered="false"
+          ng-reflect-disabled="false"
+          ng-reflect-trigger="[object HTMLButtonElement]"
+        ></div>
+        <div class="mat-button-focus-overlay"></div>
+      </button>
       <div class="logo-wrapper">
         <a
-          class="logo"
           data-testing-id="header-home-link-desktop"
           rel="home"
           routerlink="/home"
           ng-reflect-router-link="/home"
           href="/home"
+          ><mat-icon
+            class="logo mat-icon notranslate mat-icon-no-color"
+            role="img"
+            svgicon="logo"
+            aria-hidden="true"
+            ng-reflect-svg-icon="logo"
+          ></mat-icon
+          ><mat-icon
+            class="logo--cart mat-icon notranslate mat-icon-no-color"
+            role="img"
+            svgicon="camfil-logo-cart"
+            aria-hidden="true"
+            ng-reflect-svg-icon="camfil-logo-cart"
+          ></mat-icon
         ></a>
       </div>
     </div>
-    <div class="col-md-1 text-right">
-      <camfil-lazy-header-quickorder></camfil-lazy-header-quickorder>
-    </div>
-    <div class="col-md-5">
-      <div class="search-container">
-        <camfil-search-box data-testing-id="search-box-desktop"></camfil-search-box>
-      </div>
-    </div>
-    <div class="col-md-1">
+    <div class="col-lg-5 col-xl-6 col-sm-12 search-container"></div>
+    <div class="col-3 col-md-6 col-lg-3 col-xl-3 d-flex align-items-center justify-content-end">
       <camfil-product-compare-status
+        class="justify-content-end"
         data-testing-id="compare-status-desktop"
-      ></camfil-product-compare-status>
-    </div>
-    <div class="col-md-2">
-      <camfil-mini-basket
-        class="d-none d-md-block"
+      ></camfil-product-compare-status
+      ><camfil-mini-basket
         data-testing-id="mini-basket-desktop"
         view="full"
+        class="d-md-block"
         ng-reflect-ng-class="d-md-block"
         ng-reflect-view="full"
       ></camfil-mini-basket>
     </div>
   </div>
-  <button class="navbar-toggler" type="button">
-    <span class="sr-only">common.button.navbarCollapsed.text</span>
-    <div class="hamburger-menu open"><span></span><span></span><span></span></div>
-  </button>
   <div class="global-nav-container">
     <nav class="global-nav navbar-expand-md" ng-reflect-collapsed="false">
       <div class="main-navigation" role="navigation">
-        <ish-header-navigation></ish-header-navigation
-        ><ish-user-information-mobile></ish-user-information-mobile>
+        <camfil-header-navigation></camfil-header-navigation>
       </div>
     </nav>
   </div>
@@ -75,71 +93,89 @@ exports[`Camfil Header Default Component should render normal header adequately 
 
 exports[`Camfil Header Default Component should render normal header adequately for tablet devices 1`] = `
 <div class="header container tablet" ng-reflect-ng-class="tablet">
-  <ul class="user-links">
-    <li class="dropdown">Webshop</li>
-    <li>Customer support</li>
-    <li>Filter guide</li>
-    <li>Top link 3</li>
-    <li>Top link 4</li>
-  </ul>
-  <div class="header-utility">
-    <a class="search-toggler"></a>
-    <div class="language-switch-container d-none d-md-block">
-      <ish-login-status data-testing-id="user-status-desktop"></ish-login-status>
+  <div class="row align-items-center header__first">
+    <div class="col-7 col-md-8 d-flex align-items-center">
+      <camfil-user-links ng-reflect-device-type="tablet"></camfil-user-links>
     </div>
-    <camfil-mini-basket
-      data-testing-id="mini-basket-mobile"
-      view="small"
-      class="d-md-none"
-      ng-reflect-ng-class="d-md-none"
-      ng-reflect-view="small"
-    ></camfil-mini-basket>
+    <div class="col-5 col-md-4">
+      <div class="header-utility">
+        <div class="language-switch-container d-flex align-items-center">
+          <camfil-language-switch data-testing-id="language-switch-desktop"></camfil-language-switch
+          ><camfil-login-status data-testing-id="user-status-desktop"></camfil-login-status>
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="row align-items-center">
-    <div class="col-md-3 logo-col">
+  <div class="row align-items-center header__second">
+    <div class="col-9 col-md-6 col-lg-4 col-xl-3 logo-col d-flex">
+      <button
+        class="navbar-toggler mat-focus-indicator mat-stroked-button mat-button-base mat-accent"
+        color="accent"
+        mat-stroked-button=""
+        ng-reflect-color="accent"
+        aria-label="camfil.common.button.navbarCollapsed.menu.aria_label"
+      >
+        <span class="mat-button-wrapper"
+          ><mat-icon
+            class="mat-icon notranslate material-icons mat-icon-no-color"
+            role="img"
+            aria-hidden="true"
+            >close</mat-icon
+          >
+          camfil.common.button.navbarCollapsed.close.text
+        </span>
+        <div
+          class="mat-button-ripple mat-ripple"
+          matripple=""
+          ng-reflect-centered="false"
+          ng-reflect-disabled="false"
+          ng-reflect-trigger="[object HTMLButtonElement]"
+        ></div>
+        <div class="mat-button-focus-overlay"></div>
+      </button>
       <div class="logo-wrapper">
         <a
-          class="logo"
           data-testing-id="header-home-link-desktop"
           rel="home"
           routerlink="/home"
           ng-reflect-router-link="/home"
           href="/home"
+          ><mat-icon
+            class="logo mat-icon notranslate mat-icon-no-color"
+            role="img"
+            svgicon="logo"
+            aria-hidden="true"
+            ng-reflect-svg-icon="logo"
+          ></mat-icon
+          ><mat-icon
+            class="logo--cart mat-icon notranslate mat-icon-no-color"
+            role="img"
+            svgicon="camfil-logo-cart"
+            aria-hidden="true"
+            ng-reflect-svg-icon="camfil-logo-cart"
+          ></mat-icon
         ></a>
       </div>
     </div>
-    <div class="col-md-1 text-right">
-      <camfil-lazy-header-quickorder></camfil-lazy-header-quickorder>
-    </div>
-    <div class="col-md-5">
-      <div class="search-container">
-        <camfil-search-box data-testing-id="search-box-desktop"></camfil-search-box>
-      </div>
-    </div>
-    <div class="col-md-1">
+    <div class="col-lg-5 col-xl-6 col-sm-12 search-container"></div>
+    <div class="col-3 col-md-6 col-lg-3 col-xl-3 d-flex align-items-center justify-content-end">
       <camfil-product-compare-status
+        class="justify-content-end"
         data-testing-id="compare-status-desktop"
-      ></camfil-product-compare-status>
-    </div>
-    <div class="col-md-2">
-      <camfil-mini-basket
-        class="d-none d-md-block"
+      ></camfil-product-compare-status
+      ><camfil-mini-basket
         data-testing-id="mini-basket-desktop"
         view="full"
+        class="d-md-block"
         ng-reflect-ng-class="d-md-block"
         ng-reflect-view="full"
       ></camfil-mini-basket>
     </div>
   </div>
-  <button class="navbar-toggler" type="button">
-    <span class="sr-only">common.button.navbarCollapsed.text</span>
-    <div class="hamburger-menu open"><span></span><span></span><span></span></div>
-  </button>
   <div class="global-nav-container">
     <nav class="global-nav navbar-expand-md" ng-reflect-collapsed="false">
       <div class="main-navigation" role="navigation">
-        <ish-header-navigation></ish-header-navigation
-        ><ish-user-information-mobile></ish-user-information-mobile>
+        <camfil-header-navigation></camfil-header-navigation>
       </div>
     </nav>
   </div>
@@ -148,12 +184,37 @@ exports[`Camfil Header Default Component should render normal header adequately 
 
 exports[`Camfil Header Default Component should render sticky header adequately for desktop 1`] = `
 <div class="header container desktop" ng-reflect-ng-class="desktop">
-  <div class="row align-items-center">
-    <div class="col-md-3 logo-col">
+  <div class="row align-items-center header__second">
+    <div class="col-9 col-md-6 col-lg-4 col-xl-3 logo-col d-flex">
+      <button
+        class="navbar-toggler mat-focus-indicator mat-stroked-button mat-button-base mat-accent"
+        color="accent"
+        mat-stroked-button=""
+        ng-reflect-color="accent"
+        aria-label="camfil.common.button.navbarCollapsed.menu.aria_label"
+      >
+        <span class="mat-button-wrapper"
+          ><mat-icon
+            class="mat-icon notranslate material-icons mat-icon-no-color"
+            role="img"
+            aria-hidden="true"
+            >close</mat-icon
+          >
+          camfil.common.button.navbarCollapsed.close.text
+        </span>
+        <div
+          class="mat-button-ripple mat-ripple"
+          matripple=""
+          ng-reflect-centered="false"
+          ng-reflect-disabled="false"
+          ng-reflect-trigger="[object HTMLButtonElement]"
+        ></div>
+        <div class="mat-button-focus-overlay"></div>
+      </button>
       <div class="logo-wrapper">
         <a
-          class="logo"
-          data-testing-id="header-home-link-desktop"
+          class="mobile-logo"
+          data-testing-id="header-home-link-mobile"
           rel="home"
           routerlink="/home"
           ng-reflect-router-link="/home"
@@ -161,20 +222,11 @@ exports[`Camfil Header Default Component should render sticky header adequately 
         ></a>
       </div>
     </div>
-    <div class="col-md-1 text-right">
-      <camfil-lazy-header-quickorder></camfil-lazy-header-quickorder>
-    </div>
-    <div class="col-md-5"></div>
   </div>
-  <button class="navbar-toggler" type="button">
-    <span class="sr-only">common.button.navbarCollapsed.text</span>
-    <div class="hamburger-menu open"><span></span><span></span><span></span></div>
-  </button>
   <div class="global-nav-container">
     <nav class="global-nav navbar-expand-md" ng-reflect-collapsed="false">
       <div class="main-navigation" role="navigation">
-        <ish-header-navigation></ish-header-navigation
-        ><ish-user-information-mobile></ish-user-information-mobile>
+        <camfil-header-navigation></camfil-header-navigation>
       </div>
     </nav>
   </div>
@@ -183,8 +235,47 @@ exports[`Camfil Header Default Component should render sticky header adequately 
 
 exports[`Camfil Header Default Component should render sticky header adequately for mobile devices 1`] = `
 <div class="header container mobile" ng-reflect-ng-class="mobile">
-  <div class="row align-items-center">
-    <div class="col-md-3 logo-col">
+  <div class="row align-items-center header__first">
+    <div class="col-7 col-md-8 d-flex align-items-center">
+      <camfil-product-compare-status
+        data-testing-id="compare-status-desktop"
+      ></camfil-product-compare-status>
+    </div>
+    <div class="col-5 col-md-4">
+      <div class="header-utility">
+        <div class="language-switch-container d-flex align-items-center">
+          <camfil-login-status data-testing-id="user-status-desktop"></camfil-login-status>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row align-items-center header__second">
+    <div class="col-9 col-md-6 col-lg-4 col-xl-3 logo-col d-flex">
+      <button
+        class="navbar-toggler mat-focus-indicator mat-stroked-button mat-button-base mat-accent"
+        color="accent"
+        mat-stroked-button=""
+        ng-reflect-color="accent"
+        aria-label="camfil.common.button.navbarCollapsed.menu.aria_label"
+      >
+        <span class="mat-button-wrapper"
+          ><mat-icon
+            class="mat-icon notranslate material-icons mat-icon-no-color"
+            role="img"
+            aria-hidden="true"
+            >menu</mat-icon
+          >
+          camfil.common.button.navbarCollapsed.text
+        </span>
+        <div
+          class="mat-button-ripple mat-ripple"
+          matripple=""
+          ng-reflect-centered="false"
+          ng-reflect-disabled="false"
+          ng-reflect-trigger="[object HTMLButtonElement]"
+        ></div>
+        <div class="mat-button-focus-overlay"></div>
+      </button>
       <div class="logo-wrapper">
         <a
           class="mobile-logo"
@@ -196,20 +287,29 @@ exports[`Camfil Header Default Component should render sticky header adequately 
         ></a>
       </div>
     </div>
-    <div class="col-md-1 text-right">
-      <camfil-lazy-header-quickorder></camfil-lazy-header-quickorder>
+    <div class="col-lg-5 col-xl-6 col-sm-12 search-container">
+      <div ng-reflect-collapsed="false">
+        <camfil-search-box data-testing-id="search-box-desktop"></camfil-search-box>
+      </div>
     </div>
-    <div class="col-md-5"></div>
+    <div class="col-3 col-md-6 col-lg-3 col-xl-3 d-flex align-items-center justify-content-end">
+      <camfil-mini-basket
+        data-testing-id="mini-basket-desktop"
+        view="full"
+        class="d-lg-block"
+        ng-reflect-ng-class="d-lg-block"
+        ng-reflect-view="full"
+      ></camfil-mini-basket>
+    </div>
   </div>
-  <button class="navbar-toggler" type="button">
-    <span class="sr-only">common.button.navbarCollapsed.text</span>
-    <div class="hamburger-menu"><span></span><span></span><span></span></div>
-  </button>
   <div class="global-nav-container">
     <nav class="global-nav navbar-expand-md" ng-reflect-collapsed="true">
       <div class="main-navigation" role="navigation">
-        <ish-header-navigation></ish-header-navigation
-        ><ish-user-information-mobile></ish-user-information-mobile>
+        <camfil-header-navigation></camfil-header-navigation
+        ><camfil-user-links
+          ng-reflect-device-type="mobile"
+          ng-reflect-next-open-level-on-mobile-nav=""
+        ></camfil-user-links>
       </div>
     </nav>
   </div>
@@ -218,8 +318,33 @@ exports[`Camfil Header Default Component should render sticky header adequately 
 
 exports[`Camfil Header Default Component should render sticky header adequately for tablet devices 1`] = `
 <div class="header container tablet" ng-reflect-ng-class="tablet">
-  <div class="row align-items-center">
-    <div class="col-md-3 logo-col">
+  <div class="row align-items-center header__second">
+    <div class="col-9 col-md-6 col-lg-4 col-xl-3 logo-col d-flex">
+      <button
+        class="navbar-toggler mat-focus-indicator mat-stroked-button mat-button-base mat-accent"
+        color="accent"
+        mat-stroked-button=""
+        ng-reflect-color="accent"
+        aria-label="camfil.common.button.navbarCollapsed.menu.aria_label"
+      >
+        <span class="mat-button-wrapper"
+          ><mat-icon
+            class="mat-icon notranslate material-icons mat-icon-no-color"
+            role="img"
+            aria-hidden="true"
+            >close</mat-icon
+          >
+          camfil.common.button.navbarCollapsed.close.text
+        </span>
+        <div
+          class="mat-button-ripple mat-ripple"
+          matripple=""
+          ng-reflect-centered="false"
+          ng-reflect-disabled="false"
+          ng-reflect-trigger="[object HTMLButtonElement]"
+        ></div>
+        <div class="mat-button-focus-overlay"></div>
+      </button>
       <div class="logo-wrapper">
         <a
           class="mobile-logo"
@@ -231,20 +356,11 @@ exports[`Camfil Header Default Component should render sticky header adequately 
         ></a>
       </div>
     </div>
-    <div class="col-md-1 text-right">
-      <camfil-lazy-header-quickorder></camfil-lazy-header-quickorder>
-    </div>
-    <div class="col-md-5"></div>
   </div>
-  <button class="navbar-toggler" type="button">
-    <span class="sr-only">common.button.navbarCollapsed.text</span>
-    <div class="hamburger-menu"><span></span><span></span><span></span></div>
-  </button>
   <div class="global-nav-container">
-    <nav class="global-nav navbar-expand-md" ng-reflect-collapsed="true">
+    <nav class="global-nav navbar-expand-md" ng-reflect-collapsed="false">
       <div class="main-navigation" role="navigation">
-        <ish-header-navigation></ish-header-navigation
-        ><ish-user-information-mobile></ish-user-information-mobile>
+        <camfil-header-navigation></camfil-header-navigation>
       </div>
     </nav>
   </div>

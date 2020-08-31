@@ -7,7 +7,13 @@ import { filter, map, mapTo, shareReplay, startWith, withLatestFrom } from 'rxjs
 import { getAvailableLocales, getCurrentLocale, getDeviceType, getICMBaseURL } from 'ish-core/store/core/configuration';
 import { getGeneralError, getGeneralErrorType } from 'ish-core/store/core/error';
 import { selectPath } from 'ish-core/store/core/router';
-import { getBreadcrumbData, getHeaderType, getWrapperClass, isStickyHeader } from 'ish-core/store/core/viewconf';
+import {
+  getBreadcrumbData,
+  getHeaderType,
+  getScroll,
+  getWrapperClass,
+  isStickyHeader,
+} from 'ish-core/store/core/viewconf';
 import { getLoggedInCustomer } from 'ish-core/store/customer/user';
 import { getAllCountries, getCountriesLoading, loadCountries } from 'ish-core/store/general/countries';
 import { getRegionsByCountryCode, loadRegions } from 'ish-core/store/general/regions';
@@ -48,6 +54,10 @@ export class AppFacade {
     this.store.pipe(
       select(getDeviceType),
       map(deviceType => (deviceType === 'mobile' ? 'sticky-header' : ''))
+    ),
+    this.store.pipe(
+      select(getScroll),
+      map(scroll => (scroll.isDown ? 'isScrollDown' : ''))
     ),
   ]).pipe(map(classes => classes.filter(c => !!c)));
 

@@ -1,12 +1,10 @@
-//general tags
+// general tags
 a {
   font-weight: 600;
 }
 
-//classes
+// layout elemnts
 .main-container {
-  padding-right: 0;
-  padding-left: 0;
   background: transparent;
 }
 header {
@@ -15,8 +13,55 @@ header {
   margin-bottom: 0;
   box-shadow: $header-shadow;
 
+  @media (max-width: $screen-xs-max) {
+    top: 0;
+    transition: top 0.5s 0.5s;
+
+    .isScrollDown & {
+      top: -145px;
+    }
+  }
+
   &::before {
     background-color: $camfil-color-primary;
+
+    @media (max-width: $screen-xs-max) {
+      .sticky-header & {
+        background-color: $camfil-color-primary;
+      }
+
+      height: 32px;
+    }
+  }
+
+  & .header {
+    @media (max-width: $screen-xs-max) {
+      flex-direction: column;
+    }
+    @media (max-width: $screen-sm-max) {
+      &__first {
+        height: 40px;
+
+        @media (max-width: $screen-xs-max) {
+          height: 32px;
+          margin-bottom: $space-box / 2;
+        }
+      }
+      &__second {
+        padding: 0 $space-box / 2;
+      }
+    }
+  }
+}
+
+.sticky-header .wrapper {
+  margin-top: 180px;
+
+  @media (max-width: $screen-sm-max) {
+    margin-top: 244px;
+  }
+  @media (max-width: $screen-xs-max) {
+    margin-top: 140px;
   }
 }
 

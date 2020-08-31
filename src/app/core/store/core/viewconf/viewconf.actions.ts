@@ -9,3 +9,8 @@ export const setBreadcrumbData = createAction(
 );
 
 export const setStickyHeader = createAction('[Viewconf Internal] Set Sticky Header', payload<{ sticky: boolean }>());
+
+export const setScroll = createAction(
+  '[Viewconf Internal] Set Scroll',
+  payload<{ position: number; isDown: boolean }>()
+);

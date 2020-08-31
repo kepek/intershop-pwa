@@ -1,0 +1,86 @@
+@import '~src/styles/themes/camfil/colors.scss';
+@import '~src/styles/themes/camfil/mixins.scss';
+@import '~src/styles/themes/camfil/variables.scss';
+
+.user-links {
+  // ng-deep because of language-switch on mobile
+  ::ng-deep {
+    li {
+      position: relative;
+      padding: 0;
+      font-size: $font-size-sm;
+      color: $greyF9;
+
+      &::after {
+        position: absolute;
+        top: 12px;
+        right: 0;
+        display: block;
+        width: 0;
+        width: 1px;
+        height: 16px;
+        content: '';
+        background-color: $camfil-color-white;
+        opacity: 0.6;
+      }
+      a {
+        padding: 12px;
+        font-family: $font-family-SansPro;
+        font-weight: 400;
+        color: $camfil-color-white-light;
+        text-transform: none;
+      }
+
+      @media (max-width: $screen-sm-max) {
+        float: none;
+        font-size: $font-size-base;
+
+        &:not(.dropdown) {
+          background: $primary;
+
+          &::after {
+            display: none;
+          }
+        }
+
+        a {
+          display: block;
+          padding: 0 $space-default;
+          font-weight: 500;
+        }
+      }
+    }
+  }
+
+  .dropdown,
+  .link-languages {
+    color: $camfil-text-color-primary;
+    background-color: $greyC9;
+    @media (max-width: $screen-sm-max) {
+      border-bottom: 1px solid $grey88;
+    }
+
+    a {
+      color: $primary;
+    }
+  }
+
+  .dropdown {
+    padding-right: $space-box;
+
+    &::after {
+      @include triangle(bottom, 4px, 4px, $camfil-color-primary);
+
+      position: relative;
+      top: -2px;
+      display: inline-block;
+      content: '';
+      background-color: unset;
+      border-width: 5px 5px 0 5px;
+
+      @media (max-width: $screen-sm-max) {
+        display: none;
+      }
+    }
+  }
+}

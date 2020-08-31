@@ -21,6 +21,10 @@
       margin-right: $space-default;
       border-right: 1px solid $border-color-light;
     }
+
+    .switch-layout {
+      padding-right: 0;
+    }
     .sort-by {
       padding-left: 0;
       label {

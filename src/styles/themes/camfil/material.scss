@@ -251,7 +251,7 @@ button {
   font-family: 'Material Icons', serif;
   font-size: 24px;
   .mat-badge-content {
-    font-family: 'Source Sans Pro', sans-serif;
+    font-family: $font-family-SansPro;
   }
   .mat-chip & {
     margin-left: 5px;
@@ -259,10 +259,10 @@ button {
 
   // for custom camfil icons
   @each $color in $colors-icons {
-    &.color-#{""+$color} *[stroke]:not([stroke="none"]) {
+    &.color-#{'' + $color} *[stroke]:not([stroke='none']) {
       stroke: map-get($color-icons-def, $color);
     }
-    &.color-#{""+$color} *[fill]:not([fill="none"]) {
+    &.color-#{'' + $color} *[fill]:not([fill='none']) {
       fill: map-get($color-icons-def, $color);
     }
   }

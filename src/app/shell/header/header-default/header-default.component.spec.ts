@@ -3,16 +3,16 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { NgbCollapse } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
+import { findAllCamfilElements } from 'camfil-core/utils/dev/html-query-utils';
 import { MockComponent } from 'ng-mocks';
 
 import { FeatureToggleModule } from 'ish-core/feature-toggle.module';
-import { findAllIshElements } from 'ish-core/utils/dev/html-query-utils';
+import { CamfilHeaderNavigationComponent } from 'ish-shell/header/camfil-header-navigation/camfil-header-navigation.component';
+import { CamfilLanguageSwitchComponent } from 'ish-shell/header/camfil-language-switch/camfil-language-switch.component';
+import { CamfilLoginStatusComponent } from 'ish-shell/header/camfil-login-status/camfil-login-status.component';
 import { CamfilMiniBasketComponent } from 'ish-shell/header/camfil-mini-basket/camfil-mini-basket.component';
 import { CamfilProductCompareStatusComponent } from 'ish-shell/header/camfil-product-compare-status/camfil-product-compare-status.component';
 import { CamfilSearchBoxComponent } from 'ish-shell/header/camfil-search-box/camfil-search-box.component';
-import { HeaderNavigationComponent } from 'ish-shell/header/header-navigation/header-navigation.component';
-import { LanguageSwitchComponent } from 'ish-shell/header/language-switch/language-switch.component';
-import { LoginStatusComponent } from 'ish-shell/header/login-status/login-status.component';
 import { UserInformationMobileComponent } from 'ish-shell/header/user-information-mobile/user-information-mobile.component';
 
 import { LazyHeaderQuickorderComponent } from '../../../extensions/quickorder/exports/lazy-header-quickorder/lazy-header-quickorder.component';
@@ -30,15 +30,15 @@ describe('Header Default Component', () => {
       imports: [FeatureToggleModule.forTesting('compare'), RouterTestingModule, TranslateModule.forRoot()],
       declarations: [
         HeaderDefaultComponent,
+        MockComponent(CamfilHeaderNavigationComponent),
+        MockComponent(CamfilLanguageSwitchComponent),
+        MockComponent(CamfilLoginStatusComponent),
         MockComponent(CamfilMiniBasketComponent),
         MockComponent(CamfilProductCompareStatusComponent),
         MockComponent(CamfilSearchBoxComponent),
         MockComponent(FaIconComponent),
-        MockComponent(HeaderNavigationComponent),
-        MockComponent(LanguageSwitchComponent),
         MockComponent(LazyHeaderQuickorderComponent),
         MockComponent(LazyWishlistsLinkComponent),
-        MockComponent(LoginStatusComponent),
         MockComponent(NgbCollapse),
         MockComponent(UserInformationMobileComponent),
       ],
@@ -59,12 +59,12 @@ describe('Header Default Component', () => {
 
   it('should render Language Switch on template', () => {
     fixture.detectChanges();
-    expect(findAllIshElements(element)).toContain('ish-language-switch');
+    expect(findAllCamfilElements(element)).toContain('camfil-language-switch');
   });
 
   it('should render Header Navigation on template', () => {
     fixture.detectChanges();
-    expect(findAllIshElements(element)).toContain('ish-header-navigation');
+    expect(findAllCamfilElements(element)).toContain('camfil-header-navigation');
   });
 
   it('should render normal header adequately for mobile devices', () => {

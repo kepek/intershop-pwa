@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
@@ -10,8 +10,6 @@ import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
   styleUrls: ['./camfil-product-compare-status.scss'],
 })
 export class CamfilProductCompareStatusComponent implements OnInit {
-  @Input() view: 'auto' | 'small' | 'full' = 'auto';
-
   productCompareCount$: Observable<number>;
 
   constructor(private shoppingFacade: ShoppingFacade) {}
