@@ -89,6 +89,7 @@ import { LoginFormComponent } from './components/login/login-form/login-form.com
 import { LoginModalComponent } from './components/login/login-modal/login-modal.component';
 import { OrderListComponent } from './components/order/order-list/order-list.component';
 import { OrderWidgetComponent } from './components/order/order-widget/order-widget.component';
+import { CamfilProductAttributesComponent } from './components/product/camfil-product-attributes/camfil-product-attributes.component';
 import { CamfilProductItemDetailedComponent } from './components/product/camfil-product-item-detailed/camfil-product-item-detailed.component';
 import { CamfilProductItemSimpleComponent } from './components/product/camfil-product-item-simple/camfil-product-item-simple.component';
 import { CamfilProductItemComponent } from './components/product/camfil-product-item/camfil-product-item.component';
@@ -167,6 +168,7 @@ const declaredComponents = [
   CamfilFilterCollapsableComponent,
   CamfilFilterDropdownComponent,
   CamfilFilterTextComponent,
+  CamfilProductAttributesComponent,
   CamfilProductItemDetailedComponent,
   CamfilProductItemSimpleComponent,
   CamfilProductListComponent,
@@ -214,6 +216,7 @@ const exportedComponents = [
   CamfilFilterMeasurementsComponent,
   CamfilFilterNavigationComponent,
   CamfilLinksBlockComponent,
+  CamfilProductAttributesComponent,
   CamfilProductItemComponent,
   CamfilProductListingComponent,
   CamfilProductPriceComponent,
