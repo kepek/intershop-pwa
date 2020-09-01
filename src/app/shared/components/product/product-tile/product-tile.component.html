@@ -12,11 +12,21 @@
 
   <ish-product-rating *ishFeature="'rating'" [product]="product"></ish-product-rating>
 
-  <ish-product-promotion
-    *ngIf="configuration.displayPromotions"
-    [product]="product"
-    displayType="simple"
-  ></ish-product-promotion>
+  <ng-container *ishFeature="'tacton'; else standardInformation">
+    <ng-container *ishIsTactonProduct="product; else standardInformation"></ng-container>
+  </ng-container>
+
+  <ng-template #standardInformation>
+    <ish-product-promotion
+      *ngIf="configuration.displayPromotions"
+      [product]="product"
+      displayType="simple"
+    ></ish-product-promotion>
+
+    <div *ngIf="configuration.displayPrice" class="price-container">
+      <camfil-product-price [product]="product" [showInformationalPrice]="true"></camfil-product-price>
+    </div>
+  </ng-template>
 
   <div *ngIf="configuration.displayPrice" class="price-container">
     <camfil-product-price [product]="product" [showInformationalPrice]="true"></camfil-product-price>

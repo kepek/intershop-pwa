@@ -11,6 +11,7 @@ import { Category } from 'ish-core/models/category/category.model';
 import { categoryTree } from 'ish-core/utils/dev/test-data-utils';
 import { CamfilBreadcrumbComponent } from 'ish-shared/components/common/camfil-breadcrumb/camfil-breadcrumb.component';
 import { CamfilLinksBlockComponent } from 'ish-shared/components/common/camfil-links-block/camfil-links-block.component';
+import { CamfilFilterMeasurementsComponent } from 'ish-shared/components/filter/camfil-filter-measurements/camfil-filter-measurements.component';
 import { CamfilFilterNavigationComponent } from 'ish-shared/components/filter/camfil-filter-navigation/camfil-filter-navigation.component';
 import { CamfilProductListingComponent } from 'ish-shared/components/product/camfil-product-listing/camfil-product-listing.component';
 
@@ -30,6 +31,7 @@ describe('Camfil Category Products Component', () => {
         CamfilCategoryProductsComponent,
         MockComponent(CamfilBreadcrumbComponent),
         MockComponent(CamfilCategoryNavigationComponent),
+        MockComponent(CamfilFilterMeasurementsComponent),
         MockComponent(CamfilFilterNavigationComponent),
         MockComponent(CamfilLinksBlockComponent),
         MockComponent(CamfilProductListingComponent),

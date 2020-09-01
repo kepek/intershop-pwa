@@ -1,6 +1,8 @@
 import { Locale } from 'ish-core/models/locale/locale.model';
 import { DeviceType, ViewType } from 'ish-core/models/viewtype/viewtype.types';
 
+import { TactonConfig } from '../app/extensions/tacton/models/tacton-config/tacton-config.model';
+
 export interface Environment {
   production: boolean;
 
@@ -33,6 +35,7 @@ export interface Environment {
     /* Third-party Integrations */
     | 'sentry'
     | 'tracking'
+    | 'tacton'
     /* B2C features */
     | 'wishlists'
   )[];
@@ -44,6 +47,9 @@ export interface Environment {
 
   // log client-side javascript errors to sentry.io (to be used with 'sentry' feature, works with server side rendering only)
   sentryDSN?: string;
+
+  // tacton integration
+  tacton?: TactonConfig;
 
   /* PROGRESSIVE WEB APP CONFIGURATIONS */
 
@@ -78,7 +84,7 @@ export interface Environment {
 
 export const ENVIRONMENT_DEFAULTS: Environment = {
   /* INTERSHOP COMMERCE MANAGEMENT REST API CONFIGURATION */
-  icmBaseURL: 'http://localhost:4200',
+  icmBaseURL: 'http://camfil.local',
   icmChannel: 'Camfil-CamfilSE-Site',
   icmServer: 'INTERSHOP/rest/WFS',
   icmServerStatic: 'INTERSHOP/static/WFS',
