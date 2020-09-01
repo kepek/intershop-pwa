@@ -13,4 +13,8 @@
       <input placeholder="xxx" [class.mat-elevation-z2]="true" (focusout)="filter($event.target.value, 'depth')" />
     </div>
   </form>
+  <camfil-filter-info
+    title="How to measure a bag filter"
+    note="Width & height are shown  +/- 10 mm, depth +/-50 mm. You can also search within an interval, i.e 280-290"
+  ></camfil-filter-info>
 </camfil-filter-collapsable>

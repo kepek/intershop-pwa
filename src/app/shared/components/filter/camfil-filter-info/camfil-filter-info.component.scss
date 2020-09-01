@@ -1,0 +1,30 @@
+@import '~src/styles/themes/camfil/colors';
+@import '~src/styles/themes/camfil/variables';
+
+:host {
+  .filter-info {
+    &__title {
+      display: flex;
+      align-items: center;
+      font-weight: 700;
+      color: $camfil-color-primary;
+    }
+
+    &__note {
+      max-width: 272px;
+      font-size: 12px;
+      line-height: 16px;
+      color: $grey79;
+    }
+
+    ::ng-deep {
+      .mat-icon {
+        width: 20px;
+        height: 20px;
+        margin-right: 6px;
+        font-size: 20px;
+        color: $camfil-color-primary;
+      }
+    }
+  }
+}

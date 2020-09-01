@@ -53,4 +53,12 @@
       color: $camfil-color-primary;
     }
   }
+
+  a {
+    font-weight: 500;
+
+    &.filter-selected {
+      font-weight: 600;
+    }
+  }
 }
