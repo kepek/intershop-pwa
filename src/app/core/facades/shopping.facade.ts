@@ -166,7 +166,9 @@ export class ShoppingFacade {
     return this.store.pipe(
       select(getAvailableFilter),
       whenTruthy(),
-      map(x => (withCategoryFilter ? x : { ...x, filter: x.filter.filter(f => f.id !== 'CategoryUUIDLevelMulti') }))
+      map(x =>
+        withCategoryFilter ? x : { ...x, filter: [...x?.filter].filter(f => f.id !== 'CategoryUUIDLevelMulti') }
+      )
     );
   }
 
