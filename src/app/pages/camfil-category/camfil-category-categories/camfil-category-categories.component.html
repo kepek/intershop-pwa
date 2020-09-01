@@ -8,6 +8,7 @@
     <aside class="col-md-3 sidebar">
       <div class="sidebar--container">
         <div [ngbCollapse]="isCollapsed">
+          <camfil-filter-measurements></camfil-filter-measurements>
           <camfil-category-navigation [uniqueId]="category.categoryPath[0]"></camfil-category-navigation>
         </div>
         <a class="d-md-none mobile-filter-toggle" (click)="toggle()">

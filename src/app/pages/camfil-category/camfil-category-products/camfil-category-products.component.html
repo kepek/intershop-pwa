@@ -11,10 +11,11 @@
   <div class="row no-gutters">
     <aside class="col-md-3 sidebar">
       <mat-toolbar color="primary">
-        <span>My sidebar</span>
+        <span>Refine your product list</span>
       </mat-toolbar>
       <div class="sidebar--container">
         <div [ngbCollapse]="isCollapsed">
+          <camfil-filter-measurements></camfil-filter-measurements>
           <camfil-category-navigation [uniqueId]="category.categoryPath[0]"></camfil-category-navigation>
           <br />
           <camfil-filter-navigation [showCategoryFilter]="false"></camfil-filter-navigation>

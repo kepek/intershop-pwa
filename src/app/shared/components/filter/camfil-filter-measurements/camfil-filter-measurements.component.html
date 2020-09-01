@@ -1,0 +1,16 @@
+<camfil-filter-collapsable title="Measurements">
+  <form class="form">
+    <div class="form-group">
+      <label>Width <span>(mm)</span></label>
+      <input placeholder="xxx" [class.mat-elevation-z2]="true" (focusout)="filter($event.target.value, 'width')" />
+    </div>
+    <div class="form-group">
+      <label>Height <span>(mm)</span></label>
+      <input placeholder="xxx" [class.mat-elevation-z2]="true" (focusout)="filter($event.target.value, 'height')" />
+    </div>
+    <div class="form-group">
+      <label>Depth <span>(mm)</span></label>
+      <input placeholder="xxx" [class.mat-elevation-z2]="true" (focusout)="filter($event.target.value, 'depth')" />
+    </div>
+  </form>
+</camfil-filter-collapsable>

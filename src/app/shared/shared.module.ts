@@ -69,6 +69,7 @@ import { ModalDialogComponent } from './components/common/modal-dialog/modal-dia
 import { CamfilFilterAppliedComponent } from './components/filter/camfil-filter-applied/camfil-filter-applied.component';
 import { CamfilFilterCollapsableComponent } from './components/filter/camfil-filter-collapsable/camfil-filter-collapsable.component';
 import { CamfilFilterDropdownComponent } from './components/filter/camfil-filter-dropdown/camfil-filter-dropdown.component';
+import { CamfilFilterMeasurementsComponent } from './components/filter/camfil-filter-measurements/camfil-filter-measurements.component';
 import { CamfilFilterNavigationComponent } from './components/filter/camfil-filter-navigation/camfil-filter-navigation.component';
 import { CamfilFilterTextComponent } from './components/filter/camfil-filter-text/camfil-filter-text.component';
 import { FilterCheckboxComponent } from './components/filter/filter-checkbox/filter-checkbox.component';
@@ -207,6 +208,7 @@ const exportedComponents = [
   BasketShippingAddressWidgetComponent,
   BasketValidationResultsComponent,
   CamfilBreadcrumbComponent,
+  CamfilFilterMeasurementsComponent,
   CamfilFilterNavigationComponent,
   CamfilLinksBlockComponent,
   CamfilProductItemComponent,
