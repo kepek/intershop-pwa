@@ -10,6 +10,7 @@ import { Category } from 'ish-core/models/category/category.model';
 import { findAllIshElements } from 'ish-core/utils/dev/html-query-utils';
 import { categoryTree } from 'ish-core/utils/dev/test-data-utils';
 import { CamfilBreadcrumbComponent } from 'ish-shared/components/common/camfil-breadcrumb/camfil-breadcrumb.component';
+import { CamfilFilterMeasurementsComponent } from 'ish-shared/components/filter/camfil-filter-measurements/camfil-filter-measurements.component';
 
 import { CategoryListComponent } from '../../category/category-list/category-list.component';
 import { CamfilCategoryNavigationComponent } from '../camfil-category-navigation/camfil-category-navigation.component';
@@ -28,6 +29,7 @@ describe('Camfil Category Categories Component', () => {
         CamfilCategoryCategoriesComponent,
         MockComponent(CamfilBreadcrumbComponent),
         MockComponent(CamfilCategoryNavigationComponent),
+        MockComponent(CamfilFilterMeasurementsComponent),
         MockComponent(CategoryListComponent),
         MockComponent(FaIconComponent),
         MockComponent(NgbCollapse),
