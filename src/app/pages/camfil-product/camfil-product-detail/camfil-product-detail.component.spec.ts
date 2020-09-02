@@ -20,8 +20,8 @@ import { ProductRatingComponent } from 'ish-shared/components/product/product-ra
 import { ProductShipmentComponent } from 'ish-shared/components/product/product-shipment/product-shipment.component';
 import { ProductVariationSelectComponent } from 'ish-shared/components/product/product-variation-select/product-variation-select.component';
 
-import { LazyProductAddToOrderTemplateComponent } from '../../../extensions/order-templates/exports/product/lazy-product-add-to-order-template/lazy-product-add-to-order-template.component';
-import { LazyProductAddToQuoteComponent } from '../../../extensions/quoting/exports/product/lazy-product-add-to-quote/lazy-product-add-to-quote.component';
+import { LazyProductAddToOrderTemplateComponent } from '../../../extensions/order-templates/exports/lazy-product-add-to-order-template/lazy-product-add-to-order-template.component';
+import { LazyProductAddToQuoteComponent } from '../../../extensions/quoting/exports/lazy-product-add-to-quote/lazy-product-add-to-quote.component';
 import { ProductDetailActionsComponent } from '../../product/product-detail-actions/product-detail-actions.component';
 import { ProductImagesComponent } from '../../product/product-images/product-images.component';
 import { CamfilProductAttributesPreviewComponent } from '../camfil-product-attributes-preview/camfil-product-attributes-preview.component';
