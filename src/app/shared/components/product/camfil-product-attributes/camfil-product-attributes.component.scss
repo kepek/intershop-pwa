@@ -1,13 +1,15 @@
+@import '~src/styles/themes/camfil/colors';
+@import '~src/styles/themes/camfil/variables';
+
 dd,
 dt {
   display: flex;
   align-items: center;
-  padding: 15px 0;
+  padding: $space-default/4 0;
   margin: 0;
-
-  &:nth-of-type(n + 2) {
-    border-top: 1px solid #006a3a;
-  }
+  font-size: $font-size-lg;
+  font-weight: 400;
+  color: $camfil-text-color-primary;
 }
 
 dd {

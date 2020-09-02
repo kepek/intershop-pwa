@@ -1,16 +1,19 @@
+@import '~src/styles/themes/camfil/colors';
+
 h1 {
   margin: 0;
 }
 
 .product-info {
-  border-right: 1px solid #006a3a;
-  border-left: 1px solid #006a3a;
+  border-right: 1px solid $greyD9;
+  border-left: 1px solid $greyD9;
 }
 .product-data {
-  background-color: #f9f8f4;
+  background-color: rgba(0, 103, 62, 0.1);
 
   h2 {
     margin: 32px 0 16px 0;
+    text-transform: none;
   }
 
   .product-attributes,
@@ -19,6 +22,6 @@ h1 {
   }
 
   .product-description {
-    border-left: 1px solid #006a3a;
+    border-left: 1px solid $greyD9;
   }
 }
