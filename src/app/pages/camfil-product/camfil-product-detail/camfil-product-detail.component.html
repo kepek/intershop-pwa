@@ -1,0 +1,142 @@
+<!-- <ish-product-detail-actions [product]="product" (productToCompare)="addToCompare()"></ish-product-detail-actions> -->
+
+<div class="row product-details my-4">
+  <div class="col-12">
+    <h1>
+      <span itemprop="name">{{ product.name }}</span>
+    </h1>
+    <p>
+      <span itemprop="name">{{ product.shortDescription }}</span>
+    </p>
+  </div>
+
+  <div class="col-12 col-md-4 col-lg-3 pt-3">
+    <camfil-product-images [product]="product"></camfil-product-images>
+  </div>
+
+  <div class="col-12 col-md-4 col-lg-5 product-info">
+    <!-- <ish-product-rating *ishFeature="'rating'" [product]="product"></ish-product-rating> -->
+
+    <div class="mat-card mat-focus-indicator p-3 my-3">
+      <!-- <div *ngIf="product.manufacturer" class="product-brand">
+        <a [routerLink]="['/search', product.manufacturer]">
+          <span itemprop="brand">{{ product.manufacturer }}</span>
+        </a>
+      </div> -->
+
+      <!-- <ish-product-id [product]="product"></ish-product-id> -->
+
+      <ish-product-promotion [product]="product"></ish-product-promotion>
+
+      <div class="price-container" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+        <camfil-product-price
+          [product]="price || product"
+          [showInformationalPrice]="true"
+          [showPriceSavings]="true"
+        ></camfil-product-price>
+
+        <ish-product-inventory
+          *ngIf="!isRetailSet(product) && !isMasterProduct(product)"
+          [product]="product"
+        ></ish-product-inventory>
+      </div>
+
+      <ish-product-shipment
+        *ngIf="!isRetailSet(product) && !isMasterProduct(product)"
+        [product]="product"
+      ></ish-product-shipment>
+
+      <ish-product-variation-select
+        *ngIf="isVariationProduct(product)"
+        [productMasterSKU]="product.productMasterSKU"
+        [variationOptions]="variationOptions"
+        (selectVariation)="variationSelected($event)"
+      ></ish-product-variation-select>
+
+      <form *ngIf="!isMasterProduct(product)" [formGroup]="productDetailForm" class="product-form form-horizontal">
+        <div class="row">
+          <div class="w-100">
+            <ish-product-quantity
+              *ngIf="!isRetailSet(product)"
+              [product]="product"
+              [parentForm]="productDetailForm"
+              [controlName]="quantityControlName"
+              [type]="'input'"
+            ></ish-product-quantity>
+          </div>
+        </div>
+
+        <ish-product-add-to-basket
+          [product]="product"
+          [class]="'btn-lg btn-block'"
+          [disabled]="productDetailForm.invalid"
+          [translationKey]="isRetailSet(product) ? 'product.add_to_cart.retailset.link' : 'product.add_to_cart.link'"
+          (productToBasket)="addToBasket()"
+        ></ish-product-add-to-basket>
+
+        <camfil-lazy-product-add-to-order-template
+          [class]="'btn btn-default btn-block'"
+          [product]="product"
+          [quantity]="quantity"
+        ></camfil-lazy-product-add-to-order-template>
+
+        <camfil-lazy-product-add-to-quote
+          [product]="product"
+          [disabled]="productDetailForm.invalid"
+          [quantity]="quantity"
+          [class]="'btn-block'"
+        ></camfil-lazy-product-add-to-quote>
+      </form>
+    </div>
+
+    <camfil-product-attributes-preview [product]="product"></camfil-product-attributes-preview>
+    <!-- <ish-accordion>
+      <ish-accordion-item [heading]="'product.description.heading' | translate">
+        <div [innerHTML]="product.longDescription"></div>
+      </ish-accordion-item>
+      <ish-accordion-item
+        *ngIf="product.attributes && product.attributes.length"
+        [heading]="'product.details.heading' | translate"
+      >
+        <ish-product-attributes [product]="product"></ish-product-attributes>
+      </ish-accordion-item>
+      <ish-accordion-item
+        *ngIf="!isMasterProduct(product)"
+        [heading]="'product.shipping.heading' | translate"
+        dataTestingId="section-shipping-tab"
+      >
+        <ish-product-shipment [product]="product"></ish-product-shipment>
+      </ish-accordion-item>
+    </ish-accordion> -->
+  </div>
+  <div class="col-12 col-md-4 col-lg-4 pt-3 product-accessories">
+    <strong>Guides & Technical Documents</strong>
+    <ul>
+      <li><a>Document 1</a></li>
+      <li><a>Document 2</a></li>
+      <li><a>Document 3</a></li>
+    </ul>
+
+    <strong>Environmental Badges and Classifications</strong>
+    <ul>
+      <li>Milk</li>
+      <li>Bread</li>
+      <li>Chocolate</li>
+      <li>More chocolate</li>
+    </ul>
+  </div>
+</div>
+<div class="container-fluid product-data my-4">
+  <div class="row">
+    <div class="col-12 col-md-6 product-attributes">
+      <h2>{{ 'product.details.heading' | translate }}</h2>
+      <camfil-product-attributes [product]="product"></camfil-product-attributes>
+    </div>
+    <div class="col-12 col-md-6 product-description">
+      <h2>{{ 'product.description.heading' | translate }}</h2>
+      <p [innerHTML]="product.longDescription"></p>
+      <h2>{{ 'product.shipping.heading' | translate }}</h2>
+      <ish-product-shipment [product]="product"></ish-product-shipment>
+    </div>
+  </div>
+</div>

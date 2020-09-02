@@ -1,0 +1,17 @@
+@import '~src/styles/themes/camfil/colors';
+@import '~src/styles/themes/camfil/variables';
+
+dd,
+dt {
+  display: flex;
+  align-items: center;
+  padding: $space-default/4 0;
+  margin: 0;
+  font-size: $font-size-lg;
+  font-weight: 400;
+  color: $camfil-text-color-primary;
+}
+
+dd {
+  justify-content: flex-end;
+}

@@ -8,7 +8,7 @@ import { matchProductRoute } from 'ish-core/routing/product/product.route';
 const routes: Routes = [
   {
     matcher: matchProductRoute,
-    loadChildren: () => import('./product/product-page.module').then(m => m.ProductPageModule),
+    loadChildren: () => import('./camfil-product/camfil-product-page.module').then(m => m.CamfilProductPageModule),
   },
   {
     matcher: matchCategoryRoute,

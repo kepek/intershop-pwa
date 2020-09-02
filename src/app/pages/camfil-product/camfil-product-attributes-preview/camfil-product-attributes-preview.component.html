@@ -1,0 +1,16 @@
+<dl *ngIf="product.attributes && product.attributes.length" class="product-attributes-review row mx-3">
+  <!-- SKU -->
+  <dt class="attribute-type col-sm-6">{{ 'product.itemNumber.label' | translate }}</dt>
+  <dd class="attribute-value col-sm-6 text-right">{{ product.sku }}</dd>
+  <!-- Custom Attributes -->
+  <ng-container *ngFor="let attribute of product.attributes | slice: 0:5">
+    <dt class="attribute-type col-sm-6">{{ attribute.name }}</dt>
+    <dd
+      class="attribute-value col-sm-6 text-right"
+      [innerHTML]="attribute | ishAttribute: multipleValuesSeparator"
+    ></dd>
+  </ng-container>
+</dl>
+<a mat-flat-button class="d-flex justify-content-center" (click)="scrollToAttributes()">{{
+  'product.attributes.more' | translate
+}}</a>
