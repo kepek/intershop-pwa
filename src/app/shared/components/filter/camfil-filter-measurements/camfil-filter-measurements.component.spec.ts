@@ -3,6 +3,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { MockComponent } from 'ng-mocks';
 
 import { CamfilFilterCollapsableComponent } from 'ish-shared/components/filter/camfil-filter-collapsable/camfil-filter-collapsable.component';
+import { CamfilFilterInfoComponent } from 'ish-shared/components/filter/camfil-filter-info/camfil-filter-info.component';
 
 import { CamfilFilterMeasurementsComponent } from './camfil-filter-measurements.component';
 
@@ -13,7 +14,11 @@ describe('Camfil Filter Measurements Component', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [CamfilFilterMeasurementsComponent, MockComponent(CamfilFilterCollapsableComponent)],
+      declarations: [
+        CamfilFilterMeasurementsComponent,
+        MockComponent(CamfilFilterCollapsableComponent),
+        MockComponent(CamfilFilterInfoComponent),
+      ],
       imports: [RouterTestingModule],
     }).compileComponents();
   }));
