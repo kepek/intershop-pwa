@@ -1,4 +1,7 @@
 import { NgModule } from '@angular/core';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
 import { RouterModule, Routes } from '@angular/router';
 
 import { SharedModule } from 'ish-shared/shared.module';
@@ -43,7 +46,7 @@ const productPageRoutes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(productPageRoutes), SharedModule],
+  imports: [MatExpansionModule, MatIconModule, MatListModule, RouterModule.forChild(productPageRoutes), SharedModule],
   declarations: [
     CamfilProductAttributesPreviewComponent,
     CamfilProductDetailComponent,
