@@ -17,6 +17,10 @@
         content: '';
         background-color: $greyF5;
       }
+
+      &.collapsed {
+        border-bottom: 0 !important;
+      }
     }
   }
 }
@@ -25,7 +29,7 @@
   align-items: flex-start;
   height: 80px;
   padding-left: 8px;
-  margin: 0 -8px;
+  margin: -8px 0 10px;
   border-left: 2px solid $camfil-color-primary;
 }
 

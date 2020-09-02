@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { MatRadioModule } from '@angular/material/radio';
@@ -69,6 +70,7 @@ import { ModalDialogComponent } from './components/common/modal-dialog/modal-dia
 import { CamfilFilterAppliedComponent } from './components/filter/camfil-filter-applied/camfil-filter-applied.component';
 import { CamfilFilterCollapsableComponent } from './components/filter/camfil-filter-collapsable/camfil-filter-collapsable.component';
 import { CamfilFilterDropdownComponent } from './components/filter/camfil-filter-dropdown/camfil-filter-dropdown.component';
+import { CamfilFilterInfoComponent } from './components/filter/camfil-filter-info/camfil-filter-info.component';
 import { CamfilFilterMeasurementsComponent } from './components/filter/camfil-filter-measurements/camfil-filter-measurements.component';
 import { CamfilFilterNavigationComponent } from './components/filter/camfil-filter-navigation/camfil-filter-navigation.component';
 import { CamfilFilterTextComponent } from './components/filter/camfil-filter-text/camfil-filter-text.component';
@@ -208,6 +210,7 @@ const exportedComponents = [
   BasketShippingAddressWidgetComponent,
   BasketValidationResultsComponent,
   CamfilBreadcrumbComponent,
+  CamfilFilterInfoComponent,
   CamfilFilterMeasurementsComponent,
   CamfilFilterNavigationComponent,
   CamfilLinksBlockComponent,
@@ -245,7 +248,15 @@ const exportedComponents = [
 ];
 
 @NgModule({
-  imports: [...importExportModules, MatCardModule, MatChipsModule, MatIconModule, MatRadioModule, MatSelectModule],
+  imports: [
+    ...importExportModules,
+    MatCardModule,
+    MatCheckboxModule,
+    MatChipsModule,
+    MatIconModule,
+    MatRadioModule,
+    MatSelectModule,
+  ],
   declarations: [...declaredComponents, ...exportedComponents],
   exports: [...exportedComponents, ...importExportModules],
 })
