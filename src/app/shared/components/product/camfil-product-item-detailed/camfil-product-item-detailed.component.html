@@ -1,4 +1,4 @@
-<div class="row" [attr.data-testing-sku]="product.sku">
+<div class="row" [attr.data-testing-sku]="product.sku" [class.mat-elevation-z3]="true">
   <div class="col-3">
     <div class="product-image-container">
       <a [routerLink]="product | ishProductRoute: category">
