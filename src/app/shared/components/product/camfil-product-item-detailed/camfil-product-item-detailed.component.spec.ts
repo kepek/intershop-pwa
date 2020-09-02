@@ -16,7 +16,7 @@ import { ProductIdComponent } from 'ish-shared/components/product/product-id/pro
 import { ProductInventoryComponent } from 'ish-shared/components/product/product-inventory/product-inventory.component';
 import { ProductLabelComponent } from 'ish-shared/components/product/product-label/product-label.component';
 import { ProductPromotionComponent } from 'ish-shared/components/product/product-promotion/product-promotion.component';
-import { ProductQuantityComponent } from 'ish-shared/components/product/product-quantity/product-quantity.component';
+import { CamfilProductQuantityComponent } from 'ish-shared/components/product/camfil-product-quantity/camfil-product-quantity.component';
 import { ProductRatingComponent } from 'ish-shared/components/product/product-rating/product-rating.component';
 import { ProductShipmentComponent } from 'ish-shared/components/product/product-shipment/product-shipment.component';
 import { ProductVariationSelectComponent } from 'ish-shared/components/product/product-variation-select/product-variation-select.component';
@@ -27,6 +27,7 @@ import { LazyProductAddToQuoteComponent } from '../../../../extensions/quoting/e
 import { LazyProductAddToWishlistComponent } from '../../../../extensions/wishlists/exports/lazy-product-add-to-wishlist/lazy-product-add-to-wishlist.component';
 
 import { CamfilProductItemDetailedComponent } from './camfil-product-item-detailed.component';
+import { findAllCamfilElements } from 'camfil-core/utils/dev/html-query-utils';
 
 describe('Camfil Product Item Detailed Component', () => {
   let component: CamfilProductItemDetailedComponent;
@@ -49,7 +50,7 @@ describe('Camfil Product Item Detailed Component', () => {
         MockComponent(ProductInventoryComponent),
         MockComponent(ProductLabelComponent),
         MockComponent(ProductPromotionComponent),
-        MockComponent(ProductQuantityComponent),
+        MockComponent(CamfilProductQuantityComponent),
         MockComponent(ProductRatingComponent),
         MockComponent(ProductShipmentComponent),
         MockComponent(ProductVariationSelectComponent),
@@ -84,7 +85,15 @@ describe('Camfil Product Item Detailed Component', () => {
         "ish-product-inventory",
         "ish-product-label",
         "ish-product-promotion",
-        "ish-product-quantity",
+      ]
+    `);
+    expect(findAllCamfilElements(element)).toMatchInlineSnapshot(`
+      Array [
+        "camfil-lazy-product-add-to-order-template",
+        "camfil-lazy-product-add-to-quote",
+        "camfil-lazy-product-add-to-wishlist",
+        "camfil-product-price",
+        "camfil-product-quantity",
       ]
     `);
   });

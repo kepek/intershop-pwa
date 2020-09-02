@@ -14,7 +14,7 @@ import { ProductAddToBasketComponent } from 'ish-shared/components/product/produ
 import { ProductBundleDisplayComponent } from 'ish-shared/components/product/product-bundle-display/product-bundle-display.component';
 import { ProductIdComponent } from 'ish-shared/components/product/product-id/product-id.component';
 import { ProductInventoryComponent } from 'ish-shared/components/product/product-inventory/product-inventory.component';
-import { ProductQuantityComponent } from 'ish-shared/components/product/product-quantity/product-quantity.component';
+import { CamfilProductQuantityComponent } from 'ish-shared/components/product/camfil-product-quantity/camfil-product-quantity.component';
 import { ProductVariationDisplayComponent } from 'ish-shared/components/product/product-variation-display/product-variation-display.component';
 import { CheckboxComponent } from 'ish-shared/forms/components/checkbox/checkbox.component';
 import { InputComponent } from 'ish-shared/forms/components/input/input.component';
@@ -43,7 +43,7 @@ describe('Account Order Template Detail Line Item Component', () => {
         MockComponent(ProductIdComponent),
         MockComponent(ProductImageComponent),
         MockComponent(ProductInventoryComponent),
-        MockComponent(ProductQuantityComponent),
+        MockComponent(CamfilProductQuantityComponent),
         MockComponent(ProductVariationDisplayComponent),
         MockComponent(SelectOrderTemplateModalComponent),
         MockPipe(DatePipe),

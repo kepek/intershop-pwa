@@ -62,13 +62,13 @@
         <form *ngIf="!isMasterProduct(product)" [formGroup]="productDetailForm" class="product-form form-horizontal">
           <div class="row">
             <div class="w-100">
-              <ish-product-quantity
+              <camfil-product-quantity
                 *ngIf="!isRetailSet(product)"
                 [product]="product"
                 [parentForm]="productDetailForm"
                 [controlName]="quantityControlName"
                 [type]="'input'"
-              ></ish-product-quantity>
+              ></camfil-product-quantity>
             </div>
           </div>
 

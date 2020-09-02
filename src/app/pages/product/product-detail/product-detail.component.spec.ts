@@ -14,7 +14,7 @@ import { ProductAttributesComponent } from 'ish-shared/components/product/produc
 import { ProductIdComponent } from 'ish-shared/components/product/product-id/product-id.component';
 import { ProductInventoryComponent } from 'ish-shared/components/product/product-inventory/product-inventory.component';
 import { ProductPromotionComponent } from 'ish-shared/components/product/product-promotion/product-promotion.component';
-import { ProductQuantityComponent } from 'ish-shared/components/product/product-quantity/product-quantity.component';
+import { CamfilProductQuantityComponent } from 'ish-shared/components/product/camfil-product-quantity/camfil-product-quantity.component';
 import { ProductRatingComponent } from 'ish-shared/components/product/product-rating/product-rating.component';
 import { ProductShipmentComponent } from 'ish-shared/components/product/product-shipment/product-shipment.component';
 import { ProductVariationSelectComponent } from 'ish-shared/components/product/product-variation-select/product-variation-select.component';
@@ -61,7 +61,7 @@ describe('Product Detail Component', () => {
         MockComponent(ProductImagesComponent),
         MockComponent(ProductInventoryComponent),
         MockComponent(ProductPromotionComponent),
-        MockComponent(ProductQuantityComponent),
+        MockComponent(CamfilProductQuantityComponent),
         MockComponent(ProductRatingComponent),
         MockComponent(ProductShipmentComponent),
         MockComponent(ProductVariationSelectComponent),

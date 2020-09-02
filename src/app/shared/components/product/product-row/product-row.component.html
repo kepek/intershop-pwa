@@ -109,7 +109,7 @@
                     configuration.quantityLabel === ' ' ? 'col-6 offset-md-6 col-lg-5 offset-lg-0' : 'col-12 col-xl-7'
                   "
                 >
-                  <ish-product-quantity
+                  <camfil-product-quantity
                     *ngIf="configuration.displayQuantity"
                     [readOnly]="configuration.readOnly"
                     [allowZeroQuantity]="configuration.allowZeroQuantity"
@@ -117,7 +117,7 @@
                     [product]="product"
                     [parentForm]="productItemForm"
                     [controlName]="quantityControlName"
-                  ></ish-product-quantity>
+                  ></camfil-product-quantity>
                 </div>
 
                 <div
