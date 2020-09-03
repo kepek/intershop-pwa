@@ -13,7 +13,7 @@ import { CamfilProductAddToBasketComponent } from 'ish-shared/components/product
 import { DEFAULT_CONFIGURATION } from 'ish-shared/components/product/camfil-product-item/camfil-product-item.component';
 import { CamfilProductPriceComponent } from 'ish-shared/components/product/camfil-product-price/camfil-product-price.component';
 import { CamfilProductQuantityComponent } from 'ish-shared/components/product/camfil-product-quantity/camfil-product-quantity.component';
-import { ProductAddToCompareComponent } from 'ish-shared/components/product/product-add-to-compare/product-add-to-compare.component';
+import { CamfilProductAddToCompareComponent } from 'ish-shared/components/product/camfil-product-add-to-compare/camfil-product-add-to-compare.component';
 import { ProductIdComponent } from 'ish-shared/components/product/product-id/product-id.component';
 import { ProductInventoryComponent } from 'ish-shared/components/product/product-inventory/product-inventory.component';
 import { ProductLabelComponent } from 'ish-shared/components/product/product-label/product-label.component';
@@ -45,7 +45,7 @@ describe('Camfil Product Item Simple Component', () => {
         MockComponent(LazyProductAddToOrderTemplateComponent),
         MockComponent(LazyProductAddToQuoteComponent),
         MockComponent(LazyProductAddToWishlistComponent),
-        MockComponent(ProductAddToCompareComponent),
+        MockComponent(CamfilProductAddToCompareComponent),
         MockComponent(ProductIdComponent),
         MockComponent(ProductImageComponent),
         MockComponent(ProductInventoryComponent),
@@ -78,7 +78,6 @@ describe('Camfil Product Item Simple Component', () => {
     fixture.detectChanges();
     expect(findAllIshElements(element)).toMatchInlineSnapshot(`
       Array [
-        "ish-product-add-to-compare",
         "ish-product-id",
         "ish-product-image",
         "ish-product-inventory",
@@ -88,6 +87,7 @@ describe('Camfil Product Item Simple Component', () => {
     `);
     expect(findAllCamfilElements(element)).toMatchInlineSnapshot(`
       Array [
+        "camfil-product-add-to-compare",
         "camfil-lazy-product-add-to-order-template",
         "camfil-lazy-product-add-to-quote",
         "camfil-lazy-product-add-to-wishlist",

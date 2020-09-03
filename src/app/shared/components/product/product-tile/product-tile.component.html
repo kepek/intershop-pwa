@@ -49,13 +49,13 @@
       displayType="icon"
       class="btn-link"
     ></camfil-lazy-product-add-to-quote>
-    <ish-product-add-to-compare
+    <camfil-product-add-to-compare
       *ngIf="configuration.displayAddToCompare"
       [isInCompareList]="isInCompareList"
       displayType="icon"
       class="btn-link"
       (compareToggle)="toggleCompare()"
-    ></ish-product-add-to-compare>
+    ></camfil-product-add-to-compare>
     <camfil-lazy-product-add-to-order-template
       *ngIf="configuration.displayAddToOrderTemplate"
       [class]="'btn btn-link mr-0'"

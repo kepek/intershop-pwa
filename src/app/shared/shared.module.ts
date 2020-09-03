@@ -90,6 +90,7 @@ import { LoginModalComponent } from './components/login/login-modal/login-modal.
 import { OrderListComponent } from './components/order/order-list/order-list.component';
 import { OrderWidgetComponent } from './components/order/order-widget/order-widget.component';
 import { CamfilProductAddToBasketComponent } from './components/product/camfil-product-add-to-basket/camfil-product-add-to-basket.component';
+import { CamfilProductAddToCompareComponent } from './components/product/camfil-product-add-to-compare/camfil-product-add-to-compare.component';
 import { CamfilProductAttributesComponent } from './components/product/camfil-product-attributes/camfil-product-attributes.component';
 import { CamfilProductItemDetailedComponent } from './components/product/camfil-product-item-detailed/camfil-product-item-detailed.component';
 import { CamfilProductItemSimpleComponent } from './components/product/camfil-product-item-simple/camfil-product-item-simple.component';
@@ -190,6 +191,7 @@ const declaredComponents = [
   LineItemEditDialogComponent,
   LoginModalComponent,
   ProductAddToBasketComponent,
+  ProductAddToCompareComponent,
   ProductIdComponent,
   ProductItemComponent,
   ProductLabelComponent,
@@ -221,6 +223,7 @@ const exportedComponents = [
   CamfilFilterNavigationComponent,
   CamfilLinksBlockComponent,
   CamfilProductAddToBasketComponent,
+  CamfilProductAddToCompareComponent,
   CamfilProductAttributesComponent,
   CamfilProductItemComponent,
   CamfilProductListingComponent,
@@ -237,7 +240,6 @@ const exportedComponents = [
   ModalDialogLinkComponent,
   OrderListComponent,
   OrderWidgetComponent,
-  ProductAddToCompareComponent,
   ProductAttributesComponent,
   ProductBundleDisplayComponent,
   ProductIdComponent,
