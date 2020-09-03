@@ -1,10 +1,10 @@
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { TranslateModule } from '@ngx-translate/core';
+import { findAllCamfilElements } from 'camfil-core/utils/dev/html-query-utils';
 import { MockComponent } from 'ng-mocks';
 
-import { findAllIshElements } from 'ish-core/utils/dev/html-query-utils';
+import { CamfilProductAddToBasketComponent } from 'ish-shared/components/product/camfil-product-add-to-basket/camfil-product-add-to-basket.component';
 import { CamfilProductItemComponent } from 'ish-shared/components/product/camfil-product-item/camfil-product-item.component';
-import { ProductAddToBasketComponent } from 'ish-shared/components/product/product-add-to-basket/product-add-to-basket.component';
 
 import { RetailSetPartsComponent } from './retail-set-parts.component';
 
@@ -17,8 +17,8 @@ describe('Retail Set Parts Component', () => {
     TestBed.configureTestingModule({
       imports: [TranslateModule.forRoot()],
       declarations: [
+        MockComponent(CamfilProductAddToBasketComponent),
         MockComponent(CamfilProductItemComponent),
-        MockComponent(ProductAddToBasketComponent),
         RetailSetPartsComponent,
       ],
     }).compileComponents();
@@ -43,9 +43,12 @@ describe('Retail Set Parts Component', () => {
 
   it('should display elements for each part', () => {
     fixture.detectChanges();
-    expect(findAllIshElements(element)).toMatchInlineSnapshot(`
+    expect(findAllCamfilElements(element)).toMatchInlineSnapshot(`
       Array [
-        "ish-product-add-to-basket",
+        "camfil-product-add-to-basket",
+        "camfil-product-item",
+        "camfil-product-item",
+        "camfil-product-item",
       ]
     `);
   });

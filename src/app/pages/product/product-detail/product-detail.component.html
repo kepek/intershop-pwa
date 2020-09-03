@@ -72,13 +72,13 @@
             </div>
           </div>
 
-          <ish-product-add-to-basket
+          <camfil-product-add-to-basket
             [product]="product"
             [class]="'btn-lg btn-block'"
             [disabled]="productDetailForm.invalid"
             [translationKey]="isRetailSet(product) ? 'product.add_to_cart.retailset.link' : 'product.add_to_cart.link'"
             (productToBasket)="addToBasket()"
-          ></ish-product-add-to-basket>
+          ></camfil-product-add-to-basket>
 
           <camfil-lazy-product-add-to-order-template
             [class]="'btn btn-default btn-block'"

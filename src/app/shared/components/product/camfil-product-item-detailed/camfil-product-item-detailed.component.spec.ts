@@ -2,21 +2,22 @@ import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
+import { findAllCamfilElements } from 'camfil-core/utils/dev/html-query-utils';
 import { MockComponent, MockDirective, MockPipe } from 'ng-mocks';
 
 import { FeatureToggleDirective } from 'ish-core/directives/feature-toggle.directive';
 import { ProductView } from 'ish-core/models/product-view/product-view.model';
 import { ProductRoutePipe } from 'ish-core/routing/product/product-route.pipe';
 import { findAllIshElements } from 'ish-core/utils/dev/html-query-utils';
+import { CamfilProductAddToBasketComponent } from 'ish-shared/components/product/camfil-product-add-to-basket/camfil-product-add-to-basket.component';
 import { DEFAULT_CONFIGURATION } from 'ish-shared/components/product/camfil-product-item/camfil-product-item.component';
 import { CamfilProductPriceComponent } from 'ish-shared/components/product/camfil-product-price/camfil-product-price.component';
-import { ProductAddToBasketComponent } from 'ish-shared/components/product/product-add-to-basket/product-add-to-basket.component';
+import { CamfilProductQuantityComponent } from 'ish-shared/components/product/camfil-product-quantity/camfil-product-quantity.component';
 import { ProductAddToCompareComponent } from 'ish-shared/components/product/product-add-to-compare/product-add-to-compare.component';
 import { ProductIdComponent } from 'ish-shared/components/product/product-id/product-id.component';
 import { ProductInventoryComponent } from 'ish-shared/components/product/product-inventory/product-inventory.component';
 import { ProductLabelComponent } from 'ish-shared/components/product/product-label/product-label.component';
 import { ProductPromotionComponent } from 'ish-shared/components/product/product-promotion/product-promotion.component';
-import { CamfilProductQuantityComponent } from 'ish-shared/components/product/camfil-product-quantity/camfil-product-quantity.component';
 import { ProductRatingComponent } from 'ish-shared/components/product/product-rating/product-rating.component';
 import { ProductShipmentComponent } from 'ish-shared/components/product/product-shipment/product-shipment.component';
 import { ProductVariationSelectComponent } from 'ish-shared/components/product/product-variation-select/product-variation-select.component';
@@ -27,7 +28,6 @@ import { LazyProductAddToQuoteComponent } from '../../../../extensions/quoting/e
 import { LazyProductAddToWishlistComponent } from '../../../../extensions/wishlists/exports/lazy-product-add-to-wishlist/lazy-product-add-to-wishlist.component';
 
 import { CamfilProductItemDetailedComponent } from './camfil-product-item-detailed.component';
-import { findAllCamfilElements } from 'camfil-core/utils/dev/html-query-utils';
 
 describe('Camfil Product Item Detailed Component', () => {
   let component: CamfilProductItemDetailedComponent;
@@ -39,18 +39,18 @@ describe('Camfil Product Item Detailed Component', () => {
       imports: [ReactiveFormsModule, RouterTestingModule, TranslateModule.forRoot()],
       declarations: [
         CamfilProductItemDetailedComponent,
+        MockComponent(CamfilProductAddToBasketComponent),
         MockComponent(CamfilProductPriceComponent),
+        MockComponent(CamfilProductQuantityComponent),
         MockComponent(LazyProductAddToOrderTemplateComponent),
         MockComponent(LazyProductAddToQuoteComponent),
         MockComponent(LazyProductAddToWishlistComponent),
-        MockComponent(ProductAddToBasketComponent),
         MockComponent(ProductAddToCompareComponent),
         MockComponent(ProductIdComponent),
         MockComponent(ProductImageComponent),
         MockComponent(ProductInventoryComponent),
         MockComponent(ProductLabelComponent),
         MockComponent(ProductPromotionComponent),
-        MockComponent(CamfilProductQuantityComponent),
         MockComponent(ProductRatingComponent),
         MockComponent(ProductShipmentComponent),
         MockComponent(ProductVariationSelectComponent),
@@ -78,7 +78,6 @@ describe('Camfil Product Item Detailed Component', () => {
     fixture.detectChanges();
     expect(findAllIshElements(element)).toMatchInlineSnapshot(`
       Array [
-        "ish-product-add-to-basket",
         "ish-product-add-to-compare",
         "ish-product-id",
         "ish-product-image",
@@ -92,6 +91,7 @@ describe('Camfil Product Item Detailed Component', () => {
         "camfil-lazy-product-add-to-order-template",
         "camfil-lazy-product-add-to-quote",
         "camfil-lazy-product-add-to-wishlist",
+        "camfil-product-add-to-basket",
         "camfil-product-price",
         "camfil-product-quantity",
       ]

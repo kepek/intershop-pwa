@@ -89,6 +89,7 @@ import { LoginFormComponent } from './components/login/login-form/login-form.com
 import { LoginModalComponent } from './components/login/login-modal/login-modal.component';
 import { OrderListComponent } from './components/order/order-list/order-list.component';
 import { OrderWidgetComponent } from './components/order/order-widget/order-widget.component';
+import { CamfilProductAddToBasketComponent } from './components/product/camfil-product-add-to-basket/camfil-product-add-to-basket.component';
 import { CamfilProductAttributesComponent } from './components/product/camfil-product-attributes/camfil-product-attributes.component';
 import { CamfilProductItemDetailedComponent } from './components/product/camfil-product-item-detailed/camfil-product-item-detailed.component';
 import { CamfilProductItemSimpleComponent } from './components/product/camfil-product-item-simple/camfil-product-item-simple.component';
@@ -97,6 +98,7 @@ import { CamfilProductListToolbarComponent } from './components/product/camfil-p
 import { CamfilProductListComponent } from './components/product/camfil-product-list/camfil-product-list.component';
 import { CamfilProductListingComponent } from './components/product/camfil-product-listing/camfil-product-listing.component';
 import { CamfilProductPriceComponent } from './components/product/camfil-product-price/camfil-product-price.component';
+import { CamfilProductQuantityComponent } from './components/product/camfil-product-quantity/camfil-product-quantity.component';
 import { ProductAddToBasketComponent } from './components/product/product-add-to-basket/product-add-to-basket.component';
 import { ProductAddToCompareComponent } from './components/product/product-add-to-compare/product-add-to-compare.component';
 import { ProductAttributesComponent } from './components/product/product-attributes/product-attributes.component';
@@ -109,7 +111,7 @@ import { ProductListPagingComponent } from './components/product/product-list-pa
 import { ProductListComponent } from './components/product/product-list/product-list.component';
 import { ProductPriceComponent } from './components/product/product-price/product-price.component';
 import { ProductPromotionComponent } from './components/product/product-promotion/product-promotion.component';
-import { CamfilProductQuantityComponent } from './components/product/camfil-product-quantity/camfil-product-quantity.component';
+import { ProductQuantityComponent } from './components/product/product-quantity/product-quantity.component';
 import { ProductRatingStarComponent } from './components/product/product-rating-star/product-rating-star.component';
 import { ProductRatingComponent } from './components/product/product-rating/product-rating.component';
 import { ProductRowComponent } from './components/product/product-row/product-row.component';
@@ -122,7 +124,6 @@ import { PromotionRemoveComponent } from './components/promotion/promotion-remov
 import { RecentlyViewedComponent } from './components/recently/recently-viewed/recently-viewed.component';
 import { FormsDynamicModule } from './forms-dynamic/forms-dynamic.module';
 import { FormsSharedModule } from './forms/forms.module';
-import { ProductQuantityComponent } from './components/product/product-quantity/product-quantity.component';
 
 const importExportModules = [
   AddressFormsSharedModule,
@@ -188,12 +189,14 @@ const declaredComponents = [
   LineItemEditComponent,
   LineItemEditDialogComponent,
   LoginModalComponent,
+  ProductAddToBasketComponent,
   ProductIdComponent,
   ProductItemComponent,
   ProductLabelComponent,
   ProductListComponent,
   ProductListPagingComponent,
   ProductPriceComponent,
+  ProductQuantityComponent,
   ProductRatingStarComponent,
   ProductRowComponent,
   ProductTileComponent,
@@ -217,10 +220,12 @@ const exportedComponents = [
   CamfilFilterMeasurementsComponent,
   CamfilFilterNavigationComponent,
   CamfilLinksBlockComponent,
+  CamfilProductAddToBasketComponent,
   CamfilProductAttributesComponent,
   CamfilProductItemComponent,
   CamfilProductListingComponent,
   CamfilProductPriceComponent,
+  CamfilProductQuantityComponent,
   ContentIncludeComponent,
   ContentPageletComponent,
   ErrorMessageComponent,
@@ -232,7 +237,6 @@ const exportedComponents = [
   ModalDialogLinkComponent,
   OrderListComponent,
   OrderWidgetComponent,
-  ProductAddToBasketComponent,
   ProductAddToCompareComponent,
   ProductAttributesComponent,
   ProductBundleDisplayComponent,
@@ -241,7 +245,6 @@ const exportedComponents = [
   ProductLabelComponent,
   ProductPriceComponent,
   ProductPromotionComponent,
-  CamfilProductQuantityComponent,
   ProductRatingComponent,
   ProductShipmentComponent,
   ProductVariationDisplayComponent,
@@ -261,7 +264,7 @@ const exportedComponents = [
     MatRadioModule,
     MatSelectModule,
   ],
-  declarations: [...declaredComponents, ...exportedComponents, ProductQuantityComponent],
+  declarations: [...declaredComponents, ...exportedComponents],
   exports: [...exportedComponents, ...importExportModules],
 })
 export class SharedModule {}

@@ -10,8 +10,8 @@ import { ProductView, createProductView } from 'ish-core/models/product-view/pro
 import { Product } from 'ish-core/models/product/product.model';
 import { ProductRoutePipe } from 'ish-core/routing/product/product-route.pipe';
 import { categoryTree } from 'ish-core/utils/dev/test-data-utils';
+import { CamfilProductAddToBasketComponent } from 'ish-shared/components/product/camfil-product-add-to-basket/camfil-product-add-to-basket.component';
 import { CamfilProductPriceComponent } from 'ish-shared/components/product/camfil-product-price/camfil-product-price.component';
-import { ProductAddToBasketComponent } from 'ish-shared/components/product/product-add-to-basket/product-add-to-basket.component';
 import { ProductAttributesComponent } from 'ish-shared/components/product/product-attributes/product-attributes.component';
 import { ProductIdComponent } from 'ish-shared/components/product/product-id/product-id.component';
 import { ProductInventoryComponent } from 'ish-shared/components/product/product-inventory/product-inventory.component';
@@ -33,9 +33,9 @@ describe('Product Compare List Component', () => {
     TestBed.configureTestingModule({
       imports: [RouterTestingModule, TranslateModule.forRoot()],
       declarations: [
+        MockComponent(CamfilProductAddToBasketComponent),
         MockComponent(CamfilProductPriceComponent),
         MockComponent(FaIconComponent),
-        MockComponent(ProductAddToBasketComponent),
         MockComponent(ProductAttributesComponent),
         MockComponent(ProductComparePagingComponent),
         MockComponent(ProductIdComponent),

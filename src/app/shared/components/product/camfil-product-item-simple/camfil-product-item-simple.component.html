@@ -103,11 +103,11 @@
                 class="action-container addtocart-container"
                 [ngClass]="configuration.quantityLabel === ' ' ? 'col-12 col-lg-7' : 'col-12 col-xl-5'"
               >
-                <ish-product-add-to-basket
+                <camfil-product-add-to-basket
                   *ngIf="configuration.displayAddToBasket"
                   [product]="product"
                   (productToBasket)="addToBasket()"
-                ></ish-product-add-to-basket>
+                ></camfil-product-add-to-basket>
               </div>
             </form>
           </ng-container>

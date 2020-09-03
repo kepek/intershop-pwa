@@ -9,11 +9,11 @@ import { instance, mock } from 'ts-mockito';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { DatePipe } from 'ish-core/pipes/date.pipe';
 import { ProductRoutePipe } from 'ish-core/routing/product/product-route.pipe';
+import { CamfilProductAddToBasketComponent } from 'ish-shared/components/product/camfil-product-add-to-basket/camfil-product-add-to-basket.component';
 import { CamfilProductPriceComponent } from 'ish-shared/components/product/camfil-product-price/camfil-product-price.component';
-import { ProductAddToBasketComponent } from 'ish-shared/components/product/product-add-to-basket/product-add-to-basket.component';
+import { CamfilProductQuantityComponent } from 'ish-shared/components/product/camfil-product-quantity/camfil-product-quantity.component';
 import { ProductBundleDisplayComponent } from 'ish-shared/components/product/product-bundle-display/product-bundle-display.component';
 import { ProductIdComponent } from 'ish-shared/components/product/product-id/product-id.component';
-import { CamfilProductQuantityComponent } from 'ish-shared/components/product/camfil-product-quantity/camfil-product-quantity.component';
 import { ProductVariationDisplayComponent } from 'ish-shared/components/product/product-variation-display/product-variation-display.component';
 import { InputComponent } from 'ish-shared/forms/components/input/input.component';
 import { ProductImageComponent } from 'ish-shell/header/product-image/product-image.component';
@@ -32,14 +32,14 @@ describe('Account Wishlist Detail Line Item Component', () => {
     TestBed.configureTestingModule({
       declarations: [
         AccountWishlistDetailLineItemComponent,
+        MockComponent(CamfilProductAddToBasketComponent),
         MockComponent(CamfilProductPriceComponent),
+        MockComponent(CamfilProductQuantityComponent),
         MockComponent(FaIconComponent),
         MockComponent(InputComponent),
-        MockComponent(ProductAddToBasketComponent),
         MockComponent(ProductBundleDisplayComponent),
         MockComponent(ProductIdComponent),
         MockComponent(ProductImageComponent),
-        MockComponent(CamfilProductQuantityComponent),
         MockComponent(ProductVariationDisplayComponent),
         MockComponent(SelectWishlistModalComponent),
         MockPipe(DatePipe),

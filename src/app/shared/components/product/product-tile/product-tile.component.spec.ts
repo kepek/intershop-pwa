@@ -1,15 +1,16 @@
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
+import { findAllCamfilElements } from 'camfil-core/utils/dev/html-query-utils';
 import { MockComponent, MockDirective, MockPipe } from 'ng-mocks';
 
 import { FeatureToggleModule } from 'ish-core/feature-toggle.module';
 import { ProductView } from 'ish-core/models/product-view/product-view.model';
 import { ProductRoutePipe } from 'ish-core/routing/product/product-route.pipe';
 import { findAllIshElements } from 'ish-core/utils/dev/html-query-utils';
+import { CamfilProductAddToBasketComponent } from 'ish-shared/components/product/camfil-product-add-to-basket/camfil-product-add-to-basket.component';
 import { DEFAULT_CONFIGURATION } from 'ish-shared/components/product/camfil-product-item/camfil-product-item.component';
 import { CamfilProductPriceComponent } from 'ish-shared/components/product/camfil-product-price/camfil-product-price.component';
-import { ProductAddToBasketComponent } from 'ish-shared/components/product/product-add-to-basket/product-add-to-basket.component';
 import { ProductAddToCompareComponent } from 'ish-shared/components/product/product-add-to-compare/product-add-to-compare.component';
 import { ProductLabelComponent } from 'ish-shared/components/product/product-label/product-label.component';
 import { ProductPromotionComponent } from 'ish-shared/components/product/product-promotion/product-promotion.component';
@@ -35,12 +36,12 @@ describe('Product Tile Component', () => {
     TestBed.configureTestingModule({
       imports: [FeatureToggleModule.forTesting(), RouterTestingModule, TranslateModule.forRoot()],
       declarations: [
+        MockComponent(CamfilProductAddToBasketComponent),
         MockComponent(CamfilProductPriceComponent),
         MockComponent(LazyProductAddToOrderTemplateComponent),
         MockComponent(LazyProductAddToQuoteComponent),
         MockComponent(LazyProductAddToWishlistComponent),
         MockComponent(LazyTactonConfigureProductComponent),
-        MockComponent(ProductAddToBasketComponent),
         MockComponent(ProductAddToCompareComponent),
         MockComponent(ProductAddToWishlistComponent),
         MockComponent(ProductImageComponent),
@@ -73,11 +74,20 @@ describe('Product Tile Component', () => {
     fixture.detectChanges();
     expect(findAllIshElements(element)).toMatchInlineSnapshot(`
       Array [
-        "ish-product-add-to-basket",
         "ish-product-add-to-compare",
         "ish-product-image",
         "ish-product-label",
         "ish-product-promotion",
+      ]
+    `);
+    expect(findAllCamfilElements(element)).toMatchInlineSnapshot(`
+      Array [
+        "camfil-lazy-product-add-to-order-template",
+        "camfil-lazy-product-add-to-quote",
+        "camfil-lazy-product-add-to-wishlist",
+        "camfil-product-add-to-basket",
+        "camfil-product-price",
+        "camfil-product-price",
       ]
     `);
   });
