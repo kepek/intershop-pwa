@@ -20,11 +20,20 @@ export class CamfilFilterMeasurementsComponent {
 
   filter(facet, type) {
     this[type] = facet;
+
+    const filter = [
+      `attr_width%5Bgte%5D=${+this.width - 10}&attr_width%5Blte%5D=${+this.width + 10}`,
+      `attr_height%5Bgte%5D=${+this.height - 10}&attr_height%5Blte%5D=${+this.height + 10}`,
+      `attr_depth%5Bgte%5D=${+this.depth - 50}&attr_depth%5Blte%5D=${+this.depth + 50}`,
+    ].join('&');
+
     if (+this.width && +this.height && +this.depth) {
       this.router.navigate([], {
         queryParamsHandling: 'merge',
         relativeTo: this.activatedRoute,
-        queryParams: { filters: `width=${this.width},height=${this.height},depth=${this.depth}` },
+        queryParams: {
+          filters: filter,
+        },
         fragment: this.fragmentOnRouting,
       });
     }
