@@ -12,11 +12,11 @@ import { findAllIshElements } from 'ish-core/utils/dev/html-query-utils';
 import { CamfilProductAddToBasketComponent } from 'ish-shared/components/product/camfil-product-add-to-basket/camfil-product-add-to-basket.component';
 import { CamfilProductAddToCompareComponent } from 'ish-shared/components/product/camfil-product-add-to-compare/camfil-product-add-to-compare.component';
 import { DEFAULT_CONFIGURATION } from 'ish-shared/components/product/camfil-product-item/camfil-product-item.component';
+import { CamfilProductLabelComponent } from 'ish-shared/components/product/camfil-product-label/camfil-product-label.component';
 import { CamfilProductPriceComponent } from 'ish-shared/components/product/camfil-product-price/camfil-product-price.component';
 import { CamfilProductQuantityComponent } from 'ish-shared/components/product/camfil-product-quantity/camfil-product-quantity.component';
 import { ProductIdComponent } from 'ish-shared/components/product/product-id/product-id.component';
 import { ProductInventoryComponent } from 'ish-shared/components/product/product-inventory/product-inventory.component';
-import { ProductLabelComponent } from 'ish-shared/components/product/product-label/product-label.component';
 import { ProductPromotionComponent } from 'ish-shared/components/product/product-promotion/product-promotion.component';
 import { ProductRatingComponent } from 'ish-shared/components/product/product-rating/product-rating.component';
 import { ProductShipmentComponent } from 'ish-shared/components/product/product-shipment/product-shipment.component';
@@ -42,6 +42,7 @@ describe('Product Row Component', () => {
       declarations: [
         MockComponent(CamfilProductAddToBasketComponent),
         MockComponent(CamfilProductAddToCompareComponent),
+        MockComponent(CamfilProductLabelComponent),
         MockComponent(CamfilProductPriceComponent),
         MockComponent(CamfilProductQuantityComponent),
         MockComponent(LazyProductAddToOrderTemplateComponent),
@@ -51,7 +52,6 @@ describe('Product Row Component', () => {
         MockComponent(ProductIdComponent),
         MockComponent(ProductImageComponent),
         MockComponent(ProductInventoryComponent),
-        MockComponent(ProductLabelComponent),
         MockComponent(ProductPromotionComponent),
         MockComponent(ProductRatingComponent),
         MockComponent(ProductShipmentComponent),
@@ -84,7 +84,6 @@ describe('Product Row Component', () => {
         "ish-product-id",
         "ish-product-image",
         "ish-product-inventory",
-        "ish-product-label",
         "ish-product-promotion",
       ]
     `);
@@ -95,6 +94,7 @@ describe('Product Row Component', () => {
         "camfil-lazy-product-add-to-wishlist",
         "camfil-product-add-to-basket",
         "camfil-product-add-to-compare",
+        "camfil-product-label",
         "camfil-product-price",
         "camfil-product-quantity",
       ]
@@ -107,7 +107,11 @@ describe('Product Row Component', () => {
     expect(findAllIshElements(element)).toMatchInlineSnapshot(`
       Array [
         "ish-product-image",
-        "ish-product-label",
+      ]
+    `);
+    expect(findAllCamfilElements(element)).toMatchInlineSnapshot(`
+      Array [
+        "camfil-product-label",
       ]
     `);
   });

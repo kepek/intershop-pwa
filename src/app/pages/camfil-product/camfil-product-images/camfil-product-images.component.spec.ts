@@ -4,7 +4,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MockComponent } from 'ng-mocks';
 
 import { Product } from 'ish-core/models/product/product.model';
-import { ProductLabelComponent } from 'ish-shared/components/product/product-label/product-label.component';
+import { CamfilProductLabelComponent } from 'ish-shared/components/product/camfil-product-label/camfil-product-label.component';
 import { ProductImageComponent } from 'ish-shell/header/product-image/product-image.component';
 
 import { CamfilProductImagesComponent } from './camfil-product-images.component';
@@ -64,8 +64,8 @@ describe('Camfil Product Images Component', () => {
       imports: [NgbCarouselModule, TranslateModule.forRoot()],
       declarations: [
         CamfilProductImagesComponent,
+        MockComponent(CamfilProductLabelComponent),
         MockComponent(ProductImageComponent),
-        MockComponent(ProductLabelComponent),
       ],
     }).compileComponents();
   }));

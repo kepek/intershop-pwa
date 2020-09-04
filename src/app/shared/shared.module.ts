@@ -95,6 +95,7 @@ import { CamfilProductAttributesComponent } from './components/product/camfil-pr
 import { CamfilProductItemDetailedComponent } from './components/product/camfil-product-item-detailed/camfil-product-item-detailed.component';
 import { CamfilProductItemSimpleComponent } from './components/product/camfil-product-item-simple/camfil-product-item-simple.component';
 import { CamfilProductItemComponent } from './components/product/camfil-product-item/camfil-product-item.component';
+import { CamfilProductLabelComponent } from './components/product/camfil-product-label/camfil-product-label.component';
 import { CamfilProductListToolbarComponent } from './components/product/camfil-product-list-toolbar/camfil-product-list-toolbar.component';
 import { CamfilProductListComponent } from './components/product/camfil-product-list/camfil-product-list.component';
 import { CamfilProductListingComponent } from './components/product/camfil-product-listing/camfil-product-listing.component';
@@ -174,6 +175,7 @@ const declaredComponents = [
   CamfilProductAttributesComponent,
   CamfilProductItemDetailedComponent,
   CamfilProductItemSimpleComponent,
+  CamfilProductLabelComponent,
   CamfilProductListComponent,
   CamfilProductListToolbarComponent,
   ContentSlotComponent,
@@ -226,6 +228,7 @@ const exportedComponents = [
   CamfilProductAddToCompareComponent,
   CamfilProductAttributesComponent,
   CamfilProductItemComponent,
+  CamfilProductLabelComponent,
   CamfilProductListingComponent,
   CamfilProductPriceComponent,
   CamfilProductQuantityComponent,
@@ -244,7 +247,6 @@ const exportedComponents = [
   ProductBundleDisplayComponent,
   ProductIdComponent,
   ProductInventoryComponent,
-  ProductLabelComponent,
   ProductPriceComponent,
   ProductPromotionComponent,
   ProductRatingComponent,

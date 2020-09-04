@@ -3,7 +3,7 @@
     <a [routerLink]="product | ishProductRoute: category">
       <ish-product-image [product]="product" imageType="M" class="product-image"></ish-product-image>
     </a>
-    <ish-product-label [product]="product"></ish-product-label>
+    <camfil-product-label [product]="product"></camfil-product-label>
   </div>
 
   <a *ngIf="configuration.displayName" class="product-title" [routerLink]="product | ishProductRoute: category">{{
