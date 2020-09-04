@@ -17,7 +17,7 @@
 
         <ish-product-rating *ishFeature="'rating'" [product]="product"></ish-product-rating>
 
-        <ish-product-id *ngIf="configuration.displaySKU" [product]="product"></ish-product-id>
+        <camfil-product-id *ngIf="configuration.displaySKU" [product]="product"></camfil-product-id>
 
         <div *ngIf="configuration.displayDescription" class="product-description">{{ product.shortDescription }}</div>
 

@@ -9,10 +9,10 @@ import { ProductView } from 'ish-core/models/product-view/product-view.model';
 import { AccordionItemComponent } from 'ish-shared/components/common/accordion-item/accordion-item.component';
 import { AccordionComponent } from 'ish-shared/components/common/accordion/accordion.component';
 import { CamfilProductAddToBasketComponent } from 'ish-shared/components/product/camfil-product-add-to-basket/camfil-product-add-to-basket.component';
+import { CamfilProductIdComponent } from 'ish-shared/components/product/camfil-product-id/camfil-product-id.component';
 import { CamfilProductPriceComponent } from 'ish-shared/components/product/camfil-product-price/camfil-product-price.component';
 import { CamfilProductQuantityComponent } from 'ish-shared/components/product/camfil-product-quantity/camfil-product-quantity.component';
 import { ProductAttributesComponent } from 'ish-shared/components/product/product-attributes/product-attributes.component';
-import { ProductIdComponent } from 'ish-shared/components/product/product-id/product-id.component';
 import { ProductInventoryComponent } from 'ish-shared/components/product/product-inventory/product-inventory.component';
 import { ProductPromotionComponent } from 'ish-shared/components/product/product-promotion/product-promotion.component';
 import { ProductRatingComponent } from 'ish-shared/components/product/product-rating/product-rating.component';
@@ -51,6 +51,7 @@ describe('Product Detail Component', () => {
         MockComponent(AccordionComponent),
         MockComponent(AccordionItemComponent),
         MockComponent(CamfilProductAddToBasketComponent),
+        MockComponent(CamfilProductIdComponent),
         MockComponent(CamfilProductPriceComponent),
         MockComponent(CamfilProductQuantityComponent),
         MockComponent(LazyProductAddToOrderTemplateComponent),
@@ -58,7 +59,6 @@ describe('Product Detail Component', () => {
         MockComponent(LazyTactonConfigureProductComponent),
         MockComponent(ProductAttributesComponent),
         MockComponent(ProductDetailActionsComponent),
-        MockComponent(ProductIdComponent),
         MockComponent(ProductImagesComponent),
         MockComponent(ProductInventoryComponent),
         MockComponent(ProductPromotionComponent),

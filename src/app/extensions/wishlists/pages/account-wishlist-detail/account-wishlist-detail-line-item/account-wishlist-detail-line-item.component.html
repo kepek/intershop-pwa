@@ -12,7 +12,7 @@
             <a [routerLink]="product | ishProductRoute" class="product-title" data-testing-id="wishlist-product-link">
               {{ product.name }}
             </a>
-            <ish-product-id [product]="product"></ish-product-id>
+            <camfil-product-id [product]="product"></camfil-product-id>
             <ish-product-variation-display [product]="product"></ish-product-variation-display>
             <ish-product-bundle-display
               *ngIf="product.type === 'Bundle'"
