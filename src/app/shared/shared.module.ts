@@ -94,6 +94,7 @@ import { CamfilProductAddToCompareComponent } from './components/product/camfil-
 import { CamfilProductAttributeComponent } from './components/product/camfil-product-attribute/camfil-product-attribute.component';
 import { CamfilProductAttributesComponent } from './components/product/camfil-product-attributes/camfil-product-attributes.component';
 import { CamfilProductIdComponent } from './components/product/camfil-product-id/camfil-product-id.component';
+import { CamfilProductInventoryComponent } from './components/product/camfil-product-inventory/camfil-product-inventory.component';
 import { CamfilProductItemDetailedComponent } from './components/product/camfil-product-item-detailed/camfil-product-item-detailed.component';
 import { CamfilProductItemSimpleComponent } from './components/product/camfil-product-item-simple/camfil-product-item-simple.component';
 import { CamfilProductItemComponent } from './components/product/camfil-product-item/camfil-product-item.component';
@@ -102,38 +103,37 @@ import { CamfilProductListToolbarComponent } from './components/product/camfil-p
 import { CamfilProductListComponent } from './components/product/camfil-product-list/camfil-product-list.component';
 import { CamfilProductListingComponent } from './components/product/camfil-product-listing/camfil-product-listing.component';
 import { CamfilProductPriceComponent } from './components/product/camfil-product-price/camfil-product-price.component';
+import { CamfilProductPromotionComponent } from './components/product/camfil-product-promotion/camfil-product-promotion.component';
 import { CamfilProductQuantityComponent } from './components/product/camfil-product-quantity/camfil-product-quantity.component';
+import { CamfilProductRatingStarComponent } from './components/product/camfil-product-rating-star/camfil-product-rating-star.component';
+import { CamfilProductRatingComponent } from './components/product/camfil-product-rating/camfil-product-rating.component';
+import { CamfilProductShipmentComponent } from './components/product/camfil-product-shipment/camfil-product-shipment.component';
+import { CamfilProductVariationSelectComponent } from './components/product/camfil-product-variation-select/camfil-product-variation-select.component';
 import { ProductAddToBasketComponent } from './components/product/product-add-to-basket/product-add-to-basket.component';
 import { ProductAddToCompareComponent } from './components/product/product-add-to-compare/product-add-to-compare.component';
 import { ProductAttributesComponent } from './components/product/product-attributes/product-attributes.component';
 import { ProductBundleDisplayComponent } from './components/product/product-bundle-display/product-bundle-display.component';
 import { ProductIdComponent } from './components/product/product-id/product-id.component';
-import { CamfilProductInventoryComponent } from './components/product/camfil-product-inventory/camfil-product-inventory.component';
+import { ProductInventoryComponent } from './components/product/product-inventory/product-inventory.component';
 import { ProductItemComponent } from './components/product/product-item/product-item.component';
 import { ProductLabelComponent } from './components/product/product-label/product-label.component';
 import { ProductListPagingComponent } from './components/product/product-list-paging/product-list-paging.component';
 import { ProductListComponent } from './components/product/product-list/product-list.component';
 import { ProductPriceComponent } from './components/product/product-price/product-price.component';
-import { CamfilProductPromotionComponent } from './components/product/camfil-product-promotion/camfil-product-promotion.component';
+import { ProductPromotionComponent } from './components/product/product-promotion/product-promotion.component';
 import { ProductQuantityComponent } from './components/product/product-quantity/product-quantity.component';
-import { CamfilProductRatingStarComponent } from './components/product/camfil-product-rating-star/camfil-product-rating-star.component';
-import { CamfilProductRatingComponent } from './components/product/camfil-product-rating/camfil-product-rating.component';
+import { ProductRatingStarComponent } from './components/product/product-rating-star/product-rating-star.component';
+import { ProductRatingComponent } from './components/product/product-rating/product-rating.component';
 import { ProductRowComponent } from './components/product/product-row/product-row.component';
-import { CamfilProductShipmentComponent } from './components/product/camfil-product-shipment/camfil-product-shipment.component';
+import { ProductShipmentComponent } from './components/product/product-shipment/product-shipment.component';
 import { ProductTileComponent } from './components/product/product-tile/product-tile.component';
 import { ProductVariationDisplayComponent } from './components/product/product-variation-display/product-variation-display.component';
-import { CamfilProductVariationSelectComponent } from './components/product/camfil-product-variation-select/camfil-product-variation-select.component';
+import { ProductVariationSelectComponent } from './components/product/product-variation-select/product-variation-select.component';
 import { PromotionDetailsComponent } from './components/promotion/promotion-details/promotion-details.component';
 import { PromotionRemoveComponent } from './components/promotion/promotion-remove/promotion-remove.component';
 import { RecentlyViewedComponent } from './components/recently/recently-viewed/recently-viewed.component';
 import { FormsDynamicModule } from './forms-dynamic/forms-dynamic.module';
 import { FormsSharedModule } from './forms/forms.module';
-import { ProductInventoryComponent } from './components/product/product-inventory/product-inventory.component';
-import { ProductShipmentComponent } from './components/product/product-shipment/product-shipment.component';
-import { ProductRatingComponent } from './components/product/product-rating/product-rating.component';
-import { ProductRatingStarComponent } from './components/product/product-rating-star/product-rating-star.component';
-import { ProductPromotionComponent } from './components/product/product-promotion/product-promotion.component';
-import { ProductVariationSelectComponent } from './components/product/product-variation-select/product-variation-select.component';
 
 const importExportModules = [
   AddressFormsSharedModule,
@@ -188,6 +188,7 @@ const declaredComponents = [
   CamfilProductLabelComponent,
   CamfilProductListComponent,
   CamfilProductListToolbarComponent,
+  CamfilProductRatingStarComponent,
   ContentSlotComponent,
   FilterCheckboxComponent,
   FilterCollapsableComponent,
@@ -205,15 +206,20 @@ const declaredComponents = [
   ProductAddToBasketComponent,
   ProductAddToCompareComponent,
   ProductIdComponent,
+  ProductInventoryComponent,
   ProductItemComponent,
   ProductLabelComponent,
   ProductListComponent,
   ProductListPagingComponent,
   ProductPriceComponent,
+  ProductPromotionComponent,
   ProductQuantityComponent,
-  CamfilProductRatingStarComponent,
+  ProductRatingComponent,
+  ProductRatingStarComponent,
   ProductRowComponent,
+  ProductShipmentComponent,
   ProductTileComponent,
+  ProductVariationSelectComponent,
 ];
 
 const exportedComponents = [
@@ -238,11 +244,16 @@ const exportedComponents = [
   CamfilProductAddToCompareComponent,
   CamfilProductAttributesComponent,
   CamfilProductIdComponent,
+  CamfilProductInventoryComponent,
   CamfilProductItemComponent,
   CamfilProductLabelComponent,
   CamfilProductListingComponent,
   CamfilProductPriceComponent,
+  CamfilProductPromotionComponent,
   CamfilProductQuantityComponent,
+  CamfilProductRatingComponent,
+  CamfilProductShipmentComponent,
+  CamfilProductVariationSelectComponent,
   ContentIncludeComponent,
   ContentPageletComponent,
   ErrorMessageComponent,
@@ -256,13 +267,8 @@ const exportedComponents = [
   OrderWidgetComponent,
   ProductAttributesComponent,
   ProductBundleDisplayComponent,
-  CamfilProductInventoryComponent,
   ProductPriceComponent,
-  CamfilProductPromotionComponent,
-  CamfilProductRatingComponent,
-  CamfilProductShipmentComponent,
   ProductVariationDisplayComponent,
-  CamfilProductVariationSelectComponent,
   PromotionDetailsComponent,
   PromotionRemoveComponent,
   RecentlyViewedComponent,
@@ -278,7 +284,7 @@ const exportedComponents = [
     MatRadioModule,
     MatSelectModule,
   ],
-  declarations: [...declaredComponents, ...exportedComponents, ProductInventoryComponent, ProductShipmentComponent, ProductRatingComponent, ProductRatingStarComponent, ProductPromotionComponent, ProductVariationSelectComponent],
+  declarations: [...declaredComponents, ...exportedComponents],
   exports: [...exportedComponents, ...importExportModules],
 })
 export class SharedModule {}

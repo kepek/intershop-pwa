@@ -11,7 +11,7 @@ import { PromotionDetailsComponent } from 'ish-shared/components/promotion/promo
 
 import { CamfilProductPromotionComponent } from './camfil-product-promotion.component';
 
-describe('Product Promotion Component', () => {
+describe('Camfil Product Promotion Component', () => {
   let component: CamfilProductPromotionComponent;
   let fixture: ComponentFixture<CamfilProductPromotionComponent>;
   let element: HTMLElement;
@@ -23,9 +23,9 @@ describe('Product Promotion Component', () => {
 
     TestBed.configureTestingModule({
       declarations: [
+        CamfilProductPromotionComponent,
         MockComponent(PromotionDetailsComponent),
         MockDirective(ServerHtmlDirective),
-        CamfilProductPromotionComponent,
       ],
       providers: [{ provide: ShoppingFacade, useFactory: () => instance(shoppingFacade) }],
     }).compileComponents();
@@ -63,9 +63,7 @@ describe('Product Promotion Component', () => {
     expect(element).toMatchInlineSnapshot(`
       <ul class="promotion-list">
         <li class="promotion-list-item">
-          <div class="promotion-short-title" ng-reflect-ish-server-html="MyPromotion"></div>
-          <br />
-          <div><ish-promotion-details></ish-promotion-details></div>
+          <span class="promotion-short-title" ng-reflect-ish-server-html="MyPromotion"></span>
         </li>
       </ul>
     `);

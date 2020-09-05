@@ -4,14 +4,14 @@ import { MockComponent } from 'ng-mocks';
 
 import { CamfilProductRatingStarComponent } from './camfil-product-rating-star.component';
 
-describe('Product Rating Star Component', () => {
+describe('Camfil Product Rating Star Component', () => {
   let component: CamfilProductRatingStarComponent;
   let fixture: ComponentFixture<CamfilProductRatingStarComponent>;
   let element: HTMLElement;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [MockComponent(FaIconComponent), CamfilProductRatingStarComponent],
+      declarations: [CamfilProductRatingStarComponent, MockComponent(FaIconComponent)],
     }).compileComponents();
   }));
 

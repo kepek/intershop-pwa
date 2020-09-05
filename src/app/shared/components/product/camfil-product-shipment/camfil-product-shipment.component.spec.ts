@@ -10,7 +10,7 @@ import { ModalDialogLinkComponent } from 'ish-shared/components/common/modal-dia
 
 import { CamfilProductShipmentComponent } from './camfil-product-shipment.component';
 
-describe('Product Shipment Component', () => {
+describe('Camfil Product Shipment Component', () => {
   let component: CamfilProductShipmentComponent;
   let fixture: ComponentFixture<CamfilProductShipmentComponent>;
   let product: Product;
@@ -21,9 +21,9 @@ describe('Product Shipment Component', () => {
     TestBed.configureTestingModule({
       imports: [NgbModalModule, TranslateModule.forRoot()],
       declarations: [
+        CamfilProductShipmentComponent,
         MockComponent(ContentIncludeComponent),
         MockComponent(ModalDialogLinkComponent),
-        CamfilProductShipmentComponent,
       ],
     }).compileComponents();
   }));

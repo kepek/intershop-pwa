@@ -29,8 +29,8 @@ describe('Camfil Mini Basket Component', () => {
     TestBed.configureTestingModule({
       declarations: [
         CamfilMiniBasketComponent,
-        MockComponent(FaIconComponent),
         MockComponent(CamfilProductImageComponent),
+        MockComponent(FaIconComponent),
         MockPipe(ProductRoutePipe),
         PricePipe,
       ],

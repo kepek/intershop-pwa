@@ -11,10 +11,10 @@ import { DatePipe } from 'ish-core/pipes/date.pipe';
 import { ProductRoutePipe } from 'ish-core/routing/product/product-route.pipe';
 import { CamfilProductAddToBasketComponent } from 'ish-shared/components/product/camfil-product-add-to-basket/camfil-product-add-to-basket.component';
 import { CamfilProductIdComponent } from 'ish-shared/components/product/camfil-product-id/camfil-product-id.component';
+import { CamfilProductInventoryComponent } from 'ish-shared/components/product/camfil-product-inventory/camfil-product-inventory.component';
 import { CamfilProductPriceComponent } from 'ish-shared/components/product/camfil-product-price/camfil-product-price.component';
 import { CamfilProductQuantityComponent } from 'ish-shared/components/product/camfil-product-quantity/camfil-product-quantity.component';
 import { ProductBundleDisplayComponent } from 'ish-shared/components/product/product-bundle-display/product-bundle-display.component';
-import { CamfilProductInventoryComponent } from 'ish-shared/components/product/camfil-product-inventory/camfil-product-inventory.component';
 import { ProductVariationDisplayComponent } from 'ish-shared/components/product/product-variation-display/product-variation-display.component';
 import { CheckboxComponent } from 'ish-shared/forms/components/checkbox/checkbox.component';
 import { InputComponent } from 'ish-shared/forms/components/input/input.component';
@@ -36,14 +36,14 @@ describe('Account Order Template Detail Line Item Component', () => {
         AccountOrderTemplateDetailLineItemComponent,
         MockComponent(CamfilProductAddToBasketComponent),
         MockComponent(CamfilProductIdComponent),
+        MockComponent(CamfilProductImageComponent),
+        MockComponent(CamfilProductInventoryComponent),
         MockComponent(CamfilProductPriceComponent),
         MockComponent(CamfilProductQuantityComponent),
         MockComponent(CheckboxComponent),
         MockComponent(FaIconComponent),
         MockComponent(InputComponent),
         MockComponent(ProductBundleDisplayComponent),
-        MockComponent(CamfilProductImageComponent),
-        MockComponent(CamfilProductInventoryComponent),
         MockComponent(ProductVariationDisplayComponent),
         MockComponent(SelectOrderTemplateModalComponent),
         MockPipe(DatePipe),

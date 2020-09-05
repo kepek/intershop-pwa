@@ -25,6 +25,7 @@ import { CamfilHeaderDefaultComponent } from './header/camfil-header-default/cam
 import { CamfilHeaderComponent } from './header/camfil-header/camfil-header.component';
 import { CamfilMiniBasketComponent } from './header/camfil-mini-basket/camfil-mini-basket.component';
 import { CamfilProductCompareStatusComponent } from './header/camfil-product-compare-status/camfil-product-compare-status.component';
+import { CamfilProductImageComponent } from './header/camfil-product-image/camfil-product-image.component';
 import { CamfilSearchBoxComponent } from './header/camfil-search-box/camfil-search-box.component';
 import { HeaderCheckoutComponent } from './header/header-checkout/header-checkout.component';
 import { HeaderDefaultComponent } from './header/header-default/header-default.component';
@@ -35,11 +36,10 @@ import { LanguageSwitchComponent } from './header/language-switch/language-switc
 import { LoginStatusComponent } from './header/login-status/login-status.component';
 import { MiniBasketComponent } from './header/mini-basket/mini-basket.component';
 import { ProductCompareStatusComponent } from './header/product-compare-status/product-compare-status.component';
-import { CamfilProductImageComponent } from './header/camfil-product-image/camfil-product-image.component';
+import { ProductImageComponent } from './header/product-image/product-image.component';
 import { SearchBoxComponent } from './header/search-box/search-box.component';
 import { SubCategoryNavigationComponent } from './header/sub-category-navigation/sub-category-navigation.component';
 import { UserInformationMobileComponent } from './header/user-information-mobile/user-information-mobile.component';
-import { ProductImageComponent } from './header/product-image/product-image.component';
 
 const importExportModules = [
   CaptchaExportsModule,
@@ -54,8 +54,8 @@ const importExportModules = [
 const exportedComponents = [
   CamfilFooterComponent,
   CamfilHeaderComponent,
-  CamfilSearchBoxComponent,
   CamfilProductImageComponent,
+  CamfilSearchBoxComponent,
 ];
 
 @NgModule({
@@ -89,10 +89,10 @@ const exportedComponents = [
     LoginStatusComponent,
     MiniBasketComponent,
     ProductCompareStatusComponent,
+    ProductImageComponent,
     SearchBoxComponent,
     SubCategoryNavigationComponent,
     UserInformationMobileComponent,
-    ProductImageComponent,
   ],
   exports: [...exportedComponents, ...importExportModules],
 })

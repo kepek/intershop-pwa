@@ -7,7 +7,7 @@ import { FeatureToggleModule } from 'ish-core/feature-toggle.module';
 
 import { CamfilProductVariationSelectComponent } from './camfil-product-variation-select.component';
 
-describe('Product Variation Select Component', () => {
+describe('Camfil Product Variation Select Component', () => {
   let component: CamfilProductVariationSelectComponent;
   let fixture: ComponentFixture<CamfilProductVariationSelectComponent>;
   let element: HTMLElement;

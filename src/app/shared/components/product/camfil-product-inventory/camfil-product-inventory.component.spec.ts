@@ -5,7 +5,7 @@ import { Product } from 'ish-core/models/product/product.model';
 
 import { CamfilProductInventoryComponent } from './camfil-product-inventory.component';
 
-describe('Product Inventory Component', () => {
+describe('Camfil Product Inventory Component', () => {
   let component: CamfilProductInventoryComponent;
   let fixture: ComponentFixture<CamfilProductInventoryComponent>;
   let product: Product;

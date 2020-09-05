@@ -38,17 +38,17 @@ describe('Product Tile Component', () => {
       declarations: [
         MockComponent(CamfilProductAddToBasketComponent),
         MockComponent(CamfilProductAddToCompareComponent),
+        MockComponent(CamfilProductImageComponent),
         MockComponent(CamfilProductLabelComponent),
         MockComponent(CamfilProductPriceComponent),
+        MockComponent(CamfilProductPromotionComponent),
+        MockComponent(CamfilProductRatingComponent),
+        MockComponent(CamfilProductVariationSelectComponent),
         MockComponent(LazyProductAddToOrderTemplateComponent),
         MockComponent(LazyProductAddToQuoteComponent),
         MockComponent(LazyProductAddToWishlistComponent),
         MockComponent(LazyTactonConfigureProductComponent),
         MockComponent(ProductAddToWishlistComponent),
-        MockComponent(CamfilProductImageComponent),
-        MockComponent(CamfilProductPromotionComponent),
-        MockComponent(CamfilProductRatingComponent),
-        MockComponent(CamfilProductVariationSelectComponent),
         MockDirective(IsTactonProductDirective),
         MockPipe(ProductRoutePipe),
         ProductTileComponent,
@@ -72,11 +72,7 @@ describe('Product Tile Component', () => {
   it('should render default elements when not specifically configured', () => {
     component.configuration = DEFAULT_CONFIGURATION;
     fixture.detectChanges();
-    expect(findAllIshElements(element)).toMatchInlineSnapshot(`
-      Array [
-        "camfil-product-promotion",
-      ]
-    `);
+    expect(findAllIshElements(element)).toMatchInlineSnapshot(`Array []`);
     expect(findAllCamfilElements(element)).toMatchInlineSnapshot(`
       Array [
         "camfil-lazy-product-add-to-order-template",
@@ -88,6 +84,7 @@ describe('Product Tile Component', () => {
         "camfil-product-label",
         "camfil-product-price",
         "camfil-product-price",
+        "camfil-product-promotion",
       ]
     `);
   });

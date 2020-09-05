@@ -11,9 +11,9 @@ import { BasketMockData } from 'ish-core/utils/dev/basket-mock-data';
 import { findAllIshElements } from 'ish-core/utils/dev/html-query-utils';
 import { LineItemEditComponent } from 'ish-shared/components/line-item/line-item-edit/line-item-edit.component';
 import { CamfilProductIdComponent } from 'ish-shared/components/product/camfil-product-id/camfil-product-id.component';
-import { ProductBundleDisplayComponent } from 'ish-shared/components/product/product-bundle-display/product-bundle-display.component';
 import { CamfilProductInventoryComponent } from 'ish-shared/components/product/camfil-product-inventory/camfil-product-inventory.component';
 import { CamfilProductShipmentComponent } from 'ish-shared/components/product/camfil-product-shipment/camfil-product-shipment.component';
+import { ProductBundleDisplayComponent } from 'ish-shared/components/product/product-bundle-display/product-bundle-display.component';
 import { ProductVariationDisplayComponent } from 'ish-shared/components/product/product-variation-display/product-variation-display.component';
 
 import { LineItemDescriptionComponent } from './line-item-description.component';
@@ -29,12 +29,12 @@ describe('Line Item Description Component', () => {
       declarations: [
         LineItemDescriptionComponent,
         MockComponent(CamfilProductIdComponent),
+        MockComponent(CamfilProductInventoryComponent),
+        MockComponent(CamfilProductShipmentComponent),
         MockComponent(FaIconComponent),
         MockComponent(LineItemEditComponent),
         MockComponent(NgbPopover),
         MockComponent(ProductBundleDisplayComponent),
-        MockComponent(CamfilProductInventoryComponent),
-        MockComponent(CamfilProductShipmentComponent),
         MockComponent(ProductVariationDisplayComponent),
         MockPipe(PricePipe),
       ],

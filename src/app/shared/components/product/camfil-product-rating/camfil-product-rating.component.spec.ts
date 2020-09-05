@@ -6,14 +6,14 @@ import { CamfilProductRatingStarComponent } from 'ish-shared/components/product/
 
 import { CamfilProductRatingComponent } from './camfil-product-rating.component';
 
-describe('Product Rating Component', () => {
+describe('Camfil Product Rating Component', () => {
   let component: CamfilProductRatingComponent;
   let fixture: ComponentFixture<CamfilProductRatingComponent>;
   let element: HTMLElement;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [MockComponents(CamfilProductRatingStarComponent), CamfilProductRatingComponent],
+      declarations: [CamfilProductRatingComponent, MockComponents(CamfilProductRatingStarComponent)],
     }).compileComponents();
   }));
 

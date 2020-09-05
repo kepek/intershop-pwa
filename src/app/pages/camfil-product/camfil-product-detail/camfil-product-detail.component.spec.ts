@@ -11,14 +11,14 @@ import { AccordionComponent } from 'ish-shared/components/common/accordion/accor
 import { CamfilProductAddToBasketComponent } from 'ish-shared/components/product/camfil-product-add-to-basket/camfil-product-add-to-basket.component';
 import { CamfilProductAttributesComponent } from 'ish-shared/components/product/camfil-product-attributes/camfil-product-attributes.component';
 import { CamfilProductIdComponent } from 'ish-shared/components/product/camfil-product-id/camfil-product-id.component';
-import { CamfilProductPriceComponent } from 'ish-shared/components/product/camfil-product-price/camfil-product-price.component';
-import { CamfilProductQuantityComponent } from 'ish-shared/components/product/camfil-product-quantity/camfil-product-quantity.component';
-import { ProductAttributesComponent } from 'ish-shared/components/product/product-attributes/product-attributes.component';
 import { CamfilProductInventoryComponent } from 'ish-shared/components/product/camfil-product-inventory/camfil-product-inventory.component';
+import { CamfilProductPriceComponent } from 'ish-shared/components/product/camfil-product-price/camfil-product-price.component';
 import { CamfilProductPromotionComponent } from 'ish-shared/components/product/camfil-product-promotion/camfil-product-promotion.component';
+import { CamfilProductQuantityComponent } from 'ish-shared/components/product/camfil-product-quantity/camfil-product-quantity.component';
 import { CamfilProductRatingComponent } from 'ish-shared/components/product/camfil-product-rating/camfil-product-rating.component';
 import { CamfilProductShipmentComponent } from 'ish-shared/components/product/camfil-product-shipment/camfil-product-shipment.component';
 import { CamfilProductVariationSelectComponent } from 'ish-shared/components/product/camfil-product-variation-select/camfil-product-variation-select.component';
+import { ProductAttributesComponent } from 'ish-shared/components/product/product-attributes/product-attributes.component';
 
 import { LazyProductAddToOrderTemplateComponent } from '../../../extensions/order-templates/exports/lazy-product-add-to-order-template/lazy-product-add-to-order-template.component';
 import { LazyProductAddToQuoteComponent } from '../../../extensions/quoting/exports/lazy-product-add-to-quote/lazy-product-add-to-quote.component';
@@ -56,18 +56,18 @@ describe('Camfil Product Detail Component', () => {
         MockComponent(CamfilProductAttributesPreviewComponent),
         MockComponent(CamfilProductIdComponent),
         MockComponent(CamfilProductImagesComponent),
+        MockComponent(CamfilProductInventoryComponent),
         MockComponent(CamfilProductPriceComponent),
+        MockComponent(CamfilProductPromotionComponent),
         MockComponent(CamfilProductQuantityComponent),
+        MockComponent(CamfilProductRatingComponent),
+        MockComponent(CamfilProductShipmentComponent),
+        MockComponent(CamfilProductVariationSelectComponent),
         MockComponent(LazyProductAddToOrderTemplateComponent),
         MockComponent(LazyProductAddToQuoteComponent),
         MockComponent(ProductAttributesComponent),
         MockComponent(ProductDetailActionsComponent),
         MockComponent(ProductImagesComponent),
-        MockComponent(CamfilProductInventoryComponent),
-        MockComponent(CamfilProductPromotionComponent),
-        MockComponent(CamfilProductRatingComponent),
-        MockComponent(CamfilProductShipmentComponent),
-        MockComponent(CamfilProductVariationSelectComponent),
         MockDirective(FeatureToggleDirective),
       ],
     })

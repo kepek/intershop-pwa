@@ -63,8 +63,8 @@ describe('Product Images Component', () => {
     TestBed.configureTestingModule({
       imports: [NgbCarouselModule, TranslateModule.forRoot()],
       declarations: [
-        MockComponent(CamfilProductLabelComponent),
         MockComponent(CamfilProductImageComponent),
+        MockComponent(CamfilProductLabelComponent),
         ProductImagesComponent,
       ],
     }).compileComponents();

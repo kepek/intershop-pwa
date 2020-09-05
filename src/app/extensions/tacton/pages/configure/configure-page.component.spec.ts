@@ -32,10 +32,10 @@ describe('Configure Page Component', () => {
       imports: [RouterTestingModule, TranslateModule.forRoot()],
       declarations: [
         ConfigurePageComponent,
+        MockComponent(CamfilProductImageComponent),
         MockComponent(FaIconComponent),
         MockComponent(LoadingComponent),
         MockComponent(ModalDialogComponent),
-        MockComponent(CamfilProductImageComponent),
         MockComponent(TactonBomComponent),
         MockComponent(TactonConfigureNavigationComponent),
         MockComponent(TactonGroupComponent),

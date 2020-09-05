@@ -64,8 +64,8 @@ describe('Camfil Product Images Component', () => {
       imports: [NgbCarouselModule, TranslateModule.forRoot()],
       declarations: [
         CamfilProductImagesComponent,
-        MockComponent(CamfilProductLabelComponent),
         MockComponent(CamfilProductImageComponent),
+        MockComponent(CamfilProductLabelComponent),
       ],
     }).compileComponents();
   }));

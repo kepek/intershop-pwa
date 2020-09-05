@@ -3,6 +3,7 @@ import { FormArray, ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { TranslateModule } from '@ngx-translate/core';
+import { findAllCamfilElements } from 'camfil-core/utils/dev/html-query-utils';
 import { MockComponent, MockComponents, MockPipe } from 'ng-mocks';
 import { anything, spy, verify } from 'ts-mockito';
 
@@ -32,10 +33,10 @@ describe('Line Item List Component', () => {
       declarations: [
         LineItemListComponent,
         MockComponent(BasketPromotionComponent),
+        MockComponent(CamfilProductImageComponent),
         MockComponent(FaIconComponent),
         MockComponent(InputComponent),
         MockComponent(LineItemDescriptionComponent),
-        MockComponent(CamfilProductImageComponent),
         MockComponent(PromotionDetailsComponent),
         MockComponents(LazyProductAddToOrderTemplateComponent),
         MockComponents(LazyProductAddToWishlistComponent),
@@ -81,7 +82,8 @@ describe('Line Item List Component', () => {
   it('should render sub components if basket changes', () => {
     component.ngOnChanges();
     fixture.detectChanges();
-    expect(findAllIshElements(element)).toIncludeAllMembers(['ish-line-item-description', 'camfil-product-image']);
+    expect(findAllIshElements(element)).toIncludeAllMembers(['ish-line-item-description']);
+    expect(findAllCamfilElements(element)).toIncludeAllMembers(['camfil-product-image']);
   });
 
   it('should throw updateItem event when form group item changes', fakeAsync(() => {

@@ -12,12 +12,12 @@ import { findAllIshElements } from 'ish-core/utils/dev/html-query-utils';
 import { CamfilProductAddToBasketComponent } from 'ish-shared/components/product/camfil-product-add-to-basket/camfil-product-add-to-basket.component';
 import { CamfilProductAddToCompareComponent } from 'ish-shared/components/product/camfil-product-add-to-compare/camfil-product-add-to-compare.component';
 import { CamfilProductIdComponent } from 'ish-shared/components/product/camfil-product-id/camfil-product-id.component';
+import { CamfilProductInventoryComponent } from 'ish-shared/components/product/camfil-product-inventory/camfil-product-inventory.component';
 import { DEFAULT_CONFIGURATION } from 'ish-shared/components/product/camfil-product-item/camfil-product-item.component';
 import { CamfilProductLabelComponent } from 'ish-shared/components/product/camfil-product-label/camfil-product-label.component';
 import { CamfilProductPriceComponent } from 'ish-shared/components/product/camfil-product-price/camfil-product-price.component';
-import { CamfilProductQuantityComponent } from 'ish-shared/components/product/camfil-product-quantity/camfil-product-quantity.component';
-import { CamfilProductInventoryComponent } from 'ish-shared/components/product/camfil-product-inventory/camfil-product-inventory.component';
 import { CamfilProductPromotionComponent } from 'ish-shared/components/product/camfil-product-promotion/camfil-product-promotion.component';
+import { CamfilProductQuantityComponent } from 'ish-shared/components/product/camfil-product-quantity/camfil-product-quantity.component';
 import { CamfilProductRatingComponent } from 'ish-shared/components/product/camfil-product-rating/camfil-product-rating.component';
 import { CamfilProductShipmentComponent } from 'ish-shared/components/product/camfil-product-shipment/camfil-product-shipment.component';
 import { CamfilProductVariationSelectComponent } from 'ish-shared/components/product/camfil-product-variation-select/camfil-product-variation-select.component';
@@ -42,18 +42,18 @@ describe('Camfil Product Item Simple Component', () => {
         MockComponent(CamfilProductAddToBasketComponent),
         MockComponent(CamfilProductAddToCompareComponent),
         MockComponent(CamfilProductIdComponent),
-        MockComponent(CamfilProductLabelComponent),
-        MockComponent(CamfilProductPriceComponent),
-        MockComponent(CamfilProductQuantityComponent),
-        MockComponent(LazyProductAddToOrderTemplateComponent),
-        MockComponent(LazyProductAddToQuoteComponent),
-        MockComponent(LazyProductAddToWishlistComponent),
         MockComponent(CamfilProductImageComponent),
         MockComponent(CamfilProductInventoryComponent),
+        MockComponent(CamfilProductLabelComponent),
+        MockComponent(CamfilProductPriceComponent),
         MockComponent(CamfilProductPromotionComponent),
+        MockComponent(CamfilProductQuantityComponent),
         MockComponent(CamfilProductRatingComponent),
         MockComponent(CamfilProductShipmentComponent),
         MockComponent(CamfilProductVariationSelectComponent),
+        MockComponent(LazyProductAddToOrderTemplateComponent),
+        MockComponent(LazyProductAddToQuoteComponent),
+        MockComponent(LazyProductAddToWishlistComponent),
         MockDirective(FeatureToggleDirective),
         MockPipe(ProductRoutePipe),
       ],
@@ -76,11 +76,7 @@ describe('Camfil Product Item Simple Component', () => {
   it('should render default elements when not specifically configured', () => {
     component.configuration = DEFAULT_CONFIGURATION;
     fixture.detectChanges();
-    expect(findAllIshElements(element)).toMatchInlineSnapshot(`
-      Array [
-        "camfil-product-promotion",
-      ]
-    `);
+    expect(findAllIshElements(element)).toMatchInlineSnapshot(`Array []`);
     expect(findAllCamfilElements(element)).toMatchInlineSnapshot(`
       Array [
         "camfil-lazy-product-add-to-order-template",
@@ -93,6 +89,7 @@ describe('Camfil Product Item Simple Component', () => {
         "camfil-product-inventory",
         "camfil-product-label",
         "camfil-product-price",
+        "camfil-product-promotion",
         "camfil-product-quantity",
       ]
     `);
