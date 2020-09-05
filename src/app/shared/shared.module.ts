@@ -108,7 +108,7 @@ import { ProductAddToCompareComponent } from './components/product/product-add-t
 import { ProductAttributesComponent } from './components/product/product-attributes/product-attributes.component';
 import { ProductBundleDisplayComponent } from './components/product/product-bundle-display/product-bundle-display.component';
 import { ProductIdComponent } from './components/product/product-id/product-id.component';
-import { ProductInventoryComponent } from './components/product/product-inventory/product-inventory.component';
+import { CamfilProductInventoryComponent } from './components/product/camfil-product-inventory/camfil-product-inventory.component';
 import { ProductItemComponent } from './components/product/product-item/product-item.component';
 import { ProductLabelComponent } from './components/product/product-label/product-label.component';
 import { ProductListPagingComponent } from './components/product/product-list-paging/product-list-paging.component';
@@ -128,6 +128,7 @@ import { PromotionRemoveComponent } from './components/promotion/promotion-remov
 import { RecentlyViewedComponent } from './components/recently/recently-viewed/recently-viewed.component';
 import { FormsDynamicModule } from './forms-dynamic/forms-dynamic.module';
 import { FormsSharedModule } from './forms/forms.module';
+import { ProductInventoryComponent } from './components/product/product-inventory/product-inventory.component';
 
 const importExportModules = [
   AddressFormsSharedModule,
@@ -250,7 +251,7 @@ const exportedComponents = [
   OrderWidgetComponent,
   ProductAttributesComponent,
   ProductBundleDisplayComponent,
-  ProductInventoryComponent,
+  CamfilProductInventoryComponent,
   ProductPriceComponent,
   ProductPromotionComponent,
   ProductRatingComponent,
@@ -272,7 +273,7 @@ const exportedComponents = [
     MatRadioModule,
     MatSelectModule,
   ],
-  declarations: [...declaredComponents, ...exportedComponents],
+  declarations: [...declaredComponents, ...exportedComponents, ProductInventoryComponent],
   exports: [...exportedComponents, ...importExportModules],
 })
 export class SharedModule {}

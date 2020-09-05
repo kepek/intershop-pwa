@@ -16,7 +16,7 @@ import { DEFAULT_CONFIGURATION } from 'ish-shared/components/product/camfil-prod
 import { CamfilProductLabelComponent } from 'ish-shared/components/product/camfil-product-label/camfil-product-label.component';
 import { CamfilProductPriceComponent } from 'ish-shared/components/product/camfil-product-price/camfil-product-price.component';
 import { CamfilProductQuantityComponent } from 'ish-shared/components/product/camfil-product-quantity/camfil-product-quantity.component';
-import { ProductInventoryComponent } from 'ish-shared/components/product/product-inventory/product-inventory.component';
+import { CamfilProductInventoryComponent } from 'ish-shared/components/product/camfil-product-inventory/camfil-product-inventory.component';
 import { ProductPromotionComponent } from 'ish-shared/components/product/product-promotion/product-promotion.component';
 import { ProductRatingComponent } from 'ish-shared/components/product/product-rating/product-rating.component';
 import { ProductShipmentComponent } from 'ish-shared/components/product/product-shipment/product-shipment.component';
@@ -51,7 +51,7 @@ describe('Product Row Component', () => {
         MockComponent(LazyProductAddToWishlistComponent),
         MockComponent(LazyTactonConfigureProductComponent),
         MockComponent(CamfilProductImageComponent),
-        MockComponent(ProductInventoryComponent),
+        MockComponent(CamfilProductInventoryComponent),
         MockComponent(ProductPromotionComponent),
         MockComponent(ProductRatingComponent),
         MockComponent(ProductShipmentComponent),
@@ -81,7 +81,6 @@ describe('Product Row Component', () => {
     fixture.detectChanges();
     expect(findAllIshElements(element)).toMatchInlineSnapshot(`
       Array [
-        "ish-product-inventory",
         "ish-product-promotion",
       ]
     `);
@@ -94,6 +93,7 @@ describe('Product Row Component', () => {
         "camfil-product-add-to-compare",
         "camfil-product-id",
         "camfil-product-image",
+        "camfil-product-inventory",
         "camfil-product-label",
         "camfil-product-price",
         "camfil-product-quantity",

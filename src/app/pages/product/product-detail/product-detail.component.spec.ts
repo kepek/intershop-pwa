@@ -13,7 +13,7 @@ import { CamfilProductIdComponent } from 'ish-shared/components/product/camfil-p
 import { CamfilProductPriceComponent } from 'ish-shared/components/product/camfil-product-price/camfil-product-price.component';
 import { CamfilProductQuantityComponent } from 'ish-shared/components/product/camfil-product-quantity/camfil-product-quantity.component';
 import { ProductAttributesComponent } from 'ish-shared/components/product/product-attributes/product-attributes.component';
-import { ProductInventoryComponent } from 'ish-shared/components/product/product-inventory/product-inventory.component';
+import { CamfilProductInventoryComponent } from 'ish-shared/components/product/camfil-product-inventory/camfil-product-inventory.component';
 import { ProductPromotionComponent } from 'ish-shared/components/product/product-promotion/product-promotion.component';
 import { ProductRatingComponent } from 'ish-shared/components/product/product-rating/product-rating.component';
 import { ProductShipmentComponent } from 'ish-shared/components/product/product-shipment/product-shipment.component';
@@ -60,7 +60,7 @@ describe('Product Detail Component', () => {
         MockComponent(ProductAttributesComponent),
         MockComponent(ProductDetailActionsComponent),
         MockComponent(ProductImagesComponent),
-        MockComponent(ProductInventoryComponent),
+        MockComponent(CamfilProductInventoryComponent),
         MockComponent(ProductPromotionComponent),
         MockComponent(ProductRatingComponent),
         MockComponent(ProductShipmentComponent),

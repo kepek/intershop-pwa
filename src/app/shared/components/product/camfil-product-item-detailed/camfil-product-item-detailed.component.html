@@ -63,10 +63,10 @@
           [product]="product"
           [showInformationalPrice]="true"
         ></camfil-product-price>
-        <ish-product-inventory
+        <camfil-product-inventory
           *ngIf="configuration.displayInventory && !isMasterProduct(product)"
           [product]="product"
-        ></ish-product-inventory>
+        ></camfil-product-inventory>
         <ish-product-shipment
           *ngIf="configuration.displayShipment && !isMasterProduct(product)"
           [product]="product"

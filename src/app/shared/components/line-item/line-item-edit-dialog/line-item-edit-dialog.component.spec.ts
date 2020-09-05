@@ -17,7 +17,7 @@ import { LoadingComponent } from 'ish-shared/components/common/loading/loading.c
 import { CamfilProductIdComponent } from 'ish-shared/components/product/camfil-product-id/camfil-product-id.component';
 import { CamfilProductItemDetailedComponent } from 'ish-shared/components/product/camfil-product-item-detailed/camfil-product-item-detailed.component';
 import { CamfilProductItemSimpleComponent } from 'ish-shared/components/product/camfil-product-item-simple/camfil-product-item-simple.component';
-import { ProductInventoryComponent } from 'ish-shared/components/product/product-inventory/product-inventory.component';
+import { CamfilProductInventoryComponent } from 'ish-shared/components/product/camfil-product-inventory/camfil-product-inventory.component';
 import { ProductVariationSelectComponent } from 'ish-shared/components/product/product-variation-select/product-variation-select.component';
 import { InputComponent } from 'ish-shared/forms/components/input/input.component';
 import { CamfilProductImageComponent } from 'ish-shell/header/camfil-product-image/camfil-product-image.component';
@@ -43,7 +43,7 @@ describe('Line Item Edit Dialog Component', () => {
         MockComponent(CamfilProductItemSimpleComponent),
         MockComponent(InputComponent),
         MockComponent(LoadingComponent),
-        MockComponent(ProductInventoryComponent),
+        MockComponent(CamfilProductInventoryComponent),
         MockComponent(ProductVariationSelectComponent),
         MockPipe(PricePipe),
       ],

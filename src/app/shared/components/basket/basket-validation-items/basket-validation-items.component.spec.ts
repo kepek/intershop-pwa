@@ -7,7 +7,7 @@ import { spy, verify } from 'ts-mockito';
 import { PricePipe } from 'ish-core/models/price/price.pipe';
 import { ProductRoutePipe } from 'ish-core/routing/product/product-route.pipe';
 import { BasketMockData } from 'ish-core/utils/dev/basket-mock-data';
-import { ProductInventoryComponent } from 'ish-shared/components/product/product-inventory/product-inventory.component';
+import { CamfilProductInventoryComponent } from 'ish-shared/components/product/camfil-product-inventory/camfil-product-inventory.component';
 import { CamfilProductImageComponent } from 'ish-shell/header/camfil-product-image/camfil-product-image.component';
 
 import { BasketValidationItemsComponent } from './basket-validation-items.component';
@@ -22,7 +22,7 @@ describe('Basket Validation Items Component', () => {
       declarations: [
         BasketValidationItemsComponent,
         MockComponent(CamfilProductImageComponent),
-        MockComponent(ProductInventoryComponent),
+        MockComponent(CamfilProductInventoryComponent),
         MockPipe(PricePipe),
         MockPipe(ProductRoutePipe),
       ],

@@ -12,7 +12,7 @@ import { findAllIshElements } from 'ish-core/utils/dev/html-query-utils';
 import { LineItemEditComponent } from 'ish-shared/components/line-item/line-item-edit/line-item-edit.component';
 import { CamfilProductIdComponent } from 'ish-shared/components/product/camfil-product-id/camfil-product-id.component';
 import { ProductBundleDisplayComponent } from 'ish-shared/components/product/product-bundle-display/product-bundle-display.component';
-import { ProductInventoryComponent } from 'ish-shared/components/product/product-inventory/product-inventory.component';
+import { CamfilProductInventoryComponent } from 'ish-shared/components/product/camfil-product-inventory/camfil-product-inventory.component';
 import { ProductShipmentComponent } from 'ish-shared/components/product/product-shipment/product-shipment.component';
 import { ProductVariationDisplayComponent } from 'ish-shared/components/product/product-variation-display/product-variation-display.component';
 
@@ -33,7 +33,7 @@ describe('Line Item Description Component', () => {
         MockComponent(LineItemEditComponent),
         MockComponent(NgbPopover),
         MockComponent(ProductBundleDisplayComponent),
-        MockComponent(ProductInventoryComponent),
+        MockComponent(CamfilProductInventoryComponent),
         MockComponent(ProductShipmentComponent),
         MockComponent(ProductVariationDisplayComponent),
         MockPipe(PricePipe),
@@ -75,13 +75,13 @@ describe('Line Item Description Component', () => {
     expect(findAllIshElements(element)).toMatchInlineSnapshot(`
       Array [
         "ish-line-item-edit",
-        "ish-product-inventory",
         "ish-product-shipment",
       ]
     `);
     expect(findAllCamfilElements(element)).toMatchInlineSnapshot(`
       Array [
         "camfil-product-id",
+        "camfil-product-inventory",
       ]
     `);
   });

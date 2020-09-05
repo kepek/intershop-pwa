@@ -32,10 +32,10 @@
             [showPriceSavings]="true"
           ></camfil-product-price>
 
-          <ish-product-inventory
+          <camfil-product-inventory
             *ngIf="!isRetailSet(product) && !isMasterProduct(product)"
             [product]="product"
-          ></ish-product-inventory>
+          ></camfil-product-inventory>
         </div>
 
         <ish-product-shipment
