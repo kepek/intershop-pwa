@@ -16,7 +16,7 @@ import { CamfilProductQuantityComponent } from 'ish-shared/components/product/ca
 import { ProductBundleDisplayComponent } from 'ish-shared/components/product/product-bundle-display/product-bundle-display.component';
 import { ProductVariationDisplayComponent } from 'ish-shared/components/product/product-variation-display/product-variation-display.component';
 import { InputComponent } from 'ish-shared/forms/components/input/input.component';
-import { ProductImageComponent } from 'ish-shell/header/product-image/product-image.component';
+import { CamfilProductImageComponent } from 'ish-shell/header/camfil-product-image/camfil-product-image.component';
 
 import { WishlistsFacade } from '../../../facades/wishlists.facade';
 import { SelectWishlistModalComponent } from '../../../shared/select-wishlist-modal/select-wishlist-modal.component';
@@ -39,7 +39,7 @@ describe('Account Wishlist Detail Line Item Component', () => {
         MockComponent(FaIconComponent),
         MockComponent(InputComponent),
         MockComponent(ProductBundleDisplayComponent),
-        MockComponent(ProductImageComponent),
+        MockComponent(CamfilProductImageComponent),
         MockComponent(ProductVariationDisplayComponent),
         MockComponent(SelectWishlistModalComponent),
         MockPipe(DatePipe),

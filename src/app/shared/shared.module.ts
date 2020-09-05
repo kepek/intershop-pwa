@@ -91,6 +91,7 @@ import { OrderListComponent } from './components/order/order-list/order-list.com
 import { OrderWidgetComponent } from './components/order/order-widget/order-widget.component';
 import { CamfilProductAddToBasketComponent } from './components/product/camfil-product-add-to-basket/camfil-product-add-to-basket.component';
 import { CamfilProductAddToCompareComponent } from './components/product/camfil-product-add-to-compare/camfil-product-add-to-compare.component';
+import { CamfilProductAttributeComponent } from './components/product/camfil-product-attribute/camfil-product-attribute.component';
 import { CamfilProductAttributesComponent } from './components/product/camfil-product-attributes/camfil-product-attributes.component';
 import { CamfilProductIdComponent } from './components/product/camfil-product-id/camfil-product-id.component';
 import { CamfilProductItemDetailedComponent } from './components/product/camfil-product-item-detailed/camfil-product-item-detailed.component';
@@ -173,6 +174,7 @@ const declaredComponents = [
   CamfilFilterCollapsableComponent,
   CamfilFilterDropdownComponent,
   CamfilFilterTextComponent,
+  CamfilProductAttributeComponent,
   CamfilProductAttributesComponent,
   CamfilProductIdComponent,
   CamfilProductItemDetailedComponent,

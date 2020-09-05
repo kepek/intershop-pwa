@@ -11,7 +11,7 @@ import { SelectComponent } from 'ish-shared/forms/components/select/select.compo
 
 import { CamfilProductQuantityComponent } from './camfil-product-quantity.component';
 
-describe('Product Quantity Component', () => {
+describe('Camfil Product Quantity Component', () => {
   let component: CamfilProductQuantityComponent;
   let fixture: ComponentFixture<CamfilProductQuantityComponent>;
   let product: Product;
@@ -21,10 +21,10 @@ describe('Product Quantity Component', () => {
     TestBed.configureTestingModule({
       imports: [ReactiveFormsModule, TranslateModule.forRoot()],
       declarations: [
+        CamfilProductQuantityComponent,
         MockComponent(CounterComponent),
         MockComponent(InputComponent),
         MockComponent(SelectComponent),
-        CamfilProductQuantityComponent,
       ],
     }).compileComponents();
   }));

@@ -11,17 +11,17 @@ import { ProductRoutePipe } from 'ish-core/routing/product/product-route.pipe';
 import { findAllIshElements } from 'ish-core/utils/dev/html-query-utils';
 import { CamfilProductAddToBasketComponent } from 'ish-shared/components/product/camfil-product-add-to-basket/camfil-product-add-to-basket.component';
 import { CamfilProductAddToCompareComponent } from 'ish-shared/components/product/camfil-product-add-to-compare/camfil-product-add-to-compare.component';
+import { CamfilProductIdComponent } from 'ish-shared/components/product/camfil-product-id/camfil-product-id.component';
 import { DEFAULT_CONFIGURATION } from 'ish-shared/components/product/camfil-product-item/camfil-product-item.component';
 import { CamfilProductLabelComponent } from 'ish-shared/components/product/camfil-product-label/camfil-product-label.component';
 import { CamfilProductPriceComponent } from 'ish-shared/components/product/camfil-product-price/camfil-product-price.component';
 import { CamfilProductQuantityComponent } from 'ish-shared/components/product/camfil-product-quantity/camfil-product-quantity.component';
-import { CamfilProductIdComponent } from 'ish-shared/components/product/camfil-product-id/camfil-product-id.component';
 import { ProductInventoryComponent } from 'ish-shared/components/product/product-inventory/product-inventory.component';
 import { ProductPromotionComponent } from 'ish-shared/components/product/product-promotion/product-promotion.component';
 import { ProductRatingComponent } from 'ish-shared/components/product/product-rating/product-rating.component';
 import { ProductShipmentComponent } from 'ish-shared/components/product/product-shipment/product-shipment.component';
 import { ProductVariationSelectComponent } from 'ish-shared/components/product/product-variation-select/product-variation-select.component';
-import { ProductImageComponent } from 'ish-shell/header/product-image/product-image.component';
+import { CamfilProductImageComponent } from 'ish-shell/header/camfil-product-image/camfil-product-image.component';
 
 import { LazyProductAddToOrderTemplateComponent } from '../../../../extensions/order-templates/exports/lazy-product-add-to-order-template/lazy-product-add-to-order-template.component';
 import { LazyProductAddToQuoteComponent } from '../../../../extensions/quoting/exports/lazy-product-add-to-quote/lazy-product-add-to-quote.component';
@@ -41,14 +41,14 @@ describe('Camfil Product Item Simple Component', () => {
         CamfilProductItemSimpleComponent,
         MockComponent(CamfilProductAddToBasketComponent),
         MockComponent(CamfilProductAddToCompareComponent),
+        MockComponent(CamfilProductIdComponent),
         MockComponent(CamfilProductLabelComponent),
         MockComponent(CamfilProductPriceComponent),
         MockComponent(CamfilProductQuantityComponent),
         MockComponent(LazyProductAddToOrderTemplateComponent),
         MockComponent(LazyProductAddToQuoteComponent),
         MockComponent(LazyProductAddToWishlistComponent),
-        MockComponent(CamfilProductIdComponent),
-        MockComponent(ProductImageComponent),
+        MockComponent(CamfilProductImageComponent),
         MockComponent(ProductInventoryComponent),
         MockComponent(ProductPromotionComponent),
         MockComponent(ProductRatingComponent),
@@ -78,19 +78,19 @@ describe('Camfil Product Item Simple Component', () => {
     fixture.detectChanges();
     expect(findAllIshElements(element)).toMatchInlineSnapshot(`
       Array [
-        "ish-product-image",
         "ish-product-inventory",
         "ish-product-promotion",
       ]
     `);
     expect(findAllCamfilElements(element)).toMatchInlineSnapshot(`
       Array [
-        "camfil-product-id",
         "camfil-lazy-product-add-to-order-template",
         "camfil-lazy-product-add-to-quote",
         "camfil-lazy-product-add-to-wishlist",
         "camfil-product-add-to-basket",
         "camfil-product-add-to-compare",
+        "camfil-product-id",
+        "camfil-product-image",
         "camfil-product-label",
         "camfil-product-price",
         "camfil-product-quantity",
@@ -101,13 +101,9 @@ describe('Camfil Product Item Simple Component', () => {
   it('should render almost no elements when configured with empty configuration', () => {
     component.configuration = {};
     fixture.detectChanges();
-    expect(findAllIshElements(element)).toMatchInlineSnapshot(`
-      Array [
-        "ish-product-image",
-      ]
-    `);
     expect(findAllCamfilElements(element)).toMatchInlineSnapshot(`
       Array [
+        "camfil-product-image",
         "camfil-product-label",
       ]
     `);

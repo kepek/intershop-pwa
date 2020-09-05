@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
+import { findAllCamfilElements } from 'camfil-core/utils/dev/html-query-utils';
 import { MockComponent, MockPipe } from 'ng-mocks';
 import { Observable, of } from 'rxjs';
 import { anything, instance, mock, when } from 'ts-mockito';
@@ -19,7 +20,7 @@ import { CamfilProductItemSimpleComponent } from 'ish-shared/components/product/
 import { ProductInventoryComponent } from 'ish-shared/components/product/product-inventory/product-inventory.component';
 import { ProductVariationSelectComponent } from 'ish-shared/components/product/product-variation-select/product-variation-select.component';
 import { InputComponent } from 'ish-shared/forms/components/input/input.component';
-import { ProductImageComponent } from 'ish-shell/header/product-image/product-image.component';
+import { CamfilProductImageComponent } from 'ish-shell/header/camfil-product-image/camfil-product-image.component';
 
 import { LineItemEditDialogComponent } from './line-item-edit-dialog.component';
 
@@ -37,11 +38,11 @@ describe('Line Item Edit Dialog Component', () => {
       declarations: [
         LineItemEditDialogComponent,
         MockComponent(CamfilProductIdComponent),
+        MockComponent(CamfilProductImageComponent),
         MockComponent(CamfilProductItemDetailedComponent),
         MockComponent(CamfilProductItemSimpleComponent),
         MockComponent(InputComponent),
         MockComponent(LoadingComponent),
-        MockComponent(ProductImageComponent),
         MockComponent(ProductInventoryComponent),
         MockComponent(ProductVariationSelectComponent),
         MockPipe(PricePipe),
@@ -90,7 +91,8 @@ describe('Line Item Edit Dialog Component', () => {
 
   it('should display ish-components on the container', () => {
     fixture.detectChanges();
-    expect(findAllIshElements(element)).toIncludeAllMembers(['ish-input', 'ish-product-image']);
+    expect(findAllIshElements(element)).toIncludeAllMembers(['ish-input']);
+    expect(findAllCamfilElements(element)).toIncludeAllMembers(['camfil-product-image']);
   });
 
   it('should display loading-components on the container', () => {

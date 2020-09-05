@@ -35,10 +35,11 @@ import { LanguageSwitchComponent } from './header/language-switch/language-switc
 import { LoginStatusComponent } from './header/login-status/login-status.component';
 import { MiniBasketComponent } from './header/mini-basket/mini-basket.component';
 import { ProductCompareStatusComponent } from './header/product-compare-status/product-compare-status.component';
-import { ProductImageComponent } from './header/product-image/product-image.component';
+import { CamfilProductImageComponent } from './header/camfil-product-image/camfil-product-image.component';
 import { SearchBoxComponent } from './header/search-box/search-box.component';
 import { SubCategoryNavigationComponent } from './header/sub-category-navigation/sub-category-navigation.component';
 import { UserInformationMobileComponent } from './header/user-information-mobile/user-information-mobile.component';
+import { ProductImageComponent } from './header/product-image/product-image.component';
 
 const importExportModules = [
   CaptchaExportsModule,
@@ -54,7 +55,7 @@ const exportedComponents = [
   CamfilFooterComponent,
   CamfilHeaderComponent,
   CamfilSearchBoxComponent,
-  ProductImageComponent,
+  CamfilProductImageComponent,
 ];
 
 @NgModule({
@@ -91,7 +92,8 @@ const exportedComponents = [
     SearchBoxComponent,
     SubCategoryNavigationComponent,
     UserInformationMobileComponent,
+    ProductImageComponent,
   ],
   exports: [...exportedComponents, ...importExportModules],
 })
-export class ShellModule { }
+export class ShellModule {}

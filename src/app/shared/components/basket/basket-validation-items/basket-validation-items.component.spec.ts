@@ -8,7 +8,7 @@ import { PricePipe } from 'ish-core/models/price/price.pipe';
 import { ProductRoutePipe } from 'ish-core/routing/product/product-route.pipe';
 import { BasketMockData } from 'ish-core/utils/dev/basket-mock-data';
 import { ProductInventoryComponent } from 'ish-shared/components/product/product-inventory/product-inventory.component';
-import { ProductImageComponent } from 'ish-shell/header/product-image/product-image.component';
+import { CamfilProductImageComponent } from 'ish-shell/header/camfil-product-image/camfil-product-image.component';
 
 import { BasketValidationItemsComponent } from './basket-validation-items.component';
 
@@ -21,7 +21,7 @@ describe('Basket Validation Items Component', () => {
     TestBed.configureTestingModule({
       declarations: [
         BasketValidationItemsComponent,
-        MockComponent(ProductImageComponent),
+        MockComponent(CamfilProductImageComponent),
         MockComponent(ProductInventoryComponent),
         MockPipe(PricePipe),
         MockPipe(ProductRoutePipe),

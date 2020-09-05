@@ -11,7 +11,7 @@ import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { PricePipe } from 'ish-core/models/price/price.pipe';
 import { ProductRoutePipe } from 'ish-core/routing/product/product-route.pipe';
 import { BasketMockData } from 'ish-core/utils/dev/basket-mock-data';
-import { ProductImageComponent } from 'ish-shell/header/product-image/product-image.component';
+import { CamfilProductImageComponent } from 'ish-shell/header/camfil-product-image/camfil-product-image.component';
 
 import { MiniBasketComponent } from './mini-basket.component';
 
@@ -30,7 +30,7 @@ describe('Mini Basket Component', () => {
       declarations: [
         MiniBasketComponent,
         MockComponent(FaIconComponent),
-        MockComponent(ProductImageComponent),
+        MockComponent(CamfilProductImageComponent),
         MockPipe(ProductRoutePipe),
         PricePipe,
       ],
@@ -96,7 +96,7 @@ describe('Mini Basket Component', () => {
   it('should render product image component on expanded component', () => {
     component.open();
     fixture.detectChanges();
-    expect(element.getElementsByTagName('ish-product-image')).toHaveLength(3);
+    expect(element.getElementsByTagName('camfil-product-image')).toHaveLength(3);
   });
 
   it('should set isCollapsed to proper value if toggleCollapsed is called', () => {

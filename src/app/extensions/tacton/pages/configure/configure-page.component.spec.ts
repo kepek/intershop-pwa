@@ -9,7 +9,7 @@ import { instance, mock, when } from 'ts-mockito';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
 import { ModalDialogComponent } from 'ish-shared/components/common/modal-dialog/modal-dialog.component';
-import { ProductImageComponent } from 'ish-shell/header/product-image/product-image.component';
+import { CamfilProductImageComponent } from 'ish-shell/header/camfil-product-image/camfil-product-image.component';
 
 import { TactonFacade } from '../../facades/tacton.facade';
 
@@ -35,7 +35,7 @@ describe('Configure Page Component', () => {
         MockComponent(FaIconComponent),
         MockComponent(LoadingComponent),
         MockComponent(ModalDialogComponent),
-        MockComponent(ProductImageComponent),
+        MockComponent(CamfilProductImageComponent),
         MockComponent(TactonBomComponent),
         MockComponent(TactonConfigureNavigationComponent),
         MockComponent(TactonGroupComponent),

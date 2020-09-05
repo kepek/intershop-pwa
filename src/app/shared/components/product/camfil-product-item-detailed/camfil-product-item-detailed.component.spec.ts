@@ -21,7 +21,7 @@ import { ProductPromotionComponent } from 'ish-shared/components/product/product
 import { ProductRatingComponent } from 'ish-shared/components/product/product-rating/product-rating.component';
 import { ProductShipmentComponent } from 'ish-shared/components/product/product-shipment/product-shipment.component';
 import { ProductVariationSelectComponent } from 'ish-shared/components/product/product-variation-select/product-variation-select.component';
-import { ProductImageComponent } from 'ish-shell/header/product-image/product-image.component';
+import { CamfilProductImageComponent } from 'ish-shell/header/camfil-product-image/camfil-product-image.component';
 
 import { LazyProductAddToOrderTemplateComponent } from '../../../../extensions/order-templates/exports/lazy-product-add-to-order-template/lazy-product-add-to-order-template.component';
 import { LazyProductAddToQuoteComponent } from '../../../../extensions/quoting/exports/lazy-product-add-to-quote/lazy-product-add-to-quote.component';
@@ -48,7 +48,7 @@ describe('Camfil Product Item Detailed Component', () => {
         MockComponent(LazyProductAddToOrderTemplateComponent),
         MockComponent(LazyProductAddToQuoteComponent),
         MockComponent(LazyProductAddToWishlistComponent),
-        MockComponent(ProductImageComponent),
+        MockComponent(CamfilProductImageComponent),
         MockComponent(ProductInventoryComponent),
         MockComponent(ProductPromotionComponent),
         MockComponent(ProductRatingComponent),
@@ -78,19 +78,19 @@ describe('Camfil Product Item Detailed Component', () => {
     fixture.detectChanges();
     expect(findAllIshElements(element)).toMatchInlineSnapshot(`
       Array [
-        "ish-product-image",
         "ish-product-inventory",
         "ish-product-promotion",
       ]
     `);
     expect(findAllCamfilElements(element)).toMatchInlineSnapshot(`
       Array [
-        "camfil-product-id",
         "camfil-lazy-product-add-to-order-template",
         "camfil-lazy-product-add-to-quote",
         "camfil-lazy-product-add-to-wishlist",
         "camfil-product-add-to-basket",
         "camfil-product-add-to-compare",
+        "camfil-product-id",
+        "camfil-product-image",
         "camfil-product-label",
         "camfil-product-price",
         "camfil-product-quantity",
@@ -101,13 +101,9 @@ describe('Camfil Product Item Detailed Component', () => {
   it('should render almost no elements when configured with empty configuration', () => {
     component.configuration = {};
     fixture.detectChanges();
-    expect(findAllIshElements(element)).toMatchInlineSnapshot(`
-      Array [
-        "ish-product-image",
-      ]
-    `);
     expect(findAllCamfilElements(element)).toMatchInlineSnapshot(`
       Array [
+        "camfil-product-image",
         "camfil-product-label",
       ]
     `);

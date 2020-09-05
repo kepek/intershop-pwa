@@ -16,7 +16,7 @@ import { CamfilProductPriceComponent } from 'ish-shared/components/product/camfi
 import { ProductPromotionComponent } from 'ish-shared/components/product/product-promotion/product-promotion.component';
 import { ProductRatingComponent } from 'ish-shared/components/product/product-rating/product-rating.component';
 import { ProductVariationSelectComponent } from 'ish-shared/components/product/product-variation-select/product-variation-select.component';
-import { ProductImageComponent } from 'ish-shell/header/product-image/product-image.component';
+import { CamfilProductImageComponent } from 'ish-shell/header/camfil-product-image/camfil-product-image.component';
 
 import { LazyProductAddToOrderTemplateComponent } from '../../../../extensions/order-templates/exports/lazy-product-add-to-order-template/lazy-product-add-to-order-template.component';
 import { LazyProductAddToQuoteComponent } from '../../../../extensions/quoting/exports/lazy-product-add-to-quote/lazy-product-add-to-quote.component';
@@ -45,7 +45,7 @@ describe('Product Tile Component', () => {
         MockComponent(LazyProductAddToWishlistComponent),
         MockComponent(LazyTactonConfigureProductComponent),
         MockComponent(ProductAddToWishlistComponent),
-        MockComponent(ProductImageComponent),
+        MockComponent(CamfilProductImageComponent),
         MockComponent(ProductPromotionComponent),
         MockComponent(ProductRatingComponent),
         MockComponent(ProductVariationSelectComponent),
@@ -74,7 +74,6 @@ describe('Product Tile Component', () => {
     fixture.detectChanges();
     expect(findAllIshElements(element)).toMatchInlineSnapshot(`
       Array [
-        "ish-product-image",
         "ish-product-promotion",
       ]
     `);
@@ -85,6 +84,7 @@ describe('Product Tile Component', () => {
         "camfil-lazy-product-add-to-wishlist",
         "camfil-product-add-to-basket",
         "camfil-product-add-to-compare",
+        "camfil-product-image",
         "camfil-product-label",
         "camfil-product-price",
         "camfil-product-price",
@@ -95,13 +95,9 @@ describe('Product Tile Component', () => {
   it('should render almost no elements when configured with empty configuration', () => {
     component.configuration = {};
     fixture.detectChanges();
-    expect(findAllIshElements(element)).toMatchInlineSnapshot(`
-      Array [
-        "ish-product-image",
-      ]
-    `);
     expect(findAllCamfilElements(element)).toMatchInlineSnapshot(`
       Array [
+        "camfil-product-image",
         "camfil-product-label",
       ]
     `);

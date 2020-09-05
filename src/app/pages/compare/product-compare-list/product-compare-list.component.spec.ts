@@ -16,7 +16,7 @@ import { CamfilProductPriceComponent } from 'ish-shared/components/product/camfi
 import { ProductAttributesComponent } from 'ish-shared/components/product/product-attributes/product-attributes.component';
 import { ProductInventoryComponent } from 'ish-shared/components/product/product-inventory/product-inventory.component';
 import { ProductRatingComponent } from 'ish-shared/components/product/product-rating/product-rating.component';
-import { ProductImageComponent } from 'ish-shell/header/product-image/product-image.component';
+import { CamfilProductImageComponent } from 'ish-shell/header/camfil-product-image/camfil-product-image.component';
 
 import { ProductComparePagingComponent } from '../product-compare-paging/product-compare-paging.component';
 
@@ -39,7 +39,7 @@ describe('Product Compare List Component', () => {
         MockComponent(FaIconComponent),
         MockComponent(ProductAttributesComponent),
         MockComponent(ProductComparePagingComponent),
-        MockComponent(ProductImageComponent),
+        MockComponent(CamfilProductImageComponent),
         MockComponent(ProductInventoryComponent),
         MockComponent(ProductRatingComponent),
         MockDirective(FeatureToggleDirective),
