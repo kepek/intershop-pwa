@@ -41,10 +41,10 @@
         ></camfil-product-inventory>
       </div>
 
-      <ish-product-shipment
+      <camfil-product-shipment
         *ngIf="!isRetailSet(product) && !isMasterProduct(product)"
         [product]="product"
-      ></ish-product-shipment>
+      ></camfil-product-shipment>
 
       <ish-product-variation-select
         *ngIf="isVariationProduct(product)"
@@ -105,7 +105,7 @@
         [heading]="'product.shipping.heading' | translate"
         dataTestingId="section-shipping-tab"
       >
-        <ish-product-shipment [product]="product"></ish-product-shipment>
+        <camfil-product-shipment [product]="product"></camfil-product-shipment>
       </ish-accordion-item>
     </ish-accordion> -->
   </div>
@@ -136,7 +136,7 @@
       <h2>{{ 'product.description.heading' | translate }}</h2>
       <p [innerHTML]="product.longDescription"></p>
       <h2>{{ 'product.shipping.heading' | translate }}</h2>
-      <ish-product-shipment [product]="product"></ish-product-shipment>
+      <camfil-product-shipment [product]="product"></camfil-product-shipment>
     </div>
   </div>
 </div>

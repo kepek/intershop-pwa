@@ -78,10 +78,10 @@
             *ngIf="configuration.displayInventory && !isMasterProduct(product)"
             [product]="product"
           ></camfil-product-inventory>
-          <ish-product-shipment
+          <camfil-product-shipment
             *ngIf="configuration.displayShipment && !isMasterProduct(product)"
             [product]="product"
-          ></ish-product-shipment>
+          ></camfil-product-shipment>
         </ng-template>
 
         <ish-product-variation-select

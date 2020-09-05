@@ -67,10 +67,10 @@
           *ngIf="configuration.displayInventory && !isMasterProduct(product)"
           [product]="product"
         ></camfil-product-inventory>
-        <ish-product-shipment
+        <camfil-product-shipment
           *ngIf="configuration.displayShipment && !isMasterProduct(product)"
           [product]="product"
-        ></ish-product-shipment>
+        ></camfil-product-shipment>
 
         <ish-product-variation-select
           *ngIf="variationOptions && configuration.displayVariations"

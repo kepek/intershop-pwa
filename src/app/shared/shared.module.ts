@@ -119,7 +119,7 @@ import { ProductQuantityComponent } from './components/product/product-quantity/
 import { ProductRatingStarComponent } from './components/product/product-rating-star/product-rating-star.component';
 import { ProductRatingComponent } from './components/product/product-rating/product-rating.component';
 import { ProductRowComponent } from './components/product/product-row/product-row.component';
-import { ProductShipmentComponent } from './components/product/product-shipment/product-shipment.component';
+import { CamfilProductShipmentComponent } from './components/product/camfil-product-shipment/camfil-product-shipment.component';
 import { ProductTileComponent } from './components/product/product-tile/product-tile.component';
 import { ProductVariationDisplayComponent } from './components/product/product-variation-display/product-variation-display.component';
 import { ProductVariationSelectComponent } from './components/product/product-variation-select/product-variation-select.component';
@@ -129,6 +129,7 @@ import { RecentlyViewedComponent } from './components/recently/recently-viewed/r
 import { FormsDynamicModule } from './forms-dynamic/forms-dynamic.module';
 import { FormsSharedModule } from './forms/forms.module';
 import { ProductInventoryComponent } from './components/product/product-inventory/product-inventory.component';
+import { ProductShipmentComponent } from './components/product/product-shipment/product-shipment.component';
 
 const importExportModules = [
   AddressFormsSharedModule,
@@ -255,7 +256,7 @@ const exportedComponents = [
   ProductPriceComponent,
   ProductPromotionComponent,
   ProductRatingComponent,
-  ProductShipmentComponent,
+  CamfilProductShipmentComponent,
   ProductVariationDisplayComponent,
   ProductVariationSelectComponent,
   PromotionDetailsComponent,
@@ -273,7 +274,7 @@ const exportedComponents = [
     MatRadioModule,
     MatSelectModule,
   ],
-  declarations: [...declaredComponents, ...exportedComponents, ProductInventoryComponent],
+  declarations: [...declaredComponents, ...exportedComponents, ProductInventoryComponent, ProductShipmentComponent],
   exports: [...exportedComponents, ...importExportModules],
 })
 export class SharedModule {}

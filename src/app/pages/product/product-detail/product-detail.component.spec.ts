@@ -16,7 +16,7 @@ import { ProductAttributesComponent } from 'ish-shared/components/product/produc
 import { CamfilProductInventoryComponent } from 'ish-shared/components/product/camfil-product-inventory/camfil-product-inventory.component';
 import { ProductPromotionComponent } from 'ish-shared/components/product/product-promotion/product-promotion.component';
 import { ProductRatingComponent } from 'ish-shared/components/product/product-rating/product-rating.component';
-import { ProductShipmentComponent } from 'ish-shared/components/product/product-shipment/product-shipment.component';
+import { CamfilProductShipmentComponent } from 'ish-shared/components/product/camfil-product-shipment/camfil-product-shipment.component';
 import { ProductVariationSelectComponent } from 'ish-shared/components/product/product-variation-select/product-variation-select.component';
 
 import { LazyProductAddToOrderTemplateComponent } from '../../../extensions/order-templates/exports/lazy-product-add-to-order-template/lazy-product-add-to-order-template.component';
@@ -63,7 +63,7 @@ describe('Product Detail Component', () => {
         MockComponent(CamfilProductInventoryComponent),
         MockComponent(ProductPromotionComponent),
         MockComponent(ProductRatingComponent),
-        MockComponent(ProductShipmentComponent),
+        MockComponent(CamfilProductShipmentComponent),
         MockComponent(ProductVariationSelectComponent),
         MockDirective(IsTactonProductDirective),
         ProductDetailComponent,
