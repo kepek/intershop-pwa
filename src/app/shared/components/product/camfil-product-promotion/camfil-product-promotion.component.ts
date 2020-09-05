@@ -12,7 +12,7 @@ import { Promotion } from 'ish-core/models/promotion/promotion.model';
 })
 export class CamfilProductPromotionComponent implements OnChanges {
   @Input() product: Product;
-  @Input() displayType?: string;
+  @Input() displayType?: 'simpleWithDetail' | 'simple' = 'simple';
 
   promotions$: Observable<Promotion[]>;
 
