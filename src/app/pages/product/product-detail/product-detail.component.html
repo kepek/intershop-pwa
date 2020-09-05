@@ -4,7 +4,7 @@
   <div class="col-12 col-md-6 col-lg-8"><ish-product-images [product]="product"></ish-product-images></div>
 
   <div class="col-12 col-md-6 col-lg-4">
-    <ish-product-rating *ishFeature="'rating'" [product]="product"></ish-product-rating>
+    <camfil-product-rating *ishFeature="'rating'" [product]="product"></camfil-product-rating>
     <h1>
       <span itemprop="name">{{ product.name }}</span>
     </h1>
@@ -23,7 +23,7 @@
       </ng-container>
 
       <ng-template #standardInformation>
-        <ish-product-promotion [product]="product"></ish-product-promotion>
+        <camfil-product-promotion [product]="product"></camfil-product-promotion>
 
         <div class="price-container" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
           <camfil-product-price
@@ -44,12 +44,12 @@
         ></camfil-product-shipment>
       </ng-template>
 
-      <ish-product-variation-select
+      <camfil-product-variation-select
         *ngIf="isVariationProduct(product)"
         [productMasterSKU]="product.productMasterSKU"
         [variationOptions]="variationOptions"
         (selectVariation)="variationSelected($event)"
-      ></ish-product-variation-select>
+      ></camfil-product-variation-select>
 
       <ng-container *ishFeature="'tacton'; else standardInteractions">
         <camfil-lazy-tacton-configure-product

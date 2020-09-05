@@ -15,10 +15,10 @@ import { CamfilProductPriceComponent } from 'ish-shared/components/product/camfi
 import { CamfilProductQuantityComponent } from 'ish-shared/components/product/camfil-product-quantity/camfil-product-quantity.component';
 import { ProductAttributesComponent } from 'ish-shared/components/product/product-attributes/product-attributes.component';
 import { CamfilProductInventoryComponent } from 'ish-shared/components/product/camfil-product-inventory/camfil-product-inventory.component';
-import { ProductPromotionComponent } from 'ish-shared/components/product/product-promotion/product-promotion.component';
-import { ProductRatingComponent } from 'ish-shared/components/product/product-rating/product-rating.component';
+import { CamfilProductPromotionComponent } from 'ish-shared/components/product/camfil-product-promotion/camfil-product-promotion.component';
+import { CamfilProductRatingComponent } from 'ish-shared/components/product/camfil-product-rating/camfil-product-rating.component';
 import { CamfilProductShipmentComponent } from 'ish-shared/components/product/camfil-product-shipment/camfil-product-shipment.component';
-import { ProductVariationSelectComponent } from 'ish-shared/components/product/product-variation-select/product-variation-select.component';
+import { CamfilProductVariationSelectComponent } from 'ish-shared/components/product/camfil-product-variation-select/camfil-product-variation-select.component';
 
 import { LazyProductAddToOrderTemplateComponent } from '../../../extensions/order-templates/exports/lazy-product-add-to-order-template/lazy-product-add-to-order-template.component';
 import { LazyProductAddToQuoteComponent } from '../../../extensions/quoting/exports/lazy-product-add-to-quote/lazy-product-add-to-quote.component';
@@ -64,10 +64,10 @@ describe('Camfil Product Detail Component', () => {
         MockComponent(ProductDetailActionsComponent),
         MockComponent(ProductImagesComponent),
         MockComponent(CamfilProductInventoryComponent),
-        MockComponent(ProductPromotionComponent),
-        MockComponent(ProductRatingComponent),
+        MockComponent(CamfilProductPromotionComponent),
+        MockComponent(CamfilProductRatingComponent),
         MockComponent(CamfilProductShipmentComponent),
-        MockComponent(ProductVariationSelectComponent),
+        MockComponent(CamfilProductVariationSelectComponent),
         MockDirective(FeatureToggleDirective),
       ],
     })

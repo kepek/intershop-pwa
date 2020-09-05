@@ -15,7 +15,7 @@
   </div>
 
   <div class="col-12 col-md-4 col-lg-5 product-info">
-    <!-- <ish-product-rating *ishFeature="'rating'" [product]="product"></ish-product-rating> -->
+    <!-- <camfil-product-rating *ishFeature="'rating'" [product]="product"></camfil-product-rating> -->
 
     <div class="mat-card mat-focus-indicator p-3 my-3">
       <!-- <div *ngIf="product.manufacturer" class="product-brand">
@@ -26,7 +26,7 @@
 
       <!-- <camfil-product-id [product]="product"></camfil-product-id> -->
 
-      <ish-product-promotion [product]="product"></ish-product-promotion>
+      <camfil-product-promotion [product]="product"></camfil-product-promotion>
 
       <div class="price-container" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
         <camfil-product-price
@@ -46,12 +46,12 @@
         [product]="product"
       ></camfil-product-shipment>
 
-      <ish-product-variation-select
+      <camfil-product-variation-select
         *ngIf="isVariationProduct(product)"
         [productMasterSKU]="product.productMasterSKU"
         [variationOptions]="variationOptions"
         (selectVariation)="variationSelected($event)"
-      ></ish-product-variation-select>
+      ></camfil-product-variation-select>
 
       <form *ngIf="!isMasterProduct(product)" [formGroup]="productDetailForm" class="product-form form-horizontal">
         <div class="row">

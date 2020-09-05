@@ -19,11 +19,11 @@
       <camfil-product-inventory [product]="variation"></camfil-product-inventory>
 
       <!-- select (variation) -->
-      <ish-product-variation-select
+      <camfil-product-variation-select
         *ngIf="variationOptions$ | async as variationOptions"
         [variationOptions]="variationOptions"
         (selectVariation)="variationSelected($event)"
-      ></ish-product-variation-select>
+      ></camfil-product-variation-select>
 
       <!-- input (quantity) -->
       <div class="form-group">

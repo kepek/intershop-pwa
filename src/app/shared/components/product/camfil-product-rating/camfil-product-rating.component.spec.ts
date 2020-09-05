@@ -4,21 +4,21 @@ import { MockComponents } from 'ng-mocks';
 import { Product } from 'ish-core/models/product/product.model';
 import { CamfilProductRatingStarComponent } from 'ish-shared/components/product/camfil-product-rating-star/camfil-product-rating-star.component';
 
-import { ProductRatingComponent } from './product-rating.component';
+import { CamfilProductRatingComponent } from './camfil-product-rating.component';
 
 describe('Product Rating Component', () => {
-  let component: ProductRatingComponent;
-  let fixture: ComponentFixture<ProductRatingComponent>;
+  let component: CamfilProductRatingComponent;
+  let fixture: ComponentFixture<CamfilProductRatingComponent>;
   let element: HTMLElement;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [MockComponents(CamfilProductRatingStarComponent), ProductRatingComponent],
+      declarations: [MockComponents(CamfilProductRatingStarComponent), CamfilProductRatingComponent],
     }).compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ProductRatingComponent);
+    fixture = TestBed.createComponent(CamfilProductRatingComponent);
     component = fixture.componentInstance;
     component.product = { roundedAverageRating: 3.5 } as Product;
     element = fixture.nativeElement;

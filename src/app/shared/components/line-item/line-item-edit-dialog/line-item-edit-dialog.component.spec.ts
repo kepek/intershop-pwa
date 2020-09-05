@@ -18,7 +18,7 @@ import { CamfilProductIdComponent } from 'ish-shared/components/product/camfil-p
 import { CamfilProductItemDetailedComponent } from 'ish-shared/components/product/camfil-product-item-detailed/camfil-product-item-detailed.component';
 import { CamfilProductItemSimpleComponent } from 'ish-shared/components/product/camfil-product-item-simple/camfil-product-item-simple.component';
 import { CamfilProductInventoryComponent } from 'ish-shared/components/product/camfil-product-inventory/camfil-product-inventory.component';
-import { ProductVariationSelectComponent } from 'ish-shared/components/product/product-variation-select/product-variation-select.component';
+import { CamfilProductVariationSelectComponent } from 'ish-shared/components/product/camfil-product-variation-select/camfil-product-variation-select.component';
 import { InputComponent } from 'ish-shared/forms/components/input/input.component';
 import { CamfilProductImageComponent } from 'ish-shell/header/camfil-product-image/camfil-product-image.component';
 
@@ -44,7 +44,7 @@ describe('Line Item Edit Dialog Component', () => {
         MockComponent(InputComponent),
         MockComponent(LoadingComponent),
         MockComponent(CamfilProductInventoryComponent),
-        MockComponent(ProductVariationSelectComponent),
+        MockComponent(CamfilProductVariationSelectComponent),
         MockPipe(PricePipe),
       ],
       providers: [{ provide: ShoppingFacade, useFactory: () => instance(shoppingFacade) }],

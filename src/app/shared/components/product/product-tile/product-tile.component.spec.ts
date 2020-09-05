@@ -13,9 +13,9 @@ import { CamfilProductAddToCompareComponent } from 'ish-shared/components/produc
 import { DEFAULT_CONFIGURATION } from 'ish-shared/components/product/camfil-product-item/camfil-product-item.component';
 import { CamfilProductLabelComponent } from 'ish-shared/components/product/camfil-product-label/camfil-product-label.component';
 import { CamfilProductPriceComponent } from 'ish-shared/components/product/camfil-product-price/camfil-product-price.component';
-import { ProductPromotionComponent } from 'ish-shared/components/product/product-promotion/product-promotion.component';
-import { ProductRatingComponent } from 'ish-shared/components/product/product-rating/product-rating.component';
-import { ProductVariationSelectComponent } from 'ish-shared/components/product/product-variation-select/product-variation-select.component';
+import { CamfilProductPromotionComponent } from 'ish-shared/components/product/camfil-product-promotion/camfil-product-promotion.component';
+import { CamfilProductRatingComponent } from 'ish-shared/components/product/camfil-product-rating/camfil-product-rating.component';
+import { CamfilProductVariationSelectComponent } from 'ish-shared/components/product/camfil-product-variation-select/camfil-product-variation-select.component';
 import { CamfilProductImageComponent } from 'ish-shell/header/camfil-product-image/camfil-product-image.component';
 
 import { LazyProductAddToOrderTemplateComponent } from '../../../../extensions/order-templates/exports/lazy-product-add-to-order-template/lazy-product-add-to-order-template.component';
@@ -46,9 +46,9 @@ describe('Product Tile Component', () => {
         MockComponent(LazyTactonConfigureProductComponent),
         MockComponent(ProductAddToWishlistComponent),
         MockComponent(CamfilProductImageComponent),
-        MockComponent(ProductPromotionComponent),
-        MockComponent(ProductRatingComponent),
-        MockComponent(ProductVariationSelectComponent),
+        MockComponent(CamfilProductPromotionComponent),
+        MockComponent(CamfilProductRatingComponent),
+        MockComponent(CamfilProductVariationSelectComponent),
         MockDirective(IsTactonProductDirective),
         MockPipe(ProductRoutePipe),
         ProductTileComponent,
@@ -74,7 +74,7 @@ describe('Product Tile Component', () => {
     fixture.detectChanges();
     expect(findAllIshElements(element)).toMatchInlineSnapshot(`
       Array [
-        "ish-product-promotion",
+        "camfil-product-promotion",
       ]
     `);
     expect(findAllCamfilElements(element)).toMatchInlineSnapshot(`

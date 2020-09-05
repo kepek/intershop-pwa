@@ -17,10 +17,10 @@ import { CamfilProductLabelComponent } from 'ish-shared/components/product/camfi
 import { CamfilProductPriceComponent } from 'ish-shared/components/product/camfil-product-price/camfil-product-price.component';
 import { CamfilProductQuantityComponent } from 'ish-shared/components/product/camfil-product-quantity/camfil-product-quantity.component';
 import { CamfilProductInventoryComponent } from 'ish-shared/components/product/camfil-product-inventory/camfil-product-inventory.component';
-import { ProductPromotionComponent } from 'ish-shared/components/product/product-promotion/product-promotion.component';
-import { ProductRatingComponent } from 'ish-shared/components/product/product-rating/product-rating.component';
+import { CamfilProductPromotionComponent } from 'ish-shared/components/product/camfil-product-promotion/camfil-product-promotion.component';
+import { CamfilProductRatingComponent } from 'ish-shared/components/product/camfil-product-rating/camfil-product-rating.component';
 import { CamfilProductShipmentComponent } from 'ish-shared/components/product/camfil-product-shipment/camfil-product-shipment.component';
-import { ProductVariationSelectComponent } from 'ish-shared/components/product/product-variation-select/product-variation-select.component';
+import { CamfilProductVariationSelectComponent } from 'ish-shared/components/product/camfil-product-variation-select/camfil-product-variation-select.component';
 import { CamfilProductImageComponent } from 'ish-shell/header/camfil-product-image/camfil-product-image.component';
 
 import { LazyProductAddToOrderTemplateComponent } from '../../../../extensions/order-templates/exports/lazy-product-add-to-order-template/lazy-product-add-to-order-template.component';
@@ -50,10 +50,10 @@ describe('Camfil Product Item Simple Component', () => {
         MockComponent(LazyProductAddToWishlistComponent),
         MockComponent(CamfilProductImageComponent),
         MockComponent(CamfilProductInventoryComponent),
-        MockComponent(ProductPromotionComponent),
-        MockComponent(ProductRatingComponent),
+        MockComponent(CamfilProductPromotionComponent),
+        MockComponent(CamfilProductRatingComponent),
         MockComponent(CamfilProductShipmentComponent),
-        MockComponent(ProductVariationSelectComponent),
+        MockComponent(CamfilProductVariationSelectComponent),
         MockDirective(FeatureToggleDirective),
         MockPipe(ProductRoutePipe),
       ],
@@ -78,7 +78,7 @@ describe('Camfil Product Item Simple Component', () => {
     fixture.detectChanges();
     expect(findAllIshElements(element)).toMatchInlineSnapshot(`
       Array [
-        "ish-product-promotion",
+        "camfil-product-promotion",
       ]
     `);
     expect(findAllCamfilElements(element)).toMatchInlineSnapshot(`

@@ -10,18 +10,18 @@
     product.name
   }}</a>
 
-  <ish-product-rating *ishFeature="'rating'" [product]="product"></ish-product-rating>
+  <camfil-product-rating *ishFeature="'rating'" [product]="product"></camfil-product-rating>
 
   <ng-container *ishFeature="'tacton'; else standardInformation">
     <ng-container *ishIsTactonProduct="product; else standardInformation"></ng-container>
   </ng-container>
 
   <ng-template #standardInformation>
-    <ish-product-promotion
+    <camfil-product-promotion
       *ngIf="configuration.displayPromotions"
       [product]="product"
       displayType="simple"
-    ></ish-product-promotion>
+    ></camfil-product-promotion>
 
     <div *ngIf="configuration.displayPrice" class="price-container">
       <camfil-product-price [product]="product" [showInformationalPrice]="true"></camfil-product-price>
@@ -32,12 +32,12 @@
     <camfil-product-price [product]="product" [showInformationalPrice]="true"></camfil-product-price>
   </div>
 
-  <ish-product-variation-select
+  <camfil-product-variation-select
     *ngIf="variationOptions && configuration.displayVariations"
     [readOnly]="configuration.readOnly"
     [variationOptions]="variationOptions"
     (selectVariation)="variationSelected($event)"
-  ></ish-product-variation-select>
+  ></camfil-product-variation-select>
   <ng-container *ngIf="isMasterProduct(product)">
     <span class="product-variation read-only">{{ variationCount }} {{ 'product.variations.text' | translate }}</span>
   </ng-container>

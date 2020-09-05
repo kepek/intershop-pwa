@@ -15,7 +15,7 @@
           product.name
         }}</a>
 
-        <ish-product-rating *ishFeature="'rating'" [product]="product"></ish-product-rating>
+        <camfil-product-rating *ishFeature="'rating'" [product]="product"></camfil-product-rating>
 
         <camfil-product-id *ngIf="configuration.displaySKU" [product]="product"></camfil-product-id>
 
@@ -26,11 +26,11 @@
         </ng-container>
 
         <ng-template #displayInteractions>
-          <ish-product-promotion
+          <camfil-product-promotion
             *ngIf="configuration.displayPromotions"
             [product]="product"
             displayType="simpleWithDetail"
-          ></ish-product-promotion>
+          ></camfil-product-promotion>
 
           <div class="product-tile-actions btn-group">
             <camfil-lazy-product-add-to-quote
@@ -84,12 +84,12 @@
           ></camfil-product-shipment>
         </ng-template>
 
-        <ish-product-variation-select
+        <camfil-product-variation-select
           *ngIf="variationOptions && configuration.displayVariations"
           [readOnly]="configuration.readOnly"
           [variationOptions]="variationOptions"
           (selectVariation)="variationSelected($event)"
-        ></ish-product-variation-select>
+        ></camfil-product-variation-select>
 
         <div class="product-list-actions-container">
           <ng-container *ishFeature="'tacton'; else standardInteractions">
