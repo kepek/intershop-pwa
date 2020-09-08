@@ -1,3 +1,8 @@
-<p>
-  camfil-product-attribute works!
-</p>
+<dl *ngIf="attribute" [ngClass]="classObject">
+  <dt class="camfil-product-attribute__label">{{ attribute.name | translate }}:&nbsp;</dt>
+  <dd
+    [attr.itemprop]="itemProp"
+    [innerHTML]="attribute | ishAttribute: multipleValuesSeparator"
+    class="camfil-product-attribute__value"
+  ></dd>
+</dl>

@@ -1,4 +1,8 @@
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { TranslateModule } from '@ngx-translate/core';
+import { MockPipe } from 'ng-mocks';
+
+import { AttributeToStringPipe } from 'ish-core/models/attribute/attribute.pipe';
 
 import { CamfilProductAttributeComponent } from './camfil-product-attribute.component';
 
@@ -9,7 +13,8 @@ describe('Camfil Product Attribute Component', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [CamfilProductAttributeComponent],
+      declarations: [CamfilProductAttributeComponent, MockPipe(AttributeToStringPipe)],
+      imports: [TranslateModule.forRoot()],
     }).compileComponents();
   }));
 

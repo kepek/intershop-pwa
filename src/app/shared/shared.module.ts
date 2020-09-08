@@ -108,6 +108,7 @@ import { CamfilProductQuantityComponent } from './components/product/camfil-prod
 import { CamfilProductRatingStarComponent } from './components/product/camfil-product-rating-star/camfil-product-rating-star.component';
 import { CamfilProductRatingComponent } from './components/product/camfil-product-rating/camfil-product-rating.component';
 import { CamfilProductShipmentComponent } from './components/product/camfil-product-shipment/camfil-product-shipment.component';
+import { CamfilProductTitleComponent } from './components/product/camfil-product-title/camfil-product-title.component';
 import { CamfilProductVariationSelectComponent } from './components/product/camfil-product-variation-select/camfil-product-variation-select.component';
 import { ProductAddToBasketComponent } from './components/product/product-add-to-basket/product-add-to-basket.component';
 import { ProductAddToCompareComponent } from './components/product/product-add-to-compare/product-add-to-compare.component';
@@ -189,6 +190,7 @@ const declaredComponents = [
   CamfilProductListComponent,
   CamfilProductListToolbarComponent,
   CamfilProductRatingStarComponent,
+  CamfilProductTitleComponent,
   ContentSlotComponent,
   FilterCheckboxComponent,
   FilterCollapsableComponent,

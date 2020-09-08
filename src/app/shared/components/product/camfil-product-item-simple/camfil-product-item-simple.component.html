@@ -11,13 +11,28 @@
   <div class="col-9">
     <div class="row">
       <div class="col-md-7 col-xs-12">
-        <a *ngIf="configuration.displayName" class="product-title" [routerLink]="product | ishProductRoute: category">{{
-          product.name
-        }}</a>
-
-        <camfil-product-rating *ishFeature="'rating'" [product]="product"></camfil-product-rating>
-
-        <camfil-product-id *ngIf="configuration.displaySKU" [product]="product"></camfil-product-id>
+        <camfil-product-title *ngIf="configuration.displayName" [product]="product"></camfil-product-title>
+        <camfil-product-id *ngIf="configuration.displaySKU" [product]="product"></camfil-product-id><br />
+        <camfil-product-attribute
+          [product]="product"
+          name="camfil.product.dimensions.label"
+          value="xxx-xxx-xxx"
+        ></camfil-product-attribute>
+        <camfil-product-attribute
+          [product]="product"
+          name="camfil.product.efficiency.label"
+          value="xxx"
+        ></camfil-product-attribute>
+        <camfil-product-attribute
+          [product]="product"
+          name="camfil.product.list_price.label"
+          [value]="product.listPrice"
+        ></camfil-product-attribute>
+        <camfil-product-attribute
+          [product]="product"
+          name="camfil.product.your_price.label"
+          [value]="product.salePrice"
+        ></camfil-product-attribute>
 
         <div *ngIf="configuration.displayDescription" class="product-description">{{ product.shortDescription }}</div>
 
@@ -47,13 +62,6 @@
             class="btn-link"
             [product]="product"
           ></camfil-lazy-product-add-to-wishlist>
-          <camfil-lazy-product-add-to-order-template
-            *ngIf="configuration.displayAddToOrderTemplate"
-            displayType="icon"
-            [quantity]="1"
-            class="btn-link"
-            [product]="product"
-          ></camfil-lazy-product-add-to-order-template>
         </div>
       </div>
 
@@ -103,10 +111,19 @@
                 class="action-container addtocart-container"
                 [ngClass]="configuration.quantityLabel === ' ' ? 'col-12 col-lg-7' : 'col-12 col-xl-5'"
               >
+                <camfil-lazy-product-add-to-order-template
+                  *ngIf="configuration.displayAddToOrderTemplate"
+                  displayType="icon"
+                  [quantity]="1"
+                  class="btn-link"
+                  [product]="product"
+                ></camfil-lazy-product-add-to-order-template>
                 <camfil-product-add-to-basket
                   *ngIf="configuration.displayAddToBasket"
                   [product]="product"
                   (productToBasket)="addToBasket()"
+                  displayType="icon"
+                  class="btn-link"
                 ></camfil-product-add-to-basket>
               </div>
             </form>
