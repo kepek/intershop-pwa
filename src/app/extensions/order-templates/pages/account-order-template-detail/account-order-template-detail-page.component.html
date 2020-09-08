@@ -40,13 +40,13 @@
       </div>
     </ng-container>
   </div>
-  <ish-product-add-to-basket
+  <camfil-product-add-to-basket
     displayType="button"
     [product]="dummyProduct"
     [disabled]="!selectedItems?.length"
     [class]="'btn btn-primary float-right'"
     (productToBasket)="addSelectedItemsToCart(orderTemplate)"
-  ></ish-product-add-to-basket>
+  ></camfil-product-add-to-basket>
 
   <ng-template #noItems>
     <p>{{ 'account.order_template.no_entries' | translate }}</p>

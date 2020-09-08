@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { MockComponents } from 'ng-mocks';
 
 import { Product } from 'ish-core/models/product/product.model';
-import { ProductRatingStarComponent } from 'ish-shared/components/product/product-rating-star/product-rating-star.component';
+import { CamfilProductRatingStarComponent } from 'ish-shared/components/product/camfil-product-rating-star/camfil-product-rating-star.component';
 
 import { ProductRatingComponent } from './product-rating.component';
 
@@ -13,7 +13,7 @@ describe('Product Rating Component', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [MockComponents(ProductRatingStarComponent), ProductRatingComponent],
+      declarations: [MockComponents(CamfilProductRatingStarComponent), ProductRatingComponent],
     }).compileComponents();
   }));
 
@@ -30,26 +30,26 @@ describe('Product Rating Component', () => {
     expect(() => fixture.detectChanges()).not.toThrow();
     expect(element).toMatchInlineSnapshot(`
       <div>
-        <ish-product-rating-star
+        <camfil-product-rating-star
           ng-reflect-filled="full"
           ng-reflect-last-star="false"
-        ></ish-product-rating-star
-        ><ish-product-rating-star
+        ></camfil-product-rating-star
+        ><camfil-product-rating-star
           ng-reflect-filled="full"
           ng-reflect-last-star="false"
-        ></ish-product-rating-star
-        ><ish-product-rating-star
+        ></camfil-product-rating-star
+        ><camfil-product-rating-star
           ng-reflect-filled="full"
           ng-reflect-last-star="false"
-        ></ish-product-rating-star
-        ><ish-product-rating-star
+        ></camfil-product-rating-star
+        ><camfil-product-rating-star
           ng-reflect-filled="half"
           ng-reflect-last-star="false"
-        ></ish-product-rating-star
-        ><ish-product-rating-star
+        ></camfil-product-rating-star
+        ><camfil-product-rating-star
           ng-reflect-filled="empty"
           ng-reflect-last-star="true"
-        ></ish-product-rating-star
+        ></camfil-product-rating-star
         ><span class="product-info ml-1">(3.5)</span>
       </div>
     `);

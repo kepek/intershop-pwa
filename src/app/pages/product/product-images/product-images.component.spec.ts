@@ -4,8 +4,8 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MockComponent } from 'ng-mocks';
 
 import { Product } from 'ish-core/models/product/product.model';
-import { ProductLabelComponent } from 'ish-shared/components/product/product-label/product-label.component';
-import { ProductImageComponent } from 'ish-shell/header/product-image/product-image.component';
+import { CamfilProductLabelComponent } from 'ish-shared/components/product/camfil-product-label/camfil-product-label.component';
+import { CamfilProductImageComponent } from 'ish-shell/header/camfil-product-image/camfil-product-image.component';
 
 import { ProductImagesComponent } from './product-images.component';
 
@@ -63,8 +63,8 @@ describe('Product Images Component', () => {
     TestBed.configureTestingModule({
       imports: [NgbCarouselModule, TranslateModule.forRoot()],
       declarations: [
-        MockComponent(ProductImageComponent),
-        MockComponent(ProductLabelComponent),
+        MockComponent(CamfilProductImageComponent),
+        MockComponent(CamfilProductLabelComponent),
         ProductImagesComponent,
       ],
     }).compileComponents();
@@ -93,7 +93,7 @@ describe('Product Images Component', () => {
     fixture.detectChanges();
     const thumbNailsSetElement = element.getElementsByClassName('product-thumb-set');
     expect(thumbNailsSetElement).toHaveLength(2);
-    const productImageElem = thumbNailsSetElement[0].querySelector('ish-product-image');
+    const productImageElem = thumbNailsSetElement[0].querySelector('camfil-product-image');
     expect(productImageElem.getAttribute('ng-reflect-image-type')).toBe(component.product.images[0].typeID);
   });
 
@@ -107,6 +107,6 @@ describe('Product Images Component', () => {
 
   it('should render product image component on component', () => {
     fixture.detectChanges();
-    expect(element.getElementsByTagName('ish-product-image')).toBeTruthy();
+    expect(element.getElementsByTagName('camfil-product-image')).toBeTruthy();
   });
 });

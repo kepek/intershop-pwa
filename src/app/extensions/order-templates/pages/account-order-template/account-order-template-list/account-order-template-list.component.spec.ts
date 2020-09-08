@@ -8,7 +8,7 @@ import { anything, capture, instance, mock, spy, verify } from 'ts-mockito';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { DatePipe } from 'ish-core/pipes/date.pipe';
 import { ModalDialogComponent } from 'ish-shared/components/common/modal-dialog/modal-dialog.component';
-import { ProductAddToBasketComponent } from 'ish-shared/components/product/product-add-to-basket/product-add-to-basket.component';
+import { CamfilProductAddToBasketComponent } from 'ish-shared/components/product/camfil-product-add-to-basket/camfil-product-add-to-basket.component';
 
 import { AccountOrderTemplateListComponent } from './account-order-template-list.component';
 
@@ -54,9 +54,9 @@ describe('Account Order Template List Component', () => {
     TestBed.configureTestingModule({
       declarations: [
         AccountOrderTemplateListComponent,
+        MockComponent(CamfilProductAddToBasketComponent),
         MockComponent(FaIconComponent),
         MockComponent(ModalDialogComponent),
-        MockComponent(ProductAddToBasketComponent),
         MockPipe(DatePipe),
       ],
       imports: [RouterTestingModule, TranslateModule.forRoot()],

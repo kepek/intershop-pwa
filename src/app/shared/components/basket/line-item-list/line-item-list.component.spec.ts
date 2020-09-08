@@ -3,6 +3,7 @@ import { FormArray, ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { TranslateModule } from '@ngx-translate/core';
+import { findAllCamfilElements } from 'camfil-core/utils/dev/html-query-utils';
 import { MockComponent, MockComponents, MockPipe } from 'ng-mocks';
 import { anything, spy, verify } from 'ts-mockito';
 
@@ -15,7 +16,7 @@ import { BasketPromotionComponent } from 'ish-shared/components/basket/basket-pr
 import { LineItemDescriptionComponent } from 'ish-shared/components/basket/line-item-description/line-item-description.component';
 import { PromotionDetailsComponent } from 'ish-shared/components/promotion/promotion-details/promotion-details.component';
 import { InputComponent } from 'ish-shared/forms/components/input/input.component';
-import { ProductImageComponent } from 'ish-shell/header/product-image/product-image.component';
+import { CamfilProductImageComponent } from 'ish-shell/header/camfil-product-image/camfil-product-image.component';
 
 import { LazyProductAddToOrderTemplateComponent } from '../../../../extensions/order-templates/exports/lazy-product-add-to-order-template/lazy-product-add-to-order-template.component';
 import { LazyProductAddToWishlistComponent } from '../../../../extensions/wishlists/exports/lazy-product-add-to-wishlist/lazy-product-add-to-wishlist.component';
@@ -32,10 +33,10 @@ describe('Line Item List Component', () => {
       declarations: [
         LineItemListComponent,
         MockComponent(BasketPromotionComponent),
+        MockComponent(CamfilProductImageComponent),
         MockComponent(FaIconComponent),
         MockComponent(InputComponent),
         MockComponent(LineItemDescriptionComponent),
-        MockComponent(ProductImageComponent),
         MockComponent(PromotionDetailsComponent),
         MockComponents(LazyProductAddToOrderTemplateComponent),
         MockComponents(LazyProductAddToWishlistComponent),
@@ -81,7 +82,8 @@ describe('Line Item List Component', () => {
   it('should render sub components if basket changes', () => {
     component.ngOnChanges();
     fixture.detectChanges();
-    expect(findAllIshElements(element)).toIncludeAllMembers(['ish-line-item-description', 'ish-product-image']);
+    expect(findAllIshElements(element)).toIncludeAllMembers(['ish-line-item-description']);
+    expect(findAllCamfilElements(element)).toIncludeAllMembers(['camfil-product-image']);
   });
 
   it('should throw updateItem event when form group item changes', fakeAsync(() => {

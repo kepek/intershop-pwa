@@ -15,7 +15,7 @@
   </div>
 
   <div class="col-12 col-md-4 col-lg-5 product-info">
-    <!-- <ish-product-rating *ishFeature="'rating'" [product]="product"></ish-product-rating> -->
+    <!-- <camfil-product-rating *ishFeature="'rating'" [product]="product"></camfil-product-rating> -->
 
     <div class="mat-card mat-focus-indicator p-3 my-3">
       <!-- <div *ngIf="product.manufacturer" class="product-brand">
@@ -24,9 +24,9 @@
         </a>
       </div> -->
 
-      <!-- <ish-product-id [product]="product"></ish-product-id> -->
+      <!-- <camfil-product-id [product]="product"></camfil-product-id> -->
 
-      <ish-product-promotion [product]="product"></ish-product-promotion>
+      <camfil-product-promotion [product]="product"></camfil-product-promotion>
 
       <div class="price-container" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
         <camfil-product-price
@@ -35,44 +35,44 @@
           [showPriceSavings]="true"
         ></camfil-product-price>
 
-        <ish-product-inventory
+        <camfil-product-inventory
           *ngIf="!isRetailSet(product) && !isMasterProduct(product)"
           [product]="product"
-        ></ish-product-inventory>
+        ></camfil-product-inventory>
       </div>
 
-      <ish-product-shipment
+      <camfil-product-shipment
         *ngIf="!isRetailSet(product) && !isMasterProduct(product)"
         [product]="product"
-      ></ish-product-shipment>
+      ></camfil-product-shipment>
 
-      <ish-product-variation-select
+      <camfil-product-variation-select
         *ngIf="isVariationProduct(product)"
         [productMasterSKU]="product.productMasterSKU"
         [variationOptions]="variationOptions"
         (selectVariation)="variationSelected($event)"
-      ></ish-product-variation-select>
+      ></camfil-product-variation-select>
 
       <form *ngIf="!isMasterProduct(product)" [formGroup]="productDetailForm" class="product-form form-horizontal">
         <div class="row">
           <div class="w-100">
-            <ish-product-quantity
+            <camfil-product-quantity
               *ngIf="!isRetailSet(product)"
               [product]="product"
               [parentForm]="productDetailForm"
               [controlName]="quantityControlName"
               [type]="'input'"
-            ></ish-product-quantity>
+            ></camfil-product-quantity>
           </div>
         </div>
 
-        <ish-product-add-to-basket
+        <camfil-product-add-to-basket
           [product]="product"
           [class]="'btn-lg btn-block'"
           [disabled]="productDetailForm.invalid"
           [translationKey]="isRetailSet(product) ? 'product.add_to_cart.retailset.link' : 'product.add_to_cart.link'"
           (productToBasket)="addToBasket()"
-        ></ish-product-add-to-basket>
+        ></camfil-product-add-to-basket>
 
         <camfil-lazy-product-add-to-order-template
           [class]="'btn btn-default btn-block'"
@@ -105,7 +105,7 @@
         [heading]="'product.shipping.heading' | translate"
         dataTestingId="section-shipping-tab"
       >
-        <ish-product-shipment [product]="product"></ish-product-shipment>
+        <camfil-product-shipment [product]="product"></camfil-product-shipment>
       </ish-accordion-item>
     </ish-accordion> -->
   </div>
@@ -136,7 +136,7 @@
       <h2>{{ 'product.description.heading' | translate }}</h2>
       <p [innerHTML]="product.longDescription"></p>
       <h2>{{ 'product.shipping.heading' | translate }}</h2>
-      <ish-product-shipment [product]="product"></ish-product-shipment>
+      <camfil-product-shipment [product]="product"></camfil-product-shipment>
     </div>
   </div>
 </div>

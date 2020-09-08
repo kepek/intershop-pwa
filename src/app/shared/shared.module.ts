@@ -89,14 +89,27 @@ import { LoginFormComponent } from './components/login/login-form/login-form.com
 import { LoginModalComponent } from './components/login/login-modal/login-modal.component';
 import { OrderListComponent } from './components/order/order-list/order-list.component';
 import { OrderWidgetComponent } from './components/order/order-widget/order-widget.component';
+import { CamfilProductAddToBasketComponent } from './components/product/camfil-product-add-to-basket/camfil-product-add-to-basket.component';
+import { CamfilProductAddToCompareComponent } from './components/product/camfil-product-add-to-compare/camfil-product-add-to-compare.component';
+import { CamfilProductAttributeComponent } from './components/product/camfil-product-attribute/camfil-product-attribute.component';
 import { CamfilProductAttributesComponent } from './components/product/camfil-product-attributes/camfil-product-attributes.component';
+import { CamfilProductIdComponent } from './components/product/camfil-product-id/camfil-product-id.component';
+import { CamfilProductInventoryComponent } from './components/product/camfil-product-inventory/camfil-product-inventory.component';
 import { CamfilProductItemDetailedComponent } from './components/product/camfil-product-item-detailed/camfil-product-item-detailed.component';
 import { CamfilProductItemSimpleComponent } from './components/product/camfil-product-item-simple/camfil-product-item-simple.component';
 import { CamfilProductItemComponent } from './components/product/camfil-product-item/camfil-product-item.component';
+import { CamfilProductLabelComponent } from './components/product/camfil-product-label/camfil-product-label.component';
 import { CamfilProductListToolbarComponent } from './components/product/camfil-product-list-toolbar/camfil-product-list-toolbar.component';
 import { CamfilProductListComponent } from './components/product/camfil-product-list/camfil-product-list.component';
 import { CamfilProductListingComponent } from './components/product/camfil-product-listing/camfil-product-listing.component';
 import { CamfilProductPriceComponent } from './components/product/camfil-product-price/camfil-product-price.component';
+import { CamfilProductPromotionComponent } from './components/product/camfil-product-promotion/camfil-product-promotion.component';
+import { CamfilProductQuantityComponent } from './components/product/camfil-product-quantity/camfil-product-quantity.component';
+import { CamfilProductRatingStarComponent } from './components/product/camfil-product-rating-star/camfil-product-rating-star.component';
+import { CamfilProductRatingComponent } from './components/product/camfil-product-rating/camfil-product-rating.component';
+import { CamfilProductShipmentComponent } from './components/product/camfil-product-shipment/camfil-product-shipment.component';
+import { CamfilProductTitleComponent } from './components/product/camfil-product-title/camfil-product-title.component';
+import { CamfilProductVariationSelectComponent } from './components/product/camfil-product-variation-select/camfil-product-variation-select.component';
 import { ProductAddToBasketComponent } from './components/product/product-add-to-basket/product-add-to-basket.component';
 import { ProductAddToCompareComponent } from './components/product/product-add-to-compare/product-add-to-compare.component';
 import { ProductAttributesComponent } from './components/product/product-attributes/product-attributes.component';
@@ -168,11 +181,16 @@ const declaredComponents = [
   CamfilFilterCollapsableComponent,
   CamfilFilterDropdownComponent,
   CamfilFilterTextComponent,
+  CamfilProductAttributeComponent,
   CamfilProductAttributesComponent,
+  CamfilProductIdComponent,
   CamfilProductItemDetailedComponent,
   CamfilProductItemSimpleComponent,
+  CamfilProductLabelComponent,
   CamfilProductListComponent,
   CamfilProductListToolbarComponent,
+  CamfilProductRatingStarComponent,
+  CamfilProductTitleComponent,
   ContentSlotComponent,
   FilterCheckboxComponent,
   FilterCollapsableComponent,
@@ -187,15 +205,23 @@ const declaredComponents = [
   LineItemEditComponent,
   LineItemEditDialogComponent,
   LoginModalComponent,
+  ProductAddToBasketComponent,
+  ProductAddToCompareComponent,
   ProductIdComponent,
+  ProductInventoryComponent,
   ProductItemComponent,
   ProductLabelComponent,
   ProductListComponent,
   ProductListPagingComponent,
   ProductPriceComponent,
+  ProductPromotionComponent,
+  ProductQuantityComponent,
+  ProductRatingComponent,
   ProductRatingStarComponent,
   ProductRowComponent,
+  ProductShipmentComponent,
   ProductTileComponent,
+  ProductVariationSelectComponent,
 ];
 
 const exportedComponents = [
@@ -216,10 +242,20 @@ const exportedComponents = [
   CamfilFilterMeasurementsComponent,
   CamfilFilterNavigationComponent,
   CamfilLinksBlockComponent,
+  CamfilProductAddToBasketComponent,
+  CamfilProductAddToCompareComponent,
   CamfilProductAttributesComponent,
+  CamfilProductIdComponent,
+  CamfilProductInventoryComponent,
   CamfilProductItemComponent,
+  CamfilProductLabelComponent,
   CamfilProductListingComponent,
   CamfilProductPriceComponent,
+  CamfilProductPromotionComponent,
+  CamfilProductQuantityComponent,
+  CamfilProductRatingComponent,
+  CamfilProductShipmentComponent,
+  CamfilProductVariationSelectComponent,
   ContentIncludeComponent,
   ContentPageletComponent,
   ErrorMessageComponent,
@@ -231,20 +267,10 @@ const exportedComponents = [
   ModalDialogLinkComponent,
   OrderListComponent,
   OrderWidgetComponent,
-  ProductAddToBasketComponent,
-  ProductAddToCompareComponent,
   ProductAttributesComponent,
   ProductBundleDisplayComponent,
-  ProductIdComponent,
-  ProductInventoryComponent,
-  ProductLabelComponent,
   ProductPriceComponent,
-  ProductPromotionComponent,
-  ProductQuantityComponent,
-  ProductRatingComponent,
-  ProductShipmentComponent,
   ProductVariationDisplayComponent,
-  ProductVariationSelectComponent,
   PromotionDetailsComponent,
   PromotionRemoveComponent,
   RecentlyViewedComponent,

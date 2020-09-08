@@ -1,0 +1,16 @@
+@import '~src/styles/themes/camfil/colors';
+
+:host {
+  display: inline-block;
+  .camfil-product-attribute__label,
+  .camfil-product-attribute__value {
+    display: inline-block;
+  }
+  .camfil-product-attribute__label {
+    font-weight: normal;
+  }
+  .camfil-product-attribute__value {
+    font-weight: bold;
+    color: $camfil-text-color-primary;
+  }
+}

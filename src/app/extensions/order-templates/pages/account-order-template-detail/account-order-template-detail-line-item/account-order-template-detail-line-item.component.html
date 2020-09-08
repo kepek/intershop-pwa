@@ -3,7 +3,7 @@
     <div class="col-1 col-md-2 list-item d-flex">
       <ish-checkbox [form]="selectItemForm" controlName="productCheckbox"> </ish-checkbox>
       <a class="d-none d-md-inline" [routerLink]="product | ishProductRoute">
-        <ish-product-image [product]="product" imageType="S" class="product-image"></ish-product-image>
+        <camfil-product-image [product]="product" imageType="S" class="product-image"></camfil-product-image>
       </a>
     </div>
     <div class="col-8 col-md-6 list-item d-block d-md-flex">
@@ -11,13 +11,13 @@
         <a [routerLink]="product | ishProductRoute" class="product-title" data-testing-id="order-template-product-link">
           {{ product.name }}
         </a>
-        <ish-product-id [product]="product"></ish-product-id>
+        <camfil-product-id [product]="product"></camfil-product-id>
         <ish-product-variation-display [product]="product"></ish-product-variation-display>
         <ish-product-bundle-display
           *ngIf="product.type === 'Bundle'"
           [productBundleSKU]="product.sku"
         ></ish-product-bundle-display>
-        <ish-product-inventory [product]="product"></ish-product-inventory>
+        <camfil-product-inventory [product]="product"></camfil-product-inventory>
         <div class="btn-group mb-2">
           <a class="btn-tool" (click)="moveDialog.show()" data-testing-id="move-order-template">
             <fa-icon
@@ -39,13 +39,13 @@
       </div>
       <div class="col-6 col-md-3 p-md-0 text-right">
         <form [formGroup]="addToCartForm">
-          <ish-product-quantity
+          <camfil-product-quantity
             [allowZeroQuantity]="false"
             [quantityLabel]="''"
             [product]="product"
             [parentForm]="addToCartForm"
             controlName="quantity"
-          ></ish-product-quantity>
+          ></camfil-product-quantity>
         </form>
       </div>
     </div>

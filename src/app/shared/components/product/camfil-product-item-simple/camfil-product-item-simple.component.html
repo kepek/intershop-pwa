@@ -1,31 +1,46 @@
-<mat-card [attr.data-testing-sku]="product.sku">
+<mat-card [attr.data-testing-sku]="product.sku" [class.mat-elevation-z3]="true">
   <div class="col-3">
     <div class="product-image-container">
       <a [routerLink]="product | ishProductRoute: category">
-        <ish-product-image [product]="product" imageType="S" class="product-image"></ish-product-image>
+        <camfil-product-image [product]="product" imageType="S" class="product-image"></camfil-product-image>
       </a>
-      <ish-product-label [product]="product"></ish-product-label>
+      <camfil-product-label [product]="product"></camfil-product-label>
     </div>
   </div>
 
   <div class="col-9">
     <div class="row">
       <div class="col-md-7 col-xs-12">
-        <a *ngIf="configuration.displayName" class="product-title" [routerLink]="product | ishProductRoute: category">{{
-          product.name
-        }}</a>
-
-        <ish-product-rating *ishFeature="'rating'" [product]="product"></ish-product-rating>
-
-        <ish-product-id *ngIf="configuration.displaySKU" [product]="product"></ish-product-id>
+        <camfil-product-title *ngIf="configuration.displayName" [product]="product"></camfil-product-title>
+        <camfil-product-id *ngIf="configuration.displaySKU" [product]="product"></camfil-product-id><br />
+        <camfil-product-attribute
+          [product]="product"
+          name="camfil.product.dimensions.label"
+          value="xxx-xxx-xxx"
+        ></camfil-product-attribute>
+        <camfil-product-attribute
+          [product]="product"
+          name="camfil.product.efficiency.label"
+          value="xxx"
+        ></camfil-product-attribute>
+        <camfil-product-attribute
+          [product]="product"
+          name="camfil.product.list_price.label"
+          [value]="product.listPrice"
+        ></camfil-product-attribute>
+        <camfil-product-attribute
+          [product]="product"
+          name="camfil.product.your_price.label"
+          [value]="product.salePrice"
+        ></camfil-product-attribute>
 
         <div *ngIf="configuration.displayDescription" class="product-description">{{ product.shortDescription }}</div>
 
-        <ish-product-promotion
+        <camfil-product-promotion
           *ngIf="configuration.displayPromotions"
           [product]="product"
           displayType="simpleWithDetail"
-        ></ish-product-promotion>
+        ></camfil-product-promotion>
 
         <div class="product-tile-actions btn-group">
           <camfil-lazy-product-add-to-quote
@@ -34,26 +49,19 @@
             displayType="icon"
             class="btn-link"
           ></camfil-lazy-product-add-to-quote>
-          <ish-product-add-to-compare
+          <camfil-product-add-to-compare
             *ngIf="configuration.displayAddToCompare"
             [isInCompareList]="isInCompareList"
             displayType="icon"
             class="btn-link"
             (compareToggle)="toggleCompare()"
-          ></ish-product-add-to-compare>
+          ></camfil-product-add-to-compare>
           <camfil-lazy-product-add-to-wishlist
             *ngIf="configuration.displayAddToWishlist"
             displayType="icon"
             class="btn-link"
             [product]="product"
           ></camfil-lazy-product-add-to-wishlist>
-          <camfil-lazy-product-add-to-order-template
-            *ngIf="configuration.displayAddToOrderTemplate"
-            displayType="icon"
-            [quantity]="1"
-            class="btn-link"
-            [product]="product"
-          ></camfil-lazy-product-add-to-order-template>
         </div>
       </div>
 
@@ -63,21 +71,21 @@
           [product]="product"
           [showInformationalPrice]="true"
         ></camfil-product-price>
-        <ish-product-inventory
+        <camfil-product-inventory
           *ngIf="configuration.displayInventory && !isMasterProduct(product)"
           [product]="product"
-        ></ish-product-inventory>
-        <ish-product-shipment
+        ></camfil-product-inventory>
+        <camfil-product-shipment
           *ngIf="configuration.displayShipment && !isMasterProduct(product)"
           [product]="product"
-        ></ish-product-shipment>
+        ></camfil-product-shipment>
 
-        <ish-product-variation-select
+        <camfil-product-variation-select
           *ngIf="variationOptions && configuration.displayVariations"
           [readOnly]="configuration.readOnly"
           [variationOptions]="variationOptions"
           (selectVariation)="variationSelected($event)"
-        ></ish-product-variation-select>
+        ></camfil-product-variation-select>
 
         <div class="product-list-actions-container">
           <ng-container *ngIf="!isMasterProduct(product); else masterProductActions">
@@ -88,7 +96,7 @@
                   configuration.quantityLabel === ' ' ? 'col-6 offset-md-6 col-lg-5 offset-lg-0' : 'col-12 col-xl-7'
                 "
               >
-                <ish-product-quantity
+                <camfil-product-quantity
                   *ngIf="configuration.displayQuantity"
                   [readOnly]="configuration.readOnly"
                   [allowZeroQuantity]="configuration.allowZeroQuantity"
@@ -96,18 +104,27 @@
                   [product]="product"
                   [parentForm]="productItemForm"
                   [controlName]="quantityControlName"
-                ></ish-product-quantity>
+                ></camfil-product-quantity>
               </div>
 
               <div
                 class="action-container addtocart-container"
                 [ngClass]="configuration.quantityLabel === ' ' ? 'col-12 col-lg-7' : 'col-12 col-xl-5'"
               >
-                <ish-product-add-to-basket
+                <camfil-lazy-product-add-to-order-template
+                  *ngIf="configuration.displayAddToOrderTemplate"
+                  displayType="icon"
+                  [quantity]="1"
+                  class="btn-link"
+                  [product]="product"
+                ></camfil-lazy-product-add-to-order-template>
+                <camfil-product-add-to-basket
                   *ngIf="configuration.displayAddToBasket"
                   [product]="product"
                   (productToBasket)="addToBasket()"
-                ></ish-product-add-to-basket>
+                  displayType="icon"
+                  class="btn-link"
+                ></camfil-product-add-to-basket>
               </div>
             </form>
           </ng-container>

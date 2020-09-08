@@ -8,8 +8,8 @@ import { createProductView } from 'ish-core/models/product-view/product-view.mod
 import { Product } from 'ish-core/models/product/product.model';
 import { ProductRoutePipe } from 'ish-core/routing/product/product-route.pipe';
 import { categoryTree } from 'ish-core/utils/dev/test-data-utils';
-import { ProductInventoryComponent } from 'ish-shared/components/product/product-inventory/product-inventory.component';
-import { ProductImageComponent } from 'ish-shell/header/product-image/product-image.component';
+import { CamfilProductInventoryComponent } from 'ish-shared/components/product/camfil-product-inventory/camfil-product-inventory.component';
+import { CamfilProductImageComponent } from 'ish-shell/header/camfil-product-image/camfil-product-image.component';
 
 import { BasketValidationProductsComponent } from './basket-validation-products.component';
 
@@ -22,8 +22,8 @@ describe('Basket Validation Products Component', () => {
     TestBed.configureTestingModule({
       declarations: [
         BasketValidationProductsComponent,
-        MockComponent(ProductImageComponent),
-        MockComponent(ProductInventoryComponent),
+        MockComponent(CamfilProductImageComponent),
+        MockComponent(CamfilProductInventoryComponent),
         MockPipe(PricePipe),
         MockPipe(ProductRoutePipe),
       ],

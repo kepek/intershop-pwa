@@ -4,26 +4,26 @@
   <div *ngIf="variation$ | async as variation" class="row">
     <!-- right box -->
     <div class="col-12 col-md">
-      <div class="text-center"><ish-product-image [product]="variation" imageType="M"></ish-product-image></div>
+      <div class="text-center"><camfil-product-image [product]="variation" imageType="M"></camfil-product-image></div>
     </div>
 
     <!-- left box -->
     <div class="col-12 col-md product-info">
       <!-- sku -->
-      <ish-product-id [product]="variation"></ish-product-id>
+      <camfil-product-id [product]="variation"></camfil-product-id>
 
       <!-- price -->
       <div class="current-price">{{ variation.salePrice | ishPrice }}</div>
 
       <!-- Availability -->
-      <ish-product-inventory [product]="variation"></ish-product-inventory>
+      <camfil-product-inventory [product]="variation"></camfil-product-inventory>
 
       <!-- select (variation) -->
-      <ish-product-variation-select
+      <camfil-product-variation-select
         *ngIf="variationOptions$ | async as variationOptions"
         [variationOptions]="variationOptions"
         (selectVariation)="variationSelected($event)"
-      ></ish-product-variation-select>
+      ></camfil-product-variation-select>
 
       <!-- input (quantity) -->
       <div class="form-group">

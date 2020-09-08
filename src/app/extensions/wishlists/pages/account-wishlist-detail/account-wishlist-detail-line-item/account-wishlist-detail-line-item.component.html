@@ -2,7 +2,7 @@
   <div class="d-flex">
     <div class="col-3 col-md-2 list-item">
       <a [routerLink]="product | ishProductRoute">
-        <ish-product-image [product]="product" imageType="S" class="product-image"></ish-product-image>
+        <camfil-product-image [product]="product" imageType="S" class="product-image"></camfil-product-image>
       </a>
     </div>
     <div class="col-9 col-md-10 list-item column-price">
@@ -12,7 +12,7 @@
             <a [routerLink]="product | ishProductRoute" class="product-title" data-testing-id="wishlist-product-link">
               {{ product.name }}
             </a>
-            <ish-product-id [product]="product"></ish-product-id>
+            <camfil-product-id [product]="product"></camfil-product-id>
             <ish-product-variation-display [product]="product"></ish-product-variation-display>
             <ish-product-bundle-display
               *ngIf="product.type === 'Bundle'"
@@ -47,19 +47,19 @@
           </ng-template>
           <form [formGroup]="addToCartForm" class="row">
             <div class="col-6 offset-md-6 col-lg-5 offset-lg-0">
-              <ish-product-quantity
+              <camfil-product-quantity
                 [allowZeroQuantity]="false"
                 [quantityLabel]="''"
                 [product]="product"
                 [parentForm]="addToCartForm"
                 controlName="quantity"
-              ></ish-product-quantity>
+              ></camfil-product-quantity>
             </div>
             <div class="col-12 col-lg-7 addtocart-container">
-              <ish-product-add-to-basket
+              <camfil-product-add-to-basket
                 [product]="product"
                 (productToBasket)="addToCart(product.sku)"
-              ></ish-product-add-to-basket>
+              ></camfil-product-add-to-basket>
             </div>
           </form>
         </div>

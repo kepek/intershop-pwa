@@ -10,13 +10,13 @@ import { ProductView, createProductView } from 'ish-core/models/product-view/pro
 import { Product } from 'ish-core/models/product/product.model';
 import { ProductRoutePipe } from 'ish-core/routing/product/product-route.pipe';
 import { categoryTree } from 'ish-core/utils/dev/test-data-utils';
+import { CamfilProductAddToBasketComponent } from 'ish-shared/components/product/camfil-product-add-to-basket/camfil-product-add-to-basket.component';
+import { CamfilProductIdComponent } from 'ish-shared/components/product/camfil-product-id/camfil-product-id.component';
+import { CamfilProductInventoryComponent } from 'ish-shared/components/product/camfil-product-inventory/camfil-product-inventory.component';
 import { CamfilProductPriceComponent } from 'ish-shared/components/product/camfil-product-price/camfil-product-price.component';
-import { ProductAddToBasketComponent } from 'ish-shared/components/product/product-add-to-basket/product-add-to-basket.component';
+import { CamfilProductRatingComponent } from 'ish-shared/components/product/camfil-product-rating/camfil-product-rating.component';
 import { ProductAttributesComponent } from 'ish-shared/components/product/product-attributes/product-attributes.component';
-import { ProductIdComponent } from 'ish-shared/components/product/product-id/product-id.component';
-import { ProductInventoryComponent } from 'ish-shared/components/product/product-inventory/product-inventory.component';
-import { ProductRatingComponent } from 'ish-shared/components/product/product-rating/product-rating.component';
-import { ProductImageComponent } from 'ish-shell/header/product-image/product-image.component';
+import { CamfilProductImageComponent } from 'ish-shell/header/camfil-product-image/camfil-product-image.component';
 
 import { ProductComparePagingComponent } from '../product-compare-paging/product-compare-paging.component';
 
@@ -33,15 +33,15 @@ describe('Product Compare List Component', () => {
     TestBed.configureTestingModule({
       imports: [RouterTestingModule, TranslateModule.forRoot()],
       declarations: [
+        MockComponent(CamfilProductAddToBasketComponent),
+        MockComponent(CamfilProductIdComponent),
+        MockComponent(CamfilProductImageComponent),
+        MockComponent(CamfilProductInventoryComponent),
         MockComponent(CamfilProductPriceComponent),
+        MockComponent(CamfilProductRatingComponent),
         MockComponent(FaIconComponent),
-        MockComponent(ProductAddToBasketComponent),
         MockComponent(ProductAttributesComponent),
         MockComponent(ProductComparePagingComponent),
-        MockComponent(ProductIdComponent),
-        MockComponent(ProductImageComponent),
-        MockComponent(ProductInventoryComponent),
-        MockComponent(ProductRatingComponent),
         MockDirective(FeatureToggleDirective),
         MockPipe(AttributeToStringPipe),
         MockPipe(ProductRoutePipe),

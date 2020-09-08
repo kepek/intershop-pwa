@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { NgbPopover } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
+import { findAllCamfilElements } from 'camfil-core/utils/dev/html-query-utils';
 import { MockComponent, MockPipe } from 'ng-mocks';
 
 import { FeatureToggleModule } from 'ish-core/feature-toggle.module';
@@ -9,10 +10,10 @@ import { PricePipe } from 'ish-core/models/price/price.pipe';
 import { BasketMockData } from 'ish-core/utils/dev/basket-mock-data';
 import { findAllIshElements } from 'ish-core/utils/dev/html-query-utils';
 import { LineItemEditComponent } from 'ish-shared/components/line-item/line-item-edit/line-item-edit.component';
+import { CamfilProductIdComponent } from 'ish-shared/components/product/camfil-product-id/camfil-product-id.component';
+import { CamfilProductInventoryComponent } from 'ish-shared/components/product/camfil-product-inventory/camfil-product-inventory.component';
+import { CamfilProductShipmentComponent } from 'ish-shared/components/product/camfil-product-shipment/camfil-product-shipment.component';
 import { ProductBundleDisplayComponent } from 'ish-shared/components/product/product-bundle-display/product-bundle-display.component';
-import { ProductIdComponent } from 'ish-shared/components/product/product-id/product-id.component';
-import { ProductInventoryComponent } from 'ish-shared/components/product/product-inventory/product-inventory.component';
-import { ProductShipmentComponent } from 'ish-shared/components/product/product-shipment/product-shipment.component';
 import { ProductVariationDisplayComponent } from 'ish-shared/components/product/product-variation-display/product-variation-display.component';
 
 import { LineItemDescriptionComponent } from './line-item-description.component';
@@ -27,13 +28,13 @@ describe('Line Item Description Component', () => {
       imports: [FeatureToggleModule.forTesting(), TranslateModule.forRoot()],
       declarations: [
         LineItemDescriptionComponent,
+        MockComponent(CamfilProductIdComponent),
+        MockComponent(CamfilProductInventoryComponent),
+        MockComponent(CamfilProductShipmentComponent),
         MockComponent(FaIconComponent),
         MockComponent(LineItemEditComponent),
         MockComponent(NgbPopover),
         MockComponent(ProductBundleDisplayComponent),
-        MockComponent(ProductIdComponent),
-        MockComponent(ProductInventoryComponent),
-        MockComponent(ProductShipmentComponent),
         MockComponent(ProductVariationDisplayComponent),
         MockPipe(PricePipe),
       ],
@@ -55,7 +56,7 @@ describe('Line Item Description Component', () => {
 
   it('should give correct sku to productIdComponent', () => {
     fixture.detectChanges();
-    expect(element.querySelector('ish-product-id')).toMatchInlineSnapshot(`<ish-product-id></ish-product-id>`);
+    expect(element.querySelector('camfil-product-id')).toMatchInlineSnapshot(`<camfil-product-id></camfil-product-id>`);
   });
 
   it('should hold itemSurcharges for the line item', () => {
@@ -74,9 +75,13 @@ describe('Line Item Description Component', () => {
     expect(findAllIshElements(element)).toMatchInlineSnapshot(`
       Array [
         "ish-line-item-edit",
-        "ish-product-id",
-        "ish-product-inventory",
-        "ish-product-shipment",
+      ]
+    `);
+    expect(findAllCamfilElements(element)).toMatchInlineSnapshot(`
+      Array [
+        "camfil-product-id",
+        "camfil-product-inventory",
+        "camfil-product-shipment",
       ]
     `);
   });

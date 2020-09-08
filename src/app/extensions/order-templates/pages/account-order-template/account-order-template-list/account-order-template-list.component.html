@@ -27,13 +27,13 @@
     </div>
     <div class="col-5 col-md-2 list-item text-right">
       <a class="btn-tool d-inline-flex align-top">
-        <ish-product-add-to-basket
+        <camfil-product-add-to-basket
           displayType="icon"
           [product]="dummyProduct"
           [disabled]="!orderTemplate.items?.length"
           class="text-primary p-0"
           (productToBasket)="addTemplateToCart(orderTemplate.id)"
-        ></ish-product-add-to-basket>
+        ></camfil-product-add-to-basket>
       </a>
       <a
         class="btn-tool"

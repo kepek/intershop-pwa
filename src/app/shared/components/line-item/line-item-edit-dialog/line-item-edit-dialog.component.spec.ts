@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
+import { findAllCamfilElements } from 'camfil-core/utils/dev/html-query-utils';
 import { MockComponent, MockPipe } from 'ng-mocks';
 import { Observable, of } from 'rxjs';
 import { anything, instance, mock, when } from 'ts-mockito';
@@ -13,13 +14,13 @@ import { VariationProductView } from 'ish-core/models/product-view/product-view.
 import { ProductCompletenessLevel } from 'ish-core/models/product/product.model';
 import { findAllIshElements } from 'ish-core/utils/dev/html-query-utils';
 import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
+import { CamfilProductIdComponent } from 'ish-shared/components/product/camfil-product-id/camfil-product-id.component';
+import { CamfilProductInventoryComponent } from 'ish-shared/components/product/camfil-product-inventory/camfil-product-inventory.component';
 import { CamfilProductItemDetailedComponent } from 'ish-shared/components/product/camfil-product-item-detailed/camfil-product-item-detailed.component';
 import { CamfilProductItemSimpleComponent } from 'ish-shared/components/product/camfil-product-item-simple/camfil-product-item-simple.component';
-import { ProductIdComponent } from 'ish-shared/components/product/product-id/product-id.component';
-import { ProductInventoryComponent } from 'ish-shared/components/product/product-inventory/product-inventory.component';
-import { ProductVariationSelectComponent } from 'ish-shared/components/product/product-variation-select/product-variation-select.component';
+import { CamfilProductVariationSelectComponent } from 'ish-shared/components/product/camfil-product-variation-select/camfil-product-variation-select.component';
 import { InputComponent } from 'ish-shared/forms/components/input/input.component';
-import { ProductImageComponent } from 'ish-shell/header/product-image/product-image.component';
+import { CamfilProductImageComponent } from 'ish-shell/header/camfil-product-image/camfil-product-image.component';
 
 import { LineItemEditDialogComponent } from './line-item-edit-dialog.component';
 
@@ -36,14 +37,14 @@ describe('Line Item Edit Dialog Component', () => {
       imports: [NgbModalModule, ReactiveFormsModule, TranslateModule.forRoot()],
       declarations: [
         LineItemEditDialogComponent,
+        MockComponent(CamfilProductIdComponent),
+        MockComponent(CamfilProductImageComponent),
+        MockComponent(CamfilProductInventoryComponent),
         MockComponent(CamfilProductItemDetailedComponent),
         MockComponent(CamfilProductItemSimpleComponent),
+        MockComponent(CamfilProductVariationSelectComponent),
         MockComponent(InputComponent),
         MockComponent(LoadingComponent),
-        MockComponent(ProductIdComponent),
-        MockComponent(ProductImageComponent),
-        MockComponent(ProductInventoryComponent),
-        MockComponent(ProductVariationSelectComponent),
         MockPipe(PricePipe),
       ],
       providers: [{ provide: ShoppingFacade, useFactory: () => instance(shoppingFacade) }],
@@ -85,12 +86,13 @@ describe('Line Item Edit Dialog Component', () => {
 
   it('should give correct product id of variation to product id component', () => {
     fixture.detectChanges();
-    expect(element.querySelector('ish-product-id')).toMatchInlineSnapshot(`<ish-product-id></ish-product-id>`);
+    expect(element.querySelector('camfil-product-id')).toMatchInlineSnapshot(`<camfil-product-id></camfil-product-id>`);
   });
 
   it('should display ish-components on the container', () => {
     fixture.detectChanges();
-    expect(findAllIshElements(element)).toIncludeAllMembers(['ish-input', 'ish-product-image']);
+    expect(findAllIshElements(element)).toIncludeAllMembers(['ish-input']);
+    expect(findAllCamfilElements(element)).toIncludeAllMembers(['camfil-product-image']);
   });
 
   it('should display loading-components on the container', () => {

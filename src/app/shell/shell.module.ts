@@ -25,6 +25,7 @@ import { CamfilHeaderDefaultComponent } from './header/camfil-header-default/cam
 import { CamfilHeaderComponent } from './header/camfil-header/camfil-header.component';
 import { CamfilMiniBasketComponent } from './header/camfil-mini-basket/camfil-mini-basket.component';
 import { CamfilProductCompareStatusComponent } from './header/camfil-product-compare-status/camfil-product-compare-status.component';
+import { CamfilProductImageComponent } from './header/camfil-product-image/camfil-product-image.component';
 import { CamfilSearchBoxComponent } from './header/camfil-search-box/camfil-search-box.component';
 import { HeaderCheckoutComponent } from './header/header-checkout/header-checkout.component';
 import { HeaderDefaultComponent } from './header/header-default/header-default.component';
@@ -53,8 +54,8 @@ const importExportModules = [
 const exportedComponents = [
   CamfilFooterComponent,
   CamfilHeaderComponent,
+  CamfilProductImageComponent,
   CamfilSearchBoxComponent,
-  ProductImageComponent,
 ];
 
 @NgModule({
@@ -88,10 +89,11 @@ const exportedComponents = [
     LoginStatusComponent,
     MiniBasketComponent,
     ProductCompareStatusComponent,
+    ProductImageComponent,
     SearchBoxComponent,
     SubCategoryNavigationComponent,
     UserInformationMobileComponent,
   ],
   exports: [...exportedComponents, ...importExportModules],
 })
-export class ShellModule { }
+export class ShellModule {}

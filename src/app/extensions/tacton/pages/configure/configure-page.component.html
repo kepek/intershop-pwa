@@ -23,7 +23,7 @@
     <ish-tacton-configure-navigation></ish-tacton-configure-navigation>
   </div>
   <div *ngIf="state$ | async as state" class="tacton-sidebar d-none d-md-block d-md-3">
-    <ish-product-image [product]="product" imageType="M" class="product-image"></ish-product-image>
+    <camfil-product-image [product]="product" imageType="M" class="product-image"></camfil-product-image>
     <ish-tacton-bom [bom]="state.bom"></ish-tacton-bom>
   </div>
   <div class="tacton-main-panel col-lg-6" *ngIf="step$ | async as step">
