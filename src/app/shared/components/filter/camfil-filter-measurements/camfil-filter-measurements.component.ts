@@ -10,17 +10,19 @@ import { URLFormParams } from 'ish-core/utils/url-form-params';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CamfilFilterMeasurementsComponent {
-  width = '0';
-  height = '0';
-  depth = '0';
+  width;
+  height;
+  depth;
   @Input() fragmentOnRouting: string;
   @Output() applyFilter: EventEmitter<{ searchParameter: URLFormParams }> = new EventEmitter();
 
   constructor(private router: Router, private activatedRoute: ActivatedRoute) {}
 
-  filter(facet, type) {
+  change(facet, type) {
     this[type] = facet;
+  }
 
+  filter() {
     const filter = [
       `attr_width%5Bgte%5D=${+this.width - 10}&attr_width%5Blte%5D=${+this.width + 10}`,
       `attr_height%5Bgte%5D=${+this.height - 10}&attr_height%5Blte%5D=${+this.height + 10}`,

@@ -2,16 +2,32 @@
   <form class="form">
     <div class="form-group">
       <label>Width <span>(mm)</span></label>
-      <input placeholder="xxx" [class.mat-elevation-z2]="true" (focusout)="filter($event.target.value, 'width')" />
+      <input
+        type="number"
+        placeholder="xxx"
+        [class.mat-elevation-z2]="true"
+        (keyup)="change($event.target.value, 'width')"
+      />
     </div>
     <div class="form-group">
       <label>Height <span>(mm)</span></label>
-      <input placeholder="xxx" [class.mat-elevation-z2]="true" (focusout)="filter($event.target.value, 'height')" />
+      <input
+        type="number"
+        placeholder="xxx"
+        [class.mat-elevation-z2]="true"
+        (keyup)="change($event.target.value, 'height')"
+      />
     </div>
     <div class="form-group">
       <label>Depth <span>(mm)</span></label>
-      <input placeholder="xxx" [class.mat-elevation-z2]="true" (focusout)="filter($event.target.value, 'depth')" />
+      <input
+        type="number"
+        placeholder="xxx"
+        [class.mat-elevation-z2]="true"
+        (keyup)="change($event.target.value, 'depth')"
+      />
     </div>
+    <button color="primary" mat-flat-button [disabled]="!width || !height || !depth" (click)="filter()">Ok</button>
   </form>
   <camfil-filter-info
     title="How to measure a bag filter"
