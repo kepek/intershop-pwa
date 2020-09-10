@@ -119,6 +119,7 @@
     "@types/jest": "^26.0.10",
     "@types/lodash-es": "^4.17.3",
     "@types/node": "^12.12.54",
+    "@types/webpack-env": "^1.15.2",
     "codelyzer": "^6.0.0",
     "comment-json": "^3.0.3",
     "commitizen": "^4.1.5",

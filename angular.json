@@ -27,7 +27,19 @@
             "tsConfig": "tsconfig.app.json",
             "aot": true,
             "extractCss": true,
-            "assets": ["src/assets"],
+            "assets": [
+              "src/assets",
+              {
+                "glob": "**/*",
+                "input": "./projects/organization-management/src/assets",
+                "output": "/organization-management/assets/"
+              },
+              {
+                "glob": "**/*",
+                "input": "./projects/camfil/src/assets",
+                "output": "/camfil/assets/"
+              }
+            ],
             "stylePreprocessorOptions": {
               "includePaths": ["src/styles"]
             },
@@ -201,16 +213,10 @@
             "tsConfig": "projects/organization-management/tsconfig.app.json",
             "aot": false,
             "stylePreprocessorOptions": {
-              "includePaths": ["src/styles"]
+              "includePaths": ["projects/organization-management/src/styles"]
             },
             "styles": ["src/styles/themes/default/style.scss"],
-            "assets": [
-              {
-                "glob": "**/*",
-                "input": "src/assets/",
-                "output": "/assets/"
-              }
-            ],
+            "assets": ["projects/organization-management/src/assets"],
             "scripts": [],
             "fileReplacements": [
               {
@@ -254,16 +260,10 @@
             "tsConfig": "projects/camfil/tsconfig.app.json",
             "aot": false,
             "stylePreprocessorOptions": {
-              "includePaths": ["src/styles"]
+              "includePaths": ["projects/camfil/src/styles"]
             },
             "styles": ["src/styles/themes/camfil/style.scss"],
-            "assets": [
-              {
-                "glob": "**/*",
-                "input": "src/assets/",
-                "output": "/assets/"
-              }
-            ],
+            "assets": ["projects/camfil/src/assets"],
             "scripts": [],
             "fileReplacements": [
               {

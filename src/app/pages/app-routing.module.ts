@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, isDevMode } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { FeatureToggleGuard } from 'ish-core/feature-toggle.module';
@@ -152,6 +152,7 @@ const routes: Routes = [
       breadcrumbData: [{ key: 'camfil.home_page.link' }],
     },
   },
+  isDevMode() && { path: 'demo', loadChildren: () => import('./demo/demo-page.module').then(m => m.DemoPageModule) },
 ];
 
 @NgModule({

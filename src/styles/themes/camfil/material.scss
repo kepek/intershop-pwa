@@ -258,6 +258,16 @@ button {
   }
 }
 
+[mat-fab],
+[mat-button],
+[mat-button-icon] {
+  .mat-icon {
+    svg {
+      display: block;
+    }
+  }
+}
+
 .mat-toolbar {
   &-single-row {
     height: 40px;
