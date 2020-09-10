@@ -9,6 +9,7 @@ import { PageEvent } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { CamfilIcon, getCamfilIcons } from 'camfil-shared/icon/icon.module';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 
@@ -39,6 +40,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
   { position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne' },
 ];
 
+// tslint:disable-next-line:component-creation-test
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
     const isSubmitted = form && form.submitted;
@@ -75,6 +77,9 @@ export class DemoPageComponent implements AfterViewInit, OnInit {
   autocompleteOptions: string[] = ['One', 'Two', 'Three'];
   filteredAutocompleteOptions: Observable<string[]>;
 
+  camfilIcons: CamfilIcon[];
+
+  // tslint:disable-next-line:no-any
   foods: any[] = [
     { name: 'Pizza', rating: 'Excellent' },
     { name: 'Burritos', rating: 'Great' },
@@ -89,7 +94,6 @@ export class DemoPageComponent implements AfterViewInit, OnInit {
   pageSize = 10;
   pageSizeOptions: number[] = [5, 10, 25, 100];
 
-  // MatPaginator Output
   pageEvent: PageEvent;
 
   games = [
@@ -180,6 +184,7 @@ export class DemoPageComponent implements AfterViewInit, OnInit {
 
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
+    this.camfilIcons = getCamfilIcons();
   }
 
   ngOnInit() {

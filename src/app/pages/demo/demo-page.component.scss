@@ -5,8 +5,19 @@
     background: $camfil-text-color-tertiary;
   }
 
+  .st1,
+  .st2,
+  .st3,
+  .st4 {
+    stroke: none !important;
+  }
+
   .demo-chip-list {
     width: 100%;
+  }
+
+  .example-icon {
+    margin: 1rem;
   }
 
   table {

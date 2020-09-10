@@ -47,6 +47,28 @@
   </mat-toolbar>
 
   <div class="demo-content">
+    <!-- Camfil Icons -->
+    <mat-card>
+      <mat-card-content>
+        <h2 class="example-h2">
+          Camfil Icons
+        </h2>
+        <button
+          mat-fab
+          color="accent"
+          *ngFor="let camfilIcon of camfilIcons"
+          class="example-icon"
+          [cdkCopyToClipboard]="'<mat-icon svgIcon=' + camfilIcon.name + '></mat-icon>'"
+        >
+          <mat-icon
+            [matTooltip]="camfilIcon.name"
+            [svgIcon]="camfilIcon.name"
+            [attr.aria-label]="'Example ' + camfilIcon.name + ' SVG icon'"
+          ></mat-icon>
+        </button>
+      </mat-card-content>
+    </mat-card>
+
     <!-- Material Table -->
     <mat-card>
       <mat-card-content>
