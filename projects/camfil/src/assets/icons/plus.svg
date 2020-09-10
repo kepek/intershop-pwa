@@ -1,13 +1,1 @@
-<svg width="26" height="26" xmlns="http://www.w3.org/2000/svg">
- <style type="text/css">.st0{fill:none;stroke:#00673E;stroke-miterlimit:10;}</style>
-
- <g>
-  <title>background</title>
-  <rect fill="none" id="canvas_background" height="602" width="802" y="-1" x="-1"/>
- </g>
- <g>
-  <title>Layer 1</title>
-  <line id="svg_3" y2="13" x2="17.36" y1="13" x1="8.64" class="st0"/>
-  <line id="svg_4" y2="17.36" x2="13" y1="8.64" x1="13" class="st0"/>
- </g>
-</svg>
+<svg height="26" width="26" xmlns="http://www.w3.org/2000/svg"><g fill="none"><path d="m-1-1h802v602h-802z"/><g stroke="#00673e" stroke-miterlimit="10"><path d="m8.64 13h8.72"/><path d="m13 8.64v8.72"/></g></g></svg>

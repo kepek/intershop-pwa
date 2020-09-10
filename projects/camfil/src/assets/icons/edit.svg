@@ -1,17 +1,1 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Generator: Adobe Illustrator 23.0.3, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="0 0 26 26" style="enable-background:new 0 0 26 26;" xml:space="preserve">
-<style type="text/css">
-	.st0{fill:none;stroke:#00673E;stroke-linecap:round;stroke-miterlimit:10;}
-</style>
-<g>
-	<path class="st0" d="M6.82,23.06l16.3-16.3c0.43-0.43,0.43-1.12,0-1.55L20.8,2.87c-0.43-0.43-1.12-0.43-1.55,0l-16.3,16.3
-		l-1.16,5.05L6.82,23.06z"/>
-	<path class="st0" d="M24.68,2.1L23.9,1.32c-0.43-0.43-1.12-0.43-1.55,0L20.8,2.87l2.33,2.33l1.55-1.55
-		C25.11,3.22,25.11,2.53,24.68,2.1z"/>
-	<line class="st0" x1="1.78" y1="24.22" x2="1" y2="25"/>
-	<path class="st0" d="M21.18,3.26l-1.55-1.55c-0.64-0.64-1.69-0.64-2.33,0l-6.21,6.21"/>
-	<path class="st0" d="M6.82,23.06l-0.04-0.09c-0.72-1.68-2.06-3.03-3.75-3.75l-0.09-0.04"/>
-</g>
-</svg>
+<svg enable-background="new 0 0 26 26" viewBox="0 0 26 26" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#00673e" stroke-linecap="round" stroke-miterlimit="10"><path d="m6.82 23.06 16.3-16.3c.43-.43.43-1.12 0-1.55l-2.32-2.34c-.43-.43-1.12-.43-1.55 0l-16.3 16.3-1.16 5.05z"/><path d="m24.68 2.1-.78-.78c-.43-.43-1.12-.43-1.55 0l-1.55 1.55 2.33 2.33 1.55-1.55c.43-.43.43-1.12 0-1.55z"/><path d="m1.78 24.22-.78.78"/><path d="m21.18 3.26-1.55-1.55c-.64-.64-1.69-.64-2.33 0l-6.21 6.21"/><path d="m6.82 23.06-.04-.09c-.72-1.68-2.06-3.03-3.75-3.75l-.09-.04"/></g></svg>

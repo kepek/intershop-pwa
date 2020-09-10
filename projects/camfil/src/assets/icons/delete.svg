@@ -1,16 +1,1 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Generator: Adobe Illustrator 23.0.3, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="0 0 26 26" style="enable-background:new 0 0 26 26;" xml:space="preserve">
-<style type="text/css">
-	.st0{fill:none;stroke:#00673E;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
-</style>
-<g>
-	<path class="st0" d="M4.25,5.36v17.45c0,1.21,0.98,2.18,2.18,2.18h13.09c1.21,0,2.18-0.98,2.18-2.18V5.36"/>
-	<line class="st0" x1="3.16" y1="5.36" x2="22.8" y2="5.36"/>
-	<line class="st0" x1="8.62" y1="9.73" x2="8.62" y2="20.64"/>
-	<line class="st0" x1="12.98" y1="9.73" x2="12.98" y2="20.64"/>
-	<line class="st0" x1="17.35" y1="9.73" x2="17.35" y2="20.64"/>
-	<path class="st0" d="M17.35,5.36V3.18c0-1.21-0.98-2.18-2.18-2.18H10.8C9.59,1,8.62,1.98,8.62,3.18v2.18"/>
-</g>
-</svg>
+<svg enable-background="new 0 0 26 26" viewBox="0 0 26 26" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#00673e" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10"><path d="m4.25 5.36v17.45c0 1.21.98 2.18 2.18 2.18h13.09c1.21 0 2.18-.98 2.18-2.18v-17.45"/><path d="m3.16 5.36h19.64"/><path d="m8.62 9.73v10.91"/><path d="m12.98 9.73v10.91"/><path d="m17.35 9.73v10.91"/><path d="m17.35 5.36v-2.18c0-1.21-.98-2.18-2.18-2.18h-4.37c-1.21 0-2.18.98-2.18 2.18v2.18"/></g></svg>
