@@ -1,11 +1,9 @@
-import { ChangeDetectionStrategy, Component, OnInit, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { Facet } from 'ish-core/models/facet/facet.model';
-import { ActivatedRoute, Router } from '@angular/router';
 import { URLFormParams, formParamsToString } from 'ish-core/utils/url-form-params';
-
-// import { FilterNavigation } from 'ish-core/models/filter-navigation/filter-navigation.model';
 
 @Component({
   selector: 'camfil-filter-applied',

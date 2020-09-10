@@ -10,7 +10,6 @@ import {
 @Component({
   selector: 'camfil-product-title',
   templateUrl: './camfil-product-title.component.html',
-  styleUrls: ['./camfil-product-title.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CamfilProductTitleComponent {
