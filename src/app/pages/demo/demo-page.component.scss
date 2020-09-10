@@ -1,0 +1,189 @@
+@import '~src/styles/themes/camfil/colors';
+
+:host {
+  mat-sidenav-container.m2demo-dark {
+    background: $camfil-text-color-tertiary;
+  }
+
+  .demo-chip-list {
+    width: 100%;
+  }
+
+  table {
+    width: 100%;
+  }
+
+  th.mat-sort-header-sorted {
+    color: $camfil-text-color-tertiary;
+  }
+
+  .demo-content {
+    padding: 5px;
+  }
+
+  .demo-content mat-card {
+    margin: 5px;
+  }
+
+  .demo-sidenav {
+    min-width: 200px;
+  }
+
+  .demo-content mat-checkbox {
+    margin: 10px;
+  }
+
+  .demo-toolbar-filler {
+    flex: 1 1 auto;
+  }
+
+  .demo-fab {
+    position: fixed !important;
+    right: 20px;
+    bottom: 20px;
+  }
+
+  .mat-form-field {
+    margin-right: 12px;
+  }
+
+  .example-form-field {
+    width: 200px;
+  }
+
+  .example-form {
+    width: 100%;
+    min-width: 150px;
+    max-width: 500px;
+  }
+
+  .example-full-width {
+    width: 100%;
+  }
+
+  .example-headers-align .mat-expansion-panel-header-title,
+  .example-headers-align .mat-expansion-panel-header-description {
+    flex-basis: 0;
+  }
+
+  .example-headers-align .mat-expansion-panel-header-description {
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .example-headers-align .mat-form-field + .mat-form-field {
+    margin-left: 8px;
+  }
+
+  .example-card {
+    max-width: 400px;
+  }
+
+  .example-header-image {
+    background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+    background-size: cover;
+  }
+
+  mat-button-toggle-group {
+    margin-left: 12px;
+  }
+
+  .demo-spinner {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+  }
+
+  .demo-input-icon {
+    padding: 0 5px;
+    font-size: 16px;
+  }
+
+  .demo-menu-button {
+    min-width: 50px;
+    padding: 0;
+  }
+  .demo-button {
+    margin: 5px;
+  }
+
+  .demo-list {
+    border: 1px solid rgba(0, 0, 0, 0.12);
+  }
+
+  .demo-progress {
+    margin: 5px;
+  }
+
+  .example-h2 {
+    margin: 10px 0;
+    color: rgba(0, 0, 0, 0.54);
+  }
+
+  .example-section {
+    display: flex;
+    align-content: center;
+    align-items: center;
+    height: 60px;
+  }
+
+  .example-margin {
+    margin: 10px;
+  }
+
+  .mat-slider-horizontal {
+    width: 300px;
+  }
+
+  .mat-slider-vertical {
+    height: 300px;
+  }
+
+  mat-chip {
+    max-width: 200px;
+  }
+
+  .demo-sidebar-button {
+    width: inherit;
+  }
+
+  .example-spacer {
+    flex: 1 1 auto;
+  }
+
+  section {
+    display: table;
+  }
+
+  .example-label {
+    display: table-cell;
+    min-width: 120px;
+    margin-left: 8px;
+    font-size: 14px;
+  }
+
+  .example-button-row {
+    display: table-cell;
+    width: 490px;
+  }
+
+  .example-button-row .mat-button-base {
+    margin: 8px 8px 8px 0;
+  }
+
+  .example-flex-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  .example-button-container {
+    display: flex;
+    justify-content: center;
+    width: 120px;
+  }
+
+  .container {
+    overflow: hidden;
+  }
+}
