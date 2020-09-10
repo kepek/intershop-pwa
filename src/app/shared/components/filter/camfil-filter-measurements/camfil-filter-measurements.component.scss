@@ -22,6 +22,15 @@
         border-bottom: 0 !important;
       }
     }
+
+    .mat-flat-button {
+      padding: 0 20px;
+      margin-left: 5px;
+      min-width: unset;
+      align-self: flex-end;
+      margin-bottom: 12px;
+      height: 35px;
+    }
   }
 }
 .form {
@@ -41,6 +50,20 @@ input {
   border: 0;
 }
 
+/* Chrome, Safari, Edge, Opera */
+// stylelint-disable property-no-vendor-prefix
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type='number'] {
+  -moz-appearance: textfield;
+}
+// stylelint-enable property-no-vendor-prefix
+
 label {
   margin-bottom: 0;
   font-weight: 700;
@@ -54,5 +77,5 @@ label {
 .form-group {
   display: flex;
   flex-direction: column;
-  margin: 8px;
+  margin: 8px 6px;
 }
