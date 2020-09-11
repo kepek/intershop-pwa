@@ -257,11 +257,19 @@ button {
     margin-left: 5px;
   }
 
-  // for custom camfil icons 
-  // except 'logo', there need change 'fill' property
+  // for custom camfil icons
   @each $color in $colors-icons {
-    &.color-#{""+$color} * {
+    &.color-#{""+$color} *[stroke]:not([stroke="none"]) {
       stroke: map-get($color-icons-def, $color);
+    }
+    &.color-#{""+$color} *[fill]:not([fill="none"]) {
+      fill: map-get($color-icons-def, $color);
+    }
+  }
+  &[svgicon] {
+    vertical-align: middle;
+    svg {
+      vertical-align: top;
     }
   }
 }
