@@ -20,3 +20,11 @@ $greyEF: #efefef;
 $greyC9: #c9e3d5;
 $greyF9: #f9f9f9;
 $greyF5: #f5f5f5;
+
+$colors-icons: primary secondary white black;
+$color-icons-def: (
+  primary: $camfil-color-primary,
+  secondary: $camfil-color-secondary,
+  white: $camfil-color-white,
+  black: $camfil-text-color-primary,
+);

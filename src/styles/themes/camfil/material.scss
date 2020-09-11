@@ -256,6 +256,14 @@ button {
   .mat-chip & {
     margin-left: 5px;
   }
+
+  // for custom camfil icons 
+  // except 'logo', there need change 'fill' property
+  @each $color in $colors-icons {
+    &.color-#{""+$color} * {
+      stroke: map-get($color-icons-def, $color);
+    }
+  }
 }
 
 [mat-fab],
