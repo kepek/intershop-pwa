@@ -74,10 +74,8 @@ exports[`Camfil Header Default Component should render normal header adequately 
       ></camfil-product-compare-status
       ><camfil-mini-basket
         data-testing-id="mini-basket-desktop"
-        view="full"
         class="d-md-block"
         ng-reflect-ng-class="d-md-block"
-        ng-reflect-view="full"
       ></camfil-mini-basket>
     </div>
   </div>
@@ -165,10 +163,8 @@ exports[`Camfil Header Default Component should render normal header adequately 
       ></camfil-product-compare-status
       ><camfil-mini-basket
         data-testing-id="mini-basket-desktop"
-        view="full"
         class="d-md-block"
         ng-reflect-ng-class="d-md-block"
-        ng-reflect-view="full"
       ></camfil-mini-basket>
     </div>
   </div>
@@ -295,10 +291,8 @@ exports[`Camfil Header Default Component should render sticky header adequately 
     <div class="col-3 col-md-6 col-lg-3 col-xl-3 d-flex align-items-center justify-content-end">
       <camfil-mini-basket
         data-testing-id="mini-basket-desktop"
-        view="full"
         class="d-lg-block"
         ng-reflect-ng-class="d-lg-block"
-        ng-reflect-view="full"
       ></camfil-mini-basket>
     </div>
   </div>

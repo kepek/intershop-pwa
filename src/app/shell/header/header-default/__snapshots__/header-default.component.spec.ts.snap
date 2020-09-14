@@ -18,16 +18,12 @@ exports[`Header Default Component should render normal header adequately for des
     <camfil-mini-basket
       class="d-none d-md-block"
       data-testing-id="mini-basket-desktop"
-      view="full"
       ng-reflect-ng-class="d-md-block"
-      ng-reflect-view="full"
     ></camfil-mini-basket
     ><camfil-mini-basket
       data-testing-id="mini-basket-mobile"
-      view="small"
       class="d-md-none"
       ng-reflect-ng-class="d-md-none"
-      ng-reflect-view="small"
     ></camfil-mini-basket>
   </div>
   <div class="row align-items-center">
@@ -88,16 +84,12 @@ exports[`Header Default Component should render normal header adequately for mob
     ><camfil-mini-basket
       class="d-none d-md-block"
       data-testing-id="mini-basket-desktop"
-      view="full"
       ng-reflect-ng-class="d-md-block"
-      ng-reflect-view="full"
     ></camfil-mini-basket
     ><camfil-mini-basket
       data-testing-id="mini-basket-mobile"
-      view="small"
       class="d-md-none"
       ng-reflect-ng-class="d-md-none"
-      ng-reflect-view="small"
     ></camfil-mini-basket>
   </div>
   <div class="row align-items-center">
@@ -151,16 +143,12 @@ exports[`Header Default Component should render normal header adequately for tab
     <camfil-mini-basket
       class="d-none d-md-block"
       data-testing-id="mini-basket-desktop"
-      view="full"
       ng-reflect-ng-class="d-md-block"
-      ng-reflect-view="full"
     ></camfil-mini-basket
     ><camfil-mini-basket
       data-testing-id="mini-basket-mobile"
-      view="small"
       class="d-md-none"
       ng-reflect-ng-class="d-md-none"
-      ng-reflect-view="small"
     ></camfil-mini-basket>
   </div>
   <div class="row align-items-center">
@@ -213,16 +201,12 @@ exports[`Header Default Component should render sticky header adequately for des
     ><camfil-mini-basket
       class="d-none d-lg-block"
       data-testing-id="mini-basket-desktop"
-      view="full"
       ng-reflect-ng-class="d-lg-block"
-      ng-reflect-view="full"
     ></camfil-mini-basket
     ><camfil-mini-basket
       data-testing-id="mini-basket-mobile"
-      view="small"
       class="d-lg-none"
       ng-reflect-ng-class="d-lg-none"
-      ng-reflect-view="small"
     ></camfil-mini-basket>
   </div>
   <div class="row align-items-center">
@@ -271,16 +255,12 @@ exports[`Header Default Component should render sticky header adequately for mob
     ><camfil-mini-basket
       class="d-none d-lg-block"
       data-testing-id="mini-basket-desktop"
-      view="full"
       ng-reflect-ng-class="d-lg-block"
-      ng-reflect-view="full"
     ></camfil-mini-basket
     ><camfil-mini-basket
       data-testing-id="mini-basket-mobile"
-      view="small"
       class="d-lg-none"
       ng-reflect-ng-class="d-lg-none"
-      ng-reflect-view="small"
     ></camfil-mini-basket>
   </div>
   <div class="row align-items-center">
@@ -329,16 +309,12 @@ exports[`Header Default Component should render sticky header adequately for tab
     ><camfil-mini-basket
       class="d-none d-lg-block"
       data-testing-id="mini-basket-desktop"
-      view="full"
       ng-reflect-ng-class="d-lg-block"
-      ng-reflect-view="full"
     ></camfil-mini-basket
     ><camfil-mini-basket
       data-testing-id="mini-basket-mobile"
-      view="small"
       class="d-lg-none"
       ng-reflect-ng-class="d-lg-none"
-      ng-reflect-view="small"
     ></camfil-mini-basket>
   </div>
   <div class="row align-items-center">

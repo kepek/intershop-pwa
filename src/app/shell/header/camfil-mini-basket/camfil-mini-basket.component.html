@@ -1,57 +1,10 @@
-<div
-  class="quick-cart-link"
-  [ngClass]="{ 'mini-cart-active': !isCollapsed }"
-  ishClickOutside
-  (isClickedOutside)="collapse()"
->
-  <button (click)="toggleCollapse()" mat-flat-button color="primary">
+<div class="quick-cart-link">
+  <button mat-flat-button color="primary" routerLink="/basket">
     <mat-icon svgIcon="cart" class="color-white"></mat-icon>
     &nbsp;&nbsp;
-    <!-- TODO: check for a better solution for the plural and translate pipe combination for cases where the en_US.json is not yet loaded, current solution: || {"other": "#"} -->
     <span class="d-none d-lg-none d-md-inline d-xl-inline"
       >{{ 'camfil.shopping_cart.ministatus.items.label' | translate }}&nbsp;&nbsp;</span
     >
     <span class="counter">{{ itemCount$ | async }}</span>
-    <ng-container *ngIf="itemTotal$ | async as itemTotal">
-      <span> / </span> <span class="mini-cart-price">{{ itemTotal | ishPrice }}</span>
-    </ng-container>
   </button>
-
-  <div *ngIf="!isCollapsed" class="mini-cart">
-    <ng-container *ngIf="basketError$ | async as error">
-      <p *ngIf="error && error.status" role="alert" class="text-danger">
-        <span *ngIf="!error.error">{{ error.status }}: {{ error.message }}</span
-        >{{ error.error }}
-      </p>
-    </ng-container>
-
-    <ng-container *ngIf="lineItems$ | async as lineItems; else emptyBlock">
-      <div class="product-rows-block">
-        <div *ngFor="let lineItem of lineItems" class="product-row">
-          <div class="mini-product-img">
-            <a [routerLink]="lineItem.product | ishProductRoute" (click)="collapse()">
-              <camfil-product-image
-                [product]="lineItem.product"
-                imageType="S"
-                class="product-image"
-              ></camfil-product-image>
-            </a>
-          </div>
-          <div class="mini-product-info">
-            <a [routerLink]="lineItem.product | ishProductRoute" (click)="collapse()"> {{ lineItem.name }} </a>
-            <div class="product-price">{{ lineItem.price | ishPrice }}</div>
-            <div class="cart-pli-data">
-              <span>{{ 'shopping_cart.pli.qty.label' | translate }}</span> {{ lineItem.quantity.value }}
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <a class="view-cart btn btn-primary btn-lg btn-block" routerLink="/basket" (click)="collapse()">
-        {{ 'shopping_cart.ministatus.view_cart.link' | translate }}
-      </a>
-    </ng-container>
-
-    <ng-template #emptyBlock> {{ 'shopping_cart.ministatus.empty_cart.text' | translate }} </ng-template>
-  </div>
 </div>

@@ -3,11 +3,7 @@
 
 .quick-cart-link {
   padding: 0;
-
-  &,
-  &.mini-cart-active {
-    background: unset;
-  }
+  background: unset;
 
   @media (max-width: $screen-sm-max) {
     height: $top-header-height-mobile;
