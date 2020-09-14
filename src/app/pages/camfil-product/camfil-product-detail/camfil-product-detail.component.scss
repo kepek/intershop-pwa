@@ -1,7 +1,101 @@
 @import '~src/styles/themes/camfil/colors';
+@import '~src/styles/themes/camfil/variables';
 
 h1 {
   margin: 0;
+}
+
+strong {
+  font-weight: 700;
+}
+
+.product-details {
+  &-title {
+    h1 {
+      margin-bottom: 5px;
+    }
+    p {
+      color: $grey88;
+    }
+  }
+
+  &-guides {
+    position: relative;
+    padding-bottom: 10px;
+    padding-left: 0;
+    margin-top: 8px;
+    list-style: none;
+
+    li {
+      margin-bottom: 10px;
+
+      a {
+        display: flex;
+        align-items: center;
+        font-weight: 500;
+      }
+
+      .mat-icon {
+        margin-right: 8px;
+        vertical-align: top;
+
+        &.error {
+          width: 20px;
+          height: 20px;
+          margin-right: 10px;
+          margin-left: 3px;
+        }
+
+        &::ng-deep {
+          svg {
+            vertical-align: top;
+          }
+        }
+      }
+    }
+
+    &::after {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      left: -25px;
+      display: block;
+      height: 0;
+      content: '';
+      border-bottom: 1px solid $greyD9;
+    }
+  }
+
+  &-badges {
+    padding-left: 0;
+    margin-top: 8px;
+    color: $grey88;
+    list-style: none;
+
+    li {
+      display: flex;
+      align-items: center;
+      margin-top: 8px;
+    }
+
+    img {
+      position: relative;
+      min-width: 80px;
+      min-height: 40px;
+      margin-right: 8px;
+
+      &::after {
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: block;
+        width: 100%;
+        height: 100%;
+        content: '';
+        background-color: #d8d8d8;
+      }
+    }
+  }
 }
 
 .product-info {
@@ -16,12 +110,35 @@ h1 {
     text-transform: none;
   }
 
-  .product-attributes,
-  .product-description {
-    padding: 60px 135px;
+  .product-description,
+  .product-attributes {
+    padding: ($space-default * 2) $space-default;
+
+    @media (min-width: map-get($grid-breakpoints, md)) {
+      padding: 60px 135px;
+    }
   }
 
   .product-description {
     border-left: 1px solid $greyD9;
+  }
+}
+
+::ng-deep {
+  .product-attributes-review {
+    dt,
+    dd {
+      padding: 10px 0 !important;
+      font-size: $space-box !important;
+      color: $grey88 !important;
+    }
+  }
+}
+
+.product-accessories {
+  margin: 1rem;
+
+  @media (min-width: map-get($grid-breakpoints, md)) {
+    margin: 0;
   }
 }

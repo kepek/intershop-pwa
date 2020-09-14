@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>↳ 📍icon </title>
+    <defs>
+        <path d="M11,15 L13,15 L13,17 L11,17 L11,15 Z M11,7 L13,7 L13,13 L11,13 L11,7 Z M11.99,2 C6.47,2 2,6.48 2,12 C2,17.52 6.47,22 11.99,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 11.99,2 Z M12,21 C7.0275,21 3,16.9725 3,12 C3,7.0275 7.0275,3 12,3 C16.9725,3 21,7.0275 21,12 C21,16.9725 16.9725,21 12,21 Z" id="path-1"></path>
+    </defs>
+    <g id="Visual-Design-🌕" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="PDP-Simple-Visual" transform="translate(-955.000000, -479.000000)">
+            <g id="Product" transform="translate(86.000000, 325.000000)">
+                <g id="Liknande-produkt" transform="translate(844.000000, 0.000000)">
+                    <g id="Guides" transform="translate(23.000000, 24.000000)">
+                        <g id="↳-📍icon-" transform="translate(0.000000, 128.000000)">
+                            <mask id="mask-2" fill="white">
+                                <use xlink:href="#path-1"></use>
+                            </mask>
+                            <use id="-↳Color" fill="#00673E" xlink:href="#path-1"></use>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
