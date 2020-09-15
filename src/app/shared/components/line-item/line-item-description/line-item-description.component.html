@@ -1,16 +1,16 @@
-<ng-container *ngIf="pli && pli.product">
+<ng-container *ngIf="pli && product">
   <!-- Product ID -->
-  <camfil-product-id [product]="pli.product"></camfil-product-id>
+  <camfil-product-id [product]="product"></camfil-product-id>
 
   <!-- Product Variations -->
   <ish-product-variation-display
-    *ngIf="isVariationProduct(pli.product)"
-    [product]="pli.product"
+    *ngIf="isVariationProduct(product)"
+    [product]="product"
   ></ish-product-variation-display>
   <!-- Product Bundles -->
   <ish-product-bundle-display
-    *ngIf="isBundleProduct(pli.product)"
-    [productBundleSKU]="pli.product.sku"
+    *ngIf="isBundleProduct(product)"
+    [productBundleSKU]="product.sku"
   ></ish-product-bundle-display>
 
   <!-- switch by lineItemViewType -->
@@ -20,7 +20,7 @@
 
     <!-- lineItemViewType = 'availability' -->
     <ng-container *ngSwitchCase="'availability'">
-      <camfil-product-inventory [product]="pli.product"></camfil-product-inventory>
+      <camfil-product-inventory [product]="product"></camfil-product-inventory>
     </ng-container>
 
     <!-- default lineItemViewType -->
@@ -29,15 +29,16 @@
       <ish-line-item-edit
         *ishNotFeature="'advancedVariationHandling'"
         [lineItem]="pli"
+        [product]="product"
         [editable]="editable"
         (updateItem)="onUpdateItem($event)"
       ></ish-line-item-edit>
 
       <!-- availability -->
-      <camfil-product-inventory [product]="pli.product"></camfil-product-inventory>
+      <camfil-product-inventory [product]="product"></camfil-product-inventory>
 
       <!-- ship window message -->
-      <camfil-product-shipment [product]="pli.product"></camfil-product-shipment>
+      <camfil-product-shipment [product]="product"></camfil-product-shipment>
 
       <!-- surcharges -->
       <div *ngFor="let surcharge of pli.itemSurcharges">

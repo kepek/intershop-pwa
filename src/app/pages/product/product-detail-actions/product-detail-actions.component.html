@@ -3,10 +3,10 @@
     <ul class="share-tools">
       <ng-container *ishFeature="'wishlists'">
         <li class="d-none d-md-block mt-1 mr-2" [attr.data-testing-id]="'wishlist-' + product.sku">
-          <camfil-lazy-product-add-to-wishlist
+          <ish-lazy-product-add-to-wishlist
             [product]="product"
             displayType="animated"
-          ></camfil-lazy-product-add-to-wishlist>
+          ></ish-lazy-product-add-to-wishlist>
         </li>
       </ng-container>
       <ng-container *ishFeature="'compare'">
@@ -25,10 +25,10 @@
       <ng-template #standardInteractions>
         <ng-container *ishFeature="'wishlists'">
           <li class="d-none d-md-block mt-1 mr-2" [attr.data-testing-id]="'wishlist-' + product.sku">
-            <camfil-lazy-product-add-to-wishlist
+            <ish-lazy-product-add-to-wishlist
               [product]="product"
               displayType="animated"
-            ></camfil-lazy-product-add-to-wishlist>
+            ></ish-lazy-product-add-to-wishlist>
           </li>
         </ng-container>
         <ng-container *ishFeature="'compare'">

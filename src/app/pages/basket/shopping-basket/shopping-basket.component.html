@@ -37,12 +37,12 @@
         ></ish-line-item-list>
 
         <div class="cart-button-group">
-          <camfil-lazy-basket-add-to-quote></camfil-lazy-basket-add-to-quote>
-          <camfil-lazy-basket-create-order-template
+          <ish-lazy-basket-add-to-quote></ish-lazy-basket-add-to-quote>
+          <ish-lazy-product-add-to-order-template
             *ngIf="basket"
             [class]="'btn btn-default'"
-            [products]="basket.lineItems"
-          ></camfil-lazy-basket-create-order-template>
+            [product]="basket.lineItems"
+          ></ish-lazy-product-add-to-order-template>
         </div>
         <a routerLink="/home" class="text-nowrap btn btn-link">{{
           'shopping_cart.detailed.continue_shopping.link' | translate

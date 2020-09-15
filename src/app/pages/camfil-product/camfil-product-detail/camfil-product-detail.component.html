@@ -74,18 +74,18 @@
           (productToBasket)="addToBasket()"
         ></camfil-product-add-to-basket>
 
-        <camfil-lazy-product-add-to-order-template
+        <ish-lazy-product-add-to-order-template
           [class]="'btn btn-default btn-block'"
           [product]="product"
           [quantity]="quantity"
-        ></camfil-lazy-product-add-to-order-template>
+        ></ish-lazy-product-add-to-order-template>
 
-        <camfil-lazy-product-add-to-quote
+        <ish-lazy-product-add-to-quote
           [product]="product"
           [disabled]="productDetailForm.invalid"
           [quantity]="quantity"
           [class]="'btn-block'"
-        ></camfil-lazy-product-add-to-quote>
+        ></ish-lazy-product-add-to-quote>
       </form>
     </div>
 

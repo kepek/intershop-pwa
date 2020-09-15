@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
-import { NgbCollapseModule, NgbDropdownModule, NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbCollapseModule, NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 import { DeferLoadModule } from '@trademe/ng-defer-load';
 import { IconModule as CamfilIconModule } from 'camfil-shared/icon/icon.module';
@@ -79,7 +79,6 @@ const exportedComponents = [
     MaterialModule,
     NgbCollapseModule,
     NgbDropdownModule,
-    NgbModalModule,
     PipesModule.forRoot(),
     RouterModule,
     TranslateModule,
