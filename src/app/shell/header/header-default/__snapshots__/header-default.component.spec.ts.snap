@@ -3,7 +3,7 @@
 exports[`Header Default Component should render normal header adequately for desktop 1`] = `
 <div class="header container desktop" ng-reflect-ng-class="desktop">
   <ul class="user-links">
-    <li><ish-login-status data-testing-id="user-status-desktop"></ish-login-status></li>
+    <li><camfil-login-status data-testing-id="user-status-desktop"></camfil-login-status></li>
     <li class="d-none d-md-block">
       <camfil-product-compare-status
         data-testing-id="compare-status-desktop"
@@ -13,21 +13,17 @@ exports[`Header Default Component should render normal header adequately for des
   <div class="header-utility">
     <a class="search-toggler"></a>
     <div class="language-switch-container d-none d-md-block">
-      <ish-language-switch data-testing-id="language-switch-desktop"></ish-language-switch>
+      <camfil-language-switch data-testing-id="language-switch-desktop"></camfil-language-switch>
     </div>
     <camfil-mini-basket
       class="d-none d-md-block"
       data-testing-id="mini-basket-desktop"
-      view="full"
       ng-reflect-ng-class="d-md-block"
-      ng-reflect-view="full"
     ></camfil-mini-basket
     ><camfil-mini-basket
       data-testing-id="mini-basket-mobile"
-      view="small"
       class="d-md-none"
       ng-reflect-ng-class="d-md-none"
-      ng-reflect-view="small"
     ></camfil-mini-basket>
   </div>
   <div class="row align-items-center">
@@ -59,7 +55,7 @@ exports[`Header Default Component should render normal header adequately for des
   <div class="global-nav-container">
     <nav class="global-nav navbar-expand-md" ng-reflect-collapsed="false">
       <div class="main-navigation" role="navigation">
-        <ish-header-navigation></ish-header-navigation
+        <camfil-header-navigation></camfil-header-navigation
         ><ish-user-information-mobile></ish-user-information-mobile>
       </div>
     </nav>
@@ -82,22 +78,18 @@ exports[`Header Default Component should render normal header adequately for mob
         <camfil-search-box data-testing-id="search-box-desktop"></camfil-search-box></div
     ></a>
     <div class="language-switch-container d-none d-md-block">
-      <ish-language-switch data-testing-id="language-switch-desktop"></ish-language-switch>
+      <camfil-language-switch data-testing-id="language-switch-desktop"></camfil-language-switch>
     </div>
-    <ish-login-status view="small" ng-reflect-view="small"></ish-login-status
+    <camfil-login-status view="small" ng-reflect-view="small"></camfil-login-status
     ><camfil-mini-basket
       class="d-none d-md-block"
       data-testing-id="mini-basket-desktop"
-      view="full"
       ng-reflect-ng-class="d-md-block"
-      ng-reflect-view="full"
     ></camfil-mini-basket
     ><camfil-mini-basket
       data-testing-id="mini-basket-mobile"
-      view="small"
       class="d-md-none"
       ng-reflect-ng-class="d-md-none"
-      ng-reflect-view="small"
     ></camfil-mini-basket>
   </div>
   <div class="row align-items-center">
@@ -125,7 +117,7 @@ exports[`Header Default Component should render normal header adequately for mob
   <div class="global-nav-container">
     <nav class="global-nav navbar-expand-md" ng-reflect-collapsed="true">
       <div class="main-navigation" role="navigation">
-        <ish-header-navigation></ish-header-navigation
+        <camfil-header-navigation></camfil-header-navigation
         ><ish-user-information-mobile></ish-user-information-mobile>
       </div>
     </nav>
@@ -136,7 +128,7 @@ exports[`Header Default Component should render normal header adequately for mob
 exports[`Header Default Component should render normal header adequately for tablet devices 1`] = `
 <div class="header container tablet" ng-reflect-ng-class="tablet">
   <ul class="user-links">
-    <li><ish-login-status data-testing-id="user-status-desktop"></ish-login-status></li>
+    <li><camfil-login-status data-testing-id="user-status-desktop"></camfil-login-status></li>
     <li class="d-none d-md-block">
       <camfil-product-compare-status
         data-testing-id="compare-status-desktop"
@@ -146,21 +138,17 @@ exports[`Header Default Component should render normal header adequately for tab
   <div class="header-utility">
     <a class="search-toggler"></a>
     <div class="language-switch-container d-none d-md-block">
-      <ish-language-switch data-testing-id="language-switch-desktop"></ish-language-switch>
+      <camfil-language-switch data-testing-id="language-switch-desktop"></camfil-language-switch>
     </div>
     <camfil-mini-basket
       class="d-none d-md-block"
       data-testing-id="mini-basket-desktop"
-      view="full"
       ng-reflect-ng-class="d-md-block"
-      ng-reflect-view="full"
     ></camfil-mini-basket
     ><camfil-mini-basket
       data-testing-id="mini-basket-mobile"
-      view="small"
       class="d-md-none"
       ng-reflect-ng-class="d-md-none"
-      ng-reflect-view="small"
     ></camfil-mini-basket>
   </div>
   <div class="row align-items-center">
@@ -192,7 +180,7 @@ exports[`Header Default Component should render normal header adequately for tab
   <div class="global-nav-container">
     <nav class="global-nav navbar-expand-md" ng-reflect-collapsed="false">
       <div class="main-navigation" role="navigation">
-        <ish-header-navigation></ish-header-navigation
+        <camfil-header-navigation></camfil-header-navigation
         ><ish-user-information-mobile></ish-user-information-mobile>
       </div>
     </nav>
@@ -209,20 +197,16 @@ exports[`Header Default Component should render sticky header adequately for des
         <camfil-search-box data-testing-id="search-box-desktop"></camfil-search-box></div
     ></a>
     <div class="language-switch-container d-none d-md-block"></div>
-    <ish-login-status view="small" ng-reflect-view="small"></ish-login-status
+    <camfil-login-status view="small" ng-reflect-view="small"></camfil-login-status
     ><camfil-mini-basket
       class="d-none d-lg-block"
       data-testing-id="mini-basket-desktop"
-      view="full"
       ng-reflect-ng-class="d-lg-block"
-      ng-reflect-view="full"
     ></camfil-mini-basket
     ><camfil-mini-basket
       data-testing-id="mini-basket-mobile"
-      view="small"
       class="d-lg-none"
       ng-reflect-ng-class="d-lg-none"
-      ng-reflect-view="small"
     ></camfil-mini-basket>
   </div>
   <div class="row align-items-center">
@@ -250,7 +234,7 @@ exports[`Header Default Component should render sticky header adequately for des
   <div class="global-nav-container">
     <nav class="global-nav navbar-expand-md" ng-reflect-collapsed="false">
       <div class="main-navigation" role="navigation">
-        <ish-header-navigation></ish-header-navigation
+        <camfil-header-navigation></camfil-header-navigation
         ><ish-user-information-mobile></ish-user-information-mobile>
       </div>
     </nav>
@@ -267,20 +251,16 @@ exports[`Header Default Component should render sticky header adequately for mob
         <camfil-search-box data-testing-id="search-box-desktop"></camfil-search-box></div
     ></a>
     <div class="language-switch-container d-none d-md-block"></div>
-    <ish-login-status view="small" ng-reflect-view="small"></ish-login-status
+    <camfil-login-status view="small" ng-reflect-view="small"></camfil-login-status
     ><camfil-mini-basket
       class="d-none d-lg-block"
       data-testing-id="mini-basket-desktop"
-      view="full"
       ng-reflect-ng-class="d-lg-block"
-      ng-reflect-view="full"
     ></camfil-mini-basket
     ><camfil-mini-basket
       data-testing-id="mini-basket-mobile"
-      view="small"
       class="d-lg-none"
       ng-reflect-ng-class="d-lg-none"
-      ng-reflect-view="small"
     ></camfil-mini-basket>
   </div>
   <div class="row align-items-center">
@@ -308,7 +288,7 @@ exports[`Header Default Component should render sticky header adequately for mob
   <div class="global-nav-container">
     <nav class="global-nav navbar-expand-md" ng-reflect-collapsed="true">
       <div class="main-navigation" role="navigation">
-        <ish-header-navigation></ish-header-navigation
+        <camfil-header-navigation></camfil-header-navigation
         ><ish-user-information-mobile></ish-user-information-mobile>
       </div>
     </nav>
@@ -325,20 +305,16 @@ exports[`Header Default Component should render sticky header adequately for tab
         <camfil-search-box data-testing-id="search-box-desktop"></camfil-search-box></div
     ></a>
     <div class="language-switch-container d-none d-md-block"></div>
-    <ish-login-status view="small" ng-reflect-view="small"></ish-login-status
+    <camfil-login-status view="small" ng-reflect-view="small"></camfil-login-status
     ><camfil-mini-basket
       class="d-none d-lg-block"
       data-testing-id="mini-basket-desktop"
-      view="full"
       ng-reflect-ng-class="d-lg-block"
-      ng-reflect-view="full"
     ></camfil-mini-basket
     ><camfil-mini-basket
       data-testing-id="mini-basket-mobile"
-      view="small"
       class="d-lg-none"
       ng-reflect-ng-class="d-lg-none"
-      ng-reflect-view="small"
     ></camfil-mini-basket>
   </div>
   <div class="row align-items-center">
@@ -366,7 +342,7 @@ exports[`Header Default Component should render sticky header adequately for tab
   <div class="global-nav-container">
     <nav class="global-nav navbar-expand-md" ng-reflect-collapsed="true">
       <div class="main-navigation" role="navigation">
-        <ish-header-navigation></ish-header-navigation
+        <camfil-header-navigation></camfil-header-navigation
         ><ish-user-information-mobile></ish-user-information-mobile>
       </div>
     </nav>

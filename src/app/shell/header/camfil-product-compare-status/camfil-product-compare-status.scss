@@ -1,14 +1,22 @@
 @import '~src/styles/themes/camfil/colors.scss';
+@import '~src/styles/themes/camfil/variables.scss';
 
 .compare-status {
   display: flex;
   color: $grey79;
+
+  @media (max-width: $screen-sm-max) {
+    padding: 0 $space-box / 2;
+    color: $greyCC;
+  }
+
   .badge {
     position: static;
     width: 24px;
     height: 24px;
-    margin-right: 6px;
-    font-size: 14px;
+    margin-right: $space-box / 2;
+    font-size: $font-size-base;
+    line-height: 1.2;
     color: $grey79;
     background: $greyCC;
   }

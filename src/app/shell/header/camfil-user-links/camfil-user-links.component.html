@@ -1,0 +1,20 @@
+<ul class="user-links">
+  <li class="dropdown" *ngIf="closedLangList">
+    <a>Webshop</a>
+  </li>
+  <li class="link-languages" *ngIf="deviceType === 'mobile'">
+    <camfil-language-switch
+      (isClosedLangList)="toggleLang($event)"
+      view="{{ deviceType === 'mobile' ? 'onMobile' : 'onMobile' }}"
+      data-testing-id="language-switch-desktop"
+    ></camfil-language-switch>
+  </li>
+
+  <!-- TODO: when BE do it -->
+  <ng-container *ngIf="closedLangList">
+    <li><a>Customer support</a></li>
+    <li><a>Filter guide</a></li>
+    <li><a>Top link 3</a></li>
+    <li><a>Next link</a></li>
+  </ng-container>
+</ul>

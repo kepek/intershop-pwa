@@ -1,0 +1,38 @@
+<ul class="navbar-nav main-navigation-list">
+  <ng-container *ngTemplateOutlet="categoryTemplate"></ng-container>
+</ul>
+<!--- Category Template -->
+<ng-template #categoryTemplate>
+  <ng-container *ngFor="let category of categories$ | async">
+    <li
+      *ngIf="isOpenCat(category.uniqueId)"
+      #submenu
+      class="dropdown"
+      [ngClass]="{ open: isOpened(category.uniqueId) }"
+      (mouseover)="subMenuShow(submenu)"
+      (mouseleave)="subMenuHide(submenu)"
+      (click)="subMenuHide(submenu)"
+    >
+      <a
+        [routerLink]="category.url"
+        [attr.data-testing-id]="category.uniqueId + '-link'"
+        [ngStyle]="{ width: !category.hasChildren ? '100%' : '' }"
+      >
+        {{ category.name }}
+      </a>
+      <ng-container *ngIf="category.hasChildren">
+        <a class="dropdown-toggle" (click)="toggleOpen(category.uniqueId)">
+          <mat-icon>arrow_{{ isOpened(category.uniqueId) ? 'left' : 'right' }}</mat-icon>
+        </a>
+        <ish-sub-category-navigation
+          [categoryUniqueId]="category.uniqueId"
+          [subCategoriesDepth]="1"
+          [view]="view"
+        ></ish-sub-category-navigation>
+      </ng-container>
+    </li>
+  </ng-container>
+  <li *ngIf="isOpenCat('0')">
+    <a [routerLink]="['/my-camcards']">{{ 'camfil.navigation.camcards.text' | translate }}</a>
+  </li>
+</ng-template>

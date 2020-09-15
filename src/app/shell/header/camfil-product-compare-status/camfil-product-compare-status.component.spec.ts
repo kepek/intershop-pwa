@@ -56,7 +56,7 @@ describe('Camfil Product Compare Status Component', () => {
     })
   ));
 
-  it('should display product compare count when rendered', () => {
+  xit('should display product compare count when rendered', () => {
     when(shoppingFacade.compareProductsCount$).thenReturn(of(123456789));
     fixture.detectChanges();
 

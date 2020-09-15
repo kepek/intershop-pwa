@@ -1,0 +1,86 @@
+@import '~src/styles/themes/camfil/colors.scss';
+@import '~src/styles/themes/camfil/mixins.scss';
+@import '~src/styles/themes/camfil/variables.scss';
+
+:host {
+  .main-navigation-list {
+    border-top: 1px solid $greyEF;
+
+    .sticky-header & {
+      > li {
+        &.dropdown {
+          line-height: $top-header-height;
+        }
+      }
+
+      @media (min-width: $screen-md-min) {
+        padding-left: $space-default;
+        border-color: $color-inverse;
+      }
+    }
+
+    > li:last-child {
+      // My CamCards link
+      @media (min-width: $screen-md-min) {
+        padding-left: $space-default;
+        margin-left: $space-default - 10;
+
+        @include nav-back-separator('left', $primary);
+      }
+    }
+
+    a {
+      font-size: 14px;
+      font-weight: 600;
+      color: $camfil-color-primary;
+      text-transform: none;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    @media (max-width: $screen-sm-max) {
+      ::ng-deep {
+        .sticky-header .global-nav-container & {
+          li {
+            overflow: hidden;
+            background: $white;
+            border-top: 1px solid $greyEF;
+
+            &.open {
+              margin: 2px 0;
+
+              > a:first-child {
+                @include nav-back-separator('right');
+              }
+
+              &:not(.main-navigation-level1-item) {
+                > a:first-child {
+                  float: right;
+                  font-size: $font-size-lg;
+                  color: $camfil-text-color-primary;
+
+                  @include nav-back-separator('left');
+                }
+              }
+            }
+            > a,
+            .dropdown-toggle {
+              padding: 0 $space-default !important;
+              line-height: $top-header-height;
+              color: $link-color;
+              background: transparent;
+              border: none;
+
+              .mat-icon {
+                vertical-align: middle;
+              }
+            }
+            ul ul {
+              padding-left: $space-default;
+            }
+          }
+        }
+      }
+    }
+  }
+}

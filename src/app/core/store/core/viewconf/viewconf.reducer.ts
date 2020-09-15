@@ -1,17 +1,23 @@
 import { createReducer, on } from '@ngrx/store';
 
 import { BreadcrumbItem } from 'ish-core/models/breadcrumb-item/breadcrumb-item.interface';
+import { ScrollInfo } from 'ish-core/models/scroll-info/scroll-info.interface';
 
-import { setBreadcrumbData, setStickyHeader } from './viewconf.actions';
+import { setBreadcrumbData, setScroll, setStickyHeader } from './viewconf.actions';
 
 export interface ViewconfState {
   breadcrumbData: BreadcrumbItem[];
   stickyHeader: boolean;
+  scroll: ScrollInfo;
 }
 
 export const initialState: ViewconfState = {
   breadcrumbData: [],
   stickyHeader: false,
+  scroll: {
+    position: 0,
+    isDown: false,
+  },
 };
 
 export const viewconfReducer = createReducer(
@@ -23,5 +29,9 @@ export const viewconfReducer = createReducer(
   on(setStickyHeader, (state: ViewconfState, action) => ({
     ...state,
     stickyHeader: action.payload.sticky,
+  })),
+  on(setScroll, (state: ViewconfState, action) => ({
+    ...state,
+    scroll: { position: action.payload.position, isDown: action.payload.isDown },
   }))
 );

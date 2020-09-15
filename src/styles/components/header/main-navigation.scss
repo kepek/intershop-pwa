@@ -250,6 +250,6 @@
   }
 }
 
-@include media-breakpoint-down(sm) {
+@media (max-width: $screen-xs-max) {
   @include mobile-navigation;
 }

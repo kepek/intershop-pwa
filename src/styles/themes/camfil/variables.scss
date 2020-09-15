@@ -9,12 +9,12 @@
 //
 // LOGOS
 
-$logo: url('/assets/themes/camfil/img/logo.png');
-$logo-width: 329px;
-$logo-height: 97px;
-$logo-mobile: url('/assets/themes/camfil/img/logo_mobile.png');
-$logo-mobile-width: 41px;
-$logo-mobile-height: 41px;
+$logo: url('/assets/themes/camfil/img/camfil-logo.svg');
+$logo-width: 200px;
+$logo-height: 100px;
+$logo-mobile: url('/assets/themes/camfil/img/camfil-logo.svg');
+$logo-mobile-width: 120px;
+$logo-mobile-height: 32px;
 
 // General variables
 $cover-index: 5;
@@ -30,6 +30,7 @@ $font-family-regular: 'robotoregular', 'Helvetica', 'Arial', sans-serif;
 $font-family-bold: 'robotobold', 'Helvetica', 'Arial', sans-serif;
 $font-family-condensedregular: 'roboto_condensedregular', 'Helvetica Neue', helvetica, 'Arial', sans-serif;
 $font-family-condensedbold: 'roboto_condensedbold', 'Helvetica Neue', helvetica, 'Arial', sans-serif;
+$font-family-SansPro: 'Source Sans Pro', sans-serif;
 // stylelint-enable value-keyword-case
 
 //
@@ -116,6 +117,7 @@ $toggler-width: 64px;
 
 // Header
 $top-header-height: 40px;
+$top-header-height-mobile: 32px;
 $header-height-mobile: 55px;
 $header-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 2px 1px -1px rgba(0, 0, 0, 0.12), 0 1px 3px 0 rgba(0, 0, 0, 0.2);
 
@@ -131,6 +133,8 @@ $font-size-navbar-item-mobile: $font-size-corporate * 1.14; // ~16px
 $font-size-menu-item-mobile: $font-size-corporate; // ~14px
 $font-size-sub-menu-item-mobile: $font-size-corporate; // ~14px
 
+$navbar-shadow: 2px 1px 4px 0 rgba(0, 0, 0, 0.17);
+$navbar-shadow-mobile: 2px 1px 4px 0 rgba(0, 0, 0, 0.17);
 $sidebar-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.37);
 
 // filter
@@ -244,12 +248,40 @@ $dropdown-border-color: rgba(0, 0, 0, 0.15);
 // adapting to different screen sizes, for use in media queries.
 
 $grid-breakpoints: (
-  xs: 0,
+  xxs: 0,
+  xs: 360px,
   sm: 576px,
   md: 768px,
   lg: 1200px,
   xl: 1480px,
 );
+
+// Override breakpoints max / min
+//
+// X Small screen
+$screen-xs: map-get($grid-breakpoints, 'xs');
+
+// Small screen / tablet
+$screen-sm: map-get($grid-breakpoints, 'sm');
+$screen-sm-min: $screen-sm;
+
+// Medium screen / desktop
+$screen-md: map-get($grid-breakpoints, 'md');
+$screen-md-min: $screen-md;
+
+// Large screen / wide desktop
+$screen-lg: map-get($grid-breakpoints, 'lg');
+$screen-lg-min: $screen-lg;
+
+// X Large screen / wide desktop
+$screen-xl: map-get($grid-breakpoints, 'xl');
+$screen-xl-min: $screen-xl;
+
+// So media queries don't overlap when required, provide a maximum
+$screen-xs-max: ($screen-sm-min - 1);
+$screen-sm-max: ($screen-md-min - 1);
+$screen-md-max: ($screen-lg-min - 1);
+$screen-lg-max: ($screen-xl-min - 1);
 
 // Grid columns
 // Set the number of columns and specify the width of the gutters.

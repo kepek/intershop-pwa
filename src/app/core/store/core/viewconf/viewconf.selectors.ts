@@ -22,3 +22,5 @@ export const isStickyHeader = createSelector(
   getHeaderType,
   (state, headerType) => state.stickyHeader && !headerType
 );
+
+export const getScroll = createSelector(getViewconfState, state => state.scroll);

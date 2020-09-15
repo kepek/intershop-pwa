@@ -1,11 +1,13 @@
 <div class="container user-info-box">
   <div class="user-info-box-item">{{ 'header.welcome.text' | translate }}</div>
-  <div class="user-info-box-item"><ish-login-status view="full"></ish-login-status></div>
+  <div class="user-info-box-item"><camfil-login-status view="full"></camfil-login-status></div>
   <div *ishFeature="'compare'" class="user-info-box-item">
-    <camfil-product-compare-status view="full"></camfil-product-compare-status>
+    <camfil-product-compare-status></camfil-product-compare-status>
   </div>
   <div *ishFeature="'wishlists'" class="user-info-box-item">
     <camfil-lazy-wishlists-link view="full"></camfil-lazy-wishlists-link>
   </div>
-  <div class="user-info-box-item"><ish-language-switch view="accordion" placement="up"></ish-language-switch></div>
+  <div class="user-info-box-item">
+    <camfil-language-switch view="accordion" placement="up"></camfil-language-switch>
+  </div>
 </div>

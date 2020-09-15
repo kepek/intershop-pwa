@@ -259,8 +259,8 @@ $grid-gutter-width: 30px;
 // to work well with our breakpoints the value for 'sm' needs to be the width of the next breakpoint
 // and the value of 'md' needs to be larger than the one for 'sm'
 $container-max-widths: (
-  sm: 768px,
-  md: 770px,
+  sm: map-get($grid-breakpoints, sm) - $grid-gutter-width,
+  md: map-get($grid-breakpoints, md) - $grid-gutter-width,
   lg: map-get($grid-breakpoints, lg) - $grid-gutter-width,
   xl: map-get($grid-breakpoints, xl) - $grid-gutter-width,
 );

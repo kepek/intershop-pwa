@@ -14,7 +14,7 @@
 <div class="header container" [ngClass]="deviceType">
   <ul *ngIf="!isSticky" class="user-links">
     <li *ngIf="!isSticky && deviceType !== 'mobile'">
-      <ish-login-status data-testing-id="user-status-desktop"></ish-login-status>
+      <camfil-login-status data-testing-id="user-status-desktop"></camfil-login-status>
     </li>
     <li *ishFeature="'compare'" class="d-none d-md-block">
       <camfil-product-compare-status data-testing-id="compare-status-desktop"> </camfil-product-compare-status>
@@ -37,19 +37,17 @@
       </div>
     </a>
     <div class="language-switch-container d-none d-md-block">
-      <ish-language-switch *ngIf="!isSticky" data-testing-id="language-switch-desktop"> </ish-language-switch>
+      <camfil-language-switch *ngIf="!isSticky" data-testing-id="language-switch-desktop"> </camfil-language-switch>
     </div>
-    <ish-login-status *ngIf="isSticky || deviceType === 'mobile'" view="small"></ish-login-status>
+    <camfil-login-status *ngIf="isSticky || deviceType === 'mobile'" view="small"></camfil-login-status>
 
     <camfil-mini-basket
       data-testing-id="mini-basket-desktop"
-      view="full"
       class="d-none"
       [ngClass]="isSticky ? 'd-lg-block' : 'd-md-block'"
     ></camfil-mini-basket>
     <camfil-mini-basket
       data-testing-id="mini-basket-mobile"
-      view="small"
       [ngClass]="isSticky ? 'd-lg-none' : 'd-md-none'"
     ></camfil-mini-basket>
   </div>
@@ -93,7 +91,7 @@
   <div class="global-nav-container">
     <nav class="global-nav navbar-expand-md" [ngbCollapse]="!showNavBar">
       <div class="main-navigation" role="navigation">
-        <ish-header-navigation></ish-header-navigation>
+        <camfil-header-navigation></camfil-header-navigation>
         <ish-user-information-mobile></ish-user-information-mobile>
       </div>
     </nav>
