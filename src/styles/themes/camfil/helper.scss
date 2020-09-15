@@ -21,3 +21,19 @@
     background-color: $CORPORATE-PRIMARY;
   }
 }
+
+.headline {
+  text-transform: uppercase;
+  border-bottom: 1px solid $primary;
+}
+
+.half-gutters {
+  margin-right: $space-default-half * -1;
+  margin-left: $space-default-half * -1;
+
+  > .col,
+  > [class*='col-'] {
+    padding-right: $space-default-half;
+    padding-left: $space-default-half;
+  }
+}
