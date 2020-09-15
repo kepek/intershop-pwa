@@ -36,6 +36,7 @@ import { RetailSetPartsComponent } from '../product/retail-set-parts/retail-set-
 
 import { CamfilProductAttributesPreviewComponent } from './camfil-product-attributes-preview/camfil-product-attributes-preview.component';
 import { CamfilProductDetailComponent } from './camfil-product-detail/camfil-product-detail.component';
+import { CamfilProductGuidesComponent } from './camfil-product-guides/camfil-product-guides.component';
 import { CamfilProductImagesComponent } from './camfil-product-images/camfil-product-images.component';
 import { CamfilProductPageComponent } from './camfil-product-page.component';
 
@@ -63,6 +64,7 @@ describe('Camfil Product Page Component', () => {
         MockComponent(CamfilBreadcrumbComponent),
         MockComponent(CamfilProductAttributesPreviewComponent),
         MockComponent(CamfilProductDetailComponent),
+        MockComponent(CamfilProductGuidesComponent),
         MockComponent(CamfilProductImagesComponent),
         MockComponent(LoadingComponent),
         MockComponent(ProductBundlePartsComponent),

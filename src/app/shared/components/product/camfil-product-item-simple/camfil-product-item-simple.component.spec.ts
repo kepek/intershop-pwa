@@ -80,12 +80,15 @@ describe('Camfil Product Item Simple Component', () => {
   it('should render default elements when not specifically configured', () => {
     component.configuration = DEFAULT_CONFIGURATION;
     fixture.detectChanges();
-    expect(findAllIshElements(element)).toMatchInlineSnapshot(`Array []`);
+    expect(findAllIshElements(element)).toMatchInlineSnapshot(`
+      Array [
+        "ish-lazy-product-add-to-order-template",
+        "ish-lazy-product-add-to-quote",
+        "ish-lazy-product-add-to-wishlist",
+      ]
+    `);
     expect(findAllCamfilElements(element)).toMatchInlineSnapshot(`
       Array [
-        "camfil-lazy-product-add-to-order-template",
-        "camfil-lazy-product-add-to-quote",
-        "camfil-lazy-product-add-to-wishlist",
         "camfil-product-add-to-basket",
         "camfil-product-add-to-compare",
         "camfil-product-attribute",

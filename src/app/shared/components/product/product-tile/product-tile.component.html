@@ -43,12 +43,12 @@
   </ng-container>
 
   <div class="product-tile-actions btn-group">
-    <camfil-lazy-product-add-to-quote
+    <ish-lazy-product-add-to-quote
       *ngIf="configuration.displayAddToQuote && !isMasterProduct(product)"
       [product]="product"
       displayType="icon"
       class="btn-link"
-    ></camfil-lazy-product-add-to-quote>
+    ></ish-lazy-product-add-to-quote>
     <camfil-product-add-to-compare
       *ngIf="configuration.displayAddToCompare"
       [isInCompareList]="isInCompareList"
@@ -56,19 +56,19 @@
       class="btn-link"
       (compareToggle)="toggleCompare()"
     ></camfil-product-add-to-compare>
-    <camfil-lazy-product-add-to-order-template
+    <ish-lazy-product-add-to-order-template
       *ngIf="configuration.displayAddToOrderTemplate"
       [class]="'btn btn-link mr-0'"
       [product]="product"
       [quantity]="1"
       displayType="icon"
-    ></camfil-lazy-product-add-to-order-template>
-    <camfil-lazy-product-add-to-wishlist
+    ></ish-lazy-product-add-to-order-template>
+    <ish-lazy-product-add-to-wishlist
       *ngIf="configuration.displayAddToWishlist"
       class="btn-link"
       [product]="product"
       displayType="icon"
-    ></camfil-lazy-product-add-to-wishlist>
+    ></ish-lazy-product-add-to-wishlist>
     <camfil-product-add-to-basket
       *ngIf="configuration.displayAddToBasket && !isMasterProduct(product)"
       [product]="product"

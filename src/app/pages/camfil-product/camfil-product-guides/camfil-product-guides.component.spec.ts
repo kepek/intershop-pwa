@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 
 import { CamfilProductGuidesComponent } from './camfil-product-guides.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('Camfil Product Guides Component', () => {
   let component: CamfilProductGuidesComponent;
@@ -10,6 +11,7 @@ describe('Camfil Product Guides Component', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [CamfilProductGuidesComponent],
+      imports: [TranslateModule.forRoot()],
     }).compileComponents();
   }));
 

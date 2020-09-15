@@ -39,9 +39,7 @@ exports[`Header Default Component should render normal header adequately for des
         ></a>
       </div>
     </div>
-    <div class="col-md-5 text-right">
-      <camfil-lazy-header-quickorder></camfil-lazy-header-quickorder>
-    </div>
+    <div class="col-md-5 text-right"><ish-lazy-header-quickorder></ish-lazy-header-quickorder></div>
     <div class="col-md-4">
       <div class="search-container header-search-container">
         <camfil-search-box data-testing-id="search-box-desktop"></camfil-search-box>
@@ -105,9 +103,7 @@ exports[`Header Default Component should render normal header adequately for mob
         ></a>
       </div>
     </div>
-    <div class="col-md-5 text-right">
-      <camfil-lazy-header-quickorder></camfil-lazy-header-quickorder>
-    </div>
+    <div class="col-md-5 text-right"><ish-lazy-header-quickorder></ish-lazy-header-quickorder></div>
     <div class="col-md-4"></div>
   </div>
   <button class="navbar-toggler" type="button">
@@ -164,9 +160,7 @@ exports[`Header Default Component should render normal header adequately for tab
         ></a>
       </div>
     </div>
-    <div class="col-md-5 text-right">
-      <camfil-lazy-header-quickorder></camfil-lazy-header-quickorder>
-    </div>
+    <div class="col-md-5 text-right"><ish-lazy-header-quickorder></ish-lazy-header-quickorder></div>
     <div class="col-md-4">
       <div class="search-container header-search-container">
         <camfil-search-box data-testing-id="search-box-desktop"></camfil-search-box>
@@ -222,9 +216,7 @@ exports[`Header Default Component should render sticky header adequately for des
         ></a>
       </div>
     </div>
-    <div class="col-md-5 text-right">
-      <camfil-lazy-header-quickorder></camfil-lazy-header-quickorder>
-    </div>
+    <div class="col-md-5 text-right"><ish-lazy-header-quickorder></ish-lazy-header-quickorder></div>
     <div class="col-md-4"></div>
   </div>
   <button class="navbar-toggler" type="button">
@@ -276,9 +268,7 @@ exports[`Header Default Component should render sticky header adequately for mob
         ></a>
       </div>
     </div>
-    <div class="col-md-5 text-right">
-      <camfil-lazy-header-quickorder></camfil-lazy-header-quickorder>
-    </div>
+    <div class="col-md-5 text-right"><ish-lazy-header-quickorder></ish-lazy-header-quickorder></div>
     <div class="col-md-4"></div>
   </div>
   <button class="navbar-toggler" type="button">
@@ -330,9 +320,7 @@ exports[`Header Default Component should render sticky header adequately for tab
         ></a>
       </div>
     </div>
-    <div class="col-md-5 text-right">
-      <camfil-lazy-header-quickorder></camfil-lazy-header-quickorder>
-    </div>
+    <div class="col-md-5 text-right"><ish-lazy-header-quickorder></ish-lazy-header-quickorder></div>
     <div class="col-md-4"></div>
   </div>
   <button class="navbar-toggler" type="button">

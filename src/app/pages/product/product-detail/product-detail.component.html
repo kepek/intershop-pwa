@@ -52,10 +52,10 @@
       ></camfil-product-variation-select>
 
       <ng-container *ishFeature="'tacton'; else standardInteractions">
-        <camfil-lazy-tacton-configure-product
+        <ish-lazy-tacton-configure-product
           *ishIsTactonProduct="product; else standardInteractions"
           [product]="product"
-        ></camfil-lazy-tacton-configure-product>
+        ></ish-lazy-tacton-configure-product>
       </ng-container>
 
       <ng-template #standardInteractions>
@@ -80,18 +80,18 @@
             (productToBasket)="addToBasket()"
           ></camfil-product-add-to-basket>
 
-          <camfil-lazy-product-add-to-order-template
+          <ish-lazy-product-add-to-order-template
             [class]="'btn btn-default btn-block'"
             [product]="product"
             [quantity]="quantity"
-          ></camfil-lazy-product-add-to-order-template>
+          ></ish-lazy-product-add-to-order-template>
 
-          <camfil-lazy-product-add-to-quote
+          <ish-lazy-product-add-to-quote
             [product]="product"
             [disabled]="productDetailForm.invalid"
             [quantity]="quantity"
             [class]="'btn-block'"
-          ></camfil-lazy-product-add-to-quote>
+          ></ish-lazy-product-add-to-quote>
         </form>
       </ng-template>
     </div>

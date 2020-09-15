@@ -1,9 +1,11 @@
 import {
   ChangeDetectionStrategy,
+  Compiler,
   Component,
-  ComponentFactoryResolver,
   ComponentRef,
+  Injector,
   Input,
+  NgModuleFactory,
   OnChanges,
   OnInit,
   ViewChild,
@@ -13,10 +15,8 @@ import {
 import { FeatureToggleService } from 'ish-core/feature-toggle.module';
 import { ProductView } from 'ish-core/models/product-view/product-view.model';
 
-import { TactonConfigureProductComponent } from '../../shared/tacton-configure-product/tacton-configure-product.component';
-
 @Component({
-  selector: 'camfil-lazy-tacton-configure-product',
+  selector: 'ish-lazy-tacton-configure-product',
   templateUrl: './lazy-tacton-configure-product.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -36,18 +36,33 @@ export class LazyTactonConfigureProductComponent implements OnInit, OnChanges {
   @Input() product: ProductView;
   @Input() displayType?: 'icon' | 'link' | 'list-button' = 'link';
 
-  private component: ComponentRef<TactonConfigureProductComponent>;
+  // tslint:disable-next-line: no-any
+  private component: ComponentRef<any>;
 
   constructor(
-    private componentFactoryResolver: ComponentFactoryResolver,
-    private featureToggleService: FeatureToggleService
+    private featureToggleService: FeatureToggleService,
+    private compiler: Compiler,
+    private injector: Injector
   ) {}
 
-  ngOnInit() {
+  async ngOnInit() {
     if (this.featureToggleService.enabled('tacton')) {
-      const factory = this.componentFactoryResolver.resolveComponentFactory(TactonConfigureProductComponent);
+      // prevent cyclic dependency warnings
+      const extension = 'tacton';
+      const moduleObj = await import(`../../${extension}.module`);
+      const module = moduleObj[Object.keys(moduleObj)[0]];
+
+      const { TactonConfigureProductComponent } = await import(
+        '../../shared/tacton-configure-product/tacton-configure-product.component'
+      );
+
+      const moduleFactory = await this.loadModuleFactory(module);
+      const moduleRef = moduleFactory.create(this.injector);
+      const factory = moduleRef.componentFactoryResolver.resolveComponentFactory(TactonConfigureProductComponent);
+
       this.component = this.anchor.createComponent(factory);
       this.ngOnChanges();
+      this.component.changeDetectorRef.markForCheck();
     }
   }
 
@@ -55,6 +70,14 @@ export class LazyTactonConfigureProductComponent implements OnInit, OnChanges {
     if (this.component) {
       this.component.instance.product = this.product;
       this.component.instance.displayType = this.displayType;
+    }
+  }
+
+  private async loadModuleFactory(t) {
+    if (t instanceof NgModuleFactory) {
+      return t;
+    } else {
+      return await this.compiler.compileModuleAsync(t);
     }
   }
 }
