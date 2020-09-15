@@ -1,7 +1,7 @@
 <!-- <ish-product-detail-actions [product]="product" (productToCompare)="addToCompare()"></ish-product-detail-actions> -->
 
 <div class="row product-details my-4">
-  <div class="col-12">
+  <div class="col-12 product-details-title">
     <h1>
       <span itemprop="name">{{ product.name }}</span>
     </h1>
@@ -111,18 +111,26 @@
   </div>
   <div class="col-12 col-md-4 col-lg-4 pt-3 product-accessories">
     <strong>Guides & Technical Documents</strong>
-    <ul>
-      <li><a>Document 1</a></li>
-      <li><a>Document 2</a></li>
-      <li><a>Document 3</a></li>
+    <ul class="product-details-guides">
+      <li>
+        <a><mat-icon svgIcon="pdf"></mat-icon> Technical specification</a>
+      </li>
+      <li>
+        <a><mat-icon svgIcon="pdf"></mat-icon> Broschure</a>
+      </li>
+      <li>
+        <a><mat-icon svgIcon="pdf"></mat-icon> Data sheet</a>
+      </li>
+      <li>
+        <a><mat-icon svgIcon="error" class="error"></mat-icon> How to measure a bag filter</a>
+      </li>
     </ul>
 
     <strong>Environmental Badges and Classifications</strong>
-    <ul>
-      <li>Milk</li>
-      <li>Bread</li>
-      <li>Chocolate</li>
-      <li>More chocolate</li>
+    <ul class="product-details-badges">
+      <li><img src="" /> Badge name</li>
+      <li><img src="" /> Badge name</li>
+      <li><img src="" /> Badge name</li>
     </ul>
   </div>
 </div>
