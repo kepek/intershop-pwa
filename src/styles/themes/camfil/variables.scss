@@ -215,6 +215,7 @@ $font-family-base: $font-family-regular;
 // TODO: round font size values
 $font-size-base: $font-size-corporate; // 14px is the bootstrap 3 default font size (1rem should be around 16px)
 $font-size-sm: $font-size-base * 0.85; // ~12px
+$font-size-xs: $font-size-base * 0.75; // ~10px
 $font-size-lg: $font-size-base * 1.1428; // ~16px
 
 $h1-font-size: $font-size-base * 2.15; // ~30px
@@ -335,6 +336,7 @@ $main-box-margin: 3px;
 
 // General spaces
 $space-default: $grid-gutter-width / 2;
+$space-default-half: $space-default / 2;
 $space-sm: $grid-gutter-width / 3;
 $space-box: 16px;
 

@@ -233,7 +233,7 @@ $altTheme: mat-dark-theme($theme-primary, $theme-accent, $theme-warn);
   line-height: 41.6px;
 }
 
-button {
+button, a {
   &.mat-raised-button,
   &.mat-stroked-button,
   &.mat-flat-button {
@@ -255,6 +255,9 @@ button {
   }
   .mat-chip & {
     margin-left: 5px;
+  }
+  a & {
+    vertical-align: middle;
   }
 
   // for custom camfil icons

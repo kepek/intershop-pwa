@@ -1,0 +1,31 @@
+@import '~src/styles/themes/camfil/colors';
+@import '~src/styles/themes/camfil/variables';
+
+:host {
+  article {
+    margin-bottom: $space-box;
+  }
+  img {
+    max-width: none;
+  }
+  .mat-card-subtitle {
+    margin-bottom: 0;
+    font-size: $font-size-xs;
+    font-weight: 600;
+  }
+  .mat-card-content {
+    padding-bottom: $space-box;
+    border-bottom: 1px solid #d7d7d7;
+  }
+  .mat-card-actions:last-child {
+    margin: $space-box 0 0;
+    a {
+      font-weight: 600;
+    }
+  }
+  ::ng-deep {
+    .mat-card-header-text {
+      margin: 0;
+    }
+  }
+}

@@ -1,0 +1,23 @@
+<h1 class="text-uppercase headline">{{ 'camfil.guide_article.headline' | translate }}</h1>
+<section class="row half-gutters">
+  <article *ngFor="let guide of guides" class="col-md-4">
+    <mat-card>
+      <a href="{{ guide.url }}">
+        <img mat-card-image src="{{ guide.img.url }}" alt="{{ guide.img.alt }}" />
+      </a>
+      <mat-card-header>
+        <mat-card-subtitle class="text-uppercase">{{ guide.tagName }}</mat-card-subtitle>
+        <mat-card-title>{{ guide.title }}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>{{ guide.content }}</p>
+      </mat-card-content>
+      <mat-card-actions class="text-right">
+        <a href="{{ guide.url }}" class="mat-stroked-button mat-primary">
+          <mat-icon>navigate_next</mat-icon>
+          {{ guide.moreText || 'camfil.guide_article.read_more.text' | translate }}
+        </a>
+      </mat-card-actions>
+    </mat-card>
+  </article>
+</section>
