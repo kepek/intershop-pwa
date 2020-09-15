@@ -10,6 +10,9 @@ strong {
 }
 
 .product-details {
+  @media (min-width: $screen-xl-min) {
+    padding: 0 60px;
+  }
   &-title {
     h1 {
       margin-bottom: 5px;
@@ -114,7 +117,11 @@ strong {
   .product-attributes {
     padding: ($space-default * 2) $space-default;
 
-    @media (min-width: map-get($grid-breakpoints, md)) {
+    @media (min-width: $screen-md-min) {
+      padding: 50px $space-default * 2;
+    }
+
+    @media (min-width: $screen-lg-min) {
       padding: 60px 135px;
     }
   }
@@ -138,7 +145,7 @@ strong {
 .product-accessories {
   margin: 1rem;
 
-  @media (min-width: map-get($grid-breakpoints, md)) {
+  @media (min-width: $screen-md-min) {
     margin: 0;
   }
 }
