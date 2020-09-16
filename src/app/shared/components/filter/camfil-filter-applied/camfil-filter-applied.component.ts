@@ -21,6 +21,10 @@ export class CamfilFilterAppliedComponent implements OnInit {
     this.applyFilter({ searchParameter: facet.searchParameter });
   }
 
+  disableAll() {
+    this.applyFilter({ searchParameter: {} });
+  }
+
   applyFilter(event: { searchParameter: URLFormParams }) {
     const params = formParamsToString(event.searchParameter);
     this.router.navigate([], {

@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { instance, mock } from 'ts-mockito';
 
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
@@ -10,11 +11,12 @@ describe('Camfil Filter Applied Component', () => {
   let component: CamfilFilterAppliedComponent;
   let fixture: ComponentFixture<CamfilFilterAppliedComponent>;
   let element: HTMLElement;
+  let translate: TranslateService;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [CamfilFilterAppliedComponent],
-      imports: [RouterTestingModule],
+      imports: [RouterTestingModule, TranslateModule.forRoot()],
       providers: [{ provide: ShoppingFacade, useFactory: () => instance(mock(ShoppingFacade)) }],
     }).compileComponents();
   }));
@@ -23,6 +25,9 @@ describe('Camfil Filter Applied Component', () => {
     fixture = TestBed.createComponent(CamfilFilterAppliedComponent);
     component = fixture.componentInstance;
     element = fixture.nativeElement;
+    translate = TestBed.inject(TranslateService);
+    translate.setDefaultLang('en');
+    translate.use('en');
   });
 
   it('should be created', () => {

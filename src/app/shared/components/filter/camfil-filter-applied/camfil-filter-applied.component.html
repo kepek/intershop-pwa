@@ -1,6 +1,10 @@
 <div class="row">
   <div class="col-12 applied-filters bg-primary">
     <mat-chip-list aria-label="Fish selection">
+      <mat-chip hip *ngIf="(filters$ | async)?.length >= 2"
+        >{{ 'camfil.navigation.filterClearAll.message' | translate }}
+        <mat-icon color="primary" (click)="disableAll()">cancel</mat-icon></mat-chip
+      >
       <ng-container *ngFor="let filter of filters$ | async">
         <mat-chip hip *ngFor="let facet of filter.picked"
           >{{ filter.name }} - {{ facet.displayName }}
