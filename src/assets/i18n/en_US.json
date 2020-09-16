@@ -1848,6 +1848,7 @@
   "intershop.SMBResponsive.Description": "The storefront application for Small and Medium B2B Customers.",
   "intershop.SMBResponsive.Name": "SMB - Responsive",
   "navigation.filterClearAll.message": "Todo: filter clear all",
+  "camfil.navigation.filterClearAll.message": "Clear all filters",
   "navigation.filterList.message": "Todo: filter list",
   "navigation.parentCategoryLink.link": "Back to {{0}}",
   "navigation.refine_your_selection.heading": "Refine Your Selection",
