@@ -1,0 +1,38 @@
+<ng-container *ngIf="size === 'normal'; else small">
+  <mat-card>
+    <a routerLink="/{{ getCategoryUrl(category) }}">
+      <mat-card-header>
+        <mat-card-title>{{ category.name }}</mat-card-title>
+      </mat-card-header>
+      <img mat-card-image *ngIf="category.images" src="{{ category.images[0].effectiveUrl }}" alt="" />
+      <mat-icon *ngIf="!category.images" svgIcon="logo" class="logo"></mat-icon>
+    </a>
+    <mat-card-content>
+      <p>
+        {{ category.description }}
+      </p>
+    </mat-card-content>
+    <mat-card-actions>
+      <a routerLink="/{{ getCategoryUrl(category) }}" class="mat-stroked-button mat-primary">
+        <mat-icon>navigate_next</mat-icon>
+        {{ 'camfil.guide_article.read_more.text' | translate }}
+      </a>
+    </mat-card-actions>
+  </mat-card>
+</ng-container>
+
+<ng-template #small>
+  <mat-card>
+    <a routerLink="/{{ getCategoryUrl(category) }}" class="d-flex align-items-center">
+      <figure>
+        <img *ngIf="category.images" src="{{ category.images[0].effectiveUrl }}" alt="" />
+        <mat-icon *ngIf="!category.images" svgIcon="logo" class="logo"></mat-icon>
+      </figure>
+      <strong>
+        {{ category.name }}<br />
+        <small class="text-muted">{{ category.description | slice: 0:40 }}</small>
+      </strong>
+      <mat-icon svgIcon="chevron-right-fab" class=""></mat-icon>
+    </a>
+  </mat-card>
+</ng-template>

@@ -7,6 +7,7 @@ import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
 @Component({
   selector: 'camfil-category-categories',
   templateUrl: './camfil-category-categories.component.html',
+  styleUrls: ['./camfil-category-categories.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CamfilCategoryCategoriesComponent implements OnInit, OnChanges {

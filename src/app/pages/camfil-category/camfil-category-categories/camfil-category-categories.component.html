@@ -4,6 +4,11 @@
       <camfil-breadcrumb></camfil-breadcrumb>
     </div>
   </div>
+  <ng-container *ngIf="category.uniqueId === 'Computers'">
+    <h1 class="landing__banner display-4">{{ 'camfil.category_landing.baner.text' | translate }}</h1>
+    <camfil-category-boxes></camfil-category-boxes>
+  </ng-container>
+
   <div class="row no-gutters">
     <aside class="col-md-3 sidebar">
       <div class="sidebar--container">

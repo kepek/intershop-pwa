@@ -21,6 +21,8 @@ import {
   loadTopLevelCategories,
   loadTopLevelCategoriesFail,
   loadTopLevelCategoriesSuccess,
+  updateCategory,
+  updateCategorySuccess,
 } from './categories.actions';
 import { getBreadcrumbForCategoryPage, getCategoryEntities, getSelectedCategory } from './categories.selectors';
 
@@ -72,6 +74,19 @@ export class CategoriesEffects {
       mergeMap(categoryUniqueId =>
         this.categoryService.getCategory(categoryUniqueId).pipe(
           map(categories => loadCategorySuccess({ categories })),
+          mapErrorToAction(loadCategoryFail)
+        )
+      )
+    )
+  );
+
+  updateCategory$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(updateCategory),
+      mapToPayloadProperty('categoryId'),
+      mergeMap(uniqueId =>
+        this.categoryService.getCategory(uniqueId).pipe(
+          map(categories => updateCategorySuccess({ categories })),
           mapErrorToAction(loadCategoryFail)
         )
       )

@@ -3,14 +3,17 @@ import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { debounce, filter, map, switchMap, tap } from 'rxjs/operators';
 
+import { CategoryHelper } from 'ish-core/models/category/category.model';
 import { ProductListingID } from 'ish-core/models/product-listing/product-listing.model';
 import { ProductCompletenessLevel, ProductHelper } from 'ish-core/models/product/product.model';
 import { addProductToBasket } from 'ish-core/store/customer/basket';
 import {
+  getCategories,
   getCategory,
   getNavigationCategories,
   getSelectedCategory,
   loadTopLevelCategories,
+  updateCategory,
 } from 'ish-core/store/shopping/categories';
 import {
   addToCompare,
@@ -59,6 +62,22 @@ export class ShoppingFacade {
 
   category$(uniqueId: string) {
     return this.store.pipe(select(getCategory(uniqueId)));
+  }
+
+  categories$(ids: string[]) {
+    return this.store.pipe(
+      select(getCategories(ids)),
+      map(categories =>
+        categories.filter(category => {
+          if (!CategoryHelper.isCategoryCompletelyLoaded(category)) {
+            const categoryId = category.uniqueId;
+            this.store.dispatch(updateCategory({ categoryId }));
+          } else {
+            return categories;
+          }
+        })
+      )
+    );
   }
 
   navigationCategories$(uniqueId?: string) {
