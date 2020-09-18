@@ -11,9 +11,9 @@ import { ProductBundlePartsComponent } from '../product/product-bundle-parts/pro
 import { ProductDetailActionsComponent } from '../product/product-detail-actions/product-detail-actions.component';
 import { ProductDetailComponent } from '../product/product-detail/product-detail.component';
 import { ProductImagesComponent } from '../product/product-images/product-images.component';
-import { ProductLinksCarouselComponent } from '../product/product-links-carousel/product-links-carousel.component';
+import { CamfilProductLinksCarouselComponent } from '../product/camfil-product-links-carousel/camfil-product-links-carousel.component';
 import { ProductLinksListComponent } from '../product/product-links-list/product-links-list.component';
-import { ProductLinksComponent } from '../product/product-links/product-links.component';
+import { CamfilProductLinksComponent } from '../product/camfil-product-links/camfil-product-links.component';
 import { ProductMasterVariationsComponent } from '../product/product-master-variations/product-master-variations.component';
 import { RetailSetPartsComponent } from '../product/retail-set-parts/retail-set-parts.component';
 
@@ -66,8 +66,8 @@ const productPageRoutes: Routes = [
     ProductDetailActionsComponent,
     ProductDetailComponent,
     ProductImagesComponent,
-    ProductLinksCarouselComponent,
-    ProductLinksComponent,
+    CamfilProductLinksCarouselComponent,
+    CamfilProductLinksComponent,
     ProductLinksListComponent,
     ProductMasterVariationsComponent,
     RetailSetPartsComponent,
