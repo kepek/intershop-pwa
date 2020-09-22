@@ -1,0 +1,26 @@
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { IconModule } from 'camfil-shared/icon/icon.module';
+import { MaterialModule } from 'camfil-shared/material/material.module';
+
+import { SharedModule } from 'ish-shared/shared.module';
+
+import { BannerComponent } from './banner/banner.component';
+import { CamfilRegistrationCompanyFormComponent } from './camfil-registration-company-form/camfil-registration-company-form.component';
+import { CamfilRegistrationCredentialsFormComponent } from './camfil-registration-credentials-form/camfil-registration-credentials-form.component';
+import { CamfilRegistrationFormComponent } from './camfil-registration-form/camfil-registration-form.component';
+import { CamfilRegistrationPageComponent } from './camfil-registration-page.component';
+
+const registrationPageRoutes: Routes = [{ path: '', component: CamfilRegistrationPageComponent }];
+
+@NgModule({
+  imports: [IconModule, MaterialModule, RouterModule.forChild(registrationPageRoutes), SharedModule],
+  declarations: [
+    BannerComponent,
+    CamfilRegistrationCompanyFormComponent,
+    CamfilRegistrationCredentialsFormComponent,
+    CamfilRegistrationFormComponent,
+    CamfilRegistrationPageComponent,
+  ],
+})
+export class CamfilRegistrationPageModule {}
