@@ -1,5 +1,9 @@
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+
+import { CoreStoreModule } from 'ish-core/store/core/core-store.module';
+import { ShoppingStoreModule } from 'ish-core/store/shopping/shopping-store.module';
 
 import { CamfilCategoryBoxComponent } from '../camfil-category-box/camfil-category-box.component';
 
@@ -14,7 +18,12 @@ describe('Camfil Category Boxes Component', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [CamfilCategoryBoxComponent, CamfilCategoryBoxesComponent],
-      imports: [TranslateModule.forRoot()],
+      imports: [
+        CoreStoreModule.forTesting(),
+        RouterTestingModule,
+        ShoppingStoreModule.forTesting('products', 'categories'),
+        TranslateModule.forRoot(),
+      ],
     }).compileComponents();
   }));
 

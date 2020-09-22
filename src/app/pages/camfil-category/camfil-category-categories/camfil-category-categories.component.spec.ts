@@ -27,9 +27,9 @@ describe('Camfil Category Categories Component', () => {
     TestBed.configureTestingModule({
       imports: [TranslateModule.forRoot()],
       declarations: [
-        CamfilCategoryBoxesComponent,
         CamfilCategoryCategoriesComponent,
         MockComponent(CamfilBreadcrumbComponent),
+        MockComponent(CamfilCategoryBoxesComponent),
         MockComponent(CamfilCategoryNavigationComponent),
         MockComponent(CamfilFilterMeasurementsComponent),
         MockComponent(CategoryListComponent),

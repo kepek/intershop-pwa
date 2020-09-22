@@ -1,8 +1,10 @@
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
-import { CamfilCategoryBoxComponent } from './camfil-category-box.component';
+import { CategoryView } from 'ish-core/models/category-view/category-view.model';
 
+import { CamfilCategoryBoxComponent } from './camfil-category-box.component';
 
 describe('Camfil Category Box Component', () => {
   let component: CamfilCategoryBoxComponent;
@@ -10,10 +12,23 @@ describe('Camfil Category Box Component', () => {
   let element: HTMLElement;
   let translate: TranslateService;
 
+  const category = {
+    uniqueId: 'A',
+    categoryPath: ['A'],
+    images: [
+      {
+        type: 'Image',
+        effectiveUrl: '/assets/product_img/a.jpg',
+        primaryImage: false,
+      },
+    ],
+    name: 'A',
+  } as CategoryView;
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [CamfilCategoryBoxComponent],
-      imports: [TranslateModule.forRoot()],
+      imports: [RouterTestingModule, TranslateModule.forRoot()],
     }).compileComponents();
   }));
 
@@ -21,6 +36,8 @@ describe('Camfil Category Box Component', () => {
     fixture = TestBed.createComponent(CamfilCategoryBoxComponent);
     component = fixture.componentInstance;
     element = fixture.nativeElement;
+
+    component.category = category;
 
     translate = TestBed.inject(TranslateService);
     translate.setDefaultLang('en');
