@@ -1,0 +1,52 @@
+@import '~src/styles/themes/camfil/colors';
+@import '~src/styles/themes/camfil/variables';
+
+:host {
+  margin-bottom: $space-box / 2;
+  display: block;
+
+  &:last-child[size='small'] {
+    margin-bottom: $space-default;
+  }
+
+  .mat-card {
+    &-actions:last-child {
+      margin: 0;
+      padding: 0;
+      a {
+        font-weight: 600;
+      }
+    }
+  }
+  ::ng-deep {
+    .mat-card-header {
+      &-text {
+        margin: 0;
+        color: $text-color-primary;
+      }
+      & + img {
+        max-width: none;
+      }
+    }
+  }
+
+  &[size='small'] {
+    .mat-card {
+      padding: $space-box / 2;
+    }
+    figure {
+      width: 44px;
+      height: 44px;
+      line-height: 44px;
+      margin: 0 $space-box / 2 0 0;
+    }
+    strong {
+      line-height: 1.1em;
+    }
+    .mat-icon {
+      margin: 0 0 0 auto;
+      box-shadow: $header-shadow;
+      border-radius: 50%;
+    }
+  }
+}

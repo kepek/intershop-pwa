@@ -144,14 +144,28 @@ exports[`Camfil Header Default Component should render normal header adequately 
             svgicon="logo"
             aria-hidden="true"
             ng-reflect-svg-icon="logo"
-          ></mat-icon
+            ><svg
+              class="fake-testing-svg"
+              fit=""
+              height="100%"
+              width="100%"
+              preserveAspectRatio="xMidYMid meet"
+              focusable="false"
+            ></svg></mat-icon
           ><mat-icon
             class="logo--cart mat-icon notranslate mat-icon-no-color"
             role="img"
             svgicon="camfil-logo-cart"
             aria-hidden="true"
             ng-reflect-svg-icon="camfil-logo-cart"
-          ></mat-icon
+            ><svg
+              class="fake-testing-svg"
+              fit=""
+              height="100%"
+              width="100%"
+              preserveAspectRatio="xMidYMid meet"
+              focusable="false"
+            ></svg></mat-icon
         ></a>
       </div>
     </div>

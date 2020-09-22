@@ -5,13 +5,14 @@ require('jest-extended');
 
 import { getTestBed } from '@angular/core/testing';
 import { MaterialModule } from 'camfil-shared/material/material.module';
+import { MatIconTestingModule } from '@angular/material/icon/testing';
 
 beforeEach(() => {
   const testBed = getTestBed();
   // tslint:disable-next-line: no-any
   testBed.configureCompiler({ preserveWhitespaces: false } as any);
   testBed.configureTestingModule({
-    imports: [MaterialModule],
+    imports: [MaterialModule, MatIconTestingModule],
   });
 
   jest.spyOn(global.console, 'warn').mockImplementation(arg => {

@@ -2920,6 +2920,8 @@
   "tacton.undo.tooltip": "Undo",
   "tacton.submit.success.message": "Your request has been successfully submitted. We will e-mail <strong>{{0}}</strong> to keep you updated on the status of your request.",
   "tacton.submit.error.message": "A technical error occurred while processing your request. Please try again later.",
+  "camfil.category_landing.baner.text": "Air Filters",
+  "camfil.category_landing.boxes.headline": "Air Filters Categories",
   "camfil.guide_article.headline": "Guides",
   "camfil.guide_article.read_more.text": "Read air filter guide",
   "camfil.product.id.label": "Art nr",

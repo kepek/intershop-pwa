@@ -1,0 +1,14 @@
+@import '~src/styles/themes/camfil/colors';
+@import '~src/styles/themes/camfil/variables';
+
+:host {
+  .landing {
+    &__banner {
+      padding: 40px $space-default;
+      font-size: 56px;
+      line-height: 1.143em;
+      background: #d7d7d7 no-repeat 50% 50%;
+      background-size: cover;
+    }
+  }
+}

@@ -30,6 +30,12 @@ export const getCategory = (uniqueId: string) =>
     (tree: CategoryTree) => createCategoryView(tree, uniqueId)
   );
 
+export const getCategories = (ids: string[]) =>
+  createSelectorFactory(projector => defaultMemoize(projector, undefined, isEqual))(
+    getCategoryTree,
+    (tree: CategoryTree): CategoryView[] => ids.map(id => createCategoryView(tree, id)).filter(x => !!x)
+  );
+
 /**
  * Retrieves the currently resolved selected category.
  */
