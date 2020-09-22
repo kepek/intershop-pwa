@@ -233,7 +233,8 @@ $altTheme: mat-dark-theme($theme-primary, $theme-accent, $theme-warn);
   line-height: 41.6px;
 }
 
-button, a {
+button,
+a {
   &.mat-raised-button,
   &.mat-stroked-button,
   &.mat-flat-button {
@@ -273,6 +274,12 @@ button, a {
     vertical-align: middle;
     svg {
       vertical-align: top;
+    }
+  }
+  @for $i from 10 through 56 {
+    &.size-#{$i} {
+      width: #{$i}px;
+      height: #{$i}px;
     }
   }
 }
