@@ -1,0 +1,24 @@
+@import '~src/styles/themes/camfil/colors';
+@import '~src/styles/themes/camfil/variables';
+
+.camfil-banner {
+  width: 100%;
+  height: 200px;
+  padding-top: 80px;
+  padding-bottom: 56px;
+  padding-left: 86px;
+  font-family: $font-family-bold;
+  font-size: 64px;
+  color: $camfil-color-white;
+  background-color: $camfil-color-primary;
+
+  &__icon {
+    width: 64px;
+    height: 64px;
+    fill: $camfil-color-white;
+
+    svg {
+      fill: $camfil-color-white;
+    }
+  }
+}
