@@ -1,0 +1,55 @@
+@import '~src/styles/themes/camfil/colors';
+@import '~src/styles/themes/camfil/variables';
+
+:host {
+  > div {
+    margin: 10px auto $space-default;
+    font-size: $font-size-lg;
+  }
+
+  h3 {
+    margin-bottom: 8px;
+    font-size: $space-box;
+    font-weight: 700;
+    text-transform: unset;
+  }
+
+  span {
+    margin-bottom: 12px;
+    font-weight: 700;
+  }
+
+  .row {
+    margin: -16px !important;
+  }
+
+  aside {
+    display: flex;
+    align-items: center;
+    padding: $space-box;
+  }
+
+  section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: $space-box 10px;
+    background: rgba($camfil-color-primary, 0.2);
+  }
+
+  .icon {
+    width: 64px;
+    height: 64px;
+    padding: 20px 26px;
+    margin-right: 25px;
+    font-size: 32px;
+    color: $camfil-white;
+    background-color: $camfil-color-primary;
+    border-radius: 50%;
+  }
+
+  button {
+    background-color: $camfil-white;
+  }
+}
