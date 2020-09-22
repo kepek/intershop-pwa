@@ -7,12 +7,14 @@ import { ProductBundlePartsComponent } from './product-bundle-parts/product-bund
 import { ProductDetailActionsComponent } from './product-detail-actions/product-detail-actions.component';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
 import { ProductImagesComponent } from './product-images/product-images.component';
-import { ProductLinksCarouselComponent } from './product-links-carousel/product-links-carousel.component';
+import { CamfilProductLinksCarouselComponent } from './camfil-product-links-carousel/camfil-product-links-carousel.component';
 import { ProductLinksListComponent } from './product-links-list/product-links-list.component';
-import { ProductLinksComponent } from './product-links/product-links.component';
+import { CamfilProductLinksComponent } from './camfil-product-links/camfil-product-links.component';
 import { ProductMasterVariationsComponent } from './product-master-variations/product-master-variations.component';
 import { ProductPageComponent } from './product-page.component';
 import { RetailSetPartsComponent } from './retail-set-parts/retail-set-parts.component';
+import { ProductLinksCarouselComponent } from './product-links-carousel/product-links-carousel.component';
+import { ProductLinksComponent } from './product-links/product-links.component';
 
 const productPageRoutes: Routes = [
   {
@@ -45,12 +47,14 @@ const productPageRoutes: Routes = [
     ProductDetailActionsComponent,
     ProductDetailComponent,
     ProductImagesComponent,
-    ProductLinksCarouselComponent,
-    ProductLinksComponent,
+    CamfilProductLinksCarouselComponent,
+    CamfilProductLinksComponent,
     ProductLinksListComponent,
     ProductMasterVariationsComponent,
     ProductPageComponent,
     RetailSetPartsComponent,
+    ProductLinksCarouselComponent,
+    ProductLinksComponent,
   ],
 })
 export class ProductPageModule {}

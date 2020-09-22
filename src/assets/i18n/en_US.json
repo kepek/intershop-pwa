@@ -2661,6 +2661,7 @@
   "common.button.spinning.label": "Adding...",
   "product.product_links.accessory.title": "Accessories",
   "product.product_links.crossselling.title": "You may also like",
+  "camfil.product.product_links.crossselling.title": "Related products",
   "product.product_links.differentorderunit.title": "Different Order Unit",
   "product.product_links.followup.title": "Follow-Up",
   "product.product_links.other.title": "Featured",
