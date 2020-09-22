@@ -319,6 +319,10 @@ $modal-header-border-color: $border-color-light;
 $carousel-control-color: $color-secondary;
 $carousel-control-width: 5%;
 $carousel-indicator-active-bg: $CORPORATE-PRIMARY;
+$carousel-control-prev-icon-bg: url("data:image/svg+xml,<svg width='12' height='16' xmlns='http://www.w3.org/2000/svg'><path d='M.884 6.514L9.76.43c.41-.281.823-.43 1.166-.43C11.589 0 12 .533 12 1.426v13.15c0 .892-.41 1.424-1.072 1.424-.344 0-.75-.149-1.161-.43L.887 9.484C.317 9.093 0 8.565 0 7.999s.312-1.093.884-1.485z' fill='#00673E' fill-rule='nonzero'/></svg>");
+$carousel-control-next-icon-bg: url("data:image/svg+xml,<svg width='12' height='16' xmlns='http://www.w3.org/2000/svg'><path d='M11.116 6.514L2.24.43C1.83.149 1.417 0 1.074 0 .411 0 0 .533 0 1.426v13.15C0 15.468.41 16 1.072 16c.344 0 .75-.149 1.161-.43l8.88-6.085c.57-.392.887-.92.887-1.486s-.312-1.093-.884-1.485z' fill='#00673E' fill-rule='nonzero'/></svg>");
+$carousel-control-icon-width: 12px;
+
 // TODO:  needed?
 // @carousel-indicator-border-color:             #999;
 // Close
@@ -336,7 +340,7 @@ $main-box-margin: 3px;
 
 // General spaces
 $space-default: $grid-gutter-width / 2;
-$space-default-half: $space-default / 2;
+$space-half: $space-default / 2;
 $space-sm: $grid-gutter-width / 3;
 $space-box: 16px;
 

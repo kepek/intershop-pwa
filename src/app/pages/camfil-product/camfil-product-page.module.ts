@@ -7,13 +7,13 @@ import { MaterialModule } from 'camfil-shared/material/material.module';
 
 import { SharedModule } from 'ish-shared/shared.module';
 
+import { CamfilProductLinksCarouselComponent } from '../product/camfil-product-links-carousel/camfil-product-links-carousel.component';
+import { CamfilProductLinksComponent } from '../product/camfil-product-links/camfil-product-links.component';
 import { ProductBundlePartsComponent } from '../product/product-bundle-parts/product-bundle-parts.component';
 import { ProductDetailActionsComponent } from '../product/product-detail-actions/product-detail-actions.component';
 import { ProductDetailComponent } from '../product/product-detail/product-detail.component';
 import { ProductImagesComponent } from '../product/product-images/product-images.component';
-import { ProductLinksCarouselComponent } from '../product/product-links-carousel/product-links-carousel.component';
 import { ProductLinksListComponent } from '../product/product-links-list/product-links-list.component';
-import { ProductLinksComponent } from '../product/product-links/product-links.component';
 import { ProductMasterVariationsComponent } from '../product/product-master-variations/product-master-variations.component';
 import { RetailSetPartsComponent } from '../product/retail-set-parts/retail-set-parts.component';
 
@@ -61,13 +61,13 @@ const productPageRoutes: Routes = [
     CamfilProductDetailComponent,
     CamfilProductGuidesComponent,
     CamfilProductImagesComponent,
+    CamfilProductLinksCarouselComponent,
+    CamfilProductLinksComponent,
     CamfilProductPageComponent,
     ProductBundlePartsComponent,
     ProductDetailActionsComponent,
     ProductDetailComponent,
     ProductImagesComponent,
-    ProductLinksCarouselComponent,
-    ProductLinksComponent,
     ProductLinksListComponent,
     ProductMasterVariationsComponent,
     RetailSetPartsComponent,

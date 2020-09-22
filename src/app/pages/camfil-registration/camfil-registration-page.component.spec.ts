@@ -22,7 +22,7 @@ describe('Camfil Registration Page Component', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [CamfilRegistrationFormComponent, DummyComponent, MockComponent(CamfilRegistrationFormComponent)],
+      declarations: [CamfilRegistrationPageComponent, DummyComponent, MockComponent(CamfilRegistrationFormComponent)],
       imports: [
         RouterTestingModule.withRoutes([{ path: 'home', component: DummyComponent }]),
         TranslateModule.forRoot(),

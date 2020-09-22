@@ -1,0 +1,15 @@
+<div class="col-12">
+  <h1 class="text-uppercase headline">{{ 'camfil.category_landing.boxes.headline' | translate }}</h1>
+  <section class="row box-gutters">
+    <article class="col-md-3 col-sm-6" *ngFor="let category of categories$ | async">
+      <camfil-category-box [category]="category"></camfil-category-box>
+    </article>
+  </section>
+  <section class="row box-gutters">
+    <article class="col-md-3 col-sm-6" *ngFor="let categoryCol$ of categoriesColumns">
+      <ng-container *ngFor="let category of categoryCol$ | async">
+        <camfil-category-box size="small" [category]="category"></camfil-category-box>
+      </ng-container>
+    </article>
+  </section>
+</div>

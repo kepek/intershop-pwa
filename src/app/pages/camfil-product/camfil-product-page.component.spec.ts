@@ -28,9 +28,9 @@ import { CamfilBreadcrumbComponent } from 'ish-shared/components/common/camfil-b
 import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
 import { RecentlyViewedComponent } from 'ish-shared/components/recently/recently-viewed/recently-viewed.component';
 
+import { CamfilProductLinksComponent } from '../product/camfil-product-links/camfil-product-links.component';
 import { ProductBundlePartsComponent } from '../product/product-bundle-parts/product-bundle-parts.component';
 import { ProductDetailComponent } from '../product/product-detail/product-detail.component';
-import { ProductLinksComponent } from '../product/product-links/product-links.component';
 import { ProductMasterVariationsComponent } from '../product/product-master-variations/product-master-variations.component';
 import { RetailSetPartsComponent } from '../product/retail-set-parts/retail-set-parts.component';
 
@@ -66,10 +66,10 @@ describe('Camfil Product Page Component', () => {
         MockComponent(CamfilProductDetailComponent),
         MockComponent(CamfilProductGuidesComponent),
         MockComponent(CamfilProductImagesComponent),
+        MockComponent(CamfilProductLinksComponent),
         MockComponent(LoadingComponent),
         MockComponent(ProductBundlePartsComponent),
         MockComponent(ProductDetailComponent),
-        MockComponent(ProductLinksComponent),
         MockComponent(ProductMasterVariationsComponent),
         MockComponent(RecentlyViewedComponent),
         MockComponent(RetailSetPartsComponent),
@@ -106,7 +106,7 @@ describe('Camfil Product Page Component', () => {
 
     fixture.detectChanges();
 
-    expect(findAllIshElements(element)).toEqual(['ish-product-detail', 'ish-product-links', 'ish-recently-viewed']);
+    expect(findAllIshElements(element)).toEqual(['ish-product-detail', 'camfil-product-links', 'ish-recently-viewed']);
     expect(findAllCamfilElements(element)).toEqual(['camfil-breadcrumb']);
   });
 

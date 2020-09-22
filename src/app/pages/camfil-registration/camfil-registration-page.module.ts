@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { IconModule } from 'camfil-shared/icon/icon.module';
 import { MaterialModule } from 'camfil-shared/material/material.module';
@@ -14,7 +15,14 @@ import { CamfilRegistrationPageComponent } from './camfil-registration-page.comp
 const registrationPageRoutes: Routes = [{ path: '', component: CamfilRegistrationPageComponent }];
 
 @NgModule({
-  imports: [IconModule, MaterialModule, RouterModule.forChild(registrationPageRoutes), SharedModule],
+  imports: [
+    FormsModule,
+    IconModule,
+    MaterialModule,
+    ReactiveFormsModule,
+    RouterModule.forChild(registrationPageRoutes),
+    SharedModule,
+  ],
   declarations: [
     BannerComponent,
     CamfilRegistrationCompanyFormComponent,

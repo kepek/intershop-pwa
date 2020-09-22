@@ -1,0 +1,53 @@
+@import '~src/styles/themes/camfil/colors.scss';
+@import '~src/styles/themes/camfil/mixins.scss';
+@import '~src/styles/themes/camfil/variables.scss';
+
+.product-list-container {
+  padding: 15px 75px;
+  margin: 15px -24px;
+  background-color: $breadcrumbs-bg;
+
+  ::ng-deep {
+    .mat-card {
+      max-height: 160px;
+      padding-bottom: 15px;
+      margin: 5px 0;
+      overflow: hidden;
+    }
+
+    .swiper-button-next,
+    .swiper-button-prev {
+      position: absolute !important;
+      top: 0 !important;
+      right: 0 !important;
+      bottom: 0 !important;
+      display: block !important;
+      width: 50px !important;
+      height: unset !important;
+      background-color: $breadcrumbs-bg !important;
+      background-position: center !important;
+      background-size: initial !important;
+      box-shadow: 0 3px 3px -2px rgba(0, 0, 0, 0.2), 0 3px 4px 0 rgba(0, 0, 0, 0.14), 0 1px 8px 0 rgba(0, 0, 0, 0);
+      opacity: 1 !important;
+    }
+
+    .swiper-button-disabled {
+      opacity: 0 !important;
+    }
+
+    .swiper.swiper.s-wrapper {
+      width: auto !important;
+      padding: 40px 70px 14px;
+      margin: -43px -60px -14px -70px;
+    }
+  }
+  h2 {
+    margin-bottom: 5px;
+    font-family: $font-family-SansPro;
+    text-transform: unset;
+  }
+
+  .product-list {
+    margin: 0 -15px;
+  }
+}

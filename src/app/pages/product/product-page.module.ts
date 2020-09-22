@@ -3,6 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { SharedModule } from 'ish-shared/shared.module';
 
+import { CamfilProductLinksCarouselComponent } from './camfil-product-links-carousel/camfil-product-links-carousel.component';
+import { CamfilProductLinksComponent } from './camfil-product-links/camfil-product-links.component';
 import { ProductBundlePartsComponent } from './product-bundle-parts/product-bundle-parts.component';
 import { ProductDetailActionsComponent } from './product-detail-actions/product-detail-actions.component';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
@@ -41,6 +43,8 @@ const productPageRoutes: Routes = [
 @NgModule({
   imports: [RouterModule.forChild(productPageRoutes), SharedModule],
   declarations: [
+    CamfilProductLinksCarouselComponent,
+    CamfilProductLinksComponent,
     ProductBundlePartsComponent,
     ProductDetailActionsComponent,
     ProductDetailComponent,

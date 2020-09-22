@@ -10,21 +10,21 @@ import { CamfilProductItemComponent } from 'ish-shared/components/product/camfil
 import { CamfilProductLinksCarouselComponent } from '../camfil-product-links-carousel/camfil-product-links-carousel.component';
 import { ProductLinksListComponent } from '../product-links-list/product-links-list.component';
 
-import { ProductLinksComponent } from './product-links.component';
+import { CamfilProductLinksComponent } from './camfil-product-links.component';
 
-describe('Product Links Component', () => {
-  let component: ProductLinksComponent;
-  let fixture: ComponentFixture<ProductLinksComponent>;
+describe('Camfil Product Links Component', () => {
+  let component: CamfilProductLinksComponent;
+  let fixture: ComponentFixture<CamfilProductLinksComponent>;
   let element: HTMLElement;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [TranslateModule.forRoot()],
       declarations: [
+        CamfilProductLinksComponent,
         MockComponent(CamfilProductItemComponent),
         MockComponent(CamfilProductLinksCarouselComponent),
         MockComponent(ProductLinksListComponent),
-        ProductLinksComponent,
       ],
       providers: [
         { provide: LARGE_BREAKPOINT_WIDTH, useValue: 992 },
@@ -34,7 +34,7 @@ describe('Product Links Component', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ProductLinksComponent);
+    fixture = TestBed.createComponent(CamfilProductLinksComponent);
     component = fixture.componentInstance;
     element = fixture.nativeElement;
   });
