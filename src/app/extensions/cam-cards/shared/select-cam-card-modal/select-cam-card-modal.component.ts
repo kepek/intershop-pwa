@@ -26,7 +26,7 @@ import { CamCard } from '../../models/cam-card/cam-card.model';
  * The cam cards select modal displays a list of cam_cards. The user can select one cam cards  or enter a name for a new cam card in order to add or move an item to the selected cam cards .
  */
 @Component({
-  selector: 'ish-select-cam-card-modal',
+  selector: 'camfil-select-cam-card-modal',
   templateUrl: './select-cam-card-modal.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

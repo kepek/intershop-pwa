@@ -118,6 +118,15 @@
                   class="btn-link"
                   [product]="product"
                 ></ish-lazy-product-add-to-order-template>
+
+                <camfil-lazy-product-add-to-cam-card
+                  *ngIf="configuration.displayAddToCamCard"
+                  displayType="icon"
+                  [quantity]="1"
+                  class="btn-link"
+                  [product]="product"
+                ></camfil-lazy-product-add-to-cam-card>
+
                 <camfil-product-add-to-basket
                   *ngIf="configuration.displayAddToBasket"
                   [product]="product"

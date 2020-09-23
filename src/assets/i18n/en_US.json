@@ -3004,5 +3004,6 @@
   "camfil.account.cancel.button.label": "Cancel",
   "camfil.account.cam_cards.list.table.item": "Item",
   "camfil.account.cam_card.add_to_cam_card.button.add_to_cam_card.label": "Add to CamCard",
-  "camfil.account.cam_card.table.options.move_to_cam_card": "Move to Other CamCard"
+  "camfil.account.cam_card.table.options.move_to_cam_card": "Move to Other CamCard",
+  "account.login.cam_cards.message": "Please log in to your account to use CamCards."
 }

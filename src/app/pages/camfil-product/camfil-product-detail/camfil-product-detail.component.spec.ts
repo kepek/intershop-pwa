@@ -20,6 +20,7 @@ import { CamfilProductShipmentComponent } from 'ish-shared/components/product/ca
 import { CamfilProductVariationSelectComponent } from 'ish-shared/components/product/camfil-product-variation-select/camfil-product-variation-select.component';
 import { ProductAttributesComponent } from 'ish-shared/components/product/product-attributes/product-attributes.component';
 
+import { LazyProductAddToCamCardComponent } from '../../../extensions/cam-cards/exports/lazy-product-add-to-cam-card/lazy-product-add-to-cam-card.component';
 import { LazyProductAddToOrderTemplateComponent } from '../../../extensions/order-templates/exports/lazy-product-add-to-order-template/lazy-product-add-to-order-template.component';
 import { LazyProductAddToQuoteComponent } from '../../../extensions/quoting/exports/lazy-product-add-to-quote/lazy-product-add-to-quote.component';
 import { ProductDetailActionsComponent } from '../../product/product-detail-actions/product-detail-actions.component';
@@ -63,6 +64,7 @@ describe('Camfil Product Detail Component', () => {
         MockComponent(CamfilProductRatingComponent),
         MockComponent(CamfilProductShipmentComponent),
         MockComponent(CamfilProductVariationSelectComponent),
+        MockComponent(LazyProductAddToCamCardComponent),
         MockComponent(LazyProductAddToOrderTemplateComponent),
         MockComponent(LazyProductAddToQuoteComponent),
         MockComponent(ProductAttributesComponent),
