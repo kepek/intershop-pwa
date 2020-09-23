@@ -1,4 +1,5 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import { SelectionModel } from '@angular/cdk/collections';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { AfterViewInit, ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
@@ -155,8 +156,9 @@ export class DemoPageComponent implements AfterViewInit, OnInit, OnDestroy {
   /** table */
   // displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
-  columnsToDisplay = ['name', 'weight', 'symbol', 'position'];
+  columnsToDisplay = ['name', 'weight', 'symbol', 'position', 'checkbox'];
   expandedElement: PeriodicElement | null;
+  selection = new SelectionModel<PeriodicElement>(true, []);
 
   visibleFruits = true;
   selectableFruits = true;
@@ -174,6 +176,33 @@ export class DemoPageComponent implements AfterViewInit, OnInit, OnDestroy {
   matcher = new MyErrorStateMatcher();
 
   @ViewChild(MatSort) sort: MatSort;
+
+
+  /** for table */
+  /** Whether the number of selected elements matches the total number of rows. */
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dataSource.data.length;
+    return numSelected === numRows;
+  }
+
+  /** Selects all rows if they are not all selected; otherwise clear selection. */
+  masterToggle() {
+    this.isAllSelected() ? this.selection.clear() : this.dataSource.data.forEach(row => this.selection.select(row));
+  }
+
+  /** The label for the checkbox on the passed row */
+  checkboxLabel(row?: PeriodicElement): string {
+    if (!row) {
+      return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
+    }
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`;
+  }
+
+  /** EOF for table */
+
+
+
 
   setPageSizeOptions(setPageSizeOptionsInput: string) {
     if (setPageSizeOptionsInput) {

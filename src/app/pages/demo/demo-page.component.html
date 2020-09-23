@@ -5,10 +5,31 @@
   <mat-card-content>
     <div class="row box-gutters">
       <table mat-table [dataSource]="dataSource" multiTemplateDataRows matSort>
-
-        <ng-container matColumnDef="{{ column }}" *ngFor="let column of columnsToDisplay">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ column }}</th>
-          <td mat-cell *matCellDef="let element">{{ element[column] }}</td>
+        <ng-container matColumnDef="{{ column }}" *ngFor="let column of columnsToDisplay; last as isLast">
+          <ng-container *ngIf="!isLast; else checkbox">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ column }}</th>
+            <td mat-cell *matCellDef="let element">{{ element[column] }}</td>
+          </ng-container>
+          <ng-template #checkbox>
+            <th mat-header-cell *matHeaderCellDef>
+              <mat-checkbox
+                (change)="$event ? masterToggle() : null"
+                [checked]="selection.hasValue() && isAllSelected()"
+                [indeterminate]="selection.hasValue() && !isAllSelected()"
+                [aria-label]="checkboxLabel()"
+              >
+              </mat-checkbox>
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <mat-checkbox
+                (click)="$event.stopPropagation()"
+                (change)="$event ? selection.toggle(element) : null"
+                [checked]="selection.isSelected(element)"
+                [aria-label]="checkboxLabel(element)"
+              >
+              </mat-checkbox>
+            </td>
+          </ng-template>
         </ng-container>
 
         <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
