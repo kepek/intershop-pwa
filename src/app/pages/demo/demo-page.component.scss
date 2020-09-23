@@ -197,4 +197,14 @@
   .container {
     overflow: hidden;
   }
+
+  /** tables **/
+  .example-element-detail {
+    overflow: hidden;
+    display: flex;
+  }
+  .example-detail-row {
+    height: auto;
+    
+  }
 }
