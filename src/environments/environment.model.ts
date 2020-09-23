@@ -103,7 +103,6 @@ export const ENVIRONMENT_DEFAULTS: Environment = {
     /* B2B features */
     'advancedVariationHandling',
     'businessCustomerRegistration',
-    'quoting',
     'orderTemplates',
     /* Camfil features */
     'camCards',

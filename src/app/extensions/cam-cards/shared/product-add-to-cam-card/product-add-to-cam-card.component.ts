@@ -11,7 +11,7 @@ import { CamCardsFacade } from '../../facades/cam-cards.facade';
 import { SelectCamCardModalComponent } from '../select-cam-card-modal/select-cam-card-modal.component';
 
 @Component({
-  selector: 'ish-product-add-to-cam-card',
+  selector: 'camfil-product-add-to-cam-card',
   templateUrl: './product-add-to-cam-card.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -19,10 +19,10 @@ import { SelectCamCardModalComponent } from '../select-cam-card-modal/select-cam
  * The Product Add To Cam Card Component adds a product to a cam_cards.
  *
  * @example
- * <ish-product-add-to-cam-card
+ * <camfil-product-add-to-cam-card
  *               [product]=product
  *               displayType="icon"
- * ></ish-product-add-to-cam-card>
+ * ></camfil-product-add-to-cam-card>
  */
 @GenerateLazyComponent()
 export class ProductAddToCamCardComponent implements OnDestroy {

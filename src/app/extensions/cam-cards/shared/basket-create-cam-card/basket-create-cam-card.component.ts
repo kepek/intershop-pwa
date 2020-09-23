@@ -12,7 +12,7 @@ import { CamCard } from '../../models/cam-card/cam-card.model';
 import { CamCardPreferencesDialogComponent } from '../cam-card-preferences-dialog/cam-card-preferences-dialog.component';
 
 @Component({
-  selector: 'ish-basket-create-cam-card',
+  selector: 'camfil-basket-create-cam-card',
   templateUrl: './basket-create-cam-card.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

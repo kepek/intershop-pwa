@@ -42,6 +42,7 @@ export const DEFAULT_CONFIGURATION: Readonly<ProductItemContainerConfiguration> 
   displayAddToBasket: true,
   displayAddToWishlist: true,
   displayAddToOrderTemplate: true,
+  displayAddToCamCard: true,
   displayAddToCompare: true,
   displayAddToQuote: true,
   displayType: 'simple',
