@@ -12,6 +12,7 @@ import { HttpError } from 'ish-core/models/http-error/http-error.model';
  */
 @Component({
   templateUrl: './camfil-registration-page.component.html',
+  styleUrls: ['./camfil-registration-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CamfilRegistrationPageComponent implements OnInit {

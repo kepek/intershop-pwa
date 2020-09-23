@@ -1,24 +1,42 @@
 @import '~src/styles/themes/camfil/colors';
 @import '~src/styles/themes/camfil/variables';
+@import '~src/styles/themes/camfil/mixins.scss';
 
 .camfil-banner {
   width: 100%;
-  height: 200px;
+  height: 100%;
   padding-top: 80px;
   padding-bottom: 56px;
   padding-left: 86px;
-  font-family: $font-family-bold;
-  font-size: 64px;
-  color: $camfil-color-white;
-  background-color: $camfil-color-primary;
+  background-color: $camfil-color-image-placeholder;
 
-  &__icon {
-    width: 64px;
-    height: 64px;
-    fill: $camfil-color-white;
+  &__header {
+    display: flex;
 
-    svg {
-      fill: $camfil-color-white;
+    &--icon {
+      width: 64px;
+      height: 64px;
+
+      &::ng-deep svg g {
+        stroke: $camfil-text-color-tertiary;
+      }
     }
+
+    &--title {
+      margin-bottom: 0;
+      font-family: $font-family-bold;
+      font-size: 64px;
+      line-height: 64px;
+      text-transform: none;
+    }
+  }
+
+  &__description {
+    margin: 16px 0 0;
+    @include font-size-h3;
+  }
+
+  &__link {
+    margin-top: 24px;
   }
 }

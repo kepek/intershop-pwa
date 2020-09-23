@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
 @Component({
   selector: 'camfil-banner',
@@ -6,4 +6,9 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   styleUrls: ['./camfil-banner.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CamfilBannerComponent {}
+export class CamfilBannerComponent {
+  @Input() title: string = '';
+  @Input() iconName: string = '';
+  @Input() linkTitle: string = '';
+  @Input() linkUrl: string = '';
+}

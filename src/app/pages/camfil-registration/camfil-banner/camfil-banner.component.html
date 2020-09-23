@@ -1,6 +1,16 @@
 <div class="camfil-banner">
-  <span color="warn">
-    <mat-icon svgIcon="users" class="camfil-banner__icon material-icons"></mat-icon>
-  </span>
-  <span>Create an account</span>
+  <div class="camfil-banner__header">
+    <mat-icon svgIcon="{{ iconName }}" class="camfil-banner__header--icon material-icons"></mat-icon>
+    <h1 class="camfil-banner__header--title">{{ title }}</h1>
+  </div>
+  <h3 class="camfil-banner__description">description</h3>
+  <a
+    *ngIf="linkTitle"
+    class="camfil-banner__link"
+    mat-raised-button
+    href="{{ linkUrl }}"
+    target="_blank"
+    color="primary"
+    >{{ linkTitle }}</a
+  >
 </div>
