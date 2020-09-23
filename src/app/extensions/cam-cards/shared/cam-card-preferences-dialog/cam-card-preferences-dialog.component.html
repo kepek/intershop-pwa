@@ -1,0 +1,42 @@
+<ng-template #modal let-addModal>
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2 class="modal-title">{{ modalHeader | translate }}</h2>
+      <button class="close" (click)="hide()" [title]="'application.overlay.close.text' | translate" aria-label="Close">
+        <span aria-hidden="true">×</span>
+      </button>
+    </div>
+
+    <form [formGroup]="camCardForm" (ngSubmit)="submitCamCardForm(); addModal.close('')">
+      <div class="modal-body">
+        <!-- TODO: Show server error -->
+        <ish-input
+          [form]="camCardForm"
+          controlName="title"
+          label="camfil.account.cam_card.form.name.label"
+          markRequiredLabel="off"
+          maxlength="35"
+          [errorMessages]="{
+            required: 'camfil.account.cam_card.form.name.error.required',
+            maxlength: 'camfil.account.cam_card.form.name.error.maxlength'
+          }"
+          data-testing-id="cam-card-dialog-name"
+        ></ish-input>
+      </div>
+    </form>
+    <div class="modal-footer">
+      <button
+        class="btn btn-primary"
+        type="submit"
+        [disabled]="formDisabled"
+        (click)="submitCamCardForm()"
+        data-testing-id="cam-card-dialog-submit"
+      >
+        {{ primaryButton | translate }}
+      </button>
+      <button class="btn btn-secondary" type="button" (click)="addModal.close('')">
+        {{ 'camfil.account.cancel.button.label' | translate }}
+      </button>
+    </div>
+  </div>
+</ng-template>

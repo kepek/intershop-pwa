@@ -3,18 +3,18 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { SharedModule } from 'ish-shared/shared.module';
 
+import { CamfilProductLinksCarouselComponent } from './camfil-product-links-carousel/camfil-product-links-carousel.component';
+import { CamfilProductLinksComponent } from './camfil-product-links/camfil-product-links.component';
 import { ProductBundlePartsComponent } from './product-bundle-parts/product-bundle-parts.component';
 import { ProductDetailActionsComponent } from './product-detail-actions/product-detail-actions.component';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
 import { ProductImagesComponent } from './product-images/product-images.component';
-import { CamfilProductLinksCarouselComponent } from './camfil-product-links-carousel/camfil-product-links-carousel.component';
+import { ProductLinksCarouselComponent } from './product-links-carousel/product-links-carousel.component';
 import { ProductLinksListComponent } from './product-links-list/product-links-list.component';
-import { CamfilProductLinksComponent } from './camfil-product-links/camfil-product-links.component';
+import { ProductLinksComponent } from './product-links/product-links.component';
 import { ProductMasterVariationsComponent } from './product-master-variations/product-master-variations.component';
 import { ProductPageComponent } from './product-page.component';
 import { RetailSetPartsComponent } from './retail-set-parts/retail-set-parts.component';
-import { ProductLinksCarouselComponent } from './product-links-carousel/product-links-carousel.component';
-import { ProductLinksComponent } from './product-links/product-links.component';
 
 const productPageRoutes: Routes = [
   {
@@ -43,18 +43,18 @@ const productPageRoutes: Routes = [
 @NgModule({
   imports: [RouterModule.forChild(productPageRoutes), SharedModule],
   declarations: [
+    CamfilProductLinksCarouselComponent,
+    CamfilProductLinksComponent,
     ProductBundlePartsComponent,
     ProductDetailActionsComponent,
     ProductDetailComponent,
     ProductImagesComponent,
-    CamfilProductLinksCarouselComponent,
-    CamfilProductLinksComponent,
+    ProductLinksCarouselComponent,
+    ProductLinksComponent,
     ProductLinksListComponent,
     ProductMasterVariationsComponent,
     ProductPageComponent,
     RetailSetPartsComponent,
-    ProductLinksCarouselComponent,
-    ProductLinksComponent,
   ],
 })
 export class ProductPageModule {}

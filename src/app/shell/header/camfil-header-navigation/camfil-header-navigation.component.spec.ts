@@ -84,7 +84,9 @@ describe('Camfil Header Navigation Component', () => {
           </a>
         </li>
         <li>
-          <a ng-reflect-router-link="/my-camcards" href="/my-camcards">camfil.navigation.camcards.text</a>
+          <a ng-reflect-router-link="/account/cam-cards" href="/account/cam-cards"
+            >camfil.account.cam_cards.link</a
+          >
         </li>
       </ul>
     `);

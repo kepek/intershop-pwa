@@ -51,11 +51,6 @@
               },
               {
                 "inject": false,
-                "input": "src/styles/themes/blue/style.scss",
-                "bundleName": "blue"
-              },
-              {
-                "inject": false,
                 "input": "src/styles/themes/camfil/style.scss",
                 "bundleName": "camfil"
               }

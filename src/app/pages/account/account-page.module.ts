@@ -74,6 +74,12 @@ const accountPageRoutes: Routes = [
           permission: 'APP_B2B_MANAGE_USERS',
         },
       },
+      {
+        path: 'cam-cards',
+        data: { breadcrumbData: [{ key: 'camfil.account.cam_cards.link' }] },
+        loadChildren: () =>
+          import('../../extensions/cam-cards/pages/cam-cards-routing.module').then(m => m.CamCardsRoutingModule),
+      },
     ],
   },
 ];
