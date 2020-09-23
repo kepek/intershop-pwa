@@ -22,9 +22,15 @@ export interface Fruit {
   name: string;
 }
 
-export interface SubPeriodicElement {
-  header: string;
-  insideData: string[];
+export interface BuildingProductRow {
+  name: string;
+  checked: boolean;
+}
+
+export interface BuildingPeriodicElement {
+  name: string;
+  checked: boolean;
+  products: BuildingProductRow[];
 }
 
 export interface PeriodicElement {
@@ -32,22 +38,192 @@ export interface PeriodicElement {
   position: number;
   weight: number;
   symbol: string;
-  other: SubPeriodicElement[];
+  buildings: BuildingPeriodicElement[];
 }
 
-const ELEMENT_DATA_OTHER: SubPeriodicElement[] = [
-  { header: 'Building 1', insideData: ['product sku - 12345', 'product sku - 12645'] },
-  { header: 'Building 2', insideData: ['product sku - 98265', 'product sku - 761'] },
-];
-
 const ELEMENT_DATA: PeriodicElement[] = [
-  { position: 1, name: 'CamCard Hydrogen', weight: 1.0079, symbol: 'H', other: ELEMENT_DATA_OTHER },
-  { position: 2, name: 'CamCard test', weight: 4.0026, symbol: 'He', other: ELEMENT_DATA_OTHER },
-  { position: 3, name: 'CamCard Lithium', weight: 6.941, symbol: 'Li', other: ELEMENT_DATA_OTHER },
-  { position: 4, name: 'CamCard Beryllium', weight: 9.0122, symbol: 'Be', other: ELEMENT_DATA_OTHER },
-  { position: 5, name: 'CamCard Boron', weight: 10.811, symbol: 'B', other: ELEMENT_DATA_OTHER },
-  { position: 6, name: 'CamCard Carbon', weight: 12.0107, symbol: 'C', other: ELEMENT_DATA_OTHER },
-  { position: 7, name: 'CamCard Nitrogen', weight: 14.0067, symbol: 'N', other: ELEMENT_DATA_OTHER },
+  {
+    position: 1,
+    name: 'CamCard Hydrogen',
+    weight: 1.0079,
+    symbol: 'H',
+    buildings: [
+      {
+        name: 'Building 1',
+        checked: false,
+        products: [
+          { name: 'product sku - 12345', checked: false },
+          { name: 'product2 sku - 98265', checked: false },
+          { name: 'product3 sku - 52489', checked: false },
+        ],
+      },
+      {
+        name: 'Building 2',
+        checked: false,
+        products: [
+          { name: 'product sku - 12345', checked: false },
+          { name: 'product2 sku - 98265', checked: false },
+          { name: 'product3 sku - 52489', checked: false },
+        ],
+      },
+    ],
+  },
+  {
+    position: 2,
+    name: 'CamCard test',
+    weight: 4.0026,
+    symbol: 'He',
+    buildings: [
+      {
+        name: 'Building 1',
+        checked: false,
+        products: [
+          { name: 'product sku - 12345', checked: false },
+          { name: 'product2 sku - 98265', checked: false },
+          { name: 'product3 sku - 52489', checked: false },
+        ],
+      },
+      {
+        name: 'Building 2',
+        checked: false,
+        products: [
+          { name: 'product sku - 12345', checked: false },
+          { name: 'product2 sku - 98265', checked: false },
+          { name: 'product3 sku - 52489', checked: false },
+        ],
+      },
+    ],
+  },
+  {
+    position: 3,
+    name: 'CamCard Lithium',
+    weight: 6.941,
+    symbol: 'Li',
+    buildings: [
+      {
+        name: 'Building 1',
+        checked: false,
+        products: [
+          { name: 'product sku - 12345', checked: false },
+          { name: 'product2 sku - 98265', checked: false },
+          { name: 'product3 sku - 52489', checked: false },
+        ],
+      },
+      {
+        name: 'Building 2',
+        checked: false,
+        products: [
+          { name: 'product sku - 12345', checked: false },
+          { name: 'product2 sku - 98265', checked: false },
+          { name: 'product3 sku - 52489', checked: false },
+        ],
+      },
+    ],
+  },
+  {
+    position: 4,
+    name: 'CamCard Beryllium',
+    weight: 9.0122,
+    symbol: 'Be',
+    buildings: [
+      {
+        name: 'Building 1',
+        checked: false,
+        products: [
+          { name: 'product sku - 12345', checked: false },
+          { name: 'product2 sku - 98265', checked: false },
+          { name: 'product3 sku - 52489', checked: false },
+        ],
+      },
+      {
+        name: 'Building 2',
+        checked: false,
+        products: [
+          { name: 'product sku - 12345', checked: false },
+          { name: 'product2 sku - 98265', checked: false },
+          { name: 'product3 sku - 52489', checked: false },
+        ],
+      },
+    ],
+  },
+  {
+    position: 5,
+    name: 'CamCard Boron',
+    weight: 10.811,
+    symbol: 'B',
+    buildings: [
+      {
+        name: 'Building 1',
+        checked: false,
+        products: [
+          { name: 'product sku - 12345', checked: false },
+          { name: 'product2 sku - 98265', checked: false },
+          { name: 'product3 sku - 52489', checked: false },
+        ],
+      },
+      {
+        name: 'Building 2',
+        checked: false,
+        products: [
+          { name: 'product sku - 12345', checked: false },
+          { name: 'product2 sku - 98265', checked: false },
+          { name: 'product3 sku - 52489', checked: false },
+        ],
+      },
+    ],
+  },
+  {
+    position: 6,
+    name: 'CamCard Carbon',
+    weight: 12.0107,
+    symbol: 'C',
+    buildings: [
+      {
+        name: 'Building 1',
+        checked: false,
+        products: [
+          { name: 'product sku - 12345', checked: false },
+          { name: 'product2 sku - 98265', checked: false },
+          { name: 'product3 sku - 52489', checked: false },
+        ],
+      },
+      {
+        name: 'Building 2',
+        checked: false,
+        products: [
+          { name: 'product sku - 12345', checked: false },
+          { name: 'product2 sku - 98265', checked: false },
+          { name: 'product3 sku - 52489', checked: false },
+        ],
+      },
+    ],
+  },
+  {
+    position: 7,
+    name: 'CamCard Nitrogen',
+    weight: 14.0067,
+    symbol: 'N',
+    buildings: [
+      {
+        name: 'Building 1',
+        checked: false,
+        products: [
+          { name: 'product sku - 12345', checked: false },
+          { name: 'product2 sku - 98265', checked: false },
+          { name: 'product3 sku - 52489', checked: false },
+        ],
+      },
+      {
+        name: 'Building 2',
+        checked: false,
+        products: [
+          { name: 'product sku - 12345', checked: false },
+          { name: 'product2 sku - 98265', checked: false },
+          { name: 'product3 sku - 52489', checked: false },
+        ],
+      },
+    ],
+  },
 ];
 
 // tslint:disable-next-line:component-creation-test
@@ -153,12 +329,12 @@ export class DemoPageComponent implements AfterViewInit, OnInit, OnDestroy {
     { name: 'Warn', color: 'warn' },
   ];
 
-  /** table */
-  // displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
+  /** for camCards */
   dataSource = new MatTableDataSource(ELEMENT_DATA);
   columnsToDisplay = ['name', 'weight', 'symbol', 'position', 'checkbox'];
   expandedElement: PeriodicElement | null;
   selection = new SelectionModel<PeriodicElement>(true, []);
+  /** EOF camCards */
 
   visibleFruits = true;
   selectableFruits = true;
@@ -178,7 +354,7 @@ export class DemoPageComponent implements AfterViewInit, OnInit, OnDestroy {
   @ViewChild(MatSort) sort: MatSort;
 
 
-  /** for table */
+  /** for camCards */
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
     const numSelected = this.selection.selected.length;
@@ -199,7 +375,31 @@ export class DemoPageComponent implements AfterViewInit, OnInit, OnDestroy {
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`;
   }
 
-  /** EOF for table */
+  /** deeper level for checkbox */
+  allChecked(item: BuildingPeriodicElement): boolean {
+    return item.checked;
+  }
+
+  updateAllChecked(item: BuildingPeriodicElement) {
+    item.checked = item.products !== null && item.products.every(t => t.checked);
+  }
+
+  someChecked(item: BuildingPeriodicElement): boolean {
+    if (item.products === null) {
+      return false;
+    }
+    return item.products.filter(t => t.checked).length > 0 && !item.checked;
+  }
+
+  setAll(item: BuildingPeriodicElement, checked: boolean) {
+    item.checked = checked;
+    if (item.products === null) {
+      return;
+    }
+    item.products.forEach(t => (t.checked = checked));
+  }
+
+  /** EOF for camCards */
 
 
 

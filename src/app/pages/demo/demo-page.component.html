@@ -39,10 +39,24 @@
               <div class="example-element-description">
                 <h3>{{ element.name }} / {{ element.position }} / {{ element.symbol }} / {{ element.weight }}</h3>
                 <ul>
-                  <li *ngFor="let item of element.other">
-                    <strong>{{ item.header }}</strong>
+                  <li *ngFor="let building of element.buildings;">
+                    <mat-checkbox
+                      class="example-margin"
+                      [checked]="allChecked(building)"
+                      [indeterminate]="someChecked(building)"
+                      (change)="setAll(building, $event.checked)"
+                    >
+                      {{ building.name }}
+                    </mat-checkbox>
                     <div>
-                      <div *ngFor="let insideData of item.insideData">{{ insideData }}</div>
+                      <div *ngFor="let product of building.products">
+                        <mat-checkbox
+                          [(ngModel)]="product.checked"
+                          (ngModelChange)="updateAllChecked(building)"
+                        >
+                          {{ product.name }}
+                        </mat-checkbox>
+                      </div>
                     </div>
                   </li>
                 </ul>
