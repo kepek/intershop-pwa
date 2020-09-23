@@ -1,9 +1,9 @@
-<div class="camfil-banner">
+<div class="camfil-banner" [ngStyle]="backgroundImageUrl && { 'background-image': 'url(' + backgroundImageUrl + ')' }">
   <div class="camfil-banner__header">
     <mat-icon svgIcon="{{ iconName }}" class="camfil-banner__header--icon material-icons"></mat-icon>
     <h1 class="camfil-banner__header--title">{{ title }}</h1>
   </div>
-  <h3 class="camfil-banner__description">description</h3>
+  <h3 *ngIf="description" class="camfil-banner__description">{{ description }}</h3>
   <a
     *ngIf="linkTitle"
     class="camfil-banner__link"

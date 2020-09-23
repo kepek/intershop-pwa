@@ -33,6 +33,7 @@
 
   &__description {
     margin: 16px 0 0;
+    text-transform: none;
     @include font-size-h3;
   }
 

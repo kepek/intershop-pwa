@@ -9,6 +9,8 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 export class CamfilBannerComponent {
   @Input() title: string = '';
   @Input() iconName: string = '';
+  @Input() description: string = '';
   @Input() linkTitle: string = '';
   @Input() linkUrl: string = '';
+  @Input() backgroundImageUrl: string;
 }
