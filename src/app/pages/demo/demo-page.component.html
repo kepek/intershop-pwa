@@ -38,28 +38,32 @@
             <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
               <div class="example-element-description">
                 <h3>{{ element.name }} / {{ element.position }} / {{ element.symbol }} / {{ element.weight }}</h3>
-                <ul>
-                  <li *ngFor="let building of element.buildings;">
+
+                <ng-container *ngFor="let building of element.buildings">
+                  <mat-action-row>
+                    <strong (click)="building.open = !building.open">
+                      {{ building.name }}
+                    </strong>
                     <mat-checkbox
                       class="example-margin"
                       [checked]="allChecked(building)"
                       [indeterminate]="someChecked(building)"
                       (change)="setAll(building, $event.checked)"
                     >
-                      {{ building.name }}
                     </mat-checkbox>
-                    <div>
+                  </mat-action-row>
+                  <mat-accordion class="mat-read-more">
+                    <mat-expansion-panel [expanded]="building.open">
                       <div *ngFor="let product of building.products">
+                        {{ product.name }}
                         <mat-checkbox
                           [(ngModel)]="product.checked"
                           (ngModelChange)="updateAllChecked(building)"
-                        >
-                          {{ product.name }}
-                        </mat-checkbox>
+                        ></mat-checkbox>
                       </div>
-                    </div>
-                  </li>
-                </ul>
+                    </mat-expansion-panel>
+                  </mat-accordion>
+                </ng-container>
               </div>
             </div>
           </td>

@@ -30,6 +30,7 @@ export interface BuildingProductRow {
 export interface BuildingPeriodicElement {
   name: string;
   checked: boolean;
+  open?: boolean;
   products: BuildingProductRow[];
 }
 
