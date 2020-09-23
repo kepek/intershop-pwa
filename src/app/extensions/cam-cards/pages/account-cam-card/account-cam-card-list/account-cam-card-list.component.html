@@ -1,0 +1,65 @@
+<div *ngIf="camCards && camCards.length > 0; else noCamCard" class="section">
+  <div class="list-header d-none d-md-flex">
+    <div class="list-header-item col-5">{{ 'camfil.account.cam_cards.list.table.name' | translate }}</div>
+    <div class="list-header-item col-3">{{ 'camfil.account.cam_cards.list.table.created' | translate }}</div>
+    <div class="list-header-item col-2">{{ 'camfil.account.cam_cards.list.table.item' | translate }}</div>
+  </div>
+  <div class="list-body">
+    <ng-container *ngTemplateOutlet="camCardRow"></ng-container>
+    <ng-container *ngFor="let camCards of camCards">
+      <ng-container *ngTemplateOutlet="camCardRow; context: { camCards: camCards }"></ng-container>
+    </ng-container>
+  </div>
+</div>
+<ng-template #noCamCard>
+  <p>{{ 'camfil.account.cam_cards.list.no_templates.text' | translate }}</p>
+</ng-template>
+<ng-template #camCardRow let-camCards="camCards">
+  <div *ngIf="camCards" class="list-item-row row mx-0" data-testing-id="cam-card-list-item-container">
+    <div class="col-5 list-item" data-testing-id="cam-card-list-item">
+      <a [routerLink]="'/account/cam-cards/' + camCards.id" data-testing-id="cam-card-list-title">{{
+        camCards.title
+      }}</a>
+    </div>
+    <div class="col-3 list-item d-none d-md-block">{{ camCards.creationDate | ishDate: 'shortDate' }}</div>
+    <div class="col-2 list-item">
+      {{ camCards.itemsCount | i18nPlural: ('camfil.account.cam_cards.items' | translate) || { other: '#' } }}
+    </div>
+    <div class="col-5 col-md-2 list-item text-right">
+      <a class="btn-tool d-inline-flex align-top">
+        <camfil-product-add-to-basket
+          displayType="icon"
+          [product]="dummyProduct"
+          [disabled]="!camCards.items?.length"
+          class="text-primary p-0"
+          (productToBasket)="addCamCardToCart(camCards.id)"
+        ></camfil-product-add-to-basket>
+      </a>
+      <a
+        class="btn-tool"
+        [title]="'camfil.account.cam_card.edit.heading' | translate"
+        data-testing-id="cam-card-details-edit"
+        [routerLink]="'/account/cam-cards/' + camCards.id"
+        data-testing-id="cam-card-list-title"
+        ><fa-icon icon="pencil-alt"></fa-icon
+      ></a>
+      <a
+        class="btn-tool"
+        title="{{ 'camfil.account.cam_cards.list.link.remove' | translate }}"
+        (click)="openDeleteConfirmationDialog(camCards, deleteDialog)"
+        data-testing-id="delete-cam-card"
+        ><fa-icon [icon]="['fas', 'trash-alt']"></fa-icon
+      ></a>
+    </div>
+  </div>
+</ng-template>
+
+<ish-modal-dialog
+  #deleteDialog
+  (confirmed)="delete($event)"
+  [options]="{
+    confirmText: 'camfil.account.cam_card.delete.button.text' | translate,
+    rejectText: 'camfil.account.cancel.button.label' | translate
+  }"
+  >{{ 'camfil.account.cam_card.delete.do_you_really.text' | translate }}</ish-modal-dialog
+>

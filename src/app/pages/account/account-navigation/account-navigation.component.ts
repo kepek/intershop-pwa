@@ -28,6 +28,11 @@ export class AccountNavigationComponent implements OnInit, OnChanges {
    */
   navigationItems: NavigationItems = {
     '/account': { localizationKey: 'account.my_account.link' },
+    '/account/cam-cards': {
+      localizationKey: 'camfil.account.cam_cards.link',
+      feature: 'camCards',
+      dataTestingId: 'cam-cards-link',
+    },
     '/account/orders': { localizationKey: 'account.order_history.link' },
     '/account/wishlists': {
       localizationKey: 'account.wishlists.link',

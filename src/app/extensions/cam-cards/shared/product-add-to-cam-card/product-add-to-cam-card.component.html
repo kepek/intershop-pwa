@@ -1,0 +1,36 @@
+<!-- display addToCamCard Icon/animated Icon or link-->
+<button
+  type="submit"
+  name="addProduct"
+  class="btn"
+  [ngClass]="class"
+  (click)="openModal(modal)"
+  data-testing-id="addToCamCardButton"
+>
+  <ng-container [ngSwitch]="displayType">
+    <ng-template [ngSwitchCase]="'animated'">
+      <fa-icon
+        [icon]="['fas', 'list']"
+        [title]="'camfil.account.cam_card.add_to_template.button.add_to_template.label' | translate"
+      ></fa-icon>
+      <span class="share-label">{{
+        'camfil.account.cam_card.add_to_template.button.add_to_template.label' | translate
+      }}</span>
+    </ng-template>
+    <ng-template [ngSwitchCase]="'icon'">
+      <fa-icon
+        [icon]="['fas', 'list']"
+        [title]="'camfil.account.cam_card.add_to_template.button.add_to_template.label' | translate"
+      ></fa-icon>
+    </ng-template>
+    <ng-template ngSwitchDefault>
+      {{ 'camfil.account.cam_card.add_to_template.button.add_to_template.label' | translate }}
+    </ng-template>
+  </ng-container>
+</button>
+
+<ish-select-cam-card-modal
+  #modal
+  [product]="product"
+  (submitEmitter)="addProductToCamCard($event)"
+></ish-select-cam-card-modal>
