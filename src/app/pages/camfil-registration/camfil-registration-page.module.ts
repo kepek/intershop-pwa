@@ -6,7 +6,8 @@ import { MaterialModule } from 'camfil-shared/material/material.module';
 
 import { SharedModule } from 'ish-shared/shared.module';
 
-import { CamfilBannerComponent } from './camfil-banner/camfil-banner.component';
+import { CamfilBannerComponent } from '../../shared/components/camfil-banner/camfil-banner.component';
+
 import { CamfilRegistrationCompanyFormComponent } from './camfil-registration-company-form/camfil-registration-company-form.component';
 import { CamfilRegistrationCredentialsFormComponent } from './camfil-registration-credentials-form/camfil-registration-credentials-form.component';
 import { CamfilRegistrationFormComponent } from './camfil-registration-form/camfil-registration-form.component';

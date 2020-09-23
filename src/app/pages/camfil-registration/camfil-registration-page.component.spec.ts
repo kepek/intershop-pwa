@@ -8,7 +8,8 @@ import { instance, mock } from 'ts-mockito';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
 
-import { CamfilBannerComponent } from './camfil-banner/camfil-banner.component';
+import { CamfilBannerComponent } from '../../shared/components/camfil-banner/camfil-banner.component';
+
 import { CamfilRegistrationFormComponent } from './camfil-registration-form/camfil-registration-form.component';
 import { CamfilRegistrationPageComponent } from './camfil-registration-page.component';
 
