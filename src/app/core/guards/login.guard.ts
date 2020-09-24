@@ -1,13 +1,13 @@
-import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, NavigationEnd, Router, RouterStateSnapshot } from '@angular/router';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Store, select } from '@ngrx/store';
 import { filter, first } from 'rxjs/operators';
 
+import { Injectable } from '@angular/core';
+import { LoginModalComponent } from 'ish-shared/components/login/login-modal/login-modal.component';
 import { getDeviceType } from 'ish-core/store/core/configuration';
 import { getUserAuthorized } from 'ish-core/store/customer/user';
 import { whenTruthy } from 'ish-core/utils/operators';
-import { LoginModalComponent } from 'ish-shared/components/login/login-modal/login-modal.component';
 
 @Injectable({ providedIn: 'root' })
 export class LoginGuard implements CanActivate {
@@ -34,8 +34,6 @@ export class LoginGuard implements CanActivate {
       return true;
     }
 
-    const returnUrl = route.queryParams.returnUrl || '/home';
-
     this.currentDialog = this.modalService.open(LoginModalComponent, { centered: true, size: 'sm' });
 
     const loginModalComponent = this.currentDialog.componentInstance as LoginModalComponent;
@@ -59,7 +57,6 @@ export class LoginGuard implements CanActivate {
     // login successful
     this.store.pipe(select(getUserAuthorized), whenTruthy(), first()).subscribe(() => {
       this.currentDialog.dismiss();
-      this.router.navigateByUrl(returnUrl);
     });
 
     return false;

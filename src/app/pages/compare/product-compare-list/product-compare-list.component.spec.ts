@@ -1,29 +1,27 @@
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
-import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MockComponent, MockDirective, MockPipe } from 'ng-mocks';
-import { of } from 'rxjs';
+import { ProductView, createProductView } from 'ish-core/models/product-view/product-view.model';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { anything, instance, mock, when } from 'ts-mockito';
 
-import { FeatureToggleDirective } from 'ish-core/directives/feature-toggle.directive';
-import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { AttributeToStringPipe } from 'ish-core/models/attribute/attribute.pipe';
-import { ProductView, createProductView } from 'ish-core/models/product-view/product-view.model';
-import { Product } from 'ish-core/models/product/product.model';
-import { ProductRoutePipe } from 'ish-core/routing/product/product-route.pipe';
-import { categoryTree } from 'ish-core/utils/dev/test-data-utils';
 import { CamfilProductAddToBasketComponent } from 'ish-shared/components/product/camfil-product-add-to-basket/camfil-product-add-to-basket.component';
 import { CamfilProductIdComponent } from 'ish-shared/components/product/camfil-product-id/camfil-product-id.component';
+import { CamfilProductImageComponent } from 'ish-shell/header/camfil-product-image/camfil-product-image.component';
 import { CamfilProductInventoryComponent } from 'ish-shared/components/product/camfil-product-inventory/camfil-product-inventory.component';
 import { CamfilProductPriceComponent } from 'ish-shared/components/product/camfil-product-price/camfil-product-price.component';
 import { CamfilProductRatingComponent } from 'ish-shared/components/product/camfil-product-rating/camfil-product-rating.component';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { FeatureToggleDirective } from 'ish-core/directives/feature-toggle.directive';
+import { Product } from 'ish-core/models/product/product.model';
 import { ProductAttributesComponent } from 'ish-shared/components/product/product-attributes/product-attributes.component';
-import { CamfilProductImageComponent } from 'ish-shell/header/camfil-product-image/camfil-product-image.component';
-
-import { ProductComparePagingComponent } from '../product-compare-paging/product-compare-paging.component';
-
 import { ProductCompareListComponent } from './product-compare-list.component';
+import { ProductComparePagingComponent } from '../product-compare-paging/product-compare-paging.component';
+import { ProductRoutePipe } from 'ish-core/routing/product/product-route.pipe';
+import { RouterTestingModule } from '@angular/router/testing';
+import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
+import { categoryTree } from 'ish-core/utils/dev/test-data-utils';
+import { of } from 'rxjs';
 
 describe('Product Compare List Component', () => {
   let fixture: ComponentFixture<ProductCompareListComponent>;
@@ -33,7 +31,7 @@ describe('Product Compare List Component', () => {
   let compareProduct1: ProductView;
   let compareProduct2: ProductView;
 
-  beforeEach(async(() => {
+  beforeEach(async () => {
     compareProduct1 = createProductView({ sku: '111', inStock: true, availability: true } as Product, categoryTree());
     compareProduct1.attributes = [
       {
@@ -88,7 +86,7 @@ describe('Product Compare List Component', () => {
       ],
       providers: [{ provide: ShoppingFacade, useFactory: () => instance(shoppingFacade) }],
     }).compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ProductCompareListComponent);

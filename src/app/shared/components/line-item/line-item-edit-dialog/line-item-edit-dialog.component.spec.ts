@@ -1,8 +1,7 @@
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
-import { findAllCamfilElements } from 'camfil-core/utils/dev/html-query-utils';
 import { MockComponent, MockPipe } from 'ng-mocks';
 import { of } from 'rxjs';
 import { anything, instance, mock, when } from 'ts-mockito';
@@ -12,7 +11,7 @@ import { LineItemView } from 'ish-core/models/line-item/line-item.model';
 import { PricePipe } from 'ish-core/models/price/price.pipe';
 import { VariationProductView } from 'ish-core/models/product-view/product-view.model';
 import { ProductCompletenessLevel } from 'ish-core/models/product/product.model';
-import { findAllIshElements } from 'ish-core/utils/dev/html-query-utils';
+import { findAllCustomElements } from 'ish-core/utils/dev/html-query-utils';
 import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
 import { CamfilProductIdComponent } from 'ish-shared/components/product/camfil-product-id/camfil-product-id.component';
 import { CamfilProductInventoryComponent } from 'ish-shared/components/product/camfil-product-inventory/camfil-product-inventory.component';
@@ -30,10 +29,10 @@ describe('Line Item Edit Dialog Component', () => {
   let element: HTMLElement;
   let shoppingFacade: ShoppingFacade;
 
-  beforeEach(async(() => {
+  beforeEach(async () => {
     shoppingFacade = mock(ShoppingFacade);
 
-    TestBed.configureTestingModule({
+    await TestBed.configureTestingModule({
       imports: [NgbModalModule, ReactiveFormsModule, TranslateModule.forRoot()],
       declarations: [
         LineItemEditDialogComponent,
@@ -49,7 +48,7 @@ describe('Line Item Edit Dialog Component', () => {
       ],
       providers: [{ provide: ShoppingFacade, useFactory: () => instance(shoppingFacade) }],
     }).compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(LineItemEditDialogComponent);
@@ -89,13 +88,12 @@ describe('Line Item Edit Dialog Component', () => {
 
   it('should display ish-components on the container', () => {
     fixture.detectChanges();
-    expect(findAllIshElements(element)).toIncludeAllMembers(['ish-input']);
-    expect(findAllCamfilElements(element)).toIncludeAllMembers(['camfil-product-image']);
+    expect(findAllCustomElements(element)).toIncludeAllMembers(['ish-input', 'camfil-product-image']);
   });
 
   it('should display loading-components on the container', () => {
     when(shoppingFacade.productNotReady$(anything(), anything())).thenReturn(of(true));
     fixture.detectChanges();
-    expect(findAllIshElements(element)).toIncludeAllMembers(['ish-input', 'ish-loading']);
+    expect(findAllCustomElements(element)).toIncludeAllMembers(['ish-input', 'ish-loading']);
   });
 });

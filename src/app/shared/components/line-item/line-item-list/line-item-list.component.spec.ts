@@ -1,9 +1,8 @@
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { TranslateModule } from '@ngx-translate/core';
-import { findAllCamfilElements } from 'camfil-core/utils/dev/html-query-utils';
 import { MockComponent, MockComponents, MockPipe } from 'ng-mocks';
 import { of } from 'rxjs';
 import { anything, instance, mock, when } from 'ts-mockito';
@@ -14,7 +13,7 @@ import { PricePipe } from 'ish-core/models/price/price.pipe';
 import { ProductView } from 'ish-core/models/product-view/product-view.model';
 import { ProductRoutePipe } from 'ish-core/routing/product/product-route.pipe';
 import { BasketMockData } from 'ish-core/utils/dev/basket-mock-data';
-import { findAllIshElements } from 'ish-core/utils/dev/html-query-utils';
+import { findAllCustomElements } from 'ish-core/utils/dev/html-query-utils';
 import { BasketPromotionComponent } from 'ish-shared/components/basket/basket-promotion/basket-promotion.component';
 import { LineItemDescriptionComponent } from 'ish-shared/components/line-item/line-item-description/line-item-description.component';
 import { PromotionDetailsComponent } from 'ish-shared/components/promotion/promotion-details/promotion-details.component';
@@ -31,11 +30,11 @@ describe('Line Item List Component', () => {
   let fixture: ComponentFixture<LineItemListComponent>;
   let element: HTMLElement;
 
-  beforeEach(async(() => {
+  beforeEach(async () => {
     const shoppingFacade = mock(ShoppingFacade);
     when(shoppingFacade.product$(anything(), anything())).thenReturn(of({} as ProductView));
 
-    TestBed.configureTestingModule({
+    await TestBed.configureTestingModule({
       declarations: [
         LineItemListComponent,
         MockComponent(BasketPromotionComponent),
@@ -52,7 +51,7 @@ describe('Line Item List Component', () => {
       imports: [ReactiveFormsModule, RouterTestingModule, TranslateModule.forRoot()],
       providers: [{ provide: ShoppingFacade, useFactory: () => instance(shoppingFacade) }],
     }).compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(LineItemListComponent);
@@ -69,8 +68,7 @@ describe('Line Item List Component', () => {
 
   it('should render sub components if basket changes', () => {
     fixture.detectChanges();
-    expect(findAllIshElements(element)).toIncludeAllMembers(['ish-line-item-description']);
-    expect(findAllCamfilElements(element)).toIncludeAllMembers(['camfil-product-image']);
+    expect(findAllCustomElements(element)).toIncludeAllMembers(['ish-line-item-description', 'camfil-product-image']);
   });
 
   it('should throw deleteItem event when delete item is clicked', done => {

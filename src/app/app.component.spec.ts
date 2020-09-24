@@ -1,18 +1,18 @@
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { RouterTestingModule } from '@angular/router/testing';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { findAllCamfilElements } from 'camfil';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MockComponent, MockDirective } from 'ng-mocks';
-import { NgxCookieBannerModule } from 'ngx-cookie-banner';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { instance, mock } from 'ts-mockito';
 
-import { ServerHtmlDirective } from 'ish-core/directives/server-html.directive';
-import { AppFacade } from 'ish-core/facades/app.facade';
-
 import { AppComponent } from './app.component';
+import { AppFacade } from 'ish-core/facades/app.facade';
 import { CamfilFooterComponent } from './shell/footer/camfil-footer/camfil-footer.component';
 import { CamfilHeaderComponent } from './shell/header/camfil-header/camfil-header.component';
+import { NgxCookieBannerModule } from 'ngx-cookie-banner';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterTestingModule } from '@angular/router/testing';
+import { ServerHtmlDirective } from 'ish-core/directives/server-html.directive';
+import { findAllCamfilElements } from 'camfil';
+import { findAllCustomElements } from 'ish-core/utils/dev/html-query-utils';
 
 let translate: TranslateService;
 
@@ -21,8 +21,8 @@ describe('App Component', () => {
   let component: AppComponent;
   let element: HTMLElement;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       declarations: [
         AppComponent,
         MockComponent(CamfilFooterComponent),
@@ -32,7 +32,7 @@ describe('App Component', () => {
       imports: [NgxCookieBannerModule.forRoot(), NoopAnimationsModule, RouterTestingModule, TranslateModule.forRoot()],
       providers: [{ provide: AppFacade, useFactory: () => instance(mock(AppFacade)) }],
     }).compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(AppComponent);
@@ -51,7 +51,7 @@ describe('App Component', () => {
     expect(() => fixture.detectChanges()).not.toThrow();
   });
 
-  it('should render header component on page', async(() => {
-    expect(findAllCamfilElements(element)).toContain('camfil-header');
-  }));
+  it('should render header component on page', () => {
+    expect(findAllCustomElements(element)).toContain('ish-header');
+  });
 });

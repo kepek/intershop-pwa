@@ -1,39 +1,37 @@
-import { Location } from '@angular/common';
-import { ComponentFixture, TestBed, async, fakeAsync, tick } from '@angular/core/testing';
-import { Router } from '@angular/router';
-import { RouterTestingModule } from '@angular/router/testing';
-import { findAllCamfilElements } from 'camfil-core/utils/dev/html-query-utils';
-import { MockComponent } from 'ng-mocks';
+import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { EMPTY, noop, of } from 'rxjs';
-import { anything, instance, mock, verify, when } from 'ts-mockito';
-
-import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
-import { FeatureToggleModule } from 'ish-core/feature-toggle.module';
-import { createCategoryView } from 'ish-core/models/category-view/category-view.model';
-import { Category } from 'ish-core/models/category/category.model';
-import { VariationSelection } from 'ish-core/models/product-variation/variation-selection.model';
+import { Product, ProductCompletenessLevel } from 'ish-core/models/product/product.model';
 import {
   VariationProductView,
   createProductView,
   createVariationProductMasterView,
 } from 'ish-core/models/product-view/product-view.model';
-import { ProductRetailSet } from 'ish-core/models/product/product-retail-set.model';
-import { VariationProductMaster } from 'ish-core/models/product/product-variation-master.model';
-import { VariationProduct } from 'ish-core/models/product/product-variation.model';
-import { Product, ProductCompletenessLevel } from 'ish-core/models/product/product.model';
-import { ProductRoutePipe } from 'ish-core/routing/product/product-route.pipe';
-import { findAllIshElements } from 'ish-core/utils/dev/html-query-utils';
-import { categoryTree } from 'ish-core/utils/dev/test-data-utils';
-import { CamfilBreadcrumbComponent } from 'ish-shared/components/common/camfil-breadcrumb/camfil-breadcrumb.component';
-import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
-import { RecentlyViewedComponent } from 'ish-shared/components/recently/recently-viewed/recently-viewed.component';
+import { anything, instance, mock, verify, when } from 'ts-mockito';
 
+import { CamfilBreadcrumbComponent } from 'ish-shared/components/common/camfil-breadcrumb/camfil-breadcrumb.component';
 import { CamfilProductLinksComponent } from './camfil-product-links/camfil-product-links.component';
+import { Category } from 'ish-core/models/category/category.model';
+import { FeatureToggleModule } from 'ish-core/feature-toggle.module';
+import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
+import { Location } from '@angular/common';
+import { MockComponent } from 'ng-mocks';
 import { ProductBundlePartsComponent } from './product-bundle-parts/product-bundle-parts.component';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
 import { ProductMasterVariationsComponent } from './product-master-variations/product-master-variations.component';
 import { ProductPageComponent } from './product-page.component';
+import { ProductRetailSet } from 'ish-core/models/product/product-retail-set.model';
+import { ProductRoutePipe } from 'ish-core/routing/product/product-route.pipe';
+import { RecentlyViewedComponent } from 'ish-shared/components/recently/recently-viewed/recently-viewed.component';
 import { RetailSetPartsComponent } from './retail-set-parts/retail-set-parts.component';
+import { Router } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
+import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
+import { VariationProduct } from 'ish-core/models/product/product-variation.model';
+import { VariationProductMaster } from 'ish-core/models/product/product-variation-master.model';
+import { VariationSelection } from 'ish-core/models/product-variation/variation-selection.model';
+import { categoryTree } from 'ish-core/utils/dev/test-data-utils';
+import { createCategoryView } from 'ish-core/models/category-view/category-view.model';
+import { findAllCustomElements } from 'ish-core/utils/dev/html-query-utils';
 
 describe('Product Page Component', () => {
   let component: ProductPageComponent;
@@ -44,12 +42,12 @@ describe('Product Page Component', () => {
 
   const categories = categoryTree([{ uniqueId: 'A', categoryPath: ['A'] } as Category]);
 
-  beforeEach(async(() => {
+  beforeEach(async () => {
     shoppingFacade = mock(ShoppingFacade);
     when(shoppingFacade.selectedProduct$).thenReturn(EMPTY);
     when(shoppingFacade.selectedCategory$).thenReturn(of(createCategoryView(categories, 'A')));
 
-    TestBed.configureTestingModule({
+    await TestBed.configureTestingModule({
       imports: [
         FeatureToggleModule.forTesting('recently'),
         RouterTestingModule.withRoutes([{ path: '**', component: ProductPageComponent }]),
@@ -67,7 +65,7 @@ describe('Product Page Component', () => {
       ],
       providers: [ProductRoutePipe, { provide: ShoppingFacade, useFactory: () => instance(shoppingFacade) }],
     }).compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ProductPageComponent);
@@ -88,7 +86,7 @@ describe('Product Page Component', () => {
 
     fixture.detectChanges();
 
-    expect(findAllIshElements(element)).toEqual(['ish-loading', 'ish-recently-viewed']);
+    expect(findAllCustomElements(element)).toEqual(['ish-loading', 'ish-recently-viewed']);
   });
 
   xit('should display product-detail when product is available', () => {
@@ -97,8 +95,12 @@ describe('Product Page Component', () => {
 
     fixture.detectChanges();
 
-    expect(findAllIshElements(element)).toEqual(['ish-product-detail', 'camfil-product-links', 'ish-recently-viewed']);
-    expect(findAllCamfilElements(element)).toEqual(['camfil-breadcrumb']);
+    expect(findAllCustomElements(element)).toEqual([
+      'camfil-product-links',
+      'camfil-breadcrumb',
+      'ish-product-detail',
+      'ish-recently-viewed',
+    ]);
   });
 
   it('should redirect to product page when variation is selected', fakeAsync(() => {

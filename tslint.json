@@ -516,6 +516,8 @@
     },
     "use-async-synchronization-in-tests": true,
     "use-jest-extended-matchers-in-tests": true,
+    "use-new-async-in-tests": true,
+    "do-not-use-then-with-testbed-in-tests": true,
     "no-any": {
       "severity": "warning"
     },
@@ -743,11 +745,11 @@
             "file": ".*/store/(<kebab>/|)<kebab>-store\\.module\\.ts$"
           },
           {
-            "name": "^get(.*)State$",
+            "name": "^get(.*?)(Internal)?State$",
             "file": ".*/store/([a-z][a-z0-9-]+/|)(<kebab>/<kebab>\\.selectors|<kebab>-store)\\.ts$"
           },
           {
-            "name": "^([A-Z].*)State$",
+            "name": "^([A-Z].*?)(Internal)?State$",
             "file": ".*/store/([a-z][a-z0-9-]+/|)(<kebab>/<kebab>\\.reducer|(<kebab>/|)<kebab>-store)\\.ts$"
           },
           {

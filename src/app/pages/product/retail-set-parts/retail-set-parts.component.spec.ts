@@ -1,20 +1,19 @@
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { TranslateModule } from '@ngx-translate/core';
-import { findAllCamfilElements } from 'camfil-core/utils/dev/html-query-utils';
-import { MockComponent } from 'ng-mocks';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CamfilProductAddToBasketComponent } from 'ish-shared/components/product/camfil-product-add-to-basket/camfil-product-add-to-basket.component';
 import { CamfilProductItemComponent } from 'ish-shared/components/product/camfil-product-item/camfil-product-item.component';
-
+import { MockComponent } from 'ng-mocks';
 import { RetailSetPartsComponent } from './retail-set-parts.component';
+import { TranslateModule } from '@ngx-translate/core';
+import { findAllCustomElements } from 'ish-core/utils/dev/html-query-utils';
 
 describe('Retail Set Parts Component', () => {
   let component: RetailSetPartsComponent;
   let fixture: ComponentFixture<RetailSetPartsComponent>;
   let element: HTMLElement;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       imports: [TranslateModule.forRoot()],
       declarations: [
         MockComponent(CamfilProductAddToBasketComponent),
@@ -22,7 +21,7 @@ describe('Retail Set Parts Component', () => {
         RetailSetPartsComponent,
       ],
     }).compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(RetailSetPartsComponent);
@@ -43,7 +42,7 @@ describe('Retail Set Parts Component', () => {
 
   it('should display elements for each part', () => {
     fixture.detectChanges();
-    expect(findAllCamfilElements(element)).toMatchInlineSnapshot(`
+    expect(findAllCustomElements(element)).toMatchInlineSnapshot(`
       Array [
         "camfil-product-add-to-basket",
         "camfil-product-item",

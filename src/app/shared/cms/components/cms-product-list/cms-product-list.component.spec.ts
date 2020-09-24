@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MockComponent } from 'ng-mocks';
 
 import { createContentPageletView } from 'ish-core/models/content-view/content-view.model';
@@ -15,7 +15,7 @@ describe('Cms Product List Component', () => {
     TestBed.configureTestingModule({
       declarations: [CMSProductListComponent, MockComponent(CamfilProductItemComponent)],
     }).compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(CMSProductListComponent);

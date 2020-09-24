@@ -64,6 +64,7 @@ import { CamfilBreadcrumbComponent } from './components/common/camfil-breadcrumb
 import { CamfilLinksBlockComponent } from './components/common/camfil-links-block/camfil-links-block.component';
 import { ErrorMessageComponent } from './components/common/error-message/error-message.component';
 import { InfoBoxComponent } from './components/common/info-box/info-box.component';
+import { InplaceEditComponent } from './components/common/inplace-edit/inplace-edit.component';
 import { LoadingComponent } from './components/common/loading/loading.component';
 import { ModalDialogLinkComponent } from './components/common/modal-dialog-link/modal-dialog-link.component';
 import { ModalDialogComponent } from './components/common/modal-dialog/modal-dialog.component';
@@ -263,6 +264,7 @@ const exportedComponents = [
   ContentPageletComponent,
   ErrorMessageComponent,
   InfoBoxComponent,
+  InplaceEditComponent,
   LineItemListComponent,
   LoadingComponent,
   LoginFormComponent,

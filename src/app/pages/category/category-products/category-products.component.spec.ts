@@ -1,28 +1,26 @@
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { NgbCollapse } from '@ng-bootstrap/ng-bootstrap';
-import { TranslateModule } from '@ngx-translate/core';
-import { findAllCamfilElements } from 'camfil-core/utils/dev/html-query-utils';
-import { MockComponent } from 'ng-mocks';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { createCategoryView } from 'ish-core/models/category-view/category-view.model';
-import { Category } from 'ish-core/models/category/category.model';
-import { categoryTree } from 'ish-core/utils/dev/test-data-utils';
 import { CamfilBreadcrumbComponent } from 'ish-shared/components/common/camfil-breadcrumb/camfil-breadcrumb.component';
+import { CamfilCategoryNavigationComponent } from '../../camfil-category/camfil-category-navigation/camfil-category-navigation.component';
 import { CamfilFilterNavigationComponent } from 'ish-shared/components/filter/camfil-filter-navigation/camfil-filter-navigation.component';
 import { CamfilProductListingComponent } from 'ish-shared/components/product/camfil-product-listing/camfil-product-listing.component';
-
-import { CamfilCategoryNavigationComponent } from '../../camfil-category/camfil-category-navigation/camfil-category-navigation.component';
-
+import { Category } from 'ish-core/models/category/category.model';
 import { CategoryProductsComponent } from './category-products.component';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { MockComponent } from 'ng-mocks';
+import { NgbCollapse } from '@ng-bootstrap/ng-bootstrap';
+import { TranslateModule } from '@ngx-translate/core';
+import { categoryTree } from 'ish-core/utils/dev/test-data-utils';
+import { createCategoryView } from 'ish-core/models/category-view/category-view.model';
+import { findAllCustomElements } from 'ish-core/utils/dev/html-query-utils';
 
 describe('Category Products Component', () => {
   let component: CategoryProductsComponent;
   let fixture: ComponentFixture<CategoryProductsComponent>;
   let element: HTMLElement;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       imports: [TranslateModule.forRoot()],
       declarations: [
         CategoryProductsComponent,
@@ -34,7 +32,7 @@ describe('Category Products Component', () => {
         MockComponent(NgbCollapse),
       ],
     }).compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(CategoryProductsComponent);
@@ -51,7 +49,7 @@ describe('Category Products Component', () => {
   });
 
   it('should display all components on the page', () => {
-    expect(findAllCamfilElements(element)).toIncludeAllMembers([
+    expect(findAllCustomElements(element)).toIncludeAllMembers([
       'camfil-breadcrumb',
       'camfil-product-listing',
       'camfil-filter-navigation',

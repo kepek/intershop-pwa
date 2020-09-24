@@ -1,36 +1,34 @@
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
-import { TranslateModule } from '@ngx-translate/core';
-import { MockComponent } from 'ng-mocks';
-import { SwiperModule } from 'ngx-swiper-wrapper';
-import { EMPTY } from 'rxjs';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { instance, mock, when } from 'ts-mockito';
 
-import { LARGE_BREAKPOINT_WIDTH } from 'ish-core/configurations/injection-keys';
 import { CamfilProductItemComponent } from 'ish-shared/components/product/camfil-product-item/camfil-product-item.component';
-
-import { WishlistsFacade } from '../../facades/wishlists.facade';
-
+import { EMPTY } from 'rxjs';
+import { LARGE_BREAKPOINT_WIDTH } from 'ish-core/configurations/injection-keys';
+import { MockComponent } from 'ng-mocks';
+import { RouterTestingModule } from '@angular/router/testing';
+import { SwiperModule } from 'ngx-swiper-wrapper';
+import { TranslateModule } from '@ngx-translate/core';
 import { WishlistWidgetComponent } from './wishlist-widget.component';
+import { WishlistsFacade } from '../../facades/wishlists.facade';
 
 describe('Wishlist Widget Component', () => {
   let component: WishlistWidgetComponent;
   let fixture: ComponentFixture<WishlistWidgetComponent>;
   let element: HTMLElement;
 
-  beforeEach(async(() => {
+  beforeEach(async () => {
     const wishlistFacadeMock = mock(WishlistsFacade);
     when(wishlistFacadeMock.allWishlistsItemsSkus$).thenReturn(EMPTY);
 
-    TestBed.configureTestingModule({
-      declarations: [MockComponent(CamfilProductItemComponent), WishlistWidgetComponent],
+    await TestBed.configureTestingModule({
+      declarations: [MockComponent(ProductItemComponent), WishlistWidgetComponent],
       imports: [RouterTestingModule, SwiperModule, TranslateModule.forRoot()],
       providers: [
         { provide: WishlistsFacade, useFactory: () => instance(wishlistFacadeMock) },
         { provide: LARGE_BREAKPOINT_WIDTH, useValue: 992 },
       ],
     }).compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(WishlistWidgetComponent);

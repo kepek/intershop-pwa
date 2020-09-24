@@ -1,13 +1,12 @@
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
-import { findAllCamfilElements } from 'camfil-core/utils/dev/html-query-utils';
 import { MockComponent, MockDirective, MockPipe } from 'ng-mocks';
 
 import { FeatureToggleModule } from 'ish-core/feature-toggle.module';
 import { ProductView } from 'ish-core/models/product-view/product-view.model';
 import { ProductRoutePipe } from 'ish-core/routing/product/product-route.pipe';
-import { findAllIshElements } from 'ish-core/utils/dev/html-query-utils';
+import { findAllCustomElements } from 'ish-core/utils/dev/html-query-utils';
 import { CamfilProductAddToBasketComponent } from 'ish-shared/components/product/camfil-product-add-to-basket/camfil-product-add-to-basket.component';
 import { CamfilProductAddToCompareComponent } from 'ish-shared/components/product/camfil-product-add-to-compare/camfil-product-add-to-compare.component';
 import { DEFAULT_CONFIGURATION } from 'ish-shared/components/product/camfil-product-item/camfil-product-item.component';
@@ -32,8 +31,8 @@ describe('Product Tile Component', () => {
   let fixture: ComponentFixture<ProductTileComponent>;
   let element: HTMLElement;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       imports: [FeatureToggleModule.forTesting(), RouterTestingModule, TranslateModule.forRoot()],
       declarations: [
         MockComponent(CamfilProductAddToBasketComponent),
@@ -54,7 +53,7 @@ describe('Product Tile Component', () => {
         ProductTileComponent,
       ],
     }).compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ProductTileComponent);
@@ -72,14 +71,7 @@ describe('Product Tile Component', () => {
   it('should render default elements when not specifically configured', () => {
     component.configuration = DEFAULT_CONFIGURATION;
     fixture.detectChanges();
-    expect(findAllIshElements(element)).toMatchInlineSnapshot(`
-      Array [
-        "ish-lazy-product-add-to-order-template",
-        "ish-lazy-product-add-to-quote",
-        "ish-lazy-product-add-to-wishlist",
-      ]
-    `);
-    expect(findAllCamfilElements(element)).toMatchInlineSnapshot(`
+    expect(findAllCustomElements(element)).toMatchInlineSnapshot(`
       Array [
         "camfil-product-add-to-basket",
         "camfil-product-add-to-compare",
@@ -88,6 +80,15 @@ describe('Product Tile Component', () => {
         "camfil-product-price",
         "camfil-product-price",
         "camfil-product-promotion",
+        "ish-product-image",
+        "ish-product-label",
+        "ish-product-promotion",
+        "ish-product-price",
+        "ish-lazy-product-add-to-quote",
+        "ish-product-add-to-compare",
+        "ish-lazy-product-add-to-order-template",
+        "ish-lazy-product-add-to-wishlist",
+        "ish-product-add-to-basket",
       ]
     `);
   });
@@ -95,8 +96,8 @@ describe('Product Tile Component', () => {
   it('should render almost no elements when configured with empty configuration', () => {
     component.configuration = {};
     fixture.detectChanges();
-    expect(findAllCamfilElements(element)).toMatchInlineSnapshot(`
-      Array [
+    expect(findAllCustomElements(element)).toMatchInlineSnapshot(`
+      Array[
         "camfil-product-image",
         "camfil-product-label",
       ]
