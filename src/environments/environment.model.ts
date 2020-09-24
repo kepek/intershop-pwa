@@ -38,6 +38,8 @@ export interface Environment {
     | 'tacton'
     /* B2C features */
     | 'wishlists'
+    /* Camfil features */
+    | 'camCards'
   )[];
 
   /* ADDITIONAL FEATURE CONFIGURATIONS */
@@ -101,8 +103,8 @@ export const ENVIRONMENT_DEFAULTS: Environment = {
     /* B2B features */
     'advancedVariationHandling',
     'businessCustomerRegistration',
-    'quoting',
-    'orderTemplates',
+    /* Camfil features */
+    'camCards',
   ],
 
   /* PROGRESSIVE WEB APP CONFIGURATIONS */

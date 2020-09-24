@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { TranslateModule } from '@ngx-translate/core';
 
 import { CamfilProductGuidesComponent } from './camfil-product-guides.component';
-import { TranslateModule } from '@ngx-translate/core';
 
 describe('Camfil Product Guides Component', () => {
   let component: CamfilProductGuidesComponent;

@@ -12,7 +12,7 @@ import { ProductLinksListComponent } from '../product-links-list/product-links-l
 
 import { CamfilProductLinksComponent } from './camfil-product-links.component';
 
-describe('Product Links Component', () => {
+describe('Camfil Product Links Component', () => {
   let component: CamfilProductLinksComponent;
   let fixture: ComponentFixture<CamfilProductLinksComponent>;
   let element: HTMLElement;
@@ -21,10 +21,10 @@ describe('Product Links Component', () => {
     TestBed.configureTestingModule({
       imports: [TranslateModule.forRoot()],
       declarations: [
+        CamfilProductLinksComponent,
         MockComponent(CamfilProductItemComponent),
         MockComponent(CamfilProductLinksCarouselComponent),
         MockComponent(ProductLinksListComponent),
-        CamfilProductLinksComponent,
       ],
       providers: [
         { provide: LARGE_BREAKPOINT_WIDTH, useValue: 992 },

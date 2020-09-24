@@ -28,9 +28,9 @@ import { CamfilBreadcrumbComponent } from 'ish-shared/components/common/camfil-b
 import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
 import { RecentlyViewedComponent } from 'ish-shared/components/recently/recently-viewed/recently-viewed.component';
 
+import { CamfilProductLinksComponent } from '../product/camfil-product-links/camfil-product-links.component';
 import { ProductBundlePartsComponent } from '../product/product-bundle-parts/product-bundle-parts.component';
 import { ProductDetailComponent } from '../product/product-detail/product-detail.component';
-import { CamfilProductLinksComponent } from '../product/camfil-product-links/camfil-product-links.component';
 import { ProductMasterVariationsComponent } from '../product/product-master-variations/product-master-variations.component';
 import { RetailSetPartsComponent } from '../product/retail-set-parts/retail-set-parts.component';
 
@@ -66,10 +66,10 @@ describe('Camfil Product Page Component', () => {
         MockComponent(CamfilProductDetailComponent),
         MockComponent(CamfilProductGuidesComponent),
         MockComponent(CamfilProductImagesComponent),
+        MockComponent(CamfilProductLinksComponent),
         MockComponent(LoadingComponent),
         MockComponent(ProductBundlePartsComponent),
         MockComponent(ProductDetailComponent),
-        MockComponent(CamfilProductLinksComponent),
         MockComponent(ProductMasterVariationsComponent),
         MockComponent(RecentlyViewedComponent),
         MockComponent(RetailSetPartsComponent),

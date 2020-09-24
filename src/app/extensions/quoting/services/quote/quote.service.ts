@@ -26,7 +26,7 @@ export class QuoteService {
    */
   private ids$: Observable<{ userId: string; customerId: string }>;
 
-  constructor(private apiService: ApiService, private quoteRequestServie: QuoteRequestService, store: Store) {
+  constructor(private apiService: ApiService, private quoteRequestService: QuoteRequestService, store: Store) {
     this.ids$ = combineLatest([store.pipe(select(getLoggedInUser)), store.pipe(select(getLoggedInCustomer))]).pipe(
       take(1),
       concatMap(([user, customer]) =>
@@ -103,7 +103,7 @@ export class QuoteService {
 
     return this.ids$.pipe(
       concatMap(({ userId, customerId }) =>
-        this.quoteRequestServie
+        this.quoteRequestService
           .addQuoteRequest()
           .pipe(
             concatMap(quoteRequestId =>

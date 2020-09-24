@@ -29,6 +29,7 @@ export interface ProductItemDetailedComponentConfiguration {
   displayAddToBasket: boolean;
   displayAddToWishlist: boolean;
   displayAddToOrderTemplate: boolean;
+  displayAddToCamCard: boolean;
   displayAddToCompare: boolean;
   displayAddToQuote: boolean;
 }

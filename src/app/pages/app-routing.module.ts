@@ -133,17 +133,6 @@ const routes: Routes = [
       breadcrumbData: [{ key: 'helpdesk.contact_us.link' }],
     },
   },
-  {
-    path: 'camfil',
-    loadChildren: () => import('camfil-exports').then(m => m.CamfilModule),
-    data: {
-      meta: {
-        title: 'camfil.home_page.heading',
-        robots: 'index, nofollow',
-      },
-      breadcrumbData: [{ key: 'camfil.home_page.link' }],
-    },
-  },
   isDevMode() && { path: 'demo', loadChildren: () => import('./demo/demo-page.module').then(m => m.DemoPageModule) },
 ];
 

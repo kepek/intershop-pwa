@@ -1,0 +1,15 @@
+<button
+  type="submit"
+  name="addProduct"
+  [ngClass]="class"
+  (click)="openModal(modal)"
+  data-testing-id="addBasketToCamCardButton"
+>
+  {{ 'cam_card.create.heading' | translate }}
+</button>
+
+<camfil-cam-card-preferences-dialog
+  #modal
+  modalTitle="camfil.account.cam_card.new_from_basket.heading"
+  (submit)="createCamCard($event)"
+></camfil-cam-card-preferences-dialog>

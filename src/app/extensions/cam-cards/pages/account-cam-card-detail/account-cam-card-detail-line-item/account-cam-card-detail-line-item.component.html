@@ -1,0 +1,62 @@
+<ng-container *ngIf="product$ | async as product">
+  <div class="d-flex">
+    <div class="col-1 col-md-2 list-item d-flex">
+      <ish-checkbox [form]="selectItemForm" controlName="productCheckbox"> </ish-checkbox>
+      <a class="d-none d-md-inline" [routerLink]="product | ishProductRoute">
+        <camfil-product-image [product]="product" imageType="S" class="product-image"></camfil-product-image>
+      </a>
+    </div>
+    <div class="col-8 col-md-6 list-item d-block d-md-flex">
+      <div class="col-12 col-md-9 pli-description">
+        <a [routerLink]="product | ishProductRoute" class="product-title" data-testing-id="cam-card-product-link">
+          {{ product.name }}
+        </a>
+        <camfil-product-id [product]="product"></camfil-product-id>
+        <ish-product-variation-display [product]="product"></ish-product-variation-display>
+        <ish-product-bundle-display
+          *ngIf="product.type === 'Bundle'"
+          [productBundleSKU]="product.sku"
+        ></ish-product-bundle-display>
+        <camfil-product-inventory [product]="product"></camfil-product-inventory>
+        <div class="btn-group mb-2">
+          <a class="btn-tool" (click)="moveDialog.show()" data-testing-id="move-cam-card">
+            <fa-icon
+              [icon]="['fas', 'arrows-alt']"
+              [title]="'camfil.account.cam_card.table.options.move_to_template' | translate"
+            ></fa-icon>
+          </a>
+          <a class="btn-tool" (click)="removeProductFromCamCard(product?.sku)" data-testing-id="delete-cam-card">
+            <fa-icon
+              [icon]="['fas', 'trash-alt']"
+              [title]="'modal.heading.remove.cam_card.template' | translate"
+            ></fa-icon>
+          </a>
+        </div>
+      </div>
+      <div class="col-6 col-md-3 p-md-0 text-right">
+        <form [formGroup]="addToCartForm">
+          <camfil-product-quantity
+            [allowZeroQuantity]="false"
+            [quantityLabel]="''"
+            [product]="product"
+            [parentForm]="addToCartForm"
+            controlName="quantity"
+          ></camfil-product-quantity>
+        </form>
+      </div>
+    </div>
+    <div class="col-2 list-item d-none d-md-block text-right">
+      {{ camCardItemData?.creationDate | ishDate: 'shortDate' }}
+    </div>
+    <div class="col-4 col-md-2 list-item column-price">
+      <camfil-product-price [product]="product"></camfil-product-price>
+    </div>
+  </div>
+
+  <camfil-select-cam-card-modal
+    #moveDialog
+    addMoveProduct="move"
+    [product]="product"
+    (submitEmitter)="moveItemToOtherCamCard(product.sku, $event)"
+  ></camfil-select-cam-card-modal>
+</ng-container>

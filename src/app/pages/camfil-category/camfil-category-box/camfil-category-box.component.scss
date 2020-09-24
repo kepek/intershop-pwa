@@ -2,8 +2,8 @@
 @import '~src/styles/themes/camfil/variables';
 
 :host {
-  margin-bottom: $space-box / 2;
   display: block;
+  margin-bottom: $space-box / 2;
 
   &:last-child[size='small'] {
     margin-bottom: $space-default;
@@ -11,8 +11,8 @@
 
   .mat-card {
     &-actions:last-child {
-      margin: 0;
       padding: 0;
+      margin: 0;
       a {
         font-weight: 600;
       }
@@ -37,16 +37,16 @@
     figure {
       width: 44px;
       height: 44px;
-      line-height: 44px;
       margin: 0 $space-box / 2 0 0;
+      line-height: 44px;
     }
     strong {
       line-height: 1.1em;
     }
     .mat-icon {
       margin: 0 0 0 auto;
-      box-shadow: $header-shadow;
       border-radius: 50%;
+      box-shadow: $header-shadow;
     }
   }
 }
