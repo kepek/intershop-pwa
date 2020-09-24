@@ -1,11 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-
-import { CamfilSearchBoxComponent } from 'ish-shell/header/camfil-search-box/camfil-search-box.component';
-import { ErrorComponent } from './error.component';
 import { MockComponent } from 'ng-mocks';
+
 import { SafeHtmlPipe } from 'ish-core/pipes/safe-html.pipe';
 import { findAllCustomElements } from 'ish-core/utils/dev/html-query-utils';
+import { CamfilSearchBoxComponent } from 'ish-shell/header/camfil-search-box/camfil-search-box.component';
+
+import { ErrorComponent } from './error.component';
 
 describe('Error Component', () => {
   let fixture: ComponentFixture<ErrorComponent>;

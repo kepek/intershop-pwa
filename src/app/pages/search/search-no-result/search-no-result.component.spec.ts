@@ -17,7 +17,7 @@ describe('Search No Result Component', () => {
       imports: [TranslateModule.forRoot()],
       declarations: [MockComponent(CamfilSearchBoxComponent), SearchNoResultComponent],
     });
-  }););
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(SearchNoResultComponent);
@@ -41,4 +41,4 @@ describe('Search No Result Component', () => {
     expect(element.querySelector('.no-search-result-title')).toBeTruthy();
     expect(element.querySelector('.no-search-result-title').textContent).toContain(component.searchTerm);
   });
-})
+});

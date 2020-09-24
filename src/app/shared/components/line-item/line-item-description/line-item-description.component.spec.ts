@@ -76,12 +76,9 @@ describe('Line Item Description Component', () => {
     expect(findAllCustomElements(element)).toMatchInlineSnapshot(`
       Array [
         "camfil-product-id",
+        "ish-line-item-edit",
         "camfil-product-inventory",
         "camfil-product-shipment",
-        "ish-product-id",
-        "ish-line-item-edit",
-        "ish-product-inventory",
-        "ish-product-shipment",
         "fa-icon",
       ]
     `);

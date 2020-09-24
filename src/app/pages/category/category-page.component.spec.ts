@@ -1,19 +1,21 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MockComponent } from 'ng-mocks';
+import { of } from 'rxjs';
 import { instance, mock, when } from 'ts-mockito';
 
 import { AppFacade } from 'ish-core/facades/app.facade';
+import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
+import { createCategoryView } from 'ish-core/models/category-view/category-view.model';
+import { Category } from 'ish-core/models/category/category.model';
+import { findAllCustomElements } from 'ish-core/utils/dev/html-query-utils';
+import { categoryTree } from 'ish-core/utils/dev/test-data-utils';
+import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
+
 import { CamfilCategoryCategoriesComponent } from '../camfil-category/camfil-category-categories/camfil-category-categories.component';
 import { CamfilCategoryProductsComponent } from '../camfil-category/camfil-category-products/camfil-category-products.component';
-import { Category } from 'ish-core/models/category/category.model';
+
 import { CategoryCategoriesComponent } from './category-categories/category-categories.component';
 import { CategoryPageComponent } from './category-page.component';
-import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
-import { MockComponent } from 'ng-mocks';
-import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
-import { categoryTree } from 'ish-core/utils/dev/test-data-utils';
-import { createCategoryView } from 'ish-core/models/category-view/category-view.model';
-import { findAllCustomElements } from 'ish-core/utils/dev/html-query-utils';
-import { of } from 'rxjs';
 
 describe('Category Page Component', () => {
   let component: CategoryPageComponent;

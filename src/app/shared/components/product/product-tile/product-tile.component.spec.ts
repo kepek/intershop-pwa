@@ -73,22 +73,16 @@ describe('Product Tile Component', () => {
     fixture.detectChanges();
     expect(findAllCustomElements(element)).toMatchInlineSnapshot(`
       Array [
-        "camfil-product-add-to-basket",
-        "camfil-product-add-to-compare",
         "camfil-product-image",
         "camfil-product-label",
-        "camfil-product-price",
-        "camfil-product-price",
         "camfil-product-promotion",
-        "ish-product-image",
-        "ish-product-label",
-        "ish-product-promotion",
-        "ish-product-price",
+        "camfil-product-price",
+        "camfil-product-price",
         "ish-lazy-product-add-to-quote",
-        "ish-product-add-to-compare",
+        "camfil-product-add-to-compare",
         "ish-lazy-product-add-to-order-template",
         "ish-lazy-product-add-to-wishlist",
-        "ish-product-add-to-basket",
+        "camfil-product-add-to-basket",
       ]
     `);
   });
@@ -97,7 +91,7 @@ describe('Product Tile Component', () => {
     component.configuration = {};
     fixture.detectChanges();
     expect(findAllCustomElements(element)).toMatchInlineSnapshot(`
-      Array[
+      Array [
         "camfil-product-image",
         "camfil-product-label",
       ]

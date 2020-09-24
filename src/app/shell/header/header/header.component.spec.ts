@@ -61,7 +61,7 @@ describe('Header Component', () => {
     fixture.detectChanges();
     expect(findAllCustomElements(element)).toMatchInlineSnapshot(`
       Array [
-        "camfil-header-simple",
+        "ish-header-simple",
       ]
     `);
   });

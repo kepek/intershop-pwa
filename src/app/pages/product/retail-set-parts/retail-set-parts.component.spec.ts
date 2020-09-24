@@ -1,11 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { TranslateModule } from '@ngx-translate/core';
+import { MockComponent } from 'ng-mocks';
 
+import { findAllCustomElements } from 'ish-core/utils/dev/html-query-utils';
 import { CamfilProductAddToBasketComponent } from 'ish-shared/components/product/camfil-product-add-to-basket/camfil-product-add-to-basket.component';
 import { CamfilProductItemComponent } from 'ish-shared/components/product/camfil-product-item/camfil-product-item.component';
-import { MockComponent } from 'ng-mocks';
+
 import { RetailSetPartsComponent } from './retail-set-parts.component';
-import { TranslateModule } from '@ngx-translate/core';
-import { findAllCustomElements } from 'ish-core/utils/dev/html-query-utils';
 
 describe('Retail Set Parts Component', () => {
   let component: RetailSetPartsComponent;
@@ -44,10 +45,10 @@ describe('Retail Set Parts Component', () => {
     fixture.detectChanges();
     expect(findAllCustomElements(element)).toMatchInlineSnapshot(`
       Array [
+        "camfil-product-item",
+        "camfil-product-item",
+        "camfil-product-item",
         "camfil-product-add-to-basket",
-        "camfil-product-item",
-        "camfil-product-item",
-        "camfil-product-item",
       ]
     `);
   });

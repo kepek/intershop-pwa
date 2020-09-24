@@ -11,8 +11,8 @@ describe('Cms Product List Component', () => {
   let fixture: ComponentFixture<CMSProductListComponent>;
   let element: HTMLElement;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       declarations: [CMSProductListComponent, MockComponent(CamfilProductItemComponent)],
     }).compileComponents();
   });

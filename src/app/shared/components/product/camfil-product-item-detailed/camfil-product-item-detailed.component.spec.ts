@@ -1,14 +1,13 @@
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
-import { findAllCamfilElements } from 'camfil-core/utils/dev/html-query-utils';
 import { MockComponent, MockDirective, MockPipe } from 'ng-mocks';
 
 import { FeatureToggleDirective } from 'ish-core/directives/feature-toggle.directive';
 import { ProductView } from 'ish-core/models/product-view/product-view.model';
 import { ProductRoutePipe } from 'ish-core/routing/product/product-route.pipe';
-import { findAllIshElements } from 'ish-core/utils/dev/html-query-utils';
+import { findAllCustomElements } from 'ish-core/utils/dev/html-query-utils';
 import { CamfilProductAddToBasketComponent } from 'ish-shared/components/product/camfil-product-add-to-basket/camfil-product-add-to-basket.component';
 import { CamfilProductAddToCompareComponent } from 'ish-shared/components/product/camfil-product-add-to-compare/camfil-product-add-to-compare.component';
 import { CamfilProductIdComponent } from 'ish-shared/components/product/camfil-product-id/camfil-product-id.component';
@@ -35,8 +34,8 @@ describe('Camfil Product Item Detailed Component', () => {
   let fixture: ComponentFixture<CamfilProductItemDetailedComponent>;
   let element: HTMLElement;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       imports: [ReactiveFormsModule, RouterTestingModule, TranslateModule.forRoot()],
       declarations: [
         CamfilProductItemDetailedComponent,
@@ -60,7 +59,7 @@ describe('Camfil Product Item Detailed Component', () => {
         MockPipe(ProductRoutePipe),
       ],
     }).compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(CamfilProductItemDetailedComponent);
@@ -78,24 +77,36 @@ describe('Camfil Product Item Detailed Component', () => {
   it('should render default elements when not specifically configured', () => {
     component.configuration = DEFAULT_CONFIGURATION;
     fixture.detectChanges();
-    expect(findAllIshElements(element)).toMatchInlineSnapshot(`
+    expect(findAllCustomElements(element)).toMatchInlineSnapshot(`
       Array [
+        "camfil-product-image",
+        "camfil-product-label",
+        "camfil-product-id",
+        "camfil-product-promotion",
         "ish-lazy-product-add-to-quote",
+        "camfil-product-add-to-compare",
         "ish-lazy-product-add-to-wishlist",
+        "camfil-lazy-product-add-to-cam-card",
+        "camfil-product-price",
+        "camfil-product-inventory",
+        "camfil-product-quantity",
+        "camfil-product-add-to-basket",
       ]
     `);
-    expect(findAllCamfilElements(element)).toMatchInlineSnapshot(`
+    expect(findAllCustomElements(element)).toMatchInlineSnapshot(`
       Array [
-        "camfil-lazy-product-add-to-cam-card",
-        "camfil-product-add-to-basket",
-        "camfil-product-add-to-compare",
-        "camfil-product-id",
         "camfil-product-image",
-        "camfil-product-inventory",
         "camfil-product-label",
-        "camfil-product-price",
+        "camfil-product-id",
         "camfil-product-promotion",
+        "ish-lazy-product-add-to-quote",
+        "camfil-product-add-to-compare",
+        "ish-lazy-product-add-to-wishlist",
+        "camfil-lazy-product-add-to-cam-card",
+        "camfil-product-price",
+        "camfil-product-inventory",
         "camfil-product-quantity",
+        "camfil-product-add-to-basket",
       ]
     `);
   });
@@ -103,7 +114,7 @@ describe('Camfil Product Item Detailed Component', () => {
   it('should render almost no elements when configured with empty configuration', () => {
     component.configuration = {};
     fixture.detectChanges();
-    expect(findAllCamfilElements(element)).toMatchInlineSnapshot(`
+    expect(findAllCustomElements(element)).toMatchInlineSnapshot(`
       Array [
         "camfil-product-image",
         "camfil-product-label",

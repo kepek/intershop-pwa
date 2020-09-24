@@ -1,13 +1,12 @@
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { NgbCollapse } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
-import { findAllCamfilElements } from 'camfil-core/utils/dev/html-query-utils';
 import { MockComponent } from 'ng-mocks';
 
 import { createCategoryView } from 'ish-core/models/category-view/category-view.model';
 import { Category } from 'ish-core/models/category/category.model';
-import { findAllIshElements } from 'ish-core/utils/dev/html-query-utils';
+import { findAllCustomElements } from 'ish-core/utils/dev/html-query-utils';
 import { categoryTree } from 'ish-core/utils/dev/test-data-utils';
 import { CamfilBreadcrumbComponent } from 'ish-shared/components/common/camfil-breadcrumb/camfil-breadcrumb.component';
 import { CamfilFilterMeasurementsComponent } from 'ish-shared/components/filter/camfil-filter-measurements/camfil-filter-measurements.component';
@@ -23,8 +22,8 @@ describe('Camfil Category Categories Component', () => {
   let fixture: ComponentFixture<CamfilCategoryCategoriesComponent>;
   let element: HTMLElement;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       imports: [TranslateModule.forRoot()],
       declarations: [
         CamfilCategoryCategoriesComponent,
@@ -37,7 +36,7 @@ describe('Camfil Category Categories Component', () => {
         MockComponent(NgbCollapse),
       ],
     }).compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(CamfilCategoryCategoriesComponent);
@@ -64,7 +63,7 @@ describe('Camfil Category Categories Component', () => {
   });
 
   it('should display all components on the page', () => {
-    expect(findAllIshElements(element)).toIncludeAllMembers(['ish-category-list']);
-    expect(findAllCamfilElements(element)).toIncludeAllMembers(['camfil-breadcrumb', 'camfil-category-navigation']);
+    expect(findAllCustomElements(element)).toIncludeAllMembers(['ish-category-list']);
+    expect(findAllCustomElements(element)).toIncludeAllMembers(['camfil-breadcrumb', 'camfil-category-navigation']);
   });
 });

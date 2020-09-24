@@ -25,6 +25,6 @@ function findAllElementsByPrefix(el: HTMLElement, prefix: string): string[] {
   return returnList.sort();
 }
 
-export function findAllCamfilElements(el: HTMLElement): string[] {
+export function findAllCustomElements(el: HTMLElement): string[] {
   return findAllElementsByPrefix(el, 'camfil-');
 }

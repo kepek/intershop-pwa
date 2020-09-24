@@ -1,3 +1,4 @@
+// tslint:disable-next-line:force-jsdoc-comments
 // TODO: move to correct location
 export interface PDPGuideImg {
   url: string;

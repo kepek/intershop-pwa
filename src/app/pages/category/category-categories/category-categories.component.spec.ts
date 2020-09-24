@@ -1,17 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { CamfilBreadcrumbComponent } from 'ish-shared/components/common/camfil-breadcrumb/camfil-breadcrumb.component';
-import { CamfilCategoryNavigationComponent } from '../../camfil-category/camfil-category-navigation/camfil-category-navigation.component';
-import { Category } from 'ish-core/models/category/category.model';
-import { CategoryCategoriesComponent } from './category-categories.component';
-import { CategoryListComponent } from '../category-list/category-list.component';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { MockComponent } from 'ng-mocks';
 import { NgbCollapse } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
-import { categoryTree } from 'ish-core/utils/dev/test-data-utils';
+import { MockComponent } from 'ng-mocks';
+
 import { createCategoryView } from 'ish-core/models/category-view/category-view.model';
+import { Category } from 'ish-core/models/category/category.model';
 import { findAllCustomElements } from 'ish-core/utils/dev/html-query-utils';
+import { categoryTree } from 'ish-core/utils/dev/test-data-utils';
+import { CamfilBreadcrumbComponent } from 'ish-shared/components/common/camfil-breadcrumb/camfil-breadcrumb.component';
+
+import { CamfilCategoryNavigationComponent } from '../../camfil-category/camfil-category-navigation/camfil-category-navigation.component';
+import { CategoryListComponent } from '../category-list/category-list.component';
+
+import { CategoryCategoriesComponent } from './category-categories.component';
 
 describe('Category Categories Component', () => {
   let component: CategoryCategoriesComponent;

@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MockComponent, MockDirective } from 'ng-mocks';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { instance, mock } from 'ts-mockito';
-
-import { AppComponent } from './app.component';
-import { AppFacade } from 'ish-core/facades/app.facade';
-import { CamfilFooterComponent } from './shell/footer/camfil-footer/camfil-footer.component';
-import { CamfilHeaderComponent } from './shell/header/camfil-header/camfil-header.component';
-import { NgxCookieBannerModule } from 'ngx-cookie-banner';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { MockComponent, MockDirective } from 'ng-mocks';
+import { NgxCookieBannerModule } from 'ngx-cookie-banner';
+import { instance, mock } from 'ts-mockito';
+
 import { ServerHtmlDirective } from 'ish-core/directives/server-html.directive';
-import { findAllCamfilElements } from 'camfil';
+import { AppFacade } from 'ish-core/facades/app.facade';
 import { findAllCustomElements } from 'ish-core/utils/dev/html-query-utils';
+
+import { AppComponent } from './app.component';
+import { CamfilFooterComponent } from './shell/footer/camfil-footer/camfil-footer.component';
+import { CamfilHeaderComponent } from './shell/header/camfil-header/camfil-header.component';
 
 let translate: TranslateService;
 
@@ -52,6 +52,6 @@ describe('App Component', () => {
   });
 
   it('should render header component on page', () => {
-    expect(findAllCustomElements(element)).toContain('ish-header');
+    expect(findAllCustomElements(element)).toContain('camfil-header');
   });
 });

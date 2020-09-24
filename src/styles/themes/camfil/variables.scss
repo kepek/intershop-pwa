@@ -31,7 +31,6 @@ $font-family-bold: 'robotobold', 'Helvetica', 'Arial', sans-serif;
 $font-family-condensedregular: 'roboto_condensedregular', 'Helvetica Neue', helvetica, 'Arial', sans-serif;
 $font-family-condensedbold: 'roboto_condensedbold', 'Helvetica Neue', helvetica, 'Arial', sans-serif;
 $font-family-SansPro: 'Source Sans Pro', sans-serif;
-// stylelint-enable value-keyword-case
 
 //
 // FONT SIZES
@@ -210,7 +209,6 @@ $border-radius-sm: 0;
 $font-family-sans-serif: $font-family-regular;
 $font-family-monospace: 'Menlo', 'Monaco', 'Consolas', 'Courier New', monospace;
 $font-family-base: $font-family-regular;
-// stylelint-enable value-keyword-case
 
 // TODO: round font size values
 $font-size-base: $font-size-corporate; // 14px is the bootstrap 3 default font size (1rem should be around 16px)

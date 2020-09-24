@@ -4,7 +4,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { routerNavigatedAction } from '@ngrx/router-store';
 import { Store, select } from '@ngrx/store';
 import { defer, fromEvent, iif } from 'rxjs';
-import { distinctUntilChanged, map, sample } from 'rxjs/operators';
+import { distinctUntilChanged, map, sample, withLatestFrom } from 'rxjs/operators';
 
 import { selectRouteData } from 'ish-core/store/core/router';
 import { distinctCompareWith } from 'ish-core/utils/operators';

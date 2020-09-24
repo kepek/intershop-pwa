@@ -80,27 +80,18 @@ describe('Product Row Component', () => {
     fixture.detectChanges();
     expect(findAllCustomElements(element)).toMatchInlineSnapshot(`
       Array [
-        "camfil-product-add-to-basket",
-        "camfil-product-add-to-compare",
-        "camfil-product-id",
         "camfil-product-image",
-        "camfil-product-inventory",
         "camfil-product-label",
-        "camfil-product-price",
+        "camfil-product-id",
         "camfil-product-promotion",
-        "camfil-product-quantity",
-        "ish-product-image",
-        "ish-product-label",
-        "ish-product-id",
-        "ish-product-promotion",
         "ish-lazy-product-add-to-quote",
-        "ish-product-add-to-compare",
+        "camfil-product-add-to-compare",
         "ish-lazy-product-add-to-wishlist",
         "ish-lazy-product-add-to-order-template",
-        "ish-product-price",
-        "ish-product-inventory",
-        "ish-product-quantity",
-        "ish-product-add-to-basket",
+        "camfil-product-price",
+        "camfil-product-inventory",
+        "camfil-product-quantity",
+        "camfil-product-add-to-basket",
       ]
     `);
   });
@@ -109,7 +100,7 @@ describe('Product Row Component', () => {
     component.configuration = {};
     fixture.detectChanges();
     expect(findAllCustomElements(element)).toMatchInlineSnapshot(`
-      Array[
+      Array [
         "camfil-product-image",
         "camfil-product-label",
       ]

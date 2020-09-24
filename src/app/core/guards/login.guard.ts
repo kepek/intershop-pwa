@@ -1,13 +1,13 @@
+import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, NavigationEnd, Router, RouterStateSnapshot } from '@angular/router';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Store, select } from '@ngrx/store';
 import { filter, first } from 'rxjs/operators';
 
-import { Injectable } from '@angular/core';
-import { LoginModalComponent } from 'ish-shared/components/login/login-modal/login-modal.component';
 import { getDeviceType } from 'ish-core/store/core/configuration';
 import { getUserAuthorized } from 'ish-core/store/customer/user';
 import { whenTruthy } from 'ish-core/utils/operators';
+import { LoginModalComponent } from 'ish-shared/components/login/login-modal/login-modal.component';
 
 @Injectable({ providedIn: 'root' })
 export class LoginGuard implements CanActivate {

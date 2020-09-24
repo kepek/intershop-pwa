@@ -147,7 +147,7 @@ $mat-primary: (
   darker: #004d25,
   200: $camfil-color-primary,
   // For slide toggle,
-    contrast:
+  contrast:
     (
       main: $light-primary-text,
       lighter: $dark-primary-text,
@@ -160,7 +160,7 @@ $mat-accent: (
   darker: #333f48,
   200: $camfil-color-secondary,
   // For slide toggle,
-    contrast:
+  contrast:
     (
       main: $light-primary-text,
       lighter: $dark-primary-text,
@@ -173,7 +173,7 @@ $mat-warn: (
   darker: $camfil-color-special-primary,
   200: #ff6961,
   // For slide toggle,
-    contrast:
+  contrast:
     (
       main: $dark-primary-text,
       lighter: $dark-primary-text,

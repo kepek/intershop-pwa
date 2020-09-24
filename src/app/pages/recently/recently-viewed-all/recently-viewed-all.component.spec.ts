@@ -1,10 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { CamfilProductItemComponent } from 'ish-shared/components/product/camfil-product-item/camfil-product-item.component';
-import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
-import { MockComponent } from 'ng-mocks';
-import { RecentlyViewedAllComponent } from './recently-viewed-all.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { MockComponent } from 'ng-mocks';
+
+import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
+import { CamfilProductItemComponent } from 'ish-shared/components/product/camfil-product-item/camfil-product-item.component';
+
+import { RecentlyViewedAllComponent } from './recently-viewed-all.component';
 
 describe('Recently Viewed All Component', () => {
   let component: RecentlyViewedAllComponent;

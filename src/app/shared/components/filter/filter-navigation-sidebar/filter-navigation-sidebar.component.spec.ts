@@ -53,34 +53,34 @@ describe('Filter Navigation Sidebar Component', () => {
     } as FilterNavigation;
 
     fixture.detectChanges();
-    expect(findAllCustomElements(element)).toEqual(['ish-filter-collapsable', 'ish-filter-dropdown']);
+    expect(findAllCustomElements(element)).toEqual(['camfil-filter-collapsable', 'camfil-filter-dropdown']);
   });
 
   it('should display filter-text if facet with displayType text_clear is present', () => {
     component.filterNavigation = { filter: [{ displayType: 'text_clear' } as Filter] } as FilterNavigation;
 
     fixture.detectChanges();
-    expect(findAllCustomElements(element)).toEqual(['ish-filter-collapsable', 'ish-filter-text']);
+    expect(findAllCustomElements(element)).toEqual(['camfil-filter-collapsable', 'camfil-filter-text']);
   });
 
   it('should display filter-swatch-images if facet with displayType swatch is present', () => {
     component.filterNavigation = { filter: [{ displayType: 'swatch' } as Filter] } as FilterNavigation;
 
     fixture.detectChanges();
-    expect(findAllCustomElements(element)).toEqual(['ish-filter-collapsable', 'ish-filter-swatch-images']);
+    expect(findAllCustomElements(element)).toEqual(['camfil-filter-collapsable', 'ish-filter-swatch-images']);
   });
 
   it('should display filter-text if facet has no displayType set', () => {
     component.filterNavigation = { filter: [{} as Filter] } as FilterNavigation;
 
     fixture.detectChanges();
-    expect(findAllCustomElements(element)).toEqual(['ish-filter-collapsable', 'ish-filter-text']);
+    expect(findAllCustomElements(element)).toEqual(['camfil-filter-collapsable', 'camfil-filter-text']);
   });
 
   it('should display filter-text if facet has a typo in the displayType', () => {
     component.filterNavigation = { filter: [{ displayType: 'typo' } as Filter] } as FilterNavigation;
 
     fixture.detectChanges();
-    expect(findAllCustomElements(element)).toEqual(['ish-filter-collapsable', 'ish-filter-text']);
+    expect(findAllCustomElements(element)).toEqual(['camfil-filter-collapsable', 'camfil-filter-text']);
   });
 });

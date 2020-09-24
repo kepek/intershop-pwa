@@ -58,6 +58,7 @@ describe('Search Page Component', () => {
 
     expect(findAllCustomElements(element)).toMatchInlineSnapshot(`
       Array [
+        "camfil-breadcrumb",
         "ish-search-no-result",
       ]
     `);
@@ -70,7 +71,7 @@ describe('Search Page Component', () => {
 
     expect(findAllCustomElements(element)).toMatchInlineSnapshot(`
       Array [
-        "ish-search-result",
+        "camfil-search-result",
       ]
     `);
   });

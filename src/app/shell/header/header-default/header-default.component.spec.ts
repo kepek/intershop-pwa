@@ -59,7 +59,17 @@ describe('Header Default Component', () => {
 
   it('should render User Links on template', () => {
     fixture.detectChanges();
-    expect(findAllCustomElements(element)).toIncludeAllMembers(['ish-login-status', 'ish-product-compare-status']);
+    expect(findAllCustomElements(element)).toIncludeAllMembers([
+      'camfil-login-status',
+      'camfil-product-compare-status',
+      'camfil-language-switch',
+      'camfil-mini-basket',
+      'camfil-mini-basket',
+      'ish-lazy-header-quickorder',
+      'camfil-search-box',
+      'camfil-header-navigation',
+      'ish-user-information-mobile',
+    ]);
   });
   it('should render Language Switch on template', () => {
     fixture.detectChanges();
@@ -68,7 +78,17 @@ describe('Header Default Component', () => {
 
   it('should render Search Box on template', () => {
     fixture.detectChanges();
-    expect(findAllCustomElements(element)).toContain('ish-search-box');
+    expect(findAllCustomElements(element)).toIncludeAllMembers([
+      'camfil-login-status',
+      'camfil-product-compare-status',
+      'camfil-language-switch',
+      'camfil-mini-basket',
+      'camfil-mini-basket',
+      'ish-lazy-header-quickorder',
+      'camfil-search-box',
+      'camfil-header-navigation',
+      'ish-user-information-mobile',
+    ]);
   });
 
   it('should render Header Navigation on template', () => {
