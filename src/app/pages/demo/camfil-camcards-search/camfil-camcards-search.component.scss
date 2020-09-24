@@ -1,0 +1,68 @@
+@import '~src/styles/themes/camfil/colors.scss';
+@import '~src/styles/themes/camfil/variables.scss';
+
+:host {
+  position: relative;
+  display: block;
+  width: 100%;
+
+  form {
+    position: relative;
+    width: 100%;
+  }
+
+  button {
+    &[type='submit'] {
+      position: absolute;
+      top: $space-box / 2;
+      right: $space-box / 2;
+      padding-right: $space-default;
+      padding-left: $space-default;
+      line-height: $top-header-height-mobile;
+    }
+
+    &.btn-reset {
+      display: none;
+    }
+  }
+
+  .search-input {
+    width: 100%;
+    height: 48px;
+    padding: 8px 8px 8px 56px;
+    border: none;
+    border-radius: 30px;
+
+    &:focus {
+      outline: none;
+
+      + .buttons {
+        button {
+          color: $camfil-color-white;
+        }
+      }
+    }
+  }
+
+  .background-icon {
+    position: absolute;
+    top: 12px;
+    left: $space-box;
+  }
+
+  ul {
+    &.search-suggest-results {
+      position: absolute;
+      top: 55px;
+    }
+  }
+
+  .total {
+    font-size: 16px;
+    color: $camfil-text-color-secondary;
+
+    span {
+      color: $camfil-text-color-primary;
+    }
+  }
+}

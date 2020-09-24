@@ -1,0 +1,38 @@
+<mat-card>
+  <mat-card-content>
+    <div class="row">
+      <div class="col-md-4 d-flex align-items-center">
+        <form role="search" class="search clearfix" name="SearchBox_Header">
+          <mat-icon svgIcon="search" class="search__icon background-icon"></mat-icon>
+          <input
+            #searchInput
+            placeholder="Search for CamCards"
+            formControlName="search"
+            type="text"
+            class="search-input"
+            [class.mat-elevation-z2]="true"
+          />
+
+          <div class="buttons">
+            <button type="submit" name="search" title="Search" mat-flat-button color="primary">Search</button>
+          </div>
+        </form>
+      </div>
+      <div class="col-md-2">
+        <mat-form-field appearance="fill" [class.mat-elevation-z2]="true">
+          <mat-label>Filter by customer</mat-label>
+          <mat-select>
+            <mat-option *ngFor="let food of foods" [value]="food.value">
+              {{ food.viewValue }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-md-3 d-flex align-items-center">
+        <div class="total">
+          Total Camcards: <span>{{ camcardSum }}</span>
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>
