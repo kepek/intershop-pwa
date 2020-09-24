@@ -1,8 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-
-import { AccountFacade } from 'ish-core/facades/account.facade';
-import { User } from 'ish-core/models/user/user.model';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
   selector: 'camfil-root',
@@ -10,12 +6,4 @@ import { User } from 'ish-core/models/user/user.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 // tslint:disable-next-line: component-creation-test
-export class AppComponent implements OnInit {
-  user$: Observable<User>;
-
-  constructor(private accountFacade: AccountFacade) {}
-
-  ngOnInit() {
-    this.user$ = this.accountFacade.user$;
-  }
-}
+export class AppComponent {}
