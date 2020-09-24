@@ -11,6 +11,8 @@
             type="text"
             class="search-input"
             [class.mat-elevation-z2]="true"
+            [(ngModel)]="searchInput$"
+            (input)="submit($event.target.value)"
           />
 
           <div class="buttons">
@@ -21,16 +23,17 @@
       <div class="col-md-2">
         <mat-form-field appearance="fill" [class.mat-elevation-z2]="true">
           <mat-label>Filter by customer</mat-label>
-          <mat-select>
-            <mat-option *ngFor="let food of foods" [value]="food.value">
-              {{ food.viewValue }}
+          <mat-select [(ngModel)]="selectInput$" (selectionChange)="submit($event.value)">
+            <mat-option>--</mat-option>
+            <mat-option *ngFor="let customer of customers" [value]="customer.value">
+              {{ customer.viewValue }}
             </mat-option>
           </mat-select>
         </mat-form-field>
       </div>
       <div class="col-md-3 d-flex align-items-center">
         <div class="total">
-          Total Camcards: <span>{{ camcardSum }}</span>
+          Total Camcards: <span>{{ count }}</span>
         </div>
       </div>
     </div>

@@ -1,4 +1,9 @@
 <br />
+<camfil-camcards-search
+  [count]="dataSource.filteredData.length"
+  (queryChanged)="applyfilters($event)"
+></camfil-camcards-search>
+<br />
 <h1 class="d-flex align-items-center"><mat-icon svgIcon="camcard" class="size-37"></mat-icon> &nbsp; My CamCards</h1>
 
 <mat-card>
@@ -134,16 +139,6 @@
   </mat-toolbar>
 
   <div class="demo-content">
-    <!-- Camfil Icons -->
-    <mat-card>
-      <mat-card-content>
-        <h2 class="example-h2">
-          Camfil Camcards search
-        </h2>
-        <camfil-camcards-search></camfil-camcards-search>
-      </mat-card-content>
-    </mat-card>
-
     <!-- Camfil Icons -->
     <mat-card>
       <mat-card-content>

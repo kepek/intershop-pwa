@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'camfil-camcards-search',
@@ -7,12 +7,36 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CamfilCamcardsSearchComponent {
-  foods = [
+  @Input() count: Number;
+  @Output() queryChanged = new EventEmitter<string>();
+
+  searchInput$ = '';
+  selectInput$ = '';
+
+  customers = [
     {
-      value: 'test',
-      viewValue: 'test',
+      value: 'hydrogen',
+      viewValue: 'Hydrogen',
     },
-    { value: 'test2', viewValue: 'test2' },
+    {
+      value: 'lithium',
+      viewValue: 'Lithium',
+    },
+    {
+      value: 'beryllium',
+      viewValue: 'Beryllium',
+    },
+    {
+      value: 'boron',
+      viewValue: 'Boron',
+    },
+    {
+      value: 'carbon',
+      viewValue: 'Carbon',
+    },
   ];
-  camcardSum = 5;
+
+  submit(value) {
+    this.queryChanged.emit(value);
+  }
 }

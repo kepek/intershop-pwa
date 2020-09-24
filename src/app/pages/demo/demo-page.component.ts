@@ -354,6 +354,9 @@ export class DemoPageComponent implements AfterViewInit, OnInit, OnDestroy {
 
   @ViewChild(MatSort) sort: MatSort;
 
+  applyfilters(filter) {
+    this.dataSource.filter = filter;
+  }
 
   /** for camCards */
   /** Whether the number of selected elements matches the total number of rows. */
@@ -401,9 +404,6 @@ export class DemoPageComponent implements AfterViewInit, OnInit, OnDestroy {
   }
 
   /** EOF for camCards */
-
-
-
 
   setPageSizeOptions(setPageSizeOptionsInput: string) {
     if (setPageSizeOptionsInput) {
