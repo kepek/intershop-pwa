@@ -4,6 +4,7 @@ import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { AfterViewInit, ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { MatCheckboxChange } from '@angular/material/checkbox';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
@@ -22,27 +23,27 @@ export interface Fruit {
   name: string;
 }
 
-export interface BuildingProductRow {
+export interface CamCardBuildingProducts {
   name: string;
   checked: boolean;
 }
 
-export interface BuildingPeriodicElement {
+export interface CamCardBuilding {
   name: string;
   checked: boolean;
   open?: boolean;
-  products: BuildingProductRow[];
+  products: CamCardBuildingProducts[];
 }
 
-export interface PeriodicElement {
+export interface CamCard {
   name: string;
   position: number;
   weight: number;
   symbol: string;
-  buildings: BuildingPeriodicElement[];
+  buildings: CamCardBuilding[];
 }
 
-const ELEMENT_DATA: PeriodicElement[] = [
+const CAMCARDS_DATA: CamCard[] = [
   {
     position: 1,
     name: 'CamCard Hydrogen',
@@ -331,10 +332,10 @@ export class DemoPageComponent implements AfterViewInit, OnInit, OnDestroy {
   ];
 
   /** for camCards */
-  dataSource = new MatTableDataSource(ELEMENT_DATA);
+  dataSource = new MatTableDataSource(CAMCARDS_DATA);
   columnsToDisplay = ['name', 'weight', 'symbol', 'position', 'checkbox'];
-  expandedElement: PeriodicElement | null;
-  selection = new SelectionModel<PeriodicElement>(true, []);
+  selection = new SelectionModel<CamCard>(true, []);
+  expandedElement: CamCard | null;
   /** EOF camCards */
 
   visibleFruits = true;
@@ -358,49 +359,73 @@ export class DemoPageComponent implements AfterViewInit, OnInit, OnDestroy {
     this.dataSource.filter = filter;
   }
 
-  /** for camCards */
-  /** Whether the number of selected elements matches the total number of rows. */
-  isAllSelected() {
+  /** checkboxes for CamCards */
+  isAllChecked() {
     const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.data.length;
-    return numSelected === numRows;
+    const numCamCards = this.dataSource.data.length;
+    return numSelected === numCamCards && this.dataSource.data.every(c => this.isCamCardChecked(c));
   }
 
-  /** Selects all rows if they are not all selected; otherwise clear selection. */
-  masterToggle() {
-    this.isAllSelected() ? this.selection.clear() : this.dataSource.data.forEach(row => this.selection.select(row));
-  }
+  masterChange(event: MatCheckboxChange) {
+    if (event) {
+      this.isAllChecked() ? this.selection.clear() : this.dataSource.data.forEach(c => this.selection.select(c));
 
-  /** The label for the checkbox on the passed row */
-  checkboxLabel(row?: PeriodicElement): string {
-    if (!row) {
-      return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
+      this.dataSource.data.forEach(row =>
+        row.buildings.forEach(b => {
+          b.checked = event.checked;
+          b.products.forEach(p => (p.checked = event.checked));
+        })
+      );
+    } else {
+      return null;
     }
-    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`;
   }
 
-  /** deeper level for checkbox */
-  allChecked(item: BuildingPeriodicElement): boolean {
-    return item.checked;
+  isAllIndeterminate() {
+    return (
+      (this.selection.hasValue() && !this.isAllChecked()) ||
+      this.dataSource.data.filter(c => this.isCamCardIndeterminate(c)).length > 0
+    );
   }
 
-  updateAllChecked(item: BuildingPeriodicElement) {
-    item.checked = item.products !== null && item.products.every(t => t.checked);
-  }
-
-  someChecked(item: BuildingPeriodicElement): boolean {
-    if (item.products === null) {
-      return false;
+  isCamCardChecked(camCard: CamCard) {
+    const allBuildings = camCard.buildings.every(b => b.checked);
+    if (allBuildings && !this.selection.isSelected(camCard)) {
+      this.selection.select(camCard);
     }
-    return item.products.filter(t => t.checked).length > 0 && !item.checked;
+    return allBuildings || this.selection.isSelected(camCard);
   }
 
-  setAll(item: BuildingPeriodicElement, checked: boolean) {
-    item.checked = checked;
-    if (item.products === null) {
+  isCamCardIndeterminate(camCard: CamCard) {
+    const buildingNum = camCard.buildings.filter(b => b.checked || b.products.filter(p => p.checked).length).length;
+    if (buildingNum === 0) {
+      this.selection.deselect(camCard);
+    }
+    return buildingNum > 0 && camCard.buildings.filter(b => b.checked).length !== camCard.buildings.length;
+  }
+
+  isBuildingIndeterminate(camCard: CamCardBuilding): boolean {
+    return camCard.products === null ? false : camCard.products.filter(t => t.checked).length > 0 && !camCard.checked;
+  }
+
+  setCamCardChecked(camCard: CamCard, event: MatCheckboxChange) {
+    if (event) {
+      camCard.buildings.forEach(b => {
+        b.checked = event.checked;
+        b.products.forEach(p => (p.checked = event.checked));
+      });
+      return this.selection.toggle(camCard);
+    } else {
+      return null;
+    }
+  }
+
+  setBuildingChecked(building: CamCardBuilding, checked: boolean) {
+    building.checked = checked;
+    if (building.products === null) {
       return;
     }
-    item.products.forEach(t => (t.checked = checked));
+    building.products.forEach(t => (t.checked = checked));
   }
 
   /** EOF for camCards */
