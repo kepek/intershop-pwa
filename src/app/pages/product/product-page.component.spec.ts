@@ -1,8 +1,7 @@
 import { Location } from '@angular/common';
-import { ComponentFixture, TestBed, async, fakeAsync, tick } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { findAllCamfilElements } from 'camfil-core/utils/dev/html-query-utils';
 import { MockComponent } from 'ng-mocks';
 import { EMPTY, noop, of } from 'rxjs';
 import { anything, instance, mock, verify, when } from 'ts-mockito';
@@ -22,7 +21,7 @@ import { VariationProductMaster } from 'ish-core/models/product/product-variatio
 import { VariationProduct } from 'ish-core/models/product/product-variation.model';
 import { Product, ProductCompletenessLevel } from 'ish-core/models/product/product.model';
 import { ProductRoutePipe } from 'ish-core/routing/product/product-route.pipe';
-import { findAllIshElements } from 'ish-core/utils/dev/html-query-utils';
+import { findAllCustomElements } from 'ish-core/utils/dev/html-query-utils';
 import { categoryTree } from 'ish-core/utils/dev/test-data-utils';
 import { CamfilBreadcrumbComponent } from 'ish-shared/components/common/camfil-breadcrumb/camfil-breadcrumb.component';
 import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
@@ -44,12 +43,12 @@ describe('Product Page Component', () => {
 
   const categories = categoryTree([{ uniqueId: 'A', categoryPath: ['A'] } as Category]);
 
-  beforeEach(async(() => {
+  beforeEach(async () => {
     shoppingFacade = mock(ShoppingFacade);
     when(shoppingFacade.selectedProduct$).thenReturn(EMPTY);
     when(shoppingFacade.selectedCategory$).thenReturn(of(createCategoryView(categories, 'A')));
 
-    TestBed.configureTestingModule({
+    await TestBed.configureTestingModule({
       imports: [
         FeatureToggleModule.forTesting('recently'),
         RouterTestingModule.withRoutes([{ path: '**', component: ProductPageComponent }]),
@@ -67,7 +66,7 @@ describe('Product Page Component', () => {
       ],
       providers: [ProductRoutePipe, { provide: ShoppingFacade, useFactory: () => instance(shoppingFacade) }],
     }).compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ProductPageComponent);
@@ -88,17 +87,21 @@ describe('Product Page Component', () => {
 
     fixture.detectChanges();
 
-    expect(findAllIshElements(element)).toEqual(['ish-loading', 'ish-recently-viewed']);
+    expect(findAllCustomElements(element)).toEqual(['ish-loading', 'ish-recently-viewed']);
   });
 
-  xit('should display product-detail when product is available', () => {
+  it('should display product-detail when product is available', () => {
     const product = { sku: 'dummy', completenessLevel: ProductCompletenessLevel.Detail } as Product;
     when(shoppingFacade.selectedProduct$).thenReturn(of(createProductView(product, categories)));
 
     fixture.detectChanges();
 
-    expect(findAllIshElements(element)).toEqual(['ish-product-detail', 'camfil-product-links', 'ish-recently-viewed']);
-    expect(findAllCamfilElements(element)).toEqual(['camfil-breadcrumb']);
+    expect(findAllCustomElements(element)).toEqual([
+      'camfil-breadcrumb',
+      'ish-product-detail',
+      'camfil-product-links',
+      'ish-recently-viewed',
+    ]);
   });
 
   it('should redirect to product page when variation is selected', fakeAsync(() => {

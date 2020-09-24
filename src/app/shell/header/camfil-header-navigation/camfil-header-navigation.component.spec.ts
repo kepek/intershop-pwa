@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
@@ -20,10 +20,10 @@ describe('Camfil Header Navigation Component', () => {
   let shoppingFacade: ShoppingFacade;
   let translate: TranslateService;
 
-  beforeEach(async(() => {
+  beforeEach(async () => {
     shoppingFacade = mock(ShoppingFacade);
 
-    TestBed.configureTestingModule({
+    await TestBed.configureTestingModule({
       imports: [RouterTestingModule, TranslateModule.forRoot()],
       declarations: [
         CamfilHeaderNavigationComponent,
@@ -33,7 +33,7 @@ describe('Camfil Header Navigation Component', () => {
       ],
       providers: [{ provide: ShoppingFacade, useFactory: () => instance(shoppingFacade) }],
     }).compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(CamfilHeaderNavigationComponent);
@@ -65,6 +65,7 @@ describe('Camfil Header Navigation Component', () => {
               class="mat-icon notranslate material-icons mat-icon-no-color"
               role="img"
               aria-hidden="true"
+              data-mat-icon-type="font"
               >arrow_right</mat-icon
             ></a
           ><ish-sub-category-navigation
@@ -74,12 +75,12 @@ describe('Camfil Header Navigation Component', () => {
           ></ish-sub-category-navigation>
         </li>
         <li class="dropdown">
-          <a style="width: 100%;" ng-reflect-router-link="/cat/B" data-testing-id="B-link" href="/cat/B">
+          <a style="width: 100%" ng-reflect-router-link="/cat/B" data-testing-id="B-link" href="/cat/B">
             CAT_B
           </a>
         </li>
         <li class="dropdown">
-          <a style="width: 100%;" ng-reflect-router-link="/cat/C" data-testing-id="C-link" href="/cat/C">
+          <a style="width: 100%" ng-reflect-router-link="/cat/C" data-testing-id="C-link" href="/cat/C">
             CAT_C
           </a>
         </li>

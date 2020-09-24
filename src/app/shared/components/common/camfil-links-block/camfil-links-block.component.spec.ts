@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CamfilLinksBlockComponent } from './camfil-links-block.component';
 
@@ -7,11 +7,11 @@ describe('Camfil Links Block Component', () => {
   let fixture: ComponentFixture<CamfilLinksBlockComponent>;
   let element: HTMLElement;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       declarations: [CamfilLinksBlockComponent],
     }).compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(CamfilLinksBlockComponent);

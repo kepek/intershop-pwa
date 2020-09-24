@@ -1,5 +1,5 @@
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { AfterViewInit, ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatChipInputEvent } from '@angular/material/chips';
@@ -10,8 +10,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { CamfilIcon, getCamfilIcons } from 'camfil-shared/icon/icon.module';
-import { Observable } from 'rxjs';
-import { map, startWith } from 'rxjs/operators';
+import { Observable, Subject } from 'rxjs';
+import { map, startWith, take, takeUntil } from 'rxjs/operators';
 
 import { DemoBottomSheetComponent } from './demo-bottom-sheet/demo-bottom-sheet.component';
 import { DemoDialogComponent } from './demo-dialog/demo-dialog.component';
@@ -54,7 +54,9 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   styleUrls: ['./demo-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DemoPageComponent implements AfterViewInit, OnInit {
+export class DemoPageComponent implements AfterViewInit, OnInit, OnDestroy {
+  private destroy$ = new Subject();
+
   constructor(private dialog: MatDialog, private snackBar: MatSnackBar, private bottomSheet: MatBottomSheet) {
     // Update the value for the progress-bar on an interval.
     setInterval(() => {
@@ -194,6 +196,11 @@ export class DemoPageComponent implements AfterViewInit, OnInit {
     );
   }
 
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
   openBottomSheet(): void {
     this.bottomSheet.open(DemoBottomSheetComponent);
   }
@@ -228,9 +235,12 @@ export class DemoPageComponent implements AfterViewInit, OnInit {
       },
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      this.lastDialogResult = result;
-    });
+    dialogRef
+      .afterClosed()
+      .pipe(take(1), takeUntil(this.destroy$))
+      .subscribe(result => {
+        this.lastDialogResult = result;
+      });
   }
 
   showSnackbar() {

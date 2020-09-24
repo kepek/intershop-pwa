@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { instance, mock } from 'ts-mockito';
@@ -13,13 +13,13 @@ describe('Camfil Filter Applied Component', () => {
   let element: HTMLElement;
   let translate: TranslateService;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       declarations: [CamfilFilterAppliedComponent],
       imports: [RouterTestingModule, TranslateModule.forRoot()],
       providers: [{ provide: ShoppingFacade, useFactory: () => instance(mock(ShoppingFacade)) }],
     }).compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(CamfilFilterAppliedComponent);

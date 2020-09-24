@@ -1,15 +1,14 @@
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { NgbPopover } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
-import { findAllCamfilElements } from 'camfil-core/utils/dev/html-query-utils';
 import { MockComponent, MockPipe } from 'ng-mocks';
 
 import { FeatureToggleModule } from 'ish-core/feature-toggle.module';
 import { PricePipe } from 'ish-core/models/price/price.pipe';
 import { ProductView } from 'ish-core/models/product-view/product-view.model';
 import { BasketMockData } from 'ish-core/utils/dev/basket-mock-data';
-import { findAllIshElements } from 'ish-core/utils/dev/html-query-utils';
+import { findAllCustomElements } from 'ish-core/utils/dev/html-query-utils';
 import { LineItemEditComponent } from 'ish-shared/components/line-item/line-item-edit/line-item-edit.component';
 import { CamfilProductIdComponent } from 'ish-shared/components/product/camfil-product-id/camfil-product-id.component';
 import { CamfilProductInventoryComponent } from 'ish-shared/components/product/camfil-product-inventory/camfil-product-inventory.component';
@@ -24,8 +23,8 @@ describe('Line Item Description Component', () => {
   let fixture: ComponentFixture<LineItemDescriptionComponent>;
   let element: HTMLElement;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       imports: [FeatureToggleModule.forTesting(), TranslateModule.forRoot()],
       declarations: [
         LineItemDescriptionComponent,
@@ -40,7 +39,7 @@ describe('Line Item Description Component', () => {
         MockPipe(PricePipe),
       ],
     }).compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(LineItemDescriptionComponent);
@@ -74,16 +73,13 @@ describe('Line Item Description Component', () => {
 
   it('should display standard elements for normal products', () => {
     fixture.detectChanges();
-    expect(findAllIshElements(element)).toMatchInlineSnapshot(`
-      Array [
-        "ish-line-item-edit",
-      ]
-    `);
-    expect(findAllCamfilElements(element)).toMatchInlineSnapshot(`
+    expect(findAllCustomElements(element)).toMatchInlineSnapshot(`
       Array [
         "camfil-product-id",
+        "ish-line-item-edit",
         "camfil-product-inventory",
         "camfil-product-shipment",
+        "fa-icon",
       ]
     `);
   });
@@ -91,13 +87,13 @@ describe('Line Item Description Component', () => {
   it('should display bundle parts for bundle products', () => {
     component.product.type = 'Bundle';
     fixture.detectChanges();
-    expect(findAllIshElements(element)).toContain('ish-product-bundle-display');
+    expect(findAllCustomElements(element)).toContain('ish-product-bundle-display');
   });
 
   it('should not display edit component for variation products with advanced variation handling', () => {
     component.product.type = 'VariationProduct';
     FeatureToggleModule.switchTestingFeatures('advancedVariationHandling');
     fixture.detectChanges();
-    expect(findAllIshElements(element)).not.toContain('ish-line-item-edit');
+    expect(findAllCustomElements(element)).not.toContain('ish-line-item-edit');
   });
 });

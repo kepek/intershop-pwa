@@ -1,8 +1,9 @@
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MockComponent } from 'ng-mocks';
 
 import { SafeHtmlPipe } from 'ish-core/pipes/safe-html.pipe';
+import { findAllCustomElements } from 'ish-core/utils/dev/html-query-utils';
 import { CamfilSearchBoxComponent } from 'ish-shell/header/camfil-search-box/camfil-search-box.component';
 
 import { ErrorComponent } from './error.component';
@@ -13,12 +14,12 @@ describe('Error Component', () => {
   let component: ErrorComponent;
   let translate: TranslateService;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       imports: [TranslateModule.forRoot()],
       declarations: [ErrorComponent, MockComponent(CamfilSearchBoxComponent), SafeHtmlPipe],
     }).compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ErrorComponent);
@@ -39,5 +40,10 @@ describe('Error Component', () => {
   it('should render localized error text with HTML on template', () => {
     fixture.detectChanges();
     expect(element.getElementsByTagName('h3')[0].textContent).toContain('test paragraph title');
+  });
+
+  it('should render search box on template', () => {
+    fixture.detectChanges();
+    expect(findAllCustomElements(element)).toEqual(['camfil-search-box']);
   });
 });

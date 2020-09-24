@@ -10,8 +10,10 @@ import { CategoryView } from 'ish-core/models/category-view/category-view.model'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CamfilCategoryBoxesComponent implements OnInit {
+  // tslint:disable-next-line:force-jsdoc-comments
   // TODO: tmp data for example
-  // TODO: + to impelment list for children/small boxes
+  // tslint:disable-next-line:force-jsdoc-comments
+  // TODO: + to implement list for children/small boxes
   categoryLandingBoxIds = ['servers.servers-data-storage', 'Computers.1835', 'Computers.897.897_Acer', 'Computers.225'];
   categories$: Observable<CategoryView[]>;
   categoriesColumns = [];

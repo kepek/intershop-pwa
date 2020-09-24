@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DemoBottomSheetComponent } from './demo-bottom-sheet.component';
 
@@ -7,11 +7,11 @@ describe('Demo Bottom Sheet Component', () => {
   let fixture: ComponentFixture<DemoBottomSheetComponent>;
   let element: HTMLElement;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       declarations: [DemoBottomSheetComponent],
     }).compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(DemoBottomSheetComponent);

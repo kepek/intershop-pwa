@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { NgbModalModule, NgbPopoverModule } from '@ng-bootstrap/ng-bootstrap';
@@ -16,8 +16,8 @@ describe('Cam Card Preferences Dialog Component', () => {
   let fixture: ComponentFixture<CamCardPreferencesDialogComponent>;
   let element: HTMLElement;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       declarations: [
         CamCardPreferencesDialogComponent,
         MockComponent(CheckboxComponent),
@@ -26,7 +26,7 @@ describe('Cam Card Preferences Dialog Component', () => {
       ],
       imports: [NgbModalModule, NgbPopoverModule, ReactiveFormsModule, TranslateModule.forRoot()],
     }).compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(CamCardPreferencesDialogComponent);

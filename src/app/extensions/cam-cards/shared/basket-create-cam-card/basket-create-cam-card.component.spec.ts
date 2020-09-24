@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { MockComponent } from 'ng-mocks';
@@ -17,8 +17,8 @@ describe('Basket Create Cam Card Component', () => {
   let fixture: ComponentFixture<BasketCreateCamCardComponent>;
   let element: HTMLElement;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       declarations: [
         BasketCreateCamCardComponent,
         MockComponent(CamCardPreferencesDialogComponent),
@@ -30,7 +30,7 @@ describe('Basket Create Cam Card Component', () => {
         { provide: AccountFacade, useFactory: () => instance(mock(AccountFacade)) },
       ],
     }).compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(BasketCreateCamCardComponent);

@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
@@ -15,8 +15,8 @@ describe('Camfil Category Boxes Component', () => {
   let element: HTMLElement;
   let translate: TranslateService;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       declarations: [CamfilCategoryBoxComponent, CamfilCategoryBoxesComponent],
       imports: [
         CoreStoreModule.forTesting(),
@@ -25,7 +25,7 @@ describe('Camfil Category Boxes Component', () => {
         TranslateModule.forRoot(),
       ],
     }).compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(CamfilCategoryBoxesComponent);
