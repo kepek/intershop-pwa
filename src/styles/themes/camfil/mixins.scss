@@ -65,3 +65,9 @@
   font-weight: 500;
   line-height: $h3-line-height;
 }
+
+@mixin font-size-p {
+  font-size: $font-size-corporate;
+  font-weight: 300;
+  line-height: 20px;
+}

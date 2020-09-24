@@ -8,8 +8,9 @@ import { instance, mock } from 'ts-mockito';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
 
-import { CamfilBannerComponent } from '../../shared/components/camfil-banner/camfil-banner.component';
+import { CamfilBannerComponent } from 'ish-shared/components/camfil-banner/camfil-banner.component';
 
+import { CamfilInfoComponent } from './camfil-info/camfil-info.component';
 import { CamfilRegistrationFormComponent } from './camfil-registration-form/camfil-registration-form.component';
 import { CamfilRegistrationPageComponent } from './camfil-registration-page.component';
 
@@ -26,6 +27,7 @@ describe('Camfil Registration Page Component', () => {
     TestBed.configureTestingModule({
       declarations: [
         CamfilBannerComponent,
+        CamfilInfoComponent,
         CamfilRegistrationPageComponent,
         DummyComponent,
         MockComponent(CamfilRegistrationFormComponent),

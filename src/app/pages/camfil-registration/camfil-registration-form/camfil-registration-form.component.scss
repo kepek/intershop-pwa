@@ -1,3 +1,15 @@
-.red {
-  color: red;
+@import '~src/styles/themes/camfil/mixins.scss';
+@import '~src/styles/themes/camfil/colors';
+@import '~src/styles/themes/camfil/variables';
+
+:host {
+  .header {
+    font-family: $font-family-helveticaneue;
+    @include font-size-h3;
+  }
+
+  .description {
+    font-family: $font-family-helveticaneue;
+    @include font-size-p;
+  }
 }
