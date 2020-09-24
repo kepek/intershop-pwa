@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 
-import { CamfilInfoComponent } from './camfil-info.component';
+import { CamfilIntroComponent } from './camfil-intro.component';
 
-describe('Camfil Info Component', () => {
-  let component: CamfilInfoComponent;
-  let fixture: ComponentFixture<CamfilInfoComponent>;
+describe('CamfilIntroComponent', () => {
+  let component: CamfilIntroComponent;
+  let fixture: ComponentFixture<CamfilIntroComponent>;
   let element: HTMLElement;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [CamfilInfoComponent],
+      declarations: [CamfilIntroComponent]
     }).compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CamfilInfoComponent);
+    fixture = TestBed.createComponent(CamfilIntroComponent);
     component = fixture.componentInstance;
     element = fixture.nativeElement;
   });

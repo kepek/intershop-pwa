@@ -10,9 +10,11 @@ import { AccountFacade } from 'ish-core/facades/account.facade';
 
 import { CamfilBannerComponent } from 'ish-shared/components/camfil-banner/camfil-banner.component';
 
-import { CamfilInfoComponent } from './camfil-info/camfil-info.component';
+import { CamfilInfoSectionComponent } from './camfil-info-section/camfil-info-section.component';
 import { CamfilRegistrationFormComponent } from './camfil-registration-form/camfil-registration-form.component';
 import { CamfilRegistrationPageComponent } from './camfil-registration-page.component';
+import { CamfilIntroComponent } from './camfil-intro/camfil-intro.component';
+
 
 describe('Camfil Registration Page Component', () => {
   let fixture: ComponentFixture<CamfilRegistrationPageComponent>;
@@ -27,8 +29,9 @@ describe('Camfil Registration Page Component', () => {
     TestBed.configureTestingModule({
       declarations: [
         CamfilBannerComponent,
-        CamfilInfoComponent,
+        CamfilInfoSectionComponent,
         CamfilRegistrationPageComponent,
+        CamfilIntroComponent,
         DummyComponent,
         MockComponent(CamfilRegistrationFormComponent),
       ],

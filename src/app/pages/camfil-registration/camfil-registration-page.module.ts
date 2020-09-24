@@ -8,11 +8,12 @@ import { SharedModule } from 'ish-shared/shared.module';
 
 import { CamfilBannerComponent } from '../../shared/components/camfil-banner/camfil-banner.component';
 
-import { CamfilInfoComponent } from './camfil-info/camfil-info.component';
+import { CamfilInfoSectionComponent } from './camfil-info-section/camfil-info-section.component';
 import { CamfilRegistrationCompanyFormComponent } from './camfil-registration-company-form/camfil-registration-company-form.component';
 import { CamfilRegistrationCredentialsFormComponent } from './camfil-registration-credentials-form/camfil-registration-credentials-form.component';
 import { CamfilRegistrationFormComponent } from './camfil-registration-form/camfil-registration-form.component';
 import { CamfilRegistrationPageComponent } from './camfil-registration-page.component';
+import { CamfilIntroComponent } from './camfil-intro/camfil-intro.component';
 
 const registrationPageRoutes: Routes = [{ path: '', component: CamfilRegistrationPageComponent }];
 
@@ -27,11 +28,12 @@ const registrationPageRoutes: Routes = [{ path: '', component: CamfilRegistratio
   ],
   declarations: [
     CamfilBannerComponent,
-    CamfilInfoComponent,
+    CamfilInfoSectionComponent,
     CamfilRegistrationCompanyFormComponent,
     CamfilRegistrationCredentialsFormComponent,
     CamfilRegistrationFormComponent,
     CamfilRegistrationPageComponent,
+    CamfilIntroComponent,
   ],
 })
 export class CamfilRegistrationPageModule {}

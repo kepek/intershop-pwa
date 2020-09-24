@@ -1,5 +1,7 @@
-<h1 class="header">{{ 'account.register.heading' | translate }}</h1>
-<p class="description">{{ 'account.register.message' | translate }}</p>
+<camfil-intro
+  [header]="'account.register.heading' | translate"
+  [description]="'account.register.message' | translate"
+></camfil-intro>
 
 <ish-error-message [error]="error"></ish-error-message>
 
