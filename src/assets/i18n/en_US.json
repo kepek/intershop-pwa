@@ -588,6 +588,7 @@
   "camfil.product.list_price.label": "List Price",
   "camfil.product.product_links.crossselling.title": "Related products",
   "camfil.product.your_price.label": "Your Price",
+  "camfil.product.sorting.label": "Sort by",
   "camfil.read_more.text": "Read more",
   "camfil.search.filter.show.link": {
     "other": "Show # more"
