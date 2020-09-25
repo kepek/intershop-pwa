@@ -359,6 +359,10 @@ export class DemoPageComponent implements AfterViewInit, OnInit, OnDestroy {
     this.dataSource.filter = filter;
   }
 
+  updateBuildingChecked(value) {
+    console.log(value);
+  }
+
   /** checkboxes for CamCards */
   isAllChecked() {
     const numSelected = this.selection.selected.length;
