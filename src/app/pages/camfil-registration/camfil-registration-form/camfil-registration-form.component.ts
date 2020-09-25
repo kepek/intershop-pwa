@@ -20,11 +20,15 @@ import { SpecialValidators } from 'ish-shared/forms/validators/special-validator
 export class CamfilRegistrationFormComponent implements OnInit {
   @Input() error: HttpError;
 
+  @Input() animal = 'test';
+
   @Output() create = new EventEmitter<CustomerRegistrationType>();
   @Output() cancel = new EventEmitter<void>();
 
   /** switch for business customer registration */
   businessCustomerRegistration: boolean;
+
+  autocompleteControl = new FormControl();
 
   form: FormGroup;
   submitted = false;

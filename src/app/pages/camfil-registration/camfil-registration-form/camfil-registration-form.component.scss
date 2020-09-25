@@ -3,13 +3,36 @@
 @import '~src/styles/themes/camfil/variables';
 
 :host {
-  .header {
-    font-family: $font-family-helveticaneue;
-    @include font-size-h3;
+  input {
+    font-size: 12px;
+    line-height: 15px;
   }
 
-  .description {
-    font-family: $font-family-helveticaneue;
-    @include font-size-p;
+  .form-field {
+    width: 100%;
+
+    &::ng-deep .mat-form-field-wrapper {
+      padding-bottom: 16px;
+    }
+
+    &::ng-deep .mat-form-field-underline {
+      bottom: 16px;
+    }
+
+    &::ng-deep .mat-form-field-infix {
+      height: 48px;
+      border-top: 10px solid transparent;
+    }
   }
+
+  &::ng-deep label {
+    span {
+      float:left;
+      margin-top: 2px;
+      margin-right: 2px;
+      color: $camfil-color-special-primary;
+    }
+  }
+
+
 }

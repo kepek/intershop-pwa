@@ -7,8 +7,42 @@
 
 <div class="registration-form section" data-testing-id="account-create-full-page">
   <form [formGroup]="form" (ngSubmit)="submitForm()" class="form-horizontal" novalidate="novalidate">
-    <h2>{{ 'account.register.email_password.heading' | translate }}</h2>
-    <p>{{ 'account.register.email_password.message' | translate }}</p>
+
+    <mat-form-field class="form-field">
+      <mat-label>First name</mat-label>
+      <input matInput required class="input-field" />
+    </mat-form-field>
+
+    <mat-form-field class="form-field">
+      <mat-label>Last name</mat-label>
+      <input matInput required />
+    </mat-form-field>
+
+    <mat-form-field class="form-field">
+      <mat-label>Company</mat-label>
+      <input matInput required />
+    </mat-form-field>
+
+    <mat-form-field class="form-field">
+      <mat-label>Input field</mat-label>
+      <input matInput required />
+    </mat-form-field>
+
+    <mat-form-field class="form-field">
+      <mat-label>Input field</mat-label>
+      <input matInput required />
+    </mat-form-field>
+
+    <mat-form-field class="form-field">
+      <textarea
+        matInput>
+      </textarea>
+    </mat-form-field>
+
+
+  </form>
+
+  <form [formGroup]="form" (ngSubmit)="submitForm()" class="form-horizontal" novalidate="novalidate">
     <div class="section">
       <div class="row">
         <div class="col-md-10 col-lg-8 col-xl-6">
