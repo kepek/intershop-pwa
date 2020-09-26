@@ -1,5 +1,4 @@
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { findAllCamfilElements } from 'camfil-core/utils/dev/html-query-utils';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MockComponent } from 'ng-mocks';
 import { of } from 'rxjs';
 import { instance, mock, when } from 'ts-mockito';
@@ -8,7 +7,7 @@ import { AppFacade } from 'ish-core/facades/app.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { createCategoryView } from 'ish-core/models/category-view/category-view.model';
 import { Category } from 'ish-core/models/category/category.model';
-import { findAllIshElements } from 'ish-core/utils/dev/html-query-utils';
+import { findAllCustomElements } from 'ish-core/utils/dev/html-query-utils';
 import { categoryTree } from 'ish-core/utils/dev/test-data-utils';
 import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
 
@@ -24,9 +23,9 @@ describe('Camfil Category Page Component', () => {
   let element: HTMLElement;
   let shoppingFacade: ShoppingFacade;
 
-  beforeEach(async(() => {
+  beforeEach(async () => {
     shoppingFacade = mock(ShoppingFacade);
-    TestBed.configureTestingModule({
+    await TestBed.configureTestingModule({
       declarations: [
         CamfilCategoryPageComponent,
         MockComponent(CamfilCategoryCategoriesComponent),
@@ -39,7 +38,7 @@ describe('Camfil Category Page Component', () => {
         { provide: AppFacade, useFactory: () => instance(mock(AppFacade)) },
       ],
     }).compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(CamfilCategoryPageComponent);
@@ -56,7 +55,7 @@ describe('Camfil Category Page Component', () => {
   it('should not display anything when neither category nor loading is set', () => {
     fixture.detectChanges();
 
-    expect(findAllIshElements(element)).toBeEmpty();
+    expect(findAllCustomElements(element)).toBeEmpty();
   });
 
   it('should display categories when category has sub categories', () => {
@@ -68,6 +67,6 @@ describe('Camfil Category Page Component', () => {
     );
 
     fixture.detectChanges();
-    expect(findAllCamfilElements(element)).toEqual(['camfil-category-categories']);
+    expect(findAllCustomElements(element)).toEqual(['camfil-category-categories']);
   });
 });

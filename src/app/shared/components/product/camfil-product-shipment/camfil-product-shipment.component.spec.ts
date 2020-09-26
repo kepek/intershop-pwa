@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import * as using from 'jasmine-data-provider';
@@ -17,8 +17,8 @@ describe('Camfil Product Shipment Component', () => {
   let translate: TranslateService;
   let element: HTMLElement;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       imports: [NgbModalModule, TranslateModule.forRoot()],
       declarations: [
         CamfilProductShipmentComponent,
@@ -26,7 +26,7 @@ describe('Camfil Product Shipment Component', () => {
         MockComponent(ModalDialogLinkComponent),
       ],
     }).compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(CamfilProductShipmentComponent);

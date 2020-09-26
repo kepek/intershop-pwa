@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { NgbPopoverModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
@@ -19,10 +19,10 @@ describe('Account Cam Card Page Component', () => {
   let fixture: ComponentFixture<AccountCamCardPageComponent>;
   let element: HTMLElement;
 
-  beforeEach(async(() => {
+  beforeEach(async () => {
     const camCardsFacade = mock(CamCardsFacade);
 
-    TestBed.configureTestingModule({
+    await TestBed.configureTestingModule({
       imports: [NgbPopoverModule, TranslateModule.forRoot()],
       declarations: [
         AccountCamCardPageComponent,
@@ -34,7 +34,7 @@ describe('Account Cam Card Page Component', () => {
       ],
       providers: [{ provide: CamCardsFacade, useFactory: () => instance(camCardsFacade) }],
     }).compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(AccountCamCardPageComponent);

@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MockPipe } from 'ng-mocks';
@@ -17,7 +17,7 @@ describe('Camfil Category Navigation Component', () => {
   let fixture: ComponentFixture<CamfilCategoryNavigationComponent>;
   let element: HTMLElement;
 
-  beforeEach(async(() => {
+  beforeEach(async () => {
     const shoppingFacade = mock(ShoppingFacade);
     const appFacade = mock(AppFacade);
     when(shoppingFacade.selectedCategory$).thenReturn(of({ uniqueId: 'A.1' }));
@@ -35,57 +35,26 @@ describe('Camfil Category Navigation Component', () => {
     );
     when(shoppingFacade.navigationCategories$('B')).thenReturn(of([] as NavigationCategory[]));
 
-    TestBed.configureTestingModule({
+    await TestBed.configureTestingModule({
       imports: [FontAwesomeModule, RouterTestingModule],
       declarations: [CamfilCategoryNavigationComponent, MockPipe(CategoryRoutePipe)],
       providers: [
         { provide: ShoppingFacade, useFactory: () => instance(shoppingFacade) },
         { provide: AppFacade, useFactory: () => instance(appFacade) },
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(CamfilCategoryNavigationComponent);
-        component = fixture.componentInstance;
-        element = fixture.nativeElement;
-      });
-  }));
+    }).compileComponents();
+  });
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(CamfilCategoryNavigationComponent);
+    component = fixture.componentInstance;
+    element = fixture.nativeElement;
+  });
 
   it('should be created', () => {
     expect(component).toBeTruthy();
     expect(element).toBeTruthy();
     expect(() => component.ngOnChanges()).not.toThrow();
     expect(() => fixture.detectChanges()).not.toThrow();
-  });
-
-  xit('should create all links for tree', () => {
-    component.ngOnChanges();
-    fixture.detectChanges();
-
-    expect(element.querySelectorAll('a')).toMatchInlineSnapshot(`
-      NodeList [
-        <a class="filter-item-name" ng-reflect-router-link="/c/A" href="/c/A"> nA </a>,
-        <a class="filter-item-name filter-selected" ng-reflect-router-link="/c/A/A.1" href="/c/A/A.1">
-        nA.1
-      </a>,
-        <a class="filter-item-name" ng-reflect-router-link="/c/A/A.2" href="/c/A/A.2"> nA.2 </a>,
-        <a class="filter-item-name" ng-reflect-router-link="/c/B" href="/c/B"> nB </a>,
-      ]
-    `);
-  });
-
-  xit('should create all links for top level category', () => {
-    component.uniqueId = 'A';
-    component.ngOnChanges();
-    fixture.detectChanges();
-
-    expect(element.querySelectorAll('a')).toMatchInlineSnapshot(`
-      NodeList [
-        <a class="filter-item-name filter-selected" ng-reflect-router-link="/c/A/A.1" href="/c/A/A.1">
-        nA.1
-      </a>,
-        <a class="filter-item-name" ng-reflect-router-link="/c/A/A.2" href="/c/A/A.2"> nA.2 </a>,
-      ]
-    `);
   });
 });

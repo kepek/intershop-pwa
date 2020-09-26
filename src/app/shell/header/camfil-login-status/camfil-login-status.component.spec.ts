@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { TranslateModule } from '@ngx-translate/core';
@@ -22,14 +22,14 @@ describe('Camfil Login Status Component', () => {
     lastName: 'Miller',
   } as User;
 
-  beforeEach(async(() => {
+  beforeEach(async () => {
     accountFacade = mock(AccountFacade);
-    TestBed.configureTestingModule({
+    await TestBed.configureTestingModule({
       declarations: [CamfilLoginStatusComponent, MockComponent(FaIconComponent)],
       imports: [RouterTestingModule, TranslateModule.forRoot()],
       providers: [{ provide: AccountFacade, useFactory: () => instance(accountFacade) }],
     }).compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(CamfilLoginStatusComponent);
@@ -54,16 +54,6 @@ describe('Camfil Login Status Component', () => {
     fixture.detectChanges();
 
     expect(element.querySelector('a[data-testing-id=link-logout]')).toBeFalsy();
-  });
-
-  xit('should render full name on template when user is logged in', () => {
-    when(accountFacade.user$).thenReturn(of(userData));
-    fixture.detectChanges();
-
-    const loggedInDetails = element.getElementsByClassName('login-name');
-    expect(loggedInDetails).toBeTruthy();
-    expect(loggedInDetails.length).toBeGreaterThan(0);
-    expect(loggedInDetails[0].textContent).toEqual('camfil.account.login_status.my_pages');
   });
 
   it('should render nothing on template when user is not logged in', () => {

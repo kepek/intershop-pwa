@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
@@ -33,7 +33,7 @@ describe('Product Compare List Component', () => {
   let compareProduct1: ProductView;
   let compareProduct2: ProductView;
 
-  beforeEach(async(() => {
+  beforeEach(async () => {
     compareProduct1 = createProductView({ sku: '111', inStock: true, availability: true } as Product, categoryTree());
     compareProduct1.attributes = [
       {
@@ -88,7 +88,7 @@ describe('Product Compare List Component', () => {
       ],
       providers: [{ provide: ShoppingFacade, useFactory: () => instance(shoppingFacade) }],
     }).compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ProductCompareListComponent);

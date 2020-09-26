@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 import { MockComponent } from 'ng-mocks';
@@ -15,7 +15,7 @@ describe('Camfil Product Images Component', () => {
   let product: Product;
   let element: HTMLElement;
 
-  beforeEach(async(() => {
+  beforeEach(async () => {
     product = { sku: 'sku' } as Product;
     product.name = 'Lenco';
     product.images = [
@@ -60,7 +60,7 @@ describe('Camfil Product Images Component', () => {
         primaryImage: false,
       },
     ];
-    TestBed.configureTestingModule({
+    await TestBed.configureTestingModule({
       imports: [NgbCarouselModule, TranslateModule.forRoot()],
       declarations: [
         CamfilProductImagesComponent,
@@ -68,7 +68,7 @@ describe('Camfil Product Images Component', () => {
         MockComponent(CamfilProductLabelComponent),
       ],
     }).compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(CamfilProductImagesComponent);

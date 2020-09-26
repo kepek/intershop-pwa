@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { TranslateModule } from '@ngx-translate/core';
@@ -14,12 +14,12 @@ describe('Camfil Filter Text Component', () => {
   let fixture: ComponentFixture<CamfilFilterTextComponent>;
   let element: HTMLElement;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       imports: [FormsModule, TranslateModule.forRoot()],
       declarations: [CamfilFilterTextComponent, MockComponent(FaIconComponent), SanitizePipe],
     }).compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     const filterElement = {
@@ -87,7 +87,7 @@ describe('Camfil Filter Text Component', () => {
                     <div class="mat-checkbox-mixedmark"></div>
                   </div>
                 </div>
-                <span class="mat-checkbox-label"><span style="display: none;">&nbsp;</span></span></label
+                <span class="mat-checkbox-label"><span style="display: none">&nbsp;</span></span></label
               ></mat-checkbox
             ></a
           >
@@ -137,7 +137,7 @@ describe('Camfil Filter Text Component', () => {
                     <div class="mat-checkbox-mixedmark"></div>
                   </div>
                 </div>
-                <span class="mat-checkbox-label"><span style="display: none;">&nbsp;</span></span></label
+                <span class="mat-checkbox-label"><span style="display: none">&nbsp;</span></span></label
               ></mat-checkbox
             ></a
           >

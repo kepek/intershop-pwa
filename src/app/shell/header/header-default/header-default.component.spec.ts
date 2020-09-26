@@ -1,12 +1,12 @@
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { NgbCollapse } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
-import { findAllCamfilElements } from 'camfil-core/utils/dev/html-query-utils';
 import { MockComponent } from 'ng-mocks';
 
 import { FeatureToggleModule } from 'ish-core/feature-toggle.module';
+import { findAllCustomElements } from 'ish-core/utils/dev/html-query-utils';
 import { CamfilHeaderNavigationComponent } from 'ish-shell/header/camfil-header-navigation/camfil-header-navigation.component';
 import { CamfilLanguageSwitchComponent } from 'ish-shell/header/camfil-language-switch/camfil-language-switch.component';
 import { CamfilLoginStatusComponent } from 'ish-shell/header/camfil-login-status/camfil-login-status.component';
@@ -25,8 +25,8 @@ describe('Header Default Component', () => {
   let element: HTMLElement;
   let component: HeaderDefaultComponent;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       imports: [FeatureToggleModule.forTesting('compare'), RouterTestingModule, TranslateModule.forRoot()],
       declarations: [
         HeaderDefaultComponent,
@@ -43,7 +43,7 @@ describe('Header Default Component', () => {
         MockComponent(UserInformationMobileComponent),
       ],
     }).compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(HeaderDefaultComponent);
@@ -57,14 +57,43 @@ describe('Header Default Component', () => {
     expect(() => fixture.detectChanges()).not.toThrow();
   });
 
+  it('should render User Links on template', () => {
+    fixture.detectChanges();
+    expect(findAllCustomElements(element)).toIncludeAllMembers([
+      'camfil-login-status',
+      'camfil-product-compare-status',
+      'camfil-language-switch',
+      'camfil-mini-basket',
+      'camfil-mini-basket',
+      'ish-lazy-header-quickorder',
+      'camfil-search-box',
+      'camfil-header-navigation',
+      'ish-user-information-mobile',
+    ]);
+  });
   it('should render Language Switch on template', () => {
     fixture.detectChanges();
-    expect(findAllCamfilElements(element)).toContain('camfil-language-switch');
+    expect(findAllCustomElements(element)).toContain('camfil-language-switch');
+  });
+
+  it('should render Search Box on template', () => {
+    fixture.detectChanges();
+    expect(findAllCustomElements(element)).toIncludeAllMembers([
+      'camfil-login-status',
+      'camfil-product-compare-status',
+      'camfil-language-switch',
+      'camfil-mini-basket',
+      'camfil-mini-basket',
+      'ish-lazy-header-quickorder',
+      'camfil-search-box',
+      'camfil-header-navigation',
+      'ish-user-information-mobile',
+    ]);
   });
 
   it('should render Header Navigation on template', () => {
     fixture.detectChanges();
-    expect(findAllCamfilElements(element)).toContain('camfil-header-navigation');
+    expect(findAllCustomElements(element)).toContain('camfil-header-navigation');
   });
 
   it('should render normal header adequately for mobile devices', () => {

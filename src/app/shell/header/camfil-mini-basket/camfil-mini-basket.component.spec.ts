@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MockPipe } from 'ng-mocks';
@@ -18,12 +18,12 @@ describe('Camfil Mini Basket Component', () => {
   let element: HTMLElement;
   let checkoutFacade: CheckoutFacade;
 
-  beforeEach(async(() => {
+  beforeEach(async () => {
     checkoutFacade = mock(CheckoutFacade);
     const accountFacade = mock(AccountFacade);
     when(accountFacade.userPriceDisplayType$).thenReturn(of('gross'));
 
-    TestBed.configureTestingModule({
+    await TestBed.configureTestingModule({
       declarations: [CamfilMiniBasketComponent, MockPipe(ProductRoutePipe)],
       imports: [RouterTestingModule, TranslateModule.forRoot()],
       providers: [
@@ -31,7 +31,7 @@ describe('Camfil Mini Basket Component', () => {
         { provide: AccountFacade, useFactory: () => instance(accountFacade) },
       ],
     }).compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(CamfilMiniBasketComponent);
@@ -50,12 +50,5 @@ describe('Camfil Mini Basket Component', () => {
     expect(component).toBeTruthy();
     expect(element).toBeTruthy();
     expect(() => fixture.detectChanges()).not.toThrow();
-  });
-
-  xit('should display summary when collapsed', () => {
-    fixture.detectChanges();
-    expect(element.textContent.replace(/ /g, '')).toMatchInlineSnapshot(
-      `"  camfil.shopping_cart.ministatus.items.label  30/$141,796.98"`
-    );
   });
 });

@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, async, fakeAsync, tick } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
 import { MockComponent } from 'ng-mocks';
@@ -10,12 +10,12 @@ describe('Camfil Filter Collapsable Component', () => {
   let fixture: ComponentFixture<CamfilFilterCollapsableComponent>;
   let element: HTMLElement;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       imports: [NgbCollapseModule],
       declarations: [CamfilFilterCollapsableComponent, MockComponent(FaIconComponent)],
     }).compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(CamfilFilterCollapsableComponent);
@@ -28,15 +28,4 @@ describe('Camfil Filter Collapsable Component', () => {
     expect(element).toBeTruthy();
     expect(() => fixture.detectChanges()).not.toThrow();
   });
-
-  xit('should hide content when header is clicked', fakeAsync(() => {
-    fixture.detectChanges();
-    expect(element).toMatchSnapshot('open');
-    const filterGroupHead = fixture.nativeElement.querySelectorAll('h3')[0];
-    filterGroupHead.click();
-    tick(500);
-    fixture.detectChanges();
-
-    expect(element).toMatchSnapshot('closed');
-  }));
 });

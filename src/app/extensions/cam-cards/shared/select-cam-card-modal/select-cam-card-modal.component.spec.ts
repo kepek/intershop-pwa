@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
@@ -26,15 +26,15 @@ describe('Select Cam Card Modal Component', () => {
     public: false,
   };
 
-  beforeEach(async(() => {
+  beforeEach(async () => {
     camCardFacadeMock = mock(CamCardsFacade);
 
-    TestBed.configureTestingModule({
+    await TestBed.configureTestingModule({
       declarations: [MockComponent(InputComponent), MockDirective(ServerHtmlDirective), SelectCamCardModalComponent],
       imports: [NgbModalModule, ReactiveFormsModule, RouterTestingModule, TranslateModule.forRoot()],
       providers: [{ provide: CamCardsFacade, useFactory: () => instance(camCardFacadeMock) }],
     }).compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(SelectCamCardModalComponent);

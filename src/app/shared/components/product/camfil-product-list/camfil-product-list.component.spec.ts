@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, async, fakeAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { TranslateModule } from '@ngx-translate/core';
 import { MockComponent } from 'ng-mocks';
@@ -8,7 +8,7 @@ import { instance, mock, when } from 'ts-mockito';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { CoreStoreModule } from 'ish-core/store/core/core-store.module';
 import { ShoppingStoreModule } from 'ish-core/store/shopping/shopping-store.module';
-import { findAllIshElements } from 'ish-core/utils/dev/html-query-utils';
+import { findAllCustomElements } from 'ish-core/utils/dev/html-query-utils';
 import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
 import { CamfilProductItemComponent } from 'ish-shared/components/product/camfil-product-item/camfil-product-item.component';
 
@@ -20,9 +20,9 @@ describe('Camfil Product List Component', () => {
   let element: HTMLElement;
   let shoppingFacade: ShoppingFacade;
 
-  beforeEach(async(() => {
+  beforeEach(async () => {
     shoppingFacade = mock(ShoppingFacade);
-    TestBed.configureTestingModule({
+    await TestBed.configureTestingModule({
       imports: [
         CoreStoreModule.forTesting(),
         ShoppingStoreModule.forTesting('productListing'),
@@ -35,7 +35,7 @@ describe('Camfil Product List Component', () => {
       ],
       providers: [{ provide: ShoppingFacade, useFactory: () => instance(shoppingFacade) }],
     }).compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(CamfilProductListComponent);
@@ -72,6 +72,6 @@ describe('Camfil Product List Component', () => {
 
     fixture.detectChanges();
 
-    expect(findAllIshElements(element)).toEqual(['ish-loading', 'ish-loading']);
+    expect(findAllCustomElements(element)).toEqual(['ish-loading', 'ish-loading']);
   }));
 });
