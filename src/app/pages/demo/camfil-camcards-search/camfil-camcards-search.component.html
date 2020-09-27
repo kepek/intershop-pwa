@@ -5,13 +5,12 @@
         <form role="search" class="search clearfix" name="SearchBox_Header">
           <mat-icon svgIcon="search" class="search__icon background-icon"></mat-icon>
           <input
-            #searchInput
             placeholder="Search for CamCards"
-            formControlName="search"
             type="text"
             class="search-input"
             [class.mat-elevation-z2]="true"
             [(ngModel)]="searchInput$"
+            [ngModelOptions]="{ standalone: true }"
             (input)="submit($event.target.value)"
           />
 

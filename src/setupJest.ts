@@ -1,4 +1,6 @@
 // tslint:disable:ish-ordered-imports
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 require('jest-preset-angular');
 
 require('jest-extended');
@@ -6,13 +8,14 @@ require('jest-extended');
 import { getTestBed } from '@angular/core/testing';
 import { MaterialModule } from 'camfil-shared/material/material.module';
 import { MatIconTestingModule } from '@angular/material/icon/testing';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 beforeEach(() => {
   const testBed = getTestBed();
   // tslint:disable-next-line: no-any
   testBed.configureCompiler({ preserveWhitespaces: false } as any);
   testBed.configureTestingModule({
-    imports: [MaterialModule, MatIconTestingModule],
+    imports: [MaterialModule, MatIconTestingModule, FormsModule, ReactiveFormsModule, NoopAnimationsModule],
   });
 
   jest.spyOn(global.console, 'warn').mockImplementation(arg => {
