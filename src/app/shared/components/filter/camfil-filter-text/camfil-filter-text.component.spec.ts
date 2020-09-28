@@ -87,7 +87,7 @@ describe('Camfil Filter Text Component', () => {
                     <div class="mat-checkbox-mixedmark"></div>
                   </div>
                 </div>
-                <span class="mat-checkbox-label"><span style="display: none;">&nbsp;</span></span></label
+                <span class="mat-checkbox-label"><span style="display: none">&nbsp;</span></span></label
               ></mat-checkbox
             ></a
           >
@@ -137,7 +137,7 @@ describe('Camfil Filter Text Component', () => {
                     <div class="mat-checkbox-mixedmark"></div>
                   </div>
                 </div>
-                <span class="mat-checkbox-label"><span style="display: none;">&nbsp;</span></span></label
+                <span class="mat-checkbox-label"><span style="display: none">&nbsp;</span></span></label
               ></mat-checkbox
             ></a
           >

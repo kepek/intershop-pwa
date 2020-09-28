@@ -29,18 +29,18 @@ exports[`Camfil Header Default Component should render normal header adequately 
             class="mat-icon notranslate material-icons mat-icon-no-color"
             role="img"
             aria-hidden="true"
+            data-mat-icon-type="font"
             >close</mat-icon
           >
-          camfil.common.button.navbarCollapsed.close.text
-        </span>
-        <div
+          camfil.common.button.navbarCollapsed.close.text </span
+        ><span
           class="mat-button-ripple mat-ripple"
           matripple=""
           ng-reflect-centered="false"
           ng-reflect-disabled="false"
           ng-reflect-trigger="[object HTMLButtonElement]"
-        ></div>
-        <div class="mat-button-focus-overlay"></div>
+        ></span
+        ><span class="mat-button-focus-overlay"></span>
       </button>
       <div class="logo-wrapper">
         <a
@@ -55,6 +55,8 @@ exports[`Camfil Header Default Component should render normal header adequately 
             svgicon="logo"
             aria-hidden="true"
             ng-reflect-svg-icon="logo"
+            data-mat-icon-type="svg"
+            data-mat-icon-name="logo"
             ><svg
               class="fake-testing-svg"
               fit=""
@@ -69,6 +71,8 @@ exports[`Camfil Header Default Component should render normal header adequately 
             svgicon="camfil-logo-cart"
             aria-hidden="true"
             ng-reflect-svg-icon="camfil-logo-cart"
+            data-mat-icon-type="svg"
+            data-mat-icon-name="camfil-logo-cart"
             ><svg
               class="fake-testing-svg"
               fit=""
@@ -132,18 +136,18 @@ exports[`Camfil Header Default Component should render normal header adequately 
             class="mat-icon notranslate material-icons mat-icon-no-color"
             role="img"
             aria-hidden="true"
+            data-mat-icon-type="font"
             >close</mat-icon
           >
-          camfil.common.button.navbarCollapsed.close.text
-        </span>
-        <div
+          camfil.common.button.navbarCollapsed.close.text </span
+        ><span
           class="mat-button-ripple mat-ripple"
           matripple=""
           ng-reflect-centered="false"
           ng-reflect-disabled="false"
           ng-reflect-trigger="[object HTMLButtonElement]"
-        ></div>
-        <div class="mat-button-focus-overlay"></div>
+        ></span
+        ><span class="mat-button-focus-overlay"></span>
       </button>
       <div class="logo-wrapper">
         <a
@@ -158,6 +162,8 @@ exports[`Camfil Header Default Component should render normal header adequately 
             svgicon="logo"
             aria-hidden="true"
             ng-reflect-svg-icon="logo"
+            data-mat-icon-type="svg"
+            data-mat-icon-name="logo"
             ><svg
               class="fake-testing-svg"
               fit=""
@@ -172,6 +178,8 @@ exports[`Camfil Header Default Component should render normal header adequately 
             svgicon="camfil-logo-cart"
             aria-hidden="true"
             ng-reflect-svg-icon="camfil-logo-cart"
+            data-mat-icon-type="svg"
+            data-mat-icon-name="camfil-logo-cart"
             ><svg
               class="fake-testing-svg"
               fit=""
@@ -222,18 +230,18 @@ exports[`Camfil Header Default Component should render sticky header adequately 
             class="mat-icon notranslate material-icons mat-icon-no-color"
             role="img"
             aria-hidden="true"
+            data-mat-icon-type="font"
             >close</mat-icon
           >
-          camfil.common.button.navbarCollapsed.close.text
-        </span>
-        <div
+          camfil.common.button.navbarCollapsed.close.text </span
+        ><span
           class="mat-button-ripple mat-ripple"
           matripple=""
           ng-reflect-centered="false"
           ng-reflect-disabled="false"
           ng-reflect-trigger="[object HTMLButtonElement]"
-        ></div>
-        <div class="mat-button-focus-overlay"></div>
+        ></span
+        ><span class="mat-button-focus-overlay"></span>
       </button>
       <div class="logo-wrapper">
         <a
@@ -287,18 +295,18 @@ exports[`Camfil Header Default Component should render sticky header adequately 
             class="mat-icon notranslate material-icons mat-icon-no-color"
             role="img"
             aria-hidden="true"
+            data-mat-icon-type="font"
             >menu</mat-icon
           >
-          camfil.common.button.navbarCollapsed.text
-        </span>
-        <div
+          camfil.common.button.navbarCollapsed.text </span
+        ><span
           class="mat-button-ripple mat-ripple"
           matripple=""
           ng-reflect-centered="false"
           ng-reflect-disabled="false"
           ng-reflect-trigger="[object HTMLButtonElement]"
-        ></div>
-        <div class="mat-button-focus-overlay"></div>
+        ></span
+        ><span class="mat-button-focus-overlay"></span>
       </button>
       <div class="logo-wrapper">
         <a
@@ -354,18 +362,18 @@ exports[`Camfil Header Default Component should render sticky header adequately 
             class="mat-icon notranslate material-icons mat-icon-no-color"
             role="img"
             aria-hidden="true"
+            data-mat-icon-type="font"
             >close</mat-icon
           >
-          camfil.common.button.navbarCollapsed.close.text
-        </span>
-        <div
+          camfil.common.button.navbarCollapsed.close.text </span
+        ><span
           class="mat-button-ripple mat-ripple"
           matripple=""
           ng-reflect-centered="false"
           ng-reflect-disabled="false"
           ng-reflect-trigger="[object HTMLButtonElement]"
-        ></div>
-        <div class="mat-button-focus-overlay"></div>
+        ></span
+        ><span class="mat-button-focus-overlay"></span>
       </button>
       <div class="logo-wrapper">
         <a
