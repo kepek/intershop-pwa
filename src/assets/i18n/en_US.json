@@ -548,6 +548,7 @@
   "camfil.account.cam_card.new_from_basket.heading": "Create CamCard from Cart",
   "camfil.account.cam_card.new_from_basket_confirm.heading": "The CamCard \"{{0}}\" has been created and all items from the current cart have been transferred.",
   "camfil.account.cam_card.new_from_order.button.create.label": "Create",
+  "camfil.account.cam_card.no_entries": "There are currently no items in this cam card.",
   "camfil.account.cam_card.order_template.no_selection.error": "You have not selected any items. Please select at least one item you want to add to your shopping cart.",
   "camfil.account.cam_card.table.header.date_added": "Created",
   "camfil.account.cam_card.table.header.item": "Item",
@@ -574,6 +575,7 @@
   "camfil.common.button.navbarCollapsed.menu.aria_label": "Button with a menu icon for close/open navigation",
   "camfil.common.button.navbarCollapsed.text": "Menu",
   "camfil.common.home.link": "Start",
+  "camfil.product.list.sorting.label": "Sort by",
   "camfil.guide_article.headline": "Guides",
   "camfil.guide_article.read_more.text": "Read air filter guide",
   "camfil.navigation.filterClearAll.message": "Clear all filters",
@@ -588,7 +590,6 @@
   "camfil.product.list_price.label": "List Price",
   "camfil.product.product_links.crossselling.title": "Related products",
   "camfil.product.your_price.label": "Your Price",
-  "camfil.product.sorting.label": "Sort by",
   "camfil.read_more.text": "Read more",
   "camfil.search.filter.show.link": {
     "other": "Show # more"
