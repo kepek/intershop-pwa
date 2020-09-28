@@ -432,6 +432,10 @@ export class DemoPageComponent implements AfterViewInit, OnInit, OnDestroy {
     building.products.forEach(t => (t.checked = checked));
   }
 
+  updateBuildingChecked(building: CamCardBuilding) {
+    building.checked = building.products !== null && building.products.every(p => p.checked);
+  }
+
   /** EOF for camCards */
 
   setPageSizeOptions(setPageSizeOptionsInput: string) {
