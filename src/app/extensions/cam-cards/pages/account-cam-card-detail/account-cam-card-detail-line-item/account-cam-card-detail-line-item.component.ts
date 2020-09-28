@@ -48,18 +48,18 @@ export class AccountCamCardDetailLineItemComponent implements OnChanges, OnInit,
   updateQuantities() {
     this.addToCartForm.valueChanges
       .pipe(debounceTime(500), takeUntil(this.destroy$))
-      .subscribe(val => this.updateProductQuantity(this.camCardItemData.sku, val.quantity));
+      .subscribe(val => this.updateProductQuantity(this.camCardItemData.product.sku, val.quantity));
   }
 
   /** init form in the beginning */
   private initForm() {
     this.addToCartForm = new FormGroup({
-      quantity: new FormControl(this.camCardItemData.desiredQuantity.value || 1),
+      quantity: new FormControl(this.camCardItemData.count || 1),
     });
 
     this.selectItemForm = new FormGroup({
       productCheckbox: new FormControl(true),
-      sku: new FormControl(this.camCardItemData.sku),
+      sku: new FormControl(this.camCardItemData.product.sku),
     });
 
     this.selectedItemsForm.push(this.selectItemForm);
@@ -84,11 +84,7 @@ export class AccountCamCardDetailLineItemComponent implements OnChanges, OnInit,
   }
 
   updateProductQuantity(sku: string, quantity: number) {
-    this.camCardsFacade.addProductToCamCard(
-      this.currentCamCard.id,
-      sku,
-      quantity - this.camCardItemData.desiredQuantity.value
-    );
+    this.camCardsFacade.addProductToCamCard(this.currentCamCard.id, sku, quantity - this.camCardItemData.count);
   }
 
   removeProductFromCamCard(sku: string) {
@@ -99,7 +95,7 @@ export class AccountCamCardDetailLineItemComponent implements OnChanges, OnInit,
   private loadProductDetails() {
     if (!this.product$) {
       this.product$ = this.productFacade.product$(
-        this.camCardItemData.sku,
+        this.camCardItemData.product.sku,
         AccountCamCardDetailLineItemComponent.REQUIRED_COMPLETENESS_LEVEL
       );
     }

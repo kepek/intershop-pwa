@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { IconModule } from 'camfil-shared/icon/icon.module';
+import { MaterialModule } from 'camfil-shared/material/material.module';
 
 import { SharedModule } from 'ish-shared/shared.module';
 
@@ -7,6 +9,7 @@ import { CamCardsModule } from '../../cam-cards.module';
 
 import { AccountCamCardListComponent } from './account-cam-card-list/account-cam-card-list.component';
 import { AccountCamCardPageComponent } from './account-cam-card-page.component';
+import { CamfilCamCardsSearchComponent } from './camfil-cam-cards-search/camfil-cam-cards-search.component';
 
 const accountCamCardPageRoutes: Routes = [
   {
@@ -16,7 +19,7 @@ const accountCamCardPageRoutes: Routes = [
 ];
 
 @NgModule({
-  imports: [CamCardsModule, RouterModule.forChild(accountCamCardPageRoutes), SharedModule],
-  declarations: [AccountCamCardListComponent, AccountCamCardPageComponent],
+  imports: [CamCardsModule, IconModule, MaterialModule, RouterModule.forChild(accountCamCardPageRoutes), SharedModule],
+  declarations: [AccountCamCardListComponent, AccountCamCardPageComponent, CamfilCamCardsSearchComponent],
 })
 export class AccountCamCardPageModule {}

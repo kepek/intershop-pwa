@@ -68,14 +68,14 @@ export class AccountCamCardDetailPageComponent implements OnInit, OnDestroy {
   }
 
   filterItems(camCards): CamCardItem[] {
-    return camCards.items.filter(item =>
-      this.selectedItemsForm.value.find(p => p.sku === item.sku && p.productCheckbox === true)
+    return camCards.camCardItems.filter(item =>
+      this.selectedItemsForm.value.find(p => p.sku === item.product.sku && p.productCheckbox === true)
     );
   }
 
   addSelectedItemsToCart(camCard: CamCard) {
     this.filterItems(camCard).forEach(item => {
-      this.shoppingFacade.addProductToBasket(item.sku, item.desiredQuantity.value);
+      this.shoppingFacade.addProductToBasket(item.product.sku, item.count);
     });
   }
 }

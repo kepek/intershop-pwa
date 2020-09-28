@@ -16,7 +16,7 @@ export class CamCardMapper {
   }
   fromData(camCardData: CamCardData, camCardId: string): CamCard {
     if (camCardData) {
-      let items: CamCardItem[];
+      let camCardItems: CamCardItem[];
       if (camCardData.items && camCardData.items.length) {
         // create items object from attribute array
         const arrayToObject = attributes =>
@@ -24,28 +24,62 @@ export class CamCardMapper {
             obj[attr.name] = attr.value;
             return obj;
           }, {});
-        items = camCardData.items
+        camCardItems = camCardData.items
           .map(item => arrayToObject(item.attributes))
           .map(item => ({
-            sku: item.sku,
             id: item.id,
-            creationDate: Number(item.creationDate),
-            desiredQuantity: {
-              value: item.desiredQuantity.value,
-              // TBD: is the unit necessary?
-              // unit: item.desiredQuantity.unit,
+            count: item.desiredQuantity.value,
+            position: 0,
+            product: {
+              sku: item.sku,
+              // name:
+              // shortDescription:
+              // longDescription:
+              // available:
             },
+            creationDate: Number(item.creationDate),
           }));
       } else {
-        items = [];
+        camCardItems = [];
       }
+
+      // tmp
+      const subCamCardItems = camCardItems.length
+        ? camCardItems.map(item => ({
+            id: item.id + 'sub',
+            count: item.count,
+            position: item.position,
+            product: item.product,
+            creationDate: Number(item.creationDate),
+          }))
+        : [];
+      // EOF tmp
 
       return {
         id: camCardId,
         title: camCardData.title,
         itemsCount: camCardData.itemsCount || 0,
         creationDate: camCardData.creationDate,
-        items,
+        camCardItems,
+        // contacts:
+
+        // tmp default values
+        rootCamCard: '',
+        subCamCards: [
+          {
+            id: camCardId + 'SUB',
+            title: 'SUB CamCard - ' + camCardData.title,
+            customer: {},
+            itemsCount: camCardData.itemsCount || 0,
+            creationDate: camCardData.creationDate,
+            rootCamCard: camCardId,
+            subCamCards: [],
+            camCardItems: subCamCardItems,
+          },
+        ],
+        customer: {
+          name: 'customerName ' + camCardId,
+        },
       };
     } else {
       throw new Error(`camCardData is required`);
