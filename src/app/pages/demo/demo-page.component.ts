@@ -1,7 +1,10 @@
+import { animate, state, style, transition, trigger } from '@angular/animations';
+import { SelectionModel } from '@angular/cdk/collections';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { AfterViewInit, ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { MatCheckboxChange } from '@angular/material/checkbox';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
@@ -16,28 +19,213 @@ import { map, startWith, take, takeUntil } from 'rxjs/operators';
 import { DemoBottomSheetComponent } from './demo-bottom-sheet/demo-bottom-sheet.component';
 import { DemoDialogComponent } from './demo-dialog/demo-dialog.component';
 
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-}
-
 export interface Fruit {
   name: string;
 }
 
-const ELEMENT_DATA: PeriodicElement[] = [
-  { position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H' },
-  { position: 2, name: 'Helium', weight: 4.0026, symbol: 'He' },
-  { position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li' },
-  { position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be' },
-  { position: 5, name: 'Boron', weight: 10.811, symbol: 'B' },
-  { position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C' },
-  { position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N' },
-  { position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O' },
-  { position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F' },
-  { position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne' },
+export interface CamCardBuildingProducts {
+  name: string;
+  checked: boolean;
+}
+
+export interface CamCardBuilding {
+  name: string;
+  checked: boolean;
+  open?: boolean;
+  products: CamCardBuildingProducts[];
+}
+
+export interface CamCard {
+  name: string;
+  position: number;
+  weight: number;
+  symbol: string;
+  buildings: CamCardBuilding[];
+}
+
+const CAMCARDS_DATA: CamCard[] = [
+  {
+    position: 1,
+    name: 'CamCard Hydrogen',
+    weight: 1.0079,
+    symbol: 'H',
+    buildings: [
+      {
+        name: 'Building 1',
+        checked: false,
+        products: [
+          { name: 'product sku - 12345', checked: false },
+          { name: 'product2 sku - 98265', checked: false },
+          { name: 'product3 sku - 52489', checked: false },
+        ],
+      },
+      {
+        name: 'Building 2',
+        checked: false,
+        products: [
+          { name: 'product sku - 12345', checked: false },
+          { name: 'product2 sku - 98265', checked: false },
+          { name: 'product3 sku - 52489', checked: false },
+        ],
+      },
+    ],
+  },
+  {
+    position: 2,
+    name: 'CamCard test',
+    weight: 4.0026,
+    symbol: 'He',
+    buildings: [
+      {
+        name: 'Building 1',
+        checked: false,
+        products: [
+          { name: 'product sku - 12345', checked: false },
+          { name: 'product2 sku - 98265', checked: false },
+          { name: 'product3 sku - 52489', checked: false },
+        ],
+      },
+      {
+        name: 'Building 2',
+        checked: false,
+        products: [
+          { name: 'product sku - 12345', checked: false },
+          { name: 'product2 sku - 98265', checked: false },
+          { name: 'product3 sku - 52489', checked: false },
+        ],
+      },
+    ],
+  },
+  {
+    position: 3,
+    name: 'CamCard Lithium',
+    weight: 6.941,
+    symbol: 'Li',
+    buildings: [
+      {
+        name: 'Building 1',
+        checked: false,
+        products: [
+          { name: 'product sku - 12345', checked: false },
+          { name: 'product2 sku - 98265', checked: false },
+          { name: 'product3 sku - 52489', checked: false },
+        ],
+      },
+      {
+        name: 'Building 2',
+        checked: false,
+        products: [
+          { name: 'product sku - 12345', checked: false },
+          { name: 'product2 sku - 98265', checked: false },
+          { name: 'product3 sku - 52489', checked: false },
+        ],
+      },
+    ],
+  },
+  {
+    position: 4,
+    name: 'CamCard Beryllium',
+    weight: 9.0122,
+    symbol: 'Be',
+    buildings: [
+      {
+        name: 'Building 1',
+        checked: false,
+        products: [
+          { name: 'product sku - 12345', checked: false },
+          { name: 'product2 sku - 98265', checked: false },
+          { name: 'product3 sku - 52489', checked: false },
+        ],
+      },
+      {
+        name: 'Building 2',
+        checked: false,
+        products: [
+          { name: 'product sku - 12345', checked: false },
+          { name: 'product2 sku - 98265', checked: false },
+          { name: 'product3 sku - 52489', checked: false },
+        ],
+      },
+    ],
+  },
+  {
+    position: 5,
+    name: 'CamCard Boron',
+    weight: 10.811,
+    symbol: 'B',
+    buildings: [
+      {
+        name: 'Building 1',
+        checked: false,
+        products: [
+          { name: 'product sku - 12345', checked: false },
+          { name: 'product2 sku - 98265', checked: false },
+          { name: 'product3 sku - 52489', checked: false },
+        ],
+      },
+      {
+        name: 'Building 2',
+        checked: false,
+        products: [
+          { name: 'product sku - 12345', checked: false },
+          { name: 'product2 sku - 98265', checked: false },
+          { name: 'product3 sku - 52489', checked: false },
+        ],
+      },
+    ],
+  },
+  {
+    position: 6,
+    name: 'CamCard Carbon',
+    weight: 12.0107,
+    symbol: 'C',
+    buildings: [
+      {
+        name: 'Building 1',
+        checked: false,
+        products: [
+          { name: 'product sku - 12345', checked: false },
+          { name: 'product2 sku - 98265', checked: false },
+          { name: 'product3 sku - 52489', checked: false },
+        ],
+      },
+      {
+        name: 'Building 2',
+        checked: false,
+        products: [
+          { name: 'product sku - 12345', checked: false },
+          { name: 'product2 sku - 98265', checked: false },
+          { name: 'product3 sku - 52489', checked: false },
+        ],
+      },
+    ],
+  },
+  {
+    position: 7,
+    name: 'CamCard Nitrogen',
+    weight: 14.0067,
+    symbol: 'N',
+    buildings: [
+      {
+        name: 'Building 1',
+        checked: false,
+        products: [
+          { name: 'product sku - 12345', checked: false },
+          { name: 'product2 sku - 98265', checked: false },
+          { name: 'product3 sku - 52489', checked: false },
+        ],
+      },
+      {
+        name: 'Building 2',
+        checked: false,
+        products: [
+          { name: 'product sku - 12345', checked: false },
+          { name: 'product2 sku - 98265', checked: false },
+          { name: 'product3 sku - 52489', checked: false },
+        ],
+      },
+    ],
+  },
 ];
 
 // tslint:disable-next-line:component-creation-test
@@ -53,6 +241,13 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   templateUrl: './demo-page.component.html',
   styleUrls: ['./demo-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '*' })),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
 })
 export class DemoPageComponent implements AfterViewInit, OnInit, OnDestroy {
   private destroy$ = new Subject();
@@ -136,8 +331,12 @@ export class DemoPageComponent implements AfterViewInit, OnInit, OnDestroy {
     { name: 'Warn', color: 'warn' },
   ];
 
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-  dataSource = new MatTableDataSource(ELEMENT_DATA);
+  /** for camCards */
+  dataSource = new MatTableDataSource(CAMCARDS_DATA);
+  columnsToDisplay = ['name', 'weight', 'symbol', 'position', 'checkbox'];
+  selection = new SelectionModel<CamCard>(true, []);
+  expandedElement: CamCard | null;
+  /** EOF camCards */
 
   visibleFruits = true;
   selectableFruits = true;
@@ -155,6 +354,85 @@ export class DemoPageComponent implements AfterViewInit, OnInit, OnDestroy {
   matcher = new MyErrorStateMatcher();
 
   @ViewChild(MatSort) sort: MatSort;
+
+  applyfilters(filter) {
+    this.dataSource.filter = filter;
+  }
+
+  /** checkboxes for CamCards */
+  isAllChecked() {
+    const numSelected = this.selection.selected.length;
+    const numCamCards = this.dataSource.data.length;
+    return numSelected === numCamCards && this.dataSource.data.every(c => this.isCamCardChecked(c));
+  }
+
+  masterChange(event: MatCheckboxChange) {
+    if (event) {
+      this.isAllChecked() ? this.selection.clear() : this.dataSource.data.forEach(c => this.selection.select(c));
+
+      this.dataSource.data.forEach(row =>
+        row.buildings.forEach(b => {
+          b.checked = event.checked;
+          b.products.forEach(p => (p.checked = event.checked));
+        })
+      );
+    } else {
+      return null;
+    }
+  }
+
+  isAllIndeterminate() {
+    return (
+      (this.selection.hasValue() && !this.isAllChecked()) ||
+      this.dataSource.data.filter(c => this.isCamCardIndeterminate(c)).length > 0
+    );
+  }
+
+  isCamCardChecked(camCard: CamCard) {
+    const allBuildings = camCard.buildings.every(b => b.checked);
+    if (allBuildings && !this.selection.isSelected(camCard)) {
+      this.selection.select(camCard);
+    }
+    return allBuildings || this.selection.isSelected(camCard);
+  }
+
+  isCamCardIndeterminate(camCard: CamCard) {
+    const buildingNum = camCard.buildings.filter(b => b.checked || b.products.filter(p => p.checked).length).length;
+    if (buildingNum === 0) {
+      this.selection.deselect(camCard);
+    }
+    return buildingNum > 0 && camCard.buildings.filter(b => b.checked).length !== camCard.buildings.length;
+  }
+
+  isBuildingIndeterminate(camCard: CamCardBuilding): boolean {
+    return camCard.products === null ? false : camCard.products.filter(t => t.checked).length > 0 && !camCard.checked;
+  }
+
+  setCamCardChecked(camCard: CamCard, event: MatCheckboxChange) {
+    if (event) {
+      camCard.buildings.forEach(b => {
+        b.checked = event.checked;
+        b.products.forEach(p => (p.checked = event.checked));
+      });
+      return this.selection.toggle(camCard);
+    } else {
+      return null;
+    }
+  }
+
+  setBuildingChecked(building: CamCardBuilding, checked: boolean) {
+    building.checked = checked;
+    if (building.products === null) {
+      return;
+    }
+    building.products.forEach(t => (t.checked = checked));
+  }
+
+  updateBuildingChecked(building: CamCardBuilding) {
+    building.checked = building.products !== null && building.products.every(p => p.checked);
+  }
+
+  /** EOF for camCards */
 
   setPageSizeOptions(setPageSizeOptionsInput: string) {
     if (setPageSizeOptionsInput) {

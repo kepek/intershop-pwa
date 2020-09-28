@@ -1,5 +1,5 @@
 <div class="account-wrapper">
-  <div class="row account-main">
+  <div class="row account-main" *ngIf="_router.url !== '/account/cam-cards'; else camCards">
     <div class="col-lg-3 account-nav-box">
       <ish-account-navigation [deviceType]="deviceType$ | async"></ish-account-navigation>
     </div>
@@ -9,3 +9,7 @@
     </div>
   </div>
 </div>
+
+<ng-template #camCards>
+  <router-outlet></router-outlet>
+</ng-template>
