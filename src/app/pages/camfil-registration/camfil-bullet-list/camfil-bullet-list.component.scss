@@ -1,0 +1,38 @@
+@import '~src/styles/themes/camfil/colors';
+@import '~src/styles/themes/camfil/variables';
+@import '~src/styles/themes/camfil/mixins';
+
+:host {
+  .bullet-list {
+    background-color: $camfil-color-image-fallback;
+    padding-top: 0;
+
+    .mat-list-item {
+      height: 100%;
+      padding-top: 16px;
+
+      &:first-child {
+        padding-top: 50px;
+      }
+
+      &:last-child {
+        padding-bottom: 50px;
+      }
+
+      &::ng-deep .mat-list-text > * {
+        @include font-size-list-item;
+        font-family: $font-family-helveticaneue;
+      }
+
+      &::ng-deep .mat-list-item-content {
+        padding-left: 50px;
+      };
+    }
+
+    .mat-icon {
+      font-size: 16px;
+      width: 16px;
+      height: 16px;
+    }
+  }
+}

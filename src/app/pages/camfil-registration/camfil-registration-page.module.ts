@@ -8,6 +8,7 @@ import { SharedModule } from 'ish-shared/shared.module';
 
 import { CamfilBannerComponent } from '../../shared/components/camfil-banner/camfil-banner.component';
 
+import { CamfilBulletListComponent } from './camfil-bullet-list/camfil-bullet-list.component';
 import { CamfilInfoSectionComponent } from './camfil-info-section/camfil-info-section.component';
 import { CamfilIntroComponent } from './camfil-intro/camfil-intro.component';
 import { CamfilRegistrationCompanyFormComponent } from './camfil-registration-company-form/camfil-registration-company-form.component';
@@ -28,6 +29,7 @@ const registrationPageRoutes: Routes = [{ path: '', component: CamfilRegistratio
   ],
   declarations: [
     CamfilBannerComponent,
+    CamfilBulletListComponent,
     CamfilInfoSectionComponent,
     CamfilIntroComponent,
     CamfilRegistrationCompanyFormComponent,

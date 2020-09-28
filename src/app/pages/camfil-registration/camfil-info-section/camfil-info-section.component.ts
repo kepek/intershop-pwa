@@ -6,4 +6,6 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   styleUrls: ['./camfil-info-section.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CamfilInfoSectionComponent {}
+export class CamfilInfoSectionComponent {
+  bullets: String[] = ['test0', 'test1', 'test2', 'test3'];
+}

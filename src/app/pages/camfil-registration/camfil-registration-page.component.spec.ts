@@ -14,6 +14,7 @@ import { CamfilInfoSectionComponent } from './camfil-info-section/camfil-info-se
 import { CamfilRegistrationFormComponent } from './camfil-registration-form/camfil-registration-form.component';
 import { CamfilRegistrationPageComponent } from './camfil-registration-page.component';
 import { CamfilIntroComponent } from './camfil-intro/camfil-intro.component';
+import {CamfilBulletListComponent} from "./camfil-bullet-list/camfil-bullet-list.component";
 
 
 describe('Camfil Registration Page Component', () => {
@@ -32,6 +33,7 @@ describe('Camfil Registration Page Component', () => {
         CamfilInfoSectionComponent,
         CamfilRegistrationPageComponent,
         CamfilIntroComponent,
+        CamfilBulletListComponent,
         DummyComponent,
         MockComponent(CamfilRegistrationFormComponent),
       ],

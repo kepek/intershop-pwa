@@ -1,3 +1,11 @@
-.red {
-  color: red;
+@import '~src/styles/themes/camfil/colors';
+@import '~src/styles/themes/camfil/variables';
+@import '~src/styles/themes/camfil/mixins';
+
+:host {
+  .bullet-list {
+    &__wrapper {
+      padding-top: 6px;
+    }
+  }
 }

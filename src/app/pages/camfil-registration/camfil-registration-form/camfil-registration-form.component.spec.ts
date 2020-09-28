@@ -1,8 +1,9 @@
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { TranslateModule } from '@ngx-translate/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MockComponent, MockDirective } from 'ng-mocks';
-import { anything, instance, mock, spy, verify, when } from 'ts-mockito';
+import { anything, instance, mock, when } from 'ts-mockito';
 
 import { FeatureToggleModule } from 'ish-core/feature-toggle.module';
 import { AddressFormContainerComponent } from 'ish-shared/address-forms/components/address-form-container/address-form-container.component';
@@ -15,6 +16,7 @@ import { CheckboxComponent } from 'ish-shared/forms/components/checkbox/checkbox
 import { TacCheckboxComponent } from 'ish-shared/forms/components/tac-checkbox/tac-checkbox.component';
 
 import { LazyCaptchaComponent } from '../../../extensions/captcha/exports/lazy-captcha/lazy-captcha.component';
+import { CamfilIntroComponent } from '../camfil-intro/camfil-intro.component';
 import { CamfilRegistrationCompanyFormComponent } from '../camfil-registration-company-form/camfil-registration-company-form.component';
 import { CamfilRegistrationCredentialsFormComponent } from '../camfil-registration-credentials-form/camfil-registration-credentials-form.component';
 
@@ -24,17 +26,18 @@ describe('Camfil Registration Form Component', () => {
   let fixture: ComponentFixture<CamfilRegistrationFormComponent>;
   let component: CamfilRegistrationFormComponent;
   let element: HTMLElement;
-  let fb: FormBuilder;
+  let translate: TranslateService;
 
-  beforeEach(async(() => {
+  beforeEach(async () => {
     const addressFormFactoryMock = mock(AddressFormFactory);
     when(addressFormFactoryMock.getGroup(anything())).thenReturn(new FormGroup({}));
 
     const addressFormFactoryProviderMock = mock(AddressFormFactoryProvider);
     when(addressFormFactoryProviderMock.getFactory(anything())).thenReturn(addressFormFactoryMock);
 
-    TestBed.configureTestingModule({
+    await TestBed.configureTestingModule({
       declarations: [
+        CamfilIntroComponent,
         CamfilRegistrationFormComponent,
         MockComponent(AddressFormContainerComponent),
         MockComponent(CamfilRegistrationCompanyFormComponent),
@@ -48,113 +51,26 @@ describe('Camfil Registration Form Component', () => {
       ],
       providers: [{ provide: AddressFormFactoryProvider, useFactory: () => instance(addressFormFactoryProviderMock) }],
       imports: [
+        BrowserAnimationsModule,
         FeatureToggleModule.forTesting('businessCustomerRegistration'),
         ReactiveFormsModule,
         TranslateModule.forRoot(),
       ],
     }).compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(CamfilRegistrationFormComponent);
     component = fixture.componentInstance;
     element = fixture.nativeElement;
-    fb = TestBed.inject(FormBuilder);
+    translate = TestBed.inject(TranslateService);
+    translate.setDefaultLang('en');
+    translate.use('en');
   });
 
   it('should be created', () => {
     expect(component).toBeTruthy();
     expect(element).toBeTruthy();
     expect(() => fixture.detectChanges()).not.toThrow();
-  });
-
-  it('should create a registration form on creation', () => {
-    expect(component.form).toBeUndefined();
-    fixture.detectChanges();
-    expect(component.form.get('preferredLanguage')).toBeTruthy();
-    expect(component.form.get('birthday')).toBeTruthy();
-    expect(component.form.get('taxationID')).toBeTruthy();
-  });
-
-  it('should display registration company form for a business customer registration', () => {
-    fixture.detectChanges();
-    expect(element.querySelector('camfil-registration-company-form')).toBeTruthy();
-  });
-
-  it('should throw cancel event when cancel is clicked', done => {
-    component.cancel.subscribe(() => {
-      done();
-    });
-
-    component.cancelForm();
-  });
-
-  it('should set submitted flag if submit is clicked and form is not valid', async(() => {
-    component.form = new FormGroup({
-      preferredLanguage: new FormControl('', Validators.required),
-    });
-    expect(component.submitted).toBeFalsy();
-    component.submitForm();
-    fixture.whenStable().then(() => {
-      expect(component.submitted).toBeTruthy();
-    });
-  }));
-
-  it('should NOT throw create event for invalid form', done => {
-    component.form = new FormGroup({
-      control: new FormControl('', Validators.required),
-    });
-
-    component.create.subscribe(() => {
-      fail();
-      done();
-    });
-
-    component.submitForm();
-    fixture.detectChanges();
-
-    done();
-  });
-
-  it('should throw create event for valid form (and not when invalid)', done => {
-    component.form = fb.group({
-      control: new FormControl('foo', Validators.required),
-      credentials: fb.group({}),
-      address: fb.group({}),
-      captcha: 'FAKE_CAPTCHA_RESPONSE',
-      captchaAction: 'create_account',
-    });
-
-    component.create.subscribe(() => {
-      done();
-    });
-
-    component.submitForm();
-    fixture.detectChanges();
-  });
-
-  it('should throw create event if t&c checkbox is checked', done => {
-    component.form = fb.group({
-      control: new FormControl('foo', Validators.required),
-      credentials: fb.group({}),
-      address: fb.group({}),
-      termsAndConditions: true,
-      captcha: 'FAKE_CAPTCHA_RESPONSE',
-      captchaAction: 'create_account',
-    });
-    component.create.subscribe(() => {
-      done();
-    });
-
-    component.submitForm();
-    fixture.detectChanges();
-  });
-
-  it('should not emit an event if t&c checkbox is empty', () => {
-    const emitter = spy(component.create);
-
-    fixture.detectChanges();
-    component.submitForm();
-    verify(emitter.emit(anything())).never();
   });
 });

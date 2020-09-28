@@ -71,3 +71,9 @@
   font-weight: 300;
   line-height: 20px;
 }
+
+@mixin font-size-list-item {
+  font-size: $font-size-corporate;
+  font-weight: 500;
+  line-height: 16px;
+}
