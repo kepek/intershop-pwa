@@ -13,6 +13,7 @@ import { CategoryListComponent } from '../category/category-list/category-list.c
 import { CamfilCategoryBoxComponent } from './camfil-category-box/camfil-category-box.component';
 import { CamfilCategoryBoxesComponent } from './camfil-category-boxes/camfil-category-boxes.component';
 import { CamfilCategoryCategoriesComponent } from './camfil-category-categories/camfil-category-categories.component';
+import { CamfilCategoryFaqComponent } from './camfil-category-faq/camfil-category-faq.component';
 import { CamfilCategoryNavigationComponent } from './camfil-category-navigation/camfil-category-navigation.component';
 import { CamfilCategoryPageComponent } from './camfil-category-page.component';
 import { CamfilCategoryProductsComponent } from './camfil-category-products/camfil-category-products.component';
@@ -40,6 +41,7 @@ const categoryPageRoutes: Routes = [
     CamfilCategoryBoxComponent,
     CamfilCategoryBoxesComponent,
     CamfilCategoryCategoriesComponent,
+    CamfilCategoryFaqComponent,
     CamfilCategoryNavigationComponent,
     CamfilCategoryPageComponent,
     CamfilCategoryProductsComponent,

@@ -13,6 +13,7 @@ import { CamfilFilterMeasurementsComponent } from 'ish-shared/components/filter/
 
 import { CategoryListComponent } from '../../category/category-list/category-list.component';
 import { CamfilCategoryBoxesComponent } from '../camfil-category-boxes/camfil-category-boxes.component';
+import { CamfilCategoryFaqComponent } from '../camfil-category-faq/camfil-category-faq.component';
 import { CamfilCategoryNavigationComponent } from '../camfil-category-navigation/camfil-category-navigation.component';
 
 import { CamfilCategoryCategoriesComponent } from './camfil-category-categories.component';
@@ -29,6 +30,7 @@ describe('Camfil Category Categories Component', () => {
         CamfilCategoryCategoriesComponent,
         MockComponent(CamfilBreadcrumbComponent),
         MockComponent(CamfilCategoryBoxesComponent),
+        MockComponent(CamfilCategoryFaqComponent),
         MockComponent(CamfilCategoryNavigationComponent),
         MockComponent(CamfilFilterMeasurementsComponent),
         MockComponent(CategoryListComponent),

@@ -197,4 +197,23 @@
   .container {
     overflow: hidden;
   }
+
+  /** camCards **/
+  .example-element-detail {
+    overflow: hidden;
+  }
+  .example-detail-row {
+    height: auto;
+
+  }
+  .mat-action-row {
+    justify-content: space-between;
+    align-items: center;
+    
+    ::ng-deep {
+      label {
+        margin-bottom: 0;
+      }
+    }
+  }
 }

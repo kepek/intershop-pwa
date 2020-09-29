@@ -18,7 +18,7 @@ exports[`Camfil Header Default Component should render normal header adequately 
   <div class="row align-items-center header__second">
     <div class="col-9 col-md-6 col-lg-4 col-xl-3 logo-col d-flex">
       <button
-        class="navbar-toggler mat-focus-indicator mat-stroked-button mat-button-base mat-accent"
+        class="navbar-toggler mat-focus-indicator mat-stroked-button mat-button-base mat-accent _mat-animation-noopable"
         color="accent"
         mat-stroked-button=""
         ng-reflect-color="accent"
@@ -125,7 +125,7 @@ exports[`Camfil Header Default Component should render normal header adequately 
   <div class="row align-items-center header__second">
     <div class="col-9 col-md-6 col-lg-4 col-xl-3 logo-col d-flex">
       <button
-        class="navbar-toggler mat-focus-indicator mat-stroked-button mat-button-base mat-accent"
+        class="navbar-toggler mat-focus-indicator mat-stroked-button mat-button-base mat-accent _mat-animation-noopable"
         color="accent"
         mat-stroked-button=""
         ng-reflect-color="accent"
@@ -219,7 +219,7 @@ exports[`Camfil Header Default Component should render sticky header adequately 
   <div class="row align-items-center header__second">
     <div class="col-9 col-md-6 col-lg-4 col-xl-3 logo-col d-flex">
       <button
-        class="navbar-toggler mat-focus-indicator mat-stroked-button mat-button-base mat-accent"
+        class="navbar-toggler mat-focus-indicator mat-stroked-button mat-button-base mat-accent _mat-animation-noopable"
         color="accent"
         mat-stroked-button=""
         ng-reflect-color="accent"
@@ -284,7 +284,7 @@ exports[`Camfil Header Default Component should render sticky header adequately 
   <div class="row align-items-center header__second">
     <div class="col-9 col-md-6 col-lg-4 col-xl-3 logo-col d-flex">
       <button
-        class="navbar-toggler mat-focus-indicator mat-stroked-button mat-button-base mat-accent"
+        class="navbar-toggler mat-focus-indicator mat-stroked-button mat-button-base mat-accent _mat-animation-noopable"
         color="accent"
         mat-stroked-button=""
         ng-reflect-color="accent"
@@ -351,7 +351,7 @@ exports[`Camfil Header Default Component should render sticky header adequately 
   <div class="row align-items-center header__second">
     <div class="col-9 col-md-6 col-lg-4 col-xl-3 logo-col d-flex">
       <button
-        class="navbar-toggler mat-focus-indicator mat-stroked-button mat-button-base mat-accent"
+        class="navbar-toggler mat-focus-indicator mat-stroked-button mat-button-base mat-accent _mat-animation-noopable"
         color="accent"
         mat-stroked-button=""
         ng-reflect-color="accent"

@@ -113,11 +113,11 @@ describe('Tacton Select Input Component', () => {
     expect(element).toMatchInlineSnapshot(`
       <div class="form-group">
         <select class="form-control mw-100">
-          <option value="opt1">OPT1</option>
-          <option value="opt2">OPT2</option>
-          <option value="opt3">OPT3</option>
-          <option value="opt4">OPT4</option>
-          <option value="opt5">OPT5</option>
+          <option value="opt1" ng-reflect-value="opt1">OPT1</option>
+          <option value="opt2" ng-reflect-value="opt2">OPT2</option>
+          <option value="opt3" ng-reflect-value="opt3">OPT3</option>
+          <option value="opt4" ng-reflect-value="opt4">OPT4</option>
+          <option value="opt5" ng-reflect-value="opt5">OPT5</option>
         </select>
       </div>
     `);

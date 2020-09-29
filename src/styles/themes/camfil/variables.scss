@@ -250,13 +250,20 @@ $dropdown-border-color: rgba(0, 0, 0, 0.15);
 // Define the minimum dimensions at which your layout will change,
 // adapting to different screen sizes, for use in media queries.
 
+$grid-columns: 12;
+$grid-gutter-width: 30px;
+
 $grid-breakpoints: (
-  xxs: 0,
-  xs: 360px,
+  // Extra small screen / phone
+  xs: 0,
+  // Small screen / phone
   sm: 576px,
+  // Medium screen / tablet
   md: 768px,
-  lg: 1200px,
-  xl: 1480px,
+  // Large screen / desktop
+  lg: 992px,
+  // Extra large screen / wide desktop
+  xl: 1200px
 );
 
 // Override breakpoints max / min
@@ -295,10 +302,10 @@ $grid-gutter-width: 48px;
 // to work well with our breakpoints the value for 'sm' needs to be the width of the next breakpoint
 // and the value of 'md' needs to be larger than the one for 'sm'
 $container-max-widths: (
-  sm: 768px,
-  md: 770px,
-  lg: map-get($grid-breakpoints, lg) - $grid-gutter-width,
-  xl: map-get($grid-breakpoints, xl) - $grid-gutter-width,
+  sm: 540px,
+  md: 720px,
+  lg: 1140px,
+  xl: 1440px,
 );
 // Navbar
 $navbar-padding-x: 0;

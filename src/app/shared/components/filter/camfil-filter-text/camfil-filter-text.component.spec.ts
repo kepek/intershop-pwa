@@ -46,7 +46,7 @@ describe('Camfil Filter Text Component', () => {
           <a class="filter-item-name" data-testing-id="filter-link-AsusName">
             Asus
             <mat-checkbox
-              class="example-margin mat-checkbox mat-accent ng-untouched ng-pristine ng-valid"
+              class="example-margin mat-checkbox mat-accent _mat-animation-noopable ng-untouched ng-pristine ng-valid"
               ng-reflect-model="false"
               id="mat-checkbox-1"
               ><label class="mat-checkbox-layout" for="mat-checkbox-1-input"
@@ -96,7 +96,7 @@ describe('Camfil Filter Text Component', () => {
           <a data-testing-id="filter-link-LogitechName"
             ><span class="filter-item-name"> Logitech </span
             ><mat-checkbox
-              class="example-margin mat-checkbox mat-accent ng-untouched ng-pristine ng-valid"
+              class="example-margin mat-checkbox mat-accent _mat-animation-noopable ng-untouched ng-pristine ng-valid"
               ng-reflect-model="true"
               id="mat-checkbox-2"
               ><label class="mat-checkbox-layout" for="mat-checkbox-2-input"

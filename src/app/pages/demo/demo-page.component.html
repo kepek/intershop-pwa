@@ -1,3 +1,90 @@
+<br />
+<camfil-camcards-search
+  [count]="dataSource.filteredData.length"
+  (queryChanged)="applyfilters($event)"
+></camfil-camcards-search>
+<br />
+<h1 class="d-flex align-items-center"><mat-icon svgIcon="camcard" class="size-37"></mat-icon> &nbsp; My CamCards</h1>
+
+<mat-card>
+  <mat-card-content>
+    <div class="row box-gutters">
+      <table mat-table [dataSource]="dataSource" multiTemplateDataRows matSort>
+        <ng-container matColumnDef="{{ column }}" *ngFor="let column of columnsToDisplay; last as isLast">
+          <ng-container *ngIf="!isLast; else checkbox">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ column }}</th>
+            <td mat-cell *matCellDef="let element">{{ element[column] }}</td>
+          </ng-container>
+          <ng-template #checkbox>
+            <th mat-header-cell *matHeaderCellDef>
+              <mat-checkbox
+                (change)="masterChange($event)"
+                [checked]="isAllChecked()"
+                [indeterminate]="isAllIndeterminate()"
+              >
+              </mat-checkbox>
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <mat-checkbox
+                (click)="$event.stopPropagation()"
+                (change)="setCamCardChecked(element, $event)"
+                [checked]="isCamCardChecked(element)"
+                [indeterminate]="isCamCardIndeterminate(element)"
+              > 
+              </mat-checkbox>
+            </td>
+          </ng-template>
+        </ng-container>
+
+        <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+        <ng-container matColumnDef="expandedDetail">
+          <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
+            <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+              <ng-container *ngFor="let building of element.buildings">
+                <mat-action-row>
+                  <strong (click)="building.open = !building.open">
+                    {{ building.name }}
+                  </strong>
+                  <mat-checkbox
+                    class="example-margin"
+                    [checked]="building.checked"
+                    [indeterminate]="isBuildingIndeterminate(building)"
+                    (change)="setBuildingChecked(building, $event.checked)"
+                  >
+                  </mat-checkbox>
+                </mat-action-row>
+                <mat-accordion class="mat-read-more">
+                  <mat-expansion-panel [expanded]="building.open">
+                    <div *ngFor="let product of building.products" class="d-flex justify-content-between box-container">
+                      {{ product.name }}
+                      <mat-checkbox
+                        [(ngModel)]="product.checked"
+                        (ngModelChange)="updateBuildingChecked(building)"
+                      ></mat-checkbox>
+                    </div>
+                  </mat-expansion-panel>
+                </mat-accordion>
+              </ng-container>
+            </div>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+        <tr
+          mat-row
+          *matRowDef="let element; columns: columnsToDisplay"
+          class="example-element-row"
+          [class.example-expanded-row]="expandedElement === element"
+          (click)="expandedElement = expandedElement === element ? null : element"
+        ></tr>
+        <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+      </table>
+    </div>
+  </mat-card-content>
+</mat-card>
+
+<br /><br />
+
 <mat-sidenav-container [class.m2demo-dark]="isDarkTheme">
   <mat-sidenav #sidenav mode="over" class="demo-sidenav" color="primary">
     <mat-toolbar>
@@ -68,36 +155,6 @@
     </mat-card>
 
     <!-- Material Table -->
-    <mat-card>
-      <mat-card-content>
-        <h2 class="example-h2">Material Table</h2>
-        <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
-          <!-- Position Column -->
-          <ng-container matColumnDef="position">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>No.</th>
-            <td mat-cell *matCellDef="let element">{{ element.position }}</td>
-          </ng-container>
-          <!-- Name Column -->
-          <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
-            <td mat-cell *matCellDef="let element">{{ element.name }}</td>
-          </ng-container>
-          <!-- Weight Column -->
-          <ng-container matColumnDef="weight">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Weight</th>
-            <td mat-cell *matCellDef="let element">{{ element.weight }}</td>
-          </ng-container>
-          <!-- Symbol Column -->
-          <ng-container matColumnDef="symbol">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Symbol</th>
-            <td mat-cell *matCellDef="let element">{{ element.symbol }}</td>
-          </ng-container>
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-        </table>
-      </mat-card-content>
-    </mat-card>
-    <!-- /Material Table -->
 
     <!-- Material Autocomplete -->
     <mat-card>
