@@ -14,7 +14,7 @@ import { CamfilInfoSectionComponent } from './camfil-info-section/camfil-info-se
 import { CamfilRegistrationFormComponent } from './camfil-registration-form/camfil-registration-form.component';
 import { CamfilRegistrationPageComponent } from './camfil-registration-page.component';
 import { CamfilIntroComponent } from './camfil-intro/camfil-intro.component';
-import { CamfilBulletListComponent } from '../../shared/components/camfil-bullet-list/camfil-bullet-list.component';
+import { CamfilBulletListComponent } from 'ish-shared/components/camfil-bullet-list/camfil-bullet-list.component';
 
 describe('Camfil Registration Page Component', () => {
   let fixture: ComponentFixture<CamfilRegistrationPageComponent>;

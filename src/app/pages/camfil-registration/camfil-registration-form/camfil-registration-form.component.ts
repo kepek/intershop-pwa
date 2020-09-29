@@ -60,7 +60,6 @@ export class CamfilRegistrationFormComponent implements OnInit {
       ),
       countryCodeSwitch: ['', [Validators.required]],
       preferredLanguage: ['en_US', [Validators.required]],
-      birthday: [''],
       termsAndConditions: [false, [Validators.required, Validators.pattern('true')]],
       captcha: [''],
       captchaAction: ['register'],
@@ -71,10 +70,6 @@ export class CamfilRegistrationFormComponent implements OnInit {
     if (this.businessCustomerRegistration) {
       this.form.addControl('taxationID', new FormControl(''));
     }
-  }
-
-  cancelForm() {
-    this.cancel.emit();
   }
 
   /**
@@ -102,7 +97,6 @@ export class CamfilRegistrationFormComponent implements OnInit {
       lastName: formValue.address.lastName,
       email: formValue.credentials.login,
       phoneHome: formValue.address.phoneHome,
-      birthday: formValue.birthday === '' ? undefined : formValue.birthday, // TODO: see IS-22276
       preferredLanguage: formValue.preferredLanguage,
     };
 

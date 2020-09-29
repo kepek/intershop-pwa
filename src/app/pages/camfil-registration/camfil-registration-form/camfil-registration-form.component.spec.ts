@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import {FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MockComponent, MockDirective } from 'ng-mocks';
@@ -17,8 +17,6 @@ import { TacCheckboxComponent } from 'ish-shared/forms/components/tac-checkbox/t
 
 import { LazyCaptchaComponent } from '../../../extensions/captcha/exports/lazy-captcha/lazy-captcha.component';
 import { CamfilIntroComponent } from '../camfil-intro/camfil-intro.component';
-import { CamfilRegistrationCompanyFormComponent } from '../camfil-registration-company-form/camfil-registration-company-form.component';
-import { CamfilRegistrationCredentialsFormComponent } from '../camfil-registration-credentials-form/camfil-registration-credentials-form.component';
 
 import { CamfilRegistrationFormComponent } from './camfil-registration-form.component';
 
@@ -40,8 +38,6 @@ describe('Camfil Registration Form Component', () => {
         CamfilIntroComponent,
         CamfilRegistrationFormComponent,
         MockComponent(AddressFormContainerComponent),
-        MockComponent(CamfilRegistrationCompanyFormComponent),
-        MockComponent(CamfilRegistrationCredentialsFormComponent),
         MockComponent(CheckboxComponent),
         MockComponent(ContentIncludeComponent),
         MockComponent(ErrorMessageComponent),
@@ -52,6 +48,7 @@ describe('Camfil Registration Form Component', () => {
       providers: [{ provide: AddressFormFactoryProvider, useFactory: () => instance(addressFormFactoryProviderMock) }],
       imports: [
         BrowserAnimationsModule,
+        FormsModule,
         FeatureToggleModule.forTesting('businessCustomerRegistration'),
         ReactiveFormsModule,
         TranslateModule.forRoot(),
