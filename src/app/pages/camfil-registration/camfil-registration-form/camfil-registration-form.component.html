@@ -8,17 +8,17 @@
 <div class="registration-form section" data-testing-id="account-create-full-page">
   <form [formGroup]="form" (ngSubmit)="submitForm()" class="form-horizontal" novalidate="novalidate">
     <mat-form-field appearance="fill" class="form-field">
-      <mat-label>First name</mat-label>
+      <mat-label>{{'account.register.form.firstName' | translate}}</mat-label>
       <input matInput required />
     </mat-form-field>
 
     <mat-form-field appearance="fill" class="form-field">
-      <mat-label>Last name</mat-label>
+      <mat-label>{{'account.register.form.lastName' | translate}}</mat-label>
       <input matInput required />
     </mat-form-field>
 
     <mat-form-field appearance="fill" class="form-field">
-      <mat-label>Company</mat-label>
+      <mat-label>{{'account.register.form.company' | translate}}</mat-label>
       <input matInput required />
     </mat-form-field>
 

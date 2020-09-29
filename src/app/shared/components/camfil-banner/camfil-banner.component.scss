@@ -13,15 +13,6 @@
   &__header {
     display: flex;
 
-    &--icon {
-      width: 64px;
-      height: 64px;
-
-      &::ng-deep svg g {
-        stroke: $camfil-text-color-tertiary;
-      }
-    }
-
     &--title {
       margin-bottom: 0;
       font-family: $font-family-bold;
