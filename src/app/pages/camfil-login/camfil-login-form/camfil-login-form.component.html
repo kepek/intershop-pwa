@@ -1,0 +1,32 @@
+<div class="login-form">
+  <ish-error-message [error]="loginError$ | async" [toast]="false"></ish-error-message>
+
+  <camfil-header-box
+    [header]="'camfil.account.login.button.label' | translate"
+    [description]="'camfil.account.login.subtitle' | translate"
+  >
+  </camfil-header-box>
+
+  <form [formGroup]="form" (ngSubmit)="submitForm()" class="form-horizontal" novalidate="novalidate">
+    <mat-form-field appearance="fill" class="form-field form-field__login">
+      <mat-label>{{ 'camfil.account.login.form.username' | translate }}</mat-label>
+      <input formControlName="login" matInput required />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="form-field">
+      <mat-label>{{ 'camfil.account.login.form.password' | translate }}</mat-label>
+      <input formControlName="password" type="password" matInput required />
+    </mat-form-field>
+
+    <button mat-raised-button type="submit" aria-label="Send application" color="primary" class="button__login">
+      {{ 'camfil.account.login.button.label' | translate }}
+    </button>
+
+    <a mat-button class="link link__password" routerLink="/forgotPassword" target="_blank">
+      {{ 'camfil.account.login.forgotPassword' | translate }}
+    </a>
+    <a mat-button class="link" routerLink="/forgotPassword" target="_blank">{{
+      'camfil.account.login.forgotUsername' | translate
+    }}</a>
+  </form>
+</div>

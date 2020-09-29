@@ -12,4 +12,5 @@ export const environment: Environment = {
   icmBaseURL: 'http://localhost:4200',
 
   mockServerAPI: true,
+  theme: 'camfil',
 };

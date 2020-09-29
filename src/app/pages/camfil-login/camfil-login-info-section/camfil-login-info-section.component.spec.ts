@@ -1,26 +1,32 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
-import { CamfilBulletListComponent } from 'ish-shared/components/common/camfil-bullet-list/camfil-bullet-list.component';
+import { CamfilDetailsBoxComponent } from 'ish-shared/components/common/camfil-details-box/camfil-details-box.component';
 import { CamfilHeaderBoxComponent } from 'ish-shared/components/common/camfil-header-box/camfil-header-box.component';
 
-import { CamfilInfoSectionComponent } from './camfil-info-section.component';
+import { CamfilLoginInfoSectionComponent } from './camfil-login-info-section.component';
+import { CamfilBulletListComponent } from 'ish-shared/components/common/camfil-bullet-list/camfil-bullet-list.component';
 
-describe('Camfil Info Section Component', () => {
-  let component: CamfilInfoSectionComponent;
-  let fixture: ComponentFixture<CamfilInfoSectionComponent>;
+describe('Camfil Login Info Section Component', () => {
+  let component: CamfilLoginInfoSectionComponent;
+  let fixture: ComponentFixture<CamfilLoginInfoSectionComponent>;
   let element: HTMLElement;
   let translate: TranslateService;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CamfilBulletListComponent, CamfilHeaderBoxComponent, CamfilInfoSectionComponent],
+      declarations: [
+        CamfilDetailsBoxComponent,
+        CamfilHeaderBoxComponent,
+        CamfilLoginInfoSectionComponent,
+        CamfilBulletListComponent,
+      ],
       imports: [TranslateModule.forRoot()],
     }).compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CamfilInfoSectionComponent);
+    fixture = TestBed.createComponent(CamfilLoginInfoSectionComponent);
     component = fixture.componentInstance;
     element = fixture.nativeElement;
     translate = TestBed.inject(TranslateService);

@@ -6,4 +6,5 @@ export const environment: Environment = {
   icmChannel: 'inSPIRED-inTRONICS_Business-Site',
   icmApplication: '-',
   production: true,
+  theme: 'camfil',
 };

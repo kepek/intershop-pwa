@@ -106,7 +106,7 @@ const routes: Routes = [
   },
   {
     path: 'login',
-    loadChildren: () => import('./login/login-page.module').then(m => m.LoginPageModule),
+    loadChildren: () => import('./camfil-login/camfil-login-page.module').then(m => m.CamfilLoginPageModule),
   },
   {
     path: 'logout',
