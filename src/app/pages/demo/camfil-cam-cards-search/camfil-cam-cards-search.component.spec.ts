@@ -1,10 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CamfilCamcardsSearchComponent } from './camfil-camcards-search.component';
+import { CamfilCamCardsSearchComponent } from './camfil-cam-cards-search.component';
 
-describe('Camfil Camcards Search Component', () => {
-  let component: CamfilCamcardsSearchComponent;
-  let fixture: ComponentFixture<CamfilCamcardsSearchComponent>;
+describe('Camfil Cam Cards Search Component', () => {
+  let component: CamfilCamCardsSearchComponent;
+  let fixture: ComponentFixture<CamfilCamCardsSearchComponent>;
   let element: HTMLElement;
 
   beforeEach(async () => {
@@ -14,7 +14,7 @@ describe('Camfil Camcards Search Component', () => {
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CamfilCamcardsSearchComponent);
+    fixture = TestBed.createComponent(CamfilCamCardsSearchComponent);
     component = fixture.componentInstance;
     element = fixture.nativeElement;
   });

@@ -595,6 +595,11 @@
   "camfil.product.efficiency.label": "Efficiency",
   "camfil.product.id.label": "Art nr",
   "camfil.product.items.showing.text": "Showing",
+  "camfil.product.items.label": {
+    "=0": "0 list items",
+    "=1": "1 list item",
+    "other": "# list items"
+  },
   "camfil.product.list.toolbar.choose.option": "Choose an option",
   "camfil.product.list.toolbar.detailedView.text": "Detailed product info",
   "camfil.product.list.toolbar.quickDelivery.text": "= Quick delivery",

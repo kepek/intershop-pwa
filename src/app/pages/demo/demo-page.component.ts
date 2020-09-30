@@ -16,6 +16,11 @@ import { CamfilIcon, getCamfilIcons } from 'camfil-shared/icon/icon.module';
 import { Observable, Subject } from 'rxjs';
 import { map, startWith, take, takeUntil } from 'rxjs/operators';
 
+import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
+import { CategoryView } from 'ish-core/models/category-view/category-view.model';
+import { ProductView } from 'ish-core/models/product-view/product-view.model';
+import { ProductCompletenessLevel } from 'ish-core/models/product/product.helper';
+
 import { DemoBottomSheetComponent } from './demo-bottom-sheet/demo-bottom-sheet.component';
 import { DemoDialogComponent } from './demo-dialog/demo-dialog.component';
 
@@ -250,9 +255,17 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   ],
 })
 export class DemoPageComponent implements AfterViewInit, OnInit, OnDestroy {
+  product$: Observable<ProductView>;
+  category$: Observable<CategoryView>;
+
   private destroy$ = new Subject();
 
-  constructor(private dialog: MatDialog, private snackBar: MatSnackBar, private bottomSheet: MatBottomSheet) {
+  constructor(
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar,
+    private bottomSheet: MatBottomSheet,
+    private shoppingFacade: ShoppingFacade
+  ) {
     // Update the value for the progress-bar on an interval.
     setInterval(() => {
       this.progress = (this.progress + Math.floor(Math.random() * 4) + 1) % 100;
@@ -368,6 +381,7 @@ export class DemoPageComponent implements AfterViewInit, OnInit, OnDestroy {
 
   masterChange(event: MatCheckboxChange) {
     if (event) {
+      // tslint:disable-next-line:ban
       this.isAllChecked() ? this.selection.clear() : this.dataSource.data.forEach(c => this.selection.select(c));
 
       this.dataSource.data.forEach(row =>
@@ -377,7 +391,7 @@ export class DemoPageComponent implements AfterViewInit, OnInit, OnDestroy {
         })
       );
     } else {
-      return null;
+      return false;
     }
   }
 
@@ -391,6 +405,7 @@ export class DemoPageComponent implements AfterViewInit, OnInit, OnDestroy {
   isCamCardChecked(camCard: CamCard) {
     const allBuildings = camCard.buildings.every(b => b.checked);
     if (allBuildings && !this.selection.isSelected(camCard)) {
+      // tslint:disable-next-line:ban
       this.selection.select(camCard);
     }
     return allBuildings || this.selection.isSelected(camCard);
@@ -416,7 +431,7 @@ export class DemoPageComponent implements AfterViewInit, OnInit, OnDestroy {
       });
       return this.selection.toggle(camCard);
     } else {
-      return null;
+      return false;
     }
   }
 
@@ -468,6 +483,8 @@ export class DemoPageComponent implements AfterViewInit, OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.product$ = this.shoppingFacade.product$('1365531', ProductCompletenessLevel.List);
+    this.category$ = this.shoppingFacade.category$('presentation-conferencing.audio-equipment');
     this.filteredAutocompleteOptions = this.autocompleteControl.valueChanges.pipe(
       startWith(''),
       map(value => this.autocompleteFilter(value))
