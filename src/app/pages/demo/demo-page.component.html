@@ -107,16 +107,19 @@
               name="camfil.product.your_price.label"
               [value]="product.salePrice | ishPrice"
             ></camfil-product-attribute>
-            <hr>
-            <camfil-product-attribute
-              name="camfil.product.id.label"
-              [value]="product.sku"
-            ></camfil-product-attribute>
-            <hr>
+            |
+            <camfil-product-attribute name="camfil.product.id.label" [value]="product.sku"></camfil-product-attribute>
+            |
             <camfil-product-attribute
               name="camfil.product.dimensions.label"
               [value]="product.attributes | camfilDimension"
             ></camfil-product-attribute>
+          </mat-card-content>
+        </mat-card>
+        <mat-card>
+          <mat-card-content>
+            <h2 class="example-h2">camfil-product-inventory</h2>
+            <camfil-product-inventory [product]="product"></camfil-product-inventory>
           </mat-card-content>
         </mat-card>
       </div>
@@ -124,9 +127,7 @@
   </ng-container>
 </ng-container>
 
-<ng-template #loading>
-  Loading...
-</ng-template>
+<ng-template #loading> Loading... </ng-template>
 
 <hr />
 

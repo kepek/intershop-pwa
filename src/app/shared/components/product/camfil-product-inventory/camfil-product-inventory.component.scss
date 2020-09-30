@@ -1,0 +1,18 @@
+@import '~src/styles/themes/camfil/colors.scss';
+
+:host {
+  .product-in-stock,
+  .product-out-of-stock {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    text-align: left;
+    text-indent: -9999em;
+    vertical-align: middle;
+    background-color: $grey88;
+    border-radius: 50%;
+  }
+  .product-in-stock {
+    background-color: $camfil-color-primary;
+  }
+}

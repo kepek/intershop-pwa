@@ -20,6 +20,7 @@ import { FormlyModule } from '@ngx-formly/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { DeferLoadModule } from '@trademe/ng-defer-load';
 import { IconModule as CamfilIconModule } from 'camfil-shared/icon/icon.module';
+import { MaterialModule } from 'camfil-shared/material/material.module';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { SwiperModule } from 'ngx-swiper-wrapper';
 
@@ -293,6 +294,7 @@ const exportedComponents = [
     MatIconModule,
     MatRadioModule,
     MatSelectModule,
+    MaterialModule,
   ],
   declarations: [...declaredComponents, ...exportedComponents],
   exports: [...exportedComponents, ...importExportModules],

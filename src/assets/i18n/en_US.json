@@ -543,6 +543,8 @@
   "basket.promotioncode.adding.error": "The promotion code could not be added.",
   "basket.promotioncode.not_found.error": "The promotion code could not be found.",
   "basket.validation.general.error": "Your shopping cart is not valid anymore. Please correct the errors indicated below.",
+  "camfil.product.instock.text": "In Stock",
+  "camfil.product.out_of_stock.text": "Out of Stock",
   "camfil.account.cam_card.add_to_cam_card.button.add_to_cam_card.label": "Add to CamCard",
   "camfil.account.cam_card.add_to_template.button.add_to_template.label": "Add to CamCard",
   "camfil.account.cam_card.added.confirmation": "{{0}} has been added to <a callback=\"callbackHideDialogModal\" href=\"{{2}}\">{{1}}</a>.",
