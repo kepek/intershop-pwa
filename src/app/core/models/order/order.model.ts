@@ -10,6 +10,7 @@ export interface OrderLineItem extends LineItem {
 export interface Order extends AbstractBasket<OrderLineItem> {
   documentNo: string;
   creationDate: number;
+  customer: string;
   orderCreation: {
     status: 'COMPLETED' | 'ROLLED_BACK' | 'STOPPED' | 'CONTINUE';
     stopAction?: {
