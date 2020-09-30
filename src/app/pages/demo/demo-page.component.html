@@ -133,7 +133,7 @@
   </ng-container>
 </ng-container>
 
-<ng-template #loading> Loading... </ng-template>
+<ng-template #loading> Loading Demo of Camfil Components... </ng-template>
 
 <hr />
 
@@ -195,6 +195,7 @@
           color="accent"
           *ngFor="let camfilIcon of camfilIcons"
           class="example-icon"
+          (click)="this.snackBar.open('Icon snippet has been copied to your clipboard.', 'OK');"
           [cdkCopyToClipboard]="'<mat-icon svgIcon=&quot;' + camfilIcon.name + '&quot;></mat-icon>'"
         >
           <mat-icon
