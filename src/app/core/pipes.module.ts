@@ -2,6 +2,7 @@ import { ModuleWithProviders, NgModule } from '@angular/core';
 
 import { AttributeToStringPipe } from './models/attribute/attribute.pipe';
 import { PricePipe } from './models/price/price.pipe';
+import { CamfilDimensionPipe } from './pipes/camfil-dimension.pipe';
 import { DatePipe } from './pipes/date.pipe';
 import { HighlightPipe } from './pipes/highlight.pipe';
 import { MakeHrefPipe } from './pipes/make-href.pipe';
@@ -12,6 +13,7 @@ import { ProductRoutePipe } from './routing/product/product-route.pipe';
 
 const pipes = [
   AttributeToStringPipe,
+  CamfilDimensionPipe,
   CategoryRoutePipe,
   DatePipe,
   HighlightPipe,

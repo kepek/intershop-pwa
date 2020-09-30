@@ -105,7 +105,17 @@
             <h2 class="example-h2">camfil-product-attribute</h2>
             <camfil-product-attribute
               name="camfil.product.your_price.label"
-              [value]="product.salePrice"
+              [value]="product.salePrice | ishPrice"
+            ></camfil-product-attribute>
+            <hr>
+            <camfil-product-attribute
+              name="camfil.product.id.label"
+              [value]="product.sku"
+            ></camfil-product-attribute>
+            <hr>
+            <camfil-product-attribute
+              name="camfil.product.dimensions.label"
+              [value]="product.attributes | camfilDimension"
             ></camfil-product-attribute>
           </mat-card-content>
         </mat-card>

@@ -20,7 +20,8 @@ import { Attribute } from 'ish-core/models/attribute/attribute.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CamfilProductAttributeComponent implements OnInit {
-  @Input() value?: string | object;
+  // tslint:disable-next-line:no-any
+  @Input() value?: any;
   @Input() name: string;
   @Input() itemProp?: string;
   @Input() multipleValuesSeparator = ', ';
