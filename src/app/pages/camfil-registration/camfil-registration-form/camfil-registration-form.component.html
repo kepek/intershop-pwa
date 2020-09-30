@@ -1,6 +1,6 @@
 <camfil-intro
-  [header]="'account.register.heading' | translate"
-  [description]="'account.register.message' | translate"
+  [header]="'camfil.account.register.heading' | translate"
+  [description]="'camfil.account.register.message' | translate"
 ></camfil-intro>
 
 <ish-error-message [error]="error"></ish-error-message>
@@ -8,17 +8,17 @@
 <div class="registration-form section" data-testing-id="account-create-full-page">
   <form [formGroup]="form" (ngSubmit)="submitForm()" class="form-horizontal" novalidate="novalidate">
     <mat-form-field appearance="fill" class="form-field">
-      <mat-label>{{'account.register.form.firstName' | translate}}</mat-label>
+      <mat-label>{{'camfil.account.register.form.firstName' | translate}}</mat-label>
       <input matInput required />
     </mat-form-field>
 
     <mat-form-field appearance="fill" class="form-field">
-      <mat-label>{{'account.register.form.lastName' | translate}}</mat-label>
+      <mat-label>{{'camfil.account.register.form.lastName' | translate}}</mat-label>
       <input matInput required />
     </mat-form-field>
 
     <mat-form-field appearance="fill" class="form-field">
-      <mat-label>{{'account.register.form.company' | translate}}</mat-label>
+      <mat-label>{{'camfil.account.register.form.company' | translate}}</mat-label>
       <input matInput required />
     </mat-form-field>
 

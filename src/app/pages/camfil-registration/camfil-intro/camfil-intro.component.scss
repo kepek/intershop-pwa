@@ -4,12 +4,12 @@
 
 :host {
   .header {
-    font-family: $font-family-helveticaneue;
+    font-family: $font-family-SansPro;
     @include font-size-h3;
   }
 
   .description {
-    font-family: $font-family-helveticaneue;
+    font-family: $font-family-SansPro;
     @include font-size-p;
   }
 }
