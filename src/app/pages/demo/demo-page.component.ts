@@ -2,7 +2,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { SelectionModel } from '@angular/cdk/collections';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { AfterViewInit, ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormGroupDirective, NgForm, Validators } from '@angular/forms';
+import { FormControl, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { MatChipInputEvent } from '@angular/material/chips';
@@ -23,6 +23,7 @@ import { ProductCompletenessLevel } from 'ish-core/models/product/product.helper
 
 import { DemoBottomSheetComponent } from './demo-bottom-sheet/demo-bottom-sheet.component';
 import { DemoDialogComponent } from './demo-dialog/demo-dialog.component';
+import { whenTruthy } from '../../core/utils/operators';
 
 export interface Fruit {
   name: string;
@@ -258,6 +259,11 @@ export class DemoPageComponent implements AfterViewInit, OnInit, OnDestroy {
   product$: Observable<ProductView>;
   category$: Observable<CategoryView>;
 
+  product: ProductView;
+  category: CategoryView;
+  productItemForm: FormGroup;
+  readonly quantityControlName = 'quantity';
+
   private destroy$ = new Subject();
 
   constructor(
@@ -367,6 +373,27 @@ export class DemoPageComponent implements AfterViewInit, OnInit, OnDestroy {
   matcher = new MyErrorStateMatcher();
 
   @ViewChild(MatSort) sort: MatSort;
+
+  ngOnInit() {
+    this.product$ = this.shoppingFacade.product$('1365531', ProductCompletenessLevel.List);
+    this.category$ = this.shoppingFacade.category$('presentation-conferencing.audio-equipment');
+
+    this.category$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(category => {
+      this.category = category;
+    });
+
+    this.product$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(product => {
+      this.product = product;
+      this.productItemForm = new FormGroup({
+        [this.quantityControlName]: new FormControl(product.minOrderQuantity),
+      });
+    });
+
+    this.filteredAutocompleteOptions = this.autocompleteControl.valueChanges.pipe(
+      startWith(''),
+      map(value => this.autocompleteFilter(value))
+    );
+  }
 
   applyfilters(filter) {
     this.dataSource.filter = filter;
@@ -480,15 +507,6 @@ export class DemoPageComponent implements AfterViewInit, OnInit, OnDestroy {
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
     this.camfilIcons = getCamfilIcons();
-  }
-
-  ngOnInit() {
-    this.product$ = this.shoppingFacade.product$('1365531', ProductCompletenessLevel.List);
-    this.category$ = this.shoppingFacade.category$('presentation-conferencing.audio-equipment');
-    this.filteredAutocompleteOptions = this.autocompleteControl.valueChanges.pipe(
-      startWith(''),
-      map(value => this.autocompleteFilter(value))
-    );
   }
 
   ngOnDestroy() {

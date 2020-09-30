@@ -85,7 +85,7 @@
 
 <hr />
 
-<ng-container *ngIf="category$ | async as category; else loading">
+<ng-container *ngIf="category && product else loading">
   <ng-container *ngIf="product$ | async as product; else loading">
     <mat-sidenav-container>
       <mat-toolbar color="primary">
@@ -126,6 +126,37 @@
           <mat-card-content>
             <h2 class="example-h2">camfil-product-price</h2>
             <camfil-product-price [product]="product"></camfil-product-price>
+          </mat-card-content>
+        </mat-card>
+        <mat-card>
+          <mat-card-content>
+            <h2 class="example-h2">camfil-product-quantity</h2>
+            <camfil-product-quantity
+              [type]="'counter'"
+              [allowZeroQuantity]="true"
+              [quantityLabel]="'camfil.product.quantity.label'"
+              [product]="product"
+              [parentForm]="productItemForm"
+              [controlName]="quantityControlName"
+            ></camfil-product-quantity>
+            <hr>
+            <camfil-product-quantity
+              [type]="'select'"
+              [allowZeroQuantity]="true"
+              [quantityLabel]="'camfil.product.quantity.label'"
+              [product]="product"
+              [parentForm]="productItemForm"
+              [controlName]="quantityControlName"
+            ></camfil-product-quantity>
+            <hr>
+            <camfil-product-quantity
+              [type]="'input'"
+              [allowZeroQuantity]="true"
+              [quantityLabel]="'camfil.product.quantity.label'"
+              [product]="product"
+              [parentForm]="productItemForm"
+              [controlName]="quantityControlName"
+            ></camfil-product-quantity>
           </mat-card-content>
         </mat-card>
       </div>
