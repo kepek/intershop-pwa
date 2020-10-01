@@ -38,7 +38,6 @@ const customerEffects = [
   BasketEffects,
   BasketItemsEffects,
   BasketPaymentEffects,
-  UserEffects,
   BasketPromotionCodeEffects,
   BasketValidationEffects,
   OrdersEffects,

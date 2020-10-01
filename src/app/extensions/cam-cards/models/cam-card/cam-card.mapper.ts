@@ -50,7 +50,7 @@ export class CamCardMapper {
             count: item.count,
             position: item.position,
             product: item.product,
-            creationDate: Number(item.creationDate),
+            creationDate: item.creationDate,
           }))
         : [];
       // EOF tmp

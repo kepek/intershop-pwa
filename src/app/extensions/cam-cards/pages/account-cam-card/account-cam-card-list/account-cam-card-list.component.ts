@@ -1,6 +1,7 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   EventEmitter,
   Input,
@@ -40,6 +41,7 @@ export class AccountCamCardListComponent implements OnChanges, OnDestroy {
   @Input() camCards: CamCard[];
   /** Emits the id of the cam cards, which is to be deleted. */
   @Output() deleteCamCard = new EventEmitter<string>();
+  @Output() addCamCard = new EventEmitter<CamCard>();
 
   dummyProduct = { sku: 'dummy', inStock: true, availability: true };
   private destroy$ = new Subject();
@@ -51,11 +53,17 @@ export class AccountCamCardListComponent implements OnChanges, OnDestroy {
   isSubOpen = [];
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private translate: TranslateService, private productFacade: ShoppingFacade) { }
+  constructor(
+    private translate: TranslateService,
+    private productFacade: ShoppingFacade,
+    private changeDetectorRefs: ChangeDetectorRef
+  ) {}
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.camCards) {
       this.camCardsProcessed = new MatTableDataSource(this.camCards);
+      this.changeDetectorRefs.detectChanges();
+      this.camCardsProcessed.sort = this.sort;
     }
   }
 
@@ -83,6 +91,10 @@ export class AccountCamCardListComponent implements OnChanges, OnDestroy {
   /** Emits the id of the cam cards to delete. */
   delete(camCardId: string) {
     this.deleteCamCard.emit(camCardId);
+  }
+  /** Emits the camCard to add new one. */
+  add(camCard: CamCard) {
+    this.addCamCard.emit(camCard);
   }
 
   /** Determine the heading of the delete modal and opens the modal. */

@@ -1,19 +1,66 @@
+@import '~src/styles/themes/camfil/colors';
+@import '~src/styles/themes/camfil/variables';
+
 :host {
   table {
-      width: 100%;
+    margin: $space-box $space-box * -1 0;
+    width: calc(100% + #{$space-sm * 2});
+    
+      th {
+        background-color: rgba($color-corporate, 0.1);
+        color: $text-color-primary;
+        font-weight: 600;
+      }
+      td {
+        border: none;
+
+        &.mat-column-expandedDetail {
+          padding: 0;
+        }
+      }
+
+      ::ng-deep {
+        .mat-expansion-panel-body {
+          padding: 0;
+
+          > div:nth-child(even) {
+            background-color: #F5F5F5;
+          }
+        }
+      }
   }
     
-  .cam-card-detail {
-    overflow: hidden;
-
-    &--row {
-      height: auto;
+  .cam-card {
+    &-product {
+      padding: $space-box/2 58px $space-box/2 $space-default * 2;
+    }
+    &-detail {
+      overflow: hidden;
   
+      &--row {
+        height: auto;
+    
+      }
+      > div:nth-child(odd) {
+        background-color: #F5F5F5;
+      }
+    }
+    &-expanded-row {
+      + tr td {
+        border-bottom: 2px solid #222;
+      }
+    }
+    &-element-row {
+      border-bottom: 1px solid #d7D7D7;;
     }
   }
   .mat-action-row {
+    background-color: rgba($color-corporate, 0.1);
     justify-content: space-between;
     align-items: center;
+    border: none;
+    padding-left: $space-default * 2;
+    padding-right: 58px;
     
     ::ng-deep {
       label {

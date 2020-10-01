@@ -11,6 +11,8 @@ export interface CamCard extends CamCardHeader {
   itemsCount?: number;
   creationDate?: Date;
   contacts?: CamCardContact[];
+  delivery?: CamCardDelivery;
+  maintenanceStatus?: boolean;
 }
 
 export interface CamCardItem {
@@ -20,6 +22,7 @@ export interface CamCardItem {
   position?: number;
   product?: CamCardProduct;
   creationDate: number;
+  comment?: CamCardItemComment; // Talk bubble on view
 }
 
 export interface CamCardProduct {
@@ -41,4 +44,14 @@ export interface CamCardContact {
   firstName?: string;
   lastName?: string;
   camCardId?: string;
+}
+
+export interface CamCardItemComment {
+  label: string;
+  text: string;
+}
+
+export interface CamCardDelivery {
+  last: Date;
+  interval: number;
 }

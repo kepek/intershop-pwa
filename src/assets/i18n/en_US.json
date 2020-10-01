@@ -578,6 +578,10 @@
     "other": "# Items"
   },
   "camfil.account.cam_cards.link": "My CamCards",
+  "camfil.account.cam_cards.list.button.add_to_card.label": "Add to cart",
+  "camfil.account.cam_cards.list.button.print.label": "Print",
+  "camfil.account.cam_cards.list.button.move.label": "Move",
+  "camfil.account.cam_cards.list.button.copy.label": "Copy",
   "camfil.account.cam_cards.list.button.add_cam_card.label": "Create new CamCard",
   "camfil.account.cam_cards.list.table.created": "Created",
   "camfil.account.cam_cards.list.table.item": "Item",

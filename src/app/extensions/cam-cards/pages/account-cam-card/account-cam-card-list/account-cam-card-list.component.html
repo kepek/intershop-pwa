@@ -1,99 +1,102 @@
-<br />
-<camfil-cam-cards-search [count]="camCardsProcessed.filteredData.length" (queryChanged)="applyfilters($event)">
-</camfil-cam-cards-search>
-<br />
+<camfil-cam-cards-search 
+  [count]="camCardsProcessed.filteredData.length" 
+  (queryChanged)="applyfilters($event)" 
+  class="box-shadow"
+></camfil-cam-cards-search>
 
-<mat-card *ngIf="camCardsProcessed.data && camCardsProcessed.data.length > 0; else noCamCard">
+<mat-card>
   <mat-card-content>
-    <div class="row box-gutters">
-      <table mat-table [dataSource]="camCardsProcessed" multiTemplateDataRows matSort>
-        <ng-container matColumnDef="{{ column }}" *ngFor="let column of columnsToDisplay; last as isLast">
-          <ng-container *ngIf="!isLast; else checkbox">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ ('camfil.account.cam_cards.' + column) | translate }}</th>
-            <td mat-cell *matCellDef="let element">
-              <ng-container *ngIf="column === 'title'">{{element[column]}}</ng-container>
-              <ng-container *ngIf="column === 'customer'">{{element[column].name}}</ng-container>
-              <ng-container *ngIf="column === 'creationDate'">{{element[column] | ishDate: 'shortDate' }}</ng-container>
-              <ng-container *ngIf="column === 'itemsCount'">
-                {{ element[column] | i18nPlural: ('camfil.account.cam_cards.items' | translate) || { other: '#' } }}
-              </ng-container>
-              <ng-container *ngIf="column === 'actions'">
-                <a class="btn-tool d-inline-flex align-top">
-                  <camfil-product-add-to-basket displayType="icon" [product]="dummyProduct"
-                    [disabled]="!element.items?.length" class="text-primary p-0" (click)="$event.stopPropagation()"
-                    (productToBasket)="addCamCardToCart(element.id)"></camfil-product-add-to-basket>
-                </a>
-                <a class="btn-tool" [title]="'camfil.account.cam_card.edit.heading' | translate"
-                  data-testing-id="cam-card-details-edit" [routerLink]="'/account/cam-cards/' + element.id"
-                  data-testing-id="cam-card-list-title" (click)="$event.stopPropagation()">
-                  <fa-icon icon="pencil-alt"></fa-icon>
-                </a>
-                <a class="btn-tool" title="{{ 'camfil.account.cam_cards.list.link.remove' | translate }}"
-                  (click)="openDeleteConfirmationDialog(element, deleteDialog); $event.stopPropagation()"
-                  data-testing-id="delete-cam-card">
-                  <fa-icon [icon]="['fas', 'trash-alt']"></fa-icon>
-                </a>
-              </ng-container>
-            </td>
-          </ng-container>
-          <ng-template #checkbox>
-            <th mat-header-cell *matHeaderCellDef>
-              <mat-checkbox (change)="masterToggle($event)" [checked]="isAllChecked()"
-                [indeterminate]="isAllIndeterminate()">
-              </mat-checkbox>
-            </th>
-            <td mat-cell *matCellDef="let element">
-              <mat-checkbox (click)="$event.stopPropagation()" (change)="camCardToggle(element, $event)"
-                [checked]="isCamCardChecked(element)" [indeterminate]="isCamCardIndeterminate(element)">
-              </mat-checkbox>
-            </td>
-          </ng-template>
-        </ng-container>
-
-        <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
-        <ng-container matColumnDef="expandedDetail">
-          <td mat-cell *matCellDef="let camCard" [attr.colspan]="columnsToDisplay.length">
-            <div class="cam-card-detail" [@detailExpand]="camCard == expandedElement ? 'expanded' : 'collapsed'">
-              <ng-container *ngTemplateOutlet="camCardRow; context:{camCard: camCard}"></ng-container>
-              <ng-container *ngFor="let subCamCard of camCard.subCamCards">
-                <mat-action-row>
-                  <strong (click)="toggleSubCamCard(subCamCard.id)">
-                    {{ subCamCard.title }}
-                  </strong>
-                  <mat-checkbox (change)="camCardToggle(subCamCard, $event)"
-                    [checked]="isCamCardChecked(subCamCard)" [indeterminate]="isCamCardIndeterminate(subCamCard)">
-                  </mat-checkbox>
-                </mat-action-row>
-                <mat-accordion>
-                  <mat-expansion-panel [expanded]="isSubCamCardOpen(subCamCard.id)">
-                    <ng-container *ngTemplateOutlet="camCardRow; context:{camCard: subCamCard}"></ng-container>
-                  </mat-expansion-panel>
-                </mat-accordion>
-              </ng-container>
-            </div>
+    <camfil-account-cam-card-toolbar
+    (addCamCard)="add($event)"
+    ></camfil-account-cam-card-toolbar> 
+  
+    <table *ngIf="camCardsProcessed.data && camCardsProcessed.data.length > 0; else noCamCard" mat-table [dataSource]="camCardsProcessed" multiTemplateDataRows matSort>
+      <ng-container matColumnDef="{{ column }}" *ngFor="let column of columnsToDisplay; last as isLast">
+        <ng-container *ngIf="!isLast; else checkbox">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ ('camfil.account.cam_cards.' + column) | translate }}</th>
+          <td mat-cell *matCellDef="let element">
+            <ng-container *ngIf="column === 'title'">{{element[column]}}</ng-container>
+            <ng-container *ngIf="column === 'customer'">{{element[column].name}}</ng-container>
+            <ng-container *ngIf="column === 'creationDate'">{{element[column] | ishDate: 'shortDate' }}</ng-container>
+            <ng-container *ngIf="column === 'itemsCount'">
+              {{ element[column] | i18nPlural: ('camfil.account.cam_cards.items' | translate) || { other: '#' } }}
+            </ng-container>
+            <ng-container *ngIf="column === 'actions'">
+              <a class="btn-tool d-inline-flex align-top">
+                <camfil-product-add-to-basket displayType="icon" [product]="dummyProduct"
+                  [disabled]="!element.items?.length" class="text-primary p-0" (click)="$event.stopPropagation()"
+                  (productToBasket)="addCamCardToCart(element.id)"></camfil-product-add-to-basket>
+              </a>
+              <a class="btn-tool" [title]="'camfil.account.cam_card.edit.heading' | translate"
+                data-testing-id="cam-card-details-edit" [routerLink]="'/account/cam-cards/' + element.id"
+                data-testing-id="cam-card-list-title" (click)="$event.stopPropagation()">
+                <fa-icon icon="pencil-alt"></fa-icon>
+              </a>
+              <a class="btn-tool" title="{{ 'camfil.account.cam_cards.list.link.remove' | translate }}"
+                (click)="openDeleteConfirmationDialog(element, deleteDialog); $event.stopPropagation()"
+                data-testing-id="delete-cam-card">
+                <fa-icon [icon]="['fas', 'trash-alt']"></fa-icon>
+              </a>
+            </ng-container>
           </td>
-
-          <ng-template #camCardRow let-camCard="camCard">
-            <div *ngFor="let camCardItem of camCard.camCardItems" class="d-flex justify-content-between box-container">
-              {{camCardItem.product.sku}}
-              <!-- <camfil-account-cam-card-detail-line-item
-                [camCardItemData]="camCardItem"
-                [currentCamCard]="camCard"
-              ></camfil-account-cam-card-detail-line-item> -->
-              <mat-checkbox [checked]="isProductChecked(camCardItem.id)"
-                (change)="handleProductCheckbox(camCardItem, $event)"></mat-checkbox>
-            </div>
-          </ng-template>
         </ng-container>
+        <ng-template #checkbox>
+          <th mat-header-cell *matHeaderCellDef>
+            <mat-checkbox (change)="masterToggle($event)" [checked]="isAllChecked()"
+              [indeterminate]="isAllIndeterminate()">
+            </mat-checkbox>
+          </th>
+          <td mat-cell *matCellDef="let element">
+            <mat-checkbox (click)="$event.stopPropagation()" (change)="camCardToggle(element, $event)" *ngIf="element.itemsCount > 0"
+              [checked]="isCamCardChecked(element)" [indeterminate]="isCamCardIndeterminate(element)">
+            </mat-checkbox>
+          </td>
+        </ng-template>
+      </ng-container>
+
+      <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+      <ng-container matColumnDef="expandedDetail">
+        <td mat-cell *matCellDef="let camCard" [attr.colspan]="columnsToDisplay.length">
+          <div class="cam-card-detail" [@detailExpand]="camCard == expandedElement ? 'expanded' : 'collapsed'">
+            <ng-container *ngTemplateOutlet="camCardRow; context:{camCard: camCard}"></ng-container>
+            <ng-container *ngFor="let subCamCard of camCard.subCamCards">
+              <mat-action-row>
+                <strong (click)="toggleSubCamCard(subCamCard.id)">
+                  {{ subCamCard.title }}
+                </strong>
+                <mat-checkbox (change)="camCardToggle(subCamCard, $event)"
+                  [checked]="isCamCardChecked(subCamCard)" [indeterminate]="isCamCardIndeterminate(subCamCard)">
+                </mat-checkbox>
+              </mat-action-row>
+              <mat-accordion>
+                <mat-expansion-panel [expanded]="isSubCamCardOpen(subCamCard.id)">
+                  <ng-container *ngTemplateOutlet="camCardRow; context:{camCard: subCamCard}"></ng-container>
+                </mat-expansion-panel>
+              </mat-accordion>
+            </ng-container>
+          </div>
+        </td>
+
+        <ng-template #camCardRow let-camCard="camCard">
+          <div *ngFor="let camCardItem of camCard.camCardItems" class="d-flex justify-content-between cam-card-product">
+            sku: {{camCardItem.product.sku}}
+            <!-- <camfil-account-cam-card-detail-line-item
+              [camCardItemData]="camCardItem"
+              [currentCamCard]="camCard"
+            ></camfil-account-cam-card-detail-line-item> -->
+            <mat-checkbox [checked]="isProductChecked(camCardItem.id)"
+              (change)="handleProductCheckbox(camCardItem, $event)"></mat-checkbox>
+          </div>
+        </ng-template>
+      </ng-container>
 
 
-        <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-        <tr mat-row *matRowDef="let camCard; columns: columnsToDisplay" class="example-element-row"
-          [class.cam-card-expanded-row]="expandedElement === camCard"
-          (click)="expandedElement = expandedElement === camCard ? null : camCard"></tr>
-        <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="cam-card-detail--row"></tr>
-      </table>
-    </div>
+      <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+      <tr mat-row *matRowDef="let camCard; columns: columnsToDisplay" class="cam-card-element-row"
+        [class.cam-card-expanded-row]="expandedElement === camCard" 
+        (click)="expandedElement = expandedElement === camCard ? null : camCard"></tr>
+      <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="cam-card-detail--row"></tr>
+    </table>
   </mat-card-content>
 </mat-card>
 
