@@ -133,8 +133,8 @@
             <h2 class="example-h2">camfil-product-quantity</h2>
             <camfil-product-quantity
               [type]="'counter'"
-              [allowZeroQuantity]="true"
-              [quantityLabel]="'camfil.product.quantity.label'"
+              [allowZeroQuantity]="false"
+              [quantityLabel]="'camfil.product.quantity.label' | translate"
               [product]="product"
               [parentForm]="productItemForm"
               [controlName]="quantityControlName"
@@ -142,8 +142,8 @@
             <hr>
             <camfil-product-quantity
               [type]="'select'"
-              [allowZeroQuantity]="true"
-              [quantityLabel]="'camfil.product.quantity.label'"
+              [allowZeroQuantity]="false"
+              [quantityLabel]="'camfil.product.quantity.label' | translate"
               [product]="product"
               [parentForm]="productItemForm"
               [controlName]="quantityControlName"
@@ -151,8 +151,8 @@
             <hr>
             <camfil-product-quantity
               [type]="'input'"
-              [allowZeroQuantity]="true"
-              [quantityLabel]="'camfil.product.quantity.label'"
+              [allowZeroQuantity]="false"
+              [quantityLabel]="'camfil.product.quantity.label' | translate"
               [product]="product"
               [parentForm]="productItemForm"
               [controlName]="quantityControlName"
@@ -226,7 +226,7 @@
           color="accent"
           *ngFor="let camfilIcon of camfilIcons"
           class="example-icon"
-          (click)="this.snackBar.open('Icon snippet has been copied to your clipboard.', 'OK');"
+          (click)="iconSnippetSnackbar()"
           [cdkCopyToClipboard]="'<mat-icon svgIcon=&quot;' + camfilIcon.name + '&quot;></mat-icon>'"
         >
           <mat-icon
@@ -838,6 +838,39 @@
     <mat-card class="demo-input-section">
       <mat-card-content>
         <h2 class="example-h2">Material Input</h2>
+        <p>
+          <mat-form-field appearance="legacy">
+            <mat-label>Legacy form field</mat-label>
+            <input matInput placeholder="Placeholder">
+            <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+            <mat-hint>Hint</mat-hint>
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field appearance="standard">
+            <mat-label>Standard form field</mat-label>
+            <input matInput placeholder="Placeholder">
+            <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+            <mat-hint>Hint</mat-hint>
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field appearance="fill">
+            <mat-label>Fill form field</mat-label>
+            <input matInput placeholder="Placeholder">
+            <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+            <mat-hint>Hint</mat-hint>
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field appearance="outline">
+            <mat-label>Outline form field</mat-label>
+            <input matInput placeholder="Placeholder">
+            <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+            <mat-hint>Hint</mat-hint>
+          </mat-form-field>
+        </p>
+        <hr>
         <mat-form-field>
           <input matInput placeholder="First name" />
         </mat-form-field>

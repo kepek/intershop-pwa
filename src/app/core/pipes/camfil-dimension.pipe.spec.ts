@@ -1,9 +1,17 @@
 import { TestBed } from '@angular/core/testing';
 
 import { CamfilDimensionPipe } from './camfil-dimension.pipe';
+import { Attribute } from 'ish-core/models/attribute/attribute.model';
 
 describe('Camfil Dimension Pipe', () => {
   let camfilDimensionPipe: CamfilDimensionPipe;
+  const attributes: Attribute<string>[] = [
+    {
+      name: 'Test',
+      type: 'String',
+      value: 'Hello',
+    },
+  ];
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -17,10 +25,11 @@ describe('Camfil Dimension Pipe', () => {
   });
 
   it('should transform true to okay', () => {
-    expect(camfilDimensionPipe.transform(true)).toEqual('test: okay');
+    expect(camfilDimensionPipe.transform(attributes)).toEqual('test: okay');
   });
 
   it('should transform false to failed', () => {
+    // @ts-ignore
     expect(camfilDimensionPipe.transform(false)).toEqual('test: failed');
   });
 });

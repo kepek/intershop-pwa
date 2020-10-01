@@ -9,7 +9,7 @@ describe('Camfil Cam Cards Search Component', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CamfilCamcardsSearchComponent],
+      declarations: [CamfilCamCardsSearchComponent],
     }).compileComponents();
   });
 

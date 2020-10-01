@@ -21,9 +21,10 @@ import { CategoryView } from 'ish-core/models/category-view/category-view.model'
 import { ProductView } from 'ish-core/models/product-view/product-view.model';
 import { ProductCompletenessLevel } from 'ish-core/models/product/product.helper';
 
+import { whenTruthy } from 'ish-core/utils/operators';
+
 import { DemoBottomSheetComponent } from './demo-bottom-sheet/demo-bottom-sheet.component';
 import { DemoDialogComponent } from './demo-dialog/demo-dialog.component';
-import { whenTruthy } from '../../core/utils/operators';
 
 export interface Fruit {
   name: string;
@@ -558,5 +559,9 @@ export class DemoPageComponent implements AfterViewInit, OnInit, OnDestroy {
 
   showSnackbar() {
     this.snackBar.open('YUM SNACKS', 'CHEW');
+  }
+
+  iconSnippetSnackbar() {
+    this.snackBar.open('Icon snippet has been copied to your clipboard.', 'OK');
   }
 }
