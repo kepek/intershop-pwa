@@ -9,31 +9,31 @@
   <form [formGroup]="form" (ngSubmit)="submitForm()" class="form-horizontal" novalidate="novalidate">
     <mat-form-field appearance="fill" class="form-field">
       <mat-label>{{'camfil.account.register.form.firstName' | translate}}</mat-label>
-      <input matInput required />
+      <input matInput required formControlName="firstName" />
     </mat-form-field>
 
     <mat-form-field appearance="fill" class="form-field">
       <mat-label>{{'camfil.account.register.form.lastName' | translate}}</mat-label>
-      <input matInput required />
+      <input matInput required formControlName="lastName" />
     </mat-form-field>
 
     <mat-form-field appearance="fill" class="form-field">
-      <mat-label>{{'camfil.account.register.form.company' | translate}}</mat-label>
-      <input matInput required />
+      <mat-label>{{'camfil.account.register.form.email' | translate}}</mat-label>
+      <input matInput required formControlName="email" />
     </mat-form-field>
 
     <mat-form-field appearance="fill" class="form-field">
-      <mat-label>Input field</mat-label>
-      <input matInput required />
+      <mat-label>{{'camfil.account.register.form.customer_name' | translate}}</mat-label>
+      <input matInput required formControlName="customerName" />
     </mat-form-field>
 
     <mat-form-field appearance="fill" class="form-field">
-      <mat-label>Input field</mat-label>
-      <input matInput required />
+      <mat-label>{{'camfil.account.register.form.customer_no' | translate}}</mat-label>
+      <input matInput required formControlName="customerNo" />
     </mat-form-field>
 
     <mat-form-field appearance="fill" class="form-field">
-      <textarea matInput placeholder="Add comment"></textarea>
+      <textarea matInput formControlName="comment" [placeholder]="'camfil.account.register.form.add_comment' | translate"></textarea>
     </mat-form-field>
 
     <button
@@ -43,7 +43,7 @@
       [disabled]="formDisabled"
       color="primary"
     >
-      {{ 'account.create.button.label' | translate }}
+      {{ 'camfil.account.create.button.label' | translate }}
     </button>
   </form>
 </div>

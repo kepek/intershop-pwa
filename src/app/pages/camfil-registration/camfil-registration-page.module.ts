@@ -33,5 +33,6 @@ const registrationPageRoutes: Routes = [{ path: '', component: CamfilRegistratio
     CamfilRegistrationFormComponent,
     CamfilRegistrationPageComponent,
   ],
+  exports: [CamfilBulletListComponent],
 })
 export class CamfilRegistrationPageModule {}
