@@ -10,7 +10,7 @@ import { CamfilBannerComponent } from '../../shared/components/camfil-banner/cam
 import { CamfilBulletListComponent } from '../../shared/components/camfil-bullet-list/camfil-bullet-list.component';
 
 import { CamfilInfoSectionComponent } from './camfil-info-section/camfil-info-section.component';
-import { CamfilIntroComponent } from './camfil-intro/camfil-intro.component';
+import { CamfilHeaderBoxComponent } from '../../shared/components/common/camfil-header-box/camfil-header-box.component';
 import { CamfilRegistrationFormComponent } from './camfil-registration-form/camfil-registration-form.component';
 import { CamfilRegistrationPageComponent } from './camfil-registration-page.component';
 
@@ -29,7 +29,7 @@ const registrationPageRoutes: Routes = [{ path: '', component: CamfilRegistratio
     CamfilBannerComponent,
     CamfilBulletListComponent,
     CamfilInfoSectionComponent,
-    CamfilIntroComponent,
+    CamfilHeaderBoxComponent,
     CamfilRegistrationFormComponent,
     CamfilRegistrationPageComponent,
   ],

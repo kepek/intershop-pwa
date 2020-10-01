@@ -1,6 +1,5 @@
-import { Location } from '@angular/common';
 import { Component } from '@angular/core';
-import { ComponentFixture, TestBed, async, fakeAsync, tick } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { MockComponent } from 'ng-mocks';
@@ -13,25 +12,24 @@ import { CamfilBannerComponent } from 'ish-shared/components/camfil-banner/camfi
 import { CamfilInfoSectionComponent } from './camfil-info-section/camfil-info-section.component';
 import { CamfilRegistrationFormComponent } from './camfil-registration-form/camfil-registration-form.component';
 import { CamfilRegistrationPageComponent } from './camfil-registration-page.component';
-import { CamfilIntroComponent } from './camfil-intro/camfil-intro.component';
+import { CamfilHeaderBoxComponent } from 'ish-shared/components/common/camfil-header-box/camfil-header-box.component';
 import { CamfilBulletListComponent } from 'ish-shared/components/camfil-bullet-list/camfil-bullet-list.component';
 
 describe('Camfil Registration Page Component', () => {
   let fixture: ComponentFixture<CamfilRegistrationPageComponent>;
   let component: CamfilRegistrationPageComponent;
   let element: HTMLElement;
-  let location: Location;
 
   @Component({ template: 'dummy' })
   class DummyComponent {}
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       declarations: [
         CamfilBannerComponent,
         CamfilInfoSectionComponent,
         CamfilRegistrationPageComponent,
-        CamfilIntroComponent,
+        CamfilHeaderBoxComponent,
         CamfilBulletListComponent,
         DummyComponent,
         MockComponent(CamfilRegistrationFormComponent),
@@ -42,9 +40,7 @@ describe('Camfil Registration Page Component', () => {
       ],
       providers: [{ provide: AccountFacade, useFactory: () => instance(mock(AccountFacade)) }],
     }).compileComponents();
-
-    location = TestBed.inject(Location);
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(CamfilRegistrationPageComponent);
@@ -57,12 +53,4 @@ describe('Camfil Registration Page Component', () => {
     expect(element).toBeTruthy();
     expect(() => fixture.detectChanges()).not.toThrow();
   });
-
-  it('should navigate to homepage when cancel is clicked', fakeAsync(() => {
-    component.onCancel();
-
-    tick(500);
-
-    expect(location.path()).toEqual('/home');
-  }));
 });

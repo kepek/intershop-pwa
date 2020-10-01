@@ -2,11 +2,11 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
 @Component({
   selector: 'camfil-intro',
-  templateUrl: './camfil-intro.component.html',
-  styleUrls: ['./camfil-intro.component.scss'],
+  templateUrl: './camfil-header-box.component.html',
+  styleUrls: ['./camfil-header-box.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CamfilIntroComponent {
+export class CamfilHeaderBoxComponent {
   @Input() header: string;
   @Input() description: string;
 }

@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import {FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MockComponent, MockDirective } from 'ng-mocks';
@@ -16,7 +16,7 @@ import { CheckboxComponent } from 'ish-shared/forms/components/checkbox/checkbox
 import { TacCheckboxComponent } from 'ish-shared/forms/components/tac-checkbox/tac-checkbox.component';
 
 import { LazyCaptchaComponent } from '../../../extensions/captcha/exports/lazy-captcha/lazy-captcha.component';
-import { CamfilIntroComponent } from '../camfil-intro/camfil-intro.component';
+import { CamfilHeaderBoxComponent } from '../../../shared/components/common/camfil-header-box/camfil-header-box.component';
 
 import { CamfilRegistrationFormComponent } from './camfil-registration-form.component';
 
@@ -35,7 +35,7 @@ describe('Camfil Registration Form Component', () => {
 
     await TestBed.configureTestingModule({
       declarations: [
-        CamfilIntroComponent,
+        CamfilHeaderBoxComponent,
         CamfilRegistrationFormComponent,
         MockComponent(AddressFormContainerComponent),
         MockComponent(CheckboxComponent),
