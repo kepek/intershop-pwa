@@ -91,9 +91,6 @@ export class UserService {
    */
   createUser(body: CustomerRegistrationType): Observable<void> {
     if (!body || !body.customer || !body.user || !body.credentials || !body.address) {
-
-      console.log('users');
-
       return throwError('createUser() called without required body data');
     }
 

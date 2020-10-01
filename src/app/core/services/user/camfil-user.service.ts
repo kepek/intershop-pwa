@@ -20,7 +20,6 @@ export class CamfilUserService {
    */
   createUser(body: CamfilCustomerRegistrationType): Observable<void> {
     if (!body || !body.firstName || !body.lastName || !body.email || !body.customerName) {
-      console.log('fd', body);
       return throwError('createUser() called without required body data');
     }
 
