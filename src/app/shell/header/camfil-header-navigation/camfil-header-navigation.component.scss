@@ -19,7 +19,7 @@
       }
     }
 
-    > li:last-child {
+    > li.with-separator {
       // My CamCards link
       @media (min-width: $screen-md-min) {
         padding-left: $space-default;

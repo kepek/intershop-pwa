@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CamfilHeaderBoxComponent } from './camfil-header-box.component';
 
-describe('Camfil Intro Component', () => {
+describe('Camfil Header Box Component', () => {
   let component: CamfilHeaderBoxComponent;
   let fixture: ComponentFixture<CamfilHeaderBoxComponent>;
   let element: HTMLElement;

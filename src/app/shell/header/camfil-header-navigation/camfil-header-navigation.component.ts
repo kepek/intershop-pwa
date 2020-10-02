@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, isDevMode } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
@@ -19,10 +19,13 @@ export class CamfilHeaderNavigationComponent implements OnInit {
 
   openedCategories = [];
 
+  isDevMode: boolean;
+
   constructor(private shoppingFacade: ShoppingFacade) {}
 
   ngOnInit() {
     this.categories$ = this.shoppingFacade.navigationCategories$();
+    this.isDevMode = isDevMode();
   }
 
   /**

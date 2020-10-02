@@ -75,3 +75,26 @@ header {
     box-shadow: $sidebar-shadow;
   }
 }
+
+.current-price {
+  font-family: unset;
+  font-size: unset;
+  color: unset;
+}
+
+.sale-price {
+  font-family: unset;
+  font-size: unset;
+  color: unset;
+}
+
+.old-price {
+  margin: unset;
+  font-family: unset;
+  color: unset;
+}
+
+.price-savings {
+  font-family: unset;
+  color: unset;
+}

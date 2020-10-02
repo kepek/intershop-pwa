@@ -9,7 +9,7 @@
             type="text"
             class="search-input"
             [class.mat-elevation-z2]="true"
-            [(ngModel)]="searchInput$"
+            [(ngModel)]="searchInput"
             [ngModelOptions]="{ standalone: true }"
             (input)="submit($event.target.value)"
           />
@@ -22,7 +22,7 @@
       <div class="col-md-2">
         <mat-form-field appearance="fill" [class.mat-elevation-z2]="true">
           <mat-label>Filter by customer</mat-label>
-          <mat-select [(ngModel)]="selectInput$" (selectionChange)="submit($event.value)">
+          <mat-select [(ngModel)]="selectInput" (selectionChange)="submit($event.value)">
             <mat-option>--</mat-option>
             <mat-option *ngFor="let customer of customers" [value]="customer.value">
               {{ customer.viewValue }}
