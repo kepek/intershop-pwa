@@ -1,7 +1,8 @@
 import { TestBed } from '@angular/core/testing';
 
-import { CamfilDimensionPipe } from './camfil-dimension.pipe';
 import { Attribute } from 'ish-core/models/attribute/attribute.model';
+
+import { CamfilDimensionPipe } from './camfil-dimension.pipe';
 
 describe('Camfil Dimension Pipe', () => {
   let camfilDimensionPipe: CamfilDimensionPipe;
