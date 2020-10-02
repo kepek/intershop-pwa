@@ -20,7 +20,6 @@ import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { CategoryView } from 'ish-core/models/category-view/category-view.model';
 import { ProductView } from 'ish-core/models/product-view/product-view.model';
 import { ProductCompletenessLevel } from 'ish-core/models/product/product.helper';
-
 import { whenTruthy } from 'ish-core/utils/operators';
 
 import { DemoBottomSheetComponent } from './demo-bottom-sheet/demo-bottom-sheet.component';
@@ -260,6 +259,8 @@ export class DemoPageComponent implements AfterViewInit, OnInit, OnDestroy {
   product$: Observable<ProductView>;
   category$: Observable<CategoryView>;
 
+  now: Date;
+
   product: ProductView;
   category: CategoryView;
   productItemForm: FormGroup;
@@ -376,6 +377,7 @@ export class DemoPageComponent implements AfterViewInit, OnInit, OnDestroy {
   @ViewChild(MatSort) sort: MatSort;
 
   ngOnInit() {
+    this.now = new Date();
     this.product$ = this.shoppingFacade.product$('1365531', ProductCompletenessLevel.List);
     this.category$ = this.shoppingFacade.category$('presentation-conferencing.audio-equipment');
 

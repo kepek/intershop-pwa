@@ -85,13 +85,26 @@
 
 <hr />
 
-<ng-container *ngIf="category && product else loading">
+<ng-container *ngIf="category && product; else loading">
   <ng-container *ngIf="product$ | async as product; else loading">
     <mat-sidenav-container>
       <mat-toolbar color="primary">
         <span class="title">Camfil Demo</span>
       </mat-toolbar>
       <div class="demo-content">
+        <!-- CamfilProductTitleComponent -->
+        <mat-card>
+          <mat-card-content>
+            <h2 class="example-h2">Date Formatting</h2>
+            <ul>
+              <li>{{ now | date }} <small>date</small></li>
+              <li>{{ now | camfilDate }} <small>camfilDate</small></li>
+              <li>{{ now | ishDate: 'shortDate' }} <small>ishDate 'shortDate'</small></li>
+              <li>{{ now | ishDate: 'mediumDate' }} <small>ishDate 'mediumDate'</small></li>
+              <li>{{ now | ishDate: 'fullDate' }} <small>ishDate 'fullDate'</small></li>
+            </ul>
+          </mat-card-content>
+        </mat-card>
         <!-- CamfilProductTitleComponent -->
         <mat-card>
           <mat-card-content>
@@ -139,7 +152,7 @@
               [parentForm]="productItemForm"
               [controlName]="quantityControlName"
             ></camfil-product-quantity>
-            <hr>
+            <hr />
             <camfil-product-quantity
               [type]="'select'"
               [allowZeroQuantity]="false"
@@ -148,7 +161,7 @@
               [parentForm]="productItemForm"
               [controlName]="quantityControlName"
             ></camfil-product-quantity>
-            <hr>
+            <hr />
             <camfil-product-quantity
               [type]="'input'"
               [allowZeroQuantity]="false"
@@ -841,7 +854,7 @@
         <p>
           <mat-form-field appearance="legacy">
             <mat-label>Legacy form field</mat-label>
-            <input matInput placeholder="Placeholder">
+            <input matInput placeholder="Placeholder" />
             <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
             <mat-hint>Hint</mat-hint>
           </mat-form-field>
@@ -849,7 +862,7 @@
         <p>
           <mat-form-field appearance="standard">
             <mat-label>Standard form field</mat-label>
-            <input matInput placeholder="Placeholder">
+            <input matInput placeholder="Placeholder" />
             <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
             <mat-hint>Hint</mat-hint>
           </mat-form-field>
@@ -857,7 +870,7 @@
         <p>
           <mat-form-field appearance="fill">
             <mat-label>Fill form field</mat-label>
-            <input matInput placeholder="Placeholder">
+            <input matInput placeholder="Placeholder" />
             <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
             <mat-hint>Hint</mat-hint>
           </mat-form-field>
@@ -865,12 +878,12 @@
         <p>
           <mat-form-field appearance="outline">
             <mat-label>Outline form field</mat-label>
-            <input matInput placeholder="Placeholder">
+            <input matInput placeholder="Placeholder" />
             <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
             <mat-hint>Hint</mat-hint>
           </mat-form-field>
         </p>
-        <hr>
+        <hr />
         <mat-form-field>
           <input matInput placeholder="First name" />
         </mat-form-field>
