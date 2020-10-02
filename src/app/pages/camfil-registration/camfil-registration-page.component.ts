@@ -1,0 +1,34 @@
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+
+import { CamfilAccountFacade } from 'ish-core/facades/camfil-account.facade';
+import { CamfilCustomerRegistrationType } from 'ish-core/models/camfil-customer/camfil-customer.model';
+import { HttpError } from 'ish-core/models/http-error/http-error.model';
+
+/**
+ * The Registration Page Container renders the customer registration form using the {@link CamfilRegistrationFormComponent}
+ *
+ */
+@Component({
+  templateUrl: './camfil-registration-page.component.html',
+  styleUrls: ['./camfil-registration-page.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class CamfilRegistrationPageComponent implements OnInit {
+  userError$: Observable<HttpError>;
+
+  constructor(private accountFacade: CamfilAccountFacade, private router: Router) {}
+
+  ngOnInit() {
+    this.userError$ = this.accountFacade.userError$;
+  }
+
+  onCancel() {
+    this.router.navigate(['/home']);
+  }
+
+  onCreate(body: CamfilCustomerRegistrationType) {
+    this.accountFacade.createUser(body);
+  }
+}

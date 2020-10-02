@@ -1,0 +1,34 @@
+@import '~src/styles/themes/camfil/colors';
+@import '~src/styles/themes/camfil/variables';
+@import '~src/styles/themes/camfil/mixins.scss';
+
+.camfil-banner {
+  width: 100%;
+  height: 100%;
+  padding-top: 80px;
+  padding-bottom: 56px;
+  padding-left: 86px;
+  background-color: $camfil-color-image-fallback;
+
+  &__header {
+    display: flex;
+
+    &--title {
+      margin-bottom: 0;
+      font-family: $font-family-bold;
+      font-size: 64px;
+      line-height: 64px;
+      text-transform: none;
+    }
+  }
+
+  &__description {
+    margin: 16px 0 0;
+    text-transform: none;
+    @include font-size-h3;
+  }
+
+  &__link {
+    margin-top: 24px;
+  }
+}

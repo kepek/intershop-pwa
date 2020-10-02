@@ -1,0 +1,18 @@
+@import '~src/styles/themes/camfil/colors';
+@import '~src/styles/themes/camfil/variables';
+
+:host {
+  .form-field {
+    width: 100%;
+    margin-bottom: 16px;
+  }
+
+  &::ng-deep label {
+    span {
+      float:left;
+      margin-top: 3px;
+      margin-right: 2px;
+      color: $camfil-color-special-primary;
+    }
+  }
+}

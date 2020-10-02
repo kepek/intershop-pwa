@@ -1,0 +1,15 @@
+@import '../../../../../styles/themes/camfil/mixins';
+@import '../../../../../styles/themes/camfil/colors';
+@import '../../../../../styles/themes/camfil/variables';
+
+:host {
+  .header {
+    font-family: $font-family-SansPro;
+    @include font-size-h3;
+  }
+
+  .description {
+    font-family: $font-family-SansPro;
+    @include font-size-p;
+  }
+}

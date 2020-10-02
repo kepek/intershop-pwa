@@ -276,10 +276,13 @@ a {
       vertical-align: top;
     }
   }
-  @for $i from 10 through 56 {
+  @for $i from 10 through 64 {
     &.size-#{$i} {
       width: #{$i}px;
       height: #{$i}px;
+    }
+    &.fontsize-#{$i} {
+      font-size: #{$i}px !important;
     }
   }
 }
@@ -317,8 +320,3 @@ a {
   bottom: 0;
 }
 
-.mat-form-field-appearance-fill {
-  .mat-form-field-flex {
-    background-color: unset;
-  }
-}

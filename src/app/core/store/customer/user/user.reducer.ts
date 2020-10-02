@@ -7,8 +7,8 @@ import { User } from 'ish-core/models/user/user.model';
 import { loadRolesAndPermissionsFail } from 'ish-core/store/customer/authorization';
 import { setErrorOn, setLoadingOn } from 'ish-core/utils/ngrx-creators';
 
+import { camfilCreateUser } from './camfil-user.actions';
 import {
-  createUser,
   createUserFail,
   deleteUserPaymentInstrument,
   deleteUserPaymentInstrumentFail,
@@ -96,7 +96,7 @@ export const userReducer = createReducer(
   })),
   setLoadingOn(
     loadCompanyUser,
-    createUser,
+    camfilCreateUser,
     updateUser,
     updateUserPassword,
     updateCustomer,

@@ -31,6 +31,7 @@ $font-family-bold: 'robotobold', 'Helvetica', 'Arial', sans-serif;
 $font-family-condensedregular: 'roboto_condensedregular', 'Helvetica Neue', helvetica, 'Arial', sans-serif;
 $font-family-condensedbold: 'roboto_condensedbold', 'Helvetica Neue', helvetica, 'Arial', sans-serif;
 $font-family-SansPro: 'Source Sans Pro', sans-serif;
+// stylelint-enable value-keyword-case
 
 //
 // FONT SIZES
@@ -222,6 +223,8 @@ $h3-font-size: $font-size-base * 1.25; // ~18px
 $h4-font-size: $font-size-base * 1.05; // ~15px
 // TODO: h5 font size
 $h6-font-size: $font-size-base * 0.85; // ~12px
+
+$h3-line-height: 24px;
 
 $headings-font-family: $font-family-condensedbold;
 $headings-font-weight: normal;

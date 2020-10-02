@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CamfilCamcardsSearchComponent } from './camfil-camcards-search.component';
+import { CamfilBulletListComponent } from './camfil-bullet-list.component';
 
-describe('Camfil Camcards Search Component', () => {
-  let component: CamfilCamcardsSearchComponent;
-  let fixture: ComponentFixture<CamfilCamcardsSearchComponent>;
+describe('Camfil Bullet List Component', () => {
+  let component: CamfilBulletListComponent;
+  let fixture: ComponentFixture<CamfilBulletListComponent>;
   let element: HTMLElement;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CamfilCamcardsSearchComponent],
+      declarations: [CamfilBulletListComponent],
     }).compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CamfilCamcardsSearchComponent);
+    fixture = TestBed.createComponent(CamfilBulletListComponent);
     component = fixture.componentInstance;
     element = fixture.nativeElement;
   });

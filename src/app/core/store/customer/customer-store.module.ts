@@ -21,7 +21,6 @@ import { OrdersEffects } from './orders/orders.effects';
 import { ordersReducer } from './orders/orders.reducer';
 import { OrganizationManagementEffects } from './organization-management/organization-management.effects';
 import { RestoreEffects } from './restore/restore.effects';
-import { UserEffects } from './user/user.effects';
 import { userReducer } from './user/user.reducer';
 
 const customerReducers: ActionReducerMap<CustomerState> = {
@@ -42,7 +41,6 @@ const customerEffects = [
   BasketValidationEffects,
   OrdersEffects,
   RestoreEffects,
-  UserEffects,
   AuthorizationEffects,
   OrganizationManagementEffects,
 ];
