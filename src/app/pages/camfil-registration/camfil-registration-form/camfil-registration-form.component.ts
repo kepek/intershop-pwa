@@ -61,8 +61,6 @@ export class CamfilRegistrationFormComponent implements OnInit {
 
     const formValue = this.form.value;
 
-    console.log('formValue', formValue);
-
     const registration = { ...formValue };
 
     this.create.emit(registration);

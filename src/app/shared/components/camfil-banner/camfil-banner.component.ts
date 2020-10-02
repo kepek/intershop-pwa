@@ -7,10 +7,10 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CamfilBannerComponent {
-  @Input() title: string = '';
-  @Input() iconName: string = '';
-  @Input() description: string = '';
-  @Input() linkTitle: string = '';
-  @Input() linkUrl: string = '';
+  @Input() title = '';
+  @Input() iconName = '';
+  @Input() description = '';
+  @Input() linkTitle = '';
+  @Input() linkUrl = '';
   @Input() backgroundImageUrl: string;
 }

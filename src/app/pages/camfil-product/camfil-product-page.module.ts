@@ -23,7 +23,7 @@ import { CamfilProductGuidesComponent } from './camfil-product-guides/camfil-pro
 import { CamfilProductImagesComponent } from './camfil-product-images/camfil-product-images.component';
 import { CamfilProductPageComponent } from './camfil-product-page.component';
 
-const productPageRoutes: Routes = [
+const camfilProductPageRoutes: Routes = [
   {
     // compatibility to old routes
     path: 'product/:sku',
@@ -53,7 +53,7 @@ const productPageRoutes: Routes = [
     MatIconModule,
     MatListModule,
     MaterialModule,
-    RouterModule.forChild(productPageRoutes),
+    RouterModule.forChild(camfilProductPageRoutes),
     SharedModule,
   ],
   declarations: [

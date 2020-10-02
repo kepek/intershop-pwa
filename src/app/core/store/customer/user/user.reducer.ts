@@ -7,6 +7,7 @@ import { User } from 'ish-core/models/user/user.model';
 import { loadRolesAndPermissionsFail } from 'ish-core/store/customer/authorization';
 import { setErrorOn, setLoadingOn } from 'ish-core/utils/ngrx-creators';
 
+import { camfilCreateUser } from './camfil-user.actions';
 import {
   createUserFail,
   deleteUserPaymentInstrument,
@@ -43,8 +44,6 @@ import {
   updateUserSuccess,
   userErrorReset,
 } from './user.actions';
-
-import {camfilCreateUser} from './camfil-user.actions';
 
 export interface UserState {
   customer: Customer;

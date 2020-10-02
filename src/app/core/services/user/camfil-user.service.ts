@@ -3,9 +3,8 @@ import { Observable, throwError } from 'rxjs';
 import { concatMap, first } from 'rxjs/operators';
 
 import { AppFacade } from 'ish-core/facades/app.facade';
+import { CamfilCustomerRegistrationType } from 'ish-core/models/camfil-customer/camfil-customer.model';
 import { ApiService } from 'ish-core/services/api/api.service';
-import {CamfilCustomerRegistrationType} from "ish-core/models/camfil-customer/camfil-customer.model";
-
 
 /**
  * The User Service handles the registration related interaction with the 'customers' REST API.
@@ -29,10 +28,7 @@ export class CamfilUserService {
     return this.appFacade.isAppTypeREST$.pipe(
       first(),
       concatMap(isAppTypeRest =>
-        this.apiService.post<void>(
-          AppFacade.getCustomerRestResource(false, isAppTypeRest),
-          newCustomer
-        )
+        this.apiService.post<void>(AppFacade.getCustomerRestResource(false, isAppTypeRest), newCustomer)
       )
     );
   }

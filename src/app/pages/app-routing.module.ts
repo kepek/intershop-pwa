@@ -95,7 +95,8 @@ const routes: Routes = [
   },
   {
     path: 'register',
-    loadChildren: () => import('./camfil-registration/camfil-registration-page.module').then(m => m.CamfilRegistrationPageModule),
+    loadChildren: () =>
+      import('./camfil-registration/camfil-registration-page.module').then(m => m.CamfilRegistrationPageModule),
     data: {
       meta: {
         title: 'account.register.link',

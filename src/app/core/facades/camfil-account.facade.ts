@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 
+import { CamfilCustomerRegistrationType } from 'ish-core/models/camfil-customer/camfil-customer.model';
 import { Credentials } from 'ish-core/models/credentials/credentials.model';
 import { getUserRoles } from 'ish-core/store/customer/authorization';
 import {
@@ -11,8 +12,6 @@ import {
   getUserLoading,
   loginUser,
 } from 'ish-core/store/customer/user';
-
-import { CamfilCustomerRegistrationType } from 'ish-core/models/camfil-customer/camfil-customer.model';
 
 // tslint:disable:member-ordering
 @Injectable({ providedIn: 'root' })

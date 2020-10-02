@@ -29,7 +29,6 @@ export class CamfilRegistrationPageComponent implements OnInit {
   }
 
   onCreate(body: CamfilCustomerRegistrationType) {
-    console.log('onCreate', body);
     this.accountFacade.createUser(body);
   }
 }

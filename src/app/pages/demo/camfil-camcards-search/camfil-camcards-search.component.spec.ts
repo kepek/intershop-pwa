@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CamfilCamcardsSearchComponent } from './camfil-camcards-search.component';
 
@@ -7,11 +7,11 @@ describe('Camfil Camcards Search Component', () => {
   let fixture: ComponentFixture<CamfilCamcardsSearchComponent>;
   let element: HTMLElement;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       declarations: [CamfilCamcardsSearchComponent],
     }).compileComponents();
-  }));
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(CamfilCamcardsSearchComponent);

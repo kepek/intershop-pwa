@@ -2,14 +2,14 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CamfilBulletListComponent } from './camfil-bullet-list.component';
 
-describe('CamfilBulletListComponent', () => {
+describe('Camfil Bullet List Component', () => {
   let component: CamfilBulletListComponent;
   let fixture: ComponentFixture<CamfilBulletListComponent>;
   let element: HTMLElement;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CamfilBulletListComponent]
+      declarations: [CamfilBulletListComponent],
     }).compileComponents();
   });
 

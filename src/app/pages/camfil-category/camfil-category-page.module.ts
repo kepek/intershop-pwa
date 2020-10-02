@@ -19,7 +19,7 @@ import { CamfilCategoryPageComponent } from './camfil-category-page.component';
 import { CamfilCategoryProductsComponent } from './camfil-category-products/camfil-category-products.component';
 import { CamfilCategoryTileComponent } from './camfil-category-tile/camfil-category-tile.component';
 
-const categoryPageRoutes: Routes = [
+const camfilCategoryPageRoutes: Routes = [
   {
     // compatibility to old routes
     path: 'category/:categoryUniqueId',
@@ -34,7 +34,7 @@ const categoryPageRoutes: Routes = [
     MatIconModule,
     MatToolbarModule,
     MaterialModule,
-    RouterModule.forChild(categoryPageRoutes),
+    RouterModule.forChild(camfilCategoryPageRoutes),
     SharedModule,
   ],
   declarations: [

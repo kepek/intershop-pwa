@@ -6,14 +6,13 @@ import { MockComponent } from 'ng-mocks';
 import { instance, mock } from 'ts-mockito';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
-
 import { CamfilBannerComponent } from 'ish-shared/components/camfil-banner/camfil-banner.component';
+import { CamfilBulletListComponent } from 'ish-shared/components/camfil-bullet-list/camfil-bullet-list.component';
+import { CamfilHeaderBoxComponent } from 'ish-shared/components/common/camfil-header-box/camfil-header-box.component';
 
 import { CamfilInfoSectionComponent } from './camfil-info-section/camfil-info-section.component';
 import { CamfilRegistrationFormComponent } from './camfil-registration-form/camfil-registration-form.component';
 import { CamfilRegistrationPageComponent } from './camfil-registration-page.component';
-import { CamfilHeaderBoxComponent } from 'ish-shared/components/common/camfil-header-box/camfil-header-box.component';
-import { CamfilBulletListComponent } from 'ish-shared/components/camfil-bullet-list/camfil-bullet-list.component';
 
 describe('Camfil Registration Page Component', () => {
   let fixture: ComponentFixture<CamfilRegistrationPageComponent>;
@@ -27,10 +26,10 @@ describe('Camfil Registration Page Component', () => {
     await TestBed.configureTestingModule({
       declarations: [
         CamfilBannerComponent,
+        CamfilBulletListComponent,
+        CamfilHeaderBoxComponent,
         CamfilInfoSectionComponent,
         CamfilRegistrationPageComponent,
-        CamfilHeaderBoxComponent,
-        CamfilBulletListComponent,
         DummyComponent,
         MockComponent(CamfilRegistrationFormComponent),
       ],

@@ -10,13 +10,13 @@ import { AddressFormContainerComponent } from 'ish-shared/address-forms/componen
 import { AddressFormFactory } from 'ish-shared/address-forms/components/address-form/address-form.factory';
 import { AddressFormFactoryProvider } from 'ish-shared/address-forms/configurations/address-form-factory.provider';
 import { ContentIncludeComponent } from 'ish-shared/cms/components/content-include/content-include.component';
+import { CamfilHeaderBoxComponent } from 'ish-shared/components/common/camfil-header-box/camfil-header-box.component';
 import { ErrorMessageComponent } from 'ish-shared/components/common/error-message/error-message.component';
 import { ModalDialogComponent } from 'ish-shared/components/common/modal-dialog/modal-dialog.component';
 import { CheckboxComponent } from 'ish-shared/forms/components/checkbox/checkbox.component';
 import { TacCheckboxComponent } from 'ish-shared/forms/components/tac-checkbox/tac-checkbox.component';
 
 import { LazyCaptchaComponent } from '../../../extensions/captcha/exports/lazy-captcha/lazy-captcha.component';
-import { CamfilHeaderBoxComponent } from '../../../shared/components/common/camfil-header-box/camfil-header-box.component';
 
 import { CamfilRegistrationFormComponent } from './camfil-registration-form.component';
 
@@ -48,8 +48,8 @@ describe('Camfil Registration Form Component', () => {
       providers: [{ provide: AddressFormFactoryProvider, useFactory: () => instance(addressFormFactoryProviderMock) }],
       imports: [
         BrowserAnimationsModule,
-        FormsModule,
         FeatureToggleModule.forTesting('businessCustomerRegistration'),
+        FormsModule,
         ReactiveFormsModule,
         TranslateModule.forRoot(),
       ],

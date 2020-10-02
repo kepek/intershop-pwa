@@ -4,17 +4,16 @@ import { RouterModule, Routes } from '@angular/router';
 import { IconModule } from 'camfil-shared/icon/icon.module';
 import { MaterialModule } from 'camfil-shared/material/material.module';
 
+import { CamfilBannerComponent } from 'ish-shared/components/camfil-banner/camfil-banner.component';
+import { CamfilBulletListComponent } from 'ish-shared/components/camfil-bullet-list/camfil-bullet-list.component';
+import { CamfilHeaderBoxComponent } from 'ish-shared/components/common/camfil-header-box/camfil-header-box.component';
 import { SharedModule } from 'ish-shared/shared.module';
 
-import { CamfilBannerComponent } from '../../shared/components/camfil-banner/camfil-banner.component';
-import { CamfilBulletListComponent } from '../../shared/components/camfil-bullet-list/camfil-bullet-list.component';
-
 import { CamfilInfoSectionComponent } from './camfil-info-section/camfil-info-section.component';
-import { CamfilHeaderBoxComponent } from '../../shared/components/common/camfil-header-box/camfil-header-box.component';
 import { CamfilRegistrationFormComponent } from './camfil-registration-form/camfil-registration-form.component';
 import { CamfilRegistrationPageComponent } from './camfil-registration-page.component';
 
-const registrationPageRoutes: Routes = [{ path: '', component: CamfilRegistrationPageComponent }];
+const camfilRegistrationPageRoutes: Routes = [{ path: '', component: CamfilRegistrationPageComponent }];
 
 @NgModule({
   imports: [
@@ -22,14 +21,14 @@ const registrationPageRoutes: Routes = [{ path: '', component: CamfilRegistratio
     IconModule,
     MaterialModule,
     ReactiveFormsModule,
-    RouterModule.forChild(registrationPageRoutes),
+    RouterModule.forChild(camfilRegistrationPageRoutes),
     SharedModule,
   ],
   declarations: [
     CamfilBannerComponent,
     CamfilBulletListComponent,
-    CamfilInfoSectionComponent,
     CamfilHeaderBoxComponent,
+    CamfilInfoSectionComponent,
     CamfilRegistrationFormComponent,
     CamfilRegistrationPageComponent,
   ],

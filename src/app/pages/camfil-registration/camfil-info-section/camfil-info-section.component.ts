@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import {TranslateService} from "@ngx-translate/core";
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'camfil-info-section',
@@ -8,7 +8,7 @@ import {TranslateService} from "@ngx-translate/core";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CamfilInfoSectionComponent {
-  bullets: String[] = [
+  bullets: string[] = [
     this.translateService.instant('camfil.register.whycamfil.personal_assortment'),
     this.translateService.instant('camfil.register.whycamfil.products'),
     this.translateService.instant('camfil.register.whycamfil.rwd'),
