@@ -42,7 +42,7 @@ describe('Camfil Product Inventory Component', () => {
   });
 
   it('should show In Stock when inStock = true', () => {
-    translate.set('product.instock.text', 'In Stock');
+    translate.set('camfil.product.instock.text', 'In Stock');
     product.inStock = true;
     product.availability = true;
     fixture.detectChanges();
@@ -53,7 +53,7 @@ describe('Camfil Product Inventory Component', () => {
   });
 
   it('should show Out of Stock when inStock = false', () => {
-    translate.set('product.out_of_stock.text', 'Out of Stock');
+    translate.set('camfil.product.out_of_stock.text', 'Out of Stock');
     product.inStock = false;
     fixture.detectChanges();
     expect(element.querySelector('.product-availability').textContent).toContain('Out of Stock');
