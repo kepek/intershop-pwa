@@ -23,6 +23,6 @@ describe('Camfil Date Pipe', () => {
   });
 
   it('should transform true to okay', () => {
-    expect(camfilDatePipe.transform(new Date())).toEqual('10/5/2020"');
+    expect(camfilDatePipe.transform(new Date())).toEqual('10/5/2020');
   });
 });
