@@ -23,6 +23,13 @@ import { ModalDialogComponent } from 'ish-shared/components/common/modal-dialog/
 
 import { CamCard, CamCardItem } from '../../../models/cam-card/cam-card.model';
 
+export interface ProductChecked {
+  camCardId: string;
+  camCardRoot: string;
+  sku: string;
+  count: number;
+}
+
 @Component({
   selector: 'camfil-account-cam-card-list',
   templateUrl: './account-cam-card-list.component.html',
@@ -47,9 +54,21 @@ export class AccountCamCardListComponent implements OnChanges, OnDestroy {
   private destroy$ = new Subject();
 
   camCardsProcessed: MatTableDataSource<CamCard>;
-  columnsToDisplay = ['title', 'customer', 'creationDate', 'itemsCount', 'actions', 'checkbox'];
+  columnsToDisplay = [
+    'title',
+    'customer',
+    'lastDelivery',
+    'orderInterval',
+    'nextDelivery',
+    // 'creationDate',
+    'itemsCount',
+    'userAccess',
+    'edit',
+    'checkbox',
+  ];
   expandedElement: CamCard | null;
-  productsChecked = [];
+  productsChecked = {};
+
   isSubOpen = [];
   @ViewChild(MatSort) sort: MatSort;
 
@@ -88,6 +107,13 @@ export class AccountCamCardListComponent implements OnChanges, OnDestroy {
     }
   }
 
+  /** addToCartItems */
+  addSelectedItemsToCart() {
+    Object.values(this.productsChecked).forEach((val: ProductChecked) =>
+      this.productFacade.addProductToBasket(val.sku, val.count)
+    );
+  }
+
   /** Emits the id of the cam cards to delete. */
   delete(camCardId: string) {
     this.deleteCamCard.emit(camCardId);
@@ -118,7 +144,7 @@ export class AccountCamCardListComponent implements OnChanges, OnDestroy {
 
   /** checkboxes */
   isProductChecked(id: string) {
-    return this.productsChecked.indexOf(id) > -1;
+    return this.productsChecked[id];
   }
 
   isCamCardChecked(camCard: CamCard) {
@@ -133,7 +159,7 @@ export class AccountCamCardListComponent implements OnChanges, OnDestroy {
   }
 
   isAllIndeterminate() {
-    return this.productsChecked.length > 0 && !this.isAllChecked();
+    return Object.keys(this.productsChecked).length !== 0 && !this.isAllChecked();
   }
 
   isCamCardIndeterminate(camCard: CamCard) {
@@ -143,19 +169,25 @@ export class AccountCamCardListComponent implements OnChanges, OnDestroy {
     return itmsNum > 0 && !this.isCamCardChecked(camCard);
   }
 
-  handleProductCheck(item: CamCardItem, event: MatCheckboxChange) {
-    const index = this.productsChecked.indexOf(item.id);
-    if (event.checked && index === -1) {
-      this.productsChecked.push(item.id);
-    } else if (!event.checked && index > -1) {
-      this.productsChecked.splice(index, 1);
+  handleProductCheck(item: CamCardItem, camCard: CamCard, event: MatCheckboxChange) {
+    const productOnList = this.productsChecked[item.id];
+    if (event.checked && !productOnList) {
+      const element: ProductChecked = {
+        camCardId: camCard.id,
+        camCardRoot: camCard.rootCamCard,
+        sku: item.product.sku,
+        count: item.count,
+      };
+      this.productsChecked[item.id] = element;
+    } else if (!event.checked && productOnList) {
+      delete this.productsChecked[item.id];
     }
   }
 
   handleProductsCheck(camCard: CamCard, event: MatCheckboxChange) {
-    camCard.camCardItems.forEach(item => this.handleProductCheck(item, event));
+    camCard.camCardItems.forEach(item => this.handleProductCheck(item, camCard, event));
     camCard.subCamCards.forEach(subCamCard => {
-      subCamCard.camCardItems.forEach(item => this.handleProductCheck(item, event));
+      subCamCard.camCardItems.forEach(item => this.handleProductCheck(item, camCard, event));
     });
   }
 
@@ -169,7 +201,7 @@ export class AccountCamCardListComponent implements OnChanges, OnDestroy {
     this.handleProductsCheck(camCard, event);
   }
 
-  handleProductCheckbox(item: CamCardItem, event: MatCheckboxChange) {
-    this.handleProductCheck(item, event);
+  handleProductCheckbox(item: CamCardItem, camCard: CamCard, event: MatCheckboxChange) {
+    this.handleProductCheck(item, camCard, event);
   }
 }

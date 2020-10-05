@@ -34,15 +34,9 @@
       <mat-icon svgIcon="print" class="size-15"></mat-icon>
       {{ 'camfil.account.cam_cards.list.button.print.label' | translate }}
     </button>
-    <button
-      mat-stroked-button
-      color="primary"
-      disabled
-      data-testing-id="add-cam-card"
-      (click)="addCamCardDialog.show()"
-    >
+    <button mat-stroked-button color="primary" data-testing-id="add-cam-card" (click)="addToCart()">
       <mat-icon svgIcon="cart" class="size-15"></mat-icon>
-      {{ 'camfil.account.cam_cards.list.button.add_to_card.label' | translate }}
+      {{ 'camfil.account.cam_cards.list.button.add_to_cart.label' | translate }}
     </button>
   </div>
 </div>

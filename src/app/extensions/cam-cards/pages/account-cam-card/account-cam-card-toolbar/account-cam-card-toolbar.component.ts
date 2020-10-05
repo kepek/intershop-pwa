@@ -10,8 +10,13 @@ import { CamCard } from '../../../models/cam-card/cam-card.model';
 })
 export class AccountCamCardToolbarComponent {
   @Output() addCamCard = new EventEmitter<CamCard>();
+  @Output() addSelectedItemsToCart = new EventEmitter();
 
   add(camCard: CamCard) {
     this.addCamCard.emit(camCard);
+  }
+
+  addToCart() {
+    this.addSelectedItemsToCart.emit();
   }
 }
