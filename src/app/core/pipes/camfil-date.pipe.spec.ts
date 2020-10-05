@@ -15,6 +15,7 @@ describe('Camfil Date Pipe', () => {
     camfilDatePipe = TestBed.inject(CamfilDatePipe);
     translateService = TestBed.inject(TranslateService);
     translateService.setDefaultLang('en');
+    translateService.use('en');
   });
 
   it('should be created', () => {
@@ -22,6 +23,6 @@ describe('Camfil Date Pipe', () => {
   });
 
   it('should transform true to okay', () => {
-    expect(camfilDatePipe.transform(new Date())).toEqual('test: okay');
+    expect(camfilDatePipe.transform(new Date())).toEqual('10/5/2020"');
   });
 });

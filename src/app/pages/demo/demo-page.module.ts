@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
 import { RouterModule, Routes } from '@angular/router';
 import { IconModule } from 'camfil-shared/icon/icon.module';
@@ -14,14 +13,7 @@ import { DemoPageComponent } from './demo-page.component';
 const demoPageRoutes: Routes = [{ path: '', component: DemoPageComponent }];
 
 @NgModule({
-  imports: [
-    FormsModule,
-    IconModule,
-    MatDialogModule,
-    MaterialModule,
-    RouterModule.forChild(demoPageRoutes),
-    SharedModule,
-  ],
+  imports: [IconModule, MatDialogModule, MaterialModule, RouterModule.forChild(demoPageRoutes), SharedModule],
   declarations: [DemoBottomSheetComponent, DemoDialogComponent, DemoPageComponent],
 })
 export class DemoPageModule {}

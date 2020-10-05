@@ -41,8 +41,14 @@ describe('Cam Card Mapper', () => {
       const mapped = camCardMapper.fromData(camCardData, '1234');
       expect(mapped).toHaveProperty('id', '1234');
       expect(mapped).toHaveProperty('title', 'cam cards title');
-      expect(mapped).toHaveProperty('items', [
-        { sku: '123456', id: 'camCardItemId', creationDate: 12345818123, desiredQuantity: { value: 2 } },
+      expect(mapped).toHaveProperty('camCardItems', [
+        {
+          id: 'camCardItemId',
+          creationDate: 12345818123,
+          count: 2,
+          position: 0,
+          product: { sku: '123456' },
+        },
       ]);
     });
   });

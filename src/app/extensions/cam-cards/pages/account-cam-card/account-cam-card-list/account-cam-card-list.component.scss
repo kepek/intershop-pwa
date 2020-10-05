@@ -3,46 +3,45 @@
 
 :host {
   table {
-    margin: $space-box $space-box * -1 0;
     width: calc(100% + #{$space-sm * 2});
-    
-      th {
-        background-color: rgba($color-corporate, 0.1);
-        color: $text-color-primary;
-        font-weight: 600;
-      }
-      td {
-        border: none;
+    margin: $space-box $space-box * -1 0;
 
-        &.mat-column-expandedDetail {
-          padding: 0;
+    th {
+      font-weight: 600;
+      color: $text-color-primary;
+      background-color: rgba($color-corporate, 0.1);
+    }
+    td {
+      border: none;
+
+      &.mat-column-expandedDetail {
+        padding: 0;
+      }
+    }
+
+    ::ng-deep {
+      .mat-expansion-panel-body {
+        padding: 0;
+
+        > div:nth-child(even) {
+          background-color: #f5f5f5;
         }
       }
-
-      ::ng-deep {
-        .mat-expansion-panel-body {
-          padding: 0;
-
-          > div:nth-child(even) {
-            background-color: #F5F5F5;
-          }
-        }
-      }
+    }
   }
-    
+
   .cam-card {
     &-product {
       padding: $space-box/2 58px $space-box/2 $space-default * 2;
     }
     &-detail {
       overflow: hidden;
-  
+
       &--row {
         height: auto;
-    
       }
       > div:nth-child(odd) {
-        background-color: #F5F5F5;
+        background-color: #f5f5f5;
       }
     }
     &-expanded-row {
@@ -51,17 +50,17 @@
       }
     }
     &-element-row {
-      border-bottom: 1px solid #d7D7D7;;
+      border-bottom: 1px solid #d7d7d7;
     }
   }
   .mat-action-row {
-    background-color: rgba($color-corporate, 0.1);
-    justify-content: space-between;
     align-items: center;
-    border: none;
-    padding-left: $space-default * 2;
+    justify-content: space-between;
     padding-right: 58px;
-    
+    padding-left: $space-default * 2;
+    background-color: rgba($color-corporate, 0.1);
+    border: none;
+
     ::ng-deep {
       label {
         margin-bottom: 0;

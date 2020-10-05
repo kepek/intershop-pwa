@@ -37,10 +37,26 @@ describe('Cam Card Service', () => {
       expect(data).toMatchInlineSnapshot(`
         Array [
           Object {
+            "camCardItems": Array [],
             "creationDate": undefined,
+            "customer": Object {
+              "name": "customerName 1234",
+            },
             "id": "1234",
-            "items": Array [],
             "itemsCount": 0,
+            "rootCamCard": "",
+            "subCamCards": Array [
+              Object {
+                "camCardItems": Array [],
+                "creationDate": undefined,
+                "customer": Object {},
+                "id": "1234SUB",
+                "itemsCount": 0,
+                "rootCamCard": "1234",
+                "subCamCards": Array [],
+                "title": "SUB CamCard - undefined",
+              },
+            ],
             "title": undefined,
           },
         ]

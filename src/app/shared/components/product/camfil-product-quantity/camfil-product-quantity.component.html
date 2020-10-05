@@ -1,10 +1,9 @@
 <div *ngIf="product.inStock && product.availability" [formGroup]="parentForm" class="product-quantity">
   <ng-container *ngIf="!readOnly">
     <ng-container [ngSwitch]="type">
-
       <mat-form-field *ngSwitchCase="'select'" appearance="fill">
         <mat-label>{{ quantityLabel | translate }}</mat-label>
-        <mat-select  [formGroup]="parentForm" [formControlName]="controlName">
+        <mat-select [formGroup]="parentForm" [formControlName]="controlName">
           <mat-option *ngFor="let quantityOption of quantityOptions" [value]="quantityOption.value">
             {{ quantityOption.label }}
           </mat-option>

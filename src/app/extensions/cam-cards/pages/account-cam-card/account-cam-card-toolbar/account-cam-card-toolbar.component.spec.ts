@@ -1,15 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { TranslateModule } from '@ngx-translate/core';
+import { MockComponent } from 'ng-mocks';
+
+import { CamCardPreferencesDialogComponent } from '../../../shared/cam-card-preferences-dialog/cam-card-preferences-dialog.component';
 
 import { AccountCamCardToolbarComponent } from './account-cam-card-toolbar.component';
 
-describe('AccountCamCardToolbarComponent', () => {
+describe('Account Cam Card Toolbar Component', () => {
   let component: AccountCamCardToolbarComponent;
   let fixture: ComponentFixture<AccountCamCardToolbarComponent>;
   let element: HTMLElement;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [AccountCamCardToolbarComponent]
+      declarations: [AccountCamCardToolbarComponent, MockComponent(CamCardPreferencesDialogComponent)],
+      imports: [TranslateModule.forRoot()],
     }).compileComponents();
   });
 

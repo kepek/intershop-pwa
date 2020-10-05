@@ -64,9 +64,11 @@ describe('Account Cam Card Detail Line Item Component', () => {
 
     component.camCardItemData = {
       id: '1234',
-      sku: 'abdc',
+      product: {
+        sku: 'abcd',
+      },
       creationDate: 123124124,
-      desiredQuantity: { value: 1 },
+      count: 1,
     };
     component.selectItemForm = new FormGroup({
       sku: new FormControl('abcd'),

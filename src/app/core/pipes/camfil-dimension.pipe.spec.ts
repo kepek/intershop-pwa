@@ -8,7 +8,6 @@ import { CamfilDimensionPipe } from './camfil-dimension.pipe';
 
 describe('Camfil Dimension Pipe', () => {
   let camfilDimensionPipe: CamfilDimensionPipe;
-  let attributePipe: AttributeToStringPipe;
   let translateService: TranslateService;
   const attributes: Attribute<string>[] = [
     {
@@ -23,10 +22,13 @@ describe('Camfil Dimension Pipe', () => {
       imports: [TranslateModule.forRoot()],
       providers: [CamfilDimensionPipe, AttributeToStringPipe],
     });
+
+    TestBed.inject(AttributeToStringPipe);
+
     camfilDimensionPipe = TestBed.inject(CamfilDimensionPipe);
-    attributePipe = TestBed.inject(AttributeToStringPipe);
     translateService = TestBed.inject(TranslateService);
     translateService.setDefaultLang('en');
+    translateService.use('en');
   });
 
   it('should be created', () => {
