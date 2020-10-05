@@ -27,6 +27,7 @@ export interface CustomerUserType {
 /**
  * registration request data type
  */
+// export interface CustomerRegistrationType extends CustomerUserType, Captcha {
 export interface CustomerRegistrationType extends CustomerUserType, Captcha {
   credentials: Credentials;
   address: Address;
