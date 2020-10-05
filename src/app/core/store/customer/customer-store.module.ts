@@ -41,6 +41,7 @@ const customerEffects = [
   BasketPromotionCodeEffects,
   BasketValidationEffects,
   OrdersEffects,
+  UserEffects,
   RestoreEffects,
   AuthorizationEffects,
   OrganizationManagementEffects,
@@ -60,3 +61,4 @@ export class CustomerStoreModule {
     return StoreModule.forFeature('_customer', pick(customerReducers, reducers), { metaReducers });
   }
 }
+
