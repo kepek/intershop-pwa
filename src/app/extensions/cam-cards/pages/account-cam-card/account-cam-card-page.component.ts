@@ -9,6 +9,7 @@ import { CamCard } from '../../models/cam-card/cam-card.model';
 @Component({
   selector: 'camfil-account-cam-card-page',
   templateUrl: './account-cam-card-page.component.html',
+  styleUrls: ['./account-cam-card-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AccountCamCardPageComponent implements OnInit {

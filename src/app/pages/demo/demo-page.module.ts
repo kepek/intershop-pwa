@@ -7,7 +7,6 @@ import { MaterialModule } from 'camfil-shared/material/material.module';
 
 import { SharedModule } from 'ish-shared/shared.module';
 
-import { CamfilCamCardsSearchComponent } from './camfil-cam-cards-search/camfil-cam-cards-search.component';
 import { DemoBottomSheetComponent } from './demo-bottom-sheet/demo-bottom-sheet.component';
 import { DemoDialogComponent } from './demo-dialog/demo-dialog.component';
 import { DemoPageComponent } from './demo-page.component';
@@ -23,6 +22,6 @@ const demoPageRoutes: Routes = [{ path: '', component: DemoPageComponent }];
     RouterModule.forChild(demoPageRoutes),
     SharedModule,
   ],
-  declarations: [CamfilCamCardsSearchComponent, DemoBottomSheetComponent, DemoDialogComponent, DemoPageComponent],
+  declarations: [DemoBottomSheetComponent, DemoDialogComponent, DemoPageComponent],
 })
 export class DemoPageModule {}

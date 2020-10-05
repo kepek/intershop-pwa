@@ -4,17 +4,54 @@ export interface CamCardHeader {
 
 export interface CamCard extends CamCardHeader {
   id: string;
-  items?: CamCardItem[];
+  customer?: CamCardCustomer;
+  rootCamCard?: string; // TODO: id from root
+  subCamCards?: CamCard[];
+  camCardItems?: CamCardItem[]; // was items
   itemsCount?: number;
   creationDate?: Date;
+  contacts?: CamCardContact[];
+  delivery?: CamCardDelivery;
+  maintenanceStatus?: boolean;
 }
 
 export interface CamCardItem {
-  sku: string;
+  // had sku: string;
   id: string;
+  count: number; // was desiredQuantity.value
+  position?: number;
+  product?: CamCardProduct;
   creationDate: number;
-  desiredQuantity: {
-    value: number;
-    unit?: string;
-  };
+  comment?: CamCardItemComment; // Talk bubble on view
+}
+
+export interface CamCardProduct {
+  sku: string;
+  name?: string;
+  shortDescription?: string;
+  longDescription?: string;
+  available?: boolean;
+}
+
+export interface CamCardCustomer {
+  // TODO
+  name?: string;
+}
+
+export interface CamCardContact {
+  profileId?: string;
+  email?: string;
+  firstName?: string;
+  lastName?: string;
+  camCardId?: string;
+}
+
+export interface CamCardItemComment {
+  label: string;
+  text: string;
+}
+
+export interface CamCardDelivery {
+  last: Date;
+  interval: number;
 }

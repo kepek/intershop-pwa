@@ -1,10 +1,11 @@
+
+<camfil-breadcrumb [account]="true"></camfil-breadcrumb>
+<br>
 <div class="cam-card">
   <h1 class="d-flex align-items-center">
-    <!-- <mat-icon svgIcon="camcard" class="size-37"></mat-icon> &nbsp; -->
+    <mat-icon svgIcon="camcard" class="size-37"></mat-icon> &nbsp;
     {{ 'camfil.account.cam_cards.heading' | translate
-    }}<a class="btn btn-secondary" data-testing-id="add-cam-card" (click)="addCamCardDialog.show()">{{
-      'camfil.account.cam_cards.list.button.add_cam_card.label' | translate
-    }}</a>
+    }}
   </h1>
 
   <!-- Error message -->
@@ -13,12 +14,10 @@
   <camfil-account-cam-card-list
     [camCards]="camCard$ | async"
     (deleteCamCard)="deleteCamCard($event)"
+    (addCamCard)="addCamCard($event)"
   ></camfil-account-cam-card-list>
 </div>
 
-<camfil-cam-card-preferences-dialog
-  #addCamCardDialog
-  (submit)="addCamCard($event)"
-></camfil-cam-card-preferences-dialog>
+
 
 <ish-loading *ngIf="camCardLoading$ | async"></ish-loading>
