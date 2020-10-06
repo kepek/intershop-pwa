@@ -1,15 +1,5 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  Output,
-  TemplateRef,
-  ViewChild,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
 import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
 
@@ -24,11 +14,19 @@ import { CamCard } from '../../models/cam-card/cam-card.model';
    </camfil-cam-card-preferences-dialog>
  */
 @Component({
-  selector: 'camfil-cam-card-preferences-dialog',
-  templateUrl: './cam-card-preferences-dialog.component.html',
+  selector: 'camfil-cam-card-preferences',
+  templateUrl: './cam-card-preferences.component.html',
+  styleUrls: ['./cam-card-preferences.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CamCardPreferencesDialogComponent implements OnChanges {
+export class CamCardPreferencesComponent implements OnChanges {
+  constructor(private fb: FormBuilder) {
+    this.initForm();
+  }
+
+  get formDisabled() {
+    return this.camCardForm.invalid && this.submitted;
+  }
   /**
    * Predefined cam cards to fill the form with, if there is no cam cards a new cam cards will be created
    */
@@ -42,31 +40,59 @@ export class CamCardPreferencesDialogComponent implements OnChanges {
 
   camCardForm: FormGroup;
   submitted = false;
+  pickerLast;
+  pickerNext;
 
   /**
-   *  A reference to the current modal.
+   *  A reference to the current modal  .
    */
-  modal: NgbModalRef;
 
   // localization keys, default = for new
 
   primaryButton = 'camfil.account.cam_card.new_from_order.button.create.label';
   camCardTitle = 'camfil.account.cam_card.new_cam_card.text';
-  modalHeader = 'camfil.account.cam_cards.list.button.add_cam_card.label';
 
-  @ViewChild('modal', { static: false }) modalTemplate: TemplateRef<unknown>;
+  customers = [
+    {
+      value: 'skanska',
+      viewValue: 'Skanska',
+    },
+    {
+      value: 'txm',
+      viewValue: 'TXM',
+    },
+  ];
 
-  constructor(private fb: FormBuilder, private ngbModal: NgbModal) {
-    this.initForm();
-  }
+  locations = [
+    {
+      value: 'poland',
+      viewValue: 'Poland',
+    },
+    {
+      value: 'norway',
+      viewValue: 'Norway',
+    },
+    {
+      value: 'sweden',
+      viewValue: 'Sweden',
+    },
+  ];
+
+  deliveryInterval = [
+    {
+      value: '1',
+      viewValue: '1 week',
+    },
+    {
+      value: '2',
+      viewValue: '2 weeks',
+    },
+  ];
 
   ngOnChanges() {
     this.patchForm();
-    this.modalHeader = this.modalTitle || this.modalHeader;
     if (this.camCard) {
       this.primaryButton = 'camfil.account.cam_cards.edit_form.save_button.text';
-      this.camCardTitle = this.camCard.title;
-      this.modalHeader = 'camfil.account.cam_card.edit.heading';
     }
   }
 
@@ -85,36 +111,13 @@ export class CamCardPreferencesDialogComponent implements OnChanges {
   /** Emits the cam cards data, when the form was valid. */
   submitCamCardForm() {
     if (this.camCardForm.valid) {
-      console.log('test');
       this.submit.emit({
         id: !this.camCard ? this.camCardForm.get('title').value : this.camCardTitle,
         title: this.camCardForm.get('title').value,
       });
-
-      this.hide();
     } else {
       this.submitted = true;
       markAsDirtyRecursive(this.camCardForm);
     }
-  }
-
-  /** Opens the modal. */
-  show() {
-    this.modal = this.ngbModal.open(this.modalTemplate);
-  }
-
-  /** Close the modal. */
-  hide() {
-    this.camCardForm.reset({
-      title: '',
-    });
-    this.submitted = false;
-    if (this.modal) {
-      this.modal.close();
-    }
-  }
-
-  get formDisabled() {
-    return this.camCardForm.invalid && this.submitted;
   }
 }

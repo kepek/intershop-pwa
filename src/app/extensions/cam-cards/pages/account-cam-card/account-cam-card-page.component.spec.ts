@@ -11,6 +11,7 @@ import { LoadingComponent } from 'ish-shared/components/common/loading/loading.c
 
 import { CamCardsFacade } from '../../facades/cam-cards.facade';
 import { CamCardPreferencesDialogComponent } from '../../shared/cam-card-preferences-dialog/cam-card-preferences-dialog.component';
+import { CamCardPreferencesComponent } from '../../shared/cam-card-preferences/cam-card-preferences.component';
 
 import { AccountCamCardListComponent } from './account-cam-card-list/account-cam-card-list.component';
 import { AccountCamCardPageComponent } from './account-cam-card-page.component';
@@ -28,6 +29,7 @@ describe('Account Cam Card Page Component', () => {
       declarations: [
         AccountCamCardPageComponent,
         MockComponent(AccountCamCardListComponent),
+        MockComponent(CamCardPreferencesComponent),
         MockComponent(CamCardPreferencesDialogComponent),
         MockComponent(CamfilBreadcrumbComponent),
         MockComponent(ErrorMessageComponent),

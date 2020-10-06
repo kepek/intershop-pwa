@@ -9,6 +9,7 @@ import { GenerateLazyComponent } from 'ish-core/utils/module-loader/generate-laz
 
 import { CamCardsFacade } from '../../facades/cam-cards.facade';
 import { SelectCamCardModalComponent } from '../select-cam-card-modal/select-cam-card-modal.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'camfil-product-add-to-cam-card',
@@ -32,7 +33,12 @@ export class ProductAddToCamCardComponent implements OnDestroy {
   @Input() class?: string;
   private destroy$ = new Subject();
 
-  constructor(private camCardsFacade: CamCardsFacade, private accountFacade: AccountFacade, private router: Router) {}
+  constructor(
+    private camCardsFacade: CamCardsFacade,
+    private accountFacade: AccountFacade,
+    private router: Router,
+    public dialog: MatDialog
+  ) {}
 
   /**
    * if the user is not logged in display login dialog, else open select cam cards dialog
@@ -40,7 +46,14 @@ export class ProductAddToCamCardComponent implements OnDestroy {
   openModal(modal: SelectCamCardModalComponent) {
     this.accountFacade.isLoggedIn$.pipe(take(1), takeUntil(this.destroy$)).subscribe(isLoggedIn => {
       if (isLoggedIn) {
-        modal.show();
+        // modal.show();
+        console.log(modal);
+        const dialogRef = this.dialog.open(modal.show());
+        modal.hide = () => this.dialog.closeAll();
+
+        dialogRef.afterClosed().subscribe(result => {
+          console.log(`Dialog result: ${result}`);
+        });
       } else {
         // stay on the same page after login
         const queryParams = { returnUrl: this.router.routerState.snapshot.url, messageKey: 'cam_cards' };
