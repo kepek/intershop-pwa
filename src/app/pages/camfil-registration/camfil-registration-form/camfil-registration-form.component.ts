@@ -41,6 +41,8 @@ export class CamfilRegistrationFormComponent implements OnInit {
       customerName: ['', [Validators.required]],
       customerNo: '',
       comment: '',
+      captcha: [''],
+      captchaAction: ['register'],
     });
 
     // add form control(s) for business customers
@@ -62,6 +64,9 @@ export class CamfilRegistrationFormComponent implements OnInit {
     const formValue = this.form.value;
 
     const registration = { ...formValue };
+
+    registration.captcha = this.form.get('captcha').value;
+    registration.captchaAction = this.form.get('captchaAction').value;
 
     this.create.emit(registration);
   }
