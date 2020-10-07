@@ -6,6 +6,13 @@
     margin-bottom: $main-box-margin;
     overflow: hidden;
     box-shadow: $main-box-shadow;
+
+    &--dark {
+      box-shadow: $dark-box-shadow;
+    }
+    + .box-shadow {
+      margin-top: $main-box-margin * -1;
+    }
   }
 }
 
