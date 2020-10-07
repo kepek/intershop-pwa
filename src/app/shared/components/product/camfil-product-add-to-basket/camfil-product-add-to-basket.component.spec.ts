@@ -70,7 +70,7 @@ describe('Camfil Product Add To Basket Component', () => {
   it('should show icon button when display type is icon ', () => {
     component.displayType = 'icon';
     fixture.detectChanges();
-    expect(element.querySelector('fa-icon')).toBeTruthy();
+    expect(element.querySelector('mat-icon')).toBeTruthy();
   });
 
   it('should show disable button when "disabled" is set to "false" ', () => {
