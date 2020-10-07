@@ -85,7 +85,6 @@ export class CamCardPreferencesDialogComponent implements OnChanges {
   /** Emits the cam cards data, when the form was valid. */
   submitCamCardForm() {
     if (this.camCardForm.valid) {
-      console.log('test');
       this.submit.emit({
         id: !this.camCard ? this.camCardForm.get('title').value : this.camCardTitle,
         title: this.camCardForm.get('title').value,

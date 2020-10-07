@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input, OnDestroy } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
@@ -9,7 +10,6 @@ import { GenerateLazyComponent } from 'ish-core/utils/module-loader/generate-laz
 
 import { CamCardsFacade } from '../../facades/cam-cards.facade';
 import { SelectCamCardModalComponent } from '../select-cam-card-modal/select-cam-card-modal.component';
-import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'camfil-product-add-to-cam-card',

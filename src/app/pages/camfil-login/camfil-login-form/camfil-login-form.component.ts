@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 
@@ -13,7 +13,7 @@ import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
   styleUrls: ['./camfil-login-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CamfilLoginFormComponent {
+export class CamfilLoginFormComponent implements OnInit {
   @Input() loginMessageKey: string;
 
   form: FormGroup;

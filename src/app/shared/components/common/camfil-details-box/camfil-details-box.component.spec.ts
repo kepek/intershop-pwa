@@ -2,14 +2,14 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CamfilDetailsBoxComponent } from './camfil-details-box.component';
 
-describe('CamfilIconItemComponent', () => {
+describe('Camfil Details Box Component', () => {
   let component: CamfilDetailsBoxComponent;
   let fixture: ComponentFixture<CamfilDetailsBoxComponent>;
   let element: HTMLElement;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CamfilDetailsBoxComponent]
+      declarations: [CamfilDetailsBoxComponent],
     }).compileComponents();
   });
 
