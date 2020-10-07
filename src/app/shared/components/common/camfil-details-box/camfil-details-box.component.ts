@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
 
 @Component({
-  selector: 'camfil-icon-item',
+  selector: 'camfil-details-box',
   templateUrl: './camfil-details-box.component.html',
   styleUrls: ['./camfil-details-box.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
