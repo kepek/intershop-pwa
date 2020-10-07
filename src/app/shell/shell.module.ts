@@ -16,6 +16,7 @@ import { IconModule } from 'ish-core/icon.module';
 import { PipesModule } from 'ish-core/pipes.module';
 
 import { CamCardsExportsModule } from '../extensions/cam-cards/exports/cam-cards-exports.module';
+import { CamUserExportsModule } from '../extensions/cam-user/exports/cam-user-exports.module';
 import { CaptchaExportsModule } from '../extensions/captcha/exports/captcha-exports.module';
 import { OrderTemplatesExportsModule } from '../extensions/order-templates/exports/order-templates-exports.module';
 import { QuickorderExportsModule } from '../extensions/quickorder/exports/quickorder-exports.module';
@@ -51,6 +52,7 @@ import { UserInformationMobileComponent } from './header/user-information-mobile
 
 const importExportModules = [
   CamCardsExportsModule,
+  CamUserExportsModule,
   CaptchaExportsModule,
   DirectivesModule,
   OrderTemplatesExportsModule,

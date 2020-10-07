@@ -28,6 +28,7 @@ import { AuthorizationToggleModule } from 'ish-core/authorization-toggle.module'
 import { FeatureToggleModule } from 'ish-core/feature-toggle.module';
 import { IconModule } from 'ish-core/icon.module';
 import { PipesModule } from 'ish-core/pipes.module';
+import { CamfilBannerComponent } from 'ish-shared/components/camfil-banner/camfil-banner.component';
 import { CamfilBulletListComponent } from 'ish-shared/components/common/camfil-bullet-list/camfil-bullet-list.component';
 import { CamfilHeaderBoxComponent } from 'ish-shared/components/common/camfil-header-box/camfil-header-box.component';
 import { ShellModule } from 'ish-shell/shell.module';
@@ -184,10 +185,13 @@ const declaredComponents = [
   CMSStaticPageComponent,
   CMSTextComponent,
   CMSVideoComponent,
+  CamfilBannerComponent,
+  CamfilBulletListComponent,
   CamfilFilterAppliedComponent,
   CamfilFilterCollapsableComponent,
   CamfilFilterDropdownComponent,
   CamfilFilterTextComponent,
+  CamfilHeaderBoxComponent,
   CamfilProductAttributeComponent,
   CamfilProductAttributesComponent,
   CamfilProductIdComponent,
@@ -244,6 +248,7 @@ const exportedComponents = [
   BasketPromotionComponent,
   BasketShippingAddressWidgetComponent,
   BasketValidationResultsComponent,
+  CamfilBannerComponent,
   CamfilBreadcrumbComponent,
   CamfilBulletListComponent,
   CamfilFilterInfoComponent,

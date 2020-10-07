@@ -8,15 +8,15 @@ import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
 import { SpecialValidators } from 'ish-shared/forms/validators/special-validators';
 
 @Component({
-  selector: 'camfil-registration-form',
-  templateUrl: './camfil-registration-form.component.html',
-  styleUrls: ['./camfil-registration-form.component.scss'],
+  selector: 'camfil-apply-form',
+  templateUrl: './apply-form.component.html',
+  styleUrls: ['./apply-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CamfilRegistrationFormComponent implements OnInit {
+export class ApplyFormComponent implements OnInit {
   @Input() error: HttpError;
 
-  @Output() create = new EventEmitter<CustomerRegistrationType>();
+  @Output() apply = new EventEmitter<CustomerRegistrationType>();
 
   /** switch for business customer registration */
   businessCustomerRegistration: boolean;
@@ -68,7 +68,7 @@ export class CamfilRegistrationFormComponent implements OnInit {
     registration.captcha = this.form.get('captcha').value;
     registration.captchaAction = this.form.get('captchaAction').value;
 
-    this.create.emit(registration);
+    this.apply.emit(registration);
   }
 
   get formDisabled() {

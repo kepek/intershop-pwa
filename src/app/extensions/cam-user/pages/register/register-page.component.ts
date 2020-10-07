@@ -7,16 +7,13 @@ import { HttpError } from 'ish-core/models/http-error/http-error.model';
 import { RegistrationUserMapper } from 'ish-core/models/user/registration-user.mapper';
 import { RegistrationUser } from 'ish-core/models/user/registration-user.model';
 
-/**
- * The Registration Page Container renders the customer registration form using the {@link CamfilRegistrationFormComponent}
- *
- */
 @Component({
-  templateUrl: './camfil-registration-page.component.html',
-  styleUrls: ['./camfil-registration-page.component.scss'],
+  selector: 'camfil-register-page',
+  templateUrl: './register-page.component.html',
+  styleUrls: ['./register-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CamfilRegistrationPageComponent implements OnInit {
+export class RegisterPageComponent implements OnInit {
   userError$: Observable<HttpError>;
 
   constructor(private accountFacade: AccountFacade, private router: Router) {}
@@ -29,7 +26,7 @@ export class CamfilRegistrationPageComponent implements OnInit {
     this.router.navigate(['/home']);
   }
 
-  onCreate(body: RegistrationUser) {
+  onApply(body: RegistrationUser) {
     this.accountFacade.createUser(RegistrationUserMapper.fromData(body));
   }
 }

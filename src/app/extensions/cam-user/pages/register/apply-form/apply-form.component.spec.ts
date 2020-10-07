@@ -16,13 +16,13 @@ import { ModalDialogComponent } from 'ish-shared/components/common/modal-dialog/
 import { CheckboxComponent } from 'ish-shared/forms/components/checkbox/checkbox.component';
 import { TacCheckboxComponent } from 'ish-shared/forms/components/tac-checkbox/tac-checkbox.component';
 
-import { LazyCaptchaComponent } from '../../../extensions/captcha/exports/lazy-captcha/lazy-captcha.component';
+import { LazyCaptchaComponent } from '../../../../captcha/exports/lazy-captcha/lazy-captcha.component';
 
-import { CamfilRegistrationFormComponent } from './camfil-registration-form.component';
+import { ApplyFormComponent } from './apply-form.component';
 
-describe('Camfil Registration Form Component', () => {
-  let fixture: ComponentFixture<CamfilRegistrationFormComponent>;
-  let component: CamfilRegistrationFormComponent;
+describe('Apply Form Component', () => {
+  let fixture: ComponentFixture<ApplyFormComponent>;
+  let component: ApplyFormComponent;
   let element: HTMLElement;
   let translate: TranslateService;
 
@@ -35,8 +35,8 @@ describe('Camfil Registration Form Component', () => {
 
     await TestBed.configureTestingModule({
       declarations: [
+        ApplyFormComponent,
         CamfilHeaderBoxComponent,
-        CamfilRegistrationFormComponent,
         MockComponent(AddressFormContainerComponent),
         MockComponent(CheckboxComponent),
         MockComponent(ContentIncludeComponent),
@@ -57,7 +57,7 @@ describe('Camfil Registration Form Component', () => {
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CamfilRegistrationFormComponent);
+    fixture = TestBed.createComponent(ApplyFormComponent);
     component = fixture.componentInstance;
     element = fixture.nativeElement;
     translate = TestBed.inject(TranslateService);

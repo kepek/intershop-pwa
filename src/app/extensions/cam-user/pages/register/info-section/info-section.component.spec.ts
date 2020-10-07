@@ -4,23 +4,23 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { CamfilBulletListComponent } from 'ish-shared/components/common/camfil-bullet-list/camfil-bullet-list.component';
 import { CamfilHeaderBoxComponent } from 'ish-shared/components/common/camfil-header-box/camfil-header-box.component';
 
-import { CamfilInfoSectionComponent } from './camfil-info-section.component';
+import { InfoSectionComponent } from './info-section.component';
 
-describe('Camfil Info Section Component', () => {
-  let component: CamfilInfoSectionComponent;
-  let fixture: ComponentFixture<CamfilInfoSectionComponent>;
+describe('Info Section Component', () => {
+  let component: InfoSectionComponent;
+  let fixture: ComponentFixture<InfoSectionComponent>;
   let element: HTMLElement;
   let translate: TranslateService;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CamfilBulletListComponent, CamfilHeaderBoxComponent, CamfilInfoSectionComponent],
+      declarations: [CamfilBulletListComponent, CamfilHeaderBoxComponent, InfoSectionComponent],
       imports: [TranslateModule.forRoot()],
     }).compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CamfilInfoSectionComponent);
+    fixture = TestBed.createComponent(InfoSectionComponent);
     component = fixture.componentInstance;
     element = fixture.nativeElement;
     translate = TestBed.inject(TranslateService);
