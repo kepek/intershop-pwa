@@ -4,7 +4,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { SharedModule } from 'ish-shared/shared.module';
 
 import { MaterialModule } from '../../../../projects/camfil/src/app/shared/material/material.module';
-import { CamfilLoginGuard } from '../../core/guards/camfil-login.guard';
 import { CamfilDetailsBoxComponent } from '../../shared/components/common/camfil-details-box/camfil-details-box.component';
 
 import { CamfilLoginFormComponent } from './camfil-login-form/camfil-login-form.component';
@@ -16,7 +15,6 @@ const loginPageRoutes: Routes = [
   {
     path: '',
     component: CamfilLoginPageComponent,
-    canActivate: [CamfilLoginGuard],
     data: {
       meta: {
         title: 'account.login.link',
