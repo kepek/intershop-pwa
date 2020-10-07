@@ -2,10 +2,10 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { FeatureToggleService } from 'ish-core/feature-toggle.module';
-import { CamfilCustomerRegistrationType } from 'ish-core/models/camfil-customer/camfil-customer.model';
 import { HttpError } from 'ish-core/models/http-error/http-error.model';
 import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
 import { SpecialValidators } from 'ish-shared/forms/validators/special-validators';
+import {CustomerRegistrationType} from "ish-core/models/customer/customer.model";
 
 @Component({
   selector: 'camfil-registration-form',
@@ -16,7 +16,7 @@ import { SpecialValidators } from 'ish-shared/forms/validators/special-validator
 export class CamfilRegistrationFormComponent implements OnInit {
   @Input() error: HttpError;
 
-  @Output() create = new EventEmitter<CamfilCustomerRegistrationType>();
+  @Output() create = new EventEmitter<CustomerRegistrationType>();
 
   /** switch for business customer registration */
   businessCustomerRegistration: boolean;
