@@ -10,7 +10,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
 import { Subject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
@@ -56,12 +56,7 @@ export class SelectCamCardModalComponent implements OnInit, OnDestroy {
 
   @ViewChild('modal', { static: false }) modalTemplate: TemplateRef<unknown>;
 
-  constructor(
-    private ngbModal: NgbModal,
-    private fb: FormBuilder,
-    private translate: TranslateService,
-    private camCardsFacade: CamCardsFacade
-  ) {}
+  constructor(private fb: FormBuilder, private translate: TranslateService, private camCardsFacade: CamCardsFacade) {}
 
   ngOnInit() {
     this.determineSelectOptions();
@@ -158,7 +153,9 @@ export class SelectCamCardModalComponent implements OnInit, OnDestroy {
   show() {
     this.showForm = true;
     this.setDefaultFormValues();
-    this.modal = this.ngbModal.open(this.modalTemplate);
+    console.log(this);
+    // this.modal = this.ngbModal.open(this.modalTemplate);
+    return this.modalTemplate;
   }
 
   /**

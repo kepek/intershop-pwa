@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
 @Component({
   selector: 'camfil-details-box',
@@ -7,7 +7,7 @@ import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CamfilDetailsBoxComponent {
-  @Input() title: string = '';
-  @Input() description: string = '';
-  @Input() icon: string = '';
+  @Input() title = '';
+  @Input() description = '';
+  @Input() icon = '';
 }

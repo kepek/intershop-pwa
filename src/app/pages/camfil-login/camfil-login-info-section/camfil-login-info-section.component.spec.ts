@@ -1,11 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
+import { CamfilBulletListComponent } from 'ish-shared/components/common/camfil-bullet-list/camfil-bullet-list.component';
 import { CamfilDetailsBoxComponent } from 'ish-shared/components/common/camfil-details-box/camfil-details-box.component';
 import { CamfilHeaderBoxComponent } from 'ish-shared/components/common/camfil-header-box/camfil-header-box.component';
 
 import { CamfilLoginInfoSectionComponent } from './camfil-login-info-section.component';
-import { CamfilBulletListComponent } from 'ish-shared/components/common/camfil-bullet-list/camfil-bullet-list.component';
 
 describe('Camfil Login Info Section Component', () => {
   let component: CamfilLoginInfoSectionComponent;
@@ -16,10 +16,10 @@ describe('Camfil Login Info Section Component', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [
+        CamfilBulletListComponent,
         CamfilDetailsBoxComponent,
         CamfilHeaderBoxComponent,
         CamfilLoginInfoSectionComponent,
-        CamfilBulletListComponent,
       ],
       imports: [TranslateModule.forRoot()],
     }).compileComponents();

@@ -1,10 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+
+import { CamfilHeaderBoxComponent } from 'ish-shared/components/common/camfil-header-box/camfil-header-box.component';
 
 import { CamfilLoginNewCustomerComponent } from './camfil-login-new-customer.component';
-import {TranslateModule, TranslateService} from "@ngx-translate/core";
-import {CamfilHeaderBoxComponent} from "ish-shared/components/common/camfil-header-box/camfil-header-box.component";
 
-describe('CamfilLoginNewCustomerComponent', () => {
+describe('Camfil Login New Customer Component', () => {
   let component: CamfilLoginNewCustomerComponent;
   let fixture: ComponentFixture<CamfilLoginNewCustomerComponent>;
   let element: HTMLElement;
@@ -12,7 +13,7 @@ describe('CamfilLoginNewCustomerComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CamfilLoginNewCustomerComponent, CamfilHeaderBoxComponent],
+      declarations: [CamfilHeaderBoxComponent, CamfilLoginNewCustomerComponent],
       imports: [TranslateModule.forRoot()],
     }).compileComponents();
   });

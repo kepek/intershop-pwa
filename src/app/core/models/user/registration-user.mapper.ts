@@ -14,13 +14,13 @@ export class RegistrationUserMapper {
             firstName: user.firstName,
             lastName: user.lastName,
             email: user.email,
-            preferredLanguage: ''
+            preferredLanguage: '',
           },
           customer: {
             customerNo: user.customerNo,
             companyName: user.customerName,
             // description: user.comment ?
-            description: user.comment
+            description: user.comment,
           },
           address: {
             id: '',
@@ -36,7 +36,7 @@ export class RegistrationUserMapper {
             phoneHome: '',
             invoiceToAddress: true,
             shipToAddress: true,
-          }
+          },
         }
       : undefined;
   }

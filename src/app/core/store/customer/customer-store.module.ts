@@ -61,4 +61,3 @@ export class CustomerStoreModule {
     return StoreModule.forFeature('_customer', pick(customerReducers, reducers), { metaReducers });
   }
 }
-

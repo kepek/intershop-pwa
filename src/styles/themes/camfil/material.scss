@@ -319,3 +319,14 @@ a {
 .mat-form-field-underline {
   bottom: 0;
 }
+
+.mat-form-field-appearance-fill.mat-form-field-appearance-fill .mat-form-field-underline::before {
+  height: 2px;
+  background-color: $camfil-color-primary;
+}
+
+.mat-dialog-actions {
+  &.mat-dialog-actions {
+    margin-bottom: 0;
+  }
+}

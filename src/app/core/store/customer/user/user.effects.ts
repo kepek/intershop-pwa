@@ -16,7 +16,6 @@ import {
   map,
   mapTo,
   mergeMap,
-  /*sample,*/
   switchMap,
   switchMapTo,
   tap,
@@ -28,8 +27,8 @@ import { PaymentService } from 'ish-core/services/payment/payment.service';
 import { PersonalizationService } from 'ish-core/services/personalization/personalization.service';
 import { UserService } from 'ish-core/services/user/user.service';
 import { displaySuccessMessage } from 'ish-core/store/core/messages';
-import { /*selectQueryParam, */ selectUrl } from 'ish-core/store/core/router';
-import { mapErrorToAction, mapToPayload, mapToPayloadProperty, /*whenTruthy*/ } from 'ish-core/utils/operators';
+import { selectUrl } from 'ish-core/store/core/router';
+import { mapErrorToAction, mapToPayload, mapToPayloadProperty } from 'ish-core/utils/operators';
 
 import {
   createUser,

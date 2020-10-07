@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CamfilDetailsBoxComponent } from './camfil-details-box.component';
+import { CamCardPreferencesComponent } from './cam-card-preferences.component';
 
-describe('Camfil Details Box Component', () => {
-  let component: CamfilDetailsBoxComponent;
-  let fixture: ComponentFixture<CamfilDetailsBoxComponent>;
+describe('Cam Card Preferences Component', () => {
+  let component: CamCardPreferencesComponent;
+  let fixture: ComponentFixture<CamCardPreferencesComponent>;
   let element: HTMLElement;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CamfilDetailsBoxComponent],
+      declarations: [CamCardPreferencesComponent],
     }).compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CamfilDetailsBoxComponent);
+    fixture = TestBed.createComponent(CamCardPreferencesComponent);
     component = fixture.componentInstance;
     element = fixture.nativeElement;
   });

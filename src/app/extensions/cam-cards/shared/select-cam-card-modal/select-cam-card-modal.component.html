@@ -1,20 +1,9 @@
 <ng-template #modal let-selectModal>
-  <div class="modal-content">
-    <div class="modal-header">
-      <h2 class="modal-title">{{ headerTranslationKey | translate }}</h2>
-      <button
-        type="button"
-        class="close close-modal"
-        [attr.aria-label]="'dialog.close.text' | translate"
-        (click)="hide()"
-        [title]="'application.overlay.close.text' | translate"
-      >
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <ng-container *ngIf="showForm; else showSuccess">
+  <h2 mat-dialog-title>{{ headerTranslationKey | translate }}</h2>
+  <ng-container *ngIf="showForm; else showSuccess">
+    <div mat-dialog-content>
       <form [formGroup]="updateCamCardForm" (ngSubmit)="submitForm()">
-        <div class="modal-body">
+        <div mat-dialog-content>
           <ng-container *ngIf="camCardOptions === undefined || camCardOptions.length === 0; else radioButtonForm">
             <ish-input
               controlName="newCamCard"
@@ -61,32 +50,31 @@
             </div>
           </ng-template>
         </div>
-        <div class="modal-footer">
-          <button class="btn btn-primary" type="submit">
+        <div mat-dialog-actions>
+          <button mat-raised-button color="primary" type="submit">
             {{ submitButtonTranslationKey | translate }}
           </button>
-          <button class="btn btn-secondary" type="button" (click)="hide()">
+          <button mat-flat-button color="secondary" mat-dialog-close type="button" (click)="hide()">
             {{ 'camfil.account.cancel.button.label' | translate }}
           </button>
         </div>
       </form>
-    </ng-container>
-    <ng-template #showSuccess>
-      <div class="modal-body">
-        <span
-          [ishServerHtml]="
-            successTranslationKey
-              | translate: { '0': product.name, '1': selectedCamCardTitle, '2': selectedCamCardRoute }
-          "
-          [callbacks]="{ callbackHideDialogModal: callbackHideDialogModal }"
-          data-testing-id="cam-card-success-link"
-        ></span>
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-secondary" (click)="hide()">
-          {{ 'store.dialog.button.ok' | translate }}
-        </button>
-      </div>
-    </ng-template>
-  </div>
+    </div>
+  </ng-container>
+  <ng-template #showSuccess>
+    <div mat-dialog-content>
+      <span
+        [ishServerHtml]="
+          successTranslationKey | translate: { '0': product.name, '1': selectedCamCardTitle, '2': selectedCamCardRoute }
+        "
+        [callbacks]="{ callbackHideDialogModal: callbackHideDialogModal }"
+        data-testing-id="cam-card-success-link"
+      ></span>
+    </div>
+    <div mat-dialog-actions>
+      <button mat-flat-button color="primary" (click)="hide()">
+        {{ 'store.dialog.button.ok' | translate }}
+      </button>
+    </div>
+  </ng-template>
 </ng-template>

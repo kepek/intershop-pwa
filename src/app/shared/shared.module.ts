@@ -28,6 +28,8 @@ import { AuthorizationToggleModule } from 'ish-core/authorization-toggle.module'
 import { FeatureToggleModule } from 'ish-core/feature-toggle.module';
 import { IconModule } from 'ish-core/icon.module';
 import { PipesModule } from 'ish-core/pipes.module';
+import { CamfilBulletListComponent } from 'ish-shared/components/common/camfil-bullet-list/camfil-bullet-list.component';
+import { CamfilHeaderBoxComponent } from 'ish-shared/components/common/camfil-header-box/camfil-header-box.component';
 import { ShellModule } from 'ish-shell/shell.module';
 
 import { AddressFormsSharedModule } from './address-forms/address-forms.module';
@@ -139,8 +141,6 @@ import { PromotionRemoveComponent } from './components/promotion/promotion-remov
 import { RecentlyViewedComponent } from './components/recently/recently-viewed/recently-viewed.component';
 import { FormsDynamicModule } from './forms-dynamic/forms-dynamic.module';
 import { FormsSharedModule } from './forms/forms.module';
-import { CamfilHeaderBoxComponent } from 'ish-shared/components/common/camfil-header-box/camfil-header-box.component';
-import {CamfilBulletListComponent} from "ish-shared/components/common/camfil-bullet-list/camfil-bullet-list.component";
 
 const importExportModules = [
   AddressFormsSharedModule,
@@ -246,10 +246,10 @@ const exportedComponents = [
   BasketValidationResultsComponent,
   CamfilBreadcrumbComponent,
   CamfilBulletListComponent,
-  CamfilHeaderBoxComponent,
   CamfilFilterInfoComponent,
   CamfilFilterMeasurementsComponent,
   CamfilFilterNavigationComponent,
+  CamfilHeaderBoxComponent,
   CamfilLinksBlockComponent,
   CamfilProductAddToBasketComponent,
   CamfilProductAddToCompareComponent,

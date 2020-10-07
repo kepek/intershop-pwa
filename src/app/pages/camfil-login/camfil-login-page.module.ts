@@ -1,10 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { MaterialModule } from 'camfil-shared/material/material.module';
 
+import { CamfilDetailsBoxComponent } from 'ish-shared/components/common/camfil-details-box/camfil-details-box.component';
 import { SharedModule } from 'ish-shared/shared.module';
-
-import { MaterialModule } from '../../../../projects/camfil/src/app/shared/material/material.module';
-import { CamfilDetailsBoxComponent } from '../../shared/components/common/camfil-details-box/camfil-details-box.component';
 
 import { CamfilLoginFormComponent } from './camfil-login-form/camfil-login-form.component';
 import { CamfilLoginInfoSectionComponent } from './camfil-login-info-section/camfil-login-info-section.component';
