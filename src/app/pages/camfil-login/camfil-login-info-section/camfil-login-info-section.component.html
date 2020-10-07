@@ -1,0 +1,32 @@
+<div class="login-info">
+  <camfil-header-box
+    [header]="'camfil.login.info.header' | translate"
+    [description]="'camfil.login.info.subtitle' | translate"
+  >
+  </camfil-header-box>
+
+  <div class="login-info__icon-list">
+    <camfil-details-box
+      [title]="'camfil.login.info.order_status' | translate"
+      [description]="'camfil.login.info.order_status.description' | translate"
+      icon="assignment"
+    ></camfil-details-box>
+    <camfil-details-box
+      [title]="'camfil.login.info.order_tracking' | translate"
+      [description]="'camfil.login.info.order_tracking.description' | translate"
+      icon="explore"
+    ></camfil-details-box>
+    <camfil-details-box
+      [title]="'camfil.login.info.camcards' | translate"
+      [description]="'camfil.login.info.camcards.description' | translate"
+      icon="note_add"
+    ></camfil-details-box>
+    <camfil-details-box
+      [title]="'camfil.login.info.administer_users' | translate"
+      [description]="'camfil.login.info.administer_users.description' | translate"
+      icon="create"
+    ></camfil-details-box>
+  </div>
+
+  <camfil-bullet-list [bullets]="bullets"></camfil-bullet-list>
+</div>

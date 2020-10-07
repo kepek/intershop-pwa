@@ -60,20 +60,26 @@
   }
 }
 
-@mixin font-size-h3 {
-  font-size: $h3-font-size;
-  font-weight: 500;
-  line-height: $h3-line-height;
-}
-
 @mixin font-size-p {
   font-size: $font-size-corporate;
   font-weight: 300;
   line-height: 20px;
 }
 
-@mixin font-size-list-item {
+@mixin font-size-h3 {
+  font-size: $h3-font-size;
+  font-weight: 500;
+  line-height: $h3-line-height; // 24
+}
+
+@mixin font-size-14-16 {
   font-size: $font-size-corporate;
   font-weight: 500;
+  line-height: 16px;
+}
+
+@mixin font-size-12-16 {
+  font-size: 12px;
+  font-weight: 300;
   line-height: 16px;
 }

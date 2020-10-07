@@ -19,6 +19,8 @@ export class LoginGuard implements CanActivate {
   }
 
   async canActivate(route: ActivatedRouteSnapshot, _: RouterStateSnapshot) {
+    return true;
+
     // first request should go to page
     if (!this.router.navigated) {
       return true;

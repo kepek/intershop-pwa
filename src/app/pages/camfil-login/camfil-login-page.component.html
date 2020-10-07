@@ -1,0 +1,15 @@
+<ng-container *ngIf="routingInProgress$ | async; else ready">
+  <ish-loading></ish-loading>
+</ng-container>
+
+<ng-template #ready>
+  <div class="login-form">
+    <div class="col-sm-12 col-lg-4 no-padding">
+      <camfil-login-form></camfil-login-form>
+      <camfil-login-new-customer></camfil-login-new-customer>
+    </div>
+    <div class="col-sm-12 col-lg-8 no-padding">
+      <camfil-login-info-section></camfil-login-info-section>
+    </div>
+  </div>
+</ng-template>

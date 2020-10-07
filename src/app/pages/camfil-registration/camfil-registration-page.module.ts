@@ -5,8 +5,6 @@ import { IconModule } from 'camfil-shared/icon/icon.module';
 import { MaterialModule } from 'camfil-shared/material/material.module';
 
 import { CamfilBannerComponent } from 'ish-shared/components/camfil-banner/camfil-banner.component';
-import { CamfilBulletListComponent } from 'ish-shared/components/camfil-bullet-list/camfil-bullet-list.component';
-import { CamfilHeaderBoxComponent } from 'ish-shared/components/common/camfil-header-box/camfil-header-box.component';
 import { SharedModule } from 'ish-shared/shared.module';
 
 import { CamfilInfoSectionComponent } from './camfil-info-section/camfil-info-section.component';
@@ -26,12 +24,9 @@ const camfilRegistrationPageRoutes: Routes = [{ path: '', component: CamfilRegis
   ],
   declarations: [
     CamfilBannerComponent,
-    CamfilBulletListComponent,
-    CamfilHeaderBoxComponent,
     CamfilInfoSectionComponent,
     CamfilRegistrationFormComponent,
     CamfilRegistrationPageComponent,
   ],
-  exports: [CamfilBulletListComponent],
 })
 export class CamfilRegistrationPageModule {}

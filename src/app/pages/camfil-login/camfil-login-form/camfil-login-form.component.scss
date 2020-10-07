@@ -1,0 +1,43 @@
+@import '~src/styles/themes/camfil/mixins.scss';
+@import '~src/styles/themes/camfil/colors';
+@import '~src/styles/themes/camfil/variables';
+
+:host {
+  .login-form {
+    padding: 40px;
+    border-bottom: 1px solid $camfil-color-border;
+
+    @media (min-width: $screen-lg-min) {
+      border-right: 1px solid $camfil-color-border;
+    }
+  }
+
+  .form-field {
+    width: 100%;
+
+    &__login {
+      margin-bottom: 16px;
+    }
+  }
+
+  .link {
+    display: block;
+    text-decoration: underline;
+    text-align: left;
+    padding-left: 0;
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: 500;
+
+    &__password {
+      margin-bottom: 8px;
+    }
+  }
+
+  .button {
+    &__login {
+      margin-top: 24px;
+      margin-bottom: 24px;
+    }
+  }
+}

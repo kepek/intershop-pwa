@@ -7,7 +7,7 @@ import { instance, mock } from 'ts-mockito';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
 import { CamfilBannerComponent } from 'ish-shared/components/camfil-banner/camfil-banner.component';
-import { CamfilBulletListComponent } from 'ish-shared/components/camfil-bullet-list/camfil-bullet-list.component';
+import { CamfilBulletListComponent } from 'ish-shared/components/common/camfil-bullet-list/camfil-bullet-list.component';
 import { CamfilHeaderBoxComponent } from 'ish-shared/components/common/camfil-header-box/camfil-header-box.component';
 
 import { CamfilInfoSectionComponent } from './camfil-info-section/camfil-info-section.component';

@@ -16,7 +16,7 @@ import {
   map,
   mapTo,
   mergeMap,
-  sample,
+  /*sample,*/
   switchMap,
   switchMapTo,
   tap,
@@ -28,8 +28,8 @@ import { PaymentService } from 'ish-core/services/payment/payment.service';
 import { PersonalizationService } from 'ish-core/services/personalization/personalization.service';
 import { UserService } from 'ish-core/services/user/user.service';
 import { displaySuccessMessage } from 'ish-core/store/core/messages';
-import { selectQueryParam, selectUrl } from 'ish-core/store/core/router';
-import { mapErrorToAction, mapToPayload, mapToPayloadProperty, whenTruthy } from 'ish-core/utils/operators';
+import { /*selectQueryParam, */ selectUrl } from 'ish-core/store/core/router';
+import { mapErrorToAction, mapToPayload, mapToPayloadProperty, /*whenTruthy*/ } from 'ish-core/utils/operators';
 
 import {
   createUser,
@@ -128,12 +128,23 @@ export class UserEffects {
    * redirects to the returnUrl after successful login
    * does not redirect at all, if no returnUrl is defined
    */
+  /*  redirectAfterLogin$ = createEffect(
+      () =>
+        this.store$.pipe(select(selectQueryParam('returnUrl'))).pipe(
+          whenTruthy(),
+          sample(this.actions$.pipe(ofType(loginUserSuccess))),
+          tap(navigateTo => this.router.navigateByUrl(navigateTo))
+        ),
+      { dispatch: false }
+    );*/
+
   redirectAfterLogin$ = createEffect(
     () =>
-      this.store$.pipe(select(selectQueryParam('returnUrl'))).pipe(
-        whenTruthy(),
-        sample(this.actions$.pipe(ofType(loginUserSuccess))),
-        tap(navigateTo => this.router.navigateByUrl(navigateTo))
+      this.actions$.pipe(
+        ofType(loginUserSuccess),
+        tap(() => {
+          this.router.navigateByUrl('account/cam-cards');
+        })
       ),
     { dispatch: false }
   );

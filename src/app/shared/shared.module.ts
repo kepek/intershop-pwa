@@ -139,6 +139,8 @@ import { PromotionRemoveComponent } from './components/promotion/promotion-remov
 import { RecentlyViewedComponent } from './components/recently/recently-viewed/recently-viewed.component';
 import { FormsDynamicModule } from './forms-dynamic/forms-dynamic.module';
 import { FormsSharedModule } from './forms/forms.module';
+import { CamfilHeaderBoxComponent } from 'ish-shared/components/common/camfil-header-box/camfil-header-box.component';
+import {CamfilBulletListComponent} from "ish-shared/components/common/camfil-bullet-list/camfil-bullet-list.component";
 
 const importExportModules = [
   AddressFormsSharedModule,
@@ -243,6 +245,8 @@ const exportedComponents = [
   BasketShippingAddressWidgetComponent,
   BasketValidationResultsComponent,
   CamfilBreadcrumbComponent,
+  CamfilBulletListComponent,
+  CamfilHeaderBoxComponent,
   CamfilFilterInfoComponent,
   CamfilFilterMeasurementsComponent,
   CamfilFilterNavigationComponent,

@@ -177,6 +177,8 @@
   "account.login.username_password.error.required": "Bitte geben Sie einen Benutzernamen und ein Kennwort ein.",
   "account.login.wishlists.message": "Melden Sie sich mit Ihrem Benutzernamen an, um die Wunschliste zu benutzen.",
   "account.login_status.myaccount.link": "Mein Konto",
+  "camfil.account.login.form.login": "Log in",
+  "camfil.account.login.form.password": "Password",
   "account.logout.link": "Abmelden",
   "account.my_account.heading": "Mein Konto",
   "account.my_account.link": "Mein Konto",

@@ -5,6 +5,7 @@ import { LoginGuard } from 'ish-core/guards/login.guard';
 import { SharedModule } from 'ish-shared/shared.module';
 
 import { LoginPageComponent } from './login-page.component';
+import { LoginComponent } from './login.component';
 
 const loginPageRoutes: Routes = [
   {
@@ -22,6 +23,6 @@ const loginPageRoutes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forChild(loginPageRoutes), SharedModule],
-  declarations: [LoginPageComponent],
+  declarations: [LoginPageComponent, LoginComponent],
 })
 export class LoginPageModule {}

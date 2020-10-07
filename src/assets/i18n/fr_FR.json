@@ -178,6 +178,8 @@
   "account.login.username_password.error.required": "Veuillez entrer un nom d’utilisateur et un mot de passe.",
   "account.login.wishlists.message": "Veuillez vous connecter à votre compte pour utiliser les listes de souhaits.",
   "account.login_status.myaccount.link": "Mon compte",
+  "camfil.account.login.form.login": "Log in",
+  "camfil.account.login.form.password": "Password",
   "account.logout.link": "Déconnexion",
   "account.my_account.heading": "Mon compte",
   "account.my_account.link": "Mon compte",
