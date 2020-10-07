@@ -13,7 +13,7 @@
     <ng-container *ngIf="!(displaySpinner$ | async); else spinning">
       <!-- Add to Cart button -->
       <ng-container *ngIf="displayIcon; else defaultButton">
-        <fa-icon [icon]="['fas', 'shopping-cart']"></fa-icon>
+        <mat-icon svgIcon="cart"></mat-icon>
       </ng-container>
 
       <ng-template #defaultButton>{{ translationKey | translate }}</ng-template>
