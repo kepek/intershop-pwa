@@ -1,10 +1,10 @@
 <camfil-cam-cards-search
   [count]="camCardsProcessed?.filteredData?.length"
   (queryChanged)="applyfilters($event)"
-  class="box-shadow"
+  class="box-shadow box-shadow--dark"
 ></camfil-cam-cards-search>
 
-<mat-card>
+<mat-card class="mat-elevation-z box-shadow box-shadow--dark">
   <mat-card-content>
     <camfil-account-cam-card-toolbar
       (addCamCard)="add($event)"
@@ -20,11 +20,18 @@
     >
       <ng-container matColumnDef="{{ column }}" *ngFor="let column of columnsToDisplay; last as isLast">
         <ng-container *ngIf="!isLast; else checkbox">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-center">
-            {{ 'camfil.account.cam_cards.' + column | translate }}
-          </th>
-          <td mat-cell *matCellDef="let element" class="text-center">
-            <ng-container *ngIf="column === 'title'">{{ element[column] }}</ng-container>
+          <ng-container *ngIf="column !== 'edit' && column !== 'userAccess'; else noSort">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+              {{ 'camfil.account.cam_cards.' + column | translate }}
+            </th>
+          </ng-container>
+          <td mat-cell *matCellDef="let element">
+            <ng-container *ngIf="column === 'title'">
+              <mat-icon class="arrow_down" [class.arrow_down--expanded]="expandedElement === element">
+                arrow_left</mat-icon
+              >
+              <strong>{{ element[column] }}</strong>
+            </ng-container>
             <ng-container *ngIf="column === 'customer'">{{ element[column].name }}</ng-container>
             <ng-container *ngIf="column === 'lastDelivery'">lastDelivery</ng-container>
             <ng-container *ngIf="column === 'orderInterval'">orderInterval</ng-container>
@@ -86,20 +93,32 @@
             </mat-checkbox>
           </td>
         </ng-template>
+        <ng-template #noSort>
+          <th mat-header-cell *matHeaderCellDef class="text-center">
+            {{ 'camfil.account.cam_cards.' + column | translate }}
+          </th>
+        </ng-template>
       </ng-container>
 
       <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
       <ng-container matColumnDef="expandedDetail">
         <td mat-cell *matCellDef="let camCard" [attr.colspan]="columnsToDisplay.length">
-          <div class="cam-card-detail" [@detailExpand]="camCard == expandedElement ? 'expanded' : 'collapsed'">
+          <div
+            class="cam-card-row-details__detail"
+            [@detailExpand]="camCard == expandedElement ? 'expanded' : 'collapsed'"
+          >
             <ng-container *ngTemplateOutlet="camCardRow; context: { camCard: camCard }"></ng-container>
             <ng-container *ngFor="let subCamCard of camCard.subCamCards">
               <mat-action-row>
                 <strong (click)="toggleSubCamCard(subCamCard.id)">
+                  <mat-icon class="arrow_down" [class.arrow_down--expanded]="isSubCamCardOpen(subCamCard.id)"
+                    >arrow_left</mat-icon
+                  >
                   {{ subCamCard.title }}
                 </strong>
                 <mat-checkbox
                   (change)="camCardToggle(subCamCard, $event)"
+                  *ngIf="subCamCard.itemsCount > 0"
                   [checked]="isCamCardChecked(subCamCard)"
                   [indeterminate]="isCamCardIndeterminate(subCamCard)"
                 >
@@ -115,8 +134,11 @@
         </td>
 
         <ng-template #camCardRow let-camCard="camCard">
-          <div *ngFor="let camCardItem of camCard.camCardItems" class="d-flex justify-content-between cam-card-product">
-            sku: {{ camCardItem.product.sku }}
+          <div
+            *ngFor="let camCardItem of camCard.camCardItems; index as i"
+            class="d-flex justify-content-between cam-card-product"
+          >
+            {{ i + 1 }} sku: {{ camCardItem.product.sku }}
             <!-- <camfil-account-cam-card-detail-line-item
               [camCardItemData]="camCardItem"
               [currentCamCard]="camCard"
@@ -133,11 +155,11 @@
       <tr
         mat-row
         *matRowDef="let camCard; columns: columnsToDisplay"
-        class="cam-card-element-row"
-        [class.cam-card-expanded-row]="expandedElement === camCard"
+        class="cam-card-row-element"
+        [class.cam-card-row-element--expanded]="expandedElement === camCard"
         (click)="expandedElement = expandedElement === camCard ? null : camCard"
       ></tr>
-      <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="cam-card-detail--row"></tr>
+      <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="cam-card-row-details"></tr>
     </table>
   </mat-card-content>
 </mat-card>
