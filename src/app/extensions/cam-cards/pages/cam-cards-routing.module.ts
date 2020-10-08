@@ -12,6 +12,15 @@ const routes: Routes = [
     data: { feature: 'camCards', breadcrumbData: [{ key: 'camfil.account.cam_cards.link' }] },
   },
   {
+    path: 'create',
+    loadChildren: () =>
+      import('./account-cam-card-detail/account-cam-card-detail-page.module').then(
+        m => m.AccountCamCardDetailPageModule
+      ),
+    canActivate: [FeatureToggleGuard, AuthGuard],
+    data: { feature: 'camCards' },
+  },
+  {
     path: ':camCardName',
     loadChildren: () =>
       import('./account-cam-card-detail/account-cam-card-detail-page.module').then(

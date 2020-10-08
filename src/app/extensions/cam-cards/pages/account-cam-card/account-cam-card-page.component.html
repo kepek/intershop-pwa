@@ -6,8 +6,6 @@
     {{ 'camfil.account.cam_cards.heading' | translate }}
   </h1>
 
-  <camfil-cam-card-preferences (submit)="addCamCard($event)"></camfil-cam-card-preferences>
-
   <!-- Error message -->
   <ish-error-message [error]="camCardError$ | async"></ish-error-message>
 

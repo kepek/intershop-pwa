@@ -1,6 +1,13 @@
 <!-- Error message -->
 <ish-error-message [error]="camCardError$ | async"></ish-error-message>
 
+<ng-container *ngIf="router.isActive('/account/cam-cards/create', true)">
+  <h1>{{ 'camfil.account.cam_card.edit.header' | translate }}</h1>
+
+  <div class="section">
+    <camfil-cam-card-preferences (submit)="addCamCard($event)"></camfil-cam-card-preferences>
+  </div>
+</ng-container>
 <ng-container *ngIf="camCard$ | async as camCard">
   <h1>
     {{ camCard?.title }}
