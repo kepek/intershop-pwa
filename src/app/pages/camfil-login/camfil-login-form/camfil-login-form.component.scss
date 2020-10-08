@@ -1,5 +1,4 @@
 @import '~src/styles/themes/camfil/mixins.scss';
-@import '~src/styles/themes/camfil/colors';
 @import '~src/styles/themes/camfil/variables';
 
 :host {
@@ -22,12 +21,12 @@
 
   .link {
     display: block;
-    text-decoration: underline;
-    text-align: left;
     padding-left: 0;
     font-size: 12px;
-    line-height: 16px;
     font-weight: 500;
+    line-height: 16px;
+    text-align: left;
+    text-decoration: underline;
 
     &__password {
       margin-bottom: 8px;
