@@ -133,7 +133,17 @@ const routes: Routes = [
       breadcrumbData: [{ key: 'helpdesk.contact_us.link' }],
     },
   },
-  isDevMode() && { path: 'demo', loadChildren: () => import('./demo/demo-page.module').then(m => m.DemoPageModule) },
+  isDevMode() && {
+    path: 'demo',
+    data: {
+      meta: {
+        title: 'Demo',
+        robots: 'index, nofollow',
+      },
+      breadcrumbData: [{ key: 'Demo' }],
+    },
+    loadChildren: () => import('./demo/demo-page.module').then(m => m.DemoPageModule),
+  },
 ];
 
 @NgModule({

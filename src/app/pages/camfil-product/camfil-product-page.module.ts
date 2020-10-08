@@ -3,7 +3,6 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { RouterModule, Routes } from '@angular/router';
-import { MaterialModule } from 'camfil-shared/material/material.module';
 
 import { SharedModule } from 'ish-shared/shared.module';
 
@@ -52,7 +51,6 @@ const camfilProductPageRoutes: Routes = [
     MatExpansionModule,
     MatIconModule,
     MatListModule,
-    MaterialModule,
     RouterModule.forChild(camfilProductPageRoutes),
     SharedModule,
   ],
