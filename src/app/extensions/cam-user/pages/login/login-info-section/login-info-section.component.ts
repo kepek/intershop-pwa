@@ -3,11 +3,11 @@ import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'camfil-login-info-section',
-  templateUrl: './camfil-login-info-section.component.html',
-  styleUrls: ['./camfil-login-info-section.component.scss'],
+  templateUrl: './login-info-section.component.html',
+  styleUrls: ['./login-info-section.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CamfilLoginInfoSectionComponent {
+export class LoginInfoSectionComponent {
   bullets: string[] = [
     this.translateService.instant('camfil.register.whycamfil.personal_assortment'),
     this.translateService.instant('camfil.register.whycamfil.products'),

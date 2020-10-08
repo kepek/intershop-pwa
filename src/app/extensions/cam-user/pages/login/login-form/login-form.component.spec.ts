@@ -8,24 +8,24 @@ import { AccountFacade } from 'ish-core/facades/account.facade';
 import { CamfilHeaderBoxComponent } from 'ish-shared/components/common/camfil-header-box/camfil-header-box.component';
 import { ErrorMessageComponent } from 'ish-shared/components/common/error-message/error-message.component';
 
-import { CamfilLoginFormComponent } from './camfil-login-form.component';
+import { LoginFormComponent } from './login-form.component';
 
-describe('Camfil Login Form Component', () => {
-  let component: CamfilLoginFormComponent;
-  let fixture: ComponentFixture<CamfilLoginFormComponent>;
+describe('Login Form Component', () => {
+  let component: LoginFormComponent;
+  let fixture: ComponentFixture<LoginFormComponent>;
   let element: HTMLElement;
   let translate: TranslateService;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CamfilHeaderBoxComponent, CamfilLoginFormComponent, MockComponent(ErrorMessageComponent)],
+      declarations: [CamfilHeaderBoxComponent, LoginFormComponent, MockComponent(ErrorMessageComponent)],
       imports: [ReactiveFormsModule, TranslateModule.forRoot()],
       providers: [{ provide: AccountFacade, useFactory: () => instance(mock(AccountFacade)) }],
     }).compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CamfilLoginFormComponent);
+    fixture = TestBed.createComponent(LoginFormComponent);
     component = fixture.componentInstance;
     element = fixture.nativeElement;
     translate = TestBed.inject(TranslateService);

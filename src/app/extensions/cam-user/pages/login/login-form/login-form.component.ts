@@ -9,11 +9,11 @@ import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
 
 @Component({
   selector: 'camfil-login-form',
-  templateUrl: './camfil-login-form.component.html',
-  styleUrls: ['./camfil-login-form.component.scss'],
+  templateUrl: './login-form.component.html',
+  styleUrls: ['./login-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CamfilLoginFormComponent implements OnInit {
+export class LoginFormComponent implements OnInit {
   @Input() loginMessageKey: string;
 
   form: FormGroup;

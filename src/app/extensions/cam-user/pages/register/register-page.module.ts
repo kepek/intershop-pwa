@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { MaterialModule } from 'camfil-shared/material/material.module';
+
+import { SharedModule } from 'ish-shared/shared.module';
 
 import { CamUserModule } from '../../cam-user.module';
 
@@ -11,7 +12,7 @@ import { RegisterPageComponent } from './register-page.component';
 const registerPageRoutes: Routes = [{ path: '', component: RegisterPageComponent }];
 
 @NgModule({
-  imports: [CamUserModule, MaterialModule, RouterModule.forChild(registerPageRoutes)],
+  imports: [CamUserModule, RouterModule.forChild(registerPageRoutes), SharedModule],
   declarations: [ApplyFormComponent, InfoSectionComponent, RegisterPageComponent],
 })
 export class RegisterPageModule {}
