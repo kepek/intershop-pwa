@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { IconModule } from 'camfil-shared/icon/icon.module';
 
 import { SharedModule } from 'ish-shared/shared.module';
 
@@ -19,7 +18,7 @@ const accountCamCardPageRoutes: Routes = [
 ];
 
 @NgModule({
-  imports: [CamCardsModule, IconModule, RouterModule.forChild(accountCamCardPageRoutes), SharedModule],
+  imports: [CamCardsModule, RouterModule.forChild(accountCamCardPageRoutes), SharedModule],
   declarations: [
     AccountCamCardListComponent,
     AccountCamCardPageComponent,
