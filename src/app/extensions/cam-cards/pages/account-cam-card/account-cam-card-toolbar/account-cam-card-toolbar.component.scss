@@ -1,7 +1,10 @@
+@import '~src/styles/themes/camfil/variables';
+
 button {
-  margin-left: 10px;
+  margin-left: $space-box/2;
+  margin-bottom: $space-box/2;
 
   &:not(:first-child) .mat-icon {
-    margin-right: 10px;
+    margin-right: $space-box/2;
   }
 }

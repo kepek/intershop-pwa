@@ -12,6 +12,13 @@
     width: 100%;
   }
 
+  .mat-form-field {
+    width: 100%;
+    @media (max-width: $screen-sm-max) {
+      margin: $space-box 0;
+    }
+  }
+
   button {
     &[type='submit'] {
       position: absolute;

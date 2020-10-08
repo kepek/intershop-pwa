@@ -10,6 +10,7 @@
   <ish-error-message [error]="camCardError$ | async"></ish-error-message>
 
   <camfil-account-cam-card-list
+    [deviceType]="deviceType$ | async"
     [camCards]="camCard$ | async"
     (deleteCamCard)="deleteCamCard($event)"
     (addCamCard)="addCamCard($event)"

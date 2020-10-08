@@ -7,6 +7,7 @@ import {
   Input,
   OnChanges,
   OnDestroy,
+  OnInit,
   Output,
   SimpleChanges,
   ViewChild,
@@ -19,6 +20,7 @@ import { Subject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
 
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
+import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
 import { ModalDialogComponent } from 'ish-shared/components/common/modal-dialog/modal-dialog.component';
 
 import { CamCard, CamCardItem } from '../../../models/cam-card/cam-card.model';
@@ -43,9 +45,10 @@ export interface ProductChecked {
     ]),
   ],
 })
-export class AccountCamCardListComponent implements OnChanges, OnDestroy {
+export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy {
   /** The list of cam cards of the customer. */
   @Input() camCards: CamCard[];
+  @Input() deviceType: DeviceType;
   /** Emits the id of the cam cards, which is to be deleted. */
   @Output() deleteCamCard = new EventEmitter<string>();
   @Output() addCamCard = new EventEmitter<CamCard>();
@@ -66,8 +69,9 @@ export class AccountCamCardListComponent implements OnChanges, OnDestroy {
     'edit',
     'checkbox',
   ];
-  expandedElement: CamCard | null;
+  expandedCamCard: CamCard | null;
   productsChecked = {};
+  isMobileView = false;
 
   isSubOpen = [];
   @ViewChild(MatSort) sort: MatSort;
@@ -78,12 +82,20 @@ export class AccountCamCardListComponent implements OnChanges, OnDestroy {
     private changeDetectorRefs: ChangeDetectorRef
   ) {}
 
+  ngOnInit() {
+    this.isMobileView = this.isMobile();
+  }
+
   ngOnChanges(changes: SimpleChanges) {
     if (changes.camCards) {
       this.camCardsProcessed = new MatTableDataSource(this.camCards);
       this.changeDetectorRefs.detectChanges();
       this.camCardsProcessed.sort = this.sort;
     }
+    this.isMobileView = this.isMobile();
+  }
+  isMobile() {
+    return this.deviceType === 'mobile'; // || this.deviceType === 'tablet';
   }
 
   isSubCamCardOpen(id: string) {
