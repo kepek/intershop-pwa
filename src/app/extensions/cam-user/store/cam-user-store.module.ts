@@ -3,11 +3,15 @@ import { EffectsModule } from '@ngrx/effects';
 import { ActionReducerMap, StoreModule } from '@ngrx/store';
 import { pick } from 'lodash-es';
 
+import { ApplicantEffects } from './applicant/applicant.effects';
+import { applicantReducer } from './applicant/applicant.reducer';
 import { CamUserState } from './cam-user-store';
 
-const camUserReducers: ActionReducerMap<CamUserState> = {};
+const camUserReducers: ActionReducerMap<CamUserState> = {
+  applicant: applicantReducer,
+};
 
-const camUserEffects = [];
+const camUserEffects = [ApplicantEffects];
 
 // not-dead-code
 @NgModule({

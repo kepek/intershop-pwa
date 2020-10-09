@@ -2,10 +2,10 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
-import { AccountFacade } from 'ish-core/facades/account.facade';
 import { HttpError } from 'ish-core/models/http-error/http-error.model';
-import { RegistrationUserMapper } from 'ish-core/models/user/registration-user.mapper';
-import { RegistrationUser } from 'ish-core/models/user/registration-user.model';
+
+import { CamUserFacade } from '../../facades/cam-user.facade';
+import { Applicant } from '../../models/applicant/applicant.model';
 
 @Component({
   selector: 'camfil-register-page',
@@ -14,19 +14,23 @@ import { RegistrationUser } from 'ish-core/models/user/registration-user.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RegisterPageComponent implements OnInit {
-  userError$: Observable<HttpError>;
+  applicantError$: Observable<HttpError>;
+  applicantLoading$: Observable<boolean>;
+  applicant$: Observable<Applicant>;
 
-  constructor(private accountFacade: AccountFacade, private router: Router) {}
+  constructor(private camUserFacade: CamUserFacade, private router: Router) {}
 
   ngOnInit() {
-    this.userError$ = this.accountFacade.userError$;
+    this.applicantError$ = this.camUserFacade.applicantError$;
+    this.applicantLoading$ = this.camUserFacade.applicantLoading$;
+    this.applicant$ = this.camUserFacade.applicant$;
   }
 
   onCancel() {
     this.router.navigate(['/home']);
   }
 
-  onApply(body: RegistrationUser) {
-    this.accountFacade.createUser(RegistrationUserMapper.fromData(body));
+  onApply(applicant: Applicant) {
+    this.camUserFacade.applyForAnAccount(applicant);
   }
 }

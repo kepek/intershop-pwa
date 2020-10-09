@@ -1,5 +1,9 @@
 import { createFeatureSelector } from '@ngrx/store';
 
-export interface CamUserState {}
+import { ApplicantState } from './applicant/applicant.reducer';
+
+export interface CamUserState {
+  applicant: ApplicantState;
+}
 
 export const getCamUserState = createFeatureSelector<CamUserState>('camUser');

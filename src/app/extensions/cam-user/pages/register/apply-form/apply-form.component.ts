@@ -30,10 +30,10 @@ export class ApplyFormComponent implements OnInit {
     // toggles business / private customer registration
     this.businessCustomerRegistration = this.featureToggle.enabled('businessCustomerRegistration');
 
-    this.createRegistrationForm();
+    this.createApplyForm();
   }
 
-  private createRegistrationForm(): void {
+  private createApplyForm(): void {
     this.form = this.fb.group({
       firstName: ['', [Validators.required]],
       lastName: ['', [Validators.required]],
@@ -42,7 +42,7 @@ export class ApplyFormComponent implements OnInit {
       customerNo: '',
       comment: '',
       captcha: [''],
-      captchaAction: ['register'],
+      captchaAction: ['applyForAnAccount'],
     });
 
     // add form control(s) for business customers

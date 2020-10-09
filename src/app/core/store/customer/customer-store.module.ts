@@ -41,7 +41,6 @@ const customerEffects = [
   BasketPromotionCodeEffects,
   BasketValidationEffects,
   OrdersEffects,
-  UserEffects,
   RestoreEffects,
   AuthorizationEffects,
   OrganizationManagementEffects,
