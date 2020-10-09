@@ -9,6 +9,7 @@ on:
   pull_request:
     types: [opened, synchronize]
     paths-ignore:
+      - '**.md'
       - 'docs/**'
 
 env:
@@ -20,6 +21,7 @@ jobs:
 
     steps:
       - name: Cancel Old Pipeline
+        if: "!startsWith(github.ref, 'refs/tags/') && github.ref != 'refs/heads/master' && github.ref != 'refs/heads/develop'"
         uses: rokroskar/workflow-run-cleanup-action@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -51,9 +53,10 @@ jobs:
           useLockFile: false
 
       - name: Code Formatting
-        run: |
-          npm run format
-          bash scripts/ci-test-no-changes.sh 'you probably committed unformatted code'
+        run: npm run format
+
+      - name: Check No Changes
+        run: git diff --exit-code --raw -p --stat
 
       - name: Compile Angular
         run: npm run ng -- build --aot

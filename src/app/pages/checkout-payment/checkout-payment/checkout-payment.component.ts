@@ -29,7 +29,7 @@ import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
 @Component({
   selector: 'ish-checkout-payment',
   templateUrl: './checkout-payment.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.Default,
 })
 export class CheckoutPaymentComponent implements OnInit, OnChanges, OnDestroy {
   @Input() basket: Basket;
@@ -137,8 +137,11 @@ export class CheckoutPaymentComponent implements OnInit, OnChanges, OnDestroy {
    */
   paymentCostThresholdReached(paymentMethod: PaymentMethod): boolean {
     const basketTotalPrice = PriceItemHelper.selectType(this.basket.totals.total, this.priceType);
+
     if (paymentMethod.paymentCostsThreshold && basketTotalPrice) {
-      return paymentMethod.paymentCostsThreshold.value <= basketTotalPrice.value;
+      return (
+        PriceItemHelper.selectType(paymentMethod.paymentCostsThreshold, this.priceType)?.value <= basketTotalPrice.value
+      );
     }
     return false;
   }
@@ -157,7 +160,6 @@ export class CheckoutPaymentComponent implements OnInit, OnChanges, OnDestroy {
   openPaymentParameterForm(index: number) {
     this.formSubmitted = false;
     this.openFormIndex = index;
-
     // enable / disable the appropriate parameter form controls
     Object.keys(this.parameterForm.controls).forEach(key => {
       this.filteredPaymentMethods[index].parameters.find(param => param.key === key)

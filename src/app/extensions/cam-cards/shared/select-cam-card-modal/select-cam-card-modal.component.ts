@@ -153,7 +153,6 @@ export class SelectCamCardModalComponent implements OnInit, OnDestroy {
   show() {
     this.showForm = true;
     this.setDefaultFormValues();
-    console.log(this);
     // this.modal = this.ngbModal.open(this.modalTemplate);
     return this.modalTemplate;
   }

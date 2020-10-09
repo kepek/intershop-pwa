@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { Action, Store } from '@ngrx/store';
@@ -20,6 +19,7 @@ import { loginUserSuccess } from 'ish-core/store/customer/user';
 import { ShoppingStoreModule } from 'ish-core/store/shopping/shopping-store.module';
 import { makeHttpError } from 'ish-core/utils/dev/api-service-utils';
 import { BasketMockData } from 'ish-core/utils/dev/basket-mock-data';
+import { routerTestNavigatedAction } from 'ish-core/utils/dev/routing';
 
 import { BasketPaymentEffects } from './basket-payment.effects';
 import {
@@ -47,7 +47,6 @@ describe('Basket Payment Effects', () => {
   let paymentServiceMock: PaymentService;
   let effects: BasketPaymentEffects;
   let store$: Store;
-  let router: Router;
 
   beforeEach(() => {
     paymentServiceMock = mock(PaymentService);
@@ -72,14 +71,11 @@ describe('Basket Payment Effects', () => {
 
     effects = TestBed.inject(BasketPaymentEffects);
     store$ = TestBed.inject(Store);
-    router = TestBed.inject(Router);
   });
 
   describe('loadBasketEligiblePaymentMethods$', () => {
     beforeEach(() => {
-      when(paymentServiceMock.getBasketEligiblePaymentMethods(anyString())).thenReturn(
-        of([BasketMockData.getPaymentMethod()])
-      );
+      when(paymentServiceMock.getBasketEligiblePaymentMethods()).thenReturn(of([BasketMockData.getPaymentMethod()]));
 
       store$.dispatch(
         loadBasketSuccess({
@@ -96,7 +92,7 @@ describe('Basket Payment Effects', () => {
       actions$ = of(action);
 
       effects.loadBasketEligiblePaymentMethods$.subscribe(() => {
-        verify(paymentServiceMock.getBasketEligiblePaymentMethods('BID')).once();
+        verify(paymentServiceMock.getBasketEligiblePaymentMethods()).once();
         done();
       });
     });
@@ -113,7 +109,7 @@ describe('Basket Payment Effects', () => {
     });
 
     it('should map invalid request to action of type LoadBasketEligiblePaymentMethodsFail', () => {
-      when(paymentServiceMock.getBasketEligiblePaymentMethods(anyString())).thenReturn(
+      when(paymentServiceMock.getBasketEligiblePaymentMethods()).thenReturn(
         throwError(makeHttpError({ message: 'invalid' }))
       );
       const action = loadBasketEligiblePaymentMethods();
@@ -129,7 +125,7 @@ describe('Basket Payment Effects', () => {
 
   describe('setPaymentAtBasket$ - set payment at basket for the first time', () => {
     beforeEach(() => {
-      when(paymentServiceMock.setBasketPayment(anyString(), anyString())).thenReturn(of(undefined));
+      when(paymentServiceMock.setBasketPayment(anyString())).thenReturn(of(undefined));
 
       store$.dispatch(
         loadBasketSuccess({
@@ -148,7 +144,7 @@ describe('Basket Payment Effects', () => {
       actions$ = of(action);
 
       effects.setPaymentAtBasket$.subscribe(() => {
-        verify(paymentServiceMock.setBasketPayment('BID', id)).once();
+        verify(paymentServiceMock.setBasketPayment(id)).once();
         done();
       });
     });
@@ -164,7 +160,7 @@ describe('Basket Payment Effects', () => {
     });
 
     it('should map invalid request to action of type SetPaymentFail', () => {
-      when(paymentServiceMock.setBasketPayment(anyString(), anyString())).thenReturn(
+      when(paymentServiceMock.setBasketPayment(anyString())).thenReturn(
         throwError(makeHttpError({ message: 'invalid' }))
       );
       const action = setBasketPayment({ id: 'newPayment' });
@@ -178,7 +174,7 @@ describe('Basket Payment Effects', () => {
 
   describe('setPaymentAtBasket$ - change payment method at basket', () => {
     beforeEach(() => {
-      when(paymentServiceMock.setBasketPayment(anyString(), anyString())).thenReturn(of(undefined));
+      when(paymentServiceMock.setBasketPayment(anyString())).thenReturn(of(undefined));
 
       store$.dispatch(loadBasketSuccess({ basket: BasketMockData.getBasket() }));
     });
@@ -189,7 +185,7 @@ describe('Basket Payment Effects', () => {
       actions$ = of(action);
 
       effects.setPaymentAtBasket$.subscribe(() => {
-        verify(paymentServiceMock.setBasketPayment('4711', id)).once();
+        verify(paymentServiceMock.setBasketPayment(id)).once();
         done();
       });
     });
@@ -205,7 +201,7 @@ describe('Basket Payment Effects', () => {
     });
 
     it('should map invalid addBasketPayment request to action of type SetPaymentFail', () => {
-      when(paymentServiceMock.setBasketPayment(anyString(), anyString())).thenReturn(
+      when(paymentServiceMock.setBasketPayment(anyString())).thenReturn(
         throwError(makeHttpError({ message: 'invalid' }))
       );
       const action = setBasketPayment({ id: 'newPayment' });
@@ -235,7 +231,7 @@ describe('Basket Payment Effects', () => {
     const customer = { customerNo: 'patricia' } as Customer;
 
     beforeEach(() => {
-      when(paymentServiceMock.createBasketPayment(anyString(), anything())).thenReturn(
+      when(paymentServiceMock.createBasketPayment(anything())).thenReturn(
         of({ id: 'newPaymentInstrumentId' } as PaymentInstrument)
       );
       when(paymentServiceMock.createUserPayment(anyString(), anything())).thenReturn(
@@ -259,7 +255,7 @@ describe('Basket Payment Effects', () => {
       actions$ = of(action);
 
       effects.createBasketPaymentInstrument$.subscribe(() => {
-        verify(paymentServiceMock.createBasketPayment('BID', anything())).once();
+        verify(paymentServiceMock.createBasketPayment(anything())).once();
         done();
       });
     });
@@ -284,7 +280,7 @@ describe('Basket Payment Effects', () => {
     });
 
     it('should map invalid request to action of type CreateBasketPaymentFail', () => {
-      when(paymentServiceMock.createBasketPayment(anyString(), anything())).thenReturn(
+      when(paymentServiceMock.createBasketPayment(anything())).thenReturn(
         throwError(makeHttpError({ message: 'invalid' }))
       );
       const action = createBasketPayment({ paymentInstrument, saveForLater: false });
@@ -318,7 +314,11 @@ describe('Basket Payment Effects', () => {
     });
 
     it('should trigger updateBasketPayment action if checkout payment/review page is called with query param "redirect"', done => {
-      router.navigate(['checkout', 'review'], { queryParams: { redirect: 'success', param1: 123 } });
+      actions$ = of(
+        routerTestNavigatedAction({
+          routerState: { url: '/checkout/review', queryParams: { redirect: 'success', param1: '123' } },
+        })
+      );
 
       effects.sendPaymentRedirectData$.subscribe(action => {
         expect(action).toMatchInlineSnapshot(`
@@ -360,7 +360,7 @@ describe('Basket Payment Effects', () => {
     };
 
     beforeEach(() => {
-      when(paymentServiceMock.updateBasketPayment(anyString(), anything())).thenReturn(of(payment));
+      when(paymentServiceMock.updateBasketPayment(anything())).thenReturn(of(payment));
 
       store$.dispatch(
         loadBasketSuccess({
@@ -378,7 +378,7 @@ describe('Basket Payment Effects', () => {
       actions$ = of(action);
 
       effects.updateBasketPayment$.subscribe(() => {
-        verify(paymentServiceMock.updateBasketPayment('BID', anything())).once();
+        verify(paymentServiceMock.updateBasketPayment(anything())).once();
         done();
       });
     });
@@ -394,7 +394,7 @@ describe('Basket Payment Effects', () => {
     });
 
     it('should map invalid request to action of type UpdateBasketPaymentFail', () => {
-      when(paymentServiceMock.updateBasketPayment(anyString(), anything())).thenReturn(
+      when(paymentServiceMock.updateBasketPayment(anything())).thenReturn(
         throwError(makeHttpError({ message: 'invalid' }))
       );
       const action = updateBasketPayment({ params });
