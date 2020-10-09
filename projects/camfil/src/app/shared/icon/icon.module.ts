@@ -9,8 +9,14 @@ export interface CamfilIcon {
 }
 
 export const getCamfilIcons = (): CamfilIcon[] => {
-  // @ts-ignore
-  const context = require.context('../../../assets/icons/', true, /\.svg$/);
+  let context;
+
+  if (process.env.NODE_ENV === 'test') {
+    context = require('require-context')(require('path').join(__dirname, '../../../assets/icons/'), true, /\.svg$/);
+  } else {
+    // @ts-ignore
+    context = require.context('../../../assets/icons/', true, /\.svg$/);
+  }
 
   return context.keys().map(key => {
     const name = key.split('/').pop().split('.').slice(0, -1).join('.').replace(/\W+/g, '-').toLowerCase();

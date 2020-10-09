@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { MaterialModule } from 'camfil-shared/material/material.module';
 
 import { SharedModule } from 'ish-shared/shared.module';
 
@@ -11,7 +10,7 @@ import { ProductAddToCamCardComponent } from './shared/product-add-to-cam-card/p
 import { SelectCamCardModalComponent } from './shared/select-cam-card-modal/select-cam-card-modal.component';
 
 @NgModule({
-  imports: [MaterialModule, SharedModule],
+  imports: [SharedModule],
   declarations: [
     AccountCamCardDetailLineItemComponent,
     BasketCreateCamCardComponent,

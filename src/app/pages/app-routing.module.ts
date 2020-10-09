@@ -95,8 +95,7 @@ const routes: Routes = [
   },
   {
     path: 'register',
-    loadChildren: () =>
-      import('./camfil-registration/camfil-registration-page.module').then(m => m.CamfilRegistrationPageModule),
+    loadChildren: () => import('./registration/registration-page.module').then(m => m.RegistrationPageModule),
     data: {
       meta: {
         title: 'account.register.link',
@@ -106,7 +105,7 @@ const routes: Routes = [
   },
   {
     path: 'login',
-    loadChildren: () => import('./camfil-login/camfil-login-page.module').then(m => m.CamfilLoginPageModule),
+    loadChildren: () => import('./login/login-page.module').then(m => m.LoginPageModule),
   },
   {
     path: 'logout',
@@ -134,7 +133,17 @@ const routes: Routes = [
       breadcrumbData: [{ key: 'helpdesk.contact_us.link' }],
     },
   },
-  isDevMode() && { path: 'demo', loadChildren: () => import('./demo/demo-page.module').then(m => m.DemoPageModule) },
+  isDevMode() && {
+    path: 'demo',
+    data: {
+      meta: {
+        title: 'Demo',
+        robots: 'index, nofollow',
+      },
+      breadcrumbData: [{ key: 'Demo' }],
+    },
+    loadChildren: () => import('./demo/demo-page.module').then(m => m.DemoPageModule),
+  },
 ];
 
 @NgModule({

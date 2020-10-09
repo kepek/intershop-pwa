@@ -1,5 +1,8 @@
 import { TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+
+import { CoreStoreModule } from 'ish-core/store/core/core-store.module';
 
 import { CamfilDatePipe } from './camfil-date.pipe';
 
@@ -9,7 +12,7 @@ describe('Camfil Date Pipe', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot()],
+      imports: [CoreStoreModule.forTesting(), RouterTestingModule, TranslateModule.forRoot()],
       providers: [CamfilDatePipe],
     });
     camfilDatePipe = TestBed.inject(CamfilDatePipe);
@@ -22,7 +25,7 @@ describe('Camfil Date Pipe', () => {
     expect(camfilDatePipe).toBeTruthy();
   });
 
-  it('should transform true to okay', () => {
+  it('should transform 32452435234 to 1/11/1971', () => {
     expect(camfilDatePipe.transform(new Date(32452435234))).toEqual('1/11/1971');
   });
 });

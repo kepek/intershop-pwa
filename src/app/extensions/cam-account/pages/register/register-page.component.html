@@ -1,0 +1,11 @@
+<camfil-banner [title]="'camfil.account.apply_heading' | translate" iconName="users"></camfil-banner>
+
+<div class="registration__wrapper">
+  <div class="col-sm-12 col-lg-4 registration__wrapper--section">
+    <camfil-apply-form [error]="applicantError$ | async" (apply)="onApply($event)" (cancel)="onCancel()">
+    </camfil-apply-form>
+  </div>
+  <div class="col-sm-12 col-lg-8 registration__wrapper--section">
+    <camfil-info-section></camfil-info-section>
+  </div>
+</div>

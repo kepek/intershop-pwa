@@ -1,8 +1,6 @@
 import { NgModule } from '@angular/core';
 import { MatDialogModule } from '@angular/material/dialog';
 import { RouterModule, Routes } from '@angular/router';
-import { IconModule } from 'camfil-shared/icon/icon.module';
-import { MaterialModule } from 'camfil-shared/material/material.module';
 
 import { SharedModule } from 'ish-shared/shared.module';
 
@@ -13,7 +11,7 @@ import { DemoPageComponent } from './demo-page.component';
 const demoPageRoutes: Routes = [{ path: '', component: DemoPageComponent }];
 
 @NgModule({
-  imports: [IconModule, MatDialogModule, MaterialModule, RouterModule.forChild(demoPageRoutes), SharedModule],
+  imports: [MatDialogModule, RouterModule.forChild(demoPageRoutes), SharedModule],
   declarations: [DemoBottomSheetComponent, DemoDialogComponent, DemoPageComponent],
 })
 export class DemoPageModule {}
