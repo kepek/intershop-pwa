@@ -1,7 +1,7 @@
 <mat-card class="mat-elevation-z">
   <mat-card-content>
     <div class="row">
-      <div class="col-md-4 d-flex align-items-center">
+      <div class="col-12 col-md-5 d-flex align-items-center">
         <form role="search" class="search clearfix" name="SearchBox_Header">
           <mat-icon svgIcon="search" class="search__icon background-icon"></mat-icon>
           <input
@@ -19,7 +19,7 @@
           </div>
         </form>
       </div>
-      <div class="col-md-2">
+      <div class="col-12 col-sm-6 col-md-4 col-lg-3">
         <mat-form-field appearance="fill" [class.mat-elevation-z2]="true">
           <mat-label>Filter by customer</mat-label>
           <mat-select [(ngModel)]="selectInput" (selectionChange)="submit($event.value)">
@@ -30,7 +30,7 @@
           </mat-select>
         </mat-form-field>
       </div>
-      <div class="col-md-3 d-flex align-items-center">
+      <div class="col-12 col-sm-6 col-md-3 d-flex align-items-center">
         <div class="total">
           Total Camcards: <span>{{ count }}</span>
         </div>

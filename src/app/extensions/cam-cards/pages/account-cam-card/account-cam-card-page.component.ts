@@ -1,7 +1,9 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 
+import { AppFacade } from 'ish-core/facades/app.facade';
 import { HttpError } from 'ish-core/models/http-error/http-error.model';
+import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
 
 import { CamCardsFacade } from '../../facades/cam-cards.facade';
 import { CamCard } from '../../models/cam-card/cam-card.model';
@@ -26,12 +28,15 @@ export class AccountCamCardPageComponent implements OnInit {
    */
   camCardError$: Observable<HttpError>;
 
-  constructor(private camCardsFacade: CamCardsFacade) {}
+  deviceType$: Observable<DeviceType>;
+
+  constructor(private camCardsFacade: CamCardsFacade, private appFacade: AppFacade) {}
 
   ngOnInit() {
     this.camCard$ = this.camCardsFacade.camCard$;
     this.camCardLoading$ = this.camCardsFacade.camCardLoading$;
     this.camCardError$ = this.camCardsFacade.camCardError$;
+    this.deviceType$ = this.appFacade.deviceType$;
   }
 
   /** dispatch delete request */

@@ -114,6 +114,37 @@
         background-color: $greyF5;
       }
     }
+    // for mobile
+    &s-mobile {
+      padding: $space-box 0;
+    }
+    @media (max-width: $screen-sm-max) {
+      &-item {
+        color: $camfil-text-color-tertiary;
+        line-height: 24px;
+        .row:nth-of-type(2n+1) {
+          background-color: rgba($color-corporate, 0.1);
+          margin-top: $space-box/2;
+          margin-bottom: $space-box/2;
+          font-weight: 600;
+          font-size: $font-size-xs;
+          color: $camfil-text-color-primary;
+        }
+        &__detail {
+          width: 100%;
+          margin-top: $space-box;
+          &.expanded {
+            border-top: $border-width-default solid $border-color-light;
+          }
+        }
+        ::ng-deep {
+          .mat-expansion-panel-body {
+            padding: 0;
+          }
+        }
+      }
+    }
+    // EOF for mobile
   }
   .mat-action-row {
     align-items: center;
