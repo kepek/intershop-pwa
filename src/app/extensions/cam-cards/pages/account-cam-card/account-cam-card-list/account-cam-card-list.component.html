@@ -13,7 +13,7 @@
 
     <ng-container *ngIf="camCardsProcessed?.data && camCardsProcessed.data.length > 0; else noCamCard">
       <ng-container *ngIf="isMobileView">
-        <ng-container *ngFor="let camCards of camCardsProcessed.data;">
+        <ng-container *ngFor="let camCards of camCardsProcessed.data">
           <ng-container *ngTemplateOutlet="camCardMobileRow; context: { camCards: camCards }"></ng-container>
         </ng-container>
 
@@ -78,13 +78,12 @@
                   <b>{{ 'camfil.account.cam_cards.more_info' | translate }}</b>
                 </button>
               </div>
-              
+
               <div
                 class="cam-card-item__detail"
                 [class.expanded]="camCards === expandedCamCard"
                 [@detailExpand]="camCards === expandedCamCard ? 'expanded' : 'collapsed'"
               >
-              
                 <!-- TODO: to improve after get design for mobile for expanded camCard!! (this part is copy from desktop) -->
                 <ng-container *ngTemplateOutlet="camCardRow; context: { camCard: camCards }"></ng-container>
                 <ng-container *ngFor="let subCamCard of camCards.subCamCards">
