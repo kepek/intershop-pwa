@@ -22,6 +22,7 @@ import {
   loadCamCardsSuccess,
   removeItemFromCamCardSuccess,
   selectCamCard,
+  setStickyCamCardToolbar,
   updateCamCard,
   updateCamCardFail,
   updateCamCardSuccess,
@@ -31,6 +32,7 @@ export interface CamCardState extends EntityState<CamCard> {
   loading: boolean;
   selected: string;
   error: HttpError;
+  stickyToolbar: boolean;
 }
 
 export const camCardAdapter = createEntityAdapter<CamCard>({
@@ -41,6 +43,7 @@ export const initialState: CamCardState = camCardAdapter.getInitialState({
   loading: false,
   selected: undefined,
   error: undefined,
+  stickyToolbar: false,
 });
 
 export const camCardReducer = createReducer(
@@ -97,5 +100,9 @@ export const camCardReducer = createReducer(
       ...state,
       selected: id,
     };
-  })
+  }),
+  on(setStickyCamCardToolbar, (state: CamCardState, action) => ({
+    ...state,
+    stickyToolbar: action.payload.sticky,
+  }))
 );

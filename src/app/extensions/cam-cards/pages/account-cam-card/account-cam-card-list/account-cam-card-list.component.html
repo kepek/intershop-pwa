@@ -9,6 +9,7 @@
     <camfil-account-cam-card-toolbar
       (addCamCard)="add($event)"
       (addSelectedItemsToCart)="addSelectedItemsToCart()"
+      [isSticky]="isStickyCamCardToolbar$ | async"
     ></camfil-account-cam-card-toolbar>
 
     <ng-container *ngIf="camCardsProcessed?.data && camCardsProcessed.data.length > 0; else noCamCard">

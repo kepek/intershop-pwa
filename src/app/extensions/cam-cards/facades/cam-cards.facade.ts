@@ -15,8 +15,10 @@ import {
   getCamCardError,
   getCamCardLoading,
   getSelectedCamCardDetails,
+  isStickyCamCardToolbar,
   moveItemToCamCard,
   removeItemFromCamCard,
+  detectCamCardToolbar,
   updateCamCard,
 } from '../store/cam-card';
 
@@ -28,6 +30,7 @@ export class CamCardsFacade {
   currentCamCard$: Observable<CamCard> = this.store.pipe(select(getSelectedCamCardDetails));
   camCardLoading$: Observable<boolean> = this.store.pipe(select(getCamCardLoading));
   camCardError$: Observable<HttpError> = this.store.pipe(select(getCamCardError));
+  isStickyCamCardToolbar$: Observable<boolean> = this.store.pipe(select(isStickyCamCardToolbar));
 
   addCamCard(camCards: CamCardHeader): void | HttpError {
     this.store.dispatch(createCamCard({ camCards }));
@@ -68,5 +71,9 @@ export class CamCardsFacade {
 
   removeProductFromCamCard(camCardId: string, sku: string): void {
     this.store.dispatch(removeItemFromCamCard({ camCardId, sku }));
+  }
+
+  detectCamCardToolbar() {
+    this.store.dispatch(detectCamCardToolbar());
   }
 }

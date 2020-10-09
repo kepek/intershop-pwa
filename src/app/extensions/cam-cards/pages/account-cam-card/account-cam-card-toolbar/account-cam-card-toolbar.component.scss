@@ -1,5 +1,41 @@
 @import '~src/styles/themes/camfil/variables';
 
+:host {
+  height: 44px;
+  display: block;
+
+  .sticky {
+    position: fixed;
+    top: 48px;
+    left: $space-default;
+    z-index: 99;
+    width: 100%;
+    background-color: $camfil-white;
+    padding: $space-box 0 $space-box/2;
+
+    > .container {
+      padding-left: $space-default - $space-box;
+      padding-right: $space-default + $space-box;
+    }
+    
+    @media (max-width: $screen-sm-max) {
+      bottom: $main-box-margin * -1;
+      top: auto;
+      box-shadow: $main-box-shadow-revers;
+      padding-bottom: 0;
+  
+      > .container {
+        padding: 0 $space-box/2 0 0;
+        max-width: 100%;
+        white-space: nowrap;
+        overflow: auto;
+      }
+    }
+  }
+  @media (max-width: $screen-sm-max) {
+    height: 0;
+  }
+}
 button {
   margin-left: $space-box/2;
   margin-bottom: $space-box/2;
