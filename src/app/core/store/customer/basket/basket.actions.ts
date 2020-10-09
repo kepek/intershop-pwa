@@ -61,7 +61,7 @@ export const addProductToBasket = createAction('[Basket] Add Product', payload<{
 
 export const addItemsToBasket = createAction(
   '[Basket Internal] Add Items To Basket',
-  payload<{ items: { sku: string; quantity: number; unit: string }[]; basketId?: string }>()
+  payload<{ items: { sku: string; quantity: number; unit: string }[] }>()
 );
 
 export const addItemsToBasketFail = createAction('[Basket API] Add Items To Basket Fail', httpError());
@@ -204,3 +204,18 @@ export const deleteBasketPaymentFail = createAction('[Basket API] Delete Basket 
 export const deleteBasketPaymentSuccess = createAction('[Basket API] Delete Basket Payment Success');
 
 export const resetBasketErrors = createAction('[Basket Internal] Reset Basket and Basket Promotion Errors');
+
+export const updateConcardisCvcLastUpdated = createAction(
+  '[Basket] Update CvcLastUpdated for Concardis Credit Card ',
+  payload<{ paymentInstrument: PaymentInstrument }>()
+);
+
+export const updateConcardisCvcLastUpdatedFail = createAction(
+  '[Basket API] Update CvcLastUpdated for Concardis Credit Card Fail',
+  httpError()
+);
+
+export const updateConcardisCvcLastUpdatedSuccess = createAction(
+  '[Basket API] Update CvcLastUpdated for Concardis Credit Card Success',
+  payload<{ paymentInstrument: PaymentInstrument }>()
+);

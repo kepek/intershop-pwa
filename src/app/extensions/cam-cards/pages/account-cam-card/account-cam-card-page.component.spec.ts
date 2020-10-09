@@ -1,10 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { NgbPopoverModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 import { MockComponent } from 'ng-mocks';
 import { instance, mock } from 'ts-mockito';
 
+import { CoreStoreModule } from 'ish-core/store/core/core-store.module';
 import { CamfilBreadcrumbComponent } from 'ish-shared/components/common/camfil-breadcrumb/camfil-breadcrumb.component';
 import { ErrorMessageComponent } from 'ish-shared/components/common/error-message/error-message.component';
 import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
@@ -25,7 +27,7 @@ describe('Account Cam Card Page Component', () => {
     const camCardsFacade = mock(CamCardsFacade);
 
     await TestBed.configureTestingModule({
-      imports: [NgbPopoverModule, TranslateModule.forRoot()],
+      imports: [CoreStoreModule.forTesting(), NgbPopoverModule, RouterTestingModule, TranslateModule.forRoot()],
       declarations: [
         AccountCamCardPageComponent,
         MockComponent(AccountCamCardListComponent),

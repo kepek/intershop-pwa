@@ -46,14 +46,8 @@ export class ProductAddToCamCardComponent implements OnDestroy {
   openModal(modal: SelectCamCardModalComponent) {
     this.accountFacade.isLoggedIn$.pipe(take(1), takeUntil(this.destroy$)).subscribe(isLoggedIn => {
       if (isLoggedIn) {
-        // modal.show();
-        console.log(modal);
         const dialogRef = this.dialog.open(modal.show());
         modal.hide = () => this.dialog.closeAll();
-
-        dialogRef.afterClosed().subscribe(result => {
-          console.log(`Dialog result: ${result}`);
-        });
       } else {
         // stay on the same page after login
         const queryParams = { returnUrl: this.router.routerState.snapshot.url, messageKey: 'cam_cards' };

@@ -1,9 +1,11 @@
+import { BreadcrumbModule } from '../breadcrumb.module';
 import { HeaderModule } from '../header.module';
 
 export class QuoteDetailPage {
-  readonly tag = 'ish-quote-edit';
+  readonly tag = 'ish-quote-page';
 
   readonly header = new HeaderModule();
+  readonly breadcrumb = new BreadcrumbModule();
 
   private copyQuoteRequestButton = () => cy.get('[data-testing-id="copy-quote-request"]');
 
@@ -29,10 +31,6 @@ export class QuoteDetailPage {
 
   deleteItemFromQuoteRequest() {
     cy.get(`a[title="Remove"]`).click();
-  }
-
-  saveQuoteRequest() {
-    cy.get('[data-testing-id="save-quote-request"]').click();
   }
 
   submitQuoteRequest() {

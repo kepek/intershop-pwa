@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { RouterNavigatedPayload, routerNavigatedAction } from '@ngrx/router-store';
 import { Store, select } from '@ngrx/store';
 import { EMPTY, combineLatest, iif, of } from 'rxjs';
-import { concatMap, map, mapTo, mergeMap, sample, startWith, switchMap, withLatestFrom } from 'rxjs/operators';
+import { concatMap, filter, map, mapTo, mergeMap, sample, startWith, switchMap, withLatestFrom } from 'rxjs/operators';
 
 import { BasketService } from 'ish-core/services/basket/basket.service';
-import { ofUrl, selectQueryParam } from 'ish-core/store/core/router';
+import { RouterState } from 'ish-core/store/core/router/router.reducer';
 import { getLastAPITokenBeforeLogin, loginUser, loginUserSuccess } from 'ish-core/store/customer/user';
-import { mapErrorToAction, mapToPayloadProperty, whenFalsy } from 'ish-core/utils/operators';
+import { mapErrorToAction, mapToPayloadProperty } from 'ish-core/utils/operators';
 
 import {
   loadBasket,
@@ -63,7 +64,7 @@ export class BasketEffects {
       ofType(loadBasketEligibleShippingMethods),
       withLatestFrom(this.store.pipe(select(getCurrentBasket))),
       concatMap(([, basket]) =>
-        this.basketService.getBasketEligibleShippingMethods(basket.id, basket.bucketId).pipe(
+        this.basketService.getBasketEligibleShippingMethods(basket.bucketId).pipe(
           map(result => loadBasketEligibleShippingMethodsSuccess({ shippingMethods: result })),
           mapErrorToAction(loadBasketEligibleShippingMethodsFail)
         )
@@ -78,9 +79,8 @@ export class BasketEffects {
     this.actions$.pipe(
       ofType(updateBasket),
       mapToPayloadProperty('update'),
-      withLatestFrom(this.store.pipe(select(getCurrentBasketId))),
-      concatMap(([update, currentBasketId]) =>
-        this.basketService.updateBasket(currentBasketId, update).pipe(
+      concatMap(update =>
+        this.basketService.updateBasket(update).pipe(
           concatMap(basket => [loadBasketSuccess({ basket }), resetBasketErrors()]),
           mapErrorToAction(updateBasketFail)
         )
@@ -155,10 +155,12 @@ export class BasketEffects {
    *
    */
   routeListenerForResettingBasketErrors$ = createEffect(() =>
-    this.store.pipe(
-      ofUrl(/^\/(basket|checkout.*)/),
-      select(selectQueryParam('error')),
-      whenFalsy(),
+    this.actions$.pipe(
+      ofType(routerNavigatedAction),
+      mapToPayloadProperty<RouterNavigatedPayload<RouterState>>('routerState'),
+      filter(
+        (routerState: RouterState) => /^\/(basket|checkout.*)/.test(routerState.url) && !routerState.queryParams?.error
+      ),
       mapTo(resetBasketErrors())
     )
   );
