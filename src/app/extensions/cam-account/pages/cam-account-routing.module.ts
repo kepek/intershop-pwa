@@ -12,7 +12,7 @@ const routes: Routes = [
         title: 'camfil.account.apply_form.link',
         robots: 'noindex, nofollow',
       },
-      feature: 'camUser',
+      feature: 'camAccount',
       breadcrumbData: [{ key: 'camfil.account.apply_form.link' }],
     },
     loadChildren: () => import('./login/login-page.module').then(m => m.LoginPageModule),
@@ -26,7 +26,7 @@ const routes: Routes = [
         title: 'camfil.account.login_form.link',
         robots: 'noindex, nofollow',
       },
-      feature: 'camUser',
+      feature: 'camAccount',
       breadcrumbData: [{ key: 'camfil.account.apply_form.link' }],
     },
     loadChildren: () => import('./register/register-page.module').then(m => m.RegisterPageModule),
@@ -37,4 +37,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class CamUserRoutingModule {}
+export class CamAccountRoutingModule {}

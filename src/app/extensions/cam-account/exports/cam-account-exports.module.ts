@@ -8,11 +8,11 @@ import { LAZY_FEATURE_MODULE } from 'ish-core/utils/module-loader/module-loader.
   providers: [
     {
       provide: LAZY_FEATURE_MODULE,
-      useValue: { feature: 'camUser', location: import('../store/cam-user-store.module') },
+      useValue: { feature: 'camAccount', location: import('../store/cam-account-store.module') },
       multi: true,
     },
   ],
   declarations: [],
   exports: [],
 })
-export class CamUserExportsModule {}
+export class CamAccountExportsModule {}

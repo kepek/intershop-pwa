@@ -8,7 +8,7 @@ import { FormlyMaterialModule } from '@ngx-formly/material';
 import { CoreModule } from 'ish-core/core.module';
 
 import { AppComponent } from './app.component';
-import { CamUserRoutingModule } from './extensions/cam-user/pages/cam-user-routing.module';
+import { CamAccountRoutingModule } from './extensions/cam-account/pages/cam-account-routing.module';
 import { QuickorderRoutingModule } from './extensions/quickorder/pages/quickorder-routing.module';
 import { TactonRoutingModule } from './extensions/tacton/pages/tacton-routing.module';
 import { AppLastRoutingModule } from './pages/app-last-routing.module';
@@ -22,7 +22,7 @@ import { ShellModule } from './shell/shell.module';
     BrowserAnimationsModule,
     CoreModule,
     ShellModule,
-    CamUserRoutingModule,
+    CamAccountRoutingModule,
     AppRoutingModule,
     QuickorderRoutingModule,
     TactonRoutingModule,

@@ -1,10 +1,10 @@
 import { createSelector } from '@ngrx/store';
 
-import { getCamUserState } from '../cam-user-store';
+import { getCamAccountState } from '../cam-account-store';
 
 /* Applicant */
 
-const getApplicantState = createSelector(getCamUserState, state => state.applicant);
+const getApplicantState = createSelector(getCamAccountState, state => state.applicant);
 
 export const getApplicant = createSelector(getApplicantState, state => state.applicant);
 

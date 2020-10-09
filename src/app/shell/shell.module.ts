@@ -15,8 +15,8 @@ import { FeatureToggleModule } from 'ish-core/feature-toggle.module';
 import { IconModule } from 'ish-core/icon.module';
 import { PipesModule } from 'ish-core/pipes.module';
 
+import { CamAccountExportsModule } from '../extensions/cam-account/exports/cam-account-exports.module';
 import { CamCardsExportsModule } from '../extensions/cam-cards/exports/cam-cards-exports.module';
-import { CamUserExportsModule } from '../extensions/cam-user/exports/cam-user-exports.module';
 import { CaptchaExportsModule } from '../extensions/captcha/exports/captcha-exports.module';
 import { OrderTemplatesExportsModule } from '../extensions/order-templates/exports/order-templates-exports.module';
 import { QuickorderExportsModule } from '../extensions/quickorder/exports/quickorder-exports.module';
@@ -51,8 +51,8 @@ import { SubCategoryNavigationComponent } from './header/sub-category-navigation
 import { UserInformationMobileComponent } from './header/user-information-mobile/user-information-mobile.component';
 
 const importExportModules = [
+  CamAccountExportsModule,
   CamCardsExportsModule,
-  CamUserExportsModule,
   CaptchaExportsModule,
   DirectivesModule,
   OrderTemplatesExportsModule,

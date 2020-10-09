@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 
 import { HttpError } from 'ish-core/models/http-error/http-error.model';
 
-import { CamUserFacade } from '../../facades/cam-user.facade';
+import { CamAccountFacade } from '../../facades/cam-account.facade';
 import { Applicant } from '../../models/applicant/applicant.model';
 
 @Component({
@@ -18,12 +18,12 @@ export class RegisterPageComponent implements OnInit {
   applicantLoading$: Observable<boolean>;
   applicant$: Observable<Applicant>;
 
-  constructor(private camUserFacade: CamUserFacade, private router: Router) {}
+  constructor(private camAccountFacade: CamAccountFacade, private router: Router) {}
 
   ngOnInit() {
-    this.applicantError$ = this.camUserFacade.applicantError$;
-    this.applicantLoading$ = this.camUserFacade.applicantLoading$;
-    this.applicant$ = this.camUserFacade.applicant$;
+    this.applicantError$ = this.camAccountFacade.applicantError$;
+    this.applicantLoading$ = this.camAccountFacade.applicantLoading$;
+    this.applicant$ = this.camAccountFacade.applicant$;
   }
 
   onCancel() {
@@ -31,6 +31,6 @@ export class RegisterPageComponent implements OnInit {
   }
 
   onApply(applicant: Applicant) {
-    this.camUserFacade.applyForAnAccount(applicant);
+    this.camAccountFacade.applyForAnAccount(applicant);
   }
 }

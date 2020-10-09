@@ -7,4 +7,4 @@ import { SharedModule } from 'ish-shared/shared.module';
   declarations: [],
   exports: [SharedModule],
 })
-export class CamUserModule {}
+export class CamAccountModule {}

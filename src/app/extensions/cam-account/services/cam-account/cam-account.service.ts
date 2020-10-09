@@ -8,7 +8,7 @@ import { ApplicantData } from '../../models/applicant/applicant.interface';
 import { Applicant } from '../../models/applicant/applicant.model';
 
 @Injectable({ providedIn: 'root' })
-export class UserService {
+export class CamAccountService {
   constructor(private apiService: ApiService) {}
 
   applyForAnAccount(data: Applicant): Observable<ApplicantData> {

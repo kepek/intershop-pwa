@@ -13,7 +13,7 @@ describe('Applicant Mapper', () => {
         lastName: 'Miller',
         email: 'pmiller@test.intershop.de',
         customerName: 'Intershop',
-      } as ApplicantData;
+      };
       const applicant = ApplicantMapper.fromData(applicantData);
 
       expect(applicant).toBeTruthy();

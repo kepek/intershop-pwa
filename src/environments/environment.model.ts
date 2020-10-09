@@ -40,7 +40,7 @@ export interface Environment {
     | 'wishlists'
     /* Camfil features */
     | 'camCards'
-    | 'camUser'
+    | 'camAccount'
   )[];
 
   /* ADDITIONAL FEATURE CONFIGURATIONS */
@@ -106,7 +106,7 @@ export const ENVIRONMENT_DEFAULTS: Environment = {
     'businessCustomerRegistration',
     /* Camfil features */
     'camCards',
-    'camUser',
+    'camAccount',
   ],
 
   /* PROGRESSIVE WEB APP CONFIGURATIONS */
