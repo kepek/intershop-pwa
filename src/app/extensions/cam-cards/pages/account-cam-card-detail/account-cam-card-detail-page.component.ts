@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormArray } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil, withLatestFrom } from 'rxjs/operators';
 
@@ -25,7 +26,7 @@ export class AccountCamCardDetailPageComponent implements OnInit, OnDestroy {
 
   private destroy$ = new Subject();
 
-  constructor(private camCardsFacade: CamCardsFacade, private shoppingFacade: ShoppingFacade) {}
+  constructor(private camCardsFacade: CamCardsFacade, private shoppingFacade: ShoppingFacade, public router: Router) {}
 
   ngOnInit() {
     this.camCard$ = this.camCardsFacade.currentCamCard$;
@@ -77,5 +78,10 @@ export class AccountCamCardDetailPageComponent implements OnInit, OnDestroy {
     this.filterItems(camCard).forEach(item => {
       this.shoppingFacade.addProductToBasket(item.product.sku, item.count);
     });
+  }
+
+  /** dispatch creation request */
+  addCamCard(camCard: CamCard) {
+    this.camCardsFacade.addCamCard(camCard);
   }
 }

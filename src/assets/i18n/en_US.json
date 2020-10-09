@@ -569,6 +569,7 @@
   "camfil.account.cam_card.delete.do_you_really.text": "Do you really want to delete this CamCard?",
   "camfil.account.cam_card.edit.button.back.label": "Back to CamCards",
   "camfil.account.cam_card.edit.button.rename.label": "Rename",
+  "camfil.account.cam_card.edit.header": "Create new camcard",
   "camfil.account.cam_card.edit.heading": "Edit CamCard",
   "camfil.account.cam_card.form.name.error.maxlength": "The CamCard name must not exceed 35 characters.",
   "camfil.account.cam_card.form.name.error.required": "Please enter an CamCard name.",
