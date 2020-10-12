@@ -1,9 +1,15 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 
-interface Customer {
-  value: string;
-  viewValue: string;
-}
+import { CamCard, CamCardCustomer } from '../../../models/cam-card/cam-card.model';
 
 @Component({
   selector: 'camfil-cam-cards-search',
@@ -11,39 +17,26 @@ interface Customer {
   styleUrls: ['./camfil-cam-cards-search.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CamfilCamCardsSearchComponent implements OnInit {
+export class CamfilCamCardsSearchComponent implements OnInit, OnChanges {
   @Input() count: number;
+  @Input() camCards: CamCard[];
   @Output() queryChanged = new EventEmitter<string>();
 
   searchInput: string;
   selectInput: string;
-  customers: Customer[];
+  customers: CamCardCustomer[];
 
   ngOnInit() {
     this.searchInput = '';
     this.selectInput = '';
-    this.customers = [
-      {
-        value: 'hydrogen',
-        viewValue: 'Hydrogen',
-      },
-      {
-        value: 'lithium',
-        viewValue: 'Lithium',
-      },
-      {
-        value: 'beryllium',
-        viewValue: 'Beryllium',
-      },
-      {
-        value: 'boron',
-        viewValue: 'Boron',
-      },
-      {
-        value: 'carbon',
-        viewValue: 'Carbon',
-      },
-    ];
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.camCards) {
+      this.customers = this.camCards.map(customer => ({
+        ...customer.customer,
+      }));
+    }
   }
 
   submit(value) {
