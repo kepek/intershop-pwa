@@ -1,3 +1,4 @@
+@import '~@angular/material/button/button-base';
 @import 'colors';
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -362,3 +363,8 @@ $space-box: 16px;
 
 //other
 $camfil-toolbar-font-size: $font-size-base * 0.95; // ~13px
+
+//counter
+$camfil-counter-value-border-radius: $mat-icon-button-size / 10;
+$camfil-counter-value-font-size:  $font-size-lg;
+$camfil-counter-value-size:  $mat-icon-button-size;

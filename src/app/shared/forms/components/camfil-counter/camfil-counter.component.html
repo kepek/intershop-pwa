@@ -1,0 +1,34 @@
+<div class="row form-group" [formGroup]="form">
+  <label *ngIf="displayLabel" [for]="uuid" class="col-form-label" [ngClass]="labelClass"
+    >{{ label | translate }}<span *ngIf="required" class="required">*</span>
+  </label>
+  <div [ngClass]="inputClass">
+    <div class="">
+      <div class="d-flex flex-row align-items-center">
+        <!-- display: inline -->
+        <button
+          mat-button
+          mat-icon-button
+          (click)="decrease()"
+          [disabled]="cannotDecrease$ | async"
+          [attr.data-testing-id]="'decrease-' + controlName"
+        >
+          <mat-icon svgIcon="minus"></mat-icon>
+        </button>
+        <span class="value" [attr.data-testing-id]="controlName" [class.mat-elevation-z2]="true">
+          {{ value$ | async }}
+        </span>
+        <!-- display: inline -->
+        <button
+          mat-button
+          mat-icon-button
+          (click)="increase()"
+          [disabled]="cannotIncrease$ | async"
+          [attr.data-testing-id]="'increase-' + controlName"
+        >
+          <mat-icon svgIcon="plus"></mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

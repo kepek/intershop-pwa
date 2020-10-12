@@ -1,0 +1,19 @@
+@import '~@angular/material/theming';
+@import '~src/styles/themes/camfil/variables.scss';
+
+:host {
+  .value {
+    display: inline-block;
+    width: $camfil-counter-value-size;
+    height: $camfil-counter-value-size;
+    font-size: $camfil-counter-value-font-size;
+    line-height: $camfil-counter-value-size;
+    text-align: center;
+    border-radius: $camfil-counter-value-border-radius;
+    @include mat-elevation-transition;
+    @include mat-elevation(2);
+    &:active {
+      @include mat-elevation(8);
+    }
+  }
+}

@@ -5,7 +5,7 @@ import { MockComponent } from 'ng-mocks';
 
 import { Product } from 'ish-core/models/product/product.model';
 import { findAllCustomElements } from 'ish-core/utils/dev/html-query-utils';
-import { CounterComponent } from 'ish-shared/forms/components/counter/counter.component';
+import { CamfilCounterComponent } from 'ish-shared/forms/components/camfil-counter/camfil-counter.component';
 import { InputComponent } from 'ish-shared/forms/components/input/input.component';
 import { SelectComponent } from 'ish-shared/forms/components/select/select.component';
 
@@ -22,7 +22,7 @@ describe('Camfil Product Quantity Component', () => {
       imports: [ReactiveFormsModule, TranslateModule.forRoot()],
       declarations: [
         CamfilProductQuantityComponent,
-        MockComponent(CounterComponent),
+        MockComponent(CamfilCounterComponent),
         MockComponent(InputComponent),
         MockComponent(SelectComponent),
       ],

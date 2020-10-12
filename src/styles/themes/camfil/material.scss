@@ -294,6 +294,11 @@ a {
     svg {
       display: block;
     }
+    &[svgicon] {
+      display: block;
+      margin-right: auto;
+      margin-left: auto;
+    }
   }
 }
 
