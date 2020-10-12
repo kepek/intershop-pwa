@@ -18,6 +18,7 @@
 
     .logo-wrapper {
       padding: 0;
+      white-space: nowrap;
 
       .mat-icon {
         &.logo {
@@ -53,7 +54,6 @@
       margin: $space-box / 2 0;
       @media (min-width: $screen-md-max) {
         order: inherit;
-        padding: 0;
       }
     }
 
