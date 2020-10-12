@@ -5,7 +5,6 @@
   <div [ngClass]="inputClass">
     <div class="">
       <div class="d-flex flex-row align-items-center">
-        <!-- display: inline -->
         <button
           mat-button
           mat-icon-button
@@ -18,10 +17,10 @@
         <span class="value" [attr.data-testing-id]="controlName" [class.mat-elevation-z2]="true">
           {{ value$ | async }}
         </span>
-        <!-- display: inline -->
         <button
           mat-button
           mat-icon-button
+          class="size-10"
           (click)="increase()"
           [disabled]="cannotIncrease$ | async"
           [attr.data-testing-id]="'increase-' + controlName"
