@@ -1,0 +1,29 @@
+<form name="AccountsRequestForm" [formGroup]="form" class="form-horizontal accounts-request" (ngSubmit)="submitForm()">
+  <mat-form-field appearance="fill" class="accounts-request__field">
+    <mat-label>{{ 'camfil.account.forgotdata.email.label' | translate }}</mat-label>
+    <input matInput required [formControl]="emailFormControl" type="email" />
+  </mat-form-field>
+  <div>
+    <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')" class="error-field">
+      {{ 'camfil.account.email.error.email' | translate }}
+    </mat-error>
+    <mat-error *ngIf="emailFormControl.hasError('required')" class="error-field">
+      {{ 'camfil.account.email.error.required' | translate }}
+    </mat-error>
+  </div>
+
+  <div class="form-group">
+    <button
+      mat-raised-button
+      type="submit"
+      value="AccountsRequest"
+      name="AccountsRequest"
+      color="primary"
+      aria-label="Send"
+      class="accounts-request__button"
+      [disabled]="buttonDisabled"
+    >
+      {{ 'camfil.forgot_username.form.send.button.label' | translate }}
+    </button>
+  </div>
+</form>

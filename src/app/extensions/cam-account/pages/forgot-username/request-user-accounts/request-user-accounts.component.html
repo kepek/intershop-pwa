@@ -1,0 +1,28 @@
+<div class="col-md-6 request-accounts">
+  <h1 class="heading">{{ 'camfil.account.forgotdata.username_retrieval.heading' | translate }}</h1>
+
+  <ng-container *ngIf="success$ | async; else forgotUsernameForm">
+    <p class="subtitle">{{ 'camfil.account.send_username.message' | translate }}</p>
+
+    <div *ngFor="let account of accounts$">
+      <a mat-button class="link" routerLink="/login" target="_blank">
+        {{ account }}
+      </a>
+    </div>
+  </ng-container>
+
+
+  <ng-template #forgotUsernameForm>
+    <p class="subtitle">{{ 'camfil.account.forgotdata.username_retrieval_info.text' | translate }}</p>
+
+    <ish-error-message [error]="error$ | async"></ish-error-message>
+
+    <div class="request-accounts__form-wrapper">
+      <camfil-request-user-accounts-form
+        (submitAccountsRequest)="requestUsernameReminder($event)"
+      ></camfil-request-user-accounts-form>
+    </div>
+  </ng-template>
+
+  <ish-loading *ngIf="loading$ | async"></ish-loading>
+</div>

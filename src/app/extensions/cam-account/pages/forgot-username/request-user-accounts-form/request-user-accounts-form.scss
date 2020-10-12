@@ -1,0 +1,18 @@
+@import '~src/styles/themes/camfil/mixins';
+@import '~src/styles/themes/camfil/variables';
+
+:host {
+  .accounts-request {
+    &__field {
+      width: 50%;
+    }
+
+    &__button {
+      margin-top: 24px;
+    }
+  }
+
+  .error-field {
+    @include error;
+  }
+}

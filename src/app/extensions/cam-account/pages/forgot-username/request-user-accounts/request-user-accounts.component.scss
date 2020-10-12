@@ -2,11 +2,16 @@
 @import '~src/styles/themes/camfil/variables';
 
 :host {
+  .request-accounts {
+    @include page-40;
+  }
+
   .heading {
     @include heading;
   }
 
-  .description {
+  .subtitle {
+    margin-bottom: 24px;
     font-family: $font-family-SansPro;
     @include font-size-p;
   }

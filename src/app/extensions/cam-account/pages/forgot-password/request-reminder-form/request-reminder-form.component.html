@@ -1,0 +1,31 @@
+<form name="PasswordReminderForm" [formGroup]="form" class="form-horizontal password-form" (ngSubmit)="submitForm()">
+  <mat-form-field appearance="fill" class="password-form__field">
+    <mat-label>{{ 'camfil.account.forgotdata.email.label' | translate }}</mat-label>
+    <input matInput required [formControl]="emailFormControl" type="email" />
+  </mat-form-field>
+  <div>
+    <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')" class="error-field">
+      {{ 'camfil.account.email.error.email' | translate }}
+    </mat-error>
+    <mat-error *ngIf="emailFormControl.hasError('required')" class="error-field">
+      {{ 'camfil.account.email.error.required' | translate }}
+    </mat-error>
+  </div>
+
+  <camfil-lazy-captcha topic="forgotPassword" [form]="form" cssClass="offset-md-4 col-md-8"></camfil-lazy-captcha>
+
+  <div class="form-group">
+    <button
+      mat-raised-button
+      type="submit"
+      value="PasswordReminder"
+      name="passwordReminder"
+      color="primary"
+      aria-label="Send"
+      class="password-form__button"
+      [disabled]="buttonDisabled"
+    >
+      {{ 'camfil.forgot_password.form.send.button.label' | translate }}
+    </button>
+  </div>
+</form>

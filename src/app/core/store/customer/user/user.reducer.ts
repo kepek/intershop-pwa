@@ -26,8 +26,12 @@ import {
   requestPasswordReminder,
   requestPasswordReminderFail,
   requestPasswordReminderSuccess,
+  requestUsernameReminder,
+  requestUsernameReminderFail,
+  requestUsernameReminderSuccess,
   resetAPIToken,
   resetPasswordReminder,
+  resetUsernameReminder,
   setAPIToken,
   setPGID,
   updateCustomer,
@@ -55,6 +59,9 @@ export interface UserState {
   pgid: string;
   passwordReminderSuccess: boolean;
   passwordReminderError: HttpError;
+  usernameReminderSuccess: boolean;
+  usernameReminderError: HttpError;
+  customerAccounts: String[];
   // not synced via state transfer
   authToken: string;
   lastAuthTokenBeforeLogin: string;
@@ -70,6 +77,9 @@ export const initialState: UserState = {
   pgid: undefined,
   passwordReminderSuccess: undefined,
   passwordReminderError: undefined,
+  usernameReminderSuccess: undefined,
+  usernameReminderError: undefined,
+  customerAccounts: [],
   authToken: undefined,
   lastAuthTokenBeforeLogin: undefined,
 };
@@ -206,5 +216,35 @@ export const userReducer = createReducer(
     ...state,
     passwordReminderSuccess: undefined,
     passwordReminderError: undefined,
+  })),
+  on(resetUsernameReminder, (state: UserState) => ({
+    ...state,
+    usernameReminderSuccess: undefined,
+    usernameReminderError: undefined,
+    customerAccounts: []
+  })),
+  on(requestUsernameReminder, (state: UserState) => ({
+    ...state,
+    loading: true,
+    usernameReminderSuccess: undefined,
+    usernameReminderError: undefined,
+  })),
+  on(requestUsernameReminderSuccess, (state: UserState, action) => {
+    const { accounts } = action.payload;
+
+    return {
+      ...state,
+      loading: false,
+      usernameReminderSuccess: true,
+      usernameReminderError: undefined,
+      customerAccounts: accounts,
+    };
+  }),
+  on(requestUsernameReminderFail, (state: UserState, action) => ({
+    ...state,
+    loading: false,
+    usernameReminderSuccess: false,
+    usernameReminderError: action.payload.error,
+    customerAccounts: []
   }))
 );

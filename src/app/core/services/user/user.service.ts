@@ -15,6 +15,7 @@ import { PasswordReminderUpdate } from 'ish-core/models/password-reminder-update
 import { PasswordReminder } from 'ish-core/models/password-reminder/password-reminder.model';
 import { UserMapper } from 'ish-core/models/user/user.mapper';
 import { User } from 'ish-core/models/user/user.model';
+import { UsernameReminder } from "ish-core/models/username-reminder/username-reminder.model";
 import { ApiService, AvailableOptions } from 'ish-core/services/api/api.service';
 
 /**
@@ -232,6 +233,14 @@ export class UserService {
     };
 
     return this.apiService.post('security/reminder', { answer: '', ...data }, options);
+  }
+
+  /**
+   * Request an email for the customer accounts connected with email.
+   * @param data  The user data (email, firstName, lastName ) to identify the user.
+   */
+  requestUsernameReminder(data: UsernameReminder): Observable<String[]> {
+    return this.apiService.post('security/customerAccounts', { answer: '', ...data });
   }
 
   /**

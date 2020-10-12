@@ -50,6 +50,9 @@ import {
   requestPasswordReminder,
   requestPasswordReminderFail,
   requestPasswordReminderSuccess,
+  requestUsernameReminder,
+  requestUsernameReminderFail,
+  requestUsernameReminderSuccess,
   resetAPIToken,
   setPGID,
   updateCustomer,
@@ -345,6 +348,18 @@ export class UserEffects {
         displaySuccessMessage({
           message: 'account.profile.update_password.message',
         })
+      )
+    )
+  );
+
+  requestUsernameReminder$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(requestUsernameReminder),
+      mapToPayloadProperty('data'),
+      concatMap(data =>
+        this.userService
+          .requestUsernameReminder(data)
+          .pipe(map(accounts => requestUsernameReminderSuccess({accounts})), mapErrorToAction(requestUsernameReminderFail))
       )
     )
   );
