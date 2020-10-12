@@ -91,9 +91,12 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
       this.camCardsProcessed = new MatTableDataSource(this.camCards);
       this.changeDetectorRefs.detectChanges();
       this.camCardsProcessed.sort = this.sort;
+      this.camCardsProcessed.sortingDataAccessor = (item, property) =>
+        property === 'customer' ? item.customer.name : item[property];
     }
     this.isMobileView = this.isMobile();
   }
+
   isMobile() {
     return this.deviceType === 'mobile'; // || this.deviceType === 'tablet';
   }
