@@ -16,7 +16,6 @@ export interface CamCard extends CamCardHeader {
 }
 
 export interface CamCardItem {
-  // had sku: string;
   id: string;
   count: number; // was desiredQuantity.value
   position?: number;
@@ -34,8 +33,11 @@ export interface CamCardProduct {
 }
 
 export interface CamCardCustomer {
-  // TODO
+  id?: string;
   name?: string;
+  deliveryAddress?: string; // will be some { } // or in CamCardDelivery
+  email?: string;
+  contactPerson?: string; // will be some { }
 }
 
 export interface CamCardContact {
@@ -54,4 +56,5 @@ export interface CamCardItemComment {
 export interface CamCardDelivery {
   last: Date;
   interval: number;
+  // maybe deliveryAddress: { } also
 }
