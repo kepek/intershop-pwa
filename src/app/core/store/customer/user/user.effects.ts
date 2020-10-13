@@ -141,8 +141,10 @@ export class UserEffects {
     () =>
       this.actions$.pipe(
         ofType(loginUserSuccess),
+        withLatestFrom(this.store$.pipe(select(selectUrl))),
+        filter(([, url]) => url.includes('/login')),
         tap(() => {
-          this.router.navigateByUrl('account/cam-cards');
+          this.router.navigateByUrl('/account/cam-cards');
         })
       ),
     { dispatch: false }
