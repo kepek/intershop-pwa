@@ -1,5 +1,6 @@
 <camfil-cam-cards-search
   [count]="camCardsProcessed?.filteredData?.length"
+  [camCards]="camCardsProcessed?.data"
   (queryChanged)="applyfilters($event)"
   class="box-shadow box-shadow--dark"
 ></camfil-cam-cards-search>
