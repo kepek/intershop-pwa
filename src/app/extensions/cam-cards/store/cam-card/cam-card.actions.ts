@@ -87,3 +87,10 @@ export const addBasketToNewCamCardSuccess = createAction(
   '[Cam Cards API] Add basket to New Cam Card Success]',
   payload<{ camCard: CamCard }>()
 );
+
+export const detectCamCardToolbar = createAction('[Cam Cards API] Detect Cam Card toolbar');
+
+export const setStickyCamCardToolbar = createAction(
+  '[Cam Cards API] Set Sticky Toolbar',
+  payload<{ sticky: boolean }>()
+);

@@ -1,9 +1,20 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store, select } from '@ngrx/store';
-import { concat } from 'rxjs';
-import { concatMap, filter, last, map, mapTo, mergeMap, switchMap, withLatestFrom } from 'rxjs/operators';
+import { concat, fromEvent } from 'rxjs';
+import {
+  concatMap,
+  distinctUntilChanged,
+  filter,
+  last,
+  map,
+  mapTo,
+  mergeMap,
+  switchMap,
+  withLatestFrom,
+} from 'rxjs/operators';
 
+import { getDeviceType } from 'ish-core/store/core/configuration';
 import { displaySuccessMessage } from 'ish-core/store/core/messages';
 import { ofUrl, selectRouteParam } from 'ish-core/store/core/router';
 import { setBreadcrumbData } from 'ish-core/store/core/viewconf';
@@ -34,6 +45,7 @@ import {
   deleteCamCard,
   deleteCamCardFail,
   deleteCamCardSuccess,
+  detectCamCardToolbar,
   loadCamCards,
   loadCamCardsFail,
   loadCamCardsSuccess,
@@ -42,6 +54,7 @@ import {
   removeItemFromCamCardFail,
   removeItemFromCamCardSuccess,
   selectCamCard,
+  setStickyCamCardToolbar,
   updateCamCard,
   updateCamCardFail,
   updateCamCardSuccess,
@@ -274,6 +287,32 @@ export class CamCardEffects {
             { text: camCards.title },
           ],
         })
+      )
+    )
+  );
+
+  decetctCamCardToolbar$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(detectCamCardToolbar),
+      mergeMap(() =>
+        this.store.pipe(
+          select(getDeviceType),
+          mergeMap(device =>
+            fromEvent(window, 'scroll').pipe(
+              map(() => {
+                const bar = document.getElementsByTagName('camfil-account-cam-card-toolbar')[0] as HTMLElement;
+                const barBounding = bar.getBoundingClientRect();
+                if (device === 'mobile') {
+                  return window.innerHeight > barBounding.top + barBounding.height;
+                } else {
+                  return barBounding.top < barBounding.height + bar.offsetTop;
+                }
+              }),
+              distinctUntilChanged(),
+              map(sticky => setStickyCamCardToolbar({ sticky }))
+            )
+          )
+        )
       )
     )
   );

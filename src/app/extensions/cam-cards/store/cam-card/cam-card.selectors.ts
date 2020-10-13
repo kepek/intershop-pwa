@@ -27,3 +27,5 @@ export const getCamCardDetails = createSelector(
   selectEntities,
   (entities, props: { id: string }): CamCard => props.id && entities[props.id]
 );
+
+export const isStickyCamCardToolbar = createSelector(getCamCardState, state => state.stickyToolbar);

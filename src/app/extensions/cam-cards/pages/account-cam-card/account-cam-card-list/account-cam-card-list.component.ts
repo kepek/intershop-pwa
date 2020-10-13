@@ -16,13 +16,14 @@ import { MatCheckboxChange } from '@angular/material/checkbox';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { TranslateService } from '@ngx-translate/core';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
 
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
 import { ModalDialogComponent } from 'ish-shared/components/common/modal-dialog/modal-dialog.component';
 
+import { CamCardsFacade } from '../../../facades/cam-cards.facade';
 import { CamCard, CamCardItem } from '../../../models/cam-card/cam-card.model';
 
 export interface ProductChecked {
@@ -52,6 +53,7 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
   /** Emits the id of the cam cards, which is to be deleted. */
   @Output() deleteCamCard = new EventEmitter<string>();
   @Output() addCamCard = new EventEmitter<CamCard>();
+  isStickyCamCardToolbar$: Observable<boolean>;
 
   dummyProduct = { sku: 'dummy', inStock: true, availability: true };
   private destroy$ = new Subject();
@@ -79,11 +81,13 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
   constructor(
     private translate: TranslateService,
     private productFacade: ShoppingFacade,
+    private camCardsFacade: CamCardsFacade,
     private changeDetectorRefs: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
     this.isMobileView = this.isMobile();
+    this.isStickyCamCardToolbar$ = this.camCardsFacade.isStickyCamCardToolbar$;
   }
 
   ngOnChanges(changes: SimpleChanges) {
