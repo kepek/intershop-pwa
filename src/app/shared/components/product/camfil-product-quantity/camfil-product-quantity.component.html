@@ -9,26 +9,25 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
-      <camfil-counter
-        *ngSwitchCase="'counter'"
-        [form]="parentForm"
-        [controlName]="controlName"
-        [min]="allowZeroQuantity ? 0 : product.minOrderQuantity"
-        [max]="product.maxOrderQuantity"
-      ></camfil-counter>
+      <mat-form-field *ngSwitchCase="'input'" appearance="fill">
+        <mat-label>{{ quantityLabel | translate }}</mat-label>
+        <input
+          matInput
+          [type]="'number'"
+          [formGroup]="parentForm"
+          [formControlName]="controlName"
+          [min]="allowZeroQuantity ? 0 : product.minOrderQuantity"
+          [max]="product.maxOrderQuantity"
+          [placeholder]="allowZeroQuantity ? 0 : product.minOrderQuantity"
+        />
+      </mat-form-field>
       <ng-container *ngSwitchDefault>
-        <mat-form-field appearance="fill">
-          <mat-label>{{ quantityLabel | translate }}</mat-label>
-          <input
-            matInput
-            [type]="'number'"
-            [formGroup]="parentForm"
-            [formControlName]="controlName"
-            [min]="allowZeroQuantity ? 0 : product.minOrderQuantity"
-            [max]="product.maxOrderQuantity"
-            [placeholder]="allowZeroQuantity ? 0 : product.minOrderQuantity"
-          />
-        </mat-form-field>
+        <camfil-counter
+          [form]="parentForm"
+          [controlName]="controlName"
+          [min]="allowZeroQuantity ? 0 : product.minOrderQuantity"
+          [max]="product.maxOrderQuantity"
+        ></camfil-counter>
       </ng-container>
     </ng-container>
   </ng-container>
