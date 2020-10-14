@@ -1,4 +1,5 @@
-<div class="product-id">
-  <label>{{ 'product.itemNumber.label' | translate }}</label>
-  <span itemprop="sku">{{ product.sku }}</span>
-</div>
+<camfil-product-attribute
+  class="camfil-product-id"
+  [name]="label | translate"
+  [value]="product.sku"
+></camfil-product-attribute>

@@ -11,6 +11,22 @@
   <div class="col-9">
     <div class="row">
       <div class="col-md-7 col-xs-12">
+        <button
+          mat-button
+          color="primary"
+          data-testing-id="quick-view"
+        >
+          <mat-icon svgIcon="search" class="size-15"></mat-icon>
+          {{ 'Quickview' | translate }}
+        </button>
+        <button
+          mat-stroked-button
+          color="primary"
+          data-testing-id="quick-view"
+        >
+          <mat-icon svgIcon="search" class="size-15"></mat-icon>
+          {{ 'Quickview' | translate }}
+        </button>
         <camfil-product-title *ngIf="configuration.displayName" [product]="product"></camfil-product-title>
         <camfil-product-id *ngIf="configuration.displaySKU" [product]="product"></camfil-product-id><br />
         <camfil-product-attribute name="camfil.product.dimensions.label" value="xxx-xxx-xxx"></camfil-product-attribute>
