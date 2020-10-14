@@ -142,7 +142,6 @@
             "outputPath": "dist/server",
             "main": "server.ts",
             "tsConfig": "tsconfig.server.json",
-            "proxyConfig": "src/setupProxy.ts",
             "stylePreprocessorOptions": {
               "includePaths": ["src/styles"]
             }
@@ -175,8 +174,7 @@
           "builder": "@nguniversal/builders:ssr-dev-server",
           "options": {
             "browserTarget": "intershop-pwa:build",
-            "serverTarget": "intershop-pwa:server",
-            "proxyConfig": "src/setupProxy.ts"
+            "serverTarget": "intershop-pwa:server"
           },
           "configurations": {
             "local": {
