@@ -1,6 +1,9 @@
-const https = require('https');
-
-const http = require('http');
+const getHttpAgent = endpoint => {
+  const https = require('https');
+  const http = require('http');
+  const httpProtocol = new URL(endpoint).protocol.slice(0, -1);
+  return httpProtocol === 'https' ? new https.Agent({ rejectUnauthorized: false }) : new http.Agent();
+};
 
 const PROXY_ICM = process.env.PROXY_ICM;
 
@@ -10,12 +13,7 @@ const isUrl = PROXY_ICM && PROXY_ICM.startsWith('http');
 
 const useProxy = isUrl;
 
-const getHttpAgent = endpoint => {
-  const httpProtocol = new URL(endpoint).protocol.slice(0, -1);
-  return httpProtocol === 'https' ? new https.Agent({ rejectUnauthorized: false }) : new http.Agent();
-};
-
-if (!isUrl) {
+if (PROXY_ICM && !isUrl) {
   console.error('PROXY_ICM is not url');
   process.exit(1);
 }
