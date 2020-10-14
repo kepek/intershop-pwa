@@ -4,7 +4,7 @@ const http = require('http');
 
 const PROXY_ICM = process.env.PROXY_ICM;
 
-const TRUST_ICM = Boolean(Number(JSON.parse(process.env.TRUST_ICM))) || true;
+const TRUST_ICM = process.env.TRUST_ICM ? Boolean(Number(JSON.parse(process.env.TRUST_ICM))) : true;
 
 const isUrl = PROXY_ICM && PROXY_ICM.startsWith('http');
 
