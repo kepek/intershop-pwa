@@ -1,8 +1,9 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {SpecialValidators} from "ish-shared/forms/validators/special-validators";
-import {markAsDirtyRecursive} from "ish-shared/forms/utils/form-utils";
-import {UsernameReminder} from "ish-core/models/username-reminder/username-reminder.model";
+import { ChangeDetectionStrategy, Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+
+import { UsernameReminder } from 'ish-core/models/username-reminder/username-reminder.model';
+import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
+import { SpecialValidators } from 'ish-shared/forms/validators/special-validators';
 
 @Component({
   selector: 'camfil-request-user-accounts-form',

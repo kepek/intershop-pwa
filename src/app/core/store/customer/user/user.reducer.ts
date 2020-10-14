@@ -61,7 +61,7 @@ export interface UserState {
   passwordReminderError: HttpError;
   usernameReminderSuccess: boolean;
   usernameReminderError: HttpError;
-  customerAccounts: String[];
+  customerAccounts: string[];
   // not synced via state transfer
   authToken: string;
   lastAuthTokenBeforeLogin: string;
@@ -221,7 +221,7 @@ export const userReducer = createReducer(
     ...state,
     usernameReminderSuccess: undefined,
     usernameReminderError: undefined,
-    customerAccounts: []
+    customerAccounts: [],
   })),
   on(requestUsernameReminder, (state: UserState) => ({
     ...state,
@@ -245,6 +245,6 @@ export const userReducer = createReducer(
     loading: false,
     usernameReminderSuccess: false,
     usernameReminderError: action.payload.error,
-    customerAccounts: []
+    customerAccounts: [],
   }))
 );

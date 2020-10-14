@@ -99,7 +99,10 @@ export const requestUsernameReminder = createAction(
 
 export const loadAccounts = createAction('[Username Internal] Load Accounts');
 
-export const requestUsernameReminderSuccess = createAction('[Username Reminder API] Request Username Reminder Success', payload<{ accounts: String[] }>());
+export const requestUsernameReminderSuccess = createAction(
+  '[Username Reminder API] Request Username Reminder Success',
+  payload<{ accounts: string[] }>()
+);
 
 export const requestUsernameReminderFail = createAction(
   '[Username Reminder API] Request Username Reminder Fail',

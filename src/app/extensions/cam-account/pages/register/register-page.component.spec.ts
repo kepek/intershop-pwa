@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { provideMockStore } from '@ngrx/store/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { MockComponent } from 'ng-mocks';
 import { instance, mock } from 'ts-mockito';
@@ -30,7 +29,7 @@ describe('Register Page Component', () => {
         RegisterPageComponent,
       ],
       imports: [RouterTestingModule, TranslateModule.forRoot()],
-      providers: [provideMockStore(), { provide: AccountFacade, useFactory: () => instance(mock(AccountFacade)) }],
+      providers: [{ provide: AccountFacade, useFactory: () => instance(mock(AccountFacade)) }],
     }).compileComponents();
   });
 

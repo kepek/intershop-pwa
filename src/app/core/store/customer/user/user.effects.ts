@@ -130,6 +130,7 @@ export class UserEffects {
    * redirects to the returnUrl after successful login
    * does not redirect at all, if no returnUrl is defined
    */
+  // tslint:disable-next-line:no-commented-out-code
   /*  redirectAfterLogin$ = createEffect(
       () =>
         this.store$.pipe(select(selectQueryParam('returnUrl'))).pipe(
@@ -357,9 +358,10 @@ export class UserEffects {
       ofType(requestUsernameReminder),
       mapToPayloadProperty('data'),
       concatMap(data =>
-        this.userService
-          .requestUsernameReminder(data)
-          .pipe(map(accounts => requestUsernameReminderSuccess({accounts})), mapErrorToAction(requestUsernameReminderFail))
+        this.userService.requestUsernameReminder(data).pipe(
+          map(accounts => requestUsernameReminderSuccess({ accounts })),
+          mapErrorToAction(requestUsernameReminderFail)
+        )
       )
     )
   );

@@ -16,7 +16,7 @@ export class RequestUserAccountsComponent implements OnInit {
   error$: Observable<HttpError>;
   loading$: Observable<boolean>;
 
-  accounts$: Observable<String[]>;
+  accounts$: Observable<string[]>;
 
   constructor(private accountFacade: AccountFacade) {}
 

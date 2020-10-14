@@ -2,14 +2,14 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RequestUserAccountsFormComponent } from './request-user-accounts-form.component';
 
-describe('RequestUserAccountsFormComponent', () => {
+describe('Request User Accounts Form Component', () => {
   let component: RequestUserAccountsFormComponent;
   let fixture: ComponentFixture<RequestUserAccountsFormComponent>;
   let element: HTMLElement;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [RequestUserAccountsFormComponent]
+      declarations: [RequestUserAccountsFormComponent],
     }).compileComponents();
   });
 
