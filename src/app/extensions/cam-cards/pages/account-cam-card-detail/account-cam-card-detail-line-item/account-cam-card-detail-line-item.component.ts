@@ -65,11 +65,12 @@ export class AccountCamCardDetailLineItemComponent implements OnChanges, OnInit,
     this.selectedItemsForm.push(this.selectItemForm);
   }
 
-  moveItemToOtherCamCard(sku: string, camCardMoveData: { id: string; title: string }) {
+  moveItemToOtherCamCard(camCardItemId: string, sku: string, camCardMoveData: { id: string; title: string }) {
     if (camCardMoveData.id) {
       this.camCardsFacade.moveItemToCamCard(
         this.currentCamCard.id,
         camCardMoveData.id,
+        camCardItemId,
         sku,
         Number(this.addToCartForm.get('quantity').value)
       );
@@ -77,6 +78,7 @@ export class AccountCamCardDetailLineItemComponent implements OnChanges, OnInit,
       this.camCardsFacade.moveItemToNewCamCard(
         this.currentCamCard.id,
         camCardMoveData.title,
+        camCardItemId,
         sku,
         Number(this.addToCartForm.get('quantity').value)
       );
@@ -87,8 +89,8 @@ export class AccountCamCardDetailLineItemComponent implements OnChanges, OnInit,
     this.camCardsFacade.addProductToCamCard(this.currentCamCard.id, sku, quantity - this.camCardItemData.count);
   }
 
-  removeProductFromCamCard(sku: string) {
-    this.camCardsFacade.removeProductFromCamCard(this.currentCamCard.id, sku);
+  removeProductFromCamCard(camCardItemId: string) {
+    this.camCardsFacade.removeProductFromCamCard(this.currentCamCard.id, camCardItemId);
   }
 
   /**if the camCardItem is loaded, get product details*/

@@ -56,21 +56,35 @@ export class CamCardsFacade {
     this.store.dispatch(addProductToCamCard({ camCardId, sku, quantity }));
   }
 
-  moveItemToCamCard(sourcecamCardId: string, targetcamCardId: string, sku: string, quantity: number): void {
+  moveItemToCamCard(
+    sourcecamCardId: string,
+    targetcamCardId: string,
+    camCardItemId: string,
+    sku: string,
+    quantity: number
+  ): void {
     this.store.dispatch(
       moveItemToCamCard({
-        source: { id: sourcecamCardId },
+        source: { id: sourcecamCardId, itemId: camCardItemId },
         target: { id: targetcamCardId, sku, quantity },
       })
     );
   }
 
-  moveItemToNewCamCard(sourceCamCardId: string, title: string, sku: string, quantity: number): void {
-    this.store.dispatch(moveItemToCamCard({ source: { id: sourceCamCardId }, target: { title, sku, quantity } }));
+  moveItemToNewCamCard(
+    sourceCamCardId: string,
+    title: string,
+    camCardItemId: string,
+    sku: string,
+    quantity: number
+  ): void {
+    this.store.dispatch(
+      moveItemToCamCard({ source: { id: sourceCamCardId, itemId: camCardItemId }, target: { title, sku, quantity } })
+    );
   }
 
-  removeProductFromCamCard(camCardId: string, sku: string): void {
-    this.store.dispatch(removeItemFromCamCard({ camCardId, sku }));
+  removeProductFromCamCard(camCardId: string, camCardItemId: string): void {
+    this.store.dispatch(removeItemFromCamCard({ camCardId, camCardItemId }));
   }
 
   detectCamCardToolbar() {

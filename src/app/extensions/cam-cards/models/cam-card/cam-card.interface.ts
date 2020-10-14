@@ -1,11 +1,15 @@
-import { Attribute } from 'ish-core/models/attribute/attribute.model';
-
-import { CamCardHeader } from './cam-card.model';
+import { CamCardContact, CamCardCustomer, CamCardHeader, CamCardItem } from './cam-card.model';
 
 export interface CamCardData extends CamCardHeader {
-  items?: { attributes: Attribute[] }[];
-  itemsCount?: number;
+  id: string;
   name?: string;
-  uri?: string;
+  camCardItems?: CamCardItem[];
+  contacts?: CamCardContact[];
+  customer?: CamCardCustomer;
+  invoiceLabel?: string;
+  orderLabel?: string;
+  position?: number;
   creationDate?: Date;
+  subCamCards?: CamCardData[];
+  rootCamCard: string;
 }
