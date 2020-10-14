@@ -25,7 +25,7 @@
               [title]="'camfil.account.cam_card.table.options.move_to_template' | translate"
             ></fa-icon>
           </a>
-          <a class="btn-tool" (click)="removeProductFromCamCard(product?.sku)" data-testing-id="delete-cam-card">
+          <a class="btn-tool" (click)="removeProductFromCamCard(camCardItemData?.id)" data-testing-id="delete-cam-card">
             <fa-icon
               [icon]="['fas', 'trash-alt']"
               [title]="'modal.heading.remove.cam_card.template' | translate"
@@ -57,6 +57,6 @@
     #moveDialog
     addMoveProduct="move"
     [product]="product"
-    (submitEmitter)="moveItemToOtherCamCard(product.sku, $event)"
+    (submitEmitter)="moveItemToOtherCamCard(camCardItemData?.id, product.sku, $event)"
   ></camfil-select-cam-card-modal>
 </ng-container>

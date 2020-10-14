@@ -17,10 +17,9 @@ export class CamCardService {
    * @returns           The customer's cam_cards.
    */
   getCamCards(): Observable<CamCard[]> {
-    return this.apiService.get(`customers/-/users/-/wishlists`).pipe(
+    return this.apiService.get(`camcards`).pipe(
       unpackEnvelope(),
-      map(camCardData => camCardData.map(this.camCardMapper.fromDataToIds)),
-      map(camCardData => camCardData.map(camCard => this.getCamCard(camCard.id))),
+      map(camCardData => camCardData.map((camCard: CamCardData) => this.getCamCard(camCard.id))),
       // tslint:disable-next-line:no-unnecessary-callback-wrapper
       switchMap(obsArray => forkJoin(obsArray)),
       defaultIfEmpty([])
@@ -37,8 +36,8 @@ export class CamCardService {
       return throwError('getCamCard() called without camCardId');
     }
     return this.apiService
-      .get<CamCardData>(`customers/-/users/-/wishlists/${camCardId}`)
-      .pipe(map(camCardData => this.camCardMapper.fromData(camCardData, camCardId)));
+      .get<CamCardData>(`camcards/${camCardId}`)
+      .pipe(map(camCardData => this.camCardMapper.fromData(camCardData)));
   }
 
   /**
@@ -48,8 +47,8 @@ export class CamCardService {
    */
   createCamCard(camCardData: CamCardHeader): Observable<CamCard> {
     return this.apiService
-      .post('customers/-/users/-/wishlists', camCardData)
-      .pipe(concatMap((response: CamCardData) => this.getCamCard(response.title)));
+      .post('camcards', camCardData)
+      .pipe(concatMap((response: CamCardData) => this.getCamCard(response.id)));
   }
 
   /**
@@ -61,7 +60,7 @@ export class CamCardService {
     if (!camCardId) {
       return throwError('deleteCamCardt() called without camCardId');
     }
-    return this.apiService.delete(`customers/-/users/-/wishlists/${camCardId}`);
+    return this.apiService.delete(`camcards/${camCardId}`);
   }
 
   /**
@@ -71,7 +70,7 @@ export class CamCardService {
    */
   updateCamCard(camCard: CamCard): Observable<CamCard> {
     return this.apiService
-      .put(`customers/-/users/-/wishlists/${camCard.id}`, camCard)
+      .put(`camcards/${camCard.id}`, camCard)
       .pipe(map((response: CamCard) => this.camCardMapper.fromUpdate(response, camCard.id)));
   }
 
@@ -82,15 +81,12 @@ export class CamCardService {
    * @param quantity      The product quantity (default = 1).
    * @returns             The changed cam_cards.
    */
-  addProductToCamCard(camCardId: string, sku: string, quantity: number): Observable<CamCard> {
-    if (!camCardId) {
-      return throwError('addProductToCamCard() called without camCardId');
-    }
-    if (!sku) {
-      return throwError('addProductToCamCard() called without sku');
-    }
+  addProductToCamCard(camCardId: string, sku: string, count: number): Observable<CamCard> {
     return this.apiService
-      .post(`customers/-/users/-/wishlists/${camCardId}/products/${sku}?quantity=${quantity}`)
+      .post(`camcards/${camCardId}/products`, {
+        count,
+        product: { sku },
+      })
       .pipe(concatMap(() => this.getCamCard(camCardId)));
   }
 
@@ -100,15 +96,15 @@ export class CamCardService {
    * @param sku           The product sku.
    * @returns             The changed cam_cards.
    */
-  removeProductFromCamCard(camCardId: string, sku: string): Observable<CamCard> {
+  removeProductFromCamCard(camCardId: string, camCardItemId: string): Observable<CamCard> {
     if (!camCardId) {
       return throwError('removeProductFromCamCard() called without camCardId');
     }
-    if (!sku) {
-      return throwError('removeProductFromCamCard() called without sku');
+    if (!camCardItemId) {
+      return throwError('removeProductFromCamCard() called without camCard Item Id');
     }
     return this.apiService
-      .delete(`customers/-/users/-/wishlists/${camCardId}/products/${sku}`)
+      .delete(`camcards/${camCardId}/products/${camCardItemId}`)
       .pipe(concatMap(() => this.getCamCard(camCardId)));
   }
 }

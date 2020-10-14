@@ -227,7 +227,7 @@ export class CamCardEffects {
             }),
             removeItemFromCamCard({
               camCardId: payload.source.id,
-              sku: payload.target.sku,
+              camCardItemId: payload.source.itemId,
             }),
           ];
         } else {
@@ -239,7 +239,7 @@ export class CamCardEffects {
             }),
             removeItemFromCamCard({
               camCardId: payload.source.id,
-              sku: payload.target.sku,
+              camCardItemId: payload.source.itemId,
             }),
           ];
         }
@@ -252,7 +252,7 @@ export class CamCardEffects {
       ofType(removeItemFromCamCard),
       mapToPayload(),
       mergeMap(payload =>
-        this.camCardService.removeProductFromCamCard(payload.camCardId, payload.sku).pipe(
+        this.camCardService.removeProductFromCamCard(payload.camCardId, payload.camCardItemId).pipe(
           map(camCard => removeItemFromCamCardSuccess({ camCard })),
           mapErrorToAction(removeItemFromCamCardFail)
         )

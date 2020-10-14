@@ -59,12 +59,15 @@ export const addProductToNewCamCard = createAction(
 
 export const moveItemToCamCard = createAction(
   '[Cam Cards] Move Item to another Cam Card',
-  payload<{ source: { id: string }; target: { id?: string; title?: string; sku: string; quantity: number } }>()
+  payload<{
+    source: { id: string; itemId: string };
+    target: { id?: string; title?: string; sku: string; quantity: number };
+  }>()
 );
 
 export const removeItemFromCamCard = createAction(
   '[Cam Cards] Remove Item from Cam Card',
-  payload<{ camCardId: string; sku: string }>()
+  payload<{ camCardId: string; camCardItemId: string }>()
 );
 
 export const removeItemFromCamCardSuccess = createAction(
