@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideMockStore } from '@ngrx/store/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { MockComponent } from 'ng-mocks';
 
@@ -15,6 +16,7 @@ describe('Account Cam Card Toolbar Component', () => {
     await TestBed.configureTestingModule({
       declarations: [AccountCamCardToolbarComponent, MockComponent(CamCardPreferencesDialogComponent)],
       imports: [TranslateModule.forRoot()],
+      providers: [provideMockStore()],
     }).compileComponents();
   });
 
