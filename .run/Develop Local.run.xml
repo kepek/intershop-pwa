@@ -7,9 +7,10 @@
     </scripts>
     <node-interpreter value="project" />
     <envs>
+      <env name="NODE_ENV" value="development" />
       <env name="PORT" value="4200" />
       <env name="LOGGING" value="true" />
-      <env name="PROXY_ICM" value="true" />
+      <env name="PROXY_ICM" value="https://intershoppwa.azurewebsites.net" />
       <env name="TRUST_ICM" value="true" />
       <env name="SSR_HYBRID" value="true" />
     </envs>

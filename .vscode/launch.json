@@ -47,9 +47,10 @@
       "skipFiles": ["<node_internals>/**"],
       "type": "pwa-node",
       "env": {
+        "NODE_ENV": "development",
         "PORT": "4200",
         "LOGGING": "true",
-        "PROXY_ICM": "true",
+        "PROXY_ICM": "https://intershoppwa.azurewebsites.net",
         "TRUST_ICM": "true",
         "SSR_HYBRID": "true"
       }
@@ -66,9 +67,10 @@
       "skipFiles": ["<node_internals>/**"],
       "type": "pwa-node",
       "env": {
+        "NODE_ENV": "development",
         "PORT": "4200",
         "LOGGING": "true",
-        "PROXY_ICM": "true",
+        "PROXY_ICM": "https://intershoppwa.azurewebsites.net",
         "TRUST_ICM": "true",
         "SSR_HYBRID": "true"
       }
