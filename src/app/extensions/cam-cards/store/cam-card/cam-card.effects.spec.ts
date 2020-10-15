@@ -384,7 +384,7 @@ describe('Cam Card Effects', () => {
       store$.dispatch(loginUserSuccess({ customer }));
       when(camCardServiceMock.createCamCard(anything())).thenReturn(of(camCard));
     });
-    xit('should map to actions of types AddProductToNewCamCard and RemoveItemFromCamCard if there is no target id given', () => {
+    it('should map to actions of types AddProductToNewCamCard and RemoveItemFromCamCard if there is no target id given', () => {
       const action = moveItemToCamCard(payload1);
       const completion1 = addProductToNewCamCard({
         title: payload1.target.title,
@@ -393,13 +393,13 @@ describe('Cam Card Effects', () => {
       });
       const completion2 = removeItemFromCamCard({
         camCardId: payload1.source.id,
-        camCardItemId: payload1.target.camCardItemId,
+        camCardItemId: payload1.source.camCardItemId,
       });
       actions$ = hot('-a----a----a', { a: action });
       const expected$ = cold('-(bc)-(bc)-(bc)', { b: completion1, c: completion2 });
       expect(effects.moveItemToCamCard$).toBeObservable(expected$);
     });
-    xit('should map to actions of types AddProductToCamCard and RemoveItemFromCamCard if there is a target id given', () => {
+    it('should map to actions of types AddProductToCamCard and RemoveItemFromCamCard if there is a target id given', () => {
       const action = moveItemToCamCard(payload2);
       const completion1 = addProductToCamCard({
         camCardId: camCard.id,
@@ -434,23 +434,23 @@ describe('Cam Card Effects', () => {
       when(camCardServiceMock.removeProductFromCamCard(anyString(), anyString())).thenReturn(of(camCard));
     });
 
-    xit('should call the CamCardService for removeProductFromCamCard', done => {
+    it('should call the CamCardService for removeProductFromCamCard', done => {
       const action = removeItemFromCamCard(payload);
       actions$ = of(action);
 
       effects.removeProductFromCamCard$.subscribe(() => {
-        verify(camCardServiceMock.removeProductFromCamCard(payload.camCardId, payload.sku)).once();
+        verify(camCardServiceMock.removeProductFromCamCard(payload.camCardId, payload.camCardItemId)).once();
         done();
       });
     });
-    xit('should map to actions of type RemoveItemFromCamCardSuccess', () => {
+    it('should map to actions of type RemoveItemFromCamCardSuccess', () => {
       const action = removeItemFromCamCard(payload);
       const completion = removeItemFromCamCardSuccess({ camCard });
       actions$ = hot('-a-a-a', { a: action });
       const expected$ = cold('-c-c-c', { c: completion });
       expect(effects.removeProductFromCamCard$).toBeObservable(expected$);
     });
-    xit('should map failed calls to actions of type RemoveItemFromCamCardFail', () => {
+    it('should map failed calls to actions of type RemoveItemFromCamCardFail', () => {
       const error = makeHttpError({ message: 'invalid' });
       when(camCardServiceMock.removeProductFromCamCard(anyString(), anyString())).thenReturn(throwError(error));
       const action = removeItemFromCamCard(payload);
