@@ -14,46 +14,30 @@ describe('Cam Card Mapper', () => {
 
   describe('fromData', () => {
     it('should throw when input is falsy', () => {
-      expect(() => camCardMapper.fromData(undefined, undefined)).toThrow();
+      expect(() => camCardMapper.fromData(undefined)).toThrow();
     });
 
     it('should map incoming data to cam cards model data', () => {
       const camCardData: CamCardData = {
-        title: 'cam cards title',
-        itemsCount: 3,
-        items: [
-          {
-            attributes: [
-              { name: 'sku', value: '123456' },
-              { name: 'id', value: 'camCardItemId' },
-              { name: 'creationDate', value: '12345818123' },
-              {
-                name: 'desiredQuantity',
-                value: {
-                  value: 2,
-                  unit: '',
-                },
-              },
-            ],
-          },
-        ],
+        id: '1234',
+        subCamCards: [],
+        name: 'cam cards title',
+        camCardItems: [{ sku: '123456', camCardItemId: 'camCardItemId', creationDate: 12345818123 }],
       };
-      const mapped = camCardMapper.fromData(camCardData, '1234');
+      const mapped = camCardMapper.fromData(camCardData);
       expect(mapped).toHaveProperty('id', '1234');
       expect(mapped).toHaveProperty('title', 'cam cards title');
       expect(mapped).toHaveProperty('camCardItems', [
         {
-          id: 'camCardItemId',
+          sku: '123456',
+          camCardItemId: 'camCardItemId',
           creationDate: 12345818123,
-          count: 2,
-          position: 0,
-          product: { sku: '123456' },
         },
       ]);
     });
   });
 
-  describe('fromUpdate', () => {
+  describe('Cam Card Mapper', () => {
     it('should map incoming data to cam cards', () => {
       const camCardId = '1234';
 

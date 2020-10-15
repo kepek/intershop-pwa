@@ -120,15 +120,15 @@
     }
     @media (max-width: $screen-sm-max) {
       &-item {
-        color: $camfil-text-color-tertiary;
         line-height: 24px;
+        color: $camfil-text-color-tertiary;
         .row:nth-of-type(2n + 1) {
-          background-color: rgba($color-corporate, 0.1);
           margin-top: $space-box/2;
           margin-bottom: $space-box/2;
-          font-weight: 600;
           font-size: $font-size-xs;
+          font-weight: 600;
           color: $camfil-text-color-primary;
+          background-color: rgba($color-corporate, 0.1);
         }
         &__detail {
           width: 100%;

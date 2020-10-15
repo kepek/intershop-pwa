@@ -11,6 +11,7 @@ import {
   addProductToNewCamCard,
   createCamCard,
   deleteCamCard,
+  detectCamCardToolbar,
   getAllCamCards,
   getCamCardError,
   getCamCardLoading,
@@ -18,7 +19,6 @@ import {
   isStickyCamCardToolbar,
   moveItemToCamCard,
   removeItemFromCamCard,
-  detectCamCardToolbar,
   updateCamCard,
 } from '../store/cam-card';
 

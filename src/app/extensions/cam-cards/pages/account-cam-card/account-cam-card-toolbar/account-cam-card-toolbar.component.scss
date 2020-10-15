@@ -17,13 +17,13 @@
       padding-left: $space-default - $space-box;
       padding-right: $space-default + $space-box;
     }
-    
+
     @media (max-width: $screen-sm-max) {
       bottom: $main-box-margin * -1;
       top: auto;
       box-shadow: $main-box-shadow-revers;
       padding-bottom: 0;
-  
+
       > .container {
         padding: 0 $space-box/2 0 0;
         max-width: 100%;

@@ -17,7 +17,7 @@ export class CamCardService {
    * @returns           The customer's cam_cards.
    */
   getCamCards(): Observable<CamCard[]> {
-    return this.apiService.get(`camcards`).pipe(
+    return this.apiService.get('camcards').pipe(
       unpackEnvelope(),
       map(camCardData => camCardData.map((camCard: CamCardData) => this.getCamCard(camCard.id))),
       // tslint:disable-next-line:no-unnecessary-callback-wrapper
@@ -76,9 +76,9 @@ export class CamCardService {
 
   /**
    * Adds a product to the cam cards with the given id and reloads the cam_cards.
-   * @param camCards Id   The cam cards id.
+   * @param camCardId
    * @param sku           The product sku.
-   * @param quantity      The product quantity (default = 1).
+   * @param count
    * @returns             The changed cam_cards.
    */
   addProductToCamCard(camCardId: string, sku: string, count: number): Observable<CamCard> {
@@ -92,9 +92,9 @@ export class CamCardService {
 
   /**
    * Removes a product from the cam cards with the given id. Returns an error observable if parameters are falsy.
-   * @param wishlist Id   The cam cards id.
-   * @param sku           The product sku.
    * @returns             The changed cam_cards.
+   * @param camCardId
+   * @param camCardItemId
    */
   removeProductFromCamCard(camCardId: string, camCardItemId: string): Observable<CamCard> {
     if (!camCardId) {

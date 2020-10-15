@@ -95,7 +95,7 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
       this.camCardsProcessed = new MatTableDataSource(this.camCards);
       this.changeDetectorRefs.detectChanges();
 
-      this.camCardsProcessed.filterPredicate = (data, filter: string) => {
+      this.camCardsProcessed.filterPredicate = (data, filter) => {
         const filtered = this.simplifyData(filter);
         return (
           this.simplifyData(data.customer.name).indexOf(filtered) !== -1 ||
