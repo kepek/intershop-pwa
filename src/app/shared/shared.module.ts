@@ -5,9 +5,14 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
+import { MatSortModule } from '@angular/material/sort';
+import { MatTableModule } from '@angular/material/table';
 import { RouterModule } from '@angular/router';
 import {
   NgbCarouselModule,
@@ -94,6 +99,7 @@ import { LineItemEditComponent } from './components/line-item/line-item-edit/lin
 import { LineItemListComponent } from './components/line-item/line-item-list/line-item-list.component';
 import { LoginFormComponent } from './components/login/login-form/login-form.component';
 import { LoginModalComponent } from './components/login/login-modal/login-modal.component';
+import { CamfilOrderListComponent } from './components/order/camfil-order-list/camfil-order-list.component';
 import { OrderListComponent } from './components/order/order-list/order-list.component';
 import { OrderWidgetComponent } from './components/order/order-widget/order-widget.component';
 import { CamfilProductAddToBasketComponent } from './components/product/camfil-product-add-to-basket/camfil-product-add-to-basket.component';
@@ -217,6 +223,7 @@ const declaredComponents = [
   LineItemEditComponent,
   LineItemEditDialogComponent,
   LoginModalComponent,
+  OrderListComponent,
   ProductAddToBasketComponent,
   ProductAddToCompareComponent,
   ProductIdComponent,
@@ -257,6 +264,7 @@ const exportedComponents = [
   CamfilFilterNavigationComponent,
   CamfilHeaderBoxComponent,
   CamfilLinksBlockComponent,
+  CamfilOrderListComponent,
   CamfilProductAddToBasketComponent,
   CamfilProductAddToCompareComponent,
   CamfilProductAttributeComponent,
@@ -301,9 +309,14 @@ const exportedComponents = [
     MatCardModule,
     MatCheckboxModule,
     MatChipsModule,
+    MatDatepickerModule,
+    MatFormFieldModule,
     MatIconModule,
+    MatInputModule,
     MatRadioModule,
     MatSelectModule,
+    MatSortModule,
+    MatTableModule,
   ],
   declarations: [...declaredComponents, ...exportedComponents],
   exports: [...exportedComponents, ...importExportModules],

@@ -1,0 +1,97 @@
+@import '~src/styles/themes/camfil/colors.scss';
+@import '~src/styles/themes/camfil/variables.scss';
+
+:host {
+  tr.mat-header-row,
+  tr.mat-row {
+    height: 42px;
+  }
+  ::ng-deep .mat-form-field-flex {
+    padding: 0 !important;
+  }
+  ::ng-deep div.show-more-overlay .mat-stroked-button {
+    padding: 0 28px;
+    font-size: 12px;
+  }
+}
+
+table {
+  width: 100%;
+
+  th {
+    height: 45px;
+    font-size: $font-size-corporate;
+    color: #000;
+    background-color: $greyF5;
+  }
+  tr.orderlist-row:hover {
+    background: $greyF5;
+  }
+  tr.orderlist-row:active {
+    background: $greyEF;
+  }
+}
+
+.search-container {
+  width: 308px;
+  margin-right: 16px;
+}
+
+.search-input {
+  width: 100%;
+  height: 40px;
+  padding: 8px 8px 8px 46px;
+  border: none;
+  border-radius: 30px;
+
+  &:focus {
+    outline: none;
+
+    + .buttons {
+      button {
+        color: $camfil-color-light;
+      }
+    }
+  }
+}
+button {
+  &[type='submit'] {
+    position: absolute;
+    top: $space-box / 4;
+    right: $space-box / 2;
+    padding-right: $space-box / 2;
+    padding-left: $space-box / 2;
+    line-height: 26px;
+  }
+
+  &.btn-reset {
+    display: none;
+  }
+}
+
+.background-icon {
+  position: absolute;
+  top: 5px;
+  left: 12px;
+}
+
+.orders-count {
+  font-size: 16px;
+}
+
+.show-more-overlay {
+  position: relative;
+  top: -80px;
+  background-color: rgb(255 255 255 / 90%);
+  mat-stroked-button {
+    padding: 0 28px;
+    font-size: 12px;
+  }
+}
+
+mat-form-field.select-filter {
+  width: 160px;
+  margin-right: 16px;
+  font-size: 12px;
+  letter-spacing: 1px;
+}

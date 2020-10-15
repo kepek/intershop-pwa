@@ -25,7 +25,7 @@ const accountPageRoutes: Routes = [
         path: 'orders',
         data: { breadcrumbData: [{ key: 'account.order_history.link' }] },
         loadChildren: () =>
-          import('../account-order-history/account-order-history-page.module').then(
+          import('../camfil-account-order-history/camfil-account-order-history-page.module').then(
             m => m.AccountOrderHistoryPageModule
           ),
       },
