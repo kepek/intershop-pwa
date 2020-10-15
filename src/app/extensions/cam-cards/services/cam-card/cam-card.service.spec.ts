@@ -4,6 +4,7 @@ import { anything, instance, mock, verify, when } from 'ts-mockito';
 
 import { ApiService } from 'ish-core/services/api/api.service';
 
+import { CamCardCreate } from '../../models/cam-card/cam-card-create.interface';
 import { CamCardData } from '../../models/cam-card/cam-card.interface';
 import { CamCard, CamCardHeader } from '../../models/cam-card/cam-card.model';
 
@@ -64,7 +65,7 @@ describe('Cam Card Service', () => {
     const camCardId = '1234';
     const camCardHeader: CamCardHeader = { title: 'cam cards title' };
     when(apiServiceMock.post('camcards', anything())).thenReturn(
-      of({ title: camCardId, id: camCardId } as CamCardData)
+      of({ title: camCardId, itemId: camCardId } as CamCardCreate)
     );
     when(apiServiceMock.get('camcards/1234')).thenReturn(of({ id: '1234' }));
 
