@@ -633,6 +633,7 @@
   "camfil.common.button.navbarCollapsed.menu.aria_label": "Button with a menu icon for close/open navigation",
   "camfil.common.button.navbarCollapsed.text": "Menu",
   "camfil.common.home.link": "Start",
+  "camfil.common.label.none": "None",
   "camfil.forgot_password.form.send.button.label": "Send",
   "camfil.forgot_username.form.send.button.label": "Send",
   "camfil.guide_article.headline": "Guides",
