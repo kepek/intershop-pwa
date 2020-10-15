@@ -6,9 +6,17 @@
   tr.mat-row {
     height: 42px;
   }
-  ::ng-deep .mat-form-field-flex {
-    padding: 0 !important;
+
+  // reduce height of filter select boxes
+  ::ng-deep .mat-form-field-appearance-fill {
+    .mat-form-field-flex {
+      padding: 0.25em 0.75em 0 0.75em;
+    }
+    .mat-form-field-infix {
+      padding: 0.25em 0 0.25em 0;
+    }
   }
+
   ::ng-deep div.show-more-overlay .mat-stroked-button {
     padding: 0 28px;
     font-size: 12px;
