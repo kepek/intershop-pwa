@@ -9,4 +9,4 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['./camfil-account-order-history-page.scss'],
 })
-export class CamfilAccountOrderHistoryPageComponent { }
+export class CamfilAccountOrderHistoryPageComponent {}
