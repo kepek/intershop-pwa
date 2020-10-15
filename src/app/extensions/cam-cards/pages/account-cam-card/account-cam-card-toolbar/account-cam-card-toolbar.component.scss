@@ -1,8 +1,8 @@
 @import '~src/styles/themes/camfil/variables';
 
 :host {
-  height: 44px;
   display: block;
+  height: 44px;
 
   .sticky {
     position: fixed;
@@ -10,25 +10,25 @@
     left: $space-default;
     z-index: 99;
     width: 100%;
-    background-color: $camfil-white;
     padding: $space-box 0 $space-box/2;
+    background-color: $camfil-white;
 
     > .container {
-      padding-left: $space-default - $space-box;
       padding-right: $space-default + $space-box;
+      padding-left: $space-default - $space-box;
     }
 
     @media (max-width: $screen-sm-max) {
-      bottom: $main-box-margin * -1;
       top: auto;
-      box-shadow: $main-box-shadow-revers;
+      bottom: $main-box-margin * -1;
       padding-bottom: 0;
+      box-shadow: $main-box-shadow-revers;
 
       > .container {
-        padding: 0 $space-box/2 0 0;
         max-width: 100%;
-        white-space: nowrap;
+        padding: 0 $space-box/2 0 0;
         overflow: auto;
+        white-space: nowrap;
       }
     }
   }
@@ -37,8 +37,8 @@
   }
 }
 button {
-  margin-left: $space-box/2;
   margin-bottom: $space-box/2;
+  margin-left: $space-box/2;
 
   &:not(:first-child) .mat-icon {
     margin-right: $space-box/2;

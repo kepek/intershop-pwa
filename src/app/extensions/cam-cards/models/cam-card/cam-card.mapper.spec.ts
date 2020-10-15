@@ -20,17 +20,23 @@ describe('Cam Card Mapper', () => {
     it('should map incoming data to cam cards model data', () => {
       const camCardData: CamCardData = {
         id: '1234',
+        rootCamCard: '111',
         subCamCards: [],
+        title: 'cam cards title',
         name: 'cam cards title',
-        camCardItems: [{ sku: '123456', camCardItemId: 'camCardItemId', creationDate: 12345818123 }],
+        creationDate: new Date(12345818123),
+        camCardItems: [{ id: '123456', count: 2, product: { sku: '666' }, creationDate: 12345818123 }],
       };
       const mapped = camCardMapper.fromData(camCardData);
       expect(mapped).toHaveProperty('id', '1234');
       expect(mapped).toHaveProperty('title', 'cam cards title');
       expect(mapped).toHaveProperty('camCardItems', [
         {
-          sku: '123456',
-          camCardItemId: 'camCardItemId',
+          id: '123456',
+          count: 2,
+          product: {
+            sku: '666',
+          },
           creationDate: 12345818123,
         },
       ]);

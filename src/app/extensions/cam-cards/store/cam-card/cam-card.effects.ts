@@ -227,7 +227,7 @@ export class CamCardEffects {
             }),
             removeItemFromCamCard({
               camCardId: payload.source.id,
-              camCardItemId: payload.source.itemId,
+              camCardItemId: payload.source.camCardItemId,
             }),
           ];
         } else {
@@ -239,7 +239,7 @@ export class CamCardEffects {
             }),
             removeItemFromCamCard({
               camCardId: payload.source.id,
-              camCardItemId: payload.source.itemId,
+              camCardItemId: payload.source.camCardItemId,
             }),
           ];
         }

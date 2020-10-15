@@ -65,7 +65,7 @@ export class CamCardsFacade {
   ): void {
     this.store.dispatch(
       moveItemToCamCard({
-        source: { id: sourcecamCardId, itemId: camCardItemId },
+        source: { id: sourcecamCardId, camCardItemId },
         target: { id: targetcamCardId, sku, quantity },
       })
     );
@@ -79,7 +79,7 @@ export class CamCardsFacade {
     quantity: number
   ): void {
     this.store.dispatch(
-      moveItemToCamCard({ source: { id: sourceCamCardId, itemId: camCardItemId }, target: { title, sku, quantity } })
+      moveItemToCamCard({ source: { id: sourceCamCardId, camCardItemId }, target: { title, sku, quantity } })
     );
   }
 
