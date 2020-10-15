@@ -143,7 +143,7 @@ export class CamfilOrderListComponent implements OnInit, AfterViewInit, OnDestro
   }
 
   getCustomers(data) {
-    return [...new Set(data.map(item => item.customer))];
+    return [undefined, ...new Set(data.map(item => item.customer))];
   }
 
   addStatusFilter(change: MatCheckboxChange) {

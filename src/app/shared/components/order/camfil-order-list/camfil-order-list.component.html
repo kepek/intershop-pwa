@@ -49,7 +49,7 @@
             <mat-label>Filter by customer</mat-label>
             <mat-select [formControl]="customerFilter">
               <mat-option *ngFor="let customer of customers" [value]="customer">
-                {{ customer }}
+                {{ customer || 'camfil.common.label.none' | translate }}
               </mat-option>
             </mat-select>
           </mat-form-field>
