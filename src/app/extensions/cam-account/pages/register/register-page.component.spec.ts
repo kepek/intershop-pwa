@@ -30,7 +30,7 @@ describe('Register Page Component', () => {
         RegisterPageComponent,
       ],
       imports: [RouterTestingModule, TranslateModule.forRoot()],
-      providers: [provideMockStore(), { provide: AccountFacade, useFactory: () => instance(mock(AccountFacade)) }],
+      providers: [{ provide: AccountFacade, useFactory: () => instance(mock(AccountFacade)) }, provideMockStore()],
     }).compileComponents();
   });
 

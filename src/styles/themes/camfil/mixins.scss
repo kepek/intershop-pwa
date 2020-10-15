@@ -83,3 +83,21 @@
   font-weight: 300;
   line-height: 16px;
 }
+
+@mixin heading {
+  font-family: $font-family-SansPro;
+  @include font-size-h3;
+}
+
+@mixin error {
+  margin-top: 8px;
+  font-size: 11.2px;
+}
+
+@mixin page-40 {
+  padding: $common-padding;
+
+  &__form-wrapper {
+    padding: 0;
+  }
+}

@@ -5,6 +5,7 @@ import { Customer, CustomerRegistrationType, CustomerUserType } from 'ish-core/m
 import { PasswordReminder } from 'ish-core/models/password-reminder/password-reminder.model';
 import { PaymentMethod } from 'ish-core/models/payment-method/payment-method.model';
 import { User } from 'ish-core/models/user/user.model';
+import { UsernameReminder } from 'ish-core/models/username-reminder/username-reminder.model';
 import { httpError, payload } from 'ish-core/utils/ngrx-creators';
 
 export const loginUser = createAction('[User] Login User', payload<{ credentials: Credentials }>());
@@ -88,6 +89,25 @@ export const deleteUserPaymentInstrumentFail = createAction(
 );
 
 export const deleteUserPaymentInstrumentSuccess = createAction('[User API] Delete User Payment Instrument Success');
+
+export const resetUsernameReminder = createAction('[Userame Reminder Internal] Reset Username Reminder Data');
+
+export const requestUsernameReminder = createAction(
+  '[Userame Reminder] Request Password Reminder',
+  payload<{ data: UsernameReminder }>()
+);
+
+export const loadAccounts = createAction('[Username Internal] Load Accounts');
+
+export const requestUsernameReminderSuccess = createAction(
+  '[Username Reminder API] Request Username Reminder Success',
+  payload<{ accounts: string[] }>()
+);
+
+export const requestUsernameReminderFail = createAction(
+  '[Username Reminder API] Request Username Reminder Fail',
+  httpError()
+);
 
 export const requestPasswordReminder = createAction(
   '[Password Reminder] Request Password Reminder',

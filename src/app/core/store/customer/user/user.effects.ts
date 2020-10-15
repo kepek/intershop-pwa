@@ -50,6 +50,9 @@ import {
   requestPasswordReminder,
   requestPasswordReminderFail,
   requestPasswordReminderSuccess,
+  requestUsernameReminder,
+  requestUsernameReminderFail,
+  requestUsernameReminderSuccess,
   resetAPIToken,
   setPGID,
   updateCustomer,
@@ -127,6 +130,7 @@ export class UserEffects {
    * redirects to the returnUrl after successful login
    * does not redirect at all, if no returnUrl is defined
    */
+  // tslint:disable-next-line:no-commented-out-code
   /*  redirectAfterLogin$ = createEffect(
       () =>
         this.store$.pipe(select(selectQueryParam('returnUrl'))).pipe(
@@ -345,6 +349,19 @@ export class UserEffects {
         displaySuccessMessage({
           message: 'account.profile.update_password.message',
         })
+      )
+    )
+  );
+
+  requestUsernameReminder$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(requestUsernameReminder),
+      mapToPayloadProperty('data'),
+      concatMap(data =>
+        this.userService.requestUsernameReminder(data).pipe(
+          map(accounts => requestUsernameReminderSuccess({ accounts })),
+          mapErrorToAction(requestUsernameReminderFail)
+        )
       )
     )
   );
