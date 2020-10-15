@@ -5,6 +5,7 @@ import { concatMap, defaultIfEmpty, map, switchMap } from 'rxjs/operators';
 import { ApiService, unpackEnvelope } from 'ish-core/services/api/api.service';
 
 import { CamCardData } from '../../models/cam-card/cam-card.interface';
+import { CamCardCreate } from '../../models/cam-card/cam-card-create.interface';
 import { CamCardMapper } from '../../models/cam-card/cam-card.mapper';
 import { CamCard, CamCardHeader } from '../../models/cam-card/cam-card.model';
 
@@ -47,8 +48,8 @@ export class CamCardService {
    */
   createCamCard(camCardData: CamCardHeader): Observable<CamCard> {
     return this.apiService
-      .post('camcards', camCardData)
-      .pipe(concatMap((response: CamCardData) => this.getCamCard(response.id)));
+      .post('camcards', { ...camCardData, name: camCardData.title })
+      .pipe(concatMap((response: CamCardCreate) => this.getCamCard(response.itemId)));
   }
 
   /**

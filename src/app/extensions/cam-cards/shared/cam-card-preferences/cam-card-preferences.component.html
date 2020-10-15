@@ -17,7 +17,7 @@
           </mat-form-field>
           <mat-form-field appearance="fill">
             <mat-label>{{ 'camfil.account.cam_card.add_to_form.customer_name' | translate }}</mat-label>
-            <mat-select>
+            <mat-select formControlName="customerName">
               <mat-option>--</mat-option>
               <mat-option *ngFor="let customer of customers" [value]="customer.value">
                 {{ customer.viewValue }}
@@ -28,6 +28,7 @@
             <mat-label>{{ 'camfil.account.cam_card.add_to_form.order_mark' | translate }}</mat-label>
             <input
               matInput
+              formControlName="orderMark"
               label="camfil.account.cam_card.add_to_form.order_mark"
               markRequiredLabel="off"
               maxlength="35"
@@ -38,6 +39,7 @@
             <mat-label>{{ 'camfil.account.cam_card.add_to_form.invoice_mark' | translate }}</mat-label>
             <input
               matInput
+              formControlName="invoiceMark"
               label="camfil.account.cam_card.add_to_form.invoice_mark"
               markRequiredLabel="off"
               maxlength="35"
@@ -49,7 +51,7 @@
           <h3>{{ 'camfil.account.cam_card.add_to_form.delivery_address' | translate }}</h3>
           <mat-form-field appearance="fill">
             <mat-label>{{ 'camfil.account.cam_card.add_to_form.choose_address' | translate }}</mat-label>
-            <mat-select>
+            <mat-select formControlName="deliveryAddress">
               <mat-option>--</mat-option>
               <mat-option *ngFor="let location of locations" [value]="location.value">
                 {{ location.viewValue }}
@@ -60,6 +62,7 @@
             <mat-label>{{ 'camfil.account.cam_card.add_to_form.customer_name' | translate }}</mat-label>
             <input
               matInput
+              formControlName="customerName"
               label="camfil.account.cam_card.add_to_form.customer_name"
               markRequiredLabel="off"
               maxlength="35"
@@ -70,6 +73,7 @@
             <mat-label>{{ 'camfil.account.cam_card.add_to_form.building' | translate }}</mat-label>
             <input
               matInput
+              formControlName="building"
               label="camfil.account.cam_card.add_to_form.building"
               markRequiredLabel="off"
               maxlength="35"
@@ -80,6 +84,7 @@
             <mat-label>{{ 'camfil.account.cam_card.add_to_form.adress' | translate }}</mat-label>
             <input
               matInput
+              formControlName="address"
               label="camfil.account.cam_card.add_to_form.adress"
               markRequiredLabel="off"
               maxlength="35"
@@ -90,6 +95,7 @@
             <mat-label>{{ 'camfil.account.cam_card.add_to_form.zip_code' | translate }}</mat-label>
             <input
               matInput
+              formControlName="zipCode"
               label="camfil.account.cam_card.add_to_form.zip_code"
               markRequiredLabel="off"
               maxlength="35"
@@ -100,6 +106,7 @@
             <mat-label>{{ 'camfil.account.cam_card.add_to_form.area' | translate }}</mat-label>
             <input
               matInput
+              formControlName="area"
               label="camfil.account.cam_card.add_to_form.area"
               markRequiredLabel="off"
               maxlength="35"
@@ -111,15 +118,15 @@
           <h3>{{ 'camfil.account.cam_card.add_to_form.delivery_time' | translate }}</h3>
           <mat-form-field appearance="fill">
             <mat-label>{{ 'camfil.account.cam_card.add_to_form.last_delivery' | translate }}</mat-label>
-            <input matInput [matDatepicker]="pickerLast" />
-            <mat-datepicker-toggle matSuffix [for]="picker">
+            <input matInput [matDatepicker]="pickerLast" formControlName="lastDelivery" />
+            <mat-datepicker-toggle matSuffix [for]="pickerLast">
               <mat-icon svgIcon="calendar" matDatepickerToggleIcon></mat-icon>
             </mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
+            <mat-datepicker #pickerLast></mat-datepicker>
           </mat-form-field>
           <mat-form-field appearance="fill">
             <mat-label>{{ 'camfil.account.cam_card.add_to_form.delivery_interval' | translate }}</mat-label>
-            <mat-select>
+            <mat-select formControlName="deliveryInterval">
               <mat-option>--</mat-option>
               <mat-option *ngFor="let delivery of deliveryInterval" [value]="delivery.value">
                 {{ delivery.viewValue }}
@@ -128,11 +135,11 @@
           </mat-form-field>
           <mat-form-field appearance="fill">
             <mat-label>{{ 'camfil.account.cam_card.add_to_form.next_delivery' | translate }}</mat-label>
-            <input matInput [matDatepicker]="pickerNext" />
-            <mat-datepicker-toggle matSuffix [for]="picker">
+            <input matInput [matDatepicker]="pickerNext" formControlName="nextDelivery" />
+            <mat-datepicker-toggle matSuffix [for]="pickerNext">
               <mat-icon svgIcon="calendar" matDatepickerToggleIcon></mat-icon>
             </mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
+            <mat-datepicker #pickerNext></mat-datepicker>
           </mat-form-field>
         </div>
       </div>

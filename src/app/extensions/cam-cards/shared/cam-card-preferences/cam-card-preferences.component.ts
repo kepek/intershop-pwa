@@ -54,12 +54,8 @@ export class CamCardPreferencesComponent implements OnChanges {
 
   customers = [
     {
-      value: 'skanska',
-      viewValue: 'Skanska',
-    },
-    {
-      value: 'txm',
-      viewValue: 'TXM',
+      value: 'sQJ_AAABWFkAAAF1Q6wJsCII',
+      viewValue: 'Bio tech',
     },
   ];
 
@@ -97,7 +93,20 @@ export class CamCardPreferencesComponent implements OnChanges {
   }
 
   initForm() {
-    this.camCardForm = this.fb.group({ title: ['', [Validators.required, Validators.maxLength(35)]] });
+    this.camCardForm = this.fb.group({
+      title: ['', [Validators.required, Validators.maxLength(35)]],
+      customerName: ['', [Validators.required, Validators.maxLength(35)]],
+      orderMark: ['', [Validators.maxLength(35)]],
+      invoiceMark: ['', [Validators.maxLength(35)]],
+      deliveryAddress: ['', [Validators.maxLength(35)]],
+      building: ['', [Validators.maxLength(35)]],
+      address: ['', [Validators.maxLength(35)]],
+      zipCode: ['', [Validators.maxLength(35)]],
+      area: ['', [Validators.maxLength(35)]],
+      lastDelivery: ['', [Validators.maxLength(35)]],
+      deliveryInterval: ['', [Validators.maxLength(35)]],
+      nextDelivery: ['', [Validators.maxLength(35)]],
+    });
   }
 
   patchForm() {
@@ -112,8 +121,12 @@ export class CamCardPreferencesComponent implements OnChanges {
   submitCamCardForm() {
     if (this.camCardForm.valid) {
       this.submit.emit({
-        id: !this.camCard ? this.camCardForm.get('title').value : this.camCardTitle,
-        title: this.camCardForm.get('title').value,
+        title: !this.camCard ? this.camCardForm.get('title').value : this.camCardTitle,
+        orderLabel: this.camCardForm.get('orderMark').value,
+        invoiceLabel: this.camCardForm.get('invoiceMark').value,
+        customer: {
+          id: this.camCardForm.get('customerName').value,
+        },
       });
     } else {
       this.submitted = true;
