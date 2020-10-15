@@ -26,37 +26,23 @@ describe('Cam Card Service', () => {
   });
 
   it("should get cam cards when 'getCamCards' is called", done => {
-    when(apiServiceMock.get(`customers/-/users/-/wishlists`)).thenReturn(
-      of({ elements: [{ uri: 'any/wishlists/1234' }] })
-    );
-    when(apiServiceMock.get(`customers/-/users/-/wishlists/1234`)).thenReturn(of({ id: '1234' }));
+    when(apiServiceMock.get('camcards')).thenReturn(of({ elements: [{ id: '1234' }] }));
+    when(apiServiceMock.get('camcards/1234')).thenReturn(of({ id: '1234' }));
 
     camCardService.getCamCards().subscribe(data => {
-      verify(apiServiceMock.get(`customers/-/users/-/wishlists`)).once();
-      verify(apiServiceMock.get(`customers/-/users/-/wishlists/1234`)).once();
+      verify(apiServiceMock.get('camcards')).once();
+      verify(apiServiceMock.get('camcards/1234')).once();
       expect(data).toMatchInlineSnapshot(`
         Array [
           Object {
-            "camCardItems": Array [],
-            "creationDate": undefined,
-            "customer": Object {
-              "name": "customerName 1234",
+            "delivery": Object {
+              "interval": 10,
+              "last": "12-01-2020",
             },
             "id": "1234",
             "itemsCount": 0,
-            "rootCamCard": "",
-            "subCamCards": Array [
-              Object {
-                "camCardItems": Array [],
-                "creationDate": undefined,
-                "customer": Object {},
-                "id": "1234SUB",
-                "itemsCount": 0,
-                "rootCamCard": "1234",
-                "subCamCards": Array [],
-                "title": "SUB CamCard - undefined",
-              },
-            ],
+            "maintenanceStatus": false,
+            "subCamCards": Array [],
             "title": undefined,
           },
         ]
@@ -66,10 +52,10 @@ describe('Cam Card Service', () => {
   });
 
   it("should get an cam cards when 'getCamCard' is called", done => {
-    when(apiServiceMock.get(`customers/-/users/-/wishlists/1234`)).thenReturn(of({ id: '1234' }));
+    when(apiServiceMock.get(`camcards/1234`)).thenReturn(of({ id: '1234' }));
 
     camCardService.getCamCard('1234').subscribe(() => {
-      verify(apiServiceMock.get(`customers/-/users/-/wishlists/1234`)).once();
+      verify(apiServiceMock.get(`camcards/1234`)).once();
       done();
     });
   });
@@ -77,17 +63,14 @@ describe('Cam Card Service', () => {
   it("should create an cam cards when 'createCamCard' is called", done => {
     const camCardId = '1234';
     const camCardHeader: CamCardHeader = { title: 'cam cards title' };
-    when(apiServiceMock.post(`customers/-/users/-/wishlists`, anything())).thenReturn(
-      of({ title: camCardId } as CamCardData)
+    when(apiServiceMock.post('camcards', anything())).thenReturn(
+      of({ title: camCardId, id: camCardId } as CamCardData)
     );
-    when(apiServiceMock.post(`customers/-/users/-/wishlists`, anything())).thenReturn(
-      of({ title: camCardId } as CamCardData)
-    );
-    when(apiServiceMock.get(`customers/-/users/-/wishlists/1234`)).thenReturn(of({ id: '1234' }));
+    when(apiServiceMock.get('camcards/1234')).thenReturn(of({ id: '1234' }));
 
     camCardService.createCamCard(camCardHeader).subscribe(data => {
       expect(camCardId).toEqual(data.id);
-      verify(apiServiceMock.post(`customers/-/users/-/wishlists`, anything())).once();
+      verify(apiServiceMock.post('camcards', anything())).once();
       done();
     });
   });
@@ -95,10 +78,10 @@ describe('Cam Card Service', () => {
   it("should delete a cam cards when 'deleteCamCard' is called", done => {
     const camCardId = '1234';
 
-    when(apiServiceMock.delete(`customers/-/users/-/wishlists/${camCardId}`)).thenReturn(of({}));
+    when(apiServiceMock.delete(`camcards/${camCardId}`)).thenReturn(of({}));
 
     camCardService.deleteCamCard(camCardId).subscribe(() => {
-      verify(apiServiceMock.delete(`customers/-/users/-/wishlists/${camCardId}`)).once();
+      verify(apiServiceMock.delete(`camcards/${camCardId}`)).once();
       done();
     });
   });
@@ -106,27 +89,27 @@ describe('Cam Card Service', () => {
   it("should update a cam cards when 'updateCamCard' is called", done => {
     const camCard: CamCard = { id: '1234', title: 'cam cards title' };
 
-    when(apiServiceMock.put(`customers/-/users/-/wishlists/${camCard.id}`, anything())).thenReturn(of({ camCard }));
+    when(apiServiceMock.put(`camcards/${camCard.id}`, anything())).thenReturn(of({ camCard }));
 
     camCardService.updateCamCard(camCard).subscribe(data => {
       expect(camCard.id).toEqual(data.id);
-      verify(apiServiceMock.put(`customers/-/users/-/wishlists/${camCard.id}`, anything())).once();
+      verify(apiServiceMock.put(`camcards/${camCard.id}`, anything())).once();
       done();
     });
   });
 
   it("should remove a product from a cam cards when 'removeItemFromCamCard' is called", done => {
     const camCardId = '1234';
-    const sku = 'abcd';
+    const camCardItemId = 'abcd';
 
-    when(apiServiceMock.delete(`customers/-/users/-/wishlists/${camCardId}/products/${sku}`)).thenReturn(of({}));
-    when(apiServiceMock.get(`customers/-/users/-/wishlists/${camCardId}`)).thenReturn(
-      of({ title: 'cam cards title' } as CamCardData)
+    when(apiServiceMock.delete(`camcards/${camCardId}/products/${camCardItemId}`)).thenReturn(of({}));
+    when(apiServiceMock.get(`camcards/${camCardId}`)).thenReturn(
+      of({ title: 'cam cards title', id: '1234', rootCamCard: '' } as CamCardData)
     );
 
-    camCardService.removeProductFromCamCard(camCardId, sku).subscribe(() => {
-      verify(apiServiceMock.delete(`customers/-/users/-/wishlists/${camCardId}/products/${sku}`)).once();
-      verify(apiServiceMock.get(`customers/-/users/-/wishlists/${camCardId}`)).once();
+    camCardService.removeProductFromCamCard(camCardId, camCardItemId).subscribe(() => {
+      verify(apiServiceMock.delete(`camcards/${camCardId}/products/${camCardItemId}`)).once();
+      verify(apiServiceMock.get(`camcards/${camCardId}`)).once();
       done();
     });
   });

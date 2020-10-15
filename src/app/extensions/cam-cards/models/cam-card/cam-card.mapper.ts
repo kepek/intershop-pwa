@@ -7,14 +7,16 @@ import { CamCard } from './cam-card.model';
 export class CamCardMapper {
   fromData(camCardData: CamCardData): CamCard {
     if (camCardData) {
-      const itemsCountFromSubCamCard = camCardData.subCamCards.reduce(
-        (result, data) => result + data.camCardItems.length,
-        0
-      );
-      const subs = camCardData.subCamCards.map(sub => ({
-        ...sub,
-        title: sub.name || 'Building', // TODO: improve
-      }));
+      const itemsFromSubCamCard = camCardData.subCamCards
+        ? camCardData.subCamCards.reduce((result, data) => result + data.camCardItems.length, 0)
+        : 0;
+      const items = camCardData.camCardItems ? camCardData.camCardItems.length : 0;
+      const subs = camCardData.subCamCards
+        ? camCardData.subCamCards.map(sub => ({
+            ...sub,
+            title: sub.name || 'Building', // TODO: improve
+          }))
+        : [];
       return {
         ...camCardData,
         title: camCardData.name,
@@ -24,7 +26,7 @@ export class CamCardMapper {
           interval: 10, // TODO: tmp
         },
         maintenanceStatus: false, // TODO: tmp
-        itemsCount: camCardData.camCardItems.length + itemsCountFromSubCamCard,
+        itemsCount: items + itemsFromSubCamCard,
       };
     } else {
       throw new Error(`camCardData is required`);
