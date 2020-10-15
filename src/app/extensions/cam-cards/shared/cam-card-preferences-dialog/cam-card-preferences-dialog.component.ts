@@ -65,7 +65,7 @@ export class CamCardPreferencesDialogComponent implements OnChanges {
     this.modalHeader = this.modalTitle || this.modalHeader;
     if (this.camCard) {
       this.primaryButton = 'camfil.account.cam_cards.edit_form.save_button.text';
-      this.camCardTitle = this.camCard.title;
+      this.camCardTitle = this.camCard.name;
       this.modalHeader = 'camfil.account.cam_card.edit.heading';
     }
   }
@@ -77,7 +77,7 @@ export class CamCardPreferencesDialogComponent implements OnChanges {
   patchForm() {
     if (this.camCard) {
       this.camCardForm.setValue({
-        title: this.camCard.title,
+        title: this.camCard.name,
       });
     }
   }
@@ -87,7 +87,7 @@ export class CamCardPreferencesDialogComponent implements OnChanges {
     if (this.camCardForm.valid) {
       this.submit.emit({
         id: !this.camCard ? this.camCardForm.get('title').value : this.camCardTitle,
-        title: this.camCardForm.get('title').value,
+        name: this.camCardForm.get('title').value,
       });
 
       this.hide();

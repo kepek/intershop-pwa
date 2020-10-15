@@ -22,14 +22,13 @@ describe('Cam Card Mapper', () => {
         id: '1234',
         rootCamCard: '111',
         subCamCards: [],
-        title: 'cam cards title',
         name: 'cam cards title',
         creationDate: new Date(12345818123),
         camCardItems: [{ id: '123456', count: 2, product: { sku: '666' }, creationDate: 12345818123 }],
       };
       const mapped = camCardMapper.fromData(camCardData);
       expect(mapped).toHaveProperty('id', '1234');
-      expect(mapped).toHaveProperty('title', 'cam cards title');
+      expect(mapped).toHaveProperty('name', 'cam cards title');
       expect(mapped).toHaveProperty('camCardItems', [
         {
           id: '123456',
@@ -49,12 +48,12 @@ describe('Cam Card Mapper', () => {
 
       const updateCamCardData: CamCard = {
         id: camCardId,
-        title: 'title',
+        name: 'title',
       };
       const mapped = camCardMapper.fromUpdate(updateCamCardData, camCardId);
 
       expect(mapped).toHaveProperty('id', camCardId);
-      expect(mapped).toHaveProperty('title', 'title');
+      expect(mapped).toHaveProperty('name', 'title');
     });
   });
 });

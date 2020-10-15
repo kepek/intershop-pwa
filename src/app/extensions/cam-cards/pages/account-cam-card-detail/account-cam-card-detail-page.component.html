@@ -10,7 +10,7 @@
 </ng-container>
 <ng-container *ngIf="camCard$ | async as camCard">
   <h1>
-    {{ camCard?.title }}
+    {{ camCard?.name }}
     <a
       (click)="editCamCardDialog.show()"
       class="btn btn-default btn-tool float-right"

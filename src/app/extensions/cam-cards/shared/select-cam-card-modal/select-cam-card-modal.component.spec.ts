@@ -20,10 +20,9 @@ describe('Select Cam Card Modal Component', () => {
   let element: HTMLElement;
   let camCardFacadeMock: CamCardsFacade;
   const camCardDetails = {
-    title: 'testing cam cards',
+    name: 'testing cam cards',
     id: '.SKsEQAE4FIAAAFuNiUBWx0d',
     itemsCount: 0,
-    public: false,
   };
 
   beforeEach(async () => {

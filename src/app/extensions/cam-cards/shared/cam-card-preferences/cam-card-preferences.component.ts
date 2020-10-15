@@ -112,7 +112,7 @@ export class CamCardPreferencesComponent implements OnChanges {
   patchForm() {
     if (this.camCard) {
       this.camCardForm.setValue({
-        title: this.camCard.title,
+        title: this.camCard.name,
       });
     }
   }
@@ -121,7 +121,7 @@ export class CamCardPreferencesComponent implements OnChanges {
   submitCamCardForm() {
     if (this.camCardForm.valid) {
       this.submit.emit({
-        title: !this.camCard ? this.camCardForm.get('title').value : this.camCardTitle,
+        name: !this.camCard ? this.camCardForm.get('title').value : this.camCardTitle,
         orderLabel: this.camCardForm.get('orderMark').value,
         invoiceLabel: this.camCardForm.get('invoiceMark').value,
         customer: {

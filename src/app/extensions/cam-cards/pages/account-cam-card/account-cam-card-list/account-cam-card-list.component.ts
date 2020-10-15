@@ -60,7 +60,7 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
 
   camCardsProcessed: MatTableDataSource<CamCard>;
   columnsToDisplay = [
-    'title',
+    'name',
     'customer',
     'lastDelivery',
     'orderInterval',
@@ -99,7 +99,7 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
         const filtered = this.simplifyData(filter);
         return (
           this.simplifyData(data.customer.name).indexOf(filtered) !== -1 ||
-          this.simplifyData(data.title).indexOf(filtered) !== -1
+          this.simplifyData(data.name).indexOf(filtered) !== -1
         );
       };
       this.camCardsProcessed.sort = this.sort;
@@ -157,7 +157,7 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
   /** Determine the heading of the delete modal and opens the modal. */
   openDeleteConfirmationDialog(camCard: CamCard, modal: ModalDialogComponent<string>) {
     this.translate
-      .get('camfil.account.cam_cards.delete_dialog.header', { 0: camCard.title })
+      .get('camfil.account.cam_cards.delete_dialog.header', { 0: camCard.name })
       .pipe(take(1), takeUntil(this.destroy$))
       .subscribe(res => (modal.options.titleText = res));
 

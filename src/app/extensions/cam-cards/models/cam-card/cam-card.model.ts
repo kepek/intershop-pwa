@@ -1,10 +1,9 @@
 export interface CamCardHeader {
-  title: string;
+  name: string;
 }
 
 export interface CamCard extends CamCardHeader {
   id?: string;
-  name?: string;
   orderLabel?: string;
   invoiceLabel?: string;
   customer?: CamCardCustomer;
@@ -64,5 +63,4 @@ export interface CamCardDelivery {
   address?: string;
   zipCode?: string;
   area?: string;
-  // maybe deliveryAddress: { } also
 }

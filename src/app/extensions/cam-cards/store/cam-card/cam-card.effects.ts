@@ -12,8 +12,8 @@ import {
   mapTo,
   mergeMap,
   switchMap,
-  withLatestFrom,
   tap,
+  withLatestFrom,
 } from 'rxjs/operators';
 
 import { getDeviceType } from 'ish-core/store/core/configuration';
@@ -30,7 +30,7 @@ import {
   whenTruthy,
 } from 'ish-core/utils/operators';
 
-import { CamCard, CamCardHeader } from '../../models/cam-card/cam-card.model';
+import { CamCard } from '../../models/cam-card/cam-card.model';
 import { CamCardService } from '../../services/cam-card/cam-card.service';
 
 import {
@@ -90,7 +90,7 @@ export class CamCardEffects {
     this.actions$.pipe(
       ofType(createCamCard),
       mapToPayloadProperty('camCards'),
-      mergeMap((camCardData: CamCardHeader) =>
+      mergeMap((camCardData: CamCard) =>
         this.camCardService.createCamCard(camCardData).pipe(
           tap(camCard => {
             this.navigateTo(`/account/cam-cards/${camCard.id}`);
@@ -99,7 +99,7 @@ export class CamCardEffects {
             createCamCardSuccess({ camCard }),
             displaySuccessMessage({
               message: 'camfil.account.cam_card.new_cam_card.confirmation',
-              messageParams: { 0: camCard.title },
+              messageParams: { 0: camCard.name },
             }),
           ]),
           mapErrorToAction(createCamCardFail)
@@ -115,7 +115,7 @@ export class CamCardEffects {
       mergeMap(payload =>
         this.camCardService
           .createCamCard({
-            title: payload.camCards.title,
+            name: payload.camCards.name,
           })
           .pipe(
             withLatestFrom(this.store.pipe(select(getCurrentBasket))),
@@ -131,7 +131,7 @@ export class CamCardEffects {
                   addBasketToNewCamCardSuccess({ camCard: newCamCard }),
                   displaySuccessMessage({
                     message: 'camfil.account.cam_card.new_from_basket_confirm.heading',
-                    messageParams: { 0: camCard.title },
+                    messageParams: { 0: camCard.name },
                   }),
                 ]),
                 mapErrorToAction(addBasketToNewCamCardFail)
@@ -149,14 +149,14 @@ export class CamCardEffects {
       mapToPayloadProperty('camCardId'),
       mergeMap(camCardId => this.store.pipe(select(getCamCardDetails, { id: camCardId }))),
       whenTruthy(),
-      map(camCard => ({ camCardId: camCard.id, title: camCard.title })),
-      mergeMap(({ camCardId, title }) =>
+      map(camCard => ({ camCardId: camCard.id, name: camCard.name })),
+      mergeMap(({ camCardId, name }) =>
         this.camCardService.deleteCamCard(camCardId).pipe(
           mergeMap(() => [
             deleteCamCardSuccess({ camCardId }),
             displaySuccessMessage({
               message: 'camfil.account.cam_card.delete_cam_card.confirmation',
-              messageParams: { 0: title },
+              messageParams: { 0: name },
             }),
           ]),
           mapErrorToAction(deleteCamCardFail)
@@ -175,7 +175,7 @@ export class CamCardEffects {
             updateCamCardSuccess({ camCard }),
             displaySuccessMessage({
               message: 'camfil.account.cam_cards.edit.confirmation',
-              messageParams: { 0: camCard.title },
+              messageParams: { 0: camCard.name },
             }),
           ]),
           mapErrorToAction(updateCamCardFail)
@@ -204,7 +204,7 @@ export class CamCardEffects {
       mergeMap(payload =>
         this.camCardService
           .createCamCard({
-            title: payload.title,
+            name: payload.name,
           })
           .pipe(
             // use created cam cards data to dispatch addProduct action
@@ -231,7 +231,7 @@ export class CamCardEffects {
         if (!payload.target.id) {
           return [
             addProductToNewCamCard({
-              title: payload.target.title,
+              name: payload.target.name,
               sku: payload.target.sku,
               quantity: payload.target.quantity,
             }),
@@ -294,7 +294,7 @@ export class CamCardEffects {
         setBreadcrumbData({
           breadcrumbData: [
             { key: 'camfil.account.cam_cards.link', link: '/account/cam-cards' },
-            { text: camCards.title },
+            { text: camCards.name },
           ],
         })
       )
@@ -311,11 +311,15 @@ export class CamCardEffects {
             fromEvent(window, 'scroll').pipe(
               map(() => {
                 const bar = document.getElementsByTagName('camfil-account-cam-card-toolbar')[0] as HTMLElement;
-                const barBounding = bar.getBoundingClientRect();
-                if (device === 'mobile') {
-                  return window.innerHeight > barBounding.top + barBounding.height;
+                if (bar) {
+                  const barBounding = bar.getBoundingClientRect();
+                  if (device === 'mobile') {
+                    return window.innerHeight > barBounding.top + barBounding.height;
+                  } else {
+                    return barBounding.top < barBounding.height + bar.offsetTop;
+                  }
                 } else {
-                  return barBounding.top < barBounding.height + bar.offsetTop;
+                  return false;
                 }
               }),
               distinctUntilChanged(),

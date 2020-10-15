@@ -56,9 +56,9 @@ export class ProductAddToCamCardComponent implements OnDestroy {
     });
   }
 
-  addProductToCamCard(camCard: { id: string; title: string }) {
+  addProductToCamCard(camCard: { id: string; name: string }) {
     if (!camCard.id) {
-      this.camCardsFacade.addProductToNewCamCard(camCard.title, this.product.sku, this.quantity);
+      this.camCardsFacade.addProductToNewCamCard(camCard.name, this.product.sku, this.quantity);
     } else {
       this.camCardsFacade.addProductToCamCard(camCard.id, this.product.sku, this.quantity);
     }

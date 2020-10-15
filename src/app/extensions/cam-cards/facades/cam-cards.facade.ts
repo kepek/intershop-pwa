@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 
 import { HttpError } from 'ish-core/models/http-error/http-error.model';
 
-import { CamCard, CamCardHeader } from '../models/cam-card/cam-card.model';
+import { CamCard } from '../models/cam-card/cam-card.model';
 import {
   addBasketToNewCamCard,
   addProductToCamCard,
@@ -32,11 +32,11 @@ export class CamCardsFacade {
   camCardError$: Observable<HttpError> = this.store.pipe(select(getCamCardError));
   isStickyCamCardToolbar$: Observable<boolean> = this.store.pipe(select(isStickyCamCardToolbar));
 
-  addCamCard(camCards: CamCardHeader): void | HttpError {
+  addCamCard(camCards: CamCard): void | HttpError {
     this.store.dispatch(createCamCard({ camCards }));
   }
 
-  addBasketToNewCamCard(camCards: CamCardHeader): void | HttpError {
+  addBasketToNewCamCard(camCards: CamCard): void | HttpError {
     this.store.dispatch(addBasketToNewCamCard({ camCards }));
   }
 
@@ -48,8 +48,8 @@ export class CamCardsFacade {
     this.store.dispatch(updateCamCard({ camCard }));
   }
 
-  addProductToNewCamCard(title: string, sku: string, quantity?: number): void {
-    this.store.dispatch(addProductToNewCamCard({ title, sku, quantity }));
+  addProductToNewCamCard(name: string, sku: string, quantity?: number): void {
+    this.store.dispatch(addProductToNewCamCard({ name, sku, quantity }));
   }
 
   addProductToCamCard(camCardId: string, sku: string, quantity?: number): void {
@@ -73,13 +73,13 @@ export class CamCardsFacade {
 
   moveItemToNewCamCard(
     sourceCamCardId: string,
-    title: string,
+    name: string,
     camCardItemId: string,
     sku: string,
     quantity: number
   ): void {
     this.store.dispatch(
-      moveItemToCamCard({ source: { id: sourceCamCardId, camCardItemId }, target: { title, sku, quantity } })
+      moveItemToCamCard({ source: { id: sourceCamCardId, camCardItemId }, target: { name, sku, quantity } })
     );
   }
 

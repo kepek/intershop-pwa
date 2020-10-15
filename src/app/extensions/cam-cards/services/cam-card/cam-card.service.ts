@@ -4,10 +4,10 @@ import { concatMap, defaultIfEmpty, map, switchMap } from 'rxjs/operators';
 
 import { ApiService, unpackEnvelope } from 'ish-core/services/api/api.service';
 
-import { CamCardData } from '../../models/cam-card/cam-card.interface';
 import { CamCardCreate } from '../../models/cam-card/cam-card-create.interface';
+import { CamCardData } from '../../models/cam-card/cam-card.interface';
 import { CamCardMapper } from '../../models/cam-card/cam-card.mapper';
-import { CamCard, CamCardHeader } from '../../models/cam-card/cam-card.model';
+import { CamCard } from '../../models/cam-card/cam-card.model';
 
 @Injectable({ providedIn: 'root' })
 export class CamCardService {
@@ -46,9 +46,9 @@ export class CamCardService {
    * @param CamCardDetails   The cam cards data.
    * @returns                 The created cam_cards.
    */
-  createCamCard(camCardData: CamCardHeader): Observable<CamCard> {
+  createCamCard(camCardData: CamCard): Observable<CamCard> {
     return this.apiService
-      .post('camcards', { ...camCardData, name: camCardData.title })
+      .post('camcards', { ...camCardData, name: camCardData.name })
       .pipe(concatMap((response: CamCardCreate) => this.getCamCard(response.itemId)));
   }
 

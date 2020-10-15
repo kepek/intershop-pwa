@@ -104,7 +104,7 @@ export class SelectCamCardModalComponent implements OnInit, OnDestroy {
       if (camCards && camCards.length > 0) {
         this.camCardOptions = camCards.map(camCard => ({
           value: camCard.id,
-          label: camCard.title,
+          label: camCard.name,
         }));
         if (this.addMoveProduct === 'move' && currentCamCard) {
           this.camCardOptions = this.camCardOptions.filter(option => option.value !== currentCamCard.id);
