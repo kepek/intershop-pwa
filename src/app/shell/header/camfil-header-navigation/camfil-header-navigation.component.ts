@@ -1,9 +1,11 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, isDevMode } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { NavigationCategory } from 'ish-core/models/navigation-category/navigation-category.model';
 import { NextOpenLevelOnMobileNavType } from 'ish-core/models/viewtype/viewtype.types';
+
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'camfil-header-navigation',
@@ -19,13 +21,12 @@ export class CamfilHeaderNavigationComponent implements OnInit {
 
   openedCategories = [];
 
-  isDevMode: boolean;
+  isProdEnv = environment.production;
 
   constructor(private shoppingFacade: ShoppingFacade) {}
 
   ngOnInit() {
     this.categories$ = this.shoppingFacade.navigationCategories$();
-    this.isDevMode = isDevMode();
   }
 
   /**

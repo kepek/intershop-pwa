@@ -20,8 +20,7 @@ module.exports = {
   moduleNameMapper: {
     '^ish-(.*)$': '<rootDir>/src/app/$1',
     '^organization-management$': '<rootDir>/projects/organization-management/src/app/exports',
-    '^camfil-(.*)$': '<rootDir>/projects/camfil/src/app/$1',
-    '^camfil$': '<rootDir>/projects/camfil/src/app/exports',
+    '^camfil-icons$': '<rootDir>/projects/camfil-icons/src/public-api.ts',
   },
   snapshotSerializers: [
     './src/jest-serializer/AngularHTMLSerializer.js',

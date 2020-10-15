@@ -20,8 +20,7 @@
       "organization-management": [
         "projects/organization-management/src/app/exports"
       ],
-      "camfil": ["projects/camfil/src/app/exports"],
-      "camfil-*": ["projects/camfil/src/app/*"]
+      "camfil-icons": ["projects/camfil-icons/src/public-api"]
     },
     "lib": ["es2018", "dom"],
     "noUnusedLocals": true,

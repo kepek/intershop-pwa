@@ -1,7 +1,9 @@
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
-import { DemoDialogData } from 'ish-core/models/demo/demo.model';
+interface DemoDialogData {
+  animal: string;
+}
 
 @Component({
   selector: 'camfil-demo-dialog',

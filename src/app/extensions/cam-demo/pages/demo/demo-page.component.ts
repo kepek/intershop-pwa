@@ -9,7 +9,7 @@ import { PageEvent } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { CamfilIcon, getCamfilIcons } from 'camfil-shared/icon/icon.module';
+import { completeIconSet } from 'camfil-icons';
 import { Observable, Subject } from 'rxjs';
 import { map, startWith, take, takeUntil } from 'rxjs/operators';
 
@@ -100,7 +100,7 @@ export class DemoPageComponent implements AfterViewInit, OnInit, OnDestroy {
   autocompleteOptions: string[] = ['One', 'Two', 'Three'];
   filteredAutocompleteOptions: Observable<string[]>;
 
-  camfilIcons: CamfilIcon[];
+  camfilIcons = completeIconSet;
 
   // tslint:disable-next-line:no-any
   foods: any[] = [
@@ -229,7 +229,6 @@ export class DemoPageComponent implements AfterViewInit, OnInit, OnDestroy {
 
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
-    this.camfilIcons = getCamfilIcons();
   }
 
   ngOnDestroy() {

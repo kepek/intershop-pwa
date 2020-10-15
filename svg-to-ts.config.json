@@ -1,0 +1,24 @@
+{
+  "conversionType": "files",
+  "srcFiles": ["./projects/camfil-icons/src/assets/**/*.svg"],
+  "outputDirectory": "./projects/camfil-icons/src/exports",
+  "interfaceName": "CamfilIcon",
+  "typeName": "camfilIcon",
+  "prefix": "camfilIcon",
+  "svgoConfig": {
+    "plugins": [
+      {
+        "cleanupAttrs": true
+      }
+    ]
+  },
+  "fileName": "camfil-icon.model",
+  "modelFileName": "camfil-icon.model",
+  "delimiter": "KEBAB",
+  "iconsFolderName": "build",
+  "additionalModelFile": "./projects/camfil-icons/src/lib",
+  "compileSources": false,
+  "exportCompleteIconSet": true,
+  "generateType": false,
+  "generateTypeObject": false
+}

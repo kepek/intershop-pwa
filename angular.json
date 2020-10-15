@@ -46,11 +46,6 @@
             "styles": [
               {
                 "inject": false,
-                "input": "src/styles/themes/default/style.scss",
-                "bundleName": "default"
-              },
-              {
-                "inject": false,
                 "input": "src/styles/themes/camfil/style.scss",
                 "bundleName": "camfil"
               }
@@ -232,49 +227,35 @@
         }
       }
     },
-    "camfil": {
-      "projectType": "application",
-      "cli": {
-        "defaultCollection": "intershop-schematics"
-      },
-      "schematics": {
-        "intershop-schematics:page": {
-          "lazy": false
-        }
-      },
-      "root": "projects/camfil",
-      "sourceRoot": "projects/camfil/src",
-      "prefix": "camfil",
+    "camfil-icons": {
+      "projectType": "library",
+      "root": "projects/camfil-icons",
+      "sourceRoot": "projects/camfil-icons/src",
+      "prefix": "lib",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
-            "outputPath": "dist/camfil",
-            "index": "projects/camfil/src/index.html",
-            "main": "projects/camfil/src/main.ts",
-            "polyfills": "src/polyfills.ts",
-            "tsConfig": "projects/camfil/tsconfig.app.json",
-            "aot": false,
-            "stylePreprocessorOptions": {
-              "includePaths": ["projects/camfil/src/styles"]
-            },
-            "styles": ["src/styles/themes/camfil/style.scss"],
-            "assets": ["projects/camfil/src/assets"],
-            "scripts": [],
-            "fileReplacements": [
-              {
-                "replace": "src/environments/environment.ts",
-                "with": "src/environments/environment.local.ts"
-              }
-            ]
+            "tsConfig": "projects/camfil-icons/tsconfig.lib.json",
+            "project": "projects/camfil-icons/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/camfil-icons/tsconfig.lib.prod.json"
+            }
           }
         },
-        "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
+        "test": {
+          "builder": "@angular-builders/jest:run"
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "browserTarget": "camfil:build",
-            "disableHostCheck": true,
-            "host": "0.0.0.0"
+            "tsConfig": [
+              "projects/camfil-icons/tsconfig.lib.json",
+              "projects/camfil-icons/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**"]
           }
         }
       }

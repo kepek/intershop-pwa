@@ -10,7 +10,7 @@ import { MatIconTestingModule } from '@angular/material/icon/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule } from '@ngx-translate/core';
 
-import { MaterialModule } from 'camfil-shared/material/material.module';
+import { MaterialModule } from 'ish-shared/material/material.module';
 
 beforeEach(() => {
   const testBed = getTestBed();

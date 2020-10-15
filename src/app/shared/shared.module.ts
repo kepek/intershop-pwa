@@ -24,8 +24,7 @@ import {
 import { FormlyModule } from '@ngx-formly/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { DeferLoadModule } from '@trademe/ng-defer-load';
-import { IconModule as CamfilIconModule } from 'camfil-shared/icon/icon.module';
-import { MaterialModule } from 'camfil-shared/material/material.module';
+import { CamfilIconsModule } from 'camfil-icons';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { SwiperModule } from 'ngx-swiper-wrapper';
 
@@ -36,6 +35,7 @@ import { PipesModule } from 'ish-core/pipes.module';
 import { CamfilBannerComponent } from 'ish-shared/components/camfil-banner/camfil-banner.component';
 import { CamfilBulletListComponent } from 'ish-shared/components/common/camfil-bullet-list/camfil-bullet-list.component';
 import { CamfilHeaderBoxComponent } from 'ish-shared/components/common/camfil-header-box/camfil-header-box.component';
+import { MaterialModule } from 'ish-shared/material/material.module';
 import { ShellModule } from 'ish-shell/shell.module';
 
 import { AddressFormsSharedModule } from './address-forms/address-forms.module';
@@ -153,7 +153,7 @@ const importExportModules = [
   AddressFormsSharedModule,
   AuthorizationToggleModule,
   CMSModule,
-  CamfilIconModule,
+  CamfilIconsModule,
   CommonModule,
   DeferLoadModule,
   FeatureToggleModule,
