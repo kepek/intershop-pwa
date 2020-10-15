@@ -3,7 +3,10 @@ export interface CamCardHeader {
 }
 
 export interface CamCard extends CamCardHeader {
-  id: string;
+  id?: string;
+  name?: string;
+  orderLabel?: string;
+  invoiceLabel?: string;
   customer?: CamCardCustomer;
   rootCamCard?: string; // TODO: id from root
   subCamCards?: CamCard[];
@@ -56,5 +59,10 @@ export interface CamCardItemComment {
 export interface CamCardDelivery {
   last: string;
   interval: number;
+  deliveryAddress?: string;
+  building?: string;
+  address?: string;
+  zipCode?: string;
+  area?: string;
   // maybe deliveryAddress: { } also
 }

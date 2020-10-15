@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store, select } from '@ngrx/store';
 import { concat, fromEvent } from 'rxjs';
@@ -12,6 +13,7 @@ import {
   mergeMap,
   switchMap,
   withLatestFrom,
+  tap,
 } from 'rxjs/operators';
 
 import { getDeviceType } from 'ish-core/store/core/configuration';
@@ -63,7 +65,12 @@ import { getCamCardDetails, getSelectedCamCardDetails, getSelectedCamCardId } fr
 
 @Injectable()
 export class CamCardEffects {
-  constructor(private actions$: Actions, private camCardService: CamCardService, private store: Store) {}
+  constructor(
+    private actions$: Actions,
+    private camCardService: CamCardService,
+    private store: Store,
+    private router: Router
+  ) {}
 
   loadCamCards$ = createEffect(() =>
     this.actions$.pipe(
@@ -85,6 +92,9 @@ export class CamCardEffects {
       mapToPayloadProperty('camCards'),
       mergeMap((camCardData: CamCardHeader) =>
         this.camCardService.createCamCard(camCardData).pipe(
+          tap(camCard => {
+            this.navigateTo(`/account/cam-cards/${camCard.id}`);
+          }),
           mergeMap(camCard => [
             createCamCardSuccess({ camCard }),
             displaySuccessMessage({
@@ -316,4 +326,7 @@ export class CamCardEffects {
       )
     )
   );
+  private navigateTo(path: string): void {
+    this.router.navigate([path]);
+  }
 }
