@@ -159,13 +159,12 @@ export class CamfilOrderListComponent implements OnInit, AfterViewInit, OnDestro
       const filterString = JSON.parse(filter) as OrderFilter;
 
       // Check search string
-      let isSearchMatching = false;
-      if (filterString.search) {
-        if (JSON.stringify(data).trim().toLowerCase().indexOf(filterString.search.trim().toLowerCase()) !== -1) {
-          isSearchMatching = true;
-        }
-      } else {
-        isSearchMatching = true;
+      const isSearchMatching = true;
+      if (
+        filterString.search &&
+        JSON.stringify(data).trim().toLowerCase().indexOf(filterString.search.trim().toLowerCase()) === -1
+      ) {
+        return false;
       }
 
       // Check status filter
@@ -177,26 +176,21 @@ export class CamfilOrderListComponent implements OnInit, AfterViewInit, OnDestro
             break;
           }
         }
-      } else {
-        isStatusMatching = true;
       }
 
       // Check customer filter
-      let isCustomerMatching = false;
-      if (filterString.customer) {
-        if (data.customer.toString().trim().toLowerCase().indexOf(filterString.customer.trim().toLowerCase()) !== -1) {
-          isCustomerMatching = true;
-        }
-      } else {
-        isCustomerMatching = true;
+      const isCustomerMatching = true;
+      if (
+        filterString.customer &&
+        data.customer.toString().trim().toLowerCase().indexOf(filterString.customer.trim().toLowerCase()) === -1
+      ) {
+        return false;
       }
 
       // Check date filters
-      let isInDateRange = false;
-      if (filterString.dateFrom && filterString.dateFrom <= data.creationDate) {
-        isInDateRange = true;
-      } else {
-        isInDateRange = true;
+      let isInDateRange = true;
+      if (filterString.dateFrom && !(filterString.dateFrom <= data.creationDate)) {
+        isInDateRange = false;
       }
       if (filterString.dateTo && !(filterString.dateTo >= data.creationDate)) {
         isInDateRange = false;
