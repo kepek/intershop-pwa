@@ -20,6 +20,8 @@ function generateSelectOptionsForRange(min: number, max: number): SelectOption[]
     .map(num => ({ label: num, value: num }));
 }
 
+export type CamfilProductQuantityType = 'input' | 'select' | 'counter';
+
 @Component({
   selector: 'camfil-product-quantity',
   templateUrl: './camfil-product-quantity.component.html',
@@ -32,7 +34,7 @@ export class CamfilProductQuantityComponent implements OnInit, OnChanges {
   @Input() product: Product;
   @Input() parentForm: FormGroup;
   @Input() controlName: string;
-  @Input() type?: 'input' | 'select' | 'counter';
+  @Input() type?: CamfilProductQuantityType = 'counter';
   @Input() class?: string;
 
   quantityOptions: SelectOption[];

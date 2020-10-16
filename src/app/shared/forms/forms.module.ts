@@ -3,11 +3,13 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
+import { MaterialModule } from 'camfil-shared/material/material.module';
 
 import { DirectivesModule } from 'ish-core/directives.module';
 import { FeatureToggleModule } from 'ish-core/feature-toggle.module';
 import { IconModule } from 'ish-core/icon.module';
 
+import { CamfilCounterComponent } from './components/camfil-counter/camfil-counter.component';
 import { CheckboxComponent } from './components/checkbox/checkbox.component';
 import { CounterComponent } from './components/counter/counter.component';
 import { FormControlFeedbackComponent } from './components/form-control-feedback/form-control-feedback.component';
@@ -24,6 +26,7 @@ import { TextareaComponent } from './components/textarea/textarea.component';
 import { ShowFormFeedbackDirective } from './directives/show-form-feedback.directive';
 
 const exportedComponents = [
+  CamfilCounterComponent,
   CheckboxComponent,
   CounterComponent,
   FormControlFeedbackComponent,
@@ -46,6 +49,7 @@ const exportedComponents = [
     DirectivesModule,
     FeatureToggleModule,
     IconModule,
+    MaterialModule,
     ReactiveFormsModule,
     RouterModule,
     TranslateModule,

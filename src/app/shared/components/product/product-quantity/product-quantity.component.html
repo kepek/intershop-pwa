@@ -10,7 +10,7 @@
         [labelClass]="labelClass"
         [inputClass]="inputClass"
       ></ish-select>
-      <ish-counter
+      <camfil-counter
         *ngSwitchCase="'counter'"
         [form]="parentForm"
         [controlName]="controlName"
@@ -19,7 +19,7 @@
         [inputClass]="inputClass"
         [min]="allowZeroQuantity ? 0 : product.minOrderQuantity"
         [max]="product.maxOrderQuantity"
-      ></ish-counter>
+      ></camfil-counter>
       <ish-input
         *ngSwitchDefault
         [type]="'number'"

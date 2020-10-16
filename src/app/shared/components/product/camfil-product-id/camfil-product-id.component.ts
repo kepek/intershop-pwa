@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
 import { Product } from 'ish-core/models/product/product.model';
 
@@ -11,18 +11,9 @@ import { Product } from 'ish-core/models/product/product.model';
 @Component({
   selector: 'camfil-product-id',
   templateUrl: './camfil-product-id.component.html',
-  styleUrls: ['../camfil-product-attribute/camfil-product-attribute.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CamfilProductIdComponent implements OnInit {
+export class CamfilProductIdComponent {
   @Input() label = 'camfil.product.id.label';
   @Input() product: Product;
-
-  classObject: { [key: string]: boolean };
-
-  ngOnInit() {
-    this.classObject = {
-      'camfil-product-attribute camfil-product-id': true,
-    };
-  }
 }
