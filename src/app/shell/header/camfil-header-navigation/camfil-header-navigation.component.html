@@ -35,7 +35,7 @@
   <li class="dropdown with-separator">
     <a [routerLink]="['/account/cam-cards']">{{ 'camfil.account.cam_cards.link' | translate }}</a>
   </li>
-  <li *ngIf="isDevMode" class="dropdown with-separator">
+  <li *ngIf="!isProdEnv" class="dropdown with-separator">
     <a [routerLink]="['/demo']">Demo</a>
   </li>
 </ng-template>

@@ -12,13 +12,12 @@
   },
   "private": true,
   "scripts": {
-    "postinstall": "postinstall && npm --silent run build:tslint-rules && npm --silent run build:schematics && npm run synchronize-lazy-components && node scripts/init-local-environment",
+    "postinstall": "postinstall && npm --silent run build:tslint-rules && npm --silent run build:schematics && npm run synchronize-lazy-components && node scripts/init-local-environment && npm run generate-icons",
     "build:tslint-rules": "cd tslint-rules && npm run build",
     "build:schematics": "cd schematics && npm run build",
     "ng": "ng",
     "test": "jest --ci",
     "test:watch": "jest --watch",
-
     "test:update-snapshot": "jest --updateSnapshot --forceExit --ci -w=4",
     "test:health-check": "jest --runInBand --detectOpenHandles",
     "test:report-leaks": "node --expose-gc ./node_modules/.bin/jest --runInBand --logHeapUsage",
@@ -47,7 +46,8 @@
     "dev": "ng run intershop-pwa:serve",
     "dev:local": "ng run intershop-pwa:serve:local",
     "dev:ssr": "ng run intershop-pwa:serve-ssr",
-    "dev:ssr:local": "ng run intershop-pwa:serve-ssr:local"
+    "dev:ssr:local": "ng run intershop-pwa:serve-ssr:local",
+    "generate-icons": "svg-to-ts --config svg-to-ts.config.json"
   },
   "peerDependencies": {
     "@angular/cdk": "~10.2.2",
@@ -115,6 +115,7 @@
     "zone.js": "~0.10.2"
   },
   "devDependencies": {
+    "@angular-builders/jest": "^10.0.1",
     "@angular-devkit/build-angular": "^0.1001.2",
     "@angular/cli": "^10.1.2",
     "@angular/compiler-cli": "~10.1.2",
@@ -137,12 +138,13 @@
     "husky": "^4.3.0",
     "intershop-schematics": "file:schematics/src",
     "jasmine-data-provider": "^2.2.0",
-    "jest": "^26.5.2",
+    "jest": "^26.5.3",
     "jest-extended": "^0.11.5",
     "jest-marbles": "^2.5.1",
     "jest-preset-angular": "^8.3.1",
     "lint-staged": "^10.4.0",
     "ng-mocks": "^10.1.3",
+    "ng-packagr": "^10.1.0",
     "postinstall": "^0.7.0",
     "prettier": "^2.1.2",
     "rxjs-tslint-rules": "^4.34.3",
@@ -153,6 +155,7 @@
     "stylelint-config-standard": "^20.0.0",
     "stylelint-prettier": "^1.1.2",
     "stylelint-scss": "^3.18.0",
+    "svg-to-ts": "^5.6.1",
     "treeify": "^1.1.0",
     "ts-mockito": "2.6.1",
     "ts-morph": "^8.1.1",

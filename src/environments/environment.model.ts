@@ -39,8 +39,9 @@ export interface Environment {
     /* B2C features */
     | 'wishlists'
     /* Camfil features */
-    | 'camCards'
     | 'camAccount'
+    | 'camCards'
+    | 'camDemo'
   )[];
 
   /* ADDITIONAL FEATURE CONFIGURATIONS */
@@ -107,6 +108,7 @@ export const ENVIRONMENT_DEFAULTS: Environment = {
     /* Camfil features */
     'camCards',
     'camAccount',
+    'camDemo',
   ],
 
   /* PROGRESSIVE WEB APP CONFIGURATIONS */

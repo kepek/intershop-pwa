@@ -1,4 +1,4 @@
-import { NgModule, isDevMode } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { FeatureToggleGuard } from 'ish-core/feature-toggle.module';
@@ -132,17 +132,6 @@ const routes: Routes = [
       },
       breadcrumbData: [{ key: 'helpdesk.contact_us.link' }],
     },
-  },
-  isDevMode() && {
-    path: 'demo',
-    data: {
-      meta: {
-        title: 'Demo',
-        robots: 'index, nofollow',
-      },
-      breadcrumbData: [{ key: 'Demo' }],
-    },
-    loadChildren: () => import('./demo/demo-page.module').then(m => m.DemoPageModule),
   },
 ];
 

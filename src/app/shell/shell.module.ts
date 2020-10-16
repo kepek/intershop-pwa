@@ -6,17 +6,18 @@ import { RouterModule } from '@angular/router';
 import { NgbCollapseModule, NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 import { DeferLoadModule } from '@trademe/ng-defer-load';
-import { IconModule as CamfilIconModule } from 'camfil-shared/icon/icon.module';
-import { MaterialModule } from 'camfil-shared/material/material.module';
+import { CamfilIconsModule } from 'camfil-icons';
 
 import { AuthorizationToggleModule } from 'ish-core/authorization-toggle.module';
 import { DirectivesModule } from 'ish-core/directives.module';
 import { FeatureToggleModule } from 'ish-core/feature-toggle.module';
 import { IconModule } from 'ish-core/icon.module';
 import { PipesModule } from 'ish-core/pipes.module';
+import { MaterialModule } from 'ish-shared/material/material.module';
 
 import { CamAccountExportsModule } from '../extensions/cam-account/exports/cam-account-exports.module';
 import { CamCardsExportsModule } from '../extensions/cam-cards/exports/cam-cards-exports.module';
+import { CamDemoExportsModule } from '../extensions/cam-demo/exports/cam-demo-exports.module';
 import { CaptchaExportsModule } from '../extensions/captcha/exports/captcha-exports.module';
 import { OrderTemplatesExportsModule } from '../extensions/order-templates/exports/order-templates-exports.module';
 import { QuickorderExportsModule } from '../extensions/quickorder/exports/quickorder-exports.module';
@@ -53,6 +54,7 @@ import { UserInformationMobileComponent } from './header/user-information-mobile
 const importExportModules = [
   CamAccountExportsModule,
   CamCardsExportsModule,
+  CamDemoExportsModule,
   CaptchaExportsModule,
   DirectivesModule,
   OrderTemplatesExportsModule,
@@ -73,7 +75,7 @@ const exportedComponents = [
   imports: [
     ...importExportModules,
     AuthorizationToggleModule,
-    CamfilIconModule,
+    CamfilIconsModule,
     CommonModule,
     DeferLoadModule,
     FeatureToggleModule,

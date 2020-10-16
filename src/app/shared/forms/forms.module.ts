@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { MaterialModule } from 'camfil-shared/material/material.module';
+import { MaterialModule } from 'ish-shared/material/material.module';
 
 import { DirectivesModule } from 'ish-core/directives.module';
 import { FeatureToggleModule } from 'ish-core/feature-toggle.module';
