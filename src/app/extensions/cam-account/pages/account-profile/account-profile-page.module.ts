@@ -1,5 +1,9 @@
 import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
+
+import { SharedModule } from 'ish-shared/shared.module';
 
 import { CamAccountModule } from '../../cam-account.module';
 
@@ -11,7 +15,13 @@ import { PersonalInfoComponent } from './personal-info-form/personal-info.compon
 const accountProfilePageRoutes: Routes = [{ path: '', component: AccountProfilePageComponent }];
 
 @NgModule({
-  imports: [CamAccountModule, RouterModule.forChild(accountProfilePageRoutes)],
+  imports: [
+    CamAccountModule,
+    ReactiveFormsModule,
+    RouterModule.forChild(accountProfilePageRoutes),
+    SharedModule,
+    TranslateModule,
+  ],
   declarations: [AccountProfileComponent, AccountProfilePageComponent, ChangePasswordComponent, PersonalInfoComponent],
 })
 export class AccountProfilePageModule {}

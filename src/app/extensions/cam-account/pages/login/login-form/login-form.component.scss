@@ -35,8 +35,8 @@
 
   .button {
     &__login {
-      margin-top: 24px;
-      margin-bottom: 24px;
+      margin-top: $space-default;
+      margin-bottom: $space-default;
     }
   }
 }

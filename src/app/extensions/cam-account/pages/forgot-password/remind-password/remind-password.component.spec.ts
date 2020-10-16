@@ -9,14 +9,14 @@ import { AccountFacade } from 'ish-core/facades/account.facade';
 import { ErrorMessageComponent } from 'ish-shared/components/common/error-message/error-message.component';
 import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
 
-import { RequestReminderFormComponent } from '../request-reminder-form/request-reminder-form.component';
+import { RemindPasswordFormComponent } from '../remind-password-form/remind-password-form.component';
 import { UpdatePasswordFormComponent } from '../update-password-form/update-password-form.component';
 
-import { RequestReminderComponent } from './request-reminder.component';
+import { RemindPasswordComponent } from './remind-password.component';
 
-describe('Request Reminder Component', () => {
-  let component: RequestReminderComponent;
-  let fixture: ComponentFixture<RequestReminderComponent>;
+describe('Remind Password Component', () => {
+  let component: RemindPasswordComponent;
+  let fixture: ComponentFixture<RemindPasswordComponent>;
   let element: HTMLElement;
 
   beforeEach(async () => {
@@ -24,10 +24,10 @@ describe('Request Reminder Component', () => {
       declarations: [
         MockComponent(ErrorMessageComponent),
         MockComponent(LoadingComponent),
-        MockComponent(RequestReminderFormComponent),
+        MockComponent(RemindPasswordFormComponent),
         MockComponent(UpdatePasswordFormComponent),
         MockDirective(ServerHtmlDirective),
-        RequestReminderComponent,
+        RemindPasswordComponent,
       ],
       imports: [RouterTestingModule, TranslateModule.forRoot()],
       providers: [{ provide: AccountFacade, useFactory: () => instance(mock(AccountFacade)) }],
@@ -35,7 +35,7 @@ describe('Request Reminder Component', () => {
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(RequestReminderComponent);
+    fixture = TestBed.createComponent(RemindPasswordComponent);
     component = fixture.componentInstance;
     element = fixture.nativeElement;
   });
@@ -48,6 +48,6 @@ describe('Request Reminder Component', () => {
 
   it('should render request reminder form on forgot-password request reminder page', () => {
     fixture.detectChanges();
-    expect(element.querySelector('ish-request-reminder-form')).toBeTruthy();
+    expect(element.querySelector('camfil-remind-password-form')).toBeTruthy();
   });
 });

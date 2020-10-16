@@ -32,6 +32,34 @@ export class UpdatePasswordFormComponent implements OnInit {
   passwordFormControl = new FormControl('', [Validators.required, SpecialValidators.password]);
   passwordConfirmationFormControl = new FormControl('', [Validators.required, SpecialValidators.password]);
 
+  passwordValidator = [
+    {
+      error: 'required',
+      message: 'camfil.account.update_password.new_password.error.required',
+    },
+    {
+      error: 'password',
+      message: 'camfil.account.update_password.new_password.error.password',
+      ifNot: 'required',
+    },
+  ];
+
+  passwordConfirmationValidator = [
+    {
+      error: 'required',
+      message: 'camfil.account.update_password.new_password.error.required',
+    },
+    {
+      error: 'password',
+      message: 'camfil.account.update_password.new_password.error.regexp',
+      ifNot: 'required',
+    },
+    {
+      error: 'equalTo',
+      message: 'camfil.account.update_password.confirm_password.error.stringcompare',
+    },
+  ];
+
   ngOnInit() {
     this.form = new FormGroup(
       {

@@ -3,6 +3,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { MockComponent } from 'ng-mocks';
 
+import { CamfilErrorComponent } from 'ish-shared/components/common/camfil-error/camfil-error.component';
 import { InputComponent } from 'ish-shared/forms/components/input/input.component';
 
 import { UpdatePasswordFormComponent } from './update-password-form.component';
@@ -14,7 +15,7 @@ describe('Update Password Form Component', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [MockComponent(InputComponent), UpdatePasswordFormComponent],
+      declarations: [CamfilErrorComponent, MockComponent(InputComponent), UpdatePasswordFormComponent],
       imports: [ReactiveFormsModule, TranslateModule.forRoot()],
     }).compileComponents();
   });

@@ -6,9 +6,11 @@ import { pick } from 'lodash-es';
 import { ApplicantEffects } from './applicant/applicant.effects';
 import { applicantReducer } from './applicant/applicant.reducer';
 import { CamAccountState } from './cam-account-store';
+import { userReducer } from './user/user.reducer';
 
 const camAccountReducers: ActionReducerMap<CamAccountState> = {
   applicant: applicantReducer,
+  user: userReducer,
 };
 
 const camAccountEffects = [ApplicantEffects];
