@@ -33,9 +33,12 @@ export class CamfilCamCardsSearchComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.camCards) {
-      this.customers = this.camCards.map(customer => ({
-        ...customer.customer,
-      }));
+      this.customers = this.camCards.reduce((result, { customer }) => {
+        if (!result.find(({ id }) => id === customer.id)) {
+          result.push(customer);
+        }
+        return result;
+      }, []);
     }
   }
 
