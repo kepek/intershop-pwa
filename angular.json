@@ -34,11 +34,6 @@
                 "input": "./projects/organization-management/src/assets",
                 "output": "/organization-management/assets/"
               },
-              {
-                "glob": "**/*",
-                "input": "./projects/camfil/src/assets",
-                "output": "/camfil/assets/"
-              }
             ],
             "stylePreprocessorOptions": {
               "includePaths": ["src/styles"]
