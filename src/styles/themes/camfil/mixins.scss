@@ -60,10 +60,15 @@
   }
 }
 
-@mixin font-size-p {
-  font-size: $font-size-corporate;
-  font-weight: 300;
+@mixin font-size-caption {
+  font-size: $font-size-corporate; //14px
   line-height: 20px;
+}
+
+@mixin font-size-p {
+  @include font-size-caption;
+
+  font-weight: 300;
 }
 
 @mixin font-size-h3 {
