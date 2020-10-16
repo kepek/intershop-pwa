@@ -2,7 +2,6 @@ import { CamCardContact, CamCardCustomer, CamCardHeader, CamCardItem } from './c
 
 export interface CamCardData extends CamCardHeader {
   id: string;
-  name?: string;
   camCardItems?: CamCardItem[];
   contacts?: CamCardContact[];
   customer?: CamCardCustomer;

@@ -14,12 +14,12 @@ export class CamCardMapper {
       const subs = camCardData.subCamCards
         ? camCardData.subCamCards.map(sub => ({
             ...sub,
-            title: sub.name || 'Building', // TODO: improve
+            name: sub.name || 'Building', // TODO: improve
           }))
         : [];
       return {
         ...camCardData,
-        title: camCardData.name,
+        name: camCardData.name,
         subCamCards: subs,
         delivery: {
           last: '12-01-2020', // TODO: tmp
@@ -37,20 +37,8 @@ export class CamCardMapper {
     if (camCard && id) {
       return {
         id,
-        title: camCard.title,
+        name: camCard.name,
         creationDate: camCard.creationDate,
-      };
-    }
-  }
-
-  /**
-   * extract ID from URI
-   */
-  fromDataToIds(camCardData: CamCardData): CamCard {
-    if (camCardData) {
-      return {
-        id: camCardData.id,
-        title: camCardData.name,
       };
     }
   }

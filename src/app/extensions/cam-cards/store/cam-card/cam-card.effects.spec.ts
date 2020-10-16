@@ -56,13 +56,13 @@ describe('Cam Card Effects', () => {
 
   const camCards = [
     {
-      title: 'testing cam cards',
+      name: 'testing cam cards',
       id: '.SKsEQAE4FIAAAFuNiUBWx0d',
       itemsCount: 0,
       public: false,
     },
     {
-      title: 'testing cam cards 2',
+      name: 'testing cam cards 2',
       id: '.AsdHS18FIAAAFuNiUBWx0d',
       itemsCount: 0,
       public: false,
@@ -139,12 +139,12 @@ describe('Cam Card Effects', () => {
   describe('createCamCard$', () => {
     const camCardData = [
       {
-        title: 'testing cam cards',
+        name: 'testing cam cards',
         id: '.SKsEQAE4FIAAAFuNiUBWx0d',
       } as CamCard,
     ];
     const createCamCardData = {
-      title: 'testing cam cards',
+      name: 'testing cam cards',
       public: false,
     };
     beforeEach(() => {
@@ -169,7 +169,7 @@ describe('Cam Card Effects', () => {
       });
       const completion2 = displaySuccessMessage({
         message: 'camfil.account.cam_card.new_cam_card.confirmation',
-        messageParams: { 0: createCamCardData.title },
+        messageParams: { 0: createCamCardData.name },
       });
       actions$ = hot('-a----a----a', { a: action });
       const expected$ = cold('-(cd)-(cd)-(cd)', { c: completion1, d: completion2 });
@@ -213,7 +213,7 @@ describe('Cam Card Effects', () => {
       const completion1 = deleteCamCardSuccess({ camCardId: id });
       const completion2 = displaySuccessMessage({
         message: 'camfil.account.cam_card.delete_cam_card.confirmation',
-        messageParams: { 0: camCards[0].title },
+        messageParams: { 0: camCards[0].name },
       });
       actions$ = hot('-a----a----a', { a: action });
       const expected$ = cold('-(cd)-(cd)-(cd)', { c: completion1, d: completion2 });
@@ -237,7 +237,7 @@ describe('Cam Card Effects', () => {
   describe('updateCamCard$', () => {
     const camCardDetailData = [
       {
-        title: 'testing cam cards',
+        name: 'testing cam cards',
         id: '.SKsEQAE4FIAAAFuNiUBWx0d',
         itemCount: 0,
         public: false,
@@ -263,7 +263,7 @@ describe('Cam Card Effects', () => {
       const completion1 = updateCamCardSuccess({ camCard: camCardDetailData[0] });
       const completion2 = displaySuccessMessage({
         message: 'camfil.account.cam_cards.edit.confirmation',
-        messageParams: { 0: camCardDetailData[0].title },
+        messageParams: { 0: camCardDetailData[0].name },
       });
       actions$ = hot('-a----a----a', { a: action });
       const expected$ = cold('-(cd)-(cd)-(cd)', { c: completion1, d: completion2 });
@@ -329,11 +329,11 @@ describe('Cam Card Effects', () => {
 
   describe('addProductToNewCamCard$', () => {
     const payload = {
-      title: 'new Cam Card',
+      name: 'new Cam Card',
       sku: 'sku',
     };
     const camCard = {
-      title: 'testing cam cards',
+      name: 'testing cam cards',
       id: '.SKsEQAE4FIAAAFuNiUBWx0d',
       itemCount: 0,
       public: false,
@@ -368,14 +368,14 @@ describe('Cam Card Effects', () => {
   describe('moveProductToCamCard$', () => {
     const payload1 = {
       source: { id: '1234', camCardItemId: '199' },
-      target: { camCardItemId: '.SKsEQAE4FIAAAFuNiUBWx0d', title: 'new Cam Card', sku: 'sku', quantity: 1 },
+      target: { camCardItemId: '.SKsEQAE4FIAAAFuNiUBWx0d', name: 'new Cam Card', sku: 'sku', quantity: 1 },
     };
     const payload2 = {
       source: { id: '1234', camCardItemId: '199' },
       target: { id: '.SKsEQAE4FIAAAFuNiUBWx0d', sku: 'sku', quantity: 1 },
     };
     const camCard = {
-      title: 'testing cam cards',
+      name: 'testing cam cards',
       id: '.SKsEQAE4FIAAAFuNiUBWx0d',
       itemCount: 0,
       public: false,
@@ -387,7 +387,7 @@ describe('Cam Card Effects', () => {
     it('should map to actions of types AddProductToNewCamCard and RemoveItemFromCamCard if there is no target id given', () => {
       const action = moveItemToCamCard(payload1);
       const completion1 = addProductToNewCamCard({
-        title: payload1.target.title,
+        name: payload1.target.name,
         sku: payload1.target.sku,
         quantity: payload1.target.quantity,
       });
@@ -423,10 +423,9 @@ describe('Cam Card Effects', () => {
       sku: 'sku',
     };
     const camCard = {
-      title: 'testing cam cards',
+      name: 'testing cam cards',
       id: '.SKsEQAE4FIAAAFuNiUBWx0d',
       itemCount: 0,
-
       public: false,
     };
     beforeEach(() => {

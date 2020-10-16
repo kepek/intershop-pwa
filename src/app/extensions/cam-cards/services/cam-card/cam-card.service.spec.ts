@@ -6,7 +6,7 @@ import { ApiService } from 'ish-core/services/api/api.service';
 
 import { CamCardCreate } from '../../models/cam-card/cam-card-create.interface';
 import { CamCardData } from '../../models/cam-card/cam-card.interface';
-import { CamCard, CamCardHeader } from '../../models/cam-card/cam-card.model';
+import { CamCard } from '../../models/cam-card/cam-card.model';
 
 import { CamCardService } from './cam-card.service';
 
@@ -43,8 +43,8 @@ describe('Cam Card Service', () => {
             "id": "1234",
             "itemsCount": 0,
             "maintenanceStatus": false,
+            "name": undefined,
             "subCamCards": Array [],
-            "title": undefined,
           },
         ]
       `);
@@ -63,13 +63,13 @@ describe('Cam Card Service', () => {
 
   it("should create an cam cards when 'createCamCard' is called", done => {
     const camCardId = '1234';
-    const camCardHeader: CamCardHeader = { title: 'cam cards title' };
+    const camCard: CamCard = { name: 'cam cards title', customer: { id: 'cust_1234' } };
     when(apiServiceMock.post('camcards', anything())).thenReturn(
-      of({ title: camCardId, itemId: camCardId } as CamCardCreate)
+      of({ name: camCard.name, itemId: camCardId } as CamCardCreate)
     );
     when(apiServiceMock.get('camcards/1234')).thenReturn(of({ id: '1234' }));
 
-    camCardService.createCamCard(camCardHeader).subscribe(data => {
+    camCardService.createCamCard(camCard).subscribe(data => {
       expect(camCardId).toEqual(data.id);
       verify(apiServiceMock.post('camcards', anything())).once();
       done();
@@ -88,7 +88,7 @@ describe('Cam Card Service', () => {
   });
 
   it("should update a cam cards when 'updateCamCard' is called", done => {
-    const camCard: CamCard = { id: '1234', title: 'cam cards title' };
+    const camCard: CamCard = { id: '1234', name: 'cam cards title' };
 
     when(apiServiceMock.put(`camcards/${camCard.id}`, anything())).thenReturn(of({ camCard }));
 
@@ -105,7 +105,7 @@ describe('Cam Card Service', () => {
 
     when(apiServiceMock.delete(`camcards/${camCardId}/products/${camCardItemId}`)).thenReturn(of({}));
     when(apiServiceMock.get(`camcards/${camCardId}`)).thenReturn(
-      of({ title: 'cam cards title', id: '1234', rootCamCard: '' } as CamCardData)
+      of({ name: 'cam cards title', id: '1234', rootCamCard: '' } as CamCardData)
     );
 
     camCardService.removeProductFromCamCard(camCardId, camCardItemId).subscribe(() => {

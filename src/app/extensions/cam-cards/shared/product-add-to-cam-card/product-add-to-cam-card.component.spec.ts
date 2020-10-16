@@ -10,6 +10,7 @@ import { AccountFacade } from 'ish-core/facades/account.facade';
 import { Product } from 'ish-core/models/product/product.model';
 
 import { CamCardsFacade } from '../../facades/cam-cards.facade';
+import { CamCard } from '../../models/cam-card/cam-card.model';
 import { SelectCamCardModalComponent } from '../select-cam-card-modal/select-cam-card-modal.component';
 
 import { ProductAddToCamCardComponent } from './product-add-to-cam-card.component';
@@ -21,24 +22,21 @@ describe('Product Add To Cam Card Component', () => {
   let camCardFacadeMock: CamCardsFacade;
   let accountFacadeMock: AccountFacade;
 
-  const camCardDetails = [
+  const camCardDetails: CamCard[] = [
     {
-      title: 'testing cam cards',
+      name: 'testing cam cards',
       id: '.SKsEQAE4FIAAAFuNiUBWx0d',
       itemsCount: 0,
-      public: false,
     },
     {
-      title: 'testing cam cards 2',
+      name: 'testing cam cards 2',
       id: '.AsdHS18FIAAAFuNiUBWx0d',
       itemsCount: 0,
-      public: false,
     },
     {
-      title: 'new cam cards',
+      name: 'new cam cards',
       id: 'new cam cards id',
       itemsCount: 0,
-      public: false,
     },
   ];
 
@@ -77,13 +75,13 @@ describe('Product Add To Cam Card Component', () => {
 
   it('should call camCardFacade to add product to cam cards', () => {
     fixture.detectChanges();
-    component.addProductToCamCard({ id: 'testid', title: 'Test Cam Card' });
+    component.addProductToCamCard({ id: 'testid', name: 'Test Cam Card' });
     verify(camCardFacadeMock.addProductToCamCard(anyString(), anyString(), anyNumber())).once();
   });
 
   it('should call camCardFacade to add product to new cam cards', () => {
     fixture.detectChanges();
-    component.addProductToCamCard({ id: undefined, title: 'Test Cam Card' });
+    component.addProductToCamCard({ id: undefined, name: 'Test Cam Card' });
     verify(camCardFacadeMock.addProductToNewCamCard(anyString(), anyString(), anyNumber())).once();
   });
 });

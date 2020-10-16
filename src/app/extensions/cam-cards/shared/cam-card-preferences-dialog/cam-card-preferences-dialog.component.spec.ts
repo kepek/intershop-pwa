@@ -49,7 +49,7 @@ describe('Cam Card Preferences Dialog Component', () => {
     component.submit.subscribe(emit => {
       expect(emit).toEqual({
         id: 'test cam cards',
-        title: 'test cam cards',
+        name: 'test cam cards',
       });
       done();
     });

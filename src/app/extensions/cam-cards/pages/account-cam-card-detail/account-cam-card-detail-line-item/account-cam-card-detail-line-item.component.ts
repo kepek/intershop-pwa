@@ -65,7 +65,7 @@ export class AccountCamCardDetailLineItemComponent implements OnChanges, OnInit,
     this.selectedItemsForm.push(this.selectItemForm);
   }
 
-  moveItemToOtherCamCard(camCardItemId: string, sku: string, camCardMoveData: { id: string; title: string }) {
+  moveItemToOtherCamCard(camCardItemId: string, sku: string, camCardMoveData: { id: string; name: string }) {
     if (camCardMoveData.id) {
       this.camCardsFacade.moveItemToCamCard(
         this.currentCamCard.id,
@@ -77,7 +77,7 @@ export class AccountCamCardDetailLineItemComponent implements OnChanges, OnInit,
     } else {
       this.camCardsFacade.moveItemToNewCamCard(
         this.currentCamCard.id,
-        camCardMoveData.title,
+        camCardMoveData.name,
         camCardItemId,
         sku,
         Number(this.addToCartForm.get('quantity').value)

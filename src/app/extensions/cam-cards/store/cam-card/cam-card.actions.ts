@@ -2,7 +2,7 @@ import { createAction } from '@ngrx/store';
 
 import { httpError, payload } from 'ish-core/utils/ngrx-creators';
 
-import { CamCard, CamCardHeader } from '../../models/cam-card/cam-card.model';
+import { CamCard } from '../../models/cam-card/cam-card.model';
 
 export const loadCamCards = createAction('[Cam Cards Internal] Load Cam Cards');
 
@@ -13,7 +13,7 @@ export const loadCamCardsSuccess = createAction(
 
 export const loadCamCardsFail = createAction('[Cam Cards API] Load Cam Cards Fail', httpError());
 
-export const createCamCard = createAction('[Cam Cards] Create Cam Card', payload<{ camCards: CamCardHeader }>());
+export const createCamCard = createAction('[Cam Cards] Create Cam Card', payload<{ camCards: CamCard }>());
 
 export const createCamCardSuccess = createAction(
   '[Cam Cards API] Create Cam Card Success',
@@ -54,14 +54,14 @@ export const addProductToCamCardFail = createAction('[Cam Cards API] Add Item to
 
 export const addProductToNewCamCard = createAction(
   '[Cam Cards Internal] Add Product To New Cam Card',
-  payload<{ title: string; sku: string; quantity?: number }>()
+  payload<{ name: string; sku: string; quantity?: number }>()
 );
 
 export const moveItemToCamCard = createAction(
   '[Cam Cards] Move Item to another Cam Card',
   payload<{
     source: { id: string; camCardItemId: string };
-    target: { id?: string; title?: string; sku: string; quantity: number };
+    target: { id?: string; name?: string; sku: string; quantity: number };
   }>()
 );
 
@@ -81,7 +81,7 @@ export const selectCamCard = createAction('[Cam Cards Internal] Select Cam Card'
 
 export const addBasketToNewCamCard = createAction(
   '[Cam Cards] Add basket to New Cam Card]',
-  payload<{ camCards: CamCardHeader }>()
+  payload<{ camCards: CamCard }>()
 );
 
 export const addBasketToNewCamCardFail = createAction('[Cam Cards API] Add basket to New Cam Card Fail]', httpError());
