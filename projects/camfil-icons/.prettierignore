@@ -1,1 +1,3 @@
 /src/exports/**/*
+/src/exports/index.ts
+/src/exports/build/*.ts
