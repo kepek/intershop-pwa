@@ -1,7 +1,7 @@
 FROM node:12-alpine as buildstep
 WORKDIR /workspace
 COPY schematics /workspace/schematics/
-COPY package.json package-lock.json /workspace/
+COPY package.json package-lock.json svg-to-ts.config.json /workspace/
 RUN npm i --ignore-scripts
 COPY projects/organization-management/src/app /workspace/projects/organization-management/src/app/
 COPY projects/camfil-icons/src /workspace/projects/camfil-icons/src
