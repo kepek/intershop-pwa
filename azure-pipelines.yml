@@ -1,0 +1,31 @@
+trigger:
+  - master
+  - 'refs/tags/*'
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  projectName: 'camfil-pwa-master'
+
+  registryServerName: $(registryName).azurecr.io
+  imageName: '$(projectName)'
+
+steps:
+  - bash: |
+      echo -n "##vso[task.setvariable variable=tag]"
+      if [[ $(Build.SourceBranch) =~ tags/(.*) ]]
+      then
+        echo ${BASH_REMATCH[1]}
+      else
+        echo $(build.buildId)
+      fi
+
+  - bash: |
+      docker build -f $(system.defaultWorkingDirectory)/Dockerfile -t $(registryServerName)/$(imageName):$(tag) $(system.defaultWorkingDirectory) --build-arg displayVersion=$(tag)
+    displayName: 'docker build'
+
+  - bash: |
+      docker login $(registryServerName) -u $(registryLogin) -p $(registryPassword)
+      docker push $(registryServerName)/$(imageName):$(tag)
+    displayName: 'docker push'
