@@ -194,9 +194,9 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
   }
 
   isCamCardIndeterminate(camCard: CamCard) {
-    const itmsNum =
-      camCard.subCamCards.filter(subCard => subCard.camCardItems.filter(item => this.isProductChecked(item.id)).length)
-        .length + camCard.camCardItems.filter(item => this.isProductChecked(item.id)).length;
+    const itmsNum = camCard.subCamCards
+      ? camCard.subCamCards.filter(sub => sub.camCardItems.filter(item => this.isProductChecked(item.id)).length).length
+      : 0 + camCard.camCardItems.filter(item => this.isProductChecked(item.id)).length;
     return itmsNum > 0 && !this.isCamCardChecked(camCard);
   }
 

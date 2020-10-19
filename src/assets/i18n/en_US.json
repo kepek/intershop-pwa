@@ -601,6 +601,7 @@
   "camfil.account.cam_cards.search.total": "Total CamCards",
   "camfil.account.cam_cards.selectAll": "Select all",
   "camfil.account.cam_cards.userAccess": "User Access",
+  "camfil.account.cam_cards.update.product.confirmation": "The {{0}} has been updated on Cam Card",
   "camfil.account.cancel.button.label": "Cancel",
   "camfil.account.change_password.button.label": "Change Password",
   "camfil.account.create.button.label": "Send application",

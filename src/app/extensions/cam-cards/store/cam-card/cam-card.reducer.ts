@@ -4,7 +4,7 @@ import { createReducer, on } from '@ngrx/store';
 import { HttpError } from 'ish-core/models/http-error/http-error.model';
 import { setLoadingOn } from 'ish-core/utils/ngrx-creators';
 
-import { CamCard } from '../../models/cam-card/cam-card.model';
+import { CamCard, CamCardItem } from '../../models/cam-card/cam-card.model';
 
 import {
   addBasketToNewCamCard,
@@ -25,6 +25,7 @@ import {
   setStickyCamCardToolbar,
   updateCamCard,
   updateCamCardFail,
+  updateCamCardProductSuccess,
   updateCamCardSuccess,
 } from './cam-card.actions';
 
@@ -38,6 +39,10 @@ export interface CamCardState extends EntityState<CamCard> {
 export const camCardAdapter = createEntityAdapter<CamCard>({
   selectId: camCard => camCard.id,
 });
+
+const updateCamCardItem = (camCard: CamCard, camCardItem: CamCardItem) => {
+  camCard.camCardItems.map((item: CamCardItem) => (item.id === camCardItem.id ? camCardItem : item));
+};
 
 export const initialState: CamCardState = camCardAdapter.getInitialState({
   loading: false,
@@ -93,6 +98,20 @@ export const camCardReducer = createReducer(
       ...state,
       loading: false,
     });
+  }),
+  on(updateCamCardProductSuccess, (state: CamCardState, action) => {
+    const { rootCamCard, camCardId, camCardItem } = action.payload;
+    if (rootCamCard) {
+      state.entities[rootCamCard].subCamCards.map(sub =>
+        sub.id === camCardId ? updateCamCardItem(sub, camCardItem) : sub
+      );
+    } else {
+      updateCamCardItem(state.entities[camCardId], camCardItem);
+    }
+    return {
+      ...state,
+      loading: false,
+    };
   }),
   on(selectCamCard, (state: CamCardState, action) => {
     const { id } = action.payload;

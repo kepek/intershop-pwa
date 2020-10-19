@@ -5,6 +5,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MockComponent, MockDirective, MockPipe } from 'ng-mocks';
 
 import { FeatureToggleDirective } from 'ish-core/directives/feature-toggle.directive';
+import { PricePipe } from 'ish-core/models/price/price.pipe';
 import { ProductView } from 'ish-core/models/product-view/product-view.model';
 import { ProductRoutePipe } from 'ish-core/routing/product/product-route.pipe';
 import { findAllCustomElements } from 'ish-core/utils/dev/html-query-utils';
@@ -60,6 +61,7 @@ describe('Camfil Product Item Simple Component', () => {
         MockComponent(LazyProductAddToQuoteComponent),
         MockComponent(LazyProductAddToWishlistComponent),
         MockDirective(FeatureToggleDirective),
+        MockPipe(PricePipe),
         MockPipe(ProductRoutePipe),
       ],
     }).compileComponents();
@@ -86,6 +88,8 @@ describe('Camfil Product Item Simple Component', () => {
         "mat-card",
         "camfil-product-image",
         "camfil-product-label",
+        "mat-icon",
+        "mat-icon",
         "camfil-product-title",
         "camfil-product-id",
         "camfil-product-attribute",
@@ -109,6 +113,8 @@ describe('Camfil Product Item Simple Component', () => {
         "mat-card",
         "camfil-product-image",
         "camfil-product-label",
+        "mat-icon",
+        "mat-icon",
         "camfil-product-title",
         "camfil-product-id",
         "camfil-product-attribute",
@@ -137,6 +143,8 @@ describe('Camfil Product Item Simple Component', () => {
         "mat-card",
         "camfil-product-image",
         "camfil-product-label",
+        "mat-icon",
+        "mat-icon",
         "camfil-product-attribute",
         "camfil-product-attribute",
         "camfil-product-attribute",
