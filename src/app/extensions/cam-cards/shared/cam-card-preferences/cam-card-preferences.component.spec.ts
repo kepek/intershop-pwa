@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CamCardPreferencesComponent } from './cam-card-preferences.component';
+import { provideMockStore } from '@ngrx/store/testing';
 
 describe('Cam Card Preferences Component', () => {
   let component: CamCardPreferencesComponent;
@@ -10,6 +11,7 @@ describe('Cam Card Preferences Component', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [CamCardPreferencesComponent],
+      providers: [provideMockStore({})],
     }).compileComponents();
   });
 

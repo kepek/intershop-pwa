@@ -13,6 +13,8 @@ export const getAllCamCards = selectAll;
 
 export const getCamCardLoading = createSelector(getCamCardState, state => state.loading);
 
+export const getCamCardCustomers = createSelector(getCamCardState, state => state.customers);
+
 export const getCamCardError = createSelector(getCamCardState, state => state.error);
 
 export const getSelectedCamCardId = createSelector(getCamCardState, state => state.selected);

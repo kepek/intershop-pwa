@@ -42,7 +42,6 @@ describe('Cam Card Service', () => {
             },
             "id": "1234",
             "itemsCount": 0,
-            "maintenanceStatus": false,
             "name": undefined,
             "subCamCards": Array [],
           },

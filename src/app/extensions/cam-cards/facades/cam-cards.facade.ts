@@ -13,6 +13,7 @@ import {
   deleteCamCard,
   detectCamCardToolbar,
   getAllCamCards,
+  getCamCardCustomers,
   getCamCardError,
   getCamCardLoading,
   getSelectedCamCardDetails,
@@ -32,6 +33,7 @@ export class CamCardsFacade {
   camCardLoading$: Observable<boolean> = this.store.pipe(select(getCamCardLoading));
   camCardError$: Observable<HttpError> = this.store.pipe(select(getCamCardError));
   isStickyCamCardToolbar$: Observable<boolean> = this.store.pipe(select(isStickyCamCardToolbar));
+  customers$: Observable<[]> = this.store.pipe(select(getCamCardCustomers));
 
   addCamCard(camCards: CamCard): void | HttpError {
     this.store.dispatch(createCamCard({ camCards }));

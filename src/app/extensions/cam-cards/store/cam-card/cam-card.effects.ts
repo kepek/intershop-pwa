@@ -51,6 +51,9 @@ import {
   loadCamCards,
   loadCamCardsFail,
   loadCamCardsSuccess,
+  loadCustomers,
+  loadCustomersSuccess,
+  loadCustomersdFail,
   moveItemToCamCard,
   removeItemFromCamCard,
   removeItemFromCamCardFail,
@@ -108,6 +111,27 @@ export class CamCardEffects {
         )
       )
     )
+  );
+
+  loadCustomers$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loadCustomers),
+      withLatestFrom(this.store.pipe(select(getUserAuthorized))),
+      filter(([, authorized]) => authorized),
+      switchMap(() =>
+        this.camCardService.getCustomers().pipe(
+          map(camCards => loadCustomersSuccess({ customers: camCards.elements })),
+          mapErrorToAction(loadCustomersdFail)
+        )
+      )
+    )
+  );
+
+  /**
+   * Trigger LoadCamCards action after LoginUserSuccess.
+   */
+  loadCustomersAfterLogin$ = createEffect(() =>
+    this.store.pipe(select(getUserAuthorized), whenTruthy(), mapTo(loadCustomers(true)))
   );
 
   addBasketToNewCamCard$ = createEffect(() =>
