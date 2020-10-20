@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { provideMockStore } from '@ngrx/store/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { MockComponent, MockPipe } from 'ng-mocks';
 import { anything, capture, instance, mock, spy, verify } from 'ts-mockito';
@@ -16,7 +17,6 @@ import { AccountCamCardToolbarComponent } from '../account-cam-card-toolbar/acco
 import { CamfilCamCardsSearchComponent } from '../camfil-cam-cards-search/camfil-cam-cards-search.component';
 
 import { AccountCamCardListComponent } from './account-cam-card-list.component';
-import { provideMockStore } from '@ngrx/store/testing';
 
 describe('Account Cam Card List Component', () => {
   let component: AccountCamCardListComponent;

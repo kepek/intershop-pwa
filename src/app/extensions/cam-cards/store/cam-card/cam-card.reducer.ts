@@ -20,6 +20,9 @@ import {
   loadCamCards,
   loadCamCardsFail,
   loadCamCardsSuccess,
+  loadCustomers,
+  loadCustomersSuccess,
+  loadCustomersdFail,
   removeItemFromCamCardSuccess,
   selectCamCard,
   setStickyCamCardToolbar,
@@ -34,6 +37,7 @@ export interface CamCardState extends EntityState<CamCard> {
   selected: string;
   error: HttpError;
   stickyToolbar: boolean;
+  customers: [];
 }
 
 export const camCardAdapter = createEntityAdapter<CamCard>({
@@ -48,18 +52,20 @@ export const initialState: CamCardState = camCardAdapter.getInitialState({
   loading: false,
   selected: undefined,
   error: undefined,
+  customers: [],
   stickyToolbar: false,
 });
 
 export const camCardReducer = createReducer(
   initialState,
-  setLoadingOn(loadCamCards, createCamCard, addBasketToNewCamCard, deleteCamCard, updateCamCard),
+  setLoadingOn(loadCamCards, createCamCard, addBasketToNewCamCard, deleteCamCard, updateCamCard, loadCustomers),
   on(
     loadCamCardsFail,
     deleteCamCardFail,
     createCamCardFail,
     addBasketToNewCamCardFail,
     updateCamCardFail,
+    loadCustomersdFail,
     (state: CamCardState, action) => {
       const { error } = action.payload;
       return {
@@ -76,6 +82,14 @@ export const camCardReducer = createReducer(
       ...state,
       loading: false,
     });
+  }),
+  on(loadCustomersSuccess, (state: CamCardState, action) => {
+    const { customers } = action.payload;
+    return {
+      ...state,
+      customers,
+      loading: false,
+    };
   }),
   on(
     addBasketToNewCamCardSuccess,

@@ -1,8 +1,10 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Observable } from 'rxjs';
 
 import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
 
+import { CamCardsFacade } from '../../facades/cam-cards.facade';
 import { CamCard } from '../../models/cam-card/cam-card.model';
 
 /**
@@ -19,8 +21,8 @@ import { CamCard } from '../../models/cam-card/cam-card.model';
   styleUrls: ['./cam-card-preferences.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CamCardPreferencesComponent implements OnChanges {
-  constructor(private fb: FormBuilder) {
+export class CamCardPreferencesComponent implements OnChanges, OnInit {
+  constructor(private fb: FormBuilder, private camCardsFacade: CamCardsFacade) {
     this.initForm();
   }
 
@@ -42,6 +44,7 @@ export class CamCardPreferencesComponent implements OnChanges {
   submitted = false;
   pickerLast;
   pickerNext;
+  customers$: Observable<[]>;
 
   /**
    *  A reference to the current modal  .
@@ -90,6 +93,9 @@ export class CamCardPreferencesComponent implements OnChanges {
     if (this.camCard) {
       this.primaryButton = 'camfil.account.cam_cards.edit_form.save_button.text';
     }
+  }
+  ngOnInit() {
+    this.customers$ = this.camCardsFacade.customers$;
   }
 
   initForm() {

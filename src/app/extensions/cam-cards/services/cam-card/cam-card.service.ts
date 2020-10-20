@@ -148,6 +148,15 @@ export class CamCardService {
   }
 
   /**
+   * Get customers available for current user.
+   * @param CamCardDetails   The cam cards data.
+   * @returns                 The created cam_cards.
+   */
+  getCustomers(): Observable<{ elements?: [] }> {
+    return this.apiService.get('camfilcustomers').pipe(map(camCardData => camCardData));
+  }
+
+  /**
    * Adds a product to the cam cards with the given id and reloads the cam_cards.
    * @param camCardId
    * @param sku           The product sku.

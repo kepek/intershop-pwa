@@ -40,6 +40,15 @@ export const deleteCamCardSuccess = createAction(
 
 export const deleteCamCardFail = createAction('[Cam Cards API] Delete Cam Card Fail', httpError());
 
+export const loadCustomers = createAction('[Cam Cards] load available customer', payload<boolean>());
+
+export const loadCustomersSuccess = createAction(
+  '[Cam Cards API] load available customer Success',
+  payload<{ customers: [] }>()
+);
+
+export const loadCustomersdFail = createAction('[Cam Cards API] load available customer Fail', httpError());
+
 export const addProductToCamCard = createAction(
   '[Cam Cards] Add Item to Cam Card',
   payload<{ camCardId: string; sku: string; quantity?: number }>()
