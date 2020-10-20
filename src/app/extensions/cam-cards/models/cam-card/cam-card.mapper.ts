@@ -26,7 +26,6 @@ export class CamCardMapper {
           last: '12-01-2020', // TODO: tmp
           interval: 10, // TODO: tmp
         },
-        maintenanceStatus: false, // TODO: tmp
         itemsCount: items + itemsFromSubCamCard,
       };
     } else {
