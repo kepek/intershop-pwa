@@ -1,4 +1,5 @@
-import { NgModule } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { Inject, NgModule } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 
@@ -6,17 +7,23 @@ import { completeIconSet } from '../exports';
 
 @NgModule({})
 export class CamfilIconsModule {
-  constructor(private domSanitizer: DomSanitizer, public matIconRegistry: MatIconRegistry) {
+  constructor(
+    private domSanitizer: DomSanitizer,
+    public matIconRegistry: MatIconRegistry,
+    @Inject(DOCUMENT) private document: Document
+  ) {
     completeIconSet.forEach(({ name, data }) => {
-      let options = {};
-      const start = data.indexOf('viewBox="');
-
-      if (start > -1) {
-        const end = data.indexOf('"', start + 9);
-        const val = data.slice(start + 9, end);
-        options = { viewBox: val };
-      }
+      const svgElement = this.svgElementFromString(data);
+      const options = {
+        viewBox: svgElement.getAttribute('viewBox'),
+      };
       this.matIconRegistry.addSvgIconLiteral(name, this.domSanitizer.bypassSecurityTrustHtml(data), options);
     });
+  }
+
+  private svgElementFromString(svgContent: string): SVGElement {
+    const div = this.document.createElement('DIV');
+    div.innerHTML = svgContent;
+    return div.querySelector('svg') || this.document.createElementNS('http://www.w3.org/2000/svg', 'path');
   }
 }
