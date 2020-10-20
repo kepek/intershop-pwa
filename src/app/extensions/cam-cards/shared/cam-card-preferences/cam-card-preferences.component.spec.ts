@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideMockStore } from '@ngrx/store/testing';
 
 import { CamCardPreferencesComponent } from './cam-card-preferences.component';
-import { provideMockStore } from '@ngrx/store/testing';
 
 describe('Cam Card Preferences Component', () => {
   let component: CamCardPreferencesComponent;

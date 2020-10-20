@@ -3,8 +3,7 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import { AttributeToStringPipe } from 'ish-core/models/attribute/attribute.pipe';
 import { Product } from 'ish-core/models/product/product.model';
-
-import { CamfilProductAttributeComponent } from '../camfil-product-attribute/camfil-product-attribute.component';
+import { CamfilProductAttributeComponent } from 'ish-shared/components/product/camfil-product-attribute/camfil-product-attribute.component';
 
 import { CamfilProductIdComponent } from './camfil-product-id.component';
 

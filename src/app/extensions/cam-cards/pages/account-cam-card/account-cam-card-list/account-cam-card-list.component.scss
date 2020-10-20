@@ -116,7 +116,7 @@
     }
     &-comment {
       cursor: pointer;
-      
+
       .mat-icon {
         margin-top: -2px;
       }
@@ -214,13 +214,14 @@
       }
     }
   }
-  div.cam-card-tooltip { // div tag was added becaouse of override
-    white-space: pre-line;
-    font-size: $font-size-base;
-    margin: $space-box 0 0;
-    line-height: 1.4em;
+  div.cam-card-tooltip {
     min-width: 100px;
     max-width: 200px;
+    margin: $space-box 0 0;
+    font-size: $font-size-base;
+    line-height: 1.4em;
+    // div tag was added becaouse of override
+    white-space: pre-line;
 
     &::first-line {
       font-weight: bold;

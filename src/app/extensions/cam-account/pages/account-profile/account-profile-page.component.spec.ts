@@ -5,9 +5,8 @@ import { instance, mock } from 'ts-mockito';
 
 import { ServerHtmlDirective } from 'ish-core/directives/server-html.directive';
 import { AccountFacade } from 'ish-core/facades/account.facade';
-import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
-
 import { CamfilErrorComponent } from 'ish-shared/components/common/camfil-error/camfil-error.component';
+import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
 
 import { AccountProfilePageComponent } from './account-profile-page.component';
 import { AccountProfileComponent } from './account-profile/account-profile.component';
