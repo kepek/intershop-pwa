@@ -17,6 +17,7 @@ export * from './build/camfilIcon-cart.icon';
 export * from './build/camfilIcon-checkmark.icon';
 export * from './build/camfilIcon-chevron-left-fab.icon';
 export * from './build/camfilIcon-chevron-right-fab.icon';
+export * from './build/camfilIcon-comment.icon';
 export * from './build/camfilIcon-compare.icon';
 export * from './build/camfilIcon-contact.icon';
 export * from './build/camfilIcon-copy.icon';

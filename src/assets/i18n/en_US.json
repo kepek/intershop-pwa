@@ -566,6 +566,7 @@
   "camfil.account.cam_card.form.name.error.maxlength": "The CamCard name must not exceed 35 characters.",
   "camfil.account.cam_card.form.name.error.required": "Please enter an CamCard name.",
   "camfil.account.cam_card.form.name.label": "CamCard Name",
+  "camfil.account.cam_card.list.comment": "Comment",
   "camfil.account.cam_card.list.no_templates.text": "Currently you don't have any CamCards.",
   "camfil.account.cam_card.move.added.text": "{{0}} has been added to <a callback=\"callbackHideDialogModal\" href=\"{{2}}\">{{1}}</a>.",
   "camfil.account.cam_card.new_cam_card.text": "New CamCard",
