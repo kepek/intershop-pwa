@@ -1,15 +1,17 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Develop Local" type="js.build_tools.npm">
+  <configuration default="false" name="Develop Local w/ Proxy " type="js.build_tools.npm">
     <package-json value="$PROJECT_DIR$/package.json" />
     <command value="run" />
     <scripts>
-      <script value="dev:local" />
+      <script value="dev:local:proxy" />
     </scripts>
     <node-interpreter value="project" />
     <envs>
       <env name="NODE_ENV" value="development" />
       <env name="PORT" value="4200" />
       <env name="LOGGING" value="true" />
+      <env name="PROXY_ICM" value="https://intershoppwa.azurewebsites.net" />
+      <env name="TRUST_ICM" value="true" />
     </envs>
     <method v="2" />
   </configuration>

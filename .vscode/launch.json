@@ -1,5 +1,5 @@
 {
-  "version": "0.2.0",
+  "version": "0.3.0",
   "configurations": [
     {
       "type": "node",
@@ -40,7 +40,24 @@
       "request": "launch",
       "runtimeArgs": [
         "run-script",
-        "dev:ssr:local",
+        "dev:local",
+        "--scripts-prepend-node-path=auto"
+      ],
+      "runtimeExecutable": "npm",
+      "skipFiles": ["<node_internals>/**"],
+      "type": "pwa-node",
+      "env": {
+        "NODE_ENV": "development",
+        "PORT": "4200",
+        "LOGGING": "true"
+      }
+    },
+    {
+      "name": "Develop Local w/ Proxy",
+      "request": "launch",
+      "runtimeArgs": [
+        "run-script",
+        "dev:local:proxy",
         "--scripts-prepend-node-path=auto"
       ],
       "runtimeExecutable": "npm",
@@ -51,8 +68,7 @@
         "PORT": "4200",
         "LOGGING": "true",
         "PROXY_ICM": "https://intershoppwa.azurewebsites.net",
-        "TRUST_ICM": "true",
-        "SSR_HYBRID": "true"
+        "TRUST_ICM": "true"
       }
     },
     {

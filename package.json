@@ -45,6 +45,7 @@
     "start:local": "ng run intershop-pwa:serve-ssr:local",
     "dev": "ng run intershop-pwa:serve",
     "dev:local": "ng run intershop-pwa:serve:local",
+    "dev:local:proxy": "ng run intershop-pwa:serve:local-proxy",
     "dev:ssr": "ng run intershop-pwa:serve-ssr",
     "dev:ssr:local": "ng run intershop-pwa:serve-ssr:local",
     "generate-icons": "svg-to-ts --config svg-to-ts.config.json"

@@ -110,6 +110,9 @@
               "browserTarget": "intershop-pwa:build:production"
             },
             "local": {
+              "browserTarget": "intershop-pwa:build:local"
+            },
+            "local-proxy": {
               "browserTarget": "intershop-pwa:build:local",
               "proxyConfig": "src/setupProxy.ts"
             }
