@@ -33,7 +33,7 @@
                 "glob": "**/*",
                 "input": "./projects/organization-management/src/assets",
                 "output": "/organization-management/assets/"
-              },
+              }
             ],
             "stylePreprocessorOptions": {
               "includePaths": ["src/styles"]
@@ -95,6 +95,9 @@
               "serviceWorker": false
             }
           }
+        },
+        "test": {
+          "builder": "@angular-builders/jest:run"
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -211,6 +214,9 @@
               }
             ]
           }
+        },
+        "test": {
+          "builder": "@angular-builders/jest:run"
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
