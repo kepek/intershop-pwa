@@ -4,7 +4,7 @@
 :host {
   .new-customer {
     &__wrapper {
-      padding: 24px 40px;
+      padding: $space-default 40px;
 
       @media (min-width: $screen-lg-min) {
         border-right: 1px solid $camfil-color-border;

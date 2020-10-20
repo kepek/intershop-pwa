@@ -5,6 +5,7 @@ import { instance, mock } from 'ts-mockito';
 
 import { ServerHtmlDirective } from 'ish-core/directives/server-html.directive';
 import { AccountFacade } from 'ish-core/facades/account.facade';
+import { CamfilErrorComponent } from 'ish-shared/components/common/camfil-error/camfil-error.component';
 import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
 
 import { AccountProfilePageComponent } from './account-profile-page.component';
@@ -22,6 +23,7 @@ describe('Account Profile Page Component', () => {
       declarations: [
         AccountProfileComponent,
         AccountProfilePageComponent,
+        CamfilErrorComponent,
         ChangePasswordComponent,
         MockComponent(FaIconComponent),
         MockComponent(LoadingComponent),

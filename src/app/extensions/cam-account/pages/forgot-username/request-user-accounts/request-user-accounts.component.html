@@ -3,12 +3,6 @@
 
   <ng-container *ngIf="success$ | async; else forgotUsernameForm">
     <p class="subtitle">{{ 'camfil.account.send_username.message' | translate }}</p>
-
-    <div *ngFor="let account of accounts$">
-      <a mat-button class="link" routerLink="/login" target="_blank">
-        {{ account }}
-      </a>
-    </div>
   </ng-container>
 
   <ng-template #forgotUsernameForm>

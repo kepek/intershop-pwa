@@ -135,6 +135,9 @@ $font-size-navbar-item-mobile: $font-size-corporate * 1.14; // ~16px
 $font-size-menu-item-mobile: $font-size-corporate; // ~14px
 $font-size-sub-menu-item-mobile: $font-size-corporate; // ~14px
 
+$font-size-overline: 12px;
+$line-height-overline: 16px;
+
 $navbar-shadow: 2px 1px 4px 0 rgba(0, 0, 0, 0.17);
 $navbar-shadow-mobile: 2px 1px 4px 0 rgba(0, 0, 0, 0.17);
 $sidebar-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.37);
@@ -366,5 +369,5 @@ $camfil-toolbar-font-size: $font-size-base * 0.95; // ~13px
 
 //counter
 $camfil-counter-value-border-radius: $mat-icon-button-size / 10;
-$camfil-counter-value-font-size:  $font-size-lg;
-$camfil-counter-value-size:  $mat-icon-button-size;
+$camfil-counter-value-font-size: $font-size-lg;
+$camfil-counter-value-size: $mat-icon-button-size;

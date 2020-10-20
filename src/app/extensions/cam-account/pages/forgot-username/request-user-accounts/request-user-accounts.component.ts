@@ -1,9 +1,10 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { AccountFacade } from 'ish-core/facades/account.facade';
 import { HttpError } from 'ish-core/models/http-error/http-error.model';
-import { UsernameReminder } from 'ish-core/models/username-reminder/username-reminder.model';
+
+import { CamAccountFacade } from '../../../facades/cam-account.facade';
+import { UsernameReminder } from '../../../models/username-reminder/username-reminder.model';
 
 @Component({
   selector: 'camfil-request-user-accounts',
@@ -16,20 +17,17 @@ export class RequestUserAccountsComponent implements OnInit {
   error$: Observable<HttpError>;
   loading$: Observable<boolean>;
 
-  accounts$: Observable<string[]>;
-
-  constructor(private accountFacade: AccountFacade) {}
+  constructor(private camAccountFacade: CamAccountFacade) {}
 
   ngOnInit(): void {
-    this.success$ = this.accountFacade.usernameReminderSuccess$;
-    this.error$ = this.accountFacade.usernameReminderError$;
-    this.loading$ = this.accountFacade.userLoading$;
-    this.accounts$ = this.accountFacade.accounts$();
+    this.success$ = this.camAccountFacade.usernameReminderSuccess$;
+    this.error$ = this.camAccountFacade.usernameReminderError$;
+    this.loading$ = this.camAccountFacade.loading$;
 
-    this.accountFacade.resetUsernameReminder();
+    this.camAccountFacade.resetUsernameReminder();
   }
 
   requestUsernameReminder(data: UsernameReminder) {
-    this.accountFacade.requestUsernameReminder(data);
+    this.camAccountFacade.requestUsernameReminder(data);
   }
 }

@@ -11,7 +11,6 @@ import { HttpError } from 'ish-core/models/http-error/http-error.model';
 import { PasswordReminderUpdate } from 'ish-core/models/password-reminder-update/password-reminder-update.model';
 import { PasswordReminder } from 'ish-core/models/password-reminder/password-reminder.model';
 import { User } from 'ish-core/models/user/user.model';
-import { UsernameReminder } from 'ish-core/models/username-reminder/username-reminder.model';
 import {
   createCustomerAddress,
   deleteCustomerAddress,
@@ -25,7 +24,6 @@ import { getOrders, getOrdersLoading, getSelectedOrder, loadOrders } from 'ish-c
 import {
   createUser,
   deleteUserPaymentInstrument,
-  getAccounts,
   getLoggedInCustomer,
   getLoggedInUser,
   getPasswordReminderError,
@@ -35,16 +33,11 @@ import {
   getUserError,
   getUserLoading,
   getUserPaymentMethods,
-  getUsernameReminderError,
-  getUsernameReminderSuccess,
   isBusinessCustomer,
-  loadAccounts,
   loadUserPaymentMethods,
   loginUser,
   requestPasswordReminder,
-  requestUsernameReminder,
   resetPasswordReminder,
-  resetUsernameReminder,
   updateCustomer,
   updateUser,
   updateUserPassword,
@@ -114,24 +107,6 @@ export class AccountFacade {
     this.store.dispatch(
       updateCustomer({ customer, successMessage: message ? message : 'account.profile.update_profile.message' })
     );
-  }
-
-  // USERNAME
-
-  usernameReminderSuccess$ = this.store.pipe(select(getUsernameReminderSuccess));
-  usernameReminderError$ = this.store.pipe(select(getUsernameReminderError));
-
-  resetUsernameReminder() {
-    this.store.dispatch(resetUsernameReminder());
-  }
-
-  requestUsernameReminder(data: UsernameReminder) {
-    this.store.dispatch(requestUsernameReminder({ data }));
-  }
-
-  accounts$() {
-    this.store.dispatch(loadAccounts());
-    return this.store.pipe(select(getAccounts));
   }
 
   // PASSWORD

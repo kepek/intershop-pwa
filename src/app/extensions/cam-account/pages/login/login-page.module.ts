@@ -1,5 +1,7 @@
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 
 import { CamfilDetailsBoxComponent } from 'ish-shared/components/common/camfil-details-box/camfil-details-box.component';
 import { SharedModule } from 'ish-shared/shared.module';
@@ -23,7 +25,7 @@ const loginPageRoutes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(loginPageRoutes), SharedModule],
+  imports: [CommonModule, RouterModule.forChild(loginPageRoutes), SharedModule, TranslateModule],
   declarations: [
     CamfilDetailsBoxComponent,
     LoginFormComponent,

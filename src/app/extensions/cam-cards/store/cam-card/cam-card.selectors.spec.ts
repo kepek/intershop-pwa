@@ -44,13 +44,13 @@ describe('Cam Card Selectors', () => {
 
   const camCards = [
     {
-      title: 'testing cam cards',
+      name: 'testing cam cards',
       id: '.SKsEQAE4FIAAAFuNiUBWx0d',
       itemsCount: 0,
       public: false,
     },
     {
-      title: 'testing cam cards 2',
+      name: 'testing cam cards 2',
       id: '.AsdHS18FIAAAFuNiUBWx0d',
       itemsCount: 0,
       public: false,
@@ -124,7 +124,7 @@ describe('Cam Card Selectors', () => {
     describe('CreateCamCard', () => {
       const createCamCardAction = createCamCard({
         camCards: {
-          title: 'create title',
+          name: 'create name',
         },
       });
 
@@ -246,7 +246,7 @@ describe('Cam Card Selectors', () => {
     describe('UpdatCamCardSuccess', () => {
       const updated = {
         ...camCards[0],
-        title: 'new title',
+        name: 'new name',
       };
       const updateCamCardSuccessAction = updateCamCardSuccess({
         camCard: updated,
@@ -259,7 +259,7 @@ describe('Cam Card Selectors', () => {
         expect(getCamCardLoading(store$.state)).toBeFalse();
       });
 
-      it('should update cam cards title to new title', () => {
+      it('should update cam cards name to new name', () => {
         store$.dispatch(loadCamCardSuccess);
         store$.dispatch(updateCamCardSuccessAction);
 

@@ -6,6 +6,7 @@ import { ApiService } from 'ish-core/services/api/api.service';
 
 import { ApplicantData } from '../../models/applicant/applicant.interface';
 import { Applicant } from '../../models/applicant/applicant.model';
+import { UsernameReminder } from '../../models/username-reminder/username-reminder.model';
 
 @Injectable({ providedIn: 'root' })
 export class CamAccountService {
@@ -23,5 +24,13 @@ export class CamAccountService {
           captcha: pick(data, ['captcha', 'captchaAction']),
         })
     );
+  }
+
+  /**
+   * Request an email for the customer accounts connected with email.
+   * @param data  The user data (email, firstName, lastName ) to identify the user.
+   */
+  requestUsernameReminder(data: UsernameReminder) {
+    return this.apiService.post('security/customerAccounts', { answer: '', ...data });
   }
 }

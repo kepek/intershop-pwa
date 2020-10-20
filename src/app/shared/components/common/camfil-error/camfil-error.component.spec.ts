@@ -1,22 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { provideMockStore } from '@ngrx/store/testing';
 
-import { CamCardPreferencesComponent } from './cam-card-preferences.component';
+import { CamfilErrorComponent } from './camfil-error.component';
 
-describe('Cam Card Preferences Component', () => {
-  let component: CamCardPreferencesComponent;
-  let fixture: ComponentFixture<CamCardPreferencesComponent>;
+describe('Camfil Error Component', () => {
+  let component: CamfilErrorComponent;
+  let fixture: ComponentFixture<CamfilErrorComponent>;
   let element: HTMLElement;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CamCardPreferencesComponent],
-      providers: [provideMockStore({})],
+      declarations: [CamfilErrorComponent],
     }).compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CamCardPreferencesComponent);
+    fixture = TestBed.createComponent(CamfilErrorComponent);
     component = fixture.componentInstance;
     element = fixture.nativeElement;
   });

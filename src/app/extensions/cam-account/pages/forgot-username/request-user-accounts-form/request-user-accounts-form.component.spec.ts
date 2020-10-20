@@ -1,5 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
+import { CamfilErrorComponent } from 'ish-shared/components/common/camfil-error/camfil-error.component';
+
 import { RequestUserAccountsFormComponent } from './request-user-accounts-form.component';
 
 describe('Request User Accounts Form Component', () => {
@@ -9,7 +11,7 @@ describe('Request User Accounts Form Component', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [RequestUserAccountsFormComponent],
+      declarations: [CamfilErrorComponent, RequestUserAccountsFormComponent],
     }).compileComponents();
   });
 

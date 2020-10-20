@@ -33,10 +33,18 @@ const routes: Routes = [
   },
   {
     path: 'forgotPassword',
+    canActivate: [FeatureToggleGuard],
+    data: {
+      feature: 'camAccount',
+    },
     loadChildren: () => import('./forgot-password/forgot-password-page.module').then(m => m.ForgotPasswordPageModule),
   },
   {
     path: 'forgotUsername',
+    canActivate: [FeatureToggleGuard],
+    data: {
+      feature: 'camAccount',
+    },
     loadChildren: () => import('./forgot-username/forgot-username-page.module').then(m => m.ForgotUsernamePageModule),
   },
 ];

@@ -1,0 +1,8 @@
+@import '../../../../../styles/themes/camfil/mixins';
+@import '../../../../../styles/themes/camfil/variables';
+
+:host {
+  .error-field {
+    @include error;
+  }
+}

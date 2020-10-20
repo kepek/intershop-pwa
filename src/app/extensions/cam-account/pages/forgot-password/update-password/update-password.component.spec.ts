@@ -10,7 +10,7 @@ import { AccountFacade } from 'ish-core/facades/account.facade';
 import { ErrorMessageComponent } from 'ish-shared/components/common/error-message/error-message.component';
 import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
 
-import { RequestReminderFormComponent } from '../request-reminder-form/request-reminder-form.component';
+import { RemindPasswordFormComponent } from '../remind-password-form/remind-password-form.component';
 import { UpdatePasswordFormComponent } from '../update-password-form/update-password-form.component';
 
 import { UpdatePasswordComponent } from './update-password.component';
@@ -28,7 +28,7 @@ describe('Update Password Component', () => {
       declarations: [
         MockComponent(ErrorMessageComponent),
         MockComponent(LoadingComponent),
-        MockComponent(RequestReminderFormComponent),
+        MockComponent(RemindPasswordFormComponent),
         MockComponent(UpdatePasswordFormComponent),
         MockDirective(ServerHtmlDirective),
         UpdatePasswordComponent,

@@ -266,9 +266,10 @@
       [camCardItemData]="camCardItem"
       [currentCamCard]="camCard"
     ></camfil-account-cam-card-detail-line-item>
-    
+
     <ng-container *ngIf="camCardItem.comment.label">
-      <span #tooltip="matTooltip"
+      <span
+        #tooltip="matTooltip"
         matTooltip="{{ camCardItem.comment.label }} &#13;{{ camCardItem.comment.text }}"
         matTooltipPosition="below"
         matTooltipClass="cam-card-tooltip"

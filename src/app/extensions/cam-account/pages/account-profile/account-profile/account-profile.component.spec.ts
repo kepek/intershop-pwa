@@ -10,6 +10,7 @@ import { AccountFacade } from 'ish-core/facades/account.facade';
 import { Customer } from 'ish-core/models/customer/customer.model';
 import { User } from 'ish-core/models/user/user.model';
 import { DatePipe } from 'ish-core/pipes/date.pipe';
+import { CamfilErrorComponent } from 'ish-shared/components/common/camfil-error/camfil-error.component';
 import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
 
 import { ChangePasswordComponent } from '../change-password/change-password.component';
@@ -33,6 +34,7 @@ describe('Account Profile Component', () => {
     await TestBed.configureTestingModule({
       declarations: [
         AccountProfileComponent,
+        CamfilErrorComponent,
         ChangePasswordComponent,
         MockComponent(FaIconComponent),
         MockComponent(LoadingComponent),

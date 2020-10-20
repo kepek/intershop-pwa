@@ -3,14 +3,13 @@
     <mat-label>{{ 'camfil.account.forgotdata.email.label' | translate }}</mat-label>
     <input matInput required [formControl]="emailFormControl" type="email" />
   </mat-form-field>
-  <div>
-    <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')" class="error-field">
-      {{ 'camfil.account.email.error.email' | translate }}
-    </mat-error>
-    <mat-error *ngIf="emailFormControl.hasError('required')" class="error-field">
-      {{ 'camfil.account.email.error.required' | translate }}
-    </mat-error>
-  </div>
+
+  <camfil-error
+    [errors]="emailFormControl.errors"
+    [errorValidators]="emailValidator"
+    [touched]="emailFormControl.touched"
+  >
+  </camfil-error>
 
   <div class="form-group">
     <button
@@ -19,7 +18,7 @@
       value="AccountsRequest"
       name="AccountsRequest"
       color="primary"
-      aria-label="Send"
+      attr.aria-label="{{ 'camfil.account.update_username.button.aria' | translate }}"
       class="accounts-request__button"
       [disabled]="buttonDisabled"
     >

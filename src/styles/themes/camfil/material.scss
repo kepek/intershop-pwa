@@ -272,7 +272,7 @@ a {
   }
   &[svgicon] {
     vertical-align: middle;
-    &:not([svgicon="eye"]) svg {
+    &:not([svgicon='eye']) svg {
       vertical-align: top;
     }
   }

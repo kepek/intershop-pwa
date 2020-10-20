@@ -3,11 +3,11 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { MaterialModule } from 'ish-shared/material/material.module';
 
 import { DirectivesModule } from 'ish-core/directives.module';
 import { FeatureToggleModule } from 'ish-core/feature-toggle.module';
 import { IconModule } from 'ish-core/icon.module';
+import { MaterialModule } from 'ish-shared/material/material.module';
 
 import { CamfilCounterComponent } from './components/camfil-counter/camfil-counter.component';
 import { CheckboxComponent } from './components/checkbox/checkbox.component';

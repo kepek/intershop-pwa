@@ -10,12 +10,12 @@ import { PasswordReminder } from 'ish-core/models/password-reminder/password-rem
  * See also {@link RequestReminderFormComponent}.
  */
 @Component({
-  selector: 'ish-request-reminder',
-  templateUrl: './request-reminder.component.html',
-  styleUrls: ['./request-reminder.component.scss'],
+  selector: 'camfil-remind-password',
+  templateUrl: './remind-password.component.html',
+  styleUrls: ['./remind-password.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RequestReminderComponent implements OnInit {
+export class RemindPasswordComponent implements OnInit {
   success$: Observable<boolean>;
   error$: Observable<HttpError>;
   loading$: Observable<boolean>;

@@ -1,5 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
+
+import { SharedModule } from 'ish-shared/shared.module';
 
 import { CamAccountModule } from '../../cam-account.module';
 
@@ -9,7 +12,7 @@ import { RequestUserAccountsComponent } from './request-user-accounts/request-us
 const forgotUsernamePageRoutes: Routes = [{ path: '', component: RequestUserAccountsComponent }];
 
 @NgModule({
-  imports: [CamAccountModule, RouterModule.forChild(forgotUsernamePageRoutes)],
+  imports: [CamAccountModule, RouterModule.forChild(forgotUsernamePageRoutes), SharedModule, TranslateModule],
   declarations: [RequestUserAccountsComponent, RequestUserAccountsFormComponent],
 })
 export class ForgotUsernamePageModule {}

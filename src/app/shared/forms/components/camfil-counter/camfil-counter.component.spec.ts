@@ -6,7 +6,7 @@ import { spy, verify } from 'ts-mockito';
 
 import { CamfilCounterComponent } from './camfil-counter.component';
 
-describe('Counter Component', () => {
+describe('Camfil Counter Component', () => {
   let component: CamfilCounterComponent;
   let fixture: ComponentFixture<CamfilCounterComponent>;
   let element: HTMLElement;
