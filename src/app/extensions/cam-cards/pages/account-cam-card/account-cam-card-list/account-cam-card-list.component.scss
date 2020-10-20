@@ -114,6 +114,14 @@
         background-color: $greyF5;
       }
     }
+    &-comment {
+      cursor: pointer;
+      
+      .mat-icon {
+        margin-top: -2px;
+      }
+    }
+
     // for mobile
     &s-mobile {
       padding: $space-box 0;
@@ -204,6 +212,18 @@
       &::after {
         top: 5px;
       }
+    }
+  }
+  div.cam-card-tooltip { // div tag was added becaouse of override
+    white-space: pre-line;
+    font-size: $font-size-base;
+    margin: $space-box 0 0;
+    line-height: 1.4em;
+    min-width: 100px;
+    max-width: 200px;
+
+    &::first-line {
+      font-weight: bold;
     }
   }
 }

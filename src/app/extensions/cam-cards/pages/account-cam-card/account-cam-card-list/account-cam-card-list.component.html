@@ -261,11 +261,24 @@
     *ngFor="let camCardItem of camCard.camCardItems; index as i"
     class="d-flex justify-content-between cam-card-product"
   >
-    <!-- {{ i + 1 }} sku: {{ camCardItem.product.sku }} -->
+    {{ i + 1 }}
     <camfil-account-cam-card-detail-line-item
       [camCardItemData]="camCardItem"
       [currentCamCard]="camCard"
     ></camfil-account-cam-card-detail-line-item>
+    
+    <ng-container *ngIf="camCardItem.comment.label">
+      <span #tooltip="matTooltip"
+        matTooltip="{{ camCardItem.comment.label }} &#13;{{ camCardItem.comment.text }}"
+        matTooltipPosition="below"
+        matTooltipClass="cam-card-tooltip"
+        class="cam-card-comment"
+        (click)="tooltip.show()"
+        (mouseenter)="$event.stopImmediatePropagation()"
+      >
+        <mat-icon svgIcon="comment" class="size-14"></mat-icon> {{ 'camfil.account.cam_card.list.comment' | translate }}
+      </span>
+    </ng-container>
     <mat-checkbox
       [checked]="isProductChecked(camCardItem.id)"
       (change)="handleProductCheckbox(camCardItem, camCard, $event)"
