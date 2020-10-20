@@ -171,7 +171,7 @@ export class CamCardService {
    */
   updateCamCardProduct(camCardId: string, camCardItem: CamCardItem): Observable<CamCardItem> {
     return this.apiService
-      .post(`camcards/${camCardId}/products`, camCardItem)
+      .put(`camcards/${camCardId}/products/${camCardItem.id}`, camCardItem)
       .pipe(concatMap(({ id }) => this.getCamCardProduct(camCardId, id)));
   }
 

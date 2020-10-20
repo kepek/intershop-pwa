@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 
 import { HttpError } from 'ish-core/models/http-error/http-error.model';
 
-import { CamCard } from '../models/cam-card/cam-card.model';
+import { CamCard, CamCardItem } from '../models/cam-card/cam-card.model';
 import {
   addBasketToNewCamCard,
   addProductToCamCard,
@@ -20,6 +20,7 @@ import {
   moveItemToCamCard,
   removeItemFromCamCard,
   updateCamCard,
+  updateCamCardProduct,
 } from '../store/cam-card';
 
 @Injectable({ providedIn: 'root' })
@@ -54,6 +55,10 @@ export class CamCardsFacade {
 
   addProductToCamCard(camCardId: string, sku: string, quantity?: number): void {
     this.store.dispatch(addProductToCamCard({ camCardId, sku, quantity }));
+  }
+
+  updateCamCardProduct(rootCamCard: string, camCardId: string, camCardItem: CamCardItem): void {
+    this.store.dispatch(updateCamCardProduct({ rootCamCard, camCardId, camCardItem }));
   }
 
   moveItemToCamCard(

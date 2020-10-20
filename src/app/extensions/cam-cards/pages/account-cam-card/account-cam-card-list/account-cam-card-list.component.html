@@ -254,11 +254,11 @@
     *ngFor="let camCardItem of camCard.camCardItems; index as i"
     class="d-flex justify-content-between cam-card-product"
   >
-    {{ i + 1 }} sku: {{ camCardItem.product.sku }}
-    <!-- <camfil-account-cam-card-detail-line-item
+    <!-- {{ i + 1 }} sku: {{ camCardItem.product.sku }} -->
+    <camfil-account-cam-card-detail-line-item
       [camCardItemData]="camCardItem"
       [currentCamCard]="camCard"
-    ></camfil-account-cam-card-detail-line-item> -->
+    ></camfil-account-cam-card-detail-line-item>
     <mat-checkbox
       [checked]="isProductChecked(camCardItem.id)"
       (change)="handleProductCheckbox(camCardItem, camCard, $event)"

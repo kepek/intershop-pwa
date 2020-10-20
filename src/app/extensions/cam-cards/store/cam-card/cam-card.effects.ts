@@ -59,6 +59,8 @@ import {
   setStickyCamCardToolbar,
   updateCamCard,
   updateCamCardFail,
+  updateCamCardProduct,
+  updateCamCardProductSuccess,
   updateCamCardSuccess,
 } from './cam-card.actions';
 import { getCamCardDetails, getSelectedCamCardDetails, getSelectedCamCardId } from './cam-card.selectors';
@@ -219,6 +221,28 @@ export class CamCardEffects {
             ]),
             mapErrorToAction(createCamCardFail)
           )
+      )
+    )
+  );
+
+  updateCamCardProduct$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(updateCamCardProduct),
+      mapToPayload(),
+      mergeMap(payload =>
+        this.camCardService.updateCamCardProduct(payload.camCardId, payload.camCardItem).pipe(
+          mergeMap(camCardItem => {
+            const { rootCamCard, camCardId } = payload;
+            return [
+              updateCamCardProductSuccess({ rootCamCard, camCardId, camCardItem }),
+              displaySuccessMessage({
+                message: 'camfil.account.cam_cards.update.product.confirmation',
+                messageParams: { 0: camCardItem.product.name },
+              }),
+            ];
+          }),
+          mapErrorToAction(updateCamCardFail)
+        )
       )
     )
   );

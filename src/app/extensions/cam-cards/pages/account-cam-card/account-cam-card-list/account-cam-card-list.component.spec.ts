@@ -1,7 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { provideMockStore } from '@ngrx/store/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { MockComponent, MockPipe } from 'ng-mocks';
 import { anything, capture, instance, mock, spy, verify } from 'ts-mockito';
@@ -11,6 +10,8 @@ import { DatePipe } from 'ish-core/pipes/date.pipe';
 import { ModalDialogComponent } from 'ish-shared/components/common/modal-dialog/modal-dialog.component';
 import { CamfilProductAddToBasketComponent } from 'ish-shared/components/product/camfil-product-add-to-basket/camfil-product-add-to-basket.component';
 
+import { CamCard } from '../../../models/cam-card/cam-card.model';
+import { AccountCamCardDetailLineItemComponent } from '../../account-cam-card-detail/account-cam-card-detail-line-item/account-cam-card-detail-line-item.component';
 import { AccountCamCardToolbarComponent } from '../account-cam-card-toolbar/account-cam-card-toolbar.component';
 import { CamfilCamCardsSearchComponent } from '../camfil-cam-cards-search/camfil-cam-cards-search.component';
 
@@ -22,34 +23,31 @@ describe('Account Cam Card List Component', () => {
   let element: HTMLElement;
   let shoppingFacadeMock: ShoppingFacade;
 
-  const camCardDetails = [
+  const camCardDetails: CamCard[] = [
     {
-      title: 'testing cam cards',
+      name: 'testing cam cards',
       id: '.SKsEQAE4FIAAAFuNiUBWx0d',
       itemsCount: 1,
-      public: false,
-      items: [
+      camCardItems: [
         {
-          sku: '1234',
           id: '12345',
+          count: 1,
           creationDate: 123124125,
-          desiredQuantity: {
-            value: 1,
+          product: {
+            sku: '1234',
           },
         },
       ],
     },
     {
-      title: 'testing cam cards 2',
+      name: 'testing cam cards 2',
       id: '.AsdHS18FIAAAFuNiUBWx0d',
       itemsCount: 0,
-      public: false,
     },
     {
-      title: 'new cam cards',
+      name: 'new cam cards',
       id: 'new cam cards id',
       itemsCount: 0,
-      public: false,
     },
   ];
 
@@ -58,6 +56,7 @@ describe('Account Cam Card List Component', () => {
     await TestBed.configureTestingModule({
       declarations: [
         AccountCamCardListComponent,
+        MockComponent(AccountCamCardDetailLineItemComponent),
         MockComponent(AccountCamCardToolbarComponent),
         MockComponent(CamfilCamCardsSearchComponent),
         MockComponent(CamfilProductAddToBasketComponent),
@@ -66,7 +65,7 @@ describe('Account Cam Card List Component', () => {
         MockPipe(DatePipe),
       ],
       imports: [RouterTestingModule, TranslateModule.forRoot()],
-      providers: [{ provide: ShoppingFacade, useFactory: () => instance(shoppingFacadeMock) }, provideMockStore()],
+      providers: [{ provide: ShoppingFacade, useFactory: () => instance(shoppingFacadeMock) }],
     }).compileComponents();
   });
 
@@ -90,7 +89,7 @@ describe('Account Cam Card List Component', () => {
     verify(emitter.emit('deleteId')).once();
   });
 
-  xit('should trigger add product to cart with right sku', () => {
+  it('should trigger add product to cart with right sku', () => {
     expect(() => fixture.detectChanges()).not.toThrow();
     component.camCards = camCardDetails;
     component.addCamCardToCart('.SKsEQAE4FIAAAFuNiUBWx0d');

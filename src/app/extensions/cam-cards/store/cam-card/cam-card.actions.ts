@@ -2,7 +2,7 @@ import { createAction } from '@ngrx/store';
 
 import { httpError, payload } from 'ish-core/utils/ngrx-creators';
 
-import { CamCard } from '../../models/cam-card/cam-card.model';
+import { CamCard, CamCardItem } from '../../models/cam-card/cam-card.model';
 
 export const loadCamCards = createAction('[Cam Cards Internal] Load Cam Cards');
 
@@ -43,6 +43,16 @@ export const deleteCamCardFail = createAction('[Cam Cards API] Delete Cam Card F
 export const addProductToCamCard = createAction(
   '[Cam Cards] Add Item to Cam Card',
   payload<{ camCardId: string; sku: string; quantity?: number }>()
+);
+
+export const updateCamCardProduct = createAction(
+  '[Cam Cards] Update Cam Card Product',
+  payload<{ rootCamCard: string; camCardId: string; camCardItem: CamCardItem }>()
+);
+
+export const updateCamCardProductSuccess = createAction(
+  '[Cam Cards API] Update Cam Card Product Success',
+  payload<{ rootCamCard: string; camCardId: string; camCardItem: CamCardItem }>()
 );
 
 export const addProductToCamCardSuccess = createAction(
