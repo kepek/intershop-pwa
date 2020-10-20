@@ -2,70 +2,79 @@
 <ish-error-message [error]="camCardError$ | async"></ish-error-message>
 
 <ng-container *ngIf="router.isActive('/account/cam-cards/create', true)">
-  <h1>{{ 'camfil.account.cam_card.edit.header' | translate }}</h1>
+  <h1 class="mt-4">{{ 'camfil.account.cam_card.edit.header' | translate }}</h1>
 
   <div class="section">
     <camfil-cam-card-preferences (submit)="addCamCard($event)"></camfil-cam-card-preferences>
   </div>
 </ng-container>
+
 <ng-container *ngIf="camCard$ | async as camCard">
-  <h1>
-    {{ camCard?.name }}
-    <a
-      (click)="editCamCardDialog.show()"
-      class="btn btn-default btn-tool float-right"
-      [title]="'camfil.account.cam_card.edit.heading' | translate"
-      data-testing-id="cam-card-details-edit"
-      >{{ 'camfil.account.cam_card.edit.button.rename.label' | translate }}</a
-    >
-  </h1>
+  <ng-container *ngIf="!camCard.maintenanceStatus; else maintenanceStatus">
+    <h1>
+      {{ camCard?.name }}
+      <a
+        (click)="editCamCardDialog.show()"
+        class="btn btn-default btn-tool float-right"
+        [title]="'camfil.account.cam_card.edit.heading' | translate"
+        data-testing-id="cam-card-details-edit"
+        >{{ 'camfil.account.cam_card.edit.button.rename.label' | translate }}</a
+      >
+    </h1>
 
-  <div class="section">
-    <ng-container *ngIf="camCard.itemsCount && camCard.itemsCount > 0; else noItems" class="section">
-      <div class="list-header d-none d-md-flex">
-        <div class="col-6 list-header-item">{{ 'camfil.account.cam_card.table.header.item' | translate }}</div>
-        <div class="col-2 list-header-item text-right">
-          {{ 'shopping_cart.qty.heading' | translate }}
-        </div>
-        <div class="col-2 list-header-item text-right">
-          {{ 'camfil.account.cam_card.table.header.date_added' | translate }}
-        </div>
-        <div class="col-2 list-header-item column-price text-right">
-          {{ 'camfil.account.cam_card.table.header.price' | translate }}
-        </div>
-      </div>
-      <div class="list-body">
-        <ng-container *ngFor="let item of camCard.camCardItems">
-          <div class="list-item-row list-item-row-big">
-            <camfil-account-cam-card-detail-line-item
-              [camCardItemData]="item"
-              [currentCamCard]="camCard"
-              [selectedItemsForm]="selectedItemsForm"
-            ></camfil-account-cam-card-detail-line-item>
+    <div class="section">
+      <ng-container *ngIf="camCard.itemsCount && camCard.itemsCount > 0; else noItems" class="section">
+        <div class="list-header d-none d-md-flex">
+          <div class="col-6 list-header-item">{{ 'camfil.account.cam_card.table.header.item' | translate }}</div>
+          <div class="col-2 list-header-item text-right">
+            {{ 'shopping_cart.qty.heading' | translate }}
           </div>
-        </ng-container>
-      </div>
-    </ng-container>
-  </div>
-  <camfil-product-add-to-basket
-    displayType="button"
-    [product]="dummyProduct"
-    [disabled]="!selectedItems?.length"
-    [class]="'btn btn-primary float-right'"
-    (productToBasket)="addSelectedItemsToCart(camCard)"
-  ></camfil-product-add-to-basket>
+          <div class="col-2 list-header-item text-right">
+            {{ 'camfil.account.cam_card.table.header.date_added' | translate }}
+          </div>
+          <div class="col-2 list-header-item column-price text-right">
+            {{ 'camfil.account.cam_card.table.header.price' | translate }}
+          </div>
+        </div>
+        <div class="list-body">
+          <ng-container *ngFor="let item of camCard.camCardItems">
+            <div class="list-item-row list-item-row-big">
+              <camfil-account-cam-card-detail-line-item
+                [camCardItemData]="item"
+                [currentCamCard]="camCard"
+                [selectedItemsForm]="selectedItemsForm"
+              ></camfil-account-cam-card-detail-line-item>
+            </div>
+          </ng-container>
+        </div>
+      </ng-container>
+    </div>
+    <camfil-product-add-to-basket
+      displayType="button"
+      [product]="dummyProduct"
+      [disabled]="!selectedItems?.length"
+      [class]="'btn btn-primary float-right'"
+      (productToBasket)="addSelectedItemsToCart(camCard)"
+    ></camfil-product-add-to-basket>
 
-  <ng-template #noItems>
-    <p>{{ 'camfil.account.cam_card.no_entries' | translate }}</p>
+    <ng-template #noItems>
+      <p>{{ 'camfil.account.cam_card.no_entries' | translate }}</p>
+    </ng-template>
+
+    <camfil-cam-card-preferences-dialog
+      #editCamCardDialog
+      [camCard]="camCard"
+      (submit)="editPreferences($event, camCard.id)"
+    ></camfil-cam-card-preferences-dialog>
+  </ng-container>
+
+  <a routerLink="/account/cam-cards">{{ 'camfil.account.cam_card.edit.button.back.label' | translate }}</a>
+
+  <ng-template #maintenanceStatus>
+    <br />
+    <h1>{{ camCard?.name }}</h1>
+    <h2 class="p-3 bg-warning">{{ 'camfil.account.cam_card.maintenance_status' | translate }}</h2>
   </ng-template>
-
-  <camfil-cam-card-preferences-dialog
-    #editCamCardDialog
-    [camCard]="camCard"
-    (submit)="editPreferences($event, camCard.id)"
-  ></camfil-cam-card-preferences-dialog>
 </ng-container>
 
-<a routerLink="/account/cam-cards">{{ 'camfil.account.cam_card.edit.button.back.label' | translate }}</a>
-<!-- TODO: restore or check how it works later
-  <ish-loading *ngIf="camCardLoading$ | async"></ish-loading> -->
+<ish-loading *ngIf="camCardLoading$ | async"></ish-loading>

@@ -143,6 +143,16 @@
                 <mat-icon svgIcon="lock"></mat-icon>
               </ng-container>
               <ng-container *ngIf="column === 'edit'">
+                <a
+                  *ngIf="!camCard.maintenanceStatus"
+                  class="btn-tool"
+                  [title]="'camfil.account.cam_card.edit.heading' | translate"
+                  data-testing-id="cam-card-details-edit"
+                  [routerLink]="'/account/cam-cards/' + camCard.id"
+                  (click)="$event.stopPropagation()"
+                >
+                  <mat-icon svgIcon="edit"></mat-icon>
+                </a>
                 <a class="btn-tool d-inline-flex align-top">
                   <camfil-product-add-to-basket
                     displayType="icon"
@@ -155,21 +165,18 @@
                 </a>
                 <a
                   class="btn-tool"
-                  [title]="'camfil.account.cam_card.edit.heading' | translate"
-                  data-testing-id="cam-card-details-edit"
-                  [routerLink]="'/account/cam-cards/' + camCard.id"
-                  (click)="$event.stopPropagation()"
-                >
-                  <mat-icon svgIcon="edit"></mat-icon>
-                </a>
-                <a
-                  class="btn-tool"
                   title="{{ 'camfil.account.cam_cards.list.link.remove' | translate }}"
                   (click)="openDeleteConfirmationDialog(camCard, deleteDialog); $event.stopPropagation()"
                   data-testing-id="delete-cam-card"
                 >
                   <mat-icon svgIcon="delete"></mat-icon>
                 </a>
+                <mat-icon
+                  class="btn-tool"
+                  *ngIf="camCard.maintenanceStatus"
+                  svgIcon="eye"
+                  title="{{ 'camfil.account.cam_cards.read_only.text' | translate }}"
+                ></mat-icon>
               </ng-container>
             </td>
           </ng-container>
