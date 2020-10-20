@@ -58,9 +58,9 @@ describe('Camfil Product Quantity Component', () => {
     expect(findAllCustomElements(element)).toBeEmpty();
   });
 
-  it('should display number input when type is not select', () => {
+  it('should display counter when type is not select', () => {
     fixture.detectChanges();
-    expect(findAllCustomElements(element)).toContain('ish-input');
+    expect(findAllCustomElements(element)).toContain('camfil-counter');
   });
 
   it('should be read-only when configured that way', () => {
