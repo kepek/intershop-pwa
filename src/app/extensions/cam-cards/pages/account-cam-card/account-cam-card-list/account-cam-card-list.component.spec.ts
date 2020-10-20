@@ -16,6 +16,7 @@ import { AccountCamCardToolbarComponent } from '../account-cam-card-toolbar/acco
 import { CamfilCamCardsSearchComponent } from '../camfil-cam-cards-search/camfil-cam-cards-search.component';
 
 import { AccountCamCardListComponent } from './account-cam-card-list.component';
+import { provideMockStore } from '@ngrx/store/testing';
 
 describe('Account Cam Card List Component', () => {
   let component: AccountCamCardListComponent;
@@ -65,7 +66,7 @@ describe('Account Cam Card List Component', () => {
         MockPipe(DatePipe),
       ],
       imports: [RouterTestingModule, TranslateModule.forRoot()],
-      providers: [{ provide: ShoppingFacade, useFactory: () => instance(shoppingFacadeMock) }],
+      providers: [{ provide: ShoppingFacade, useFactory: () => instance(shoppingFacadeMock) }, provideMockStore({})],
     }).compileComponents();
   });
 
