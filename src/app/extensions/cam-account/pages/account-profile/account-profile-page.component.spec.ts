@@ -7,6 +7,8 @@ import { ServerHtmlDirective } from 'ish-core/directives/server-html.directive';
 import { AccountFacade } from 'ish-core/facades/account.facade';
 import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
 
+import { CamfilErrorComponent } from 'ish-shared/components/common/camfil-error/camfil-error.component';
+
 import { AccountProfilePageComponent } from './account-profile-page.component';
 import { AccountProfileComponent } from './account-profile/account-profile.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
@@ -22,6 +24,7 @@ describe('Account Profile Page Component', () => {
       declarations: [
         AccountProfileComponent,
         AccountProfilePageComponent,
+        CamfilErrorComponent,
         ChangePasswordComponent,
         MockComponent(FaIconComponent),
         MockComponent(LoadingComponent),
