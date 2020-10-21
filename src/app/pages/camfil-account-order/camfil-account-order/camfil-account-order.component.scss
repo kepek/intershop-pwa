@@ -13,6 +13,9 @@
 
 h1 {
   text-transform: none;
+  @media (max-width: $screen-md-max) {
+    font-size: $font-size-base * 1.25;
+  }
 }
 .dl-horizontal.dl-separator > dt::after {
   content: '';

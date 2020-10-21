@@ -4,7 +4,7 @@
       <mat-icon class="mt-n1">arrow_left</mat-icon>
       {{ 'account.orderdetails.links.return_to_orders' | translate }}</a
     >
-    <h1 *ngIf="order" class="d-inline align-middle pl-3">
+    <h1 *ngIf="order" class="align-middle d-none d-md-inline pl-3">
       {{ 'account.orderdetails.order_number.label' | translate }}:
       <span data-testing-id="order-number">{{ order.documentNo }}</span>
     </h1>
@@ -15,6 +15,11 @@
     </a>
   </div>
 </div>
+
+<h1 *ngIf="order" class="d-block d-md-none">
+  {{ 'account.orderdetails.order_number.label' | translate }}:
+  <span data-testing-id="order-number">{{ order.documentNo }}</span>
+</h1>
 
 <mat-card *ngIf="order" class="mb-3 box-shadow--dark mat-elevation-z clearfix">
   <div class="row">
