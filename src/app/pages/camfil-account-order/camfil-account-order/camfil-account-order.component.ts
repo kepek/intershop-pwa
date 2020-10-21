@@ -12,6 +12,7 @@ import { Order } from 'ish-core/models/order/order.model';
   selector: 'camfil-account-order',
   templateUrl: './camfil-account-order.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  styleUrls: ['./camfil-account-order.component.scss'],
 })
 export class CamfilAccountOrderComponent {
   @Input() order: Order;

@@ -6,9 +6,9 @@ import { MockComponent, MockPipe } from 'ng-mocks';
 import { DatePipe } from 'ish-core/pipes/date.pipe';
 import { BasketMockData } from 'ish-core/utils/dev/basket-mock-data';
 import { AddressComponent } from 'ish-shared/components/address/address/address.component';
-import { BasketCostSummaryComponent } from 'ish-shared/components/basket/basket-cost-summary/basket-cost-summary.component';
+import { CamfilBasketCostSummaryComponent } from 'ish-shared/components/basket/camfil-basket-cost-summary/camfil-basket-cost-summary.component';
 import { InfoBoxComponent } from 'ish-shared/components/common/info-box/info-box.component';
-import { LineItemListComponent } from 'ish-shared/components/line-item/line-item-list/line-item-list.component';
+import { CamfilLineItemTableComponent } from 'ish-shared/components/line-item/camfil-line-item-table/camfil-line-item-table.component';
 
 import { AccountOrderComponent } from './account-order.component';
 
@@ -22,10 +22,10 @@ describe('Account Order Component', () => {
       declarations: [
         AccountOrderComponent,
         MockComponent(AddressComponent),
-        MockComponent(BasketCostSummaryComponent),
+        MockComponent(CamfilBasketCostSummaryComponent),
+        MockComponent(CamfilLineItemTableComponent),
         MockComponent(FaIconComponent),
         MockComponent(InfoBoxComponent),
-        MockComponent(LineItemListComponent),
         MockPipe(DatePipe),
       ],
       imports: [TranslateModule.forRoot()],
@@ -55,8 +55,8 @@ describe('Account Order Component', () => {
 
     expect(element.querySelector('[data-testing-id=order-summary-info]')).toBeTruthy();
     expect(element.querySelectorAll('ish-info-box')).toHaveLength(4);
-    expect(element.querySelector('ish-line-item-list')).toBeTruthy();
-    expect(element.querySelector('ish-basket-cost-summary')).toBeTruthy();
+    expect(element.querySelector('camfil-line-item-table')).toBeTruthy();
+    expect(element.querySelector('camfil-basket-cost-summary')).toBeTruthy();
   });
 
   it('should display the home link after creation', () => {

@@ -1,0 +1,87 @@
+<table
+  mat-table
+  [dataSource]="lineItemsProcessed"
+  matSort
+  matSortActive="sku"
+  matSortDirection="desc"
+  class="mt-4 mb-2 box-shadow--dark"
+>
+  <!-- Art Nr. Column -->
+  <ng-container matColumnDef="sku">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+      {{ 'camfil.lineitem.table.art_nr' | translate }}
+    </th>
+    <td mat-cell *matCellDef="let pli">{{ pli.productSKU }}</td>
+  </ng-container>
+
+  <!-- Product Name Column -->
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+      {{ 'camfil.lineitem.table.product' | translate }}
+    </th>
+    <td mat-cell *matCellDef="let pli">
+      <div class="truncate">{{ pli.name }}</div>
+    </td>
+  </ng-container>
+
+  <!-- Ordered qty Column -->
+  <ng-container matColumnDef="orderedQty">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+      {{ 'camfil.lineitem.table.qty_ordered' | translate }}
+    </th>
+    <td mat-cell *matCellDef="let pli">
+      -
+      <!-- <camfil-product-quantity
+        [allowZeroQuantity]="false"
+        [quantityLabel]="''"
+        [product]="pli"
+        controlName="quantity"
+      ></camfil-product-quantity> -->
+    </td>
+  </ng-container>
+
+  <!-- Delivered qty Column -->
+  <ng-container matColumnDef="deliveredQty">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+      {{ 'camfil.lineitem.table.qty_delivered' | translate }}
+    </th>
+    <td mat-cell *matCellDef="let pli">
+      -
+      <!-- <camfil-product-quantity
+        [allowZeroQuantity]="false"
+        [quantityLabel]="''"
+        [product]="pli"
+        controlName="quantity"
+      ></camfil-product-quantity> -->
+    </td>
+  </ng-container>
+
+  <!-- Box label Column -->
+  <ng-container matColumnDef="boxLabel">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+      {{ 'camfil.lineitem.table.box_label' | translate }}
+    </th>
+    <td mat-cell *matCellDef="let pli"><div class="truncate">Lorem ipsum dolor sit amet</div></td>
+  </ng-container>
+
+  <!-- Delivery Date Column -->
+  <ng-container matColumnDef="deliveryDate">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+      {{ 'camfil.lineitem.table.delivery_date' | translate }}
+    </th>
+    <td mat-cell *matCellDef="let pli"><strong>1900-01-01</strong></td>
+  </ng-container>
+
+  <!-- Price Column -->
+  <ng-container matColumnDef="price">
+    <th mat-header-cell *matHeaderCellDef>
+      {{ 'camfil.lineitem.table.price' | translate }}
+    </th>
+    <td mat-cell *matCellDef="let pli">
+      {{ 'camfil.lineitem.table.price_label' | translate }} <strong>{{ pli.totals.total | ishPrice }}</strong>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let pli; columns: displayedColumns; let i = index" class="orderlist-row"></tr>
+</table>

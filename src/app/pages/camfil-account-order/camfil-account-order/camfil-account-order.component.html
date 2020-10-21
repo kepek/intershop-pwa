@@ -1,78 +1,85 @@
-<div class="float-right">
-  <ul class="share-tools">
-    <li class="d-none d-md-block">
-      <a href="javascript:window.print();" class="link-print pull-right" rel="nofollow">
-        <fa-icon [icon]="['fas', 'print']"></fa-icon>
-        <span class="share-label">{{ 'account.orderdetails.print_link.text' | translate }}</span>
-      </a>
-    </li>
-  </ul>
+<div class="d-flex justify-content-between py-3">
+  <div class="">
+    <a mat-stroked-button color="primary" routerLink="/account/orders" data-testing-id="orders-link">
+      <mat-icon class="mt-n1">arrow_left</mat-icon>
+      {{ 'account.orderdetails.links.return_to_orders' | translate }}</a
+    >
+    <h1 *ngIf="order" class="d-inline align-middle pl-3">
+      {{ 'account.orderdetails.order_number.label' | translate }}:
+      <span data-testing-id="order-number">{{ order.documentNo }}</span>
+    </h1>
+  </div>
+  <div class="">
+    <a mat-flat-button color="primary" routerLink="/home" data-testing-id="order-again">
+      {{ 'camfil.account.orderdetails.links.order_again' | translate }}
+    </a>
+  </div>
 </div>
-<h1>{{ 'account.orderdetails.heading.default' | translate }}</h1>
-<p>{{ 'account.orderdetails.headerDetails.default' | translate }}</p>
 
-<div *ngIf="order" class="section" data-testing-id="order-summary-info">
-  <dl class="row dl-horizontal dl-separator">
-    <dt class="col-6 col-sm-4 col-md-2">{{ 'account.orderdetails.order_number.label' | translate }}</dt>
-    <dd class="col-6 col-sm-8 col-md-10" data-testing-id="order-number">{{ order.documentNo }}</dd>
-    <dt class="col-6 col-sm-4 col-md-2">{{ 'account.orderdetails.date_of_order.label' | translate }}</dt>
-    <dd class="col-6 col-sm-8 col-md-10" data-testing-id="order-date">{{ order.creationDate | ishDate }}</dd>
-    <dt class="col-6 col-sm-4 col-md-2">{{ 'account.orderdetails.order_status.label' | translate }}</dt>
-    <dd class="col-6 col-sm-8 col-md-10" data-testing-id="order-status">{{ order.status }}</dd>
-    <!-- ToDo: should actually be the status display name -->
-  </dl>
-</div>
+<mat-card *ngIf="order" class="mb-3 box-shadow--dark mat-elevation-z clearfix">
+  <div class="row">
+    <div class="order-summary-info col-sm-6 border-sm-right" data-testing-id="order-summary-info">
+      <dl class="row dl-horizontal dl-separator">
+        <dt class="col-6 p-0">{{ 'camfil.account.orderdetails.customer_id.label' | translate }}</dt>
+        <dd class="col-6 p-0" data-testing-id="order-customer_id">{{ order.documentNo }}</dd>
+        <dt class="col-6 p-0 pb-4">{{ 'camfil.account.orderdetails.customer_name.label' | translate }}</dt>
+        <dd class="col-6 p-0" data-testing-id="order-customer_name">{{ order.customer }}</dd>
+        <dt class="col-6 p-0">{{ 'camfil.account.orderdetails.camfil_no.label' | translate }}</dt>
+        <dd class="col-6 p-0" data-testing-id="order-camfil_no">-</dd>
+        <dt class="col-6 p-0">{{ 'camfil.account.orderdetails.goods_mark.label' | translate }}</dt>
+        <dd class="col-6 p-0" data-testing-id="order-goods_mark">-</dd>
+        <dt class="col-6 p-0">{{ 'camfil.account.orderdetails.order_status.label' | translate }}</dt>
+        <dd class="col-6 p-0" data-testing-id="order-status">{{ order.status }}</dd>
+        <dt class="col-6 p-0">{{ 'camfil.account.orderdetails.date_of_order.label' | translate }}</dt>
+        <dd class="col-6 p-0" data-testing-id="order-creationDate">{{ order.creationDate | ishDate }}</dd>
+        <dt class="col-6 p-0">{{ 'camfil.account.orderdetails.delivery_date.label' | translate }}</dt>
+        <dd class="col-6 p-0" data-testing-id="order-deliveryDate">{{ order.creationDate | ishDate }}</dd>
+      </dl>
+    </div>
+    <div class="order-summary-info col-sm-6" data-testing-id="order-summary-info">
+      <dl class="row dl-horizontal dl-separator mb-0">
+        <dt class="col-6 p-0">{{ 'camfil.account.orderdetails.order_channel.label' | translate }}</dt>
+        <dd class="col-6 p-0" data-testing-id="order-channel">-</dd>
+        <dt class="col-6 p-0">{{ 'camfil.account.orderdetails.contact_person.label' | translate }}</dt>
+        <dd class="col-6 p-0" data-testing-id="order-contact_person">{{ order.customer }}</dd>
+        <dt class="col-6 p-0 pb-4">{{ 'camfil.account.orderdetails.phone_notification.label' | translate }}</dt>
+        <dd class="col-6 p-0" data-testing-id="order-phone_notification">1234567890</dd>
+        <dt class="col-6 p-0">{{ 'camfil.account.orderdetails.delivery_address.label' | translate }}</dt>
+        <dd class="col-6 p-0" data-testing-id="order-delivery_address">
+          <ish-address [address]="order.commonShipToAddress"></ish-address>
+        </dd>
+      </dl>
+      <a
+        mat-stroked-button
+        class="btn-track-order float-right mr-n4"
+        color="primary"
+        routerLink="/account/orders"
+        data-testing-id="orders-link"
+      >
+        {{ 'camfil.account.orderdetails.links.track_order' | translate }}</a
+      >
+    </div>
+  </div>
+</mat-card>
 
 <ng-container *ngIf="order">
-  <div class="row d-flex">
-    <!-- Invoice Address -->
-    <ish-info-box heading="checkout.widget.billing-address.heading" class="infobox-wrapper col-md-6">
-      <ish-address [address]="order.invoiceToAddress" [displayEmail]="true"></ish-address>
-    </ish-info-box>
-    <!-- Shipping Address -->
-    <ish-info-box heading="checkout.widget.shipping-address.heading" class="infobox-wrapper col-md-6">
-      <ish-address [address]="order.commonShipToAddress"></ish-address>
-    </ish-info-box>
-  </div>
-
-  <div class="row d-flex">
-    <!-- Shipping Method -->
-    <ish-info-box heading="checkout.widget.shipping_method.heading" class="infobox-wrapper col-md-6">
-      <p>{{ order.commonShippingMethod.name }}</p>
-    </ish-info-box>
-    <!-- Payment -->
-    <ish-info-box heading="checkout.widget.payment_method.heading" class="infobox-wrapper col-md-6">
-      <div class="float-right">
-        <p class="badge badge-info">{{ order.payment.status }}</p>
-      </div>
-      <p>
-        {{ order.payment.displayName }}<br />{{ order.payment.paymentInstrument.accountIdentifier }}
-        <ng-container *ngIf="!order.payment.displayName && !order.payment.paymentInstrument.accountIdentifier">
-          {{ order.payment.paymentInstrument }}
-        </ng-container>
-      </p>
-    </ish-info-box>
-  </div>
-
   <!-- Line Items -->
-  <ish-line-item-list
+  <camfil-line-item-table
     *ngIf="order.lineItems?.length > 0"
     [lineItems]="order.lineItems"
-    [editable]="false"
     lineItemViewType="simple"
-  ></ish-line-item-list>
+  ></camfil-line-item-table>
 
   <!-- Cost Summary -->
-  <div class="section cost-summary float-right">
-    <h3>{{ 'checkout.order_summary.heading' | translate }}</h3>
-    <ish-basket-cost-summary [totals]="order.totals"></ish-basket-cost-summary>
-  </div>
+  <mat-card *ngIf="order" class="mb-3 box-shadow--dark mat-elevation-z clearfix">
+    <div class="section cost-summary float-right box-shadow--dark mat-elevation-z">
+      <dl class="row dl-horizontal dl-separator mb-0">
+        <dt class="col-6">{{ 'camfil.account.orderdetails.summary.qty_ordered' | translate }}</dt>
+        <dd class="col-6">xxx</dd>
+        <dt class="col-6">{{ 'camfil.account.orderdetails.summary.qty_delivered' | translate }}</dt>
+        <dd class="col-6">xxx</dd>
+      </dl>
+      <camfil-basket-cost-summary [totals]="order.totals"></camfil-basket-cost-summary>
+    </div>
+  </mat-card>
 </ng-container>
-
-<!-- Links -->
-<div class="section d-flex justify-content-between">
-  <a routerLink="/account/orders" data-testing-id="orders-link">{{
-    'account.orderdetails.links.return_to_orders' | translate
-  }}</a>
-  <a routerLink="/home" data-testing-id="home-link">{{ 'account.orderdetails.links.continue_shopping' | translate }}</a>
-</div>
