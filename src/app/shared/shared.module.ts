@@ -149,6 +149,7 @@ import { PromotionRemoveComponent } from './components/promotion/promotion-remov
 import { RecentlyViewedComponent } from './components/recently/recently-viewed/recently-viewed.component';
 import { FormsDynamicModule } from './forms-dynamic/forms-dynamic.module';
 import { FormsSharedModule } from './forms/forms.module';
+import { CamfilProductGuidesComponent } from '../pages/camfil-product/camfil-product-guides/camfil-product-guides.component';
 
 const importExportModules = [
   AddressFormsSharedModule,
@@ -203,6 +204,7 @@ const declaredComponents = [
   CamfilHeaderBoxComponent,
   CamfilProductAttributeComponent,
   CamfilProductAttributesComponent,
+  CamfilProductGuidesComponent,
   CamfilProductIdComponent,
   CamfilProductItemDetailedComponent,
   CamfilProductItemSimpleComponent,
@@ -322,6 +324,6 @@ const exportedComponents = [
     MatTableModule,
   ],
   declarations: [...declaredComponents, ...exportedComponents],
-  exports: [...exportedComponents, ...importExportModules],
+  exports: [...exportedComponents, ...importExportModules, CamfilProductGuidesComponent],
 })
 export class SharedModule {}

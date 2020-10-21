@@ -1,0 +1,34 @@
+<camfil-breadcrumb></camfil-breadcrumb>
+
+<div class="ahu">
+  <img class="ahu__banner" src="{{ banner.url }}" />
+  <mat-card class="ahu__card text-center">
+    <mat-card-header>
+      <mat-card-title class="ahu__title">{{ 'camfil.ahu.heading' | translate }}</mat-card-title>
+      <mat-card-subtitle>{{ 'camfil.ahu.intro.line1' | translate }}<br>{{ 'camfil.ahu.intro.line2' | translate }}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="ahu__form">
+        <p class="ahu__subtitle">{{ 'camfil.ahu.subheading' | translate }}</p>
+        <p>
+          <mat-form-field appearance="fill" class="ahu__field">
+            <mat-label>{{ 'camfil.ahu.select.manufacturer' | translate }}</mat-label>
+            <mat-select [(ngModel)]="manufacturerSelect">
+              <mat-option *ngFor="let manufacturer of manufacturers" [value]="manufacturer.id">{{manufacturer.title}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field appearance="fill" class="ahu__field">
+            <mat-label>{{ 'camfil.ahu.select.model' | translate }}</mat-label>
+            <mat-select [disabled]="!manufacturerSelect" [(ngModel)]="modelSelect">
+              <mat-option *ngFor="let model of models" [value]="model.id">{{model.title}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </p>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<camfil-product-guides></camfil-product-guides>
