@@ -76,7 +76,7 @@
   <div class="col-md-12 col-lg-4 order-summary">
     <h2>{{ 'checkout.order_details.heading' | translate }}</h2>
 
-    <div class="cost-summary"><ish-basket-cost-summary [totals]="order.totals"></ish-basket-cost-summary></div>
+    <div class="cost-summary"><camfil-basket-cost-summary [totals]="order.totals"></camfil-basket-cost-summary></div>
     <div *ngIf="user" class="cart-summary">
       <h3>{{ 'checkout.account.email.registered.heading' | translate }}</h3>
       {{ 'checkout.account.email.registered.text' | translate }}&nbsp;

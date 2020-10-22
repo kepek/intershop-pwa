@@ -67,6 +67,7 @@ import { BasketPromotionComponent } from './components/basket/basket-promotion/b
 import { BasketValidationItemsComponent } from './components/basket/basket-validation-items/basket-validation-items.component';
 import { BasketValidationProductsComponent } from './components/basket/basket-validation-products/basket-validation-products.component';
 import { BasketValidationResultsComponent } from './components/basket/basket-validation-results/basket-validation-results.component';
+import { CamfilBasketCostSummaryComponent } from './components/basket/camfil-basket-cost-summary/camfil-basket-cost-summary.component';
 import { BasketInvoiceAddressWidgetComponent } from './components/checkout/basket-invoice-address-widget/basket-invoice-address-widget.component';
 import { BasketShippingAddressWidgetComponent } from './components/checkout/basket-shipping-address-widget/basket-shipping-address-widget.component';
 import { AccordionItemComponent } from './components/common/accordion-item/accordion-item.component';
@@ -95,6 +96,7 @@ import { FilterNavigationSidebarComponent } from './components/filter/filter-nav
 import { FilterNavigationComponent } from './components/filter/filter-navigation/filter-navigation.component';
 import { FilterSwatchImagesComponent } from './components/filter/filter-swatch-images/filter-swatch-images.component';
 import { FilterTextComponent } from './components/filter/filter-text/filter-text.component';
+import { CamfilLineItemTableComponent } from './components/line-item/camfil-line-item-table/camfil-line-item-table.component';
 import { LineItemDescriptionComponent } from './components/line-item/line-item-description/line-item-description.component';
 import { LineItemEditDialogComponent } from './components/line-item/line-item-edit-dialog/line-item-edit-dialog.component';
 import { LineItemEditComponent } from './components/line-item/line-item-edit/line-item-edit.component';
@@ -180,6 +182,7 @@ const importExportModules = [
 ];
 
 const declaredComponents = [
+  BasketCostSummaryComponent,
   BasketValidationItemsComponent,
   BasketValidationProductsComponent,
   CMSCarouselComponent,
@@ -226,6 +229,7 @@ const declaredComponents = [
   LineItemDescriptionComponent,
   LineItemEditComponent,
   LineItemEditDialogComponent,
+  LineItemListComponent,
   LoginModalComponent,
   OrderListComponent,
   ProductAddToBasketComponent,
@@ -252,7 +256,6 @@ const exportedComponents = [
   AccordionItemComponent,
   AddressComponent,
   BasketAddressSummaryComponent,
-  BasketCostSummaryComponent,
   BasketInfoComponent,
   BasketInvoiceAddressWidgetComponent,
   BasketItemsSummaryComponent,
@@ -261,6 +264,7 @@ const exportedComponents = [
   BasketShippingAddressWidgetComponent,
   BasketValidationResultsComponent,
   CamfilBannerComponent,
+  CamfilBasketCostSummaryComponent,
   CamfilBreadcrumbComponent,
   CamfilBulletListComponent,
   CamfilErrorComponent,
@@ -268,6 +272,7 @@ const exportedComponents = [
   CamfilFilterMeasurementsComponent,
   CamfilFilterNavigationComponent,
   CamfilHeaderBoxComponent,
+  CamfilLineItemTableComponent,
   CamfilLinksBlockComponent,
   CamfilOrderListComponent,
   CamfilProductAddToBasketComponent,

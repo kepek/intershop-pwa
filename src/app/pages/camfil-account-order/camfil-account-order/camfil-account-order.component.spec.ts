@@ -10,17 +10,17 @@ import { CamfilBasketCostSummaryComponent } from 'ish-shared/components/basket/c
 import { InfoBoxComponent } from 'ish-shared/components/common/info-box/info-box.component';
 import { CamfilLineItemTableComponent } from 'ish-shared/components/line-item/camfil-line-item-table/camfil-line-item-table.component';
 
-import { AccountOrderComponent } from './account-order.component';
+import { CamfilAccountOrderComponent } from './camfil-account-order.component';
 
-describe('Account Order Component', () => {
-  let component: AccountOrderComponent;
-  let fixture: ComponentFixture<AccountOrderComponent>;
+describe('Camfil Account Order Component', () => {
+  let component: CamfilAccountOrderComponent;
+  let fixture: ComponentFixture<CamfilAccountOrderComponent>;
   let element: HTMLElement;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [
-        AccountOrderComponent,
+        CamfilAccountOrderComponent,
         MockComponent(AddressComponent),
         MockComponent(CamfilBasketCostSummaryComponent),
         MockComponent(CamfilLineItemTableComponent),
@@ -33,7 +33,7 @@ describe('Account Order Component', () => {
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AccountOrderComponent);
+    fixture = TestBed.createComponent(CamfilAccountOrderComponent);
     component = fixture.componentInstance;
     element = fixture.nativeElement;
     component.order = BasketMockData.getOrder();
@@ -54,14 +54,13 @@ describe('Account Order Component', () => {
     fixture.detectChanges();
 
     expect(element.querySelector('[data-testing-id=order-summary-info]')).toBeTruthy();
-    expect(element.querySelectorAll('ish-info-box')).toHaveLength(4);
     expect(element.querySelector('camfil-line-item-table')).toBeTruthy();
     expect(element.querySelector('camfil-basket-cost-summary')).toBeTruthy();
   });
 
-  it('should display the home link after creation', () => {
+  it('should display the order again link after creation', () => {
     fixture.detectChanges();
-    expect(element.querySelector('[data-testing-id="home-link"]')).toBeTruthy();
+    expect(element.querySelector('[data-testing-id="order-again"]')).toBeTruthy();
   });
 
   it('should display the order list link after creation', () => {

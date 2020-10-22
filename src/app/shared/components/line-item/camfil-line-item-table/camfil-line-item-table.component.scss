@@ -1,0 +1,49 @@
+@import '~src/styles/themes/camfil/colors.scss';
+@import '~src/styles/themes/camfil/variables.scss';
+
+:host {
+  tr.mat-header-row {
+    height: 40px;
+  }
+  tr.mat-row {
+    height: 60px;
+  }
+  tr:last-child td {
+    border-bottom: none;
+  }
+  td div.text-truncate {
+    display: block;
+    width: 20ch;
+  }
+  ::ng-deep {
+    .mat-column {
+      &-price {
+        text-align: right;
+      }
+      &-orderedQty,
+      &-deliveredQty,
+      &-deliveryDate {
+        text-align: center;
+      }
+    }
+  }
+}
+
+table {
+  width: 100%;
+  td,
+  th {
+    font-size: $font-size-sm;
+  }
+  th {
+    height: 45px;
+    color: #000;
+    background-color: $greyD9;
+  }
+  tr.orderlist-row:hover {
+    background: $greyF5;
+  }
+  tr.orderlist-row:active {
+    background: $greyEF;
+  }
+}

@@ -1,0 +1,90 @@
+<div class="d-flex justify-content-between py-3">
+  <div>
+    <a mat-stroked-button color="primary" routerLink="/account/orders" data-testing-id="orders-link">
+      <mat-icon class="mt-n1">arrow_left</mat-icon>
+      {{ 'account.orderdetails.links.return_to_orders' | translate }}</a
+    >
+    <h1 *ngIf="order" class="align-middle d-none d-md-inline pl-3">
+      {{ 'account.orderdetails.order_number.label' | translate }}:
+      <span data-testing-id="order-number">{{ order.documentNo }}</span>
+    </h1>
+  </div>
+  <div class="">
+    <a mat-flat-button color="primary" routerLink="/home" data-testing-id="order-again">
+      {{ 'camfil.account.orderdetails.links.order_again' | translate }}
+    </a>
+  </div>
+</div>
+
+<h1 *ngIf="order" class="d-block d-md-none">
+  {{ 'account.orderdetails.order_number.label' | translate }}:
+  <span data-testing-id="order-number">{{ order.documentNo }}</span>
+</h1>
+
+<mat-card *ngIf="order" class="mb-3 box-shadow--dark mat-elevation-z clearfix">
+  <div class="row">
+    <div class="order-summary-info col-sm-6 border-sm-right" data-testing-id="order-summary-info">
+      <dl class="row dl-horizontal dl-separator">
+        <dt class="col-6 p-0">{{ 'camfil.account.orderdetails.customer_id.label' | translate }}</dt>
+        <dd class="col-6 p-0" data-testing-id="order-customer_id">{{ order.documentNo }}</dd>
+        <dt class="col-6 p-0 pb-4">{{ 'camfil.account.orderdetails.customer_name.label' | translate }}</dt>
+        <dd class="col-6 p-0" data-testing-id="order-customer_name">{{ order.customer }}</dd>
+        <dt class="col-6 p-0">{{ 'camfil.account.orderdetails.camfil_no.label' | translate }}</dt>
+        <dd class="col-6 p-0" data-testing-id="order-camfil_no">-</dd>
+        <dt class="col-6 p-0">{{ 'camfil.account.orderdetails.goods_mark.label' | translate }}</dt>
+        <dd class="col-6 p-0" data-testing-id="order-goods_mark">-</dd>
+        <dt class="col-6 p-0">{{ 'camfil.account.orderdetails.order_status.label' | translate }}</dt>
+        <dd class="col-6 p-0" data-testing-id="order-status">{{ order.status }}</dd>
+        <dt class="col-6 p-0">{{ 'camfil.account.orderdetails.date_of_order.label' | translate }}</dt>
+        <dd class="col-6 p-0" data-testing-id="order-creationDate">{{ order.creationDate | ishDate }}</dd>
+        <dt class="col-6 p-0">{{ 'camfil.account.orderdetails.delivery_date.label' | translate }}</dt>
+        <dd class="col-6 p-0" data-testing-id="order-deliveryDate">{{ order.creationDate | ishDate }}</dd>
+      </dl>
+    </div>
+    <div class="order-summary-info col-sm-6" data-testing-id="order-summary-info">
+      <dl class="row dl-horizontal dl-separator mb-0">
+        <dt class="col-6 p-0">{{ 'camfil.account.orderdetails.order_channel.label' | translate }}</dt>
+        <dd class="col-6 p-0" data-testing-id="order-channel">-</dd>
+        <dt class="col-6 p-0">{{ 'camfil.account.orderdetails.contact_person.label' | translate }}</dt>
+        <dd class="col-6 p-0" data-testing-id="order-contact_person">{{ order.customer }}</dd>
+        <dt class="col-6 p-0 pb-4">{{ 'camfil.account.orderdetails.phone_notification.label' | translate }}</dt>
+        <dd class="col-6 p-0" data-testing-id="order-phone_notification">1234567890</dd>
+        <dt class="col-6 p-0">{{ 'camfil.account.orderdetails.delivery_address.label' | translate }}</dt>
+        <dd class="col-6 p-0" data-testing-id="order-delivery_address">
+          <ish-address [address]="order.commonShipToAddress"></ish-address>
+        </dd>
+      </dl>
+      <a
+        mat-stroked-button
+        class="btn-track-order float-right mr-n4"
+        color="primary"
+        routerLink="/account/orders"
+        data-testing-id="orders-link"
+      >
+        {{ 'camfil.account.orderdetails.links.track_order' | translate }}</a
+      >
+    </div>
+  </div>
+</mat-card>
+
+<ng-container *ngIf="order">
+  <!-- Line Items -->
+  <camfil-line-item-table
+    *ngIf="order.lineItems?.length > 0"
+    [lineItems]="order.lineItems"
+    lineItemViewType="simple"
+  ></camfil-line-item-table>
+
+  <!-- Cost Summary -->
+  <mat-card *ngIf="order" class="mb-3 box-shadow--dark mat-elevation-z clearfix">
+    <div class="section cost-summary float-right box-shadow--dark mat-elevation-z">
+      <dl class="row dl-horizontal dl-separator mb-0">
+        <dt class="col-6">{{ 'camfil.account.orderdetails.summary.qty_ordered' | translate }}</dt>
+        <dd class="col-6">xxx</dd>
+        <dt class="col-6">{{ 'camfil.account.orderdetails.summary.qty_delivered' | translate }}</dt>
+        <dd class="col-6">xxx</dd>
+      </dl>
+      <camfil-basket-cost-summary [totals]="order.totals"></camfil-basket-cost-summary>
+    </div>
+  </mat-card>
+</ng-container>

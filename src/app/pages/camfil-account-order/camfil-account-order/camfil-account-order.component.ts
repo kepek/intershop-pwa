@@ -6,13 +6,14 @@ import { Order } from 'ish-core/models/order/order.model';
  * The Order Page Component displays the details of an order. See also {@link OrderPageContainerComponent}
  *
  * @example
- * <ish-account-order-page [order]="order"></ish-order-page>
+ * <camfil-account-order-page [order]="order"></camfil-account-order-page>
  */
 @Component({
-  selector: 'ish-account-order',
-  templateUrl: './account-order.component.html',
+  selector: 'camfil-account-order',
+  templateUrl: './camfil-account-order.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  styleUrls: ['./camfil-account-order.component.scss'],
 })
-export class AccountOrderComponent {
+export class CamfilAccountOrderComponent {
   @Input() order: Order;
 }

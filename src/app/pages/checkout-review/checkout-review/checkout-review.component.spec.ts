@@ -10,8 +10,8 @@ import { makeHttpError } from 'ish-core/utils/dev/api-service-utils';
 import { BasketMockData } from 'ish-core/utils/dev/basket-mock-data';
 import { ContentIncludeComponent } from 'ish-shared/cms/components/content-include/content-include.component';
 import { AddressComponent } from 'ish-shared/components/address/address/address.component';
-import { BasketCostSummaryComponent } from 'ish-shared/components/basket/basket-cost-summary/basket-cost-summary.component';
 import { BasketValidationResultsComponent } from 'ish-shared/components/basket/basket-validation-results/basket-validation-results.component';
+import { CamfilBasketCostSummaryComponent } from 'ish-shared/components/basket/camfil-basket-cost-summary/camfil-basket-cost-summary.component';
 import { ErrorMessageComponent } from 'ish-shared/components/common/error-message/error-message.component';
 import { InfoBoxComponent } from 'ish-shared/components/common/info-box/info-box.component';
 import { ModalDialogLinkComponent } from 'ish-shared/components/common/modal-dialog-link/modal-dialog-link.component';
@@ -30,8 +30,8 @@ describe('Checkout Review Component', () => {
       declarations: [
         CheckoutReviewComponent,
         MockComponent(AddressComponent),
-        MockComponent(BasketCostSummaryComponent),
         MockComponent(BasketValidationResultsComponent),
+        MockComponent(CamfilBasketCostSummaryComponent),
         MockComponent(CheckboxComponent),
         MockComponent(ContentIncludeComponent),
         MockComponent(ErrorMessageComponent),

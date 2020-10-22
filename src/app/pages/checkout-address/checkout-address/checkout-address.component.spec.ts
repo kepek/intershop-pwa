@@ -10,9 +10,9 @@ import { ServerHtmlDirective } from 'ish-core/directives/server-html.directive';
 import { makeHttpError } from 'ish-core/utils/dev/api-service-utils';
 import { BasketMockData } from 'ish-core/utils/dev/basket-mock-data';
 import { ContentIncludeComponent } from 'ish-shared/cms/components/content-include/content-include.component';
-import { BasketCostSummaryComponent } from 'ish-shared/components/basket/basket-cost-summary/basket-cost-summary.component';
 import { BasketItemsSummaryComponent } from 'ish-shared/components/basket/basket-items-summary/basket-items-summary.component';
 import { BasketValidationResultsComponent } from 'ish-shared/components/basket/basket-validation-results/basket-validation-results.component';
+import { CamfilBasketCostSummaryComponent } from 'ish-shared/components/basket/camfil-basket-cost-summary/camfil-basket-cost-summary.component';
 import { BasketInvoiceAddressWidgetComponent } from 'ish-shared/components/checkout/basket-invoice-address-widget/basket-invoice-address-widget.component';
 import { BasketShippingAddressWidgetComponent } from 'ish-shared/components/checkout/basket-shipping-address-widget/basket-shipping-address-widget.component';
 import { ErrorMessageComponent } from 'ish-shared/components/common/error-message/error-message.component';
@@ -33,11 +33,11 @@ describe('Checkout Address Component', () => {
       declarations: [
         CheckoutAddressComponent,
         DummyComponent,
-        MockComponent(BasketCostSummaryComponent),
         MockComponent(BasketInvoiceAddressWidgetComponent),
         MockComponent(BasketItemsSummaryComponent),
         MockComponent(BasketShippingAddressWidgetComponent),
         MockComponent(BasketValidationResultsComponent),
+        MockComponent(CamfilBasketCostSummaryComponent),
         MockComponent(ContentIncludeComponent),
         MockComponent(ErrorMessageComponent),
         MockComponent(ModalDialogLinkComponent),
@@ -84,7 +84,7 @@ describe('Checkout Address Component', () => {
   it('should render cart summary components after creation', () => {
     fixture.detectChanges();
     expect(element.querySelector('ish-basket-items-summary')).toBeTruthy();
-    expect(element.querySelector('ish-basket-cost-summary')).toBeTruthy();
+    expect(element.querySelector('camfil-basket-cost-summary')).toBeTruthy();
   });
 
   it('should not render an error if no error occurs', () => {

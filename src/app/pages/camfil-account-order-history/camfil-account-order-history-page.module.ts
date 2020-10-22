@@ -12,7 +12,8 @@ const routes: Routes = [
     data: {
       breadcrumbData: [{ key: 'account.order_history.link', link: '/account/orders' }],
     },
-    loadChildren: () => import('../account-order/account-order-page.module').then(m => m.AccountOrderPageModule),
+    loadChildren: () =>
+      import('../camfil-account-order/camfil-account-order-page.module').then(m => m.AccountOrderPageModule),
   },
 ];
 
