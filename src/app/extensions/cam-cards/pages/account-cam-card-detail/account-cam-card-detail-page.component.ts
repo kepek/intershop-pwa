@@ -41,9 +41,7 @@ export class AccountCamCardDetailPageComponent implements OnChanges, OnInit, OnD
       });
   }
 
-  ngOnChanges() {
-    console.log('test', this.camCard$);
-  }
+  ngOnChanges() {}
 
   private initForm() {
     this.createSelectedItemsForm();
