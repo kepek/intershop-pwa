@@ -45,7 +45,7 @@
     "start:local": "ng run intershop-pwa:serve-ssr:local",
     "dev": "ng run intershop-pwa:serve",
     "dev:local": "ng run intershop-pwa:serve:local",
-    "dev:local:proxy": "ng run intershop-pwa:serve:local-proxy",
+    "dev:local:proxy": "ng run intershop-pwa:serve:proxy",
     "dev:ssr": "ng run intershop-pwa:serve-ssr",
     "dev:ssr:local": "ng run intershop-pwa:serve-ssr:local",
     "generate-icons": "svg-to-ts --config svg-to-ts.config.json"
@@ -116,6 +116,7 @@
     "zone.js": "~0.10.2"
   },
   "devDependencies": {
+    "@angular-builders/custom-webpack": "^10.0.1",
     "@angular-builders/jest": "^10.0.1",
     "@angular-devkit/build-angular": "^0.1001.2",
     "@angular/cli": "^10.1.2",
