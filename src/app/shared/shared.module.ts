@@ -36,6 +36,7 @@ import { CamfilBannerComponent } from 'ish-shared/components/camfil-banner/camfi
 import { CamfilBulletListComponent } from 'ish-shared/components/common/camfil-bullet-list/camfil-bullet-list.component';
 import { CamfilErrorComponent } from 'ish-shared/components/common/camfil-error/camfil-error.component';
 import { CamfilHeaderBoxComponent } from 'ish-shared/components/common/camfil-header-box/camfil-header-box.component';
+import { CamfilProductGuidesComponent } from 'ish-shared/components/product/camfil-product-guides/camfil-product-guides.component';
 import { MaterialModule } from 'ish-shared/material/material.module';
 import { ShellModule } from 'ish-shell/shell.module';
 
@@ -203,6 +204,7 @@ const declaredComponents = [
   CamfilHeaderBoxComponent,
   CamfilProductAttributeComponent,
   CamfilProductAttributesComponent,
+  CamfilProductGuidesComponent,
   CamfilProductIdComponent,
   CamfilProductItemDetailedComponent,
   CamfilProductItemSimpleComponent,
@@ -272,6 +274,7 @@ const exportedComponents = [
   CamfilProductAddToCompareComponent,
   CamfilProductAttributeComponent,
   CamfilProductAttributesComponent,
+  CamfilProductGuidesComponent,
   CamfilProductIdComponent,
   CamfilProductInventoryComponent,
   CamfilProductItemComponent,

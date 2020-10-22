@@ -9,6 +9,7 @@ import { CoreModule } from 'ish-core/core.module';
 
 import { AppComponent } from './app.component';
 import { CamAccountRoutingModule } from './extensions/cam-account/pages/cam-account-routing.module';
+import { CamAhuRoutingModule } from './extensions/cam-ahu/pages/cam-ahu-routing.module';
 import { CamDemoRoutingModule } from './extensions/cam-demo/pages/cam-demo-routing.module';
 import { QuickorderRoutingModule } from './extensions/quickorder/pages/quickorder-routing.module';
 import { QuotingRoutingModule } from './extensions/quoting/pages/quoting-routing.module';
@@ -30,6 +31,7 @@ import { ShellModule } from './shell/shell.module';
     TactonRoutingModule,
     QuotingRoutingModule,
     CamDemoRoutingModule,
+    CamAhuRoutingModule,
     AppLastRoutingModule,
     ReactiveFormsModule,
     FormlyModule.forRoot(),

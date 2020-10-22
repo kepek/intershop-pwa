@@ -25,6 +25,7 @@ import { findAllCustomElements } from 'ish-core/utils/dev/html-query-utils';
 import { categoryTree } from 'ish-core/utils/dev/test-data-utils';
 import { CamfilBreadcrumbComponent } from 'ish-shared/components/common/camfil-breadcrumb/camfil-breadcrumb.component';
 import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
+import { CamfilProductGuidesComponent } from 'ish-shared/components/product/camfil-product-guides/camfil-product-guides.component';
 import { RecentlyViewedComponent } from 'ish-shared/components/recently/recently-viewed/recently-viewed.component';
 
 import { CamfilProductLinksComponent } from '../product/camfil-product-links/camfil-product-links.component';
@@ -35,7 +36,6 @@ import { RetailSetPartsComponent } from '../product/retail-set-parts/retail-set-
 
 import { CamfilProductAttributesPreviewComponent } from './camfil-product-attributes-preview/camfil-product-attributes-preview.component';
 import { CamfilProductDetailComponent } from './camfil-product-detail/camfil-product-detail.component';
-import { CamfilProductGuidesComponent } from './camfil-product-guides/camfil-product-guides.component';
 import { CamfilProductImagesComponent } from './camfil-product-images/camfil-product-images.component';
 import { CamfilProductPageComponent } from './camfil-product-page.component';
 
