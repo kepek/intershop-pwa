@@ -1,3 +1,5 @@
+// This is a "Solution Style" tsconfig.json file, and is used by editors and TypeScript’s language server to improve development experience.
+// It is not intended to be used to perform a compilation.
 {
   "files": [],
   "references": [
@@ -13,10 +15,5 @@
     {
       "path": "./e2e/cypress/tsconfig.json"
     }
-  ],
-  "include": ["src/**/*.ts", "projects/**/*.ts"],
-  "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {}
-  }
+  ]
 }
