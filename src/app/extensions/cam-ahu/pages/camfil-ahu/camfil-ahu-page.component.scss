@@ -3,7 +3,7 @@
 
 .ahu {
   position: relative;
-  min-height: 350px;
+  min-height: 355px;
   margin-bottom: 40px;
 
   &__banner {
@@ -17,7 +17,7 @@
     bottom: 0;
     left: 0;
     max-width: 550px;
-    max-height: 350px;
+    max-height: 355px;
     padding: 20px;
     margin: auto;
   }
@@ -27,17 +27,22 @@
   }
 
   &__card-title {
+    margin-top: 5px;
+    font-size: 24px;
     text-transform: uppercase;
   }
 
   &__card-subtitle {
-    font-size: 14px;
-    color: rgba(0, 0, 0, 0.6);
+    font-size: 16px;
+    line-height: 24px;
+    color: rgba($camfil-color-dark, 0.74);
   }
 
-  &__subtitle {
+  &__subheading {
+    display: block;
+    margin-bottom: 10px;
     font-size: 14px;
-    color: rgba(0, 0, 0, 0.6);
+    color: $camfil-text-color-tertiary;
   }
 
   &__form {
@@ -49,6 +54,11 @@
 
   &__field {
     width: 100%;
-    background-color: $greyF5;
+    color: rgba($camfil-color-dark, 0.74);
+    background-color: $camfil-color-light;
+
+    .mat-form-field-appearance-fill .mat-form-field-flex {
+      background: none;
+    }
   }
 }
