@@ -17,7 +17,7 @@
           </mat-form-field>
           <mat-form-field appearance="fill">
             <mat-label>{{ 'camfil.account.cam_card.add_to_form.customer_name' | translate }}</mat-label>
-            <mat-select formControlName="customerName">
+            <mat-select formControlName="customerName" [compareWith]="compareFn">
               <mat-option>--</mat-option>
               <mat-option *ngFor="let customer of customers$ | async" [value]="customer.id">
                 {{ customer.name }}
@@ -62,7 +62,7 @@
             <mat-label>{{ 'camfil.account.cam_card.add_to_form.customer_name' | translate }}</mat-label>
             <input
               matInput
-              formControlName="customerName"
+              formControlName="customer"
               label="camfil.account.cam_card.add_to_form.customer_name"
               markRequiredLabel="off"
               maxlength="35"

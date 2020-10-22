@@ -84,4 +84,9 @@ export class AccountCamCardDetailPageComponent implements OnInit, OnDestroy {
   addCamCard(camCard: CamCard) {
     this.camCardsFacade.addCamCard(camCard);
   }
+
+  /** dispatch edit request */
+  updateCamCard(camCard: CamCard) {
+    this.camCardsFacade.updateCamCard(camCard);
+  }
 }
