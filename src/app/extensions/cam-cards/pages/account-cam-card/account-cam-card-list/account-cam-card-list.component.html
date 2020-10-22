@@ -51,12 +51,21 @@
               </div>
               <div class="row text-center">
                 <div class="col-4">{{ 'camfil.account.cam_cards.itemsCount' | translate }}</div>
-                <div class="col-4">{{ 'camfil.account.cam_cards.userAccess' | translate }}</div>
+                <div class="col-4" *ngIf="isCustomerAdmin()">
+                  {{ 'camfil.account.cam_cards.userAccess' | translate }}
+                </div>
                 <div class="col-4">{{ 'camfil.account.cam_cards.edit' | translate }}</div>
               </div>
               <div class="row text-center">
                 <div class="col-4">{{ camCards.itemsCount }}</div>
-                <div class="col-4"><mat-icon svgIcon="lock"></mat-icon></div>
+                <div class="col-4" *ngIf="isCustomerAdmin()">
+                  <a
+                    class="btn-tool"
+                    [title]="'camfil.account.cam_cards.userAccess' | translate"
+                    data-testing-id="cam-card-details-user-access"
+                    (click)="openUserAccessDialog(camCards)"
+                  ><mat-icon svgIcon="lock"></mat-icon></a>
+                </div>
                 <div class="col-4">
                   <a
                     class="btn-tool"
@@ -140,7 +149,12 @@
               <!-- <ng-container *ngIf="column === 'creationDate'">{{ camCard[column] | ishDate: 'shortDate' }}</ng-container> -->
               <ng-container *ngIf="column === 'itemsCount'">{{ camCard[column] }}</ng-container>
               <ng-container *ngIf="column === 'userAccess'">
-                <mat-icon svgIcon="lock"></mat-icon>
+                <a
+                  class="btn-tool"
+                  [title]="'camfil.account.cam_cards.userAccess' | translate"
+                  data-testing-id="cam-card-details-user-access"
+                  (click)="openUserAccessDialog(camCard)"
+                ><mat-icon svgIcon="lock"></mat-icon></a>
               </ng-container>
               <ng-container *ngIf="column === 'edit'">
                 <a

@@ -2,7 +2,7 @@ import { createAction } from '@ngrx/store';
 
 import { httpError, payload } from 'ish-core/utils/ngrx-creators';
 
-import { CamCard, CamCardItem } from '../../models/cam-card/cam-card.model';
+import { CamCard, CamCardContact, CamCardCustomer, CamCardItem } from '../../models/cam-card/cam-card.model';
 
 export const loadCamCards = createAction('[Cam Cards Internal] Load Cam Cards');
 
@@ -44,10 +44,22 @@ export const loadCustomers = createAction('[Cam Cards] load available customer',
 
 export const loadCustomersSuccess = createAction(
   '[Cam Cards API] load available customer Success',
-  payload<{ customers: [] }>()
+  payload<{ customers: CamCardCustomer[] }>()
 );
 
 export const loadCustomersdFail = createAction('[Cam Cards API] load available customer Fail', httpError());
+
+export const loadContactsByCustomer = createAction(
+  '[Cam Cards] load Contacts by customer',
+  payload<{ customerId: string }>()
+);
+
+export const loadContactsByCustomerSuccess = createAction(
+  '[Cam Cards API] load Contacts by customer Success',
+  payload<{ customerId: string; contacts: CamCardContact[] }>()
+);
+
+export const loadContactsByCustomerFail = createAction('[Cam Cards API] load Contacts by customer Fail', httpError());
 
 export const addProductToCamCard = createAction(
   '[Cam Cards] Add Item to Cam Card',
@@ -75,6 +87,18 @@ export const addProductToNewCamCard = createAction(
   '[Cam Cards Internal] Add Product To New Cam Card',
   payload<{ name: string; sku: string; quantity?: number }>()
 );
+
+export const updateCamCardContacts = createAction(
+  '[Cam Cards] Update Cam Card Contacts',
+  payload<{ camCardId: string; camCardContacts: CamCardContact[] }>()
+);
+
+export const updateCamCardContactsSuccess = createAction(
+  '[Cam Cards API] Update Cam Card Contacts Success',
+  payload<{ camCardId: string; contacts: CamCardContact[] }>()
+);
+
+export const updateCamCardContactsFail = createAction('[Cam Cards API] Update Cam Card contacts Fail', httpError());
 
 export const moveItemToCamCard = createAction(
   '[Cam Cards] Move Item to another Cam Card',

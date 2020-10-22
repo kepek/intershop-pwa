@@ -1,0 +1,50 @@
+<h2 class="text-center">
+  <mat-icon svgIcon="lock"></mat-icon>
+  <div class="mt-3 mb-5" [ishServerHtml]="'camfil.account.cam_card.access_user.dialog.title' | translate"></div>
+</h2>
+
+<form [formGroup]="accessForm" (ngSubmit)="submit(); dialogRef.close()">
+  <mat-radio-group aria-label="Select an option" formControlName="user">
+    <mat-radio-button class="d-block" *ngFor="let user of users" [value]="user">
+      {{ 'camfil.account.cam_card.access_user.dialog.input_user_radio.' + user | translate }}
+    </mat-radio-button>
+  </mat-radio-group>
+
+  <mat-form-field appearance="fill" class="offset-sm-1">
+    <mat-label>{{ 'camfil.account.cam_card.access_user.dialog.select.label' | translate }}</mat-label>
+    <mat-select multiple formControlName="contact" [disabled]="!isUserSingle()" [required]="isUserSingle()">
+      <mat-option *ngFor="let item of allContacts$ | async" [value]="item.profileId">
+        {{ item.firstName }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</form>
+
+<camfil-error
+class="test-error"
+  [errors]="getField('user').errors"
+  [errorValidators]="validators.user"
+  [touched]="getField('user').touched || getField('user').dirty"
+></camfil-error>
+<camfil-error
+class="test-error"
+  [errors]="getField('contact').errors"
+  [errorValidators]="validators.contact"
+  [touched]="getField('contact').touched || getField('contact').dirty"
+></camfil-error>
+
+<div class="col-12 text-right p-0 mt-5">
+  <button
+    mat-flat-button
+    class="text-primary"
+    type="submit"
+    (click)="submit()"
+    data-testing-id="cam-card-access-user-dialog-submit"
+  >
+    {{ 'camfil.account.cam_card.access_user.dialog.btn.save' | translate }}
+  </button>
+  &nbsp;
+  <button mat-flat-button class="text-primary" type="button" (click)="dialogRef.close()">
+    {{ 'camfil.account.cam_card.access_user.dialog.btn.cancel' | translate }}
+  </button>
+</div>

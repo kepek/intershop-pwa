@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
 
 import { CamCardsFacade } from '../../facades/cam-cards.facade';
-import { CamCard } from '../../models/cam-card/cam-card.model';
+import { CamCard, CamCardCustomer } from '../../models/cam-card/cam-card.model';
 
 /**
  * The Cam Cards Preferences Dialog shows the modal to create/edit a cam_cards.
@@ -44,7 +44,7 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit {
   submitted = false;
   pickerLast;
   pickerNext;
-  customers$: Observable<[]>;
+  customers$: Observable<CamCardCustomer[]>;
 
   /**
    *  A reference to the current modal  .

@@ -47,7 +47,7 @@ export interface CamCardContact {
   email?: string;
   firstName?: string;
   lastName?: string;
-  camCardId?: string;
+  erpId?: string;
 }
 
 export interface CamCardItemComment {
