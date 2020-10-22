@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { pick } from 'lodash-es';
 import { Observable, throwError } from 'rxjs';
 
+import { User } from 'ish-core/models/user/user.model';
 import { ApiService } from 'ish-core/services/api/api.service';
 
 import { ApplicantData } from '../../models/applicant/applicant.interface';
@@ -30,7 +31,7 @@ export class CamAccountService {
    * Request an email for the customer accounts connected with email.
    * @param data  The user data (email, firstName, lastName ) to identify the user.
    */
-  requestUsernameReminder(data: UsernameReminder) {
-    return this.apiService.post('security/customerAccounts', { answer: '', ...data });
+  requestUsernameReminder(data: UsernameReminder): Observable<User[]> {
+    return this.apiService.post<User[]>('security/customerAccounts', { answer: '', ...data });
   }
 }

@@ -1,3 +1,23 @@
+require('ts-node').register({
+  project: './tsconfig.base.json',
+});
+
+const getProxyEnvironmentConfig = () => {
+  try {
+    return require('./environments/environment.proxy').environment;
+  } catch (err) {
+    console.error('The proxy environment config file does not exist.');
+    console.error(err);
+    process.exit(1);
+  }
+};
+
+const environment = getProxyEnvironmentConfig();
+
+if (!environment.icmProxyURL) {
+  console.error('Did not find a valid PROXY_ICM. Setup a environment.proxy.ts or supply it via environment variable.');
+}
+
 const getHttpAgent = endpoint => {
   const https = require('https');
   const http = require('http');
@@ -5,9 +25,7 @@ const getHttpAgent = endpoint => {
   return httpProtocol === 'https' ? new https.Agent({ rejectUnauthorized: false }) : new http.Agent();
 };
 
-const PROXY_ICM = process.env.PROXY_ICM;
-
-const TRUST_ICM = process.env.TRUST_ICM ? Boolean(Number(JSON.parse(process.env.TRUST_ICM))) : true;
+const PROXY_ICM = process.env.PROXY_ICM || environment.icmProxyURL;
 
 const isUrl = PROXY_ICM && PROXY_ICM.startsWith('http');
 
@@ -23,7 +41,7 @@ module.exports = !useProxy
   : {
       '/INTERSHOP/*': {
         target: PROXY_ICM,
-        secure: TRUST_ICM,
+        secure: true,
         changeOrigin: true,
         logLevel: 'debug',
         agent: getHttpAgent(PROXY_ICM),

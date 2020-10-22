@@ -93,6 +93,22 @@
               ],
               "sourceMap": true,
               "serviceWorker": false
+            },
+            "proxy": {
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.proxy.ts"
+                }
+              ],
+              "sourceMap": true,
+              "serviceWorker": false
             }
           }
         },
@@ -112,8 +128,8 @@
             "local": {
               "browserTarget": "intershop-pwa:build:local"
             },
-            "local-proxy": {
-              "browserTarget": "intershop-pwa:build:local",
+            "proxy": {
+              "browserTarget": "intershop-pwa:build:proxy",
               "proxyConfig": "src/setupProxy.ts"
             }
           }
