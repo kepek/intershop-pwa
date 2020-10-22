@@ -35,10 +35,15 @@ export class CamCardMapper {
 
   fromUpdate(camCard: CamCard, id: string): CamCard {
     if (camCard && id) {
+      const { name, creationDate, customer, orderLabel, invoiceLabel } = camCard;
+
       return {
         id,
-        name: camCard.name,
-        creationDate: camCard.creationDate,
+        name,
+        creationDate,
+        orderLabel,
+        invoiceLabel,
+        customer,
       };
     }
   }
