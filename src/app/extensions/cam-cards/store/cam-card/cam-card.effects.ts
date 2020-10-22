@@ -210,6 +210,8 @@ export class CamCardEffects {
     )
   );
 
+  updateCamCardSuccess$ = createEffect(() => this.actions$.pipe(ofType(updateCamCardSuccess), mapTo(loadCamCards())));
+
   addProductToCamCard$ = createEffect(() =>
     this.actions$.pipe(
       ofType(addProductToCamCard),

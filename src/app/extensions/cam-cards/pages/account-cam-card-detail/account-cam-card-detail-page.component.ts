@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnChanges, OnDestroy, OnInit } from '@angular/core';
 import { FormArray } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
@@ -15,7 +15,7 @@ import { CamCard, CamCardItem } from '../../models/cam-card/cam-card.model';
   templateUrl: './account-cam-card-detail-page.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AccountCamCardDetailPageComponent implements OnInit, OnDestroy {
+export class AccountCamCardDetailPageComponent implements OnChanges, OnInit, OnDestroy {
   camCard$: Observable<CamCard>;
   camCardError$: Observable<HttpError>;
   camCardLoading$: Observable<boolean>;
@@ -39,6 +39,10 @@ export class AccountCamCardDetailPageComponent implements OnInit, OnDestroy {
       .subscribe(([, camCards]) => {
         this.selectedItems = this.filterItems(camCards);
       });
+  }
+
+  ngOnChanges() {
+    console.log('test', this.camCard$);
   }
 
   private initForm() {
@@ -83,5 +87,10 @@ export class AccountCamCardDetailPageComponent implements OnInit, OnDestroy {
   /** dispatch creation request */
   addCamCard(camCard: CamCard) {
     this.camCardsFacade.addCamCard(camCard);
+  }
+
+  /** dispatch edit request */
+  updateCamCard(camCard: CamCard) {
+    this.camCardsFacade.updateCamCard(camCard);
   }
 }

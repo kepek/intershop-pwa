@@ -55,13 +55,6 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit {
   primaryButton = 'camfil.account.cam_card.new_from_order.button.create.label';
   camCardTitle = 'camfil.account.cam_card.new_cam_card.text';
 
-  customers = [
-    {
-      value: 'sQJ_AAABWFkAAAF1Q6wJsCII',
-      viewValue: 'Bio tech',
-    },
-  ];
-
   locations = [
     {
       value: 'poland',
@@ -105,6 +98,7 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit {
       orderMark: ['', [Validators.maxLength(35)]],
       invoiceMark: ['', [Validators.maxLength(35)]],
       deliveryAddress: ['', [Validators.maxLength(35)]],
+      customer: ['', [Validators.maxLength(35)]],
       building: ['', [Validators.maxLength(35)]],
       address: ['', [Validators.maxLength(35)]],
       zipCode: ['', [Validators.maxLength(35)]],
@@ -114,11 +108,17 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit {
       nextDelivery: ['', [Validators.maxLength(35)]],
     });
   }
+  compareFn(x, y): boolean {
+    return x && y ? x.id === y.id : x === y;
+  }
 
   patchForm() {
     if (this.camCard) {
-      this.camCardForm.setValue({
+      this.camCardForm.patchValue({
         title: this.camCard.name,
+        customerName: this.camCard.customer.name,
+        orderMark: this.camCard.orderLabel,
+        invoiceMark: this.camCard.invoiceLabel,
       });
     }
   }
@@ -127,7 +127,8 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit {
   submitCamCardForm() {
     if (this.camCardForm.valid) {
       this.submit.emit({
-        name: !this.camCard ? this.camCardForm.get('title').value : this.camCardTitle,
+        id: this.camCard?.id,
+        name: this.camCardForm.get('title').value,
         orderLabel: this.camCardForm.get('orderMark').value,
         invoiceLabel: this.camCardForm.get('invoiceMark').value,
         customer: {

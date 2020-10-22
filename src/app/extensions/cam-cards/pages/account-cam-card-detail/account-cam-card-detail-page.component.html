@@ -23,6 +23,7 @@
     </h1>
 
     <div class="section">
+      <camfil-cam-card-preferences (submit)="updateCamCard($event)" [camCard]="camCard"></camfil-cam-card-preferences>
       <ng-container *ngIf="camCard.itemsCount && camCard.itemsCount > 0; else noItems" class="section">
         <div class="list-header d-none d-md-flex">
           <div class="col-6 list-header-item">{{ 'camfil.account.cam_card.table.header.item' | translate }}</div>
