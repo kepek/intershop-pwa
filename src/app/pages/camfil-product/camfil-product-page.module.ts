@@ -52,7 +52,6 @@ const camfilProductPageRoutes: Routes = [
     MatListModule,
     RouterModule.forChild(camfilProductPageRoutes),
     SharedModule,
-    SharedModule,
   ],
   declarations: [
     CamfilProductAttributesPreviewComponent,

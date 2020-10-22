@@ -36,6 +36,7 @@ import { CamfilBannerComponent } from 'ish-shared/components/camfil-banner/camfi
 import { CamfilBulletListComponent } from 'ish-shared/components/common/camfil-bullet-list/camfil-bullet-list.component';
 import { CamfilErrorComponent } from 'ish-shared/components/common/camfil-error/camfil-error.component';
 import { CamfilHeaderBoxComponent } from 'ish-shared/components/common/camfil-header-box/camfil-header-box.component';
+import { CamfilProductGuidesComponent } from 'ish-shared/components/product/camfil-product-guides/camfil-product-guides.component';
 import { MaterialModule } from 'ish-shared/material/material.module';
 import { ShellModule } from 'ish-shell/shell.module';
 
@@ -149,7 +150,6 @@ import { PromotionRemoveComponent } from './components/promotion/promotion-remov
 import { RecentlyViewedComponent } from './components/recently/recently-viewed/recently-viewed.component';
 import { FormsDynamicModule } from './forms-dynamic/forms-dynamic.module';
 import { FormsSharedModule } from './forms/forms.module';
-import { CamfilProductGuidesComponent } from '../pages/camfil-product/camfil-product-guides/camfil-product-guides.component';
 
 const importExportModules = [
   AddressFormsSharedModule,
@@ -274,6 +274,7 @@ const exportedComponents = [
   CamfilProductAddToCompareComponent,
   CamfilProductAttributeComponent,
   CamfilProductAttributesComponent,
+  CamfilProductGuidesComponent,
   CamfilProductIdComponent,
   CamfilProductInventoryComponent,
   CamfilProductItemComponent,
@@ -324,6 +325,6 @@ const exportedComponents = [
     MatTableModule,
   ],
   declarations: [...declaredComponents, ...exportedComponents],
-  exports: [...exportedComponents, ...importExportModules, CamfilProductGuidesComponent],
+  exports: [...exportedComponents, ...importExportModules],
 })
 export class SharedModule {}

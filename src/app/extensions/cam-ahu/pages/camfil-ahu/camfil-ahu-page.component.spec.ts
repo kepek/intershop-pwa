@@ -6,12 +6,12 @@ import { instance, mock } from 'ts-mockito';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
 import { CamfilBreadcrumbComponent } from 'ish-shared/components/common/camfil-breadcrumb/camfil-breadcrumb.component';
-import { CamfilProductGuidesComponent } from '../../../../pages/camfil-product/camfil-product-guides/camfil-product-guides.component';
 import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
+import { CamfilProductGuidesComponent } from 'ish-shared/components/product/camfil-product-guides/camfil-product-guides.component';
 
 import { CamfilAHUPageComponent } from './camfil-ahu-page.component';
 
-describe('Camfil AHU Page Component', () => {
+describe('Camfil Ahu Page Component', () => {
   let component: CamfilAHUPageComponent;
   let fixture: ComponentFixture<CamfilAHUPageComponent>;
   let element: HTMLElement;
