@@ -11,12 +11,9 @@
   tr:last-child td {
     border-bottom: none;
   }
-  td div.truncate {
+  td div.text-truncate {
     display: block;
     width: 20ch;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
   }
   ::ng-deep {
     .mat-column {
