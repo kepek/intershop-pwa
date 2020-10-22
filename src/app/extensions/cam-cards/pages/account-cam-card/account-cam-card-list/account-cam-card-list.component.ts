@@ -180,8 +180,8 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
 
   isCamCardChecked(camCard: CamCard) {
     return (
-      camCard.camCardItems.every(item => this.isProductChecked(item.id)) &&
-      camCard.subCamCards.every(subCard => subCard.camCardItems.every(item => this.isProductChecked(item.id)))
+      camCard.camCardItems?.every(item => this.isProductChecked(item.id)) &&
+      camCard.subCamCards?.every(subCard => subCard.camCardItems.every(item => this.isProductChecked(item.id)))
     );
   }
 
