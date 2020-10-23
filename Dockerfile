@@ -7,7 +7,7 @@ COPY projects/organization-management/src/app /workspace/projects/organization-m
 COPY projects/camfil-icons/src /workspace/projects/camfil-icons/src
 COPY src /workspace/src/
 COPY tsconfig.app.json tsconfig.base.json ngsw-config.json .browserslistrc angular.json /workspace/
-RUN npm run build:schematics && npm run synchronize-lazy-components -- --ci && npm run generate-icons
+RUN npm run build:icons && npm run build:schematics && npm run synchronize-lazy-components -- --ci
 ARG configuration=production
 COPY scripts /workspace/scripts/
 RUN test "${configuration}" = 'local' && node scripts/init-local-environment.js || true

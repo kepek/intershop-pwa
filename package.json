@@ -12,7 +12,7 @@
   },
   "private": true,
   "scripts": {
-    "postinstall": "postinstall && npm --silent run build:tslint-rules && npm --silent run build:schematics && npm run synchronize-lazy-components && node scripts/init-local-environment && npm run generate-icons",
+    "postinstall": "postinstall && npm --silent run build:tslint-rules && npm --silent run build:schematics && npm run synchronize-lazy-components && node scripts/init-local-environment && npm --silent run build:icons",
     "build:tslint-rules": "cd tslint-rules && npm run build",
     "build:schematics": "cd schematics && npm run build",
     "ng": "ng",
@@ -48,7 +48,8 @@
     "dev:local:proxy": "ng run intershop-pwa:serve:proxy",
     "dev:ssr": "ng run intershop-pwa:serve-ssr",
     "dev:ssr:local": "ng run intershop-pwa:serve-ssr:local",
-    "generate-icons": "svg-to-ts --config svg-to-ts.config.json"
+    "build:icons": "cd projects/camfil-icons && npm run build",
+    "info": "envinfo"
   },
   "peerDependencies": {
     "@angular/cdk": "~10.2.2",
@@ -137,6 +138,7 @@
     "commitlint-config-cz": "^0.13.2",
     "conventional-changelog-cli": "2.1.0",
     "cz-customizable": "^6.3.0",
+    "envinfo": "^7.7.3",
     "husky": "^4.3.0",
     "intershop-schematics": "file:schematics/src",
     "jest": "^26.5.3",
