@@ -1,0 +1,20 @@
+<div class="article-details">
+  <mat-form-field [formGroup]="quantityForm" appearance="outline">
+    <mat-label>{{ 'camfil.modal.addToCamcard.box.label' | translate }}</mat-label>
+    <input matInput formControlName="boxLabel" />
+  </mat-form-field>
+  <div class="article-details__quantity">
+    <mat-label class="article-details__label article-details__quantity--label">{{
+      'camfil.modal.addToCamcard.quantity.label' | translate
+    }}</mat-label>
+    <camfil-product-quantity
+      class="article-details__quantity--input"
+      [type]="'counter'"
+      [allowZeroQuantity]="false"
+      [quantityLabel]="'camfil.modal.addToCamcard.quantity.label' | translate"
+      [product]="product"
+      [parentForm]="quantityForm"
+      controlName="quantity"
+    ></camfil-product-quantity>
+  </div>
+</div>

@@ -17,6 +17,7 @@ import {
   addBasketToNewCamCardFail,
   addBasketToNewCamCardSuccess,
   addProductToCamCardSuccess,
+  createAndUpdateCamCardSuccess,
   createCamCard,
   createCamCardFail,
   createCamCardSuccess,
@@ -37,6 +38,7 @@ import {
   loadDeliveryAddressesSuccess,
   moveCamCardSuccess,
   removeItemFromCamCardSuccess,
+  resetCreatedCamCard,
   selectCamCard,
   setStickyCamCardToolbar,
   updateCamCard,
@@ -52,6 +54,10 @@ export interface CamCardState extends EntityState<CamCard> {
   error: HttpError;
   stickyToolbar: boolean;
   customers: CamCardCustomer[];
+  created: {
+    id: string;
+    name: string;
+  };
   contacts: {
     [key: string]: CamCardContact[];
   };
@@ -67,6 +73,10 @@ export const initialState: CamCardState = camCardAdapter.getInitialState({
   selected: undefined,
   error: undefined,
   customers: [],
+  created: {
+    id: undefined,
+    name: undefined,
+  },
   contacts: {},
   addresses: [],
   stickyToolbar: false,
@@ -152,12 +162,31 @@ export const camCardReducer = createReducer(
     removeItemFromCamCardSuccess,
     (state: CamCardState, action) => {
       const { camCard } = action.payload;
+
       return camCardAdapter.upsertOne(camCard, {
         ...state,
         loading: false,
       });
     }
   ),
+  on(createAndUpdateCamCardSuccess, (state: CamCardState, action) => {
+    const { name, id } = action.payload;
+
+    return {
+      ...state,
+      created: {
+        id,
+        name,
+      },
+    };
+  }),
+  on(resetCreatedCamCard, (state: CamCardState) => ({
+    ...state,
+    created: {
+      id: undefined,
+      name: undefined,
+    },
+  })),
   on(deleteCamCardSuccess, (state: CamCardState, action) => {
     const { camCardId } = action.payload;
     return camCardAdapter.removeOne(camCardId, {

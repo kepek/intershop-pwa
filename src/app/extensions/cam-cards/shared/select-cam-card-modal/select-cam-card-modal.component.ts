@@ -9,18 +9,41 @@ import {
   TemplateRef,
   ViewChild,
 } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { TranslateService } from '@ngx-translate/core';
-import { Subject } from 'rxjs';
-import { take, takeUntil } from 'rxjs/operators';
+import { Observable, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { Product } from 'ish-core/models/product/product.model';
 import { SelectOption } from 'ish-shared/forms/components/select/select.component';
 import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
 
 import { CamCardsFacade } from '../../facades/cam-cards.facade';
-import { CamCard } from '../../models/cam-card/cam-card.model';
+import { CamCard, CamCardCustomer, CamCardItem } from '../../models/cam-card/cam-card.model';
+
+import { CreateCamCardModalComponent } from './create-cam-card-modal/create-cam-card-modal.component';
+
+interface SelectCamCardOption extends SelectOption {
+  nextDelivery: string;
+  orderLabel?: string;
+  invoiceLabel?: string;
+  deliveryAddress?: string;
+  subCamCards?: CamCard[];
+  boxLabels?: string[];
+  camCardItems?: CamCardItem[];
+  customer: CamCardCustomer;
+  name: string;
+}
+
+interface CreateCamCardData {
+  camCard: CamCard;
+  quantity?: number;
+  boxLabel?: string;
+  edit?: boolean;
+  subCamCard?: CamCard;
+}
 
 /**
  * The cam cards select modal displays a list of cam_cards. The user can select one cam cards  or enter a name for a new cam card in order to add or move an item to the selected cam cards .
@@ -28,6 +51,7 @@ import { CamCard } from '../../models/cam-card/cam-card.model';
 @Component({
   selector: 'camfil-select-cam-card-modal',
   templateUrl: './select-cam-card-modal.component.html',
+  styleUrls: ['./select-cam-card-modal.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SelectCamCardModalComponent implements OnInit, OnDestroy {
@@ -43,8 +67,13 @@ export class SelectCamCardModalComponent implements OnInit, OnDestroy {
    */
   @Output() submitEmitter = new EventEmitter<{ id: string; title: string }>();
 
-  updateCamCardForm: FormGroup;
-  camCardOptions: SelectOption[];
+  // search
+  isActive = false;
+  inputSearchTerm = '';
+  searchInputFilter = new FormControl();
+
+  camCardOptions: SelectCamCardOption[];
+  camCardOptionsAll: SelectCamCardOption[];
 
   showForm: boolean;
   newCamCardInitValue = '';
@@ -54,31 +83,68 @@ export class SelectCamCardModalComponent implements OnInit, OnDestroy {
   idAfterCreate = '';
   private destroy$ = new Subject<void>();
 
+  quantityForm: FormGroup;
+
+  newSegmentForm: FormGroup;
+  camCardSelected: string;
+  segmentSelected: string;
+  readonly newSegmentValue = 'newSubCamCard';
+  showNewSegment = false;
+
+  created$: Observable<{ name: string; id: string }>;
+  created: { name: string; id: string };
+
+  newSegmentValidator = [
+    {
+      error: 'required',
+      message: 'camfil.modal.addToCamcard.camcard.new_segment.error.required',
+    },
+    {
+      error: 'maxlength',
+      message: 'camfil.modal.addToCamcard.camcard.new_segment.error.maxLength',
+    },
+  ];
+
+  camCardAddressEntry = {
+    id: '',
+    urn: '',
+    addressName: '',
+    firstName: '',
+    lastName: '',
+    addressLine1: '',
+    postalCode: '',
+    city: '',
+    country: '',
+    countryCode: '',
+    phoneHome: '',
+    invoiceToAddress: false,
+    shipToAddress: false,
+  };
+
   @ViewChild('modal', { static: false }) modalTemplate: TemplateRef<unknown>;
 
-  constructor(private fb: FormBuilder, private translate: TranslateService, private camCardsFacade: CamCardsFacade) {}
+  constructor(
+    private fb: FormBuilder,
+    private camCardsFacade: CamCardsFacade,
+    public dialog: MatDialog,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.determineSelectOptions();
-    this.formInit();
+    this.formsInit();
+
+    this.created$ = this.camCardsFacade.created$;
+    this.created$.pipe(takeUntil(this.destroy$)).subscribe(created => {
+      this.created = created;
+    });
+
     this.camCardsFacade.currentCamCard$
       .pipe(takeUntil(this.destroy$))
       .subscribe(camCard => (this.idAfterCreate = camCard && camCard.id));
 
-    this.translate
-      .get('camfil.account.cam_card.new_cam_card.text')
-      .pipe(take(1), takeUntil(this.destroy$))
-      .subscribe(res => {
-        this.newCamCardInitValue = res;
-        this.setDefaultFormValues();
-      });
-    this.updateCamCardForm.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(changes => {
-      if (changes.camCards !== 'newCamCard') {
-        this.updateCamCardForm.get('newCamCard').clearValidators();
-      } else {
-        this.updateCamCardForm.get('newCamCard').setValidators(Validators.required);
-      }
-      this.updateCamCardForm.get('newCamCard').updateValueAndValidity({ emitEvent: false });
+    this.searchInputFilter.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(filterValue => {
+      this.applyFilter(filterValue);
     });
   }
 
@@ -87,73 +153,184 @@ export class SelectCamCardModalComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  private formInit() {
-    this.updateCamCardForm = this.fb.group({
-      camCards: [
-        this.camCardOptions && this.camCardOptions.length > 0 ? this.camCardOptions[0].value : 'newCamCard',
-        Validators.required,
-      ],
-      newCamCard: [this.newCamCardInitValue, Validators.required],
-    });
-  }
-
   private determineSelectOptions() {
-    let currentCamCard: CamCard;
-    this.camCardsFacade.currentCamCard$.pipe(take(1), takeUntil(this.destroy$)).subscribe(w => (currentCamCard = w));
     this.camCardsFacade.camCard$.pipe(takeUntil(this.destroy$)).subscribe(camCards => {
       if (camCards && camCards.length > 0) {
-        this.camCardOptions = camCards.map(camCard => ({
+        this.camCardOptionsAll = camCards.map(camCard => ({
           value: camCard.id,
           label: camCard.name,
+          nextDelivery: camCard.nextDeliveryDate,
+          orderLabel: camCard.orderLabel,
+          invoiceLabel: camCard.invoiceLabel,
+          deliveryAddress: this.formatDeliveryAddress(camCard.deliveryAddress),
+          subCamCards: camCard.subCamCards,
+          boxLabels: camCard.camCardItems.map(item => item.comment.label),
+          camCardItems: camCard.camCardItems,
+          customer: camCard.customer,
+          name: camCard.name,
         }));
-        if (this.addMoveProduct === 'move' && currentCamCard) {
-          this.camCardOptions = this.camCardOptions.filter(option => option.value !== currentCamCard.id);
-        }
+
+        this.camCardOptions = this.camCardOptionsAll;
       } else {
         this.camCardOptions = [];
       }
-      this.setDefaultFormValues();
     });
   }
 
-  private setDefaultFormValues() {
-    if (this.showForm) {
-      if (this.camCardOptions && this.camCardOptions.length > 0) {
-        this.updateCamCardForm.get('camCards').setValue(this.camCardOptions[0].value);
-      } else {
-        this.updateCamCardForm.get('camCards').setValue('newCamCard');
-      }
-      this.updateCamCardForm.get('newCamCard').setValue(this.newCamCardInitValue);
+  private formsInit() {
+    this.newSegmentForm = this.fb.group({
+      newCamCard: [{ value: '' }, [Validators.required, Validators.maxLength(10)]],
+    });
+
+    this.quantityForm = new FormGroup({
+      quantity: new FormControl(this.product.minOrderQuantity),
+      boxLabel: new FormControl(),
+    });
+  }
+
+  applyFilter(filterValue: string) {
+    this.camCardOptions = this.camCardOptionsAll.filter(option => {
+      const fields = [
+        option.label,
+        option.orderLabel,
+        option.invoiceLabel,
+        option.deliveryAddress,
+        option.subCamCards,
+        option.boxLabels,
+      ];
+      return this.searchBy(filterValue, fields);
+    });
+  }
+
+  searchBy(filter, fields) {
+    return JSON.stringify(fields).trim().toLowerCase().indexOf(filter.trim().toLowerCase()) !== -1;
+  }
+
+  createCamcardAndAdd({ camCard, quantity, boxLabel, edit, subCamCard }: CreateCamCardData) {
+    if (subCamCard) {
+      this.camCardsFacade.addToNewCamCardWithNewSubCamCard(
+        camCard,
+        subCamCard,
+        this.product.sku,
+        quantity,
+        boxLabel,
+        edit
+      );
+    } else {
+      this.camCardsFacade.addProductToNewCamCardAndUpdate(camCard, this.product.sku, quantity, boxLabel, edit);
+    }
+
+    this.dialog.closeAll();
+    this.hide();
+  }
+
+  getSelectedCamCard = camCardId => this.camCardOptions.find(camCard => camCard.value === camCardId);
+
+  getSelectedCamCardItem = camCardId => {
+    const currentCamCard = this.getSelectedCamCard(camCardId);
+    return currentCamCard ? currentCamCard.camCardItems : [];
+  }
+
+  isAddedToExistingSubCamCard = () => this.segmentSelected && this.segmentSelected !== this.newSegmentValue;
+
+  isAddedToNewSubCamCard = () => this.segmentSelected && this.segmentSelected === this.newSegmentValue;
+
+  addToNewSubCamCard(quantity?: number, boxLabel?: string) {
+    if (this.newSegmentForm.valid) {
+      const newSegmentValue = this.newSegmentForm.get('newCamCard').value;
+
+      const newSubCamCard = {
+        name: newSegmentValue,
+        deliveryAddress: this.camCardAddressEntry,
+      };
+
+      this.camCardsFacade.addProductToNewSubCamCard(
+        newSubCamCard,
+        this.camCardSelected,
+        this.product.sku,
+        quantity,
+        boxLabel,
+        false
+      );
+    } else {
+      markAsDirtyRecursive(this.newSegmentForm);
     }
   }
 
-  /** emit results when the form is valid */
-  submitForm() {
-    if (this.updateCamCardForm.valid) {
-      const camCardId = this.updateCamCardForm.get('camCards').value;
-      this.submitEmitter.emit({
-        id: camCardId !== 'newCamCard' ? camCardId : undefined,
-        title:
-          camCardId !== 'newCamCard'
-            ? this.camCardOptions.find(option => option.value === camCardId).label
-            : this.updateCamCardForm.get('newCamCard').value,
-      });
-      this.showForm = false;
-    } else {
-      markAsDirtyRecursive(this.updateCamCardForm);
+  addToCamcard() {
+    const quantity = this.quantityForm.get('quantity').value;
+    const boxLabel = this.quantityForm.get('boxLabel').value;
+
+    if (this.camCardSelected && this.isAddedToNewSubCamCard()) {
+      this.addToNewSubCamCard(quantity, boxLabel);
+      return;
     }
+
+    if (this.camCardSelected) {
+      const camCardToAdd = this.isAddedToExistingSubCamCard() ? this.segmentSelected : this.camCardSelected;
+      const camCardItems = this.getSelectedCamCardItem(camCardToAdd);
+
+      this.camCardsFacade.addProductToCamCardAndUpdate(
+        this.camCardSelected,
+        this.product.sku,
+        camCardItems,
+        quantity,
+        boxLabel
+      );
+    }
+  }
+
+  getValueOrEmpty(value: string, last?: boolean) {
+    return value ? value + (last ? '' : ', ') : '';
+  }
+
+  formatDeliveryAddress(deliveryAddress) {
+    let formattedAddress = '';
+
+    if (deliveryAddress) {
+      const { company, addressLine1, city } = deliveryAddress;
+
+      formattedAddress =
+        this.getValueOrEmpty(company, !addressLine1 && !city) +
+        this.getValueOrEmpty(addressLine1, !city) +
+        this.getValueOrEmpty(city, true);
+    }
+
+    return formattedAddress;
+  }
+
+  selectCamCard(camCardID) {
+    if (this.camCardSelected !== camCardID) {
+      this.newSegmentForm.reset('newCamCard');
+    }
+    this.camCardSelected = camCardID;
+  }
+
+  showNewSegmant() {
+    this.showNewSegment = true;
+  }
+
+  goToCamcard() {
+    this.router.navigate([`/account/cam-cards/${this.idAfterCreate}`]);
+    this.camCardsFacade.resetCreatedCamCard();
   }
 
   /** close modal */
   hide() {
     this.modal.close();
+    this.camCardsFacade.resetCreatedCamCard();
   }
 
   /** open modal */
   show() {
+    this.camCardsFacade.resetCreatedCamCard();
     this.showForm = true;
-    this.setDefaultFormValues();
     return this.modalTemplate;
+  }
+
+  openModal(modal: CreateCamCardModalComponent) {
+    this.dialog.open(modal.show());
+    modal.hide = () => this.dialog.closeAll();
   }
 
   /**
@@ -163,51 +340,5 @@ export class SelectCamCardModalComponent implements OnInit, OnDestroy {
     return () => {
       this.hide();
     };
-  }
-
-  get selectedCamCardTitle(): string {
-    const selectedValue = this.updateCamCardForm.get('camCards').value;
-    if (selectedValue === 'newCamCard') {
-      return this.updateCamCardForm.get('newCamCard').value;
-    } else {
-      return this.camCardOptions.find(camCards => camCards.value === selectedValue).label;
-    }
-  }
-
-  /** returns the route to the selected cam cards */
-  get selectedCamCardRoute(): string {
-    const selectedValue = this.updateCamCardForm.get('camCards').value;
-    if (selectedValue === 'newCamCard') {
-      return `route://account/cam-cards/${this.idAfterCreate}`;
-    } else {
-      return `route://account/cam-cards/${selectedValue}`;
-    }
-  }
-
-  /** activates the input field to create a new cam cards */
-  get newCamCardDisabled() {
-    const selectedCamCard = this.updateCamCardForm.get('camCards').value;
-    return selectedCamCard !== 'newCamCard';
-  }
-
-  /** translation key for the modal header */
-  get headerTranslationKey() {
-    return this.addMoveProduct === 'add'
-      ? 'camfil.account.cam_card.add_to_cam_card.button.add_to_cam_card.label'
-      : 'camfil.account.cam_card.table.options.move_to_cam_card';
-  }
-
-  /** translation key for the submit button */
-  get submitButtonTranslationKey() {
-    return this.addMoveProduct === 'add'
-      ? 'camfil.account.cam_card.add_to_cam_card.button.add_to_cam_card.label'
-      : 'camfil.account.cam_card.table.options.move_to_cam_card';
-  }
-
-  /** translation key for the success text */
-  get successTranslationKey() {
-    return this.addMoveProduct === 'add'
-      ? 'camfil.account.cam_card.added.confirmation'
-      : 'camfil.account.cam_card.move.added.text';
   }
 }

@@ -1,0 +1,28 @@
+@import '~src/styles/themes/camfil/variables';
+@import '~src/styles/themes/camfil/mixins.scss';
+
+.article-details {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 0;
+
+  &__quantity {
+    display: flex;
+    align-items: center;
+
+    &--input {
+      margin-top: 1rem;
+    }
+
+    &--label {
+      width: 72px;
+    }
+  }
+
+  &__label {
+    font-weight: 400;
+    color: $text-color-quarternary;
+    @include font-size-subtitle1;
+  }
+}

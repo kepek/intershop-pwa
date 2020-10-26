@@ -14,7 +14,11 @@ import {
 import {
   addBasketToNewCamCard,
   addProductToCamCard,
+  addProductToCamCardAndUpdate,
   addProductToNewCamCard,
+  addProductToNewCamCardAndUpdate,
+  addProductToNewSubCamCard,
+  addToNewCamCardWithNewSubCamCard,
   createCamCard,
   deleteCamCard,
   detectCamCardToolbar,
@@ -23,6 +27,7 @@ import {
   getCamCardError,
   getCamCardLoading,
   getContactsbyCustomerId,
+  getCreated,
   getCustomerAddresses,
   getSelectedCamCardDetails,
   isStickyCamCardToolbar,
@@ -31,6 +36,7 @@ import {
   moveCamCard,
   moveItemToCamCard,
   removeItemFromCamCard,
+  resetCreatedCamCard,
   updateCamCard,
   updateCamCardContacts,
   updateCamCardProduct,
@@ -47,6 +53,7 @@ export class CamCardsFacade {
   isStickyCamCardToolbar$: Observable<boolean> = this.store.pipe(select(isStickyCamCardToolbar));
   customers$: Observable<CamCardCustomer[]> = this.store.pipe(select(getCamCardCustomers));
   addresses$: Observable<CamCardAddress[]> = this.store.pipe(select(getCustomerAddresses));
+  created$: Observable<{ name: string; id: string }> = this.store.pipe(select(getCreated));
 
   contactsByCustomer$(id: string): Observable<CamCardContact[]> {
     return this.store.pipe(select(getContactsbyCustomerId, { id }));
@@ -80,12 +87,58 @@ export class CamCardsFacade {
     this.store.dispatch(updateCamCard({ camCard }));
   }
 
+  addToNewCamCardWithNewSubCamCard(
+    newCamCard: CamCard,
+    newSubCamCard: CamCard,
+    sku: string,
+    quantity?: number,
+    boxLabel?: string,
+    edit?: boolean
+  ): void {
+    this.store.dispatch(addToNewCamCardWithNewSubCamCard({ newCamCard, newSubCamCard, sku, quantity, boxLabel, edit }));
+  }
+
   addProductToNewCamCard(name: string, sku: string, quantity?: number): void {
     this.store.dispatch(addProductToNewCamCard({ name, sku, quantity }));
   }
 
   addProductToCamCard(camCardId: string, sku: string, quantity?: number): void {
     this.store.dispatch(addProductToCamCard({ camCardId, sku, quantity }));
+  }
+
+  resetCreatedCamCard() {
+    this.store.dispatch(resetCreatedCamCard());
+  }
+
+  addProductToNewSubCamCard(
+    subCamCard: CamCard,
+    rootCamCard: string,
+    sku: string,
+    quantity?: number,
+    boxLabel?: string,
+    edit?: boolean
+  ): void {
+    this.store.dispatch(addProductToNewSubCamCard({ subCamCard, rootCamCard, sku, quantity, boxLabel, edit }));
+  }
+
+  addProductToNewCamCardAndUpdate(
+    camCard: CamCard,
+    sku: string,
+    quantity?: number,
+    boxLabel?: string,
+    edit?: boolean
+  ): void {
+    this.store.dispatch(addProductToNewCamCardAndUpdate({ camCard, sku, quantity, boxLabel, edit }));
+  }
+
+  addProductToCamCardAndUpdate(
+    camCardId: string,
+    sku: string,
+    camCardItems: CamCardItem[],
+    quantity?: number,
+    boxLabel?: string
+  ) {
+    this.store.dispatch(addProductToCamCardAndUpdate({ camCardId, sku, camCardItems, quantity, boxLabel }));
   }
 
   updateCamCardProduct(rootCamCard: string, camCardId: string, camCardItem: CamCardItem): void {

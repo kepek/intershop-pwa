@@ -71,6 +71,11 @@
   font-weight: 300;
 }
 
+@mixin font-size-subtitle1 {
+  font-size: 14px;
+  line-height: 24px;
+}
+
 @mixin font-size-h3 {
   font-size: $h3-font-size;
   font-weight: 500;
@@ -86,6 +91,12 @@
 @mixin font-size-12-16 {
   font-size: $font-size-overline;
   font-weight: 300;
+  line-height: $line-height-overline;
+}
+
+@mixin font-size-12-16--normal {
+  font-size: $font-size-overline;
+  font-weight: 400;
   line-height: $line-height-overline;
 }
 
@@ -106,4 +117,12 @@
   &__form-wrapper {
     padding: 0;
   }
+}
+
+@mixin link {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16px;
+  text-align: left;
+  text-decoration: underline;
 }

@@ -49,7 +49,10 @@
               <div class="row text-center">
                 <div class="col-4">{{ camCards.lastDeliveryDate || '---' }}</div>
                 <div class="col-4">
-                  {{ camCards.deliveryInterval | i18nPlural: ('camfil.account.cam_cards.deliveryInterval.value' | translate) || { other: '#' } }}
+                  {{
+                    camCards.deliveryInterval
+                      | i18nPlural: ('camfil.account.cam_cards.deliveryInterval.value' | translate) || { other: '#' }
+                  }}
                 </div>
                 <div class="col-4">{{ camCards.nextDeliveryDate || '---' }}</div>
               </div>
@@ -142,9 +145,12 @@
               <ng-container *ngIf="column === 'customer'">{{ camCard[column].companyName }}</ng-container>
               <ng-container *ngIf="column === 'lastDeliveryDate'">{{ camCard[column] || '---' }}</ng-container>
               <ng-container *ngIf="column === 'deliveryInterval'">
-                {{ camCard[column] | i18nPlural: ('camfil.account.cam_cards.deliveryInterval.value' | translate) || { other: '#' } }}
+                {{
+                  camCard[column]
+                    | i18nPlural: ('camfil.account.cam_cards.deliveryInterval.value' | translate) || { other: '#' }
+                }}
               </ng-container>
-              <ng-container *ngIf="column === 'nextDeliveryDate'">{{ camCard[column]  || '---' }}</ng-container>
+              <ng-container *ngIf="column === 'nextDeliveryDate'">{{ camCard[column] || '---' }}</ng-container>
               <!-- <ng-container *ngIf="column === 'creationDate'">{{ camCard[column] | ishDate: 'shortDate' }}</ng-container> -->
               <ng-container *ngIf="column === 'itemsCount'">{{ camCard[column] }}</ng-container>
               <ng-container *ngIf="column === 'userAccess'">
