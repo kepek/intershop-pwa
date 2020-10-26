@@ -66,9 +66,7 @@
       "env": {
         "NODE_ENV": "development",
         "PORT": "4200",
-        "LOGGING": "true",
-        "PROXY_ICM": "https://intershoppwa.azurewebsites.net",
-        "TRUST_ICM": "true"
+        "LOGGING": "true"
       }
     },
     {
