@@ -1,9 +1,11 @@
 import {
+  AfterViewInit,
   ChangeDetectionStrategy,
   Component,
   EventEmitter,
   Input,
   OnChanges,
+  OnInit,
   Output,
   SimpleChanges,
   ViewChild,
@@ -39,7 +41,7 @@ import { ProductCompletenessLevel } from 'ish-core/models/product/product.model'
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['./camfil-line-item-table.component.scss'],
 })
-export class CamfilLineItemTableComponent implements OnChanges {
+export class CamfilLineItemTableComponent implements OnInit, OnChanges, AfterViewInit {
   @Input() lineItems: Partial<LineItemView & OrderLineItem>[];
   @Input() total: Price;
   @Input() lineItemViewType?: 'simple' | 'availability';
@@ -47,17 +49,33 @@ export class CamfilLineItemTableComponent implements OnChanges {
   @Output() deleteItem = new EventEmitter<string>();
   @ViewChild(MatSort) sort: MatSort;
 
-  displayedColumns: string[] = ['sku', 'name', 'orderedQty', 'deliveredQty', 'boxLabel', 'deliveryDate', 'price'];
+  displayedColumns: string[] = [
+    'productSKU',
+    'name',
+    'orderedQty',
+    'deliveredQty',
+    'boxLabel',
+    'deliveryDate',
+    'price',
+  ];
   lineItemsProcessed: MatTableDataSource<Partial<LineItemView & OrderLineItem>>;
 
   constructor(private shoppingFacade: ShoppingFacade) {}
 
+  ngOnInit() {
+    this.lineItemsProcessed = new MatTableDataSource(this.lineItems);
+  }
+
   ngOnChanges(changes: SimpleChanges) {
     if (changes.lineItems) {
       this.lineItemsProcessed = new MatTableDataSource(this.lineItems);
-      this.lineItemsProcessed.sort = this.sort;
     }
   }
+
+  ngAfterViewInit() {
+    this.lineItemsProcessed.sort = this.sort;
+  }
+
   product$(sku: string) {
     return this.shoppingFacade.product$(sku, ProductCompletenessLevel.List);
   }

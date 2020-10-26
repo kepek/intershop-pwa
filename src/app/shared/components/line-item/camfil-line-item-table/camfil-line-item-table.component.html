@@ -7,11 +7,13 @@
   class="mt-4 mb-2 box-shadow--dark"
 >
   <!-- Art Nr. Column -->
-  <ng-container matColumnDef="sku">
+  <ng-container matColumnDef="productSKU">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>
       {{ 'camfil.lineitem.table.art_nr' | translate }}
     </th>
-    <td mat-cell *matCellDef="let pli">{{ pli.productSKU }}</td>
+    <td mat-cell *matCellDef="let pli">
+      {{ pli.productSKU }}
+    </td>
   </ng-container>
 
   <!-- Product Name Column -->

@@ -19,8 +19,8 @@ import { Order } from 'ish-core/models/order/order.model';
  */
 export interface OrderFilter {
   customer: string;
-  dateFrom: number;
-  dateTo: number;
+  dateFrom: string;
+  dateTo: string;
   search: string;
   status: string[];
 }
@@ -50,8 +50,8 @@ export class CamfilOrderListComponent implements OnInit, AfterViewInit, OnDestro
   dateToFilter = new FormControl();
   filteredValues: OrderFilter = {
     customer: '',
-    dateFrom: 0,
-    dateTo: 0,
+    dateFrom: '',
+    dateTo: '',
     status: [],
     search: '',
   };
@@ -108,7 +108,10 @@ export class CamfilOrderListComponent implements OnInit, AfterViewInit, OnDestro
 
     // subscribe to dateTo changes
     this.dateToFilter.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(filterValue => {
-      this.filteredValues.dateTo = filterValue;
+      console.log('CamfilOrderListComponent -> ngOnInit -> filterValue', filterValue);
+      const dateTo = new Date(filterValue);
+      dateTo.setHours(23, 59, 59);
+      this.filteredValues.dateTo = dateTo.toISOString();
       this.dataSource.filter = JSON.stringify(this.filteredValues);
     });
 
@@ -189,10 +192,10 @@ export class CamfilOrderListComponent implements OnInit, AfterViewInit, OnDestro
 
       // Check date filters
       let isInDateRange = true;
-      if (filterString.dateFrom && !(filterString.dateFrom <= data.creationDate)) {
+      if (filterString.dateFrom && !(Date.parse(filterString.dateFrom) <= data.creationDate)) {
         isInDateRange = false;
       }
-      if (filterString.dateTo && !(filterString.dateTo >= data.creationDate)) {
+      if (filterString.dateTo && !(Date.parse(filterString.dateTo) >= data.creationDate)) {
         isInDateRange = false;
       }
       return isSearchMatching && isStatusMatching && isCustomerMatching && isInDateRange;
