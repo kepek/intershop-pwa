@@ -55,7 +55,7 @@ export class CamCardService {
   /**
    * Deletes a cam cards of the given id.
    * @param camCardId   The cam cards id.
-   * @returns            The cam_cards.
+   * @returns           The cam_card.
    */
   deleteCamCard(camCardId: string): Observable<void> {
     if (!camCardId) {
@@ -73,6 +73,17 @@ export class CamCardService {
     return this.apiService
       .put(`camcards/${camCard.id}`, camCard)
       .pipe(map((response: CamCard) => this.camCardMapper.fromUpdate(response, camCard.id)));
+  }
+
+  /**
+   * Move a cam cards of the given id.
+   * @param camCardId   The cam cards to be moved.
+   * @param customerId  The new customer ID of cam card to be updated.
+   * @returns           The moved cam_card.
+   */
+  moveCamCard(camCardId: string, customerId: string): Observable<CamCard> {
+    const data = { id: customerId };
+    return this.apiService.put(`camcards/${camCardId}/move`, data);
   }
 
   /**
@@ -166,7 +177,7 @@ export class CamCardService {
     camCardId: string,
     camCardContacts: { elements: CamCardContact[] }
   ): Observable<CamCardContact[]> {
-    return this.apiService.put(`camcards/${camCardId}/contacts`, camCardContacts);
+    return this.apiService.put(`privatecamcards/${camCardId}/contacts`, camCardContacts);
   }
 
   /**
@@ -174,8 +185,10 @@ export class CamCardService {
    * @param customerId   The customer ID.
    * @returns            The all customer contacts.
    */
-  getContactsByCastomerId(customerId: string): Observable<{ elements?: CamCardContact[] }> {
-    return this.apiService.get(`camfilcustomers/${customerId}/contacts`);
+  getContactsByCastomerId(customerId: string): Observable<CamCardContact[]> {
+    return this.apiService
+      .get(`privatecamfilcustomers/${customerId}/contacts`)
+      .pipe(unpackEnvelope(), defaultIfEmpty([]));
   }
 
   /**

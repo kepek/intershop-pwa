@@ -10,7 +10,9 @@
     <camfil-account-cam-card-toolbar
       (addCamCard)="add($event)"
       (addSelectedItemsToCart)="addSelectedItemsToCart()"
+      (openMoveCamCardDialog)="move()"
       [isSticky]="isStickyCamCardToolbar$ | async"
+      [checkedCamCards]="checkedCamCards.length > 0"
     ></camfil-account-cam-card-toolbar>
 
     <ng-container *ngIf="camCardsProcessed?.data && camCardsProcessed.data.length > 0; else noCamCard">
@@ -64,7 +66,8 @@
                     [title]="'camfil.account.cam_cards.userAccess' | translate"
                     data-testing-id="cam-card-details-user-access"
                     (click)="openUserAccessDialog(camCards)"
-                  ><mat-icon svgIcon="lock"></mat-icon></a>
+                    ><mat-icon svgIcon="lock"></mat-icon
+                  ></a>
                 </div>
                 <div class="col-4">
                   <a
@@ -154,7 +157,8 @@
                   [title]="'camfil.account.cam_cards.userAccess' | translate"
                   data-testing-id="cam-card-details-user-access"
                   (click)="openUserAccessDialog(camCard)"
-                ><mat-icon svgIcon="lock"></mat-icon></a>
+                  ><mat-icon svgIcon="lock"></mat-icon
+                ></a>
               </ng-container>
               <ng-container *ngIf="column === 'edit'">
                 <a
@@ -174,7 +178,7 @@
                     [disabled]="camCard.itemsCount === 0"
                     class="text-primary p-0"
                     (click)="$event.stopPropagation()"
-                    (productToBasket)="addCamCardToCart(camCard.id)"
+                    (productToBasket)="addCamCardToCart(camCard)"
                   ></camfil-product-add-to-basket>
                 </a>
                 <a
@@ -281,10 +285,7 @@
       [currentCamCard]="camCard"
     ></camfil-account-cam-card-detail-line-item>
 
-    <camfil-cam-card-product-comment
-      [camCardItem]="camCardItem"
-      mode="view"
-    ></camfil-cam-card-product-comment>
+    <camfil-cam-card-product-comment [camCardItem]="camCardItem" mode="view"></camfil-cam-card-product-comment>
     <mat-checkbox
       [checked]="isProductChecked(camCardItem.id)"
       (change)="handleProductCheckbox(camCardItem, camCard, $event)"

@@ -57,6 +57,9 @@ import {
   loadCustomers,
   loadCustomersSuccess,
   loadCustomersdFail,
+  moveCamCard,
+  moveCamCardFail,
+  moveCamCardSuccess,
   moveItemToCamCard,
   removeItemFromCamCard,
   removeItemFromCamCardFail,
@@ -71,6 +74,7 @@ import {
   updateCamCardProduct,
   updateCamCardProductSuccess,
   updateCamCardSuccess,
+  updateContactsWhileMoveCamCardFail,
 } from './cam-card.actions';
 import { getCamCardDetails, getSelectedCamCardDetails, getSelectedCamCardId } from './cam-card.selectors';
 
@@ -114,6 +118,38 @@ export class CamCardEffects {
             }),
           ]),
           mapErrorToAction(createCamCardFail)
+        )
+      )
+    )
+  );
+
+  moveCamCard$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(moveCamCard),
+      mapToPayload(),
+      mergeMap(({ camCardId, newCustomerId, newContacts }) =>
+        this.camCardService.moveCamCard(camCardId, newCustomerId).pipe(
+          mergeMap((camCard: CamCard) => [moveCamCardSuccess({ camCard, newContacts })]),
+          mapErrorToAction(moveCamCardFail)
+        )
+      )
+    )
+  );
+
+  moveCamCardSuccess$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(moveCamCardSuccess),
+      mapToPayload(),
+      mergeMap(({ camCard, newContacts }) =>
+        this.camCardService.updateCamCardContacts(camCard.id, newContacts).pipe(
+          mergeMap(contacts => [
+            updateCamCardContactsSuccess({ camCardId: camCard.id, contacts }),
+            displaySuccessMessage({
+              message: 'camfil.account.cam_card.move.confirmation',
+              messageParams: { 0: camCard.id },
+            }),
+          ]),
+          mapErrorToAction(updateContactsWhileMoveCamCardFail)
         )
       )
     )
@@ -283,7 +319,7 @@ export class CamCardEffects {
       mapToPayload(),
       mergeMap(({ customerId }) =>
         this.camCardService.getContactsByCastomerId(customerId).pipe(
-          map(({ elements }) => loadContactsByCustomerSuccess({ customerId, contacts: elements })),
+          map(contacts => loadContactsByCustomerSuccess({ customerId, contacts })),
           mapErrorToAction(loadContactsByCustomerFail)
         )
       )

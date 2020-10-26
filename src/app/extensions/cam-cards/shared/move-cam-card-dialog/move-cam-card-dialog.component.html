@@ -1,0 +1,47 @@
+<h2 class="text-center">
+  <mat-icon svgIcon="move"></mat-icon>
+  <div class="mt-3 mb-5" [ishServerHtml]="'camfil.account.cam_card.move.dialog.title' | translate"></div>
+</h2>
+
+<form [formGroup]="moveForm" (ngSubmit)="submitMoveCamCardForm($event)" class="form-horizontal" novalidate="novalidate">
+  <mat-form-field appearance="fill" class="w-100">
+    <mat-label>{{ 'camfil.account.cam_card.move.dialog.customers.label' | translate }}</mat-label>
+    <mat-select formControlName="customers" (selectionChange)="handleCustomers($event)" [(value)]="selectCustomer">
+      <mat-option>--</mat-option>
+      <mat-option *ngFor="let customer of customers$ | async" [value]="customer.id">
+        {{ customer.companyName }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field appearance="fill" class="w-100 mt-3">
+    <mat-label>{{ 'camfil.account.cam_card.move.dialog.contacts.label' | translate }}</mat-label>
+    <mat-select
+      formControlName="contacts"
+      multiple
+      [disabled]="!selectCustomer"
+      (selectionChange)="handleContacts($event)"
+    >
+      <mat-option value="all">{{ 'camfil.account.cam_card.move.dialog.all_contacts' | translate }}</mat-option>
+      <mat-option *ngFor="let contact of contacts" [value]="contact.profileId" [disabled]="selectAllContacts">
+        {{ contact.firstName }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <div class="col-12 text-right p-0 mt-5">
+    <button
+      mat-flat-button
+      class="btn-tool text-primary"
+      type="submit"
+      attr.aria-label="{{ 'camfil.account.cam_card.move.dialog.btn.aria' | translate }}"
+      type="submit"
+      (click)="submitMoveCamCardForm($event)"
+      data-testing-id="cam-card-dialog-move-submit"
+    >
+      {{ 'camfil.account.cam_card.move.dialog.btn.text' | translate }}
+    </button>
+    <button mat-flat-button class="btn-tool text-primary" type="button" (click)="dialogRef.close()">
+      {{ 'camfil.account.cam_card.move.dialog.btn.cancel' | translate }}
+    </button>
+  </div>
+</form>

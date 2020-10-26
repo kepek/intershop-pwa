@@ -118,6 +118,23 @@ export const removeItemFromCamCardSuccess = createAction(
   payload<{ camCard: CamCard }>()
 );
 
+export const moveCamCard = createAction(
+  '[Cam Cards] move Cam Card',
+  payload<{ camCardId: string; newCustomerId: string; newContacts: { elements: CamCardContact[] } }>()
+);
+
+export const moveCamCardSuccess = createAction(
+  '[Cam Cards API] move Cam Card Success',
+  payload<{ camCard: CamCard; newContacts: { elements: CamCardContact[] } }>()
+);
+
+export const moveCamCardFail = createAction('[Cam Cards API] move Cam Card Fail', httpError());
+
+export const updateContactsWhileMoveCamCardFail = createAction(
+  '[Cam Cards API] updating contacts while moving Cam Card Fail',
+  httpError()
+);
+
 export const removeItemFromCamCardFail = createAction('[Cam Cards API] Remove Item from Cam Card Fail', httpError());
 
 export const selectCamCard = createAction('[Cam Cards Internal] Select Cam Card', payload<{ id: string }>());

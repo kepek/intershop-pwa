@@ -17,9 +17,9 @@
     <button
       mat-stroked-button
       color="primary"
-      disabled
+      disabled="{{ !checkedCamCards }}"
       data-testing-id="add-cam-card"
-      (click)="addCamCardDialog.show()"
+      (click)="move($event)"
     >
       <mat-icon svgIcon="move" class="size-15"></mat-icon>
       {{ 'camfil.account.cam_cards.list.button.move.label' | translate }}
