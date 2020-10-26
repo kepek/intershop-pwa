@@ -1,28 +1,28 @@
-<form name="AccountsRequestForm" [formGroup]="form" class="form-horizontal accounts-request" (ngSubmit)="submitForm()">
-  <mat-form-field appearance="fill" class="accounts-request__field">
+<ish-error-message [error]="error"></ish-error-message>
+
+<form [formGroup]="form" class="form-horizontal" (ngSubmit)="submitForm()">
+  <mat-form-field appearance="fill" class="form-field">
     <mat-label>{{ 'camfil.account.forgotdata.email.label' | translate }}</mat-label>
-    <input matInput required [formControl]="emailFormControl" type="email" />
+    <input matInput required formControlName="email" type="email" />
   </mat-form-field>
 
   <camfil-error
-    [errors]="emailFormControl.errors"
+    [errors]="form.controls.email.errors"
     [errorValidators]="emailValidator"
-    [touched]="emailFormControl.touched"
+    [touched]="form.controls.email.touched"
   >
   </camfil-error>
 
-  <div class="form-group">
-    <button
-      mat-raised-button
-      type="submit"
-      value="AccountsRequest"
-      name="AccountsRequest"
-      color="primary"
-      attr.aria-label="{{ 'camfil.account.update_username.button.aria' | translate }}"
-      class="accounts-request__button"
-      [disabled]="buttonDisabled"
-    >
-      {{ 'camfil.forgot_username.form.send.button.label' | translate }}
-    </button>
-  </div>
+  <camfil-lazy-captcha topic="forgotUsername" [form]="form"></camfil-lazy-captcha>
+
+  <button
+    mat-raised-button
+    type="submit"
+    color="primary"
+    attr.aria-label="{{ 'camfil.account.update_username.button.aria' | translate }}"
+    class="form-button"
+    [disabled]="formDisabled"
+  >
+    {{ 'camfil.forgot_username.form.send.button.label' | translate }}
+  </button>
 </form>

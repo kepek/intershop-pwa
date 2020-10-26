@@ -1,4 +1,4 @@
-<div class="col-md-6 request-accounts">
+<div class="col-md-4 request-accounts">
   <h1 class="heading">{{ 'camfil.account.forgotdata.username_retrieval.heading' | translate }}</h1>
 
   <ng-container *ngIf="success$ | async; else forgotUsernameForm">
@@ -12,7 +12,8 @@
 
     <div class="request-accounts__form-wrapper">
       <camfil-request-user-accounts-form
-        (submitAccountsRequest)="requestUsernameReminder($event)"
+        [error]="error$ | async"
+        (forgotUsername)="requestUsernameReminder($event)"
       ></camfil-request-user-accounts-form>
     </div>
   </ng-template>

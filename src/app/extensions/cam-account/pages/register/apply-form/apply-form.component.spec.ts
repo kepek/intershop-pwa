@@ -16,7 +16,7 @@ import { ModalDialogComponent } from 'ish-shared/components/common/modal-dialog/
 import { CheckboxComponent } from 'ish-shared/forms/components/checkbox/checkbox.component';
 import { TacCheckboxComponent } from 'ish-shared/forms/components/tac-checkbox/tac-checkbox.component';
 
-import { LazyCaptchaComponent } from '../../../../captcha/exports/lazy-captcha/lazy-captcha.component';
+import { LazyCamCaptchaComponent } from '../../../../cam-captcha/exports/lazy-cam-captcha/lazy-cam-captcha.component';
 
 import { ApplyFormComponent } from './apply-form.component';
 
@@ -41,7 +41,7 @@ describe('Apply Form Component', () => {
         MockComponent(CheckboxComponent),
         MockComponent(ContentIncludeComponent),
         MockComponent(ErrorMessageComponent),
-        MockComponent(LazyCaptchaComponent),
+        MockComponent(LazyCamCaptchaComponent),
         MockComponent(ModalDialogComponent),
         MockDirective(TacCheckboxComponent),
       ],

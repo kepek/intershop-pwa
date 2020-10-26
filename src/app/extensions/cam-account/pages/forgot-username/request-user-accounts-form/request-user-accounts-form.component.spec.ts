@@ -1,6 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MockComponent } from 'ng-mocks';
 
 import { CamfilErrorComponent } from 'ish-shared/components/common/camfil-error/camfil-error.component';
+import { ErrorMessageComponent } from 'ish-shared/components/common/error-message/error-message.component';
+
+import { LazyCamCaptchaComponent } from '../../../../cam-captcha/exports/lazy-cam-captcha/lazy-cam-captcha.component';
 
 import { RequestUserAccountsFormComponent } from './request-user-accounts-form.component';
 
@@ -11,7 +15,12 @@ describe('Request User Accounts Form Component', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CamfilErrorComponent, RequestUserAccountsFormComponent],
+      declarations: [
+        CamfilErrorComponent,
+        MockComponent(ErrorMessageComponent),
+        MockComponent(LazyCamCaptchaComponent),
+        RequestUserAccountsFormComponent,
+      ],
     }).compileComponents();
   });
 

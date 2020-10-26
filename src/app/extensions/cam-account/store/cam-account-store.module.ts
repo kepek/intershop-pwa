@@ -6,6 +6,7 @@ import { pick } from 'lodash-es';
 import { ApplicantEffects } from './applicant/applicant.effects';
 import { applicantReducer } from './applicant/applicant.reducer';
 import { CamAccountState } from './cam-account-store';
+import { UserEffects } from './user/user.effects';
 import { userReducer } from './user/user.reducer';
 
 const camAccountReducers: ActionReducerMap<CamAccountState> = {
@@ -13,7 +14,7 @@ const camAccountReducers: ActionReducerMap<CamAccountState> = {
   user: userReducer,
 };
 
-const camAccountEffects = [ApplicantEffects];
+const camAccountEffects = [ApplicantEffects, UserEffects];
 
 // not-dead-code
 @NgModule({

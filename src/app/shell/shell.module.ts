@@ -17,6 +17,7 @@ import { MaterialModule } from 'ish-shared/material/material.module';
 
 import { CamAccountExportsModule } from '../extensions/cam-account/exports/cam-account-exports.module';
 import { CamAhuExportsModule } from '../extensions/cam-ahu/exports/cam-ahu-exports.module';
+import { CamCaptchaExportsModule } from '../extensions/cam-captcha/exports/cam-captcha-exports.module';
 import { CamCardsExportsModule } from '../extensions/cam-cards/exports/cam-cards-exports.module';
 import { CamDemoExportsModule } from '../extensions/cam-demo/exports/cam-demo-exports.module';
 import { CaptchaExportsModule } from '../extensions/captcha/exports/captcha-exports.module';
@@ -55,6 +56,7 @@ import { UserInformationMobileComponent } from './header/user-information-mobile
 const importExportModules = [
   CamAccountExportsModule,
   CamAhuExportsModule,
+  CamCaptchaExportsModule,
   CamCardsExportsModule,
   CamDemoExportsModule,
   CaptchaExportsModule,

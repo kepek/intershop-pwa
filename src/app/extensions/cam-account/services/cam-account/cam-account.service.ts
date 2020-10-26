@@ -2,8 +2,7 @@ import { Injectable } from '@angular/core';
 import { pick } from 'lodash-es';
 import { Observable, throwError } from 'rxjs';
 
-import { User } from 'ish-core/models/user/user.model';
-import { ApiService } from 'ish-core/services/api/api.service';
+import { ApiService, AvailableOptions } from 'ish-core/services/api/api.service';
 
 import { ApplicantData } from '../../models/applicant/applicant.interface';
 import { Applicant } from '../../models/applicant/applicant.model';
@@ -21,7 +20,7 @@ export class CamAccountService {
     return (
       this.apiService
         // TODO replace the api endpoint "/apply_for_an_account" when back-end is ready.
-        .post<Applicant>('privatecustomers', data, {
+        .post<Applicant>('security/apply_for_an_account', data, {
           captcha: pick(data, ['captcha', 'captchaAction']),
         })
     );
@@ -31,7 +30,12 @@ export class CamAccountService {
    * Request an email for the customer accounts connected with email.
    * @param data  The user data (email, firstName, lastName ) to identify the user.
    */
-  requestUsernameReminder(data: UsernameReminder): Observable<User[]> {
-    return this.apiService.post<User[]>('security/customerAccounts', { answer: '', ...data });
+  requestUsernameReminder(data: UsernameReminder) {
+    const options: AvailableOptions = {
+      skipApiErrorHandling: true,
+      captcha: pick(data, ['captcha', 'captchaAction']),
+    };
+
+    return this.apiService.post('security/username_reminder', { answer: '', ...data }, options);
   }
 }
