@@ -46,8 +46,8 @@ export class CamfilOrderListComponent implements OnInit, AfterViewInit, OnDestro
   filterCheckboxes$: BehaviorSubject<string[]> = new BehaviorSubject<string[]>([]);
   searchInputFilter = new FormControl();
   customerFilter = new FormControl();
-  dateFromFilter = new FormControl();
-  dateToFilter = new FormControl();
+  dateFromFilter = new FormControl(new Date());
+  dateToFilter = new FormControl(new Date());
   filteredValues: OrderFilter = {
     customer: '',
     dateFrom: '',
@@ -69,6 +69,7 @@ export class CamfilOrderListComponent implements OnInit, AfterViewInit, OnDestro
   constructor(private accountFacade: AccountFacade, private router: Router) {}
 
   ngOnInit() {
+    this.dateFromFilter.value.setMonth(this.dateFromFilter.value.getMonth() - 3);
     this.accountFacade
       .orders$()
       .pipe(takeUntil(this.destroy$))
