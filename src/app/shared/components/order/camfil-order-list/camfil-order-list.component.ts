@@ -108,7 +108,6 @@ export class CamfilOrderListComponent implements OnInit, AfterViewInit, OnDestro
 
     // subscribe to dateTo changes
     this.dateToFilter.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(filterValue => {
-      console.log('CamfilOrderListComponent -> ngOnInit -> filterValue', filterValue);
       const dateTo = new Date(filterValue);
       dateTo.setHours(23, 59, 59);
       this.filteredValues.dateTo = dateTo.toISOString();
