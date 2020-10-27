@@ -29,7 +29,7 @@ import { CaptchaFacade, CaptchaTopic } from '../../facades/captcha.facade';
  * The parent form supplied must have controls for 'captcha' and 'captchaAction'
  *
  * @example
- * <camfil-lazy-captcha [form]="form" cssClass="offset-md-2 col-md-8" topic="contactUs"></camfil-lazy-captcha>
+ * <ish-lazy-captcha [form]="form" cssClass="offset-md-2 col-md-8" topic="contactUs"></camfil-lazy-captcha>
  */
 @Component({
   selector: 'ish-lazy-captcha',
