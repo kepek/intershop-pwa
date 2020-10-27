@@ -1,15 +1,15 @@
 FROM node:12-alpine as buildstep
 WORKDIR /workspace
 COPY schematics /workspace/schematics/
+COPY projects/camfil-icons /workspace/projects/camfil-icons/
+COPY projects/organization-management/src/app /workspace/projects/organization-management/src/app/
 COPY package.json package-lock.json /workspace/
 RUN npm i --ignore-scripts
-COPY projects/organization-management/src/app /workspace/projects/organization-management/src/app/
-COPY projects/camfil-icons/svg-to-ts.config.json /workspace/projects/camfil-icons/svg-to-ts.config.json
-COPY projects/camfil-icons/src /workspace/projects/camfil-icons/src
 COPY src /workspace/src/
 COPY tsconfig.app.json tsconfig.base.json ngsw-config.json .browserslistrc angular.json /workspace/
 COPY tsconfig.server.json server.ts /workspace/
-RUN npm run build:icons && npm run build:schematics && npm run synchronize-lazy-components -- --ci
+RUN npm run build:schematics && npm run synchronize-lazy-components -- --ci
+RUN npm run build:icons
 ARG configuration=production
 COPY scripts /workspace/scripts/
 RUN test "${configuration}" = 'local' && node scripts/init-local-environment.js || true
