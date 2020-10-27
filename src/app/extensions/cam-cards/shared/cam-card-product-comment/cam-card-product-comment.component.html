@@ -1,0 +1,30 @@
+<ng-container *ngIf="mode === 'edit'">
+  <form [formGroup]="commentForm">
+    <mat-form-field appearance="fill" class="form-field ml-2" *ngFor="let input of inputs"> 
+      <mat-label>{{ 'camfil.account.cam_card.edit.comment.' + input + '.label' | translate }}</mat-label>
+      <input
+        matInput
+        formControlName="{{input}}"
+        markRequiredLabel="off"
+        maxlength="200"
+        attr.data-testing-id="cam-card-edit-comment-{{input}}"
+        (blur)="onBlur($event.target, input)"
+        (keyup.enter)="keyupEnter($event.target)"
+      />
+    </mat-form-field>
+  </form>
+</ng-container>
+
+<ng-container *ngIf="camCardItem.comment.label && mode === 'view'">
+  <span
+    #tooltip="matTooltip"
+    matTooltip="{{ camCardItem.comment.label }} &#13;{{ camCardItem.comment.text }}"
+    matTooltipPosition="below"
+    matTooltipClass="cam-card-tooltip"
+    class="cam-card-comment"
+    (click)="tooltip.show()"
+    (mouseenter)="$event.stopImmediatePropagation()"
+  >
+    <mat-icon svgIcon="comment" class="size-14"></mat-icon> {{ 'camfil.account.cam_card.list.comment' | translate }}
+  </span>
+</ng-container>

@@ -6,6 +6,7 @@ import { AccountCamCardDetailLineItemComponent } from './pages/account-cam-card-
 import { BasketCreateCamCardComponent } from './shared/basket-create-cam-card/basket-create-cam-card.component';
 import { CamCardPreferencesDialogComponent } from './shared/cam-card-preferences-dialog/cam-card-preferences-dialog.component';
 import { CamCardPreferencesComponent } from './shared/cam-card-preferences/cam-card-preferences.component';
+import { CamCardProductCommentComponent } from './shared/cam-card-product-comment/cam-card-product-comment.component';
 import { ProductAddToCamCardComponent } from './shared/product-add-to-cam-card/product-add-to-cam-card.component';
 import { SelectCamCardModalComponent } from './shared/select-cam-card-modal/select-cam-card-modal.component';
 import { UserAccessCamCardDialogComponent } from './shared/user-access-cam-card-dialog/user-access-cam-card-dialog.component';
@@ -17,6 +18,7 @@ import { UserAccessCamCardDialogComponent } from './shared/user-access-cam-card-
     BasketCreateCamCardComponent,
     CamCardPreferencesComponent,
     CamCardPreferencesDialogComponent,
+    CamCardProductCommentComponent,
     ProductAddToCamCardComponent,
     SelectCamCardModalComponent,
     UserAccessCamCardDialogComponent,
@@ -25,6 +27,7 @@ import { UserAccessCamCardDialogComponent } from './shared/user-access-cam-card-
     AccountCamCardDetailLineItemComponent,
     CamCardPreferencesComponent,
     CamCardPreferencesDialogComponent,
+    CamCardProductCommentComponent,
     SelectCamCardModalComponent,
   ],
 })
