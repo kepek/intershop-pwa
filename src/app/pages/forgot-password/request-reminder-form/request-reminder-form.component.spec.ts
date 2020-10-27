@@ -5,7 +5,7 @@ import { MockComponent } from 'ng-mocks';
 
 import { InputComponent } from 'ish-shared/forms/components/input/input.component';
 
-import { LazyCaptchaComponent } from '../../../extensions/captcha/exports/lazy-captcha/lazy-captcha.component';
+import { LazyCamCaptchaComponent } from '../../../extensions/cam-captcha/exports/lazy-cam-captcha/lazy-cam-captcha.component';
 
 import { RequestReminderFormComponent } from './request-reminder-form.component';
 
@@ -16,7 +16,11 @@ describe('Request Reminder Form Component', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [MockComponent(InputComponent), MockComponent(LazyCaptchaComponent), RequestReminderFormComponent],
+      declarations: [
+        MockComponent(InputComponent),
+        MockComponent(LazyCamCaptchaComponent),
+        RequestReminderFormComponent,
+      ],
       imports: [ReactiveFormsModule, TranslateModule.forRoot()],
     }).compileComponents();
   });

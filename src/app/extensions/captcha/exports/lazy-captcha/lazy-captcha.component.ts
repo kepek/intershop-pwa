@@ -32,7 +32,7 @@ import { CaptchaFacade, CaptchaTopic } from '../../facades/captcha.facade';
  * <camfil-lazy-captcha [form]="form" cssClass="offset-md-2 col-md-8" topic="contactUs"></camfil-lazy-captcha>
  */
 @Component({
-  selector: 'camfil-lazy-captcha',
+  selector: 'ish-lazy-captcha',
   templateUrl: './lazy-captcha.component.html',
   changeDetection: ChangeDetectionStrategy.Default,
 })

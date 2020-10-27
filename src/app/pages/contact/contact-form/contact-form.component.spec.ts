@@ -8,7 +8,7 @@ import { InputComponent } from 'ish-shared/forms/components/input/input.componen
 import { SelectComponent, SelectOption } from 'ish-shared/forms/components/select/select.component';
 import { TextareaComponent } from 'ish-shared/forms/components/textarea/textarea.component';
 
-import { LazyCaptchaComponent } from '../../../extensions/captcha/exports/lazy-captcha/lazy-captcha.component';
+import { LazyCamCaptchaComponent } from '../../../extensions/cam-captcha/exports/lazy-cam-captcha/lazy-cam-captcha.component';
 
 import { ContactFormComponent } from './contact-form.component';
 
@@ -22,7 +22,7 @@ describe('Contact Form Component', () => {
       declarations: [
         ContactFormComponent,
         MockComponent(InputComponent),
-        MockComponent(LazyCaptchaComponent),
+        MockComponent(LazyCamCaptchaComponent),
         MockComponent(SelectComponent),
         MockComponent(TextareaComponent),
       ],

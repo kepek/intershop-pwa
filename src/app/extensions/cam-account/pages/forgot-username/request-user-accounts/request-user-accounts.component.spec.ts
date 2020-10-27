@@ -11,6 +11,7 @@ import { CamfilErrorComponent } from 'ish-shared/components/common/camfil-error/
 import { ErrorMessageComponent } from 'ish-shared/components/common/error-message/error-message.component';
 import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
 
+import { LazyCamCaptchaComponent } from '../../../../cam-captcha/exports/lazy-cam-captcha/lazy-cam-captcha.component';
 import { CamAccountFacade } from '../../../facades/cam-account.facade';
 import { RequestUserAccountsFormComponent } from '../request-user-accounts-form/request-user-accounts-form.component';
 
@@ -26,6 +27,7 @@ describe('Request User Accounts Component', () => {
       declarations: [
         CamfilErrorComponent,
         ErrorMessageComponent,
+        MockComponent(LazyCamCaptchaComponent),
         MockComponent(LoadingComponent),
         MockDirective(ServerHtmlDirective),
         RequestUserAccountsComponent,

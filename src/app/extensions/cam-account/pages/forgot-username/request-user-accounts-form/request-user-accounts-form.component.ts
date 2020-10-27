@@ -1,6 +1,7 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
+import { HttpError } from 'ish-core/models/http-error/http-error.model';
 import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
 import { SpecialValidators } from 'ish-shared/forms/validators/special-validators';
 
@@ -13,13 +14,13 @@ import { UsernameReminder } from '../../../models/username-reminder/username-rem
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RequestUserAccountsFormComponent implements OnInit {
-  get buttonDisabled() {
-    return this.form.invalid && this.submitted;
-  }
-  @Output() submitAccountsRequest = new EventEmitter<UsernameReminder>();
+  @Input() error: HttpError;
+
+  @Output() forgotUsername = new EventEmitter<UsernameReminder>();
+
+  constructor(private fb: FormBuilder) {}
 
   form: FormGroup;
-  emailFormControl = new FormControl('', [Validators.required, SpecialValidators.email]);
   submitted = false;
 
   emailValidator = [
@@ -35,8 +36,14 @@ export class RequestUserAccountsFormComponent implements OnInit {
   ];
 
   ngOnInit() {
-    this.form = new FormGroup({
-      email: this.emailFormControl,
+    this.createForm();
+  }
+
+  private createForm(): void {
+    this.form = this.fb.group({
+      email: ['', [Validators.required, SpecialValidators.email]],
+      captcha: [''],
+      captchaAction: ['forgotUsername'],
     });
   }
 
@@ -47,6 +54,17 @@ export class RequestUserAccountsFormComponent implements OnInit {
       return;
     }
 
-    this.submitAccountsRequest.emit(this.form.value);
+    const formValue = this.form.value;
+
+    const request = { ...formValue };
+
+    request.captcha = this.form.get('captcha').value;
+    request.captchaAction = this.form.get('captchaAction').value;
+
+    this.forgotUsername.emit(request);
+  }
+
+  get formDisabled() {
+    return this.form.invalid && this.submitted;
   }
 }

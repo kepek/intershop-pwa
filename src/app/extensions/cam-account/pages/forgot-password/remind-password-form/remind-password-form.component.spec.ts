@@ -6,7 +6,7 @@ import { MockComponent } from 'ng-mocks';
 import { CamfilErrorComponent } from 'ish-shared/components/common/camfil-error/camfil-error.component';
 import { InputComponent } from 'ish-shared/forms/components/input/input.component';
 
-import { LazyCaptchaComponent } from '../../../../captcha/exports/lazy-captcha/lazy-captcha.component';
+import { LazyCamCaptchaComponent } from '../../../../cam-captcha/exports/lazy-cam-captcha/lazy-cam-captcha.component';
 
 import { RemindPasswordFormComponent } from './remind-password-form.component';
 
@@ -20,7 +20,7 @@ describe('Remind Password Form Component', () => {
       declarations: [
         CamfilErrorComponent,
         MockComponent(InputComponent),
-        MockComponent(LazyCaptchaComponent),
+        MockComponent(LazyCamCaptchaComponent),
         RemindPasswordFormComponent,
       ],
       imports: [ReactiveFormsModule, TranslateModule.forRoot()],
