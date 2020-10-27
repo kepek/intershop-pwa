@@ -19,8 +19,8 @@ import { Order } from 'ish-core/models/order/order.model';
  */
 export interface OrderFilter {
   customer: string;
-  dateFrom: number;
-  dateTo: number;
+  dateFrom: string;
+  dateTo: string;
   search: string;
   status: string[];
 }
@@ -46,12 +46,12 @@ export class CamfilOrderListComponent implements OnInit, AfterViewInit, OnDestro
   filterCheckboxes$: BehaviorSubject<string[]> = new BehaviorSubject<string[]>([]);
   searchInputFilter = new FormControl();
   customerFilter = new FormControl();
-  dateFromFilter = new FormControl();
-  dateToFilter = new FormControl();
+  dateFromFilter = new FormControl(new Date());
+  dateToFilter = new FormControl(new Date());
   filteredValues: OrderFilter = {
     customer: '',
-    dateFrom: 0,
-    dateTo: 0,
+    dateFrom: '',
+    dateTo: '',
     status: [],
     search: '',
   };
@@ -69,6 +69,7 @@ export class CamfilOrderListComponent implements OnInit, AfterViewInit, OnDestro
   constructor(private accountFacade: AccountFacade, private router: Router) {}
 
   ngOnInit() {
+    this.dateFromFilter.value.setMonth(this.dateFromFilter.value.getMonth() - 3);
     this.accountFacade
       .orders$()
       .pipe(takeUntil(this.destroy$))
@@ -108,7 +109,9 @@ export class CamfilOrderListComponent implements OnInit, AfterViewInit, OnDestro
 
     // subscribe to dateTo changes
     this.dateToFilter.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(filterValue => {
-      this.filteredValues.dateTo = filterValue;
+      const dateTo = new Date(filterValue);
+      dateTo.setHours(23, 59, 59);
+      this.filteredValues.dateTo = dateTo.toISOString();
       this.dataSource.filter = JSON.stringify(this.filteredValues);
     });
 
@@ -189,10 +192,10 @@ export class CamfilOrderListComponent implements OnInit, AfterViewInit, OnDestro
 
       // Check date filters
       let isInDateRange = true;
-      if (filterString.dateFrom && !(filterString.dateFrom <= data.creationDate)) {
+      if (filterString.dateFrom && !(Date.parse(filterString.dateFrom) <= data.creationDate)) {
         isInDateRange = false;
       }
-      if (filterString.dateTo && !(filterString.dateTo >= data.creationDate)) {
+      if (filterString.dateTo && !(Date.parse(filterString.dateTo) >= data.creationDate)) {
         isInDateRange = false;
       }
       return isSearchMatching && isStatusMatching && isCustomerMatching && isInDateRange;
