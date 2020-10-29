@@ -4,7 +4,7 @@ import { createReducer, on } from '@ngrx/store';
 import { HttpError } from 'ish-core/models/http-error/http-error.model';
 import { setLoadingOn } from 'ish-core/utils/ngrx-creators';
 
-import { CamCard, CamCardItem } from '../../models/cam-card/cam-card.model';
+import { CamCard, CamCardContact, CamCardCustomer, CamCardItem } from '../../models/cam-card/cam-card.model';
 
 import {
   addBasketToNewCamCard,
@@ -20,6 +20,9 @@ import {
   loadCamCards,
   loadCamCardsFail,
   loadCamCardsSuccess,
+  loadContactsByCustomer,
+  loadContactsByCustomerFail,
+  loadContactsByCustomerSuccess,
   loadCustomers,
   loadCustomersSuccess,
   loadCustomersdFail,
@@ -27,6 +30,7 @@ import {
   selectCamCard,
   setStickyCamCardToolbar,
   updateCamCard,
+  updateCamCardContactsSuccess,
   updateCamCardFail,
   updateCamCardProductSuccess,
   updateCamCardSuccess,
@@ -37,7 +41,10 @@ export interface CamCardState extends EntityState<CamCard> {
   selected: string;
   error: HttpError;
   stickyToolbar: boolean;
-  customers: [];
+  customers: CamCardCustomer[];
+  contacts: {
+    [key: string]: CamCardContact[];
+  };
 }
 
 export const camCardAdapter = createEntityAdapter<CamCard>({
@@ -53,12 +60,21 @@ export const initialState: CamCardState = camCardAdapter.getInitialState({
   selected: undefined,
   error: undefined,
   customers: [],
+  contacts: {},
   stickyToolbar: false,
 });
 
 export const camCardReducer = createReducer(
   initialState,
-  setLoadingOn(loadCamCards, createCamCard, addBasketToNewCamCard, deleteCamCard, updateCamCard, loadCustomers),
+  setLoadingOn(
+    loadCamCards,
+    createCamCard,
+    addBasketToNewCamCard,
+    deleteCamCard,
+    updateCamCard,
+    loadCustomers,
+    loadContactsByCustomer
+  ),
   on(
     loadCamCardsFail,
     deleteCamCardFail,
@@ -66,6 +82,7 @@ export const camCardReducer = createReducer(
     addBasketToNewCamCardFail,
     updateCamCardFail,
     loadCustomersdFail,
+    loadContactsByCustomerFail,
     (state: CamCardState, action) => {
       const { error } = action.payload;
       return {
@@ -91,6 +108,14 @@ export const camCardReducer = createReducer(
       loading: false,
     };
   }),
+  on(loadContactsByCustomerSuccess, (state: CamCardState, action) => {
+    const { customerId, contacts } = action.payload;
+    return {
+      ...state,
+      contacts: { ...state.contacts, [customerId]: contacts },
+      loading: false,
+    };
+  }),
   on(
     addBasketToNewCamCardSuccess,
     createCamCardSuccess,
@@ -99,7 +124,6 @@ export const camCardReducer = createReducer(
     removeItemFromCamCardSuccess,
     (state: CamCardState, action) => {
       const { camCard } = action.payload;
-
       return camCardAdapter.upsertOne(camCard, {
         ...state,
         loading: false,
@@ -125,6 +149,13 @@ export const camCardReducer = createReducer(
     return {
       ...state,
       loading: false,
+    };
+  }),
+  on(updateCamCardContactsSuccess, (state: CamCardState, action) => {
+    const { camCardId, contacts } = action.payload;
+    state.entities[camCardId].contacts = contacts;
+    return {
+      ...state,
     };
   }),
   on(selectCamCard, (state: CamCardState, action) => {

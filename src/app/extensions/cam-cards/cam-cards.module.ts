@@ -8,6 +8,7 @@ import { CamCardPreferencesDialogComponent } from './shared/cam-card-preferences
 import { CamCardPreferencesComponent } from './shared/cam-card-preferences/cam-card-preferences.component';
 import { ProductAddToCamCardComponent } from './shared/product-add-to-cam-card/product-add-to-cam-card.component';
 import { SelectCamCardModalComponent } from './shared/select-cam-card-modal/select-cam-card-modal.component';
+import { UserAccessCamCardDialogComponent } from './shared/user-access-cam-card-dialog/user-access-cam-card-dialog.component';
 
 @NgModule({
   imports: [SharedModule],
@@ -18,6 +19,7 @@ import { SelectCamCardModalComponent } from './shared/select-cam-card-modal/sele
     CamCardPreferencesDialogComponent,
     ProductAddToCamCardComponent,
     SelectCamCardModalComponent,
+    UserAccessCamCardDialogComponent,
   ],
   exports: [
     AccountCamCardDetailLineItemComponent,

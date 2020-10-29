@@ -51,6 +51,9 @@ import {
   loadCamCards,
   loadCamCardsFail,
   loadCamCardsSuccess,
+  loadContactsByCustomer,
+  loadContactsByCustomerFail,
+  loadContactsByCustomerSuccess,
   loadCustomers,
   loadCustomersSuccess,
   loadCustomersdFail,
@@ -61,6 +64,9 @@ import {
   selectCamCard,
   setStickyCamCardToolbar,
   updateCamCard,
+  updateCamCardContacts,
+  updateCamCardContactsFail,
+  updateCamCardContactsSuccess,
   updateCamCardFail,
   updateCamCardProduct,
   updateCamCardProductSuccess,
@@ -266,6 +272,38 @@ export class CamCardEffects {
             ];
           }),
           mapErrorToAction(updateCamCardFail)
+        )
+      )
+    )
+  );
+
+  loadCustomerContacts$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loadContactsByCustomer),
+      mapToPayload(),
+      mergeMap(({ customerId }) =>
+        this.camCardService.getContactsByCastomerId(customerId).pipe(
+          map(({ elements }) => loadContactsByCustomerSuccess({ customerId, contacts: elements })),
+          mapErrorToAction(loadContactsByCustomerFail)
+        )
+      )
+    )
+  );
+
+  updateCamCardContacts$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(updateCamCardContacts),
+      mapToPayload(),
+      mergeMap(({ camCardId, camCardContacts }) =>
+        this.camCardService.updateCamCardContacts(camCardId, camCardContacts).pipe(
+          mergeMap(contacts => [
+            updateCamCardContactsSuccess({ camCardId, contacts }),
+            displaySuccessMessage({
+              message: 'camfil.account.cam_cards.update.contacts.confirmation',
+              messageParams: { 0: camCardId },
+            }),
+          ]),
+          mapErrorToAction(updateCamCardContactsFail)
         )
       )
     )

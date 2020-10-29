@@ -13,6 +13,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { MatCheckboxChange } from '@angular/material/checkbox';
+import { MatDialog } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { TranslateService } from '@ngx-translate/core';
@@ -25,6 +26,7 @@ import { ModalDialogComponent } from 'ish-shared/components/common/modal-dialog/
 
 import { CamCardsFacade } from '../../../facades/cam-cards.facade';
 import { CamCard, CamCardItem } from '../../../models/cam-card/cam-card.model';
+import { UserAccessCamCardDialogComponent } from '../../../shared/user-access-cam-card-dialog/user-access-cam-card-dialog.component';
 
 export interface ProductChecked {
   camCardId: string;
@@ -53,11 +55,11 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
   /** Emits the id of the cam cards, which is to be deleted. */
   @Output() deleteCamCard = new EventEmitter<string>();
   @Output() addCamCard = new EventEmitter<CamCard>();
-  isStickyCamCardToolbar$: Observable<boolean>;
+  @ViewChild(MatSort) sort: MatSort;
 
   dummyProduct = { sku: 'dummy', inStock: true, availability: true };
-  private destroy$ = new Subject();
 
+  isStickyCamCardToolbar$: Observable<boolean>;
   camCardsProcessed: MatTableDataSource<CamCard>;
   columnsToDisplay = [
     'name',
@@ -65,27 +67,29 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
     'lastDelivery',
     'orderInterval',
     'nextDelivery',
-    // 'creationDate',
     'itemsCount',
-    'userAccess',
     'edit',
     'checkbox',
   ];
   expandedCamCard: CamCard | null;
   productsChecked = {};
   isMobileView = false;
-
   isSubOpen = [];
-  @ViewChild(MatSort) sort: MatSort;
+
+  private destroy$ = new Subject();
 
   constructor(
     private translate: TranslateService,
     private productFacade: ShoppingFacade,
     private camCardsFacade: CamCardsFacade,
-    private changeDetectorRefs: ChangeDetectorRef
+    private changeDetectorRefs: ChangeDetectorRef,
+    public dialog: MatDialog
   ) {}
 
   ngOnInit() {
+    if (this.isCustomerAdmin()) {
+      this.columnsToDisplay.splice(6, 0, 'userAccess');
+    }
     this.isMobileView = this.isMobile();
     this.isStickyCamCardToolbar$ = this.camCardsFacade.isStickyCamCardToolbar$;
   }
@@ -109,8 +113,23 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
     this.isMobileView = this.isMobile();
   }
 
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
   simplifyData(data) {
     return data.toLowerCase().trim();
+  }
+
+  applyfilters(filter) {
+    this.camCardsProcessed.filter = filter;
+  }
+
+  isCustomerAdmin() {
+    // TODO: !!!! IMPORTANT !!!!
+    // condition should based on sth like this user.role == customer.admin
+    return Math.floor(Math.random() * 10) % 2;
   }
 
   isMobile() {
@@ -126,6 +145,7 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
     this.isSubCamCardOpen(id) ? this.isSubOpen.splice(index, 1) : this.isSubOpen.push(id);
   }
 
+  /** addToCartItems */
   addCamCardToCart(camCardId: string) {
     const items = this.camCards.find(t => t.id === camCardId).camCardItems
       ? this.camCards.find(t => t.id === camCardId).camCardItems
@@ -138,7 +158,6 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
     }
   }
 
-  /** addToCartItems */
   addSelectedItemsToCart() {
     Object.values(this.productsChecked).forEach((val: ProductChecked) =>
       this.productFacade.addProductToBasket(val.sku, val.count)
@@ -164,13 +183,12 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
     modal.show(camCard.id);
   }
 
-  ngOnDestroy() {
-    this.destroy$.next();
-    this.destroy$.complete();
-  }
-
-  applyfilters(filter) {
-    this.camCardsProcessed.filter = filter;
+  openUserAccessDialog(camCard: CamCard): void {
+    this.dialog.open(UserAccessCamCardDialogComponent, {
+      width: '330px',
+      autoFocus: false,
+      data: { ...camCard },
+    });
   }
 
   /** checkboxes */

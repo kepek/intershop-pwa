@@ -7,7 +7,7 @@ import { ApiService, unpackEnvelope } from 'ish-core/services/api/api.service';
 import { CamCardCreate } from '../../models/cam-card/cam-card-create.interface';
 import { CamCardData } from '../../models/cam-card/cam-card.interface';
 import { CamCardMapper } from '../../models/cam-card/cam-card.mapper';
-import { CamCard, CamCardItem } from '../../models/cam-card/cam-card.model';
+import { CamCard, CamCardContact, CamCardItem } from '../../models/cam-card/cam-card.model';
 
 @Injectable({ providedIn: 'root' })
 export class CamCardService {
@@ -157,6 +157,28 @@ export class CamCardService {
   }
 
   /**
+   * Update a contacts from the cam card..
+   * @param camCardId   The cam card ID.
+   * @param camCardContacts   The new contacts for cam card.
+   * @returns                 The updated contacts on cam_card.
+   */
+  updateCamCardContacts(
+    camCardId: string,
+    camCardContacts: { elements: CamCardContact[] }
+  ): Observable<CamCardContact[]> {
+    return this.apiService.put(`camcards/${camCardId}/contacts`, camCardContacts);
+  }
+
+  /**
+   * Get customer contacts.
+   * @param customerId   The customer ID.
+   * @returns            The all customer contacts.
+   */
+  getContactsByCastomerId(customerId: string): Observable<{ elements?: CamCardContact[] }> {
+    return this.apiService.get(`camfilcustomers/${customerId}/contacts`);
+  }
+
+  /**
    * Adds a product to the cam cards with the given id and reloads the cam_cards.
    * @param camCardId
    * @param sku           The product sku.
@@ -179,9 +201,7 @@ export class CamCardService {
    * @param camCardItemId
    */
   updateCamCardProduct(camCardId: string, camCardItem: CamCardItem): Observable<CamCardItem> {
-    return this.apiService
-      .put(`camcards/${camCardId}/products/${camCardItem.id}`, camCardItem)
-      .pipe(concatMap(({ id }) => this.getCamCardProduct(camCardId, id)));
+    return this.apiService.put(`camcards/${camCardId}/products/${camCardItem.id}`, camCardItem);
   }
 
   /**

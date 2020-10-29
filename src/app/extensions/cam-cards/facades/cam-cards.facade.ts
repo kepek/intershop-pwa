@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 
 import { HttpError } from 'ish-core/models/http-error/http-error.model';
 
-import { CamCard, CamCardItem } from '../models/cam-card/cam-card.model';
+import { CamCard, CamCardContact, CamCardCustomer, CamCardItem } from '../models/cam-card/cam-card.model';
 import {
   addBasketToNewCamCard,
   addProductToCamCard,
@@ -16,11 +16,14 @@ import {
   getCamCardCustomers,
   getCamCardError,
   getCamCardLoading,
+  getContactsbyCustomerId,
   getSelectedCamCardDetails,
   isStickyCamCardToolbar,
+  loadContactsByCustomer,
   moveItemToCamCard,
   removeItemFromCamCard,
   updateCamCard,
+  updateCamCardContacts,
   updateCamCardProduct,
 } from '../store/cam-card';
 
@@ -33,7 +36,15 @@ export class CamCardsFacade {
   camCardLoading$: Observable<boolean> = this.store.pipe(select(getCamCardLoading));
   camCardError$: Observable<HttpError> = this.store.pipe(select(getCamCardError));
   isStickyCamCardToolbar$: Observable<boolean> = this.store.pipe(select(isStickyCamCardToolbar));
-  customers$: Observable<[]> = this.store.pipe(select(getCamCardCustomers));
+  customers$: Observable<CamCardCustomer[]> = this.store.pipe(select(getCamCardCustomers));
+
+  contactsByCustomer$(id: string): Observable<CamCardContact[]> {
+    return this.store.pipe(select(getContactsbyCustomerId, { id }));
+  }
+
+  loadContactsByCustomer(customerId: string): void | HttpError {
+    this.store.dispatch(loadContactsByCustomer({ customerId }));
+  }
 
   addCamCard(camCards: CamCard): void | HttpError {
     this.store.dispatch(createCamCard({ camCards }));
@@ -61,6 +72,10 @@ export class CamCardsFacade {
 
   updateCamCardProduct(rootCamCard: string, camCardId: string, camCardItem: CamCardItem): void {
     this.store.dispatch(updateCamCardProduct({ rootCamCard, camCardId, camCardItem }));
+  }
+
+  updateCamCardContacts(camCardId: string, camCardContacts: { elements: CamCardContact[] }): void {
+    this.store.dispatch(updateCamCardContacts({ camCardId, camCardContacts }));
   }
 
   moveItemToCamCard(
