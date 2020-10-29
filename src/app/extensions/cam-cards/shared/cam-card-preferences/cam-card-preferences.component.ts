@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
 
 import { CamCardsFacade } from '../../facades/cam-cards.facade';
-import { CamCard, CamCardCustomer } from '../../models/cam-card/cam-card.model';
+import { CamCard, CamCardCustomer, CamCardDelivery } from '../../models/cam-card/cam-card.model';
 
 /**
  * The Cam Cards Preferences Dialog shows the modal to create/edit a cam_cards.
@@ -45,6 +45,7 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit {
   pickerLast;
   pickerNext;
   customers$: Observable<CamCardCustomer[]>;
+  addresses$: Observable<CamCardDelivery[]>;
 
   /**
    *  A reference to the current modal  .
@@ -81,6 +82,13 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit {
     },
   ];
 
+  errorValidator = [
+    {
+      error: 'required',
+      message: 'camfil.account.forgotdata.error.username.required',
+    },
+  ];
+
   ngOnChanges() {
     this.patchForm();
     if (this.camCard) {
@@ -89,6 +97,7 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit {
   }
   ngOnInit() {
     this.customers$ = this.camCardsFacade.customers$;
+    this.addresses$ = this.camCardsFacade.addresses$;
   }
 
   initForm() {
@@ -114,11 +123,17 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit {
 
   patchForm() {
     if (this.camCard) {
+      this.camCardsFacade.getDeliveryAddress(this.camCard.customer.id);
       this.camCardForm.patchValue({
         title: this.camCard.name,
-        customerName: this.camCard.customer.name,
+        customerName: this.camCard.customer.id,
         orderMark: this.camCard.orderLabel,
         invoiceMark: this.camCard.invoiceLabel,
+        customer: this.camCard.deliveryAddress.companyName1,
+        building: this.camCard.deliveryAddress.addressLine1,
+        address: this.camCard.deliveryAddress.street,
+        zipCode: this.camCard.deliveryAddress.postalCode,
+        area: this.camCard.deliveryAddress.city,
       });
     }
   }
@@ -127,6 +142,7 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit {
   submitCamCardForm() {
     if (this.camCardForm.valid) {
       this.submit.emit({
+        ...this.camCard,
         id: this.camCard?.id,
         name: this.camCardForm.get('title').value,
         orderLabel: this.camCardForm.get('orderMark').value,
@@ -134,10 +150,36 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit {
         customer: {
           id: this.camCardForm.get('customerName').value,
         },
+        deliveryAddress: {
+          ...this.camCard?.deliveryAddress,
+          companyName1: this.camCardForm.get('customer').value,
+          addressLine1: this.camCardForm.get('building').value,
+          street: this.camCardForm.get('address').value,
+          postalCode: this.camCardForm.get('zipCode').value,
+          city: this.camCardForm.get('area').value,
+        },
       });
     } else {
       this.submitted = true;
       markAsDirtyRecursive(this.camCardForm);
     }
+  }
+
+  pickCustomer(event) {
+    this.camCardsFacade.getDeliveryAddress(event.value);
+  }
+
+  pickAddress(event) {
+    const id = event.value;
+    this.addresses$.subscribe(addresses => {
+      const address = addresses.filter((element: CamCardDelivery) => element.id === id)[0];
+      this.camCardForm.patchValue({
+        customer: address.companyName1,
+        building: address.addressLine1,
+        address: address.street,
+        zipCode: address.postalCode,
+        area: address.city,
+      });
+    });
   }
 }

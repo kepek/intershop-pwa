@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, forkJoin, throwError } from 'rxjs';
-import { concatMap, defaultIfEmpty, map, switchMap } from 'rxjs/operators';
+import { concatMap, defaultIfEmpty, map, switchMap, tap } from 'rxjs/operators';
 
 import { ApiService, unpackEnvelope } from 'ish-core/services/api/api.service';
 
@@ -20,9 +20,7 @@ export class CamCardService {
   getCamCards(): Observable<CamCard[]> {
     return this.apiService.get('camcards').pipe(
       unpackEnvelope(),
-      map(camCardData => camCardData.map((camCard: CamCardData) => this.getCamCard(camCard.id))),
-      // tslint:disable-next-line:no-unnecessary-callback-wrapper
-      switchMap(obsArray => forkJoin(obsArray)),
+      tap((camCards: any) => camCards.elements),
       defaultIfEmpty([])
     );
   }
@@ -189,6 +187,35 @@ export class CamCardService {
     return this.apiService
       .get(`privatecamfilcustomers/${customerId}/contacts`)
       .pipe(unpackEnvelope(), defaultIfEmpty([]));
+  }
+
+  /**
+   * Get customers available for current user.
+   * @param CamCardDetails   The cam cards data.
+   * @returns                 The created cam_cards.
+   */
+  getDeliveryAddresses(id): Observable<[]> {
+    return this.apiService
+      .get(`camfilcustomers/${id}/deliveryaddresses`)
+      .pipe(map((camCardData: { elements }) => camCardData.elements));
+  }
+
+  /**
+   * Get customers available for current user.
+   * @param CamCardDetails   The cam cards data.
+   * @returns                 The created cam_cards.
+   */
+  createDeliveryAddress(): Observable<any> {
+    return this.apiService.get('camfilcustomers').pipe(map(camCardData => camCardData));
+  }
+
+  /**
+   * Get customers available for current user.
+   * @param CamCardDetails   The cam cards data.
+   * @returns                 The created cam_cards.
+   */
+  updateDeliveryAddress(): Observable<{ customers?: [] }> {
+    return this.apiService.get('camfilcustomers').pipe(map(camCardData => camCardData));
   }
 
   /**

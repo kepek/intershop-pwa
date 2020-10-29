@@ -60,6 +60,14 @@ export const loadContactsByCustomerSuccess = createAction(
 );
 
 export const loadContactsByCustomerFail = createAction('[Cam Cards API] load Contacts by customer Fail', httpError());
+export const loadDeliveryAddresses = createAction('[Cam Cards] load available addressses', payload<{ id: string }>());
+
+export const loadDeliveryAddressesSuccess = createAction(
+  '[Cam Cards API] load available addressses Success',
+  payload<{ addresses: [] }>()
+);
+
+export const loadDeliveryAddressesFail = createAction('[Cam Cards API] load available addressses Fail', httpError());
 
 export const addProductToCamCard = createAction(
   '[Cam Cards] Add Item to Cam Card',

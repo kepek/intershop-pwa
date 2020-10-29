@@ -57,6 +57,9 @@ import {
   loadCustomers,
   loadCustomersSuccess,
   loadCustomersdFail,
+  loadDeliveryAddresses,
+  loadDeliveryAddressesFail,
+  loadDeliveryAddressesSuccess,
   moveCamCard,
   moveCamCardFail,
   moveCamCardSuccess,
@@ -168,6 +171,19 @@ export class CamCardEffects {
       )
     )
   );
+
+  loadDeliveryAddresses$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loadDeliveryAddresses),
+      mergeMap(payload =>
+        this.camCardService.getDeliveryAddresses(payload.payload.id).pipe(
+          map(addresses => loadDeliveryAddressesSuccess({ addresses })),
+          mapErrorToAction(loadDeliveryAddressesFail)
+        )
+      )
+    )
+  );
+
 
   /**
    * Trigger LoadCamCards action after LoginUserSuccess.

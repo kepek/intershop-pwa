@@ -32,18 +32,10 @@ describe('Cam Card Service', () => {
 
     camCardService.getCamCards().subscribe(data => {
       verify(apiServiceMock.get('camcards')).once();
-      verify(apiServiceMock.get('camcards/1234')).once();
       expect(data).toMatchInlineSnapshot(`
         Array [
           Object {
-            "delivery": Object {
-              "interval": 10,
-              "last": "12-01-2020",
-            },
             "id": "1234",
-            "itemsCount": 0,
-            "name": undefined,
-            "subCamCards": Array [],
           },
         ]
       `);

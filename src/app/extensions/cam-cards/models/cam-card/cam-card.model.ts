@@ -17,6 +17,7 @@ export interface CamCard extends CamCardHeader {
   contacts?: CamCardContact[];
   delivery?: CamCardDelivery;
   maintenanceStatus?: MaintenanceStatus;
+  deliveryAddress?: CamCardDelivery;
 }
 
 export interface CamCardItem {
@@ -39,6 +40,7 @@ export interface CamCardProduct {
 export interface CamCardCustomer {
   id?: string;
   name?: string;
+  companyName?: string;
   deliveryAddress?: string; // will be some { } // or in CamCardDelivery
   email?: string;
   contactPerson?: string; // will be some { }
@@ -58,6 +60,7 @@ export interface CamCardItemComment {
 }
 
 export interface CamCardDelivery {
+  id: string;
   last: string;
   interval: number;
   deliveryAddress?: string;
@@ -65,6 +68,11 @@ export interface CamCardDelivery {
   address?: string;
   zipCode?: string;
   area?: string;
+  companyName1?: string;
+  addressLine1?: string;
+  street?: string;
+  postalCode?: string;
+  city?: string;
 }
 
 export * from './cam-card.helper';

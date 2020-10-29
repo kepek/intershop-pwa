@@ -4,7 +4,13 @@ import { Observable } from 'rxjs';
 
 import { HttpError } from 'ish-core/models/http-error/http-error.model';
 
-import { CamCard, CamCardContact, CamCardCustomer, CamCardItem } from '../models/cam-card/cam-card.model';
+import {
+  CamCard,
+  CamCardContact,
+  CamCardCustomer,
+  CamCardDelivery,
+  CamCardItem,
+} from '../models/cam-card/cam-card.model';
 import {
   addBasketToNewCamCard,
   addProductToCamCard,
@@ -17,9 +23,11 @@ import {
   getCamCardError,
   getCamCardLoading,
   getContactsbyCustomerId,
+  getCustomerAddresses,
   getSelectedCamCardDetails,
   isStickyCamCardToolbar,
   loadContactsByCustomer,
+  loadDeliveryAddresses,
   moveCamCard,
   moveItemToCamCard,
   removeItemFromCamCard,
@@ -38,6 +46,7 @@ export class CamCardsFacade {
   camCardError$: Observable<HttpError> = this.store.pipe(select(getCamCardError));
   isStickyCamCardToolbar$: Observable<boolean> = this.store.pipe(select(isStickyCamCardToolbar));
   customers$: Observable<CamCardCustomer[]> = this.store.pipe(select(getCamCardCustomers));
+  addresses$: Observable<CamCardDelivery[]> = this.store.pipe(select(getCustomerAddresses));
 
   contactsByCustomer$(id: string): Observable<CamCardContact[]> {
     return this.store.pipe(select(getContactsbyCustomerId, { id }));
@@ -53,6 +62,10 @@ export class CamCardsFacade {
 
   addCamCard(camCards: CamCard): void | HttpError {
     this.store.dispatch(createCamCard({ camCards }));
+  }
+
+  getDeliveryAddress(id) {
+    this.store.dispatch(loadDeliveryAddresses({ id }));
   }
 
   addBasketToNewCamCard(camCards: CamCard): void | HttpError {
