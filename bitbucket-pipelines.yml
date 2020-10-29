@@ -37,6 +37,7 @@ pipelines:
             - npm run synchronize-lazy-components -- --ci
           after-script:
             - cat /root/.npm/_logs/*
+            - cat $(find /tmp/ng-** -name "angular-errors.log")
       - step:
           name: Generate Icons
           caches:
@@ -47,6 +48,7 @@ pipelines:
             - npm run build:icons
           after-script:
             - cat /root/.npm/_logs/*
+            - cat $(find /tmp/ng-** -name "angular-errors.log")
       - step:
           name: Code Linting
           caches:
@@ -55,6 +57,7 @@ pipelines:
             - npm run lint
           after-script:
             - cat /root/.npm/_logs/*
+            - cat $(find /tmp/ng-** -name "angular-errors.log")
       - step:
           name: Testing the PWA
           caches:
@@ -63,3 +66,4 @@ pipelines:
             - npm run test
           after-script:
             - cat /root/.npm/_logs/*
+            - cat $(find /tmp/ng-** -name "angular-errors.log")
