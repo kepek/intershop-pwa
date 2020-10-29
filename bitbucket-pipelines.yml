@@ -8,17 +8,18 @@ image: node:12
 pipelines:
   pull-requests:
     '**':
-      - parallel:
-        - step:
-            name: Build and Test
-            caches:
-              - node
-            script:
-              - npm ci
-              - npm test
-        - step:
-            name: Code Linting
-            caches:
-              - node
-            script:
-              - npm run lint
+      - step:
+          name: Test
+          caches:
+            - node
+          script:
+            - echo "$(ls -la)"
+            - npm install -g @angular/cli
+            - npm ci
+            - npm test
+      - step:
+          name: Code Linting
+          caches:
+            - node
+          script:
+            - npm run lint
