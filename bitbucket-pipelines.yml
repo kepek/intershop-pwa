@@ -9,17 +9,49 @@ pipelines:
   pull-requests:
     '**':
       - step:
-          name: Test
+          name: List Files
+          script:
+            - echo "$(ls -la)"
+      - step:
+          name: Install Dependencies
+          caches:
+            - node
+          artifacts:
+            - node_modules/**
+          script:
+            - npm ci
+      - step:
+          name: Install Angular CLI
           caches:
             - node
           script:
-            - echo "$(ls -la)"
             - npm install -g @angular/cli
-            - npm ci
-            - npm test
+            - echo "$(which ng)"
+      - step:
+          name: Synchronize Lazy Components
+          caches:
+            - node
+          artifacts:
+            - src/app/extensions/**/exports/**
+          script:
+            - npm run synchronize-lazy-components -- --ci
+      - step:
+          name: Generate Icons
+          caches:
+            - node
+          artifacts:
+            - projects/camfil-icons/src/exports/build/**
+          script:
+            - npm run build:icons
       - step:
           name: Code Linting
           caches:
             - node
           script:
             - npm run lint
+      - step:
+          name: Testing the PWA
+          caches:
+            - node
+          script:
+            - npm run test
