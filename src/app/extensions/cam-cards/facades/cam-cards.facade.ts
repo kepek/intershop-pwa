@@ -74,7 +74,7 @@ export class CamCardsFacade {
     this.store.dispatch(updateCamCardProduct({ rootCamCard, camCardId, camCardItem }));
   }
 
-  updateCamCardContacts(camCardId: string, camCardContacts: CamCardContact[]): void {
+  updateCamCardContacts(camCardId: string, camCardContacts: { elements: CamCardContact[] }): void {
     this.store.dispatch(updateCamCardContacts({ camCardId, camCardContacts }));
   }
 

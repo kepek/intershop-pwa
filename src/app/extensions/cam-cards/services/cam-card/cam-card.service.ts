@@ -162,7 +162,10 @@ export class CamCardService {
    * @param camCardContacts   The new contacts for cam card.
    * @returns                 The updated contacts on cam_card.
    */
-  updateCamCardContacts(camCardId: string, camCardContacts: CamCardContact[]): Observable<CamCardContact[]> {
+  updateCamCardContacts(
+    camCardId: string,
+    camCardContacts: { elements: CamCardContact[] }
+  ): Observable<CamCardContact[]> {
     return this.apiService.put(`camcards/${camCardId}/contacts`, camCardContacts);
   }
 

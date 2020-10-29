@@ -90,7 +90,7 @@ export const addProductToNewCamCard = createAction(
 
 export const updateCamCardContacts = createAction(
   '[Cam Cards] Update Cam Card Contacts',
-  payload<{ camCardId: string; camCardContacts: CamCardContact[] }>()
+  payload<{ camCardId: string; camCardContacts: { elements: CamCardContact[] } }>()
 );
 
 export const updateCamCardContactsSuccess = createAction(

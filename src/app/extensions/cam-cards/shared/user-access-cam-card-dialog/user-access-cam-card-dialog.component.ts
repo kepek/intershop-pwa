@@ -65,7 +65,8 @@ export class UserAccessCamCardDialogComponent implements OnInit, OnDestroy {
           contacts.push({ profileId: item });
         });
       }
-      this.camCardsFacade.updateCamCardContacts(this.camCard.id, contacts);
+      const camCardContacts = { elements: contacts };
+      this.camCardsFacade.updateCamCardContacts(this.camCard.id, camCardContacts);
       this.dialogRef.close();
     } else {
       markAsDirtyRecursive(this.accessForm);
