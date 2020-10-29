@@ -19,7 +19,7 @@ pipelines:
           artifacts:
             - node_modules/**
           script:
-            - npm ci
+            - npm install
       - step:
           name: Install Angular CLI
           caches:
