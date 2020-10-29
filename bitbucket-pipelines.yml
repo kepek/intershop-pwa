@@ -35,6 +35,8 @@ pipelines:
             - src/app/extensions/**/exports/**
           script:
             - npm run synchronize-lazy-components -- --ci
+          after-script:
+            - cat /root/.npm/logs/*
       - step:
           name: Generate Icons
           caches:
@@ -43,15 +45,21 @@ pipelines:
             - projects/camfil-icons/src/exports/build/**
           script:
             - npm run build:icons
+          after-script:
+            - cat /root/.npm/logs/*
       - step:
           name: Code Linting
           caches:
             - node
           script:
             - npm run lint
+          after-script:
+            - cat /root/.npm/logs/*
       - step:
           name: Testing the PWA
           caches:
             - node
           script:
             - npm run test
+          after-script:
+            - cat /root/.npm/logs/*
