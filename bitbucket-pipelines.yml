@@ -36,7 +36,7 @@ pipelines:
           script:
             - npm run synchronize-lazy-components -- --ci
           after-script:
-            - cat /root/.npm/logs/*
+            - cat /root/.npm/_logs/*
       - step:
           name: Generate Icons
           caches:
@@ -46,7 +46,7 @@ pipelines:
           script:
             - npm run build:icons
           after-script:
-            - cat /root/.npm/logs/*
+            - cat /root/.npm/_logs/*
       - step:
           name: Code Linting
           caches:
@@ -54,7 +54,7 @@ pipelines:
           script:
             - npm run lint
           after-script:
-            - cat /root/.npm/logs/*
+            - cat /root/.npm/_logs/*
       - step:
           name: Testing the PWA
           caches:
@@ -62,4 +62,4 @@ pipelines:
           script:
             - npm run test
           after-script:
-            - cat /root/.npm/logs/*
+            - cat /root/.npm/_logs/*
