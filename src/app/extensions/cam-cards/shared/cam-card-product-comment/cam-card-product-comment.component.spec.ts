@@ -21,7 +21,7 @@ describe('Cam Card Product Comment Component', () => {
     element = fixture.nativeElement;
   });
 
-  xit('should be created', () => {
+  it('should be created', () => {
     expect(component).toBeTruthy();
     expect(element).toBeTruthy();
     expect(() => fixture.detectChanges()).not.toThrow();
