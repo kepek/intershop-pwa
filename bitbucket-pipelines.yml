@@ -18,33 +18,11 @@ pipelines:
             - node
           artifacts:
             - node_modules/**
-          script:
-            - npm install
-      - step:
-          name: Install Angular CLI
-          caches:
-            - node
-          script:
-            - npm install -g @angular/cli
-            - echo "$(which ng)"
-      - step:
-          name: Synchronize Lazy Components
-          caches:
-            - node
-          artifacts:
-            - src/app/extensions/**/exports/**
-          script:
-            - npm run synchronize-lazy-components -- --ci
-          after-script:
-            - cat /root/.npm/_logs/*
-            - cat $(find /tmp/ng-** -name "angular-errors.log")
-      - step:
-          name: Generate Icons
-          caches:
-            - node
-          artifacts:
             - projects/camfil-icons/src/exports/build/**
           script:
+            - npm install
+            - npm install -g @angular/cli
+            - npm run synchronize-lazy-components -- --ci
             - npm run build:icons
           after-script:
             - cat /root/.npm/_logs/*
