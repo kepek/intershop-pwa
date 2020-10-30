@@ -14,7 +14,6 @@
               autocomplete="off"
               type="text"
               class="search-input"
-              [value]="inputSearchTerm"
               [formControl]="searchInputFilter"
               [class.mat-elevation-z2]="!isActive"
               [class.mat-elevation-z4]="isActive"
@@ -22,16 +21,6 @@
               (focusout)="isActive = !isActive"
             />
             <div class="buttons">
-              <button
-                *ngIf="inputSearchTerm"
-                class="btn-reset btn btn-primary"
-                type="reset"
-                name="reset"
-                [title]="'account.orderlist.seach.reset.title' | translate"
-                style="right: 40px"
-                (click)="searchInput.focus()"
-              ></button>
-
               <button
                 type="submit"
                 name="search"
@@ -75,6 +64,7 @@
     <hr />
     <section>
       <mat-checkbox
+        #statusFilters
         *ngFor="let status of statuses"
         value="{{ status }}"
         class="mr-3"
@@ -174,7 +164,7 @@
   </table>
 
   <div class="empty-list col-12" *ngIf="dataSource.data.length === 0">
-    <p data-testing-id="emptyList">{{ 'account.orderlist.no_orders_message' | translate }}</p>
+    <p class="text-center m-3" data-testing-id="emptyList">{{ 'account.orderlist.no_orders_message' | translate }}</p>
   </div>
 
   <div class="show-more-overlay col-12" *ngIf="displayShowMoreLink()">
