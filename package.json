@@ -49,7 +49,8 @@
     "dev:ssr": "ng run intershop-pwa:serve-ssr",
     "dev:ssr:local": "ng run intershop-pwa:serve-ssr:local",
     "build:icons": "cd projects/camfil-icons && npm run build",
-    "info": "envinfo"
+    "info": "envinfo",
+    "ngcc": "ngcc"
   },
   "peerDependencies": {
     "@angular/cdk": "~10.2.2",

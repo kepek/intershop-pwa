@@ -13,17 +13,20 @@ pipelines:
           script:
             - echo "$(ls -la)"
       - step:
-          name: Install Dependencies
+          name: Install & Build Dependencies
           caches:
             - node
           artifacts:
             - node_modules/**
             - projects/camfil-icons/src/exports/build/**
+            - node_modules/intershop-tslint-rules/**
+            - schematics/src/**/*.js
+            - schematics/src/**/*.d.ts
+            - src/app/extensions/**/exports/**
           script:
             - npm ci
-            - npm install -g @angular/cli
-            - ./node_modules/.bin/ngcc
             - npm run build:icons
+            - npm run build:tslint-rules
             - npm run build:schematics
             - npm run synchronize-lazy-components -- --ci
           after-script:
