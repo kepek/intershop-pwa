@@ -156,8 +156,11 @@
             "tsConfig": ["tsconfig.base.json"],
             "exclude": [
               "**/node_modules/**",
+              "**/exports/**",
               "**/build/**",
-              "**/dist/**"
+              "**/dist/**",
+              "src/environments/environment.local.ts",
+              "src/environments/environment.proxy.ts"
             ],
             "format": "stylish"
           }
@@ -289,7 +292,7 @@
               "projects/camfil-icons/tsconfig.lib.json",
               "projects/camfil-icons/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**"]
+            "exclude": ["**/node_modules/**", "**/exports/**"]
           }
         }
       }

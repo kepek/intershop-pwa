@@ -40,8 +40,12 @@ export class UserAccessCamCardDialogComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.camCardsFacade.loadContactsByCustomer(this.camCard.customer.id);
-    this.allContacts$ = this.camCardsFacade.contactsByCustomer$(this.camCard.customer.id);
+    if (this.camCard?.customer) {
+      const { id } = this.camCard.customer;
+      this.camCardsFacade.loadContactsByCustomer(id);
+      this.allContacts$ = this.camCardsFacade.contactsByCustomer$(id);
+    }
+
     this.initForm();
   }
 

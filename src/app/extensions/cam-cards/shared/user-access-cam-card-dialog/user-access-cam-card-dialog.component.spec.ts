@@ -1,7 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { provideMockStore } from '@ngrx/store/testing';
 import { MockDirective } from 'ng-mocks';
 
 import { ServerHtmlDirective } from 'ish-core/directives/server-html.directive';
+import { CamfilErrorComponent } from 'ish-shared/components/common/camfil-error/camfil-error.component';
 
 import { UserAccessCamCardDialogComponent } from './user-access-cam-card-dialog.component';
 
@@ -12,7 +15,8 @@ describe('User Access Cam Card Dialog Component', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [MockDirective(ServerHtmlDirective), UserAccessCamCardDialogComponent],
+      declarations: [CamfilErrorComponent, MockDirective(ServerHtmlDirective), UserAccessCamCardDialogComponent],
+      providers: [provideMockStore({}), { provide: MAT_DIALOG_DATA, useValue: {} }],
     }).compileComponents();
   });
 
@@ -22,7 +26,7 @@ describe('User Access Cam Card Dialog Component', () => {
     element = fixture.nativeElement;
   });
 
-  xit('should be created', () => {
+  it('should be created', () => {
     expect(component).toBeTruthy();
     expect(element).toBeTruthy();
     expect(() => fixture.detectChanges()).not.toThrow();
