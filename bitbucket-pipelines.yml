@@ -22,7 +22,7 @@ pipelines:
           script:
             - npm install
             - npm install -g @angular/cli
-            - npm run synchronize-lazy-components -- --ci
+            - npm run synchronize-lazy-components
             - npm run build:icons
           after-script:
             - cat /root/.npm/_logs/*
@@ -37,11 +37,11 @@ pipelines:
             - cat /root/.npm/_logs/*
             - cat $(find /tmp/ng-** -name "angular-errors.log")
       - step:
-          name: Testing the PWA
+          name: Unit Testing
           caches:
             - node
           script:
-            - npm run test
+            - npm run test -- --changedSince=$BITBUCKET_PR_DESTINATION_BRANCH
           after-script:
             - cat /root/.npm/_logs/*
             - cat $(find /tmp/ng-** -name "angular-errors.log")
