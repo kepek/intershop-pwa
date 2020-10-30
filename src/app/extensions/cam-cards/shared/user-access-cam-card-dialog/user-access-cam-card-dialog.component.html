@@ -21,13 +21,14 @@
 </form>
 
 <camfil-error
-class="test-error"
+  class="test-error"
   [errors]="getField('user').errors"
   [errorValidators]="validators.user"
   [touched]="getField('user').touched || getField('user').dirty"
 ></camfil-error>
+
 <camfil-error
-class="test-error"
+  class="test-error"
   [errors]="getField('contact').errors"
   [errorValidators]="validators.contact"
   [touched]="getField('contact').touched || getField('contact').dirty"

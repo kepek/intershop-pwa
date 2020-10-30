@@ -154,7 +154,14 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": ["tsconfig.base.json"],
-            "exclude": ["**/node_modules/**"],
+            "exclude": [
+              "**/node_modules/**",
+              "**/exports/**",
+              "**/build/**",
+              "**/dist/**",
+              "src/environments/environment.local.ts",
+              "src/environments/environment.proxy.ts"
+            ],
             "format": "stylish"
           }
         },
@@ -285,7 +292,7 @@
               "projects/camfil-icons/tsconfig.lib.json",
               "projects/camfil-icons/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**"]
+            "exclude": ["**/node_modules/**", "**/exports/**"]
           }
         }
       }
