@@ -439,6 +439,8 @@
   "camfil.account.cam_card.edit.button.rename.label": "Rename",
   "camfil.account.cam_card.edit.header": "Create new camcard",
   "camfil.account.cam_card.edit.heading": "Edit CamCard",
+  "camfil.account.cam_card.edit.comment.label.label": "Box label",
+  "camfil.account.cam_card.edit.comment.text.label": "Add comment",
   "camfil.account.cam_card.form.name.error.maxlength": "The CamCard name must not exceed 35 characters.",
   "camfil.account.cam_card.form.name.error.required": "Please enter an CamCard name.",
   "camfil.account.cam_card.form.name.label": "CamCard Name",
