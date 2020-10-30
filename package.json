@@ -36,7 +36,7 @@
     "docs": "npx markserv docs/README.md",
     "compodoc": "npx @compodoc/compodoc -p tsconfig.app.json -d docs/compodoc -y docs/theme --hideGenerator",
     "compodoc:serve": "npm run compodoc -- -s -w",
-    "synchronize-lazy-components": "ng g lazy-components",
+    "synchronize-lazy-components": "npm run ng g lazy-components",
     "build:watch": "ng build --aot --watch",
     "build": "ng build -c production && ng run intershop-pwa:server:production --bundleDependencies",
     "analyze": "ng build --prod --stats-json && npx webpack-bundle-analyzer --host 0.0.0.0 dist/browser/stats.json dist/browser",
