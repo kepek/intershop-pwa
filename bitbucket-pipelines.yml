@@ -20,10 +20,12 @@ pipelines:
             - node_modules/**
             - projects/camfil-icons/src/exports/build/**
           script:
-            - npm install
+            - npm ci
             - npm install -g @angular/cli
-            - npm run synchronize-lazy-components
+            - ./node_modules/.bin/ngcc
             - npm run build:icons
+            - npm run build:schematics
+            - npm run synchronize-lazy-components -- --ci
           after-script:
             - cat /root/.npm/_logs/*
             - cat $(find /tmp/ng-** -name "angular-errors.log")
