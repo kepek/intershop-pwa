@@ -1,6 +1,12 @@
 <div class="d-flex justify-content-between py-3">
   <div>
-    <a mat-stroked-button color="primary" routerLink="/account/orders" data-testing-id="orders-link">
+    <a
+      mat-stroked-button
+      color="primary"
+      routerLink="/account/orders"
+      data-testing-id="orders-link"
+      queryParamsHandling="preserve"
+    >
       <mat-icon class="mt-n1">arrow_left</mat-icon>
       {{ 'account.orderdetails.links.return_to_orders' | translate }}</a
     >
@@ -58,7 +64,7 @@
         mat-stroked-button
         class="btn-track-order float-right mr-n4"
         color="primary"
-        routerLink="/account/orders"
+        routerLink="#"
         data-testing-id="orders-link"
       >
         {{ 'camfil.account.orderdetails.links.track_order' | translate }}</a
