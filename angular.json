@@ -154,7 +154,11 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": ["tsconfig.base.json"],
-            "exclude": ["**/node_modules/**"],
+            "exclude": [
+              "**/node_modules/**",
+              "**/build/**",
+              "**/dist/**"
+            ],
             "format": "stylish"
           }
         },
