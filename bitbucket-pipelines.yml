@@ -32,22 +32,25 @@ pipelines:
           after-script:
             - cat $HOME/.npm/_logs/*
             - cat $(find /tmp/ng-** -name "angular-errors.log")
-      - step:
-          name: Code Linting
-          caches:
-            - node
-          script:
-            - npm run lint
-          after-script:
-            - cat $HOME/.npm/_logs/*
-            - cat $(find /tmp/ng-** -name "angular-errors.log")
-      - step:
-          name: Unit Testing
-          caches:
-            - node
-          script:
-            - git fetch --no-tags --depth=1 origin $BITBUCKET_PR_DESTINATION_BRANCH
-            - npm run test -- --changedSince=$BITBUCKET_PR_DESTINATION_BRANCH
-          after-script:
-            - cat $HOME/.npm/_logs/*
-            - cat $(find /tmp/ng-** -name "angular-errors.log")
+      - parallel:
+          - step:
+              name: Code Linting
+              caches:
+                - node
+              script:
+                - npm run lint
+              after-script:
+                - cat $HOME/.npm/_logs/*
+                - cat $(find /tmp/ng-** -name "angular-errors.log")
+          - step:
+              name: Unit Testing
+              caches:
+                - node
+              script:
+                - git fetch --no-tags --depth=1 origin $BITBUCKET_PR_DESTINATION_BRANCH
+                - git checkout -b $BITBUCKET_PR_DESTINATION_BRANCH
+                - git checkout $BITBUCKET_BRANCH
+                - npm run test -- --changedSince=$BITBUCKET_PR_DESTINATION_BRANCH
+              after-script:
+                - cat $HOME/.npm/_logs/*
+                - cat $(find /tmp/ng-** -name "angular-errors.log")
