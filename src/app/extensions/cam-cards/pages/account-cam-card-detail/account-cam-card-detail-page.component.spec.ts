@@ -15,6 +15,7 @@ import { CamfilProductAddToBasketComponent } from 'ish-shared/components/product
 import { CamCardsFacade } from '../../facades/cam-cards.facade';
 import { CamCardPreferencesDialogComponent } from '../../shared/cam-card-preferences-dialog/cam-card-preferences-dialog.component';
 import { CamCardPreferencesComponent } from '../../shared/cam-card-preferences/cam-card-preferences.component';
+import { CamCardProductCommentComponent } from '../../shared/cam-card-product-comment/cam-card-product-comment.component';
 
 import { AccountCamCardDetailLineItemComponent } from './account-cam-card-detail-line-item/account-cam-card-detail-line-item.component';
 import { AccountCamCardDetailPageComponent } from './account-cam-card-detail-page.component';
@@ -35,6 +36,7 @@ describe('Account Cam Card Detail Page Component', () => {
         MockComponent(AccountCamCardDetailLineItemComponent),
         MockComponent(CamCardPreferencesComponent),
         MockComponent(CamCardPreferencesDialogComponent),
+        MockComponent(CamCardProductCommentComponent),
         MockComponent(CamfilProductAddToBasketComponent),
         MockComponent(ErrorMessageComponent),
         MockComponent(FaIconComponent),

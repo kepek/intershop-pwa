@@ -12,6 +12,7 @@ import { ModalDialogComponent } from 'ish-shared/components/common/modal-dialog/
 import { CamfilProductAddToBasketComponent } from 'ish-shared/components/product/camfil-product-add-to-basket/camfil-product-add-to-basket.component';
 
 import { CamCard } from '../../../models/cam-card/cam-card.model';
+import { CamCardProductCommentComponent } from '../../../shared/cam-card-product-comment/cam-card-product-comment.component';
 import { AccountCamCardDetailLineItemComponent } from '../../account-cam-card-detail/account-cam-card-detail-line-item/account-cam-card-detail-line-item.component';
 import { AccountCamCardToolbarComponent } from '../account-cam-card-toolbar/account-cam-card-toolbar.component';
 import { CamfilCamCardsSearchComponent } from '../camfil-cam-cards-search/camfil-cam-cards-search.component';
@@ -59,6 +60,7 @@ describe('Account Cam Card List Component', () => {
         AccountCamCardListComponent,
         MockComponent(AccountCamCardDetailLineItemComponent),
         MockComponent(AccountCamCardToolbarComponent),
+        MockComponent(CamCardProductCommentComponent),
         MockComponent(CamfilCamCardsSearchComponent),
         MockComponent(CamfilProductAddToBasketComponent),
         MockComponent(FaIconComponent),
