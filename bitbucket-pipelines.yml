@@ -30,7 +30,7 @@ pipelines:
             - npm run build:schematics
             - npm run synchronize-lazy-components -- --ci
           after-script:
-            - cat /root/.npm/_logs/*
+            - cat $HOME/.npm/_logs/*
             - cat $(find /tmp/ng-** -name "angular-errors.log")
       - step:
           name: Code Linting
@@ -39,7 +39,7 @@ pipelines:
           script:
             - npm run lint
           after-script:
-            - cat /root/.npm/_logs/*
+            - cat $HOME/.npm/_logs/*
             - cat $(find /tmp/ng-** -name "angular-errors.log")
       - step:
           name: Unit Testing
@@ -47,9 +47,7 @@ pipelines:
             - node
           script:
             - git fetch --no-tags --depth=1 origin $BITBUCKET_PR_DESTINATION_BRANCH
-            - git checkout -b $BITBUCKET_PR_DESTINATION_BRANCH
-            - git checkout $BITBUCKET_BRANCH
             - npm run test -- --changedSince=$BITBUCKET_PR_DESTINATION_BRANCH
           after-script:
-            - cat /root/.npm/_logs/*
+            - cat $HOME/.npm/_logs/*
             - cat $(find /tmp/ng-** -name "angular-errors.log")
