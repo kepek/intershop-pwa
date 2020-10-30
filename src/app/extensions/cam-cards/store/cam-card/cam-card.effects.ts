@@ -184,7 +184,6 @@ export class CamCardEffects {
     )
   );
 
-
   /**
    * Trigger LoadCamCards action after LoginUserSuccess.
    */
