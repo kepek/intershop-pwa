@@ -20,6 +20,7 @@ import {
   getSelectedCamCardDetails,
   isStickyCamCardToolbar,
   loadContactsByCustomer,
+  moveCamCard,
   moveItemToCamCard,
   removeItemFromCamCard,
   updateCamCard,
@@ -44,6 +45,10 @@ export class CamCardsFacade {
 
   loadContactsByCustomer(customerId: string): void | HttpError {
     this.store.dispatch(loadContactsByCustomer({ customerId }));
+  }
+
+  moveCamCard(camCardId: string, newCustomerId: string, newContacts: { elements: CamCardContact[] }): void {
+    this.store.dispatch(moveCamCard({ camCardId, newCustomerId, newContacts }));
   }
 
   addCamCard(camCards: CamCard): void | HttpError {

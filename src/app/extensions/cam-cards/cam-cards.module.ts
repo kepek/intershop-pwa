@@ -7,6 +7,7 @@ import { BasketCreateCamCardComponent } from './shared/basket-create-cam-card/ba
 import { CamCardPreferencesDialogComponent } from './shared/cam-card-preferences-dialog/cam-card-preferences-dialog.component';
 import { CamCardPreferencesComponent } from './shared/cam-card-preferences/cam-card-preferences.component';
 import { CamCardProductCommentComponent } from './shared/cam-card-product-comment/cam-card-product-comment.component';
+import { MoveCamCardDialogComponent } from './shared/move-cam-card-dialog/move-cam-card-dialog.component';
 import { ProductAddToCamCardComponent } from './shared/product-add-to-cam-card/product-add-to-cam-card.component';
 import { SelectCamCardModalComponent } from './shared/select-cam-card-modal/select-cam-card-modal.component';
 import { UserAccessCamCardDialogComponent } from './shared/user-access-cam-card-dialog/user-access-cam-card-dialog.component';
@@ -19,6 +20,7 @@ import { UserAccessCamCardDialogComponent } from './shared/user-access-cam-card-
     CamCardPreferencesComponent,
     CamCardPreferencesDialogComponent,
     CamCardProductCommentComponent,
+    MoveCamCardDialogComponent,
     ProductAddToCamCardComponent,
     SelectCamCardModalComponent,
     UserAccessCamCardDialogComponent,
@@ -28,6 +30,7 @@ import { UserAccessCamCardDialogComponent } from './shared/user-access-cam-card-
     CamCardPreferencesComponent,
     CamCardPreferencesDialogComponent,
     CamCardProductCommentComponent,
+    MoveCamCardDialogComponent,
     SelectCamCardModalComponent,
   ],
 })

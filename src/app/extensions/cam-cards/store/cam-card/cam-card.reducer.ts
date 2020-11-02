@@ -26,6 +26,7 @@ import {
   loadCustomers,
   loadCustomersSuccess,
   loadCustomersdFail,
+  moveCamCardSuccess,
   removeItemFromCamCardSuccess,
   selectCamCard,
   setStickyCamCardToolbar,
@@ -120,6 +121,7 @@ export const camCardReducer = createReducer(
     addBasketToNewCamCardSuccess,
     createCamCardSuccess,
     updateCamCardSuccess,
+    moveCamCardSuccess,
     addProductToCamCardSuccess,
     removeItemFromCamCardSuccess,
     (state: CamCardState, action) => {

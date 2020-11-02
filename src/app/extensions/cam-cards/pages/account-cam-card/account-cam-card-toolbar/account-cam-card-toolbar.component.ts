@@ -11,8 +11,10 @@ import { CamCard } from '../../../models/cam-card/cam-card.model';
 })
 export class AccountCamCardToolbarComponent implements OnInit {
   @Output() addCamCard = new EventEmitter<CamCard>();
+  @Output() openMoveCamCardDialog = new EventEmitter<Event>();
   @Output() addSelectedItemsToCart = new EventEmitter();
   @Input() isSticky: boolean;
+  @Input() checkedCamCards: boolean;
 
   constructor(private camCardsFacade: CamCardsFacade) {}
 
@@ -22,6 +24,10 @@ export class AccountCamCardToolbarComponent implements OnInit {
 
   add(camCard: CamCard) {
     this.addCamCard.emit(camCard);
+  }
+
+  move(event: Event) {
+    this.openMoveCamCardDialog.emit(event);
   }
 
   addToCart() {

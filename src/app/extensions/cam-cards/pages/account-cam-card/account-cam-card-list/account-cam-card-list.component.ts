@@ -26,6 +26,7 @@ import { ModalDialogComponent } from 'ish-shared/components/common/modal-dialog/
 
 import { CamCardsFacade } from '../../../facades/cam-cards.facade';
 import { CamCard, CamCardItem } from '../../../models/cam-card/cam-card.model';
+import { MoveCamCardDialogComponent } from '../../../shared/move-cam-card-dialog/move-cam-card-dialog.component';
 import { UserAccessCamCardDialogComponent } from '../../../shared/user-access-cam-card-dialog/user-access-cam-card-dialog.component';
 
 export interface ProductChecked {
@@ -146,19 +147,20 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
   }
 
   /** addToCartItems */
-  addCamCardToCart(camCardId: string) {
-    const items = this.camCards.find(t => t.id === camCardId).camCardItems
-      ? this.camCards.find(t => t.id === camCardId).camCardItems
-      : [];
-
-    if (items.length > 0) {
-      items.forEach(item => {
+  addCamCardToCart(camCard: CamCard) {
+    // TODO: improve when NEW order/addToCartWay will be inProgress
+    camCard.camCardItems?.map(item => {
+      this.productFacade.addProductToBasket(item.product.sku, item.count);
+    });
+    camCard.subCamCards?.map(sub => {
+      sub.camCardItems?.map(item => {
         this.productFacade.addProductToBasket(item.product.sku, item.count);
       });
-    }
+    });
   }
 
   addSelectedItemsToCart() {
+    // TODO: improve when NEW order/addToCartWay will be inProgress
     Object.values(this.productsChecked).forEach((val: ProductChecked) =>
       this.productFacade.addProductToBasket(val.sku, val.count)
     );
@@ -171,6 +173,15 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
   /** Emits the camCard to add new one. */
   add(camCard: CamCard) {
     this.addCamCard.emit(camCard);
+  }
+
+  /** From emits event to move camcard. */
+  move() {
+    this.dialog.open(MoveCamCardDialogComponent, {
+      width: '330px',
+      autoFocus: false,
+      data: this.checkedCamCards,
+    });
   }
 
   /** Determine the heading of the delete modal and opens the modal. */
@@ -195,27 +206,30 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
   isProductChecked(id: string) {
     return this.productsChecked[id];
   }
-
-  isCamCardChecked(camCard: CamCard) {
-    return (
-      camCard.camCardItems?.every(item => this.isProductChecked(item.id)) &&
-      camCard.subCamCards?.every(subCard => subCard.camCardItems.every(item => this.isProductChecked(item.id)))
+  isCamCardChecked({ itemsCount, camCardItems, subCamCards }: CamCard) {
+    const items = itemsCount > 0;
+    const itemsChecked = camCardItems ? camCardItems.every(item => this.isProductChecked(item.id)) : true;
+    const itemsInSubChecked = subCamCards
+      ? subCamCards.every(sub =>
+          sub.camCardItems ? sub.camCardItems.every(item => this.isProductChecked(item.id)) : true
+        )
+      : true;
+    return items && itemsChecked && itemsInSubChecked;
+  }
+  isAllChecked() {
+    return this.camCardsProcessed.data.every(camCard =>
+      camCard.itemsCount > 0 ? this.isCamCardChecked(camCard) : true
     );
   }
 
-  isAllChecked() {
-    return this.camCardsProcessed.data.every(camCard => this.isCamCardChecked(camCard));
+  isCamCardIndeterminate(camCard: CamCard) {
+    let itmsNum = 0;
+    camCard.camCardItems?.map(({ id }) => this.isProductChecked(id) && itmsNum++);
+    camCard.subCamCards?.map(sub => sub.camCardItems?.map(({ id }) => this.isProductChecked(id) && itmsNum++));
+    return !this.isCamCardChecked(camCard) && itmsNum > 0;
   }
-
   isAllIndeterminate() {
     return Object.keys(this.productsChecked).length !== 0 && !this.isAllChecked();
-  }
-
-  isCamCardIndeterminate(camCard: CamCard) {
-    const itmsNum = camCard.subCamCards
-      ? camCard.subCamCards.filter(sub => sub.camCardItems.filter(item => this.isProductChecked(item.id)).length).length
-      : 0 + camCard.camCardItems.filter(item => this.isProductChecked(item.id)).length;
-    return itmsNum > 0 && !this.isCamCardChecked(camCard);
   }
 
   handleProductCheck(item: CamCardItem, camCard: CamCard, event: MatCheckboxChange) {
@@ -234,9 +248,9 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
   }
 
   handleProductsCheck(camCard: CamCard, event: MatCheckboxChange) {
-    camCard.camCardItems.forEach(item => this.handleProductCheck(item, camCard, event));
-    camCard.subCamCards.forEach(subCamCard => {
-      subCamCard.camCardItems.forEach(item => this.handleProductCheck(item, camCard, event));
+    camCard.camCardItems?.forEach(item => this.handleProductCheck(item, camCard, event));
+    camCard.subCamCards?.forEach(subCamCard => {
+      subCamCard.camCardItems?.forEach(item => this.handleProductCheck(item, camCard, event));
     });
   }
 
@@ -252,5 +266,9 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
 
   handleProductCheckbox(item: CamCardItem, camCard: CamCard, event: MatCheckboxChange) {
     this.handleProductCheck(item, camCard, event);
+  }
+
+  get checkedCamCards() {
+    return this.camCards ? this.camCards.filter(camCard => this.isCamCardChecked(camCard)) : [];
   }
 }
