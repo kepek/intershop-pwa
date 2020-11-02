@@ -10,7 +10,7 @@
 </ng-container>
 
 <ng-container *ngIf="camCard$ | async as camCard">
-  <ng-container *ngIf="!camCard.maintenanceStatus; else maintenanceStatus">
+  <ng-container *ngIf="maintenance(camCard, ['MAINTENANCE', 'ACTIVE']); else nonActiveStatus">
     <h1>
       {{ camCard?.name }}
       <a
@@ -76,10 +76,10 @@
 
   <a routerLink="/account/cam-cards">{{ 'camfil.account.cam_card.edit.button.back.label' | translate }}</a>
 
-  <ng-template #maintenanceStatus>
+  <ng-template #nonActiveStatus>
     <br />
     <h1>{{ camCard?.name }}</h1>
-    <h2 class="p-3 bg-warning">{{ 'camfil.account.cam_card.maintenance_status' | translate }}</h2>
+    <h2 class="p-3 bg-warning">{{ 'camfil.account.cam_card.maintenance.not_edit.text' | translate }}</h2>
   </ng-template>
 </ng-container>
 
