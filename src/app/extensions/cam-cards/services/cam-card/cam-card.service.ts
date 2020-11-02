@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Observable, forkJoin, throwError } from 'rxjs';
-import { concatMap, defaultIfEmpty, map, switchMap, tap } from 'rxjs/operators';
+import { concatMap, defaultIfEmpty, map, switchMap } from 'rxjs/operators';
 
 import { ApiService, unpackEnvelope } from 'ish-core/services/api/api.service';
 
 import { CamCardCreate } from '../../models/cam-card/cam-card-create.interface';
 import { CamCardData } from '../../models/cam-card/cam-card.interface';
 import { CamCardMapper } from '../../models/cam-card/cam-card.mapper';
-import { CamCard, CamCardContact, CamCardItem } from '../../models/cam-card/cam-card.model';
+import { CamCard, CamCardContact, CamCardDelivery, CamCardItem } from '../../models/cam-card/cam-card.model';
 
 @Injectable({ providedIn: 'root' })
 export class CamCardService {
@@ -18,11 +18,7 @@ export class CamCardService {
    * @returns           The customer's cam_cards.
    */
   getCamCards(): Observable<CamCard[]> {
-    return this.apiService.get('camcards').pipe(
-      unpackEnvelope(),
-      tap((camCards: any) => camCards.elements),
-      defaultIfEmpty([])
-    );
+    return this.apiService.get('camcards').pipe(unpackEnvelope(), defaultIfEmpty([]));
   }
 
   /**
@@ -183,7 +179,7 @@ export class CamCardService {
    * @param customerId   The customer ID.
    * @returns            The all customer contacts.
    */
-  getContactsByCastomerId(customerId: string): Observable<CamCardContact[]> {
+  getContactsByCustomerId(customerId: string): Observable<CamCardContact[]> {
     return this.apiService
       .get(`privatecamfilcustomers/${customerId}/contacts`)
       .pipe(unpackEnvelope(), defaultIfEmpty([]));
@@ -191,13 +187,13 @@ export class CamCardService {
 
   /**
    * Get customers available for current user.
-   * @param CamCardDetails   The cam cards data.
-   * @returns                 The created cam_cards.
+   * @param customerId   The customer ID.
+   * @returns            The created cam_cards.
    */
-  getDeliveryAddresses(id): Observable<[]> {
+  getDeliveryAddresses(customerId: string): Observable<CamCardDelivery[]> {
     return this.apiService
-      .get(`camfilcustomers/${id}/deliveryaddresses`)
-      .pipe(map((camCardData: { elements }) => camCardData.elements));
+      .get(`camfilcustomers/${customerId}/deliveryaddresses`)
+      .pipe(unpackEnvelope(), defaultIfEmpty([]));
   }
 
   /**

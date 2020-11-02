@@ -333,7 +333,7 @@ export class CamCardEffects {
       ofType(loadContactsByCustomer),
       mapToPayload(),
       mergeMap(({ customerId }) =>
-        this.camCardService.getContactsByCastomerId(customerId).pipe(
+        this.camCardService.getContactsByCustomerId(customerId).pipe(
           map(contacts => loadContactsByCustomerSuccess({ customerId, contacts })),
           mapErrorToAction(loadContactsByCustomerFail)
         )
