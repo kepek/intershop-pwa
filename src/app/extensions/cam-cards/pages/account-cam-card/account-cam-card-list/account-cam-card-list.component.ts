@@ -25,7 +25,7 @@ import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
 import { ModalDialogComponent } from 'ish-shared/components/common/modal-dialog/modal-dialog.component';
 
 import { CamCardsFacade } from '../../../facades/cam-cards.facade';
-import { CamCard, CamCardItem } from '../../../models/cam-card/cam-card.model';
+import { CamCard, CamCardHelper, CamCardItem } from '../../../models/cam-card/cam-card.model';
 import { MoveCamCardDialogComponent } from '../../../shared/move-cam-card-dialog/move-cam-card-dialog.component';
 import { UserAccessCamCardDialogComponent } from '../../../shared/user-access-cam-card-dialog/user-access-cam-card-dialog.component';
 
@@ -76,6 +76,7 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
   productsChecked = {};
   isMobileView = false;
   isSubOpen = [];
+  maintenance = CamCardHelper.maintenance;
 
   private destroy$ = new Subject();
 
@@ -130,7 +131,7 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
   isCustomerAdmin() {
     // TODO: !!!! IMPORTANT !!!!
     // condition should based on sth like this user.role == customer.admin
-    return Math.floor(Math.random() * 10) % 2;
+    return Math.floor(new Date().getTime() / 100) % 2;
   }
 
   isMobile() {

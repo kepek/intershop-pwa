@@ -1,3 +1,5 @@
+import { MaintenanceStatus } from './cam-card.helper';
+
 export interface CamCardHeader {
   name: string;
 }
@@ -14,7 +16,7 @@ export interface CamCard extends CamCardHeader {
   creationDate?: Date;
   contacts?: CamCardContact[];
   delivery?: CamCardDelivery;
-  maintenanceStatus?: boolean;
+  maintenanceStatus?: MaintenanceStatus;
 }
 
 export interface CamCardItem {
@@ -64,3 +66,5 @@ export interface CamCardDelivery {
   zipCode?: string;
   area?: string;
 }
+
+export * from './cam-card.helper';
