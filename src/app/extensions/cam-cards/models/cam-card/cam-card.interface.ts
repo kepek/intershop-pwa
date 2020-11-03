@@ -1,4 +1,5 @@
-import { CamCardContact, CamCardCustomer, CamCardHeader, CamCardItem, MaintenanceStatus } from './cam-card.model';
+import { MaintenanceStatus } from './cam-card.helper';
+import { CamCardContact, CamCardCustomer, CamCardHeader, CamCardItem } from './cam-card.model';
 
 export interface CamCardData extends CamCardHeader {
   id: string;

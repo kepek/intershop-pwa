@@ -23,6 +23,7 @@ export class CamCardMapper {
         name: camCardData.name,
         subCamCards: subs,
         delivery: {
+          id: '999', // TODO tmp
           last: '12-01-2020', // TODO: tmp
           interval: 10, // TODO: tmp
         },
@@ -35,7 +36,7 @@ export class CamCardMapper {
 
   fromUpdate(camCard: CamCard, id: string): CamCard {
     if (camCard && id) {
-      const { name, creationDate, customer, orderLabel, invoiceLabel } = camCard;
+      const { name, creationDate, customer, orderLabel, invoiceLabel, deliveryAddress } = camCard;
 
       return {
         id,
@@ -44,6 +45,7 @@ export class CamCardMapper {
         orderLabel,
         invoiceLabel,
         customer,
+        deliveryAddress,
       };
     }
   }

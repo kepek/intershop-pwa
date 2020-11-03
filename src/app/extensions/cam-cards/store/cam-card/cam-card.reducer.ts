@@ -4,7 +4,13 @@ import { createReducer, on } from '@ngrx/store';
 import { HttpError } from 'ish-core/models/http-error/http-error.model';
 import { setLoadingOn } from 'ish-core/utils/ngrx-creators';
 
-import { CamCard, CamCardContact, CamCardCustomer, CamCardItem } from '../../models/cam-card/cam-card.model';
+import {
+  CamCard,
+  CamCardAddress,
+  CamCardContact,
+  CamCardCustomer,
+  CamCardItem,
+} from '../../models/cam-card/cam-card.model';
 
 import {
   addBasketToNewCamCard,
@@ -26,6 +32,9 @@ import {
   loadCustomers,
   loadCustomersSuccess,
   loadCustomersdFail,
+  loadDeliveryAddresses,
+  loadDeliveryAddressesFail,
+  loadDeliveryAddressesSuccess,
   moveCamCardSuccess,
   removeItemFromCamCardSuccess,
   selectCamCard,
@@ -46,6 +55,7 @@ export interface CamCardState extends EntityState<CamCard> {
   contacts: {
     [key: string]: CamCardContact[];
   };
+  addresses?: CamCardAddress[];
 }
 
 export const camCardAdapter = createEntityAdapter<CamCard>({
@@ -62,6 +72,7 @@ export const initialState: CamCardState = camCardAdapter.getInitialState({
   error: undefined,
   customers: [],
   contacts: {},
+  addresses: [],
   stickyToolbar: false,
 });
 
@@ -74,7 +85,8 @@ export const camCardReducer = createReducer(
     deleteCamCard,
     updateCamCard,
     loadCustomers,
-    loadContactsByCustomer
+    loadContactsByCustomer,
+    loadDeliveryAddresses
   ),
   on(
     loadCamCardsFail,
@@ -84,6 +96,8 @@ export const camCardReducer = createReducer(
     updateCamCardFail,
     loadCustomersdFail,
     loadContactsByCustomerFail,
+    loadDeliveryAddressesFail,
+
     (state: CamCardState, action) => {
       const { error } = action.payload;
       return {
@@ -114,6 +128,22 @@ export const camCardReducer = createReducer(
     return {
       ...state,
       contacts: { ...state.contacts, [customerId]: contacts },
+    };
+  }),
+  on(loadDeliveryAddressesSuccess, (state: CamCardState, action) => {
+    const { addresses } = action.payload;
+    return {
+      ...state,
+      addresses,
+      loading: false,
+    };
+  }),
+  on(loadDeliveryAddressesFail, (state: CamCardState) => {
+    const addresses = [];
+
+    return {
+      ...state,
+      addresses,
       loading: false,
     };
   }),

@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideMockStore } from '@ngrx/store/testing';
 
+import { CamfilErrorComponent } from 'ish-shared/components/common/camfil-error/camfil-error.component';
+
 import { CamCardPreferencesComponent } from './cam-card-preferences.component';
 
 describe('Cam Card Preferences Component', () => {
@@ -10,7 +12,7 @@ describe('Cam Card Preferences Component', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CamCardPreferencesComponent],
+      declarations: [CamCardPreferencesComponent, CamfilErrorComponent],
       providers: [provideMockStore({})],
     }).compileComponents();
   });

@@ -32,18 +32,10 @@ describe('Cam Card Service', () => {
 
     camCardService.getCamCards().subscribe(data => {
       verify(apiServiceMock.get('camcards')).once();
-      verify(apiServiceMock.get('camcards/1234')).once();
       expect(data).toMatchInlineSnapshot(`
         Array [
           Object {
-            "delivery": Object {
-              "interval": 10,
-              "last": "12-01-2020",
-            },
             "id": "1234",
-            "itemsCount": 0,
-            "name": undefined,
-            "subCamCards": Array [],
           },
         ]
       `);
@@ -52,7 +44,7 @@ describe('Cam Card Service', () => {
   });
 
   it("should get an cam cards when 'getCamCard' is called", done => {
-    when(apiServiceMock.get(`camcards/1234`)).thenReturn(of({ id: '1234' }));
+    when(apiServiceMock.get(`camcards/1234`)).thenReturn(of({ id: '1234', customerNo: '1234' }));
 
     camCardService.getCamCard('1234').subscribe(() => {
       verify(apiServiceMock.get(`camcards/1234`)).once();
@@ -62,7 +54,7 @@ describe('Cam Card Service', () => {
 
   it("should create an cam cards when 'createCamCard' is called", done => {
     const camCardId = '1234';
-    const camCard: CamCard = { name: 'cam cards title', customer: { id: 'cust_1234' } };
+    const camCard: CamCard = { name: 'cam cards title', customer: { id: 'cust_1234', customerNo: 'cust_1234' } };
     when(apiServiceMock.post('camcards', anything())).thenReturn(
       of({ name: camCard.name, itemId: camCardId } as CamCardCreate)
     );
