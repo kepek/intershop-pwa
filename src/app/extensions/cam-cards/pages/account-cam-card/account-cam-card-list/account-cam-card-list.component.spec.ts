@@ -33,7 +33,7 @@ describe('Account Cam Card List Component', () => {
       camCardItems: [
         {
           id: '12345',
-          count: 1,
+          quantity: 1,
           creationDate: 123124125,
           product: {
             sku: '1234',

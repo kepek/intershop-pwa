@@ -33,7 +33,7 @@ export interface ProductChecked {
   camCardId: string;
   camCardRoot: string;
   sku: string;
-  count: number;
+  quantity: number;
 }
 
 @Component({
@@ -151,11 +151,11 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
   addCamCardToCart(camCard: CamCard) {
     // TODO: improve when NEW order/addToCartWay will be inProgress
     camCard.camCardItems?.map(item => {
-      this.productFacade.addProductToBasket(item.product.sku, item.count);
+      this.productFacade.addProductToBasket(item.product.sku, item.quantity);
     });
     camCard.subCamCards?.map(sub => {
       sub.camCardItems?.map(item => {
-        this.productFacade.addProductToBasket(item.product.sku, item.count);
+        this.productFacade.addProductToBasket(item.product.sku, item.quantity);
       });
     });
   }
@@ -163,7 +163,7 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
   addSelectedItemsToCart() {
     // TODO: improve when NEW order/addToCartWay will be inProgress
     Object.values(this.productsChecked).forEach((val: ProductChecked) =>
-      this.productFacade.addProductToBasket(val.sku, val.count)
+      this.productFacade.addProductToBasket(val.sku, val.quantity)
     );
   }
 
@@ -240,7 +240,7 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
         camCardId: camCard.id,
         camCardRoot: camCard.rootCamCard,
         sku: item.product.sku,
-        count: item.count,
+        quantity: item.quantity,
       };
       this.productsChecked[item.id] = element;
     } else if (!event.checked && productOnList) {
