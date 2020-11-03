@@ -198,10 +198,10 @@ export class CamCardService {
    * @param count
    * @returns             The changed cam_cards.
    */
-  addProductToCamCard(camCardId: string, sku: string, count: number): Observable<CamCard> {
+  addProductToCamCard(camCardId: string, sku: string, quantity: number): Observable<CamCard> {
     return this.apiService
       .post(`camcards/${camCardId}/products`, {
-        count,
+        quantity,
         product: { sku },
       })
       .pipe(concatMap(() => this.getCamCard(camCardId)));

@@ -19,11 +19,11 @@ export interface CamCard extends CamCardHeader {
 
 export interface CamCardItem {
   id?: string;
-  count: number; // was desiredQuantity.value
+  quantity: number;
   position?: number;
   product: CamCardProduct;
   creationDate?: number;
-  comment?: CamCardItemComment; // Talk bubble on view
+  comment?: CamCardItemComment;
 }
 
 export interface CamCardProduct {

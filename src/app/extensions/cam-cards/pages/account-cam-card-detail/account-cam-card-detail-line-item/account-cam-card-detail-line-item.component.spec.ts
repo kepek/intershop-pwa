@@ -68,7 +68,7 @@ describe('Account Cam Card Detail Line Item Component', () => {
         sku: 'abcd',
       },
       creationDate: 123124124,
-      count: 1,
+      quantity: 1,
     };
     component.selectItemForm = new FormGroup({
       sku: new FormControl('abcd'),

@@ -54,7 +54,7 @@ export class AccountCamCardDetailLineItemComponent implements OnChanges, OnInit,
   /** init form in the beginning */
   private initForm() {
     this.addToCartForm = new FormGroup({
-      quantity: new FormControl(this.camCardItemData.count || 1),
+      quantity: new FormControl(this.camCardItemData.quantity || 1),
     });
 
     if (this.selectedItemsForm) {
@@ -90,7 +90,7 @@ export class AccountCamCardDetailLineItemComponent implements OnChanges, OnInit,
   updateProductQuantity(camCardItem: CamCardItem, quantity: number) {
     const newItem = {
       ...camCardItem,
-      count: quantity,
+      quantity,
     };
     this.camCardsFacade.updateCamCardProduct(this.currentCamCard.rootCamCard, this.currentCamCard.id, newItem);
   }
