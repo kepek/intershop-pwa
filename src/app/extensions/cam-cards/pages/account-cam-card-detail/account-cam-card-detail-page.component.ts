@@ -8,7 +8,8 @@ import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { HttpError } from 'ish-core/models/http-error/http-error.model';
 
 import { CamCardsFacade } from '../../facades/cam-cards.facade';
-import { CamCard, CamCardHelper, CamCardItem } from '../../models/cam-card/cam-card.model';
+import { CamCardHelper } from '../../models/cam-card/cam-card.helper';
+import { CamCard, CamCardItem } from '../../models/cam-card/cam-card.model';
 
 @Component({
   selector: 'camfil-account-cam-card-detail-page',

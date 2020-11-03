@@ -23,6 +23,7 @@ export class CamCardMapper {
         name: camCardData.name,
         subCamCards: subs,
         delivery: {
+          id: '999', // TODO tmp
           last: '12-01-2020', // TODO: tmp
           interval: 10, // TODO: tmp
         },

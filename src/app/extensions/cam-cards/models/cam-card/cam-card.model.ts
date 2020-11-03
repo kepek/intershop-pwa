@@ -78,4 +78,4 @@ export interface CamCardDeliveryAddress {
 }
 
 // tslint:disable-next-line:no-empty-interface
-export interface CamCardAddress extends Address { }
+export interface CamCardAddress extends Address {}
