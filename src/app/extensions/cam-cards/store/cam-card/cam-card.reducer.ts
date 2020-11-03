@@ -6,9 +6,9 @@ import { setLoadingOn } from 'ish-core/utils/ngrx-creators';
 
 import {
   CamCard,
+  CamCardAddress,
   CamCardContact,
   CamCardCustomer,
-  CamCardDelivery,
   CamCardItem,
 } from '../../models/cam-card/cam-card.model';
 
@@ -55,7 +55,7 @@ export interface CamCardState extends EntityState<CamCard> {
   contacts: {
     [key: string]: CamCardContact[];
   };
-  addresses?: CamCardDelivery[];
+  addresses?: CamCardAddress[];
 }
 
 export const camCardAdapter = createEntityAdapter<CamCard>({

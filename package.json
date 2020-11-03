@@ -50,7 +50,10 @@
     "dev:ssr:local": "ng run intershop-pwa:serve-ssr:local",
     "build:icons": "cd projects/camfil-icons && npm run build",
     "info": "envinfo",
-    "ngcc": "ngcc"
+    "ngcc": "ngcc",
+    "tsc": "tsc",
+    "tsc:build-all": "tsc --project tsconfig.all.json",
+    "tsc:watch-all": "tsc --project tsconfig.all.json --watch"
   },
   "peerDependencies": {
     "@angular/cdk": "~10.2.2",

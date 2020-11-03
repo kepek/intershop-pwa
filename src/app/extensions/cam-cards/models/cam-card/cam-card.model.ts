@@ -1,3 +1,7 @@
+import { Address } from 'ish-core/models/address/address.model';
+import { CustomerData } from 'ish-core/models/customer/customer.interface';
+import { Customer } from 'ish-core/models/customer/customer.model';
+
 import { MaintenanceStatus } from './cam-card.helper';
 
 export interface CamCardHeader {
@@ -15,9 +19,9 @@ export interface CamCard extends CamCardHeader {
   itemsCount?: number;
   creationDate?: Date;
   contacts?: CamCardContact[];
-  delivery?: CamCardDelivery;
+  delivery?: CamCardDeliveryAddress;
   maintenanceStatus?: MaintenanceStatus;
-  deliveryAddress?: CamCardDelivery;
+  deliveryAddress?: CamCardAddress;
 }
 
 export interface CamCardItem {
@@ -37,13 +41,12 @@ export interface CamCardProduct {
   available?: boolean;
 }
 
-export interface CamCardCustomer {
-  id?: string;
-  name?: string;
-  companyName?: string;
-  deliveryAddress?: string; // will be some { } // or in CamCardDelivery
-  email?: string;
-  contactPerson?: string; // will be some { }
+export interface CamCardCustomer extends Customer {
+  id: string;
+}
+
+export interface CamCardCustomerData extends CustomerData {
+  id: string;
 }
 
 export interface CamCardContact {
@@ -59,14 +62,13 @@ export interface CamCardItemComment {
   text: string;
 }
 
-export interface CamCardDelivery {
+export interface CamCardDeliveryAddress {
   id: string;
   last: string;
   interval: number;
   deliveryAddress?: string;
   building?: string;
   address?: string;
-  zipCode?: string;
   area?: string;
   companyName1?: string;
   addressLine1?: string;
@@ -75,4 +77,5 @@ export interface CamCardDelivery {
   city?: string;
 }
 
-export * from './cam-card.helper';
+// tslint:disable-next-line:no-empty-interface
+export interface CamCardAddress extends Address { }

@@ -2,7 +2,13 @@ import { createAction } from '@ngrx/store';
 
 import { httpError, payload } from 'ish-core/utils/ngrx-creators';
 
-import { CamCard, CamCardContact, CamCardCustomer, CamCardItem } from '../../models/cam-card/cam-card.model';
+import {
+  CamCard,
+  CamCardAddress,
+  CamCardContact,
+  CamCardCustomer,
+  CamCardItem,
+} from '../../models/cam-card/cam-card.model';
 
 export const loadCamCards = createAction('[Cam Cards Internal] Load Cam Cards');
 
@@ -65,7 +71,7 @@ export const loadDeliveryAddresses = createAction('[Cam Cards] load available ad
 
 export const loadDeliveryAddressesSuccess = createAction(
   '[Cam Cards API] load available addressses Success',
-  payload<{ addresses: [] }>()
+  payload<{ addresses: CamCardAddress[] }>()
 );
 
 export const loadDeliveryAddressesFail = createAction('[Cam Cards API] load available addressses Fail', httpError());

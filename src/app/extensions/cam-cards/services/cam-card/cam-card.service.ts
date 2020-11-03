@@ -7,7 +7,13 @@ import { ApiService, unpackEnvelope } from 'ish-core/services/api/api.service';
 import { CamCardCreate } from '../../models/cam-card/cam-card-create.interface';
 import { CamCardData } from '../../models/cam-card/cam-card.interface';
 import { CamCardMapper } from '../../models/cam-card/cam-card.mapper';
-import { CamCard, CamCardContact, CamCardDelivery, CamCardItem } from '../../models/cam-card/cam-card.model';
+import {
+  CamCard,
+  CamCardAddress,
+  CamCardContact,
+  CamCardCustomerData,
+  CamCardItem,
+} from '../../models/cam-card/cam-card.model';
 
 @Injectable({ providedIn: 'root' })
 export class CamCardService {
@@ -37,12 +43,12 @@ export class CamCardService {
 
   /**
    * Creates a cam cards for the current user.
-   * @param CamCardDetails   The cam cards data.
+   * @param camCardData
    * @returns                 The created cam_cards.
    */
   createCamCard(camCardData: CamCard): Observable<CamCard> {
     return this.apiService
-      .post('camcards', { ...camCardData, name: camCardData.name })
+      .post('camcards', camCardData)
       .pipe(concatMap((response: CamCardCreate) => this.getCamCard(response.itemId)));
   }
 
@@ -53,15 +59,15 @@ export class CamCardService {
    */
   deleteCamCard(camCardId: string): Observable<void> {
     if (!camCardId) {
-      return throwError('deleteCamCardt() called without camCardId');
+      return throwError('deleteCamCard() called without camCardId');
     }
     return this.apiService.delete(`camcards/${camCardId}`);
   }
 
   /**
    * Updates a cam cards of the given id.
-   * @param camCards   The cam cards to be updated.
-   * @returns          The updated cam_cards.
+   * @param camCard
+   * @returns          The updated cam_card.
    */
   updateCamCard(camCard: CamCard): Observable<CamCard> {
     return this.apiService
@@ -154,11 +160,10 @@ export class CamCardService {
 
   /**
    * Get customers available for current user.
-   * @param CamCardDetails   The cam cards data.
    * @returns                 The created cam_cards.
    */
-  getCustomers(): Observable<{ elements?: [] }> {
-    return this.apiService.get('camfilcustomers').pipe(map(camCardData => camCardData));
+  getCustomers(): Observable<CamCardCustomerData[]> {
+    return this.apiService.get('camfilcustomers').pipe(unpackEnvelope(), defaultIfEmpty([]));
   }
 
   /**
@@ -190,7 +195,7 @@ export class CamCardService {
    * @param customerId   The customer ID.
    * @returns            The created cam_cards.
    */
-  getDeliveryAddresses(customerId: string): Observable<CamCardDelivery[]> {
+  getDeliveryAddresses(customerId: string): Observable<CamCardAddress[]> {
     return this.apiService
       .get(`camfilcustomers/${customerId}/deliveryaddresses`)
       .pipe(unpackEnvelope(), defaultIfEmpty([]));
@@ -198,20 +203,22 @@ export class CamCardService {
 
   /**
    * Get customers available for current user.
-   * @param CamCardDetails   The cam cards data.
-   * @returns                 The created cam_cards.
+   * @returns             The created cam_cards.
+   * @deprecated
    */
-  createDeliveryAddress(): Observable<any> {
-    return this.apiService.get('camfilcustomers').pipe(map(camCardData => camCardData));
+  // TODO: verify if needed / deprecated
+  createDeliveryAddress(): Observable<void> {
+    return this.apiService.get('camfilcustomers');
   }
 
   /**
    * Get customers available for current user.
-   * @param CamCardDetails   The cam cards data.
-   * @returns                 The created cam_cards.
+   * @returns             The created cam_cards.
+   * @deprecated
    */
-  updateDeliveryAddress(): Observable<{ customers?: [] }> {
-    return this.apiService.get('camfilcustomers').pipe(map(camCardData => camCardData));
+  // TODO: verify if needed / deprecated
+  updateDeliveryAddress(): Observable<void> {
+    return this.apiService.get('camfilcustomers');
   }
 
   /**
@@ -234,7 +241,7 @@ export class CamCardService {
    * Update a product from the cam card with the given id. Returns an error observable if parameters are falsy.
    * @returns             The changed cam card item.
    * @param camCardId
-   * @param camCardItemId
+   * @param camCardItem
    */
   updateCamCardProduct(camCardId: string, camCardItem: CamCardItem): Observable<CamCardItem> {
     return this.apiService.put(`camcards/${camCardId}/products/${camCardItem.id}`, camCardItem);

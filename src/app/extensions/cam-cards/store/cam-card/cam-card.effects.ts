@@ -165,7 +165,7 @@ export class CamCardEffects {
       filter(([, authorized]) => authorized),
       switchMap(() =>
         this.camCardService.getCustomers().pipe(
-          map(camCards => loadCustomersSuccess({ customers: camCards.elements })),
+          map(customers => loadCustomersSuccess({ customers })),
           mapErrorToAction(loadCustomersdFail)
         )
       )

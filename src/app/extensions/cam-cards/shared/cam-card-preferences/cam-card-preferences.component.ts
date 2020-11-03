@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
 
 import { CamCardsFacade } from '../../facades/cam-cards.facade';
-import { CamCard, CamCardCustomer, CamCardDelivery } from '../../models/cam-card/cam-card.model';
+import { CamCard, CamCardAddress, CamCardCustomer } from '../../models/cam-card/cam-card.model';
 
 /**
  * The Cam Cards Preferences Dialog shows the modal to create/edit a cam_cards.
@@ -45,7 +45,7 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit {
   pickerLast;
   pickerNext;
   customers$: Observable<CamCardCustomer[]>;
-  addresses$: Observable<CamCardDelivery[]>;
+  addresses$: Observable<CamCardAddress[]>;
 
   /**
    *  A reference to the current modal  .
@@ -95,6 +95,7 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit {
       this.primaryButton = 'camfil.account.cam_cards.edit_form.save_button.text';
     }
   }
+
   ngOnInit() {
     this.customers$ = this.camCardsFacade.customers$;
     this.addresses$ = this.camCardsFacade.addresses$;
@@ -108,10 +109,10 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit {
       invoiceMark: ['', [Validators.maxLength(35)]],
       deliveryAddress: ['', [Validators.maxLength(35)]],
       customer: ['', [Validators.maxLength(35)]],
-      building: ['', [Validators.maxLength(35)]],
-      address: ['', [Validators.maxLength(35)]],
-      zipCode: ['', [Validators.maxLength(35)]],
-      area: ['', [Validators.maxLength(35)]],
+      addressLine1: ['', [Validators.maxLength(35)]],
+      addressLine2: ['', [Validators.maxLength(35)]],
+      postalCode: ['', [Validators.maxLength(35)]],
+      city: ['', [Validators.maxLength(35)]],
       lastDelivery: ['', [Validators.maxLength(35)]],
       deliveryInterval: ['', [Validators.maxLength(35)]],
       nextDelivery: ['', [Validators.maxLength(35)]],
@@ -126,14 +127,14 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit {
       this.camCardsFacade.getDeliveryAddress(this.camCard.customer.id);
       this.camCardForm.patchValue({
         title: this.camCard.name,
-        customerName: this.camCard.customer.id,
+        customerName: this.camCard.customer.customerNo,
         orderMark: this.camCard.orderLabel,
         invoiceMark: this.camCard.invoiceLabel,
         customer: this.camCard.deliveryAddress.companyName1,
-        building: this.camCard.deliveryAddress.addressLine1,
-        address: this.camCard.deliveryAddress.street,
-        zipCode: this.camCard.deliveryAddress.postalCode,
-        area: this.camCard.deliveryAddress.city,
+        addressLine1: this.camCard.deliveryAddress.addressLine1,
+        addressLine2: this.camCard.deliveryAddress.addressLine2,
+        postalCode: this.camCard.deliveryAddress.postalCode,
+        city: this.camCard.deliveryAddress.city,
       });
     }
   }
@@ -149,14 +150,15 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit {
         invoiceLabel: this.camCardForm.get('invoiceMark').value,
         customer: {
           id: this.camCardForm.get('customerName').value,
+          customerNo: this.camCardForm.get('customerName').value,
         },
         deliveryAddress: {
           ...this.camCard?.deliveryAddress,
           companyName1: this.camCardForm.get('customer').value,
-          addressLine1: this.camCardForm.get('building').value,
-          street: this.camCardForm.get('address').value,
-          postalCode: this.camCardForm.get('zipCode').value,
-          city: this.camCardForm.get('area').value,
+          addressLine1: this.camCardForm.get('addressLine1').value,
+          addressLine2: this.camCardForm.get('addressLine2').value,
+          postalCode: this.camCardForm.get('postalCode').value,
+          city: this.camCardForm.get('city').value,
         },
       });
     } else {
@@ -172,13 +174,13 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit {
   pickAddress(event) {
     const id = event.value;
     this.addresses$.subscribe(addresses => {
-      const address = addresses.filter((element: CamCardDelivery) => element.id === id)[0];
+      const address = addresses.filter(element => element.id === id)[0];
       this.camCardForm.patchValue({
         customer: address.companyName1,
-        building: address.addressLine1,
-        address: address.street,
-        zipCode: address.postalCode,
-        area: address.city,
+        addressLine1: address.addressLine1,
+        addressLine2: address.addressLine2,
+        postalCode: address.postalCode,
+        city: address.city,
       });
     });
   }

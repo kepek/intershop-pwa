@@ -104,13 +104,13 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
       this.camCardsProcessed.filterPredicate = (data, filter) => {
         const filtered = this.simplifyData(filter);
         return (
-          this.simplifyData(data.customer.name).indexOf(filtered) !== -1 ||
+          this.simplifyData(data.customer.companyName).indexOf(filtered) !== -1 ||
           this.simplifyData(data.name).indexOf(filtered) !== -1
         );
       };
       this.camCardsProcessed.sort = this.sort;
       this.camCardsProcessed.sortingDataAccessor = (item, property) =>
-        property === 'customer' ? item.customer.name : item[property];
+        property === 'customer' ? item.customer.companyName : item[property];
     }
     this.isMobileView = this.isMobile();
   }

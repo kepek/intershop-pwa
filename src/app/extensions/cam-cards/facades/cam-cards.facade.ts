@@ -6,9 +6,9 @@ import { HttpError } from 'ish-core/models/http-error/http-error.model';
 
 import {
   CamCard,
+  CamCardAddress,
   CamCardContact,
   CamCardCustomer,
-  CamCardDelivery,
   CamCardItem,
 } from '../models/cam-card/cam-card.model';
 import {
@@ -46,7 +46,7 @@ export class CamCardsFacade {
   camCardError$: Observable<HttpError> = this.store.pipe(select(getCamCardError));
   isStickyCamCardToolbar$: Observable<boolean> = this.store.pipe(select(isStickyCamCardToolbar));
   customers$: Observable<CamCardCustomer[]> = this.store.pipe(select(getCamCardCustomers));
-  addresses$: Observable<CamCardDelivery[]> = this.store.pipe(select(getCustomerAddresses));
+  addresses$: Observable<CamCardAddress[]> = this.store.pipe(select(getCustomerAddresses));
 
   contactsByCustomer$(id: string): Observable<CamCardContact[]> {
     return this.store.pipe(select(getContactsbyCustomerId, { id }));
