@@ -1,5 +1,5 @@
 <ng-container *ngIf="product$ | async as product">
-  <div class="d-flex align-items-center text-left" [ngClass]="{'justify-content-between': mode === 'edit'}">
+  <div class="d-flex align-items-center text-left" [ngClass]="{ 'justify-content-between': mode === 'edit' }">
     {{ index }}
     <a class="image" [routerLink]="product | ishProductRoute">
       <camfil-product-image [product]="product" imageType="S" class="product-image"></camfil-product-image>
@@ -16,7 +16,7 @@
             [value]="camCardItemData.comment.label"
             *ngIf="camCardItemData.comment.label"
           ></camfil-product-attribute>
-          <camfil-product-attribute name="Quantity" [value]="camCardItemData.count"></camfil-product-attribute>
+          <camfil-product-attribute name="Quantity" [value]="camCardItemData.quantity"></camfil-product-attribute>
           <ng-container *ngTemplateOutlet="price"></ng-container>
         </ng-container>
         <span>
@@ -27,7 +27,7 @@
     </div>
     <camfil-cam-card-product-comment
       *ngIf="mode === 'edit' || camCardItemData.comment?.label"
-      [ngClass]="{'align-self-end': mode === 'view'}"
+      [ngClass]="{ 'align-self-end': mode === 'view' }"
       [currentCamCard]="currentCamCard"
       [camCardItem]="camCardItemData"
       [mode]="mode"
