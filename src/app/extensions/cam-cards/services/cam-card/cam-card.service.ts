@@ -24,7 +24,11 @@ export class CamCardService {
    * @returns           The customer's cam_cards.
    */
   getCamCards(): Observable<CamCard[]> {
-    return this.apiService.get('camcards').pipe(unpackEnvelope(), defaultIfEmpty([]));
+    return this.apiService.get('camcards').pipe(
+      unpackEnvelope(),
+      map((camCards: CamCardData[]) => camCards.map(camCard => this.camCardMapper.fromData(camCard))),
+      defaultIfEmpty([])
+    );
   }
 
   /**

@@ -185,9 +185,15 @@ export const camCardReducer = createReducer(
   }),
   on(updateCamCardContactsSuccess, (state: CamCardState, action) => {
     const { camCardId, contacts } = action.payload;
-    state.entities[camCardId].contacts = contacts;
     return {
       ...state,
+      entities: {
+        ...state.entities,
+        [camCardId]: {
+          ...state.entities[camCardId],
+          contacts,
+        },
+      },
     };
   }),
   on(selectCamCard, (state: CamCardState, action) => {
