@@ -71,16 +71,10 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit {
     },
   ];
 
-  deliveryInterval = [
-    {
-      value: '1',
-      viewValue: '1 week',
-    },
-    {
-      value: '2',
-      viewValue: '2 weeks',
-    },
-  ];
+  deliveryInterval = [...Array(999).keys()].map(i => ({
+    value: i + 1,
+    viewValue: i + 1,
+  }));
 
   errorValidator = [
     {
@@ -108,7 +102,6 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit {
       orderMark: ['', [Validators.maxLength(35)]],
       invoiceMark: ['', [Validators.maxLength(35)]],
       deliveryAddress: ['', [Validators.maxLength(35)]],
-      customer: ['', [Validators.maxLength(35)]],
       addressLine1: ['', [Validators.maxLength(35)]],
       addressLine2: ['', [Validators.maxLength(35)]],
       postalCode: ['', [Validators.maxLength(35)]],
@@ -116,6 +109,7 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit {
       lastDelivery: ['', [Validators.maxLength(35)]],
       deliveryInterval: ['', [Validators.maxLength(35)]],
       nextDelivery: ['', [Validators.maxLength(35)]],
+      reminder: ['', [Validators.maxLength(35)]],
     });
   }
   compareFn(x, y): boolean {
@@ -130,11 +124,14 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit {
         customerName: this.camCard.customer.customerNo,
         orderMark: this.camCard.orderLabel,
         invoiceMark: this.camCard.invoiceLabel,
-        customer: this.camCard.deliveryAddress.companyName1,
         addressLine1: this.camCard.deliveryAddress.addressLine1,
         addressLine2: this.camCard.deliveryAddress.addressLine2,
         postalCode: this.camCard.deliveryAddress.postalCode,
         city: this.camCard.deliveryAddress.city,
+        lastDelivery: this.camCard.lastDeliveryDate,
+        deliveryInterval: this.camCard.deliveryInterval,
+        nextDelivery: this.camCard.nextDeliveryDate,
+        reminder: this.camCard.reminderFlag,
       });
     }
   }
@@ -154,12 +151,15 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit {
         },
         deliveryAddress: {
           ...this.camCard?.deliveryAddress,
-          companyName1: this.camCardForm.get('customer').value,
           addressLine1: this.camCardForm.get('addressLine1').value,
           addressLine2: this.camCardForm.get('addressLine2').value,
           postalCode: this.camCardForm.get('postalCode').value,
           city: this.camCardForm.get('city').value,
         },
+        nextDeliveryDate: this.camCardForm.get('nextDelivery').value,
+        lastDeliveryDate: this.camCardForm.get('lastDelivery').value,
+        deliveryInterval: this.camCardForm.get('deliveryInterval').value,
+        reminderFlag: this.camCardForm.get('reminder').value,
       });
     } else {
       this.submitted = true;
@@ -175,13 +175,22 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit {
     const id = event.value;
     this.addresses$.subscribe(addresses => {
       const address = addresses.filter(element => element.id === id)[0];
+
       this.camCardForm.patchValue({
-        customer: address.companyName1,
         addressLine1: address.addressLine1,
         addressLine2: address.addressLine2,
         postalCode: address.postalCode,
         city: address.city,
       });
+    });
+  }
+
+  pickInterval(event) {
+    const amount = event.value;
+    const date = new Date(this.camCardForm.get('lastDelivery').value);
+    date.setMonth(date.getMonth() + amount);
+    this.camCardForm.patchValue({
+      nextDelivery: date,
     });
   }
 }

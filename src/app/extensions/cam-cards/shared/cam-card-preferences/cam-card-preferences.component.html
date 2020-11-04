@@ -75,17 +75,6 @@
             </mat-select>
           </mat-form-field>
           <mat-form-field appearance="fill" class="form-field">
-            <mat-label>{{ 'camfil.account.cam_card.add_to_form.customer_name' | translate }}</mat-label>
-            <input
-              matInput
-              formControlName="customer"
-              label="camfil.account.cam_card.add_to_form.customer_name"
-              markRequiredLabel="off"
-              maxlength="35"
-              data-testing-id="cam-card-dialog-name"
-            />
-          </mat-form-field>
-          <mat-form-field appearance="fill" class="form-field">
             <mat-label>{{ 'camfil.account.cam_card.add_to_form.building' | translate }}</mat-label>
             <input
               matInput
@@ -107,28 +96,30 @@
               data-testing-id="cam-card-dialog-name"
             />
           </mat-form-field>
-          <mat-form-field appearance="fill" class="form-field">
-            <mat-label>{{ 'camfil.account.cam_card.add_to_form.postal_code' | translate }}</mat-label>
-            <input
-              matInput
-              formControlName="postalCode"
-              label="camfil.account.cam_card.add_to_form.postal_code"
-              markRequiredLabel="off"
-              maxlength="35"
-              data-testing-id="cam-card-dialog-name"
-            />
-          </mat-form-field>
-          <mat-form-field appearance="fill" class="form-field">
-            <mat-label>{{ 'camfil.account.cam_card.add_to_form.city' | translate }}</mat-label>
-            <input
-              matInput
-              formControlName="city"
-              label="camfil.account.cam_card.add_to_form.city"
-              markRequiredLabel="off"
-              maxlength="35"
-              data-testing-id="cam-card-dialog-name"
-            />
-          </mat-form-field>
+          <div class="form-group">
+            <mat-form-field appearance="fill" class="form-field-zip-code">
+              <mat-label>{{ 'camfil.account.cam_card.add_to_form.postal_code' | translate }}</mat-label>
+              <input
+                matInput
+                formControlName="postalCode"
+                label="camfil.account.cam_card.add_to_form.postal_code"
+                markRequiredLabel="off"
+                maxlength="35"
+                data-testing-id="cam-card-dialog-name"
+              />
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="form-field-area">
+              <mat-label>{{ 'camfil.account.cam_card.add_to_form.city' | translate }}</mat-label>
+              <input
+                matInput
+                formControlName="city"
+                label="camfil.account.cam_card.add_to_form.city"
+                markRequiredLabel="off"
+                maxlength="35"
+                data-testing-id="cam-card-dialog-name"
+              />
+            </mat-form-field>
+          </div>
         </div>
         <div class="col-md-4">
           <h3>{{ 'camfil.account.cam_card.add_to_form.delivery_time' | translate }}</h3>
@@ -142,7 +133,7 @@
           </mat-form-field>
           <mat-form-field appearance="fill">
             <mat-label>{{ 'camfil.account.cam_card.add_to_form.delivery_interval' | translate }}</mat-label>
-            <mat-select formControlName="deliveryInterval">
+            <mat-select formControlName="deliveryInterval" (selectionChange)="pickInterval($event)">
               <mat-option>--</mat-option>
               <mat-option *ngFor="let delivery of deliveryInterval" [value]="delivery.value">
                 {{ delivery.viewValue }}
@@ -157,6 +148,9 @@
             </mat-datepicker-toggle>
             <mat-datepicker #pickerNext></mat-datepicker>
           </mat-form-field>
+          <mat-checkbox class="example-margin" formControlName="reminder">
+            Send me a service reminder via email
+          </mat-checkbox>
         </div>
       </div>
     </form>
