@@ -9,6 +9,7 @@ export interface CamCardHeader {
 }
 
 export interface CamCard extends CamCardHeader {
+  // TODO: make extends form CamCardData and simplify data later + compare fields
   id?: string;
   orderLabel?: string;
   invoiceLabel?: string;
