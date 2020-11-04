@@ -7,6 +7,15 @@ const routes: Routes = [
     loadChildren: () => import('./camfil-ahu/camfil-ahu-page.module').then(m => m.CamfilAHUPageModule),
     data: { feature: 'camAhu', breadcrumbData: [{ key: 'camfil.ahu.link' }] },
   },
+  {
+    path: 'air-handling-unit-guide/detail',
+    loadChildren: () =>
+      import('./camfil-ahu-detail/camfil-ahu-page-detail.module').then(m => m.CamfilAHUPageDetailModule),
+    data: {
+      feature: 'camAhu',
+      breadcrumbData: [{ key: 'camfil.ahu.link', link: '/air-handling-unit-guide' }, { key: 'Air Handling Unit Name' }],
+    },
+  },
 ];
 
 @NgModule({
