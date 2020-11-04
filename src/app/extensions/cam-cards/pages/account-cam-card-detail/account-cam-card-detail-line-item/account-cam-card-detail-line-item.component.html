@@ -1,5 +1,67 @@
 <ng-container *ngIf="product$ | async as product">
-  <div class="d-flex">
+  <div class="d-flex align-items-center text-left" [ngClass]="{'justify-content-between': mode === 'edit'}">
+    {{ index }}
+    <a class="image" [routerLink]="product | ishProductRoute">
+      <camfil-product-image [product]="product" imageType="S" class="product-image"></camfil-product-image>
+    </a>
+    <div>
+      <camfil-product-title [product]="product"></camfil-product-title>
+      <div class="attributes">
+        <camfil-product-attribute name="camfil.product.id.label" [value]="product.sku"></camfil-product-attribute>
+        <camfil-product-attribute name="Dimensions" [value]="product.sku"></camfil-product-attribute>
+        <camfil-product-attribute name="Efficiency" [value]="product.sku"></camfil-product-attribute>
+        <ng-container *ngIf="mode === 'view'">
+          <camfil-product-attribute
+            name="comment.label"
+            [value]="camCardItemData.comment.label"
+            *ngIf="camCardItemData.comment.label"
+          ></camfil-product-attribute>
+          <camfil-product-attribute name="Quantity" [value]="camCardItemData.count"></camfil-product-attribute>
+          <ng-container *ngTemplateOutlet="price"></ng-container>
+        </ng-container>
+        <span>
+          <mat-icon svgIcon="search" class="size-15"></mat-icon>
+          {{ 'Quickview' | translate }}
+        </span>
+      </div>
+    </div>
+    <camfil-cam-card-product-comment
+      *ngIf="mode === 'edit' || camCardItemData.comment?.label"
+      [ngClass]="{'align-self-end': mode === 'view'}"
+      [currentCamCard]="currentCamCard"
+      [camCardItem]="camCardItemData"
+      [mode]="mode"
+    ></camfil-cam-card-product-comment>
+    <ng-container *ngIf="mode === 'edit'">
+      <a class="btn-tool" (click)="removeProductFromCamCard(camCardItemData?.id)" data-testing-id="delete-cam-card">
+        <mat-icon svgIcon="delete"></mat-icon>
+      </a>
+      <form [formGroup]="addToCartForm">
+        <camfil-product-quantity
+          [allowZeroQuantity]="false"
+          [quantityLabel]="''"
+          [product]="product"
+          [parentForm]="addToCartForm"
+          controlName="quantity"
+        ></camfil-product-quantity>
+      </form>
+      <div class="prices"><ng-container *ngTemplateOutlet="price"></ng-container></div>
+    </ng-container>
+    <ish-checkbox *ngIf="selectItemForm" [form]="selectItemForm" controlName="productCheckbox"> </ish-checkbox>
+  </div>
+
+  <ng-template #price>
+    <camfil-product-attribute
+      name="camfil.product.list_price.label"
+      [value]="product.listPrice | ishPrice"
+    ></camfil-product-attribute>
+    <camfil-product-attribute
+      name="camfil.product.your_price.label"
+      [value]="product.salePrice | ishPrice"
+    ></camfil-product-attribute>
+  </ng-template>
+
+  <!-- <div class="d-flex">
     <div class="col-1 col-md-2 list-item d-flex">
       <ish-checkbox *ngIf="selectItemForm" [form]="selectItemForm" controlName="productCheckbox"> </ish-checkbox>
       <a class="d-none d-md-inline" [routerLink]="product | ishProductRoute">
@@ -51,7 +113,7 @@
     <div class="col-4 col-md-2 list-item column-price">
       <camfil-product-price [product]="product"></camfil-product-price>
     </div>
-  </div>
+  </div> -->
 
   <camfil-select-cam-card-modal
     #moveDialog

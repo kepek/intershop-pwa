@@ -13,6 +13,7 @@ import { CamCard, CamCardItem } from '../../../models/cam-card/cam-card.model';
 @Component({
   selector: 'camfil-account-cam-card-detail-line-item',
   templateUrl: './account-cam-card-detail-line-item.component.html',
+  styleUrls: ['./account-cam-card-detail-line-item.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AccountCamCardDetailLineItemComponent implements OnChanges, OnInit, OnDestroy {
@@ -22,6 +23,8 @@ export class AccountCamCardDetailLineItemComponent implements OnChanges, OnInit,
   @Input() camCardItemData: CamCardItem;
   @Input() currentCamCard: CamCard;
   @Input() selectedItemsForm?: FormArray;
+  @Input() mode?: 'edit' | 'view';
+  @Input() index: number;
 
   addToCartForm: FormGroup;
   selectItemForm: FormGroup;

@@ -7,13 +7,16 @@ import { MockComponent, MockPipe } from 'ng-mocks';
 import { instance, mock } from 'ts-mockito';
 
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
+import { PricePipe } from 'ish-core/models/price/price.pipe';
 import { DatePipe } from 'ish-core/pipes/date.pipe';
 import { ProductRoutePipe } from 'ish-core/routing/product/product-route.pipe';
 import { CamfilProductAddToBasketComponent } from 'ish-shared/components/product/camfil-product-add-to-basket/camfil-product-add-to-basket.component';
+import { CamfilProductAttributeComponent } from 'ish-shared/components/product/camfil-product-attribute/camfil-product-attribute.component';
 import { CamfilProductIdComponent } from 'ish-shared/components/product/camfil-product-id/camfil-product-id.component';
 import { CamfilProductInventoryComponent } from 'ish-shared/components/product/camfil-product-inventory/camfil-product-inventory.component';
 import { CamfilProductPriceComponent } from 'ish-shared/components/product/camfil-product-price/camfil-product-price.component';
 import { CamfilProductQuantityComponent } from 'ish-shared/components/product/camfil-product-quantity/camfil-product-quantity.component';
+import { CamfilProductTitleComponent } from 'ish-shared/components/product/camfil-product-title/camfil-product-title.component';
 import { ProductBundleDisplayComponent } from 'ish-shared/components/product/product-bundle-display/product-bundle-display.component';
 import { ProductVariationDisplayComponent } from 'ish-shared/components/product/product-variation-display/product-variation-display.component';
 import { CheckboxComponent } from 'ish-shared/forms/components/checkbox/checkbox.component';
@@ -21,6 +24,7 @@ import { InputComponent } from 'ish-shared/forms/components/input/input.componen
 import { CamfilProductImageComponent } from 'ish-shell/header/camfil-product-image/camfil-product-image.component';
 
 import { CamCardsFacade } from '../../../facades/cam-cards.facade';
+import { CamCardProductCommentComponent } from '../../../shared/cam-card-product-comment/cam-card-product-comment.component';
 import { SelectCamCardModalComponent } from '../../../shared/select-cam-card-modal/select-cam-card-modal.component';
 
 import { AccountCamCardDetailLineItemComponent } from './account-cam-card-detail-line-item.component';
@@ -34,12 +38,15 @@ describe('Account Cam Card Detail Line Item Component', () => {
     await TestBed.configureTestingModule({
       declarations: [
         AccountCamCardDetailLineItemComponent,
+        MockComponent(CamCardProductCommentComponent),
         MockComponent(CamfilProductAddToBasketComponent),
+        MockComponent(CamfilProductAttributeComponent),
         MockComponent(CamfilProductIdComponent),
         MockComponent(CamfilProductImageComponent),
         MockComponent(CamfilProductInventoryComponent),
         MockComponent(CamfilProductPriceComponent),
         MockComponent(CamfilProductQuantityComponent),
+        MockComponent(CamfilProductTitleComponent),
         MockComponent(CheckboxComponent),
         MockComponent(FaIconComponent),
         MockComponent(InputComponent),
@@ -47,6 +54,7 @@ describe('Account Cam Card Detail Line Item Component', () => {
         MockComponent(ProductVariationDisplayComponent),
         MockComponent(SelectCamCardModalComponent),
         MockPipe(DatePipe),
+        MockPipe(PricePipe),
         MockPipe(ProductRoutePipe),
       ],
       imports: [ReactiveFormsModule, RouterTestingModule, TranslateModule.forRoot()],

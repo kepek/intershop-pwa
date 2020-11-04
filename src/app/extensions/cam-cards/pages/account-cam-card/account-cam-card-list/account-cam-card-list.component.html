@@ -254,15 +254,14 @@
 <ng-template #camCardRow let-camCard="camCard">
   <div
     *ngFor="let camCardItem of camCard.camCardItems; index as i"
-    class="d-flex justify-content-between cam-card-product"
+    class="d-flex align-items-center justify-content-between cam-card-product"
   >
-    {{ i + 1 }}
     <camfil-account-cam-card-detail-line-item
       [camCardItemData]="camCardItem"
       [currentCamCard]="camCard"
+      [index]="i + 1"
+      mode="view"
     ></camfil-account-cam-card-detail-line-item>
-
-    <camfil-cam-card-product-comment [camCardItem]="camCardItem" mode="view"></camfil-cam-card-product-comment>
     <mat-checkbox
       [checked]="isProductChecked(camCardItem.id)"
       (change)="handleProductCheckbox(camCardItem, camCard, $event)"
