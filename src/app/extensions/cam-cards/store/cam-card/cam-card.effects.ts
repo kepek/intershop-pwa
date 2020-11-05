@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store, select } from '@ngrx/store';
@@ -12,16 +13,17 @@ import {
   mapTo,
   mergeMap,
   switchMap,
+  takeWhile,
   tap,
   withLatestFrom,
 } from 'rxjs/operators';
 
 import { getDeviceType } from 'ish-core/store/core/configuration';
 import { displaySuccessMessage } from 'ish-core/store/core/messages';
-import { ofUrl, selectRouteParam } from 'ish-core/store/core/router';
+import { ofUrl, selectQueryParam, selectRouteParam } from 'ish-core/store/core/router';
 import { setBreadcrumbData } from 'ish-core/store/core/viewconf';
 import { getCurrentBasket } from 'ish-core/store/customer/basket';
-import { getUserAuthorized } from 'ish-core/store/customer/user';
+import { getUserAuthorized, loginUserSuccess } from 'ish-core/store/customer/user';
 import {
   distinctCompareWith,
   mapErrorToAction,
@@ -87,7 +89,8 @@ export class CamCardEffects {
     private actions$: Actions,
     private camCardService: CamCardService,
     private store: Store,
-    private router: Router
+    private router: Router,
+    @Inject(PLATFORM_ID) private platformId: string
   ) {}
 
   loadCamCards$ = createEffect(() =>
@@ -111,7 +114,7 @@ export class CamCardEffects {
       mergeMap((camCardData: CamCard) =>
         this.camCardService.createCamCard(camCardData).pipe(
           tap(camCard => {
-            this.navigateTo(`/account/cam-cards/${camCard.id}`);
+            this.router.navigateByUrl(`/account/cam-cards/${camCard.id}`);
           }),
           mergeMap(camCard => [
             createCamCardSuccess({ camCard }),
@@ -467,7 +470,22 @@ export class CamCardEffects {
       )
     )
   );
-  private navigateTo(path: string): void {
-    this.router.navigate([path]);
-  }
+
+  redirectAfterLogin$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(loginUserSuccess),
+        takeWhile(() => isPlatformBrowser(this.platformId)),
+        whenTruthy(),
+        withLatestFrom(this.store.pipe(select(selectQueryParam('returnUrl')))),
+        tap(([, returnUrl]) => {
+          if (returnUrl) {
+            this.router.navigateByUrl(returnUrl);
+          } else {
+            this.router.navigateByUrl('account/cam-cards');
+          }
+        })
+      ),
+    { dispatch: false }
+  );
 }
