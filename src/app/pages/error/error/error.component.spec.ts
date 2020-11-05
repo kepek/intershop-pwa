@@ -1,8 +1,12 @@
+import { APP_BASE_HREF } from '@angular/common';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MockComponent } from 'ng-mocks';
+import { instance, mock } from 'ts-mockito';
 
-import { SafeHtmlPipe } from 'ish-core/pipes/safe-html.pipe';
+import { ServerHtmlDirective } from 'ish-core/directives/server-html.directive';
+import { AppFacade } from 'ish-core/facades/app.facade';
 import { findAllCustomElements } from 'ish-core/utils/dev/html-query-utils';
 import { CamfilSearchBoxComponent } from 'ish-shell/header/camfil-search-box/camfil-search-box.component';
 
@@ -16,8 +20,12 @@ describe('Error Component', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot()],
-      declarations: [ErrorComponent, MockComponent(CamfilSearchBoxComponent), SafeHtmlPipe],
+      imports: [RouterTestingModule, TranslateModule.forRoot()],
+      declarations: [ErrorComponent, MockComponent(CamfilSearchBoxComponent), ServerHtmlDirective],
+      providers: [
+        { provide: AppFacade, useFactory: () => instance(mock(AppFacade)) },
+        { provide: APP_BASE_HREF, useValue: '/' },
+      ],
     }).compileComponents();
   });
 

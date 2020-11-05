@@ -1,8 +1,4 @@
-import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ReactiveFormsModule } from '@angular/forms';
-import { RouterTestingModule } from '@angular/router/testing';
-import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 import { MockComponent, MockDirective } from 'ng-mocks';
 
@@ -10,13 +6,13 @@ import { ServerHtmlDirective } from 'ish-core/directives/server-html.directive';
 import { makeHttpError } from 'ish-core/utils/dev/api-service-utils';
 import { BasketMockData } from 'ish-core/utils/dev/basket-mock-data';
 import { ContentIncludeComponent } from 'ish-shared/cms/components/content-include/content-include.component';
+import { BasketCostSummaryComponent } from 'ish-shared/components/basket/basket-cost-summary/basket-cost-summary.component';
 import { BasketItemsSummaryComponent } from 'ish-shared/components/basket/basket-items-summary/basket-items-summary.component';
 import { BasketValidationResultsComponent } from 'ish-shared/components/basket/basket-validation-results/basket-validation-results.component';
 import { CamfilBasketCostSummaryComponent } from 'ish-shared/components/basket/camfil-basket-cost-summary/camfil-basket-cost-summary.component';
 import { BasketInvoiceAddressWidgetComponent } from 'ish-shared/components/checkout/basket-invoice-address-widget/basket-invoice-address-widget.component';
 import { BasketShippingAddressWidgetComponent } from 'ish-shared/components/checkout/basket-shipping-address-widget/basket-shipping-address-widget.component';
 import { ErrorMessageComponent } from 'ish-shared/components/common/error-message/error-message.component';
-import { ModalDialogLinkComponent } from 'ish-shared/components/common/modal-dialog-link/modal-dialog-link.component';
 
 import { CheckoutAddressComponent } from './checkout-address.component';
 
@@ -26,13 +22,10 @@ describe('Checkout Address Component', () => {
   let element: HTMLElement;
 
   beforeEach(async () => {
-    @Component({ template: 'dummy' })
-    class DummyComponent {}
-
     await TestBed.configureTestingModule({
       declarations: [
         CheckoutAddressComponent,
-        DummyComponent,
+        MockComponent(BasketCostSummaryComponent),
         MockComponent(BasketInvoiceAddressWidgetComponent),
         MockComponent(BasketItemsSummaryComponent),
         MockComponent(BasketShippingAddressWidgetComponent),
@@ -40,15 +33,9 @@ describe('Checkout Address Component', () => {
         MockComponent(CamfilBasketCostSummaryComponent),
         MockComponent(ContentIncludeComponent),
         MockComponent(ErrorMessageComponent),
-        MockComponent(ModalDialogLinkComponent),
         MockDirective(ServerHtmlDirective),
       ],
-      imports: [
-        NgbCollapseModule,
-        ReactiveFormsModule,
-        RouterTestingModule.withRoutes([{ path: 'checkout/shipping', component: DummyComponent }]),
-        TranslateModule.forRoot(),
-      ],
+      imports: [TranslateModule.forRoot()],
     }).compileComponents();
   });
 

@@ -1,7 +1,9 @@
-import { PLATFORM_ID } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
+import { BrowserTransferStateModule } from '@angular/platform-browser';
 import { CookiesService as ForeignCookiesService } from 'ngx-utils-cookies-port';
 import { anything, instance, mock, verify } from 'ts-mockito';
+
+import { COOKIE_CONSENT_OPTIONS } from 'ish-core/configurations/injection-keys';
 
 import { CookiesService } from './cookies.service';
 
@@ -12,8 +14,21 @@ describe('Cookies Service', () => {
   beforeEach(() => {
     foreignCookiesServiceMock = mock(ForeignCookiesService);
     TestBed.configureTestingModule({
+      imports: [BrowserTransferStateModule],
       providers: [
-        { provide: PLATFORM_ID, useValue: 'browser' },
+        {
+          provide: COOKIE_CONSENT_OPTIONS,
+          useValue: {
+            options: [
+              {
+                id: 'required',
+                name: 'required.name',
+                description: 'required.description',
+                required: true,
+              },
+            ],
+          },
+        },
         { provide: ForeignCookiesService, useFactory: () => instance(foreignCookiesServiceMock) },
       ],
     });

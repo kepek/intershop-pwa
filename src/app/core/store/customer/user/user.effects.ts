@@ -1,23 +1,22 @@
-import { Injectable } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { routerNavigatedAction } from '@ngrx/router-store';
 import { Store, select } from '@ngrx/store';
-import { EMPTY, race, timer } from 'rxjs';
+import { EMPTY } from 'rxjs';
 import {
   catchError,
   concatMap,
   concatMapTo,
-  debounce,
-  debounceTime,
   exhaustMap,
   filter,
-  first,
   map,
   mapTo,
   mergeMap,
+  sample,
   switchMap,
-  switchMapTo,
+  takeWhile,
   tap,
   withLatestFrom,
 } from 'rxjs/operators';
@@ -27,8 +26,8 @@ import { PaymentService } from 'ish-core/services/payment/payment.service';
 import { PersonalizationService } from 'ish-core/services/personalization/personalization.service';
 import { UserService } from 'ish-core/services/user/user.service';
 import { displaySuccessMessage } from 'ish-core/store/core/messages';
-import { selectUrl } from 'ish-core/store/core/router';
-import { mapErrorToAction, mapToPayload, mapToPayloadProperty } from 'ish-core/utils/operators';
+import { selectQueryParam, selectUrl } from 'ish-core/store/core/router';
+import { mapErrorToAction, mapToPayload, mapToPayloadProperty, whenTruthy } from 'ish-core/utils/operators';
 
 import {
   createUser,
@@ -46,11 +45,9 @@ import {
   loginUser,
   loginUserFail,
   loginUserSuccess,
-  logoutUser,
   requestPasswordReminder,
   requestPasswordReminderFail,
   requestPasswordReminderSuccess,
-  resetAPIToken,
   setPGID,
   updateCustomer,
   updateCustomerFail,
@@ -76,7 +73,8 @@ export class UserEffects {
     private userService: UserService,
     private paymentService: PaymentService,
     private personalizationService: PersonalizationService,
-    private router: Router
+    private router: Router,
+    @Inject(PLATFORM_ID) private platformId: string
   ) {}
 
   loginUser$ = createEffect(() =>
@@ -101,51 +99,14 @@ export class UserEffects {
     )
   );
 
-  goToLoginAfterLogoutBySessionTimeout$ = createEffect(
-    () =>
-      this.actions$.pipe(
-        ofType(resetAPIToken),
-        switchMapTo(
-          race(
-            // wait for immediate LogoutUser
-            this.actions$.pipe(ofType(logoutUser)),
-            // or stop flow
-            timer(1000).pipe(switchMapTo(EMPTY))
-          )
-        ),
-        debounce(() => this.actions$.pipe(debounceTime(2000), first())),
-        tap(() => {
-          this.router.navigate(['/login'], {
-            queryParams: { returnUrl: this.router.url, messageKey: 'session_timeout' },
-          });
-        })
-      ),
-    { dispatch: false }
-  );
-
-  /**
-   * redirects to the returnUrl after successful login
-   * does not redirect at all, if no returnUrl is defined
-   */
-  // tslint:disable-next-line:no-commented-out-code
-  /*  redirectAfterLogin$ = createEffect(
-      () =>
-        this.store$.pipe(select(selectQueryParam('returnUrl'))).pipe(
-          whenTruthy(),
-          sample(this.actions$.pipe(ofType(loginUserSuccess))),
-          tap(navigateTo => this.router.navigateByUrl(navigateTo))
-        ),
-      { dispatch: false }
-    );*/
-
   redirectAfterLogin$ = createEffect(
     () =>
-      this.actions$.pipe(
-        ofType(loginUserSuccess),
-        withLatestFrom(this.store$.pipe(select(selectUrl))),
-        filter(([, url]) => url && url.includes('/login')),
-        tap(() => {
-          this.router.navigateByUrl('/account/cam-cards');
+      this.store$.pipe(select(selectQueryParam('returnUrl'))).pipe(
+        takeWhile(() => isPlatformBrowser(this.platformId)),
+        whenTruthy(),
+        sample(this.actions$.pipe(ofType(loginUserSuccess))),
+        tap(navigateTo => {
+          this.router.navigateByUrl(navigateTo);
         })
       ),
     { dispatch: false }
@@ -260,8 +221,7 @@ export class UserEffects {
   loadUserByAPIToken$ = createEffect(() =>
     this.actions$.pipe(
       ofType(loadUserByAPIToken),
-      mapToPayloadProperty('apiToken'),
-      concatMap(apiToken => this.userService.signinUserByToken(apiToken).pipe(map(loginUserSuccess)))
+      concatMap(() => this.userService.signinUserByToken().pipe(map(loginUserSuccess)))
     )
   );
 

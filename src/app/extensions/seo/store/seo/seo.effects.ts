@@ -1,4 +1,4 @@
-import { DOCUMENT, isPlatformServer } from '@angular/common';
+import { APP_BASE_HREF, DOCUMENT, isPlatformServer } from '@angular/common';
 import { ApplicationRef, Inject, Injectable, Optional, PLATFORM_ID } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { routerNavigatedAction, routerNavigationAction } from '@ngrx/router-store';
@@ -8,8 +8,8 @@ import { MetaService } from '@ngx-meta/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Request } from 'express';
 import { isEqual } from 'lodash-es';
-import { Observable, merge, race } from 'rxjs';
-import { distinctUntilChanged, filter, first, map, mapTo, switchMap, switchMapTo, tap } from 'rxjs/operators';
+import { merge, race } from 'rxjs';
+import { distinctUntilChanged, filter, map, mapTo, switchMap, takeWhile, tap, withLatestFrom } from 'rxjs/operators';
 
 import { CategoryHelper } from 'ish-core/models/category/category.model';
 import { ProductView } from 'ish-core/models/product-view/product-view.model';
@@ -26,31 +26,17 @@ import { mapToProperty, whenTruthy } from 'ish-core/utils/operators';
 
 @Injectable()
 export class SeoEffects {
-  private baseURL: string;
-  private ogImageDefault: string;
-
   constructor(
     private actions$: Actions,
     private store: Store,
     private meta: MetaService,
     private translate: TranslateService,
     @Inject(DOCUMENT) private doc: Document,
-    @Inject(PLATFORM_ID) private platformId: string,
     @Optional() @Inject(REQUEST) private request: Request,
-    private appRef: ApplicationRef
-  ) {
-    // get baseURL
-    if (isPlatformServer(this.platformId)) {
-      this.baseURL = `${this.request.protocol}://${
-        this.request.get('host') + this.doc.querySelector('base').getAttribute('href')
-      }`;
-    } else {
-      this.baseURL = this.doc.baseURI;
-    }
-
-    // og:image default (needs to be an absolute URL)
-    this.ogImageDefault = `${this.baseURL}assets/img/og-image-default.jpg`;
-  }
+    @Inject(APP_BASE_HREF) private baseHref: string,
+    private appRef: ApplicationRef,
+    @Inject(PLATFORM_ID) private platformId: string
+  ) {}
 
   private productPage$ = this.store.pipe(
     ofProductUrl(),
@@ -72,9 +58,9 @@ export class SeoEffects {
         switchMap(() =>
           race([
             // PRODUCT PAGE
-            this.productPage$.pipe(map(product => this.baseURL + generateProductUrl(product).substr(1))),
+            this.productPage$.pipe(map(product => this.baseURL(true) + generateProductUrl(product).substr(1))),
             // CATEGORY / FAMILY PAGE
-            this.categoryPage$.pipe(map(category => this.baseURL + generateCategoryUrl(category).substr(1))),
+            this.categoryPage$.pipe(map(category => this.baseURL(true) + generateCategoryUrl(category).substr(1))),
             // DEFAULT
             this.appRef.isStable.pipe(whenTruthy(), mapTo(this.doc.URL.replace(/[;?].*/g, ''))),
           ])
@@ -134,7 +120,7 @@ export class SeoEffects {
           description: 'seo.defaults.description',
           robots: 'index, follow',
           'og:type': 'website',
-          'og:image': this.ogImageDefault,
+          'og:image': `${this.baseURL(false)}assets/img/og-image-default.jpg`,
           ...attributes,
         })),
         distinctUntilChanged(isEqual),
@@ -145,33 +131,29 @@ export class SeoEffects {
     { dispatch: false }
   );
 
-  seoLanguage$ = createEffect(
+  seoLanguages$ = createEffect(
     () =>
-      this.waitAppStable(
-        this.store.pipe(
-          select(getCurrentLocale),
-          whenTruthy(),
-          tap(current => {
-            this.meta.setTag('og:locale', current.lang);
-          })
-        )
+      this.actions$.pipe(
+        takeWhile(() => isPlatformServer(this.platformId)),
+        ofType(routerNavigatedAction),
+        withLatestFrom(this.store.pipe(select(getCurrentLocale)), this.store.pipe(select(getAvailableLocales))),
+        tap(([, current, locales]) => {
+          this.meta.setTag('og:locale', current.lang);
+          this.meta.setTag('og:locale:alternate', locales.map(x => x.lang).join(','));
+        })
       ),
     { dispatch: false }
   );
 
-  seoAlternateLanguages$ = createEffect(
-    () =>
-      this.waitAppStable(
-        this.store.pipe(
-          select(getAvailableLocales),
-          whenTruthy(),
-          tap(locales => {
-            this.meta.setTag('og:locale:alternate', locales.map(x => x.lang).join(','));
-          })
-        )
-      ),
-    { dispatch: false }
-  );
+  private baseURL(includeBaseHref: boolean) {
+    let url: string;
+    if (this.request) {
+      url = `${this.request.protocol}://${this.request.get('host')}${includeBaseHref ? this.baseHref : ''}`;
+    } else {
+      url = includeBaseHref ? this.doc.baseURI : this.doc.baseURI.replace(new RegExp(`${this.baseHref}$`), '');
+    }
+    return url.endsWith('/') ? url : url + '/';
+  }
 
   private setCanonicalLink(url: string) {
     let canonicalLink = this.doc.querySelector('link[rel="canonical"]');
@@ -197,9 +179,5 @@ export class SeoEffects {
             break;
         }
       });
-  }
-
-  private waitAppStable<T>(obs: Observable<T>) {
-    return this.appRef.isStable.pipe(whenTruthy(), first(), switchMapTo(obs));
   }
 }

@@ -1,11 +1,14 @@
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, TransferState } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormlyModule } from '@ngx-formly/core';
 import { FormlyMaterialModule } from '@ngx-formly/material';
 
+import { COOKIE_CONSENT_VERSION } from 'ish-core/configurations/state-keys';
 import { CoreModule } from 'ish-core/core.module';
+
+import { environment } from '../environments/environment';
 
 import { AppComponent } from './app.component';
 import { CamAccountRoutingModule } from './extensions/cam-account/pages/cam-account-routing.module';
@@ -39,4 +42,10 @@ import { ShellModule } from './shell/shell.module';
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule {
+  constructor(transferState: TransferState) {
+    if (!transferState.hasKey<number>(COOKIE_CONSENT_VERSION)) {
+      transferState.set(COOKIE_CONSENT_VERSION, environment.cookieConsentVersion);
+    }
+  }
+}

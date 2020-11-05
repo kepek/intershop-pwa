@@ -32,6 +32,11 @@ describe('Product Links Carousel Component', () => {
     expect(component).toBeTruthy();
     expect(element).toBeTruthy();
     expect(() => fixture.detectChanges()).not.toThrow();
-    expect(element).toMatchSnapshot();
+    expect(element.querySelector('swiper')).toBeTruthy();
+    expect(element.querySelector('swiper .swiper-slide')).toMatchInlineSnapshot(`
+      <div class="swiper-slide">
+        <camfil-product-item ng-reflect-product-sku="sku"></camfil-product-item>
+      </div>
+    `);
   });
 });
