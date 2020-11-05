@@ -1116,5 +1116,7 @@
   "tacton.submit.error.message": "A technical error occurred while processing your request. Please try again later.",
   "tacton.submit.success.message": "Your request has been successfully submitted. We will e-mail <strong>{{0}}</strong> to keep you updated on the status of your request.",
   "tacton.undo.tooltip": "Undo",
-  "textarea.max_limit": "Your message: {{0}} characters remaining."
+  "textarea.max_limit": "Your message: {{0}} characters remaining.",
+  "camfil.account.cam_card_preferences.maximize": "Maximize",
+  "camfil.account.cam_card_preferences.minimize": "Minimize"
 }

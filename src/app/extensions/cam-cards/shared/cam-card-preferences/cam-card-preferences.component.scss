@@ -6,6 +6,9 @@
     width: 100%;
     margin-bottom: $space-box;
   }
+  .mat-card {
+    padding: 24px;
+  }
 
   .form-group {
     margin: 0 -10px;
@@ -27,6 +30,32 @@
   h3 {
     font-weight: 700;
     text-transform: initial;
+  }
+
+  .collapse {
+    display: block;
+    max-height: 0;
+    overflow: hidden;
+    transition: all 0.5s ease-out;
+  }
+
+  .collapse.show {
+    max-height: 1000px;
+    transition: all 0.5s ease-in;
+  }
+
+  .collapse-link {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 14px;
+    font-weight: normal;
+    color: $black;
+    opacity: 0.6;
+    &:hover {
+      color: $black;
+      opacity: 1;
+    }
   }
 
   @media (min-width: $screen-md-min) {
