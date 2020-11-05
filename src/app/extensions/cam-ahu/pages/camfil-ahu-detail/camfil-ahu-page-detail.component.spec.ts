@@ -9,18 +9,18 @@ import { CamfilBreadcrumbComponent } from 'ish-shared/components/common/camfil-b
 import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
 import { CamfilProductGuidesComponent } from 'ish-shared/components/product/camfil-product-guides/camfil-product-guides.component';
 
-import { CamfilAHUPageComponent } from './camfil-ahu-page.component';
+import { CamfilAHUPageDetailComponent } from './camfil-ahu-page-detail.component';
 
 describe('Camfil Ahu Page Detail Component', () => {
-  let component: CamfilAHUPageComponent;
-  let fixture: ComponentFixture<CamfilAHUPageComponent>;
+  let component: CamfilAHUPageDetailComponent;
+  let fixture: ComponentFixture<CamfilAHUPageDetailComponent>;
   let element: HTMLElement;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [RouterTestingModule, TranslateModule.forRoot()],
       declarations: [
-        CamfilAHUPageComponent,
+        CamfilAHUPageDetailComponent,
         MockComponent(CamfilBreadcrumbComponent),
         MockComponent(CamfilProductGuidesComponent),
         MockComponent(LoadingComponent),
@@ -30,7 +30,7 @@ describe('Camfil Ahu Page Detail Component', () => {
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CamfilAHUPageComponent);
+    fixture = TestBed.createComponent(CamfilAHUPageDetailComponent);
     component = fixture.componentInstance;
     element = fixture.nativeElement;
   });
