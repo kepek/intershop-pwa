@@ -4,9 +4,10 @@ import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { NgbPopoverModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 import { MockComponent } from 'ng-mocks';
-import { EMPTY } from 'rxjs';
+import { EMPTY, of } from 'rxjs';
 import { instance, mock, when } from 'ts-mockito';
 
+import { AppFacade } from 'ish-core/facades/app.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { CamfilBreadcrumbComponent } from 'ish-shared/components/common/camfil-breadcrumb/camfil-breadcrumb.component';
 import { ErrorMessageComponent } from 'ish-shared/components/common/error-message/error-message.component';
@@ -19,22 +20,28 @@ import { CamCardPreferencesComponent } from '../../shared/cam-card-preferences/c
 import { CamCardProductCommentComponent } from '../../shared/cam-card-product-comment/cam-card-product-comment.component';
 
 import { AccountCamCardDetailLineItemComponent } from './account-cam-card-detail-line-item/account-cam-card-detail-line-item.component';
+import { AccountCamCardDetailListComponent } from './account-cam-card-detail-list/account-cam-card-detail-list.component';
 import { AccountCamCardDetailPageComponent } from './account-cam-card-detail-page.component';
 
 describe('Account Cam Card Detail Page Component', () => {
   let component: AccountCamCardDetailPageComponent;
   let fixture: ComponentFixture<AccountCamCardDetailPageComponent>;
   let element: HTMLElement;
+  let appFacade: AppFacade;
 
   beforeEach(async () => {
     const camCardsFacade = mock(CamCardsFacade);
     when(camCardsFacade.currentCamCard$).thenReturn(EMPTY);
+
+    appFacade = mock(AppFacade);
+    when(appFacade.headerType$).thenReturn(of(undefined));
 
     await TestBed.configureTestingModule({
       imports: [NgbPopoverModule, RouterTestingModule, TranslateModule.forRoot()],
       declarations: [
         AccountCamCardDetailPageComponent,
         MockComponent(AccountCamCardDetailLineItemComponent),
+        MockComponent(AccountCamCardDetailListComponent),
         MockComponent(CamCardPreferencesComponent),
         MockComponent(CamCardPreferencesDialogComponent),
         MockComponent(CamCardProductCommentComponent),
@@ -47,6 +54,7 @@ describe('Account Cam Card Detail Page Component', () => {
       providers: [
         { provide: CamCardsFacade, useFactory: () => instance(camCardsFacade) },
         { provide: ShoppingFacade, useFactory: () => instance(mock(ShoppingFacade)) },
+        { provide: AppFacade, useFactory: () => instance(appFacade) },
       ],
     }).compileComponents();
   });

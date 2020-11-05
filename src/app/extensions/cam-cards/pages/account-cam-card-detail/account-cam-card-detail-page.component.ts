@@ -4,8 +4,10 @@ import { Router } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil, withLatestFrom } from 'rxjs/operators';
 
+import { AppFacade } from 'ish-core/facades/app.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { HttpError } from 'ish-core/models/http-error/http-error.model';
+import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
 
 import { CamCardsFacade } from '../../facades/cam-cards.facade';
 import { CamCardHelper } from '../../models/cam-card/cam-card.helper';
@@ -21,6 +23,7 @@ export class AccountCamCardDetailPageComponent implements OnInit, OnDestroy {
   camCard$: Observable<CamCard>;
   camCardError$: Observable<HttpError>;
   camCardLoading$: Observable<boolean>;
+  deviceType$: Observable<DeviceType>;
 
   selectedItemsForm: FormArray;
   selectedItems: CamCardItem[];
@@ -29,12 +32,18 @@ export class AccountCamCardDetailPageComponent implements OnInit, OnDestroy {
 
   private destroy$ = new Subject();
 
-  constructor(private camCardsFacade: CamCardsFacade, private shoppingFacade: ShoppingFacade, public router: Router) {}
+  constructor(
+    private camCardsFacade: CamCardsFacade,
+    private shoppingFacade: ShoppingFacade,
+    public router: Router,
+    private appFacade: AppFacade
+  ) {}
 
   ngOnInit() {
     this.camCard$ = this.camCardsFacade.currentCamCard$;
     this.camCardLoading$ = this.camCardsFacade.camCardLoading$;
     this.camCardError$ = this.camCardsFacade.camCardError$;
+    this.deviceType$ = this.appFacade.deviceType$;
     this.initForm();
 
     this.selectedItemsForm.valueChanges
