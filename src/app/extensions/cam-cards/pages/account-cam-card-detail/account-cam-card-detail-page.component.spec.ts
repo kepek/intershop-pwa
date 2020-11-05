@@ -8,6 +8,7 @@ import { EMPTY } from 'rxjs';
 import { instance, mock, when } from 'ts-mockito';
 
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
+import { CamfilBreadcrumbComponent } from 'ish-shared/components/common/camfil-breadcrumb/camfil-breadcrumb.component';
 import { ErrorMessageComponent } from 'ish-shared/components/common/error-message/error-message.component';
 import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
 import { CamfilProductAddToBasketComponent } from 'ish-shared/components/product/camfil-product-add-to-basket/camfil-product-add-to-basket.component';
@@ -37,6 +38,7 @@ describe('Account Cam Card Detail Page Component', () => {
         MockComponent(CamCardPreferencesComponent),
         MockComponent(CamCardPreferencesDialogComponent),
         MockComponent(CamCardProductCommentComponent),
+        MockComponent(CamfilBreadcrumbComponent),
         MockComponent(CamfilProductAddToBasketComponent),
         MockComponent(ErrorMessageComponent),
         MockComponent(FaIconComponent),

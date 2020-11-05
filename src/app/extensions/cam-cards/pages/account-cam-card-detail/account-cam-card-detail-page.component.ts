@@ -15,6 +15,7 @@ import { CamCard, CamCardItem } from '../../models/cam-card/cam-card.model';
   selector: 'camfil-account-cam-card-detail-page',
   templateUrl: './account-cam-card-detail-page.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  styleUrls: ['./account-cam-card-detail-page.component.scss'],
 })
 export class AccountCamCardDetailPageComponent implements OnInit, OnDestroy {
   camCard$: Observable<CamCard>;
