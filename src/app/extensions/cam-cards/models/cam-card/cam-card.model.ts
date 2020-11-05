@@ -23,6 +23,10 @@ export interface CamCard extends CamCardHeader {
   delivery?: CamCardDeliveryAddress;
   maintenanceStatus?: MaintenanceStatus;
   deliveryAddress?: CamCardAddress;
+  nextDeliveryDate?: string;
+  lastDeliveryDate?: string;
+  deliveryInterval?: number;
+  reminderFlag?: number;
 }
 
 export interface CamCardItem {

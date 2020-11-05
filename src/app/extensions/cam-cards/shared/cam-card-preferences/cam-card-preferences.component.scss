@@ -7,17 +7,35 @@
     margin-bottom: $space-box;
   }
 
+  .form-group {
+    margin: 0 -10px;
+  }
+
+  .form-field-area,
+  .form-field-zip-code {
+    padding: 0 10px;
+  }
+
+  .form-field-zip-code {
+    width: 30%;
+  }
+
+  .form-field-area {
+    width: 70%;
+  }
+
   h3 {
     font-weight: 700;
     text-transform: initial;
   }
 
-  &::ng-deep label {
-    span {
-      float: left;
-      margin-top: 3px;
-      margin-right: 2px;
-      color: $camfil-color-special-primary;
+  @media (min-width: $screen-md-min) {
+    .col-md-4 {
+      border-right: 1px solid $greyEA;
+
+      &:last-of-type {
+        border-right: none;
+      }
     }
   }
 }

@@ -1,5 +1,5 @@
 import { MaintenanceStatus } from './cam-card.helper';
-import { CamCardContact, CamCardCustomer, CamCardHeader, CamCardItem } from './cam-card.model';
+import { CamCardAddress, CamCardContact, CamCardCustomer, CamCardHeader, CamCardItem } from './cam-card.model';
 
 export interface CamCardData extends CamCardHeader {
   id: string;
@@ -13,4 +13,9 @@ export interface CamCardData extends CamCardHeader {
   subCamCards?: CamCardData[];
   rootCamCard: string;
   maintenanceStatus?: MaintenanceStatus;
+  deliveryAddress?: CamCardAddress;
+  nextDeliveryDate?: string;
+  lastDeliveryDate?: string;
+  deliveryInterval?: number;
+  reminderFlag?: number;
 }
