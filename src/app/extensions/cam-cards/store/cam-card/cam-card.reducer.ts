@@ -62,10 +62,6 @@ export const camCardAdapter = createEntityAdapter<CamCard>({
   selectId: camCard => camCard.id,
 });
 
-const updateCamCardItem = (camCard: CamCard, camCardItem: CamCardItem) => {
-  camCard.camCardItems.map((item: CamCardItem) => (item.id === camCardItem.id ? camCardItem : item));
-};
-
 export const initialState: CamCardState = camCardAdapter.getInitialState({
   loading: false,
   selected: undefined,
@@ -171,15 +167,29 @@ export const camCardReducer = createReducer(
   }),
   on(updateCamCardProductSuccess, (state: CamCardState, action) => {
     const { rootCamCard, camCardId, camCardItem } = action.payload;
+    const entities = state.entities;
+    const oldSubs = entities[rootCamCard]?.subCamCards || [];
+    const oldSub = oldSubs.find(sub => sub.id === camCardId);
+    const oldItems = rootCamCard ? [...oldSub.camCardItems] : [...entities[camCardId].camCardItems];
+
+    let items: CamCard[] | CamCardItem[] = oldItems.map(item => (item.id === camCardItem.id ? camCardItem : item));
+
     if (rootCamCard) {
-      state.entities[rootCamCard].subCamCards.map(sub =>
-        sub.id === camCardId ? updateCamCardItem(sub, camCardItem) : sub
-      );
-    } else {
-      updateCamCardItem(state.entities[camCardId], camCardItem);
+      const newSub = { ...oldSub, camCardItems: items };
+      items = [...oldSubs].map(sub => (sub.id === camCardId ? newSub : sub));
     }
+
+    const prop = rootCamCard ? 'subCamCards' : 'camCardItems';
+
     return {
       ...state,
+      entities: {
+        ...entities,
+        [rootCamCard || camCardId]: {
+          ...entities[rootCamCard || camCardId],
+          [prop]: items,
+        },
+      },
       loading: false,
     };
   }),

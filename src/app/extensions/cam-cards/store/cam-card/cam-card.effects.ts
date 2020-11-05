@@ -100,7 +100,11 @@ export class CamCardEffects {
       filter(([, authorized]) => authorized),
       switchMap(() =>
         this.camCardService.getCamCards().pipe(
-          map(camCards => loadCamCardsSuccess({ camCards })),
+          map(items => {
+            // TODO: to improve - move filter to selectors like getRootCamCards
+            const camCards = items.filter(item => !item.rootCamCard);
+            return loadCamCardsSuccess({ camCards });
+          }),
           mapErrorToAction(loadCamCardsFail)
         )
       )
