@@ -7,6 +7,8 @@ import { CamfilLanguageSwitchComponent } from 'ish-shell/header/camfil-language-
 import { CamfilLoginStatusComponent } from 'ish-shell/header/camfil-login-status/camfil-login-status.component';
 import { CamfilMiniBasketComponent } from 'ish-shell/header/camfil-mini-basket/camfil-mini-basket.component';
 import { CamfilProductCompareStatusComponent } from 'ish-shell/header/camfil-product-compare-status/camfil-product-compare-status.component';
+import { LoginStatusComponent } from 'ish-shell/header/login-status/login-status.component';
+import { ProductCompareStatusComponent } from 'ish-shell/header/product-compare-status/product-compare-status.component';
 
 import { LazyWishlistsLinkComponent } from '../../../extensions/wishlists/exports/lazy-wishlists-link/lazy-wishlists-link.component';
 
@@ -26,6 +28,8 @@ describe('User Information Mobile Component', () => {
         MockComponent(CamfilMiniBasketComponent),
         MockComponent(CamfilProductCompareStatusComponent),
         MockComponent(LazyWishlistsLinkComponent),
+        MockComponent(LoginStatusComponent),
+        MockComponent(ProductCompareStatusComponent),
         MockDirective(FeatureToggleDirective),
         UserInformationMobileComponent,
       ],

@@ -27,6 +27,7 @@ import { QuotingExportsModule } from '../extensions/quoting/exports/quoting-expo
 import { TactonExportsModule } from '../extensions/tacton/exports/tacton-exports.module';
 import { WishlistsExportsModule } from '../extensions/wishlists/exports/wishlists-exports.module';
 
+import { CookiesBannerComponent } from './application/cookies-banner/cookies-banner.component';
 import { CamfilFooterComponent } from './footer/camfil-footer/camfil-footer.component';
 import { FooterComponent } from './footer/footer/footer.component';
 import { CamfilHeaderDefaultComponent } from './header/camfil-header-default/camfil-header-default.component';
@@ -73,6 +74,11 @@ const exportedComponents = [
   CamfilHeaderComponent,
   CamfilProductImageComponent,
   CamfilSearchBoxComponent,
+  CookiesBannerComponent,
+  FooterComponent,
+  HeaderComponent,
+  ProductImageComponent,
+  SearchBoxComponent,
 ];
 
 @NgModule({
@@ -102,6 +108,7 @@ const exportedComponents = [
     CamfilMiniBasketComponent,
     CamfilProductCompareStatusComponent,
     CamfilUserLinksComponent,
+    CookiesBannerComponent,
     FooterComponent,
     HeaderCheckoutComponent,
     HeaderComponent,

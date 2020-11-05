@@ -53,6 +53,7 @@ Thumbs.db
 *.bak
 *.class
 *.pyc
+*.ut.spec.ts
 
 # Gradle Files
 **/build/

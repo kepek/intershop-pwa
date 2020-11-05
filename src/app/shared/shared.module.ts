@@ -57,6 +57,7 @@ import { CMSVideoComponent } from './cms/components/cms-video/cms-video.componen
 import { ContentIncludeComponent } from './cms/components/content-include/content-include.component';
 import { ContentPageletComponent } from './cms/components/content-pagelet/content-pagelet.component';
 import { ContentSlotComponent } from './cms/components/content-slot/content-slot.component';
+import { ContentViewcontextComponent } from './cms/components/content-viewcontext/content-viewcontext.component';
 import { AddressComponent } from './components/address/address/address.component';
 import { BasketAddressSummaryComponent } from './components/basket/basket-address-summary/basket-address-summary.component';
 import { BasketCostSummaryComponent } from './components/basket/basket-cost-summary/basket-cost-summary.component';
@@ -80,6 +81,7 @@ import { InplaceEditComponent } from './components/common/inplace-edit/inplace-e
 import { LoadingComponent } from './components/common/loading/loading.component';
 import { ModalDialogLinkComponent } from './components/common/modal-dialog-link/modal-dialog-link.component';
 import { ModalDialogComponent } from './components/common/modal-dialog/modal-dialog.component';
+import { SuccessMessageComponent } from './components/common/success-message/success-message.component';
 import { CamfilFilterAppliedComponent } from './components/filter/camfil-filter-applied/camfil-filter-applied.component';
 import { CamfilFilterCollapsableComponent } from './components/filter/camfil-filter-collapsable/camfil-filter-collapsable.component';
 import { CamfilFilterDropdownComponent } from './components/filter/camfil-filter-dropdown/camfil-filter-dropdown.component';
@@ -294,6 +296,7 @@ const exportedComponents = [
   CamfilProductVariationSelectComponent,
   ContentIncludeComponent,
   ContentPageletComponent,
+  ContentViewcontextComponent,
   ErrorMessageComponent,
   InfoBoxComponent,
   InplaceEditComponent,
@@ -311,6 +314,7 @@ const exportedComponents = [
   PromotionDetailsComponent,
   PromotionRemoveComponent,
   RecentlyViewedComponent,
+  SuccessMessageComponent,
 ];
 
 @NgModule({
