@@ -39,17 +39,19 @@
               {{ camCards.name }}<br />
               <b>{{ 'camfil.account.cam_cards.customer' | translate }}</b
               ><br />
-              {{ camCards.customer.name }}<br />
+              {{ camCards.customer.companyName }}<br />
 
               <div class="row text-center">
-                <div class="col-4">{{ 'camfil.account.cam_cards.lastDelivery' | translate }}</div>
-                <div class="col-4">{{ 'camfil.account.cam_cards.orderInterval' | translate }}</div>
-                <div class="col-4">{{ 'camfil.account.cam_cards.nextDelivery' | translate }}</div>
+                <div class="col-4">{{ 'camfil.account.cam_cards.lastDeliveryDate' | translate }}</div>
+                <div class="col-4">{{ 'camfil.account.cam_cards.deliveryInterval' | translate }}</div>
+                <div class="col-4">{{ 'camfil.account.cam_cards.nextDeliveryDate' | translate }}</div>
               </div>
               <div class="row text-center">
-                <div class="col-4">{{ camCards.lastDelivery }} lastDelivery</div>
-                <div class="col-4">{{ camCards.orderInterval }} orderInterval</div>
-                <div class="col-4">{{ camCards.nextDelivery }} nextDelivery</div>
+                <div class="col-4">{{ camCards.lastDeliveryDate || '---' }}</div>
+                <div class="col-4">
+                  {{ camCards.deliveryInterval | i18nPlural: ('camfil.account.cam_cards.deliveryInterval.value' | translate) || { other: '#' } }}
+                </div>
+                <div class="col-4">{{ camCards.nextDeliveryDate || '---' }}</div>
               </div>
               <div class="row text-center">
                 <div class="col-4">{{ 'camfil.account.cam_cards.itemsCount' | translate }}</div>
@@ -137,10 +139,12 @@
                 >
                 <strong>{{ camCard[column] }}</strong>
               </ng-container>
-              <ng-container *ngIf="column === 'customer'">{{ camCard[column].name }}</ng-container>
-              <ng-container *ngIf="column === 'lastDelivery'">lastDelivery</ng-container>
-              <ng-container *ngIf="column === 'orderInterval'">orderInterval</ng-container>
-              <ng-container *ngIf="column === 'nextDelivery'">nextDelivery</ng-container>
+              <ng-container *ngIf="column === 'customer'">{{ camCard[column].companyName }}</ng-container>
+              <ng-container *ngIf="column === 'lastDeliveryDate'">{{ camCard[column] || '---' }}</ng-container>
+              <ng-container *ngIf="column === 'deliveryInterval'">
+                {{ camCard[column] | i18nPlural: ('camfil.account.cam_cards.deliveryInterval.value' | translate) || { other: '#' } }}
+              </ng-container>
+              <ng-container *ngIf="column === 'nextDeliveryDate'">{{ camCard[column]  || '---' }}</ng-container>
               <!-- <ng-container *ngIf="column === 'creationDate'">{{ camCard[column] | ishDate: 'shortDate' }}</ng-container> -->
               <ng-container *ngIf="column === 'itemsCount'">{{ camCard[column] }}</ng-container>
               <ng-container *ngIf="column === 'userAccess'">
