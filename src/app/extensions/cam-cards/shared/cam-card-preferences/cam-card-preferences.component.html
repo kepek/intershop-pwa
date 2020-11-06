@@ -96,8 +96,8 @@
               data-testing-id="cam-card-dialog-name"
             />
           </mat-form-field>
-          <div class="form-group">
-            <mat-form-field appearance="fill" class="form-field-zip-code">
+          <div class="row no-gutters">
+            <mat-form-field appearance="fill" class="col-md-3">
               <mat-label>{{ 'camfil.account.cam_card.add_to_form.postal_code' | translate }}</mat-label>
               <input
                 matInput
@@ -108,7 +108,7 @@
                 data-testing-id="cam-card-dialog-name"
               />
             </mat-form-field>
-            <mat-form-field appearance="fill" class="form-field-area">
+            <mat-form-field appearance="fill" class="col-md-9 pl-md-3">
               <mat-label>{{ 'camfil.account.cam_card.add_to_form.city' | translate }}</mat-label>
               <input
                 matInput
@@ -125,7 +125,13 @@
           <h3>{{ 'camfil.account.cam_card.add_to_form.delivery_time' | translate }}</h3>
           <mat-form-field appearance="fill">
             <mat-label>{{ 'camfil.account.cam_card.add_to_form.last_delivery' | translate }}</mat-label>
-            <input matInput [matDatepicker]="pickerLast" formControlName="lastDelivery" />
+            <input
+              matInput
+              [matDatepicker]="pickerLast"
+              formControlName="lastDelivery"
+              (ngModelChange)="pickOrder()"
+              readonly
+            />
             <mat-datepicker-toggle matSuffix [for]="pickerLast">
               <mat-icon svgIcon="calendar" matDatepickerToggleIcon></mat-icon>
             </mat-datepicker-toggle>
@@ -142,7 +148,7 @@
           </mat-form-field>
           <mat-form-field appearance="fill">
             <mat-label>{{ 'camfil.account.cam_card.add_to_form.next_delivery' | translate }}</mat-label>
-            <input matInput [matDatepicker]="pickerNext" formControlName="nextDelivery" />
+            <input matInput [matDatepicker]="pickerNext" formControlName="nextDelivery" disabled />
             <mat-datepicker-toggle matSuffix [for]="pickerNext">
               <mat-icon svgIcon="calendar" matDatepickerToggleIcon></mat-icon>
             </mat-datepicker-toggle>

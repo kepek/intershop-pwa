@@ -185,10 +185,22 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit {
     });
   }
 
-  pickInterval(event) {
-    const amount = event.value;
+  pickOrder() {
     const date = new Date(this.camCardForm.get('lastDelivery').value);
-    date.setMonth(date.getMonth() + amount);
+    const interval = this.camCardForm.get('deliveryInterval').value;
+
+    if (interval) {
+      date.setMonth(date.getMonth() + interval);
+      this.camCardForm.patchValue({
+        nextDelivery: date,
+      });
+    }
+  }
+
+  pickInterval({ value }) {
+    const date = new Date(this.camCardForm.get('lastDelivery').value);
+
+    date.setMonth(date.getMonth() + value);
     this.camCardForm.patchValue({
       nextDelivery: date,
     });
