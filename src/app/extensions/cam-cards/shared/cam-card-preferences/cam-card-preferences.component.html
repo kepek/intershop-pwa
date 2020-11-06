@@ -96,8 +96,8 @@
               data-testing-id="cam-card-dialog-name"
             />
           </mat-form-field>
-          <div class="form-group">
-            <mat-form-field appearance="fill" class="form-field-zip-code">
+          <div class="row no-gutters">
+            <mat-form-field appearance="fill" class="col-md-3">
               <mat-label>{{ 'camfil.account.cam_card.add_to_form.postal_code' | translate }}</mat-label>
               <input
                 matInput
@@ -108,7 +108,7 @@
                 data-testing-id="cam-card-dialog-name"
               />
             </mat-form-field>
-            <mat-form-field appearance="fill" class="form-field-area">
+            <mat-form-field appearance="fill" class="col-md-9 pl-md-3">
               <mat-label>{{ 'camfil.account.cam_card.add_to_form.city' | translate }}</mat-label>
               <input
                 matInput
@@ -125,7 +125,13 @@
           <h3>{{ 'camfil.account.cam_card.add_to_form.delivery_time' | translate }}</h3>
           <mat-form-field appearance="fill">
             <mat-label>{{ 'camfil.account.cam_card.add_to_form.last_delivery' | translate }}</mat-label>
-            <input matInput [matDatepicker]="pickerLast" formControlName="lastDelivery" />
+            <input
+              matInput
+              [matDatepicker]="pickerLast"
+              formControlName="lastDelivery"
+              (ngModelChange)="pickOrder()"
+              readonly
+            />
             <mat-datepicker-toggle matSuffix [for]="pickerLast">
               <mat-icon svgIcon="calendar" matDatepickerToggleIcon></mat-icon>
             </mat-datepicker-toggle>
@@ -142,14 +148,14 @@
           </mat-form-field>
           <mat-form-field appearance="fill">
             <mat-label>{{ 'camfil.account.cam_card.add_to_form.next_delivery' | translate }}</mat-label>
-            <input matInput [matDatepicker]="pickerNext" formControlName="nextDelivery" />
+            <input matInput [matDatepicker]="pickerNext" formControlName="nextDelivery" disabled />
             <mat-datepicker-toggle matSuffix [for]="pickerNext">
               <mat-icon svgIcon="calendar" matDatepickerToggleIcon></mat-icon>
             </mat-datepicker-toggle>
             <mat-datepicker #pickerNext></mat-datepicker>
           </mat-form-field>
-          <mat-checkbox class="example-margin" formControlName="reminder">
-            Send me a service reminder via email
+          <mat-checkbox class="example-margin" formControlName="reminder" (click)="preventDefault($event)">
+            {{ 'camfil.account.cam_card.add_to_form.reminder' | translate }}
           </mat-checkbox>
         </div>
       </div>
@@ -173,3 +179,19 @@
     </div>
   </mat-card-content>
 </mat-card>
+
+<ng-template #modal let-selectModal>
+  <h1 mat-dialog-title>{{ 'camfil.account.cam_card.add_to_form.dialog.title' | translate }}</h1>
+  <div mat-dialog-content>
+    <p>{{ 'camfil.account.cam_card.add_to_form.dialog.other_users' | translate }}</p>
+    <p>{{ 'camfil.account.cam_card.add_to_form.dialog.do_you_want' | translate }}</p>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button (click)="acceptReminder(false)">
+      {{ 'camfil.account.cam_card.add_to_form.dialog.no' | translate }}
+    </button>
+    <button mat-button (click)="acceptReminder(true)">
+      {{ 'camfil.account.cam_card.add_to_form.dialog.yes' | translate }}
+    </button>
+  </div>
+</ng-template>
