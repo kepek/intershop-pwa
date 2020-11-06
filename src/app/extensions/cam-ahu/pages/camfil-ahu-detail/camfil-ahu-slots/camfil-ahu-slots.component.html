@@ -6,8 +6,14 @@
         <div>
           <span class="slot__title">Supply Slot 1</span>
           <div class="attributes">
-            <camfil-product-attribute name="{{ 'camfil.ahu.detail.filters.needed' | translate }}" [value]="2"></camfil-product-attribute>
-            <camfil-product-attribute name="{{ 'camfil.ahu.detail.filter.dimension' | translate }}" [value]="550"></camfil-product-attribute>
+            <camfil-product-attribute
+              name="{{ 'camfil.ahu.detail.filters.needed' | translate }}"
+              [value]="2"
+            ></camfil-product-attribute>
+            <camfil-product-attribute
+              name="{{ 'camfil.ahu.detail.filter.dimension' | translate }}"
+              [value]="550"
+            ></camfil-product-attribute>
           </div>
         </div>
       </div>
@@ -27,7 +33,10 @@
             <camfil-product-title [product]="product"></camfil-product-title>
             <ul class="slot-product__attributes">
               <li>
-                <camfil-product-attribute name="camfil.product.id.label" [value]="product.sku"></camfil-product-attribute>
+                <camfil-product-attribute
+                  name="camfil.product.id.label"
+                  [value]="product.sku"
+                ></camfil-product-attribute>
               </li>
               <li>
                 <camfil-product-attribute name="ISO Class" [value]="1"></camfil-product-attribute>
@@ -59,7 +68,9 @@
                 controlName="quantity"
               ></camfil-product-quantity>
             </form>
-            <button mat-raised-button class="slot-product__btn" color="accent"><mat-icon svgIcon="plus"></mat-icon>{{'camfil.ahu.detail.add.to.list' | translate}}</button>
+            <button mat-raised-button class="slot-product__btn" color="accent">
+              <mat-icon svgIcon="plus"></mat-icon>{{ 'camfil.ahu.detail.add.to.list' | translate }}
+            </button>
           </ng-container>
         </mat-card>
       </ng-container>
@@ -70,12 +81,12 @@
 <ng-template #price>
   <camfil-product-attribute
     name="camfil.product.list_price.label"
-    [value]="product.listPrice.currency + ' ' + product.listPrice.value"
+    [value]="product.listPrice | ishPrice"
     class="slot-product__price"
   ></camfil-product-attribute>
   <camfil-product-attribute
     name="camfil.product.your_price.label"
-    [value]="product.salePrice.currency + ' ' + product.salePrice.value"
+    [value]="product.salePrice | ishPrice"
     class="slot-product__price"
   ></camfil-product-attribute>
 </ng-template>

@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+
 import { Product } from 'ish-core/models/product/product.model';
 
 @Component({

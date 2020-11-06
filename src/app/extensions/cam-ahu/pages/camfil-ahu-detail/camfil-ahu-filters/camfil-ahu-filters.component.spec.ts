@@ -4,7 +4,7 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import { CamfilAhuFiltersComponent } from './camfil-ahu-filters.component';
 
-describe('Camfil AHU Filters Component', () => {
+describe('Camfil Ahu Filters Component', () => {
   let component: CamfilAhuFiltersComponent;
   let fixture: ComponentFixture<CamfilAhuFiltersComponent>;
   let element: HTMLElement;

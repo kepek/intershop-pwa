@@ -1,6 +1,8 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { PRODUCT } from './database';
+
 import { Product } from 'ish-core/models/product/product.model';
+
+import { PRODUCT } from './database';
 
 @Component({
   selector: 'camfil-ahu-page-detail',

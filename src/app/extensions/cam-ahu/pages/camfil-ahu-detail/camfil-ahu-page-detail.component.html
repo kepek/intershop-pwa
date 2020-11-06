@@ -10,17 +10,17 @@
         <div class="col-sm-12 col-md-6 ahu-detail__content">
           <div class="d-flex align-items-baseline">
             <h1 class="ahu-detail__title">
-              <span itemprop="name">{{product.name}}</span>
+              <span itemprop="name">{{ product.name }}</span>
             </h1>
             <a href="/air-handling-unit-guide">{{ 'camfil.ahu.detail.select.unit' | translate }}</a>
           </div>
-          <span class="ahu-detail__manufacturer">{{product.manufacturer}}</span>
+          <span class="ahu-detail__manufacturer">{{ product.manufacturer }}</span>
 
           <camfil-ahu-filters [product]="product"></camfil-ahu-filters>
 
           <div class="ahu-detail__descrition mt-4">
-            <p>{{product.shortDescription}}</p>
-            <p *ngIf="isMoreDetailsOpen">{{product.longDescription}}</p>
+            <p>{{ product.shortDescription }}</p>
+            <p *ngIf="isMoreDetailsOpen">{{ product.longDescription }}</p>
           </div>
           <a (click)="toggleDetails()">
             <span *ngIf="!isMoreDetailsOpen">{{ 'camfil.ahu.detail.more.details' | translate }}</span>
@@ -33,12 +33,14 @@
               <li>
                 <a>
                   <mat-icon svgIcon="pdf"></mat-icon>
-                  {{ 'camfil.ahu.detail.technical.specification' | translate }}</a>
+                  {{ 'camfil.ahu.detail.technical.specification' | translate }}</a
+                >
               </li>
               <li>
                 <a>
                   <mat-icon svgIcon="pdf"></mat-icon>
-                  {{ 'camfil.ahu.detail.broschure' | translate }}</a>
+                  {{ 'camfil.ahu.detail.broschure' | translate }}</a
+                >
               </li>
               <li>
                 <a>
