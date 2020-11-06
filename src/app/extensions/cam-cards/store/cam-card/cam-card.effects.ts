@@ -20,7 +20,7 @@ import {
 
 import { getDeviceType } from 'ish-core/store/core/configuration';
 import { displaySuccessMessage } from 'ish-core/store/core/messages';
-import { ofUrl, selectQueryParam, selectRouteParam } from 'ish-core/store/core/router';
+import { ofUrl, selectQueryParam, selectRouteParam, selectUrl } from 'ish-core/store/core/router';
 import { setBreadcrumbData } from 'ish-core/store/core/viewconf';
 import { getCurrentBasket } from 'ish-core/store/customer/basket';
 import { getUserAuthorized, loginUserSuccess } from 'ish-core/store/customer/user';
@@ -481,12 +481,14 @@ export class CamCardEffects {
         ofType(loginUserSuccess),
         takeWhile(() => isPlatformBrowser(this.platformId)),
         whenTruthy(),
-        withLatestFrom(this.store.pipe(select(selectQueryParam('returnUrl')))),
-        tap(([, returnUrl]) => {
-          if (returnUrl) {
-            this.router.navigateByUrl(returnUrl);
-          } else {
-            this.router.navigateByUrl('account/cam-cards');
+        withLatestFrom(this.store.pipe(select(selectUrl)), this.store.pipe(select(selectQueryParam('returnUrl')))),
+        tap(([, url, returnUrl]) => {
+          if (url.startsWith('/login')) {
+            if (returnUrl) {
+              this.router.navigateByUrl(returnUrl);
+            } else {
+              this.router.navigateByUrl('account/cam-cards');
+            }
           }
         })
       ),

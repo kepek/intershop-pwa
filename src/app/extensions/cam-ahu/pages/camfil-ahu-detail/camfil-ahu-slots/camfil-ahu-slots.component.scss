@@ -1,0 +1,82 @@
+@import '~src/styles/themes/camfil/variables';
+
+.slots {
+  padding: 0;
+}
+
+.slot {
+  &__heading {
+    justify-content: space-between;
+    padding: 10px 16px 5px;
+    background-color: rgba($color-corporate, 0.1);
+  }
+
+  &__icon {
+    width: 30px;
+    margin-right: 10px;
+  }
+
+  &__title {
+    font-size: 16px;
+    font-weight: 700;
+  }
+
+  &__products {
+    padding: 10px;
+  }
+}
+
+.slot-product {
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding-top: 5px;
+  margin-bottom: 10px;
+
+  .product-image {
+    display: block;
+    width: 40px;
+    padding-bottom: 16px;
+    margin-right: 16px;
+  }
+
+  &__price {
+    display: block;
+  }
+
+  &__attributes {
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style-type: none;
+
+    li {
+      display: inline-block;
+
+      &::after {
+        display: inline-block;
+        padding: 0 10px;
+        font-weight: 400;
+        color: $color-secondary;
+        content: '|';
+      }
+
+      &:last-child::after {
+        display: none;
+      }
+    }
+
+    camfil-product-inventory {
+      display: inherit;
+      height: 0;
+    }
+  }
+
+  &__btn {
+    font-weight: 600;
+    color: $color-corporate;
+
+    .mat-icon {
+      position: relative;
+      top: -2px;
+    }
+  }
+}
