@@ -1,0 +1,39 @@
+@import '~src/styles/themes/camfil/variables';
+
+.filter {
+  padding: 0;
+  margin-top: 20px;
+  background-color: rgba($color-corporate, 0.1);
+  box-shadow: none;
+
+  &__header {
+    justify-content: space-between;
+    padding: 16px 16px 16px 0;
+    background-color: rgba($color-corporate, 0.1);
+
+    .mat-card-header-text {
+      margin: 0;
+    }
+  }
+
+  &__content {
+    padding: 16px;
+  }
+
+  &__attr {
+    font-weight: 400;
+    color: $color-secondary;
+
+    &-value {
+      display: block;
+      font-weight: 600;
+      color: $color-primary;
+    }
+  }
+
+  .mat-card-header {
+    .mat-card-title {
+      margin-bottom: 0;
+    }
+  }
+}

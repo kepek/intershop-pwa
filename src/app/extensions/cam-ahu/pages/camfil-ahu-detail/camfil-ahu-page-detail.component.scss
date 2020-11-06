@@ -1,2 +1,40 @@
 @import '~src/styles/themes/camfil/mixins.scss';
 @import '~src/styles/themes/camfil/variables';
+
+.ahu-detail {
+  margin-top: 25px;
+
+  &__title {
+    margin: 5px 10px 5px 0;
+  }
+
+  &__content {
+    border-left: 1px solid $greyD9;
+  }
+
+  &__manufacturer {
+    color: $text-color-secondary;
+  }
+
+  &__description {
+    color: $text-color-secondary;
+  }
+}
+
+.product-details-guides {
+  padding-left: 0;
+  list-style-type: none;
+
+  li {
+    margin-bottom: 10px;
+  }
+}
+
+.product-data {
+  background-color: rgba($color-corporate, 0.1);
+
+  .product-attributes,
+  .product-description {
+    padding: 60px 135px;
+  }
+}

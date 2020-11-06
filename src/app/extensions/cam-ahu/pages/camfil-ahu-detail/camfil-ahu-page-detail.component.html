@@ -1,5 +1,73 @@
 <camfil-breadcrumb></camfil-breadcrumb>
 
-<div class="ahu-detail"></div>
+<div class="ahu-detail">
+  <div class="row">
+    <div class="col-md-9 col-sm-12">
+      <div class="row">
+        <div class="col-sm-12 col-md-6">
+          <camfil-product-image [product]="product" imageType="S" class="product-image"></camfil-product-image>
+        </div>
+        <div class="col-sm-12 col-md-6 ahu-detail__content">
+          <div class="d-flex align-items-baseline">
+            <h1 class="ahu-detail__title">
+              <span itemprop="name">{{product.name}}</span>
+            </h1>
+            <a href="/air-handling-unit-guide">{{ 'camfil.ahu.detail.select.unit' | translate }}</a>
+          </div>
+          <span class="ahu-detail__manufacturer">{{product.manufacturer}}</span>
+
+          <camfil-ahu-filters [product]="product"></camfil-ahu-filters>
+
+          <div class="ahu-detail__descrition mt-4">
+            <p>{{product.shortDescription}}</p>
+            <p *ngIf="isMoreDetailsOpen">{{product.longDescription}}</p>
+          </div>
+          <a (click)="toggleDetails()">
+            <span *ngIf="!isMoreDetailsOpen">{{ 'camfil.ahu.detail.more.details' | translate }}</span>
+            <span *ngIf="isMoreDetailsOpen">{{ 'camfil.ahu.detail.less.details' | translate }}</span>
+          </a>
+
+          <div class="mt-4">
+            <strong>{{ 'camfil.ahu.detail.guides' | translate }}</strong>
+            <ul class="product-details-guides mt-2">
+              <li>
+                <a>
+                  <mat-icon svgIcon="pdf"></mat-icon>
+                  {{ 'camfil.ahu.detail.technical.specification' | translate }}</a>
+              </li>
+              <li>
+                <a>
+                  <mat-icon svgIcon="pdf"></mat-icon>
+                  {{ 'camfil.ahu.detail.broschure' | translate }}</a>
+              </li>
+              <li>
+                <a>
+                  <mat-icon svgIcon="error" class="error"></mat-icon>
+                  {{ 'camfil.ahu.detail.howToMeasureFilter' | translate }}
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <camfil-ahu-slots [product]="product"></camfil-ahu-slots>
+
+      <div class="row product-data my-4">
+        <div class="col-12 col-md-6 product-attributes">
+          <h2>{{ 'product.details.heading' | translate }}</h2>
+          <camfil-product-attributes [product]="product"></camfil-product-attributes>
+        </div>
+        <div class="col-12 col-md-6 product-description">
+          <h2>{{ 'product.description.heading' | translate }}</h2>
+          <p [innerHTML]="product.longDescription"></p>
+          <h2>{{ 'product.shipping.heading' | translate }}</h2>
+          <camfil-product-shipment [product]="product"></camfil-product-shipment>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-12 col-md-3"></div>
+  </div>
+</div>
 
 <camfil-product-guides></camfil-product-guides>

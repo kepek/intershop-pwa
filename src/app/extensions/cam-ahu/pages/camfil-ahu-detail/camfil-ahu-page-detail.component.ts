@@ -1,4 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { PRODUCT } from './database';
+import { Product } from 'ish-core/models/product/product.model';
 
 @Component({
   selector: 'camfil-ahu-page-detail',
@@ -6,4 +8,11 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   templateUrl: './camfil-ahu-page-detail.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CamfilAHUPageDetailComponent {}
+export class CamfilAHUPageDetailComponent {
+  product: Product = PRODUCT;
+  isMoreDetailsOpen = false;
+
+  toggleDetails() {
+    this.isMoreDetailsOpen = !this.isMoreDetailsOpen;
+  }
+}
