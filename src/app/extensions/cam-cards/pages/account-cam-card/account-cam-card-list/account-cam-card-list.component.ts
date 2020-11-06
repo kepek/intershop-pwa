@@ -66,9 +66,9 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
   columnsToDisplay = [
     'name',
     'customer',
-    'lastDelivery',
-    'orderInterval',
-    'nextDelivery',
+    'lastDeliveryDate',
+    'deliveryInterval',
+    'nextDeliveryDate',
     'itemsCount',
     'edit',
     'checkbox',

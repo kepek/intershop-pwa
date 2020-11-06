@@ -20,7 +20,6 @@ export interface CamCard extends CamCardHeader {
   itemsCount?: number;
   creationDate?: Date;
   contacts?: CamCardContact[];
-  delivery?: CamCardDeliveryAddress;
   maintenanceStatus?: MaintenanceStatus;
   deliveryAddress?: CamCardAddress;
   nextDeliveryDate?: string;
@@ -65,21 +64,6 @@ export interface CamCardContact {
 export interface CamCardItemComment {
   label: string;
   text: string;
-}
-
-export interface CamCardDeliveryAddress {
-  id: string;
-  last: string;
-  interval: number;
-  deliveryAddress?: string;
-  building?: string;
-  address?: string;
-  area?: string;
-  companyName1?: string;
-  addressLine1?: string;
-  street?: string;
-  postalCode?: string;
-  city?: string;
 }
 
 // tslint:disable-next-line:no-empty-interface

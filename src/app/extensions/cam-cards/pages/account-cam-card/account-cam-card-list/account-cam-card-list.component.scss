@@ -45,9 +45,9 @@
         &-name {
           text-align: left;
         }
-        &-lastDelivery,
-        &-orderInterval,
-        &-nextDelivery,
+        &-lastDeliveryDate,
+        &-deliveryInterval,
+        &-nextDeliveryDate,
         &-rows {
           .mat-sort-header-container {
             justify-content: center;
@@ -162,6 +162,10 @@
     background-color: rgba($color-corporate, 0.1);
     border: none;
 
+    &:nth-of-type(2n) {
+      background-color: $white;
+    }
+
     .arrow_down {
       margin-left: $space-default/2;
       vertical-align: middle;
@@ -171,6 +175,12 @@
       label {
         margin-bottom: 0;
       }
+    }
+  }
+  .mat-expansion-panel {
+    box-shadow: none;
+    &.mat-expanded {
+      border-bottom: $border-width-default solid $border-color-light;
     }
   }
 }
