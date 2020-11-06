@@ -50,6 +50,22 @@
             </div>
           </ng-container>
         </div>
+
+        <div *ngFor="let sub of camCard.subCamCards">
+          <h2>{{ sub.name }}</h2>
+          <ng-container *ngFor="let subItem of sub.camCardItems; index as i2">
+            <div class="list-item-row list-item-row-big">
+              <camfil-account-cam-card-detail-line-item
+                [camCardItemData]="subItem"
+                [currentCamCard]="sub"
+                [selectedItemsForm]="selectedItemsForm"
+                [index]="i2 + 1"
+                mode="edit"
+              ></camfil-account-cam-card-detail-line-item>
+            </div>
+          </ng-container>
+          <hr>
+        </div>
       </ng-container>
     </div>
     <camfil-product-add-to-basket
