@@ -154,8 +154,8 @@
             </mat-datepicker-toggle>
             <mat-datepicker #pickerNext></mat-datepicker>
           </mat-form-field>
-          <mat-checkbox class="example-margin" formControlName="reminder">
-            Send me a service reminder via email
+          <mat-checkbox class="example-margin" formControlName="reminder" (click)="preventDefault($event)">
+            {{ 'camfil.account.cam_card.add_to_form.reminder' | translate }}
           </mat-checkbox>
         </div>
       </div>
@@ -179,3 +179,19 @@
     </div>
   </mat-card-content>
 </mat-card>
+
+<ng-template #modal let-selectModal>
+  <h1 mat-dialog-title>{{ 'camfil.account.cam_card.add_to_form.dialog.title' | translate }}</h1>
+  <div mat-dialog-content>
+    <p>{{ 'camfil.account.cam_card.add_to_form.dialog.other_users' | translate }}</p>
+    <p>{{ 'camfil.account.cam_card.add_to_form.dialog.do_you_want' | translate }}</p>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button (click)="acceptReminder(false)">
+      {{ 'camfil.account.cam_card.add_to_form.dialog.no' | translate }}
+    </button>
+    <button mat-button (click)="acceptReminder(true)">
+      {{ 'camfil.account.cam_card.add_to_form.dialog.yes' | translate }}
+    </button>
+  </div>
+</ng-template>

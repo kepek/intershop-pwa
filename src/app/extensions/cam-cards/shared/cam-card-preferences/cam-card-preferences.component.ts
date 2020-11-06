@@ -1,5 +1,16 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  TemplateRef,
+  ViewChild,
+} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 
 import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
@@ -22,7 +33,7 @@ import { CamCard, CamCardAddress, CamCardCustomer } from '../../models/cam-card/
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CamCardPreferencesComponent implements OnChanges, OnInit {
-  constructor(private fb: FormBuilder, private camCardsFacade: CamCardsFacade) {
+  constructor(private fb: FormBuilder, private camCardsFacade: CamCardsFacade, public dialog: MatDialog) {
     this.initForm();
   }
 
@@ -82,6 +93,41 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit {
       message: 'camfil.account.forgotdata.error.username.required',
     },
   ];
+
+  @ViewChild('modal', { static: false }) modalTemplate: TemplateRef<unknown>;
+
+  hide() {
+    this.dialog.closeAll();
+  }
+
+  show() {
+    this.dialog.open(this.modalTemplate, {
+      width: '300px',
+    });
+  }
+
+  acceptReminder(allow) {
+    const currentValue = this.camCardForm.get('reminder').value;
+
+    if (allow) {
+      this.camCardForm.patchValue({
+        reminder: !currentValue,
+      });
+    }
+
+    this.hide();
+  }
+
+  preventDefault(event) {
+    if (this.camCard) {
+      event.preventDefault();
+      this.toggleReminder();
+    }
+  }
+
+  toggleReminder() {
+    this.show();
+  }
 
   ngOnChanges() {
     this.patchForm();
