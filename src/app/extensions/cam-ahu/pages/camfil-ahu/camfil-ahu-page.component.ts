@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { AHUBanner, AHUManufacturer, AHUModel, IMAGE, MANUFACTURERS, MODELS } from './database';
 
@@ -9,6 +10,7 @@ import { AHUBanner, AHUManufacturer, AHUModel, IMAGE, MANUFACTURERS, MODELS } fr
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CamfilAHUPageComponent implements OnInit {
+  constructor(private router: Router) {}
   banner: AHUBanner = IMAGE;
   manufacturers: AHUManufacturer[] = MANUFACTURERS;
   models: AHUModel[] = MODELS;
@@ -18,5 +20,9 @@ export class CamfilAHUPageComponent implements OnInit {
   ngOnInit() {
     this.manufacturerSelect = undefined;
     this.modelSelect = undefined;
+  }
+
+  selectUnit() {
+    this.router.navigate(['/air-handling-unit-guide/detail']);
   }
 }

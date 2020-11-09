@@ -23,7 +23,7 @@
         <p>
           <mat-form-field appearance="fill" class="ahu__field">
             <mat-label>{{ 'camfil.ahu.select.model' | translate }}</mat-label>
-            <mat-select [disabled]="!manufacturerSelect" [(ngModel)]="modelSelect">
+            <mat-select [disabled]="!manufacturerSelect" [(ngModel)]="modelSelect" (selectionChange)="selectUnit()">
               <mat-option *ngFor="let model of models" [value]="model.id">{{ model.title }}</mat-option>
             </mat-select>
           </mat-form-field>

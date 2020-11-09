@@ -12,6 +12,7 @@ import { PRODUCT } from './database';
 })
 export class CamfilAHUPageDetailComponent {
   product: Product = PRODUCT;
+  slots = new Array(4);
   isMoreDetailsOpen = false;
 
   toggleDetails() {
