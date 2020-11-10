@@ -289,7 +289,7 @@ export class CamCardEffects {
         this.camCardService.addProductToCamCard(payload.camCardId, payload.sku, payload.quantity).pipe(
           mergeMap(camCard => [
             addProductToCamCardSuccess({ camCard }),
-            createAndUpdateCamCardSuccess({id: camCard.id, name: camCard.name})
+            // createAndUpdateCamCardSuccess({id: camCard.id, name: camCard.name})
           ]),
           mapErrorToAction(addProductToCamCardFail)
         )
