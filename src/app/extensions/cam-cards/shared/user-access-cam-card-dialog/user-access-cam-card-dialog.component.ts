@@ -55,21 +55,19 @@ export class UserAccessCamCardDialogComponent implements OnInit, OnDestroy {
   }
 
   private initForm() {
+    const currentContacts = this.camCard.contacts?.map(({ profileId }) => profileId);
     this.accessForm = this.fb.group({
       user: ['', [Validators.required]],
-      contact: [this.camCard.contacts],
+      contact: [currentContacts],
     });
   }
 
   submit() {
     if (this.accessForm.valid) {
-      const contacts: CamCardContact[] = [];
-      if (this.isUserSingle()) {
-        this.accessForm.get('contact').value.map((item: string) => {
-          contacts.push({ profileId: item });
-        });
-      }
-      const camCardContacts = { elements: contacts };
+      const camCardContacts: CamCardContact[] = this.isUserSingle()
+        ? this.accessForm.get('contact').value.map((item: string) => ({ profileId: item }))
+        : [];
+
       this.camCardsFacade.updateCamCardContacts(this.camCard.id, camCardContacts);
       this.dialogRef.close();
     } else {

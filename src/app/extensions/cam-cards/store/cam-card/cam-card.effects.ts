@@ -152,8 +152,8 @@ export class CamCardEffects {
       mapToPayload(),
       mergeMap(({ camCard, newContacts }) =>
         this.camCardService.updateCamCardContacts(camCard.id, newContacts).pipe(
-          mergeMap(contacts => [
-            updateCamCardContactsSuccess({ camCardId: camCard.id, contacts }),
+          mergeMap(() => [
+            updateCamCardContactsSuccess({ camCardId: camCard.id, contacts: newContacts }),
             displaySuccessMessage({
               message: 'camfil.account.cam_card.move.confirmation',
               messageParams: { 0: camCard.id },
@@ -354,8 +354,8 @@ export class CamCardEffects {
       mapToPayload(),
       mergeMap(({ camCardId, camCardContacts }) =>
         this.camCardService.updateCamCardContacts(camCardId, camCardContacts).pipe(
-          mergeMap(contacts => [
-            updateCamCardContactsSuccess({ camCardId, contacts }),
+          mergeMap(() => [
+            updateCamCardContactsSuccess({ camCardId, contacts: camCardContacts }),
             displaySuccessMessage({
               message: 'camfil.account.cam_cards.update.contacts.confirmation',
               messageParams: { 0: camCardId },

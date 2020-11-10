@@ -56,7 +56,7 @@ export class CamCardsFacade {
     this.store.dispatch(loadContactsByCustomer({ customerId }));
   }
 
-  moveCamCard(camCardId: string, newCustomerId: string, newContacts: { elements: CamCardContact[] }): void {
+  moveCamCard(camCardId: string, newCustomerId: string, newContacts: CamCardContact[]): void {
     this.store.dispatch(moveCamCard({ camCardId, newCustomerId, newContacts }));
   }
 
@@ -92,7 +92,7 @@ export class CamCardsFacade {
     this.store.dispatch(updateCamCardProduct({ rootCamCard, camCardId, camCardItem }));
   }
 
-  updateCamCardContacts(camCardId: string, camCardContacts: { elements: CamCardContact[] }): void {
+  updateCamCardContacts(camCardId: string, camCardContacts: CamCardContact[]): void {
     this.store.dispatch(updateCamCardContacts({ camCardId, camCardContacts }));
   }
 

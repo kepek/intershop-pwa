@@ -50,10 +50,11 @@ export class MoveCamCardDialogComponent implements OnInit, OnDestroy {
   submitMoveCamCardForm(event) {
     if (this.moveForm.valid && event.type === 'submit') {
       const newCustomer = this.moveForm.get('customers').value;
-      const newContacts = this.selectAllContacts ? [] : this.moveForm.get('contacts').value;
-      const camCardContacts = { elements: newContacts };
+      const newContacts = this.selectAllContacts
+        ? []
+        : this.moveForm.get('contacts').value.map((item: string) => ({ profileId: item }));
       this.selectedCamCard.forEach(({ id }: CamCard) => {
-        this.camCardsFacade.moveCamCard(id, newCustomer, camCardContacts);
+        this.camCardsFacade.moveCamCard(id, newCustomer, newContacts);
       });
       this.dialogRef.close();
     } else {
