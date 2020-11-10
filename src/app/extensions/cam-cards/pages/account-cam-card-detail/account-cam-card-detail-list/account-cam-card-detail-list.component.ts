@@ -18,6 +18,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Observable, Subject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
 
+import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
 import { ModalDialogComponent } from 'ish-shared/components/common/modal-dialog/modal-dialog.component';
 
@@ -53,6 +54,7 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges {
   constructor(
     private translate: TranslateService,
     private camCardsFacade: CamCardsFacade,
+    private productFacade: ShoppingFacade,
     private changeDetectorRefs: ChangeDetectorRef,
     public router: Router,
     public dialog: MatDialog
