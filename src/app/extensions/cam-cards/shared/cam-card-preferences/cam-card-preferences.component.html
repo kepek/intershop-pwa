@@ -1,180 +1,181 @@
 <mat-card class="mb-1">
   <mat-card-content>
-    <form [formGroup]="camCardForm" (ngSubmit)="submitCamCardForm()" class="form-horizontal" novalidate="novalidate">
-      <div class="row">
-        <div class="col-md-4">
-          <h3>{{ 'camfil.account.cam_card.add_to_form.camcards_details' | translate }}</h3>
-          <mat-form-field appearance="fill" class="form-field">
-            <mat-label>{{ 'camfil.account.cam_card.add_to_form.camcards_name' | translate }}</mat-label>
-            <input
-              matInput
-              formControlName="title"
-              label="camfil.account.cam_card.add_to_form.camcards_name"
-              markRequiredLabel="off"
-              maxlength="35"
-              data-testing-id="cam-card-dialog-name"
-            />
-          </mat-form-field>
-          <camfil-error
-            [errors]="camCardForm.controls.title.errors"
-            [errorValidators]="errorValidator"
-            [touched]="camCardForm.controls.title.touched"
-          >
-          </camfil-error>
-          <mat-form-field appearance="fill">
-            <mat-label>{{ 'camfil.account.cam_card.add_to_form.customer_name' | translate }}</mat-label>
-            <mat-select
-              formControlName="customerName"
-              [compareWith]="compareFn"
-              (selectionChange)="pickCustomer($event)"
-            >
-              <mat-option>--</mat-option>
-              <mat-option *ngFor="let customer of customers$ | async" [value]="customer.id">
-                {{ customer.companyName }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-          <camfil-error
-            [errors]="camCardForm.controls.customerName.errors"
-            [errorValidators]="errorValidator"
-            [touched]="camCardForm.controls.customerName.touched"
-          >
-          </camfil-error>
-          <mat-form-field appearance="fill" class="form-field">
-            <mat-label>{{ 'camfil.account.cam_card.add_to_form.order_mark' | translate }}</mat-label>
-            <input
-              matInput
-              formControlName="orderMark"
-              label="camfil.account.cam_card.add_to_form.order_mark"
-              markRequiredLabel="off"
-              maxlength="35"
-              data-testing-id="cam-card-dialog-name"
-            />
-          </mat-form-field>
-          <mat-form-field appearance="fill" class="form-field">
-            <mat-label>{{ 'camfil.account.cam_card.add_to_form.invoice_mark' | translate }}</mat-label>
-            <input
-              matInput
-              formControlName="invoiceMark"
-              label="camfil.account.cam_card.add_to_form.invoice_mark"
-              markRequiredLabel="off"
-              maxlength="35"
-              data-testing-id="cam-card-dialog-name"
-            />
-          </mat-form-field>
-        </div>
-        <div class="col-md-4">
-          <h3>{{ 'camfil.account.cam_card.add_to_form.delivery_address' | translate }}</h3>
-          <mat-form-field appearance="fill">
-            <mat-label>{{ 'camfil.account.cam_card.add_to_form.choose_address' | translate }}</mat-label>
-            <mat-select formControlName="deliveryAddress" (selectionChange)="pickAddress($event)">
-              <mat-option>--</mat-option>
-              <mat-option *ngFor="let location of addresses$ | async" [value]="location.id">
-                {{ location.addressLine1 }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-          <mat-form-field appearance="fill" class="form-field">
-            <mat-label>{{ 'camfil.account.cam_card.add_to_form.building' | translate }}</mat-label>
-            <input
-              matInput
-              formControlName="addressLine2"
-              label="camfil.account.cam_card.add_to_form.building"
-              markRequiredLabel="off"
-              maxlength="35"
-              data-testing-id="cam-card-dialog-name"
-            />
-          </mat-form-field>
-          <mat-form-field appearance="fill" class="form-field">
-            <mat-label>{{ 'camfil.account.cam_card.add_to_form.address' | translate }}</mat-label>
-            <input
-              matInput
-              formControlName="addressLine1"
-              label="camfil.account.cam_card.add_to_form.address"
-              markRequiredLabel="off"
-              maxlength="35"
-              data-testing-id="cam-card-dialog-name"
-            />
-          </mat-form-field>
-          <div class="row no-gutters">
-            <mat-form-field appearance="fill" class="col-md-3">
-              <mat-label>{{ 'camfil.account.cam_card.add_to_form.postal_code' | translate }}</mat-label>
+    <a class="collapse-link" (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="!isCollapsed">
+      {{ collapseFormTranslationKey | translate }}
+      <mat-icon *ngIf="isCollapsed" class="align-bottom pr-2">arrow_drop_up</mat-icon>
+      <mat-icon *ngIf="!isCollapsed" class="align-bottom pr-2">arrow_drop_down</mat-icon>
+    </a>
+    <div id="camCardFormContainer" [ngbCollapse]="isCollapsed">
+      <form [formGroup]="camCardForm" (ngSubmit)="submitCamCardForm()" class="form-horizontal" novalidate="novalidate">
+        <div class="row">
+          <div class="col-md-4">
+            <h3>{{ 'camfil.account.cam_card.add_to_form.camcards_details' | translate }}</h3>
+            <mat-form-field appearance="fill" class="form-field">
+              <mat-label>{{ 'camfil.account.cam_card.add_to_form.camcards_name' | translate }}</mat-label>
               <input
                 matInput
-                formControlName="postalCode"
-                label="camfil.account.cam_card.add_to_form.postal_code"
+                formControlName="title"
+                label="camfil.account.cam_card.add_to_form.camcards_name"
                 markRequiredLabel="off"
                 maxlength="35"
                 data-testing-id="cam-card-dialog-name"
               />
             </mat-form-field>
-            <mat-form-field appearance="fill" class="col-md-9 pl-md-3">
-              <mat-label>{{ 'camfil.account.cam_card.add_to_form.city' | translate }}</mat-label>
+            <camfil-error
+              [errors]="camCardForm.controls.title.errors"
+              [errorValidators]="errorValidator"
+              [touched]="camCardForm.controls.title.touched"
+            >
+            </camfil-error>
+            <mat-form-field appearance="fill">
+              <mat-label>{{ 'camfil.account.cam_card.add_to_form.customer_name' | translate }}</mat-label>
+              <mat-select
+                formControlName="customerName"
+                [compareWith]="compareFn"
+                (selectionChange)="pickCustomer($event)"
+              >
+                <mat-option>--</mat-option>
+                <mat-option *ngFor="let customer of customers$ | async" [value]="customer.id">
+                  {{ customer.companyName }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <camfil-error
+              [errors]="camCardForm.controls.customerName.errors"
+              [errorValidators]="errorValidator"
+              [touched]="camCardForm.controls.customerName.touched"
+            >
+            </camfil-error>
+            <mat-form-field appearance="fill" class="form-field">
+              <mat-label>{{ 'camfil.account.cam_card.add_to_form.order_mark' | translate }}</mat-label>
               <input
                 matInput
-                formControlName="city"
-                label="camfil.account.cam_card.add_to_form.city"
+                formControlName="orderMark"
+                label="camfil.account.cam_card.add_to_form.order_mark"
+                markRequiredLabel="off"
+                maxlength="35"
+                data-testing-id="cam-card-dialog-name"
+              />
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="form-field">
+              <mat-label>{{ 'camfil.account.cam_card.add_to_form.invoice_mark' | translate }}</mat-label>
+              <input
+                matInput
+                formControlName="invoiceMark"
+                label="camfil.account.cam_card.add_to_form.invoice_mark"
                 markRequiredLabel="off"
                 maxlength="35"
                 data-testing-id="cam-card-dialog-name"
               />
             </mat-form-field>
           </div>
+          <div class="col-md-4">
+            <h3>{{ 'camfil.account.cam_card.add_to_form.delivery_address' | translate }}</h3>
+            <mat-form-field appearance="fill">
+              <mat-label>{{ 'camfil.account.cam_card.add_to_form.choose_address' | translate }}</mat-label>
+              <mat-select formControlName="deliveryAddress" (selectionChange)="pickAddress($event)">
+                <mat-option>--</mat-option>
+                <mat-option *ngFor="let location of addresses$ | async" [value]="location.id">
+                  {{ location.addressLine1 }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="form-field">
+              <mat-label>{{ 'camfil.account.cam_card.add_to_form.building' | translate }}</mat-label>
+              <input
+                matInput
+                formControlName="addressLine2"
+                label="camfil.account.cam_card.add_to_form.building"
+                markRequiredLabel="off"
+                maxlength="35"
+                data-testing-id="cam-card-dialog-name"
+              />
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="form-field">
+              <mat-label>{{ 'camfil.account.cam_card.add_to_form.address' | translate }}</mat-label>
+              <input
+                matInput
+                formControlName="addressLine1"
+                label="camfil.account.cam_card.add_to_form.address"
+                markRequiredLabel="off"
+                maxlength="35"
+                data-testing-id="cam-card-dialog-name"
+              />
+            </mat-form-field>
+            <div class="form-group">
+              <mat-form-field appearance="fill" class="form-field-zip-code">
+                <mat-label>{{ 'camfil.account.cam_card.add_to_form.postal_code' | translate }}</mat-label>
+                <input
+                  matInput
+                  formControlName="postalCode"
+                  label="camfil.account.cam_card.add_to_form.postal_code"
+                  markRequiredLabel="off"
+                  maxlength="35"
+                  data-testing-id="cam-card-dialog-name"
+                />
+              </mat-form-field>
+              <mat-form-field appearance="fill" class="form-field-area">
+                <mat-label>{{ 'camfil.account.cam_card.add_to_form.city' | translate }}</mat-label>
+                <input
+                  matInput
+                  formControlName="city"
+                  label="camfil.account.cam_card.add_to_form.city"
+                  markRequiredLabel="off"
+                  maxlength="35"
+                  data-testing-id="cam-card-dialog-name"
+                />
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <h3>{{ 'camfil.account.cam_card.add_to_form.delivery_time' | translate }}</h3>
+            <mat-form-field appearance="fill">
+              <mat-label>{{ 'camfil.account.cam_card.add_to_form.last_delivery' | translate }}</mat-label>
+              <input matInput [matDatepicker]="pickerLast" formControlName="lastDelivery" />
+              <mat-datepicker-toggle matSuffix [for]="pickerLast">
+                <mat-icon svgIcon="calendar" matDatepickerToggleIcon></mat-icon>
+              </mat-datepicker-toggle>
+              <mat-datepicker #pickerLast></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+              <mat-label>{{ 'camfil.account.cam_card.add_to_form.delivery_interval' | translate }}</mat-label>
+              <mat-select formControlName="deliveryInterval" (selectionChange)="pickInterval($event)">
+                <mat-option>--</mat-option>
+                <mat-option *ngFor="let delivery of deliveryInterval" [value]="delivery.value">
+                  {{ delivery.viewValue }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+              <mat-label>{{ 'camfil.account.cam_card.add_to_form.next_delivery' | translate }}</mat-label>
+              <input matInput [matDatepicker]="pickerNext" formControlName="nextDelivery" />
+              <mat-datepicker-toggle matSuffix [for]="pickerNext">
+                <mat-icon svgIcon="calendar" matDatepickerToggleIcon></mat-icon>
+              </mat-datepicker-toggle>
+              <mat-datepicker #pickerNext></mat-datepicker>
+            </mat-form-field>
+            <mat-checkbox class="example-margin" formControlName="reminder">
+              Send me a service reminder via email
+            </mat-checkbox>
+          </div>
         </div>
-        <div class="col-md-4">
-          <h3>{{ 'camfil.account.cam_card.add_to_form.delivery_time' | translate }}</h3>
-          <mat-form-field appearance="fill">
-            <mat-label>{{ 'camfil.account.cam_card.add_to_form.last_delivery' | translate }}</mat-label>
-            <input
-              matInput
-              [matDatepicker]="pickerLast"
-              formControlName="lastDelivery"
-              (ngModelChange)="pickOrder()"
-              readonly
-            />
-            <mat-datepicker-toggle matSuffix [for]="pickerLast">
-              <mat-icon svgIcon="calendar" matDatepickerToggleIcon></mat-icon>
-            </mat-datepicker-toggle>
-            <mat-datepicker #pickerLast></mat-datepicker>
-          </mat-form-field>
-          <mat-form-field appearance="fill">
-            <mat-label>{{ 'camfil.account.cam_card.add_to_form.delivery_interval' | translate }}</mat-label>
-            <mat-select formControlName="deliveryInterval" (selectionChange)="pickInterval($event)">
-              <mat-option>--</mat-option>
-              <mat-option *ngFor="let delivery of deliveryInterval" [value]="delivery.value">
-                {{ delivery.viewValue }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-          <mat-form-field appearance="fill">
-            <mat-label>{{ 'camfil.account.cam_card.add_to_form.next_delivery' | translate }}</mat-label>
-            <input matInput [matDatepicker]="pickerNext" formControlName="nextDelivery" disabled />
-            <mat-datepicker-toggle matSuffix [for]="pickerNext">
-              <mat-icon svgIcon="calendar" matDatepickerToggleIcon></mat-icon>
-            </mat-datepicker-toggle>
-            <mat-datepicker #pickerNext></mat-datepicker>
-          </mat-form-field>
-          <mat-checkbox class="example-margin" formControlName="reminder" (click)="preventDefault($event)">
-            {{ 'camfil.account.cam_card.add_to_form.reminder' | translate }}
-          </mat-checkbox>
+      </form>
+      <div class="row">
+        <div class="col-12 text-right">
+          <button
+            mat-raised-button
+            type="submit"
+            aria-label="Send application"
+            [disabled]="formDisabled"
+            color="primary"
+            type="submit"
+            [disabled]="formDisabled"
+            (click)="submitCamCardForm()"
+            data-testing-id="cam-card-dialog-submit"
+          >
+            {{ primaryButton | translate }}
+          </button>
         </div>
-      </div>
-    </form>
-    <div class="row">
-      <div class="col-12 text-right">
-        <button
-          mat-raised-button
-          type="submit"
-          aria-label="Send application"
-          [disabled]="formDisabled"
-          color="primary"
-          type="submit"
-          [disabled]="formDisabled"
-          (click)="submitCamCardForm()"
-          data-testing-id="cam-card-dialog-submit"
-        >
-          {{ primaryButton | translate }}
-        </button>
       </div>
     </div>
   </mat-card-content>

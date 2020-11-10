@@ -1,0 +1,56 @@
+@import '~src/styles/themes/camfil/variables';
+
+:host {
+  display: block;
+  height: 44px;
+
+  .sticky {
+    position: fixed;
+    top: 48px;
+    left: $space-default;
+    z-index: 99;
+    width: 100%;
+    padding: $space-box 0 $space-box/2;
+    background-color: $camfil-white;
+
+    > .container {
+      padding-right: $space-default + $space-box;
+      padding-left: $space-default - $space-box;
+    }
+
+    @media (max-width: $screen-sm-max) {
+      top: auto;
+      bottom: $main-box-margin * -1;
+      padding-bottom: 0;
+      box-shadow: $main-box-shadow-revers;
+
+      > .container {
+        max-width: 100%;
+        padding: 0 $space-box/2 0 0;
+        overflow: auto;
+        white-space: nowrap;
+      }
+    }
+  }
+  @media (max-width: $screen-sm-max) {
+    height: 0;
+  }
+}
+button {
+  margin-bottom: $space-box/2;
+  margin-left: $space-box/2;
+
+  &:not(:first-child) .mat-icon {
+    margin-right: $space-box/2;
+  }
+
+  &.mat-raised-button {
+    color: $white;
+  }
+}
+
+.cam-card-title {
+  font-family: $font-family-SansPro;
+  font-size: $font-size-lg;
+  text-transform: none;
+}

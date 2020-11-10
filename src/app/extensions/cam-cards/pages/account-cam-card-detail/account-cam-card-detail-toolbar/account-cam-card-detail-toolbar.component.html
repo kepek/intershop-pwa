@@ -1,0 +1,21 @@
+<div class="row" [ngClass]="{ 'sticky box-shadow': isSticky }">
+  <div class="{{ isSticky ? 'container' : 'col-12' }} text-right">
+    <h2 class="cam-card-title float-left">{{ title }}</h2>
+    <button mat-stroked-button color="primary">
+      <mat-icon svgIcon="plus" class="size-31"></mat-icon>
+      {{ 'camfil.account.cam_cards.details.button.add_section.label' | translate }}
+    </button>
+    <button mat-stroked-button color="primary">
+      <mat-icon svgIcon="plus" class="size-31"></mat-icon>
+      {{ 'camfil.account.cam_cards.details.button.add_product.label' | translate }}
+    </button>
+    <button mat-stroked-button color="primary">
+      <mat-icon svgIcon="delete" class="size-15"></mat-icon>
+      {{ 'camfil.account.cam_cards.details.button.delete_camcard.label' | translate }}
+    </button>
+    <button mat-raised-button color="primary">
+      <mat-icon svgIcon="cart" class="color-light size-15"></mat-icon>
+      {{ 'camfil.account.cam_cards.details.button.add_to_cart.label' | translate }}
+    </button>
+  </div>
+</div>

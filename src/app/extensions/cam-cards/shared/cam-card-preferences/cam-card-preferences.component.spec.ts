@@ -1,5 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { NgbCollapse } from '@ng-bootstrap/ng-bootstrap';
 import { provideMockStore } from '@ngrx/store/testing';
+import { MockComponent } from 'ng-mocks';
 
 import { CamfilErrorComponent } from 'ish-shared/components/common/camfil-error/camfil-error.component';
 
@@ -12,7 +14,7 @@ describe('Cam Card Preferences Component', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CamCardPreferencesComponent, CamfilErrorComponent],
+      declarations: [CamCardPreferencesComponent, CamfilErrorComponent, MockComponent(NgbCollapse)],
       providers: [provideMockStore({})],
     }).compileComponents();
   });

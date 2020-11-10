@@ -53,6 +53,7 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit {
 
   camCardForm: FormGroup;
   submitted = false;
+  isCollapsed = false;
   pickerLast;
   pickerNext;
   customers$: Observable<CamCardCustomer[]>;
@@ -250,5 +251,10 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit {
     this.camCardForm.patchValue({
       nextDelivery: date,
     });
+  }
+  get collapseFormTranslationKey() {
+    return this.isCollapsed
+      ? 'camfil.account.cam_card_preferences.maximize'
+      : 'camfil.account.cam_card_preferences.minimize';
   }
 }
