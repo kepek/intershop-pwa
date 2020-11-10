@@ -67,4 +67,6 @@ export interface CamCardItemComment {
 }
 
 // tslint:disable-next-line:no-empty-interface
-export interface CamCardAddress extends Address {}
+export interface CamCardAddress extends Address {
+  street?: string;
+}
