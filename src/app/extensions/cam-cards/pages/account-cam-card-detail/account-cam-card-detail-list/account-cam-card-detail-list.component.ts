@@ -15,10 +15,18 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Observable } from 'rxjs';
 
+import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
 
 import { CamCardsFacade } from '../../../facades/cam-cards.facade';
-import { CamCard } from '../../../models/cam-card/cam-card.model';
+import { CamCard, CamCardItem } from '../../../models/cam-card/cam-card.model';
+
+export interface ProductChecked {
+  camCardId: string;
+  camCardRoot: string;
+  sku: string;
+  quantity: number;
+}
 
 @Component({
   selector: 'camfil-account-cam-card-detail-list',
@@ -48,6 +56,7 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges {
 
   constructor(
     private camCardsFacade: CamCardsFacade,
+    private productFacade: ShoppingFacade,
     private changeDetectorRefs: ChangeDetectorRef,
     public dialog: MatDialog
   ) {}
@@ -82,5 +91,18 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges {
 
   getCamCardName() {
     return this.camCards?.name;
+  }
+
+  addItemsToCart() {
+    // TODO: improve when NEW order/addToCartWay will be inProgress
+    console.log(
+      'AccountCamCardDetailListComponent -> addItemsToCart -> this.camCards.camCardItems',
+      this.camCards.camCardItems
+    );
+
+    this.camCards.camCardItems.forEach((val: CamCardItem) => {
+      console.log('AccountCamCardDetailListComponent -> addItemsToCart -> val', val);
+      this.productFacade.addProductToBasket(val.product.sku, val.quantity);
+    });
   }
 }

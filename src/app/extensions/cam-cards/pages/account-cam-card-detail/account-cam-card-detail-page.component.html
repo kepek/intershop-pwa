@@ -44,13 +44,6 @@
           [camCards]="camCard"
         ></camfil-account-cam-card-detail-list>
       </div>
-      <camfil-product-add-to-basket
-        displayType="button"
-        [product]="dummyProduct"
-        [disabled]="!selectedItems?.length"
-        [class]="'btn btn-primary float-right'"
-        (productToBasket)="addSelectedItemsToCart(camCard)"
-      ></camfil-product-add-to-basket>
 
       <ng-template #noItems>
         <p>{{ 'camfil.account.cam_card.no_entries' | translate }}</p>

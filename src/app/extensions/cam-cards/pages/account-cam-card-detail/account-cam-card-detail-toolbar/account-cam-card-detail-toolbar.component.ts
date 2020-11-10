@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 import { CamCardsFacade } from '../../../facades/cam-cards.facade';
 
@@ -11,14 +11,20 @@ import { CamCardsFacade } from '../../../facades/cam-cards.facade';
 export class AccountCamCardDetailToolbarComponent implements OnInit {
   // @Output() addCamCard = new EventEmitter<CamCard>();
   // @Output() openMoveCamCardDialog = new EventEmitter<Event>();
-  // @Output() addSelectedItemsToCart = new EventEmitter();
+  @Output() addItemsToCart = new EventEmitter();
   @Input() isSticky: boolean;
   @Input() title: string;
+
+  dummyProduct = { sku: 'dummy', inStock: true, availability: true };
 
   constructor(private camCardsFacade: CamCardsFacade) {}
 
   ngOnInit() {
     this.camCardsFacade.detectCamCardToolbar();
+  }
+
+  addToCart() {
+    this.addItemsToCart.emit();
   }
 
   // add(camCard: CamCard) {
@@ -27,9 +33,5 @@ export class AccountCamCardDetailToolbarComponent implements OnInit {
 
   // move(event: Event) {
   //   this.openMoveCamCardDialog.emit(event);
-  // }
-
-  // addToCart() {
-  //   this.addSelectedItemsToCart.emit();
   // }
 }
