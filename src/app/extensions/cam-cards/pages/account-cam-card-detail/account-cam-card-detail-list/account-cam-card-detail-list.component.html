@@ -2,8 +2,10 @@
   <mat-card-content>
     <camfil-account-cam-card-detail-toolbar
       (addItemsToCart)="addItemsToCart()"
+      (deleteCamCard)="openDeleteConfirmationDialog(camCards, deleteDialog)"
       [isSticky]="isStickyCamCardToolbar$ | async"
       [title]="getCamCardName()"
+      [id]="getCamCardId()"
     ></camfil-account-cam-card-detail-toolbar>
 
     <ng-container *ngIf="camCards; else noCamCard">
@@ -80,7 +82,7 @@
       <table *ngIf="!isMobileView" mat-table [dataSource]="camCardsProcessed" multiTemplateDataRows>
         <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
         <ng-container matColumnDef="expandedDetail">
-          <td mat-cell *matCellDef="let camCard" [attr.colspan]="columnsToDisplay.length">
+          <td mat-cell *matCellDef="let camCard">
             <div class="cam-card-row-details__detail">
               <ng-container *ngTemplateOutlet="camCardRow; context: { camCard: camCard }"></ng-container>
               <ng-container *ngFor="let subCamCard of camCard.subCamCards">
@@ -110,7 +112,6 @@
             </div>
           </td>
         </ng-container>
-        <!-- <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr> -->
         <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="cam-card-row-details"></tr>
         <tr mat-footer-row *matFooterRowDef="['total']" class="cam-card-total"></tr>
       </table>
@@ -140,3 +141,13 @@
     ></camfil-account-cam-card-detail-line-item>
   </div>
 </ng-template>
+
+<ish-modal-dialog
+  #deleteDialog
+  (confirmed)="deleteCamCard()"
+  [options]="{
+    confirmText: 'camfil.account.cam_card.delete.button.text' | translate,
+    rejectText: 'camfil.account.cancel.button.label' | translate
+  }"
+  >{{ 'camfil.account.cam_card.delete.do_you_really.text' | translate }}</ish-modal-dialog
+>

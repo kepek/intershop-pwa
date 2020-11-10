@@ -13,20 +13,16 @@ import { FormArray } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
+import { Observable, Subject } from 'rxjs';
+import { take, takeUntil } from 'rxjs/operators';
 
-import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
+import { ModalDialogComponent } from 'ish-shared/components/common/modal-dialog/modal-dialog.component';
 
 import { CamCardsFacade } from '../../../facades/cam-cards.facade';
 import { CamCard, CamCardItem } from '../../../models/cam-card/cam-card.model';
-
-export interface ProductChecked {
-  camCardId: string;
-  camCardRoot: string;
-  sku: string;
-  quantity: number;
-}
 
 @Component({
   selector: 'camfil-account-cam-card-detail-list',
@@ -52,12 +48,13 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges {
   expandedCamCard: CamCard | null;
   isSubOpen = [];
   isStickyCamCardToolbar$: Observable<boolean>;
-  columnsToDisplay = ['name'];
+  private destroy$ = new Subject();
 
   constructor(
+    private translate: TranslateService,
     private camCardsFacade: CamCardsFacade,
-    private productFacade: ShoppingFacade,
     private changeDetectorRefs: ChangeDetectorRef,
+    public router: Router,
     public dialog: MatDialog
   ) {}
 
@@ -93,16 +90,34 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges {
     return this.camCards?.name;
   }
 
+  getCamCardId() {
+    return this.camCards?.id;
+  }
+
   addItemsToCart() {
     // TODO: improve when NEW order/addToCartWay will be inProgress
-    console.log(
-      'AccountCamCardDetailListComponent -> addItemsToCart -> this.camCards.camCardItems',
-      this.camCards.camCardItems
-    );
-
-    this.camCards.camCardItems.forEach((val: CamCardItem) => {
-      console.log('AccountCamCardDetailListComponent -> addItemsToCart -> val', val);
-      this.productFacade.addProductToBasket(val.product.sku, val.quantity);
+    this.camCards.camCardItems.forEach((item: CamCardItem) => {
+      this.productFacade.addProductToBasket(item.product.sku, item.quantity);
     });
+    this.camCards.subCamCards.forEach((item: CamCard) => {
+      item.camCardItems.forEach((subItem: CamCardItem) => {
+        this.productFacade.addProductToBasket(subItem.product.sku, subItem.quantity);
+      });
+    });
+  }
+
+  deleteCamCard() {
+    this.camCardsFacade.deleteCamCard(this.camCards.id);
+    this.router.navigate(['/account/cam-cards']);
+  }
+
+  /** Determine the heading of the delete modal and opens the modal. */
+  openDeleteConfirmationDialog(camCard: CamCard, modal: ModalDialogComponent<string>) {
+    this.translate
+      .get('camfil.account.cam_cards.delete_dialog.header', { 0: camCard.name })
+      .pipe(take(1), takeUntil(this.destroy$))
+      .subscribe(res => (modal.options.titleText = res));
+
+    modal.show(camCard.id);
   }
 }

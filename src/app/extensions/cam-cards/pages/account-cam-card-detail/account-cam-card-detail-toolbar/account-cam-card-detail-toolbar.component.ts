@@ -9,8 +9,7 @@ import { CamCardsFacade } from '../../../facades/cam-cards.facade';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AccountCamCardDetailToolbarComponent implements OnInit {
-  // @Output() addCamCard = new EventEmitter<CamCard>();
-  // @Output() openMoveCamCardDialog = new EventEmitter<Event>();
+  @Output() deleteCamCard = new EventEmitter();
   @Output() addItemsToCart = new EventEmitter();
   @Input() isSticky: boolean;
   @Input() title: string;
@@ -27,11 +26,8 @@ export class AccountCamCardDetailToolbarComponent implements OnInit {
     this.addItemsToCart.emit();
   }
 
-  // add(camCard: CamCard) {
-  //   this.addCamCard.emit(camCard);
-  // }
-
-  // move(event: Event) {
-  //   this.openMoveCamCardDialog.emit(event);
-  // }
+  /** Emits the cam card to delete. */
+  deleteCurrentCamCard() {
+    this.deleteCamCard.emit();
+  }
 }

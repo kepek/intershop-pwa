@@ -9,7 +9,7 @@
       <mat-icon svgIcon="plus" class="size-31"></mat-icon>
       {{ 'camfil.account.cam_cards.details.button.add_product.label' | translate }}
     </button>
-    <button mat-stroked-button color="primary">
+    <button mat-stroked-button color="primary" (click)="deleteCurrentCamCard()">
       <mat-icon svgIcon="delete" class="size-15"></mat-icon>
       {{ 'camfil.account.cam_cards.details.button.delete_camcard.label' | translate }}
     </button>
