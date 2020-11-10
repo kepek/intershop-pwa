@@ -144,10 +144,7 @@ export const createAndUpdateCamCardSuccess = createAction(
 
 export const resetCreatedCamCard = createAction('[Cam Cards Internal] Reset cam card');
 
-export const editCamCard = createAction(
-  '[Cam Cards Internal] Edit Cam Card',
-  payload<{ camCardId?: string }>()
-);
+export const editCamCard = createAction('[Cam Cards Internal] Edit Cam Card', payload<{ camCardId?: string }>());
 
 export const loadCamCardsEdit = createAction('[Cam Card Internal] Load Cam Cards Edit');
 
