@@ -1,6 +1,7 @@
 <mat-card class="mat-elevation-z {{ isMobileView ? 'cam-cards-mobile' : 'box-shadow box-shadow--dark' }}">
   <mat-card-content>
     <camfil-account-cam-card-detail-toolbar
+      (addItemsToCart)="addItemsToCart()"
       [isSticky]="isStickyCamCardToolbar$ | async"
       [title]="getCamCardName()"
     ></camfil-account-cam-card-detail-toolbar>

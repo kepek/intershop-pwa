@@ -86,9 +86,9 @@ export class AccountCamCardDetailPageComponent implements OnInit, OnDestroy {
     );
   }
 
-  addSelectedItemsToCart(camCard: CamCard) {
-    this.filterItems(camCard).forEach(item => {
-      this.shoppingFacade.addProductToBasket(item.product.sku, item.quantity);
+  addItemsToCart(camCard: CamCard) {
+    this.filterItems(camCard.camCardItems).forEach(item => {
+      this.shoppingFacade.addProductToBasket(item.id, item.quantity);
     });
   }
 
