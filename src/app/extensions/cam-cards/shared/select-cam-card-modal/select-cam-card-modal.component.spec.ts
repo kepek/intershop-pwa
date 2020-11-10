@@ -8,18 +8,18 @@ import { of } from 'rxjs';
 import { instance, mock, when } from 'ts-mockito';
 
 import { ServerHtmlDirective } from 'ish-core/directives/server-html.directive';
+import { Product } from 'ish-core/models/product/product.model';
+import { CamfilErrorComponent } from 'ish-shared/components/common/camfil-error/camfil-error.component';
+import { CamfilProductQuantityComponent } from 'ish-shared/components/product/camfil-product-quantity/camfil-product-quantity.component';
+import { CamfilCounterComponent } from 'ish-shared/forms/components/camfil-counter/camfil-counter.component';
 import { InputComponent } from 'ish-shared/forms/components/input/input.component';
 
 import { CamCardsFacade } from '../../facades/cam-cards.facade';
 
+import { ArticleDetailsComponent } from './article-details/article-details.component';
+import { CamfilModalComponent } from './camfil-modal/camfil-modal.component';
+import { CreateCamCardModalComponent } from './create-cam-card-modal/create-cam-card-modal.component';
 import { SelectCamCardModalComponent } from './select-cam-card-modal.component';
-import {CamfilModalComponent} from "./camfil-modal/camfil-modal.component";
-import {CamfilErrorComponent} from "ish-shared/components/common/camfil-error/camfil-error.component";
-import {CreateCamCardModalComponent} from "./create-cam-card-modal/create-cam-card-modal.component";
-import {ArticleDetailsComponent} from "./article-details/article-details.component";
-import {CamfilProductQuantityComponent} from "ish-shared/components/product/camfil-product-quantity/camfil-product-quantity.component";
-import {CamfilCounterComponent} from "ish-shared/forms/components/camfil-counter/camfil-counter.component";
-import {Product} from "ish-core/models/product/product.model";
 
 describe('Select Cam Card Modal Component', () => {
   let component: SelectCamCardModalComponent;
@@ -37,15 +37,15 @@ describe('Select Cam Card Modal Component', () => {
 
     await TestBed.configureTestingModule({
       declarations: [
+        ArticleDetailsComponent,
+        CamfilCounterComponent,
+        CamfilErrorComponent,
+        CamfilModalComponent,
+        CamfilProductQuantityComponent,
+        CreateCamCardModalComponent,
         MockComponent(InputComponent),
         MockDirective(ServerHtmlDirective),
         SelectCamCardModalComponent,
-        CamfilModalComponent,
-        CamfilErrorComponent,
-        CreateCamCardModalComponent,
-        ArticleDetailsComponent,
-        CamfilProductQuantityComponent,
-        CamfilCounterComponent
       ],
       imports: [NgbModalModule, ReactiveFormsModule, RouterTestingModule, TranslateModule.forRoot()],
       providers: [{ provide: CamCardsFacade, useFactory: () => instance(camCardFacadeMock) }],
@@ -59,7 +59,7 @@ describe('Select Cam Card Modal Component', () => {
     element = fixture.nativeElement;
     when(camCardFacadeMock.currentCamCard$).thenReturn(of(camCardDetails));
     when(camCardFacadeMock.camCard$).thenReturn(of([camCardDetails]));
-    when(camCardFacadeMock.created$).thenReturn(of({id: 'test_id', name: 'test_name'}));
+    when(camCardFacadeMock.created$).thenReturn(of({ id: 'test_id', name: 'test_name' }));
 
     component.product = { name: 'Test Product', sku: 'test sku', minOrderQuantity: 1 } as Product;
 
@@ -72,5 +72,4 @@ describe('Select Cam Card Modal Component', () => {
     expect(element).toBeTruthy();
     expect(() => fixture.detectChanges()).not.toThrow();
   });
-
 });
