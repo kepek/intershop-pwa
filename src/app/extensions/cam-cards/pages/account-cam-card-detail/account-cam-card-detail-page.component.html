@@ -39,9 +39,8 @@
         <camfil-cam-card-preferences (submit)="updateCamCard($event)" [camCard]="camCard"></camfil-cam-card-preferences>
 
         <camfil-account-cam-card-detail-list
-          [deviceType]="deviceType$ | async"
           [selectedItemsForm]="selectedItemsForm"
-          [camCards]="camCard"
+          [camCard]="camCard"
         ></camfil-account-cam-card-detail-list>
       </div>
 

@@ -1,4 +1,5 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -12,7 +13,6 @@ import {
 import { FormArray } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable, Subject } from 'rxjs';
@@ -23,7 +23,7 @@ import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
 import { ModalDialogComponent } from 'ish-shared/components/common/modal-dialog/modal-dialog.component';
 
 import { CamCardsFacade } from '../../../facades/cam-cards.facade';
-import { CamCard, CamCardItem } from '../../../models/cam-card/cam-card.model';
+import { CamCard } from '../../../models/cam-card/cam-card.model';
 
 @Component({
   selector: 'camfil-account-cam-card-detail-list',
@@ -40,11 +40,10 @@ import { CamCard, CamCardItem } from '../../../models/cam-card/cam-card.model';
 })
 export class AccountCamCardDetailListComponent implements OnInit, OnChanges {
   @Input() deviceType: DeviceType;
-  @Input() camCards: CamCard;
+  @Input() camCard: CamCard;
   @Input() selectedItemsForm: FormArray;
 
   @ViewChild(MatSort) sort: MatSort;
-  camCardsProcessed: MatTableDataSource<CamCard>;
   isMobileView = false;
   expandedCamCard: CamCard | null;
   isSubOpen = [];
@@ -54,7 +53,7 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges {
   constructor(
     private translate: TranslateService,
     private camCardsFacade: CamCardsFacade,
-    private productFacade: ShoppingFacade,
+    private shoppingFacade: ShoppingFacade,
     private changeDetectorRefs: ChangeDetectorRef,
     public router: Router,
     public dialog: MatDialog
@@ -63,12 +62,17 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     this.isMobileView = this.isMobile();
     this.isStickyCamCardToolbar$ = this.camCardsFacade.isStickyCamCardToolbar$;
+
+    // expand all subCamCards
+    if (this.camCard) {
+      this.camCard.subCamCards.forEach(sub => {
+        this.toggleSubCamCard(sub.id);
+      });
+    }
   }
   ngOnChanges(changes: SimpleChanges) {
-    if (changes.camCards) {
-      this.camCardsProcessed = new MatTableDataSource([this.camCards]);
+    if (changes.camCard) {
       this.changeDetectorRefs.detectChanges();
-      this.camCardsProcessed.sort = this.sort;
     }
     this.isMobileView = this.isMobile();
   }
@@ -89,27 +93,23 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges {
   }
 
   getCamCardName() {
-    return this.camCards?.name;
-  }
-
-  getCamCardId() {
-    return this.camCards?.id;
+    return this.camCard?.name;
   }
 
   addItemsToCart() {
     // TODO: improve when NEW order/addToCartWay will be inProgress
-    this.camCards.camCardItems.forEach((item: CamCardItem) => {
-      this.productFacade.addProductToBasket(item.product.sku, item.quantity);
+    this.camCard.camCardItems?.map(item => {
+      this.shoppingFacade.addProductToBasket(item.product.sku, item.quantity);
     });
-    this.camCards.subCamCards.forEach((item: CamCard) => {
-      item.camCardItems.forEach((subItem: CamCardItem) => {
-        this.productFacade.addProductToBasket(subItem.product.sku, subItem.quantity);
+    this.camCard.subCamCards?.map(sub => {
+      sub.camCardItems?.map(item => {
+        this.shoppingFacade.addProductToBasket(item.product.sku, item.quantity);
       });
     });
   }
 
   deleteCamCard() {
-    this.camCardsFacade.deleteCamCard(this.camCards.id);
+    this.camCardsFacade.deleteCamCard(this.camCard.id);
     this.router.navigate(['/account/cam-cards']);
   }
 
@@ -121,5 +121,13 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges {
       .subscribe(res => (modal.options.titleText = res));
 
     modal.show(camCard.id);
+  }
+
+  drop(event: CdkDragDrop<string[]>) {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    } else {
+      transferArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
+    }
   }
 }
