@@ -2,233 +2,39 @@
 @import '~src/styles/themes/camfil/variables';
 
 :host {
-  table {
-    width: calc(100% + #{$space-sm * 2});
-    margin: $space-box $space-box * -1 0;
-
-    th {
-      padding-top: $space-default/2;
-      padding-bottom: $space-default/2;
-      font-weight: 600;
-      color: $text-color-primary;
-      background-color: rgba($color-corporate, 0.1);
-    }
-    td {
-      padding-top: $space-box;
-      padding-bottom: $space-box;
-      border: none;
-
-      &.mat-column-expandedDetail {
-        padding: 0;
-      }
-    }
-    .arrow_down {
-      margin-right: $space-default/2;
-      vertical-align: bottom;
-      transform: rotate(-90deg);
-
-      &--expanded {
-        transform: rotate(-270deg);
-      }
-    }
-
-    ::ng-deep {
-      th,
-      td {
-        text-align: center;
-        &:first-child {
-          padding-left: $space-box;
-        }
-      }
-      .mat-column {
-        &-customer,
-        &-name {
-          text-align: left;
-        }
-        &-lastDelivery,
-        &-orderInterval,
-        &-nextDelivery,
-        &-rows {
-          .mat-sort-header-container {
-            justify-content: center;
-          }
-        }
-        &-name {
-          .mat-sort-header-container {
-            padding-left: $space-default * 1.5;
-          }
-        }
-        &-total {
-          font-family: $font-family-SansPro;
-          font-size: $font-size-lg;
-        }
-      }
-
-      .mat-checkbox-layout {
-        display: inline;
-        margin: 0 0 0 8px;
-      }
-      .mat-expansion-panel-body {
-        padding: 0;
-      }
-    }
-  }
-
-  .cam-card {
-    &-row-element {
-      &:nth-child(4n-1) {
-        background-color: $greyF5;
-      }
-
-      &:nth-child(4n + 1) {
-        + tr td .cam-card-row-details__detail > .cam-card-product {
-          &:nth-child(odd) {
-            background-color: $greyF5;
-          }
-          &:nth-child(even) {
-            background-color: transparent;
-          }
-        }
-      }
-      [class*='mat-column']:not(.mat-column-name) {
-        color: $camfil-text-color-tertiary;
-      }
-      &--expanded {
-        + tr td {
-          overflow: hidden;
-
-          .cam-card-row-details__detail {
-            margin-bottom: 3px;
-            box-shadow: $header-shadow;
-          }
-        }
-      }
-    }
-    &-row-details {
-      height: auto;
-
-      &__detail {
-        overflow: hidden;
-      }
-    }
-    &-product {
-      padding: $space-box $space-default $space-box $space-default * 2;
-
-      &:nth-child(even) {
-        background-color: $greyF5;
-      }
-    }
-    &-comment {
-      cursor: pointer;
-
-      .mat-icon {
-        margin-top: -2px;
-      }
-    }
-
-    // for mobile
-    &s-mobile {
-      padding: $space-box 0;
-    }
-    @media (max-width: $screen-sm-max) {
-      &-item {
-        line-height: 24px;
-        color: $camfil-text-color-tertiary;
-        .row:nth-of-type(2n + 1) {
-          margin-top: $space-box/2;
-          margin-bottom: $space-box/2;
-          font-size: $font-size-xs;
-          font-weight: 600;
-          color: $camfil-text-color-primary;
-          background-color: rgba($color-corporate, 0.1);
-        }
-        &__detail {
-          width: 100%;
-          &.expanded {
-            margin-top: $space-box;
-            border-top: $border-width-default solid $border-color-light;
-          }
-        }
-        ::ng-deep {
-          .mat-expansion-panel-body {
-            padding: 0;
-          }
-        }
-      }
-    }
-    // EOF for mobile
-  }
-  .mat-action-row {
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 $space-default;
-    line-height: $common-height;
-    background-color: rgba($color-corporate, 0.1);
-    border: none;
-
-    .arrow_down {
-      margin-left: $space-default/2;
-      vertical-align: middle;
-    }
-
-    ::ng-deep {
-      label {
-        margin-bottom: 0;
-      }
+  ::ng-deep {
+    .mat-expansion-panel-body {
+      padding: 0;
+      margin: 0;
     }
   }
 }
-::ng-deep {
-  .mat-sort-header-arrow {
-    position: relative;
-    opacity: 1 !important;
-    transform: translateY(0%) !important;
 
-    &::before,
-    &::after {
-      position: absolute;
-      top: -1px;
-      left: 2px;
-      content: '';
-      @include triangle(top, 5px, 5px, $text-color-primary);
-    }
-    &::after {
-      top: 9px;
-      transform: rotate(180deg);
-    }
+.sub-camcard-collapse {
+  font-weight: 600;
+  line-height: 40px;
+  color: $camfil-text-color-primary;
+  background-color: rgba($color-corporate, 0.1);
+}
+.cam-card-total {
+  font-family: $font-family-SansPro;
+  font-size: $font-size-lg;
+}
+.arrow_down {
+  margin-right: $space-default/2;
+  vertical-align: middle;
+  transform: rotate(-90deg);
 
-    * {
-      visibility: hidden;
-    }
-
-    [aria-sort='ascending'] & {
-      &::after {
-        display: none;
-      }
-      &::before {
-        top: 3px;
-      }
-    }
-    [aria-sort='descending'] & {
-      &::before {
-        display: none;
-      }
-      &::after {
-        top: 5px;
-      }
-    }
+  &--expanded {
+    transform: rotate(-270deg);
   }
-  div.cam-card-tooltip {
-    min-width: 100px;
-    max-width: 200px;
-    margin: $space-box 0 0;
-    font-size: $font-size-base;
-    line-height: 1.4em;
-    // div tag was added becaouse of override
-    white-space: pre-line;
+}
 
-    &::first-line {
-      font-weight: bold;
-    }
+.list-item-row {
+  margin-top: 12px;
+  background-color: $white;
+  box-shadow: $header-shadow;
+  &:first-child {
+    margin-top: 0 !important;
   }
 }
