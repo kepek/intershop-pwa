@@ -13,8 +13,11 @@
     line-height: 14px;
     border-right: 1px solid $gray-600;
   }
-
+  .attributes > .quick-view {
+    border: none;
+  }
   .prices {
+    min-width: 130px;
     camfil-product-attribute {
       display: block;
     }

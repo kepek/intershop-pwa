@@ -82,6 +82,7 @@ import { InplaceEditComponent } from './components/common/inplace-edit/inplace-e
 import { LoadingComponent } from './components/common/loading/loading.component';
 import { ModalDialogLinkComponent } from './components/common/modal-dialog-link/modal-dialog-link.component';
 import { ModalDialogComponent } from './components/common/modal-dialog/modal-dialog.component';
+import { QuickViewModalComponent } from './components/common/quick-view-modal/quick-view-modal.component';
 import { SuccessMessageComponent } from './components/common/success-message/success-message.component';
 import { CamfilFilterAppliedComponent } from './components/filter/camfil-filter-applied/camfil-filter-applied.component';
 import { CamfilFilterCollapsableComponent } from './components/filter/camfil-filter-collapsable/camfil-filter-collapsable.component';
@@ -316,6 +317,7 @@ const exportedComponents = [
   ProductVariationDisplayComponent,
   PromotionDetailsComponent,
   PromotionRemoveComponent,
+  QuickViewModalComponent,
   RecentlyViewedComponent,
   SuccessMessageComponent,
 ];

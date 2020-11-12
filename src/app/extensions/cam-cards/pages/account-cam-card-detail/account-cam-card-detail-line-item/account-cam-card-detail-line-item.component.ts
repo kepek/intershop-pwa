@@ -11,12 +11,14 @@ import {
 } from '@angular/core';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { TranslateService } from '@ngx-translate/core';
 import { Observable, Subject } from 'rxjs';
 import { debounceTime, take, takeUntil } from 'rxjs/operators';
 
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { ProductView } from 'ish-core/models/product-view/product-view.model';
 import { ProductCompletenessLevel } from 'ish-core/models/product/product.model';
+import { QuickViewModalComponent } from 'ish-shared/components/common/quick-view-modal/quick-view-modal.component';
 
 import { CamCardsFacade } from '../../../facades/cam-cards.facade';
 import { CamCard, CamCardItem } from '../../../models/cam-card/cam-card.model';
@@ -31,6 +33,7 @@ export class AccountCamCardDetailLineItemComponent implements OnChanges, OnInit,
   constructor(
     private productFacade: ShoppingFacade,
     private camCardsFacade: CamCardsFacade,
+    private translate: TranslateService,
     public dialog: MatDialog
   ) {}
 
@@ -48,7 +51,6 @@ export class AccountCamCardDetailLineItemComponent implements OnChanges, OnInit,
   addToCartForm: FormGroup;
   selectItemForm: FormGroup;
   product$: Observable<ProductView>;
-
   private destroy$ = new Subject<void>();
 
   ngOnInit() {
@@ -141,6 +143,15 @@ export class AccountCamCardDetailLineItemComponent implements OnChanges, OnInit,
         .pipe(take(1), takeUntil(this.destroy$))
         .subscribe((res: ProductView) => this.handleLoad.emit({ res, quantity: this.camCardItemData.quantity }));
     }
+  }
+
+  /** Determine the heading of the delete modal and opens the modal. */
+  openQuickViewDialog(camCardItemData: CamCardItem) {
+    this.dialog.open(QuickViewModalComponent, {
+      width: '330px',
+      autoFocus: false,
+      data: { ...camCardItemData },
+    });
   }
 
   get isEditMode() {
