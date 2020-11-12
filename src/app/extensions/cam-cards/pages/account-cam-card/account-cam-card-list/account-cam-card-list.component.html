@@ -84,7 +84,8 @@
                   mat-stroked-button
                   color="primary"
                   [title]="'camfil.account.cam_card.edit.heading' | translate"
-                  (click)="expandedCamCard = expandedCamCard === camCards ? null : camCards"
+                  [id]="'camCard_' + camCards.id"
+                  (click)="handleExpandedCamCard(camCards)"
                 >
                   <b>{{ 'camfil.account.cam_cards.more_info' | translate }}</b>
                 </button>
@@ -96,30 +97,32 @@
                 [@detailExpand]="camCards === expandedCamCard ? 'expanded' : 'collapsed'"
               >
                 <!-- TODO: to improve after get design for mobile for expanded camCard!! (this part is copy from desktop) -->
-                <ng-container *ngTemplateOutlet="camCardRow; context: { camCard: camCards }"></ng-container>
-                <ng-container *ngFor="let subCamCard of camCards.subCamCards">
-                  <mat-action-row>
-                    <strong (click)="toggleSubCamCard(subCamCard.id)">
-                      <mat-icon class="arrow_down" [class.arrow_down--expanded]="isSubCamCardOpen(subCamCard.id)"
-                        >arrow_left</mat-icon
+                <ng-container *ngIf="camCards == expandedCamCard">
+                  <ng-container *ngTemplateOutlet="camCardRow; context: { camCard: camCards }"></ng-container>
+                  <ng-container *ngFor="let subCamCard of camCards.subCamCards">
+                    <mat-action-row>
+                      <strong (click)="toggleSubCamCard(subCamCard.id)">
+                        <mat-icon class="arrow_down" [class.arrow_down--expanded]="isSubCamCardOpen(subCamCard.id)"
+                          >arrow_left</mat-icon
+                        >
+                        {{ subCamCard.name }}
+                      </strong>
+                      <mat-checkbox
+                        (change)="camCardToggle(subCamCard, $event)"
+                        *ngIf="subCamCard.itemsCount > 0"
+                        [checked]="isCamCardChecked(subCamCard)"
+                        [indeterminate]="isCamCardIndeterminate(subCamCard)"
                       >
-                      {{ subCamCard.name }}
-                    </strong>
-                    <mat-checkbox
-                      (change)="camCardToggle(subCamCard, $event)"
-                      *ngIf="subCamCard.itemsCount > 0"
-                      [checked]="isCamCardChecked(subCamCard)"
-                      [indeterminate]="isCamCardIndeterminate(subCamCard)"
-                    >
-                    </mat-checkbox>
-                  </mat-action-row>
-                  <mat-accordion>
-                    <mat-expansion-panel [expanded]="isSubCamCardOpen(subCamCard.id)">
-                      <ng-container *ngTemplateOutlet="camCardRow; context: { camCard: subCamCard }"></ng-container>
-                    </mat-expansion-panel>
-                  </mat-accordion>
+                      </mat-checkbox>
+                    </mat-action-row>
+                    <mat-accordion>
+                      <mat-expansion-panel [expanded]="isSubCamCardOpen(subCamCard.id)">
+                        <ng-container *ngTemplateOutlet="camCardRow; context: { camCard: subCamCard }"></ng-container>
+                      </mat-expansion-panel>
+                    </mat-accordion>
+                  </ng-container>
+                  <!-- EOF: TODO -->
                 </ng-container>
-                <!-- EOF: TODO -->
               </div>
             </mat-card-content>
           </mat-card>
@@ -220,28 +223,30 @@
               class="cam-card-row-details__detail"
               [@detailExpand]="camCard == expandedCamCard ? 'expanded' : 'collapsed'"
             >
+            <ng-container *ngIf="camCard == expandedCamCard">
               <ng-container *ngTemplateOutlet="camCardRow; context: { camCard: camCard }"></ng-container>
-              <ng-container *ngFor="let subCamCard of camCard.subCamCards">
-                <mat-action-row>
-                  <strong (click)="toggleSubCamCard(subCamCard.id)">
-                    <mat-icon class="arrow_down" [class.arrow_down--expanded]="isSubCamCardOpen(subCamCard.id)"
-                      >arrow_left</mat-icon
+                <ng-container *ngFor="let subCamCard of camCard.subCamCards">
+                  <mat-action-row>
+                    <strong (click)="toggleSubCamCard(subCamCard.id)">
+                      <mat-icon class="arrow_down" [class.arrow_down--expanded]="isSubCamCardOpen(subCamCard.id)"
+                        >arrow_left</mat-icon
+                      >
+                      {{ subCamCard.name }}
+                    </strong>
+                    <mat-checkbox
+                      (change)="camCardToggle(subCamCard, $event)"
+                      *ngIf="subCamCard.itemsCount > 0"
+                      [checked]="isCamCardChecked(subCamCard)"
+                      [indeterminate]="isCamCardIndeterminate(subCamCard)"
                     >
-                    {{ subCamCard.name }}
-                  </strong>
-                  <mat-checkbox
-                    (change)="camCardToggle(subCamCard, $event)"
-                    *ngIf="subCamCard.itemsCount > 0"
-                    [checked]="isCamCardChecked(subCamCard)"
-                    [indeterminate]="isCamCardIndeterminate(subCamCard)"
-                  >
-                  </mat-checkbox>
-                </mat-action-row>
-                <mat-accordion>
-                  <mat-expansion-panel [expanded]="isSubCamCardOpen(subCamCard.id)">
-                    <ng-container *ngTemplateOutlet="camCardRow; context: { camCard: subCamCard }"></ng-container>
-                  </mat-expansion-panel>
-                </mat-accordion>
+                    </mat-checkbox>
+                  </mat-action-row>
+                  <mat-accordion>
+                    <mat-expansion-panel [expanded]="isSubCamCardOpen(subCamCard.id)">
+                      <ng-container *ngTemplateOutlet="camCardRow; context: { camCard: subCamCard }"></ng-container>
+                    </mat-expansion-panel>
+                  </mat-accordion>
+                </ng-container>
               </ng-container>
             </div>
           </td>
@@ -252,8 +257,9 @@
           mat-row
           *matRowDef="let camCard; columns: columnsToDisplay"
           class="cam-card-row-element"
+          [id]="'camCard_' + camCard.id"
           [class.cam-card-row-element--expanded]="expandedCamCard === camCard"
-          (click)="expandedCamCard = expandedCamCard === camCard ? null : camCard"
+          (click)="handleExpandedCamCard(camCard)"
         ></tr>
         <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="cam-card-row-details"></tr>
       </table>
@@ -317,3 +323,5 @@
   }"
   >{{ 'camfil.account.cam_card.delete.do_you_really.text' | translate }}</ish-modal-dialog
 >
+
+<ish-loading *ngIf="loading"></ish-loading>

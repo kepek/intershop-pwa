@@ -1,4 +1,5 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import { ViewportScroller } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -16,6 +17,7 @@ import { MatCheckboxChange } from '@angular/material/checkbox';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable, Subject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
@@ -73,11 +75,13 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
     'edit',
     'checkbox',
   ];
-  expandedCamCard: CamCard | null;
+  expandedCamCard: CamCard | undefined;
   productsChecked = {};
   isMobileView = false;
+  loading = true;
   isSubOpen = [];
   maintenance = CamCardHelper.maintenance;
+  private fragment: string;
 
   private destroy$ = new Subject();
 
@@ -86,7 +90,10 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
     private productFacade: ShoppingFacade,
     private camCardsFacade: CamCardsFacade,
     private changeDetectorRefs: ChangeDetectorRef,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private scroller: ViewportScroller
   ) {}
 
   ngOnInit() {
@@ -95,6 +102,11 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
     }
     this.isMobileView = this.isMobile();
     this.isStickyCamCardToolbar$ = this.camCardsFacade.isStickyCamCardToolbar$;
+
+    this.activatedRoute.fragment.pipe(take(1)).subscribe((fragment: string) => {
+      this.fragment = fragment;
+      this.goToExpandedCamCard();
+    });
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -112,6 +124,9 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
       this.camCardsProcessed.sort = this.sort;
       this.camCardsProcessed.sortingDataAccessor = (item, property) =>
         property === 'customer' ? item.customer.companyName : item[property];
+
+      this.goToExpandedCamCard();
+      this.loading = !this.camCardsProcessed.data.length;
     }
     this.isMobileView = this.isMobile();
   }
@@ -146,6 +161,32 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
   toggleSubCamCard(id: string) {
     const index = this.isSubOpen.indexOf(id);
     this.isSubCamCardOpen(id) ? this.isSubOpen.splice(index, 1) : this.isSubOpen.push(id);
+  }
+
+  handleExpandedCamCard(camCard: CamCard) {
+    const isExpanded = this.expandedCamCard && this.expandedCamCard.id === camCard.id;
+    this.expandedCamCard = isExpanded ? undefined : camCard;
+    if (!isExpanded) {
+      this.router.navigate([], {
+        relativeTo: this.activatedRoute,
+        fragment: camCard.id,
+      });
+    }
+  }
+
+  expandCamCardByFragment() {
+    this.expandedCamCard = this.camCards.find((camCard: CamCard) => camCard.id === this.fragment) || undefined;
+  }
+
+  goToExpandedCamCard() {
+    if (this.fragment && this.camCardsProcessed.data.length) {
+      const el = document.getElementById('camCard_' + this.fragment) as HTMLElement;
+      if (el) {
+        const top = el.getBoundingClientRect().top - (this.isMobileView ? 0 : 130);
+        this.scroller.scrollToPosition([0, top]);
+        this.expandCamCardByFragment();
+      }
+    }
   }
 
   /** addToCartItems */
