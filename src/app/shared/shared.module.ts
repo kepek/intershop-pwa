@@ -34,6 +34,7 @@ import { IconModule } from 'ish-core/icon.module';
 import { PipesModule } from 'ish-core/pipes.module';
 import { CamfilBannerComponent } from 'ish-shared/components/camfil-banner/camfil-banner.component';
 import { CamfilBulletListComponent } from 'ish-shared/components/common/camfil-bullet-list/camfil-bullet-list.component';
+import { CamfilCamCardModalComponent } from 'ish-shared/components/common/camfil-cam-card-modal/camfil-cam-card-modal.component';
 import { CamfilErrorComponent } from 'ish-shared/components/common/camfil-error/camfil-error.component';
 import { CamfilHeaderBoxComponent } from 'ish-shared/components/common/camfil-header-box/camfil-header-box.component';
 import { CamfilProductGuidesComponent } from 'ish-shared/components/product/camfil-product-guides/camfil-product-guides.component';
@@ -201,6 +202,7 @@ const declaredComponents = [
   CMSVideoComponent,
   CamfilBannerComponent,
   CamfilBulletListComponent,
+  CamfilCamCardModalComponent,
   CamfilErrorComponent,
   CamfilFilterAppliedComponent,
   CamfilFilterCollapsableComponent,
@@ -269,6 +271,7 @@ const exportedComponents = [
   CamfilBasketCostSummaryComponent,
   CamfilBreadcrumbComponent,
   CamfilBulletListComponent,
+  CamfilCamCardModalComponent,
   CamfilErrorComponent,
   CamfilFilterInfoComponent,
   CamfilFilterMeasurementsComponent,

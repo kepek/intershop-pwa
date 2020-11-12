@@ -121,7 +121,7 @@ export const addProductToNewCamCardAndUpdate = createAction(
 );
 
 export const addToNewCamCardWithNewSubCamCard = createAction(
-  '[Cam Cards Internal] Add Product To New Cam Card And New SubCamCard',
+  '[Cam Cards Internal] Add To New Cam Card With New Sub Cam Card',
   payload<{
     newCamCard: CamCard;
     newSubCamCard: CamCard;

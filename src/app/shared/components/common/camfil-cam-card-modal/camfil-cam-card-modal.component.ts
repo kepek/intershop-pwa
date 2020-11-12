@@ -1,12 +1,12 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, TemplateRef } from '@angular/core';
 
 @Component({
-  selector: 'camfil-modal',
-  templateUrl: './camfil-modal.component.html',
-  styleUrls: ['./camfil-modal.component.scss'],
+  selector: 'camfil-cam-card-modal',
+  templateUrl: './camfil-cam-card-modal.component.html',
+  styleUrls: ['./camfil-cam-card-modal.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CamfilModalComponent {
+export class CamfilCamCardModalComponent {
   @Input() title: string;
   @Input() iconName?: string;
   @Input() subtitle?: string;

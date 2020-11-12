@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CamfilModalComponent } from './camfil-modal.component';
+import { CamfilCamCardModalComponent } from './camfil-cam-card-modal.component';
 
-describe('Camfil Modal Component', () => {
-  let component: CamfilModalComponent;
-  let fixture: ComponentFixture<CamfilModalComponent>;
+describe('Camfil Cam Card Modal Component', () => {
+  let component: CamfilCamCardModalComponent;
+  let fixture: ComponentFixture<CamfilCamCardModalComponent>;
   let element: HTMLElement;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CamfilModalComponent],
+      declarations: [CamfilCamCardModalComponent],
     }).compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CamfilModalComponent);
+    fixture = TestBed.createComponent(CamfilCamCardModalComponent);
     component = fixture.componentInstance;
     element = fixture.nativeElement;
   });

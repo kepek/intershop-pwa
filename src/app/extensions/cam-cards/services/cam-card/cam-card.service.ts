@@ -58,8 +58,9 @@ export class CamCardService {
 
   /**
    * Creates a sub cam card
+   * @param rootCamCardId     Parent for sub cam card
    * @param camCardData
-   * @returns                 The created cam_cards.
+   * @returns                 The created cam_card.
    */
   createSubCamCard(camCardData: CamCard, rootCamCardId: string): Observable<CamCard> {
     return this.apiService
