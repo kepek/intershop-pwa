@@ -96,6 +96,24 @@ export class CreateCamCardModalComponent implements OnInit, AfterViewInit {
     this.showNewSegment = true;
   }
 
+  pickCustomer(event) {
+    this.camCardsFacade.getDeliveryAddress(event.value);
+  }
+
+  pickAddress(event) {
+    const id = event.value;
+    this.addresses$.subscribe(addresses => {
+      const address = addresses.filter(element => element.id === id)[0];
+
+      this.camCardForm.patchValue({
+        company: address.companyName1,
+        address: address.addressLine1,
+        zipCode: address.postalCode,
+        area: address.city,
+      });
+    });
+  }
+
   create() {
     const camCard = {
       name: this.camCardForm.get('name').value,
@@ -107,8 +125,8 @@ export class CreateCamCardModalComponent implements OnInit, AfterViewInit {
       },
       deliveryAddress: {
         ...this.camCardAddressEntry,
-        addressLine1: this.camCardForm.get('company').value,
-        addressLine2: this.camCardForm.get('address').value,
+        addressLine1: this.camCardForm.get('address').value,
+        addressLine2: this.camCardForm.get('company').value,
         postalCode: this.camCardForm.get('zipCode').value,
         city: this.camCardForm.get('area').value,
       },

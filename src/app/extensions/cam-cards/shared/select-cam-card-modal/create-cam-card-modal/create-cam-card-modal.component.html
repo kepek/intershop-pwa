@@ -26,10 +26,11 @@
         <mat-select
           [placeholder]="'camfil.modal.createCamcard.select.customer' | translate"
           formControlName="customerSelect"
+          (selectionChange)="pickCustomer($event)"
         >
           <mat-option>--</mat-option>
           <mat-option *ngFor="let customer of customers$ | async" [value]="customer.id">
-            {{ customer.id }}
+            {{ customer.companyName }}
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -72,6 +73,7 @@
         <mat-select
           [placeholder]="'camfil.account.cam_card.add_to_form.choose_address' | translate"
           formControlName="deliveryAddressSelect"
+          (selectionChange)="pickAddress($event)"
         >
           <mat-option>--</mat-option>
           <mat-option *ngFor="let location of addresses$ | async" [value]="location.id">
