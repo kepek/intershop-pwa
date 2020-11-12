@@ -229,7 +229,7 @@ export class SelectCamCardModalComponent implements OnInit, OnDestroy {
   getSelectedCamCardItem(camCardId) {
     const currentCamCard = this.getSelectedCamCard(camCardId);
     return currentCamCard ? currentCamCard.camCardItems : [];
-  };
+  }
 
   isAddedToExistingSubCamCard = () => this.segmentSelected && this.segmentSelected !== this.newSegmentValue;
 
