@@ -1,7 +1,7 @@
 <ng-container *ngIf="product$ | async as product">
-  <div class="d-flex align-items-center text-left" [ngClass]="{ 'justify-content-between': mode === 'edit' }">
-    <ng-container *ngIf="mode === 'view'">{{ index }}</ng-container>
-    <ng-container *ngIf="mode === 'edit'">
+  <div class="d-flex align-items-center text-left" [ngClass]="{ 'justify-content-between': isEditMode }">
+    <ng-container *ngIf="isViewMode">{{ index }}</ng-container>
+    <ng-container *ngIf="isEditMode">
       <mat-icon svgIcon="move" class="size-24"></mat-icon>
     </ng-container>
     <a class="image" [routerLink]="product | ishProductRoute">
@@ -16,7 +16,7 @@
         <camfil-product-attribute name="camfil.product.id.label" [value]="product.sku"></camfil-product-attribute>
         <camfil-product-attribute name="Dimensions" [value]="product.sku"></camfil-product-attribute>
         <camfil-product-attribute name="Efficiency" [value]="product.sku"></camfil-product-attribute>
-        <ng-container *ngIf="mode === 'view'">
+        <ng-container *ngIf="isViewMode">
           <camfil-product-attribute
             name="comment.label"
             [value]="camCardItemData.comment.label"
@@ -32,13 +32,13 @@
       </div>
     </div>
     <camfil-cam-card-product-comment
-      *ngIf="mode === 'edit' || camCardItemData.comment?.label"
-      [ngClass]="{ 'align-self-end': mode === 'view' }"
+      *ngIf="isEditMode || camCardItemData.comment?.label"
+      [ngClass]="{ 'align-self-end': isViewMode }"
       [currentCamCard]="currentCamCard"
       [camCardItem]="camCardItemData"
       [mode]="mode"
     ></camfil-cam-card-product-comment>
-    <ng-container *ngIf="mode === 'edit'">
+    <ng-container *ngIf="isEditMode">
       <a class="btn-tool" (click)="removeProductFromCamCard(camCardItemData?.id)" data-testing-id="delete-cam-card">
         <mat-icon svgIcon="delete"></mat-icon>
       </a>
@@ -52,9 +52,6 @@
         ></camfil-product-quantity>
       </form>
       <div class="prices"><ng-container *ngTemplateOutlet="price"></ng-container></div>
-    </ng-container>
-    <ng-container *ngIf="mode === 'view'">
-      <ish-checkbox *ngIf="selectItemForm" [form]="selectItemForm" controlName="productCheckbox"> </ish-checkbox>
     </ng-container>
   </div>
 

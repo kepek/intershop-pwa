@@ -111,4 +111,12 @@ export class AccountCamCardDetailLineItemComponent implements OnChanges, OnInit,
       );
     }
   }
+
+  get isEditMode() {
+    return this.mode === 'edit';
+  }
+
+  get isViewMode() {
+    return this.mode === 'view';
+  }
 }
