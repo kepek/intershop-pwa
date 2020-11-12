@@ -9,6 +9,7 @@ import { instance, mock, when } from 'ts-mockito';
 
 import { ServerHtmlDirective } from 'ish-core/directives/server-html.directive';
 import { Product } from 'ish-core/models/product/product.model';
+import { CamfilCamCardModalComponent } from 'ish-shared/components/common/camfil-cam-card-modal/camfil-cam-card-modal.component';
 import { CamfilErrorComponent } from 'ish-shared/components/common/camfil-error/camfil-error.component';
 import { CamfilProductQuantityComponent } from 'ish-shared/components/product/camfil-product-quantity/camfil-product-quantity.component';
 import { CamfilCounterComponent } from 'ish-shared/forms/components/camfil-counter/camfil-counter.component';
@@ -17,7 +18,6 @@ import { InputComponent } from 'ish-shared/forms/components/input/input.componen
 import { CamCardsFacade } from '../../facades/cam-cards.facade';
 
 import { ArticleDetailsComponent } from './article-details/article-details.component';
-import { CamfilCamCardModalComponent } from '../../../../shared/components/common/camfil-cam-card-modal/camfil-cam-card-modal.component';
 import { CreateCamCardModalComponent } from './create-cam-card-modal/create-cam-card-modal.component';
 import { SelectCamCardModalComponent } from './select-cam-card-modal.component';
 
@@ -38,9 +38,9 @@ describe('Select Cam Card Modal Component', () => {
     await TestBed.configureTestingModule({
       declarations: [
         ArticleDetailsComponent,
+        CamfilCamCardModalComponent,
         CamfilCounterComponent,
         CamfilErrorComponent,
-        CamfilCamCardModalComponent,
         CamfilProductQuantityComponent,
         CreateCamCardModalComponent,
         MockComponent(InputComponent),

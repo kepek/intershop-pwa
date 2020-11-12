@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CamfilCamCardModalComponent } from './camfil-cam-card-modal.component';
 
-describe('Camfil Modal Component', () => {
+describe('Camfil Cam Card Modal Component', () => {
   let component: CamfilCamCardModalComponent;
   let fixture: ComponentFixture<CamfilCamCardModalComponent>;
   let element: HTMLElement;

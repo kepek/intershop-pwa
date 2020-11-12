@@ -335,8 +335,12 @@ export class CamCardEffects {
             };
 
             return payload.edit
-              ? [createCamCardSuccess({camCard}), addProductToCamCardAndUpdate(updatePayload), editCamCard({ camCardId: camCard.id })]
-              : [createCamCardSuccess({camCard}), addProductToCamCardAndUpdate(updatePayload)];
+              ? [
+                  createCamCardSuccess({ camCard }),
+                  addProductToCamCardAndUpdate(updatePayload),
+                  editCamCard({ camCardId: camCard.id }),
+                ]
+              : [createCamCardSuccess({ camCard }), addProductToCamCardAndUpdate(updatePayload)];
           }),
           mapErrorToAction(addProductToCamCardFail)
         )

@@ -159,7 +159,6 @@ export class CreateCamCardModalComponent implements OnInit, AfterViewInit {
       } else {
         this.createAndEditEmitter.emit({ ...camCardData, edit });
       }
-
     } else {
       markAsDirtyRecursive(this.camCardForm);
     }
