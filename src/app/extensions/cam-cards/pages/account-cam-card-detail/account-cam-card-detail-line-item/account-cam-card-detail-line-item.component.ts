@@ -1,11 +1,14 @@
 import { ChangeDetectionStrategy, Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { TranslateService } from '@ngx-translate/core';
 import { Observable, Subject } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { ProductView } from 'ish-core/models/product-view/product-view.model';
 import { ProductCompletenessLevel } from 'ish-core/models/product/product.model';
+import { QuickViewModalComponent } from 'ish-shared/components/common/quick-view-modal/quick-view-modal.component';
 
 import { CamCardsFacade } from '../../../facades/cam-cards.facade';
 import { CamCard, CamCardItem } from '../../../models/cam-card/cam-card.model';
@@ -17,7 +20,12 @@ import { CamCard, CamCardItem } from '../../../models/cam-card/cam-card.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AccountCamCardDetailLineItemComponent implements OnChanges, OnInit, OnDestroy {
-  constructor(private productFacade: ShoppingFacade, private camCardsFacade: CamCardsFacade) {}
+  constructor(
+    private productFacade: ShoppingFacade,
+    private camCardsFacade: CamCardsFacade,
+    private translate: TranslateService,
+    public dialog: MatDialog
+  ) {}
 
   private static REQUIRED_COMPLETENESS_LEVEL = ProductCompletenessLevel.List;
   @Input() camCardItemData: CamCardItem;
@@ -29,7 +37,6 @@ export class AccountCamCardDetailLineItemComponent implements OnChanges, OnInit,
   addToCartForm: FormGroup;
   selectItemForm: FormGroup;
   product$: Observable<ProductView>;
-
   private destroy$ = new Subject<void>();
 
   ngOnInit() {
@@ -110,6 +117,15 @@ export class AccountCamCardDetailLineItemComponent implements OnChanges, OnInit,
         AccountCamCardDetailLineItemComponent.REQUIRED_COMPLETENESS_LEVEL
       );
     }
+  }
+
+  /** Determine the heading of the delete modal and opens the modal. */
+  openQuickViewDialog(camCardItemData: CamCardItem) {
+    this.dialog.open(QuickViewModalComponent, {
+      width: '330px',
+      autoFocus: false,
+      data: { ...camCardItemData },
+    });
   }
 
   get isEditMode() {

@@ -13,14 +13,37 @@
     line-height: 14px;
     border-right: 1px solid $gray-600;
   }
-
+  .attributes > .quick-view {
+    border: none;
+  }
   .prices {
+    min-width: 130px;
     camfil-product-attribute {
       display: block;
     }
   }
+  .delete-cam-card {
+    z-index: 1;
+  }
 
   ::ng-deep {
+    mat-form-field {
+      .mat-form-field-underline {
+        display: none;
+      }
+      .mat-form-field-appearance-fill .mat-form-field-infix {
+        padding-top: 0.5em;
+      }
+
+      div.mat-form-field-flex {
+        padding: 0.5em 0.75em 0 0.75em;
+        margin-top: 0.25em;
+        margin-bottom: 0.25em;
+      }
+      div.mat-form-field-infix {
+        padding: 0.25em 0 0.5em 0;
+      }
+    }
     .camfil-product-attribute {
       margin-bottom: 0;
     }
@@ -40,6 +63,9 @@
     }
     dt {
       color: $gray-600;
+    }
+    dd {
+      float: right;
     }
   }
 }
