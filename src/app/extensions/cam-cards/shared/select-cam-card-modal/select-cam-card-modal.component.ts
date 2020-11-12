@@ -311,8 +311,9 @@ export class SelectCamCardModalComponent implements OnInit, OnDestroy {
   }
 
   goToCamcard() {
-    this.router.navigate([`/account/cam-cards/${this.idAfterCreate}`]);
+    this.router.navigate([`/account/cam-cards/${this.created.id}`]);
     this.camCardsFacade.resetCreatedCamCard();
+    this.hide();
   }
 
   /** close modal */
