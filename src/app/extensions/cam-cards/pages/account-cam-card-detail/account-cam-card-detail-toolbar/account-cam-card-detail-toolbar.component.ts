@@ -1,6 +1,8 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 
 import { CamCardsFacade } from '../../../facades/cam-cards.facade';
+import { ModalAddNewProductComponent } from '../modal-add-new-product/modal-add-new-product.component';
 
 @Component({
   selector: 'camfil-account-cam-card-detail-toolbar',
@@ -16,7 +18,12 @@ export class AccountCamCardDetailToolbarComponent implements OnInit {
 
   dummyProduct = { sku: 'dummy', inStock: true, availability: true };
 
-  constructor(private camCardsFacade: CamCardsFacade) {}
+  constructor(private camCardsFacade: CamCardsFacade, public dialog: MatDialog) {}
+
+  openAddToProductModal(modal: ModalAddNewProductComponent) {
+    this.dialog.open(modal.show());
+    modal.hide = () => this.dialog.closeAll();
+  }
 
   ngOnInit() {
     this.camCardsFacade.detectCamCardToolbar();

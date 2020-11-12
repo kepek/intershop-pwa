@@ -5,7 +5,7 @@
       <mat-icon svgIcon="plus" class="size-31"></mat-icon>
       {{ 'camfil.account.cam_cards.details.button.add_section.label' | translate }}
     </button>
-    <button mat-stroked-button color="primary">
+    <button mat-stroked-button color="primary" (click)="openAddToProductModal(addNewProductModal)">
       <mat-icon svgIcon="plus" class="size-31"></mat-icon>
       {{ 'camfil.account.cam_cards.details.button.add_product.label' | translate }}
     </button>
@@ -19,3 +19,5 @@
     </button>
   </div>
 </div>
+
+<camfil-modal-add-new-product #addNewProductModal> </camfil-modal-add-new-product>

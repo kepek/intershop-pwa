@@ -60,6 +60,11 @@
   }
 }
 
+@mixin margin-vertical($height) {
+  margin-top: $height;
+  margin-bottom: $height;
+}
+
 @mixin font-size-caption {
   font-size: $font-size-corporate; //14px
   line-height: 20px;

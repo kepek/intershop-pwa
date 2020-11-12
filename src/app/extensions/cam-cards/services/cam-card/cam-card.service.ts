@@ -245,14 +245,18 @@ export class CamCardService {
    * Adds a product to the cam cards with the given id and reloads the cam_cards.
    * @param camCardId
    * @param sku           The product sku.
-   * @param count
+   * @param quantity      The products quantity
+   * @param boxLabel      Comment label
    * @returns             The changed cam_cards.
    */
-  addProductToCamCard(camCardId: string, sku: string, quantity: number): Observable<CamCard> {
+  addProductToCamCard(camCardId: string, sku: string, quantity: number, boxLabel?: string): Observable<CamCard> {
     return this.apiService
       .post(`camcards/${camCardId}/products`, {
         quantity,
         product: { sku },
+        comment: {
+          label: boxLabel,
+        },
       })
       .pipe(concatMap(() => this.getCamCard(camCardId)));
   }
