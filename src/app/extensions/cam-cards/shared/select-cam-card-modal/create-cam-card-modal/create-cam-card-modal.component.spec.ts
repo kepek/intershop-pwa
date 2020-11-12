@@ -8,7 +8,7 @@ import { CamfilCounterComponent } from 'ish-shared/forms/components/camfil-count
 
 import { CamCardsFacade } from '../../../facades/cam-cards.facade';
 import { ArticleDetailsComponent } from '../article-details/article-details.component';
-import { CamfilModalComponent } from '../camfil-modal/camfil-modal.component';
+import { CamfilCamCardModalComponent } from 'ish-shared/components/common/camfil-cam-card-modal/camfil-cam-card-modal.component';
 
 import { CreateCamCardModalComponent } from './create-cam-card-modal.component';
 
@@ -26,7 +26,7 @@ describe('Create Cam Card Modal Component', () => {
         ArticleDetailsComponent,
         CamfilCounterComponent,
         CamfilErrorComponent,
-        CamfilModalComponent,
+        CamfilCamCardModalComponent,
         CamfilProductQuantityComponent,
         CreateCamCardModalComponent,
       ],

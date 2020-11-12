@@ -17,7 +17,7 @@ import { InputComponent } from 'ish-shared/forms/components/input/input.componen
 import { CamCardsFacade } from '../../facades/cam-cards.facade';
 
 import { ArticleDetailsComponent } from './article-details/article-details.component';
-import { CamfilModalComponent } from './camfil-modal/camfil-modal.component';
+import { CamfilCamCardModalComponent } from '../../../../shared/components/common/camfil-cam-card-modal/camfil-cam-card-modal.component';
 import { CreateCamCardModalComponent } from './create-cam-card-modal/create-cam-card-modal.component';
 import { SelectCamCardModalComponent } from './select-cam-card-modal.component';
 
@@ -40,7 +40,7 @@ describe('Select Cam Card Modal Component', () => {
         ArticleDetailsComponent,
         CamfilCounterComponent,
         CamfilErrorComponent,
-        CamfilModalComponent,
+        CamfilCamCardModalComponent,
         CamfilProductQuantityComponent,
         CreateCamCardModalComponent,
         MockComponent(InputComponent),

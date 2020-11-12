@@ -1,6 +1,6 @@
 <ng-template #modal>
   <ng-container *ngIf="!(created$ | async).name; else showSuccess">
-    <camfil-modal
+    <camfil-cam-card-modal
       [title]="'camfil.modal.addToCamcard.header' | translate"
       iconName="note_add"
       [subtitle]="product.name"
@@ -14,12 +14,12 @@
       (secondaryButtonClicked)="addToCamcard()"
       [secondaryDisabled]="!camCardSelected"
     >
-    </camfil-modal>
+    </camfil-cam-card-modal>
   </ng-container>
 </ng-template>
 
 <ng-template #showSuccess>
-  <camfil-modal
+  <camfil-cam-card-modal
     [title]="'camfil.modal.addToCamcard.header' | translate"
     [subtitle]="product.name"
     iconName="checkmark"
@@ -29,7 +29,7 @@
     [secondaryButtonTitle]="'camfil.modal.addToCamcard.success.button.goToCamCard' | translate"
     (secondaryButtonClicked)="goToCamcard()"
   >
-  </camfil-modal>
+  </camfil-cam-card-modal>
 </ng-template>
 
 <ng-template #customSuccessHeader>

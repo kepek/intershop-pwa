@@ -154,6 +154,7 @@ import { PromotionRemoveComponent } from './components/promotion/promotion-remov
 import { RecentlyViewedComponent } from './components/recently/recently-viewed/recently-viewed.component';
 import { FormsDynamicModule } from './forms-dynamic/forms-dynamic.module';
 import { FormsSharedModule } from './forms/forms.module';
+import {CamfilCamCardModalComponent} from "ish-shared/components/common/camfil-cam-card-modal/camfil-cam-card-modal.component";
 
 const importExportModules = [
   AddressFormsSharedModule,
@@ -207,6 +208,7 @@ const declaredComponents = [
   CamfilFilterDropdownComponent,
   CamfilFilterTextComponent,
   CamfilHeaderBoxComponent,
+  CamfilCamCardModalComponent,
   CamfilProductAttributeComponent,
   CamfilProductAttributesComponent,
   CamfilProductGuidesComponent,
@@ -274,6 +276,7 @@ const exportedComponents = [
   CamfilFilterMeasurementsComponent,
   CamfilFilterNavigationComponent,
   CamfilHeaderBoxComponent,
+  CamfilCamCardModalComponent,
   CamfilLineItemTableComponent,
   CamfilLinksBlockComponent,
   CamfilOrderListComponent,

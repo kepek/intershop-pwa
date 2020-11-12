@@ -48,12 +48,14 @@ export class CreateCamCardModalComponent implements OnInit, AfterViewInit {
     quantity?: number;
     boxLabel?: string;
     edit?: boolean;
+    subCamCard?: CamCard;
   }>();
   @Output() createAndContinueEmitter = new EventEmitter<{
     camCard: CamCard;
     quantity?: number;
     boxLabel?: string;
     edit?: boolean;
+    subCamCard?: CamCard;
   }>();
 
   @ViewChild('modal', { static: false }) modalTemplate: TemplateRef<unknown>;
@@ -145,13 +147,19 @@ export class CreateCamCardModalComponent implements OnInit, AfterViewInit {
   emitCamCardData(edit) {
     if (this.camCardForm.valid) {
       const newCamCard = this.camCardForm.get('newCamCard').value;
+      const camCardData = this.create();
+
+      const newSubCamCard: CamCard = {
+        name: newCamCard,
+        deliveryAddress: this.camCardAddressEntry,
+      };
 
       if (newCamCard) {
-        // addToNewSubAndCamCard(newCamCard: CamCard, newSubCamCard: CamCard, sku: string, quantity?: number, boxLabel?: string, edit?: boolean): void {
+        this.createAndEditEmitter.emit({ ...camCardData, edit, subCamCard: newSubCamCard });
+      } else {
+        this.createAndEditEmitter.emit({ ...camCardData, edit });
       }
 
-      const camCardData = this.create();
-      this.createAndEditEmitter.emit({ ...camCardData, edit });
     } else {
       markAsDirtyRecursive(this.camCardForm);
     }

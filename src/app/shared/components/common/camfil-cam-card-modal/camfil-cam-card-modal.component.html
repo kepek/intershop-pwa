@@ -1,0 +1,47 @@
+<div class="camfil-cam-card-modal">
+  <div class="border-bottom">
+    <div *ngIf="!customHeaderTemplate" class="camfil-cam-card-modal__title">
+      <mat-icon class="camfil-cam-card-modal__title--icon size-24 color-light">{{ iconName }}</mat-icon>
+      <h2 mat-dialog-title class="camfil-cam-card-modal__title--text">{{ title }}</h2>
+    </div>
+    <h3 class="camfil-cam-card-modal__subtitle">{{ subtitle }}</h3>
+
+    <div *ngIf="customHeaderTemplate">
+      <ng-container [ngTemplateOutlet]="customHeaderTemplate"></ng-container>
+    </div>
+  </div>
+
+  <div *ngIf="detailsTemplate" class="camfil-cam-card-modal__details border-bottom">
+    <ng-container [ngTemplateOutlet]="detailsTemplate"></ng-container>
+  </div>
+
+  <div *ngIf="searchTemplate" class="camfil-cam-card-modal__search border-bottom">
+    <h3 class="camfil-cam-card-modal__subtitle camfil-cam-card-modal__subtitle--search">{{ searchTitle }}</h3>
+    <ng-container [ngTemplateOutlet]="searchTemplate"></ng-container>
+  </div>
+
+  <div class="camfil-cam-card-modal__main-content">
+    <ng-container [ngTemplateOutlet]="mainContentTemplate"></ng-container>
+  </div>
+
+  <div class="camfil-cam-card-modal__buttons-wrapper">
+    <button
+      *ngIf="primaryButtonTitle"
+      class="camfil-cam-card-modal__buttons-wrapper--button button__ghost"
+      mat-raised-button
+      (click)="emitPrimary()"
+    >
+      {{ primaryButtonTitle }}
+    </button>
+    <button
+      *ngIf="secondaryButtonTitle"
+      class="camfil-cam-card-modal__buttons-wrapper--button"
+      mat-raised-button
+      color="primary"
+      (click)="emitSecondary()"
+      [disabled]="secondaryDisabled"
+    >
+      {{ secondaryButtonTitle }}
+    </button>
+  </div>
+</div>

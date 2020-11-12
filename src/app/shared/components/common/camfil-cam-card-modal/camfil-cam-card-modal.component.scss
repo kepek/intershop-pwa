@@ -1,7 +1,7 @@
-@import '~src/styles/themes/camfil/variables';
-@import '~src/styles/themes/camfil/mixins.scss';
+@import '../../../../../styles/themes/camfil/variables';
+@import '../../../../../styles/themes/camfil/mixins';
 
-.camfil-modal {
+.camfil-cam-card-modal {
   display: flex;
   flex-direction: column;
   width: 506px;
