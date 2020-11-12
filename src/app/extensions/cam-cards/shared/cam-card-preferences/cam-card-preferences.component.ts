@@ -91,7 +91,7 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit {
   errorValidator = [
     {
       error: 'required',
-      message: 'camfil.account.forgotdata.error.username.required',
+      message: 'helpdesk.contactus.indicates',
     },
   ];
 
@@ -114,6 +114,7 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit {
       this.camCardForm.patchValue({
         reminder: !currentValue,
       });
+      this.submitCamCardForm();
     }
 
     this.hide();
@@ -149,10 +150,10 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit {
       orderMark: ['', [Validators.maxLength(35)]],
       invoiceMark: ['', [Validators.maxLength(35)]],
       deliveryAddress: ['', [Validators.maxLength(35)]],
-      addressLine1: ['', [Validators.maxLength(35)]],
+      addressLine1: ['', [Validators.required, Validators.maxLength(35)]],
       addressLine2: ['', [Validators.maxLength(35)]],
-      postalCode: ['', [Validators.maxLength(35)]],
-      city: ['', [Validators.maxLength(35)]],
+      postalCode: ['', [Validators.required, Validators.maxLength(35)]],
+      city: ['', [Validators.required, Validators.maxLength(35)]],
       lastDelivery: ['', [Validators.maxLength(35)]],
       deliveryInterval: ['', [Validators.maxLength(35)]],
       nextDelivery: ['', [Validators.maxLength(35)]],
@@ -165,7 +166,9 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit {
 
   patchForm() {
     if (this.camCard) {
-      this.camCardsFacade.getDeliveryAddress(this.camCard.customer.id);
+      if (this.addresses$ === undefined) {
+        this.camCardsFacade.getDeliveryAddress(this.camCard.customer.id);
+      }
       this.camCardForm.patchValue({
         title: this.camCard.name,
         customerName: this.camCard.customer.customerNo,
@@ -175,17 +178,25 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit {
         addressLine2: this.camCard.deliveryAddress.addressLine2,
         postalCode: this.camCard.deliveryAddress.postalCode,
         city: this.camCard.deliveryAddress.city,
-        lastDelivery: this.camCard.lastDeliveryDate,
+        lastDelivery: new Date(this.camCard.lastDeliveryDate),
         deliveryInterval: this.camCard.deliveryInterval,
-        nextDelivery: this.camCard.nextDeliveryDate,
+        nextDelivery: new Date(this.camCard.nextDeliveryDate),
         reminder: this.camCard.reminderFlag,
       });
+    }
+  }
+
+  onBlurSubmit() {
+    if (this.camCard) {
+      this.submitCamCardForm();
     }
   }
 
   /** Emits the cam cards data, when the form was valid. */
   submitCamCardForm() {
     if (this.camCardForm.valid) {
+      const nextDelivery = this.camCardForm.get('nextDelivery').value;
+      const lastDelivery = this.camCardForm.get('lastDelivery').value;
       this.submit.emit({
         ...this.camCard,
         id: this.camCard?.id,
@@ -197,19 +208,24 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit {
           customerNo: this.camCardForm.get('customerName').value,
         },
         deliveryAddress: {
-          ...this.camCard?.deliveryAddress,
+          ...this.camCard.deliveryAddress,
           addressLine1: this.camCardForm.get('addressLine1').value,
+          street: this.camCardForm.get('addressLine1').value,
           addressLine2: this.camCardForm.get('addressLine2').value,
           postalCode: this.camCardForm.get('postalCode').value,
           city: this.camCardForm.get('city').value,
         },
-        nextDeliveryDate: this.camCardForm.get('nextDelivery').value,
-        lastDeliveryDate: this.camCardForm.get('lastDelivery').value,
+        nextDeliveryDate: new Date(nextDelivery.getTime() - nextDelivery.getTimezoneOffset() * 60000).toJSON(),
+        lastDeliveryDate: new Date(lastDelivery.getTime() - lastDelivery.getTimezoneOffset() * 60000).toJSON(),
         deliveryInterval: this.camCardForm.get('deliveryInterval').value,
         reminderFlag: this.camCardForm.get('reminder').value,
       });
     } else {
       this.submitted = true;
+      Object.keys(this.camCardForm.controls).forEach(field => {
+        const control = this.camCardForm.get(field);
+        control.markAsTouched({ onlySelf: true });
+      });
       markAsDirtyRecursive(this.camCardForm);
     }
   }
@@ -229,6 +245,8 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit {
         postalCode: address.postalCode,
         city: address.city,
       });
+
+      this.onBlurSubmit();
     });
   }
 
@@ -241,6 +259,7 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit {
       this.camCardForm.patchValue({
         nextDelivery: date,
       });
+      this.onBlurSubmit();
     }
   }
 

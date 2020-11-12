@@ -67,4 +67,11 @@
       }
     }
   }
+
+  ::ng-deep {
+    .mat-error {
+      margin-top: -5px !important;
+      margin-bottom: 8px;
+    }
+  }
 }
