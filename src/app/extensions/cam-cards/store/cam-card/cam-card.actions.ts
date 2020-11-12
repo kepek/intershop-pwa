@@ -81,6 +81,18 @@ export const addProductToCamCard = createAction(
   payload<{ camCardId: string; sku: string; quantity?: number }>()
 );
 
+export const addProductToNewSubCamCard = createAction(
+  '[Cam Cards] Add Product to New SubCamCard',
+  payload<{
+    subCamCard: CamCard;
+    rootCamCard: string;
+    sku: string;
+    quantity?: number;
+    boxLabel?: string;
+    edit?: boolean;
+  }>()
+);
+
 export const updateCamCardProduct = createAction(
   '[Cam Cards] Update Cam Card Product',
   payload<{ rootCamCard: string; camCardId: string; camCardItem: CamCardItem }>()
@@ -102,6 +114,39 @@ export const addProductToNewCamCard = createAction(
   '[Cam Cards Internal] Add Product To New Cam Card',
   payload<{ name: string; sku: string; quantity?: number }>()
 );
+
+export const addProductToNewCamCardAndUpdate = createAction(
+  '[Cam Cards Internal] Add Product To New Cam Card And Update',
+  payload<{ camCard: CamCard; sku: string; quantity?: number; boxLabel?: string; edit?: boolean }>()
+);
+
+export const addToNewCamCardWithNewSubCamCard = createAction(
+  '[Cam Cards Internal] Add Product To New Cam Card And New SubCamCard',
+  payload<{
+    newCamCard: CamCard;
+    newSubCamCard: CamCard;
+    sku: string;
+    quantity?: number;
+    boxLabel?: string;
+    edit?: boolean;
+  }>()
+);
+
+export const addProductToCamCardAndUpdate = createAction(
+  '[Cam Cards Internal] Add Product To Cam Card And Update',
+  payload<{ camCardId: string; sku: string; camCardItems: CamCardItem[]; quantity?: number; boxLabel?: string }>()
+);
+
+export const createAndUpdateCamCardSuccess = createAction(
+  '[Cam Cards Internal] Set created cam card',
+  payload<{ name: string; id: string }>()
+);
+
+export const resetCreatedCamCard = createAction('[Cam Cards Internal] Reset cam card');
+
+export const editCamCard = createAction('[Cam Cards Internal] Edit Cam Card', payload<{ camCardId?: string }>());
+
+export const loadCamCardsEdit = createAction('[Cam Card Internal] Load Cam Cards Edit');
 
 export const updateCamCardContacts = createAction(
   '[Cam Cards] Update Cam Card Contacts',

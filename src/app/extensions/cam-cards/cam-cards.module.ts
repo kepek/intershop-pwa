@@ -9,6 +9,9 @@ import { CamCardPreferencesComponent } from './shared/cam-card-preferences/cam-c
 import { CamCardProductCommentComponent } from './shared/cam-card-product-comment/cam-card-product-comment.component';
 import { MoveCamCardDialogComponent } from './shared/move-cam-card-dialog/move-cam-card-dialog.component';
 import { ProductAddToCamCardComponent } from './shared/product-add-to-cam-card/product-add-to-cam-card.component';
+import { ArticleDetailsComponent } from './shared/select-cam-card-modal/article-details/article-details.component';
+import { CamfilModalComponent } from './shared/select-cam-card-modal/camfil-modal/camfil-modal.component';
+import { CreateCamCardModalComponent } from './shared/select-cam-card-modal/create-cam-card-modal/create-cam-card-modal.component';
 import { SelectCamCardModalComponent } from './shared/select-cam-card-modal/select-cam-card-modal.component';
 import { UserAccessCamCardDialogComponent } from './shared/user-access-cam-card-dialog/user-access-cam-card-dialog.component';
 
@@ -16,10 +19,13 @@ import { UserAccessCamCardDialogComponent } from './shared/user-access-cam-card-
   imports: [SharedModule],
   declarations: [
     AccountCamCardDetailLineItemComponent,
+    ArticleDetailsComponent,
     BasketCreateCamCardComponent,
     CamCardPreferencesComponent,
     CamCardPreferencesDialogComponent,
     CamCardProductCommentComponent,
+    CamfilModalComponent,
+    CreateCamCardModalComponent,
     MoveCamCardDialogComponent,
     ProductAddToCamCardComponent,
     SelectCamCardModalComponent,

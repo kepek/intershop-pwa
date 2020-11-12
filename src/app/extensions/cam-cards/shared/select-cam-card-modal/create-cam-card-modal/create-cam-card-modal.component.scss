@@ -1,0 +1,61 @@
+@import '~src/styles/themes/camfil/variables';
+@import '~src/styles/themes/camfil/mixins.scss';
+
+.camfil-create-cam-card-modal {
+  .form {
+    &__wrapper {
+      padding: 16px 40px 0 40px;
+    }
+
+    &__field {
+      padding: 0;
+
+      ::ng-deep .mat-form-field-wrapper {
+        margin-top: 16px;
+        margin-bottom: 0;
+      }
+
+      &:first-child {
+        ::ng-deep .mat-form-field-wrapper {
+          margin-top: 0;
+        }
+      }
+
+      &--zipcode {
+        width: 100%;
+        padding-right: 8px;
+      }
+
+      &--neighbour {
+        display: inline-block;
+        vertical-align: top;
+      }
+
+      &--neighbour-right {
+        padding-left: 8px;
+      }
+
+      &--area {
+        width: 100%;
+      }
+
+      &--error {
+        padding-left: 16px;
+      }
+
+      &--button {
+        margin-top: 16px;
+        text-decoration: underline;
+      }
+
+      &--button-icon {
+        margin-top: -1px;
+      }
+    }
+  }
+
+  .border-bottom {
+    padding-bottom: 16px;
+    border-bottom: $border-width-default solid $border-color-lighter;
+  }
+}

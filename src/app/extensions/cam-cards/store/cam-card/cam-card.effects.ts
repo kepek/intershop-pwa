@@ -40,9 +40,14 @@ import {
   addBasketToNewCamCardFail,
   addBasketToNewCamCardSuccess,
   addProductToCamCard,
+  addProductToCamCardAndUpdate,
   addProductToCamCardFail,
   addProductToCamCardSuccess,
   addProductToNewCamCard,
+  addProductToNewCamCardAndUpdate,
+  addProductToNewSubCamCard,
+  addToNewCamCardWithNewSubCamCard,
+  createAndUpdateCamCardSuccess,
   createCamCard,
   createCamCardFail,
   createCamCardSuccess,
@@ -50,7 +55,9 @@ import {
   deleteCamCardFail,
   deleteCamCardSuccess,
   detectCamCardToolbar,
+  editCamCard,
   loadCamCards,
+  loadCamCardsEdit,
   loadCamCardsFail,
   loadCamCardsSuccess,
   loadContactsByCustomer,
@@ -280,7 +287,116 @@ export class CamCardEffects {
       mapToPayload(),
       mergeMap(payload =>
         this.camCardService.addProductToCamCard(payload.camCardId, payload.sku, payload.quantity).pipe(
-          map(camCard => addProductToCamCardSuccess({ camCard })),
+          mergeMap(camCard => [
+            addProductToCamCardSuccess({ camCard }),
+            // createAndUpdateCamCardSuccess({id: camCard.id, name: camCard.name})
+          ]),
+          mapErrorToAction(addProductToCamCardFail)
+        )
+      )
+    )
+  );
+
+  addToNewCamCardWithNewSubCamCard$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(addToNewCamCardWithNewSubCamCard),
+      mapToPayload(),
+      mergeMap(payload =>
+        this.camCardService.createCamCard(payload.newCamCard).pipe(
+          map(camCard =>
+            addProductToNewSubCamCard({
+              subCamCard: payload.newSubCamCard,
+              rootCamCard: camCard.id,
+              sku: payload.sku,
+              quantity: payload.quantity,
+              boxLabel: payload.boxLabel,
+              edit: payload.edit,
+            })
+          ),
+          mapErrorToAction(addProductToCamCardFail)
+        )
+      )
+    )
+  );
+
+  addProductToNewSubCamCard$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(addProductToNewSubCamCard),
+      mapToPayload(),
+      mergeMap(payload =>
+        this.camCardService.createSubCamCard(payload.subCamCard, payload.rootCamCard).pipe(
+          mergeMap(camCard => {
+            const updatePayload = {
+              camCardId: camCard.id,
+              sku: payload.sku,
+              camCardItems: [],
+              quantity: payload.quantity,
+              boxLabel: payload.boxLabel,
+            };
+
+            return payload.edit
+              ? [addProductToCamCardAndUpdate(updatePayload), editCamCard({ camCardId: camCard.id })]
+              : [addProductToCamCardAndUpdate(updatePayload)];
+          }),
+          mapErrorToAction(addProductToCamCardFail)
+        )
+      )
+    )
+  );
+
+  addProductToNewCamCardAndUpdate$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(addProductToNewCamCardAndUpdate),
+      mapToPayload(),
+      mergeMap(payload =>
+        this.camCardService.createCamCard(payload.camCard).pipe(
+          mergeMap(camCard => {
+            const updatePayload = {
+              camCardId: camCard.id,
+              sku: payload.sku,
+              camCardItems: [],
+              quantity: payload.quantity,
+              boxLabel: payload.boxLabel,
+            };
+
+            return payload.edit
+              ? [
+                  createCamCardSuccess({ camCard }),
+                  addProductToCamCardAndUpdate(updatePayload),
+                  editCamCard({ camCardId: camCard.id }),
+                ]
+              : [createCamCardSuccess({ camCard }), addProductToCamCardAndUpdate(updatePayload)];
+          }),
+          mapErrorToAction(addProductToCamCardFail)
+        )
+      )
+    )
+  );
+
+  addProductToCamCardAndUpdate$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(addProductToCamCardAndUpdate),
+      mapToPayload(),
+      mergeMap(payload =>
+        this.camCardService.addProductToCamCard(payload.camCardId, payload.sku, payload.quantity).pipe(
+          mergeMap(camCard => {
+            const newCamCardItem = camCard.camCardItems.filter(item => payload.camCardItems.indexOf(item) < 0)[0];
+
+            return [
+              updateCamCardProduct({
+                rootCamCard: camCard.rootCamCard,
+                camCardId: camCard.id,
+                camCardItem: {
+                  ...newCamCardItem,
+                  comment: { ...newCamCardItem.comment, label: payload.boxLabel },
+                },
+              }),
+              createAndUpdateCamCardSuccess({
+                id: camCard.id,
+                name: camCard.name,
+              }),
+            ];
+          }),
           mapErrorToAction(addProductToCamCardFail)
         )
       )
@@ -313,25 +429,38 @@ export class CamCardEffects {
     )
   );
 
-  updateCamCardProduct$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(updateCamCardProduct),
-      mapToPayload(),
-      mergeMap(payload =>
-        this.camCardService.updateCamCardProduct(payload.camCardId, payload.camCardItem).pipe(
-          mergeMap(camCardItem => {
-            const { rootCamCard, camCardId } = payload;
-            return [
-              updateCamCardProductSuccess({ rootCamCard, camCardId, camCardItem }),
-              displaySuccessMessage({
-                message: 'camfil.account.cam_cards.update.product.confirmation',
-                messageParams: { 0: camCardItem.product.name },
-              }),
-            ];
-          }),
-          mapErrorToAction(updateCamCardFail)
+  updateCamCardProduct$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(updateCamCardProduct),
+        mapToPayload(),
+        mergeMap(payload =>
+          this.camCardService.updateCamCardProduct(payload.camCardId, payload.camCardItem).pipe(
+            mergeMap(camCardItem => {
+              const { rootCamCard, camCardId } = payload;
+              return [
+                updateCamCardProductSuccess({ rootCamCard, camCardId, camCardItem }),
+                displaySuccessMessage({
+                  message: 'camfil.account.cam_cards.update.product.confirmation',
+                  messageParams: { 0: camCardItem.product.name },
+                }),
+              ];
+            }),
+            mapErrorToAction(updateCamCardFail)
+          )
         )
-      )
+      ),
+    { dispatch: false }
+  );
+
+  navigateToEdit$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(editCamCard),
+      mapToPayloadProperty('camCardId'),
+      tap(camCardId => {
+        this.router.navigateByUrl(`/account/cam-cards/${camCardId}`);
+      }),
+      mapTo(loadCamCardsEdit())
     )
   );
 

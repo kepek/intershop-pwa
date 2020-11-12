@@ -57,6 +57,17 @@ export class CamCardService {
   }
 
   /**
+   * Creates a sub cam card
+   * @param camCardData
+   * @returns                 The created cam_cards.
+   */
+  createSubCamCard(camCardData: CamCard, rootCamCardId: string): Observable<CamCard> {
+    return this.apiService
+      .post(`camcards/${rootCamCardId}/childcamcards`, camCardData)
+      .pipe(concatMap((response: CamCardCreate) => this.getCamCard(response.itemId)));
+  }
+
+  /**
    * Deletes a cam cards of the given id.
    * @param camCardId   The cam cards id.
    * @returns           The cam_card.

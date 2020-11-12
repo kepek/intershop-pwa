@@ -305,6 +305,14 @@ describe('Cam Card Effects', () => {
       });
     });
 
+    xit('should map to actions of type AddProductToCamCardSuccess', () => {
+      const action = addProductToCamCard(payload);
+      const completion = addProductToCamCardSuccess({ camCard: camCards[0] });
+      actions$ = hot('-a-a-a', { a: action });
+      const expected$ = cold('-c-c-c', { c: completion });
+      expect(effects.addProductToCamCard$).toBeObservable(expected$);
+    });
+
     it('should map to actions of type AddProductToCamCardSuccess', () => {
       const action = addProductToCamCard(payload);
       const completion = addProductToCamCardSuccess({ camCard: camCards[0] });
