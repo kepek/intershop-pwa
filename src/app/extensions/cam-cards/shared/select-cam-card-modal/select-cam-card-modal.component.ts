@@ -80,7 +80,6 @@ export class SelectCamCardModalComponent implements OnInit, OnDestroy {
 
   modal: NgbModalRef;
 
-  idAfterCreate = '';
   private destroy$ = new Subject<void>();
 
   quantityForm: FormGroup;
@@ -138,10 +137,6 @@ export class SelectCamCardModalComponent implements OnInit, OnDestroy {
     this.created$.pipe(takeUntil(this.destroy$)).subscribe(created => {
       this.created = created;
     });
-
-    this.camCardsFacade.currentCamCard$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(camCard => (this.idAfterCreate = camCard && camCard.id));
 
     this.searchInputFilter.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(filterValue => {
       this.applyFilter(filterValue);
@@ -311,8 +306,9 @@ export class SelectCamCardModalComponent implements OnInit, OnDestroy {
   }
 
   goToCamcard() {
-    this.router.navigate([`/account/cam-cards/${this.idAfterCreate}`]);
+    this.router.navigate([`/account/cam-cards/${this.created.id}`]);
     this.camCardsFacade.resetCreatedCamCard();
+    this.hide();
   }
 
   /** close modal */
