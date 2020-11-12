@@ -5,7 +5,6 @@ import { Observable, Subject } from 'rxjs';
 import { takeUntil, withLatestFrom } from 'rxjs/operators';
 
 import { AppFacade } from 'ish-core/facades/app.facade';
-import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { HttpError } from 'ish-core/models/http-error/http-error.model';
 import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
 
@@ -28,16 +27,10 @@ export class AccountCamCardDetailPageComponent implements OnInit, OnDestroy {
   selectedItemsForm: FormArray;
   selectedItems: CamCardItem[];
   maintenance = CamCardHelper.maintenance;
-  dummyProduct = { sku: 'dummy', inStock: true, availability: true };
 
   private destroy$ = new Subject();
 
-  constructor(
-    private camCardsFacade: CamCardsFacade,
-    private shoppingFacade: ShoppingFacade,
-    public router: Router,
-    private appFacade: AppFacade
-  ) {}
+  constructor(private camCardsFacade: CamCardsFacade, public router: Router, private appFacade: AppFacade) {}
 
   ngOnInit() {
     this.camCard$ = this.camCardsFacade.currentCamCard$;
@@ -84,12 +77,6 @@ export class AccountCamCardDetailPageComponent implements OnInit, OnDestroy {
     return camCards.camCardItems.filter(item =>
       this.selectedItemsForm.value.find(p => p.sku === item.product.sku && p.productCheckbox === true)
     );
-  }
-
-  addSelectedItemsToCart(camCard: CamCard) {
-    this.filterItems(camCard).forEach(item => {
-      this.shoppingFacade.addProductToBasket(item.product.sku, item.quantity);
-    });
   }
 
   /** dispatch creation request */

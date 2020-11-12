@@ -1,4 +1,5 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -12,10 +13,14 @@ import {
 import { FormArray } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
-import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
+import { Observable, Subject } from 'rxjs';
+import { take, takeUntil } from 'rxjs/operators';
 
+import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
+import { ModalDialogComponent } from 'ish-shared/components/common/modal-dialog/modal-dialog.component';
 
 import { CamCardsFacade } from '../../../facades/cam-cards.facade';
 import { CamCard } from '../../../models/cam-card/cam-card.model';
@@ -35,32 +40,39 @@ import { CamCard } from '../../../models/cam-card/cam-card.model';
 })
 export class AccountCamCardDetailListComponent implements OnInit, OnChanges {
   @Input() deviceType: DeviceType;
-  @Input() camCards: CamCard;
+  @Input() camCard: CamCard;
   @Input() selectedItemsForm: FormArray;
 
   @ViewChild(MatSort) sort: MatSort;
-  camCardsProcessed: MatTableDataSource<CamCard>;
   isMobileView = false;
   expandedCamCard: CamCard | null;
   isSubOpen = [];
   isStickyCamCardToolbar$: Observable<boolean>;
-  columnsToDisplay = ['name'];
+  private destroy$ = new Subject();
 
   constructor(
+    private translate: TranslateService,
     private camCardsFacade: CamCardsFacade,
+    private shoppingFacade: ShoppingFacade,
     private changeDetectorRefs: ChangeDetectorRef,
+    public router: Router,
     public dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
     this.isMobileView = this.isMobile();
     this.isStickyCamCardToolbar$ = this.camCardsFacade.isStickyCamCardToolbar$;
+
+    // expand all subCamCards
+    if (this.camCard) {
+      this.camCard.subCamCards.forEach(sub => {
+        this.toggleSubCamCard(sub.id);
+      });
+    }
   }
   ngOnChanges(changes: SimpleChanges) {
-    if (changes.camCards) {
-      this.camCardsProcessed = new MatTableDataSource([this.camCards]);
+    if (changes.camCard) {
       this.changeDetectorRefs.detectChanges();
-      this.camCardsProcessed.sort = this.sort;
     }
     this.isMobileView = this.isMobile();
   }
@@ -81,6 +93,41 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges {
   }
 
   getCamCardName() {
-    return this.camCards?.name;
+    return this.camCard?.name;
+  }
+
+  addItemsToCart() {
+    // TODO: improve when NEW order/addToCartWay will be inProgress
+    this.camCard.camCardItems?.map(item => {
+      this.shoppingFacade.addProductToBasket(item.product.sku, item.quantity);
+    });
+    this.camCard.subCamCards?.map(sub => {
+      sub.camCardItems?.map(item => {
+        this.shoppingFacade.addProductToBasket(item.product.sku, item.quantity);
+      });
+    });
+  }
+
+  deleteCamCard() {
+    this.camCardsFacade.deleteCamCard(this.camCard.id);
+    this.router.navigate(['/account/cam-cards']);
+  }
+
+  /** Determine the heading of the delete modal and opens the modal. */
+  openDeleteConfirmationDialog(camCard: CamCard, modal: ModalDialogComponent<string>) {
+    this.translate
+      .get('camfil.account.cam_cards.delete_dialog.header', { 0: camCard.name })
+      .pipe(take(1), takeUntil(this.destroy$))
+      .subscribe(res => (modal.options.titleText = res));
+
+    modal.show(camCard.id);
+  }
+
+  drop(event: CdkDragDrop<string[]>) {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    } else {
+      transferArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
+    }
   }
 }

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 import { CamCardsFacade } from '../../../facades/cam-cards.facade';
 
@@ -9,11 +9,12 @@ import { CamCardsFacade } from '../../../facades/cam-cards.facade';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AccountCamCardDetailToolbarComponent implements OnInit {
-  // @Output() addCamCard = new EventEmitter<CamCard>();
-  // @Output() openMoveCamCardDialog = new EventEmitter<Event>();
-  // @Output() addSelectedItemsToCart = new EventEmitter();
+  @Output() deleteCamCard = new EventEmitter();
+  @Output() addItemsToCart = new EventEmitter();
   @Input() isSticky: boolean;
   @Input() title: string;
+
+  dummyProduct = { sku: 'dummy', inStock: true, availability: true };
 
   constructor(private camCardsFacade: CamCardsFacade) {}
 
@@ -21,15 +22,12 @@ export class AccountCamCardDetailToolbarComponent implements OnInit {
     this.camCardsFacade.detectCamCardToolbar();
   }
 
-  // add(camCard: CamCard) {
-  //   this.addCamCard.emit(camCard);
-  // }
+  addToCart() {
+    this.addItemsToCart.emit();
+  }
 
-  // move(event: Event) {
-  //   this.openMoveCamCardDialog.emit(event);
-  // }
-
-  // addToCart() {
-  //   this.addSelectedItemsToCart.emit();
-  // }
+  /** Emits the cam card to delete. */
+  deleteCurrentCamCard() {
+    this.deleteCamCard.emit();
+  }
 }

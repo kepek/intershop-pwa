@@ -1,119 +1,70 @@
-<mat-card class="mat-elevation-z {{ isMobileView ? 'cam-cards-mobile' : 'box-shadow box-shadow--dark' }}">
+<mat-card class="mat-elevation-z px-0 {{ isMobileView ? 'cam-cards-mobile' : 'box-shadow box-shadow--dark' }}">
   <mat-card-content>
     <camfil-account-cam-card-detail-toolbar
+      (addItemsToCart)="addItemsToCart()"
+      (deleteCamCard)="openDeleteConfirmationDialog(camCard, deleteDialog)"
       [isSticky]="isStickyCamCardToolbar$ | async"
       [title]="getCamCardName()"
     ></camfil-account-cam-card-detail-toolbar>
 
-    <ng-container *ngIf="camCards; else noCamCard">
-      <ng-container *ngIf="isMobileView">
-        <ng-container *ngFor="let camCards of camCardsProcessed.data">
-          <ng-container *ngTemplateOutlet="camCardMobileRow; context: { camCards: camCards }"></ng-container>
+    <div cdkDropListGroup class="list-body mt-2" *ngIf="camCard">
+      <div
+        cdkDropList
+        class="example-list"
+        [cdkDropListData]="camCard.camCardItems"
+        (cdkDropListDropped)="drop($event)"
+      >
+        <ng-container *ngFor="let item of camCard.camCardItems; index as i">
+          <div class="list-item-row list-item-row-big px-4 py-1 mt-2" cdkDrag [cdkDragData]="item">
+            <camfil-account-cam-card-detail-line-item
+              [camCardItemData]="item"
+              [currentCamCard]="camCard"
+              [selectedItemsForm]="selectedItemsForm"
+              [index]="i + 1"
+              mode="edit"
+            ></camfil-account-cam-card-detail-line-item>
+          </div>
         </ng-container>
+      </div>
+      <div *ngFor="let sub of camCard.subCamCards">
+        <div
+          class="sub-camcard-collapse px-4 my-2"
+          (click)="toggleSubCamCard(sub.id)"
+          [attr.aria-expanded]="isSubCamCardOpen(sub.id)"
+        >
+          <mat-icon class="arrow_down" [class.arrow_down--expanded]="isSubCamCardOpen(sub.id)">arrow_left</mat-icon
+          >{{ sub.name }}
+        </div>
+        <mat-expansion-panel [expanded]="isSubCamCardOpen(sub.id)">
+          <div
+            cdkDropList
+            class="example-list"
+            [cdkDropListData]="sub.camCardItems"
+            (cdkDropListDropped)="drop($event)"
+          >
+            <ng-container *ngFor="let subItem of sub.camCardItems; index as i2">
+              <div class="list-item-row list-item-row-big px-4 py-1 mt-2" cdkDrag [cdkDragData]="subItem">
+                <camfil-account-cam-card-detail-line-item
+                  [camCardItemData]="subItem"
+                  [currentCamCard]="sub"
+                  [selectedItemsForm]="selectedItemsForm"
+                  [index]="i2 + 1"
+                  mode="edit"
+                ></camfil-account-cam-card-detail-line-item>
+              </div>
+            </ng-container>
+          </div>
+        </mat-expansion-panel>
+      </div>
 
-        <ng-template #camCardMobileRow let-camCards="camCards">
-          <mat-card *ngIf="camCards" class="mat-elevation-z box-shadow box-shadow--dark">
-            <mat-card-content data-testing-id="cam-card-list-item-container" class="cam-card-item">
-              <b>{{ 'camfil.account.cam_cards.name' | translate }}</b
-              ><br />
-              {{ camCards.name }}<br />
-              <b>{{ 'camfil.account.cam_cards.customer' | translate }}</b
-              ><br />
-              {{ camCards.customer.name }}<br />
+      <div class="text-right cam-card-total">
+        <div class="pt-4 pb-2 px-4">
+          {{ 'camfil.account.cam_card.details.total.text' | translate }}:<strong class="pl-3">XXX</strong>
+        </div>
+      </div>
+    </div>
 
-              <div class="row text-center">
-                <div class="col-4">{{ 'camfil.account.cam_cards.lastDelivery' | translate }}</div>
-                <div class="col-4">{{ 'camfil.account.cam_cards.orderInterval' | translate }}</div>
-                <div class="col-4">{{ 'camfil.account.cam_cards.nextDelivery' | translate }}</div>
-              </div>
-              <div class="row text-center">
-                <div class="col-4">{{ camCards.lastDelivery }} lastDelivery</div>
-                <div class="col-4">{{ camCards.orderInterval }} orderInterval</div>
-                <div class="col-4">{{ camCards.nextDelivery }} nextDelivery</div>
-              </div>
-              <div class="row text-center">
-                <div class="col-4">{{ 'camfil.account.cam_cards.itemsCount' | translate }}</div>
-                <div class="col-4">{{ 'camfil.account.cam_cards.edit' | translate }}</div>
-              </div>
-              <div class="row text-center">
-                <div class="col-4">{{ camCards.itemsCount }}</div>
-              </div>
-              <hr />
-              <div class="text-right">
-                <button
-                  mat-stroked-button
-                  color="primary"
-                  [title]="'camfil.account.cam_card.edit.heading' | translate"
-                  (click)="expandedCamCard = expandedCamCard === camCards ? null : camCards"
-                >
-                  <b>{{ 'camfil.account.cam_cards.more_info' | translate }}</b>
-                </button>
-              </div>
-
-              <div class="cam-card-item__detail expanded">
-                <!-- TODO: to improve after get design for mobile for expanded camCard!! (this part is copy from desktop) -->
-                <ng-container *ngTemplateOutlet="camCardRow; context: { camCard: camCards }"></ng-container>
-                <ng-container *ngFor="let subCamCard of camCards.subCamCards">
-                  <mat-action-row>
-                    <strong (click)="toggleSubCamCard(subCamCard.id)">
-                      <mat-icon class="arrow_down" [class.arrow_down--expanded]="isSubCamCardOpen(subCamCard.id)"
-                        >arrow_left</mat-icon
-                      >
-                      {{ subCamCard.name }}
-                    </strong>
-                  </mat-action-row>
-                  <mat-accordion>
-                    <mat-expansion-panel [expanded]="isSubCamCardOpen(subCamCard.id)">
-                      <ng-container *ngTemplateOutlet="camCardRow; context: { camCard: subCamCard }"></ng-container>
-                    </mat-expansion-panel>
-                  </mat-accordion>
-                </ng-container>
-                <!-- EOF: TODO -->
-              </div>
-            </mat-card-content>
-          </mat-card>
-          <br />
-        </ng-template>
-      </ng-container>
-
-      <table *ngIf="!isMobileView" mat-table [dataSource]="camCardsProcessed" multiTemplateDataRows>
-        <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
-        <ng-container matColumnDef="expandedDetail">
-          <td mat-cell *matCellDef="let camCard" [attr.colspan]="columnsToDisplay.length">
-            <div class="cam-card-row-details__detail">
-              <ng-container *ngTemplateOutlet="camCardRow; context: { camCard: camCard }"></ng-container>
-              <ng-container *ngFor="let subCamCard of camCard.subCamCards">
-                <mat-action-row>
-                  <strong (click)="toggleSubCamCard(subCamCard.id)">
-                    <mat-icon class="arrow_down" [class.arrow_down--expanded]="isSubCamCardOpen(subCamCard.id)"
-                      >arrow_left</mat-icon
-                    >
-                    {{ subCamCard.name }}
-                  </strong>
-                </mat-action-row>
-                <mat-accordion>
-                  <mat-expansion-panel [expanded]="isSubCamCardOpen(subCamCard.id)">
-                    <ng-container *ngTemplateOutlet="camCardRow; context: { camCard: subCamCard }"></ng-container>
-                  </mat-expansion-panel>
-                </mat-accordion>
-              </ng-container>
-            </div>
-          </td>
-        </ng-container>
-
-        <!-- Total Price Footer Row -->
-        <ng-container matColumnDef="total">
-          <td mat-footer-cell *matFooterCellDef class="text-right">
-            <div class="pt-3">
-              {{ 'camfil.account.cam_card.details.total.text' | translate }}:<strong class="pl-3">XXX</strong>
-            </div>
-          </td>
-        </ng-container>
-        <!-- <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr> -->
-        <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="cam-card-row-details"></tr>
-        <tr mat-footer-row *matFooterRowDef="['total']" class="cam-card-total"></tr>
-      </table>
-    </ng-container>
+    <ng-container *ngIf="camCard; else noCamCard"> </ng-container>
   </mat-card-content>
 </mat-card>
 
@@ -139,3 +90,13 @@
     ></camfil-account-cam-card-detail-line-item>
   </div>
 </ng-template>
+
+<ish-modal-dialog
+  #deleteDialog
+  (confirmed)="deleteCamCard()"
+  [options]="{
+    confirmText: 'camfil.account.cam_card.delete.button.text' | translate,
+    rejectText: 'camfil.account.cancel.button.label' | translate
+  }"
+  >{{ 'camfil.account.cam_card.delete.do_you_really.text' | translate }}</ish-modal-dialog
+>

@@ -11,8 +11,9 @@
     padding-right: 10px;
     margin-right: 10px;
     line-height: 14px;
-    border-right: 1px solid;
+    border-right: 1px solid $gray-600;
   }
+
   .prices {
     camfil-product-attribute {
       display: block;
@@ -23,12 +24,22 @@
     .camfil-product-attribute {
       margin-bottom: 0;
     }
+    .camfil-product-title {
+      display: block;
+      max-width: 450px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
     .product-image {
       max-width: 40px;
       max-height: 40px;
     }
     .form-group {
       margin-bottom: 0;
+    }
+    dt {
+      color: $gray-600;
     }
   }
 }
