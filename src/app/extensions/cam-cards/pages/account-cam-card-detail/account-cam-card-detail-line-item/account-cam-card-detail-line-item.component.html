@@ -1,11 +1,17 @@
 <ng-container *ngIf="product$ | async as product">
   <div class="d-flex align-items-center text-left" [ngClass]="{ 'justify-content-between': mode === 'edit' }">
-    {{ index }}
+    <ng-container *ngIf="mode === 'view'">{{ index }}</ng-container>
+    <ng-container *ngIf="mode === 'edit'">
+      <mat-icon svgIcon="move" class="size-24"></mat-icon>
+    </ng-container>
     <a class="image" [routerLink]="product | ishProductRoute">
       <camfil-product-image [product]="product" imageType="S" class="product-image"></camfil-product-image>
     </a>
     <div>
-      <camfil-product-title [product]="product"></camfil-product-title>
+      <div class="d-flex flex-row">
+        <camfil-product-title [product]="product"></camfil-product-title
+        ><camfil-product-inventory class="px-2" [product]="product"></camfil-product-inventory>
+      </div>
       <div class="attributes">
         <camfil-product-attribute name="camfil.product.id.label" [value]="product.sku"></camfil-product-attribute>
         <camfil-product-attribute name="Dimensions" [value]="product.sku"></camfil-product-attribute>
@@ -47,7 +53,9 @@
       </form>
       <div class="prices"><ng-container *ngTemplateOutlet="price"></ng-container></div>
     </ng-container>
-    <ish-checkbox *ngIf="selectItemForm" [form]="selectItemForm" controlName="productCheckbox"> </ish-checkbox>
+    <ng-container *ngIf="mode === 'view'">
+      <ish-checkbox *ngIf="selectItemForm" [form]="selectItemForm" controlName="productCheckbox"> </ish-checkbox>
+    </ng-container>
   </div>
 
   <ng-template #price>
