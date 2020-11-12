@@ -208,7 +208,7 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit {
           customerNo: this.camCardForm.get('customerName').value,
         },
         deliveryAddress: {
-          ...this.camCard.deliveryAddress,
+          ...this.camCard?.deliveryAddress,
           addressLine1: this.camCardForm.get('addressLine1').value,
           street: this.camCardForm.get('addressLine1').value,
           addressLine2: this.camCardForm.get('addressLine2').value,
