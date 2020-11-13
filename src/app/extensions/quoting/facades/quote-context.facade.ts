@@ -43,7 +43,6 @@ export abstract class QuoteContextFacade
     entityAsQuoteRequest: QuoteRequest;
     entityAsQuote: Quote;
     state: QuoteStatus;
-    editable: boolean;
     justSubmitted: boolean;
   }>
   implements OnDestroy {
@@ -89,8 +88,6 @@ export abstract class QuoteContextFacade
       'state',
       timer(0, 2000).pipe(switchMapTo(this.select('entity').pipe(map(QuotingHelper.state))), distinctUntilChanged())
     );
-
-    this.connect('editable', this.select('state').pipe(map(state => state === 'New')));
   }
 
   updateItem(item: LineItemUpdate) {

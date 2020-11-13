@@ -28,9 +28,15 @@ export interface LineItem {
     total: PriceItem;
     undiscountedTotal;
     valueRebatesTotal?: PriceItem;
+
+    // attributes needed for quote feature
+    originTotal?: PriceItem;
   };
   isHiddenGift: boolean;
   isFreeGift: boolean;
+
+  // attributes needed for quote feature
+  originSingleBasePrice?: PriceItem;
 
   isQuantityFixed?: boolean;
 }

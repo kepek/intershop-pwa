@@ -10,7 +10,7 @@ import { Quote, QuoteStatus } from '../../models/quoting/quoting.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class QuoteExpirationDateComponent implements OnChanges {
-  @Input() quote: Partial<Pick<Quote, 'id' | 'validToDate'>>;
+  @Input() quote: Quote;
 
   state$: Observable<QuoteStatus>;
 

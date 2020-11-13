@@ -11,7 +11,6 @@ import { TactonFacade } from '../../facades/tacton.facade';
 import {
   TactonProductConfiguration,
   TactonProductConfigurationConflictItem,
-  TactonProductConfigurationGroup,
 } from '../../models/tacton-product-configuration/tacton-product-configuration.model';
 
 @Component({
@@ -25,7 +24,7 @@ export class ConfigurePageComponent implements OnInit, OnDestroy {
   >;
 
   state$: Observable<TactonProductConfiguration>;
-  step$: Observable<TactonProductConfigurationGroup>;
+  step$: Observable<unknown>;
   loading$: Observable<boolean>;
   product$: Observable<ProductView>;
   private destroy$ = new Subject();

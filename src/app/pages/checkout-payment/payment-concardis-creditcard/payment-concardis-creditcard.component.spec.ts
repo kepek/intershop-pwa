@@ -3,13 +3,12 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { NgbPopover } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
-import { MockComponent, MockDirective } from 'ng-mocks';
+import { MockComponent } from 'ng-mocks';
 import { anything, spy, verify } from 'ts-mockito';
 
 import { PaymentMethod } from 'ish-core/models/payment-method/payment-method.model';
 import { CheckboxComponent } from 'ish-shared/forms/components/checkbox/checkbox.component';
-import { FormControlFeedbackComponent } from 'ish-shared/forms/components/form-control-feedback/form-control-feedback.component';
-import { ShowFormFeedbackDirective } from 'ish-shared/forms/directives/show-form-feedback.directive';
+import { SelectYearMonthComponent } from 'ish-shared/forms/components/select-year-month/select-year-month.component';
 
 import { PaymentConcardisCreditcardComponent } from './payment-concardis-creditcard.component';
 
@@ -23,9 +22,8 @@ describe('Payment Concardis Creditcard Component', () => {
       declarations: [
         MockComponent(CheckboxComponent),
         MockComponent(FaIconComponent),
-        MockComponent(FormControlFeedbackComponent),
         MockComponent(NgbPopover),
-        MockDirective(ShowFormFeedbackDirective),
+        MockComponent(SelectYearMonthComponent),
         PaymentConcardisCreditcardComponent,
       ],
       imports: [ReactiveFormsModule, TranslateModule.forRoot()],

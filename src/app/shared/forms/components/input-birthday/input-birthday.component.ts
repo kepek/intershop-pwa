@@ -85,7 +85,7 @@ export class InputBirthdayComponent extends FormElementComponent implements OnIn
       birthday = `${year}-${month}-${day}`;
     }
 
-    this.formControl.setValue(birthday);
+    this.form.get(this.controlName).setValue(birthday);
   }
 
   ngOnDestroy() {

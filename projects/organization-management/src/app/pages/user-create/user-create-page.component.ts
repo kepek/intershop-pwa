@@ -42,8 +42,8 @@ export class UserCreatePageComponent implements OnInit {
     this.userError$ = this.organizationManagementFacade.usersError$;
   }
 
-  get profile(): FormGroup {
-    return this.form.get('profile') as FormGroup;
+  get profile() {
+    return this.form.get('profile');
   }
 
   submitForm() {
