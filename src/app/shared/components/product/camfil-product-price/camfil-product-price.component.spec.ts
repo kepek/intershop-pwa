@@ -6,7 +6,7 @@ import { instance, mock, when } from 'ts-mockito';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
 import { PricePipe } from 'ish-core/models/price/price.pipe';
-import { AnyProductType } from 'ish-core/models/product/product.model';
+import { ProductPrices } from 'ish-core/models/product/product.model';
 
 import { CamfilProductPriceComponent } from './camfil-product-price.component';
 
@@ -15,9 +15,22 @@ describe('Camfil Product Price Component', () => {
   let fixture: ComponentFixture<CamfilProductPriceComponent>;
   let element: HTMLElement;
   let translate: TranslateService;
-  let product: AnyProductType;
+  let product: ProductPrices;
 
   beforeEach(async () => {
+    product = {
+      listPrice: {
+        type: 'Money',
+        value: 11,
+        currency: 'USD',
+      },
+      salePrice: {
+        type: 'Money',
+        value: 10,
+        currency: 'USD',
+      },
+    };
+
     const accountFacade = mock(AccountFacade);
     when(accountFacade.userPriceDisplayType$).thenReturn(of('gross'));
 
@@ -34,17 +47,6 @@ describe('Camfil Product Price Component', () => {
     component = fixture.componentInstance;
     translate.setDefaultLang('en');
     translate.use('en');
-    product = { sku: 'sku' } as AnyProductType;
-    product.listPrice = {
-      type: 'Money',
-      value: 11,
-      currency: 'USD',
-    };
-    product.salePrice = {
-      type: 'Money',
-      value: 10,
-      currency: 'USD',
-    };
     component.product = product;
     element = fixture.nativeElement;
   });
