@@ -23,11 +23,12 @@ export enum ProductCompletenessLevel {
 
 export type AllProductTypes = Product | VariationProduct | VariationProductMaster | ProductBundle | ProductRetailSet;
 
-export type ProductPrices = Partial<
-  Pick<ProductRetailSet, 'minListPrice' | 'minSalePrice' | 'summedUpListPrice' | 'summedUpSalePrice'>
-> &
-  Partial<Pick<VariationProductMaster, 'minListPrice' | 'minSalePrice' | 'maxListPrice' | 'maxSalePrice'>> &
-  Partial<Pick<Product, 'salePrice' | 'listPrice'>>;
+export type AnyProductType = Product & VariationProduct & VariationProductMaster & ProductBundle & ProductRetailSet;
+
+export type ProductPrices =
+  | Partial<Pick<ProductRetailSet, 'minListPrice' | 'minSalePrice' | 'summedUpListPrice' | 'summedUpSalePrice'>>
+  | Partial<Pick<VariationProductMaster, 'minListPrice' | 'minSalePrice' | 'maxListPrice' | 'maxSalePrice'>>
+  | Partial<Pick<Product, 'salePrice' | 'listPrice'>>;
 
 export class ProductHelper {
   /**

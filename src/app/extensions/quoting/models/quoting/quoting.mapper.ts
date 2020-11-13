@@ -78,8 +78,10 @@ export class QuotingMapper {
 
             singleBasePrice: PriceMapper.fromData(item.singlePrice),
             originSingleBasePrice: PriceMapper.fromData(item.originSinglePrice),
-            total: PriceMapper.fromData(item.totalPrice),
-            originTotal: PriceMapper.fromData(item.originTotalPrice),
+            totals: {
+              total: PriceMapper.fromData(item.totalPrice),
+              originTotal: PriceMapper.fromData(item.originTotalPrice),
+            },
           })),
         };
         return mapped;
@@ -108,7 +110,7 @@ export class QuotingMapper {
                 productSKU: itemData.productSKU,
                 quantity: itemData.quantity,
                 singleBasePrice: PriceMapper.fromData(itemData.singlePrice),
-                total: PriceMapper.fromData(itemData.totalPrice),
+                totals: { total: PriceMapper.fromData(itemData.totalPrice) },
               };
             }
           }),

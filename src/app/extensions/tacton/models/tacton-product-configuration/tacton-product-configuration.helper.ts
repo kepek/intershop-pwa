@@ -10,7 +10,7 @@ export class TactonProductConfigurationHelper {
     return el.isGroup;
   }
 
-  static isParameter(
+  private static isParameter(
     el: TactonProductConfigurationGroup | TactonProductConfigurationParameter
   ): el is TactonProductConfigurationParameter {
     return el.isParameter;

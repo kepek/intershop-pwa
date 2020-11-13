@@ -7,8 +7,8 @@
     "intershop"
   ],
   "engines": {
-    "node": ">=14.15.0",
-    "npm": ">=6.14.8"
+    "node": ">=12.13.0",
+    "npm": "~6.12.0"
   },
   "private": true,
   "scripts": {
@@ -137,7 +137,7 @@
     "@types/jest": "^26.0.15",
     "@types/lodash-es": "^4.17.3",
     "@types/webpack-env": "^1.15.2",
-    "@types/node": "^14.14.7",
+    "@types/node": "^12.19.2",
     "codelyzer": "^6.0.1",
     "comment-json": "^4.1.0",
     "commitizen": "^4.2.2",

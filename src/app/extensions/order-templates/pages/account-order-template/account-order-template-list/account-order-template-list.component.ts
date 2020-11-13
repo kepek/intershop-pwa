@@ -24,7 +24,6 @@ export class AccountOrderTemplateListComponent implements OnDestroy {
   @Output() deleteOrderTemplate = new EventEmitter<string>();
 
   dummyProduct = { sku: 'dummy', inStock: true, availability: true };
-
   private destroy$ = new Subject();
 
   constructor(private translate: TranslateService, private productFacade: ShoppingFacade) {}

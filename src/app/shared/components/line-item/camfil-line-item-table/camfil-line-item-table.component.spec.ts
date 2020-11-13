@@ -3,7 +3,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { TranslateModule } from '@ngx-translate/core';
-import { MockComponent, MockPipe } from 'ng-mocks';
+import { MockComponent, MockComponents, MockPipe } from 'ng-mocks';
 import { of } from 'rxjs';
 import { anything, instance, mock, when } from 'ts-mockito';
 
@@ -39,10 +39,10 @@ describe('Camfil Line Item Table Component', () => {
         MockComponent(CamfilProductImageComponent),
         MockComponent(FaIconComponent),
         MockComponent(InputComponent),
-        MockComponent(LazyProductAddToOrderTemplateComponent),
-        MockComponent(LazyProductAddToWishlistComponent),
         MockComponent(LineItemDescriptionComponent),
         MockComponent(PromotionDetailsComponent),
+        MockComponents(LazyProductAddToOrderTemplateComponent),
+        MockComponents(LazyProductAddToWishlistComponent),
         MockPipe(PricePipe),
         MockPipe(ProductRoutePipe),
       ],

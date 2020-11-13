@@ -30,15 +30,17 @@ export interface QuoteRequestItem extends QuoteItemStub {
   quantity: Attribute<number>;
 
   singleBasePrice: Price;
-  total: Price;
+  totals: { total: Price };
 }
 
-export interface QuoteItem extends QuoteRequestItem {
+interface QuoteItem extends QuoteRequestItem {
   originQuantity: Attribute<number>;
 
   originSingleBasePrice: Price;
-  total: Price;
-  originTotal: Price;
+  totals: {
+    total: Price;
+    originTotal: Price;
+  };
 }
 
 interface QuoteBase<ItemType> extends QuoteStub {

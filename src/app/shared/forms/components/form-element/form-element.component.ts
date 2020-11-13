@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { AbstractControl, FormControl } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { UUID } from 'angular2-uuid';
 
@@ -10,15 +10,15 @@ export abstract class FormElementComponent {
   /**
    * Name of the corresponding form group (required)
    */
-  @Input() form: AbstractControl;
+  @Input() form: FormGroup;
   /**
-   * control name, corresponding control with this name should exist in the form group (required)
+   * control name or an array of control names, corresponding controls with this name(s) should exist in the form group (required)
    */
-  @Input() controlName: string;
+  @Input() controlName: string | string[];
   /**
    * error messages for each validator of the control(s)
    */
-  @Input() errorMessages: { [key: string]: string };
+  @Input() errorMessages: { [key: string]: string } | { [key: string]: string }[];
   /**
    * Label for the input/select field(s)
    */
@@ -52,7 +52,13 @@ export abstract class FormElementComponent {
     }
     if (!this.formControl) {
       throw new Error(
-        `input parameter <controlName> with value '${this.controlName}' does not exist in the given form for FormElementComponent`
+        `input parameter <controlName> with value '${this.getControlName()}' does not exist in the given form for FormElementComponent`
+      );
+    }
+
+    if (Array.isArray(this.controlName) && this.formControlArray.some(el => !el)) {
+      throw new Error(
+        `one of the input parameter <controlName> do not exist in the given form for FormElementComponent`
       );
     }
 
@@ -60,10 +66,22 @@ export abstract class FormElementComponent {
   }
 
   /**
-   * get the form control according to the controlName
+   * get the form control according to the controlName or first element of the controlName array
    */
-  get formControl(): FormControl {
-    return this.form.get(this.controlName) as FormControl;
+  get formControl(): AbstractControl {
+    return this.form.get(this.getControlName());
+  }
+
+  /**
+   * get an array of form controls if a controlName array is given
+   */
+  get formControlArray(): AbstractControl[] {
+    const formControls: AbstractControl[] = [];
+    Array.isArray(this.controlName)
+      ? this.controlName.forEach(controlName => formControls.push(this.form.get(controlName)))
+      : formControls.push(this.formControl);
+
+    return formControls;
   }
 
   /** decides whether to show a required sign after the label in dependence of the markRequiredLabel
@@ -83,12 +101,23 @@ export abstract class FormElementComponent {
         // determine, if the control has the required attribute
         let required = false;
         const formControl = new FormControl();
-        if (this.form.get(this.controlName).validator) {
-          const validationResult = this.form.get(this.controlName).validator(formControl);
+        if (this.form.get(this.getControlName()).validator) {
+          const validationResult = this.form.get(this.getControlName()).validator(formControl);
           required = !!validationResult && validationResult.required;
         }
         return required;
       }
     }
+  }
+
+  /**
+   * get the form control according to the controlName or first element of the controlName array
+   */
+  getControlName(): string {
+    return Array.isArray(this.controlName)
+      ? this.controlName.length
+        ? this.controlName[0]
+        : undefined
+      : this.controlName;
   }
 }

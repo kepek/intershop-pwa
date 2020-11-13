@@ -51,7 +51,15 @@
     <!-- Quote Item List -->
     <div class="section">
       <h3>{{ 'quote.items.table.heading' | translate }}</h3>
-      <ish-quote-line-item-list *ngIf="quote.items"></ish-quote-line-item-list>
+      <ish-line-item-list
+        *ngIf="quote.items"
+        [lineItems]="quote.items"
+        [editable]="true"
+        lineItemViewType="availability"
+        [total]="quote.total"
+        (updateItem)="onUpdateItem($event)"
+        (deleteItem)="onDeleteItem($event)"
+      ></ish-line-item-list>
     </div>
   </form>
 </ng-container>

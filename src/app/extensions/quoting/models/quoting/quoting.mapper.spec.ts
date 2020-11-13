@@ -210,11 +210,6 @@ describe('Quoting Mapper', () => {
                 "type": "Money",
                 "value": 1002.95,
               },
-              "originTotal": Object {
-                "currency": "USD",
-                "type": "Money",
-                "value": 1002.95,
-              },
               "productSKU": "10696946",
               "quantity": Object {
                 "type": "Quantity",
@@ -226,10 +221,17 @@ describe('Quoting Mapper', () => {
                 "type": "Money",
                 "value": 10.95,
               },
-              "total": Object {
-                "currency": "USD",
-                "type": "Money",
-                "value": 10.95,
+              "totals": Object {
+                "originTotal": Object {
+                  "currency": "USD",
+                  "type": "Money",
+                  "value": 1002.95,
+                },
+                "total": Object {
+                  "currency": "USD",
+                  "type": "Money",
+                  "value": 10.95,
+                },
               },
             },
           ],
@@ -361,10 +363,12 @@ describe('Quoting Mapper', () => {
                 "type": "Money",
                 "value": 964.5,
               },
-              "total": Object {
-                "currency": "USD",
-                "type": "Money",
-                "value": 964.5,
+              "totals": Object {
+                "total": Object {
+                  "currency": "USD",
+                  "type": "Money",
+                  "value": 964.5,
+                },
               },
             },
           ],

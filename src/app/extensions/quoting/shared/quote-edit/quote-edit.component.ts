@@ -3,6 +3,8 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { pick } from 'lodash-es';
 import { Observable } from 'rxjs';
 
+import { LineItemUpdate } from 'ish-core/models/line-item-update/line-item-update.model';
+
 import { QuoteContextFacade } from '../../facades/quote-context.facade';
 import { QuoteRequest } from '../../models/quoting/quoting.model';
 
@@ -49,5 +51,13 @@ export class QuoteEditComponent implements OnInit {
 
   reset() {
     this.form.reset(this.valuesFromQuote);
+  }
+
+  onUpdateItem(item: LineItemUpdate) {
+    this.context.updateItem(item);
+  }
+
+  onDeleteItem(itemId: string) {
+    this.context.deleteItem(itemId);
   }
 }
