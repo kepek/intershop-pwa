@@ -6,7 +6,7 @@
 
   <!---Create Camcard-->
   <ng-container *ngIf="router.isActive('/account/cam-cards/create', true)">
-    <div class="d-flex pb-2">
+    <div class="d-flex flex-column flex-sm-row pb-2">
       <a class="py-3 pr-4 pl-2" routerLink="/account/cam-cards"
         ><mat-icon class="align-bottom pr-2">arrow_left</mat-icon
         >{{ 'camfil.account.cam_card.edit.button.back.label' | translate }}</a
@@ -19,12 +19,13 @@
     <div class="section">
       <camfil-cam-card-preferences (submit)="addCamCard($event)"></camfil-cam-card-preferences>
     </div>
+    <div class="section"></div>
   </ng-container>
 
   <!---Edit Camcard-->
   <ng-container *ngIf="camCard$ | async as camCard">
     <ng-container *ngIf="maintenance(camCard, ['MAINTENANCE', 'ACTIVE']); else nonActiveStatus">
-      <div class="d-flex pb-2">
+      <div class="d-flex flex-column flex-sm-row pb-2">
         <a class="py-3 pr-4 pl-2" routerLink="/account/cam-cards"
           ><mat-icon class="align-bottom pr-2">arrow_left</mat-icon
           >{{ 'camfil.account.cam_card.edit.button.back.label' | translate }}</a

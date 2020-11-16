@@ -25,6 +25,12 @@
   .delete-cam-card {
     z-index: 1;
   }
+  @media (max-width: $screen-sm-max) {
+    .attributes > * {
+      line-height: 20px;
+      border-right: none;
+    }
+  }
 
   ::ng-deep {
     mat-form-field {
@@ -66,6 +72,32 @@
     }
     dd {
       float: right;
+    }
+
+    @media (max-width: $screen-sm-max) {
+      mat-form-field {
+        width: 100%;
+      }
+      .attributes {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .line-item {
+        flex-direction: column;
+      }
+      .camfil-product-title {
+        max-width: 175px;
+      }
+      .delete-cam-card {
+        position: relative;
+        top: -148px;
+      }
+    }
+    @media (max-width: $screen-xs-max) {
+      .camfil-product-title {
+        max-width: 125px;
+      }
     }
   }
 }

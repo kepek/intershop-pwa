@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { TranslateService } from '@ngx-translate/core';
 import { Observable, Subject } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 
@@ -23,7 +22,6 @@ export class AccountCamCardDetailLineItemComponent implements OnChanges, OnInit,
   constructor(
     private productFacade: ShoppingFacade,
     private camCardsFacade: CamCardsFacade,
-    private translate: TranslateService,
     public dialog: MatDialog
   ) {}
 
