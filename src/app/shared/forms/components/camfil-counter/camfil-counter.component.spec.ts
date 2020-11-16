@@ -44,7 +44,7 @@ describe('Camfil Counter Component', () => {
     });
 
     it('should display value from form when rendered', () => {
-      const display = element.querySelector(`[data-testing-id=${controlName}]`);
+      const display = element.querySelector<HTMLInputElement>(`[data-testing-id=${controlName}]`);
       expect(display.value).toMatchInlineSnapshot(`"42"`);
     });
 
@@ -54,7 +54,7 @@ describe('Camfil Counter Component', () => {
       fixture.detectChanges();
       verify(componentSpy.increase()).once();
 
-      const display = element.querySelector(`[data-testing-id=${controlName}]`);
+      const display = element.querySelector<HTMLInputElement>(`[data-testing-id=${controlName}]`);
       expect(display.value).toMatchInlineSnapshot(`"43"`);
     });
 
@@ -64,7 +64,7 @@ describe('Camfil Counter Component', () => {
       fixture.detectChanges();
       verify(componentSpy.decrease()).once();
 
-      const display = element.querySelector(`[data-testing-id=${controlName}]`);
+      const display = element.querySelector<HTMLInputElement>(`[data-testing-id=${controlName}]`);
       expect(display.value).toMatchInlineSnapshot(`"41"`);
     });
 

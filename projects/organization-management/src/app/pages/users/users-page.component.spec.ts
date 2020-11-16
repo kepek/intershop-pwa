@@ -7,9 +7,9 @@ import { of } from 'rxjs';
 import { instance, mock, when } from 'ts-mockito';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
+import { CamfilModalDialogComponent } from 'ish-shared/components/common/camfil-modal-dialog/camfil-modal-dialog.component';
 import { ErrorMessageComponent } from 'ish-shared/components/common/error-message/error-message.component';
 import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
-import { ModalDialogComponent } from 'ish-shared/components/common/modal-dialog/modal-dialog.component';
 
 import { OrganizationManagementFacade } from '../../facades/organization-management.facade';
 import { B2bUser } from '../../models/b2b-user/b2b-user.model';
@@ -36,10 +36,10 @@ describe('Users Page Component', () => {
     await TestBed.configureTestingModule({
       imports: [RouterTestingModule, TranslateModule.forRoot()],
       declarations: [
+        MockComponent(CamfilModalDialogComponent),
         MockComponent(ErrorMessageComponent),
         MockComponent(FaIconComponent),
         MockComponent(LoadingComponent),
-        MockComponent(ModalDialogComponent),
         MockComponent(UserRolesBadgesComponent),
         UsersPageComponent,
       ],

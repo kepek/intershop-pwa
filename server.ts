@@ -8,6 +8,8 @@ import * as fs from 'fs';
 import * as proxy from 'express-http-proxy';
 // tslint:disable-next-line: ban-specific-imports
 import { AppServerModule, ICM_WEB_URL, HYBRID_MAPPING_TABLE, environment, APP_BASE_HREF } from './src/main.server';
+// tslint:disable-next-line: ban-specific-imports
+import { createProxy } from './src/proxy';
 import { ngExpressEngine } from '@nguniversal/express-engine';
 
 const PORT = process.env.PORT || 4200;
@@ -111,6 +113,8 @@ export function app() {
     })
   );
 
+  // tslint:disable:no-unused
+  // @ts-ignore
   const icmProxy = proxy(ICM_BASE_URL, {
     // preserve original path
     proxyReqPathResolver: req => req.originalUrl,
@@ -230,6 +234,11 @@ export function app() {
     console.log("making ICM available for all requests to '/INTERSHOP'");
     server.use('/INTERSHOP', icmProxy);
   }
+
+  // @ts-ignores
+  createProxy(environment).forEach(proxyMiddleware => {
+    server.use(proxyMiddleware);
+  });
 
   if (/^(on|1|true|yes)$/i.test(process.env.PROMETHEUS)) {
     const promBundle = require('express-prom-bundle');

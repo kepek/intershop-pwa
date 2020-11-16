@@ -88,6 +88,26 @@
         "TRUST_ICM": "true",
         "SSR_HYBRID": "true"
       }
+    },
+    {
+      "name": "Develop SSR w/ Proxy",
+      "request": "launch",
+      "runtimeArgs": [
+        "run-script",
+        "dev:ssr:proxy",
+        "--scripts-prepend-node-path=auto"
+      ],
+      "runtimeExecutable": "npm",
+      "skipFiles": ["<node_internals>/**"],
+      "type": "pwa-node",
+      "env": {
+        "NODE_ENV": "development",
+        "PORT": "4200",
+        "LOGGING": "true",
+        "PROXY_ICM": "https://intershoppwa.azurewebsites.net",
+        "TRUST_ICM": "true",
+        "SSR_HYBRID": "true"
+      }
     }
   ]
 }

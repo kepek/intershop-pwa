@@ -1,6 +1,6 @@
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { AfterViewInit, ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { ErrorStateMatcher } from '@angular/material/core';
@@ -9,15 +9,21 @@ import { PageEvent } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
 import { completeIconSet } from 'camfil-icons';
 import { Observable, Subject } from 'rxjs';
 import { map, startWith, take, takeUntil } from 'rxjs/operators';
 
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { CategoryView } from 'ish-core/models/category-view/category-view.model';
+import { HttpError } from 'ish-core/models/http-error/http-error.model';
 import { ProductView } from 'ish-core/models/product-view/product-view.model';
 import { ProductCompletenessLevel } from 'ish-core/models/product/product.helper';
 import { whenTruthy } from 'ish-core/utils/operators';
+
+import { CamAhuFacade } from '../../../cam-ahu/facades/cam-ahu.facade';
+import { Manufacturer } from '../../../cam-ahu/models/manufacturer/manufacturer.model';
+import { Unit } from '../../../cam-ahu/models/unit/unit.model';
 
 import { DemoBottomSheetComponent } from './demo-bottom-sheet/demo-bottom-sheet.component';
 import { DemoDialogComponent } from './demo-dialog/demo-dialog.component';
@@ -61,11 +67,22 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DemoPageComponent implements AfterViewInit, OnInit, OnDestroy {
+  ahuManufacturers$: Observable<Manufacturer[]>;
+  ahuManufacturersLoading$: Observable<boolean>;
+  ahuManufacturersError$: Observable<HttpError>;
+  selectedAhuManufacturer$: Observable<Manufacturer>;
+  ahuForm: FormGroup;
+  ahuUnits$: Observable<Unit[]>;
+  ahuUnitsLoading$: Observable<boolean>;
+  ahuUnitsError$: Observable<HttpError>;
+  selectedAhuUnit$: Observable<Unit>;
+
   product$: Observable<ProductView>;
   category$: Observable<CategoryView>;
 
   now: Date;
 
+  manufacturers: Manufacturer[];
   product: ProductView;
   category: CategoryView;
   productItemForm: FormGroup;
@@ -77,18 +94,15 @@ export class DemoPageComponent implements AfterViewInit, OnInit, OnDestroy {
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
     private bottomSheet: MatBottomSheet,
-    private shoppingFacade: ShoppingFacade
+    private shoppingFacade: ShoppingFacade,
+    private fb: FormBuilder,
+    private ahuFacade: CamAhuFacade,
+    private router: Router
   ) {
     // Update the value for the progress-bar on an interval.
     setInterval(() => {
       this.progress = (this.progress + Math.floor(Math.random() * 4) + 1) % 100;
     }, 200);
-  }
-  get tickInterval(): number | 'auto' {
-    return this.slider.showTicks ? (this.slider.autoTicks ? 'auto' : this.slider.tickInterval) : undefined;
-  }
-  set tickInterval(v) {
-    this.slider.tickInterval = Number(v);
   }
   isDarkTheme = false;
   lastDialogResult: string;
@@ -177,7 +191,65 @@ export class DemoPageComponent implements AfterViewInit, OnInit, OnDestroy {
 
   @ViewChild(MatSort) sort: MatSort;
 
+  selectAhuManufacturer(event) {
+    const manufacturerId = event.value;
+    const unitId = undefined;
+
+    this.router.navigate(['/demo'], {
+      queryParamsHandling: 'merge',
+
+      queryParams: {
+        manufacturerId,
+        unitId,
+      },
+    });
+  }
+
+  selectAhuUnit(event) {
+    const unitId = event.value;
+
+    this.router.navigate(['/demo'], {
+      queryParamsHandling: 'merge',
+      queryParams: {
+        unitId,
+      },
+    });
+  }
+
+  submitAhuForm() {
+    console.log('submitAhuForm', this.ahuForm);
+  }
+
   ngOnInit() {
+    // AHU-Manufacturers
+    this.ahuManufacturers$ = this.ahuFacade.ahuManufacturers$();
+    this.ahuManufacturersLoading$ = this.ahuFacade.ahuManufacturersLoading$;
+    this.ahuManufacturersError$ = this.ahuFacade.ahuManufacturersError$;
+    this.selectedAhuManufacturer$ = this.ahuFacade.selectedAhuManufacturer$;
+    // AHU-Unit
+    this.ahuUnits$ = this.ahuFacade.ahuUnits$;
+    this.ahuUnitsLoading$ = this.ahuFacade.ahuUnitsLoading$;
+    this.ahuUnitsError$ = this.ahuFacade.ahuUnitsError$;
+    this.selectedAhuUnit$ = this.ahuFacade.selectedAhuUnit$;
+    // AHU-Form
+    this.ahuForm = this.fb.group({
+      manufacturer: new FormControl(undefined, [Validators.required]),
+      unit: new FormControl(undefined, [Validators.required]),
+    });
+    // AHU-Form: Manufacturer-Select-Toggle
+    this.ahuManufacturersLoading$.pipe(takeUntil(this.destroy$)).subscribe(loading => {
+      this.ahuForm.controls.manufacturer[loading ? 'disable' : 'enable']();
+    });
+    // AHU-Form: Manufacturer-Selection-Logic
+    this.selectedAhuManufacturer$.pipe(takeUntil(this.destroy$)).subscribe(manufacturer => {
+      this.ahuForm.controls.manufacturer.setValue(manufacturer?.id);
+      this.ahuForm.controls.unit[manufacturer ? 'enable' : 'disable']();
+    });
+    // AHU-Form: Unit-Selection-Logic
+    this.selectedAhuUnit$.pipe(takeUntil(this.destroy$)).subscribe(unit => {
+      this.ahuForm.controls.unit.setValue(unit?.ahu?.id);
+    });
+
     this.now = new Date();
     this.product$ = this.shoppingFacade.product$('1365531', ProductCompletenessLevel.List);
     this.category$ = this.shoppingFacade.category$('presentation-conferencing.audio-equipment');

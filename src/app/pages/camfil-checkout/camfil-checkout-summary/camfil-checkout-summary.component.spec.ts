@@ -25,7 +25,7 @@ describe('Camfil Checkout Summary Component', () => {
 
     basket = { totals: {} } as Basket;
     basket.totals.total = { type: 'PriceItem', currency: 'USD', gross: 0.0, net: 0.0 };
-    basket.totals.taxTotal = { type: 'PriceItem', currency: 'USD', gross: 0.0, net: 0.0 };
+    basket.totals.taxTotal = { type: 'Money', currency: 'USD', value: 0.0 };
 
     component.basket = basket;
   });

@@ -59,7 +59,6 @@ describe('Select Cam Card Modal Component', () => {
     element = fixture.nativeElement;
     when(camCardFacadeMock.currentCamCard$).thenReturn(of(camCardDetails));
     when(camCardFacadeMock.camCard$).thenReturn(of([camCardDetails]));
-    when(camCardFacadeMock.created$).thenReturn(of({ id: 'test_id', name: 'test_name' }));
 
     component.product = { name: 'Test Product', sku: 'test sku', minOrderQuantity: 1 } as Product;
 

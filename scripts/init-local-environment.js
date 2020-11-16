@@ -14,6 +14,8 @@ export const environment: Environment = {
   icmBaseURL: 'https://intershoppwa.azurewebsites.net',
   icmChannel: 'inSPIRED-inTRONICS_Business-Site',
   icmApplication: '-',
+  /* ICC API CONFIGURATION */
+  iccToken: 'YOUR_ICC_API_TOKEN',
 };
 
 `;
@@ -32,6 +34,8 @@ export const environment: EnvironmentProxy = {
   icmBaseURL: 'http://localhost:4200',
   /* PROXY CONFIGURATION */
   icmProxyURL: 'https://intershoppwa.azurewebsites.net',
+  /* ICC API CONFIGURATION */
+  iccToken: 'YOUR_ICC_API_TOKEN',
 };
 
 `;

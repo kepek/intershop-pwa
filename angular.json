@@ -20,6 +20,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "allowedCommonJsDependencies": ["camelcase-keys"],
             "outputPath": "dist/browser",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -196,6 +197,16 @@
               ],
               "optimization": true,
               "sourceMap": true
+            },
+            "proxy": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.proxy.ts"
+                }
+              ],
+              "optimization": true,
+              "sourceMap": true
             }
           }
         },
@@ -209,6 +220,10 @@
             "local": {
               "browserTarget": "intershop-pwa:build:local",
               "serverTarget": "intershop-pwa:server:local"
+            },
+            "proxy": {
+              "browserTarget": "intershop-pwa:build:proxy",
+              "serverTarget": "intershop-pwa:server:proxy"
             }
           }
         }

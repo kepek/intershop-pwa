@@ -43,6 +43,8 @@ export interface Environment {
     /* B2C features */
     | 'wishlists'
     /* Camfil features */
+    | 'camConfiguration'
+    | 'camIcc'
     | 'camAccount'
     | 'camCards'
     | 'camDemo'
@@ -101,6 +103,13 @@ export interface Environment {
       [key: string]: unknown;
     };
   };
+
+  /* ICC API CONFIGURATION */
+
+  iccBaseURL: string;
+  iccToken: string;
+  iccTokenHeaderKey: string;
+  iccServer: string;
 }
 
 export const ENVIRONMENT_DEFAULTS: Environment = {
@@ -124,6 +133,7 @@ export const ENVIRONMENT_DEFAULTS: Environment = {
     'advancedVariationHandling',
     'businessCustomerRegistration',
     /* Camfil features */
+    'camIcc',
     'camCards',
     'camAccount',
     'camDemo',
@@ -166,4 +176,11 @@ export const ENVIRONMENT_DEFAULTS: Environment = {
     allowedCookies: ['cookieConsent', 'apiToken'],
   },
   cookieConsentVersion: 1,
+
+  /* ICC API CONFIGURATION */
+
+  iccBaseURL: 'https://apim-icc.azure-api.net',
+  iccToken: 'NOT SET',
+  iccTokenHeaderKey: 'Ocp-Apim-Subscription-Key',
+  iccServer: 'ICC',
 };
