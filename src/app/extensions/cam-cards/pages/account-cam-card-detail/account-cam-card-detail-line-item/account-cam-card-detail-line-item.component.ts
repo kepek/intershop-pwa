@@ -10,6 +10,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { Observable, Subject } from 'rxjs';
 import { debounceTime, take, takeUntil } from 'rxjs/operators';
 
@@ -27,7 +28,11 @@ import { CamCard, CamCardItem } from '../../../models/cam-card/cam-card.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AccountCamCardDetailLineItemComponent implements OnChanges, OnInit, OnDestroy {
-  constructor(private productFacade: ShoppingFacade, private camCardsFacade: CamCardsFacade) {}
+  constructor(
+    private productFacade: ShoppingFacade,
+    private camCardsFacade: CamCardsFacade,
+    public dialog: MatDialog
+  ) {}
 
   private static REQUIRED_COMPLETENESS_LEVEL = ProductCompletenessLevel.List;
   @Input() camCardItemData: CamCardItem;

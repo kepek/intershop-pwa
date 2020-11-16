@@ -2,4 +2,13 @@
 
 .camcard-icon {
   box-sizing: unset;
+  @media (max-width: $screen-xs-max) {
+    border: none !important;
+  }
+}
+
+@media (max-width: $screen-xs-max) {
+  .list-body .list-item-row {
+    margin-bottom: 0;
+  }
 }
