@@ -1,7 +1,17 @@
-import { ChangeDetectionStrategy, Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { Observable, Subject } from 'rxjs';
-import { debounceTime, takeUntil } from 'rxjs/operators';
+import { debounceTime, take, takeUntil } from 'rxjs/operators';
 
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { ProductView } from 'ish-core/models/product-view/product-view.model';
@@ -25,6 +35,10 @@ export class AccountCamCardDetailLineItemComponent implements OnChanges, OnInit,
   @Input() selectedItemsForm?: FormArray;
   @Input() mode?: 'edit' | 'view';
   @Input() index: number;
+  @Output() handleLoad = new EventEmitter<{ res: ProductView; quantity: number }>();
+  @Output() handleUpdate = new EventEmitter<{ res: ProductView; quantity: number }>();
+
+  quantity = 0;
 
   addToCartForm: FormGroup;
   selectItemForm: FormGroup;
@@ -34,6 +48,7 @@ export class AccountCamCardDetailLineItemComponent implements OnChanges, OnInit,
 
   ngOnInit() {
     this.initForm();
+    this.quantity = this.camCardItemData.quantity;
     this.updateQuantities();
   }
 
@@ -95,7 +110,14 @@ export class AccountCamCardDetailLineItemComponent implements OnChanges, OnInit,
       ...camCardItem,
       quantity,
     };
+    const difference = quantity - this.quantity;
+
+    this.quantity = quantity;
+
     this.camCardsFacade.updateCamCardProduct(this.currentCamCard.rootCamCard, this.currentCamCard.id, newItem);
+    this.product$
+      .pipe(take(1), takeUntil(this.destroy$))
+      .subscribe((res: ProductView) => this.handleUpdate.emit({ res, quantity: difference }));
   }
 
   removeProductFromCamCard(camCardItemId: string) {
@@ -109,6 +131,10 @@ export class AccountCamCardDetailLineItemComponent implements OnChanges, OnInit,
         this.camCardItemData.product.sku,
         AccountCamCardDetailLineItemComponent.REQUIRED_COMPLETENESS_LEVEL
       );
+
+      this.product$
+        .pipe(take(1), takeUntil(this.destroy$))
+        .subscribe((res: ProductView) => this.handleLoad.emit({ res, quantity: this.camCardItemData.quantity }));
     }
   }
 

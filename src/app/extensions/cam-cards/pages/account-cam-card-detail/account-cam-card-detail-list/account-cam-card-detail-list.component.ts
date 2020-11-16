@@ -19,6 +19,7 @@ import { Observable, Subject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
 
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
+import { Price } from 'ish-core/models/price/price.model';
 import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
 import { ModalDialogComponent } from 'ish-shared/components/common/modal-dialog/modal-dialog.component';
 
@@ -48,6 +49,8 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges {
   expandedCamCard: CamCard | null;
   isSubOpen = [];
   isStickyCamCardToolbar$: Observable<boolean>;
+  // TODO: improve when user locale will be properlyused
+  priceSum: Price = { currency: 'USD', value: 0, type: 'Money' };
   private destroy$ = new Subject();
 
   constructor(
@@ -94,6 +97,12 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges {
 
   getCamCardName() {
     return this.camCard?.name;
+  }
+
+  productUpdate(event) {
+    if (event.res.salePrice.value) {
+      this.priceSum.value = this.priceSum.value + event.res.salePrice.value * event.quantity;
+    }
   }
 
   addItemsToCart() {
