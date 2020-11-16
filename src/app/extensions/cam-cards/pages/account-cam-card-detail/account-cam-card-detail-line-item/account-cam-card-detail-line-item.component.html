@@ -10,7 +10,7 @@
       </a>
       <div class="my-2 my-md-0">
         <div class="d-flex flex-row">
-          <camfil-product-title [product]="product"></camfil-product-title
+          <camfil-product-title [product]="product" [class]="'text-truncate'"></camfil-product-title
           ><camfil-product-inventory class="px-2" [product]="product"></camfil-product-inventory>
         </div>
         <div class="attributes">
@@ -35,32 +35,34 @@
     </div>
     <camfil-cam-card-product-comment
       *ngIf="isEditMode || camCardItemData.comment?.label"
-      [ngClass]="{ 'align-self-end': isViewMode, 'ml-auto': isEditMode }"
+      [ngClass]="{ 'align-self-end': isViewMode, 'ml-md-auto': isEditMode }"
       [currentCamCard]="currentCamCard"
       [camCardItem]="camCardItemData"
       [mode]="mode"
     ></camfil-cam-card-product-comment>
     <ng-container *ngIf="isEditMode">
-      <a
-        class="btn-tool delete-cam-card"
-        [ngClass]="{ 'ml-auto': isEditMode }"
-        (click)="removeProductFromCamCard(camCardItemData?.id)"
-        data-testing-id="delete-cam-card"
-      >
-        <mat-icon svgIcon="delete" class="size-16 mx-2"></mat-icon>
-      </a>
-      <form [formGroup]="addToCartForm">
-        <camfil-product-quantity
-          [allowZeroQuantity]="false"
-          [quantityLabel]="''"
-          [product]="product"
-          [parentForm]="addToCartForm"
-          [ngClass]="{ 'ml-auto': isEditMode }"
-          controlName="quantity"
-        ></camfil-product-quantity>
-      </form>
-      <div class="prices" [ngClass]="{ 'ml-auto': isEditMode }">
-        <ng-container *ngTemplateOutlet="price"></ng-container>
+      <div class="quantity-row d-flex flex-row justify-content-between align-items-center py-3 py-md-0">
+        <a
+          class="btn-tool delete-cam-card"
+          [ngClass]="{ 'ml-md-auto': isEditMode }"
+          (click)="removeProductFromCamCard(camCardItemData?.id)"
+          data-testing-id="delete-cam-card"
+        >
+          <mat-icon svgIcon="delete" class="size-16 mx-2"></mat-icon>
+        </a>
+        <form [formGroup]="addToCartForm">
+          <camfil-product-quantity
+            [allowZeroQuantity]="false"
+            [quantityLabel]="''"
+            [product]="product"
+            [parentForm]="addToCartForm"
+            [ngClass]="{ 'ml-md-auto': isEditMode }"
+            controlName="quantity"
+          ></camfil-product-quantity>
+        </form>
+        <div class="prices" [ngClass]="{ 'ml-md-auto': isEditMode }">
+          <ng-container *ngTemplateOutlet="price"></ng-container>
+        </div>
       </div>
     </ng-container>
   </div>

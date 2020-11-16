@@ -40,7 +40,6 @@
       .mat-form-field-appearance-fill .mat-form-field-infix {
         padding-top: 0.5em;
       }
-
       div.mat-form-field-flex {
         padding: 0.5em 0.75em 0 0.75em;
         margin-top: 0.25em;
@@ -56,9 +55,6 @@
     .camfil-product-title {
       display: block;
       max-width: 450px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
     }
     .product-image {
       max-width: 40px;
@@ -74,8 +70,20 @@
       float: right;
     }
 
+    @media (max-width: $screen-lg-max) {
+      .camfil-product-title {
+        max-width: 160px;
+      }
+      .quantity-row {
+        width: 100%;
+      }
+    }
+
     @media (max-width: $screen-sm-max) {
       mat-form-field {
+        width: 100%;
+      }
+      camfil-cam-card-product-comment {
         width: 100%;
       }
       .attributes {
@@ -87,16 +95,12 @@
         flex-direction: column;
       }
       .camfil-product-title {
-        max-width: 175px;
-      }
-      .delete-cam-card {
-        position: relative;
-        top: -148px;
+        max-width: 325px;
       }
     }
     @media (max-width: $screen-xs-max) {
       .camfil-product-title {
-        max-width: 125px;
+        max-width: 200px;
       }
     }
   }
