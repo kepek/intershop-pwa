@@ -3,7 +3,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Subject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
 
-import { ModalDialogComponent } from 'ish-shared/components/common/modal-dialog/modal-dialog.component';
+import { CamfilModalDialogComponent } from 'ish-shared/components/common/camfil-modal-dialog/camfil-modal-dialog.component';
 
 import { Wishlist } from '../../../models/wishlist/wishlist.model';
 
@@ -53,7 +53,7 @@ export class AccountWishlistListComponent implements OnChanges, OnDestroy {
   }
 
   /** Determine the heading of the delete modal and opens the modal. */
-  openDeleteConfirmationDialog(wishlist: Wishlist, modal: ModalDialogComponent<string>) {
+  openDeleteConfirmationDialog(wishlist: Wishlist, modal: CamfilModalDialogComponent<string>) {
     this.translate
       .get('account.wishlists.delete_wishlist_dialog.header', { 0: wishlist.title })
       .pipe(take(1), takeUntil(this.destroy$))

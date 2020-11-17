@@ -55,6 +55,18 @@ export const deleteCamCardSuccess = createAction(
 
 export const deleteCamCardFail = createAction('[Cam Cards API] Delete Cam Card Fail', httpError());
 
+export const deleteSubCamCard = createAction(
+  '[Cam Cards] Delete Sub Cam Card',
+  payload<{ rootId: string; id: string }>()
+);
+
+export const deleteSubCamCardSuccess = createAction(
+  '[Cam Cards API] Delete Sub Cam Card Success',
+  payload<{ camCard: CamCard }>()
+);
+
+export const deleteSubCamCardFail = createAction('[Cam Cards API] Delete Sub Cam Card Fail', httpError());
+
 export const loadCustomers = createAction('[Cam Cards] load available customer', payload<boolean>());
 
 export const loadCustomersSuccess = createAction(

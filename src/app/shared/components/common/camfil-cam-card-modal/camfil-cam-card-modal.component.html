@@ -26,22 +26,23 @@
 
   <div class="camfil-cam-card-modal__buttons-wrapper">
     <button
-      *ngIf="primaryButtonTitle"
-      class="camfil-cam-card-modal__buttons-wrapper--button button__ghost"
-      mat-raised-button
-      (click)="emitPrimary()"
-    >
-      {{ primaryButtonTitle }}
-    </button>
-    <button
       *ngIf="secondaryButtonTitle"
       class="camfil-cam-card-modal__buttons-wrapper--button"
       mat-raised-button
-      color="primary"
       (click)="emitSecondary()"
       [disabled]="secondaryDisabled"
     >
       {{ secondaryButtonTitle }}
+    </button>
+
+    <button
+      *ngIf="primaryButtonTitle"
+      class="camfil-cam-card-modal__buttons-wrapper--button button__ghost"
+      mat-raised-button
+      color="primary"
+      (click)="emitPrimary()"
+    >
+      {{ primaryButtonTitle }}
     </button>
   </div>
 </div>

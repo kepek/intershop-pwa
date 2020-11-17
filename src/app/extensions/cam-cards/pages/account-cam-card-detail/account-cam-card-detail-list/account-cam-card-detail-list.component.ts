@@ -21,7 +21,7 @@ import { take, takeUntil } from 'rxjs/operators';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { Price } from 'ish-core/models/price/price.model';
 import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
-import { ModalDialogComponent } from 'ish-shared/components/common/modal-dialog/modal-dialog.component';
+import { CamfilModalDialogComponent } from 'ish-shared/components/common/camfil-modal-dialog/camfil-modal-dialog.component';
 
 import { CamCardsFacade } from '../../../facades/cam-cards.facade';
 import { CamCard } from '../../../models/cam-card/cam-card.model';
@@ -122,14 +122,22 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges {
     this.router.navigate(['/account/cam-cards']);
   }
 
+  deleteSubCamCard(sub: CamCard) {
+    this.camCardsFacade.deleteSubCamCard(sub.rootCamCard, sub.id);
+  }
+
   /** Determine the heading of the delete modal and opens the modal. */
-  openDeleteConfirmationDialog(camCard: CamCard, modal: ModalDialogComponent<string>) {
+  openDeleteConfirmationDialog(camCard: CamCard, modal: CamfilModalDialogComponent<string | CamCard>, sub?: boolean) {
+    const header = sub
+      ? 'camfil.account.cam_card.delete_dialog.sub_cam_card.header'
+      : 'camfil.account.cam_card.delete_dialog.header';
     this.translate
-      .get('camfil.account.cam_cards.delete_dialog.header', { 0: camCard.name })
+      .get(header, { 0: camCard.name })
       .pipe(take(1), takeUntil(this.destroy$))
       .subscribe(res => (modal.options.titleText = res));
 
-    modal.show(camCard.id);
+    const data = sub ? camCard : camCard.id;
+    modal.show(data);
   }
 
   drop(event: CdkDragDrop<string[]>) {

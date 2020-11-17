@@ -9,7 +9,7 @@ import { instance, mock } from 'ts-mockito';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { PricePipe } from 'ish-core/models/price/price.pipe';
 import { DatePipe } from 'ish-core/pipes/date.pipe';
-import { ModalDialogComponent } from 'ish-shared/components/common/modal-dialog/modal-dialog.component';
+import { CamfilModalDialogComponent } from 'ish-shared/components/common/camfil-modal-dialog/camfil-modal-dialog.component';
 import { CamfilProductAddToBasketComponent } from 'ish-shared/components/product/camfil-product-add-to-basket/camfil-product-add-to-basket.component';
 
 import { CamCardProductCommentComponent } from '../../../shared/cam-card-product-comment/cam-card-product-comment.component';
@@ -34,9 +34,9 @@ describe('Account Cam Card Detail List Component', () => {
         MockComponent(AccountCamCardDetailSubTitleComponent),
         MockComponent(AccountCamCardDetailToolbarComponent),
         MockComponent(CamCardProductCommentComponent),
+        MockComponent(CamfilModalDialogComponent),
         MockComponent(CamfilProductAddToBasketComponent),
         MockComponent(FaIconComponent),
-        MockComponent(ModalDialogComponent),
         MockPipe(DatePipe),
         MockPipe(PricePipe),
       ],

@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { MockComponent } from 'ng-mocks';
 
-import { ModalDialogComponent } from 'ish-shared/components/common/modal-dialog/modal-dialog.component';
+import { CamfilModalDialogComponent } from 'ish-shared/components/common/camfil-modal-dialog/camfil-modal-dialog.component';
 
 import { ModalDialogLinkComponent } from './modal-dialog-link.component';
 
@@ -13,7 +13,7 @@ describe('Modal Dialog Link Component', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [MockComponent(ModalDialogComponent), ModalDialogLinkComponent],
+      declarations: [MockComponent(CamfilModalDialogComponent), ModalDialogLinkComponent],
       imports: [TranslateModule.forRoot()],
     }).compileComponents();
   });
@@ -35,6 +35,6 @@ describe('Modal Dialog Link Component', () => {
     component.options = { titleText: 'Dialog Title' };
 
     expect(() => fixture.detectChanges()).not.toThrow();
-    expect(element).toMatchInlineSnapshot(`<a rel="nofollow">testLink</a><ish-modal-dialog></ish-modal-dialog>`);
+    expect(element).toMatchInlineSnapshot(`<a rel="nofollow">testLink</a><camfil-modal-dialog></camfil-modal-dialog>`);
   });
 });

@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
-import { ModalOptions } from 'ish-shared/components/common/modal-dialog/modal-dialog.component';
+import { ModalOptions } from 'ish-shared/components/common/camfil-modal-dialog/camfil-modal-dialog.component';
 
 /**
  * The Modal Dialog Link Component

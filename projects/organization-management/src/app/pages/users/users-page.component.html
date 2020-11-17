@@ -35,7 +35,7 @@
               <fa-icon [icon]="['fas', 'trash-alt']"></fa-icon>
             </a>
 
-            <ish-modal-dialog
+            <camfil-modal-dialog
               #modalDialog
               [options]="{
                 titleText:
@@ -46,7 +46,7 @@
               (confirmed)="deleteUser($event)"
             >
               <p>{{ 'account.user.delete_user_dialog.are_you_sure_paragraph' | translate }}</p>
-            </ish-modal-dialog>
+            </camfil-modal-dialog>
           </div>
         </div>
       </div>

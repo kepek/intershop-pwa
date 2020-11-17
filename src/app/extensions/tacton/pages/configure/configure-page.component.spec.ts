@@ -6,8 +6,8 @@ import { EMPTY } from 'rxjs';
 import { instance, mock, when } from 'ts-mockito';
 
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
+import { CamfilModalDialogComponent } from 'ish-shared/components/common/camfil-modal-dialog/camfil-modal-dialog.component';
 import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
-import { ModalDialogComponent } from 'ish-shared/components/common/modal-dialog/modal-dialog.component';
 import { CamfilProductImageComponent } from 'ish-shell/header/camfil-product-image/camfil-product-image.component';
 
 import { TactonFacade } from '../../facades/tacton.facade';
@@ -31,10 +31,10 @@ describe('Configure Page Component', () => {
       imports: [TranslateModule.forRoot()],
       declarations: [
         ConfigurePageComponent,
+        MockComponent(CamfilModalDialogComponent),
         MockComponent(CamfilProductImageComponent),
         MockComponent(FaIconComponent),
         MockComponent(LoadingComponent),
-        MockComponent(ModalDialogComponent),
         MockComponent(TactonBomComponent),
         MockComponent(TactonConfigureNavigationComponent),
         MockComponent(TactonGroupComponent),

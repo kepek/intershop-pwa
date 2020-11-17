@@ -314,14 +314,14 @@
   <p>{{ 'camfil.account.cam_card.list.no_templates.text' | translate }}</p>
 </ng-template>
 
-<ish-modal-dialog
+<camfil-modal-dialog
   #deleteDialog
   (confirmed)="delete($event)"
   [options]="{
     confirmText: 'camfil.account.cam_card.delete.button.text' | translate,
     rejectText: 'camfil.account.cancel.button.label' | translate
   }"
-  >{{ 'camfil.account.cam_card.delete.do_you_really.text' | translate }}</ish-modal-dialog
+  >{{ 'camfil.account.cam_card.delete.do_you_really.text' | translate }}</camfil-modal-dialog
 >
 
 <ish-loading *ngIf="loading"></ish-loading>

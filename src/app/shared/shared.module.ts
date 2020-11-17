@@ -76,6 +76,7 @@ import { AccordionItemComponent } from './components/common/accordion-item/accor
 import { AccordionComponent } from './components/common/accordion/accordion.component';
 import { CamfilBreadcrumbComponent } from './components/common/camfil-breadcrumb/camfil-breadcrumb.component';
 import { CamfilLinksBlockComponent } from './components/common/camfil-links-block/camfil-links-block.component';
+import { CamfilModalDialogComponent } from './components/common/camfil-modal-dialog/camfil-modal-dialog.component';
 import { ErrorMessageComponent } from './components/common/error-message/error-message.component';
 import { InfoBoxComponent } from './components/common/info-box/info-box.component';
 import { InplaceEditComponent } from './components/common/inplace-edit/inplace-edit.component';
@@ -235,6 +236,7 @@ const declaredComponents = [
   LineItemEditDialogComponent,
   LineItemListComponent,
   LoginModalComponent,
+  ModalDialogComponent,
   OrderListComponent,
   ProductAddToBasketComponent,
   ProductAddToCompareComponent,
@@ -279,6 +281,7 @@ const exportedComponents = [
   CamfilHeaderBoxComponent,
   CamfilLineItemTableComponent,
   CamfilLinksBlockComponent,
+  CamfilModalDialogComponent,
   CamfilOrderListComponent,
   CamfilProductAddToBasketComponent,
   CamfilProductAddToCompareComponent,
@@ -306,7 +309,6 @@ const exportedComponents = [
   LineItemListComponent,
   LoadingComponent,
   LoginFormComponent,
-  ModalDialogComponent,
   ModalDialogLinkComponent,
   OrderListComponent,
   OrderWidgetComponent,
