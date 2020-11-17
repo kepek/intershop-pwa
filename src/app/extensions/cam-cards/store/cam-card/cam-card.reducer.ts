@@ -17,7 +17,6 @@ import {
   addBasketToNewCamCardFail,
   addBasketToNewCamCardSuccess,
   addProductToCamCardSuccess,
-  createAndUpdateCamCardSuccess,
   createCamCard,
   createCamCardFail,
   createCamCardSuccess,
@@ -38,9 +37,9 @@ import {
   loadDeliveryAddressesSuccess,
   moveCamCardSuccess,
   removeItemFromCamCardSuccess,
-  resetCreatedCamCard,
   selectCamCard,
   setStickyCamCardToolbar,
+  unselectCamCard,
   updateCamCard,
   updateCamCardContactsSuccess,
   updateCamCardFail,
@@ -57,10 +56,7 @@ export interface CamCardState extends EntityState<CamCard> {
   error: HttpError;
   stickyToolbar: boolean;
   customers: CamCardCustomer[];
-  created: {
-    id: string;
-    name: string;
-  };
+  addProductSuccess: boolean;
   contacts: {
     [key: string]: CamCardContact[];
   };
@@ -76,10 +72,7 @@ export const initialState: CamCardState = camCardAdapter.getInitialState({
   selected: undefined,
   error: undefined,
   customers: [],
-  created: {
-    id: undefined,
-    name: undefined,
-  },
+  addProductSuccess: false,
   contacts: {},
   addresses: [],
   stickyToolbar: false,
@@ -175,24 +168,6 @@ export const camCardReducer = createReducer(
       });
     }
   ),
-  on(createAndUpdateCamCardSuccess, (state: CamCardState, action) => {
-    const { name, id } = action.payload;
-
-    return {
-      ...state,
-      created: {
-        id,
-        name,
-      },
-    };
-  }),
-  on(resetCreatedCamCard, (state: CamCardState) => ({
-    ...state,
-    created: {
-      id: undefined,
-      name: undefined,
-    },
-  })),
   on(deleteCamCardSuccess, (state: CamCardState, action) => {
     const { camCardId } = action.payload;
     return camCardAdapter.removeOne(camCardId, {
@@ -241,8 +216,13 @@ export const camCardReducer = createReducer(
       },
     };
   }),
+  on(unselectCamCard, (state: CamCardState) => ({
+    ...state,
+    selected: undefined,
+  })),
   on(selectCamCard, (state: CamCardState, action) => {
     const { id } = action.payload;
+
     return {
       ...state,
       selected: id,

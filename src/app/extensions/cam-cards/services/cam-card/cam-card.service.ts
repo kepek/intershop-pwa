@@ -262,6 +262,33 @@ export class CamCardService {
   }
 
   /**
+   * Add product to subCamCard and reload root CamCard
+   * @param rootCamCardId     Parent for sub cam card
+   * @param camCardId       SubCamCard id
+   * @param sku           The product sku.
+   * @param quantity      The products quantity
+   * @param boxLabel      Comment label
+   * @returns                 The created cam_card.
+   */
+  addProductToSubCamCard(
+    camCardId: string,
+    rootCamCardId: string,
+    sku: string,
+    quantity: number,
+    boxLabel?: string
+  ): Observable<CamCard> {
+    return this.apiService
+      .post(`camcards/${rootCamCardId}/childcamcards/${camCardId}/products`, {
+        quantity,
+        product: { sku },
+        comment: {
+          label: boxLabel,
+        },
+      })
+      .pipe(concatMap(() => this.getCamCard(rootCamCardId)));
+  }
+
+  /**
    * Update a product from the cam card with the given id. Returns an error observable if parameters are falsy.
    * @returns             The changed cam card item.
    * @param camCardId
