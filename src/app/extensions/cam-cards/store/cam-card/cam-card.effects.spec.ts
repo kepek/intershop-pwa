@@ -294,7 +294,9 @@ describe('Cam Card Effects', () => {
 
     beforeEach(() => {
       store$.dispatch(loginUserSuccess({ customer }));
-      when(camCardServiceMock.addProductToCamCard(anyString(), anyString(), anyNumber(), anyString())).thenReturn(of(camCards[0]));
+      when(camCardServiceMock.addProductToCamCard(anyString(), anyString(), anyNumber(), anyString())).thenReturn(
+        of(camCards[0])
+      );
     });
 
     xit('should call the CamCardService for addProductToCamCard', done => {
@@ -312,7 +314,9 @@ describe('Cam Card Effects', () => {
       actions$ = of(action);
 
       effects.addProductToCamCard$.subscribe(() => {
-        verify(camCardServiceMock.addProductToCamCard(payload.camCardId, payload.sku, payload.quantity, payload.boxLabel)).once();
+        verify(
+          camCardServiceMock.addProductToCamCard(payload.camCardId, payload.sku, payload.quantity, payload.boxLabel)
+        ).once();
         done();
       });
     });
