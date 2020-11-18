@@ -46,6 +46,9 @@ import {
   updateCamCardFail,
   updateCamCardProductSuccess,
   updateCamCardSuccess,
+  updateSubCamCard,
+  updateSubCamCardFail,
+  updateSubCamCardSuccess,
 } from './cam-card.actions';
 
 export interface CamCardState extends EntityState<CamCard> {
@@ -92,7 +95,8 @@ export const camCardReducer = createReducer(
     updateCamCard,
     loadCustomers,
     loadContactsByCustomer,
-    loadDeliveryAddresses
+    loadDeliveryAddresses,
+    updateSubCamCard
   ),
   on(
     loadCamCardsFail,
@@ -103,6 +107,7 @@ export const camCardReducer = createReducer(
     loadCustomersdFail,
     loadContactsByCustomerFail,
     loadDeliveryAddressesFail,
+    updateSubCamCardFail,
 
     (state: CamCardState, action) => {
       const { error } = action.payload;
@@ -157,6 +162,7 @@ export const camCardReducer = createReducer(
     addBasketToNewCamCardSuccess,
     createCamCardSuccess,
     updateCamCardSuccess,
+    updateSubCamCardSuccess,
     moveCamCardSuccess,
     addProductToCamCardSuccess,
     removeItemFromCamCardSuccess,

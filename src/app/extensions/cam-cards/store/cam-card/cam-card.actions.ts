@@ -35,6 +35,15 @@ export const updateCamCardSuccess = createAction(
   payload<{ camCard: CamCard }>()
 );
 
+export const updateSubCamCardFail = createAction('[Cam Cards API] Update Sub Cam Card Fail', httpError());
+
+export const updateSubCamCard = createAction('[Cam Cards] Update Sub Cam Card', payload<{ sub: CamCard }>());
+
+export const updateSubCamCardSuccess = createAction(
+  '[Cam Cards API] Update Sub Cam Card Success',
+  payload<{ camCard: CamCard }>()
+);
+
 export const updateCamCardFail = createAction('[Cam Cards API] Update Cam Card Fail', httpError());
 
 export const deleteCamCard = createAction('[Cam Cards] Delete Cam Card', payload<{ camCardId: string }>());

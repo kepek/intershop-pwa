@@ -34,8 +34,8 @@
           (click)="toggleSubCamCard(sub.id)"
           [attr.aria-expanded]="isSubCamCardOpen(sub.id)"
         >
-          <mat-icon class="arrow_down" [class.arrow_down--expanded]="isSubCamCardOpen(sub.id)">arrow_left</mat-icon
-          >{{ sub.name }}
+          <mat-icon class="arrow_down" [class.arrow_down--expanded]="isSubCamCardOpen(sub.id)">arrow_left</mat-icon>
+          <camfil-account-cam-card-detail-sub-title [sub]="sub"></camfil-account-cam-card-detail-sub-title>
         </div>
         <mat-expansion-panel [expanded]="isSubCamCardOpen(sub.id)">
           <div

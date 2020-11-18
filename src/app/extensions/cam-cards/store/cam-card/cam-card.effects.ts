@@ -87,6 +87,9 @@ import {
   updateCamCardProductSuccess,
   updateCamCardSuccess,
   updateContactsWhileMoveCamCardFail,
+  updateSubCamCard,
+  updateSubCamCardFail,
+  updateSubCamCardSuccess,
 } from './cam-card.actions';
 import { getCamCardDetails, getSelectedCamCardDetails, getSelectedCamCardId } from './cam-card.selectors';
 
@@ -278,6 +281,26 @@ export class CamCardEffects {
           mapErrorToAction(updateCamCardFail)
         )
       )
+    )
+  );
+
+  // prettier-ignore
+
+  updateSubCamCard$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(updateSubCamCard),
+      mapToPayloadProperty('sub'),
+      mergeMap(sub =>
+        this.camCardService.updateSubCamCard(sub).pipe(
+          mergeMap(camCard => [
+            updateSubCamCardSuccess({ camCard }),
+            displaySuccessMessage({
+              message: 'camfil.account.cam_cards.edit.confirmation',
+              messageParams: { 0: camCard.name },
+            }),
+          ]),
+          mapErrorToAction(updateSubCamCardFail)
+        ))
     )
   );
 
