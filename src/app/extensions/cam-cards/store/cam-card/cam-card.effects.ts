@@ -50,6 +50,7 @@ import {
   createCamCard,
   createCamCardFail,
   createCamCardSuccess,
+  createSubCamCard,
   deleteCamCard,
   deleteCamCardFail,
   deleteCamCardSuccess,
@@ -140,6 +141,23 @@ export class CamCardEffects {
             }),
           ]),
           mapErrorToAction(createCamCardFail)
+        )
+      )
+    )
+  );
+
+  createSubCamCard$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(createSubCamCard),
+      mapToPayload(),
+      mergeMap(payload =>
+        this.camCardService.createSubCamCard(payload.subCamCard, payload.rootCamCardId).pipe(
+          mergeMap(subCamCard =>
+            this.camCardService
+              .getCamCard(subCamCard.rootCamCard)
+              .pipe(mergeMap(camCard => [createCamCardSuccess({ camCard })]))
+          ),
+          mapErrorToAction(addProductToCamCardFail)
         )
       )
     )
