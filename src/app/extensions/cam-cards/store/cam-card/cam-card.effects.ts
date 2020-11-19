@@ -317,9 +317,10 @@ export class CamCardEffects {
             payload.boxLabel
           )
           .pipe(
-            mergeMap(camCard => {
-              return [addProductToCamCardSuccess({ camCard }), selectCamCard({ id: payload.refreshCamCardId })];
-            }),
+            mergeMap(camCard => [
+              addProductToCamCardSuccess({ camCard }),
+              selectCamCard({ id: payload.refreshCamCardId }),
+            ]),
             mapErrorToAction(addProductToCamCardFail)
           )
       )
