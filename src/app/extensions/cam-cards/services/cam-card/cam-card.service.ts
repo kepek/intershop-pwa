@@ -91,6 +91,12 @@ export class CamCardService {
       .pipe(map((response: CamCard) => this.camCardMapper.fromUpdate(response, camCard.id)));
   }
 
+  updateSubCamCard(sub: CamCard): Observable<CamCard> {
+    return this.apiService
+      .put(`camcards/${sub.rootCamCard}/childcamcards/${sub.id}`, sub)
+      .pipe(concatMap(() => this.getCamCard(sub.rootCamCard)));
+  }
+
   /**
    * Move a cam cards of the given id.
    * @param camCardId   The cam cards to be moved.

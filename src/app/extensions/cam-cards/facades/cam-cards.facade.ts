@@ -40,6 +40,7 @@ import {
   updateCamCard,
   updateCamCardContacts,
   updateCamCardProduct,
+  updateSubCamCard,
 } from '../store/cam-card';
 
 @Injectable({ providedIn: 'root' })
@@ -85,6 +86,10 @@ export class CamCardsFacade {
 
   updateCamCard(camCard: CamCard): void {
     this.store.dispatch(updateCamCard({ camCard }));
+  }
+
+  updateSubCamCard(sub: CamCard): void {
+    this.store.dispatch(updateSubCamCard({ sub }));
   }
 
   addToNewCamCardWithNewSubCamCard(
