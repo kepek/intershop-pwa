@@ -553,7 +553,7 @@
   "camfil.account.register.password_confirmation.label": "Confirm Password",
   "camfil.account.remind_password.button.aria": "Send",
   "camfil.account.send_password.message": "An e-mail with a link has been sent to your e-mail address. Please follow this link to change your password.",
-  "camfil.account.send_username.message": "Select account to retrieve.",
+  "camfil.account.send_username.message": "An e-mail with usernames has been sent to your e-mail address.",
   "camfil.account.update_password.button.aria": "Change Password",
   "camfil.account.update_password.change_your_password.heading": "Change your password",
   "camfil.account.update_password.confirm_password.error.stringcompare": "Your passwords do not match.",
