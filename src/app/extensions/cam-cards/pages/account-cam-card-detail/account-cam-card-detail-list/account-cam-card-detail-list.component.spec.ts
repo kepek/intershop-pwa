@@ -7,6 +7,7 @@ import { MockComponent, MockPipe } from 'ng-mocks';
 import { instance, mock } from 'ts-mockito';
 
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
+import { PricePipe } from 'ish-core/models/price/price.pipe';
 import { DatePipe } from 'ish-core/pipes/date.pipe';
 import { ModalDialogComponent } from 'ish-shared/components/common/modal-dialog/modal-dialog.component';
 import { CamfilProductAddToBasketComponent } from 'ish-shared/components/product/camfil-product-add-to-basket/camfil-product-add-to-basket.component';
@@ -35,6 +36,7 @@ describe('Account Cam Card Detail List Component', () => {
         MockComponent(FaIconComponent),
         MockComponent(ModalDialogComponent),
         MockPipe(DatePipe),
+        MockPipe(PricePipe),
       ],
       imports: [RouterTestingModule, TranslateModule.forRoot()],
       providers: [{ provide: ShoppingFacade, useFactory: () => instance(shoppingFacadeMock) }, provideMockStore({})],

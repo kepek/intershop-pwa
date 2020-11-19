@@ -21,6 +21,8 @@
               [currentCamCard]="camCard"
               [selectedItemsForm]="selectedItemsForm"
               [index]="i + 1"
+              (handleLoad)="productUpdate($event)"
+              (handleUpdate)="productUpdate($event)"
               mode="edit"
             ></camfil-account-cam-card-detail-line-item>
           </div>
@@ -49,6 +51,8 @@
                   [currentCamCard]="sub"
                   [selectedItemsForm]="selectedItemsForm"
                   [index]="i2 + 1"
+                  (handleLoad)="productUpdate($event)"
+                  (handleUpdate)="productUpdate($event)"
                   mode="edit"
                 ></camfil-account-cam-card-detail-line-item>
               </div>
@@ -59,7 +63,9 @@
 
       <div class="text-right cam-card-total">
         <div class="pt-4 pb-2 px-4">
-          {{ 'camfil.account.cam_card.details.total.text' | translate }}:<strong class="pl-3">XXX</strong>
+          {{ 'camfil.account.cam_card.details.total.text' | translate }}:<strong class="pl-3">{{
+            priceSum | ishPrice
+          }}</strong>
         </div>
       </div>
     </div>
