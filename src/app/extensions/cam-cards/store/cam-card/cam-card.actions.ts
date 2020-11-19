@@ -92,7 +92,7 @@ export const addProductToCamCard = createAction(
 
 export const addProductToSubCamCard = createAction(
   '[Cam Cards] Add Item to Sub Cam Card',
-  payload<{ camCardId: string; refreshCamCard: CamCard; sku: string; quantity?: number; boxLabel?: string }>()
+  payload<{ camCardId: string; refreshCamCardId: string; sku: string; quantity?: number; boxLabel?: string }>()
 );
 
 export const addProductToNewSubCamCard = createAction(

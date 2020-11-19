@@ -266,7 +266,6 @@ export class SelectCamCardModalComponent implements OnInit, OnDestroy {
     const quantity = this.quantityForm.get('quantity').value;
     const boxLabel = this.quantityForm.get('boxLabel').value;
 
-    // fixed
     if (this.camCardSelected && this.isAddedToNewSubCamCard()) {
       this.addToNewSubCamCard(quantity, boxLabel);
       return;
@@ -277,7 +276,7 @@ export class SelectCamCardModalComponent implements OnInit, OnDestroy {
         const rootCamCard = this.camCards.find(camCard => camCard.id === this.camCardSelected);
         this.camCardsFacade.addProductToSubCamCard(
           this.segmentSelected,
-          rootCamCard,
+          this.camCardSelected,
           this.product.sku,
           quantity,
           boxLabel
@@ -287,7 +286,7 @@ export class SelectCamCardModalComponent implements OnInit, OnDestroy {
         this.useSubCamCard = true;
       } else {
         this.camCardsFacade.addProductToCamCard(this.camCardSelected, this.product.sku, quantity, boxLabel);
-        this.useSubCamCard = true;
+        this.useSubCamCard = false;
       }
     }
   }
@@ -323,10 +322,9 @@ export class SelectCamCardModalComponent implements OnInit, OnDestroy {
   }
 
   goToCamcard() {
-    const rootCamCardId = this.currentCamCard.rootCamCard ? this.currentCamCard.rootCamCard : this.currentCamCard.id;
+    const rootCamCardId = this.currentCamCard.rootCamCard || this.currentCamCard.id;
 
     this.router.navigate([`/account/cam-cards/${rootCamCardId}`]);
-    // this.camCardsFacade.unSelectCamCard();
     this.hide();
   }
 

@@ -311,15 +311,14 @@ export class CamCardEffects {
         this.camCardService
           .addProductToSubCamCard(
             payload.camCardId,
-            payload.refreshCamCard.id,
+            payload.refreshCamCardId,
             payload.sku,
             payload.quantity,
             payload.boxLabel
           )
           .pipe(
             mergeMap(camCard => {
-              console.log('addProductToSubCamCard$', camCard, camCard.id);
-              return [addProductToCamCardSuccess({ camCard }), selectCamCard({ id: payload.refreshCamCard.id })];
+              return [addProductToCamCardSuccess({ camCard }), selectCamCard({ id: payload.refreshCamCardId })];
             }),
             mapErrorToAction(addProductToCamCardFail)
           )
@@ -416,7 +415,7 @@ export class CamCardEffects {
           mergeMap(camCard => {
             const addProductPayload = {
               camCardId: camCard.id,
-              refreshCamCard: payload.rootCamCard,
+              refreshCamCardId: payload.rootCamCard.id,
               sku: payload.sku,
               quantity: payload.quantity,
               boxLabel: payload.boxLabel,

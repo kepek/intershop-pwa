@@ -117,12 +117,12 @@ export class CamCardsFacade {
 
   addProductToSubCamCard(
     camCardId: string,
-    refreshCamCard: CamCard,
+    refreshCamCardId: string,
     sku: string,
     quantity?: number,
     boxLabel?: string
   ): void {
-    this.store.dispatch(addProductToSubCamCard({ camCardId, refreshCamCard, sku, quantity, boxLabel }));
+    this.store.dispatch(addProductToSubCamCard({ camCardId, refreshCamCardId, sku, quantity, boxLabel }));
   }
 
   addProductToNewSubCamCard(
