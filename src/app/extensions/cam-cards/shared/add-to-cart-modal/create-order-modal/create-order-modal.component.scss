@@ -1,0 +1,46 @@
+@import '~src/styles/themes/camfil/mixins.scss';
+@import '~src/styles/themes/camfil/variables';
+
+.create-order {
+  padding: 8px;
+
+  &__container {
+    display: flex;
+
+    &--order-details {
+      padding-right: 36px;
+      margin-right: 36px;
+      border-right: $border-width-default solid $border-color-lighter;
+    }
+  }
+
+  &__buttons {
+    margin-top: 32px;
+    text-align: right;
+
+    &--button {
+      min-width: 140px;
+    }
+
+    &--primary {
+      margin-left: 32px;
+    }
+  }
+
+  &__success {
+    &--header {
+      display: flex;
+      justify-content: center;
+      margin-top: $space-box;
+    }
+
+    &--text {
+      padding-top: 2px;
+      margin-bottom: 24px;
+      margin-left: $space-box;
+      font-size: 20px;
+      line-height: 24px;
+      text-transform: none;
+    }
+  }
+}

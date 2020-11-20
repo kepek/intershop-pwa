@@ -2,6 +2,7 @@ import { Address } from 'ish-core/models/address/address.model';
 import { BasketInfo } from 'ish-core/models/basket-info/basket-info.model';
 import { BasketTotal } from 'ish-core/models/basket-total/basket-total.model';
 import { BasketValidationResultType } from 'ish-core/models/basket-validation/basket-validation.model';
+import { BasketExtension } from 'ish-core/models/basket/basket.interface';
 import { LineItem, LineItemView } from 'ish-core/models/line-item/line-item.model';
 import { Payment } from 'ish-core/models/payment/payment.model';
 import { ShippingMethod } from 'ish-core/models/shipping-method/shipping-method.model';
@@ -20,7 +21,9 @@ export interface AbstractBasket<T> {
   totals: BasketTotal;
   totalProductQuantity?: number;
   bucketId?: string;
+  buckets?: string[];
   infos?: BasketInfo[];
+  basketExtension?: BasketExtension[];
 }
 
 export interface Basket extends AbstractBasket<LineItem> {}

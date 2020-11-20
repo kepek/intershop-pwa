@@ -13,4 +13,17 @@ export class ArticleDetailsComponent {
   @Input() product: Product;
 
   @Input() quantityForm: FormGroup;
+
+  validators = {
+    boxLabel: [
+      {
+        error: 'maxlength',
+        message: 'camfil.modal.createCamcard.input.box_label.error.maxLength',
+      },
+    ],
+  };
+
+  getField(name: string) {
+    return this.quantityForm.get(name);
+  }
 }

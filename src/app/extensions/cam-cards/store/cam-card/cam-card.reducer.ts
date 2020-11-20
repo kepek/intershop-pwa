@@ -17,9 +17,11 @@ import {
   addBasketToNewCamCardFail,
   addBasketToNewCamCardSuccess,
   addProductToCamCardSuccess,
+  clearVirtualCamCard,
   createCamCard,
   createCamCardFail,
   createCamCardSuccess,
+  createVirtualCamCardSuccess,
   deleteCamCard,
   deleteCamCardFail,
   deleteCamCardSuccess,
@@ -68,6 +70,7 @@ export interface CamCardState extends EntityState<CamCard> {
     [key: string]: CamCardContact[];
   };
   addresses?: CamCardAddress[];
+  virtualCamCard: CamCard;
 }
 
 export const camCardAdapter = createEntityAdapter<CamCard>({
@@ -83,6 +86,7 @@ export const initialState: CamCardState = camCardAdapter.getInitialState({
   contacts: {},
   addresses: [],
   stickyToolbar: false,
+  virtualCamCard: undefined,
 });
 
 /** Returns a new state with replaced camcard or subcamcard */
@@ -289,5 +293,13 @@ export const camCardReducer = createReducer(
   on(setStickyCamCardToolbar, (state: CamCardState, action) => ({
     ...state,
     stickyToolbar: action.payload.sticky,
+  })),
+  on(createVirtualCamCardSuccess, (state: CamCardState, action) => ({
+    ...state,
+    virtualCamCard: action.payload.camCard,
+  })),
+  on(clearVirtualCamCard, (state: CamCardState) => ({
+    ...state,
+    virtualCamCard: undefined,
   }))
 );

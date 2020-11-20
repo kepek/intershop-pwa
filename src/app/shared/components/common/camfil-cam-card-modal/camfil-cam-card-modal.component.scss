@@ -23,10 +23,15 @@
     &--icon {
       margin-right: 16px;
     }
+
+    &--svg-icon {
+      display: inline-flex;
+      margin-right: 16px;
+    }
   }
 
   &__subtitle {
-    margin-bottom: 0;
+    margin-bottom: 8px;
     font-weight: 400;
     color: $text-color-quarternary;
     text-align: center;

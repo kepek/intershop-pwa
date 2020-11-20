@@ -22,6 +22,20 @@ export const loadCamCardsFail = createAction('[Cam Cards API] Load Cam Cards Fai
 
 export const createCamCard = createAction('[Cam Cards] Create Cam Card', payload<{ camCards: CamCard }>());
 
+export const createVirtualCamCard = createAction(
+  '[Cam Cards] Create Virtual Cam Card',
+  payload<{ camCard: CamCard }>()
+);
+
+export const createVirtualCamCardSuccess = createAction(
+  '[Cam Cards] Create Virtual Cam Card Success',
+  payload<{ camCard: CamCard }>()
+);
+
+export const createVirtualCamCardFail = createAction('[Cam Cards] Create Virtual Cam Card Fail');
+
+export const clearVirtualCamCard = createAction('[Cam Cards] Clear Virtual Cam Card');
+
 export const createSubCamCard = createAction(
   '[Cam Cards] Create Sub Cam Card',
   payload<{ subCamCard: CamCard; rootCamCardId: string }>()

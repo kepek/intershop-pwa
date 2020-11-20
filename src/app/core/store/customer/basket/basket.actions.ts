@@ -5,6 +5,7 @@ import { Address } from 'ish-core/models/address/address.model';
 import { BasketInfo } from 'ish-core/models/basket-info/basket-info.model';
 import { BasketValidation, BasketValidationScopeType } from 'ish-core/models/basket-validation/basket-validation.model';
 import { Basket } from 'ish-core/models/basket/basket.model';
+import { Bucket } from 'ish-core/models/basket/bucket.model';
 import { LineItemUpdate } from 'ish-core/models/line-item-update/line-item-update.model';
 import { PaymentInstrument } from 'ish-core/models/payment-instrument/payment-instrument.model';
 import { PaymentMethod } from 'ish-core/models/payment-method/payment-method.model';
@@ -57,11 +58,31 @@ export const deleteBasketShippingAddress = createAction(
   payload<{ addressId: string }>()
 );
 
-export const addProductToBasket = createAction('[Basket] Add Product', payload<{ sku: string; quantity: number }>());
+export const addProductToBasket = createAction(
+  '[Basket] Add Product',
+  payload<{ sku: string; quantity: number; shipToAddress?: string }>()
+);
+
+export const updateBucket = createAction(
+  '[Bucket] Update Bucket',
+  payload<{ basketId: string; addressId: string; boxLabel: string; contact?: string; info?: string }>()
+);
+
+export const updateBucketSuccess = createAction('[Basket] Update Bucket Success');
+
+export const updateBucketFail = createAction('[Basket] Update Bucket Fail');
+
+export const resetProductAdded = createAction('[Basket] Reset Product Added');
+
+export const loadBuckets = createAction('[Basket] Get Bucket Info');
+
+export const loadBucketsSuccess = createAction('[Basket] Get Bucket Info Success', payload<{ buckets: Bucket[] }>());
+
+export const loadBucketsFail = createAction('[Basket] Get Bucket Info Fail');
 
 export const addItemsToBasket = createAction(
   '[Basket Internal] Add Items To Basket',
-  payload<{ items: { sku: string; quantity: number; unit: string }[] }>()
+  payload<{ items: { sku: string; quantity: number; unit: string; shipToAddress?: string }[] }>()
 );
 
 export const addItemsToBasketFail = createAction('[Basket API] Add Items To Basket Fail', httpError());

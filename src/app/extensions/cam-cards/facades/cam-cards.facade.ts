@@ -20,8 +20,10 @@ import {
   addProductToNewSubCamCard,
   addProductToSubCamCard,
   addToNewCamCardWithNewSubCamCard,
+  clearVirtualCamCard,
   createCamCard,
   createSubCamCard,
+  createVirtualCamCard,
   deleteCamCard,
   deleteSubCamCard,
   detectCamCardToolbar,
@@ -32,6 +34,7 @@ import {
   getContactsbyCustomerId,
   getCustomerAddresses,
   getSelectedCamCardDetails,
+  getVirtualCamCard,
   isStickyCamCardToolbar,
   loadContactsByCustomer,
   loadDeliveryAddresses,
@@ -58,6 +61,7 @@ export class CamCardsFacade {
   isStickyCamCardToolbar$: Observable<boolean> = this.store.pipe(select(isStickyCamCardToolbar));
   customers$: Observable<CamCardCustomer[]> = this.store.pipe(select(getCamCardCustomers));
   addresses$: Observable<CamCardAddress[]> = this.store.pipe(select(getCustomerAddresses));
+  virtualCamCard$: Observable<CamCard> = this.store.pipe(select(getVirtualCamCard));
 
   contactsByCustomer$(id: string): Observable<CamCardContact[]> {
     return this.store.pipe(select(getContactsbyCustomerId, { id }));
@@ -77,6 +81,14 @@ export class CamCardsFacade {
 
   createSubCamCard(subCamCard: CamCard, rootCamCardId: string) {
     this.store.dispatch(createSubCamCard({ subCamCard, rootCamCardId }));
+  }
+
+  createVirtualCamCard(virtualCamCard: CamCard) {
+    this.store.dispatch(createVirtualCamCard({ camCard: virtualCamCard }));
+  }
+
+  clearVirtualCamCard() {
+    this.store.dispatch(clearVirtualCamCard());
   }
 
   getDeliveryAddress(id) {

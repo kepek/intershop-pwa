@@ -1,0 +1,142 @@
+<div class="delivery-address" mat-dialog-content>
+  <form [formGroup]="addressForm" class="delivery-address__form" novalidate="novalidate">
+    <!--customer select-->
+    <mat-form-field appearance="outline" class="delivery-address__form--field">
+      <mat-select
+        [placeholder]="'camfil.modal.createOrder.order-form.select.customer' | translate"
+        formControlName="customer"
+        (selectionChange)="pickCustomer($event)"
+      >
+        <mat-option>--</mat-option>
+        <mat-option *ngFor="let customer of customers$ | async" [value]="customer.id">
+          {{ customer.companyName }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <camfil-error
+      [errors]="getField('customer').errors"
+      [errorValidators]="validators.customer"
+      [touched]="getField('customer').touched || getField('customer').dirty"
+    ></camfil-error>
+
+    <!--contacts select-->
+    <mat-form-field appearance="outline" class="delivery-address__form--field">
+      <mat-select
+        [placeholder]="'camfil.modal.createOrder.order-form.select.contact' | translate"
+        formControlName="contact"
+      >
+        <mat-option>--</mat-option>
+        <mat-option *ngFor="let contact of contacts" [value]="contact.erpId">
+          {{ contact.firstName }}{{ ' ' }}{{ contact.lastName }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!--goods mark-->
+    <mat-form-field appearance="outline" class="delivery-address__form--field">
+      <mat-label>{{ 'camfil.modal.createOrder.order-form.input.goods_mark' | translate }}</mat-label>
+      <input matInput type="text" formControlName="invoiceLabel" />
+    </mat-form-field>
+    <camfil-error
+      [errors]="getField('invoiceLabel').errors"
+      [errorValidators]="validators.invoiceLabel"
+      [touched]="getField('invoiceLabel').touched || getField('invoiceLabel').dirty"
+    ></camfil-error>
+
+    <!--order mark-->
+    <mat-form-field appearance="outline" class="delivery-address__form--field">
+      <mat-label>{{ 'camfil.modal.createOrder.order-form.input.order_mark' | translate }}</mat-label>
+      <input matInput type="text" formControlName="orderMark" />
+    </mat-form-field>
+    <camfil-error
+      [errors]="getField('orderMark').errors"
+      [errorValidators]="validators.orderMark"
+      [touched]="getField('orderMark').touched || getField('orderMark').dirty"
+    ></camfil-error>
+
+    <!--address select-->
+    <mat-form-field appearance="outline" class="delivery-address__form--field">
+      <mat-select
+        [placeholder]="'camfil.modal.createOrder.order-form.select.address' | translate"
+        formControlName="deliveryAddressSelect"
+        (selectionChange)="pickAddress($event)"
+      >
+        <mat-option>--</mat-option>
+        <mat-option *ngFor="let location of addresses$ | async" [value]="location.id">
+          {{ location.addressLine1 }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!--recipient-->
+    <mat-form-field appearance="outline" class="delivery-address__form--field">
+      <mat-label>{{ 'camfil.modal.createOrder.order-form.input.recipient' | translate }}</mat-label>
+      <input matInput type="text" formControlName="company" />
+    </mat-form-field>
+    <camfil-error
+      [errors]="getField('company').errors"
+      [errorValidators]="validators.company"
+      [touched]="getField('company').touched || getField('company').dirty"
+    ></camfil-error>
+
+    <!--building -->
+    <mat-form-field appearance="outline" class="delivery-address__form--field">
+      <mat-label>{{ 'camfil.modal.createOrder.order-form.input.building' | translate }}</mat-label>
+      <input matInput type="text" formControlName="building" />
+    </mat-form-field>
+    <camfil-error
+      [errors]="getField('building').errors"
+      [errorValidators]="validators.building"
+      [touched]="getField('building').touched || getField('building').dirty"
+    ></camfil-error>
+
+    <!--address-->
+    <mat-form-field appearance="outline" class="delivery-address__form--field">
+      <mat-label>{{ 'camfil.modal.createOrder.order-form.input.address' | translate }}</mat-label>
+      <input matInput type="text" formControlName="address" />
+    </mat-form-field>
+    <camfil-error
+      [errors]="getField('address').errors"
+      [errorValidators]="validators.address"
+      [touched]="getField('address').touched || getField('address').dirty"
+    ></camfil-error>
+
+    <div class="delivery-address__form--field-wrapper">
+      <!--zip code-->
+      <div class="delivery-address__form--zipcode col-sm-12 col-md-5">
+        <mat-form-field appearance="outline" class="delivery-address__form--field delivery-address__form--field-small">
+          <mat-label>{{ 'camfil.modal.createOrder.order-form.input.zipcode' | translate }}</mat-label>
+          <input matInput type="text" formControlName="zipCode" />
+        </mat-form-field>
+        <camfil-error
+          [errors]="getField('zipCode').errors"
+          [errorValidators]="validators.zipCode"
+          [touched]="getField('zipCode').touched || getField('zipCode').dirty"
+        ></camfil-error>
+      </div>
+
+      <!--area-->
+      <div class="col-sm-12 col-md-7 delivery-address__form--area">
+        <mat-form-field appearance="outline" class="delivery-address__form--field delivery-address__form--field-small">
+          <mat-label>{{ 'camfil.modal.createOrder.order-form.input.area' | translate }}</mat-label>
+          <input matInput type="text" formControlName="area" />
+        </mat-form-field>
+        <camfil-error
+          [errors]="getField('area').errors"
+          [errorValidators]="validators.area"
+          [touched]="getField('area').touched || getField('area').dirty"
+        ></camfil-error>
+      </div>
+    </div>
+
+    <mat-form-field appearance="outline" class="delivery-address__form--field">
+      <mat-label>{{ 'camfil.modal.createOrder.order-form.info' | translate }}</mat-label>
+      <textarea matInput formControlName="info"></textarea>
+    </mat-form-field>
+    <camfil-error
+      [errors]="getField('info').errors"
+      [errorValidators]="validators.info"
+      [touched]="getField('info').touched || getField('info').dirty"
+    ></camfil-error>
+  </form>
+</div>

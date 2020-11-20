@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, FormGroup } from '@angular/forms';
 
 import { Product } from 'ish-core/models/product/product.model';
+import { CamfilErrorComponent } from 'ish-shared/components/common/camfil-error/camfil-error.component';
 import { CamfilProductQuantityComponent } from 'ish-shared/components/product/camfil-product-quantity/camfil-product-quantity.component';
 import { CamfilCounterComponent } from 'ish-shared/forms/components/camfil-counter/camfil-counter.component';
 
@@ -14,7 +15,12 @@ describe('Article Details Component', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ArticleDetailsComponent, CamfilCounterComponent, CamfilProductQuantityComponent],
+      declarations: [
+        ArticleDetailsComponent,
+        CamfilCounterComponent,
+        CamfilErrorComponent,
+        CamfilProductQuantityComponent,
+      ],
     }).compileComponents();
   });
 

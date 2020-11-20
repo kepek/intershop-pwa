@@ -12,9 +12,11 @@ import { BasketMergeData } from 'ish-core/models/basket-merge/basket-merge.inter
 import { BasketValidationData } from 'ish-core/models/basket-validation/basket-validation.interface';
 import { BasketValidationMapper } from 'ish-core/models/basket-validation/basket-validation.mapper';
 import { BasketValidation, BasketValidationScopeType } from 'ish-core/models/basket-validation/basket-validation.model';
-import { BasketBaseData, BasketData } from 'ish-core/models/basket/basket.interface';
+import { BasketBaseData, BasketData, BasketExtension } from 'ish-core/models/basket/basket.interface';
 import { BasketMapper } from 'ish-core/models/basket/basket.mapper';
 import { Basket } from 'ish-core/models/basket/basket.model';
+import { BucketMapper } from 'ish-core/models/basket/bucket.mapper';
+import { Bucket } from 'ish-core/models/basket/bucket.model';
 import { ShippingMethodData } from 'ish-core/models/shipping-method/shipping-method.interface';
 import { ShippingMethodMapper } from 'ish-core/models/shipping-method/shipping-method.mapper';
 import { ShippingMethod } from 'ish-core/models/shipping-method/shipping-method.model';
@@ -131,6 +133,33 @@ export class BasketService {
         params,
       })
       .pipe(map(BasketMapper.fromData));
+  }
+
+  getBuckets(): Observable<Bucket[]> {
+    const params = new HttpParams().set('include', 'all');
+
+    return this.apiService
+      .get(`baskets/current/buckets`, {
+        headers: this.basketHeaders,
+        params,
+      })
+      .pipe(map(BucketMapper.fromData));
+  }
+
+  updateBucket(
+    basketId: string,
+    addressId: string,
+    boxLabel: string,
+    contact?: string,
+    info?: string
+  ): Observable<BasketExtension> {
+    return this.apiService.post(`baskets/${basketId}/camfil/${addressId}`, {
+      boxLabel,
+      contactPerson: {
+        erpId: contact,
+      },
+      info,
+    });
   }
 
   getBasketByToken(apiToken: string): Observable<Basket> {
@@ -254,8 +283,11 @@ export class BasketService {
   /**
    * Adds a list of items with the given sku and quantity to the given basket.
    * @param items     The list of product SKU and quantity pairs to be added to the basket.
+   * @param shipToAddress shipping address
    */
-  addItemsToBasket(items: { sku: string; quantity: number; unit: string }[]): Observable<BasketInfo[]> {
+  addItemsToBasket(
+    items: { sku: string; quantity: number; unit: string; shipToAddress?: string }[]
+  ): Observable<BasketInfo[]> {
     if (!items) {
       return throwError('addItemsToBasket() called without items');
     }
@@ -266,6 +298,7 @@ export class BasketService {
         value: item.quantity,
         unit: item.unit,
       },
+      shipToAddress: item.shipToAddress,
     }));
 
     return this.apiService

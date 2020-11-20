@@ -26,6 +26,7 @@ export interface CamCard extends CamCardHeader {
   lastDeliveryDate?: string;
   deliveryInterval?: number;
   reminderFlag?: number;
+  transient?: boolean;
 }
 
 export interface CamCardItem {

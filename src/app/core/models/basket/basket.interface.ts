@@ -9,6 +9,8 @@ import { PaymentData } from 'ish-core/models/payment/payment.interface';
 import { PriceItemData } from 'ish-core/models/price-item/price-item.interface';
 import { ShippingMethodData } from 'ish-core/models/shipping-method/shipping-method.interface';
 
+import { CamCardContact } from '../../../extensions/cam-cards/models/cam-card/cam-card.model';
+
 export interface BasketBaseData {
   id: string;
   purchaseCurrency?: string;
@@ -23,6 +25,7 @@ export interface BasketBaseData {
     valueBasedDiscounts?: string[];
   };
   buckets?: string[];
+  basketExtension?: BasketExtension[];
   lineItems?: string[];
   payments?: string[];
   promotionCodes?: string[];
@@ -56,4 +59,12 @@ export interface BasketData {
     payments_paymentInstrument?: { [id: string]: PaymentInstrument };
   };
   infos?: BasketInfo[];
+}
+
+export interface BasketExtension {
+  name?: string;
+  shippingAddress?: AddressData;
+  contactPerson?: CamCardContact;
+  info?: string;
+  boxLabel?: string;
 }

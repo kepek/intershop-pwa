@@ -28,9 +28,11 @@ import {
   getBasketShippingAddress,
   getBasketValidationResults,
   getCurrentBasket,
+  getCurrentBuckets,
   isBasketInvoiceAndShippingAddressEqual,
   loadBasketEligiblePaymentMethods,
   loadBasketEligibleShippingMethods,
+  loadBuckets,
   removePromotionCodeFromBasket,
   setBasketPayment,
   updateBasketAddress,
@@ -67,6 +69,11 @@ export class CheckoutFacade {
   basketLineItems$ = this.basket$.pipe(
     map(basket => (basket && basket.lineItems && basket.lineItems.length ? basket.lineItems : undefined))
   );
+  buckets$ = this.store.pipe(select(getCurrentBuckets));
+
+  loadBuckets() {
+    this.store.dispatch(loadBuckets());
+  }
 
   deleteBasketItem(itemId: string) {
     this.store.dispatch(deleteBasketItem({ itemId }));

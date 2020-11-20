@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -25,6 +26,8 @@ import { whenFalsy } from 'ish-core/utils/operators';
 })
 export class CamfilProductAddToBasketComponent implements OnInit, OnDestroy {
   basketLoading$: Observable<boolean>;
+
+  show = false;
 
   /**
    * The product that can be added to basket
@@ -54,7 +57,7 @@ export class CamfilProductAddToBasketComponent implements OnInit, OnDestroy {
    */
   @Output() productToBasket = new EventEmitter<void>();
 
-  constructor(private checkoutFacade: CheckoutFacade) {}
+  constructor(private checkoutFacade: CheckoutFacade, public dialog: MatDialog) {}
 
   /**
    * fires 'true' after add To Cart is clicked and basket is loading

@@ -1,0 +1,17 @@
+<div class="cam-card-modal-details" [ngClass]="{ 'cam-card-modal-details__selected': isClicked }">
+  <div class="cam-card__label">{{ label }}</div>
+
+  <div class="cam-card__details">
+    <div class="cam-card__details--left">
+      <div class="cam-card__details--label">
+        {{ 'camfil.modal.addToCamcard.camcard.next_delivery' | translate }}
+      </div>
+      <div class="cam-card__details--value">{{ nextDelivery }}</div>
+    </div>
+
+    <div class="cam-card__details--label">
+      {{ 'camfil.modal.addToCamcard.camcard.order_mark' | translate }}
+    </div>
+    <div class="cam-card__details--value">{{ orderMark }}</div>
+  </div>
+</div>

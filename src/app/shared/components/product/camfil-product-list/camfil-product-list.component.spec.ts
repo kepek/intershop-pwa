@@ -7,6 +7,7 @@ import { of } from 'rxjs';
 import { instance, mock, when } from 'ts-mockito';
 
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
+import { PricePipe } from 'ish-core/models/price/price.pipe';
 import { CoreStoreModule } from 'ish-core/store/core/core-store.module';
 import { ShoppingStoreModule } from 'ish-core/store/shopping/shopping-store.module';
 import { findAllCustomElements } from 'ish-core/utils/dev/html-query-utils';
@@ -34,6 +35,7 @@ describe('Camfil Product List Component', () => {
         CamfilProductListComponent,
         MockComponent(CamfilProductItemComponent),
         MockComponent(LoadingComponent),
+        PricePipe,
       ],
       providers: [{ provide: ShoppingFacade, useFactory: () => instance(shoppingFacade) }],
     }).compileComponents();
