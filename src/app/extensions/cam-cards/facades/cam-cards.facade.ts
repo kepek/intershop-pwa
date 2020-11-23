@@ -36,6 +36,7 @@ import {
   moveCamCard,
   moveItemToCamCard,
   removeItemFromCamCard,
+  resetCamCardItemPositions,
   resetCreatedCamCard,
   updateCamCard,
   updateCamCardContacts,
@@ -165,12 +166,13 @@ export class CamCardsFacade {
     targetcamCardId: string,
     camCardItemId: string,
     sku: string,
-    quantity: number
+    quantity: number,
+    position?: number
   ): void {
     this.store.dispatch(
       moveItemToCamCard({
         source: { id: sourcecamCardId, camCardItemId },
-        target: { id: targetcamCardId, sku, quantity },
+        target: { id: targetcamCardId, sku, quantity, position },
       })
     );
   }
@@ -193,5 +195,12 @@ export class CamCardsFacade {
 
   detectCamCardToolbar() {
     this.store.dispatch(detectCamCardToolbar());
+  }
+
+  resetItemPositions(rootCamCardId: string, camCardId: string, gapSize: number) {
+    console.log('🚀 ~ file: cam-cards.facade.ts ~ CamCardsFacade ~ resetItemPositions ~ gapSize', gapSize);
+    console.log('🚀 ~ file: cam-cards.facade.ts ~ CamCardsFacade ~ resetItemPositions ~ camCardId', camCardId);
+    console.log('🚀 ~ file: cam-cards.facade.ts ~ CamCardsFacade ~ resetItemPositions ~ rootCamCardId', rootCamCardId);
+    this.store.dispatch(resetCamCardItemPositions({ rootCamCardId, camCardId, gapSize }));
   }
 }
