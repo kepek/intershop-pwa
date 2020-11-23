@@ -8,7 +8,6 @@ import { CamCard, CamCardItem } from '../../models/cam-card/cam-card.model';
 @Component({
   selector: 'camfil-cam-card-product-comment',
   templateUrl: './cam-card-product-comment.component.html',
-  styleUrls: ['./cam-card-product-comment.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CamCardProductCommentComponent implements OnInit, OnDestroy {
