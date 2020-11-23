@@ -1,39 +1,41 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { provideMockStore } from '@ngrx/store/testing';
-import { TranslateModule } from '@ngx-translate/core';
-import { MockComponent } from 'ng-mocks';
+import { EMPTY } from 'rxjs';
+import { instance, mock, when } from 'ts-mockito';
 
+import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { CamfilErrorComponent } from 'ish-shared/components/common/camfil-error/camfil-error.component';
 import { CamfilProductQuantityComponent } from 'ish-shared/components/product/camfil-product-quantity/camfil-product-quantity.component';
 import { CamfilCounterComponent } from 'ish-shared/forms/components/camfil-counter/camfil-counter.component';
 
-import { CamCardPreferencesDialogComponent } from '../../../shared/cam-card-preferences-dialog/cam-card-preferences-dialog.component';
-import { ModalAddNewProductComponent } from '../modal-add-new-product/modal-add-new-product.component';
+import { CamCardsFacade } from '../../../facades/cam-cards.facade';
 
-import { AccountCamCardDetailToolbarComponent } from './account-cam-card-detail-toolbar.component';
+import { ModalAddNewProductComponent } from './modal-add-new-product.component';
 
-describe('Account Cam Card Detail Toolbar Component', () => {
-  let component: AccountCamCardDetailToolbarComponent;
-  let fixture: ComponentFixture<AccountCamCardDetailToolbarComponent>;
+describe('Modal Add New Product Component', () => {
+  let component: ModalAddNewProductComponent;
+  let fixture: ComponentFixture<ModalAddNewProductComponent>;
   let element: HTMLElement;
 
   beforeEach(async () => {
+    const camCardsFacade = mock(CamCardsFacade);
+    when(camCardsFacade.currentCamCard$).thenReturn(EMPTY);
+
     await TestBed.configureTestingModule({
       declarations: [
-        AccountCamCardDetailToolbarComponent,
         CamfilCounterComponent,
         CamfilErrorComponent,
         CamfilProductQuantityComponent,
-        MockComponent(CamCardPreferencesDialogComponent),
         ModalAddNewProductComponent,
       ],
-      imports: [TranslateModule.forRoot()],
-      providers: [provideMockStore()],
+      providers: [
+        { provide: CamCardsFacade, useFactory: () => instance(camCardsFacade) },
+        { provide: ShoppingFacade, useFactory: () => instance(mock(ShoppingFacade)) },
+      ],
     }).compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AccountCamCardDetailToolbarComponent);
+    fixture = TestBed.createComponent(ModalAddNewProductComponent);
     component = fixture.componentInstance;
     element = fixture.nativeElement;
   });

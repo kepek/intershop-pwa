@@ -1,0 +1,62 @@
+<ng-template #modal>
+  <div class="add-new-product">
+    <mat-icon svgIcon="add-camcard"></mat-icon>
+    <h2 class="add-new-product__header">{{ 'camfil.modal.addNewProduct.title' | translate }}</h2>
+
+    <form [formGroup]="productForm">
+      <div>
+        <mat-form-field appearance="fill" class="add-new-product__field">
+          <mat-label>{{ 'camfil.modal.addNewProduct.input.product_sku' | translate }}</mat-label>
+          <input matInput maxlength="35" formControlName="sku" (keyup)="resetError()" (blur)="validateSku()" />
+          <mat-icon *ngIf="product && !showSkuError" matSuffix svgIcon="checkmark"></mat-icon>
+        </mat-form-field>
+
+        <camfil-error
+          class="add-new-product__field--camfil-error"
+          [errors]="getField('sku').errors"
+          [errorValidators]="validators.sku"
+          [touched]="getField('sku').touched || getField('sku').dirty"
+        ></camfil-error>
+
+        <mat-error *ngIf="showSkuError" class="add-new-product__field add-new-product__field--error">
+          {{ 'camfil.modal.addNewProduct.error' | translate }}
+        </mat-error>
+
+        <mat-form-field appearance="fill" class="add-new-product__field">
+          <mat-label>{{ 'camfil.modal.addNewProduct.input.box_label' | translate }}</mat-label>
+          <input matInput maxlength="35" formControlName="boxLabel" />
+        </mat-form-field>
+      </div>
+
+      <div class="add-new-product__quantity-wrapper">
+        <mat-label class="add-new-product__label">{{
+          'camfil.modal.addNewProduct.input.quantity' | translate
+        }}</mat-label>
+        <camfil-product-quantity
+          [allowZeroQuantity]="false"
+          [quantityLabel]="''"
+          [product]="dummyProduct"
+          [parentForm]="productForm"
+          controlName="quantity"
+        ></camfil-product-quantity>
+      </div>
+
+      <camfil-error
+        class="add-new-product__field--camfil-error"
+        [errors]="getField('quantity').errors"
+        [errorValidators]="validators.quantity"
+        [touched]="getField('quantity').touched || getField('quantity').dirty"
+      ></camfil-error>
+
+      <div class="add-new-product__buttons">
+        <button class="btn btn-link add-new-product__buttons--link" (click)="hide()">
+          {{ 'camfil.modal.addNewProduct.button.cancel' | translate }}
+        </button>
+
+        <button type="submit" (click)="submitForm()" class="btn btn-link add-new-product__buttons--link">
+          {{ 'camfil.modal.addNewProduct.button.add_product' | translate }}
+        </button>
+      </div>
+    </form>
+  </div>
+</ng-template>

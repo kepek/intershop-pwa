@@ -309,13 +309,22 @@ export class CamCardEffects {
       ofType(addProductToCamCard),
       mapToPayload(),
       mergeMap(payload =>
-        this.camCardService.addProductToCamCard(payload.camCardId, payload.sku, payload.quantity).pipe(
-          mergeMap(camCard => [
-            addProductToCamCardSuccess({ camCard }),
-            // createAndUpdateCamCardSuccess({id: camCard.id, name: camCard.name})
-          ]),
-          mapErrorToAction(addProductToCamCardFail)
-        )
+        this.camCardService
+          .addProductToCamCard(payload.camCardId, payload.sku, payload.quantity, payload.boxLabel)
+          .pipe(
+            mergeMap(camCard =>
+              payload.showSuccessToast
+                ? [
+                    addProductToCamCardSuccess({ camCard }),
+                    displaySuccessMessage({
+                      message: 'camfil.modal.addNewProduct.confirmation',
+                      messageParams: { 0: payload.sku },
+                    }),
+                  ]
+                : [addProductToCamCardSuccess({ camCard })]
+            ),
+            mapErrorToAction(addProductToCamCardFail)
+          )
       )
     )
   );

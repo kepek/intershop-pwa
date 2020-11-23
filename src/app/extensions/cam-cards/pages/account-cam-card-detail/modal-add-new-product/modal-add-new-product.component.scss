@@ -1,0 +1,56 @@
+@import '~src/styles/themes/camfil/variables';
+@import '~src/styles/themes/camfil/mixins.scss';
+
+.add-new-product {
+  text-align: center;
+
+  &__header {
+    margin-top: $space-box;
+    text-transform: capitalize;
+    @include font-size-subtitle1;
+  }
+
+  &__field {
+    display: block;
+    width: 296px;
+    margin-top: $space-box;
+
+    &--error {
+      @include error;
+
+      margin-top: 8px;
+    }
+
+    &--camfil-error {
+      text-align: left;
+    }
+  }
+
+  &__product {
+    margin-bottom: $space-box;
+  }
+
+  &__quantity-wrapper {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-top: $space-box;
+  }
+
+  &__label {
+    font-weight: 700;
+    @include font-size-subtitle1;
+  }
+
+  &__buttons {
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+
+    &--link {
+      margin-bottom: 0;
+      font-size: $font-size-base;
+      font-weight: 700;
+    }
+  }
+}

@@ -107,8 +107,14 @@ export class CamCardsFacade {
     this.store.dispatch(addProductToNewCamCard({ name, sku, quantity }));
   }
 
-  addProductToCamCard(camCardId: string, sku: string, quantity?: number): void {
-    this.store.dispatch(addProductToCamCard({ camCardId, sku, quantity }));
+  addProductToCamCard(
+    camCardId: string,
+    sku: string,
+    quantity?: number,
+    boxLabel?: string,
+    showSuccessToast?: boolean
+  ): void {
+    this.store.dispatch(addProductToCamCard({ camCardId, sku, quantity, boxLabel, showSuccessToast }));
   }
 
   resetCreatedCamCard() {
