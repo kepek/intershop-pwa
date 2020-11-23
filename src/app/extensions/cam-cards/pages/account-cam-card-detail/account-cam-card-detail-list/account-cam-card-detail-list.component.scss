@@ -30,11 +30,12 @@
   }
 }
 
+.cdk-drop-list {
+  min-height: 10px;
+}
+
 .list-item-row {
   margin-top: 12px;
   background-color: $white;
   box-shadow: $header-shadow;
-  &:first-child {
-    margin-top: 0 !important;
-  }
 }

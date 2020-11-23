@@ -75,6 +75,9 @@ import {
   removeItemFromCamCard,
   removeItemFromCamCardFail,
   removeItemFromCamCardSuccess,
+  resetCamCardItemPositions,
+  resetCamCardItemPositionsFail,
+  resetCamCardItemPositionsSuccess,
   selectCamCard,
   setStickyCamCardToolbar,
   updateCamCard,
@@ -333,7 +336,7 @@ export class CamCardEffects {
       mapToPayload(),
       mergeMap(payload =>
         this.camCardService
-          .addProductToCamCard(payload.camCardId, payload.sku, payload.quantity, payload.boxLabel)
+          .addProductToCamCard(payload.camCardId, payload.sku, payload.quantity, payload.boxLabel, payload.position)
           .pipe(
             mergeMap(camCard =>
               payload.showSuccessToast
@@ -549,6 +552,7 @@ export class CamCardEffects {
               camCardId: payload.target.id,
               sku: payload.target.sku,
               quantity: payload.target.quantity,
+              position: payload.target.position,
             }),
             removeItemFromCamCard({
               camCardId: payload.source.id,
@@ -568,6 +572,25 @@ export class CamCardEffects {
         this.camCardService.removeProductFromCamCard(payload.camCardId, payload.camCardItemId).pipe(
           map(camCard => removeItemFromCamCardSuccess({ camCard })),
           mapErrorToAction(removeItemFromCamCardFail)
+        )
+      )
+    )
+  );
+
+  resetItemPositions$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(resetCamCardItemPositions),
+      mapToPayload(),
+      mergeMap(payload =>
+        this.camCardService.resetItemPositions(payload.rootCamCardId, payload.camCardId, payload.gapSize).pipe(
+          map(camCardItems =>
+            resetCamCardItemPositionsSuccess({
+              rootCamCardId: payload.rootCamCardId,
+              camCardId: payload.camCardId,
+              camCardItems,
+            })
+          ),
+          mapErrorToAction(resetCamCardItemPositionsFail)
         )
       )
     )

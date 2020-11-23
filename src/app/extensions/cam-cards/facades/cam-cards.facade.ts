@@ -35,6 +35,7 @@ import {
   moveCamCard,
   moveItemToCamCard,
   removeItemFromCamCard,
+  resetCamCardItemPositions,
   unselectCamCard,
   updateCamCard,
   updateCamCardContacts,
@@ -159,12 +160,13 @@ export class CamCardsFacade {
     targetcamCardId: string,
     camCardItemId: string,
     sku: string,
-    quantity: number
+    quantity: number,
+    position?: number
   ): void {
     this.store.dispatch(
       moveItemToCamCard({
         source: { id: sourcecamCardId, camCardItemId },
-        target: { id: targetcamCardId, sku, quantity },
+        target: { id: targetcamCardId, sku, quantity, position },
       })
     );
   }
@@ -191,5 +193,9 @@ export class CamCardsFacade {
 
   unSelectCamCard() {
     this.store.dispatch(unselectCamCard());
+  }
+
+  resetItemPositions(rootCamCardId: string, camCardId: string, gapSize: number) {
+    this.store.dispatch(resetCamCardItemPositions({ rootCamCardId, camCardId, gapSize }));
   }
 }
