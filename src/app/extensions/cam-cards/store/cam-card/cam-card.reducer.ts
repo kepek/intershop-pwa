@@ -36,7 +36,9 @@ import {
   loadDeliveryAddressesFail,
   loadDeliveryAddressesSuccess,
   moveCamCardSuccess,
+  moveItemToCamCard,
   removeItemFromCamCardSuccess,
+  resetCamCardItemPositionsSuccess,
   selectCamCard,
   setStickyCamCardToolbar,
   updateCamCard,
@@ -82,7 +84,8 @@ export const camCardReducer = createReducer(
     updateCamCard,
     loadCustomers,
     loadContactsByCustomer,
-    loadDeliveryAddresses
+    loadDeliveryAddresses,
+    moveItemToCamCard
   ),
   on(
     loadCamCardsFail,
@@ -93,7 +96,6 @@ export const camCardReducer = createReducer(
     loadCustomersdFail,
     loadContactsByCustomerFail,
     loadDeliveryAddressesFail,
-
     (state: CamCardState, action) => {
       const { error } = action.payload;
       return {
@@ -193,6 +195,48 @@ export const camCardReducer = createReducer(
       loading: false,
     };
   }),
+
+  on(resetCamCardItemPositionsSuccess, (state: CamCardState, action) => {
+    const { rootCamCardId, camCardId, camCardItems } = action.payload;
+    console.log('🚀 ~ file: cam-card.reducer.ts ~ line 201 ~ camCardItems', camCardItems);
+    console.log('🚀 ~ file: cam-card.reducer.ts ~ line 201 ~ camCardId', camCardId);
+    console.log('🚀 ~ file: cam-card.reducer.ts ~ line 201 ~ rootCamCardId', rootCamCardId);
+    if (!camCardItems) {
+      return {
+        ...state,
+      };
+    }
+
+    if (!rootCamCardId) {
+      return {
+        ...state,
+        entities: {
+          ...state.entities,
+          [camCardId]: {
+            ...state.entities[camCardId],
+            camCardItems,
+          },
+        },
+      };
+    } else {
+      const oldSubs = state.entities[rootCamCardId]?.subCamCards || [];
+      const oldSub = oldSubs.find(sub => sub.id === camCardId);
+      const newSub = { ...oldSub, camCardItems };
+      const newSubs = oldSubs.map(sub => (sub.id === camCardId ? newSub : sub));
+
+      return {
+        ...state,
+        entities: {
+          ...state.entities,
+          [rootCamCardId]: {
+            ...state.entities[rootCamCardId],
+            subCamCards: newSubs,
+          },
+        },
+      };
+    }
+  }),
+
   on(updateCamCardContactsSuccess, (state: CamCardState, action) => {
     const { camCardId, contacts } = action.payload;
     return {

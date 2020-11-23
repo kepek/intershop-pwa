@@ -10,12 +10,19 @@
     <div cdkDropListGroup class="list-body mt-2" *ngIf="camCard">
       <div
         cdkDropList
-        class="example-list"
+        class="d-flex flex-column"
+        [attr.data-cam-card-id]="camCard.id"
         [cdkDropListData]="camCard.camCardItems"
-        (cdkDropListDropped)="drop($event)"
+        (cdkDropListDropped)="drop($event, camCard)"
       >
         <ng-container *ngFor="let item of camCard.camCardItems; index as i">
-          <div class="list-item-row list-item-row-big px-4 py-1 mt-2" cdkDrag [cdkDragData]="item">
+          <div
+            class="list-item-row list-item-row-big px-4 py-1 mt-2"
+            [ngStyle]="{ order: item.position }"
+            [cdkDragData]="item"
+            cdkDrag
+          >
+            <p>Index: {{ i }}, Position: {{ item.position }}</p>
             <camfil-account-cam-card-detail-line-item
               [camCardItemData]="item"
               [currentCamCard]="camCard"
@@ -33,17 +40,24 @@
           [attr.aria-expanded]="isSubCamCardOpen(sub.id)"
         >
           <mat-icon class="arrow_down" [class.arrow_down--expanded]="isSubCamCardOpen(sub.id)">arrow_left</mat-icon
-          >{{ sub.name }}
+          >{{ sub.name }}, Id: {{ sub.id }}
         </div>
-        <mat-expansion-panel [expanded]="isSubCamCardOpen(sub.id)">
+        <mat-expansion-panel class="mat-elevation-z0" [expanded]="isSubCamCardOpen(sub.id)">
           <div
             cdkDropList
-            class="example-list"
+            class="d-flex flex-column"
+            [attr.data-cam-card-id]="sub.id"
             [cdkDropListData]="sub.camCardItems"
-            (cdkDropListDropped)="drop($event)"
+            (cdkDropListDropped)="drop($event, sub)"
           >
             <ng-container *ngFor="let subItem of sub.camCardItems; index as i2">
-              <div class="list-item-row list-item-row-big px-4 py-1 mt-2" cdkDrag [cdkDragData]="subItem">
+              <div
+                class="list-item-row list-item-row-big px-4 py-1 mt-2"
+                cdkDrag
+                [cdkDragData]="subItem"
+                [ngStyle]="{ order: subItem.position }"
+              >
+                <p>Index: {{ i2 }}, Position: {{ subItem.position }}, ID: {{ subItem.id }}</p>
                 <camfil-account-cam-card-detail-line-item
                   [camCardItemData]="subItem"
                   [currentCamCard]="sub"

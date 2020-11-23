@@ -38,6 +38,7 @@ import {
   removeItemFromCamCard,
   removeItemFromCamCardFail,
   removeItemFromCamCardSuccess,
+  resetCamCardItemPositions,
   selectCamCard,
   updateCamCard,
   updateCamCardFail,
@@ -66,6 +67,27 @@ describe('Cam Card Effects', () => {
       id: '.AsdHS18FIAAAFuNiUBWx0d',
       itemsCount: 0,
       public: false,
+    },
+  ];
+
+  const camCardItems = [
+    {
+      name: 'testing cam card items',
+      id: '.SKsEQAE4FIAAAFuNiUBWx0d',
+      quantity: 1,
+      position: 0,
+      product: {
+        sku: '111',
+      },
+    },
+    {
+      name: 'testing cam card items 2',
+      id: '.AsdHS18FIAAAFuNiUBWx0d',
+      quantity: 2,
+      position: 1000,
+      product: {
+        sku: '111',
+      },
     },
   ];
   @Component({ template: 'dummy' })
@@ -288,11 +310,14 @@ describe('Cam Card Effects', () => {
       camCardId: '.SKsEQAE4FIAAAFuNiUBWx0d',
       sku: 'sku',
       quantity: 2,
+      position: 1000,
     };
 
     beforeEach(() => {
       store$.dispatch(loginUserSuccess({ customer }));
-      when(camCardServiceMock.addProductToCamCard(anyString(), anyString(), anyNumber())).thenReturn(of(camCards[0]));
+      when(camCardServiceMock.addProductToCamCard(anyString(), anyString(), anyNumber(), anyNumber())).thenReturn(
+        of(camCards[0])
+      );
     });
 
     it('should call the CamCardService for addProductToCamCard', done => {
@@ -300,7 +325,9 @@ describe('Cam Card Effects', () => {
       actions$ = of(action);
 
       effects.addProductToCamCard$.subscribe(() => {
-        verify(camCardServiceMock.addProductToCamCard(payload.camCardId, payload.sku, payload.quantity)).once();
+        verify(
+          camCardServiceMock.addProductToCamCard(payload.camCardId, payload.sku, payload.quantity, payload.position)
+        ).once();
         done();
       });
     });
@@ -315,7 +342,9 @@ describe('Cam Card Effects', () => {
 
     it('should map failed calls to actions of type AddProductToCamCardFail', () => {
       const error = makeHttpError({ message: 'invalid' });
-      when(camCardServiceMock.addProductToCamCard(anyString(), anyString(), anything())).thenReturn(throwError(error));
+      when(camCardServiceMock.addProductToCamCard(anyString(), anyString(), anything(), anything())).thenReturn(
+        throwError(error)
+      );
       const action = addProductToCamCard(payload);
       const completion = addProductToCamCardFail({
         error,
@@ -324,6 +353,29 @@ describe('Cam Card Effects', () => {
       const expected$ = cold('-c-c-c', { c: completion });
 
       expect(effects.addProductToCamCard$).toBeObservable(expected$);
+    });
+  });
+
+  describe('resetItemPositions$', () => {
+    const payload = {
+      rootCamCardId: undefined,
+      camCardId: '.SKsEQAE4FIAAAFuNiUBWx0d',
+      gapSize: 1000,
+    };
+
+    beforeEach(() => {
+      store$.dispatch(loginUserSuccess({ customer }));
+      when(camCardServiceMock.resetItemPositions(anything(), anyString(), anyNumber())).thenReturn(of(camCardItems));
+    });
+
+    it('should call the CamCardService for resetItemPositions', done => {
+      const action = resetCamCardItemPositions(payload);
+      actions$ = of(action);
+
+      effects.resetItemPositions$.subscribe(() => {
+        verify(camCardServiceMock.resetItemPositions(payload.rootCamCardId, payload.camCardId, payload.gapSize)).once();
+        done();
+      });
     });
   });
 

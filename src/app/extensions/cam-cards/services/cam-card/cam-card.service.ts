@@ -230,10 +230,11 @@ export class CamCardService {
    * @param count
    * @returns             The changed cam_cards.
    */
-  addProductToCamCard(camCardId: string, sku: string, quantity: number): Observable<CamCard> {
+  addProductToCamCard(camCardId: string, sku: string, quantity: number, position: number): Observable<CamCard> {
     return this.apiService
       .post(`camcards/${camCardId}/products`, {
         quantity,
+        position,
         product: { sku },
       })
       .pipe(concatMap(() => this.getCamCard(camCardId)));
@@ -247,6 +248,36 @@ export class CamCardService {
    */
   updateCamCardProduct(camCardId: string, camCardItem: CamCardItem): Observable<CamCardItem> {
     return this.apiService.put(`camcards/${camCardId}/products/${camCardItem.id}`, camCardItem);
+  }
+
+  /**
+   * Reset the positions of its directly assigned line items of this camcard
+   * @returns             The changed cam card item.
+   * @param camCardId
+   * @param gapSize
+   */
+  resetItemPositions(rootCamCardId: string, camCardId: string, gapSize: number): Observable<CamCardItem[]> {
+    console.log('🚀 ~ file: cam-card.service.ts ~ line 260 ~ CamCardService ~ gapSize', gapSize);
+    console.log('🚀 ~ file: cam-card.service.ts ~ line 260 ~ CamCardService ~ camCardId', camCardId);
+    console.log('🚀 ~ file: cam-card.service.ts ~ line 260 ~ CamCardService ~ rootCamCardId', rootCamCardId);
+
+    if (!camCardId) {
+      return throwError('resetItemPositions() called without camCardId');
+    }
+    if (!gapSize) {
+      return throwError('resetItemPositions() called without gapSize');
+    }
+
+    const data = { gapSize };
+    if (!rootCamCardId) {
+      console.log('🚀 ~ file: cam-card.service.ts ~ line 270 ~ CamCardService ~ CASE 1: rootCamCardId not available');
+      return this.apiService.put(`camcards/${camCardId}/products`, data).pipe(unpackEnvelope());
+    } else {
+      console.log('🚀 ~ file: cam-card.service.ts ~ line 270 ~ CamCardService ~ CASE 2: rootCamCardId available');
+      return this.apiService
+        .put(`camcards/${rootCamCardId}/childcamcards/${camCardId}/products`, data)
+        .pipe(unpackEnvelope());
+    }
   }
 
   /**

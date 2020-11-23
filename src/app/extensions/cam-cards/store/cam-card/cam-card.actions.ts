@@ -78,7 +78,7 @@ export const loadDeliveryAddressesFail = createAction('[Cam Cards API] load avai
 
 export const addProductToCamCard = createAction(
   '[Cam Cards] Add Item to Cam Card',
-  payload<{ camCardId: string; sku: string; quantity?: number }>()
+  payload<{ camCardId: string; sku: string; quantity?: number; position?: number }>()
 );
 
 export const updateCamCardProduct = createAction(
@@ -119,7 +119,7 @@ export const moveItemToCamCard = createAction(
   '[Cam Cards] Move Item to another Cam Card',
   payload<{
     source: { id: string; camCardItemId: string };
-    target: { id?: string; name?: string; sku: string; quantity: number };
+    target: { id?: string; name?: string; sku: string; quantity: number; position?: number };
   }>()
 );
 
@@ -131,6 +131,21 @@ export const removeItemFromCamCard = createAction(
 export const removeItemFromCamCardSuccess = createAction(
   '[Cam Cards API] Remove Item from Cam Card Success',
   payload<{ camCard: CamCard }>()
+);
+
+export const resetCamCardItemPositions = createAction(
+  '[Cam Cards API] Preset Positions of all Cam Card Items',
+  payload<{ rootCamCardId: string; camCardId: string; gapSize: number }>()
+);
+
+export const resetCamCardItemPositionsSuccess = createAction(
+  '[Cam Cards API] Preset Positions of all Cam Card Items Success',
+  payload<{ rootCamCardId: string; camCardId: string; camCardItems: CamCardItem[] }>()
+);
+
+export const resetCamCardItemPositionsFail = createAction(
+  '[Cam Cards API] Preset Positions of all Cam Card Items Fail',
+  httpError()
 );
 
 export const moveCamCard = createAction(
