@@ -36,6 +36,6 @@ export class CamAccountService {
       captcha: pick(data, ['captcha', 'captchaAction']),
     };
 
-    return this.apiService.post('security/username_reminder', { answer: '', ...data }, options);
+    return this.apiService.post('mailing/remind-user-name', { answer: '', ...data }, options);
   }
 }
