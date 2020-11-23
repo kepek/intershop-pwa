@@ -9,8 +9,17 @@
     height: $camfil-counter-value-size;
     font-size: $camfil-counter-value-font-size;
     line-height: $camfil-counter-value-size;
+    color: $camfil-text-color-primary;
     text-align: center;
+    border: none;
     border-radius: $camfil-counter-value-border-radius;
+
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      margin: 0;
+      appearance: none;
+    }
+
     @include mat-elevation-transition;
     @include mat-elevation(2);
     &:active {

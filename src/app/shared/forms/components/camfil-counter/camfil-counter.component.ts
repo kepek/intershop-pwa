@@ -26,6 +26,16 @@ export class CamfilCounterComponent extends FormElementComponent implements OnIn
     super(translate);
   }
 
+  handleInput(event) {
+    if (event.target.value > this.max) {
+      this.formControl.setValue(this.max);
+    }
+    if (event.code === 'Enter') {
+      event.preventDefault();
+      event.target.blur();
+    }
+  }
+
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();

@@ -14,9 +14,18 @@
         >
           <mat-icon svgIcon="minus"></mat-icon>
         </button>
-        <span class="counter_value" [attr.data-testing-id]="controlName" [class.mat-elevation-z2]="true">
-          {{ value$ | async }}
-        </span>
+        <input
+          type="number"
+          class="counter_value"
+          [attr.data-testing-id]="controlName"
+          [class.mat-elevation-z2]="true"
+          [max]="max"
+          name="value"
+          placeholder="0"
+          [formControlName]="controlName"
+          (keydown)="handleInput($event)"
+          (keyup)="handleInput($event)"
+        />
         <button
           mat-button
           mat-icon-button
