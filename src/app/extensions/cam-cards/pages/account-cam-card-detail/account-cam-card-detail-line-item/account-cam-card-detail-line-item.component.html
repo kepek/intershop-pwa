@@ -42,7 +42,7 @@
       <a class="btn-tool" (click)="removeProductFromCamCard(camCardItemData?.id)" data-testing-id="delete-cam-card">
         <mat-icon svgIcon="delete"></mat-icon>
       </a>
-      <form [formGroup]="addToCartForm">
+      <form [formGroup]="addToCartForm" *ngIf="product.inStock && product.availability">
         <camfil-product-quantity
           [allowZeroQuantity]="false"
           [quantityLabel]="''"

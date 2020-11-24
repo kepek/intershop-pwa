@@ -45,7 +45,7 @@ describe('Camfil Counter Component', () => {
 
     it('should display value from form when rendered', () => {
       const display = element.querySelector(`[data-testing-id=${controlName}]`);
-      expect(display.textContent).toMatchInlineSnapshot(`"  "`);
+      expect(display.value).toMatchInlineSnapshot(`"42"`);
     });
 
     it('should increase value when increase button was clicked', () => {
@@ -55,7 +55,7 @@ describe('Camfil Counter Component', () => {
       verify(componentSpy.increase()).once();
 
       const display = element.querySelector(`[data-testing-id=${controlName}]`);
-      expect(display.textContent).toMatchInlineSnapshot(`" 43 "`);
+      expect(display.value).toMatchInlineSnapshot(`"43"`);
     });
 
     it('should decrease value when decrease button was clicked', () => {
@@ -65,7 +65,7 @@ describe('Camfil Counter Component', () => {
       verify(componentSpy.decrease()).once();
 
       const display = element.querySelector(`[data-testing-id=${controlName}]`);
-      expect(display.textContent).toMatchInlineSnapshot(`" 41 "`);
+      expect(display.value).toMatchInlineSnapshot(`"41"`);
     });
 
     describe('with max', () => {
