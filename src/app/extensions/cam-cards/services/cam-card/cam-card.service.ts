@@ -285,10 +285,6 @@ export class CamCardService {
    * @param gapSize
    */
   resetItemPositions(rootCamCardId: string, camCardId: string, gapSize: number): Observable<CamCardItem[]> {
-    console.log('🚀 ~ file: cam-card.service.ts ~ line 260 ~ CamCardService ~ gapSize', gapSize);
-    console.log('🚀 ~ file: cam-card.service.ts ~ line 260 ~ CamCardService ~ camCardId', camCardId);
-    console.log('🚀 ~ file: cam-card.service.ts ~ line 260 ~ CamCardService ~ rootCamCardId', rootCamCardId);
-
     if (!camCardId) {
       return throwError('resetItemPositions() called without camCardId');
     }
@@ -298,10 +294,8 @@ export class CamCardService {
 
     const data = { gapSize };
     if (!rootCamCardId) {
-      console.log('🚀 ~ file: cam-card.service.ts ~ line 270 ~ CamCardService ~ CASE 1: rootCamCardId not available');
       return this.apiService.put(`camcards/${camCardId}/products`, data).pipe(unpackEnvelope());
     } else {
-      console.log('🚀 ~ file: cam-card.service.ts ~ line 270 ~ CamCardService ~ CASE 2: rootCamCardId available');
       return this.apiService
         .put(`camcards/${rootCamCardId}/childcamcards/${camCardId}/products`, data)
         .pipe(unpackEnvelope());
