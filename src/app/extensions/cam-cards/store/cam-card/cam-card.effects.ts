@@ -343,8 +343,9 @@ export class CamCardEffects {
                       message: 'camfil.modal.addNewProduct.confirmation',
                       messageParams: { 0: payload.sku },
                     }),
+                    selectCamCard({ id: camCard.id })
                   ]
-                : [addProductToCamCardSuccess({ camCard })]
+                : [addProductToCamCardSuccess({ camCard }), selectCamCard({ id: camCard.id })]
             ),
             mapErrorToAction(addProductToCamCardFail)
           )
