@@ -33,6 +33,7 @@ import {
   loadContactsByCustomer,
   loadDeliveryAddresses,
   moveCamCard,
+  moveCamCardItem,
   moveItemToCamCard,
   removeItemFromCamCard,
   resetCamCardItemPositions,
@@ -40,6 +41,7 @@ import {
   updateCamCard,
   updateCamCardContacts,
   updateCamCardProduct,
+  updateCamCardProductDispatch,
   updateSubCamCard,
 } from '../store/cam-card';
 
@@ -151,6 +153,10 @@ export class CamCardsFacade {
     this.store.dispatch(updateCamCardProduct({ rootCamCard, camCardId, camCardItem }));
   }
 
+  updateCamCardProductDispatch(rootCamCard: string, camCardId: string, camCardItem: CamCardItem): void {
+    this.store.dispatch(updateCamCardProductDispatch({ rootCamCard, camCardId, camCardItem }));
+  }
+
   updateCamCardContacts(camCardId: string, camCardContacts: CamCardContact[]): void {
     this.store.dispatch(updateCamCardContacts({ camCardId, camCardContacts }));
   }
@@ -160,13 +166,12 @@ export class CamCardsFacade {
     targetcamCardId: string,
     camCardItemId: string,
     sku: string,
-    quantity: number,
-    position?: number
+    quantity: number
   ): void {
     this.store.dispatch(
       moveItemToCamCard({
         source: { id: sourcecamCardId, camCardItemId },
-        target: { id: targetcamCardId, sku, quantity, position },
+        target: { id: targetcamCardId, sku, quantity },
       })
     );
   }
@@ -180,6 +185,22 @@ export class CamCardsFacade {
   ): void {
     this.store.dispatch(
       moveItemToCamCard({ source: { id: sourceCamCardId, camCardItemId }, target: { name, sku, quantity } })
+    );
+  }
+
+  moveCamCardItem(
+    sourcecamCardId: string,
+    targetcamCardId: string,
+    camCardItemId: string,
+    sku: string,
+    quantity: number,
+    position?: number
+  ): void {
+    this.store.dispatch(
+      moveCamCardItem({
+        source: { id: sourcecamCardId, camCardItemId },
+        target: { id: targetcamCardId, sku, quantity, position },
+      })
     );
   }
 

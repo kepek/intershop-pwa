@@ -119,6 +119,11 @@ export const updateCamCardProduct = createAction(
   payload<{ rootCamCard: string; camCardId: string; camCardItem: CamCardItem }>()
 );
 
+export const updateCamCardProductDispatch = createAction(
+  '[Cam Cards] Update Cam Card Product Dispatch',
+  payload<{ rootCamCard: string; camCardId: string; camCardItem: CamCardItem }>()
+);
+
 export const updateCamCardProductSuccess = createAction(
   '[Cam Cards API] Update Cam Card Product Success',
   payload<{ rootCamCard: string; camCardId: string; camCardItem: CamCardItem }>()
@@ -180,7 +185,7 @@ export const moveItemToCamCard = createAction(
   '[Cam Cards] Move Item to another Cam Card',
   payload<{
     source: { id: string; camCardItemId: string };
-    target: { id?: string; name?: string; sku: string; quantity: number; position?: number };
+    target: { id?: string; name?: string; sku: string; quantity: number };
   }>()
 );
 
@@ -220,6 +225,24 @@ export const moveCamCardSuccess = createAction(
 );
 
 export const moveCamCardFail = createAction('[Cam Cards API] move Cam Card Fail', httpError());
+
+export const moveCamCardItem = createAction(
+  '[Cam Cards] Move CamCardItem',
+  payload<{
+    source: { id: string; camCardItemId: string };
+    target: { id?: string; name?: string; sku: string; quantity: number; position?: number };
+  }>()
+);
+
+export const moveCamCardItemSuccess = createAction(
+  '[Cam Cards API] move CamCardItem Success',
+  payload<{
+    sourceCamCard: CamCard;
+    targetCamCard: CamCard;
+  }>()
+);
+
+export const moveCamCardItemFail = createAction('[Cam Cards API] move CamCardItem Fail', httpError());
 
 export const updateContactsWhileMoveCamCardFail = createAction(
   '[Cam Cards API] updating contacts while moving Cam Card Fail',

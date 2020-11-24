@@ -70,6 +70,9 @@ import {
   loadDeliveryAddressesSuccess,
   moveCamCard,
   moveCamCardFail,
+  moveCamCardItem,
+  moveCamCardItemFail,
+  moveCamCardItemSuccess,
   moveCamCardSuccess,
   moveItemToCamCard,
   removeItemFromCamCard,
@@ -86,6 +89,7 @@ import {
   updateCamCardContactsSuccess,
   updateCamCardFail,
   updateCamCardProduct,
+  updateCamCardProductDispatch,
   updateCamCardProductSuccess,
   updateCamCardSuccess,
   updateContactsWhileMoveCamCardFail,
@@ -491,6 +495,28 @@ export class CamCardEffects {
     { dispatch: false }
   );
 
+  updateCamCardProductDispatch$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(updateCamCardProductDispatch),
+      mapToPayload(),
+      mergeMap(payload =>
+        this.camCardService.updateCamCardProduct(payload.camCardId, payload.camCardItem).pipe(
+          mergeMap(camCardItem => {
+            const { rootCamCard, camCardId } = payload;
+            return [
+              updateCamCardProductSuccess({ rootCamCard, camCardId, camCardItem }),
+              displaySuccessMessage({
+                message: 'camfil.account.cam_cards.update.product.confirmation',
+                messageParams: { 0: camCardItem.product.name },
+              }),
+            ];
+          }),
+          mapErrorToAction(updateCamCardFail)
+        )
+      )
+    )
+  );
+
   navigateToEdit$ = createEffect(() =>
     this.actions$.pipe(
       ofType(editCamCard),
@@ -557,7 +583,6 @@ export class CamCardEffects {
               camCardId: payload.target.id,
               sku: payload.target.sku,
               quantity: payload.target.quantity,
-              position: payload.target.position,
             }),
             removeItemFromCamCard({
               camCardId: payload.source.id,
@@ -566,6 +591,23 @@ export class CamCardEffects {
           ];
         }
       })
+    )
+  );
+
+  moveCamCardItem$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(moveCamCardItem),
+      mapToPayload(),
+      mergeMap(payload =>
+        this.camCardService.addProductToCamCard(payload.target.id, payload.target.sku, payload.target.quantity).pipe(
+          mergeMap(targetCamCard =>
+            this.camCardService.removeProductFromCamCard(payload.source.id, payload.source.camCardItemId).pipe(
+              map(sourceCamCard => moveCamCardItemSuccess({ sourceCamCard, targetCamCard })),
+              mapErrorToAction(moveCamCardItemFail)
+            )
+          )
+        )
+      )
     )
   );
 

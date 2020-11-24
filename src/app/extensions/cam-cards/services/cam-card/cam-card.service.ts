@@ -321,10 +321,8 @@ export class CamCardService {
 
     const data = { gapSize };
     if (!rootCamCardId) {
-      console.log('🚀 ~ file: cam-card.service.ts ~ line 270 ~ CamCardService ~ CASE 1: rootCamCardId not available');
       return this.apiService.put(`camcards/${camCardId}/products`, data).pipe(unpackEnvelope());
     } else {
-      console.log('🚀 ~ file: cam-card.service.ts ~ line 270 ~ CamCardService ~ CASE 2: rootCamCardId available');
       return this.apiService
         .put(`camcards/${rootCamCardId}/childcamcards/${camCardId}/products`, data)
         .pipe(unpackEnvelope());
