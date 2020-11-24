@@ -87,7 +87,7 @@ export const loadDeliveryAddressesFail = createAction('[Cam Cards API] load avai
 
 export const addProductToCamCard = createAction(
   '[Cam Cards] Add Item to Cam Card',
-  payload<{ camCardId: string; sku: string; quantity?: number; boxLabel?: string, showSuccessToast?: boolean  }>()
+  payload<{ camCardId: string; sku: string; quantity?: number; boxLabel?: string; showSuccessToast?: boolean }>()
 );
 
 export const addProductToSubCamCard = createAction(

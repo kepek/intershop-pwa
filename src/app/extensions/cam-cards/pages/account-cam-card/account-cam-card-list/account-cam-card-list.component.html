@@ -223,8 +223,8 @@
               class="cam-card-row-details__detail"
               [@detailExpand]="camCard == expandedCamCard ? 'expanded' : 'collapsed'"
             >
-            <ng-container *ngIf="camCard == expandedCamCard">
-              <ng-container *ngTemplateOutlet="camCardRow; context: { camCard: camCard }"></ng-container>
+              <ng-container *ngIf="camCard == expandedCamCard">
+                <ng-container *ngTemplateOutlet="camCardRow; context: { camCard: camCard }"></ng-container>
                 <ng-container *ngFor="let subCamCard of camCard.subCamCards">
                   <mat-action-row>
                     <strong (click)="toggleSubCamCard(subCamCard.id)">
