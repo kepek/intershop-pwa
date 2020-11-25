@@ -22,7 +22,6 @@
             [cdkDragData]="item"
             cdkDrag
           >
-            <p>Index: {{ i }}, Position: {{ item.position }}, ID: {{ item.id }}</p>
             <div class="d-flex align-items-center">
               <mat-icon svgIcon="move" class="size-24 d-none d-md-block handle" cdkDragHandle></mat-icon>
               <camfil-account-cam-card-detail-line-item
@@ -44,7 +43,6 @@
           (click)="toggleSubCamCard(sub.id)"
           [attr.aria-expanded]="isSubCamCardOpen(sub.id)"
         >
-          <p>ID: {{ sub.id }}</p>
           <mat-icon class="arrow_down" [class.arrow_down--expanded]="isSubCamCardOpen(sub.id)">arrow_left</mat-icon>
 
           <camfil-account-cam-card-detail-sub-title [sub]="sub"></camfil-account-cam-card-detail-sub-title>
@@ -64,7 +62,6 @@
                 [cdkDragData]="subItem"
                 [ngStyle]="{ order: subItem.position }"
               >
-                <p>Index: {{ i2 }}, Position: {{ subItem.position }}, ID: {{ subItem.id }}</p>
                 <div class="d-flex align-items-center">
                   <mat-icon svgIcon="move" class="size-24 d-none d-md-block handle" cdkDragHandle></mat-icon>
                   <camfil-account-cam-card-detail-line-item
