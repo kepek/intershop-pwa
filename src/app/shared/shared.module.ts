@@ -77,13 +77,13 @@ import { AccordionComponent } from './components/common/accordion/accordion.comp
 import { CamfilBreadcrumbComponent } from './components/common/camfil-breadcrumb/camfil-breadcrumb.component';
 import { CamfilLinksBlockComponent } from './components/common/camfil-links-block/camfil-links-block.component';
 import { CamfilModalDialogComponent } from './components/common/camfil-modal-dialog/camfil-modal-dialog.component';
+import { CamfilQuickViewModalComponent } from './components/common/camfil-quick-view-modal/camfil-quick-view-modal.component';
 import { ErrorMessageComponent } from './components/common/error-message/error-message.component';
 import { InfoBoxComponent } from './components/common/info-box/info-box.component';
 import { InplaceEditComponent } from './components/common/inplace-edit/inplace-edit.component';
 import { LoadingComponent } from './components/common/loading/loading.component';
 import { ModalDialogLinkComponent } from './components/common/modal-dialog-link/modal-dialog-link.component';
 import { ModalDialogComponent } from './components/common/modal-dialog/modal-dialog.component';
-import { QuickViewModalComponent } from './components/common/quick-view-modal/quick-view-modal.component';
 import { SuccessMessageComponent } from './components/common/success-message/success-message.component';
 import { CamfilFilterAppliedComponent } from './components/filter/camfil-filter-applied/camfil-filter-applied.component';
 import { CamfilFilterCollapsableComponent } from './components/filter/camfil-filter-collapsable/camfil-filter-collapsable.component';
@@ -301,6 +301,7 @@ const exportedComponents = [
   CamfilProductShipmentComponent,
   CamfilProductTitleComponent,
   CamfilProductVariationSelectComponent,
+  CamfilQuickViewModalComponent,
   ContentIncludeComponent,
   ContentPageletComponent,
   ContentViewcontextComponent,
@@ -319,7 +320,6 @@ const exportedComponents = [
   ProductVariationDisplayComponent,
   PromotionDetailsComponent,
   PromotionRemoveComponent,
-  QuickViewModalComponent,
   RecentlyViewedComponent,
   SuccessMessageComponent,
 ];

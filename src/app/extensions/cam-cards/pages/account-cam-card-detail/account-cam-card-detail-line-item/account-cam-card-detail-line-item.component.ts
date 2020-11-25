@@ -17,7 +17,7 @@ import { debounceTime, take, takeUntil } from 'rxjs/operators';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { ProductView } from 'ish-core/models/product-view/product-view.model';
 import { ProductCompletenessLevel } from 'ish-core/models/product/product.model';
-import { QuickViewModalComponent } from 'ish-shared/components/common/quick-view-modal/quick-view-modal.component';
+import { CamfilQuickViewModalComponent } from 'ish-shared/components/common/camfil-quick-view-modal/camfil-quick-view-modal.component';
 
 import { CamCardsFacade } from '../../../facades/cam-cards.facade';
 import { CamCard, CamCardItem } from '../../../models/cam-card/cam-card.model';
@@ -145,7 +145,7 @@ export class AccountCamCardDetailLineItemComponent implements OnChanges, OnInit,
 
   /** Determine the heading of the delete modal and opens the modal. */
   openQuickViewDialog(camCardItemData: CamCardItem) {
-    this.dialog.open(QuickViewModalComponent, {
+    this.dialog.open(CamfilQuickViewModalComponent, {
       width: '330px',
       autoFocus: false,
       data: { ...camCardItemData },

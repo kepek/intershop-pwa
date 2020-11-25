@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { QuickViewModalComponent } from './quick-view-modal.component';
+import { CamfilQuickViewModalComponent } from './camfil-quick-view-modal.component';
 
-describe('Quick View Modal Component', () => {
-  let component: QuickViewModalComponent;
-  let fixture: ComponentFixture<QuickViewModalComponent>;
+describe('Camfil Quick View Modal Component', () => {
+  let component: CamfilQuickViewModalComponent;
+  let fixture: ComponentFixture<CamfilQuickViewModalComponent>;
   let element: HTMLElement;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [QuickViewModalComponent],
+      declarations: [CamfilQuickViewModalComponent],
     }).compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(QuickViewModalComponent);
+    fixture = TestBed.createComponent(CamfilQuickViewModalComponent);
     component = fixture.componentInstance;
     element = fixture.nativeElement;
   });

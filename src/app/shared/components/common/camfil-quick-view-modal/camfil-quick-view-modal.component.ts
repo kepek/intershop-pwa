@@ -6,7 +6,7 @@ import { GenerateLazyComponent } from 'ish-core/utils/module-loader/generate-laz
 
 @Component({
   selector: 'camfil-quick-view-modal',
-  templateUrl: './quick-view-modal.component.html',
+  templateUrl: './camfil-quick-view-modal.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 /**
@@ -19,7 +19,7 @@ import { GenerateLazyComponent } from 'ish-core/utils/module-loader/generate-laz
  * ></camfil-quick-view-modal>
  */
 @GenerateLazyComponent()
-export class QuickViewModalComponent {
+export class CamfilQuickViewModalComponent {
   @Input() product: Product;
   @Input() class?: string;
 
