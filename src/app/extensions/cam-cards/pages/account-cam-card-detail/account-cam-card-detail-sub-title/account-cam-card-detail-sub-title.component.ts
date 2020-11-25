@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 
 import { CamCardsFacade } from '../../../facades/cam-cards.facade';
 import { CamCard } from '../../../models/cam-card/cam-card.model';
@@ -12,16 +12,26 @@ export class AccountCamCardDetailSubTitleComponent {
   constructor(private camCardsFacade: CamCardsFacade) {}
 
   @Input() sub: CamCard;
+  @Output() delete = new EventEmitter<Event>();
 
   active = false;
 
-  handleEdit(event) {
+  handleEdit(event: Event) {
     event.stopPropagation();
     this.active = !this.active;
   }
 
+  handleDelete(event: Event) {
+    event.stopPropagation();
+    this.delete.emit(event);
+  }
+
   onBlurSubmit(event) {
     this.camCardsFacade.updateSubCamCard({ ...this.sub, name: event.target.value });
+    this.onBlur();
+  }
+
+  onBlur() {
     this.active = false;
   }
 }

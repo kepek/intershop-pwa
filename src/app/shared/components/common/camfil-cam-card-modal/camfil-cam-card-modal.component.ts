@@ -7,7 +7,7 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, Templa
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CamfilCamCardModalComponent {
-  @Input() title: string;
+  @Input() title?: string;
   @Input() iconName?: string;
   @Input() subtitle?: string;
   @Input() customHeaderTemplate?: TemplateRef<any>;

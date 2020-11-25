@@ -21,6 +21,7 @@ import {
   addToNewCamCardWithNewSubCamCard,
   createCamCard,
   deleteCamCard,
+  deleteSubCamCard,
   detectCamCardToolbar,
   getAllCamCards,
   getCamCardCustomers,
@@ -80,6 +81,10 @@ export class CamCardsFacade {
 
   deleteCamCard(id: string): void {
     this.store.dispatch(deleteCamCard({ camCardId: id }));
+  }
+
+  deleteSubCamCard(rootId: string, id: string): void {
+    this.store.dispatch(deleteSubCamCard({ rootId, id }));
   }
 
   updateCamCard(camCard: CamCard): void {

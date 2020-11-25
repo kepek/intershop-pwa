@@ -24,7 +24,7 @@
           <fa-icon [icon]="['fas', 'trash-alt']"></fa-icon>
         </a>
 
-        <ish-modal-dialog
+        <camfil-modal-dialog
           #modalDialog
           [options]="{
             titleText: 'checkout.address.delete.confirmation.heading' | translate,
@@ -35,7 +35,7 @@
         >
           <p>{{ 'checkout.address.delete.confirmation.text' | translate }}</p>
           <small class="help-block">{{ 'checkout.address.delete.confirmation.deletionhint' | translate }}</small>
-        </ish-modal-dialog>
+        </camfil-modal-dialog>
       </div>
 
       <!-- display shipping address -->

@@ -143,13 +143,13 @@ export class CamCardService {
    * @param camCardId     The cam card id.
    * @param subCamCardId  The sub cam card id.
    */
-  deleteSubCamCard(camCardId: string, subCamCardId: string): Observable<CamCard> {
-    if (!camCardId) {
-      return throwError('removeSubCamCard() called without camCardId');
+  deleteSubCamCard(rootcamCardId: string, subCamCardId: string): Observable<CamCard> {
+    if (!rootcamCardId || !subCamCardId) {
+      return throwError('deleteSubCamCard() called without correct parameters');
     }
     return this.apiService
-      .delete(`camcards/${camCardId}/childcamcards/${subCamCardId}`)
-      .pipe(concatMap(() => this.getCamCard(camCardId)));
+      .delete(`camcards/${rootcamCardId}/childcamcards/${subCamCardId}`)
+      .pipe(concatMap(() => this.getCamCard(rootcamCardId)));
   }
 
   /**

@@ -7,7 +7,7 @@
     >{{ 'checkout.variation.edit.button.label' | translate }}</a
   >
 
-  <ish-modal-dialog
+  <camfil-modal-dialog
     #modalDialog
     [options]="{
       titleText: product.name,
@@ -22,5 +22,5 @@
       [modalDialogRef]="modalDialog"
       (updateItem)="onUpdateItem($event)"
     ></ish-line-item-edit-dialog>
-  </ish-modal-dialog>
+  </camfil-modal-dialog>
 </ng-container>

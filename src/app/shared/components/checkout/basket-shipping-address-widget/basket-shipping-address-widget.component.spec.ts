@@ -14,7 +14,7 @@ import { BasketMockData } from 'ish-core/utils/dev/basket-mock-data';
 import { findAllCustomElements, findAllDataTestingIDs } from 'ish-core/utils/dev/html-query-utils';
 import { CustomerAddressFormComponent } from 'ish-shared/address-forms/components/customer-address-form/customer-address-form.component';
 import { AddressComponent } from 'ish-shared/components/address/address/address.component';
-import { ModalDialogComponent } from 'ish-shared/components/common/modal-dialog/modal-dialog.component';
+import { CamfilModalDialogComponent } from 'ish-shared/components/common/camfil-modal-dialog/camfil-modal-dialog.component';
 import { SelectAddressComponent } from 'ish-shared/forms/components/select-address/select-address.component';
 
 import { BasketShippingAddressWidgetComponent } from './basket-shipping-address-widget.component';
@@ -39,9 +39,9 @@ describe('Basket Shipping Address Widget Component', () => {
       declarations: [
         BasketShippingAddressWidgetComponent,
         MockComponent(AddressComponent),
+        MockComponent(CamfilModalDialogComponent),
         MockComponent(CustomerAddressFormComponent),
         MockComponent(FaIconComponent),
-        MockComponent(ModalDialogComponent),
         MockComponent(SelectAddressComponent),
         MockDirective(NgbCollapse),
       ],
@@ -88,7 +88,7 @@ describe('Basket Shipping Address Widget Component', () => {
       expect(findAllCustomElements(element)).toMatchInlineSnapshot(`
         Array [
           "fa-icon",
-          "ish-modal-dialog",
+          "camfil-modal-dialog",
           "ish-address",
           "ish-select-address",
           "ish-customer-address-form",
@@ -110,7 +110,7 @@ describe('Basket Shipping Address Widget Component', () => {
 
       expect(findAllCustomElements(element)).toMatchInlineSnapshot(`
         Array [
-          "ish-modal-dialog",
+          "camfil-modal-dialog",
           "ish-address",
           "ish-select-address",
           "ish-customer-address-form",

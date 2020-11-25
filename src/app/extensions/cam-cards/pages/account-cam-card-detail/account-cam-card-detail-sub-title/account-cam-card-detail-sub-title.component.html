@@ -2,16 +2,25 @@
   {{ sub.name }}
 </ng-template>
 <ng-template [ngIf]="active">
-  <mat-form-field appearance="fill" class="form-field">
-    <mat-label>{{ 'camfil.account.cam_card.add_to_form.camcards_name' | translate }}</mat-label>
+  <mat-form-field appearance="fill" class="form-field mat-input-no-label" (click)="$event.stopPropagation()">
     <input
       matInput
-      label="camfil.account.cam_card.add_to_form.camcards_name"
+      [attr.label]="'camfil.account.cam_card.add_to_form.camcards_name' | translate"
       markRequiredLabel="off"
       maxlength="35"
+      class=""
+      [value]="sub.name"
       (change)="onBlurSubmit($event)"
+      (blur)="onBlur()"
     />
   </mat-form-field>
 </ng-template>
 
-<div class="float-right"><mat-icon svgIcon="edit" (click)="handleEdit($event)"></mat-icon></div>
+<span class="float-right">
+  <button mat-button (click)="handleEdit($event)">
+    <mat-icon svgIcon="edit"></mat-icon>
+  </button>
+  <button mat-button (click)="handleDelete($event)">
+    <mat-icon svgIcon="delete"></mat-icon>
+  </button>
+</span>

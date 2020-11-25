@@ -5,7 +5,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MockComponent } from 'ng-mocks';
 import { spy, verify } from 'ts-mockito';
 
-import { ModalDialogComponent } from 'ish-shared/components/common/modal-dialog/modal-dialog.component';
+import { CamfilModalDialogComponent } from 'ish-shared/components/common/camfil-modal-dialog/camfil-modal-dialog.component';
 
 import { AccountWishlistListComponent } from './account-wishlist-list.component';
 
@@ -16,7 +16,11 @@ describe('Account Wishlist List Component', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [AccountWishlistListComponent, MockComponent(FaIconComponent), MockComponent(ModalDialogComponent)],
+      declarations: [
+        AccountWishlistListComponent,
+        MockComponent(CamfilModalDialogComponent),
+        MockComponent(FaIconComponent),
+      ],
       imports: [RouterTestingModule, TranslateModule.forRoot()],
     }).compileComponents();
   });
