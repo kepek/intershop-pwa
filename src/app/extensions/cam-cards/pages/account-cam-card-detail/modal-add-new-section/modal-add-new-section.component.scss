@@ -1,0 +1,14 @@
+@import '~src/styles/themes/camfil/variables';
+@import '~src/styles/themes/camfil/mixins.scss';
+
+.add-new-section {
+  margin-bottom: 42px;
+
+  &__field {
+    width: 296px;
+
+    input {
+      width: 100%;
+    }
+  }
+}

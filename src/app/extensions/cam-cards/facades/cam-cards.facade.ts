@@ -20,6 +20,7 @@ import {
   addProductToSubCamCard,
   addToNewCamCardWithNewSubCamCard,
   createCamCard,
+  createSubCamCard,
   deleteCamCard,
   deleteSubCamCard,
   detectCamCardToolbar,
@@ -69,6 +70,10 @@ export class CamCardsFacade {
 
   addCamCard(camCards: CamCard): void | HttpError {
     this.store.dispatch(createCamCard({ camCards }));
+  }
+
+  createSubCamCard(subCamCard: CamCard, rootCamCardId: string) {
+    this.store.dispatch(createSubCamCard({ subCamCard, rootCamCardId }));
   }
 
   getDeliveryAddress(id) {

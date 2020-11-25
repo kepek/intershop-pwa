@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Subject } from 'rxjs';
 
 import { CamCardsFacade } from '../../../facades/cam-cards.facade';
 import { ModalAddNewProductComponent } from '../modal-add-new-product/modal-add-new-product.component';
@@ -11,6 +12,8 @@ import { ModalAddNewProductComponent } from '../modal-add-new-product/modal-add-
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AccountCamCardDetailToolbarComponent implements OnInit {
+  constructor(private camCardsFacade: CamCardsFacade, public dialog: MatDialog) {}
+
   @Output() deleteCamCard = new EventEmitter();
   @Output() addItemsToCart = new EventEmitter();
   @Input() isSticky: boolean;
@@ -18,11 +21,15 @@ export class AccountCamCardDetailToolbarComponent implements OnInit {
 
   dummyProduct = { sku: 'dummy', inStock: true, availability: true };
 
-  constructor(private camCardsFacade: CamCardsFacade, public dialog: MatDialog) {}
+  eventsSubject: Subject<void> = new Subject<void>();
 
   openAddToProductModal(modal: ModalAddNewProductComponent) {
     this.dialog.open(modal.show());
     modal.hide = () => this.dialog.closeAll();
+  }
+
+  emitEventToChild() {
+    this.eventsSubject.next();
   }
 
   ngOnInit() {

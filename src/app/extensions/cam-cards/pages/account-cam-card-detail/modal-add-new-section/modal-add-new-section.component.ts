@@ -1,0 +1,87 @@
+import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { Observable, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+
+import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
+
+import { CamCardsFacade } from '../../../facades/cam-cards.facade';
+import { CamCardAddress } from '../../../models/cam-card/cam-card.model';
+import { CamfilSmallCtaModalComponent } from '../camfil-small-cta-modal/camfil-small-cta-modal.component';
+
+@Component({
+  selector: 'camfil-modal-add-new-section',
+  templateUrl: './modal-add-new-section.component.html',
+  styleUrls: ['./modal-add-new-section.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class ModalAddNewSectionComponent implements OnInit, OnDestroy {
+  @Input() events: Observable<void>;
+
+  @ViewChild(CamfilSmallCtaModalComponent) modal: CamfilSmallCtaModalComponent;
+
+  rootCamCardId: string;
+  rootCamCardAddress: CamCardAddress;
+  newSegmentForm: FormGroup;
+  newSegmentValidator = [
+    {
+      error: 'required',
+      message: 'camfil.modal.addToCamcard.camcard.new_segment.error.required',
+    },
+    {
+      error: 'maxlength',
+      message: 'camfil.modal.addToCamcard.camcard.new_segment.error.maxLength',
+    },
+  ];
+
+  private destroy$ = new Subject<void>();
+
+  constructor(public dialog: MatDialog, private fb: FormBuilder, private camCardsFacade: CamCardsFacade) {}
+
+  ngOnInit() {
+    this.events.pipe(takeUntil(this.destroy$)).subscribe(() => {
+      this.openModal();
+    });
+
+    this.newSegmentForm = this.fb.group({
+      newCamCard: ['', [Validators.required, Validators.maxLength(10)]],
+    });
+
+    this.camCardsFacade.currentCamCard$.pipe(takeUntil(this.destroy$)).subscribe(currentCamCard => {
+      if (currentCamCard) {
+        this.rootCamCardId = currentCamCard.id;
+        this.rootCamCardAddress = currentCamCard.deliveryAddress;
+      }
+    });
+  }
+
+  openModal() {
+    this.dialog.open(this.modal.show());
+    this.modal.hide = () => this.dialog.closeAll();
+  }
+
+  submitForm(event?) {
+    if (this.newSegmentForm.valid) {
+      const newSegmentValue = this.newSegmentForm.get('newCamCard').value;
+      const newSubCamCard = {
+        name: newSegmentValue,
+        deliveryAddress: this.rootCamCardAddress,
+      };
+
+      this.camCardsFacade.createSubCamCard(newSubCamCard, this.rootCamCardId);
+      this.newSegmentForm.reset();
+      if (event?.type === 'submit') {
+        this.modal.hide();
+      }
+    } else {
+      markAsDirtyRecursive(this.newSegmentForm);
+    }
+  }
+
+  ngOnDestroy() {
+    this.newSegmentForm.reset();
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+}

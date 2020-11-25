@@ -1,0 +1,22 @@
+<ng-template #modal>
+  <div class="cta-modal-container">
+    <div class="cta-modal__header">
+      <mat-icon svgIcon="add-camcard"></mat-icon>
+      <h2 class="cta-modal__header--text">{{ actionTitle }}</h2>
+    </div>
+
+    <div class="cta-modal__action">
+      <ng-container [ngTemplateOutlet]="actionTemplate"></ng-container>
+    </div>
+
+    <div class="cta-modal__links">
+      <button class="btn btn-link cta-modal__links--link" (click)="hide()">
+        {{ 'camfil.modal.cta.button.cancel' | translate }}
+      </button>
+
+      <button type="submit" (click)="emitAction()" class="btn btn-link cta-modal__links--link">
+        {{ actionButtonTitle }}
+      </button>
+    </div>
+  </div>
+</ng-template>
