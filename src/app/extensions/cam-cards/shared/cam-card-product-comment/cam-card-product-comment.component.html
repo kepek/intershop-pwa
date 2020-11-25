@@ -15,10 +15,10 @@
   </form>
 </ng-container>
 
-<ng-container *ngIf="camCardItem?.comment?.label && mode === 'view'">
+<ng-container *ngIf="camCardItem?.comment?.text && mode === 'view'">
   <span
     #tooltip="matTooltip"
-    matTooltip="{{ camCardItem.comment.label }} &#13;{{ camCardItem.comment.text }}"
+    matTooltip="{{ camCardItem.comment.text }}"
     matTooltipPosition="below"
     matTooltipClass="cam-card-tooltip"
     class="cam-card-comment"
