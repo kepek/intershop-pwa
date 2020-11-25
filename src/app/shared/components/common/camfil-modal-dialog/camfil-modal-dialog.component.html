@@ -1,0 +1,27 @@
+<ng-template #template>
+  <camfil-cam-card-modal
+    [customHeaderTemplate]="defaultHeader"
+    [mainContentTemplate]="defaultTemplate"
+    [primaryButtonTitle]="options.confirmText"
+    (primaryButtonClicked)="confirm()"
+    [secondaryButtonTitle]="options.rejectText"
+    (secondaryButtonClicked)="hide()"
+    [secondaryDisabled]="options?.confirmDisabled"
+  >
+  </camfil-cam-card-modal>
+</ng-template>
+
+<ng-template #defaultHeader>
+  <div class="modal__success--header">
+    <h2 mat-dialog-title class="modal__success--text text-center">
+      <mat-icon class="size-24 color-dark" *ngIf="options?.icon" svgIcon="{{ options?.icon }}"></mat-icon>
+      <div class="mt-3 mb-4">{{ options?.titleText || 'camfil.modal.default.header' | translate }}</div>
+    </h2>
+  </div>
+</ng-template>
+
+<ng-template #defaultTemplate>
+  <div mat-dialog-content class="cam-card-list text-center mt-3">
+    <ng-content></ng-content>
+  </div>
+</ng-template>

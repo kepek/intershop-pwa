@@ -21,7 +21,7 @@ import { SelectOption } from 'ish-shared/forms/components/select/select.componen
 import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
 
 import { CamCardsFacade } from '../../facades/cam-cards.facade';
-import { CamCard, CamCardCustomer, CamCardItem } from '../../models/cam-card/cam-card.model';
+import { CamCard, CamCardAddress, CamCardCustomer, CamCardItem } from '../../models/cam-card/cam-card.model';
 
 import { CreateCamCardModalComponent } from './create-cam-card-modal/create-cam-card-modal.component';
 
@@ -29,7 +29,8 @@ interface SelectCamCardOption extends SelectOption {
   nextDelivery: string;
   orderLabel?: string;
   invoiceLabel?: string;
-  deliveryAddress?: string;
+  deliveryAddressDisplay?: string;
+  deliveryAddress?: CamCardAddress;
   subCamCards?: CamCard[];
   boxLabels?: string[];
   camCardItems?: CamCardItem[];
@@ -109,21 +110,7 @@ export class SelectCamCardModalComponent implements OnInit, OnDestroy {
     },
   ];
 
-  camCardAddressEntry = {
-    id: '',
-    urn: '',
-    addressName: '',
-    firstName: '',
-    lastName: '',
-    addressLine1: '',
-    postalCode: '',
-    city: '',
-    country: '',
-    countryCode: '',
-    phoneHome: '',
-    invoiceToAddress: false,
-    shipToAddress: false,
-  };
+  rootCamCardAddress?: CamCardAddress;
 
   @ViewChild('modal', { static: false }) modalTemplate: TemplateRef<unknown>;
 
@@ -164,7 +151,8 @@ export class SelectCamCardModalComponent implements OnInit, OnDestroy {
           nextDelivery: camCard.nextDeliveryDate,
           orderLabel: camCard.orderLabel,
           invoiceLabel: camCard.invoiceLabel,
-          deliveryAddress: this.formatDeliveryAddress(camCard.deliveryAddress),
+          deliveryAddressDisplay: this.formatDeliveryAddress(camCard.deliveryAddress),
+          deliveryAddress: camCard.deliveryAddress,
           subCamCards: camCard.subCamCards,
           boxLabels: camCard.camCardItems.map(item => item.comment.label),
           camCardItems: camCard.camCardItems,
@@ -196,7 +184,7 @@ export class SelectCamCardModalComponent implements OnInit, OnDestroy {
         option.label,
         option.orderLabel,
         option.invoiceLabel,
-        option.deliveryAddress,
+        option.deliveryAddressDisplay,
         option.subCamCards,
         option.boxLabels,
       ];
@@ -246,7 +234,7 @@ export class SelectCamCardModalComponent implements OnInit, OnDestroy {
 
       const newSubCamCard = {
         name: newSegmentValue,
-        deliveryAddress: this.camCardAddressEntry,
+        deliveryAddress: this.rootCamCardAddress,
       };
 
       this.camCardsFacade.addProductToNewSubCamCard(
@@ -315,6 +303,7 @@ export class SelectCamCardModalComponent implements OnInit, OnDestroy {
       this.newSegmentForm.reset('newCamCard');
     }
     this.camCardSelected = camCardID;
+    this.rootCamCardAddress = this.getSelectedCamCard(this.camCardSelected).deliveryAddress;
   }
 
   showNewSegmant() {

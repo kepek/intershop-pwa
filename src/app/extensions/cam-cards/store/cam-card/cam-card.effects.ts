@@ -50,9 +50,13 @@ import {
   createCamCard,
   createCamCardFail,
   createCamCardSuccess,
+  createSubCamCard,
   deleteCamCard,
   deleteCamCardFail,
   deleteCamCardSuccess,
+  deleteSubCamCard,
+  deleteSubCamCardFail,
+  deleteSubCamCardSuccess,
   detectCamCardToolbar,
   editCamCard,
   loadCamCards,
@@ -144,6 +148,23 @@ export class CamCardEffects {
             }),
           ]),
           mapErrorToAction(createCamCardFail)
+        )
+      )
+    )
+  );
+
+  createSubCamCard$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(createSubCamCard),
+      mapToPayload(),
+      mergeMap(payload =>
+        this.camCardService.createSubCamCard(payload.subCamCard, payload.rootCamCardId).pipe(
+          mergeMap(subCamCard =>
+            this.camCardService
+              .getCamCard(subCamCard.rootCamCard)
+              .pipe(mergeMap(camCard => [createCamCardSuccess({ camCard })]))
+          ),
+          mapErrorToAction(addProductToCamCardFail)
         )
       )
     )
@@ -266,6 +287,25 @@ export class CamCardEffects {
             }),
           ]),
           mapErrorToAction(deleteCamCardFail)
+        )
+      )
+    )
+  );
+
+  deleteSubCamCard$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(deleteSubCamCard),
+      mapToPayload(),
+      mergeMap(({ rootId, id }) =>
+        this.camCardService.deleteSubCamCard(rootId, id).pipe(
+          mergeMap(camCard => [
+            deleteSubCamCardSuccess({ camCard }),
+            displaySuccessMessage({
+              message: 'camfil.account.cam_card.delete_sub_cam_card.confirmation',
+              messageParams: { 0: name },
+            }),
+          ]),
+          mapErrorToAction(deleteSubCamCardFail)
         )
       )
     )

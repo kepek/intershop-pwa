@@ -26,7 +26,7 @@ import {
 } from 'ish-core/models/product-view/product-view.model';
 import { VariationProduct } from 'ish-core/models/product/product-variation.model';
 import { ProductCompletenessLevel, ProductHelper } from 'ish-core/models/product/product.model';
-import { ModalDialogComponent } from 'ish-shared/components/common/modal-dialog/modal-dialog.component';
+import { CamfilModalDialogComponent } from 'ish-shared/components/common/camfil-modal-dialog/camfil-modal-dialog.component';
 import { SpecialValidators } from 'ish-shared/forms/validators/special-validators';
 
 /**
@@ -49,7 +49,7 @@ import { SpecialValidators } from 'ish-shared/forms/validators/special-validator
 })
 export class LineItemEditDialogComponent implements OnInit, OnDestroy, OnChanges {
   @Input() lineItem: LineItemView;
-  @Input() modalDialogRef?: ModalDialogComponent<unknown>;
+  @Input() modalDialogRef?: CamfilModalDialogComponent<unknown>;
   @Input() editable = true;
   @Output() updateItem = new EventEmitter<LineItemUpdate>();
 

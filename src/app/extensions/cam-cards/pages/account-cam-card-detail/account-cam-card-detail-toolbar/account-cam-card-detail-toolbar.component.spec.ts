@@ -8,7 +8,9 @@ import { CamfilProductQuantityComponent } from 'ish-shared/components/product/ca
 import { CamfilCounterComponent } from 'ish-shared/forms/components/camfil-counter/camfil-counter.component';
 
 import { CamCardPreferencesDialogComponent } from '../../../shared/cam-card-preferences-dialog/cam-card-preferences-dialog.component';
+import { CamfilSmallCtaModalComponent } from '../camfil-small-cta-modal/camfil-small-cta-modal.component';
 import { ModalAddNewProductComponent } from '../modal-add-new-product/modal-add-new-product.component';
+import { ModalAddNewSectionComponent } from '../modal-add-new-section/modal-add-new-section.component';
 
 import { AccountCamCardDetailToolbarComponent } from './account-cam-card-detail-toolbar.component';
 
@@ -24,8 +26,10 @@ describe('Account Cam Card Detail Toolbar Component', () => {
         CamfilCounterComponent,
         CamfilErrorComponent,
         CamfilProductQuantityComponent,
+        CamfilSmallCtaModalComponent,
         MockComponent(CamCardPreferencesDialogComponent),
         ModalAddNewProductComponent,
+        ModalAddNewSectionComponent,
       ],
       imports: [TranslateModule.forRoot()],
       providers: [provideMockStore()],

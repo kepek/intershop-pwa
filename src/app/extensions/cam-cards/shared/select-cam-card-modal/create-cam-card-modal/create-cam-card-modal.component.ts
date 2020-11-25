@@ -29,7 +29,7 @@ import { CREATE_CAMCARD_VALIDATORS } from './validators';
 })
 export class CreateCamCardModalComponent implements OnInit, AfterViewInit {
   @Input() product: Product;
-  @Input() camCardAddressEntry: CamCardAddress;
+  @Input() rootCamCardAddress: CamCardAddress;
 
   modal: NgbModalRef;
 
@@ -126,7 +126,7 @@ export class CreateCamCardModalComponent implements OnInit, AfterViewInit {
         customerNo: this.camCardForm.get('customerSelect').value,
       },
       deliveryAddress: {
-        ...this.camCardAddressEntry,
+        ...this.rootCamCardAddress,
         addressLine1: this.camCardForm.get('address').value,
         addressLine2: this.camCardForm.get('company').value,
         postalCode: this.camCardForm.get('zipCode').value,
@@ -151,7 +151,7 @@ export class CreateCamCardModalComponent implements OnInit, AfterViewInit {
 
       const newSubCamCard: CamCard = {
         name: newCamCard,
-        deliveryAddress: this.camCardAddressEntry,
+        deliveryAddress: this.rootCamCardAddress,
       };
 
       if (newCamCard) {

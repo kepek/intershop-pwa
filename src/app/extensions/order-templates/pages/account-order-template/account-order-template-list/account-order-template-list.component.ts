@@ -4,7 +4,7 @@ import { Subject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
 
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
-import { ModalDialogComponent } from 'ish-shared/components/common/modal-dialog/modal-dialog.component';
+import { CamfilModalDialogComponent } from 'ish-shared/components/common/camfil-modal-dialog/camfil-modal-dialog.component';
 
 import { OrderTemplate } from '../../../models/order-template/order-template.model';
 
@@ -46,7 +46,7 @@ export class AccountOrderTemplateListComponent implements OnDestroy {
   }
 
   /** Determine the heading of the delete modal and opens the modal. */
-  openDeleteConfirmationDialog(orderTemplate: OrderTemplate, modal: ModalDialogComponent<string>) {
+  openDeleteConfirmationDialog(orderTemplate: OrderTemplate, modal: CamfilModalDialogComponent<string>) {
     this.translate
       .get('account.order_templates.delete_dialog.header', { 0: orderTemplate.title })
       .pipe(take(1), takeUntil(this.destroy$))

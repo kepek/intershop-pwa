@@ -47,7 +47,7 @@
   [product]="product"
   (createAndEditEmitter)="createCamcardAndAdd($event)"
   (createAndContinueEmitter)="createCamcardAndAdd($event)"
-  [camCardAddressEntry]="camCardAddressEntry"
+  [rootCamCardAddress]="rootCamCardAddress"
 ></camfil-create-cam-card-modal>
 
 <ng-template #detailsTemplate>
@@ -142,7 +142,7 @@
               <div class="modal__cam-card--label">
                 {{ 'camfil.modal.addToCamcard.camcard.delivery_address' | translate }}
               </div>
-              <div class="modal__cam-card--value">{{ option.deliveryAddress }}</div>
+              <div class="modal__cam-card--value">{{ option.deliveryAddressDisplay }}</div>
             </div>
             <div class="modal__label">
               {{ 'camfil.modal.addToCamcard.camcard.sublist.title' | translate }}
@@ -192,83 +192,3 @@
     </form>
   </div>
 </ng-template>
-
-<!-- <div>
-  <ng-container *ngIf="showForm; else showSuccess">
-    <div mat-dialog-content>
-      <form [formGroup]="updateCamCardForm" (ngSubmit)="submitForm()">
-        <div mat-dialog-content>
-          <ng-container *ngIf="camCardOptions === undefined || camCardOptions.length === 0; else radioButtonForm">
-            <ish-input
-              controlName="newCamCard"
-              [errorMessages]="{ required: 'camfil.account.cam_card.name.error.required' }"
-              [form]="updateCamCardForm"
-            ></ish-input>
-          </ng-container>
-
-          <ng-template #radioButtonForm>
-            <div class="form-group">
-              <div class="radio" *ngFor="let option of camCardOptions; let i = index">
-                <label>
-                  <input
-                    type="radio"
-                    name="camCards"
-                    formControlName="camCards"
-                    [value]="option.value"
-                    id="camCard_{{ i }}"
-                    [attr.data-testing-id]="option.label"
-                  />
-                  {{ option.label }}
-                </label>
-              </div>
-              <div class="radio">
-                <label class="d-flex align-items-center">
-                  <input
-                    type="radio"
-                    name="camCards"
-                    formControlName="camCards"
-                    value="newCamCard"
-                    class="mb-3"
-                    id="camCards"
-                  />
-                  <ish-input
-                    class="w-75"
-                    controlName="newCamCard"
-                    [disabled]="newCamCardDisabled ? 'true' : null"
-                    [errorMessages]="{ required: 'camfil.account.cam_card.name.error.required' }"
-                    [form]="updateCamCardForm"
-                    inputClass="col-md-12"
-                  ></ish-input>
-                </label>
-              </div>
-            </div>
-          </ng-template>
-        </div>
-        <div mat-dialog-actions>
-          <button mat-raised-button color="primary" type="submit">
-            {{ submitButtonTranslationKey | translate }}
-          </button>
-          <button mat-flat-button color="secondary" mat-dialog-close type="button" (click)="hide()">
-            {{ 'camfil.account.cancel.button.label' | translate }}
-          </button>
-        </div>
-      </form>
-    </div>
-  </ng-container>
-  <ng-template #showSuccess>
-    <div mat-dialog-content>
-      <span
-        [ishServerHtml]="
-          successTranslationKey | translate: { '0': product.name, '1': selectedCamCardTitle, '2': selectedCamCardRoute }
-        "
-        [callbacks]="{ callbackHideDialogModal: callbackHideDialogModal }"
-        data-testing-id="cam-card-success-link"
-      ></span>
-    </div>
-    <div mat-dialog-actions>
-      <button mat-flat-button color="primary" (click)="hide()">
-        {{ 'store.dialog.button.ok' | translate }}
-      </button>
-    </div>
-  </ng-template>
-</div> -->

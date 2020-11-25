@@ -44,8 +44,10 @@
           [attr.aria-expanded]="isSubCamCardOpen(sub.id)"
         >
           <mat-icon class="arrow_down" [class.arrow_down--expanded]="isSubCamCardOpen(sub.id)">arrow_left</mat-icon>
-
-          <camfil-account-cam-card-detail-sub-title [sub]="sub"></camfil-account-cam-card-detail-sub-title>
+          <camfil-account-cam-card-detail-sub-title
+            [sub]="sub"
+            (delete)="openDeleteConfirmationDialog(sub, subDeleteDialog, true)"
+          ></camfil-account-cam-card-detail-sub-title>
         </div>
         <mat-expansion-panel class="mat-elevation-z0" [expanded]="isSubCamCardOpen(sub.id)">
           <div
@@ -116,12 +118,24 @@
   </div>
 </ng-template>
 
-<ish-modal-dialog
+<camfil-modal-dialog
   #deleteDialog
   (confirmed)="deleteCamCard()"
   [options]="{
     confirmText: 'camfil.account.cam_card.delete.button.text' | translate,
     rejectText: 'camfil.account.cancel.button.label' | translate
   }"
-  >{{ 'camfil.account.cam_card.delete.do_you_really.text' | translate }}</ish-modal-dialog
+>
+  {{ 'camfil.account.cam_card.delete.do_you_really.text' | translate }}
+</camfil-modal-dialog>
+
+<camfil-modal-dialog
+  #subDeleteDialog
+  (confirmed)="deleteSubCamCard($event)"
+  [options]="{
+    confirmText: 'camfil.account.cam_card.delete.button.text' | translate,
+    rejectText: 'camfil.account.cancel.button.label' | translate,
+    icon: 'checkmark'
+  }"
+  >{{ 'camfil.account.cam_card.delete.sub_cam_card.do_you_really.text' | translate }}</camfil-modal-dialog
 >

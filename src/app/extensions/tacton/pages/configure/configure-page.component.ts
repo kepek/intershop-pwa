@@ -5,7 +5,7 @@ import { filter, takeUntil } from 'rxjs/operators';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { ProductView } from 'ish-core/models/product-view/product-view.model';
 import { whenTruthy } from 'ish-core/utils/operators';
-import { ModalDialogComponent } from 'ish-shared/components/common/modal-dialog/modal-dialog.component';
+import { CamfilModalDialogComponent } from 'ish-shared/components/common/camfil-modal-dialog/camfil-modal-dialog.component';
 
 import { TactonFacade } from '../../facades/tacton.facade';
 import {
@@ -19,7 +19,7 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ConfigurePageComponent implements OnInit, OnDestroy {
-  @ViewChild('conflictResolutionDialog') conflictResolutionDialog: ModalDialogComponent<
+  @ViewChild('conflictResolutionDialog') conflictResolutionDialog: CamfilModalDialogComponent<
     TactonProductConfigurationConflictItem[]
   >;
 

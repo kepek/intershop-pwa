@@ -1,7 +1,7 @@
 <div class="row px-4" [ngClass]="{ 'sticky box-shadow': isSticky }">
   <div class="{{ isSticky ? 'container' : 'col-12' }} text-right">
     <h2 class="cam-card-title float-left">{{ title }}</h2>
-    <button mat-stroked-button color="primary" class="d-none d-sm-inline">
+    <button mat-stroked-button color="primary" class="d-none d-sm-inline" (click)="emitEventToChild()">
       <mat-icon svgIcon="plus" class="size-31"></mat-icon>
       {{ 'camfil.account.cam_cards.details.button.add_section.label' | translate }}
     </button>
@@ -24,5 +24,7 @@
     </button>
   </div>
 </div>
+
+<camfil-modal-add-new-section [events]="eventsSubject.asObservable()"></camfil-modal-add-new-section>
 
 <camfil-modal-add-new-product #addNewProductModal> </camfil-modal-add-new-product>

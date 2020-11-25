@@ -1,0 +1,26 @@
+<camfil-small-cta-modal
+  #addNewSectionModal
+  actionTitle="{{ 'camfil.modal.addNewSection.header' | translate }}"
+  actionButtonTitle="{{ 'camfil.modal.addNewSection.button.confirm' | translate }}"
+  [actionTemplate]="actionTemplate"
+  (actionClicked)="submitForm()"
+>
+</camfil-small-cta-modal>
+
+<ng-template #actionTemplate>
+  <div class="add-new-section">
+    <form [formGroup]="newSegmentForm" (ngSubmit)="submitForm($event)">
+      <mat-form-field appearance="fill" class="add-new-section__field">
+        <mat-label>{{ 'camfil.modal.addNewSection.input.label' | translate }}</mat-label>
+        <input matInput formControlName="newCamCard" />
+      </mat-form-field>
+
+      <camfil-error
+        [errors]="newSegmentForm.controls.newCamCard.errors"
+        [errorValidators]="newSegmentValidator"
+        [touched]="newSegmentForm.controls.newCamCard.touched"
+      >
+      </camfil-error>
+    </form>
+  </div>
+</ng-template>

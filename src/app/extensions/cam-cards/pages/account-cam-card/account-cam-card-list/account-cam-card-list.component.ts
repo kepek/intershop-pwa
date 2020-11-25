@@ -24,7 +24,7 @@ import { take, takeUntil } from 'rxjs/operators';
 
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
-import { ModalDialogComponent } from 'ish-shared/components/common/modal-dialog/modal-dialog.component';
+import { CamfilModalDialogComponent } from 'ish-shared/components/common/camfil-modal-dialog/camfil-modal-dialog.component';
 
 import { CamCardsFacade } from '../../../facades/cam-cards.facade';
 import { CamCardHelper } from '../../../models/cam-card/cam-card.helper';
@@ -228,7 +228,7 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
   }
 
   /** Determine the heading of the delete modal and opens the modal. */
-  openDeleteConfirmationDialog(camCard: CamCard, modal: ModalDialogComponent<string>) {
+  openDeleteConfirmationDialog(camCard: CamCard, modal: CamfilModalDialogComponent<string>) {
     this.translate
       .get('camfil.account.cam_cards.delete_dialog.header', { 0: camCard.name })
       .pipe(take(1), takeUntil(this.destroy$))

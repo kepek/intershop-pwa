@@ -230,11 +230,5 @@
     margin: $space-box 0 0;
     font-size: $font-size-base;
     line-height: 1.4em;
-    // div tag was added becaouse of override
-    white-space: pre-line;
-
-    &::first-line {
-      font-weight: bold;
-    }
   }
 }

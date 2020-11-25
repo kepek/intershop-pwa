@@ -11,8 +11,8 @@ import { AddressFormFactory } from 'ish-shared/address-forms/components/address-
 import { AddressFormFactoryProvider } from 'ish-shared/address-forms/configurations/address-form-factory.provider';
 import { ContentIncludeComponent } from 'ish-shared/cms/components/content-include/content-include.component';
 import { CamfilHeaderBoxComponent } from 'ish-shared/components/common/camfil-header-box/camfil-header-box.component';
+import { CamfilModalDialogComponent } from 'ish-shared/components/common/camfil-modal-dialog/camfil-modal-dialog.component';
 import { ErrorMessageComponent } from 'ish-shared/components/common/error-message/error-message.component';
-import { ModalDialogComponent } from 'ish-shared/components/common/modal-dialog/modal-dialog.component';
 import { CheckboxComponent } from 'ish-shared/forms/components/checkbox/checkbox.component';
 import { TacCheckboxComponent } from 'ish-shared/forms/components/tac-checkbox/tac-checkbox.component';
 
@@ -38,11 +38,11 @@ describe('Apply Form Component', () => {
         ApplyFormComponent,
         CamfilHeaderBoxComponent,
         MockComponent(AddressFormContainerComponent),
+        MockComponent(CamfilModalDialogComponent),
         MockComponent(CheckboxComponent),
         MockComponent(ContentIncludeComponent),
         MockComponent(ErrorMessageComponent),
         MockComponent(LazyCamCaptchaComponent),
-        MockComponent(ModalDialogComponent),
         MockDirective(TacCheckboxComponent),
       ],
       providers: [{ provide: AddressFormFactoryProvider, useFactory: () => instance(addressFormFactoryProviderMock) }],
