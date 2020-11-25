@@ -229,12 +229,7 @@ export class CamCardEffects {
             concatMap(([camCard, currentBasket]) =>
               concat(
                 ...currentBasket.lineItems.map(lineItem =>
-                  this.camCardService.addProductToCamCard(
-                    camCard.id,
-                    lineItem.productSKU,
-                    lineItem.quantity.value,
-                    lineItem.position
-                  )
+                  this.camCardService.addProductToCamCard(camCard.id, lineItem.productSKU, lineItem.quantity.value)
                 )
               ).pipe(
                 last(),
