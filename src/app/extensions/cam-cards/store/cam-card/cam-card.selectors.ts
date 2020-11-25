@@ -21,8 +21,6 @@ export const getCustomerAddresses = createSelector(getCamCardState, state => sta
 
 export const getCamCardError = createSelector(getCamCardState, state => state.error);
 
-export const getCreated = createSelector(getCamCardState, state => state.created);
-
 export const getSelectedCamCardId = createSelector(getCamCardState, state => state.selected);
 
 export const getSelectedCamCardDetails = createSelector(

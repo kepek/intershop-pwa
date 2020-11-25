@@ -90,11 +90,16 @@ export const addProductToCamCard = createAction(
   payload<{ camCardId: string; sku: string; quantity?: number; boxLabel?: string; showSuccessToast?: boolean }>()
 );
 
+export const addProductToSubCamCard = createAction(
+  '[Cam Cards] Add Item to Sub Cam Card',
+  payload<{ camCardId: string; refreshCamCardId: string; sku: string; quantity?: number; boxLabel?: string }>()
+);
+
 export const addProductToNewSubCamCard = createAction(
-  '[Cam Cards] Add Product to New SubCamCard',
+  '[Cam Cards] Add Product To New Sub Cam Card',
   payload<{
     subCamCard: CamCard;
-    rootCamCard: string;
+    rootCamCard: CamCard;
     sku: string;
     quantity?: number;
     boxLabel?: string;
@@ -124,11 +129,6 @@ export const addProductToNewCamCard = createAction(
   payload<{ name: string; sku: string; quantity?: number }>()
 );
 
-export const addProductToNewCamCardAndUpdate = createAction(
-  '[Cam Cards Internal] Add Product To New Cam Card And Update',
-  payload<{ camCard: CamCard; sku: string; quantity?: number; boxLabel?: string; edit?: boolean }>()
-);
-
 export const addToNewCamCardWithNewSubCamCard = createAction(
   '[Cam Cards Internal] Add To New Cam Card With New Sub Cam Card',
   payload<{
@@ -141,9 +141,9 @@ export const addToNewCamCardWithNewSubCamCard = createAction(
   }>()
 );
 
-export const addProductToCamCardAndUpdate = createAction(
-  '[Cam Cards Internal] Add Product To CamCard And Update',
-  payload<{ camCardId: string; sku: string; camCardItems: CamCardItem[]; quantity?: number; boxLabel?: string }>()
+export const addProductToNewCamCardAndEdit = createAction(
+  '[Cam Cards Internal] Add Product To Cam Card And Update',
+  payload<{ camCard: CamCard; sku: string; quantity?: number; boxLabel?: string; edit?: boolean }>()
 );
 
 export const createAndUpdateCamCardSuccess = createAction(
@@ -207,6 +207,8 @@ export const updateContactsWhileMoveCamCardFail = createAction(
 export const removeItemFromCamCardFail = createAction('[Cam Cards API] Remove Item from Cam Card Fail', httpError());
 
 export const selectCamCard = createAction('[Cam Cards Internal] Select Cam Card', payload<{ id: string }>());
+
+export const unselectCamCard = createAction('[Cam Cards Internal] Unselect Cam Card');
 
 export const addBasketToNewCamCard = createAction(
   '[Cam Cards] Add basket to New Cam Card]',

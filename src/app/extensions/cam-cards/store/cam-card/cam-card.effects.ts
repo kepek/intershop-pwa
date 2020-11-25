@@ -40,14 +40,13 @@ import {
   addBasketToNewCamCardFail,
   addBasketToNewCamCardSuccess,
   addProductToCamCard,
-  addProductToCamCardAndUpdate,
   addProductToCamCardFail,
   addProductToCamCardSuccess,
   addProductToNewCamCard,
-  addProductToNewCamCardAndUpdate,
+  addProductToNewCamCardAndEdit,
   addProductToNewSubCamCard,
+  addProductToSubCamCard,
   addToNewCamCardWithNewSubCamCard,
-  createAndUpdateCamCardSuccess,
   createCamCard,
   createCamCardFail,
   createCamCardSuccess,
@@ -304,6 +303,30 @@ export class CamCardEffects {
     )
   );
 
+  addProductToSubCamCard$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(addProductToSubCamCard),
+      mapToPayload(),
+      mergeMap(payload =>
+        this.camCardService
+          .addProductToSubCamCard(
+            payload.camCardId,
+            payload.refreshCamCardId,
+            payload.sku,
+            payload.quantity,
+            payload.boxLabel
+          )
+          .pipe(
+            mergeMap(camCard => [
+              addProductToCamCardSuccess({ camCard }),
+              selectCamCard({ id: payload.refreshCamCardId }),
+            ]),
+            mapErrorToAction(addProductToCamCardFail)
+          )
+      )
+    )
+  );
+
   addProductToCamCard$ = createEffect(() =>
     this.actions$.pipe(
       ofType(addProductToCamCard),
@@ -320,8 +343,9 @@ export class CamCardEffects {
                       message: 'camfil.modal.addNewProduct.confirmation',
                       messageParams: { 0: payload.sku },
                     }),
+                    selectCamCard({ id: camCard.id }),
                   ]
-                : [addProductToCamCardSuccess({ camCard })]
+                : [addProductToCamCardSuccess({ camCard }), selectCamCard({ id: camCard.id })]
             ),
             mapErrorToAction(addProductToCamCardFail)
           )
@@ -338,7 +362,7 @@ export class CamCardEffects {
           map(camCard =>
             addProductToNewSubCamCard({
               subCamCard: payload.newSubCamCard,
-              rootCamCard: camCard.id,
+              rootCamCard: camCard,
               sku: payload.sku,
               quantity: payload.quantity,
               boxLabel: payload.boxLabel,
@@ -351,87 +375,57 @@ export class CamCardEffects {
     )
   );
 
+  addProductToNewCamCardAndEdit$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(addProductToNewCamCardAndEdit),
+      mapToPayload(),
+      mergeMap(payload =>
+        this.camCardService.createCamCard(payload.camCard).pipe(
+          mergeMap(camCard => {
+            const addProductPayload = {
+              camCardId: camCard.id,
+              sku: payload.sku,
+              quantity: payload.quantity,
+              boxLabel: payload.boxLabel,
+            };
+
+            return payload.edit
+              ? [
+                  addProductToCamCard(addProductPayload),
+                  createCamCardSuccess({ camCard }),
+                  selectCamCard({ id: camCard.id }),
+                  editCamCard({ camCardId: camCard.id }),
+                ]
+              : [
+                  addProductToCamCard(addProductPayload),
+                  createCamCardSuccess({ camCard }),
+                  selectCamCard({ id: camCard.id }),
+                ];
+          }),
+          mapErrorToAction(addProductToCamCardFail)
+        )
+      )
+    )
+  );
+
   addProductToNewSubCamCard$ = createEffect(() =>
     this.actions$.pipe(
       ofType(addProductToNewSubCamCard),
       mapToPayload(),
       mergeMap(payload =>
-        this.camCardService.createSubCamCard(payload.subCamCard, payload.rootCamCard).pipe(
+        this.camCardService.createSubCamCard(payload.subCamCard, payload.rootCamCard.id).pipe(
           mergeMap(camCard => {
-            const updatePayload = {
+            const addProductPayload = {
               camCardId: camCard.id,
+              refreshCamCardId: payload.rootCamCard.id,
               sku: payload.sku,
-              camCardItems: [],
               quantity: payload.quantity,
               boxLabel: payload.boxLabel,
             };
 
             return payload.edit
-              ? [
-                  createCamCardSuccess({ camCard }),
-                  addProductToCamCardAndUpdate(updatePayload),
-                  editCamCard({ camCardId: camCard.id }),
-                ]
-              : [createCamCardSuccess({ camCard }), addProductToCamCardAndUpdate(updatePayload)];
-          }),
-          mapErrorToAction(addProductToCamCardFail)
-        )
-      )
-    )
-  );
-
-  addProductToNewCamCardAndUpdate$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(addProductToNewCamCardAndUpdate),
-      mapToPayload(),
-      mergeMap(payload =>
-        this.camCardService.createCamCard(payload.camCard).pipe(
-          mergeMap(camCard => {
-            const updatePayload = {
-              camCardId: camCard.id,
-              sku: payload.sku,
-              camCardItems: [],
-              quantity: payload.quantity,
-              boxLabel: payload.boxLabel,
-            };
-
-            return payload.edit
-              ? [
-                  createCamCardSuccess({ camCard }),
-                  addProductToCamCardAndUpdate(updatePayload),
-                  editCamCard({ camCardId: camCard.id }),
-                ]
-              : [createCamCardSuccess({ camCard }), addProductToCamCardAndUpdate(updatePayload)];
-          }),
-          mapErrorToAction(addProductToCamCardFail)
-        )
-      )
-    )
-  );
-
-  addProductToCamCardAndUpdate$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(addProductToCamCardAndUpdate),
-      mapToPayload(),
-      mergeMap(payload =>
-        this.camCardService.addProductToCamCard(payload.camCardId, payload.sku, payload.quantity).pipe(
-          mergeMap(camCard => {
-            const newCamCardItem = camCard.camCardItems.filter(item => payload.camCardItems.indexOf(item) < 0)[0];
-
-            return [
-              updateCamCardProduct({
-                rootCamCard: camCard.rootCamCard,
-                camCardId: camCard.id,
-                camCardItem: {
-                  ...newCamCardItem,
-                  comment: { ...newCamCardItem.comment, label: payload.boxLabel },
-                },
-              }),
-              createAndUpdateCamCardSuccess({
-                id: camCard.id,
-                name: camCard.name,
-              }),
-            ];
+              ? [addProductToSubCamCard(addProductPayload), editCamCard({ camCardId: payload.rootCamCard.id })]
+              : [addProductToSubCamCard(addProductPayload)];
           }),
           mapErrorToAction(addProductToCamCardFail)
         )

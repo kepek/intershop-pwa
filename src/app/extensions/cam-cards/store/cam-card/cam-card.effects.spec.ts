@@ -176,6 +176,7 @@ describe('Cam Card Effects', () => {
 
       expect(effects.createCamCard$).toBeObservable(expected$);
     });
+
     it('should map failed calls to actions of type CreateCamCardFail', () => {
       const error = makeHttpError({ message: 'invalid' });
       when(camCardServiceMock.createCamCard(anything())).thenReturn(throwError(error));
@@ -330,9 +331,10 @@ describe('Cam Card Effects', () => {
 
     it('should map to actions of type AddProductToCamCardSuccess', () => {
       const action = addProductToCamCard(payload);
-      const completion = addProductToCamCardSuccess({ camCard: camCards[0] });
-      actions$ = hot('-a-a-a', { a: action });
-      const expected$ = cold('-c-c-c', { c: completion });
+      const completion1 = addProductToCamCardSuccess({ camCard: camCards[0] });
+      const completion2 = selectCamCard({ id: camCards[0].id });
+      actions$ = hot('-a----a----a', { a: action });
+      const expected$ = cold('-(cd)-(cd)-(cd)', { c: completion1, d: completion2 });
       expect(effects.addProductToCamCard$).toBeObservable(expected$);
     });
 

@@ -1,5 +1,5 @@
 <ng-template #modal>
-  <ng-container *ngIf="!(created$ | async).name; else showSuccess">
+  <ng-container *ngIf="!(currentCamCard$ | async); else showSuccess">
     <camfil-cam-card-modal
       [title]="'camfil.modal.addToCamcard.header' | translate"
       iconName="note_add"
@@ -36,7 +36,8 @@
   <div class="modal__success--header">
     <mat-icon class="size-24 color-dark" svgIcon="checkmark"></mat-icon>
     <h2 mat-dialog-title class="modal__success--text">
-      {{ 'camfil.modal.addToCamcard.success.title' | translate }} {{ (created$ | async).name }}
+      {{ 'camfil.modal.addToCamcard.success.title' | translate }}
+      {{ useSubCamCard ? currentSubCamCardName : (currentCamCard$ | async).name }}
     </h2>
   </div>
 </ng-template>
