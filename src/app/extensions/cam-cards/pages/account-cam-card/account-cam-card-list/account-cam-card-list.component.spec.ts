@@ -8,6 +8,7 @@ import { anything, capture, instance, mock, spy, verify } from 'ts-mockito';
 
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { DatePipe } from 'ish-core/pipes/date.pipe';
+import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
 import { ModalDialogComponent } from 'ish-shared/components/common/modal-dialog/modal-dialog.component';
 import { CamfilProductAddToBasketComponent } from 'ish-shared/components/product/camfil-product-add-to-basket/camfil-product-add-to-basket.component';
 
@@ -64,6 +65,7 @@ describe('Account Cam Card List Component', () => {
         MockComponent(CamfilCamCardsSearchComponent),
         MockComponent(CamfilProductAddToBasketComponent),
         MockComponent(FaIconComponent),
+        MockComponent(LoadingComponent),
         MockComponent(ModalDialogComponent),
         MockPipe(DatePipe),
       ],
