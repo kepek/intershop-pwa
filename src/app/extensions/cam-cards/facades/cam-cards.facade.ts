@@ -226,7 +226,7 @@ export class CamCardsFacade {
     this.store.dispatch(unselectCamCard());
   }
 
-  resetItemPositions(rootCamCardId: string, camCardId: string, gapSize: number) {
-    this.store.dispatch(resetCamCardItemPositions({ rootCamCardId, camCardId, gapSize }));
+  resetItemPositions(rootCamCardId: string, camCardId: string) {
+    this.store.dispatch(resetCamCardItemPositions({ rootCamCardId, camCardId }));
   }
 }

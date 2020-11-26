@@ -308,23 +308,19 @@ export class CamCardService {
   /**
    * Reset the positions of its directly assigned line items of this camcard
    * @returns             The changed cam card item.
+   * @param rootCamCardId     Parent of sub cam card
    * @param camCardId
-   * @param gapSize
    */
-  resetItemPositions(rootCamCardId: string, camCardId: string, gapSize: number): Observable<CamCardItem[]> {
+  resetItemPositions(rootCamCardId: string, camCardId: string): Observable<CamCardItem[]> {
     if (!camCardId) {
       return throwError('resetItemPositions() called without camCardId');
     }
-    if (!gapSize) {
-      return throwError('resetItemPositions() called without gapSize');
-    }
 
-    const data = { gapSize };
     if (!rootCamCardId) {
-      return this.apiService.put(`camcards/${camCardId}/products`, data).pipe(unpackEnvelope());
+      return this.apiService.put(`camcards/${camCardId}/products`).pipe(unpackEnvelope());
     } else {
       return this.apiService
-        .put(`camcards/${rootCamCardId}/childcamcards/${camCardId}/products`, data)
+        .put(`camcards/${rootCamCardId}/childcamcards/${camCardId}/products`)
         .pipe(unpackEnvelope());
     }
   }

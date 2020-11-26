@@ -52,7 +52,7 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges {
   // TODO: improve when user locale will be properlyused
   priceSum: Price = { currency: 'USD', value: 0, type: 'Money' };
   private destroy$ = new Subject();
-  POSITION_GAP_SIZE = 1000000;
+  POSITION_GAP_SIZE = 1000;
 
   constructor(
     private translate: TranslateService,
@@ -164,8 +164,8 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges {
     items.sort((a, b) => (a.position < b.position ? -1 : 1));
     let predecessorPos;
     let successorPos;
+    let targetPos;
 
-    //
     if (!previousIndex || previousIndex > currentIndex) {
       /** moving item upwards or to another camcard */
       predecessorPos = items[currentIndex - 1]?.position;
@@ -177,23 +177,20 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges {
     }
 
     if (predecessorPos === undefined && successorPos === undefined) {
-      return 0;
+      targetPos = 1;
+    } else if (predecessorPos === undefined) {
+      targetPos = successorPos - this.POSITION_GAP_SIZE;
+    } else if (successorPos === undefined) {
+      targetPos = predecessorPos + this.POSITION_GAP_SIZE;
+    } else {
+      const gap = successorPos - predecessorPos;
+      if (gap <= 2) {
+        this.camCardsFacade.resetItemPositions(rootCamCardId, targetCamCardId);
+      }
+      targetPos = Math.round(gap / 2) + predecessorPos;
     }
-
-    if (predecessorPos === undefined) {
-      return successorPos - this.POSITION_GAP_SIZE;
-    }
-
-    if (successorPos === undefined) {
-      return predecessorPos + this.POSITION_GAP_SIZE;
-    }
-
-    const gap = successorPos - predecessorPos;
-    if (gap <= 2) {
-      this.camCardsFacade.resetItemPositions(rootCamCardId, targetCamCardId, this.POSITION_GAP_SIZE);
-    }
-
-    return Math.round(gap / 2) + predecessorPos;
+    // skip 0
+    return targetPos ? targetPos : 1;
   }
 
   /** Handle drag & drop event */
@@ -202,6 +199,7 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges {
     if (event.previousContainer === event.container) {
       // same position, do nothing
       if (event.previousIndex === event.currentIndex) {
+        this.camCardsFacade.resetItemPositions(targetCamCard.rootCamCard, targetCamCard.id);
         return;
       }
 

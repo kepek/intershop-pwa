@@ -218,7 +218,7 @@ export const removeItemFromCamCardSuccess = createAction(
 
 export const resetCamCardItemPositions = createAction(
   '[Cam Cards API] Preset Positions of all Cam Card Items',
-  payload<{ rootCamCardId: string; camCardId: string; gapSize: number }>()
+  payload<{ rootCamCardId: string; camCardId: string }>()
 );
 
 export const resetCamCardItemPositionsSuccess = createAction(

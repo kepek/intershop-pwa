@@ -369,12 +369,11 @@ describe('Cam Card Effects', () => {
     const payload = {
       rootCamCardId: undefined,
       camCardId: '.SKsEQAE4FIAAAFuNiUBWx0d',
-      gapSize: 1000,
     };
 
     beforeEach(() => {
       store$.dispatch(loginUserSuccess({ customer }));
-      when(camCardServiceMock.resetItemPositions(anything(), anyString(), anyNumber())).thenReturn(of(camCardItems));
+      when(camCardServiceMock.resetItemPositions(anything(), anyString())).thenReturn(of(camCardItems));
     });
 
     it('should call the CamCardService for resetItemPositions', done => {
@@ -382,7 +381,7 @@ describe('Cam Card Effects', () => {
       actions$ = of(action);
 
       effects.resetItemPositions$.subscribe(() => {
-        verify(camCardServiceMock.resetItemPositions(payload.rootCamCardId, payload.camCardId, payload.gapSize)).once();
+        verify(camCardServiceMock.resetItemPositions(payload.rootCamCardId, payload.camCardId)).once();
         done();
       });
     });

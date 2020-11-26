@@ -664,7 +664,7 @@ export class CamCardEffects {
       ofType(resetCamCardItemPositions),
       mapToPayload(),
       mergeMap(payload =>
-        this.camCardService.resetItemPositions(payload.rootCamCardId, payload.camCardId, payload.gapSize).pipe(
+        this.camCardService.resetItemPositions(payload.rootCamCardId, payload.camCardId).pipe(
           map(camCardItems =>
             resetCamCardItemPositionsSuccess({
               rootCamCardId: payload.rootCamCardId,
