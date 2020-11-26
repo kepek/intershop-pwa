@@ -21,6 +21,7 @@ export class CamfilBreadcrumbComponent implements OnInit {
   @Input() separator = '❭';
   @Input() showHome = true;
   @Input() account: boolean;
+  @Input() checkout: boolean;
 
   trail$: Observable<BreadcrumbItem[]>;
 

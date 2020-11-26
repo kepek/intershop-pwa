@@ -30,8 +30,13 @@
         item.text || (item.key | translate)
       }}</a>
       <ng-template #noLink>{{ item.text || (item.key | translate) }}</ng-template>
-      <mat-icon *ngIf="!last" class="breadcrumbs-list-separator" aria-hidden="false">navigate_next</mat-icon>
+      <mat-icon *ngIf="!last || checkout" class="breadcrumbs-list-separator" aria-hidden="false"
+        >navigate_next</mat-icon
+      >
       <!-- {{ separator }} -->
+    </li>
+    <li *ngIf="checkout" class="breadcrumbs-list">
+      {{ 'shopping_cart.proceed_to_checkout.button.label' | translate }}
     </li>
   </ol>
 </div>
