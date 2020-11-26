@@ -68,6 +68,7 @@ describe('Camfil Breadcrumb Component', () => {
     it('should render breadcrumbtrail from account and trail when account is active', () => {
       component.showHome = false;
       component.account = true;
+      component.checkout = false;
       when(appFacade.breadcrumbData$).thenReturn(of([{ key: 'account.order_history.link' }]));
       fixture.detectChanges();
       expect(element.textContent).toMatchInlineSnapshot(`"My Accountnavigate_nextOrders"`);
@@ -75,6 +76,7 @@ describe('Camfil Breadcrumb Component', () => {
 
     it('should render breadcrumbtrail from home and account and trail when account is active', () => {
       component.account = true;
+      component.checkout = false;
       when(appFacade.breadcrumbData$).thenReturn(of([{ key: 'account.order_history.link' }]));
       fixture.detectChanges();
       expect(element.textContent).toMatchInlineSnapshot(

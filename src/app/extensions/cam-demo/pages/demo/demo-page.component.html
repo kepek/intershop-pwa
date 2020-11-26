@@ -39,14 +39,17 @@
           <mat-card-content>
             <h2 class="example-h2">camfil-product-attribute</h2>
             <camfil-product-attribute
-              name="camfil.product.your_price.label"
+              [name]="'camfil.product.your_price.label' | translate"
               [value]="product.salePrice | ishPrice"
             ></camfil-product-attribute>
             |
-            <camfil-product-attribute name="camfil.product.id.label" [value]="product.sku"></camfil-product-attribute>
+            <camfil-product-attribute
+              [name]="'camfil.product.id.label' | translate"
+              [value]="product.sku"
+            ></camfil-product-attribute>
             |
             <camfil-product-attribute
-              name="camfil.product.dimensions.label"
+              [name]="'camfil.product.dimensions.label' | translate"
               [value]="product.attributes | camfilDimension"
             ></camfil-product-attribute>
           </mat-card-content>

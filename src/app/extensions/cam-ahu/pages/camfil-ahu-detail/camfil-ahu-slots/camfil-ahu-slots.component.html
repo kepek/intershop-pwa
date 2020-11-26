@@ -7,11 +7,11 @@
           <span class="slot__title">Supply Slot 1</span>
           <div class="attributes">
             <camfil-product-attribute
-              name="{{ 'camfil.ahu.detail.filters.needed' | translate }}"
+              [name]="'camfil.ahu.detail.filters.needed' | translate"
               [value]="2"
             ></camfil-product-attribute>
             <camfil-product-attribute
-              name="{{ 'camfil.ahu.detail.filter.dimension' | translate }}"
+              [name]="'camfil.ahu.detail.filter.dimension' | translate"
               [value]="550"
             ></camfil-product-attribute>
           </div>
@@ -34,15 +34,21 @@
             <ul class="slot-product__attributes">
               <li>
                 <camfil-product-attribute
-                  name="camfil.product.id.label"
+                  [name]="'camfil.product.id.label' | translate"
                   [value]="product.sku"
                 ></camfil-product-attribute>
               </li>
               <li>
-                <camfil-product-attribute name="ISO Class" [value]="1"></camfil-product-attribute>
+                <camfil-product-attribute
+                  [name]="'camfil.product.ISO.class' | translate"
+                  [value]="1"
+                ></camfil-product-attribute>
               </li>
               <li>
-                <camfil-product-attribute name="Efficiency" [value]="2"></camfil-product-attribute>
+                <camfil-product-attribute
+                  [name]="'camfil.product.efficiency' | translate"
+                  [value]="2"
+                ></camfil-product-attribute>
               </li>
               <li>
                 <a href="">
@@ -80,12 +86,12 @@
 
 <ng-template #price>
   <camfil-product-attribute
-    name="camfil.product.list_price.label"
+    [name]="'camfil.product.list_price.label' | translate"
     [value]="product.listPrice | ishPrice"
     class="slot-product__price"
   ></camfil-product-attribute>
   <camfil-product-attribute
-    name="camfil.product.your_price.label"
+    [name]="'camfil.product.your_price.label' | translate"
     [value]="product.salePrice | ishPrice"
     class="slot-product__price"
   ></camfil-product-attribute>

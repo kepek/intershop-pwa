@@ -33,7 +33,7 @@ export class CamfilMiniBasketComponent implements OnInit, OnDestroy {
   goToBasket() {
     this.user$.pipe(take(1), takeUntil(this.destroy$)).subscribe(user => {
       if (user) {
-        this.router.navigate(['/basket']);
+        this.router.navigate(['/checkout']);
       } else {
         this.router.navigate(['/login']);
       }
