@@ -52,7 +52,7 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges {
   // TODO: improve when user locale will be properlyused
   priceSum: Price = { currency: 'USD', value: 0, type: 'Money' };
   private destroy$ = new Subject();
-  POSITION_GAP_SIZE = 1000;
+  POSITION_GAP_SIZE = 999;
 
   constructor(
     private translate: TranslateService,
@@ -225,14 +225,7 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges {
 
       // move camcard
       const sourceCamCardId = document.getElementById(event.previousContainer.id).dataset.camCardId;
-      this.camCardsFacade.moveCamCardItem(
-        sourceCamCardId,
-        targetCamCard.id,
-        event.item.data.id,
-        event.item.data.product.sku,
-        event.item.data.quantity,
-        targetPos
-      );
+      this.camCardsFacade.moveCamCardItem(sourceCamCardId, targetCamCard.id, event.item.data, targetPos);
     }
   }
 }

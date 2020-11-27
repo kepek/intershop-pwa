@@ -93,14 +93,14 @@ export const loadContactsByCustomerSuccess = createAction(
 
 export const loadContactsByCustomerFail = createAction('[Cam Cards API] load Contacts by customer Fail', httpError());
 
-export const loadDeliveryAddresses = createAction('[Cam Cards] load available addressses', payload<{ id: string }>());
+export const loadDeliveryAddresses = createAction('[Cam Cards] load available addresses', payload<{ id: string }>());
 
 export const loadDeliveryAddressesSuccess = createAction(
   '[Cam Cards API] load available addressses Success',
   payload<{ addresses: CamCardAddress[] }>()
 );
 
-export const loadDeliveryAddressesFail = createAction('[Cam Cards API] load available addressses Fail', httpError());
+export const loadDeliveryAddressesFail = createAction('[Cam Cards API] load available addresses Fail', httpError());
 
 export const addProductToCamCard = createAction(
   '[Cam Cards] Add Item to Cam Card',
@@ -108,9 +108,9 @@ export const addProductToCamCard = createAction(
     camCardId: string;
     sku: string;
     quantity?: number;
+    position?: number;
     boxLabel?: string;
     showSuccessToast?: boolean;
-    position?: number;
   }>()
 );
 
@@ -246,8 +246,8 @@ export const moveCamCardFail = createAction('[Cam Cards API] move Cam Card Fail'
 export const moveCamCardItem = createAction(
   '[Cam Cards] Move CamCardItem',
   payload<{
-    source: { id: string; camCardItemId: string };
-    target: { id?: string; name?: string; sku: string; quantity: number; position?: number };
+    source: { id: string; camCardItem: CamCardItem };
+    target: { id?: string; position?: number };
   }>()
 );
 

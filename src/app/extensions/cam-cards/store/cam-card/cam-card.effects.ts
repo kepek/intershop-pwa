@@ -634,14 +634,22 @@ export class CamCardEffects {
       ofType(moveCamCardItem),
       mapToPayload(),
       mergeMap(payload =>
-        this.camCardService.addProductToCamCard(payload.target.id, payload.target.sku, payload.target.quantity).pipe(
-          mergeMap(targetCamCard =>
-            this.camCardService.removeProductFromCamCard(payload.source.id, payload.source.camCardItemId).pipe(
-              map(sourceCamCard => moveCamCardItemSuccess({ sourceCamCard, targetCamCard })),
-              mapErrorToAction(moveCamCardItemFail)
+        this.camCardService
+          .addProductToCamCard(
+            payload.target.id,
+            payload.source.camCardItem.product.sku,
+            payload.source.camCardItem.quantity,
+            payload.source.camCardItem.comment.label,
+            payload.target.position
+          )
+          .pipe(
+            mergeMap(targetCamCard =>
+              this.camCardService.removeProductFromCamCard(payload.source.id, payload.source.camCardItem.id).pipe(
+                map(sourceCamCard => moveCamCardItemSuccess({ sourceCamCard, targetCamCard })),
+                mapErrorToAction(moveCamCardItemFail)
+              )
             )
           )
-        )
       )
     )
   );

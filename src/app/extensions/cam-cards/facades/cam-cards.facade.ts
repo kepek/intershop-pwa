@@ -123,9 +123,10 @@ export class CamCardsFacade {
     sku: string,
     quantity?: number,
     boxLabel?: string,
+    position?: number,
     showSuccessToast?: boolean
   ): void {
-    this.store.dispatch(addProductToCamCard({ camCardId, sku, quantity, boxLabel, showSuccessToast }));
+    this.store.dispatch(addProductToCamCard({ camCardId, sku, quantity, position, boxLabel, showSuccessToast }));
   }
 
   addProductToSubCamCard(
@@ -198,18 +199,12 @@ export class CamCardsFacade {
     );
   }
 
-  moveCamCardItem(
-    sourcecamCardId: string,
-    targetcamCardId: string,
-    camCardItemId: string,
-    sku: string,
-    quantity: number,
-    position?: number
-  ): void {
+  moveCamCardItem(sourcecamCardId: string, targetcamCardId: string, camCardItem: CamCardItem, position?: number): void {
+    console.log('🚀 ~ file: cam-cards.facade.ts ~ line 214 ~ CamCardsFacade ~ position', position);
     this.store.dispatch(
       moveCamCardItem({
-        source: { id: sourcecamCardId, camCardItemId },
-        target: { id: targetcamCardId, sku, quantity, position },
+        source: { id: sourcecamCardId, camCardItem },
+        target: { id: targetcamCardId, position },
       })
     );
   }
