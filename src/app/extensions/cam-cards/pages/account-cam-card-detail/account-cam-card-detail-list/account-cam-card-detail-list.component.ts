@@ -199,7 +199,6 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges {
     if (event.previousContainer === event.container) {
       // same position, do nothing
       if (event.previousIndex === event.currentIndex) {
-        this.camCardsFacade.resetItemPositions(targetCamCard);
         return;
       }
       const items: CamCardItem[] = Object.keys(event.container.data).map(i => event.container.data[i]);
