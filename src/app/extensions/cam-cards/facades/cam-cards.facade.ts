@@ -195,7 +195,6 @@ export class CamCardsFacade {
   }
 
   moveCamCardItem(sourcecamCardId: string, targetcamCardId: string, camCardItem: CamCardItem, position?: number): void {
-    console.log('🚀 ~ file: cam-cards.facade.ts ~ line 214 ~ CamCardsFacade ~ position', position);
     this.store.dispatch(
       moveCamCardItem({
         source: { id: sourcecamCardId, camCardItem },

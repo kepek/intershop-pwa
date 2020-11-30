@@ -257,35 +257,8 @@ export const camCardReducer = createReducer(
 
   on(resetCamCardItemPositionsSuccess, (state: CamCardState, action) => {
     const { camCard, camCardItems } = action.payload;
-
-    if (!camCard.rootCamCard) {
-      return {
-        ...state,
-        entities: {
-          ...state.entities,
-          [camCard.id]: {
-            ...state.entities[camCard.id],
-            camCardItems,
-          },
-        },
-      };
-    } else {
-      const oldSubs = state.entities[camCard.rootCamCard]?.subCamCards || [];
-      const oldSub = oldSubs.find(sub => sub.id === camCard.id);
-      const newSub = { ...oldSub, camCardItems };
-      const newSubs = oldSubs.map(sub => (sub.id === camCard.id ? newSub : sub));
-
-      return {
-        ...state,
-        entities: {
-          ...state.entities,
-          [camCard.rootCamCard]: {
-            ...state.entities[camCard.rootCamCard],
-            subCamCards: newSubs,
-          },
-        },
-      };
-    }
+    const updatedCamcard: CamCard = { ...camCard, camCardItems };
+    return insertCamCard(state, updatedCamcard);
   }),
 
   on(updateCamCardContactsSuccess, (state: CamCardState, action) => {

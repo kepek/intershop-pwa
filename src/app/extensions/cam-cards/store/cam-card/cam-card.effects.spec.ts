@@ -366,10 +366,13 @@ describe('Cam Card Effects', () => {
     });
   });
 
-  xdescribe('resetItemPositions$', () => {
+  describe('resetItemPositions$', () => {
     const payload = {
-      rootCamCardId: undefined,
-      camCardId: '.SKsEQAE4FIAAAFuNiUBWx0d',
+      camCard: {
+        name: 'testing cam cards',
+        id: '.SKsEQAE4FIAAAFuNiUBWx0d',
+        rootCamCard: undefined,
+      } as CamCard,
     };
 
     beforeEach(() => {
@@ -382,7 +385,7 @@ describe('Cam Card Effects', () => {
       actions$ = of(action);
 
       effects.resetItemPositions$.subscribe(() => {
-        verify(camCardServiceMock.resetItemPositions(payload.rootCamCardId, payload.camCardId)).once();
+        verify(camCardServiceMock.resetItemPositions(payload.camCard.rootCamCard, payload.camCard.id)).once();
         done();
       });
     });
