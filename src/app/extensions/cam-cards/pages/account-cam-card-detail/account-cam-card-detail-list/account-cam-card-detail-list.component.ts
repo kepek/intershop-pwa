@@ -150,7 +150,7 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges {
     };
 
     const rootCamCardId = this.camCard.id === camcardId ? undefined : this.camCard.id;
-    this.camCardsFacade.updateCamCardProductDispatch(rootCamCardId, camcardId, newItem);
+    this.camCardsFacade.updateCamCardProduct(rootCamCardId, camcardId, newItem);
   }
 
   /** dispatch edit request */
@@ -159,14 +159,14 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges {
   }
 
   /** Returns the new position of the dropped item. Resets gaps if too small */
-  getTargetPosition(previousIndex, currentIndex, items, targetCamCardId, rootCamCardId) {
+  getTargetPosition(previousIndex, currentIndex, items, targetCamCard) {
     // sort first because currentIndex contains only the 'visible' position
     items.sort((a, b) => (a.position < b.position ? -1 : 1));
     let predecessorPos;
     let successorPos;
     let targetPos;
 
-    if (!previousIndex || previousIndex > currentIndex) {
+    if (previousIndex === undefined || previousIndex > currentIndex) {
       /** moving item upwards or to another camcard */
       predecessorPos = items[currentIndex - 1]?.position;
       successorPos = items[currentIndex]?.position;
@@ -185,7 +185,7 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges {
     } else {
       const gap = successorPos - predecessorPos;
       if (gap <= 2) {
-        this.camCardsFacade.resetItemPositions(rootCamCardId, targetCamCardId);
+        this.camCardsFacade.resetItemPositions(targetCamCard);
       }
       targetPos = Math.round(gap / 2) + predecessorPos;
     }
@@ -199,29 +199,16 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges {
     if (event.previousContainer === event.container) {
       // same position, do nothing
       if (event.previousIndex === event.currentIndex) {
-        this.camCardsFacade.resetItemPositions(targetCamCard.rootCamCard, targetCamCard.id);
+        this.camCardsFacade.resetItemPositions(targetCamCard);
         return;
       }
-
       const items: CamCardItem[] = Object.keys(event.container.data).map(i => event.container.data[i]);
-      const targetPos = this.getTargetPosition(
-        event.previousIndex,
-        event.currentIndex,
-        items,
-        targetCamCard.id,
-        targetCamCard.rootCamCard
-      );
+      const targetPos = this.getTargetPosition(event.previousIndex, event.currentIndex, items, targetCamCard);
       this.updateProductPosition(event.item.data, targetCamCard.id, targetPos);
     } else {
       // dropped inside another camcard
       const items: CamCardItem[] = Object.keys(event.container.data).map(i => event.container.data[i]);
-      const targetPos = this.getTargetPosition(
-        undefined,
-        event.currentIndex,
-        items,
-        targetCamCard.id,
-        targetCamCard.rootCamCard
-      );
+      const targetPos = this.getTargetPosition(undefined, event.currentIndex, items, targetCamCard);
 
       // move camcard
       const sourceCamCardId = document.getElementById(event.previousContainer.id).dataset.camCardId;

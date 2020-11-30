@@ -85,6 +85,31 @@ export const initialState: CamCardState = camCardAdapter.getInitialState({
   stickyToolbar: false,
 });
 
+/** Returns a new state with replaced camcard or subcamcard */
+function insertCamCard(state, camCard) {
+  const entities = state.entities;
+  const oldSubs = entities[camCard.rootCamCard]?.subCamCards || [];
+  const oldSub = oldSubs.find(sub => sub.id === camCard.id);
+  let items: CamCard[] | CamCardItem[] = camCard.camCardItems;
+  if (camCard.rootCamCard) {
+    const newSub = { ...oldSub, camCardItems: items };
+    items = [...oldSubs].map(sub => (sub.id === camCard.id ? newSub : sub));
+  }
+
+  const prop = camCard.rootCamCard ? 'subCamCards' : 'camCardItems';
+
+  return {
+    ...state,
+    entities: {
+      ...state.entities,
+      [camCard.rootCamCard || camCard.id]: {
+        ...state.entities[camCard.rootCamCard || camCard.id],
+        [prop]: items,
+      },
+    },
+  };
+}
+
 export const camCardReducer = createReducer(
   initialState,
   setLoadingOn(
@@ -224,68 +249,38 @@ export const camCardReducer = createReducer(
       };
     }
 
-    /** Returns a new state with replaced camcard/subcamcard */
-    function replaceCamCardItems(oldState, camCard) {
-      const entities = oldState.entities;
-      const oldSubs = entities[camCard.rootCamCard]?.subCamCards || [];
-      const oldSub = oldSubs.find(sub => sub.id === camCard.id);
-      let items: CamCard[] | CamCardItem[] = camCard.camCardItems;
-      if (camCard.rootCamCard) {
-        const newSub = { ...oldSub, camCardItems: items };
-        items = [...oldSubs].map(sub => (sub.id === camCard.id ? newSub : sub));
-      }
-
-      const prop = camCard.rootCamCard ? 'subCamCards' : 'camCardItems';
-
-      return {
-        ...oldState,
-        entities: {
-          ...oldState.entities,
-          [camCard.rootCamCard || camCard.id]: {
-            ...oldState.entities[camCard.rootCamCard || camCard.id],
-            [prop]: items,
-          },
-        },
-      };
-    }
-
     return {
-      ...replaceCamCardItems(replaceCamCardItems(state, targetCamCard), sourceCamCard),
+      ...insertCamCard(insertCamCard(state, targetCamCard), sourceCamCard),
       loading: false,
     };
   }),
 
   on(resetCamCardItemPositionsSuccess, (state: CamCardState, action) => {
-    const { rootCamCardId, camCardId, camCardItems } = action.payload;
-    if (!camCardItems) {
-      return {
-        ...state,
-      };
-    }
+    const { camCard, camCardItems } = action.payload;
 
-    if (!rootCamCardId) {
+    if (!camCard.rootCamCard) {
       return {
         ...state,
         entities: {
           ...state.entities,
-          [camCardId]: {
-            ...state.entities[camCardId],
+          [camCard.id]: {
+            ...state.entities[camCard.id],
             camCardItems,
           },
         },
       };
     } else {
-      const oldSubs = state.entities[rootCamCardId]?.subCamCards || [];
-      const oldSub = oldSubs.find(sub => sub.id === camCardId);
+      const oldSubs = state.entities[camCard.rootCamCard]?.subCamCards || [];
+      const oldSub = oldSubs.find(sub => sub.id === camCard.id);
       const newSub = { ...oldSub, camCardItems };
-      const newSubs = oldSubs.map(sub => (sub.id === camCardId ? newSub : sub));
+      const newSubs = oldSubs.map(sub => (sub.id === camCard.id ? newSub : sub));
 
       return {
         ...state,
         entities: {
           ...state.entities,
-          [rootCamCardId]: {
-            ...state.entities[rootCamCardId],
+          [camCard.rootCamCard]: {
+            ...state.entities[camCard.rootCamCard],
             subCamCards: newSubs,
           },
         },

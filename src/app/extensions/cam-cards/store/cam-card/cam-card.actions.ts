@@ -110,6 +110,7 @@ export const addProductToCamCard = createAction(
     quantity?: number;
     position?: number;
     boxLabel?: string;
+    comment?: string;
     showSuccessToast?: boolean;
   }>()
 );
@@ -133,11 +134,6 @@ export const addProductToNewSubCamCard = createAction(
 
 export const updateCamCardProduct = createAction(
   '[Cam Cards] Update Cam Card Product',
-  payload<{ rootCamCard: string; camCardId: string; camCardItem: CamCardItem }>()
-);
-
-export const updateCamCardProductDispatch = createAction(
-  '[Cam Cards] Update Cam Card Product Dispatch',
   payload<{ rootCamCard: string; camCardId: string; camCardItem: CamCardItem }>()
 );
 
@@ -218,12 +214,12 @@ export const removeItemFromCamCardSuccess = createAction(
 
 export const resetCamCardItemPositions = createAction(
   '[Cam Cards API] Preset Positions of all Cam Card Items',
-  payload<{ rootCamCardId: string; camCardId: string }>()
+  payload<{ camCard: CamCard }>()
 );
 
 export const resetCamCardItemPositionsSuccess = createAction(
   '[Cam Cards API] Preset Positions of all Cam Card Items Success',
-  payload<{ rootCamCardId: string; camCardId: string; camCardItems: CamCardItem[] }>()
+  payload<{ camCard: CamCard; camCardItems: CamCardItem[] }>()
 );
 
 export const resetCamCardItemPositionsFail = createAction(

@@ -254,6 +254,7 @@ export class CamCardService {
     sku: string,
     quantity: number,
     boxLabel?: string,
+    comment?: string,
     position?: number
   ): Observable<CamCard> {
     return this.apiService
@@ -263,6 +264,7 @@ export class CamCardService {
         product: { sku },
         comment: {
           label: boxLabel,
+          text: comment,
         },
       })
       .pipe(concatMap(() => this.getCamCard(camCardId)));

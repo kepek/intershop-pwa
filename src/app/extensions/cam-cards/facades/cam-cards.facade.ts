@@ -43,7 +43,6 @@ import {
   updateCamCard,
   updateCamCardContacts,
   updateCamCardProduct,
-  updateCamCardProductDispatch,
   updateSubCamCard,
 } from '../store/cam-card';
 
@@ -164,10 +163,6 @@ export class CamCardsFacade {
     this.store.dispatch(updateCamCardProduct({ rootCamCard, camCardId, camCardItem }));
   }
 
-  updateCamCardProductDispatch(rootCamCard: string, camCardId: string, camCardItem: CamCardItem): void {
-    this.store.dispatch(updateCamCardProductDispatch({ rootCamCard, camCardId, camCardItem }));
-  }
-
   updateCamCardContacts(camCardId: string, camCardContacts: CamCardContact[]): void {
     this.store.dispatch(updateCamCardContacts({ camCardId, camCardContacts }));
   }
@@ -221,7 +216,7 @@ export class CamCardsFacade {
     this.store.dispatch(unselectCamCard());
   }
 
-  resetItemPositions(rootCamCardId: string, camCardId: string) {
-    this.store.dispatch(resetCamCardItemPositions({ rootCamCardId, camCardId }));
+  resetItemPositions(camCard: CamCard) {
+    this.store.dispatch(resetCamCardItemPositions({ camCard }));
   }
 }

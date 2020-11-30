@@ -93,7 +93,6 @@ import {
   updateCamCardContactsSuccess,
   updateCamCardFail,
   updateCamCardProduct,
-  updateCamCardProductDispatch,
   updateCamCardProductSuccess,
   updateCamCardSuccess,
   updateContactsWhileMoveCamCardFail,
@@ -380,7 +379,14 @@ export class CamCardEffects {
       mapToPayload(),
       mergeMap(payload =>
         this.camCardService
-          .addProductToCamCard(payload.camCardId, payload.sku, payload.quantity, payload.boxLabel, payload.position)
+          .addProductToCamCard(
+            payload.camCardId,
+            payload.sku,
+            payload.quantity,
+            payload.boxLabel,
+            payload.comment,
+            payload.position
+          )
           .pipe(
             mergeMap(camCard =>
               payload.showSuccessToast
@@ -506,33 +512,9 @@ export class CamCardEffects {
     )
   );
 
-  updateCamCardProduct$ = createEffect(
-    () =>
-      this.actions$.pipe(
-        ofType(updateCamCardProduct),
-        mapToPayload(),
-        mergeMap(payload =>
-          this.camCardService.updateCamCardProduct(payload.camCardId, payload.camCardItem).pipe(
-            mergeMap(camCardItem => {
-              const { rootCamCard, camCardId } = payload;
-              return [
-                updateCamCardProductSuccess({ rootCamCard, camCardId, camCardItem }),
-                displaySuccessMessage({
-                  message: 'camfil.account.cam_cards.update.product.confirmation',
-                  messageParams: { 0: camCardItem.product.name },
-                }),
-              ];
-            }),
-            mapErrorToAction(updateCamCardFail)
-          )
-        )
-      ),
-    { dispatch: false }
-  );
-
-  updateCamCardProductDispatch$ = createEffect(() =>
+  updateCamCardProduct$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(updateCamCardProductDispatch),
+      ofType(updateCamCardProduct),
       mapToPayload(),
       mergeMap(payload =>
         this.camCardService.updateCamCardProduct(payload.camCardId, payload.camCardItem).pipe(
@@ -640,6 +622,7 @@ export class CamCardEffects {
             payload.source.camCardItem.product.sku,
             payload.source.camCardItem.quantity,
             payload.source.camCardItem.comment.label,
+            payload.source.camCardItem.comment.text,
             payload.target.position
           )
           .pipe(
@@ -672,11 +655,10 @@ export class CamCardEffects {
       ofType(resetCamCardItemPositions),
       mapToPayload(),
       mergeMap(payload =>
-        this.camCardService.resetItemPositions(payload.rootCamCardId, payload.camCardId).pipe(
+        this.camCardService.resetItemPositions(payload.camCard.rootCamCard, payload.camCard.id).pipe(
           map(camCardItems =>
             resetCamCardItemPositionsSuccess({
-              rootCamCardId: payload.rootCamCardId,
-              camCardId: payload.camCardId,
+              camCard: payload.camCard,
               camCardItems,
             })
           ),
