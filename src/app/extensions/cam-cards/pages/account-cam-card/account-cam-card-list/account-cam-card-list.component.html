@@ -9,7 +9,7 @@
   <mat-card-content>
     <camfil-account-cam-card-toolbar
       (addCamCard)="add($event)"
-      (addSelectedItemsToCart)="addSelectedItemsToCart()"
+      (addSelectedItemsToCart)="addToCart(notBuyableElemntsDialog)"
       (openMoveCamCardDialog)="move()"
       [isSticky]="isStickyCamCardToolbar$ | async"
       [checkedCamCards]="checkedCamCards.length > 0"
@@ -28,7 +28,7 @@
                 class="float-right"
                 (click)="$event.stopPropagation()"
                 (change)="camCardToggle(camCards, $event)"
-                *ngIf="camCards.itemsCount > 0"
+                *ngIf="camCards.itemsCount > 0 && !maintenance(camCards, ['INACTIVE'])"
                 [checked]="isCamCardChecked(camCards)"
                 [indeterminate]="isCamCardIndeterminate(camCards)"
               >
@@ -109,7 +109,7 @@
                       </strong>
                       <mat-checkbox
                         (change)="camCardToggle(subCamCard, $event)"
-                        *ngIf="subCamCard.itemsCount > 0"
+                        *ngIf="subCamCard.itemsCount > 0 && !maintenance(subCamCard, ['INACTIVE'])"
                         [checked]="isCamCardChecked(subCamCard)"
                         [indeterminate]="isCamCardIndeterminate(subCamCard)"
                       >
@@ -166,24 +166,6 @@
                 ></a>
               </ng-container>
               <ng-container *ngIf="column === 'edit'">
-                <a class="btn-tool d-inline-flex align-top">
-                  <camfil-product-add-to-basket
-                    displayType="icon"
-                    [product]="dummyProduct"
-                    [disabled]="camCard.itemsCount === 0"
-                    class="text-primary p-0"
-                    (click)="$event.stopPropagation()"
-                    (productToBasket)="addCamCardToCart(camCard)"
-                  ></camfil-product-add-to-basket>
-                </a>
-                <a
-                  class="btn-tool"
-                  title="{{ 'camfil.account.cam_cards.list.link.remove' | translate }}"
-                  (click)="openDeleteConfirmationDialog(camCard, deleteDialog); $event.stopPropagation()"
-                  data-testing-id="delete-cam-card"
-                >
-                  <mat-icon svgIcon="delete"></mat-icon>
-                </a>
                 <ng-container *ngTemplateOutlet="editIcon; context: { camCard: camCard }"></ng-container>
               </ng-container>
             </td>
@@ -202,7 +184,7 @@
               <mat-checkbox
                 (click)="$event.stopPropagation()"
                 (change)="camCardToggle(camCard, $event)"
-                *ngIf="camCard.itemsCount > 0"
+                *ngIf="camCard.itemsCount > 0 && !maintenance(camCard, ['INACTIVE'])"
                 [checked]="isCamCardChecked(camCard)"
                 [indeterminate]="isCamCardIndeterminate(camCard)"
               >
@@ -235,7 +217,7 @@
                     </strong>
                     <mat-checkbox
                       (change)="camCardToggle(subCamCard, $event)"
-                      *ngIf="subCamCard.itemsCount > 0"
+                      *ngIf="subCamCard.itemsCount > 0 && !maintenance(subCamCard, ['INACTIVE'])"
                       [checked]="isCamCardChecked(subCamCard)"
                       [indeterminate]="isCamCardIndeterminate(subCamCard)"
                     >
@@ -268,20 +250,16 @@
 </mat-card>
 
 <ng-template #camCardRow let-camCard="camCard">
-  <div
-    *ngFor="let camCardItem of camCard.camCardItems; index as i"
-    class="d-flex align-items-center justify-content-between cam-card-product"
-  >
+  <div *ngFor="let camCardItem of camCard.camCardItems; index as i" class="cam-card-product">
     <camfil-account-cam-card-detail-line-item
-      [camCardItemData]="camCardItem"
-      [currentCamCard]="camCard"
-      [index]="i + 1"
       mode="view"
-    ></camfil-account-cam-card-detail-line-item>
-    <mat-checkbox
+      [index]="i + 1"
+      [currentCamCard]="camCard"
+      [camCardItemData]="camCardItem"
+      [showCheckbox]="!maintenance(camCard, ['INACTIVE'])"
       [checked]="isProductChecked(camCardItem.id)"
-      (change)="handleProductCheckbox(camCardItem, camCard, $event)"
-    ></mat-checkbox>
+      (changeCheckbox)="handleProductCheckbox(camCardItem, camCard, $event)"
+    ></camfil-account-cam-card-detail-line-item>
   </div>
 </ng-template>
 
@@ -289,12 +267,21 @@
   <a
     *ngIf="maintenance(camCard, ['MAINTENANCE', 'ACTIVE'])"
     class="btn-tool"
-    [title]="'camfil.account.cam_card.maintenance.edit.text' | translate"
+    [attr.title]="'camfil.account.cam_cards.maintenance.edit.text' | translate"
     data-testing-id="cam-card-details-edit"
     [routerLink]="'/account/cam-cards/' + camCard.id"
     (click)="$event.stopPropagation()"
   >
-    <mat-icon svgIcon="edit"></mat-icon>
+    <mat-icon svgIcon="edit" *ngIf="maintenance(camCard, ['ACTIVE'])"></mat-icon>
+    <mat-icon
+      #tooltip="matTooltip"
+      matTooltip="{{'camfil.account.cam_cards.maintenance.status.tooltip' | translate}}"
+      matTooltipPosition="below"
+      matTooltipClass="cam-card-tooltip"
+      svgIcon="maintenance"
+      *ngIf="maintenance(camCard, ['MAINTENANCE'])"
+      [title]="'camfil.account.cam_cards.maintenance.status.text' | translate"
+    ></mat-icon>
   </a>
   <mat-icon
     class="btn-tool"
@@ -305,7 +292,7 @@
   <mat-icon
     class="btn-tool"
     *ngIf="maintenance(camCard, ['INACTIVE'])"
-    svgIcon="error"
+    svgIcon="inactive"
     [title]="'camfil.account.cam_cards.maintenance.inactive.text' | translate"
   ></mat-icon>
 </ng-template>
@@ -315,13 +302,20 @@
 </ng-template>
 
 <camfil-modal-dialog
-  #deleteDialog
-  (confirmed)="delete($event)"
+  #notBuyableElemntsDialog
+  (confirmed)="addSelectedItemsToCart()"
   [options]="{
-    confirmText: 'camfil.account.cam_card.delete.button.text' | translate,
-    rejectText: 'camfil.account.cancel.button.label' | translate
+    titleText: 'camfil.account.cam_card.trying_add_to_cart_not_buyable_elements.header' | translate,
+    confirmText: 'camfil.account.cam_card.trying_add_to_cart_not_buyable_elements.btn' | translate
   }"
-  >{{ 'camfil.account.cam_card.delete.do_you_really.text' | translate }}</camfil-modal-dialog
+  >{{ 'camfil.account.cam_card.trying_add_to_cart_not_buyable_elements.text' | translate }}
+  <div *ngFor="let cc of notBuyableElemnts">
+    <b>{{ cc.name }} ({{ cc.isChild ? 'camfil.account.cam_card.trying_add_to_cart_not_buyable_elements.section' : 'CamCard' | translate }})</b>
+    <div *ngFor="let item of cc.items">
+      {{ item.product.name }}
+    </div>
+  </div>
+  </camfil-modal-dialog
 >
 
 <ish-loading *ngIf="loading"></ish-loading>

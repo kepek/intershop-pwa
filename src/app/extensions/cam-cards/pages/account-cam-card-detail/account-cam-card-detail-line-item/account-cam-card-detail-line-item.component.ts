@@ -49,6 +49,11 @@ export class AccountCamCardDetailLineItemComponent implements OnChanges, OnInit,
   addToCartForm: FormGroup;
   selectItemForm: FormGroup;
   product$: Observable<ProductView>;
+
+  @Input() showCheckbox: boolean;
+  @Input() checked: boolean;
+  @Output() changeCheckbox = new EventEmitter<Event>();
+
   private destroy$ = new Subject<void>();
 
   ngOnInit() {
@@ -72,6 +77,10 @@ export class AccountCamCardDetailLineItemComponent implements OnChanges, OnInit,
     this.addToCartForm.valueChanges
       .pipe(debounceTime(500), takeUntil(this.destroy$))
       .subscribe(val => this.updateProductQuantity(this.camCardItemData, val.quantity));
+  }
+
+  changeCheck(event) {
+    this.changeCheckbox.emit(event);
   }
 
   /** init form in the beginning */

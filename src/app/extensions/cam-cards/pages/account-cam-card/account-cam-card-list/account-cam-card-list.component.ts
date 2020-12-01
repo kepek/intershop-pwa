@@ -18,9 +18,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
 import { Observable, Subject } from 'rxjs';
-import { take, takeUntil } from 'rxjs/operators';
+import { take } from 'rxjs/operators';
 
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
@@ -61,8 +60,6 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
   @Output() addCamCard = new EventEmitter<CamCard>();
   @ViewChild(MatSort) sort: MatSort;
 
-  dummyProduct = { sku: 'dummy', inStock: true, availability: true };
-
   isStickyCamCardToolbar$: Observable<boolean>;
   camCardsProcessed: MatTableDataSource<CamCard>;
   columnsToDisplay = [
@@ -80,13 +77,13 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
   isMobileView = false;
   loading = true;
   isSubOpen = [];
+  notBuyableElemnts = [];
   maintenance = CamCardHelper.maintenance;
   private fragment: string;
 
   private destroy$ = new Subject();
 
   constructor(
-    private translate: TranslateService,
     private productFacade: ShoppingFacade,
     private camCardsFacade: CamCardsFacade,
     private changeDetectorRefs: ChangeDetectorRef,
@@ -190,16 +187,45 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
   }
 
   /** addToCartItems */
-  addCamCardToCart(camCard: CamCard) {
-    // TODO: improve when NEW order/addToCartWay will be inProgress
-    camCard.camCardItems?.map(item => {
-      this.productFacade.addProductToBasket(item.product.sku, item.quantity);
-    });
-    camCard.subCamCards?.map(sub => {
-      sub.camCardItems?.map(item => {
-        this.productFacade.addProductToBasket(item.product.sku, item.quantity);
-      });
-    });
+  addToCart(modal: CamfilModalDialogComponent<any>) {
+    const notBuyableElemnts = this.camCardsProcessed.data
+      // Checked CamCards
+      .reduce((output, camcard) => {
+        if (this.isCamCardChecked(camcard)) {
+          output.push(camcard);
+        } else {
+          const checkedSubs = camcard.subCamCards.filter(sub => this.isCamCardChecked(sub));
+          if (checkedSubs.length) {
+            output.push(checkedSubs);
+          }
+        }
+        return output;
+      }, [])
+      // mapping checked CamCards for view
+      .map((cc: CamCard) => {
+        const allNotAvailableItems = cc.camCardItems.filter(item => !item.product.available);
+        cc.subCamCards.forEach(({ camCardItems }) => {
+          camCardItems.forEach(item => {
+            if (!item.product.available) {
+              allNotAvailableItems.push(item);
+            }
+          });
+        });
+        // clean up duplicate products
+        const items = allNotAvailableItems.filter(
+          (item, i, arr) => arr.findIndex(el => el.product.sku === item.product.sku) === i
+        );
+        return { name: cc.name, isChild: !!cc.rootCamCard, items };
+      })
+      // remove empty camCards (without not available items)
+      .filter(item => item.items.length);
+
+    if (notBuyableElemnts.length) {
+      this.notBuyableElemnts = notBuyableElemnts;
+      this.notAvailbaleProdList(modal);
+    } else {
+      this.addSelectedItemsToCart();
+    }
   }
 
   addSelectedItemsToCart() {
@@ -207,6 +233,10 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
     Object.values(this.productsChecked).forEach((val: ProductChecked) =>
       this.productFacade.addProductToBasket(val.sku, val.quantity)
     );
+  }
+
+  notAvailbaleProdList(modal: CamfilModalDialogComponent<any>) {
+    modal.show();
   }
 
   /** Emits the id of the cam cards to delete. */
@@ -227,16 +257,6 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
     });
   }
 
-  /** Determine the heading of the delete modal and opens the modal. */
-  openDeleteConfirmationDialog(camCard: CamCard, modal: CamfilModalDialogComponent<string>) {
-    this.translate
-      .get('camfil.account.cam_cards.delete_dialog.header', { 0: camCard.name })
-      .pipe(take(1), takeUntil(this.destroy$))
-      .subscribe(res => (modal.options.titleText = res));
-
-    modal.show(camCard.id);
-  }
-
   openUserAccessDialog(camCard: CamCard): void {
     this.dialog.open(UserAccessCamCardDialogComponent, {
       width: '330px',
@@ -251,10 +271,14 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
   }
   isCamCardChecked({ itemsCount, camCardItems, subCamCards }: CamCard) {
     const items = itemsCount > 0;
-    const itemsChecked = camCardItems ? camCardItems.every(item => this.isProductChecked(item.id)) : true;
+    const itemsChecked = camCardItems
+      ? camCardItems.filter(item => item.product.available).every(item => this.isProductChecked(item.id))
+      : true;
     const itemsInSubChecked = subCamCards
       ? subCamCards.every(sub =>
-          sub.camCardItems ? sub.camCardItems.every(item => this.isProductChecked(item.id)) : true
+          sub.camCardItems
+            ? sub.camCardItems.filter(item => item.product.available).every(item => this.isProductChecked(item.id))
+            : true
         )
       : true;
     return items && itemsChecked && itemsInSubChecked;
@@ -277,7 +301,7 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
 
   handleProductCheck(item: CamCardItem, camCard: CamCard, event: MatCheckboxChange) {
     const productOnList = this.productsChecked[item.id];
-    if (event.checked && !productOnList) {
+    if (event.checked && !productOnList && item.product.available) {
       const element: ProductChecked = {
         camCardId: camCard.id,
         camCardRoot: camCard.rootCamCard,
