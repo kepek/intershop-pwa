@@ -16,7 +16,7 @@ import { CustomerStoreModule } from 'ish-core/store/customer/customer-store.modu
 import { loginUserSuccess } from 'ish-core/store/customer/user';
 import { makeHttpError } from 'ish-core/utils/dev/api-service-utils';
 
-import { CamCard } from '../../models/cam-card/cam-card.model';
+import { CamCard, CamCardItemComment } from '../../models/cam-card/cam-card.model';
 import { CamCardService } from '../../services/cam-card/cam-card.service';
 import { CamCardsStoreModule } from '../cam-cards-store.module';
 
@@ -311,14 +311,17 @@ describe('Cam Card Effects', () => {
       camCardId: '.SKsEQAE4FIAAAFuNiUBWx0d',
       sku: 'sku',
       quantity: 2,
-      boxLabel: '',
+      comment: {
+        label: 'boxLabel',
+        text: 'text',
+      } as CamCardItemComment,
       position: 1000,
     };
 
     beforeEach(() => {
       store$.dispatch(loginUserSuccess({ customer }));
       when(
-        camCardServiceMock.addProductToCamCard(anyString(), anyString(), anyNumber(), anyString(), anyNumber())
+        camCardServiceMock.addProductToCamCard(anyString(), anyString(), anyNumber(), anything(), anyNumber())
       ).thenReturn(of(camCards[0]));
     });
 
@@ -332,7 +335,6 @@ describe('Cam Card Effects', () => {
             payload.camCardId,
             payload.sku,
             payload.quantity,
-            payload.boxLabel,
             payload.comment,
             payload.position
           )

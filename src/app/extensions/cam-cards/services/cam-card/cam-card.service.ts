@@ -13,6 +13,7 @@ import {
   CamCardContact,
   CamCardCustomerData,
   CamCardItem,
+  CamCardItemComment,
 } from '../../models/cam-card/cam-card.model';
 
 @Injectable({ providedIn: 'root' })
@@ -246,15 +247,14 @@ export class CamCardService {
    * @param camCardId
    * @param sku           The product sku.
    * @param quantity      The products quantity
-   * @param boxLabel      Comment label
+   * @param comment      Comment label
    * @returns             The changed cam_cards.
    */
   addProductToCamCard(
     camCardId: string,
     sku: string,
     quantity: number,
-    boxLabel?: string,
-    comment?: string,
+    comment?: CamCardItemComment,
     position?: number
   ): Observable<CamCard> {
     return this.apiService
@@ -262,10 +262,7 @@ export class CamCardService {
         quantity,
         position,
         product: { sku },
-        comment: {
-          label: boxLabel,
-          text: comment,
-        },
+        comment,
       })
       .pipe(concatMap(() => this.getCamCard(camCardId)));
   }

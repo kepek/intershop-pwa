@@ -10,6 +10,7 @@ import {
   CamCardContact,
   CamCardCustomer,
   CamCardItem,
+  CamCardItemComment,
 } from '../models/cam-card/cam-card.model';
 import {
   addBasketToNewCamCard,
@@ -121,11 +122,11 @@ export class CamCardsFacade {
     camCardId: string,
     sku: string,
     quantity?: number,
-    boxLabel?: string,
+    comment?: CamCardItemComment,
     position?: number,
     showSuccessToast?: boolean
   ): void {
-    this.store.dispatch(addProductToCamCard({ camCardId, sku, quantity, position, boxLabel, showSuccessToast }));
+    this.store.dispatch(addProductToCamCard({ camCardId, sku, quantity, position, comment, showSuccessToast }));
   }
 
   addProductToSubCamCard(

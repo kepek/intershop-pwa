@@ -177,7 +177,7 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges {
     }
 
     if (predecessorPos === undefined && successorPos === undefined) {
-      targetPos = 1;
+      return; // 1000, set by ICM
     } else if (predecessorPos === undefined) {
       targetPos = successorPos - this.POSITION_GAP_SIZE;
     } else if (successorPos === undefined) {

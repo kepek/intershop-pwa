@@ -8,6 +8,7 @@ import {
   CamCardContact,
   CamCardCustomer,
   CamCardItem,
+  CamCardItemComment,
 } from '../../models/cam-card/cam-card.model';
 
 export const loadCamCards = createAction('[Cam Cards Internal] Load Cam Cards');
@@ -109,8 +110,7 @@ export const addProductToCamCard = createAction(
     sku: string;
     quantity?: number;
     position?: number;
-    boxLabel?: string;
-    comment?: string;
+    comment?: CamCardItemComment;
     showSuccessToast?: boolean;
   }>()
 );

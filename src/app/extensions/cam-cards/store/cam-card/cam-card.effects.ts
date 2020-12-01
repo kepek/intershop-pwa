@@ -379,14 +379,7 @@ export class CamCardEffects {
       mapToPayload(),
       mergeMap(payload =>
         this.camCardService
-          .addProductToCamCard(
-            payload.camCardId,
-            payload.sku,
-            payload.quantity,
-            payload.boxLabel,
-            payload.comment,
-            payload.position
-          )
+          .addProductToCamCard(payload.camCardId, payload.sku, payload.quantity, payload.comment, payload.position)
           .pipe(
             mergeMap(camCard =>
               payload.showSuccessToast
@@ -621,8 +614,7 @@ export class CamCardEffects {
             payload.target.id,
             payload.source.camCardItem.product.sku,
             payload.source.camCardItem.quantity,
-            payload.source.camCardItem.comment.label,
-            payload.source.camCardItem.comment.text,
+            payload.source.camCardItem.comment,
             payload.target.position
           )
           .pipe(
