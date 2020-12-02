@@ -1,0 +1,35 @@
+@import '~src/styles/themes/camfil/colors.scss';
+@import '~src/styles/themes/camfil/variables.scss';
+
+:host {
+  .product-image-box {
+    margin: 0 $space-box-half 0 0;
+  }
+  camfil-product-image {
+    display: block;
+    width: $common-height;
+    height: $common-height;
+  }
+  .product-item-details-container {
+    height: $common-height;
+    @media (max-width: $screen-md-max) {
+      height: auto;
+    }
+  }
+  .product-title-container {
+    margin: 0;
+  }
+  ::ng-deep {
+    .camfil-product-title {
+      display: block;
+      max-width: 450px;
+      overflow: hidden;
+      line-height: $line-height-overline;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      @media (max-width: $screen-md-max) {
+        white-space: normal;
+      }
+    }
+  }
+}

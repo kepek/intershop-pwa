@@ -11,7 +11,7 @@ const environmentLocalDataSource = `import { ENVIRONMENT_DEFAULTS, Environment }
 export const environment: Environment = {
   ...ENVIRONMENT_DEFAULTS,
   /* INTERSHOP COMMERCE MANAGEMENT REST API CONFIGURATION */
-  icmBaseURL: 'http://intershoppwa.azurewebsites.net',
+  icmBaseURL: 'https://intershoppwa.azurewebsites.net',
   icmChannel: 'inSPIRED-inTRONICS_Business-Site',
   icmApplication: '-',
 };

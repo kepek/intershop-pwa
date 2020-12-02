@@ -287,6 +287,12 @@ a {
   }
 }
 
+.mat-icon-button {
+  .mat-icon[svgicon] svg {
+    margin-top: -2px;
+  }
+}
+
 [mat-fab],
 [mat-button],
 [mat-button-icon] {

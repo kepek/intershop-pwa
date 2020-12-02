@@ -19,6 +19,7 @@ import { CamfilProductLabelComponent } from 'ish-shared/components/product/camfi
 import { CamfilProductPriceComponent } from 'ish-shared/components/product/camfil-product-price/camfil-product-price.component';
 import { CamfilProductPromotionComponent } from 'ish-shared/components/product/camfil-product-promotion/camfil-product-promotion.component';
 import { CamfilProductQuantityComponent } from 'ish-shared/components/product/camfil-product-quantity/camfil-product-quantity.component';
+import { CamfilProductQuickviewComponent } from 'ish-shared/components/product/camfil-product-quickview/camfil-product-quickview.component';
 import { CamfilProductRatingComponent } from 'ish-shared/components/product/camfil-product-rating/camfil-product-rating.component';
 import { CamfilProductShipmentComponent } from 'ish-shared/components/product/camfil-product-shipment/camfil-product-shipment.component';
 import { CamfilProductTitleComponent } from 'ish-shared/components/product/camfil-product-title/camfil-product-title.component';
@@ -52,6 +53,7 @@ describe('Camfil Product Item Simple Component', () => {
         MockComponent(CamfilProductPriceComponent),
         MockComponent(CamfilProductPromotionComponent),
         MockComponent(CamfilProductQuantityComponent),
+        MockComponent(CamfilProductQuickviewComponent),
         MockComponent(CamfilProductRatingComponent),
         MockComponent(CamfilProductShipmentComponent),
         MockComponent(CamfilProductTitleComponent),
@@ -87,23 +89,15 @@ describe('Camfil Product Item Simple Component', () => {
       Array [
         "mat-card",
         "camfil-product-image",
-        "camfil-product-label",
-        "mat-icon",
-        "mat-icon",
         "camfil-product-title",
         "camfil-product-id",
         "camfil-product-attribute",
         "camfil-product-attribute",
-        "camfil-product-attribute",
-        "camfil-product-attribute",
-        "camfil-product-promotion",
-        "ish-lazy-product-add-to-quote",
-        "camfil-product-add-to-compare",
-        "ish-lazy-product-add-to-wishlist",
-        "camfil-product-price",
+        "camfil-product-quickview",
         "camfil-product-inventory",
+        "camfil-product-attribute",
+        "camfil-product-attribute",
         "camfil-product-quantity",
-        "ish-lazy-product-add-to-order-template",
         "camfil-lazy-product-add-to-cam-card",
         "camfil-product-add-to-basket",
       ]
@@ -112,23 +106,15 @@ describe('Camfil Product Item Simple Component', () => {
       Array [
         "mat-card",
         "camfil-product-image",
-        "camfil-product-label",
-        "mat-icon",
-        "mat-icon",
         "camfil-product-title",
         "camfil-product-id",
         "camfil-product-attribute",
         "camfil-product-attribute",
-        "camfil-product-attribute",
-        "camfil-product-attribute",
-        "camfil-product-promotion",
-        "ish-lazy-product-add-to-quote",
-        "camfil-product-add-to-compare",
-        "ish-lazy-product-add-to-wishlist",
-        "camfil-product-price",
+        "camfil-product-quickview",
         "camfil-product-inventory",
+        "camfil-product-attribute",
+        "camfil-product-attribute",
         "camfil-product-quantity",
-        "ish-lazy-product-add-to-order-template",
         "camfil-lazy-product-add-to-cam-card",
         "camfil-product-add-to-basket",
       ]
@@ -142,11 +128,9 @@ describe('Camfil Product Item Simple Component', () => {
       Array [
         "mat-card",
         "camfil-product-image",
-        "camfil-product-label",
-        "mat-icon",
-        "mat-icon",
         "camfil-product-attribute",
         "camfil-product-attribute",
+        "camfil-product-quickview",
         "camfil-product-attribute",
         "camfil-product-attribute",
       ]

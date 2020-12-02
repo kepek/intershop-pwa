@@ -11,6 +11,7 @@
     (productToBasket)="addToBasket($event)"
     (compareToggle)="toggleCompare()"
     (selectVariation)="replaceVariation($event)"
+    [isMobileView]="isMobileView"
   ></camfil-product-item-simple>
 
   <camfil-product-item-detailed
