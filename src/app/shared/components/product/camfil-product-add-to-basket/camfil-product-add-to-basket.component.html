@@ -6,6 +6,8 @@
     [ngClass]="class"
     [class.btn-primary]="!displayIcon"
     [class.round-cart-btn]="displayIcon"
+    [class.mat-flat-button]="displayType === 'button'"
+    [class.cart-big-round-btn]="displayType === 'button'"
     [disabled]="disabled || (displaySpinner$ | async)"
     [attr.title]="translationKey | translate"
     data-testing-id="addToCartButton"

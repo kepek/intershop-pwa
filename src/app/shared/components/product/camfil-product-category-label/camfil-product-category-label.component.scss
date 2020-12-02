@@ -1,0 +1,9 @@
+@import '~src/styles/themes/camfil/colors.scss';
+@import '~src/styles/themes/camfil/variables.scss';
+
+:host {
+  .camfil-product-category-label {
+    margin: 4px 0;
+    color: $gray-400;
+  }
+}

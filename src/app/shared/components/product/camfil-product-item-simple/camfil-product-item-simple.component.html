@@ -132,17 +132,15 @@
     <div class="product-actions-container">
       <ng-container *ngIf="!isMasterProduct(product); else masterProductActions">
         <form [formGroup]="productItemForm" class="product-form form-horizontal row">
-          <div class="action-container">
-            <camfil-product-quantity
-              *ngIf="configuration.displayQuantity"
-              [readOnly]="configuration.readOnly"
-              [allowZeroQuantity]="configuration.allowZeroQuantity"
-              [quantityLabel]="configuration.quantityLabel"
-              [product]="product"
-              [parentForm]="productItemForm"
-              [controlName]="quantityControlName"
-            ></camfil-product-quantity>
-          </div>
+          <camfil-product-quantity
+            *ngIf="configuration.displayQuantity"
+            [readOnly]="configuration.readOnly"
+            [allowZeroQuantity]="configuration.allowZeroQuantity"
+            [quantityLabel]="configuration.quantityLabel"
+            [product]="product"
+            [parentForm]="productItemForm"
+            [controlName]="quantityControlName"
+          ></camfil-product-quantity>
 
           <div class="action-container addtocart-container">
             <camfil-lazy-product-add-to-cam-card

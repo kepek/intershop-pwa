@@ -1,1 +1,98 @@
 @import '../camfil-product-item-base/camfil-product-item-base.component';
+:host {
+  .product-item-detailed-container {
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: 350px repeat(3, 1fr);
+    grid-row-gap: 0;
+    grid-column-gap: 10px;
+  }
+  .product-detailed-left-col {
+    grid-area: 1 / 1 / 2 / 2;
+    padding: $space-box-half $space-box;
+  }
+  .product-detailed-col-2 {
+    grid-area: 1 / 2 / 2 / 3;
+  }
+  .product-detailed-col-3 {
+    grid-area: 1 / 3 / 2 / 4;
+  }
+  .product-detailed-col-4 {
+    grid-area: 1 / 4 / 2 / 5;
+    padding: $space-box-half $space-box;
+    text-align: center;
+    background-color: $greyF5;
+  }
+  .product-image-container {
+    margin-right: $space-box-half;
+    camfil-product-image {
+      width: $camfil-product-image-size;
+      height: $camfil-product-image-size;
+    }
+  }
+  .product-detail-action-col {
+    height: $camfil-product-image-size;
+  }
+
+  .product-data-col > * {
+    margin-bottom: $space-box-half;
+  }
+  .product-list-actions-container {
+    .product-form {
+      margin: 0 auto;
+    }
+  }
+  .product-prices-container {
+    margin-bottom: $space-box-half;
+    line-height: $h4-line-height;
+    .camfil-product-attribute__label {
+      font-size: $h6-font-size;
+    }
+  }
+  .buttons-container {
+    width: 100%;
+    margin: 0;
+    .mat-flat-button {
+      margin-bottom: $space-box-half;
+    }
+  }
+  ::ng-deep {
+    camfil-product-add-to-compare {
+      .add-to-compare {
+        display: flex;
+        align-items: center;
+        padding: 0;
+      }
+
+      .mat-checkbox-layout {
+        margin-right: $space-box-half;
+        margin-bottom: 2px;
+      }
+    }
+    camfil-product-attribute {
+      display: block;
+    }
+
+    camfil-product-quickview {
+      .mat-button {
+        padding: 0;
+      }
+    }
+    camfil-product-add-to-basket {
+      .mat-flat-button {
+        margin-bottom: $space-box-half;
+      }
+    }
+    camfil-product-quantity {
+      .form-group {
+        margin-bottom: $space-box-half;
+      }
+    }
+
+    camfil-lazy-product-add-to-cam-card {
+      .camcard-big-round-btn {
+        margin-bottom: 0;
+      }
+    }
+  }
+}

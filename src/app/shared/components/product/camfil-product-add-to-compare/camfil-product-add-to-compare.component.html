@@ -10,5 +10,8 @@
     <fa-icon [icon]="['fas', 'columns']"></fa-icon>
   </ng-container>
 
-  <ng-template #defaultButton> {{ 'product.compare.link' | translate }} </ng-template>
+  <ng-template #defaultButton>
+    <mat-checkbox [checked]="isInCompareList"></mat-checkbox>
+    {{ 'camfil.product.add_to_compare.label' | translate }}
+  </ng-template>
 </button>

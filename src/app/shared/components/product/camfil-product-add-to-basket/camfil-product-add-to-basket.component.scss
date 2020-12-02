@@ -4,11 +4,16 @@
 :host {
   .round-cart-btn {
     display: flex;
-    width: 40px;
-    height: 40px;
+    width: $common-height;
+    height: $common-height;
     padding: 7px;
     background-color: $button-primary-bg;
     border-radius: 50%;
-    box-shadow: 0 3px 5px -1px rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12);
+    box-shadow: $dark-box-shadow;
+  }
+  .cart-big-round-btn {
+    width: 100%;
+    color: $camfil-color-light;
+    background-color: $camfil-color-primary;
   }
 }

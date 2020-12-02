@@ -229,6 +229,7 @@ $h4-font-size: $font-size-base * 1.05; // ~15px
 $h6-font-size: $font-size-base * 0.85; // ~12px
 
 $h3-line-height: 24px;
+$h4-line-height: 20px;
 
 $headings-font-family: $font-family-condensedbold;
 $headings-font-weight: normal;
@@ -367,6 +368,7 @@ $space-prod-item: 20px;
 
 //other
 $camfil-toolbar-font-size: $font-size-base * 0.95; // ~13px
+$camfil-product-image-size: 120px;
 
 //counter
 $camfil-counter-value-border-radius: $mat-icon-button-size / 10;

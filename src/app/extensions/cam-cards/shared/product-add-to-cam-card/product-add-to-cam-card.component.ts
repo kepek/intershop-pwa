@@ -14,6 +14,7 @@ import { SelectCamCardModalComponent } from '../select-cam-card-modal/select-cam
 @Component({
   selector: 'camfil-product-add-to-cam-card',
   templateUrl: './product-add-to-cam-card.component.html',
+  styleUrls: ['./product-add-to-cam-card.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 /**
@@ -29,7 +30,7 @@ import { SelectCamCardModalComponent } from '../select-cam-card-modal/select-cam
 export class ProductAddToCamCardComponent implements OnDestroy {
   @Input() product: Product;
   @Input() quantity: number;
-  @Input() displayType?: 'icon' | 'link' | 'animated' = 'link';
+  @Input() displayType?: 'icon' | 'link' | 'animated' | 'round-btn' = 'link';
   @Input() class?: string;
   private destroy$ = new Subject();
 

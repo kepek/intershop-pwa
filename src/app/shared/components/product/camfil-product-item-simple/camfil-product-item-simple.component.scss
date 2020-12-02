@@ -47,6 +47,8 @@
   }
   ::ng-deep {
     camfil-product-quickview {
+      display: inline-flex;
+      align-items: center;
       .mat-button {
         min-width: 20px;
         padding: 0 4px;

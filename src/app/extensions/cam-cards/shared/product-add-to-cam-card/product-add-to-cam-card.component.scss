@@ -1,0 +1,8 @@
+@import '~src/styles/themes/camfil/colors.scss';
+:host {
+  .camcard-big-round-btn {
+    width: 100%;
+    color: $camfil-color-primary;
+    background-color: $camfil-color-light;
+  }
+}
