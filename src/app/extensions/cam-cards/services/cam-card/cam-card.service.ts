@@ -83,6 +83,31 @@ export class CamCardService {
   }
 
   /**
+   * Clone a cam card of the given id.
+   * @param camCardId   The cam cards id.
+   * @returns           The cam_card.
+   */
+  cloneCamCard(camCardId: string): Observable<CamCardData> {
+    if (!camCardId) {
+      return throwError('cloneCamCard() called without camCardId');
+    }
+    return this.apiService.post(`camcards/${camCardId}/clone`);
+  }
+
+  /**
+   * Copy a cam card of the given id.
+   * @param camCardId   The cam cards id.
+   * @returns           The cam_card.
+   */
+  copyCamCard(camCardId: string, name: string): Observable<CamCardData> {
+    if (!camCardId) {
+      return throwError('copyCamCard() called without camCardId');
+    }
+    const data = { name };
+    return this.apiService.post(`camcards/${camCardId}/copy`, data);
+  }
+
+  /**
    * Updates a cam cards of the given id.
    * @param camCard
    * @returns          The updated cam_card.

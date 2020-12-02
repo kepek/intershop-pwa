@@ -501,6 +501,7 @@
   "camfil.account.cam_cards.maintenance.status.tooltip": "Maintenance status - one or more products from this CamCard is not for sale",
   "camfil.account.cam_cards.more_info": "More info",
   "camfil.account.cam_cards.name": "Title",
+  "camfil.account.cam_cards.name.copy_prefix": "COPY_",
   "camfil.account.cam_cards.nextDelivery": "Next Delivery",
   "camfil.account.cam_cards.nextDeliveryDate": "Next Delivery",
   "camfil.account.cam_cards.search.btn.label": "Search",

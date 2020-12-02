@@ -18,6 +18,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { Observable, Subject } from 'rxjs';
 import { take } from 'rxjs/operators';
 
@@ -90,7 +91,8 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
     public dialog: MatDialog,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private scroller: ViewportScroller
+    private scroller: ViewportScroller,
+    private translate: TranslateService
   ) {}
 
   ngOnInit() {
@@ -255,6 +257,12 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
       autoFocus: false,
       data: this.checkedCamCards,
     });
+  }
+
+  copyCamCard() {
+    this.loading = true;
+    const name = this.translate.instant('camfil.account.cam_cards.name.copy_prefix') + this.checkedCamCards[0].name;
+    this.camCardsFacade.copyCamCard(this.checkedCamCards[0].id, name);
   }
 
   openUserAccessDialog(camCard: CamCard): void {

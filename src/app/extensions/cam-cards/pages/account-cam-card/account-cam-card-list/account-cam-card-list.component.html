@@ -11,8 +11,9 @@
       (addCamCard)="add($event)"
       (addSelectedItemsToCart)="addToCart(notBuyableElemntsDialog)"
       (openMoveCamCardDialog)="move()"
+      (copyCamCard)="copyCamCard()"
       [isSticky]="isStickyCamCardToolbar$ | async"
-      [checkedCamCards]="checkedCamCards.length > 0"
+      [checkedCamCards]="checkedCamCards"
     ></camfil-account-cam-card-toolbar>
 
     <ng-container *ngIf="camCardsProcessed?.data && camCardsProcessed.data.length > 0; else noCamCard">

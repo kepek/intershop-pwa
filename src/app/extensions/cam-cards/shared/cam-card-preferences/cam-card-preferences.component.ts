@@ -11,7 +11,9 @@ import {
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
+import { take } from 'rxjs/operators';
 
 import { AppFacade } from 'ish-core/facades/app.facade';
 import { Country } from 'ish-core/models/country/country.model';
@@ -39,7 +41,8 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit {
     private fb: FormBuilder,
     private camCardsFacade: CamCardsFacade,
     private appFacade: AppFacade,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private activatedRoute: ActivatedRoute
   ) {
     this.initForm();
   }
@@ -150,6 +153,15 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit {
     this.countries$ = this.appFacade.countries$();
     this.customers$ = this.camCardsFacade.customers$;
     this.addresses$ = this.camCardsFacade.addresses$;
+
+    this.activatedRoute.queryParams.pipe(take(1)).subscribe(queryParam => {
+      const copy = 'copy';
+      if (queryParam[copy] === 'true') {
+        this.camCardForm.patchValue({ title: '' });
+        this.camCardForm.get('title').setErrors({ required: true });
+        this.camCardForm.get('title').markAsTouched();
+      }
+    });
   }
 
   initForm() {

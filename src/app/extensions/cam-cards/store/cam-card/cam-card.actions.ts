@@ -117,6 +117,10 @@ export const loadDeliveryAddressesSuccess = createAction(
 
 export const loadDeliveryAddressesFail = createAction('[Cam Cards API] load available addresses Fail', httpError());
 
+export const copyCamCard = createAction('[Cam Cards] copy CamCard', payload<{ camCardId: string; name: string }>());
+
+export const copyCamCardFail = createAction('[Cam Cards API] copy Cam Card Fail', httpError());
+
 export const addProductToCamCard = createAction(
   '[Cam Cards] Add Item to Cam Card',
   payload<{

@@ -13,8 +13,9 @@ export class AccountCamCardToolbarComponent implements OnInit {
   @Output() addCamCard = new EventEmitter<CamCard>();
   @Output() openMoveCamCardDialog = new EventEmitter<Event>();
   @Output() addSelectedItemsToCart = new EventEmitter();
+  @Output() copyCamCard = new EventEmitter<Event>();
   @Input() isSticky: boolean;
-  @Input() checkedCamCards: boolean;
+  @Input() checkedCamCards: CamCard[];
 
   constructor(private camCardsFacade: CamCardsFacade) {}
 
@@ -28,6 +29,10 @@ export class AccountCamCardToolbarComponent implements OnInit {
 
   move(event: Event) {
     this.openMoveCamCardDialog.emit(event);
+  }
+
+  copy(event: Event) {
+    this.copyCamCard.emit(event);
   }
 
   addToCart() {

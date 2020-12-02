@@ -47,6 +47,8 @@ import {
   addProductToNewSubCamCard,
   addProductToSubCamCard,
   addToNewCamCardWithNewSubCamCard,
+  copyCamCard,
+  copyCamCardFail,
   createCamCard,
   createCamCardFail,
   createCamCardSuccess,
@@ -308,6 +310,26 @@ export class CamCardEffects {
             }),
           ]),
           mapErrorToAction(deleteCamCardFail)
+        )
+      )
+    )
+  );
+
+  copyCamCard$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(copyCamCard),
+      mapToPayload(),
+      mergeMap(({ camCardId, name }) =>
+        this.camCardService.copyCamCard(camCardId, name).pipe(
+          tap(camCard => this.router.navigate([`/account/cam-cards/${camCard.id}`], { queryParams: { copy: true } })),
+          mergeMap(camCard => [
+            createCamCardSuccess({ camCard }),
+            displaySuccessMessage({
+              message: 'camfil.account.cam_card.delete_cam_card.confirmation',
+              messageParams: { 0: camCard.name },
+            }),
+          ]),
+          mapErrorToAction(copyCamCardFail)
         )
       )
     )
