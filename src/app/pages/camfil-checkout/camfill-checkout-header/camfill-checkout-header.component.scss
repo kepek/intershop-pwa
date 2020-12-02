@@ -1,0 +1,18 @@
+@import '~src/styles/themes/camfil/variables';
+
+:host {
+  p {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 4px;
+    font-size: 16px;
+    font-weight: 500;
+    color: $camfil-text-color-secondary;
+
+    .checkout-header-number {
+      margin-left: 15px;
+      font-weight: 700;
+    }
+  }
+}
