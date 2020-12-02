@@ -1,5 +1,5 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -24,7 +24,7 @@ import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
 import { CamfilModalDialogComponent } from 'ish-shared/components/common/camfil-modal-dialog/camfil-modal-dialog.component';
 
 import { CamCardsFacade } from '../../../facades/cam-cards.facade';
-import { CamCard } from '../../../models/cam-card/cam-card.model';
+import { CamCard, CamCardItem } from '../../../models/cam-card/cam-card.model';
 
 @Component({
   selector: 'camfil-account-cam-card-detail-list',
@@ -46,12 +46,13 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges {
 
   @ViewChild(MatSort) sort: MatSort;
   isMobileView = false;
-  expandedCamCard: CamCard | null;
+
   isSubOpen = [];
   isStickyCamCardToolbar$: Observable<boolean>;
   // TODO: improve when user locale will be properlyused
   priceSum: Price = { currency: 'USD', value: 0, type: 'Money' };
   private destroy$ = new Subject();
+  POSITION_GAP_SIZE = 999;
 
   constructor(
     private translate: TranslateService,
@@ -79,6 +80,7 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges {
     }
     this.isMobileView = this.isMobile();
   }
+
   isMobile() {
     return this.deviceType === 'mobile'; // || this.deviceType === 'tablet';
   }
@@ -140,11 +142,76 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges {
     modal.show(data);
   }
 
-  drop(event: CdkDragDrop<string[]>) {
-    if (event.previousContainer === event.container) {
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+  /** Set position attribute of a CamCardItem */
+  updateProductPosition(camCardItem: CamCardItem, camcardId: string, position: number) {
+    const newItem = {
+      ...camCardItem,
+      position,
+    };
+
+    const rootCamCardId = this.camCard.id === camcardId ? undefined : this.camCard.id;
+    this.camCardsFacade.updateCamCardProduct(rootCamCardId, camcardId, newItem);
+  }
+
+  /** dispatch edit request */
+  updateCamCard(camCard: CamCard) {
+    this.camCardsFacade.updateCamCard(camCard);
+  }
+
+  /** Returns the new position of the dropped item. Resets gaps if too small */
+  getTargetPosition(previousIndex, currentIndex, items, targetCamCard) {
+    // sort first because currentIndex contains only the 'visible' position
+    items.sort((a, b) => (a.position < b.position ? -1 : 1));
+    let predecessorPos;
+    let successorPos;
+    let targetPos;
+
+    if (previousIndex === undefined || previousIndex > currentIndex) {
+      /** moving item upwards or to another camcard */
+      predecessorPos = items[currentIndex - 1]?.position;
+      successorPos = items[currentIndex]?.position;
     } else {
-      transferArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
+      /** moving item downwards */
+      predecessorPos = items[currentIndex]?.position;
+      successorPos = items[currentIndex + 1]?.position;
+    }
+
+    if (predecessorPos === undefined && successorPos === undefined) {
+      return; // 1000, set by ICM
+    } else if (predecessorPos === undefined) {
+      targetPos = successorPos - this.POSITION_GAP_SIZE;
+    } else if (successorPos === undefined) {
+      targetPos = predecessorPos + this.POSITION_GAP_SIZE;
+    } else {
+      const gap = successorPos - predecessorPos;
+      if (gap <= 2) {
+        this.camCardsFacade.resetItemPositions(targetCamCard);
+      }
+      targetPos = Math.round(gap / 2) + predecessorPos;
+    }
+    // skip 0
+    return targetPos ? targetPos : 1;
+  }
+
+  /** Handle drag & drop event */
+  drop(event: CdkDragDrop<string[]>, targetCamCard: CamCard) {
+    // dropped item in the same CamCard/SubCamCard
+    if (event.previousContainer === event.container) {
+      // same position, do nothing
+      if (event.previousIndex === event.currentIndex) {
+        return;
+      }
+      const items: CamCardItem[] = Object.keys(event.container.data).map(i => event.container.data[i]);
+      const targetPos = this.getTargetPosition(event.previousIndex, event.currentIndex, items, targetCamCard);
+      this.updateProductPosition(event.item.data, targetCamCard.id, targetPos);
+    } else {
+      // dropped inside another camcard
+      const items: CamCardItem[] = Object.keys(event.container.data).map(i => event.container.data[i]);
+      const targetPos = this.getTargetPosition(undefined, event.currentIndex, items, targetCamCard);
+
+      // move camcard
+      const sourceCamCardId = document.getElementById(event.previousContainer.id).dataset.camCardId;
+      this.camCardsFacade.moveCamCardItem(sourceCamCardId, targetCamCard.id, event.item.data, targetPos);
     }
   }
 }

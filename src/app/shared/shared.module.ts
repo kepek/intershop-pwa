@@ -77,6 +77,7 @@ import { AccordionComponent } from './components/common/accordion/accordion.comp
 import { CamfilBreadcrumbComponent } from './components/common/camfil-breadcrumb/camfil-breadcrumb.component';
 import { CamfilLinksBlockComponent } from './components/common/camfil-links-block/camfil-links-block.component';
 import { CamfilModalDialogComponent } from './components/common/camfil-modal-dialog/camfil-modal-dialog.component';
+import { CamfilQuickViewModalComponent } from './components/common/camfil-quick-view-modal/camfil-quick-view-modal.component';
 import { ErrorMessageComponent } from './components/common/error-message/error-message.component';
 import { InfoBoxComponent } from './components/common/info-box/info-box.component';
 import { InplaceEditComponent } from './components/common/inplace-edit/inplace-edit.component';
@@ -300,6 +301,7 @@ const exportedComponents = [
   CamfilProductShipmentComponent,
   CamfilProductTitleComponent,
   CamfilProductVariationSelectComponent,
+  CamfilQuickViewModalComponent,
   ContentIncludeComponent,
   ContentPageletComponent,
   ContentViewcontextComponent,

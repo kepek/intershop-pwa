@@ -10,6 +10,7 @@ import {
   CamCardContact,
   CamCardCustomer,
   CamCardItem,
+  CamCardItemComment,
 } from '../models/cam-card/cam-card.model';
 import {
   addBasketToNewCamCard,
@@ -35,8 +36,10 @@ import {
   loadContactsByCustomer,
   loadDeliveryAddresses,
   moveCamCard,
+  moveCamCardItem,
   moveItemToCamCard,
   removeItemFromCamCard,
+  resetCamCardItemPositions,
   unselectCamCard,
   updateCamCard,
   updateCamCardContacts,
@@ -119,10 +122,11 @@ export class CamCardsFacade {
     camCardId: string,
     sku: string,
     quantity?: number,
-    boxLabel?: string,
+    comment?: CamCardItemComment,
+    position?: number,
     showSuccessToast?: boolean
   ): void {
-    this.store.dispatch(addProductToCamCard({ camCardId, sku, quantity, boxLabel, showSuccessToast }));
+    this.store.dispatch(addProductToCamCard({ camCardId, sku, quantity, position, comment, showSuccessToast }));
   }
 
   addProductToSubCamCard(
@@ -191,6 +195,15 @@ export class CamCardsFacade {
     );
   }
 
+  moveCamCardItem(sourcecamCardId: string, targetcamCardId: string, camCardItem: CamCardItem, position?: number): void {
+    this.store.dispatch(
+      moveCamCardItem({
+        source: { id: sourcecamCardId, camCardItem },
+        target: { id: targetcamCardId, position },
+      })
+    );
+  }
+
   removeProductFromCamCard(camCardId: string, camCardItemId: string): void {
     this.store.dispatch(removeItemFromCamCard({ camCardId, camCardItemId }));
   }
@@ -201,5 +214,9 @@ export class CamCardsFacade {
 
   unSelectCamCard() {
     this.store.dispatch(unselectCamCard());
+  }
+
+  resetItemPositions(camCard: CamCard) {
+    this.store.dispatch(resetCamCardItemPositions({ camCard }));
   }
 }

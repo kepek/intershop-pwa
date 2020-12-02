@@ -113,7 +113,7 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy {
       const quantity = this.getField('quantity').value;
       const boxLabel = this.getField('boxLabel').value;
 
-      this.camCardsFacade.addProductToCamCard(this.rootCamCardId, sku, quantity, boxLabel, true);
+      this.camCardsFacade.addProductToCamCard(this.rootCamCardId, sku, quantity, boxLabel, 0, true);
       this.hide();
     } else {
       markAsDirtyRecursive(this.productForm);
