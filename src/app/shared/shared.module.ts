@@ -117,6 +117,7 @@ import { CamfilProductAttributeComponent } from './components/product/camfil-pro
 import { CamfilProductAttributesComponent } from './components/product/camfil-product-attributes/camfil-product-attributes.component';
 import { CamfilProductIdComponent } from './components/product/camfil-product-id/camfil-product-id.component';
 import { CamfilProductInventoryComponent } from './components/product/camfil-product-inventory/camfil-product-inventory.component';
+import { CamfilProductItemBaseComponent } from './components/product/camfil-product-item-base/camfil-product-item-base.component';
 import { CamfilProductItemDetailedComponent } from './components/product/camfil-product-item-detailed/camfil-product-item-detailed.component';
 import { CamfilProductItemSimpleComponent } from './components/product/camfil-product-item-simple/camfil-product-item-simple.component';
 import { CamfilProductItemComponent } from './components/product/camfil-product-item/camfil-product-item.component';
@@ -127,6 +128,7 @@ import { CamfilProductListingComponent } from './components/product/camfil-produ
 import { CamfilProductPriceComponent } from './components/product/camfil-product-price/camfil-product-price.component';
 import { CamfilProductPromotionComponent } from './components/product/camfil-product-promotion/camfil-product-promotion.component';
 import { CamfilProductQuantityComponent } from './components/product/camfil-product-quantity/camfil-product-quantity.component';
+import { CamfilProductQuickviewComponent } from './components/product/camfil-product-quickview/camfil-product-quickview.component';
 import { CamfilProductRatingStarComponent } from './components/product/camfil-product-rating-star/camfil-product-rating-star.component';
 import { CamfilProductRatingComponent } from './components/product/camfil-product-rating/camfil-product-rating.component';
 import { CamfilProductShipmentComponent } from './components/product/camfil-product-shipment/camfil-product-shipment.component';
@@ -215,11 +217,13 @@ const declaredComponents = [
   CamfilProductAttributesComponent,
   CamfilProductGuidesComponent,
   CamfilProductIdComponent,
+  CamfilProductItemBaseComponent,
   CamfilProductItemDetailedComponent,
   CamfilProductItemSimpleComponent,
   CamfilProductLabelComponent,
   CamfilProductListComponent,
   CamfilProductListToolbarComponent,
+  CamfilProductQuickviewComponent,
   CamfilProductRatingStarComponent,
   CamfilProductTitleComponent,
   ContentSlotComponent,

@@ -1,156 +1,176 @@
-<mat-card [attr.data-testing-sku]="product.sku" [class.mat-elevation-z3]="true">
-  <div class="col-3">
-    <div class="product-image-container">
-      <a [routerLink]="product | ishProductRoute: category">
+<div *ngIf="isMobileView; else desktopView">
+  <mat-card
+    class="d-flex flex-wrap align-items-center text-left mobile-card-container"
+    [attr.data-testing-sku]="product.sku"
+    [class.mat-elevation-z3]="true"
+  >
+    <div class="d-flex">
+      <a [routerLink]="product | ishProductRoute: category" class="product-image-box">
         <camfil-product-image [product]="product" imageType="S" class="product-image"></camfil-product-image>
       </a>
-      <camfil-product-label [product]="product"></camfil-product-label>
-    </div>
-  </div>
 
-  <div class="col-9">
-    <div class="row">
-      <div class="col-md-7 col-xs-12">
-        <button mat-button color="primary" data-testing-id="quick-view">
-          <mat-icon svgIcon="search" class="size-15"></mat-icon>
-          {{ 'Quickview' | translate }}
-        </button>
-        <button mat-stroked-button color="primary" data-testing-id="quick-view">
-          <mat-icon svgIcon="search" class="size-15"></mat-icon>
-          {{ 'Quickview' | translate }}
-        </button>
-        <camfil-product-title *ngIf="configuration.displayName" [product]="product"></camfil-product-title>
-        <camfil-product-id *ngIf="configuration.displaySKU" [product]="product"></camfil-product-id><br />
+      <camfil-product-title *ngIf="configuration.displayName" [product]="product"></camfil-product-title>
+    </div>
+    <div class="product-item-attributes d-flex flex-nowrap">
+      <div class="col-sm-6">
+        <camfil-product-id *ngIf="configuration.displaySKU" [product]="product"></camfil-product-id>
+        <camfil-product-attribute name="camfil.product.dimensions.label" value="xxx-xxx-xxx"></camfil-product-attribute>
+        <camfil-product-attribute name="camfil.product.efficiency.label" value="xxx"></camfil-product-attribute>
+      </div>
+      <div class="col-sm-6 right-col d-flex flex-column">
+        <div class="right-col-actions--container">
+          <camfil-product-inventory
+            *ngIf="configuration.displayInventory && !isMasterProduct(product)"
+            [product]="product"
+          ></camfil-product-inventory>
+          <camfil-product-quickview
+            class="d-inline-flex align-items-center"
+            [product]="product"
+            [hideText]="true"
+          ></camfil-product-quickview>
+        </div>
         <camfil-product-attribute
-          name="'camfil.product.dimensions.label' | translate"
-          value="xxx-xxx-xxx"
-        ></camfil-product-attribute>
-        <camfil-product-attribute
-          name="'camfil.product.efficiency.label' | translate"
-          value="xxx"
-        ></camfil-product-attribute>
-        <camfil-product-attribute
-          name="'camfil.product.list_price.label' | translate"
+          name="camfil.product.list_price.label"
           [value]="product.listPrice | ishPrice"
         ></camfil-product-attribute>
+
         <camfil-product-attribute
-          name="'camfil.product.your_price.label' | translate"
+          name="camfil.product.your_price.label"
           [value]="product.salePrice | ishPrice"
         ></camfil-product-attribute>
-
-        <div *ngIf="configuration.displayDescription" class="product-description">{{ product.shortDescription }}</div>
-
-        <camfil-product-promotion
-          *ngIf="configuration.displayPromotions"
-          [product]="product"
-          displayType="simpleWithDetail"
-        ></camfil-product-promotion>
-
-        <div class="product-tile-actions btn-group">
-          <ish-lazy-product-add-to-quote
-            *ngIf="configuration.displayAddToQuote"
-            [product]="product"
-            displayType="icon"
-            class="btn-link"
-          ></ish-lazy-product-add-to-quote>
-          <camfil-product-add-to-compare
-            *ngIf="configuration.displayAddToCompare"
-            [isInCompareList]="isInCompareList"
-            displayType="icon"
-            class="btn-link"
-            (compareToggle)="toggleCompare()"
-          ></camfil-product-add-to-compare>
-          <ish-lazy-product-add-to-wishlist
-            *ngIf="configuration.displayAddToWishlist"
-            displayType="icon"
-            class="btn-link"
-            [product]="product"
-          ></ish-lazy-product-add-to-wishlist>
-        </div>
       </div>
+    </div>
+    <div class="product-actions-container">
+      <ng-container *ngIf="!isMasterProduct(product); else masterProductActions">
+        <form [formGroup]="productItemForm" class="product-form form-horizontal row d-flex justify-content-between">
+          <div class="action-container">
+            <camfil-product-quantity
+              *ngIf="configuration.displayQuantity"
+              [readOnly]="configuration.readOnly"
+              [allowZeroQuantity]="configuration.allowZeroQuantity"
+              [quantityLabel]="configuration.quantityLabel"
+              [product]="product"
+              [parentForm]="productItemForm"
+              [controlName]="quantityControlName"
+            ></camfil-product-quantity>
+          </div>
 
-      <div class="col-12 col-md-5 text-md-right">
-        <camfil-product-price
-          *ngIf="configuration.displayPrice"
-          [product]="product"
-          [showInformationalPrice]="true"
-        ></camfil-product-price>
-        <camfil-product-inventory
-          *ngIf="configuration.displayInventory && !isMasterProduct(product)"
-          [product]="product"
-        ></camfil-product-inventory>
-        <camfil-product-shipment
-          *ngIf="configuration.displayShipment && !isMasterProduct(product)"
-          [product]="product"
-        ></camfil-product-shipment>
+          <div class="action-container addtocart-container">
+            <camfil-lazy-product-add-to-cam-card
+              *ngIf="configuration.displayAddToCamCard"
+              displayType="icon"
+              [quantity]="1"
+              class="btn-link"
+              [product]="product"
+            ></camfil-lazy-product-add-to-cam-card>
 
-        <camfil-product-variation-select
-          *ngIf="variationOptions && configuration.displayVariations"
-          [readOnly]="configuration.readOnly"
-          [variationOptions]="variationOptions"
-          (selectVariation)="variationSelected($event)"
-        ></camfil-product-variation-select>
+            <camfil-product-add-to-basket
+              *ngIf="configuration.displayAddToBasket"
+              [product]="product"
+              (productToBasket)="addToBasket()"
+              displayType="icon"
+              class="btn-link"
+            ></camfil-product-add-to-basket>
+          </div>
+        </form>
+      </ng-container>
 
-        <div class="product-list-actions-container">
-          <ng-container *ngIf="!isMasterProduct(product); else masterProductActions">
-            <form [formGroup]="productItemForm" class="product-form form-horizontal row">
-              <div
-                class="action-container"
-                [ngClass]="
-                  configuration.quantityLabel === ' ' ? 'col-6 offset-md-6 col-lg-5 offset-lg-0' : 'col-12 col-xl-7'
-                "
-              >
-                <camfil-product-quantity
-                  *ngIf="configuration.displayQuantity"
-                  [readOnly]="configuration.readOnly"
-                  [allowZeroQuantity]="configuration.allowZeroQuantity"
-                  [quantityLabel]="configuration.quantityLabel"
-                  [product]="product"
-                  [parentForm]="productItemForm"
-                  [controlName]="quantityControlName"
-                ></camfil-product-quantity>
-              </div>
+      <ng-template #masterProductActions>
+        <div class="action-container">
+          <a [routerLink]="product | ishProductRoute: category" class="btn btn-primary" role="button">
+            {{ 'product.choose_variation.link' | translate }}
+          </a>
+        </div>
+      </ng-template>
+    </div>
+  </mat-card>
+</div>
+<ng-template #desktopView>
+  <mat-card
+    class="d-flex align-items-center flex-wrap justify-content-between text-left"
+    [attr.data-testing-sku]="product.sku"
+    [class.mat-elevation-z3]="true"
+  >
+    <div class="d-flex">
+      <a [routerLink]="product | ishProductRoute: category" class="product-image-box">
+        <camfil-product-image [product]="product" imageType="S" class="product-image"></camfil-product-image>
+      </a>
 
-              <div
-                class="action-container addtocart-container"
-                [ngClass]="configuration.quantityLabel === ' ' ? 'col-12 col-lg-7' : 'col-12 col-xl-5'"
-              >
-                <ish-lazy-product-add-to-order-template
-                  *ngIf="configuration.displayAddToOrderTemplate"
-                  displayType="icon"
-                  [quantity]="1"
-                  class="btn-link"
-                  [product]="product"
-                ></ish-lazy-product-add-to-order-template>
+      <div class="product-item-details-container d-flex flex-column justify-content-between">
+        <p class="product-title-container">
+          <camfil-product-title *ngIf="configuration.displayName" [product]="product"></camfil-product-title>
+        </p>
+        <div class="product-item-attributes justify-content-between">
+          <camfil-product-id *ngIf="configuration.displaySKU" [product]="product"></camfil-product-id>
+          <camfil-product-attribute
+            name="camfil.product.dimensions.label"
+            value="xxx-xxx-xxx"
+          ></camfil-product-attribute>
+          <camfil-product-attribute name="camfil.product.efficiency.label" value="xxx"></camfil-product-attribute>
 
-                <camfil-lazy-product-add-to-cam-card
-                  *ngIf="configuration.displayAddToCamCard"
-                  displayType="icon"
-                  [quantity]="1"
-                  class="btn-link"
-                  [product]="product"
-                ></camfil-lazy-product-add-to-cam-card>
+          <camfil-product-quickview [product]="product" [hideText]="true"></camfil-product-quickview>
 
-                <camfil-product-add-to-basket
-                  *ngIf="configuration.displayAddToBasket"
-                  [product]="product"
-                  (productToBasket)="addToBasket()"
-                  displayType="icon"
-                  class="btn-link"
-                ></camfil-product-add-to-basket>
-              </div>
-            </form>
-          </ng-container>
-
-          <ng-template #masterProductActions>
-            <div class="action-container">
-              <a [routerLink]="product | ishProductRoute: category" class="btn btn-primary" role="button">
-                {{ 'product.choose_variation.link' | translate }}
-              </a>
-            </div>
-          </ng-template>
+          <camfil-product-inventory
+            *ngIf="configuration.displayInventory && !isMasterProduct(product)"
+            [product]="product"
+          ></camfil-product-inventory>
         </div>
       </div>
     </div>
-  </div>
-</mat-card>
+    <div class="product-prices-container d-flex flex-column justify-content-between">
+      <camfil-product-attribute
+        name="camfil.product.list_price.label"
+        [value]="product.listPrice | ishPrice"
+      ></camfil-product-attribute>
+
+      <camfil-product-attribute
+        name="camfil.product.your_price.label"
+        [value]="product.salePrice | ishPrice"
+      ></camfil-product-attribute>
+    </div>
+
+    <div class="product-actions-container">
+      <ng-container *ngIf="!isMasterProduct(product); else masterProductActions">
+        <form [formGroup]="productItemForm" class="product-form form-horizontal row">
+          <div class="action-container">
+            <camfil-product-quantity
+              *ngIf="configuration.displayQuantity"
+              [readOnly]="configuration.readOnly"
+              [allowZeroQuantity]="configuration.allowZeroQuantity"
+              [quantityLabel]="configuration.quantityLabel"
+              [product]="product"
+              [parentForm]="productItemForm"
+              [controlName]="quantityControlName"
+            ></camfil-product-quantity>
+          </div>
+
+          <div class="action-container addtocart-container">
+            <camfil-lazy-product-add-to-cam-card
+              *ngIf="configuration.displayAddToCamCard"
+              displayType="icon"
+              [quantity]="1"
+              class="btn-link"
+              [product]="product"
+            ></camfil-lazy-product-add-to-cam-card>
+
+            <camfil-product-add-to-basket
+              *ngIf="configuration.displayAddToBasket"
+              [product]="product"
+              (productToBasket)="addToBasket()"
+              displayType="icon"
+              class="btn-link"
+            ></camfil-product-add-to-basket>
+          </div>
+        </form>
+      </ng-container>
+
+      <ng-template #masterProductActions>
+        <div class="action-container">
+          <a [routerLink]="product | ishProductRoute: category" class="btn btn-primary" role="button">
+            {{ 'product.choose_variation.link' | translate }}
+          </a>
+        </div>
+      </ng-template>
+    </div>
+  </mat-card>
+</ng-template>

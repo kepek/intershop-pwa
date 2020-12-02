@@ -1,4 +1,4 @@
-<div class="product-availability">
+<span class="product-availability">
   <ng-container *ngIf="product.inStock && product.availability; else outOfStock">
     <span class="product-in-stock" [matTooltip]="'camfil.product.instock.text' | translate">
       {{ 'camfil.product.instock.text' | translate }}
@@ -11,4 +11,4 @@
       <link itemprop="availability" href="http://schema.org/OutOfStock" />
     </span>
   </ng-template>
-</div>
+</span>

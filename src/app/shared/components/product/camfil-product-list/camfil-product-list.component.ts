@@ -1,9 +1,10 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 
+import { AppFacade } from 'ish-core/facades/app.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { Category } from 'ish-core/models/category/category.model';
-import { ViewType } from 'ish-core/models/viewtype/viewtype.types';
+import { DeviceType, ViewType } from 'ish-core/models/viewtype/viewtype.types';
 
 /**
  * The Product List Component displays a list of products.
@@ -18,6 +19,7 @@ import { ViewType } from 'ish-core/models/viewtype/viewtype.types';
 @Component({
   selector: 'camfil-product-list',
   templateUrl: './camfil-product-list.component.html',
+  styleUrls: ['./camfil-product-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CamfilProductListComponent implements OnInit {
@@ -27,10 +29,11 @@ export class CamfilProductListComponent implements OnInit {
 
   listingLoading$: Observable<boolean>;
 
-  constructor(private shoppingFacade: ShoppingFacade) {}
-
+  constructor(private shoppingFacade: ShoppingFacade, private appFacade: AppFacade) {}
+  deviceType$: Observable<DeviceType>;
   ngOnInit(): void {
     this.listingLoading$ = this.shoppingFacade.productListingLoading$;
+    this.deviceType$ = this.appFacade.deviceType$;
   }
 
   get isSimpleView() {

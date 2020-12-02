@@ -19,7 +19,7 @@ import { VariationOptionGroup } from 'ish-core/models/product-variation/variatio
 import { VariationSelection } from 'ish-core/models/product-variation/variation-selection.model';
 import { ProductView, VariationProductView } from 'ish-core/models/product-view/product-view.model';
 import { ProductCompletenessLevel, ProductHelper } from 'ish-core/models/product/product.model';
-import { ViewType } from 'ish-core/models/viewtype/viewtype.types';
+import { DeviceType, ViewType } from 'ish-core/models/viewtype/viewtype.types';
 import { ProductItemDetailedComponentConfiguration } from 'ish-shared/components/product/camfil-product-item-detailed/camfil-product-item-detailed.component';
 import { ProductItemSimpleComponentConfiguration } from 'ish-shared/components/product/camfil-product-item-simple/camfil-product-item-simple.component';
 
@@ -81,7 +81,8 @@ export class CamfilProductItemComponent implements OnInit, OnChanges, OnDestroy 
    * configuration
    */
   @Input() configuration: ProductItemContainerConfiguration = DEFAULT_CONFIGURATION;
-
+  @Input() deviceType: DeviceType;
+  isMobileView = false;
   product$: Observable<ProductView>;
   loading$: Observable<boolean>;
   productVariationOptions$: Observable<VariationOptionGroup[]>;
@@ -110,10 +111,12 @@ export class CamfilProductItemComponent implements OnInit, OnChanges, OnDestroy 
     this.productVariationOptions$ = this.shoppingFacade.productVariationOptions$(this.sku$);
 
     this.isInCompareList$ = this.shoppingFacade.inCompareProducts$(this.sku$);
+    this.isMobileView = this.deviceType === 'mobile';
   }
 
   ngOnChanges(changes: SimpleChanges) {
     this.mergeConfiguration(changes);
+    this.isMobileView = this.deviceType === 'mobile';
   }
 
   private mergeConfiguration(changes: SimpleChanges) {

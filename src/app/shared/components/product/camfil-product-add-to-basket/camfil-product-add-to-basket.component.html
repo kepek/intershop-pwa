@@ -5,6 +5,7 @@
     class="btn"
     [ngClass]="class"
     [class.btn-primary]="!displayIcon"
+    [class.round-cart-btn]="displayIcon"
     [disabled]="disabled || (displaySpinner$ | async)"
     [attr.title]="translationKey | translate"
     data-testing-id="addToCartButton"
@@ -13,7 +14,7 @@
     <ng-container *ngIf="!(displaySpinner$ | async); else spinning">
       <!-- Add to Cart button -->
       <ng-container *ngIf="displayIcon; else defaultButton">
-        <mat-icon svgIcon="cart"></mat-icon>
+        <mat-icon svgIcon="cart" class="cart-icon color-light"></mat-icon>
       </ng-container>
 
       <ng-template #defaultButton>{{ translationKey | translate }}</ng-template>
