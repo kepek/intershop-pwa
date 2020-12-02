@@ -74,11 +74,17 @@ import {
   loadDeliveryAddressesSuccess,
   moveCamCard,
   moveCamCardFail,
+  moveCamCardItem,
+  moveCamCardItemFail,
+  moveCamCardItemSuccess,
   moveCamCardSuccess,
   moveItemToCamCard,
   removeItemFromCamCard,
   removeItemFromCamCardFail,
   removeItemFromCamCardSuccess,
+  resetCamCardItemPositions,
+  resetCamCardItemPositionsFail,
+  resetCamCardItemPositionsSuccess,
   selectCamCard,
   setStickyCamCardToolbar,
   updateCamCard,
@@ -373,7 +379,7 @@ export class CamCardEffects {
       mapToPayload(),
       mergeMap(payload =>
         this.camCardService
-          .addProductToCamCard(payload.camCardId, payload.sku, payload.quantity, payload.boxLabel)
+          .addProductToCamCard(payload.camCardId, payload.sku, payload.quantity, payload.comment, payload.position)
           .pipe(
             mergeMap(camCard =>
               payload.showSuccessToast
@@ -499,28 +505,26 @@ export class CamCardEffects {
     )
   );
 
-  updateCamCardProduct$ = createEffect(
-    () =>
-      this.actions$.pipe(
-        ofType(updateCamCardProduct),
-        mapToPayload(),
-        mergeMap(payload =>
-          this.camCardService.updateCamCardProduct(payload.camCardId, payload.camCardItem).pipe(
-            mergeMap(camCardItem => {
-              const { rootCamCard, camCardId } = payload;
-              return [
-                updateCamCardProductSuccess({ rootCamCard, camCardId, camCardItem }),
-                displaySuccessMessage({
-                  message: 'camfil.account.cam_cards.update.product.confirmation',
-                  messageParams: { 0: camCardItem.product.name },
-                }),
-              ];
-            }),
-            mapErrorToAction(updateCamCardFail)
-          )
+  updateCamCardProduct$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(updateCamCardProduct),
+      mapToPayload(),
+      mergeMap(payload =>
+        this.camCardService.updateCamCardProduct(payload.camCardId, payload.camCardItem).pipe(
+          mergeMap(camCardItem => {
+            const { rootCamCard, camCardId } = payload;
+            return [
+              updateCamCardProductSuccess({ rootCamCard, camCardId, camCardItem }),
+              displaySuccessMessage({
+                message: 'camfil.account.cam_cards.update.product.confirmation',
+                messageParams: { 0: camCardItem.product.name },
+              }),
+            ];
+          }),
+          mapErrorToAction(updateCamCardFail)
         )
-      ),
-    { dispatch: false }
+      )
+    )
   );
 
   navigateToEdit$ = createEffect(() =>
@@ -600,6 +604,31 @@ export class CamCardEffects {
     )
   );
 
+  moveCamCardItem$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(moveCamCardItem),
+      mapToPayload(),
+      mergeMap(payload =>
+        this.camCardService
+          .addProductToCamCard(
+            payload.target.id,
+            payload.source.camCardItem.product.sku,
+            payload.source.camCardItem.quantity,
+            payload.source.camCardItem.comment,
+            payload.target.position
+          )
+          .pipe(
+            mergeMap(targetCamCard =>
+              this.camCardService.removeProductFromCamCard(payload.source.id, payload.source.camCardItem.id).pipe(
+                map(sourceCamCard => moveCamCardItemSuccess({ sourceCamCard, targetCamCard })),
+                mapErrorToAction(moveCamCardItemFail)
+              )
+            )
+          )
+      )
+    )
+  );
+
   removeProductFromCamCard$ = createEffect(() =>
     this.actions$.pipe(
       ofType(removeItemFromCamCard),
@@ -608,6 +637,24 @@ export class CamCardEffects {
         this.camCardService.removeProductFromCamCard(payload.camCardId, payload.camCardItemId).pipe(
           map(camCard => removeItemFromCamCardSuccess({ camCard })),
           mapErrorToAction(removeItemFromCamCardFail)
+        )
+      )
+    )
+  );
+
+  resetItemPositions$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(resetCamCardItemPositions),
+      mapToPayload(),
+      mergeMap(payload =>
+        this.camCardService.resetItemPositions(payload.camCard.rootCamCard, payload.camCard.id).pipe(
+          map(camCardItems =>
+            resetCamCardItemPositionsSuccess({
+              camCard: payload.camCard,
+              camCardItems,
+            })
+          ),
+          mapErrorToAction(resetCamCardItemPositionsFail)
         )
       )
     )

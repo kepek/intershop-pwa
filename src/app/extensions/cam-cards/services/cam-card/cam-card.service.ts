@@ -13,6 +13,7 @@ import {
   CamCardContact,
   CamCardCustomerData,
   CamCardItem,
+  CamCardItemComment,
 } from '../../models/cam-card/cam-card.model';
 
 @Injectable({ providedIn: 'root' })
@@ -246,17 +247,22 @@ export class CamCardService {
    * @param camCardId
    * @param sku           The product sku.
    * @param quantity      The products quantity
-   * @param boxLabel      Comment label
+   * @param comment      Comment label
    * @returns             The changed cam_cards.
    */
-  addProductToCamCard(camCardId: string, sku: string, quantity: number, boxLabel?: string): Observable<CamCard> {
+  addProductToCamCard(
+    camCardId: string,
+    sku: string,
+    quantity: number,
+    comment?: CamCardItemComment,
+    position?: number
+  ): Observable<CamCard> {
     return this.apiService
       .post(`camcards/${camCardId}/products`, {
         quantity,
+        position,
         product: { sku },
-        comment: {
-          label: boxLabel,
-        },
+        comment,
       })
       .pipe(concatMap(() => this.getCamCard(camCardId)));
   }
@@ -296,6 +302,26 @@ export class CamCardService {
    */
   updateCamCardProduct(camCardId: string, camCardItem: CamCardItem): Observable<CamCardItem> {
     return this.apiService.put(`camcards/${camCardId}/products/${camCardItem.id}`, camCardItem);
+  }
+
+  /**
+   * Reset the positions of its directly assigned line items of this camcard
+   * @returns             The changed cam card item.
+   * @param rootCamCardId     Parent of sub cam card
+   * @param camCardId
+   */
+  resetItemPositions(rootCamCardId: string, camCardId: string): Observable<CamCardItem[]> {
+    if (!camCardId) {
+      return throwError('resetItemPositions() called without camCardId');
+    }
+
+    if (!rootCamCardId) {
+      return this.apiService.put(`camcards/${camCardId}/products`).pipe(unpackEnvelope());
+    } else {
+      return this.apiService
+        .put(`camcards/${rootCamCardId}/childcamcards/${camCardId}/products`)
+        .pipe(unpackEnvelope());
+    }
   }
 
   /**

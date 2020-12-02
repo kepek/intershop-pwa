@@ -117,7 +117,6 @@ export class CamfilOrderListComponent implements OnInit, AfterViewInit, OnDestro
     // subscribe to order status checkbox changes
     this.filterCheckboxes$.pipe(takeUntil(this.destroy$)).subscribe((stat: []) => {
       if (statusFiltersReady) {
-        console.log('CamfilOrderListComponent -> ngAfterViewInit -> stat', stat);
         this.filteredValues.status = stat;
         this.updateFilter(this.filteredValues);
       }

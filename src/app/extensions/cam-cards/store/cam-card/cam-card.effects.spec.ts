@@ -16,7 +16,7 @@ import { CustomerStoreModule } from 'ish-core/store/customer/customer-store.modu
 import { loginUserSuccess } from 'ish-core/store/customer/user';
 import { makeHttpError } from 'ish-core/utils/dev/api-service-utils';
 
-import { CamCard } from '../../models/cam-card/cam-card.model';
+import { CamCard, CamCardItemComment } from '../../models/cam-card/cam-card.model';
 import { CamCardService } from '../../services/cam-card/cam-card.service';
 import { CamCardsStoreModule } from '../cam-cards-store.module';
 
@@ -38,6 +38,7 @@ import {
   removeItemFromCamCard,
   removeItemFromCamCardFail,
   removeItemFromCamCardSuccess,
+  resetCamCardItemPositions,
   selectCamCard,
   updateCamCard,
   updateCamCardFail,
@@ -66,6 +67,27 @@ describe('Cam Card Effects', () => {
       id: '.AsdHS18FIAAAFuNiUBWx0d',
       itemsCount: 0,
       public: false,
+    },
+  ];
+
+  const camCardItems = [
+    {
+      name: 'testing cam card items',
+      id: '.SKsEQAE4FIAAAFuNiUBWx0d',
+      quantity: 1,
+      position: 0,
+      product: {
+        sku: '111',
+      },
+    },
+    {
+      name: 'testing cam card items 2',
+      id: '.AsdHS18FIAAAFuNiUBWx0d',
+      quantity: 2,
+      position: 1000,
+      product: {
+        sku: '111',
+      },
     },
   ];
   @Component({ template: 'dummy' })
@@ -289,14 +311,18 @@ describe('Cam Card Effects', () => {
       camCardId: '.SKsEQAE4FIAAAFuNiUBWx0d',
       sku: 'sku',
       quantity: 2,
-      boxLabel: '',
+      comment: {
+        label: 'boxLabel',
+        text: 'text',
+      } as CamCardItemComment,
+      position: 1000,
     };
 
     beforeEach(() => {
       store$.dispatch(loginUserSuccess({ customer }));
-      when(camCardServiceMock.addProductToCamCard(anyString(), anyString(), anyNumber(), anyString())).thenReturn(
-        of(camCards[0])
-      );
+      when(
+        camCardServiceMock.addProductToCamCard(anyString(), anyString(), anyNumber(), anything(), anyNumber())
+      ).thenReturn(of(camCards[0]));
     });
 
     xit('should call the CamCardService for addProductToCamCard', done => {
@@ -304,32 +330,20 @@ describe('Cam Card Effects', () => {
       actions$ = of(action);
 
       effects.addProductToCamCard$.subscribe(() => {
-        verify(camCardServiceMock.addProductToCamCard(payload.camCardId, payload.sku, payload.quantity)).once();
-        done();
-      });
-    });
-
-    it('should call the CamCardService for addProductToCamCard', done => {
-      const action = addProductToCamCard(payload);
-      actions$ = of(action);
-
-      effects.addProductToCamCard$.subscribe(() => {
         verify(
-          camCardServiceMock.addProductToCamCard(payload.camCardId, payload.sku, payload.quantity, payload.boxLabel)
+          camCardServiceMock.addProductToCamCard(
+            payload.camCardId,
+            payload.sku,
+            payload.quantity,
+            payload.comment,
+            payload.position
+          )
         ).once();
         done();
       });
     });
 
     xit('should map to actions of type AddProductToCamCardSuccess', () => {
-      const action = addProductToCamCard(payload);
-      const completion = addProductToCamCardSuccess({ camCard: camCards[0] });
-      actions$ = hot('-a-a-a', { a: action });
-      const expected$ = cold('-c-c-c', { c: completion });
-      expect(effects.addProductToCamCard$).toBeObservable(expected$);
-    });
-
-    it('should map to actions of type AddProductToCamCardSuccess', () => {
       const action = addProductToCamCard(payload);
       const completion1 = addProductToCamCardSuccess({ camCard: camCards[0] });
       const completion2 = selectCamCard({ id: camCards[0].id });
@@ -340,7 +354,9 @@ describe('Cam Card Effects', () => {
 
     xit('should map failed calls to actions of type AddProductToCamCardFail', () => {
       const error = makeHttpError({ message: 'invalid' });
-      when(camCardServiceMock.addProductToCamCard(anyString(), anyString(), anything())).thenReturn(throwError(error));
+      when(
+        camCardServiceMock.addProductToCamCard(anyString(), anyString(), anything(), anything(), anything())
+      ).thenReturn(throwError(error));
       const action = addProductToCamCard(payload);
       const completion = addProductToCamCardFail({
         error,
@@ -350,20 +366,30 @@ describe('Cam Card Effects', () => {
 
       expect(effects.addProductToCamCard$).toBeObservable(expected$);
     });
+  });
 
-    it('should map failed calls to actions of type AddProductToCamCardFail', () => {
-      const error = makeHttpError({ message: 'invalid' });
-      when(camCardServiceMock.addProductToCamCard(anyString(), anyString(), anything(), anything())).thenReturn(
-        throwError(error)
-      );
-      const action = addProductToCamCard(payload);
-      const completion = addProductToCamCardFail({
-        error,
+  describe('resetItemPositions$', () => {
+    const payload = {
+      camCard: {
+        name: 'testing cam cards',
+        id: '.SKsEQAE4FIAAAFuNiUBWx0d',
+        rootCamCard: undefined,
+      } as CamCard,
+    };
+
+    beforeEach(() => {
+      store$.dispatch(loginUserSuccess({ customer }));
+      when(camCardServiceMock.resetItemPositions(anything(), anyString())).thenReturn(of(camCardItems));
+    });
+
+    it('should call the CamCardService for resetItemPositions', done => {
+      const action = resetCamCardItemPositions(payload);
+      actions$ = of(action);
+
+      effects.resetItemPositions$.subscribe(() => {
+        verify(camCardServiceMock.resetItemPositions(payload.camCard.rootCamCard, payload.camCard.id)).once();
+        done();
       });
-      actions$ = hot('-a-a-a', { a: action });
-      const expected$ = cold('-c-c-c', { c: completion });
-
-      expect(effects.addProductToCamCard$).toBeObservable(expected$);
     });
   });
 

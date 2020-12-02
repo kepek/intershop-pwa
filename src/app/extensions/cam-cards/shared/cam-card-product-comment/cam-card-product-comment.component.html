@@ -1,6 +1,6 @@
 <ng-container *ngIf="mode === 'edit'">
   <form [formGroup]="commentForm">
-    <mat-form-field appearance="fill" class="form-field ml-2" *ngFor="let input of inputs">
+    <mat-form-field appearance="fill" class="form-field ml-md-3" *ngFor="let input of inputs">
       <mat-label>{{ 'camfil.dynamic.account.cam_card.edit.comment.' + input + '.label' | translate }}</mat-label>
       <input
         matInput

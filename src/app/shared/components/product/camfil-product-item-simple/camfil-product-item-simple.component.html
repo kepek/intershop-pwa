@@ -21,10 +21,22 @@
         </button>
         <camfil-product-title *ngIf="configuration.displayName" [product]="product"></camfil-product-title>
         <camfil-product-id *ngIf="configuration.displaySKU" [product]="product"></camfil-product-id><br />
-        <camfil-product-attribute name="'camfil.product.dimensions.label' | translate" value="xxx-xxx-xxx"></camfil-product-attribute>
-        <camfil-product-attribute name="'camfil.product.efficiency.label' | translate" value="xxx"></camfil-product-attribute>
-        <camfil-product-attribute name="'camfil.product.list_price.label' | translate" [value]="product.listPrice | ishPrice"></camfil-product-attribute>
-        <camfil-product-attribute name="'camfil.product.your_price.label' | translate" [value]="product.salePrice | ishPrice"></camfil-product-attribute>
+        <camfil-product-attribute
+          name="'camfil.product.dimensions.label' | translate"
+          value="xxx-xxx-xxx"
+        ></camfil-product-attribute>
+        <camfil-product-attribute
+          name="'camfil.product.efficiency.label' | translate"
+          value="xxx"
+        ></camfil-product-attribute>
+        <camfil-product-attribute
+          name="'camfil.product.list_price.label' | translate"
+          [value]="product.listPrice | ishPrice"
+        ></camfil-product-attribute>
+        <camfil-product-attribute
+          name="'camfil.product.your_price.label' | translate"
+          [value]="product.salePrice | ishPrice"
+        ></camfil-product-attribute>
 
         <div *ngIf="configuration.displayDescription" class="product-description">{{ product.shortDescription }}</div>
 

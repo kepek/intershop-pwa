@@ -38,8 +38,12 @@ import {
   loadDeliveryAddresses,
   loadDeliveryAddressesFail,
   loadDeliveryAddressesSuccess,
+  moveCamCardItem,
+  moveCamCardItemSuccess,
   moveCamCardSuccess,
+  moveItemToCamCard,
   removeItemFromCamCardSuccess,
+  resetCamCardItemPositionsSuccess,
   selectCamCard,
   setStickyCamCardToolbar,
   unselectCamCard,
@@ -81,6 +85,31 @@ export const initialState: CamCardState = camCardAdapter.getInitialState({
   stickyToolbar: false,
 });
 
+/** Returns a new state with replaced camcard or subcamcard */
+function insertCamCard(state, camCard) {
+  const entities = state.entities;
+  const oldSubs = entities[camCard.rootCamCard]?.subCamCards || [];
+  const oldSub = oldSubs.find(sub => sub.id === camCard.id);
+  let items: CamCard[] | CamCardItem[] = camCard.camCardItems;
+  if (camCard.rootCamCard) {
+    const newSub = { ...oldSub, camCardItems: items };
+    items = [...oldSubs].map(sub => (sub.id === camCard.id ? newSub : sub));
+  }
+
+  const prop = camCard.rootCamCard ? 'subCamCards' : 'camCardItems';
+
+  return {
+    ...state,
+    entities: {
+      ...state.entities,
+      [camCard.rootCamCard || camCard.id]: {
+        ...state.entities[camCard.rootCamCard || camCard.id],
+        [prop]: items,
+      },
+    },
+  };
+}
+
 export const camCardReducer = createReducer(
   initialState,
   setLoadingOn(
@@ -93,7 +122,9 @@ export const camCardReducer = createReducer(
     loadCustomers,
     loadContactsByCustomer,
     loadDeliveryAddresses,
-    updateSubCamCard
+    updateSubCamCard,
+    moveItemToCamCard,
+    moveCamCardItem
   ),
   on(
     loadCamCardsFail,
@@ -167,7 +198,6 @@ export const camCardReducer = createReducer(
     removeItemFromCamCardSuccess,
     (state: CamCardState, action) => {
       const { camCard } = action.payload;
-
       return camCardAdapter.upsertOne(camCard, {
         ...state,
         loading: false,
@@ -209,6 +239,28 @@ export const camCardReducer = createReducer(
       loading: false,
     };
   }),
+
+  on(moveCamCardItemSuccess, (state: CamCardState, action) => {
+    const { sourceCamCard, targetCamCard } = action.payload;
+
+    if (!sourceCamCard || !targetCamCard) {
+      return {
+        ...state,
+      };
+    }
+
+    return {
+      ...insertCamCard(insertCamCard(state, targetCamCard), sourceCamCard),
+      loading: false,
+    };
+  }),
+
+  on(resetCamCardItemPositionsSuccess, (state: CamCardState, action) => {
+    const { camCard, camCardItems } = action.payload;
+    const updatedCamcard: CamCard = { ...camCard, camCardItems };
+    return insertCamCard(state, updatedCamcard);
+  }),
+
   on(updateCamCardContactsSuccess, (state: CamCardState, action) => {
     const { camCardId, contacts } = action.payload;
     return {
