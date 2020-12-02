@@ -1,0 +1,54 @@
+<mat-card class="mat-elevation-4">
+  <mat-card-title>{{ 'camfil.checkout.total_order_summary' | translate }}</mat-card-title>
+  <br />
+  <mat-card-content>
+    <mat-divider></mat-divider>
+    <br />
+    <div class="summary-line">
+      <p>{{ 'camfil.checkout.your_total_price' | translate }}</p>
+      <p>{{ basket.totals.total | ishPrice }}</p>
+    </div>
+    <div class="summary-line">
+      <p>{{ 'camfil.checkout.volume_discount' | translate }}</p>
+      <p>0</p>
+    </div>
+    <div class="summary-line">
+      <p>
+        <b>{{ 'camfil.checkout.total_price_after' | translate }}</b> ({{ 'camfil.checkout.excl_vat' | translate }})
+      </p>
+      <p>{{ basket.totals.total | ishPrice }}</p>
+    </div>
+    <div class="summary-line">
+      <p>{{ 'camfil.checkout.tax_amount' | translate }}</p>
+      <p>{{ basket.totals.taxTotal | ishPrice }}</p>
+    </div>
+    <br />
+    <mat-divider></mat-divider>
+    <br />
+    <button mat-raised-button color="primary">{{ 'camfil.checkout.place_your_orders' | translate }}</button>
+    <br />
+    <br />
+    <mat-divider></mat-divider>
+    <br />
+    <div class="filter-info">
+      <p class="filter-info__title">
+        <mat-icon aria-hidden="false">help_outline</mat-icon>
+        <span>{{ 'camfil.checkout.delivery_info' | translate }}</span>
+      </p>
+      <p class="filter-info__note">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum facilisis felis nec mauris viverra
+        consectetur. Sed ut pulvinar nisl. Nam cursus libero et pellentesque dictum. Cras nec ligula sed lorem maximus
+        laoreet in non orci.
+      </p>
+      <p>
+        In mi lectus, mollis congue urna id, facilisis porta lorem. Phasellus eros nunc, tempus sit amet dictum sed,
+        accumsan eu velit. Sed eu malesuada ligula. Aenean euismod, quam in vehicula vehicula, enim ligula facilisis
+        diam, ut fermentum lacus nisl feugiat arcu.
+      </p>
+      <p>
+        Duis quis vehicula diam, nec efficitur nulla. Sed felis lorem, molestie sit amet imperdiet at, commodo et
+        ligula. Duis eu diam
+      </p>
+    </div>
+  </mat-card-content>
+</mat-card>

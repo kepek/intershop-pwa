@@ -1,0 +1,17 @@
+@import '~src/styles/themes/camfil/variables';
+
+:host {
+  .summary-line {
+    display: flex;
+    justify-content: space-between;
+  }
+  .filter-info__title {
+    display: flex;
+    align-items: center;
+    font-weight: 700;
+
+    span {
+      margin-left: 5px;
+    }
+  }
+}
