@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 
+import { CamfilCMSImageTextButtonComponent } from './components/camfil-cms-image-text-button/camfil-cms-image-text-button.component';
 import { CMSCarouselComponent } from './components/cms-carousel/cms-carousel.component';
 import { CMSContainerComponent } from './components/cms-container/cms-container.component';
 import { CMSDialogComponent } from './components/cms-dialog/cms-dialog.component';
@@ -110,6 +111,14 @@ import { SfeAdapterService } from './sfe-adapter/sfe-adapter.service';
       useValue: {
         definitionQualifiedName: 'app_sf_base_cm:component.common.dialog.pagelet2-Component',
         class: CMSDialogComponent,
+      },
+      multi: true,
+    },
+    {
+      provide: CMS_COMPONENT,
+      useValue: {
+        definitionQualifiedName: 'camfil_app_sf_base_cm:camfil.component.imageTextButton.pagelet2-Component',
+        class: CamfilCMSImageTextButtonComponent,
       },
       multi: true,
     },
