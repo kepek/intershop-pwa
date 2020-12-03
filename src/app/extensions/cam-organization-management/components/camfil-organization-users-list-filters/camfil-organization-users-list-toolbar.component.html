@@ -1,0 +1,49 @@
+<mat-card class="mb-3 clearfix">
+  <form [formGroup]="filterForm">
+    <div class="container">
+      <div class="row justify-content-between">
+        <div class="action-col">
+          <!-- User search Box -->
+          <div class="search-container">
+            <mat-icon svgIcon="search" class="search__icon background-icon"></mat-icon>
+            <input
+              matInput
+              placeholder="{{ 'camfil.account.organization.user_list.toolbar.search.input.placeholder' | translate }}"
+              autocomplete="off"
+              type="text"
+              class="search-input"
+              formControlName="search"
+              [class.mat-elevation-z2]="!isActive"
+              [class.mat-elevation-z4]="isActive"
+              (focus)="isActive = !isActive"
+              (focusout)="isActive = !isActive"
+            />
+            <div class="buttons">
+              <button
+                mat-flat-button
+                [title]="'camfil.account.organization.user_list.toolbar.filter.search.button.text' | translate"
+                type="submit"
+                name="search"
+                color="primary"
+              >
+                {{ 'camfil.account.organization.user_list.toolbar.filter.search.button.text' | translate }}
+              </button>
+            </div>
+          </div>
+          <div class="checkboxes-container">
+            <mat-checkbox formControlName="fullAccessUsers" class="mr-3">
+              {{ 'camfil.account.organization.user_list.toolbar.filter.fullAccessUsers.text' | translate }}
+            </mat-checkbox>
+            <mat-checkbox formControlName="activeUsers">
+              {{ 'camfil.account.organization.user_list.toolbar.filter.activeUsers.text' | translate }}
+            </mat-checkbox>
+          </div>
+        </div>
+        <div class="users-count">
+          {{ 'camfil.account.organization.user_list.toolbar.count.text' | translate }}
+          <strong>{{ count }}</strong>
+        </div>
+      </div>
+    </div>
+  </form>
+</mat-card>

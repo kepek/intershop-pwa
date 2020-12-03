@@ -2,6 +2,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { RouterNavigatedPayload, routerNavigatedAction } from '@ngrx/router-store';
 import { Store, select } from '@ngrx/store';
 import { concat, fromEvent } from 'rxjs';
 import {
@@ -13,6 +14,7 @@ import {
   mapTo,
   mergeMap,
   switchMap,
+  take,
   takeWhile,
   tap,
   withLatestFrom,
@@ -21,6 +23,7 @@ import {
 import { getDeviceType } from 'ish-core/store/core/configuration';
 import { displaySuccessMessage } from 'ish-core/store/core/messages';
 import { ofUrl, selectQueryParam, selectRouteParam, selectUrl } from 'ish-core/store/core/router';
+import { RouterState } from 'ish-core/store/core/router/router.reducer';
 import { setBreadcrumbData } from 'ish-core/store/core/viewconf';
 import { getUserAuthorized, loginUserSuccess } from 'ish-core/store/customer/user';
 import {
@@ -126,6 +129,38 @@ export class CamCardEffects {
     private router: Router,
     @Inject(PLATFORM_ID) private platformId: string
   ) {}
+
+  routeListenerForCamCustomers$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(routerNavigatedAction),
+      mapToPayloadProperty<RouterNavigatedPayload<RouterState>>('routerState'),
+      filter((routerState: RouterState) => /^\/(account\/camcards)/.test(routerState.url)),
+      take(1),
+      mapTo(loadCustomers(true))
+    )
+  );
+
+  routeListenerForCamCards$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(routerNavigatedAction),
+      mapToPayloadProperty<RouterNavigatedPayload<RouterState>>('routerState'),
+      filter((routerState: RouterState) => /^\/(account\/camcards)/.test(routerState.url)),
+      take(1),
+      mapTo(loadCamCards())
+    )
+  );
+
+  /**
+   * Reload CamCards after a creation or update to ensure integrity with server
+   */
+  reloadCamCards$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(updateCamCardSuccess, createCamCardSuccess),
+      mapToPayloadProperty('camCard'),
+      filter(camCard => camCard && !!camCard.id),
+      mapTo(loadCamCards())
+    )
+  );
 
   loadCamCards$ = createEffect(() =>
     this.actions$.pipe(
@@ -274,13 +309,6 @@ export class CamCardEffects {
         )
       )
     )
-  );
-
-  /**
-   * Trigger LoadCamCards action after LoginUserSuccess.
-   */
-  loadCustomersAfterLogin$ = createEffect(() =>
-    this.store.pipe(select(getUserAuthorized), whenTruthy(), mapTo(loadCustomers(true)))
   );
 
   addBasketToNewCamCard$ = createEffect(() =>
@@ -772,13 +800,6 @@ export class CamCardEffects {
       distinctCompareWith(this.store.pipe(select(getSelectedCamCardId))),
       map(id => selectCamCard({ id }))
     )
-  );
-
-  /**
-   * Trigger LoadCamCards action after LoginUserSuccess.
-   */
-  loadCamCardsAfterLogin$ = createEffect(() =>
-    this.store.pipe(select(getUserAuthorized), whenTruthy(), mapTo(loadCamCards()))
   );
 
   setCamCardBreadcrumb$ = createEffect(() =>

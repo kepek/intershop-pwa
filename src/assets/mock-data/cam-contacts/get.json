@@ -1,0 +1,20 @@
+{
+  "contacts": [
+    {
+      "type": "Contact",
+      "profileId": "JDN_AAAB6psAAAF1MBAGUrEi",
+      "email": "test@gmail.com",
+      "firstName": "test",
+      "lastName": "Merkel",
+      "erpId": "10"
+    },
+    {
+      "type": "Contact",
+      "profileId": "f9x_AAABJ30AAAF1pYoGUrEi",
+      "email": "test200@gmail.com",
+      "firstName": "test2",
+      "lastName": "Merkel",
+      "erpId": "100"
+    }
+  ]
+}

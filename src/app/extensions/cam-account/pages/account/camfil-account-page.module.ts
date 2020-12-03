@@ -44,8 +44,10 @@ const accountPageRoutes: Routes = [
       },
       {
         path: 'organization',
-        // TODO (extMlk): To be replaced with `cam-organization` extension module in the next days...
-        loadChildren: () => import('organization-management').then(m => m.OrganizationManagementModule),
+        loadChildren: () =>
+          import('../../../cam-organization-management/pages/cam-organization-management-routing.module').then(
+            m => m.CamOrganizationManagementRoutingModule
+          ),
         canActivate: [AuthorizationToggleGuard],
         data: {
           permission: 'APP_B2B_MANAGE_USERS',

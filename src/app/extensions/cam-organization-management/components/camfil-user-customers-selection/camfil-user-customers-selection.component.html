@@ -1,0 +1,54 @@
+<form *ngIf="parentCustomersForm" [formGroup]="parentCustomersForm" (ngSubmit)="submitForm()">
+  <ng-container *ngIf="customers$ | async">
+    <div
+      class="form-item-container"
+      *ngFor="let customerItemForm of customerArray.controls.slice(0, previewSize); let i = index"
+    >
+      <camfil-user-customer-selection-form-item
+        *ngIf="customerItemForm"
+        [customerItemForm]="customerItemForm"
+        [customerCheckbox]="customerCheckboxes[i]"
+        [selectedUser]="selectedUser"
+      ></camfil-user-customer-selection-form-item>
+    </div>
+  </ng-container>
+
+  <div class="error-text-container">
+    <mat-error *ngIf="formError" class="error-text">{{
+      'camfil.account.useredit.contact.form.error.text' | translate
+    }}</mat-error>
+  </div>
+
+  <div class="show-more-overlay col-12" *ngIf="displayShowMoreLink(); else collapseListContainer">
+    <div class="my-auto text-center pt-1">
+      {{ 'camfil.account.orderlist.showing_of' | translate: { '0': previewSize, '1': customerArray.controls.length } }}
+    </div>
+    <div class="my-auto text-center p-1">
+      <button type="button" mat-stroked-button color="primary" (click)="showAllCustomers()">
+        {{ 'camfil.account.organization.edit_user.expand.button.text' | translate }}
+      </button>
+    </div>
+  </div>
+  <ng-template #collapseListContainer>
+    <div class="show-more-overlay col-12">
+      <div class="my-auto text-center pt-1">
+        {{ 'camfil.account.organization.edit_user.customers.showing_all' | translate }}
+      </div>
+      <div class="my-auto text-center p-1">
+        <button type="button" mat-stroked-button color="primary" (click)="collapseCustomersList()">
+          {{ 'camfil.account.organization.edit_user.collapse.button.text' | translate }}
+        </button>
+      </div>
+    </div>
+  </ng-template>
+  <div class="row justify-content-center">
+    <button mat-flat-button class="btn-tool text-primary" type="submit" data-testing-id="cam-card-dialog-move-submit">
+      Submit
+    </button>
+  </div>
+</form>
+<camfil-confirmation-modal
+  #contactAddedConfirmModal
+  actionTitle="{{ 'camfil.account.useredit.contact.form.confirmation.text' | translate }}"
+>
+</camfil-confirmation-modal>

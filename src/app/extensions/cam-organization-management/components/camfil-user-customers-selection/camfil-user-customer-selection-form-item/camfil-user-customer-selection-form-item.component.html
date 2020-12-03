@@ -1,0 +1,23 @@
+<div *ngIf="customerItemForm">
+  <form [formGroup]="customerItemForm" *ngIf="customerCheckbox">
+    <div class="d-flex align-items-center">
+      <mat-checkbox
+        formControlName="customer"
+        class="col-6 customer-checkbox"
+        [checked]="customerCheckbox?.checked"
+        [value]="customerCheckbox?.id"
+        (change)="changeCheckbox($event)"
+      >
+        {{ customerCheckbox?.companyName }}
+      </mat-checkbox>
+      <mat-form-field appearance="fill" class="w-100 col-6">
+        <mat-label>{{ 'camfil.account.cam_card.move.dialog.contacts.label' | translate }}</mat-label>
+        <mat-select [disabled]="!customerCheckbox?.checked" formControlName="contact">
+          <mat-option *ngFor="let contact of contacts" [value]="contact.id">
+            {{ contact.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </form>
+</div>

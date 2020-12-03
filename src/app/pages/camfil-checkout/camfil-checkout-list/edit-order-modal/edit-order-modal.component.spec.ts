@@ -42,6 +42,7 @@ describe('Edit Order Modal Component', () => {
     element = fixture.nativeElement;
 
     component.order = {
+      contactPerson: { firstName: 'test' },
       basket: 'test_basketId',
       id: 'test_id',
       customer: {

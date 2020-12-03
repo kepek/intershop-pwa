@@ -12,8 +12,8 @@ import { User } from 'ish-core/models/user/user.model';
 import { makeHttpError } from 'ish-core/utils/dev/api-service-utils';
 import { CustomerAddressFormComponent } from 'ish-shared/address-forms/components/customer-address-form/customer-address-form.component';
 import { AddressComponent } from 'ish-shared/components/address/address/address.component';
-import { CamfilModalDialogComponent } from 'ish-shared/components/common/camfil-modal-dialog/camfil-modal-dialog.component';
 import { ErrorMessageComponent } from 'ish-shared/components/common/error-message/error-message.component';
+import { ModalDialogComponent } from 'ish-shared/components/common/modal-dialog/modal-dialog.component';
 import { SelectAddressComponent } from 'ish-shared/forms/components/select-address/select-address.component';
 
 import { AccountAddressesComponent } from './account-addresses.component';
@@ -29,10 +29,10 @@ describe('Account Addresses Component', () => {
       declarations: [
         AccountAddressesComponent,
         MockComponent(AddressComponent),
-        MockComponent(CamfilModalDialogComponent),
         MockComponent(CustomerAddressFormComponent),
         MockComponent(ErrorMessageComponent),
         MockComponent(FaIconComponent),
+        MockComponent(ModalDialogComponent),
         MockComponent(SelectAddressComponent),
       ],
       imports: [ReactiveFormsModule, TranslateModule.forRoot()],

@@ -1,0 +1,195 @@
+{
+  "type": "UserLinkCollection",
+  "name": "users",
+  "amount": 5,
+  "elements": [
+    {
+      "type": "Link",
+      "name": "Alfonso Gerocci",
+      "login": "agerocci@test.intershop.de",
+      "uri": "Camfil-CamfilSE-Site/rest;loc=en_US;cur=USD/customers/OilCorp/users/agerocci%40test.intershop.de",
+      "attributes": [
+        { "name": "firstName", "type": "String", "value": "Alfonso" },
+        { "name": "lastName", "type": "String", "value": "Gerocci" },
+        {
+          "name": "roleIDs",
+          "type": "MultipleString",
+          "value": ["APP_B2B_ADMIN_PUNCHOUT_USER", "APP_B2B_BUYER"]
+        },
+        {
+          "name": "roleNames",
+          "type": "MultipleString",
+          "value": ["Customer admin punchout user", "Buyer"]
+        },
+        { "name": "budgetPeriod", "type": "String", "value": "none" },
+        {
+          "name": "pendingOneTimeRequisitionsCount",
+          "type": "Integer",
+          "value": 0
+        },
+        {
+          "name": "pendingRecurringRequisitionsCount",
+          "type": "Integer",
+          "value": 0
+        },
+        {
+          "name": "status",
+          "type": "String",
+          "value": "Active"
+        }
+      ],
+      "customerNo": "BioTech"
+    },
+    {
+      "type": "Link",
+      "name": "Bernhard Boldner",
+      "login": "bboldner@test.intershop.de",
+      "uri": "Camfil-CamfilSE-Site/rest;loc=en_US;cur=USD/customers/OilCorp/users/bboldner%40test.intershop.de",
+      "attributes": [
+        { "name": "firstName", "type": "String", "value": "Bernhard" },
+        { "name": "lastName", "type": "String", "value": "Boldner" },
+        {
+          "name": "roleIDs",
+          "type": "MultipleString",
+          "value": ["APP_B2B_BUYER", "APP_B2B_ACCOUNT_OWNER"]
+        },
+        {
+          "name": "roleNames",
+          "type": "MultipleString",
+          "value": ["Buyer", "Account Admin"]
+        },
+        { "name": "budgetPeriod", "type": "String", "value": "none" },
+        {
+          "name": "pendingOneTimeRequisitionsCount",
+          "type": "Integer",
+          "value": 0
+        },
+        {
+          "name": "pendingRecurringRequisitionsCount",
+          "type": "Integer",
+          "value": 0
+        },
+        {
+          "name": "status",
+          "type": "String",
+          "value": "Active"
+        }
+      ],
+      "customerNo": "BioTech"
+    },
+    {
+      "type": "Link",
+      "name": "Jack Link",
+      "login": "jlink@test.intershop.de",
+      "uri": "Camfil-CamfilSE-Site/rest;loc=en_US;cur=USD/customers/OilCorp/users/jlink%40test.intershop.de",
+      "attributes": [
+        { "name": "firstName", "type": "String", "value": "Jack" },
+        { "name": "lastName", "type": "String", "value": "Link" },
+        {
+          "name": "roleIDs",
+          "type": "MultipleString",
+          "value": ["APP_B2B_PRINT_WITH_PRICES_USER", "APP_B2B_EXTERNAL_USER"]
+        },
+        {
+          "name": "roleNames",
+          "type": "MultipleString",
+          "value": [
+            "Customer print with prices user",
+            "External user (belongs to a customer)"
+          ]
+        },
+        { "name": "budgetPeriod", "type": "String", "value": "none" },
+        {
+          "name": "pendingOneTimeRequisitionsCount",
+          "type": "Integer",
+          "value": 0
+        },
+        {
+          "name": "pendingRecurringRequisitionsCount",
+          "type": "Integer",
+          "value": 0
+        },
+        {
+          "name": "status",
+          "type": "String",
+          "value": "Inactive"
+        }
+      ],
+      "customerNo": "OilCorp"
+    },
+    {
+      "type": "Link",
+      "name": "OCI User",
+      "login": "ociuser@test.intershop.de",
+      "uri": "Camfil-CamfilSE-Site/rest;loc=en_US;cur=USD/customers/OilCorp/users/ociuser%40test.intershop.de",
+      "attributes": [
+        { "name": "firstName", "type": "String", "value": "OCI" },
+        { "name": "lastName", "type": "String", "value": "User" },
+        {
+          "name": "roleIDs",
+          "type": "MultipleString",
+          "value": ["APP_B2B_OCI_USER"]
+        },
+        {
+          "name": "roleNames",
+          "type": "MultipleString",
+          "value": ["OCI Punchout User"]
+        },
+        { "name": "budgetPeriod", "type": "String", "value": "none" },
+        {
+          "name": "pendingOneTimeRequisitionsCount",
+          "type": "Integer",
+          "value": 0
+        },
+        {
+          "name": "pendingRecurringRequisitionsCount",
+          "type": "Integer",
+          "value": 0
+        },
+        {
+          "name": "status",
+          "type": "String",
+          "value": "Inactive"
+        }
+      ]
+    },
+    {
+      "type": "Link",
+      "name": "Patricia Miller",
+      "login": "pmiller@test.intershop.de",
+      "uri": "Camfil-CamfilSE-Site/rest;loc=en_US;cur=USD/customers/OilCorp/users/pmiller%40test.intershop.de",
+      "attributes": [
+        { "name": "firstName", "type": "String", "value": "Patricia" },
+        { "name": "lastName", "type": "String", "value": "Miller" },
+        {
+          "name": "roleIDs",
+          "type": "MultipleString",
+          "value": ["APP_B2B_VIEW_PRICES_USER"]
+        },
+        {
+          "name": "roleNames",
+          "type": "MultipleString",
+          "value": ["Customer price user"]
+        },
+        { "name": "budgetPeriod", "type": "String", "value": "none" },
+        {
+          "name": "pendingOneTimeRequisitionsCount",
+          "type": "Integer",
+          "value": 0
+        },
+        {
+          "name": "pendingRecurringRequisitionsCount",
+          "type": "Integer",
+          "value": 0
+        },
+        {
+          "name": "status",
+          "type": "String",
+          "value": "Active"
+        }
+      ],
+      "customerNo": "OilCorp"
+    }
+  ],
+  "sortKeys": ["name"]
+}

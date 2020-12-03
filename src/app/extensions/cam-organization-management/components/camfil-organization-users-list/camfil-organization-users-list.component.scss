@@ -1,0 +1,55 @@
+@import '~src/styles/themes/camfil/colors.scss';
+@import '~src/styles/themes/camfil/variables.scss';
+
+:host {
+  td.mat-cell,
+  td.mat-footer-cell {
+    vertical-align: middle;
+  }
+
+  td.mat-column-roleIDs {
+    max-width: 200px;
+  }
+
+  ::ng-deep div.show-more-overlay .mat-stroked-button {
+    padding: 0 28px;
+    font-size: 12px;
+  }
+
+  .action-col {
+    display: flex;
+  }
+
+  table {
+    width: 100%;
+
+    th {
+      height: 45px;
+      font-size: $font-size-corporate;
+      color: #000;
+      background-color: $greyF5;
+    }
+
+    tr {
+      outline: 0;
+    }
+
+    tr.disabled > td:not(.mat-column-active):not(.mat-column-edit) {
+      pointer-events: none;
+      opacity: 0.5;
+    }
+
+    tr.users-list-row:hover {
+      background: $greyF5;
+    }
+
+    tr.users-list-row:active {
+      background: $greyEF;
+    }
+
+    .edit-btn {
+      background-color: transparent;
+      border: none;
+    }
+  }
+}

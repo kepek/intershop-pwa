@@ -6,12 +6,12 @@ import { instance, mock } from 'ts-mockito';
 
 import { AppFacade } from 'ish-core/facades/app.facade';
 import { findAllCustomElements } from 'ish-core/utils/dev/html-query-utils';
-import { CamfilBreadcrumbComponent } from 'ish-shared/components/common/camfil-breadcrumb/camfil-breadcrumb.component';
 import { CookiesBannerComponent } from 'ish-shell/application/cookies-banner/cookies-banner.component';
+import { CamfilFooterComponent } from 'ish-shell/footer/camfil-footer/camfil-footer.component';
+import { CamfilBreadcrumbComponent } from 'ish-shell/header/camfil-breadcrumb/camfil-breadcrumb.component';
+import { CamfilHeaderComponent } from 'ish-shell/header/camfil-header/camfil-header.component';
 
 import { AppComponent } from './app.component';
-import { CamfilFooterComponent } from './shared/components/common/camfil-footer/camfil-footer.component';
-import { CamfilHeaderComponent } from './shared/components/common/camfil-header/camfil-header.component';
 
 let translate: TranslateService;
 

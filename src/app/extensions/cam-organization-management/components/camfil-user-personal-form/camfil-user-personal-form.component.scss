@@ -1,0 +1,16 @@
+:host {
+  ::ng-deep {
+    fieldset {
+      padding-left: 0;
+      margin-bottom: 15px;
+    }
+
+    .mat-form-field {
+      width: 100%;
+    }
+
+    .form-field-left {
+      margin-right: 24px;
+    }
+  }
+}

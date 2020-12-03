@@ -265,6 +265,10 @@ describe('Shopping Store', () => {
             sorting: undefined
           [Filter Internal] Load Filter For Category:
             uniqueId: "A.123"
+          [Products API] load Category Products:
+            categoryId: "A.123"
+            page: 1
+            sorting: undefined
           [Filter API] Load Filter Success:
             filterNavigation: {}
           @ngrx/router-store/navigated:
@@ -429,6 +433,10 @@ describe('Shopping Store', () => {
           sorting: undefined
         [Filter Internal] Load Filter For Category:
           uniqueId: "A.123"
+        [Products API] load Category Products:
+          categoryId: "A.123"
+          page: 1
+          sorting: undefined
         [Filter API] Load Filter Success:
           filterNavigation: {}
       `);
@@ -528,6 +536,12 @@ describe('Shopping Store', () => {
           sorting: undefined
         [Filter Internal] Load Filter For Category:
           uniqueId: "A.123.456"
+        [Products API] load Category Products:
+          categoryId: "A.123.456"
+          page: 1
+          sorting: undefined
+        [Filter API] Load Filter Success:
+          filterNavigation: {}
         [Products API] Load Product Success:
           product: {"sku":"P1"}
         [Products API] Load Product Success:
@@ -537,8 +551,6 @@ describe('Shopping Store', () => {
           id: {"type":"category","value":"A.123.456"}
           itemCount: 2
           sortableAttributes: []
-        [Filter API] Load Filter Success:
-          filterNavigation: {}
       `);
     }));
 
@@ -832,6 +844,12 @@ describe('Shopping Store', () => {
             sorting: undefined
           [Filter Internal] Load Filter For Category:
             uniqueId: "A.123.456"
+          [Products API] load Category Products:
+            categoryId: "A.123.456"
+            page: 1
+            sorting: undefined
+          [Filter API] Load Filter Success:
+            filterNavigation: {}
           [Products API] Load Product Success:
             product: {"sku":"P1"}
           [Products API] Load Product Success:
@@ -841,8 +859,6 @@ describe('Shopping Store', () => {
             id: {"type":"category","value":"A.123.456"}
             itemCount: 2
             sortableAttributes: []
-          [Filter API] Load Filter Success:
-            filterNavigation: {}
           @ngrx/router-store/navigated:
             routerState: {"url":"/category/A.123.456","params":{"categoryUniqueId":"A...
             event: {"id":2,"url":"/category/A.123.456","urlAfterRedirects":"/ca...

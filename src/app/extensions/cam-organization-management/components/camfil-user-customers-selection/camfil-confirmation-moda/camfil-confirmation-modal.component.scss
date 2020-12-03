@@ -1,0 +1,29 @@
+@import '~src/styles/themes/camfil/variables';
+@import '~src/styles/themes/camfil/mixins.scss';
+
+.cta-modal-container {
+  .cta-modal {
+    &__header {
+      text-align: center;
+
+      &--text {
+        margin-top: $space-box;
+        text-transform: capitalize;
+        @include font-size-subtitle1;
+      }
+    }
+
+    &__links {
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-end;
+      margin-top: $space-box;
+
+      &--link {
+        margin-bottom: 0;
+        font-size: $font-size-base;
+        font-weight: 700;
+      }
+    }
+  }
+}

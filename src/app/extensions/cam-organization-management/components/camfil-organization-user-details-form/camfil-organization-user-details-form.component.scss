@@ -1,0 +1,36 @@
+@import '~src/styles/themes/camfil/variables';
+@import '~src/styles/themes/camfil/mixins';
+
+:host {
+  &::ng-deep .mat-checkbox-layout,
+  &::ng-deep .mat-form-field-wrapper {
+    margin: 0;
+  }
+
+  .form {
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.04);
+
+    &__section {
+      padding: $space-default;
+
+      &--name {
+        margin-bottom: 15px;
+      }
+    }
+
+    &__field {
+      width: $input-width;
+    }
+
+    &__personal-info {
+      border-bottom: 1px solid $camfil-color-border;
+    }
+
+    &__subtitle {
+      @include font-size-h3;
+
+      font-weight: bold;
+      text-transform: none;
+    }
+  }
+}

@@ -1,3 +1,4 @@
+import { isEqual, omit } from 'lodash-es';
 import { MonoTypeOperatorFunction, Observable, OperatorFunction, of, throwError } from 'rxjs';
 import { catchError, distinctUntilChanged, filter, map, withLatestFrom } from 'rxjs/operators';
 
@@ -52,4 +53,17 @@ export function whenTruthy<T>(): MonoTypeOperatorFunction<T> {
 
 export function whenFalsy<T>(): MonoTypeOperatorFunction<T> {
   return (source$: Observable<T>) => source$.pipe(filter(x => !x));
+}
+
+/**
+ * Skip relations so it will not trigger the subscribe/next when relations are changed;
+ * @param relations
+ */
+export function skipRelations<T>(relations: string[]): OperatorFunction<T[], T[]> {
+  return source$ =>
+    source$.pipe(
+      // @ts-ignore
+      map(items => items.map(item => omit(item, relations))),
+      distinctUntilChanged(isEqual)
+    );
 }

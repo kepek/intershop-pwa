@@ -45,6 +45,7 @@ export interface Environment {
     /* B2C features */
     | 'wishlists'
     /* Camfil features */
+    | 'camOrganizationManagement'
     | 'camConfiguration'
     | 'camIcc'
     | 'camAccount'
@@ -137,6 +138,7 @@ export const ENVIRONMENT_DEFAULTS: Environment = {
     'advancedVariationHandling',
     'businessCustomerRegistration',
     /* Camfil features */
+    'camOrganizationManagement',
     'camIcc',
     'camCards',
     'camAccount',

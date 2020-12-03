@@ -128,7 +128,7 @@
                     <fa-icon [icon]="['fas', 'trash-alt']"></fa-icon>
                   </a>
 
-                  <camfil-modal-dialog
+                  <ish-modal-dialog
                     #modalDialog
                     [options]="{
                       titleText: 'account.addresses.remove_dialog.title' | translate,
@@ -138,7 +138,7 @@
                     (confirmed)="deleteAddress($event)"
                   >
                     <p>{{ 'account.addresses.remove_dialog.message_line2' | translate }}</p>
-                  </camfil-modal-dialog>
+                  </ish-modal-dialog>
                 </div>
                 <ish-address [address]="currentAddress"></ish-address>
               </div>

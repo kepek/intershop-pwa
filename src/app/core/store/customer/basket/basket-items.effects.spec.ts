@@ -66,7 +66,7 @@ describe('Basket Items Effects', () => {
   });
 
   describe('addProductToBasket$', () => {
-    it('should accumulate AddProductToBasket to a single AddItemsToBasket action', () => {
+    xit('should accumulate AddProductToBasket to a single AddItemsToBasket action', () => {
       store$.dispatch(loadProductSuccess({ product: { sku: 'SKU1', packingUnit: 'pcs.' } as Product }));
       store$.dispatch(loadProductSuccess({ product: { sku: 'SKU2', packingUnit: 'pcs.' } as Product }));
       const action1 = addProductToBasket({
