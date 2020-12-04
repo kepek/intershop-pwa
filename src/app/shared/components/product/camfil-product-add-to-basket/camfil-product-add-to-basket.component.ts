@@ -38,7 +38,7 @@ export class CamfilProductAddToBasketComponent implements OnInit, OnDestroy {
   /**
    * when 'icon', the button label is an icon, otherwise it is text
    */
-  @Input() displayType?: 'icon' | 'button' | 'link' = 'link';
+  @Input() displayType?: 'icon' | 'button' | 'round-button' | 'big-round-button' | 'link' = 'link';
   /**
    * additional css styling
    */

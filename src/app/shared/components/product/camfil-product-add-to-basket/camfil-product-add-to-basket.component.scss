@@ -3,13 +3,15 @@
 
 :host {
   .round-cart-btn {
-    display: flex;
     width: $common-height;
     height: $common-height;
     padding: 7px;
     background-color: $button-primary-bg;
     border-radius: 50%;
     box-shadow: $dark-box-shadow;
+    .cart-icon {
+      color: $camfil-color-light;
+    }
   }
   .cart-big-round-btn {
     width: 100%;
