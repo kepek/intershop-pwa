@@ -15,7 +15,7 @@
   >
     <ng-container *ngIf="!(displaySpinner$ | async); else spinning">
       <!-- Add to Cart button -->
-      <ng-container *ngIf="displayIcon || displayType === 'round-button' else defaultButton">
+      <ng-container *ngIf="displayIcon || displayType === 'round-button'; else defaultButton">
         <mat-icon svgIcon="cart" class="cart-icon" [class.color-light]="displayType === 'round-button'"></mat-icon>
       </ng-container>
 
