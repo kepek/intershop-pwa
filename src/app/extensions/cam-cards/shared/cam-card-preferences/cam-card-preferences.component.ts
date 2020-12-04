@@ -169,19 +169,31 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit {
       if (this.addresses$ === undefined) {
         this.camCardsFacade.getDeliveryAddress(this.camCard.customer.id);
       }
+      const {
+        name,
+        customer,
+        orderLabel,
+        invoiceLabel,
+        deliveryAddress,
+        lastDeliveryDate,
+        deliveryInterval,
+        nextDeliveryDate,
+        reminderFlag,
+      } = this.camCard;
+      const { addressLine1, addressLine2, postalCode, city } = deliveryAddress;
       this.camCardForm.patchValue({
-        title: this.camCard.name,
-        customerName: this.camCard.customer.customerNo,
-        orderMark: this.camCard.orderLabel,
-        invoiceMark: this.camCard.invoiceLabel,
-        addressLine1: this.camCard.deliveryAddress.addressLine1,
-        addressLine2: this.camCard.deliveryAddress.addressLine2,
-        postalCode: this.camCard.deliveryAddress.postalCode,
-        city: this.camCard.deliveryAddress.city,
-        lastDelivery: new Date(this.camCard.lastDeliveryDate),
-        deliveryInterval: this.camCard.deliveryInterval,
-        nextDelivery: new Date(this.camCard.nextDeliveryDate),
-        reminder: this.camCard.reminderFlag,
+        title: name,
+        customerName: customer.customerNo,
+        orderMark: orderLabel,
+        invoiceMark: invoiceLabel,
+        addressLine1,
+        addressLine2,
+        postalCode,
+        city,
+        lastDelivery: lastDeliveryDate ? new Date(lastDeliveryDate) : '',
+        deliveryInterval,
+        nextDelivery: nextDeliveryDate ? new Date(nextDeliveryDate) : '',
+        reminder: reminderFlag,
       });
     }
   }
@@ -215,8 +227,8 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit {
           postalCode: this.camCardForm.get('postalCode').value,
           city: this.camCardForm.get('city').value,
         },
-        nextDeliveryDate: new Date(nextDelivery.getTime() - nextDelivery.getTimezoneOffset() * 60000).toJSON(),
-        lastDeliveryDate: new Date(lastDelivery.getTime() - lastDelivery.getTimezoneOffset() * 60000).toJSON(),
+        nextDeliveryDate: nextDelivery ? this.dateToSend(nextDelivery) : '',
+        lastDeliveryDate: lastDelivery ? this.dateToSend(lastDelivery) : '',
         deliveryInterval: this.camCardForm.get('deliveryInterval').value,
         reminderFlag: this.camCardForm.get('reminder').value,
       });
@@ -228,6 +240,10 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit {
       });
       markAsDirtyRecursive(this.camCardForm);
     }
+  }
+
+  dateToSend(date) {
+    return new Date(date.getTime() - date.getTimezoneOffset() * 60000).toJSON();
   }
 
   pickCustomer(event) {
