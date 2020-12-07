@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 
+import { CamfilCMSBigBannerWithButtonComponent } from './components/camfil-cms-big-banner-with-button/camfil-cms-big-banner-with-button.component';
 import { CamfilCMSImageTextButtonComponent } from './components/camfil-cms-image-text-button/camfil-cms-image-text-button.component';
 import { CamfilCMSSmallImageTextLinkComponent } from './components/camfil-cms-small-image-text-link/camfil-cms-small-image-text-link.component';
 import { CMSCarouselComponent } from './components/cms-carousel/cms-carousel.component';
@@ -128,6 +129,14 @@ import { SfeAdapterService } from './sfe-adapter/sfe-adapter.service';
       useValue: {
         definitionQualifiedName: 'camfil_app_sf_base_cm:camfil.component.smallImageTextLink.pagelet2-Component',
         class: CamfilCMSSmallImageTextLinkComponent,
+      },
+      multi: true,
+    },
+    {
+      provide: CMS_COMPONENT,
+      useValue: {
+        definitionQualifiedName: 'camfil_app_sf_base_cm:camfil.component.bigBannerWithButton.pagelet2-Component',
+        class: CamfilCMSBigBannerWithButtonComponent,
       },
       multi: true,
     },
