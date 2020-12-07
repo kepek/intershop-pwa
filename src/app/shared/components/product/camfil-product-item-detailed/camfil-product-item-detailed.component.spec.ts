@@ -10,6 +10,7 @@ import { ProductRoutePipe } from 'ish-core/routing/product/product-route.pipe';
 import { findAllCustomElements } from 'ish-core/utils/dev/html-query-utils';
 import { CamfilProductAddToBasketComponent } from 'ish-shared/components/product/camfil-product-add-to-basket/camfil-product-add-to-basket.component';
 import { CamfilProductAddToCompareComponent } from 'ish-shared/components/product/camfil-product-add-to-compare/camfil-product-add-to-compare.component';
+import { CamfilProductAttributeComponent } from 'ish-shared/components/product/camfil-product-attribute/camfil-product-attribute.component';
 import { CamfilProductIdComponent } from 'ish-shared/components/product/camfil-product-id/camfil-product-id.component';
 import { CamfilProductInventoryComponent } from 'ish-shared/components/product/camfil-product-inventory/camfil-product-inventory.component';
 import { DEFAULT_CONFIGURATION } from 'ish-shared/components/product/camfil-product-item/camfil-product-item.component';
@@ -20,6 +21,7 @@ import { CamfilProductQuantityComponent } from 'ish-shared/components/product/ca
 import { CamfilProductQuickviewComponent } from 'ish-shared/components/product/camfil-product-quickview/camfil-product-quickview.component';
 import { CamfilProductRatingComponent } from 'ish-shared/components/product/camfil-product-rating/camfil-product-rating.component';
 import { CamfilProductShipmentComponent } from 'ish-shared/components/product/camfil-product-shipment/camfil-product-shipment.component';
+import { CamfilProductTitleComponent } from 'ish-shared/components/product/camfil-product-title/camfil-product-title.component';
 import { CamfilProductVariationSelectComponent } from 'ish-shared/components/product/camfil-product-variation-select/camfil-product-variation-select.component';
 import { CamfilProductImageComponent } from 'ish-shell/header/camfil-product-image/camfil-product-image.component';
 
@@ -42,6 +44,7 @@ describe('Camfil Product Item Detailed Component', () => {
         CamfilProductItemDetailedComponent,
         MockComponent(CamfilProductAddToBasketComponent),
         MockComponent(CamfilProductAddToCompareComponent),
+        MockComponent(CamfilProductAttributeComponent),
         MockComponent(CamfilProductIdComponent),
         MockComponent(CamfilProductImageComponent),
         MockComponent(CamfilProductInventoryComponent),
@@ -52,6 +55,7 @@ describe('Camfil Product Item Detailed Component', () => {
         MockComponent(CamfilProductQuickviewComponent),
         MockComponent(CamfilProductRatingComponent),
         MockComponent(CamfilProductShipmentComponent),
+        MockComponent(CamfilProductTitleComponent),
         MockComponent(CamfilProductVariationSelectComponent),
         MockComponent(LazyProductAddToCamCardComponent),
         MockComponent(LazyProductAddToOrderTemplateComponent),
@@ -81,34 +85,48 @@ describe('Camfil Product Item Detailed Component', () => {
     fixture.detectChanges();
     expect(findAllCustomElements(element)).toMatchInlineSnapshot(`
       Array [
+        "camfil-product-title",
         "camfil-product-image",
         "camfil-product-label",
-        "camfil-product-id",
-        "camfil-product-promotion",
-        "ish-lazy-product-add-to-quote",
-        "camfil-product-add-to-compare",
-        "ish-lazy-product-add-to-wishlist",
-        "camfil-lazy-product-add-to-cam-card",
-        "camfil-product-price",
         "camfil-product-inventory",
+        "camfil-product-add-to-compare",
+        "camfil-product-quickview",
+        "camfil-product-id",
+        "camfil-product-attribute",
+        "camfil-product-attribute",
+        "camfil-product-attribute",
+        "camfil-product-attribute",
+        "camfil-product-attribute",
+        "camfil-product-attribute",
+        "camfil-product-attribute",
+        "camfil-product-attribute",
+        "camfil-product-attribute",
         "camfil-product-quantity",
         "camfil-product-add-to-basket",
+        "camfil-lazy-product-add-to-cam-card",
       ]
     `);
     expect(findAllCustomElements(element)).toMatchInlineSnapshot(`
       Array [
+        "camfil-product-title",
         "camfil-product-image",
         "camfil-product-label",
-        "camfil-product-id",
-        "camfil-product-promotion",
-        "ish-lazy-product-add-to-quote",
-        "camfil-product-add-to-compare",
-        "ish-lazy-product-add-to-wishlist",
-        "camfil-lazy-product-add-to-cam-card",
-        "camfil-product-price",
         "camfil-product-inventory",
+        "camfil-product-add-to-compare",
+        "camfil-product-quickview",
+        "camfil-product-id",
+        "camfil-product-attribute",
+        "camfil-product-attribute",
+        "camfil-product-attribute",
+        "camfil-product-attribute",
+        "camfil-product-attribute",
+        "camfil-product-attribute",
+        "camfil-product-attribute",
+        "camfil-product-attribute",
+        "camfil-product-attribute",
         "camfil-product-quantity",
         "camfil-product-add-to-basket",
+        "camfil-lazy-product-add-to-cam-card",
       ]
     `);
   });
@@ -118,8 +136,25 @@ describe('Camfil Product Item Detailed Component', () => {
     fixture.detectChanges();
     expect(findAllCustomElements(element)).toMatchInlineSnapshot(`
       Array [
+        "camfil-product-title",
         "camfil-product-image",
         "camfil-product-label",
+        "camfil-product-inventory",
+        "camfil-product-add-to-compare",
+        "camfil-product-quickview",
+        "camfil-product-id",
+        "camfil-product-attribute",
+        "camfil-product-attribute",
+        "camfil-product-attribute",
+        "camfil-product-attribute",
+        "camfil-product-attribute",
+        "camfil-product-attribute",
+        "camfil-product-attribute",
+        "camfil-product-attribute",
+        "camfil-product-attribute",
+        "camfil-product-quantity",
+        "camfil-product-add-to-basket",
+        "camfil-lazy-product-add-to-cam-card",
       ]
     `);
   });

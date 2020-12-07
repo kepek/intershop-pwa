@@ -3,7 +3,9 @@
     <p class="product-title-container">
       <camfil-product-title *ngIf="configuration.displayName" [product]="product"></camfil-product-title>
     </p>
-    <camfil-product-category-label [category]="category"></camfil-product-category-label>
+    <p class="camfil-product-category-label">
+      {{ category.name }}
+    </p>
     <div class="d-flex">
       <div class="product-image-container">
         <a [routerLink]="product | ishProductRoute: category">
@@ -70,12 +72,12 @@
               *ngIf="configuration.displayAddToBasket"
               [product]="product"
               (productToBasket)="addToBasket()"
-              displayType="big-round-button"
+              displayType="button"
             ></camfil-product-add-to-basket>
             <camfil-lazy-product-add-to-cam-card
               *ngIf="configuration.displayAddToCamCard"
               [quantity]="1"
-              class="btn-link"
+              class="btn-link cart-big-round-btn"
               [product]="product"
               displayType="round-btn"
             ></camfil-lazy-product-add-to-cam-card>

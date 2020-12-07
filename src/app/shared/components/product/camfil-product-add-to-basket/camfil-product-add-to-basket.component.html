@@ -5,9 +5,7 @@
     class="btn"
     [ngClass]="class"
     [class.btn-primary]="!displayIcon"
-    [class.round-cart-btn]="displayType === 'round-button'"
-    [class.mat-flat-button]="displayType === 'button' || displayType === 'big-round-button'"
-    [class.cart-big-round-btn]="displayType === 'big-round-button'"
+    [class.mat-flat-button]="displayType === 'button'"
     [disabled]="disabled || (displaySpinner$ | async)"
     [attr.title]="translationKey | translate"
     data-testing-id="addToCartButton"
@@ -15,8 +13,8 @@
   >
     <ng-container *ngIf="!(displaySpinner$ | async); else spinning">
       <!-- Add to Cart button -->
-      <ng-container *ngIf="displayIcon || displayType === 'round-button'; else defaultButton">
-        <mat-icon svgIcon="cart" class="cart-icon" [class.color-light]="displayType === 'round-button'"></mat-icon>
+      <ng-container *ngIf="displayIcon; else defaultButton">
+        <mat-icon svgIcon="cart" class="cart-icon  {{ colorIcon }}"></mat-icon>
       </ng-container>
 
       <ng-template #defaultButton>{{ translationKey | translate }}</ng-template>

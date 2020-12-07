@@ -7,6 +7,10 @@
     grid-row-gap: 0;
     grid-column-gap: 10px;
   }
+  .camfil-product-category-label {
+    margin: 4px 0;
+    color: $gray-400;
+  }
   .product-detailed-left-col {
     grid-area: 1 / 1 / 2 / 2;
     padding: $space-box-half $space-box;
@@ -81,6 +85,12 @@
     camfil-product-add-to-basket {
       .mat-flat-button {
         margin-bottom: $space-box-half;
+      }
+
+      button {
+        width: 100%;
+        color: $camfil-color-light;
+        background-color: $camfil-color-primary;
       }
     }
     camfil-product-quantity {
