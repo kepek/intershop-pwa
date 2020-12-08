@@ -1,0 +1,25 @@
+<div class="d-flex align-items-center bg-light p-3" [ngClass]="pagelet.stringParam('CSSClass')">
+  <picture *ngIf="showImage">
+    <img [src]="pagelet.stringParam('Image')" [attr.alt]="pagelet.stringParam('AlternateText')" />
+  </picture>
+  <div class="card-body px-3 py-0">
+    <p class="card-title mb-0" *ngIf="pagelet.hasParam('Heading1')">
+      <strong>{{ pagelet.stringParam('Heading1') }}</strong>
+    </p>
+    <p
+      *ngIf="pagelet.hasParam('Description')"
+      class="card-text"
+      [ishServerHtml]="pagelet.stringParam('Description')"
+    ></p>
+  </div>
+  <a
+    *ngIf="pagelet.hasParam('Link')"
+    [routerLink]="routerLink(pagelet, 'Link')"
+    [attr.title]="pagelet.stringParam('LinkTitle')"
+    class="mat-fab mat-elevation-z1"
+    mat-fab
+    color=""
+  >
+    <mat-icon class="size-24">east</mat-icon>
+  </a>
+</div>

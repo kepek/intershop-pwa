@@ -1,0 +1,26 @@
+<div class="card border-0" [ngClass]="pagelet.stringParam('CSSClass')">
+  <picture *ngIf="showImage" class="card-img-top">
+    <img [src]="pagelet.stringParam('Image')" [attr.alt]="pagelet.stringParam('AlternateText')" />
+  </picture>
+  <div class="card-body bg-light">
+    <p class="card-subtitle mb-0" *ngIf="pagelet.hasParam('Heading2')">
+      <small class="text-muted">{{ pagelet.stringParam('Heading2') }}</small>
+    </p>
+    <h1 class="card-title text-capitalize" *ngIf="pagelet.hasParam('Heading1')">
+      {{ pagelet.stringParam('Heading1') }}
+    </h1>
+    <p
+      *ngIf="pagelet.hasParam('Description')"
+      class="card-text mb-3"
+      [ishServerHtml]="pagelet.stringParam('Description')"
+    ></p>
+    <a
+      *ngIf="pagelet.hasParam('Link') && pagelet.hasParam('LinkText')"
+      [routerLink]="routerLink(pagelet, 'Link')"
+      [attr.title]="pagelet.stringParam('LinkTitle')"
+      class="mat-focus-indicator mat-raised-button mat-button-base px-5"
+    >
+      {{ pagelet.stringParam('LinkText') }}
+    </a>
+  </div>
+</div>

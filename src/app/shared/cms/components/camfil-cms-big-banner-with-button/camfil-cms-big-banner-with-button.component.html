@@ -1,0 +1,22 @@
+<div
+  (deferLoad)="showImage = true"
+  class="banner-container defer-load"
+  [ngClass]="pagelet.stringParam('CSSClass')"
+  [ngStyle]="{ 'background-image': 'url(' + this.pagelet.stringParam('Image') + ')' }"
+>
+  <div class="banner-text px-5 py-5">
+    <h1 class="text-capitalize" *ngIf="pagelet.hasParam('Heading1')">
+      {{ pagelet.stringParam('Heading1') }}
+    </h1>
+    <p *ngIf="pagelet.hasParam('Description')" class="mb-3" [ishServerHtml]="pagelet.stringParam('Description')"></p>
+    <a
+      *ngIf="pagelet.hasParam('Link') && pagelet.hasParam('LinkText')"
+      [routerLink]="routerLink(pagelet, 'Link')"
+      [attr.title]="pagelet.stringParam('LinkTitle')"
+      class="mat-focus-indicator mat-raised-button mat-button-base mat-primary px-5"
+      color="primary"
+    >
+      {{ pagelet.stringParam('LinkText') }}
+    </a>
+  </div>
+</div>
