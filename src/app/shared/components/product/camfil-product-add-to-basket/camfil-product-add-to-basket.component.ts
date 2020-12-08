@@ -21,7 +21,6 @@ import { whenFalsy } from 'ish-core/utils/operators';
 @Component({
   selector: 'camfil-product-add-to-basket',
   templateUrl: './camfil-product-add-to-basket.component.html',
-  styleUrls: ['./camfil-product-add-to-basket.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CamfilProductAddToBasketComponent implements OnInit, OnDestroy {
@@ -43,6 +42,9 @@ export class CamfilProductAddToBasketComponent implements OnInit, OnDestroy {
    * additional css styling
    */
   @Input() class?: string;
+
+  @Input() colorIcon?: string;
+
   /**
    * translationKey for the button label
    */
