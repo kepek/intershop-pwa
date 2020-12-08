@@ -1,4 +1,4 @@
-<div *ngIf="product.inStock && product.availability" [formGroup]="parentForm" class="product-quantity">
+<div *ngIf="product.availability" [formGroup]="parentForm" class="product-quantity">
   <ng-container *ngIf="!readOnly">
     <ng-container [ngSwitch]="type">
       <mat-form-field *ngSwitchCase="'select'" appearance="fill">
@@ -27,6 +27,7 @@
           [controlName]="controlName"
           [min]="allowZeroQuantity ? 0 : product.minOrderQuantity"
           [max]="product.maxOrderQuantity"
+          inputClass=""
         ></camfil-counter>
       </ng-container>
     </ng-container>

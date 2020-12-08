@@ -1,14 +1,15 @@
-<span class="product-availability">
-  <ng-container *ngIf="product.inStock && product.availability; else outOfStock">
+<div class="product-availability">
+  <ng-container *ngIf="product.inStock && product.availability">
     <span class="product-in-stock" [matTooltip]="'camfil.product.instock.text' | translate">
       {{ 'camfil.product.instock.text' | translate }}
       <link itemprop="availability" href="http://schema.org/InStock" />
     </span>
   </ng-container>
-  <ng-template #outOfStock>
+  <!-- because of FRS005
+    <ng-template #outOfStock>
     <span class="product-out-of-stock" [matTooltip]="'camfil.product.out_of_stock.text' | translate">
       {{ 'camfil.product.out_of_stock.text' | translate }}
       <link itemprop="availability" href="http://schema.org/OutOfStock" />
     </span>
-  </ng-template>
-</span>
+  </ng-template> -->
+</div>

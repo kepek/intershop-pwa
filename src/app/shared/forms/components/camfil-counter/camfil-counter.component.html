@@ -1,42 +1,40 @@
-<div class="row form-group" [formGroup]="form">
+<div class="form-group" [ngClass]="{ 'row' : inputClass }" [formGroup]="form">
   <label *ngIf="displayLabel" [for]="uuid" class="col-form-label" [ngClass]="labelClass"
     >{{ label | translate }}<span *ngIf="required" class="required">*</span>
   </label>
   <div [ngClass]="inputClass">
-    <div class="">
-      <div class="d-flex flex-row align-items-center">
-        <button
-          mat-button
-          mat-icon-button
-          (click)="decrease()"
-          [disabled]="cannotDecrease$ | async"
-          [attr.data-testing-id]="'decrease-' + controlName"
-        >
-          <mat-icon svgIcon="minus"></mat-icon>
-        </button>
-        <input
-          type="number"
-          class="counter_value"
-          [attr.data-testing-id]="controlName"
-          [class.mat-elevation-z2]="true"
-          [max]="max"
-          name="value"
-          placeholder="0"
-          [formControlName]="controlName"
-          (keydown)="handleInput($event)"
-          (keyup)="handleInput($event)"
-        />
-        <button
-          mat-button
-          mat-icon-button
-          class="size-10"
-          (click)="increase()"
-          [disabled]="cannotIncrease$ | async"
-          [attr.data-testing-id]="'increase-' + controlName"
-        >
-          <mat-icon svgIcon="plus"></mat-icon>
-        </button>
-      </div>
+    <div class="d-flex flex-row align-items-center">
+      <button
+        mat-button
+        mat-icon-button
+        (click)="decrease()"
+        [disabled]="cannotDecrease$ | async"
+        [attr.data-testing-id]="'decrease-' + controlName"
+      >
+        <mat-icon svgIcon="minus"></mat-icon>
+      </button>
+      <input
+        type="number"
+        class="counter_value"
+        [attr.data-testing-id]="controlName"
+        [class.mat-elevation-z2]="true"
+        [max]="max"
+        name="value"
+        placeholder="0"
+        [formControlName]="controlName"
+        (keydown)="handleInput($event)"
+        (keyup)="handleInput($event)"
+      />
+      <button
+        mat-button
+        mat-icon-button
+        class="size-10"
+        (click)="increase()"
+        [disabled]="cannotIncrease$ | async"
+        [attr.data-testing-id]="'increase-' + controlName"
+      >
+        <mat-icon svgIcon="plus"></mat-icon>
+      </button>
     </div>
   </div>
 </div>

@@ -36,10 +36,17 @@
 
 .handle {
   cursor: move;
+  @media (max-width: $screen-sm-max) {
+    position: absolute;
+    right: $space-box;
+    top: $space-box;
+  }
 }
 
 .list-item-row {
-  margin-top: 12px;
+  margin-top: $space-box;
+  padding: $space-box;
   background-color: $white;
   box-shadow: $header-shadow;
+  position: relative;
 }
