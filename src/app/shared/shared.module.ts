@@ -45,6 +45,8 @@ import { ShellModule } from 'ish-shell/shell.module';
 import { AddressFormsSharedModule } from './address-forms/address-forms.module';
 import { CMSModule } from './cms/cms.module';
 import { CamfilCMSBigBannerWithButtonComponent } from './cms/components/camfil-cms-big-banner-with-button/camfil-cms-big-banner-with-button.component';
+import { CamfilCmsEdpComponent } from './cms/components/camfil-cms-edp/camfil-cms-edp.component';
+import { CamfilCmsFaqComponent } from './cms/components/camfil-cms-faq/camfil-cms-faq.component';
 import { CamfilCMSImageTextButtonComponent } from './cms/components/camfil-cms-image-text-button/camfil-cms-image-text-button.component';
 import { CamfilCMSSmallImageTextLinkComponent } from './cms/components/camfil-cms-small-image-text-link/camfil-cms-small-image-text-link.component';
 import { CMSCarouselComponent } from './cms/components/cms-carousel/cms-carousel.component';
@@ -214,6 +216,8 @@ const declaredComponents = [
   CamfilCMSImageTextButtonComponent,
   CamfilCMSSmallImageTextLinkComponent,
   CamfilCamCardModalComponent,
+  CamfilCmsEdpComponent,
+  CamfilCmsFaqComponent,
   CamfilErrorComponent,
   CamfilFilterAppliedComponent,
   CamfilFilterCollapsableComponent,

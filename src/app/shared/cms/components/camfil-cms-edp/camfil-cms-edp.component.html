@@ -1,0 +1,25 @@
+<div [ngClass]="pagelet.stringParam('CSSClass')">
+  <div class="d-flex flex-row mb-4">
+    <div
+      *ngIf="showImage"
+      [ngStyle]="{
+        'background-image': 'url(' + this.pagelet.stringParam('Image1') + ')',
+        'background-size': 'cover',
+        'background-position': 'center center'
+      }"
+      class="w-50"
+    ></div>
+    <div class="d-flex flex-column w-50 ml-3">
+      <img
+        class="mb-3"
+        *ngIf="showImage"
+        [src]="pagelet.stringParam('Image2')"
+        [attr.alt]="pagelet.stringParam('AlternateText2')"
+      />
+      <img *ngIf="showImage" [src]="pagelet.stringParam('Image3')" [attr.alt]="pagelet.stringParam('AlternateText3')" />
+    </div>
+  </div>
+  <div class="px-3 mb-3">
+    <p *ngIf="pagelet.hasParam('Description')" [ishServerHtml]="pagelet.stringParam('Description')"></p>
+  </div>
+</div>
