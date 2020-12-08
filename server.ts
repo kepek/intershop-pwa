@@ -32,7 +32,7 @@ global['navigator'] = win.navigator;
 */
 
 // The Express app is exported so that it can be used by serverless Functions.
-export function app() {
+export function app(): express.Express {
   const logging = /on|1|true|yes/.test(process.env.LOGGING?.toLowerCase());
 
   const ICM_BASE_URL = process.env.ICM_BASE_URL || environment.icmBaseURL;
@@ -113,8 +113,6 @@ export function app() {
     })
   );
 
-  // tslint:disable:no-unused
-  // @ts-ignore
   const icmProxy = proxy(ICM_BASE_URL, {
     // preserve original path
     proxyReqPathResolver: req => req.originalUrl,
@@ -235,7 +233,7 @@ export function app() {
     server.use('/INTERSHOP', icmProxy);
   }
 
-  // @ts-ignores
+  // @ts-ignore
   createProxy(environment).forEach(proxyMiddleware => {
     server.use(proxyMiddleware);
   });

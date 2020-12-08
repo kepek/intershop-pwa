@@ -3,14 +3,14 @@ import { createReducer, on } from '@ngrx/store';
 import { applyIccConfiguration, setIccToken } from './icc.actions';
 
 export interface ICCState {
-  iccBaseURL: string;
+  iccProxyURL: string;
   iccServer: string;
   iccToken: string;
   iccTokenHeaderKey: string;
 }
 
 const initialState: ICCState = {
-  iccBaseURL: undefined,
+  iccProxyURL: undefined,
   iccServer: undefined,
   iccToken: undefined,
   iccTokenHeaderKey: undefined,

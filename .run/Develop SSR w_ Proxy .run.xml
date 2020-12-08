@@ -10,6 +10,7 @@
       <env name="NODE_ENV" value="development" />
       <env name="PORT" value="4200" />
       <env name="LOGGING" value="true" />
+      <env name="DEBUG" value="true" />
     </envs>
     <method v="2" />
   </configuration>

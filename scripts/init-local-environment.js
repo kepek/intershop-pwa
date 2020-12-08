@@ -14,8 +14,6 @@ export const environment: Environment = {
   icmBaseURL: 'https://intershoppwa.azurewebsites.net',
   icmChannel: 'inSPIRED-inTRONICS_Business-Site',
   icmApplication: '-',
-  /* ICC API CONFIGURATION */
-  iccToken: 'YOUR_ICC_API_TOKEN',
 };
 
 `;
@@ -23,12 +21,7 @@ export const environment: Environment = {
 const environmentProxyPath = 'src/environments/environment.proxy.ts';
 const environmentProxyDataSource = `import { ENVIRONMENT_DEFAULTS, Environment } from './environment.model';
 
-interface EnvironmentProxy extends Environment {
-  /* PROXY CONFIGURATION */
-  icmProxyURL: string;
-}
-
-export const environment: EnvironmentProxy = {
+export const environment: Environment = {
   ...ENVIRONMENT_DEFAULTS,
   /* INTERSHOP COMMERCE MANAGEMENT REST API CONFIGURATION */
   icmBaseURL: 'http://localhost:4200',

@@ -1,8 +1,8 @@
 {
   "data": {
-    "icc": {
-      "apiBaseURL": "https://apim-icc.azure-api.net",
-      "apiToken": "7c2823bbdde20579a6c396abf61f457c"
+    "someApi": {
+      "someApiBaseURL": "https://some-api.example.com",
+      "someApiToken": "7c2823bbdde20579a6c396abf61f457c"
     }
   }
 }

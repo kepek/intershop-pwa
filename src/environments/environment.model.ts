@@ -20,6 +20,9 @@ export interface Environment {
   icmChannel: string;
   icmApplication?: string;
 
+  /* INTERSHOP PROXY CONFIGURATION */
+  icmProxyURL?: string;
+
   // set 'mockServerAPI' to true if not working against a real ICM server
   mockServerAPI?: boolean;
   // array of REST path expressions that should always be mocked
@@ -106,7 +109,7 @@ export interface Environment {
 
   /* ICC API CONFIGURATION */
 
-  iccBaseURL: string;
+  iccProxyURL: string;
   iccToken: string;
   iccTokenHeaderKey: string;
   iccServer: string;
@@ -114,6 +117,7 @@ export interface Environment {
 
 export const ENVIRONMENT_DEFAULTS: Environment = {
   /* INTERSHOP COMMERCE MANAGEMENT REST API CONFIGURATION */
+
   icmBaseURL: 'NOT SET',
   icmChannel: 'Camfil-CamfilSE-Site',
   icmServer: 'INTERSHOP/rest/WFS',
@@ -179,7 +183,7 @@ export const ENVIRONMENT_DEFAULTS: Environment = {
 
   /* ICC API CONFIGURATION */
 
-  iccBaseURL: 'https://apim-icc.azure-api.net',
+  iccProxyURL: 'https://apim-icc.azure-api.net',
   iccToken: 'NOT SET',
   iccTokenHeaderKey: 'Ocp-Apim-Subscription-Key',
   iccServer: 'ICC',

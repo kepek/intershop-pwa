@@ -23,8 +23,10 @@ describe('Configuration Selectors', () => {
   describe('initial state', () => {
     it('should be undefined or empty values for most selectors', () => {
       expect(isCamfilConfigurationLoaded(store$.state)).toBeFalsy();
-      expect(getCamfilConfigurationParameter('icc.apiBaseURL')(store$.state)).toMatchInlineSnapshot(`undefined`);
-      expect(getCamfilConfigurationParameter('icc.apiToken')(store$.state)).toMatchInlineSnapshot(`undefined`);
+      expect(getCamfilConfigurationParameter('someApi.someApiBaseURL')(store$.state)).toMatchInlineSnapshot(
+        `undefined`
+      );
+      expect(getCamfilConfigurationParameter('someApi.someApiToken')(store$.state)).toMatchInlineSnapshot(`undefined`);
     });
   });
 
@@ -44,10 +46,10 @@ describe('Configuration Selectors', () => {
 
     it('should set serverConfig to state', () => {
       expect(isCamfilConfigurationLoaded(store$.state)).toBeTruthy();
-      expect(getCamfilConfigurationParameter('icc.apiBaseURL')(store$.state)).toMatchInlineSnapshot(
-        `"http://example.org"`
+      expect(getCamfilConfigurationParameter('someApi.someApiBaseURL')(store$.state)).toMatchInlineSnapshot(
+        `undefined`
       );
-      expect(getCamfilConfigurationParameter('icc.apiToken')(store$.state)).toMatchInlineSnapshot(`"YYYY-YYYY"`);
+      expect(getCamfilConfigurationParameter('someApi.someApiToken')(store$.state)).toMatchInlineSnapshot(`undefined`);
     });
   });
 });

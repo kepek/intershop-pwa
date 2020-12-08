@@ -2,12 +2,12 @@ import { createSelector } from '@ngrx/store';
 
 import { getCamIccState } from '../cam-icc-store';
 
-const getIccState = createSelector(getCamIccState, state => state.icc);
+const getIccState = createSelector(getCamIccState, state => state._icc);
 
-export const getICCBaseURL = createSelector(getIccState, state => state.iccBaseURL);
+export const getICCProxyURL = createSelector(getIccState, state => state.iccProxyURL);
 
 export const getICCServerURL = createSelector(getIccState, state =>
-  state.iccBaseURL && state.iccServer ? `${state.iccBaseURL}/${state.iccServer}` : undefined
+  state.iccProxyURL && state.iccServer ? `${state.iccProxyURL}/${state.iccServer}` : undefined
 );
 
 export const getIccRestEndpoint = getICCServerURL;

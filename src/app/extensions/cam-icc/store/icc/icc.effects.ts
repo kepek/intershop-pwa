@@ -33,11 +33,10 @@ export class IccEffects implements OnInitEffects {
           this.stateProperties.getStateOrEnvOrDefault<string>('ICC_TOKEN', 'iccToken'),
           this.stateProperties.getStateOrEnvOrDefault<string>('ICC_TOKEN_HEADER_KEY', 'iccTokenHeaderKey')
         ),
-        // @ts-ignore
         // tslint:disable-next-line:no-unused
-        map(([_, iccBaseURL, iccServer, iccToken, iccTokenHeaderKey]) =>
+        map(([_, iccProxyURL, iccServer, iccToken, iccTokenHeaderKey]) =>
           applyIccConfiguration({
-            iccBaseURL,
+            iccProxyURL,
             iccServer,
             iccToken,
             iccTokenHeaderKey,

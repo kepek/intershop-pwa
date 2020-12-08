@@ -1,9 +1,10 @@
 // tslint:disable: no-console ish-ordered-imports force-jsdoc-comments project-structure ban-specific-imports ish-no-object-literal-type-assertion ish-no-object-literal-type-assertion
 import * as https from 'https';
 import * as http from 'http';
-import { createProxyMiddleware } from 'http-proxy-middleware';
+import { Request } from 'express';
+import { createProxyMiddleware, Options } from 'http-proxy-middleware';
 
-import { EnvironmentProxy } from '../environments/environment.proxy';
+import { Environment } from '../environments/environment.model';
 import { createProxiesConfig } from './config';
 
 const PORT = process.env.PORT || 4200;
@@ -48,7 +49,7 @@ export function getHttpAgent(url) {
  * Create Development Proxy
  * @param env
  */
-export function createDevProxy(env: EnvironmentProxy) {
+export function createDevProxy(env: Environment) {
   const config = createProxiesConfig(env);
 
   const devProxy = {};
@@ -61,12 +62,14 @@ export function createDevProxy(env: EnvironmentProxy) {
 
     const { route, changeOrigin = true, logLevel = 'debug', secure = true, ...rest } = proxy;
 
-    devProxy[`/${route}/*`] = {
+    const middlewareConfig: Options = {
       ...rest,
       changeOrigin,
       logLevel,
       secure,
     };
+
+    devProxy[`/${route}/*`] = middlewareConfig;
   });
 
   return devProxy;
@@ -76,21 +79,21 @@ export function createDevProxy(env: EnvironmentProxy) {
  * Create Proxy
  * @param env
  */
-export function createProxy(env: EnvironmentProxy) {
+export function createProxy(env: Environment) {
   const config = createProxiesConfig(env);
 
   const { allowedDomains: globalAllowedDomains = [], proxies } = config;
 
   let prodProxies = [...proxies];
 
-  if (process.env.PROXY_ICM || process.env.SSR_HYBRID) {
+  if (process.env.NODE_ENV === 'production' && (process.env.PROXY_ICM || process.env.SSR_HYBRID)) {
     prodProxies = prodProxies.filter(p => p.route !== 'INTERSHOP');
   }
 
   return prodProxies.map(proxy => {
     const { route, allowedDomains = [], allowedMethods = ['GET'], changeOrigin = true, ...rest } = proxy;
 
-    const filter = (pathname, req) => {
+    const filter = (pathname: string, req: Request) => {
       const checks = [];
 
       // Check if the request route is matching;
@@ -108,10 +111,14 @@ export function createProxy(env: EnvironmentProxy) {
       return checks.every(check => check === true);
     };
 
-    return createProxyMiddleware(filter, {
+    console.log(`making "${proxy.target}" available for all requests via '/${route}'`);
+
+    const middlewareConfig: Options = {
       ...rest,
       changeOrigin,
       logLevel: NODE_ENV === 'development' ? 'debug' : 'info',
-    });
+    };
+
+    return createProxyMiddleware(filter, middlewareConfig);
   });
 }

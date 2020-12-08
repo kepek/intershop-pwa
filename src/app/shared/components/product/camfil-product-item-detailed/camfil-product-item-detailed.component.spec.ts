@@ -88,7 +88,6 @@ describe('Camfil Product Item Detailed Component', () => {
     expect(findAllCustomElements(element)).toMatchInlineSnapshot(`
       Array [
         "camfil-product-title",
-        "camfil-product-category-label",
         "camfil-product-image",
         "camfil-product-label",
         "camfil-product-inventory",
@@ -112,7 +111,6 @@ describe('Camfil Product Item Detailed Component', () => {
     expect(findAllCustomElements(element)).toMatchInlineSnapshot(`
       Array [
         "camfil-product-title",
-        "camfil-product-category-label",
         "camfil-product-image",
         "camfil-product-label",
         "camfil-product-inventory",
@@ -140,14 +138,6 @@ describe('Camfil Product Item Detailed Component', () => {
     fixture.detectChanges();
     expect(findAllCustomElements(element)).toMatchInlineSnapshot(`
       Array [
-        "camfil-product-title",
-        "camfil-product-image",
-        "camfil-product-label",
-        "camfil-product-inventory",
-        "camfil-product-add-to-compare",
-        "camfil-product-quickview",
-        "camfil-product-id",
-        "camfil-product-category-label",
         "camfil-product-image",
         "camfil-product-label",
         "camfil-product-quickview",
@@ -160,9 +150,6 @@ describe('Camfil Product Item Detailed Component', () => {
         "camfil-product-attribute",
         "camfil-product-attribute",
         "camfil-product-attribute",
-        "camfil-product-quantity",
-        "camfil-product-add-to-basket",
-        "camfil-lazy-product-add-to-cam-card",
       ]
     `);
   });

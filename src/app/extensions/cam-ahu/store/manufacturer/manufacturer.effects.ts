@@ -10,6 +10,7 @@ import { AhuService } from '../../services/ahu/ahu.service';
 
 import {
   loadAhuManufacturer,
+  loadAhuManufacturerFail,
   loadAhuManufacturerSuccess,
   loadAhuManufacturers,
   loadAhuManufacturersFail,
@@ -40,7 +41,7 @@ export class ManufacturerEffects {
       switchMap(manufacturerId =>
         this.ahuService.getManufacturer(manufacturerId).pipe(
           map(manufacturer => loadAhuManufacturerSuccess({ manufacturer })),
-          mapErrorToAction(loadAhuManufacturersFail)
+          mapErrorToAction(loadAhuManufacturerFail)
         )
       )
     )

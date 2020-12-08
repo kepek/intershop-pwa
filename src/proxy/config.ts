@@ -1,10 +1,12 @@
 // tslint:disable: no-console ish-ordered-imports force-jsdoc-comments project-structure ban-specific-imports
 import { Options } from 'http-proxy-middleware';
-
-import { EnvironmentProxy } from '../environments/environment.proxy';
+import { Environment } from '../environments/environment.model';
 import { defaultAllowedDomains, defaultAllowedMethods, defaultHeaders, getHttpAgent, RequestMethod } from './index';
 
-const NODE_ENV = process.env.NODE_ENV;
+// TODO (extMlk): Talk with DevOps to change the name of the `PROXY_ICC` to `ICC_PROXY_URL` to remove below workaround.
+if (!process.env.ICC_PROXY_URL && process.env.PROXY_ICC) {
+  process.env.ICC_PROXY_URL = process.env.PROXY_ICC;
+}
 
 export interface Proxy extends Options {
   route: string;
@@ -21,7 +23,7 @@ export interface Config {
  * Create Proxies Config
  * @param env
  */
-export function createProxiesConfig(env: EnvironmentProxy): Config {
+export function createProxiesConfig(env: Environment): Config {
   function getSysEnvOrAppEnv(sysEnvKey: string, appEnvKey: string): string {
     const sysEnvVar = process && process.env[sysEnvKey];
     const appEnvVar = env[appEnvKey];
@@ -33,26 +35,38 @@ export function createProxiesConfig(env: EnvironmentProxy): Config {
     proxies: [],
   };
 
-  if (!NODE_ENV || NODE_ENV === 'development') {
-    // Route -> /INTERSHOP/*
-    const ICM_TARGET = getSysEnvOrAppEnv('PROXY_ICM', 'icmProxyURL') || getSysEnvOrAppEnv('ICM_BASE_URL', 'icmBaseURL');
+  /**
+   *
+   * Intershop-ICM
+   *
+   **/
 
-    config.proxies.push({
-      route: getSysEnvOrAppEnv('ICM_SERVER', 'icmServer').split('/')[0],
-      target: ICM_TARGET,
-      allowedMethods: defaultAllowedMethods,
-      agent: getHttpAgent(ICM_TARGET),
-      headers: {
-        ...defaultHeaders,
-      },
-    });
-  }
-
-  // Route -> /ICC/*
-  const ICC_TARGET = getSysEnvOrAppEnv('PROXY_ICC', 'iccBaseURL');
+  // Route -> /INTERSHOP/*
+  const ICM_TARGET = getSysEnvOrAppEnv('ICM_PROXY_URL', 'icmProxyURL');
 
   config.proxies.push({
-    route: getSysEnvOrAppEnv('PROXY_ICC_SERVER', 'iccServer'),
+    route: getSysEnvOrAppEnv('ICM_SERVER', 'icmServer').split('/')[0],
+    target: ICM_TARGET,
+    allowedMethods: defaultAllowedMethods,
+    agent: getHttpAgent(ICM_TARGET),
+    headers: {
+      ...defaultHeaders,
+    },
+  });
+
+  /**
+   *
+   * Camfil-ICC
+   *
+   **/
+
+  // Route -> /ICC/*
+  const ICC_TARGET = getSysEnvOrAppEnv('ICC_PROXY_URL', 'iccProxyURL');
+
+  console.log('ICC_TARGET', ICC_TARGET);
+
+  config.proxies.push({
+    route: getSysEnvOrAppEnv('ICC_SERVER', 'iccServer'),
     target: ICC_TARGET,
     allowedMethods: defaultAllowedMethods,
     agent: getHttpAgent(ICC_TARGET),
@@ -61,7 +75,7 @@ export function createProxiesConfig(env: EnvironmentProxy): Config {
       [getSysEnvOrAppEnv('ICC_TOKEN_HEADER_KEY', 'iccTokenHeaderKey')]: getSysEnvOrAppEnv('ICC_TOKEN', 'iccToken'),
     },
     pathRewrite: {
-      [`^/${getSysEnvOrAppEnv('PROXY_ICC_SERVER', 'iccServer')}`]: '', // `http://localhost:4200/ICC/very/deep/path` -> `http://example.com/very/deep/path`
+      [`^/${getSysEnvOrAppEnv('ICC_SERVER', 'iccServer')}`]: '', // `http://localhost:4200/ICC/very/deep/path` -> `http://example.com/very/deep/path`
     },
   });
 

@@ -47,8 +47,8 @@ pipelines:
               caches:
                 - node
               script:
-                - git fetch --no-tags --depth=1 origin $BITBUCKET_PR_DESTINATION_BRANCH
-                - git checkout -b $BITBUCKET_PR_DESTINATION_BRANCH
+                - git fetch --no-tags origin $BITBUCKET_PR_DESTINATION_BRANCH
+                - git checkout $BITBUCKET_PR_DESTINATION_BRANCH
                 - git checkout $BITBUCKET_BRANCH
                 - npm run test -- --changedSince=$BITBUCKET_PR_DESTINATION_BRANCH --forceExit --ci -w=4
               after-script:
