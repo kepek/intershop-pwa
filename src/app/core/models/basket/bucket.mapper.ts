@@ -4,8 +4,6 @@ export class BucketMapper {
   static fromData(payload: Buckets): Bucket[] {
     const { data, included } = payload;
 
-    console.log('fromData', data);
-
     return data.map((bucketData: BucketData) => ({
       id: bucketData.id,
       basket: bucketData.basket,

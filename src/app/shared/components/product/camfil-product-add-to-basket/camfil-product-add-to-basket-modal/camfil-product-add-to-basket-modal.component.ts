@@ -32,9 +32,6 @@ export class CamfilProductAddToBasketModalComponent implements OnInit, OnDestroy
 
   ngOnInit() {
     this.basket$ = this.checkoutFacade.basket$;
-    /*    this.basket$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(basket => {
-      console.log('CamfilProductAddToBasketModalComponent basket', basket);
-    });*/
   }
 
   openModal(modal: AddToCartModalComponent) {
