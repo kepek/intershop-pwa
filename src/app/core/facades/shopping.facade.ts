@@ -8,7 +8,7 @@ import { ProductListingID } from 'ish-core/models/product-listing/product-listin
 import { ProductCompletenessLevel, ProductHelper } from 'ish-core/models/product/product.model';
 import {
   addProductToBasket,
-  getAddToBasketSuccess,
+  getProductAdded,
   resetProductAdded,
   updateBucket,
 } from 'ish-core/store/customer/basket';
@@ -61,7 +61,7 @@ import { whenFalsy, whenTruthy } from 'ish-core/utils/operators';
 export class ShoppingFacade {
   constructor(private store: Store) {}
 
-  productAdded$ = this.store.pipe(select(getAddToBasketSuccess));
+  productAdded$ = this.store.pipe(select(getProductAdded));
 
   // CATEGORY
 

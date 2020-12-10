@@ -79,7 +79,7 @@ export interface BasketState {
   info: BasketInfo[];
   lastTimeProductAdded: number;
   validationResults: BasketValidationResultType;
-  addToBasketSuccess: boolean;
+  productAdded: boolean;
   buckets: Bucket[];
 }
 
@@ -99,8 +99,8 @@ export const initialState: BasketState = {
   promotionError: undefined,
   lastTimeProductAdded: undefined,
   validationResults: initialValidationResults,
-  addToBasketSuccess: false,
   buckets: undefined,
+  productAdded: false
 };
 
 export const basketReducer = createReducer(
@@ -171,7 +171,7 @@ export const basketReducer = createReducer(
   })),
   on(updateBucketSuccess, (state: BasketState) => ({
     ...state,
-    addToBasketSuccess: true,
+    productAdded: true,
   })),
   on(
     removePromotionCodeFromBasketSuccess,
@@ -192,11 +192,11 @@ export const basketReducer = createReducer(
     error: undefined,
     info: action.payload.info,
     lastTimeProductAdded: new Date().getTime(),
-    addToBasketSuccess: true,
+    productAdded: true,
   })),
   on(resetProductAdded, (state: BasketState) => ({
     ...state,
-    addToBasketSuccess: false,
+    productAdded: false,
   })),
   on(mergeBasketSuccess, loadBasketSuccess, (state: BasketState, action) => {
     const basket = {

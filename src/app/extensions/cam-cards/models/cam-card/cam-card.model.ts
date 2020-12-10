@@ -60,6 +60,7 @@ export interface CamCardContact {
   firstName?: string;
   lastName?: string;
   erpId?: string;
+  fullName?: string
 }
 
 export interface CamCardItemComment {
