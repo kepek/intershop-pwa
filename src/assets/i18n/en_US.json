@@ -618,6 +618,8 @@
   "camfil.checkout.create_new_order": "Create new order",
   "camfil.checkout.delivery_info": "Delivery info",
   "camfil.checkout.excl_vat": "excl. VAT",
+  "camfil.checkout.new_camcard.button.create": "Create Camcards",
+  "camfil.checkout.new_camcard.header": "{{0}} new CamCards will be created from your orders",
   "camfil.checkout.number_of_orders": "Number of orders",
   "camfil.checkout.number_of_products": "Number of products",
   "camfil.checkout.order": "Order",

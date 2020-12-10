@@ -47,6 +47,9 @@ import {
   addProductToNewSubCamCard,
   addProductToSubCamCard,
   addToNewCamCardWithNewSubCamCard,
+  cloneAndEditCamCard,
+  cloneAndEditCamCards,
+  cloneAndEditFail,
   copyCamCard,
   copyCamCardFail,
   createCamCard,
@@ -203,6 +206,31 @@ export class CamCardEffects {
           mapErrorToAction(moveCamCardFail)
         )
       )
+    )
+  );
+
+  cloneAndEditCamCard$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(cloneAndEditCamCard),
+      mapToPayload(),
+      mergeMap(({ camCardId, camCardName }) =>
+        this.camCardService.cloneCamCard(camCardId).pipe(
+          mergeMap((camCard: CamCard) => [
+            updateCamCard({ camCard: { id: camCard.id, name: camCardName, transient: false } }),
+          ]),
+          mapErrorToAction(cloneAndEditFail)
+        )
+      )
+    )
+  );
+
+  cloneAndEditCamCards$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(cloneAndEditCamCards),
+      mapToPayload(),
+      concatMap(payload => [
+        ...payload.camCards.map(camCard => cloneAndEditCamCard({ camCardId: camCard.id, camCardName: camCard.name })),
+      ])
     )
   );
 

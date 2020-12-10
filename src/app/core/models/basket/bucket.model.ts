@@ -7,6 +7,7 @@ export interface Bucket {
   orderName?: string;
   nextDelivery?: string;
   orderMark?: string;
+  camCardId?: string;
 }
 
 export interface BucketData {

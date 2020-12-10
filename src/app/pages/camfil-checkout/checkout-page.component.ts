@@ -5,6 +5,7 @@ import { takeUntil } from 'rxjs/operators';
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { BasketView } from 'ish-core/models/basket/basket.model';
 import { Bucket } from 'ish-core/models/basket/bucket.model';
+import { whenTruthy } from 'ish-core/utils/operators';
 
 import { CamCardsFacade } from '../../extensions/cam-cards/facades/cam-cards.facade';
 import { CamCard } from '../../extensions/cam-cards/models/cam-card/cam-card.model';
@@ -20,7 +21,6 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
   buckets$: Observable<any[]>;
   buckets: Bucket[];
 
-  currentCamCard: CamCard;
   camCards: CamCard[];
 
   private destroy$ = new Subject<void>();
@@ -35,23 +35,18 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
     this.basket$ = this.checkoutFacade.basket$;
     this.buckets$ = this.checkoutFacade.buckets$;
 
-    this.basket$.pipe(takeUntil(this.destroy$)).subscribe((basket: BasketView) => {
+    this.basket$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe((basket: BasketView) => {
       this.basketId = basket.id;
     });
 
-    this.camCardsFacade.camCard$.pipe(takeUntil(this.destroy$)).subscribe(camCards => {
-      if (camCards) {
-        this.camCards = camCards;
-        this.checkoutFacade.loadBuckets();
-      }
+    this.camCardsFacade.camCard$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(camCards => {
+      this.camCards = camCards;
+      this.checkoutFacade.loadBuckets();
     });
 
     this.buckets$.pipe(takeUntil(this.destroy$)).subscribe((buckets: Bucket[]) => {
-      console.log('buckets', buckets);
-
       if (buckets && this.camCards.length) {
         this.buckets = this.connectWithCamCard(buckets);
-        console.log('bucketsCam', this.buckets);
       }
     });
   }
@@ -60,8 +55,6 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
     return buckets
       .map(bucket => {
         const camCard = this.getCamCard(bucket.deliveryAddressId);
-
-        console.log('camCard', camCard);
 
         return camCard
           ? {
@@ -73,6 +66,7 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
               orderMark: camCard.orderLabel,
               customer: camCard.customer,
               contacts: camCard.contacts,
+              camCardId: camCard.id,
             }
           : { ...bucket };
       })

@@ -1,0 +1,12 @@
+<button mat-stroked-button color="primary" class="button-bold" data-testing-id="add-cam-card" (click)="openModal()">
+  <mat-icon svgIcon="plus" class="size-31"></mat-icon>
+  {{ 'camfil.account.cam_cards.list.button.add_cam_card.label' | translate }}
+</button>
+
+<camfil-small-cta-modal
+  actionTitle="{{ 'camfil.checkout.new_camcard.header' | translate: { '0': buckets ? buckets.length : 0 } }}"
+  actionButtonTitle="{{ 'camfil.checkout.new_camcard.button.create' | translate }}"
+  showCloseIcon="true"
+  (actionClicked)="create()"
+>
+</camfil-small-cta-modal>

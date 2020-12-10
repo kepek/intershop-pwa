@@ -1,10 +1,11 @@
 <camfil-breadcrumb [checkout]="true"></camfil-breadcrumb>
 
 <br />
+
 <ng-container *ngIf="basket$ | async as basket">
   <div class="checkout row">
     <div class="col-sm-12 col-lg-8">
-      <camfil-camfill-checkout-header [basket]="basket"></camfil-camfill-checkout-header>
+      <camfil-camfill-checkout-header [basket]="basket" [buckets]="buckets"></camfil-camfill-checkout-header>
 
       <ng-container *ngFor="let item of buckets">
         <camfil-checkout-list [order]="item"></camfil-checkout-list>

@@ -1,5 +1,11 @@
 <ng-template #modal>
   <div class="cta-modal-container">
+    <div *ngIf="showCloseIcon" class="cta-modal__close">
+      <button mat-button matSuffix mat-icon-button aria-label="Clear" (click)="hide()">
+        <mat-icon class="cta-modal__close--icon">close</mat-icon>
+      </button>
+    </div>
+
     <div class="cta-modal__header">
       <mat-icon svgIcon="add-camcard"></mat-icon>
       <h2 class="cta-modal__header--text">{{ actionTitle }}</h2>

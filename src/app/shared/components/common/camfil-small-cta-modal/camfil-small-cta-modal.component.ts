@@ -16,6 +16,7 @@ export class CamfilSmallCtaModalComponent {
   @Input() actionTitle?: string;
   @Input() actionButtonTitle?: string;
   @Output() actionClicked = new EventEmitter<any>();
+  @Input() showCloseIcon = false;
 
   emitAction() {
     this.actionClicked.emit();
@@ -30,5 +31,14 @@ export class CamfilSmallCtaModalComponent {
   /** open modal */
   show() {
     return this.modalTemplate;
+  }
+
+  /**
+   * Callback function to hide modal dialog (used with ishServerHtml). - is needed for closing the dialog after the user clicks a message link
+   */
+  get callbackHideDialogModal() {
+    return () => {
+      this.hide();
+    };
   }
 }

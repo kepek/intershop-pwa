@@ -37,6 +37,7 @@ import { CamfilBulletListComponent } from 'ish-shared/components/common/camfil-b
 import { CamfilCamCardModalComponent } from 'ish-shared/components/common/camfil-cam-card-modal/camfil-cam-card-modal.component';
 import { CamfilErrorComponent } from 'ish-shared/components/common/camfil-error/camfil-error.component';
 import { CamfilHeaderBoxComponent } from 'ish-shared/components/common/camfil-header-box/camfil-header-box.component';
+import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
 import { CamfilProductAddToBasketModalComponent } from 'ish-shared/components/product/camfil-product-add-to-basket/camfil-product-add-to-basket-modal/camfil-product-add-to-basket-modal.component';
 import { CamfilProductGuidesComponent } from 'ish-shared/components/product/camfil-product-guides/camfil-product-guides.component';
 import { MaterialModule } from 'ish-shared/material/material.module';
@@ -248,6 +249,7 @@ const declaredComponents = [
   CamfilProductQuickviewComponent,
   CamfilProductRatingStarComponent,
   CamfilProductTitleComponent,
+  CamfilSmallCtaModalComponent,
   ContentSlotComponent,
   CreateOrderModalComponent,
   CreateOrderSuccessComponent,
@@ -334,6 +336,7 @@ const exportedComponents = [
   CamfilProductTitleComponent,
   CamfilProductVariationSelectComponent,
   CamfilQuickViewModalComponent,
+  CamfilSmallCtaModalComponent,
   ContentIncludeComponent,
   ContentPageletComponent,
   ContentViewcontextComponent,

@@ -4,11 +4,11 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MockComponent } from 'ng-mocks';
 
 import { CamfilErrorComponent } from 'ish-shared/components/common/camfil-error/camfil-error.component';
+import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
 import { CamfilProductQuantityComponent } from 'ish-shared/components/product/camfil-product-quantity/camfil-product-quantity.component';
 import { CamfilCounterComponent } from 'ish-shared/forms/components/camfil-counter/camfil-counter.component';
 
 import { CamCardPreferencesDialogComponent } from '../../../shared/cam-card-preferences-dialog/cam-card-preferences-dialog.component';
-import { CamfilSmallCtaModalComponent } from '../camfil-small-cta-modal/camfil-small-cta-modal.component';
 import { ModalAddNewProductComponent } from '../modal-add-new-product/modal-add-new-product.component';
 import { ModalAddNewSectionComponent } from '../modal-add-new-section/modal-add-new-section.component';
 

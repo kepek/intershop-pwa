@@ -1,14 +1,22 @@
-@import '~src/styles/themes/camfil/variables';
-@import '~src/styles/themes/camfil/mixins.scss';
+@import '../../../../../styles/themes/camfil/variables';
+@import '../../../../../styles/themes/camfil/mixins';
 
 .cta-modal-container {
   .cta-modal {
+    &__close {
+      text-align: right;
+
+      &--icon {
+        margin-bottom: 2px;
+      }
+    }
+
     &__header {
       text-align: center;
 
       &--text {
         margin-top: $space-box;
-        text-transform: capitalize;
+        text-transform: none;
         @include font-size-subtitle1;
       }
     }
