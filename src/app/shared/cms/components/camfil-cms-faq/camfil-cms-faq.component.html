@@ -1,0 +1,22 @@
+<mat-card [ngClass]="pagelet.stringParam('CSSClass')">
+  <div class="row">
+    <aside class="col-md-8">
+      <img [src]="pagelet.stringParam('Image')" [attr.alt]="pagelet.stringParam('AlternateText')" />
+      <div class="content pl-3">
+        <h3 *ngIf="pagelet.hasParam('Heading1')">{{ pagelet.stringParam('Heading1') }}</h3>
+        <div *ngIf="pagelet.hasParam('Description')" [ishServerHtml]="pagelet.stringParam('Description')"></div>
+      </div>
+    </aside>
+    <section class="col-md-4">
+      <span *ngIf="pagelet.hasParam('Heading2')">{{ pagelet.stringParam('Heading2') }}</span>
+      <button
+        *ngIf="pagelet.hasParam('Link')"
+        [routerLink]="routerLink(pagelet, 'Link')"
+        mat-stroked-button
+        color="primary"
+      >
+        {{ pagelet.stringParam('LinkText') }}
+      </button>
+    </section>
+  </div>
+</mat-card>
