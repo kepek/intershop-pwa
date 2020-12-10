@@ -107,7 +107,7 @@ export class AddToCartModalComponent implements OnInit, OnDestroy {
       .map(bucket => {
         const camCard = this.getCamCard(bucket.deliveryAddressId);
 
-        return camCard
+        return camCard && !camCard.transient
           ? {
               ...bucket,
               shipToAddress: camCard.deliveryAddress.urn,
