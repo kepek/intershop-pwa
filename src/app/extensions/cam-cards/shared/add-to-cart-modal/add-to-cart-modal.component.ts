@@ -16,6 +16,7 @@ import { CamCardsFacade } from '../../facades/cam-cards.facade';
 import { CamCard } from '../../models/cam-card/cam-card.model';
 
 import { CreateOrderModalComponent } from './create-order-modal/create-order-modal.component';
+import {whenTruthy} from "ish-core/utils/operators";
 
 @Component({
   selector: 'camfil-add-to-cart-modal',
@@ -72,17 +73,13 @@ export class AddToCartModalComponent implements OnInit, OnDestroy {
     this.basket$ = this.checkoutFacade.basket$;
     this.buckets$ = this.checkoutFacade.buckets$;
 
-    this.basket$.pipe(takeUntil(this.destroy$)).subscribe((basket: BasketView) => {
-      if (basket) {
-        this.basketId = basket.id;
-      }
+    this.basket$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe((basket: BasketView) => {
+      this.basketId = basket.id;
     });
 
-    this.camCardsFacade.camCard$.pipe(takeUntil(this.destroy$)).subscribe(camCards => {
-      if (camCards) {
-        this.camCards = camCards;
-        this.checkoutFacade.loadBuckets();
-      }
+    this.camCardsFacade.camCard$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(camCards => {
+      this.camCards = camCards;
+      this.checkoutFacade.loadBuckets();
     });
 
     this.buckets$.pipe(takeUntil(this.destroy$)).subscribe((buckets: Bucket[]) => {
