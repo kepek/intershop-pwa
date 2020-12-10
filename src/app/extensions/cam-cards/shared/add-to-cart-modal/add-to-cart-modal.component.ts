@@ -16,7 +16,6 @@ import { CamCardsFacade } from '../../facades/cam-cards.facade';
 import { CamCard } from '../../models/cam-card/cam-card.model';
 
 import { CreateOrderModalComponent } from './create-order-modal/create-order-modal.component';
-import { ORDERS_MOCK_DATA, OrderMock } from './orders-mock';
 
 @Component({
   selector: 'camfil-add-to-cart-modal',
@@ -31,8 +30,6 @@ export class AddToCartModalComponent implements OnInit, OnDestroy {
 
   @Input() product: Product;
   quantityForm: FormGroup;
-
-  orderOptions: OrderMock[] = ORDERS_MOCK_DATA;
 
   selectedOrderId: string;
 
@@ -110,7 +107,7 @@ export class AddToCartModalComponent implements OnInit, OnDestroy {
       .map(bucket => {
         const camCard = this.getCamCard(bucket.deliveryAddressId);
 
-        return camCard && !camCard.transient
+        return camCard
           ? {
               ...bucket,
               shipToAddress: camCard.deliveryAddress.urn,

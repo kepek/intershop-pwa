@@ -2,8 +2,8 @@
 @import '~src/styles/themes/camfil/mixins.scss';
 
 .cam-card-modal-details {
-  padding: 16px;
-  margin-top: 8px;
+  padding: $space-box;
+  margin-top: $space-box-half;
   cursor: pointer;
   border: $border-width-default solid $border-color-lighter;
   border-radius: 5px;
@@ -26,13 +26,13 @@
 
       &--left {
         display: flex;
-        padding-right: 8px;
-        margin-right: 8px;
+        padding-right: $space-box-half;
+        margin-right: $space-box-half;
         border-right: $border-width-default solid $border-color-lighter;
       }
 
       &--label {
-        margin-right: 8px;
+        margin-right: $space-box-half;
       }
 
       &--value {
@@ -42,20 +42,20 @@
   }
 
   .buildings {
-    padding-top: 8px;
+    padding-top: $space-box-half;
     margin-top: $space-box;
     border-top: $border-width-default solid $border-color-lighter;
 
     &--subtitle {
-      margin-bottom: 8px;
+      margin-bottom: $space-box-half;
       font-weight: 400;
       color: $text-color-quarternary;
       @include font-size-subtitle1;
     }
 
     &__radio {
-      padding: 8px;
-      margin-top: 8px;
+      padding: $space-box-half;
+      margin-top: $space-box-half;
       border: $border-width-default solid $border-color-lighter;
       border-radius: 5px;
 
@@ -71,7 +71,7 @@
     &__new-section {
       display: flex;
       align-items: center;
-      margin-top: 8px;
+      margin-top: $space-box-half;
 
       &--icon {
         margin-bottom: 1px;
@@ -87,7 +87,7 @@
   .input {
     &--small {
       ::ng-deep .mat-form-field-infix {
-        padding-top: 16px;
+        padding-top: $space-box;
         border: 0;
       }
     }

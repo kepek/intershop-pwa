@@ -1,8 +1,4 @@
-<!--<ng-container *ishFeature="'camCards'; else standardAddProduct">
-  <camfil-product-add-to-basket-modal [product]="product"></camfil-product-add-to-basket-modal>
-</ng-container>-->
-
-<ng-container *ngIf="!show; else standardAddProduct">
+<ng-container *ishFeature="'camCards'; else standardAddProduct">
   <camfil-product-add-to-basket-modal [product]="product"></camfil-product-add-to-basket-modal>
 </ng-container>
 

@@ -5,9 +5,7 @@ export class BucketMapper {
     const { data, included } = payload;
 
     return data.map((bucketData: BucketData) => ({
-      id: bucketData.id,
-      basket: bucketData.basket,
-      lineItems: bucketData.lineItems,
+      ...bucketData,
       deliveryAddressId: bucketData.shipToAddress ? included.shipToAddress[bucketData.shipToAddress].id : '',
     }));
   }
