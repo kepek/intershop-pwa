@@ -6,12 +6,7 @@ import { debounce, filter, map, switchMap, tap } from 'rxjs/operators';
 import { CategoryHelper } from 'ish-core/models/category/category.model';
 import { ProductListingID } from 'ish-core/models/product-listing/product-listing.model';
 import { ProductCompletenessLevel, ProductHelper } from 'ish-core/models/product/product.model';
-import {
-  addProductToBasket,
-  getProductAdded,
-  resetProductAdded,
-  updateBucket,
-} from 'ish-core/store/customer/basket';
+import { addProductToBasket, getProductAdded, resetProductAdded, updateBucket } from 'ish-core/store/customer/basket';
 import {
   getCategories,
   getCategory,

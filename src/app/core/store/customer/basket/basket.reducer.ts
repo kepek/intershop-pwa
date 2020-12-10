@@ -100,7 +100,7 @@ export const initialState: BasketState = {
   lastTimeProductAdded: undefined,
   validationResults: initialValidationResults,
   buckets: undefined,
-  productAdded: false
+  productAdded: false,
 };
 
 export const basketReducer = createReducer(

@@ -15,7 +15,7 @@ import {
   CamCardItem,
   CamCardItemComment,
 } from '../../models/cam-card/cam-card.model';
-import {ContactMapper} from "../../models/cam-card/contact.mapper";
+import { ContactMapper } from '../../models/cam-card/contact.mapper';
 
 @Injectable({ providedIn: 'root' })
 export class CamCardService {
