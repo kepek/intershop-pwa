@@ -7,9 +7,9 @@
     <button
       mat-stroked-button
       color="primary"
-      disabled
-      data-testing-id="add-cam-card"
-      (click)="addCamCardDialog.show()"
+      disabled="{{ checkedCamCards?.length !== 1 }}"
+      data-testing-id="copy-cam-card"
+      (click)="copy($event)"
     >
       <mat-icon svgIcon="copy" class="size-15"></mat-icon>
       {{ 'camfil.account.cam_cards.list.button.copy.label' | translate }}
@@ -17,8 +17,8 @@
     <button
       mat-stroked-button
       color="primary"
-      disabled="{{ !checkedCamCards }}"
-      data-testing-id="add-cam-card"
+      disabled="{{ !checkedCamCards?.length }}"
+      data-testing-id="move-cam-card"
       (click)="move($event)"
     >
       <mat-icon svgIcon="move" class="size-15"></mat-icon>
@@ -28,7 +28,7 @@
       mat-stroked-button
       color="primary"
       disabled
-      data-testing-id="add-cam-card"
+      data-testing-id="print-cam-card"
       (click)="addCamCardDialog.show()"
     >
       <mat-icon svgIcon="print" class="size-15"></mat-icon>

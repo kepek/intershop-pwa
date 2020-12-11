@@ -21,6 +21,7 @@ import {
   addProductToSubCamCard,
   addToNewCamCardWithNewSubCamCard,
   clearVirtualCamCard,
+  copyCamCard,
   createCamCard,
   createSubCamCard,
   createVirtualCamCard,
@@ -69,6 +70,10 @@ export class CamCardsFacade {
 
   loadContactsByCustomer(customerId: string): void | HttpError {
     this.store.dispatch(loadContactsByCustomer({ customerId }));
+  }
+
+  copyCamCard(camCardId: string, name: string): void | HttpError {
+    this.store.dispatch(copyCamCard({ camCardId, name }));
   }
 
   moveCamCard(camCardId: string, newCustomerId: string, newContacts: CamCardContact[]): void {

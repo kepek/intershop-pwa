@@ -18,6 +18,8 @@ import {
   addBasketToNewCamCardSuccess,
   addProductToCamCardSuccess,
   clearVirtualCamCard,
+  copyCamCard,
+  copyCamCardFail,
   createCamCard,
   createCamCardFail,
   createCamCardSuccess,
@@ -118,6 +120,7 @@ export const camCardReducer = createReducer(
   initialState,
   setLoadingOn(
     loadCamCards,
+    copyCamCard,
     createCamCard,
     addBasketToNewCamCard,
     deleteCamCard,
@@ -132,6 +135,7 @@ export const camCardReducer = createReducer(
   ),
   on(
     loadCamCardsFail,
+    copyCamCardFail,
     deleteCamCardFail,
     deleteSubCamCardFail,
     createCamCardFail,
