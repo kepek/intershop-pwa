@@ -27,8 +27,6 @@ import { whenFalsy } from 'ish-core/utils/operators';
 export class CamfilProductAddToBasketComponent implements OnInit, OnDestroy {
   basketLoading$: Observable<boolean>;
 
-  show = false;
-
   /**
    * The product that can be added to basket
    */
