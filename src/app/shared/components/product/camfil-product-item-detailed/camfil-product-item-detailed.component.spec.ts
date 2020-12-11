@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
+import { provideMockStore } from '@ngrx/store/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { MockComponent, MockDirective, MockPipe } from 'ng-mocks';
 
@@ -12,7 +13,6 @@ import { findAllCustomElements } from 'ish-core/utils/dev/html-query-utils';
 import { CamfilProductAddToBasketComponent } from 'ish-shared/components/product/camfil-product-add-to-basket/camfil-product-add-to-basket.component';
 import { CamfilProductAddToCompareComponent } from 'ish-shared/components/product/camfil-product-add-to-compare/camfil-product-add-to-compare.component';
 import { CamfilProductAttributeComponent } from 'ish-shared/components/product/camfil-product-attribute/camfil-product-attribute.component';
-import { CamfilProductCategoryLabelComponent } from 'ish-shared/components/product/camfil-product-category-label/camfil-product-category-label.component';
 import { CamfilProductIdComponent } from 'ish-shared/components/product/camfil-product-id/camfil-product-id.component';
 import { CamfilProductInventoryComponent } from 'ish-shared/components/product/camfil-product-inventory/camfil-product-inventory.component';
 import { DEFAULT_CONFIGURATION } from 'ish-shared/components/product/camfil-product-item/camfil-product-item.component';
@@ -42,12 +42,12 @@ describe('Camfil Product Item Detailed Component', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [ReactiveFormsModule, RouterTestingModule, TranslateModule.forRoot()],
+      providers: [provideMockStore()],
       declarations: [
         CamfilProductItemDetailedComponent,
         MockComponent(CamfilProductAddToBasketComponent),
         MockComponent(CamfilProductAddToCompareComponent),
         MockComponent(CamfilProductAttributeComponent),
-        MockComponent(CamfilProductCategoryLabelComponent),
         MockComponent(CamfilProductIdComponent),
         MockComponent(CamfilProductImageComponent),
         MockComponent(CamfilProductInventoryComponent),

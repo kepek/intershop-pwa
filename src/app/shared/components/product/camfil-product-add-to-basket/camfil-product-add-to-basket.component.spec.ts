@@ -7,6 +7,7 @@ import { of } from 'rxjs';
 import { instance, mock, when } from 'ts-mockito';
 
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
+import { FeatureToggleModule } from 'ish-core/feature-toggle.module';
 import { Product } from 'ish-core/models/product/product.model';
 import { CamfilCamCardModalComponent } from 'ish-shared/components/common/camfil-cam-card-modal/camfil-cam-card-modal.component';
 import { CamfilErrorComponent } from 'ish-shared/components/common/camfil-error/camfil-error.component';
@@ -35,7 +36,7 @@ describe('Camfil Product Add To Basket Component', () => {
     when(checkoutFacade.basketLoading$).thenReturn(of(false));
 
     await TestBed.configureTestingModule({
-      imports: [ToastrModule.forRoot(), TranslateModule.forRoot()],
+      imports: [FeatureToggleModule.forTesting(), ToastrModule.forRoot(), TranslateModule.forRoot()],
       declarations: [
         AddToCartModalComponent,
         ArticleDetailsComponent,

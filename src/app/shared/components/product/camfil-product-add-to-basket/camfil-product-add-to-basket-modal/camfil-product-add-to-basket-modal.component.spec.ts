@@ -3,15 +3,20 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
-import { instance, mock } from 'ts-mockito';
+import { of } from 'rxjs';
+import { instance, mock, when } from 'ts-mockito';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
+import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
+import { BasketView } from 'ish-core/models/basket/basket.model';
+import { Product } from 'ish-core/models/product/product.model';
 import { CamfilCamCardModalComponent } from 'ish-shared/components/common/camfil-cam-card-modal/camfil-cam-card-modal.component';
 import { CamfilErrorComponent } from 'ish-shared/components/common/camfil-error/camfil-error.component';
 import { CamfilProductQuantityComponent } from 'ish-shared/components/product/camfil-product-quantity/camfil-product-quantity.component';
 import { CamfilCounterComponent } from 'ish-shared/forms/components/camfil-counter/camfil-counter.component';
 
+import { CamCardsFacade } from '../../../../../extensions/cam-cards/facades/cam-cards.facade';
 import { AddToCartModalComponent } from '../../../../../extensions/cam-cards/shared/add-to-cart-modal/add-to-cart-modal.component';
 import { CamCardModalDetailsComponent } from '../../../../../extensions/cam-cards/shared/add-to-cart-modal/cam-card-modal-details/cam-card-modal-details.component';
 import { CreateOrderModalComponent } from '../../../../../extensions/cam-cards/shared/add-to-cart-modal/create-order-modal/create-order-modal.component';
@@ -25,12 +30,41 @@ describe('Camfil Product Add To Basket Modal Component', () => {
   let component: CamfilProductAddToBasketModalComponent;
   let fixture: ComponentFixture<CamfilProductAddToBasketModalComponent>;
   let element: HTMLElement;
+  let shoppingFacadeMock: ShoppingFacade;
   let checkoutFacadeMock: CheckoutFacade;
   let accountFacadeMock: AccountFacade;
+  let camCardFacadeMock: CamCardsFacade;
+
+  const camCardDetails = {
+    name: 'testing cam cards',
+    id: '.SKsEQAE4FIAAAFuNiUBWx0d',
+    itemsCount: 0,
+  };
+
+  const basketDetails: BasketView = {
+    id: 'basket_test',
+    totals: {
+      itemTotal: {
+        type: 'PriceItem',
+        gross: 100,
+        net: 80,
+        currency: '',
+      },
+      total: {
+        type: 'PriceItem',
+        gross: 100,
+        net: 80,
+        currency: '',
+      },
+      isEstimated: false,
+    },
+  };
 
   beforeEach(async () => {
+    shoppingFacadeMock = mock(ShoppingFacade);
     checkoutFacadeMock = mock(CheckoutFacade);
     accountFacadeMock = mock(AccountFacade);
+    camCardFacadeMock = mock(CamCardsFacade);
 
     await TestBed.configureTestingModule({
       declarations: [
@@ -48,8 +82,10 @@ describe('Camfil Product Add To Basket Modal Component', () => {
       ],
       imports: [NgbModalModule, ReactiveFormsModule, RouterTestingModule, TranslateModule.forRoot()],
       providers: [
+        { provide: ShoppingFacade, useFactory: () => instance(shoppingFacadeMock) },
         { provide: CheckoutFacade, useFactory: () => instance(checkoutFacadeMock) },
         { provide: AccountFacade, useFactory: () => instance(accountFacadeMock) },
+        { provide: CamCardsFacade, useFactory: () => instance(camCardFacadeMock) },
       ],
     }).compileComponents();
   });
@@ -58,6 +94,14 @@ describe('Camfil Product Add To Basket Modal Component', () => {
     fixture = TestBed.createComponent(CamfilProductAddToBasketModalComponent);
     component = fixture.componentInstance;
     element = fixture.nativeElement;
+
+    component.product = { name: 'Test Product', sku: 'test sku', minOrderQuantity: 1 } as Product;
+
+    when(camCardFacadeMock.camCard$).thenReturn(of([camCardDetails]));
+    when(camCardFacadeMock.virtualCamCard$).thenReturn(of(camCardDetails));
+    when(checkoutFacadeMock.buckets$).thenReturn(of([]));
+    when(checkoutFacadeMock.basket$).thenReturn(of(basketDetails));
+    when(shoppingFacadeMock.productAdded$).thenReturn(of(true));
   });
 
   it('should be created', () => {
