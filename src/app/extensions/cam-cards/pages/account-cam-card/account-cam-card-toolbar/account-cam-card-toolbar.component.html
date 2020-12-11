@@ -7,7 +7,7 @@
     <button
       mat-stroked-button
       color="primary"
-      disabled="{{ checkedCamCards.length !== 1 }}"
+      disabled="{{ checkedCamCards?.length !== 1 }}"
       data-testing-id="copy-cam-card"
       (click)="copy($event)"
     >
@@ -17,7 +17,7 @@
     <button
       mat-stroked-button
       color="primary"
-      disabled="{{ !checkedCamCards.length }}"
+      disabled="{{ !checkedCamCards?.length }}"
       data-testing-id="move-cam-card"
       (click)="move($event)"
     >
