@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 import { NgbCollapse } from '@ng-bootstrap/ng-bootstrap';
 import { provideMockStore } from '@ngrx/store/testing';
 import { MockComponent } from 'ng-mocks';
@@ -15,6 +16,7 @@ describe('Cam Card Preferences Component', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [CamCardPreferencesComponent, CamfilErrorComponent, MockComponent(NgbCollapse)],
+      imports: [RouterTestingModule],
       providers: [provideMockStore({})],
     }).compileComponents();
   });
