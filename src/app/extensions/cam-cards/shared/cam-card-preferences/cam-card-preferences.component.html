@@ -145,6 +145,21 @@
                 </camfil-error>
               </div>
             </div>
+            <mat-form-field appearance="fill">
+              <mat-label>{{ 'camfil.account.cam_card.add_to_form.country' | translate }}</mat-label>
+              <mat-select formControlName="countryCode" (selectionChange)="onBlurSubmit()">
+                <mat-option>--</mat-option>
+                <mat-option *ngFor="let country of countries$ | async" [value]="country.countryCode">
+                  {{ country.name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <camfil-error
+              [errors]="camCardForm.controls.countryCode.errors"
+              [errorValidators]="errorValidator"
+              [touched]="camCardForm.controls.countryCode.touched"
+            >
+            </camfil-error>
           </div>
           <div class="col-md-4">
             <h3>{{ 'camfil.account.cam_card.add_to_form.delivery_time' | translate }}</h3>
@@ -164,11 +179,7 @@
             </mat-form-field>
             <mat-form-field appearance="fill">
               <mat-label>{{ 'camfil.account.cam_card.add_to_form.delivery_interval' | translate }}</mat-label>
-              <mat-select
-                formControlName="deliveryInterval"
-                (selectionChange)="pickInterval($event)"
-                (selectionChange)="onBlurSubmit()"
-              >
+              <mat-select formControlName="deliveryInterval" (selectionChange)="pickInterval($event); onBlurSubmit()">
                 <mat-option>--</mat-option>
                 <mat-option *ngFor="let delivery of deliveryInterval" [value]="delivery.value">
                   {{ delivery.viewValue }}

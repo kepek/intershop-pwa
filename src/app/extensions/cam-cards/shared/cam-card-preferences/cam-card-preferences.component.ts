@@ -13,6 +13,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 
+import { AppFacade } from 'ish-core/facades/app.facade';
+import { Country } from 'ish-core/models/country/country.model';
 import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
 
 import { CamCardsFacade } from '../../facades/cam-cards.facade';
@@ -33,7 +35,12 @@ import { CamCard, CamCardAddress, CamCardCustomer } from '../../models/cam-card/
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CamCardPreferencesComponent implements OnChanges, OnInit {
-  constructor(private fb: FormBuilder, private camCardsFacade: CamCardsFacade, public dialog: MatDialog) {
+  constructor(
+    private fb: FormBuilder,
+    private camCardsFacade: CamCardsFacade,
+    private appFacade: AppFacade,
+    public dialog: MatDialog
+  ) {
     this.initForm();
   }
 
@@ -58,6 +65,7 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit {
   pickerNext;
   customers$: Observable<CamCardCustomer[]>;
   addresses$: Observable<CamCardAddress[]>;
+  countries$: Observable<Country[]>;
 
   /**
    *  A reference to the current modal  .
@@ -139,6 +147,7 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit {
   }
 
   ngOnInit() {
+    this.countries$ = this.appFacade.countries$();
     this.customers$ = this.camCardsFacade.customers$;
     this.addresses$ = this.camCardsFacade.addresses$;
   }
@@ -154,6 +163,7 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit {
       addressLine2: ['', [Validators.maxLength(35)]],
       postalCode: ['', [Validators.required, Validators.maxLength(35)]],
       city: ['', [Validators.required, Validators.maxLength(35)]],
+      countryCode: ['', [Validators.required, Validators.maxLength(35)]],
       lastDelivery: ['', [Validators.maxLength(35)]],
       deliveryInterval: ['', [Validators.maxLength(35)]],
       nextDelivery: ['', [Validators.maxLength(35)]],
@@ -180,7 +190,7 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit {
         nextDeliveryDate,
         reminderFlag,
       } = this.camCard;
-      const { addressLine1, addressLine2, postalCode, city } = deliveryAddress;
+      const { addressLine1, addressLine2, postalCode, city, countryCode } = deliveryAddress;
       this.camCardForm.patchValue({
         title: name,
         customerName: customer.customerNo,
@@ -190,6 +200,7 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit {
         addressLine2,
         postalCode,
         city,
+        countryCode,
         lastDelivery: lastDeliveryDate ? new Date(lastDeliveryDate) : '',
         deliveryInterval,
         nextDelivery: nextDeliveryDate ? new Date(nextDeliveryDate) : '',
@@ -226,6 +237,7 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit {
           addressLine2: this.camCardForm.get('addressLine2').value,
           postalCode: this.camCardForm.get('postalCode').value,
           city: this.camCardForm.get('city').value,
+          countryCode: this.camCardForm.get('countryCode').value,
         },
         nextDeliveryDate: nextDelivery ? this.dateToSend(nextDelivery) : '',
         lastDeliveryDate: lastDelivery ? this.dateToSend(lastDelivery) : '',
@@ -260,6 +272,7 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit {
         addressLine2: address.addressLine2,
         postalCode: address.postalCode,
         city: address.city,
+        countryCode: address.countryCode,
       });
 
       this.onBlurSubmit();
