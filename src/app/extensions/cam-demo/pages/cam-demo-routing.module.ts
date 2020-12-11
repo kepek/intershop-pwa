@@ -5,7 +5,13 @@ import { environment } from '../../../../environments/environment';
 
 const routes: Routes = environment.production
   ? []
-  : [{ path: 'demo', loadChildren: () => import('./demo/demo-page.module').then(m => m.DemoPageModule) }];
+  : [
+      {
+        path: 'demo',
+        data: { feature: 'camDemo', breadcrumbData: [{ key: 'Demo Page' }] },
+        loadChildren: () => import('./demo/demo-page.module').then(m => m.DemoPageModule),
+      },
+    ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

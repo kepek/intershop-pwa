@@ -52,7 +52,8 @@ describe('Camfil Product Inventory Component', () => {
     ).toBeTruthy();
   });
 
-  it('should show Out of Stock when inStock = false', () => {
+  // because of FRS005
+  xit('should show Out of Stock when inStock = false', () => {
     translate.set('camfil.product.out_of_stock.text', 'Out of Stock');
     product.inStock = false;
     fixture.detectChanges();

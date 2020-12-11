@@ -19,7 +19,9 @@ import { CamAccountExportsModule } from '../extensions/cam-account/exports/cam-a
 import { CamAhuExportsModule } from '../extensions/cam-ahu/exports/cam-ahu-exports.module';
 import { CamCaptchaExportsModule } from '../extensions/cam-captcha/exports/cam-captcha-exports.module';
 import { CamCardsExportsModule } from '../extensions/cam-cards/exports/cam-cards-exports.module';
+import { CamConfigurationExportsModule } from '../extensions/cam-configuration/exports/cam-configuration-exports.module';
 import { CamDemoExportsModule } from '../extensions/cam-demo/exports/cam-demo-exports.module';
+import { CamIccExportsModule } from '../extensions/cam-icc/exports/cam-icc-exports.module';
 import { CaptchaExportsModule } from '../extensions/captcha/exports/captcha-exports.module';
 import { OrderTemplatesExportsModule } from '../extensions/order-templates/exports/order-templates-exports.module';
 import { QuickorderExportsModule } from '../extensions/quickorder/exports/quickorder-exports.module';
@@ -59,7 +61,9 @@ const importExportModules = [
   CamAhuExportsModule,
   CamCaptchaExportsModule,
   CamCardsExportsModule,
+  CamConfigurationExportsModule,
   CamDemoExportsModule,
+  CamIccExportsModule,
   CaptchaExportsModule,
   DirectivesModule,
   OrderTemplatesExportsModule,

@@ -21,17 +21,14 @@ export const environment: Environment = {
 const environmentProxyPath = 'src/environments/environment.proxy.ts';
 const environmentProxyDataSource = `import { ENVIRONMENT_DEFAULTS, Environment } from './environment.model';
 
-interface EnvironmentProxy extends Environment {
-  /* PROXY CONFIGURATION */
-  icmProxyURL: string;
-}
-
-export const environment: EnvironmentProxy = {
+export const environment: Environment = {
   ...ENVIRONMENT_DEFAULTS,
   /* INTERSHOP COMMERCE MANAGEMENT REST API CONFIGURATION */
   icmBaseURL: 'http://localhost:4200',
   /* PROXY CONFIGURATION */
   icmProxyURL: 'https://intershoppwa.azurewebsites.net',
+  /* ICC API CONFIGURATION */
+  iccToken: 'YOUR_ICC_API_TOKEN',
 };
 
 `;

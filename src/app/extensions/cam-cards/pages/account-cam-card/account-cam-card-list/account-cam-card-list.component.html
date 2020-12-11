@@ -275,7 +275,7 @@
     <mat-icon svgIcon="edit" *ngIf="maintenance(camCard, ['ACTIVE'])"></mat-icon>
     <mat-icon
       #tooltip="matTooltip"
-      matTooltip="{{'camfil.account.cam_cards.maintenance.status.tooltip' | translate}}"
+      matTooltip="{{ 'camfil.account.cam_cards.maintenance.status.tooltip' | translate }}"
       matTooltipPosition="below"
       matTooltipClass="cam-card-tooltip"
       svgIcon="maintenance"
@@ -310,12 +310,17 @@
   }"
   >{{ 'camfil.account.cam_card.trying_add_to_cart_not_buyable_elements.text' | translate }}
   <div *ngFor="let cc of notBuyableElemnts">
-    <b>{{ cc.name }} ({{ cc.isChild ? 'camfil.account.cam_card.trying_add_to_cart_not_buyable_elements.section' : 'CamCard' | translate }})</b>
+    <b>
+      {{ cc.name }} ({{
+        cc.isChild
+          ? 'camfil.account.cam_card.trying_add_to_cart_not_buyable_elements.section'
+          : ('CamCard' | translate)
+      }})
+    </b>
     <div *ngFor="let item of cc.items">
       {{ item.product.name }}
     </div>
   </div>
-  </camfil-modal-dialog
->
+</camfil-modal-dialog>
 
 <ish-loading *ngIf="loading"></ish-loading>

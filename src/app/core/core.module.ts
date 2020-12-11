@@ -6,6 +6,8 @@ import { FormlyModule } from '@ngx-formly/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { BrowserCookiesModule } from 'ngx-utils-cookies-port';
 
+import { CamfilStripUndefinedParamsInterceptor } from 'ish-core/interceptors/camfil-strip-undefined-params-interceptor.service';
+
 import { environment } from '../../environments/environment';
 
 import { AppearanceModule } from './appearance.module';
@@ -40,6 +42,11 @@ import { ModuleLoaderService } from './utils/module-loader/module-loader.service
     {
       provide: HTTP_INTERCEPTORS,
       useClass: IdentityProviderInterceptor,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: CamfilStripUndefinedParamsInterceptor,
       multi: true,
     },
     { provide: HTTP_INTERCEPTORS, useClass: MockInterceptor, multi: true },

@@ -8,6 +8,8 @@ import * as fs from 'fs';
 import * as proxy from 'express-http-proxy';
 // tslint:disable-next-line: ban-specific-imports
 import { AppServerModule, ICM_WEB_URL, HYBRID_MAPPING_TABLE, environment, APP_BASE_HREF } from './src/main.server';
+// tslint:disable-next-line: ban-specific-imports
+import { createProxy } from './src/proxy';
 import { ngExpressEngine } from '@nguniversal/express-engine';
 
 const PORT = process.env.PORT || 4200;
@@ -30,7 +32,7 @@ global['navigator'] = win.navigator;
 */
 
 // The Express app is exported so that it can be used by serverless Functions.
-export function app() {
+export function app(): express.Express {
   const logging = /on|1|true|yes/.test(process.env.LOGGING?.toLowerCase());
 
   const ICM_BASE_URL = process.env.ICM_BASE_URL || environment.icmBaseURL;
@@ -230,6 +232,11 @@ export function app() {
     console.log("making ICM available for all requests to '/INTERSHOP'");
     server.use('/INTERSHOP', icmProxy);
   }
+
+  // @ts-ignore
+  createProxy(environment).forEach(proxyMiddleware => {
+    server.use(proxyMiddleware);
+  });
 
   if (/^(on|1|true|yes)$/i.test(process.env.PROMETHEUS)) {
     const promBundle = require('express-prom-bundle');

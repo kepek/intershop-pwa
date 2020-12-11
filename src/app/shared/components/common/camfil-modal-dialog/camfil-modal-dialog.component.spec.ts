@@ -6,7 +6,7 @@ import { CamfilCamCardModalComponent } from 'ish-shared/components/common/camfil
 
 import { CamfilModalDialogComponent } from './camfil-modal-dialog.component';
 
-xdescribe('Camfil Modal Dialog Component', () => {
+describe('Camfil Modal Dialog Component', () => {
   let component: CamfilModalDialogComponent<string>;
   let fixture: ComponentFixture<CamfilModalDialogComponent<string>>;
   let element: HTMLElement;
@@ -33,7 +33,7 @@ xdescribe('Camfil Modal Dialog Component', () => {
     expect(() => fixture.detectChanges()).not.toThrow();
   });
 
-  it('should display modal dialog when show function is called', () => {
+  xit('should display modal dialog when show function is called', () => {
     fixture.detectChanges();
     component.show();
     expect(component.ngbModalRef).toBeTruthy();
@@ -44,7 +44,7 @@ xdescribe('Camfil Modal Dialog Component', () => {
     expect(component.ngbModalRef).toBeFalsy();
   });
 
-  it('should output input data on confirm', done => {
+  xit('should output input data on confirm', done => {
     let firedData;
 
     component.show('test');

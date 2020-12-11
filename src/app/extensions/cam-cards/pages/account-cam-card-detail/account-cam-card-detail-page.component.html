@@ -59,7 +59,9 @@
     <ng-template #nonActiveStatus>
       <br />
       <h1>{{ camCard?.name }}</h1>
-      <h2 class="p-3 bg-warning">{{ 'camfil.account.cam_card.maintenance.not_edit.text' | translate: { '0': camCard.maintenanceStatus } }}</h2>
+      <h2 class="p-3 bg-warning">
+        {{ 'camfil.account.cam_card.maintenance.not_edit.text' | translate: { '0': camCard.maintenanceStatus } }}
+      </h2>
     </ng-template>
   </ng-container>
 

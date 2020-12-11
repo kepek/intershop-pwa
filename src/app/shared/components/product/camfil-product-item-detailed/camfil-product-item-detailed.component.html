@@ -3,7 +3,7 @@
     <p class="product-title-container">
       <camfil-product-title *ngIf="configuration.displayName" [product]="product"></camfil-product-title>
     </p>
-    <p class="camfil-product-category-label">
+    <p *ngIf="category" class="camfil-product-category-label">
       {{ category.name }}
     </p>
     <div class="d-flex">

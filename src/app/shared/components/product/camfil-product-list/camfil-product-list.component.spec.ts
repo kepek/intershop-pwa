@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed, fakeAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { MockComponent } from 'ng-mocks';
 import { of } from 'rxjs';
@@ -25,6 +26,7 @@ describe('Camfil Product List Component', () => {
     await TestBed.configureTestingModule({
       imports: [
         CoreStoreModule.forTesting(),
+        RouterTestingModule,
         ShoppingStoreModule.forTesting('productListing'),
         TranslateModule.forRoot(),
       ],

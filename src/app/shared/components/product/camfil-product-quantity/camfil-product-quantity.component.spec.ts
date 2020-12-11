@@ -52,7 +52,8 @@ describe('Camfil Product Quantity Component', () => {
     expect(() => fixture.detectChanges()).not.toThrow();
   });
 
-  it('should not render when inStock = false', () => {
+  // because of FRS005
+  xit('should not render when inStock = false', () => {
     product.inStock = false;
     fixture.detectChanges();
     expect(findAllCustomElements(element)).toBeEmpty();

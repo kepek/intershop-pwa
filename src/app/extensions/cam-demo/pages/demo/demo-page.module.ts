@@ -4,6 +4,8 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { SharedModule } from 'ish-shared/shared.module';
 
+import { CamAhuModule } from '../../../cam-ahu/cam-ahu.module';
+
 import { DemoBottomSheetComponent } from './demo-bottom-sheet/demo-bottom-sheet.component';
 import { DemoDialogComponent } from './demo-dialog/demo-dialog.component';
 import { DemoPageComponent } from './demo-page.component';
@@ -11,7 +13,7 @@ import { DemoPageComponent } from './demo-page.component';
 const demoPageRoutes: Routes = [{ path: '', component: DemoPageComponent }];
 
 @NgModule({
-  imports: [MatDialogModule, RouterModule.forChild(demoPageRoutes), SharedModule],
+  imports: [CamAhuModule, MatDialogModule, RouterModule.forChild(demoPageRoutes), SharedModule],
   declarations: [DemoBottomSheetComponent, DemoDialogComponent, DemoPageComponent],
 })
 export class DemoPageModule {}

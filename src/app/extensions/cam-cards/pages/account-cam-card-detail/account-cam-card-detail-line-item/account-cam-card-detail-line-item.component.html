@@ -1,83 +1,86 @@
 <ng-container *ngIf="product$ | async as product">
-  <div class="line-item d-flex align-items-center align-self-start align-self-md-center text-left" [ngClass]="{'justify-content-between': isEditMode}">
-      <ng-container *ngIf="isViewMode">{{ index }}</ng-container>
-      <div class="d-flex align-items-center">
-        <a class="image ml-0 mx-md-3" [routerLink]="product | ishProductRoute">
-          <camfil-product-image [product]="product" imageType="S" class="product-image"></camfil-product-image>
-        </a>
-        <div class="my-2 my-md-0">
-          <div class="d-flex flex-row">
-            <camfil-product-title [product]="product" [class]="'text-truncate'"></camfil-product-title>
-            <camfil-product-inventory class="px-2" [product]="product"></camfil-product-inventory>
-          </div>
-          <div class="attributes">
+  <div
+    class="line-item d-flex align-items-center align-self-start align-self-md-center text-left"
+    [ngClass]="{ 'justify-content-between': isEditMode }"
+  >
+    <ng-container *ngIf="isViewMode">{{ index }}</ng-container>
+    <div class="d-flex align-items-center">
+      <a class="image ml-0 mx-md-3" [routerLink]="product | ishProductRoute">
+        <camfil-product-image [product]="product" imageType="S" class="product-image"></camfil-product-image>
+      </a>
+      <div class="my-2 my-md-0">
+        <div class="d-flex flex-row">
+          <camfil-product-title [product]="product" [class]="'text-truncate'"></camfil-product-title>
+          <camfil-product-inventory class="px-2" [product]="product"></camfil-product-inventory>
+        </div>
+        <div class="attributes">
+          <camfil-product-attribute
+            [name]="'camfil.cam_card.product.id.label' | translate"
+            [value]="product.sku"
+          ></camfil-product-attribute>
+          <camfil-product-attribute
+            [name]="'camfil.cam_card.product.dimensions' | translate"
+            [value]="product.sku"
+          ></camfil-product-attribute>
+          <camfil-product-attribute
+            [name]="'camfil.cam_card.product.efficiency' | translate"
+            [value]="product.sku"
+          ></camfil-product-attribute>
+          <ng-container *ngIf="isViewMode">
             <camfil-product-attribute
-              [name]="'camfil.cam_card.product.id.label' | translate"
-              [value]="product.sku"
+              [name]="'camfil.cam_card.product.comment.label' | translate"
+              [value]="camCardItemData.comment.label | slice: 0:40"
+              *ngIf="camCardItemData.comment.label"
             ></camfil-product-attribute>
             <camfil-product-attribute
-              [name]="'camfil.cam_card.product.dimensions' | translate"
-              [value]="product.sku"
+              [name]="'camfil.cam_card.product.quantity' | translate"
+              [value]="camCardItemData.quantity"
             ></camfil-product-attribute>
-            <camfil-product-attribute
-              [name]="'camfil.cam_card.product.efficiency' | translate"
-              [value]="product.sku"
-            ></camfil-product-attribute>
-            <ng-container *ngIf="isViewMode">
-              <camfil-product-attribute
-                [name]="'camfil.cam_card.product.comment.label' | translate"
-                [value]="camCardItemData.comment.label | slice: 0:40"
-                *ngIf="camCardItemData.comment.label"
-              ></camfil-product-attribute>
-              <camfil-product-attribute
-                [name]="'camfil.cam_card.product.quantity' | translate"
-                [value]="camCardItemData.quantity"
-              ></camfil-product-attribute>
-              <ng-container *ngTemplateOutlet="price"></ng-container>
-            </ng-container>
-            <a class="quick-view text-nowrap" (click)="openQuickViewDialog(camCardItemData); $event.stopPropagation()">
-              <mat-icon svgIcon="search" class="size-16"></mat-icon>
-              {{ 'Quickview' | translate }}
-            </a>
-          </div>
+            <ng-container *ngTemplateOutlet="price"></ng-container>
+          </ng-container>
+          <a class="quick-view text-nowrap" (click)="openQuickViewDialog(camCardItemData); $event.stopPropagation()">
+            <mat-icon svgIcon="search" class="size-16"></mat-icon>
+            {{ 'Quickview' | translate }}
+          </a>
         </div>
       </div>
-      <camfil-cam-card-product-comment
-        *ngIf="isEditMode || camCardItemData.comment?.label"
-        [ngClass]="{ 'align-self-end': isViewMode }"
-        [currentCamCard]="currentCamCard"
-        [camCardItem]="camCardItemData"
-        [mode]="mode"
-      ></camfil-cam-card-product-comment>
-      <ng-container *ngIf="isEditMode">
-        <div class="quantity-row d-flex justify-content-between align-items-center py-3 py-md-0">
-          <div class="d-flex justify-content-between align-items-center">
-            <a class="btn-tool" (click)="removeProductFromCamCard(camCardItemData?.id)" data-testing-id="delete-cam-card">
-              <mat-icon svgIcon="delete"></mat-icon>
-            </a>
-            <form [formGroup]="addToCartForm">
-              <camfil-product-quantity
-                [allowZeroQuantity]="false"
-                [quantityLabel]="''"
-                [product]="product"
-                [parentForm]="addToCartForm"
-                [ngClass]="{ 'ml-md-auto': isEditMode }"
-                controlName="quantity"
-              ></camfil-product-quantity>
-            </form>
-          </div>
-          <div class="prices" [ngClass]="{ 'ml-md-auto': isEditMode }">
-            <ng-container *ngTemplateOutlet="price"></ng-container>
-          </div>
-        </div>
-      </ng-container>
-  
-      <mat-checkbox
-        *ngIf="showCheckbox && product.availability"
-        [checked]="checked"
-        (change)="changeCheck($event)"
-      ></mat-checkbox>
     </div>
+    <camfil-cam-card-product-comment
+      *ngIf="isEditMode || camCardItemData.comment?.label"
+      [ngClass]="{ 'align-self-end': isViewMode }"
+      [currentCamCard]="currentCamCard"
+      [camCardItem]="camCardItemData"
+      [mode]="mode"
+    ></camfil-cam-card-product-comment>
+    <ng-container *ngIf="isEditMode">
+      <div class="quantity-row d-flex justify-content-between align-items-center py-3 py-md-0">
+        <div class="d-flex justify-content-between align-items-center">
+          <a class="btn-tool" (click)="removeProductFromCamCard(camCardItemData?.id)" data-testing-id="delete-cam-card">
+            <mat-icon svgIcon="delete"></mat-icon>
+          </a>
+          <form [formGroup]="addToCartForm">
+            <camfil-product-quantity
+              [allowZeroQuantity]="false"
+              [quantityLabel]="''"
+              [product]="product"
+              [parentForm]="addToCartForm"
+              [ngClass]="{ 'ml-md-auto': isEditMode }"
+              controlName="quantity"
+            ></camfil-product-quantity>
+          </form>
+        </div>
+        <div class="prices" [ngClass]="{ 'ml-md-auto': isEditMode }">
+          <ng-container *ngTemplateOutlet="price"></ng-container>
+        </div>
+      </div>
+    </ng-container>
+
+    <mat-checkbox
+      *ngIf="showCheckbox && product.availability"
+      [checked]="checked"
+      (change)="changeCheck($event)"
+    ></mat-checkbox>
+  </div>
 
   <ng-template #price>
     <camfil-product-attribute

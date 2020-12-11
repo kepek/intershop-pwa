@@ -38,15 +38,15 @@
   cursor: move;
   @media (max-width: $screen-sm-max) {
     position: absolute;
-    right: $space-box;
     top: $space-box;
+    right: $space-box;
   }
 }
 
 .list-item-row {
-  margin-top: $space-box;
+  position: relative;
   padding: $space-box;
+  margin-top: $space-box;
   background-color: $white;
   box-shadow: $header-shadow;
-  position: relative;
 }
