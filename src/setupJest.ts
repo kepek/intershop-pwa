@@ -56,3 +56,15 @@ Object.defineProperty(window, 'getComputedStyle', {
     getPropertyValue: () => '',
   }),
 });
+
+// In Node v7 unhandled promise rejections will terminate the process
+if (!process.env.LISTENING_TO_UNHANDLED_REJECTION) {
+  // tslint:disable-next-line:no-any
+  process.on('unhandledRejection', (reason: Error | any) => {
+    // To avoid memory leaks do not just log the error, but throw it to make sure jest test will return a non-zero exit code.
+    // This is very useful in a ci context.
+    throw reason;
+  });
+  // Avoid memory leak by adding too many listeners
+  process.env.LISTENING_TO_UNHANDLED_REJECTION = 'true';
+}
