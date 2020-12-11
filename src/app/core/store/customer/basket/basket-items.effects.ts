@@ -19,6 +19,7 @@ import {
   withLatestFrom,
 } from 'rxjs/operators';
 
+import { Bucket } from 'ish-core/models/basket/bucket.model';
 import {
   LineItemUpdateHelper,
   LineItemUpdateHelperItem,
@@ -36,9 +37,15 @@ import {
   deleteBasketItemFail,
   deleteBasketItemSuccess,
   loadBasket,
+  loadBuckets,
+  loadBucketsFail,
+  loadBucketsSuccess,
   updateBasketItems,
   updateBasketItemsFail,
   updateBasketItemsSuccess,
+  updateBucket,
+  updateBucketFail,
+  updateBucketSuccess,
   validateBasket,
 } from './basket.actions';
 import { getCurrentBasket, getCurrentBasketId } from './basket.selectors';
@@ -71,12 +78,43 @@ export class BasketItemsEffects {
             if (element) {
               element.quantity += val.quantity;
             } else {
-              acc.push({ ...val, unit: entities[val.sku] && entities[val.sku].packingUnit });
+              acc.push({
+                ...val,
+                unit: entities[val.sku] && entities[val.sku].packingUnit,
+                shipToAddress: val.shipToAddress,
+              });
             }
             return acc;
           }, []),
           map(items => addItemsToBasket({ items }))
         )
+      )
+    )
+  );
+
+  loadBucket$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loadBuckets),
+      mergeMap(() =>
+        this.basketService.getBuckets().pipe(
+          mergeMap((buckets: Bucket[]) => [loadBucketsSuccess({ buckets })]),
+          mapErrorToAction(loadBucketsFail)
+        )
+      )
+    )
+  );
+
+  updateBucket = createEffect(() =>
+    this.actions$.pipe(
+      ofType(updateBucket),
+      mapToPayload(),
+      mergeMap(payload =>
+        this.basketService
+          .updateBucket(payload.basketId, payload.addressId, payload.boxLabel, payload.contact, payload.info)
+          .pipe(
+            mergeMap(() => [updateBucketSuccess(), loadBuckets()]),
+            mapErrorToAction(updateBucketFail)
+          )
       )
     )
   );

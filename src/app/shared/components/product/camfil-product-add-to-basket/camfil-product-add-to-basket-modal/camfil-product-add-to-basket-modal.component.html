@@ -1,0 +1,9 @@
+<div *ngIf="product?.inStock && product?.availability">
+  <button (click)="openModalIfLoggedIn(addToCartModal)" class="btn">
+    <ng-container>
+      <mat-icon svgIcon="cart"></mat-icon>
+    </ng-container>
+  </button>
+</div>
+
+<camfil-add-to-cart-modal #addToCartModal [product]="product"> </camfil-add-to-cart-modal>

@@ -26,6 +26,7 @@ export interface CamCard extends CamCardHeader {
   lastDeliveryDate?: string;
   deliveryInterval?: number;
   reminderFlag?: number;
+  transient?: boolean;
 }
 
 export interface CamCardItem {
@@ -59,6 +60,7 @@ export interface CamCardContact {
   firstName?: string;
   lastName?: string;
   erpId?: string;
+  fullName?: string;
 }
 
 export interface CamCardItemComment {

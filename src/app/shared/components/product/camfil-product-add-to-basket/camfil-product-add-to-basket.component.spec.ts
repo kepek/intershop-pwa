@@ -7,7 +7,20 @@ import { of } from 'rxjs';
 import { instance, mock, when } from 'ts-mockito';
 
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
+import { FeatureToggleModule } from 'ish-core/feature-toggle.module';
 import { Product } from 'ish-core/models/product/product.model';
+import { CamfilCamCardModalComponent } from 'ish-shared/components/common/camfil-cam-card-modal/camfil-cam-card-modal.component';
+import { CamfilErrorComponent } from 'ish-shared/components/common/camfil-error/camfil-error.component';
+import { CamfilProductAddToBasketModalComponent } from 'ish-shared/components/product/camfil-product-add-to-basket/camfil-product-add-to-basket-modal/camfil-product-add-to-basket-modal.component';
+import { CamfilProductQuantityComponent } from 'ish-shared/components/product/camfil-product-quantity/camfil-product-quantity.component';
+import { CamfilCounterComponent } from 'ish-shared/forms/components/camfil-counter/camfil-counter.component';
+
+import { AddToCartModalComponent } from '../../../../extensions/cam-cards/shared/add-to-cart-modal/add-to-cart-modal.component';
+import { CamCardModalDetailsComponent } from '../../../../extensions/cam-cards/shared/add-to-cart-modal/cam-card-modal-details/cam-card-modal-details.component';
+import { CreateOrderModalComponent } from '../../../../extensions/cam-cards/shared/add-to-cart-modal/create-order-modal/create-order-modal.component';
+import { OrderFormComponent } from '../../../../extensions/cam-cards/shared/add-to-cart-modal/create-order-modal/order-form/order-form.component';
+import { CreateOrderSuccessComponent } from '../../../../extensions/cam-cards/shared/add-to-cart-modal/create-order-success/create-order-success.component';
+import { ArticleDetailsComponent } from '../../../../extensions/cam-cards/shared/select-cam-card-modal/article-details/article-details.component';
 
 import { CamfilProductAddToBasketComponent } from './camfil-product-add-to-basket.component';
 
@@ -23,8 +36,22 @@ describe('Camfil Product Add To Basket Component', () => {
     when(checkoutFacade.basketLoading$).thenReturn(of(false));
 
     await TestBed.configureTestingModule({
-      imports: [ToastrModule.forRoot(), TranslateModule.forRoot()],
-      declarations: [CamfilProductAddToBasketComponent, MockComponent(FaIconComponent)],
+      imports: [FeatureToggleModule.forTesting(), ToastrModule.forRoot(), TranslateModule.forRoot()],
+      declarations: [
+        AddToCartModalComponent,
+        ArticleDetailsComponent,
+        CamCardModalDetailsComponent,
+        CamfilCamCardModalComponent,
+        CamfilCounterComponent,
+        CamfilErrorComponent,
+        CamfilProductAddToBasketComponent,
+        CamfilProductAddToBasketModalComponent,
+        CamfilProductQuantityComponent,
+        CreateOrderModalComponent,
+        CreateOrderSuccessComponent,
+        MockComponent(FaIconComponent),
+        OrderFormComponent,
+      ],
       providers: [{ provide: CheckoutFacade, useFactory: () => instance(checkoutFacade) }],
     }).compileComponents();
   });

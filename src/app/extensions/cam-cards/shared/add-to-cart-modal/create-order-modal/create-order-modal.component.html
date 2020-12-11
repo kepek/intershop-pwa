@@ -1,0 +1,27 @@
+<ng-template #modal>
+  <ng-container *ngIf="!showSuccess; else success">
+    <camfil-cam-card-modal
+      [title]="'camfil.modal.createOrder.order-form.title' | translate"
+      iconName="note_add"
+      [detailsTemplate]="detailsTemplate"
+      [mainContentTemplate]="mainContentTemplate"
+      [secondaryButtonTitle]="'camfil.modal.createCamcard.button.cancel' | translate"
+      (secondaryButtonClicked)="cancel()"
+      [primaryButtonTitle]="'camfil.modal.createCamcard.button.create_new_order' | translate"
+      (primaryButtonClicked)="submitForm()"
+    >
+    </camfil-cam-card-modal>
+  </ng-container>
+</ng-template>
+
+<ng-template #mainContentTemplate>
+  <camfil-delivery-address-form></camfil-delivery-address-form>
+</ng-template>
+
+<ng-template #detailsTemplate>
+  <camfil-article-details [product]="product" [quantityForm]="quantityForm"></camfil-article-details>
+</ng-template>
+
+<ng-template #success>
+  <camfil-create-order-success (hideEmitter)="hide()" [product]="product"></camfil-create-order-success>
+</ng-template>

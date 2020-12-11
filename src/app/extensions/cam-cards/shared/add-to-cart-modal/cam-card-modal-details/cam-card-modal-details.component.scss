@@ -1,0 +1,95 @@
+@import '~src/styles/themes/camfil/variables';
+@import '~src/styles/themes/camfil/mixins.scss';
+
+.cam-card-modal-details {
+  padding: $space-box;
+  margin-top: $space-box-half;
+  cursor: pointer;
+  border: $border-width-default solid $border-color-lighter;
+  border-radius: 5px;
+  @include font-size-12-16--normal;
+
+  &__selected {
+    border: 2px solid $border-color-default;
+  }
+
+  .cam-card {
+    &__label {
+      font-weight: 400;
+      color: $text-color-quarternary;
+      @include font-size-subtitle1;
+    }
+
+    &__details {
+      display: flex;
+      margin-top: 4px;
+
+      &--left {
+        display: flex;
+        padding-right: $space-box-half;
+        margin-right: $space-box-half;
+        border-right: $border-width-default solid $border-color-lighter;
+      }
+
+      &--label {
+        margin-right: $space-box-half;
+      }
+
+      &--value {
+        font-weight: 700;
+      }
+    }
+  }
+
+  .buildings {
+    padding-top: $space-box-half;
+    margin-top: $space-box;
+    border-top: $border-width-default solid $border-color-lighter;
+
+    &--subtitle {
+      margin-bottom: $space-box-half;
+      font-weight: 400;
+      color: $text-color-quarternary;
+      @include font-size-subtitle1;
+    }
+
+    &__radio {
+      padding: $space-box-half;
+      margin-top: $space-box-half;
+      border: $border-width-default solid $border-color-lighter;
+      border-radius: 5px;
+
+      &--selected {
+        border: 2px solid $border-color-default;
+      }
+
+      ::ng-deep label {
+        margin-bottom: 0;
+      }
+    }
+
+    &__new-section {
+      display: flex;
+      align-items: center;
+      margin-top: $space-box-half;
+
+      &--icon {
+        margin-bottom: 1px;
+      }
+
+      &--link {
+        color: $camfil-text-color-primary;
+        @include link;
+      }
+    }
+  }
+
+  .input {
+    &--small {
+      ::ng-deep .mat-form-field-infix {
+        padding-top: $space-box;
+        border: 0;
+      }
+    }
+  }
+}

@@ -3,6 +3,7 @@ import { createReducer, on } from '@ngrx/store';
 import { BasketInfo } from 'ish-core/models/basket-info/basket-info.model';
 import { BasketValidationResultType } from 'ish-core/models/basket-validation/basket-validation.model';
 import { Basket } from 'ish-core/models/basket/basket.model';
+import { Bucket } from 'ish-core/models/basket/bucket.model';
 import { HttpError } from 'ish-core/models/http-error/http-error.model';
 import { PaymentMethod } from 'ish-core/models/payment-method/payment-method.model';
 import { ShippingMethod } from 'ish-core/models/shipping-method/shipping-method.model';
@@ -40,12 +41,15 @@ import {
   loadBasketEligibleShippingMethodsSuccess,
   loadBasketFail,
   loadBasketSuccess,
+  loadBucketsFail,
+  loadBucketsSuccess,
   mergeBasketFail,
   mergeBasketSuccess,
   removePromotionCodeFromBasket,
   removePromotionCodeFromBasketFail,
   removePromotionCodeFromBasketSuccess,
   resetBasketErrors,
+  resetProductAdded,
   setBasketPayment,
   setBasketPaymentFail,
   setBasketPaymentSuccess,
@@ -58,6 +62,8 @@ import {
   updateBasketPaymentFail,
   updateBasketPaymentSuccess,
   updateBasketShippingMethod,
+  updateBucketFail,
+  updateBucketSuccess,
   updateConcardisCvcLastUpdated,
   updateConcardisCvcLastUpdatedFail,
   updateConcardisCvcLastUpdatedSuccess,
@@ -73,6 +79,8 @@ export interface BasketState {
   info: BasketInfo[];
   lastTimeProductAdded: number;
   validationResults: BasketValidationResultType;
+  productAdded: boolean;
+  buckets: Bucket[];
 }
 
 const initialValidationResults: BasketValidationResultType = {
@@ -91,6 +99,8 @@ export const initialState: BasketState = {
   promotionError: undefined,
   lastTimeProductAdded: undefined,
   validationResults: initialValidationResults,
+  buckets: undefined,
+  productAdded: false,
 };
 
 export const basketReducer = createReducer(
@@ -118,7 +128,9 @@ export const basketReducer = createReducer(
   setErrorOn(
     mergeBasketFail,
     loadBasketFail,
+    loadBucketsFail,
     updateBasketFail,
+    updateBucketFail,
     continueCheckoutFail,
     addItemsToBasketFail,
     removePromotionCodeFromBasketFail,
@@ -153,6 +165,14 @@ export const basketReducer = createReducer(
     info: action.payload.info,
     validationResults: initialValidationResults,
   })),
+  on(loadBucketsSuccess, (state: BasketState, action) => ({
+    ...state,
+    buckets: action.payload.buckets,
+  })),
+  on(updateBucketSuccess, (state: BasketState) => ({
+    ...state,
+    productAdded: true,
+  })),
   on(
     removePromotionCodeFromBasketSuccess,
     setBasketPaymentSuccess,
@@ -172,6 +192,11 @@ export const basketReducer = createReducer(
     error: undefined,
     info: action.payload.info,
     lastTimeProductAdded: new Date().getTime(),
+    productAdded: true,
+  })),
+  on(resetProductAdded, (state: BasketState) => ({
+    ...state,
+    productAdded: false,
   })),
   on(mergeBasketSuccess, loadBasketSuccess, (state: BasketState, action) => {
     const basket = {

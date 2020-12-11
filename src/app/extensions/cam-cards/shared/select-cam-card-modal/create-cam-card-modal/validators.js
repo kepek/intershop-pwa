@@ -5,7 +5,7 @@ export const CREATE_CAMCARD_VALIDATORS = {
       message: 'camfil.modal.createCamcard.input.name.error.required',
     },
     {
-      error: 'maxLength',
+      error: 'maxlength',
       message: 'camfil.modal.createCamcard.input.name.error.maxlength',
     },
   ],

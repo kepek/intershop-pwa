@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
+import { provideMockStore } from '@ngrx/store/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { MockComponent, MockDirective, MockPipe } from 'ng-mocks';
 
@@ -41,6 +42,7 @@ describe('Camfil Product Item Detailed Component', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [ReactiveFormsModule, RouterTestingModule, TranslateModule.forRoot()],
+      providers: [provideMockStore()],
       declarations: [
         CamfilProductItemDetailedComponent,
         MockComponent(CamfilProductAddToBasketComponent),
@@ -65,6 +67,7 @@ describe('Camfil Product Item Detailed Component', () => {
         MockDirective(FeatureToggleDirective),
         MockPipe(PricePipe),
         MockPipe(ProductRoutePipe),
+        PricePipe,
       ],
     }).compileComponents();
   });

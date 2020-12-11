@@ -7,7 +7,6 @@
   "account.address.company_name.error.required": "Veuillez entrer le nom de votre société.",
   "account.address.company_name.label": "Nom de la société",
   "account.address.company_name_2.label": "Nom de la société 2",
-  "account.address.country.error.default": "Veuillez sélectionner un pays.",
   "account.address.country.label": "Pays",
   "account.address.de.postalcode.error.regexp": "Veuillez entrer un code postal valide à 5 chiffres.",
   "account.address.email.hint": "pour la confirmation des commandes et les mises à jour",

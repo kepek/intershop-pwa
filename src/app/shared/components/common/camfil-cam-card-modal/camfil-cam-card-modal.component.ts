@@ -9,6 +9,7 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, Templa
 export class CamfilCamCardModalComponent {
   @Input() title?: string;
   @Input() iconName?: string;
+  @Input() svgIcon?: string;
   @Input() subtitle?: string;
   @Input() customHeaderTemplate?: TemplateRef<any>;
 

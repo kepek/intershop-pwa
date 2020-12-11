@@ -51,6 +51,9 @@ import {
   createCamCardFail,
   createCamCardSuccess,
   createSubCamCard,
+  createVirtualCamCard,
+  createVirtualCamCardFail,
+  createVirtualCamCardSuccess,
   deleteCamCard,
   deleteCamCardFail,
   deleteCamCardSuccess,
@@ -125,6 +128,25 @@ export class CamCardEffects {
             return loadCamCardsSuccess({ camCards });
           }),
           mapErrorToAction(loadCamCardsFail)
+        )
+      )
+    )
+  );
+
+  createVirtualCamCard$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(createVirtualCamCard),
+      mapToPayloadProperty('camCard'),
+      mergeMap((camCardData: CamCard) =>
+        this.camCardService.createCamCard(camCardData).pipe(
+          mergeMap(camCard => [
+            createVirtualCamCardSuccess({ camCard }),
+            displaySuccessMessage({
+              message: 'camfil.account.cam_card.new_cam_card.confirmation',
+              messageParams: { 0: camCard.name },
+            }),
+          ]),
+          mapErrorToAction(createVirtualCamCardFail)
         )
       )
     )

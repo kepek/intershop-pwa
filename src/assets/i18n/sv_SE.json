@@ -7,7 +7,6 @@
   "account.address.company_name.error.required": "Bitte geben Sie Ihren Firmennamen an.",
   "account.address.company_name.label": "Firmenname",
   "account.address.company_name_2.label": "Firmenname 2",
-  "account.address.country.error.default": "Wählen Sie ein Land aus.",
   "account.address.country.label": "Land",
   "account.address.de.postalcode.error.regexp": "Geben Sie eine gültige fünfstellige PLZ an.",
   "account.address.email.hint": "für Bestellbestätigung und Aktualisierungen",

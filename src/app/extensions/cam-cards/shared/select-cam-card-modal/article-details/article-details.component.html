@@ -1,8 +1,17 @@
 <div class="article-details">
-  <mat-form-field [formGroup]="quantityForm" appearance="outline">
-    <mat-label>{{ 'camfil.modal.addToCamcard.box.label' | translate }}</mat-label>
-    <input matInput formControlName="boxLabel" />
-  </mat-form-field>
+  <div>
+    <mat-form-field [formGroup]="quantityForm" appearance="outline">
+      <mat-label>{{ 'camfil.modal.addToCamcard.box.label' | translate }}</mat-label>
+      <input matInput formControlName="boxLabel" />
+    </mat-form-field>
+
+    <camfil-error
+      [errors]="getField('boxLabel').errors"
+      [errorValidators]="validators.boxLabel"
+      [touched]="getField('boxLabel').touched || getField('boxLabel').dirty"
+    ></camfil-error>
+  </div>
+
   <div class="article-details__quantity">
     <mat-label class="article-details__label article-details__quantity--label">{{
       'camfil.modal.addToCamcard.quantity.label' | translate

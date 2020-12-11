@@ -15,6 +15,7 @@ import {
   CamCardItem,
   CamCardItemComment,
 } from '../../models/cam-card/cam-card.model';
+import { ContactMapper } from '../../models/cam-card/contact.mapper';
 
 @Injectable({ providedIn: 'root' })
 export class CamCardService {
@@ -208,7 +209,7 @@ export class CamCardService {
   getContactsByCustomerId(customerId: string): Observable<CamCardContact[]> {
     return this.apiService
       .get(`privatecamfilcustomers/${customerId}/contacts`)
-      .pipe(unpackEnvelope(), defaultIfEmpty([]));
+      .pipe(unpackEnvelope(), defaultIfEmpty([]), map(ContactMapper.fromData));
   }
 
   /**

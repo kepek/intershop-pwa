@@ -37,9 +37,17 @@ import { CamfilBulletListComponent } from 'ish-shared/components/common/camfil-b
 import { CamfilCamCardModalComponent } from 'ish-shared/components/common/camfil-cam-card-modal/camfil-cam-card-modal.component';
 import { CamfilErrorComponent } from 'ish-shared/components/common/camfil-error/camfil-error.component';
 import { CamfilHeaderBoxComponent } from 'ish-shared/components/common/camfil-header-box/camfil-header-box.component';
+import { CamfilProductAddToBasketModalComponent } from 'ish-shared/components/product/camfil-product-add-to-basket/camfil-product-add-to-basket-modal/camfil-product-add-to-basket-modal.component';
 import { CamfilProductGuidesComponent } from 'ish-shared/components/product/camfil-product-guides/camfil-product-guides.component';
 import { MaterialModule } from 'ish-shared/material/material.module';
 import { ShellModule } from 'ish-shell/shell.module';
+
+import { AddToCartModalComponent } from '../extensions/cam-cards/shared/add-to-cart-modal/add-to-cart-modal.component';
+import { CamCardModalDetailsComponent } from '../extensions/cam-cards/shared/add-to-cart-modal/cam-card-modal-details/cam-card-modal-details.component';
+import { CreateOrderModalComponent } from '../extensions/cam-cards/shared/add-to-cart-modal/create-order-modal/create-order-modal.component';
+import { OrderFormComponent } from '../extensions/cam-cards/shared/add-to-cart-modal/create-order-modal/order-form/order-form.component';
+import { CreateOrderSuccessComponent } from '../extensions/cam-cards/shared/add-to-cart-modal/create-order-success/create-order-success.component';
+import { ArticleDetailsComponent } from '../extensions/cam-cards/shared/select-cam-card-modal/article-details/article-details.component';
 
 import { AddressFormsSharedModule } from './address-forms/address-forms.module';
 import { CMSModule } from './cms/cms.module';
@@ -194,6 +202,8 @@ const importExportModules = [
 ];
 
 const declaredComponents = [
+  AddToCartModalComponent,
+  ArticleDetailsComponent,
   BasketCostSummaryComponent,
   BasketValidationItemsComponent,
   BasketValidationProductsComponent,
@@ -209,6 +219,7 @@ const declaredComponents = [
   CMSStaticPageComponent,
   CMSTextComponent,
   CMSVideoComponent,
+  CamCardModalDetailsComponent,
   CamfilBannerComponent,
   CamfilBulletListComponent,
   CamfilCMSBigBannerWithButtonComponent,
@@ -223,6 +234,7 @@ const declaredComponents = [
   CamfilFilterDropdownComponent,
   CamfilFilterTextComponent,
   CamfilHeaderBoxComponent,
+  CamfilProductAddToBasketModalComponent,
   CamfilProductAttributeComponent,
   CamfilProductAttributesComponent,
   CamfilProductGuidesComponent,
@@ -237,6 +249,8 @@ const declaredComponents = [
   CamfilProductRatingStarComponent,
   CamfilProductTitleComponent,
   ContentSlotComponent,
+  CreateOrderModalComponent,
+  CreateOrderSuccessComponent,
   FilterCheckboxComponent,
   FilterCollapsableComponent,
   FilterDropdownComponent,
@@ -252,6 +266,7 @@ const declaredComponents = [
   LineItemListComponent,
   LoginModalComponent,
   ModalDialogComponent,
+  OrderFormComponent,
   OrderListComponent,
   ProductAddToBasketComponent,
   ProductAddToCompareComponent,
@@ -275,7 +290,9 @@ const declaredComponents = [
 const exportedComponents = [
   AccordionComponent,
   AccordionItemComponent,
+  AddToCartModalComponent,
   AddressComponent,
+  ArticleDetailsComponent,
   BasketAddressSummaryComponent,
   BasketInfoComponent,
   BasketInvoiceAddressWidgetComponent,
@@ -284,6 +301,7 @@ const exportedComponents = [
   BasketPromotionComponent,
   BasketShippingAddressWidgetComponent,
   BasketValidationResultsComponent,
+  CamCardModalDetailsComponent,
   CamfilBannerComponent,
   CamfilBasketCostSummaryComponent,
   CamfilBreadcrumbComponent,
@@ -319,6 +337,8 @@ const exportedComponents = [
   ContentIncludeComponent,
   ContentPageletComponent,
   ContentViewcontextComponent,
+  CreateOrderModalComponent,
+  CreateOrderSuccessComponent,
   ErrorMessageComponent,
   InfoBoxComponent,
   InplaceEditComponent,
@@ -326,6 +346,7 @@ const exportedComponents = [
   LoadingComponent,
   LoginFormComponent,
   ModalDialogLinkComponent,
+  OrderFormComponent,
   OrderListComponent,
   OrderWidgetComponent,
   ProductAttributesComponent,

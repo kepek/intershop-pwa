@@ -6,7 +6,7 @@ import { debounce, filter, map, switchMap, tap } from 'rxjs/operators';
 import { CategoryHelper } from 'ish-core/models/category/category.model';
 import { ProductListingID } from 'ish-core/models/product-listing/product-listing.model';
 import { ProductCompletenessLevel, ProductHelper } from 'ish-core/models/product/product.model';
-import { addProductToBasket } from 'ish-core/store/customer/basket';
+import { addProductToBasket, getProductAdded, resetProductAdded, updateBucket } from 'ish-core/store/customer/basket';
 import {
   getCategories,
   getCategory,
@@ -55,6 +55,8 @@ import { whenFalsy, whenTruthy } from 'ish-core/utils/operators';
 @Injectable({ providedIn: 'root' })
 export class ShoppingFacade {
   constructor(private store: Store) {}
+
+  productAdded$ = this.store.pipe(select(getProductAdded));
 
   // CATEGORY
 
@@ -134,8 +136,16 @@ export class ShoppingFacade {
 
   // CHECKOUT
 
-  addProductToBasket(sku: string, quantity: number) {
-    this.store.dispatch(addProductToBasket({ sku, quantity }));
+  addProductToBasket(sku: string, quantity: number, shipToAddress?: string) {
+    this.store.dispatch(addProductToBasket({ sku, quantity, shipToAddress }));
+  }
+
+  updateBucket(basketId: string, addressId: string, boxLabel: string, contact?: string, info?: string) {
+    this.store.dispatch(updateBucket({ basketId, addressId, boxLabel, contact, info }));
+  }
+
+  resetProductAdded() {
+    this.store.dispatch(resetProductAdded());
   }
 
   // PRODUCT LISTING
