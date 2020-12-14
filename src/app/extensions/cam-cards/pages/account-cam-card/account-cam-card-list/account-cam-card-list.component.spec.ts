@@ -4,7 +4,7 @@ import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { provideMockStore } from '@ngrx/store/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { MockComponent, MockPipe } from 'ng-mocks';
-import { anything, capture, instance, mock, spy, verify } from 'ts-mockito';
+import { anything, capture, instance, mock, verify } from 'ts-mockito';
 
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { DatePipe } from 'ish-core/pipes/date.pipe';
@@ -84,14 +84,6 @@ describe('Account Cam Card List Component', () => {
     expect(component).toBeTruthy();
     expect(element).toBeTruthy();
     expect(() => fixture.detectChanges()).not.toThrow();
-  });
-
-  it('should emit delete id when delete is called', () => {
-    const emitter = spy(component.deleteCamCard);
-
-    component.delete('deleteId');
-
-    verify(emitter.emit('deleteId')).once();
   });
 
   // TODO: improve, change or delete when NEW order/addToCartWay will be inProgress
