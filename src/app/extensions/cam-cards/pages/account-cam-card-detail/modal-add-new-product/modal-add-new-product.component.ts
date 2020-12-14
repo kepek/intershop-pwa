@@ -10,7 +10,7 @@ import { Product, ProductCompletenessLevel } from 'ish-core/models/product/produ
 import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
 
 import { CamCardsFacade } from '../../../facades/cam-cards.facade';
-import { CamCard } from '../../../models/cam-card/cam-card.model';
+import { CamCard, CamCardItemComment } from '../../../models/cam-card/cam-card.model';
 
 @Component({
   selector: 'camfil-modal-add-new-product',
@@ -109,11 +109,13 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy {
 
   submitForm() {
     if (this.productForm.valid) {
-      const sku = this.getField('sku').value;
-      const quantity = this.getField('quantity').value;
-      const boxLabel = this.getField('boxLabel').value;
+      const sku = this.getField('sku') ? String(this.getField('sku').value) : undefined;
+      const quantity = this.getField('quantity') ? Number(this.getField('quantity')?.value) : 1;
+      const label = this.getField('boxLabel') ? String(this.getField('boxLabel').value) : undefined;
+      const text = undefined;
+      const comment: CamCardItemComment = { label, text };
 
-      this.camCardsFacade.addProductToCamCard(this.rootCamCardId, sku, quantity, boxLabel, 0, true);
+      this.camCardsFacade.addProductToCamCard(this.rootCamCardId, sku, quantity, comment, 0, true);
       this.hide();
     } else {
       markAsDirtyRecursive(this.productForm);
