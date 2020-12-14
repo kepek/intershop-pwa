@@ -35,6 +35,7 @@ import { UserAccessCamCardDialogComponent } from '../../../shared/user-access-ca
 export interface ProductChecked {
   camCardId: string;
   camCardRoot: string;
+  urn: string;
   sku: string;
   quantity: number;
 }
@@ -56,8 +57,6 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
   /** The list of cam cards of the customer. */
   @Input() camCards: CamCard[];
   @Input() deviceType: DeviceType;
-  /** Emits the id of the cam cards, which is to be deleted. */
-  @Output() deleteCamCard = new EventEmitter<string>();
   @Output() addCamCard = new EventEmitter<CamCard>();
   @ViewChild(MatSort) sort: MatSort;
 
@@ -205,8 +204,8 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
       }, [])
       // mapping checked CamCards for view
       .map((cc: CamCard) => {
-        const allNotAvailableItems = cc.camCardItems.filter(item => !item.product.available);
-        cc.subCamCards.forEach(({ camCardItems }) => {
+        const allNotAvailableItems = cc.camCardItems?.filter(item => !item.product.available) || [];
+        cc.subCamCards?.forEach(({ camCardItems }) => {
           camCardItems.forEach(item => {
             if (!item.product.available) {
               allNotAvailableItems.push(item);
@@ -231,9 +230,8 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
   }
 
   addSelectedItemsToCart() {
-    // TODO: improve when NEW order/addToCartWay will be inProgress
     Object.values(this.productsChecked).forEach((val: ProductChecked) =>
-      this.productFacade.addProductToBasket(val.sku, val.quantity)
+      this.productFacade.addProductToBasket(val.sku, val.quantity, val.urn)
     );
   }
 
@@ -241,10 +239,6 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
     modal.show();
   }
 
-  /** Emits the id of the cam cards to delete. */
-  delete(camCardId: string) {
-    this.deleteCamCard.emit(camCardId);
-  }
   /** Emits the camCard to add new one. */
   add(camCard: CamCard) {
     this.addCamCard.emit(camCard);
@@ -313,6 +307,7 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
       const element: ProductChecked = {
         camCardId: camCard.id,
         camCardRoot: camCard.rootCamCard,
+        urn: this.getCamCardUrn(camCard.rootCamCard) || camCard.deliveryAddress.urn,
         sku: item.product.sku,
         quantity: item.quantity,
       };
@@ -341,6 +336,11 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
 
   handleProductCheckbox(item: CamCardItem, camCard: CamCard, event: MatCheckboxChange) {
     this.handleProductCheck(item, camCard, event);
+  }
+
+  getCamCardUrn(id: string) {
+    const cc = this.camCards.find(item => item.id === id);
+    return cc?.deliveryAddress.urn || '';
   }
 
   get checkedCamCards() {
