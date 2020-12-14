@@ -4,9 +4,12 @@
 :host {
   width: 100%;
 
-  &[mode='edit'] {
-    @media (min-width: $screen-md-min) {
+  @media (min-width: $screen-md-min) {
+    &[mode='edit'] {
       width: calc(100% - #{$space-default});
+    }
+    .prices {
+      min-width: 140px;
     }
   }
 
@@ -30,9 +33,6 @@
 
     margin: 0 0 0 auto;
   }
-  .prices {
-    min-width: 140px;
-  }
   .delete-cam-card {
     z-index: 1;
   }
@@ -40,6 +40,15 @@
     .attributes > * {
       line-height: 20px;
       border-right: none;
+    }
+  }
+
+  &[mode='edit'] {
+    ::ng-deep {
+      camfil-product-quantity:empty {
+        width: $space-box;
+        display: block;
+      }
     }
   }
 
@@ -79,17 +88,6 @@
     }
     dd {
       float: right;
-    }
-
-    &[mode='edit'] {
-      camfil-cam-card-product-comment {
-        @media (min-width: $screen-md-min) {
-          margin: 0 $space-box 0 0;
-        }
-      }
-      .quantity-row {
-        margin: 0 0 0 auto;
-      }
     }
 
     @media (max-width: $screen-lg-max) {
