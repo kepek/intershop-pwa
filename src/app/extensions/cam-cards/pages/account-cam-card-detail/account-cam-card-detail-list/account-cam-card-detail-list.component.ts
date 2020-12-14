@@ -108,15 +108,20 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges {
   }
 
   addItemsToCart() {
-    // TODO: improve when NEW order/addToCartWay will be inProgress
-    this.camCard.camCardItems?.map(item => {
-      this.shoppingFacade.addProductToBasket(item.product.sku, item.quantity);
+    const urn = this.camCard.deliveryAddress.urn;
+    this.camCard.camCardItems?.forEach(item => {
+      this.addItemToCart(item, urn);
     });
-    this.camCard.subCamCards?.map(sub => {
-      sub.camCardItems?.map(item => {
-        this.shoppingFacade.addProductToBasket(item.product.sku, item.quantity);
+    this.camCard.subCamCards?.forEach(sub => {
+      sub.camCardItems?.forEach(item => {
+        this.addItemToCart(item, urn);
       });
     });
+  }
+  addItemToCart(item: CamCardItem, urn: string) {
+    if (item.product.available) {
+      this.shoppingFacade.addProductToBasket(item.product.sku, item.quantity, urn);
+    }
   }
 
   deleteCamCard() {
