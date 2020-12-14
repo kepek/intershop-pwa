@@ -284,7 +284,7 @@ export class CamCardService {
     position?: number
   ): Observable<CamCard> {
     return this.apiService
-      .post(`camcards/${camCardId}/products`, {
+      .post(`camcards/${camCardId}/product`, {
         quantity,
         position,
         product: { sku },
