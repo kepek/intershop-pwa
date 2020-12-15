@@ -1,0 +1,79 @@
+@import '~src/styles/themes/camfil/variables';
+@import '~src/styles/themes/camfil/colors';
+
+::ng-deep {
+  .mat-card {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+  ish-address address {
+    text-align: right;
+  }
+}
+
+h1 {
+  text-transform: none;
+  @media (max-width: $screen-md-max) {
+    font-size: $font-size-base * 1.25;
+  }
+}
+.dl-horizontal.dl-separator > dt::after {
+  content: '';
+}
+dd,
+dt {
+  display: flex;
+  font-weight: 400;
+  color: $camfil-text-color-primary;
+}
+
+dd {
+  justify-content: flex-end;
+  font-weight: 500;
+}
+
+.order-summary-info {
+  padding: $space-default/3 * 2 $space-default * 2;
+
+  dd,
+  dt {
+    line-height: 18px;
+  }
+
+  dd {
+    font-weight: bold;
+  }
+
+  @media (min-width: $screen-xl-min) {
+    padding: $space-default $space-default * 5;
+  }
+
+  @media (min-width: $screen-sm-min) {
+    &.border-sm-right {
+      border-right: 1px solid $greyEA;
+    }
+  }
+}
+
+.cost-summary {
+  padding: 24px;
+  margin-bottom: 24px;
+  font-size: revert;
+  background: none;
+  border: none;
+  box-shadow: none;
+  @media (min-width: $screen-lg-min) {
+    width: 50%;
+  }
+}
+
+a.btn-track-order {
+  font-size: $font-size-sm;
+  line-height: 26px;
+}
+
+.list-item-row {
+  margin-top: 12px;
+  background-color: $white;
+  box-shadow: $header-shadow;
+}

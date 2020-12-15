@@ -1,0 +1,83 @@
+<div class="d-flex justify-content-between py-3">
+  <div>
+    <h1 *ngIf="order" class="align-middle d-none d-md-inline pl-3">
+      {{ 'camfil.checkout.order' | translate }}:
+      <span data-testing-id="order-number"
+        >{{ order.id }} - {{ order.orderName }}, {{ order.customer.companyName }}</span
+      >
+    </h1>
+  </div>
+</div>
+
+<h1 *ngIf="order" class="d-block d-md-none">
+  {{ 'account.orderdetails.order_number.label' | translate }}:
+  <span data-testing-id="order-number">{{ order.id }} - {{ order.orderName }}</span>
+</h1>
+
+<mat-card *ngIf="order" class="mb-3 box-shadow--dark mat-elevation-z clearfix">
+  <div class="row">
+    <div class="order-summary-info col-sm-6 border-sm-right" data-testing-id="order-summary-info">
+      <dl class="row dl-horizontal dl-separator">
+        <dt class="col-6 p-0">{{ 'camfil.account.orderdetails.customer_id.label' | translate }}</dt>
+        <dd class="col-6 p-0" data-testing-id="order-customer_id">{{ order.customer.id }}</dd>
+        <dt class="col-6 p-0 pb-4">{{ 'camfil.account.orderdetails.customer_name.label' | translate }}</dt>
+        <dd class="col-6 p-0" data-testing-id="order-customer_name">{{ order.customer.companyName }}</dd>
+        <dt class="col-6 p-0">{{ 'camfil.account.orderdetails.contact_person.label' | translate }}</dt>
+        <dd class="col-6 p-0" data-testing-id="order-contact_person">
+          {{ order.contacts[0].firstName }} {{ order.contacts[0].lastName }}
+        </dd>
+        <dt class="col-6 p-0">{{ 'camfil.checkout.phone' | translate }}</dt>
+        <dd class="col-6 p-0" data-testing-id="order-camfil_no">-</dd>
+        <dt class="col-6 p-0">{{ 'camfil.account.orderdetails.delivery_address.label' | translate }}</dt>
+        <dd class="col-6 p-0" data-testing-id="order-delivery_address">
+          <ish-address [address]="order.shipToAddressFull"></ish-address>
+        </dd>
+      </dl>
+    </div>
+    <div class="order-summary-info col-sm-6" data-testing-id="order-summary-info">
+      <dl class="row dl-horizontal dl-separator mb-0">
+        <dt class="col-6 p-0">{{ 'camfil.account.orderdetails.order_channel.label' | translate }}</dt>
+        <dd class="col-6 p-0" data-testing-id="order-channel">-</dd>
+        <dt class="col-6 p-0 pb-4">{{ 'camfil.account.orderdetails.phone_notification.label' | translate }}</dt>
+        <dd class="col-6 p-0" data-testing-id="order-phone_notification">1234567890</dd>
+      </dl>
+      <a
+        mat-stroked-button
+        class="btn-track-order float-right mr-n4"
+        color="primary"
+        routerLink="#"
+        data-testing-id="orders-link"
+      >
+        {{ 'camfil.account.orderdetails.links.track_order' | translate }}</a
+      >
+    </div>
+  </div>
+</mat-card>
+
+<ng-container *ngIf="order">
+  <!-- Line Items -->
+
+  <ng-container *ngFor="let product of order.lineItems; index as i">
+    <div class="list-item-row list-item-row-big px-4 py-1 mt-2">
+      <div class="d-flex align-items-center">
+        <mat-icon svgIcon="move" class="size-24 d-none d-md-block handle" cdkDragHandle></mat-icon>
+        <camfil-checkout-line-item [id]="product.productSKU"></camfil-checkout-line-item>
+      </div>
+    </div>
+  </ng-container>
+
+  <!-- Cost Summary -->
+  <mat-card *ngIf="order" class="mb-3 box-shadow--dark mat-elevation-z clearfix">
+    <div class="section cost-summary float-right box-shadow--dark mat-elevation-z">
+      <dl class="row dl-horizontal dl-separator mb-0">
+        <dt class="col-6">{{ 'camfil.checkout.volume_discount' | translate }}</dt>
+        <dd class="col-6">{{ discount() | ishPrice }}</dd>
+        <dt class="col-6">{{ 'camfil.checkout.single_total_price_after' | translate }}</dt>
+        <dd class="col-6">{{ totalPrice() | ishPrice }}</dd>
+        <dt class="col-6">{{ 'camfil.checkout.tax_amount' | translate }}</dt>
+        <dd class="col-6">{{ totalTax() | ishPrice }}</dd>
+      </dl>
+      <camfil-basket-cost-summary [totals]="order.totals"></camfil-basket-cost-summary>
+    </div>
+  </mat-card>
+</ng-container>

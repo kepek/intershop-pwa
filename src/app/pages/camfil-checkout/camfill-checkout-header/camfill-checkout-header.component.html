@@ -5,7 +5,8 @@
 <div class="row align-items-end">
   <div class="col-md-3">
     <p>
-      <span>{{ 'camfil.checkout.number_of_orders' | translate }}:</span> <span class="checkout-header-number">1</span>
+      <span>{{ 'camfil.checkout.number_of_orders' | translate }}:</span>
+      <span class="checkout-header-number">{{ basket.buckets.length + 1 }}</span>
     </p>
     <p>
       <span>{{ 'camfil.checkout.number_of_products' | translate }}:</span>

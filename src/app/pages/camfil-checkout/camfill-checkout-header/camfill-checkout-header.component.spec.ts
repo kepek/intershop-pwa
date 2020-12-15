@@ -25,6 +25,7 @@ describe('Camfill Checkout Header Component', () => {
 
     basket = { id: '1' } as Basket;
     basket.totalProductQuantity = 8;
+    basket.buckets = ['1', '2', '3'];
 
     component.basket = basket;
   });

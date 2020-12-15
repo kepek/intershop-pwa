@@ -5,6 +5,10 @@
   <div class="checkout row">
     <div class="col-sm-12 col-lg-8">
       <camfil-camfill-checkout-header [basket]="basket"></camfil-camfill-checkout-header>
+
+      <ng-container *ngFor="let item of buckets">
+        <camfil-checkout-list [order]="item"></camfil-checkout-list>
+      </ng-container>
     </div>
     <div class="col-sm-12 col-lg-4">
       <camfil-checkout-summary [basket]="basket"></camfil-checkout-summary>

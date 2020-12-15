@@ -1,7 +1,8 @@
 import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Store, select } from '@ngrx/store';
 import { EMPTY, Observable, throwError } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { catchError, map, switchMap, take } from 'rxjs/operators';
 
 import { AddressMapper } from 'ish-core/models/address/address.mapper';
 import { Address } from 'ish-core/models/address/address.model';
@@ -16,11 +17,13 @@ import { BasketBaseData, BasketData, BasketExtension } from 'ish-core/models/bas
 import { BasketMapper } from 'ish-core/models/basket/basket.mapper';
 import { Basket } from 'ish-core/models/basket/basket.model';
 import { BucketMapper } from 'ish-core/models/basket/bucket.mapper';
-import { Bucket } from 'ish-core/models/basket/bucket.model';
+import { Bucket, Buckets } from 'ish-core/models/basket/bucket.model';
 import { ShippingMethodData } from 'ish-core/models/shipping-method/shipping-method.interface';
 import { ShippingMethodMapper } from 'ish-core/models/shipping-method/shipping-method.mapper';
 import { ShippingMethod } from 'ish-core/models/shipping-method/shipping-method.model';
 import { ApiService, unpackEnvelope } from 'ish-core/services/api/api.service';
+import { getCurrentBasket } from 'ish-core/store/customer/basket/basket.selectors';
+import { whenTruthy } from 'ish-core/utils/operators';
 
 export type BasketUpdateType =
   | { invoiceToAddress: string }
@@ -72,7 +75,9 @@ type ValidationBasketIncludeType =
  */
 @Injectable({ providedIn: 'root' })
 export class BasketService {
-  constructor(private apiService: ApiService) {}
+  constructor(private apiService: ApiService, private store: Store) {}
+
+  private currentBasket$ = this.store?.pipe(select(getCurrentBasket), whenTruthy(), take(1));
 
   /**
    * http header for Basket API v1
@@ -138,12 +143,18 @@ export class BasketService {
   getBuckets(): Observable<Bucket[]> {
     const params = new HttpParams().set('include', 'all');
 
-    return this.apiService
-      .get(`baskets/current/buckets`, {
-        headers: this.basketHeaders,
-        params,
+    return this.currentBasket$.pipe(
+      switchMap(basket => {
+        console.log('cus', basket.lineItems);
+
+        return this.apiService
+          .get(`baskets/current/buckets`, {
+            headers: this.basketHeaders,
+            params,
+          })
+          .pipe(map((payload: Buckets) => BucketMapper.fromData(payload, basket.lineItems)));
       })
-      .pipe(map(BucketMapper.fromData));
+    );
   }
 
   updateBucket(
