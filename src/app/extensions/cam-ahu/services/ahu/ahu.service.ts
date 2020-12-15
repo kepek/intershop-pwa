@@ -9,6 +9,8 @@ import { Manufacturer } from '../../models/manufacturer/manufacturer.model';
 import { UnitData } from '../../models/unit/unit.interface';
 import { UnitMapper } from '../../models/unit/unit.mapper';
 import { Unit } from '../../models/unit/unit.model';
+import { manufacturers } from '../../store/manufacturer/manufacturer.mock';
+import { units } from '../../store/unit/unit.mock';
 
 export function unpackHeap<T>(): OperatorFunction<[], T[]> {
   return map(data => (!!data && !!data.length ? data : []));
@@ -28,7 +30,16 @@ export class AhuService {
 
     return this.iccApiService.post<ManufacturerData[]>('ahu/manufacturer', requestBody).pipe(
       unpackHeap<ManufacturerData>(),
-      map(data => ManufacturerMapper.fromListData(data))
+      map(data => {
+        if (data && data.length) {
+          return ManufacturerMapper.fromListData(data);
+        }
+
+        // TODO (extMlk): Remove when ICC/AHU Team will fix the API.
+        console.warn('[AHU] Mocking response in AhuService.getManufacturers().');
+
+        return manufacturers;
+      })
     );
   }
 
@@ -41,7 +52,14 @@ export class AhuService {
           return ManufacturerMapper.fromListData(data).find(m => m.id === id);
         }
 
-        return ManufacturerMapper.fromData(data);
+        if (data) {
+          return ManufacturerMapper.fromData(data);
+        }
+
+        // TODO (extMlk): Remove when ICC/AHU Team will fix the API.
+        console.warn('[AHU] Mocking response in AhuService.getManufacturer().');
+
+        return manufacturers[0];
       })
     );
   }
@@ -63,7 +81,16 @@ export class AhuService {
 
     return this.iccApiService.post<UnitData[]>('ahu/unit', requestBody).pipe(
       unpackHeap<UnitData>(),
-      map(data => UnitMapper.fromListData(data))
+      map(data => {
+        if (data && data.length) {
+          return UnitMapper.fromListData(data);
+        }
+
+        // TODO (extMlk): Remove when ICC/AHU Team will fix the API.
+        console.warn('[AHU] Mocking response in AhuService.getUnits().');
+
+        return units;
+      })
     );
   }
 
@@ -91,7 +118,14 @@ export class AhuService {
           return UnitMapper.fromListData(data).find(u => u?.ahu?.id === unitId);
         }
 
-        return UnitMapper.fromData(data);
+        if (data) {
+          return UnitMapper.fromData(data);
+        }
+
+        // TODO (extMlk): Remove when ICC/AHU Team will fix the API.
+        console.warn('[AHU] Mocking response in AhuService.getUnit().');
+
+        return units[0];
       })
     );
   }
