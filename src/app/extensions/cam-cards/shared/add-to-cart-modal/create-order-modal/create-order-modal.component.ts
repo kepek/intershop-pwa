@@ -1,4 +1,14 @@
-import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  TemplateRef,
+  ViewChild,
+} from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, Subject } from 'rxjs';
@@ -38,7 +48,9 @@ export class CreateOrderModalComponent implements OnInit, OnDestroy {
     };
   }
 
-  @Input() product: Product;
+  @Input() product?: Product;
+
+  @Output() createEmitter = new EventEmitter<CamCard>();
 
   modal: NgbModalRef;
   @ViewChild('modal', { static: false }) modalTemplate: TemplateRef<unknown>;
@@ -77,7 +89,7 @@ export class CreateOrderModalComponent implements OnInit, OnDestroy {
 
     this.orderForm = this.fb.group({});
     this.quantityForm = new FormGroup({
-      quantity: new FormControl(this.product.minOrderQuantity),
+      quantity: new FormControl(this.product?.minOrderQuantity),
       boxLabel: new FormControl('', Validators.maxLength(60)),
     });
 
@@ -91,7 +103,7 @@ export class CreateOrderModalComponent implements OnInit, OnDestroy {
   subscribeToStateChanges() {
     this.virtualCamCard$.pipe(takeUntil(this.destroy$)).subscribe((virtualCamCard: CamCard) => {
       if (virtualCamCard) {
-        this.addToBasket(virtualCamCard.deliveryAddress.urn);
+        this.product ? this.addToBasket(virtualCamCard.deliveryAddress.urn) : this.createEmitter.emit(virtualCamCard);
       }
       this.currentVirtualCamCard = virtualCamCard;
     });
@@ -197,6 +209,7 @@ export class CreateOrderModalComponent implements OnInit, OnDestroy {
 
   /** open modal */
   show() {
+    this.showSuccess = false;
     return this.modalTemplate;
   }
 

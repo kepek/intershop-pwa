@@ -1,0 +1,8 @@
+@import '~src/styles/themes/camfil/variables';
+@import '~src/styles/themes/camfil/mixins.scss';
+
+:host {
+  .button-bold {
+    font-weight: 600;
+  }
+}

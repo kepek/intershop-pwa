@@ -17,6 +17,7 @@ export class CamfilSmallCtaModalComponent {
   @Input() actionButtonTitle?: string;
   @Output() actionClicked = new EventEmitter<any>();
   @Input() showCloseIcon = false;
+  @Input() onlyAccept = false;
 
   emitAction() {
     this.actionClicked.emit();

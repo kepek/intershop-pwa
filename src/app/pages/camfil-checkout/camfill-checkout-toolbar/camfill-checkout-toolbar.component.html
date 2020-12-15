@@ -1,9 +1,6 @@
 <div class="row">
   <div class="text-right">
-    <button mat-stroked-button color="primary" data-testing-id="add-cam-card" routerLink="/account/cam-cards/create">
-      <mat-icon svgIcon="plus" class="size-31"></mat-icon>
-      {{ 'camfil.checkout.create_new_order' | translate }}
-    </button>
+    <camfil-create-order-button [basketId]="basketId"></camfil-create-order-button>
 
     <camfil-create-new-camcard [buckets]="buckets"></camfil-create-new-camcard>
 

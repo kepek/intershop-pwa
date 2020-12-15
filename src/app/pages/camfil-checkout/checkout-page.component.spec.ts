@@ -82,6 +82,7 @@ describe('Checkout Page Component', () => {
     when(camCardFacadeMock.camCard$).thenReturn(of([camCardDetails]));
 
     when(checkoutFacade.buckets$).thenReturn(of([]));
+    when(checkoutFacade.emptyBuckets$).thenReturn(of([]));
     when(checkoutFacade.basket$).thenReturn(of(basketDetails));
   });
 

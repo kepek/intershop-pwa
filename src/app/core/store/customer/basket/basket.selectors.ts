@@ -60,6 +60,8 @@ export const getProductAdded = createSelector(getBasketState, basket => basket.p
 
 export const getCurrentBuckets = createSelector(getBasketState, basket => basket.buckets);
 
+export const getEmptyBuckets = createSelector(getBasketState, basket => basket.emptyBuckets);
+
 export const getBasketEligibleShippingMethods = createSelector(
   getBasketState,
   basket => basket.eligibleShippingMethods

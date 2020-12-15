@@ -1,3 +1,9 @@
+import {
+  CamCardAddress,
+  CamCardContact,
+  CamCardCustomer,
+} from '../../../extensions/cam-cards/models/cam-card/cam-card.model';
+
 export interface Bucket {
   basket: string;
   id: string;
@@ -7,6 +13,10 @@ export interface Bucket {
   orderName?: string;
   nextDelivery?: string;
   orderMark?: string;
+  transient?: boolean;
+  shipToAddressFull?: CamCardAddress;
+  customer?: CamCardCustomer;
+  contacts?: CamCardContact[];
   camCardId?: string;
 }
 

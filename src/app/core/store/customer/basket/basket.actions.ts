@@ -87,6 +87,8 @@ export const loadBucketsSuccess = createAction('[Basket] Get Bucket Info Success
 
 export const loadBucketsFail = createAction('[Basket] Get Bucket Info Fail');
 
+export const addEmptyBucket = createAction('[Basket] Add Empty Bucket', payload<{ bucket: Bucket }>());
+
 export const addItemsToBasket = createAction(
   '[Basket Internal] Add Items To Basket',
   payload<{ items: { sku: string; quantity: number; unit: string; shipToAddress?: string }[] }>()

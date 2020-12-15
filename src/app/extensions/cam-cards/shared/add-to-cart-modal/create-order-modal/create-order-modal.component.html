@@ -3,7 +3,7 @@
     <camfil-cam-card-modal
       [title]="'camfil.modal.createOrder.order-form.title' | translate"
       iconName="note_add"
-      [detailsTemplate]="detailsTemplate"
+      [detailsTemplate]="product && detailsTemplate"
       [mainContentTemplate]="mainContentTemplate"
       [secondaryButtonTitle]="'camfil.modal.createCamcard.button.cancel' | translate"
       (secondaryButtonClicked)="cancel()"
@@ -15,7 +15,7 @@
 </ng-template>
 
 <ng-template #mainContentTemplate>
-  <camfil-delivery-address-form></camfil-delivery-address-form>
+  <camfil-order-form></camfil-order-form>
 </ng-template>
 
 <ng-template #detailsTemplate>

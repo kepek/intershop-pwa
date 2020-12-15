@@ -11,6 +11,7 @@ import { createOrderSuccess } from 'ish-core/store/customer/orders';
 import { setErrorOn, setLoadingOn } from 'ish-core/utils/ngrx-creators';
 
 import {
+  addEmptyBucket,
   addItemsToBasket,
   addItemsToBasketFail,
   addItemsToBasketSuccess,
@@ -81,6 +82,7 @@ export interface BasketState {
   validationResults: BasketValidationResultType;
   productAdded: boolean;
   buckets: Bucket[];
+  emptyBuckets: Bucket[];
 }
 
 const initialValidationResults: BasketValidationResultType = {
@@ -101,6 +103,7 @@ export const initialState: BasketState = {
   validationResults: initialValidationResults,
   buckets: undefined,
   productAdded: false,
+  emptyBuckets: [],
 };
 
 export const basketReducer = createReducer(
@@ -168,6 +171,10 @@ export const basketReducer = createReducer(
   on(loadBucketsSuccess, (state: BasketState, action) => ({
     ...state,
     buckets: action.payload.buckets,
+  })),
+  on(addEmptyBucket, (state: BasketState, action) => ({
+    ...state,
+    emptyBuckets: [action.payload.bucket, ...state.emptyBuckets],
   })),
   on(updateBucketSuccess, (state: BasketState) => ({
     ...state,

@@ -9,7 +9,7 @@ import { CamCardAddress, CamCardContact, CamCardCustomer } from '../../../../mod
 import { ADDRESS_VALIDATORS } from './validators.js';
 
 @Component({
-  selector: 'camfil-delivery-address-form',
+  selector: 'camfil-order-form',
   templateUrl: './order-form.component.html',
   styleUrls: ['./order-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
