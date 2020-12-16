@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideMockStore } from '@ngrx/store/testing';
+import { TranslateModule } from '@ngx-translate/core';
 
 import { DatePipe } from 'ish-core/pipes/date.pipe';
 import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
@@ -15,6 +16,7 @@ describe('Account Cam Card Pdf Component', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [AccountCamCardPdfComponent, CamfilSmallCtaModalComponent, LoadingComponent],
+      imports: [TranslateModule.forRoot()],
       providers: [provideMockStore(), DatePipe],
     }).compileComponents();
   });
