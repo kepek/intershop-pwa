@@ -35,6 +35,8 @@ export const getBasketValidationResults = createSelector(
 
 export const getBasketInfo = createSelector(getBasketState, basket => basket.info);
 
+export const getBasketLineItems = createSelector(getBasketState, basket => basket.basket.lineItems);
+
 export const getCurrentBasket = createSelector(
   getBasketState,
   getBasketValidationResults,

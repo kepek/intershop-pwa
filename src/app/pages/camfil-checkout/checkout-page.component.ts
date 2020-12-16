@@ -1,20 +1,90 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { BasketView } from 'ish-core/models/basket/basket.model';
+import { Bucket } from 'ish-core/models/basket/bucket.model';
+
+import { CamCardsFacade } from '../../extensions/cam-cards/facades/cam-cards.facade';
+import { CamCard } from '../../extensions/cam-cards/models/cam-card/cam-card.model';
 
 @Component({
   templateUrl: './checkout-page.component.html',
   styleUrls: ['./checkout-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.Default,
 })
-export class CheckoutPageComponent implements OnInit {
+export class CheckoutPageComponent implements OnInit, OnDestroy {
   basket$: Observable<BasketView>;
+  basketId: string;
+  buckets$: Observable<any[]>;
+  buckets: Bucket[];
 
-  constructor(private checkoutFacade: CheckoutFacade) {}
+  currentCamCard: CamCard;
+  camCards: CamCard[];
+
+  private destroy$ = new Subject<void>();
+
+  constructor(private checkoutFacade: CheckoutFacade, private camCardsFacade: CamCardsFacade) {}
 
   ngOnInit() {
+    this.initBasket();
+  }
+
+  initBasket() {
     this.basket$ = this.checkoutFacade.basket$;
+    this.buckets$ = this.checkoutFacade.buckets$;
+
+    this.basket$.pipe(takeUntil(this.destroy$)).subscribe((basket: BasketView) => {
+      this.basketId = basket.id;
+    });
+
+    this.camCardsFacade.camCard$.pipe(takeUntil(this.destroy$)).subscribe(camCards => {
+      if (camCards) {
+        this.camCards = camCards;
+        this.checkoutFacade.loadBuckets();
+      }
+    });
+
+    this.buckets$.pipe(takeUntil(this.destroy$)).subscribe((buckets: Bucket[]) => {
+      console.log('buckets', buckets);
+
+      if (buckets && this.camCards.length) {
+        this.buckets = this.connectWithCamCard(buckets);
+        console.log('bucketsCam', this.buckets);
+      }
+    });
+  }
+
+  connectWithCamCard(buckets: Bucket[]): Bucket[] {
+    return buckets
+      .map(bucket => {
+        const camCard = this.getCamCard(bucket.deliveryAddressId);
+
+        console.log('camCard', camCard);
+
+        return camCard
+          ? {
+              ...bucket,
+              shipToAddress: camCard.deliveryAddress.urn,
+              shipToAddressFull: camCard.deliveryAddress,
+              orderName: camCard.name,
+              nextDelivery: camCard.nextDeliveryDate,
+              orderMark: camCard.orderLabel,
+              customer: camCard.customer,
+              contacts: camCard.contacts,
+            }
+          : { ...bucket };
+      })
+      .filter(bucket => bucket.orderName);
+  }
+
+  getCamCard(deliveryAddressId: string) {
+    return this.camCards.find(camcard => camcard.deliveryAddress.id === deliveryAddressId);
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }
