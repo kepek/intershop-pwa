@@ -65,7 +65,14 @@ export const addProductToBasket = createAction(
 
 export const updateBucket = createAction(
   '[Bucket] Update Bucket',
-  payload<{ basketId: string; addressId: string; boxLabel: string; contact?: string; info?: string }>()
+  payload<{
+    basketId: string;
+    addressId: string;
+    boxLabel: string;
+    contact?: string;
+    info?: string;
+    phoneNumber?: string;
+  }>()
 );
 
 export const updateBucketSuccess = createAction('[Basket] Update Bucket Success');

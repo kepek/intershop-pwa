@@ -110,7 +110,14 @@ export class BasketItemsEffects {
       mapToPayload(),
       mergeMap(payload =>
         this.basketService
-          .updateBucket(payload.basketId, payload.addressId, payload.boxLabel, payload.contact, payload.info)
+          .updateBucket(
+            payload.basketId,
+            payload.addressId,
+            payload.boxLabel,
+            payload.contact,
+            payload.info,
+            payload.phoneNumber
+          )
           .pipe(
             mergeMap(() => [updateBucketSuccess(), loadBuckets()]),
             mapErrorToAction(updateBucketFail)

@@ -34,6 +34,7 @@ export class OrderFormComponent implements OnInit, OnDestroy {
       customer: ['', [Validators.required]],
       contact: [''],
       invoiceLabel: ['', [Validators.required, Validators.maxLength(20)]],
+      phoneNumber: ['', Validators.pattern('[0-9+-/]*')],
       orderMark: ['', [Validators.required]],
       deliveryAddressSelect: ['', []],
       company: ['', [Validators.required]],

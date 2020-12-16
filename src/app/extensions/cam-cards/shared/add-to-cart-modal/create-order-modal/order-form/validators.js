@@ -5,6 +5,12 @@ export const ADDRESS_VALIDATORS = {
       message: 'camfil.modal.createOrder.order-form.select.customer.error.required',
     },
   ],
+  phoneNumber: [
+    {
+      error: 'pattern',
+      message: 'camfil.modal.createOrder.order-form.input.phone_number.error.pattern',
+    },
+  ],
   orderMark: [
     {
       error: 'required',
@@ -14,11 +20,11 @@ export const ADDRESS_VALIDATORS = {
   invoiceLabel: [
     {
       error: 'required',
-      message: 'camfil.modal.createOrder.order-form.input.goods_mark.error.required',
+      message: 'camfil.modal.createOrder.order-form.input.invoice_mark.error.required',
     },
     {
       error: 'maxlength',
-      message: 'camfil.modal.createOrder.order-form.input.goods_mark.error.maxLength',
+      message: 'camfil.modal.createOrder.order-form.input.invoice_mark.error.maxLength',
     },
   ],
   company: [
