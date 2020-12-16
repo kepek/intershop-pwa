@@ -1,0 +1,21 @@
+<button
+  mat-stroked-button
+  color="primary"
+  disabled
+  data-testing-id="pdf-cam-card"
+  (click)="openPdfGenDialog()"
+  disabled="{{ !camCards?.length }}"
+>
+  <mat-icon svgIcon="print" class="size-15"></mat-icon>
+  {{ 'camfil.account.cam_cards.list.button.print.label' | translate }}
+</button>
+
+<camfil-small-cta-modal
+  [actionTitle]="'camfil.account.cam_cards.print.dialog.title' | translate"
+  [actionButtonTitle]="'camfil.account.cam_cards.print.dialog.btn.with_price' | translate"
+  [action2ButtonTitle]="'camfil.account.cam_cards.print.dialog.btn.no_price' | translate"
+  [icon]="'print'"
+  (actionClicked)="generatePdfWithPrices()"
+  (action2Clicked)="generatePdfWithoutPrices()"
+>
+</camfil-small-cta-modal>
