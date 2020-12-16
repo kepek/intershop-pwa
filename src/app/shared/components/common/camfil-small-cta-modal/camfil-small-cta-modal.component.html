@@ -23,11 +23,20 @@
     </div>
 
     <div *ngIf="!onlyAccept" class="cta-modal__links">
-      <button class="btn btn-link cta-modal__links--link" (click)="hide()">
+      <button class="btn btn-link cta-modal__links--link" (click)="hide()" *ngIf="!action2ButtonTitle">
         {{ 'camfil.modal.cta.button.cancel' | translate }}
       </button>
 
-      <button type="submit" (click)="emitAction()" class="btn btn-link cta-modal__links--link">
+      <button
+        *ngIf="action2ButtonTitle"
+        class="btn btn-link cta-modal__links--link"
+        type="submit"
+        (click)="emitAction2()"
+      >
+        {{ action2ButtonTitle }}
+      </button>
+
+      <button class="btn btn-link cta-modal__links--link" type="submit" (click)="emitAction()">
         {{ actionButtonTitle }}
       </button>
     </div>
