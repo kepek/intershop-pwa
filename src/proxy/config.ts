@@ -63,8 +63,6 @@ export function createProxiesConfig(env: Environment): Config {
   // Route -> /ICC/*
   const ICC_TARGET = getSysEnvOrAppEnv('ICC_PROXY_URL', 'iccProxyURL');
 
-  console.log('ICC_TARGET', ICC_TARGET);
-
   config.proxies.push({
     route: getSysEnvOrAppEnv('ICC_SERVER', 'iccServer'),
     target: ICC_TARGET,
