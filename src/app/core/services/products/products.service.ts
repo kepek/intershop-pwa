@@ -12,7 +12,7 @@ import { VariationProduct } from 'ish-core/models/product/product-variation.mode
 import { ProductData, ProductDataStub, ProductVariationLink } from 'ish-core/models/product/product.interface';
 import { ProductMapper } from 'ish-core/models/product/product.mapper';
 import { Product, ProductHelper, SkuQuantityType } from 'ish-core/models/product/product.model';
-import { ApiService, unpackEnvelope } from 'ish-core/services/api/api.service';
+import { ApiService, AvailableOptions, unpackEnvelope } from 'ish-core/services/api/api.service';
 import { getProductListingItemsPerPage } from 'ish-core/store/shopping/product-listing';
 import { FeatureToggleService } from 'ish-core/utils/feature-toggle/feature-toggle.service';
 
@@ -21,11 +21,6 @@ import { FeatureToggleService } from 'ish-core/utils/feature-toggle/feature-togg
  */
 @Injectable({ providedIn: 'root' })
 export class ProductsService {
-  static STUB_ATTRS =
-    'sku,salePrice,listPrice,availability,manufacturer,image,minOrderQuantity,inStock,promotions,packingUnit,mastered,productMaster,productMasterSKU,roundedAverageRating,retailSet';
-
-  private itemsPerPage: number;
-
   constructor(
     private apiService: ApiService,
     private productMapper: ProductMapper,
@@ -34,6 +29,15 @@ export class ProductsService {
   ) {
     store.pipe(select(getProductListingItemsPerPage)).subscribe(itemsPerPage => (this.itemsPerPage = itemsPerPage));
   }
+
+  static STUB_ATTRS =
+    'sku,salePrice,listPrice,availability,manufacturer,image,minOrderQuantity,inStock,promotions,packingUnit,mastered,productMaster,productMasterSKU,roundedAverageRating,retailSet';
+
+  private productsOptions: AvailableOptions = {
+    sendSPGID: true,
+  };
+
+  private itemsPerPage: number;
 
   /**
    * Get the full Product data for the given Product SKU.
@@ -47,8 +51,10 @@ export class ProductsService {
 
     const params = new HttpParams().set('allImages', 'true');
 
+    const options: AvailableOptions = { ...this.productsOptions, params };
+
     return this.apiService
-      .get<ProductData>(`products/${sku}`, { params })
+      .get<ProductData>(`products/${sku}`, options)
       .pipe(map(element => this.productMapper.fromData(element)));
   }
 
@@ -79,10 +85,12 @@ export class ProductsService {
       params = params.set('sortKey', sortKey);
     }
 
+    const options: AvailableOptions = { ...this.productsOptions, params };
+
     return this.apiService
       .get<{ elements: ProductDataStub[]; sortKeys: string[]; categoryUniqueId: string; total: number }>(
         `categories/${CategoryHelper.getCategoryPath(categoryUniqueId)}/products`,
-        { params }
+        options
       )
       .pipe(
         map(response => ({
@@ -121,8 +129,10 @@ export class ProductsService {
       params = params.set('sortKey', sortKey);
     }
 
+    const options: AvailableOptions = { ...this.productsOptions, params };
+
     return this.apiService
-      .get<{ elements: ProductDataStub[]; sortKeys: string[]; total: number }>('products', { params })
+      .get<{ elements: ProductDataStub[]; sortKeys: string[]; total: number }>('products', options)
       .pipe(
         map(response => ({
           products: response.elements.map(element => this.productMapper.fromStubData(element)),
@@ -154,22 +164,27 @@ export class ProductsService {
       return throwError('getProductVariations() called without a sku');
     }
 
-    return this.apiService.get<{ elements: Link[]; total: number; amount: number }>(`products/${sku}/variations`).pipe(
-      switchMap(resp =>
-        !resp.total
-          ? of(resp.elements)
-          : this.apiService
-              .get<{ elements: Link[] }>(`products/${sku}/variations`, {
-                params: new HttpParams().set('amount', `${resp.total - resp.amount}`).set('offset', `${resp.amount}`),
-              })
-              .pipe(map(resp2 => [...resp.elements, ...resp2.elements]))
-      ),
-      map((links: ProductVariationLink[]) => ({
-        products: links.map(link => this.productMapper.fromVariationLink(link, sku)),
-        defaultVariation: ProductMapper.findDefaultVariation(links),
-      })),
-      defaultIfEmpty({ products: [], defaultVariation: undefined })
-    );
+    const options: AvailableOptions = { ...this.productsOptions };
+
+    return this.apiService
+      .get<{ elements: Link[]; total: number; amount: number }>(`products/${sku}/variations`, options)
+      .pipe(
+        switchMap(resp =>
+          !resp.total
+            ? of(resp.elements)
+            : this.apiService
+                .get<{ elements: Link[] }>(`products/${sku}/variations`, {
+                  ...options,
+                  params: new HttpParams().set('amount', `${resp.total - resp.amount}`).set('offset', `${resp.amount}`),
+                })
+                .pipe(map(resp2 => [...resp.elements, ...resp2.elements]))
+        ),
+        map((links: ProductVariationLink[]) => ({
+          products: links.map(link => this.productMapper.fromVariationLink(link, sku)),
+          defaultVariation: ProductMapper.findDefaultVariation(links),
+        })),
+        defaultIfEmpty({ products: [], defaultVariation: undefined })
+      );
   }
 
   /**
@@ -180,7 +195,9 @@ export class ProductsService {
       return throwError('getProductBundles() called without a sku');
     }
 
-    return this.apiService.get(`products/${sku}/bundles`).pipe(
+    const options: AvailableOptions = { ...this.productsOptions };
+
+    return this.apiService.get(`products/${sku}/bundles`, options).pipe(
       unpackEnvelope<Link>(),
       map(links => ({
         stubs: links.map(link => this.productMapper.fromLink(link)),
@@ -197,7 +214,9 @@ export class ProductsService {
       return throwError('getRetailSetParts() called without a sku');
     }
 
-    return this.apiService.get(`products/${sku}/partOfRetailSet`).pipe(
+    const options: AvailableOptions = { ...this.productsOptions };
+
+    return this.apiService.get(`products/${sku}/partOfRetailSet`, options).pipe(
       unpackEnvelope<Link>(),
       map(links => links.map(link => this.productMapper.fromRetailSetLink(link))),
       defaultIfEmpty([])
@@ -205,7 +224,9 @@ export class ProductsService {
   }
 
   getProductLinks(sku: string): Observable<ProductLinks> {
-    return this.apiService.get(`products/${sku}/links`).pipe(
+    const options: AvailableOptions = { ...this.productsOptions };
+
+    return this.apiService.get(`products/${sku}/links`, options).pipe(
       unpackEnvelope<{ linkType: string; categoryLinks: Link[]; productLinks: Link[] }>(),
       map(links =>
         links.reduce(
