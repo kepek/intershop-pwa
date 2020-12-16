@@ -46,8 +46,8 @@
   &[mode='edit'] {
     ::ng-deep {
       camfil-product-quantity:empty {
-        width: $space-box;
         display: block;
+        width: $space-box;
       }
     }
   }

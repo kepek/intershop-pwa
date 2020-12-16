@@ -162,7 +162,8 @@ export class BasketService {
     addressId: string,
     boxLabel: string,
     contact?: string,
-    info?: string
+    info?: string,
+    phoneNumber?: string
   ): Observable<BasketExtension> {
     return this.apiService.post(`baskets/${basketId}/camfil/${addressId}`, {
       boxLabel,
@@ -170,6 +171,7 @@ export class BasketService {
         erpId: contact,
       },
       info,
+      phoneNumber,
     });
   }
 

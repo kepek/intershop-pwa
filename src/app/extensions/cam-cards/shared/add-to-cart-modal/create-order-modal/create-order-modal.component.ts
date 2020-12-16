@@ -125,13 +125,15 @@ export class CreateOrderModalComponent implements OnInit, OnDestroy {
     if (this.deliveryAddress && this.deliveryAddress.addressForm.valid) {
       const contact = this.deliveryAddress.addressForm.get('contact').value;
       const info = this.deliveryAddress.addressForm.get('info').value;
+      const phoneNumber = this.deliveryAddress.addressForm.get('phoneNumber').value;
 
       this.shoppingFacade.updateBucket(
         this.basketId,
         this.currentVirtualCamCard.deliveryAddress.id,
         boxLabel,
         contact,
-        info
+        info,
+        phoneNumber
       );
     }
   }

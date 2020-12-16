@@ -32,17 +32,6 @@
       </mat-select>
     </mat-form-field>
 
-    <!--goods mark-->
-    <mat-form-field appearance="outline" class="delivery-address__form--field">
-      <mat-label>{{ 'camfil.modal.createOrder.order-form.input.goods_mark' | translate }}</mat-label>
-      <input matInput type="text" formControlName="invoiceLabel" />
-    </mat-form-field>
-    <camfil-error
-      [errors]="getField('invoiceLabel').errors"
-      [errorValidators]="validators.invoiceLabel"
-      [touched]="getField('invoiceLabel').touched || getField('invoiceLabel').dirty"
-    ></camfil-error>
-
     <!--order mark-->
     <mat-form-field appearance="outline" class="delivery-address__form--field">
       <mat-label>{{ 'camfil.modal.createOrder.order-form.input.order_mark' | translate }}</mat-label>
@@ -52,6 +41,28 @@
       [errors]="getField('orderMark').errors"
       [errorValidators]="validators.orderMark"
       [touched]="getField('orderMark').touched || getField('orderMark').dirty"
+    ></camfil-error>
+
+    <!--invoice mark-->
+    <mat-form-field appearance="outline" class="delivery-address__form--field">
+      <mat-label>{{ 'camfil.modal.createOrder.order-form.input.invoice_mark' | translate }}</mat-label>
+      <input matInput type="text" formControlName="invoiceLabel" />
+    </mat-form-field>
+    <camfil-error
+      [errors]="getField('invoiceLabel').errors"
+      [errorValidators]="validators.invoiceLabel"
+      [touched]="getField('invoiceLabel').touched || getField('invoiceLabel').dirty"
+    ></camfil-error>
+
+    <!--phone number-->
+    <mat-form-field appearance="outline" class="delivery-address__form--field">
+      <mat-label>{{ 'camfil.modal.createOrder.order-form.input.phone_number' | translate }}</mat-label>
+      <input matInput type="tel" formControlName="phoneNumber" />
+    </mat-form-field>
+    <camfil-error
+      [errors]="getField('phoneNumber').errors"
+      [errorValidators]="validators.phoneNumber"
+      [touched]="getField('phoneNumber').touched || getField('phoneNumber').dirty"
     ></camfil-error>
 
     <!--address select-->

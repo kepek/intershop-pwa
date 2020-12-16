@@ -140,8 +140,15 @@ export class ShoppingFacade {
     this.store.dispatch(addProductToBasket({ sku, quantity, shipToAddress }));
   }
 
-  updateBucket(basketId: string, addressId: string, boxLabel: string, contact?: string, info?: string) {
-    this.store.dispatch(updateBucket({ basketId, addressId, boxLabel, contact, info }));
+  updateBucket(
+    basketId: string,
+    addressId: string,
+    boxLabel: string,
+    contact?: string,
+    info?: string,
+    phoneNumber?: string
+  ) {
+    this.store.dispatch(updateBucket({ basketId, addressId, boxLabel, contact, info, phoneNumber }));
   }
 
   resetProductAdded() {
