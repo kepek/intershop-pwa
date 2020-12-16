@@ -8,50 +8,16 @@ import { instance, mock, verify, when } from 'ts-mockito';
 import { FeatureToggleModule } from 'ish-core/feature-toggle.module';
 import { makeHttpError } from 'ish-core/utils/dev/api-service-utils';
 
-import { Manufacturer } from '../../models/manufacturer/manufacturer.model';
 import { AhuService } from '../../services/ahu/ahu.service';
 
 import { loadAhuManufacturers, loadAhuManufacturersFail, loadAhuManufacturersSuccess } from './manufacturer.actions';
 import { ManufacturerEffects } from './manufacturer.effects';
+import { manufacturers } from './manufacturer.mock';
 
 describe('Manufacturer Effects', () => {
   let actions$;
   let ahuService: AhuService;
   let effects: ManufacturerEffects;
-
-  const manufacturers: Manufacturer[] = [
-    {
-      name: 'Fläktwoods',
-      id: '4711',
-      market: ['SE', 'DK'],
-      description: [
-        {
-          lang: 'EN-US',
-          shortDescription: 'Flaektwoods',
-        },
-        {
-          lang: 'SV-SE',
-          shortDescription: 'Fläktwoods',
-        },
-        {
-          lang: 'EN-US',
-          longDescription:
-            'Flaektwoods is the bla bla bla and something more as a mouse-over text or whatever you would like.',
-        },
-        {
-          lang: 'SV-SE',
-          longDescription:
-            'Fläktwoods är den bla bla bla och något ytterligare som kan visas som en mouse-over/popup text eller vad man nu önskar.',
-        },
-      ],
-      images: [
-        {
-          uri: 'https://camfil.com/some/CDN/uri/flaktwoods.png',
-          type: 'logotype',
-        },
-      ],
-    },
-  ];
 
   beforeEach(() => {
     ahuService = mock(AhuService);

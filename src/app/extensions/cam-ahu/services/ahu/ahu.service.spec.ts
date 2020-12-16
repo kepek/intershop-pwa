@@ -23,37 +23,37 @@ describe('Ahu Service', () => {
   });
 
   it("should get the manufacturers when 'getManufacturers' is called", done => {
-    when(iccApiServiceMock.get(`ahu/manufacturer`, anything())).thenReturn(of([]));
+    when(iccApiServiceMock.post(`ahu/manufacturer`, anything())).thenReturn(of([]));
 
     ahuService.getManufacturers().subscribe(() => {
-      verify(iccApiServiceMock.get(`ahu/manufacturer`, anything())).once();
+      verify(iccApiServiceMock.post(`ahu/manufacturer`, anything())).once();
       done();
     });
   });
 
   it("should get the manufacturer when 'getManufacturer' is called", done => {
-    when(iccApiServiceMock.get(`ahu/manufacturer`, anything())).thenReturn(of({}));
+    when(iccApiServiceMock.post(`ahu/manufacturer`, anything())).thenReturn(of({}));
 
     ahuService.getManufacturer('123').subscribe(() => {
-      verify(iccApiServiceMock.get(`ahu/manufacturer`, anything())).once();
+      verify(iccApiServiceMock.post(`ahu/manufacturer`, anything())).once();
       done();
     });
   });
 
   it("should get the air handling units when 'getUnits' is called", done => {
-    when(iccApiServiceMock.get(`ahu/unit`, anything())).thenReturn(of([]));
+    when(iccApiServiceMock.post(`ahu/unit`, anything())).thenReturn(of([]));
 
     ahuService.getUnits('123').subscribe(() => {
-      verify(iccApiServiceMock.get(`ahu/unit`, anything())).once();
+      verify(iccApiServiceMock.post(`ahu/unit`, anything())).once();
       done();
     });
   });
 
   it("should get the air handling unit when 'getUnit' is called", done => {
-    when(iccApiServiceMock.get(`ahu/unit`, anything())).thenReturn(of({}));
+    when(iccApiServiceMock.post(`ahu/unit`, anything())).thenReturn(of({}));
 
     ahuService.getUnit('456').subscribe(() => {
-      verify(iccApiServiceMock.get(`ahu/unit`, anything())).once();
+      verify(iccApiServiceMock.post(`ahu/unit`, anything())).once();
       done();
     });
   });
