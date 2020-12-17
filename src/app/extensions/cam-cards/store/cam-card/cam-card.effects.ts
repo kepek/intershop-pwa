@@ -103,6 +103,7 @@ import {
   updateCamCardProduct,
   updateCamCardProductSuccess,
   updateCamCardSuccess,
+  updateClonedCamCard,
   updateContactsWhileMoveCamCardFail,
   updateSubCamCard,
   updateSubCamCardFail,
@@ -216,7 +217,7 @@ export class CamCardEffects {
       mergeMap(({ camCardId, camCardName }) =>
         this.camCardService.cloneCamCard(camCardId).pipe(
           mergeMap((camCard: CamCard) => [
-            updateCamCard({ camCard: { id: camCard.id, name: camCardName, transient: false } }),
+            updateClonedCamCard({ camCard: { id: camCard.id, name: camCardName, transient: false } }),
           ]),
           mapErrorToAction(cloneAndEditFail)
         )
@@ -230,6 +231,10 @@ export class CamCardEffects {
       mapToPayload(),
       concatMap(payload => [
         ...payload.camCards.map(camCard => cloneAndEditCamCard({ camCardId: camCard.id, camCardName: camCard.name })),
+        displaySuccessMessage({
+          message: 'camfil.cam_cards.clone_and_edit.success',
+          messageParams: { 0: payload.camCards.length.toString() },
+        }),
       ])
     )
   );
@@ -395,6 +400,19 @@ export class CamCardEffects {
               messageParams: { 0: camCard.name },
             }),
           ]),
+          mapErrorToAction(updateCamCardFail)
+        )
+      )
+    )
+  );
+
+  updateClonedCamCard$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(updateClonedCamCard),
+      mapToPayloadProperty('camCard'),
+      mergeMap((newCamCard: CamCard) =>
+        this.camCardService.updateCamCard(newCamCard).pipe(
+          mergeMap(camCard => [updateCamCardSuccess({ camCard })]),
           mapErrorToAction(updateCamCardFail)
         )
       )
