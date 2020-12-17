@@ -4,11 +4,11 @@ import { MatDialog } from '@angular/material/dialog';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
+import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
 import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
 
 import { CamCardsFacade } from '../../../facades/cam-cards.facade';
 import { CamCardAddress } from '../../../models/cam-card/cam-card.model';
-import { CamfilSmallCtaModalComponent } from '../camfil-small-cta-modal/camfil-small-cta-modal.component';
 
 @Component({
   selector: 'camfil-modal-add-new-section',

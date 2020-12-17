@@ -1,36 +1,32 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { EMPTY, Subject } from 'rxjs';
-import { instance, mock, when } from 'ts-mockito';
+import { instance, mock } from 'ts-mockito';
 
-import { CamfilErrorComponent } from 'ish-shared/components/common/camfil-error/camfil-error.component';
 import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
 
-import { CamCardsFacade } from '../../../facades/cam-cards.facade';
+import { CamCardsFacade } from '../../../../extensions/cam-cards/facades/cam-cards.facade';
 
-import { ModalAddNewSectionComponent } from './modal-add-new-section.component';
+import { CreateNewCamcardComponent } from './create-new-camcard.component';
 
-describe('Modal Add New Section Component', () => {
-  let component: ModalAddNewSectionComponent;
-  let fixture: ComponentFixture<ModalAddNewSectionComponent>;
+describe('Create New Camcard Component', () => {
+  let component: CreateNewCamcardComponent;
+  let fixture: ComponentFixture<CreateNewCamcardComponent>;
   let element: HTMLElement;
   let camCardFacadeMock: CamCardsFacade;
 
   beforeEach(async () => {
     camCardFacadeMock = mock(CamCardsFacade);
-    when(camCardFacadeMock.currentCamCard$).thenReturn(EMPTY);
 
     await TestBed.configureTestingModule({
-      declarations: [CamfilErrorComponent, CamfilSmallCtaModalComponent, ModalAddNewSectionComponent],
+      declarations: [CamfilSmallCtaModalComponent, CreateNewCamcardComponent],
       providers: [{ provide: CamCardsFacade, useFactory: () => instance(camCardFacadeMock) }],
     }).compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ModalAddNewSectionComponent);
+    fixture = TestBed.createComponent(CreateNewCamcardComponent);
     component = fixture.componentInstance;
+    component.buckets = [];
     element = fixture.nativeElement;
-
-    component.events = new Subject<void>().asObservable();
   });
 
   it('should be created', () => {

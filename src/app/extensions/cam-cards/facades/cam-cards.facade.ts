@@ -21,6 +21,8 @@ import {
   addProductToSubCamCard,
   addToNewCamCardWithNewSubCamCard,
   clearVirtualCamCard,
+  cloneAndEditCamCard,
+  cloneAndEditCamCards,
   copyCamCard,
   createCamCard,
   createSubCamCard,
@@ -110,6 +112,14 @@ export class CamCardsFacade {
 
   deleteSubCamCard(rootId: string, id: string): void {
     this.store.dispatch(deleteSubCamCard({ rootId, id }));
+  }
+
+  cloneAndEditPermanentCamCard(camCardId: string, camCardName: string) {
+    this.store.dispatch(cloneAndEditCamCard({ camCardId, camCardName }));
+  }
+
+  cloneAndEditPermanentCamCards(camCards: CamCard[]) {
+    this.store.dispatch(cloneAndEditCamCards({ camCards }));
   }
 
   updateCamCard(camCard: CamCard): void {

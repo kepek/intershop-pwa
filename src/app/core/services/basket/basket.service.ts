@@ -144,16 +144,14 @@ export class BasketService {
     const params = new HttpParams().set('include', 'all');
 
     return this.currentBasket$.pipe(
-      switchMap(basket => {
-        console.log('cus', basket.lineItems);
-
-        return this.apiService
+      switchMap(basket =>
+        this.apiService
           .get(`baskets/current/buckets`, {
             headers: this.basketHeaders,
             params,
           })
-          .pipe(map((payload: Buckets) => BucketMapper.fromData(payload, basket.lineItems)));
-      })
+          .pipe(map((payload: Buckets) => BucketMapper.fromData(payload, basket.lineItems)))
+      )
     );
   }
 
