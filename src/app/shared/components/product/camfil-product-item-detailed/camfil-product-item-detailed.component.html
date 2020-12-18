@@ -59,7 +59,7 @@
           <camfil-product-quantity
             *ngIf="configuration.displayQuantity"
             [readOnly]="configuration.readOnly"
-            [allowZeroQuantity]="configuration.allowZeroQuantity"
+            [allowZeroQuantity]="true"
             [quantityLabel]="configuration.quantityLabel"
             [product]="product"
             [parentForm]="productItemForm"
@@ -76,7 +76,7 @@
             ></camfil-product-add-to-basket>
             <camfil-lazy-product-add-to-cam-card
               *ngIf="configuration.displayAddToCamCard"
-              [quantity]="1"
+              [quantity]="updatedQuantity"
               class="btn-link cart-big-round-btn"
               [product]="product"
               displayType="round-btn"

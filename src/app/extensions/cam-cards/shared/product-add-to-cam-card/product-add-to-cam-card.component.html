@@ -37,5 +37,14 @@
 <camfil-select-cam-card-modal
   #modal
   [product]="product"
+  [quantity]="quantity"
   (submitEmitter)="addProductToCamCard($event)"
 ></camfil-select-cam-card-modal>
+
+<camfil-small-cta-modal
+  actionTitle="{{ 'camfil.account.cam_card.add_to_camcard.error.quantity.header' | translate }}"
+  actionButtonTitle="{{ 'camfil.account.cam_card.add_to_camcard.error.quantity.button.ok' | translate }}"
+  onlyAccept="true"
+  hasError="true"
+>
+</camfil-small-cta-modal>

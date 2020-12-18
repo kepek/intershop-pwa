@@ -3,9 +3,11 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnChanges,
   OnDestroy,
   OnInit,
   Output,
+  SimpleChanges,
   TemplateRef,
   ViewChild,
 } from '@angular/core';
@@ -55,8 +57,9 @@ interface CreateCamCardData {
   styleUrls: ['./select-cam-card-modal.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SelectCamCardModalComponent implements OnInit, OnDestroy {
+export class SelectCamCardModalComponent implements OnInit, OnDestroy, OnChanges {
   @Input() product: Product;
+  @Input() quantity: number;
 
   /**
    * changes the some logic and the translations keys between add or move a product (default: 'add')
@@ -66,7 +69,7 @@ export class SelectCamCardModalComponent implements OnInit, OnDestroy {
   /**
    * submit success event
    */
-  @Output() submitEmitter = new EventEmitter<{ id: string; title: string }>();
+  @Output() submitEmitter = new EventEmitter<{ id: string; name: string }>();
 
   // search
   isActive = false;
@@ -135,6 +138,12 @@ export class SelectCamCardModalComponent implements OnInit, OnDestroy {
     });
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.quantity && this.quantityForm) {
+      this.quantityForm.patchValue({ quantity: changes.quantity.currentValue });
+    }
+  }
+
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
@@ -173,7 +182,7 @@ export class SelectCamCardModalComponent implements OnInit, OnDestroy {
     });
 
     this.quantityForm = new FormGroup({
-      quantity: new FormControl(this.product.minOrderQuantity),
+      quantity: new FormControl(this.quantity),
       boxLabel: new FormControl(),
     });
   }
