@@ -61,7 +61,7 @@
     <div class="list-item-row list-item-row-big px-4 py-1 mt-2">
       <div class="d-flex align-items-center">
         <mat-icon svgIcon="move" class="size-24 d-none d-md-block handle" cdkDragHandle></mat-icon>
-        <camfil-checkout-line-item [id]="product.productSKU"></camfil-checkout-line-item>
+        <camfil-checkout-line-item [id]="product.productSKU" [product]="product"></camfil-checkout-line-item>
       </div>
     </div>
   </ng-container>
