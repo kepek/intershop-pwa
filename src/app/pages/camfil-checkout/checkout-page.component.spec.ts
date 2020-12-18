@@ -12,10 +12,10 @@ import { CamfilBreadcrumbComponent } from 'ish-shared/components/common/camfil-b
 
 import { CamCardsFacade } from '../../extensions/cam-cards/facades/cam-cards.facade';
 
+import { CamfilCheckoutHeaderComponent } from './camfil-checkout-header/camfil-checkout-header.component';
 import { CamfilCheckoutListComponent } from './camfil-checkout-list/camfil-checkout-list.component';
 import { CamfilCheckoutSummaryComponent } from './camfil-checkout-summary/camfil-checkout-summary.component';
-import { CamfillCheckoutHeaderComponent } from './camfill-checkout-header/camfill-checkout-header.component';
-import { CamfillCheckoutToolbarComponent } from './camfill-checkout-toolbar/camfill-checkout-toolbar.component';
+import { CamfilCheckoutToolbarComponent } from './camfil-checkout-toolbar/camfil-checkout-toolbar.component';
 import { CheckoutPageComponent } from './checkout-page.component';
 
 describe('Checkout Page Component', () => {
@@ -58,10 +58,10 @@ describe('Checkout Page Component', () => {
       declarations: [
         CheckoutPageComponent,
         MockComponent(CamfilBreadcrumbComponent),
+        MockComponent(CamfilCheckoutHeaderComponent),
         MockComponent(CamfilCheckoutListComponent),
         MockComponent(CamfilCheckoutSummaryComponent),
-        MockComponent(CamfillCheckoutHeaderComponent),
-        MockComponent(CamfillCheckoutToolbarComponent),
+        MockComponent(CamfilCheckoutToolbarComponent),
       ],
       imports: [RouterTestingModule],
       providers: [

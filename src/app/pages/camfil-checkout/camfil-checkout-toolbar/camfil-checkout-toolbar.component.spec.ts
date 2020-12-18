@@ -17,13 +17,13 @@ import { OrderFormComponent } from '../../../extensions/cam-cards/shared/add-to-
 import { CreateOrderSuccessComponent } from '../../../extensions/cam-cards/shared/add-to-cart-modal/create-order-success/create-order-success.component';
 import { ArticleDetailsComponent } from '../../../extensions/cam-cards/shared/select-cam-card-modal/article-details/article-details.component';
 
-import { CamfillCheckoutToolbarComponent } from './camfill-checkout-toolbar.component';
+import { CamfilCheckoutToolbarComponent } from './camfil-checkout-toolbar.component';
 import { CreateNewCamcardComponent } from './create-new-camcard/create-new-camcard.component';
 import { CreateOrderButtonComponent } from './create-order-button/create-order-button.component';
 
-describe('Camfill Checkout Toolbar Component', () => {
-  let component: CamfillCheckoutToolbarComponent;
-  let fixture: ComponentFixture<CamfillCheckoutToolbarComponent>;
+describe('Camfil Checkout Toolbar Component', () => {
+  let component: CamfilCheckoutToolbarComponent;
+  let fixture: ComponentFixture<CamfilCheckoutToolbarComponent>;
   let element: HTMLElement;
 
   let camCardFacadeMock: CamCardsFacade;
@@ -64,11 +64,11 @@ describe('Camfill Checkout Toolbar Component', () => {
       declarations: [
         ArticleDetailsComponent,
         CamfilCamCardModalComponent,
+        CamfilCheckoutToolbarComponent,
         CamfilCounterComponent,
         CamfilErrorComponent,
         CamfilProductQuantityComponent,
         CamfilSmallCtaModalComponent,
-        CamfillCheckoutToolbarComponent,
         CreateNewCamcardComponent,
         CreateOrderButtonComponent,
         CreateOrderModalComponent,
@@ -84,7 +84,7 @@ describe('Camfill Checkout Toolbar Component', () => {
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CamfillCheckoutToolbarComponent);
+    fixture = TestBed.createComponent(CamfilCheckoutToolbarComponent);
     component = fixture.componentInstance;
     element = fixture.nativeElement;
 
