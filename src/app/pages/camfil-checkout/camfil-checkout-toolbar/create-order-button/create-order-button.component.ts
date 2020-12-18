@@ -26,8 +26,8 @@ export class CreateOrderButtonComponent {
       basket: this.basketId,
       id: '',
       lineItems: [],
-      shipToAddress: virtualCamCard.deliveryAddress.urn,
-      deliveryAddressId: virtualCamCard.deliveryAddress.id,
+      shipToAddress: virtualCamCard.deliveryAddress?.urn,
+      deliveryAddressId: virtualCamCard.deliveryAddress?.id,
       shipToAddressFull: virtualCamCard.deliveryAddress,
       orderName: virtualCamCard.name,
       nextDelivery: virtualCamCard.nextDeliveryDate,
@@ -48,7 +48,7 @@ export class CreateOrderButtonComponent {
   }
 
   openSuccessModal() {
-    this.dialog.open(this.modal.show());
+    this.dialog.open(this.modal?.show());
     this.modal.hide = () => this.dialog.closeAll();
   }
 }
