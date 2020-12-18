@@ -310,7 +310,7 @@ export class CamCardService {
     boxLabel?: string
   ): Observable<CamCard> {
     return this.apiService
-      .post(`camcards/${rootCamCardId}/childcamcards/${camCardId}/products`, {
+      .post(`camcards/${rootCamCardId}/childcamcards/${camCardId}/product`, {
         quantity,
         product: { sku },
         comment: {
