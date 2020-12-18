@@ -1,0 +1,19 @@
+<button
+  mat-stroked-button
+  color="primary"
+  data-testing-id="add-cam-card"
+  class="button-bold"
+  (click)="openModal(createModal)"
+>
+  <mat-icon svgIcon="plus" class="size-31"></mat-icon>
+  {{ 'camfil.checkout.create_new_order' | translate }}
+</button>
+
+<camfil-create-order-modal #createModal (createEmitter)="createVirtualOrder($event)"></camfil-create-order-modal>
+
+<camfil-small-cta-modal
+  actionTitle="{{ 'camfil.checkout.create_new_order.temporary_order.header' | translate }}"
+  actionButtonTitle="{{ 'camfil.checkout.create_new_order.temporary_order.ok' | translate }}"
+  onlyAccept="true"
+>
+</camfil-small-cta-modal>

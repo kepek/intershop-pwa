@@ -20,6 +20,7 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
   basketId: string;
   buckets$: Observable<any[]>;
   buckets: Bucket[];
+  emptyBuckets: Bucket[];
 
   camCards: CamCard[];
 
@@ -48,6 +49,10 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
       if (buckets && this.camCards.length) {
         this.buckets = this.connectWithCamCard(buckets);
       }
+    });
+
+    this.checkoutFacade.emptyBuckets$.pipe(takeUntil(this.destroy$)).subscribe(emptyBuckets => {
+      this.emptyBuckets = emptyBuckets;
     });
   }
 

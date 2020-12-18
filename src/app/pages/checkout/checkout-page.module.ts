@@ -10,6 +10,7 @@ import { CamfilCheckoutSummaryComponent } from '../camfil-checkout/camfil-checko
 import { CamfillCheckoutHeaderComponent } from '../camfil-checkout/camfill-checkout-header/camfill-checkout-header.component';
 import { CamfillCheckoutToolbarComponent } from '../camfil-checkout/camfill-checkout-toolbar/camfill-checkout-toolbar.component';
 import { CreateNewCamcardComponent } from '../camfil-checkout/camfill-checkout-toolbar/create-new-camcard/create-new-camcard.component';
+import { CreateOrderButtonComponent } from '../camfil-checkout/camfill-checkout-toolbar/create-order-button/create-order-button.component';
 import { CheckoutPageComponent } from '../camfil-checkout/checkout-page.component';
 
 const checkoutPageRoutes: Routes = [
@@ -35,6 +36,7 @@ const checkoutPageRoutes: Routes = [
     CamfillCheckoutToolbarComponent,
     CheckoutPageComponent,
     CreateNewCamcardComponent,
+    CreateOrderButtonComponent,
   ],
 })
 export class CheckoutPageModule {}

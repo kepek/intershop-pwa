@@ -10,6 +10,7 @@ export class BucketMapper {
       basket: bucketData.basket,
       lineItems: bucketData.lineItems.map(id => lineItems.filter(element => element.id === id)[0]),
       deliveryAddressId: bucketData.shipToAddress ? included.shipToAddress[bucketData.shipToAddress].id : '',
+      transient: false,
     }));
   }
 }

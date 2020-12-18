@@ -7,6 +7,9 @@
     <div class="col-sm-12 col-lg-8">
       <camfil-camfill-checkout-header [basket]="basket" [buckets]="buckets"></camfil-camfill-checkout-header>
 
+      <ng-container *ngFor="let item of emptyBuckets">
+        <camfil-checkout-list [order]="item"></camfil-checkout-list>
+      </ng-container>
       <ng-container *ngFor="let item of buckets">
         <camfil-checkout-list [order]="item"></camfil-checkout-list>
       </ng-container>

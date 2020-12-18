@@ -4,11 +4,13 @@ import { merge } from 'rxjs';
 import { map, switchMap, take, tap } from 'rxjs/operators';
 
 import { Address } from 'ish-core/models/address/address.model';
+import { Bucket } from 'ish-core/models/basket/bucket.model';
 import { LineItemUpdate } from 'ish-core/models/line-item-update/line-item-update.model';
 import { PaymentInstrument } from 'ish-core/models/payment-instrument/payment-instrument.model';
 import { selectRouteData } from 'ish-core/store/core/router';
 import { getAllAddresses } from 'ish-core/store/customer/addresses';
 import {
+  addEmptyBucket,
   addPromotionCodeToBasket,
   assignBasketAddress,
   continueCheckout,
@@ -29,6 +31,7 @@ import {
   getBasketValidationResults,
   getCurrentBasket,
   getCurrentBuckets,
+  getEmptyBuckets,
   isBasketInvoiceAndShippingAddressEqual,
   loadBasketEligiblePaymentMethods,
   loadBasketEligibleShippingMethods,
@@ -70,6 +73,7 @@ export class CheckoutFacade {
     map(basket => (basket && basket.lineItems && basket.lineItems.length ? basket.lineItems : undefined))
   );
   buckets$ = this.store.pipe(select(getCurrentBuckets));
+  emptyBuckets$ = this.store.pipe(select(getEmptyBuckets));
 
   loadBuckets() {
     this.store.dispatch(loadBuckets());
@@ -85,6 +89,10 @@ export class CheckoutFacade {
 
   updateBasketShippingMethod(shippingId: string) {
     this.store.dispatch(updateBasketShippingMethod({ shippingId }));
+  }
+
+  addEmptyBucket(emptyBucket: Bucket) {
+    this.store.dispatch(addEmptyBucket({ bucket: emptyBucket }));
   }
 
   // ORDERS

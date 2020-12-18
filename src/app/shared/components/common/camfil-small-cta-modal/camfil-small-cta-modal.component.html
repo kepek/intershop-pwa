@@ -15,7 +15,13 @@
       <ng-container [ngTemplateOutlet]="actionTemplate"></ng-container>
     </div>
 
-    <div class="cta-modal__links">
+    <div *ngIf="onlyAccept" class="cta-modal__link--accept">
+      <button class="btn btn-link cta-modal__links--link" (click)="hide()">
+        {{ 'camfil.modal.cta.button.ok' | translate }}
+      </button>
+    </div>
+
+    <div *ngIf="!onlyAccept" class="cta-modal__links">
       <button class="btn btn-link cta-modal__links--link" (click)="hide()">
         {{ 'camfil.modal.cta.button.cancel' | translate }}
       </button>

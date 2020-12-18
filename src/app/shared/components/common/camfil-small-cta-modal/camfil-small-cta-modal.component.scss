@@ -21,6 +21,12 @@
       }
     }
 
+    &__link {
+      &--accept {
+        text-align: center;
+      }
+    }
+
     &__links {
       display: flex;
       align-items: flex-end;
