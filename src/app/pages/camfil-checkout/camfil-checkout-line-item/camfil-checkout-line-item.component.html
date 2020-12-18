@@ -1,27 +1,27 @@
-<ng-container *ngIf="product$ | async as product">
+<ng-container *ngIf="product$ | async as productData">
   <div class="line-item d-flex align-items-center text-left">
     <div class="d-flex align-items-center align-self-start align-self-md-center text-left">
       <!-- <ng-container *ngIf="isViewMode">{{ index }}</ng-container> -->
-      <a class="image ml-0 mx-md-3" [routerLink]="product | ishProductRoute">
-        <camfil-product-image [product]="product" imageType="S" class="product-image"></camfil-product-image>
+      <a class="image ml-0 mx-md-3" [routerLink]="productData | ishProductRoute">
+        <camfil-product-image [product]="productData" imageType="S" class="product-image"></camfil-product-image>
       </a>
       <div class="my-2 my-md-0">
         <div class="d-flex flex-row">
-          <camfil-product-title [product]="product" [class]="'text-truncate'"></camfil-product-title
-          ><camfil-product-inventory class="px-2" [product]="product"></camfil-product-inventory>
+          <camfil-product-title [product]="productData" [class]="'text-truncate'"></camfil-product-title
+          ><camfil-product-inventory class="px-2" [product]="productData"></camfil-product-inventory>
         </div>
         <div class="attributes">
           <camfil-product-attribute
             [name]="'camfil.cam_card.product.id.label' | translate"
-            [value]="product.sku"
+            [value]="productData.sku"
           ></camfil-product-attribute>
           <camfil-product-attribute
             [name]="'camfil.cam_card.product.dimensions' | translate"
-            [value]="product.sku"
+            [value]="productData.sku"
           ></camfil-product-attribute>
           <camfil-product-attribute
             [name]="'camfil.cam_card.product.efficiency' | translate"
-            [value]="product.sku"
+            [value]="productData.sku"
           ></camfil-product-attribute>
           <!-- <ng-container *ngIf="isViewMode">
             <camfil-product-attribute
@@ -51,14 +51,19 @@
     ></camfil-cam-card-product-comment> -->
     <ng-container>
       <div class="quantity-row d-flex flex-row justify-content-between align-items-center py-3 py-md-0">
-        <a class="btn-tool delete-cam-card" [ngClass]="{ 'ml-md-auto': isEditMode }" data-testing-id="delete-cam-card">
+        <a
+          class="btn-tool delete-cam-card"
+          (click)="removeProduct(product.id)"
+          [ngClass]="{ 'ml-md-auto': isEditMode }"
+          data-testing-id="delete-cam-card"
+        >
           <mat-icon svgIcon="delete" class="size-16 mx-2"></mat-icon>
         </a>
-        <form [formGroup]="addToCartForm" *ngIf="product.inStock && product.availability">
+        <form [formGroup]="addToCartForm" *ngIf="productData.inStock && productData.availability">
           <camfil-product-quantity
             [allowZeroQuantity]="false"
             [quantityLabel]="''"
-            [product]="product"
+            [product]="productData"
             [parentForm]="addToCartForm"
             [ngClass]="{ 'ml-md-auto': isEditMode }"
             controlName="quantity"
@@ -74,33 +79,33 @@
   <ng-template #price>
     <camfil-product-attribute
       [name]="'camfil.cam_card.product.list_price.label' | translate"
-      [value]="product.listPrice | ishPrice"
+      [value]="productData.listPrice | ishPrice"
     ></camfil-product-attribute>
     <camfil-product-attribute
       [name]="'camfil.cam_card.product.your_price.label' | translate"
-      [value]="product.salePrice | ishPrice"
+      [value]="productData.salePrice | ishPrice"
     ></camfil-product-attribute>
   </ng-template>
 
   <!-- <div class="d-flex">
     <div class="col-1 col-md-2 list-item d-flex">
-      <ish-checkbox *ngIf="selectItemForm" [form]="selectItemForm" controlName="productCheckbox"> </ish-checkbox>
-      <a class="d-none d-md-inline" [routerLink]="product | ishProductRoute">
-        <camfil-product-image [product]="product" imageType="S" class="product-image"></camfil-product-image>
+      <ish-checkbox *ngIf="selectItemForm" [form]="selectItemForm" controlName="productDataCheckbox"> </ish-checkbox>
+      <a class="d-none d-md-inline" [routerLink]="productData | ishProductRoute">
+        <camfil-product-image [product]="productData" imageType="S" class="productData-image"></camfil-product-image>
       </a>
     </div>
     <div class="col-8 col-md-6 list-item d-block d-md-flex">
       <div class="col-12 col-md-9 pli-description">
-        <a [routerLink]="product | ishProductRoute" class="product-title" data-testing-id="cam-card-product-link">
+        <a [routerLink]="productData | ishProductRoute" class="productData-title" data-testing-id="cam-card-product-link">
           {{ product.name }}
         </a>
-        <camfil-product-id [product]="product"></camfil-product-id>
-        <ish-product-variation-display [product]="product"></ish-product-variation-display>
+        <camfil-product-id [product]="productData"></camfil-product-id>
+        <ish-product-variation-display [product]="productData"></ish-product-variation-display>
         <ish-product-bundle-display
-          *ngIf="product.type === 'Bundle'"
-          [productBundleSKU]="product.sku"
+          *ngIf="productData.type === 'Bundle'"
+          [productBundleSKU]="productData.sku"
         ></ish-product-bundle-display>
-        <camfil-product-inventory [product]="product"></camfil-product-inventory>
+        <camfil-product-inventory [product]="productData"></camfil-product-inventory>
         <div class="btn-group mb-2">
           <a class="btn-tool" (click)="moveDialog.show()" data-testing-id="move-cam-card">
             <fa-icon
@@ -121,7 +126,7 @@
           <camfil-product-quantity
             [allowZeroQuantity]="false"
             [quantityLabel]="''"
-            [product]="product"
+            [product]="productData"
             [parentForm]="addToCartForm"
             controlName="quantity"
           ></camfil-product-quantity>
@@ -132,7 +137,7 @@
       {{ camCardItemData?.creationDate | ishDate: 'shortDate' }}
     </div>
     <div class="col-4 col-md-2 list-item column-price">
-      <camfil-product-price [product]="product"></camfil-product-price>
+      <camfil-product-price [product]="productData"></camfil-product-price>
     </div>
   </div> -->
 </ng-container>

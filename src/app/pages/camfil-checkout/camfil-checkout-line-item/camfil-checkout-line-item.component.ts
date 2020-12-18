@@ -14,7 +14,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { Observable, Subject } from 'rxjs';
 import { debounceTime, take, takeUntil } from 'rxjs/operators';
 
+import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
+import { LineItemUpdate } from 'ish-core/models/line-item-update/line-item-update.model';
+import { LineItemView } from 'ish-core/models/line-item/line-item.model';
 import { ProductView } from 'ish-core/models/product-view/product-view.model';
 import { ProductCompletenessLevel } from 'ish-core/models/product/product.model';
 
@@ -25,7 +28,11 @@ import { ProductCompletenessLevel } from 'ish-core/models/product/product.model'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDestroy {
-  constructor(private shoppingFacade: ShoppingFacade, public dialog: MatDialog) {}
+  constructor(
+    private shoppingFacade: ShoppingFacade,
+    private checkoutFacade: CheckoutFacade,
+    public dialog: MatDialog
+  ) {}
 
   private static REQUIRED_COMPLETENESS_LEVEL = ProductCompletenessLevel.List;
   @Input() selectedItemsForm?: FormArray;
@@ -36,6 +43,7 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
 
   quantity = 0;
 
+  @Input() product: LineItemView;
   @Input() id: string;
   addToCartForm: FormGroup;
   selectItemForm: FormGroup;
@@ -43,14 +51,13 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
   private destroy$ = new Subject<void>();
 
   ngOnInit() {
-    this.loadProductDetails();
     this.initForm();
-    // this.quantity = this.camCardItemData.quantity;
+    this.quantity = this.product.quantity.value;
     this.updateQuantities();
   }
 
   ngOnChanges(s: SimpleChanges) {
-    if (s.camCardItemData) {
+    if (s.product) {
       this.loadProductDetails();
     }
   }
@@ -61,31 +68,29 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
   }
 
   updateQuantities() {
-    this.addToCartForm.valueChanges.pipe(debounceTime(500), takeUntil(this.destroy$));
-    // .subscribe(val => this.updateProductQuantity(this.camCardItemData, val.quantity));
+    this.addToCartForm.valueChanges
+      .pipe(debounceTime(500), takeUntil(this.destroy$))
+      .subscribe(val => this.updateBasketItem({ itemId: this.product.id, quantity: val.quantity }));
+  }
+
+  updateBasketItem(formValue: LineItemUpdate) {
+    this.checkoutFacade.updateBasketItem(formValue);
+  }
+
+  removeProduct(itemId: string) {
+    this.checkoutFacade.deleteBasketItem(itemId);
   }
 
   /** init form in the beginning */
   private initForm() {
     this.addToCartForm = new FormGroup({
-      quantity: new FormControl(1),
+      quantity: new FormControl(this.product.quantity.value || 1),
     });
-
-    // if (this.selectedItemsForm) {
-    //   this.selectItemForm = new FormGroup({
-    //     productCheckbox: new FormControl(true),
-    //     sku: new FormControl(this.camCardItemData.product.sku),
-    //   });
-
-    //   this.selectedItemsForm.push(this.selectItemForm);
-    // }
   }
 
   /**if the camCardItem is loaded, get product details*/
   private loadProductDetails() {
     if (!this.product$) {
-      // this.product$ = this.productFacade.product$(this.id, CamfilCheckoutLineItemComponent.REQUIRED_COMPLETENESS_LEVEL);
-
       this.product$ = this.shoppingFacade.product$(
         this.id,
         CamfilCheckoutLineItemComponent.REQUIRED_COMPLETENESS_LEVEL

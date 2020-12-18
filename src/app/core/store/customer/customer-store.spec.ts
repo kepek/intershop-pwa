@@ -222,6 +222,7 @@ describe('Customer Store', () => {
               product: {"name":"test","shortDescription":"test","longDescription":"...
             [Basket API] Load Basket Success:
               basket: {"id":"test","lineItems":[1]}
+            [Basket] Get Bucket Info
           `);
           done();
         }, 1000);

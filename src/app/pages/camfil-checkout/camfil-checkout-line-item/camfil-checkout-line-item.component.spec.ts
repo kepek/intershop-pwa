@@ -7,6 +7,7 @@ import { of } from 'rxjs';
 import { anything, instance, mock, when } from 'ts-mockito';
 
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
+import { LineItemView } from 'ish-core/models/line-item/line-item.model';
 import { PricePipe } from 'ish-core/models/price/price.pipe';
 import { ProductView } from 'ish-core/models/product-view/product-view.model';
 import { DatePipe } from 'ish-core/pipes/date.pipe';
@@ -64,6 +65,12 @@ describe('Camfil Checkout Line Item Component', () => {
     fixture = TestBed.createComponent(CamfilCheckoutLineItemComponent);
     component = fixture.componentInstance;
     element = fixture.nativeElement;
+
+    component.product = ({
+      quantity: {
+        value: 5,
+      },
+    } as unknown) as LineItemView;
 
     when(shoppingFacadeMock.product$(anything(), anything())).thenReturn(of({ sku: '4713' } as ProductView));
   });

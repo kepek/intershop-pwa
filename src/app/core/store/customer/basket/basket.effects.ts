@@ -19,6 +19,7 @@ import {
   loadBasketEligibleShippingMethodsSuccess,
   loadBasketFail,
   loadBasketSuccess,
+  loadBuckets,
   mergeBasketFail,
   mergeBasketSuccess,
   resetBasketErrors,
@@ -51,6 +52,8 @@ export class BasketEffects {
       )
     )
   );
+
+  loadBasketSuccess$ = createEffect(() => this.actions$.pipe(ofType(loadBasketSuccess), map(loadBuckets)));
 
   loadBasketByAPIToken$ = createEffect(() =>
     this.actions$.pipe(
