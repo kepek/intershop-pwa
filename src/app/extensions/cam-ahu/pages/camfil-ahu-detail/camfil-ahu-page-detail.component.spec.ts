@@ -5,6 +5,7 @@ import { MockComponent } from 'ng-mocks';
 import { instance, mock } from 'ts-mockito';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
+import { ContentIncludeComponent } from 'ish-shared/cms/components/content-include/content-include.component';
 import { CamfilBreadcrumbComponent } from 'ish-shared/components/common/camfil-breadcrumb/camfil-breadcrumb.component';
 import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
 import { CamfilProductAttributesComponent } from 'ish-shared/components/product/camfil-product-attributes/camfil-product-attributes.component';
@@ -37,6 +38,7 @@ describe('Camfil Ahu Page Detail Component', () => {
         MockComponent(CamfilProductInventoryComponent),
         MockComponent(CamfilProductQuantityComponent),
         MockComponent(CamfilProductShipmentComponent),
+        MockComponent(ContentIncludeComponent),
         MockComponent(LoadingComponent),
       ],
       providers: [{ provide: AccountFacade, useFactory: () => instance(mock(AccountFacade)) }],

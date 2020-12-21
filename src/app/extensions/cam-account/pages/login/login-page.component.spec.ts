@@ -6,6 +6,7 @@ import { instance, mock } from 'ts-mockito';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
 import { AppFacade } from 'ish-core/facades/app.facade';
+import { ContentIncludeComponent } from 'ish-shared/cms/components/content-include/content-include.component';
 import { CamfilBulletListComponent } from 'ish-shared/components/common/camfil-bullet-list/camfil-bullet-list.component';
 import { CamfilDetailsBoxComponent } from 'ish-shared/components/common/camfil-details-box/camfil-details-box.component';
 import { CamfilHeaderBoxComponent } from 'ish-shared/components/common/camfil-header-box/camfil-header-box.component';
@@ -33,6 +34,7 @@ describe('Login Page Component', () => {
         LoginInfoSectionComponent,
         LoginNewCustomerComponent,
         LoginPageComponent,
+        MockComponent(ContentIncludeComponent),
         MockComponent(ErrorMessageComponent),
         MockComponent(LoadingComponent),
       ],

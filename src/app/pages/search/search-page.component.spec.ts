@@ -9,8 +9,8 @@ import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { findAllCustomElements } from 'ish-core/utils/dev/html-query-utils';
 import { CamfilBreadcrumbComponent } from 'ish-shared/components/common/camfil-breadcrumb/camfil-breadcrumb.component';
 
+import { CamfilSearchNoResultComponent } from './camfil-search-no-result/camfil-search-no-result.component';
 import { CamfilSearchResultComponent } from './camfil-search-result/camfil-search-result.component';
-import { SearchNoResultComponent } from './search-no-result/search-no-result.component';
 import { SearchPageComponent } from './search-page.component';
 
 describe('Search Page Component', () => {
@@ -27,8 +27,8 @@ describe('Search Page Component', () => {
       imports: [RouterTestingModule],
       declarations: [
         MockComponent(CamfilBreadcrumbComponent),
+        MockComponent(CamfilSearchNoResultComponent),
         MockComponent(CamfilSearchResultComponent),
-        MockComponent(SearchNoResultComponent),
         SearchPageComponent,
       ],
       providers: [
@@ -59,7 +59,7 @@ describe('Search Page Component', () => {
     expect(findAllCustomElements(element)).toMatchInlineSnapshot(`
       Array [
         "camfil-breadcrumb",
-        "ish-search-no-result",
+        "camfil-search-no-result",
       ]
     `);
   });

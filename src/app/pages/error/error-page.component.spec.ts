@@ -4,8 +4,8 @@ import { instance, mock } from 'ts-mockito';
 
 import { AppFacade } from 'ish-core/facades/app.facade';
 
+import { CamfilErrorComponent } from './camfil-error/camfil-error.component';
 import { ErrorPageComponent } from './error-page.component';
-import { ErrorComponent } from './error/error.component';
 import { ServerErrorComponent } from './server-error/server-error.component';
 
 describe('Error Page Component', () => {
@@ -15,7 +15,7 @@ describe('Error Page Component', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ErrorPageComponent, MockComponent(ErrorComponent), MockComponent(ServerErrorComponent)],
+      declarations: [ErrorPageComponent, MockComponent(CamfilErrorComponent), MockComponent(ServerErrorComponent)],
       providers: [{ provide: AppFacade, useFactory: () => instance(mock(AppFacade)) }],
     }).compileComponents();
   });

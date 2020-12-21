@@ -1,26 +1,27 @@
-<div class="card border-0" [ngClass]="pagelet.stringParam('CSSClass')">
-  <picture *ngIf="showImage" class="card-img-top">
-    <img [src]="pagelet.stringParam('Image')" [attr.alt]="pagelet.stringParam('AlternateText')" />
-  </picture>
-  <div class="card-body bg-light">
-    <p class="card-subtitle mb-0" *ngIf="pagelet.hasParam('Heading2')">
-      <small class="text-muted">{{ pagelet.stringParam('Heading2') }}</small>
-    </p>
-    <h1 class="card-title text-capitalize" *ngIf="pagelet.hasParam('Heading1')">
-      {{ pagelet.stringParam('Heading1') }}
-    </h1>
-    <p
-      *ngIf="pagelet.hasParam('Description')"
-      class="card-text mb-3"
-      [ishServerHtml]="pagelet.stringParam('Description')"
-    ></p>
-    <a
-      *ngIf="pagelet.hasParam('Link') && pagelet.hasParam('LinkText')"
-      [routerLink]="routerLink(pagelet, 'Link')"
-      [attr.title]="pagelet.stringParam('LinkTitle')"
-      class="mat-focus-indicator mat-raised-button mat-button-base px-5"
-    >
-      {{ pagelet.stringParam('LinkText') }}
+<article>
+  <mat-card>
+    <a [routerLink]="routerLink(pagelet, 'Link')">
+      <img mat-card-image [src]="pagelet.stringParam('Image')" [attr.alt]="pagelet.stringParam('AlternateText')" />
     </a>
-  </div>
-</div>
+    <mat-card-header>
+      <mat-card-subtitle *ngIf="pagelet.hasParam('Heading2')" class="text-uppercase">{{
+        pagelet.stringParam('Heading2')
+      }}</mat-card-subtitle>
+      <mat-card-title *ngIf="pagelet.hasParam('Heading1')">{{ pagelet.stringParam('Heading1') }}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p *ngIf="pagelet.hasParam('Description')" [ishServerHtml]="pagelet.stringParam('Description')"></p>
+    </mat-card-content>
+    <mat-card-actions class="text-right">
+      <a
+        *ngIf="pagelet.hasParam('Link') && pagelet.hasParam('LinkText')"
+        [routerLink]="routerLink(pagelet, 'Link')"
+        [attr.title]="pagelet.stringParam('LinkTitle')"
+        class="mat-stroked-button mat-primary"
+      >
+        <mat-icon>navigate_next</mat-icon>
+        {{ pagelet.stringParam('LinkText') }}
+      </a>
+    </mat-card-actions>
+  </mat-card>
+</article>

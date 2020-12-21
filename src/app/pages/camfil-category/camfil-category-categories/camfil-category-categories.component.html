@@ -7,9 +7,9 @@
   <ng-container *ngIf="category.uniqueId === 'Computers'">
     <h1 class="landing__banner display-4">{{ 'camfil.category_landing.baner.text' | translate }}</h1>
     <camfil-category-boxes></camfil-category-boxes>
-    <camfil-category-faq></camfil-category-faq>
+    <!-- <camfil-category-faq></camfil-category-faq> -->
   </ng-container>
-
+  <ish-content-include includeId="camfil.include.category-categories.content.pagelet2-Include"></ish-content-include>
   <div class="row no-gutters">
     <aside class="col-md-3 sidebar">
       <div class="sidebar--container">

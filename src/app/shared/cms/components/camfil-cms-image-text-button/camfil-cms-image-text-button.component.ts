@@ -7,6 +7,7 @@ import { CMSComponent } from 'ish-shared/cms/models/cms-component/cms-component.
 @Component({
   selector: 'camfil-cms-image-text-button',
   templateUrl: './camfil-cms-image-text-button.component.html',
+  styleUrls: ['./camfil-cms-image-text-button.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CamfilCMSImageTextButtonComponent implements CMSComponent {

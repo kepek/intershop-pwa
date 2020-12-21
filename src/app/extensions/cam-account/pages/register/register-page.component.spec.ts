@@ -6,6 +6,7 @@ import { MockComponent } from 'ng-mocks';
 import { instance, mock } from 'ts-mockito';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
+import { ContentIncludeComponent } from 'ish-shared/cms/components/content-include/content-include.component';
 import { CamfilBannerComponent } from 'ish-shared/components/camfil-banner/camfil-banner.component';
 import { CamfilBulletListComponent } from 'ish-shared/components/common/camfil-bullet-list/camfil-bullet-list.component';
 import { CamfilHeaderBoxComponent } from 'ish-shared/components/common/camfil-header-box/camfil-header-box.component';
@@ -27,6 +28,7 @@ describe('Register Page Component', () => {
         CamfilHeaderBoxComponent,
         InfoSectionComponent,
         MockComponent(ApplyFormComponent),
+        MockComponent(ContentIncludeComponent),
         RegisterPageComponent,
       ],
       imports: [RouterTestingModule, TranslateModule.forRoot()],

@@ -11,6 +11,6 @@
   <!-- empty search result -->
   <ng-template #noResult>
     <camfil-breadcrumb></camfil-breadcrumb>
-    <ish-search-no-result *ngIf="!(searchLoading$ | async)" [searchTerm]="searchTerm"></ish-search-no-result>
+    <camfil-search-no-result *ngIf="!(searchLoading$ | async)" [searchTerm]="searchTerm"></camfil-search-no-result>
   </ng-template>
 </ng-container>

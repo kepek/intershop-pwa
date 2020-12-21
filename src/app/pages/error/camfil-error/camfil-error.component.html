@@ -1,0 +1,14 @@
+<div class="errorpage-content col-lg-6 offset-lg-3">
+  <ish-content-include includeId="camfil.include.error.content.pagelet2-Include"></ish-content-include>
+  <h1>{{ 'error.page.title' | translate }}</h1>
+  <div class="error-text" [ishServerHtml]="'error.page.text' | translate"></div>
+  <div class="search-container error-search-container">
+    <camfil-search-box
+      [configuration]="{
+        placeholder: 'search.searchbox.instructional_text' | translate,
+        autoSuggest: true,
+        maxAutoSuggests: 10
+      }"
+    ></camfil-search-box>
+  </div>
+</div>
