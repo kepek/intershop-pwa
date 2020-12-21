@@ -1,6 +1,10 @@
 @import '~src/styles/themes/camfil/variables';
 
 :host {
+  .camfil-checkout-header {
+    margin-bottom: 11px;
+  }
+
   p {
     display: flex;
     justify-content: space-between;

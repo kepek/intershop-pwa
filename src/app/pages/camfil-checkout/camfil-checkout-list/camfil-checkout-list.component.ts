@@ -10,6 +10,11 @@ import { Price } from 'ish-core/models/price/price.model';
 })
 export class CamfilCheckoutListComponent {
   @Input() order;
+  isOrderOpen = true;
+
+  toggleOrder() {
+    this.isOrderOpen = !this.isOrderOpen;
+  }
 
   totalPrice(): Price {
     const price: Price = {
@@ -20,10 +25,12 @@ export class CamfilCheckoutListComponent {
 
     const items = this.order && this.order.lineItems;
 
-    items.forEach(element => {
-      price.currency = element.price.currency;
-      price.value = price.value + element.totals?.total.gross;
-    });
+    if (items) {
+      items.forEach(element => {
+        price.currency = element.price.currency;
+        price.value = price.value + element.totals?.total.gross;
+      });
+    }
 
     return price;
   }
@@ -37,10 +44,12 @@ export class CamfilCheckoutListComponent {
 
     const items = this.order && this.order.lineItems;
 
-    items.map(element => {
-      price.currency = element.totals?.salesTaxTotal.currency;
-      price.value = price.value + element.totals?.salesTaxTotal.value;
-    });
+    if (items) {
+      items.map(element => {
+        price.currency = element.totals?.salesTaxTotal.currency;
+        price.value = price.value + element.totals?.salesTaxTotal.value;
+      });
+    }
     return price;
   }
 
@@ -53,10 +62,12 @@ export class CamfilCheckoutListComponent {
 
     const items = this.order && this.order.lineItems;
 
-    items.map(element => {
-      price.currency = element.price.currency;
-      price.value = price.value + (element.totals?.total.gross - element.totals?.undiscountedTotal.gross);
-    });
+    if (items) {
+      items.map(element => {
+        price.currency = element.price.currency;
+        price.value = price.value + (element.totals?.total.gross - element.totals?.undiscountedTotal.gross);
+      });
+    }
 
     return price;
   }

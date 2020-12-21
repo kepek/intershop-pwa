@@ -1,0 +1,9 @@
+@import '~src/styles/themes/camfil/mixins';
+@import '~src/styles/themes/camfil/variables';
+
+:host {
+  .spacer {
+    display: inline-block;
+    width: $space-box;
+  }
+}
