@@ -1,5 +1,5 @@
 <mat-card class="mat-elevation-4">
-  <mat-card-title>{{ 'camfil.checkout.total_order_summary' | translate }}</mat-card-title>
+  <p class="summary-title">{{ 'camfil.checkout.total_order_summary' | translate }}</p>
   <br />
   <mat-card-content>
     <mat-divider></mat-divider>
@@ -25,13 +25,13 @@
     <br />
     <mat-divider></mat-divider>
     <br />
-    <button mat-raised-button color="primary">{{ 'camfil.checkout.place_your_orders' | translate }}</button>
+    <button mat-flat-button color="primary">{{ 'camfil.checkout.place_your_orders' | translate }}</button>
     <br />
     <br />
     <mat-divider></mat-divider>
     <br />
     <div class="filter-info">
-      <p class="filter-info__title">
+      <p class="filter-title">
         <mat-icon aria-hidden="false">help_outline</mat-icon>
         <span>{{ 'camfil.checkout.delivery_info' | translate }}</span>
       </p>

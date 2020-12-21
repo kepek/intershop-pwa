@@ -36,6 +36,16 @@ describe('Camfil Checkout List Component', () => {
     fixture = TestBed.createComponent(CamfilCheckoutListComponent);
     component = fixture.componentInstance;
     element = fixture.nativeElement;
+
+    component.order = {
+      customer: {},
+      contacts: [
+        {
+          firstName: 'test',
+          lastName: 'test',
+        },
+      ],
+    };
   });
 
   it('should be created', () => {
