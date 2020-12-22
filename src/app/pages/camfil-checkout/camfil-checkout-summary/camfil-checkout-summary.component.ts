@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 
+import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { BasketView } from 'ish-core/models/basket/basket.model';
 
 @Component({
@@ -8,6 +9,16 @@ import { BasketView } from 'ish-core/models/basket/basket.model';
   styleUrls: ['./camfil-checkout-summary.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CamfilCheckoutSummaryComponent {
+export class CamfilCheckoutSummaryComponent implements OnInit {
   @Input() basket: BasketView;
+
+  constructor(private checkoutFacade: CheckoutFacade) {}
+
+  ngOnInit() {
+    this.checkoutFacade.setBasketPayment('ISH_INVOICE');
+  }
+
+  submitOrder() {
+    this.checkoutFacade.continue(5);
+  }
 }

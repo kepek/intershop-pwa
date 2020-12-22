@@ -25,7 +25,9 @@
     <br />
     <mat-divider></mat-divider>
     <br />
-    <button mat-flat-button color="primary">{{ 'camfil.checkout.place_your_orders' | translate }}</button>
+    <button mat-flat-button color="primary" (click)="submitOrder()">
+      {{ 'camfil.checkout.place_your_orders' | translate }}
+    </button>
     <br />
     <br />
     <mat-divider></mat-divider>
