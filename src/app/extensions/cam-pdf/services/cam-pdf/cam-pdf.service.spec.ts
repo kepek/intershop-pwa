@@ -2,12 +2,12 @@ import { TestBed } from '@angular/core/testing';
 
 import { CamPdfService } from './cam-pdf.service';
 
-describe('CamPdf Service', () => {
+describe('Cam Pdf Service', () => {
   let camPdfService: CamPdfService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [],
+      providers: [CamPdfService],
     });
     camPdfService = TestBed.inject(CamPdfService);
   });
