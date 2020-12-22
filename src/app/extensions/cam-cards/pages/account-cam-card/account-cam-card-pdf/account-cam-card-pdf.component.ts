@@ -43,6 +43,7 @@ export class AccountCamCardPdfComponent implements OnInit {
   sumPrice: CamCardTotalPricesObj = {};
   currency: string;
   skuEqProducts = false;
+  pdfLoading = false;
 
   ngOnInit() {
     this.accountFacade.user$.pipe(whenTruthy(), take(1)).subscribe(user => {
@@ -65,6 +66,7 @@ export class AccountCamCardPdfComponent implements OnInit {
 
   generatePdf(showPrice?: boolean) {
     this.skuEqProducts = false;
+    this.pdfLoading = true;
     this.camCards.forEach(camCard => {
       this.sumPrice[camCard.id] = 0;
     });
@@ -86,6 +88,7 @@ export class AccountCamCardPdfComponent implements OnInit {
 
           if (Object.keys(this.products).length === prodSkusList.length && !this.skuEqProducts) {
             this.skuEqProducts = true;
+            this.pdfLoading = false;
             this.currency = res.listPrice.currency;
 
             const styles = this.pdfStyles();
@@ -94,6 +97,7 @@ export class AccountCamCardPdfComponent implements OnInit {
             const data: DataToPdf = { content, styles, images };
 
             this.pdfService.printPdf(data);
+            this.dialog.closeAll();
           }
         });
     });

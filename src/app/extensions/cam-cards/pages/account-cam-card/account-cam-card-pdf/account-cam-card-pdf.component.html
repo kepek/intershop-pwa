@@ -12,10 +12,17 @@
 
 <camfil-small-cta-modal
   [actionTitle]="'camfil.account.cam_cards.print.dialog.title' | translate"
-  [actionButtonTitle]="'camfil.account.cam_cards.print.dialog.btn.with_price' | translate"
-  [action2ButtonTitle]="'camfil.account.cam_cards.print.dialog.btn.no_price' | translate"
   [icon]="'print'"
-  (actionClicked)="generatePdfWithPrices()"
-  (action2Clicked)="generatePdfWithoutPrices()"
+  [actionTemplate]="actionTemplate"
 >
 </camfil-small-cta-modal>
+
+<ng-template #actionTemplate>
+  <button class="btn btn-link cta-modal__links--link" type="submit" (click)="generatePdfWithoutPrices()">
+    <b>{{ 'camfil.account.cam_cards.print.dialog.btn.no_price' | translate }}</b>
+  </button>
+  <button class="btn btn-link cta-modal__links--link" type="submit" (click)="generatePdfWithPrices()">
+    <b>{{ 'camfil.account.cam_cards.print.dialog.btn.with_price' | translate }}</b>
+  </button>
+  <ish-loading *ngIf="pdfLoading"></ish-loading>
+</ng-template>
