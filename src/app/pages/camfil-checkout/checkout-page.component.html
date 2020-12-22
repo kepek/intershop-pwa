@@ -4,6 +4,7 @@
 
 <ng-container *ngIf="basket$ | async as basket">
   <div class="checkout row">
+    <ish-content-include includeId="camfil.include.checkout.content.pagelet2-Include"></ish-content-include>
     <div class="col-sm-12 col-lg-8">
       <camfil-checkout-header [basket]="basket" [buckets]="buckets"></camfil-checkout-header>
 

@@ -3,11 +3,10 @@
 :host {
   > div {
     margin: 10px auto $space-default;
-    font-size: $font-size-lg;
   }
 
-  img {
-    width: auto;
+  div {
+    font-size: $font-size-lg;
   }
 
   h3 {
@@ -39,6 +38,17 @@
     justify-content: center;
     padding: $space-box 10px;
     background: rgba($camfil-color-primary, 0.2);
+  }
+
+  .icon {
+    width: 64px;
+    height: 64px;
+    padding: 20px 26px;
+    margin-right: 25px;
+    font-size: 32px;
+    color: $camfil-white;
+    background-color: $camfil-color-primary;
+    border-radius: 50%;
   }
 
   button {

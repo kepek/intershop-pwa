@@ -8,7 +8,7 @@
       </div>
     </aside>
     <section class="col-md-4">
-      <span *ngIf="pagelet.hasParam('Heading2')">{{ pagelet.stringParam('Heading2') }}</span>
+      <h3 *ngIf="pagelet.hasParam('Heading2')">{{ pagelet.stringParam('Heading2') }}</h3>
       <button
         *ngIf="pagelet.hasParam('Link')"
         [routerLink]="routerLink(pagelet, 'Link')"

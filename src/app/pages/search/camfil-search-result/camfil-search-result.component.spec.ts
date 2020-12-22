@@ -4,6 +4,7 @@ import { NgbCollapse } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MockComponent } from 'ng-mocks';
 
+import { ContentIncludeComponent } from 'ish-shared/cms/components/content-include/content-include.component';
 import { CamfilBreadcrumbComponent } from 'ish-shared/components/common/camfil-breadcrumb/camfil-breadcrumb.component';
 import { CamfilFilterNavigationComponent } from 'ish-shared/components/filter/camfil-filter-navigation/camfil-filter-navigation.component';
 import { CamfilProductListingComponent } from 'ish-shared/components/product/camfil-product-listing/camfil-product-listing.component';
@@ -24,6 +25,7 @@ describe('Camfil Search Result Component', () => {
         MockComponent(CamfilBreadcrumbComponent),
         MockComponent(CamfilFilterNavigationComponent),
         MockComponent(CamfilProductListingComponent),
+        MockComponent(ContentIncludeComponent),
         MockComponent(FaIconComponent),
         MockComponent(NgbCollapse),
       ],

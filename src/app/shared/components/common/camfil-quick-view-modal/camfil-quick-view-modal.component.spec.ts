@@ -1,4 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MockComponent } from 'ng-mocks';
+
+import { ContentIncludeComponent } from 'ish-shared/cms/components/content-include/content-include.component';
 
 import { CamfilQuickViewModalComponent } from './camfil-quick-view-modal.component';
 
@@ -9,7 +12,7 @@ describe('Camfil Quick View Modal Component', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CamfilQuickViewModalComponent],
+      declarations: [CamfilQuickViewModalComponent, MockComponent(ContentIncludeComponent)],
     }).compileComponents();
   });
 

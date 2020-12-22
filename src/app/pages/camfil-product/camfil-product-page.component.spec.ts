@@ -23,6 +23,7 @@ import { Product, ProductCompletenessLevel } from 'ish-core/models/product/produ
 import { ProductRoutePipe } from 'ish-core/routing/product/product-route.pipe';
 import { findAllCustomElements } from 'ish-core/utils/dev/html-query-utils';
 import { categoryTree } from 'ish-core/utils/dev/test-data-utils';
+import { ContentIncludeComponent } from 'ish-shared/cms/components/content-include/content-include.component';
 import { CamfilBreadcrumbComponent } from 'ish-shared/components/common/camfil-breadcrumb/camfil-breadcrumb.component';
 import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
 import { CamfilProductGuidesComponent } from 'ish-shared/components/product/camfil-product-guides/camfil-product-guides.component';
@@ -66,6 +67,7 @@ describe('Camfil Product Page Component', () => {
         MockComponent(CamfilProductGuidesComponent),
         MockComponent(CamfilProductImagesComponent),
         MockComponent(CamfilProductLinksComponent),
+        MockComponent(ContentIncludeComponent),
         MockComponent(LoadingComponent),
         MockComponent(ProductBundlePartsComponent),
         MockComponent(ProductDetailComponent),
