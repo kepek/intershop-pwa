@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { TranslateModule } from '@ngx-translate/core';
 
 import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
 
@@ -13,7 +12,6 @@ describe('Account Cam Card Pdf Component', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [AccountCamCardPdfComponent, CamfilSmallCtaModalComponent],
-      imports: [TranslateModule.forRoot()],
     }).compileComponents();
   });
 
