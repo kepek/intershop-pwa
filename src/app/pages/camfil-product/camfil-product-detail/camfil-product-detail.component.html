@@ -5,8 +5,8 @@
     <h1>
       <span itemprop="name">{{ product.name }}</span>
     </h1>
-    <p>
-      <span itemprop="name">{{ product.shortDescription }}</span>
+    <p *ngIf="category">
+      <span>{{ category.name }}</span>
     </p>
   </div>
 
@@ -27,8 +27,13 @@
       <!-- <camfil-product-id [product]="product"></camfil-product-id> -->
 
       <camfil-product-promotion [product]="product"></camfil-product-promotion>
-      <div class="d-flex justify-content-between align-items-center row">
-        <div class="price-container col-6" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+      <div class="d-flex justify-content-between align-items-center row flex-wrap">
+        <div
+          class="price-container col-lg-6 col-md-12 col-12"
+          itemprop="offers"
+          itemscope
+          itemtype="http://schema.org/Offer"
+        >
           <div class="row">
             <div class="col-6 pice-col">
               <camfil-product-attribute
@@ -44,7 +49,7 @@
             </div>
           </div>
         </div>
-        <div class="col-6">
+        <div class="col-lg-6 col-md-12 col-12">
           <form
             *ngIf="!isMasterProduct(product)"
             [formGroup]="productDetailForm"
@@ -59,8 +64,8 @@
           </form>
         </div>
       </div>
-      <div class="row">
-        <div class="col-6 d-flex justify-content-center align-items-center">
+      <div class="row flex-wrap buttons-container">
+        <div class="col-lg-6 col-12 d-flex justify-content-center align-items-center">
           <camfil-lazy-product-add-to-cam-card
             class="btn-link cart-big-round-btn"
             [product]="product"
@@ -68,7 +73,7 @@
             displayType="round-btn"
           ></camfil-lazy-product-add-to-cam-card>
         </div>
-        <div class="col-6 d-flex justify-content-center align-items-center">
+        <div class="col-lg-6 col-12 d-flex justify-content-center align-items-center">
           <camfil-product-add-to-basket
             [product]="product"
             [translationKey]="isRetailSet(product) ? 'product.add_to_cart.retailset.link' : 'product.add_to_cart.link'"
@@ -77,15 +82,23 @@
           ></camfil-product-add-to-basket>
         </div>
       </div>
-      <camfil-product-inventory
-        *ngIf="!isRetailSet(product) && !isMasterProduct(product)"
-        [product]="product"
-      ></camfil-product-inventory>
+      <div class="row">
+        <div class="col-12 d-flex align-items-center">
+          <camfil-product-add-to-compare
+            [isInCompareList]="isInCompareList"
+            class="btn-link"
+            (compareToggle)="toggleCompare()"
+          ></camfil-product-add-to-compare>
+          <camfil-product-inventory
+            *ngIf="!isRetailSet(product) && !isMasterProduct(product)"
+            [product]="product"
+          ></camfil-product-inventory>
+        </div>
+      </div>
       <camfil-product-shipment
         *ngIf="!isRetailSet(product) && !isMasterProduct(product)"
         [product]="product"
       ></camfil-product-shipment>
-
       <!-- <camfil-product-variation-select
         *ngIf="isVariationProduct(product)"
         [productMasterSKU]="product.productMasterSKU"
@@ -93,7 +106,7 @@
         (selectVariation)="variationSelected($event)"
       ></camfil-product-variation-select> -->
 
-      <ish-lazy-product-add-to-order-template
+      <!-- <ish-lazy-product-add-to-order-template
         [class]="'btn btn-default btn-block'"
         [product]="product"
         [quantity]="quantity"
@@ -104,7 +117,7 @@
         [disabled]="productDetailForm.invalid"
         [quantity]="quantity"
         [class]="'btn-block'"
-      ></ish-lazy-product-add-to-quote>
+      ></ish-lazy-product-add-to-quote> -->
     </div>
 
     <camfil-product-attributes-preview [product]="product"></camfil-product-attributes-preview>

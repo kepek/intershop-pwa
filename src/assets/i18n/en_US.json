@@ -902,6 +902,7 @@
     "=1": "1 list item",
     "other": "# list items"
   },
+  "camfil.product.attributes.more": "More details",
   "camfil.product.items.showing.text": "Showing",
   "camfil.product.list.sorting.label": "Sort by",
   "camfil.product.list.toolbar.choose.option": "Choose an option",
