@@ -8,6 +8,7 @@
       <div class="box-shadow box-container">
         <camfil-product-detail
           [product]="product"
+          [category]="category$ | async"
           [price]="price$ | async"
           [(quantity)]="quantity"
           [variationOptions]="productVariationOptions$ | async"

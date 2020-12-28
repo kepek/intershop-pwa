@@ -56,6 +56,7 @@ export class CamfilProductPageComponent implements OnInit, OnDestroy {
     this.product$ = this.shoppingFacade.selectedProduct$;
     this.productVariationOptions$ = this.shoppingFacade.selectedProductVariationOptions$;
     this.category$ = this.shoppingFacade.selectedCategory$;
+
     this.productLoading$ = this.shoppingFacade.productDetailLoading$;
 
     this.product$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(product => {
