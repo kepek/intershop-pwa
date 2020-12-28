@@ -11,6 +11,7 @@ import {
   VariationProductView,
 } from 'ish-core/models/product-view/product-view.model';
 import { ProductHelper, ProductPrices } from 'ish-core/models/product/product.model';
+import { CategoryView } from 'ish-core/models/category-view/category-view.model';
 
 @Component({
   selector: 'camfil-product-detail',
@@ -20,13 +21,16 @@ import { ProductHelper, ProductPrices } from 'ish-core/models/product/product.mo
 })
 export class CamfilProductDetailComponent implements OnInit, OnDestroy {
   @Input() product: ProductView | VariationProductView | VariationProductMasterView;
+  @Input() category?: CategoryView;
   @Input() quantity: number;
   @Input() price: ProductPrices;
   @Input() variationOptions: VariationOptionGroup[];
+  @Input() isInCompareList: boolean;
   @Output() productToBasket = new EventEmitter<{ sku: string; quantity: number }>();
   @Output() productToCompare = new EventEmitter<string>();
   @Output() selectVariation = new EventEmitter<{ selection: VariationSelection; changedAttribute?: string }>();
   @Output() quantityChange = new EventEmitter<number>();
+  @Output() compareToggle = new EventEmitter<void>();
 
   productDetailForm: FormGroup;
   readonly quantityControlName = 'quantity';
@@ -57,6 +61,10 @@ export class CamfilProductDetailComponent implements OnInit, OnDestroy {
       sku: this.product.sku,
       quantity: this.productDetailForm.get(this.quantityControlName).value,
     });
+  }
+
+  toggleCompare() {
+    this.compareToggle.emit();
   }
 
   addToCompare() {
