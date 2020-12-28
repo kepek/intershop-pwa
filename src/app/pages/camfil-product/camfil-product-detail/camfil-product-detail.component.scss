@@ -139,6 +139,32 @@ strong {
       color: $grey88 !important;
     }
   }
+
+  camfil-product-quantity {
+    .form-group {
+      margin-bottom: 0;
+    }
+  }
+  camfil-lazy-product-add-to-cam-card {
+    width: 100%;
+    button {
+      width: 100%;
+    }
+  }
+  camfil-product-add-to-basket {
+    width: 100%;
+    .add-to-cart {
+      .mat-flat-button {
+        margin-bottom: $space-box-half;
+      }
+
+      button {
+        width: 100%;
+        color: $camfil-color-light;
+        background-color: $camfil-color-primary;
+      }
+    }
+  }
 }
 
 .product-accessories {
@@ -146,5 +172,11 @@ strong {
 
   @media (min-width: $screen-md-min) {
     margin: 0;
+  }
+}
+
+:host {
+  .pice-col {
+    text-align: center;
   }
 }

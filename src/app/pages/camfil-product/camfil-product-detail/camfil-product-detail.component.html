@@ -27,71 +27,84 @@
       <!-- <camfil-product-id [product]="product"></camfil-product-id> -->
 
       <camfil-product-promotion [product]="product"></camfil-product-promotion>
-
-      <div class="price-container" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
-        <camfil-product-price
-          [product]="price || product"
-          [showInformationalPrice]="true"
-          [showPriceSavings]="true"
-        ></camfil-product-price>
-
-        <camfil-product-inventory
-          *ngIf="!isRetailSet(product) && !isMasterProduct(product)"
-          [product]="product"
-        ></camfil-product-inventory>
-      </div>
-
-      <camfil-product-shipment
-        *ngIf="!isRetailSet(product) && !isMasterProduct(product)"
-        [product]="product"
-      ></camfil-product-shipment>
-
-      <camfil-product-variation-select
-        *ngIf="isVariationProduct(product)"
-        [productMasterSKU]="product.productMasterSKU"
-        [variationOptions]="variationOptions"
-        (selectVariation)="variationSelected($event)"
-      ></camfil-product-variation-select>
-
-      <form *ngIf="!isMasterProduct(product)" [formGroup]="productDetailForm" class="product-form form-horizontal">
-        <div class="row">
-          <div class="w-100">
+      <div class="d-flex justify-content-between align-items-center row">
+        <div class="price-container col-6" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+          <div class="row">
+            <div class="col-6 pice-col">
+              <camfil-product-attribute
+                name="camfil.product.list_price.label"
+                [value]="product.listPrice | ishPrice"
+              ></camfil-product-attribute>
+            </div>
+            <div class="col-6 pice-col">
+              <camfil-product-attribute
+                name="camfil.product.your_price.label"
+                [value]="product.salePrice | ishPrice"
+              ></camfil-product-attribute>
+            </div>
+          </div>
+        </div>
+        <div class="col-6">
+          <form
+            *ngIf="!isMasterProduct(product)"
+            [formGroup]="productDetailForm"
+            class="product-form form-horizontal d-flex justify-content-center"
+          >
             <camfil-product-quantity
               *ngIf="!isRetailSet(product)"
               [product]="product"
               [parentForm]="productDetailForm"
               [controlName]="quantityControlName"
             ></camfil-product-quantity>
-          </div>
+          </form>
         </div>
+      </div>
+      <div class="row">
+        <div class="col-6 d-flex justify-content-center align-items-center">
+          <camfil-lazy-product-add-to-cam-card
+            class="btn-link cart-big-round-btn"
+            [product]="product"
+            [quantity]="quantity"
+            displayType="round-btn"
+          ></camfil-lazy-product-add-to-cam-card>
+        </div>
+        <div class="col-6 d-flex justify-content-center align-items-center">
+          <camfil-product-add-to-basket
+            [product]="product"
+            [translationKey]="isRetailSet(product) ? 'product.add_to_cart.retailset.link' : 'product.add_to_cart.link'"
+            (productToBasket)="addToBasket()"
+            displayType="button"
+          ></camfil-product-add-to-basket>
+        </div>
+      </div>
+      <camfil-product-inventory
+        *ngIf="!isRetailSet(product) && !isMasterProduct(product)"
+        [product]="product"
+      ></camfil-product-inventory>
+      <camfil-product-shipment
+        *ngIf="!isRetailSet(product) && !isMasterProduct(product)"
+        [product]="product"
+      ></camfil-product-shipment>
 
-        <camfil-product-add-to-basket
-          [product]="product"
-          [class]="'btn-lg btn-block'"
-          [disabled]="productDetailForm.invalid"
-          [translationKey]="isRetailSet(product) ? 'product.add_to_cart.retailset.link' : 'product.add_to_cart.link'"
-          (productToBasket)="addToBasket()"
-        ></camfil-product-add-to-basket>
+      <!-- <camfil-product-variation-select
+        *ngIf="isVariationProduct(product)"
+        [productMasterSKU]="product.productMasterSKU"
+        [variationOptions]="variationOptions"
+        (selectVariation)="variationSelected($event)"
+      ></camfil-product-variation-select> -->
 
-        <ish-lazy-product-add-to-order-template
-          [class]="'btn btn-default btn-block'"
-          [product]="product"
-          [quantity]="quantity"
-        ></ish-lazy-product-add-to-order-template>
+      <ish-lazy-product-add-to-order-template
+        [class]="'btn btn-default btn-block'"
+        [product]="product"
+        [quantity]="quantity"
+      ></ish-lazy-product-add-to-order-template>
 
-        <camfil-lazy-product-add-to-cam-card
-          [class]="'btn btn-default btn-block'"
-          [product]="product"
-          [quantity]="quantity"
-        ></camfil-lazy-product-add-to-cam-card>
-
-        <ish-lazy-product-add-to-quote
-          [product]="product"
-          [disabled]="productDetailForm.invalid"
-          [quantity]="quantity"
-          [class]="'btn-block'"
-        ></ish-lazy-product-add-to-quote>
-      </form>
+      <ish-lazy-product-add-to-quote
+        [product]="product"
+        [disabled]="productDetailForm.invalid"
+        [quantity]="quantity"
+        [class]="'btn-block'"
+      ></ish-lazy-product-add-to-quote>
     </div>
 
     <camfil-product-attributes-preview [product]="product"></camfil-product-attributes-preview>
@@ -114,7 +127,7 @@
       </ish-accordion-item>
     </ish-accordion> -->
   </div>
-  <div class="col-12 col-md-4 col-lg-4">
+  <div class="col-12 col-md-4 col-lg-4 my-3">
     <strong>Guides & Technical Documents</strong>
     <ul class="product-details-guides">
       <li>
