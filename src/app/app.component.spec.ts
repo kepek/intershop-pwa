@@ -9,7 +9,7 @@ import { findAllCustomElements } from 'ish-core/utils/dev/html-query-utils';
 import { CookiesBannerComponent } from 'ish-shell/application/cookies-banner/cookies-banner.component';
 
 import { AppComponent } from './app.component';
-import { CamfilFooterComponent } from './shell/footer/camfil-footer/camfil-footer.component';
+import { CamfilFooterComponent } from './shared/components/common/camfil-footer/camfil-footer.component';
 import { CamfilHeaderComponent } from './shell/header/camfil-header/camfil-header.component';
 
 let translate: TranslateService;
