@@ -30,7 +30,7 @@ export class CamfilCmsCookieDisclaimerComponent implements CMSComponent, OnInit 
     @Inject(PLATFORM_ID) private platformId: string,
     private transferState: TransferState,
     private cookiesService: CookiesService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.showBannerIfNecessary();
