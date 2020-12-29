@@ -150,9 +150,6 @@ strong {
 }
 
 :host {
-  .pice-col {
-    text-align: center;
-  }
   .buttons-container {
     margin-top: $space-box;
   }
@@ -170,7 +167,7 @@ strong {
     }
     camfil-product-attribute {
       .camfil-product-attribute__value {
-        font-size: 20px;
+        font-size: $font-size-xlg;
       }
     }
     camfil-lazy-product-add-to-cam-card {
@@ -201,7 +198,7 @@ strong {
         display: flex;
         align-items: center;
         padding: 0;
-        margin-right: 24px;
+        margin-right: $space-detail-item-margin;
         margin-bottom: 0;
       }
 
@@ -214,6 +211,14 @@ strong {
       .ready-for-shipment {
         padding-bottom: 0;
         margin-top: $space-box;
+      }
+    }
+    camfil-product-attributes-preview {
+      .attribute-value {
+        font-weight: bold;
+      }
+      .mat-button-wrapper {
+        text-decoration: underline;
       }
     }
     .product-attributes {

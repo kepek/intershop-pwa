@@ -12,6 +12,8 @@ import {
 } from 'ish-core/models/product-view/product-view.model';
 import { ProductHelper, ProductPrices } from 'ish-core/models/product/product.model';
 import { CategoryView } from 'ish-core/models/category-view/category-view.model';
+import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
+import { whenTruthy } from 'ish-core/utils/operators';
 
 @Component({
   selector: 'camfil-product-detail',
@@ -32,6 +34,8 @@ export class CamfilProductDetailComponent implements OnInit, OnDestroy {
   @Output() quantityChange = new EventEmitter<number>();
   @Output() compareToggle = new EventEmitter<void>();
 
+  constructor(private shoppingFacade: ShoppingFacade) {}
+
   productDetailForm: FormGroup;
   readonly quantityControlName = 'quantity';
 
@@ -45,10 +49,20 @@ export class CamfilProductDetailComponent implements OnInit, OnDestroy {
     this.productDetailForm = new FormGroup({
       [this.quantityControlName]: new FormControl(this.quantity || this.product.minOrderQuantity),
     });
+
     this.productDetailForm
       .get(this.quantityControlName)
       .valueChanges.pipe(takeUntil(this.destroy$))
       .subscribe(this.quantityChange);
+
+    if (!this.category && this.product.defaultCategoryId) {
+      this.shoppingFacade
+        .category$(this.product.defaultCategoryId)
+        .pipe(whenTruthy(), takeUntil(this.destroy$))
+        .subscribe(category => {
+          this.category = category;
+        });
+    }
   }
 
   ngOnDestroy() {
