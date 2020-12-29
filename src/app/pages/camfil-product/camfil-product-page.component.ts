@@ -54,6 +54,7 @@ export class CamfilProductPageComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.product$ = this.shoppingFacade.selectedProduct$;
+
     this.productVariationOptions$ = this.shoppingFacade.selectedProductVariationOptions$;
     this.category$ = this.shoppingFacade.selectedCategory$;
 
