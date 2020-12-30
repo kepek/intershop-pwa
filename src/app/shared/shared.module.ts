@@ -182,8 +182,6 @@ import { PromotionRemoveComponent } from './components/promotion/promotion-remov
 import { RecentlyViewedComponent } from './components/recently/recently-viewed/recently-viewed.component';
 import { FormsDynamicModule } from './forms-dynamic/forms-dynamic.module';
 import { FormsSharedModule } from './forms/forms.module';
-import { CamfilFooterComponent } from './components/common/camfil-footer/camfil-footer.component';
-import { CamfilCmsCookieDisclaimerComponent } from './cms/components/camfil-cms-cookie-disclaimer/camfil-cms-cookie-disclaimer.component';
 
 const importExportModules = [
   AddressFormsSharedModule,
@@ -238,7 +236,6 @@ const declaredComponents = [
   CamfilCMSBigBannerWithButtonComponent,
   CamfilCMSImageTextButtonComponent,
   CamfilCMSSmallImageTextLinkComponent,
-  CamfilCmsCookieDisclaimerComponent,
   CamfilCamCardModalComponent,
   CamfilCmsCookieDisclaimerComponent,
   CamfilCmsEdpComponent,
@@ -305,7 +302,6 @@ const declaredComponents = [
   ProductShipmentComponent,
   ProductTileComponent,
   ProductVariationSelectComponent,
-  CamfilFooterComponent,
 ];
 
 const exportedComponents = [
@@ -390,7 +386,6 @@ const exportedComponents = [
   PromotionRemoveComponent,
   RecentlyViewedComponent,
   SuccessMessageComponent,
-  CamfilFooterComponent,
 ];
 
 @NgModule({
