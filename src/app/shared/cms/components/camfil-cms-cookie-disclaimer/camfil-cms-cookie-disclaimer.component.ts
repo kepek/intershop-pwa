@@ -1,15 +1,15 @@
-import { ContentViewHelper } from 'ish-core/models/content-view/content-view.helper';
-import { ContentPageletView } from 'ish-core/models/content-view/content-view.model';
-import { CMSComponent } from 'ish-shared/cms/models/cms-component/cms-component.model';
 import { AnimationEvent } from '@angular/animations';
 import { isPlatformBrowser } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Inject, Input, PLATFORM_ID } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, Input, OnInit, PLATFORM_ID } from '@angular/core';
 import { TransferState } from '@angular/platform-browser';
 
 import bottomOutAnimation from 'ish-core/animations/bottom-out.animation';
 import { COOKIE_CONSENT_VERSION } from 'ish-core/configurations/state-keys';
+import { ContentViewHelper } from 'ish-core/models/content-view/content-view.helper';
+import { ContentPageletView } from 'ish-core/models/content-view/content-view.model';
 import { CookieConsentSettings } from 'ish-core/models/cookies/cookies.model';
 import { CookiesService } from 'ish-core/utils/cookies/cookies.service';
+import { CMSComponent } from 'ish-shared/cms/models/cms-component/cms-component.model';
 
 @Component({
   selector: 'camfil-cookie-disclaimer',
@@ -18,7 +18,7 @@ import { CookiesService } from 'ish-core/utils/cookies/cookies.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [bottomOutAnimation()],
 })
-export class CamfilCmsCookieDisclaimerComponent implements CMSComponent {
+export class CamfilCmsCookieDisclaimerComponent implements CMSComponent, OnInit {
   @Input() pagelet: ContentPageletView;
   showBanner = false;
   transitionBanner = undefined;
@@ -32,7 +32,7 @@ export class CamfilCmsCookieDisclaimerComponent implements CMSComponent {
     private cookiesService: CookiesService
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.showBannerIfNecessary();
   }
 
@@ -42,9 +42,6 @@ export class CamfilCmsCookieDisclaimerComponent implements CMSComponent {
    * - consent outdated
    */
   showBannerIfNecessary() {
-    console.log('🚀 ~ showBannerIfNecessary');
-    console.log('🚀 ~ isPlatformBrowser(this.platformId)', isPlatformBrowser(this.platformId));
-
     if (isPlatformBrowser(this.platformId)) {
       const cookieConsentSettings = JSON.parse(
         this.cookiesService.get('cookieConsent') || 'null'

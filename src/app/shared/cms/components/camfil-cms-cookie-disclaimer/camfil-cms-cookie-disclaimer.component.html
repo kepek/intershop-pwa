@@ -2,9 +2,10 @@
   *ngIf="showBanner"
   [@bottomOut]="transitionBanner"
   (@bottomOut.done)="acceptAllAnimationDone($event)"
+  [ngClass]="pagelet.stringParam('CSSClass')"
   class="cookies-banner"
 >
-  <div [ishServerHtml]="'cookies.banner.text' | translate"></div>
+  <p *ngIf="pagelet.hasParam('Description')" [ishServerHtml]="pagelet.stringParam('Description')"></p>
 
   <button type="button" class="btn btn-light float-right" (click)="acceptAll()" data-testing-id="acceptAllButton">
     {{ 'cookies.banner.accept_all' | translate }}
