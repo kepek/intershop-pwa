@@ -29,37 +29,40 @@ Only empty strings count as inactive.
 
 If the format is _switch_, the property is switched on by supplying `on`, `1`, `yes` or `true` (checked case-insensitive), anything else is considered `off`.
 
-|                     | parameter            | format               | comment                                                                     |
-| ------------------- | -------------------- | -------------------- | --------------------------------------------------------------------------- |
-| **SSR Specific**    | PORT                 | number               | Port for running the application                                            |
-|                     | SSL                  | any                  | Enables TLS (expects `server.crt` and `server.key` in `dist` folder)        |
-| **General**         | ICM_BASE_URL         | URL                  | Sets the base URL for the ICM                                               |
-|                     | ICM_CHANNEL          | string               | Overrides the default channel                                               |
-|                     | ICM_APPLICATION      | string               | Overrides the default application                                           |
-|                     | ICM_SERVER           | string               | Sets the server path for the ICM                                            |
-|                     | ICM_SERVER_STATIC    | string               | Sets the server static path for the ICM                                     |
-|                     | ICM_PROXY_URL        | URL                  | Sets the proxy URL for the ICM                                              |
-|                     | FEATURES             | comma-separated list | Overrides active features                                                   |
-|                     | THEME                | string               | Overrides the default theme                                                 |
-| **Debug** :warning: | TRUST_ICM            | any                  | Use this if ICM is deployed with an insecure certificate                    |
-|                     | LOGGING              | switch               | Enable extra log output                                                     |
-| **Hybrid Approach** | SSR_HYBRID           | any                  | Enable running PWA and ICM in [Hybrid Mode](../concepts/hybrid-approach.md) |
-|                     | PROXY_ICM            | any \| URL           | Proxy ICM via `/INTERSHOP` (enabled if SSR_HYBRID is active)                |
-| **Third party**     | GTM_TOKEN            | string               | Token for Google Tag Manager                                                |
-|                     | SENTRY_DSN           | string               | Sentry DSN URL for using Sentry Error Monitor                               |
-|                     | PROMETHEUS           | switch               | Expose Prometheus metrics                                                   |
-| **Camfil**          | ICC_PROXY_URL        | URL                  | Sets the proxy URL for the ICC                                              |
-|                     | ICC_TOKEN            | string               | Token for ICC                                                               |
-|                     | ICC_TOKEN_HEADER_KEY | string               | Token Header Name for ICC                                                   |
-|                     | ICC_SERVER           | string               | Proxy ICC via `/ICC`                                                        |
+|                     | parameter             | format               | comment                                                              |
+| ------------------- | --------------------- | -------------------- | -------------------------------------------------------------------- |
+| **SSR Specific**    | PORT                  | number               | Port for running the application                                     |
+|                     | SSL                   | any                  | Enables TLS (expects `server.crt` and `server.key` in `dist` folder) |
+| **General**         | ICM_BASE_URL          | string               | Sets the base URL for the ICM                                        |
+|                     | ICM_CHANNEL           | string               | Overrides the default channel                                        |
+|                     | ICM_APPLICATION       | string               | Overrides the default application                                    |
+|                     | FEATURES              | comma-separated list | Overrides active features                                            |
+|                     | THEME                 | string               | Overrides the default theme                                          |
+| **Debug** :warning: | TRUST_ICM             | any                  | Use this if ICM is deployed with an insecure certificate             |
+|                     | LOGGING               | switch               | Enables extra log output                                             |
+| **Hybrid Approach** | SSR_HYBRID            | any                  | Enables running PWA and ICM in [Hybrid Mode][concept-hybrid]         |
+|                     | PROXY_ICM             | any \| URL           | Proxy ICM via `/INTERSHOP` (enabled if SSR_HYBRID is active)         |
+| **Third party**     | GTM_TOKEN             | string               | Token for Google Tag Manager                                         |
+|                     | SENTRY_DSN            | string               | Sentry DSN URL for using Sentry Error Monitor                        |
+|                     | PROMETHEUS            | switch               | Exposes Prometheus metrics                                           |
+|                     | ICM_IDENTITY_PROVIDER | string               | ID of Identity Provider for [SSO][concept-sso]                       |
+|                     | IDENTITY_PROVIDERS    | JSON                 | Configuration of Identity Providers for [SSO][concept-sso]           |
+| **Camfil**          | ICC_PROXY_URL         | URL                  | Sets the proxy URL for the ICC                                       |
+|                     | ICC_TOKEN             | string               | Token for ICC                                                        |
+|                     | ICC_TOKEN_HEADER_KEY  | string               | Token Header Name for ICC                                            |
+|                     | ICC_SERVER            | string               | Proxy ICC via `/ICC`                                                 |
 
 # Further References
 
 - [Concept - Configuration](../concepts/configuration.md)
-- [Concept - Hybrid Approach](../concepts/hybrid-approach.md)
+- [Concept - Hybrid Approach][concept-hybrid]
 - [Concept - Logging](../concepts/logging.md)
+- [Concept - Single Sign-On (SSO) for PWA][concept-sso]
 - [Guide - Client-Side Error Monitoring with Sentry](./sentry-error-monitoring.md)
 - [Guide - Google Tag Manager](./google-tag-manager.md)
 - [Guide - Monitoring with Prometheus](./prometheus-monitoring.md)
 - [Youtube - Server Side Rendering and Pre Rendering with Angular Universal](https://youtu.be/-VDOAjzLcvQ)
 - [Google Developers - Rendering on the Web](https://developers.google.com/web/updates/2019/02/rendering-on-the-web)
+
+[concept-sso]: ../concepts/sso.md
+[concept-hybrid]: ../concepts/hybrid-approach.md

@@ -4,6 +4,7 @@ import { merge } from 'rxjs';
 import { map, switchMap, take, tap } from 'rxjs/operators';
 
 import { Address } from 'ish-core/models/address/address.model';
+import { Attribute } from 'ish-core/models/attribute/attribute.model';
 import { Bucket } from 'ish-core/models/basket/bucket.model';
 import { LineItemUpdate } from 'ish-core/models/line-item-update/line-item-update.model';
 import { PaymentInstrument } from 'ish-core/models/payment-instrument/payment-instrument.model';
@@ -16,6 +17,7 @@ import {
   continueCheckout,
   createBasketAddress,
   createBasketPayment,
+  deleteBasketAttribute,
   deleteBasketItem,
   deleteBasketPayment,
   deleteBasketShippingAddress,
@@ -32,12 +34,15 @@ import {
   getCurrentBasket,
   getCurrentBuckets,
   getEmptyBuckets,
+  getSubmittedBasket,
   isBasketInvoiceAndShippingAddressEqual,
   loadBasketEligiblePaymentMethods,
   loadBasketEligibleShippingMethods,
   loadBuckets,
   removePromotionCodeFromBasket,
+  setBasketAttribute,
   setBasketPayment,
+  startCheckout,
   updateBasketAddress,
   updateBasketItems,
   updateBasketShippingMethod,
@@ -54,6 +59,10 @@ export class CheckoutFacade {
   constructor(private store: Store) {}
 
   checkoutStep$ = this.store.pipe(select(selectRouteData<number>('checkoutStep')));
+
+  start() {
+    this.store.dispatch(startCheckout());
+  }
 
   continue(targetStep: number) {
     this.store.dispatch(continueCheckout({ targetStep }));
@@ -72,12 +81,7 @@ export class CheckoutFacade {
   basketLineItems$ = this.basket$.pipe(
     map(basket => (basket && basket.lineItems && basket.lineItems.length ? basket.lineItems : undefined))
   );
-  buckets$ = this.store.pipe(select(getCurrentBuckets));
-  emptyBuckets$ = this.store.pipe(select(getEmptyBuckets));
-
-  loadBuckets() {
-    this.store.dispatch(loadBuckets());
-  }
+  submittedBasket$ = this.store.pipe(select(getSubmittedBasket));
 
   deleteBasketItem(itemId: string) {
     this.store.dispatch(deleteBasketItem({ itemId }));
@@ -91,8 +95,12 @@ export class CheckoutFacade {
     this.store.dispatch(updateBasketShippingMethod({ shippingId }));
   }
 
-  addEmptyBucket(emptyBucket: Bucket) {
-    this.store.dispatch(addEmptyBucket({ bucket: emptyBucket }));
+  setBasketCustomAttribute(attribute: Attribute): void {
+    this.store.dispatch(setBasketAttribute({ attribute }));
+  }
+
+  deleteBasketCustomAttribute(attributeName: string): void {
+    this.store.dispatch(deleteBasketAttribute({ attributeName }));
   }
 
   // ORDERS
@@ -191,5 +199,18 @@ export class CheckoutFacade {
 
   updateConcardisCvcLastUpdated(paymentInstrument: PaymentInstrument) {
     this.store.dispatch(updateConcardisCvcLastUpdated({ paymentInstrument }));
+  }
+
+  // TODO: CAMFIL Additions, it should be separated to avoid core modifications;
+
+  buckets$ = this.store.pipe(select(getCurrentBuckets));
+  emptyBuckets$ = this.store.pipe(select(getEmptyBuckets));
+
+  loadBuckets() {
+    this.store.dispatch(loadBuckets());
+  }
+
+  addEmptyBucket(emptyBucket: Bucket) {
+    this.store.dispatch(addEmptyBucket({ bucket: emptyBucket }));
   }
 }

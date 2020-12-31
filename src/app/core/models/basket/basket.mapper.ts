@@ -41,6 +41,7 @@ export class BasketMapper {
           ? ShippingMethodMapper.fromData(included.commonShippingMethod[data.commonShippingMethod])
           : undefined,
       customerNo: data.customer,
+      email: data.user,
       lineItems:
         included && included.lineItems && data.lineItems && data.lineItems.length
           ? data.lineItems.map(lineItemId =>
@@ -49,7 +50,7 @@ export class BasketMapper {
           : [],
       totalProductQuantity: data.totalProductQuantity,
       payment:
-        included && included.payments && data.payments && data.payments.length && included.payments[data.payments[0]]
+        included?.payments && data.payments?.length && included.payments[data.payments[0]]
           ? PaymentMapper.fromIncludeData(
               included.payments[data.payments[0]],
               included.payments_paymentMethod &&
@@ -64,6 +65,8 @@ export class BasketMapper {
       promotionCodes: data.promotionCodes,
       totals,
       infos: infos && infos.filter(info => info.code !== 'include.not_resolved.error'),
+      approval: data.approval,
+      attributes: data.attributes,
     };
   }
 

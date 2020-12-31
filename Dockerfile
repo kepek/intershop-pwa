@@ -5,6 +5,8 @@ COPY projects/camfil-icons /workspace/projects/camfil-icons/
 COPY projects/organization-management/src/app /workspace/projects/organization-management/src/app/
 COPY package.json package-lock.json /workspace/
 RUN npm i --ignore-scripts
+COPY projects/organization-management/src/app /workspace/projects/organization-management/src/app/
+COPY projects/requisition-management/src/app /workspace/projects/requisition-management/src/app/
 COPY src /workspace/src/
 COPY tsconfig.app.json tsconfig.base.json ngsw-config.json .browserslistrc angular.json /workspace/
 COPY tsconfig.server.json server.ts /workspace/
@@ -20,7 +22,6 @@ RUN npm run ng -- run intershop-pwa:server:${configuration} --bundleDependencies
 # remove cache check for resources (especially index.html)
 # https://github.com/angular/angular/issues/23613#issuecomment-415886919
 RUN test "${serviceWorker}" = "true" && sed -i 's/canonicalHash !== cacheBustedHash/false/g' /workspace/dist/browser/ngsw-worker.js || true
-RUN egrep -o '^\s*(mockServerAPI: true|mustMockPaths)' src/environments/environment.prod.ts || rm -Rf dist/browser/assets/mock*
 COPY dist/entrypoint.sh dist/healthcheck.js dist/server.crt dist/server.key dist/robots.txt* /workspace/dist/
 
 FROM node:12-alpine

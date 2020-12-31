@@ -1,18 +1,19 @@
 import {
   ChangeDetectionStrategy,
-  Compiler,
   Component,
-  ComponentRef,
-  Injector,
-  Input,
-  NgModuleFactory,
-  OnChanges,
   OnInit,
   ViewChild,
   ViewContainerRef,
+  Compiler,
+  Injector,
+  NgModuleFactory,
+  ComponentRef,
+  Input,
+  OnChanges,
 } from '@angular/core';
 
 import { FeatureToggleService } from 'ish-core/feature-toggle.module';
+
 import { ProductView } from 'ish-core/models/product-view/product-view.model';
 
 @Component({
