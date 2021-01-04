@@ -33,4 +33,10 @@
     height: 40px;
     text-align: center;
   }
+
+  @media (min-width: $screen-lg-min) {
+    .summary-container {
+      margin-left: -30px;
+    }
+  }
 }
