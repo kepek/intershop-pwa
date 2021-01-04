@@ -1,3 +1,5 @@
+// tslint:disable: ish-ordered-imports ban-specific-imports
+
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -199,7 +201,6 @@ const importExportModules = [
   NgbModalModule,
   NgbPopoverModule,
   PipesModule,
-  ProductAddToBasketComponent,
   ReactiveFormsModule,
   RouterModule,
   ShellModule,
