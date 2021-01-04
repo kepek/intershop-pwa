@@ -34,7 +34,7 @@ export class ProductsService {
     'sku,salePrice,listPrice,availability,manufacturer,image,minOrderQuantity,inStock,promotions,packingUnit,mastered,productMaster,productMasterSKU,roundedAverageRating,retailSet';
 
   private productsOptions: AvailableOptions = {
-    sendSPGID: false,
+    sendSPGID: true,
   };
 
   private itemsPerPage: number;
