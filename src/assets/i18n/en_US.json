@@ -889,6 +889,7 @@
   "camfil.modal.cta.button.ok": "OK",
   "camfil.navigation.filterClearAll.message": "Clear all filters",
   "camfil.product.add_to_compare.label": "Add to compare",
+  "camfil.product.attributes.more": "More details",
   "camfil.product.bags.label": "Bags",
   "camfil.product.dimensions.label": "Dimensions",
   "camfil.product.efficiency.label": "Efficiency",
@@ -902,7 +903,6 @@
     "=1": "1 list item",
     "other": "# list items"
   },
-  "camfil.product.attributes.more": "More details",
   "camfil.product.items.showing.text": "Showing",
   "camfil.product.list.sorting.label": "Sort by",
   "camfil.product.list.toolbar.choose.option": "Choose an option",
