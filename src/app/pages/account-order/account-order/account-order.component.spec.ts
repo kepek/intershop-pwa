@@ -60,8 +60,8 @@ describe('Account Order Component', () => {
 
     expect(element.querySelector('[data-testing-id=order-summary-info]')).toBeTruthy();
     expect(element.querySelectorAll('ish-info-box')).toHaveLength(4);
-    expect(element.querySelector('camfil-line-item-table')).toBeTruthy();
-    expect(element.querySelector('camfil-basket-cost-summary')).toBeTruthy();
+    expect(element.querySelector('ish-line-item-list')).toBeTruthy();
+    expect(element.querySelector('ish-basket-cost-summary')).toBeTruthy();
   });
 
   it('should display the home link after creation', () => {
