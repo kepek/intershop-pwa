@@ -246,11 +246,14 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "projects/organization-management/tsconfig.app.json",
             "aot": false,
-            "stylePreprocessorOptions": {
-              "includePaths": ["projects/organization-management/src/styles"]
-            },
             "styles": ["src/styles/themes/default/style.scss"],
-            "assets": ["projects/organization-management/src/assets"],
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "src/assets/",
+                "output": "/assets/"
+              }
+            ],
             "scripts": [],
             "fileReplacements": [
               {
@@ -259,9 +262,6 @@
               }
             ]
           }
-        },
-        "test": {
-          "builder": "@angular-builders/jest:run"
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",

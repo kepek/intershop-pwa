@@ -18,6 +18,8 @@ pipelines:
             - node
           artifacts:
             - node_modules/**
+            - projects/organization-management/src/app/exports/**
+            - projects/requisition-management/src/app/exports/**
             - projects/camfil-icons/src/exports/build/**
             - node_modules/intershop-tslint-rules/**
             - schematics/src/**/*.js
