@@ -47,7 +47,7 @@
             <camfil-product-quantity
               *ngIf="configuration.displayQuantity"
               [readOnly]="configuration.readOnly"
-              [allowZeroQuantity]="configuration.allowZeroQuantity"
+              [allowZeroQuantity]="true"
               [quantityLabel]="configuration.quantityLabel"
               [product]="product"
               [parentForm]="productItemForm"
@@ -59,7 +59,7 @@
             <camfil-lazy-product-add-to-cam-card
               *ngIf="configuration.displayAddToCamCard"
               displayType="icon"
-              [quantity]="1"
+              [quantity]="updatedQuantity"
               class="btn-link"
               [product]="product"
             ></camfil-lazy-product-add-to-cam-card>
@@ -136,7 +136,7 @@
           <camfil-product-quantity
             *ngIf="configuration.displayQuantity"
             [readOnly]="configuration.readOnly"
-            [allowZeroQuantity]="configuration.allowZeroQuantity"
+            [allowZeroQuantity]="true"
             [quantityLabel]="configuration.quantityLabel"
             [product]="product"
             [parentForm]="productItemForm"
@@ -147,7 +147,7 @@
             <camfil-lazy-product-add-to-cam-card
               *ngIf="configuration.displayAddToCamCard"
               displayType="icon"
-              [quantity]="1"
+              [quantity]="updatedQuantity"
               class="btn-link"
               [product]="product"
             ></camfil-lazy-product-add-to-cam-card>

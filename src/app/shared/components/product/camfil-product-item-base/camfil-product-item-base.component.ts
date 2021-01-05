@@ -54,6 +54,7 @@ export class CamfilProductItemBaseComponent implements OnInit, OnDestroy {
   @Output() selectVariation = new EventEmitter<{ selection: VariationSelection; changedAttribute?: string }>();
   @Input() isMobileView: boolean;
   isMasterProduct = ProductHelper.isMasterProduct;
+  updatedQuantity: number;
 
   productItemForm: FormGroup;
 
@@ -63,8 +64,10 @@ export class CamfilProductItemBaseComponent implements OnInit, OnDestroy {
   protected destroy$ = new Subject();
 
   ngOnInit() {
+    this.updatedQuantity = this.quantity || 0;
+
     this.productItemForm = new FormGroup({
-      [this.quantityControlName]: new FormControl(this.quantity || this.product.minOrderQuantity),
+      [this.quantityControlName]: new FormControl(this.updatedQuantity),
     });
     this.productItemForm
       .get(this.quantityControlName)
@@ -72,7 +75,10 @@ export class CamfilProductItemBaseComponent implements OnInit, OnDestroy {
         map(val => +val),
         takeUntil(this.destroy$)
       )
-      .subscribe(this.quantityChange);
+      .subscribe(quantity => {
+        this.updatedQuantity = quantity;
+        this.quantityChange.emit(quantity);
+      });
   }
 
   addToBasket() {
