@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnDestroy, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
@@ -7,6 +7,7 @@ import { take, takeUntil } from 'rxjs/operators';
 import { AccountFacade } from 'ish-core/facades/account.facade';
 import { Product } from 'ish-core/models/product/product.model';
 import { GenerateLazyComponent } from 'ish-core/utils/module-loader/generate-lazy-component.decorator';
+import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
 
 import { CamCardsFacade } from '../../facades/cam-cards.facade';
 import { SelectCamCardModalComponent } from '../select-cam-card-modal/select-cam-card-modal.component';
@@ -34,6 +35,8 @@ export class ProductAddToCamCardComponent implements OnDestroy {
   @Input() class?: string;
   private destroy$ = new Subject();
 
+  @ViewChild(CamfilSmallCtaModalComponent) errorModal: CamfilSmallCtaModalComponent;
+
   constructor(
     private camCardsFacade: CamCardsFacade,
     private accountFacade: AccountFacade,
@@ -47,14 +50,24 @@ export class ProductAddToCamCardComponent implements OnDestroy {
   openModal(modal: SelectCamCardModalComponent) {
     this.accountFacade.isLoggedIn$.pipe(take(1), takeUntil(this.destroy$)).subscribe(isLoggedIn => {
       if (isLoggedIn) {
-        this.dialog.open(modal.show());
-        modal.hide = () => this.dialog.closeAll();
+        this.quantity ? this.openAddModal(modal) : this.openErrorModal();
       } else {
         // stay on the same page after login
         const queryParams = { returnUrl: this.router.routerState.snapshot.url, messageKey: 'cam_cards' };
         this.router.navigate(['/login'], { queryParams });
       }
     });
+  }
+
+  openAddModal(modal: SelectCamCardModalComponent) {
+    modal.quantity = this.quantity;
+    this.dialog.open(modal.show());
+    modal.hide = () => this.dialog.closeAll();
+  }
+
+  openErrorModal() {
+    this.dialog.open(this.errorModal?.show());
+    this.errorModal.hide = () => this.dialog.closeAll();
   }
 
   addProductToCamCard(camCard: { id: string; name: string }) {
