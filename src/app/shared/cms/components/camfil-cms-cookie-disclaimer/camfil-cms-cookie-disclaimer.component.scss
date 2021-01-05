@@ -1,0 +1,15 @@
+@import '~src/styles/themes/camfil/variables';
+
+:host {
+  .cookies-banner {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+    width: 100%;
+    padding: 20px;
+    color: #fff;
+    background-color: #222 !important;
+    opacity: 0.9;
+  }
+}

@@ -55,6 +55,7 @@ import { ArticleDetailsComponent } from '../extensions/cam-cards/shared/select-c
 import { AddressFormsSharedModule } from './address-forms/address-forms.module';
 import { CMSModule } from './cms/cms.module';
 import { CamfilCMSBigBannerWithButtonComponent } from './cms/components/camfil-cms-big-banner-with-button/camfil-cms-big-banner-with-button.component';
+import { CamfilCmsCookieDisclaimerComponent } from './cms/components/camfil-cms-cookie-disclaimer/camfil-cms-cookie-disclaimer.component';
 import { CamfilCmsEdpComponent } from './cms/components/camfil-cms-edp/camfil-cms-edp.component';
 import { CamfilCmsFaqComponent } from './cms/components/camfil-cms-faq/camfil-cms-faq.component';
 import { CamfilCMSImageTextButtonComponent } from './cms/components/camfil-cms-image-text-button/camfil-cms-image-text-button.component';
@@ -93,6 +94,7 @@ import { BasketShippingAddressWidgetComponent } from './components/checkout/bask
 import { AccordionItemComponent } from './components/common/accordion-item/accordion-item.component';
 import { AccordionComponent } from './components/common/accordion/accordion.component';
 import { CamfilBreadcrumbComponent } from './components/common/camfil-breadcrumb/camfil-breadcrumb.component';
+import { CamfilFooterComponent } from './components/common/camfil-footer/camfil-footer.component';
 import { CamfilLinksBlockComponent } from './components/common/camfil-links-block/camfil-links-block.component';
 import { CamfilModalDialogComponent } from './components/common/camfil-modal-dialog/camfil-modal-dialog.component';
 import { CamfilQuickViewModalComponent } from './components/common/camfil-quick-view-modal/camfil-quick-view-modal.component';
@@ -234,6 +236,7 @@ const declaredComponents = [
   CamfilCMSImageTextButtonComponent,
   CamfilCMSSmallImageTextLinkComponent,
   CamfilCamCardModalComponent,
+  CamfilCmsCookieDisclaimerComponent,
   CamfilCmsEdpComponent,
   CamfilCmsFaqComponent,
   CamfilErrorComponent,
@@ -241,6 +244,7 @@ const declaredComponents = [
   CamfilFilterCollapsableComponent,
   CamfilFilterDropdownComponent,
   CamfilFilterTextComponent,
+  CamfilFooterComponent,
   CamfilHeaderBoxComponent,
   CamfilProductAddToBasketModalComponent,
   CamfilProductAttributeComponent,
@@ -257,6 +261,7 @@ const declaredComponents = [
   CamfilProductRatingStarComponent,
   CamfilProductTitleComponent,
   CamfilSmallCtaModalComponent,
+  ContentIncludeComponent,
   ContentSlotComponent,
   CreateOrderModalComponent,
   CreateOrderSuccessComponent,
@@ -324,6 +329,7 @@ const exportedComponents = [
   CamfilFilterInfoComponent,
   CamfilFilterMeasurementsComponent,
   CamfilFilterNavigationComponent,
+  CamfilFooterComponent,
   CamfilHeaderBoxComponent,
   CamfilLineItemTableComponent,
   CamfilLinksBlockComponent,
