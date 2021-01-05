@@ -6,7 +6,7 @@ import { Order } from 'ish-core/models/order/order.model';
  * The Order Page Component displays the details of an order. See also {@link OrderPageContainerComponent}
  *
  * @example
- * <ish-account-order-page [order]="order"></ish-order-page>
+ * <ish-order-page [order]="order"></ish-order-page>
  */
 @Component({
   selector: 'ish-account-order',

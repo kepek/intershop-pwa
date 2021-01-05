@@ -50,27 +50,23 @@ describe('Camfil Filter Text Component', () => {
               ng-reflect-model="false"
               id="mat-checkbox-1"
               ><label class="mat-checkbox-layout" for="mat-checkbox-1-input"
-                ><div class="mat-checkbox-inner-container mat-checkbox-inner-container-no-side-margin">
-                  <input
+                ><span class="mat-checkbox-inner-container mat-checkbox-inner-container-no-side-margin"
+                  ><input
                     class="mat-checkbox-input cdk-visually-hidden"
                     type="checkbox"
                     id="mat-checkbox-1-input"
                     tabindex="0"
-                    aria-checked="false"
-                  />
-                  <div
+                    aria-checked="false" /><span
                     class="mat-checkbox-ripple mat-focus-indicator mat-ripple"
                     matripple=""
                     ng-reflect-centered="true"
                     ng-reflect-radius="20"
                     ng-reflect-disabled="false"
                     ng-reflect-trigger="[object HTMLLabelElement]"
-                  >
-                    <div class="mat-ripple-element mat-checkbox-persistent-ripple"></div>
-                  </div>
-                  <div class="mat-checkbox-frame"></div>
-                  <div class="mat-checkbox-background">
-                    <svg
+                    ><span class="mat-ripple-element mat-checkbox-persistent-ripple"></span></span
+                  ><span class="mat-checkbox-frame"></span
+                  ><span class="mat-checkbox-background"
+                    ><svg
                       xml:space="preserve"
                       class="mat-checkbox-checkmark"
                       focusable="false"
@@ -82,12 +78,9 @@ describe('Camfil Filter Text Component', () => {
                         d="M4.1,12.7 9,17.6 20.3,6.3"
                         fill="none"
                         stroke="white"
-                      ></path>
-                    </svg>
-                    <div class="mat-checkbox-mixedmark"></div>
-                  </div>
-                </div>
-                <span class="mat-checkbox-label"><span style="display: none">&nbsp;</span></span></label
+                      ></path></svg
+                    ><span class="mat-checkbox-mixedmark"></span></span></span
+                ><span class="mat-checkbox-label"><span style="display: none">&nbsp;</span></span></label
               ></mat-checkbox
             ></a
           >
@@ -100,27 +93,23 @@ describe('Camfil Filter Text Component', () => {
               ng-reflect-model="true"
               id="mat-checkbox-2"
               ><label class="mat-checkbox-layout" for="mat-checkbox-2-input"
-                ><div class="mat-checkbox-inner-container mat-checkbox-inner-container-no-side-margin">
-                  <input
+                ><span class="mat-checkbox-inner-container mat-checkbox-inner-container-no-side-margin"
+                  ><input
                     class="mat-checkbox-input cdk-visually-hidden"
                     type="checkbox"
                     id="mat-checkbox-2-input"
                     tabindex="0"
-                    aria-checked="false"
-                  />
-                  <div
+                    aria-checked="false" /><span
                     class="mat-checkbox-ripple mat-focus-indicator mat-ripple"
                     matripple=""
                     ng-reflect-centered="true"
                     ng-reflect-radius="20"
                     ng-reflect-disabled="false"
                     ng-reflect-trigger="[object HTMLLabelElement]"
-                  >
-                    <div class="mat-ripple-element mat-checkbox-persistent-ripple"></div>
-                  </div>
-                  <div class="mat-checkbox-frame"></div>
-                  <div class="mat-checkbox-background">
-                    <svg
+                    ><span class="mat-ripple-element mat-checkbox-persistent-ripple"></span></span
+                  ><span class="mat-checkbox-frame"></span
+                  ><span class="mat-checkbox-background"
+                    ><svg
                       xml:space="preserve"
                       class="mat-checkbox-checkmark"
                       focusable="false"
@@ -132,12 +121,9 @@ describe('Camfil Filter Text Component', () => {
                         d="M4.1,12.7 9,17.6 20.3,6.3"
                         fill="none"
                         stroke="white"
-                      ></path>
-                    </svg>
-                    <div class="mat-checkbox-mixedmark"></div>
-                  </div>
-                </div>
-                <span class="mat-checkbox-label"><span style="display: none">&nbsp;</span></span></label
+                      ></path></svg
+                    ><span class="mat-checkbox-mixedmark"></span></span></span
+                ><span class="mat-checkbox-label"><span style="display: none">&nbsp;</span></span></label
               ></mat-checkbox
             ></a
           >

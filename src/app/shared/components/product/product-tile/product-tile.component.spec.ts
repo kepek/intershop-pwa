@@ -2,7 +2,9 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { MockComponent, MockDirective, MockPipe } from 'ng-mocks';
+import { instance, mock } from 'ts-mockito';
 
+import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { FeatureToggleModule } from 'ish-core/feature-toggle.module';
 import { ProductView } from 'ish-core/models/product-view/product-view.model';
 import { ProductRoutePipe } from 'ish-core/routing/product/product-route.pipe';
@@ -15,7 +17,7 @@ import { CamfilProductPriceComponent } from 'ish-shared/components/product/camfi
 import { CamfilProductPromotionComponent } from 'ish-shared/components/product/camfil-product-promotion/camfil-product-promotion.component';
 import { CamfilProductRatingComponent } from 'ish-shared/components/product/camfil-product-rating/camfil-product-rating.component';
 import { CamfilProductVariationSelectComponent } from 'ish-shared/components/product/camfil-product-variation-select/camfil-product-variation-select.component';
-import { CamfilProductImageComponent } from 'ish-shell/header/camfil-product-image/camfil-product-image.component';
+import { ProductImageComponent } from 'ish-shell/header/product-image/product-image.component';
 
 import { LazyProductAddToOrderTemplateComponent } from '../../../../extensions/order-templates/exports/lazy-product-add-to-order-template/lazy-product-add-to-order-template.component';
 import { LazyProductAddToQuoteComponent } from '../../../../extensions/quoting/exports/lazy-product-add-to-quote/lazy-product-add-to-quote.component';
@@ -36,7 +38,6 @@ describe('Product Tile Component', () => {
       declarations: [
         MockComponent(CamfilProductAddToBasketComponent),
         MockComponent(CamfilProductAddToCompareComponent),
-        MockComponent(CamfilProductImageComponent),
         MockComponent(CamfilProductLabelComponent),
         MockComponent(CamfilProductPriceComponent),
         MockComponent(CamfilProductPromotionComponent),
@@ -46,10 +47,12 @@ describe('Product Tile Component', () => {
         MockComponent(LazyProductAddToQuoteComponent),
         MockComponent(LazyProductAddToWishlistComponent),
         MockComponent(LazyTactonConfigureProductComponent),
+        MockComponent(ProductImageComponent),
         MockDirective(IsTactonProductDirective),
         MockPipe(ProductRoutePipe),
         ProductTileComponent,
       ],
+      providers: [{ provide: ShoppingFacade, useFactory: () => instance(mock(ShoppingFacade)) }],
     }).compileComponents();
   });
 
@@ -71,7 +74,7 @@ describe('Product Tile Component', () => {
     fixture.detectChanges();
     expect(findAllCustomElements(element)).toMatchInlineSnapshot(`
       Array [
-        "camfil-product-image",
+        "ish-product-image",
         "camfil-product-label",
         "camfil-product-promotion",
         "camfil-product-price",
@@ -90,7 +93,7 @@ describe('Product Tile Component', () => {
     fixture.detectChanges();
     expect(findAllCustomElements(element)).toMatchInlineSnapshot(`
       Array [
-        "camfil-product-image",
+        "ish-product-image",
         "camfil-product-label",
       ]
     `);
