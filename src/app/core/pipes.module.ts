@@ -5,9 +5,11 @@ import { PricePipe } from './models/price/price.pipe';
 import { CamfilDatePipe } from './pipes/camfil-date.pipe';
 import { CamfilDimensionPipe } from './pipes/camfil-dimension.pipe';
 import { DatePipe } from './pipes/date.pipe';
+import { FeatureTogglePipe } from './pipes/feature-toggle.pipe';
 import { HighlightPipe } from './pipes/highlight.pipe';
 import { MakeHrefPipe } from './pipes/make-href.pipe';
 import { SanitizePipe } from './pipes/sanitize.pipe';
+import { ServerSettingPipe } from './pipes/server-setting.pipe';
 import { CategoryRoutePipe } from './routing/category/category-route.pipe';
 import { ProductRoutePipe } from './routing/product/product-route.pipe';
 
@@ -17,11 +19,13 @@ const pipes = [
   CamfilDimensionPipe,
   CategoryRoutePipe,
   DatePipe,
+  FeatureTogglePipe,
   HighlightPipe,
   MakeHrefPipe,
   PricePipe,
   ProductRoutePipe,
   SanitizePipe,
+  ServerSettingPipe,
 ];
 
 @NgModule({

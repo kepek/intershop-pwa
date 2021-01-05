@@ -25,7 +25,7 @@ const accountPageRoutes: Routes = [
         path: 'orders',
         data: { breadcrumbData: [{ key: 'account.order_history.link' }] },
         loadChildren: () =>
-          import('../camfil-account-order-history/camfil-account-order-history-page.module').then(
+          import('../account-order-history/account-order-history-page.module').then(
             m => m.AccountOrderHistoryPageModule
           ),
       },
@@ -36,12 +36,10 @@ const accountPageRoutes: Routes = [
           import('../account-payment/account-payment-page.module').then(m => m.AccountPaymentPageModule),
       },
       {
-        path: '',
+        path: 'profile',
         data: { breadcrumbData: [{ key: 'account.profile.link' }] },
         loadChildren: () =>
-          import('../../extensions/cam-account/pages/account-profile/account-profile-page.module').then(
-            m => m.AccountProfilePageModule
-          ),
+          import('../account-profile/account-profile-page.module').then(m => m.AccountProfilePageModule),
       },
       {
         path: 'quotes',
@@ -49,11 +47,11 @@ const accountPageRoutes: Routes = [
         loadChildren: () =>
           import('../../extensions/quoting/pages/quote-list/quote-list-page.module').then(m => m.QuoteListPageModule),
       },
-      /*      {
+      {
         path: '',
         data: { breadcrumbData: [] },
         component: AccountOverviewPageModule.component,
-      },*/
+      },
       {
         path: 'wishlists',
         data: { breadcrumbData: [{ key: 'account.wishlists.breadcrumb_link' }] },
