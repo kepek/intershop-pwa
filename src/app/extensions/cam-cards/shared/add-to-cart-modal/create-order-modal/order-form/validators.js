@@ -5,6 +5,12 @@ export const ADDRESS_VALIDATORS = {
       message: 'camfil.modal.createOrder.order-form.select.customer.error.required',
     },
   ],
+  contact: [
+    {
+      error: 'required',
+      message: 'camfil.modal.createOrder.order-form.select.contact_person.error.required',
+    },
+  ],
   phoneNumber: [
     {
       error: 'pattern',
