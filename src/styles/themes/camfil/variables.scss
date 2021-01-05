@@ -220,6 +220,7 @@ $font-size-base: $font-size-corporate; // 14px is the bootstrap 3 default font s
 $font-size-sm: $font-size-base * 0.85; // ~12px
 $font-size-xs: $font-size-base * 0.75; // ~10px
 $font-size-lg: $font-size-base * 1.1428; // ~16px
+$font-size-xlg: 20px;
 
 $h1-font-size: $font-size-base * 2.15; // ~30px
 $h2-font-size: $font-size-base * 1.7; // ~24px
@@ -365,6 +366,7 @@ $space-sm: $grid-gutter-width / 3;
 $space-box: 16px;
 $space-box-half: $space-box / 2;
 $space-prod-item: 20px;
+$space-detail-item-margin: 24px;
 
 //other
 $camfil-toolbar-font-size: $font-size-base * 0.95; // ~13px

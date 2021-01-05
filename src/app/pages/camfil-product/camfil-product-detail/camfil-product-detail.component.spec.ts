@@ -1,14 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
+import { provideMockStore } from '@ngrx/store/testing';
 import { TranslateModule } from '@ngx-translate/core';
-import { MockComponent, MockDirective } from 'ng-mocks';
+import { MockComponent, MockDirective, MockPipe } from 'ng-mocks';
 
 import { FeatureToggleDirective } from 'ish-core/directives/feature-toggle.directive';
+import { PricePipe } from 'ish-core/models/price/price.pipe';
 import { ProductView } from 'ish-core/models/product-view/product-view.model';
 import { AccordionItemComponent } from 'ish-shared/components/common/accordion-item/accordion-item.component';
 import { AccordionComponent } from 'ish-shared/components/common/accordion/accordion.component';
 import { CamfilProductAddToBasketComponent } from 'ish-shared/components/product/camfil-product-add-to-basket/camfil-product-add-to-basket.component';
+import { CamfilProductAddToCompareComponent } from 'ish-shared/components/product/camfil-product-add-to-compare/camfil-product-add-to-compare.component';
+import { CamfilProductAttributeComponent } from 'ish-shared/components/product/camfil-product-attribute/camfil-product-attribute.component';
 import { CamfilProductAttributesComponent } from 'ish-shared/components/product/camfil-product-attributes/camfil-product-attributes.component';
 import { CamfilProductIdComponent } from 'ish-shared/components/product/camfil-product-id/camfil-product-id.component';
 import { CamfilProductInventoryComponent } from 'ish-shared/components/product/camfil-product-inventory/camfil-product-inventory.component';
@@ -53,6 +57,8 @@ describe('Camfil Product Detail Component', () => {
         MockComponent(AccordionComponent),
         MockComponent(AccordionItemComponent),
         MockComponent(CamfilProductAddToBasketComponent),
+        MockComponent(CamfilProductAddToCompareComponent),
+        MockComponent(CamfilProductAttributeComponent),
         MockComponent(CamfilProductAttributesComponent),
         MockComponent(CamfilProductAttributesPreviewComponent),
         MockComponent(CamfilProductIdComponent),
@@ -71,7 +77,9 @@ describe('Camfil Product Detail Component', () => {
         MockComponent(ProductDetailActionsComponent),
         MockComponent(ProductImagesComponent),
         MockDirective(FeatureToggleDirective),
+        MockPipe(PricePipe),
       ],
+      providers: [provideMockStore()],
     }).compileComponents();
   });
 
