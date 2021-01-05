@@ -11,6 +11,8 @@ pipelines:
       - step:
           name: List Files
           script:
+            - node -v
+            - npm -v
             - echo "$(ls -la)"
       - step:
           name: Install & Build Dependencies
