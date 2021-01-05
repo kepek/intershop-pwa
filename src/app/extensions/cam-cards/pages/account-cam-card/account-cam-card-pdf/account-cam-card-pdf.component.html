@@ -1,0 +1,27 @@
+<button
+  mat-stroked-button
+  color="primary"
+  disabled
+  data-testing-id="pdf-cam-card"
+  (click)="openPdfGenDialog()"
+  disabled="{{ !camCards?.length }}"
+>
+  <mat-icon svgIcon="print" class="size-15"></mat-icon>
+  {{ 'camfil.account.cam_cards.list.button.print.label' | translate }}
+</button>
+
+<camfil-small-cta-modal
+  [actionTitle]="'camfil.account.cam_cards.print.dialog.title' | translate"
+  [actionTemplate]="actionTemplate"
+>
+</camfil-small-cta-modal>
+
+<ng-template #actionTemplate>
+  <button class="btn btn-link cta-modal__links--link" type="submit" (click)="generatePdfWithoutPrices()">
+    <b>{{ 'camfil.account.cam_cards.print.dialog.btn.no_price' | translate }}</b>
+  </button>
+  <button class="btn btn-link cta-modal__links--link" type="submit" (click)="generatePdfWithPrices()">
+    <b>{{ 'camfil.account.cam_cards.print.dialog.btn.with_price' | translate }}</b>
+  </button>
+  <ish-loading *ngIf="pdfLoading"></ish-loading>
+</ng-template>
