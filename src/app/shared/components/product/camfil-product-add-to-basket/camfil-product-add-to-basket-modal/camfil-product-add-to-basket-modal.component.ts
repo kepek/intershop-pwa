@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
@@ -18,6 +18,25 @@ import { AddToCartModalComponent } from '../../../../../extensions/cam-cards/sha
 })
 export class CamfilProductAddToBasketModalComponent implements OnInit, OnDestroy {
   @Input() product: Product;
+  /**
+   * When true, it specifies that the button should be disabled
+   */
+  @Input() disabled = false;
+  /**
+   * when 'icon', the button label is an icon, otherwise it is text
+   */
+  @Input() displayType?: 'icon' | 'button' | 'link' = 'icon';
+  /**
+   * additional css styling
+   */
+  @Input() class?: string;
+
+  @Input() colorIcon?: string;
+
+  /**
+   * translationKey for the button label
+   */
+  @Input() translationKey = 'product.add_to_cart.link';
 
   basket$: Observable<BasketView>;
 
@@ -29,6 +48,11 @@ export class CamfilProductAddToBasketModalComponent implements OnInit, OnDestroy
     private router: Router,
     private checkoutFacade: CheckoutFacade
   ) {}
+
+  /**
+   * fires 'true' after add To Cart is clicked and basket is loading
+   */
+  displaySpinner$ = new BehaviorSubject(false);
 
   ngOnInit() {
     this.basket$ = this.checkoutFacade.basket$;
@@ -51,6 +75,10 @@ export class CamfilProductAddToBasketModalComponent implements OnInit, OnDestroy
         this.navigateToLogin();
       }
     });
+  }
+
+  get displayIcon(): boolean {
+    return this.displayType === 'icon';
   }
 
   ngOnDestroy() {

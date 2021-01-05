@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 import { of } from 'rxjs';
@@ -78,6 +79,7 @@ describe('Camfil Product Add To Basket Modal Component', () => {
         CamfilProductQuantityComponent,
         CreateOrderModalComponent,
         CreateOrderSuccessComponent,
+        FaIconComponent,
         OrderFormComponent,
       ],
       imports: [NgbModalModule, ReactiveFormsModule, RouterTestingModule, TranslateModule.forRoot()],
