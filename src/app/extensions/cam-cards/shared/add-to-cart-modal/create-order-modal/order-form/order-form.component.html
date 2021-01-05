@@ -31,6 +31,11 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
+    <camfil-error
+      [errors]="getField('contact').errors"
+      [errorValidators]="validators.contact"
+      [touched]="getField('contact').touched || getField('contact').dirty"
+    ></camfil-error>
 
     <!--order mark-->
     <mat-form-field appearance="outline" class="delivery-address__form--field">

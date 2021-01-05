@@ -32,7 +32,7 @@ export class OrderFormComponent implements OnInit, OnDestroy {
 
     this.addressForm = this.fb.group({
       customer: ['', [Validators.required]],
-      contact: [''],
+      contact: ['', Validators.required],
       invoiceLabel: ['', [Validators.required, Validators.maxLength(20)]],
       phoneNumber: ['', Validators.pattern('[0-9+-/]*')],
       orderMark: ['', [Validators.required]],
