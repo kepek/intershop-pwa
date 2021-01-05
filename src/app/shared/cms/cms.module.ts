@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 
 import { CamfilCMSBigBannerWithButtonComponent } from './components/camfil-cms-big-banner-with-button/camfil-cms-big-banner-with-button.component';
+import { CamfilCmsCookieDisclaimerComponent } from './components/camfil-cms-cookie-disclaimer/camfil-cms-cookie-disclaimer.component';
 import { CamfilCmsEdpComponent } from './components/camfil-cms-edp/camfil-cms-edp.component';
 import { CamfilCmsFaqComponent } from './components/camfil-cms-faq/camfil-cms-faq.component';
 import { CamfilCMSImageTextButtonComponent } from './components/camfil-cms-image-text-button/camfil-cms-image-text-button.component';
@@ -155,6 +156,14 @@ import { SfeAdapterService } from './sfe-adapter/sfe-adapter.service';
       useValue: {
         definitionQualifiedName: 'camfil_app_sf_base_cm:camfil.component.faq.pagelet2-Component',
         class: CamfilCmsFaqComponent,
+      },
+      multi: true,
+    },
+    {
+      provide: CMS_COMPONENT,
+      useValue: {
+        definitionQualifiedName: 'camfil_app_sf_base_cm:camfil.component.cookieDisclaimer.pagelet2-Component',
+        class: CamfilCmsCookieDisclaimerComponent,
       },
       multi: true,
     },

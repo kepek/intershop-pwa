@@ -1,0 +1,17 @@
+<div
+  *ngIf="showBanner"
+  [@bottomOut]="transitionBanner"
+  (@bottomOut.done)="acceptAllAnimationDone($event)"
+  [ngClass]="pagelet.stringParam('CSSClass')"
+  class="cookies-banner"
+>
+  <p *ngIf="pagelet.hasParam('Description')" [ishServerHtml]="pagelet.stringParam('Description')"></p>
+
+  <button type="button" class="btn btn-light float-right" (click)="acceptAll()" data-testing-id="acceptAllButton">
+    {{ 'cookies.banner.accept_all' | translate }}
+  </button>
+
+  <button type="button" class="btn btn-outline-light float-right" routerLink="/cookies">
+    {{ 'cookies.banner.set_preferences' | translate }}
+  </button>
+</div>

@@ -30,7 +30,6 @@ import { TactonExportsModule } from '../extensions/tacton/exports/tacton-exports
 import { WishlistsExportsModule } from '../extensions/wishlists/exports/wishlists-exports.module';
 
 import { CookiesBannerComponent } from './application/cookies-banner/cookies-banner.component';
-import { CamfilFooterComponent } from './footer/camfil-footer/camfil-footer.component';
 import { FooterComponent } from './footer/footer/footer.component';
 import { CamfilHeaderDefaultComponent } from './header/camfil-header-default/camfil-header-default.component';
 import { CamfilHeaderNavigationComponent } from './header/camfil-header-navigation/camfil-header-navigation.component';
@@ -74,7 +73,6 @@ const importExportModules = [
 ];
 
 const exportedComponents = [
-  CamfilFooterComponent,
   CamfilHeaderComponent,
   CamfilProductImageComponent,
   CamfilSearchBoxComponent,
