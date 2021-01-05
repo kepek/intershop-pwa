@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { Price } from 'ish-core/models/price/price.model';
 
@@ -11,9 +12,24 @@ import { Price } from 'ish-core/models/price/price.model';
 export class CamfilCheckoutListComponent {
   @Input() order;
   isOrderOpen = true;
+  orderForm: FormGroup;
+
+  constructor(private fb: FormBuilder) {
+    this.initForm();
+  }
+
+  initForm() {
+    this.orderForm = this.fb.group({
+      orderMark: ['', [Validators.required, Validators.maxLength(35)]],
+      invoiceMark: ['', [Validators.maxLength(35)]],
+      deliveryDate: ['', [Validators.maxLength(35)]],
+      note: ['', [Validators.maxLength(35)]],
+    });
+  }
 
   toggleOrder() {
     this.isOrderOpen = !this.isOrderOpen;
+    console.log('ORDER', this.order);
   }
 
   totalPrice(): Price {

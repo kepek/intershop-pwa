@@ -38,6 +38,7 @@
 
   .order-summary-info {
     padding: $space-default/3 * 2 $space-default * 2;
+    margin: 8px 0;
 
     dd,
     dt {
@@ -49,7 +50,7 @@
     }
 
     @media (min-width: $screen-xl-min) {
-      padding: $space-default $space-default * 5;
+      padding: $space-default $space-default * 3;
     }
 
     @media (min-width: $screen-sm-min) {
@@ -126,5 +127,64 @@
     margin-left: 16px;
     font-size: 14px;
     font-weight: 500;
+  }
+
+  form {
+    margin: 0 -50px;
+  }
+
+  .mat-form-field {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .order-cta {
+    position: relative;
+    padding-bottom: 10px;
+    padding-left: 0;
+    margin-top: 8px;
+    list-style: none;
+
+    li {
+      margin-bottom: 10px;
+
+      a {
+        display: flex;
+        align-items: center;
+        font-weight: 500;
+      }
+
+      .mat-icon {
+        margin-right: 8px;
+        vertical-align: top;
+
+        &.edit-icon {
+          width: 16px;
+          height: 16px;
+          // margin-right: 10px;
+          // margin-left: 3px;
+        }
+
+        &.remove-icon {
+          width: 16px;
+          height: 16px;
+        }
+
+        &.add-icon {
+          margin-right: 5px;
+          margin-left: -4px;
+        }
+
+        &::ng-deep {
+          svg {
+            vertical-align: top;
+          }
+        }
+      }
+    }
+  }
+
+  .order-cta-container {
+    margin: 0 -50px;
   }
 }

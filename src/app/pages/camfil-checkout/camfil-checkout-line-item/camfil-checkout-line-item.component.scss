@@ -4,6 +4,10 @@
 :host {
   width: 100%;
 
+  .line-item {
+    justify-content: space-between;
+  }
+
   .image {
     margin: 0 $space-box;
   }
