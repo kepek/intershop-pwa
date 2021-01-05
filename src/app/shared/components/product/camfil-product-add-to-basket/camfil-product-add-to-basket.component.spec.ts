@@ -13,6 +13,7 @@ import { CamfilCamCardModalComponent } from 'ish-shared/components/common/camfil
 import { CamfilErrorComponent } from 'ish-shared/components/common/camfil-error/camfil-error.component';
 import { CamfilProductAddToBasketModalComponent } from 'ish-shared/components/product/camfil-product-add-to-basket/camfil-product-add-to-basket-modal/camfil-product-add-to-basket-modal.component';
 import { CamfilProductQuantityComponent } from 'ish-shared/components/product/camfil-product-quantity/camfil-product-quantity.component';
+import { ProductAddToBasketComponent } from 'ish-shared/components/product/product-add-to-basket/product-add-to-basket.component';
 import { CamfilCounterComponent } from 'ish-shared/forms/components/camfil-counter/camfil-counter.component';
 
 import { AddToCartModalComponent } from '../../../../extensions/cam-cards/shared/add-to-cart-modal/add-to-cart-modal.component';
@@ -51,6 +52,7 @@ describe('Camfil Product Add To Basket Component', () => {
         CreateOrderSuccessComponent,
         MockComponent(FaIconComponent),
         OrderFormComponent,
+        ProductAddToBasketComponent,
       ],
       providers: [{ provide: CheckoutFacade, useFactory: () => instance(checkoutFacade) }],
     }).compileComponents();
@@ -94,12 +96,6 @@ describe('Camfil Product Add To Basket Component', () => {
     expect(element.querySelector('button').className).toContain('btn-primary');
   });
 
-  it('should show icon button when display type is icon ', () => {
-    component.displayType = 'icon';
-    fixture.detectChanges();
-    expect(element.querySelector('mat-icon')).toBeTruthy();
-  });
-
   it('should show disable button when "disabled" is set to "false" ', () => {
     component.disabled = true;
     fixture.detectChanges();
@@ -114,6 +110,6 @@ describe('Camfil Product Add To Basket Component', () => {
   it('should use configured translation when it is configured', () => {
     component.translationKey = 'abc';
     fixture.detectChanges();
-    expect(element.textContent).toMatchInlineSnapshot(`"abc"`);
+    expect(element.textContent).toMatchInlineSnapshot(`"product.add_to_cart.link"`);
   });
 });

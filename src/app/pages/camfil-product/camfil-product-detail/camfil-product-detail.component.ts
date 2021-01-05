@@ -55,11 +55,12 @@ export class CamfilProductDetailComponent implements OnInit, OnDestroy {
       .valueChanges.pipe(takeUntil(this.destroy$))
       .subscribe(this.quantityChange);
 
-    if (!this.category && this.product.defaultCategoryId) {
+    if (!this.category && this.product?.defaultCategoryId) {
       this.shoppingFacade
         .category$(this.product.defaultCategoryId)
         .pipe(whenTruthy(), takeUntil(this.destroy$))
         .subscribe(category => {
+          // tslint:disable-next-line:no-assignement-to-inputs
           this.category = category;
         });
     }
