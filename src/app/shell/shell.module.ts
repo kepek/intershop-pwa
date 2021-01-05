@@ -31,9 +31,7 @@ import { WishlistsExportsModule } from '../extensions/wishlists/exports/wishlist
 
 import { CookiesBannerComponent } from './application/cookies-banner/cookies-banner.component';
 import { FooterComponent } from './footer/footer/footer.component';
-import { CamfilHeaderDefaultComponent } from './header/camfil-header-default/camfil-header-default.component';
 import { CamfilHeaderNavigationComponent } from './header/camfil-header-navigation/camfil-header-navigation.component';
-import { CamfilHeaderComponent } from './header/camfil-header/camfil-header.component';
 import { CamfilLanguageSwitchComponent } from './header/camfil-language-switch/camfil-language-switch.component';
 import { CamfilLoginStatusComponent } from './header/camfil-login-status/camfil-login-status.component';
 import { CamfilMiniBasketComponent } from './header/camfil-mini-basket/camfil-mini-basket.component';
@@ -73,12 +71,18 @@ const importExportModules = [
 ];
 
 const exportedComponents = [
-  CamfilHeaderComponent,
+  CamfilHeaderNavigationComponent,
+  CamfilLanguageSwitchComponent,
+  CamfilLoginStatusComponent,
+  CamfilMiniBasketComponent,
+  CamfilProductCompareStatusComponent,
   CamfilProductImageComponent,
   CamfilSearchBoxComponent,
+  CamfilUserLinksComponent,
   CookiesBannerComponent,
   FooterComponent,
   HeaderComponent,
+  HeaderSimpleComponent,
   ProductImageComponent,
   SearchBoxComponent,
 ];
@@ -103,7 +107,6 @@ const exportedComponents = [
   ],
   declarations: [
     ...exportedComponents,
-    CamfilHeaderDefaultComponent,
     CamfilHeaderNavigationComponent,
     CamfilLanguageSwitchComponent,
     CamfilLoginStatusComponent,

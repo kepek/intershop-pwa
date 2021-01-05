@@ -96,6 +96,8 @@ import { AccordionItemComponent } from './components/common/accordion-item/accor
 import { AccordionComponent } from './components/common/accordion/accordion.component';
 import { CamfilBreadcrumbComponent } from './components/common/camfil-breadcrumb/camfil-breadcrumb.component';
 import { CamfilFooterComponent } from './components/common/camfil-footer/camfil-footer.component';
+import { CamfilHeaderDefaultComponent } from './components/common/camfil-header-default/camfil-header-default.component';
+import { CamfilHeaderComponent } from './components/common/camfil-header/camfil-header.component';
 import { CamfilLinksBlockComponent } from './components/common/camfil-links-block/camfil-links-block.component';
 import { CamfilModalDialogComponent } from './components/common/camfil-modal-dialog/camfil-modal-dialog.component';
 import { CamfilQuickViewModalComponent } from './components/common/camfil-quick-view-modal/camfil-quick-view-modal.component';
@@ -247,6 +249,8 @@ const declaredComponents = [
   CamfilFilterTextComponent,
   CamfilFooterComponent,
   CamfilHeaderBoxComponent,
+  CamfilHeaderComponent,
+  CamfilHeaderDefaultComponent,
   CamfilProductAddToBasketModalComponent,
   CamfilProductAttributeComponent,
   CamfilProductAttributesComponent,
@@ -333,6 +337,7 @@ const exportedComponents = [
   CamfilFilterNavigationComponent,
   CamfilFooterComponent,
   CamfilHeaderBoxComponent,
+  CamfilHeaderComponent,
   CamfilLineItemTableComponent,
   CamfilLinksBlockComponent,
   CamfilModalDialogComponent,

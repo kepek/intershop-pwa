@@ -3,10 +3,10 @@
   <ish-header-checkout *ngSwitchCase="'checkout'"></ish-header-checkout>
 
   <ng-container *ngSwitchDefault>
-    <camfil-header-default
+    <ish-header-default
       [isSticky]="isSticky$ | async"
       [deviceType]="deviceType$ | async"
       [reset]="reset$ | async"
-    ></camfil-header-default>
+    ></ish-header-default>
   </ng-container>
 </ng-container>
