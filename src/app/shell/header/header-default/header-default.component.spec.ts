@@ -10,6 +10,12 @@ import { UserInformationMobileComponent } from 'ish-shell/header/user-informatio
 
 import { LazyHeaderQuickorderComponent } from '../../../extensions/quickorder/exports/lazy-header-quickorder/lazy-header-quickorder.component';
 import { LazyWishlistsLinkComponent } from '../../../extensions/wishlists/exports/lazy-wishlists-link/lazy-wishlists-link.component';
+import { CamfilHeaderNavigationComponent } from '../camfil-header-navigation/camfil-header-navigation.component';
+import { CamfilLanguageSwitchComponent } from '../camfil-language-switch/camfil-language-switch.component';
+import { CamfilLoginStatusComponent } from '../camfil-login-status/camfil-login-status.component';
+import { CamfilMiniBasketComponent } from '../camfil-mini-basket/camfil-mini-basket.component';
+import { CamfilProductCompareStatusComponent } from '../camfil-product-compare-status/camfil-product-compare-status.component';
+import { CamfilSearchBoxComponent } from '../camfil-search-box/camfil-search-box.component';
 
 import { HeaderDefaultComponent } from './header-default.component';
 

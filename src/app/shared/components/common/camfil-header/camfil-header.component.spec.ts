@@ -7,7 +7,7 @@ import { instance, mock, when } from 'ts-mockito';
 import { AppFacade } from 'ish-core/facades/app.facade';
 import { FeatureToggleModule } from 'ish-core/feature-toggle.module';
 import { findAllCustomElements } from 'ish-core/utils/dev/html-query-utils';
-import { CamfilHeaderDefaultComponent } from 'ish-shell/header/camfil-header-default/camfil-header-default.component';
+import { CamfilHeaderDefaultComponent } from 'ish-shared/components/common/camfil-header-default/camfil-header-default.component';
 import { HeaderCheckoutComponent } from 'ish-shell/header/header-checkout/header-checkout.component';
 import { HeaderSimpleComponent } from 'ish-shell/header/header-simple/header-simple.component';
 

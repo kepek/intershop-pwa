@@ -9,15 +9,15 @@ import { LazyWishlistsLinkComponent } from 'src/app/extensions/wishlists/exports
 
 import { FeatureToggleModule } from 'ish-core/feature-toggle.module';
 import { findAllCustomElements } from 'ish-core/utils/dev/html-query-utils';
+import { ContentIncludeComponent } from 'ish-shared/cms/components/content-include/content-include.component';
+import { CamfilHeaderNavigationComponent } from 'ish-shell/header/camfil-header-navigation/camfil-header-navigation.component';
+import { CamfilLanguageSwitchComponent } from 'ish-shell/header/camfil-language-switch/camfil-language-switch.component';
+import { CamfilLoginStatusComponent } from 'ish-shell/header/camfil-login-status/camfil-login-status.component';
+import { CamfilMiniBasketComponent } from 'ish-shell/header/camfil-mini-basket/camfil-mini-basket.component';
+import { CamfilProductCompareStatusComponent } from 'ish-shell/header/camfil-product-compare-status/camfil-product-compare-status.component';
+import { CamfilSearchBoxComponent } from 'ish-shell/header/camfil-search-box/camfil-search-box.component';
 import { CamfilUserLinksComponent } from 'ish-shell/header/camfil-user-links/camfil-user-links.component';
 import { UserInformationMobileComponent } from 'ish-shell/header/user-information-mobile/user-information-mobile.component';
-
-import { CamfilHeaderNavigationComponent } from '../camfil-header-navigation/camfil-header-navigation.component';
-import { CamfilLanguageSwitchComponent } from '../camfil-language-switch/camfil-language-switch.component';
-import { CamfilLoginStatusComponent } from '../camfil-login-status/camfil-login-status.component';
-import { CamfilMiniBasketComponent } from '../camfil-mini-basket/camfil-mini-basket.component';
-import { CamfilProductCompareStatusComponent } from '../camfil-product-compare-status/camfil-product-compare-status.component';
-import { CamfilSearchBoxComponent } from '../camfil-search-box/camfil-search-box.component';
 
 import { CamfilHeaderDefaultComponent } from './camfil-header-default.component';
 
@@ -38,6 +38,7 @@ describe('Camfil Header Default Component', () => {
         MockComponent(CamfilProductCompareStatusComponent),
         MockComponent(CamfilSearchBoxComponent),
         MockComponent(CamfilUserLinksComponent),
+        MockComponent(ContentIncludeComponent),
         MockComponent(FaIconComponent),
         MockComponent(LazyHeaderQuickorderComponent),
         MockComponent(LazyWishlistsLinkComponent),

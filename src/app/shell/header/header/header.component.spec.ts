@@ -6,9 +6,10 @@ import { instance, mock, when } from 'ts-mockito';
 
 import { AppFacade } from 'ish-core/facades/app.facade';
 import { findAllCustomElements } from 'ish-core/utils/dev/html-query-utils';
-import { CamfilHeaderDefaultComponent } from 'ish-shell/header/camfil-header-default/camfil-header-default.component';
 import { HeaderCheckoutComponent } from 'ish-shell/header/header-checkout/header-checkout.component';
 import { HeaderSimpleComponent } from 'ish-shell/header/header-simple/header-simple.component';
+
+import { HeaderDefaultComponent } from '../header-default/header-default.component';
 
 import { HeaderComponent } from './header.component';
 
@@ -26,8 +27,8 @@ describe('Header Component', () => {
       imports: [RouterTestingModule],
       declarations: [
         HeaderComponent,
-        MockComponent(CamfilHeaderDefaultComponent),
         MockComponent(HeaderCheckoutComponent),
+        MockComponent(HeaderDefaultComponent),
         MockComponent(HeaderSimpleComponent),
       ],
       providers: [{ provide: AppFacade, useFactory: () => instance(appFacade) }],
@@ -50,7 +51,7 @@ describe('Header Component', () => {
     fixture.detectChanges();
     expect(findAllCustomElements(element)).toMatchInlineSnapshot(`
       Array [
-        "camfil-header-default",
+        "ish-header-default",
       ]
     `);
   });

@@ -10,7 +10,7 @@ import { CookiesBannerComponent } from 'ish-shell/application/cookies-banner/coo
 
 import { AppComponent } from './app.component';
 import { CamfilFooterComponent } from './shared/components/common/camfil-footer/camfil-footer.component';
-import { CamfilHeaderComponent } from './shell/header/camfil-header/camfil-header.component';
+import { CamfilHeaderComponent } from './shared/components/common/camfil-header/camfil-header.component';
 
 let translate: TranslateService;
 
