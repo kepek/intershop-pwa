@@ -25,6 +25,7 @@ describe('Checkout Page Component', () => {
   let element: HTMLElement;
   let checkoutFacade: CheckoutFacade;
   let camCardFacadeMock: CamCardsFacade;
+  let shoppingFacadeMock: ShoppingFacade;
 
   const camCardDetails = {
     name: 'testing cam cards',
@@ -54,6 +55,7 @@ describe('Checkout Page Component', () => {
   beforeEach(async () => {
     camCardFacadeMock = mock(CamCardsFacade);
     checkoutFacade = mock(CheckoutFacade);
+    shoppingFacadeMock = mock(ShoppingFacade);
 
     await TestBed.configureTestingModule({
       declarations: [
@@ -69,7 +71,7 @@ describe('Checkout Page Component', () => {
       providers: [
         { provide: CheckoutFacade, useFactory: () => instance(checkoutFacade) },
         { provide: CamCardsFacade, useFactory: () => instance(camCardFacadeMock) },
-        { provide: ShoppingFacade, useFactory: () => instance(mock(ShoppingFacade)) },
+        { provide: ShoppingFacade, useFactory: () => instance(shoppingFacadeMock) },
         { provide: AppFacade, useFactory: () => instance(mock(AppFacade)) },
       ],
     }).compileComponents();
@@ -79,6 +81,8 @@ describe('Checkout Page Component', () => {
     fixture = TestBed.createComponent(CheckoutPageComponent);
     component = fixture.componentInstance;
     element = fixture.nativeElement;
+
+    when(shoppingFacadeMock.productAdded$).thenReturn(of(true));
 
     when(camCardFacadeMock.currentCamCard$).thenReturn(of(camCardDetails));
     when(camCardFacadeMock.camCard$).thenReturn(of([camCardDetails]));
