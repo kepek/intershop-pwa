@@ -5,7 +5,8 @@
     class="btn"
     [ngClass]="class"
     [class.btn-primary]="!displayIcon"
-    [class.mat-flat-button]="displayType === 'button'"
+    [class.mat-flat-button]="displayType === 'button' && !hasIcon"
+    [class.mat-raised-button]="hasIcon"
     [disabled]="disabled || (displaySpinner$ | async)"
     [attr.title]="translationKey | translate"
     data-testing-id="addToCartButton"
@@ -17,7 +18,10 @@
         <mat-icon svgIcon="cart"></mat-icon>
       </ng-container>
 
-      <ng-template #defaultButton>{{ translationKey | translate }}</ng-template>
+      <ng-template #defaultButton>
+        <mat-icon svgIcon="cart" *ngIf="hasIcon" class="mat-icon notranslate color-light mat-icon-no-color"></mat-icon
+        ><span class="button-text">{{ translationKey | translate }}</span></ng-template
+      >
     </ng-container>
     <!-- button with spinning animation after Add to Cart -->
     <ng-template #spinning>
