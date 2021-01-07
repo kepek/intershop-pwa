@@ -1,7 +1,10 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 
 import { Price } from 'ish-core/models/price/price.model';
+
+import { ModalAddNewProductComponent } from '../../../extensions/cam-cards/pages/account-cam-card-detail/modal-add-new-product/modal-add-new-product.component';
 
 @Component({
   selector: 'camfil-checkout-list',
@@ -14,7 +17,7 @@ export class CamfilCheckoutListComponent {
   isOrderOpen = true;
   orderForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, public dialog: MatDialog) {
     this.initForm();
   }
 
@@ -29,7 +32,6 @@ export class CamfilCheckoutListComponent {
 
   toggleOrder() {
     this.isOrderOpen = !this.isOrderOpen;
-    console.log('ORDER', this.order);
   }
 
   totalPrice(): Price {
@@ -86,5 +88,10 @@ export class CamfilCheckoutListComponent {
     }
 
     return price;
+  }
+
+  openAddToProductModal(modal: ModalAddNewProductComponent) {
+    this.dialog.open(modal.show());
+    modal.hide = () => this.dialog.closeAll();
   }
 }

@@ -9,7 +9,6 @@ import { AccountCamCardDetailListComponent } from './account-cam-card-detail-lis
 import { AccountCamCardDetailPageComponent } from './account-cam-card-detail-page.component';
 import { AccountCamCardDetailSubTitleComponent } from './account-cam-card-detail-sub-title/account-cam-card-detail-sub-title.component';
 import { AccountCamCardDetailToolbarComponent } from './account-cam-card-detail-toolbar/account-cam-card-detail-toolbar.component';
-import { ModalAddNewProductComponent } from './modal-add-new-product/modal-add-new-product.component';
 import { ModalAddNewSectionComponent } from './modal-add-new-section/modal-add-new-section.component';
 
 const accountCamCardDetailPageRoutes: Routes = [
@@ -26,7 +25,6 @@ const accountCamCardDetailPageRoutes: Routes = [
     AccountCamCardDetailPageComponent,
     AccountCamCardDetailSubTitleComponent,
     AccountCamCardDetailToolbarComponent,
-    ModalAddNewProductComponent,
     ModalAddNewSectionComponent,
   ],
 })

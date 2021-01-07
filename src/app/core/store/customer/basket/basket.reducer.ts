@@ -207,10 +207,17 @@ export const basketReducer = createReducer(
     info: action.payload.info,
     validationResults: initialValidationResults,
   })),
-  on(loadBucketsSuccess, (state: BasketState, action) => ({
-    ...state,
-    buckets: action.payload.buckets,
-  })),
+  on(loadBucketsSuccess, (state: BasketState, action) => {
+    const hasBeenCreated = shipToAddress =>
+      action.payload.buckets.find(bucket => bucket.shipToAddress === shipToAddress);
+    const onlyEmpty = state.emptyBuckets.filter(emptyBucket => !hasBeenCreated(emptyBucket.shipToAddress));
+
+    return {
+      ...state,
+      buckets: action.payload.buckets,
+      emptyBuckets: onlyEmpty,
+    };
+  }),
   on(addEmptyBucket, (state: BasketState, action) => ({
     ...state,
     emptyBuckets: [action.payload.bucket, ...state.emptyBuckets],

@@ -83,10 +83,10 @@
         <div class="order-cta-container" [formGroup]="orderForm">
           <ul class="order-cta">
             <li>
-              <a
-                ><mat-icon svgIcon="plus" class="add-icon"></mat-icon>
-                {{ 'camfil.checkout.cta.add_product' | translate }}</a
-              >
+              <a (click)="openAddToProductModal(addNewProductModal)">
+                <mat-icon svgIcon="plus" class="add-icon"></mat-icon>
+                {{ 'camfil.checkout.cta.add_product' | translate }}
+              </a>
             </li>
             <li>
               <a
@@ -144,3 +144,5 @@
     </div>
   </ng-container>
 </ng-template>
+
+<camfil-modal-add-new-product #addNewProductModal [order]="order" [addToOrder]="true"> </camfil-modal-add-new-product>

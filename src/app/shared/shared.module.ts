@@ -45,6 +45,7 @@ import { CamfilProductGuidesComponent } from 'ish-shared/components/product/camf
 import { MaterialModule } from 'ish-shared/material/material.module';
 import { ShellModule } from 'ish-shell/shell.module';
 
+import { ModalAddNewProductComponent } from '../extensions/cam-cards/pages/account-cam-card-detail/modal-add-new-product/modal-add-new-product.component';
 import { AddToCartModalComponent } from '../extensions/cam-cards/shared/add-to-cart-modal/add-to-cart-modal.component';
 import { CamCardModalDetailsComponent } from '../extensions/cam-cards/shared/add-to-cart-modal/cam-card-modal-details/cam-card-modal-details.component';
 import { CreateOrderModalComponent } from '../extensions/cam-cards/shared/add-to-cart-modal/create-order-modal/create-order-modal.component';
@@ -280,6 +281,7 @@ const declaredComponents = [
   LineItemListComponent,
   LoginFormComponent,
   LoginModalComponent,
+  ModalAddNewProductComponent,
   ModalDialogComponent,
   OrderFormComponent,
   OrderListComponent,
@@ -367,6 +369,7 @@ const exportedComponents = [
   LineItemListComponent,
   LoadingComponent,
   LoginFormComponent,
+  ModalAddNewProductComponent,
   ModalDialogComponent,
   ModalDialogLinkComponent,
   OrderFormComponent,

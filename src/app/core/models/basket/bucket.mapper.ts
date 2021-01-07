@@ -8,7 +8,9 @@ export class BucketMapper {
       ...bucketData,
       id: bucketData.id,
       basket: bucketData.basket,
-      lineItems: bucketData.lineItems.map(id => lineItems.filter(element => element.id === id)[0]),
+      lineItems: bucketData.lineItems
+        .map(id => lineItems.find(element => element.id === id))
+        .filter(element => !!element),
       deliveryAddressId: bucketData.shipToAddress ? included.shipToAddress[bucketData.shipToAddress].id : '',
       transient: false,
     }));
