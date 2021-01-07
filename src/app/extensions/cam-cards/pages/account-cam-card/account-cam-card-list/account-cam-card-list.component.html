@@ -270,7 +270,7 @@
     class="btn-tool"
     [attr.title]="'camfil.account.cam_cards.maintenance.edit.text' | translate"
     data-testing-id="cam-card-details-edit"
-    [routerLink]="'/account/cam-cards/' + camCard.id"
+    [routerLink]="'/account/camcards/' + camCard.id"
     (click)="$event.stopPropagation()"
   >
     <mat-icon svgIcon="edit" *ngIf="maintenance(camCard, ['ACTIVE'])"></mat-icon>

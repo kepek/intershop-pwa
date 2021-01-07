@@ -103,7 +103,7 @@ describe('Cam Card Effects', () => {
         CoreStoreModule.forTesting(['router']),
         CustomerStoreModule.forTesting('user'),
         FeatureToggleModule.forTesting('camCards'),
-        RouterTestingModule.withRoutes([{ path: 'account/cam-cards/:camCardName', component: DummyComponent }]),
+        RouterTestingModule.withRoutes([{ path: 'account/camcards/:camCardName', component: DummyComponent }]),
       ],
       providers: [
         CamCardEffects,
@@ -531,7 +531,7 @@ describe('Cam Card Effects', () => {
 
   describe('routeListenerForSelectedCamCard$', () => {
     it('should map to action of type SelectCamCard', done => {
-      router.navigateByUrl('/account/cam-cards/.SKsEQAE4FIAAAFuNiUBWx0d');
+      router.navigateByUrl('/account/camcards/.SKsEQAE4FIAAAFuNiUBWx0d');
 
       effects.routeListenerForSelectedCamCard$.subscribe(action => {
         expect(action).toMatchInlineSnapshot(`
@@ -564,7 +564,7 @@ describe('Cam Card Effects', () => {
     });
 
     it('should set the breadcrumb of the selected Cam Card when on account url', done => {
-      router.navigateByUrl('/account/cam-cards/' + camCards[0].id);
+      router.navigateByUrl('/account/camcards/' + camCards[0].id);
 
       effects.setCamCardBreadcrumb$.subscribe(action => {
         expect(action.payload).toMatchInlineSnapshot(`
@@ -572,7 +572,7 @@ describe('Cam Card Effects', () => {
             "breadcrumbData": Array [
               Object {
                 "key": "camfil.account.cam_cards.link",
-                "link": "/account/cam-cards",
+                "link": "/account/camcards",
               },
               Object {
                 "text": "testing cam cards",

@@ -322,7 +322,7 @@ export class SelectCamCardModalComponent implements OnInit, OnDestroy, OnChanges
   goToCamcard() {
     const rootCamCardId = this.currentCamCard.rootCamCard || this.currentCamCard.id;
 
-    this.router.navigate([`/account/cam-cards/${rootCamCardId}`]);
+    this.router.navigate([`/account/camcards/${rootCamCardId}`]);
     this.hide();
   }
 

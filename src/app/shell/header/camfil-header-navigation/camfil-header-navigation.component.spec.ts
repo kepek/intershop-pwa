@@ -85,7 +85,7 @@ describe('Camfil Header Navigation Component', () => {
           </a>
         </li>
         <li class="dropdown with-separator">
-          <a ng-reflect-router-link="/account/cam-cards" href="/account/cam-cards"
+          <a ng-reflect-router-link="/account/camcards" href="/account/camcards"
             >camfil.account.cam_cards.link</a
           >
         </li>

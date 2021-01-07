@@ -126,7 +126,7 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges {
 
   deleteCamCard() {
     this.camCardsFacade.deleteCamCard(this.camCard.id);
-    this.router.navigate(['/account/cam-cards']);
+    this.router.navigate(['/account/camcards']);
   }
 
   deleteSubCamCard(sub: CamCard) {
