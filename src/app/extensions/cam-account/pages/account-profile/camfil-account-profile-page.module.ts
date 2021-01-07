@@ -29,4 +29,4 @@ const accountProfilePageRoutes: Routes = [{ path: '', component: CamfilAccountPr
     CamfilPersonalInfoComponent,
   ],
 })
-export class AccountProfilePageModule {}
+export class CamfilAccountProfilePageModule {}

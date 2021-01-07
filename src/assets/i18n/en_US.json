@@ -893,6 +893,7 @@
   "camfil.modal.createOrder.success.title": "Successfully added to your shopping cart",
   "camfil.modal.cta.button.ok": "OK",
   "camfil.navigation.filterClearAll.message": "Clear all filters",
+  "camfil.product.quantity.text": "Quantity",
   "camfil.product.add_to_compare.label": "Add to compare",
   "camfil.product.attributes.more": "More details",
   "camfil.product.bags.label": "Bags",

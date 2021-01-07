@@ -25,9 +25,7 @@ const accountPageRoutes: Routes = [
         path: 'profile',
         data: { breadcrumbData: [{ key: 'camfil.account.profile.link' }] },
         loadChildren: () =>
-          import('../../../cam-account/pages/account-profile/account-profile-page.module').then(
-            m => m.AccountProfilePageModule
-          ),
+          import('../account-profile/camfil-account-profile-page.module').then(m => m.CamfilAccountProfilePageModule),
       },
       {
         path: 'camcards',
