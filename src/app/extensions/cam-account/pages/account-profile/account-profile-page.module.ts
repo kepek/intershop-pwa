@@ -7,12 +7,12 @@ import { SharedModule } from 'ish-shared/shared.module';
 
 import { CamAccountModule } from '../../cam-account.module';
 
-import { AccountProfilePageComponent } from './account-profile-page.component';
-import { AccountProfileComponent } from './account-profile/account-profile.component';
-import { ChangePasswordComponent } from './change-password/change-password.component';
-import { PersonalInfoComponent } from './personal-info-form/personal-info.component';
+import { CamfilAccountProfilePageComponent } from './camfil-account-profile-page.component';
+import { CamfilChangePasswordComponent } from './camfil-change-password/camfil-change-password.component';
+import { CamfilPersonalInfoComponent } from './camfil-personal-info-form/camfil-personal-info.component';
+import { CamfilAccountProfileComponent } from './camil-account-profile/camfil-account-profile.component';
 
-const accountProfilePageRoutes: Routes = [{ path: '', component: AccountProfilePageComponent }];
+const accountProfilePageRoutes: Routes = [{ path: '', component: CamfilAccountProfilePageComponent }];
 
 @NgModule({
   imports: [
@@ -22,6 +22,11 @@ const accountProfilePageRoutes: Routes = [{ path: '', component: AccountProfileP
     SharedModule,
     TranslateModule,
   ],
-  declarations: [AccountProfileComponent, AccountProfilePageComponent, ChangePasswordComponent, PersonalInfoComponent],
+  declarations: [
+    CamfilAccountProfileComponent,
+    CamfilAccountProfilePageComponent,
+    CamfilChangePasswordComponent,
+    CamfilPersonalInfoComponent,
+  ],
 })
 export class AccountProfilePageModule {}

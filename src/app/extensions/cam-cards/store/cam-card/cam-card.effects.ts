@@ -165,7 +165,7 @@ export class CamCardEffects {
       mergeMap((camCardData: CamCard) =>
         this.camCardService.createCamCard(camCardData).pipe(
           tap(camCard => {
-            this.router.navigateByUrl(`/account/cam-cards/${camCard.id}`);
+            this.router.navigateByUrl(`/account/camcards/${camCard.id}`);
           }),
           mergeMap(camCard => [
             createCamCardSuccess({ camCard }),
@@ -354,7 +354,7 @@ export class CamCardEffects {
       mapToPayload(),
       mergeMap(({ camCardId, name }) =>
         this.camCardService.copyCamCard(camCardId, name).pipe(
-          tap(camCard => this.router.navigate([`/account/cam-cards/${camCard.id}`], { queryParams: { copy: true } })),
+          tap(camCard => this.router.navigate([`/account/camcards/${camCard.id}`], { queryParams: { copy: true } })),
           mergeMap(camCard => [
             createCamCardSuccess({ camCard }),
             displaySuccessMessage({
@@ -622,7 +622,7 @@ export class CamCardEffects {
       ofType(editCamCard),
       mapToPayloadProperty('camCardId'),
       tap(camCardId => {
-        this.router.navigateByUrl(`/account/cam-cards/${camCardId}`);
+        this.router.navigateByUrl(`/account/camcards/${camCardId}`);
       }),
       mapTo(loadCamCardsEdit())
     )
@@ -773,7 +773,7 @@ export class CamCardEffects {
       map(camCards =>
         setBreadcrumbData({
           breadcrumbData: [
-            { key: 'camfil.account.cam_cards.link', link: '/account/cam-cards' },
+            { key: 'camfil.account.cam_cards.link', link: '/account/camcards' },
             { text: camCards.name },
           ],
         })
@@ -823,7 +823,7 @@ export class CamCardEffects {
             if (returnUrl) {
               this.router.navigateByUrl(returnUrl);
             } else {
-              this.router.navigateByUrl('account/cam-cards');
+              this.router.navigateByUrl('account/camcards');
             }
           }
         })
