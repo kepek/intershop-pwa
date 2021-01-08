@@ -1,0 +1,59 @@
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { TranslateModule } from '@ngx-translate/core';
+import { MockComponent, MockDirective } from 'ng-mocks';
+import { EMPTY } from 'rxjs';
+import { instance, mock, when } from 'ts-mockito';
+
+import { ServerHtmlDirective } from 'ish-core/directives/server-html.directive';
+import { AccountFacade } from 'ish-core/facades/account.facade';
+import { ErrorMessageComponent } from 'ish-shared/components/common/error-message/error-message.component';
+import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
+
+import { CamfilRemindPasswordFormComponent } from '../camfil-remind-password-form/camfil-remind-password-form.component';
+import { CamfilUpdatePasswordFormComponent } from '../camfil-update-password-form/camfil-update-password-form.component';
+
+import { CamfilUpdatePasswordComponent } from './camfil-update-password.component';
+
+describe('Camfil Update Password Component', () => {
+  let component: CamfilUpdatePasswordComponent;
+  let fixture: ComponentFixture<CamfilUpdatePasswordComponent>;
+  let element: HTMLElement;
+
+  beforeEach(async () => {
+    const accountFacade = mock(AccountFacade);
+    when(accountFacade.passwordReminderSuccess$).thenReturn(EMPTY);
+
+    await TestBed.configureTestingModule({
+      declarations: [
+        CamfilUpdatePasswordComponent,
+        MockComponent(CamfilRemindPasswordFormComponent),
+        MockComponent(CamfilUpdatePasswordFormComponent),
+        MockComponent(ErrorMessageComponent),
+        MockComponent(LoadingComponent),
+        MockDirective(ServerHtmlDirective),
+      ],
+      imports: [RouterTestingModule, TranslateModule.forRoot()],
+      providers: [{ provide: AccountFacade, useFactory: () => instance(accountFacade) }],
+    }).compileComponents();
+  });
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(CamfilUpdatePasswordComponent);
+    component = fixture.componentInstance;
+    element = fixture.nativeElement;
+  });
+
+  it('should be created', () => {
+    expect(component).toBeTruthy();
+    expect(element).toBeTruthy();
+    expect(() => fixture.detectChanges()).not.toThrow();
+  });
+
+  it('should render update password form on forgot-password update password page', () => {
+    component.secureCode = 'abc';
+    component.userID = 'a123';
+    fixture.detectChanges();
+    expect(element.querySelector('camfil-update-password-form')).toBeTruthy();
+  });
+});

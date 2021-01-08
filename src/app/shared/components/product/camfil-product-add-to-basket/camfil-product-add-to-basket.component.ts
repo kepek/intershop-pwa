@@ -40,6 +40,10 @@ export class CamfilProductAddToBasketComponent implements OnInit, OnDestroy {
    */
   @Input() displayType?: 'icon' | 'button' | 'link' = 'link';
   /**
+   * When true will display icon inside button
+   */
+  @Input() hasIcon = false;
+  /**
    * additional css styling
    */
   @Input() class?: string;

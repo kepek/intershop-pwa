@@ -1,6 +1,12 @@
 <div class="row" [ngClass]="{ 'sticky box-shadow': isSticky }">
   <div class="{{ isSticky ? 'container' : 'col-12' }} text-right">
-    <button mat-stroked-button color="primary" class="btn-tool" data-testing-id="add-cam-card" routerLink="/account/cam-cards/create">
+    <button
+      mat-stroked-button
+      color="primary"
+      class="btn-tool"
+      data-testing-id="add-cam-card"
+      routerLink="/account/cam-cards/create"
+    >
       <mat-icon svgIcon="plus" class="size-31"></mat-icon>
       {{ 'camfil.account.cam_cards.list.button.add_cam_card.label' | translate }}
     </button>

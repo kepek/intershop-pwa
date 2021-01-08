@@ -35,13 +35,12 @@
           itemtype="http://schema.org/Offer"
         >
           <div class="row">
-            <div class="col-6 text-center">
+            <div class="col-12 prices-col">
               <camfil-product-attribute
                 name="camfil.product.list_price.label"
                 [value]="product.listPrice | ishPrice"
               ></camfil-product-attribute>
-            </div>
-            <div class="col-6 text-center">
+
               <camfil-product-attribute
                 name="camfil.product.your_price.label"
                 [value]="product.salePrice | ishPrice"
@@ -49,12 +48,13 @@
             </div>
           </div>
         </div>
-        <div class="col-lg-6 col-md-12 col-12">
+        <div class="col-lg-6 col-md-12 col-12 quantity-row">
           <form
             *ngIf="!isMasterProduct(product)"
             [formGroup]="productDetailForm"
-            class="product-form form-horizontal d-flex justify-content-center"
+            class="product-form form-horizontal d-flex justify-content-center align-items-center"
           >
+            <p class="quantity-form-text">{{ 'camfil.product.quantity.text' | translate }}</p>
             <camfil-product-quantity
               *ngIf="!isRetailSet(product)"
               [product]="product"
@@ -71,6 +71,7 @@
             [product]="product"
             [quantity]="quantity"
             displayType="round-btn"
+            [hasIcon]="true"
           ></camfil-lazy-product-add-to-cam-card>
         </div>
         <div class="col-lg-6 col-12 d-flex justify-content-center align-items-center">
@@ -79,6 +80,7 @@
             [translationKey]="isRetailSet(product) ? 'product.add_to_cart.retailset.link' : 'product.add_to_cart.link'"
             (productToBasket)="addToBasket()"
             displayType="button"
+            hasIcon="true"
           ></camfil-product-add-to-basket>
         </div>
       </div>
@@ -93,12 +95,13 @@
             *ngIf="!isRetailSet(product) && !isMasterProduct(product)"
             [product]="product"
           ></camfil-product-inventory>
+          <p class="qd-text">Quick delivery</p>
         </div>
       </div>
-      <camfil-product-shipment
+      <!-- <camfil-product-shipment
         *ngIf="!isRetailSet(product) && !isMasterProduct(product)"
         [product]="product"
-      ></camfil-product-shipment>
+      ></camfil-product-shipment> -->
       <!-- <camfil-product-variation-select
         *ngIf="isVariationProduct(product)"
         [productMasterSKU]="product.productMasterSKU"

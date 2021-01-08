@@ -1,0 +1,75 @@
+import { ChangeDetectionStrategy, Component, Input, OnChanges, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+
+import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
+
+interface NavigationItems {
+  [link: string]: {
+    localizationKey: string;
+    dataTestingId?: string;
+    feature?: string;
+    permission?: string;
+    children?: NavigationItems;
+  };
+}
+
+@Component({
+  selector: 'camfil-account-navigation',
+  templateUrl: './camfil-account-navigation.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class CamfilAccountNavigationComponent implements OnInit, OnChanges {
+  @Input() deviceType: DeviceType;
+
+  isMobileView = false;
+
+  /**
+   * Manages the Account Navigation items.
+   */
+  navigationItems: NavigationItems = {
+    '/account': { localizationKey: 'account.my_account.link' },
+    '/account/profile': { localizationKey: 'camfil.account.profile.link' },
+    '/account/camcards': {
+      localizationKey: 'camfil.account.cam_cards.link',
+      feature: 'camCards',
+      dataTestingId: 'cam-cards-link',
+    },
+    '/account/orders': { localizationKey: 'account.order_history.link' },
+    /**
+    '/account/organization': {
+      localizationKey: 'camfil.account.organization.user_management',
+      feature: 'camOrganizationManagement',
+      permission: 'APP_B2B_MANAGE_USERS',
+    },
+    **/
+    '/account/organization': {
+      localizationKey: 'account.organization.user_management',
+      permission: 'APP_B2B_MANAGE_USERS',
+    },
+    '/logout': { localizationKey: 'account.navigation.logout.link' },
+  };
+
+  constructor(private router: Router) {}
+
+  ngOnInit() {
+    this.isMobileView = this.deviceType === 'tablet' || this.deviceType === 'mobile';
+  }
+
+  ngOnChanges() {
+    this.isMobileView = this.deviceType === 'tablet' || this.deviceType === 'mobile';
+  }
+
+  get currentPath() {
+    return location.pathname;
+  }
+
+  navigateTo(link) {
+    if (link) {
+      this.router.navigate([link]);
+    }
+  }
+
+  get unsorted() {
+    return () => 0;
+  }
+}

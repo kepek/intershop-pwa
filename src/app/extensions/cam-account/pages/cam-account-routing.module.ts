@@ -1,9 +1,21 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+import { AuthGuard } from 'ish-core/guards/auth.guard';
 import { FeatureToggleGuard } from 'ish-core/guards/feature-toggle.guard';
 
 const routes: Routes = [
+  {
+    path: 'account',
+    loadChildren: () => import('./account/camfil-account-page.module').then(m => m.CamfilAccountPageModule),
+    canActivate: [AuthGuard],
+    data: {
+      meta: {
+        title: 'account.my_account.heading',
+        robots: 'noindex, nofollow',
+      },
+    },
+  },
   {
     path: 'login',
     canActivate: [FeatureToggleGuard],
@@ -15,7 +27,7 @@ const routes: Routes = [
       feature: 'camAccount',
       breadcrumbData: [{ key: 'camfil.account.apply_form.link' }],
     },
-    loadChildren: () => import('./login/login-page.module').then(m => m.LoginPageModule),
+    loadChildren: () => import('./login/camfil-login-page.module').then(m => m.CamfilLoginPageModule),
   },
   {
     path: 'register',
@@ -29,7 +41,7 @@ const routes: Routes = [
       feature: 'camAccount',
       breadcrumbData: [{ key: 'camfil.account.apply_form.link' }],
     },
-    loadChildren: () => import('./register/register-page.module').then(m => m.RegisterPageModule),
+    loadChildren: () => import('./register/camfil-register-page.module').then(m => m.CamfilRegisterPageModule),
   },
   {
     path: 'forgotPassword',
@@ -37,7 +49,8 @@ const routes: Routes = [
     data: {
       feature: 'camAccount',
     },
-    loadChildren: () => import('./forgot-password/forgot-password-page.module').then(m => m.ForgotPasswordPageModule),
+    loadChildren: () =>
+      import('./forgot-password/camfil-forgot-password-page.module').then(m => m.CamfilForgotPasswordPageModule),
   },
   {
     path: 'forgotUsername',
@@ -45,7 +58,8 @@ const routes: Routes = [
     data: {
       feature: 'camAccount',
     },
-    loadChildren: () => import('./forgot-username/forgot-username-page.module').then(m => m.ForgotUsernamePageModule),
+    loadChildren: () =>
+      import('./forgot-username/camfil-forgot-username-page.module').then(m => m.CamfilForgotUsernamePageModule),
   },
 ];
 

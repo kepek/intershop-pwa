@@ -1,11 +1,12 @@
 import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Store, select } from '@ngrx/store';
-import { EMPTY, Observable, throwError } from 'rxjs';
-import { catchError, map, switchMap, take } from 'rxjs/operators';
+import { EMPTY, Observable, of, throwError } from 'rxjs';
+import { catchError, concatMap, map, switchMap, take } from 'rxjs/operators';
 
 import { AddressMapper } from 'ish-core/models/address/address.mapper';
 import { Address } from 'ish-core/models/address/address.model';
+import { Attribute } from 'ish-core/models/attribute/attribute.model';
 import { BasketInfoMapper } from 'ish-core/models/basket-info/basket-info.mapper';
 import { BasketInfo } from 'ish-core/models/basket-info/basket-info.model';
 import { BasketMergeHelper } from 'ish-core/models/basket-merge/basket-merge.helper';
@@ -22,7 +23,8 @@ import { ShippingMethodData } from 'ish-core/models/shipping-method/shipping-met
 import { ShippingMethodMapper } from 'ish-core/models/shipping-method/shipping-method.mapper';
 import { ShippingMethod } from 'ish-core/models/shipping-method/shipping-method.model';
 import { ApiService, unpackEnvelope } from 'ish-core/services/api/api.service';
-import { getCurrentBasket } from 'ish-core/store/customer/basket/basket.selectors';
+import { OrderService } from 'ish-core/services/order/order.service';
+import { getCurrentBasket } from 'ish-core/store/customer/basket';
 import { whenTruthy } from 'ish-core/utils/operators';
 
 export type BasketUpdateType =
@@ -75,9 +77,7 @@ type ValidationBasketIncludeType =
  */
 @Injectable({ providedIn: 'root' })
 export class BasketService {
-  constructor(private apiService: ApiService, private store: Store) {}
-
-  private currentBasket$ = this.store?.pipe(select(getCurrentBasket), whenTruthy(), take(1));
+  constructor(private apiService: ApiService, private orderService: OrderService, private store: Store) {}
 
   /**
    * http header for Basket API v1
@@ -138,39 +138,6 @@ export class BasketService {
         params,
       })
       .pipe(map(BasketMapper.fromData));
-  }
-
-  getBuckets(): Observable<Bucket[]> {
-    const params = new HttpParams().set('include', 'all');
-
-    return this.currentBasket$.pipe(
-      switchMap(basket =>
-        this.apiService
-          .get(`baskets/current/buckets`, {
-            headers: this.basketHeaders,
-            params,
-          })
-          .pipe(map((payload: Buckets) => BucketMapper.fromData(payload, basket.lineItems)))
-      )
-    );
-  }
-
-  updateBucket(
-    basketId: string,
-    addressId: string,
-    boxLabel: string,
-    contact?: string,
-    info?: string,
-    phoneNumber?: string
-  ): Observable<BasketExtension> {
-    return this.apiService.post(`baskets/${basketId}/camfil/${addressId}`, {
-      boxLabel,
-      contactPerson: {
-        erpId: contact,
-      },
-      info,
-      phoneNumber,
-    });
   }
 
   getBasketByToken(apiToken: string): Observable<Basket> {
@@ -294,7 +261,6 @@ export class BasketService {
   /**
    * Adds a list of items with the given sku and quantity to the given basket.
    * @param items     The list of product SKU and quantity pairs to be added to the basket.
-   * @param shipToAddress shipping address
    */
   addItemsToBasket(
     items: { sku: string; quantity: number; unit: string; shipToAddress?: string }[]
@@ -309,7 +275,6 @@ export class BasketService {
         value: item.quantity,
         unit: item.unit,
       },
-      shipToAddress: item.shipToAddress,
     }));
 
     return this.apiService
@@ -400,7 +365,7 @@ export class BasketService {
   }
 
   /**
-   * Updates partly or completely an address for the selected basket of an anonymous user.
+   * Update partly or completely an address for the selected basket of an anonymous user.
    * @param address   The address data which should be updated
    * @returns         The new basket address.
    */
@@ -445,5 +410,114 @@ export class BasketService {
             unpackEnvelope<ShippingMethodData>('data'),
             map(data => data.map(ShippingMethodMapper.fromData))
           );
+  }
+
+  /**
+   * Creates a requisition of a certain basket that has to be approved.
+   * @param  basketId      Basket id.
+   * @returns              nothing
+   */
+  createRequisition(basketId: string): Observable<void> {
+    if (!basketId) {
+      return throwError('createRequisition() called without required basketId');
+    }
+
+    return this.orderService.createOrder(basketId, true).pipe(
+      concatMap(() => of(undefined)),
+      catchError(err => {
+        if (err.status === 422) {
+          return of(undefined);
+        }
+        return throwError(err);
+      })
+    );
+  }
+
+  /**
+   * Create a custom attribute on the basket. Default attribute type is 'String'.
+   * @param attr   The custom attribute
+   * @returns      The custom attribute
+   */
+  createBasketAttribute(attr: Attribute): Observable<Attribute> {
+    if (!attr) {
+      return throwError('createBasketAttribute() called without attribute');
+    }
+
+    // if no type is provided save it as string
+    const attribute = { ...attr, type: attr.type ?? 'String' };
+
+    return this.apiService.post<Attribute>(`baskets/current/attributes`, attribute, {
+      headers: this.basketHeaders,
+    });
+  }
+
+  /**
+   * Update a custom attribute on the basket. Default attribute type is 'String'.
+   * @param attribute   The custom attribute
+   * @returns           The custom attribute
+   */
+  updateBasketAttribute(attr: Attribute): Observable<Attribute> {
+    if (!attr) {
+      return throwError('updateBasketAttribute() called without attribute');
+    }
+
+    // if no type is provided save it as string
+    const attribute = { ...attr, type: attr.type ?? 'String' };
+
+    return this.apiService.patch<Attribute>(`baskets/current/attributes/${attribute.name}`, attribute, {
+      headers: this.basketHeaders,
+    });
+  }
+
+  /**
+   * Delete a custom attribute from the basket
+   * @param attributeName The name of the custom attribute
+   */
+  deleteBasketAttribute(attributeName: string): Observable<void> {
+    if (!attributeName) {
+      return throwError('deleteBasketAttribute() called without attributeName');
+    }
+
+    return this.apiService.delete(`baskets/current/attributes/${attributeName}`, {
+      headers: this.basketHeaders,
+    });
+  }
+
+  // TODO: CAMFIL Additions, it should be separated to avoid core modifications;
+
+  // tslint:disable-next-line:member-ordering
+  private currentBasket$ = this.store?.pipe(select(getCurrentBasket), whenTruthy(), take(1));
+
+  getBuckets(): Observable<Bucket[]> {
+    const params = new HttpParams().set('include', 'all');
+
+    return this.currentBasket$.pipe(
+      switchMap(basket =>
+        this.apiService
+          .get(`baskets/current/buckets`, {
+            headers: this.basketHeaders,
+            params,
+          })
+          .pipe(map((payload: Buckets) => BucketMapper.fromData(payload, basket.lineItems)))
+      )
+    );
+  }
+
+  updateBucket(
+    basketId: string,
+    addressId: string,
+    boxLabel: string,
+    contact?: string,
+    info?: string,
+    phoneNumber?: string
+  ): Observable<BasketExtension> {
+    return this.apiService.post(`baskets/${basketId}/camfil/${addressId}`, {
+      boxLabel,
+      contactPerson: {
+        erpId: contact,
+      },
+      info,
+      phoneNumber,
+    });
   }
 }

@@ -39,6 +39,7 @@ import {
   getSelectedCamCardDetails,
   getVirtualCamCard,
   isStickyCamCardToolbar,
+  loadCamCards,
   loadContactsByCustomer,
   loadDeliveryAddresses,
   moveCamCard,
@@ -72,6 +73,10 @@ export class CamCardsFacade {
 
   loadContactsByCustomer(customerId: string): void | HttpError {
     this.store.dispatch(loadContactsByCustomer({ customerId }));
+  }
+
+  loadCamCards() {
+    this.store.dispatch(loadCamCards());
   }
 
   copyCamCard(camCardId: string, name: string): void | HttpError {

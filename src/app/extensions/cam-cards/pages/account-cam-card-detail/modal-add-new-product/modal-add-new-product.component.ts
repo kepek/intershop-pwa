@@ -1,10 +1,11 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
+import { Bucket } from 'ish-core/models/basket/bucket.model';
 import { ProductView } from 'ish-core/models/product-view/product-view.model';
 import { Product, ProductCompletenessLevel } from 'ish-core/models/product/product.model';
 import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
@@ -40,6 +41,9 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy {
 
   currentCamCard$: Observable<CamCard>;
   rootCamCardId: string;
+
+  @Input() addToOrder = false;
+  @Input() order?: Bucket;
 
   showSkuError = false;
   showQuantityError = false;
@@ -115,7 +119,11 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy {
       const text = undefined;
       const comment: CamCardItemComment = { label, text };
 
-      this.camCardsFacade.addProductToCamCard(this.rootCamCardId, sku, quantity, comment, 0, true);
+      if (this.addToOrder) {
+        this.productFacade.addProductToBasket(this.product.sku, quantity, this.order.shipToAddress);
+      } else {
+        this.camCardsFacade.addProductToCamCard(this.rootCamCardId, sku, quantity, comment, 0, true);
+      }
       this.hide();
     } else {
       markAsDirtyRecursive(this.productForm);

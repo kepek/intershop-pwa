@@ -154,16 +154,38 @@ strong {
     margin-top: $space-box;
   }
 
+  .qd-text {
+    margin-bottom: 0;
+    margin-left: $space-half;
+  }
   @media (max-width: $screen-sm-max) {
     .product-info {
       border: none;
     }
+    .prices-col {
+      display: flex;
+      justify-content: space-between;
+    }
+    .quantity-row {
+      margin-top: $space-box;
+    }
   }
   ::ng-deep {
+    .price-container {
+      camfil-product-attribute {
+        dt {
+          width: 67px;
+        }
+      }
+    }
     camfil-product-quantity {
       .form-group {
         margin-bottom: 0;
       }
+    }
+    .quantity-form-text {
+      margin: 0;
+      color: rgba(0, 0, 0, 0.6);
     }
     camfil-product-attribute {
       .camfil-product-attribute__value {
@@ -174,6 +196,10 @@ strong {
       width: 100%;
       button {
         width: 100%;
+      }
+      .button-text {
+        display: inline-block;
+        width: 85%;
       }
     }
     camfil-product-add-to-basket {
@@ -189,6 +215,10 @@ strong {
           width: 100%;
           color: $camfil-color-light;
           background-color: $camfil-color-primary;
+        }
+        .button-text {
+          display: inline-block;
+          width: 85%;
         }
       }
     }

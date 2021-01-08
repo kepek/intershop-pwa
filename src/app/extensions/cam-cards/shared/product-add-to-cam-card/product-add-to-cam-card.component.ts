@@ -33,6 +33,7 @@ export class ProductAddToCamCardComponent implements OnDestroy {
   @Input() quantity: number;
   @Input() displayType?: 'icon' | 'link' | 'animated' | 'round-btn' = 'link';
   @Input() class?: string;
+  @Input() hasIcon = false;
   private destroy$ = new Subject();
 
   @ViewChild(CamfilSmallCtaModalComponent) errorModal: CamfilSmallCtaModalComponent;

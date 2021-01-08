@@ -35,7 +35,7 @@
         </td>
       </tr>
 
-      <camfil-modal-dialog
+      <ish-modal-dialog
         #modalDialog
         [options]="{
           titleText: 'quote.list.modaldialog.title' | translate,
@@ -46,7 +46,7 @@
       >
         <p>{{ 'quote.list.delete.heading' | translate: { '0': asQuote(modalDialog.data)?.displayName } }}</p>
         <p>{{ 'quote.list.delete.do_you_really_want_to_delete.text' | translate }}</p>
-      </camfil-modal-dialog>
+      </ish-modal-dialog>
     </table>
   </div>
 </ng-container>

@@ -3,6 +3,7 @@ import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
+import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { BasketView } from 'ish-core/models/basket/basket.model';
 import { Bucket } from 'ish-core/models/basket/bucket.model';
 import { whenTruthy } from 'ish-core/utils/operators';
@@ -26,7 +27,11 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
 
   private destroy$ = new Subject<void>();
 
-  constructor(private checkoutFacade: CheckoutFacade, private camCardsFacade: CamCardsFacade) {}
+  constructor(
+    private checkoutFacade: CheckoutFacade,
+    private camCardsFacade: CamCardsFacade,
+    private productFacade: ShoppingFacade
+  ) {}
 
   ngOnInit() {
     this.initBasket();
@@ -49,6 +54,10 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
       if (buckets && this.camCards.length) {
         this.buckets = this.connectWithCamCard(buckets);
       }
+    });
+
+    this.productFacade.productAdded$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(() => {
+      this.camCardsFacade.loadCamCards();
     });
 
     this.checkoutFacade.emptyBuckets$.pipe(takeUntil(this.destroy$)).subscribe(emptyBuckets => {

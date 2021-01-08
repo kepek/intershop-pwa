@@ -26,6 +26,7 @@ export class CamfilProductAddToBasketModalComponent implements OnInit, OnDestroy
    * when 'icon', the button label is an icon, otherwise it is text
    */
   @Input() displayType?: 'icon' | 'button' | 'link' = 'icon';
+  @Input() hasIcon = false;
   /**
    * additional css styling
    */

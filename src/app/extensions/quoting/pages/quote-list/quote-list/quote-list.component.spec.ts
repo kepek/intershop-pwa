@@ -5,7 +5,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MockComponent, MockPipe } from 'ng-mocks';
 
 import { DatePipe } from 'ish-core/pipes/date.pipe';
-import { CamfilModalDialogComponent } from 'ish-shared/components/common/camfil-modal-dialog/camfil-modal-dialog.component';
+import { ModalDialogComponent } from 'ish-shared/components/common/modal-dialog/modal-dialog.component';
 
 import { Quote } from '../../../models/quoting/quoting.model';
 import { QuoteExpirationDateComponent } from '../../../shared/quote-expiration-date/quote-expiration-date.component';
@@ -21,8 +21,8 @@ describe('Quote List Component', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [
-        MockComponent(CamfilModalDialogComponent),
         MockComponent(FaIconComponent),
+        MockComponent(ModalDialogComponent),
         MockComponent(QuoteExpirationDateComponent),
         MockComponent(QuoteStateComponent),
         MockPipe(DatePipe),

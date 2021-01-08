@@ -27,36 +27,18 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "aot": true,
-            "extractCss": true,
-            "assets": [
-              "src/assets",
-              {
-                "glob": "**/*",
-                "input": "./projects/organization-management/src/assets",
-                "output": "/organization-management/assets/"
-              }
-            ],
-            "stylePreprocessorOptions": {
-              "includePaths": ["src/styles"]
-            },
+            "assets": ["src/assets"],
             "styles": [
-              {
-                "inject": false,
-                "input": "src/styles/themes/default/style.scss",
-                "bundleName": "default"
-              },
-              {
-                "inject": false,
-                "input": "src/styles/themes/blue/style.scss",
-                "bundleName": "blue"
-              },
               {
                 "inject": false,
                 "input": "src/styles/themes/camfil/style.scss",
                 "bundleName": "camfil"
               }
             ],
-            "scripts": []
+            "scripts": [],
+            "stylePreprocessorOptions": {
+              "includePaths": ["src/styles"]
+            }
           },
           "configurations": {
             "production": {
@@ -69,7 +51,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
               "extractLicenses": true,
               "vendorChunk": false,
@@ -103,7 +84,8 @@
                 }
               ],
               "sourceMap": true,
-              "serviceWorker": false
+              "serviceWorker": false,
+              "aot": true
             },
             "proxy": {
               "budgets": [
@@ -119,7 +101,8 @@
                 }
               ],
               "sourceMap": true,
-              "serviceWorker": false
+              "serviceWorker": false,
+              "aot": true
             }
           }
         },
@@ -129,7 +112,6 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "aot": true,
             "browserTarget": "intershop-pwa:build"
           },
           "configurations": {
@@ -252,11 +234,14 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "projects/organization-management/tsconfig.app.json",
             "aot": false,
-            "stylePreprocessorOptions": {
-              "includePaths": ["projects/organization-management/src/styles"]
-            },
             "styles": ["src/styles/themes/default/style.scss"],
-            "assets": ["projects/organization-management/src/assets"],
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "src/assets/",
+                "output": "/assets/"
+              }
+            ],
             "scripts": [],
             "fileReplacements": [
               {
@@ -266,13 +251,56 @@
             ]
           }
         },
-        "test": {
-          "builder": "@angular-builders/jest:run"
-        },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
             "browserTarget": "organization-management:build",
+            "disableHostCheck": true,
+            "host": "0.0.0.0"
+          }
+        }
+      }
+    },
+    "requisition-management": {
+      "projectType": "application",
+      "cli": {
+        "defaultCollection": "intershop-schematics"
+      },
+      "schematics": {
+        "intershop-schematics:page": {
+          "lazy": false
+        }
+      },
+      "root": "projects/requisition-management",
+      "sourceRoot": "projects/requisition-management/src",
+      "prefix": "ish",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/requisition-management",
+            "index": "projects/requisition-management/src/index.html",
+            "main": "projects/requisition-management/src/main.ts",
+            "polyfills": "src/polyfills.ts",
+            "tsConfig": "projects/requisition-management/tsconfig.app.json",
+            "aot": false,
+            "styles": ["src/styles/themes/default/style.scss"],
+            "assets": [
+              { "glob": "**/*", "input": "src/assets/", "output": "/assets/" }
+            ],
+            "scripts": [],
+            "fileReplacements": [
+              {
+                "replace": "src/environments/environment.ts",
+                "with": "src/environments/environment.local.ts"
+              }
+            ]
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "requisition-management:build",
             "disableHostCheck": true,
             "host": "0.0.0.0"
           }

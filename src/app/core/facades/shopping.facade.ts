@@ -3,7 +3,7 @@ import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { debounce, filter, map, switchMap, tap } from 'rxjs/operators';
 
-import { CategoryHelper } from 'ish-core/models/category/category.model';
+import { CategoryHelper } from 'ish-core/models/category/category.helper';
 import { ProductListingID } from 'ish-core/models/product-listing/product-listing.model';
 import { ProductCompletenessLevel, ProductHelper } from 'ish-core/models/product/product.model';
 import { addProductToBasket, getProductAdded, resetProductAdded, updateBucket } from 'ish-core/store/customer/basket';
@@ -34,6 +34,7 @@ import {
   getProduct,
   getProductBundleParts,
   getProductLinks,
+  getProductVariationCount,
   getProductVariationOptions,
   getProducts,
   getSelectedProduct,
@@ -56,30 +57,12 @@ import { whenFalsy, whenTruthy } from 'ish-core/utils/operators';
 export class ShoppingFacade {
   constructor(private store: Store) {}
 
-  productAdded$ = this.store.pipe(select(getProductAdded));
-
   // CATEGORY
 
   selectedCategory$ = this.store.pipe(select(getSelectedCategory));
 
   category$(uniqueId: string) {
     return this.store.pipe(select(getCategory(uniqueId)));
-  }
-
-  categories$(ids: string[]) {
-    return this.store.pipe(
-      select(getCategories(ids)),
-      map(categories =>
-        categories.filter(category => {
-          if (!CategoryHelper.isCategoryCompletelyLoaded(category)) {
-            const categoryId = category.uniqueId;
-            this.store.dispatch(updateCategory({ categoryId }));
-          } else {
-            return categories;
-          }
-        })
-      )
-    );
   }
 
   navigationCategories$(uniqueId?: string) {
@@ -116,6 +99,12 @@ export class ShoppingFacade {
   productVariationOptions$(sku: string | Observable<string>) {
     return toObservable(sku).pipe(
       switchMap(plainSKU => this.store.pipe(select(getProductVariationOptions, { sku: plainSKU })))
+    );
+  }
+
+  productVariationCount$(sku: string) {
+    return toObservable(sku).pipe(
+      switchMap(plainSKU => this.store.pipe(select(getProductVariationCount, { sku: plainSKU })))
     );
   }
 
@@ -202,25 +191,7 @@ export class ShoppingFacade {
     return this.store.pipe(
       select(getAvailableFilter),
       whenTruthy(),
-      map(x =>
-        withCategoryFilter ? x : { ...x, filter: [...x?.filter].filter(f => f.id !== 'CategoryUUIDLevelMulti') }
-      )
-    );
-  }
-
-  activeFilters$() {
-    return this.store.pipe(
-      select(getAvailableFilter),
-      whenTruthy(),
-      map(x => (false ? x : { ...x, filter: [...x?.filter].filter(f => f.id !== 'CategoryUUIDLevelMulti') })),
-      map(x =>
-        x.filter
-          .filter(z => z.facets.filter(y => y.selected).length)
-          .map(o => ({
-            name: o.name,
-            picked: o.facets.filter(facet => facet.selected).map(single => single),
-          }))
-      )
+      map(x => (withCategoryFilter ? x : { ...x, filter: x.filter?.filter(f => f.id !== 'CategoryUUIDLevelMulti') }))
     );
   }
 
@@ -266,5 +237,41 @@ export class ShoppingFacade {
       this.store.dispatch(loadPromotion({ promoId: promotionId }));
     });
     return this.store.pipe(select(getPromotions(), { promotionIds }));
+  }
+
+  // TODO: CAMFIL Additions, it should be separated to avoid core modifications;
+
+  productAdded$ = this.store.pipe(select(getProductAdded));
+
+  categories$(ids: string[]) {
+    return this.store.pipe(
+      select(getCategories(ids)),
+      map(categories =>
+        categories.filter(category => {
+          if (!CategoryHelper.isCategoryCompletelyLoaded(category)) {
+            const categoryId = category.uniqueId;
+            this.store.dispatch(updateCategory({ categoryId }));
+          } else {
+            return categories;
+          }
+        })
+      )
+    );
+  }
+
+  activeFilters$() {
+    return this.store.pipe(
+      select(getAvailableFilter),
+      whenTruthy(),
+      map(x => ({ ...x, filter: [...x?.filter].filter(f => f.id !== 'CategoryUUIDLevelMulti') })),
+      map(x =>
+        x.filter
+          .filter(z => z.facets.filter(y => y.selected).length)
+          .map(o => ({
+            name: o.name,
+            picked: o.facets.filter(facet => facet.selected).map(single => single),
+          }))
+      )
+    );
   }
 }

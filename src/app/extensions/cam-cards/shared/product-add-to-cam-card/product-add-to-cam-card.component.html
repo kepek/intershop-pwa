@@ -6,8 +6,9 @@
   [ngClass]="class"
   (click)="openModal(modal)"
   data-testing-id="addToCamCardButton"
-  [class.mat-stroked-button]="displayType === 'round-btn'"
-  [class.camcard-big-round-btn]="displayType === 'round-btn'"
+  [class.mat-raised-button]="hasIcon"
+  [class.mat-stroked-button]="displayType === 'round-btn' && !hasIcon"
+  [class.camcard-big-round-btn]="displayType === 'round-btn' && !hasIcon"
 >
   <ng-container [ngSwitch]="displayType">
     <ng-template [ngSwitchCase]="'animated'">
@@ -26,8 +27,11 @@
       ></fa-icon>
     </ng-template>
     <ng-template [ngSwitchCase]="'round-btn'">
-      {{ 'camfil.account.cam_card.add_to_template.button.add_to_template.label' | translate }}
-    </ng-template>
+      <mat-icon svgIcon="add-camcard" *ngIf="hasIcon"></mat-icon>
+      <span class="button-text"
+        >{{ 'camfil.account.cam_card.add_to_template.button.add_to_template.label' | translate }}
+      </span></ng-template
+    >
     <ng-template ngSwitchDefault>
       {{ 'camfil.account.cam_card.add_to_template.button.add_to_template.label' | translate }}
     </ng-template>

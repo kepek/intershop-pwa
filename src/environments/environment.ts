@@ -9,7 +9,5 @@ export const environment: Environment = {
   ...ENVIRONMENT_DEFAULTS,
 
   /* INTERSHOP COMMERCE MANAGEMENT REST API CONFIGURATION */
-  icmBaseURL: 'http://localhost:4200',
-
-  mockServerAPI: true,
+  icmBaseURL: 'https://pwa-ish-demo.test.intershop.com',
 };

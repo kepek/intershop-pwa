@@ -20,6 +20,9 @@
       "organization-management": [
         "projects/organization-management/src/app/exports"
       ],
+      "requisition-management": [
+        "projects/requisition-management/src/app/exports"
+      ],
       "camfil-icons": ["projects/camfil-icons/src/public-api"]
     },
     "lib": ["es2018", "dom"],
@@ -28,6 +31,7 @@
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,
-    "strictInjectionParameters": true
+    "strictInjectionParameters": true,
+    "strictTemplates": false
   }
 }

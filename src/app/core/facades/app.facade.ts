@@ -7,13 +7,7 @@ import { filter, map, mapTo, shareReplay, startWith, withLatestFrom } from 'rxjs
 import { getAvailableLocales, getCurrentLocale, getDeviceType, getICMBaseURL } from 'ish-core/store/core/configuration';
 import { getGeneralError, getGeneralErrorType } from 'ish-core/store/core/error';
 import { selectPath } from 'ish-core/store/core/router';
-import {
-  getBreadcrumbData,
-  getHeaderType,
-  getScroll,
-  getWrapperClass,
-  isStickyHeader,
-} from 'ish-core/store/core/viewconf';
+import { getBreadcrumbData, getHeaderType, getWrapperClass, isStickyHeader } from 'ish-core/store/core/viewconf';
 import { getLoggedInCustomer } from 'ish-core/store/customer/user';
 import { getAllCountries, getCountriesLoading, loadCountries } from 'ish-core/store/general/countries';
 import { getRegionsByCountryCode, loadRegions } from 'ish-core/store/general/regions';
@@ -21,13 +15,12 @@ import { getServerConfigParameter } from 'ish-core/store/general/server-config';
 
 @Injectable({ providedIn: 'root' })
 export class AppFacade {
-  icmBaseUrl: string;
-
   constructor(private store: Store, private router: Router) {
     this.routingInProgress$.subscribe(noop);
 
     store.pipe(select(getICMBaseURL)).subscribe(icmBaseUrl => (this.icmBaseUrl = icmBaseUrl));
   }
+  icmBaseUrl: string;
 
   headerType$ = this.store.pipe(select(getHeaderType));
   deviceType$ = this.store.pipe(select(getDeviceType));
@@ -40,11 +33,6 @@ export class AppFacade {
   generalErrorType$ = this.store.pipe(select(getGeneralErrorType));
   breadcrumbData$ = this.store.pipe(select(getBreadcrumbData));
 
-  breadcrumbCategoryNames$ = this.store.pipe(
-    select(getBreadcrumbData),
-    map(item => item && item.map(element => element.text))
-  );
-
   appWrapperClasses$ = combineLatest([
     this.store.pipe(select(getWrapperClass)),
     this.store.pipe(
@@ -55,13 +43,7 @@ export class AppFacade {
       select(getDeviceType),
       map(deviceType => (deviceType === 'mobile' ? 'sticky-header' : ''))
     ),
-    this.store.pipe(
-      select(getScroll),
-      map(scroll => (scroll.isDown ? 'isScrollDown' : ''))
-    ),
   ]).pipe(map(classes => classes.filter(c => !!c)));
-
-  // COUNTRIES AND REGIONS
 
   countriesLoading$ = this.store.pipe(select(getCountriesLoading));
 
@@ -105,6 +87,14 @@ export class AppFacade {
     return isAppTypeREST && !isBusinessCustomer ? 'privatecustomers' : 'customers';
   }
 
+  /**
+   * extracts a specific server setting from the store.
+   * @param path the path to the server setting, starting from the serverConfig/_config store.
+   */
+  serverSetting$<T>(path: string) {
+    return this.store.pipe(select(getServerConfigParameter<T>(path)));
+  }
+
   countries$() {
     this.store.dispatch(loadCountries());
     return this.store.pipe(select(getAllCountries));
@@ -114,4 +104,12 @@ export class AppFacade {
     this.store.dispatch(loadRegions({ countryCode }));
     return this.store.pipe(select(getRegionsByCountryCode, { countryCode }));
   }
+
+  // TODO: CAMFIL Additions, it should be separated to avoid core modifications;
+
+  // tslint:disable-next-line:member-ordering
+  breadcrumbCategoryNames$ = this.store.pipe(
+    select(getBreadcrumbData),
+    map(item => item && item.map(element => element.text))
+  );
 }

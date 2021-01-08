@@ -1,3 +1,5 @@
+// tslint:disable: ish-ordered-imports ban-specific-imports
+
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -43,6 +45,7 @@ import { CamfilProductGuidesComponent } from 'ish-shared/components/product/camf
 import { MaterialModule } from 'ish-shared/material/material.module';
 import { ShellModule } from 'ish-shell/shell.module';
 
+import { ModalAddNewProductComponent } from '../extensions/cam-cards/pages/account-cam-card-detail/modal-add-new-product/modal-add-new-product.component';
 import { AddToCartModalComponent } from '../extensions/cam-cards/shared/add-to-cart-modal/add-to-cart-modal.component';
 import { CamCardModalDetailsComponent } from '../extensions/cam-cards/shared/add-to-cart-modal/cam-card-modal-details/cam-card-modal-details.component';
 import { CreateOrderModalComponent } from '../extensions/cam-cards/shared/add-to-cart-modal/create-order-modal/create-order-modal.component';
@@ -76,6 +79,8 @@ import { ContentSlotComponent } from './cms/components/content-slot/content-slot
 import { ContentViewcontextComponent } from './cms/components/content-viewcontext/content-viewcontext.component';
 import { AddressComponent } from './components/address/address/address.component';
 import { BasketAddressSummaryComponent } from './components/basket/basket-address-summary/basket-address-summary.component';
+import { BasketApprovalInfoComponent } from './components/basket/basket-approval-info/basket-approval-info.component';
+import { BasketBuyerComponent } from './components/basket/basket-buyer/basket-buyer.component';
 import { BasketCostSummaryComponent } from './components/basket/basket-cost-summary/basket-cost-summary.component';
 import { BasketInfoComponent } from './components/basket/basket-info/basket-info.component';
 import { BasketItemsSummaryComponent } from './components/basket/basket-items-summary/basket-items-summary.component';
@@ -122,6 +127,8 @@ import { LineItemDescriptionComponent } from './components/line-item/line-item-d
 import { LineItemEditDialogComponent } from './components/line-item/line-item-edit-dialog/line-item-edit-dialog.component';
 import { LineItemEditComponent } from './components/line-item/line-item-edit/line-item-edit.component';
 import { LineItemListComponent } from './components/line-item/line-item-list/line-item-list.component';
+import { Auth0SigninComponent } from './components/login/auth0-signin/auth0-signin.component';
+import { IdentityProviderLoginComponent } from './components/login/identity-provider-login/identity-provider-login.component';
 import { LoginFormComponent } from './components/login/login-form/login-form.component';
 import { LoginModalComponent } from './components/login/login-modal/login-modal.component';
 import { CamfilOrderListComponent } from './components/order/camfil-order-list/camfil-order-list.component';
@@ -207,6 +214,7 @@ const importExportModules = [
 const declaredComponents = [
   AddToCartModalComponent,
   ArticleDetailsComponent,
+  Auth0SigninComponent,
   BasketCostSummaryComponent,
   BasketValidationItemsComponent,
   BasketValidationProductsComponent,
@@ -271,7 +279,9 @@ const declaredComponents = [
   LineItemEditComponent,
   LineItemEditDialogComponent,
   LineItemListComponent,
+  LoginFormComponent,
   LoginModalComponent,
+  ModalAddNewProductComponent,
   ModalDialogComponent,
   OrderFormComponent,
   OrderListComponent,
@@ -301,6 +311,9 @@ const exportedComponents = [
   AddressComponent,
   ArticleDetailsComponent,
   BasketAddressSummaryComponent,
+  BasketApprovalInfoComponent,
+  BasketBuyerComponent,
+  BasketCostSummaryComponent,
   BasketInfoComponent,
   BasketInvoiceAddressWidgetComponent,
   BasketItemsSummaryComponent,
@@ -349,17 +362,24 @@ const exportedComponents = [
   CreateOrderModalComponent,
   CreateOrderSuccessComponent,
   ErrorMessageComponent,
+  FilterNavigationComponent,
+  IdentityProviderLoginComponent,
   InfoBoxComponent,
   InplaceEditComponent,
   LineItemListComponent,
   LoadingComponent,
   LoginFormComponent,
+  ModalAddNewProductComponent,
+  ModalDialogComponent,
   ModalDialogLinkComponent,
   OrderFormComponent,
   OrderListComponent,
   OrderWidgetComponent,
+  ProductAddToBasketComponent,
   ProductAttributesComponent,
   ProductBundleDisplayComponent,
+  ProductIdComponent,
+  ProductInventoryComponent,
   ProductPriceComponent,
   ProductVariationDisplayComponent,
   PromotionDetailsComponent,
