@@ -28,6 +28,8 @@ import { BasketService } from 'ish-core/services/basket/basket.service';
 import { getProductEntities, loadProduct } from 'ish-core/store/shopping/products';
 import { mapErrorToAction, mapToPayload, mapToPayloadProperty } from 'ish-core/utils/operators';
 
+import { loadCamCards } from '../../../../extensions/cam-cards/store/cam-card';
+
 import {
   addItemsToBasket,
   addItemsToBasketFail,
@@ -36,6 +38,9 @@ import {
   deleteBasketItem,
   deleteBasketItemFail,
   deleteBasketItemSuccess,
+  editBucket,
+  editBucketFail,
+  editBucketSuccess,
   loadBasket,
   loadBuckets,
   loadBucketsFail,
@@ -87,18 +92,6 @@ export class BasketItemsEffects {
             return acc;
           }, []),
           map(items => addItemsToBasket({ items }))
-        )
-      )
-    )
-  );
-
-  loadBucket$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(loadBuckets),
-      mergeMap(() =>
-        this.basketService.getBuckets().pipe(
-          mergeMap((buckets: Bucket[]) => [loadBucketsSuccess({ buckets })]),
-          mapErrorToAction(loadBucketsFail)
         )
       )
     )
@@ -238,6 +231,41 @@ export class BasketItemsEffects {
           : undefined
       ),
       mapTo(loadBasket())
+    )
+  );
+
+  editBucket = createEffect(() =>
+    this.actions$.pipe(
+      ofType(editBucket),
+      mapToPayload(),
+      mergeMap(payload =>
+        this.basketService
+          .editBucket(
+            payload.basketId,
+            payload.shippingAddress,
+            payload.bucket.customer.id,
+            payload.bucket.orderMark,
+            payload.bucket.invoiceLabel,
+            payload.bucket.deliveryAddress,
+            payload.bucket.boxLabel,
+            payload.bucket.contact,
+            payload.bucket.info,
+            payload.bucket.phoneNumber
+          )
+          .pipe(map(editBucketSuccess), mapErrorToAction(editBucketFail))
+      )
+    )
+  );
+
+  loadBucket$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loadBuckets),
+      mergeMap(() =>
+        this.basketService.getBuckets().pipe(
+          mergeMap((buckets: Bucket[]) => [loadBucketsSuccess({ buckets }), loadCamCards()]),
+          mapErrorToAction(loadBucketsFail)
+        )
+      )
     )
   );
 }

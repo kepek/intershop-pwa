@@ -79,11 +79,13 @@ export const updateBucket = createAction(
 
 export const updateBucketSuccess = createAction('[Basket] Update Bucket Success');
 
-export const updateBucketFail = createAction('[Basket] Update Bucket Fail');
+export const updateBucketFail = createAction('[Basket] Update Bucket Fail', httpError());
 
 export const resetProductAdded = createAction('[Basket] Reset Product Added');
 
-export const loadBuckets = createAction('[Basket] Get Bucket Info');
+export const loadBuckets = createAction('[Basket] Load Buckets');
+
+export const connectBuckets = createAction('[Basket] Connect buckets', payload<{ buckets: Bucket[] }>());
 
 export const loadBucketsSuccess = createAction('[Basket] Get Bucket Info Success', payload<{ buckets: Bucket[] }>());
 
@@ -297,3 +299,12 @@ export const camfilDragLineItemSuccess = createAction(
 );
 
 export const camfilDragLineItemFail = createAction('[Basket API] Move Product between buckets Fail', httpError());
+
+export const editBucket = createAction(
+  '[Bucket] Edit Bucket',
+  payload<{ basketId: string; shippingAddress: string; bucket: Bucket }>()
+);
+
+export const editBucketSuccess = createAction('[Basket] Edit Bucket Success');
+
+export const editBucketFail = createAction('[Basket] Edit Bucket Fail', httpError());

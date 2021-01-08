@@ -1,0 +1,18 @@
+<ng-template #modal>
+  <ng-container>
+    <camfil-cam-card-modal
+      [title]="'camfil.modal.edit_order.button.header' | translate"
+      iconName="note_add"
+      [mainContentTemplate]="mainContentTemplate"
+      [secondaryButtonTitle]="'camfil.modal.createCamcard.button.cancel' | translate"
+      (secondaryButtonClicked)="hide()"
+      [primaryButtonTitle]="'camfil.modal.edit_order.button.save' | translate"
+      (primaryButtonClicked)="submitEdit()"
+    >
+    </camfil-cam-card-modal>
+  </ng-container>
+</ng-template>
+
+<ng-template #mainContentTemplate>
+  <camfil-order-form [orderToEdit]="editOrder"></camfil-order-form>
+</ng-template>

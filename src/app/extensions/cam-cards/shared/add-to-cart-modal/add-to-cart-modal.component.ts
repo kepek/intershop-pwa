@@ -38,6 +38,7 @@ export class AddToCartModalComponent implements OnInit, OnDestroy {
   basketId: string;
   buckets$: Observable<any[]>;
   buckets: Bucket[];
+  notConnectedBuckets: Bucket[];
 
   currentCamCard: CamCard;
   camCards: CamCard[];
@@ -77,14 +78,15 @@ export class AddToCartModalComponent implements OnInit, OnDestroy {
       this.basketId = basket.id;
     });
 
-    this.camCardsFacade.camCard$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(camCards => {
-      this.camCards = camCards;
-      this.checkoutFacade.loadBuckets();
+    this.buckets$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe((buckets: Bucket[]) => {
+      this.notConnectedBuckets = buckets;
     });
 
-    this.buckets$.pipe(takeUntil(this.destroy$)).subscribe((buckets: Bucket[]) => {
-      if (buckets && this.camCards.length) {
-        this.buckets = this.connectWithCamCard(buckets);
+    this.camCardsFacade.camCard$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(camCards => {
+      this.camCards = camCards;
+
+      if (this.notConnectedBuckets) {
+        this.buckets = this.connectWithCamCard(this.notConnectedBuckets);
       }
     });
   }
@@ -104,7 +106,6 @@ export class AddToCartModalComponent implements OnInit, OnDestroy {
       .map(bucket => {
         const camCard = this.getCamCard(bucket.deliveryAddressId);
 
-        // return camCard && !camCard.transient
         return camCard
           ? {
               ...bucket,

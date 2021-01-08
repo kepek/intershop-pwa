@@ -57,7 +57,7 @@ describe('Requisition Mapper', () => {
             "status": "APPROVED",
           },
           "attributes": undefined,
-          "basketExtension": undefined,
+          "basketExtensions": undefined,
           "bucketId": undefined,
           "buckets": undefined,
           "commonShipToAddress": undefined,

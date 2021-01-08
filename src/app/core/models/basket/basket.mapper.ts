@@ -24,7 +24,7 @@ export class BasketMapper {
       id: data.id,
       bucketId: data.buckets && data.buckets.length === 1 && data.buckets[0],
       buckets: data.buckets,
-      basketExtension: data.basketExtension,
+      basketExtensions: data.basketExtensions,
       purchaseCurrency: data.purchaseCurrency,
       dynamicMessages: data.discounts ? data.discounts.dynamicMessages : undefined,
       invoiceToAddress:

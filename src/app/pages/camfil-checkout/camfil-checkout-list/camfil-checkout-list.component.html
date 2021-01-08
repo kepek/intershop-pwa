@@ -89,7 +89,7 @@
               </a>
             </li>
             <li>
-              <a
+              <a (click)="openEditModal(editModal)"
                 ><mat-icon svgIcon="edit" class="edit-icon"></mat-icon>
                 {{ 'camfil.checkout.cta.edit_details' | translate }}</a
               >
@@ -153,3 +153,5 @@
 </ng-template>
 
 <camfil-modal-add-new-product #addNewProductModal [order]="order" [addToOrder]="true"> </camfil-modal-add-new-product>
+
+<camfil-edit-order-modal #editModal [order]="order"></camfil-edit-order-modal>

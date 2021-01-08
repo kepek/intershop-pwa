@@ -4,6 +4,15 @@ import {
   CamCardCustomer,
 } from '../../../extensions/cam-cards/models/cam-card/cam-card.model';
 
+export interface BucketAddress {
+  addressLine1?: string;
+  addressLine2?: string;
+  street?: string;
+  postalCode?: string;
+  city?: string;
+  companyName1?: string;
+}
+
 export interface Bucket {
   basket: string;
   id: string;
@@ -12,12 +21,19 @@ export interface Bucket {
   deliveryAddressId?: string;
   orderName?: string;
   nextDelivery?: string;
-  orderMark?: string;
   transient?: boolean;
   shipToAddressFull?: CamCardAddress;
-  customer?: CamCardCustomer;
   contacts?: CamCardContact[];
   camCardId?: string;
+  contactPersonId?: string;
+  customer?: CamCardCustomer;
+  orderMark?: string;
+  invoiceLabel?: string;
+  deliveryAddress?: BucketAddress;
+  boxLabel?: string;
+  contact?: string;
+  info?: string;
+  phoneNumber?: string;
 }
 
 export interface BucketData {
@@ -38,4 +54,13 @@ export interface BucketIncluded {
 export interface Buckets {
   data: BucketData[];
   included: BucketIncluded;
+}
+
+export interface EditBucket extends Bucket {
+  customerId?: string;
+  company?: string;
+  building?: string;
+  address?: string;
+  zipCode?: string;
+  area?: string;
 }
