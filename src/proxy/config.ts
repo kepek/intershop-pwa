@@ -1,12 +1,15 @@
 // tslint:disable: no-console ish-ordered-imports force-jsdoc-comments project-structure ban-specific-imports
 import { Options } from 'http-proxy-middleware';
 import { Environment } from '../environments/environment.model';
-import { defaultAllowedDomains, defaultAllowedMethods, defaultHeaders, getHttpAgent, RequestMethod } from './index';
+import * as https from 'https';
+import * as http from 'http';
 
 // TODO (extMlk): Talk with DevOps to change the name of the `PROXY_ICC` to `ICC_PROXY_URL` to remove below workaround.
 if (!process.env.ICC_PROXY_URL && process.env.PROXY_ICC) {
   process.env.ICC_PROXY_URL = process.env.PROXY_ICC;
 }
+
+const PORT = process.env.PORT || 4200;
 
 export interface Proxy extends Options {
   route: string;
@@ -18,6 +21,40 @@ export interface Config {
   allowedDomains: string[];
   proxies: Proxy[];
 }
+
+export type RequestMethod = 'GET' | 'HEAD' | 'POST' | 'PUT' | 'DELETE' | 'CONNECT' | 'OPTIONS' | 'TRACE' | 'PATCH';
+
+/**
+ * Get and detect the httpAgent.
+ * @param url
+ */
+export function getHttpAgent(url) {
+  const httpProtocol = new URL(url).protocol.slice(0, -1);
+  return httpProtocol === 'https' ? new https.Agent({ rejectUnauthorized: false }) : new http.Agent();
+}
+
+export const defaultAllowedDomains = [
+  ...new Set([
+    `${process.env.SSL ? 'https://' : 'http://'}${require('os').hostname().toLowerCase()}:${PORT}`,
+    `${process.env.SSL ? 'https://' : 'http://'}localhost:${PORT}`,
+  ]),
+];
+
+export const defaultAllowedMethods: RequestMethod[] = [
+  'GET',
+  'HEAD',
+  'POST',
+  'PUT',
+  'DELETE',
+  'CONNECT',
+  'OPTIONS',
+  'TRACE',
+  'PATCH',
+];
+
+export const defaultHeaders: { [header: string]: string } = {
+  'content-type': 'application/json',
+};
 
 /**
  * Create Proxies Config

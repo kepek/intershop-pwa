@@ -1,49 +1,11 @@
 // tslint:disable: no-console ish-ordered-imports force-jsdoc-comments project-structure ban-specific-imports ish-no-object-literal-type-assertion ish-no-object-literal-type-assertion
-import * as https from 'https';
-import * as http from 'http';
 import { Request } from 'express';
 import { createProxyMiddleware, Options } from 'http-proxy-middleware';
 
 import { Environment } from '../environments/environment.model';
-import { createProxiesConfig } from './config';
-
-const PORT = process.env.PORT || 4200;
+import { createProxiesConfig, RequestMethod } from './config';
 
 const NODE_ENV = process.env.NODE_ENV;
-
-export type RequestMethod = 'GET' | 'HEAD' | 'POST' | 'PUT' | 'DELETE' | 'CONNECT' | 'OPTIONS' | 'TRACE' | 'PATCH';
-
-export const defaultAllowedDomains = [
-  ...new Set([
-    `${process.env.SSL ? 'https://' : 'http://'}${require('os').hostname().toLowerCase()}:${PORT}`,
-    `${process.env.SSL ? 'https://' : 'http://'}localhost:${PORT}`,
-  ]),
-];
-
-export const defaultAllowedMethods: RequestMethod[] = [
-  'GET',
-  'HEAD',
-  'POST',
-  'PUT',
-  'DELETE',
-  'CONNECT',
-  'OPTIONS',
-  'TRACE',
-  'PATCH',
-];
-
-export const defaultHeaders: { [header: string]: string } = {
-  'content-type': 'application/json',
-};
-
-/**
- * Get and detect the httpAgent.
- * @param url
- */
-export function getHttpAgent(url) {
-  const httpProtocol = new URL(url).protocol.slice(0, -1);
-  return httpProtocol === 'https' ? new https.Agent({ rejectUnauthorized: false }) : new http.Agent();
-}
 
 /**
  * Create Development Proxy
@@ -62,14 +24,12 @@ export function createDevProxy(env: Environment) {
 
     const { route, changeOrigin = true, logLevel = 'debug', secure = true, ...rest } = proxy;
 
-    const middlewareConfig: Options = {
+    devProxy[`/${route}/*`] = {
       ...rest,
       changeOrigin,
       logLevel,
       secure,
     };
-
-    devProxy[`/${route}/*`] = middlewareConfig;
   });
 
   return devProxy;
