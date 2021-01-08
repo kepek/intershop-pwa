@@ -4,7 +4,7 @@ export const environment: Environment = {
   ...ENVIRONMENT_DEFAULTS,
   production: true,
   /* INTERSHOP COMMERCE MANAGEMENT REST API CONFIGURATION */
-  icmBaseURL: 'http://localhost:4200',
+  icmBaseURL: 'https://pwa-ish-demo.test.intershop.com',
   /* ICM PROXY CONFIGURATION */
   icmProxyURL: 'https://gruchot.hopto.org:42443',
 };
