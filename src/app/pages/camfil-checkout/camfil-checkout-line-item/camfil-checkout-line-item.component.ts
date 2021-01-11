@@ -9,7 +9,7 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { FormArray, FormControl, FormGroup } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Observable, Subject } from 'rxjs';
 import { debounceTime, take, takeUntil } from 'rxjs/operators';
@@ -40,17 +40,22 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
   @Input() index: number;
   @Output() handleLoad = new EventEmitter<{ res: ProductView; quantity: number }>();
   @Output() handleUpdate = new EventEmitter<{ res: ProductView; quantity: number }>();
-
+  boxLabelValidator = {
+    boxLabel: [{ error: 'maxlength', message: 'MAX length exceeded' }],
+  };
   quantity = 0;
 
   @Input() product: LineItemView;
   @Input() id: string;
+  boxLabel: string;
   addToCartForm: FormGroup;
+  boxLabelForm: FormGroup;
   selectItemForm: FormGroup;
   product$: Observable<ProductView>;
   private destroy$ = new Subject<void>();
 
   ngOnInit() {
+    this.boxLabel = 'Lab1';
     this.initForm();
     this.quantity = this.product.quantity.value;
     this.updateQuantities();
@@ -86,6 +91,9 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
     this.addToCartForm = new FormGroup({
       quantity: new FormControl(this.product.quantity.value || 1),
     });
+    this.boxLabelForm = new FormGroup({
+      boxLabel: new FormControl(this.boxLabel, [Validators.maxLength(5)]),
+    });
   }
 
   /**if the camCardItem is loaded, get product details*/
@@ -108,5 +116,9 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
 
   get isViewMode() {
     return this.mode === 'view';
+  }
+
+  getField(name: string) {
+    return this.boxLabelForm.get(name);
   }
 }

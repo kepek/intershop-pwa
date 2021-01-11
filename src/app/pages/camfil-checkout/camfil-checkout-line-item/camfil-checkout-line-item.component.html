@@ -50,6 +50,19 @@
       [camCardItem]="camCardItemData"
       [mode]="mode"
     ></camfil-cam-card-product-comment> -->
+    <div class="box-label">
+      <form [formGroup]="boxLabelForm" class="box-label__form">
+        <mat-form-field appearance="outline" class="box-label__form--field">
+          <mat-label>{{ 'camfil.cam_card.product.comment.label' | translate }}</mat-label>
+          <input matInput type="text" formControlName="boxLabel" />
+        </mat-form-field>
+        <camfil-error
+        [errors]="getField('boxLabel').errors"
+        [errorValidators]="boxLabelValidator.boxLabel"
+        [touched]="getField('boxLabel').touched || getField('boxLabel').dirty"
+      ></camfil-error>
+      </form>
+    </div>
     <ng-container>
       <div class="quantity-row d-flex flex-row justify-content-between align-items-center py-3 py-md-0">
         <a
