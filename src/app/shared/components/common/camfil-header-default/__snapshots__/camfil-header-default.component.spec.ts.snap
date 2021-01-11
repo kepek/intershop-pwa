@@ -43,45 +43,10 @@ exports[`Camfil Header Default Component should render normal header adequately 
         ><span class="mat-button-focus-overlay"></span>
       </button>
       <div class="logo-wrapper">
-        <a
-          data-testing-id="header-home-link-desktop"
-          rel="home"
-          routerlink="/home"
-          ng-reflect-router-link="/home"
-          href="/home"
-          ><mat-icon
-            class="logo mat-icon notranslate mat-icon-no-color"
-            role="img"
-            svgicon="logo"
-            aria-hidden="true"
-            ng-reflect-svg-icon="logo"
-            data-mat-icon-type="svg"
-            data-mat-icon-name="logo"
-            ><svg
-              class="fake-testing-svg"
-              fit=""
-              height="100%"
-              width="100%"
-              preserveAspectRatio="xMidYMid meet"
-              focusable="false"
-            ></svg></mat-icon
-          ><mat-icon
-            class="logo--cart mat-icon notranslate mat-icon-no-color"
-            role="img"
-            svgicon="camfil-logo-cart"
-            aria-hidden="true"
-            ng-reflect-svg-icon="camfil-logo-cart"
-            data-mat-icon-type="svg"
-            data-mat-icon-name="camfil-logo-cart"
-            ><svg
-              class="fake-testing-svg"
-              fit=""
-              height="100%"
-              width="100%"
-              preserveAspectRatio="xMidYMid meet"
-              focusable="false"
-            ></svg></mat-icon
-        ></a>
+        <ish-content-include
+          includeid="camfil.include.header.logo.content.pagelet2-Include"
+          ng-reflect-include-id="camfil.include.header.logo.con"
+        ></ish-content-include>
       </div>
     </div>
     <div class="col-lg-5 col-xl-6 col-sm-12 search-container"></div>
@@ -150,45 +115,10 @@ exports[`Camfil Header Default Component should render normal header adequately 
         ><span class="mat-button-focus-overlay"></span>
       </button>
       <div class="logo-wrapper">
-        <a
-          data-testing-id="header-home-link-desktop"
-          rel="home"
-          routerlink="/home"
-          ng-reflect-router-link="/home"
-          href="/home"
-          ><mat-icon
-            class="logo mat-icon notranslate mat-icon-no-color"
-            role="img"
-            svgicon="logo"
-            aria-hidden="true"
-            ng-reflect-svg-icon="logo"
-            data-mat-icon-type="svg"
-            data-mat-icon-name="logo"
-            ><svg
-              class="fake-testing-svg"
-              fit=""
-              height="100%"
-              width="100%"
-              preserveAspectRatio="xMidYMid meet"
-              focusable="false"
-            ></svg></mat-icon
-          ><mat-icon
-            class="logo--cart mat-icon notranslate mat-icon-no-color"
-            role="img"
-            svgicon="camfil-logo-cart"
-            aria-hidden="true"
-            ng-reflect-svg-icon="camfil-logo-cart"
-            data-mat-icon-type="svg"
-            data-mat-icon-name="camfil-logo-cart"
-            ><svg
-              class="fake-testing-svg"
-              fit=""
-              height="100%"
-              width="100%"
-              preserveAspectRatio="xMidYMid meet"
-              focusable="false"
-            ></svg></mat-icon
-        ></a>
+        <ish-content-include
+          includeid="camfil.include.header.logo.content.pagelet2-Include"
+          ng-reflect-include-id="camfil.include.header.logo.con"
+        ></ish-content-include>
       </div>
     </div>
     <div class="col-lg-5 col-xl-6 col-sm-12 search-container"></div>
@@ -244,14 +174,10 @@ exports[`Camfil Header Default Component should render sticky header adequately 
         ><span class="mat-button-focus-overlay"></span>
       </button>
       <div class="logo-wrapper">
-        <a
-          class="mobile-logo"
-          data-testing-id="header-home-link-mobile"
-          rel="home"
-          routerlink="/home"
-          ng-reflect-router-link="/home"
-          href="/home"
-        ></a>
+        <ish-content-include
+          includeid="camfil.include.header.mobileLogo.content.pagelet2-Include"
+          ng-reflect-include-id="camfil.include.header.mobileLo"
+        ></ish-content-include>
       </div>
     </div>
   </div>
@@ -309,14 +235,10 @@ exports[`Camfil Header Default Component should render sticky header adequately 
         ><span class="mat-button-focus-overlay"></span>
       </button>
       <div class="logo-wrapper">
-        <a
-          class="mobile-logo"
-          data-testing-id="header-home-link-mobile"
-          rel="home"
-          routerlink="/home"
-          ng-reflect-router-link="/home"
-          href="/home"
-        ></a>
+        <ish-content-include
+          includeid="camfil.include.header.mobileLogo.content.pagelet2-Include"
+          ng-reflect-include-id="camfil.include.header.mobileLo"
+        ></ish-content-include>
       </div>
     </div>
     <div class="col-lg-5 col-xl-6 col-sm-12 search-container">
@@ -376,14 +298,10 @@ exports[`Camfil Header Default Component should render sticky header adequately 
         ><span class="mat-button-focus-overlay"></span>
       </button>
       <div class="logo-wrapper">
-        <a
-          class="mobile-logo"
-          data-testing-id="header-home-link-mobile"
-          rel="home"
-          routerlink="/home"
-          ng-reflect-router-link="/home"
-          href="/home"
-        ></a>
+        <ish-content-include
+          includeid="camfil.include.header.mobileLogo.content.pagelet2-Include"
+          ng-reflect-include-id="camfil.include.header.mobileLo"
+        ></ish-content-include>
       </div>
     </div>
   </div>

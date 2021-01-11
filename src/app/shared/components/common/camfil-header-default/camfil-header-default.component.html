@@ -51,14 +51,18 @@
       </button>
       <div class="logo-wrapper">
         <ng-container *ngIf="showDesktopLogoLink && !isSticky; else mobileLogo">
-          <a rel="home" routerLink="/home" data-testing-id="header-home-link-desktop">
+          <!-- <a rel="home" routerLink="/home" data-testing-id="header-home-link-desktop">
             <mat-icon svgIcon="logo" class="logo"></mat-icon>
             <mat-icon svgIcon="camfil-logo-cart" class="logo--cart"></mat-icon>
-          </a>
+          </a> -->
+          <ish-content-include includeId="camfil.include.header.logo.content.pagelet2-Include"></ish-content-include>
         </ng-container>
         <ng-template #mobileLogo>
-          <a rel="home" routerLink="/home" class="mobile-logo" data-testing-id="header-home-link-mobile"></a
-        ></ng-template>
+          <!-- <a rel="home" routerLink="/home" class="mobile-logo" data-testing-id="header-home-link-mobile"></a> -->
+          <ish-content-include
+            includeId="camfil.include.header.mobileLogo.content.pagelet2-Include"
+          ></ish-content-include>
+        </ng-template>
       </div>
     </div>
     <div class="col-lg-5 col-xl-6 col-sm-12 search-container" *ngIf="!isSticky || deviceType === 'mobile'">
