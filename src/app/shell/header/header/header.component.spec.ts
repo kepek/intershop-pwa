@@ -7,9 +7,8 @@ import { instance, mock, when } from 'ts-mockito';
 import { AppFacade } from 'ish-core/facades/app.facade';
 import { findAllCustomElements } from 'ish-core/utils/dev/html-query-utils';
 import { HeaderCheckoutComponent } from 'ish-shell/header/header-checkout/header-checkout.component';
+import { HeaderDefaultComponent } from 'ish-shell/header/header-default/header-default.component';
 import { HeaderSimpleComponent } from 'ish-shell/header/header-simple/header-simple.component';
-
-import { HeaderDefaultComponent } from '../header-default/header-default.component';
 
 import { HeaderComponent } from './header.component';
 
