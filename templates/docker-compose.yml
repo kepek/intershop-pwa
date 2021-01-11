@@ -11,10 +11,11 @@ services:
         configuration: production
         serviceWorker: 'false'
     environment:
+      - NODE_OPTIONS="--max-old-space-size=16384"
       - LOGGING=on
-      - ICM_BASE_URL
-      - ICC_TOKEN
-      - ICC_PROXY_URL
+      - ICM_BASE_URL=${ICM_BASE_URL}
+      - ICC_TOKEN=${ICC_TOKEN}
+      - ICC_PROXY_URL=${ICC_PROXY_URL}
       - PROXY_ICM=true
       - TRUST_ICM=true
       # - PROMETHEUS=on
