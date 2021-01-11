@@ -8,7 +8,6 @@ COPY projects/requisition-management/src/app /workspace/projects/requisition-man
 COPY projects/camfil-icons /workspace/projects/camfil-icons/
 COPY src /workspace/src/
 COPY tsconfig.app.json tsconfig.base.json ngsw-config.json .browserslistrc angular.json /workspace/
-COPY tsconfig.server.json server.ts /workspace/
 RUN npm run build:schematics && npm run synchronize-lazy-components -- --ci
 RUN npm run build:icons
 ARG configuration=production
