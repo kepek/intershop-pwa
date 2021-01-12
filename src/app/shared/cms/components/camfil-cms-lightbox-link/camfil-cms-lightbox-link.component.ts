@@ -19,7 +19,7 @@ export class CamfilCmsLightboxLinkComponent implements CMSComponent {
   constructor(public dialog: MatDialog) {}
 
   openDialog() {
-    this.dialog.open(CamfilCmsLightboxLinkArticle, {
+    this.dialog.open(CamfilCmsLightboxLinkArticleComponent, {
       data: {
         article: this.pagelet.stringParam('Article'),
       },
@@ -31,7 +31,7 @@ export class CamfilCmsLightboxLinkComponent implements CMSComponent {
   selector: 'camfil-cms-lightbox-article',
   templateUrl: 'camfil-cms-lightbox-article.component.html',
 })
-export class CamfilCmsLightboxLinkArticle {
+export class CamfilCmsLightboxLinkArticleComponent {
   constructor(public dialog: MatDialog, @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
 
   closeDialog() {
