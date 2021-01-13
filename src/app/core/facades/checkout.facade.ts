@@ -39,6 +39,7 @@ import {
   loadBasketEligiblePaymentMethods,
   loadBasketEligibleShippingMethods,
   loadBuckets,
+  camfilDragLineItem,
   removePromotionCodeFromBasket,
   setBasketAttribute,
   setBasketPayment,
@@ -52,6 +53,7 @@ import { getOrdersError, getSelectedOrder } from 'ish-core/store/customer/orders
 import { getLoggedInUser } from 'ish-core/store/customer/user';
 import { getServerConfigParameter } from 'ish-core/store/general/server-config';
 import { whenTruthy } from 'ish-core/utils/operators';
+import { LineItem } from 'ish-core/models/line-item/line-item.model';
 
 // tslint:disable:member-ordering
 @Injectable({ providedIn: 'root' })
@@ -212,5 +214,9 @@ export class CheckoutFacade {
 
   addEmptyBucket(emptyBucket: Bucket) {
     this.store.dispatch(addEmptyBucket({ bucket: emptyBucket }));
+  }
+
+  camfilDragLineItem(basketId: string, updatedLineItem: LineItem, targetBucket: Bucket) {
+    this.store.dispatch(camfilDragLineItem({ basketId, updatedLineItem, targetBucket }));
   }
 }

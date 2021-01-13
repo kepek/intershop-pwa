@@ -26,6 +26,7 @@ import { ApiService, unpackEnvelope } from 'ish-core/services/api/api.service';
 import { OrderService } from 'ish-core/services/order/order.service';
 import { getCurrentBasket } from 'ish-core/store/customer/basket';
 import { whenTruthy } from 'ish-core/utils/operators';
+import { LineItem } from 'ish-core/models/line-item/line-item.model';
 
 export type BasketUpdateType =
   | { invoiceToAddress: string }
@@ -519,5 +520,24 @@ export class BasketService {
       info,
       phoneNumber,
     });
+  }
+  //CAMFIL
+
+  /**
+   * Movew product to another bucket and update position.
+   * @param basketId  The basket id.
+   * @param updatedLineItem  Updated product.
+   * @param targetBucket  Updated product.
+   * @returns
+   */
+  camfilDragLineItem(basketId: string, updatedLineItem: LineItem, targetBucket: Bucket) {
+    const params = new HttpParams().set('include', this.allBasketIncludes.join());
+    const itemToSend = {
+      position: updatedLineItem.position,
+      shipToAddress: { id: targetBucket.deliveryAddressId },
+    };
+    return this.apiService
+      .post(`baskets/${basketId}/items/${updatedLineItem.id}/camfil?${params}`, itemToSend)
+      .pipe(map(BasketMapper.fromData));
   }
 }
