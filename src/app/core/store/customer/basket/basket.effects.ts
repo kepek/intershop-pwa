@@ -23,9 +23,12 @@ import { BasketService } from 'ish-core/services/basket/basket.service';
 import { RouterState } from 'ish-core/store/core/router/router.reducer';
 import { loadUserByAPIToken, loginUser, loginUserSuccess } from 'ish-core/store/customer/user';
 import { ApiTokenService } from 'ish-core/utils/api-token/api-token.service';
-import { mapErrorToAction, mapToPayloadProperty } from 'ish-core/utils/operators';
+import { mapErrorToAction, mapToPayload, mapToPayloadProperty } from 'ish-core/utils/operators';
 
 import {
+  camfilDragLineItem,
+  camfilDragLineItemFail,
+  camfilDragLineItemSuccess,
   deleteBasketAttribute,
   deleteBasketAttributeFail,
   deleteBasketAttributeSuccess,
@@ -248,6 +251,21 @@ export class BasketEffects {
           tap(() => this.router.navigate(['/checkout/receipt'])),
           map(submitBasketSuccess),
           mapErrorToAction(submitBasketFail)
+        )
+      )
+    )
+  );
+
+  // CAMFIL
+
+  camfilDragLineItem$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(camfilDragLineItem),
+      mapToPayload(),
+      mergeMap(payload =>
+        this.basketService.camfilDragLineItem(payload.basketId, payload.updatedLineItem, payload.targetBucket).pipe(
+          mergeMap(updatedBasket => [camfilDragLineItemSuccess({ updatedBasket }), loadBuckets()]),
+          mapErrorToAction(camfilDragLineItemFail)
         )
       )
     )

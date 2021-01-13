@@ -19,6 +19,7 @@ import { BasketMapper } from 'ish-core/models/basket/basket.mapper';
 import { Basket } from 'ish-core/models/basket/basket.model';
 import { BucketMapper } from 'ish-core/models/basket/bucket.mapper';
 import { Bucket, Buckets } from 'ish-core/models/basket/bucket.model';
+import { LineItem } from 'ish-core/models/line-item/line-item.model';
 import { ShippingMethodData } from 'ish-core/models/shipping-method/shipping-method.interface';
 import { ShippingMethodMapper } from 'ish-core/models/shipping-method/shipping-method.mapper';
 import { ShippingMethod } from 'ish-core/models/shipping-method/shipping-method.model';
@@ -519,5 +520,24 @@ export class BasketService {
       info,
       phoneNumber,
     });
+  }
+  // CAMFIL
+
+  /**
+   * Movew product to another bucket and update position.
+   * @param basketId  The basket id.
+   * @param updatedLineItem  Updated product.
+   * @param targetBucket  Updated product.
+   * @returns
+   */
+  camfilDragLineItem(basketId: string, updatedLineItem: LineItem, targetBucket: Bucket) {
+    const params = new HttpParams().set('include', this.allBasketIncludes.join());
+    const itemToSend = {
+      position: updatedLineItem.position,
+      shipToAddress: { id: targetBucket.deliveryAddressId },
+    };
+    return this.apiService
+      .post(`baskets/${basketId}/items/${updatedLineItem.id}/camfil?${params}`, itemToSend)
+      .pipe(map(BasketMapper.fromData));
   }
 }

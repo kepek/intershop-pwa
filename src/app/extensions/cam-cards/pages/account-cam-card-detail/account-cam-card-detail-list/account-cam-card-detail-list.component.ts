@@ -189,6 +189,7 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges {
       targetPos = predecessorPos + this.POSITION_GAP_SIZE;
     } else {
       const gap = successorPos - predecessorPos;
+
       if (gap <= 2) {
         this.camCardsFacade.resetItemPositions(targetCamCard);
       }
@@ -208,6 +209,7 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges {
       }
       const items: CamCardItem[] = Object.keys(event.container.data).map(i => event.container.data[i]);
       const targetPos = this.getTargetPosition(event.previousIndex, event.currentIndex, items, targetCamCard);
+
       this.updateProductPosition(event.item.data, targetCamCard.id, targetPos);
     } else {
       // dropped inside another camcard

@@ -16,7 +16,7 @@
   <div class="d-inline-flex">
     <strong *ngIf="order"> {{ 'camfil.checkout.order' | translate }} {{ order.id }}</strong>
     <span data-testing-id="order-number" class="order-number"
-      >{{ order.orderName }}, {{ order.customer.companyName }}</span
+      >{{ order?.orderName }}, {{ order?.customer.companyName }}</span
     >
   </div>
 </ng-template>
@@ -37,7 +37,7 @@
           <dd class="col-6 p-0" data-testing-id="order-customer_name">{{ order.customer.companyName }}</dd>
           <dt class="col-6 p-0">{{ 'camfil.account.orderdetails.contact_person.label' | translate }}</dt>
           <dd class="col-6 p-0" data-testing-id="order-contact_person">
-            {{ order.contacts[0].firstName }} {{ order.contacts[0].lastName }}
+            {{ order.contacts[0]?.firstName }} {{ order.contacts[0]?.lastName }}
           </dd>
           <dt class="col-6 p-0">{{ 'camfil.checkout.phone' | translate }}</dt>
           <dd class="col-6 p-0" data-testing-id="order-camfil_no">-</dd>
@@ -118,16 +118,23 @@
 
   <ng-container *ngIf="order">
     <!-- Line Items -->
-
-    <ng-container *ngFor="let product of order.lineItems; index as i">
-      <div class="list-item-row list-item-row-big px-4 py-1 mt-2">
-        <div class="d-flex align-items-center">
-          <mat-icon svgIcon="move" class="size-24 d-none d-md-block handle" cdkDragHandle></mat-icon>
-          <camfil-checkout-line-item [id]="product.productSKU" [product]="product"></camfil-checkout-line-item>
-        </div>
+    <div>
+      <div
+        cdkDropList
+        [cdkDropListData]="order.lineItems"
+        (cdkDropListDropped)="drop($event, order)"
+        [attr.data-order-id]="order.id"
+      >
+        <ng-container *ngFor="let product of order.lineItems; of: sortBy(); index as i">
+          <div class="list-item-row list-item-row-big px-4 py-1 mt-2" [cdkDragData]="product" cdkDrag>
+            <div class="d-flex align-items-center">
+              <mat-icon svgIcon="move" class="size-24 d-none d-md-block handle" cdkDragHandle></mat-icon>
+              <camfil-checkout-line-item [id]="product.productSKU" [product]="product"></camfil-checkout-line-item>
+            </div>
+          </div>
+        </ng-container>
       </div>
-    </ng-container>
-
+    </div>
     <!-- Cost Summary -->
     <div *ngIf="order">
       <div class="section cost-summary float-right box-shadow--dark mat-elevation-z">
