@@ -26,6 +26,9 @@ import { ApiTokenService } from 'ish-core/utils/api-token/api-token.service';
 import { mapErrorToAction, mapToPayload, mapToPayloadProperty } from 'ish-core/utils/operators';
 
 import {
+  camfilDragLineItem,
+  camfilDragLineItemFail,
+  camfilDragLineItemSuccess,
   deleteBasketAttribute,
   deleteBasketAttributeFail,
   deleteBasketAttributeSuccess,
@@ -39,9 +42,6 @@ import {
   loadBuckets,
   mergeBasketFail,
   mergeBasketSuccess,
-  camfilDragLineItem,
-  camfilDragLineItemFail,
-  camfilDragLineItemSuccess,
   resetBasketErrors,
   setBasketAttribute,
   setBasketAttributeFail,
@@ -256,15 +256,7 @@ export class BasketEffects {
     )
   );
 
-  /** check whether a specific custom attribute exists at basket.
-   * @param basket
-   * @param attributeName
-   */
-  private basketContainsAttribute(basket: Basket, attributeName: string): boolean {
-    return !!basket?.attributes?.find(attr => attr.name === attributeName);
-  }
-
-  //CAMFIL
+  // CAMFIL
 
   camfilDragLineItem$ = createEffect(() =>
     this.actions$.pipe(
@@ -272,12 +264,19 @@ export class BasketEffects {
       mapToPayload(),
       mergeMap(payload =>
         this.basketService.camfilDragLineItem(payload.basketId, payload.updatedLineItem, payload.targetBucket).pipe(
-          mergeMap(updatedBasket => {
-            return [camfilDragLineItemSuccess({ updatedBasket }), loadBuckets()];
-          }),
+          mergeMap(updatedBasket =>
+            [camfilDragLineItemSuccess({ updatedBasket }), loadBuckets()]),
           mapErrorToAction(camfilDragLineItemFail)
         )
       )
     )
   );
+
+  /** check whether a specific custom attribute exists at basket.
+   * @param basket
+   * @param attributeName
+   */
+  private basketContainsAttribute(basket: Basket, attributeName: string): boolean {
+    return !!basket?.attributes?.find(attr => attr.name === attributeName);
+  }
 }

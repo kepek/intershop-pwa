@@ -19,6 +19,7 @@ import { BasketMapper } from 'ish-core/models/basket/basket.mapper';
 import { Basket } from 'ish-core/models/basket/basket.model';
 import { BucketMapper } from 'ish-core/models/basket/bucket.mapper';
 import { Bucket, Buckets } from 'ish-core/models/basket/bucket.model';
+import { LineItem } from 'ish-core/models/line-item/line-item.model';
 import { ShippingMethodData } from 'ish-core/models/shipping-method/shipping-method.interface';
 import { ShippingMethodMapper } from 'ish-core/models/shipping-method/shipping-method.mapper';
 import { ShippingMethod } from 'ish-core/models/shipping-method/shipping-method.model';
@@ -26,7 +27,6 @@ import { ApiService, unpackEnvelope } from 'ish-core/services/api/api.service';
 import { OrderService } from 'ish-core/services/order/order.service';
 import { getCurrentBasket } from 'ish-core/store/customer/basket';
 import { whenTruthy } from 'ish-core/utils/operators';
-import { LineItem } from 'ish-core/models/line-item/line-item.model';
 
 export type BasketUpdateType =
   | { invoiceToAddress: string }
@@ -521,7 +521,7 @@ export class BasketService {
       phoneNumber,
     });
   }
-  //CAMFIL
+  // CAMFIL
 
   /**
    * Movew product to another bucket and update position.

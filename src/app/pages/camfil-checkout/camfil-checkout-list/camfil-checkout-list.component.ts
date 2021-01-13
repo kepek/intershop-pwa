@@ -24,7 +24,6 @@ export class CamfilCheckoutListComponent {
   orderForm: FormGroup;
 
   constructor(private fb: FormBuilder, public dialog: MatDialog, private checkoutFacade: CheckoutFacade) {
-
     this.initForm();
   }
 

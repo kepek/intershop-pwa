@@ -20,6 +20,9 @@ import {
   addPromotionCodeToBasketFail,
   addPromotionCodeToBasketSuccess,
   assignBasketAddress,
+  camfilDragLineItem,
+  camfilDragLineItemFail,
+  camfilDragLineItemSuccess,
   continueCheckout,
   continueCheckoutFail,
   continueCheckoutSuccess,
@@ -80,10 +83,6 @@ import {
   updateConcardisCvcLastUpdated,
   updateConcardisCvcLastUpdatedFail,
   updateConcardisCvcLastUpdatedSuccess,
-  //CAMFILL
-  camfilDragLineItem,
-  camfilDragLineItemSuccess,
-  camfilDragLineItemFail,
 } from './basket.actions';
 
 export interface BasketState {
@@ -340,7 +339,7 @@ export const basketReducer = createReducer(
     validationResults: initialValidationResults,
   })),
 
-  //CAMFIL
+  // CAMFIL
 
   on(camfilDragLineItemSuccess, (state: BasketState, action) => {
     const basket = {
