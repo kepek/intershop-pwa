@@ -13,6 +13,7 @@ import {
   getCurrentLocale,
   getICMServerURL,
   getRestEndpoint,
+  setCurrentLocale,
 } from 'ish-core/store/core/configuration';
 import { CoreStoreModule } from 'ish-core/store/core/core-store.module';
 import { serverError } from 'ish-core/store/core/error';
@@ -505,6 +506,7 @@ describe('Api Service', () => {
       store$ = TestBed.inject(Store);
 
       store$.dispatch(applyConfiguration({ baseURL: 'http://www.example.org', server: 'WFS', channel: 'site' }));
+      store$.dispatch(setCurrentLocale({ currency: 'USD', lang: 'en_US' } as Locale));
     });
 
     afterEach(() => {
