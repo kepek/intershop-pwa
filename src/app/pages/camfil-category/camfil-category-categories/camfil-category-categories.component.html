@@ -33,7 +33,34 @@
 
     <div class="col-md-9">
       <div class="col-12 box-shadow box-container">
-        <h1>{{ category.name }}</h1>
+        <div class="row">
+          <div class="col-lg-9 col-md-7">
+            <h1>{{ category.name }}</h1>
+
+            <p *ngIf="category.description.length < 200; else readMore">
+              {{ category.description }}
+            </p>
+
+            <ng-template #readMore>
+              <mat-accordion class="mat-read-more">
+                <mat-expansion-panel [expanded]="!longOpen">
+                  {{ category.description | slice: 0:200 }}...
+                </mat-expansion-panel>
+                <mat-expansion-panel [expanded]="longOpen">
+                  {{ category.description }}
+                </mat-expansion-panel>
+              </mat-accordion>
+              <mat-action-row>
+                <a (click)="longOpen = !longOpen">
+                  {{ (longOpen ? 'camfil.show_less.text' : 'camfil.read_more.text') | translate }}
+                </a>
+              </mat-action-row>
+            </ng-template>
+          </div>
+          <div class="col-lg-3 col-md-5">
+            <camfil-links-block title="Guides"></camfil-links-block>
+          </div>
+        </div>
       </div>
       <ish-category-list [categories]="category.children"></ish-category-list>
     </div>
