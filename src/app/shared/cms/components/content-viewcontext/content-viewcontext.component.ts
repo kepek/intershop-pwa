@@ -13,7 +13,7 @@ import { ContentPageletEntryPointView } from 'ish-core/models/content-view/conte
  * @example
  * <ish-content-viewcontext
  *   viewContextId="vc_product_detail"
- *   [callParameters]="{ Product: product.sku, Category: category.categoryRef }"
+ *   [callParameters]="{ Product: product?.sku, Category: category?.categoryRef }"
  * ></ish-content-viewcontext>
  */
 @Component({
