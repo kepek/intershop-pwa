@@ -21,6 +21,7 @@ export class CamfilSmallCtaModalComponent {
   @Input() showCloseIcon = false;
   @Input() onlyAccept = false;
   @Input() hasError = false;
+  @Input() icon?: string;
 
   emitAction() {
     this.actionClicked.emit();

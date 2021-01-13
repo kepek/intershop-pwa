@@ -1,3 +1,4 @@
+import { Price } from 'ish-core/models/price/price.model';
 import { ProductView } from 'ish-core/models/product-view/product-view.model';
 
 export interface DataToPdf {
@@ -18,5 +19,5 @@ export interface ProductsObj {
 }
 
 export interface CamCardTotalPricesObj {
-  [camCardId: string]: number;
+  [camCardId: string]: Price;
 }
