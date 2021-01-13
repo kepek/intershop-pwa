@@ -19,6 +19,7 @@ import { CamfilCategoryFaqComponent } from '../camfil-category-faq/camfil-catego
 import { CamfilCategoryNavigationComponent } from '../camfil-category-navigation/camfil-category-navigation.component';
 
 import { CamfilCategoryCategoriesComponent } from './camfil-category-categories.component';
+import { CamfilLinksBlockComponent } from 'ish-shared/components/common/camfil-links-block/camfil-links-block.component';
 
 describe('Camfil Category Categories Component', () => {
   let component: CamfilCategoryCategoriesComponent;
@@ -35,6 +36,7 @@ describe('Camfil Category Categories Component', () => {
         MockComponent(CamfilCategoryFaqComponent),
         MockComponent(CamfilCategoryNavigationComponent),
         MockComponent(CamfilFilterMeasurementsComponent),
+        MockComponent(CamfilLinksBlockComponent),
         MockComponent(CategoryListComponent),
         MockComponent(ContentIncludeComponent),
         MockComponent(ContentViewcontextComponent),
@@ -50,7 +52,7 @@ describe('Camfil Category Categories Component', () => {
     element = fixture.nativeElement;
 
     const tree = categoryTree([
-      { uniqueId: 'A', categoryPath: ['A'] },
+      { uniqueId: 'A', categoryPath: ['A'], description: 'A' },
       { uniqueId: 'A.1', categoryPath: ['A', 'A.1'] },
       { uniqueId: 'A.2', categoryPath: ['A', 'A.2'] },
       {
