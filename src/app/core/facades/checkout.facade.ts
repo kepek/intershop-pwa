@@ -7,6 +7,7 @@ import { Address } from 'ish-core/models/address/address.model';
 import { Attribute } from 'ish-core/models/attribute/attribute.model';
 import { Bucket } from 'ish-core/models/basket/bucket.model';
 import { LineItemUpdate } from 'ish-core/models/line-item-update/line-item-update.model';
+import { LineItem } from 'ish-core/models/line-item/line-item.model';
 import { PaymentInstrument } from 'ish-core/models/payment-instrument/payment-instrument.model';
 import { selectRouteData } from 'ish-core/store/core/router';
 import { getAllAddresses } from 'ish-core/store/customer/addresses';
@@ -14,6 +15,7 @@ import {
   addEmptyBucket,
   addPromotionCodeToBasket,
   assignBasketAddress,
+  camfilDragLineItem,
   continueCheckout,
   createBasketAddress,
   createBasketPayment,
@@ -39,7 +41,6 @@ import {
   loadBasketEligiblePaymentMethods,
   loadBasketEligibleShippingMethods,
   loadBuckets,
-  camfilDragLineItem,
   removePromotionCodeFromBasket,
   setBasketAttribute,
   setBasketPayment,
@@ -53,7 +54,6 @@ import { getOrdersError, getSelectedOrder } from 'ish-core/store/customer/orders
 import { getLoggedInUser } from 'ish-core/store/customer/user';
 import { getServerConfigParameter } from 'ish-core/store/general/server-config';
 import { whenTruthy } from 'ish-core/utils/operators';
-import { LineItem } from 'ish-core/models/line-item/line-item.model';
 
 // tslint:disable:member-ordering
 @Injectable({ providedIn: 'root' })

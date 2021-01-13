@@ -1,13 +1,13 @@
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 
-import { Price } from 'ish-core/models/price/price.model';
-import { CdkDragDrop } from '@angular/cdk/drag-drop';
-import { Bucket } from 'ish-core/models/basket/bucket.model';
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
-import { LineItem } from 'ish-core/models/line-item/line-item.model';
+import { Bucket } from 'ish-core/models/basket/bucket.model';
 import { LineItemData } from 'ish-core/models/line-item/line-item.interface';
+import { LineItem } from 'ish-core/models/line-item/line-item.model';
+import { Price } from 'ish-core/models/price/price.model';
 
 import { ModalAddNewProductComponent } from '../../../extensions/cam-cards/pages/account-cam-card-detail/modal-add-new-product/modal-add-new-product.component';
 
@@ -126,9 +126,9 @@ export class CamfilCheckoutListComponent {
     if (predecessorPos === undefined && successorPos === undefined) {
       return; // Current position
     } else if (predecessorPos === undefined) {
-      targetPos = successorPos; //Successor position - update all succesors
+      targetPos = successorPos; // Successor position - update all succesors
     } else if (successorPos === undefined) {
-      targetPos = predecessorPos; //Predecesor position
+      targetPos = predecessorPos; // Predecesor position
     } else {
       const gap = successorPos - predecessorPos;
 
@@ -145,7 +145,7 @@ export class CamfilCheckoutListComponent {
     const basketId = targetBucket.basket;
     const updatedLineItem = {
       ...lineItem,
-      position: position,
+      position,
     };
     this.checkoutFacade.camfilDragLineItem(basketId, updatedLineItem, targetBucket);
   }
@@ -160,8 +160,8 @@ export class CamfilCheckoutListComponent {
       const targetPos = this.getTargetPosition(event.previousIndex, event.currentIndex, items);
       this.camfilDragLineItem(event.item.data, targetOrder, targetPos);
     } else {
-      //Move line item to different bucket
-      let items: LineItemData[] = Object.keys(event.container.data).map(i => event.container.data[i]);
+      // Move line item to different bucket
+      const items: LineItemData[] = Object.keys(event.container.data).map(i => event.container.data[i]);
       const targetPos = this.getTargetPosition(event.previousIndex, event.currentIndex, items);
       this.camfilDragLineItem(event.item.data, targetOrder, targetPos);
     }

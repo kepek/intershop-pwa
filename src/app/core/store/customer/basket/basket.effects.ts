@@ -264,8 +264,7 @@ export class BasketEffects {
       mapToPayload(),
       mergeMap(payload =>
         this.basketService.camfilDragLineItem(payload.basketId, payload.updatedLineItem, payload.targetBucket).pipe(
-          mergeMap(updatedBasket =>
-            [camfilDragLineItemSuccess({ updatedBasket }), loadBuckets()]),
+          mergeMap(updatedBasket => [camfilDragLineItemSuccess({ updatedBasket }), loadBuckets()]),
           mapErrorToAction(camfilDragLineItemFail)
         )
       )
