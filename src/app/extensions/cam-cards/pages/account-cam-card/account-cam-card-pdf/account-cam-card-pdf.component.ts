@@ -5,11 +5,12 @@ import { take } from 'rxjs/operators';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
-import { PricePipe } from 'ish-core/models/price/price.pipe';
+import { Price } from 'ish-core/models/price/price.model';
+import { formatPrice } from 'ish-core/models/price/price.pipe';
 import { ProductView } from 'ish-core/models/product-view/product-view.model';
 import { ProductCompletenessLevel } from 'ish-core/models/product/product.model';
 import { User } from 'ish-core/models/user/user.model';
-import { DatePipe } from 'ish-core/pipes/date.pipe';
+import { formatISHDate } from 'ish-core/pipes/date.pipe';
 import { whenTruthy } from 'ish-core/utils/operators';
 import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
 
@@ -33,8 +34,6 @@ export class AccountCamCardPdfComponent implements OnInit {
     private pdfService: CamPdfService,
     private accountFacade: AccountFacade,
     public dialog: MatDialog,
-    private datePipe: DatePipe,
-    private pricePipe: PricePipe,
     private translate: TranslateService
   ) {}
 
@@ -69,6 +68,14 @@ export class AccountCamCardPdfComponent implements OnInit {
     this.accountFacade.user$.pipe(whenTruthy(), take(1)).subscribe(user => {
       this.user = user;
     });
+  }
+
+  handlePrice(data: Price) {
+    return formatPrice(data, this.translate.currentLang);
+  }
+
+  handleDate(data: Date) {
+    return formatISHDate(data, 'medium', this.translate.currentLang);
   }
 
   openPdfGenDialog() {
@@ -146,7 +153,7 @@ export class AccountCamCardPdfComponent implements OnInit {
 
   pdfHeader(pageBreak: boolean | number) {
     const basicDate = new Date();
-    const date = `${this.datePipe.transform(basicDate)}, ${basicDate.toLocaleTimeString()}`;
+    const date = this.handleDate(basicDate);
     return {
       pageBreak: pageBreak ? 'before' : '',
       columns: [
@@ -263,7 +270,7 @@ export class AccountCamCardPdfComponent implements OnInit {
     const qtyVal = { text: item.quantity, bold: true };
     const size = ` | ${this.texts.packSize} `;
     const sizeVal = { text: 'xxx', bold: true }; // TODO: Pack size val
-    const priceVal = this.pricePipe.transform(this.products[sku].listPrice);
+    const priceVal = this.handlePrice(this.products[sku].listPrice);
     const priceLabel = showPrice ? ` | ${this.texts.price} ` : '';
     const price = showPrice ? { text: priceVal, bold: true } : '';
     return {
@@ -341,7 +348,7 @@ export class AccountCamCardPdfComponent implements OnInit {
               fillColor: '#F2F2F2',
               text: [
                 { text: `\n ${this.texts.yourTotal}`, bold: true },
-                { text: this.pricePipe.transform(this.sumPrice[id]), fontSize: 15, bold: true },
+                { text: this.handlePrice(this.sumPrice[id]), fontSize: 15, bold: true },
                 { text: '\n ' },
               ],
             },
