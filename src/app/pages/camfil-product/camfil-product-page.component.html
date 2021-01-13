@@ -38,8 +38,14 @@
         ></ish-retail-set-parts>
 
         <camfil-product-links [sku]="product.sku"></camfil-product-links>
-        <ish-content-include includeId="camfil.include.product.content.pagelet2-Include"></ish-content-include>
+
+        <!-- <ish-content-include includeId="camfil.include.product.content.pagelet2-Include"></ish-content-include> -->
         <!-- <camfil-product-guides></camfil-product-guides> -->
+
+        <ish-content-viewcontext
+          viewContextId="vc_camfil_product_endcap"
+          [callParameters]="{ Product: product.sku }"
+        ></ish-content-viewcontext>
       </div>
     </ng-container>
   </ng-template>
