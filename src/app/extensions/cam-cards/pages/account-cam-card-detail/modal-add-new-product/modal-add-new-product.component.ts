@@ -74,7 +74,7 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.currentCamCard$ = this.camCardsFacade.currentCamCard$;
 
-    this.currentCamCard$.pipe(takeUntil(this.destroy$)).subscribe(camCard => {
+    this.currentCamCard$?.pipe(takeUntil(this.destroy$)).subscribe(camCard => {
       if (camCard) {
         this.rootCamCardId = camCard.id;
       }

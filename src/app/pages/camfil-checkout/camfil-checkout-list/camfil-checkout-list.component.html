@@ -16,7 +16,7 @@
   <div class="d-inline-flex">
     <strong *ngIf="order"> {{ 'camfil.checkout.order' | translate }} {{ order.id }}</strong>
     <span data-testing-id="order-number" class="order-number"
-      >{{ order.orderName }}, {{ order.customer.companyName }}</span
+      >{{ order?.orderName }}, {{ order?.customer.companyName }}</span
     >
   </div>
 </ng-template>

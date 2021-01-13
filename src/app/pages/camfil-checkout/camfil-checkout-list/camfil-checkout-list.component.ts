@@ -124,20 +124,15 @@ export class CamfilCheckoutListComponent {
     }
 
     if (predecessorPos === undefined && successorPos === undefined) {
-      return; // Current position
+      return; /** Current position  */
     } else if (predecessorPos === undefined) {
-      targetPos = successorPos; // Successor position - update all succesors
+      targetPos = successorPos; /** Successor position - update all succesors  */
     } else if (successorPos === undefined) {
-      targetPos = predecessorPos; // Predecesor position
+      targetPos = predecessorPos; /** Predecesor position  */
     } else {
       const gap = successorPos - predecessorPos;
-
-      if (gap <= 2) {
-        // this.checkoutFacade.camfilResetItemPositions(targetOrder);
-      }
       targetPos = Math.round(gap / 2) + predecessorPos;
     }
-    // skip 0
     return targetPos ? targetPos : 1;
   }
 
@@ -152,7 +147,6 @@ export class CamfilCheckoutListComponent {
 
   drop(event: CdkDragDrop<string[]>, targetOrder: Bucket) {
     if (event.previousContainer === event.container) {
-      // same position, do nothing
       if (event.previousIndex === event.currentIndex) {
         return;
       }
@@ -160,7 +154,7 @@ export class CamfilCheckoutListComponent {
       const targetPos = this.getTargetPosition(event.previousIndex, event.currentIndex, items);
       this.camfilDragLineItem(event.item.data, targetOrder, targetPos);
     } else {
-      // Move line item to different bucket
+      /** Move line item to different bucket */
       const items: LineItemData[] = Object.keys(event.container.data).map(i => event.container.data[i]);
       const targetPos = this.getTargetPosition(event.previousIndex, event.currentIndex, items);
       this.camfilDragLineItem(event.item.data, targetOrder, targetPos);
