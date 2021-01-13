@@ -11,6 +11,7 @@ import { categoryTree } from 'ish-core/utils/dev/test-data-utils';
 import { ContentIncludeComponent } from 'ish-shared/cms/components/content-include/content-include.component';
 import { ContentViewcontextComponent } from 'ish-shared/cms/components/content-viewcontext/content-viewcontext.component';
 import { CamfilBreadcrumbComponent } from 'ish-shared/components/common/camfil-breadcrumb/camfil-breadcrumb.component';
+import { CamfilLinksBlockComponent } from 'ish-shared/components/common/camfil-links-block/camfil-links-block.component';
 import { CamfilFilterMeasurementsComponent } from 'ish-shared/components/filter/camfil-filter-measurements/camfil-filter-measurements.component';
 
 import { CategoryListComponent } from '../../category/category-list/category-list.component';
@@ -19,7 +20,6 @@ import { CamfilCategoryFaqComponent } from '../camfil-category-faq/camfil-catego
 import { CamfilCategoryNavigationComponent } from '../camfil-category-navigation/camfil-category-navigation.component';
 
 import { CamfilCategoryCategoriesComponent } from './camfil-category-categories.component';
-import { CamfilLinksBlockComponent } from 'ish-shared/components/common/camfil-links-block/camfil-links-block.component';
 
 describe('Camfil Category Categories Component', () => {
   let component: CamfilCategoryCategoriesComponent;

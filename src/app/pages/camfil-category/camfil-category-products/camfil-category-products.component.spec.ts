@@ -68,7 +68,6 @@ describe('Camfil Category Products Component', () => {
     expect(findAllCustomElements(element)).toIncludeAllMembers([
       'camfil-breadcrumb',
       'camfil-product-listing',
-      'camfil-links-block',
       'camfil-filter-navigation',
     ]);
   });

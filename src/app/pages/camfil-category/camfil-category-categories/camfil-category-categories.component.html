@@ -57,8 +57,12 @@
               </mat-action-row>
             </ng-template>
           </div>
-          <div class="col-lg-3 col-md-5">
-            <camfil-links-block title="Guides"></camfil-links-block>
+          <div class="product-guides-area col-lg-3 col-md-5">
+            <ish-content-viewcontext
+              viewContextId="vc_camfil_category_categories_guides"
+              [callParameters]="{ Category: category.categoryRef }"
+            ></ish-content-viewcontext>
+            <!-- <camfil-links-block title="Guides"></camfil-links-block> -->
           </div>
         </div>
       </div>
