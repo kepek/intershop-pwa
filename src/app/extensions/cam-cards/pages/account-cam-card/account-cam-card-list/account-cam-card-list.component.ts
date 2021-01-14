@@ -57,6 +57,7 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
   /** The list of cam cards of the customer. */
   @Input() camCards: CamCard[];
   @Input() deviceType: DeviceType;
+  @Input() camCardLoading: boolean;
   @Output() addCamCard = new EventEmitter<CamCard>();
   @ViewChild(MatSort) sort: MatSort;
 
@@ -124,7 +125,7 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
         property === 'customer' ? item.customer.companyName : item[property];
 
       this.goToExpandedCamCard();
-      this.loading = !this.camCardsProcessed.data.length;
+      this.loading = this.camCardLoading;
     }
     this.isMobileView = this.isMobile();
   }

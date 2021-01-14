@@ -14,6 +14,7 @@ export class CamfilCategoryCategoriesComponent implements OnInit, OnChanges {
   @Input() category: CategoryView;
   @Input() deviceType: DeviceType;
 
+  longOpen = false;
   isCollapsed = false;
 
   constructor(@Inject(PLATFORM_ID) private platformId: string) {}

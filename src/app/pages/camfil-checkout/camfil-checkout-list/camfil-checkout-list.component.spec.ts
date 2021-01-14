@@ -1,10 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MockComponent, MockDirective, MockPipe } from 'ng-mocks';
-import { of } from 'rxjs';
-import { instance, mock, when } from 'ts-mockito';
+import { instance, mock } from 'ts-mockito';
 
 import { ServerHtmlDirective } from 'ish-core/directives/server-html.directive';
+import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { PricePipe } from 'ish-core/models/price/price.pipe';
 import { DatePipe } from 'ish-core/pipes/date.pipe';
@@ -31,16 +31,12 @@ describe('Camfil Checkout List Component', () => {
   let element: HTMLElement;
   let camCardFacadeMock: CamCardsFacade;
   let shoppingFacadeMock: ShoppingFacade;
-
-  const camCardDetails = {
-    name: 'testing cam cards',
-    id: '.SKsEQAE4FIAAAFuNiUBWx0d',
-    itemsCount: 0,
-  };
+  let checkoutFacadeMock: CheckoutFacade;
 
   beforeEach(async () => {
     camCardFacadeMock = mock(CamCardsFacade);
     shoppingFacadeMock = mock(ShoppingFacade);
+    checkoutFacadeMock = mock(CheckoutFacade);
 
     await TestBed.configureTestingModule({
       declarations: [
@@ -65,6 +61,7 @@ describe('Camfil Checkout List Component', () => {
       providers: [
         { provide: CamCardsFacade, useFactory: () => instance(camCardFacadeMock) },
         { provide: ShoppingFacade, useFactory: () => instance(shoppingFacadeMock) },
+        { provide: CheckoutFacade, useFactory: () => instance(checkoutFacadeMock) },
       ],
     }).compileComponents();
   });
@@ -73,18 +70,6 @@ describe('Camfil Checkout List Component', () => {
     fixture = TestBed.createComponent(CamfilCheckoutListComponent);
     component = fixture.componentInstance;
     element = fixture.nativeElement;
-
-    when(camCardFacadeMock.currentCamCard$).thenReturn(of(camCardDetails));
-
-    component.order = {
-      customer: {},
-      contacts: [
-        {
-          firstName: 'test',
-          lastName: 'test',
-        },
-      ],
-    };
   });
 
   it('should be created', () => {

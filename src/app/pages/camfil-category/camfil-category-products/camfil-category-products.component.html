@@ -8,7 +8,13 @@
       <camfil-breadcrumb></camfil-breadcrumb>
     </div>
   </div>
-  <ish-content-include includeId="camfil.include.category-products.content.pagelet2-Include"></ish-content-include>
+
+  <!-- <ish-content-include includeId="camfil.include.category-products.content.pagelet2-Include"></ish-content-include> -->
+  <ish-content-viewcontext
+    viewContextId="vc_camfil_category_products_top"
+    [callParameters]="{ Category: category.categoryRef }"
+  ></ish-content-viewcontext>
+
   <div class="row no-gutters">
     <aside class="col-md-3 sidebar">
       <mat-toolbar color="primary">
@@ -33,17 +39,17 @@
           <div class="col-lg-9 col-md-7">
             <h1>{{ category.name }}</h1>
 
-            <p *ngIf="tmpDescription.length < 200; else readMore">
-              {{ tmpDescription }}
+            <p *ngIf="category.description.length < 200; else readMore">
+              {{ category.description }}
             </p>
 
             <ng-template #readMore>
               <mat-accordion class="mat-read-more">
                 <mat-expansion-panel [expanded]="!longOpen">
-                  {{ tmpDescription | slice: 0:200 }}...
+                  {{ category.description | slice: 0:200 }}...
                 </mat-expansion-panel>
                 <mat-expansion-panel [expanded]="longOpen">
-                  {{ tmpDescription }}
+                  {{ category.description }}
                 </mat-expansion-panel>
               </mat-accordion>
               <mat-action-row>
@@ -53,8 +59,12 @@
               </mat-action-row>
             </ng-template>
           </div>
-          <div class="col-lg-3 col-md-5">
-            <camfil-links-block title="Guides"></camfil-links-block>
+          <div class="product-guides-area col-lg-3 col-md-5">
+            <ish-content-viewcontext
+              viewContextId="vc_camfil_category_categories_guides"
+              [callParameters]="{ Category: category.categoryRef }"
+            ></ish-content-viewcontext>
+            <!-- <camfil-links-block title="Guides"></camfil-links-block> -->
           </div>
         </div>
       </div>

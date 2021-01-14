@@ -20,6 +20,9 @@ import {
   addPromotionCodeToBasketFail,
   addPromotionCodeToBasketSuccess,
   assignBasketAddress,
+  camfilDragLineItem,
+  camfilDragLineItemFail,
+  camfilDragLineItemSuccess,
   continueCheckout,
   continueCheckoutFail,
   continueCheckoutSuccess,
@@ -165,7 +168,9 @@ export const basketReducer = createReducer(
     loadBasketEligiblePaymentMethodsSuccess,
     updateConcardisCvcLastUpdatedSuccess,
     submitBasketSuccess,
-    startCheckoutSuccess
+    startCheckoutSuccess,
+    updateConcardisCvcLastUpdated,
+    camfilDragLineItem
   ),
   setErrorOn(
     mergeBasketFail,
@@ -188,7 +193,8 @@ export const basketReducer = createReducer(
     deleteBasketPaymentFail,
     updateConcardisCvcLastUpdatedFail,
     submitBasketFail,
-    startCheckoutFail
+    startCheckoutFail,
+    camfilDragLineItemFail
   ),
 
   on(loadBasketSuccess, mergeBasketSuccess, (state: BasketState, action) => {
@@ -331,5 +337,20 @@ export const basketReducer = createReducer(
     info: undefined,
     promotionError: undefined,
     validationResults: initialValidationResults,
-  }))
+  })),
+
+  // CAMFIL
+
+  on(camfilDragLineItemSuccess, (state: BasketState, action) => {
+    const basket = {
+      ...action.payload.updatedBasket,
+    };
+
+    return {
+      ...state,
+      basket,
+      loading: false,
+      error: undefined,
+    };
+  })
 );

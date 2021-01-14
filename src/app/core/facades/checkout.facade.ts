@@ -7,6 +7,7 @@ import { Address } from 'ish-core/models/address/address.model';
 import { Attribute } from 'ish-core/models/attribute/attribute.model';
 import { Bucket } from 'ish-core/models/basket/bucket.model';
 import { LineItemUpdate } from 'ish-core/models/line-item-update/line-item-update.model';
+import { LineItem } from 'ish-core/models/line-item/line-item.model';
 import { PaymentInstrument } from 'ish-core/models/payment-instrument/payment-instrument.model';
 import { selectRouteData } from 'ish-core/store/core/router';
 import { getAllAddresses } from 'ish-core/store/customer/addresses';
@@ -14,6 +15,7 @@ import {
   addEmptyBucket,
   addPromotionCodeToBasket,
   assignBasketAddress,
+  camfilDragLineItem,
   continueCheckout,
   createBasketAddress,
   createBasketPayment,
@@ -212,5 +214,9 @@ export class CheckoutFacade {
 
   addEmptyBucket(emptyBucket: Bucket) {
     this.store.dispatch(addEmptyBucket({ bucket: emptyBucket }));
+  }
+
+  camfilDragLineItem(basketId: string, updatedLineItem: LineItem, targetBucket: Bucket) {
+    this.store.dispatch(camfilDragLineItem({ basketId, updatedLineItem, targetBucket }));
   }
 }

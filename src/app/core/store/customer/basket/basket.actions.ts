@@ -8,6 +8,7 @@ import { BasketValidation, BasketValidationScopeType } from 'ish-core/models/bas
 import { Basket } from 'ish-core/models/basket/basket.model';
 import { Bucket } from 'ish-core/models/basket/bucket.model';
 import { LineItemUpdate } from 'ish-core/models/line-item-update/line-item-update.model';
+import { LineItem } from 'ish-core/models/line-item/line-item.model';
 import { PaymentInstrument } from 'ish-core/models/payment-instrument/payment-instrument.model';
 import { PaymentMethod } from 'ish-core/models/payment-method/payment-method.model';
 import { ShippingMethod } from 'ish-core/models/shipping-method/shipping-method.model';
@@ -283,3 +284,16 @@ export const updateConcardisCvcLastUpdatedSuccess = createAction(
   '[Basket API] Update CvcLastUpdated for Concardis Credit Card Success',
   payload<{ paymentInstrument: PaymentInstrument }>()
 );
+
+// CAMFIL
+export const camfilDragLineItem = createAction(
+  '[Basket API] Move Product between buckets',
+  payload<{ basketId: string; updatedLineItem: LineItem; targetBucket: Bucket }>()
+);
+
+export const camfilDragLineItemSuccess = createAction(
+  '[Basket API ] Move Product between buckets Success',
+  payload<{ updatedBasket: Basket }>()
+);
+
+export const camfilDragLineItemFail = createAction('[Basket API] Move Product between buckets Fail', httpError());

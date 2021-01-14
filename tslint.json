@@ -790,7 +790,8 @@
           "utils/dev/",
           "core/utils/",
           ".*.actions.ts$",
-          ".*.model.ts$"
+          ".*.model.ts$",
+          "projects/camfil-icons/src/exports/"
         ]
       }
     }

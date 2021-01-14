@@ -18,9 +18,6 @@ export class CamfilCategoryProductsComponent implements OnInit, OnChanges {
   @Input() deviceType: DeviceType;
 
   longOpen = false;
-  tmpDescription = `Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Utbeatae perferendis, nobis nulla, tempore facilis qui magni eos voluptate asperiores
-                    libero rerum dicta porro necessitatibus sed ipsam quibusda esse magnam.`;
   isCollapsed = false;
 
   constructor(@Inject(PLATFORM_ID) private platformId: string) {}

@@ -9,13 +9,15 @@
       <camfil-checkout-header [basket]="basket" [buckets]="buckets"></camfil-checkout-header>
 
       <mat-divider></mat-divider>
+      <div cdkDropListGroup>
+        <ng-container *ngFor="let item of emptyBuckets">
+          <camfil-checkout-list [order]="item"></camfil-checkout-list>
+        </ng-container>
 
-      <ng-container *ngFor="let item of emptyBuckets">
-        <camfil-checkout-list [order]="item"></camfil-checkout-list>
-      </ng-container>
-      <ng-container *ngFor="let item of buckets">
-        <camfil-checkout-list [order]="item"></camfil-checkout-list>
-      </ng-container>
+        <ng-container *ngFor="let item of buckets">
+          <camfil-checkout-list [order]="item" [buckets]="buckets"></camfil-checkout-list>
+        </ng-container>
+      </div>
     </div>
     <div class="col-sm-12 col-lg-3">
       <camfil-checkout-summary [basket]="basket"></camfil-checkout-summary>

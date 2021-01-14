@@ -1,10 +1,16 @@
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { MatIconModule } from '@angular/material/icon';
+import { CamfilIconsModule } from 'camfil-icons';
+
+import { IconModule } from 'ish-core/icon.module';
 
 import { CamfilCMSBigBannerWithButtonComponent } from './components/camfil-cms-big-banner-with-button/camfil-cms-big-banner-with-button.component';
 import { CamfilCmsCookieDisclaimerComponent } from './components/camfil-cms-cookie-disclaimer/camfil-cms-cookie-disclaimer.component';
 import { CamfilCmsEdpComponent } from './components/camfil-cms-edp/camfil-cms-edp.component';
 import { CamfilCmsFaqComponent } from './components/camfil-cms-faq/camfil-cms-faq.component';
 import { CamfilCMSImageTextButtonComponent } from './components/camfil-cms-image-text-button/camfil-cms-image-text-button.component';
+import { CamfilCmsLightboxLinkComponent } from './components/camfil-cms-lightbox-link/camfil-cms-lightbox-link.component';
 import { CamfilCMSSmallImageTextLinkComponent } from './components/camfil-cms-small-image-text-link/camfil-cms-small-image-text-link.component';
 import { CMSCarouselComponent } from './components/cms-carousel/cms-carousel.component';
 import { CMSContainerComponent } from './components/cms-container/cms-container.component';
@@ -167,7 +173,17 @@ import { SfeAdapterService } from './sfe-adapter/sfe-adapter.service';
       },
       multi: true,
     },
+    {
+      provide: CMS_COMPONENT,
+      useValue: {
+        definitionQualifiedName: 'camfil_app_sf_base_cm:camfil.component.lightboxLink.pagelet2-Component',
+        class: CamfilCmsLightboxLinkComponent,
+      },
+      multi: true,
+    },
   ],
+  declarations: [CamfilCmsLightboxLinkComponent],
+  imports: [CamfilIconsModule, CommonModule, IconModule, MatIconModule],
 })
 export class CMSModule {
   constructor(sfeAdapter: SfeAdapterService) {

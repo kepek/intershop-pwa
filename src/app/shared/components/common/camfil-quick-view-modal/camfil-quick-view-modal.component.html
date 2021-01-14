@@ -1,4 +1,10 @@
 <!-- display product detail quickview -->
-<ish-content-include includeId="camfil.include.quick-view.content.pagelet2-Include"></ish-content-include>
+
+<!-- <ish-content-include includeId="camfil.include.quick-view.content.pagelet2-Include"></ish-content-include> -->
+<ish-content-viewcontext
+  viewContextId="vc_camfil_product_quick_view"
+  [callParameters]="{ Product: product.sku }"
+></ish-content-viewcontext>
+
 Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione odit doloribus numquam exercitationem beatae animi
 reprehenderit.

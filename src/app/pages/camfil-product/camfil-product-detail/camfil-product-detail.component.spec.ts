@@ -8,6 +8,7 @@ import { MockComponent, MockDirective, MockPipe } from 'ng-mocks';
 import { FeatureToggleDirective } from 'ish-core/directives/feature-toggle.directive';
 import { PricePipe } from 'ish-core/models/price/price.pipe';
 import { ProductView } from 'ish-core/models/product-view/product-view.model';
+import { ContentViewcontextComponent } from 'ish-shared/cms/components/content-viewcontext/content-viewcontext.component';
 import { AccordionItemComponent } from 'ish-shared/components/common/accordion-item/accordion-item.component';
 import { AccordionComponent } from 'ish-shared/components/common/accordion/accordion.component';
 import { CamfilProductAddToBasketComponent } from 'ish-shared/components/product/camfil-product-add-to-basket/camfil-product-add-to-basket.component';
@@ -70,6 +71,7 @@ describe('Camfil Product Detail Component', () => {
         MockComponent(CamfilProductRatingComponent),
         MockComponent(CamfilProductShipmentComponent),
         MockComponent(CamfilProductVariationSelectComponent),
+        MockComponent(ContentViewcontextComponent),
         MockComponent(LazyProductAddToCamCardComponent),
         MockComponent(LazyProductAddToOrderTemplateComponent),
         MockComponent(LazyProductAddToQuoteComponent),

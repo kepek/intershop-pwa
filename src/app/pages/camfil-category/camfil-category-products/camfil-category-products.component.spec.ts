@@ -5,11 +5,12 @@ import { NgbCollapse } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 import { MockComponent } from 'ng-mocks';
 
-import { createCategoryView } from 'ish-core/models/category-view/category-view.model';
+import { CategoryView, createCategoryView } from 'ish-core/models/category-view/category-view.model';
 import { Category } from 'ish-core/models/category/category.model';
 import { findAllCustomElements } from 'ish-core/utils/dev/html-query-utils';
 import { categoryTree } from 'ish-core/utils/dev/test-data-utils';
 import { ContentIncludeComponent } from 'ish-shared/cms/components/content-include/content-include.component';
+import { ContentViewcontextComponent } from 'ish-shared/cms/components/content-viewcontext/content-viewcontext.component';
 import { CamfilBreadcrumbComponent } from 'ish-shared/components/common/camfil-breadcrumb/camfil-breadcrumb.component';
 import { CamfilLinksBlockComponent } from 'ish-shared/components/common/camfil-links-block/camfil-links-block.component';
 import { CamfilFilterMeasurementsComponent } from 'ish-shared/components/filter/camfil-filter-measurements/camfil-filter-measurements.component';
@@ -37,6 +38,7 @@ describe('Camfil Category Products Component', () => {
         MockComponent(CamfilLinksBlockComponent),
         MockComponent(CamfilProductListingComponent),
         MockComponent(ContentIncludeComponent),
+        MockComponent(ContentViewcontextComponent),
         MockComponent(FaIconComponent),
         MockComponent(NgbCollapse),
       ],
@@ -44,10 +46,15 @@ describe('Camfil Category Products Component', () => {
   });
 
   beforeEach(() => {
+    const category = {
+      uniqueId: 'dummy',
+    } as CategoryView;
+
     fixture = TestBed.createComponent(CamfilCategoryProductsComponent);
     component = fixture.componentInstance;
+    component.category = category;
     element = fixture.nativeElement;
-    const cat = { uniqueId: 'A', categoryPath: ['A'] } as Category;
+    const cat = { uniqueId: 'A', categoryPath: ['A'], description: 'A' } as Category;
     component.category = createCategoryView(categoryTree([cat]), 'A');
   });
 
@@ -61,7 +68,6 @@ describe('Camfil Category Products Component', () => {
     expect(findAllCustomElements(element)).toIncludeAllMembers([
       'camfil-breadcrumb',
       'camfil-product-listing',
-      'camfil-links-block',
       'camfil-filter-navigation',
     ]);
   });

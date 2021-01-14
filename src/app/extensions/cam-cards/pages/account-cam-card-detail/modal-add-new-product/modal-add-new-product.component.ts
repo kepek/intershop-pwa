@@ -74,7 +74,7 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.currentCamCard$ = this.camCardsFacade.currentCamCard$;
 
-    this.currentCamCard$.pipe(takeUntil(this.destroy$)).subscribe(camCard => {
+    this.currentCamCard$?.pipe(takeUntil(this.destroy$)).subscribe(camCard => {
       if (camCard) {
         this.rootCamCardId = camCard.id;
       }
@@ -116,8 +116,7 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy {
       const sku = this.getField('sku') ? String(this.getField('sku').value) : undefined;
       const quantity = this.getField('quantity') ? Number(this.getField('quantity')?.value) : 1;
       const label = this.getField('boxLabel') ? String(this.getField('boxLabel').value) : undefined;
-      const text = undefined;
-      const comment: CamCardItemComment = { label, text };
+      const comment: CamCardItemComment = { label };
 
       if (this.addToOrder) {
         this.productFacade.addProductToBasket(this.product.sku, quantity, this.order.shipToAddress);
