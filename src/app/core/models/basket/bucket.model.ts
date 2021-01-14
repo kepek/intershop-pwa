@@ -1,3 +1,5 @@
+import { LineItem } from 'ish-core/models/line-item/line-item.model';
+
 import {
   CamCardAddress,
   CamCardContact,
@@ -16,7 +18,7 @@ export interface BucketAddress {
 export interface Bucket {
   basket: string;
   id: string;
-  lineItems?: string[];
+  lineItems?: LineItem[];
   shipToAddress?: string;
   deliveryAddressId?: string;
   orderName?: string;
