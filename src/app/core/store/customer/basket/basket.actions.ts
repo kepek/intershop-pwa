@@ -413,3 +413,5 @@ export const deleteBasketItemAttributesSuccess = createAction(
   '[Basket API] Delete Attributes for selected line item Success',
   payload<{ lineItemId: string; bucketId: string; attributeName: string }>()
 );
+
+export const editBucketFail = createAction('[Basket] Edit Bucket Fail', httpError());

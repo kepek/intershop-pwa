@@ -74,10 +74,11 @@ export interface BasketExtensions {
   info?: string;
   boxLabel?: string;
   phoneNumber?: string;
-  deliveryDate?: string;
   isPartial?: boolean;
   orderMark?: string;
   invoiceLabel?: string;
   deliveryAddress?: Address;
   shippingAddress?: Address;
+  deliveryDate?: string;
+  isPartialDelivery?: boolean;
 }

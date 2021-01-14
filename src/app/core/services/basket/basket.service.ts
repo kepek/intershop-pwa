@@ -478,9 +478,8 @@ export class BasketService {
   }
 
   // CAMFIL
-
   /**
-   * Movew product to another bucket and update position.
+   * Move product to another bucket and update position.
    * @param basketId  The basket id.
    * @param updatedLineItem  Updated product.
    * @param targetBucket  Updated product.
