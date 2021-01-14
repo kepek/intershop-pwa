@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core
 import { Observable } from 'rxjs';
 
 import { AppFacade } from 'ish-core/facades/app.facade';
+import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { Category } from 'ish-core/models/category/category.model';
 import { DeviceType, ViewType } from 'ish-core/models/viewtype/viewtype.types';
@@ -29,9 +30,14 @@ export class CamfilProductListComponent implements OnInit {
 
   listingLoading$: Observable<boolean>;
 
-  constructor(private shoppingFacade: ShoppingFacade, private appFacade: AppFacade) {}
+  constructor(
+    private shoppingFacade: ShoppingFacade,
+    private appFacade: AppFacade,
+    private checkoutFacade: CheckoutFacade
+  ) {}
   deviceType$: Observable<DeviceType>;
   ngOnInit(): void {
+    this.checkoutFacade.loadBuckets();
     this.listingLoading$ = this.shoppingFacade.productListingLoading$;
     this.deviceType$ = this.appFacade.deviceType$;
   }

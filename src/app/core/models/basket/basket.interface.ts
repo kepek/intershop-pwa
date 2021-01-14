@@ -28,7 +28,7 @@ export interface BasketBaseData {
     valueBasedDiscounts?: string[];
   };
   buckets?: string[];
-  basketExtension?: BasketExtension[];
+  basketExtensions?: BasketExtensions[];
   lineItems?: string[];
   payments?: string[];
   promotionCodes?: string[];
@@ -66,10 +66,11 @@ export interface BasketData {
   infos?: BasketInfo[];
 }
 
-export interface BasketExtension {
+export interface BasketExtensions {
   name?: string;
   shippingAddress?: AddressData;
   contactPerson?: CamCardContact;
   info?: string;
   boxLabel?: string;
+  phoneNumber?: string;
 }

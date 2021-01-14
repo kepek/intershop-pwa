@@ -11,6 +11,8 @@ import { Price } from 'ish-core/models/price/price.model';
 
 import { ModalAddNewProductComponent } from '../../../extensions/cam-cards/pages/account-cam-card-detail/modal-add-new-product/modal-add-new-product.component';
 
+import { EditOrderModalComponent } from './edit-order-modal/edit-order-modal.component';
+
 @Component({
   selector: 'camfil-checkout-list',
   templateUrl: './camfil-checkout-list.component.html',
@@ -159,5 +161,10 @@ export class CamfilCheckoutListComponent {
       const targetPos = this.getTargetPosition(event.previousIndex, event.currentIndex, items);
       this.camfilDragLineItem(event.item.data, targetOrder, targetPos);
     }
+  }
+
+  openEditModal(modal: EditOrderModalComponent) {
+    this.dialog.open(modal.show());
+    modal.hide = () => this.dialog.closeAll();
   }
 }

@@ -1,7 +1,9 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+
+import { EditBucket } from 'ish-core/models/basket/bucket.model';
 
 import { CamCardsFacade } from '../../../../facades/cam-cards.facade';
 import { CamCardAddress, CamCardContact, CamCardCustomer } from '../../../../models/cam-card/cam-card.model';
@@ -22,6 +24,8 @@ export class OrderFormComponent implements OnInit, OnDestroy {
   customers$: Observable<CamCardCustomer[]>;
   contacts: CamCardContact[];
 
+  @Input() orderToEdit?: EditBucket;
+
   private destroy$ = new Subject<void>();
 
   constructor(private fb: FormBuilder, private camCardsFacade: CamCardsFacade) {}
@@ -30,19 +34,23 @@ export class OrderFormComponent implements OnInit, OnDestroy {
     this.addresses$ = this.camCardsFacade.addresses$;
     this.customers$ = this.camCardsFacade.customers$;
 
+    if (this.orderToEdit && this.orderToEdit.customerId) {
+      this.pickCustomer({ value: this.orderToEdit.customerId });
+    }
+
     this.addressForm = this.fb.group({
-      customer: ['', [Validators.required]],
-      contact: ['', Validators.required],
-      invoiceLabel: ['', [Validators.required, Validators.maxLength(20)]],
-      phoneNumber: ['', Validators.pattern('[0-9+-/]*')],
-      orderMark: ['', [Validators.required]],
-      deliveryAddressSelect: ['', []],
-      company: ['', [Validators.required]],
-      building: [''],
-      address: ['', [Validators.required]],
-      zipCode: ['', [Validators.required, Validators.pattern('[0-9]{5}')]],
-      area: ['', [Validators.required]],
-      info: ['', [Validators.maxLength(150)]],
+      customer: [this.orderToEdit?.customerId || '', [Validators.required]],
+      contact: [this.orderToEdit?.contactPersonId || '', Validators.required],
+      invoiceLabel: [this.orderToEdit?.invoiceLabel || '', [Validators.required, Validators.maxLength(20)]],
+      phoneNumber: [this.orderToEdit?.phoneNumber || '', Validators.pattern('[0-9+-/]*')],
+      orderMark: [this.orderToEdit?.orderMark || '', [Validators.required]],
+      deliveryAddressSelect: [this.orderToEdit?.deliveryAddressId || '', []],
+      company: [this.orderToEdit?.company || '', [Validators.required]],
+      building: [this.orderToEdit?.building || ''],
+      address: [this.orderToEdit?.address || '', [Validators.required]],
+      zipCode: [this.orderToEdit?.zipCode || '', [Validators.required, Validators.pattern('[0-9]{5}')]],
+      area: [this.orderToEdit?.area || '', [Validators.required]],
+      info: [this.orderToEdit?.info || '', [Validators.maxLength(150)]],
     });
   }
 

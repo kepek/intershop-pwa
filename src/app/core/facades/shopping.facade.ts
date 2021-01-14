@@ -3,10 +3,17 @@ import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { debounce, filter, map, switchMap, tap } from 'rxjs/operators';
 
+import { Bucket } from 'ish-core/models/basket/bucket.model';
 import { CategoryHelper } from 'ish-core/models/category/category.helper';
 import { ProductListingID } from 'ish-core/models/product-listing/product-listing.model';
 import { ProductCompletenessLevel, ProductHelper } from 'ish-core/models/product/product.model';
-import { addProductToBasket, getProductAdded, resetProductAdded, updateBucket } from 'ish-core/store/customer/basket';
+import {
+  addProductToBasket,
+  editBucket,
+  getProductAdded,
+  resetProductAdded,
+  updateBucket,
+} from 'ish-core/store/customer/basket';
 import {
   getCategories,
   getCategory,
@@ -273,5 +280,9 @@ export class ShoppingFacade {
           }))
       )
     );
+  }
+
+  editOrder(basketId: string, shippingAddress: string, bucket: Bucket) {
+    this.store.dispatch(editBucket({ basketId, shippingAddress, bucket }));
   }
 }

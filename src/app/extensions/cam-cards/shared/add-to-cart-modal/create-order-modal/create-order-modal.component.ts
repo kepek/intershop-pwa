@@ -17,6 +17,7 @@ import { takeUntil } from 'rxjs/operators';
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { BasketView } from 'ish-core/models/basket/basket.model';
+import { Bucket } from 'ish-core/models/basket/bucket.model';
 import { Product } from 'ish-core/models/product/product.model';
 import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
 
@@ -83,6 +84,9 @@ export class CreateOrderModalComponent implements OnInit, OnDestroy {
 
   basket$: Observable<BasketView>;
   basketId: string;
+
+  @Input() order?: Bucket;
+  @Input() edit = false;
 
   ngOnInit() {
     this.updated = false;
@@ -193,6 +197,7 @@ export class CreateOrderModalComponent implements OnInit, OnDestroy {
         addressLine2: addressForm.get('building').value,
         postalCode: addressForm.get('zipCode').value,
         city: addressForm.get('area').value,
+        companyName1: addressForm.get('company').value,
       },
       transient: true,
     };

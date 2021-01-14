@@ -3,7 +3,6 @@ import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
-import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { BasketView } from 'ish-core/models/basket/basket.model';
 import { Bucket } from 'ish-core/models/basket/bucket.model';
 import { whenTruthy } from 'ish-core/utils/operators';
@@ -24,14 +23,11 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
   emptyBuckets: Bucket[];
 
   camCards: CamCard[];
+  notConnectedBuckets: Bucket[];
 
   private destroy$ = new Subject<void>();
 
-  constructor(
-    private checkoutFacade: CheckoutFacade,
-    private camCardsFacade: CamCardsFacade,
-    private productFacade: ShoppingFacade
-  ) {}
+  constructor(private checkoutFacade: CheckoutFacade, private camCardsFacade: CamCardsFacade) {}
 
   ngOnInit() {
     this.initBasket();
@@ -45,20 +41,21 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
       this.basketId = basket.id;
     });
 
-    this.camCardsFacade.camCard$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(camCards => {
-      this.camCards = camCards;
-      this.checkoutFacade.loadBuckets();
+    this.buckets$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe((buckets: Bucket[]) => {
+      this.notConnectedBuckets = buckets;
     });
 
-    this.buckets$.pipe(takeUntil(this.destroy$)).subscribe((buckets: Bucket[]) => {
-      if (buckets && this.camCards.length) {
-        this.buckets = this.connectWithCamCard(buckets);
+    this.camCardsFacade.camCard$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(camCards => {
+      this.camCards = camCards;
+
+      if (this.notConnectedBuckets) {
+        this.buckets = this.connectWithCamCard(this.notConnectedBuckets);
       }
     });
 
-    this.productFacade.productAdded$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(() => {
+    /*    this.productFacade.productAdded$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(() => {
       this.camCardsFacade.loadCamCards();
-    });
+    });*/
 
     this.checkoutFacade.emptyBuckets$.pipe(takeUntil(this.destroy$)).subscribe(emptyBuckets => {
       this.emptyBuckets = emptyBuckets;
@@ -78,6 +75,7 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
               orderName: camCard.name,
               nextDelivery: camCard.nextDeliveryDate,
               orderMark: camCard.orderLabel,
+              invoiceLabel: camCard.invoiceLabel,
               customer: camCard.customer,
               contacts: camCard.contacts,
               camCardId: camCard.id,

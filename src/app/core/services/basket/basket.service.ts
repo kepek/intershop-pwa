@@ -14,11 +14,11 @@ import { BasketMergeData } from 'ish-core/models/basket-merge/basket-merge.inter
 import { BasketValidationData } from 'ish-core/models/basket-validation/basket-validation.interface';
 import { BasketValidationMapper } from 'ish-core/models/basket-validation/basket-validation.mapper';
 import { BasketValidation, BasketValidationScopeType } from 'ish-core/models/basket-validation/basket-validation.model';
-import { BasketBaseData, BasketData, BasketExtension } from 'ish-core/models/basket/basket.interface';
+import { BasketBaseData, BasketData, BasketExtensions } from 'ish-core/models/basket/basket.interface';
 import { BasketMapper } from 'ish-core/models/basket/basket.mapper';
 import { Basket } from 'ish-core/models/basket/basket.model';
 import { BucketMapper } from 'ish-core/models/basket/bucket.mapper';
-import { Bucket, Buckets } from 'ish-core/models/basket/bucket.model';
+import { Bucket, BucketAddress, Buckets } from 'ish-core/models/basket/bucket.model';
 import { LineItem } from 'ish-core/models/line-item/line-item.model';
 import { ShippingMethodData } from 'ish-core/models/shipping-method/shipping-method.interface';
 import { ShippingMethodMapper } from 'ish-core/models/shipping-method/shipping-method.mapper';
@@ -276,6 +276,7 @@ export class BasketService {
         value: item.quantity,
         unit: item.unit,
       },
+      shipToAddress: item.shipToAddress,
     }));
 
     return this.apiService
@@ -499,7 +500,7 @@ export class BasketService {
             headers: this.basketHeaders,
             params,
           })
-          .pipe(map((payload: Buckets) => BucketMapper.fromData(payload, basket.lineItems)))
+          .pipe(map((payload: Buckets) => BucketMapper.fromData(payload, basket.lineItems, basket.basketExtensions)))
       )
     );
   }
@@ -511,7 +512,7 @@ export class BasketService {
     contact?: string,
     info?: string,
     phoneNumber?: string
-  ): Observable<BasketExtension> {
+  ): Observable<BasketExtensions> {
     return this.apiService.post(`baskets/${basketId}/camfil/${addressId}`, {
       boxLabel,
       contactPerson: {
@@ -539,5 +540,30 @@ export class BasketService {
     return this.apiService
       .post(`baskets/${basketId}/items/${updatedLineItem.id}/camfil?${params}`, itemToSend)
       .pipe(map(BasketMapper.fromData));
+  }
+
+  editBucket(
+    basketId: string,
+    addressId: string,
+    customerId?: string,
+    orderMark?: string,
+    invoiceLabel?: string,
+    deliveryAddress?: BucketAddress,
+    boxLabel?: string,
+    contact?: string,
+    info?: string,
+    phoneNumber?: string
+  ): Observable<Bucket> {
+    // todo - needs BE
+    return this.apiService.post(`baskets/${basketId}/camfil/${addressId}`, {
+      customerId,
+      orderMark,
+      invoiceLabel,
+      deliveryAddress,
+      boxLabel,
+      contact,
+      info,
+      phoneNumber,
+    });
   }
 }
