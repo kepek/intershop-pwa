@@ -7,11 +7,11 @@
     <div class="col-md-3">
       <p>
         <span>{{ 'camfil.checkout.number_of_orders' | translate }}:</span>
-        <span class="checkout-header-number">{{ basket.buckets.length + 1 }}</span>
+        <span class="checkout-header-number">{{ buckets.length }}</span>
       </p>
       <p>
         <span>{{ 'camfil.checkout.number_of_products' | translate }}:</span>
-        <span class="checkout-header-number">{{ basket.totalProductQuantity }}</span>
+        <span class="checkout-header-number">{{ totalProductQuantity() }}</span>
       </p>
     </div>
     <div class="col-md-9">

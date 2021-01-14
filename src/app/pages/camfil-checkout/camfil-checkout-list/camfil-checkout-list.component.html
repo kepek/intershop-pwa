@@ -37,7 +37,7 @@
           <dd class="col-6 p-0" data-testing-id="order-customer_name">{{ order.customer.companyName }}</dd>
           <dt class="col-6 p-0">{{ 'camfil.account.orderdetails.contact_person.label' | translate }}</dt>
           <dd class="col-6 p-0" data-testing-id="order-contact_person">
-            {{ order.contacts[0].firstName }} {{ order.contacts[0].lastName }}
+            {{ order.contacts[0]?.firstName }} {{ order.contacts[0]?.lastName }}
           </dd>
           <dt class="col-6 p-0">{{ 'camfil.checkout.phone' | translate }}</dt>
           <dd class="col-6 p-0" data-testing-id="order-camfil_no">-</dd>
