@@ -27,6 +27,7 @@ describe('Camfil Checkout Header Component', () => {
   let fixture: ComponentFixture<CamfilCheckoutHeaderComponent>;
   let element: HTMLElement;
   let basket: Basket;
+  let buckets;
   let camCardFacadeMock: CamCardsFacade;
   let checkoutFacadeMock: CheckoutFacade;
   let shoppingFacadeMock: ShoppingFacade;
@@ -93,8 +94,10 @@ describe('Camfil Checkout Header Component', () => {
     basket = { id: '1' } as Basket;
     basket.totalProductQuantity = 8;
     basket.buckets = ['1', '2', '3'];
+    buckets = [];
 
     component.basket = basket;
+    component.buckets = buckets;
     when(camCardFacadeMock.camCard$).thenReturn(of([camCardDetails]));
     when(camCardFacadeMock.virtualCamCard$).thenReturn(of(camCardDetails));
     when(checkoutFacadeMock.buckets$).thenReturn(of([]));
