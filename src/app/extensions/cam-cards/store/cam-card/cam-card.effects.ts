@@ -32,7 +32,7 @@ import {
   whenTruthy,
 } from 'ish-core/utils/operators';
 
-import { CamCard } from '../../models/cam-card/cam-card.model';
+import { CamCard, CamCardItemComment } from '../../models/cam-card/cam-card.model';
 import { CamCardService } from '../../services/cam-card/cam-card.service';
 
 import {
@@ -378,7 +378,7 @@ export class CamCardEffects {
             deleteSubCamCardSuccess({ camCard }),
             displaySuccessMessage({
               message: 'camfil.account.cam_card.delete_sub_cam_card.confirmation',
-              messageParams: { 0: name },
+              messageParams: { 0: camCard.name },
             }),
           ]),
           mapErrorToAction(deleteSubCamCardFail)
@@ -518,11 +518,14 @@ export class CamCardEffects {
       mergeMap(payload =>
         this.camCardService.createCamCard(payload.camCard).pipe(
           mergeMap(camCard => {
+            const comment: CamCardItemComment = {
+              label: payload.boxLabel,
+            };
             const addProductPayload = {
               camCardId: camCard.id,
               sku: payload.sku,
               quantity: payload.quantity,
-              boxLabel: payload.boxLabel,
+              comment,
             };
 
             return payload.edit
