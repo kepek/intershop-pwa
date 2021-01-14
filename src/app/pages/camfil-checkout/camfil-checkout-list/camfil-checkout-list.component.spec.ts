@@ -28,6 +28,7 @@ import { OrderFormComponent } from '../../../extensions/cam-cards/shared/add-to-
 import { CamfilCheckoutLineItemComponent } from '../camfil-checkout-line-item/camfil-checkout-line-item.component';
 
 import { CamfilCheckoutListComponent } from './camfil-checkout-list.component';
+import { CamfilDeleteOrderComponent } from './camfil-delete-order/camfil-delete-order.component';
 import { EditOrderModalComponent } from './edit-order-modal/edit-order-modal.component';
 
 describe('Camfil Checkout List Component', () => {
@@ -48,6 +49,7 @@ describe('Camfil Checkout List Component', () => {
         CamfilCamCardModalComponent,
         CamfilCheckoutListComponent,
         CamfilCounterComponent,
+        CamfilDeleteOrderComponent,
         CamfilProductQuantityComponent,
         CamfilSearchBoxComponent,
         CamfilSmallCtaModalComponent,

@@ -1,0 +1,18 @@
+<a class="link__delete" (click)="openModal()">
+  <mat-icon svgIcon="delete" class="remove-icon"></mat-icon>
+  {{ 'camfil.checkout.cta.delete_order' | translate }}
+</a>
+
+<camfil-small-cta-modal
+  actionButtonTitle="{{ 'camfil.checkout.order.delete_order.modal.yes' | translate }}"
+  cancelButtonTitle="{{ 'camfil.checkout.order.delete_order.modal.no' | translate }}"
+  showCloseIcon="true"
+  hideIcon="true"
+  [actionTemplate]="actionTemplate"
+  (actionClicked)="deleteOrder()"
+>
+</camfil-small-cta-modal>
+
+<ng-template #actionTemplate>
+  <div>{{ 'camfil.checkout.order.delete_order.modal.subheading' | translate }}</div>
+</ng-template>

@@ -25,6 +25,7 @@ import {
   deleteBasketItemAttributes,
   deleteBasketPayment,
   deleteBasketShippingAddress,
+  deleteBucket,
   getBasketEligiblePaymentMethods,
   getBasketEligibleShippingMethods,
   getBasketError,
@@ -241,5 +242,9 @@ export class CheckoutFacade {
     boxLabelAttribute: { name: string; type: string; value: string }
   ) {
     this.store.dispatch(updateBasketItemAttributes({ basketId, lineItemId, boxLabelAttribute }));
+  }
+
+  deleteOrder(basketId: string, bucketId: string) {
+    this.store.dispatch(deleteBucket({ basketId, bucketId }));
   }
 }

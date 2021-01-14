@@ -48,6 +48,8 @@ import {
   deleteBasketItemAttributesSuccess,
   deleteBasketItemFail,
   deleteBasketItemSuccess,
+  deleteBucket,
+  deleteBucketFail,
   loadBasket,
   loadBasketAddresses,
   loadBuckets,
@@ -321,6 +323,18 @@ export class BasketItemsEffects {
           map(info => deleteBasketItemSuccess({ info })),
           mapErrorToAction(deleteBasketItemFail)
         )
+      )
+    )
+  );
+
+  deleteBucket$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(deleteBucket),
+      mapToPayload(),
+      concatMap(payload =>
+        this.basketService
+          .deleteBucket(payload.basketId, payload.bucketId)
+          .pipe(map(loadBuckets), mapErrorToAction(deleteBucketFail))
       )
     )
   );

@@ -8,7 +8,7 @@
 
     <div class="cta-modal__header">
       <mat-icon *ngIf="hasError" svgIcon="error"></mat-icon>
-      <mat-icon *ngIf="!hasError" svgIcon="{{ icon || 'add-camcard' }}"></mat-icon>
+      <mat-icon *ngIf="!hasError && !hideIcon" svgIcon="{{ icon || 'add-camcard' }}"></mat-icon>
       <h2 class="cta-modal__header--text">{{ actionTitle }}</h2>
     </div>
 
@@ -24,7 +24,7 @@
 
     <div *ngIf="!onlyAccept && actionButtonTitle" class="cta-modal__links">
       <button class="btn btn-link cta-modal__links--link" (click)="hide()">
-        {{ 'camfil.modal.cta.button.ok' | translate }}
+        {{ cancelButtonTitle ? cancelButtonTitle : ('camfil.modal.cta.button.cancel' | translate) }}
       </button>
 
       <button class="btn btn-link cta-modal__links--link" type="submit" (click)="emitAction()">

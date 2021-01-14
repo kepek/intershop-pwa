@@ -409,4 +409,6 @@ export const deleteBasketItemAttributesSuccess = createAction(
   payload<{ lineItemId: string; bucketId: string; attributeName: string }>()
 );
 
-export const editBucketFail = createAction('[Basket] Edit Bucket Fail', httpError());
+export const deleteBucket = createAction('[Basket] Delete Bucket', payload<{ basketId: string; bucketId: string }>());
+
+export const deleteBucketFail = createAction('[Basket API] Delete Bucket Fail', httpError());

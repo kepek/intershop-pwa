@@ -15,21 +15,16 @@ export class CamfilSmallCtaModalComponent {
   @Input() actionTemplate?: TemplateRef<any>;
   @Input() actionTitle?: string;
   @Input() actionButtonTitle?: string;
-  @Input() action2ButtonTitle?: string;
+  @Input() cancelButtonTitle?: string;
   @Output() actionClicked = new EventEmitter<any>();
-  @Output() action2Clicked = new EventEmitter<any>();
+  @Input() icon?: string;
   @Input() showCloseIcon = false;
   @Input() onlyAccept = false;
   @Input() hasError = false;
-  @Input() icon?: string;
+  @Input() hideIcon = false;
 
   emitAction() {
     this.actionClicked.emit();
-    this.hide();
-  }
-
-  emitAction2() {
-    this.action2Clicked.emit();
     this.hide();
   }
 
