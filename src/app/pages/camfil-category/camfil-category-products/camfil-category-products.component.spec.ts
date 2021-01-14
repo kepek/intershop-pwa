@@ -54,7 +54,7 @@ describe('Camfil Category Products Component', () => {
     component = fixture.componentInstance;
     component.category = category;
     element = fixture.nativeElement;
-    const cat = { uniqueId: 'A', categoryPath: ['A'] } as Category;
+    const cat = { uniqueId: 'A', categoryPath: ['A'], description: 'A' } as Category;
     component.category = createCategoryView(categoryTree([cat]), 'A');
   });
 
@@ -68,7 +68,6 @@ describe('Camfil Category Products Component', () => {
     expect(findAllCustomElements(element)).toIncludeAllMembers([
       'camfil-breadcrumb',
       'camfil-product-listing',
-      'camfil-links-block',
       'camfil-filter-navigation',
     ]);
   });
