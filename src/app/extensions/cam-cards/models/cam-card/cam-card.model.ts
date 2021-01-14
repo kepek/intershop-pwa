@@ -1,6 +1,7 @@
 import { Address } from 'ish-core/models/address/address.model';
 import { CustomerData } from 'ish-core/models/customer/customer.interface';
 import { Customer } from 'ish-core/models/customer/customer.model';
+import { SelectOption } from 'ish-shared/forms/components/select/select.component';
 
 import { MaintenanceStatus } from './cam-card.helper';
 
@@ -65,10 +66,31 @@ export interface CamCardContact {
 
 export interface CamCardItemComment {
   label: string;
-  text: string;
+  text?: string;
 }
 
 // tslint:disable-next-line:no-empty-interface
 export interface CamCardAddress extends Address {
   street?: string;
+}
+
+export interface SelectCamCardOption extends SelectOption {
+  nextDelivery: string;
+  orderLabel?: string;
+  invoiceLabel?: string;
+  deliveryAddressDisplay?: string;
+  deliveryAddress?: CamCardAddress;
+  subCamCards?: CamCard[];
+  boxLabels?: string[];
+  camCardItems?: CamCardItem[];
+  customer: CamCardCustomer;
+  name: string;
+}
+
+export interface CreateCamCardData {
+  camCard: CamCard;
+  quantity?: number;
+  boxLabel?: string;
+  edit?: boolean;
+  subCamCard?: CamCard;
 }

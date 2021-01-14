@@ -19,34 +19,18 @@ import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { Product } from 'ish-core/models/product/product.model';
-import { SelectOption } from 'ish-shared/forms/components/select/select.component';
 import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
 
 import { CamCardsFacade } from '../../facades/cam-cards.facade';
-import { CamCard, CamCardAddress, CamCardCustomer, CamCardItem } from '../../models/cam-card/cam-card.model';
+import {
+  CamCard,
+  CamCardAddress,
+  CamCardItemComment,
+  CreateCamCardData,
+  SelectCamCardOption,
+} from '../../models/cam-card/cam-card.model';
 
 import { CreateCamCardModalComponent } from './create-cam-card-modal/create-cam-card-modal.component';
-
-interface SelectCamCardOption extends SelectOption {
-  nextDelivery: string;
-  orderLabel?: string;
-  invoiceLabel?: string;
-  deliveryAddressDisplay?: string;
-  deliveryAddress?: CamCardAddress;
-  subCamCards?: CamCard[];
-  boxLabels?: string[];
-  camCardItems?: CamCardItem[];
-  customer: CamCardCustomer;
-  name: string;
-}
-
-interface CreateCamCardData {
-  camCard: CamCard;
-  quantity?: number;
-  boxLabel?: string;
-  edit?: boolean;
-  subCamCard?: CamCard;
-}
 
 /**
  * The cam cards select modal displays a list of cam_cards. The user can select one cam cards  or enter a name for a new cam card in order to add or move an item to the selected cam cards .
@@ -282,7 +266,8 @@ export class SelectCamCardModalComponent implements OnInit, OnDestroy, OnChanges
         this.currentSubCamCardName = rootCamCard.subCamCards.find(sub => sub.id === this.segmentSelected).name;
         this.useSubCamCard = true;
       } else {
-        this.camCardsFacade.addProductToCamCard(this.camCardSelected, this.product.sku, quantity, boxLabel);
+        const comment: CamCardItemComment = { label: boxLabel };
+        this.camCardsFacade.addProductToCamCard(this.camCardSelected, this.product.sku, quantity, comment);
         this.useSubCamCard = false;
       }
     }
