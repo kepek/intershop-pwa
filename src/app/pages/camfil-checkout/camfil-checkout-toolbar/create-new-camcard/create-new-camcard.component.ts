@@ -41,7 +41,7 @@ export class CreateNewCamcardComponent {
   }
 
   getNewName(oldName: string, idx: number): string {
-    return oldName + '_' + this.getTimestamp() + '_' + idx;
+    return `${oldName}_${this.getTimestamp()}_${idx}`;
   }
 
   openModal() {

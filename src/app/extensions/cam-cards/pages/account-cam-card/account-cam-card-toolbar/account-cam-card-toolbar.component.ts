@@ -16,6 +16,7 @@ export class AccountCamCardToolbarComponent implements OnInit {
   @Output() copyCamCard = new EventEmitter<Event>();
   @Input() isSticky: boolean;
   @Input() checkedCamCards: CamCard[];
+  @Input() productsChecked = {};
 
   constructor(private camCardsFacade: CamCardsFacade) {}
 
@@ -37,5 +38,9 @@ export class AccountCamCardToolbarComponent implements OnInit {
 
   addToCart() {
     this.addSelectedItemsToCart.emit();
+  }
+
+  isProductsChecked() {
+    return Object.keys(this.productsChecked).length;
   }
 }

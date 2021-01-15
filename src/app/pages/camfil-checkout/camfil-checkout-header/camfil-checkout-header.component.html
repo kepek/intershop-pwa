@@ -4,7 +4,7 @@
     {{ 'shopping_cart.proceed_to_checkout.button.label' | translate }}
   </h1>
   <div class="row align-items-end">
-    <div class="col-md-3">
+    <div class="col-md-3" *ngIf="buckets">
       <p>
         <span>{{ 'camfil.checkout.number_of_orders' | translate }}:</span>
         <span class="checkout-header-number">{{ buckets.length }}</span>
