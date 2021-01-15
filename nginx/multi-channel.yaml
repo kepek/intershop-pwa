@@ -1,2 +1,13 @@
 .+:
-  channel: default
+  - baseHref: /se
+    channel: Camfil-CamfilSE-Site
+    lang: sv_SE
+  - baseHref: /se/en_US
+    channel: Camfil-CamfilSE-Site
+    lang: en_US
+  - baseHref: /se/de_DE
+    channel: Camfil-CamfilSE-Site
+    lang: de_DE
+  - baseHref: /se/fr_FR
+    channel: Camfil-CamfilSE-Site
+    lang: fr_FR
