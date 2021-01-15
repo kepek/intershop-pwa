@@ -2,7 +2,7 @@
   <mat-card-content>
     <camfil-account-cam-card-detail-toolbar
       (addItemsToCart)="addItemsToCart()"
-      (deleteCamCard)="openDeleteConfirmationDialog(camCard, deleteDialog)"
+      (deleteCamCard)="openDeleteConfirmationDialog(deleteDialog, camCard, 'cc')"
       [isSticky]="isStickyCamCardToolbar$ | async"
       [title]="getCamCardName()"
     ></camfil-account-cam-card-detail-toolbar>
@@ -31,6 +31,7 @@
                 [index]="i + 1"
                 (handleLoad)="productUpdate($event)"
                 (handleUpdate)="productUpdate($event)"
+                (delete)="openDeleteConfirmationDialog(productDeleteDialog, null, 'product', $event)"
                 mode="edit"
               ></camfil-account-cam-card-detail-line-item>
             </div>
@@ -46,7 +47,7 @@
           <mat-icon class="arrow_down" [class.arrow_down--expanded]="isSubCamCardOpen(sub.id)">arrow_left</mat-icon>
           <camfil-account-cam-card-detail-sub-title
             [sub]="sub"
-            (delete)="openDeleteConfirmationDialog(sub, subDeleteDialog, true)"
+            (delete)="openDeleteConfirmationDialog(subDeleteDialog, sub, 'sub')"
           ></camfil-account-cam-card-detail-sub-title>
         </div>
         <mat-expansion-panel class="mat-elevation-z0" [expanded]="isSubCamCardOpen(sub.id)">
@@ -73,6 +74,7 @@
                     [index]="i2 + 1"
                     (handleLoad)="productUpdate($event)"
                     (handleUpdate)="productUpdate($event)"
+                    (delete)="openDeleteConfirmationDialog(productDeleteDialog, null, 'product', $event)"
                     mode="edit"
                   ></camfil-account-cam-card-detail-line-item>
                 </div>
@@ -123,4 +125,15 @@
     icon: 'checkmark'
   }"
   >{{ 'camfil.account.cam_card.delete.sub_cam_card.do_you_really.text' | translate }}</camfil-modal-dialog
+>
+
+<camfil-modal-dialog
+  #productDeleteDialog
+  (confirmed)="deleteProduct($event)"
+  [options]="{
+    confirmText: 'camfil.account.cam_card.delete.button.text' | translate,
+    rejectText: 'camfil.account.cancel.button.label' | translate,
+    icon: 'checkmark'
+  }"
+  >{{ 'camfil.account.cam_card.delete.product.do_you_really.text' | translate }}</camfil-modal-dialog
 >

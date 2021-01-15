@@ -15,8 +15,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { Observable, Subject } from 'rxjs';
-import { take, takeUntil } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { Price } from 'ish-core/models/price/price.model';
@@ -51,7 +50,6 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges {
   isStickyCamCardToolbar$: Observable<boolean>;
   // TODO: improve when user locale will be properlyused
   priceSum: Price = { currency: 'USD', value: 0, type: 'Money' };
-  private destroy$ = new Subject();
   POSITION_GAP_SIZE = 999;
 
   constructor(
@@ -133,17 +131,22 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges {
     this.camCardsFacade.deleteSubCamCard(sub.rootCamCard, sub.id);
   }
 
-  /** Determine the heading of the delete modal and opens the modal. */
-  openDeleteConfirmationDialog(camCard: CamCard, modal: CamfilModalDialogComponent<string | CamCard>, sub?: boolean) {
-    const header = sub
-      ? 'camfil.account.cam_card.delete_dialog.sub_cam_card.header'
-      : 'camfil.account.cam_card.delete_dialog.header';
-    this.translate
-      .get(header, { 0: camCard.name })
-      .pipe(take(1), takeUntil(this.destroy$))
-      .subscribe(res => (modal.options.titleText = res));
+  deleteProduct(camCardItemId: string) {
+    this.camCardsFacade.removeProductFromCamCard(this.camCard.id, camCardItemId);
+  }
 
-    const data = sub ? camCard : camCard.id;
+  /** Determine the heading of the delete modal and opens the modal. */
+  openDeleteConfirmationDialog(
+    modal: CamfilModalDialogComponent<string | CamCard>,
+    camCard: CamCard,
+    type?: 'cc' | 'sub' | 'product',
+    camCardItem?: CamCardItem
+  ) {
+    const header = `camfil.dynamic.account.cam_card.delete_dialog.${type}.header`;
+    const name = camCardItem ? camCardItem.product.sku : camCard.name;
+    modal.options.titleText = this.translate.instant(header, { 0: name });
+
+    const data = camCardItem ? camCardItem.id : type === 'sub' ? camCard : camCard.id;
     modal.show(data);
   }
 

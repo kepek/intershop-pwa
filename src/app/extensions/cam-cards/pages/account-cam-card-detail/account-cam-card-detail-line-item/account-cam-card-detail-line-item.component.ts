@@ -43,6 +43,7 @@ export class AccountCamCardDetailLineItemComponent implements OnChanges, OnInit,
   @Input() index: number;
   @Output() handleLoad = new EventEmitter<{ res: ProductView; quantity: number }>();
   @Output() handleUpdate = new EventEmitter<{ res: ProductView; quantity: number }>();
+  @Output() delete = new EventEmitter<CamCardItem>();
 
   quantity = 0;
 
@@ -134,8 +135,8 @@ export class AccountCamCardDetailLineItemComponent implements OnChanges, OnInit,
       .subscribe((res: ProductView) => this.handleUpdate.emit({ res, quantity: difference }));
   }
 
-  removeProductFromCamCard(camCardItemId: string) {
-    this.camCardsFacade.removeProductFromCamCard(this.currentCamCard.id, camCardItemId);
+  removeProductFromCamCard(camCardItem: CamCardItem) {
+    this.delete.emit(camCardItem);
   }
 
   /**if the camCardItem is loaded, get product details*/
