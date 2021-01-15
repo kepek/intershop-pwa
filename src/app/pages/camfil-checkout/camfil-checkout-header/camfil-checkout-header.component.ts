@@ -14,6 +14,10 @@ export class CamfilCheckoutHeaderComponent {
   @Input() buckets: Bucket[];
 
   totalProductQuantity() {
+    if (!this.buckets) {
+      return 0;
+    }
+
     return this.buckets.reduce((a, b) => a + b.lineItems.reduce((c, d) => c + d.quantity.value, 0), 0);
   }
 }

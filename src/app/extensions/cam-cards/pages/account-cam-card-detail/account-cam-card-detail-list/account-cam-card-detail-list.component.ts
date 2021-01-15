@@ -102,7 +102,7 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges {
   }
 
   productUpdate(event) {
-    if (event.res.salePrice.value) {
+    if (event.res.salePrice?.value) {
       this.priceSum.value = this.priceSum.value + event.res.salePrice.value * event.quantity;
     }
   }

@@ -6,7 +6,7 @@
     <br />
     <div class="summary-line">
       <p>{{ 'camfil.checkout.your_total_price' | translate }}</p>
-      <p>{{ basket.totals.total | ishPrice }}</p>
+      <p>{{ basket.totals?.total | ishPrice }}</p>
     </div>
     <div class="summary-line">
       <p>{{ 'camfil.checkout.volume_discount' | translate }}</p>
@@ -16,11 +16,11 @@
       <p>
         <b>{{ 'camfil.checkout.total_price_after' | translate }}</b> ({{ 'camfil.checkout.excl_vat' | translate }})
       </p>
-      <p>{{ basket.totals.total | ishPrice }}</p>
+      <p>{{ basket.totals?.total | ishPrice }}</p>
     </div>
     <div class="summary-line">
       <p>{{ 'camfil.checkout.tax_amount' | translate }}</p>
-      <p>{{ basket.totals.taxTotal | ishPrice }}</p>
+      <p>{{ basket.totals?.taxTotal | ishPrice }}</p>
     </div>
     <br />
     <mat-divider></mat-divider>
