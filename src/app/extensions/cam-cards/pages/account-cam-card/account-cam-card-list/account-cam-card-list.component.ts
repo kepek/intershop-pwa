@@ -116,9 +116,18 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
 
       this.camCardsProcessed.filterPredicate = (data, filter) => {
         const filtered = this.simplifyData(filter);
+        const additionalFields = data.camCardItems.map(item => item.comment.label);
+        data.subCamCards.reduce((res, el) => {
+          res.push(el.name);
+          el.camCardItems.forEach(item => {
+            res.push(item.comment.label);
+          });
+          return res;
+        }, additionalFields);
         return (
           this.simplifyData(data.customer.companyName).indexOf(filtered) !== -1 ||
-          this.simplifyData(data.name).indexOf(filtered) !== -1
+          this.simplifyData(data.name).indexOf(filtered) !== -1 ||
+          !!additionalFields.filter(item => this.simplifyData(item).indexOf(filtered) !== -1).length
         );
       };
       this.camCardsProcessed.sort = this.sort;
