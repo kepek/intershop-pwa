@@ -14,6 +14,7 @@
       (copyCamCard)="copyCamCard()"
       [isSticky]="isStickyCamCardToolbar$ | async"
       [checkedCamCards]="checkedCamCards"
+      [productsChecked]="productsChecked"
     ></camfil-account-cam-card-toolbar>
 
     <ng-container *ngIf="camCardsProcessed?.data && camCardsProcessed.data.length > 0; else noCamCard">

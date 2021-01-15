@@ -110,7 +110,8 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.camCards) {
-      this.camCardsProcessed = new MatTableDataSource(this.camCards);
+      const realCamCards = this.camCards.filter(item => !item.transient);
+      this.camCardsProcessed = new MatTableDataSource(realCamCards);
       this.changeDetectorRefs.detectChanges();
 
       this.camCardsProcessed.filterPredicate = (data, filter) => {
