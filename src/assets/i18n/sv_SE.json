@@ -636,6 +636,7 @@
   "camfil.account.cam_cards.print.dialog.title": "sv_How would you like to print your CamCard?",
   "camfil.account.cam_cards.search.btn.label": "sv_Search",
   "camfil.account.cam_cards.search.input.placeholder": "sv_Search for CamCards",
+  "camfil.account.cam_cards.search.select.all.customers": "sv_All customers",
   "camfil.account.cam_cards.search.select.label": "sv_Filter by customer",
   "camfil.account.cam_cards.search.total": "sv_Total CamCards",
   "camfil.account.cam_cards.selectAll": "sv_Select all",
