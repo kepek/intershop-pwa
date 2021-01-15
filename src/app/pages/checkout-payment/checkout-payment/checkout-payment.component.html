@@ -32,7 +32,7 @@
               <p *ngIf="paymentMethod.description">{{ paymentMethod.description }}</p>
               <p *ngIf="paymentCostThresholdReached(paymentMethod); else displayPaymentCosts">
                 {{ 'checkout.payment.payment_cost_threshold.amount_reached' | translate }}
-                {{ basket.totals.total | ishPrice }}
+                {{ basket.totals?.total | ishPrice }}
               </p>
               <ng-template #displayPaymentCosts>
                 <div *ngIf="!paymentMethod.isRestricted; else displayRestrictions">
