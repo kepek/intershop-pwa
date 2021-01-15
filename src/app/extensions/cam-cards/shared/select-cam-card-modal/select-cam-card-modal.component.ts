@@ -22,6 +22,7 @@ import { Product } from 'ish-core/models/product/product.model';
 import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
 
 import { CamCardsFacade } from '../../facades/cam-cards.facade';
+import { CamCardHelper } from '../../models/cam-card/cam-card.helper';
 import {
   CamCard,
   CamCardAddress,
@@ -136,9 +137,10 @@ export class SelectCamCardModalComponent implements OnInit, OnDestroy, OnChanges
   private determineSelectOptions() {
     this.camCardsFacade.camCard$.pipe(takeUntil(this.destroy$)).subscribe(camCards => {
       if (camCards && camCards.length > 0) {
-        this.camCards = camCards;
+        const realCamCards = CamCardHelper.getRealCamCards(camCards);
+        this.camCards = realCamCards;
 
-        this.camCardOptionsAll = camCards.map(camCard => ({
+        this.camCardOptionsAll = realCamCards.map(camCard => ({
           value: camCard.id,
           label: camCard.name,
           nextDelivery: camCard.nextDeliveryDate,
