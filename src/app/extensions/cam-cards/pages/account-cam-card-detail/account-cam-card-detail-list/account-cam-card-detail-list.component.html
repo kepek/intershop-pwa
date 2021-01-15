@@ -2,7 +2,7 @@
   <mat-card-content>
     <camfil-account-cam-card-detail-toolbar
       (addItemsToCart)="addItemsToCart()"
-      (deleteCamCard)="openDeleteConfirmationDialog(deleteDialog, camCard)"
+      (deleteCamCard)="openDeleteConfirmationDialog(deleteDialog, camCard, 'cc')"
       [isSticky]="isStickyCamCardToolbar$ | async"
       [title]="getCamCardName()"
     ></camfil-account-cam-card-detail-toolbar>

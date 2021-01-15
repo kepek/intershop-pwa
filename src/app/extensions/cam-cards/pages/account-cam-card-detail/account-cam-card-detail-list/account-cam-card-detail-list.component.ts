@@ -139,11 +139,11 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges {
   openDeleteConfirmationDialog(
     modal: CamfilModalDialogComponent<string | CamCard>,
     camCard: CamCard,
-    type?: 'sub' | 'product',
+    type?: 'cc' | 'sub' | 'product',
     camCardItem?: CamCardItem
   ) {
-    const header = `camfil.account.cam_card.delete_dialog.${type}.header`;
-    const name = camCardItem ? '' : camCard.name;
+    const header = `camfil.dynamic.account.cam_card.delete_dialog.${type}.header`;
+    const name = camCardItem ? camCardItem.product.sku : camCard.name;
     modal.options.titleText = this.translate.instant(header, { 0: name });
 
     const data = camCardItem ? camCardItem.id : type === 'sub' ? camCard : camCard.id;
