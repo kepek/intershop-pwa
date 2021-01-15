@@ -1,7 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MockComponent, MockDirective, MockPipe } from 'ng-mocks';
-import { instance, mock } from 'ts-mockito';
+import { of } from 'rxjs';
+import { instance, mock, when } from 'ts-mockito';
 
 import { ServerHtmlDirective } from 'ish-core/directives/server-html.directive';
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
@@ -87,6 +88,8 @@ describe('Camfil Checkout List Component', () => {
     };
 
     element = fixture.nativeElement;
+
+    when(shoppingFacadeMock.basketAddresses$).thenReturn(of([]));
   });
 
   it('should be created', () => {

@@ -87,6 +87,8 @@ describe('Create Order Modal Component', () => {
     when(checkoutFacadeMock.buckets$).thenReturn(of([]));
     when(checkoutFacadeMock.basket$).thenReturn(of(basketDetails));
     when(shoppingFacadeMock.productAdded$).thenReturn(of(true));
+    when(shoppingFacadeMock.basketAddresses$).thenReturn(of([]));
+    when(shoppingFacadeMock.productUpdated$).thenReturn(of(false));
   });
 
   it('should be created', () => {

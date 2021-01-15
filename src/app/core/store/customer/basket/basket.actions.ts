@@ -5,6 +5,7 @@ import { Address } from 'ish-core/models/address/address.model';
 import { Attribute } from 'ish-core/models/attribute/attribute.model';
 import { BasketInfo } from 'ish-core/models/basket-info/basket-info.model';
 import { BasketValidation, BasketValidationScopeType } from 'ish-core/models/basket-validation/basket-validation.model';
+import { BasketExtensions } from 'ish-core/models/basket/basket.interface';
 import { Basket } from 'ish-core/models/basket/basket.model';
 import { Bucket } from 'ish-core/models/basket/bucket.model';
 import { LineItemUpdate } from 'ish-core/models/line-item-update/line-item-update.model';
@@ -60,9 +61,38 @@ export const deleteBasketShippingAddress = createAction(
   payload<{ addressId: string }>()
 );
 
+export const addProductToBucket = createAction(
+  '[Basket] Add Product To Bucket',
+  payload<{
+    address: Address;
+    shippingMethod: string;
+    sku: string;
+    quantity: number;
+    basketId: string;
+    basketExtensions: BasketExtensions;
+  }>()
+);
+
+export const addProductToBucketWithUrn = createAction(
+  '[Basket] Add Product To Bucket With Urn',
+  payload<{
+    urn: string;
+    shippingMethod: string;
+    addressId: string;
+    sku: string;
+    quantity: number;
+    basketId: string;
+    basketExtensions: BasketExtensions;
+  }>()
+);
+
+export const addProductToBucketAddressFail = createAction('[Basket] Add Product To Bucket Address Fail');
+
+export const addProductToBucketFail = createAction('[Basket] Add Product To Bucket Fail', httpError());
+
 export const addProductToBasket = createAction(
-  '[Basket] Add Product',
-  payload<{ sku: string; quantity: number; shipToAddress?: string }>()
+  '[Basket] Add Product To Basket',
+  payload<{ sku: string; quantity: number; shippingMethod: string; shipToAddress?: string;  }>()
 );
 
 export const updateBucket = createAction(
@@ -70,10 +100,7 @@ export const updateBucket = createAction(
   payload<{
     basketId: string;
     addressId: string;
-    boxLabel: string;
-    contact?: string;
-    info?: string;
-    phoneNumber?: string;
+    basketExtension: BasketExtensions;
   }>()
 );
 
@@ -95,7 +122,7 @@ export const addEmptyBucket = createAction('[Basket] Add Empty Bucket', payload<
 
 export const addItemsToBasket = createAction(
   '[Basket Internal] Add Items To Basket',
-  payload<{ items: { sku: string; quantity: number; unit: string; shipToAddress?: string }[] }>()
+  payload<{ items: { sku: string; quantity: number; unit: string; shippingMethod:string; shipToAddress?: string }[] }>()
 );
 
 export const addItemsToBasketFail = createAction('[Basket API] Add Items To Basket Fail', httpError());
@@ -305,9 +332,14 @@ export const editBucket = createAction(
   payload<{ basketId: string; shippingAddress: string; bucket: Bucket }>()
 );
 
-export const editBucketSuccess = createAction('[Basket] Edit Bucket Success');
+export const loadBasketAddresses = createAction('[Basket API] Load Basket Addresses');
 
-export const editBucketFail = createAction('[Basket] Edit Bucket Fail', httpError());
+export const loadBasketAddressesSuccess = createAction(
+  '[Basket API] Load Basket Addresses Success',
+  payload<{ basketAddresses: Address[] }>()
+);
+
+export const loadBasketAddressesFail = createAction('[Basket API] Load Basket Addresses Fail', httpError());
 
 export const getBasketItemAttributes = createAction(
   '[Basket API] Get Attributes for selected line item ',

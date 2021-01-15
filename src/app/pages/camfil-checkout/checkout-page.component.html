@@ -6,7 +6,7 @@
   <div class="checkout row">
     <ish-content-include includeId="camfil.include.checkout.content.pagelet2-Include"></ish-content-include>
     <div class="col-sm-12 col-lg-9">
-      <camfil-checkout-header [basket]="basket" [buckets]="buckets"></camfil-checkout-header>
+      <camfil-checkout-header [basket]="basket" [buckets]="buckets" ></camfil-checkout-header>
 
       <mat-divider></mat-divider>
       <div cdkDropListGroup>
@@ -15,7 +15,7 @@
         </ng-container>
 
         <ng-container *ngFor="let item of buckets">
-          <camfil-checkout-list [order]="item" [buckets]="buckets"></camfil-checkout-list>
+          <camfil-checkout-list [order]="item" [buckets]="buckets" [shippingMethodId]="shippingMethodId"></camfil-checkout-list>
         </ng-container>
       </div>
     </div>

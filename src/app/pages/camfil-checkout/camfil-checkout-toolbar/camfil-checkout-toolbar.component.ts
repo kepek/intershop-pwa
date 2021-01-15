@@ -11,4 +11,5 @@ import { Bucket } from 'ish-core/models/basket/bucket.model';
 export class CamfilCheckoutToolbarComponent {
   @Input() buckets: Bucket[];
   @Input() basketId: string;
+  @Input() shippingMethodId: string;
 }

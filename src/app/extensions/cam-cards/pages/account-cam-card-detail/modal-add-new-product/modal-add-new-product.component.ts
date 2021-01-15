@@ -5,6 +5,7 @@ import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
+import { Address } from 'ish-core/models/address/address.model';
 import { Bucket } from 'ish-core/models/basket/bucket.model';
 import { ProductView } from 'ish-core/models/product-view/product-view.model';
 import { Product, ProductCompletenessLevel } from 'ish-core/models/product/product.model';
@@ -44,11 +45,12 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy {
 
   @Input() addToOrder = false;
   @Input() order?: Bucket;
+  @Input() shippingMethodId?: string
 
   showSkuError = false;
-  showQuantityError = false;
 
   private destroy$ = new Subject();
+  basketAddresses: Address[];
 
   validators = {
     sku: [
@@ -85,6 +87,10 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy {
       sku: new FormControl('', [Validators.required]),
       boxLabel: new FormControl('', [Validators.max(10)]),
     });
+
+    this.productFacade.basketAddresses$.pipe(takeUntil(this.destroy$)).subscribe((basketAddresses: Address[]) => {
+      this.basketAddresses = basketAddresses;
+    });
   }
 
   isSkuValid = () => !this.product.failed && this.product.availability;
@@ -119,7 +125,14 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy {
       const comment: CamCardItemComment = { label };
 
       if (this.addToOrder) {
-        this.productFacade.addProductToBasket(this.product.sku, quantity, this.order.shipToAddress);
+        console.log('ModalAddNewProductComponent', this.order );
+
+        if (this.order.id && this.order.shipToAddress) {
+          this.addToExistingOrder(sku, quantity, this.order.shipToAddress);
+        } else {
+          const deliveryAddress = this.order.shipToAddressFull as Address;
+          this.addToNewOrder(sku, quantity, deliveryAddress);
+        }
       } else {
         this.camCardsFacade.addProductToCamCard(this.rootCamCardId, sku, quantity, comment, 0, true);
       }
@@ -127,6 +140,45 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy {
     } else {
       markAsDirtyRecursive(this.productForm);
     }
+  }
+
+  addToExistingOrder(sku, quantity, shipToAddress) {
+    console.log('addToExistingOrder', this.shippingMethodId);
+
+    this.productFacade.addProductToBasket(sku, quantity, this.shippingMethodId, shipToAddress);
+  }
+
+  addToNewOrder(sku, quantity, deliveryAddress) {
+    console.log('addToNewOrder', this.order.shippingMethod);
+
+    if (this.isNewAddress(deliveryAddress)) {
+      this.productFacade.addProductToBucket(deliveryAddress, this.order.shippingMethod, sku, quantity, this.order.basket, {
+        ...this.order,
+      });
+    } else {
+      this.productFacade.addProductToBucketWithUrn(
+        deliveryAddress.urn,
+        this.order.shippingMethod,
+        deliveryAddress.id,
+        sku,
+        quantity,
+        this.order.basket,
+        { ...this.order }
+      );
+    }
+  }
+
+  isNewAddress(currentAddress: Address) {
+    const isCurrentOnTheList = this.basketAddresses.find(
+      address =>
+        address.addressLine1 === currentAddress.addressLine1 &&
+        address.addressLine2 === currentAddress.addressLine2 &&
+        address.postalCode === currentAddress.postalCode &&
+        address.city === currentAddress.city &&
+        address.companyName1 === currentAddress.companyName1
+    );
+
+    return isCurrentOnTheList === undefined;
   }
 
   resetError() {

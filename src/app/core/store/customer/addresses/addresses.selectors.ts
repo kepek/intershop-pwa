@@ -11,3 +11,5 @@ export const { selectAll: getAllAddresses } = addressAdapter.getSelectors(getAdd
 export const getAddressesLoading = createSelector(getAddressesState, addresses => addresses.loading);
 
 export const getAddressesError = createSelector(getAddressesState, addresses => addresses.error);
+
+export const getCreatedAddress = createSelector(getAddressesState, addresses => addresses.createdAddress);

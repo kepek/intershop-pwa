@@ -104,6 +104,8 @@ describe('Camfil Product Add To Basket Modal Component', () => {
     when(checkoutFacadeMock.buckets$).thenReturn(of([]));
     when(checkoutFacadeMock.basket$).thenReturn(of(basketDetails));
     when(shoppingFacadeMock.productAdded$).thenReturn(of(true));
+    when(shoppingFacadeMock.productUpdated$).thenReturn(of(false));
+    when(shoppingFacadeMock.basketAddresses$).thenReturn(of([]));
   });
 
   it('should be created', () => {

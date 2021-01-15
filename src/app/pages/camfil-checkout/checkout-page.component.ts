@@ -3,12 +3,10 @@ import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
+import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { BasketView } from 'ish-core/models/basket/basket.model';
 import { Bucket } from 'ish-core/models/basket/bucket.model';
 import { whenTruthy } from 'ish-core/utils/operators';
-
-import { CamCardsFacade } from '../../extensions/cam-cards/facades/cam-cards.facade';
-import { CamCard } from '../../extensions/cam-cards/models/cam-card/cam-card.model';
 
 @Component({
   templateUrl: './checkout-page.component.html',
@@ -18,19 +16,18 @@ import { CamCard } from '../../extensions/cam-cards/models/cam-card/cam-card.mod
 export class CheckoutPageComponent implements OnInit, OnDestroy {
   basket$: Observable<BasketView>;
   basketId: string;
+  shippingMethodId: string;
   buckets$: Observable<any[]>;
   buckets: Bucket[];
   emptyBuckets: Bucket[];
 
-  camCards: CamCard[];
-  notConnectedBuckets: Bucket[];
-
   private destroy$ = new Subject<void>();
 
-  constructor(private checkoutFacade: CheckoutFacade, private camCardsFacade: CamCardsFacade) {}
+  constructor(private checkoutFacade: CheckoutFacade, private shoppingFacade: ShoppingFacade) {}
 
   ngOnInit() {
     this.initBasket();
+    this.shoppingFacade.loadBasketAddresses();
   }
 
   initBasket() {
@@ -39,54 +36,16 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
 
     this.basket$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe((basket: BasketView) => {
       this.basketId = basket.id;
+      this.shippingMethodId = basket.commonShippingMethod.id
     });
 
     this.buckets$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe((buckets: Bucket[]) => {
-      this.notConnectedBuckets = buckets;
+      this.buckets = buckets;
     });
-
-    this.camCardsFacade.camCard$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(camCards => {
-      this.camCards = camCards;
-
-      if (this.notConnectedBuckets) {
-        this.buckets = this.connectWithCamCard(this.notConnectedBuckets);
-      }
-    });
-
-    /*    this.productFacade.productAdded$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(() => {
-      this.camCardsFacade.loadCamCards();
-    });*/
 
     this.checkoutFacade.emptyBuckets$.pipe(takeUntil(this.destroy$)).subscribe(emptyBuckets => {
       this.emptyBuckets = emptyBuckets;
     });
-  }
-
-  connectWithCamCard(buckets: Bucket[]): Bucket[] {
-    return buckets
-      .map(bucket => {
-        const camCard = this.getCamCard(bucket.deliveryAddressId);
-
-        return camCard
-          ? {
-              ...bucket,
-              shipToAddress: camCard.deliveryAddress.urn,
-              shipToAddressFull: camCard.deliveryAddress,
-              orderName: camCard.name,
-              nextDelivery: camCard.nextDeliveryDate,
-              orderMark: camCard.orderLabel,
-              invoiceLabel: camCard.invoiceLabel,
-              customer: camCard.customer,
-              contacts: camCard.contacts,
-              camCardId: camCard.id,
-            }
-          : { ...bucket };
-      })
-      .filter(bucket => bucket.orderName);
-  }
-
-  getCamCard(deliveryAddressId: string) {
-    return this.camCards.find(camcard => camcard.deliveryAddress.id === deliveryAddressId);
   }
 
   ngOnDestroy() {

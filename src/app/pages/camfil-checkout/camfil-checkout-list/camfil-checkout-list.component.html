@@ -16,7 +16,7 @@
   <div class="d-inline-flex">
     <strong *ngIf="order"> {{ 'camfil.checkout.order' | translate }} {{ order.id }}</strong>
     <span data-testing-id="order-number" class="order-number"
-      >{{ order?.orderName }}, {{ order?.customer.companyName }}</span
+      >{{ order?.orderMark }}, {{ order?.customer.companyName }}</span
     >
   </div>
 </ng-template>
@@ -37,7 +37,7 @@
           <dd class="col-6 p-0" data-testing-id="order-customer_name">{{ order.customer.companyName }}</dd>
           <dt class="col-6 p-0">{{ 'camfil.account.orderdetails.contact_person.label' | translate }}</dt>
           <dd class="col-6 p-0" data-testing-id="order-contact_person">
-            {{ order.contacts[0]?.firstName }} {{ order.contacts[0]?.lastName }}
+            {{ order.contactPerson?.firstName }} {{ order.contactPerson?.lastName }}
           </dd>
           <dt class="col-6 p-0">{{ 'camfil.checkout.phone' | translate }}</dt>
           <dd class="col-6 p-0" data-testing-id="order-camfil_no">-</dd>
@@ -157,6 +157,6 @@
   </ng-container>
 </ng-template>
 
-<camfil-modal-add-new-product #addNewProductModal [order]="order" [addToOrder]="true"> </camfil-modal-add-new-product>
+<camfil-modal-add-new-product #addNewProductModal [order]="order" [addToOrder]="true" [shippingMethodId]="shippingMethodId"> </camfil-modal-add-new-product>
 
 <camfil-edit-order-modal #editModal [order]="order"></camfil-edit-order-modal>

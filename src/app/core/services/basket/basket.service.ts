@@ -18,7 +18,7 @@ import { BasketBaseData, BasketData, BasketExtensions } from 'ish-core/models/ba
 import { BasketMapper } from 'ish-core/models/basket/basket.mapper';
 import { Basket } from 'ish-core/models/basket/basket.model';
 import { BucketMapper } from 'ish-core/models/basket/bucket.mapper';
-import { Bucket, BucketAddress, Buckets } from 'ish-core/models/basket/bucket.model';
+import { Bucket, Buckets } from 'ish-core/models/basket/bucket.model';
 import { LineItem } from 'ish-core/models/line-item/line-item.model';
 import { ShippingMethodData } from 'ish-core/models/shipping-method/shipping-method.interface';
 import { ShippingMethodMapper } from 'ish-core/models/shipping-method/shipping-method.mapper';
@@ -260,33 +260,6 @@ export class BasketService {
   }
 
   /**
-   * Adds a list of items with the given sku and quantity to the given basket.
-   * @param items     The list of product SKU and quantity pairs to be added to the basket.
-   */
-  addItemsToBasket(
-    items: { sku: string; quantity: number; unit: string; shipToAddress?: string }[]
-  ): Observable<BasketInfo[]> {
-    if (!items) {
-      return throwError('addItemsToBasket() called without items');
-    }
-
-    const body = items.map(item => ({
-      product: item.sku,
-      quantity: {
-        value: item.quantity,
-        unit: item.unit,
-      },
-      shipToAddress: item.shipToAddress,
-    }));
-
-    return this.apiService
-      .post(`baskets/current/items`, body, {
-        headers: this.basketHeaders,
-      })
-      .pipe(map(BasketInfoMapper.fromInfo));
-  }
-
-  /**
    * Add a promotion code to basket.
    * @param codeStr   The code string of the promotion code that should be added to basket.
    * @returns         The info message after creation.
@@ -505,23 +478,6 @@ export class BasketService {
     );
   }
 
-  updateBucket(
-    basketId: string,
-    addressId: string,
-    boxLabel: string,
-    contact?: string,
-    info?: string,
-    phoneNumber?: string
-  ): Observable<BasketExtensions> {
-    return this.apiService.post(`baskets/${basketId}/camfil/${addressId}`, {
-      boxLabel,
-      contactPerson: {
-        erpId: contact,
-      },
-      info,
-      phoneNumber,
-    });
-  }
   // CAMFIL
 
   /**
@@ -542,30 +498,50 @@ export class BasketService {
       .pipe(map(BasketMapper.fromData));
   }
 
-  editBucket(
-    basketId: string,
-    addressId: string,
-    customerId?: string,
-    orderMark?: string,
-    invoiceLabel?: string,
-    deliveryAddress?: BucketAddress,
-    boxLabel?: string,
-    contact?: string,
-    info?: string,
-    phoneNumber?: string
-  ): Observable<Bucket> {
-    // todo - needs BE
+  getBasketAddresses(): Observable<Address[]> {
+    return this.apiService
+      .get<{ data: Address[] }>(`baskets/current/addresses`, {
+        headers: this.basketHeaders,
+      })
+      .pipe(map(addresses => addresses.data));
+  }
+
+  updateBucket(basketId: string, addressId: string, basketExtension: BasketExtensions): Observable<BasketExtensions> {
+    console.log('service updateBucket');
+
     return this.apiService.post(`baskets/${basketId}/camfil/${addressId}`, {
-      customerId,
-      orderMark,
-      invoiceLabel,
-      deliveryAddress,
-      boxLabel,
-      contact,
-      info,
-      phoneNumber,
+      ...basketExtension,
     });
   }
+
+  /**
+   * Adds a list of items with the given sku and quantity to the given basket.
+   * @param items     The list of product SKU and quantity pairs to be added to the basket.
+   */
+  addItemsToBasket(
+    items: { sku: string; quantity: number; unit: string; shippingMethod: string; shipToAddress?: string  }[]
+  ): Observable<BasketInfo[]> {
+    if (!items) {
+      return throwError('addItemsToBasket() called without items');
+    }
+
+    const body = items.map(item => ({
+      product: item.sku,
+      quantity: {
+        value: item.quantity,
+        unit: item.unit,
+      },
+      shipToAddress: item.shipToAddress,
+      shippingMethod: item.shippingMethod
+    }));
+
+    return this.apiService
+      .post(`baskets/current/items`, body, {
+        headers: this.basketHeaders,
+      })
+      .pipe(map(BasketInfoMapper.fromInfo));
+  }
+
 
   /**
    * http header for Camfil Basket API v1

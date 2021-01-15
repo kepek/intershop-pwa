@@ -40,7 +40,7 @@ export class OrderFormComponent implements OnInit, OnDestroy {
 
     this.addressForm = this.fb.group({
       customer: [this.orderToEdit?.customerId || '', [Validators.required]],
-      contact: [this.orderToEdit?.contactPersonId || '', Validators.required],
+      contact: [this.orderToEdit?.contactPerson.erpId || '', Validators.required],
       invoiceLabel: [this.orderToEdit?.invoiceLabel || '', [Validators.required, Validators.maxLength(20)]],
       phoneNumber: [this.orderToEdit?.phoneNumber || '', Validators.pattern('[0-9+-/]*')],
       orderMark: [this.orderToEdit?.orderMark || '', [Validators.required]],
@@ -51,6 +51,8 @@ export class OrderFormComponent implements OnInit, OnDestroy {
       zipCode: [this.orderToEdit?.zipCode || '', [Validators.required, Validators.pattern('[0-9]{5}')]],
       area: [this.orderToEdit?.area || '', [Validators.required]],
       info: [this.orderToEdit?.info || '', [Validators.maxLength(150)]],
+      contactFull: [],
+      addressFull: [],
     });
   }
 
@@ -65,6 +67,7 @@ export class OrderFormComponent implements OnInit, OnDestroy {
         building: address.addressLine2,
         zipCode: address.postalCode,
         area: address.city,
+        addressFull: address,
       });
     });
   }
@@ -82,6 +85,11 @@ export class OrderFormComponent implements OnInit, OnDestroy {
       .subscribe((contacts: CamCardContact[]) => {
         this.contacts = contacts;
       });
+  }
+
+  pickContact(event) {
+    const selectedContact = this.contacts.find(contact => contact.erpId === event.value);
+    this.addressForm.patchValue({ contactFull: selectedContact });
   }
 
   ngOnDestroy() {

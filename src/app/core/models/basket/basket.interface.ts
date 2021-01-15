@@ -1,4 +1,5 @@
 import { AddressData } from 'ish-core/models/address/address.interface';
+import { Address } from 'ish-core/models/address/address.model';
 import { Attribute } from 'ish-core/models/attribute/attribute.model';
 import { BasketApproval } from 'ish-core/models/basket-approval/basket-approval.model';
 import { BasketInfo } from 'ish-core/models/basket-info/basket-info.model';
@@ -11,7 +12,7 @@ import { PaymentData } from 'ish-core/models/payment/payment.interface';
 import { PriceItemData } from 'ish-core/models/price-item/price-item.interface';
 import { ShippingMethodData } from 'ish-core/models/shipping-method/shipping-method.interface';
 
-import { CamCardContact } from '../../../extensions/cam-cards/models/cam-card/cam-card.model';
+import { CamCardContact, CamCardCustomer } from '../../../extensions/cam-cards/models/cam-card/cam-card.model';
 
 export interface BasketBaseData {
   id: string;
@@ -68,9 +69,15 @@ export interface BasketData {
 
 export interface BasketExtensions {
   name?: string;
-  shippingAddress?: AddressData;
-  contactPerson?: CamCardContact;
+  customer?: CamCardCustomer;
+  contactPerson: CamCardContact;
   info?: string;
   boxLabel?: string;
   phoneNumber?: string;
+  deliveryDate?: string;
+  isPartial?: boolean;
+  orderMark?: string;
+  invoiceLabel?: string;
+  deliveryAddress?: Address;
+  shippingAddress?: Address;
 }

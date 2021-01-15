@@ -3,6 +3,7 @@ import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Subject } from 'rxjs';
 
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
+import { BasketExtensions } from 'ish-core/models/basket/basket.interface';
 import { Bucket, EditBucket } from 'ish-core/models/basket/bucket.model';
 import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
 
@@ -35,7 +36,6 @@ export class EditOrderModalComponent implements OnInit, OnDestroy {
     return {
       ...this.order,
       customerId: this.order.customer ? this.order.customer.id : '',
-      contactPersonId: this.order.contactPersonId,
       invoiceLabel: this.order.invoiceLabel,
       phoneNumber: this.order.phoneNumber,
       orderMark: this.order.orderMark,
@@ -55,32 +55,20 @@ export class EditOrderModalComponent implements OnInit, OnDestroy {
     if (addressForm.invalid) {
       markAsDirtyRecursive(addressForm);
     } else {
-      // todo - needs BE
-      // this.shoppingFacade.editOrder(this.editOrder.basket, this.editOrder.shipToAddress, this.getUpdatedData());
+      const basketExtension = this.getUpdatedData();
+      this.shoppingFacade.updateBucket(this.editOrder.basket, this.editOrder.shipToAddress, basketExtension);
     }
   }
 
-  getUpdatedData(): Bucket {
+  getUpdatedData(): BasketExtensions {
     const form = this.orderForm.addressForm;
 
+    // todo update address
+
     return {
-      basket: this.editOrder.basket,
-      id: this.editOrder.id,
       orderMark: form.get('orderMark').value,
       invoiceLabel: form.get('invoiceLabel').value,
-      customer: {
-        id: form.get('customer').value,
-        customerNo: form.get('customer').value,
-      },
-      deliveryAddress: {
-        addressLine1: form.get('address').value,
-        street: form.get('address').value,
-        addressLine2: form.get('building').value,
-        postalCode: form.get('zipCode').value,
-        city: form.get('area').value,
-        companyName1: form.get('company').value,
-      },
-      contact: form.get('contact').value,
+      contactPerson: form.get('contactFull').value,
       info: form.get('info').value,
       phoneNumber: form.get('phoneNumber').value,
     };

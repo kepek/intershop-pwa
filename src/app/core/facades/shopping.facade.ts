@@ -3,14 +3,21 @@ import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { debounce, filter, map, switchMap, tap } from 'rxjs/operators';
 
+import { Address } from 'ish-core/models/address/address.model';
+import { BasketExtensions } from 'ish-core/models/basket/basket.interface';
 import { Bucket } from 'ish-core/models/basket/bucket.model';
 import { CategoryHelper } from 'ish-core/models/category/category.helper';
 import { ProductListingID } from 'ish-core/models/product-listing/product-listing.model';
 import { ProductCompletenessLevel, ProductHelper } from 'ish-core/models/product/product.model';
 import {
   addProductToBasket,
+  addProductToBucket,
+  addProductToBucketWithUrn,
   editBucket,
+  getBasketAddresses,
   getProductAdded,
+  getProductUpdated,
+  loadBasketAddresses,
   resetProductAdded,
   updateBucket,
 } from 'ish-core/store/customer/basket';
@@ -132,19 +139,41 @@ export class ShoppingFacade {
 
   // CHECKOUT
 
-  addProductToBasket(sku: string, quantity: number, shipToAddress?: string) {
-    this.store.dispatch(addProductToBasket({ sku, quantity, shipToAddress }));
+  addProductToBucket(
+    address: Address,
+    shippingMethod: string,
+    sku: string,
+    quantity: number,
+    basketId: string,
+    basketExtensions: BasketExtensions
+  ) {
+    this.store.dispatch(addProductToBucket({ address, shippingMethod, sku, quantity, basketId, basketExtensions }));
   }
 
-  updateBucket(
-    basketId: string,
+  addProductToBucketWithUrn(
+    urn: string,
+    shippingMethod: string,
     addressId: string,
-    boxLabel: string,
-    contact?: string,
-    info?: string,
-    phoneNumber?: string
+    sku: string,
+    quantity: number,
+    basketId: string,
+    basketExtensions: BasketExtensions
   ) {
-    this.store.dispatch(updateBucket({ basketId, addressId, boxLabel, contact, info, phoneNumber }));
+    this.store.dispatch(addProductToBucketWithUrn({ urn, shippingMethod, addressId, sku, quantity, basketId, basketExtensions }));
+  }
+
+  addProductToBasket(sku: string, quantity: number, shippingMethod?: string, shipToAddress?: string) {
+    this.store.dispatch(addProductToBasket({ sku, quantity, shippingMethod, shipToAddress }));
+  }
+
+  updateBucket(basketId: string, addressId: string, basketExtension: BasketExtensions) {
+    this.store.dispatch(
+      updateBucket({
+        basketId,
+        addressId,
+        basketExtension,
+      })
+    );
   }
 
   resetProductAdded() {
@@ -249,6 +278,8 @@ export class ShoppingFacade {
   // TODO: CAMFIL Additions, it should be separated to avoid core modifications;
 
   productAdded$ = this.store.pipe(select(getProductAdded));
+  productUpdated$ = this.store.pipe(select(getProductUpdated));
+  basketAddresses$ = this.store.pipe(select(getBasketAddresses));
 
   categories$(ids: string[]) {
     return this.store.pipe(
@@ -284,5 +315,9 @@ export class ShoppingFacade {
 
   editOrder(basketId: string, shippingAddress: string, bucket: Bucket) {
     this.store.dispatch(editBucket({ basketId, shippingAddress, bucket }));
+  }
+
+  loadBasketAddresses() {
+    this.store.dispatch(loadBasketAddresses());
   }
 }
