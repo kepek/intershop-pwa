@@ -6,25 +6,22 @@
   placement="{{ placement === 'up' ? 'top-right' : 'bottom-right' }}"
 >
   <ng-container *ngIf="view !== 'onMobile'; else inMobileNav">
-    <a ngbDropdownToggle class="language-switch-link">
+    <a class="language-switch-link dropdown-toggle" [matMenuTriggerFor]="menu">
       <mat-icon svgIcon="globe" class="color-secondary language-switch--globe"></mat-icon>
-      <span class="language-switch-current-selection d-inline"
-        >{{ view === 'accordion' ? locale.displayName : locale.value }}<span class="switch_arrow"></span
-      ></span>
+      <span class="language-switch-current-selection d-inline">
+        {{ view === 'accordion' ? locale.displayName : locale.value }}
+        <span class="switch_arrow"></span>
+      </span>
     </a>
-    <div ngbDropdownMenu class="language-switch-container dropdown-menu" style="left: 0 !important">
-      <div class="language-switch-menu-container">
-        <ng-container *ngIf="availableLocales$ | async as availableLocales">
-          <ul *ngIf="availableLocales.length">
-            <ng-container *ngFor="let l of availableLocales">
-              <li *ngIf="l.lang !== locale.lang">
-                <a [href]="location | makeHref: { redirect: '1', lang: l.lang }"> {{ l.displayName }} </a>
-              </li>
-            </ng-container>
-          </ul>
+    <mat-menu #menu="matMenu">
+      <ng-container *ngIf="availableLocales$ | async as availableLocales">
+        <ng-container *ngFor="let l of availableLocales">
+          <ng-container *ngIf="l.lang !== locale.lang">
+            <a mat-menu-item [href]="location | makeHref: { redirect: '1', lang: l.lang }"> {{ l.displayName }}</a>
+          </ng-container>
         </ng-container>
-      </div>
-    </div>
+      </ng-container>
+    </mat-menu>
   </ng-container>
 
   <ng-template #inMobileNav>
