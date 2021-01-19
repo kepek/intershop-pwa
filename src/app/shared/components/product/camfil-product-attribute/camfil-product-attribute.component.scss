@@ -4,6 +4,10 @@
   display: inline-block;
   margin-top: 0;
   margin-bottom: 0;
+  
+  &:empty {
+    display: none
+  }
 
   .camfil-product-attribute {
     margin-bottom: 0;

@@ -8,6 +8,8 @@ import { instance, mock } from 'ts-mockito';
 
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { PricePipe } from 'ish-core/models/price/price.pipe';
+import { CamfilDimensionPipe } from 'ish-core/pipes/camfil-dimension.pipe';
+import { CamfilProductAttributeValPipe } from 'ish-core/pipes/camfil-product-attribute-val';
 import { DatePipe } from 'ish-core/pipes/date.pipe';
 import { ProductRoutePipe } from 'ish-core/routing/product/product-route.pipe';
 import { CamfilProductAddToBasketComponent } from 'ish-shared/components/product/camfil-product-add-to-basket/camfil-product-add-to-basket.component';
@@ -53,6 +55,8 @@ describe('Account Cam Card Detail Line Item Component', () => {
         MockComponent(ProductBundleDisplayComponent),
         MockComponent(ProductVariationDisplayComponent),
         MockComponent(SelectCamCardModalComponent),
+        MockPipe(CamfilDimensionPipe),
+        MockPipe(CamfilProductAttributeValPipe),
         MockPipe(DatePipe),
         MockPipe(PricePipe),
         MockPipe(ProductRoutePipe),

@@ -10,6 +10,8 @@ import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { LineItemView } from 'ish-core/models/line-item/line-item.model';
 import { PricePipe } from 'ish-core/models/price/price.pipe';
 import { ProductView } from 'ish-core/models/product-view/product-view.model';
+import { CamfilDimensionPipe } from 'ish-core/pipes/camfil-dimension.pipe';
+import { CamfilProductAttributeValPipe } from 'ish-core/pipes/camfil-product-attribute-val';
 import { DatePipe } from 'ish-core/pipes/date.pipe';
 import { ProductRoutePipe } from 'ish-core/routing/product/product-route.pipe';
 import { CamfilProductAddToBasketComponent } from 'ish-shared/components/product/camfil-product-add-to-basket/camfil-product-add-to-basket.component';
@@ -53,6 +55,8 @@ describe('Camfil Checkout Line Item Component', () => {
         MockComponent(InputComponent),
         MockComponent(ProductBundleDisplayComponent),
         MockComponent(ProductVariationDisplayComponent),
+        MockPipe(CamfilDimensionPipe),
+        MockPipe(CamfilProductAttributeValPipe),
         MockPipe(DatePipe),
         MockPipe(PricePipe),
         MockPipe(ProductRoutePipe),
