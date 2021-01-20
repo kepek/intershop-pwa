@@ -270,11 +270,8 @@ a {
       fill: map-get($color-icons-def, $color);
     }
   }
-  &[svgicon] {
-    vertical-align: middle;
-    &[svgicon='eye'] svg {
-      margin-top: 5px;
-    }
+  &[svgicon] svg {
+    vertical-align: top;
   }
   @for $i from 10 through 64 {
     &.size-#{$i} {
