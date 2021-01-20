@@ -347,7 +347,6 @@ export const basketReducer = createReducer(
 
   // CAMFIL
 
-
   on(camfilDragLineItemSuccess, (state: BasketState, action) => {
     const basket = {
       ...action.payload.updatedBasket,
@@ -362,14 +361,20 @@ export const basketReducer = createReducer(
   }),
 
   on(getBasketItemAttributesSuccess, (state: BasketState, action) => {
-    console.log('REDUCER', action.payload, state);
-    // const {bucketId, lineItemId} = action.payload
+    const { bucketId, lineItemId, attributes } = action.payload;
+
     return {
       ...state,
-      // buckets: {
-      //   ...state.buckets,
-      //   lineItems: state.buckets.find(b => b.id === bucketId).lineItems.map(li => li.id === )
-      // },
+      buckets: state.buckets.map(b => {
+        if (b.id === bucketId) {
+          return {
+            ...b,
+            lineItems: b.lineItems.map(li => (li.id === lineItemId ? { ...li, attributes: attributes } : li)),
+          };
+        } else {
+          return b;
+        }
+      }),
     };
   })
 );

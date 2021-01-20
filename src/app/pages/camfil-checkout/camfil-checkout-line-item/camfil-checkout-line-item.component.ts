@@ -1,4 +1,5 @@
 import {
+  Attribute,
   ChangeDetectionStrategy,
   Component,
   EventEmitter,
@@ -17,10 +18,9 @@ import { debounceTime, take, takeUntil } from 'rxjs/operators';
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { LineItemUpdate } from 'ish-core/models/line-item-update/line-item-update.model';
-import { LineItemView } from 'ish-core/models/line-item/line-item.model';
+import { LineItem, LineItemView } from 'ish-core/models/line-item/line-item.model';
 import { ProductView } from 'ish-core/models/product-view/product-view.model';
 import { ProductCompletenessLevel } from 'ish-core/models/product/product.model';
-import { whenTruthy } from 'ish-core/utils/operators';
 
 @Component({
   selector: 'camfil-checkout-line-item',
@@ -50,18 +50,18 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
 
   @Input() product: LineItemView;
   @Input() id: string;
-  boxLabel: string;
+
   addToCartForm: FormGroup;
   boxLabelForm: FormGroup;
   selectItemForm: FormGroup;
   product$: Observable<ProductView>;
+
   private destroy$ = new Subject<void>();
 
   ngOnInit() {
     this.initForm();
     this.quantity = this.product.quantity.value;
     this.updateQuantities();
-    this.getItemBoxLabel();
   }
 
   ngOnChanges(s: SimpleChanges) {
@@ -95,7 +95,7 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
       quantity: new FormControl(this.product.quantity.value || 1),
     });
     this.boxLabelForm = new FormGroup({
-      boxLabel: new FormControl(this.boxLabel, [Validators.maxLength(5)]),
+      boxLabel: new FormControl(this.getItemBoxLabel(), [Validators.maxLength(5)]),
     });
   }
 
@@ -126,11 +126,19 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
   }
 
   getItemBoxLabel() {
-    this.checkoutFacade.getBasketItemAttributes(this.basketId, this.product.id, this.bucketId );
+    let boxLabel;
+    this.checkoutFacade.getBasketItemAttributes(this.basketId, this.product.id, this.bucketId);
+    this.checkoutFacade.basketLineItems$.pipe(take(1), takeUntil(this.destroy$)).subscribe((res: LineItem[]) => {
+      let lineItem = res.find(li => li.id === this.product.id);
+      let boxLabelAttribute = lineItem.attributes.find(att => att.name === 'boxLabel');
+
+      boxLabel = boxLabelAttribute && 'value' in boxLabelAttribute ? boxLabelAttribute.value : '';
+    });
+    return boxLabel;
   }
 
   onBlur(target: HTMLDataElement) {
-    const oldValue = this.boxLabel;
+    const oldValue = this.boxLabelForm.get("boxLabel").value
     const newValue = target.value;
     if (newValue && newValue !== oldValue) {
       const boxLabelAttribute = { name: 'boxLabel', type: 'String', value: newValue };

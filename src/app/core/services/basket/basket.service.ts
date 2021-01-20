@@ -574,7 +574,13 @@ export class BasketService {
         headers: this.basketHeaders,
         params,
       })
-      .pipe(map((attributes: Attribute[]) => ({attributes, lineItemId, bucketId})));
+      .pipe(
+        map((payload: { data: Attribute[]; links }) => {
+          const { data } = payload;
+          const attributes = data
+          return { attributes, lineItemId, bucketId };
+        })
+      );
   }
 
   updateLineItemAttributes(

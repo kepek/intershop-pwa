@@ -283,7 +283,6 @@ export class BasketItemsEffects {
       mergeMap(payload =>
         this.basketService.getLineItemAttributes(payload.basketId, payload.lineItemId, payload.bucketId).pipe(
           map(res => {
-            console.log('RES', res);
             return getBasketItemAttributesSuccess(res);
           }),
           mapErrorToAction(getBasketItemAttributesFail)
@@ -291,7 +290,6 @@ export class BasketItemsEffects {
       )
     )
   );
-
 
   updateLineItemAttributtes$ = createEffect(() =>
     this.actions$.pipe(
