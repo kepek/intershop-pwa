@@ -132,7 +132,7 @@
 
     a {
       font-family: $font-family-condensedbold;
-      text-transform: uppercase;
+      // text-transform: uppercase;
     }
   }
 
@@ -148,15 +148,15 @@
       &.dropdown {
         position: static;
         padding: 0 10px;
-        background: url('/assets/img/active_catalog.png') -2000px bottom no-repeat;
+        // background: url('/assets/img/active_catalog.png') -2000px bottom no-repeat;
 
         &:first-child {
           padding-left: 0;
         }
 
         &.hover {
-          background-position: center bottom;
-          transition-delay: 0.5s;
+          // background-position: center bottom;
+          // transition-delay: 0.5s;
 
           ul {
             visibility: visible;
@@ -186,7 +186,7 @@
 
           a {
             font-family: $font-family-regular;
-            font-size: $font-size-menu-item;
+            // font-size: $font-size-menu-item;
           }
 
           li {

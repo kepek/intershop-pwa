@@ -9,7 +9,7 @@ import { instance, mock, when } from 'ts-mockito';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { NavigationCategory } from 'ish-core/models/navigation-category/navigation-category.model';
 import { CategoryRoutePipe } from 'ish-core/routing/category/category-route.pipe';
-import { SubCategoryNavigationComponent } from 'ish-shell/header/sub-category-navigation/sub-category-navigation.component';
+import { CamfilSubCategoryNavigationComponent } from 'ish-shell/header/camfil-sub-category-navigation/camfil-sub-category-navigation.component';
 
 import { CamfilHeaderNavigationComponent } from './camfil-header-navigation.component';
 
@@ -28,8 +28,8 @@ describe('Camfil Header Navigation Component', () => {
       declarations: [
         CamfilHeaderNavigationComponent,
         CategoryRoutePipe,
+        MockComponent(CamfilSubCategoryNavigationComponent),
         MockComponent(FaIconComponent),
-        MockComponent(SubCategoryNavigationComponent),
       ],
       providers: [{ provide: ShoppingFacade, useFactory: () => instance(shoppingFacade) }],
     }).compileComponents();
@@ -68,11 +68,11 @@ describe('Camfil Header Navigation Component', () => {
               data-mat-icon-type="font"
               >arrow_right</mat-icon
             ></a
-          ><ish-sub-category-navigation
+          ><camfil-sub-category-navigation
             ng-reflect-view="auto"
             ng-reflect-category-unique-id="A"
             ng-reflect-sub-categories-depth="1"
-          ></ish-sub-category-navigation>
+          ></camfil-sub-category-navigation>
         </li>
         <li class="dropdown">
           <a style="width: 100%" ng-reflect-router-link="/cat/B" data-testing-id="B-link" href="/cat/B">

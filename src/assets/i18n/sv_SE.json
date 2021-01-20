@@ -911,6 +911,7 @@
   "camfil.modal.createOrder.success.title": "sv_Successfully added to your shopping cart",
   "camfil.modal.cta.button.ok": "sv_OK",
   "camfil.navigation.filterClearAll.message": "sv_Clear all filters",
+  "camfil.navigation.see.all.airFilters": "sv_See all air filters",
   "camfil.product.add_to_compare.label": "sv_Add to compare",
   "camfil.product.attributes.more": "sv_More details",
   "camfil.product.bags.label": "sv_Bags",
