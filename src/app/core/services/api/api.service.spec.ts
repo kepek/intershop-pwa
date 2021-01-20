@@ -8,13 +8,7 @@ import { anything, capture, spy, verify } from 'ts-mockito';
 
 import { Link } from 'ish-core/models/link/link.model';
 import { Locale } from 'ish-core/models/locale/locale.model';
-import {
-  applyConfiguration,
-  getCurrentLocale,
-  getICMServerURL,
-  getRestEndpoint,
-  setCurrentLocale,
-} from 'ish-core/store/core/configuration';
+import { getCurrentLocale, getICMServerURL, getRestEndpoint } from 'ish-core/store/core/configuration';
 import { CoreStoreModule } from 'ish-core/store/core/core-store.module';
 import { serverError } from 'ish-core/store/core/error';
 import { CustomerStoreModule } from 'ish-core/store/customer/customer-store.module';
@@ -488,7 +482,7 @@ describe('Api Service', () => {
   describe('API Service Headers', () => {
     const REST_URL = 'http://www.example.org/WFS/site/-;loc=en_US;cur=USD';
     let apiService: ApiService;
-    let store$: Store;
+    let store$: MockStore;
     let httpTestingController: HttpTestingController;
 
     beforeEach(() => {
@@ -499,14 +493,24 @@ describe('Api Service', () => {
           CustomerStoreModule.forTesting('user'),
           HttpClientTestingModule,
         ],
+        providers: [
+          provideMockStore({
+            selectors: [
+              { selector: getRestEndpoint, value: 'http://www.example.org/WFS/site/-' },
+              { selector: getICMServerURL, value: 'http://www.example.org/WFS' },
+              { selector: getCurrentLocale, value: undefined },
+              { selector: getPGID, value: undefined },
+            ],
+          }),
+        ],
       });
 
       apiService = TestBed.inject(ApiService);
       httpTestingController = TestBed.inject(HttpTestingController);
-      store$ = TestBed.inject(Store);
+      store$ = TestBed.inject(MockStore);
 
-      store$.dispatch(applyConfiguration({ baseURL: 'http://www.example.org', server: 'WFS', channel: 'site' }));
-      store$.dispatch(setCurrentLocale({ currency: 'USD', lang: 'en_US' } as Locale));
+      store$.overrideSelector(getCurrentLocale, { currency: 'USD', lang: 'en_US' } as Locale);
+      store$.overrideSelector(getPGID, 'ASDF');
     });
 
     afterEach(() => {

@@ -54,13 +54,7 @@ describe('Camfil Language Switch Component', () => {
 
     fixture.detectChanges();
 
-    expect(element.querySelectorAll('li')).toHaveLength(2);
-    expect(element.querySelectorAll('[href]')).toMatchInlineSnapshot(`
-      NodeList [
-        <a href="/;redirect=1;lang=en_US"> English </a>,
-        <a href="/;redirect=1;lang=fr_FR"> Fran¢aise </a>,
-      ]
-    `);
-    expect(element.querySelector('.language-switch-current-selection').textContent).toMatchInlineSnapshot(`"de"`);
+    expect(element.querySelectorAll('mat-menu')).toHaveLength(1);
+    expect(element.querySelector('.language-switch-current-selection').textContent).toMatchInlineSnapshot(`" de "`);
   });
 });
