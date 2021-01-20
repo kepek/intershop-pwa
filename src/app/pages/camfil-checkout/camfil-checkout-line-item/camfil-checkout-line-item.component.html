@@ -54,13 +54,13 @@
       <form [formGroup]="boxLabelForm" class="box-label__form">
         <mat-form-field appearance="outline" class="box-label__form--field">
           <mat-label>{{ 'camfil.cam_card.product.comment.label' | translate }}</mat-label>
-          <input matInput type="text" formControlName="boxLabel" />
+          <input matInput type="text" formControlName="boxLabel" (blur)="onBlur($event.target)" />
         </mat-form-field>
         <camfil-error
-        [errors]="getField('boxLabel').errors"
-        [errorValidators]="boxLabelValidator.boxLabel"
-        [touched]="getField('boxLabel').touched || getField('boxLabel').dirty"
-      ></camfil-error>
+          [errors]="getField('boxLabel').errors"
+          [errorValidators]="boxLabelValidator.boxLabel"
+          [touched]="getField('boxLabel').touched || getField('boxLabel').dirty"
+        ></camfil-error>
       </form>
     </div>
     <ng-container>

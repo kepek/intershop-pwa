@@ -28,6 +28,7 @@ import {
   getBasketError,
   getBasketInfo,
   getBasketInvoiceAddress,
+  getBasketItemAttributes,
   getBasketLastTimeProductAdded,
   getBasketLoading,
   getBasketPromotionError,
@@ -46,6 +47,7 @@ import {
   setBasketPayment,
   startCheckout,
   updateBasketAddress,
+  updateBasketItemAttributes,
   updateBasketItems,
   updateBasketShippingMethod,
   updateConcardisCvcLastUpdated,
@@ -218,5 +220,17 @@ export class CheckoutFacade {
 
   camfilDragLineItem(basketId: string, updatedLineItem: LineItem, targetBucket: Bucket) {
     this.store.dispatch(camfilDragLineItem({ basketId, updatedLineItem, targetBucket }));
+  }
+
+  getBasketItemAttributes(basketId: string, lineItemId: string) {
+    this.store.dispatch(getBasketItemAttributes({ basketId, lineItemId }));
+  }
+
+  updateBasketItemAttributes(
+    basketId: string,
+    lineItemId: string,
+    boxLabelAttribute: { name: string; type: string; value: string }
+  ) {
+    this.store.dispatch(updateBasketItemAttributes({ basketId, lineItemId, boxLabelAttribute }));
   }
 }

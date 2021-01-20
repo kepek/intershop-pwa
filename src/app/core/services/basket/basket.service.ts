@@ -566,4 +566,27 @@ export class BasketService {
       phoneNumber,
     });
   }
+
+  getLineItemAttributes(basketId: string, lineItemId: string) {
+    const params = new HttpParams().set('include', 'all');
+    return this.apiService.get(`baskets/${basketId}/items/${lineItemId}/attributes`, {
+      headers: this.basketHeaders,
+      params,
+    });
+  }
+
+  updateLineItemAttributes(
+    basketId: string,
+    lineItemId: string,
+    boxLabelAttribute: { name: string; type: string; value: string }
+  ) {
+    // const params = new HttpParams().set('include', 'all');
+    const headers = new HttpHeaders({
+      'content-type': 'application/json',
+      Accept: 'application/vnd.intershop.basket.v1+json',
+    });
+    return this.apiService.post(`baskets/${basketId}/items/${lineItemId}/attributes`, boxLabelAttribute, {
+      headers: headers,
+    });
+  }
 }

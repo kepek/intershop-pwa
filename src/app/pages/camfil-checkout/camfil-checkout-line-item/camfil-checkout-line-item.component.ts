@@ -38,6 +38,7 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
   @Input() selectedItemsForm?: FormArray;
   @Input() mode?: 'edit' | 'view';
   @Input() index: number;
+  @Input() basketId: string;
   @Output() handleLoad = new EventEmitter<{ res: ProductView; quantity: number }>();
   @Output() handleUpdate = new EventEmitter<{ res: ProductView; quantity: number }>();
   boxLabelValidator = {
@@ -55,10 +56,10 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
   private destroy$ = new Subject<void>();
 
   ngOnInit() {
-    this.boxLabel = 'Lab1';
     this.initForm();
     this.quantity = this.product.quantity.value;
     this.updateQuantities();
+    this.getItemBoxLabel();
   }
 
   ngOnChanges(s: SimpleChanges) {
@@ -120,5 +121,19 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
 
   getField(name: string) {
     return this.boxLabelForm.get(name);
+  }
+
+  getItemBoxLabel() {
+    this.checkoutFacade.getBasketItemAttributes(this.basketId, this.product.id);
+  }
+
+  onBlur(target: HTMLDataElement) {
+    console.log("Wywolanie")
+    const oldValue = this.boxLabel;
+    const newValue = target.value;
+    if (newValue && newValue !== oldValue) {
+      const boxLabelAttribute = { name: 'boxLabel', type: 'String', value: newValue };
+      this.checkoutFacade.updateBasketItemAttributes(this.basketId, this.product.id, boxLabelAttribute);
+    }
   }
 }

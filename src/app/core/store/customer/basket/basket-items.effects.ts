@@ -41,6 +41,9 @@ import {
   editBucket,
   editBucketFail,
   editBucketSuccess,
+  getBasketItemAttributes,
+  getBasketItemAttributesSuccess,
+  getBasketItemAttributesFail,
   loadBasket,
   loadBuckets,
   loadBucketsFail,
@@ -52,6 +55,9 @@ import {
   updateBucketFail,
   updateBucketSuccess,
   validateBasket,
+  updateBasketItemAttributes,
+  updateBasketItemAttributesFail,
+  updateBasketItemAttributesSuccess,
 } from './basket.actions';
 import { getCurrentBasket, getCurrentBasketId } from './basket.selectors';
 
@@ -234,6 +240,7 @@ export class BasketItemsEffects {
     )
   );
 
+
   editBucket = createEffect(() =>
     this.actions$.pipe(
       ofType(editBucket),
@@ -268,4 +275,30 @@ export class BasketItemsEffects {
       )
     )
   );
+  // CAMFIL
+
+  getLineItemAttributtes$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(getBasketItemAttributes),
+      mapToPayload(),
+      mergeMap(payload =>
+        this.basketService.getLineItemAttributes(payload.basketId, payload.lineItemId).pipe(
+          map(() => getBasketItemAttributesSuccess()),
+          mapErrorToAction(getBasketItemAttributesFail)
+        )
+      )
+    )
+  );
+  updateLineItemAttributtes$ = createEffect(() =>
+  this.actions$.pipe(
+    ofType(updateBasketItemAttributes),
+    mapToPayload(),
+    mergeMap(payload =>
+      this.basketService.updateLineItemAttributes(payload.basketId, payload.lineItemId, payload.boxLabelAttribute).pipe(
+        map(() => updateBasketItemAttributesSuccess()),
+        mapErrorToAction(updateBasketItemAttributesFail)
+      )
+    )
+  )
+);
 }
