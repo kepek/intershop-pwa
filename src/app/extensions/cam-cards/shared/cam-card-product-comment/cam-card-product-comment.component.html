@@ -6,7 +6,7 @@
         matInput
         formControlName="{{ input }}"
         markRequiredLabel="off"
-        maxlength="{{input === 'text' ? '200' : '30'}}"
+        maxlength="{{ input === 'text' ? '200' : '30' }}"
         attr.data-testing-id="cam-card-edit-comment-{{ input }}"
         (blur)="onBlur($event.target, input)"
         (keyup.enter)="keyupEnter($event.target)"
