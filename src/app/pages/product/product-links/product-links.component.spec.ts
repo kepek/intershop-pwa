@@ -3,7 +3,6 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MockComponent } from 'ng-mocks';
 import { instance, mock } from 'ts-mockito';
 
-import { LARGE_BREAKPOINT_WIDTH } from 'ish-core/configurations/injection-keys';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { CamfilProductItemComponent } from 'ish-shared/components/product/camfil-product-item/camfil-product-item.component';
 
@@ -26,10 +25,7 @@ describe('Product Links Component', () => {
         MockComponent(ProductLinksListComponent),
         ProductLinksComponent,
       ],
-      providers: [
-        { provide: LARGE_BREAKPOINT_WIDTH, useValue: 992 },
-        { provide: ShoppingFacade, useFactory: () => instance(mock(ShoppingFacade)) },
-      ],
+      providers: [{ provide: ShoppingFacade, useFactory: () => instance(mock(ShoppingFacade)) }],
     }).compileComponents();
   });
 

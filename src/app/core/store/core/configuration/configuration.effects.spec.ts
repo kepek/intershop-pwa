@@ -10,7 +10,6 @@ import { Observable, Subject, of } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { anything, capture, instance, mock, verify } from 'ts-mockito';
 
-import { LARGE_BREAKPOINT_WIDTH, MEDIUM_BREAKPOINT_WIDTH } from 'ish-core/configurations/injection-keys';
 import { Locale } from 'ish-core/models/locale/locale.model';
 import { getCurrentLocale } from 'ish-core/store/core/configuration/configuration.selectors';
 import { CoreStoreModule } from 'ish-core/store/core/core-store.module';
@@ -33,8 +32,6 @@ describe('Configuration Effects', () => {
         provideMockActions(() => actions$),
         provideMockStore({ selectors: [{ selector: getCurrentLocale, value: { lang: 'en_US' } as Locale }] }),
         { provide: PLATFORM_ID, useValue: 'server' },
-        { provide: MEDIUM_BREAKPOINT_WIDTH, useValue: 768 },
-        { provide: LARGE_BREAKPOINT_WIDTH, useValue: 992 },
       ],
     });
 
