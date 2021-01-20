@@ -1,13 +1,13 @@
-.+:
-  - baseHref: /se
+'.+':
+  - baseHref: /sv-se
     channel: Camfil-CamfilSE-Site
     lang: sv_SE
-  - baseHref: /se/en_US
+  - baseHref: /en-gb
     channel: Camfil-CamfilSE-Site
-    lang: en_US
-  - baseHref: /se/de_DE
+    lang: en_GB
+  - baseHref: /de-de
     channel: Camfil-CamfilSE-Site
     lang: de_DE
-  - baseHref: /se/fr_FR
+  - baseHref: /fr-fr
     channel: Camfil-CamfilSE-Site
     lang: fr_FR
