@@ -14,8 +14,14 @@
     <div class="product-item-attributes d-flex flex-nowrap">
       <div class="col-sm-6">
         <camfil-product-id *ngIf="configuration.displaySKU" [product]="product"></camfil-product-id>
-        <camfil-product-attribute name="camfil.product.dimensions.label" value="xxx-xxx-xxx"></camfil-product-attribute>
-        <camfil-product-attribute name="camfil.product.efficiency.label" value="xxx"></camfil-product-attribute>
+        <camfil-product-attribute
+          name="camfil.product.dimensions.label"
+          [value]="product | camfilDimension"
+        ></camfil-product-attribute>
+        <camfil-product-attribute
+          [name]="'camfil.product.efficiency.label' | translate"
+          [value]="product | camfilProductAttributeVal: 'IsoEfficiency'" 
+        ></camfil-product-attribute>
       </div>
       <div class="col-sm-6 right-col d-flex flex-column">
         <div class="right-col-actions--container">
@@ -105,10 +111,12 @@
           <camfil-product-id *ngIf="configuration.displaySKU" [product]="product"></camfil-product-id>
           <camfil-product-attribute
             name="camfil.product.dimensions.label"
-            value="xxx-xxx-xxx"
+            [value]="product | camfilDimension"
           ></camfil-product-attribute>
-          <camfil-product-attribute name="camfil.product.efficiency.label" value="xxx"></camfil-product-attribute>
-
+          <camfil-product-attribute
+            [name]="'camfil.product.efficiency.label' | translate"
+            [value]="product | camfilProductAttributeVal: 'IsoEfficiency'"
+          ></camfil-product-attribute>
           <camfil-product-quickview [product]="product" [hideText]="true"></camfil-product-quickview>
 
           <camfil-product-inventory

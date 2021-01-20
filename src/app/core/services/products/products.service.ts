@@ -76,7 +76,7 @@ export class ProductsService {
 
     let params = new HttpParams()
       .set('attrs', ProductsService.STUB_ATTRS)
-      .set('attributeGroup', AttributeGroupTypes.ProductLabelAttributes)
+      .set('attributeGroup', AttributeGroupTypes.ProductsListLabelAttributes)
       .set('amount', this.itemsPerPage.toString())
       .set('offset', ((page - 1) * this.itemsPerPage).toString())
       .set('returnSortKeys', 'true')

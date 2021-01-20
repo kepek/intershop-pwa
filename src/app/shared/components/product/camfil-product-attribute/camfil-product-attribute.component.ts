@@ -7,7 +7,7 @@ import { Attribute } from 'ish-core/models/attribute/attribute.model';
  *
  * @example
  * <camfil-product-attribute
- *   [label]="ID"
+ *   [name]="ID"
  *   [value]="sku"
  *   [itmProp]="sku">
  * </camfil-product-attribute>

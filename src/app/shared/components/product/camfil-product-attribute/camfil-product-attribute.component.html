@@ -1,4 +1,4 @@
-<dl *ngIf="attribute" [ngClass]="classObject">
+<dl *ngIf="attribute && value" [ngClass]="classObject">
   <dt class="camfil-product-attribute__label">{{ attribute.name | translate }}: &nbsp;</dt>
   <dd
     [attr.itemprop]="itemProp"

@@ -4,6 +4,7 @@ import { AttributeToStringPipe } from './models/attribute/attribute.pipe';
 import { PricePipe } from './models/price/price.pipe';
 import { CamfilDatePipe } from './pipes/camfil-date.pipe';
 import { CamfilDimensionPipe } from './pipes/camfil-dimension.pipe';
+import { CamfilProductAttributeValPipe } from './pipes/camfil-product-attribute-val';
 import { DatePipe } from './pipes/date.pipe';
 import { FeatureTogglePipe } from './pipes/feature-toggle.pipe';
 import { HighlightPipe } from './pipes/highlight.pipe';
@@ -17,6 +18,7 @@ const pipes = [
   AttributeToStringPipe,
   CamfilDatePipe,
   CamfilDimensionPipe,
+  CamfilProductAttributeValPipe,
   CategoryRoutePipe,
   DatePipe,
   FeatureTogglePipe,

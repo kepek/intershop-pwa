@@ -7,6 +7,8 @@ import { MockComponent, MockDirective, MockPipe } from 'ng-mocks';
 import { FeatureToggleDirective } from 'ish-core/directives/feature-toggle.directive';
 import { PricePipe } from 'ish-core/models/price/price.pipe';
 import { ProductView } from 'ish-core/models/product-view/product-view.model';
+import { CamfilDimensionPipe } from 'ish-core/pipes/camfil-dimension.pipe';
+import { CamfilProductAttributeValPipe } from 'ish-core/pipes/camfil-product-attribute-val';
 import { ProductRoutePipe } from 'ish-core/routing/product/product-route.pipe';
 import { findAllCustomElements } from 'ish-core/utils/dev/html-query-utils';
 import { CamfilProductAddToBasketComponent } from 'ish-shared/components/product/camfil-product-add-to-basket/camfil-product-add-to-basket.component';
@@ -63,6 +65,8 @@ describe('Camfil Product Item Simple Component', () => {
         MockComponent(LazyProductAddToQuoteComponent),
         MockComponent(LazyProductAddToWishlistComponent),
         MockDirective(FeatureToggleDirective),
+        MockPipe(CamfilDimensionPipe),
+        MockPipe(CamfilProductAttributeValPipe),
         MockPipe(PricePipe),
         MockPipe(ProductRoutePipe),
       ],

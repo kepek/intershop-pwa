@@ -17,11 +17,12 @@
           ></camfil-product-attribute>
           <camfil-product-attribute
             [name]="'camfil.cam_card.product.dimensions' | translate"
-            [value]="productData.sku"
+            [value]="productData | camfilDimension"
           ></camfil-product-attribute>
+          
           <camfil-product-attribute
             [name]="'camfil.cam_card.product.efficiency' | translate"
-            [value]="productData.sku"
+            [value]="productData | camfilProductAttributeVal: 'IsoEfficiency'"
           ></camfil-product-attribute>
           <!-- <ng-container *ngIf="isViewMode">
             <camfil-product-attribute
