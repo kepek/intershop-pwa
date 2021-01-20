@@ -385,6 +385,7 @@ const exportedComponents = [
   ProductBundleDisplayComponent,
   ProductIdComponent,
   ProductInventoryComponent,
+  ProductItemComponent,
   ProductPriceComponent,
   ProductVariationDisplayComponent,
   PromotionDetailsComponent,

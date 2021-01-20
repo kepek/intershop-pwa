@@ -5,7 +5,6 @@ import { MockComponent } from 'ng-mocks';
 import { of } from 'rxjs';
 import { instance, mock, when } from 'ts-mockito';
 
-import { MAIN_NAVIGATION_MAX_SUB_CATEGORIES_DEPTH } from 'ish-core/configurations/injection-keys';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { NavigationCategory } from 'ish-core/models/navigation-category/navigation-category.model';
 
@@ -37,10 +36,7 @@ describe('Sub Category Navigation Component', () => {
     await TestBed.configureTestingModule({
       imports: [RouterTestingModule],
       declarations: [MockComponent(FaIconComponent), SubCategoryNavigationComponent],
-      providers: [
-        { provide: MAIN_NAVIGATION_MAX_SUB_CATEGORIES_DEPTH, useValue: 2 },
-        { provide: ShoppingFacade, useFactory: () => instance(shoppingFacade) },
-      ],
+      providers: [{ provide: ShoppingFacade, useFactory: () => instance(shoppingFacade) }],
     }).compileComponents();
   });
 
@@ -68,9 +64,24 @@ describe('Sub Category Navigation Component', () => {
             ><ul class="category-level2">
               <li class="main-navigation-level2-item">
                 <a ng-reflect-router-link="/CAT_A1a-catA.1.a" href="/CAT_A1a-catA.1.a">CAT_A1a</a
-                ><a class="dropdown-toggle"><fa-icon ng-reflect-icon="fas,plus"></fa-icon></a>
-              </li></ul
-          ></ish-sub-category-navigation>
+                ><a class="dropdown-toggle"><fa-icon ng-reflect-icon="fas,plus"></fa-icon></a
+                ><ish-sub-category-navigation
+                  ng-reflect-category-unique-id="A.1.a"
+                  ng-reflect-sub-categories-depth="3"
+                  ><ul class="category-level3">
+                    <li class="main-navigation-level3-item">
+                      <a
+                        style="width: 100%"
+                        ng-reflect-router-link="/CAT_A1aAlpha-catA.1.a.alpha"
+                        href="/CAT_A1aAlpha-catA.1.a.alpha"
+                        >CAT_A1aAlpha</a
+                      >
+                    </li>
+                  </ul></ish-sub-category-navigation
+                >
+              </li>
+            </ul></ish-sub-category-navigation
+          >
         </li>
         <li class="main-navigation-level1-item">
           <a style="width: 100%" ng-reflect-router-link="/CAT_A2-catA.2" href="/CAT_A2-catA.2">CAT_A2</a>
