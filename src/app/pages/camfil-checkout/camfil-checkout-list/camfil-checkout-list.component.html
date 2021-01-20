@@ -130,10 +130,11 @@
             <div class="d-flex align-items-center">
               <mat-icon svgIcon="move" class="size-24 d-none d-md-block handle" cdkDragHandle></mat-icon>
               <camfil-checkout-line-item
-              [id]="product.productSKU"
-              [product]="product"
-              [basketId]="order?.basket"
-            ></camfil-checkout-line-item>
+                [id]="product.productSKU"
+                [product]="product"
+                [basketId]="order?.basket"
+                [bucketId]="order?.id"
+              ></camfil-checkout-line-item>
             </div>
           </div>
         </ng-container>

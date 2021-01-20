@@ -20,6 +20,7 @@ import { LineItemUpdate } from 'ish-core/models/line-item-update/line-item-updat
 import { LineItemView } from 'ish-core/models/line-item/line-item.model';
 import { ProductView } from 'ish-core/models/product-view/product-view.model';
 import { ProductCompletenessLevel } from 'ish-core/models/product/product.model';
+import { whenTruthy } from 'ish-core/utils/operators';
 
 @Component({
   selector: 'camfil-checkout-line-item',
@@ -39,6 +40,7 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
   @Input() mode?: 'edit' | 'view';
   @Input() index: number;
   @Input() basketId: string;
+  @Input() bucketId: string;
   @Output() handleLoad = new EventEmitter<{ res: ProductView; quantity: number }>();
   @Output() handleUpdate = new EventEmitter<{ res: ProductView; quantity: number }>();
   boxLabelValidator = {
@@ -124,11 +126,10 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
   }
 
   getItemBoxLabel() {
-    this.checkoutFacade.getBasketItemAttributes(this.basketId, this.product.id);
+    this.checkoutFacade.getBasketItemAttributes(this.basketId, this.product.id, this.bucketId );
   }
 
   onBlur(target: HTMLDataElement) {
-    console.log("Wywolanie")
     const oldValue = this.boxLabel;
     const newValue = target.value;
     if (newValue && newValue !== oldValue) {

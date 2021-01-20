@@ -240,7 +240,6 @@ export class BasketItemsEffects {
     )
   );
 
-
   editBucket = createEffect(() =>
     this.actions$.pipe(
       ofType(editBucket),
@@ -282,23 +281,30 @@ export class BasketItemsEffects {
       ofType(getBasketItemAttributes),
       mapToPayload(),
       mergeMap(payload =>
-        this.basketService.getLineItemAttributes(payload.basketId, payload.lineItemId).pipe(
-          map(() => getBasketItemAttributesSuccess()),
+        this.basketService.getLineItemAttributes(payload.basketId, payload.lineItemId, payload.bucketId).pipe(
+          map(res => {
+            console.log('RES', res);
+            return getBasketItemAttributesSuccess(res);
+          }),
           mapErrorToAction(getBasketItemAttributesFail)
         )
       )
     )
   );
+
+
   updateLineItemAttributtes$ = createEffect(() =>
-  this.actions$.pipe(
-    ofType(updateBasketItemAttributes),
-    mapToPayload(),
-    mergeMap(payload =>
-      this.basketService.updateLineItemAttributes(payload.basketId, payload.lineItemId, payload.boxLabelAttribute).pipe(
-        map(() => updateBasketItemAttributesSuccess()),
-        mapErrorToAction(updateBasketItemAttributesFail)
+    this.actions$.pipe(
+      ofType(updateBasketItemAttributes),
+      mapToPayload(),
+      mergeMap(payload =>
+        this.basketService
+          .updateLineItemAttributes(payload.basketId, payload.lineItemId, payload.boxLabelAttribute)
+          .pipe(
+            map(() => updateBasketItemAttributesSuccess()),
+            mapErrorToAction(updateBasketItemAttributesFail)
+          )
       )
     )
-  )
-);
+  );
 }

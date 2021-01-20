@@ -222,8 +222,8 @@ export class CheckoutFacade {
     this.store.dispatch(camfilDragLineItem({ basketId, updatedLineItem, targetBucket }));
   }
 
-  getBasketItemAttributes(basketId: string, lineItemId: string) {
-    this.store.dispatch(getBasketItemAttributes({ basketId, lineItemId }));
+  getBasketItemAttributes(basketId: string, lineItemId: string, bucketId: string) {
+    this.store.dispatch(getBasketItemAttributes({ basketId, lineItemId, bucketId }));
   }
 
   updateBasketItemAttributes(

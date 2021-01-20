@@ -310,7 +310,7 @@ export const editBucketSuccess = createAction('[Basket] Edit Bucket Success');
 export const editBucketFail = createAction('[Basket] Edit Bucket Fail', httpError());
 export const getBasketItemAttributes = createAction(
   '[Basket API] Get Attributes for selected line item ',
-  payload<{ basketId: string; lineItemId: string }>()
+  payload<{ basketId: string; lineItemId: string, bucketId: string }>()
 );
 
 export const getBasketItemAttributesFail = createAction(
@@ -319,7 +319,8 @@ export const getBasketItemAttributesFail = createAction(
 );
 
 export const getBasketItemAttributesSuccess = createAction(
-  '[Basket API] Get Attributes for selected line item Success'
+  '[Basket API] Get Attributes for selected line item Success',
+  payload<{ attributes: Attribute[]; lineItemId: string; bucketId: string }>()
 );
 
 export const updateBasketItemAttributes = createAction(
@@ -333,5 +334,6 @@ export const updateBasketItemAttributesFail = createAction(
 );
 
 export const updateBasketItemAttributesSuccess = createAction(
-  '[Basket API] Update Attributes for selected line item Success'
+  '[Basket API] Update Attributes for selected line item Success',
+
 );

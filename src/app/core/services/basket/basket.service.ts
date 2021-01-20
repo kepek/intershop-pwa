@@ -567,12 +567,14 @@ export class BasketService {
     });
   }
 
-  getLineItemAttributes(basketId: string, lineItemId: string) {
+  getLineItemAttributes(basketId: string, lineItemId: string, bucketId: string) {
     const params = new HttpParams().set('include', 'all');
-    return this.apiService.get(`baskets/${basketId}/items/${lineItemId}/attributes`, {
-      headers: this.basketHeaders,
-      params,
-    });
+    return this.apiService
+      .get(`baskets/${basketId}/items/${lineItemId}/attributes`, {
+        headers: this.basketHeaders,
+        params,
+      })
+      .pipe(map((attributes: Attribute[]) => ({attributes, lineItemId, bucketId})));
   }
 
   updateLineItemAttributes(
