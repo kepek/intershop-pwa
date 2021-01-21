@@ -45,7 +45,7 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy {
 
   @Input() addToOrder = false;
   @Input() order?: Bucket;
-  @Input() shippingMethodId?: string
+  @Input() shippingMethodId?: string;
 
   showSkuError = false;
 
@@ -146,9 +146,16 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy {
 
   addToNewOrder(sku, quantity, deliveryAddress) {
     if (this.isNewAddress(deliveryAddress)) {
-      this.productFacade.addProductToBucket(deliveryAddress, this.order.shippingMethod, sku, quantity, this.order.basket, {
-        ...this.order,
-      });
+      this.productFacade.addProductToBucket(
+        deliveryAddress,
+        this.order.shippingMethod,
+        sku,
+        quantity,
+        this.order.basket,
+        {
+          ...this.order,
+        }
+      );
     } else {
       this.productFacade.addProductToBucketWithUrn(
         deliveryAddress.urn,

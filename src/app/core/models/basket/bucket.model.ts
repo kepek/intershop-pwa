@@ -33,7 +33,7 @@ export interface BucketData {
   lineItems?: string[];
   id: string;
   shipToAddress?: string;
-  shippingMethod?: string
+  shippingMethod?: string;
 }
 
 export interface BucketIncluded {

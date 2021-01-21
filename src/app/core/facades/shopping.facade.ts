@@ -159,7 +159,9 @@ export class ShoppingFacade {
     basketId: string,
     basketExtensions: BasketExtensions
   ) {
-    this.store.dispatch(addProductToBucketWithUrn({ urn, shippingMethod, addressId, sku, quantity, basketId, basketExtensions }));
+    this.store.dispatch(
+      addProductToBucketWithUrn({ urn, shippingMethod, addressId, sku, quantity, basketId, basketExtensions })
+    );
   }
 
   addProductToBasket(sku: string, quantity: number, shippingMethod?: string, shipToAddress?: string) {

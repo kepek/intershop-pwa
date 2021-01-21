@@ -31,7 +31,7 @@ export class CreateOrderButtonComponent {
       shipToAddressFull: virtualBucket.shippingAddress,
       orderMark: virtualBucket.orderMark,
       customer: virtualBucket.customer,
-      shippingMethod: this.shippingMethodId
+      shippingMethod: this.shippingMethodId,
     };
 
     this.checkoutFacade.addEmptyBucket(bucket);
