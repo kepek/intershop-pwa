@@ -10,37 +10,7 @@
           <camfil-product-title [product]="productData" [class]="'text-truncate'"></camfil-product-title
           ><camfil-product-inventory class="px-2" [product]="productData"></camfil-product-inventory>
         </div>
-        <div class="attributes">
-          <camfil-product-attribute
-            [name]="'camfil.cam_card.product.id.label' | translate"
-            [value]="productData.sku"
-          ></camfil-product-attribute>
-          <camfil-product-attribute
-            [name]="'camfil.cam_card.product.dimensions' | translate"
-            [value]="productData | camfilDimension"
-          ></camfil-product-attribute>
 
-          <camfil-product-attribute
-            [name]="'camfil.cam_card.product.efficiency' | translate"
-            [value]="productData | camfilProductAttributeVal: 'IsoEfficiency'"
-          ></camfil-product-attribute>
-          <!-- <ng-container *ngIf="isViewMode">
-            <camfil-product-attribute
-              [name]="'camfil.cam_card.product.comment.label' | translate"
-              [value]="camCardItemData.comment.label | slice: 0:40"
-              *ngIf="camCardItemData.comment.label"
-            ></camfil-product-attribute>
-            <camfil-product-attribute
-              [name]="'camfil.cam_card.product.quantity' | translate"
-              [value]="camCardItemData.quantity"
-            ></camfil-product-attribute>
-            <ng-container *ngTemplateOutlet="price"></ng-container>
-          </ng-container> -->
-          <a class="quick-view">
-            <mat-icon svgIcon="search" class="size-16"></mat-icon>
-            {{ 'Quickview' | translate }}
-          </a>
-        </div>
       </div>
     </div>
     <!-- <camfil-cam-card-product-comment
@@ -54,7 +24,7 @@
       <form [formGroup]="boxLabelForm" class="box-label__form">
         <mat-form-field appearance="outline" class="box-label__form--field">
           <mat-label>{{ 'camfil.cam_card.product.comment.label' | translate }}</mat-label>
-          <input matInput type="text" formControlName="boxLabel" (blur)="onBlur($event.target)" />
+          <input matInput type="text" formControlName="boxLabel" (blur)="onBlur($event.target)" maxlength="60"/>
         </mat-form-field>
         <camfil-error
           [errors]="getField('boxLabel').errors"

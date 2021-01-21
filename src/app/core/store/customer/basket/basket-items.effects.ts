@@ -58,6 +58,12 @@ import {
   updateBasketItemAttributes,
   updateBasketItemAttributesFail,
   updateBasketItemAttributesSuccess,
+  addBasketItemAttributes,
+  addBasketItemAttributesSuccess,
+  addBasketItemAttributesFail,
+  deleteBasketItemAttributes,
+  deleteBasketItemAttributesSuccess,
+  deleteBasketItemAttributesFail,
 } from './basket.actions';
 import { getCurrentBasket, getCurrentBasketId } from './basket.selectors';
 
@@ -291,6 +297,19 @@ export class BasketItemsEffects {
     )
   );
 
+  addLineItemAttribute$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(addBasketItemAttributes),
+      mapToPayload(),
+      mergeMap(payload =>
+        this.basketService.addLineItemAttribute(payload.basketId, payload.lineItemId, payload.boxLabelAttribute).pipe(
+          map(() => addBasketItemAttributesSuccess()),
+          mapErrorToAction(addBasketItemAttributesFail)
+        )
+      )
+    )
+  );
+
   updateLineItemAttributtes$ = createEffect(() =>
     this.actions$.pipe(
       ofType(updateBasketItemAttributes),
@@ -302,6 +321,19 @@ export class BasketItemsEffects {
             map(() => updateBasketItemAttributesSuccess()),
             mapErrorToAction(updateBasketItemAttributesFail)
           )
+      )
+    )
+  );
+
+  deleteLineItemAttributte$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(deleteBasketItemAttributes),
+      mapToPayload(),
+      mergeMap(payload =>
+        this.basketService.deleteLineItemAttributes(payload.basketId, payload.lineItemId, payload.bucketId, payload.attributeName).pipe(
+          map((res) => deleteBasketItemAttributesSuccess(res)),
+          mapErrorToAction(deleteBasketItemAttributesFail)
+        )
       )
     )
   );

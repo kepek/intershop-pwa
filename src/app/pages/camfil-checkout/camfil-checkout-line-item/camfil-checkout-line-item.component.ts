@@ -1,5 +1,4 @@
 import {
-  Attribute,
   ChangeDetectionStrategy,
   Component,
   EventEmitter,
@@ -50,7 +49,7 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
 
   @Input() product: LineItemView;
   @Input() id: string;
-
+  boxLabel: string;
   addToCartForm: FormGroup;
   boxLabelForm: FormGroup;
   selectItemForm: FormGroup;
@@ -95,7 +94,7 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
       quantity: new FormControl(this.product.quantity.value || 1),
     });
     this.boxLabelForm = new FormGroup({
-      boxLabel: new FormControl(this.getItemBoxLabel(), [Validators.maxLength(5)]),
+      boxLabel: new FormControl(this.boxLabel ? this.boxLabel : this.getItemBoxLabel(), [Validators.maxLength(60)]),
     });
   }
 
@@ -134,15 +133,31 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
 
       boxLabel = boxLabelAttribute && 'value' in boxLabelAttribute ? boxLabelAttribute.value : '';
     });
+    if (boxLabel) {
+      this.boxLabel = boxLabel;
+    }
     return boxLabel;
   }
 
   onBlur(target: HTMLDataElement) {
-    const oldValue = this.boxLabelForm.get("boxLabel").value
+    const oldValue = this.boxLabel;
     const newValue = target.value;
     if (newValue && newValue !== oldValue) {
       const boxLabelAttribute = { name: 'boxLabel', type: 'String', value: newValue };
-      this.checkoutFacade.updateBasketItemAttributes(this.basketId, this.product.id, boxLabelAttribute);
+      if (!oldValue) {
+        //Add attribute
+        this.checkoutFacade.addBasketItemAttributes(this.basketId, this.product.id, boxLabelAttribute);
+        this.boxLabel = newValue;
+      } else {
+        //Update existing attribute
+        this.checkoutFacade.updateBasketItemAttributes(this.basketId, this.product.id, boxLabelAttribute);
+      }
+    } else if (!newValue && oldValue) {
+      //DELETE
+      this.checkoutFacade.deleteBasketItemAttributes(this.basketId, this.product.id, this.bucketId, 'boxLabel');
+      this.boxLabel = '';
+    } else {
+      this.boxLabel = '';
     }
   }
 }

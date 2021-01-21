@@ -577,10 +577,24 @@ export class BasketService {
       .pipe(
         map((payload: { data: Attribute[]; links }) => {
           const { data } = payload;
-          const attributes = data
+          const attributes = data;
           return { attributes, lineItemId, bucketId };
         })
       );
+  }
+
+  addLineItemAttribute(
+    basketId: string,
+    lineItemId: string,
+    boxLabelAttribute: { name: string; type: string; value: string }
+  ) {
+    const headers = new HttpHeaders({
+      'content-type': 'application/vnd.intershop.basket.v1+json',
+      Accept: 'application/vnd.intershop.basket.v1+json',
+    });
+    return this.apiService.post(`baskets/${basketId}/items/${lineItemId}/attributes`, boxLabelAttribute, {
+      headers: headers,
+    });
   }
 
   updateLineItemAttributes(
@@ -588,13 +602,28 @@ export class BasketService {
     lineItemId: string,
     boxLabelAttribute: { name: string; type: string; value: string }
   ) {
-    // const params = new HttpParams().set('include', 'all');
     const headers = new HttpHeaders({
-      'content-type': 'application/json',
+      'content-type': 'application/vnd.intershop.basket.v1+json',
       Accept: 'application/vnd.intershop.basket.v1+json',
     });
-    return this.apiService.post(`baskets/${basketId}/items/${lineItemId}/attributes`, boxLabelAttribute, {
+    return this.apiService.patch(`baskets/${basketId}/items/${lineItemId}/attributes/boxLabel`, boxLabelAttribute, {
       headers: headers,
     });
+  }
+
+  deleteLineItemAttributes(basketId: string, lineItemId: string, bucketId: string, attributeName: string) {
+    const headers = new HttpHeaders({
+      'content-type': 'application/vnd.intershop.basket.v1+json',
+      Accept: 'application/vnd.intershop.basket.v1+json',
+    });
+    return this.apiService
+      .delete(`baskets/${basketId}/items/${lineItemId}/attributes/${attributeName}`, {
+        headers: headers,
+      })
+      .pipe(
+        map(() => {
+          return { lineItemId, bucketId, attributeName };
+        })
+      );
   }
 }

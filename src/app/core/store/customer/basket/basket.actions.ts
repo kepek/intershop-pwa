@@ -310,7 +310,7 @@ export const editBucketSuccess = createAction('[Basket] Edit Bucket Success');
 export const editBucketFail = createAction('[Basket] Edit Bucket Fail', httpError());
 export const getBasketItemAttributes = createAction(
   '[Basket API] Get Attributes for selected line item ',
-  payload<{ basketId: string; lineItemId: string, bucketId: string }>()
+  payload<{ basketId: string; lineItemId: string; bucketId: string }>()
 );
 
 export const getBasketItemAttributesFail = createAction(
@@ -321,6 +321,20 @@ export const getBasketItemAttributesFail = createAction(
 export const getBasketItemAttributesSuccess = createAction(
   '[Basket API] Get Attributes for selected line item Success',
   payload<{ attributes: Attribute[]; lineItemId: string; bucketId: string }>()
+);
+
+export const addBasketItemAttributes = createAction(
+  '[Basket API] Add Attributes for selected line item ',
+  payload<{ basketId: string; lineItemId: string; boxLabelAttribute: { name: string; type: string; value: string } }>()
+);
+
+export const addBasketItemAttributesFail = createAction(
+  '[Basket API] Add Attributes for selected line item Fail',
+  httpError()
+);
+
+export const addBasketItemAttributesSuccess = createAction(
+  '[Basket API] Add Attributes for selected line item Success'
 );
 
 export const updateBasketItemAttributes = createAction(
@@ -334,6 +348,20 @@ export const updateBasketItemAttributesFail = createAction(
 );
 
 export const updateBasketItemAttributesSuccess = createAction(
-  '[Basket API] Update Attributes for selected line item Success',
+  '[Basket API] Update Attributes for selected line item Success'
+);
 
+export const deleteBasketItemAttributes = createAction(
+  '[Basket API] Delete Attributes for selected line item ',
+  payload<{ basketId: string; lineItemId: string; bucketId: string; attributeName: string }>()
+);
+
+export const deleteBasketItemAttributesFail = createAction(
+  '[Basket API] Delete Attributes for selected line item Fail',
+  httpError()
+);
+
+export const deleteBasketItemAttributesSuccess = createAction(
+  '[Basket API] Delete Attributes for selected line item Success',
+  payload<{ lineItemId: string; bucketId: string; attributeName: string }>()
 );

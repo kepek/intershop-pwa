@@ -34,6 +34,7 @@ import {
   deleteBasketAttributeFail,
   deleteBasketAttributeSuccess,
   deleteBasketItem,
+  deleteBasketItemAttributesSuccess,
   deleteBasketItemFail,
   deleteBasketItemSuccess,
   deleteBasketPayment,
@@ -370,6 +371,26 @@ export const basketReducer = createReducer(
           return {
             ...b,
             lineItems: b.lineItems.map(li => (li.id === lineItemId ? { ...li, attributes: attributes } : li)),
+          };
+        } else {
+          return b;
+        }
+      }),
+    };
+  }),
+
+  on(deleteBasketItemAttributesSuccess, (state: BasketState, action) => {
+    const { bucketId, lineItemId, attributeName } = action.payload;
+
+    return {
+      ...state,
+      buckets: state.buckets.map(b => {
+        if (b.id === bucketId) {
+          return {
+            ...b,
+            lineItems: b.lineItems.map(li =>
+              li.id === lineItemId ? { ...li, attributes: li.attributes.filter(att => att.name !== attributeName) } : li
+            ),
           };
         } else {
           return b;
