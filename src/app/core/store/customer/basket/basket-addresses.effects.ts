@@ -56,7 +56,6 @@ export class BasketAddressesEffects {
               createBasketAddressSuccess({
                 address: newAddress,
                 scope: action.payload.scope,
-                omitBucket: action.payload.omitBucket,
               })
             ),
             mapErrorToAction(createCustomerAddressFail)
@@ -68,7 +67,6 @@ export class BasketAddressesEffects {
               createBasketAddressSuccess({
                 address: newAddress,
                 scope: action.payload.scope,
-                omitBucket: action.payload.omitBucket,
               })
             ),
             mapErrorToAction(createCustomerAddressFail)

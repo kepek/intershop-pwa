@@ -507,8 +507,6 @@ export class BasketService {
   }
 
   updateBucket(basketId: string, addressId: string, basketExtension: BasketExtensions): Observable<BasketExtensions> {
-    console.log('service updateBucket');
-
     return this.apiService.post(`baskets/${basketId}/camfil/${addressId}`, {
       ...basketExtension,
     });

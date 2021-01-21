@@ -175,12 +175,12 @@ export class CheckoutFacade {
     this.store.dispatch(assignBasketAddress({ addressId, scope }));
   }
 
-  createBasketAddress(address: Address, scope: 'invoice' | 'shipping' | 'any', omitBucket?: boolean) {
+  createBasketAddress(address: Address, scope: 'invoice' | 'shipping' | 'any') {
     if (!address || !scope) {
       return;
     }
 
-    this.store.dispatch(createBasketAddress({ address, scope, omitBucket }));
+    this.store.dispatch(createBasketAddress({ address, scope }));
   }
 
   updateBasketAddress(address: Address) {
