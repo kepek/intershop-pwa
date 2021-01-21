@@ -125,8 +125,6 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy {
       const comment: CamCardItemComment = { label };
 
       if (this.addToOrder) {
-        console.log('ModalAddNewProductComponent', this.order );
-
         if (this.order.id && this.order.shipToAddress) {
           this.addToExistingOrder(sku, quantity, this.order.shipToAddress);
         } else {
@@ -143,14 +141,10 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy {
   }
 
   addToExistingOrder(sku, quantity, shipToAddress) {
-    console.log('addToExistingOrder', this.shippingMethodId);
-
     this.productFacade.addProductToBasket(sku, quantity, this.shippingMethodId, shipToAddress);
   }
 
   addToNewOrder(sku, quantity, deliveryAddress) {
-    console.log('addToNewOrder', this.order.shippingMethod);
-
     if (this.isNewAddress(deliveryAddress)) {
       this.productFacade.addProductToBucket(deliveryAddress, this.order.shippingMethod, sku, quantity, this.order.basket, {
         ...this.order,

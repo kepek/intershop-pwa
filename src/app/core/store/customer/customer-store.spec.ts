@@ -218,8 +218,9 @@ describe('Customer Store', () => {
             [Basket] Add Product To Basket:
               sku: "test"
               quantity: 1
+              shippingMethod: "STD_GROUND"
             [Basket Internal] Add Items To Basket:
-              items: [{"sku":"test","quantity":1,"unit":"pcs."}]
+              items: [{"sku":"test","quantity":1,"shippingMethod":"STD_GROUND","u...
             [Basket API] Add Items To Basket Success:
               info: undefined
             [Products Internal] Load Product:
