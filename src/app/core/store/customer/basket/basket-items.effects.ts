@@ -31,23 +31,32 @@ import { mapErrorToAction, mapToPayload, mapToPayloadProperty } from 'ish-core/u
 import { loadCamCards } from '../../../../extensions/cam-cards/store/cam-card';
 
 import {
+  addBasketItemAttributes,
+  addBasketItemAttributesFail,
+  addBasketItemAttributesSuccess,
   addItemsToBasket,
   addItemsToBasketFail,
   addItemsToBasketSuccess,
   addProductToBasket,
   deleteBasketItem,
+  deleteBasketItemAttributes,
+  deleteBasketItemAttributesFail,
+  deleteBasketItemAttributesSuccess,
   deleteBasketItemFail,
   deleteBasketItemSuccess,
   editBucket,
   editBucketFail,
   editBucketSuccess,
   getBasketItemAttributes,
-  getBasketItemAttributesSuccess,
   getBasketItemAttributesFail,
+  getBasketItemAttributesSuccess,
   loadBasket,
   loadBuckets,
   loadBucketsFail,
   loadBucketsSuccess,
+  updateBasketItemAttributes,
+  updateBasketItemAttributesFail,
+  updateBasketItemAttributesSuccess,
   updateBasketItems,
   updateBasketItemsFail,
   updateBasketItemsSuccess,
@@ -55,15 +64,6 @@ import {
   updateBucketFail,
   updateBucketSuccess,
   validateBasket,
-  updateBasketItemAttributes,
-  updateBasketItemAttributesFail,
-  updateBasketItemAttributesSuccess,
-  addBasketItemAttributes,
-  addBasketItemAttributesSuccess,
-  addBasketItemAttributesFail,
-  deleteBasketItemAttributes,
-  deleteBasketItemAttributesSuccess,
-  deleteBasketItemAttributesFail,
 } from './basket.actions';
 import { getCurrentBasket, getCurrentBasketId } from './basket.selectors';
 
@@ -287,12 +287,9 @@ export class BasketItemsEffects {
       ofType(getBasketItemAttributes),
       mapToPayload(),
       mergeMap(payload =>
-        this.basketService.getLineItemAttributes(payload.basketId, payload.lineItemId, payload.bucketId).pipe(
-          map(res => {
-            return getBasketItemAttributesSuccess(res);
-          }),
-          mapErrorToAction(getBasketItemAttributesFail)
-        )
+        this.basketService
+          .getLineItemAttributes(payload.basketId, payload.lineItemId, payload.bucketId)
+          .pipe(map(getBasketItemAttributesSuccess), mapErrorToAction(getBasketItemAttributesFail))
       )
     )
   );
@@ -302,10 +299,9 @@ export class BasketItemsEffects {
       ofType(addBasketItemAttributes),
       mapToPayload(),
       mergeMap(payload =>
-        this.basketService.addLineItemAttribute(payload.basketId, payload.lineItemId, payload.boxLabelAttribute).pipe(
-          map(() => addBasketItemAttributesSuccess()),
-          mapErrorToAction(addBasketItemAttributesFail)
-        )
+        this.basketService
+          .addLineItemAttribute(payload.basketId, payload.lineItemId, payload.boxLabelAttribute)
+          .pipe(map(addBasketItemAttributesSuccess), mapErrorToAction(addBasketItemAttributesFail))
       )
     )
   );
@@ -317,10 +313,7 @@ export class BasketItemsEffects {
       mergeMap(payload =>
         this.basketService
           .updateLineItemAttributes(payload.basketId, payload.lineItemId, payload.boxLabelAttribute)
-          .pipe(
-            map(() => updateBasketItemAttributesSuccess()),
-            mapErrorToAction(updateBasketItemAttributesFail)
-          )
+          .pipe(map(updateBasketItemAttributesSuccess), mapErrorToAction(updateBasketItemAttributesFail))
       )
     )
   );
@@ -330,10 +323,9 @@ export class BasketItemsEffects {
       ofType(deleteBasketItemAttributes),
       mapToPayload(),
       mergeMap(payload =>
-        this.basketService.deleteLineItemAttributes(payload.basketId, payload.lineItemId, payload.bucketId, payload.attributeName).pipe(
-          map((res) => deleteBasketItemAttributesSuccess(res)),
-          mapErrorToAction(deleteBasketItemAttributesFail)
-        )
+        this.basketService
+          .deleteLineItemAttributes(payload.basketId, payload.lineItemId, payload.bucketId, payload.attributeName)
+          .pipe(map(deleteBasketItemAttributesSuccess), mapErrorToAction(deleteBasketItemAttributesFail))
       )
     )
   );

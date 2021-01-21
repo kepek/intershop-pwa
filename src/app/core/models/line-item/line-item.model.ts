@@ -1,9 +1,8 @@
+import { Attribute } from 'ish-core/models/attribute/attribute.model';
 import { BasketFeedback } from 'ish-core/models/basket-feedback/basket-feedback.model';
 import { BasketRebate } from 'ish-core/models/basket-rebate/basket-rebate.model';
 import { PriceItem } from 'ish-core/models/price-item/price-item.model';
 import { Price } from 'ish-core/models/price/price.model';
-import { Attribute } from 'ish-core/models/attribute/attribute.model';
-
 
 export interface LineItem {
   id: string;
@@ -42,7 +41,7 @@ export interface LineItem {
 
   isQuantityFixed?: boolean;
 
-  //CAMFIL
+  // CAMFIL
   attributes?: Attribute[];
 }
 

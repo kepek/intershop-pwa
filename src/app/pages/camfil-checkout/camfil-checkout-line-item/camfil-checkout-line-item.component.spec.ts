@@ -6,6 +6,7 @@ import { MockComponent, MockPipe } from 'ng-mocks';
 import { of } from 'rxjs';
 import { anything, instance, mock, when } from 'ts-mockito';
 
+import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { LineItemView } from 'ish-core/models/line-item/line-item.model';
 import { PricePipe } from 'ish-core/models/price/price.pipe';
@@ -14,6 +15,7 @@ import { CamfilDimensionPipe } from 'ish-core/pipes/camfil-dimension.pipe';
 import { CamfilProductAttributeValPipe } from 'ish-core/pipes/camfil-product-attribute-val';
 import { DatePipe } from 'ish-core/pipes/date.pipe';
 import { ProductRoutePipe } from 'ish-core/routing/product/product-route.pipe';
+import { CamfilErrorComponent } from 'ish-shared/components/common/camfil-error/camfil-error.component';
 import { CamfilProductAddToBasketComponent } from 'ish-shared/components/product/camfil-product-add-to-basket/camfil-product-add-to-basket.component';
 import { CamfilProductAttributeComponent } from 'ish-shared/components/product/camfil-product-attribute/camfil-product-attribute.component';
 import { CamfilProductIdComponent } from 'ish-shared/components/product/camfil-product-id/camfil-product-id.component';
@@ -34,14 +36,17 @@ describe('Camfil Checkout Line Item Component', () => {
   let fixture: ComponentFixture<CamfilCheckoutLineItemComponent>;
   let element: HTMLElement;
   let shoppingFacadeMock: ShoppingFacade;
+  let checkoutFacadeMock: CheckoutFacade;
 
   beforeEach(async () => {
     shoppingFacadeMock = mock(ShoppingFacade);
+    checkoutFacadeMock = mock(CheckoutFacade);
 
     await TestBed.configureTestingModule({
       imports: [RouterTestingModule],
       declarations: [
         CamfilCheckoutLineItemComponent,
+        CamfilErrorComponent,
         MockComponent(CamfilProductAddToBasketComponent),
         MockComponent(CamfilProductAttributeComponent),
         MockComponent(CamfilProductIdComponent),
@@ -61,7 +66,11 @@ describe('Camfil Checkout Line Item Component', () => {
         MockPipe(PricePipe),
         MockPipe(ProductRoutePipe),
       ],
-      providers: [{ provide: ShoppingFacade, useFactory: () => instance(shoppingFacadeMock) }, provideMockStore({})],
+      providers: [
+        { provide: ShoppingFacade, useFactory: () => instance(shoppingFacadeMock) },
+        { provide: CheckoutFacade, useFactory: () => instance(checkoutFacadeMock) },
+        provideMockStore({}),
+      ],
     }).compileComponents();
   });
 

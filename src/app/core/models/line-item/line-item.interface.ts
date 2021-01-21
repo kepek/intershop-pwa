@@ -1,6 +1,6 @@
+import { Attribute } from 'ish-core/models/attribute/attribute.model';
 import { PriceItemData } from 'ish-core/models/price-item/price-item.interface';
 import { PriceData } from 'ish-core/models/price/price.interface';
-import { Attribute } from 'ish-core/models/attribute/attribute.model';
 
 export interface LineItemData {
   id: string;

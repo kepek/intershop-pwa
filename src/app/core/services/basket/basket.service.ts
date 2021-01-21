@@ -593,7 +593,7 @@ export class BasketService {
       Accept: 'application/vnd.intershop.basket.v1+json',
     });
     return this.apiService.post(`baskets/${basketId}/items/${lineItemId}/attributes`, boxLabelAttribute, {
-      headers: headers,
+      headers,
     });
   }
 
@@ -607,7 +607,7 @@ export class BasketService {
       Accept: 'application/vnd.intershop.basket.v1+json',
     });
     return this.apiService.patch(`baskets/${basketId}/items/${lineItemId}/attributes/boxLabel`, boxLabelAttribute, {
-      headers: headers,
+      headers,
     });
   }
 
@@ -618,12 +618,8 @@ export class BasketService {
     });
     return this.apiService
       .delete(`baskets/${basketId}/items/${lineItemId}/attributes/${attributeName}`, {
-        headers: headers,
+        headers,
       })
-      .pipe(
-        map(() => {
-          return { lineItemId, bucketId, attributeName };
-        })
-      );
+      .pipe(map(() => ({ lineItemId, bucketId, attributeName })));
   }
 }

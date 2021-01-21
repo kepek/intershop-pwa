@@ -44,7 +44,7 @@ export class LineItemMapper {
 
         productSKU: data.product,
         isQuantityFixed: data.quantityFixed,
-        attributes: data.attributes ? data.attributes : []
+        attributes: data.attributes ? data.attributes : [],
       };
     } else {
       throw new Error(`'LineItemData' is required for the mapping`);

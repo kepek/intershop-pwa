@@ -370,7 +370,7 @@ export const basketReducer = createReducer(
         if (b.id === bucketId) {
           return {
             ...b,
-            lineItems: b.lineItems.map(li => (li.id === lineItemId ? { ...li, attributes: attributes } : li)),
+            lineItems: b.lineItems.map(li => (li.id === lineItemId ? { ...li, attributes } : li)),
           };
         } else {
           return b;

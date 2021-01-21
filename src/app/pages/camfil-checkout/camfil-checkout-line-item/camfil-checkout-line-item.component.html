@@ -10,7 +10,6 @@
           <camfil-product-title [product]="productData" [class]="'text-truncate'"></camfil-product-title
           ><camfil-product-inventory class="px-2" [product]="productData"></camfil-product-inventory>
         </div>
-
       </div>
     </div>
     <!-- <camfil-cam-card-product-comment
@@ -24,7 +23,7 @@
       <form [formGroup]="boxLabelForm" class="box-label__form">
         <mat-form-field appearance="outline" class="box-label__form--field">
           <mat-label>{{ 'camfil.cam_card.product.comment.label' | translate }}</mat-label>
-          <input matInput type="text" formControlName="boxLabel" (blur)="onBlur($event.target)" maxlength="60"/>
+          <input matInput type="text" formControlName="boxLabel" (blur)="onBlur($event.target)" />
         </mat-form-field>
         <camfil-error
           [errors]="getField('boxLabel').errors"
