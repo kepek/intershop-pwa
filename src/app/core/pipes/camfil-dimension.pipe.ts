@@ -22,7 +22,8 @@ export class CamfilDimensionPipe implements PipeTransform {
       .filter(attribute => names.indexOf(attribute.name.toLowerCase()) !== -1)
       .map(attribute => {
         const data = attribute as Attribute<{ value: unknown }>;
-        return formatNumber(data.value.value as number, this.translateService.currentLang);
+        const val = (data.value?.value || data.value) as number;
+        return formatNumber(val, this.translateService.currentLang);
       });
 
     return (dimensions.length === 3 ? dimensions : []).join(valuesSeparator);
