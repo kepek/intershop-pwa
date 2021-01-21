@@ -913,6 +913,7 @@
   "camfil.modal.edit_order.button.save": "Save",
   "camfil.modal.edit_order.button.header": "Edit order details",
   "camfil.navigation.filterClearAll.message": "Clear all filters",
+  "camfil.navigation.see.all.airFilters": "See all air filters",
   "camfil.product.add_to_compare.label": "Add to compare",
   "camfil.product.attributes.more": "More details",
   "camfil.product.bags.label": "Bags",
