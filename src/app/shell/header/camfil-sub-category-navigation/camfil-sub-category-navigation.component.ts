@@ -49,7 +49,6 @@ export class CamfilSubCategoryNavigationComponent implements OnInit {
   }
 
   showAllFiltersBtn() {
-    // TODO: improve condition - this.categoryUniqueId === 'Computers'
-    return this.subCategoriesDepth === 1 && this.categoryUniqueId === 'Computers';
+    return this.subCategoriesDepth === 1;
   }
 }

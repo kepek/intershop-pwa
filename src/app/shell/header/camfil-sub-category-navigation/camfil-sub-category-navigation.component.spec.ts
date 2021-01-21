@@ -8,8 +8,7 @@ import { instance, mock, when } from 'ts-mockito';
 import { MAIN_NAVIGATION_MAX_SUB_CATEGORIES_DEPTH } from 'ish-core/configurations/injection-keys';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { NavigationCategory } from 'ish-core/models/navigation-category/navigation-category.model';
-
-import { SubCategoryNavigationComponent } from '../sub-category-navigation/sub-category-navigation.component';
+import { SubCategoryNavigationComponent } from 'ish-shell/header/sub-category-navigation/sub-category-navigation.component';
 
 import { CamfilSubCategoryNavigationComponent } from './camfil-sub-category-navigation.component';
 
