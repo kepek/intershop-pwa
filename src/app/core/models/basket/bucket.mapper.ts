@@ -11,8 +11,6 @@ export class BucketMapper {
         basketExtensions && basketExtensions.find(ext => ext.shippingAddress.urn === bucketData.shipToAddress);
       const shipToAddress = bucketData.shipToAddress && included.shipToAddress[bucketData.shipToAddress];
 
-      // todo shippingAddress => deliveryAddress
-
       return {
         ...bucketData,
         id: bucketData.id,
@@ -28,18 +26,10 @@ export class BucketMapper {
         info: extension ? extension.info : '',
         boxLabel: extension ? extension.boxLabel : '',
         phoneNumber: extension ? extension.phoneNumber : '',
-        // todo
-        customer: {
-          companyName: 'Bio Tech',
-          companyName2: '',
-          customerNo: 'BioTech',
-          description: "Bio Tech is one of the world's leading companies in bio technologies.",
-          id: 'xP9_AAABUmAAAAF2dzgS4.D8',
-          industry: '',
-        },
+        customer: extension ? extension.customer : undefined,
         nextDelivery: '12.10.22',
-        orderMark: 'todo_ordermark',
-        invoiceLabel: 'todo_invoiceLabel',
+        orderMark: extension ? extension.orderMark : '',
+        invoiceLabel: extension ? extension.invoiceLabel : '',
         deliveryDate: extension ? extension.deliveryDate : '',
       };
     });
