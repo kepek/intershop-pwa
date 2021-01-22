@@ -55,16 +55,9 @@ export const updateCamCardSuccess = createAction(
   payload<{ camCard: CamCard }>()
 );
 
-export const updateClonedCamCard = createAction('[Cam Cards] Update Cloned Cam Card', payload<{ camCard: CamCard }>());
-
 export const cloneAndEditCamCard = createAction(
   '[Cam Cards API] Clone And Update Cam Card',
   payload<{ camCardId: string; camCardName: string }>()
-);
-
-export const cloneAndEditCamCards = createAction(
-  '[Cam Cards API] Clone And Update Cam Cards',
-  payload<{ camCards: CamCard[] }>()
 );
 
 export const cloneAndEditFail = createAction('[Cam Cards API] Clone And Update Cam Card Fail', httpError());

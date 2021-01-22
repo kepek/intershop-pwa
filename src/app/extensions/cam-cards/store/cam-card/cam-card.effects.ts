@@ -46,9 +46,6 @@ import {
   addProductToNewSubCamCard,
   addProductToSubCamCard,
   addToNewCamCardWithNewSubCamCard,
-  cloneAndEditCamCard,
-  cloneAndEditCamCards,
-  cloneAndEditFail,
   copyCamCard,
   copyCamCardFail,
   createCamCard,
@@ -102,7 +99,6 @@ import {
   updateCamCardProduct,
   updateCamCardProductSuccess,
   updateCamCardSuccess,
-  updateClonedCamCard,
   updateContactsWhileMoveCamCardFail,
   updateSubCamCard,
   updateSubCamCardFail,
@@ -206,35 +202,6 @@ export class CamCardEffects {
           mapErrorToAction(moveCamCardFail)
         )
       )
-    )
-  );
-
-  cloneAndEditCamCard$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(cloneAndEditCamCard),
-      mapToPayload(),
-      mergeMap(({ camCardId, camCardName }) =>
-        this.camCardService.cloneCamCard(camCardId).pipe(
-          mergeMap((camCard: CamCard) => [
-            updateClonedCamCard({ camCard: { id: camCard.id, name: camCardName, transient: false } }),
-          ]),
-          mapErrorToAction(cloneAndEditFail)
-        )
-      )
-    )
-  );
-
-  cloneAndEditCamCards$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(cloneAndEditCamCards),
-      mapToPayload(),
-      concatMap(payload => [
-        ...payload.camCards.map(camCard => cloneAndEditCamCard({ camCardId: camCard.id, camCardName: camCard.name })),
-        displaySuccessMessage({
-          message: 'camfil.cam_cards.clone_and_edit.success',
-          messageParams: { 0: payload.camCards.length.toString() },
-        }),
-      ])
     )
   );
 
@@ -393,19 +360,6 @@ export class CamCardEffects {
               messageParams: { 0: camCard.name },
             }),
           ]),
-          mapErrorToAction(updateCamCardFail)
-        )
-      )
-    )
-  );
-
-  updateClonedCamCard$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(updateClonedCamCard),
-      mapToPayloadProperty('camCard'),
-      mergeMap((newCamCard: CamCard) =>
-        this.camCardService.updateCamCard(newCamCard).pipe(
-          mergeMap(camCard => [updateCamCardSuccess({ camCard })]),
           mapErrorToAction(updateCamCardFail)
         )
       )
