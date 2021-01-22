@@ -567,6 +567,15 @@ export class BasketService {
     });
   }
 
+  /**
+   * http header for Camfil Basket API v1
+   */
+  // tslint:disable:member-ordering
+  private camfilBasketHeaders = new HttpHeaders({
+    'content-type': 'application/vnd.intershop.basket.v1+json',
+    Accept: 'application/vnd.intershop.basket.v1+json',
+  });
+
   getLineItemAttributes(basketId: string, lineItemId: string, bucketId: string) {
     const params = new HttpParams().set('include', 'all');
     return this.apiService
@@ -588,12 +597,8 @@ export class BasketService {
     lineItemId: string,
     boxLabelAttribute: { name: string; type: string; value: string }
   ) {
-    const headers = new HttpHeaders({
-      'content-type': 'application/vnd.intershop.basket.v1+json',
-      Accept: 'application/vnd.intershop.basket.v1+json',
-    });
     return this.apiService.post(`baskets/${basketId}/items/${lineItemId}/attributes`, boxLabelAttribute, {
-      headers,
+      headers: this.camfilBasketHeaders,
     });
   }
 
@@ -602,23 +607,15 @@ export class BasketService {
     lineItemId: string,
     boxLabelAttribute: { name: string; type: string; value: string }
   ) {
-    const headers = new HttpHeaders({
-      'content-type': 'application/vnd.intershop.basket.v1+json',
-      Accept: 'application/vnd.intershop.basket.v1+json',
-    });
     return this.apiService.patch(`baskets/${basketId}/items/${lineItemId}/attributes/boxLabel`, boxLabelAttribute, {
-      headers,
+      headers: this.camfilBasketHeaders,
     });
   }
 
   deleteLineItemAttributes(basketId: string, lineItemId: string, bucketId: string, attributeName: string) {
-    const headers = new HttpHeaders({
-      'content-type': 'application/vnd.intershop.basket.v1+json',
-      Accept: 'application/vnd.intershop.basket.v1+json',
-    });
     return this.apiService
       .delete(`baskets/${basketId}/items/${lineItemId}/attributes/${attributeName}`, {
-        headers,
+        headers: this.camfilBasketHeaders,
       })
       .pipe(map(() => ({ lineItemId, bucketId, attributeName })));
   }
