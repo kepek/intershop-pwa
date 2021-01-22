@@ -140,7 +140,7 @@ export class BasketItemsEffects {
     this.actions$.pipe(
       ofType(addProductToBucket),
       mapToPayload(),
-      switchMap(payload => {
+      mergeMap(payload => {
         if (!payload.basketId) {
           return this.basketService.createBasket().pipe(
             mergeMap(basket => [
@@ -190,7 +190,8 @@ export class BasketItemsEffects {
                     basketExtension: payload.basketExtensions,
                   }),
                 ]
-              : [addProductToBucketAddressFail()]),
+              : [addProductToBucketAddressFail()]
+          ),
           mapErrorToAction(addProductToBucketFail)
         )
       )
