@@ -459,7 +459,6 @@ export class BasketService {
   }
 
   // TODO: CAMFIL Additions, it should be separated to avoid core modifications;
-
   // tslint:disable-next-line:member-ordering
   private currentBasket$ = this.store?.pipe(select(getCurrentBasket), whenTruthy(), take(1));
 
@@ -539,7 +538,6 @@ export class BasketService {
       })
       .pipe(map(BasketInfoMapper.fromInfo));
   }
-
 
   /**
    * http header for Camfil Basket API v1
