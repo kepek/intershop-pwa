@@ -190,7 +190,7 @@ export class BasketItemsEffects {
                     basketExtension: payload.basketExtensions,
                   }),
                 ]
-              : [git saddProductToBucketAddressFail()]),
+              : [addProductToBucketAddressFail()]),
           mapErrorToAction(addProductToBucketFail)
         )
       )
