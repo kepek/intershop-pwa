@@ -70,6 +70,8 @@ import {
 } from './basket.actions';
 import { getCurrentBasket, getCurrentBasketId } from './basket.selectors';
 
+const STANDARD_SHIPPING_METHOD = 'STD_GROUND';
+
 @Injectable()
 export class BasketItemsEffects {
   constructor(
@@ -143,7 +145,7 @@ export class BasketItemsEffects {
             mergeMap(basket => [
               addProductToBucketWithBasketId({
                 address: payload.address,
-                shippingMethod: payload.shippingMethod,
+                shippingMethod: STANDARD_SHIPPING_METHOD,
                 sku: payload.sku,
                 quantity: payload.quantity,
                 basketId: basket.id,
@@ -155,7 +157,7 @@ export class BasketItemsEffects {
         return [
           addProductToBucketWithBasketId({
             address: payload.address,
-            shippingMethod: payload.shippingMethod,
+            shippingMethod: STANDARD_SHIPPING_METHOD,
             sku: payload.sku,
             quantity: payload.quantity,
             basketId: payload.basketId,

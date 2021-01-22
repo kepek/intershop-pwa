@@ -27,6 +27,7 @@ import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
 import { CamCardContact } from '../../../models/cam-card/cam-card.model';
 
 import { OrderFormComponent } from './order-form/order-form.component';
+import {AddressHelper} from "ish-core/models/address/address.helper";
 
 @Component({
   selector: 'camfil-create-order-modal',
@@ -176,16 +177,7 @@ export class CreateOrderModalComponent implements OnInit, OnDestroy {
 
   isNewAddress() {
     const currentAddress = this.getAddress();
-    const isCurrentOnTheList = this.basketAddresses.find(
-      address =>
-        address.addressLine1 === currentAddress.addressLine1 &&
-        address.addressLine2 === currentAddress.addressLine2 &&
-        address.postalCode === currentAddress.postalCode &&
-        address.city === currentAddress.city &&
-        address.companyName1 === currentAddress.companyName1
-    );
-
-    return isCurrentOnTheList === undefined;
+    return AddressHelper.isNewAddress(currentAddress, this.basketAddresses);
   }
 
   getBasketExtension(): BasketExtensions {

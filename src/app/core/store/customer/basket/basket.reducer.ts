@@ -91,6 +91,7 @@ import {
   updateConcardisCvcLastUpdatedFail,
   updateConcardisCvcLastUpdatedSuccess,
 } from './basket.actions';
+import {AddressHelper} from "ish-core/models/address/address.helper";
 
 export interface BasketState {
   basket: Basket;
@@ -228,9 +229,8 @@ export const basketReducer = createReducer(
     validationResults: initialValidationResults,
   })),
   on(loadBucketsSuccess, (state: BasketState, action) => {
-    const hasBeenCreated = shipToAddress =>
-      action.payload.buckets.find(bucket => bucket.shipToAddress === shipToAddress);
-    const onlyEmpty = state.emptyBuckets.filter(emptyBucket => !hasBeenCreated(emptyBucket.shipToAddress));
+    const addresses = action.payload.buckets.map(bucket => bucket.shipToAddressFull)
+    const onlyEmpty = state.emptyBuckets.filter(emptyBucket => AddressHelper.isNewAddress(emptyBucket.shipToAddressFull as Address, addresses ));
 
     return {
       ...state,
