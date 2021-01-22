@@ -53,12 +53,19 @@
         padding: 0.25em 0 0.5em 0;
       }
     }
+    .box-label {
+      div.mat-form-field-infix {
+        padding: 1em 0 1em 0;
+        border-top: none;
+      }
+    }
     .camfil-product-attribute {
       margin-bottom: 0;
     }
     .camfil-product-title {
       display: block;
-      max-width: 450px;
+      width: 200px;
+      max-width: 200px;
     }
     .product-image {
       max-width: 40px;

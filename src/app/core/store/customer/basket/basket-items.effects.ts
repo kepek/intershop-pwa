@@ -31,20 +31,32 @@ import { mapErrorToAction, mapToPayload, mapToPayloadProperty } from 'ish-core/u
 import { loadCamCards } from '../../../../extensions/cam-cards/store/cam-card';
 
 import {
+  addBasketItemAttributes,
+  addBasketItemAttributesFail,
+  addBasketItemAttributesSuccess,
   addItemsToBasket,
   addItemsToBasketFail,
   addItemsToBasketSuccess,
   addProductToBasket,
   deleteBasketItem,
+  deleteBasketItemAttributes,
+  deleteBasketItemAttributesFail,
+  deleteBasketItemAttributesSuccess,
   deleteBasketItemFail,
   deleteBasketItemSuccess,
   editBucket,
   editBucketFail,
   editBucketSuccess,
+  getBasketItemAttributes,
+  getBasketItemAttributesFail,
+  getBasketItemAttributesSuccess,
   loadBasket,
   loadBuckets,
   loadBucketsFail,
   loadBucketsSuccess,
+  updateBasketItemAttributes,
+  updateBasketItemAttributesFail,
+  updateBasketItemAttributesSuccess,
   updateBasketItems,
   updateBasketItemsFail,
   updateBasketItemsSuccess,
@@ -265,6 +277,55 @@ export class BasketItemsEffects {
           mergeMap((buckets: Bucket[]) => [loadBucketsSuccess({ buckets }), loadCamCards()]),
           mapErrorToAction(loadBucketsFail)
         )
+      )
+    )
+  );
+  // CAMFIL
+
+  getLineItemAttributtes$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(getBasketItemAttributes),
+      mapToPayload(),
+      mergeMap(payload =>
+        this.basketService
+          .getLineItemAttributes(payload.basketId, payload.lineItemId, payload.bucketId)
+          .pipe(map(getBasketItemAttributesSuccess), mapErrorToAction(getBasketItemAttributesFail))
+      )
+    )
+  );
+
+  addLineItemAttribute$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(addBasketItemAttributes),
+      mapToPayload(),
+      mergeMap(payload =>
+        this.basketService
+          .addLineItemAttribute(payload.basketId, payload.lineItemId, payload.boxLabelAttribute)
+          .pipe(map(addBasketItemAttributesSuccess), mapErrorToAction(addBasketItemAttributesFail))
+      )
+    )
+  );
+
+  updateLineItemAttributtes$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(updateBasketItemAttributes),
+      mapToPayload(),
+      mergeMap(payload =>
+        this.basketService
+          .updateLineItemAttributes(payload.basketId, payload.lineItemId, payload.boxLabelAttribute)
+          .pipe(map(updateBasketItemAttributesSuccess), mapErrorToAction(updateBasketItemAttributesFail))
+      )
+    )
+  );
+
+  deleteLineItemAttributte$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(deleteBasketItemAttributes),
+      mapToPayload(),
+      mergeMap(payload =>
+        this.basketService
+          .deleteLineItemAttributes(payload.basketId, payload.lineItemId, payload.bucketId, payload.attributeName)
+          .pipe(map(deleteBasketItemAttributesSuccess), mapErrorToAction(deleteBasketItemAttributesFail))
       )
     )
   );

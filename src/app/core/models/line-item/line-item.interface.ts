@@ -1,3 +1,4 @@
+import { Attribute } from 'ish-core/models/attribute/attribute.model';
 import { PriceItemData } from 'ish-core/models/price-item/price-item.interface';
 import { PriceData } from 'ish-core/models/price/price.interface';
 
@@ -33,4 +34,5 @@ export interface LineItemData {
   freeGift: boolean;
   quantityFixed?: boolean;
   shipToAddress?: string;
+  attributes?: Attribute[];
 }

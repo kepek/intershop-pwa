@@ -9,7 +9,7 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { FormArray, FormControl, FormGroup } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Observable, Subject } from 'rxjs';
 import { debounceTime, take, takeUntil } from 'rxjs/operators';
@@ -17,9 +17,10 @@ import { debounceTime, take, takeUntil } from 'rxjs/operators';
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { LineItemUpdate } from 'ish-core/models/line-item-update/line-item-update.model';
-import { LineItemView } from 'ish-core/models/line-item/line-item.model';
+import { LineItem, LineItemView } from 'ish-core/models/line-item/line-item.model';
 import { ProductView } from 'ish-core/models/product-view/product-view.model';
 import { ProductCompletenessLevel } from 'ish-core/models/product/product.model';
+import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
 
 @Component({
   selector: 'camfil-checkout-line-item',
@@ -38,16 +39,23 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
   @Input() selectedItemsForm?: FormArray;
   @Input() mode?: 'edit' | 'view';
   @Input() index: number;
+  @Input() basketId: string;
+  @Input() bucketId: string;
   @Output() handleLoad = new EventEmitter<{ res: ProductView; quantity: number }>();
   @Output() handleUpdate = new EventEmitter<{ res: ProductView; quantity: number }>();
-
+  boxLabelValidator = {
+    boxLabel: [{ error: 'maxlength', message: 'MAX length exceeded' }],
+  };
   quantity = 0;
 
   @Input() product: LineItemView;
   @Input() id: string;
+  boxLabel: string;
   addToCartForm: FormGroup;
+  boxLabelForm: FormGroup;
   selectItemForm: FormGroup;
   product$: Observable<ProductView>;
+
   private destroy$ = new Subject<void>();
 
   ngOnInit() {
@@ -86,6 +94,9 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
     this.addToCartForm = new FormGroup({
       quantity: new FormControl(this.product.quantity.value || 1),
     });
+    this.boxLabelForm = new FormGroup({
+      boxLabel: new FormControl(this.boxLabel ? this.boxLabel : this.getItemBoxLabel(), [Validators.maxLength(60)]),
+    });
   }
 
   /**if the camCardItem is loaded, get product details*/
@@ -108,5 +119,51 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
 
   get isViewMode() {
     return this.mode === 'view';
+  }
+
+  getField(name: string) {
+    return this.boxLabelForm.get(name);
+  }
+
+  getItemBoxLabel() {
+    let boxLabel;
+    this.checkoutFacade.getBasketItemAttributes(this.basketId, this.product.id, this.bucketId);
+    this.checkoutFacade.basketLineItems$?.pipe(take(1), takeUntil(this.destroy$)).subscribe((res: LineItem[]) => {
+      const lineItem = res.find(li => li.id === this.product.id);
+      const boxLabelAttribute = lineItem.attributes.find(att => att.name === 'boxLabel');
+
+      boxLabel = boxLabelAttribute && 'value' in boxLabelAttribute ? boxLabelAttribute.value : '';
+    });
+    if (boxLabel) {
+      this.boxLabel = boxLabel;
+    }
+    return boxLabel;
+  }
+
+  onBlur(target: HTMLDataElement) {
+    if (this.boxLabelForm.invalid) {
+      markAsDirtyRecursive(this.boxLabelForm);
+      return;
+    }
+
+    const oldValue = this.boxLabel;
+    const newValue = target.value;
+    if (newValue && newValue !== oldValue) {
+      const boxLabelAttribute = { name: 'boxLabel', type: 'String', value: newValue };
+      if (!oldValue) {
+        // Add attribute
+        this.checkoutFacade.addBasketItemAttributes(this.basketId, this.product.id, boxLabelAttribute);
+        this.boxLabel = newValue;
+      } else {
+        // Update existing attribute
+        this.checkoutFacade.updateBasketItemAttributes(this.basketId, this.product.id, boxLabelAttribute);
+      }
+    } else if (!newValue && oldValue) {
+      // DELETE
+      this.checkoutFacade.deleteBasketItemAttributes(this.basketId, this.product.id, this.bucketId, 'boxLabel');
+      this.boxLabel = '';
+    } else {
+      this.boxLabel = '';
+    }
   }
 }

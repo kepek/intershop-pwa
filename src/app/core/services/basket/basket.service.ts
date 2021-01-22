@@ -566,4 +566,57 @@ export class BasketService {
       phoneNumber,
     });
   }
+
+  /**
+   * http header for Camfil Basket API v1
+   */
+  // tslint:disable:member-ordering
+  private camfilBasketHeaders = new HttpHeaders({
+    'content-type': 'application/vnd.intershop.basket.v1+json',
+    Accept: 'application/vnd.intershop.basket.v1+json',
+  });
+
+  getLineItemAttributes(basketId: string, lineItemId: string, bucketId: string) {
+    const params = new HttpParams().set('include', 'all');
+    return this.apiService
+      .get(`baskets/${basketId}/items/${lineItemId}/attributes`, {
+        headers: this.basketHeaders,
+        params,
+      })
+      .pipe(
+        map((payload: { data: Attribute[]; links }) => {
+          const { data } = payload;
+          const attributes = data;
+          return { attributes, lineItemId, bucketId };
+        })
+      );
+  }
+
+  addLineItemAttribute(
+    basketId: string,
+    lineItemId: string,
+    boxLabelAttribute: { name: string; type: string; value: string }
+  ) {
+    return this.apiService.post(`baskets/${basketId}/items/${lineItemId}/attributes`, boxLabelAttribute, {
+      headers: this.camfilBasketHeaders,
+    });
+  }
+
+  updateLineItemAttributes(
+    basketId: string,
+    lineItemId: string,
+    boxLabelAttribute: { name: string; type: string; value: string }
+  ) {
+    return this.apiService.patch(`baskets/${basketId}/items/${lineItemId}/attributes/boxLabel`, boxLabelAttribute, {
+      headers: this.camfilBasketHeaders,
+    });
+  }
+
+  deleteLineItemAttributes(basketId: string, lineItemId: string, bucketId: string, attributeName: string) {
+    return this.apiService
+      .delete(`baskets/${basketId}/items/${lineItemId}/attributes/${attributeName}`, {
+        headers: this.camfilBasketHeaders,
+      })
+      .pipe(map(() => ({ lineItemId, bucketId, attributeName })));
+  }
 }

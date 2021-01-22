@@ -1,3 +1,4 @@
+import { Attribute } from 'ish-core/models/attribute/attribute.model';
 import { BasketFeedback } from 'ish-core/models/basket-feedback/basket-feedback.model';
 import { BasketRebate } from 'ish-core/models/basket-rebate/basket-rebate.model';
 import { PriceItem } from 'ish-core/models/price-item/price-item.model';
@@ -39,6 +40,9 @@ export interface LineItem {
   originSingleBasePrice?: PriceItem;
 
   isQuantityFixed?: boolean;
+
+  // CAMFIL
+  attributes?: Attribute[];
 }
 
 export interface LineItemView extends LineItem {

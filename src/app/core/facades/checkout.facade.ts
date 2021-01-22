@@ -12,6 +12,7 @@ import { PaymentInstrument } from 'ish-core/models/payment-instrument/payment-in
 import { selectRouteData } from 'ish-core/store/core/router';
 import { getAllAddresses } from 'ish-core/store/customer/addresses';
 import {
+  addBasketItemAttributes,
   addEmptyBucket,
   addPromotionCodeToBasket,
   assignBasketAddress,
@@ -21,6 +22,7 @@ import {
   createBasketPayment,
   deleteBasketAttribute,
   deleteBasketItem,
+  deleteBasketItemAttributes,
   deleteBasketPayment,
   deleteBasketShippingAddress,
   getBasketEligiblePaymentMethods,
@@ -28,6 +30,7 @@ import {
   getBasketError,
   getBasketInfo,
   getBasketInvoiceAddress,
+  getBasketItemAttributes,
   getBasketLastTimeProductAdded,
   getBasketLoading,
   getBasketPromotionError,
@@ -46,6 +49,7 @@ import {
   setBasketPayment,
   startCheckout,
   updateBasketAddress,
+  updateBasketItemAttributes,
   updateBasketItems,
   updateBasketShippingMethod,
   updateConcardisCvcLastUpdated,
@@ -218,5 +222,29 @@ export class CheckoutFacade {
 
   camfilDragLineItem(basketId: string, updatedLineItem: LineItem, targetBucket: Bucket) {
     this.store.dispatch(camfilDragLineItem({ basketId, updatedLineItem, targetBucket }));
+  }
+
+  getBasketItemAttributes(basketId: string, lineItemId: string, bucketId: string) {
+    this.store.dispatch(getBasketItemAttributes({ basketId, lineItemId, bucketId }));
+  }
+
+  addBasketItemAttributes(
+    basketId: string,
+    lineItemId: string,
+    boxLabelAttribute: { name: string; type: string; value: string }
+  ) {
+    this.store.dispatch(addBasketItemAttributes({ basketId, lineItemId, boxLabelAttribute }));
+  }
+
+  deleteBasketItemAttributes(basketId: string, lineItemId: string, bucketId: string, attributeName: string) {
+    this.store.dispatch(deleteBasketItemAttributes({ basketId, lineItemId, bucketId, attributeName }));
+  }
+
+  updateBasketItemAttributes(
+    basketId: string,
+    lineItemId: string,
+    boxLabelAttribute: { name: string; type: string; value: string }
+  ) {
+    this.store.dispatch(updateBasketItemAttributes({ basketId, lineItemId, boxLabelAttribute }));
   }
 }

@@ -34,11 +34,15 @@ import {
   deleteBasketAttributeFail,
   deleteBasketAttributeSuccess,
   deleteBasketItem,
+  deleteBasketItemAttributesSuccess,
   deleteBasketItemFail,
   deleteBasketItemSuccess,
   deleteBasketPayment,
   deleteBasketPaymentFail,
   deleteBasketPaymentSuccess,
+  getBasketItemAttributes,
+  getBasketItemAttributesFail,
+  getBasketItemAttributesSuccess,
   loadBasket,
   loadBasketEligiblePaymentMethods,
   loadBasketEligiblePaymentMethodsFail,
@@ -149,7 +153,8 @@ export const basketReducer = createReducer(
     deleteBasketPayment,
     submitBasket,
     updateConcardisCvcLastUpdated,
-    startCheckout
+    startCheckout,
+    getBasketItemAttributes
   ),
   unsetLoadingAndErrorOn(
     loadBasketSuccess,
@@ -170,7 +175,8 @@ export const basketReducer = createReducer(
     submitBasketSuccess,
     startCheckoutSuccess,
     updateConcardisCvcLastUpdated,
-    camfilDragLineItem
+    camfilDragLineItem,
+    getBasketItemAttributesSuccess
   ),
   setErrorOn(
     mergeBasketFail,
@@ -194,7 +200,8 @@ export const basketReducer = createReducer(
     updateConcardisCvcLastUpdatedFail,
     submitBasketFail,
     startCheckoutFail,
-    camfilDragLineItemFail
+    camfilDragLineItemFail,
+    getBasketItemAttributesFail
   ),
 
   on(loadBasketSuccess, mergeBasketSuccess, (state: BasketState, action) => {
@@ -351,6 +358,44 @@ export const basketReducer = createReducer(
       basket,
       loading: false,
       error: undefined,
+    };
+  }),
+
+  on(getBasketItemAttributesSuccess, (state: BasketState, action) => {
+    const { bucketId, lineItemId, attributes } = action.payload;
+
+    return {
+      ...state,
+      buckets: state.buckets.map(b => {
+        if (b.id === bucketId) {
+          return {
+            ...b,
+            lineItems: b.lineItems.map(li => (li.id === lineItemId ? { ...li, attributes } : li)),
+          };
+        } else {
+          return b;
+        }
+      }),
+    };
+  }),
+
+  on(deleteBasketItemAttributesSuccess, (state: BasketState, action) => {
+    const { bucketId, lineItemId, attributeName } = action.payload;
+
+    return {
+      ...state,
+      buckets: state.buckets.map(b => {
+        if (b.id === bucketId) {
+          return {
+            ...b,
+            lineItems: b.lineItems.map(li =>
+              li.id === lineItemId ? { ...li, attributes: li.attributes.filter(att => att.name !== attributeName) } : li
+            ),
+          };
+        } else {
+          return b;
+        }
+      }),
     };
   })
 );
