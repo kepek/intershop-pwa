@@ -1,5 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 
+import { AddressHelper } from 'ish-core/models/address/address.helper';
 import { Address } from 'ish-core/models/address/address.model';
 import { BasketInfo } from 'ish-core/models/basket-info/basket-info.model';
 import { BasketValidationResultType } from 'ish-core/models/basket-validation/basket-validation.model';
@@ -91,7 +92,6 @@ import {
   updateConcardisCvcLastUpdatedFail,
   updateConcardisCvcLastUpdatedSuccess,
 } from './basket.actions';
-import {AddressHelper} from "ish-core/models/address/address.helper";
 
 export interface BasketState {
   basket: Basket;
@@ -229,8 +229,10 @@ export const basketReducer = createReducer(
     validationResults: initialValidationResults,
   })),
   on(loadBucketsSuccess, (state: BasketState, action) => {
-    const addresses = action.payload.buckets.map(bucket => bucket.shipToAddressFull)
-    const onlyEmpty = state.emptyBuckets.filter(emptyBucket => AddressHelper.isNewAddress(emptyBucket.shipToAddressFull as Address, addresses ));
+    const addresses = action.payload.buckets.map(bucket => bucket.shipToAddressFull);
+    const onlyEmpty = state.emptyBuckets.filter(emptyBucket =>
+      AddressHelper.isNewAddress(emptyBucket.shipToAddressFull as Address, addresses)
+    );
 
     return {
       ...state,

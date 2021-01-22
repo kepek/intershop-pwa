@@ -1,5 +1,6 @@
+import { BucketAddress } from 'ish-core/models/basket/bucket.model';
+
 import { Address } from './address.model';
-import {BucketAddress} from "ish-core/models/basket/bucket.model";
 
 export class AddressHelper {
   static equal(add1: Address, add2: Address): boolean {

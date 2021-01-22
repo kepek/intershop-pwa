@@ -39,7 +39,8 @@ import {
   addProductToBasket,
   addProductToBucket,
   addProductToBucketAddressFail,
-  addProductToBucketFail, addProductToBucketWithBasketId,
+  addProductToBucketFail,
+  addProductToBucketWithBasketId,
   addProductToBucketWithUrn,
   deleteBasketItem,
   deleteBasketItemAttributes,
@@ -162,7 +163,7 @@ export class BasketItemsEffects {
             quantity: payload.quantity,
             basketId: payload.basketId,
             basketExtensions: payload.basketExtensions,
-          })
+          }),
         ];
       })
     )
@@ -174,23 +175,22 @@ export class BasketItemsEffects {
       mapToPayload(),
       mergeMap(payload =>
         this.basketService.createBasketAddress(payload.address).pipe(
-          concatMap((address: Address) => {
-            return address && address.urn
+          concatMap((address: Address) =>
+            address && address.urn
               ? [
-                addProductToBasket({
-                  sku: payload.sku,
-                  quantity: payload.quantity,
-                  shippingMethod: payload.shippingMethod,
-                  shipToAddress: address.urn,
-                }),
-                updateBucket({
-                  basketId: payload.basketId,
-                  addressId: address.id,
-                  basketExtension: payload.basketExtensions,
-                }),
-              ]
-              : [addProductToBucketAddressFail()];
-          }),
+                  addProductToBasket({
+                    sku: payload.sku,
+                    quantity: payload.quantity,
+                    shippingMethod: payload.shippingMethod,
+                    shipToAddress: address.urn,
+                  }),
+                  updateBucket({
+                    basketId: payload.basketId,
+                    addressId: address.id,
+                    basketExtension: payload.basketExtensions,
+                  }),
+                ]
+              : [git saddProductToBucketAddressFail()]),
           mapErrorToAction(addProductToBucketFail)
         )
       )
