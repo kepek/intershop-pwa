@@ -85,8 +85,6 @@ export class AddToCartModalComponent implements OnInit, OnDestroy {
       const boxLabel = this.quantityForm.get('boxLabel').value;
       const currentBucket = this.buckets.find(bucket => bucket.id === this.selectedOrderId);
 
-      console.log('currentBucket', currentBucket);
-
       this.submitted = true;
 
       this.shoppingFacade.addProductToBucketWithUrn(

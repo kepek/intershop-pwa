@@ -49,7 +49,6 @@ export interface Buckets {
   included: BucketIncluded;
 }
 
-// todo
 export interface EditBucket extends Bucket {
   customerId?: string;
   company?: string;

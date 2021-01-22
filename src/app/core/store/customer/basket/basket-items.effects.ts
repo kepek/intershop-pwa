@@ -140,8 +140,6 @@ export class BasketItemsEffects {
       mergeMap(payload =>
         this.basketService.createBasketAddress(payload.address).pipe(
           concatMap((address: Address) => {
-            console.log('basket-items.eff address', address && address.urn);
-
             return address && address.urn
               ? [
                   addProductToBasket({

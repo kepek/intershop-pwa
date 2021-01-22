@@ -27,7 +27,6 @@ export class BucketMapper {
         boxLabel: extension ? extension.boxLabel : '',
         phoneNumber: extension ? extension.phoneNumber : '',
         customer: extension ? extension.customer : undefined,
-        nextDelivery: '12.10.22',
         orderMark: extension ? extension.orderMark : '',
         invoiceLabel: extension ? extension.invoiceLabel : '',
         deliveryDate: extension ? extension.deliveryDate : '',

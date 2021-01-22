@@ -63,8 +63,6 @@ export class EditOrderModalComponent implements OnInit, OnDestroy {
   getUpdatedData(): BasketExtensions {
     const form = this.orderForm.addressForm;
 
-    // todo update address
-
     return {
       orderMark: form.get('orderMark').value,
       invoiceLabel: form.get('invoiceLabel').value,
