@@ -39,7 +39,7 @@ import {
   addProductToBasket,
   addProductToBucket,
   addProductToBucketAddressFail,
-  addProductToBucketFail,
+  addProductToBucketFail, addProductToBucketWithBasketId,
   addProductToBucketWithUrn,
   deleteBasketItem,
   deleteBasketItemAttributes,
@@ -137,23 +137,56 @@ export class BasketItemsEffects {
     this.actions$.pipe(
       ofType(addProductToBucket),
       mapToPayload(),
+      switchMap(payload => {
+        if (!payload.basketId) {
+          return this.basketService.createBasket().pipe(
+            mergeMap(basket => [
+              addProductToBucketWithBasketId({
+                address: payload.address,
+                shippingMethod: payload.shippingMethod,
+                sku: payload.sku,
+                quantity: payload.quantity,
+                basketId: basket.id,
+                basketExtensions: payload.basketExtensions,
+              }),
+            ])
+          );
+        }
+        return [
+          addProductToBucketWithBasketId({
+            address: payload.address,
+            shippingMethod: payload.shippingMethod,
+            sku: payload.sku,
+            quantity: payload.quantity,
+            basketId: payload.basketId,
+            basketExtensions: payload.basketExtensions,
+          })
+        ];
+      })
+    )
+  );
+
+  addProductToBucketWithBasketId$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(addProductToBucketWithBasketId),
+      mapToPayload(),
       mergeMap(payload =>
         this.basketService.createBasketAddress(payload.address).pipe(
           concatMap((address: Address) => {
             return address && address.urn
               ? [
-                  addProductToBasket({
-                    sku: payload.sku,
-                    quantity: payload.quantity,
-                    shippingMethod: payload.shippingMethod,
-                    shipToAddress: address.urn,
-                  }),
-                  updateBucket({
-                    basketId: payload.basketId,
-                    addressId: address.id,
-                    basketExtension: payload.basketExtensions,
-                  }),
-                ]
+                addProductToBasket({
+                  sku: payload.sku,
+                  quantity: payload.quantity,
+                  shippingMethod: payload.shippingMethod,
+                  shipToAddress: address.urn,
+                }),
+                updateBucket({
+                  basketId: payload.basketId,
+                  addressId: address.id,
+                  basketExtension: payload.basketExtensions,
+                }),
+              ]
               : [addProductToBucketAddressFail()];
           }),
           mapErrorToAction(addProductToBucketFail)

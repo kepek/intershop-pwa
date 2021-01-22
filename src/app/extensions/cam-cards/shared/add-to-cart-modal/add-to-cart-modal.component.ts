@@ -62,7 +62,7 @@ export class AddToCartModalComponent implements OnInit, OnDestroy {
   initBasket() {
     this.checkoutFacade.basket$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe((basket: BasketView) => {
       this.basketId = basket.id;
-      this.commonShippingMethodId = basket.commonShippingMethod.id;
+      this.commonShippingMethodId = basket.commonShippingMethod?.id;
     });
 
     this.checkoutFacade.buckets$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe((buckets: Bucket[]) => {

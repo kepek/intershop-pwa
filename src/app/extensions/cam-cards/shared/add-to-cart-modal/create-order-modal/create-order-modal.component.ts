@@ -93,7 +93,7 @@ export class CreateOrderModalComponent implements OnInit, OnDestroy {
     this.basket$ = this.checkoutFacade.basket$;
     this.basket$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe((basket: BasketView) => {
       this.basketId = basket.id;
-      this.commonShippingMethodId = basket.commonShippingMethod.id;
+      this.commonShippingMethodId = basket.commonShippingMethod?.id;
     });
 
     this.shoppingFacade.basketAddresses$.pipe(takeUntil(this.destroy$)).subscribe((basketAddresses: Address[]) => {
@@ -146,6 +146,8 @@ export class CreateOrderModalComponent implements OnInit, OnDestroy {
         this.getBasketExtension()
       );
     }
+
+    this.hide();
   }
 
   getAddress(): Address {
