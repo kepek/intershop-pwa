@@ -22,7 +22,6 @@ import { getDeviceType } from 'ish-core/store/core/configuration';
 import { displaySuccessMessage } from 'ish-core/store/core/messages';
 import { ofUrl, selectQueryParam, selectRouteParam, selectUrl } from 'ish-core/store/core/router';
 import { setBreadcrumbData } from 'ish-core/store/core/viewconf';
-import { getCurrentBasket } from 'ish-core/store/customer/basket';
 import { getUserAuthorized, loginUserSuccess } from 'ish-core/store/customer/user';
 import {
   distinctCompareWith,
@@ -294,33 +293,27 @@ export class CamCardEffects {
   addBasketToNewCamCard$ = createEffect(() =>
     this.actions$.pipe(
       ofType(addBasketToNewCamCard),
-      mapToPayload(),
-      mergeMap(payload =>
-        this.camCardService
-          .createCamCard({
-            name: payload.camCards.name,
-          })
-          .pipe(
-            withLatestFrom(this.store.pipe(select(getCurrentBasket))),
-            // use created cam cards data to dispatch addProduct action
-            concatMap(([camCard, currentBasket]) =>
-              concat(
-                ...currentBasket.lineItems.map(lineItem =>
-                  this.camCardService.addProductToCamCard(camCard.id, lineItem.productSKU, lineItem.quantity.value)
-                )
-              ).pipe(
-                last(),
-                concatMap(newCamCard => [
-                  addBasketToNewCamCardSuccess({ camCard: newCamCard }),
-                  displaySuccessMessage({
-                    message: 'camfil.account.cam_card.new_from_basket_confirm.heading',
-                    messageParams: { 0: camCard.name },
-                  }),
-                ]),
-                mapErrorToAction(addBasketToNewCamCardFail)
+      mapToPayloadProperty('camCards'),
+      mergeMap(camCards =>
+        this.camCardService.createCamCard(camCards).pipe(
+          mergeMap(newCamCard =>
+            concat(
+              ...camCards.camCardItems.map(item =>
+                this.camCardService.addProductToCamCard(newCamCard.id, item.product.sku, item.quantity)
               )
+            ).pipe(
+              last(),
+              concatMap(cc => [
+                addBasketToNewCamCardSuccess({ camCard: cc }),
+                displaySuccessMessage({
+                  message: 'camfil.account.cam_card.new_from_basket_confirm.heading',
+                  messageParams: { 0: cc.name },
+                }),
+              ]),
+              mapErrorToAction(addBasketToNewCamCardFail)
             )
           )
+        )
       ),
       mapErrorToAction(createCamCardFail)
     )

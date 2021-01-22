@@ -1,12 +1,11 @@
 import { ChangeDetectionStrategy, Component, Input, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { CamCardsFacade } from 'src/app/extensions/cam-cards/facades/cam-cards.facade';
+import { CamCard } from 'src/app/extensions/cam-cards/models/cam-card/cam-card.model';
 
 import { Bucket } from 'ish-core/models/basket/bucket.model';
 import { Product } from 'ish-core/models/product/product.model';
 import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
-
-import { CamCardsFacade } from '../../../../extensions/cam-cards/facades/cam-cards.facade';
-import { CamCard } from '../../../../extensions/cam-cards/models/cam-card/cam-card.model';
 
 @Component({
   selector: 'camfil-create-new-camcard',
@@ -28,16 +27,32 @@ export class CreateNewCamcardComponent {
   }
 
   convertToPermanent() {
-    const transientCamCards: CamCard[] = this.buckets.map((bucket, idx) => {
-      const camCardName = this.getNewName(bucket.orderMark, idx);
-
+    const newCamCards = this.buckets.map((bucket, idx) => {
+      const name = this.getNewName(bucket.orderMark || `order_${bucket.id}`, idx);
+      const { addressLine1, addressLine2, city, countryCode, postalCode, street } = bucket.shipToAddressFull;
+      const camCardItems = bucket.lineItems.map(item => ({
+        quantity: item.quantity.value,
+        product: {
+          sku: item.productSKU,
+        },
+      }));
       return {
-        id: 'todo',
-        name: camCardName,
+        name,
+        customer: bucket.customer || { id: 'xP9_AAABUmAAAAF2dzgS4.D8' },
+        deliveryAddress: { addressLine1, addressLine2, city, countryCode, postalCode, street },
+        invoiceLabel: bucket.invoiceLabel,
+        orderLabel: bucket.orderMark,
+        camCardItems,
       };
+    }) as CamCard[];
+    newCamCards.forEach(camCard => {
+      this.camCardsFacade.addBasketToNewCamCard(camCard);
     });
 
-    this.camCardsFacade.cloneAndEditPermanentCamCards(transientCamCards);
+    console.log(newCamCards, 'newCamCards');
+    console.log(this.buckets, 'this.buckets');
+
+    // this.camCardsFacade.cloneAndEditPermanentCamCards(newCamCards);
   }
 
   getNewName(oldName: string, idx: number): string {

@@ -129,6 +129,21 @@
           [touched]="getField('area').touched || getField('area').dirty"
         ></camfil-error>
       </div>
+      
+      <mat-form-field appearance="outline" class="col-sm-12 form__field">
+        <mat-label>{{ 'camfil.account.cam_card.add_to_form.country' | translate }}</mat-label>
+        <mat-select formControlName="countryCode">
+          <mat-option>--</mat-option>
+          <mat-option *ngFor="let country of countries$ | async" [value]="country.countryCode">
+            {{ country.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <camfil-error
+        [errors]="getField('countryCode').errors"
+        [errorValidators]="validators.countryCode"
+        [touched]="getField('countryCode').touched || getField('countryCode').dirty"
+      ></camfil-error>
 
       <button class="form__field--button" mat-raised-button (click)="addSublevel()">
         <mat-icon svgIcon="plus" class="color-dark form__field--button-icon"></mat-icon>
