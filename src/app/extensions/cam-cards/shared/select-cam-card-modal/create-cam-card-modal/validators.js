@@ -49,6 +49,12 @@ export const CREATE_CAMCARD_VALIDATORS = {
       message: 'camfil.modal.createCamcard.input.area.error.required',
     },
   ],
+  countryCode: [
+    {
+      error: 'required',
+      message: 'camfil.modal.createCamcard.input.countryCode.error.required',
+    },
+  ],
   newCamCard: [
     {
       error: 'maxlength',

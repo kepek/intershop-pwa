@@ -72,6 +72,7 @@ describe('Camfil Header Navigation Component', () => {
             ng-reflect-view="auto"
             ng-reflect-category-unique-id="A"
             ng-reflect-sub-categories-depth="1"
+            ng-reflect-url="/cat/A"
           ></camfil-sub-category-navigation>
         </li>
         <li class="dropdown">

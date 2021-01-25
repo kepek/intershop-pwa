@@ -1,7 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 import { instance, mock } from 'ts-mockito';
 
 import { Product } from 'ish-core/models/product/product.model';
+import { CoreStoreModule } from 'ish-core/store/core/core-store.module';
 import { CamfilCamCardModalComponent } from 'ish-shared/components/common/camfil-cam-card-modal/camfil-cam-card-modal.component';
 import { CamfilErrorComponent } from 'ish-shared/components/common/camfil-error/camfil-error.component';
 import { CamfilProductQuantityComponent } from 'ish-shared/components/product/camfil-product-quantity/camfil-product-quantity.component';
@@ -30,6 +32,7 @@ describe('Create Cam Card Modal Component', () => {
         CamfilProductQuantityComponent,
         CreateCamCardModalComponent,
       ],
+      imports: [CoreStoreModule.forTesting(), RouterTestingModule],
       providers: [{ provide: CamCardsFacade, useFactory: () => instance(camCardFacadeMock) }],
     }).compileComponents();
   });
