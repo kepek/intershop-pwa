@@ -355,21 +355,6 @@ export const loadBasketAddressesSuccess = createAction(
 
 export const loadBasketAddressesFail = createAction('[Basket API] Load Basket Addresses Fail', httpError());
 
-export const getBasketItemAttributes = createAction(
-  '[Basket API] Get Attributes for selected line item ',
-  payload<{ basketId: string; lineItemId: string; bucketId: string }>()
-);
-
-export const getBasketItemAttributesFail = createAction(
-  '[Basket API] Get Attributes for selected line item Fail',
-  httpError()
-);
-
-export const getBasketItemAttributesSuccess = createAction(
-  '[Basket API] Get Attributes for selected line item Success',
-  payload<{ attributes: Attribute[]; lineItemId: string; bucketId: string }>()
-);
-
 export const addBasketItemAttributes = createAction(
   '[Basket API] Add Attributes for selected line item ',
   payload<{ basketId: string; lineItemId: string; boxLabelAttribute: { name: string; type: string; value: string } }>()
