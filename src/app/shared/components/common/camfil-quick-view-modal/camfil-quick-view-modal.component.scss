@@ -38,6 +38,9 @@
       width: 100%;
       button {
         width: 100%;
+        mat-icon {
+          vertical-align: middle;
+        }
       }
       .button-text {
         display: inline-block;
@@ -57,6 +60,9 @@
           width: 100%;
           color: $camfil-color-light;
           background-color: $camfil-color-primary;
+          mat-icon {
+            vertical-align: middle;
+          }
         }
         .button-text {
           display: inline-block;
@@ -66,18 +72,11 @@
     }
 
     camfil-product-add-to-compare {
-      .add-to-compare {
-        display: flex;
-        align-items: center;
-        padding: 0;
-        margin-right: $space-detail-item-margin;
-        margin-bottom: 0;
-      }
-    }
-    camfil-product-shipment {
-      .ready-for-shipment {
-        padding-bottom: 0;
-        margin-top: $space-box;
+      mat-checkbox {
+        margin-bottom: $space-box-half;
+        label {
+          margin-bottom: 0.25em;
+        }
       }
     }
   }

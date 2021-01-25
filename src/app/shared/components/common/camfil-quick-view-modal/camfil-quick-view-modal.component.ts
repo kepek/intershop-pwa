@@ -57,6 +57,7 @@ export class CamfilQuickViewModalComponent implements OnInit {
   price$: Observable<ProductPrices>;
   private destroy$ = new Subject();
   retailSetParts$ = new ReplaySubject<SkuQuantityType[]>(1);
+  isInCompareList$: Observable<boolean>;
   isInCompareList: boolean;
   multipleValuesSeparator = ', ';
   productDetailForm: FormGroup;
@@ -72,33 +73,20 @@ export class CamfilQuickViewModalComponent implements OnInit {
     this.product$ = this.shoppingFacade.product$(this.data.sku, ProductCompletenessLevel.Detail);
     // this.productVariationOptions$ = this.shoppingFacade.selectedProductVariationOptions$;
 
-    // this.productLoading$ = this.shoppingFacade.productDetailLoading$;
-
     this.product$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(product => {
       this.quantity = product.minOrderQuantity;
-
       this.productDetailForm = new FormGroup({
         [this.quantityControlName]: new FormControl(this.quantity || product.minOrderQuantity),
       });
 
       this.isShipmentInformationAvailable =
         Number.isInteger(product.readyForShipmentMin) && Number.isInteger(product.readyForShipmentMax);
-
       this.videoUrl = ProductHelper.getImageCdnUrl(product, 'youTubeVideos', 'view1');
-
-      // if (
-      //   ProductHelper.isMasterProduct(product) &&
-      //   ProductVariationHelper.hasDefaultVariation(product) &&
-      //   !this.featureToggleService.enabled('advancedVariationHandling')
-      // ) {
-      //   this.redirectToVariation(product.defaultVariation(), true);
-      // }
-      // // if (ProductHelper.isMasterProduct(product) && this.featureToggleService.enabled('advancedVariationHandling')) {
-      // //   this.shoppingFacade.loadMoreProducts({ type: 'master', value: product.sku }, 1);
-      // // }
-      // this.retailSetParts$.next(
-      //   ProductHelper.isRetailSet(product) ? product.partSKUs.map(sku => ({ sku, quantity: 1 })) : []
-      // );
+      this.productVariationOptions$ = this.shoppingFacade.productVariationOptions$(product.sku);
+      this.isInCompareList$ = this.shoppingFacade.inCompareProducts$(product.sku);
+      this.isInCompareList$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(state => {
+        this.isInCompareList = state;
+      });
     });
   }
 
@@ -111,39 +99,13 @@ export class CamfilQuickViewModalComponent implements OnInit {
     return attributes.find(x => x.name === attributeName)?.value || '-';
   }
 
-  addToBasket() {
-    // this.productToBasket.emit({
-    //   sku: this.product.sku,
-    //   quantity: this.productDetailForm.get(this.quantityControlName).value,
-    // });
+  addToBasket(sku) {
+    this.shoppingFacade.addProductToBasket(sku, this.quantity);
+    this.dialog.closeAll();
   }
 
-  toggleCompare() {
-    // this.compareToggle.emit();
+  toggleCompare(sku) {
+    this.shoppingFacade.toggleProductCompare(sku);
+    this.isInCompareList = !this.isInCompareList;
   }
-
-  addToCompare() {
-    // this.productToCompare.emit(this.product.sku);
-  }
-
-  // variationSelected(event: { selection: VariationSelection; changedAttribute?: string }) {
-  //   // this.selectVariation.emit(event);
-  // }
-
-  // redirectToVariation(variation: VariationProductView, replaceUrl = false) {
-  //   this.appRef.isStable
-  //     .pipe(
-  //       filter(() => !!variation),
-  //       whenTruthy(),
-  //       take(1),
-  //       map(() => variation),
-  //       withLatestFrom(this.category$),
-  //       takeUntil(this.destroy$)
-  //     )
-  //     .subscribe(([product, category]) => {
-  //       this.ngZone.run(() => {
-  //         this.router.navigateByUrl(generateProductUrl(product, category), { replaceUrl });
-  //       });
-  //     });
-  // }
 }
