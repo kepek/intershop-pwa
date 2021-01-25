@@ -1,41 +1,31 @@
+import { BasketExtensions } from 'ish-core/models/basket/basket.interface';
 import { LineItem } from 'ish-core/models/line-item/line-item.model';
 
-import {
-  CamCardAddress,
-  CamCardContact,
-  CamCardCustomer,
-} from '../../../extensions/cam-cards/models/cam-card/cam-card.model';
+import { CamCardContact } from '../../../extensions/cam-cards/models/cam-card/cam-card.model';
 
 export interface BucketAddress {
+  id?: string;
   addressLine1?: string;
   addressLine2?: string;
   street?: string;
   postalCode?: string;
   city?: string;
   companyName1?: string;
+  countryCode?: string;
+  eligibleShipToAddress?: boolean;
 }
 
-export interface Bucket {
+export interface Bucket extends BasketExtensions {
   basket: string;
   id: string;
   lineItems?: LineItem[];
   shipToAddress?: string;
   deliveryAddressId?: string;
-  orderName?: string;
   nextDelivery?: string;
-  transient?: boolean;
-  shipToAddressFull?: CamCardAddress;
+  shipToAddressFull?: BucketAddress;
   contacts?: CamCardContact[];
-  camCardId?: string;
-  contactPersonId?: string;
-  customer?: CamCardCustomer;
-  orderMark?: string;
-  invoiceLabel?: string;
-  deliveryAddress?: BucketAddress;
-  boxLabel?: string;
   contact?: string;
-  info?: string;
-  phoneNumber?: string;
+  shippingMethod?: string;
 }
 
 export interface BucketData {
@@ -43,6 +33,7 @@ export interface BucketData {
   lineItems?: string[];
   id: string;
   shipToAddress?: string;
+  shippingMethod?: string;
 }
 
 export interface BucketIncluded {

@@ -66,6 +66,10 @@ export const getBasketLastTimeProductAdded = createSelector(getBasketState, bask
 
 export const getProductAdded = createSelector(getBasketState, basket => basket.productAdded);
 
+export const getProductUpdated = createSelector(getBasketState, basket => basket.productUpdated);
+
+export const getBasketAddresses = createSelector(getBasketState, basket => basket.basketAddresses);
+
 export const getCurrentBuckets = createSelector(getBasketState, basket => basket.buckets);
 
 export const getEmptyBuckets = createSelector(getBasketState, basket => basket.emptyBuckets);

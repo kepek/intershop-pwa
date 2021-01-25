@@ -206,7 +206,7 @@ describe('Customer Store', () => {
           product: { sku: 'test', packingUnit: 'pcs.', completenessLevel: ProductCompletenessLevel.List } as Product,
         })
       );
-      store.dispatch(addProductToBasket({ sku: 'test', quantity: 1 }));
+      store.dispatch(addProductToBasket({ sku: 'test', quantity: 1, shippingMethod: 'STD_GROUND' }));
     });
 
     describe('and without basket', () => {
@@ -215,11 +215,12 @@ describe('Customer Store', () => {
           expect(store.actionsArray(/Basket|Products/)).toMatchInlineSnapshot(`
             [Products API] Load Product Success:
               product: {"sku":"test","packingUnit":"pcs.","completenessLevel":2}
-            [Basket] Add Product:
+            [Basket] Add Product To Basket:
               sku: "test"
               quantity: 1
+              shippingMethod: "STD_GROUND"
             [Basket Internal] Add Items To Basket:
-              items: [{"sku":"test","quantity":1,"unit":"pcs."}]
+              items: [{"sku":"test","quantity":1,"shippingMethod":"STD_GROUND","u...
             [Basket API] Add Items To Basket Success:
               info: undefined
             [Products Internal] Load Product:

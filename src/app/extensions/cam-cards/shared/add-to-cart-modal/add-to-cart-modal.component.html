@@ -6,10 +6,10 @@
       [subtitle]="product.name"
       [detailsTemplate]="detailsTemplate"
       [mainContentTemplate]="mainContentTemplate"
-      [primaryButtonTitle]="'camfil.modal.addToCart.button.create_new_order' | translate"
-      (primaryButtonClicked)="openCreateOrderModal(createModal)"
-      [secondaryButtonTitle]="'camfil.modal.addToCart.button.add_to_existing_order' | translate"
-      (secondaryButtonClicked)="addToOrder()"
+      [primaryButtonTitle]="'camfil.modal.addToCart.button.add_to_existing_order' | translate"
+      (primaryButtonClicked)="addToOrder()"
+      [secondaryButtonTitle]="'camfil.modal.addToCart.button.create_new_order' | translate"
+      (secondaryButtonClicked)="openCreateOrderModal(createModal)"
     >
     </camfil-cam-card-modal>
   </ng-container>
@@ -27,7 +27,6 @@
 
     <div *ngFor="let option of buckets; let i = index">
       <camfil-cam-card-modal-details
-        [label]="option.orderName"
         [nextDelivery]="option.nextDelivery"
         [orderMark]="option.orderMark"
         (click)="onOrderClicked(option.id)"

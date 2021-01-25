@@ -32,7 +32,7 @@ export class CreateNewCamcardComponent {
       const camCardName = this.getNewName(bucket.orderMark, idx);
 
       return {
-        id: bucket.camCardId,
+        id: 'todo',
         name: camCardName,
       };
     });

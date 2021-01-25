@@ -9,6 +9,7 @@ export class BucketMapper {
     return data.map((bucketData: BucketData) => {
       const extension =
         basketExtensions && basketExtensions.find(ext => ext.shippingAddress.urn === bucketData.shipToAddress);
+      const shipToAddress = bucketData.shipToAddress && included.shipToAddress[bucketData.shipToAddress];
 
       return {
         ...bucketData,
@@ -17,12 +18,18 @@ export class BucketMapper {
         lineItems: bucketData.lineItems
           .map(id => lineItems.find(element => element.id === id))
           .filter(element => !!element),
-        deliveryAddressId: bucketData.shipToAddress ? included.shipToAddress[bucketData.shipToAddress].id : '',
-        transient: false,
-        contactPersonId: extension && extension.contactPerson ? extension.contactPerson.erpId : '',
+        shippingMethod: bucketData.shippingMethod,
+        deliveryAddressId: shipToAddress ? shipToAddress.id : '',
+        shipToAddress: extension ? extension.shippingAddress.urn : '',
+        shipToAddressFull: extension ? extension.shippingAddress : {},
+        contactPerson: extension && extension.contactPerson,
         info: extension ? extension.info : '',
         boxLabel: extension ? extension.boxLabel : '',
         phoneNumber: extension ? extension.phoneNumber : '',
+        customer: extension ? extension.customer : undefined,
+        orderMark: extension ? extension.orderMark : '',
+        invoiceLabel: extension ? extension.invoiceLabel : '',
+        deliveryDate: extension ? extension.deliveryDate : '',
       };
     });
   }

@@ -3,6 +3,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store, select } from '@ngrx/store';
 import { concatMapTo, map, mergeMap, withLatestFrom } from 'rxjs/operators';
 
+import { Address } from 'ish-core/models/address/address.model';
 import { AddressService } from 'ish-core/services/address/address.service';
 import { BasketService, BasketUpdateType } from 'ish-core/services/basket/basket.service';
 import {
@@ -21,6 +22,9 @@ import {
   createBasketAddressSuccess,
   deleteBasketShippingAddress,
   loadBasket,
+  loadBasketAddresses,
+  loadBasketAddressesFail,
+  loadBasketAddressesSuccess,
   resetBasketErrors,
   updateBasket,
   updateBasketAddress,
@@ -48,13 +52,23 @@ export class BasketAddressesEffects {
         // create address at customer for logged in user
         if (customer) {
           return this.addressService.createCustomerAddress('-', action.payload.address).pipe(
-            map(newAddress => createBasketAddressSuccess({ address: newAddress, scope: action.payload.scope })),
+            map(newAddress =>
+              createBasketAddressSuccess({
+                address: newAddress,
+                scope: action.payload.scope,
+              })
+            ),
             mapErrorToAction(createCustomerAddressFail)
           );
           // create address at basket for anonymous user
         } else {
           return this.basketService.createBasketAddress(action.payload.address).pipe(
-            map(newAddress => createBasketAddressSuccess({ address: newAddress, scope: action.payload.scope })),
+            map(newAddress =>
+              createBasketAddressSuccess({
+                address: newAddress,
+                scope: action.payload.scope,
+              })
+            ),
             mapErrorToAction(createCustomerAddressFail)
           );
         }
@@ -151,6 +165,18 @@ export class BasketAddressesEffects {
             concatMapTo([deleteCustomerAddressSuccess({ addressId }), loadBasket()]),
             mapErrorToAction(deleteCustomerAddressFail)
           )
+      )
+    )
+  );
+
+  loadBasketAddresses$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loadBasketAddresses),
+      mergeMap(() =>
+        this.basketService.getBasketAddresses().pipe(
+          mergeMap((basketAddresses: Address[]) => [loadBasketAddressesSuccess({ basketAddresses })]),
+          mapErrorToAction(loadBasketAddressesFail)
+        )
       )
     )
   );

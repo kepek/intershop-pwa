@@ -30,11 +30,13 @@ export const addressAdapter = createEntityAdapter<Address>({});
 export interface AddressesState extends EntityState<Address> {
   loading: boolean;
   error: HttpError;
+  createdAddress: Address;
 }
 
 export const initialState: AddressesState = addressAdapter.getInitialState({
   loading: false,
   error: undefined,
+  createdAddress: undefined,
 });
 
 export const addressesReducer = createReducer(
@@ -62,6 +64,14 @@ export const addressesReducer = createReducer(
     updateCustomerAddressSuccess,
     (state: AddressesState, action) => addressAdapter.upsertOne(action.payload.address, state)
   ),
+  on(createBasketAddressSuccess, (state: AddressesState, action) => ({
+    ...state,
+    createdAddress: action.payload.address,
+  })),
+  on(createBasketAddress, (state: AddressesState) => ({
+    ...state,
+    createdAddress: undefined,
+  })),
   on(deleteCustomerAddressSuccess, (state: AddressesState, action) =>
     addressAdapter.removeOne(action.payload.addressId, state)
   )

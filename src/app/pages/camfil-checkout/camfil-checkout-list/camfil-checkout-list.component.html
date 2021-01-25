@@ -16,7 +16,7 @@
   <div class="d-inline-flex">
     <strong *ngIf="order"> {{ 'camfil.checkout.order' | translate }} {{ order.id }}</strong>
     <span data-testing-id="order-number" class="order-number"
-      >{{ order?.orderName }}, {{ order?.customer.companyName }}</span
+      >{{ order?.orderMark }}, {{ order?.customer?.companyName }}</span
     >
   </div>
 </ng-template>
@@ -32,12 +32,12 @@
       <div class="order-summary-info col-sm-5 border-sm-right" data-testing-id="order-summary-info">
         <dl class="row dl-horizontal dl-separator">
           <dt class="col-6 p-0">{{ 'camfil.account.orderdetails.customer_id.label' | translate }}</dt>
-          <dd class="col-6 p-0" data-testing-id="order-customer_id">{{ order.customer.id }}</dd>
+          <dd class="col-6 p-0" data-testing-id="order-customer_id">{{ order.customer?.id }}</dd>
           <dt class="col-6 p-0 pb-4">{{ 'camfil.account.orderdetails.customer_name.label' | translate }}</dt>
-          <dd class="col-6 p-0" data-testing-id="order-customer_name">{{ order.customer.companyName }}</dd>
+          <dd class="col-6 p-0" data-testing-id="order-customer_name">{{ order.customer?.companyName }}</dd>
           <dt class="col-6 p-0">{{ 'camfil.account.orderdetails.contact_person.label' | translate }}</dt>
           <dd class="col-6 p-0" data-testing-id="order-contact_person">
-            {{ order.contacts[0]?.firstName }} {{ order.contacts[0]?.lastName }}
+            {{ order.contactPerson?.firstName }} {{ order.contactPerson?.lastName }}
           </dd>
           <dt class="col-6 p-0">{{ 'camfil.checkout.phone' | translate }}</dt>
           <dd class="col-6 p-0" data-testing-id="order-camfil_no">-</dd>
@@ -157,6 +157,12 @@
   </ng-container>
 </ng-template>
 
-<camfil-modal-add-new-product #addNewProductModal [order]="order" [addToOrder]="true"> </camfil-modal-add-new-product>
+<camfil-modal-add-new-product
+  #addNewProductModal
+  [order]="order"
+  [addToOrder]="true"
+  [shippingMethodId]="shippingMethodId"
+>
+</camfil-modal-add-new-product>
 
 <camfil-edit-order-modal #editModal [order]="order"></camfil-edit-order-modal>

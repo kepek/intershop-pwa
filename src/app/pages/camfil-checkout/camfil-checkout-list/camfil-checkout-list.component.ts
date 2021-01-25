@@ -24,6 +24,7 @@ export class CamfilCheckoutListComponent {
   @Input() buckets;
   isOrderOpen = true;
   orderForm: FormGroup;
+  @Input() shippingMethodId: string;
 
   constructor(private fb: FormBuilder, public dialog: MatDialog, private checkoutFacade: CheckoutFacade) {
     this.initForm();
@@ -102,6 +103,7 @@ export class CamfilCheckoutListComponent {
     this.dialog.open(modal.show());
     modal.hide = () => this.dialog.closeAll();
   }
+
   sortBy() {
     const items: LineItemData[] = Object.keys(this.order.lineItems).map(i => this.order.lineItems[i]);
 

@@ -5,7 +5,6 @@ import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { Bucket } from 'ish-core/models/basket/bucket.model';
 import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
 
-import { CamCard } from '../../../../extensions/cam-cards/models/cam-card/cam-card.model';
 import { CreateOrderModalComponent } from '../../../../extensions/cam-cards/shared/add-to-cart-modal/create-order-modal/create-order-modal.component';
 
 @Component({
@@ -16,25 +15,23 @@ import { CreateOrderModalComponent } from '../../../../extensions/cam-cards/shar
 })
 export class CreateOrderButtonComponent {
   @Input() basketId: string;
+  @Input() shippingMethodId: string;
 
   @ViewChild(CamfilSmallCtaModalComponent) modal: CamfilSmallCtaModalComponent;
 
   constructor(public dialog: MatDialog, private checkoutFacade: CheckoutFacade) {}
 
-  createVirtualOrder(virtualCamCard: CamCard) {
+  createVirtualOrder(virtualBucket: Bucket) {
     const bucket: Bucket = {
+      contactPerson: virtualBucket.contactPerson,
       basket: this.basketId,
       id: '',
       lineItems: [],
-      shipToAddress: virtualCamCard.deliveryAddress?.urn,
-      deliveryAddressId: virtualCamCard.deliveryAddress?.id,
-      shipToAddressFull: virtualCamCard.deliveryAddress,
-      orderName: virtualCamCard.name,
-      nextDelivery: virtualCamCard.nextDeliveryDate,
-      orderMark: virtualCamCard.orderLabel,
-      customer: virtualCamCard.customer,
-      contacts: virtualCamCard.contacts,
-      transient: true,
+      shipToAddress: virtualBucket.shippingAddress?.urn,
+      shipToAddressFull: virtualBucket.shippingAddress,
+      orderMark: virtualBucket.orderMark,
+      customer: virtualBucket.customer,
+      shippingMethod: this.shippingMethodId,
     };
 
     this.checkoutFacade.addEmptyBucket(bucket);

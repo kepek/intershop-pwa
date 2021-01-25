@@ -15,7 +15,11 @@
         </ng-container>
 
         <ng-container *ngFor="let item of buckets">
-          <camfil-checkout-list [order]="item" [buckets]="buckets"></camfil-checkout-list>
+          <camfil-checkout-list
+            [order]="item"
+            [buckets]="buckets"
+            [shippingMethodId]="shippingMethodId"
+          ></camfil-checkout-list>
         </ng-container>
       </div>
     </div>

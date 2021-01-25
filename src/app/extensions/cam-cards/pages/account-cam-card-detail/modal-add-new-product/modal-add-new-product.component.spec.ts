@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { EMPTY } from 'rxjs';
+import { EMPTY, of } from 'rxjs';
 import { instance, mock, when } from 'ts-mockito';
 
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
@@ -15,10 +15,12 @@ describe('Modal Add New Product Component', () => {
   let component: ModalAddNewProductComponent;
   let fixture: ComponentFixture<ModalAddNewProductComponent>;
   let element: HTMLElement;
+  let shoppingFacadeMock: ShoppingFacade;
 
   beforeEach(async () => {
     const camCardsFacade = mock(CamCardsFacade);
     when(camCardsFacade.currentCamCard$).thenReturn(EMPTY);
+    shoppingFacadeMock = mock(ShoppingFacade);
 
     await TestBed.configureTestingModule({
       declarations: [
@@ -29,7 +31,7 @@ describe('Modal Add New Product Component', () => {
       ],
       providers: [
         { provide: CamCardsFacade, useFactory: () => instance(camCardsFacade) },
-        { provide: ShoppingFacade, useFactory: () => instance(mock(ShoppingFacade)) },
+        { provide: ShoppingFacade, useFactory: () => instance(shoppingFacadeMock) },
       ],
     }).compileComponents();
   });
@@ -38,6 +40,8 @@ describe('Modal Add New Product Component', () => {
     fixture = TestBed.createComponent(ModalAddNewProductComponent);
     component = fixture.componentInstance;
     element = fixture.nativeElement;
+
+    when(shoppingFacadeMock.basketAddresses$).thenReturn(of([]));
   });
 
   it('should be created', () => {

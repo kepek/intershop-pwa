@@ -17,6 +17,7 @@ import {
   getAddressesError,
   getAddressesLoading,
   getAllAddresses,
+  getCreatedAddress,
   loadAddresses,
 } from 'ish-core/store/customer/addresses';
 import { getUserRoles } from 'ish-core/store/customer/authorization';
@@ -161,6 +162,7 @@ export class AccountFacade {
   }
   addressesLoading$ = this.store.pipe(select(getAddressesLoading));
   addressesError$ = this.store.pipe(select(getAddressesError));
+  createdAddress$ = this.store.pipe(select(getCreatedAddress));
 
   createCustomerAddress(address: Address) {
     this.store.dispatch(createCustomerAddress({ address }));

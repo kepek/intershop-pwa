@@ -16,7 +16,11 @@
     </div>
     <div class="col-md-9">
       <div *ngIf="buckets" class="float-right">
-        <camfil-checkout-toolbar [buckets]="buckets" [basketId]="basket.id"></camfil-checkout-toolbar>
+        <camfil-checkout-toolbar
+          [buckets]="buckets"
+          [basketId]="basket.id"
+          [shippingMethodId]="basket.commonShippingMethod?.id"
+        ></camfil-checkout-toolbar>
       </div>
     </div>
   </div>

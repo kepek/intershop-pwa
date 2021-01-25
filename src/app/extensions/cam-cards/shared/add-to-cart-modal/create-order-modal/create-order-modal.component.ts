@@ -16,13 +16,16 @@ import { takeUntil } from 'rxjs/operators';
 
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
+import { AddressHelper } from 'ish-core/models/address/address.helper';
+import { Address } from 'ish-core/models/address/address.model';
+import { BasketExtensions } from 'ish-core/models/basket/basket.interface';
 import { BasketView } from 'ish-core/models/basket/basket.model';
 import { Bucket } from 'ish-core/models/basket/bucket.model';
 import { Product } from 'ish-core/models/product/product.model';
+import { whenTruthy } from 'ish-core/utils/operators';
 import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
 
-import { CamCardsFacade } from '../../../facades/cam-cards.facade';
-import { CamCard } from '../../../models/cam-card/cam-card.model';
+import { CamCardContact } from '../../../models/cam-card/cam-card.model';
 
 import { OrderFormComponent } from './order-form/order-form.component';
 
@@ -35,7 +38,6 @@ import { OrderFormComponent } from './order-form/order-form.component';
 export class CreateOrderModalComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
-    private camCardsFacade: CamCardsFacade,
     private shoppingFacade: ShoppingFacade,
     private checkoutFacade: CheckoutFacade
   ) {}
@@ -51,155 +53,147 @@ export class CreateOrderModalComponent implements OnInit, OnDestroy {
 
   @Input() product?: Product;
 
-  @Output() createEmitter = new EventEmitter<CamCard>();
+  @Output() createEmitter = new EventEmitter<Bucket>();
 
   modal: NgbModalRef;
   @ViewChild('modal', { static: false }) modalTemplate: TemplateRef<unknown>;
 
-  @ViewChild(OrderFormComponent) deliveryAddress: OrderFormComponent;
+  @ViewChild(OrderFormComponent) orderFormCmp: OrderFormComponent;
 
   orderForm: FormGroup;
   quantityForm: FormGroup;
 
-  virtualCamCard$: Observable<CamCard>;
-  currentVirtualCamCard: CamCard;
-
   private destroy$ = new Subject<void>();
 
-  missingAddressFields = {
-    id: '',
-    urn: '',
-    addressName: '',
-    firstName: '',
-    lastName: '',
-    country: '',
-    countryCode: '',
-    phoneHome: '',
-    invoiceToAddress: true,
-    shipToAddress: true,
-  };
-
   showSuccess = false;
-  updated = false;
 
   basket$: Observable<BasketView>;
   basketId: string;
+  commonShippingMethodId: string;
 
   @Input() order?: Bucket;
   @Input() edit = false;
 
-  ngOnInit() {
-    this.updated = false;
+  contacts: CamCardContact[];
+  basketAddresses: Address[];
 
+  ngOnInit() {
+    this.initForms();
+    this.initBasket();
+  }
+
+  initForms() {
     this.orderForm = this.fb.group({});
     this.quantityForm = new FormGroup({
       quantity: new FormControl(this.product?.minOrderQuantity),
       boxLabel: new FormControl('', Validators.maxLength(60)),
     });
+  }
 
-    this.virtualCamCard$ = this.camCardsFacade.virtualCamCard$;
+  initBasket() {
     this.basket$ = this.checkoutFacade.basket$;
-    this.camCardsFacade.clearVirtualCamCard();
-
-    this.subscribeToStateChanges();
-  }
-
-  subscribeToStateChanges() {
-    this.virtualCamCard$.pipe(takeUntil(this.destroy$)).subscribe((virtualCamCard: CamCard) => {
-      if (virtualCamCard) {
-        this.product ? this.addToBasket(virtualCamCard.deliveryAddress.urn) : this.createEmitter.emit(virtualCamCard);
-      }
-      this.currentVirtualCamCard = virtualCamCard;
+    this.basket$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe((basket: BasketView) => {
+      this.basketId = basket.id;
+      this.commonShippingMethodId = basket.commonShippingMethod?.id;
     });
 
-    this.shoppingFacade.productAdded$.pipe(takeUntil(this.destroy$)).subscribe((productAdded: boolean) => {
-      this.handleSuccess(productAdded);
+    this.shoppingFacade.basketAddresses$.pipe(takeUntil(this.destroy$)).subscribe((basketAddresses: Address[]) => {
+      this.basketAddresses = basketAddresses;
     });
 
-    this.basket$.pipe(takeUntil(this.destroy$)).subscribe((basket: BasketView) => {
-      if (basket) {
-        this.basketId = basket.id;
-      }
+    this.shoppingFacade.productUpdated$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(() => {
+      this.showSuccess = true;
     });
-  }
-
-  handleSuccess(productAdded: boolean) {
-    if (productAdded) {
-      if (!this.updated) {
-        this.updated = true;
-        this.shoppingFacade.resetProductAdded();
-        this.updateBucketValues();
-      } else {
-        this.showSuccess = true;
-      }
-    }
-  }
-
-  updateBucketValues() {
-    const boxLabel = this.quantityForm.get('boxLabel').value;
-
-    if (this.deliveryAddress && this.deliveryAddress.addressForm.valid) {
-      const contact = this.deliveryAddress.addressForm.get('contact').value;
-      const info = this.deliveryAddress.addressForm.get('info').value;
-      const phoneNumber = this.deliveryAddress.addressForm.get('phoneNumber').value;
-
-      this.shoppingFacade.updateBucket(
-        this.basketId,
-        this.currentVirtualCamCard.deliveryAddress.id,
-        boxLabel,
-        contact,
-        info,
-        phoneNumber
-      );
-    }
-  }
-
-  addToBasket(shipToAddress?: string) {
-    if (this.quantityForm.valid) {
-      const quantity = this.quantityForm.get('quantity').value;
-      this.shoppingFacade.addProductToBasket(this.product.sku, quantity, shipToAddress);
-    } else {
-      markAsDirtyRecursive(this.quantityForm);
-    }
   }
 
   submitForm() {
-    const addressForm = this.deliveryAddress.addressForm;
+    const addressForm = this.orderFormCmp.addressForm;
 
-    if (addressForm.invalid) {
+    if (addressForm.invalid || this.quantityForm.invalid) {
       markAsDirtyRecursive(addressForm);
+      markAsDirtyRecursive(this.quantityForm);
     } else {
-      this.createVirtualCamCard();
+      const bucket: Bucket = {
+        basket: '',
+        id: '',
+        ...this.getBasketExtension(),
+        shippingAddress: this.getAddress(),
+      };
+      this.product ? this.addProductToBucket() : this.createEmitter.emit(bucket);
     }
   }
 
-  createVirtualCamCard() {
-    const virtualCamCardData = this.createVirtualCamCardData();
+  addProductToBucket() {
+    const address = this.getAddress();
+    const quantity = this.quantityForm.get('quantity').value;
 
-    this.camCardsFacade.createVirtualCamCard(virtualCamCardData);
+    if (this.isNewAddress()) {
+      this.shoppingFacade.addProductToBucket(
+        address,
+        this.commonShippingMethodId,
+        this.product.sku,
+        quantity,
+        this.basketId,
+        this.getBasketExtension()
+      );
+    } else {
+      this.shoppingFacade.addProductToBucketWithUrn(
+        address.urn,
+        this.commonShippingMethodId,
+        this.orderFormCmp.addressForm.get('addressFull').value.id,
+        this.product.sku,
+        quantity,
+        this.basketId,
+        this.getBasketExtension()
+      );
+    }
+
+    this.hide();
   }
 
-  createVirtualCamCardData(): CamCard {
-    const addressForm = this.deliveryAddress.addressForm;
+  getAddress(): Address {
+    const addressForm = this.orderFormCmp.addressForm;
+    const contact = addressForm.get('contactFull').value;
 
     return {
-      name: 'virtual camCard',
-      orderLabel: addressForm.get('orderMark').value,
-      invoiceLabel: addressForm.get('invoiceLabel').value,
+      addressName: '',
+      country: '',
+      firstName: contact.firstName,
+      id: '',
+      invoiceToAddress: true,
+      lastName: contact.lastName,
+      phoneHome: '',
+      shipToAddress: true,
+      urn: '',
+      addressLine1: addressForm.get('address').value,
+      addressLine2: addressForm.get('building').value,
+      postalCode: addressForm.get('zipCode').value,
+      city: addressForm.get('area').value,
+      companyName1: addressForm.get('company').value,
+      countryCode: 'SE',
+      eligibleShipToAddress: true,
+    };
+  }
+
+  isNewAddress() {
+    const currentAddress = this.getAddress();
+    return AddressHelper.isNewAddress(currentAddress, this.basketAddresses);
+  }
+
+  getBasketExtension(): BasketExtensions {
+    const addressForm = this.orderFormCmp.addressForm;
+
+    return {
       customer: {
         id: addressForm.get('customer').value,
         customerNo: addressForm.get('customer').value,
       },
-      deliveryAddress: {
-        ...this.missingAddressFields,
-        addressLine1: addressForm.get('address').value,
-        street: addressForm.get('address').value,
-        addressLine2: addressForm.get('building').value,
-        postalCode: addressForm.get('zipCode').value,
-        city: addressForm.get('area').value,
-        companyName1: addressForm.get('company').value,
-      },
-      transient: true,
+      contactPerson: addressForm.get('contactFull').value,
+      orderMark: addressForm.get('orderMark').value,
+      invoiceLabel: addressForm.get('invoiceLabel').value,
+      phoneNumber: addressForm.get('phoneNumber').value,
+      info: addressForm.get('info').value,
+      boxLabel: this.quantityForm.get('boxLabel').value,
     };
   }
 

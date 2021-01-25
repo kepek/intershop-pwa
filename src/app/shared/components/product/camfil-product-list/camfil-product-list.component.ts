@@ -38,6 +38,8 @@ export class CamfilProductListComponent implements OnInit {
   deviceType$: Observable<DeviceType>;
   ngOnInit(): void {
     this.checkoutFacade.loadBuckets();
+    this.shoppingFacade.loadBasketAddresses();
+
     this.listingLoading$ = this.shoppingFacade.productListingLoading$;
     this.deviceType$ = this.appFacade.deviceType$;
   }

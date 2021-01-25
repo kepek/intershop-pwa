@@ -1,5 +1,7 @@
 import { createReducer, on } from '@ngrx/store';
 
+import { AddressHelper } from 'ish-core/models/address/address.helper';
+import { Address } from 'ish-core/models/address/address.model';
 import { BasketInfo } from 'ish-core/models/basket-info/basket-info.model';
 import { BasketValidationResultType } from 'ish-core/models/basket-validation/basket-validation.model';
 import { Basket } from 'ish-core/models/basket/basket.model';
@@ -44,6 +46,7 @@ import {
   getBasketItemAttributesFail,
   getBasketItemAttributesSuccess,
   loadBasket,
+  loadBasketAddressesSuccess,
   loadBasketEligiblePaymentMethods,
   loadBasketEligiblePaymentMethodsFail,
   loadBasketEligiblePaymentMethodsSuccess,
@@ -82,6 +85,7 @@ import {
   updateBasketPaymentFail,
   updateBasketPaymentSuccess,
   updateBasketShippingMethod,
+  updateBucket,
   updateBucketFail,
   updateBucketSuccess,
   updateConcardisCvcLastUpdated,
@@ -104,6 +108,8 @@ export interface BasketState {
   productAdded: boolean;
   buckets: Bucket[];
   emptyBuckets: Bucket[];
+  productUpdated: boolean;
+  basketAddresses: Address[];
 }
 
 const initialValidationResults: BasketValidationResultType = {
@@ -127,6 +133,8 @@ export const initialState: BasketState = {
   buckets: undefined,
   productAdded: false,
   emptyBuckets: [],
+  productUpdated: false,
+  basketAddresses: [],
 };
 
 export const basketReducer = createReducer(
@@ -221,9 +229,10 @@ export const basketReducer = createReducer(
     validationResults: initialValidationResults,
   })),
   on(loadBucketsSuccess, (state: BasketState, action) => {
-    const hasBeenCreated = shipToAddress =>
-      action.payload.buckets.find(bucket => bucket.shipToAddress === shipToAddress);
-    const onlyEmpty = state.emptyBuckets.filter(emptyBucket => !hasBeenCreated(emptyBucket.shipToAddress));
+    const addresses = action.payload.buckets.map(bucket => bucket.shipToAddressFull);
+    const onlyEmpty = state.emptyBuckets.filter(emptyBucket =>
+      AddressHelper.isNewAddress(emptyBucket.shipToAddressFull as Address, addresses)
+    );
 
     return {
       ...state,
@@ -237,7 +246,11 @@ export const basketReducer = createReducer(
   })),
   on(updateBucketSuccess, (state: BasketState) => ({
     ...state,
-    productAdded: true,
+    productUpdated: true,
+  })),
+  on(updateBucket, (state: BasketState) => ({
+    ...state,
+    productUpdated: false,
   })),
   on(addItemsToBasketSuccess, (state: BasketState, action) => ({
     ...state,
@@ -360,6 +373,10 @@ export const basketReducer = createReducer(
       error: undefined,
     };
   }),
+  on(loadBasketAddressesSuccess, (state: BasketState, action) => ({
+    ...state,
+    basketAddresses: action.payload.basketAddresses,
+  })),
 
   on(getBasketItemAttributesSuccess, (state: BasketState, action) => {
     const { bucketId, lineItemId, attributes } = action.payload;

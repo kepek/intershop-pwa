@@ -19,6 +19,7 @@ import {
   withLatestFrom,
 } from 'rxjs/operators';
 
+import { Address } from 'ish-core/models/address/address.model';
 import { Bucket } from 'ish-core/models/basket/bucket.model';
 import {
   LineItemUpdateHelper,
@@ -28,8 +29,6 @@ import { BasketService } from 'ish-core/services/basket/basket.service';
 import { getProductEntities, loadProduct } from 'ish-core/store/shopping/products';
 import { mapErrorToAction, mapToPayload, mapToPayloadProperty } from 'ish-core/utils/operators';
 
-import { loadCamCards } from '../../../../extensions/cam-cards/store/cam-card';
-
 import {
   addBasketItemAttributes,
   addBasketItemAttributesFail,
@@ -38,15 +37,17 @@ import {
   addItemsToBasketFail,
   addItemsToBasketSuccess,
   addProductToBasket,
+  addProductToBucket,
+  addProductToBucketAddressFail,
+  addProductToBucketFail,
+  addProductToBucketWithBasketId,
+  addProductToBucketWithUrn,
   deleteBasketItem,
   deleteBasketItemAttributes,
   deleteBasketItemAttributesFail,
   deleteBasketItemAttributesSuccess,
   deleteBasketItemFail,
   deleteBasketItemSuccess,
-  editBucket,
-  editBucketFail,
-  editBucketSuccess,
   getBasketItemAttributes,
   getBasketItemAttributesFail,
   getBasketItemAttributesSuccess,
@@ -66,6 +67,8 @@ import {
   validateBasket,
 } from './basket.actions';
 import { getCurrentBasket, getCurrentBasketId } from './basket.selectors';
+
+const STANDARD_SHIPPING_METHOD = 'STD_GROUND';
 
 @Injectable()
 export class BasketItemsEffects {
@@ -98,6 +101,7 @@ export class BasketItemsEffects {
               acc.push({
                 ...val,
                 unit: entities[val.sku] && entities[val.sku].packingUnit,
+                shippingMethod: val.shippingMethod,
                 shipToAddress: val.shipToAddress,
               });
             }
@@ -109,24 +113,97 @@ export class BasketItemsEffects {
     )
   );
 
-  updateBucket = createEffect(() =>
+  addProductToBucketWithUrn$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(addProductToBucketWithUrn),
+      mapToPayload(),
+      concatMap(payload => [
+        addProductToBasket({
+          sku: payload.sku,
+          quantity: payload.quantity,
+          shippingMethod: payload.shippingMethod,
+          shipToAddress: payload.urn,
+        }),
+        updateBucket({
+          basketId: payload.basketId,
+          addressId: payload.addressId,
+          basketExtension: payload.basketExtensions,
+        }),
+      ])
+    )
+  );
+
+  addProductToBucket$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(addProductToBucket),
+      mapToPayload(),
+      mergeMap(payload => {
+        if (!payload.basketId) {
+          return this.basketService.createBasket().pipe(
+            mergeMap(basket => [
+              addProductToBucketWithBasketId({
+                address: payload.address,
+                shippingMethod: STANDARD_SHIPPING_METHOD,
+                sku: payload.sku,
+                quantity: payload.quantity,
+                basketId: basket.id,
+                basketExtensions: payload.basketExtensions,
+              }),
+            ])
+          );
+        }
+        return [
+          addProductToBucketWithBasketId({
+            address: payload.address,
+            shippingMethod: STANDARD_SHIPPING_METHOD,
+            sku: payload.sku,
+            quantity: payload.quantity,
+            basketId: payload.basketId,
+            basketExtensions: payload.basketExtensions,
+          }),
+        ];
+      })
+    )
+  );
+
+  addProductToBucketWithBasketId$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(addProductToBucketWithBasketId),
+      mapToPayload(),
+      mergeMap(payload =>
+        this.basketService.createBasketAddress(payload.address).pipe(
+          concatMap((address: Address) =>
+            address && address.urn
+              ? [
+                  addProductToBasket({
+                    sku: payload.sku,
+                    quantity: payload.quantity,
+                    shippingMethod: payload.shippingMethod,
+                    shipToAddress: address.urn,
+                  }),
+                  updateBucket({
+                    basketId: payload.basketId,
+                    addressId: address.id,
+                    basketExtension: payload.basketExtensions,
+                  }),
+                ]
+              : [addProductToBucketAddressFail()]
+          ),
+          mapErrorToAction(addProductToBucketFail)
+        )
+      )
+    )
+  );
+
+  updateBucket$ = createEffect(() =>
     this.actions$.pipe(
       ofType(updateBucket),
       mapToPayload(),
       mergeMap(payload =>
-        this.basketService
-          .updateBucket(
-            payload.basketId,
-            payload.addressId,
-            payload.boxLabel,
-            payload.contact,
-            payload.info,
-            payload.phoneNumber
-          )
-          .pipe(
-            mergeMap(() => [updateBucketSuccess(), loadBuckets()]),
-            mapErrorToAction(updateBucketFail)
-          )
+        this.basketService.updateBucket(payload.basketId, payload.addressId, payload.basketExtension).pipe(
+          mergeMap(() => [updateBucketSuccess()]),
+          mapErrorToAction(updateBucketFail)
+        )
       )
     )
   );
@@ -246,35 +323,12 @@ export class BasketItemsEffects {
     )
   );
 
-  editBucket = createEffect(() =>
-    this.actions$.pipe(
-      ofType(editBucket),
-      mapToPayload(),
-      mergeMap(payload =>
-        this.basketService
-          .editBucket(
-            payload.basketId,
-            payload.shippingAddress,
-            payload.bucket.customer.id,
-            payload.bucket.orderMark,
-            payload.bucket.invoiceLabel,
-            payload.bucket.deliveryAddress,
-            payload.bucket.boxLabel,
-            payload.bucket.contact,
-            payload.bucket.info,
-            payload.bucket.phoneNumber
-          )
-          .pipe(map(editBucketSuccess), mapErrorToAction(editBucketFail))
-      )
-    )
-  );
-
   loadBucket$ = createEffect(() =>
     this.actions$.pipe(
       ofType(loadBuckets),
       mergeMap(() =>
         this.basketService.getBuckets().pipe(
-          mergeMap((buckets: Bucket[]) => [loadBucketsSuccess({ buckets }), loadCamCards()]),
+          mergeMap((buckets: Bucket[]) => [loadBucketsSuccess({ buckets })]),
           mapErrorToAction(loadBucketsFail)
         )
       )

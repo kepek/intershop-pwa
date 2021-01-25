@@ -28,4 +28,5 @@ export interface Address {
   shipFromAddress?: boolean;
   serviceToAddress?: boolean;
   installToAddress?: boolean;
+  eligibleShipToAddress?: boolean;
 }
