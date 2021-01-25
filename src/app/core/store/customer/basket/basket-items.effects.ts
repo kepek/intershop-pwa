@@ -52,9 +52,11 @@ import {
   getBasketItemAttributesFail,
   getBasketItemAttributesSuccess,
   loadBasket,
+  loadBasketAddresses,
   loadBuckets,
   loadBucketsFail,
   loadBucketsSuccess,
+  updateBasketAddress,
   updateBasketItemAttributes,
   updateBasketItemAttributesFail,
   updateBasketItemAttributesSuccess,
@@ -186,6 +188,7 @@ export class BasketItemsEffects {
                     addressId: address.id,
                     basketExtension: payload.basketExtensions,
                   }),
+                  loadBasketAddresses(),
                 ]
               : [addProductToBucketAddressFail()]
           ),
@@ -201,7 +204,13 @@ export class BasketItemsEffects {
       mapToPayload(),
       mergeMap(payload =>
         this.basketService.updateBucket(payload.basketId, payload.addressId, payload.basketExtension).pipe(
-          mergeMap(() => [updateBucketSuccess()]),
+          mergeMap(() => {
+            if (payload.address) {
+              return [updateBasketAddress({ address: payload.address, isBasket: true })];
+            } else {
+              return [updateBucketSuccess()];
+            }
+          }),
           mapErrorToAction(updateBucketFail)
         )
       )

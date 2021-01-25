@@ -168,12 +168,13 @@ export class ShoppingFacade {
     this.store.dispatch(addProductToBasket({ sku, quantity, shippingMethod, shipToAddress }));
   }
 
-  updateBucket(basketId: string, addressId: string, basketExtension: BasketExtensions) {
+  updateBucket(basketId: string, addressId: string, basketExtension: BasketExtensions, address?: Address) {
     this.store.dispatch(
       updateBucket({
         basketId,
         addressId,
         basketExtension,
+        address,
       })
     );
   }

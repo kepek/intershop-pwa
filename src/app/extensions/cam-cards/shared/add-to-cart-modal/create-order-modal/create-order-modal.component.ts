@@ -138,7 +138,7 @@ export class CreateOrderModalComponent implements OnInit, OnDestroy {
       );
     } else {
       this.shoppingFacade.addProductToBucketWithUrn(
-        address.urn,
+        this.getUrn(address),
         this.commonShippingMethodId,
         this.orderFormCmp.addressForm.get('addressFull').value.id,
         this.product.sku,
@@ -173,6 +173,10 @@ export class CreateOrderModalComponent implements OnInit, OnDestroy {
       countryCode: 'SE',
       eligibleShipToAddress: true,
     };
+  }
+
+  getUrn(currentAddress: Address): string {
+    return AddressHelper.getUrn(currentAddress, this.basketAddresses);
   }
 
   isNewAddress() {
