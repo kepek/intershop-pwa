@@ -30,7 +30,6 @@ import {
   getBasketError,
   getBasketInfo,
   getBasketInvoiceAddress,
-  getBasketItemAttributes,
   getBasketLastTimeProductAdded,
   getBasketLoading,
   getBasketPromotionError,
@@ -222,10 +221,6 @@ export class CheckoutFacade {
 
   camfilDragLineItem(basketId: string, updatedLineItem: LineItem, targetBucket: Bucket) {
     this.store.dispatch(camfilDragLineItem({ basketId, updatedLineItem, targetBucket }));
-  }
-
-  getBasketItemAttributes(basketId: string, lineItemId: string, bucketId: string) {
-    this.store.dispatch(getBasketItemAttributes({ basketId, lineItemId, bucketId }));
   }
 
   addBasketItemAttributes(

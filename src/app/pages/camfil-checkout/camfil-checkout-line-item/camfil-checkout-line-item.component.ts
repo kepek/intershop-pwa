@@ -127,7 +127,7 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
 
   getItemBoxLabel() {
     let boxLabel;
-    this.checkoutFacade.getBasketItemAttributes(this.basketId, this.product.id, this.bucketId);
+
     this.checkoutFacade.basketLineItems$?.pipe(take(1), takeUntil(this.destroy$)).subscribe((res: LineItem[]) => {
       const lineItem = res.find(li => li.id === this.product.id);
       const boxLabelAttribute = lineItem.attributes.find(att => att.name === 'boxLabel');
