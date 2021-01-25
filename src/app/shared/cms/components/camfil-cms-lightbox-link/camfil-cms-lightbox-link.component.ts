@@ -20,6 +20,8 @@ export class CamfilCmsLightboxLinkComponent implements CMSComponent {
 
   openDialog() {
     this.dialog.open(CamfilCmsLightboxLinkArticleComponent, {
+      autoFocus: false,
+      maxHeight: '80vh',
       data: {
         article: this.pagelet.stringParam('Article'),
       },

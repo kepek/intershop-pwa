@@ -182,4 +182,33 @@ export class ProductHelper {
     const attributes = product.attributes.filter(att => !common.includes(att.name));
     return { ...product, attributes };
   }
+
+  /** CAMFIL CUSTOMIZATION: */
+
+  /** Get all product ImageView ids
+   * @param product   The Product for which to get the image types
+   * @param imageType The wanted ImageType
+   * @returns         Array of available ImageView ids
+   */
+  static getImageViewIDs(product: Product, imageType: string): string[] {
+    if (!(product && product.images)) {
+      return [];
+    }
+    return product.images.filter(image => image.typeID === imageType).map(image => image.viewID);
+  }
+
+  /**
+   * Get product image URL based on image type and image view
+   * @param product   The Product for which to get the image
+   * @param imageType The wanted ImageType
+   * @param imageView The wanted ImageView
+   * @returns         The matching product image
+   */
+  static getImageCdnUrl(product: Product, imageType: string, imageView: string): string {
+    if (!(product && product.images)) {
+      return;
+    }
+    const image = product.images.find(image => image.typeID === imageType && image.viewID === imageView);
+    return image.effectiveUrl;
+  }
 }
