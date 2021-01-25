@@ -27,6 +27,7 @@ import {
   createBasketAddressSuccess,
   deleteBasketShippingAddress,
   loadBasket,
+  loadBasketAddresses,
   resetBasketErrors,
   updateBasket,
   updateBasketAddress,
@@ -256,8 +257,9 @@ describe('Basket Addresses Effects', () => {
       const completion1 = updateCustomerAddressSuccess({ address });
       const completion2 = loadBasket();
       const completion3 = resetBasketErrors();
+      const completion4 = loadBasketAddresses();
       actions$ = hot('-a', { a: action });
-      const expected$ = cold('-(cde)', { c: completion1, d: completion2, e: completion3 });
+      const expected$ = cold('-(cdef)', { c: completion1, d: completion2, e: completion3, f: completion4 });
 
       expect(effects.updateBasketAddress$).toBeObservable(expected$);
     });

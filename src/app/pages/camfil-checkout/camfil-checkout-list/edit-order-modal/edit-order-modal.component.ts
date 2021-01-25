@@ -3,6 +3,7 @@ import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Subject } from 'rxjs';
 
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
+import { Address } from 'ish-core/models/address/address.model';
 import { BasketExtensions } from 'ish-core/models/basket/basket.interface';
 import { Bucket, EditBucket } from 'ish-core/models/basket/bucket.model';
 import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
@@ -55,12 +56,15 @@ export class EditOrderModalComponent implements OnInit, OnDestroy {
     if (addressForm.invalid) {
       markAsDirtyRecursive(addressForm);
     } else {
-      const basketExtension = this.getUpdatedData();
-      this.shoppingFacade.updateBucket(this.editOrder.basket, this.editOrder.shipToAddress, basketExtension);
+      const basketExtension = this.getUpdatedBasketExtension();
+      const address = this.getUpdatedAddress();
+
+      this.shoppingFacade.updateBucket(this.editOrder.basket, this.editOrder.shipToAddress, basketExtension, address);
+      this.hide();
     }
   }
 
-  getUpdatedData(): BasketExtensions {
+  getUpdatedBasketExtension(): BasketExtensions {
     const form = this.orderForm.addressForm;
 
     return {
@@ -69,6 +73,19 @@ export class EditOrderModalComponent implements OnInit, OnDestroy {
       contactPerson: form.get('contactFull').value,
       info: form.get('info').value,
       phoneNumber: form.get('phoneNumber').value,
+    };
+  }
+
+  getUpdatedAddress(): Address {
+    const form = this.orderForm.addressForm;
+
+    return {
+      ...this.order.shipToAddressFull,
+      addressLine1: form.get('address').value,
+      addressLine2: form.get('building').value,
+      postalCode: form.get('zipCode').value,
+      city: form.get('area').value,
+      companyName1: form.get('company').value,
     };
   }
 

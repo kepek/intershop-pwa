@@ -63,18 +63,31 @@ describe('Camfil Sub Category Navigation Component', () => {
     expect(element).toBeTruthy();
     expect(() => fixture.detectChanges()).not.toThrow();
     expect(element).toMatchInlineSnapshot(`
-      <ul class="category-level1 dropdown-menu">
+      <ul class="category-level1 dropdown-menu all-filters-menu">
+        <li class="main-navigation-btn-item">
+          <a
+            class="mat-focus-indicator mat-stroked-button mat-button-base _mat-animation-noopable"
+            mat-stroked-button=""
+            tabindex="0"
+            aria-disabled="false"
+            href="/"
+            ><span class="mat-button-wrapper"> camfil.navigation.see.all.airFilters </span
+            ><span
+              class="mat-button-ripple mat-ripple"
+              matripple=""
+              ng-reflect-centered="false"
+              ng-reflect-disabled="false"
+              ng-reflect-trigger="http://localhost/"
+            ></span
+            ><span class="mat-button-focus-overlay"></span
+          ></a>
+        </li>
         <li class="main-navigation-level1-item">
           <a ng-reflect-router-link="/CAT_A1-catA.1" href="/CAT_A1-catA.1">CAT_A1</a
           ><a class="dropdown-toggle"><fa-icon ng-reflect-icon="fas,plus"></fa-icon></a
           ><ish-sub-category-navigation
             ng-reflect-category-unique-id="A.1"
             ng-reflect-sub-categories-depth="2"
-            ><ul class="category-level2">
-              <li class="main-navigation-level2-item">
-                <a ng-reflect-router-link="/CAT_A1a-catA.1.a" href="/CAT_A1a-catA.1.a">CAT_A1a</a
-                ><a class="dropdown-toggle"><fa-icon ng-reflect-icon="fas,plus"></fa-icon></a>
-              </li></ul
           ></ish-sub-category-navigation>
         </li>
         <li class="main-navigation-level1-item">

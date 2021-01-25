@@ -21,7 +21,7 @@ export class BucketMapper {
         shippingMethod: bucketData.shippingMethod,
         deliveryAddressId: shipToAddress ? shipToAddress.id : '',
         shipToAddress: extension ? extension.shippingAddress.urn : '',
-        shipToAddressFull: extension ? extension.shippingAddress : {},
+        shipToAddressFull: extension ? extension.shippingAddress : undefined,
         contactPerson: extension && extension.contactPerson,
         info: extension ? extension.info : '',
         boxLabel: extension ? extension.boxLabel : '',
