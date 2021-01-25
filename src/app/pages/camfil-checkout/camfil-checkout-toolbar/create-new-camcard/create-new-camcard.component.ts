@@ -38,7 +38,7 @@ export class CreateNewCamcardComponent {
       }));
       return {
         name,
-        customer: bucket.customer || { id: 'xP9_AAABUmAAAAF2dzgS4.D8' },
+        customer: bucket.customer,
         deliveryAddress: { addressLine1, addressLine2, city, countryCode, postalCode, street },
         invoiceLabel: bucket.invoiceLabel,
         orderLabel: bucket.orderMark,
@@ -48,11 +48,6 @@ export class CreateNewCamcardComponent {
     newCamCards.forEach(camCard => {
       this.camCardsFacade.addBasketToNewCamCard(camCard);
     });
-
-    console.log(newCamCards, 'newCamCards');
-    console.log(this.buckets, 'this.buckets');
-
-    // this.camCardsFacade.cloneAndEditPermanentCamCards(newCamCards);
   }
 
   getNewName(oldName: string, idx: number): string {
