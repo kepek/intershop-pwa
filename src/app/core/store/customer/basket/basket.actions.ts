@@ -357,11 +357,6 @@ export const camfilDragLineItemSuccess = createAction(
 
 export const camfilDragLineItemFail = createAction('[Basket API] Move Product between buckets Fail', httpError());
 
-export const editBucket = createAction(
-  '[Bucket] Edit Bucket',
-  payload<{ basketId: string; shippingAddress: string; bucket: Bucket }>()
-);
-
 export const loadBasketAddresses = createAction('[Basket API] Load Basket Addresses');
 
 export const loadBasketAddressesSuccess = createAction(

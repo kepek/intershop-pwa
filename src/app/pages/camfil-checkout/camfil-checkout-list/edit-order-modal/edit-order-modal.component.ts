@@ -59,7 +59,12 @@ export class EditOrderModalComponent implements OnInit, OnDestroy {
       const basketExtension = this.getUpdatedBasketExtension();
       const address = this.getUpdatedAddress();
 
-      this.shoppingFacade.updateBucket(this.editOrder.basket, this.editOrder.shipToAddress, basketExtension, address);
+      this.shoppingFacade.updateBucket(
+        this.editOrder.basket,
+        this.editOrder.shipToAddressFull.id,
+        basketExtension,
+        address
+      );
       this.hide();
     }
   }
@@ -70,7 +75,7 @@ export class EditOrderModalComponent implements OnInit, OnDestroy {
     return {
       orderMark: form.get('orderMark').value,
       invoiceLabel: form.get('invoiceLabel').value,
-      contactPerson: form.get('contactFull').value,
+      contactPerson: this.order.contactPerson,
       info: form.get('info').value,
       phoneNumber: form.get('phoneNumber').value,
     };

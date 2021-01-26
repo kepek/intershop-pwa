@@ -49,41 +49,57 @@
       </div>
       <div class="order-summary-info col-sm-3 border-sm-right" data-testing-id="order-summary-info">
         <form *ngIf="orderForm" [formGroup]="orderForm" class="form-horizontal" novalidate="novalidate">
-          <mat-form-field appearance="fill" class="form-field">
-            <mat-label>{{ 'camfil.checkout.form.order_mark' | translate }}</mat-label>
-            <input
-              matInput
-              formControlName="orderMark"
-              label="camfil.checkout.form.order_mark"
-              markRequiredLabel="off"
-              maxlength="35"
-            />
-          </mat-form-field>
-          <mat-form-field appearance="fill" class="form-field">
-            <mat-label>{{ 'camfil.checkout.form.invoice_mark' | translate }}</mat-label>
-            <input
-              matInput
-              formControlName="invoiceMark"
-              label="camfil.checkout.form.invoice_mark"
-              markRequiredLabel="off"
-              maxlength="35"
-            />
-          </mat-form-field>
-          <mat-form-field appearance="fill">
-            <mat-label>{{ 'camfil.checkout.form.delivery_date' | translate }}</mat-label>
-            <input
-              matInput
-              [matDatepicker]="pickerLast"
-              formControlName="deliveryDate"
-              [min]="firstAvailableDelivery"
-              [value]="orderFullDeliveryDate"
-              (dateChange)="changeDeliveryDate($event)"
-            />
-            <mat-datepicker-toggle matSuffix [for]="pickerLast">
-              <mat-icon svgIcon="calendar" matDatepickerToggleIcon></mat-icon>
-            </mat-datepicker-toggle>
-            <mat-datepicker [dateClass]="dateClass" #pickerLast></mat-datepicker>
-          </mat-form-field>
+          <div class="mat-form-field__wrapper">
+            <mat-form-field appearance="fill" class="form-field">
+              <mat-label>{{ 'camfil.checkout.form.order_mark' | translate }}</mat-label>
+              <input
+                matInput
+                formControlName="orderMark"
+                label="camfil.checkout.form.order_mark"
+                (change)="onBlurSubmit('orderMark')"
+              />
+            </mat-form-field>
+            <camfil-error
+              [errors]="getField('orderMark').errors"
+              [errorValidators]="validators.orderMark"
+              [touched]="getField('orderMark').touched || getField('orderMark').dirty"
+            ></camfil-error>
+          </div>
+
+          <div class="mat-form-field__wrapper">
+            <mat-form-field appearance="fill" class="form-field">
+              <mat-label>{{ 'camfil.checkout.form.invoice_mark' | translate }}</mat-label>
+              <input
+                matInput
+                formControlName="invoiceLabel"
+                label="camfil.checkout.form.invoice_mark"
+                (change)="onBlurSubmit('invoiceLabel')"
+              />
+            </mat-form-field>
+            <camfil-error
+              [errors]="getField('invoiceLabel').errors"
+              [errorValidators]="validators.invoiceLabel"
+              [touched]="getField('invoiceLabel').touched || getField('invoiceLabel').dirty"
+            ></camfil-error>
+          </div>
+
+          <div class="mat-form-field__wrapper">
+            <mat-form-field appearance="fill">
+              <mat-label>{{ 'camfil.checkout.form.delivery_date' | translate }}</mat-label>
+              <input
+                matInput
+                [matDatepicker]="pickerLast"
+                formControlName="deliveryDate"
+                [min]="firstAvailableDelivery"
+                [value]="orderFullDeliveryDate"
+                (dateChange)="changeDeliveryDate($event)"
+              />
+              <mat-datepicker-toggle matSuffix [for]="pickerLast">
+                <mat-icon svgIcon="calendar" matDatepickerToggleIcon></mat-icon>
+              </mat-datepicker-toggle>
+              <mat-datepicker [dateClass]="dateClass" #pickerLast></mat-datepicker>
+            </mat-form-field>
+          </div>
         </form>
       </div>
       <div class="order-summary-info col-sm-4" data-testing-id="order-summary-info">
@@ -108,16 +124,21 @@
               >
             </li>
           </ul>
+
           <mat-form-field appearance="fill" class="form-field">
             <mat-label>{{ 'camfil.checkout.form.note' | translate }}</mat-label>
             <textarea
               matInput
-              formControlName="note"
+              formControlName="info"
               label="camfil.checkout.form.note"
-              markRequiredLabel="off"
-              maxlength="35"
+              (change)="onBlurSubmit('info')"
             ></textarea>
           </mat-form-field>
+          <camfil-error
+            [errors]="getField('info').errors"
+            [errorValidators]="validators.info"
+            [touched]="getField('info').touched || getField('info').dirty"
+          ></camfil-error>
         </div>
       </div>
     </div>
@@ -176,6 +197,7 @@
 </camfil-modal-add-new-product>
 
 <camfil-edit-order-modal #editModal [order]="order"></camfil-edit-order-modal>
+
 <camfil-small-cta-modal
   actionTitle="{{ modalDeliveryText | translate }}{{ order?.id }}"
   actionButtonTitle="{{ 'camfil.checkout.create_new_order.temporary_order.ok' | translate }}"

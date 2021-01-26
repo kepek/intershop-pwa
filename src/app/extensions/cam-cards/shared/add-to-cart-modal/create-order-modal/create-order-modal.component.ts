@@ -147,8 +147,6 @@ export class CreateOrderModalComponent implements OnInit, OnDestroy {
         this.getBasketExtension()
       );
     }
-
-    this.hide();
   }
 
   getAddress(): Address {

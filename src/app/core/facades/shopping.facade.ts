@@ -5,7 +5,6 @@ import { debounce, filter, map, switchMap, tap } from 'rxjs/operators';
 
 import { Address } from 'ish-core/models/address/address.model';
 import { BasketExtensions } from 'ish-core/models/basket/basket.interface';
-import { Bucket } from 'ish-core/models/basket/bucket.model';
 import { CategoryHelper } from 'ish-core/models/category/category.helper';
 import { ProductListingID } from 'ish-core/models/product-listing/product-listing.model';
 import { ProductCompletenessLevel, ProductHelper } from 'ish-core/models/product/product.model';
@@ -13,7 +12,6 @@ import {
   addProductToBasket,
   addProductToBucket,
   addProductToBucketWithUrn,
-  editBucket,
   getBasketAddresses,
   getProductAdded,
   getProductUpdated,
@@ -314,10 +312,6 @@ export class ShoppingFacade {
           }))
       )
     );
-  }
-
-  editOrder(basketId: string, shippingAddress: string, bucket: Bucket) {
-    this.store.dispatch(editBucket({ basketId, shippingAddress, bucket }));
   }
 
   loadBasketAddresses() {
