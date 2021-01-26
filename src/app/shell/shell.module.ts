@@ -7,7 +7,6 @@ import { NgbCollapseModule, NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap
 import { TranslateModule } from '@ngx-translate/core';
 import { DeferLoadModule } from '@trademe/ng-defer-load';
 import { CamfilIconsModule } from 'camfil-icons';
-import { SafePipeModule } from 'safe-pipe';
 
 import { AuthorizationToggleModule } from 'ish-core/authorization-toggle.module';
 import { DirectivesModule } from 'ish-core/directives.module';
@@ -68,7 +67,6 @@ const importExportModules = [
   OrderTemplatesExportsModule,
   QuickorderExportsModule,
   QuotingExportsModule,
-  SafePipeModule,
   TactonExportsModule,
   WishlistsExportsModule,
 ];

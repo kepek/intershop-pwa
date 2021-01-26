@@ -12,7 +12,7 @@
       </div>
       <ng-container *ngIf="videoUrl">
         <iframe
-          [src]="videoUrl | safe: 'resourceUrl'"
+          [src]="videoUrl"
           frameborder="0"
           allow="clipboard-write; encrypted-media;"
           scrolling="no"
@@ -110,14 +110,6 @@
       </div>
 
       <div class="mat-card mat-focus-indicator p-3 my-3">
-        <!-- <div *ngIf="product.manufacturer" class="product-brand">
-          <a [routerLink]="['/search', product.manufacturer]">
-            <span itemprop="brand">{{ product.manufacturer }}</span>
-          </a>
-        </div> -->
-
-        <!-- <camfil-product-id [product]="product"></camfil-product-id> -->
-
         <camfil-product-promotion [product]="product"></camfil-product-promotion>
         <div class="d-flex justify-content-between align-items-center row flex-wrap">
           <div
@@ -172,7 +164,7 @@
               [translationKey]="
                 isRetailSet(product) ? 'product.add_to_cart.retailset.link' : 'product.add_to_cart.link'
               "
-              (productToBasket)="addToBasket()"
+              (productToBasket)="addToBasket(product.sku)"
               displayType="button"
               hasIcon="true"
             ></camfil-product-add-to-basket>
