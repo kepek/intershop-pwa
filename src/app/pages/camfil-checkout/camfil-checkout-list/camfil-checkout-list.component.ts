@@ -20,6 +20,7 @@ import { ModalAddNewProductComponent } from '../../../extensions/cam-cards/pages
 
 import { EditOrderModalComponent } from './edit-order-modal/edit-order-modal.component';
 import { AttributeHelper } from 'ish-core/models/attribute/attribute.helper';
+import { AttributeGroupTypes } from 'ish-core/models/attribute-group/attribute-group.types';
 
 @Component({
   selector: 'camfil-checkout-list',
@@ -247,9 +248,9 @@ export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
     productDetail$.pipe(take(1), takeUntil(this.destroy$)).subscribe((res: ProductView) => {
       const today = new Date();
       let daysTillReady: number;
-      if (res.attributeGroups && res.attributeGroups.CHECKOUT_PRODUCT_ATTRIBUTE_GROUP) {
+      if (res.attributeGroups && res[AttributeGroupTypes.ProductsCheckoutAttributes]) {
         daysTillReady = Number(
-          res.attributeGroups.CHECKOUT_PRODUCT_ATTRIBUTE_GROUP.attributes.find(a => a.name === 'Deliverydays').value
+          res[AttributeGroupTypes.ProductsCheckoutAttributes].attributes.find(a => a.name === 'Deliverydays').value
         );
       } else {
         // TODO To remove. Should use only Deliverydays when attribute value is provided
@@ -318,7 +319,7 @@ export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
     const shipAddressId = this.order.deliveryAddressId;
 
     const deliveryDateValue = AttributeHelper.formatDeliveryDate(new Date(deliveryDate));
-    console.log('ORER', this.order);
+
     const contact = this.order.contactPerson || {};
 
     this.selectedDeliveryDate = deliveryDate;
