@@ -19,7 +19,7 @@ export class CamfilDimensionPipe implements PipeTransform {
 
     const names = ['width', 'depth', 'height'];
     const dimensions = attributes
-      .filter(attribute => names.indexOf(attribute.name.toLowerCase()) !== -1)
+      .filter(attribute => names.indexOf(attribute?.name?.toLowerCase()) !== -1)
       .map(attribute => {
         const data = attribute as Attribute<{ value: unknown }>;
         const val = (data.value?.value || data.value) as number;
