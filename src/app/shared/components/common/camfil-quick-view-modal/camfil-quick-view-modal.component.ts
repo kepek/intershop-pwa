@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Attributes } from '@fortawesome/fontawesome-svg-core';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -14,7 +15,6 @@ import {
 import { ProductCompletenessLevel, ProductHelper, ProductPrices } from 'ish-core/models/product/product.model';
 import { GenerateLazyComponent } from 'ish-core/utils/module-loader/generate-lazy-component.decorator';
 import { whenTruthy } from 'ish-core/utils/operators';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'camfil-quick-view-modal',
@@ -49,7 +49,7 @@ export class CamfilQuickViewModalComponent implements OnInit, OnDestroy {
   productDetailForm: FormGroup;
   isShipmentInformationAvailable = false;
   readonly quantityControlName = 'quantity';
-  videoUrl: SafeResourceUrl;
+  secureVideoUrl: SafeResourceUrl;
 
   isProductBundle = ProductHelper.isProductBundle;
   isRetailSet = ProductHelper.isRetailSet;
@@ -66,9 +66,11 @@ export class CamfilQuickViewModalComponent implements OnInit, OnDestroy {
 
       this.isShipmentInformationAvailable =
         Number.isInteger(product.readyForShipmentMin) && Number.isInteger(product.readyForShipmentMax);
-      this.videoUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
-        ProductHelper.getImageCdnUrl(product, 'youTubeVideos', 'view1')
-      );
+      let videoUrl = ProductHelper.getImageCdnUrl(product, 'youTubeVideos', 'view1');
+      if (videoUrl) {
+        this.secureVideoUrl = this.sanitizer.bypassSecurityTrustResourceUrl(videoUrl);
+      }
+
       this.shoppingFacade
         .inCompareProducts$(product.sku)
         .pipe(whenTruthy(), takeUntil(this.destroy$))

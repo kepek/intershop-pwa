@@ -10,9 +10,9 @@
         ></camfil-product-image>
         <!-- Todo: Replace with video URL coming from product attributes: -->
       </div>
-      <ng-container *ngIf="videoUrl">
+      <ng-container *ngIf="secureVideoUrl">
         <iframe
-          [src]="videoUrl"
+          [src]="secureVideoUrl"
           frameborder="0"
           allow="clipboard-write; encrypted-media;"
           scrolling="no"
