@@ -69,7 +69,7 @@ export const addProductToBucket = createAction(
     sku: string;
     quantity: number;
     basketId?: string;
-    basketExtensions: BasketExtensions;
+    basketExtension: BasketExtensions;
   }>()
 );
 
@@ -81,7 +81,7 @@ export const addProductToBucketWithBasketId = createAction(
     sku: string;
     quantity: number;
     basketId: string;
-    basketExtensions: BasketExtensions;
+    basketExtension: BasketExtensions;
   }>()
 );
 
@@ -94,7 +94,7 @@ export const addProductToBucketWithUrn = createAction(
     sku: string;
     quantity: number;
     basketId: string;
-    basketExtensions: BasketExtensions;
+    basketExtension: BasketExtensions;
   }>()
 );
 
@@ -104,7 +104,14 @@ export const addProductToBucketFail = createAction('[Basket] Add Product To Buck
 
 export const addProductToBasket = createAction(
   '[Basket] Add Product To Basket',
-  payload<{ sku: string; quantity: number; shippingMethod?: string; shipToAddress?: string }>()
+  payload<{
+    sku: string;
+    quantity: number;
+    shippingMethod?: string;
+    shipToAddress?: string;
+    basketExtension?: BasketExtensions;
+    addressId?: string;
+  }>()
 );
 
 export const updateBucket = createAction(
@@ -136,7 +143,15 @@ export const addEmptyBucket = createAction('[Basket] Add Empty Bucket', payload<
 export const addItemsToBasket = createAction(
   '[Basket Internal] Add Items To Basket',
   payload<{
-    items: { sku: string; quantity: number; unit: string; shippingMethod?: string; shipToAddress?: string }[];
+    items: {
+      sku: string;
+      quantity: number;
+      unit: string;
+      shippingMethod?: string;
+      shipToAddress?: string;
+      basketExtension: BasketExtensions;
+      addressId?: string;
+    }[];
   }>()
 );
 
