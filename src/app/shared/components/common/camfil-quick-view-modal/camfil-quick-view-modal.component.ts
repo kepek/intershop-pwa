@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Attributes } from '@fortawesome/fontawesome-svg-core';
 import { Observable, Subject } from 'rxjs';
@@ -37,7 +37,8 @@ export class CamfilQuickViewModalComponent implements OnInit, OnDestroy {
     @Inject(MAT_DIALOG_DATA) public data,
     public dialog: MatDialog,
     private shoppingFacade: ShoppingFacade,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private dialogRef: MatDialogRef<CamfilQuickViewModalComponent>
   ) {}
 
   product$: Observable<ProductView | VariationProductView | VariationProductMasterView>;
@@ -98,5 +99,9 @@ export class CamfilQuickViewModalComponent implements OnInit, OnDestroy {
   toggleCompare(sku) {
     this.shoppingFacade.toggleProductCompare(sku);
     this.isInCompareList = !this.isInCompareList;
+  }
+
+  closeDialog() {
+    this.dialogRef.close();
   }
 }

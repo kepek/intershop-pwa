@@ -1,5 +1,5 @@
 import { Component, Inject, Input } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 import { ContentPageletView } from 'ish-core/models/content-view/content-view.model';
 import { CMSComponent } from 'ish-shared/cms/models/cms-component/cms-component.model';
@@ -34,9 +34,13 @@ export class CamfilCmsLightboxLinkComponent implements CMSComponent {
   templateUrl: 'camfil-cms-lightbox-article.component.html',
 })
 export class CamfilCmsLightboxLinkArticleComponent {
-  constructor(public dialog: MatDialog, @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+  constructor(
+    public dialog: MatDialog,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData,
+    private dialogRef: MatDialogRef<CamfilCmsLightboxLinkArticleComponent>
+  ) {}
 
   closeDialog() {
-    this.dialog.closeAll();
+    this.dialogRef.close();
   }
 }
