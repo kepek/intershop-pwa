@@ -29,7 +29,7 @@ export class CreateNewCamcardComponent {
   convertToPermanent() {
     const newCamCards = this.buckets.map((bucket, idx) => {
       const name = this.getNewName(bucket.orderMark || `order_${bucket.id}`, idx);
-      const { addressLine1, addressLine2, city, countryCode, postalCode, street } = bucket.shipToAddressFull;
+      const { addressLine1, addressLine2, city, countryCode, postalCode } = bucket.shipToAddressFull;
       const camCardItems = bucket.lineItems.map(item => ({
         quantity: item.quantity.value,
         product: {
@@ -39,7 +39,7 @@ export class CreateNewCamcardComponent {
       return {
         name,
         customer: bucket.customer,
-        deliveryAddress: { addressLine1, addressLine2, city, countryCode, postalCode, street },
+        deliveryAddress: { addressLine1, addressLine2, city, countryCode, postalCode },
         invoiceLabel: bucket.invoiceLabel,
         orderLabel: bucket.orderMark,
         camCardItems,

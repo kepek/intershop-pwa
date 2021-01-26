@@ -44,7 +44,7 @@ export const assignBasketAddress = createAction(
 
 export const updateBasketAddress = createAction(
   '[Basket] Update an Address at Basket',
-  payload<{ address: Address }>()
+  payload<{ address: Address; isBasket?: boolean }>()
 );
 
 export const updateBasketShippingMethod = createAction(
@@ -113,6 +113,7 @@ export const updateBucket = createAction(
     basketId: string;
     addressId: string;
     basketExtension: BasketExtensions;
+    address?: Address;
   }>()
 );
 
@@ -135,7 +136,7 @@ export const addEmptyBucket = createAction('[Basket] Add Empty Bucket', payload<
 export const addItemsToBasket = createAction(
   '[Basket Internal] Add Items To Basket',
   payload<{
-    items: { sku: string; quantity: number; unit: string; shippingMethod: string; shipToAddress?: string }[];
+    items: { sku: string; quantity: number; unit: string; shippingMethod?: string; shipToAddress?: string }[];
   }>()
 );
 

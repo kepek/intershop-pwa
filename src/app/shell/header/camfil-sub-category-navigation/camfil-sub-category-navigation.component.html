@@ -3,11 +3,11 @@
   class="category-level{{ subCategoriesDepth }}"
   [ngClass]="{ 'dropdown-menu': subCategoriesDepth === 1, 'all-filters-menu': showAllFiltersBtn() }"
 >
-<li *ngIf="showAllFiltersBtn()" class="main-navigation-btn-item">
-  <a [routerLink]="url" mat-stroked-button>
-    {{ 'camfil.navigation.see.all.airFilters' | translate }}
-  </a>
-</li>
+  <li *ngIf="showAllFiltersBtn()" class="main-navigation-btn-item">
+    <a [routerLink]="url" mat-stroked-button>
+      {{ 'camfil.navigation.see.all.airFilters' | translate }}
+    </a>
+  </li>
   <li
     *ngFor="let subcategory of categories"
     class="main-navigation-level{{ subCategoriesDepth }}-item"

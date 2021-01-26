@@ -159,7 +159,7 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy {
       );
     } else {
       this.productFacade.addProductToBucketWithUrn(
-        deliveryAddress.urn,
+        this.getUrn(deliveryAddress),
         this.order.shippingMethod,
         deliveryAddress.id,
         sku,
@@ -170,7 +170,11 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy {
     }
   }
 
-  isNewAddress(currentAddress: Address) {
+  getUrn(currentAddress: Address): string {
+    return AddressHelper.getUrn(currentAddress, this.basketAddresses);
+  }
+
+  isNewAddress(currentAddress: Address): boolean {
     return AddressHelper.isNewAddress(currentAddress, this.basketAddresses);
   }
 

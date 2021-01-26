@@ -1,5 +1,3 @@
-import { BucketAddress } from 'ish-core/models/basket/bucket.model';
-
 import { Address } from './address.model';
 
 export class AddressHelper {
@@ -14,16 +12,25 @@ export class AddressHelper {
     return add1.id === add2.id;
   }
 
-  static isNewAddress(currentAddress: Address, addresses: (Address | BucketAddress)[]) {
-    const isCurrentOnTheList = addresses.find(
-      address =>
-        address.addressLine1 === currentAddress.addressLine1 &&
-        address.addressLine2 === currentAddress.addressLine2 &&
-        address.postalCode === currentAddress.postalCode &&
-        address.city === currentAddress.city &&
-        address.companyName1 === currentAddress.companyName1
+  private static compare(address1: Address, address2: Address): boolean {
+    return (
+      address1.addressLine1 === address2.addressLine1 &&
+      address1.addressLine2 === address2.addressLine2 &&
+      address1.postalCode === address2.postalCode &&
+      address1.city === address2.city &&
+      address1.companyName1 === address2.companyName1
     );
+  }
+
+  static isNewAddress(currentAddress: Address, addresses: Address[]): boolean {
+    const isCurrentOnTheList = addresses.find(address => AddressHelper.compare(address, currentAddress));
 
     return isCurrentOnTheList === undefined;
+  }
+
+  static getUrn(currentAddress: Address, addresses: Address[]): string {
+    const fullAddress = addresses.find(address => AddressHelper.compare(address, currentAddress));
+
+    return fullAddress ? fullAddress.urn : '';
   }
 }

@@ -127,11 +127,13 @@ export class BasketAddressesEffects {
   updateBasketAddress$ = createEffect(() =>
     this.actions$.pipe(
       ofType(updateBasketAddress),
-      mapToPayloadProperty('address'),
+      mapToPayload(),
       withLatestFrom(this.store.pipe(select(getLoggedInCustomer))),
-      mergeMap(([address, customer]) => {
+      mergeMap(([payload, customer]) => {
+        const { address } = payload;
+
         // create address at customer for logged in user
-        if (customer) {
+        if (customer && !payload.isBasket) {
           return this.addressService
             .updateCustomerAddress('-', address)
             .pipe(
@@ -143,7 +145,12 @@ export class BasketAddressesEffects {
           return this.basketService
             .updateBasketAddress(address)
             .pipe(
-              concatMapTo([updateCustomerAddressSuccess({ address }), loadBasket(), resetBasketErrors()]),
+              concatMapTo([
+                updateCustomerAddressSuccess({ address }),
+                loadBasket(),
+                resetBasketErrors(),
+                loadBasketAddresses(),
+              ]),
               mapErrorToAction(updateCustomerAddressFail)
             );
         }

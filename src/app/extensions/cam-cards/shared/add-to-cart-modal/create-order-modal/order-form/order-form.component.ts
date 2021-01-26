@@ -25,6 +25,7 @@ export class OrderFormComponent implements OnInit, OnDestroy {
   contacts: CamCardContact[];
 
   @Input() orderToEdit?: EditBucket;
+  @Input() edit?: boolean;
 
   private destroy$ = new Subject<void>();
 
@@ -40,7 +41,7 @@ export class OrderFormComponent implements OnInit, OnDestroy {
 
     this.addressForm = this.fb.group({
       customer: [this.orderToEdit?.customerId || '', [Validators.required]],
-      contact: [this.orderToEdit?.contactPerson.erpId || '', Validators.required],
+      contact: [this.orderToEdit?.contactPerson?.erpId || '', Validators.required],
       invoiceLabel: [this.orderToEdit?.invoiceLabel || '', [Validators.required, Validators.maxLength(20)]],
       phoneNumber: [this.orderToEdit?.phoneNumber || '', Validators.pattern('[0-9+-/]*')],
       orderMark: [this.orderToEdit?.orderMark || '', [Validators.required]],
@@ -88,7 +89,7 @@ export class OrderFormComponent implements OnInit, OnDestroy {
   }
 
   pickContact(event) {
-    const selectedContact = this.contacts.find(contact => contact.erpId === event.value);
+    const selectedContact = this.contacts?.find(contact => contact.erpId === event.value);
     this.addressForm.patchValue({ contactFull: selectedContact });
   }
 

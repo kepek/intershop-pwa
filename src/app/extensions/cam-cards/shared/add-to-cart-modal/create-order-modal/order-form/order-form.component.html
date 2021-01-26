@@ -6,6 +6,7 @@
         [placeholder]="'camfil.modal.createOrder.order-form.select.customer' | translate"
         formControlName="customer"
         (selectionChange)="pickCustomer($event)"
+        [disabled]="edit"
       >
         <mat-option>--</mat-option>
         <mat-option *ngFor="let customer of customers$ | async" [value]="customer.id">
