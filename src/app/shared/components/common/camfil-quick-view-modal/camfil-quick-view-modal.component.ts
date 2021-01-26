@@ -66,7 +66,7 @@ export class CamfilQuickViewModalComponent implements OnInit, OnDestroy {
 
       this.isShipmentInformationAvailable =
         Number.isInteger(product.readyForShipmentMin) && Number.isInteger(product.readyForShipmentMax);
-      let videoUrl = ProductHelper.getImageCdnUrl(product, 'youTubeVideos', 'view1');
+      const videoUrl = ProductHelper.getImageCdnUrl(product, 'youTubeVideos', 'view1');
       if (videoUrl) {
         this.secureVideoUrl = this.sanitizer.bypassSecurityTrustResourceUrl(videoUrl);
       }
