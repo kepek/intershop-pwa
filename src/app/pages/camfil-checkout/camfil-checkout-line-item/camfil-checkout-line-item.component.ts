@@ -126,18 +126,12 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
   }
 
   getItemBoxLabel() {
-    let boxLabel;
-    this.checkoutFacade.getBasketItemAttributes(this.basketId, this.product.id, this.bucketId);
     this.checkoutFacade.basketLineItems$?.pipe(take(1), takeUntil(this.destroy$)).subscribe((res: LineItem[]) => {
       const lineItem = res.find(li => li.id === this.product.id);
       const boxLabelAttribute = lineItem.attributes.find(att => att.name === 'boxLabel');
-
-      boxLabel = boxLabelAttribute && 'value' in boxLabelAttribute ? boxLabelAttribute.value : '';
+      this.boxLabel = boxLabelAttribute && 'value' in boxLabelAttribute ? (boxLabelAttribute.value as string) : '';
     });
-    if (boxLabel) {
-      this.boxLabel = boxLabel;
-    }
-    return boxLabel;
+    return this.boxLabel;
   }
 
   onBlur(target: HTMLDataElement) {

@@ -42,9 +42,6 @@ import {
   deleteBasketPayment,
   deleteBasketPaymentFail,
   deleteBasketPaymentSuccess,
-  getBasketItemAttributes,
-  getBasketItemAttributesFail,
-  getBasketItemAttributesSuccess,
   loadBasket,
   loadBasketAddressesSuccess,
   loadBasketEligiblePaymentMethods,
@@ -161,8 +158,7 @@ export const basketReducer = createReducer(
     deleteBasketPayment,
     submitBasket,
     updateConcardisCvcLastUpdated,
-    startCheckout,
-    getBasketItemAttributes
+    startCheckout
   ),
   unsetLoadingAndErrorOn(
     loadBasketSuccess,
@@ -183,8 +179,7 @@ export const basketReducer = createReducer(
     submitBasketSuccess,
     startCheckoutSuccess,
     updateConcardisCvcLastUpdated,
-    camfilDragLineItem,
-    getBasketItemAttributesSuccess
+    camfilDragLineItem
   ),
   setErrorOn(
     mergeBasketFail,
@@ -208,8 +203,7 @@ export const basketReducer = createReducer(
     updateConcardisCvcLastUpdatedFail,
     submitBasketFail,
     startCheckoutFail,
-    camfilDragLineItemFail,
-    getBasketItemAttributesFail
+    camfilDragLineItemFail
   ),
 
   on(loadBasketSuccess, mergeBasketSuccess, (state: BasketState, action) => {
@@ -377,24 +371,6 @@ export const basketReducer = createReducer(
     ...state,
     basketAddresses: action.payload.basketAddresses,
   })),
-
-  on(getBasketItemAttributesSuccess, (state: BasketState, action) => {
-    const { bucketId, lineItemId, attributes } = action.payload;
-
-    return {
-      ...state,
-      buckets: state.buckets.map(b => {
-        if (b.id === bucketId) {
-          return {
-            ...b,
-            lineItems: b.lineItems.map(li => (li.id === lineItemId ? { ...li, attributes } : li)),
-          };
-        } else {
-          return b;
-        }
-      }),
-    };
-  }),
 
   on(deleteBasketItemAttributesSuccess, (state: BasketState, action) => {
     const { bucketId, lineItemId, attributeName } = action.payload;

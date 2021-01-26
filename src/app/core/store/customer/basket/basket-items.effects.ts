@@ -48,9 +48,6 @@ import {
   deleteBasketItemAttributesSuccess,
   deleteBasketItemFail,
   deleteBasketItemSuccess,
-  getBasketItemAttributes,
-  getBasketItemAttributesFail,
-  getBasketItemAttributesSuccess,
   loadBasket,
   loadBasketAddresses,
   loadBuckets,
@@ -344,18 +341,6 @@ export class BasketItemsEffects {
     )
   );
   // CAMFIL
-
-  getLineItemAttributtes$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(getBasketItemAttributes),
-      mapToPayload(),
-      mergeMap(payload =>
-        this.basketService
-          .getLineItemAttributes(payload.basketId, payload.lineItemId, payload.bucketId)
-          .pipe(map(getBasketItemAttributesSuccess), mapErrorToAction(getBasketItemAttributesFail))
-      )
-    )
-  );
 
   addLineItemAttribute$ = createEffect(() =>
     this.actions$.pipe(
