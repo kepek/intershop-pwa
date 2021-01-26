@@ -130,13 +130,15 @@ export class BasketAddressesEffects {
       mapToPayload(),
       withLatestFrom(this.store.pipe(select(getLoggedInCustomer))),
       mergeMap(([payload, customer]) => {
+        const { address } = payload;
+
         // create address at customer for logged in user
         if (customer && !payload.isBasket) {
           return this.addressService
-            .updateCustomerAddress('-', payload.address)
+            .updateCustomerAddress('-', address)
             .pipe(
               concatMapTo([
-                updateCustomerAddressSuccess({ address: payload.address }),
+                updateCustomerAddressSuccess({ address }),
                 loadBasket(),
                 resetBasketErrors(),
               ]),
@@ -145,10 +147,10 @@ export class BasketAddressesEffects {
           // create address at basket for anonymous user
         } else {
           return this.basketService
-            .updateBasketAddress(payload.address)
+            .updateBasketAddress(address)
             .pipe(
               concatMapTo([
-                updateCustomerAddressSuccess({ address: payload.address }),
+                updateCustomerAddressSuccess({ address }),
                 loadBasket(),
                 resetBasketErrors(),
                 loadBasketAddresses(),

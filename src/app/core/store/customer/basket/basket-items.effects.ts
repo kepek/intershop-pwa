@@ -202,8 +202,10 @@ export class BasketItemsEffects {
       mergeMap(payload =>
         this.basketService.updateBucket(payload.basketId, payload.addressId, payload.basketExtension).pipe(
           mergeMap(() => {
-            if (payload.address) {
-              return [updateBasketAddress({ address: payload.address, isBasket: true })];
+            const { address } = payload;
+
+            if (address) {
+              return [updateBasketAddress({ address, isBasket: true })];
             } else {
               return [updateBucketSuccess()];
             }

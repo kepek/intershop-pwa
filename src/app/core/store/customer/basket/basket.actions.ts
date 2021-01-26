@@ -136,7 +136,7 @@ export const addEmptyBucket = createAction('[Basket] Add Empty Bucket', payload<
 export const addItemsToBasket = createAction(
   '[Basket Internal] Add Items To Basket',
   payload<{
-    items: { sku: string; quantity: number; unit: string; shippingMethod: string; shipToAddress?: string }[];
+    items: { sku: string; quantity: number; unit: string; shippingMethod?: string; shipToAddress?: string }[];
   }>()
 );
 
