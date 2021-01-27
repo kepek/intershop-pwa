@@ -208,7 +208,8 @@ export class ProductHelper {
     if (!(product && product.images)) {
       return;
     }
-    const image = product.images.find(image => image.typeID === imageType && image.viewID === imageView);
-    return image.effectiveUrl;
+    const image = product.images.find(i => i.typeID === imageType && i.viewID === imageView);
+
+    return image?.effectiveUrl;
   }
 }
