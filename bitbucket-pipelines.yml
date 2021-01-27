@@ -37,7 +37,7 @@ pipelines:
             - cat $HOME/.npm/_logs/*
             - cat $(find /tmp/ng-** -name "angular-errors.log")
       - parallel:
-          - step
+          - step:
               name: Simulating Build
               caches:
                 - node

@@ -82,13 +82,19 @@ describe('Camfil Checkout List Component', () => {
     component = fixture.componentInstance;
 
     component.order = {
-      customer: {},
+      basket: 'test_basketId',
+      id: 'test_id',
+      customer: {
+        id: 'test_customerId',
+        customerNo: 'test_customerNo',
+      },
       contacts: [
         {
           firstName: 'test',
           lastName: 'test',
         },
       ],
+      totals: 999,
     };
 
     element = fixture.nativeElement;

@@ -14,6 +14,7 @@ import { FeatureToggleModule } from 'ish-core/feature-toggle.module';
 import { IconModule } from 'ish-core/icon.module';
 import { PipesModule } from 'ish-core/pipes.module';
 import { MaterialModule } from 'ish-shared/material/material.module';
+import { LazyContentIncludeComponent } from 'ish-shell/shared/lazy-content-include/lazy-content-include.component';
 
 import { CamAccountExportsModule } from '../extensions/cam-account/exports/cam-account-exports.module';
 import { CamAhuExportsModule } from '../extensions/cam-ahu/exports/cam-ahu-exports.module';
@@ -123,6 +124,7 @@ const exportedComponents = [
     HeaderNavigationComponent,
     HeaderSimpleComponent,
     LanguageSwitchComponent,
+    LazyContentIncludeComponent,
     LoginStatusComponent,
     MiniBasketComponent,
     ProductCompareStatusComponent,
