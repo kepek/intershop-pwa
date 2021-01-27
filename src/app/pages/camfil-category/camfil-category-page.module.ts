@@ -9,7 +9,6 @@ import { SharedModule } from 'ish-shared/shared.module';
 import { CategoryImageComponent } from '../category/category-image/category-image.component';
 import { CategoryListComponent } from '../category/category-list/category-list.component';
 
-import { CamfilCategoryBoxComponent } from './camfil-category-box/camfil-category-box.component';
 import { CamfilCategoryBoxesComponent } from './camfil-category-boxes/camfil-category-boxes.component';
 import { CamfilCategoryCategoriesComponent } from './camfil-category-categories/camfil-category-categories.component';
 import { CamfilCategoryFaqComponent } from './camfil-category-faq/camfil-category-faq.component';
@@ -36,7 +35,6 @@ const camfilCategoryPageRoutes: Routes = [
     SharedModule,
   ],
   declarations: [
-    CamfilCategoryBoxComponent,
     CamfilCategoryBoxesComponent,
     CamfilCategoryCategoriesComponent,
     CamfilCategoryFaqComponent,

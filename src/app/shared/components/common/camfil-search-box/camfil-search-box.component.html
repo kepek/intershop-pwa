@@ -1,0 +1,102 @@
+<div class="overlay" (click)="out()" *ngIf="inputFocused"></div>
+<form
+  role="search"
+  class="search clearfix"
+  name="SearchBox_Header"
+  (submit)="submitSearch(searchInput.value)"
+  [ngClass]="{ 'search--focused': inputFocused }"
+>
+  <mat-icon svgIcon="search" class="search__icon background-icon"></mat-icon>
+
+  <input
+    #searchInput
+    [placeholder]="configuration?.placeholder || ''"
+    autocomplete="off"
+    type="text"
+    class="search-input"
+    (input)="searchSuggest($event.target.value)"
+    [value]="inputSearchTerms$ | async"
+    (keydown)="focus()"
+    (keydown.esc)="out()"
+    [class.mat-elevation-z2]="!isActive"
+    [class.mat-elevation-z8]="isActive"
+    (focus)="isActive = !isActive"
+    (focusout)="isActive = !isActive"
+  />
+
+  <div class="buttons">
+    <button
+      *ngIf="inputSearchTerms$ | async"
+      class="btn-reset btn btn-primary"
+      type="reset"
+      name="reset"
+      [title]="'search.searchbox.button.reset.title' | translate"
+      style="right: 40px"
+      (click)="searchSuggest(''); searchInput.focus()"
+    >
+      <fa-icon [icon]="['fas', 'times-circle']"></fa-icon>
+    </button>
+
+    <button
+      type="submit"
+      name="search"
+      [title]="'search.searchbox.button.title' | translate"
+      mat-flat-button
+      color="primary"
+    >
+      <!-- search button with icon -->
+      <ng-container *ngIf="!configuration?.buttonText; else textBlock">
+        <fa-icon [icon]="['fas', configuration?.icon || 'search']"></fa-icon>
+      </ng-container>
+      <!-- search button with text -->
+      <ng-template #textBlock> {{ configuration?.buttonText }} </ng-template>
+    </button>
+    <mat-icon svgIcon="inactive" *ngIf="inputFocused" class="search-close" (click)="out()"></mat-icon>
+  </div>
+
+  <ng-container *ngIf="inputFocused && searchResults$ | async as results">
+    <div class="box-shadow search-suggest-results">
+      <!-- {{ searchTerm }} -->
+      <div *ngIf="loading" class="col-12">
+        <ish-loading [standalone]="true"></ish-loading>
+      </div>
+      <div *ngIf="!loading">
+        <ng-container *ngIf="idToProdList && !noResults">
+          <camfil-product-listing
+            [id]="idToProdList"
+            [limitItemsOnList]="itemsOnSearchList"
+            onlyList="true"
+          ></camfil-product-listing>
+        </ng-container>
+      </div>
+      <div *ngIf="noResults">
+        <p class="m-3 p-3 bg-secondary">{{ 'camfil.search.searchbox.no.results' | translate }}</p>
+      </div>
+
+      <ng-container *ngIf="categoriesTree && categoriesFiltered?.length">
+        <h3 class="bg-light mb-3">{{ 'camfil.search.searchbox.categories.title' | translate }}</h3>
+        <div class="row box-gutters col-12">
+          <ng-container *ngFor="let category of categoriesFiltered">
+            <camfil-category-box
+              (click)="(!inputFocused)"
+              size="small"
+              [category]="category"
+              class="col-md-4 col-6"
+            ></camfil-category-box>
+          </ng-container>
+        </div>
+      </ng-container>
+
+      <div class="text-center col-12 mb-3">
+        <button
+          mat-raised-button
+          color="primary"
+          *ngIf="!noResults && !loading"
+          (click)="submitSearch(searchInput.value)"
+        >
+        {{ 'camfil.search.searchbox.show.all.results' | translate }}
+        </button>
+      </div>
+    </div>
+  </ng-container>
+</form>

@@ -4,7 +4,8 @@
   <p class="no-search-result-title" [innerHTML]="'search.noResult.message' | translate: { '0': searchTerm }"></p>
 </div>
 
-<div class="search-container main-search-container">
+<!-- <div class="search-container main-search-container">
+  TODO: improve camfil-search-box for case without comboBox
   <camfil-search-box
     [configuration]="{
       placeholder: 'search.searchbox.instructional_text' | translate,
@@ -12,6 +13,6 @@
       maxAutoSuggests: 10
     }"
   ></camfil-search-box>
-</div>
+</div> -->
 
 <div class="search-guidelines" [innerHTML]="'search.noresult.guidelines' | translate"></div>

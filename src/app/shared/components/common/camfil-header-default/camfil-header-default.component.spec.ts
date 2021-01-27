@@ -10,12 +10,12 @@ import { LazyWishlistsLinkComponent } from 'src/app/extensions/wishlists/exports
 import { FeatureToggleModule } from 'ish-core/feature-toggle.module';
 import { findAllCustomElements } from 'ish-core/utils/dev/html-query-utils';
 import { ContentIncludeComponent } from 'ish-shared/cms/components/content-include/content-include.component';
+import { CamfilSearchBoxComponent } from 'ish-shared/components/common/camfil-search-box/camfil-search-box.component.ts';
 import { CamfilHeaderNavigationComponent } from 'ish-shell/header/camfil-header-navigation/camfil-header-navigation.component';
 import { CamfilLanguageSwitchComponent } from 'ish-shell/header/camfil-language-switch/camfil-language-switch.component';
 import { CamfilLoginStatusComponent } from 'ish-shell/header/camfil-login-status/camfil-login-status.component';
 import { CamfilMiniBasketComponent } from 'ish-shell/header/camfil-mini-basket/camfil-mini-basket.component';
 import { CamfilProductCompareStatusComponent } from 'ish-shell/header/camfil-product-compare-status/camfil-product-compare-status.component';
-import { CamfilSearchBoxComponent } from 'ish-shell/header/camfil-search-box/camfil-search-box.component';
 import { CamfilUserLinksComponent } from 'ish-shell/header/camfil-user-links/camfil-user-links.component';
 import { UserInformationMobileComponent } from 'ish-shell/header/user-information-mobile/user-information-mobile.component';
 

@@ -23,6 +23,9 @@
     &:last-child {
       border-right: none;
     }
+    &:not(:empty) {
+      display: inline-block;
+    }
   }
   .product-prices-container {
     width: 150px;

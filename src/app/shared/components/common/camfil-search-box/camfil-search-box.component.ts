@@ -1,9 +1,11 @@
-import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, ReplaySubject, Subject } from 'rxjs';
-import { map, take, takeUntil } from 'rxjs/operators';
+import { map, takeUntil } from 'rxjs/operators';
 
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
+import { Category } from 'ish-core/models/category/category.model';
+import { ProductListingID } from 'ish-core/models/product-listing/product-listing.model';
 import { SuggestTerm } from 'ish-core/models/suggest-term/suggest-term.model';
 
 interface SearchBoxConfiguration {
@@ -45,27 +47,40 @@ interface SearchBoxConfiguration {
 @Component({
   selector: 'camfil-search-box',
   templateUrl: './camfil-search-box.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['./camfil-search-box.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CamfilSearchBoxComponent implements OnInit, OnDestroy {
-  isActive = false;
   /**
    * the search box configuration for this component
    */
   @Input() configuration?: SearchBoxConfiguration;
+  @ViewChild('searchInput') searchInput: ElementRef;
 
   searchResults$: Observable<SuggestTerm[]>;
   inputSearchTerms$ = new ReplaySubject<string>(1);
 
-  activeIndex = -1;
   inputFocused: boolean;
+  isActive = false;
+  loading = false;
+  noResults = false;
+  searchTerm: string;
+  idToProdList: ProductListingID;
+  categoriesTree: Category[];
+  categoriesFiltered: Category[];
+  // tslint:disable-next-line:force-jsdoc-comments
+  // TODO: move and define in global settings ex. productListingSearchBoxItemsPerPage
+  itemsOnSearchList = 5;
 
   private destroy$ = new Subject();
 
   constructor(private shoppingFacade: ShoppingFacade, private router: Router) {}
 
   ngOnInit() {
+    this.shoppingFacade.getAllCategoriesTree$.pipe(takeUntil(this.destroy$)).subscribe(list => {
+      this.categoriesTree = Object.values(list);
+    });
+
     // initialize with searchTerm when on search route
     this.shoppingFacade.searchTerm$
       .pipe(
@@ -76,6 +91,16 @@ export class CamfilSearchBoxComponent implements OnInit, OnDestroy {
 
     // suggests are triggered solely via stream
     this.searchResults$ = this.shoppingFacade.searchResults$(this.inputSearchTerms$);
+    this.searchResults$.pipe(takeUntil(this.destroy$)).subscribe(results => {
+      this.searchTerm = results.map(item => item.term).join(',');
+      this.loading = false;
+      if (this.searchTerm) {
+        this.idToProdList = { type: 'search', page: 1, value: this.searchTerm };
+        this.shoppingFacade.searchProductsInSearchBox(this.idToProdList);
+      } else {
+        this.noResults = true;
+      }
+    });
   }
 
   ngOnDestroy() {
@@ -83,50 +108,37 @@ export class CamfilSearchBoxComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  blur() {
-    this.inputFocused = false;
-    this.activeIndex = -1;
+  getFilteredCategories(searchTerm: string) {
+    return searchTerm.length > 1
+      ? this.categoriesTree.filter(item => item.name?.toLowerCase().includes(searchTerm.toLowerCase())).slice(0, 9)
+      : [];
   }
 
   focus() {
     this.inputFocused = true;
   }
 
+  out() {
+    this.inputFocused = false;
+    this.searchInput.nativeElement.blur();
+  }
+
   searchSuggest(searchTerm: string) {
+    this.categoriesFiltered = this.getFilteredCategories(searchTerm);
     this.inputSearchTerms$.next(searchTerm);
+    if (searchTerm) {
+      this.loading = true;
+      this.noResults = false;
+    }
   }
 
   submitSearch(suggestedTerm: string) {
-    if (!suggestedTerm) {
-      return false;
-    }
-
-    // remove focus when switching to search page
-    this.inputFocused = false;
-
-    if (this.activeIndex !== -1) {
-      // something was selected via keyboard
-      this.searchResults$.pipe(take(1), takeUntil(this.destroy$)).subscribe(results => {
-        this.router.navigate(['/search', results[this.activeIndex].term]);
-      });
-    } else {
-      this.router.navigate(['/search', suggestedTerm]);
+    if (suggestedTerm) {
+      this.out();
+      this.router.navigate(['/search', this.searchTerm || suggestedTerm]);
     }
 
     // prevent form submission
     return false;
-  }
-
-  selectSuggestedTerm(index: number) {
-    this.searchResults$.pipe(take(1), takeUntil(this.destroy$)).subscribe(results => {
-      if (
-        (this.configuration && this.configuration.maxAutoSuggests && index > this.configuration.maxAutoSuggests - 1) ||
-        index < -1 ||
-        index > results.length - 1
-      ) {
-        return;
-      }
-      this.activeIndex = index;
-    });
   }
 }

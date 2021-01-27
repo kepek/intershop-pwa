@@ -23,7 +23,7 @@
 
 <ng-template #small>
   <mat-card>
-    <a routerLink="/{{ getCategoryUrl(category) }}" class="d-flex align-items-center">
+    <a routerLink="/{{ getCategoryUrl(category) }}" (click)="handleClick()" class="d-flex align-items-center">
       <figure>
         <img *ngIf="category.images" src="{{ category.images[0].effectiveUrl }}" alt="" />
         <mat-icon *ngIf="!category.images" svgIcon="logo" class="logo"></mat-icon>

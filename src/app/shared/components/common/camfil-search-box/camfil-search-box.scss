@@ -1,0 +1,136 @@
+@import '~src/styles/themes/camfil/colors.scss';
+@import '~src/styles/themes/camfil/variables.scss';
+
+:host {
+  position: relative;
+  display: block;
+  width: 100%;
+
+  button {
+    &[type='submit'] {
+      position: absolute;
+      top: $space-box-half;
+      right: $space-box-half;
+      padding-right: $space-default;
+      padding-left: $space-default;
+      line-height: $top-header-height-mobile;
+    }
+
+    &.btn-reset {
+      display: none;
+    }
+  }
+
+  .search {
+    position: relative;
+    display: block;
+    width: 100%;
+    z-index: 10;
+
+    &-input {
+      width: 100%;
+      height: 48px;
+      padding: $space-box-half $space-box-half $space-box-half ($space-box * 3.5);
+      border: none;
+      border-radius: 30px;
+
+      &:focus {
+        outline: none;
+
+        + .buttons {
+          button {
+            color: $camfil-color-light;
+          }
+        }
+      }
+    }
+
+    &-suggest-results {
+      position: absolute;
+      top: 48px;
+      width: 150%;
+      margin-left: -25%;
+      background-color: $camfil-white;
+      z-index: 10;
+      box-shadow: 0 0px 5px 0px rgba(0, 0, 0, 0.2);
+    }
+
+    @media (max-width: $screen-lg-max) {
+      &--focused {
+        position: fixed;
+        overflow: auto;
+        width: calc(100% - #{$space-box});
+        height: calc(100% - #{$space-box});
+        top: $space-box-half;
+        left: $space-box-half; 
+      }
+
+      &-suggest-results {
+        width: 100%;
+        margin-left: 0;
+      }
+    }
+
+    &-close {
+      position: absolute;
+      top: 12px;
+      right: 100px;
+      cursor: pointer;
+    }
+  }
+
+  .background-icon {
+    position: absolute;
+    top: 12px;
+    left: $space-box;
+  }
+
+  ::ng-deep {
+    div.product-list {
+      margin-bottom: $space-box;
+
+      .product-list-item {
+        padding: 0;
+
+        &:nth-child(2n) {
+          .mat-card {
+            background-color: $greyF5;
+          }
+        }
+
+        .mat-card {
+          border-radius: 0;
+          padding: 4px 8px;
+          box-shadow: none;
+          border: 1px solid $greyF5;
+
+          .camfil-product-title {
+            font-weight: 600;
+            font-size: $font-size-base;
+          }
+        }
+      }
+    }
+    h3.bg-light {
+      padding: $space-box / 2 $space-default; 
+      margin: 0;
+      text-transform: none;
+      font-weight: 600;
+
+      small {
+        margin-left: $space-box;
+        font-weight: 400;
+      }
+    }
+  }
+
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.25);
+    z-index: 9;
+    height: 100%;
+    width: 100%;
+  }
+}

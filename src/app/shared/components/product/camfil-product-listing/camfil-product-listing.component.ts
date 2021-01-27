@@ -19,6 +19,8 @@ export class CamfilProductListingComponent implements OnInit, OnChanges, OnDestr
   @Input() id: ProductListingID;
   @Input() mode: 'endless-scrolling' | 'paging' = 'endless-scrolling';
   @Input() fragmentOnRouting = 'product-list-top';
+  @Input() onlyList = false;
+  @Input() limitItemsOnList?: number;
 
   productListingView$: Observable<ProductListingView>;
   viewType$: Observable<ViewType>;

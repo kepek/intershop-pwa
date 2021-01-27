@@ -38,7 +38,6 @@ import { CamfilLoginStatusComponent } from './header/camfil-login-status/camfil-
 import { CamfilMiniBasketComponent } from './header/camfil-mini-basket/camfil-mini-basket.component';
 import { CamfilProductCompareStatusComponent } from './header/camfil-product-compare-status/camfil-product-compare-status.component';
 import { CamfilProductImageComponent } from './header/camfil-product-image/camfil-product-image.component';
-import { CamfilSearchBoxComponent } from './header/camfil-search-box/camfil-search-box.component';
 import { CamfilSubCategoryNavigationComponent } from './header/camfil-sub-category-navigation/camfil-sub-category-navigation.component';
 import { CamfilUserLinksComponent } from './header/camfil-user-links/camfil-user-links.component';
 import { HeaderCheckoutComponent } from './header/header-checkout/header-checkout.component';
@@ -79,7 +78,6 @@ const exportedComponents = [
   CamfilMiniBasketComponent,
   CamfilProductCompareStatusComponent,
   CamfilProductImageComponent,
-  CamfilSearchBoxComponent,
   CamfilUserLinksComponent,
   CookiesBannerComponent,
   FooterComponent,

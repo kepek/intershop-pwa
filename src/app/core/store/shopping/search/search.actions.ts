@@ -1,7 +1,13 @@
 import { createAction } from '@ngrx/store';
 
+import { ProductListingID } from 'ish-core/models/product-listing/product-listing.model';
 import { SuggestTerm } from 'ish-core/models/suggest-term/suggest-term.model';
 import { httpError, payload } from 'ish-core/utils/ngrx-creators';
+
+export const searchProductsInSearchBox = createAction(
+  '[Search Internal] Search Products In Search Box',
+  payload<{ id: ProductListingID }>()
+);
 
 export const searchProducts = createAction(
   '[Search Internal] Search Products',

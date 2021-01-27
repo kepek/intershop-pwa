@@ -1,8 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { MockComponent } from 'ng-mocks';
-
-import { CamfilSearchBoxComponent } from 'ish-shell/header/camfil-search-box/camfil-search-box.component';
 
 import { SearchNoResultComponent } from './search-no-result.component';
 
@@ -15,7 +12,7 @@ describe('Search No Result Component', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [TranslateModule.forRoot()],
-      declarations: [MockComponent(CamfilSearchBoxComponent), SearchNoResultComponent],
+      declarations: [SearchNoResultComponent],
     });
   });
 
