@@ -183,8 +183,7 @@ export class ProductHelper {
     return { ...product, attributes };
   }
 
-    /** CAMFIL CUSTOMIZATION: */
-
+  /** CAMFIL CUSTOMIZATION: */
 
   /** Get all product ImageView ids
 
@@ -197,17 +196,12 @@ export class ProductHelper {
    */
 
   static getImageViewIDs(product: Product, imageType: string): string[] {
-
     if (!(product && product.images)) {
-
       return [];
-
     }
 
     return product.images.filter(image => image.typeID === imageType).map(image => image.viewID);
-
   }
-
 
   /**
 
@@ -224,16 +218,12 @@ export class ProductHelper {
    */
 
   static getImageCdnUrl(product: Product, imageType: string, imageView: string): string {
-
     if (!(product && product.images)) {
-
       return;
-
     }
 
     const image = product.images.find(image => image.typeID === imageType && image.viewID === imageView);
 
     return image.effectiveUrl;
-
   }
 }

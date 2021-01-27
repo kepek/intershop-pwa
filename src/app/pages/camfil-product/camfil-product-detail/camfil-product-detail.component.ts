@@ -42,6 +42,7 @@ export class CamfilProductDetailComponent implements OnInit, OnDestroy {
   isVariationProduct = ProductHelper.isVariationProduct;
   isMasterProduct = ProductHelper.isMasterProduct;
   isRetailSet = ProductHelper.isRetailSet;
+  getImageCdnUrl = ProductHelper.getImageCdnUrl;
 
   private destroy$ = new Subject();
 

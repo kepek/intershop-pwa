@@ -23,6 +23,7 @@ import { LineItem, LineItemView } from 'ish-core/models/line-item/line-item.mode
 import { ProductView } from 'ish-core/models/product-view/product-view.model';
 import { ProductCompletenessLevel } from 'ish-core/models/product/product.model';
 import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
+import { CamfilQuickViewModalComponent } from 'ish-shared/components/common/camfil-quick-view-modal/camfil-quick-view-modal.component';
 
 @Component({
   selector: 'camfil-checkout-line-item',
@@ -199,5 +200,14 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
         });
       }
     }
+  }
+
+  openQuickViewDialog() {
+    this.dialog.open(CamfilQuickViewModalComponent, {
+      width: '768px',
+      autoFocus: false,
+      maxHeight: '80vh',
+      data: { sku: this.product.productSKU },
+    });
   }
 }

@@ -7,8 +7,11 @@
       </a>
       <div class="my-2 my-md-0">
         <div class="d-flex flex-row">
-          <camfil-product-title [product]="productData" [class]="'text-truncate'"></camfil-product-title
-          ><camfil-product-inventory class="px-2" [product]="productData"></camfil-product-inventory>
+          <camfil-product-title [product]="productData" [class]="'text-truncate'"></camfil-product-title>
+          <button mat-button (click)="openQuickViewDialog(); $event.stopPropagation()">
+            <mat-icon svgIcon="search" class="size-15"></mat-icon>
+          </button>
+          <!-- <camfil-product-inventory class="px-2" [product]="productData"></camfil-product-inventory> -->
         </div>
       </div>
     </div>
