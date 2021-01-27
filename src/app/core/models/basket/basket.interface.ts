@@ -70,7 +70,7 @@ export interface BasketData {
 export interface BasketExtensions {
   name?: string;
   customer?: CamCardCustomer;
-  contactPerson: CamCardContact;
+  contactPerson?: CamCardContact;
   info?: string;
   boxLabel?: string;
   phoneNumber?: string;

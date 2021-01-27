@@ -180,7 +180,7 @@
     },
     "private-destroy-field": true,
     "ngrx-use-empty-store-type": true,
-    "semicolon": [true, "always"],
+    "semicolon": [true, "always", "ignore-bound-class-methods"],
     "triple-equals": true,
     "typedef-whitespace": [
       true,
