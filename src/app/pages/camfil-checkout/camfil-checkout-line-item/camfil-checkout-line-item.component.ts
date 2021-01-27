@@ -16,6 +16,8 @@ import { debounceTime, take, takeUntil } from 'rxjs/operators';
 
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
+import { AttributeGroupTypes } from 'ish-core/models/attribute-group/attribute-group.types';
+import { AttributeHelper } from 'ish-core/models/attribute/attribute.helper';
 import { LineItemUpdate } from 'ish-core/models/line-item-update/line-item-update.model';
 import { LineItem, LineItemView } from 'ish-core/models/line-item/line-item.model';
 import { ProductView } from 'ish-core/models/product-view/product-view.model';
@@ -41,19 +43,26 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
   @Input() index: number;
   @Input() basketId: string;
   @Input() bucketId: string;
+  @Input() orderDeliveryDate: number;
+  @Input() isPartialDelivery: boolean;
+  @Input() lineItemIndex: number;
+
   @Output() handleLoad = new EventEmitter<{ res: ProductView; quantity: number }>();
   @Output() handleUpdate = new EventEmitter<{ res: ProductView; quantity: number }>();
+  earliestDeliveryDate: string;
+  quantity = 0;
+  boxLabel: string;
   boxLabelValidator = {
     boxLabel: [{ error: 'maxlength', message: 'MAX length exceeded' }],
   };
-  quantity = 0;
 
   @Input() product: LineItemView;
   @Input() id: string;
-  boxLabel: string;
+
   addToCartForm: FormGroup;
   boxLabelForm: FormGroup;
   selectItemForm: FormGroup;
+
   product$: Observable<ProductView>;
 
   private destroy$ = new Subject<void>();
@@ -62,11 +71,15 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
     this.initForm();
     this.quantity = this.product.quantity.value;
     this.updateQuantities();
+    this.getDeliveryDate();
   }
 
   ngOnChanges(s: SimpleChanges) {
     if (s.product) {
       this.loadProductDetails();
+    }
+    if (s.orderDeliveryDate || s.isPartialDelivery) {
+      this.getDeliveryDate();
     }
   }
 
@@ -158,6 +171,33 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
       this.boxLabel = '';
     } else {
       this.boxLabel = '';
+    }
+  }
+
+  getDeliveryDate() {
+    if (this.product$) {
+      if (!this.isPartialDelivery && this.orderDeliveryDate) {
+        return (this.earliestDeliveryDate = AttributeHelper.formatDeliveryDate(new Date(this.orderDeliveryDate)));
+      } else {
+        this.product$.pipe(take(1), takeUntil(this.destroy$)).subscribe((res: ProductView) => {
+          const today = new Date();
+          let daysTillReady: number;
+          if (res.attributeGroups && res.attributeGroups[AttributeGroupTypes.ProductsCheckoutAttributes]) {
+            daysTillReady = Number(
+              res.attributeGroups[AttributeGroupTypes.ProductsCheckoutAttributes].attributes.find(
+                a => a.name === 'Deliverydays'
+              ).value
+            );
+          } else {
+            // TODO To remove. Should use only Deliverydays when attribute value is provided
+            daysTillReady = res.readyForShipmentMin + this.lineItemIndex;
+          }
+          const delivery = today.setDate(today.getDate() + daysTillReady);
+          return this.orderDeliveryDate && delivery < this.orderDeliveryDate
+            ? (this.earliestDeliveryDate = AttributeHelper.formatDeliveryDate(new Date(this.orderDeliveryDate)))
+            : (this.earliestDeliveryDate = AttributeHelper.formatDeliveryDate(new Date(delivery)));
+        });
+      }
     }
   }
 }

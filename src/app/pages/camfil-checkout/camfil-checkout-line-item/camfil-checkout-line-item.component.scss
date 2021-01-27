@@ -29,6 +29,12 @@
   .delete-cam-card {
     z-index: 1;
   }
+  .delivery-date-container {
+    .delivery-date-para {
+      margin: 0;
+      font-size: $font-size-overline;
+    }
+  }
   @media (max-width: $screen-sm-max) {
     .attributes > * {
       line-height: 20px;

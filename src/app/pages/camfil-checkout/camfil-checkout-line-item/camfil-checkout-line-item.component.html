@@ -12,6 +12,7 @@
         </div>
       </div>
     </div>
+
     <!-- <camfil-cam-card-product-comment
       *ngIf="isEditMode || camCardItemData.comment?.label"
       [ngClass]="{ 'align-self-end': isViewMode, 'ml-md-auto': isEditMode }"
@@ -31,6 +32,10 @@
           [touched]="getField('boxLabel').touched || getField('boxLabel').dirty"
         ></camfil-error>
       </form>
+    </div>
+    <div class="delivery-date-container">
+      <p class="delivery-date-para"><strong>Earliest delivery date</strong></p>
+      <p class="delivery-date-para">{{ earliestDeliveryDate }}</p>
     </div>
     <ng-container>
       <div class="quantity-row d-flex flex-row justify-content-between align-items-center py-3 py-md-0">

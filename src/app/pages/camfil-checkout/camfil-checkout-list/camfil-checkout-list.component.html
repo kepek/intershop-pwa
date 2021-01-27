@@ -14,7 +14,7 @@
 
 <ng-template #orderHeader let-camCard="camCard">
   <div class="d-inline-flex">
-    <strong *ngIf="order"> {{ 'camfil.checkout.order' | translate }} {{ order.id }}</strong>
+    <strong *ngIf="order?.id"> {{ 'camfil.checkout.order' | translate }} {{ order?.id }}</strong>
     <span data-testing-id="order-number" class="order-number"
       >{{ order?.orderMark }}, {{ order?.customer?.companyName }}</span
     >
@@ -48,7 +48,7 @@
         </dl>
       </div>
       <div class="order-summary-info col-sm-3 border-sm-right" data-testing-id="order-summary-info">
-        <form [formGroup]="orderForm" class="form-horizontal" novalidate="novalidate">
+        <form *ngIf="orderForm" [formGroup]="orderForm" class="form-horizontal" novalidate="novalidate">
           <mat-form-field appearance="fill" class="form-field">
             <mat-label>{{ 'camfil.checkout.form.order_mark' | translate }}</mat-label>
             <input
@@ -71,11 +71,18 @@
           </mat-form-field>
           <mat-form-field appearance="fill">
             <mat-label>{{ 'camfil.checkout.form.delivery_date' | translate }}</mat-label>
-            <input matInput [matDatepicker]="pickerLast" formControlName="deliveryDate" readonly />
+            <input
+              matInput
+              [matDatepicker]="pickerLast"
+              formControlName="deliveryDate"
+              [min]="firstAvailableDelivery"
+              [value]="orderFullDeliveryDate"
+              (dateChange)="changeDeliveryDate($event)"
+            />
             <mat-datepicker-toggle matSuffix [for]="pickerLast">
               <mat-icon svgIcon="calendar" matDatepickerToggleIcon></mat-icon>
             </mat-datepicker-toggle>
-            <mat-datepicker #pickerLast></mat-datepicker>
+            <mat-datepicker [dateClass]="dateClass" #pickerLast></mat-datepicker>
           </mat-form-field>
         </form>
       </div>
@@ -123,7 +130,7 @@
         cdkDropList
         [cdkDropListData]="order.lineItems"
         (cdkDropListDropped)="drop($event, order)"
-        [attr.data-order-id]="order.id"
+        [attr.data-order-id]="order?.id"
       >
         <ng-container *ngFor="let product of order.lineItems; of: sortBy(); index as i">
           <div class="list-item-row list-item-row-big px-4 py-1 mt-2" [cdkDragData]="product" cdkDrag>
@@ -134,6 +141,9 @@
                 [product]="product"
                 [basketId]="order?.basket"
                 [bucketId]="order?.id"
+                [lineItemIndex]="i"
+                [isPartialDelivery]="isPartialDelivery"
+                [orderDeliveryDate]="selectedDeliveryDate"
               ></camfil-checkout-line-item>
             </div>
           </div>
@@ -166,3 +176,9 @@
 </camfil-modal-add-new-product>
 
 <camfil-edit-order-modal #editModal [order]="order"></camfil-edit-order-modal>
+<camfil-small-cta-modal
+  actionTitle="{{ modalDeliveryText | translate }}{{ order?.id }}"
+  actionButtonTitle="{{ 'camfil.checkout.create_new_order.temporary_order.ok' | translate }}"
+  onlyAccept="true"
+>
+</camfil-small-cta-modal>

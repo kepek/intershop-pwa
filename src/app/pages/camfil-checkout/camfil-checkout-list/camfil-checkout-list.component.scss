@@ -188,3 +188,40 @@
     margin: 0 -50px;
   }
 }
+
+.mat-datepicker-popup {
+  top: 0;
+}
+::ng-deep {
+  mat-datepicker-content {
+    .custom-date-class {
+      &::before {
+        background: $camfil-color-secondary;
+      }
+    }
+    .first-day-range {
+      &::before {
+        border-top-left-radius: 999px;
+        border-bottom-left-radius: 999px;
+      }
+    }
+    .last-day-range {
+      &::before {
+        background: $camfil-color-secondary;
+        border-top-right-radius: 999px;
+        border-bottom-right-radius: 999px;
+      }
+      .mat-calendar-body-cell-content {
+        color: #fff;
+        background-color: #006a3a;
+      }
+    }
+    .first-day-range,
+    .last-day-range {
+      .mat-calendar-body-selected {
+        color: #fff;
+        background-color: #006a3a;
+      }
+    }
+  }
+}

@@ -21,4 +21,13 @@ export class AttributeHelper {
     const attribute = AttributeHelper.getAttributeByAttributeName(attributes, attributeName);
     return attribute ? (attribute.value as T) : undefined;
   }
+
+  // CAMFIL
+
+  static formatDeliveryDate(value: Date) {
+    const month = `0 ${value.getMonth() + 1}`.slice(-2);
+    const day = `0 ${value.getDate()}`.slice(-2);
+    const year = value.getFullYear();
+    return [year, month, day].join('-');
+  }
 }
