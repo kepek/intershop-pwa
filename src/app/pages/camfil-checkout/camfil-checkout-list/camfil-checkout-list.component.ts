@@ -8,6 +8,8 @@ import { take, takeUntil } from 'rxjs/operators';
 
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
+import { AttributeGroupTypes } from 'ish-core/models/attribute-group/attribute-group.types';
+import { AttributeHelper } from 'ish-core/models/attribute/attribute.helper';
 import { Bucket } from 'ish-core/models/basket/bucket.model';
 import { LineItemData } from 'ish-core/models/line-item/line-item.interface';
 import { LineItem } from 'ish-core/models/line-item/line-item.model';
@@ -19,8 +21,6 @@ import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfi
 import { ModalAddNewProductComponent } from '../../../extensions/cam-cards/pages/account-cam-card-detail/modal-add-new-product/modal-add-new-product.component';
 
 import { EditOrderModalComponent } from './edit-order-modal/edit-order-modal.component';
-import { AttributeHelper } from 'ish-core/models/attribute/attribute.helper';
-import { AttributeGroupTypes } from 'ish-core/models/attribute-group/attribute-group.types';
 
 @Component({
   selector: 'camfil-checkout-list',

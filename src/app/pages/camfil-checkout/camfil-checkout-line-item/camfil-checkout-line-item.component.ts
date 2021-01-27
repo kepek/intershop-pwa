@@ -9,7 +9,6 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { AttributeHelper } from 'ish-core/models/attribute/attribute.helper';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Observable, Subject } from 'rxjs';
@@ -17,12 +16,13 @@ import { debounceTime, take, takeUntil } from 'rxjs/operators';
 
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
+import { AttributeGroupTypes } from 'ish-core/models/attribute-group/attribute-group.types';
+import { AttributeHelper } from 'ish-core/models/attribute/attribute.helper';
 import { LineItemUpdate } from 'ish-core/models/line-item-update/line-item-update.model';
 import { LineItem, LineItemView } from 'ish-core/models/line-item/line-item.model';
 import { ProductView } from 'ish-core/models/product-view/product-view.model';
 import { ProductCompletenessLevel } from 'ish-core/models/product/product.model';
 import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
-import { AttributeGroupTypes } from 'ish-core/models/attribute-group/attribute-group.types';
 
 @Component({
   selector: 'camfil-checkout-line-item',
@@ -184,7 +184,9 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
           let daysTillReady: number;
           if (res.attributeGroups && res.attributeGroups[AttributeGroupTypes.ProductsCheckoutAttributes]) {
             daysTillReady = Number(
-              res.attributeGroups[AttributeGroupTypes.ProductsCheckoutAttributes].attributes.find(a => a.name === 'Deliverydays').value
+              res.attributeGroups[AttributeGroupTypes.ProductsCheckoutAttributes].attributes.find(
+                a => a.name === 'Deliverydays'
+              ).value
             );
           } else {
             // TODO To remove. Should use only Deliverydays when attribute value is provided
