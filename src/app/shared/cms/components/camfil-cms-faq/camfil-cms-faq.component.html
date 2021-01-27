@@ -9,14 +9,29 @@
     </aside>
     <section class="col-md-4">
       <h3 *ngIf="pagelet.hasParam('Heading2')">{{ pagelet.stringParam('Heading2') }}</h3>
-      <button
-        *ngIf="pagelet.hasParam('Link')"
-        [routerLink]="routerLink(pagelet, 'Link')"
-        mat-stroked-button
-        color="primary"
-      >
-        {{ pagelet.stringParam('LinkText') }}
-      </button>
+
+      <ng-container *ngIf="pagelet.hasParam('Link')">
+        <ng-container *ngIf="isRouterLink(pagelet, 'Link'); else externalLink">
+          <button
+            *ngIf="pagelet.hasParam('Link')"
+            [routerLink]="routerLink(pagelet, 'Link')"
+            mat-stroked-button
+            color="primary"
+          >
+            {{ pagelet.stringParam('LinkText') }}
+          </button>
+        </ng-container>
+        <ng-template #externalLink>
+          <a
+            [href]="pagelet.stringParam('Link')"
+            [attr.title]="pagelet.stringParam('LinkText')"
+            class="mat-focus-indicator mat-raised-button mat-button-base px-5"
+            color="primary"
+          >
+            {{ pagelet.stringParam('LinkText') }}
+          </a>
+        </ng-template>
+      </ng-container>
     </section>
   </div>
 </mat-card>

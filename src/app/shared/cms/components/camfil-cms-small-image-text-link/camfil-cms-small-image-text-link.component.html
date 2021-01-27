@@ -12,14 +12,29 @@
       [ishServerHtml]="pagelet.stringParam('Description')"
     ></p>
   </div>
-  <a
-    *ngIf="pagelet.hasParam('Link')"
-    [routerLink]="routerLink(pagelet, 'Link')"
-    [attr.title]="pagelet.stringParam('LinkTitle')"
-    class="mat-fab mat-elevation-z1"
-    mat-fab
-    color=""
-  >
-    <mat-icon class="size-24">east</mat-icon>
-  </a>
+
+  <ng-container *ngIf="pagelet.hasParam('Link')">
+    <ng-container *ngIf="isRouterLink(pagelet, 'Link'); else externalLink">
+      <a
+        [routerLink]="routerLink(pagelet, 'Link')"
+        [attr.title]="pagelet.stringParam('LinkTitle')"
+        class="mat-fab mat-elevation-z1"
+        mat-fab
+        color=""
+      >
+        <mat-icon class="size-24">east</mat-icon>
+      </a>
+    </ng-container>
+    <ng-template #externalLink>
+      <a
+        [href]="pagelet.stringParam('Link')"
+        [attr.title]="pagelet.stringParam('LinkTitle')"
+        class="mat-fab mat-elevation-z1"
+        mat-fab
+        color=""
+      >
+        <mat-icon class="size-24">east</mat-icon>
+      </a>
+    </ng-template>
+  </ng-container>
 </div>

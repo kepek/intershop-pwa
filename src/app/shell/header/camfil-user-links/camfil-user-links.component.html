@@ -10,11 +10,10 @@
     ></camfil-language-switch>
   </li>
 
-  <!-- TODO: when BE do it -->
+  <!-- Header top links from CMS -->
   <ng-container *ngIf="closedLangList">
-    <li><a>Customer support</a></li>
-    <li><a href="/air-handling-unit-guide">Filter guide</a></li>
-    <li><a>Top link 3</a></li>
-    <li><a>Next link</a></li>
+    <li class="no-separator">
+      <ish-lazy-content-include includeId="camfil.include.header.topLinks.pagelet2-Include"></ish-lazy-content-include>
+    </li>
   </ng-container>
 </ul>

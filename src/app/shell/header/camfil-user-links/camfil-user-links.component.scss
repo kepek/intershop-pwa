@@ -31,6 +31,10 @@
         text-transform: none;
       }
 
+      &.no-separator::after {
+        display: none;
+      }
+
       @media (max-width: $screen-sm-max) {
         float: none;
         font-size: $font-size-base;
