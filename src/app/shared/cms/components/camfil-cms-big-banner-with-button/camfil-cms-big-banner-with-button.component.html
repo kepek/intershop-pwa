@@ -9,14 +9,28 @@
       {{ pagelet.stringParam('Heading1') }}
     </h1>
     <p *ngIf="pagelet.hasParam('Description')" class="mb-3" [ishServerHtml]="pagelet.stringParam('Description')"></p>
-    <a
-      *ngIf="pagelet.hasParam('Link') && pagelet.hasParam('LinkText')"
-      [routerLink]="routerLink(pagelet, 'Link')"
-      [attr.title]="pagelet.stringParam('LinkTitle')"
-      class="mat-focus-indicator mat-raised-button mat-button-base mat-primary px-5"
-      color="primary"
-    >
-      {{ pagelet.stringParam('LinkText') }}
-    </a>
+
+    <ng-container *ngIf="pagelet.hasParam('Link') && pagelet.hasParam('LinkText')">
+      <ng-container *ngIf="isRouterLink(pagelet, 'Link'); else externalLink">
+        <a
+          [routerLink]="routerLink(pagelet, 'Link')"
+          [attr.title]="pagelet.stringParam('LinkTitle')"
+          class="mat-focus-indicator mat-raised-button mat-button-base mat-primary px-5"
+          color="primary"
+        >
+          {{ pagelet.stringParam('LinkText') }}
+        </a>
+      </ng-container>
+      <ng-template #externalLink>
+        <a
+          [href]="pagelet.stringParam('Link')"
+          [attr.title]="pagelet.stringParam('LinkTitle')"
+          class="mat-focus-indicator mat-raised-button mat-button-base mat-primary px-5"
+          color="primary"
+        >
+          {{ pagelet.stringParam('LinkText') }}
+        </a>
+      </ng-template>
+    </ng-container>
   </div>
 </div>

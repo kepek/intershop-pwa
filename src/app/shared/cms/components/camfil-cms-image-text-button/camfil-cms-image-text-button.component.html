@@ -1,8 +1,19 @@
 <article>
   <mat-card>
-    <a [routerLink]="routerLink(pagelet, 'Link')">
-      <img mat-card-image [src]="pagelet.stringParam('Image')" [attr.alt]="pagelet.stringParam('AlternateText')" />
-    </a>
+    <!-- Image with link -->
+    <ng-container *ngIf="pagelet.hasParam('Link')">
+      <ng-container *ngIf="isRouterLink(pagelet, 'Link'); else externalImageLink">
+        <a [routerLink]="routerLink(pagelet, 'Link')">
+          <img mat-card-image [src]="pagelet.stringParam('Image')" [attr.alt]="pagelet.stringParam('AlternateText')" />
+        </a>
+      </ng-container>
+      <ng-template #externalImageLink>
+        <a [href]="pagelet.stringParam('Link')">
+          <img mat-card-image [src]="pagelet.stringParam('Image')" [attr.alt]="pagelet.stringParam('AlternateText')" />
+        </a>
+      </ng-template>
+    </ng-container>
+
     <mat-card-header>
       <mat-card-subtitle *ngIf="pagelet.hasParam('Heading2')" class="text-uppercase">{{
         pagelet.stringParam('Heading2')
@@ -13,15 +24,28 @@
       <p *ngIf="pagelet.hasParam('Description')" [ishServerHtml]="pagelet.stringParam('Description')"></p>
     </mat-card-content>
     <mat-card-actions class="text-right">
-      <a
-        *ngIf="pagelet.hasParam('Link') && pagelet.hasParam('LinkText')"
-        [routerLink]="routerLink(pagelet, 'Link')"
-        [attr.title]="pagelet.stringParam('LinkTitle')"
-        class="mat-stroked-button mat-primary"
-      >
-        <mat-icon>navigate_next</mat-icon>
-        {{ pagelet.stringParam('LinkText') }}
-      </a>
+      <!-- Button -->
+      <ng-container *ngIf="pagelet.hasParam('Link') && pagelet.hasParam('LinkText')">
+        <ng-container *ngIf="isRouterLink(pagelet, 'Link'); else externalLink">
+          <a
+            [routerLink]="routerLink(pagelet, 'Link')"
+            [attr.title]="pagelet.stringParam('LinkTitle')"
+            class="mat-stroked-button mat-primary"
+          >
+            <mat-icon>navigate_next</mat-icon>
+            {{ pagelet.stringParam('LinkText') }}
+          </a>
+        </ng-container>
+        <ng-template #externalLink>
+          <a
+            [href]="pagelet.stringParam('Link')"
+            [attr.title]="pagelet.stringParam('LinkTitle')"
+            class="mat-stroked-button mat-primary"
+          >
+            {{ pagelet.stringParam('LinkText') }}
+          </a>
+        </ng-template>
+      </ng-container>
     </mat-card-actions>
   </mat-card>
 </article>
