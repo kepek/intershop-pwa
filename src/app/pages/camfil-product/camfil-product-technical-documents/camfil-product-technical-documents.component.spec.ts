@@ -1,4 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MockComponent } from 'ng-mocks';
+
+import { ContentViewcontextComponent } from 'ish-shared/cms/components/content-viewcontext/content-viewcontext.component';
 
 import { CamfilProductTechnicalDocumentsComponent } from './camfil-product-technical-documents.component';
 
@@ -9,7 +12,7 @@ describe('Camfil Product Technical Documents Component', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CamfilProductTechnicalDocumentsComponent],
+      declarations: [CamfilProductTechnicalDocumentsComponent, MockComponent(ContentViewcontextComponent)],
     }).compileComponents();
   });
 

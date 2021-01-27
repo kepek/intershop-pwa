@@ -22,8 +22,8 @@ import { LineItemUpdate } from 'ish-core/models/line-item-update/line-item-updat
 import { LineItem, LineItemView } from 'ish-core/models/line-item/line-item.model';
 import { ProductView } from 'ish-core/models/product-view/product-view.model';
 import { ProductCompletenessLevel } from 'ish-core/models/product/product.model';
-import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
 import { CamfilQuickViewModalComponent } from 'ish-shared/components/common/camfil-quick-view-modal/camfil-quick-view-modal.component';
+import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
 
 @Component({
   selector: 'camfil-checkout-line-item',

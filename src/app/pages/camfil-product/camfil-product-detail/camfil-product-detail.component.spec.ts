@@ -31,7 +31,9 @@ import { LazyProductAddToQuoteComponent } from '../../../extensions/quoting/expo
 import { ProductDetailActionsComponent } from '../../product/product-detail-actions/product-detail-actions.component';
 import { ProductImagesComponent } from '../../product/product-images/product-images.component';
 import { CamfilProductAttributesPreviewComponent } from '../camfil-product-attributes-preview/camfil-product-attributes-preview.component';
+import { CamfilProductBadgesComponent } from '../camfil-product-badges/camfil-product-badges.component';
 import { CamfilProductImagesComponent } from '../camfil-product-images/camfil-product-images.component';
+import { CamfilProductTechnicalDocumentsComponent } from '../camfil-product-technical-documents/camfil-product-technical-documents.component';
 
 import { CamfilProductDetailComponent } from './camfil-product-detail.component';
 
@@ -62,6 +64,7 @@ describe('Camfil Product Detail Component', () => {
         MockComponent(CamfilProductAttributeComponent),
         MockComponent(CamfilProductAttributesComponent),
         MockComponent(CamfilProductAttributesPreviewComponent),
+        MockComponent(CamfilProductBadgesComponent),
         MockComponent(CamfilProductIdComponent),
         MockComponent(CamfilProductImagesComponent),
         MockComponent(CamfilProductInventoryComponent),
@@ -70,6 +73,7 @@ describe('Camfil Product Detail Component', () => {
         MockComponent(CamfilProductQuantityComponent),
         MockComponent(CamfilProductRatingComponent),
         MockComponent(CamfilProductShipmentComponent),
+        MockComponent(CamfilProductTechnicalDocumentsComponent),
         MockComponent(CamfilProductVariationSelectComponent),
         MockComponent(ContentViewcontextComponent),
         MockComponent(LazyProductAddToCamCardComponent),

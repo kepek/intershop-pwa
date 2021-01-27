@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+
 import { Product } from 'ish-core/models/product/product.model';
 
 @Component({
@@ -7,7 +8,7 @@ import { Product } from 'ish-core/models/product/product.model';
   styleUrls: ['./camfil-product-badges.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CamfilProductBadgesComponent {
+export class CamfilProductBadgesComponent implements OnInit {
   @Input() product: Product;
   @Input() getImageCdnUrl: (product: Product, imageType: string, imageView: string) => string;
   productBadgesUrls: string[];

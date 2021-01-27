@@ -222,8 +222,8 @@ export class ProductHelper {
       return;
     }
 
-    const image = product.images.find(image => image.typeID === imageType && image.viewID === imageView);
+    const img = product.images.find(image => image.typeID === imageType && image.viewID === imageView);
 
-    return image.effectiveUrl;
+    return img.effectiveUrl;
   }
 }
