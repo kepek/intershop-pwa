@@ -156,9 +156,9 @@ export class AccountCamCardDetailLineItemComponent implements OnChanges, OnInit,
   /** Determine the heading of the delete modal and opens the modal. */
   openQuickViewDialog(camCardItemData: CamCardItem) {
     this.dialog.open(CamfilQuickViewModalComponent, {
-      width: '330px',
+      width: '768px',
       autoFocus: false,
-      data: { ...camCardItemData },
+      data: { sku: camCardItemData.product.sku },
     });
   }
 

@@ -10,4 +10,5 @@ import { Product } from 'ish-core/models/product/product.model';
 })
 export class CamfilProductInventoryComponent {
   @Input() product: Product;
+  @Input() showText?: Product;
 }

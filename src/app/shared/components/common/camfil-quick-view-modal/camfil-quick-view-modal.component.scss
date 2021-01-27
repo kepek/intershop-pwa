@@ -1,0 +1,96 @@
+@import '~src/styles/themes/camfil/variables';
+
+::ng-deep {
+  camfil-product-attributes-preview {
+    dd,
+    dt {
+      font-size: unset !important;
+      &:nth-of-type(n + 2) {
+        border-top: none !important;
+      }
+    }
+  }
+
+  camfil-quick-view-modal {
+    .price-container {
+      camfil-product-attribute {
+        dt {
+          float: left;
+          width: 75px;
+        }
+      }
+    }
+    camfil-product-quantity {
+      .form-group {
+        margin-bottom: 0;
+      }
+    }
+    .quantity-form-text {
+      margin: 0;
+      color: rgba(0, 0, 0, 0.6);
+    }
+    camfil-product-attribute {
+      .camfil-product-attribute__value {
+        font-size: $font-size-xlg;
+      }
+    }
+    camfil-lazy-product-add-to-cam-card {
+      width: 100%;
+      button {
+        width: 100%;
+        mat-icon {
+          vertical-align: middle;
+        }
+      }
+      .button-text {
+        display: inline-block;
+        width: 85%;
+      }
+    }
+    camfil-product-add-to-basket {
+      width: 100%;
+      .add-to-cart {
+        margin-top: $space-box;
+        margin-bottom: $space-box;
+        .mat-flat-button {
+          margin-bottom: $space-box-half;
+        }
+
+        button {
+          width: 100%;
+          color: $camfil-color-light;
+          background-color: $camfil-color-primary;
+          mat-icon {
+            vertical-align: middle;
+          }
+        }
+        .button-text {
+          display: inline-block;
+          width: 85%;
+        }
+      }
+    }
+
+    camfil-product-add-to-compare {
+      mat-checkbox {
+        margin-bottom: $space-box-half;
+        label {
+          margin-bottom: 0.25em;
+        }
+      }
+    }
+  }
+}
+
+.product-details-guides {
+  padding-bottom: 10px;
+  padding-left: 0;
+  margin-top: 8px;
+  list-style: none;
+  li {
+    margin-bottom: 10px;
+    a {
+      font-weight: 500;
+    }
+  }
+}
