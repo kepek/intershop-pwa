@@ -10,6 +10,7 @@ import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { AttributeGroupTypes } from 'ish-core/models/attribute-group/attribute-group.types';
 import { AttributeHelper } from 'ish-core/models/attribute/attribute.helper';
+import { BasketExtensions } from 'ish-core/models/basket/basket.interface';
 import { Bucket } from 'ish-core/models/basket/bucket.model';
 import { LineItemData } from 'ish-core/models/line-item/line-item.interface';
 import { LineItem } from 'ish-core/models/line-item/line-item.model';
@@ -21,6 +22,11 @@ import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfi
 import { ModalAddNewProductComponent } from '../../../extensions/cam-cards/pages/account-cam-card-detail/modal-add-new-product/modal-add-new-product.component';
 
 import { EditOrderModalComponent } from './edit-order-modal/edit-order-modal.component';
+import { ORDER_HEADER_VALIDATORS } from './validators';
+
+interface Order extends Bucket {
+  totals: number;
+}
 
 @Component({
   selector: 'camfil-checkout-list',
@@ -29,18 +35,15 @@ import { EditOrderModalComponent } from './edit-order-modal/edit-order-modal.com
   styleUrls: ['./camfil-checkout-list.component.scss'],
 })
 export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
-  constructor(
-    private fb: FormBuilder,
-    public dialog: MatDialog,
-    private checkoutFacade: CheckoutFacade,
-    private shoppingFacade: ShoppingFacade
-  ) {}
   private static REQUIRED_COMPLETENESS_LEVEL = ProductCompletenessLevel.List;
-  @Input() order;
-  @Input() buckets;
+  @Input() order: Order;
+  @Input() buckets: Bucket[];
   isOrderOpen = true;
   orderForm: FormGroup;
+
+  validators = ORDER_HEADER_VALIDATORS;
   @Input() shippingMethodId: string;
+
   selectedDeliveryDate: number;
   firstAvailableDelivery: string;
   deliveryDatesRange: Date[];
@@ -48,10 +51,19 @@ export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
   orderFullDeliveryDate: number;
   modalDeliveryText: string;
   isPartialDelivery = false;
+
   @ViewChild(CamfilSmallCtaModalComponent) modal: CamfilSmallCtaModalComponent;
+
   private destroy$ = new Subject<void>();
 
-  ngOnInit() {
+  constructor(
+    private fb: FormBuilder,
+    public dialog: MatDialog,
+    private checkoutFacade: CheckoutFacade,
+    private shoppingFacade: ShoppingFacade
+  ) {}
+
+  ngOnInit(): void {
     if (this.order) {
       this.initForm();
     }
@@ -60,14 +72,28 @@ export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
   initForm() {
     const defaultDeliveryDate = this.setFullDeliveryDate();
     this.orderForm = this.fb.group({
-      orderMark: ['', [Validators.required, Validators.maxLength(35)]],
-      invoiceMark: ['', [Validators.maxLength(35)]],
+      orderMark: [this.order.orderMark, [Validators.required, Validators.maxLength(60)]],
+      invoiceLabel: [this.order.invoiceLabel, [Validators.required, Validators.maxLength(20)]],
+      info: [this.order.info, [Validators.maxLength(150)]],
       deliveryDate: [
         this.order?.deliveryDate?.length ? this.toDate(this.order.deliveryDate) : defaultDeliveryDate,
         [Validators.maxLength(35)],
       ],
-      note: ['', [Validators.maxLength(35)]],
     });
+  }
+
+  onBlurSubmit(field: string) {
+    const formField = this.getField(field);
+    if (!formField.errors) {
+      const { basket, deliveryAddressId } = this.order;
+
+      const updated: BasketExtensions = {
+        ...this.order,
+        [field]: formField.value,
+      };
+
+      this.shoppingFacade.updateBucket(basket, deliveryAddressId, updated);
+    }
   }
 
   toggleOrder() {
@@ -196,10 +222,15 @@ export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
     }
   }
 
+  getField(name: string) {
+    return this.orderForm.get(name);
+  }
+
   openEditModal(modal: EditOrderModalComponent) {
     this.dialog.open(modal.show());
     modal.hide = () => this.dialog.closeAll();
   }
+
   setFullDeliveryDate() {
     /** Get earliest delivery date for every line item */
     let items = this.order && this.order.lineItems;

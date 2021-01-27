@@ -217,7 +217,7 @@ export class BasketItemsEffects {
       mapToPayload(),
       withLatestFrom(this.store.pipe(select(getCurrentBasketId))),
       concatMap(([payload, basketId]) => {
-        const item = payload.items[0];
+        const item = payload.items?.[0];
         const { basketExtension, addressId } = item;
 
         const getActions = (info, bktId) =>
