@@ -1,18 +1,11 @@
 <div *ngIf="product?.sku">
-  <ul class="product-details-guides" *ngFor="let imageView of getImageViewIDs(product, 'RTYP12'); index as i">
+  <ul class="product-details-guides" *ngFor="let document of productDocuments">
     <li>
-      <a><mat-icon svgIcon="pdf"></mat-icon> Technical specification</a>
+      <a href="{{ document?.effectiveUrl }}" download><mat-icon svgIcon="pdf"></mat-icon> {{ document?.name }} </a>
     </li>
-    <li>
-      <a><mat-icon svgIcon="pdf"></mat-icon> Broschure</a>
-    </li>
-    <li>
-      <a><mat-icon svgIcon="pdf"></mat-icon> Data sheet</a>
-    </li>
-
-    <ish-content-viewcontext
-      viewContextId="vc_camfil_product_guides"
-      [callParameters]="{ Product: product.sku }"
-    ></ish-content-viewcontext>
   </ul>
+  <ish-content-viewcontext
+    viewContextId="vc_camfil_product_guides"
+    [callParameters]="{ Product: product.sku }"
+  ></ish-content-viewcontext>
 </div>
