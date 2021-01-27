@@ -102,6 +102,8 @@ export class BasketItemsEffects {
                 unit: entities[val.sku] && entities[val.sku].packingUnit,
                 shippingMethod: val.shippingMethod,
                 shipToAddress: val.shipToAddress,
+                basketExtension: val.basketExtension,
+                addressId: val.addressId,
               });
             }
             return acc;
@@ -122,11 +124,8 @@ export class BasketItemsEffects {
           quantity: payload.quantity,
           shippingMethod: payload.shippingMethod,
           shipToAddress: payload.urn,
-        }),
-        updateBucket({
-          basketId: payload.basketId,
+          basketExtension: payload.basketExtension,
           addressId: payload.addressId,
-          basketExtension: payload.basketExtensions,
         }),
       ])
     )
@@ -146,7 +145,7 @@ export class BasketItemsEffects {
                 sku: payload.sku,
                 quantity: payload.quantity,
                 basketId: basket.id,
-                basketExtensions: payload.basketExtensions,
+                basketExtension: payload.basketExtension,
               }),
             ])
           );
@@ -158,7 +157,7 @@ export class BasketItemsEffects {
             sku: payload.sku,
             quantity: payload.quantity,
             basketId: payload.basketId,
-            basketExtensions: payload.basketExtensions,
+            basketExtension: payload.basketExtension,
           }),
         ];
       })
@@ -179,11 +178,8 @@ export class BasketItemsEffects {
                     quantity: payload.quantity,
                     shippingMethod: payload.shippingMethod,
                     shipToAddress: address.urn,
-                  }),
-                  updateBucket({
-                    basketId: payload.basketId,
+                    basketExtension: payload.basketExtension,
                     addressId: address.id,
-                    basketExtension: payload.basketExtensions,
                   }),
                   loadBasketAddresses(),
                 ]
@@ -203,11 +199,10 @@ export class BasketItemsEffects {
         this.basketService.updateBucket(payload.basketId, payload.addressId, payload.basketExtension).pipe(
           mergeMap(() => {
             const { address } = payload;
-
             if (address) {
-              return [updateBasketAddress({ address, isBasket: true })];
+              return [updateBasketAddress({ address, isBasket: true }), loadBasket()];
             } else {
-              return [updateBucketSuccess()];
+              return [updateBucketSuccess(), loadBasket()];
             }
           }),
           mapErrorToAction(updateBucketFail)
@@ -222,16 +217,31 @@ export class BasketItemsEffects {
       mapToPayload(),
       withLatestFrom(this.store.pipe(select(getCurrentBasketId))),
       concatMap(([payload, basketId]) => {
+        const item = payload.items[0];
+        const { basketExtension, addressId } = item;
+
+        const getActions = (info, bktId) =>
+          basketExtension
+            ? [
+                addItemsToBasketSuccess({ info }),
+                updateBucket({
+                  basketId: bktId,
+                  addressId,
+                  basketExtension,
+                }),
+              ]
+            : [addItemsToBasketSuccess({ info })];
+
         if (basketId) {
           return this.basketService.addItemsToBasket(payload.items).pipe(
-            map(info => addItemsToBasketSuccess({ info })),
+            concatMap(info => getActions(info, basketId)),
             mapErrorToAction(addItemsToBasketFail)
           );
         } else {
           return this.basketService.createBasket().pipe(
-            switchMap(() =>
+            switchMap(basket =>
               this.basketService.addItemsToBasket(payload.items).pipe(
-                map(info => addItemsToBasketSuccess({ info })),
+                concatMap(info => getActions(info, basket.id)),
                 mapErrorToAction(addItemsToBasketFail)
               )
             )
