@@ -38,6 +38,15 @@ pipelines:
             - cat $(find /tmp/ng-** -name "angular-errors.log")
       - parallel:
           - step:
+              name: Simulating Build
+              caches:
+                - node
+              script:
+                - npm run tsc:build-all -- --noEmit
+              after-script:
+                - cat $HOME/.npm/_logs/*
+                - cat $(find /tmp/ng-** -name "angular-errors.log")
+          - step:
               name: Code Linting
               caches:
                 - node
