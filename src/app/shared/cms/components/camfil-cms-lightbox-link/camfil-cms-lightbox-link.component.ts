@@ -11,6 +11,7 @@ export interface DialogData {
 @Component({
   selector: 'camfil-cms-lightbox-link',
   templateUrl: './camfil-cms-lightbox-link.component.html',
+  styleUrls: ['./camfil-cms-lightbox-link.component.scss'],
 })
 export class CamfilCmsLightboxLinkComponent implements CMSComponent {
   @Input() pagelet: ContentPageletView;
