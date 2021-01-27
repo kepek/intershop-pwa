@@ -30,6 +30,7 @@
     z-index: 1;
   }
   .delivery-date-container {
+    min-width: 115px;
     .delivery-date-para {
       margin: 0;
       font-size: $font-size-overline;
@@ -70,8 +71,8 @@
     }
     .camfil-product-title {
       display: block;
-      width: 200px;
-      max-width: 200px;
+      width: 170px;
+      max-width: 170px;
     }
     .product-image {
       max-width: 40px;

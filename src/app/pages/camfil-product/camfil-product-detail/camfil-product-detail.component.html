@@ -145,29 +145,14 @@
   </div>
   <div class="col-12 col-md-4 col-lg-4 my-3">
     <strong>{{ 'camfil.product.details.guides.headline' | translate }}</strong>
-    <ul class="product-details-guides">
-      <li>
-        <a><mat-icon svgIcon="pdf"></mat-icon> Technical specification</a>
-      </li>
-      <li>
-        <a><mat-icon svgIcon="pdf"></mat-icon> Broschure</a>
-      </li>
-      <li>
-        <a><mat-icon svgIcon="pdf"></mat-icon> Data sheet</a>
-      </li>
 
-      <ish-content-viewcontext
-        viewContextId="vc_camfil_product_guides"
-        [callParameters]="{ Product: product.sku }"
-      ></ish-content-viewcontext>
-    </ul>
+    <camfil-product-technical-documents
+      [product]="product"
+      [getImageCdnUrl]="getImageCdnUrl"
+    ></camfil-product-technical-documents>
 
-    <strong>Environmental Badges and Classifications</strong>
-    <ul class="product-details-badges">
-      <li><img src="" /> Badge name</li>
-      <li><img src="" /> Badge name</li>
-      <li><img src="" /> Badge name</li>
-    </ul>
+    <strong>{{ 'camfil.product.details.badges.headline' | translate }}</strong>
+    <camfil-product-badges [product]="product" [getImageCdnUrl]="getImageCdnUrl"></camfil-product-badges>
   </div>
 </div>
 <div class="row product-data my-4">

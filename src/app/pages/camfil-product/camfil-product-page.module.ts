@@ -17,9 +17,11 @@ import { ProductMasterVariationsComponent } from '../product/product-master-vari
 import { RetailSetPartsComponent } from '../product/retail-set-parts/retail-set-parts.component';
 
 import { CamfilProductAttributesPreviewComponent } from './camfil-product-attributes-preview/camfil-product-attributes-preview.component';
+import { CamfilProductBadgesComponent } from './camfil-product-badges/camfil-product-badges.component';
 import { CamfilProductDetailComponent } from './camfil-product-detail/camfil-product-detail.component';
 import { CamfilProductImagesComponent } from './camfil-product-images/camfil-product-images.component';
 import { CamfilProductPageComponent } from './camfil-product-page.component';
+import { CamfilProductTechnicalDocumentsComponent } from './camfil-product-technical-documents/camfil-product-technical-documents.component';
 
 const camfilProductPageRoutes: Routes = [
   {
@@ -55,11 +57,13 @@ const camfilProductPageRoutes: Routes = [
   ],
   declarations: [
     CamfilProductAttributesPreviewComponent,
+    CamfilProductBadgesComponent,
     CamfilProductDetailComponent,
     CamfilProductImagesComponent,
     CamfilProductLinksCarouselComponent,
     CamfilProductLinksComponent,
     CamfilProductPageComponent,
+    CamfilProductTechnicalDocumentsComponent,
     ProductBundlePartsComponent,
     ProductDetailActionsComponent,
     ProductDetailComponent,

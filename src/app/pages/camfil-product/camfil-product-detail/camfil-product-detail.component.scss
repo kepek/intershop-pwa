@@ -201,6 +201,9 @@ strong {
         display: inline-block;
         width: 85%;
       }
+      .mat-icon {
+        vertical-align: middle;
+      }
     }
     camfil-product-add-to-basket {
       width: 100%;
@@ -210,7 +213,9 @@ strong {
         .mat-flat-button {
           margin-bottom: $space-box-half;
         }
-
+        .mat-icon {
+          vertical-align: middle;
+        }
         button {
           width: 100%;
           color: $camfil-color-light;
