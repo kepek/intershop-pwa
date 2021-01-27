@@ -5,6 +5,7 @@ import { Product } from 'ish-core/models/product/product.model';
 @Component({
   selector: 'camfil-product-technical-documents',
   templateUrl: './camfil-product-technical-documents.component.html',
+  styleUrls: ['./camfil-product-technical-documents.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CamfilProductTechnicalDocumentsComponent implements OnInit {

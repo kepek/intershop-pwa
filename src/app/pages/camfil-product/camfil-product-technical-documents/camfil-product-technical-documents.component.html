@@ -1,11 +1,11 @@
 <div *ngIf="product?.sku">
-  <ul class="product-details-guides" *ngFor="let document of productDocuments">
-    <li>
+  <ul class="product-details-guides">
+    <li *ngFor="let document of productDocuments">
       <a href="{{ document?.effectiveUrl }}" download><mat-icon svgIcon="pdf"></mat-icon> {{ document?.name }} </a>
     </li>
+    <ish-content-viewcontext
+      viewContextId="vc_camfil_product_guides"
+      [callParameters]="{ Product: product.sku }"
+    ></ish-content-viewcontext>
   </ul>
-  <ish-content-viewcontext
-    viewContextId="vc_camfil_product_guides"
-    [callParameters]="{ Product: product.sku }"
-  ></ish-content-viewcontext>
 </div>

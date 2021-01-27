@@ -151,12 +151,8 @@
       [getImageCdnUrl]="getImageCdnUrl"
     ></camfil-product-technical-documents>
 
-    <strong>Environmental Badges and Classifications</strong>
-    <ul class="product-details-badges">
-      <li><img src="" /> Badge name</li>
-      <li><img src="" /> Badge name</li>
-      <li><img src="" /> Badge name</li>
-    </ul>
+    <strong>{{ 'camfil.product.details.badges.headline' | translate }}</strong>
+    <camfil-product-badges [product]="product" [getImageCdnUrl]="getImageCdnUrl"></camfil-product-badges>
   </div>
 </div>
 <div class="row product-data my-4">

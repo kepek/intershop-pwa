@@ -1,0 +1,24 @@
+@import '~src/styles/themes/camfil/variables';
+@import '~src/styles/themes/camfil/colors';
+
+:host {
+  .product-details-badges {
+    padding-left: 0;
+    margin-top: 8px;
+    color: $grey88;
+    list-style: none;
+
+    li {
+      display: flex;
+      align-items: center;
+      margin-top: 8px;
+    }
+
+    img {
+      position: relative;
+      min-height: 40px;
+      max-height: 40px;
+      margin-right: 8px;
+    }
+  }
+}

@@ -1,0 +1,59 @@
+@import '~src/styles/themes/camfil/variables';
+@import '~src/styles/themes/camfil/colors';
+
+:host {
+  .product-details-guides {
+    position: relative;
+    padding-bottom: 10px;
+    padding-left: 0;
+    margin-top: 8px;
+    list-style: none;
+
+    li {
+      margin-bottom: 10px;
+
+      a {
+        display: flex;
+        align-items: center;
+        font-weight: 500;
+      }
+
+      .mat-icon {
+        margin-right: 8px;
+        vertical-align: top;
+
+        &.error {
+          width: 20px;
+          height: 20px;
+          margin-right: 10px;
+          margin-left: 3px;
+        }
+
+        &::ng-deep {
+          svg {
+            vertical-align: top;
+          }
+        }
+      }
+    }
+
+    &::after {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      left: -25px;
+      display: block;
+      height: 0;
+      content: '';
+      border-bottom: 1px solid $greyD9;
+    }
+  }
+
+  &::ng-deep {
+    ish-content-viewcontext {
+      ish-content-pagelet {
+        display: block;
+      }
+    }
+  }
+}
