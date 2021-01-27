@@ -590,4 +590,10 @@ export class BasketService {
       })
       .pipe(map(() => ({ lineItemId, bucketId, attributeName })));
   }
+
+  deleteBucket(basketId: string, bucketId: string) {
+    return this.apiService.delete(`baskets/${basketId}/buckets/${bucketId}`, {
+      headers: this.basketHeaders,
+    });
+  }
 }

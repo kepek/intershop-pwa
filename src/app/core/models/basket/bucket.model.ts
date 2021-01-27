@@ -1,6 +1,6 @@
 import { Address } from 'ish-core/models/address/address.model';
 import { BasketExtensions } from 'ish-core/models/basket/basket.interface';
-import { LineItem } from 'ish-core/models/line-item/line-item.model';
+import { LineItemView } from 'ish-core/models/line-item/line-item.model';
 
 import { CamCardContact } from '../../../extensions/cam-cards/models/cam-card/cam-card.model';
 
@@ -20,7 +20,7 @@ export interface BucketAddress {
 export interface Bucket extends BasketExtensions {
   basket: string;
   id: string;
-  lineItems?: LineItem[];
+  lineItems?: LineItemView[];
   shipToAddress?: string;
   deliveryAddressId?: string;
   nextDelivery?: string;

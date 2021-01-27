@@ -1,0 +1,19 @@
+:host {
+  .link {
+    &__delete {
+      display: flex;
+      align-items: center;
+      font-weight: 500;
+
+      .mat-icon {
+        margin-right: 8px;
+        vertical-align: top;
+
+        &.remove-icon {
+          width: 16px;
+          height: 16px;
+        }
+      }
+    }
+  }
+}
