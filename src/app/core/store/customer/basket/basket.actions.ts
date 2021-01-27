@@ -149,7 +149,7 @@ export const addItemsToBasket = createAction(
       unit: string;
       shippingMethod?: string;
       shipToAddress?: string;
-      basketExtension: BasketExtensions;
+      basketExtension?: BasketExtensions;
       addressId?: string;
     }[];
   }>()
