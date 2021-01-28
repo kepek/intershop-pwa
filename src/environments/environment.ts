@@ -9,5 +9,5 @@ export const environment: Environment = {
   ...ENVIRONMENT_DEFAULTS,
 
   /* INTERSHOP COMMERCE MANAGEMENT REST API CONFIGURATION */
-  icmBaseURL: 'https://pwa-ish-demo.test.intershop.com',
+  icmBaseURL: 'https://int-api.shop.camfil.com/',
 };
