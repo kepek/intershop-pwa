@@ -23,7 +23,7 @@ export class CamfilProductImagesComponent {
    */
   @Input() product: Product;
 
-  activeSlide = 0;
+  activeSlide = "slide-0";
 
   getImageViewIDsExcludePrimary = ProductHelper.getImageViewIDsExcludePrimary;
 
@@ -32,7 +32,8 @@ export class CamfilProductImagesComponent {
    * @param slideIndex The slide index number to set the active slide
    */
   setActiveSlide(slideIndex: number) {
-    this.activeSlide = slideIndex;
+
+    this.activeSlide = `slide-${slideIndex}`;
   }
 
   /**
@@ -41,6 +42,6 @@ export class CamfilProductImagesComponent {
    * @returns True if the given slide index is the active slide, false otherwise
    */
   isActiveSlide(slideIndex: number): boolean {
-    return this.activeSlide === slideIndex;
+    return this.activeSlide ===  `slide-${slideIndex}`;
   }
 }

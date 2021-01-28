@@ -5,6 +5,9 @@ import { Image } from 'ish-core/models/image/image.model';
 import { PriceHelper } from 'ish-core/models/price/price.model';
 import { VariationProductMasterView, VariationProductView } from 'ish-core/models/product-view/product-view.model';
 
+import { ImageTypes } from 'ish-core/models/image/image.types';
+import { ProductTechnicalDocument } from 'ish-core/models/product-technical-document/product-technical-document.model';
+
 import { ProductBundle } from './product-bundle.model';
 import { ProductRetailSet } from './product-retail-set.model';
 import { VariationProductMaster } from './product-variation-master.model';
@@ -184,15 +187,10 @@ export class ProductHelper {
   }
 
   /** CAMFIL CUSTOMIZATION: */
-
   /** Get all product ImageView ids
-
    * @param product   The Product for which to get the image types
-
    * @param imageType The wanted ImageType
-
    * @returns         Array of available ImageView ids
-
    */
 
   static getImageViewIDs(product: Product, imageType: string): string[] {
@@ -200,20 +198,69 @@ export class ProductHelper {
   }
 
   /**
-
    * Get product image URL based on image type and image view
-
    * @param product   The Product for which to get the image
-
    * @param imageType The wanted ImageType
-
    * @param imageView The wanted ImageView
-
    * @returns         The matching product image
-
    */
 
   static getImageCdnUrl(product: Product, imageType: string, imageView: string): string {
     return product?.images?.find(image => image.typeID === imageType && image.viewID === imageView)?.effectiveUrl;
+  }
+
+  /**
+   * Get product technical documents
+   * @param product   The Product for which to get the technical documents
+   * @returns         The matching product technical documents
+   */
+
+  static getTechnicalDocuments(product: Product): ProductTechnicalDocument[] {
+    const productDocumentTypes = [
+      {
+        name: 'Brochures',
+        type: ImageTypes.Brochures,
+      },
+      {
+        name: 'Product PDF, Web',
+        type: ImageTypes.ProductPdf,
+      },
+      {
+        name: 'Handling & Maintenance',
+        type: ImageTypes.HamdlingAndMaintenance,
+      },
+    ];
+
+    if (!(product && product.images)) {
+      return;
+    }
+
+    return product.images
+      ?.filter(
+        image =>
+          (image.typeID === ImageTypes.Brochures ||
+            image.typeID === ImageTypes.ProductPdf ||
+            image.typeID === ImageTypes.HamdlingAndMaintenance) &&
+          image.viewID === 'default'
+      )
+      .map(document => ({
+        name: productDocumentTypes.find(prodDoc => prodDoc.type === document.typeID)?.name,
+        effectiveUrl: ProductHelper.getImageCdnUrl(product, document.typeID, document.viewID),
+      }));
+  }
+
+  /**
+   * Get product basges urls
+   * @param product   The Product for which to get the technical documents
+   * @returns         The matching product badges urls
+   */
+
+  static getProductBadges(product: Product): string[] {
+    if (!(product && product.images)) {
+      return;
+    }
+    return product.images
+      ?.filter(image => image.typeID === ImageTypes.Badge)
+      .map(badge => ProductHelper.getImageCdnUrl(product, badge.typeID, badge.viewID));
   }
 }

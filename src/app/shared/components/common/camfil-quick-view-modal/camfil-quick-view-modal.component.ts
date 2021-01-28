@@ -15,6 +15,7 @@ import {
 import { ProductCompletenessLevel, ProductHelper, ProductPrices } from 'ish-core/models/product/product.model';
 import { GenerateLazyComponent } from 'ish-core/utils/module-loader/generate-lazy-component.decorator';
 import { whenTruthy } from 'ish-core/utils/operators';
+import { ImageTypes } from 'ish-core/models/image/image.types';
 
 @Component({
   selector: 'camfil-quick-view-modal',
@@ -95,7 +96,7 @@ export class CamfilQuickViewModalComponent implements OnInit, OnDestroy {
       this.width = this.getAttributeValue(product.attributes, 'Width');
       this.depth = this.getAttributeValue(product.attributes, 'Depth');
       this.height = this.getAttributeValue(product.attributes, 'Height');
-      const videoUrl = this.getImageCdnUrl(product, 'youTubeVideos', 'view1');
+      const videoUrl = this.getImageCdnUrl(product, ImageTypes.YtVideo, 'view1');
       if (videoUrl) {
         this.secureVideoUrl = this.sanitizer.bypassSecurityTrustResourceUrl(videoUrl);
       }

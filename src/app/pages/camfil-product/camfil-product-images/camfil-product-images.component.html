@@ -8,35 +8,35 @@
         [showNavigationIndicators]="false"
         [interval]="false"
       >
-        <ng-template ngbSlide [id]="0">
-          <camfil-product-image [product]="product" imageType="L"></camfil-product-image>
+        <ng-template ngbSlide [id]="'slide-0'">
+          <camfil-product-image [product]="product" imageType="images"></camfil-product-image>
         </ng-template>
         <ng-template
           ngbSlide
-          *ngFor="let imageView of getImageViewIDsExcludePrimary(product, 'L'); index as i"
-          [id]="i + 1"
+          *ngFor="let imageView of getImageViewIDsExcludePrimary(product, 'images'); index as i"
+          [id]="'slide-' + i + 1"
         >
-          <camfil-product-image [product]="product" imageType="L" [imageView]="imageView"></camfil-product-image>
+          <camfil-product-image [product]="product" imageType="images" [imageView]="imageView"></camfil-product-image>
         </ng-template>
       </ngb-carousel>
       <camfil-product-label [product]="product"></camfil-product-label>
     </div>
   </div>
   <div class="col-12 px-3">
-    <div class="product-img-thumbs" data-type="S">
+    <div class="product-img-thumbs" data-type="images">
       <div class="col-4 product-thumb-set" [ngClass]="{ active: isActiveSlide(0) }" (click)="setActiveSlide(0)">
-        <camfil-product-image [product]="product" imageType="S" class="product-image"></camfil-product-image>
+        <camfil-product-image [product]="product" imageType="images" class="product-image"></camfil-product-image>
       </div>
 
       <div
-        *ngFor="let imageView of getImageViewIDsExcludePrimary(product, 'S'); index as i"
+        *ngFor="let imageView of getImageViewIDsExcludePrimary(product, 'images'); index as i"
         class="col-4 product-thumb-set"
         [ngClass]="{ active: isActiveSlide(i + 1) }"
         (click)="setActiveSlide(i + 1)"
       >
         <camfil-product-image
           [product]="product"
-          imageType="S"
+          imageType="images"
           [imageView]="imageView"
           class="product-image"
         ></camfil-product-image>
