@@ -351,15 +351,11 @@ export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
 
     const deliveryDateValue = AttributeHelper.formatDeliveryDate(new Date(deliveryDate));
 
-    const contact = this.order.contactPerson || {};
-
     this.selectedDeliveryDate = deliveryDate;
     this.isPartialDelivery = isPartial;
 
     const basketExtensionUpdate = {
-      contactPerson: contact,
-      info: this.order.info,
-      phoneNumber: this.order.phoneNumber,
+      ...this.order,
       deliveryDate: deliveryDateValue,
       isPartialDelivery: isPartial,
     };
