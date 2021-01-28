@@ -33,4 +33,10 @@ export class AddressHelper {
 
     return fullAddress ? fullAddress.urn : '';
   }
+
+  static getId(currentAddress: Address, addresses: Address[]): string {
+    const fullAddress = addresses.find(address => AddressHelper.compare(address, currentAddress));
+
+    return fullAddress ? fullAddress.id : '';
+  }
 }
