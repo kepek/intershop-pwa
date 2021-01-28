@@ -140,7 +140,7 @@ export class CreateOrderModalComponent implements OnInit, OnDestroy {
       this.shoppingFacade.addProductToBucketWithUrn(
         this.getUrn(address),
         this.commonShippingMethodId,
-        this.orderFormCmp.addressForm.get('addressFull').value.id,
+        this.getId(address),
         this.product.sku,
         quantity,
         this.basketId,
@@ -175,6 +175,10 @@ export class CreateOrderModalComponent implements OnInit, OnDestroy {
 
   getUrn(currentAddress: Address): string {
     return AddressHelper.getUrn(currentAddress, this.basketAddresses);
+  }
+
+  getId(currentAddress: Address): string {
+    return AddressHelper.getId(currentAddress, this.basketAddresses);
   }
 
   isNewAddress() {
