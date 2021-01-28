@@ -135,14 +135,10 @@ export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
       value: 0,
     };
 
-    const items = this.order && this.order.lineItems;
-
-    if (items) {
-      items.forEach(element => {
-        price.currency = getCurrency(element);
-        price.value = price.value + getValue(element);
-      });
-    }
+    this.order?.lineItems.forEach(element => {
+      price.currency = getCurrency(element);
+      price.value = price.value + getValue(element);
+    });
 
     return price;
   }

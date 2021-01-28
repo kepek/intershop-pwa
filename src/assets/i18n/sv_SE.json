@@ -768,6 +768,7 @@
   "camfil.checkout.order.total_cost_net.label": "sv_Total price after volume discount excl. VAT",
   "camfil.checkout.phone": "sv_Phone notification",
   "camfil.checkout.place_your_orders": "sv_Place your orders",
+  "camfil.checkout.saved_amout.text": "sv_Saved amount",
   "camfil.checkout.single_total_price_after": "sv_Order price after volume discount (excl. VAT)",
   "camfil.checkout.tax.text": "sv_Tax amount",
   "camfil.checkout.tax_amount": "sv_Tax amount",
