@@ -184,6 +184,7 @@ import { PromotionRemoveComponent } from './components/promotion/promotion-remov
 import { RecentlyViewedComponent } from './components/recently/recently-viewed/recently-viewed.component';
 import { FormsDynamicModule } from './forms-dynamic/forms-dynamic.module';
 import { FormsSharedModule } from './forms/forms.module';
+import { CamfilProductTechnicalDocumentsComponent } from './components/common/camfil-product-technical-documents/camfil-product-technical-documents.component';
 
 const importExportModules = [
   AddressFormsSharedModule,
@@ -264,6 +265,7 @@ const declaredComponents = [
   CamfilProductListToolbarComponent,
   CamfilProductQuickviewComponent,
   CamfilProductRatingStarComponent,
+  CamfilProductTechnicalDocumentsComponent,
   CamfilProductTitleComponent,
   CamfilSmallCtaModalComponent,
   ContentIncludeComponent,
@@ -357,6 +359,7 @@ const exportedComponents = [
   CamfilProductQuantityComponent,
   CamfilProductRatingComponent,
   CamfilProductShipmentComponent,
+  CamfilProductTechnicalDocumentsComponent,
   CamfilProductTitleComponent,
   CamfilProductVariationSelectComponent,
   CamfilQuickViewModalComponent,

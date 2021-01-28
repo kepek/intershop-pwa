@@ -33,7 +33,7 @@ import { ProductImagesComponent } from '../../product/product-images/product-ima
 import { CamfilProductAttributesPreviewComponent } from '../camfil-product-attributes-preview/camfil-product-attributes-preview.component';
 import { CamfilProductBadgesComponent } from '../camfil-product-badges/camfil-product-badges.component';
 import { CamfilProductImagesComponent } from '../camfil-product-images/camfil-product-images.component';
-import { CamfilProductTechnicalDocumentsComponent } from '../camfil-product-technical-documents/camfil-product-technical-documents.component';
+import { CamfilProductTechnicalDocumentsComponent } from '../../../shared/components/common/camfil-product-technical-documents/camfil-product-technical-documents.component';
 
 import { CamfilProductDetailComponent } from './camfil-product-detail.component';
 

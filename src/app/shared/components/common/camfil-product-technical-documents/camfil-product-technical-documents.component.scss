@@ -48,12 +48,4 @@
       border-bottom: 1px solid $greyD9;
     }
   }
-
-  &::ng-deep {
-    ish-content-viewcontext {
-      ish-content-pagelet {
-        display: block;
-      }
-    }
-  }
 }

@@ -958,6 +958,7 @@
   "camfil.product.quantity.text": "Quantity",
   "camfil.product.quickView.deliveryInfo.label": "Delivery information:",
   "camfil.product.quickView.dimensions.label": "Dimensions:",
+  "camfil.product.quickView.bags.label": "Bags:",
   "camfil.product.quickView.energyClass.label": "Energy class:",
   "camfil.product.quickView.frame.label": "Frame:",
   "camfil.product.quickView.isoClass.label": "ISO class:",

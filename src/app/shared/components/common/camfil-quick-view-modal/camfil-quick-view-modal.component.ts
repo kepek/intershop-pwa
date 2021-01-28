@@ -2,11 +2,11 @@ import { ChangeDetectionStrategy, Component, Inject, OnDestroy, OnInit } from '@
 import { FormControl, FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { Attributes } from '@fortawesome/fontawesome-svg-core';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
+import { Attribute } from 'ish-core/models/attribute/attribute.model';
 import {
   ProductView,
   VariationProductMasterView,
@@ -52,10 +52,21 @@ export class CamfilQuickViewModalComponent implements OnInit, OnDestroy {
   readonly quantityControlName = 'quantity';
   secureVideoUrl: SafeResourceUrl;
 
+  // product attributes
+  frameSize;
+  pressureDrop;
+  isoClass;
+  energyClass;
+  width;
+  depth;
+  height;
+  bags;
+
   isProductBundle = ProductHelper.isProductBundle;
   isRetailSet = ProductHelper.isRetailSet;
   isMasterProduct = ProductHelper.isMasterProduct;
   getImageViewIDs = ProductHelper.getImageViewIDs;
+  getImageCdnUrl = ProductHelper.getImageCdnUrl;
 
   ngOnInit(): void {
     this.product$ = this.shoppingFacade.product$(this.data.sku, ProductCompletenessLevel.Detail);
@@ -67,10 +78,6 @@ export class CamfilQuickViewModalComponent implements OnInit, OnDestroy {
 
       this.isShipmentInformationAvailable =
         Number.isInteger(product.readyForShipmentMin) && Number.isInteger(product.readyForShipmentMax);
-      const videoUrl = ProductHelper.getImageCdnUrl(product, 'youTubeVideos', 'view1');
-      if (videoUrl) {
-        this.secureVideoUrl = this.sanitizer.bypassSecurityTrustResourceUrl(videoUrl);
-      }
 
       this.shoppingFacade
         .inCompareProducts$(product.sku)
@@ -79,6 +86,19 @@ export class CamfilQuickViewModalComponent implements OnInit, OnDestroy {
         .subscribe(state => {
           this.isInCompareList = state;
         });
+
+      this.frameSize = this.getAttributeValue(product.attributes, 'FrameSize');
+      this.pressureDrop = this.getAttributeValue(product.attributes, 'Pressuredrop');
+      this.isoClass = this.getAttributeValue(product.attributes, 'ISOClass');
+      this.energyClass = this.getAttributeValue(product.attributes, 'EnergyClass');
+      this.bags = this.getAttributeValue(product.attributes, 'Filterbags');
+      this.width = this.getAttributeValue(product.attributes, 'Width');
+      this.depth = this.getAttributeValue(product.attributes, 'Depth');
+      this.height = this.getAttributeValue(product.attributes, 'Height');
+      const videoUrl = this.getImageCdnUrl(product, 'youTubeVideos', 'view1');
+      if (videoUrl) {
+        this.secureVideoUrl = this.sanitizer.bypassSecurityTrustResourceUrl(videoUrl);
+      }
     });
   }
 
@@ -87,8 +107,8 @@ export class CamfilQuickViewModalComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  getValue(attributes: Attributes[], attributeName: string) {
-    return attributes.find(x => x.name === attributeName)?.value || '-';
+  getAttributeValue(attributes: Attribute[], attributeName: string) {
+    return attributes.find(x => x.name === attributeName)?.value;
   }
 
   addToBasket(sku) {
