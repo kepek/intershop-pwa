@@ -101,57 +101,44 @@ export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
   }
 
   totalPrice(): Price {
-    const price: Price = {
-      type: 'Money',
-      currency: 'USD',
-      value: 0,
-    };
+    const getCurrency = element => element.price.currency;
+    const getValue = element => element.totals?.total.gross;
 
-    const items = this.order && this.order.lineItems;
-
-    if (items) {
-      items.forEach(element => {
-        price.currency = element.price.currency;
-        price.value = price.value + element.totals?.total.gross;
-      });
-    }
-
-    return price;
+    return this.getPrice(getCurrency, getValue);
   }
 
   totalTax(): Price {
-    const price: Price = {
-      type: 'Money',
-      currency: 'USD',
-      value: 0,
-    };
+    const getCurrency = element => element.totals?.salesTaxTotal.currency;
+    const getValue = element => element.totals?.salesTaxTotal.value;
 
-    const items = this.order && this.order.lineItems;
+    return this.getPrice(getCurrency, getValue);
+  }
 
-    if (items) {
-      items.map(element => {
-        price.currency = element.totals?.salesTaxTotal.currency;
-        price.value = price.value + element.totals?.salesTaxTotal.value;
-      });
-    }
-    return price;
+  savedAmount(): Price {
+    const getCurrency = element => element.price.currency;
+    const getValue = element => element.totals?.total.gross - element.price?.gross;
+
+    return this.getPrice(getCurrency, getValue);
   }
 
   discount(): Price {
+    const getCurrency = element => element.price.currency;
+    const getValue = element => element.totals?.total.gross - element.totals?.undiscountedTotal.gross;
+
+    return this.getPrice(getCurrency, getValue);
+  }
+
+  getPrice(getCurrency: (item: LineItem) => string, getValue: (item: LineItem) => number): Price {
     const price: Price = {
       type: 'Money',
       currency: 'USD',
       value: 0,
     };
 
-    const items = this.order && this.order.lineItems;
-
-    if (items) {
-      items.map(element => {
-        price.currency = element.price.currency;
-        price.value = price.value + (element.totals?.total.gross - element.totals?.undiscountedTotal.gross);
-      });
-    }
+    this.order?.lineItems?.forEach(element => {
+      price.currency = getCurrency(element);
+      price.value = price.value + getValue(element);
+    });
 
     return price;
   }
