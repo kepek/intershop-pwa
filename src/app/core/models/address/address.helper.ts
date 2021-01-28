@@ -31,12 +31,12 @@ export class AddressHelper {
   static getUrn(currentAddress: Address, addresses: Address[]): string {
     const fullAddress = addresses.find(address => AddressHelper.compare(address, currentAddress));
 
-    return fullAddress ? fullAddress.urn : '';
+    return fullAddress?.urn || '';
   }
 
   static getId(currentAddress: Address, addresses: Address[]): string {
     const fullAddress = addresses.find(address => AddressHelper.compare(address, currentAddress));
 
-    return fullAddress ? fullAddress.id : '';
+    return fullAddress?.id || '';
   }
 }
