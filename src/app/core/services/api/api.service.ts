@@ -131,7 +131,7 @@ export class ApiService {
       // pgid
       this.store.pipe(
         select(getPGID),
-        map(pgid => (options?.sendPGID && pgid ? `;pgid=${pgid}` : options?.sendSPGID ? `;spgid=${pgid}` : ''))
+        map(pgid => (options?.sendPGID && pgid ? `;pgid=${pgid}` : options?.sendSPGID && pgid ? `;spgid=${pgid}` : ''))
       ),
       // remaining path
       of(path.includes('/') ? path.substr(path.indexOf('/')) : ''),
