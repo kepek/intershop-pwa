@@ -214,6 +214,6 @@ export class ProductHelper {
    */
 
   static getImageCdnUrl(product: Product, imageType: string, imageView: string): string {
-    return product?.images?.find(image => image.typeID === imageType && image.viewID === imageView).effectiveUrl;
+    return product?.images?.find(image => image.typeID === imageType && image.viewID === imageView)?.effectiveUrl;
   }
 }
