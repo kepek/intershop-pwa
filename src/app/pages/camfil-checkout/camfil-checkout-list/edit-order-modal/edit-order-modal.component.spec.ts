@@ -1,9 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MockComponent } from 'ng-mocks';
 import { instance, mock } from 'ts-mockito';
 
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { CamfilCamCardModalComponent } from 'ish-shared/components/common/camfil-cam-card-modal/camfil-cam-card-modal.component';
 import { CamfilErrorComponent } from 'ish-shared/components/common/camfil-error/camfil-error.component';
+import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
 
 import { OrderFormComponent } from '../../../../extensions/cam-cards/shared/add-to-cart-modal/create-order-modal/order-form/order-form.component';
 
@@ -19,7 +21,13 @@ describe('Edit Order Modal Component', () => {
     shoppingFacadeMock = mock(ShoppingFacade);
 
     await TestBed.configureTestingModule({
-      declarations: [CamfilCamCardModalComponent, CamfilErrorComponent, EditOrderModalComponent, OrderFormComponent],
+      declarations: [
+        CamfilCamCardModalComponent,
+        CamfilErrorComponent,
+        EditOrderModalComponent,
+        MockComponent(LoadingComponent),
+        OrderFormComponent,
+      ],
       providers: [{ provide: ShoppingFacade, useFactory: () => instance(shoppingFacadeMock) }],
     }).compileComponents();
   });

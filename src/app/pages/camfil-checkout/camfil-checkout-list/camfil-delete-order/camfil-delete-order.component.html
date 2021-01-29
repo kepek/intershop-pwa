@@ -3,6 +3,8 @@
   {{ 'camfil.checkout.cta.delete_order' | translate }}
 </a>
 
+<ish-loading *ngIf="loading"></ish-loading>
+
 <camfil-small-cta-modal
   actionButtonTitle="{{ 'camfil.checkout.order.delete_order.modal.yes' | translate }}"
   cancelButtonTitle="{{ 'camfil.checkout.order.delete_order.modal.no' | translate }}"

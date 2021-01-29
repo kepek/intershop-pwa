@@ -1,8 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
+import { MockComponent } from 'ng-mocks';
 
 import { CamfilCamCardModalComponent } from 'ish-shared/components/common/camfil-cam-card-modal/camfil-cam-card-modal.component';
+import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
 
 import { CamfilModalDialogComponent } from './camfil-modal-dialog.component';
 
@@ -14,7 +16,7 @@ describe('Camfil Modal Dialog Component', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [NgbModalModule, TranslateModule.forRoot()],
-      declarations: [CamfilCamCardModalComponent, CamfilModalDialogComponent],
+      declarations: [CamfilCamCardModalComponent, CamfilModalDialogComponent, MockComponent(LoadingComponent)],
     }).compileComponents();
   });
 

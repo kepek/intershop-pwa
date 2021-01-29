@@ -1,9 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MockComponent } from 'ng-mocks';
 import { EMPTY, of } from 'rxjs';
 import { instance, mock, when } from 'ts-mockito';
 
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { CamfilErrorComponent } from 'ish-shared/components/common/camfil-error/camfil-error.component';
+import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
 import { CamfilProductQuantityComponent } from 'ish-shared/components/product/camfil-product-quantity/camfil-product-quantity.component';
 import { CamfilCounterComponent } from 'ish-shared/forms/components/camfil-counter/camfil-counter.component';
 
@@ -27,6 +29,7 @@ describe('Modal Add New Product Component', () => {
         CamfilCounterComponent,
         CamfilErrorComponent,
         CamfilProductQuantityComponent,
+        MockComponent(LoadingComponent),
         ModalAddNewProductComponent,
       ],
       providers: [
@@ -42,6 +45,8 @@ describe('Modal Add New Product Component', () => {
     element = fixture.nativeElement;
 
     when(shoppingFacadeMock.basketAddresses$).thenReturn(of([]));
+    when(shoppingFacadeMock.productUpdated$).thenReturn(of(false));
+    when(shoppingFacadeMock.productAdded$).thenReturn(of(false));
   });
 
   it('should be created', () => {

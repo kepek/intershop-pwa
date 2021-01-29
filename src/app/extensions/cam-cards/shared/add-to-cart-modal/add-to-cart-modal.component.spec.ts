@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MockComponent } from 'ng-mocks';
 import { of } from 'rxjs';
 import { instance, mock, when } from 'ts-mockito';
 
@@ -8,6 +9,7 @@ import { BasketView } from 'ish-core/models/basket/basket.model';
 import { Product } from 'ish-core/models/product/product.model';
 import { CamfilCamCardModalComponent } from 'ish-shared/components/common/camfil-cam-card-modal/camfil-cam-card-modal.component';
 import { CamfilErrorComponent } from 'ish-shared/components/common/camfil-error/camfil-error.component';
+import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
 import { CamfilProductQuantityComponent } from 'ish-shared/components/product/camfil-product-quantity/camfil-product-quantity.component';
 import { CamfilCounterComponent } from 'ish-shared/forms/components/camfil-counter/camfil-counter.component';
 
@@ -69,6 +71,7 @@ describe('Add To Cart Modal Component', () => {
         CamfilProductQuantityComponent,
         CreateOrderModalComponent,
         CreateOrderSuccessComponent,
+        MockComponent(LoadingComponent),
         OrderFormComponent,
       ],
       providers: [

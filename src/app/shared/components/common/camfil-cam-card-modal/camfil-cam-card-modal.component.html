@@ -1,4 +1,6 @@
 <div class="camfil-cam-card-modal">
+  <ish-loading *ngIf="loading"></ish-loading>
+
   <div class="border-bottom">
     <div *ngIf="!customHeaderTemplate" class="camfil-cam-card-modal__title">
       <mat-icon *ngIf="iconName" class="camfil-cam-card-modal__title--icon size-24 color-light">{{

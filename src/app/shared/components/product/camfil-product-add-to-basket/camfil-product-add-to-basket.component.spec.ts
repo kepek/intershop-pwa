@@ -11,6 +11,7 @@ import { FeatureToggleModule } from 'ish-core/feature-toggle.module';
 import { Product } from 'ish-core/models/product/product.model';
 import { CamfilCamCardModalComponent } from 'ish-shared/components/common/camfil-cam-card-modal/camfil-cam-card-modal.component';
 import { CamfilErrorComponent } from 'ish-shared/components/common/camfil-error/camfil-error.component';
+import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
 import { CamfilProductAddToBasketModalComponent } from 'ish-shared/components/product/camfil-product-add-to-basket/camfil-product-add-to-basket-modal/camfil-product-add-to-basket-modal.component';
 import { CamfilProductQuantityComponent } from 'ish-shared/components/product/camfil-product-quantity/camfil-product-quantity.component';
 import { ProductAddToBasketComponent } from 'ish-shared/components/product/product-add-to-basket/product-add-to-basket.component';
@@ -51,6 +52,7 @@ describe('Camfil Product Add To Basket Component', () => {
         CreateOrderModalComponent,
         CreateOrderSuccessComponent,
         MockComponent(FaIconComponent),
+        MockComponent(LoadingComponent),
         OrderFormComponent,
         ProductAddToBasketComponent,
       ],

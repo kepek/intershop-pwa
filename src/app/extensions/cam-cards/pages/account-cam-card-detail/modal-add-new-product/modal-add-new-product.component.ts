@@ -10,10 +10,13 @@ import { Address } from 'ish-core/models/address/address.model';
 import { Bucket } from 'ish-core/models/basket/bucket.model';
 import { ProductView } from 'ish-core/models/product-view/product-view.model';
 import { Product, ProductCompletenessLevel } from 'ish-core/models/product/product.model';
+import { whenTruthy } from 'ish-core/utils/operators';
 import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
 
 import { CamCardsFacade } from '../../../facades/cam-cards.facade';
 import { CamCard, CamCardItemComment } from '../../../models/cam-card/cam-card.model';
+
+import { ADD_NEW_PRODUCT_VALIDATORS } from './validators';
 
 @Component({
   selector: 'camfil-modal-add-new-product',
@@ -49,28 +52,12 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy {
   @Input() shippingMethodId?: string;
 
   showSkuError = false;
+  loading = false;
 
   private destroy$ = new Subject();
   basketAddresses: Address[];
 
-  validators = {
-    sku: [
-      {
-        error: 'required',
-        message: 'camfil.modal.addNewProduct.error.required.sku',
-      },
-    ],
-    quantity: [
-      {
-        error: 'min',
-        message: 'camfil.modal.addNewProduct.error.min.quantity',
-      },
-      {
-        error: 'max',
-        message: 'camfil.modal.addNewProduct.error.max.quantity',
-      },
-    ],
-  };
+  validators = ADD_NEW_PRODUCT_VALIDATORS;
 
   @ViewChild('modal', { static: false }) modalTemplate: TemplateRef<unknown>;
 
@@ -92,6 +79,16 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy {
     this.productFacade.basketAddresses$.pipe(takeUntil(this.destroy$)).subscribe((basketAddresses: Address[]) => {
       this.basketAddresses = basketAddresses;
     });
+
+    this.productFacade.productUpdated$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(() => {
+      this.loading = false;
+      this.hide();
+    });
+
+    this.productFacade.productAdded$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(() => {
+      this.loading = false;
+      this.hide();
+    });
   }
 
   isSkuValid = () => !this.product.failed && this.product.availability;
@@ -100,9 +97,11 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy {
     const sku = this.productForm.get('sku').value;
 
     if (sku) {
+      this.loading = true;
       this.product$ = this.productFacade.product$(sku, ModalAddNewProductComponent.REQUIRED_COMPLETENESS_LEVEL);
 
       this.product$.pipe(takeUntil(this.destroy$)).subscribe(product => {
+        this.loading = false;
         this.product = product;
         this.showSkuError = !this.isSkuValid();
 
@@ -126,6 +125,8 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy {
       const comment: CamCardItemComment = { label };
 
       if (this.addToOrder) {
+        this.loading = true;
+
         if (this.order.id && this.order.shipToAddress) {
           this.addToExistingOrder(sku, quantity, this.order.shipToAddress);
         } else {
@@ -134,8 +135,8 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy {
         }
       } else {
         this.camCardsFacade.addProductToCamCard(this.rootCamCardId, sku, quantity, comment, 0, true);
+        this.hide();
       }
-      this.hide();
     } else {
       markAsDirtyRecursive(this.productForm);
     }
@@ -161,7 +162,7 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy {
       this.productFacade.addProductToBucketWithUrn(
         this.getUrn(deliveryAddress),
         this.order.shippingMethod,
-        deliveryAddress.id,
+        this.getId(deliveryAddress),
         sku,
         quantity,
         this.order.basket,
@@ -172,6 +173,10 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy {
 
   getUrn(currentAddress: Address): string {
     return AddressHelper.getUrn(currentAddress, this.basketAddresses);
+  }
+
+  getId(currentAddress: Address): string {
+    return AddressHelper.getId(currentAddress, this.basketAddresses);
   }
 
   isNewAddress(currentAddress: Address): boolean {

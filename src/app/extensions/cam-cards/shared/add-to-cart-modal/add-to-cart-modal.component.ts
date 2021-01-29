@@ -112,6 +112,7 @@ export class AddToCartModalComponent implements OnInit, OnDestroy {
   /** open modal */
   show() {
     this.showSuccess = false;
+    this.submitted = false;
     return this.modalTemplate;
   }
 

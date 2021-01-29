@@ -66,6 +66,7 @@ export class CreateOrderModalComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
 
   showSuccess = false;
+  loading = false;
 
   basket$: Observable<BasketView>;
   basketId: string;
@@ -103,6 +104,7 @@ export class CreateOrderModalComponent implements OnInit, OnDestroy {
 
     this.shoppingFacade.productUpdated$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(() => {
       this.showSuccess = true;
+      this.loading = false;
     });
   }
 
@@ -113,6 +115,8 @@ export class CreateOrderModalComponent implements OnInit, OnDestroy {
       markAsDirtyRecursive(addressForm);
       markAsDirtyRecursive(this.quantityForm);
     } else {
+      this.loading = true;
+
       const bucket: Bucket = {
         basket: '',
         id: '',

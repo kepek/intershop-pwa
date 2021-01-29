@@ -27,6 +27,8 @@ export class CamfilCamCardModalComponent {
   @Output() primaryButtonClicked = new EventEmitter<any>();
   @Output() secondaryButtonClicked = new EventEmitter<any>();
 
+  @Input() loading?: boolean;
+
   emitPrimary() {
     this.primaryButtonClicked.emit();
   }
