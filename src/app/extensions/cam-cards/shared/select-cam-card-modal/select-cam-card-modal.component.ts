@@ -164,12 +164,12 @@ export class SelectCamCardModalComponent implements OnInit, OnDestroy, OnChanges
 
   private formsInit() {
     this.newSegmentForm = this.fb.group({
-      newCamCard: [{ value: '' }, [Validators.required, Validators.maxLength(10)]],
+      newCamCard: [{ value: '' }, [Validators.required, Validators.maxLength(30)]],
     });
 
     this.quantityForm = new FormGroup({
       quantity: new FormControl(this.quantity),
-      boxLabel: new FormControl(),
+      boxLabel: new FormControl('', Validators.maxLength(60)),
     });
   }
 

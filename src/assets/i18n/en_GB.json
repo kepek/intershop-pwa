@@ -849,7 +849,7 @@
   "camfil.modal.addToCamcard.camcard.delivery_address": "Delivery address:",
   "camfil.modal.addToCamcard.camcard.invoice_mark": "Order mark",
   "camfil.modal.addToCamcard.camcard.new_segment": "Add new segment",
-  "camfil.modal.addToCamcard.camcard.new_segment.error.maxLength": "The name must not exceed 10 characters.",
+  "camfil.modal.addToCamcard.camcard.new_segment.error.maxLength": "The name must not exceed 30 characters.",
   "camfil.modal.addToCamcard.camcard.new_segment.error.required": "Please enter new segment's name",
   "camfil.modal.addToCamcard.camcard.next_delivery": "Next delivery:",
   "camfil.modal.addToCamcard.camcard.order_mark": "Order mark:",
