@@ -17,13 +17,9 @@ export class CamAccountService {
       return throwError('applyForAnAccount() called without required body data');
     }
 
-    return (
-      this.apiService
-        // TODO replace the api endpoint "/apply_for_an_account" when back-end is ready.
-        .post<Applicant>('security/apply_for_an_account', data, {
-          captcha: pick(data, ['captcha', 'captchaAction']),
-        })
-    );
+    return this.apiService.post<Applicant>('mailing/register-request', data, {
+      captcha: pick(data, ['captcha', 'captchaAction']),
+    });
   }
 
   /**
