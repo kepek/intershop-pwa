@@ -16,6 +16,8 @@ import { CamfilProductPromotionComponent } from 'ish-shared/components/product/c
 import { CamfilProductQuantityComponent } from 'ish-shared/components/product/camfil-product-quantity/camfil-product-quantity.component';
 import { CamfilProductImageComponent } from 'ish-shell/header/camfil-product-image/camfil-product-image.component';
 
+import { CamfilProductTechnicalDocumentsComponent } from 'ish-shared/components/common/camfil-product-technical-documents/camfil-product-technical-documents.component';
+
 import { CamfilQuickViewModalComponent } from './camfil-quick-view-modal.component';
 
 describe('Camfil Quick View Modal Component', () => {
@@ -33,6 +35,7 @@ describe('Camfil Quick View Modal Component', () => {
         MockComponent(CamfilProductInventoryComponent),
         MockComponent(CamfilProductPromotionComponent),
         MockComponent(CamfilProductQuantityComponent),
+        MockComponent(CamfilProductTechnicalDocumentsComponent),
         MockComponent(ContentIncludeComponent),
         MockComponent(ContentViewcontextComponent),
         MockComponent(LazyProductAddToCamCardComponent),

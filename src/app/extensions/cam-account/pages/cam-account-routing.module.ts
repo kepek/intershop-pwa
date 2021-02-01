@@ -43,6 +43,7 @@ const routes: Routes = [
     },
     loadChildren: () => import('./register/camfil-register-page.module').then(m => m.CamfilRegisterPageModule),
   },
+
   {
     path: 'forgotPassword',
     canActivate: [FeatureToggleGuard],
@@ -52,6 +53,7 @@ const routes: Routes = [
     loadChildren: () =>
       import('./forgot-password/camfil-forgot-password-page.module').then(m => m.CamfilForgotPasswordPageModule),
   },
+
   {
     path: 'forgotUsername',
     canActivate: [FeatureToggleGuard],

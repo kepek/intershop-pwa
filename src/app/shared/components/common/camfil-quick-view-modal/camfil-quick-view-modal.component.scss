@@ -11,12 +11,20 @@
     }
   }
 
+  camfil-product-technical-documents {
+    .product-details-guides {
+      &::after {
+        border-bottom: none !important;
+      }
+    }
+  }
+
   camfil-quick-view-modal {
     .price-container {
       camfil-product-attribute {
         dt {
           float: left;
-          width: 75px;
+          width: 90px;
         }
       }
     }

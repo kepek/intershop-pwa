@@ -1,10 +1,10 @@
 <div class="container" *ngIf="product$ | async as product; else spinner">
   <div class="row">
     <div class="col-12 col-sm-2 p-0">
-      <div *ngFor="let imageView of getImageViewIDs(product, 'image'); index as i">
+      <div *ngFor="let imageView of getImageViewIDs(product, 'images'); index as i">
         <camfil-product-image
           [product]="product"
-          imageType="image"
+          imageType="images"
           [imageView]="imageView"
           class="product-image pb-3"
         ></camfil-product-image>
@@ -16,7 +16,6 @@
           frameborder="0"
           allow="clipboard-write; encrypted-media;"
           scrolling="no"
-          style="width: 100%"
           width="100%"
         ></iframe>
       </ng-container>
@@ -48,29 +47,32 @@
       <div class="row">
         <div class="col-7">
           <strong>{{ 'camfil.product.quickview.details.headline' | translate }}</strong>
-
-          <div>
+          <div *ngIf="frameSize">
             {{ 'camfil.product.quickView.frame.label' | translate }}
-            <strong>{{ getValue(product.attributes, 'Frame') }}</strong>
+            <strong>{{ frameSize }}</strong>
           </div>
-          <div>
+          <div *ngIf="pressureDrop">
             {{ 'camfil.product.quickView.pressureDrop.label' | translate }}
-            <strong>{{ getValue(product.attributes, 'Pressure drop') }}</strong>
+            <strong>{{ pressureDrop }}</strong>
           </div>
-          <div>
+          <div *ngIf="isoClass">
             {{ 'camfil.product.quickView.isoClass.label' | translate }}
-            <strong>{{ getValue(product.attributes, 'ISO class') }}</strong>
+            <strong>{{ isoClass }}</strong>
           </div>
-          <div>
+          <div *ngIf="energyClass">
             {{ 'camfil.product.quickView.energyClass.label' | translate }}
-            <strong>{{ getValue(product.attributes, 'Energy class') }}</strong>
+            <strong>{{ energyClass }}</strong>
           </div>
-          <div>
+          <div *ngIf="width && depth && height">
             {{ 'camfil.product.quickView.dimensions.label' | translate }}
-            <strong>{{ getValue(product.attributes, 'Dimensions (WxDxH)') }}</strong>
+            <strong> {{ width }}x{{ depth }}x{{ height }}</strong>
           </div>
           <div>
             {{ 'camfil.product.quickView.sku.label' | translate }} <strong>{{ product.sku }}</strong>
+          </div>
+          <div *ngIf="bags">
+            {{ 'camfil.product.quickView.bags.label' | translate }}
+            <strong>{{ bags }}</strong>
           </div>
           <div>
             {{ 'camfil.product.quickView.deliveryInfo.label' | translate }}
@@ -94,21 +96,10 @@
         </div>
         <div class="col-5 pl-0">
           <strong>{{ 'camfil.product.details.guides.headline' | translate }}</strong>
-          <ul class="product-details-guides">
-            <li>
-              <a><mat-icon svgIcon="pdf"></mat-icon> Technical specification</a>
-            </li>
-            <li>
-              <a><mat-icon svgIcon="pdf"></mat-icon> Broschure</a>
-            </li>
-            <li>
-              <a><mat-icon svgIcon="pdf"></mat-icon> Data sheet</a>
-            </li>
-            <ish-content-viewcontext
-              viewContextId="vc_camfil_product_guides"
-              [callParameters]="{ Product: product.sku }"
-            ></ish-content-viewcontext>
-          </ul>
+          <camfil-product-technical-documents
+            [product]="product"
+            [getImageCdnUrl]="getImageCdnUrl"
+          ></camfil-product-technical-documents>
         </div>
       </div>
 

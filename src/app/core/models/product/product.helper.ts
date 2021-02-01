@@ -196,11 +196,7 @@ export class ProductHelper {
    */
 
   static getImageViewIDs(product: Product, imageType: string): string[] {
-    if (!(product && product.images)) {
-      return [];
-    }
-
-    return product.images.filter(image => image.typeID === imageType).map(image => image.viewID);
+    return product?.images?.filter(image => image.typeID === imageType).map(image => image.viewID);
   }
 
   /**
@@ -218,12 +214,6 @@ export class ProductHelper {
    */
 
   static getImageCdnUrl(product: Product, imageType: string, imageView: string): string {
-    if (!(product && product.images)) {
-      return;
-    }
-
-    const img = product.images.find(image => image.typeID === imageType && image.viewID === imageView);
-
-    return img.effectiveUrl;
+    return product?.images?.find(image => image.typeID === imageType && image.viewID === imageView)?.effectiveUrl;
   }
 }

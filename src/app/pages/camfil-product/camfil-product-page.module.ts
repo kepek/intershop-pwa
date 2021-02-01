@@ -21,7 +21,6 @@ import { CamfilProductBadgesComponent } from './camfil-product-badges/camfil-pro
 import { CamfilProductDetailComponent } from './camfil-product-detail/camfil-product-detail.component';
 import { CamfilProductImagesComponent } from './camfil-product-images/camfil-product-images.component';
 import { CamfilProductPageComponent } from './camfil-product-page.component';
-import { CamfilProductTechnicalDocumentsComponent } from './camfil-product-technical-documents/camfil-product-technical-documents.component';
 
 const camfilProductPageRoutes: Routes = [
   {
@@ -63,7 +62,6 @@ const camfilProductPageRoutes: Routes = [
     CamfilProductLinksCarouselComponent,
     CamfilProductLinksComponent,
     CamfilProductPageComponent,
-    CamfilProductTechnicalDocumentsComponent,
     ProductBundlePartsComponent,
     ProductDetailActionsComponent,
     ProductDetailComponent,
