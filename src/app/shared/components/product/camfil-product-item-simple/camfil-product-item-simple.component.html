@@ -61,7 +61,7 @@
             ></camfil-product-quantity>
           </div>
 
-          <div class="action-container addtocart-container">
+          <div class="action-container addtocart-container align-items-center">
             <camfil-lazy-product-add-to-cam-card
               *ngIf="configuration.displayAddToCamCard"
               displayType="icon"
@@ -100,7 +100,12 @@
   >
     <div class="d-flex">
       <a [routerLink]="product | ishProductRoute: category" class="product-image-box">
-        <camfil-product-image [product]="product" imageType="S" class="product-image"></camfil-product-image>
+        <camfil-product-image
+          [product]="product"
+          imageType="images"
+          imageView="default"
+          class="product-image"
+        ></camfil-product-image>
       </a>
 
       <div class="product-item-details-container d-flex flex-column justify-content-between">
@@ -151,7 +156,7 @@
             [controlName]="quantityControlName"
           ></camfil-product-quantity>
 
-          <div class="action-container addtocart-container">
+          <div class="action-container addtocart-container align-items-center">
             <camfil-lazy-product-add-to-cam-card
               *ngIf="configuration.displayAddToCamCard"
               displayType="icon"

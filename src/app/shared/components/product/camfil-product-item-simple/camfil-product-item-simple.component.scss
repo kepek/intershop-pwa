@@ -77,6 +77,8 @@
     }
     camfil-product-add-to-basket {
       .btn {
+        display: flex;
+        align-items: center;
         margin: 0 0 0 $space-box-half;
       }
       .round-cart-btn {
@@ -132,6 +134,9 @@
     ::ng-deep {
       camfil-product-inventory {
         padding: 0 $space-box;
+        .product-availability {
+          display: inline-block;
+        }
       }
       camfil-product-quickview {
         padding-left: $space-box;
