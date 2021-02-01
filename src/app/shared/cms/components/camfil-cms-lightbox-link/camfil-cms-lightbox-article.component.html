@@ -1,4 +1,4 @@
 <button class="close" (click)="closeDialog()" aria-label="Close">
   <span aria-hidden="true">×</span>
 </button>
-<div [innerHTML]="data.article"></div>
+<div [innerHTML]="safeHtmlData"></div>
