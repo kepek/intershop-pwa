@@ -60,7 +60,7 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
 
     this.buckets$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe((buckets: Bucket[]) => {
       this.buckets = buckets;
-    }); camfil - quick - view - modal / camfil - quick - view - modal.component.ts; : 55;
+    });
 
     this.validationResults$
       .pipe(whenTruthy(), takeUntil(this.destroy$))
