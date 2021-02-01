@@ -11,6 +11,7 @@ import { ProductView } from 'ish-core/models/product-view/product-view.model';
 import { ContentViewcontextComponent } from 'ish-shared/cms/components/content-viewcontext/content-viewcontext.component';
 import { AccordionItemComponent } from 'ish-shared/components/common/accordion-item/accordion-item.component';
 import { AccordionComponent } from 'ish-shared/components/common/accordion/accordion.component';
+import { CamfilProductTechnicalDocumentsComponent } from 'ish-shared/components/common/camfil-product-technical-documents/camfil-product-technical-documents.component';
 import { CamfilProductAddToBasketComponent } from 'ish-shared/components/product/camfil-product-add-to-basket/camfil-product-add-to-basket.component';
 import { CamfilProductAddToCompareComponent } from 'ish-shared/components/product/camfil-product-add-to-compare/camfil-product-add-to-compare.component';
 import { CamfilProductAttributeComponent } from 'ish-shared/components/product/camfil-product-attribute/camfil-product-attribute.component';
@@ -33,7 +34,6 @@ import { ProductImagesComponent } from '../../product/product-images/product-ima
 import { CamfilProductAttributesPreviewComponent } from '../camfil-product-attributes-preview/camfil-product-attributes-preview.component';
 import { CamfilProductBadgesComponent } from '../camfil-product-badges/camfil-product-badges.component';
 import { CamfilProductImagesComponent } from '../camfil-product-images/camfil-product-images.component';
-import { CamfilProductTechnicalDocumentsComponent } from '../../../shared/components/common/camfil-product-technical-documents/camfil-product-technical-documents.component';
 
 import { CamfilProductDetailComponent } from './camfil-product-detail.component';
 
