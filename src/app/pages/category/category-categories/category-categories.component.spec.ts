@@ -6,9 +6,7 @@ import { MockComponent } from 'ng-mocks';
 
 import { createCategoryView } from 'ish-core/models/category-view/category-view.model';
 import { Category } from 'ish-core/models/category/category.model';
-import { findAllCustomElements } from 'ish-core/utils/dev/html-query-utils';
 import { categoryTree } from 'ish-core/utils/dev/test-data-utils';
-import { CamfilBreadcrumbComponent } from 'ish-shared/components/common/camfil-breadcrumb/camfil-breadcrumb.component';
 
 import { CamfilCategoryNavigationComponent } from '../../camfil-category/camfil-category-navigation/camfil-category-navigation.component';
 import { CategoryListComponent } from '../category-list/category-list.component';
@@ -25,7 +23,6 @@ describe('Category Categories Component', () => {
       imports: [TranslateModule.forRoot()],
       declarations: [
         CategoryCategoriesComponent,
-        MockComponent(CamfilBreadcrumbComponent),
         MockComponent(CamfilCategoryNavigationComponent),
         MockComponent(CategoryListComponent),
         MockComponent(FaIconComponent),
@@ -56,9 +53,5 @@ describe('Category Categories Component', () => {
     expect(component).toBeTruthy();
     expect(element).toBeTruthy();
     expect(() => fixture.detectChanges()).not.toThrow();
-  });
-
-  it('should display all components on the page', () => {
-    expect(findAllCustomElements(element)).toIncludeAllMembers(['camfil-breadcrumb']);
   });
 });

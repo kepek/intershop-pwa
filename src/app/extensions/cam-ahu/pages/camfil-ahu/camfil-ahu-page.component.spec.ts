@@ -6,7 +6,6 @@ import { instance, mock } from 'ts-mockito';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
 import { ContentIncludeComponent } from 'ish-shared/cms/components/content-include/content-include.component';
-import { CamfilBreadcrumbComponent } from 'ish-shared/components/common/camfil-breadcrumb/camfil-breadcrumb.component';
 import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
 import { CamfilProductGuidesComponent } from 'ish-shared/components/product/camfil-product-guides/camfil-product-guides.component';
 
@@ -22,7 +21,6 @@ describe('Camfil Ahu Page Component', () => {
       imports: [RouterTestingModule, TranslateModule.forRoot()],
       declarations: [
         CamfilAHUPageComponent,
-        MockComponent(CamfilBreadcrumbComponent),
         MockComponent(CamfilProductGuidesComponent),
         MockComponent(ContentIncludeComponent),
         MockComponent(LoadingComponent),

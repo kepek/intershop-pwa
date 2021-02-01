@@ -5,7 +5,6 @@ import { MockComponent } from 'ng-mocks';
 import { instance, mock } from 'ts-mockito';
 
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
-import { CamfilBreadcrumbComponent } from 'ish-shared/components/common/camfil-breadcrumb/camfil-breadcrumb.component';
 import { InputComponent } from 'ish-shared/forms/components/input/input.component';
 
 import { QuickorderPageComponent } from './quickorder-page.component';
@@ -18,7 +17,7 @@ describe('Quickorder Page Component', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [ReactiveFormsModule, TranslateModule.forRoot()],
-      declarations: [MockComponent(CamfilBreadcrumbComponent), MockComponent(InputComponent), QuickorderPageComponent],
+      declarations: [MockComponent(InputComponent), QuickorderPageComponent],
       providers: [{ provide: ShoppingFacade, useFactory: () => instance(mock(ShoppingFacade)) }],
     }).compileComponents();
   });

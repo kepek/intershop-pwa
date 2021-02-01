@@ -4,7 +4,6 @@ import { MockComponent } from 'ng-mocks';
 import { instance, mock } from 'ts-mockito';
 
 import { AppFacade } from 'ish-core/facades/app.facade';
-import { CamfilBreadcrumbComponent } from 'ish-shared/components/common/camfil-breadcrumb/camfil-breadcrumb.component';
 
 import { AccountNavigationComponent } from './account-navigation/account-navigation.component';
 import { AccountPageComponent } from './account-page.component';
@@ -16,11 +15,7 @@ describe('Account Page Component', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
-        AccountPageComponent,
-        MockComponent(AccountNavigationComponent),
-        MockComponent(CamfilBreadcrumbComponent),
-      ],
+      declarations: [AccountPageComponent, MockComponent(AccountNavigationComponent)],
       imports: [RouterTestingModule],
       providers: [{ provide: AppFacade, useFactory: () => instance(mock(AppFacade)) }],
     }).compileComponents();

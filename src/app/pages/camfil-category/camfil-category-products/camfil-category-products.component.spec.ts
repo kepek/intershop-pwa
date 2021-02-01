@@ -11,7 +11,6 @@ import { findAllCustomElements } from 'ish-core/utils/dev/html-query-utils';
 import { categoryTree } from 'ish-core/utils/dev/test-data-utils';
 import { ContentIncludeComponent } from 'ish-shared/cms/components/content-include/content-include.component';
 import { ContentViewcontextComponent } from 'ish-shared/cms/components/content-viewcontext/content-viewcontext.component';
-import { CamfilBreadcrumbComponent } from 'ish-shared/components/common/camfil-breadcrumb/camfil-breadcrumb.component';
 import { CamfilLinksBlockComponent } from 'ish-shared/components/common/camfil-links-block/camfil-links-block.component';
 import { CamfilFilterMeasurementsComponent } from 'ish-shared/components/filter/camfil-filter-measurements/camfil-filter-measurements.component';
 import { CamfilFilterNavigationComponent } from 'ish-shared/components/filter/camfil-filter-navigation/camfil-filter-navigation.component';
@@ -31,7 +30,6 @@ describe('Camfil Category Products Component', () => {
       imports: [BrowserAnimationsModule, TranslateModule.forRoot()],
       declarations: [
         CamfilCategoryProductsComponent,
-        MockComponent(CamfilBreadcrumbComponent),
         MockComponent(CamfilCategoryNavigationComponent),
         MockComponent(CamfilFilterMeasurementsComponent),
         MockComponent(CamfilFilterNavigationComponent),
@@ -65,10 +63,6 @@ describe('Camfil Category Products Component', () => {
   });
 
   it('should display all components on the page', () => {
-    expect(findAllCustomElements(element)).toIncludeAllMembers([
-      'camfil-breadcrumb',
-      'camfil-product-listing',
-      'camfil-filter-navigation',
-    ]);
+    expect(findAllCustomElements(element)).toIncludeAllMembers(['camfil-product-listing', 'camfil-filter-navigation']);
   });
 });

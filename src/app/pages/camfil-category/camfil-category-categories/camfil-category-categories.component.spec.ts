@@ -10,7 +10,6 @@ import { findAllCustomElements } from 'ish-core/utils/dev/html-query-utils';
 import { categoryTree } from 'ish-core/utils/dev/test-data-utils';
 import { ContentIncludeComponent } from 'ish-shared/cms/components/content-include/content-include.component';
 import { ContentViewcontextComponent } from 'ish-shared/cms/components/content-viewcontext/content-viewcontext.component';
-import { CamfilBreadcrumbComponent } from 'ish-shared/components/common/camfil-breadcrumb/camfil-breadcrumb.component';
 import { CamfilLinksBlockComponent } from 'ish-shared/components/common/camfil-links-block/camfil-links-block.component';
 import { CamfilFilterMeasurementsComponent } from 'ish-shared/components/filter/camfil-filter-measurements/camfil-filter-measurements.component';
 
@@ -31,7 +30,6 @@ describe('Camfil Category Categories Component', () => {
       imports: [TranslateModule.forRoot()],
       declarations: [
         CamfilCategoryCategoriesComponent,
-        MockComponent(CamfilBreadcrumbComponent),
         MockComponent(CamfilCategoryBoxesComponent),
         MockComponent(CamfilCategoryFaqComponent),
         MockComponent(CamfilCategoryNavigationComponent),
@@ -72,6 +70,6 @@ describe('Camfil Category Categories Component', () => {
 
   it('should display all components on the page', () => {
     expect(findAllCustomElements(element)).toIncludeAllMembers(['ish-category-list']);
-    expect(findAllCustomElements(element)).toIncludeAllMembers(['camfil-breadcrumb', 'camfil-category-navigation']);
+    expect(findAllCustomElements(element)).toIncludeAllMembers(['camfil-category-navigation']);
   });
 });
