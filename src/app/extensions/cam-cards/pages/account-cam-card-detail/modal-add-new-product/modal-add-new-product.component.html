@@ -1,4 +1,6 @@
 <ng-template #modal>
+  <ish-loading *ngIf="loading"></ish-loading>
+
   <div class="add-new-product">
     <mat-icon svgIcon="add-camcard"></mat-icon>
     <h2 class="add-new-product__header">{{ 'camfil.modal.addNewProduct.title' | translate }}</h2>

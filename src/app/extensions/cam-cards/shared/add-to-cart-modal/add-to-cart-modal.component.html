@@ -10,6 +10,7 @@
       (primaryButtonClicked)="addToOrder()"
       [secondaryButtonTitle]="'camfil.modal.addToCart.button.create_new_order' | translate"
       (secondaryButtonClicked)="openCreateOrderModal(createModal)"
+      [loading]="submitted && !showSuccess"
     >
     </camfil-cam-card-modal>
   </ng-container>

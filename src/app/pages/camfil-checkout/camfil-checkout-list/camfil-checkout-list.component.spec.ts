@@ -17,6 +17,7 @@ import { CamfilBasketCostSummaryComponent } from 'ish-shared/components/basket/c
 import { CamfilCamCardModalComponent } from 'ish-shared/components/common/camfil-cam-card-modal/camfil-cam-card-modal.component';
 import { CamfilErrorComponent } from 'ish-shared/components/common/camfil-error/camfil-error.component';
 import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
+import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
 import { CamfilProductAddToBasketComponent } from 'ish-shared/components/product/camfil-product-add-to-basket/camfil-product-add-to-basket.component';
 import { CamfilProductQuantityComponent } from 'ish-shared/components/product/camfil-product-quantity/camfil-product-quantity.component';
 import { CamfilCounterComponent } from 'ish-shared/forms/components/camfil-counter/camfil-counter.component';
@@ -61,6 +62,7 @@ describe('Camfil Checkout List Component', () => {
         MockComponent(CamfilProductAddToBasketComponent),
         MockComponent(ContentIncludeComponent),
         MockComponent(FaIconComponent),
+        MockComponent(LoadingComponent),
         MockDirective(ServerHtmlDirective),
         MockPipe(DatePipe),
         MockPipe(HighlightPipe),
@@ -100,6 +102,8 @@ describe('Camfil Checkout List Component', () => {
     element = fixture.nativeElement;
 
     when(shoppingFacadeMock.basketAddresses$).thenReturn(of([]));
+    when(shoppingFacadeMock.productUpdated$).thenReturn(of(false));
+    when(shoppingFacadeMock.productAdded$).thenReturn(of(false));
   });
 
   it('should be created', () => {

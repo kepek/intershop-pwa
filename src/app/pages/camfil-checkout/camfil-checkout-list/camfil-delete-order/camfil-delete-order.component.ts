@@ -15,6 +15,7 @@ export class CamfilDeleteOrderComponent {
   @ViewChild(CamfilSmallCtaModalComponent) modal: CamfilSmallCtaModalComponent;
 
   @Input() order: Bucket;
+  loading = false;
 
   constructor(public dialog: MatDialog, private checkoutFacade: CheckoutFacade) {}
 
@@ -24,6 +25,7 @@ export class CamfilDeleteOrderComponent {
   }
 
   deleteOrder() {
+    this.loading = true;
     this.checkoutFacade.deleteOrder(this.order.basket, this.order.id);
   }
 }
