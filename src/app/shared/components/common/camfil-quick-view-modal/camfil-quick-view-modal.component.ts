@@ -7,6 +7,7 @@ import { takeUntil } from 'rxjs/operators';
 
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { Attribute } from 'ish-core/models/attribute/attribute.model';
+import { ImageTypes } from 'ish-core/models/image/image.types';
 import {
   ProductView,
   VariationProductMasterView,
@@ -15,7 +16,6 @@ import {
 import { ProductCompletenessLevel, ProductHelper, ProductPrices } from 'ish-core/models/product/product.model';
 import { GenerateLazyComponent } from 'ish-core/utils/module-loader/generate-lazy-component.decorator';
 import { whenTruthy } from 'ish-core/utils/operators';
-import { ImageTypes } from 'ish-core/models/image/image.types';
 
 @Component({
   selector: 'camfil-quick-view-modal',

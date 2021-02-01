@@ -4,5 +4,5 @@ export enum ImageTypes {
   ProductPdf = 'RTYP12',
   HamdlingAndMaintenance = 'RTYP15',
   Image = 'images',
-  YtVideo = "youTubeVideos"
+  YtVideo = 'youTubeVideos',
 }
