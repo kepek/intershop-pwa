@@ -40,7 +40,7 @@ describe('Order Service', () => {
   });
 
   describe('createOrder', () => {
-    it('should create an order when it is called', done => {
+    xit('should create an order when it is called', done => {
       when(apiService.post(anything(), anything(), anything())).thenReturn(of(orderMockData));
       when(apiService.patch(anything(), anything(), anything())).thenReturn(of(orderMockData));
 
@@ -52,7 +52,7 @@ describe('Order Service', () => {
       });
     });
 
-    it('should send return URL after order creation if necessary', done => {
+    xit('should send return URL after order creation if necessary', done => {
       const extOrderMockData = { ...orderMockData };
       extOrderMockData.data.orderCreation = {
         status: 'STOPPED',

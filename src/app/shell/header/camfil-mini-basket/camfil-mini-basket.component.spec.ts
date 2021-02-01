@@ -10,6 +10,8 @@ import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ProductRoutePipe } from 'ish-core/routing/product/product-route.pipe';
 import { BasketMockData } from 'ish-core/utils/dev/basket-mock-data';
 
+import { CamCardsFacade } from '../../../extensions/cam-cards/facades/cam-cards.facade';
+
 import { CamfilMiniBasketComponent } from './camfil-mini-basket.component';
 
 describe('Camfil Mini Basket Component', () => {
@@ -21,6 +23,7 @@ describe('Camfil Mini Basket Component', () => {
   beforeEach(async () => {
     checkoutFacade = mock(CheckoutFacade);
     const accountFacade = mock(AccountFacade);
+    const camCardsFacade = mock(CamCardsFacade);
     when(accountFacade.userPriceDisplayType$).thenReturn(of('gross'));
 
     await TestBed.configureTestingModule({
@@ -29,6 +32,7 @@ describe('Camfil Mini Basket Component', () => {
       providers: [
         { provide: CheckoutFacade, useFactory: () => instance(checkoutFacade) },
         { provide: AccountFacade, useFactory: () => instance(accountFacade) },
+        { provide: CamCardsFacade, useFactory: () => instance(camCardsFacade) },
       ],
     }).compileComponents();
   });

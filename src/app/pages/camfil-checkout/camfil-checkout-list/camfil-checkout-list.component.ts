@@ -1,5 +1,14 @@
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
-import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { MatDialog } from '@angular/material/dialog';
@@ -43,6 +52,12 @@ export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
 
   validators = ORDER_HEADER_VALIDATORS;
   @Input() shippingMethodId: string;
+  @Input() basket;
+  @Input() isConfirmed;
+  @Input() totalOrders;
+  @Input() index;
+  @Output() handleProduct = new EventEmitter<ProductView>();
+  calculatedOrder;
 
   selectedDeliveryDate: number;
   firstAvailableDelivery: string;
@@ -94,6 +109,10 @@ export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
 
       this.shoppingFacade.updateBucket(basket, deliveryAddressId, updated);
     }
+  }
+
+  handleProductLoad(product) {
+    this.handleProduct.emit(product);
   }
 
   toggleOrder() {

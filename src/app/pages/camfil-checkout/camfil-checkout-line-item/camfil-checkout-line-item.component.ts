@@ -48,7 +48,8 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
   @Input() isPartialDelivery: boolean;
   @Input() lineItemIndex: number;
 
-  @Output() handleLoad = new EventEmitter<{ res: ProductView; quantity: number }>();
+  @Input() isConfirmed;
+  @Output() handleLoad = new EventEmitter<ProductView>();
   @Output() handleUpdate = new EventEmitter<{ res: ProductView; quantity: number }>();
   earliestDeliveryDate: string;
   quantity = 0;
@@ -121,9 +122,7 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
         CamfilCheckoutLineItemComponent.REQUIRED_COMPLETENESS_LEVEL
       );
 
-      this.product$
-        .pipe(take(1), takeUntil(this.destroy$))
-        .subscribe((res: ProductView) => this.handleLoad.emit({ res, quantity: 1 }));
+      this.product$.pipe(take(1), takeUntil(this.destroy$)).subscribe((res: ProductView) => this.handleLoad.emit(res));
     }
   }
 

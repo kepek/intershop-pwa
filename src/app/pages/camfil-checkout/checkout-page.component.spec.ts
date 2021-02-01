@@ -88,6 +88,12 @@ describe('Checkout Page Component', () => {
     when(camCardFacadeMock.camCard$).thenReturn(of([camCardDetails]));
 
     when(checkoutFacade.buckets$).thenReturn(of([]));
+    when(checkoutFacade.basketValidationResults$).thenReturn(
+      of({
+        valid: false,
+        adjusted: false,
+      })
+    );
     when(checkoutFacade.emptyBuckets$).thenReturn(of([]));
     when(checkoutFacade.basket$).thenReturn(of(basketDetails));
   });

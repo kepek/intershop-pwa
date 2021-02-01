@@ -14,9 +14,11 @@
 
 <ng-template #orderHeader let-camCard="camCard">
   <div class="d-inline-flex">
-    <strong *ngIf="order?.id"> {{ 'camfil.checkout.order' | translate }} {{ order?.id }}</strong>
-    <span data-testing-id="order-number" class="order-number"
-      >{{ order?.orderMark }}, {{ order?.customer?.companyName }}</span
+    <strong *ngIf="order">
+      {{ 'camfil.checkout.order' | translate }} {{ !!totalOrders ? index + ' / ' + totalOrders : order.id }}</strong
+    >
+    <span data-id-id="order-number" class="order-number"
+      >{{ order?.id }}, {{ order?.shipToAddressFull?.companyName1 }}</span
     >
   </div>
 </ng-template>
@@ -32,9 +34,9 @@
       <div class="order-summary-info col-sm-5 border-sm-right" data-testing-id="order-summary-info">
         <dl class="row dl-horizontal dl-separator">
           <dt class="col-6 p-0">{{ 'camfil.account.orderdetails.customer_id.label' | translate }}</dt>
-          <dd class="col-6 p-0" data-testing-id="order-customer_id">{{ order.customer?.id }}</dd>
+          <dd class="col-6 p-0" data-testing-id="order-customer_id">{{ order.shipToAddressFull?.id }}</dd>
           <dt class="col-6 p-0 pb-4">{{ 'camfil.account.orderdetails.customer_name.label' | translate }}</dt>
-          <dd class="col-6 p-0" data-testing-id="order-customer_name">{{ order.customer?.companyName }}</dd>
+          <dd class="col-6 p-0" data-testing-id="order-customer_name">{{ order.shipToAddressFull?.companyName1 }}</dd>
           <dt class="col-6 p-0">{{ 'camfil.account.orderdetails.contact_person.label' | translate }}</dt>
           <dd class="col-6 p-0" data-testing-id="order-contact_person">
             {{ order.contactPerson?.firstName }} {{ order.contactPerson?.lastName }}
@@ -47,7 +49,11 @@
           </dd>
         </dl>
       </div>
-      <div class="order-summary-info col-sm-3 border-sm-right" data-testing-id="order-summary-info">
+      <div
+        class="order-summary-info col-sm-3 border-sm-right"
+        data-testing-id="order-summary-info"
+        *ngIf="!isConfirmed"
+      >
         <form *ngIf="orderForm" [formGroup]="orderForm" class="form-horizontal" novalidate="novalidate">
           <div class="mat-form-field__wrapper">
             <mat-form-field appearance="fill" class="form-field">
@@ -102,7 +108,31 @@
           </div>
         </form>
       </div>
-      <div class="order-summary-info col-sm-4" data-testing-id="order-summary-info">
+      <div class="order-summary-info col-sm-6" data-testing-id="order-summary-info" *ngIf="isConfirmed">
+        <dl class="row dl-horizontal dl-separator mb-0">
+          <dt class="col-6 p-0">{{ 'camfil.checkout.invoice_address' | translate }}</dt>
+          <dd class="col-6 p-0" data-testing-id="order-delivery_address">
+            <ish-address [address]="order.shipToAddressFull"></ish-address>
+          </dd>
+          <dt class="col-6 p-0">{{ 'camfil.checkout.shipping_method' | translate }}</dt>
+          <dd class="col-6 p-0" data-testing-id="order-channel">
+            {{ 'camfil.checkout.standard_shipping' | translate }}
+          </dd>
+          <dt class="col-6 p-0">{{ 'camfil.checkout.payment_method' | translate }}</dt>
+          <dd class="col-6 p-0" data-testing-id="order-contact_person">{{ 'camfil.checkout.invoice' | translate }}</dd>
+        </dl>
+        <br />
+        <a
+          mat-stroked-button
+          class="btn-track-order float-right mr-n4"
+          color="primary"
+          routerLink="#"
+          data-testing-id="orders-link"
+        >
+          {{ 'camfil.account.orderdetails.links.track_order' | translate }}</a
+        >
+      </div>
+      <div class="order-summary-info col-sm-4" data-testing-id="order-summary-info" *ngIf="!isConfirmed">
         <div class="order-cta-container" [formGroup]="orderForm">
           <ul class="order-cta">
             <li>
@@ -153,6 +183,7 @@
         <ng-container *ngFor="let product of order.lineItems; of: sortBy(); index as i">
           <div class="list-item-row list-item-row-big px-4 py-1 mt-2" [cdkDragData]="product" cdkDrag>
             <div class="d-flex align-items-center">
+              <span class="pr-4">{{ i + 1 }}</span>
               <mat-icon svgIcon="move" class="size-24 d-none d-md-block handle" cdkDragHandle></mat-icon>
               <camfil-checkout-line-item
                 [id]="product.productSKU"
@@ -162,12 +193,15 @@
                 [lineItemIndex]="i"
                 [isPartialDelivery]="isPartialDelivery"
                 [orderDeliveryDate]="selectedDeliveryDate"
+                [isConfirmed]="isConfirmed"
+                (handleLoad)="handleProductLoad($event)"
               ></camfil-checkout-line-item>
             </div>
           </div>
         </ng-container>
       </div>
     </div>
+
     <!-- Cost Summary -->
     <div *ngIf="order">
       <div class="section cost-summary float-right box-shadow--dark mat-elevation-z">

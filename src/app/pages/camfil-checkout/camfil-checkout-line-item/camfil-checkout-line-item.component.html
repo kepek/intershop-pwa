@@ -23,7 +23,7 @@
       [camCardItem]="camCardItemData"
       [mode]="mode"
     ></camfil-cam-card-product-comment> -->
-    <div class="box-label">
+    <div class="box-label" *ngIf="!isConfirmed">
       <form [formGroup]="boxLabelForm" class="box-label__form">
         <mat-form-field appearance="outline" class="box-label__form--field">
           <mat-label>{{ 'camfil.cam_card.product.comment.label' | translate }}</mat-label>
@@ -42,15 +42,17 @@
     </div>
     <ng-container>
       <div class="quantity-row d-flex flex-row justify-content-between align-items-center py-3 py-md-0">
+        <span *ngIf="isConfirmed" class="quantity-confirmed">{{ product.quantity.value }}</span>
         <a
           class="btn-tool delete-cam-card"
           (click)="removeProduct(product.id)"
           [ngClass]="{ 'ml-md-auto': isEditMode }"
           data-testing-id="delete-cam-card"
+          *ngIf="!isConfirmed"
         >
           <mat-icon svgIcon="delete" class="size-16 mx-2"></mat-icon>
         </a>
-        <form [formGroup]="addToCartForm" *ngIf="productData.inStock && productData.availability">
+        <form [formGroup]="addToCartForm" *ngIf="productData.inStock && productData.availability && !isConfirmed">
           <camfil-product-quantity
             [allowZeroQuantity]="false"
             [quantityLabel]="''"

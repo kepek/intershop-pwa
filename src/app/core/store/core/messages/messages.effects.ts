@@ -1,5 +1,6 @@
 import { DOCUMENT } from '@angular/common';
 import { Inject, Injectable } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { routerRequestAction } from '@ngrx/router-store';
 import { Store, select } from '@ngrx/store';
@@ -27,6 +28,7 @@ export class MessagesEffects {
     private store: Store,
     private translate: TranslateService,
     private toastr: ToastrService,
+    private snackBar: MatSnackBar,
     @Inject(DOCUMENT) private document: Document
   ) {}
 
@@ -84,8 +86,9 @@ export class MessagesEffects {
         mapToPayload(),
         this.composeToastServiceArguments(),
         map(args => this.toastr.success(...args)),
-        tap(() => {
-          this.applyStyle$.next();
+        tap(payload => {
+          this.snackBar.open(payload.message, 'Understood');
+          // this.applyStyle$.next();
         })
       ),
     { dispatch: false }
