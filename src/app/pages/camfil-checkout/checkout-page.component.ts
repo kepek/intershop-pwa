@@ -77,7 +77,7 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
   }
 
   handleProductLoad(product) {
-    if (!product.availability) {
+    if (!product?.availability) {
       this.unavailableProducts[product.sku] = product;
     }
   }

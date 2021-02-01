@@ -51,7 +51,7 @@ export class CamfilMiniBasketComponent implements OnInit, OnDestroy {
     });
 
     this.buckets$?.pipe(takeUntil(this.destroy$)).subscribe((buckets: Bucket[]) => {
-      if (buckets && this.camCards.length) {
+      if (buckets && this.camCards?.length) {
         // this.buckets = this.connectWithCamCard(buckets);
         this.buckets = buckets;
         this.total = this.totalProductQuantity();
@@ -64,7 +64,7 @@ export class CamfilMiniBasketComponent implements OnInit, OnDestroy {
   }
 
   getCamCard(deliveryAddressId: string) {
-    return this.camCards.find(camcard => camcard.deliveryAddress.id === deliveryAddressId);
+    return this.camCards.find(camcard => camcard?.deliveryAddress?.id === deliveryAddressId);
   }
 
   totalProductQuantity() {
