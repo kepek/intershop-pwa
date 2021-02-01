@@ -71,7 +71,7 @@ export class OrderService {
         }
       )
       .pipe(
-        map(OrderMapper.fromData),
+        map(payload => OrderMapper.fromData({ data: payload.data[0] })),
         withLatestFrom(this.store.pipe(select(getCurrentLocale))),
         concatMap(([order, currentLocale]) =>
           this.sendRedirectUrlsIfRequired(order, currentLocale && currentLocale.lang)

@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MockPipe } from 'ng-mocks';
-import { instance, mock } from 'ts-mockito';
+import { of } from 'rxjs';
+import { instance, mock, when } from 'ts-mockito';
 
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { Basket } from 'ish-core/models/basket/basket.model';
@@ -32,8 +33,14 @@ describe('Camfil Checkout Summary Component', () => {
     basket = { totals: {} } as Basket;
     basket.totals.total = { type: 'PriceItem', currency: 'USD', gross: 0.0, net: 0.0 };
     basket.totals.taxTotal = { type: 'Money', currency: 'USD', value: 0.0 };
-
     component.basket = basket;
+
+    when(checkoutFacade.basketValidationResults$).thenReturn(
+      of({
+        valid: false,
+        adjusted: false,
+      })
+    );
   });
 
   it('should be created', () => {

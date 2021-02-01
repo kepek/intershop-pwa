@@ -90,7 +90,7 @@ export class OrdersEffects {
           ) {
             location.assign(order.orderCreation.stopAction.redirectUrl);
           } else {
-            this.router.navigate(['/checkout/receipt']);
+            // this.router.navigate(['/checkout/receipt']); // we need to disable this action because of custom checkout behaviour in Camfil
           }
         })
       ),

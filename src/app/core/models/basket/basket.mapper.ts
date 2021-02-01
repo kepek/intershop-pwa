@@ -74,7 +74,7 @@ export class BasketMapper {
    * @returns         The basket total.
    */
   static getTotals(data: BasketBaseData, discounts?: { [id: string]: BasketRebateData }): BasketTotal {
-    const totalsData = data.totals;
+    const totalsData = data?.totals;
 
     return totalsData
       ? {

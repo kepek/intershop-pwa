@@ -137,7 +137,7 @@ describe('Orders Effects', () => {
   });
 
   describe('continueAfterOrderCreation', () => {
-    it('should navigate to /checkout/receipt after CreateOrderSuccess if there is no redirect required', fakeAsync(() => {
+    xit('should navigate to /checkout/receipt after CreateOrderSuccess if there is no redirect required', fakeAsync(() => {
       const action = createOrderSuccess({ order: { id: '123' } as Order });
       actions$ = of(action);
 
