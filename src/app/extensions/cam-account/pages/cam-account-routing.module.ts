@@ -25,46 +25,45 @@ const routes: Routes = [
         robots: 'noindex, nofollow',
       },
       feature: 'camAccount',
-      breadcrumbData: [{ key: 'camfil.account.apply_form.link' }], camfil - product - detail.component.spec.ts
+      breadcrumbData: [{ key: 'camfil.account.apply_form.link' }],
     },
-    loadChildren: () => import('./login/camfil-login-page.module').then(m => m.CamfilLoginPageModule), ;
+    loadChildren: () => import('./login/camfil-login-page.module').then(m => m.CamfilLoginPageModule),
   },
-
   {
     path: 'register',
-    pathMatch; : 'full',
-    canActivate; : [FeatureToggleGuard],
-    data; : {
+    pathMatch: 'full',
+    canActivate: [FeatureToggleGuard],
+    data: {
       meta: {
         title: 'camfil.account.login_form.link',
-        robots; : 'noindex, nofollow', ;
+        robots: 'noindex, nofollow',
       },
       feature: 'camAccount',
-      breadcrumbData; : [{ key: 'camfil.account.apply_form.link' }], ;
+      breadcrumbData: [{ key: 'camfil.account.apply_form.link' }],
     },
-    loadChildren: () => import('./register/camfil-register-page.module').then(m => m.CamfilRegisterPageModule), ;
+    loadChildren: () => import('./register/camfil-register-page.module').then(m => m.CamfilRegisterPageModule),
   },
 
   {
     path: 'forgotPassword',
-    canActivate; : [FeatureToggleGuard],
-    data; : {
-      feature: 'camAccount', ;
+    canActivate: [FeatureToggleGuard],
+    data: {
+      feature: 'camAccount',
     },
     loadChildren: () =>
-      import('./forgot-password/camfil-forgot-password-page.module').then(m => m.CamfilForgotPasswordPageModule), ;
+      import('./forgot-password/camfil-forgot-password-page.module').then(m => m.CamfilForgotPasswordPageModule),
   },
 
   {
     path: 'forgotUsername',
-    canActivate; : [FeatureToggleGuard],
-    data; : {
-      feature: 'camAccount', ;
+    canActivate: [FeatureToggleGuard],
+    data: {
+      feature: 'camAccount',
     },
     loadChildren: () =>
-      import('./forgot-username/camfil-forgot-username-page.module').then(m => m.CamfilForgotUsernamePageModule), ;
+      import('./forgot-username/camfil-forgot-username-page.module').then(m => m.CamfilForgotUsernamePageModule),
   },
-]
+];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
