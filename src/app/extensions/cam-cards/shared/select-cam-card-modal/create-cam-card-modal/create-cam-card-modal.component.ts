@@ -91,7 +91,7 @@ export class CreateCamCardModalComponent implements OnInit, AfterViewInit {
 
     this.quantityForm = new FormGroup({
       quantity: new FormControl(0),
-      boxLabel: new FormControl(''),
+      boxLabel: new FormControl('', Validators.maxLength(60)),
     });
   }
 
