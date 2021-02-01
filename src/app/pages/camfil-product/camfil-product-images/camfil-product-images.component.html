@@ -2,19 +2,20 @@
   <div class="col-12 product-detail-img clearfix">
     <div class="product-image-container">
       <ngb-carousel
+        #ngcarousel
         [activeId]="activeSlide"
         (slide)="setActiveSlide($event.current)"
-        [showNavigationArrows]="false"
+        [showNavigationArrows]="true"
         [showNavigationIndicators]="false"
         [interval]="false"
       >
-        <ng-template ngbSlide [id]="'slide-0'">
+        <ng-template ngbSlide id="0">
           <camfil-product-image [product]="product" imageType="images"></camfil-product-image>
         </ng-template>
         <ng-template
           ngbSlide
           *ngFor="let imageView of getImageViewIDsExcludePrimary(product, 'images'); index as i"
-          [id]="'slide-' + i + 1"
+          id="{{ i + 1 }}"
         >
           <camfil-product-image [product]="product" imageType="images" [imageView]="imageView"></camfil-product-image>
         </ng-template>

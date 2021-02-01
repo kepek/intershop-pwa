@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-
+import { ChangeDetectionStrategy, Component, Input, ViewChild } from '@angular/core';
+import { NgbCarousel } from '@ng-bootstrap/ng-bootstrap';
 import { Product, ProductHelper } from 'ish-core/models/product/product.model';
 
 /**
@@ -22,8 +22,8 @@ export class CamfilProductImagesComponent {
    * The product for which the images should be displayed
    */
   @Input() product: Product;
-
-  activeSlide = "slide-0";
+  @ViewChild('ngcarousel', { static: true }) ngCarousel: NgbCarousel;
+  activeSlide = '0';
 
   getImageViewIDsExcludePrimary = ProductHelper.getImageViewIDsExcludePrimary;
 
@@ -32,8 +32,8 @@ export class CamfilProductImagesComponent {
    * @param slideIndex The slide index number to set the active slide
    */
   setActiveSlide(slideIndex: number) {
-
-    this.activeSlide = `slide-${slideIndex}`;
+    this.activeSlide = `${slideIndex}`;
+    this.ngCarousel.select(`${slideIndex}`);
   }
 
   /**
@@ -42,6 +42,6 @@ export class CamfilProductImagesComponent {
    * @returns True if the given slide index is the active slide, false otherwise
    */
   isActiveSlide(slideIndex: number): boolean {
-    return this.activeSlide ===  `slide-${slideIndex}`;
+    return this.activeSlide === `${slideIndex}`;
   }
 }
