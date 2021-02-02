@@ -842,6 +842,7 @@
   "camfil.modal.addNewProduct.button.add_product": "Add product",
   "camfil.modal.addNewProduct.button.cancel": "Cancel",
   "camfil.modal.addNewProduct.confirmation": "The {{0}} has been added to Cam Card",
+  "camfil.account.cam_card.delete_cam_card.confirmation": "The {{0}} Cam Card has been deleted",
   "camfil.modal.addNewProduct.error": "The SKU does not match any article or is no longer buyable",
   "camfil.modal.addNewProduct.error.max.quantity": "The quantity you entered is too large. ",
   "camfil.modal.addNewProduct.error.min.quantity": "The quantity you entered is too small. ",

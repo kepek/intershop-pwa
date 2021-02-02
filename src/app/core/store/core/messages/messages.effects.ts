@@ -1,11 +1,10 @@
 import { DOCUMENT } from '@angular/common';
 import { Inject, Injectable } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { routerRequestAction } from '@ngrx/router-store';
 import { Store, select } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
-import { ActiveToast, IndividualConfig, ToastrService } from 'ngx-toastr';
+import { ActiveToast, IndividualConfig } from 'ngx-toastr';
 import { OperatorFunction, Subject, combineLatest } from 'rxjs';
 import { map, switchMap, take, tap, withLatestFrom } from 'rxjs/operators';
 
@@ -13,6 +12,7 @@ import { getDeviceType } from 'ish-core/store/core/configuration';
 import { isStickyHeader } from 'ish-core/store/core/viewconf';
 import { mapToPayload } from 'ish-core/utils/operators';
 
+import { CamfilToastrService } from './CamfilToastrService';
 import {
   MessagesPayloadType,
   displayErrorMessage,
@@ -27,8 +27,8 @@ export class MessagesEffects {
     private actions$: Actions,
     private store: Store,
     private translate: TranslateService,
-    private toastr: ToastrService,
-    private snackBar: MatSnackBar,
+    private toastr: CamfilToastrService,
+
     @Inject(DOCUMENT) private document: Document
   ) {}
 
@@ -86,9 +86,8 @@ export class MessagesEffects {
         mapToPayload(),
         this.composeToastServiceArguments(),
         map(args => this.toastr.success(...args)),
-        tap(payload => {
-          this.snackBar.open(payload.message, 'Understood');
-          // this.applyStyle$.next();
+        tap(() => {
+          this.applyStyle$.next();
         })
       ),
     { dispatch: false }
@@ -131,7 +130,6 @@ export class MessagesEffects {
         withLatestFrom(this.store.pipe(select(getDeviceType))),
         map(([payload, deviceType]) => {
           const timeOut = payload.duration ?? duration ?? 5000;
-
           return [
             // message translation
             this.translate.instant(payload.message, payload.messageParams),
