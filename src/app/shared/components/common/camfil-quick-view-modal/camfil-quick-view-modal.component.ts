@@ -7,6 +7,7 @@ import { takeUntil } from 'rxjs/operators';
 
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { Attribute } from 'ish-core/models/attribute/attribute.model';
+import { ImageTypes } from 'ish-core/models/image/image.types';
 import {
   ProductView,
   VariationProductMasterView,
@@ -95,7 +96,7 @@ export class CamfilQuickViewModalComponent implements OnInit, OnDestroy {
       this.width = this.getAttributeValue(product.attributes, 'Width');
       this.depth = this.getAttributeValue(product.attributes, 'Depth');
       this.height = this.getAttributeValue(product.attributes, 'Height');
-      const videoUrl = this.getImageCdnUrl(product, 'youTubeVideos', 'view1');
+      const videoUrl = this.getImageCdnUrl(product, ImageTypes.YtVideo, 'view1');
       if (videoUrl) {
         this.secureVideoUrl = this.sanitizer.bypassSecurityTrustResourceUrl(videoUrl);
       }

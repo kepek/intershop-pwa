@@ -80,7 +80,8 @@ export class ProductsService {
       .set('amount', this.itemsPerPage.toString())
       .set('offset', ((page - 1) * this.itemsPerPage).toString())
       .set('returnSortKeys', 'true')
-      .set('productFilter', 'fallback_searchquerydefinition');
+      .set('productFilter', 'fallback_searchquerydefinition')
+      .set('allImages', 'true');
     if (sortKey) {
       params = params.set('sortKey', sortKey);
     }

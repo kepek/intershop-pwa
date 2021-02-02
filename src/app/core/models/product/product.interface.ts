@@ -78,6 +78,7 @@ export interface ProductDataStub {
   attributes: Attribute[];
   description: string;
   title: string;
+  images: Image[];
 }
 
 export interface ProductVariationLink extends Link {
