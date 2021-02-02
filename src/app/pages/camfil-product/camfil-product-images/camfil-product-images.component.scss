@@ -1,9 +1,37 @@
+@import '~src/styles/themes/camfil/variables';
+
+::ng-deep {
+  .carousel-item {
+    min-height: 270px; // prevent jumping of carousel thumbnails for images with low height
+  }
+  .play-icon {
+    svg {
+      box-sizing: content-box;
+      vertical-align: top;
+      background-color: #fff;
+      border: 5px solid #fff;
+      border-radius: 22px;
+    }
+  }
+}
+
 .product-img-thumbs {
   width: auto;
 }
+
 .product-thumb-set {
   padding-top: 0;
   padding-bottom: 0;
   margin: 1rem 0;
   border: 0;
+}
+
+.video-thumb-wrapper {
+  position: relative;
+  .play-icon {
+    position: absolute;
+    top: 12%;
+    left: 32%;
+    fill: $gray-500;
+  }
 }
