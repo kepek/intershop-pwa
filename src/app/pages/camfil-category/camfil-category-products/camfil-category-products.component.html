@@ -10,10 +10,14 @@
   </div>
 
   <!-- <ish-content-include includeId="camfil.include.category-products.content.pagelet2-Include"></ish-content-include> -->
-  <ish-content-viewcontext
-    viewContextId="vc_camfil_category_products_top"
-    [callParameters]="{ Category: category.categoryRef }"
-  ></ish-content-viewcontext>
+  <div class="row">
+    <div class="col-12">
+      <ish-content-viewcontext
+        viewContextId="vc_camfil_category_products_top"
+        [callParameters]="{ Category: category.categoryRef }"
+      ></ish-content-viewcontext>
+    </div>
+  </div>
 
   <div class="row no-gutters">
     <aside class="col-md-3 sidebar">

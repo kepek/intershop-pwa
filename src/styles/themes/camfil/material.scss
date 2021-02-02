@@ -339,3 +339,23 @@ a {
     margin-bottom: 0;
   }
 }
+
+.success-snackbar {
+  color: $light-text;
+  background-color: $camfil-color-primary;
+}
+
+.info-snackbar {
+  color: $light-text;
+  background-color: $camfil-color-special-tertiary;
+}
+
+.error-snackbar {
+  color: $camfil-text-color-primary;
+  background-color: $camfil-color-special-primary;
+}
+
+.warning-snackbar {
+  color: $camfil-text-color-primary;
+  background-color: $camfil-color-special-primary;
+}
