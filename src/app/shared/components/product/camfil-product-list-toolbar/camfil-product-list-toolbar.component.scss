@@ -71,4 +71,15 @@
       vertical-align: middle;
     }
   }
+
+  .mat-radio-checked {
+    .mat-radio-inner-circle {
+      background-color: $camfil-color-primary;
+    }
+    .mat-radio-container {
+      .mat-radio-outer-circle {
+        border-color: $camfil-color-primary;
+      }
+    }
+  }
 }

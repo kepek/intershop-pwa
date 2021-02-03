@@ -2,9 +2,7 @@
 
 import { CamfilIcon } from './build/camfil-icon.model';
 
-export type IconNameSubset<
-  T extends Readonly<CamfilIcon[]>
-> = T[number]['name'];
+export type IconNameSubset<T extends Readonly<CamfilIcon[]>> = T[number]['name'];
 
 export * from './build/camfilIcon-add-camcard.icon';
 export * from './build/camfilIcon-address-pin.icon';
@@ -42,7 +40,6 @@ export * from './build/camfilIcon-move.icon';
 export * from './build/camfilIcon-package.icon';
 export * from './build/camfilIcon-payment.icon';
 export * from './build/camfilIcon-pdf.icon';
-export * from './build/camfilIcon-play_arrow.icon';
 export * from './build/camfilIcon-play-fab.icon';
 export * from './build/camfilIcon-plus-fab.icon';
 export * from './build/camfilIcon-plus.icon';
