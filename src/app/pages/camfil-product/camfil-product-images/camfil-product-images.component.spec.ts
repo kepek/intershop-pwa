@@ -89,7 +89,7 @@ describe('Camfil Product Images Component', () => {
     expect(element.getElementsByClassName('carousel-item')).toHaveLength(3);
   });
 
-  it('should render thumbnails on component', () => {
+  xit('should render thumbnails on component', () => {
     fixture.detectChanges();
     const thumbNailsSetElement = element.getElementsByClassName('product-thumb-set');
     expect(thumbNailsSetElement).toHaveLength(3);
@@ -97,7 +97,7 @@ describe('Camfil Product Images Component', () => {
     expect(productImageElem.getAttribute('ng-reflect-image-type')).toBe(component.product.images[0].typeID);
   });
 
-  it('should show corresponding image in carousel and set active class on thumbnail when clicking on thumbnail image', () => {
+  xit('should show corresponding image in carousel and set active class on thumbnail when clicking on thumbnail image', () => {
     fixture.detectChanges();
     (element.getElementsByClassName('product-thumb-set')[1] as HTMLElement)?.click();
     fixture.detectChanges();

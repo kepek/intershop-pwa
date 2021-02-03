@@ -9,7 +9,12 @@
     <div class="d-flex">
       <div class="product-image-container">
         <a [routerLink]="product | ishProductRoute: category">
-          <camfil-product-image [product]="product" imageType="images" imageView="default" class="product-image d-block"></camfil-product-image>
+          <camfil-product-image
+            [product]="product"
+            imageType="images"
+            imageView="default"
+            class="product-image d-block"
+          ></camfil-product-image>
         </a>
         <camfil-product-label [product]="product"></camfil-product-label>
       </div>

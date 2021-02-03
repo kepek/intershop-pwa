@@ -19,6 +19,18 @@
         >
           <camfil-product-image [product]="product" imageType="images" [imageView]="imageView"></camfil-product-image>
         </ng-template>
+        <ng-container *ngIf="videoUrl">
+          <ng-template ngbSlide id="{{ getVideoThumbnailIndex() }}">
+            <iframe
+              #videoFrame
+              [src]="secureVideoUrl"
+              width="270"
+              frameborder="0"
+              allowscriptaccess="always"
+              allowfullscreen="allowfullscreen"
+            ></iframe>
+          </ng-template>
+        </ng-container>
       </ngb-carousel>
       <camfil-product-label [product]="product"></camfil-product-label>
     </div>
@@ -41,6 +53,19 @@
           [imageView]="imageView"
           class="product-image"
         ></camfil-product-image>
+      </div>
+
+      <!-- video thumbnail -->
+      <div
+        *ngIf="videoUrl"
+        class="col-4 product-thumb-set video-thumb-wrapper"
+        [ngClass]="{ active: isActiveSlide(getVideoThumbnailIndex()) }"
+        (click)="setActiveSlide(getVideoThumbnailIndex())"
+      >
+        <div class="video-thumb">
+          <img [src]="secureVideoThumbnailUrl" />
+          <mat-icon class="play-icon color-secondary" svgIcon="play-arrow"></mat-icon>
+        </div>
       </div>
     </div>
   </div>

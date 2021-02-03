@@ -3,7 +3,12 @@
     <div class="d-flex align-items-center align-self-start align-self-md-center text-left">
       <!-- <ng-container *ngIf="isViewMode">{{ index }}</ng-container> -->
       <a class="image ml-0 mx-md-3" [routerLink]="productData | ishProductRoute">
-        <camfil-product-image [product]="productData" imageType="images" [imageView]="'default'" class="product-image"></camfil-product-image>
+        <camfil-product-image
+          [product]="productData"
+          imageType="images"
+          [imageView]="'default'"
+          class="product-image"
+        ></camfil-product-image>
       </a>
       <div class="my-2 my-md-0">
         <div class="d-flex flex-row">
