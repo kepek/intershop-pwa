@@ -36,6 +36,7 @@ export class CamfilProductDetailComponent implements OnInit, OnDestroy {
   @Output() productSkuChange = new EventEmitter<string>();
 
   isInCompareList$: Observable<boolean>;
+  isInCompareList: boolean;
   private sku$ = new ReplaySubject<string>(1);
 
   constructor(private shoppingFacade: ShoppingFacade) {}
@@ -73,6 +74,9 @@ export class CamfilProductDetailComponent implements OnInit, OnDestroy {
     this.productSkuChange.pipe(startWith(this.productSku), takeUntil(this.destroy$)).subscribe(this.sku$);
     if (this.product?.sku) {
       this.isInCompareList$ = this.shoppingFacade.inCompareProducts$(this.product.sku);
+      this.isInCompareList$.pipe(take(1), takeUntil(this.destroy$)).subscribe(isInCompare => {
+        this.isInCompareList = isInCompare;
+      });
     }
   }
 
@@ -89,7 +93,7 @@ export class CamfilProductDetailComponent implements OnInit, OnDestroy {
   }
 
   toggleCompare() {
-    // this.compareToggle.emit();
+    this.isInCompareList = !this.isInCompareList;
     this.sku$.pipe(take(1), takeUntil(this.destroy$)).subscribe(sku => this.shoppingFacade.toggleProductCompare(sku));
   }
 
