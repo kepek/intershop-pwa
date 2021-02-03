@@ -25,6 +25,10 @@ import { CamfilModalDialogComponent } from 'ish-shared/components/common/camfil-
 import { CamCardsFacade } from '../../../facades/cam-cards.facade';
 import { CamCard, CamCardItem } from '../../../models/cam-card/cam-card.model';
 
+export interface Prices {
+  [id: string]: Price;
+}
+
 @Component({
   selector: 'camfil-account-cam-card-detail-list',
   templateUrl: './account-cam-card-detail-list.component.html',
@@ -48,8 +52,7 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges {
 
   isSubOpen = [];
   isStickyCamCardToolbar$: Observable<boolean>;
-  // TODO: improve when user locale will be properlyused
-  priceSum: Price = { currency: 'USD', value: 0, type: 'Money' };
+  priceSum: Prices = {};
   POSITION_GAP_SIZE = 999;
 
   constructor(
@@ -99,9 +102,17 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges {
     return this.camCard?.name;
   }
 
-  productUpdate(event) {
+  get sumPrice(): Price {
+    const list = Object.values(this.priceSum);
+    const currency = list.length ? list[0].currency : '';
+    const value = list.reduce((res, item) => res + item.value, 0);
+    return { value, type: 'Money', currency };
+  }
+
+  productUpdate(event, item: CamCardItem) {
     if (event.res.salePrice?.value) {
-      this.priceSum.value = this.priceSum.value + event.res.salePrice.value * event.quantity;
+      const price = event.res.salePrice.value * item.quantity;
+      this.priceSum[item.id] = { ...event.res.salePrice, value: price };
     }
   }
 

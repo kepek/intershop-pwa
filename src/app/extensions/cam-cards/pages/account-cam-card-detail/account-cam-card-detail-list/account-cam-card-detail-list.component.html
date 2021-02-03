@@ -29,8 +29,8 @@
                 [currentCamCard]="camCard"
                 [selectedItemsForm]="selectedItemsForm"
                 [index]="i + 1"
-                (handleLoad)="productUpdate($event)"
-                (handleUpdate)="productUpdate($event)"
+                (handleLoad)="productUpdate($event, item)"
+                (handleUpdate)="productUpdate($event, item)"
                 (delete)="openDeleteConfirmationDialog(productDeleteDialog, null, 'product', $event)"
                 mode="edit"
               ></camfil-account-cam-card-detail-line-item>
@@ -72,8 +72,8 @@
                     [currentCamCard]="sub"
                     [selectedItemsForm]="selectedItemsForm"
                     [index]="i2 + 1"
-                    (handleLoad)="productUpdate($event)"
-                    (handleUpdate)="productUpdate($event)"
+                    (handleLoad)="productUpdate($event, sub)"
+                    (handleUpdate)="productUpdate($event, sub)"
                     (delete)="openDeleteConfirmationDialog(productDeleteDialog, null, 'product', $event)"
                     mode="edit"
                   ></camfil-account-cam-card-detail-line-item>
@@ -87,7 +87,7 @@
       <div class="text-right cam-card-total">
         <div class="pt-4 pb-2 px-4">
           {{ 'camfil.account.cam_card.details.total.text' | translate }}:<strong class="pl-3">{{
-            priceSum | ishPrice
+            sumPrice | ishPrice
           }}</strong>
         </div>
       </div>
