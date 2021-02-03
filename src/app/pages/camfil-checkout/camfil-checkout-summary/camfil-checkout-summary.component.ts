@@ -36,7 +36,7 @@ export class CamfilCheckoutSummaryComponent implements OnInit {
     this.validationResults$
       .pipe(takeUntil(this.destroy$))
       .subscribe((validationResults: BasketValidationResultType) => {
-        if (!validationResults.valid) {
+        if (validationResults.valid === false) {
           this.snackBar.open(
             this.translate.instant('camfil.checkout.message.cannot_process'),
             this.translate.instant('camfil.checkout.message.understood')
