@@ -81,8 +81,7 @@ export class CamfilProductImagesComponent implements OnInit {
    * @returns index
    */
   getVideoThumbnailUrl(): string {
-    var videoId = this.videoUrl.match(/youtube\.com.*(\?v=|\/embed\/)(.{11})/).pop();
-    var thumbnailUrl = '//img.youtube.com/vi/' + videoId + '/mqdefault.jpg';
-    return thumbnailUrl;
+    const videoId = this.videoUrl.match(/youtube\.com.*(\?v=|\/embed\/)(.{11})/).pop();
+    return '//img.youtube.com/vi/' + videoId + '/mqdefault.jpg';
   }
 }
