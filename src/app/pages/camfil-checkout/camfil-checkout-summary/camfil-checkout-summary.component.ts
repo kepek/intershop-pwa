@@ -36,12 +36,13 @@ export class CamfilCheckoutSummaryComponent implements OnInit {
     this.validationResults$
       .pipe(takeUntil(this.destroy$))
       .subscribe((validationResults: BasketValidationResultType) => {
-        if (validationResults.valid === false) {
+        if (!validationResults?.valid) {
           this.snackBar.open(
             this.translate.instant('camfil.checkout.message.cannot_process'),
             this.translate.instant('camfil.checkout.message.understood')
           );
-        } else if (validationResults.valid === true) {
+        }
+        if (validationResults?.valid) {
           this.snackBar.open(this.translate.instant('camfil.checkout.message.order_created'), undefined, {
             duration: 3000,
           });

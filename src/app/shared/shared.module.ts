@@ -185,6 +185,8 @@ import { RecentlyViewedComponent } from './components/recently/recently-viewed/r
 import { FormsDynamicModule } from './forms-dynamic/forms-dynamic.module';
 import { FormsSharedModule } from './forms/forms.module';
 import { CamfilProductTechnicalDocumentsComponent } from './components/common/camfil-product-technical-documents/camfil-product-technical-documents.component';
+import { CamfilSearchBoxComponent } from './components/common/camfil-search-box/camfil-search-box.component';
+import { CamfilCategoryBoxComponent } from '../pages/camfil-category/camfil-category-box/camfil-category-box.component';
 
 const importExportModules = [
   AddressFormsSharedModule,
@@ -333,6 +335,7 @@ const exportedComponents = [
   CamfilBreadcrumbComponent,
   CamfilBulletListComponent,
   CamfilCamCardModalComponent,
+  CamfilCategoryBoxComponent,
   CamfilErrorComponent,
   CamfilFilterInfoComponent,
   CamfilFilterMeasurementsComponent,
@@ -363,6 +366,7 @@ const exportedComponents = [
   CamfilProductTitleComponent,
   CamfilProductVariationSelectComponent,
   CamfilQuickViewModalComponent,
+  CamfilSearchBoxComponent,
   CamfilSmallCtaModalComponent,
   ContentIncludeComponent,
   ContentPageletComponent,

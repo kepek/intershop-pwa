@@ -27,6 +27,7 @@ export class CamfilProductListComponent implements OnInit {
   @Input() products: string[];
   @Input() category?: Category;
   @Input() viewType?: ViewType = 'simple';
+  @Input() limit?: number;
 
   listingLoading$: Observable<boolean>;
 
@@ -50,5 +51,9 @@ export class CamfilProductListComponent implements OnInit {
 
   get isDetailedView() {
     return this.viewType === 'detailed';
+  }
+
+  ifLimit(idx: number) {
+    return this.limit && idx + 1 > this.limit;
   }
 }

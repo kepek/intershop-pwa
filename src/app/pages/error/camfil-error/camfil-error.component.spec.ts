@@ -9,7 +9,6 @@ import { ServerHtmlDirective } from 'ish-core/directives/server-html.directive';
 import { AppFacade } from 'ish-core/facades/app.facade';
 import { findAllCustomElements } from 'ish-core/utils/dev/html-query-utils';
 import { ContentIncludeComponent } from 'ish-shared/cms/components/content-include/content-include.component';
-import { CamfilSearchBoxComponent } from 'ish-shell/header/camfil-search-box/camfil-search-box.component';
 
 import { CamfilErrorComponent } from './camfil-error.component';
 
@@ -22,12 +21,7 @@ describe('Camfil Error Component', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [RouterTestingModule, TranslateModule.forRoot()],
-      declarations: [
-        CamfilErrorComponent,
-        MockComponent(CamfilSearchBoxComponent),
-        MockComponent(ContentIncludeComponent),
-        ServerHtmlDirective,
-      ],
+      declarations: [CamfilErrorComponent, MockComponent(ContentIncludeComponent), ServerHtmlDirective],
       providers: [
         { provide: AppFacade, useFactory: () => instance(mock(AppFacade)) },
         { provide: APP_BASE_HREF, useValue: '/' },

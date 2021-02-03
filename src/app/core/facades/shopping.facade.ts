@@ -22,6 +22,7 @@ import {
 import {
   getCategories,
   getCategory,
+  getCategoryEntities,
   getNavigationCategories,
   getSelectedCategory,
   loadTopLevelCategories,
@@ -60,7 +61,12 @@ import {
   getMostRecentlyViewedProducts,
   getRecentlyViewedProducts,
 } from 'ish-core/store/shopping/recently';
-import { getSearchTerm, getSuggestSearchResults, suggestSearch } from 'ish-core/store/shopping/search';
+import {
+  getSearchTerm,
+  getSuggestSearchResults,
+  searchProductsInSearchBox,
+  suggestSearch,
+} from 'ish-core/store/shopping/search';
 import { toObservable } from 'ish-core/utils/functions';
 import { whenFalsy, whenTruthy } from 'ish-core/utils/operators';
 
@@ -317,4 +323,10 @@ export class ShoppingFacade {
   loadBasketAddresses() {
     this.store.dispatch(loadBasketAddresses());
   }
+
+  searchProductsInSearchBox(id: ProductListingID) {
+    this.store.dispatch(searchProductsInSearchBox({ id }));
+  }
+
+  getAllCategoriesTree$ = this.store.pipe(select(getCategoryEntities));
 }
