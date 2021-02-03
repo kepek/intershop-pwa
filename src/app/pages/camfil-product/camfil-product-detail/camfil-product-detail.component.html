@@ -87,7 +87,7 @@
       <div class="row">
         <div class="col-12 d-flex align-items-center">
           <camfil-product-add-to-compare
-            [isInCompareList]="isInCompareList"
+            [isInCompareList]="isInCompareList$ | async"
             class="btn-link"
             (compareToggle)="toggleCompare()"
           ></camfil-product-add-to-compare>
