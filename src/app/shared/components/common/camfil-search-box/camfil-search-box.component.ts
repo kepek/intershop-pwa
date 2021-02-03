@@ -109,9 +109,7 @@ export class CamfilSearchBoxComponent implements OnInit, OnDestroy {
   }
 
   getFilteredCategories(searchTerm: string) {
-    return searchTerm.length > 1
-      ? this.categoriesTree.filter(item => item.name?.toLowerCase().includes(searchTerm.toLowerCase())).slice(0, 9)
-      : [];
+    return this.categoriesTree.filter(item => item.name?.toLowerCase().includes(searchTerm.toLowerCase())).slice(0, 9);
   }
 
   focus() {
@@ -124,9 +122,9 @@ export class CamfilSearchBoxComponent implements OnInit, OnDestroy {
   }
 
   searchSuggest(searchTerm: string) {
-    this.categoriesFiltered = this.getFilteredCategories(searchTerm);
-    this.inputSearchTerms$.next(searchTerm);
-    if (searchTerm) {
+    if (searchTerm.length > 2) {
+      this.categoriesFiltered = this.getFilteredCategories(searchTerm);
+      this.inputSearchTerms$.next(searchTerm);
       this.loading = true;
       this.noResults = false;
     }
