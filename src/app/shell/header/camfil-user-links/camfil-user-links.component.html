@@ -1,7 +1,17 @@
 <ul class="user-links">
-  <li class="dropdown" *ngIf="closedLangList">
-    <a>Webshop</a>
+  <!-- dropdown links tablet/desktop -->
+  <li class="dropdown" [matMenuTriggerFor]="menu" *ngIf="deviceType !== 'mobile'">
+    <a>{{ 'camfil.header.dropdown.title' | translate }}</a>
+    <mat-menu #menu="matMenu">
+      <ng-container *ngTemplateOutlet="dropdownLinks"></ng-container>
+    </mat-menu>
   </li>
+
+  <!-- dropdown links mobile -->
+  <li *ngIf="deviceType === 'mobile'">
+    <ng-container *ngTemplateOutlet="dropdownLinks"></ng-container>
+  </li>
+
   <li class="link-languages" *ngIf="deviceType === 'mobile'">
     <camfil-language-switch
       (isClosedLangList)="toggleLang($event)"
@@ -17,3 +27,7 @@
     </li>
   </ng-container>
 </ul>
+
+<ng-template #dropdownLinks>
+  <ish-lazy-content-include includeId="camfil.include.header.dropdownLinks.pagelet2-Include"></ish-lazy-content-include>
+</ng-template>
