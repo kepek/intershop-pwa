@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { Observable, ReplaySubject, Subject } from 'rxjs';
+import { startWith, take, takeUntil } from 'rxjs/operators';
 
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { CategoryView } from 'ish-core/models/category-view/category-view.model';
@@ -27,12 +27,17 @@ export class CamfilProductDetailComponent implements OnInit, OnDestroy {
   @Input() quantity: number;
   @Input() price: ProductPrices;
   @Input() variationOptions: VariationOptionGroup[];
-  @Input() isInCompareList: boolean;
   @Output() productToBasket = new EventEmitter<{ sku: string; quantity: number }>();
   @Output() productToCompare = new EventEmitter<string>();
   @Output() selectVariation = new EventEmitter<{ selection: VariationSelection; changedAttribute?: string }>();
   @Output() quantityChange = new EventEmitter<number>();
   @Output() compareToggle = new EventEmitter<void>();
+  @Input() productSku: string;
+  @Output() productSkuChange = new EventEmitter<string>();
+
+  isInCompareList$: Observable<boolean>;
+  isInCompareList: boolean;
+  private sku$ = new ReplaySubject<string>(1);
 
   constructor(private shoppingFacade: ShoppingFacade) {}
 
@@ -65,6 +70,14 @@ export class CamfilProductDetailComponent implements OnInit, OnDestroy {
           this.category = category;
         });
     }
+
+    this.productSkuChange.pipe(startWith(this.productSku), takeUntil(this.destroy$)).subscribe(this.sku$);
+    if (this.product?.sku) {
+      this.isInCompareList$ = this.shoppingFacade.inCompareProducts$(this.product.sku);
+      this.isInCompareList$.pipe(take(1), takeUntil(this.destroy$)).subscribe(isInCompare => {
+        this.isInCompareList = isInCompare;
+      });
+    }
   }
 
   ngOnDestroy() {
@@ -80,7 +93,8 @@ export class CamfilProductDetailComponent implements OnInit, OnDestroy {
   }
 
   toggleCompare() {
-    this.compareToggle.emit();
+    this.isInCompareList = !this.isInCompareList;
+    this.sku$.pipe(take(1), takeUntil(this.destroy$)).subscribe(sku => this.shoppingFacade.toggleProductCompare(sku));
   }
 
   addToCompare() {

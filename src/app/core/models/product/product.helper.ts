@@ -217,15 +217,15 @@ export class ProductHelper {
   static getTechnicalDocuments(product: Product): ProductTechnicalDocument[] {
     const productDocumentTypes = [
       {
-        name: 'Brochures',
+        name: 'camfil.product.brochures.text',
         type: ImageTypes.Brochures,
       },
       {
-        name: 'Product PDF, Web',
+        name: 'camfil.product.pdf_web.text',
         type: ImageTypes.ProductPdf,
       },
       {
-        name: 'Handling & Maintenance',
+        name: 'camfil.product.handling_maintenance.text',
         type: ImageTypes.HamdlingAndMaintenance,
       },
     ];
