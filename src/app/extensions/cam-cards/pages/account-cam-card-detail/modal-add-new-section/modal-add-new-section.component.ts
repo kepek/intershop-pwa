@@ -8,7 +8,7 @@ import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfi
 import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
 
 import { CamCardsFacade } from '../../../facades/cam-cards.facade';
-import { CamCardAddress } from '../../../models/cam-card/cam-card.model';
+import { CamCardAddress, CamCardCustomer } from '../../../models/cam-card/cam-card.model';
 
 @Component({
   selector: 'camfil-modal-add-new-section',
@@ -23,6 +23,7 @@ export class ModalAddNewSectionComponent implements OnInit, OnDestroy {
 
   rootCamCardId: string;
   rootCamCardAddress: CamCardAddress;
+  rootCamCardCustomer: CamCardCustomer;
   newSegmentForm: FormGroup;
   newSegmentValidator = [
     {
@@ -52,6 +53,7 @@ export class ModalAddNewSectionComponent implements OnInit, OnDestroy {
       if (currentCamCard) {
         this.rootCamCardId = currentCamCard.id;
         this.rootCamCardAddress = currentCamCard.deliveryAddress;
+        this.rootCamCardCustomer = currentCamCard.customer;
       }
     });
   }
@@ -67,6 +69,7 @@ export class ModalAddNewSectionComponent implements OnInit, OnDestroy {
       const newSubCamCard = {
         name: newSegmentValue,
         deliveryAddress: this.rootCamCardAddress,
+        customer: this.rootCamCardCustomer,
       };
 
       this.camCardsFacade.createSubCamCard(newSubCamCard, this.rootCamCardId);
