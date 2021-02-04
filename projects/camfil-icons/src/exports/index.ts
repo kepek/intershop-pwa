@@ -38,7 +38,7 @@ export * from './build/camfilIcon-move.icon';
 export * from './build/camfilIcon-package.icon';
 export * from './build/camfilIcon-payment.icon';
 export * from './build/camfilIcon-pdf.icon';
-export * from './build/camfilIcon-play_arrow.icon';
+
 export * from './build/camfilIcon-play-fab.icon';
 export * from './build/camfilIcon-plus-fab.icon';
 export * from './build/camfilIcon-plus.icon';
