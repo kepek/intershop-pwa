@@ -28,6 +28,7 @@ describe('Camfil Product Inventory Component', () => {
     product = { sku: 'sku' } as Product;
     element = fixture.nativeElement;
     component.product = product;
+    component.isAvailabilityDotVisible = true;
   });
 
   it('should be created', () => {
@@ -41,10 +42,9 @@ describe('Camfil Product Inventory Component', () => {
     expect(() => fixture.detectChanges()).toThrow();
   });
 
-  xit('should show In Stock when inStock = true', () => {
+  it('should show In Stock when isAvailabilityDotVisible = true', () => {
     translate.set('camfil.product.instock.text', 'In Stock');
-    product.inStock = true;
-    product.availability = true;
+    component.isAvailabilityDotVisible = true;
     fixture.detectChanges();
     expect(element.querySelector('.product-availability').textContent).toContain('In Stock');
     expect(
@@ -53,7 +53,7 @@ describe('Camfil Product Inventory Component', () => {
   });
 
   // because of FRS005
-  xit('should show Out of Stock when inStock = false', () => {
+  it('should show Out of Stock when inStock = false', () => {
     translate.set('camfil.product.out_of_stock.text', 'Out of Stock');
     product.inStock = false;
     fixture.detectChanges();

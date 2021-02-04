@@ -1,9 +1,9 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
-
-import { Product, ProductCompletenessLevel, ProductHelper } from 'ish-core/models/product/product.model';
+import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
+
+import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
+import { Product, ProductCompletenessLevel, ProductHelper } from 'ish-core/models/product/product.model';
 
 @Component({
   selector: 'camfil-product-inventory',
@@ -11,7 +11,7 @@ import { take, takeUntil } from 'rxjs/operators';
   styleUrls: ['./camfil-product-inventory.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CamfilProductInventoryComponent {
+export class CamfilProductInventoryComponent implements OnInit, OnDestroy {
   constructor(private shoppingFacade: ShoppingFacade) {}
 
   private static REQUIRED_COMPLETENESS_LEVEL = ProductCompletenessLevel.List;
