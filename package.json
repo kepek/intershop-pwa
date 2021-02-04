@@ -56,7 +56,6 @@
     "tsc": "tsc",
     "tsc:build-all": "tsc --project tsconfig.all.json",
     "tsc:watch-all": "tsc --project tsconfig.all.json --watch",
-    "postcheckout": "npm run postinstall"
   },
   "resolutions": {
     "axios": "^0.21.1"
