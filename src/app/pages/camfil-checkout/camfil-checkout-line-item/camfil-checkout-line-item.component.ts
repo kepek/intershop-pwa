@@ -212,9 +212,9 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
 
   showAvailabilityDot() {
     if (this.product$) {
-      this.product$.pipe(take(1), takeUntil(this.destroy$)).subscribe((res: ProductView) => {
-        return ProductHelper.showAvailabilityDot(res);
-      });
+      this.product$
+        .pipe(take(1), takeUntil(this.destroy$))
+        .subscribe((res: ProductView) => ProductHelper.showAvailabilityDot(res));
     } else {
       return false;
     }

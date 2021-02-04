@@ -106,7 +106,6 @@ export class CamfilProductDetailComponent implements OnInit, OnDestroy {
   }
 
   showAvailabilityDot() {
-    console.log("Wynik ", ProductHelper.showAvailabilityDot(this.product))
     return ProductHelper.showAvailabilityDot(this.product);
   }
 }

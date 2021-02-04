@@ -7,12 +7,13 @@ import { PriceHelper } from 'ish-core/models/price/price.model';
 import { ProductTechnicalDocument } from 'ish-core/models/product-technical-document/product-technical-document.model';
 import { VariationProductMasterView, VariationProductView } from 'ish-core/models/product-view/product-view.model';
 
+import { AttributeGroupTypes } from 'ish-core/models/attribute-group/attribute-group.types';
+
 import { ProductBundle } from './product-bundle.model';
 import { ProductRetailSet } from './product-retail-set.model';
 import { VariationProductMaster } from './product-variation-master.model';
 import { VariationProduct } from './product-variation.model';
 import { Product } from './product.model';
-import { AttributeGroupTypes } from '../attribute-group/attribute-group.types';
 
 export interface SkuQuantityType {
   sku: string;
@@ -271,6 +272,6 @@ export class ProductHelper {
       )?.value;
 
       return arrigocodeValue === 'A1' ? true : false;
-    } else return false;
+    } else { return false; }
   }
 }
