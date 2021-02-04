@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ContentIncludeComponent } from 'ish-shared/cms/components/content-include/content-include.component';
 import { MockComponent } from 'ng-mocks';
+
+import { ContentIncludeComponent } from 'ish-shared/cms/components/content-include/content-include.component';
 
 import { CamfilFilterInfoComponent } from './camfil-filter-info.component';
 
