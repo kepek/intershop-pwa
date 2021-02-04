@@ -10,7 +10,6 @@
 
   <!-- empty search result -->
   <ng-template #noResult>
-    <camfil-breadcrumb></camfil-breadcrumb>
     <camfil-search-no-result *ngIf="!(searchLoading$ | async)" [searchTerm]="searchTerm"></camfil-search-no-result>
   </ng-template>
 </ng-container>

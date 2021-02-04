@@ -9,7 +9,6 @@ import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { BasketView } from 'ish-core/models/basket/basket.model';
 import { ContentIncludeComponent } from 'ish-shared/cms/components/content-include/content-include.component';
-import { CamfilBreadcrumbComponent } from 'ish-shared/components/common/camfil-breadcrumb/camfil-breadcrumb.component';
 
 import { CamCardsFacade } from '../../extensions/cam-cards/facades/cam-cards.facade';
 
@@ -60,7 +59,6 @@ describe('Checkout Page Component', () => {
     await TestBed.configureTestingModule({
       declarations: [
         CheckoutPageComponent,
-        MockComponent(CamfilBreadcrumbComponent),
         MockComponent(CamfilCheckoutHeaderComponent),
         MockComponent(CamfilCheckoutListComponent),
         MockComponent(CamfilCheckoutSummaryComponent),

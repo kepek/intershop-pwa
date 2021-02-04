@@ -7,7 +7,6 @@ import { instance, mock, when } from 'ts-mockito';
 import { AppFacade } from 'ish-core/facades/app.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { findAllCustomElements } from 'ish-core/utils/dev/html-query-utils';
-import { CamfilBreadcrumbComponent } from 'ish-shared/components/common/camfil-breadcrumb/camfil-breadcrumb.component';
 
 import { CamfilSearchNoResultComponent } from './camfil-search-no-result/camfil-search-no-result.component';
 import { CamfilSearchResultComponent } from './camfil-search-result/camfil-search-result.component';
@@ -26,7 +25,6 @@ describe('Search Page Component', () => {
     await TestBed.configureTestingModule({
       imports: [RouterTestingModule],
       declarations: [
-        MockComponent(CamfilBreadcrumbComponent),
         MockComponent(CamfilSearchNoResultComponent),
         MockComponent(CamfilSearchResultComponent),
         SearchPageComponent,
@@ -58,7 +56,6 @@ describe('Search Page Component', () => {
 
     expect(findAllCustomElements(element)).toMatchInlineSnapshot(`
       Array [
-        "camfil-breadcrumb",
         "camfil-search-no-result",
       ]
     `);

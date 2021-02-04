@@ -8,7 +8,6 @@ import { createCategoryView } from 'ish-core/models/category-view/category-view.
 import { Category } from 'ish-core/models/category/category.model';
 import { findAllCustomElements } from 'ish-core/utils/dev/html-query-utils';
 import { categoryTree } from 'ish-core/utils/dev/test-data-utils';
-import { CamfilBreadcrumbComponent } from 'ish-shared/components/common/camfil-breadcrumb/camfil-breadcrumb.component';
 import { CamfilFilterNavigationComponent } from 'ish-shared/components/filter/camfil-filter-navigation/camfil-filter-navigation.component';
 import { CamfilProductListingComponent } from 'ish-shared/components/product/camfil-product-listing/camfil-product-listing.component';
 
@@ -26,7 +25,6 @@ describe('Category Products Component', () => {
       imports: [TranslateModule.forRoot()],
       declarations: [
         CategoryProductsComponent,
-        MockComponent(CamfilBreadcrumbComponent),
         MockComponent(CamfilCategoryNavigationComponent),
         MockComponent(CamfilFilterNavigationComponent),
         MockComponent(CamfilProductListingComponent),
@@ -51,10 +49,6 @@ describe('Category Products Component', () => {
   });
 
   it('should display all components on the page', () => {
-    expect(findAllCustomElements(element)).toIncludeAllMembers([
-      'camfil-breadcrumb',
-      'camfil-product-listing',
-      'camfil-filter-navigation',
-    ]);
+    expect(findAllCustomElements(element)).toIncludeAllMembers(['camfil-product-listing', 'camfil-filter-navigation']);
   });
 });

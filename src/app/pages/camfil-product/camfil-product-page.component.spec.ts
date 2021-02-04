@@ -25,7 +25,6 @@ import { findAllCustomElements } from 'ish-core/utils/dev/html-query-utils';
 import { categoryTree } from 'ish-core/utils/dev/test-data-utils';
 import { ContentIncludeComponent } from 'ish-shared/cms/components/content-include/content-include.component';
 import { ContentViewcontextComponent } from 'ish-shared/cms/components/content-viewcontext/content-viewcontext.component';
-import { CamfilBreadcrumbComponent } from 'ish-shared/components/common/camfil-breadcrumb/camfil-breadcrumb.component';
 import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
 import { CamfilProductGuidesComponent } from 'ish-shared/components/product/camfil-product-guides/camfil-product-guides.component';
 import { RecentlyViewedComponent } from 'ish-shared/components/recently/recently-viewed/recently-viewed.component';
@@ -62,7 +61,6 @@ describe('Camfil Product Page Component', () => {
       ],
       declarations: [
         CamfilProductPageComponent,
-        MockComponent(CamfilBreadcrumbComponent),
         MockComponent(CamfilProductAttributesPreviewComponent),
         MockComponent(CamfilProductDetailComponent),
         MockComponent(CamfilProductGuidesComponent),
@@ -110,13 +108,11 @@ describe('Camfil Product Page Component', () => {
     fixture.detectChanges();
 
     expect(findAllCustomElements(element)).toEqual([
-      'camfil-breadcrumb',
       'camfil-product-detail',
       'camfil-product-links',
       'ish-content-viewcontext',
       'ish-recently-viewed',
     ]);
-    expect(findAllCustomElements(element)).toEqual(['camfil-breadcrumb']);
   });
 
   it('should redirect to product page when variation is selected', fakeAsync(() => {

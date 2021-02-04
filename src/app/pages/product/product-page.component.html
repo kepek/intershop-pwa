@@ -3,8 +3,6 @@
 
   <ng-template #productDetail>
     <ng-container *ngIf="product$ | async as product">
-      <camfil-breadcrumb></camfil-breadcrumb>
-
       <ish-product-detail
         [product]="product"
         [price]="price$ | async"

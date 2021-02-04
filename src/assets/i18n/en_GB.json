@@ -818,8 +818,8 @@
   "camfil.lineitem.table.product": "Product",
   "camfil.lineitem.table.qty_delivered": "Delivered qty",
   "camfil.lineitem.table.qty_ordered": "Ordered qty",
-  "camfil.listing.only.list.products.title": "Products",
   "camfil.listing.only.list.products.showing": "Showing {{0}} of {{1}}",
+  "camfil.listing.only.list.products.title": "Products",
   "camfil.login.info.administer_users": "Administer users",
   "camfil.login.info.administer_users.description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse aliquam nulla non nunc sodales malesuada.",
   "camfil.login.info.camcards": "Filter lists - Camcards",
@@ -988,9 +988,9 @@
   "camfil.search.filter.show.link": {
     "other": "Show # more"
   },
+  "camfil.search.searchbox.categories.title": "Categories",
   "camfil.search.searchbox.instructional_text": "Search for air filters names. SKUs, dimensions",
   "camfil.search.searchbox.no.results": "Search does not match any results.",
-  "camfil.search.searchbox.categories.title": "Categories",
   "camfil.search.searchbox.show.all.results": "Show all results",
   "camfil.shopping_cart.ministatus.items.label": "Go to checkout",
   "camfil.show_less.text": "Show less",
