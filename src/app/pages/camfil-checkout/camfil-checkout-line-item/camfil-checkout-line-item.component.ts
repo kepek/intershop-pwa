@@ -21,7 +21,7 @@ import { AttributeHelper } from 'ish-core/models/attribute/attribute.helper';
 import { LineItemUpdate } from 'ish-core/models/line-item-update/line-item-update.model';
 import { LineItem, LineItemView } from 'ish-core/models/line-item/line-item.model';
 import { ProductView } from 'ish-core/models/product-view/product-view.model';
-import { ProductCompletenessLevel, ProductHelper } from 'ish-core/models/product/product.model';
+import { ProductCompletenessLevel } from 'ish-core/models/product/product.model';
 import { CamfilQuickViewModalComponent } from 'ish-shared/components/common/camfil-quick-view-modal/camfil-quick-view-modal.component';
 import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
 
@@ -208,15 +208,5 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
       maxHeight: '80vh',
       data: { sku: this.product.productSKU },
     });
-  }
-
-  showAvailabilityDot() {
-    if (this.product$) {
-      this.product$
-        .pipe(take(1), takeUntil(this.destroy$))
-        .subscribe((res: ProductView) => ProductHelper.showAvailabilityDot(res));
-    } else {
-      return false;
-    }
   }
 }

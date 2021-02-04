@@ -104,8 +104,4 @@ export class CamfilProductDetailComponent implements OnInit, OnDestroy {
   variationSelected(event: { selection: VariationSelection; changedAttribute?: string }) {
     this.selectVariation.emit(event);
   }
-
-  showAvailabilityDot() {
-    return ProductHelper.showAvailabilityDot(this.product);
-  }
 }

@@ -21,7 +21,7 @@
       <div class="product-detail-action-col d-flex flex-column justify-content-between">
         <div>
           <camfil-product-inventory
-            *ngIf="showAvailabilityDot() && configuration.displayInventory && !isMasterProduct(product)"
+            *ngIf="configuration.displayInventory && !isMasterProduct(product)"
             [product]="product"
           ></camfil-product-inventory>
         </div>

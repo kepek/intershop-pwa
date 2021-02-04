@@ -1,6 +1,9 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 
-import { Product } from 'ish-core/models/product/product.model';
+import { Product, ProductCompletenessLevel, ProductHelper } from 'ish-core/models/product/product.model';
+import { Subject } from 'rxjs';
+import { take, takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'camfil-product-inventory',
@@ -9,6 +12,25 @@ import { Product } from 'ish-core/models/product/product.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CamfilProductInventoryComponent {
-  @Input() product: Product;
+  constructor(private shoppingFacade: ShoppingFacade) {}
+
+  private static REQUIRED_COMPLETENESS_LEVEL = ProductCompletenessLevel.List;
+  @Input() product: Product | Pick<Product, 'sku'>;
   @Input() showText?: Product;
+  showAvailabilityDot = ProductHelper.showAvailabilityDot;
+  isAvailabilityDotVisible: boolean;
+
+  private destroy$ = new Subject<void>();
+
+  ngOnInit() {
+    this.shoppingFacade
+      .product$(this.product.sku, CamfilProductInventoryComponent.REQUIRED_COMPLETENESS_LEVEL)
+      .pipe(take(1), takeUntil(this.destroy$))
+      .subscribe((res: Product) => (this.isAvailabilityDotVisible = this.showAvailabilityDot(res)));
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 }

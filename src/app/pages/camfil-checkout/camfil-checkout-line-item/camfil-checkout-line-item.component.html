@@ -16,11 +16,7 @@
           <button mat-button (click)="openQuickViewDialog(); $event.stopPropagation()">
             <mat-icon svgIcon="search" class="size-15"></mat-icon>
           </button>
-          <camfil-product-inventory
-            *ngIf="showAvailabilityDot()"
-            class="px-2"
-            [product]="productData"
-          ></camfil-product-inventory>
+          <camfil-product-inventory class="px-2" [product]="productData"></camfil-product-inventory>
         </div>
       </div>
     </div>
