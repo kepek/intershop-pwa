@@ -79,6 +79,8 @@ export class CamfilProductItemBaseComponent implements OnInit, OnDestroy {
         this.updatedQuantity = quantity;
         this.quantityChange.emit(quantity);
       });
+
+    this.showAvailabilityDot();
   }
 
   addToBasket() {
@@ -98,5 +100,9 @@ export class CamfilProductItemBaseComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  showAvailabilityDot() {
+    return ProductHelper.showAvailabilityDot(this.product);
   }
 }

@@ -26,7 +26,7 @@
       <div class="col-sm-6 right-col d-flex flex-column">
         <div class="right-col-actions--container">
           <camfil-product-inventory
-            *ngIf="configuration.displayInventory && !isMasterProduct(product)"
+            *ngIf="showAvailabilityDot() && configuration.displayInventory && !isMasterProduct(product)"
             [product]="product"
           ></camfil-product-inventory>
           <camfil-product-quickview
@@ -126,7 +126,7 @@
           <camfil-product-quickview [product]="product" [hideText]="true"></camfil-product-quickview>
 
           <camfil-product-inventory
-            *ngIf="configuration.displayInventory && !isMasterProduct(product)"
+            *ngIf="showAvailabilityDot() && configuration.displayInventory && !isMasterProduct(product)"
             [product]="product"
           ></camfil-product-inventory>
         </div>

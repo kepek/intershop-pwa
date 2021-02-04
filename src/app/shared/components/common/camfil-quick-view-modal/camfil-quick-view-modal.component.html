@@ -33,7 +33,7 @@
         </p>
       </div>
       <camfil-product-inventory
-        *ngIf="!isRetailSet(product) && !isMasterProduct(product)"
+        *ngIf="showAvailabilityDot(product) && !isRetailSet(product) && !isMasterProduct(product)"
         [product]="product"
         [showText]="true"
       ></camfil-product-inventory>

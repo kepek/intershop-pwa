@@ -93,7 +93,7 @@
             (compareToggle)="toggleCompare()"
           ></camfil-product-add-to-compare>
           <camfil-product-inventory
-            *ngIf="!isRetailSet(product) && !isMasterProduct(product)"
+            *ngIf="showAvailabilityDot() && !isRetailSet(product) && !isMasterProduct(product)"
             [product]="product"
           ></camfil-product-inventory>
           <p class="qd-text">Quick delivery</p>

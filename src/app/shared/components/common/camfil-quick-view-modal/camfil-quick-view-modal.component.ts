@@ -125,4 +125,8 @@ export class CamfilQuickViewModalComponent implements OnInit, OnDestroy {
   closeDialog() {
     this.dialogRef.close();
   }
+
+  showAvailabilityDot(event) {
+    return ProductHelper.showAvailabilityDot(event);
+  }
 }

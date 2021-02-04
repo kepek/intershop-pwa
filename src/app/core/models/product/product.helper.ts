@@ -12,6 +12,7 @@ import { ProductRetailSet } from './product-retail-set.model';
 import { VariationProductMaster } from './product-variation-master.model';
 import { VariationProduct } from './product-variation.model';
 import { Product } from './product.model';
+import { AttributeGroupTypes } from '../attribute-group/attribute-group.types';
 
 export interface SkuQuantityType {
   sku: string;
@@ -261,5 +262,15 @@ export class ProductHelper {
     return product.images
       ?.filter(image => image.typeID === ImageTypes.Badge)
       .map(badge => ProductHelper.getImageCdnUrl(product, badge.typeID, badge.viewID));
+  }
+
+  static showAvailabilityDot(product: Product) {
+    if (product?.attributeGroups && product?.attributeGroups[AttributeGroupTypes.ProductsListLabelAttributes]) {
+      const arrigocodeValue = product?.attributeGroups[AttributeGroupTypes.ProductsListLabelAttributes].attributes.find(
+        a => a.name === 'Arrigocode'
+      )?.value;
+
+      return arrigocodeValue === 'A1' ? true : false;
+    } else return false;
   }
 }
