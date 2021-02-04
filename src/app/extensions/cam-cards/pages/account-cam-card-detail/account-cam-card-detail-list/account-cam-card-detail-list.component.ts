@@ -154,7 +154,7 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges {
   }
 
   deleteProduct(camCardItemId: string) {
-    const camCard: CamCard = this.camCard.camCardItems.find(item => item.id === camCardItemId)
+    const camCard = this.camCard.camCardItems.find(item => item.id === camCardItemId)
       ? this.camCard
       : this.camCard.subCamCards.find(sub => sub.camCardItems.find(item => item.id === camCardItemId));
     this.camCardsFacade.removeProductFromCamCard(camCard.id, camCardItemId, camCard.rootCamCard);
