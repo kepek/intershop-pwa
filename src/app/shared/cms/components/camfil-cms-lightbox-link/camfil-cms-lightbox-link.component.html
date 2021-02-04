@@ -1,3 +1,8 @@
-<a (click)="openDialog()" class="lightbox-link" [ngClass]="pagelet.stringParam('CSSClass')">
+<a
+  (click)="openDialog()"
+  class="lightbox-link"
+  [ngClass]="pagelet.stringParam('CSSClass')"
+  [attr.aria-label]="pagelet.stringParam('Title')"
+>
   <mat-icon svgIcon="error" class="error"></mat-icon> {{ pagelet.stringParam('Title') }}
 </a>

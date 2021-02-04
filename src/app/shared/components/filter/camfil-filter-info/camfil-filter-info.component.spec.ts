@@ -1,4 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MockComponent } from 'ng-mocks';
+
+import { ContentIncludeComponent } from 'ish-shared/cms/components/content-include/content-include.component';
 
 import { CamfilFilterInfoComponent } from './camfil-filter-info.component';
 
@@ -9,7 +12,7 @@ describe('Camfil Filter Info Component', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CamfilFilterInfoComponent],
+      declarations: [CamfilFilterInfoComponent, MockComponent(ContentIncludeComponent)],
     }).compileComponents();
   });
 
