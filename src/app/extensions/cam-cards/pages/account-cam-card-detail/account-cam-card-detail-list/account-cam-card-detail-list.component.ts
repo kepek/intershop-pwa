@@ -23,6 +23,7 @@ import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
 import { CamfilModalDialogComponent } from 'ish-shared/components/common/camfil-modal-dialog/camfil-modal-dialog.component';
 
 import { CamCardsFacade } from '../../../facades/cam-cards.facade';
+import { CamCardHelper } from '../../../models/cam-card/cam-card.helper';
 import { CamCard, CamCardItem } from '../../../models/cam-card/cam-card.model';
 
 export interface Prices {
@@ -75,9 +76,15 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges {
       });
     }
   }
+
   ngOnChanges(changes: SimpleChanges) {
     if (changes.camCard) {
       this.changeDetectorRefs.detectChanges();
+
+      // update priceSum
+      const currentCamCardItemsId = CamCardHelper.getCamCardItemsId(this.camCard);
+      const priceItemToRemove = Object.keys(this.priceSum).filter(key => !currentCamCardItemsId.includes(key));
+      priceItemToRemove.forEach(item => this.cleanPriceSum(item));
     }
     this.isMobileView = this.isMobile();
   }
@@ -102,11 +109,15 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges {
     return this.camCard?.name;
   }
 
-  get sumPrice(): Price {
+  get totalPrice(): Price {
     const list = Object.values(this.priceSum);
     const currency = list.length ? list[0].currency : '';
-    const value = list.reduce((res, item) => res + item.value, 0);
+    const value = list.reduce((res, item) => res + (item?.value || 0), 0);
     return { value, type: 'Money', currency };
+  }
+
+  cleanPriceSum(id: string) {
+    delete this.priceSum[id];
   }
 
   productUpdate(event, item: CamCardItem) {
