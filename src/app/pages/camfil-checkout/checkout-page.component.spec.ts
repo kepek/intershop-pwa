@@ -63,7 +63,6 @@ describe('Checkout Page Component', () => {
         MockComponent(CamfilCheckoutListComponent),
         MockComponent(CamfilCheckoutSummaryComponent),
         MockComponent(CamfilCheckoutToolbarComponent),
-        MockComponent(ContentIncludeComponent),
       ],
       imports: [RouterTestingModule],
       providers: [

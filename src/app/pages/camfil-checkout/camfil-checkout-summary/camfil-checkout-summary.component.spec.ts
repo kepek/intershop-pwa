@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MockPipe } from 'ng-mocks';
+import { MockComponent, MockPipe } from 'ng-mocks';
 import { of } from 'rxjs';
 import { instance, mock, when } from 'ts-mockito';
 
@@ -8,6 +8,7 @@ import { Basket } from 'ish-core/models/basket/basket.model';
 import { PricePipe } from 'ish-core/models/price/price.pipe';
 
 import { CamfilCheckoutSummaryComponent } from './camfil-checkout-summary.component';
+import { ContentIncludeComponent } from 'ish-shared/cms/components/content-include/content-include.component';
 
 describe('Camfil Checkout Summary Component', () => {
   let component: CamfilCheckoutSummaryComponent;
@@ -20,7 +21,7 @@ describe('Camfil Checkout Summary Component', () => {
     checkoutFacade = mock(CheckoutFacade);
 
     await TestBed.configureTestingModule({
-      declarations: [CamfilCheckoutSummaryComponent, MockPipe(PricePipe)],
+      declarations: [CamfilCheckoutSummaryComponent, MockComponent(ContentIncludeComponent), MockPipe(PricePipe)],
       providers: [{ provide: CheckoutFacade, useFactory: () => instance(checkoutFacade) }],
     }).compileComponents();
   });
