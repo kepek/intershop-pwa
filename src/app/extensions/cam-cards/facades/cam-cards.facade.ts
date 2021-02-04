@@ -231,8 +231,8 @@ export class CamCardsFacade {
     );
   }
 
-  removeProductFromCamCard(camCardId: string, camCardItemId: string): void {
-    this.store.dispatch(removeItemFromCamCard({ camCardId, camCardItemId }));
+  removeProductFromCamCard(camCardId: string, camCardItemId: string, rootCamCard: string): void {
+    this.store.dispatch(removeItemFromCamCard({ camCardId, camCardItemId, rootCamCard }));
   }
 
   detectCamCardToolbar() {
