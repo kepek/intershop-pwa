@@ -37,6 +37,9 @@
   .product-detail-action-col {
     height: $camfil-product-image-size;
   }
+  .product-detailed-inner-col {
+    padding-top: $space-detail-padding-top;
+  }
 
   .product-data-col > * {
     margin-bottom: $space-box-half;
