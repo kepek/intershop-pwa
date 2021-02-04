@@ -91,7 +91,7 @@ export class CamfilQuickViewModalComponent implements OnInit, OnDestroy {
       this.frameSize = this.getAttributeValue(product.attributes, 'FrameSize');
       this.pressureDrop = this.getAttributeValue(product.attributes, 'Pressuredrop');
       this.isoClass = this.getAttributeValue(product.attributes, 'IsoClass');
-      this.energyClass = this.getAttributeValue(product.attributes, 'Energyclass');
+      this.energyClass = this.getAttributeValue(product.attributes, 'EnergyClass');
       this.bags = this.getAttributeValue(product.attributes, 'Filterbags');
       this.width = this.getAttributeValue(product.attributes, 'Width');
       this.depth = this.getAttributeValue(product.attributes, 'Depth');

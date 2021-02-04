@@ -1,10 +1,4 @@
 <div class="category-page box-shadow" [attr.data-testing-id]="category.uniqueId">
-  <div class="row">
-    <div class="col-12">
-      <camfil-breadcrumb></camfil-breadcrumb>
-    </div>
-  </div>
-
   <!-- The following lines are replaced by CMS content assigned to view context 'vc_camfil_category_categories_top' -->
   <!-- <ng-container *ngIf="category.uniqueId === 'Computers'">
     <h1 class="landing__banner display-4">{{ 'camfil.category_landing.baner.text' | translate }}</h1>
@@ -17,7 +11,6 @@
         viewContextId="vc_camfil_category_categories_top"
         [callParameters]="{ Category: category.categoryRef }"
       ></ish-content-viewcontext>
-      test
     </div>
   </div>
 

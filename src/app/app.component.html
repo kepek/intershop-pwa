@@ -3,6 +3,11 @@
 
   <div class="wrapper">
     <div role="main" class="container main-container" style="position: relative; min-height: 200px">
+      <camfil-breadcrumb
+        [account]="isAccountPage()"
+        [checkout]="isCheckoutPage()"
+        [url]="_router.url"
+      ></camfil-breadcrumb>
       <router-outlet></router-outlet>
     </div>
   </div>

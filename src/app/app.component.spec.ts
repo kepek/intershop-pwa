@@ -6,6 +6,7 @@ import { instance, mock } from 'ts-mockito';
 
 import { AppFacade } from 'ish-core/facades/app.facade';
 import { findAllCustomElements } from 'ish-core/utils/dev/html-query-utils';
+import { CamfilBreadcrumbComponent } from 'ish-shared/components/common/camfil-breadcrumb/camfil-breadcrumb.component';
 import { CookiesBannerComponent } from 'ish-shell/application/cookies-banner/cookies-banner.component';
 
 import { AppComponent } from './app.component';
@@ -23,6 +24,7 @@ describe('App Component', () => {
     await TestBed.configureTestingModule({
       declarations: [
         AppComponent,
+        MockComponent(CamfilBreadcrumbComponent),
         MockComponent(CamfilFooterComponent),
         MockComponent(CamfilHeaderComponent),
         MockComponent(CookiesBannerComponent),
