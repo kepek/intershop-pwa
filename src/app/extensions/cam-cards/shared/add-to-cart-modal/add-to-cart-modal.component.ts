@@ -47,18 +47,15 @@ export class AddToCartModalComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-
     this.initBasket();
-    //TODO get default value from parent
     this.quantityForm = new FormGroup({
-      quantity: new FormControl(this.quantity ? this.quantity : this.product.minOrderQuantity),
+      quantity: new FormControl(this.product.minOrderQuantity),
       boxLabel: new FormControl('', Validators.maxLength(60)),
     });
 
     this.shoppingFacade.productUpdated$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(() => {
       this.showSuccess = true;
     });
-    console.log('quantity', this.quantity);
   }
 
   initBasket() {
@@ -113,6 +110,7 @@ export class AddToCartModalComponent implements OnInit, OnDestroy {
 
   /** open modal */
   show() {
+    this.quantityForm?.controls['quantity'].setValue(this.quantity);
     this.showSuccess = false;
     this.submitted = false;
     return this.modalTemplate;

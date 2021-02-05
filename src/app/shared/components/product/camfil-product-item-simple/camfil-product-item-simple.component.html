@@ -73,6 +73,7 @@
             <camfil-product-add-to-basket
               *ngIf="configuration.displayAddToBasket"
               [product]="product"
+              [quantity]="updatedQuantity"
               (productToBasket)="addToBasket()"
               displayType="icon"
               class="btn-link round-cart-btn"
@@ -168,6 +169,7 @@
             <camfil-product-add-to-basket
               *ngIf="configuration.displayAddToBasket"
               [product]="product"
+              [quantity]="updatedQuantity"
               (productToBasket)="addToBasket()"
               displayType="icon"
               class="btn-link round-cart-btn"

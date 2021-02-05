@@ -101,6 +101,7 @@
             <camfil-product-add-to-basket
               *ngIf="configuration.displayAddToBasket"
               [product]="product"
+              [quantity]="updatedQuantity"
               (productToBasket)="addToBasket()"
               displayType="button"
             ></camfil-product-add-to-basket>
