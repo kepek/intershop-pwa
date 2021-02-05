@@ -1,6 +1,10 @@
 <div *ngIf="filterNavigation" class="filter-panel">
   <div *ngFor="let element of filterNavigation.filter" [ngSwitch]="element.displayType">
-    <camfil-filter-collapsable [title]="element.name" [(collapsed)]="collapsedElements[element.name]">
+    <camfil-filter-collapsable
+      [title]="element.name"
+      [(collapsed)]="collapsedElements[element.name]"
+      *ngIf="!['Width', 'Height', 'Depth'].includes(element.id)"
+    >
       <!-- default: text & text_clear -->
       <camfil-filter-text
         *ngSwitchDefault
