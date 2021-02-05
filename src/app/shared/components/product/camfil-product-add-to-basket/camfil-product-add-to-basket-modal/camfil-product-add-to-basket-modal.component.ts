@@ -41,6 +41,8 @@ export class CamfilProductAddToBasketModalComponent implements OnInit, OnDestroy
 
   basket$: Observable<BasketView>;
 
+  @Input() quantity: number;
+
   private destroy$ = new Subject();
 
   constructor(

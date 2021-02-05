@@ -59,6 +59,7 @@ export class CamfilProductAddToBasketComponent implements OnInit, OnDestroy {
    */
   @Output() productToBasket = new EventEmitter<void>();
 
+  @Input() quantity?: number;
   constructor(private checkoutFacade: CheckoutFacade, public dialog: MatDialog) {}
 
   /**

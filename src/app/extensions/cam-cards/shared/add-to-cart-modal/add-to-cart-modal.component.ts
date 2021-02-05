@@ -25,7 +25,7 @@ export class AddToCartModalComponent implements OnInit, OnDestroy {
   modal: NgbModalRef;
 
   @ViewChild('modal', { static: false }) modalTemplate: TemplateRef<unknown>;
-
+  @Input() quantity: number;
   @Input() product: Product;
   quantityForm: FormGroup;
 
@@ -48,7 +48,6 @@ export class AddToCartModalComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.initBasket();
-
     this.quantityForm = new FormGroup({
       quantity: new FormControl(this.product.minOrderQuantity),
       boxLabel: new FormControl('', Validators.maxLength(60)),
@@ -111,6 +110,7 @@ export class AddToCartModalComponent implements OnInit, OnDestroy {
 
   /** open modal */
   show() {
+    this.quantityForm?.controls.quantity.setValue(this.quantity);
     this.showSuccess = false;
     this.submitted = false;
     return this.modalTemplate;
