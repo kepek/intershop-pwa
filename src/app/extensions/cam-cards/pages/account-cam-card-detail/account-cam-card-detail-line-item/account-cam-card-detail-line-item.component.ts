@@ -16,7 +16,7 @@ import { debounceTime, take, takeUntil } from 'rxjs/operators';
 
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { ProductView } from 'ish-core/models/product-view/product-view.model';
-import { ProductCompletenessLevel, ProductHelper } from 'ish-core/models/product/product.model';
+import { ProductCompletenessLevel } from 'ish-core/models/product/product.model';
 import { CamfilQuickViewModalComponent } from 'ish-shared/components/common/camfil-quick-view-modal/camfil-quick-view-modal.component';
 
 import { CamCardsFacade } from '../../../facades/cam-cards.facade';
@@ -168,9 +168,5 @@ export class AccountCamCardDetailLineItemComponent implements OnChanges, OnInit,
 
   get isViewMode() {
     return this.mode === 'view';
-  }
-
-  showAvailabilityDot(event) {
-    return ProductHelper.showAvailabilityDot(event);
   }
 }

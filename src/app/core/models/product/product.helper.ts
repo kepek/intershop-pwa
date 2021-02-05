@@ -267,7 +267,7 @@ export class ProductHelper {
   static showAvailabilityDot(product: Product) {
     if (product?.attributeGroups && product?.attributeGroups[AttributeGroupTypes.ProductsListLabelAttributes]) {
       const arrigocodeValue = product?.attributeGroups[AttributeGroupTypes.ProductsListLabelAttributes].attributes.find(
-        a => a.name === 'Arrigocode'
+        a => a.name?.toLowerCase() === 'arrigocode'
       )?.value;
 
       return arrigocodeValue === 'A1' ? true : false;
