@@ -6,9 +6,9 @@ import { instance, mock, when } from 'ts-mockito';
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { Basket } from 'ish-core/models/basket/basket.model';
 import { PricePipe } from 'ish-core/models/price/price.pipe';
+import { ContentIncludeComponent } from 'ish-shared/cms/components/content-include/content-include.component';
 
 import { CamfilCheckoutSummaryComponent } from './camfil-checkout-summary.component';
-import { ContentIncludeComponent } from 'ish-shared/cms/components/content-include/content-include.component';
 
 describe('Camfil Checkout Summary Component', () => {
   let component: CamfilCheckoutSummaryComponent;
