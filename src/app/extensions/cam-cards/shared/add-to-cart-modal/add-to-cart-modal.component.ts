@@ -110,7 +110,7 @@ export class AddToCartModalComponent implements OnInit, OnDestroy {
 
   /** open modal */
   show() {
-    this.quantityForm?.controls['quantity'].setValue(this.quantity);
+    this.quantityForm?.controls.quantity.setValue(this.quantity);
     this.showSuccess = false;
     this.submitted = false;
     return this.modalTemplate;
