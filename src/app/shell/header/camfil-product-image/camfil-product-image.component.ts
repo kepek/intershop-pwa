@@ -38,6 +38,8 @@ export class CamfilProductImageComponent implements OnChanges {
    */
   @Input() altText?: string;
 
+  @Input() isCategoryProductImage: boolean;
+
   productImage: Image;
 
   /**
