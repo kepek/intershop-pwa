@@ -11,6 +11,7 @@ import {
 } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { TranslateService } from '@ngx-translate/core';
 import { Observable, Subject } from 'rxjs';
 import { debounceTime, take, takeUntil } from 'rxjs/operators';
 
@@ -35,7 +36,8 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
   constructor(
     private shoppingFacade: ShoppingFacade,
     private checkoutFacade: CheckoutFacade,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private translate: TranslateService
   ) {}
 
   private static REQUIRED_COMPLETENESS_LEVEL = ProductCompletenessLevel.List;
@@ -191,6 +193,10 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
           } else {
             // TODO To remove. Should use only Deliverydays when attribute value is provided
             daysTillReady = res.readyForShipmentMin + this.lineItemIndex;
+
+            if (Number.isNaN(daysTillReady)) {
+              return (this.earliestDeliveryDate = this.translate.instant('camfil.checkout.line_item.article_expired'));
+            }
           }
           const delivery = today.setDate(today.getDate() + daysTillReady);
           return this.orderDeliveryDate && delivery < this.orderDeliveryDate

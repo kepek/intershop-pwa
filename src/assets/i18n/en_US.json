@@ -795,6 +795,7 @@
   "camfil.checkout.total_price_after": "Total price after volume discount",
   "camfil.checkout.volume_discount": "Volume discount",
   "camfil.checkout.your_total_price": "Your total price",
+  "camfil.checkout.line_item.article_expired": "Article has expired",
   "camfil.common.button.navbarCollapsed.close.text": "Close",
   "camfil.common.button.navbarCollapsed.menu.aria_label": "Button with a menu icon for close/open navigation",
   "camfil.common.button.navbarCollapsed.text": "Menu",
