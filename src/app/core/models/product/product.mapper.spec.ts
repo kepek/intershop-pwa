@@ -181,7 +181,7 @@ describe('Product Mapper', () => {
         images: [
           {
             effectiveUrl: '/assets/product_img/a.jpg',
-            name: 'front M',
+            name: 'List image',
             primaryImage: true,
             type: 'Image',
             typeID: 'images',
