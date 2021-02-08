@@ -194,7 +194,7 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy {
 
   /** close modal */
   hide() {
-    this.modal.close();
+    this.modal?.close();
   }
 
   /** open modal */

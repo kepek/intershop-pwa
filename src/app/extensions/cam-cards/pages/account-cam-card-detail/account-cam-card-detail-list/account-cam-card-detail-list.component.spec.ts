@@ -4,7 +4,8 @@ import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { provideMockStore } from '@ngrx/store/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { MockComponent, MockPipe } from 'ng-mocks';
-import { instance, mock } from 'ts-mockito';
+import { of } from 'rxjs';
+import { instance, mock, when } from 'ts-mockito';
 
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { PricePipe } from 'ish-core/models/price/price.pipe';
@@ -49,6 +50,8 @@ describe('Account Cam Card Detail List Component', () => {
     fixture = TestBed.createComponent(AccountCamCardDetailListComponent);
     component = fixture.componentInstance;
     element = fixture.nativeElement;
+
+    when(shoppingFacadeMock.basketAddresses$).thenReturn(of([]));
   });
 
   it('should be created', () => {

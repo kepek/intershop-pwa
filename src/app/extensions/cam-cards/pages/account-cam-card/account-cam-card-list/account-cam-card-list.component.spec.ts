@@ -4,7 +4,8 @@ import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { provideMockStore } from '@ngrx/store/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { MockComponent, MockPipe } from 'ng-mocks';
-import { anything, capture, instance, mock, verify } from 'ts-mockito';
+import { of } from 'rxjs';
+import { anything, capture, instance, mock, verify, when } from 'ts-mockito';
 
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { DatePipe } from 'ish-core/pipes/date.pipe';
@@ -56,6 +57,7 @@ describe('Account Cam Card List Component', () => {
 
   beforeEach(async () => {
     shoppingFacadeMock = mock(ShoppingFacade);
+
     await TestBed.configureTestingModule({
       declarations: [
         AccountCamCardListComponent,
@@ -78,6 +80,8 @@ describe('Account Cam Card List Component', () => {
     fixture = TestBed.createComponent(AccountCamCardListComponent);
     component = fixture.componentInstance;
     element = fixture.nativeElement;
+
+    when(shoppingFacadeMock.basketAddresses$).thenReturn(of([]));
   });
 
   it('should be created', () => {

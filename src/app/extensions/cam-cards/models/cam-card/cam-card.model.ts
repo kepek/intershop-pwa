@@ -94,3 +94,11 @@ export interface CreateCamCardData {
   edit?: boolean;
   subCamCard?: CamCard;
 }
+
+export interface CamCamProductChecked {
+  camCardId: string;
+  camCardRoot: string;
+  sku: string;
+  quantity: number;
+  boxLabel?: string;
+}

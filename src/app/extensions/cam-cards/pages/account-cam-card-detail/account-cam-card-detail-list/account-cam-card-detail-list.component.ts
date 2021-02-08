@@ -6,6 +6,7 @@ import {
   Component,
   Input,
   OnChanges,
+  OnDestroy,
   OnInit,
   SimpleChanges,
   ViewChild,
@@ -15,16 +16,22 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
+import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
+import { Address } from 'ish-core/models/address/address.model';
+import { BasketView } from 'ish-core/models/basket/basket.model';
+import { Bucket } from 'ish-core/models/basket/bucket.model';
 import { Price } from 'ish-core/models/price/price.model';
 import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
+import { whenTruthy } from 'ish-core/utils/operators';
 import { CamfilModalDialogComponent } from 'ish-shared/components/common/camfil-modal-dialog/camfil-modal-dialog.component';
 
 import { CamCardsFacade } from '../../../facades/cam-cards.facade';
 import { CamCardHelper } from '../../../models/cam-card/cam-card.helper';
-import { CamCard, CamCardItem } from '../../../models/cam-card/cam-card.model';
+import { CamCamProductChecked, CamCard, CamCardItem } from '../../../models/cam-card/cam-card.model';
 
 export interface Prices {
   [id: string]: Price;
@@ -43,7 +50,7 @@ export interface Prices {
     ]),
   ],
 })
-export class AccountCamCardDetailListComponent implements OnInit, OnChanges {
+export class AccountCamCardDetailListComponent implements OnInit, OnChanges, OnDestroy {
   @Input() deviceType: DeviceType;
   @Input() camCard: CamCard;
   @Input() selectedItemsForm: FormArray;
@@ -51,15 +58,25 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges {
   @ViewChild(MatSort) sort: MatSort;
   isMobileView = false;
 
+  basket$: Observable<BasketView>;
+  buckets$: Observable<any[]>;
+  buckets: Bucket[];
+  basketId: string;
+  basketAddresses: Address[];
+  commonShippingMethodId: string;
+
   isSubOpen = [];
   isStickyCamCardToolbar$: Observable<boolean>;
   priceSum: Prices = {};
   POSITION_GAP_SIZE = 999;
 
+  private destroy$ = new Subject();
+
   constructor(
     private translate: TranslateService,
     private camCardsFacade: CamCardsFacade,
     private shoppingFacade: ShoppingFacade,
+    private checkoutFacade: CheckoutFacade,
     private changeDetectorRefs: ChangeDetectorRef,
     public router: Router,
     public dialog: MatDialog
@@ -75,6 +92,26 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges {
         this.toggleSubCamCard(sub.id);
       });
     }
+
+    this.shoppingFacade.loadBasketAddresses();
+    this.basket$ = this.checkoutFacade.basket$;
+    this.buckets$ = this.checkoutFacade.buckets$;
+
+    this.basket$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe((basket: BasketView) => {
+      this.basketId = basket.id;
+      this.commonShippingMethodId = basket.commonShippingMethod?.id;
+    });
+    this.buckets$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe((buckets: Bucket[]) => {
+      this.buckets = buckets;
+    });
+    this.shoppingFacade.basketAddresses$.pipe(takeUntil(this.destroy$)).subscribe((basketAddresses: Address[]) => {
+      this.basketAddresses = basketAddresses;
+    });
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -128,19 +165,33 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges {
   }
 
   addItemsToCart() {
-    const urn = this.camCard.deliveryAddress.urn;
     this.camCard.camCardItems?.forEach(item => {
-      this.addItemToCart(item, urn);
+      this.addItemToCart(item);
     });
     this.camCard.subCamCards?.forEach(sub => {
       sub.camCardItems?.forEach(item => {
-        this.addItemToCart(item, urn);
+        this.addItemToCart(item);
       });
     });
   }
-  addItemToCart(item: CamCardItem, urn: string) {
+  addItemToCart(item: CamCardItem) {
     if (item.product.available) {
-      this.shoppingFacade.addProductToBasket(item.product.sku, item.quantity, urn);
+      const val: CamCamProductChecked = {
+        camCardId: this.camCard.id,
+        camCardRoot: this.camCard.rootCamCard,
+        sku: item.product.sku,
+        quantity: item.quantity,
+        boxLabel: item.comment?.label,
+      };
+      CamCardHelper.addToCartFromCamCard(
+        val,
+        [this.camCard],
+        this.buckets,
+        this.shoppingFacade,
+        this.commonShippingMethodId,
+        this.basketId,
+        this.basketAddresses
+      );
     }
   }
 
