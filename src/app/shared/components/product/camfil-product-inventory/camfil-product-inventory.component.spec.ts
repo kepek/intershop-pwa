@@ -1,6 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { of } from 'rxjs';
+import { anything, instance, mock, when } from 'ts-mockito';
 
+import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
+import { ProductView } from 'ish-core/models/product-view/product-view.model';
 import { Product } from 'ish-core/models/product/product.model';
 
 import { CamfilProductInventoryComponent } from './camfil-product-inventory.component';
@@ -11,11 +15,14 @@ describe('Camfil Product Inventory Component', () => {
   let product: Product;
   let translate: TranslateService;
   let element: HTMLElement;
+  let shoppingFacadeMock: ShoppingFacade;
 
   beforeEach(async () => {
+    shoppingFacadeMock = mock(ShoppingFacade);
     await TestBed.configureTestingModule({
       imports: [TranslateModule.forRoot()],
       declarations: [CamfilProductInventoryComponent],
+      providers: [{ provide: ShoppingFacade, useFactory: () => instance(shoppingFacadeMock) }],
     }).compileComponents();
   });
 
@@ -28,6 +35,9 @@ describe('Camfil Product Inventory Component', () => {
     product = { sku: 'sku' } as Product;
     element = fixture.nativeElement;
     component.product = product;
+    component.isAvailabilityDotVisible = true;
+
+    when(shoppingFacadeMock.product$(anything(), anything())).thenReturn(of({ sku: '4713' } as ProductView));
   });
 
   it('should be created', () => {
@@ -39,27 +49,5 @@ describe('Camfil Product Inventory Component', () => {
   it('should throw an error if input parameter product is not set properly', () => {
     component.product = undefined;
     expect(() => fixture.detectChanges()).toThrow();
-  });
-
-  xit('should show In Stock when inStock = true', () => {
-    translate.set('camfil.product.instock.text', 'In Stock');
-    product.inStock = true;
-    product.availability = true;
-    fixture.detectChanges();
-    expect(element.querySelector('.product-availability').textContent).toContain('In Stock');
-    expect(
-      element.querySelector("link[itemprop='availability']").getAttribute('href') === 'http://schema.org/InStock'
-    ).toBeTruthy();
-  });
-
-  // because of FRS005
-  xit('should show Out of Stock when inStock = false', () => {
-    translate.set('camfil.product.out_of_stock.text', 'Out of Stock');
-    product.inStock = false;
-    fixture.detectChanges();
-    expect(element.querySelector('.product-availability').textContent).toContain('Out of Stock');
-    expect(
-      element.querySelector("link[itemprop='availability']").getAttribute('href') === 'http://schema.org/OutOfStock'
-    ).toBeTruthy();
   });
 });

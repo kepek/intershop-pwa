@@ -19,10 +19,12 @@
         <camfil-product-label [product]="product"></camfil-product-label>
       </div>
       <div class="product-detail-action-col d-flex flex-column justify-content-between">
-        <camfil-product-inventory
-          *ngIf="configuration.displayInventory && !isMasterProduct(product)"
-          [product]="product"
-        ></camfil-product-inventory>
+        <div>
+          <camfil-product-inventory
+            *ngIf="configuration.displayInventory && !isMasterProduct(product)"
+            [product]="product"
+          ></camfil-product-inventory>
+        </div>
         <camfil-product-add-to-compare
           *ngIf="configuration.displayAddToCompare"
           [isInCompareList]="isInCompareList"

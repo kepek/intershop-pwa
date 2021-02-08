@@ -1,5 +1,6 @@
 import { intersection } from 'lodash-es';
 
+import { AttributeGroupTypes } from 'ish-core/models/attribute-group/attribute-group.types';
 import { Attribute } from 'ish-core/models/attribute/attribute.model';
 import { Image } from 'ish-core/models/image/image.model';
 import { ImageTypes } from 'ish-core/models/image/image.types';
@@ -261,5 +262,17 @@ export class ProductHelper {
     return product.images
       ?.filter(image => image.typeID === ImageTypes.Badge)
       .map(badge => ProductHelper.getImageCdnUrl(product, badge.typeID, badge.viewID));
+  }
+
+  static showAvailabilityDot(product: Product) {
+    if (product?.attributeGroups && product?.attributeGroups[AttributeGroupTypes.ProductsListLabelAttributes]) {
+      const arrigocodeValue = product?.attributeGroups[AttributeGroupTypes.ProductsListLabelAttributes].attributes.find(
+        a => a.name?.toLowerCase() === 'arrigocode'
+      )?.value;
+
+      return arrigocodeValue === 'A1' ? true : false;
+    } else {
+      return false;
+    }
   }
 }

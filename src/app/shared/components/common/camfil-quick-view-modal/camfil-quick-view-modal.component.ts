@@ -53,6 +53,7 @@ export class CamfilQuickViewModalComponent implements OnInit, OnDestroy {
   readonly quantityControlName = 'quantity';
   secureVideoUrl: SafeResourceUrl;
 
+  // tslint:disable-next-line:force-jsdoc-comments
   // product attributes
   frameSize;
   pressureDrop;
@@ -68,6 +69,7 @@ export class CamfilQuickViewModalComponent implements OnInit, OnDestroy {
   isMasterProduct = ProductHelper.isMasterProduct;
   getImageViewIDs = ProductHelper.getImageViewIDs;
   getImageCdnUrl = ProductHelper.getImageCdnUrl;
+  showAvailabilityDot = ProductHelper.showAvailabilityDot;
 
   ngOnInit(): void {
     this.product$ = this.shoppingFacade.product$(this.data.sku, ProductCompletenessLevel.Detail);
