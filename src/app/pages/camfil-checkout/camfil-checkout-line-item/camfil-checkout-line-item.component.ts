@@ -75,7 +75,7 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
     this.initForm();
     this.quantity = this.product.quantity.value;
     this.updateQuantities();
-    this.getDeliveryDate();
+    this.calculateDeliveryDate();
   }
 
   ngOnChanges(s: SimpleChanges) {
@@ -83,7 +83,7 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
       this.loadProductDetails();
     }
     if (s.orderDeliveryDate || s.isPartialDelivery) {
-      this.getDeliveryDate();
+      this.calculateDeliveryDate();
     }
   }
 
@@ -176,7 +176,7 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
     }
   }
 
-  getDeliveryDate() {
+  calculateDeliveryDate() {
     if (this.product$) {
       if (!this.isPartialDelivery && this.orderDeliveryDate) {
         return (this.earliestDeliveryDate = AttributeHelper.formatDeliveryDate(new Date(this.orderDeliveryDate)));
