@@ -229,7 +229,7 @@ export const moveItemToCamCard = createAction(
 
 export const removeItemFromCamCard = createAction(
   '[Cam Cards] Remove Item from Cam Card',
-  payload<{ camCardId: string; camCardItemId: string }>()
+  payload<{ camCardId: string; camCardItemId: string; rootCamCard?: string }>()
 );
 
 export const removeItemFromCamCardSuccess = createAction(

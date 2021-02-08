@@ -222,17 +222,17 @@ export class CamCardsFacade {
     );
   }
 
-  moveCamCardItem(sourcecamCardId: string, targetcamCardId: string, camCardItem: CamCardItem, position?: number): void {
+  moveCamCardItem(sourceCamCardId: string, targetCamCardId: string, camCardItem: CamCardItem, position?: number): void {
     this.store.dispatch(
       moveCamCardItem({
-        source: { id: sourcecamCardId, camCardItem },
-        target: { id: targetcamCardId, position },
+        source: { id: sourceCamCardId, camCardItem },
+        target: { id: targetCamCardId, position },
       })
     );
   }
 
-  removeProductFromCamCard(camCardId: string, camCardItemId: string): void {
-    this.store.dispatch(removeItemFromCamCard({ camCardId, camCardItemId }));
+  removeProductFromCamCard(camCardId: string, camCardItemId: string, rootCamCard?: string): void {
+    this.store.dispatch(removeItemFromCamCard({ camCardId, camCardItemId, rootCamCard }));
   }
 
   detectCamCardToolbar() {

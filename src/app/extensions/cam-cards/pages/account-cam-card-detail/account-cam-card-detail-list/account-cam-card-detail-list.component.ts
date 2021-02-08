@@ -154,7 +154,10 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges {
   }
 
   deleteProduct(camCardItemId: string) {
-    this.camCardsFacade.removeProductFromCamCard(this.camCard.id, camCardItemId);
+    const camCard = this.camCard.camCardItems.find(item => item.id === camCardItemId)
+      ? this.camCard
+      : this.camCard.subCamCards.find(sub => sub.camCardItems.find(item => item.id === camCardItemId));
+    this.camCardsFacade.removeProductFromCamCard(camCard.id, camCardItemId, camCard.rootCamCard);
   }
 
   /** Determine the heading of the delete modal and opens the modal. */

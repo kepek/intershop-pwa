@@ -674,10 +674,12 @@ export class CamCardEffects {
       ofType(removeItemFromCamCard),
       mapToPayload(),
       mergeMap(payload =>
-        this.camCardService.removeProductFromCamCard(payload.camCardId, payload.camCardItemId).pipe(
-          map(camCard => removeItemFromCamCardSuccess({ camCard })),
-          mapErrorToAction(removeItemFromCamCardFail)
-        )
+        this.camCardService
+          .removeProductFromCamCard(payload.camCardId, payload.camCardItemId, payload.rootCamCard)
+          .pipe(
+            map(camCard => removeItemFromCamCardSuccess({ camCard })),
+            mapErrorToAction(removeItemFromCamCardFail)
+          )
       )
     )
   );

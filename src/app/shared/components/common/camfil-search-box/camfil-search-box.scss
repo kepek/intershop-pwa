@@ -62,7 +62,7 @@
         width: calc(100% - #{$space-box});
         height: calc(100% - #{$space-box});
         top: $space-box-half;
-        left: $space-box-half; 
+        left: $space-box-half;
       }
 
       &-suggest-results {
@@ -112,7 +112,7 @@
       }
     }
     h3.bg-light {
-      padding: $space-box / 2 $space-default; 
+      padding: $space-box / 2 $space-default;
       margin: 0;
       text-transform: none;
       font-weight: 600;

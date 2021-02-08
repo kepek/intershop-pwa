@@ -355,8 +355,9 @@ export class CamCardService {
    * @returns             The changed cam_cards.
    * @param camCardId
    * @param camCardItemId
+   * @param rootCamCard
    */
-  removeProductFromCamCard(camCardId: string, camCardItemId: string): Observable<CamCard> {
+  removeProductFromCamCard(camCardId: string, camCardItemId: string, rootCamCard?: string): Observable<CamCard> {
     if (!camCardId) {
       return throwError('removeProductFromCamCard() called without camCardId');
     }
@@ -365,7 +366,7 @@ export class CamCardService {
     }
     return this.apiService
       .delete(`camcards/${camCardId}/products/${camCardItemId}`)
-      .pipe(concatMap(() => this.getCamCard(camCardId)));
+      .pipe(concatMap(() => this.getCamCard(rootCamCard || camCardId)));
   }
 
   /**

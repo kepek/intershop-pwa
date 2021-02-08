@@ -57,7 +57,6 @@
           [viewType]="viewType$ | async"
         ></camfil-product-list>
 
-
         <ng-container *ngTemplateOutlet="pagingToolbar"></ng-container>
       </ng-container>
     </div>
@@ -67,7 +66,14 @@
     <ng-container *ngIf="listing.itemCount">
       <h3 class="bg-light">
         {{ 'camfil.listing.only.list.products.title' | translate }}
-        <small>{{ 'camfil.listing.only.list.products.showing' | translate: { '0': limitItemsOnList && listing.itemCount > limitItemsOnList ? limitItemsOnList : listing.itemCount, '1': listing.itemCount } }}</small>
+        <small>{{
+          'camfil.listing.only.list.products.showing'
+            | translate
+              : {
+                  '0': limitItemsOnList && listing.itemCount > limitItemsOnList ? limitItemsOnList : listing.itemCount,
+                  '1': listing.itemCount
+                }
+        }}</small>
       </h3>
       <camfil-product-list
         [products]="listing.products()"
