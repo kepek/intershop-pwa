@@ -516,11 +516,10 @@ export class BasketService {
    */
   addItemsToBasket(
     items: { sku: string; quantity: number; unit: string; shippingMethod?: string; shipToAddress?: string }[]
-  ): Observable<BasketInfo[]> {
+  ): Observable<LineItem[]> {
     if (!items) {
       return throwError('addItemsToBasket() called without items');
     }
-
     const body = items.map(item => ({
       product: item.sku,
       quantity: {
@@ -535,7 +534,7 @@ export class BasketService {
       .post(`baskets/current/items`, body, {
         headers: this.basketHeaders,
       })
-      .pipe(map(BasketInfoMapper.fromInfo));
+      .pipe(map(BasketInfoMapper.fromData));
   }
 
   /**
@@ -563,21 +562,13 @@ export class BasketService {
       );
   }
 
-  addLineItemAttribute(
-    basketId: string,
-    lineItemId: string,
-    boxLabelAttribute: { name: string; type: string; value: string }
-  ) {
+  addLineItemAttribute(basketId: string, lineItemId: string, boxLabelAttribute: Attribute) {
     return this.apiService.post(`baskets/${basketId}/items/${lineItemId}/attributes`, boxLabelAttribute, {
       headers: this.camfilBasketHeaders,
     });
   }
 
-  updateLineItemAttributes(
-    basketId: string,
-    lineItemId: string,
-    boxLabelAttribute: { name: string; type: string; value: string }
-  ) {
+  updateLineItemAttributes(basketId: string, lineItemId: string, boxLabelAttribute: Attribute) {
     return this.apiService.patch(`baskets/${basketId}/items/${lineItemId}/attributes/boxLabel`, boxLabelAttribute, {
       headers: this.camfilBasketHeaders,
     });

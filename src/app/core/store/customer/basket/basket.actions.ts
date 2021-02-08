@@ -70,6 +70,7 @@ export const addProductToBucket = createAction(
     quantity: number;
     basketId?: string;
     basketExtension: BasketExtensions;
+    lineItemAttributes?: Attribute;
   }>()
 );
 
@@ -82,6 +83,7 @@ export const addProductToBucketWithBasketId = createAction(
     quantity: number;
     basketId: string;
     basketExtension: BasketExtensions;
+    lineItemAttributes?: Attribute;
   }>()
 );
 
@@ -95,6 +97,7 @@ export const addProductToBucketWithUrn = createAction(
     quantity: number;
     basketId: string;
     basketExtension: BasketExtensions;
+    lineItemAttributes?: Attribute;
   }>()
 );
 
@@ -111,6 +114,7 @@ export const addProductToBasket = createAction(
     shipToAddress?: string;
     basketExtension?: BasketExtensions;
     addressId?: string;
+    lineItemAttributes?: Attribute;
   }>()
 );
 
@@ -151,6 +155,7 @@ export const addItemsToBasket = createAction(
       shipToAddress?: string;
       basketExtension?: BasketExtensions;
       addressId?: string;
+      lineItemAttributes?: Attribute;
     }[];
   }>()
 );
@@ -368,7 +373,7 @@ export const loadBasketAddressesFail = createAction('[Basket API] Load Basket Ad
 
 export const addBasketItemAttributes = createAction(
   '[Basket API] Add Attributes for selected line item ',
-  payload<{ basketId: string; lineItemId: string; boxLabelAttribute: { name: string; type: string; value: string } }>()
+  payload<{ basketId: string; lineItemId: string; lineItemAttribute: Attribute }>()
 );
 
 export const addBasketItemAttributesFail = createAction(
@@ -382,7 +387,7 @@ export const addBasketItemAttributesSuccess = createAction(
 
 export const updateBasketItemAttributes = createAction(
   '[Basket API] Update Attributes for selected line item ',
-  payload<{ basketId: string; lineItemId: string; boxLabelAttribute: { name: string; type: string; value: string } }>()
+  payload<{ basketId: string; lineItemId: string; lineItemAttribute: Attribute }>()
 );
 
 export const updateBasketItemAttributesFail = createAction(

@@ -14,6 +14,7 @@ import { AddToCartModalComponent } from '../../../../../extensions/cam-cards/sha
 @Component({
   selector: 'camfil-product-add-to-basket-modal',
   templateUrl: './camfil-product-add-to-basket-modal.component.html',
+  styleUrls: ['./camfil-product-add-to-basket-modal.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CamfilProductAddToBasketModalComponent implements OnInit, OnDestroy {
