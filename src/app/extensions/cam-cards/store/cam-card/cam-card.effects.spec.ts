@@ -487,16 +487,19 @@ describe('Cam Card Effects', () => {
       camCardId: '.SKsEQAE4FIAAAFuNiUBWx0d',
       camCardItemId: '123',
       sku: 'sku',
+      rootCamCard: '111',
     };
+
     const camCard = {
       name: 'testing cam cards',
       id: '.SKsEQAE4FIAAAFuNiUBWx0d',
       itemCount: 0,
       public: false,
     };
+
     beforeEach(() => {
       store$.dispatch(loginUserSuccess({ customer }));
-      when(camCardServiceMock.removeProductFromCamCard(anyString(), anyString())).thenReturn(of(camCard));
+      when(camCardServiceMock.removeProductFromCamCard(anyString(), anyString(), anyString())).thenReturn(of(camCard));
     });
 
     it('should call the CamCardService for removeProductFromCamCard', done => {
@@ -504,7 +507,9 @@ describe('Cam Card Effects', () => {
       actions$ = of(action);
 
       effects.removeProductFromCamCard$.subscribe(() => {
-        verify(camCardServiceMock.removeProductFromCamCard(payload.camCardId, payload.camCardItemId)).once();
+        verify(
+          camCardServiceMock.removeProductFromCamCard(payload.camCardId, payload.camCardItemId, payload.rootCamCard)
+        ).once();
         done();
       });
     });
@@ -517,7 +522,9 @@ describe('Cam Card Effects', () => {
     });
     it('should map failed calls to actions of type RemoveItemFromCamCardFail', () => {
       const error = makeHttpError({ message: 'invalid' });
-      when(camCardServiceMock.removeProductFromCamCard(anyString(), anyString())).thenReturn(throwError(error));
+      when(camCardServiceMock.removeProductFromCamCard(anyString(), anyString(), anyString())).thenReturn(
+        throwError(error)
+      );
       const action = removeItemFromCamCard(payload);
       const completion = removeItemFromCamCardFail({
         error,

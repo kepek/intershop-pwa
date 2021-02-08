@@ -355,6 +355,7 @@ export class CamCardService {
    * @returns             The changed cam_cards.
    * @param camCardId
    * @param camCardItemId
+   * @param rootCamCard
    */
   removeProductFromCamCard(camCardId: string, camCardItemId: string, rootCamCard?: string): Observable<CamCard> {
     if (!camCardId) {
