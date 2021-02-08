@@ -27,7 +27,7 @@
         (keyup)="change($event.target.value, 'depth')"
       />
     </div>
-    <button color="primary" mat-flat-button [disabled]="!width || !height || !depth" (click)="filter()">Ok</button>
+    <button color="primary" mat-flat-button [disabled]="isDisabled()" (click)="filter()">Ok</button>
   </form>
   <camfil-filter-info note="{{ 'camfil.navigation.filter.measurements.info' | translate }}"></camfil-filter-info>
 </camfil-filter-collapsable>

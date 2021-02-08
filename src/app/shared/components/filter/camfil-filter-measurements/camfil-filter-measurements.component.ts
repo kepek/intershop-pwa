@@ -24,12 +24,12 @@ export class CamfilFilterMeasurementsComponent {
 
   filter() {
     const filter = [
-      `attr_width%5Bgte%5D=${+this.width - 10}&attr_width%5Blte%5D=${+this.width + 10}`,
-      `attr_height%5Bgte%5D=${+this.height - 10}&attr_height%5Blte%5D=${+this.height + 10}`,
-      `attr_depth%5Bgte%5D=${+this.depth - 50}&attr_depth%5Blte%5D=${+this.depth + 50}`,
+      !!this.width && `Width%5Bgte%5D=${this.width - 10}&Width%5Blte%5D=${+this.width + 10}`,
+      !!this.height && `Height%5Bgte%5D=${+this.height - 10}&Height%5Blte%5D=${+this.height + 10}`,
+      !!this.depth && `Depth%5Bgte%5D=${+this.depth - 50}&Depth%5Blte%5D=${+this.depth + 50}`,
     ].join('&');
 
-    if (+this.width && +this.height && +this.depth) {
+    if (+this.width || +this.height || +this.depth) {
       this.router.navigate([], {
         queryParamsHandling: 'merge',
         relativeTo: this.activatedRoute,
@@ -39,5 +39,9 @@ export class CamfilFilterMeasurementsComponent {
         fragment: this.fragmentOnRouting,
       });
     }
+  }
+
+  isDisabled() {
+    this.width || this.height || this.depth ? !1 : !0;
   }
 }
