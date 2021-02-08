@@ -42,15 +42,6 @@ export class CamfilFilterMeasurementsComponent {
   }
 
   isDisabled() {
-    if (this.width) {
-      return false;
-    }
-    if (this.height) {
-      return false;
-    }
-    if (this.depth) {
-      return false;
-    }
-    return true;
+    this.width || this.height || this.depth ? !1 : !0;
   }
 }
