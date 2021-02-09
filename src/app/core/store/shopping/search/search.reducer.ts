@@ -5,7 +5,7 @@ import { SuggestTerm } from 'ish-core/models/suggest-term/suggest-term.model';
 
 import { suggestSearchSuccess } from './search.actions';
 
-interface SuggestSearch {
+export interface SuggestSearch {
   searchTerm: string;
   suggests: SuggestTerm[];
 }

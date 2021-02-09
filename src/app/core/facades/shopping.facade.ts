@@ -63,6 +63,7 @@ import {
 } from 'ish-core/store/shopping/recently';
 import {
   getSearchTerm,
+  getSearchTermFromSuggests,
   getSuggestSearchResults,
   searchProductsInSearchBox,
   suggestSearch,
@@ -329,4 +330,8 @@ export class ShoppingFacade {
   }
 
   getAllCategoriesTree$ = this.store.pipe(select(getCategoryEntities));
+
+  getSearchTermFromSuggests$(term) {
+    return this.store.pipe(select(getSearchTermFromSuggests(term)));
+  }
 }

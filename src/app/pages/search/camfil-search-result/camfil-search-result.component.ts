@@ -1,6 +1,8 @@
 import { isPlatformBrowser } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Inject, Input, OnChanges, OnInit, PLATFORM_ID } from '@angular/core';
+import { take } from 'rxjs/operators';
 
+import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
 
 /**
@@ -32,11 +34,13 @@ export class CamfilSearchResultComponent implements OnInit, OnChanges {
   @Input() deviceType: DeviceType;
 
   isCollapsed = false;
+  orginalSearchTerm: string;
 
-  constructor(@Inject(PLATFORM_ID) private platformId: string) {}
+  constructor(private shoppingFacade: ShoppingFacade, @Inject(PLATFORM_ID) private platformId: string) {}
 
   ngOnInit() {
     this.isCollapsed = this.deviceType === 'mobile';
+    this.handleOrginalSearchTerm();
   }
 
   ngOnChanges(change) {
@@ -46,6 +50,7 @@ export class CamfilSearchResultComponent implements OnInit, OnChanges {
     if (change.deviceType) {
       this.isCollapsed = this.deviceType === 'mobile';
     }
+    this.handleOrginalSearchTerm();
   }
 
   toggle() {
@@ -53,5 +58,14 @@ export class CamfilSearchResultComponent implements OnInit, OnChanges {
     if (isPlatformBrowser(this.platformId)) {
       window.scroll(0, 0);
     }
+  }
+
+  handleOrginalSearchTerm() {
+    this.shoppingFacade
+      .getSearchTermFromSuggests$(this.searchTerm)
+      .pipe(take(1))
+      .subscribe(term => {
+        this.orginalSearchTerm = term;
+      });
   }
 }
