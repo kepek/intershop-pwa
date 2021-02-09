@@ -1,5 +1,5 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { ViewportScroller } from '@angular/common';
+import { Location, ViewportScroller } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -92,7 +92,8 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private scroller: ViewportScroller,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private location: Location
   ) {}
 
   ngOnInit() {
@@ -180,6 +181,13 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
         relativeTo: this.activatedRoute,
         fragment: camCard.id,
       });
+      camCard.subCamCards.forEach(sub => {
+        if (!this.isSubOpen.includes(sub.id)) {
+          this.isSubOpen.push(sub.id);
+        }
+      });
+    } else {
+      this.location.replaceState(this.location.path(false));
     }
   }
 
