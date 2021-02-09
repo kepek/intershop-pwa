@@ -940,7 +940,7 @@
   "camfil.navigation.filter.measurements.height": "Bredd",
   "camfil.navigation.filter.measurements.width": "Höjd",
   "camfil.navigation.filter.measurements.depth": "Djup",
-  "camfil.navigation.filter.measurements.info": "OBS! Bredd och höjd visas +/- 10 mm, djup +/- 50 mm. Du kan också söka inom ett intervall, dvs 280-290",
+  "camfil.navigation.filter.measurements.info": "Bredd och höjd visas +/- 10 mm, djup +/- 50 mm.",
   "camfil.navigation.filterClearAll.message": "Rensa alla filter",
   "camfil.navigation.see.all.airFilters": "Se alla luftfilter",
   "camfil.product.add_to_compare.label": "Lägg till för att jämföra",
