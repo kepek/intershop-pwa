@@ -983,6 +983,7 @@
   "camfil.product.quickview.details.headline": "Product Details",
   "camfil.product.quickview.text.label": "Quickview",
   "camfil.product.your_price.label": "Your Price",
+  "camfil.product.add_to_cart.not_logged.label": "Log in, in order to buy",
   "camfil.read_more.text": "Read more",
   "camfil.register.whycamfil.description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur est dolor, convallis vitae ante eget, lobortis semper lacus. Nullam ex velit, facilisis eget eros eu, pretium auctor ex.",
   "camfil.register.whycamfil.heading": "Why Camfil's E-com?",

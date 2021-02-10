@@ -285,9 +285,11 @@ export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
     productDetail$.pipe(take(1), takeUntil(this.destroy$)).subscribe((res: ProductView) => {
       const today = new Date();
       let daysTillReady: number;
-      if (res.attributeGroups && res[AttributeGroupTypes.ProductsCheckoutAttributes]) {
+      if (res.attributeGroups && res.attributeGroups[AttributeGroupTypes.ProductsCheckoutAttributes]) {
         daysTillReady = Number(
-          res[AttributeGroupTypes.ProductsCheckoutAttributes].attributes.find(a => a.name === 'Deliverydays').value
+          res.attributeGroups[AttributeGroupTypes.ProductsCheckoutAttributes].attributes.find(
+            a => a.name?.toLowerCase() === 'deliverydays'
+          ).value
         );
       } else {
         // TODO To remove. Should use only Deliverydays when attribute value is provided

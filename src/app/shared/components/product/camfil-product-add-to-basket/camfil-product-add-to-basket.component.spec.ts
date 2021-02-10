@@ -6,6 +6,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { of } from 'rxjs';
 import { instance, mock, when } from 'ts-mockito';
 
+import { AccountFacade } from 'ish-core/facades/account.facade';
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { FeatureToggleModule } from 'ish-core/feature-toggle.module';
 import { Product } from 'ish-core/models/product/product.model';
@@ -35,7 +36,9 @@ describe('Camfil Product Add To Basket Component', () => {
 
   beforeEach(async () => {
     const checkoutFacade = mock(CheckoutFacade);
+    const accountFacadeMock = mock(AccountFacade);
     when(checkoutFacade.basketLoading$).thenReturn(of(false));
+    when(accountFacadeMock.isLoggedIn$).thenReturn(of(false));
 
     await TestBed.configureTestingModule({
       imports: [FeatureToggleModule.forTesting(), ToastrModule.forRoot(), TranslateModule.forRoot()],
@@ -56,7 +59,10 @@ describe('Camfil Product Add To Basket Component', () => {
         OrderFormComponent,
         ProductAddToBasketComponent,
       ],
-      providers: [{ provide: CheckoutFacade, useFactory: () => instance(checkoutFacade) }],
+      providers: [
+        { provide: CheckoutFacade, useFactory: () => instance(checkoutFacade) },
+        { provide: AccountFacade, useFactory: () => instance(accountFacadeMock) },
+      ],
     }).compileComponents();
   });
 
@@ -72,6 +78,7 @@ describe('Camfil Product Add To Basket Component', () => {
     product.availability = true;
     element = fixture.nativeElement;
     component.product = product;
+    component.buttonTranslationKey = 'product.add_to_cart.link';
   });
 
   it('should be created', () => {

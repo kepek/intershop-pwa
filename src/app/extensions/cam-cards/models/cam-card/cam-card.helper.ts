@@ -2,6 +2,7 @@ import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { AddressHelper } from 'ish-core/models/address/address.helper';
 import { AddressMapper } from 'ish-core/models/address/address.mapper';
 import { Address } from 'ish-core/models/address/address.model';
+import { Attribute } from 'ish-core/models/attribute/attribute.model';
 import { Bucket } from 'ish-core/models/basket/bucket.model';
 
 import { CamCamProductChecked, CamCard } from './cam-card.model';
@@ -49,9 +50,19 @@ export class CamCardHelper {
           invoiceLabel: camCard.invoiceLabel,
           createdFromCamCardId: idcc,
         };
-
+    const lineItemAttribute: Attribute = val.boxLabel
+      ? { name: 'boxLabel', type: 'String', value: val.boxLabel }
+      : undefined;
     if (AddressHelper.isNewAddress(address, basketAddresses)) {
-      productFacade.addProductToBucket(address, commonShippingMethodId, val.sku, val.quantity, basketId, extensions);
+      productFacade.addProductToBucket(
+        address,
+        commonShippingMethodId,
+        val.sku,
+        val.quantity,
+        basketId,
+        extensions,
+        lineItemAttribute
+      );
     } else {
       productFacade.addProductToBucketWithUrn(
         AddressHelper.getUrn(address, basketAddresses),
@@ -60,7 +71,8 @@ export class CamCardHelper {
         val.sku,
         val.quantity,
         basketId,
-        extensions
+        extensions,
+        lineItemAttribute
       );
     }
   }

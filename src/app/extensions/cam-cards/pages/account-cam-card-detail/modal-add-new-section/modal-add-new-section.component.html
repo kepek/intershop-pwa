@@ -9,7 +9,7 @@
 
 <ng-template #actionTemplate>
   <div class="add-new-section">
-    <form [formGroup]="newSegmentForm" (ngSubmit)="submitForm($event)">
+    <form [formGroup]="newSegmentForm" (ngSubmit)="submitForm()">
       <mat-form-field appearance="fill" class="add-new-section__field">
         <mat-label>{{ 'camfil.modal.addNewSection.input.label' | translate }}</mat-label>
         <input matInput formControlName="newCamCard" />

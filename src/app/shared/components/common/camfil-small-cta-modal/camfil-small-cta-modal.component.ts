@@ -25,7 +25,6 @@ export class CamfilSmallCtaModalComponent {
 
   emitAction() {
     this.actionClicked.emit();
-    this.hide();
   }
 
   /** close modal */

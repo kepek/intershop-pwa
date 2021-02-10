@@ -107,6 +107,7 @@ export class BasketItemsEffects {
                 shipToAddress: val.shipToAddress,
                 basketExtension: val.basketExtension,
                 addressId: val.addressId,
+                lineItemAttributes: val.lineItemAttributes,
               });
             }
             return acc;
@@ -129,6 +130,7 @@ export class BasketItemsEffects {
           shipToAddress: payload.urn,
           basketExtension: payload.basketExtension,
           addressId: payload.addressId,
+          lineItemAttributes: payload.lineItemAttributes,
         }),
       ])
     )
@@ -149,6 +151,7 @@ export class BasketItemsEffects {
                 quantity: payload.quantity,
                 basketId: basket.id,
                 basketExtension: payload.basketExtension,
+                lineItemAttributes: payload.lineItemAttributes,
               }),
             ])
           );
@@ -161,6 +164,7 @@ export class BasketItemsEffects {
             quantity: payload.quantity,
             basketId: payload.basketId,
             basketExtension: payload.basketExtension,
+            lineItemAttributes: payload.lineItemAttributes,
           }),
         ];
       })
@@ -183,6 +187,7 @@ export class BasketItemsEffects {
                     shipToAddress: address.urn,
                     basketExtension: payload.basketExtension,
                     addressId: address.id,
+                    lineItemAttributes: payload.lineItemAttributes,
                   }),
                   loadBasketAddresses(),
                 ]
@@ -221,10 +226,28 @@ export class BasketItemsEffects {
       withLatestFrom(this.store.pipe(select(getCurrentBasketId))),
       concatMap(([payload, basketId]) => {
         const item = payload.items?.[0];
-        const { basketExtension, addressId } = item;
+        const { basketExtension, addressId, lineItemAttributes } = item;
+        // TODO Changes required because BE side attribue OOTB are not working when adding product to cart
+        const getActions = (info, bktId) => {
+          const attributeActions = info?.map(lineItem =>
+            addBasketItemAttributes({
+              basketId: bktId,
+              lineItemId: lineItem.id,
+              lineItemAttribute: lineItemAttributes,
+            })
+          );
 
-        const getActions = (info, bktId) =>
-          basketExtension
+          return basketExtension && lineItemAttributes?.hasOwnProperty('name')
+            ? [
+                addItemsToBasketSuccess({ info }),
+                updateBucket({
+                  basketId: bktId,
+                  addressId,
+                  basketExtension,
+                }),
+                ...attributeActions,
+              ]
+            : basketExtension
             ? [
                 addItemsToBasketSuccess({ info }),
                 updateBucket({
@@ -233,7 +256,10 @@ export class BasketItemsEffects {
                   basketExtension,
                 }),
               ]
+            : lineItemAttributes?.hasOwnProperty('name')
+            ? [addItemsToBasketSuccess({ info }), ...attributeActions]
             : [addItemsToBasketSuccess({ info })];
+        };
 
         if (basketId) {
           return this.basketService.addItemsToBasket(payload.items).pipe(
@@ -386,7 +412,7 @@ export class BasketItemsEffects {
       mapToPayload(),
       mergeMap(payload =>
         this.basketService
-          .addLineItemAttribute(payload.basketId, payload.lineItemId, payload.boxLabelAttribute)
+          .addLineItemAttribute(payload.basketId, payload.lineItemId, payload.lineItemAttribute)
           .pipe(map(addBasketItemAttributesSuccess), mapErrorToAction(addBasketItemAttributesFail))
       )
     )
@@ -398,7 +424,7 @@ export class BasketItemsEffects {
       mapToPayload(),
       mergeMap(payload =>
         this.basketService
-          .updateLineItemAttributes(payload.basketId, payload.lineItemId, payload.boxLabelAttribute)
+          .updateLineItemAttributes(payload.basketId, payload.lineItemId, payload.lineItemAttribute)
           .pipe(map(updateBasketItemAttributesSuccess), mapErrorToAction(updateBasketItemAttributesFail))
       )
     )

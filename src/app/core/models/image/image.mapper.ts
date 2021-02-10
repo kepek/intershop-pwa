@@ -25,7 +25,6 @@ export class ImageMapper {
   /**
    * Maps Images to Images.
    * @param images The source images.
-   * @param icmBaseURL The prefix URL for building absolute URLs for each relative URL.
    * @returns The images.
    */
   fromImages(images: Image[]): Image[] {
@@ -38,7 +37,6 @@ export class ImageMapper {
   /**
    * Maps Image to Image.
    * @param image The source image.
-   * @param icmBaseURL The prefix URL for building absolute URLs for each relative URL.
    * @returns The image.
    */
   private fromImage(image: Image): Image {
@@ -51,16 +49,24 @@ export class ImageMapper {
   /**
    * Builds absolute URL from relative URL and icmBaseURL or returns absolute URL.
    * @param url The relative or absolute image URL.
-   * @param icmBaseURL The prefix URL for building absolute URLs for each relative URL.
    * @returns The URL.
    */
   private fromEffectiveUrl(url: string): string {
     if (!url) {
       return;
     }
+
     if (url.match('^(https?|file):') || !url.startsWith('/')) {
-      return url;
+      // TODO (extMlk): Temporary solution. Make sure to make it customizable and adjustable via CamfilProductImageComponent.
+      const urlObject = new URL(url);
+
+      urlObject?.searchParams?.set('height', 'auto');
+      urlObject?.searchParams?.set('width', '400');
+      urlObject?.searchParams?.set('bgcolor', 'transparent');
+
+      return urlObject?.toString() || url;
     }
+
     return `${this.icmBaseURL}${url}`;
   }
 }

@@ -747,6 +747,7 @@
   "camfil.cam_card.product.list_price.label": "List Price",
   "camfil.cam_card.product.quantity": "Quantity",
   "camfil.cam_card.product.your_price.label": "Your Price",
+  "camfil.product.add_to_cart.not_logged.label": "Log in, in order to buy",
   "camfil.camcards.modal.add.search.subtitle": "Select or create a new Camcard",
   "camfil.category_landing.baner.text": "Air Filters",
   "camfil.category_landing.boxes.headline": "Air Filters Categories",
