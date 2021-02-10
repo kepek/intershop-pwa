@@ -187,8 +187,13 @@ export class CamCardsFacade {
     this.store.dispatch(addProductToNewCamCardAndEdit({ camCard, sku, quantity, boxLabel, edit }));
   }
 
-  updateCamCardProduct(rootCamCard: string, camCardId: string, camCardItem: CamCardItem): void {
-    this.store.dispatch(updateCamCardProduct({ rootCamCard, camCardId, camCardItem }));
+  updateCamCardProduct(
+    rootCamCard: string,
+    camCardId: string,
+    camCardItem: CamCardItem,
+    forceUpdateCamCard?: boolean
+  ): void {
+    this.store.dispatch(updateCamCardProduct({ rootCamCard, camCardId, camCardItem, forceUpdateCamCard }));
   }
 
   updateCamCardContacts(camCardId: string, camCardContacts: CamCardContact[]): void {

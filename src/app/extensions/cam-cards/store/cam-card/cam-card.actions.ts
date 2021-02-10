@@ -41,6 +41,13 @@ export const createSubCamCard = createAction(
   payload<{ subCamCard: CamCard; rootCamCardId: string }>()
 );
 
+export const loadCamCard = createAction('[Cam Cards API] Load Cam Card', payload<{ camCardId: string }>());
+
+export const loadCamCardSuccess = createAction(
+  '[Cam Cards API] Load Cam Card Success',
+  payload<{ camCard: CamCard }>()
+);
+
 export const createCamCardSuccess = createAction(
   '[Cam Cards API] Create Cam Card Success',
   payload<{ camCard: CamCard }>()
@@ -159,7 +166,7 @@ export const addProductToNewSubCamCard = createAction(
 
 export const updateCamCardProduct = createAction(
   '[Cam Cards] Update Cam Card Product',
-  payload<{ rootCamCard: string; camCardId: string; camCardItem: CamCardItem }>()
+  payload<{ rootCamCard: string; camCardId: string; camCardItem: CamCardItem; forceUpdateCamCard?: boolean }>()
 );
 
 export const updateCamCardProductSuccess = createAction(
