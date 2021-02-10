@@ -573,7 +573,7 @@ export class CamCardEffects {
               forceUpdateCamCard && loadCamCard({ camCardId: rootCamCard || camCardId }),
               displaySuccessMessage({
                 message: 'camfil.account.cam_cards.update.product.confirmation',
-                messageParams: { 0: camCardItem.product.name },
+                messageParams: { 0: camCardItem?.product?.name || camCardItem?.product?.sku },
               }),
             ];
           }),
