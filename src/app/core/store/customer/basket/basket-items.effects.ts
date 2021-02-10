@@ -26,6 +26,7 @@ import {
   LineItemUpdateHelperItem,
 } from 'ish-core/models/line-item-update/line-item-update.helper';
 import { BasketService } from 'ish-core/services/basket/basket.service';
+import { displayErrorMessage } from 'ish-core/store/core/messages';
 import { getProductEntities, loadProduct } from 'ish-core/store/shopping/products';
 import { mapErrorToAction, mapToPayload, mapToPayloadProperty } from 'ish-core/utils/operators';
 
@@ -308,6 +309,21 @@ export class BasketItemsEffects {
       mapToPayload(),
       withLatestFrom(this.store.pipe(select(getCurrentBasket))),
       mapTo(validateBasket({ scopes: ['Products'] }))
+    )
+  );
+
+  /**
+   * Validates the basket after an update item error occurred
+   */
+  addItemsToBasketFail$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(addItemsToBasketFail),
+      mapToPayload(),
+      mergeMap(({ error }) => [
+        displayErrorMessage({
+          message: error.message,
+        }),
+      ])
     )
   );
 

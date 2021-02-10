@@ -18,6 +18,7 @@ export class AddressHelper {
       address1.addressLine2 === address2.addressLine2 &&
       address1.postalCode === address2.postalCode &&
       address1.city === address2.city &&
+      address1.countryCode === address2.countryCode &&
       address1.companyName1 === address2.companyName1
     );
   }

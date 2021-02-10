@@ -3,7 +3,6 @@
   [attr.data-testing-id]="'family-page-' + category.uniqueId"
   id="family-page-top"
 >
-  <!-- <ish-content-include includeId="camfil.include.category-products.content.pagelet2-Include"></ish-content-include> -->
   <div class="row">
     <div class="col-12">
       <ish-content-viewcontext
@@ -16,7 +15,7 @@
   <div class="row no-gutters">
     <aside class="col-md-3 sidebar">
       <mat-toolbar color="primary">
-        <span>Refine your product list</span>
+        <span>{{ 'camfil.navigation.filter.headline' | translate }}</span>
       </mat-toolbar>
       <div class="sidebar--container">
         <div [ngbCollapse]="isCollapsed">

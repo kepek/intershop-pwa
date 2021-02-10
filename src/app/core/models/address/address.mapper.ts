@@ -1,3 +1,5 @@
+import { CamCard } from 'src/app/extensions/cam-cards/models/cam-card/cam-card.model';
+
 import { AddressData } from './address.interface';
 import { Address } from './address.model';
 
@@ -41,6 +43,31 @@ export class AddressMapper {
       };
     } else {
       throw new Error(`'addressData' is required for the mapping`);
+    }
+  }
+  static fromCamCard(camCard: CamCard): Address {
+    if (camCard) {
+      const addr = camCard.deliveryAddress;
+      return {
+        addressName: `CamCard_${camCard.name}`,
+        country: addr.country,
+        id: '',
+        invoiceToAddress: true,
+        firstName: camCard.contacts[0].firstName,
+        lastName: camCard.contacts[0].lastName,
+        phoneHome: '',
+        shipToAddress: true,
+        urn: '',
+        addressLine1: addr.addressLine1,
+        addressLine2: addr.addressLine2,
+        postalCode: addr.postalCode,
+        city: addr.city,
+        companyName1: camCard.customer.companyName,
+        countryCode: addr.countryCode,
+        eligibleShipToAddress: true,
+      };
+    } else {
+      throw new Error(`'camCard' is required for the mapping`);
     }
   }
 }

@@ -555,6 +555,7 @@
   "camfil.account.cam_card.delete_cam_card.confirmation": "CamCard {{0}} har raderats",
   "camfil.account.cam_card.details.total.text": "Totalt (inkl. moms)",
   "camfil.account.cam_card.edit.button.back.label": "Tillbaka till CamCards",
+  "camfil.account.cam_card.edit.confirmation": "{{0}} har nu uppdaterats",
   "camfil.account.cam_card.edit.header": "Skapa nytt CamCard",
   "camfil.account.cam_card.edit.heading": "Redigera CamCard",
   "camfil.account.cam_card.form.name.error.maxlength": "Namnet på ditt CamCard kan inte överstiga 35 tecken.",
@@ -937,6 +938,7 @@
   "camfil.modal.cta.button.ok": "OK",
   "camfil.modal.edit_order.button.header": "Ändra orderdetaljer",
   "camfil.modal.edit_order.button.save": "Spara",
+  "camfil.navigation.filter.headline": "sv_Refine your product list",
   "camfil.navigation.filter.measurements.title": "Mått",
   "camfil.navigation.filter.measurements.height": "Bredd",
   "camfil.navigation.filter.measurements.width": "Höjd",
@@ -993,7 +995,11 @@
   "camfil.search.filter.show.link": {
     "other": "Visa mer"
   },
+  "camfil.search.searchbox.categories.title": "sv_Categories",
   "camfil.search.searchbox.instructional_text": "Fritextsök, t.ex filternamn, artikelnummer eller dimensioner",
+  "camfil.search.searchbox.no.results": "sv_Search does not match any results.",
+  "camfil.search.searchbox.show.all.results": "sv_Show all results",
+  "camfil.search.title.text": "Sökresultat för \"{{1}}\" - {{2}}",
   "camfil.shopping_cart.ministatus.items.label": "Gå till kassan",
   "camfil.show_less.text": "Visa mindre",
   "captcha.incorrect": "Säkerhetskontrollen misslyckades. Vänligen åtgärda markerat fel nedan.",

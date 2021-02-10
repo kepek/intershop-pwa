@@ -1,5 +1,5 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { ViewportScroller } from '@angular/common';
+import { Location, ViewportScroller } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -20,25 +20,24 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable, Subject } from 'rxjs';
-import { take } from 'rxjs/operators';
+import { take, takeUntil } from 'rxjs/operators';
 
+import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
+import { AddressHelper } from 'ish-core/models/address/address.helper';
+import { AddressMapper } from 'ish-core/models/address/address.mapper';
+import { Address } from 'ish-core/models/address/address.model';
+import { BasketView } from 'ish-core/models/basket/basket.model';
+import { Bucket } from 'ish-core/models/basket/bucket.model';
 import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
+import { whenTruthy } from 'ish-core/utils/operators';
 import { CamfilModalDialogComponent } from 'ish-shared/components/common/camfil-modal-dialog/camfil-modal-dialog.component';
 
 import { CamCardsFacade } from '../../../facades/cam-cards.facade';
 import { CamCardHelper } from '../../../models/cam-card/cam-card.helper';
-import { CamCard, CamCardItem } from '../../../models/cam-card/cam-card.model';
+import { CamCamProductChecked, CamCard, CamCardItem } from '../../../models/cam-card/cam-card.model';
 import { MoveCamCardDialogComponent } from '../../../shared/move-cam-card-dialog/move-cam-card-dialog.component';
 import { UserAccessCamCardDialogComponent } from '../../../shared/user-access-cam-card-dialog/user-access-cam-card-dialog.component';
-
-export interface ProductChecked {
-  camCardId: string;
-  camCardRoot: string;
-  urn: string;
-  sku: string;
-  quantity: number;
-}
 
 @Component({
   selector: 'camfil-account-cam-card-list',
@@ -84,7 +83,16 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
 
   private destroy$ = new Subject();
 
+  commonShippingMethodId: string;
+
+  basket$: Observable<BasketView>;
+  buckets$: Observable<any[]>;
+  buckets: Bucket[];
+  basketId: string;
+  basketAddresses: Address[];
+
   constructor(
+    private checkoutFacade: CheckoutFacade,
     private productFacade: ShoppingFacade,
     private camCardsFacade: CamCardsFacade,
     private changeDetectorRefs: ChangeDetectorRef,
@@ -92,7 +100,8 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private scroller: ViewportScroller,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private location: Location
   ) {}
 
   ngOnInit() {
@@ -105,6 +114,21 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
     this.activatedRoute.fragment.pipe(take(1)).subscribe((fragment: string) => {
       this.fragment = fragment;
       this.goToExpandedCamCard();
+    });
+
+    this.productFacade.loadBasketAddresses();
+    this.basket$ = this.checkoutFacade.basket$;
+    this.buckets$ = this.checkoutFacade.buckets$;
+
+    this.basket$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe((basket: BasketView) => {
+      this.basketId = basket.id;
+      this.commonShippingMethodId = basket.commonShippingMethod?.id;
+    });
+    this.buckets$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe((buckets: Bucket[]) => {
+      this.buckets = buckets;
+    });
+    this.productFacade.basketAddresses$.pipe(takeUntil(this.destroy$)).subscribe((basketAddresses: Address[]) => {
+      this.basketAddresses = basketAddresses;
     });
   }
 
@@ -180,6 +204,13 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
         relativeTo: this.activatedRoute,
         fragment: camCard.id,
       });
+      camCard.subCamCards.forEach(sub => {
+        if (!this.isSubOpen.includes(sub.id)) {
+          this.isSubOpen.push(sub.id);
+        }
+      });
+    } else {
+      this.location.replaceState(this.location.path(false));
     }
   }
 
@@ -241,9 +272,25 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
   }
 
   addSelectedItemsToCart() {
-    Object.values(this.productsChecked).forEach((val: ProductChecked) =>
-      this.productFacade.addProductToBasket(val.sku, val.quantity, val.urn)
-    );
+    Object.values(this.productsChecked).forEach((val: CamCamProductChecked) => {
+      CamCardHelper.addToCartFromCamCard(
+        val,
+        this.camCards,
+        this.buckets,
+        this.productFacade,
+        this.commonShippingMethodId,
+        this.basketId,
+        this.basketAddresses
+      );
+    });
+  }
+
+  getAddress(cc: CamCard): Address {
+    return AddressMapper.fromCamCard(cc);
+  }
+
+  isNewAddress(currentAddress: Address): boolean {
+    return AddressHelper.isNewAddress(currentAddress, this.basketAddresses);
   }
 
   notAvailbaleProdList(modal: CamfilModalDialogComponent<any>) {
@@ -315,12 +362,12 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
   handleProductCheck(item: CamCardItem, camCard: CamCard, event: MatCheckboxChange) {
     const productOnList = this.productsChecked[item.id];
     if (event.checked && !productOnList && item.product.available) {
-      const element: ProductChecked = {
+      const element: CamCamProductChecked = {
         camCardId: camCard.id,
         camCardRoot: camCard.rootCamCard,
-        urn: this.getCamCardUrn(camCard.rootCamCard) || camCard.deliveryAddress.urn,
         sku: item.product.sku,
         quantity: item.quantity,
+        boxLabel: item.comment?.label || '',
       };
       this.productsChecked[item.id] = element;
     } else if (!event.checked && productOnList) {
@@ -347,11 +394,6 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
 
   handleProductCheckbox(item: CamCardItem, camCard: CamCard, event: MatCheckboxChange) {
     this.handleProductCheck(item, camCard, event);
-  }
-
-  getCamCardUrn(id: string) {
-    const cc = this.camCards.find(item => item.id === id);
-    return cc?.deliveryAddress.urn || '';
   }
 
   get checkedCamCards() {
