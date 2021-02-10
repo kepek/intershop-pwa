@@ -26,7 +26,7 @@ import {
   LineItemUpdateHelperItem,
 } from 'ish-core/models/line-item-update/line-item-update.helper';
 import { BasketService } from 'ish-core/services/basket/basket.service';
-import { displayErrorMessage } from 'ish-core/store/core/messages';
+import { displayErrorMessage, displaySuccessMessage } from 'ish-core/store/core/messages';
 import { getProductEntities, loadProduct } from 'ish-core/store/shopping/products';
 import { mapErrorToAction, mapToPayload, mapToPayloadProperty } from 'ish-core/utils/operators';
 
@@ -336,7 +336,13 @@ export class BasketItemsEffects {
       mapToPayloadProperty('itemId'),
       concatMap(itemId =>
         this.basketService.deleteBasketItem(itemId).pipe(
-          map(info => deleteBasketItemSuccess({ info })),
+          mergeMap(info => [
+            deleteBasketItemSuccess({ info }),
+            displaySuccessMessage({
+              message: 'Item deleted',
+            }),
+            loadBasket(),
+          ]),
           mapErrorToAction(deleteBasketItemFail)
         )
       )
@@ -362,11 +368,7 @@ export class BasketItemsEffects {
     this.actions$.pipe(
       ofType(addItemsToBasketSuccess, updateBasketItemsSuccess, deleteBasketItemSuccess),
       mapToPayloadProperty('info'),
-      tap(info =>
-        info && info.length && info[0].message
-          ? this.router.navigate(['/basket'], { queryParams: { error: true } })
-          : undefined
-      ),
+      tap(info => (info && info.length && info[0].message ? this.router.navigate(['/checkout']) : undefined)),
       mapTo(loadBasket())
     )
   );

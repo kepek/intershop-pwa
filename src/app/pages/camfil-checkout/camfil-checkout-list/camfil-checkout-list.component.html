@@ -18,7 +18,7 @@
       {{ 'camfil.checkout.order' | translate }} {{ !!totalOrders ? index + ' / ' + totalOrders : order.id }}</strong
     >
     <span data-id-id="order-number" class="order-number"
-      >{{ order?.id }}, {{ order?.shipToAddressFull?.companyName1 }}</span
+      >{{ order?.customer.customerNo }}, {{ order?.customer.companyName }}</span
     >
   </div>
 </ng-template>
@@ -34,9 +34,9 @@
       <div class="order-summary-info col-sm-5 border-sm-right" data-testing-id="order-summary-info">
         <dl class="row dl-horizontal dl-separator">
           <dt class="col-6 p-0">{{ 'camfil.account.orderdetails.customer_id.label' | translate }}</dt>
-          <dd class="col-6 p-0" data-testing-id="order-customer_id">{{ order.shipToAddressFull?.id }}</dd>
+          <dd class="col-6 p-0" data-testing-id="order-customer_id">{{ order.customer.customerNo }}</dd>
           <dt class="col-6 p-0 pb-4">{{ 'camfil.account.orderdetails.customer_name.label' | translate }}</dt>
-          <dd class="col-6 p-0" data-testing-id="order-customer_name">{{ order.shipToAddressFull?.companyName1 }}</dd>
+          <dd class="col-6 p-0" data-testing-id="order-customer_name">{{ order.customer.companyName }}</dd>
           <dt class="col-6 p-0">{{ 'camfil.account.orderdetails.contact_person.label' | translate }}</dt>
           <dd class="col-6 p-0" data-testing-id="order-contact_person">
             {{ order.contactPerson?.firstName }} {{ order.contactPerson?.lastName }}

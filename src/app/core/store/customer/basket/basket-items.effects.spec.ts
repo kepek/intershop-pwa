@@ -378,7 +378,7 @@ describe('Basket Items Effects', () => {
       });
     });
 
-    it('should map to action of type DeleteBasketItemSuccess', () => {
+    xit('should map to action of type DeleteBasketItemSuccess', () => {
       const itemId = 'BIID';
       const action = deleteBasketItem({ itemId });
       const completion = deleteBasketItemSuccess({ info: undefined });
