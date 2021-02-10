@@ -4,6 +4,7 @@ import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { EditBucket } from 'ish-core/models/basket/bucket.model';
+import { whenTruthy } from 'ish-core/utils/operators';
 
 import { CamCardsFacade } from '../../../../facades/cam-cards.facade';
 import { CamCardAddress, CamCardContact, CamCardCustomer } from '../../../../models/cam-card/cam-card.model';
@@ -22,6 +23,7 @@ export class OrderFormComponent implements OnInit, OnDestroy {
   validators = ADDRESS_VALIDATORS;
 
   customers$: Observable<CamCardCustomer[]>;
+  customersArr: CamCardCustomer[];
   contacts: CamCardContact[];
 
   @Input() orderToEdit?: EditBucket;
@@ -35,12 +37,16 @@ export class OrderFormComponent implements OnInit, OnDestroy {
     this.addresses$ = this.camCardsFacade.addresses$;
     this.customers$ = this.camCardsFacade.customers$;
 
+    this.customers$?.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(customers => {
+      this.customersArr = customers;
+    });
+
     if (this.orderToEdit && this.orderToEdit.customerId) {
       this.pickCustomer({ value: this.orderToEdit.customerId });
     }
 
     this.addressForm = this.fb.group({
-      customer: [this.orderToEdit?.customerId || '', [Validators.required]],
+      customer: [this.orderToEdit?.customerId || this.setDefaultCustomer(this.customersArr), [Validators.required]],
       contact: [this.orderToEdit?.contactPerson?.erpId || '', Validators.required],
       invoiceLabel: [this.orderToEdit?.invoiceLabel || '', [Validators.required, Validators.maxLength(20)]],
       phoneNumber: [this.orderToEdit?.phoneNumber || '', Validators.pattern('[0-9+-/]*')],
@@ -62,7 +68,7 @@ export class OrderFormComponent implements OnInit, OnDestroy {
     this.addresses$.subscribe(addresses => {
       const address = addresses.filter(element => element.id === id)[0];
 
-      this.addressForm.patchValue({
+      this.addressForm?.patchValue({
         company: address.companyName1,
         address: address.addressLine1,
         building: address.addressLine2,
@@ -100,5 +106,17 @@ export class OrderFormComponent implements OnInit, OnDestroy {
 
   getField(name: string) {
     return this.addressForm.get(name);
+  }
+
+  setDefaultCustomer(customersArr: CamCardCustomer[]) {
+    let defaultCustomerId = '';
+
+    if (customersArr?.length === 1) {
+      defaultCustomerId = customersArr[0].id;
+      this.updateContacts({ value: defaultCustomerId });
+      this.camCardsFacade.getDeliveryAddress(defaultCustomerId);
+    }
+
+    return defaultCustomerId;
   }
 }

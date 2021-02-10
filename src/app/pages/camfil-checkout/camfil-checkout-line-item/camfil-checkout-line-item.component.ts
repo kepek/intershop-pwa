@@ -19,6 +19,7 @@ import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { AttributeGroupTypes } from 'ish-core/models/attribute-group/attribute-group.types';
 import { AttributeHelper } from 'ish-core/models/attribute/attribute.helper';
+import { Attribute } from 'ish-core/models/attribute/attribute.model';
 import { LineItemUpdate } from 'ish-core/models/line-item-update/line-item-update.model';
 import { LineItem, LineItemView } from 'ish-core/models/line-item/line-item.model';
 import { ProductView } from 'ish-core/models/product-view/product-view.model';
@@ -158,7 +159,7 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
     const oldValue = this.boxLabel;
     const newValue = target.value;
     if (newValue && newValue !== oldValue) {
-      const boxLabelAttribute = { name: 'boxLabel', type: 'String', value: newValue };
+      const boxLabelAttribute: Attribute = { name: 'boxLabel', type: 'String', value: newValue };
       if (!oldValue) {
         // Add attribute
         this.checkoutFacade.addBasketItemAttributes(this.basketId, this.product.id, boxLabelAttribute);

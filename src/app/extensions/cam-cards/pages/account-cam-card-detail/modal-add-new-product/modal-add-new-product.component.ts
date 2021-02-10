@@ -78,7 +78,7 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy {
     this.productForm = new FormGroup({
       quantity: new FormControl(1),
       sku: new FormControl('', [Validators.required]),
-      boxLabel: new FormControl('', [Validators.max(10)]),
+      boxLabel: new FormControl('', [Validators.max(60)]),
     });
 
     this.productFacade.basketAddresses$.pipe(takeUntil(this.destroy$)).subscribe((basketAddresses: Address[]) => {
@@ -128,12 +128,13 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy {
       const quantity = this.getField('quantity') ? Number(this.getField('quantity')?.value) : 1;
       const label = this.getField('boxLabel') ? String(this.getField('boxLabel').value) : undefined;
       const comment: CamCardItemComment = { label };
+      const lineItemAttribute = label ? { name: 'boxLabel', type: 'String', value: label } : undefined;
 
       if (this.addToOrder) {
         this.loading = true;
 
         if (this.order.id && this.order.shipToAddress) {
-          this.addToExistingOrder(sku, quantity, this.order.shipToAddress);
+          this.addToExistingOrder(sku, quantity, this.order.shipToAddress, lineItemAttribute);
         } else {
           const deliveryAddress = this.order.shipToAddressFull as Address;
           this.addToNewOrder(sku, quantity, deliveryAddress);
@@ -147,8 +148,8 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy {
     }
   }
 
-  addToExistingOrder(sku, quantity, shipToAddress) {
-    this.productFacade.addProductToBasket(sku, quantity, this.shippingMethodId, shipToAddress);
+  addToExistingOrder(sku, quantity, shipToAddress, lineItemAttribute) {
+    this.productFacade.addProductToBasket(sku, quantity, this.shippingMethodId, shipToAddress, lineItemAttribute);
   }
 
   addToNewOrder(sku, quantity, deliveryAddress) {

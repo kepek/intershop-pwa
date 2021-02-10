@@ -7,6 +7,7 @@ import { takeUntil } from 'rxjs/operators';
 
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
+import { Attribute } from 'ish-core/models/attribute/attribute.model';
 import { BasketView } from 'ish-core/models/basket/basket.model';
 import { Bucket } from 'ish-core/models/basket/bucket.model';
 import { Product } from 'ish-core/models/product/product.model';
@@ -83,7 +84,9 @@ export class AddToCartModalComponent implements OnInit, OnDestroy {
       const quantity = this.quantityForm.get('quantity').value;
       const boxLabel = this.quantityForm.get('boxLabel').value;
       const currentBucket = this.buckets.find(bucket => bucket.id === this.selectedOrderId);
-
+      const lineItemAttributes: Attribute = boxLabel
+        ? { name: 'boxLabel', type: 'String', value: boxLabel }
+        : undefined;
       this.submitted = true;
 
       this.shoppingFacade.addProductToBucketWithUrn(
@@ -96,7 +99,8 @@ export class AddToCartModalComponent implements OnInit, OnDestroy {
         {
           boxLabel,
           contactPerson: currentBucket.contactPerson,
-        }
+        },
+        lineItemAttributes
       );
     } else {
       markAsDirtyRecursive(this.quantityForm);

@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { debounce, filter, map, switchMap, tap } from 'rxjs/operators';
 
 import { Address } from 'ish-core/models/address/address.model';
+import { Attribute } from 'ish-core/models/attribute/attribute.model';
 import { BasketExtensions } from 'ish-core/models/basket/basket.interface';
 import { CategoryHelper } from 'ish-core/models/category/category.helper';
 import { ProductListingID } from 'ish-core/models/product-listing/product-listing.model';
@@ -150,9 +151,12 @@ export class ShoppingFacade {
     sku: string,
     quantity: number,
     basketId: string,
-    basketExtension: BasketExtensions
+    basketExtension: BasketExtensions,
+    lineItemAttributes?: Attribute
   ) {
-    this.store.dispatch(addProductToBucket({ address, shippingMethod, sku, quantity, basketId, basketExtension }));
+    this.store.dispatch(
+      addProductToBucket({ address, shippingMethod, sku, quantity, basketId, basketExtension, lineItemAttributes })
+    );
   }
 
   addProductToBucketWithUrn(
@@ -162,15 +166,31 @@ export class ShoppingFacade {
     sku: string,
     quantity: number,
     basketId: string,
-    basketExtension: BasketExtensions
+    basketExtension: BasketExtensions,
+    lineItemAttributes?: Attribute
   ) {
     this.store.dispatch(
-      addProductToBucketWithUrn({ urn, shippingMethod, addressId, sku, quantity, basketId, basketExtension })
+      addProductToBucketWithUrn({
+        urn,
+        shippingMethod,
+        addressId,
+        sku,
+        quantity,
+        basketId,
+        basketExtension,
+        lineItemAttributes,
+      })
     );
   }
 
-  addProductToBasket(sku: string, quantity: number, shippingMethod?: string, shipToAddress?: string) {
-    this.store.dispatch(addProductToBasket({ sku, quantity, shippingMethod, shipToAddress }));
+  addProductToBasket(
+    sku: string,
+    quantity: number,
+    shippingMethod?: string,
+    shipToAddress?: string,
+    lineItemAttributes?: Attribute
+  ) {
+    this.store.dispatch(addProductToBasket({ sku, quantity, shippingMethod, shipToAddress, lineItemAttributes }));
   }
 
   updateBucket(basketId: string, addressId: string, basketExtension: BasketExtensions, address?: Address) {

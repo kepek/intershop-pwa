@@ -224,24 +224,16 @@ export class CheckoutFacade {
     this.store.dispatch(camfilDragLineItem({ basketId, updatedLineItem, targetBucket }));
   }
 
-  addBasketItemAttributes(
-    basketId: string,
-    lineItemId: string,
-    boxLabelAttribute: { name: string; type: string; value: string }
-  ) {
-    this.store.dispatch(addBasketItemAttributes({ basketId, lineItemId, boxLabelAttribute }));
+  addBasketItemAttributes(basketId: string, lineItemId: string, lineItemAttribute: Attribute) {
+    this.store.dispatch(addBasketItemAttributes({ basketId, lineItemId, lineItemAttribute }));
   }
 
   deleteBasketItemAttributes(basketId: string, lineItemId: string, bucketId: string, attributeName: string) {
     this.store.dispatch(deleteBasketItemAttributes({ basketId, lineItemId, bucketId, attributeName }));
   }
 
-  updateBasketItemAttributes(
-    basketId: string,
-    lineItemId: string,
-    boxLabelAttribute: { name: string; type: string; value: string }
-  ) {
-    this.store.dispatch(updateBasketItemAttributes({ basketId, lineItemId, boxLabelAttribute }));
+  updateBasketItemAttributes(basketId: string, lineItemId: string, lineItemAttribute: Attribute) {
+    this.store.dispatch(updateBasketItemAttributes({ basketId, lineItemId, lineItemAttribute }));
   }
 
   deleteOrder(basketId: string, bucketId: string) {

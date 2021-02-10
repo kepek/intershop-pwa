@@ -1,8 +1,9 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { take, takeUntil } from 'rxjs/operators';
 
+import { AccountFacade } from 'ish-core/facades/account.facade';
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { Product } from 'ish-core/models/product/product.model';
 import { whenFalsy } from 'ish-core/utils/operators';
@@ -54,13 +55,15 @@ export class CamfilProductAddToBasketComponent implements OnInit, OnDestroy {
    * translationKey for the button label
    */
   @Input() translationKey = 'product.add_to_cart.link';
+
+  buttonTranslationKey = 'product.add_to_cart.link';
   /**
    * button was clicked event
    */
   @Output() productToBasket = new EventEmitter<void>();
 
   @Input() quantity?: number;
-  constructor(private checkoutFacade: CheckoutFacade, public dialog: MatDialog) {}
+  constructor(private checkoutFacade: CheckoutFacade, public dialog: MatDialog, private accountFacade: AccountFacade) {}
 
   /**
    * fires 'true' after add To Cart is clicked and basket is loading
@@ -74,6 +77,13 @@ export class CamfilProductAddToBasketComponent implements OnInit, OnDestroy {
 
     // update emitted to display spinning animation
     this.basketLoading$.pipe(whenFalsy(), takeUntil(this.destroy$)).subscribe(this.displaySpinner$); // false
+    this.accountFacade.isLoggedIn$.pipe(take(1), takeUntil(this.destroy$)).subscribe(isLoggedIn => {
+      if (!isLoggedIn) {
+        this.buttonTranslationKey = 'camfil.product.add_to_cart.not_logged.label';
+      } else {
+        this.buttonTranslationKey = this.translationKey;
+      }
+    });
   }
 
   addToBasket() {
