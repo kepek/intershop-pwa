@@ -46,7 +46,7 @@ export class ModalAddNewSectionComponent implements OnInit, OnDestroy {
     });
 
     this.newSegmentForm = this.fb.group({
-      newCamCard: ['', [Validators.required, Validators.maxLength(10)]],
+      newCamCard: ['', [Validators.required, Validators.maxLength(30)]],
     });
 
     this.camCardsFacade.currentCamCard$.pipe(takeUntil(this.destroy$)).subscribe(currentCamCard => {

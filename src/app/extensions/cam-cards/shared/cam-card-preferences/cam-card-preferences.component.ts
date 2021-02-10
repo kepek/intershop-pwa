@@ -171,6 +171,7 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit {
       orderMark: ['', [Validators.maxLength(35)]],
       invoiceMark: ['', [Validators.maxLength(35)]],
       deliveryAddress: ['', [Validators.maxLength(35)]],
+      companyName1: ['', [Validators.maxLength(35)]],
       addressLine1: ['', [Validators.required, Validators.maxLength(35)]],
       addressLine2: ['', [Validators.maxLength(35)]],
       postalCode: ['', [Validators.required, Validators.maxLength(35)]],
@@ -202,12 +203,13 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit {
         nextDeliveryDate,
         reminderFlag,
       } = this.camCard;
-      const { addressLine1, addressLine2, postalCode, city, countryCode } = deliveryAddress;
+      const { addressLine1, addressLine2, postalCode, city, countryCode, companyName1 } = deliveryAddress;
       this.camCardForm.patchValue({
         title: name,
         customerName: customer.customerNo,
         orderMark: orderLabel,
         invoiceMark: invoiceLabel,
+        companyName1,
         addressLine1,
         addressLine2,
         postalCode,
@@ -244,6 +246,7 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit {
         },
         deliveryAddress: {
           ...this.camCard?.deliveryAddress,
+          companyName1: this.camCardForm.get('companyName1').value,
           addressLine1: this.camCardForm.get('addressLine1').value,
           street: this.camCardForm.get('addressLine1').value,
           addressLine2: this.camCardForm.get('addressLine2').value,
@@ -280,6 +283,7 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit {
       const address = addresses.filter(element => element.id === id)[0];
 
       this.camCardForm.patchValue({
+        companyName1: address.companyName1,
         addressLine1: address.addressLine1,
         addressLine2: address.addressLine2,
         postalCode: address.postalCode,
