@@ -28,7 +28,7 @@
     <button mat-flat-button color="primary" (click)="submitOrder()" *ngIf="!isConfirmed">
       {{ 'camfil.checkout.place_your_orders' | translate }}
     </button>
-    <button mat-flat-button color="primary" (click)="submitOrder()" *ngIf="isConfirmed">
+    <button mat-flat-button color="primary" (click)="continueShopping()" *ngIf="isConfirmed">
       {{ 'camfil.checkout.confirmation.continue_shopping' | translate }}
     </button>
     <br />

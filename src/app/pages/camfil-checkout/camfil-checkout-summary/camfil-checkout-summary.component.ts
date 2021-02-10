@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -26,7 +27,8 @@ export class CamfilCheckoutSummaryComponent implements OnInit {
   constructor(
     private checkoutFacade: CheckoutFacade,
     private snackBar: MatSnackBar,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -36,7 +38,7 @@ export class CamfilCheckoutSummaryComponent implements OnInit {
     this.validationResults$
       .pipe(takeUntil(this.destroy$))
       .subscribe((validationResults: BasketValidationResultType) => {
-        if (!validationResults?.valid) {
+        if (validationResults?.valid === false) {
           this.snackBar.open(
             this.translate.instant('camfil.checkout.message.cannot_process'),
             this.translate.instant('camfil.checkout.message.understood')
@@ -54,5 +56,9 @@ export class CamfilCheckoutSummaryComponent implements OnInit {
     this.update.emit();
 
     this.checkoutFacade.continue(5);
+  }
+
+  continueShopping() {
+    this.router.navigate(['/']);
   }
 }

@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -25,7 +26,11 @@ import { ADD_NEW_PRODUCT_VALIDATORS } from './validators';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ModalAddNewProductComponent implements OnInit, OnDestroy {
-  constructor(private productFacade: ShoppingFacade, private camCardsFacade: CamCardsFacade) {}
+  constructor(
+    private productFacade: ShoppingFacade,
+    private camCardsFacade: CamCardsFacade,
+    public dialog: MatDialog
+  ) {}
 
   /**
    * Callback function to hide modal dialog (used with ishServerHtml). - is needed for closing the dialog after the user clicks a message link
@@ -194,7 +199,7 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy {
 
   /** close modal */
   hide() {
-    this.modal?.close();
+    this.modal?.close ? this.modal.close() : this.dialog.closeAll();
   }
 
   /** open modal */

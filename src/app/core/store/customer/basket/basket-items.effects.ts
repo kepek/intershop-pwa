@@ -362,11 +362,7 @@ export class BasketItemsEffects {
     this.actions$.pipe(
       ofType(addItemsToBasketSuccess, updateBasketItemsSuccess, deleteBasketItemSuccess),
       mapToPayloadProperty('info'),
-      tap(info =>
-        info && info.length && info[0].message
-          ? this.router.navigate(['/basket'], { queryParams: { error: true } })
-          : undefined
-      ),
+      tap(info => (info && info.length && info[0].message ? this.router.navigate(['/checkout']) : undefined)),
       mapTo(loadBasket())
     )
   );

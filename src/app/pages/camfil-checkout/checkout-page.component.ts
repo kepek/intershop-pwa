@@ -50,6 +50,7 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
   initBasket() {
     this.basket$ = this.checkoutFacade.basket$;
     this.buckets$ = this.checkoutFacade.buckets$;
+    this.basketLoading$ = this.checkoutFacade.basketLoading$;
     this.validationResults$ = this.checkoutFacade.basketValidationResults$;
 
     this.basket$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe((basket: BasketView) => {
@@ -60,6 +61,7 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
 
     this.buckets$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe((buckets: Bucket[]) => {
       this.buckets = buckets;
+      this.cdr.detectChanges();
     });
 
     this.validationResults$
