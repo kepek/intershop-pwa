@@ -43,13 +43,17 @@ describe('Camfil Breadcrumb Component', () => {
     it('should render trail from home and trail with translation keys if set', () => {
       when(appFacade.breadcrumbData$).thenReturn(of([{ key: 'KEY' }, { key: 'KEY2' }]));
       fixture.detectChanges();
-      expect(element.textContent).toMatchInlineSnapshot(`"camfil.common.home.linknavigate_nextKEYnavigate_nextKEY2"`);
+      expect(element.textContent).toMatchInlineSnapshot(
+        `" camfil.common.home.link  navigate_next KEY navigate_next KEY2"`
+      );
     });
 
     it('should render trail from home and trail with text if set', () => {
       when(appFacade.breadcrumbData$).thenReturn(of([{ text: 'TEXT' }, { text: 'TEXT2' }]));
       fixture.detectChanges();
-      expect(element.textContent).toMatchInlineSnapshot(`"camfil.common.home.linknavigate_nextTEXTnavigate_nextTEXT2"`);
+      expect(element.textContent).toMatchInlineSnapshot(
+        `" camfil.common.home.link  navigate_next TEXT navigate_next TEXT2"`
+      );
     });
 
     it('should render trail from home and with link if set', () => {
@@ -60,7 +64,9 @@ describe('Camfil Breadcrumb Component', () => {
         ])
       );
       fixture.detectChanges();
-      expect(element.textContent).toMatchInlineSnapshot(`"camfil.common.home.linknavigate_nextL1navigate_nextL2"`);
+      expect(element.textContent).toMatchInlineSnapshot(
+        `" camfil.common.home.link  navigate_next  L1  navigate_next  L2 "`
+      );
     });
   });
 
@@ -71,7 +77,7 @@ describe('Camfil Breadcrumb Component', () => {
       component.checkout = false;
       when(appFacade.breadcrumbData$).thenReturn(of([{ key: 'account.order_history.link' }]));
       fixture.detectChanges();
-      expect(element.textContent).toMatchInlineSnapshot(`"My Accountnavigate_nextOrders"`);
+      expect(element.textContent).toMatchInlineSnapshot(`" My Account  navigate_next Orders"`);
     });
 
     it('should render breadcrumbtrail from home and account and trail when account is active', () => {
@@ -80,7 +86,7 @@ describe('Camfil Breadcrumb Component', () => {
       when(appFacade.breadcrumbData$).thenReturn(of([{ key: 'account.order_history.link' }]));
       fixture.detectChanges();
       expect(element.textContent).toMatchInlineSnapshot(
-        `"camfil.common.home.linknavigate_nextMy Accountnavigate_nextOrders"`
+        `" camfil.common.home.link  navigate_next  My Account  navigate_next Orders"`
       );
       expect(element.textContent).toContain('My Account');
     });
