@@ -63,7 +63,7 @@ export class ModalAddNewSectionComponent implements OnInit, OnDestroy {
     this.modal.hide = () => this.dialog.closeAll();
   }
 
-  submitForm(event?) {
+  submitForm() {
     if (this.newSegmentForm.valid) {
       const newSegmentValue = this.newSegmentForm.get('newCamCard').value;
       const newSubCamCard = {
@@ -74,9 +74,7 @@ export class ModalAddNewSectionComponent implements OnInit, OnDestroy {
 
       this.camCardsFacade.createSubCamCard(newSubCamCard, this.rootCamCardId);
       this.newSegmentForm.reset();
-      if (event?.type === 'submit') {
-        this.modal.hide();
-      }
+      this.modal.hide();
     } else {
       markAsDirtyRecursive(this.newSegmentForm);
     }
