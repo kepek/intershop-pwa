@@ -111,7 +111,7 @@ export class ProductsEffects {
       map(payload => ({ ...payload, page: payload.page ? payload.page : 1 })),
       concatMap(({ categoryId, page, sorting }) =>
         this.productsService.getCategoryProducts(categoryId, page, sorting).pipe(
-          concatMap(({ total, products, sortKeys }) => [
+          concatMap(({ total, products, sortableAttributes }) => [
             ...products.map(product => loadProductSuccess({ product })),
             setProductListingPages(
               this.productListingMapper.createPages(
@@ -120,7 +120,7 @@ export class ProductsEffects {
                 categoryId,
                 {
                   startPage: page,
-                  sortKeys,
+                  sortableAttributes,
                   sorting,
                   itemCount: total,
                 }
@@ -143,7 +143,7 @@ export class ProductsEffects {
       map(payload => ({ ...payload, page: payload.page ? payload.page : 1 })),
       concatMap(({ masterSKU, page, sorting }) =>
         this.productsService.getProductsForMaster(masterSKU, page, sorting).pipe(
-          concatMap(({ total, products, sortKeys }) => [
+          concatMap(({ total, products, sortableAttributes }) => [
             ...products.map(product => loadProductSuccess({ product })),
             setProductListingPages(
               this.productListingMapper.createPages(
@@ -152,7 +152,7 @@ export class ProductsEffects {
                 masterSKU,
                 {
                   startPage: page,
-                  sortKeys,
+                  sortableAttributes,
                   sorting,
                   itemCount: total,
                 }
