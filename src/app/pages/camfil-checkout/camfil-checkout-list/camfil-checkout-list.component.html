@@ -18,7 +18,7 @@
       {{ 'camfil.checkout.order' | translate }} {{ !!totalOrders ? index + ' / ' + totalOrders : order.id }}</strong
     >
     <span data-id-id="order-number" class="order-number"
-      >{{ order?.customer.customerNo }}, {{ order?.customer.companyName }}</span
+      >{{ order?.customer?.customerNo }}, {{ order?.customer?.companyName }}</span
     >
   </div>
 </ng-template>
