@@ -937,6 +937,7 @@
   "camfil.modal.cta.button.ok": "OK",
   "camfil.modal.edit_order.button.header": "Ändra orderdetaljer",
   "camfil.modal.edit_order.button.save": "Spara",
+  "camfil.navigation.filter.headline": "sv_Refine your product list",
   "camfil.navigation.filter.measurements.title": "Mått",
   "camfil.navigation.filter.measurements.height": "Bredd",
   "camfil.navigation.filter.measurements.width": "Höjd",

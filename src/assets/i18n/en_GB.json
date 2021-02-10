@@ -931,6 +931,7 @@
   "camfil.modal.cta.button.ok": "OK",
   "camfil.modal.edit_order.button.header": "Edit order details",
   "camfil.modal.edit_order.button.save": "Save",
+  "camfil.navigation.filter.headline": "Refine your product list",
   "camfil.navigation.filter.measurements.title": "Measurements",
   "camfil.navigation.filter.measurements.height": "Width",
   "camfil.navigation.filter.measurements.width": "Height",
