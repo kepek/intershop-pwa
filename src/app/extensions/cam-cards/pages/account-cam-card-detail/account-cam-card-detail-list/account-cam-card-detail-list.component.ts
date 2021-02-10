@@ -234,7 +234,7 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges, OnD
     };
 
     const rootCamCardId = this.camCard.id === camcardId ? undefined : this.camCard.id;
-    this.camCardsFacade.updateCamCardProduct(rootCamCardId, camcardId, newItem);
+    this.camCardsFacade.updateCamCardProduct(rootCamCardId, camcardId, newItem, true);
   }
 
   /** dispatch edit request */

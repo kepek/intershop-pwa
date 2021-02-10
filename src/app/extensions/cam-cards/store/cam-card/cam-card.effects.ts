@@ -63,6 +63,8 @@ import {
   deleteSubCamCardSuccess,
   detectCamCardToolbar,
   editCamCard,
+  loadCamCard,
+  loadCamCardSuccess,
   loadCamCards,
   loadCamCardsEdit,
   loadCamCardsFail,
@@ -128,6 +130,19 @@ export class CamCardEffects {
             const camCards = items.filter(item => !item.rootCamCard);
             return loadCamCardsSuccess({ camCards });
           }),
+          mapErrorToAction(loadCamCardsFail)
+        )
+      )
+    )
+  );
+
+  loadCamCard$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loadCamCard),
+      mapToPayloadProperty('camCardId'),
+      mergeMap(id =>
+        this.camCardService.getCamCard(id).pipe(
+          map(camCard => loadCamCardSuccess({ camCard })),
           mapErrorToAction(loadCamCardsFail)
         )
       )
@@ -552,9 +567,10 @@ export class CamCardEffects {
       mergeMap(payload =>
         this.camCardService.updateCamCardProduct(payload.camCardId, payload.camCardItem).pipe(
           mergeMap(camCardItem => {
-            const { rootCamCard, camCardId } = payload;
+            const { rootCamCard, camCardId, forceUpdateCamCard } = payload;
             return [
               updateCamCardProductSuccess({ rootCamCard, camCardId, camCardItem }),
+              forceUpdateCamCard && loadCamCard({ camCardId: rootCamCard || camCardId }),
               displaySuccessMessage({
                 message: 'camfil.account.cam_cards.update.product.confirmation',
                 messageParams: { 0: camCardItem.product.name },

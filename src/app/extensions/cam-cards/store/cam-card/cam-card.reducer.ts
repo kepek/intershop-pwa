@@ -30,6 +30,7 @@ import {
   deleteSubCamCard,
   deleteSubCamCardFail,
   deleteSubCamCardSuccess,
+  loadCamCardSuccess,
   loadCamCards,
   loadCamCardsFail,
   loadCamCardsSuccess,
@@ -196,6 +197,7 @@ export const camCardReducer = createReducer(
     };
   }),
   on(
+    loadCamCardSuccess,
     addBasketToNewCamCardSuccess,
     createCamCardSuccess,
     updateCamCardSuccess,
