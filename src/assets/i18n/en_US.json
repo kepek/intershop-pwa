@@ -1003,6 +1003,7 @@
   "camfil.search.searchbox.instructional_text": "Search for air filters names. SKUs, dimensions",
   "camfil.search.searchbox.no.results": "Search does not match any results.",
   "camfil.search.searchbox.show.all.results": "Show all results",
+  "camfil.search.title.text": "Search Results for \"{{1}}\" - {{2}}",
   "camfil.shopping_cart.ministatus.items.label": "Go to checkout",
   "camfil.show_less.text": "Show less",
   "captcha.incorrect": "The security verification failed. Please correct the error indicated below.",

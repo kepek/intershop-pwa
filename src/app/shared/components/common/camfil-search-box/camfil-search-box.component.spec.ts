@@ -21,14 +21,11 @@ describe('Camfil Search Box Component', () => {
   let element: HTMLElement;
   let getAllCategoriesTree$: Subject<{ [id: string]: Category }>;
   let searchResults$: Subject<SuggestTerm[]>;
-  let searchTerm$: Subject<string>;
 
   beforeEach(async () => {
     searchResults$ = new ReplaySubject(1);
-    searchTerm$ = new ReplaySubject(1);
     getAllCategoriesTree$ = new ReplaySubject(1);
     searchResults$.next([]);
-    searchTerm$.next(undefined);
     getAllCategoriesTree$.next({});
 
     await TestBed.configureTestingModule({
@@ -45,7 +42,7 @@ describe('Camfil Search Box Component', () => {
         {
           provide: ShoppingFacade,
           useFactory: () =>
-            ({ searchResults$: () => searchResults$, searchTerm$, getAllCategoriesTree$ } as Partial<ShoppingFacade>),
+            ({ searchResults$: () => searchResults$, getAllCategoriesTree$ } as Partial<ShoppingFacade>),
         },
       ],
     }).compileComponents();
@@ -105,16 +102,6 @@ describe('Camfil Search Box Component', () => {
       fixture.detectChanges();
 
       expect(element.querySelector('.search-suggest-results')).toBeFalsy();
-    });
-  });
-
-  describe('with inputs', () => {
-    it('should show searchTerm when on search page', () => {
-      searchTerm$.next('search');
-
-      fixture.detectChanges();
-      const input = element.querySelector('input');
-      expect(input.value).toContain('search');
     });
   });
 });

@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, ReplaySubject, Subject } from 'rxjs';
-import { map, takeUntil } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { Category } from 'ish-core/models/category/category.model';
@@ -80,14 +80,6 @@ export class CamfilSearchBoxComponent implements OnInit, OnDestroy {
     this.shoppingFacade.getAllCategoriesTree$.pipe(takeUntil(this.destroy$)).subscribe(list => {
       this.categoriesTree = Object.values(list);
     });
-
-    // initialize with searchTerm when on search route
-    this.shoppingFacade.searchTerm$
-      .pipe(
-        map(x => (x ? x : '')),
-        takeUntil(this.destroy$)
-      )
-      .subscribe(term => this.inputSearchTerms$.next(term));
 
     // suggests are triggered solely via stream
     this.searchResults$ = this.shoppingFacade.searchResults$(this.inputSearchTerms$);

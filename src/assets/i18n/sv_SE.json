@@ -993,7 +993,11 @@
   "camfil.search.filter.show.link": {
     "other": "Visa mer"
   },
+  "camfil.search.searchbox.categories.title": "sv_Categories",
   "camfil.search.searchbox.instructional_text": "Fritextsök, t.ex filternamn, artikelnummer eller dimensioner",
+  "camfil.search.searchbox.no.results": "sv_Search does not match any results.",
+  "camfil.search.searchbox.show.all.results": "sv_Show all results",
+  "camfil.search.title.text": "Sökresultat för \"{{1}}\" - {{2}}",
   "camfil.shopping_cart.ministatus.items.label": "Gå till kassan",
   "camfil.show_less.text": "Visa mindre",
   "captcha.incorrect": "Säkerhetskontrollen misslyckades. Vänligen åtgärda markerat fel nedan.",
