@@ -126,6 +126,7 @@ export class CreateOrderModalComponent implements OnInit, OnDestroy {
         ...this.getBasketExtension(),
         shippingAddress: this.getAddress(),
       };
+
       this.product ? this.addProductToBucket() : this.createEmitter.emit(bucket);
     }
   }
