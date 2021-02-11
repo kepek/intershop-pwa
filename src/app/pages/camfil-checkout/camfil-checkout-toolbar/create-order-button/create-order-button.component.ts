@@ -30,6 +30,7 @@ export class CreateOrderButtonComponent {
       shipToAddress: virtualBucket.shippingAddress?.urn,
       shipToAddressFull: virtualBucket.shippingAddress,
       orderMark: virtualBucket.orderMark,
+      invoiceLabel: virtualBucket.invoiceLabel,
       customer: virtualBucket.customer,
       shippingMethod: this.shippingMethodId,
     };

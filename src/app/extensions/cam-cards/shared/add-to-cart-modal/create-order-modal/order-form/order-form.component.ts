@@ -48,9 +48,9 @@ export class OrderFormComponent implements OnInit, OnDestroy {
     this.addressForm = this.fb.group({
       customer: [this.orderToEdit?.customerId || this.setDefaultCustomer(this.customersArr), [Validators.required]],
       contact: [this.orderToEdit?.contactPerson?.erpId || '', Validators.required],
-      invoiceLabel: [this.orderToEdit?.invoiceLabel || '', [Validators.required, Validators.maxLength(20)]],
+      invoiceLabel: [this.orderToEdit?.invoiceLabel || '', [Validators.maxLength(20)]],
       phoneNumber: [this.orderToEdit?.phoneNumber || '', Validators.pattern('[0-9+-/]*')],
-      orderMark: [this.orderToEdit?.orderMark || '', [Validators.required]],
+      orderMark: [this.orderToEdit?.orderMark || ''],
       deliveryAddressSelect: [this.orderToEdit?.deliveryAddressId || '', []],
       company: [this.orderToEdit?.company || '', [Validators.required]],
       building: [this.orderToEdit?.building || ''],
@@ -67,9 +67,8 @@ export class OrderFormComponent implements OnInit, OnDestroy {
     const id = event.value;
     this.addresses$.subscribe(addresses => {
       const address = addresses.filter(element => element.id === id)[0];
-
       this.addressForm?.patchValue({
-        company: address.companyName1,
+        company: address.addressName,
         address: address.addressLine1,
         building: address.addressLine2,
         zipCode: address.postalCode,
