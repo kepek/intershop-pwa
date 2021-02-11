@@ -65,7 +65,7 @@
           </div>
           <div *ngIf="width && depth && height">
             {{ 'camfil.product.quickView.dimensions.label' | translate }}
-            <strong> {{ width }}x{{ depth }}x{{ height }}</strong>
+            <strong> {{ product | camfilDimension }}</strong>
           </div>
           <div>
             {{ 'camfil.product.quickView.sku.label' | translate }} <strong>{{ product.sku }}</strong>

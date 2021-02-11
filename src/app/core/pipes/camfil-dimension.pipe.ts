@@ -11,21 +11,33 @@ export class CamfilDimensionPipe implements PipeTransform {
   constructor(private translateService: TranslateService) {}
 
   transform(product: Product, valuesSeparator: string = 'x'): string {
-    // w-d-h
+    // w-h-d
 
     const attributes =
       ProductHelper.getAttributesOfGroup(product, AttributeGroupTypes.ProductsListLabelAttributes) ||
       product.attributes;
 
-    const names = ['width', 'depth', 'height'];
-    const dimensions = attributes
+    const names = ['width', 'height', 'depth'];
+    return attributes
       .filter(attribute => names.indexOf(attribute?.name?.toLowerCase()) !== -1)
       .map(attribute => {
         const data = attribute as Attribute<{ value: unknown }>;
         const val = (data.value?.value || data.value) as number;
-        return formatNumber(val, this.translateService.currentLang);
-      });
-
-    return (dimensions.length === 3 ? dimensions : []).join(valuesSeparator);
+        return {
+          index: names.indexOf(attribute?.name?.toLowerCase()),
+          value: formatNumber(val, this.translateService.currentLang),
+        };
+      })
+      .sort((a, b) => {
+        if (a.index > b.index) {
+          return 1;
+        }
+        if (a.index < b.index) {
+          return -1;
+        }
+        return 0;
+      })
+      .map(elem => elem.value)
+      .join(valuesSeparator);
   }
 }
