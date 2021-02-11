@@ -12,6 +12,7 @@ import { LineItem } from 'ish-core/models/line-item/line-item.model';
 import { Product } from 'ish-core/models/product/product.model';
 import { BasketService } from 'ish-core/services/basket/basket.service';
 import { CoreStoreModule } from 'ish-core/store/core/core-store.module';
+import { displaySuccessMessage } from 'ish-core/store/core/messages';
 import { CustomerStoreModule } from 'ish-core/store/customer/customer-store.module';
 import { loadProduct, loadProductSuccess } from 'ish-core/store/shopping/products';
 import { ShoppingStoreModule } from 'ish-core/store/shopping/shopping-store.module';
@@ -82,7 +83,7 @@ describe('Basket Items Effects', () => {
 
   describe('addItemsToBasket$', () => {
     beforeEach(() => {
-      when(basketServiceMock.addItemsToBasket(anything())).thenReturn(of(undefined));
+      when(basketServiceMock.addItemsToBasket(anything())).thenReturn(of([]));
     });
 
     it('should call the basketService for addItemsToBasket', done => {
@@ -129,11 +130,13 @@ describe('Basket Items Effects', () => {
         })
       );
 
-      const items = [{ sku: 'SKU', quantity: 1, unit: 'pcs.' }];
+      const items = [{ sku: 'SKU', quantity: 1, unit: 'pcs.', basketExtension: { name: 'lorem' } }];
       const action = addItemsToBasket({ items });
-      const completion = addItemsToBasketSuccess({ info: undefined });
-      actions$ = hot('-a-a-a', { a: action });
-      const expected$ = cold('-c-c-c', { c: completion });
+      const completion = addItemsToBasketSuccess({ info: [] });
+      const completion2 = displaySuccessMessage({ message: 'camfil.add_items_to_basket.camfil.message.success' });
+
+      actions$ = hot('-a----a----a----|', { a: action });
+      const expected$ = cold('-(cd)-(cd)-(cd)-|', { c: completion, d: completion2 });
 
       expect(effects.addItemsToBasket$).toBeObservable(expected$);
     });
