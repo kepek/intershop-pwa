@@ -28,6 +28,7 @@ export class AddToCartModalComponent implements OnInit, OnDestroy {
   @ViewChild('modal', { static: false }) modalTemplate: TemplateRef<unknown>;
   @Input() quantity: number;
   @Input() product: Product;
+  @Input() boxLabel: string;
   quantityForm: FormGroup;
 
   selectedOrderId: string;
@@ -50,8 +51,8 @@ export class AddToCartModalComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.initBasket();
     this.quantityForm = new FormGroup({
-      quantity: new FormControl(this.product.minOrderQuantity),
-      boxLabel: new FormControl('', Validators.maxLength(60)),
+      quantity: new FormControl(this.quantity || this.product.minOrderQuantity),
+      boxLabel: new FormControl(this.boxLabel || '', Validators.maxLength(60)),
     });
 
     this.shoppingFacade.productUpdated$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(() => {

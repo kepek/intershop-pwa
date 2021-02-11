@@ -18,6 +18,7 @@ import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { AddressHelper } from 'ish-core/models/address/address.helper';
 import { Address } from 'ish-core/models/address/address.model';
+import { Attribute } from 'ish-core/models/attribute/attribute.model';
 import { BasketExtensions } from 'ish-core/models/basket/basket.interface';
 import { BasketView } from 'ish-core/models/basket/basket.model';
 import { Bucket } from 'ish-core/models/basket/bucket.model';
@@ -52,7 +53,7 @@ export class CreateOrderModalComponent implements OnInit, OnDestroy {
   }
 
   @Input() product?: Product;
-
+  @Input() parentForm: FormGroup;
   @Output() createEmitter = new EventEmitter<Bucket>();
 
   modal: NgbModalRef;
@@ -85,10 +86,12 @@ export class CreateOrderModalComponent implements OnInit, OnDestroy {
 
   initForms() {
     this.orderForm = this.fb.group({});
-    this.quantityForm = new FormGroup({
-      quantity: new FormControl(this.product?.minOrderQuantity),
-      boxLabel: new FormControl('', Validators.maxLength(60)),
-    });
+    this.quantityForm = this.parentForm
+      ? this.parentForm
+      : new FormGroup({
+          quantity: new FormControl(this.product?.minOrderQuantity),
+          boxLabel: new FormControl('', Validators.maxLength(60)),
+        });
   }
 
   initBasket() {
@@ -130,6 +133,9 @@ export class CreateOrderModalComponent implements OnInit, OnDestroy {
   addProductToBucket() {
     const address = this.getAddress();
     const quantity = this.quantityForm.get('quantity').value;
+    const lineItemAttribute: Attribute = this.getBasketExtension().boxLabel
+      ? { name: 'boxLabel', type: 'String', value: this.getBasketExtension().boxLabel }
+      : undefined;
 
     if (this.isNewAddress()) {
       this.shoppingFacade.addProductToBucket(
@@ -138,7 +144,8 @@ export class CreateOrderModalComponent implements OnInit, OnDestroy {
         this.product.sku,
         quantity,
         this.basketId,
-        this.getBasketExtension()
+        this.getBasketExtension(),
+        lineItemAttribute
       );
     } else {
       this.shoppingFacade.addProductToBucketWithUrn(
@@ -148,7 +155,8 @@ export class CreateOrderModalComponent implements OnInit, OnDestroy {
         this.product.sku,
         quantity,
         this.basketId,
-        this.getBasketExtension()
+        this.getBasketExtension(),
+        lineItemAttribute
       );
     }
   }

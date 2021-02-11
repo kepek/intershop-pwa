@@ -32,6 +32,7 @@ import { CREATE_CAMCARD_VALIDATORS } from './validators';
 export class CreateCamCardModalComponent implements OnInit, AfterViewInit {
   @Input() product: Product;
   @Input() rootCamCardAddress: CamCardAddress;
+  @Input() parentForm: FormGroup;
 
   modal: NgbModalRef;
 
@@ -89,10 +90,12 @@ export class CreateCamCardModalComponent implements OnInit, AfterViewInit {
       newCamCard: ['', [Validators.maxLength(10)]],
     });
 
-    this.quantityForm = new FormGroup({
-      quantity: new FormControl(0),
-      boxLabel: new FormControl('', Validators.maxLength(60)),
-    });
+    this.quantityForm = this.parentForm
+      ? this.parentForm
+      : new FormGroup({
+          quantity: new FormControl(0),
+          boxLabel: new FormControl('', Validators.maxLength(60)),
+        });
   }
 
   ngAfterViewInit() {
