@@ -1,9 +1,10 @@
-import { DOCUMENT } from '@angular/common';
-import { Inject, Injectable, Renderer2, RendererFactory2 } from '@angular/core';
+import { DOCUMENT, isPlatformBrowser } from '@angular/common';
+import { Inject, Injectable, PLATFORM_ID, Renderer2, RendererFactory2 } from '@angular/core';
 import { TransferState } from '@angular/platform-browser';
 import { Store, select } from '@ngrx/store';
 
 import { NGRX_STATE_SK } from 'ish-core/configurations/ngrx-state-transfer';
+import { DISPLAY_VERSION } from 'ish-core/configurations/state-keys';
 import { getTheme } from 'ish-core/store/core/configuration';
 import { whenTruthy } from 'ish-core/utils/operators';
 
@@ -24,7 +25,8 @@ export class ThemeService {
     private rendererFactory: RendererFactory2,
     @Inject(DOCUMENT) private document: Document,
     private store: Store,
-    private transferState: TransferState
+    private transferState: TransferState,
+    @Inject(PLATFORM_ID) private platformId: string
   ) {
     this.head = this.document.head;
     this.renderer = this.rendererFactory.createRenderer(undefined, undefined);
@@ -67,6 +69,14 @@ export class ThemeService {
           `assets/themes/${themeName}/img/logo_apple_180x180.png`
         );
         this.trySetAttribute('meta[name="theme-color"]', 'content', `#${themeColor}`);
+
+        if (isPlatformBrowser(this.platformId)) {
+          this.trySetAttribute(
+            'meta[name="camfil-pwa-version"]',
+            'content',
+            `${this.transferState.get(DISPLAY_VERSION, '')}`
+          );
+        }
 
         await this.loadCss(`${themeName}.css`);
       });
