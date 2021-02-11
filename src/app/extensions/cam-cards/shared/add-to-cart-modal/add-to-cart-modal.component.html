@@ -16,7 +16,7 @@
   </ng-container>
 </ng-template>
 
-<camfil-create-order-modal [product]="product" #createModal></camfil-create-order-modal>
+<camfil-create-order-modal [product]="product" #createModal [parentForm]="quantityForm"></camfil-create-order-modal>
 
 <ng-template #detailsTemplate>
   <camfil-article-details [product]="product" [quantityForm]="quantityForm"></camfil-article-details>
