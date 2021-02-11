@@ -113,11 +113,13 @@ export class CreateOrderModalComponent implements OnInit, OnDestroy {
 
   submitForm() {
     const addressForm = this.orderFormCmp.addressForm;
-
+    console.log('submitForm', addressForm);
     if (addressForm.invalid || this.quantityForm.invalid) {
+      console.log('invalid');
       markAsDirtyRecursive(addressForm);
       markAsDirtyRecursive(this.quantityForm);
     } else {
+      console.log('valid');
       this.loading = true;
 
       const bucket: Bucket = {

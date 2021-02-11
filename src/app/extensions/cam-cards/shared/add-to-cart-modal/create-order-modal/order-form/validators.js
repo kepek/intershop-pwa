@@ -17,17 +17,8 @@ export const ADDRESS_VALIDATORS = {
       message: 'camfil.modal.createOrder.order-form.input.phone_number.error.pattern',
     },
   ],
-  orderMark: [
-    {
-      error: 'required',
-      message: 'camfil.modal.createOrder.order-form.input.order_mark.error.required',
-    },
-  ],
+  orderMark: [],
   invoiceLabel: [
-    {
-      error: 'required',
-      message: 'camfil.modal.createOrder.order-form.input.invoice_mark.error.required',
-    },
     {
       error: 'maxlength',
       message: 'camfil.modal.createOrder.order-form.input.invoice_mark.error.maxLength',
