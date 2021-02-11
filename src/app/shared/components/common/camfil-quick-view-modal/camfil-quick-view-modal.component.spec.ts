@@ -5,6 +5,7 @@ import { MockComponent, MockPipe } from 'ng-mocks';
 import { LazyProductAddToCamCardComponent } from 'src/app/extensions/cam-cards/exports/lazy-product-add-to-cam-card/lazy-product-add-to-cam-card.component';
 
 import { PricePipe } from 'ish-core/models/price/price.pipe';
+import { CamfilDimensionPipe } from 'ish-core/pipes/camfil-dimension.pipe';
 import { ContentIncludeComponent } from 'ish-shared/cms/components/content-include/content-include.component';
 import { ContentViewcontextComponent } from 'ish-shared/cms/components/content-viewcontext/content-viewcontext.component';
 import { CamfilProductTechnicalDocumentsComponent } from 'ish-shared/components/common/camfil-product-technical-documents/camfil-product-technical-documents.component';
@@ -39,6 +40,7 @@ describe('Camfil Quick View Modal Component', () => {
         MockComponent(ContentViewcontextComponent),
         MockComponent(LazyProductAddToCamCardComponent),
         MockComponent(LoadingComponent),
+        MockPipe(CamfilDimensionPipe),
         MockPipe(PricePipe),
       ],
       providers: [{ provide: MAT_DIALOG_DATA, useValue: { sku: 'sku' } }, provideMockStore()],
