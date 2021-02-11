@@ -26,7 +26,7 @@ import {
   LineItemUpdateHelperItem,
 } from 'ish-core/models/line-item-update/line-item-update.helper';
 import { BasketService } from 'ish-core/services/basket/basket.service';
-import { displayErrorMessage } from 'ish-core/store/core/messages';
+import { displayErrorMessage, displaySuccessMessage } from 'ish-core/store/core/messages';
 import { getProductEntities, loadProduct } from 'ish-core/store/shopping/products';
 import { mapErrorToAction, mapToPayload, mapToPayloadProperty } from 'ish-core/utils/operators';
 
@@ -236,29 +236,27 @@ export class BasketItemsEffects {
               lineItemAttribute: lineItemAttributes,
             })
           );
+          const send = [
+            addItemsToBasketSuccess({ info }),
+            updateBucket({
+              basketId: bktId,
+              addressId,
+              basketExtension,
+            }),
+            ...attributeActions,
+            displaySuccessMessage({
+              message: 'camfil.add_items_to_basket.camfil.message.success',
+            }),
+          ];
 
-          return basketExtension && lineItemAttributes?.hasOwnProperty('name')
-            ? [
-                addItemsToBasketSuccess({ info }),
-                updateBucket({
-                  basketId: bktId,
-                  addressId,
-                  basketExtension,
-                }),
-                ...attributeActions,
-              ]
-            : basketExtension
-            ? [
-                addItemsToBasketSuccess({ info }),
-                updateBucket({
-                  basketId: bktId,
-                  addressId,
-                  basketExtension,
-                }),
-              ]
-            : lineItemAttributes?.hasOwnProperty('name')
-            ? [addItemsToBasketSuccess({ info }), ...attributeActions]
-            : [addItemsToBasketSuccess({ info })];
+          if (!basketExtension) {
+            send.splice(1, 1);
+          }
+          if (!lineItemAttributes?.hasOwnProperty('name')) {
+            send.splice(-2, 1);
+          }
+
+          return send;
         };
 
         if (basketId) {

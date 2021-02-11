@@ -722,6 +722,7 @@
   "camfil.account.update_username.button.aria": "Skicka",
   "camfil.account.useredit.contact.form.error.text": "Varje vald kund måste ha en kontaktperson",
   "camfil.account.useredit.personal.form.phone.error.text": "Fel telefonnummer",
+  "camfil.add_items_to_basket.camfil.message.success": "sv_Product/s was/were added to basket",
   "camfil.ahu.detail.add.to.list": "Lägg till i listan",
   "camfil.ahu.detail.broschure": "Broschyr",
   "camfil.ahu.detail.filter-slots": "Placering:",
