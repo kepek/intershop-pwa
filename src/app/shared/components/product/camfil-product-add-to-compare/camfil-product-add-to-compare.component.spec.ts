@@ -50,12 +50,6 @@ describe('Camfil Product Add To Compare Component', () => {
     expect(element.querySelector('fa-icon')).toBeFalsy();
   });
 
-  it('should show icon button when display type is icon ', () => {
-    component.displayType = 'icon';
-    fixture.detectChanges();
-    expect(element.querySelector('fa-icon')).toBeTruthy();
-  });
-
   it('should detect errors on emitter using spy', () => {
     const emitter = spy(component.compareToggle);
     component.toggleCompare();

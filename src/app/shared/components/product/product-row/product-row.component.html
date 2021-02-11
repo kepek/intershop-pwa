@@ -46,9 +46,9 @@
             <camfil-product-add-to-compare
               *ngIf="configuration.displayAddToCompare"
               [isInCompareList]="isInCompareList"
+              (compareToggle)="toggleCompare()"
               displayType="icon"
               class="btn-link"
-              (compareToggle)="toggleCompare()"
             ></camfil-product-add-to-compare>
             <ish-lazy-product-add-to-wishlist
               *ngIf="configuration.displayAddToWishlist"

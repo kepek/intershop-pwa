@@ -89,14 +89,14 @@
         <div class="col-12 d-flex align-items-center">
           <camfil-product-add-to-compare
             [isInCompareList]="isInCompareList"
-            class="btn-link"
             (compareToggle)="toggleCompare()"
+            class="btn-link"
           ></camfil-product-add-to-compare>
           <camfil-product-inventory
             *ngIf="!isRetailSet(product) && !isMasterProduct(product)"
             [product]="product"
+            [showText]="true"
           ></camfil-product-inventory>
-          <p class="qd-text">Quick delivery</p>
         </div>
       </div>
       <!-- <camfil-product-shipment
