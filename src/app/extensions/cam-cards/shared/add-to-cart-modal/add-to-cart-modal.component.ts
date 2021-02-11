@@ -28,7 +28,7 @@ export class AddToCartModalComponent implements OnInit, OnDestroy {
   @ViewChild('modal', { static: false }) modalTemplate: TemplateRef<unknown>;
   @Input() quantity: number;
   @Input() product: Product;
-  @Input() boxLabel: String;
+  @Input() boxLabel: string;
   quantityForm: FormGroup;
 
   selectedOrderId: string;
