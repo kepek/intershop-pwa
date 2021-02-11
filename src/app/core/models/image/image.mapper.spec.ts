@@ -46,7 +46,9 @@ describe('Image Mapper', () => {
       expect(images[0].effectiveUrl).toBe(
         'http://example.org/INTERSHOP/static/WFS/inSPIRED-inTRONICS-Site/-/inSPIRED/en_US/S/S_201807171_front.jpg'
       );
-      expect(images[1].effectiveUrl).toBe('http://10.0.27.51:2000/images/S/S_201807171_front.jpg?height=auto&width=400&bgcolor=transparent');
+      expect(images[1].effectiveUrl).toBe(
+        'http://10.0.27.51:2000/images/S/S_201807171_front.jpg?height=auto&width=400&bgcolor=transparent'
+      );
     });
   });
 });
