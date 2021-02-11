@@ -17,6 +17,8 @@ export const getCamCardCustomers = createSelector(getCamCardState, state => stat
 
 export const getCamCardContacts = createSelector(getCamCardState, state => state.contacts);
 
+export const getUserContact = createSelector(getCamCardState, state => state.userContact);
+
 export const getCustomerAddresses = createSelector(getCamCardState, state => state.addresses);
 
 export const getCamCardError = createSelector(getCamCardState, state => state.error);
@@ -37,6 +39,11 @@ export const getCamCardDetails = createSelector(
 export const getContactsbyCustomerId = createSelector(
   getCamCardContacts,
   (contacts, props: { id: string }): CamCardContact[] => props.id && contacts[props.id]
+);
+
+export const getUserContactForCustomer = createSelector(
+  getUserContact,
+  (userContact, props: { customerId: string }): CamCardContact => props.customerId && userContact[props.customerId]
 );
 
 export const isStickyCamCardToolbar = createSelector(getCamCardState, state => state.stickyToolbar);

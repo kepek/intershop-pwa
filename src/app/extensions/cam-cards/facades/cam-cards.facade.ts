@@ -36,6 +36,7 @@ import {
   getContactsbyCustomerId,
   getCustomerAddresses,
   getSelectedCamCardDetails,
+  getUserContactForCustomer,
   getVirtualCamCard,
   isStickyCamCardToolbar,
   loadCamCards,
@@ -72,6 +73,10 @@ export class CamCardsFacade {
 
   loadContactsByCustomer(customerId: string): void | HttpError {
     this.store.dispatch(loadContactsByCustomer({ customerId }));
+  }
+
+  getUserContactForCustomer$(customerId: string): Observable<CamCardContact> {
+    return this.store.pipe(select(getUserContactForCustomer, { customerId }));
   }
 
   loadCamCards() {

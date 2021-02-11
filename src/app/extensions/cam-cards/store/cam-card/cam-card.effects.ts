@@ -78,6 +78,10 @@ import {
   loadDeliveryAddresses,
   loadDeliveryAddressesFail,
   loadDeliveryAddressesSuccess,
+  loadUserContactForCustomer,
+  loadUserContactForCustomerFail,
+  loadUserContactForCustomerSuccess,
+  loadUserContactForCustomers,
   moveCamCard,
   moveCamCardFail,
   moveCamCardItem,
@@ -246,7 +250,7 @@ export class CamCardEffects {
       filter(([, authorized]) => authorized),
       switchMap(() =>
         this.camCardService.getCustomers().pipe(
-          map(customers => loadCustomersSuccess({ customers })),
+          mergeMap(customers => [loadCustomersSuccess({ customers }), loadUserContactForCustomers({ customers })]),
           mapErrorToAction(loadCustomersdFail)
         )
       )
@@ -602,6 +606,27 @@ export class CamCardEffects {
         this.camCardService.getContactsByCustomerId(customerId).pipe(
           map(contacts => loadContactsByCustomerSuccess({ customerId, contacts })),
           mapErrorToAction(loadContactsByCustomerFail)
+        )
+      )
+    )
+  );
+
+  loadUserContactForCustomers$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loadUserContactForCustomers),
+      mapToPayload(),
+      mergeMap(({ customers }) => customers.map(customer => loadUserContactForCustomer({ customerId: customer.id })))
+    )
+  );
+
+  loadUserContactForCustomer$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loadUserContactForCustomer),
+      mapToPayload(),
+      mergeMap(({ customerId, userKey }) =>
+        this.camCardService.getUserContactForCustomer(customerId, userKey).pipe(
+          map(contact => loadUserContactForCustomerSuccess({ customerId, contact })),
+          mapErrorToAction(loadUserContactForCustomerFail)
         )
       )
     )

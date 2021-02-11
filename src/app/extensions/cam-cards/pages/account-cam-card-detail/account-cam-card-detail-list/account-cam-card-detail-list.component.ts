@@ -187,6 +187,7 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges, OnD
         val,
         [this.camCard],
         this.buckets,
+        this.camCardsFacade,
         this.shoppingFacade,
         this.commonShippingMethodId,
         this.basketId,

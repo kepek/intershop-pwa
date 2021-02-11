@@ -238,6 +238,21 @@ export class CamCardService {
   }
 
   /**
+   * Get customer contacts.
+   * @param customerId   The customer ID.
+   * @param userKey      The userKey ID.
+   * @returns            The all customer contacts.
+   */
+  getUserContactForCustomer(customerId: string, userKey: string = '-'): Observable<CamCardContact> {
+    if (!customerId) {
+      return throwError('getUserContactForCustomer() called without customerId');
+    }
+    return this.apiService
+      .get(`privatecamfilcustomers/${customerId}/users/${userKey}/contact`)
+      .pipe(map(ContactMapper.handleFullName));
+  }
+
+  /**
    * Get customers available for current user.
    * @param customerId   The customer ID.
    * @returns            The created cam_cards.
