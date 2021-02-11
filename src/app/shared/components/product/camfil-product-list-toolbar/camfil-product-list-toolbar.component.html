@@ -1,5 +1,5 @@
-<div class="filters-row row align-items-center">
-  <div class="col-md-5 col-sm-8">
+<div class="filters-row row">
+  <div class="col-md-4 col-sm-8">
     <ng-container *ngIf="categoryName">
       {{ 'camfil.product.items.showing.text' | translate }}
       <strong class="filters-row__showing">{{ categoryName }}</strong>
@@ -14,7 +14,7 @@
     <!--
     [ngClass]="{ 'col-md-5': sortOptions.length, 'col-md-5': !sortOptions.length }"
   > -->
-    <div class="sort-by align-items-center justify-content-end">
+    <div class="views justify-content-end">
       <mat-radio-group aria-label="Select an option">
         <mat-radio-button
           value="simple"
@@ -26,8 +26,9 @@
           [queryParams]="{ view: 'simple' }"
           replaceUrl
           [fragment]="fragmentOnRouting"
+          [matTooltip]="'camfil.product.list.toolbar.simpleView.text' | translate"
         >
-          <b>{{ 'camfil.product.list.toolbar.simpleView.text' | translate }}</b>
+          <strong>{{ 'camfil.product.list.toolbar.simpleView.text' | translate }}</strong>
         </mat-radio-button>
         <mat-radio-button
           value="detailed"
@@ -39,8 +40,9 @@
           [queryParams]="{ view: 'detailed' }"
           replaceUrl
           [fragment]="fragmentOnRouting"
+          [matTooltip]="'camfil.product.list.toolbar.detailedView.text' | translate"
         >
-          <b>{{ 'camfil.product.list.toolbar.detailedView.text' | translate }}</b>
+          <strong>{{ 'camfil.product.list.toolbar.detailedView.text' | translate }}</strong>
         </mat-radio-button>
       </mat-radio-group>
       <span class="text-nowrap">
@@ -49,7 +51,7 @@
       </span>
     </div>
   </div>
-  <div *ngIf="sortOptions.length" class="col-8 col-xs-9 col-sm-12 col-md-2 pull-right sort-by">
+  <div *ngIf="sortOptions.length" class="col-8 col-xs-9 col-sm-12 col-md-3 pull-right sort-by">
     <div class="row no-gutters">
       <div class="col-6">
         <label>{{ 'camfil.product.list.sorting.label' | translate }}:</label>

@@ -4,14 +4,8 @@
   [ngClass]="class"
   [class.is-selected]="isInCompareList"
   title="{{ 'product.compare.link' | translate }}"
-  (click)="toggleCompare()"
 >
-  <ng-container *ngIf="displayType === 'icon'; else defaultButton">
-    <fa-icon [icon]="['fas', 'columns']"></fa-icon>
-  </ng-container>
-
-  <ng-template #defaultButton>
-    <mat-checkbox [checked]="isInCompareList"></mat-checkbox>
+  <mat-checkbox [(ngModel)]="isInCompareList" (change)="toggleCompare()">
     {{ 'camfil.product.add_to_compare.label' | translate }}
-  </ng-template>
+  </mat-checkbox>
 </button>

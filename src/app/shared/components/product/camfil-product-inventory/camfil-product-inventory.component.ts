@@ -16,7 +16,7 @@ export class CamfilProductInventoryComponent implements OnInit, OnDestroy {
 
   private static REQUIRED_COMPLETENESS_LEVEL = ProductCompletenessLevel.List;
   @Input() product: Product | Pick<Product, 'sku'>;
-  @Input() showText?: Product;
+  @Input() showText?: boolean;
   showAvailabilityDot = ProductHelper.showAvailabilityDot;
   isAvailabilityDotVisible: boolean;
 

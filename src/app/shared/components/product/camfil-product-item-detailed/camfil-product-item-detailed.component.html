@@ -28,8 +28,8 @@
         <camfil-product-add-to-compare
           *ngIf="configuration.displayAddToCompare"
           [isInCompareList]="isInCompareList"
-          class="btn-link"
           (compareToggle)="toggleCompare()"
+          class="btn-link"
         ></camfil-product-add-to-compare>
         <camfil-product-quickview [product]="product"></camfil-product-quickview>
       </div>

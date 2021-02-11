@@ -3,7 +3,9 @@
     <span class="product-in-stock" [matTooltip]="'camfil.product.instock.text' | translate">
       <link itemprop="availability" href="http://schema.org/InStock" />
     </span>
-    <span class="pl-2" *ngIf="showText">{{ 'camfil.product.instock.text' | translate }}</span>
+    <span class="pl-2" *ngIf="showText">
+      {{ 'camfil.product.instock.text' | translate }}
+    </span>
   </ng-container>
   <!-- because of FRS005
     <ng-template #outOfStock>

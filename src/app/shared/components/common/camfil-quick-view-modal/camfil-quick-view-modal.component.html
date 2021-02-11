@@ -38,9 +38,9 @@
         [showText]="true"
       ></camfil-product-inventory>
       <camfil-product-add-to-compare
-        class="btn-link py-0 px-0"
         [isInCompareList]="isInCompareList"
         (compareToggle)="toggleCompare(product.sku)"
+        class="btn-link py-0 px-0"
       ></camfil-product-add-to-compare>
       <p class="border-bottom pb-3 mb-3" [innerHTML]="product.longDescription"></p>
 

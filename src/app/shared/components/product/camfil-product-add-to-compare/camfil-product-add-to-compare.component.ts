@@ -5,10 +5,9 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from 
  *
  * @example
  * <camfil-product-add-to-compare
- *               [isInCompareList]="isInCompareList"
- *               displayType="icon"
- *               class="btn-link"
- *               (compareToggle)="toggleCompare()"
+ *   [isInCompareList]="isInCompareList"
+ *   (compareToggle)="toggleCompare()"
+ *   class="btn-link"
  * ></camfil-product-add-to-compare>
  */
 @Component({
