@@ -781,6 +781,7 @@
   "camfil.checkout.place_your_orders": "Place your orders",
   "camfil.checkout.saved_amout.text": "Saved amount",
   "camfil.checkout.single_total_price_after": "Order price after volume discount (excl. VAT)",
+  "camfil.checkout.single_total_price_after_gross": "Order price after volume discount",
   "camfil.checkout.tax.text": "Tax amount",
   "camfil.checkout.tax_amount": "Tax amount",
   "camfil.checkout.total_order_summary": "Total order summary",

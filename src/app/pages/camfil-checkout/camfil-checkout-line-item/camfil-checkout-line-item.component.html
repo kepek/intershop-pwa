@@ -17,6 +17,17 @@
             <mat-icon svgIcon="search" class="size-15"></mat-icon>
           </button>
           <camfil-product-inventory class="px-2" [product]="productData"></camfil-product-inventory>
+          <div class="attributes">
+            <camfil-product-attribute
+              [name]="'camfil.cam_card.product.id.label' | translate"
+              [value]="productData.sku"
+            ></camfil-product-attribute>
+            <camfil-product-attribute
+              *ngIf="isConfirmed"
+              [name]="'camfil.cam_card.product.comment.label' | translate"
+              [value]="getItemBoxLabel()"
+            ></camfil-product-attribute>
+          </div>
         </div>
       </div>
     </div>

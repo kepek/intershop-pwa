@@ -47,6 +47,12 @@
           <dd class="col-6 p-0" data-testing-id="order-delivery_address">
             <ish-address [address]="order.shipToAddressFull"></ish-address>
           </dd>
+          <dt class="col-6 p-0">{{ 'camfil.account.orderdetails.goods_mark.label' | translate }}</dt>
+          <dd class="col-6 p-0" data-testing-id="order-customer_id">{{ order?.orderMark || '-' }}</dd>
+          <dt class="col-6 p-0">{{ 'camfil.checkout.form.invoice_mark' | translate }}</dt>
+          <dd class="col-6 p-0" data-testing-id="order-customer_id">{{ order?.invoiceLabel || '-' }}</dd>
+          <dt class="col-6 p-0">{{ 'camfil.checkout.phone' | translate }}</dt>
+          <dd class="col-6 p-0" data-testing-id="order-customer_id">{{ order?.phoneNumber || '-' }}</dd>
         </dl>
       </div>
       <div
@@ -208,12 +214,12 @@
         <dl class="row dl-horizontal dl-separator mb-0">
           <dt class="col-6">{{ 'camfil.checkout.volume_discount' | translate }}</dt>
           <dd class="col-6">{{ discount() | ishPrice }}</dd>
-          <dt class="col-6">{{ 'camfil.checkout.saved_amout.text' | translate }}</dt>
-          <dd class="col-6">{{ savedAmount() | ishPrice }}</dd>
           <dt class="col-6">{{ 'camfil.checkout.single_total_price_after' | translate }}</dt>
           <dd class="col-6">{{ totalPrice() | ishPrice }}</dd>
           <dt class="col-6">{{ 'camfil.checkout.tax_amount' | translate }}</dt>
           <dd class="col-6">{{ totalTax() | ishPrice }}</dd>
+          <dt class="col-6">{{ 'camfil.checkout.single_total_price_after' | translate }}</dt>
+          <dd class="col-6">{{ totalPrice('gross') | ishPrice }}</dd>
         </dl>
         <camfil-basket-cost-summary [totals]="order.totals"></camfil-basket-cost-summary>
       </div>

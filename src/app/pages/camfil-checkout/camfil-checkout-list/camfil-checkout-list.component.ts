@@ -119,9 +119,9 @@ export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
     this.isOrderOpen = !this.isOrderOpen;
   }
 
-  totalPrice(): Price {
+  totalPrice(type = 'net'): Price {
     const getCurrency = element => element.price.currency;
-    const getValue = element => element.totals?.total.gross;
+    const getValue = element => element.totals?.total[type];
 
     return this.getPrice(getCurrency, getValue);
   }
