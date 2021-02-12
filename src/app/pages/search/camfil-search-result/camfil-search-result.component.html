@@ -18,7 +18,8 @@
         <h1>
           {{
             'camfil.search.title.text'
-              | translate: { '1': orginalSearchTerm, '2': totalItems | i18nPlural: ('search.title.items.text' | translate) }
+              | translate
+                : { '1': orginalSearchTerm, '2': totalItems | i18nPlural: ('search.title.items.text' | translate) }
           }}
         </h1>
       </div>
