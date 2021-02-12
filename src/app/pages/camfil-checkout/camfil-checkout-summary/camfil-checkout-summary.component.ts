@@ -60,6 +60,6 @@ export class CamfilCheckoutSummaryComponent implements OnInit {
   }
 
   continueShopping() {
-    this.router.navigate(['/']);
+    this.router.navigate(['/account/camcards']);
   }
 }

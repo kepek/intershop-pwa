@@ -71,7 +71,7 @@
     }
     .camfil-product-title {
       display: block;
-      width: 170px;
+      width: 120px;
       max-width: 170px;
     }
     .product-image {
@@ -124,5 +124,18 @@
   }
   .quantity-confirmed {
     padding: 0 ($space-box * 4);
+  }
+
+  .attributes {
+    width: 150px;
+    margin-left: $space-box;
+  }
+
+  .box-label__form {
+    margin-right: $space-box;
+
+    &--field {
+      width: 100px;
+    }
   }
 }

@@ -791,6 +791,7 @@
   "camfil.checkout.saved_amout.text": "Sparat belopp",
   "camfil.checkout.shipping_method": "Leveransmetod",
   "camfil.checkout.single_total_price_after": "Order pris efter rabatt (exkl. moms)",
+  "camfil.checkout.single_total_price_after_gross": "Order pris efter rabatt",
   "camfil.checkout.standard_shipping": "Standardleverans",
   "camfil.checkout.tax.text": "Momsbelopp",
   "camfil.checkout.tax_amount": "Momsbelopp",
