@@ -553,6 +553,7 @@
   "camfil.account.cam_card.delete.product.do_you_really.text": "Är du säker på att du radera artikeln?",
   "camfil.account.cam_card.delete.sub_cam_card.do_you_really.text": "Är du säker på att du vill ta bort den här sektionen?",
   "camfil.account.cam_card.delete_cam_card.confirmation": "CamCard {{0}} har raderats",
+  "camfil.account.cam_card.details.no_items_in_section": "sv_No products in this section.",
   "camfil.account.cam_card.details.total.text": "Totalt (inkl. moms)",
   "camfil.account.cam_card.edit.button.back.label": "Tillbaka till CamCards",
   "camfil.account.cam_card.edit.confirmation": "{{0}} har nu uppdaterats",

@@ -204,18 +204,25 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
         relativeTo: this.activatedRoute,
         fragment: camCard.id,
       });
-      camCard.subCamCards.forEach(sub => {
-        if (!this.isSubOpen.includes(sub.id)) {
-          this.isSubOpen.push(sub.id);
-        }
-      });
+      this.openSubLevels(camCard);
     } else {
       this.location.replaceState(this.location.path(false));
     }
   }
 
+  openSubLevels(camCard: CamCard) {
+    camCard.subCamCards.forEach(sub => {
+      if (!this.isSubOpen.includes(sub.id)) {
+        this.isSubOpen.push(sub.id);
+      }
+    });
+  }
+
   expandCamCardByFragment() {
     this.expandedCamCard = this.camCards.find((camCard: CamCard) => camCard.id === this.fragment) || undefined;
+    if (this.expandedCamCard) {
+      this.openSubLevels(this.expandedCamCard);
+    }
   }
 
   goToExpandedCamCard() {
