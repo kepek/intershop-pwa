@@ -122,6 +122,26 @@ export const loadContactsByCustomerSuccess = createAction(
 
 export const loadContactsByCustomerFail = createAction('[Cam Cards API] load Contacts by customer Fail', httpError());
 
+export const loadUserContactForCustomers = createAction(
+  '[Cam Cards] load User Contact for all User customers',
+  payload<{ customers: CamCardCustomer[] }>()
+);
+
+export const loadUserContactForCustomer = createAction(
+  '[Cam Cards] load User Contact for customer',
+  payload<{ customerId: string; userKey?: string }>()
+);
+
+export const loadUserContactForCustomerSuccess = createAction(
+  '[Cam Cards API] load User Contact for customer Success',
+  payload<{ customerId: string; contact: CamCardContact }>()
+);
+
+export const loadUserContactForCustomerFail = createAction(
+  '[Cam Cards API] load User Contact for customer Fail',
+  httpError()
+);
+
 export const loadDeliveryAddresses = createAction('[Cam Cards] load available addresses', payload<{ id: string }>());
 
 export const loadDeliveryAddressesSuccess = createAction(

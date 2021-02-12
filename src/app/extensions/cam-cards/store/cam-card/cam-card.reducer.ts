@@ -43,6 +43,9 @@ import {
   loadDeliveryAddresses,
   loadDeliveryAddressesFail,
   loadDeliveryAddressesSuccess,
+  loadUserContactForCustomer,
+  loadUserContactForCustomerFail,
+  loadUserContactForCustomerSuccess,
   moveCamCardItem,
   moveCamCardItemSuccess,
   moveCamCardSuccess,
@@ -72,6 +75,9 @@ export interface CamCardState extends EntityState<CamCard> {
   contacts: {
     [key: string]: CamCardContact[];
   };
+  userContact: {
+    [key: string]: CamCardContact[];
+  };
   addresses?: CamCardAddress[];
   virtualCamCard: CamCard;
 }
@@ -87,6 +93,7 @@ export const initialState: CamCardState = camCardAdapter.getInitialState({
   customers: [],
   addProductSuccess: false,
   contacts: {},
+  userContact: {},
   addresses: [],
   stickyToolbar: false,
   virtualCamCard: undefined,
@@ -129,6 +136,7 @@ export const camCardReducer = createReducer(
     updateCamCard,
     loadCustomers,
     loadContactsByCustomer,
+    loadUserContactForCustomer,
     loadDeliveryAddresses,
     updateSubCamCard,
     moveItemToCamCard,
@@ -144,6 +152,7 @@ export const camCardReducer = createReducer(
     updateCamCardFail,
     loadCustomersdFail,
     loadContactsByCustomerFail,
+    loadUserContactForCustomerFail,
     loadDeliveryAddressesFail,
     updateSubCamCardFail,
 
@@ -177,6 +186,13 @@ export const camCardReducer = createReducer(
     return {
       ...state,
       contacts: { ...state.contacts, [customerId]: contacts },
+    };
+  }),
+  on(loadUserContactForCustomerSuccess, (state: CamCardState, action) => {
+    const { customerId, contact } = action.payload;
+    return {
+      ...state,
+      userContact: { ...state.userContact, [customerId]: contact },
     };
   }),
   on(loadDeliveryAddressesSuccess, (state: CamCardState, action) => {

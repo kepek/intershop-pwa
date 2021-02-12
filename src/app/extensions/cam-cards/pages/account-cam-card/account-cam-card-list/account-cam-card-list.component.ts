@@ -277,6 +277,7 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
         val,
         this.camCards,
         this.buckets,
+        this.camCardsFacade,
         this.productFacade,
         this.commonShippingMethodId,
         this.basketId,
