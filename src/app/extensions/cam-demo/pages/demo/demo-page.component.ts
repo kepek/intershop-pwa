@@ -251,8 +251,8 @@ export class DemoPageComponent implements AfterViewInit, OnInit, OnDestroy {
     });
 
     this.now = new Date();
-    this.product$ = this.shoppingFacade.product$('1365531', ProductCompletenessLevel.List);
-    this.category$ = this.shoppingFacade.category$('presentation-conferencing.audio-equipment');
+    this.product$ = this.shoppingFacade.product$('1004670', ProductCompletenessLevel.List);
+    this.category$ = this.shoppingFacade.category$('Products.45048.45050');
 
     this.category$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(category => {
       this.category = category;
