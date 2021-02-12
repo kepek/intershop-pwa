@@ -241,6 +241,7 @@ export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
     /** Get earliest delivery date for every line item */
     let items = this.order && this.order.lineItems;
 
+    /** Get this order extensions */
     const basketExtension = this.basket?.basketExtensions.find(
       bucket => bucket.shippingAddress.id === this.order.shipToAddressFull.id
     );
@@ -377,6 +378,7 @@ export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
       this.dialog.closeAll();
     };
 
+    /* Call funtion after dialog is closed either by click, backdrop click, or ESC press */
     this.dialog.afterAllClosed.subscribe(() => {
       this.shoppingFacade.updateBucket(basketId, shipAddressId, basketExtensionUpdate);
     });
