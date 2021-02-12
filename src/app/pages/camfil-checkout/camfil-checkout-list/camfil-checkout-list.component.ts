@@ -240,7 +240,13 @@ export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
   setFullDeliveryDate() {
     /** Get earliest delivery date for every line item */
     let items = this.order && this.order.lineItems;
-    this.isPartialDelivery = this.order.isPartialDelivery || false;
+
+    /** Get this order extensions */
+    const basketExtension = this.basket?.basketExtensions.find(
+      bucket => bucket.shippingAddress.id === this.order.shipToAddressFull.id
+    );
+
+    this.isPartialDelivery = basketExtension?.isPartialDelivery || false;
     if (items?.length) {
       items = items.map((li, index) => {
         const earliestDeliveryDate = this.getDeliveryDate(li.productSKU, index);
@@ -325,9 +331,9 @@ export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
         classes = 'one-day-date-class';
       } else {
         classes = 'custom-date-class';
-        if (ranges[0].getDate() === day) {
+        if (ranges[0].getDate() === day && ranges[0].getMonth() === month) {
           classes += ' first-day-range';
-        } else if (ranges[ranges.length - 1].getDate() === day) {
+        } else if (ranges[ranges.length - 1].getDate() === day && ranges[ranges.length - 1].getMonth() === month) {
           classes += ' last-day-range';
         }
       }
@@ -345,7 +351,6 @@ export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
       this.modalDeliveryText = 'camfil.modal.checkout.parital-delivery.title';
       this.updateBucketDeliveryDate(true, selectedDD);
     }
-    this.openSuccessModal();
   }
 
   openSuccessModal() {
@@ -367,8 +372,16 @@ export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
       deliveryDate: deliveryDateValue,
       isPartialDelivery: isPartial,
     };
+    this.dialog.open(this.modal?.show());
 
-    this.shoppingFacade.updateBucket(basketId, shipAddressId, basketExtensionUpdate);
+    this.modal.hide = () => {
+      this.dialog.closeAll();
+    };
+
+    /* Call funtion after dialog is closed either by click, backdrop click, or ESC press */
+    this.dialog.afterAllClosed.subscribe(() => {
+      this.shoppingFacade.updateBucket(basketId, shipAddressId, basketExtensionUpdate);
+    });
   }
 
   toDate(dateStr) {
