@@ -350,7 +350,6 @@ export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
       this.modalDeliveryText = 'camfil.modal.checkout.parital-delivery.title';
       this.updateBucketDeliveryDate(true, selectedDD);
     }
-    this.openSuccessModal();
   }
 
   openSuccessModal() {
@@ -372,8 +371,15 @@ export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
       deliveryDate: deliveryDateValue,
       isPartialDelivery: isPartial,
     };
+    this.dialog.open(this.modal?.show());
 
-    this.shoppingFacade.updateBucket(basketId, shipAddressId, basketExtensionUpdate);
+    this.modal.hide = () => {
+      this.dialog.closeAll();
+    };
+
+    this.dialog.afterAllClosed.subscribe(() => {
+      this.shoppingFacade.updateBucket(basketId, shipAddressId, basketExtensionUpdate);
+    });
   }
 
   toDate(dateStr) {
