@@ -87,7 +87,7 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges, OnD
     this.isStickyCamCardToolbar$ = this.camCardsFacade.isStickyCamCardToolbar$;
 
     // expand all subCamCards
-    this.camCard.subCamCards?.forEach(sub => {
+    this.camCard?.subCamCards?.forEach(sub => {
       this.isSubOpen.push(sub.id);
     });
 
