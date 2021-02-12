@@ -25,7 +25,7 @@
       ],
       "camfil-icons": ["projects/camfil-icons/src/public-api"]
     },
-    "lib": ["es2018", "dom"],
+    "lib": ["es2018", "dom", "es2020.string"],
     "noUnusedLocals": true,
     "noUnusedParameters": true
   },

@@ -11,10 +11,48 @@ import { FilterNavigation } from './filter-navigation.model';
 
 @Injectable({ providedIn: 'root' })
 export class FilterNavigationMapper {
-  private icmStaticURL: string;
-
   constructor(store: Store) {
     store.pipe(select(getICMStaticURL)).subscribe(url => (this.icmStaticURL = url));
+  }
+
+  private icmStaticURL: string;
+
+  /**
+   * parseFilterDisplayName
+   *
+   * Due to SOLR configuration we're formatting the `from-to` values to be language agnostic.
+   *
+   * @param displayName
+   * @param valuesSeparator
+   * @param replaceSeparator
+   *
+   * @example
+   * [590 TO 610] => [590 - 610]
+   */
+  static parseFilterDisplayName(
+    displayName: string,
+    valuesSeparator: string = '-',
+    replaceSeparator: string = 'TO'
+  ): string {
+    if (!displayName?.length) {
+      return '';
+    }
+
+    const regexp = new RegExp(`([0-9]{1,9})(${replaceSeparator})([0-9]{1,9})`, 'gis');
+
+    const rawDisplayName = displayName.replace(/\s/g, '');
+
+    if (!rawDisplayName.match(regexp)?.length) {
+      return rawDisplayName;
+    }
+
+    const formattedDisplayName = [...rawDisplayName.matchAll(regexp)]
+      .pop()
+      .splice(1, 4)
+      .filter(x => x !== replaceSeparator)
+      .join(valuesSeparator);
+
+    return `[${formattedDisplayName}]`;
   }
 
   fromData(data: FilterNavigationData): FilterNavigation {
@@ -55,7 +93,7 @@ export class FilterNavigationMapper {
               name: facet.name,
               count: facet.count,
               selected: facet.selected,
-              displayName: facet.displayValue || undefined,
+              displayName: FilterNavigationMapper.parseFilterDisplayName(facet.displayValue) || undefined,
               searchParameter: {
                 ...stringToFormParams(facet.link.uri.split('?')[1] || ''),
                 category,
