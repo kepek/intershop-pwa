@@ -15,11 +15,11 @@
     <ng-container *ngIf="!(displaySpinner$ | async); else spinning">
       <!-- Add to Cart button -->
       <ng-container *ngIf="displayIcon; else defaultButton">
-        <mat-icon svgIcon="cart"></mat-icon>
+        <mat-icon svgIcon="cart" class="mat-icon notranslate color-light"></mat-icon>
       </ng-container>
 
       <ng-template #defaultButton>
-        <mat-icon svgIcon="cart" *ngIf="hasIcon" class="mat-icon notranslate color-light mat-icon-no-color"></mat-icon
+        <mat-icon svgIcon="cart" *ngIf="hasIcon" class="mat-icon notranslate color-light"></mat-icon
         ><span class="button-text">{{ translationKey | translate }}</span></ng-template
       >
     </ng-container>

@@ -79,10 +79,24 @@
       }
     }
     camfil-product-add-to-basket {
+      margin-right: $space-box-half;
       .btn {
         display: flex;
         align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: $common-width;
         margin: 0 0 0 $space-box-half;
+        border-radius: 50%;
+      }
+      .mat-raised-button {
+        min-width: $common-width;
+        padding: 0 $space-box-half;
+        font-size: 8px;
+        background-color: $button-primary-bg;
+        .cart-icon {
+          color: $camfil-color-light;
+        }
       }
       .round-cart-btn {
         width: $common-height;
