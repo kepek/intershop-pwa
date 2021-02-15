@@ -28,7 +28,7 @@ export class CreateNewCamcardComponent {
 
   convertToPermanent() {
     const newCamCards = this.buckets.map((bucket, idx) => {
-      const name = this.getNewName(bucket.orderMark || `order_${bucket.id}`, idx);
+      const name = this.getNewName(bucket.orderMark, idx);
       const { addressLine1, addressLine2, city, countryCode, postalCode } = bucket.shipToAddressFull;
       const camCardItems = bucket.lineItems.map(item => ({
         quantity: item.quantity.value,
@@ -51,7 +51,7 @@ export class CreateNewCamcardComponent {
   }
 
   getNewName(oldName: string, idx: number): string {
-    return `${oldName}_${this.getTimestamp()}_${idx}`;
+    return `${oldName} ${this.getTimestamp()}_${idx}`;
   }
 
   openModal() {
