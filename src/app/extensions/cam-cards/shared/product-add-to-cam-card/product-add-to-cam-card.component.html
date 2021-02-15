@@ -21,10 +21,10 @@
       }}</span>
     </ng-template>
     <ng-template [ngSwitchCase]="'icon'">
-      <fa-icon
-        [icon]="['fas', 'list']"
+      <mat-icon
+        svgIcon="add-camcard"
         [title]="'camfil.account.cam_card.add_to_template.button.add_to_template.label' | translate"
-      ></fa-icon>
+      ></mat-icon>
     </ng-template>
     <ng-template [ngSwitchCase]="'round-btn'">
       <mat-icon svgIcon="add-camcard" *ngIf="hasIcon"></mat-icon>
