@@ -24,8 +24,6 @@ import { take, takeUntil } from 'rxjs/operators';
 
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
-import { AddressHelper } from 'ish-core/models/address/address.helper';
-import { AddressMapper } from 'ish-core/models/address/address.mapper';
 import { Address } from 'ish-core/models/address/address.model';
 import { BasketView } from 'ish-core/models/basket/basket.model';
 import { Bucket } from 'ish-core/models/basket/bucket.model';
@@ -291,14 +289,6 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
         this.basketAddresses
       );
     });
-  }
-
-  getAddress(cc: CamCard): Address {
-    return AddressMapper.fromCamCard(cc);
-  }
-
-  isNewAddress(currentAddress: Address): boolean {
-    return AddressHelper.isNewAddress(currentAddress, this.basketAddresses);
   }
 
   notAvailbaleProdList(modal: CamfilModalDialogComponent<any>) {
