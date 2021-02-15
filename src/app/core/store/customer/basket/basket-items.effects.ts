@@ -367,6 +367,17 @@ export class BasketItemsEffects {
     )
   );
 
+  deleteBasketItemSuccess$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(deleteBasketItemSuccess),
+      map(() =>
+        displaySuccessMessage({
+          message: 'camfil.product_delete.confirmation',
+        })
+      )
+    )
+  );
+
   deleteBucket$ = createEffect(() =>
     this.actions$.pipe(
       ofType(deleteBucket),
