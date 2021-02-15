@@ -8,6 +8,7 @@ import {
   OnInit,
   Output,
   SimpleChanges,
+  ViewChild,
 } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
@@ -25,6 +26,7 @@ import { LineItem, LineItemView } from 'ish-core/models/line-item/line-item.mode
 import { ProductView } from 'ish-core/models/product-view/product-view.model';
 import { ProductCompletenessLevel } from 'ish-core/models/product/product.model';
 import { CamfilQuickViewModalComponent } from 'ish-shared/components/common/camfil-quick-view-modal/camfil-quick-view-modal.component';
+import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
 import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
 
 @Component({
@@ -41,7 +43,16 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
     private translate: TranslateService
   ) {}
 
+  get isEditMode() {
+    return this.mode === 'edit';
+  }
+
+  get isViewMode() {
+    return this.mode === 'view';
+  }
+
   private static REQUIRED_COMPLETENESS_LEVEL = ProductCompletenessLevel.List;
+  @ViewChild(CamfilSmallCtaModalComponent) modal: CamfilSmallCtaModalComponent;
   @Input() selectedItemsForm?: FormArray;
   @Input() mode?: 'edit' | 'view';
   @Input() index: number;
@@ -105,6 +116,7 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
 
   removeProduct(itemId: string) {
     this.checkoutFacade.deleteBasketItem(itemId);
+    this.modal.hide();
   }
 
   /** init form in the beginning */
@@ -127,14 +139,6 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
 
       this.product$.pipe(take(1), takeUntil(this.destroy$)).subscribe((res: ProductView) => this.handleLoad.emit(res));
     }
-  }
-
-  get isEditMode() {
-    return this.mode === 'edit';
-  }
-
-  get isViewMode() {
-    return this.mode === 'view';
   }
 
   getField(name: string) {
@@ -215,5 +219,10 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
       maxHeight: '80vh',
       data: { sku: this.product.productSKU },
     });
+  }
+
+  openDeleteModal() {
+    this.dialog.open(this.modal.show());
+    this.modal.hide = () => this.dialog.closeAll();
   }
 }

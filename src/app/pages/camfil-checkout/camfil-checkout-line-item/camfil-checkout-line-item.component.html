@@ -50,7 +50,7 @@
         <span *ngIf="isConfirmed" class="quantity-confirmed">{{ product.quantity.value }}</span>
         <a
           class="btn-tool delete-cam-card"
-          (click)="removeProduct(product.id)"
+          (click)="openDeleteModal()"
           [ngClass]="{ 'ml-md-auto': isEditMode }"
           data-testing-id="delete-cam-card"
           *ngIf="!isConfirmed"
@@ -139,3 +139,17 @@
     </div>
   </div> -->
 </ng-container>
+
+<camfil-small-cta-modal
+  actionButtonTitle="{{ 'camfil.checkout.order.delete_order.modal.yes' | translate }}"
+  cancelButtonTitle="{{ 'camfil.checkout.order.delete_order.modal.no' | translate }}"
+  showCloseIcon="true"
+  hideIcon="true"
+  [actionTemplate]="actionTemplate"
+  (actionClicked)="removeProduct(product.id)"
+>
+</camfil-small-cta-modal>
+
+<ng-template #actionTemplate>
+  <div>{{ 'camfil.checkout.order.delete_line_item.modal.subheading' | translate }}</div>
+</ng-template>

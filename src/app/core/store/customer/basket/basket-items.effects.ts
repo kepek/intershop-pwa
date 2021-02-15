@@ -26,7 +26,7 @@ import {
   LineItemUpdateHelperItem,
 } from 'ish-core/models/line-item-update/line-item-update.helper';
 import { BasketService } from 'ish-core/services/basket/basket.service';
-import { displayErrorMessage } from 'ish-core/store/core/messages';
+import { displayErrorMessage, displaySuccessMessage } from 'ish-core/store/core/messages';
 import { getProductEntities, loadProduct } from 'ish-core/store/shopping/products';
 import { mapErrorToAction, mapToPayload, mapToPayloadProperty } from 'ish-core/utils/operators';
 
@@ -365,6 +365,17 @@ export class BasketItemsEffects {
           map(info => deleteBasketItemSuccess({ info })),
           mapErrorToAction(deleteBasketItemFail)
         )
+      )
+    )
+  );
+
+  deleteBasketItemSuccess$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(deleteBasketItemSuccess),
+      map(() =>
+        displaySuccessMessage({
+          message: 'camfil.product_delete.confirmation',
+        })
       )
     )
   );
