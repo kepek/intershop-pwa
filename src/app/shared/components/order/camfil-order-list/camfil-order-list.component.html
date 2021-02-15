@@ -110,7 +110,7 @@
       <th mat-header-cell *matHeaderCellDef mat-sort-header>
         {{ 'camfil.account.orderlist.table.camfil_order_number' | translate }}
       </th>
-      <td mat-cell *matCellDef="let order">{{ order.documentNo }}</td>
+      <td mat-cell *matCellDef="let order">{{ order.camfilNo }}</td>
     </ng-container>
 
     <!-- Goods Mark Column -->
@@ -130,11 +130,11 @@
     </ng-container>
 
     <!-- Delivery Date Column -->
-    <ng-container matColumnDef="derliveryDate">
+    <ng-container matColumnDef="deliveryDate">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>
         {{ 'camfil.account.orderlist.delivery_date' | translate }}
       </th>
-      <td mat-cell *matCellDef="let order">{{ order.creationDate | ishDate }}</td>
+      <td mat-cell *matCellDef="let order">{{ order.deliveryDate | ishDate }}</td>
     </ng-container>
 
     <!-- Status Column -->
