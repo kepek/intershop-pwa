@@ -285,7 +285,7 @@ describe('Cam Card Effects', () => {
       const action = updateCamCard({ camCard: camCardDetailData[0] });
       const completion1 = updateCamCardSuccess({ camCard: camCardDetailData[0] });
       const completion2 = displaySuccessMessage({
-        message: 'camfil.account.cam_cards.edit.confirmation',
+        message: 'camfil.account.cam_card.edit.confirmation',
         messageParams: { 0: camCardDetailData[0].name },
       });
       actions$ = hot('-a----a----a', { a: action });
