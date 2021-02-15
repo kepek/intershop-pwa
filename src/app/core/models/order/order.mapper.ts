@@ -83,6 +83,10 @@ export class OrderMapper {
         totals,
         infos,
         attributes: data.attributes,
+
+        //CAMFIL
+        deliveryDate: data.deliveryDate,
+        camfilNo: data.camfilNo,
       };
     }
   }

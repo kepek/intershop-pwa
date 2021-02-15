@@ -67,7 +67,7 @@ export class CamfilOrderListComponent implements OnInit, AfterViewInit, OnDestro
     'camfilNo',
     'mark',
     'creationDate',
-    'derliveryDate',
+    'deliveryDate',
     'status',
     'channel',
   ];
@@ -79,7 +79,14 @@ export class CamfilOrderListComponent implements OnInit, AfterViewInit, OnDestro
       .orders$()
       .pipe(takeUntil(this.destroy$))
       .subscribe(orders => {
-        this.dataSource.data = orders;
+        //TODO: temporary fix. Orders are missing data for deliveryDate and camfilNo. Data will be changed for new API call /camfilorder and new mapper which includes all variables
+        const tempOrders = orders.map(order => ({
+          ...order,
+          camfilNo: order.camfilNo ? order.camfilNo : order.documentNo,
+          deliveryDate: order.deliveryDate ? order.deliveryDate : order.creationDate,
+        }));
+        this.dataSource.data = tempOrders;
+
         this.dataSource.filterPredicate = this.orderFilterPredicate();
         this.customers = this.getCustomers(this.dataSource.data);
       });
