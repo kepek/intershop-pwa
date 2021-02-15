@@ -87,7 +87,7 @@ export class CreateCamCardModalComponent implements OnInit, AfterViewInit {
       zipCode: ['', [Validators.required, Validators.pattern('[0-9]{5}')]],
       area: ['', [Validators.required]],
       countryCode: ['', [Validators.required, Validators.maxLength(35)]],
-      newCamCard: ['', [Validators.maxLength(10)]],
+      newCamCard: ['', [Validators.maxLength(30)]],
     });
 
     this.quantityForm = this.parentForm
@@ -162,6 +162,10 @@ export class CreateCamCardModalComponent implements OnInit, AfterViewInit {
       const newSubCamCard: CamCard = {
         name: newCamCard,
         deliveryAddress: this.rootCamCardAddress,
+        customer: {
+          id: this.camCardForm.get('customerSelect').value,
+          customerNo: this.camCardForm.get('customerSelect').value,
+        },
       };
 
       if (newCamCard) {
