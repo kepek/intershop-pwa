@@ -25,7 +25,7 @@ export interface OrderBaseData extends BasketBaseData {
   basket: string;
   requisitionDocumentNo?: string;
   attributes?: Attribute[];
-  //CAMFIL
+  // CAMFIL
   deliveryDate?: number;
   camfilNo?: string;
 }

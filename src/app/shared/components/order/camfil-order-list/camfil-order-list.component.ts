@@ -79,7 +79,8 @@ export class CamfilOrderListComponent implements OnInit, AfterViewInit, OnDestro
       .orders$()
       .pipe(takeUntil(this.destroy$))
       .subscribe(orders => {
-        //TODO: temporary fix. Orders are missing data for deliveryDate and camfilNo. Data will be changed for new API call /camfilorder and new mapper which includes all variables
+        /* TODO: temporary fix. Orders are missing data for deliveryDate and camfilNo.
+        Data will be changed for new API call /camfilorder and new mapper which includes all variables */
         const tempOrders = orders.map(order => ({
           ...order,
           camfilNo: order.camfilNo ? order.camfilNo : order.documentNo,
