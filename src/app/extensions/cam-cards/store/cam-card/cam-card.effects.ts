@@ -375,7 +375,7 @@ export class CamCardEffects {
           mergeMap(camCard => [
             updateCamCardSuccess({ camCard }),
             displaySuccessMessage({
-              message: 'camfil.account.cam_cards.edit.confirmation',
+              message: 'camfil.account.cam_card.edit.confirmation',
               messageParams: { 0: camCard.name },
             }),
           ]),
@@ -396,7 +396,7 @@ export class CamCardEffects {
           mergeMap(camCard => [
             updateSubCamCardSuccess({ camCard }),
             displaySuccessMessage({
-              message: 'camfil.account.cam_cards.edit.confirmation',
+              message: 'camfil.account.cam_card.edit.confirmation',
               messageParams: { 0: camCard.name },
             }),
           ]),
