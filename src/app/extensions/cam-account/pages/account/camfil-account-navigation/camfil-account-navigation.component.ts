@@ -30,7 +30,7 @@ export class CamfilAccountNavigationComponent implements OnInit, OnChanges {
     '/account': { localizationKey: 'account.my_account.link' },
     '/account/profile': { localizationKey: 'camfil.account.profile.link' },
     '/account/camcards': {
-      localizationKey: 'camfil.account.cam_cards.link',
+      localizationKey: 'camfil.account.cam_card.link',
       feature: 'camCards',
       dataTestingId: 'cam-cards-link',
     },

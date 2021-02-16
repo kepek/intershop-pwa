@@ -52,7 +52,7 @@ export class CamCardPreferencesDialogComponent implements OnChanges {
 
   primaryButton = 'camfil.account.cam_card.new_from_order.button.create.label';
   camCardTitle = 'camfil.account.cam_card.new_cam_card.text';
-  modalHeader = 'camfil.account.cam_cards.list.button.add_cam_card.label';
+  modalHeader = 'camfil.account.cam_card.list.button.add_cam_card.label';
 
   @ViewChild('modal', { static: false }) modalTemplate: TemplateRef<unknown>;
 
@@ -64,7 +64,7 @@ export class CamCardPreferencesDialogComponent implements OnChanges {
     this.patchForm();
     this.modalHeader = this.modalTitle || this.modalHeader;
     if (this.camCard) {
-      this.primaryButton = 'camfil.account.cam_cards.edit_form.save_button.text';
+      this.primaryButton = 'camfil.account.cam_card.edit_form.save_button.text';
       this.camCardTitle = this.camCard.name;
       this.modalHeader = 'camfil.account.cam_card.edit.heading';
     }

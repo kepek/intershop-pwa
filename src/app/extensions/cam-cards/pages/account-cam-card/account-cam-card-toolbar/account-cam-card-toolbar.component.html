@@ -8,7 +8,7 @@
       routerLink="/account/camcards/create"
     >
       <mat-icon svgIcon="plus" class="size-31"></mat-icon>
-      {{ 'camfil.account.cam_cards.list.button.add_cam_card.label' | translate }}
+      {{ 'camfil.account.cam_card.list.button.add_cam_card.label' | translate }}
     </button>
     <button
       mat-stroked-button
@@ -19,7 +19,7 @@
       (click)="copy($event)"
     >
       <mat-icon svgIcon="copy" class="size-15"></mat-icon>
-      {{ 'camfil.account.cam_cards.list.button.copy.label' | translate }}
+      {{ 'camfil.account.cam_card.list.button.copy.label' | translate }}
     </button>
     <button
       mat-stroked-button
@@ -30,7 +30,7 @@
       (click)="move($event)"
     >
       <mat-icon svgIcon="move" class="size-15"></mat-icon>
-      {{ 'camfil.account.cam_cards.list.button.move.label' | translate }}
+      {{ 'camfil.account.cam_card.list.button.move.label' | translate }}
     </button>
     <camfil-account-cam-card-pdf [camCards]="checkedCamCards" class="btn-tool"></camfil-account-cam-card-pdf>
 
@@ -43,7 +43,7 @@
       [disabled]="!isProductsChecked()"
     >
       <mat-icon svgIcon="cart" class="size-15"></mat-icon>
-      {{ 'camfil.account.cam_cards.list.button.add_to_cart.label' | translate }}
+      {{ 'camfil.account.cam_card.list.button.add_to_cart.label' | translate }}
     </button>
   </div>
 </div>

@@ -9,7 +9,7 @@ const routes: Routes = [
     path: '',
     loadChildren: () => import('./account-cam-card/account-cam-card-page.module').then(m => m.AccountCamCardPageModule),
     canActivate: [FeatureToggleGuard, AuthGuard],
-    data: { feature: 'camCards', breadcrumbData: [{ key: 'camfil.account.cam_cards.link' }] },
+    data: { feature: 'camCards', breadcrumbData: [{ key: 'camfil.account.cam_card.link' }] },
   },
   {
     path: 'create',

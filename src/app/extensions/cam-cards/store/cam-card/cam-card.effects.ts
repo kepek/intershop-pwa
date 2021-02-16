@@ -577,7 +577,7 @@ export class CamCardEffects {
               updateCamCardProductSuccess({ rootCamCard, camCardId, camCardItem }),
               forceUpdateCamCard && loadCamCard({ camCardId: rootCamCard || camCardId }),
               displaySuccessMessage({
-                message: 'camfil.account.cam_cards.update.product.confirmation',
+                message: 'camfil.account.cam_card.update.product.confirmation',
                 messageParams: { 0: camCardItem?.product?.name || camCardItem?.product?.sku },
               }),
             ];
@@ -642,7 +642,7 @@ export class CamCardEffects {
           mergeMap(() => [
             updateCamCardContactsSuccess({ camCardId, contacts: camCardContacts }),
             displaySuccessMessage({
-              message: 'camfil.account.cam_cards.update.contacts.confirmation',
+              message: 'camfil.account.cam_card.update.contacts.confirmation',
               messageParams: { 0: camCardId },
             }),
           ]),
@@ -766,10 +766,7 @@ export class CamCardEffects {
       whenTruthy(),
       map(camCards =>
         setBreadcrumbData({
-          breadcrumbData: [
-            { key: 'camfil.account.cam_cards.link', link: '/account/camcards' },
-            { text: camCards.name },
-          ],
+          breadcrumbData: [{ key: 'camfil.account.cam_card.link', link: '/account/camcards' }, { text: camCards.name }],
         })
       )
     )

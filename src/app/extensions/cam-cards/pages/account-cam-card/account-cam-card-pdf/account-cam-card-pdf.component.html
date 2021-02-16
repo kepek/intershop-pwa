@@ -7,11 +7,11 @@
   disabled="{{ !camCards?.length }}"
 >
   <mat-icon svgIcon="print" class="size-15"></mat-icon>
-  {{ 'camfil.account.cam_cards.list.button.print.label' | translate }}
+  {{ 'camfil.account.cam_card.list.button.print.label' | translate }}
 </button>
 
 <camfil-small-cta-modal
-  [actionTitle]="'camfil.account.cam_cards.print.dialog.title' | translate"
+  [actionTitle]="'camfil.account.cam_card.print.dialog.title' | translate"
   [actionTemplate]="actionTemplate"
   icon="print"
 >
@@ -19,10 +19,10 @@
 
 <ng-template #actionTemplate>
   <button class="btn btn-link cta-modal__links--link" type="submit" (click)="generatePdfWithoutPrices()">
-    <b>{{ 'camfil.account.cam_cards.print.dialog.btn.no_price' | translate }}</b>
+    <b>{{ 'camfil.account.cam_card.print.dialog.btn.no_price' | translate }}</b>
   </button>
   <button class="btn btn-link cta-modal__links--link" type="submit" (click)="generatePdfWithPrices()">
-    <b>{{ 'camfil.account.cam_cards.print.dialog.btn.with_price' | translate }}</b>
+    <b>{{ 'camfil.account.cam_card.print.dialog.btn.with_price' | translate }}</b>
   </button>
   <ish-loading *ngIf="pdfLoading"></ish-loading>
 </ng-template>
