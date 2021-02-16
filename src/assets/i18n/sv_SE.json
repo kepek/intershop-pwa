@@ -829,6 +829,8 @@
   "camfil.lineitem.table.product": "Produkt",
   "camfil.lineitem.table.qty_delivered": "Levererat antal",
   "camfil.lineitem.table.qty_ordered": "Beställt antal",
+  "camfil.listing.only.list.products.showing": "Visar {{0}} av {{1}}",
+  "camfil.listing.only.list.products.title": "Produkter",
   "camfil.login.info.administer_users": "Hantera användare",
   "camfil.login.info.administer_users.description": "",
   "camfil.login.info.camcards": "Filterlistor - CamCards",
