@@ -12,11 +12,10 @@ import {
 } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { OrderLineItem } from 'src/app/extensions/cam-account/models/orderLineItem/orderLineItem.interface';
 
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { LineItemUpdate } from 'ish-core/models/line-item-update/line-item-update.model';
-import { LineItemView } from 'ish-core/models/line-item/line-item.model';
-import { OrderLineItem } from 'ish-core/models/order/order.model';
 import { Price } from 'ish-core/models/price/price.model';
 import { ProductCompletenessLevel } from 'ish-core/models/product/product.model';
 
@@ -42,7 +41,7 @@ import { ProductCompletenessLevel } from 'ish-core/models/product/product.model'
   styleUrls: ['./camfil-line-item-table.component.scss'],
 })
 export class CamfilLineItemTableComponent implements OnInit, OnChanges, AfterViewInit {
-  @Input() lineItems: Partial<LineItemView & OrderLineItem>[];
+  @Input() lineItems: Partial<OrderLineItem>[];
   @Input() total: Price;
   @Input() lineItemViewType?: 'simple' | 'availability';
   @Output() updateItem = new EventEmitter<LineItemUpdate>();
@@ -50,15 +49,15 @@ export class CamfilLineItemTableComponent implements OnInit, OnChanges, AfterVie
   @ViewChild(MatSort) sort: MatSort;
 
   displayedColumns: string[] = [
-    'productSKU',
-    'name',
+    'sku',
+    'articleName',
     'orderedQty',
     'deliveredQty',
     'boxLabel',
     'deliveryDate',
-    'price',
+    'totalRowCustomerPrice',
   ];
-  lineItemsProcessed: MatTableDataSource<Partial<LineItemView & OrderLineItem>>;
+  lineItemsProcessed: MatTableDataSource<Partial<OrderLineItem>>;
 
   constructor(private shoppingFacade: ShoppingFacade) {}
 
