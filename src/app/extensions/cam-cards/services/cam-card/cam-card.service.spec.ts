@@ -35,6 +35,7 @@ describe('Cam Card Service', () => {
       expect(data).toMatchInlineSnapshot(`
         Array [
           Object {
+            "deliveryAddress": undefined,
             "id": "1234",
             "itemsCount": 0,
             "name": undefined,

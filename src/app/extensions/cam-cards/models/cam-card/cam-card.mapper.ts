@@ -1,10 +1,23 @@
 import { Injectable } from '@angular/core';
 
 import { CamCardData } from './cam-card.interface';
-import { CamCard } from './cam-card.model';
+import { CamCard, CamCardAddress } from './cam-card.model';
 
 @Injectable({ providedIn: 'root' })
 export class CamCardMapper {
+  /**
+   * Cleanup Delivery Address
+   * Just to make sure that we get rid of deprecated property from the payload since the ICM API still supports it.
+   * @param deprecatedDeliveryAddress
+   */
+  static cleanupDeliveryAddress(deprecatedDeliveryAddress: CamCardAddress & { company?: string }): CamCardAddress {
+    if (!deprecatedDeliveryAddress) {
+      return;
+    }
+    // tslint:disable-next-line:no-unused
+    const { company, ...deliveryAddress } = deprecatedDeliveryAddress;
+    return deliveryAddress as CamCardAddress;
+  }
   fromData(camCardData: CamCardData): CamCard {
     if (camCardData) {
       const items = camCardData.camCardItems ? camCardData.camCardItems.length : 0;
@@ -18,11 +31,15 @@ export class CamCardMapper {
             itemsCount: sub.camCardItems ? sub.camCardItems.length : 0,
           }))
         : [];
+
+      const deliveryAddress = CamCardMapper.cleanupDeliveryAddress(camCardData.deliveryAddress);
+
       return {
         ...camCardData,
         name: camCardData.name,
         subCamCards: subs,
         itemsCount: items + itemsFromSubCamCard,
+        deliveryAddress,
       };
     } else {
       throw new Error(`camCardData is required`);
@@ -37,12 +54,13 @@ export class CamCardMapper {
         customer,
         orderLabel,
         invoiceLabel,
-        deliveryAddress,
         nextDeliveryDate,
         lastDeliveryDate,
         deliveryInterval,
         reminderFlag,
       } = camCard;
+
+      const deliveryAddress = CamCardMapper.cleanupDeliveryAddress(camCard.deliveryAddress);
 
       return {
         id,
