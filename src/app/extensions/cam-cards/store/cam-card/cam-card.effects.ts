@@ -250,6 +250,7 @@ export class CamCardEffects {
       filter(([, authorized]) => authorized),
       switchMap(() =>
         this.camCardService.getCustomers().pipe(
+          /* Make sure to do not remove `loadUserContactForCustomers` since this is required to be fulfilled and it is used in CamCard Helper */
           mergeMap(customers => [loadCustomersSuccess({ customers }), loadUserContactForCustomers({ customers })]),
           mapErrorToAction(loadCustomersdFail)
         )
