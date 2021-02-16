@@ -25,3 +25,8 @@ export const suggestSearchSuccess = createAction(
   '[Suggest Search API] Return Search Suggestions',
   payload<{ searchTerm: string; suggests: SuggestTerm[] }>()
 );
+
+export const setCurrentTerm = createAction(
+  '[Suggest Search Internal] Set Current Search Term',
+  payload<{ searchTerm: string }>()
+);
