@@ -765,10 +765,7 @@ export class CamCardEffects {
       whenTruthy(),
       map(camCards =>
         setBreadcrumbData({
-          breadcrumbData: [
-            { key: 'camfil.account.cam_card.link', link: '/account/camcards' },
-            { text: camCards.name },
-          ],
+          breadcrumbData: [{ key: 'camfil.account.cam_card.link', link: '/account/camcards' }, { text: camCards.name }],
         })
       )
     )
