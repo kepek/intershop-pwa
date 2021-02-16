@@ -703,7 +703,7 @@
   "camfil.account.register.password_confirmation.label": "Bekräfta lösenord",
   "camfil.account.remind_password.button.aria": "Skicka",
   "camfil.account.send_password.message": "Ett mail har skickats med en länk till din e-postadress. Klicka på länken för att ändra ditt lösenord.",
-  "camfil.account.send_username.message": "Ett mail med ditt användarnamn har skickar till din e-postadress.",
+  "camfil.account.send_username.message": "Ett mail med ditt användarnamn har skickats till din e-postadress.",
   "camfil.account.update_password.button.aria": "Ändra lösenord",
   "camfil.account.update_password.change_your_password.heading": "Ändra ditt lösenord",
   "camfil.account.update_password.confirm_password.error.stringcompare": "Ditt lösenord matchar inte",
