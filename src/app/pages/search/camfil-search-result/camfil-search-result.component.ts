@@ -9,11 +9,11 @@ import {
   OnInit,
   PLATFORM_ID,
 } from '@angular/core';
+import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
-import { Subject } from 'rxjs';
 
 /**
  * The Search Result Component displays a list of products as the result of a search and emits events for changing view type or sorting of the list.
