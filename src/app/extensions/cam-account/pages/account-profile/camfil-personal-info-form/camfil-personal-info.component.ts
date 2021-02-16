@@ -38,7 +38,7 @@ export class CamfilPersonalInfoComponent implements OnInit, OnDestroy {
     this.form = new FormGroup({
       firstName: new FormControl(this.user.firstName, [Validators.required, SpecialValidators.noSpecialChars]),
       lastName: new FormControl(this.user.lastName, [Validators.required, SpecialValidators.noSpecialChars]),
-      phoneNumber: new FormControl(this.user.phoneHome, []),
+      phoneMobile: new FormControl(this.user.phoneMobile, []),
       email: new FormControl(this.user.email, [Validators.required, SpecialValidators.email]),
     });
   }
@@ -61,8 +61,8 @@ export class CamfilPersonalInfoComponent implements OnInit, OnDestroy {
   }
 
   updateUserProfile() {
-    const { firstName, lastName, phoneHome } = this.form.value;
-    const updatedUser = { ...this.user, firstName, lastName, phoneHome };
+    const { firstName, lastName, phoneMobile } = this.form.value;
+    const updatedUser = { ...this.user, firstName, lastName, phoneMobile };
 
     this.validate();
 
