@@ -999,6 +999,7 @@
   "camfil.search.filter.show.link": {
     "other": "Visa mer"
   },
+  "camfil.search.searchbox.btn.text": "Sök",
   "camfil.search.searchbox.categories.title": "Kategorier",
   "camfil.search.searchbox.instructional_text": "Fritextsök, t.ex filternamn, artikelnummer eller dimensioner",
   "camfil.search.searchbox.no.results": "Inga träffar. Prova att använda en annan sökfras.",
