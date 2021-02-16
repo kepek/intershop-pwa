@@ -145,7 +145,7 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit {
   ngOnChanges() {
     this.patchForm();
     if (this.camCard) {
-      this.primaryButton = 'camfil.account.cam_cards.edit_form.save_button.text';
+      this.primaryButton = 'camfil.account.cam_card.edit_form.save_button.text';
     }
   }
 

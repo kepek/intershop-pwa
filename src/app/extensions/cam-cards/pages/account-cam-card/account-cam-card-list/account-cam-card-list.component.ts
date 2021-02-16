@@ -321,7 +321,7 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
 
   copyCamCard() {
     this.loading = true;
-    const name = this.translate.instant('camfil.account.cam_cards.name.copy_prefix') + this.checkedCamCards[0].name;
+    const name = this.translate.instant('camfil.account.cam_card.name.copy_prefix') + this.checkedCamCards[0].name;
     this.camCardsFacade.copyCamCard(this.checkedCamCards[0].id, name);
   }
 

@@ -47,21 +47,21 @@ export class AccountCamCardPdfComponent implements OnInit {
   skuEqProducts = false;
   pdfLoading = false;
   texts = {
-    customerAccount: this.translate.instant('camfil.account.cam_cards.pdf.customer_account'),
-    artNr: this.translate.instant('camfil.account.cam_cards.pdf.art_nr'),
-    dimensions: this.translate.instant('camfil.account.cam_cards.pdf.dimensions'),
-    eficciency: this.translate.instant('camfil.account.cam_cards.pdf.eficciency'),
-    boxLabel: this.translate.instant('camfil.account.cam_cards.pdf.box_label'),
-    quantity: this.translate.instant('camfil.account.cam_cards.pdf.quantity'),
-    packSize: this.translate.instant('camfil.account.cam_cards.pdf.pack_size'),
-    price: this.translate.instant('camfil.account.cam_cards.pdf.price'),
-    orderMark: this.translate.instant('camfil.account.cam_cards.pdf.order_mark'),
-    invoiceMark: this.translate.instant('camfil.account.cam_cards.pdf.invoice_mark'),
-    lastOrder: this.translate.instant('camfil.account.cam_cards.pdf.last_order'),
-    yourTotal: this.translate.instant('camfil.account.cam_cards.pdf.your_total'),
-    printDate: this.translate.instant('camfil.account.cam_cards.pdf.print_date'),
-    printedBy: this.translate.instant('camfil.account.cam_cards.pdf.printed_by'),
-    deliveryAddress: this.translate.instant('camfil.account.cam_cards.pdf.delivery_address'),
+    customerAccount: this.translate.instant('camfil.account.cam_card.pdf.customer_account'),
+    artNr: this.translate.instant('camfil.account.cam_card.pdf.art_nr'),
+    dimensions: this.translate.instant('camfil.account.cam_card.pdf.dimensions'),
+    eficciency: this.translate.instant('camfil.account.cam_card.pdf.eficciency'),
+    boxLabel: this.translate.instant('camfil.account.cam_card.pdf.box_label'),
+    quantity: this.translate.instant('camfil.account.cam_card.pdf.quantity'),
+    packSize: this.translate.instant('camfil.account.cam_card.pdf.pack_size'),
+    price: this.translate.instant('camfil.account.cam_card.pdf.price'),
+    orderMark: this.translate.instant('camfil.account.cam_card.pdf.order_mark'),
+    invoiceMark: this.translate.instant('camfil.account.cam_card.pdf.invoice_mark'),
+    lastOrder: this.translate.instant('camfil.account.cam_card.pdf.last_order'),
+    yourTotal: this.translate.instant('camfil.account.cam_card.pdf.your_total'),
+    printDate: this.translate.instant('camfil.account.cam_card.pdf.print_date'),
+    printedBy: this.translate.instant('camfil.account.cam_card.pdf.printed_by'),
+    deliveryAddress: this.translate.instant('camfil.account.cam_card.pdf.delivery_address'),
   };
 
   ngOnInit() {
