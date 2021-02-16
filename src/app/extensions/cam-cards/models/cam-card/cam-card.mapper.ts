@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { CamCardData } from './cam-card.interface';
-import { CamCard } from './cam-card.model';
+import { CamCard, CamCardAddress } from './cam-card.model';
 
 @Injectable({ providedIn: 'root' })
 export class CamCardMapper {
@@ -18,11 +18,13 @@ export class CamCardMapper {
             itemsCount: sub.camCardItems ? sub.camCardItems.length : 0,
           }))
         : [];
+      const deliveryAddress = this.removeCompanyField(camCardData.deliveryAddress);
       return {
         ...camCardData,
         name: camCardData.name,
         subCamCards: subs,
         itemsCount: items + itemsFromSubCamCard,
+        deliveryAddress,
       };
     } else {
       throw new Error(`camCardData is required`);
@@ -37,12 +39,13 @@ export class CamCardMapper {
         customer,
         orderLabel,
         invoiceLabel,
-        deliveryAddress,
         nextDeliveryDate,
         lastDeliveryDate,
         deliveryInterval,
         reminderFlag,
       } = camCard;
+
+      const deliveryAddress = this.removeCompanyField(camCard.deliveryAddress);
 
       return {
         id,
@@ -58,5 +61,15 @@ export class CamCardMapper {
         reminderFlag,
       };
     }
+  }
+
+  // because of API support the deprecated fields
+  removeCompanyField(data): CamCardAddress {
+    const keys = Object.keys(data).filter(key => key !== 'company');
+    const deliveryAddress = {};
+    keys.forEach(key => {
+      deliveryAddress[key] = data[key];
+    });
+    return deliveryAddress as CamCardAddress;
   }
 }
