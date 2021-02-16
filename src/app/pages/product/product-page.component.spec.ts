@@ -84,7 +84,7 @@ describe('Product Page Component', () => {
 
     fixture.detectChanges();
 
-    expect(findAllCustomElements(element)).toEqual(['ish-loading', 'ish-recently-viewed']);
+    expect(findAllCustomElements(element)).toEqual(['ish-loading']);
   });
 
   it('should display product-detail when product is available', () => {
@@ -93,11 +93,7 @@ describe('Product Page Component', () => {
 
     fixture.detectChanges();
 
-    expect(findAllCustomElements(element)).toEqual([
-      'ish-product-detail',
-      'camfil-product-links',
-      'ish-recently-viewed',
-    ]);
+    expect(findAllCustomElements(element)).toEqual(['ish-product-detail', 'camfil-product-links']);
   });
 
   it('should redirect to product page when variation is selected', fakeAsync(() => {
