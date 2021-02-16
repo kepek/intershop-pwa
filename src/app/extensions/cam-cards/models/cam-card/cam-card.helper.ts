@@ -45,49 +45,49 @@ export class CamCardHelper {
     const idcc = val.camCardRoot || val.camCardId;
     const camCard = camCards.find(cc => cc.id === idcc);
     const bucket = buckets?.find(b => b.createdFromCamCardId === idcc);
-    const address = AddressMapper.fromCamCard(camCard);
     const customerId = camCard.customer.id;
-    let contactPerson: CamCardContact;
+
     camCardsFacade
       .getUserContactForCustomer$(customerId)
       .pipe(take(1))
-      .subscribe(contact => {
-        contactPerson = contact;
+      .subscribe((contactPerson: CamCardContact) => {
+        // TODO: what if !contactPerson
+        /* The `contactPerson` variable is always fulfilled since it is triggered in CamCard effects -> loadCustomers$ */
+        const address = AddressMapper.fromCamCard(camCard, contactPerson);
+        const extensions = bucket
+          ? {}
+          : {
+              customer: camCard.customer,
+              contactPerson,
+              orderMark: camCard.orderLabel,
+              invoiceLabel: camCard.invoiceLabel,
+              createdFromCamCardId: idcc,
+            };
+
+        const lineItemAttribute: Attribute = val.boxLabel && { name: 'boxLabel', type: 'String', value: val.boxLabel };
+
+        if (AddressHelper.isNewAddress(address, basketAddresses)) {
+          productFacade.addProductToBucket(
+            address,
+            commonShippingMethodId,
+            val.sku,
+            val.quantity,
+            basketId,
+            extensions,
+            lineItemAttribute
+          );
+        } else {
+          productFacade.addProductToBucketWithUrn(
+            AddressHelper.getUrn(address, basketAddresses),
+            commonShippingMethodId,
+            AddressHelper.getId(address, basketAddresses),
+            val.sku,
+            val.quantity,
+            basketId,
+            extensions,
+            lineItemAttribute
+          );
+        }
       });
-
-    const extensions = bucket
-      ? {}
-      : {
-          customer: camCard.customer,
-          contactPerson,
-          orderMark: camCard.orderLabel,
-          invoiceLabel: camCard.invoiceLabel,
-          createdFromCamCardId: idcc,
-        };
-
-    const lineItemAttribute: Attribute = val.boxLabel && { name: 'boxLabel', type: 'String', value: val.boxLabel };
-
-    if (AddressHelper.isNewAddress(address, basketAddresses)) {
-      productFacade.addProductToBucket(
-        address,
-        commonShippingMethodId,
-        val.sku,
-        val.quantity,
-        basketId,
-        extensions,
-        lineItemAttribute
-      );
-    } else {
-      productFacade.addProductToBucketWithUrn(
-        AddressHelper.getUrn(address, basketAddresses),
-        commonShippingMethodId,
-        AddressHelper.getId(address, basketAddresses),
-        val.sku,
-        val.quantity,
-        basketId,
-        extensions,
-        lineItemAttribute
-      );
-    }
   }
 }
