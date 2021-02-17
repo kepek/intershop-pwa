@@ -86,6 +86,19 @@
   .camfil-checkout-list {
     margin-top: 16px;
   }
+  .line-item-container {
+    position: relative;
+    .line-item-index {
+      position: absolute;
+      top: 4px;
+      left: 4px;
+      width: $space-box;
+      height: $space-box;
+      font-size: $font-size-overline;
+      border: 1px solid $camfil-color-secondary;
+      border-radius: 50%;
+    }
+  }
 
   .mat-action-row {
     align-items: center;

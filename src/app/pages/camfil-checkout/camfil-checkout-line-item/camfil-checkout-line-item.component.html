@@ -11,13 +11,11 @@
         ></camfil-product-image>
       </a>
       <div class="my-2 my-md-0">
-        <div class="d-flex flex-row">
-          <camfil-product-title [product]="productData" [class]="'text-truncate'"></camfil-product-title>
-          <button mat-button (click)="openQuickViewDialog(); $event.stopPropagation()">
-            <mat-icon svgIcon="search" class="size-15"></mat-icon>
-          </button>
-          <camfil-product-inventory class="px-2" [product]="productData"></camfil-product-inventory>
-          <div class="attributes">
+        <div class="d-flex line-item-data-container">
+          <div class="flex-row line-item-data-top">
+            <camfil-product-title [product]="productData"></camfil-product-title>
+          </div>
+          <div class="line-item-data-bottom d-flex flex-row">
             <camfil-product-attribute
               [name]="'camfil.cam_card.product.id.label' | translate"
               [value]="productData.sku"
@@ -27,6 +25,10 @@
               [name]="'camfil.cam_card.product.comment.label' | translate"
               [value]="getItemBoxLabel()"
             ></camfil-product-attribute>
+            <button mat-button (click)="openQuickViewDialog(); $event.stopPropagation()">
+              <mat-icon svgIcon="search" class="size-15"></mat-icon>
+            </button>
+            <camfil-product-inventory class="px-2" [product]="productData"></camfil-product-inventory>
           </div>
         </div>
       </div>
