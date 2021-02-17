@@ -13,7 +13,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { MatDialog } from '@angular/material/dialog';
 import { Subject } from 'rxjs';
-import { take, takeUntil } from 'rxjs/operators';
+import { first, take, takeUntil } from 'rxjs/operators';
 
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
@@ -379,7 +379,7 @@ export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
     };
 
     /* Call funtion after dialog is closed either by click, backdrop click, or ESC press */
-    this.dialog.afterAllClosed.subscribe(() => {
+    this.dialog.afterAllClosed.pipe(first()).subscribe(() => {
       this.shoppingFacade.updateBucket(basketId, shipAddressId, basketExtensionUpdate);
     });
   }
