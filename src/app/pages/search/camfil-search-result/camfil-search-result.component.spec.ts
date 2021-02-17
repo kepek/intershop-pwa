@@ -6,6 +6,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MockComponent } from 'ng-mocks';
 
 import { ContentIncludeComponent } from 'ish-shared/cms/components/content-include/content-include.component';
+import { CamfilFilterMeasurementsComponent } from 'ish-shared/components/filter/camfil-filter-measurements/camfil-filter-measurements.component';
 import { CamfilFilterNavigationComponent } from 'ish-shared/components/filter/camfil-filter-navigation/camfil-filter-navigation.component';
 import { CamfilProductListingComponent } from 'ish-shared/components/product/camfil-product-listing/camfil-product-listing.component';
 
@@ -22,6 +23,7 @@ describe('Camfil Search Result Component', () => {
       imports: [TranslateModule.forRoot()],
       declarations: [
         CamfilSearchResultComponent,
+        MockComponent(CamfilFilterMeasurementsComponent),
         MockComponent(CamfilFilterNavigationComponent),
         MockComponent(CamfilProductListingComponent),
         MockComponent(ContentIncludeComponent),

@@ -2,8 +2,12 @@
   <ish-content-include includeId="camfil.include.search-result.content.pagelet2-Include"></ish-content-include>
   <div class="row product-search-result no-gutters" data-testing-id="search-result-page" id="search-page-top">
     <aside class="col-md-3 sidebar">
+      <mat-toolbar color="primary">
+        <span>{{ 'camfil.navigation.filter.headline' | translate }}</span>
+      </mat-toolbar>
       <div class="sidebar--container">
         <div [ngbCollapse]="isCollapsed">
+          <camfil-filter-measurements></camfil-filter-measurements>
           <camfil-filter-navigation></camfil-filter-navigation>
         </div>
         <a class="d-md-none mobile-filter-toggle" (click)="toggle()">
