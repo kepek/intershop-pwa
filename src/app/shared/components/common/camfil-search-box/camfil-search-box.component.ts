@@ -125,6 +125,7 @@ export class CamfilSearchBoxComponent implements OnInit, OnDestroy {
   submitSearch(suggestedTerm: string) {
     if (suggestedTerm) {
       this.out();
+      this.shoppingFacade.setCurrentTerm(suggestedTerm);
       this.router.navigate(['/search', this.searchTerm || suggestedTerm]);
     }
 

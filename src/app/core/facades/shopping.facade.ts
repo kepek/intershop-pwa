@@ -63,10 +63,11 @@ import {
   getRecentlyViewedProducts,
 } from 'ish-core/store/shopping/recently';
 import {
+  getCurrentTerm,
   getSearchTerm,
-  getSearchTermFromSuggests,
   getSuggestSearchResults,
   searchProductsInSearchBox,
+  setCurrentTerm,
   suggestSearch,
 } from 'ish-core/store/shopping/search';
 import { toObservable } from 'ish-core/utils/functions';
@@ -351,7 +352,9 @@ export class ShoppingFacade {
 
   getAllCategoriesTree$ = this.store.pipe(select(getCategoryEntities));
 
-  getSearchTermFromSuggests$(term) {
-    return this.store.pipe(select(getSearchTermFromSuggests(term)));
+  getCurrentTerm$ = this.store.pipe(select(getCurrentTerm));
+
+  setCurrentTerm(searchTerm: string) {
+    this.store.dispatch(setCurrentTerm({ searchTerm }));
   }
 }

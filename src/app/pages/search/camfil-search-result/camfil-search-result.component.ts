@@ -1,6 +1,16 @@
 import { isPlatformBrowser } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Inject, Input, OnChanges, OnInit, PLATFORM_ID } from '@angular/core';
-import { take } from 'rxjs/operators';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Inject,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  PLATFORM_ID,
+} from '@angular/core';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
@@ -21,7 +31,7 @@ import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
   templateUrl: './camfil-search-result.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CamfilSearchResultComponent implements OnInit, OnChanges {
+export class CamfilSearchResultComponent implements OnInit, OnChanges, OnDestroy {
   /**
    * The the search term leading to the displayed result.
    */
@@ -36,11 +46,15 @@ export class CamfilSearchResultComponent implements OnInit, OnChanges {
   isCollapsed = false;
   orginalSearchTerm: string;
 
+  private destroy$ = new Subject();
+
   constructor(private shoppingFacade: ShoppingFacade, @Inject(PLATFORM_ID) private platformId: string) {}
 
   ngOnInit() {
     this.isCollapsed = this.deviceType === 'mobile';
-    this.handleOrginalSearchTerm();
+    this.shoppingFacade.getCurrentTerm$.pipe(takeUntil(this.destroy$)).subscribe(term => {
+      this.orginalSearchTerm = term || this.handleLongStr(this.searchTerm);
+    });
   }
 
   ngOnChanges(change) {
@@ -50,7 +64,11 @@ export class CamfilSearchResultComponent implements OnInit, OnChanges {
     if (change.deviceType) {
       this.isCollapsed = this.deviceType === 'mobile';
     }
-    this.handleOrginalSearchTerm();
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   toggle() {
@@ -60,12 +78,7 @@ export class CamfilSearchResultComponent implements OnInit, OnChanges {
     }
   }
 
-  handleOrginalSearchTerm() {
-    this.shoppingFacade
-      .getSearchTermFromSuggests$(this.searchTerm)
-      .pipe(take(1))
-      .subscribe(term => {
-        this.orginalSearchTerm = term;
-      });
+  handleLongStr(str: string) {
+    return str.length > 25 ? `${str.substr(0, 20)}...` : str;
   }
 }
