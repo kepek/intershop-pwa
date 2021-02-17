@@ -187,10 +187,14 @@
         [attr.data-order-id]="order?.id"
       >
         <ng-container *ngFor="let product of order.lineItems; of: sortBy(); index as i">
-          <div class="list-item-row list-item-row-big px-4 py-1 mt-2" [cdkDragData]="product" cdkDrag>
+          <div
+            class="list-item-row list-item-row-big px-4 py-1 mt-2 line-item-container"
+            [cdkDragData]="product"
+            cdkDrag
+          >
             <div class="d-flex align-items-center">
-              <span class="pr-4">{{ i + 1 }}</span>
-              <mat-icon svgIcon="move" class="size-24 d-none d-md-block handle" cdkDragHandle></mat-icon>
+              <span class="d-flex align-items-center justify-content-center line-item-index">{{ i + 1 }}</span>
+              <mat-icon svgIcon="move" class="size-16 d-none d-md-block handle" cdkDragHandle></mat-icon>
               <camfil-checkout-line-item
                 [id]="product.productSKU"
                 [product]="product"
