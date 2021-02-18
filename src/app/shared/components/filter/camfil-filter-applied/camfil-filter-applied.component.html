@@ -7,7 +7,7 @@
       </mat-chip>
       <ng-container *ngFor="let filter of filters$ | async">
         <mat-chip *ngFor="let facet of filter.picked">
-          ASDF {{ filter.name }} - {{ facet.displayName }}
+          {{ filter.name }} - {{ facet.displayName }}
           <mat-icon color="primary" (click)="disable(facet)">cancel</mat-icon>
         </mat-chip>
       </ng-container>
