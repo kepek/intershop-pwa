@@ -53,7 +53,7 @@ export class CamCardHelper {
       .subscribe((contactPerson: CamCardContact) => {
         // TODO: what if !contactPerson
         /* The `contactPerson` variable is always fulfilled since it is triggered in CamCard effects -> loadCustomers$ */
-        const address = AddressMapper.fromCamCard(camCard, contactPerson);
+        const address = AddressMapper.fromCamCard(camCard);
         const extensions = bucket
           ? {}
           : {
