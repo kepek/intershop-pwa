@@ -14,7 +14,7 @@
     autocomplete="off"
     type="text"
     class="search-input"
-    (input)="searchSuggest($event.target.value)"
+    (input)="searchResults($event.target.value)"
     [value]="inputSearchTerms$ | async"
     (keydown)="focus()"
     (keydown.esc)="out()"
@@ -32,7 +32,7 @@
       name="reset"
       [title]="'search.searchbox.button.reset.title' | translate"
       style="right: 40px"
-      (click)="searchSuggest(''); searchInput.focus()"
+      (click)="searchInput.focus()"
     >
       <fa-icon [icon]="['fas', 'times-circle']"></fa-icon>
     </button>
@@ -54,22 +54,20 @@
     <mat-icon svgIcon="inactive" *ngIf="inputFocused" class="search-close" (click)="out()"></mat-icon>
   </div>
 
-  <ng-container *ngIf="inputFocused && searchResults$ | async as results">
+  <ng-container *ngIf="inputFocused">
     <div class="box-shadow search-suggest-results">
-      <!-- {{ searchTerm }} -->
       <div *ngIf="loading" class="col-12">
         <ish-loading [standalone]="true"></ish-loading>
       </div>
-      <div *ngIf="!loading">
-        <ng-container *ngIf="idToProdList && !noResults">
-          <camfil-product-listing
-            [id]="idToProdList"
-            [limitItemsOnList]="itemsOnSearchList"
-            onlyList="true"
-          ></camfil-product-listing>
-        </ng-container>
-      </div>
-      <div *ngIf="noResults">
+      <ng-container *ngIf="productListId">
+        <camfil-product-listing
+          [id]="productListId"
+          [limitItemsOnList]="itemsOnSearchList"
+          onlyList="true"
+          (productListInfo)="productListInfo($event)"
+        ></camfil-product-listing
+      ></ng-container>
+      <div *ngIf="!loading && noResults">
         <p class="m-3 p-3 bg-secondary">{{ 'camfil.search.searchbox.no.results' | translate }}</p>
       </div>
 
@@ -87,11 +85,10 @@
         </div>
       </ng-container>
 
-      <div class="text-center col-12 mb-3">
+      <div class="text-center col-12 mb-3" *ngIf="!noResults && !loading">
         <button
           mat-raised-button
           color="primary"
-          *ngIf="!noResults && !loading"
           (click)="submitSearch(searchInput.value)"
         >
           {{ 'camfil.search.searchbox.show.all.results' | translate }}

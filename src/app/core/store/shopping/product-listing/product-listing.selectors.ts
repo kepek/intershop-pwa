@@ -101,3 +101,9 @@ export const getProductListingView = createSelector(
       JSON.stringify([entities[calculateLookUpID(id, settings)], settings[serializeProductListingID(id)]])
   )
 );
+
+export const getProductListing = createSelector(
+  getProductListingEntities,
+  getProductListingSettings,
+  (entities, settings, id) => entities[calculateLookUpID(id, settings)]
+);
