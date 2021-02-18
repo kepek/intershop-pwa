@@ -1,4 +1,14 @@
-import { ChangeDetectionStrategy, Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 import { concatMap, map, take, takeUntil } from 'rxjs/operators';
@@ -22,9 +32,10 @@ export class CamfilProductListingComponent implements OnInit, OnChanges, OnDestr
   @Input() onlyList = false;
   @Input() limitItemsOnList?: number;
 
+  @Output() productListInfo = new EventEmitter<ProductListingView>();
+
   productListingView$: Observable<ProductListingView>;
   viewType$: Observable<ViewType>;
-  listingLoading$: Observable<boolean>;
   currentPage$: Observable<number>;
   sortBy$: Observable<string>;
 
@@ -34,7 +45,6 @@ export class CamfilProductListingComponent implements OnInit, OnChanges, OnDestr
 
   ngOnInit() {
     this.viewType$ = this.shoppingFacade.productListingViewType$;
-    this.listingLoading$ = this.shoppingFacade.productListingLoading$;
     this.currentPage$ = this.activatedRoute.queryParamMap.pipe(map(params => +params.get('page') || 1));
     this.sortBy$ = this.activatedRoute.queryParamMap.pipe(map(params => params.get('sorting')));
 
@@ -53,6 +63,7 @@ export class CamfilProductListingComponent implements OnInit, OnChanges, OnDestr
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.id) {
       this.productListingView$ = this.shoppingFacade.productListingView$(this.id).pipe(takeUntil(this.destroy$));
+      this.productListingView$.subscribe(list => this.productListInfo.emit(list));
     }
   }
 

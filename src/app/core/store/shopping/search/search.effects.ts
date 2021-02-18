@@ -24,11 +24,7 @@ import { ProductsService } from 'ish-core/services/products/products.service';
 import { SuggestService } from 'ish-core/services/suggest/suggest.service';
 import { ofUrl, selectRouteParam } from 'ish-core/store/core/router';
 import { setBreadcrumbData } from 'ish-core/store/core/viewconf';
-import {
-  getProductListingView,
-  loadMoreProducts,
-  setProductListingPages,
-} from 'ish-core/store/shopping/product-listing';
+import { getProductListing, loadMoreProducts, setProductListingPages } from 'ish-core/store/shopping/product-listing';
 import { loadProductSuccess } from 'ish-core/store/shopping/products';
 import { HttpStatusCodeService } from 'ish-core/utils/http-status-code/http-status-code.service';
 import { mapErrorToAction, mapToPayload, mapToPayloadProperty, whenTruthy } from 'ish-core/utils/operators';
@@ -147,8 +143,8 @@ export class SearchEffects {
       mapToPayload(),
       mergeMap(({ id }) =>
         this.store.pipe(
-          select(getProductListingView, id),
-          map(view => (view.empty() ? searchProducts({ searchTerm: id.value }) : false)),
+          select(getProductListing, id),
+          map(view => !view && searchProducts({ searchTerm: id.value })),
           whenTruthy(),
           distinctUntilChanged(isEqual)
         )

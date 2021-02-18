@@ -39,6 +39,7 @@ import {
 } from 'ish-core/store/shopping/compare';
 import { getAvailableFilter } from 'ish-core/store/shopping/filter';
 import {
+  getProductListing,
   getProductListingLoading,
   getProductListingView,
   getProductListingViewType,
@@ -348,6 +349,10 @@ export class ShoppingFacade {
 
   searchProductsInSearchBox(id: ProductListingID) {
     this.store.dispatch(searchProductsInSearchBox({ id }));
+  }
+
+  getProductListing(id: ProductListingID) {
+    return this.store.pipe(select(getProductListing, id));
   }
 
   getAllCategoriesTree$ = this.store.pipe(select(getCategoryEntities));
