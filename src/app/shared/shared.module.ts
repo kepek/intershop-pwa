@@ -187,6 +187,7 @@ import { FormsSharedModule } from './forms/forms.module';
 import { CamfilProductTechnicalDocumentsComponent } from './components/common/camfil-product-technical-documents/camfil-product-technical-documents.component';
 import { CamfilSearchBoxComponent } from './components/common/camfil-search-box/camfil-search-box.component';
 import { CamfilCategoryBoxComponent } from '../pages/camfil-category/camfil-category-box/camfil-category-box.component';
+import { DATAPICKER_PROVIDERS_FORMAT } from './material/models/material.helper';
 
 const importExportModules = [
   AddressFormsSharedModule,
@@ -419,5 +420,6 @@ const exportedComponents = [
   ],
   declarations: [...declaredComponents, ...exportedComponents],
   exports: [...exportedComponents, ...importExportModules],
+  providers: [...DATAPICKER_PROVIDERS_FORMAT],
 })
 export class SharedModule {}
