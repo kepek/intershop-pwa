@@ -22,6 +22,7 @@ import {
   continueCheckoutWithIssues,
   loadBasketEligiblePaymentMethods,
   loadBasketEligibleShippingMethods,
+  loadBuckets,
   startCheckout,
   startCheckoutFail,
   startCheckoutSuccess,
@@ -40,11 +41,11 @@ export class BasketValidationEffects {
   ) {}
 
   private validationSteps: { scopes: BasketValidationScopeType[]; route: string }[] = [
-    { scopes: ['Products', 'Value'], route: '/basket' },
-    { scopes: ['InvoiceAddress', 'ShippingAddress', 'Addresses'], route: '/checkout/address' },
+    { scopes: ['Products', 'Value'], route: '/checkout' },
+    { scopes: ['InvoiceAddress', 'ShippingAddress', 'Addresses'], route: '/checkout' },
     { scopes: ['Shipping'], route: '/checkout/shipping' },
     { scopes: ['Payment'], route: '/checkout/payment' },
-    { scopes: ['All'], route: '/checkout/review' },
+    { scopes: ['Products', 'Value'], route: '/checkout' },
     { scopes: ['All'], route: 'auto' }, // targetRoute will be calculated in dependence of the validation result
   ];
 
@@ -148,6 +149,10 @@ export class BasketValidationEffects {
         );
       })
     )
+  );
+
+  continueCheckoutSuccess$ = createEffect(() =>
+    this.actions$.pipe(ofType(continueCheckoutSuccess), mapToPayload(), map(loadBuckets))
   );
 
   /**

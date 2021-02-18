@@ -54,7 +54,7 @@ import {
   updateBasketShippingMethod,
   updateConcardisCvcLastUpdated,
 } from 'ish-core/store/customer/basket';
-import { getOrdersError, getSelectedOrder } from 'ish-core/store/customer/orders';
+import { getOrdersError, getOrdersLoading, getSelectedOrder } from 'ish-core/store/customer/orders';
 import { getLoggedInUser } from 'ish-core/store/customer/user';
 import { getServerConfigParameter } from 'ish-core/store/general/server-config';
 import { whenTruthy } from 'ish-core/utils/operators';
@@ -114,6 +114,7 @@ export class CheckoutFacade {
   private ordersError$ = this.store.pipe(select(getOrdersError));
   basketOrOrdersError$ = merge(this.basketError$, this.ordersError$);
   selectedOrder$ = this.store.pipe(select(getSelectedOrder));
+  ordersLoading$ = this.store.pipe(select(getOrdersLoading));
 
   // SHIPPING
 

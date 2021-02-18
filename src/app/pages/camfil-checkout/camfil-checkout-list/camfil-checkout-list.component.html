@@ -194,7 +194,12 @@
           >
             <div class="d-flex align-items-center">
               <span class="d-flex align-items-center justify-content-center line-item-index">{{ i + 1 }}</span>
-              <mat-icon svgIcon="move" class="size-16 d-none d-md-block handle" cdkDragHandle></mat-icon>
+              <mat-icon
+                svgIcon="move"
+                class="size-24 d-none d-md-block handle"
+                cdkDragHandle
+                *ngIf="!isConfirmed"
+              ></mat-icon>
               <camfil-checkout-line-item
                 [id]="product.productSKU"
                 [product]="product"

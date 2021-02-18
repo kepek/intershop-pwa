@@ -258,8 +258,9 @@ describe('Customer Store', () => {
           [Basket] Validate Basket and continue checkout:
             targetStep: 1
           [Basket API] Validate Basket and continue with success:
-            targetRoute: "/checkout/address"
+            targetRoute: "/checkout"
             basketValidation: {"basket":{"id":"test","lineItems":[1]},"results":{"valid":t...
+          [Basket] Load Buckets
         `);
       });
     });
