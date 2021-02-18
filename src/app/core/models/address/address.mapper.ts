@@ -1,4 +1,4 @@
-import { CamCard, CamCardContact } from 'src/app/extensions/cam-cards/models/cam-card/cam-card.model';
+import { CamCard } from 'src/app/extensions/cam-cards/models/cam-card/cam-card.model';
 
 import { AddressData } from './address.interface';
 import { Address } from './address.model';
@@ -45,7 +45,7 @@ export class AddressMapper {
       throw new Error(`'addressData' is required for the mapping`);
     }
   }
-  static fromCamCard(camCard: CamCard, contactPerson: CamCardContact): Address {
+  static fromCamCard(camCard: CamCard): Address {
     if (camCard) {
       const addr = camCard.deliveryAddress;
       return {
@@ -53,8 +53,8 @@ export class AddressMapper {
         country: addr.country,
         id: '',
         invoiceToAddress: true,
-        firstName: contactPerson?.firstName || '',
-        lastName: contactPerson?.lastName || '',
+        firstName: addr.companyName1 || '',
+        lastName: camCard.customer.companyName2 || '',
         phoneHome: '',
         shipToAddress: true,
         urn: '',
