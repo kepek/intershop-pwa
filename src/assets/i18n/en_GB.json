@@ -569,6 +569,7 @@
   "camfil.account.cam_card.details.total.text": "Your total (net price)",
   "camfil.account.cam_card.edit": "Edit",
   "camfil.account.cam_card.edit.button.back.label": "Back to CamCards",
+  "camfil.account.cam_card.edit.confirmation": "Camcard has been updated",
   "camfil.account.cam_card.edit.header": "Create new camcard",
   "camfil.account.cam_card.edit.heading": "Edit CamCard",
   "camfil.account.cam_card.edit_form.save_button.text": "Save",
