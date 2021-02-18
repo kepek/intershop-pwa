@@ -22,6 +22,7 @@ import {
 } from 'rxjs/operators';
 
 import { OrderService } from 'ish-core/services/order/order.service';
+import { displaySuccessMessage } from 'ish-core/store/core/messages';
 import { ofUrl, selectQueryParams, selectRouteParam } from 'ish-core/store/core/router';
 import { setBreadcrumbData } from 'ish-core/store/core/viewconf';
 import { continueCheckoutWithIssues, getCurrentBasketId, loadBasket } from 'ish-core/store/customer/basket';
@@ -128,6 +129,17 @@ export class OrdersEffects {
           map(orders => loadOrdersSuccess({ orders })),
           mapErrorToAction(loadOrdersFail)
         )
+      )
+    )
+  );
+
+  notificationAfterOrderCreation$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(createOrderSuccess),
+      map(() =>
+        displaySuccessMessage({
+          message: 'camfil.checkout.message.order_created',
+        })
       )
     )
   );

@@ -25,8 +25,11 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
   basket: BasketView;
   emptyBuckets: Bucket[];
   basketLoading$: Observable<boolean>;
+  ordersLoading$: Observable<boolean>;
   validationResults$: Observable<BasketValidationResultType>;
   validation = false;
+
+  selectedOrder$: Observable<any>;
 
   private destroy$ = new Subject<void>();
 
@@ -43,15 +46,19 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
+    this.checkoutFacade.setBasketPayment('ISH_INVOICE');
     this.initBasket();
     this.shoppingFacade.loadBasketAddresses();
+    this.checkoutFacade.start();
   }
 
   initBasket() {
     this.basket$ = this.checkoutFacade.basket$;
     this.buckets$ = this.checkoutFacade.buckets$;
     this.basketLoading$ = this.checkoutFacade.basketLoading$;
+    this.basketLoading$ = this.checkoutFacade.ordersLoading$;
     this.validationResults$ = this.checkoutFacade.basketValidationResults$;
+    this.selectedOrder$ = this.checkoutFacade.selectedOrder$;
 
     this.basket$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe((basket: BasketView) => {
       this.basketId = basket.id;
@@ -64,17 +71,17 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
       this.cdr.detectChanges();
     });
 
-    this.validationResults$
-      .pipe(whenTruthy(), takeUntil(this.destroy$))
-      .subscribe((validationResults: BasketValidationResultType) => {
-        if (validationResults.valid) {
-          this.validation = validationResults.valid;
-          this.cdr.detectChanges();
-        }
-      });
-
     this.checkoutFacade.emptyBuckets$.pipe(takeUntil(this.destroy$)).subscribe(emptyBuckets => {
       this.emptyBuckets = emptyBuckets;
+    });
+
+    this.checkoutFacade.selectedOrder$.pipe(takeUntil(this.destroy$)).subscribe(selectedOrder => {
+      const currentDate = Date.now();
+      const orderDate = new Date(selectedOrder?.creationDate)?.getTime();
+
+      const difference = currentDate - orderDate;
+
+      this.validation = difference < 10000 ? !!selectedOrder : false;
     });
   }
 

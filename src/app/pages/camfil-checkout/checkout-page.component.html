@@ -6,6 +6,14 @@
       <camfil-checkout-header [basket]="basket" [buckets]="buckets" [isConfirmed]="validation"></camfil-checkout-header>
 
       <mat-divider></mat-divider>
+
+      <div>
+        <!-- Info messages -->
+        <ish-basket-info></ish-basket-info>
+        <!-- Validation messages-->
+        <ish-basket-validation-results></ish-basket-validation-results>
+      </div>
+
       <div cdkDropListGroup>
         <ng-container *ngFor="let item of emptyBuckets">
           <camfil-checkout-list [order]="item"></camfil-checkout-list>
@@ -32,3 +40,4 @@
 </ng-container>
 
 <ish-loading *ngIf="basketLoading$ | async"></ish-loading>
+<ish-loading *ngIf="ordersLoading$ | async"></ish-loading>

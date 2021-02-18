@@ -1,12 +1,7 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { Router } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
-import { Observable, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
-import { BasketValidationResultType } from 'ish-core/models/basket-validation/basket-validation.model';
 import { BasketView } from 'ish-core/models/basket/basket.model';
 
 @Component({
@@ -15,43 +10,12 @@ import { BasketView } from 'ish-core/models/basket/basket.model';
   styleUrls: ['./camfil-checkout-summary.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CamfilCheckoutSummaryComponent implements OnInit {
+export class CamfilCheckoutSummaryComponent {
   @Input() basket: BasketView;
   @Input() isConfirmed;
   @Output() update = new EventEmitter();
-  basketLoading$: Observable<boolean>;
-  validationResults$: Observable<BasketValidationResultType>;
 
-  private destroy$ = new Subject<void>();
-
-  constructor(
-    private checkoutFacade: CheckoutFacade,
-    private snackBar: MatSnackBar,
-    private translate: TranslateService,
-    private router: Router
-  ) {}
-
-  ngOnInit() {
-    this.checkoutFacade.setBasketPayment('ISH_INVOICE');
-    this.validationResults$ = this.checkoutFacade.basketValidationResults$;
-
-    this.validationResults$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((validationResults: BasketValidationResultType) => {
-        // tslint:disable-next-line: no-boolean-literal-compare
-        if (validationResults?.valid === false) {
-          this.snackBar.open(
-            this.translate.instant('camfil.checkout.message.cannot_process'),
-            this.translate.instant('camfil.checkout.message.understood')
-          );
-        }
-        if (validationResults?.valid) {
-          this.snackBar.open(this.translate.instant('camfil.checkout.message.order_created'), undefined, {
-            duration: 3000,
-          });
-        }
-      });
-  }
+  constructor(private checkoutFacade: CheckoutFacade, private router: Router) {}
 
   submitOrder() {
     this.update.emit();

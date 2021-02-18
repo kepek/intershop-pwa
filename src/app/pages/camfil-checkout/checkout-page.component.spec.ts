@@ -8,6 +8,9 @@ import { AppFacade } from 'ish-core/facades/app.facade';
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { BasketView } from 'ish-core/models/basket/basket.model';
+import { Order } from 'ish-core/models/order/order.model';
+import { BasketInfoComponent } from 'ish-shared/components/basket/basket-info/basket-info.component';
+import { BasketValidationResultsComponent } from 'ish-shared/components/basket/basket-validation-results/basket-validation-results.component';
 import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
 
 import { CamCardsFacade } from '../../extensions/cam-cards/facades/cam-cards.facade';
@@ -51,6 +54,33 @@ describe('Checkout Page Component', () => {
     },
   };
 
+  const selectedOrder: Order = {
+    id: '1',
+    documentNo: '1',
+    creationDate: 1,
+    customer: '1',
+    orderCreation: {
+      status: 'COMPLETED',
+    },
+    statusCode: '1',
+    status: '1',
+    totals: {
+      total: {
+        gross: 141796.98,
+        net: 141796.98,
+        type: 'PriceItem',
+        currency: 'USD',
+      },
+      itemTotal: {
+        gross: 141796.98,
+        net: 141796.98,
+        type: 'PriceItem',
+        currency: 'USD',
+      },
+      isEstimated: false,
+    },
+  };
+
   beforeEach(async () => {
     camCardFacadeMock = mock(CamCardsFacade);
     checkoutFacade = mock(CheckoutFacade);
@@ -59,6 +89,8 @@ describe('Checkout Page Component', () => {
     await TestBed.configureTestingModule({
       declarations: [
         CheckoutPageComponent,
+        MockComponent(BasketInfoComponent),
+        MockComponent(BasketValidationResultsComponent),
         MockComponent(CamfilCheckoutHeaderComponent),
         MockComponent(CamfilCheckoutListComponent),
         MockComponent(CamfilCheckoutSummaryComponent),
@@ -93,6 +125,7 @@ describe('Checkout Page Component', () => {
       })
     );
     when(checkoutFacade.emptyBuckets$).thenReturn(of([]));
+    when(checkoutFacade.selectedOrder$).thenReturn(of(selectedOrder));
     when(checkoutFacade.basket$).thenReturn(of(basketDetails));
   });
 

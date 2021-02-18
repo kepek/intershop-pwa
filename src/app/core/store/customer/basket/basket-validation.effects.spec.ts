@@ -313,7 +313,7 @@ describe('Basket Validation Effects', () => {
     it('should map to action of type ContinueCheckoutSuccess if targetStep is not 5 (order creation)', () => {
       const action = continueCheckout({ targetStep: 1 });
       const completion = continueCheckoutSuccess({
-        targetRoute: '/checkout/address',
+        targetRoute: '/checkout',
         basketValidation,
       });
       actions$ = hot('-a-a-a', { a: action });
@@ -389,14 +389,14 @@ describe('Basket Validation Effects', () => {
 
       tick(500);
 
-      expect(location.path()).toEqual('/checkout/address?error=true');
+      expect(location.path()).toEqual('/checkout?error=true');
     }));
 
     it('should map to action of type ContinueCheckoutWithIssues if basket is not valid', () => {
       const action = continueCheckout({ targetStep: 1 });
       basketValidation.results.valid = false;
       const completion = continueCheckoutWithIssues({
-        targetRoute: '/checkout/address',
+        targetRoute: '/checkout',
         basketValidation,
       });
       actions$ = hot('-a', { a: action });

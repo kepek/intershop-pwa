@@ -27,5 +27,6 @@ export class CamfilDeleteOrderComponent {
   deleteOrder() {
     this.loading = true;
     this.checkoutFacade.deleteOrder(this.order.basket, this.order.id);
+    this.modal.hide();
   }
 }
