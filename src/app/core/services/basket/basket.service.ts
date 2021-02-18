@@ -352,8 +352,10 @@ export class BasketService {
       return throwError('updateBasketAddress() called without addressId');
     }
 
+    const basketId = address?.urn?.split(':')[3] || 'current';
+
     return this.apiService
-      .patch(`baskets/current/addresses/${address.id}`, address, {
+      .patch(`baskets/${basketId}/addresses/${address.id}`, address, {
         headers: this.basketHeaders,
       })
       .pipe(

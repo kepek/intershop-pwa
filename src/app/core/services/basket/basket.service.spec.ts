@@ -220,7 +220,9 @@ describe('Basket Service', () => {
     const address = BasketMockData.getAddress();
 
     basketService.updateBasketAddress(address).subscribe(() => {
-      verify(apiService.patch(`baskets/current/addresses/${address.id}`, anything(), anything())).once();
+      const basketId = address?.urn?.split(':')[3] || 'current';
+
+      verify(apiService.patch(`baskets/${basketId}/addresses/${address.id}`, anything(), anything())).once();
       done();
     });
   });
