@@ -99,10 +99,10 @@ export class CreateCamCardModalComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.quantityForm.setValue({ quantity: this.product.minOrderQuantity, boxLabel: '' });
+    this.quantityForm.setValue({ quantity: this.product.minOrderQuantity || 1, boxLabel: '' });
   }
 
-  addSublevel() {
+  addSubLevel() {
     this.showNewSegment = true;
   }
 

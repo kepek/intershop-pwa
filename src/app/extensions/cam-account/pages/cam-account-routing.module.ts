@@ -14,6 +14,8 @@ const routes: Routes = [
         title: 'account.my_account.heading',
         robots: 'noindex, nofollow',
       },
+      feature: 'camAccount',
+      breadcrumbData: [],
     },
   },
   {
@@ -21,11 +23,10 @@ const routes: Routes = [
     canActivate: [FeatureToggleGuard],
     data: {
       meta: {
-        title: 'camfil.account.apply_form.link',
         robots: 'noindex, nofollow',
       },
       feature: 'camAccount',
-      breadcrumbData: [{ key: 'camfil.account.apply_form.link' }],
+      breadcrumbData: [],
     },
     loadChildren: () => import('./login/camfil-login-page.module').then(m => m.CamfilLoginPageModule),
   },
@@ -35,11 +36,10 @@ const routes: Routes = [
     canActivate: [FeatureToggleGuard],
     data: {
       meta: {
-        title: 'camfil.account.login_form.link',
         robots: 'noindex, nofollow',
       },
       feature: 'camAccount',
-      breadcrumbData: [{ key: 'camfil.account.apply_form.link' }],
+      breadcrumbData: [],
     },
     loadChildren: () => import('./register/camfil-register-page.module').then(m => m.CamfilRegisterPageModule),
   },
@@ -49,6 +49,7 @@ const routes: Routes = [
     canActivate: [FeatureToggleGuard],
     data: {
       feature: 'camAccount',
+      breadcrumbData: [],
     },
     loadChildren: () =>
       import('./forgot-password/camfil-forgot-password-page.module').then(m => m.CamfilForgotPasswordPageModule),
@@ -59,6 +60,7 @@ const routes: Routes = [
     canActivate: [FeatureToggleGuard],
     data: {
       feature: 'camAccount',
+      breadcrumbData: [],
     },
     loadChildren: () =>
       import('./forgot-username/camfil-forgot-username-page.module').then(m => m.CamfilForgotUsernamePageModule),

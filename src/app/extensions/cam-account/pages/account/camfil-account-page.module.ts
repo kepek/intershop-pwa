@@ -11,6 +11,10 @@ const accountPageRoutes: Routes = [
   {
     path: '',
     component: CamfilAccountPageComponent,
+    data: {
+      feature: 'camAccount',
+      breadcrumbData: [],
+    },
     children: [
       // Redirect /account to /account/profile
       { path: '', redirectTo: 'profile', pathMatch: 'full' },
@@ -23,19 +27,16 @@ const accountPageRoutes: Routes = [
       { path: 'requisitions', redirectTo: '/account' },
       {
         path: 'profile',
-        data: { breadcrumbData: [{ key: 'camfil.account.profile.link' }] },
         loadChildren: () =>
           import('../account-profile/camfil-account-profile-page.module').then(m => m.CamfilAccountProfilePageModule),
       },
       {
         path: 'camcards',
-        data: { breadcrumbData: [{ key: 'camfil.account.camcards.link' }] },
         loadChildren: () =>
           import('../../../cam-cards/pages/cam-cards-routing.module').then(m => m.CamCardsRoutingModule),
       },
       {
         path: 'orders',
-        data: { breadcrumbData: [{ key: 'account.order_history.link' }] },
         loadChildren: () =>
           import('../../../cam-account/pages/account-order-history/camfil-account-order-history-page.module').then(
             m => m.CamfilAccountOrderHistoryPageModule
@@ -47,7 +48,6 @@ const accountPageRoutes: Routes = [
         loadChildren: () => import('organization-management').then(m => m.OrganizationManagementModule),
         canActivate: [AuthorizationToggleGuard],
         data: {
-          breadcrumbData: [{ key: 'camfil.account.organization.user_management' }],
           permission: 'APP_B2B_MANAGE_USERS',
         },
       },

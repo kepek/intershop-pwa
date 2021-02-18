@@ -37,10 +37,6 @@ export class AppComponent implements OnInit {
     this.router = value;
   }
 
-  isAccountPage() {
-    return this.router.url.startsWith('/account/');
-  }
-
   isCheckoutPage() {
     return this.router.url.includes('/checkout');
   }

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, OnChanges, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { AppFacade } from 'ish-core/facades/app.facade';
@@ -17,13 +17,11 @@ import { BreadcrumbItem } from 'ish-core/models/breadcrumb-item/breadcrumb-item.
   styleUrls: ['./camfil-breadcrumb.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CamfilBreadcrumbComponent implements OnInit, OnChanges {
+export class CamfilBreadcrumbComponent implements OnInit {
   @Input() separator = '❭';
   @Input() showHome = true;
-  @Input() account: boolean;
   @Input() checkout: boolean;
   @Input() url: string;
-  hideOnHome = true;
 
   trail$: Observable<BreadcrumbItem[]>;
 
@@ -31,14 +29,5 @@ export class CamfilBreadcrumbComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     this.trail$ = this.appFacade.breadcrumbData$;
-    this.toggleBreadcrumbs();
-  }
-
-  ngOnChanges() {
-    this.toggleBreadcrumbs();
-  }
-
-  toggleBreadcrumbs() {
-    this.hideOnHome = this.url === '/' || this.url === '/home' ? true : false;
   }
 }

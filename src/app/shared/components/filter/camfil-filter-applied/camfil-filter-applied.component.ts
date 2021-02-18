@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Observable } from 'rxjs';
 
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { Facet } from 'ish-core/models/facet/facet.model';
@@ -12,7 +13,12 @@ import { URLFormParams, formParamsToString } from 'ish-core/utils/url-form-param
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CamfilFilterAppliedComponent implements OnInit {
-  filters$;
+  filters$: Observable<
+    {
+      name: string;
+      picked: Facet[];
+    }[]
+  >;
 
   @Input() fragmentOnRouting: string;
   constructor(private shoppingFacade: ShoppingFacade, private router: Router, private activatedRoute: ActivatedRoute) {}
