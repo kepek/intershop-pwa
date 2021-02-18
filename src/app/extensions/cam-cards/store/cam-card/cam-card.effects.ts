@@ -573,14 +573,19 @@ export class CamCardEffects {
         this.camCardService.updateCamCardProduct(payload.camCardId, payload.camCardItem).pipe(
           mergeMap(camCardItem => {
             const { rootCamCard, camCardId, forceUpdateCamCard } = payload;
-            return [
+            const send = [
               updateCamCardProductSuccess({ rootCamCard, camCardId, camCardItem }),
-              forceUpdateCamCard && loadCamCard({ camCardId: rootCamCard || camCardId }),
+              loadCamCard({ camCardId: rootCamCard || camCardId }),
               displaySuccessMessage({
                 message: 'camfil.account.cam_card.update.product.confirmation',
                 messageParams: { 0: camCardItem?.product?.name || camCardItem?.product?.sku },
               }),
             ];
+
+            if (!forceUpdateCamCard) {
+              send.splice(1, 1);
+            }
+            return send;
           }),
           mapErrorToAction(updateCamCardFail)
         )

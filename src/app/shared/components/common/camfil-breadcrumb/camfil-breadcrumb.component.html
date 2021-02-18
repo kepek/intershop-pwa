@@ -1,42 +1,30 @@
-<div class="breadcrumbs" *ngIf="!hideOnHome">
-  <ol class="breadcrumbs-list">
-    <li *ngIf="showHome" class="breadcrumbs-list breadcrumbs-list-home">
-      <a class="breadcrumbs-list-link breadcrumbs-list-link-home" rel="home" routerLink="/home">
-        {{ 'camfil.common.home.link' | translate }}
-      </a>
-      <mat-icon class="breadcrumbs-list-separator" aria-hidden="false"> navigate_next </mat-icon>
-      <!-- {{ separator }} -->
-    </li>
-
-    <li *ngIf="account" class="breadcrumbs-list">
-      <ng-container *ngIf="(trail$ | async)?.length; else AccountOverview">
-        <a class="breadcrumbs-list-link" routerLink="/account">
-          {{ 'account.my_account.link' | translate }}
+<ng-container *ngIf="trail$ | async as items">
+  <div class="breadcrumbs" *ngIf="items?.length">
+    <ol class="breadcrumbs-list">
+      <li *ngIf="showHome" class="breadcrumbs-list breadcrumbs-list-home">
+        <a class="breadcrumbs-list-link breadcrumbs-list-link-home" rel="home" routerLink="/home">
+          {{ 'camfil.common.home.link' | translate }}
         </a>
         <mat-icon class="breadcrumbs-list-separator" aria-hidden="false"> navigate_next </mat-icon>
         <!-- {{ separator }} -->
-      </ng-container>
-      <ng-template #AccountOverview>
-        {{ 'account.my_account.link' | translate }}
-      </ng-template>
-    </li>
-
-    <li
-      *ngFor="let item of trail$ | async; index as index; let last = last"
-      class="breadcrumbs-list"
-      [ngClass]="{ 'breadcrumbs-list-active': last }"
-    >
-      <a *ngIf="item.link; else noLink" [routerLink]="item.link" class="breadcrumbs-list-link">
-        {{ item.text || (item.key | translate) }}
-      </a>
-      <ng-template #noLink>{{ item.text || (item.key | translate) }}</ng-template>
-      <mat-icon *ngIf="!last || checkout" class="breadcrumbs-list-separator" aria-hidden="false">
-        navigate_next
-      </mat-icon>
-      <!-- {{ separator }} -->
-    </li>
-    <li *ngIf="checkout" class="breadcrumbs-list">
-      {{ 'shopping_cart.proceed_to_checkout.button.label' | translate }}
-    </li>
-  </ol>
-</div>
+      </li>
+      <li
+        *ngFor="let item of items; index as index; let last = last"
+        class="breadcrumbs-list"
+        [ngClass]="{ 'breadcrumbs-list-active': last }"
+      >
+        <a *ngIf="item.link; else noLink" [routerLink]="item.link" class="breadcrumbs-list-link">
+          {{ item.text || (item.key | translate) }}
+        </a>
+        <ng-template #noLink>{{ item.text || (item.key | translate) }}</ng-template>
+        <mat-icon *ngIf="!last || checkout" class="breadcrumbs-list-separator" aria-hidden="false">
+          navigate_next
+        </mat-icon>
+        <!-- {{ separator }} -->
+      </li>
+      <li *ngIf="checkout" class="breadcrumbs-list">
+        {{ 'shopping_cart.proceed_to_checkout.button.label' | translate }}
+      </li>
+    </ol>
+  </div>
+</ng-container>

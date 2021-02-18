@@ -578,7 +578,7 @@ describe('Cam Card Effects', () => {
           Object {
             "breadcrumbData": Array [
               Object {
-                "key": "camfil.account.cam_cards.link",
+                "key": "camfil.account.cam_card.link",
                 "link": "/account/camcards",
               },
               Object {

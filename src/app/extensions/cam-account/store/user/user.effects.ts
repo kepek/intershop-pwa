@@ -11,6 +11,7 @@ import { requestUsernameReminder, requestUsernameReminderFail, requestUsernameRe
 @Injectable()
 export class UserEffects {
   constructor(private actions$: Actions, private userService: CamAccountService) {}
+
   requestUsernameReminder$ = createEffect(() =>
     this.actions$.pipe(
       ofType(requestUsernameReminder),
