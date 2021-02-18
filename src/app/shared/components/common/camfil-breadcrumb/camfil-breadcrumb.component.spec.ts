@@ -69,26 +69,4 @@ describe('Camfil Breadcrumb Component', () => {
       );
     });
   });
-
-  describe('breadcrumbtrail from account', () => {
-    it('should render breadcrumbtrail from account and trail when account is active', () => {
-      component.showHome = false;
-      component.account = true;
-      component.checkout = false;
-      when(appFacade.breadcrumbData$).thenReturn(of([{ key: 'account.order_history.link' }]));
-      fixture.detectChanges();
-      expect(element.textContent).toMatchInlineSnapshot(`" My Account  navigate_next Orders"`);
-    });
-
-    it('should render breadcrumbtrail from home and account and trail when account is active', () => {
-      component.account = true;
-      component.checkout = false;
-      when(appFacade.breadcrumbData$).thenReturn(of([{ key: 'account.order_history.link' }]));
-      fixture.detectChanges();
-      expect(element.textContent).toMatchInlineSnapshot(
-        `" camfil.common.home.link  navigate_next  My Account  navigate_next Orders"`
-      );
-      expect(element.textContent).toContain('My Account');
-    });
-  });
 });

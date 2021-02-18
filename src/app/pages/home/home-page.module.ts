@@ -6,7 +6,9 @@ import { SharedModule } from 'ish-shared/shared.module';
 
 import { HomePageComponent } from './home-page.component';
 
-const homePageRoutes: Routes = [{ path: '', component: HomePageComponent, data: { wrapperClass: 'homepage' } }];
+const homePageRoutes: Routes = [
+  { path: '', component: HomePageComponent, data: { wrapperClass: 'homepage', breadcrumbData: [] } },
+];
 
 @NgModule({
   imports: [FormsModule, RouterModule.forChild(homePageRoutes), SharedModule],
