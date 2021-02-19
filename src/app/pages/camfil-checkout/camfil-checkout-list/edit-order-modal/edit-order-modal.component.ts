@@ -75,7 +75,7 @@ export class EditOrderModalComponent implements OnInit, OnDestroy {
     return {
       orderMark: form.get('orderMark').value,
       invoiceLabel: form.get('invoiceLabel').value,
-      contactPerson: this.order.contactPerson,
+      contactPerson: form.get('contactFull').value || this.order.contactPerson,
       info: form.get('info').value,
       phoneNumber: form.get('phoneNumber').value,
     };
@@ -83,9 +83,12 @@ export class EditOrderModalComponent implements OnInit, OnDestroy {
 
   getUpdatedAddress(): Address {
     const form = this.orderForm.addressForm;
+    const contact = form.get('contactFull').value;
 
     return {
       ...this.order.shipToAddressFull,
+      firstName: contact?.firstName || this.order.shipToAddressFull.firstName,
+      lastName: contact?.lastName || this.order.shipToAddressFull.lastName,
       addressLine1: form.get('address').value,
       addressLine2: form.get('building').value,
       postalCode: form.get('zipCode').value,

@@ -42,17 +42,11 @@
             {{ order.contactPerson?.firstName }} {{ order.contactPerson?.lastName }}
           </dd>
           <dt class="col-6 p-0">{{ 'camfil.checkout.phone' | translate }}</dt>
-          <dd class="col-6 p-0" data-testing-id="order-camfil_no">-</dd>
+          <dd class="col-6 p-0" data-testing-id="order-camfil_no">{{ order?.phoneNumber || '-' }}</dd>
           <dt class="col-6 p-0">{{ 'camfil.account.orderdetails.delivery_address.label' | translate }}</dt>
           <dd class="col-6 p-0" data-testing-id="order-delivery_address">
             <ish-address [address]="order.shipToAddressFull"></ish-address>
           </dd>
-          <dt class="col-6 p-0">{{ 'camfil.account.orderdetails.goods_mark.label' | translate }}</dt>
-          <dd class="col-6 p-0" data-testing-id="order-customer_id">{{ order?.orderMark || '-' }}</dd>
-          <dt class="col-6 p-0">{{ 'camfil.checkout.form.invoice_mark' | translate }}</dt>
-          <dd class="col-6 p-0" data-testing-id="order-customer_id">{{ order?.invoiceLabel || '-' }}</dd>
-          <dt class="col-6 p-0">{{ 'camfil.checkout.phone' | translate }}</dt>
-          <dd class="col-6 p-0" data-testing-id="order-customer_id">{{ order?.phoneNumber || '-' }}</dd>
         </dl>
       </div>
       <div
