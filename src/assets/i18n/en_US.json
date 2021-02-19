@@ -780,6 +780,7 @@
   "camfil.checkout.order.delete_order.modal.no": "No",
   "camfil.checkout.order.delete_order.modal.subheading": "Are you sure you want to delete the order?",
   "camfil.checkout.order.delete_order.modal.yes": "Yes",
+  "camfil.checkout.order.earliest_delivery_date.text": "Earliest delivery date",
   "camfil.checkout.order.total_cost_net.label": "Total price after volume discount excl. VAT",
   "camfil.checkout.order_header.invoice_label.error.maxLength": "Invoice label must not exceed 20 characters.",
   "camfil.checkout.order_header.invoice_label.error.required": "Please enter invoice label",

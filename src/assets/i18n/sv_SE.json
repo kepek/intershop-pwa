@@ -779,6 +779,7 @@
   "camfil.checkout.order.delete_order.modal.no": "Nej",
   "camfil.checkout.order.delete_order.modal.subheading": "Är du säker på att du vill radera ordern?",
   "camfil.checkout.order.delete_order.modal.yes": "Ja",
+  "camfil.checkout.order.earliest_delivery_date.text": "Tidigaste leveransdatum",
   "camfil.checkout.order.total_cost_net.label": "Totalt pris efter rabatt exkl. moms",
   "camfil.checkout.order_header.invoice_label.error.maxLength": "Fakturamärkningen får inte innehålla mer än 20 tecken.",
   "camfil.checkout.order_header.invoice_label.error.required": "Ange fakturamärkning",
