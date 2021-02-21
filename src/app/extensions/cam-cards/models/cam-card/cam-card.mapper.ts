@@ -10,7 +10,9 @@ export class CamCardMapper {
    * Just to make sure that we get rid of deprecated property from the payload since the ICM API still supports it.
    * @param deprecatedDeliveryAddress
    */
-  static cleanupDeliveryAddress(deprecatedDeliveryAddress: CamCardAddress & { company?: string, street2?: string }): CamCardAddress {
+  static cleanupDeliveryAddress(
+    deprecatedDeliveryAddress: CamCardAddress & { company?: string; street2?: string }
+  ): CamCardAddress {
     if (!deprecatedDeliveryAddress) {
       return;
     }
