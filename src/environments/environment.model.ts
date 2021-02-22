@@ -141,7 +141,7 @@ export const ENVIRONMENT_DEFAULTS: Environment = {
     'camCards',
     'camAccount',
     'camDemo',
-    'camAhu',
+    // 'camAhu',
   ],
 
   /* PROGRESSIVE WEB APP CONFIGURATIONS */
