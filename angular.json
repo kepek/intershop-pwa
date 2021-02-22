@@ -372,9 +372,7 @@
             "assets": [
               { "glob": "**/*", "input": "src/assets/", "output": "/assets/" }
             ],
-            "styles": [
-              "projects/camfil-pwa/src/styles.scss"
-            ],
+            "styles": ["projects/camfil-pwa/src/styles.scss"],
             "scripts": [],
             "fileReplacements": [
               {
