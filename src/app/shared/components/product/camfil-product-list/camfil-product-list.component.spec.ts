@@ -76,6 +76,6 @@ describe('Camfil Product List Component', () => {
 
     fixture.detectChanges();
 
-    expect(findAllCustomElements(element)).toEqual(['ish-loading', 'ish-loading']);
+    expect(findAllCustomElements(element)).toEqual(['ish-loading']);
   }));
 });
