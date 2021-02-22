@@ -173,8 +173,8 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy {
     } else {
       this.productFacade.addProductToBucketWithUrn(
         this.getUrn(deliveryAddress),
-        this.order.shippingMethod,
         this.getId(deliveryAddress),
+        this.order.shippingMethod,
         sku,
         quantity,
         this.order.basket,

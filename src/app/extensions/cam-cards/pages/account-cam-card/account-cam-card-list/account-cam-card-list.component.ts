@@ -33,7 +33,12 @@ import { CamfilModalDialogComponent } from 'ish-shared/components/common/camfil-
 
 import { CamCardsFacade } from '../../../facades/cam-cards.facade';
 import { CamCardHelper } from '../../../models/cam-card/cam-card.helper';
-import { CamCamProductChecked, CamCard, CamCardItem } from '../../../models/cam-card/cam-card.model';
+import {
+  CamCamProductChecked,
+  CamCamProductsAddToCart,
+  CamCard,
+  CamCardItem,
+} from '../../../models/cam-card/cam-card.model';
 import { MoveCamCardDialogComponent } from '../../../shared/move-cam-card-dialog/move-cam-card-dialog.component';
 import { UserAccessCamCardDialogComponent } from '../../../shared/user-access-cam-card-dialog/user-access-cam-card-dialog.component';
 
@@ -277,18 +282,23 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
   }
 
   addSelectedItemsToCart() {
-    Object.values(this.productsChecked).forEach((val: CamCamProductChecked) => {
-      CamCardHelper.addToCartFromCamCard(
-        val,
-        this.camCards,
-        this.buckets,
-        this.camCardsFacade,
-        this.productFacade,
-        this.commonShippingMethodId,
-        this.basketId,
-        this.basketAddresses
-      );
-    });
+    const list = Object.values(this.productsChecked).reduce((acc, val: CamCamProductChecked) => {
+      const key = val.camCardRoot || val.camCardId;
+      const products = acc[key]?.products || [];
+      acc[key] = {
+        products: [...products, val],
+      };
+      return acc;
+    }, {}) as CamCamProductsAddToCart;
+
+    CamCardHelper.addToCartFromCamCards(
+      this.camCardsFacade,
+      this.productFacade,
+      list,
+      this.camCards,
+      this.commonShippingMethodId,
+      this.basketId
+    );
   }
 
   notAvailbaleProdList(modal: CamfilModalDialogComponent<any>) {

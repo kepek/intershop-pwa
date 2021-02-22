@@ -92,8 +92,8 @@ export class AddToCartModalComponent implements OnInit, OnDestroy {
 
       this.shoppingFacade.addProductToBucketWithUrn(
         currentBucket.shipToAddress,
-        this.commonShippingMethodId,
         currentBucket.shipToAddressFull.id,
+        this.commonShippingMethodId,
         this.product.sku,
         quantity,
         this.basketId,

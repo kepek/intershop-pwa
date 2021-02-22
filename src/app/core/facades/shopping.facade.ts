@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { debounce, filter, map, switchMap, tap } from 'rxjs/operators';
+import { CamCamProductsAddToCartItems } from 'src/app/extensions/cam-cards/models/cam-card/cam-card.model';
 
 import { Address } from 'ish-core/models/address/address.model';
 import { Attribute } from 'ish-core/models/attribute/attribute.model';
@@ -13,7 +14,10 @@ import {
   addProductToBasket,
   addProductToBucket,
   addProductToBucketWithUrn,
+  addProductsFromCamCard,
+  createBasket,
   getBasketAddresses,
+  getCurrentBasket,
   getProductAdded,
   getProductUpdated,
   loadBasketAddresses,
@@ -163,8 +167,8 @@ export class ShoppingFacade {
 
   addProductToBucketWithUrn(
     urn: string,
-    shippingMethod: string,
     addressId: string,
+    shippingMethod: string,
     sku: string,
     quantity: number,
     basketId: string,
@@ -329,6 +333,15 @@ export class ShoppingFacade {
 
   loadBasketAddresses() {
     this.store.dispatch(loadBasketAddresses());
+  }
+
+  createBasket$() {
+    this.store.dispatch(createBasket());
+    return this.store.pipe(select(getCurrentBasket));
+  }
+
+  addProductsFromCamCard(itemsInfo: CamCamProductsAddToCartItems, commonShippingMethodId: string, basketId: string) {
+    this.store.dispatch(addProductsFromCamCard({ itemsInfo, commonShippingMethodId, basketId }));
   }
 
   searchProductsInSearchBox(id: ProductListingID) {

@@ -48,22 +48,23 @@ export class AddressMapper {
   static fromCamCard(camCard: CamCard): Address {
     if (camCard) {
       const addr = camCard.deliveryAddress;
+      const building = addr.addressLine2 ? ` / ${addr.addressLine2}` : '';
       return {
         addressName: `CamCard_${camCard.name}`,
+        companyName1: (addr.companyName1 || camCard.customer.companyName) + building,
+        addressLine1: addr.addressLine1,
+        addressLine2: '',
+        postalCode: addr.postalCode,
+        city: addr.city,
+        countryCode: addr.countryCode,
         country: addr.country,
         id: '',
         invoiceToAddress: true,
-        firstName: addr.companyName1 || '',
-        lastName: camCard.customer.companyName2 || '',
+        firstName: '',
+        lastName: '',
         phoneHome: '',
         shipToAddress: true,
         urn: '',
-        addressLine1: addr.addressLine1,
-        addressLine2: addr.addressLine2,
-        postalCode: addr.postalCode,
-        city: addr.city,
-        companyName1: camCard.customer.companyName,
-        countryCode: addr.countryCode,
         eligibleShipToAddress: true,
       };
     } else {

@@ -1,15 +1,13 @@
 import { take } from 'rxjs/operators';
 
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
-import { AddressHelper } from 'ish-core/models/address/address.helper';
 import { AddressMapper } from 'ish-core/models/address/address.mapper';
-import { Address } from 'ish-core/models/address/address.model';
-import { Attribute } from 'ish-core/models/attribute/attribute.model';
-import { Bucket } from 'ish-core/models/basket/bucket.model';
+import { BasketView } from 'ish-core/models/basket/basket.model';
+import { whenTruthy } from 'ish-core/utils/operators';
 
 import { CamCardsFacade } from '../../facades/cam-cards.facade';
 
-import { CamCamProductChecked, CamCard, CamCardContact } from './cam-card.model';
+import { CamCamProductsAddToCart, CamCard, CamCardContact } from './cam-card.model';
 
 export type MaintenanceStatus = 'ACTIVE' | 'INACTIVE' | 'MAINTENANCE' | 'READ_ONLY';
 
@@ -32,62 +30,53 @@ export class CamCardHelper {
     return itemsId;
   }
 
-  static addToCartFromCamCard(
-    val: CamCamProductChecked,
-    camCards: CamCard[],
-    buckets: Bucket[],
+  static addToCartFromCamCards(
     camCardsFacade: CamCardsFacade,
     productFacade: ShoppingFacade,
+    list: CamCamProductsAddToCart,
+    camCards: CamCard[],
     commonShippingMethodId: string,
-    basketId: string,
-    basketAddresses: Address[]
+    basketId: string
   ) {
-    const idcc = val.camCardRoot || val.camCardId;
-    const camCard = camCards.find(cc => cc.id === idcc);
-    const bucket = buckets?.find(b => b.createdFromCamCardId === idcc);
-    const customerId = camCard.customer.id;
+    const getActions = currentBasketId => {
+      camCards.forEach(cc => {
+        let productsToAdd = list[cc.id];
+        if (productsToAdd) {
+          const address = AddressMapper.fromCamCard(cc);
+          const customerId = cc.customer.id;
+          camCardsFacade
+            .getUserContactForCustomer$(customerId)
+            .pipe(take(1))
+            .subscribe((contactPerson: CamCardContact) => {
+              // TODO: what if !contactPerson
+              /* The `contactPerson` variable is always fulfilled since it is triggered in CamCard effects -> loadCustomers$ */
 
-    camCardsFacade
-      .getUserContactForCustomer$(customerId)
-      .pipe(take(1))
-      .subscribe((contactPerson: CamCardContact) => {
-        // TODO: what if !contactPerson
-        /* The `contactPerson` variable is always fulfilled since it is triggered in CamCard effects -> loadCustomers$ */
-        const address = AddressMapper.fromCamCard(camCard);
-        const extensions = bucket
-          ? {}
-          : {
-              customer: camCard.customer,
-              contactPerson,
-              orderMark: camCard.orderLabel,
-              invoiceLabel: camCard.invoiceLabel,
-              createdFromCamCardId: idcc,
-            };
-
-        const lineItemAttribute: Attribute = val.boxLabel && { name: 'boxLabel', type: 'String', value: val.boxLabel };
-
-        if (AddressHelper.isNewAddress(address, basketAddresses)) {
-          productFacade.addProductToBucket(
-            address,
-            commonShippingMethodId,
-            val.sku,
-            val.quantity,
-            basketId,
-            extensions,
-            lineItemAttribute
-          );
-        } else {
-          productFacade.addProductToBucketWithUrn(
-            AddressHelper.getUrn(address, basketAddresses),
-            commonShippingMethodId,
-            AddressHelper.getId(address, basketAddresses),
-            val.sku,
-            val.quantity,
-            basketId,
-            extensions,
-            lineItemAttribute
-          );
+              productsToAdd = {
+                ...productsToAdd,
+                extensions: {
+                  customer: cc.customer,
+                  contactPerson,
+                  orderMark: cc.orderLabel,
+                  invoiceLabel: cc.invoiceLabel,
+                  createdFromCamCardId: cc.id,
+                },
+                address,
+              };
+              productFacade.addProductsFromCamCard(productsToAdd, commonShippingMethodId, currentBasketId);
+            });
         }
       });
+    };
+
+    if (!basketId) {
+      productFacade
+        .createBasket$()
+        .pipe(whenTruthy(), take(1))
+        .subscribe((basket: BasketView) => {
+          getActions(basket.id);
+        });
+    } else {
+      getActions(basketId);
+    }
   }
 }

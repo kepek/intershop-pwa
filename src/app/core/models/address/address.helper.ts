@@ -15,7 +15,7 @@ export class AddressHelper {
   private static compare(address1: Address, address2: Address): boolean {
     return (
       address1.addressLine1 === address2.addressLine1 &&
-      address1.addressLine2 === address2.addressLine2 &&
+      address1.addressLine2 === (address2?.addressLine2 || '') &&
       address1.postalCode === address2.postalCode &&
       address1.city === address2.city &&
       address1.countryCode === address2.countryCode &&

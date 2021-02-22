@@ -16,8 +16,12 @@ import {
   addEmptyBucket,
   addItemsToBasket,
   addItemsToBasketFail,
+  addItemsToBasketFromCamCardSuccess,
   addItemsToBasketSuccess,
   addProductToBasket,
+  addProductToBucketAddressFromCamCardFail,
+  addProductsFromCamCardFail,
+  addProductsToBasketFromCamCard,
   addPromotionCodeToBasket,
   addPromotionCodeToBasketFail,
   addPromotionCodeToBasketSuccess,
@@ -143,6 +147,7 @@ export const basketReducer = createReducer(
     updateBasketShippingMethod,
     updateBasket,
     addProductToBasket,
+    addProductsToBasketFromCamCard,
     addPromotionCodeToBasket,
     removePromotionCodeFromBasket,
     addItemsToBasket,
@@ -167,6 +172,7 @@ export const basketReducer = createReducer(
     updateBasketItemsSuccess,
     deleteBasketItemSuccess,
     addItemsToBasketSuccess,
+    addItemsToBasketFromCamCardSuccess,
     setBasketPaymentSuccess,
     createBasketPaymentSuccess,
     updateBasketPaymentSuccess,
@@ -204,7 +210,9 @@ export const basketReducer = createReducer(
     updateConcardisCvcLastUpdatedFail,
     submitBasketFail,
     startCheckoutFail,
-    camfilDragLineItemFail
+    camfilDragLineItemFail,
+    addProductToBucketAddressFromCamCardFail,
+    addProductsFromCamCardFail
   ),
 
   on(loadBasketSuccess, mergeBasketSuccess, (state: BasketState, action) => {
@@ -256,12 +264,6 @@ export const basketReducer = createReducer(
     ...state,
     productUpdated: false,
   })),
-  on(addItemsToBasketSuccess, (state: BasketState, action) => ({
-    ...state,
-    info: action.payload.info,
-    lastTimeProductAdded: new Date().getTime(),
-    submittedBasket: undefined,
-  })),
   on(
     setBasketPaymentSuccess,
     createBasketPaymentSuccess,
@@ -275,12 +277,13 @@ export const basketReducer = createReducer(
       validationResults: initialValidationResults,
     })
   ),
-  on(addItemsToBasketSuccess, (state: BasketState, action) => ({
+  on(addItemsToBasketSuccess, addItemsToBasketFromCamCardSuccess, (state: BasketState, action) => ({
     ...state,
-    loading: false,
-    error: undefined,
     info: action.payload.info,
     lastTimeProductAdded: new Date().getTime(),
+    submittedBasket: undefined,
+    loading: false,
+    error: undefined,
     productAdded: true,
   })),
   on(resetProductAdded, (state: BasketState) => ({
