@@ -50,6 +50,42 @@
   </mat-sidenav-container>
 </ng-container>
 
+<mat-sidenav-container>
+  <mat-toolbar color="primary">
+    <span class="title">Camfil Date Picker</span>
+  </mat-toolbar>
+  <div class="demo-content">
+    <mat-card>
+      <mat-card-content>
+        <mat-form-field appearance="fill">
+          <mat-label>Different Locale</mat-label>
+          <input
+            matInput
+            [matDatepicker]="dp"
+            [formControl]="currentDate"
+            (dateInput)="onDateInput($event.value)"
+            (dateChange)="onDateChange($event.value)"
+          />
+          <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+          <mat-datepicker #dp></mat-datepicker>
+        </mat-form-field>
+        <hr />
+        <mat-button-toggle-group [value]="locales[0]" name="locale" aria-label="DatePicker Locale">
+          <mat-button-toggle *ngFor="let locale of locales" (click)="onChangeLocale(locale)" value="locale">
+            {{locale}}
+          </mat-button-toggle>
+
+        </mat-button-toggle-group>
+        <hr>
+        <p>currentDatePickerValue: {{currentDatePickerValue}}</p>
+        <p>CurrentLocale: {{currentLocale}}</p>
+        <p>CurrentDate: {{currentDate}}</p>
+      </mat-card-content>
+    </mat-card>
+    <!-- CamfilProductTitleComponent -->
+  </div>
+</mat-sidenav-container>
+
 <ng-container *ngIf="category && product; else loading">
   <ng-container *ngIf="product$ | async as product; else loading">
     <mat-sidenav-container>
@@ -57,7 +93,6 @@
         <span class="title">Camfil Demo</span>
       </mat-toolbar>
       <div class="demo-content">
-        <!-- CamfilProductTitleComponent -->
         <mat-card>
           <mat-card-content>
             <h2 class="example-h2">Date Formatting</h2>

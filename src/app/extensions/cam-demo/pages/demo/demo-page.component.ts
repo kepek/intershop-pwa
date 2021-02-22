@@ -1,9 +1,26 @@
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { AfterViewInit, ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  Inject,
+  LOCALE_ID,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
+import { MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatChipInputEvent } from '@angular/material/chips';
-import { ErrorStateMatcher } from '@angular/material/core';
+import {
+  DateAdapter,
+  ErrorStateMatcher,
+  MAT_DATE_FORMATS,
+  MAT_DATE_LOCALE,
+  MatDateFormats,
+  NativeDateAdapter,
+} from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -12,11 +29,13 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { completeIconSet } from 'camfil-icons';
 import { Observable, Subject } from 'rxjs';
-import { map, startWith, take, takeUntil } from 'rxjs/operators';
+import { map, startWith, take, takeUntil, tap } from 'rxjs/operators';
 
+import { AppFacade } from 'ish-core/facades/app.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { CategoryView } from 'ish-core/models/category-view/category-view.model';
 import { HttpError } from 'ish-core/models/http-error/http-error.model';
+import { Locale } from 'ish-core/models/locale/locale.model';
 import { ProductView } from 'ish-core/models/product-view/product-view.model';
 import { ProductCompletenessLevel } from 'ish-core/models/product/product.helper';
 import { whenTruthy } from 'ish-core/utils/operators';
@@ -60,11 +79,39 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   }
 }
 
+export const CAMFIL_FORMATS: MatDateFormats = {
+  parse: {
+    dateInput: 'L',
+  },
+  display: {
+    dateInput: 'L',
+    monthYearLabel: 'MMM YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'MMMM YYYY',
+  },
+};
+
 @Component({
   selector: 'camfil-demo-page',
   templateUrl: './demo-page.component.html',
   styleUrls: ['./demo-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [
+    // The locale would typically be provided on the root module of your application. We do it at
+    // the component level here, due to limitations of our example generation script.
+    { provide: MAT_DATE_LOCALE, useValue: 'sv-SE' },
+
+    // `MomentDateAdapter` and `MAT_MOMENT_DATE_FORMATS` can be automatically provided by importing
+    // `MatMomentDateModule` in your applications root module. We provide it at the component level
+    // here, due to limitations of our example generation script.
+    {
+      provide: DateAdapter,
+      useClass: NativeDateAdapter,
+      deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS],
+    },
+    // { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS },
+    { provide: MAT_DATE_FORMATS, useValue: CAMFIL_FORMATS },
+  ],
 })
 export class DemoPageComponent implements AfterViewInit, OnInit, OnDestroy {
   ahuManufacturers$: Observable<Manufacturer[]>;
@@ -97,12 +144,17 @@ export class DemoPageComponent implements AfterViewInit, OnInit, OnDestroy {
     private shoppingFacade: ShoppingFacade,
     private fb: FormBuilder,
     private ahuFacade: CamAhuFacade,
-    private router: Router
+    private appFacade: AppFacade,
+    private router: Router,
+    private dateAdapter: DateAdapter<any>,
+    @Inject(LOCALE_ID) lang: string
   ) {
     // Update the value for the progress-bar on an interval.
     setInterval(() => {
       this.progress = (this.progress + Math.floor(Math.random() * 4) + 1) % 100;
     }, 200);
+
+    console.log('this.lang', lang);
   }
   isDarkTheme = false;
   lastDialogResult: string;
@@ -189,7 +241,27 @@ export class DemoPageComponent implements AfterViewInit, OnInit, OnDestroy {
 
   matcher = new MyErrorStateMatcher();
 
+  currentLocale: Locale;
+
+  currentDate = new FormControl(new Date());
+
+  currentDatePickerValue = '';
+
+  locales = ['sv-SE', 'en-GB', 'en-US', 'pl-PL', 'ja-JP', 'fr-FR', 'de-DE'];
+
   @ViewChild(MatSort) sort: MatSort;
+
+  onChangeLocale(locale: string) {
+    this.dateAdapter.setLocale(locale);
+  }
+
+  onDateInput(eventValue: string) {
+    this.currentDatePickerValue = eventValue;
+  }
+
+  onDateChange(eventValue: string) {
+    this.currentDatePickerValue = eventValue;
+  }
 
   selectAhuManufacturer(event) {
     const manufacturerId = event.value;
@@ -221,6 +293,12 @@ export class DemoPageComponent implements AfterViewInit, OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    // Camfil Date Picker
+    this.appFacade.currentLocale$.pipe(
+      tap(currentLocale => {
+        this.currentLocale = currentLocale;
+      })
+    );
     // AHU-Manufacturers
     this.ahuManufacturers$ = this.ahuFacade.ahuManufacturers$();
     this.ahuManufacturersLoading$ = this.ahuFacade.ahuManufacturersLoading$;
