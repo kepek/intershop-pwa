@@ -13,6 +13,6 @@ export class CamfilAhuSlotsComponent {
    * The product with the image information.
    */
   @Input() product: Product;
-  slots = new Array(4);
+  @Input() slots: [];
   items = new Array(5);
 }
