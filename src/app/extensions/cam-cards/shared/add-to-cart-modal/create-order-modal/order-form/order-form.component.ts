@@ -60,6 +60,7 @@ export class OrderFormComponent implements OnInit, OnDestroy {
       info: [this.orderToEdit?.info || '', [Validators.maxLength(150)]],
       contactFull: [],
       addressFull: [],
+      customerFull: this.customersArr,
     });
   }
 
@@ -68,11 +69,11 @@ export class OrderFormComponent implements OnInit, OnDestroy {
     this.addresses$.subscribe(addresses => {
       const address = addresses.filter(element => element.id === id)[0];
       this.addressForm?.patchValue({
-        company: address.addressName,
-        address: address.addressLine1,
-        building: address.addressLine2,
-        zipCode: address.postalCode,
-        area: address.city,
+        company: address?.addressName,
+        address: address?.addressLine1,
+        building: address?.addressLine2,
+        zipCode: address?.postalCode,
+        area: address?.city,
         addressFull: address,
       });
     });

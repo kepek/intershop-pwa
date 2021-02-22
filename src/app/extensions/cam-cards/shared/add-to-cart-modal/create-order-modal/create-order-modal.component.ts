@@ -201,11 +201,13 @@ export class CreateOrderModalComponent implements OnInit, OnDestroy {
 
   getBasketExtension(): BasketExtensions {
     const addressForm = this.orderFormCmp.addressForm;
+    const customer = addressForm.get('customerFull').value;
 
     return {
       customer: {
-        id: addressForm.get('customer').value,
-        customerNo: addressForm.get('customer').value,
+        id: customer.id,
+        customerNo: customer.customerNo,
+        companyName: customer.companyName,
       },
       contactPerson: addressForm.get('contactFull').value,
       orderMark: addressForm.get('orderMark').value,
