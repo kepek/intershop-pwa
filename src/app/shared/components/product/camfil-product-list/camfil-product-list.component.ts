@@ -1,6 +1,7 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 
+import { PRODUCT_LISTING_ITEMS_PER_PAGE } from 'ish-core/configurations/injection-keys';
 import { AppFacade } from 'ish-core/facades/app.facade';
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
@@ -30,11 +31,13 @@ export class CamfilProductListComponent implements OnInit {
   @Input() limit?: number;
 
   listingLoading$: Observable<boolean>;
+  minForBottomLoading: number;
 
   constructor(
     private shoppingFacade: ShoppingFacade,
     private appFacade: AppFacade,
-    private checkoutFacade: CheckoutFacade
+    private checkoutFacade: CheckoutFacade,
+    @Inject(PRODUCT_LISTING_ITEMS_PER_PAGE) private itemsPerPage: number
   ) {}
   deviceType$: Observable<DeviceType>;
   ngOnInit(): void {
@@ -43,6 +46,8 @@ export class CamfilProductListComponent implements OnInit {
 
     this.listingLoading$ = this.shoppingFacade.productListingLoading$;
     this.deviceType$ = this.appFacade.deviceType$;
+
+    this.minForBottomLoading = this.itemsPerPage - 2;
   }
 
   get isSimpleView() {
