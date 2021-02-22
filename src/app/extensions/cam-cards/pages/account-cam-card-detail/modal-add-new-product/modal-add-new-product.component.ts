@@ -58,6 +58,7 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy {
 
   showSkuError = false;
   loading = false;
+  isSubmitted = false;
 
   private destroy$ = new Subject();
   basketAddresses: Address[];
@@ -96,7 +97,7 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy {
     });
   }
 
-  isSkuValid = () => !this.product.failed && this.product.availability;
+  isSkuValid = () => this.isSubmitted || (!this.product.failed && this.product.availability);
 
   validateSku() {
     const sku = this.productForm.get('sku').value;
@@ -106,9 +107,12 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy {
       this.product$ = this.productFacade.product$(sku, ModalAddNewProductComponent.REQUIRED_COMPLETENESS_LEVEL);
 
       this.product$.pipe(takeUntil(this.destroy$)).subscribe(product => {
-        this.loading = false;
         this.product = product;
         this.showSkuError = !this.isSkuValid();
+
+        if (!this.isSubmitted) {
+          this.loading = false;
+        }
 
         if (this.isSkuValid()) {
           this.setQuantityValidation(this.product.minOrderQuantity, this.product.maxOrderQuantity);
@@ -129,6 +133,8 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy {
       const label = this.getField('boxLabel') ? String(this.getField('boxLabel').value) : undefined;
       const comment: CamCardItemComment = { label };
       const lineItemAttribute = label ? { name: 'boxLabel', type: 'String', value: label } : undefined;
+
+      this.isSubmitted = true;
 
       if (this.addToOrder) {
         this.loading = true;

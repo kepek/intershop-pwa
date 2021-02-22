@@ -33,6 +33,7 @@ export class CreateOrderButtonComponent {
       invoiceLabel: virtualBucket.invoiceLabel,
       customer: virtualBucket.customer,
       shippingMethod: this.shippingMethodId,
+      phoneNumber: virtualBucket.phoneNumber,
     };
 
     this.checkoutFacade.addEmptyBucket(bucket);
