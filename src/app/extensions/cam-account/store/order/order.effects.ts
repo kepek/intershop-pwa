@@ -1,8 +1,12 @@
-import { Injectable } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { concatMap, map } from 'rxjs/operators';
+import { Store, select } from '@ngrx/store';
+import { concatMap, map, takeWhile, tap, withLatestFrom } from 'rxjs/operators';
 
-import { mapErrorToAction, mapToPayloadProperty } from 'ish-core/utils/operators';
+import { selectQueryParam, selectUrl } from 'ish-core/store/core/router';
+import { mapErrorToAction, mapToPayloadProperty, whenTruthy } from 'ish-core/utils/operators';
 
 import { OrderService } from '../../services/order/order.service';
 
@@ -29,7 +33,13 @@ import {
 
 @Injectable()
 export class OrderEffects {
-  constructor(private actions$: Actions, private camfilOrderService: OrderService) {}
+  constructor(
+    private actions$: Actions,
+    private camfilOrderService: OrderService,
+    private store: Store,
+    private router: Router,
+    @Inject(PLATFORM_ID) private platformId: string
+  ) {}
 
   loadOrder$ = createEffect(() =>
     this.actions$.pipe(
@@ -100,11 +110,24 @@ export class OrderEffects {
       ofType(createOrderDuplicate),
       mapToPayloadProperty('orderId'),
       concatMap(orderId =>
-        this.camfilOrderService.createOrderDuplicate(orderId).pipe(
-          map(createdOrder => createOrderDuplicateSuccess({ orderId, createdOrder })),
-          mapErrorToAction(createOrderDuplicateFail)
-        )
+        this.camfilOrderService
+          .createOrderDuplicate(orderId)
+          .pipe(map(createOrderDuplicateSuccess), mapErrorToAction(createOrderDuplicateFail))
       )
     )
+  );
+
+  redirectAfterOrderDuplicate$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(createOrderDuplicateSuccess),
+        takeWhile(() => isPlatformBrowser(this.platformId)),
+        whenTruthy(),
+        withLatestFrom(this.store.pipe(select(selectUrl)), this.store.pipe(select(selectQueryParam('returnUrl')))),
+        tap(() => {
+          this.router.navigateByUrl('/checkout');
+        })
+      ),
+    { dispatch: false }
   );
 }
