@@ -1459,10 +1459,10 @@
   "tacton.submit.success.message": "Your request has been successfully submitted. We will e-mail <strong>{{0}}</strong> to keep you updated on the status of your request.",
   "tacton.undo.tooltip": "Undo",
   "textarea.max_limit": "Your message: {{0}} characters remaining.",
-  "Swedish": "Swedish",
-  "Swedish (Sweden)": "Sweden",
-  "Finnish": "Finnish",
-  "Finnish (Finland)": "Finnish (Finland)",
-  "English": "English",
-  "English (Great Britain)": "English (Great Britain)"
+  "Swedish": "Ruotsin kieli",
+  "Swedish (Sweden)": "Ruotsi",
+  "Finnish": "Suomalainen",
+  "Finnish (Finland)": "Suomi (Suomi)",
+  "English": "Englanti",
+  "English (Great Britain)": "Englanti (Iso-Britannia)"
 }

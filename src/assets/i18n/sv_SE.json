@@ -1463,5 +1463,11 @@
   "tacton.submit.error.message": "Ett tekniskt fel uppstod. Försök igen senare.",
   "tacton.submit.success.message": "Din förfrågan har skickats. Vi mailar <strong>{{0}}</strong> med status på din förfrågan.",
   "tacton.undo.tooltip": "Ångra",
-  "textarea.max_limit": "Ditt meddelande: {{0}} tecken kvar."
+  "textarea.max_limit": "Ditt meddelande: {{0}} tecken kvar.",
+  "Swedish": "Svenska",
+  "Swedish (Sweden)": "Svenska (Sverige)",
+  "Finnish": "Finska",
+  "Finnish (Finland)": "Finska (Finland)",
+  "English": "Engelska",
+  "English (Great Britain)": "Engelska (Storbritannien)"
 }
