@@ -21,7 +21,7 @@ describe('Order Effects', () => {
 
   describe('loadOrder$', () => {
     it('should not dispatch actions when encountering loadOrder', () => {
-      const action = loadOrder({"orderId": "1234"});
+      const action = loadOrder({ orderId: '1234' });
       actions$ = hot('-a-a-a', { a: action });
       const expected$ = cold('------');
 

@@ -27,7 +27,7 @@ describe('Order Selectors', () => {
   });
 
   describe('loadOrder', () => {
-    const action = loadOrder({"orderId": "1234"});
+    const action = loadOrder({ orderId: '1234' });
 
     beforeEach(() => {
       store$.dispatch(action);
