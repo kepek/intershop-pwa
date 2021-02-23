@@ -157,6 +157,7 @@ export const ENVIRONMENT_DEFAULTS: Environment = {
   defaultDeviceType: 'mobile',
   locales: [
     { lang: 'sv_SE', currency: 'SEK', value: 'se', displayName: 'Swedish', displayLong: 'Swedish (Sweden)' },
+    { lang: 'fi_FI', currency: 'EUR', value: 'fi', displayName: 'Finnish', displayLong: 'Finnish (Finland)' },
     {
       lang: 'en_GB',
       currency: 'GBP',

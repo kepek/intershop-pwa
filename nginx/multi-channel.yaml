@@ -2,6 +2,9 @@
   - baseHref: /sv-se
     channel: Camfil-CamfilSE-Site
     lang: sv_SE
+  - baseHref: /fi-fi
+    channel: Camfil-CamfilSE-Site
+    lang: fi_FI
   - baseHref: /en-gb
     channel: Camfil-CamfilSE-Site
     lang: en_GB

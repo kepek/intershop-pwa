@@ -1,4 +1,10 @@
 {
+  "English": "English",
+  "English (Great Britain)": "English (Great Britain)",
+  "Finnish": "Finnish",
+  "Finnish (Finland)": "Finnish (Finland)",
+  "Swedish": "Swedish",
+  "Swedish (Sweden)": "Sweden",
   "account.address.address1.missing.error": "Address 1 is mandatory. Please provide a street.",
   "account.address.apo_fpo.link": "APO/FPO",
   "account.address.apo_fpo.tooltip": "Enter APO or FPO in the &quot;City&quot; field and select one of the following three choices from the &quot;State&quot; pull-down menu: AA for Armed Forces of America, AE for Armed Forces Europe, AP for Armed Forces Pacific.",
@@ -569,7 +575,6 @@
   "camfil.account.cam_card.details.total.text": "Your total (net price)",
   "camfil.account.cam_card.edit": "Edit",
   "camfil.account.cam_card.edit.button.back.label": "Back to CamCards",
-  "camfil.account.cam_card.edit.confirmation": "Camcard has been updated",
   "camfil.account.cam_card.edit.header": "Create new camcard",
   "camfil.account.cam_card.edit.heading": "Edit CamCard",
   "camfil.account.cam_card.edit_form.save_button.text": "Save",
