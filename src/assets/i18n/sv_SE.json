@@ -1,4 +1,10 @@
 {
+  "English": "Engelska",
+  "English (Great Britain)": "Engelska (Storbritannien)",
+  "Finnish": "Finska",
+  "Finnish (Finland)": "Finska (Finland)",
+  "Swedish": "Svenska",
+  "Swedish (Sweden)": "Svenska (Sverige)",
   "account.address.address1.missing.error": "Adress 1 är obligatorisk, ange gatuadress.",
   "account.address.apo_fpo.link": "APO/FPO",
   "account.address.apo_fpo.tooltip": "Ange APO eller FPO i &quot;Stad&quot; fältet och välj en av följande tre val från &quot;Ort&quot; drop-down menyn: AA för Armed Forces of America, AE för Armed Forces Europe, AP för Armed Forces Pacific.",
@@ -569,7 +575,6 @@
   "camfil.account.cam_card.details.total.text": "Totalt (inkl. moms)",
   "camfil.account.cam_card.edit": "Redigera",
   "camfil.account.cam_card.edit.button.back.label": "Tillbaka till CamCards",
-  "camfil.account.cam_card.edit.confirmation": "Camcard uppdaterat",
   "camfil.account.cam_card.edit.header": "Skapa nytt CamCard",
   "camfil.account.cam_card.edit.heading": "Redigera CamCard",
   "camfil.account.cam_card.edit_form.save_button.text": "Spara",
@@ -768,9 +773,7 @@
   "camfil.checkout.form.order_mark": "Ordermärke",
   "camfil.checkout.invoice": "Faktura",
   "camfil.checkout.invoice_address": "Fakturaadress ",
-  "camfil.checkout.message.cannot_process": "Kan inte slutföra din beställning",
   "camfil.checkout.message.order_created": "Order skapad",
-  "camfil.checkout.message.understood": "Jag förstår",
   "camfil.checkout.new_camcard.button.create": "Skapa CamCards",
   "camfil.checkout.new_camcard.header": "{{0}} nya CamCards skapas från dina beställningar",
   "camfil.checkout.number_of_orders": "Antal ordrar",
@@ -1463,11 +1466,5 @@
   "tacton.submit.error.message": "Ett tekniskt fel uppstod. Försök igen senare.",
   "tacton.submit.success.message": "Din förfrågan har skickats. Vi mailar <strong>{{0}}</strong> med status på din förfrågan.",
   "tacton.undo.tooltip": "Ångra",
-  "textarea.max_limit": "Ditt meddelande: {{0}} tecken kvar.",
-  "Swedish": "Svenska",
-  "Swedish (Sweden)": "Svenska (Sverige)",
-  "Finnish": "Finska",
-  "Finnish (Finland)": "Finska (Finland)",
-  "English": "Engelska",
-  "English (Great Britain)": "Engelska (Storbritannien)"
+  "textarea.max_limit": "Ditt meddelande: {{0}} tecken kvar."
 }
