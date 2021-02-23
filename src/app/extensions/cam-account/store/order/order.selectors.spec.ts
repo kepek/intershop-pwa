@@ -13,7 +13,7 @@ describe('Order Selectors', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [CamAccountStoreModule.forTesting('order'), CoreStoreModule.forTesting()],
+      imports: [CamAccountStoreModule.forTesting('orders'), CoreStoreModule.forTesting()],
       providers: [provideStoreSnapshots()],
     });
 
@@ -27,7 +27,7 @@ describe('Order Selectors', () => {
   });
 
   describe('loadOrder', () => {
-    const action = loadOrder();
+    const action = loadOrder({"orderId": "1234"});
 
     beforeEach(() => {
       store$.dispatch(action);
