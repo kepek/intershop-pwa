@@ -19,7 +19,7 @@ export const loadOrdersSuccess = createAction(
   payload<{ orders: Order[] }>()
 );
 
-export const selectOrder = createAction('[Orders] Select Order', payload<{ orderId: string }>());
+export const selectOrder = createAction('[Orders Camfil] Select Order', payload<{ orderId: string }>());
 
 export const loadOrderLineItems = createAction(
   '[Order Camfil API] Load Order LineItems',

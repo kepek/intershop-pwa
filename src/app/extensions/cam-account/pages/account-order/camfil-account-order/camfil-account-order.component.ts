@@ -11,6 +11,7 @@ import { CamAccountFacade } from '../../../facades/cam-account.facade';
 import { DeliveryAddress } from '../../../models/deliveryAddress/deliveryAddress.interface';
 import { Order } from '../../../models/order/order.model';
 import { OrderLineItem } from '../../../models/orderLineItem/orderLineItem.interface';
+import { mapToProperty, whenTruthy } from 'ish-core/utils/operators';
 
 /**
  * The Order Page Component displays the details of an order. See also {@link OrderPageContainerComponent}
@@ -36,17 +37,20 @@ export class CamfilAccountOrderComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject();
   lineItems: OrderLineItem[];
   reOrderText: string;
-
+  productsAvailability: boolean = true;
   @ViewChild(CamfilSmallCtaModalComponent) modal: CamfilSmallCtaModalComponent;
 
   ngOnInit() {
     this.camAccountFacade
       .orderLineItems$(this.order?.id)
-      .pipe(takeUntil(this.destroy$))
+      .pipe(whenTruthy(), takeUntil(this.destroy$))
       .subscribe(lineItems => {
         this.lineItems = lineItems;
-        this.camAccountFacade.orderTrackAndTrace$(this.order?.id);
-        this.camAccountFacade.orderAdditionalTotalCost$(this.order?.id);
+        if (this.lineItems && this.lineItems.length) {
+          this.camAccountFacade.orderTrackAndTrace$(this.order?.id);
+          this.camAccountFacade.orderAdditionalTotalCost$(this.order?.id);
+          this.areProductsAvailable();
+        }
       });
 
     this.deliveryAddress = this.order?.deliveryAddress;
@@ -54,7 +58,7 @@ export class CamfilAccountOrderComponent implements OnInit, OnDestroy {
 
   placeReOrder() {
     // Check products availability
-    if (!this.areProductsAvailable()) {
+    if (this.productsAvailability) {
       // API call /camfilorder/orderId Place reorder and redirect to checkout page
       this.camAccountFacade.createOrderDuplicate(this.order.id);
     } else {
@@ -69,15 +73,16 @@ export class CamfilAccountOrderComponent implements OnInit, OnDestroy {
   }
 
   areProductsAvailable() {
-    let canPlaceOrder = true;
     this.lineItems?.forEach(item =>
       this.shoppingFacade
         .product$(item.sku, CamfilAccountOrderComponent.REQUIRED_COMPLETENESS_LEVEL)
-        .pipe(take(1), takeUntil(this.destroy$))
-        .subscribe(res => (canPlaceOrder = res.availability))
+        .pipe(takeUntil(this.destroy$), mapToProperty('availability'))
+        .subscribe(availability => {
+          if (!availability) {
+            this.productsAvailability = false;
+          }
+        })
     );
-
-    return canPlaceOrder;
   }
 
   ngOnDestroy() {

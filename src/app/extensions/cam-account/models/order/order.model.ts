@@ -1,10 +1,10 @@
-import { Order as IshOrder } from 'ish-core/models/order/order.model';
 
 import { AdditionalTotalCost } from '../additionalTotalCost/additionalTotalCost.interface';
 import { DeliveryAddress } from '../deliveryAddress/deliveryAddress.interface';
 import { TrackAndTrace } from '../trackAndTrace/trackAndTrace.interface';
 
-export interface Order extends IshOrder {
+export interface Order {
+  id: string;
   contactPerson?: string;
   currency?: string;
   customerName?: string;
@@ -26,6 +26,6 @@ export interface Order extends IshOrder {
   totalOrderedQty: number;
   totalPriceAfterDiscountExVAT: number;
   lineItems?: [];
-  trackAndTrace?: TrackAndTrace[];
+  trackAndTrace?: TrackAndTrace;
   additionalTotalCost?: AdditionalTotalCost;
 }

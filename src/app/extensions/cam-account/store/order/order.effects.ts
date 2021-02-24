@@ -2,10 +2,8 @@ import { isPlatformBrowser } from '@angular/common';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { Store, select } from '@ngrx/store';
-import { concatMap, map, takeWhile, tap, withLatestFrom } from 'rxjs/operators';
+import { concatMap, filter, map, takeWhile, tap, withLatestFrom } from 'rxjs/operators';
 
-import { selectQueryParam, selectUrl } from 'ish-core/store/core/router';
 import { mapErrorToAction, mapToPayloadProperty, whenTruthy } from 'ish-core/utils/operators';
 
 import { OrderService } from '../../services/order/order.service';
@@ -29,15 +27,19 @@ import {
   loadOrders,
   loadOrdersFail,
   loadOrdersSuccess,
+  selectOrder,
 } from './order.actions';
+import { select, Store } from '@ngrx/store';
+import { ofUrl, selectRouteParam } from 'ish-core/store/core/router';
+import { getSelectedOrderId } from './order.selectors';
 
 @Injectable()
 export class OrderEffects {
   constructor(
     private actions$: Actions,
     private camfilOrderService: OrderService,
-    private store: Store,
     private router: Router,
+    private store: Store,
     @Inject(PLATFORM_ID) private platformId: string
   ) {}
 
@@ -51,6 +53,17 @@ export class OrderEffects {
           mapErrorToAction(loadOrderFail)
         )
       )
+    )
+  );
+
+  routeListenerForSelectingOrder$ = createEffect(() =>
+    this.store.pipe(
+      ofUrl(/^\/(account\/orders.*|checkout\/receipt)/),
+      select(selectRouteParam('orderId')),
+      withLatestFrom(this.store.pipe(select(getSelectedOrderId))),
+      filter(([fromAction, selectedOrderId]) => fromAction && fromAction !== selectedOrderId),
+      map(([orderId]) => orderId),
+      map(orderId => selectOrder({ orderId }))
     )
   );
 
@@ -123,7 +136,6 @@ export class OrderEffects {
         ofType(createOrderDuplicateSuccess),
         takeWhile(() => isPlatformBrowser(this.platformId)),
         whenTruthy(),
-        withLatestFrom(this.store.pipe(select(selectUrl)), this.store.pipe(select(selectQueryParam('returnUrl')))),
         tap(() => {
           this.router.navigateByUrl('/checkout');
         })

@@ -59,9 +59,21 @@ export const orderReducer = createReducer(
   }),
   on(loadOrderLineItemsSuccess, (state: OrdersState, action) => {
     const { lineItems, orderId } = action.payload;
+    const totalDeliveredQty = lineItems.reduce((total, current) => total + current.deliveredQty, 0);
+    const totalOrderedQty = lineItems.reduce((total, current) => total + current.orderedQty, 0);
 
     return {
-      ...orderAdapter.updateOne({ id: orderId, changes: { lineItems: lineItems?.elements } }, state),
+      ...orderAdapter.updateOne(
+        {
+          id: orderId,
+          changes: {
+            lineItems: lineItems,
+            totalDeliveredQty: totalDeliveredQty,
+            totalOrderedQty: totalOrderedQty,
+          },
+        },
+        state
+      ),
     };
   }),
   on(loadOrderTrackAndTraceSuccess, (state: OrdersState, action) => {

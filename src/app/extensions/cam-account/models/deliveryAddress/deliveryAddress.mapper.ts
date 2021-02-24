@@ -6,15 +6,14 @@ import { DeliveryAddress } from './deliveryAddress.interface';
 
 @Injectable({ providedIn: 'root' })
 export class DeliveryAddressMapper {
-  static camfilfromData(payload: OrderData): DeliveryAddress {
-    if (!Array.isArray(payload.elements)) {
-      const { elements } = payload;
+  static fromData(orderData: OrderData): DeliveryAddress {
+    if (orderData) {
       return {
-        deliveryAddressName: elements.deliveryAddressName,
-        deliveryAddressName2: elements.deliveryAddressName2,
-        deliveryAddressAddress: elements.deliveryAddressAddress,
-        deliveryAddressZipCode: elements.deliveryAddressZipCode,
-        deliveryAddressCity: elements.deliveryAddressCity,
+        deliveryAddressName: orderData.deliveryAddressName,
+        deliveryAddressName2: orderData.deliveryAddressName2,
+        deliveryAddressAddress: orderData.deliveryAddressAddress,
+        deliveryAddressZipCode: orderData.deliveryAddressZipCode,
+        deliveryAddressCity: orderData.deliveryAddressCity,
       };
     }
   }

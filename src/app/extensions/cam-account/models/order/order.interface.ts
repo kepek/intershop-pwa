@@ -1,6 +1,5 @@
-import { OrderBaseData as IshOrderBaseData, OrderData as IshOrderData } from 'ish-core/models/order/order.interface';
-
-export interface OrderBaseData extends IshOrderBaseData {
+export interface OrderData {
+  id: string;
   contactPerson?: string;
   currency?: string;
   customerName?: string;
@@ -26,8 +25,4 @@ export interface OrderBaseData extends IshOrderBaseData {
   totalDeliveredQty: number;
   totalOrderedQty: number;
   totalPriceAfterDiscountExVAT: number;
-}
-
-export interface OrderData extends IshOrderData {
-  elements: OrderBaseData | OrderBaseData[];
 }

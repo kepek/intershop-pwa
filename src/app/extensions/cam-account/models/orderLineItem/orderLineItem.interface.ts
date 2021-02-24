@@ -13,6 +13,3 @@ export interface OrderLineItem {
   type: string;
 }
 
-export interface OrderLineItemData {
-  elements: OrderLineItem | OrderLineItem[];
-}
