@@ -7,7 +7,6 @@ export class OrderLineMockData {
   static getOrder() {
     return {
       id: '4711',
-      documentNo: '12345678',
       customerNo: 'OilCorp',
       contactPerson: 'Tony Halik',
       customerName: 'Bio Tech',
@@ -19,6 +18,7 @@ export class OrderLineMockData {
       orderChannel: 'Channel 5',
       orderComment: 'Comment 1',
       orderDate: '23-02-2021',
+      taxAmount: 20,
       orderGoodsMark: 'Goods mark',
       orderStatus: 'Confirmed',
       orderNumber: 'xdpas15ca',
@@ -40,16 +40,14 @@ export class OrderLineMockData {
     } as DeliveryAddress;
   }
 
-  static getTrackAndTrace(): TrackAndTrace[] {
-    return [
-      {
-        name: 'Track 1',
-        id: '123sa',
-        ownerId: '4711',
-        linkText: 'DHL track',
-        link: 'https://www.dhl.com/se-en/home/tracking.html',
-      },
-    ];
+  static getTrackAndTrace(): TrackAndTrace {
+    return {
+      name: 'Track 1',
+      id: '123sa',
+      ownerId: '4711',
+      linkText: 'DHL track',
+      link: 'https://www.dhl.com/se-en/home/tracking.html',
+    };
   }
   static getOrderLineItems(): OrderLineItem[] {
     return [

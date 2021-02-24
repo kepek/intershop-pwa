@@ -10,6 +10,7 @@ import { anything, instance, mock, when } from 'ts-mockito';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { PricePipe } from 'ish-core/models/price/price.pipe';
 import { ProductView } from 'ish-core/models/product-view/product-view.model';
+import { DatePipe } from 'ish-core/pipes/date.pipe';
 import { ProductRoutePipe } from 'ish-core/routing/product/product-route.pipe';
 import { BasketMockData } from 'ish-core/utils/dev/basket-mock-data';
 import { BasketPromotionComponent } from 'ish-shared/components/basket/basket-promotion/basket-promotion.component';
@@ -43,6 +44,7 @@ describe('Camfil Line Item Table Component', () => {
         MockComponent(PromotionDetailsComponent),
         MockComponents(LazyProductAddToOrderTemplateComponent),
         MockComponents(LazyProductAddToWishlistComponent),
+        MockPipe(DatePipe),
         MockPipe(PricePipe),
         MockPipe(ProductRoutePipe),
       ],

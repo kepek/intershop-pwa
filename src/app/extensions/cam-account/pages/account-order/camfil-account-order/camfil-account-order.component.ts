@@ -1,17 +1,17 @@
 import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Subject } from 'rxjs';
-import { take, takeUntil } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { ProductCompletenessLevel } from 'ish-core/models/product/product.model';
+import { mapToProperty, whenTruthy } from 'ish-core/utils/operators';
 import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
 
 import { CamAccountFacade } from '../../../facades/cam-account.facade';
 import { DeliveryAddress } from '../../../models/deliveryAddress/deliveryAddress.interface';
 import { Order } from '../../../models/order/order.model';
 import { OrderLineItem } from '../../../models/orderLineItem/orderLineItem.interface';
-import { mapToProperty, whenTruthy } from 'ish-core/utils/operators';
 
 /**
  * The Order Page Component displays the details of an order. See also {@link OrderPageContainerComponent}
@@ -32,12 +32,14 @@ export class CamfilAccountOrderComponent implements OnInit, OnDestroy {
     private shoppingFacade: ShoppingFacade
   ) {}
   private static REQUIRED_COMPLETENESS_LEVEL = ProductCompletenessLevel.List;
+  private destroy$ = new Subject();
+
   @Input() order: Order;
   deliveryAddress: DeliveryAddress;
-  private destroy$ = new Subject();
+
   lineItems: OrderLineItem[];
   reOrderText: string;
-  productsAvailability: boolean = true;
+  productsAvailability = true;
   @ViewChild(CamfilSmallCtaModalComponent) modal: CamfilSmallCtaModalComponent;
 
   ngOnInit() {
@@ -76,7 +78,7 @@ export class CamfilAccountOrderComponent implements OnInit, OnDestroy {
     this.lineItems?.forEach(item =>
       this.shoppingFacade
         .product$(item.sku, CamfilAccountOrderComponent.REQUIRED_COMPLETENESS_LEVEL)
-        .pipe(takeUntil(this.destroy$), mapToProperty('availability'))
+        .pipe(mapToProperty('availability'), takeUntil(this.destroy$))
         .subscribe(availability => {
           if (!availability) {
             this.productsAvailability = false;

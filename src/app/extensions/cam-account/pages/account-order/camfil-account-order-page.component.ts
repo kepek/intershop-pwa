@@ -25,7 +25,7 @@ export class CamfilAccountOrderPageComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.camAccountFacade
       .orders$()
-      .pipe(takeUntil(this.destroy$))
+      ?.pipe(takeUntil(this.destroy$))
       .subscribe(orders => {
         this.orders = orders;
         this.order$ = this.camAccountFacade.selectedOrder$;

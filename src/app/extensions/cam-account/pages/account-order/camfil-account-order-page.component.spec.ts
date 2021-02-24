@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MockComponent } from 'ng-mocks';
 import { instance, mock } from 'ts-mockito';
 
-import { AccountFacade } from 'ish-core/facades/account.facade';
+import { CamAccountFacade } from '../../facades/cam-account.facade';
 
 import { CamfilAccountOrderPageComponent } from './camfil-account-order-page.component';
 import { CamfilAccountOrderComponent } from './camfil-account-order/camfil-account-order.component';
@@ -15,7 +15,7 @@ describe('Camfil Account Order Page Component', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [CamfilAccountOrderPageComponent, MockComponent(CamfilAccountOrderComponent)],
-      providers: [{ provide: AccountFacade, useFactory: () => instance(mock(AccountFacade)) }],
+      providers: [{ provide: CamAccountFacade, useFactory: () => instance(mock(CamAccountFacade)) }],
     }).compileComponents();
   });
 

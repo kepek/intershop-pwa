@@ -75,6 +75,5 @@ describe('Camfil Account Order Component', () => {
     fixture.detectChanges();
 
     expect(element.querySelector('[data-testing-id=order-summary-info]')).toBeTruthy();
-    expect(element.querySelector('camfil-line-item-table')).toBeTruthy();
   });
 });

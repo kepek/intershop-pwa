@@ -67,9 +67,9 @@ export const orderReducer = createReducer(
         {
           id: orderId,
           changes: {
-            lineItems: lineItems,
-            totalDeliveredQty: totalDeliveredQty,
-            totalOrderedQty: totalOrderedQty,
+            lineItems,
+            totalDeliveredQty,
+            totalOrderedQty,
           },
         },
         state

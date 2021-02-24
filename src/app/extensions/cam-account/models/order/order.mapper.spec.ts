@@ -1,4 +1,4 @@
-import { OrderBaseData, OrderData } from './order.interface';
+import { OrderData } from './order.interface';
 import { OrderMapper } from './order.mapper';
 
 describe('Order Mapper', () => {
@@ -28,15 +28,11 @@ describe('Order Mapper', () => {
     totalDeliveredQty: 1,
     totalOrderedQty: 1,
     totalPriceAfterDiscountExVAT: 1,
-  } as OrderBaseData;
-
-  const orderData = {
-    elements: orderBaseData,
   } as OrderData;
 
   describe('fromData', () => {
     it(`should return Order when getting OrderData`, () => {
-      const order = OrderMapper.camfilfromData(orderData);
+      const order = OrderMapper.fromData(orderBaseData);
 
       expect(order).toBeTruthy();
       expect(order.id).toEqual(orderBaseData.id);
