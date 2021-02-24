@@ -8,11 +8,11 @@ import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { FilterNavigation } from 'ish-core/models/filter-navigation/filter-navigation.model';
 import { Filter } from 'ish-core/models/filter/filter.model';
 import { findAllCustomElements } from 'ish-core/utils/dev/html-query-utils';
-import { FilterNavigationBadgesComponent } from 'ish-shared/components/filter/filter-navigation-badges/filter-navigation-badges.component';
 import { FilterNavigationHorizontalComponent } from 'ish-shared/components/filter/filter-navigation-horizontal/filter-navigation-horizontal.component';
 import { FilterNavigationSidebarComponent } from 'ish-shared/components/filter/filter-navigation-sidebar/filter-navigation-sidebar.component';
 
 import { FilterNavigationComponent } from './filter-navigation.component';
+import { CamfilFilterNavigationBadgesComponent } from '../camfil-filter-navigation-badges/camfil-filter-navigation-badges.component';
 
 describe('Filter Navigation Component', () => {
   let component: FilterNavigationComponent;
@@ -27,7 +27,7 @@ describe('Filter Navigation Component', () => {
       imports: [RouterTestingModule],
       declarations: [
         FilterNavigationComponent,
-        MockComponent(FilterNavigationBadgesComponent),
+        MockComponent(CamfilFilterNavigationBadgesComponent),
         MockComponent(FilterNavigationHorizontalComponent),
         MockComponent(FilterNavigationSidebarComponent),
       ],
@@ -76,7 +76,7 @@ describe('Filter Navigation Component', () => {
     expect(findAllCustomElements(element)).toMatchInlineSnapshot(`
       Array [
         "ish-filter-navigation-horizontal",
-        "ish-filter-navigation-badges",
+        "camfil-filter-navigation-badges",
       ]
     `);
   });
