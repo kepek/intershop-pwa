@@ -1,0 +1,16 @@
+<div *ngIf="selected" class="row">
+  <div class="col-12 applied-filters bg-primary">
+    <mat-chip-list aria-label="Fish selection">
+      <mat-chip *ngIf="selected.length >= 2">
+        {{ 'camfil.navigation.filterClearAll.message' | translate }}
+        <mat-icon color="primary" (click)="clear()">cancel</mat-icon>
+      </mat-chip>
+      <ng-container *ngFor="let select of selected">
+        <mat-chip>
+          {{ select.filterName }} - {{ select.displayName }}
+          <mat-icon color="primary" (click)="apply(select.searchParameter)">cancel</mat-icon>
+        </mat-chip>
+      </ng-container>
+    </mat-chip-list>
+  </div>
+</div>

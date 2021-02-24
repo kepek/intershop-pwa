@@ -11,10 +11,13 @@ import {
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { isEqual } from 'lodash-es';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
+import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
+import { FilterNavigation } from 'ish-core/models/filter-navigation/filter-navigation.model';
 import { ViewType } from 'ish-core/models/viewtype/viewtype.types';
+import { URLFormParams, formParamsToString } from 'ish-core/utils/url-form-params';
 import { SelectOption } from 'ish-shared/forms/components/select/select.component';
 
 @Component({
@@ -33,15 +36,18 @@ export class CamfilProductListToolbarComponent implements OnInit, OnChanges, OnD
   @Input() fragmentOnRouting: string;
   @Input() isPaging = false;
   @Input() categoryName: string;
+  @Input() showCategoryFilter = false;
 
   sortDropdown = new FormControl('');
   sortOptions: SelectOption[] = [];
+  filter$: Observable<FilterNavigation>;
 
   private destroy$ = new Subject();
 
-  constructor(private router: Router, private activatedRoute: ActivatedRoute) {}
+  constructor(private router: Router, private activatedRoute: ActivatedRoute, private shoppingFacade: ShoppingFacade) {}
 
   ngOnInit() {
+    this.filter$ = this.shoppingFacade.currentFilter$(this.showCategoryFilter);
     this.sortDropdown.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(sorting => {
       this.router.navigate([], {
         relativeTo: this.activatedRoute,
@@ -87,5 +93,24 @@ export class CamfilProductListToolbarComponent implements OnInit, OnChanges, OnD
 
   get detailedView() {
     return this.viewType === 'detailed';
+  }
+
+  applyFilter(event: { searchParameter: URLFormParams }) {
+    const params = formParamsToString(event.searchParameter);
+    this.router.navigate([], {
+      queryParamsHandling: 'merge',
+      relativeTo: this.activatedRoute,
+      queryParams: { filters: params, page: 1 },
+      fragment: this.fragmentOnRouting,
+    });
+  }
+
+  clearFilters() {
+    this.router.navigate([], {
+      queryParamsHandling: 'merge',
+      relativeTo: this.activatedRoute,
+      queryParams: { filters: undefined, page: 1 },
+      fragment: this.fragmentOnRouting,
+    });
   }
 }

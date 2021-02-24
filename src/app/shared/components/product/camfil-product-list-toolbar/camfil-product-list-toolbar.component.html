@@ -67,8 +67,14 @@
     </div>
   </div>
 </div>
-<div class="filters-row row">
-  <div class="col-12">
-    <camfil-filter-applied></camfil-filter-applied>
+<ng-container *ngIf="filter$ | async as filterNavigation">
+  <div class="filters-row row">
+    <div class="col-12">
+      <camfil-filter-navigation-badges
+        [filterNavigation]="filterNavigation"
+        (applyFilter)="applyFilter($event)"
+        (clearFilters)="clearFilters()"
+      ></camfil-filter-navigation-badges>
+    </div>
   </div>
-</div>
+</ng-container>
