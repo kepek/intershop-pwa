@@ -138,13 +138,6 @@ export class CamfilOrderListComponent implements OnInit, AfterViewInit, OnDestro
       }
     });
 
-    // this.camAccountFacade
-    //   .orders$()
-    //   .pipe(takeUntil(this.destroy$))
-    //   .subscribe(() => {
-    //     this.statuses = this.getStatuses(this.dataSource.data);
-    //   });
-
     // set and subscribe to search input changes
     this.searchInputFilter.setValue(this.filteredValues.search);
     this.searchInputFilter.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(filterValue => {
@@ -195,7 +188,7 @@ export class CamfilOrderListComponent implements OnInit, AfterViewInit, OnDestro
 
   getStatuses() {
     // TODO: Change to only include only correctValues variable
-    const correctValues = ['Received', 'Confirmed', 'Part Delivered', 'Delivered', 'Part Invoiced', 'Invoiced', 'NEW'];
+    const correctValues = ['Received', 'Confirmed', 'Part Delivered', 'Delivered', 'Part Invoiced', 'Invoiced'];
     return [...new Set(correctValues)];
   }
 
