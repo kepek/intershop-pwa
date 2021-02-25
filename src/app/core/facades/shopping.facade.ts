@@ -327,7 +327,6 @@ export class ShoppingFacade {
     );
   }
 
-
   loadBasketAddresses() {
     this.store.dispatch(loadBasketAddresses());
   }
