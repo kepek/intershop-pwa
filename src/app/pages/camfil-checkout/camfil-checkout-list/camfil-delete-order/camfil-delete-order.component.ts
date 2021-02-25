@@ -25,8 +25,12 @@ export class CamfilDeleteOrderComponent {
   }
 
   deleteOrder() {
+    const type = this.order.id.split('_')[0];
+
     this.loading = true;
-    this.checkoutFacade.deleteOrder(this.order.basket, this.order.id);
+    type === 'emptyBucket'
+      ? this.checkoutFacade.deleteEmptyBucket(this.order.id)
+      : this.checkoutFacade.deleteOrder(this.order.basket, this.order.id);
     this.modal.hide();
   }
 }

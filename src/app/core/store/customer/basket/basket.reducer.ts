@@ -42,6 +42,7 @@ import {
   deleteBasketPayment,
   deleteBasketPaymentFail,
   deleteBasketPaymentSuccess,
+  deleteEmptyBucket,
   loadBasket,
   loadBasketAddressesSuccess,
   loadBasketEligiblePaymentMethods,
@@ -237,6 +238,15 @@ export const basketReducer = createReducer(
   on(addEmptyBucket, (state: BasketState, action) => ({
     ...state,
     emptyBuckets: [action.payload.bucket, ...state.emptyBuckets],
+  })),
+  on(deleteEmptyBucket, (state: BasketState, action) => ({
+    ...state,
+    emptyBuckets: state.emptyBuckets.reduce((acc, cur) => {
+      if (cur.id !== action.payload.id) {
+        acc.push(cur);
+      }
+      return acc;
+    }, []),
   })),
   on(updateBucketSuccess, (state: BasketState) => ({
     ...state,
