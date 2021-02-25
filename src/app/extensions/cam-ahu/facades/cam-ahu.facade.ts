@@ -13,6 +13,7 @@ import {
   getAllAhuManufacturers,
   getSelectedAhuManufacturerDetails,
   loadAhuManufacturers,
+  selectAhuManufacturer,
 } from '../store/manufacturer';
 import { getAhuUnitsError, getAhuUnitsLoading, getAllAhuUnits, getSelectedAhuUnitDetails } from '../store/unit';
 
@@ -32,6 +33,10 @@ export class CamAhuFacade {
   ahuManufacturers$(): Observable<Manufacturer[]> {
     this.store.dispatch(loadAhuManufacturers());
     return this.store.pipe(select(getAllAhuManufacturers));
+  }
+
+  selectAhuManufacturer$(manufacturerId) {
+    this.store.dispatch(selectAhuManufacturer({ manufacturerId }));
   }
 
   ahuManufacturersLoading$: Observable<boolean> = this.store.pipe(select(getAhuManufacturerLoading));
