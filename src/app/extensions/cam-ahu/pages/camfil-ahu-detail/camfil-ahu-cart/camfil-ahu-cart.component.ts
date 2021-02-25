@@ -10,6 +10,6 @@ export class CamfilAhuCartComponent {
   /**
    * The product with the image information.
    */
-  @Input() slots: [];
+  @Input() unitAHUAirSlots: [];
   items = new Array(5);
 }
