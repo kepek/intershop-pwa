@@ -6,9 +6,10 @@ import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { TranslateModule } from '@ngx-translate/core';
 import { MockComponent } from 'ng-mocks';
 import { ProductListPagingComponent } from 'ish-shared/components/product/product-list-paging/product-list-paging.component';
-import { CamfilFilterAppliedComponent } from 'ish-shared/components/filter/camfil-filter-applied/camfil-filter-applied.component';
 
 import { CamfilProductListToolbarComponent } from './camfil-product-list-toolbar.component';
+import { CamfilFilterNavigationBadgesComponent } from 'ish-shared/components/filter/camfil-filter-navigation-badges/camfil-filter-navigation-badges.component';
+import { provideMockStore } from '@ngrx/store/testing';
 
 describe('Camfil Product List Toolbar Component', () => {
   let component: CamfilProductListToolbarComponent;
@@ -19,10 +20,11 @@ describe('Camfil Product List Toolbar Component', () => {
     await TestBed.configureTestingModule({
       declarations: [
         CamfilProductListToolbarComponent,
-        MockComponent(CamfilFilterAppliedComponent),
+        MockComponent(CamfilFilterNavigationBadgesComponent),
         MockComponent(FaIconComponent),
         MockComponent(ProductListPagingComponent),
       ],
+      providers: [provideMockStore()],
       imports: [ReactiveFormsModule, RouterTestingModule, TranslateModule.forRoot()],
     }).compileComponents();
   });

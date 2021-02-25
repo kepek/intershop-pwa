@@ -327,22 +327,6 @@ export class ShoppingFacade {
     );
   }
 
-  activeFilters$() {
-    return this.store.pipe(
-      select(getAvailableFilter),
-      whenTruthy(),
-      map(x => ({ ...x, filter: [...x?.filter].filter(f => f.id !== 'CategoryUUIDLevelMulti') })),
-      map(x =>
-        x.filter
-          .filter(z => z.facets.filter(y => y.selected).length)
-          .map(o => ({
-            name: o.name,
-            picked: o.facets.filter(facet => facet.selected).map(single => single),
-          }))
-      )
-    );
-  }
-
   loadBasketAddresses() {
     this.store.dispatch(loadBasketAddresses());
   }
