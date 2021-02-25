@@ -6,6 +6,7 @@ import { MockComponent, MockDirective } from 'ng-mocks';
 import { anything, instance, mock, when } from 'ts-mockito';
 
 import { FeatureToggleModule } from 'ish-core/feature-toggle.module';
+import { CamfilToastrService } from 'ish-core/store/core/messages/CamfilToastrService';
 import { AddressFormContainerComponent } from 'ish-shared/address-forms/components/address-form-container/address-form-container.component';
 import { AddressFormFactory } from 'ish-shared/address-forms/components/address-form/address-form.factory';
 import { AddressFormFactoryProvider } from 'ish-shared/address-forms/configurations/address-form-factory.provider';
@@ -25,8 +26,10 @@ describe('Camfil Apply Form Component', () => {
   let component: CamfilApplyFormComponent;
   let element: HTMLElement;
   let translate: TranslateService;
+  let toastrServiceMock: CamfilToastrService;
 
   beforeEach(async () => {
+    toastrServiceMock = mock(CamfilToastrService);
     const addressFormFactoryMock = mock(AddressFormFactory);
     when(addressFormFactoryMock.getGroup(anything())).thenReturn(new FormGroup({}));
 
@@ -45,7 +48,10 @@ describe('Camfil Apply Form Component', () => {
         MockComponent(LazyCamCaptchaComponent),
         MockDirective(TacCheckboxComponent),
       ],
-      providers: [{ provide: AddressFormFactoryProvider, useFactory: () => instance(addressFormFactoryProviderMock) }],
+      providers: [
+        { provide: AddressFormFactoryProvider, useFactory: () => instance(addressFormFactoryProviderMock) },
+        { provide: CamfilToastrService, useFactory: () => instance(toastrServiceMock) },
+      ],
       imports: [
         BrowserAnimationsModule,
         FeatureToggleModule.forTesting('businessCustomerRegistration'),

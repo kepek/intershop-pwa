@@ -22,8 +22,7 @@ export class ApplicantEffects {
           mergeMap(applicant => [
             applyForAnAccountSuccess({ applicant }),
             displaySuccessMessage({
-              message: 'camfil.account.apply.submit.confirmation',
-              messageParams: { 0: `${applicant.firstName} ${applicant.lastName}` },
+              message: 'camfil.register.form.valid.text',
             }),
           ]),
           mapErrorToAction(applyForAnAccountFail)
