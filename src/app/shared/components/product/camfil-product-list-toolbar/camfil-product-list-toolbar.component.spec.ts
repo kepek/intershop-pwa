@@ -9,6 +9,7 @@ import { ProductListPagingComponent } from 'ish-shared/components/product/produc
 
 import { CamfilProductListToolbarComponent } from './camfil-product-list-toolbar.component';
 import { CamfilFilterNavigationBadgesComponent } from 'ish-shared/components/filter/camfil-filter-navigation-badges/camfil-filter-navigation-badges.component';
+import { provideMockStore } from '@ngrx/store/testing';
 
 describe('Camfil Product List Toolbar Component', () => {
   let component: CamfilProductListToolbarComponent;
@@ -23,6 +24,7 @@ describe('Camfil Product List Toolbar Component', () => {
         MockComponent(FaIconComponent),
         MockComponent(ProductListPagingComponent),
       ],
+      providers: [provideMockStore()],
       imports: [ReactiveFormsModule, RouterTestingModule, TranslateModule.forRoot()],
     }).compileComponents();
   });
