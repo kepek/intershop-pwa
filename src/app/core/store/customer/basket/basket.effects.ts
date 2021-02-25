@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { RouterNavigatedPayload, routerNavigatedAction } from '@ngrx/router-store';
 import { Store, select } from '@ngrx/store';
-import { EMPTY, combineLatest, iif, of } from 'rxjs';
+import { combineLatest, iif, of } from 'rxjs';
 import {
   concatMap,
   concatMapTo,
@@ -215,7 +215,8 @@ export class BasketEffects {
               return of(loadBasket());
             } else {
               // no anonymous or user basket -> do nothing
-              return EMPTY;
+              // TODO: this is tmp solution to fix CAM-789 - Multiple baskets are created
+              return this.basketService.createBasket().pipe(map(basket => mergeBasketSuccess({ basket })));
             }
           })
         )
