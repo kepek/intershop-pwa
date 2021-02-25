@@ -180,7 +180,7 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit {
       lastDelivery: ['', [Validators.maxLength(35)]],
       deliveryInterval: ['', [Validators.maxLength(35)]],
       nextDelivery: ['', [Validators.maxLength(35)]],
-      reminder: ['', [Validators.maxLength(35)]],
+      reminder: [true, [Validators.maxLength(35)]],
     });
   }
   compareFn(x, y): boolean {
