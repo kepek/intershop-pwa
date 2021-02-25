@@ -16,9 +16,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
-
-import { AccountFacade } from 'ish-core/facades/account.facade';
-import { Order } from 'ish-core/models/order/order.model';
+import { CamAccountFacade } from 'src/app/extensions/cam-account/facades/cam-account.facade';
+import { Order } from 'src/app/extensions/cam-account/models/order/order.model';
 
 /**
  * The Order List Container Component fetches order data and displays them all
@@ -32,7 +31,7 @@ export interface OrderFilter {
   dateFrom?: string;
   dateTo?: string;
   search?: string;
-  status?: string[];
+  orderStatus?: string[];
 }
 
 @Component({
@@ -47,6 +46,7 @@ export class CamfilOrderListComponent implements OnInit, AfterViewInit, OnDestro
   @ViewChildren('statusFilters') statusFilters: QueryList<MatCheckbox>;
 
   orders$: Observable<Order[]>;
+  orders: Order[];
   loading$: Observable<boolean>;
   dataSource = new MatTableDataSource<Order>();
   isActive = false;
@@ -62,34 +62,42 @@ export class CamfilOrderListComponent implements OnInit, AfterViewInit, OnDestro
   dateToFilter = new FormControl(new Date());
   filteredValues: OrderFilter;
   displayedColumns: string[] = [
-    'customer',
-    'documentNo',
+    'customerName',
+    'orderNumber',
     'camfilNo',
-    'mark',
-    'creationDate',
+    'orderGoodsMark',
+    'orderDate',
     'deliveryDate',
-    'status',
-    'channel',
+    'orderStatus',
+    'orderChannel',
   ];
   private destroy$ = new Subject();
-  constructor(private accountFacade: AccountFacade, private activatedRoute: ActivatedRoute, private router: Router) {}
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private router: Router,
+    private camAccountFacade: CamAccountFacade
+  ) {}
 
   ngOnInit() {
-    this.accountFacade
+    this.camAccountFacade
       .orders$()
       .pipe(takeUntil(this.destroy$))
       .subscribe(orders => {
-        /* TODO: temporary fix. Orders are missing data for deliveryDate and camfilNo.
-        Data will be changed for new API call /camfilorder and new mapper which includes all variables */
-        const tempOrders = orders.map(order => ({
-          ...order,
-          camfilNo: order.camfilNo ? order.camfilNo : order.documentNo,
-          deliveryDate: order.deliveryDate ? order.deliveryDate : order.creationDate,
-        }));
-        this.dataSource.data = tempOrders;
-
+        this.dataSource.data = orders;
+        this.statuses = this.getStatuses();
+        this.orders = orders;
         this.dataSource.filterPredicate = this.orderFilterPredicate();
         this.customers = this.getCustomers(this.dataSource.data);
+        if (!this.filteredValues?.orderStatus) {
+          this.filteredValues = {
+            ...this.filteredValues,
+            orderStatus: this.statuses,
+          };
+
+          if (this.filteredValues.orderStatus && this.filteredValues.orderStatus.length) {
+            this.updateFilter(this.filteredValues);
+          }
+        }
       });
 
     // recover filters settings from url params
@@ -101,7 +109,7 @@ export class CamfilOrderListComponent implements OnInit, AfterViewInit, OnDestro
       });
 
     this.dataSource.sort = this.sort;
-    this.loading$ = this.accountFacade.ordersLoading$;
+    this.loading$ = this.camAccountFacade.ordersLoading$;
   }
 
   ngAfterViewInit() {
@@ -111,11 +119,11 @@ export class CamfilOrderListComponent implements OnInit, AfterViewInit, OnDestro
       // set order status checkboxes according to url parans
       statusFiltersReady = true;
       this.statusFilters.forEach((checkbox: MatCheckbox) => {
-        if (this.filteredValues.status) {
-          this.filteredValues.status.forEach(status => {
+        if (this.filteredValues.orderStatus) {
+          this.filteredValues.orderStatus.forEach(status => {
             if (checkbox.value === status) {
-              checkbox.checked = false;
-              this.filterCheckboxes$.next(this.filteredValues.status);
+              checkbox.checked = true;
+              this.filterCheckboxes$.next(this.filteredValues.orderStatus);
             }
           });
         }
@@ -125,18 +133,10 @@ export class CamfilOrderListComponent implements OnInit, AfterViewInit, OnDestro
     // subscribe to order status checkbox changes
     this.filterCheckboxes$.pipe(takeUntil(this.destroy$)).subscribe((stat: []) => {
       if (statusFiltersReady) {
-        this.filteredValues.status = stat;
+        this.filteredValues.orderStatus = stat;
         this.updateFilter(this.filteredValues);
       }
     });
-
-    // initialize checkboxes
-    this.accountFacade
-      .orders$()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(() => {
-        this.statuses = this.getStatuses(this.dataSource.data);
-      });
 
     // set and subscribe to search input changes
     this.searchInputFilter.setValue(this.filteredValues.search);
@@ -186,19 +186,33 @@ export class CamfilOrderListComponent implements OnInit, AfterViewInit, OnDestro
     this.router.navigate(['/account/orders/' + order.id], { queryParamsHandling: 'preserve' });
   }
 
-  getStatuses(data) {
-    return [...new Set(data.map(item => item.status))];
+  getStatuses() {
+    // TODO: Change to only include only correctValues variable
+    const correctValues = ['Received', 'Confirmed', 'Part Delivered', 'Delivered', 'Part Invoiced', 'Invoiced'];
+    return [...new Set(correctValues)];
   }
 
   getCustomers(data) {
-    return [undefined, ...new Set(data.map(item => item.customer))];
+    return [undefined, ...new Set(data.map(item => item.customerName))];
   }
 
   addStatusFilter(change: MatCheckboxChange) {
-    if (this.filteredValues.status.some((a: string) => a === change.source.value) && change.source.checked) {
-      this.filterCheckboxes$.next(this.filteredValues.status.filter((a: string) => a !== change.source.value));
+    if (change.source.checked) {
+      this.filteredValues = {
+        ...this.filteredValues,
+        orderStatus: this.filteredValues.orderStatus.concat(change.source.value),
+      };
+
+      this.updateFilter(this.filteredValues);
     } else if (!change.source.checked) {
-      this.filterCheckboxes$.next(this.filteredValues.status.concat(change.source.value));
+      this.filteredValues = {
+        ...this.filteredValues,
+        orderStatus: this.filteredValues.orderStatus.filter(
+          (a: string) => a.toLowerCase().trim() !== change.source.value.toLowerCase().trim()
+        ),
+      };
+
+      this.updateFilter(this.filteredValues);
     }
   }
 
@@ -208,19 +222,29 @@ export class CamfilOrderListComponent implements OnInit, AfterViewInit, OnDestro
 
       // Check search string
       const isSearchMatching = true;
+      const textSearchData = {
+        orderNumber: data.orderNumber,
+        customerOrderNumber: data.customerOrderNumber,
+        orderGoodsMark: data.orderGoodsMark,
+      };
+
       if (
         filters.search &&
-        JSON.stringify(data).trim().toLowerCase().indexOf(filters.search.trim().toLowerCase()) === -1
+        JSON.stringify(Object.values(textSearchData))
+          .trim()
+          .toLowerCase()
+          .indexOf(filters.search.trim().toLowerCase()) === -1
       ) {
         return false;
       }
 
       // Check status filter
-      let isStatusMatching = true;
-      if (filters.status && filters.status.length) {
-        for (const status of filters.status) {
-          if (data.status.trim().toLowerCase() === status) {
-            isStatusMatching = false;
+      let isStatusMatching = false;
+      if (filters.orderStatus && filters.orderStatus.length) {
+        for (const status of filters.orderStatus) {
+          // console.log('data.orderStatus', data.orderStatus);
+          if (data.orderStatus.trim().toLowerCase() === status.trim().toLowerCase()) {
+            isStatusMatching = true;
             break;
           }
         }
@@ -230,17 +254,17 @@ export class CamfilOrderListComponent implements OnInit, AfterViewInit, OnDestro
       const isCustomerMatching = true;
       if (
         filters.customer &&
-        data.customer.toString().trim().toLowerCase().indexOf(filters.customer.trim().toLowerCase()) === -1
+        data.customerName.toString().trim().toLowerCase().indexOf(filters.customer.trim().toLowerCase()) === -1
       ) {
         return false;
       }
 
       // Check date filters
       let isInDateRange = true;
-      if (filters.dateFrom && !(Date.parse(filters.dateFrom) <= data.creationDate)) {
+      if (filters.dateFrom && !(Date.parse(filters.dateFrom) <= Number(data.orderDate))) {
         isInDateRange = false;
       }
-      if (filters.dateTo && !(Date.parse(filters.dateTo) >= data.creationDate)) {
+      if (filters.dateTo && !(Date.parse(filters.dateTo) >= Number(data.orderDate))) {
         isInDateRange = false;
       }
       return isSearchMatching && isStatusMatching && isCustomerMatching && isInDateRange;
@@ -262,7 +286,7 @@ export class CamfilOrderListComponent implements OnInit, AfterViewInit, OnDestro
 
   updateFilter(filteredValues) {
     const filter = JSON.stringify(filteredValues);
-    this.dataSource.filter = filter.trim().toLowerCase();
+    this.dataSource.filter = filter.trim();
     this.router.navigate([], { queryParams: { filter } });
   }
 }

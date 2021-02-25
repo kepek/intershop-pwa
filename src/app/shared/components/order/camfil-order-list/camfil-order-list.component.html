@@ -90,19 +90,19 @@
           The actual rendered columns are set as a property on the row definition" -->
 
     <!-- Customer Name Column -->
-    <ng-container matColumnDef="customer">
+    <ng-container matColumnDef="customerName">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>
         {{ 'camfil.account.orderlist.table.customer' | translate }}
       </th>
-      <td mat-cell *matCellDef="let order">{{ order.customer }}</td>
+      <td mat-cell *matCellDef="let order">{{ order.customerName }}</td>
     </ng-container>
 
     <!-- Order No. Column -->
-    <ng-container matColumnDef="documentNo">
+    <ng-container matColumnDef="orderNumber">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>
         {{ 'account.orderlist.table.order_number' | translate }}
       </th>
-      <td mat-cell *matCellDef="let order">{{ order.documentNo }}</td>
+      <td mat-cell *matCellDef="let order">{{ order.orderNumber }}</td>
     </ng-container>
 
     <!-- Camfil Order No. Column -->
@@ -114,19 +114,19 @@
     </ng-container>
 
     <!-- Goods Mark Column -->
-    <ng-container matColumnDef="mark">
+    <ng-container matColumnDef="orderGoodsMark">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>
         {{ 'camfil.account.orderlist.table.goods_mark' | translate }}
       </th>
-      <td mat-cell *matCellDef="let order">-</td>
+      <td mat-cell *matCellDef="let order">{{ order.orderGoodsMark }}</td>
     </ng-container>
 
     <!-- Order Date Column -->
-    <ng-container matColumnDef="creationDate">
+    <ng-container matColumnDef="orderDate">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>
         {{ 'account.orderlist.table.date_of_order' | translate }}
       </th>
-      <td mat-cell *matCellDef="let order">{{ order.creationDate | ishDate }}</td>
+      <td mat-cell *matCellDef="let order">{{ order.orderDate | ishDate }}</td>
     </ng-container>
 
     <!-- Delivery Date Column -->
@@ -138,19 +138,19 @@
     </ng-container>
 
     <!-- Status Column -->
-    <ng-container matColumnDef="status">
+    <ng-container matColumnDef="orderStatus">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>
         {{ 'account.orderlist.table.order_status' | translate }}
       </th>
-      <td mat-cell *matCellDef="let order">{{ order.status }}</td>
+      <td mat-cell *matCellDef="let order">{{ order.orderStatus }}</td>
     </ng-container>
 
     <!-- Order Channel Column -->
-    <ng-container matColumnDef="channel">
+    <ng-container matColumnDef="orderChannel">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>
         {{ 'camfil.account.orderlist.order_channel' | translate }}
       </th>
-      <td mat-cell *matCellDef="let element">-</td>
+      <td mat-cell *matCellDef="let order">{{ order.orderChannel }}</td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

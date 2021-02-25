@@ -58,7 +58,7 @@ dd {
 .cost-summary {
   padding: 24px;
   margin-bottom: 24px;
-  font-size: revert;
+  font-size: 12px;
   background: none;
   border: none;
   box-shadow: none;
@@ -68,6 +68,24 @@ dd {
 }
 
 a.btn-track-order {
+  margin-top: 24px;
   font-size: $font-size-sm;
   line-height: 26px;
+}
+
+.order-delivery_address {
+  text-align: right;
+}
+
+.total-price,
+.total-price-value {
+  font-size: 14px;
+}
+.total-price-value {
+  font-weight: 600;
+}
+
+.track-link-container {
+  display: flex;
+  flex-direction: column;
 }

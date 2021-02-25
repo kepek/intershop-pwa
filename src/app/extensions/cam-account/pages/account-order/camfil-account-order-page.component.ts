@@ -1,8 +1,9 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
-import { AccountFacade } from 'ish-core/facades/account.facade';
-import { Order } from 'ish-core/models/order/order.model';
+import { CamAccountFacade } from '../../facades/cam-account.facade';
+import { Order } from '../../models/order/order.model';
 
 /**
  * The Order Page Container reads order data from store and displays them using the {@link OrderPageComponent}
@@ -13,12 +14,26 @@ import { Order } from 'ish-core/models/order/order.model';
   templateUrl: './camfil-account-order-page.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CamfilAccountOrderPageComponent implements OnInit {
+export class CamfilAccountOrderPageComponent implements OnInit, OnDestroy {
+  orders: Order[];
   order$: Observable<Order>;
 
-  constructor(private accountFacade: AccountFacade) {}
+  private destroy$ = new Subject();
+
+  constructor(private camAccountFacade: CamAccountFacade) {}
 
   ngOnInit() {
-    this.order$ = this.accountFacade.selectedOrder$;
+    this.camAccountFacade
+      .orders$()
+      ?.pipe(takeUntil(this.destroy$))
+      .subscribe(orders => {
+        this.orders = orders;
+        this.order$ = this.camAccountFacade.selectedOrder$;
+      });
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

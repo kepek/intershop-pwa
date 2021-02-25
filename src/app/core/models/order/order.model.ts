@@ -29,8 +29,4 @@ export interface Order extends OrderBasket {
     date: number;
   };
   requisitionNo?: string;
-
-  // CAMFIL
-  deliveryDate?: number;
-  camfilNo?: string;
 }

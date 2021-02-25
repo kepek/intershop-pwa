@@ -7,22 +7,22 @@
   class="mt-4 mb-2 box-shadow--dark"
 >
   <!-- Art Nr. Column -->
-  <ng-container matColumnDef="productSKU">
+  <ng-container matColumnDef="sku">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>
       {{ 'camfil.lineitem.table.art_nr' | translate }}
     </th>
     <td mat-cell *matCellDef="let pli">
-      {{ pli.productSKU }}
+      {{ pli.sku }}
     </td>
   </ng-container>
 
   <!-- Product Name Column -->
-  <ng-container matColumnDef="name">
+  <ng-container matColumnDef="articleName">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>
       {{ 'camfil.lineitem.table.product' | translate }}
     </th>
     <td mat-cell *matCellDef="let pli">
-      <div class="text-truncate">{{ pli.name }}</div>
+      <div class="text-truncate">{{ pli.articleName }}</div>
     </td>
   </ng-container>
 
@@ -32,7 +32,7 @@
       {{ 'camfil.lineitem.table.qty_ordered' | translate }}
     </th>
     <td mat-cell *matCellDef="let pli">
-      -
+      <div class="text-truncate">{{ pli.orderedQty }}</div>
       <!-- <camfil-product-quantity
         [allowZeroQuantity]="false"
         [quantityLabel]="''"
@@ -48,7 +48,7 @@
       {{ 'camfil.lineitem.table.qty_delivered' | translate }}
     </th>
     <td mat-cell *matCellDef="let pli">
-      -
+      <div class="text-truncate">{{ pli.deliveredQty }}</div>
       <!-- <camfil-product-quantity
         [allowZeroQuantity]="false"
         [quantityLabel]="''"
@@ -63,7 +63,9 @@
     <th mat-header-cell *matHeaderCellDef mat-sort-header>
       {{ 'camfil.lineitem.table.box_label' | translate }}
     </th>
-    <td mat-cell *matCellDef="let pli"><div class="text-truncate">Lorem ipsum dolor sit amet</div></td>
+    <td mat-cell *matCellDef="let pli">
+      <div class="text-truncate">{{ pli.boxLabel }}</div>
+    </td>
   </ng-container>
 
   <!-- Delivery Date Column -->
@@ -71,16 +73,19 @@
     <th mat-header-cell *matHeaderCellDef mat-sort-header>
       {{ 'camfil.lineitem.table.delivery_date' | translate }}
     </th>
-    <td mat-cell *matCellDef="let pli"><strong>1900-01-01</strong></td>
+    <td mat-cell *matCellDef="let pli">
+      <strong>{{ pli.deliveryDate | ishDate }}</strong>
+    </td>
   </ng-container>
 
   <!-- Price Column -->
-  <ng-container matColumnDef="price">
+  <ng-container matColumnDef="totalRowCustomerPrice">
     <th mat-header-cell *matHeaderCellDef>
       {{ 'camfil.lineitem.table.price' | translate }}
     </th>
     <td mat-cell *matCellDef="let pli">
-      {{ 'camfil.lineitem.table.price_label' | translate }} <strong>{{ pli.totals?.total | ishPrice }}</strong>
+      {{ 'camfil.lineitem.table.price_label' | translate }}
+      <strong>{{ pli.totalRowCustomerPrice }}</strong>
     </td>
   </ng-container>
 
