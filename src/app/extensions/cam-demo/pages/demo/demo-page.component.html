@@ -72,14 +72,13 @@
         <hr />
         <mat-button-toggle-group [value]="locales[0]" name="locale" aria-label="DatePicker Locale">
           <mat-button-toggle *ngFor="let locale of locales" (click)="onChangeLocale(locale)" value="locale">
-            {{locale}}
+            {{ locale }}
           </mat-button-toggle>
-
         </mat-button-toggle-group>
-        <hr>
-        <p>currentDatePickerValue: {{currentDatePickerValue}}</p>
-        <p>CurrentLocale: {{currentLocale}}</p>
-        <p>CurrentDate: {{currentDate}}</p>
+        <hr />
+        <p>currentDatePickerValue: {{ currentDatePickerValue }}</p>
+        <p>CurrentLocale: {{ currentLocale }}</p>
+        <p>CurrentDate: {{ currentDate }}</p>
       </mat-card-content>
     </mat-card>
     <!-- CamfilProductTitleComponent -->

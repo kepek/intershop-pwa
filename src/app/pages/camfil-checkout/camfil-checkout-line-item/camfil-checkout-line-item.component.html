@@ -55,7 +55,9 @@
       </form>
     </div>
     <div class="delivery-date-container">
-      <p class="delivery-date-para"><strong>{{ 'camfil.checkout.order.earliest_delivery_date.text' | translate }}</strong></p>
+      <p class="delivery-date-para">
+        <strong>{{ 'camfil.checkout.order.earliest_delivery_date.text' | translate }}</strong>
+      </p>
       <p class="delivery-date-para">{{ earliestDeliveryDate | ishDate: 'shortDate' }}</p>
     </div>
     <ng-container>

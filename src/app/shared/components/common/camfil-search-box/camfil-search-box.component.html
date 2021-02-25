@@ -86,11 +86,7 @@
       </ng-container>
 
       <div class="text-center col-12 mb-3" *ngIf="!noResults && !loading">
-        <button
-          mat-raised-button
-          color="primary"
-          (click)="submitSearch(searchInput.value)"
-        >
+        <button mat-raised-button color="primary" (click)="submitSearch(searchInput.value)">
           {{ 'camfil.search.searchbox.show.all.results' | translate }}
         </button>
       </div>

@@ -11,8 +11,9 @@ import { findAllCustomElements } from 'ish-core/utils/dev/html-query-utils';
 import { FilterNavigationHorizontalComponent } from 'ish-shared/components/filter/filter-navigation-horizontal/filter-navigation-horizontal.component';
 import { FilterNavigationSidebarComponent } from 'ish-shared/components/filter/filter-navigation-sidebar/filter-navigation-sidebar.component';
 
+import { CamfilFilterNavigationBadgesComponent } from 'ish-shared/components/filter/camfil-filter-navigation-badges/camfil-filter-navigation-badges.component';
+
 import { FilterNavigationComponent } from './filter-navigation.component';
-import { CamfilFilterNavigationBadgesComponent } from '../camfil-filter-navigation-badges/camfil-filter-navigation-badges.component';
 
 describe('Filter Navigation Component', () => {
   let component: FilterNavigationComponent;
