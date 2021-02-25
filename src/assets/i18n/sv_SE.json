@@ -1001,6 +1001,8 @@
   "camfil.register.whycamfil.personal_assortment": "Personligt sortiment",
   "camfil.register.whycamfil.products": "Över 10'000 produkter",
   "camfil.register.whycamfil.rwd": "Anpassad för mobil och surfplatta",
+  "camfil.register.form.invalid.text": "sv_Please fill up all mandatory fields",
+  "camfil.register.form.valid.text": "sv_Thank you for applying - we will contact you shortly",
   "camfil.search.filter.show.link": {
     "other": "Visa mer"
   },

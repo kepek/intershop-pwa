@@ -1,9 +1,11 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
 
 import { FeatureToggleService } from 'ish-core/feature-toggle.module';
 import { CustomerRegistrationType } from 'ish-core/models/customer/customer.model';
 import { HttpError } from 'ish-core/models/http-error/http-error.model';
+import { CamfilToastrService } from 'ish-core/store/core/messages/CamfilToastrService';
 import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
 import { SpecialValidators } from 'ish-shared/forms/validators/special-validators';
 
@@ -24,7 +26,12 @@ export class CamfilApplyFormComponent implements OnInit {
   form: FormGroup;
   submitted = false;
 
-  constructor(private fb: FormBuilder, private featureToggle: FeatureToggleService) {}
+  constructor(
+    private fb: FormBuilder,
+    private featureToggle: FeatureToggleService,
+    private translate: TranslateService,
+    private toastr: CamfilToastrService
+  ) {}
 
   ngOnInit() {
     // toggles business / private customer registration
@@ -58,6 +65,8 @@ export class CamfilApplyFormComponent implements OnInit {
     if (this.form.invalid) {
       this.submitted = true;
       markAsDirtyRecursive(this.form);
+      this.toastr.error(this.translate.instant('camfil.register.form.invalid.text'), '', { timeOut: 3000 });
+
       return;
     }
 
@@ -67,7 +76,6 @@ export class CamfilApplyFormComponent implements OnInit {
 
     registration.captcha = this.form.get('captcha').value;
     registration.captchaAction = this.form.get('captchaAction').value;
-
     this.apply.emit(registration);
   }
 

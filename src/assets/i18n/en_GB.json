@@ -998,6 +998,8 @@
   "camfil.register.whycamfil.personal_assortment": "Personal assortment",
   "camfil.register.whycamfil.products": "More than 10.000 products",
   "camfil.register.whycamfil.rwd": "Mobile & tablet friendly",
+  "camfil.register.form.invalid.text": "Please fill up all mandatory fields",
+  "camfil.register.form.valid.text": "Thank you for applying - we will contact you shortly",
   "camfil.search.filter.show.link": {
     "other": "Show # more"
   },
