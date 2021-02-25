@@ -15,7 +15,7 @@
 <ng-template #orderHeader let-camCard="camCard">
   <div class="d-inline-flex">
     <strong *ngIf="order">
-      {{ 'camfil.checkout.order' | translate }} {{ !!totalOrders ? index + ' / ' + totalOrders : order.id }}</strong
+      {{ 'camfil.checkout.order' | translate }} {{ !!totalOrders ? index + ' / ' + totalOrders : '' }}</strong
     >
     <span data-id-id="order-number" class="order-number"
       >{{ order?.customer?.customerNo }}, {{ order?.customer?.companyName }}</span

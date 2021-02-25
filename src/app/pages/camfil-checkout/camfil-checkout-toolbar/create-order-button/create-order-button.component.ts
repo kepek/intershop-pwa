@@ -25,7 +25,7 @@ export class CreateOrderButtonComponent {
     const bucket: Bucket = {
       contactPerson: virtualBucket.contactPerson,
       basket: this.basketId,
-      id: '',
+      id: `emptyBucket_${Date.now()}`,
       lineItems: [],
       shipToAddress: virtualBucket.shippingAddress?.urn,
       shipToAddressFull: virtualBucket.shippingAddress,

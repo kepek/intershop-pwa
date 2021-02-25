@@ -120,7 +120,7 @@ export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
   }
 
   totalPrice(type = 'net'): Price {
-    const getCurrency = element => element.price.currency;
+    const getCurrency = element => element.price?.currency;
     const getValue = element => element.totals?.total[type];
 
     return this.getPrice(getCurrency, getValue);
@@ -134,14 +134,14 @@ export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
   }
 
   savedAmount(): Price {
-    const getCurrency = element => element.price.currency;
+    const getCurrency = element => element.price?.currency;
     const getValue = element => element.totals?.total.gross - element.price?.gross;
 
     return this.getPrice(getCurrency, getValue);
   }
 
   discount(): Price {
-    const getCurrency = element => element.price.currency;
+    const getCurrency = element => element.price?.currency;
     const getValue = element => element.totals?.total.gross - element.totals?.undiscountedTotal.gross;
 
     return this.getPrice(getCurrency, getValue);

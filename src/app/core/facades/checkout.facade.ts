@@ -26,6 +26,7 @@ import {
   deleteBasketPayment,
   deleteBasketShippingAddress,
   deleteBucket,
+  deleteEmptyBucket,
   getBasketEligiblePaymentMethods,
   getBasketEligibleShippingMethods,
   getBasketError,
@@ -219,6 +220,10 @@ export class CheckoutFacade {
 
   addEmptyBucket(emptyBucket: Bucket) {
     this.store.dispatch(addEmptyBucket({ bucket: emptyBucket }));
+  }
+
+  deleteEmptyBucket(id: string) {
+    this.store.dispatch(deleteEmptyBucket({ id }));
   }
 
   camfilDragLineItem(basketId: string, updatedLineItem: LineItem, targetBucket: Bucket) {
