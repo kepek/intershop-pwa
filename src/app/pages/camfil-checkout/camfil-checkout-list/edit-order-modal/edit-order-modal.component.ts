@@ -73,6 +73,7 @@ export class EditOrderModalComponent implements OnInit, OnDestroy {
     const form = this.orderForm.addressForm;
 
     return {
+      ...this.order,
       orderMark: form.get('orderMark').value,
       invoiceLabel: form.get('invoiceLabel').value,
       contactPerson: form.get('contactFull').value || this.order.contactPerson,
