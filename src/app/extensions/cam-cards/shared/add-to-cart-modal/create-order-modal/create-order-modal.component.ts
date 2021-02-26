@@ -156,8 +156,8 @@ export class CreateOrderModalComponent implements OnInit, OnDestroy {
     } else {
       this.shoppingFacade.addProductToBucketWithUrn(
         this.getUrn(address),
-        this.commonShippingMethodId,
         this.getId(address),
+        this.commonShippingMethodId,
         this.product.sku,
         quantity,
         this.basketId,

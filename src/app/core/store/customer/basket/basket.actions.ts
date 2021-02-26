@@ -1,5 +1,9 @@
 import { Params } from '@angular/router';
 import { createAction } from '@ngrx/store';
+import {
+  CamCamProductChecked,
+  CamCamProductsAddToCartItems,
+} from 'src/app/extensions/cam-cards/models/cam-card/cam-card.model';
 
 import { Address } from 'ish-core/models/address/address.model';
 import { Attribute } from 'ish-core/models/attribute/attribute.model';
@@ -419,3 +423,53 @@ export const deleteBasketItemAttributesSuccess = createAction(
 export const deleteBucket = createAction('[Basket] Delete Bucket', payload<{ basketId: string; bucketId: string }>());
 
 export const deleteBucketFail = createAction('[Basket API] Delete Bucket Fail', httpError());
+
+export const createBasket = createAction('[Basket API] Create new Basket');
+
+export const addProductsFromCamCard = createAction(
+  '[Basket API] Add Products From CamCard',
+  payload<{ itemsInfo: CamCamProductsAddToCartItems; commonShippingMethodId: string; basketId: string }>()
+);
+
+export const addProductsFromCamCardFail = createAction('[Basket API] Add Products From CamCard Fail', httpError());
+
+export const addProductToBucketAddressFromCamCardFail = createAction(
+  '[Basket] Add Product To Bucket Address from Camcard Fail'
+);
+
+export const addProductsToBasketFromCamCard = createAction(
+  '[Basket] Add Product To Basket From CamCard',
+  payload<{
+    products: CamCamProductChecked[];
+    shippingMethod?: string;
+    shipToAddress?: string;
+    basketExtension?: BasketExtensions;
+    addressId?: string;
+  }>()
+);
+
+export const addItemsToBasketFromCamCard = createAction(
+  '[Basket Internal] Add Items To Basket from CamCard',
+  payload<{
+    items: {
+      sku: string;
+      quantity: number;
+      unit: string;
+      shippingMethod?: string;
+      shipToAddress?: string;
+      addressId?: string;
+      lineItemAttributes?: Attribute;
+    }[];
+    basketExtensions?: { addressId: string; extension: BasketExtensions }[];
+  }>()
+);
+
+export const addItemsToBasketFromCamCardSuccess = createAction(
+  '[Basket API] Add Items To Basket from CamCard Success',
+  payload<{ info: BasketInfo[] }>()
+);
+
+export const addItemsToBasketFromCamCardFail = createAction(
+  '[Basket API] Add Items To Basket from CamCard Fail',
+  httpError()
+);

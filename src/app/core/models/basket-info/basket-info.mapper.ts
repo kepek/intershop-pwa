@@ -27,6 +27,7 @@ export class BasketInfoMapper {
       position: item.position,
       quantity: item.quantity,
       productSKU: item.product,
+      addressId: item.shipToAddress,
     }));
 
     return lineItems ? lineItems : [];

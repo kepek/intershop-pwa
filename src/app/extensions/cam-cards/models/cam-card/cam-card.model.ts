@@ -1,4 +1,5 @@
 import { Address } from 'ish-core/models/address/address.model';
+import { BasketExtensions } from 'ish-core/models/basket/basket.interface';
 import { CustomerData } from 'ish-core/models/customer/customer.interface';
 import { Customer } from 'ish-core/models/customer/customer.model';
 import { SelectOption } from 'ish-shared/forms/components/select/select.component';
@@ -101,4 +102,14 @@ export interface CamCamProductChecked {
   sku: string;
   quantity: number;
   boxLabel?: string;
+}
+
+export interface CamCamProductsAddToCartItems {
+  products: CamCamProductChecked[];
+  extensions?: BasketExtensions;
+  address?: Address;
+}
+
+export interface CamCamProductsAddToCart {
+  [id: string]: CamCamProductsAddToCartItems;
 }

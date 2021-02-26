@@ -31,7 +31,12 @@ import { CamfilModalDialogComponent } from 'ish-shared/components/common/camfil-
 
 import { CamCardsFacade } from '../../../facades/cam-cards.facade';
 import { CamCardHelper } from '../../../models/cam-card/cam-card.helper';
-import { CamCamProductChecked, CamCard, CamCardItem } from '../../../models/cam-card/cam-card.model';
+import {
+  CamCamProductChecked,
+  CamCamProductsAddToCart,
+  CamCard,
+  CamCardItem,
+} from '../../../models/cam-card/cam-card.model';
 
 export interface Prices {
   [id: string]: Price;
@@ -162,36 +167,40 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges, OnD
     }
   }
 
-  addItemsToCart() {
-    this.camCard.camCardItems?.forEach(item => {
-      this.addItemToCart(item);
-    });
-    this.camCard.subCamCards?.forEach(sub => {
-      sub.camCardItems?.forEach(item => {
-        this.addItemToCart(item);
-      });
-    });
+  prepereItemToAdd(item: CamCardItem): CamCamProductChecked {
+    return {
+      camCardId: this.camCard.id,
+      camCardRoot: this.camCard.rootCamCard,
+      sku: item.product.sku,
+      quantity: item.quantity,
+      boxLabel: item.comment?.label,
+    };
   }
-  addItemToCart(item: CamCardItem) {
-    if (item.product.available) {
-      const val: CamCamProductChecked = {
-        camCardId: this.camCard.id,
-        camCardRoot: this.camCard.rootCamCard,
-        sku: item.product.sku,
-        quantity: item.quantity,
-        boxLabel: item.comment?.label,
-      };
-      CamCardHelper.addToCartFromCamCard(
-        val,
-        [this.camCard],
-        this.buckets,
-        this.camCardsFacade,
-        this.shoppingFacade,
-        this.commonShippingMethodId,
-        this.basketId,
-        this.basketAddresses
-      );
-    }
+
+  addItemsToCart() {
+    const ccId = this.camCard.id;
+    const products = this.camCard.camCardItems
+      ?.filter(x => x.product.available)
+      .map(item => this.prepereItemToAdd(item));
+
+    this.camCard.subCamCards?.forEach(sub => {
+      sub.camCardItems
+        ?.filter(x => x.product.available)
+        .forEach(item => {
+          products.push(this.prepereItemToAdd(item));
+        });
+    });
+
+    const list: CamCamProductsAddToCart = { [ccId]: { products } };
+
+    CamCardHelper.addToCartFromCamCards(
+      this.camCardsFacade,
+      this.shoppingFacade,
+      list,
+      [this.camCard],
+      this.commonShippingMethodId,
+      this.basketId
+    );
   }
 
   deleteCamCard() {

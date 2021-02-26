@@ -517,7 +517,14 @@ export class BasketService {
    * @param items     The list of product SKU and quantity pairs to be added to the basket.
    */
   addItemsToBasket(
-    items: { sku: string; quantity: number; unit: string; shippingMethod?: string; shipToAddress?: string }[]
+    items: {
+      sku: string;
+      quantity: number;
+      unit: string;
+      shippingMethod?: string;
+      shipToAddress?: string;
+      lineItemAttributes?: Attribute;
+    }[]
   ): Observable<LineItem[]> {
     if (!items) {
       return throwError('addItemsToBasket() called without items');
@@ -530,6 +537,7 @@ export class BasketService {
       },
       shipToAddress: item.shipToAddress,
       shippingMethod: item.shippingMethod,
+      attributes: [item.lineItemAttributes || {}],
     }));
 
     return this.apiService

@@ -24,6 +24,7 @@ export class BucketMapper {
         shipToAddress: extension ? extension.shippingAddress.urn : '',
         shipToAddressFull: extension ? extension.shippingAddress : undefined,
         contactPerson: extension && extension.contactPerson,
+        createdFromCamCardId: extension?.createdFromCamCardId || '',
         info: extension ? extension.info : '',
         boxLabel: extension ? extension.boxLabel : '',
         phoneNumber: extension ? extension.phoneNumber : '',
