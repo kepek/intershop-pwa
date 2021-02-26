@@ -86,6 +86,7 @@ export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
 
   initForm() {
     const defaultDeliveryDate = this.setFullDeliveryDate();
+
     this.orderForm = this.fb.group({
       orderMark: [this.order.orderMark, [Validators.required, Validators.maxLength(60)]],
       invoiceLabel: [this.order.invoiceLabel, [Validators.required, Validators.maxLength(20)]],
@@ -95,6 +96,24 @@ export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
         [Validators.maxLength(35)],
       ],
     });
+
+    const basketId = this.order.basket;
+    const shipAddressId = this.order.deliveryAddressId;
+
+    const deliveryDateValue = AttributeHelper.formatDeliveryDate(new Date(defaultDeliveryDate));
+
+    this.selectedDeliveryDate = defaultDeliveryDate;
+    this.isPartialDelivery = true;
+
+    const basketExtensionUpdate = {
+      ...this.order,
+      deliveryDate: deliveryDateValue,
+      isPartialDelivery: true,
+    };
+
+    if (!this.order?.deliveryDate?.length) {
+      this.shoppingFacade.updateBucket(basketId, shipAddressId, basketExtensionUpdate);
+    }
   }
 
   onBlurSubmit(field: string) {
