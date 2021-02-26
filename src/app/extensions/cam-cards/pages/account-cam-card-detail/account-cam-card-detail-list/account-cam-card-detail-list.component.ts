@@ -167,13 +167,13 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges, OnD
     }
   }
 
-  prepereItemToAdd(item: CamCardItem): CamCamProductChecked {
+  prepereItemToAdd(parent: CamCard, item: CamCardItem): CamCamProductChecked {
     return {
       camCardId: this.camCard.id,
       camCardRoot: this.camCard.rootCamCard,
       sku: item.product.sku,
       quantity: item.quantity,
-      boxLabel: item.comment?.label,
+      boxLabel: CamCardHelper.handleBoxLableToOrderItem(parent, item),
     };
   }
 
@@ -181,13 +181,13 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges, OnD
     const ccId = this.camCard.id;
     const products = this.camCard.camCardItems
       ?.filter(x => x.product.available)
-      .map(item => this.prepereItemToAdd(item));
+      .map(item => this.prepereItemToAdd(this.camCard, item));
 
     this.camCard.subCamCards?.forEach(sub => {
       sub.camCardItems
         ?.filter(x => x.product.available)
         .forEach(item => {
-          products.push(this.prepereItemToAdd(item));
+          products.push(this.prepereItemToAdd(sub, item));
         });
     });
 
