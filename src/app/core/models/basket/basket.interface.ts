@@ -72,7 +72,6 @@ export interface BasketExtensions {
   customer?: CamCardCustomer;
   contactPerson?: CamCardContact;
   info?: string;
-  boxLabel?: string;
   phoneNumber?: string;
   isPartial?: boolean;
   orderMark?: string;
