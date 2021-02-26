@@ -80,7 +80,7 @@ export class CamCardHelper {
     }
   }
 
-  static handleBoxLableToOrderItem(camCard: CamCard, item: CamCardItem) {
+  static handleBoxLabelToOrderItem(camCard: CamCard, item: CamCardItem) {
     const subName = camCard.rootCamCard ? camCard.name + (item.comment?.label ? ', ' : '') : '';
     return subName + item.comment?.label || '';
   }
