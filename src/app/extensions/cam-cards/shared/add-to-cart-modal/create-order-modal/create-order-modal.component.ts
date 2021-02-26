@@ -139,9 +139,8 @@ export class CreateOrderModalComponent implements OnInit, OnDestroy {
   addProductToBucket() {
     const address = this.getAddress();
     const quantity = this.quantityForm.get('quantity').value;
-    const lineItemAttribute: Attribute = this.getBasketExtension().boxLabel
-      ? { name: 'boxLabel', type: 'String', value: this.getBasketExtension().boxLabel }
-      : undefined;
+    const boxLabel = this.quantityForm.get('boxLabel').value;
+    const lineItemAttribute: Attribute = boxLabel ? { name: 'boxLabel', type: 'String', value: boxLabel } : undefined;
 
     if (this.isNewAddress()) {
       this.shoppingFacade.addProductToBucket(
@@ -219,7 +218,6 @@ export class CreateOrderModalComponent implements OnInit, OnDestroy {
       invoiceLabel: addressForm.get('invoiceLabel').value,
       phoneNumber: addressForm.get('phoneNumber').value,
       info: addressForm.get('info').value,
-      boxLabel: this.quantityForm.get('boxLabel').value,
     };
   }
 

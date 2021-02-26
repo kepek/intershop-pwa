@@ -26,7 +26,6 @@ export class BucketMapper {
         contactPerson: extension && extension.contactPerson,
         createdFromCamCardId: extension?.createdFromCamCardId || '',
         info: extension ? extension.info : '',
-        boxLabel: extension ? extension.boxLabel : '',
         phoneNumber: extension ? extension.phoneNumber : '',
         customer: extension ? extension.customer : undefined,
         orderMark: extension ? extension.orderMark : '',
