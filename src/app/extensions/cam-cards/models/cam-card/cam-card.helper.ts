@@ -7,7 +7,7 @@ import { whenTruthy } from 'ish-core/utils/operators';
 
 import { CamCardsFacade } from '../../facades/cam-cards.facade';
 
-import { CamCamProductsAddToCart, CamCard, CamCardContact } from './cam-card.model';
+import { CamCamProductsAddToCart, CamCard, CamCardContact, CamCardItem } from './cam-card.model';
 
 export type MaintenanceStatus = 'ACTIVE' | 'INACTIVE' | 'MAINTENANCE' | 'READ_ONLY';
 
@@ -78,5 +78,10 @@ export class CamCardHelper {
     } else {
       getActions(basketId);
     }
+  }
+
+  static handleBoxLabelToOrderItem(camCard: CamCard, item: CamCardItem) {
+    const subName = camCard.rootCamCard ? camCard.name + (item.comment?.label ? ', ' : '') : '';
+    return subName + item.comment?.label || '';
   }
 }
