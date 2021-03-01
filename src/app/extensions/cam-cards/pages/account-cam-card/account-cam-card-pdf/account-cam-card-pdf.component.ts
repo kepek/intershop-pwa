@@ -71,7 +71,7 @@ export class AccountCamCardPdfComponent implements OnInit {
   }
 
   handlePrice(data: Price) {
-    return formatPrice(data, this.translate.currentLang);
+    return data ? formatPrice(data, this.translate.currentLang) : '---';
   }
 
   handleDate(data: Date) {
@@ -111,13 +111,23 @@ export class AccountCamCardPdfComponent implements OnInit {
         .subscribe((res: ProductView) => {
           this.products[sku] = res;
 
+          const firstCCId = this.camCards[0].id;
+          if (res.listPrice && !this.sumPrice[firstCCId]) {
+            this.camCards.forEach(camCard => {
+              this.sumPrice[camCard.id] = { type: 'Money', value: 0, currency: res.listPrice.currency };
+            });
+          }
+
           if (Object.keys(this.products).length === prodSkusList.length && !this.skuEqProducts) {
             this.skuEqProducts = true;
             this.pdfLoading = false;
 
-            this.camCards.forEach(camCard => {
-              this.sumPrice[camCard.id] = { type: 'Money', value: 0, currency: res.listPrice.currency };
-            });
+            // double check if sumPrice is not filled yet
+            if (!this.sumPrice[firstCCId]) {
+              this.camCards.forEach(camCard => {
+                this.sumPrice[camCard.id] = { type: 'Money', value: 0, currency: '--' };
+              });
+            }
 
             const styles = this.pdfStyles();
             const images = this.pdfImages();
@@ -270,7 +280,7 @@ export class AccountCamCardPdfComponent implements OnInit {
     const qtyVal = { text: item.quantity, bold: true };
     const size = ` | ${this.texts.packSize} `;
     const sizeVal = { text: 'xxx', bold: true }; // TODO: Pack size val
-    const priceVal = this.handlePrice(this.products[sku].listPrice);
+    const priceVal = this.handlePrice(this.products[sku]?.listPrice);
     const priceLabel = showPrice ? ` | ${this.texts.price} ` : '';
     const price = showPrice ? { text: priceVal, bold: true } : '';
     return {
@@ -293,7 +303,7 @@ export class AccountCamCardPdfComponent implements OnInit {
     return camCard.camCardItems
       .map((el, i) => {
         const id = camCard.rootCamCard || camCard.id;
-        const price = this.products[el.product.sku].listPrice.value;
+        const price = this.products[el.product.sku].listPrice?.value || 0;
         this.sumPrice[id].value = this.sumPrice[id].value + price * el.quantity;
         return this.pdfProductRow(el, i, showPrice);
       })
@@ -347,7 +357,7 @@ export class AccountCamCardPdfComponent implements OnInit {
             {
               fillColor: '#F2F2F2',
               text: [
-                { text: `\n ${this.texts.yourTotal}`, bold: true },
+                { text: `\n ${this.texts.yourTotal} `, bold: true },
                 { text: this.handlePrice(this.sumPrice[id]), fontSize: 15, bold: true },
                 { text: '\n ' },
               ],
