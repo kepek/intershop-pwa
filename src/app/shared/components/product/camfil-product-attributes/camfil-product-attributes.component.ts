@@ -15,7 +15,7 @@ export class CamfilProductAttributesComponent implements OnInit {
   productListAttributes;
 
   ngOnInit(): void {
-    this.productListAttributes = this.product.attributeGroups[
+    this.productListAttributes = this.product?.attributeGroups[
       AttributeGroupTypes.ProductsListLabelAttributes
     ]?.attributes;
   }

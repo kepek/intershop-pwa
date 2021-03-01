@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
+import { AttributeGroup } from 'ish-core/models/attribute-group/attribute-group.model';
+import { AttributeGroupTypes } from 'ish-core/models/attribute-group/attribute-group.types';
 import { AttributeToStringPipe } from 'ish-core/models/attribute/attribute.pipe';
 import { Product } from 'ish-core/models/product/product.model';
 
@@ -12,11 +14,19 @@ describe('Camfil Product Attributes Component', () => {
   let element: HTMLElement;
   let product: Product;
   beforeEach(async () => {
-    product = { sku: 'sku' } as Product;
-    product.attributes = [
-      { name: 'A', type: 'String', value: 'A' },
-      { name: 'B', type: 'String', value: 'B' },
-    ];
+    const attributeGroup = {
+      attributes: [
+        { name: 'A1', type: 'String', value: 'Value1' },
+        { name: 'B1', type: 'MultipleString', value: ['hallo', 'welt'] },
+      ],
+    } as AttributeGroup;
+    product = {
+      name: 'FakeProduct',
+      sku: 'sku',
+      attributeGroups: {
+        [AttributeGroupTypes.ProductsListLabelAttributes]: attributeGroup,
+      } as { [id: string]: AttributeGroup },
+    } as Product;
     await TestBed.configureTestingModule({
       imports: [TranslateModule.forRoot()],
       declarations: [AttributeToStringPipe, CamfilProductAttributesComponent],
@@ -48,17 +58,15 @@ describe('Camfil Product Attributes Component', () => {
   });
 
   it('should render product attributes name and value when available', () => {
-    product.attributes = [{ name: 'A', type: 'String', value: 'A' }];
     fixture.detectChanges();
-    expect(element.querySelector('.attribute-type').textContent).toEqual('A:');
-    expect(element.querySelector('.attribute-value').textContent).toEqual('A');
+    expect(element.querySelector('.attribute-type').textContent).toEqual('A1:');
+    expect(element.querySelector('.attribute-value').textContent).toEqual('Value1');
   });
 
   it('should render product attributes name and multiple value when available', () => {
-    product.attributes = [{ name: 'A', type: 'MultipleString', value: ['hallo', 'welt'] }];
     component.multipleValuesSeparator = ':::';
     fixture.detectChanges();
-    expect(element.querySelector('.attribute-type').textContent).toEqual('A:');
-    expect(element.querySelector('.attribute-value').textContent).toEqual('hallo:::welt');
+    expect(element.querySelectorAll('.attribute-type')[1].textContent).toEqual('B1:');
+    expect(element.querySelectorAll('.attribute-value')[1].textContent).toEqual('hallo:::welt');
   });
 });
