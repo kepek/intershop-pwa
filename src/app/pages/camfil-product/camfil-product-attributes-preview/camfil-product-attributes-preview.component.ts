@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component, Input, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit, ViewChild } from '@angular/core';
 
+import { AttributeGroupTypes } from 'ish-core/models/attribute-group/attribute-group.types';
 import { Product } from 'ish-core/models/product/product.model';
 
 @Component({
@@ -8,10 +9,17 @@ import { Product } from 'ish-core/models/product/product.model';
   styleUrls: ['./camfil-product-attributes-preview.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CamfilProductAttributesPreviewComponent {
+export class CamfilProductAttributesPreviewComponent implements OnInit {
   @Input() product: Product;
   @Input() multipleValuesSeparator = ', ';
   @ViewChild('productAttributes') productAttributes;
+  productListAttributes;
+
+  ngOnInit(): void {
+    this.productListAttributes = this.product.attributeGroups[
+      AttributeGroupTypes.ProductsListLabelAttributes
+    ]?.attributes;
+  }
 
   scrollToAttributes(): void {
     document
