@@ -10,6 +10,7 @@ export type BasketValidationScopeType =
   | 'Shipping'
   | 'Payment'
   | 'Promotion'
+  | 'Camfil'
   | 'All'
   /* no scope: a minimum is validated */
   | '';
