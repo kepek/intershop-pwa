@@ -230,6 +230,7 @@ export class SelectCamCardModalComponent implements OnInit, OnDestroy, OnChanges
       const newSubCamCard = {
         name: newSegmentValue,
         deliveryAddress: this.rootCamCardAddress,
+        customer: rootCamCard.customer,
       };
 
       this.camCardsFacade.addProductToNewSubCamCard(
