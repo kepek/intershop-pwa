@@ -59,7 +59,12 @@
       <div class="col-6">
         <mat-form-field appearance="fill">
           <mat-label>{{ 'camfil.product.list.toolbar.choose.option' | translate }}</mat-label>
-          <mat-select [formControl]="sortDropdown" id="SortingAttribute" name="SortingAttribute">
+          <mat-select
+            [formControl]="sortDropdown"
+            (selectionChange)="changeSortBy($event)"
+            id="SortingAttribute"
+            name="SortingAttribute"
+          >
             <mat-option *ngFor="let o of sortOptions" [value]="o.value">{{ o.label }}</mat-option>
           </mat-select>
         </mat-form-field>

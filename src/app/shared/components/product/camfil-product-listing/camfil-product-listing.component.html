@@ -11,7 +11,7 @@
     >
       <camfil-product-list-toolbar
         [itemCount]="listing.itemCount"
-        [sortKeys]="listing.sortKeys"
+        [sortableAttributes]="listing.sortableAttributes"
         [viewType]="viewType$ | async"
         [sortBy]="sortBy$ | async"
         [categoryName]="category ? category.name : null"
@@ -39,7 +39,7 @@
         <ng-template #pagingToolbar>
           <camfil-product-list-toolbar
             [itemCount]="listing.itemCount"
-            [sortKeys]="listing.sortKeys"
+            [sortableAttributes]="listing.sortableAttributes"
             [viewType]="viewType$ | async"
             [sortBy]="sortBy$ | async"
             [currentPage]="currentPage"
