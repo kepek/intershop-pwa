@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 
+import { AttributeGroupTypes } from 'ish-core/models/attribute-group/attribute-group.types';
 import { Product } from 'ish-core/models/product/product.model';
 
 @Component({
@@ -8,7 +9,14 @@ import { Product } from 'ish-core/models/product/product.model';
   styleUrls: ['./camfil-product-attributes.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CamfilProductAttributesComponent {
+export class CamfilProductAttributesComponent implements OnInit {
   @Input() product: Product;
   @Input() multipleValuesSeparator = ', ';
+  productListAttributes;
+
+  ngOnInit(): void {
+    this.productListAttributes = this.product?.attributeGroups[
+      AttributeGroupTypes.ProductsListLabelAttributes
+    ]?.attributes;
+  }
 }
