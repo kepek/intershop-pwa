@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { take, takeUntil } from 'rxjs/operators';
 
 import { EditBucket } from 'ish-core/models/basket/bucket.model';
 import { whenTruthy } from 'ish-core/utils/operators';
@@ -91,6 +91,13 @@ export class OrderFormComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe((contacts: CamCardContact[]) => {
         this.contacts = contacts;
+
+        this.camCardsFacade
+          .getUserContactForCustomer$(event.value)
+          .pipe(take(1))
+          .subscribe((contactPerson: CamCardContact) => {
+            this.addressForm.patchValue({ contact: contactPerson.erpId });
+          });
       });
   }
 
