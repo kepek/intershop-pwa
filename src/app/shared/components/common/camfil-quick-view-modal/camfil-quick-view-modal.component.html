@@ -147,7 +147,7 @@
             <camfil-lazy-product-add-to-cam-card
               class="btn-link cart-big-round-btn"
               [product]="product"
-              [quantity]="quantity"
+              [quantity]="quantityCount"
               displayType="round-btn"
               [hasIcon]="true"
             ></camfil-lazy-product-add-to-cam-card>
@@ -160,6 +160,7 @@
               "
               (productToBasket)="addToBasket(product.sku)"
               displayType="button"
+              [quantity]="quantityCount"
               hasIcon="true"
             ></camfil-product-add-to-basket>
           </div>

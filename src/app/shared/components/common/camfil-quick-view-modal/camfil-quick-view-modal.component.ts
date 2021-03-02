@@ -110,12 +110,16 @@ export class CamfilQuickViewModalComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
+  get quantityCount() {
+    return this.productDetailForm.get(this.quantityControlName).value;
+  }
+
   getAttributeValue(attributes: Attribute[], attributeName: string) {
     return attributes.find(x => x.name === attributeName)?.value;
   }
 
   addToBasket(sku) {
-    this.shoppingFacade.addProductToBasket(sku, this.quantity);
+    this.shoppingFacade.addProductToBasket(sku, this.quantityCount);
     this.dialog.closeAll();
   }
 
