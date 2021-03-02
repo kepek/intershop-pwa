@@ -34,13 +34,6 @@
       </div>
     </div>
 
-    <!-- <camfil-cam-card-product-comment
-      *ngIf="isEditMode || camCardItemData.comment?.label"
-      [ngClass]="{ 'align-self-end': isViewMode, 'ml-md-auto': isEditMode }"
-      [currentCamCard]="currentCamCard"
-      [camCardItem]="camCardItemData"
-      [mode]="mode"
-    ></camfil-cam-card-product-comment> -->
     <div class="box-label" *ngIf="!isConfirmed">
       <form [formGroup]="boxLabelForm" class="box-label__form">
         <mat-form-field appearance="outline" class="box-label__form--field">
@@ -54,13 +47,13 @@
         ></camfil-error>
       </form>
     </div>
-    <div class="delivery-date-container">
-      <p class="delivery-date-para">
-        <strong>{{ 'camfil.checkout.order.earliest_delivery_date.text' | translate }}</strong>
-      </p>
-      <p class="delivery-date-para">{{ earliestDeliveryDate | ishDate: 'shortDate' }}</p>
-    </div>
-    <ng-container>
+    <ng-container *ngIf="!productData.failed; else productNotAvailable">
+      <div class="delivery-date-container">
+        <p class="delivery-date-para">
+          <strong>{{ 'camfil.checkout.order.earliest_delivery_date.text' | translate }}</strong>
+        </p>
+        <p class="delivery-date-para">{{ earliestDeliveryDate | ishDate: 'shortDate' }}</p>
+      </div>
       <div class="quantity-row d-flex flex-row justify-content-between align-items-center py-3 py-md-0">
         <span *ngIf="isConfirmed" class="quantity-confirmed">{{ product.quantity.value }}</span>
         <a
@@ -87,6 +80,20 @@
         </div>
       </div>
     </ng-container>
+    <ng-template #productNotAvailable>
+      <p class="bg-danger p-2 m-0 text-center w-100">
+        <strong>{{ 'camfil.checkout.order.product_not_available.text' | translate }}</strong>
+      </p>
+      <a
+        class="btn-tool delete-cam-card"
+        (click)="openDeleteModal()"
+        [ngClass]="{ 'ml-md-auto': isEditMode }"
+        data-testing-id="delete-cam-card"
+        *ngIf="!isConfirmed"
+      >
+        <mat-icon svgIcon="delete" class="size-16 mx-2"></mat-icon>
+      </a>
+    </ng-template>
   </div>
 
   <ng-template #price>

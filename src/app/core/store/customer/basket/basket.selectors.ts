@@ -25,7 +25,7 @@ export const getBasketValidationResults = createSelector(
             ...error,
             lineItem: error.parameters &&
               error.parameters.lineItemId && {
-                ...basket.basket.lineItems.find(item => item.id === error.parameters.lineItemId),
+                ...basket.basket?.lineItems.find(item => item.id === error.parameters.lineItemId),
               },
           }))
         : [],
