@@ -789,6 +789,7 @@
   "camfil.checkout.order_header.note.error.maxLength": "fi_Info must not exceed 150 characters.",
   "camfil.checkout.order_header.order_mark.error.maxLength": "fi_Order mark not exceed 60 characters.",
   "camfil.checkout.order_header.order_mark.error.required": "fi_Please enter order mark",
+  "camfil.checkout.order.product_not_available.text": "fi_Product is Not Available",
   "camfil.checkout.phone": "fi_Phone notification",
   "camfil.checkout.place_your_orders": "fi_Place your orders",
   "camfil.checkout.single_total_price_after": "fi_Order price after volume discount (excl. VAT)",
