@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { Actions, ofType } from '@ngrx/effects';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -7,6 +8,7 @@ import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { BasketValidationResultType } from 'ish-core/models/basket-validation/basket-validation.model';
 import { BasketView } from 'ish-core/models/basket/basket.model';
 import { Bucket } from 'ish-core/models/basket/bucket.model';
+import { createOrderSuccess } from 'ish-core/store/customer/orders/orders.actions';
 import { whenTruthy } from 'ish-core/utils/operators';
 
 import { CamCard } from '../../extensions/cam-cards/models/cam-card/cam-card.model';
@@ -42,7 +44,8 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
   constructor(
     private checkoutFacade: CheckoutFacade,
     private shoppingFacade: ShoppingFacade,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private updates$: Actions
   ) {}
 
   ngOnInit() {
@@ -75,13 +78,8 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
       this.emptyBuckets = emptyBuckets;
     });
 
-    this.checkoutFacade.selectedOrder$.pipe(takeUntil(this.destroy$)).subscribe(selectedOrder => {
-      const currentDate = Date.now();
-      const orderDate = new Date(selectedOrder?.creationDate)?.getTime();
-
-      const difference = currentDate - orderDate;
-
-      this.validation = difference < 10000 ? !!selectedOrder : false;
+    this.updates$.pipe(ofType(createOrderSuccess), takeUntil(this.destroy$)).subscribe(() => {
+      this.validation = true;
     });
   }
 
