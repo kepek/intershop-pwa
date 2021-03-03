@@ -1,7 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { provideMockActions } from '@ngrx/effects/testing';
+import { Action } from '@ngrx/store';
 import { MockComponent } from 'ng-mocks';
-import { of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { instance, mock, when } from 'ts-mockito';
 
 import { AppFacade } from 'ish-core/facades/app.facade';
@@ -9,6 +11,7 @@ import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { BasketView } from 'ish-core/models/basket/basket.model';
 import { Order } from 'ish-core/models/order/order.model';
+import { createOrderSuccess } from 'ish-core/store/customer/orders/orders.actions';
 import { BasketInfoComponent } from 'ish-shared/components/basket/basket-info/basket-info.component';
 import { BasketValidationResultsComponent } from 'ish-shared/components/basket/basket-validation-results/basket-validation-results.component';
 import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
@@ -28,6 +31,7 @@ describe('Checkout Page Component', () => {
   let checkoutFacade: CheckoutFacade;
   let camCardFacadeMock: CamCardsFacade;
   let shoppingFacadeMock: ShoppingFacade;
+  let actions$: Observable<Action>;
 
   const camCardDetails = {
     name: 'testing cam cards',
@@ -103,6 +107,8 @@ describe('Checkout Page Component', () => {
         { provide: CamCardsFacade, useFactory: () => instance(camCardFacadeMock) },
         { provide: ShoppingFacade, useFactory: () => instance(shoppingFacadeMock) },
         { provide: AppFacade, useFactory: () => instance(mock(AppFacade)) },
+        { provide: AppFacade, useFactory: () => instance(mock(AppFacade)) },
+        provideMockActions(() => actions$),
       ],
     }).compileComponents();
   });
@@ -130,6 +136,9 @@ describe('Checkout Page Component', () => {
   });
 
   it('should be created', () => {
+    const action = createOrderSuccess({ order: { id: '123' } as Order });
+    actions$ = of(action);
+
     expect(component).toBeTruthy();
     expect(element).toBeTruthy();
     expect(() => fixture.detectChanges()).not.toThrow();
