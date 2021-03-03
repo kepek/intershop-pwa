@@ -116,7 +116,7 @@ export class MessagesEffects {
         ofType(routerRequestAction),
         take(1),
         tap(() => {
-          activeToast.toastRef.manualClose();
+          activeToast?.toastRef.manualClose();
         })
       )
     );
