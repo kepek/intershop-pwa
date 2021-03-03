@@ -41,11 +41,11 @@ export class BasketValidationEffects {
   ) {}
 
   private validationSteps: { scopes: BasketValidationScopeType[]; route: string }[] = [
-    { scopes: ['Products', 'Value'], route: '/checkout' },
+    { scopes: ['Products', 'Value', 'Camfil'], route: '/checkout' },
     { scopes: ['InvoiceAddress', 'ShippingAddress', 'Addresses'], route: '/checkout' },
     { scopes: ['Shipping'], route: '/checkout/shipping' },
     { scopes: ['Payment'], route: '/checkout/payment' },
-    { scopes: ['Products', 'Value'], route: '/checkout' },
+    { scopes: ['Products', 'Value', 'Camfil'], route: '/checkout' },
     { scopes: ['All'], route: 'auto' }, // targetRoute will be calculated in dependence of the validation result
   ];
 
