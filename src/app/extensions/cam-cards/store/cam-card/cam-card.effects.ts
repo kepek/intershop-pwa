@@ -31,7 +31,7 @@ import {
   whenTruthy,
 } from 'ish-core/utils/operators';
 
-import { CamCard, CamCardItemComment } from '../../models/cam-card/cam-card.model';
+import { CamCard, CamCardContact, CamCardItemComment } from '../../models/cam-card/cam-card.model';
 import { CamCardService } from '../../services/cam-card/cam-card.service';
 
 import {
@@ -110,7 +110,12 @@ import {
   updateSubCamCardFail,
   updateSubCamCardSuccess,
 } from './cam-card.actions';
-import { getCamCardDetails, getSelectedCamCardDetails, getSelectedCamCardId } from './cam-card.selectors';
+import {
+  getCamCardDetails,
+  getSelectedCamCardDetails,
+  getSelectedCamCardId,
+  getUserContactForCustomer,
+} from './cam-card.selectors';
 
 @Injectable()
 export class CamCardEffects {
@@ -230,8 +235,9 @@ export class CamCardEffects {
       mapToPayload(),
       mergeMap(({ camCard, newContacts }) =>
         this.camCardService.updateCamCardContacts(camCard.id, newContacts).pipe(
-          mergeMap(() => [
-            updateCamCardContactsSuccess({ camCardId: camCard.id, contacts: newContacts }),
+          mergeMap(() => this.store.pipe(select(getUserContactForCustomer, { customerId: camCard.customer.id }))),
+          mergeMap(contact => [
+            this.handleCamCardContactsSuccess(camCard.id, newContacts, contact),
             displaySuccessMessage({
               message: 'camfil.account.cam_card.move.confirmation',
               messageParams: { 0: camCard.id },
@@ -644,14 +650,24 @@ export class CamCardEffects {
       mapToPayload(),
       mergeMap(({ camCardId, camCardContacts }) =>
         this.camCardService.updateCamCardContacts(camCardId, camCardContacts).pipe(
-          mergeMap(() => [
-            updateCamCardContactsSuccess({ camCardId, contacts: camCardContacts }),
-            displaySuccessMessage({
-              message: 'camfil.account.cam_card.update.contacts.confirmation',
-              messageParams: { 0: camCardId },
-            }),
-          ]),
-          mapErrorToAction(updateCamCardContactsFail)
+          switchMap(() =>
+            this.store.pipe(
+              select(getCamCardDetails, { id: camCardId }),
+              mergeMap(camCard =>
+                this.store.pipe(
+                  select(getUserContactForCustomer, { customerId: camCard.customer.id }),
+                  mergeMap(contact => [
+                    this.handleCamCardContactsSuccess(camCardId, camCardContacts, contact),
+                    displaySuccessMessage({
+                      message: 'camfil.account.cam_card.update.contacts.confirmation',
+                      messageParams: { 0: camCardId },
+                    }),
+                  ])
+                )
+              ),
+              mapErrorToAction(updateCamCardContactsFail)
+            )
+          )
         )
       )
     )
@@ -826,4 +842,14 @@ export class CamCardEffects {
       ),
     { dispatch: false }
   );
+
+  /** Action after update CamCard Contacts
+   * @param camCardId
+   * @param newContacts
+   * @param contact
+   */
+  private handleCamCardContactsSuccess(camCardId: string, contacts: CamCardContact[], contact: CamCardContact) {
+    const isInclude = !contacts.length || contacts.findIndex(newContact => newContact.erpId === contact.erpId) > -1;
+    return isInclude ? updateCamCardContactsSuccess({ camCardId, contacts }) : deleteCamCardSuccess({ camCardId });
+  }
 }
