@@ -338,7 +338,13 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
     return this.productsChecked[id];
   }
   isCamCardChecked({ itemsCount, camCardItems, subCamCards }: CamCard) {
-    const items = itemsCount > 0;
+    const notAvailableProducts =
+      subCamCards?.reduce((acc, sub) => {
+        const count = sub.camCardItems.filter(el => !el.product.available).length;
+        return acc + count;
+      }, 0) + camCardItems.filter(item => !item.product.available).length;
+
+    const items = itemsCount > 0 && notAvailableProducts !== itemsCount;
     const itemsChecked = camCardItems
       ? camCardItems.filter(item => item.product.available).every(item => this.isProductChecked(item.id))
       : true;
