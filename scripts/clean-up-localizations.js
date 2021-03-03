@@ -3,7 +3,7 @@ const fs = require('fs');
 const glob = require('glob');
 const { execSync } = require('child_process');
 
-const localizationFile_default = 'src/assets/i18n/en_US.json';
+const localizationFile_default = 'src/assets/i18n/en_GB.json';
 
 // regular expression for patterns of not explicitly used localization keys (dynamic created keys, error keys from REST calls)
 // ADDITIONAL PATTERNS HAVE TO BE ADDED HERE
