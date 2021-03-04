@@ -292,7 +292,7 @@ export class CamCardEffects {
           mergeMap(newCamCard =>
             concat(
               ...camCards.camCardItems.map(item =>
-                this.camCardService.addProductToCamCard(newCamCard.id, item.product.sku, item.quantity)
+                this.camCardService.addProductToCamCard(newCamCard.id, item.product.sku, item.quantity, item.comment)
               )
             ).pipe(
               last(),

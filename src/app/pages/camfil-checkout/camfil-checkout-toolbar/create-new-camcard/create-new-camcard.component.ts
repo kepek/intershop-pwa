@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { CamCardsFacade } from 'src/app/extensions/cam-cards/facades/cam-cards.facade';
-import { CamCard } from 'src/app/extensions/cam-cards/models/cam-card/cam-card.model';
+import { CamCard, CamCardItem } from 'src/app/extensions/cam-cards/models/cam-card/cam-card.model';
 
 import { Bucket } from 'ish-core/models/basket/bucket.model';
 import { Product } from 'ish-core/models/product/product.model';
@@ -30,12 +30,19 @@ export class CreateNewCamcardComponent {
     const newCamCards = this.buckets.map((bucket, idx) => {
       const name = this.getNewName(bucket.orderMark, idx);
       const { addressLine1, addressLine2, city, countryCode, postalCode } = bucket.shipToAddressFull;
-      const camCardItems = bucket.lineItems.map(item => ({
-        quantity: item.quantity.value,
-        product: {
-          sku: item.productSKU,
-        },
-      }));
+      const camCardItems = bucket.lineItems.map(item => {
+        const label = item.attributes?.find(attr => attr.name === 'boxLabel')?.value as string;
+        const data: CamCardItem = {
+          quantity: item.quantity.value,
+          product: {
+            sku: item.productSKU,
+          },
+        };
+        if (label) {
+          data.comment = { label };
+        }
+        return data;
+      });
       return {
         name,
         customer: bucket.customer,
