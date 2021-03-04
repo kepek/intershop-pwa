@@ -81,7 +81,16 @@ export class CamCardHelper {
   }
 
   static handleBoxLabelToOrderItem(camCard: CamCard, item: CamCardItem) {
-    const subName = camCard.rootCamCard ? camCard.name + (item.comment?.label ? ', ' : '') : '';
-    return subName + item.comment?.label || '';
+    const isItemFromSub = camCard.rootCamCard || camCard.camCardItems.findIndex(el => el.id === item.id) === -1;
+    const nameFromSub =
+      camCard.subCamCards?.reduce(
+        (name, sub) => (sub.camCardItems.find(el => el.id === item.id) ? sub.name : name),
+        ''
+      ) || '';
+
+    const subName = isItemFromSub
+      ? (camCard.rootCamCard ? camCard.name : nameFromSub) + (item.comment?.label ? ', ' : '')
+      : '';
+    return subName + (item.comment?.label || '');
   }
 }

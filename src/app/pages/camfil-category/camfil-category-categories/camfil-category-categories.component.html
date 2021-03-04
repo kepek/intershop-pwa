@@ -31,7 +31,7 @@
     <div class="col-md-9">
       <div class="col-12 box-shadow box-container">
         <div class="row">
-          <div class="col-lg-9 col-md-7">
+          <div class="col-md-7 col-lg-8">
             <h1>{{ category.name }}</h1>
 
             <p *ngIf="category?.description?.length < 200; else readMore">
@@ -54,7 +54,7 @@
               </mat-action-row>
             </ng-template>
           </div>
-          <div class="product-guides-area col-lg-3 col-md-5">
+          <div class="product-guides-area col-md-5 col-lg-4 border-left border-primary pl-5">
             <ish-content-viewcontext
               viewContextId="vc_camfil_category_categories_guides"
               [callParameters]="{ Category: category.categoryRef }"

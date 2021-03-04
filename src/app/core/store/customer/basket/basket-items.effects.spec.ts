@@ -32,6 +32,7 @@ import {
   updateBasketItems,
   updateBasketItemsFail,
   updateBasketItemsSuccess,
+  updateBucket,
   validateBasket,
 } from './basket.actions';
 
@@ -184,13 +185,20 @@ describe('Basket Items Effects', () => {
         })
       );
 
-      const items = [{ sku: 'SKU', quantity: 1, unit: 'pcs.', basketExtension: { name: 'lorem' } }];
+      const items = [
+        { sku: 'SKU', quantity: 1, unit: 'pcs.', basketExtension: { name: 'lorem' }, addressId: 'addressId' },
+      ];
       const action = addItemsToBasket({ items });
       const completion = addItemsToBasketSuccess({ info: [] });
-      const completion2 = displaySuccessMessage({ message: 'camfil.add_items_to_basket.camfil.message.success' });
+      const completion2 = updateBucket({
+        basketId: 'BID',
+        addressId: items[0].addressId,
+        basketExtension: items[0].basketExtension,
+      });
+      const completion3 = displaySuccessMessage({ message: 'camfil.add_items_to_basket.camfil.message.success' });
 
-      actions$ = hot('-a----a----a----|', { a: action });
-      const expected$ = cold('-(cd)-(cd)-(cd)-|', { c: completion, d: completion2 });
+      actions$ = hot('-a-----a-----a-----|', { a: action });
+      const expected$ = cold('-(cde)-(cde)-(cde)-|', { c: completion, d: completion2, e: completion3 });
 
       expect(effects.addItemsToBasket$).toBeObservable(expected$);
     });

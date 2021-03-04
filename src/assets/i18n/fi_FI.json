@@ -977,9 +977,9 @@
   "camfil.product.instock.text": "fi_In Stock",
   "camfil.product.isoClass.label": "fi_Iso class",
   "camfil.product.items.label": {
-    "=0": "fi_0 list items",
-    "=1": "fi_1 list item",
-    "other": "fi_# list items"
+    "=0": "fi_<b>0</b> list items",
+    "=1": "fi_<b>1</b> list item",
+    "other": "fi_<b>#</b> list items"
   },
   "camfil.product.items.showing.text": "fi_Showing",
   "camfil.product.list.sorting.label": "fi_Sort by",
