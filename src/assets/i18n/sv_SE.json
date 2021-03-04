@@ -977,9 +977,9 @@
   "camfil.product.instock.text": "Snabb leverans",
   "camfil.product.isoClass.label": "ISO-klass",
   "camfil.product.items.label": {
-    "=0": "0 artiklar",
-    "=1": "1 artikel",
-    "other": "# artiklar"
+    "=0": "<b>0</b> artiklar",
+    "=1": "<b>1</b> artikel",
+    "other": "<b>#</b> artiklar"
   },
   "camfil.product.items.showing.text": "Visa",
   "camfil.product.list.sorting.label": "Sortera",

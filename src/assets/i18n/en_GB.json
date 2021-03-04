@@ -976,9 +976,9 @@
   "camfil.product.instock.text": "In Stock",
   "camfil.product.isoClass.label": "Iso class",
   "camfil.product.items.label": {
-    "=0": "0 list items",
-    "=1": "1 list item",
-    "other": "# list items"
+    "=0": "<b>0</b> list items",
+    "=1": "<b>1</b> list item",
+    "other": "<b>#</b> list items"
   },
   "camfil.product.items.showing.text": "Showing",
   "camfil.product.list.sorting.label": "Sort by",
@@ -1480,5 +1480,4 @@
   "tacton.undo.tooltip": "Undo",
   "textarea.max_limit": "Your message: {{0}} characters remaining.",
   "camfil.account.cam_card.edit.confirmation": "{{0}} has now been updated"
-  
 }
