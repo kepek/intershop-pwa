@@ -81,6 +81,8 @@ export class OrderFormComponent implements OnInit, OnDestroy {
 
   pickCustomer(event) {
     this.camCardsFacade.getDeliveryAddress(event.value);
+    const selectedCustomer = this.customersArr?.find(customer => customer.id === event.value);
+    this.addressForm?.patchValue({ customerFull: selectedCustomer });
     this.updateContacts(event);
   }
 
