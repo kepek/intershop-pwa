@@ -98,7 +98,7 @@ describe('Camfil Product Page Component', () => {
 
     fixture.detectChanges();
 
-    expect(findAllCustomElements(element)).toEqual(['ish-loading', 'ish-recently-viewed']);
+    expect(findAllCustomElements(element)).toEqual(['ish-loading']);
   });
 
   xit('should display product-detail when product is available', () => {
