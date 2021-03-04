@@ -92,18 +92,25 @@ export class OrderFormComponent implements OnInit, OnDestroy {
       .subscribe((contacts: CamCardContact[]) => {
         this.contacts = contacts;
 
-        this.camCardsFacade
-          .getUserContactForCustomer$(event.value)
-          .pipe(take(1))
-          .subscribe((contactPerson: CamCardContact) => {
-            this.addressForm.patchValue({ contact: contactPerson.erpId });
-          });
+        if (this.orderToEdit?.contactPerson && this.orderToEdit.customerId === this.getField('customer')?.value) {
+          const erpId = this.orderToEdit.contactPerson.erpId;
+          this.addressForm?.patchValue({ contact: erpId });
+          this.pickContact({ value: erpId });
+        } else {
+          this.camCardsFacade
+            .getUserContactForCustomer$(event.value)
+            .pipe(take(1))
+            .subscribe((contactPerson: CamCardContact) => {
+              this.addressForm?.patchValue({ contact: contactPerson.erpId });
+              this.pickContact({ value: contactPerson.erpId });
+            });
+        }
       });
   }
 
   pickContact(event) {
     const selectedContact = this.contacts?.find(contact => contact.erpId === event.value);
-    this.addressForm.patchValue({ contactFull: selectedContact });
+    this.addressForm?.patchValue({ contactFull: selectedContact });
   }
 
   ngOnDestroy() {
@@ -112,7 +119,7 @@ export class OrderFormComponent implements OnInit, OnDestroy {
   }
 
   getField(name: string) {
-    return this.addressForm.get(name);
+    return this.addressForm?.get(name);
   }
 
   setDefaultCustomer(customersArr: CamCardCustomer[]) {
