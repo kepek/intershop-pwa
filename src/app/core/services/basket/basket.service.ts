@@ -529,16 +529,20 @@ export class BasketService {
     if (!items) {
       return throwError('addItemsToBasket() called without items');
     }
-    const body = items.map(item => ({
-      product: item.sku,
-      quantity: {
-        value: item.quantity,
-        unit: item.unit,
-      },
-      shipToAddress: item.shipToAddress,
-      shippingMethod: item.shippingMethod,
-      attributes: [item.lineItemAttributes || {}],
-    }));
+    const body = items.map(item => {
+      const attrs = item.lineItemAttributes;
+      const attributes = attrs ? [attrs] : [];
+      return {
+        product: item.sku,
+        quantity: {
+          value: item.quantity,
+          unit: item.unit,
+        },
+        shipToAddress: item.shipToAddress,
+        shippingMethod: item.shippingMethod,
+        attributes,
+      };
+    });
 
     return this.apiService
       .post(`baskets/current/items`, body, {

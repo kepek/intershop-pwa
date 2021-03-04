@@ -234,16 +234,9 @@ export class BasketItemsEffects {
       withLatestFrom(this.store.pipe(select(getCurrentBasketId))),
       concatMap(([payload, basketId]) => {
         const item = payload.items?.[0];
-        const { basketExtension, addressId, lineItemAttributes } = item;
+        const { basketExtension, addressId } = item;
         // TODO Changes required because BE side attribue OOTB are not working when adding product to cart
         const getActions = (info, bktId) => {
-          const attributeActions = info?.map(lineItem =>
-            addBasketItemAttributes({
-              basketId: bktId,
-              lineItemId: lineItem.id,
-              lineItemAttribute: lineItemAttributes,
-            })
-          );
           const send = [
             addItemsToBasketSuccess({ info }),
             updateBucket({
@@ -251,7 +244,6 @@ export class BasketItemsEffects {
               addressId,
               basketExtension,
             }),
-            ...attributeActions,
             displaySuccessMessage({
               message: 'camfil.add_items_to_basket.camfil.message.success',
             }),
@@ -259,9 +251,6 @@ export class BasketItemsEffects {
 
           if (!basketExtension) {
             send.splice(1, 1);
-          }
-          if (!lineItemAttributes?.hasOwnProperty('name')) {
-            send.splice(-2, 1);
           }
 
           return send;
