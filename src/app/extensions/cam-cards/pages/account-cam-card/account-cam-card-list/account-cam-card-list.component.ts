@@ -93,6 +93,7 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
   buckets: Bucket[];
   basketId: string;
   basketAddresses: Address[];
+  checkedCamCard = [];
 
   constructor(
     private checkoutFacade: CheckoutFacade,
@@ -260,14 +261,7 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
       }, [])
       // mapping checked CamCards for view
       .map((cc: CamCard) => {
-        const allNotAvailableItems = cc.camCardItems?.filter(item => !item.product.available) || [];
-        cc.subCamCards?.forEach(({ camCardItems }) => {
-          camCardItems.forEach(item => {
-            if (!item.product.available) {
-              allNotAvailableItems.push(item);
-            }
-          });
-        });
+        const allNotAvailableItems = this.getInactiveProductsInCamCard(cc);
         // clean up duplicate products
         const items = allNotAvailableItems.filter(
           (item, i, arr) => arr.findIndex(el => el.product.sku === item.product.sku) === i
@@ -303,6 +297,9 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
       this.commonShippingMethodId,
       this.basketId
     );
+
+    const event = { checked: false };
+    this.masterToggle(event as MatCheckboxChange);
   }
 
   notAvailbaleProdList(modal: CamfilModalDialogComponent<any>) {
@@ -338,16 +335,33 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
   }
 
   /** checkboxes */
+  handleShowCheckbox(camCard: CamCard) {
+    return camCard.itemsCount > 0 && !this.maintenance(camCard, ['INACTIVE']);
+  }
+
+  getInactiveProducts(items: CamCardItem[]) {
+    return items?.filter(el => !el.product.available) || [];
+  }
+
+  getInactiveProductsInCamCard(camCard: CamCard) {
+    const inavcite = this.getInactiveProducts(camCard.camCardItems);
+    camCard.subCamCards?.reduce((arr, sub) => {
+      const sumItem = this.getInactiveProducts(sub.camCardItems);
+      if (sumItem.length) {
+        arr.push(...sumItem);
+      }
+      return arr;
+    }, inavcite);
+    return inavcite;
+  }
+
   isProductChecked(id: string) {
     return this.productsChecked[id];
   }
-  isCamCardChecked({ itemsCount, camCardItems, subCamCards }: CamCard) {
-    const notAvailableProducts =
-      subCamCards?.reduce((acc, sub) => {
-        const count = sub.camCardItems.filter(el => !el.product.available).length;
-        return acc + count;
-      }, 0) + camCardItems.filter(item => !item.product.available).length;
 
+  isCamCardChecked(camCard: CamCard) {
+    const { itemsCount, camCardItems, subCamCards, id } = camCard;
+    const notAvailableProducts = this.getInactiveProductsInCamCard(camCard).length;
     const items = itemsCount > 0 && notAvailableProducts !== itemsCount;
     const itemsChecked = camCardItems
       ? camCardItems.filter(item => item.product.available).every(item => this.isProductChecked(item.id))
@@ -359,8 +373,13 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
             : true
         )
       : true;
-    return items && itemsChecked && itemsInSubChecked;
+    return itemsCount > notAvailableProducts ? items && itemsChecked && itemsInSubChecked : this.isOnCheckedList(id);
   }
+
+  isOnCheckedList(id: string) {
+    return this.checkedCamCard.findIndex(item => item === id) > -1;
+  }
+
   isAllChecked() {
     return this.camCardsProcessed.data.every(camCard =>
       camCard.itemsCount > 0 ? this.isCamCardChecked(camCard) : true
@@ -404,10 +423,18 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
     this.camCardsProcessed.data.forEach(row => {
       this.handleProductsCheck(row, event);
     });
+
+    this.checkedCamCard = event.checked ? this.camCardsProcessed.data.map(cc => cc.id) : [];
   }
 
   camCardToggle(camCard: CamCard, event: MatCheckboxChange) {
     this.handleProductsCheck(camCard, event);
+
+    if (event.checked) {
+      this.checkedCamCard.push(camCard.id);
+    } else {
+      this.checkedCamCard = this.checkedCamCard.filter(el => el !== camCard.id);
+    }
   }
 
   handleProductCheckbox(item: CamCardItem, camCard: CamCard, event: MatCheckboxChange) {

@@ -30,7 +30,7 @@
                 class="float-right"
                 (click)="$event.stopPropagation()"
                 (change)="camCardToggle(camCards, $event)"
-                *ngIf="camCards.itemsCount > 0 && !maintenance(camCards, ['INACTIVE'])"
+                *ngIf="handleShowCheckbox(camCards)"
                 [checked]="isCamCardChecked(camCards)"
                 [indeterminate]="isCamCardIndeterminate(camCards)"
               >
@@ -111,7 +111,7 @@
                       </strong>
                       <mat-checkbox
                         (change)="camCardToggle(subCamCard, $event)"
-                        *ngIf="subCamCard.itemsCount > 0 && !maintenance(subCamCard, ['INACTIVE'])"
+                        *ngIf="handleShowCheckbox(subCamCard)"
                         [checked]="isCamCardChecked(subCamCard)"
                         [indeterminate]="isCamCardIndeterminate(subCamCard)"
                       >
@@ -186,7 +186,7 @@
               <mat-checkbox
                 (click)="$event.stopPropagation()"
                 (change)="camCardToggle(camCard, $event)"
-                *ngIf="camCard.itemsCount > 0 && !maintenance(camCard, ['INACTIVE'])"
+                *ngIf="handleShowCheckbox(camCard)"
                 [checked]="isCamCardChecked(camCard)"
                 [indeterminate]="isCamCardIndeterminate(camCard)"
               >
@@ -219,7 +219,7 @@
                     </strong>
                     <mat-checkbox
                       (change)="camCardToggle(subCamCard, $event)"
-                      *ngIf="subCamCard.itemsCount > 0 && !maintenance(subCamCard, ['INACTIVE'])"
+                      *ngIf="handleShowCheckbox(subCamCard)"
                       [checked]="isCamCardChecked(subCamCard)"
                       [indeterminate]="isCamCardIndeterminate(subCamCard)"
                     >
