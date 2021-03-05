@@ -71,9 +71,15 @@ export class EditOrderModalComponent implements OnInit, OnDestroy {
 
   getUpdatedBasketExtension(): BasketExtensions {
     const form = this.orderForm.addressForm;
+    const customer = this.orderForm.addressForm.get('customerFull').value;
 
     return {
       ...this.order,
+      customer: {
+        id: customer.id,
+        customerNo: customer.customerNo,
+        companyName: customer.companyName,
+      },
       orderMark: form.get('orderMark').value,
       invoiceLabel: form.get('invoiceLabel').value,
       contactPerson: form.get('contactFull').value || this.order.contactPerson,
