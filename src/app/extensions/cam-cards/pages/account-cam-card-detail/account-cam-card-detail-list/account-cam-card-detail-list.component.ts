@@ -132,9 +132,6 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges, OnD
   isMobile() {
     return this.deviceType === 'mobile'; // || this.deviceType === 'tablet';
   }
-  simplifyData(data) {
-    return data.toLowerCase().trim();
-  }
 
   isSubCamCardOpen(id: string) {
     return this.isSubOpen.indexOf(id) > -1;
