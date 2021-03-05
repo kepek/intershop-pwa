@@ -10,24 +10,34 @@
     <mat-card-content>
       <div class="ahu__form">
         <span class="ahu__subheading">{{ 'camfil.ahu.subheading' | translate }}</span>
-        <p>
-          <mat-form-field appearance="fill" class="ahu__field">
-            <mat-label>{{ 'camfil.ahu.select.manufacturer' | translate }}</mat-label>
-            <mat-select [(ngModel)]="manufacturerSelect">
-              <mat-option *ngFor="let manufacturer of manufacturers" [value]="manufacturer.id">{{
-                manufacturer.title
-              }}</mat-option>
-            </mat-select>
-          </mat-form-field>
-        </p>
-        <p>
-          <mat-form-field appearance="fill" class="ahu__field">
-            <mat-label>{{ 'camfil.ahu.select.model' | translate }}</mat-label>
-            <mat-select [disabled]="!manufacturerSelect" [(ngModel)]="modelSelect" (selectionChange)="selectUnit()">
-              <mat-option *ngFor="let model of models" [value]="model.id">{{ model.title }}</mat-option>
-            </mat-select>
-          </mat-form-field>
-        </p>
+        <form [formGroup]="ahuForm" (ngSubmit)="submitAhuForm()">
+          <p>
+            <mat-form-field appearance="fill" class="ahu__field">
+              <mat-label>{{ 'camfil.ahu.select.manufacturer' | translate }}</mat-label>
+              <mat-select formControlName="manufacturer" (selectionChange)="selectAhuManufacturer($event)">
+                <mat-option [value]="undefined">None</mat-option>
+                <ng-container *ngIf="ahuManufacturers$ | async as ahuManufacturers">
+                  <mat-option *ngFor="let manufacturer of ahuManufacturers" [value]="manufacturer.id">
+                    {{ manufacturer.name }}
+                  </mat-option>
+                </ng-container>
+              </mat-select>
+            </mat-form-field>
+          </p>
+          <p>
+            <mat-form-field appearance="fill" class="ahu__field">
+              <mat-label>{{ 'camfil.ahu.select.model' | translate }}</mat-label>
+              <mat-select formControlName="unit" (selectionChange)="selectAhuUnit($event)">
+                <mat-option [value]="undefined">None</mat-option>
+                <ng-container *ngIf="ahuUnits$ | async as ahuUnits">
+                  <mat-option *ngFor="let unit of ahuUnits" [value]="unit.ahu.id">
+                    {{ unit.ahu.airHandlingUnitName | unitAhuLongDescription }}
+                  </mat-option>
+                </ng-container>
+              </mat-select>
+            </mat-form-field>
+          </p>
+        </form>
       </div>
     </mat-card-content>
   </mat-card>

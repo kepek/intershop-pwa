@@ -1,5 +1,5 @@
 <mat-card class="slots mt-4">
-  <ng-container *ngFor="let s of slots">
+  <ng-container *ngFor="let s of unitAHUAirSlots">
     <div class="slot__heading d-flex align-items-baseline">
       <div class="d-flex align-items-center">
         <mat-icon svgIcon="error" class="slot__icon"></mat-icon>
@@ -66,14 +66,14 @@
             <div class="prices">
               <ng-container *ngTemplateOutlet="price"></ng-container>
             </div>
-            <form>
+            <!-- <form>
               <camfil-product-quantity
                 [allowZeroQuantity]="false"
                 [quantityLabel]="''"
                 [product]="product"
                 controlName="quantity"
               ></camfil-product-quantity>
-            </form>
+            </form> -->
             <button mat-raised-button class="slot-product__btn" color="accent">
               <mat-icon svgIcon="plus"></mat-icon>{{ 'camfil.ahu.detail.add.to.list' | translate }}
             </button>
