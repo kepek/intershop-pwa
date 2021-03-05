@@ -1,8 +1,9 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-
-import { Product } from 'ish-core/models/product/product.model';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+
+import { Product } from 'ish-core/models/product/product.model';
+
 import { CamAhuFacade } from '../../facades/cam-ahu.facade';
 import { Unit, UnitAHUAirSlot } from '../../models/unit/unit.model';
 
@@ -14,7 +15,7 @@ import { PRODUCT } from './database';
   templateUrl: './camfil-ahu-page-detail.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CamfilAHUPageDetailComponent {
+export class CamfilAHUPageDetailComponent implements OnInit, OnDestroy {
   product: Product = PRODUCT;
   unitAHUAirSlots: UnitAHUAirSlot[];
   isMoreDetailsOpen = false;
@@ -24,8 +25,7 @@ export class CamfilAHUPageDetailComponent {
 
   private destroy$ = new Subject<void>();
   ngOnInit() {
-    this.ahuFacade.selectedAhuUnit$.pipe(takeUntil(this.destroy$)).subscribe(unit => {
-      console.log("unit", unit)
+    this.ahuFacade.selectedAhuUnit$?.pipe(takeUntil(this.destroy$)).subscribe(unit => {
       this.unitAHUAirSlots = unit?.ahuAirSlots;
     });
   }

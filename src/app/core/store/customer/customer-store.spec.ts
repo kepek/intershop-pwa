@@ -221,10 +221,16 @@ describe('Customer Store', () => {
               shippingMethod: "STD_GROUND"
             [Basket Internal] Add Items To Basket:
               items: [{"sku":"test","quantity":1,"shippingMethod":"STD_GROUND","u...
+            [Basket API] Add Items To Basket Success:
+              info: undefined
             [Products Internal] Load Product:
               sku: "test"
+            [Basket Internal] Load Basket
             [Products API] Load Product Success:
               product: {"name":"test","shortDescription":"test","longDescription":"...
+            [Basket API] Load Basket Success:
+              basket: {"id":"test","lineItems":[1]}
+            [Basket] Load Buckets
           `);
           done();
         }, 1000);
