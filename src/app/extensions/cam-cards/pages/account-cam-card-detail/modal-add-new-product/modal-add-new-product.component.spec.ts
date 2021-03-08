@@ -3,6 +3,7 @@ import { MockComponent } from 'ng-mocks';
 import { EMPTY, of } from 'rxjs';
 import { instance, mock, when } from 'ts-mockito';
 
+import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { CamfilErrorComponent } from 'ish-shared/components/common/camfil-error/camfil-error.component';
 import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
@@ -35,6 +36,7 @@ describe('Modal Add New Product Component', () => {
       providers: [
         { provide: CamCardsFacade, useFactory: () => instance(camCardsFacade) },
         { provide: ShoppingFacade, useFactory: () => instance(shoppingFacadeMock) },
+        { provide: CheckoutFacade, useFactory: () => instance(CheckoutFacade) },
       ],
     }).compileComponents();
   });

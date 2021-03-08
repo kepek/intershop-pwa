@@ -54,6 +54,7 @@ import {
   updateBasketItems,
   updateBasketShippingMethod,
   updateConcardisCvcLastUpdated,
+  updateEmptyBucket,
 } from 'ish-core/store/customer/basket';
 import { getOrdersError, getOrdersLoading, getSelectedOrder } from 'ish-core/store/customer/orders';
 import { getLoggedInUser } from 'ish-core/store/customer/user';
@@ -220,6 +221,14 @@ export class CheckoutFacade {
 
   addEmptyBucket(emptyBucket: Bucket) {
     this.store.dispatch(addEmptyBucket({ bucket: emptyBucket }));
+  }
+
+  updateEmptyBucket(emptyBucket: Bucket) {
+    this.store.dispatch(
+      updateEmptyBucket({
+        bucket: emptyBucket,
+      })
+    );
   }
 
   deleteEmptyBucket(id: string) {

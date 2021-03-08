@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit, TemplateR
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Subject } from 'rxjs';
 
+import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { Address } from 'ish-core/models/address/address.model';
 import { BasketExtensions } from 'ish-core/models/basket/basket.interface';
@@ -27,7 +28,7 @@ export class EditOrderModalComponent implements OnInit, OnDestroy {
   @ViewChild(OrderFormComponent) orderForm: OrderFormComponent;
 
   // @ts-ignore
-  constructor(private shoppingFacade: ShoppingFacade) {}
+  constructor(private shoppingFacade: ShoppingFacade, private checkoutFacade: CheckoutFacade) {}
 
   ngOnInit() {
     this.editOrder = this.convertToFormValues();
@@ -59,12 +60,31 @@ export class EditOrderModalComponent implements OnInit, OnDestroy {
       const basketExtension = this.getUpdatedBasketExtension();
       const address = this.getUpdatedAddress();
 
-      this.shoppingFacade.updateBucket(
-        this.editOrder.basket,
-        this.editOrder.shipToAddressFull.id,
-        basketExtension,
-        address
-      );
+      const type = this.order.id.split('_')[0];
+      const form = this.orderForm.addressForm;
+
+      const bucket = {
+        ...this.order,
+        contactPerson: form.get('contactFull').value || this.order.contactPerson,
+        // shipToAddress: virtualBucket.shippingAddress?.urn,
+        shipToAddressFull: address,
+        orderMark: form.get('orderMark').value,
+        invoiceLabel: form.get('invoiceLabel').value,
+        info: form.get('info').value,
+        phoneNumber: form.get('phoneNumber').value,
+        // customer: virtualBucket.customer,
+        // shippingMethod: this.shippingMethodId,
+      };
+
+      type === 'emptyBucket'
+        ? this.checkoutFacade.updateEmptyBucket(bucket)
+        : this.shoppingFacade.updateBucket(
+            this.editOrder.basket,
+            this.editOrder.shipToAddressFull.id,
+            basketExtension,
+            address
+          );
+
       this.hide();
     }
   }
