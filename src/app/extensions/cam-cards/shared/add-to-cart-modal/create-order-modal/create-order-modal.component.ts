@@ -173,10 +173,10 @@ export class CreateOrderModalComponent implements OnInit, OnDestroy {
     return {
       addressName: '',
       country: '',
-      firstName: contact.firstName,
+      firstName: contact?.firstName,
       id: '',
       invoiceToAddress: true,
-      lastName: contact.lastName,
+      lastName: contact?.lastName,
       phoneHome: '',
       shipToAddress: true,
       urn: '',

@@ -148,6 +148,8 @@ export const loadBucketsFail = createAction('[Basket] Get Bucket Info Fail');
 
 export const addEmptyBucket = createAction('[Basket] Add Empty Bucket', payload<{ bucket: Bucket }>());
 
+export const updateEmptyBucket = createAction('[Basket] Update Empty Bucket', payload<{ bucket: Bucket }>());
+
 export const deleteEmptyBucket = createAction('[Basket] Remove Empty Bucket', payload<{ id: string }>());
 
 export const addItemsToBasket = createAction(

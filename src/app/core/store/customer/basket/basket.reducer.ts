@@ -93,6 +93,7 @@ import {
   updateConcardisCvcLastUpdated,
   updateConcardisCvcLastUpdatedFail,
   updateConcardisCvcLastUpdatedSuccess,
+  updateEmptyBucket,
 } from './basket.actions';
 
 export interface BasketState {
@@ -255,6 +256,15 @@ export const basketReducer = createReducer(
       }
       return acc;
     }, []),
+  })),
+  on(updateEmptyBucket, (state: BasketState, action) => ({
+    ...state,
+    emptyBuckets: state.emptyBuckets.map(bucket => {
+      if (bucket.id === action.payload.bucket.id) {
+        return action.payload.bucket;
+      }
+      return bucket;
+    }),
   })),
   on(updateBucketSuccess, (state: BasketState) => ({
     ...state,

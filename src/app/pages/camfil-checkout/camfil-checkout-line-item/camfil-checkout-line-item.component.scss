@@ -56,6 +56,11 @@
       }
     }
   }
+  .line-item__confirmed {
+    .line-item-data-bottom {
+      width: 450px;
+    }
+  }
 
   @media (max-width: $screen-sm-max) {
     .attributes > * {
@@ -69,6 +74,9 @@
       overflow: hidden;
       text-overflow: ellipsis;
       word-wrap: normal;
+    }
+    .box-label-attribute {
+      margin-left: 5px;
     }
     mat-form-field {
       .mat-form-field-underline {
