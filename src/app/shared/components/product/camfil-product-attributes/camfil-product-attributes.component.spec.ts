@@ -24,7 +24,7 @@ describe('Camfil Product Attributes Component', () => {
       name: 'FakeProduct',
       sku: 'sku',
       attributeGroups: {
-        [AttributeGroupTypes.ProductsListLabelAttributes]: attributeGroup,
+        [AttributeGroupTypes.ProductsDetailAttributes]: attributeGroup,
       } as { [id: string]: AttributeGroup },
     } as Product;
     await TestBed.configureTestingModule({

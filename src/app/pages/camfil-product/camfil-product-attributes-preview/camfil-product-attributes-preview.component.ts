@@ -3,6 +3,15 @@ import { ChangeDetectionStrategy, Component, Input, OnInit, ViewChild } from '@a
 import { AttributeGroupTypes } from 'ish-core/models/attribute-group/attribute-group.types';
 import { Product } from 'ish-core/models/product/product.model';
 
+/**
+ * The Product Attributes Preview Component renders the SKU & the first five attributes of the product detail attribute group in a description list
+ *
+ * @example
+ * <camfil-product-attributes-preview
+ *   [product]="product"
+ *   [multipleValuesSeparator]=", ">
+ * </camfil-product-attributes-preview>
+ */
 @Component({
   selector: 'camfil-product-attributes-preview',
   templateUrl: './camfil-product-attributes-preview.component.html',
@@ -17,7 +26,7 @@ export class CamfilProductAttributesPreviewComponent implements OnInit {
 
   ngOnInit(): void {
     this.productListAttributes = this.product?.attributeGroups[
-      AttributeGroupTypes.ProductsListLabelAttributes
+      AttributeGroupTypes.ProductsDetailAttributes
     ]?.attributes;
   }
 
