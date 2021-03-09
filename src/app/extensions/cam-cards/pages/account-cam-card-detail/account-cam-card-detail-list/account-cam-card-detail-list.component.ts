@@ -125,6 +125,18 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges, OnD
       const currentCamCardItemsId = CamCardHelper.getCamCardItemsId(this.camCard);
       const priceItemToRemove = Object.keys(this.priceSum).filter(key => !currentCamCardItemsId.includes(key));
       priceItemToRemove.forEach(item => this.cleanPriceSum(item));
+
+      if (this.camCard?.subCamCards) {
+        const { currentValue, previousValue } = changes?.camCard;
+
+        const currentChanges = currentValue.subCamCards.map(element => element.id);
+        const previousChanges = previousValue.subCamCards.map(element => element.id);
+        const difference = currentChanges.filter(element => !previousChanges.includes(element));
+
+        if (difference.length) {
+          this.isSubOpen = this.isSubOpen.concat(difference);
+        }
+      }
     }
     this.isMobileView = this.isMobile();
   }
