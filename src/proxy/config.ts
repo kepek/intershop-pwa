@@ -52,9 +52,7 @@ export const defaultAllowedMethods: RequestMethod[] = [
   'PATCH',
 ];
 
-export const defaultHeaders: { [header: string]: string } = {
-  'content-type': 'application/json',
-};
+export const defaultHeaders: { [header: string]: string } = {};
 
 /**
  * Create Proxies Config
