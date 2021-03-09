@@ -3,6 +3,15 @@ import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core
 import { AttributeGroupTypes } from 'ish-core/models/attribute-group/attribute-group.types';
 import { Product } from 'ish-core/models/product/product.model';
 
+/**
+ * The Product Attributes Component renders all attributes of the product detail attribute group in a description list
+ *
+ * @example
+ * <camfil-product-attributes
+ *   [product]="product"
+ *   [multipleValuesSeparator]=", ">
+ * </camfil-product-attributes>
+ */
 @Component({
   selector: 'camfil-product-attributes',
   templateUrl: './camfil-product-attributes.component.html',
@@ -16,7 +25,7 @@ export class CamfilProductAttributesComponent implements OnInit {
 
   ngOnInit(): void {
     this.productListAttributes = this.product?.attributeGroups[
-      AttributeGroupTypes.ProductsListLabelAttributes
+      AttributeGroupTypes.ProductsDetailAttributes
     ]?.attributes;
   }
 }
