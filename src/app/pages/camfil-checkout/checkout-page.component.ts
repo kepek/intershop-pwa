@@ -67,6 +67,7 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
       this.basketId = basket.id;
       this.basket = basket;
       this.shippingMethodId = basket.commonShippingMethod?.id;
+      this.validation = false;
     });
 
     this.buckets$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe((buckets: Bucket[]) => {

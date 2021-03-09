@@ -779,6 +779,7 @@
   "camfil.checkout.invoice_address": "fi_Invoice address",
   "camfil.checkout.line_item.article_expired": "fi_Article has expired",
   "camfil.checkout.message.order_created": "fi_Order created",
+  "camfil.checkout.message.order_failed": "fi_Order failed",
   "camfil.checkout.new_camcard.button.create": "fi_Create Camcards",
   "camfil.checkout.new_camcard.header": "fi_{{0}} new CamCards will be created from your orders",
   "camfil.checkout.number_of_orders": "fi_Number of orders",

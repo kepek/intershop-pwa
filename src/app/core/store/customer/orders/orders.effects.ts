@@ -144,6 +144,17 @@ export class OrdersEffects {
     )
   );
 
+  notificationAfterOrderCreationError$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(createOrderFail),
+      map(() =>
+        displaySuccessMessage({
+          message: 'camfil.checkout.message.order_failed',
+        })
+      )
+    )
+  );
+
   loadOrder$ = createEffect(() =>
     this.actions$.pipe(
       ofType(loadOrder),
