@@ -21,13 +21,27 @@ export class CamCardHelper {
   }
 
   static getCamCardItemsId(camCard: CamCard) {
-    const itemsId = camCard.camCardItems.map(item => item.id);
-    camCard.subCamCards.forEach(sub => {
-      sub.camCardItems.forEach(item => {
-        itemsId.push(item.id);
-      });
-    });
-    return itemsId;
+    return [
+      ...camCard.camCardItems?.map(({ id }) => id),
+      ...camCard.subCamCards?.reduce((acc, { camCardItems }) => {
+        acc.push(...camCardItems.map(({ id }) => id));
+        return acc;
+      }, []),
+    ];
+  }
+
+  static getCamCardSkus(camCard: CamCard) {
+    return (
+      [
+        ...camCard.camCardItems?.map(({ product }) => product.sku),
+        ...camCard.subCamCards?.reduce((acc, { camCardItems }) => {
+          acc.push(...camCardItems.map(({ product }) => product.sku));
+          return acc;
+        }, []),
+      ]
+        // remove duplicate skus
+        .filter((it, i, arr) => arr.findIndex(el => el === it) === i)
+    );
   }
 
   static addToCartFromCamCards(
@@ -92,5 +106,12 @@ export class CamCardHelper {
       ? (camCard.rootCamCard ? camCard.name : nameFromSub) + (item.comment?.label ? ', ' : '')
       : '';
     return subName + (item.comment?.label || '');
+  }
+
+  static handleCamCardsToGetCustomerPrice(camCards: CamCard[]) {
+    return camCards.reduce((list, item) => {
+      const customerId = item.customer.id;
+      return list[customerId] ? list : { ...list, [customerId]: CamCardHelper.getCamCardSkus(item) };
+    }, {});
   }
 }

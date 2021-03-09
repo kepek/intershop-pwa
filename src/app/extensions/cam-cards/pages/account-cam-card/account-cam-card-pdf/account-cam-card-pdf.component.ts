@@ -21,6 +21,7 @@ import {
   ProductsObj,
 } from '../../../../cam-pdf/models/pdf.interface';
 import { CamPdfService } from '../../../../cam-pdf/services/cam-pdf/cam-pdf.service';
+import { CamCardHelper } from '../../../models/cam-card/cam-card.helper';
 import { CamCard, CamCardItem } from '../../../models/cam-card/cam-card.model';
 
 @Component({
@@ -46,6 +47,7 @@ export class AccountCamCardPdfComponent implements OnInit {
   sumPrice: CamCardTotalPricesObj = {};
   skuEqProducts = false;
   pdfLoading = false;
+  listForCustomerPrices = {};
   texts = {
     customerAccount: this.translate.instant('camfil.account.cam_card.pdf.customer_account'),
     artNr: this.translate.instant('camfil.account.cam_card.pdf.art_nr'),
@@ -70,6 +72,19 @@ export class AccountCamCardPdfComponent implements OnInit {
     });
   }
 
+  getCustomerPrice() {
+    const listToGetCustomerPrices = CamCardHelper.handleCamCardsToGetCustomerPrice(this.camCards);
+
+    Object.keys(listToGetCustomerPrices).forEach(customerId => {
+      this.productFacade
+        .getCustomerPrices$(customerId)
+        .pipe(whenTruthy(), take(1))
+        .subscribe(prices => {
+          this.listForCustomerPrices[customerId] = prices;
+        });
+    });
+  }
+
   handlePrice(data: Price) {
     return data ? formatPrice(data, this.translate.currentLang) : '---';
   }
@@ -81,14 +96,7 @@ export class AccountCamCardPdfComponent implements OnInit {
   openPdfGenDialog() {
     this.dialog.open(this.modal.show());
     this.modal.hide = () => this.dialog.closeAll();
-  }
-
-  addSkuToArr(camCard: CamCard, arr: string[]) {
-    camCard.camCardItems.forEach(item => {
-      if (!arr.find(el => el === item.product.sku)) {
-        arr.push(item.product.sku);
-      }
-    });
+    this.getCustomerPrice();
   }
 
   generatePdf(showPrice?: boolean) {
@@ -96,13 +104,12 @@ export class AccountCamCardPdfComponent implements OnInit {
     this.pdfLoading = true;
     this.products = {};
 
-    const prodSkusList = this.camCards.reduce((res, camCard) => {
-      this.addSkuToArr(camCard, res);
-      camCard.subCamCards.forEach(sub => {
-        this.addSkuToArr(sub, res);
-      });
-      return res;
-    }, []);
+    const prodSkusList = this.camCards
+      .reduce((acc, cc) => {
+        acc.push(...CamCardHelper.getCamCardSkus(cc));
+        return acc;
+      }, [])
+      .filter((it, i, arr) => arr.findIndex(el => el === it) === i);
 
     prodSkusList.forEach(sku => {
       this.productFacade
@@ -112,9 +119,9 @@ export class AccountCamCardPdfComponent implements OnInit {
           this.products[sku] = res;
 
           const firstCCId = this.camCards[0].id;
-          if (res.listPrice && !this.sumPrice[firstCCId]) {
+          if (res.salePrice && !this.sumPrice[firstCCId]) {
             this.camCards.forEach(camCard => {
-              this.sumPrice[camCard.id] = { type: 'Money', value: 0, currency: res.listPrice.currency };
+              this.sumPrice[camCard.id] = { type: 'Money', value: 0, currency: res.salePrice.currency };
             });
           }
 
@@ -264,7 +271,7 @@ export class AccountCamCardPdfComponent implements OnInit {
     ];
   }
 
-  pdfProductRow(item: CamCardItem, index: number, showPrice: boolean): PDFProductLine {
+  pdfProductRow(camCard: CamCard, item: CamCardItem, index: number, showPrice: boolean): PDFProductLine {
     const sku = item.product.sku;
     const artNo = `${this.texts.artNr} `;
     const artNoVal = { text: sku, bold: true };
@@ -280,7 +287,8 @@ export class AccountCamCardPdfComponent implements OnInit {
     const qtyVal = { text: item.quantity, bold: true };
     const size = ` | ${this.texts.packSize} `;
     const sizeVal = { text: 'xxx', bold: true }; // TODO: Pack size val
-    const priceVal = this.handlePrice(this.products[sku]?.listPrice);
+    const priceObj = this.getCustomerPriceForItem(camCard, item) || this.products[sku]?.salePrice;
+    const priceVal = this.handlePrice(priceObj);
     const priceLabel = showPrice ? ` | ${this.texts.price} ` : '';
     const price = showPrice ? { text: priceVal, bold: true } : '';
     return {
@@ -303,14 +311,22 @@ export class AccountCamCardPdfComponent implements OnInit {
     return camCard.camCardItems
       .map((el, i) => {
         const id = camCard.rootCamCard || camCard.id;
-        const price = this.products[el.product.sku].listPrice?.value || 0;
-        this.sumPrice[id].value = this.sumPrice[id].value + price * el.quantity;
-        return this.pdfProductRow(el, i, showPrice);
+        const price =
+          this.getCustomerPriceForItem(camCard, el)?.value || this.products[el.product.sku].salePrice?.value || 0;
+        this.sumPrice[id].value = (this.sumPrice[id].value || 0) + price * el.quantity;
+        return this.pdfProductRow(camCard, el, i, showPrice);
       })
       .reduce((res, { line1, line2, line3, line4 }) => {
         res.push(line1, line2, line3, line4);
         return res;
       }, []);
+  }
+
+  getCustomerPriceForItem(camCard: CamCard, el: CamCardItem) {
+    const productCustomerPrice = this.listForCustomerPrices[camCard.customer.id]?.find(
+      product => product.sku === el.product.sku
+    );
+    return productCustomerPrice?.salePrice || undefined;
   }
 
   pdfSubItemsRowToTable(camCard: CamCard, showPrice: boolean) {

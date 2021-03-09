@@ -260,6 +260,7 @@
       [camCardItemData]="camCardItem"
       [showCheckbox]="!maintenance(camCard, ['INACTIVE'])"
       [checked]="isProductChecked(camCardItem.id)"
+      [customerPrices]="listForCustomerPrices[camCard.customer.id] | async"
       (changeCheckbox)="handleProductCheckbox(camCardItem, camCard, $event)"
     ></camfil-account-cam-card-detail-line-item>
   </div>

@@ -1,9 +1,11 @@
 import { EntityState, createEntityAdapter } from '@ngrx/entity';
 import { createReducer, on } from '@ngrx/store';
 
-import { AllProductTypes } from 'ish-core/models/product/product.model';
+import { AllProductTypes, Product } from 'ish-core/models/product/product.model';
 
 import {
+  loadCustomerPricesFail,
+  loadCustomerPricesSuccess,
   loadProductBundlesSuccess,
   loadProductFail,
   loadProductLinksSuccess,
@@ -19,6 +21,9 @@ export const productAdapter = createEntityAdapter<AllProductTypes>({
 
 export interface ProductsState extends EntityState<AllProductTypes> {
   failed: string[];
+  customerPrices?: {
+    [key: string]: Product[];
+  };
 }
 
 export const initialState: ProductsState = productAdapter.getInitialState({
@@ -31,6 +36,13 @@ function addFailed(failed: string[], sku: string): string[] {
 
 function removeFailed(failed: string[], sku: string): string[] {
   return failed.filter(val => val !== sku);
+}
+
+function addCustomerPrices(state: ProductsState, customerId: string, products: Product[]): ProductsState {
+  return {
+    ...state,
+    customerPrices: { ...state.customerPrices, [customerId]: products },
+  };
 }
 
 export const productsReducer = createReducer(
@@ -77,5 +89,13 @@ export const productsReducer = createReducer(
       { id: action.payload.sku, changes: { links: action.payload.links } },
       { ...state, loading: false }
     )
-  )
+  ),
+  on(loadCustomerPricesSuccess, (state: ProductsState, action) => {
+    const { customerId, products } = action.payload;
+    return addCustomerPrices(state, customerId, products);
+  }),
+  on(loadCustomerPricesFail, (state: ProductsState, action) => {
+    const { customerId } = action.payload;
+    return addCustomerPrices(state, customerId, []);
+  })
 );

@@ -71,3 +71,18 @@ export const loadProductLinksSuccess = createAction(
   '[Products API] Load Product Links Success',
   payload<{ sku: string; links: ProductLinks }>()
 );
+
+export const loadCustomerPrices = createAction(
+  '[Products API] Load Customer Prices',
+  payload<{ customerId: string; skus: string[] }>()
+);
+
+export const loadCustomerPricesFail = createAction(
+  '[Products API] Load Customer Prices Fail',
+  httpError<{ customerId: string }>()
+);
+
+export const loadCustomerPricesSuccess = createAction(
+  '[Products API] Load Customer Prices Success',
+  payload<{ customerId: string; products: Product[] }>()
+);
