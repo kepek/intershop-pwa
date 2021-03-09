@@ -25,6 +25,7 @@ import { LineItemUpdate } from 'ish-core/models/line-item-update/line-item-updat
 import { LineItem, LineItemView } from 'ish-core/models/line-item/line-item.model';
 import { ProductView } from 'ish-core/models/product-view/product-view.model';
 import { ProductCompletenessLevel } from 'ish-core/models/product/product.model';
+import { whenTruthy } from 'ish-core/utils/operators';
 import { CamfilQuickViewModalComponent } from 'ish-shared/components/common/camfil-quick-view-modal/camfil-quick-view-modal.component';
 import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
 import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
@@ -146,10 +147,11 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
   }
 
   getItemBoxLabel() {
-    this.checkoutFacade.basketLineItems$?.pipe(take(1), takeUntil(this.destroy$)).subscribe((res: LineItem[]) => {
-      const lineItem = res.find(li => li.id === this.product.id);
-      const boxLabelAttribute = lineItem.attributes.find(att => att.name === 'boxLabel');
-      this.boxLabel = boxLabelAttribute && 'value' in boxLabelAttribute ? (boxLabelAttribute.value as string) : '';
+    // TODO: improve
+    this.checkoutFacade.basketLineItems$?.pipe(whenTruthy(), take(1)).subscribe((res: LineItem[]) => {
+      const lineItem = res?.find(li => li.id === this.product.id);
+      const boxLabelAttribute = lineItem?.attributes?.find(att => att.name === 'boxLabel');
+      this.boxLabel = (boxLabelAttribute?.value as string) || '';
     });
     return this.boxLabel;
   }
@@ -164,6 +166,7 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
     const newValue = target.value;
     if (newValue && newValue !== oldValue) {
       const boxLabelAttribute: Attribute = { name: 'boxLabel', type: 'String', value: newValue };
+      // TODO: improve, sometimes works bad - addBasketItemAttributes when boxLabel exist => error + notUpdate
       if (!oldValue) {
         // Add attribute
         this.checkoutFacade.addBasketItemAttributes(this.basketId, this.product.id, boxLabelAttribute);
