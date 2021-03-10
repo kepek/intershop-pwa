@@ -24,7 +24,7 @@
               *ngIf="isConfirmed"
               [name]="'camfil.cam_card.product.comment.label' | translate"
               class="box-label-attribute"
-              [value]="getItemBoxLabel()"
+              [value]="boxLabel"
             ></camfil-product-attribute>
             <button mat-button (click)="openQuickViewDialog(); $event.stopPropagation()">
               <mat-icon svgIcon="search" class="size-15"></mat-icon>

@@ -85,6 +85,11 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
   private destroy$ = new Subject<void>();
 
   ngOnInit() {
+    this.checkoutFacade.basketLineItems$?.pipe(whenTruthy(), take(1)).subscribe((res: LineItem[]) => {
+      const lineItem = res.find(li => li.id === this.product.id);
+      this.boxLabel = (lineItem?.attributes?.find(att => att.name === 'boxLabel')?.value as string) || '';
+    });
+
     this.initForm();
     this.quantity = this.product.quantity.value;
     this.updateQuantities();
@@ -126,7 +131,7 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
       quantity: new FormControl(this.product.quantity.value || 1),
     });
     this.boxLabelForm = new FormGroup({
-      boxLabel: new FormControl(this.boxLabel ? this.boxLabel : this.getItemBoxLabel(), [Validators.maxLength(60)]),
+      boxLabel: new FormControl(this.boxLabel, [Validators.maxLength(60)]),
     });
   }
 
@@ -146,16 +151,6 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
     return this.boxLabelForm.get(name);
   }
 
-  getItemBoxLabel() {
-    // TODO: improve
-    this.checkoutFacade.basketLineItems$?.pipe(whenTruthy(), take(1)).subscribe((res: LineItem[]) => {
-      const lineItem = res?.find(li => li.id === this.product.id);
-      const boxLabelAttribute = lineItem?.attributes?.find(att => att.name === 'boxLabel');
-      this.boxLabel = (boxLabelAttribute?.value as string) || '';
-    });
-    return this.boxLabel;
-  }
-
   onBlur(target: HTMLDataElement) {
     if (this.boxLabelForm.invalid) {
       markAsDirtyRecursive(this.boxLabelForm);
@@ -164,24 +159,19 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
 
     const oldValue = this.boxLabel;
     const newValue = target.value;
-    if (newValue && newValue !== oldValue) {
-      const boxLabelAttribute: Attribute = { name: 'boxLabel', type: 'String', value: newValue };
-      // TODO: improve, sometimes works bad - addBasketItemAttributes when boxLabel exist => error + notUpdate
-      if (!oldValue) {
-        // Add attribute
-        this.checkoutFacade.addBasketItemAttributes(this.basketId, this.product.id, boxLabelAttribute);
-        this.boxLabel = newValue;
-      } else {
-        // Update existing attribute
+    const boxLabelAttribute: Attribute = { name: 'boxLabel', type: 'String', value: newValue };
+
+    if (oldValue) {
+      if (!newValue) {
+        this.checkoutFacade.deleteBasketItemAttributes(this.basketId, this.product.id, this.bucketId, 'boxLabel');
+      } else if (newValue !== oldValue) {
         this.checkoutFacade.updateBasketItemAttributes(this.basketId, this.product.id, boxLabelAttribute);
       }
-    } else if (!newValue && oldValue) {
-      // DELETE
-      this.checkoutFacade.deleteBasketItemAttributes(this.basketId, this.product.id, this.bucketId, 'boxLabel');
-      this.boxLabel = '';
-    } else {
-      this.boxLabel = '';
+    } else if (newValue) {
+      this.checkoutFacade.addBasketItemAttributes(this.basketId, this.product.id, boxLabelAttribute);
     }
+
+    this.boxLabel = newValue;
   }
 
   calculateDeliveryDate() {
