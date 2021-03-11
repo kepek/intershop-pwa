@@ -1395,6 +1395,8 @@
   "promotion.detailslink.label": "Kampanjdetaljer",
   "promotion.detailslink.text": "Detaljer",
   "promotion.removelink.text": "Ta bort",
+  "punchout.error.missing.parameters": "sv_Error connecting to the punchout catalog. Required start parameters are missing.",
+  "punchout.login_already_exists.error": "sv_A punchout user with that user name already exists. Please check the information for accuracy or enter a different name.",
   "quickorder.page.add.cart": "Lägg till i varukorg",
   "quickorder.page.add.row": "Lägg till fler rader",
   "quickorder.page.breadcrumb": "Snabbeställning",
