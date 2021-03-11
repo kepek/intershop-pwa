@@ -9,7 +9,7 @@
       <div>
         <mat-form-field appearance="fill" class="add-new-product__field">
           <mat-label>{{ 'camfil.modal.addNewProduct.input.product_sku' | translate }}</mat-label>
-          <input matInput maxlength="35" formControlName="sku" (keyup)="resetError()" (blur)="validateSku()" />
+          <input matInput maxlength="35" formControlName="sku" (keyup)="resetError()" (focus)="isSubmitted = false" (blur)="validateSku()" />
           <mat-icon *ngIf="product && !showSkuError" matSuffix svgIcon="checkmark"></mat-icon>
         </mat-form-field>
 

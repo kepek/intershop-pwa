@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { take, takeUntil } from 'rxjs/operators';
 
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
@@ -72,37 +72,37 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.currentCamCard$ = this.camCardsFacade.currentCamCard$;
 
-    this.currentCamCard$?.pipe(takeUntil(this.destroy$)).subscribe(camCard => {
-      if (camCard) {
-        this.rootCamCardId = camCard.id;
-      }
-    });
-
     this.productForm = new FormGroup({
       quantity: new FormControl(1),
       sku: new FormControl('', [Validators.required]),
       boxLabel: new FormControl('', [Validators.max(60)]),
     });
 
-    this.productFacade.basketAddresses$.pipe(takeUntil(this.destroy$)).subscribe((basketAddresses: Address[]) => {
-      this.basketAddresses = basketAddresses;
-    });
+    if (this.addToOrder) {
+      this.productFacade.basketAddresses$.pipe(takeUntil(this.destroy$)).subscribe((basketAddresses: Address[]) => {
+        this.basketAddresses = basketAddresses;
+      });
 
-    this.productFacade.productUpdated$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(() => {
-      this.loading = false;
-      this.hide();
-    });
+      this.productFacade.productUpdated$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(() => {
+        this.loading = false;
+        this.hide();
+      });
 
-    this.productFacade.productAdded$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(() => {
-      const type = this.order.id.split('_')[0];
+      this.productFacade.productAdded$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(() => {
+        const type = this.order.id.split('_')[0];
 
-      this.loading = false;
-      this.hide();
+        this.loading = false;
+        this.hide();
 
-      if (type === 'emptyBucket') {
-        this.checkoutFacade.deleteEmptyBucket(this.order.id);
-      }
-    });
+        if (type === 'emptyBucket') {
+          this.checkoutFacade.deleteEmptyBucket(this.order.id);
+        }
+      });
+    } else {
+      this.currentCamCard$?.pipe(takeUntil(this.destroy$)).subscribe(camCard => {
+        this.rootCamCardId = camCard?.id || undefined;
+      });
+    }
   }
 
   isSkuValid = () => this.isSubmitted || (!this.product.failed && this.product.availability);
@@ -114,7 +114,7 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy {
       this.loading = true;
       this.product$ = this.productFacade.product$(sku, ModalAddNewProductComponent.REQUIRED_COMPLETENESS_LEVEL);
 
-      this.product$.pipe(takeUntil(this.destroy$)).subscribe(product => {
+      this.product$.pipe(take(1)).subscribe(product => {
         this.product = product;
         this.showSkuError = !this.isSkuValid();
 
@@ -141,14 +141,14 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy {
       const label = this.getField('boxLabel') ? String(this.getField('boxLabel').value) : undefined;
       const comment: CamCardItemComment = { label };
       const lineItemAttribute = label ? { name: 'boxLabel', type: 'String', value: label } : undefined;
-      const type = this.order?.id.split('_')[0];
 
       this.isSubmitted = true;
 
       if (this.addToOrder) {
+        const type = this.order.id.split('_')[0];
         this.loading = true;
 
-        if (this.order?.id && type !== 'emptyBucket' && this.order.shipToAddress) {
+        if (this.order.id && type !== 'emptyBucket' && this.order.shipToAddress) {
           this.addToExistingOrder(sku, quantity, this.order.shipToAddress, lineItemAttribute);
         } else {
           const deliveryAddress = this.order.shipToAddressFull as Address;
