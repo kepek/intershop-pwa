@@ -300,4 +300,16 @@ export class ProductsService {
       )
     );
   }
+
+  loadCustomerPrices(customerId: string, skus: string[]): Observable<Product[]> {
+    if (!customerId) {
+      return throwError('loadCustomerPrices() called without a customerId');
+    }
+    if (!skus.length) {
+      return throwError('loadCustomerPrices() skus is empty');
+    }
+    const params = new HttpParams().set('skus', skus.join(','));
+    const options: AvailableOptions = { params };
+    return this.apiService.get(`camfilcustomers/${customerId}/prices`, options);
+  }
 }

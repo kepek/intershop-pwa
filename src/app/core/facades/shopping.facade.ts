@@ -50,6 +50,7 @@ import {
   loadMoreProducts,
 } from 'ish-core/store/shopping/product-listing';
 import {
+  getCustomerPrices,
   getProduct,
   getProductBundleParts,
   getProductLinks,
@@ -58,6 +59,7 @@ import {
   getProducts,
   getSelectedProduct,
   getSelectedProductVariationOptions,
+  loadCustomerPrices,
   loadProductIfNotLoaded,
   loadProductLinks,
 } from 'ish-core/store/shopping/products';
@@ -358,5 +360,13 @@ export class ShoppingFacade {
 
   setCurrentTerm(searchTerm: string) {
     this.store.dispatch(setCurrentTerm({ searchTerm }));
+  }
+
+  loadCustomerPrices(customerId: string, skus: string[]) {
+    this.store.dispatch(loadCustomerPrices({ customerId, skus }));
+  }
+
+  getCustomerPrices$(customerId: string) {
+    return this.store.pipe(select(getCustomerPrices, { customerId }));
   }
 }

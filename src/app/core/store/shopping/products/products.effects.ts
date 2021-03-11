@@ -5,7 +5,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Dictionary } from '@ngrx/entity';
 import { routerNavigatedAction } from '@ngrx/router-store';
 import { Store, select } from '@ngrx/store';
-import { identity } from 'rxjs';
+import { EMPTY, identity } from 'rxjs';
 import {
   concatMap,
   distinct,
@@ -41,6 +41,9 @@ import {
 } from 'ish-core/utils/operators';
 
 import {
+  loadCustomerPrices,
+  loadCustomerPricesFail,
+  loadCustomerPricesSuccess,
   loadProduct,
   loadProductBundlesSuccess,
   loadProductFail,
@@ -58,7 +61,12 @@ import {
   loadProductsForMasterFail,
   loadRetailSetSuccess,
 } from './products.actions';
-import { getBreadcrumbForProductPage, getProductEntities, getSelectedProduct } from './products.selectors';
+import {
+  getBreadcrumbForProductPage,
+  getCustomersPrices,
+  getProductEntities,
+  getSelectedProduct,
+} from './products.selectors';
 
 @Injectable()
 export class ProductsEffects {
@@ -377,6 +385,30 @@ export class ProductsEffects {
           map(breadcrumbData => setBreadcrumbData({ breadcrumbData }))
         )
       )
+    )
+  );
+
+  loadCustomerPrices$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loadCustomerPrices),
+      mapToPayload(),
+      withLatestFrom(this.store.pipe(select(getCustomersPrices))),
+      concatMap(([{ customerId, skus }, prices]) => {
+        const getAction = arr =>
+          this.productsService.loadCustomerPrices(customerId, arr).pipe(
+            map(products => loadCustomerPricesSuccess({ customerId, products })),
+            mapErrorToAction(loadCustomerPricesFail, { customerId })
+          );
+
+        if (!prices || !prices[customerId]) {
+          return getAction(skus);
+        } else {
+          const newSkus = skus.filter(sku => !prices[customerId].find(prod => prod.sku === sku));
+          return newSkus.length
+            ? getAction(newSkus)
+            : EMPTY.pipe(map(() => loadCustomerPricesSuccess({ customerId, products: [] })));
+        }
+      })
     )
   );
 

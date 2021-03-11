@@ -167,3 +167,10 @@ export const getBreadcrumbForProductPage = createSelectorFactory(projector =>
           .concat([{ text: product.name, link: undefined }])
       : undefined
 );
+
+export const getCustomersPrices = createSelector(getProductsState, state => state.customerPrices);
+
+export const getCustomerPrices = createSelector(
+  getCustomersPrices,
+  (list, props: { customerId: string }) => list && props.customerId && list[props.customerId]
+);
