@@ -48,7 +48,7 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
     private shoppingFacade: ShoppingFacade,
     private cdr: ChangeDetectorRef,
     private updates$: Actions
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.checkoutFacade.setBasketPayment('ISH_INVOICE');

@@ -24,7 +24,7 @@ import { Bucket } from 'ish-core/models/basket/bucket.model';
 import { CustomerDeliveryTerm } from 'ish-core/models/customer/customer.interface';
 import { LineItemData } from 'ish-core/models/line-item/line-item.interface';
 import { LineItem } from 'ish-core/models/line-item/line-item.model';
-import { Price } from 'ish-core/models/price/price.model';
+import { Price, PriceHelper } from 'ish-core/models/price/price.model';
 import { ProductView } from 'ish-core/models/product-view/product-view.model';
 import { ProductCompletenessLevel } from 'ish-core/models/product/product.model';
 import { whenTruthy } from 'ish-core/utils/operators';
@@ -130,46 +130,19 @@ export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
   }
 
   totalPrice(type = 'net'): Price {
-    const getCurrency = element => element.price?.currency;
-    const getValue = element => element.totals?.total[type];
-
-    return this.getPrice(getCurrency, getValue);
+    return PriceHelper.totalPrice(this.order?.lineItems, type);
   }
 
   totalTax(): Price {
-    const getCurrency = element => element.totals?.salesTaxTotal.currency;
-    const getValue = element => element.totals?.salesTaxTotal.value;
-
-    return this.getPrice(getCurrency, getValue);
+    return PriceHelper.totalTax(this.order?.lineItems);
   }
 
   savedAmount(): Price {
-    const getCurrency = element => element.price?.currency;
-    const getValue = element => element.totals?.total.gross - element.price?.gross;
-
-    return this.getPrice(getCurrency, getValue);
+    return PriceHelper.savedAmount(this.order?.lineItems);
   }
 
   discount(): Price {
-    const getCurrency = element => element.price?.currency;
-    const getValue = element => element.totals?.total.gross - element.totals?.undiscountedTotal.gross;
-
-    return this.getPrice(getCurrency, getValue);
-  }
-
-  getPrice(getCurrency: (item: LineItem) => string, getValue: (item: LineItem) => number): Price {
-    const price: Price = {
-      type: 'Money',
-      currency: 'USD',
-      value: 0,
-    };
-
-    this.order?.lineItems?.forEach(element => {
-      price.currency = getCurrency(element);
-      price.value = price.value + getValue(element);
-    });
-
-    return price;
+    return PriceHelper.discount(this.order?.lineItems);
   }
 
   get freeDelivery() {

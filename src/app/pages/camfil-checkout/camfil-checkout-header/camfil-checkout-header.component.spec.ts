@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideMockStore } from '@ngrx/store/testing';
 import { MockComponent } from 'ng-mocks';
 import { of } from 'rxjs';
 import { instance, mock, when } from 'ts-mockito';
@@ -21,6 +22,7 @@ import { ArticleDetailsComponent } from '../../../extensions/cam-cards/shared/se
 import { CamfilCheckoutToolbarComponent } from '../camfil-checkout-toolbar/camfil-checkout-toolbar.component';
 import { CreateNewCamcardComponent } from '../camfil-checkout-toolbar/create-new-camcard/create-new-camcard.component';
 import { CreateOrderButtonComponent } from '../camfil-checkout-toolbar/create-order-button/create-order-button.component';
+import { PrintOrderComponent } from '../camfil-checkout-toolbar/print-order/print-order.component';
 
 import { CamfilCheckoutHeaderComponent } from './camfil-checkout-header.component';
 
@@ -80,11 +82,13 @@ describe('Camfil Checkout Header Component', () => {
         CreateOrderSuccessComponent,
         MockComponent(LoadingComponent),
         OrderFormComponent,
+        PrintOrderComponent,
       ],
       providers: [
         { provide: CamCardsFacade, useFactory: () => instance(camCardFacadeMock) },
         { provide: CheckoutFacade, useFactory: () => instance(checkoutFacadeMock) },
         { provide: ShoppingFacade, useFactory: () => instance(shoppingFacadeMock) },
+        provideMockStore({}),
       ],
     }).compileComponents();
   });
