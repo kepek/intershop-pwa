@@ -103,6 +103,7 @@ export class AddToCartModalComponent implements OnInit, OnDestroy {
           contactPerson: currentBucket.contactPerson,
           info: currentBucket.info,
           phoneNumber: currentBucket.phoneNumber,
+          customer: currentBucket.customer,
         },
         lineItemAttributes
       );
