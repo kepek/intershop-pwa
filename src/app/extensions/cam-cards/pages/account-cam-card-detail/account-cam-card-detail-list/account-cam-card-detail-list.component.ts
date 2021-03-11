@@ -130,8 +130,8 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges, OnD
         const { currentValue, previousValue } = changes?.camCard;
 
         const currentChanges = currentValue.subCamCards.map(element => element.id);
-        const previousChanges = previousValue.subCamCards.map(element => element.id);
-        const difference = currentChanges.filter(element => !previousChanges.includes(element));
+        const previousChanges = previousValue?.subCamCards.map(element => element.id);
+        const difference = currentChanges.filter(element => !previousChanges?.includes(element));
 
         if (difference.length) {
           this.isSubOpen = this.isSubOpen.concat(difference);

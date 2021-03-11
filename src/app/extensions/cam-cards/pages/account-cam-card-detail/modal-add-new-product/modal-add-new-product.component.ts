@@ -141,14 +141,14 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy {
       const label = this.getField('boxLabel') ? String(this.getField('boxLabel').value) : undefined;
       const comment: CamCardItemComment = { label };
       const lineItemAttribute = label ? { name: 'boxLabel', type: 'String', value: label } : undefined;
-      const type = this.order.id.split('_')[0];
+      const type = this.order?.id.split('_')[0];
 
       this.isSubmitted = true;
 
       if (this.addToOrder) {
         this.loading = true;
 
-        if (this.order.id && type !== 'emptyBucket' && this.order.shipToAddress) {
+        if (this.order?.id && type !== 'emptyBucket' && this.order.shipToAddress) {
           this.addToExistingOrder(sku, quantity, this.order.shipToAddress, lineItemAttribute);
         } else {
           const deliveryAddress = this.order.shipToAddressFull as Address;
