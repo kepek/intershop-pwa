@@ -1,7 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MockComponent } from 'ng-mocks';
+import { instance, mock } from 'ts-mockito';
 
+import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { CamfilFilterCollapsableComponent } from 'ish-shared/components/filter/camfil-filter-collapsable/camfil-filter-collapsable.component';
 import { CamfilFilterInfoComponent } from 'ish-shared/components/filter/camfil-filter-info/camfil-filter-info.component';
 
@@ -11,8 +13,10 @@ describe('Camfil Filter Measurements Component', () => {
   let component: CamfilFilterMeasurementsComponent;
   let fixture: ComponentFixture<CamfilFilterMeasurementsComponent>;
   let element: HTMLElement;
+  let shoppingFacade: ShoppingFacade;
 
   beforeEach(async () => {
+    shoppingFacade = mock(ShoppingFacade);
     await TestBed.configureTestingModule({
       declarations: [
         CamfilFilterMeasurementsComponent,
@@ -20,6 +24,7 @@ describe('Camfil Filter Measurements Component', () => {
         MockComponent(CamfilFilterInfoComponent),
       ],
       imports: [RouterTestingModule],
+      providers: [{ provide: ShoppingFacade, useFactory: () => instance(shoppingFacade) }],
     }).compileComponents();
   });
 
