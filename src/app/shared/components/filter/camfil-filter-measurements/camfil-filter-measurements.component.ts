@@ -1,10 +1,12 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
+import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
+import { FilterNavigation } from 'ish-core/models/filter-navigation/filter-navigation.model';
 import { whenTruthy } from 'ish-core/utils/operators';
-import { URLFormParams } from 'ish-core/utils/url-form-params';
+import { URLFormParams, formParamsToString } from 'ish-core/utils/url-form-params';
 
 @Component({
   selector: 'camfil-filter-measurements',
@@ -17,12 +19,12 @@ export class CamfilFilterMeasurementsComponent implements OnInit, OnDestroy {
   height;
   depth;
   @Input() fragmentOnRouting: string;
-  @Output() applyFilter: EventEmitter<{ searchParameter: URLFormParams }> = new EventEmitter();
+  currentFilters$: Observable<FilterNavigation>;
   filters: URLSearchParams;
   showCategoryFilter = false;
   private destroy$ = new Subject();
 
-  constructor(private router: Router, private activatedRoute: ActivatedRoute) {
+  constructor(private shoppingFacade: ShoppingFacade, private router: Router, private activatedRoute: ActivatedRoute) {
     // make sure we see the latest queryParams when subscribing to the route in ngOnInit
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
   }
@@ -56,10 +58,20 @@ export class CamfilFilterMeasurementsComponent implements OnInit, OnDestroy {
   }
 
   filter() {
+    // identify current search parameters (category, previous filters) and remove width, height, depth
+    let currentFilterParams = {};
+    this.currentFilters$ = this.shoppingFacade.currentFilter$(this.showCategoryFilter);
+    this.currentFilters$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(currentFilters => {
+      currentFilterParams = this.stripMeasurementSearchParameters(
+        currentFilters?.filter?.filter(filterElement => filterElement.id === 'Width')[0]?.facets[0].searchParameter
+      );
+    });
+
     const filter = [
       !!this.width && `Width%5Bgte%5D=${this.width - 10}&Width%5Blte%5D=${+this.width + 10}`,
       !!this.height && `Height%5Bgte%5D=${+this.height - 10}&Height%5Blte%5D=${+this.height + 10}`,
       !!this.depth && `Depth%5Bgte%5D=${+this.depth - 50}&Depth%5Blte%5D=${+this.depth + 50}`,
+      formParamsToString(currentFilterParams),
     ].join('&');
 
     if (+this.width || +this.height || +this.depth) {
@@ -76,5 +88,16 @@ export class CamfilFilterMeasurementsComponent implements OnInit, OnDestroy {
 
   isDisabled() {
     return this.width || this.height || this.depth ? !1 : !0;
+  }
+
+  // Remove 'Width', 'Height', 'Depth' from search parameters
+  stripMeasurementSearchParameters(params: URLFormParams) {
+    const forbiddenKeys = ['Width', 'Height', 'Depth'];
+    return Object.keys(params)
+      .filter(key => !forbiddenKeys.includes(key))
+      .reduce((obj, key) => {
+        obj[key] = params[key];
+        return obj;
+      }, {});
   }
 }
