@@ -1,5 +1,3 @@
-import { PDFProductLine } from './pdf.interface';
-
 export class PdfHelper {
   static pdfHeader(
     pageBreak: boolean | number,
@@ -27,10 +25,10 @@ export class PdfHelper {
       ],
     };
   }
-  static pdfTable(body, sub?: boolean) {
-    const idx = sub ? 1 : 0;
+  static pdfTable(body) {
     return {
       table: {
+        headerRows: 1,
         body,
         widths: [10, '*', 'auto'],
       },
@@ -39,8 +37,8 @@ export class PdfHelper {
         vLineWidth() {
           return 0;
         },
-        hLineWidth(i, node) {
-          return i === 0 || i === node.table.body.length || (i - idx) % 4 ? 0 : 1;
+        hLineWidth() {
+          return 0;
         },
         hLineColor() {
           return '#F2F2F2';
@@ -49,13 +47,10 @@ export class PdfHelper {
     };
   }
 
-  static pdfProductRow(index: number, name: string, arrLine3a: any[], arrLine3b: any[]): PDFProductLine {
-    return {
-      line1: [{ text: '', colSpan: 2, lineHeight: 0.3 }, {}, {}],
-      line2: [{ text: index + 1, rowSpan: 2, alignment: 'center' }, { text: name, colSpan: 2, lineHeight: 1.3 }, {}],
-      line3: ['', { text: arrLine3a }, { text: arrLine3b, alignment: 'right' }],
-      line4: [{ text: '', colSpan: 2, lineHeight: 0.3 }, {}, {}],
-    };
+  static pdfProductRow(index: number, name: string, arrRightInfo: any[], arrLeftInfo: any[]) {
+    arrRightInfo.unshift(name, '\n');
+    arrLeftInfo.unshift('\n');
+    return [{ text: index + 1, alignment: 'center' }, { text: arrRightInfo }, { text: arrLeftInfo }];
   }
 
   static pdfImages() {
@@ -73,7 +68,7 @@ export class PdfHelper {
         fontSize: 8,
       },
       header: {
-        fontSize: 18,
+        fontSize: 14,
         bold: true,
         fillColor: '#F2F2F2',
         width: 1000,
@@ -82,7 +77,7 @@ export class PdfHelper {
         fontSize: 8,
       },
       subHeader: {
-        fontSize: 11,
+        fontSize: 10,
         bold: true,
       },
       row: {

@@ -623,6 +623,8 @@
   "camfil.account.cam_card.pdf.box_label": "Godsmärke:",
   "camfil.account.cam_card.pdf.customer_account": "Kund",
   "camfil.account.cam_card.pdf.delivery_address": "Leveransadress",
+  "camfil.account.cam_card.pdf.order_interval": "Leveransintervall",
+  "camfil.account.cam_card.pdf.next_order": "Nästa beställning",
   "camfil.account.cam_card.pdf.dimensions": "Dimension:",
   "camfil.account.cam_card.pdf.eficciency": "Effektivitet:",
   "camfil.account.cam_card.pdf.invoice_mark": "Fakturamärkning",

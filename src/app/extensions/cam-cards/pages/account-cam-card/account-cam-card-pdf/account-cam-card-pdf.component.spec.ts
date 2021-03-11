@@ -1,8 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideMockStore } from '@ngrx/store/testing';
 import { TranslateModule } from '@ngx-translate/core';
+import { MockPipe } from 'ng-mocks';
 
-import { PipesModule } from 'ish-core/pipes.module';
+import { PricePipe } from 'ish-core/models/price/price.pipe';
+import { DatePipe } from 'ish-core/pipes/date.pipe';
 import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
 import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
 
@@ -15,8 +17,14 @@ describe('Account Cam Card Pdf Component', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [AccountCamCardPdfComponent, CamfilSmallCtaModalComponent, LoadingComponent],
-      imports: [PipesModule.forRoot(), TranslateModule.forRoot()],
+      declarations: [
+        AccountCamCardPdfComponent,
+        CamfilSmallCtaModalComponent,
+        LoadingComponent,
+        MockPipe(DatePipe),
+        MockPipe(PricePipe),
+      ],
+      imports: [TranslateModule.forRoot()],
       providers: [provideMockStore()],
     }).compileComponents();
   });
