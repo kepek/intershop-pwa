@@ -274,7 +274,9 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit {
   }
 
   pickCustomer(event) {
-    this.camCardsFacade.getDeliveryAddress(event.value);
+    if (event.value) {
+      this.camCardsFacade.getDeliveryAddress(event.value);
+    }
   }
 
   pickAddress(event) {
