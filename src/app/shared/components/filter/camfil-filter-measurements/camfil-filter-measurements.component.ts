@@ -90,7 +90,9 @@ export class CamfilFilterMeasurementsComponent implements OnInit, OnDestroy {
     return this.width || this.height || this.depth ? !1 : !0;
   }
 
-  // Remove 'Width', 'Height', 'Depth' from search parameters
+  /**
+   *  Remove 'Width', 'Height', 'Depth' from search parameters
+   * */
   stripMeasurementSearchParameters(params: URLFormParams) {
     const forbiddenKeys = ['Width', 'Height', 'Depth'];
     return Object.keys(params)

@@ -1,13 +1,13 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MockComponent } from 'ng-mocks';
+import { instance, mock } from 'ts-mockito';
 
+import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { CamfilFilterCollapsableComponent } from 'ish-shared/components/filter/camfil-filter-collapsable/camfil-filter-collapsable.component';
 import { CamfilFilterInfoComponent } from 'ish-shared/components/filter/camfil-filter-info/camfil-filter-info.component';
 
 import { CamfilFilterMeasurementsComponent } from './camfil-filter-measurements.component';
-import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
-import { instance, mock } from 'ts-mockito';
 
 describe('Camfil Filter Measurements Component', () => {
   let component: CamfilFilterMeasurementsComponent;
