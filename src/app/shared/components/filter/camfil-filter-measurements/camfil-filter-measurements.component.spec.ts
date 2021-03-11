@@ -6,13 +6,17 @@ import { CamfilFilterCollapsableComponent } from 'ish-shared/components/filter/c
 import { CamfilFilterInfoComponent } from 'ish-shared/components/filter/camfil-filter-info/camfil-filter-info.component';
 
 import { CamfilFilterMeasurementsComponent } from './camfil-filter-measurements.component';
+import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
+import { instance, mock } from 'ts-mockito';
 
 describe('Camfil Filter Measurements Component', () => {
   let component: CamfilFilterMeasurementsComponent;
   let fixture: ComponentFixture<CamfilFilterMeasurementsComponent>;
   let element: HTMLElement;
+  let shoppingFacade: ShoppingFacade;
 
   beforeEach(async () => {
+    shoppingFacade = mock(ShoppingFacade);
     await TestBed.configureTestingModule({
       declarations: [
         CamfilFilterMeasurementsComponent,
@@ -20,6 +24,7 @@ describe('Camfil Filter Measurements Component', () => {
         MockComponent(CamfilFilterInfoComponent),
       ],
       imports: [RouterTestingModule],
+      providers: [{ provide: ShoppingFacade, useFactory: () => instance(shoppingFacade) }],
     }).compileComponents();
   });
 
