@@ -20,6 +20,7 @@ import {
 } from 'rxjs/operators';
 
 import { Address } from 'ish-core/models/address/address.model';
+import { AttributeHelper } from 'ish-core/models/attribute/attribute.helper';
 import { Attribute } from 'ish-core/models/attribute/attribute.model';
 import { Bucket } from 'ish-core/models/basket/bucket.model';
 import {
@@ -74,6 +75,7 @@ import {
   updateBucket,
   updateBucketFail,
   updateBucketSuccess,
+  updateBucketsQueue,
   validateBasket,
 } from './basket.actions';
 import { getCurrentBasket, getCurrentBasketId } from './basket.selectors';
@@ -532,21 +534,19 @@ export class BasketItemsEffects {
       withLatestFrom(this.store.pipe(select(getCurrentBasketId))),
       concatMap(([payload, basketId]) => {
         const getActions = (info, bktId) => {
-          const updateBuckets = payload.basketExtensions.map(b =>
-            updateBucket({
+          // TODO: tmp solution until BE handle deliveryDate
+          const d = new Date();
+          const date = d.setDate(d.getDate() + 10);
+          //
+          const updateBuckets = payload.basketExtensions.map(b => {
+            const deliveryDate = b.extension?.deliveryDate || AttributeHelper.formatDeliveryDate(new Date(date));
+            return {
               basketId: bktId,
               addressId: b.addressId,
-              basketExtension: b.extension,
-            })
-          );
-          return [
-            addItemsToBasketFromCamCardSuccess({ info }),
-            ...updateBuckets,
-            loadBasketAddresses(),
-            displaySuccessMessage({
-              message: 'camfil.add_items_to_basket.camfil.message.success',
-            }),
-          ];
+              basketExtension: { ...b.extension, deliveryDate },
+            };
+          });
+          return [addItemsToBasketFromCamCardSuccess({ info }), updateBucketsQueue(updateBuckets)];
         };
 
         if (basketId) {
@@ -565,6 +565,31 @@ export class BasketItemsEffects {
           );
         }
       })
+    )
+  );
+
+  updateBucketsQueue$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(updateBucketsQueue),
+      mapToPayload(),
+      mergeMap(payload =>
+        concat(
+          ...Object.values(payload).map(item =>
+            this.basketService.updateBucket(item.basketId, item.addressId, item.basketExtension)
+          )
+        ).pipe(
+          last(),
+          concatMap(() => [
+            updateBucketSuccess(),
+            loadBasket(),
+            loadBasketAddresses(),
+            displaySuccessMessage({
+              message: 'camfil.add_items_to_basket.camfil.message.success',
+            }),
+          ]),
+          mapErrorToAction(updateBucketFail)
+        )
+      )
     )
   );
 }

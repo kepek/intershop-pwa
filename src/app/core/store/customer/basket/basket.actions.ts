@@ -475,3 +475,14 @@ export const addItemsToBasketFromCamCardFail = createAction(
   '[Basket API] Add Items To Basket from CamCard Fail',
   httpError()
 );
+
+export const updateBucketsQueue = createAction(
+  '[Basket API] Update Buckets in queue',
+  payload<
+    {
+      basketId: string;
+      addressId: string;
+      basketExtension: BasketExtensions;
+    }[]
+  >()
+);
