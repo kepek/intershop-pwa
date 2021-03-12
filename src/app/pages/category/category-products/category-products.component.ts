@@ -21,7 +21,6 @@ export class CategoryProductsComponent implements OnInit, OnChanges {
   constructor(@Inject(PLATFORM_ID) private platformId: string) {}
 
   ngOnInit() {
-    console.log('CategoryProductsComponent nocamfil');
     this.isCollapsed = this.deviceType === 'mobile';
   }
 
