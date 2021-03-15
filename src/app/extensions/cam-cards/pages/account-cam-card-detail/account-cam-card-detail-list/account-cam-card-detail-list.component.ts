@@ -25,7 +25,6 @@ import { Address } from 'ish-core/models/address/address.model';
 import { BasketView } from 'ish-core/models/basket/basket.model';
 import { Bucket } from 'ish-core/models/basket/bucket.model';
 import { Price } from 'ish-core/models/price/price.model';
-import { Product } from 'ish-core/models/product/product.model';
 import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
 import { whenTruthy } from 'ish-core/utils/operators';
 import { CamfilModalDialogComponent } from 'ish-shared/components/common/camfil-modal-dialog/camfil-modal-dialog.component';
@@ -76,9 +75,6 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges, OnD
   priceSum: Prices = {};
   POSITION_GAP_SIZE = 999;
 
-  customerPrices$: Observable<Product[]>;
-  customerPrices: Product[];
-
   private destroy$ = new Subject();
 
   constructor(
@@ -125,16 +121,6 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges, OnD
     if (changes.camCard) {
       this.changeDetectorRefs.detectChanges();
 
-      if (!this.customerPrices$) {
-        const listToGetCustomerPrices = CamCardHelper.handleCamCardsToGetCustomerPrice([this.camCard]);
-        const customerId = this.camCard.customer.id;
-        this.shoppingFacade.loadCustomerPrices(customerId, listToGetCustomerPrices[customerId]);
-        this.customerPrices$ = this.shoppingFacade.getCustomerPrices$(customerId);
-        this.customerPrices$.pipe(takeUntil(this.destroy$)).subscribe((products: Product[]) => {
-          this.customerPrices = products;
-        });
-      }
-
       // update priceSum
       const currentCamCardItemsId = CamCardHelper.getCamCardItemsId(this.camCard);
       const priceItemToRemove = Object.keys(this.priceSum).filter(key => !currentCamCardItemsId.includes(key));
@@ -175,11 +161,7 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges, OnD
   get totalPrice(): Price {
     const list = Object.values(this.priceSum);
     const currency = list.length ? list.find(([item]) => item.currency)[0]?.currency : '';
-    const value = list.reduce(
-      (res, [item, sku, qty]) =>
-        res + (this.customerPrices?.find(p => p.sku === sku)?.salePrice.value || item?.value || 0) * qty,
-      0
-    );
+    const value = list.reduce((res, [item, , qty]) => res + (item?.value || 0) * qty, 0);
     return { value, type: 'Money', currency };
   }
 
