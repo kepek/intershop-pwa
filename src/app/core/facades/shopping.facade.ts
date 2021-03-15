@@ -23,6 +23,7 @@ import {
   loadBasketAddresses,
   resetProductAdded,
   updateBucket,
+  updateBucketsQueue,
 } from 'ish-core/store/customer/basket';
 import {
   getCategories,
@@ -210,6 +211,10 @@ export class ShoppingFacade {
         address,
       })
     );
+  }
+
+  updateBucketsQueue(buckets) {
+    this.store.dispatch(updateBucketsQueue(buckets));
   }
 
   resetProductAdded() {
