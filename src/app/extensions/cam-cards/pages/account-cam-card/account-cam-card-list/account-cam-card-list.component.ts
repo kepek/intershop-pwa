@@ -27,7 +27,6 @@ import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { Address } from 'ish-core/models/address/address.model';
 import { BasketView } from 'ish-core/models/basket/basket.model';
 import { Bucket } from 'ish-core/models/basket/bucket.model';
-import { Product } from 'ish-core/models/product/product.model';
 import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
 import { whenTruthy } from 'ish-core/utils/operators';
 import { CamfilModalDialogComponent } from 'ish-shared/components/common/camfil-modal-dialog/camfil-modal-dialog.component';
@@ -82,9 +81,6 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
   loading = true;
   isSubOpen = [];
   notBuyableElemnts = [];
-  listForCustomerPrices: {
-    [key: string]: Observable<Product[]>;
-  };
   maintenance = CamCardHelper.maintenance;
   private fragment: string;
 
@@ -170,10 +166,6 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
       this.camCardsProcessed.sortingDataAccessor = (item, property) =>
         property === 'customer' ? item.customer.companyName : item[property];
 
-      if (this.camCards.length) {
-        this.getCustomerPrice();
-      }
-
       this.goToExpandedCamCard();
       this.loading = this.camCardLoading;
     }
@@ -231,16 +223,6 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
       if (!this.isSubOpen.includes(sub.id)) {
         this.isSubOpen.push(sub.id);
       }
-    });
-  }
-
-  getCustomerPrice() {
-    const listToGetCustomerPrices = CamCardHelper.handleCamCardsToGetCustomerPrice(this.camCardsProcessed.data);
-    Object.keys(listToGetCustomerPrices).forEach(customerId => {
-      this.productFacade.loadCustomerPrices(customerId, listToGetCustomerPrices[customerId]);
-      this.listForCustomerPrices = {
-        [customerId]: this.productFacade.getCustomerPrices$(customerId),
-      };
     });
   }
 

@@ -39,7 +39,11 @@ function removeFailed(failed: string[], sku: string): string[] {
 }
 
 function addCustomerPrices(state: ProductsState, customerId: string, products: Product[]): ProductsState {
-  const prices = state.customerPrices ? [...state.customerPrices[customerId], ...products] : products;
+  const prices =
+    state.customerPrices && state.customerPrices[customerId]
+      ? [...state.customerPrices[customerId], ...products]
+      : products;
+
   return {
     ...state,
     customerPrices: {
