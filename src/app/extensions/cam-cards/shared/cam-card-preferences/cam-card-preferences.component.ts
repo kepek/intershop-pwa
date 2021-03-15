@@ -17,6 +17,7 @@ import { take } from 'rxjs/operators';
 
 import { AppFacade } from 'ish-core/facades/app.facade';
 import { Country } from 'ish-core/models/country/country.model';
+import { whenTruthy } from 'ish-core/utils/operators';
 import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
 
 import { CamCardsFacade } from '../../facades/cam-cards.facade';
@@ -160,6 +161,15 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit {
         this.camCardForm.patchValue({ title: '' });
         this.camCardForm.get('title').setErrors({ required: true });
         this.camCardForm.get('title').markAsTouched();
+      }
+    });
+
+    this.customers$.pipe(whenTruthy(), take(2)).subscribe(customers => {
+      if (customers.length === 1) {
+        this.camCardForm.patchValue({
+          customerName: customers[0].customerNo,
+        });
+        this.pickCustomer(customers[0].id);
       }
     });
   }
