@@ -52,7 +52,9 @@
         <dt class="col-6 p-0">{{ 'camfil.account.orderdetails.order_channel.label' | translate }}</dt>
         <dd class="col-6 p-0" data-testing-id="order-channel">{{ order.orderChannel }}</dd>
         <dt class="col-6 p-0">{{ 'camfil.account.orderdetails.contact_person.label' | translate }}</dt>
-        <dd class="col-6 p-0" data-testing-id="order-contact_person">{{ order.customerName }}</dd>
+        <dd class="col-6 p-0" data-testing-id="order-contact_person">
+          {{ order.contactPerson }}
+        </dd>
         <dt class="col-6 p-0 pb-4">{{ 'camfil.account.orderdetails.phone_notification.label' | translate }}</dt>
         <dd class="col-6 p-0" data-testing-id="order-phone_notification">1234567890</dd>
         <dt class="col-6 p-0">{{ 'camfil.account.orderdetails.delivery_address.label' | translate }}</dt>
