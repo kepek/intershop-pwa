@@ -103,7 +103,8 @@ export class CategoryMapper {
         categoryRef: categoryData.categoryRef,
         categoryPath,
         name: categoryData.name,
-        hasOnlineProducts: categoryData.hasOnlineProducts,
+        // hasOnlineProducts: categoryData.hasOnlineProducts,
+        hasOnlineProducts: true, // must be true to handle any category level as leaf category
         description: categoryData.description,
         images: this.imageMapper.fromImages(categoryData.images),
         attributes: categoryData.attributes,
