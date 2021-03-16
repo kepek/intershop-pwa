@@ -108,11 +108,14 @@ export class BasketItemsEffects {
               // if (element) {
               //   element.quantity += val.quantity;
               // } else {
-              const { addressId, basketExtension, ...restValues } = val;
+              const { shippingMethod, shipToAddress, addressId, lineItemAttributes, basketExtension } = val;
               acc.items.push({
-                ...restValues,
+                ...val,
                 unit: entities[val.sku] && entities[val.sku].packingUnit,
+                shippingMethod,
+                shipToAddress,
                 addressId,
+                lineItemAttributes,
               });
               if (basketExtension) {
                 acc.extentions.push({ addressId, basketExtension });
