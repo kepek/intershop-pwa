@@ -1,5 +1,3 @@
-import { LineItem } from 'ish-core/models/line-item/line-item.model';
-
 import { BasketInfo } from './basket-info.model';
 
 export class BasketInfoMapper {
@@ -19,17 +17,5 @@ export class BasketInfoMapper {
               info.causes.map(cause => ({ ...cause, parameters: { ...cause.parameters, lineItemId: itemId } })),
           }))
       : infos;
-  }
-
-  static fromData(payload): LineItem[] {
-    const lineItems = payload.data?.map(item => ({
-      id: item.id,
-      position: item.position,
-      quantity: item.quantity,
-      productSKU: item.product,
-      addressId: item.shipToAddress,
-    }));
-
-    return lineItems ? lineItems : [];
   }
 }

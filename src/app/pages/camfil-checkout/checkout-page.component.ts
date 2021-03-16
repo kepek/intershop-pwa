@@ -142,7 +142,7 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
         daysTillReady = Number(
           res.attributeGroups[AttributeGroupTypes.ProductsListLabelAttributes].attributes.find(
             a => a.name?.toLowerCase() === 'deliverydays'
-          ).value
+          )?.value || 7
         );
       } else {
         // TODO To remove. Should use only Deliverydays when attribute value is provided

@@ -160,7 +160,6 @@ export class CreateOrderModalComponent implements OnInit, OnDestroy {
         this.product.sku,
         quantity,
         this.basketId,
-        this.getBasketExtension(),
         lineItemAttribute
       );
     }
