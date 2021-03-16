@@ -190,7 +190,7 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
             );
           } else {
             // TODO To remove. Should use only Deliverydays when attribute value is provided
-            daysTillReady = res.readyForShipmentMin + this.lineItemIndex;
+            daysTillReady = res.readyForShipmentMin;
 
             if (Number.isNaN(daysTillReady)) {
               return (this.earliestDeliveryDate = this.translate.instant('camfil.checkout.line_item.article_expired'));

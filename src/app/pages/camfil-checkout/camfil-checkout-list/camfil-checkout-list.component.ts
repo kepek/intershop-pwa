@@ -97,23 +97,8 @@ export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
       ],
     });
 
-    const basketId = this.order.basket;
-    const shipAddressId = this.order.deliveryAddressId;
-
-    const deliveryDateValue = AttributeHelper.formatDeliveryDate(new Date(defaultDeliveryDate));
-
     this.selectedDeliveryDate = defaultDeliveryDate;
     this.isPartialDelivery = true;
-
-    const basketExtensionUpdate = {
-      ...this.order,
-      deliveryDate: deliveryDateValue,
-      isPartialDelivery: true,
-    };
-
-    if (!this.order?.deliveryDate?.length) {
-      this.shoppingFacade.updateBucket(basketId, shipAddressId, basketExtensionUpdate);
-    }
   }
 
   onBlurSubmit(field: string) {
@@ -267,8 +252,8 @@ export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
 
     this.isPartialDelivery = basketExtension?.isPartialDelivery || false;
     if (items?.length) {
-      items = items.map((li, index) => {
-        const earliestDeliveryDate = this.getDeliveryDate(li.productSKU, index);
+      items = items.map(li => {
+        const earliestDeliveryDate = this.getDeliveryDate(li.productSKU);
         return { ...li, earliestDeliveryDate };
       });
       const max = Math.max.apply(
@@ -301,7 +286,7 @@ export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  getDeliveryDate(lineItemId: string, index: number) {
+  getDeliveryDate(lineItemId: string) {
     const productDetail$ = this.shoppingFacade.product$(
       lineItemId,
       CamfilCheckoutListComponent.REQUIRED_COMPLETENESS_LEVEL
@@ -318,7 +303,7 @@ export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
         );
       } else {
         // TODO To remove. Should use only Deliverydays when attribute value is provided
-        daysTillReady = res.readyForShipmentMin + index;
+        daysTillReady = res.readyForShipmentMin;
       }
       delivery = today.setDate(today.getDate() + daysTillReady);
     });
