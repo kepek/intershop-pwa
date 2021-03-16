@@ -169,7 +169,7 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit {
         this.camCardForm.patchValue({
           customerName: customers[0].customerNo,
         });
-        this.pickCustomer(customers[0].id);
+        this.pickCustomer({ value: customers[0].id });
       }
     });
   }
@@ -294,15 +294,16 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit {
     this.addresses$.subscribe(addresses => {
       const address = addresses.filter(element => element.id === id)[0];
 
-      this.camCardForm.patchValue({
-        companyName1: address.companyName1,
-        addressLine1: address.addressLine1,
-        addressLine2: address.addressLine2,
-        postalCode: address.postalCode,
-        city: address.city,
-        countryCode: address.countryCode,
-      });
-
+      if (address) {
+        this.camCardForm.patchValue({
+          companyName1: address.companyName1,
+          addressLine1: address.addressLine1,
+          addressLine2: address.addressLine2,
+          postalCode: address.postalCode,
+          city: address.city,
+          countryCode: address.countryCode,
+        });
+      }
       this.onBlurSubmit();
     });
   }
