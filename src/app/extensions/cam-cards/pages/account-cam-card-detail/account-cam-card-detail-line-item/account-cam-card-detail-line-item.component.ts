@@ -14,9 +14,12 @@ import { MatDialog } from '@angular/material/dialog';
 import { Observable, Subject } from 'rxjs';
 import { debounceTime, take, takeUntil } from 'rxjs/operators';
 
+import { AppFacade } from 'ish-core/facades/app.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
+import { Channel } from 'ish-core/models/channel/channel.types';
 import { ProductView } from 'ish-core/models/product-view/product-view.model';
 import { ProductCompletenessLevel } from 'ish-core/models/product/product.model';
+import { whenTruthy } from 'ish-core/utils/operators';
 import { CamfilQuickViewModalComponent } from 'ish-shared/components/common/camfil-quick-view-modal/camfil-quick-view-modal.component';
 
 import { CamCardsFacade } from '../../../facades/cam-cards.facade';
@@ -32,6 +35,7 @@ export class AccountCamCardDetailLineItemComponent implements OnChanges, OnInit,
   constructor(
     private productFacade: ShoppingFacade,
     private camCardsFacade: CamCardsFacade,
+    private appFacade: AppFacade,
     public dialog: MatDialog
   ) {}
 
@@ -46,6 +50,7 @@ export class AccountCamCardDetailLineItemComponent implements OnChanges, OnInit,
   @Output() delete = new EventEmitter<CamCardItem>();
 
   quantity = 0;
+  showPrice: boolean;
 
   addToCartForm: FormGroup;
   selectItemForm: FormGroup;
@@ -62,6 +67,10 @@ export class AccountCamCardDetailLineItemComponent implements OnChanges, OnInit,
     this.quantity = this.camCardItemData.quantity;
 
     this.updateQuantities();
+
+    this.appFacade.getCamfilChannel$
+      .pipe(whenTruthy(), take(1))
+      .subscribe(channel => (this.showPrice = channel !== Channel.SE));
   }
 
   ngOnChanges(s: SimpleChanges) {

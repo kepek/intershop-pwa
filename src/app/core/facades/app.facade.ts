@@ -4,7 +4,13 @@ import { Store, select } from '@ngrx/store';
 import { combineLatest, merge, noop } from 'rxjs';
 import { filter, map, mapTo, shareReplay, startWith, withLatestFrom } from 'rxjs/operators';
 
-import { getAvailableLocales, getCurrentLocale, getDeviceType, getICMBaseURL } from 'ish-core/store/core/configuration';
+import {
+  getAvailableLocales,
+  getCamfilChannel,
+  getCurrentLocale,
+  getDeviceType,
+  getICMBaseURL,
+} from 'ish-core/store/core/configuration';
 import { getGeneralError, getGeneralErrorType } from 'ish-core/store/core/error';
 import { selectPath } from 'ish-core/store/core/router';
 import { getBreadcrumbData, getHeaderType, getWrapperClass, isStickyHeader } from 'ish-core/store/core/viewconf';
@@ -112,4 +118,7 @@ export class AppFacade {
     select(getBreadcrumbData),
     map(item => item && item.map(element => element.text))
   );
+
+  // tslint:disable-next-line:member-ordering
+  getCamfilChannel$ = this.store.pipe(select(getCamfilChannel));
 }

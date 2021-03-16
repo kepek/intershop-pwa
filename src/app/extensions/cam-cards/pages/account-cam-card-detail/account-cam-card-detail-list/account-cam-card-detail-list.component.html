@@ -89,7 +89,7 @@
         </mat-expansion-panel>
       </div>
 
-      <div class="text-right cam-card-total">
+      <div class="text-right cam-card-total" *ngIf="showPrice">
         <div class="pt-4 pb-2 px-4">
           {{ 'camfil.account.cam_card.details.total.text' | translate }}:<strong class="pl-3">{{
             totalPrice | ishPrice

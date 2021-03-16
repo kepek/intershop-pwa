@@ -53,3 +53,5 @@ export const getIdentityProvider = createSelectorFactory(projector => defaultMem
     state.identityProvider &&
     (state.identityProvider === 'ICM' ? { type: 'ICM' } : state.identityProviders?.[state.identityProvider])
 );
+
+export const getCamfilChannel = createSelector(getConfigurationState, state => state?.channel);
