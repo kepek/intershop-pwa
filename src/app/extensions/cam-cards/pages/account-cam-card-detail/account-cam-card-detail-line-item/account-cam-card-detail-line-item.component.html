@@ -83,16 +83,14 @@
   </div>
 
   <ng-template #price>
-    <ng-container *ngIf="loadedPrice">
-      <camfil-product-attribute
-        [name]="'camfil.cam_card.product.list_price.label' | translate"
-        [value]="product.listPrice | ishPrice"
-      ></camfil-product-attribute>
-      <camfil-product-attribute
-        [name]="'camfil.cam_card.product.your_price.label' | translate"
-        [value]="(customerPrice || product.salePrice) | ishPrice"
-      ></camfil-product-attribute>
-    </ng-container>
+    <camfil-product-attribute
+      [name]="'camfil.cam_card.product.list_price.label' | translate"
+      [value]="product.listPrice | ishPrice"
+    ></camfil-product-attribute>
+    <camfil-product-attribute
+      [name]="'camfil.cam_card.product.your_price.label' | translate"
+      [value]="product.salePrice | ishPrice"
+    ></camfil-product-attribute>
   </ng-template>
 
   <!-- <div class="d-flex">

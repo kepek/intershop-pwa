@@ -111,7 +111,15 @@ export class CamCardHelper {
   static handleCamCardsToGetCustomerPrice(camCards: CamCard[]) {
     return camCards.reduce((list, item) => {
       const customerId = item.customer.id;
-      return list[customerId] ? list : { ...list, [customerId]: CamCardHelper.getCamCardSkus(item) };
+      if (list[customerId]) {
+        list[customerId].push(...CamCardHelper.getCamCardSkus(item));
+      }
+      return {
+        ...list,
+        [customerId]: list[customerId]
+          ? list[customerId].filter((it, i, arr) => arr.findIndex(el => el === it) === i)
+          : CamCardHelper.getCamCardSkus(item),
+      };
     }, {});
   }
 }

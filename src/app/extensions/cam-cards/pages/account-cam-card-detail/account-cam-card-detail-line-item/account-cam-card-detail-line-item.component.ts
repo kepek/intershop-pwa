@@ -15,9 +15,8 @@ import { Observable, Subject } from 'rxjs';
 import { debounceTime, take, takeUntil } from 'rxjs/operators';
 
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
-import { Price } from 'ish-core/models/price/price.model';
 import { ProductView } from 'ish-core/models/product-view/product-view.model';
-import { Product, ProductCompletenessLevel } from 'ish-core/models/product/product.model';
+import { ProductCompletenessLevel } from 'ish-core/models/product/product.model';
 import { CamfilQuickViewModalComponent } from 'ish-shared/components/common/camfil-quick-view-modal/camfil-quick-view-modal.component';
 
 import { CamCardsFacade } from '../../../facades/cam-cards.facade';
@@ -42,7 +41,6 @@ export class AccountCamCardDetailLineItemComponent implements OnChanges, OnInit,
   @Input() selectedItemsForm?: FormArray;
   @Input() mode?: 'edit' | 'view';
   @Input() index: number;
-  @Input() customerPrices?: Product[];
   @Output() handleLoad = new EventEmitter<{ res: ProductView; quantity: number }>();
   @Output() handleUpdate = new EventEmitter<{ res: ProductView; quantity: number }>();
   @Output() delete = new EventEmitter<CamCardItem>();
@@ -52,8 +50,6 @@ export class AccountCamCardDetailLineItemComponent implements OnChanges, OnInit,
   addToCartForm: FormGroup;
   selectItemForm: FormGroup;
   product$: Observable<ProductView>;
-  customerPrice: Price;
-  loadedPrice = false;
 
   @Input() showCheckbox: boolean;
   @Input() checked: boolean;
@@ -64,6 +60,7 @@ export class AccountCamCardDetailLineItemComponent implements OnChanges, OnInit,
   ngOnInit() {
     this.initForm();
     this.quantity = this.camCardItemData.quantity;
+
     this.updateQuantities();
   }
 
@@ -71,20 +68,11 @@ export class AccountCamCardDetailLineItemComponent implements OnChanges, OnInit,
     if (s.camCardItemData) {
       this.loadProductDetails();
     }
-    if (this.customerPrices) {
-      this.updatecustomerPrice();
-    }
   }
 
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
-  }
-
-  updatecustomerPrice() {
-    this.customerPrice =
-      this.customerPrices?.find(product => product.sku === this.camCardItemData?.product.sku)?.salePrice || undefined;
-    this.loadedPrice = true;
   }
 
   updateQuantities() {

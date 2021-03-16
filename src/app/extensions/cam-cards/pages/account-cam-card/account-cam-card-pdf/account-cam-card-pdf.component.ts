@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
 import { take } from 'rxjs/operators';
 
+import { AuthorizationToggleService } from 'ish-core/authorization-toggle.module';
 import { AccountFacade } from 'ish-core/facades/account.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { Price } from 'ish-core/models/price/price.model';
@@ -35,7 +36,8 @@ export class AccountCamCardPdfComponent implements OnInit {
     private pdfService: CamPdfService,
     private accountFacade: AccountFacade,
     public dialog: MatDialog,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private authorizationToggle: AuthorizationToggleService
   ) {}
 
   private static REQUIRED_COMPLETENESS_LEVEL = ProductCompletenessLevel.List;
@@ -48,6 +50,7 @@ export class AccountCamCardPdfComponent implements OnInit {
   skuEqProducts = false;
   pdfLoading = false;
   listForCustomerPrices = {};
+  customerPricesLoaded: boolean;
   texts = {
     customerAccount: this.translate.instant('camfil.account.cam_card.pdf.customer_account'),
     artNr: this.translate.instant('camfil.account.cam_card.pdf.art_nr'),
@@ -72,17 +75,35 @@ export class AccountCamCardPdfComponent implements OnInit {
     });
   }
 
-  getCustomerPrice() {
-    const listToGetCustomerPrices = CamCardHelper.handleCamCardsToGetCustomerPrice(this.camCards);
+  loadCustomerPrice() {
+    this.pdfLoading = true;
+    this.customerPricesLoaded = false;
+    this.authorizationToggle
+      .isAuthorizedTo('APP_B2B_PRINT_PRICES')
+      .pipe(take(1))
+      .subscribe(permission => {
+        if (permission) {
+          const listToGetCustomerPrices = CamCardHelper.handleCamCardsToGetCustomerPrice(this.camCards);
+          const customersId = Object.keys(listToGetCustomerPrices);
+          this.listForCustomerPrices = {};
+          customersId.forEach(customerId => {
+            this.productFacade.loadCustomerPrices(customerId, listToGetCustomerPrices[customerId]);
 
-    Object.keys(listToGetCustomerPrices).forEach(customerId => {
-      this.productFacade
-        .getCustomerPrices$(customerId)
-        .pipe(whenTruthy(), take(1))
-        .subscribe(prices => {
-          this.listForCustomerPrices[customerId] = prices;
-        });
-    });
+            this.productFacade
+              .getCustomerPrices$(customerId)
+              .pipe(whenTruthy(), take(1))
+              .subscribe(prices => {
+                this.listForCustomerPrices[customerId] = prices;
+                if (Object.keys(this.listForCustomerPrices).length === customersId.length) {
+                  this.customerPricesLoaded = true;
+                  this.pdfLoading = false;
+                }
+              });
+          });
+        } else {
+          this.generatePdfWithoutPrices();
+        }
+      });
   }
 
   handlePrice(data: Price) {
@@ -96,13 +117,14 @@ export class AccountCamCardPdfComponent implements OnInit {
   openPdfGenDialog() {
     this.dialog.open(this.modal.show());
     this.modal.hide = () => this.dialog.closeAll();
-    this.getCustomerPrice();
+
+    this.loadCustomerPrice();
   }
 
   generatePdf(showPrice?: boolean) {
     this.skuEqProducts = false;
-    this.pdfLoading = true;
     this.products = {};
+    this.sumPrice = {};
 
     const prodSkusList = this.camCards
       .reduce((acc, cc) => {
@@ -162,7 +184,9 @@ export class AccountCamCardPdfComponent implements OnInit {
       const subs = camCard.subCamCards
         .filter(el => el.camCardItems.length)
         .map(sub => this.pdfSubItemsRowToTable(sub, showPrice));
-      subs.unshift(firstLevelItems);
+      if (camCard.camCardItems.length) {
+        subs.unshift(firstLevelItems);
+      }
       res.push(this.pdfHeader(i), this.pdfInfoPart(camCard), subs, showPrice ? this.pdfTotal(camCard.id) : '');
       return res;
     }, []);
