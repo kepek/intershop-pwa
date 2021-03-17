@@ -4,8 +4,10 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { TranslateModule } from '@ngx-translate/core';
 import { MockComponent, MockPipe } from 'ng-mocks';
-import { instance, mock } from 'ts-mockito';
+import { of } from 'rxjs';
+import { instance, mock, when } from 'ts-mockito';
 
+import { AppFacade } from 'ish-core/facades/app.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { PricePipe } from 'ish-core/models/price/price.pipe';
 import { CamfilDimensionPipe } from 'ish-core/pipes/camfil-dimension.pipe';
@@ -35,8 +37,11 @@ describe('Account Cam Card Detail Line Item Component', () => {
   let component: AccountCamCardDetailLineItemComponent;
   let fixture: ComponentFixture<AccountCamCardDetailLineItemComponent>;
   let element: HTMLElement;
+  let appFacadeMock: AppFacade;
 
   beforeEach(async () => {
+    appFacadeMock = mock(AppFacade);
+
     await TestBed.configureTestingModule({
       declarations: [
         AccountCamCardDetailLineItemComponent,
@@ -65,6 +70,7 @@ describe('Account Cam Card Detail Line Item Component', () => {
       providers: [
         { provide: CamCardsFacade, useFactory: () => instance(mock(CamCardsFacade)) },
         { provide: ShoppingFacade, useFactory: () => instance(mock(ShoppingFacade)) },
+        { provide: AppFacade, useFactory: () => instance(appFacadeMock) },
       ],
     }).compileComponents();
   });
@@ -73,6 +79,8 @@ describe('Account Cam Card Detail Line Item Component', () => {
     fixture = TestBed.createComponent(AccountCamCardDetailLineItemComponent);
     component = fixture.componentInstance;
     element = fixture.nativeElement;
+
+    when(appFacadeMock.getCamfilChannel$).thenReturn(of('channel'));
 
     component.camCardItemData = {
       id: '1234',
