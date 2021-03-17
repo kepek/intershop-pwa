@@ -113,7 +113,8 @@ export class CategoriesEffects {
           ofCategoryUrl(),
           select(getSelectedCategory),
           whenTruthy(),
-          filter(cat => cat.hasOnlineProducts),
+          // CAM-881: Skip below filter to also show products on main categories that have sub categories
+          // filter(cat => cat.hasOnlineProducts),
           map(({ uniqueId }) => loadMoreProducts({ id: { type: 'category', value: uniqueId } }))
         )
       )

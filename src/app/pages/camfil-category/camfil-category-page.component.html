@@ -1,11 +1,3 @@
 <ng-container *ngIf="category$ | async as category">
-  <!-- category without products but with subcategories -->
-  <ng-container *ngIf="!category.hasOnlineProducts && category.hasChildren; else productListing">
-    <camfil-category-categories [category]="category" [deviceType]="deviceType$ | async"></camfil-category-categories>
-  </ng-container>
-
-  <!-- category with products or without children -->
-  <ng-template #productListing>
-    <camfil-category-products [category]="category" [deviceType]="deviceType$ | async"></camfil-category-products>
-  </ng-template>
+  <camfil-category-products [category]="category" [deviceType]="deviceType$ | async"></camfil-category-products>
 </ng-container>
