@@ -530,6 +530,7 @@
   "camfil.account.cam_card.access_user.dialog.title": "Select which user should have<br />access to this CamCard",
   "camfil.account.cam_card.add_to_camcard.error.quantity.button.ok": "OK",
   "camfil.account.cam_card.add_to_camcard.error.quantity.header": "Please select quantity before adding to CamCard",
+  "camfil.account.cam_card.add_to_cart.error.quantity.header": "Please select quantity before adding to Cart",
   "camfil.account.cam_card.add_to_form.address": "Adress",
   "camfil.account.cam_card.add_to_form.building": "Building",
   "camfil.account.cam_card.add_to_form.camcards_details": "Camcards details",
