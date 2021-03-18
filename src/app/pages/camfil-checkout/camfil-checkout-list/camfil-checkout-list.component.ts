@@ -295,9 +295,9 @@ export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
     productDetail$.pipe(take(1), takeUntil(this.destroy$)).subscribe((res: ProductView) => {
       const today = new Date();
       let daysTillReady: number;
-      if (res.attributeGroups && res.attributeGroups[AttributeGroupTypes.ProductsCheckoutAttributes]) {
+      if (res.attributeGroups && res.attributeGroups[AttributeGroupTypes.ProductsListLabelAttributes]) {
         daysTillReady = Number(
-          res.attributeGroups[AttributeGroupTypes.ProductsCheckoutAttributes].attributes.find(
+          res.attributeGroups[AttributeGroupTypes.ProductsListLabelAttributes].attributes.find(
             a => a.name?.toLowerCase() === 'deliverydays'
           ).value
         );
