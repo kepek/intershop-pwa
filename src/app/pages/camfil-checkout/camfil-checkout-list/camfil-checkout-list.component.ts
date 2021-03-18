@@ -21,11 +21,13 @@ import { AttributeGroupTypes } from 'ish-core/models/attribute-group/attribute-g
 import { AttributeHelper } from 'ish-core/models/attribute/attribute.helper';
 import { BasketExtensions } from 'ish-core/models/basket/basket.interface';
 import { Bucket } from 'ish-core/models/basket/bucket.model';
+import { CustomerDeliveryTerm } from 'ish-core/models/customer/customer.interface';
 import { LineItemData } from 'ish-core/models/line-item/line-item.interface';
 import { LineItem } from 'ish-core/models/line-item/line-item.model';
 import { Price } from 'ish-core/models/price/price.model';
 import { ProductView } from 'ish-core/models/product-view/product-view.model';
 import { ProductCompletenessLevel } from 'ish-core/models/product/product.model';
+import { whenTruthy } from 'ish-core/utils/operators';
 import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
 
 import { ModalAddNewProductComponent } from '../../../extensions/cam-cards/pages/account-cam-card-detail/modal-add-new-product/modal-add-new-product.component';
@@ -66,6 +68,7 @@ export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
   orderFullDeliveryDate: number;
   modalDeliveryText: string;
   isPartialDelivery = false;
+  deliveryTerm: CustomerDeliveryTerm;
 
   @ViewChild(CamfilSmallCtaModalComponent) modal: CamfilSmallCtaModalComponent;
 
@@ -81,6 +84,9 @@ export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     if (this.order) {
       this.initForm();
+      this.checkoutFacade.getCustomersDeliveryTerms$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(terms => {
+        this.deliveryTerm = terms[this.order.customer.id];
+      });
     }
   }
 
@@ -164,6 +170,12 @@ export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
     });
 
     return price;
+  }
+
+  get freeDelivery() {
+    const total = this.totalPrice();
+    const threshold = this.deliveryTerm.threshold;
+    return { ...total, value: threshold - total.value };
   }
 
   openAddToProductModal(modal: ModalAddNewProductComponent) {

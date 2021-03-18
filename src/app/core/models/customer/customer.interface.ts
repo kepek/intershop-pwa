@@ -27,3 +27,11 @@ export interface CustomerData extends Customer {
   preferredShipToAddress?: Address;
   preferredPaymentInstrument?: PaymentInstrument;
 }
+
+export interface CustomerDeliveryTerm {
+  name: string;
+  type: string;
+  id: string;
+  threshold: number;
+  description: string;
+}

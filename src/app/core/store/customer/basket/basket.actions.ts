@@ -12,6 +12,7 @@ import { BasketValidation, BasketValidationScopeType } from 'ish-core/models/bas
 import { BasketExtensions } from 'ish-core/models/basket/basket.interface';
 import { Basket } from 'ish-core/models/basket/basket.model';
 import { Bucket } from 'ish-core/models/basket/bucket.model';
+import { CustomerDeliveryTerm } from 'ish-core/models/customer/customer.interface';
 import { LineItemUpdate } from 'ish-core/models/line-item-update/line-item-update.model';
 import { LineItem } from 'ish-core/models/line-item/line-item.model';
 import { PaymentInstrument } from 'ish-core/models/payment-instrument/payment-instrument.model';
@@ -485,4 +486,14 @@ export const updateBucketsQueue = createAction(
       basketExtension: BasketExtensions;
     }[]
   >()
+);
+
+export const loadCustomerDeliveryTerm = createAction(
+  '[Basket API] Load Customer Delivery Term',
+  payload<{ customerId: string }>()
+);
+
+export const loadCustomerDeliveryTermSuccess = createAction(
+  '[Basket API] Load Customer Delivery Term Success',
+  payload<{ customerId: string; term: CustomerDeliveryTerm }>()
 );
