@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
@@ -8,6 +8,7 @@ import { AccountFacade } from 'ish-core/facades/account.facade';
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { BasketView } from 'ish-core/models/basket/basket.model';
 import { Product } from 'ish-core/models/product/product.model';
+import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
 
 import { AddToCartModalComponent } from '../../../../../extensions/cam-cards/shared/add-to-cart-modal/add-to-cart-modal.component';
 
@@ -46,6 +47,8 @@ export class CamfilProductAddToBasketModalComponent implements OnInit, OnDestroy
 
   private destroy$ = new Subject();
 
+  @ViewChild(CamfilSmallCtaModalComponent) errorModal: CamfilSmallCtaModalComponent;
+
   constructor(
     public dialog: MatDialog,
     private accountFacade: AccountFacade,
@@ -74,11 +77,16 @@ export class CamfilProductAddToBasketModalComponent implements OnInit, OnDestroy
   openModalIfLoggedIn(modal: AddToCartModalComponent) {
     this.accountFacade.isLoggedIn$.pipe(take(1), takeUntil(this.destroy$)).subscribe(isLoggedIn => {
       if (isLoggedIn) {
-        this.openModal(modal);
+        this.quantity ? this.openModal(modal) : this.openErrorModal();
       } else {
         this.navigateToLogin();
       }
     });
+  }
+
+  openErrorModal() {
+    this.dialog.open(this.errorModal?.show());
+    this.errorModal.hide = () => this.dialog.closeAll();
   }
 
   get displayIcon(): boolean {

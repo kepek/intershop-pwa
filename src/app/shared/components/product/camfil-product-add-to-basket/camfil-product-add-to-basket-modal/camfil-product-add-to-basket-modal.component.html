@@ -32,3 +32,11 @@
 </div>
 
 <camfil-add-to-cart-modal #addToCartModal [product]="product" [quantity]="quantity"> </camfil-add-to-cart-modal>
+
+<camfil-small-cta-modal
+  actionTitle="{{ 'camfil.account.cam_card.add_to_cart.error.quantity.header' | translate }}"
+  actionButtonTitle="{{ 'camfil.account.cam_card.add_to_camcard.error.quantity.button.ok' | translate }}"
+  onlyAccept="true"
+  hasError="true"
+>
+</camfil-small-cta-modal>

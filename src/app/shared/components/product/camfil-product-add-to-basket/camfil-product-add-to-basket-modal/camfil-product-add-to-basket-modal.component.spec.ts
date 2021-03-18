@@ -15,6 +15,7 @@ import { BasketView } from 'ish-core/models/basket/basket.model';
 import { Product } from 'ish-core/models/product/product.model';
 import { CamfilCamCardModalComponent } from 'ish-shared/components/common/camfil-cam-card-modal/camfil-cam-card-modal.component';
 import { CamfilErrorComponent } from 'ish-shared/components/common/camfil-error/camfil-error.component';
+import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
 import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
 import { CamfilProductQuantityComponent } from 'ish-shared/components/product/camfil-product-quantity/camfil-product-quantity.component';
 import { CamfilCounterComponent } from 'ish-shared/forms/components/camfil-counter/camfil-counter.component';
@@ -79,6 +80,7 @@ describe('Camfil Product Add To Basket Modal Component', () => {
         CamfilErrorComponent,
         CamfilProductAddToBasketModalComponent,
         CamfilProductQuantityComponent,
+        CamfilSmallCtaModalComponent,
         CreateOrderModalComponent,
         CreateOrderSuccessComponent,
         FaIconComponent,
@@ -101,6 +103,7 @@ describe('Camfil Product Add To Basket Modal Component', () => {
     element = fixture.nativeElement;
 
     component.product = { name: 'Test Product', sku: 'test sku', minOrderQuantity: 1 } as Product;
+    component.quantity = 1;
 
     when(camCardFacadeMock.camCard$).thenReturn(of([camCardDetails]));
     when(camCardFacadeMock.virtualCamCard$).thenReturn(of(camCardDetails));
