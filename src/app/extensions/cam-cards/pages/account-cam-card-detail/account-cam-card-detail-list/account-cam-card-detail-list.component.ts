@@ -17,13 +17,15 @@ import { MatSort } from '@angular/material/sort';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { take, takeUntil } from 'rxjs/operators';
 
+import { AppFacade } from 'ish-core/facades/app.facade';
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { Address } from 'ish-core/models/address/address.model';
 import { BasketView } from 'ish-core/models/basket/basket.model';
 import { Bucket } from 'ish-core/models/basket/bucket.model';
+import { Channel } from 'ish-core/models/channel/channel.types';
 import { Price } from 'ish-core/models/price/price.model';
 import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
 import { whenTruthy } from 'ish-core/utils/operators';
@@ -75,6 +77,8 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges, OnD
   priceSum: Prices = {};
   POSITION_GAP_SIZE = 999;
 
+  showPrice: boolean;
+
   private destroy$ = new Subject();
 
   constructor(
@@ -82,6 +86,7 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges, OnD
     private camCardsFacade: CamCardsFacade,
     private shoppingFacade: ShoppingFacade,
     private checkoutFacade: CheckoutFacade,
+    private appFacade: AppFacade,
     private changeDetectorRefs: ChangeDetectorRef,
     public router: Router,
     public dialog: MatDialog
@@ -110,6 +115,10 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges, OnD
     this.shoppingFacade.basketAddresses$.pipe(takeUntil(this.destroy$)).subscribe((basketAddresses: Address[]) => {
       this.basketAddresses = basketAddresses;
     });
+
+    this.appFacade.getCamfilChannel$
+      .pipe(whenTruthy(), take(1))
+      .subscribe(channel => (this.showPrice = channel !== Channel.SE));
   }
 
   ngOnDestroy() {
@@ -121,10 +130,12 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges, OnD
     if (changes.camCard) {
       this.changeDetectorRefs.detectChanges();
 
-      // update priceSum
-      const currentCamCardItemsId = CamCardHelper.getCamCardItemsId(this.camCard);
-      const priceItemToRemove = Object.keys(this.priceSum).filter(key => !currentCamCardItemsId.includes(key));
-      priceItemToRemove.forEach(item => this.cleanPriceSum(item));
+      if (this.showPrice) {
+        // update priceSum
+        const currentCamCardItemsId = CamCardHelper.getCamCardItemsId(this.camCard);
+        const priceItemToRemove = Object.keys(this.priceSum).filter(key => !currentCamCardItemsId.includes(key));
+        priceItemToRemove.forEach(item => this.cleanPriceSum(item));
+      }
 
       if (this.camCard?.subCamCards) {
         const { currentValue, previousValue } = changes?.camCard;
@@ -170,7 +181,7 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges, OnD
   }
 
   productUpdate(event, item: CamCardItem) {
-    if (event.res.salePrice?.value) {
+    if (this.showPrice && event.res.salePrice?.value) {
       this.priceSum[item.id] = [event.res.salePrice, item.product.sku, item.quantity];
     }
   }
