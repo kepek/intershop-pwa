@@ -258,6 +258,9 @@ export class CamCardService {
    * @returns            The created cam_cards.
    */
   getDeliveryAddresses(customerId: string): Observable<CamCardAddress[]> {
+    if (!customerId) {
+      return throwError('getDeliveryAddresses() called without customerId');
+    }
     return this.apiService
       .get(`camfilcustomers/${customerId}/deliveryaddresses`)
       .pipe(unpackEnvelope(), defaultIfEmpty([]));

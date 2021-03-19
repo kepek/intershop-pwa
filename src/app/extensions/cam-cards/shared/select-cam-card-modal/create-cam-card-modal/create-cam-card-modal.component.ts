@@ -12,10 +12,12 @@ import {
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs';
+import { take } from 'rxjs/operators';
 
 import { AppFacade } from 'ish-core/facades/app.facade';
 import { Country } from 'ish-core/models/country/country.model';
 import { Product } from 'ish-core/models/product/product.model';
+import { whenTruthy } from 'ish-core/utils/operators';
 import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
 
 import { CamCardsFacade } from '../../../facades/cam-cards.facade';
@@ -73,6 +75,15 @@ export class CreateCamCardModalComponent implements OnInit, AfterViewInit {
     this.addresses$ = this.camCardsFacade.addresses$;
     this.customers$ = this.camCardsFacade.customers$;
     this.initForm();
+
+    this.customers$.pipe(whenTruthy(), take(1)).subscribe(customers => {
+      if (customers.length === 1) {
+        this.camCardForm.patchValue({
+          customerSelect: customers[0].id,
+        });
+        this.pickCustomer({ value: customers[0].id });
+      }
+    });
   }
 
   initForm() {
@@ -107,21 +118,24 @@ export class CreateCamCardModalComponent implements OnInit, AfterViewInit {
   }
 
   pickCustomer(event) {
-    this.camCardsFacade.getDeliveryAddress(event.value);
+    if (event.value) {
+      this.camCardsFacade.getDeliveryAddress(event.value);
+    }
   }
 
   pickAddress(event) {
     const id = event.value;
     this.addresses$.subscribe(addresses => {
       const address = addresses.filter(element => element.id === id)[0];
-
-      this.camCardForm.patchValue({
-        company: address.companyName1,
-        address: address.addressLine1,
-        zipCode: address.postalCode,
-        area: address.city,
-        countryCode: address.countryCode,
-      });
+      if (address) {
+        this.camCardForm.patchValue({
+          company: address.companyName1,
+          address: address.addressLine1,
+          zipCode: address.postalCode,
+          area: address.city,
+          countryCode: address.countryCode,
+        });
+      }
     });
   }
 
