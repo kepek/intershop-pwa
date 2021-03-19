@@ -23,10 +23,7 @@ export class CamCardHelper {
   static getCamCardItemsId(camCard: CamCard) {
     return [
       ...camCard.camCardItems?.map(({ id }) => id),
-      ...camCard.subCamCards?.reduce((acc, { camCardItems }) => {
-        acc.push(...camCardItems.map(({ id }) => id));
-        return acc;
-      }, []),
+      ...camCard.subCamCards?.reduce((acc, { camCardItems }) => [...acc, ...camCardItems.map(({ id }) => id)], []),
     ];
   }
 
@@ -34,10 +31,10 @@ export class CamCardHelper {
     return (
       [
         ...camCard.camCardItems?.map(({ product }) => product.sku),
-        ...camCard.subCamCards?.reduce((acc, { camCardItems }) => {
-          acc.push(...camCardItems.map(({ product }) => product.sku));
-          return acc;
-        }, []),
+        ...camCard.subCamCards?.reduce(
+          (acc, { camCardItems }) => [...acc, ...camCardItems.map(({ product }) => product.sku)],
+          []
+        ),
       ]
         // remove duplicate skus
         .filter((it, i, arr) => arr.findIndex(el => el === it) === i)

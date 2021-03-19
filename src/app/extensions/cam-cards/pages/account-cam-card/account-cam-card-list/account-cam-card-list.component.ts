@@ -22,6 +22,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Observable, Subject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
 
+import { AuthorizationToggleService } from 'ish-core/authorization-toggle.module';
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { Address } from 'ish-core/models/address/address.model';
@@ -56,13 +57,32 @@ import { UserAccessCamCardDialogComponent } from '../../../shared/user-access-ca
   ],
 })
 export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy {
+  constructor(
+    private checkoutFacade: CheckoutFacade,
+    private productFacade: ShoppingFacade,
+    private camCardsFacade: CamCardsFacade,
+    private changeDetectorRefs: ChangeDetectorRef,
+    public dialog: MatDialog,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private scroller: ViewportScroller,
+    private translate: TranslateService,
+    private location: Location,
+    private authorizationToggle: AuthorizationToggleService
+  ) {}
+
+  get checkedCamCards() {
+    return this.camCards ? this.camCards.filter(camCard => this.isCamCardChecked(camCard)) : [];
+  }
+
+  private static CUSTOMER_ADMIN_PERMISSIONS = ['APP_B2B_MANAGE_USERS', 'APP_B2B_PURCHASE', 'APP_B2B_MANAGE_ALL_ORDERS'];
+
   /** The list of cam cards of the customer. */
   @Input() camCards: CamCard[];
   @Input() deviceType: DeviceType;
   @Input() camCardLoading: boolean;
   @Output() addCamCard = new EventEmitter<CamCard>();
   @ViewChild(MatSort) sort: MatSort;
-
   isStickyCamCardToolbar$: Observable<boolean>;
   camCardsProcessed: MatTableDataSource<CamCard>;
   columnsToDisplay = [
@@ -94,24 +114,9 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
   basketId: string;
   basketAddresses: Address[];
   checkedCamCard = [];
-
-  constructor(
-    private checkoutFacade: CheckoutFacade,
-    private productFacade: ShoppingFacade,
-    private camCardsFacade: CamCardsFacade,
-    private changeDetectorRefs: ChangeDetectorRef,
-    public dialog: MatDialog,
-    private router: Router,
-    private activatedRoute: ActivatedRoute,
-    private scroller: ViewportScroller,
-    private translate: TranslateService,
-    private location: Location
-  ) {}
+  isCustomerAdmin: boolean;
 
   ngOnInit() {
-    if (this.isCustomerAdmin()) {
-      this.columnsToDisplay.splice(6, 0, 'userAccess');
-    }
     this.isMobileView = this.isMobile();
     this.isStickyCamCardToolbar$ = this.camCardsFacade.isStickyCamCardToolbar$;
 
@@ -138,36 +143,50 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.camCards) {
-      const realCamCards = CamCardHelper.getRealCamCards(this.camCards);
-      this.camCardsProcessed = new MatTableDataSource(realCamCards);
-      this.changeDetectorRefs.detectChanges();
+      if (this.camCards.length) {
+        this.authorizationToggle
+          .isAuthorizedToCheckArr(AccountCamCardListComponent.CUSTOMER_ADMIN_PERMISSIONS)
+          .pipe(take(1))
+          .subscribe(p => {
+            this.isCustomerAdmin = p;
 
-      this.camCardsProcessed.filterPredicate = (data, filter) => {
-        const filtered = this.simplifyData(filter);
-        const additionalFields = data.camCardItems.reduce((arr, item) => {
-          const label = item.comment?.label;
-          if (label) {
-            arr.push(label);
-          }
-          return arr;
-        }, []);
-        data.subCamCards.reduce((res, el) => {
-          res.push(el.name);
-          el.camCardItems.forEach(item => (item.comment?.label ? res.push(item.comment.label) : ''));
-          return res;
-        }, additionalFields);
-        return (
-          this.simplifyData(data.customer.companyName).indexOf(filtered) !== -1 ||
-          this.simplifyData(data.name).indexOf(filtered) !== -1 ||
-          !!additionalFields.filter(item => this.simplifyData(item).indexOf(filtered) !== -1).length
-        );
-      };
-      this.camCardsProcessed.sort = this.sort;
-      this.camCardsProcessed.sortingDataAccessor = (item, property) =>
-        property === 'customer' ? item.customer.companyName : item[property];
+            if (this.isCustomerAdmin && !this.columnsToDisplay.includes('userAccess')) {
+              this.columnsToDisplay.splice(6, 0, 'userAccess');
+            }
+            const realCamCards = CamCardHelper.getRealCamCards(this.camCards);
+            this.camCardsProcessed = new MatTableDataSource(realCamCards);
+            this.changeDetectorRefs.detectChanges();
 
-      this.goToExpandedCamCard();
-      this.loading = this.camCardLoading;
+            this.camCardsProcessed.filterPredicate = (data, filter) => {
+              const filtered = this.simplifyData(filter);
+              const additionalFields = data.camCardItems.reduce((arr, item) => {
+                const label = item.comment?.label;
+                if (label) {
+                  arr.push(label);
+                }
+                return arr;
+              }, []);
+              data.subCamCards.reduce((res, el) => {
+                res.push(el.name);
+                el.camCardItems.forEach(item => (item.comment?.label ? res.push(item.comment.label) : ''));
+                return res;
+              }, additionalFields);
+              return (
+                this.simplifyData(data.customer.companyName).indexOf(filtered) !== -1 ||
+                this.simplifyData(data.name).indexOf(filtered) !== -1 ||
+                !!additionalFields.filter(item => this.simplifyData(item).indexOf(filtered) !== -1).length
+              );
+            };
+            this.camCardsProcessed.sort = this.sort;
+            this.camCardsProcessed.sortingDataAccessor = (item, property) =>
+              property === 'customer' ? item.customer.companyName : item[property];
+
+            this.goToExpandedCamCard();
+            this.loading = this.camCardLoading;
+          });
+      } else {
+        this.loading = this.camCardLoading;
+      }
     }
     this.isMobileView = this.isMobile();
   }
@@ -183,12 +202,6 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
 
   applyfilters(filter) {
     this.camCardsProcessed.filter = filter;
-  }
-
-  isCustomerAdmin() {
-    // TODO: !!!! IMPORTANT !!!!
-    // condition should based on sth like this user.role == customer.admin
-    return Math.floor(new Date().getTime() / 100) % 2;
   }
 
   isMobile() {
@@ -234,7 +247,7 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
   }
 
   goToExpandedCamCard() {
-    if (this.fragment && this.camCardsProcessed.data.length) {
+    if (this.fragment && this.camCardsProcessed?.data.length) {
       const el = document.getElementById('camCard_' + this.fragment) as HTMLElement;
       if (el) {
         const top = el.getBoundingClientRect().top - (this.isMobileView ? 0 : 130);
@@ -439,9 +452,5 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
 
   handleProductCheckbox(item: CamCardItem, camCard: CamCard, event: MatCheckboxChange) {
     this.handleProductCheck(item, camCard, event);
-  }
-
-  get checkedCamCards() {
-    return this.camCards ? this.camCards.filter(camCard => this.isCamCardChecked(camCard)) : [];
   }
 }
