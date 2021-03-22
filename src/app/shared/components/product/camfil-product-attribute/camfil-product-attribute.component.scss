@@ -10,6 +10,7 @@
   }
 
   .camfil-product-attribute {
+    display: flex;
     margin-bottom: 0;
 
     &__label,
@@ -23,8 +24,26 @@
     }
     &__value {
       margin-right: 5px;
+      margin-left: 5px;
+      overflow: hidden;
       font-weight: bold;
       color: $camfil-text-color-primary;
+      text-overflow: ellipsis;
+    }
+
+    &--dimensions {
+      width: 180px;
+      height: 14px;
+    }
+
+    &--label {
+      width: 130px;
+      height: 14px;
+    }
+
+    &--quantity {
+      width: 66px;
+      height: 14px;
     }
   }
 }

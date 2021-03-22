@@ -39,6 +39,7 @@
     <div class="product-detailed-inner-col">
       <camfil-product-id *ngIf="configuration.displaySKU" [product]="product"></camfil-product-id>
       <camfil-product-attribute
+        identifier="dimensions"
         name="camfil.product.dimensions.label"
         [value]="product | camfilDimension"
       ></camfil-product-attribute>

@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MockPipe } from 'ng-mocks';
 
 import { AttributeToStringPipe } from 'ish-core/models/attribute/attribute.pipe';
@@ -10,6 +10,7 @@ describe('Camfil Product Attribute Component', () => {
   let component: CamfilProductAttributeComponent;
   let fixture: ComponentFixture<CamfilProductAttributeComponent>;
   let element: HTMLElement;
+  let translate: TranslateService;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -22,6 +23,11 @@ describe('Camfil Product Attribute Component', () => {
     fixture = TestBed.createComponent(CamfilProductAttributeComponent);
     component = fixture.componentInstance;
     element = fixture.nativeElement;
+    component.identifier = 'dimensions';
+    component.name = 'dimensions';
+    translate = TestBed.inject(TranslateService);
+    translate.setDefaultLang('en');
+    translate.use('en');
   });
 
   it('should be created', () => {

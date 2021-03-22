@@ -1,6 +1,6 @@
 <ng-container *ngIf="product$ | async as productData">
   <div class="line-item d-flex align-items-center text-left" [class]="{ 'line-item__confirmed': isConfirmed }">
-    <div class="d-flex align-items-center align-self-start align-self-md-center text-left">
+    <div class="d-flex align-items-center align-self-start align-self-md-center text-left w-100">
       <!-- <ng-container *ngIf="isViewMode">{{ index }}</ng-container> -->
       <a class="image ml-0 mx-md-3" [routerLink]="productData | ishProductRoute">
         <camfil-product-image
@@ -53,9 +53,7 @@
         <p class="delivery-date-para">
           <strong>{{ 'camfil.checkout.order.earliest_delivery_date.text' | translate }}</strong>
         </p>
-        <p class="delivery-date-para">
-          {{ earliestDeliveryDate }}
-        </p>
+        <p class="delivery-date-para">{{ earliestDeliveryDate | ishDate: 'shortDate' }}</p>
       </div>
       <div class="quantity-row d-flex flex-row justify-content-between align-items-center py-3 py-md-0">
         <span *ngIf="isConfirmed" class="quantity-confirmed">{{ product.quantity.value }}</span>

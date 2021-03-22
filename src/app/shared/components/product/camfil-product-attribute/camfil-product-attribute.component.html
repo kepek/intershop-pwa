@@ -1,8 +1,9 @@
 <dl *ngIf="attribute && value" [ngClass]="classObject">
-  <dt class="camfil-product-attribute__label">{{ attribute.name | translate }}: &nbsp;</dt>
+  <dt class="camfil-product-attribute__label">{{ attribute.name | translate }}:</dt>
   <dd
     [attr.itemprop]="itemProp"
     [innerHTML]="attribute | ishAttribute: multipleValuesSeparator"
     class="camfil-product-attribute__value"
+    [title]="attribute | ishAttribute: multipleValuesSeparator"
   ></dd>
 </dl>

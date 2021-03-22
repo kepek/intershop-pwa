@@ -41,8 +41,6 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
 
   camCards: CamCard[];
 
-  isConfirmed = false;
-
   unavailableProducts = {};
 
   constructor(
