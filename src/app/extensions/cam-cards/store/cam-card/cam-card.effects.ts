@@ -653,6 +653,7 @@ export class CamCardEffects {
           switchMap(() =>
             this.store.pipe(
               select(getCamCardDetails, { id: camCardId }),
+              whenTruthy(),
               mergeMap(camCard =>
                 this.store.pipe(
                   select(getUserContactForCustomer, { customerId: camCard.customer.id }),
@@ -849,7 +850,8 @@ export class CamCardEffects {
    * @param contact
    */
   private handleCamCardContactsSuccess(camCardId: string, contacts: CamCardContact[], contact: CamCardContact) {
-    const isInclude = !contacts.length || contacts.findIndex(newContact => newContact.erpId === contact.erpId) > -1;
+    const isInclude =
+      !contacts.length || contacts.findIndex(newContact => newContact.profileId === contact.profileId) > -1;
     return isInclude ? updateCamCardContactsSuccess({ camCardId, contacts }) : deleteCamCardSuccess({ camCardId });
   }
 }
