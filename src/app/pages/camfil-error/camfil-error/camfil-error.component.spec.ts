@@ -7,7 +7,6 @@ import { instance, mock } from 'ts-mockito';
 
 import { ServerHtmlDirective } from 'ish-core/directives/server-html.directive';
 import { AppFacade } from 'ish-core/facades/app.facade';
-import { findAllCustomElements } from 'ish-core/utils/dev/html-query-utils';
 import { ContentIncludeComponent } from 'ish-shared/cms/components/content-include/content-include.component';
 
 import { CamfilErrorComponent } from './camfil-error.component';
@@ -43,15 +42,5 @@ describe('Camfil Error Component', () => {
     expect(component).toBeTruthy();
     expect(element).toBeTruthy();
     expect(() => fixture.detectChanges()).not.toThrow();
-  });
-
-  it('should render localized error text with HTML on template', () => {
-    fixture.detectChanges();
-    expect(element.getElementsByTagName('h3')[0].textContent).toContain('test paragraph title');
-  });
-
-  xit('should render search box on template', () => {
-    fixture.detectChanges();
-    expect(findAllCustomElements(element)).toEqual(['camfil-search-box']);
   });
 });

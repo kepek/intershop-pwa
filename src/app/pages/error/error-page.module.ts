@@ -3,8 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { SharedModule } from 'ish-shared/shared.module';
 
-import { CamfilErrorComponent } from './camfil-error/camfil-error.component';
 import { ErrorPageComponent } from './error-page.component';
+import { ErrorComponent } from './error/error.component';
 import { ServerErrorComponent } from './server-error/server-error.component';
 
 const errorPageRoutes: Routes = [
@@ -13,6 +13,6 @@ const errorPageRoutes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forChild(errorPageRoutes), SharedModule],
-  declarations: [CamfilErrorComponent, ErrorPageComponent, ServerErrorComponent],
+  declarations: [ErrorComponent, ErrorPageComponent, ServerErrorComponent],
 })
 export class ErrorPageModule {}
