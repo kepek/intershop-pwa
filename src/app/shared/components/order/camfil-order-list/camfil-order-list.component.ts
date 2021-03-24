@@ -277,16 +277,22 @@ export class CamfilOrderListComponent implements OnInit, AfterViewInit, OnDestro
 
   showAllOrders() {
     this.showPreview = false;
-    this.previewSize = Number.MAX_VALUE;
+    this.previewSize = this.dataSource.filteredData.length;
   }
 
   isMaxTableLength() {
-    return this.dataSource.filteredData.length >= this.previewSize;
+    return this.dataSource.filteredData.length >= this.previewSize + 2; // 2 preview rows will be visible below "show more" overlay
   }
 
   updateFilter(filteredValues) {
     const filter = JSON.stringify(filteredValues);
     this.dataSource.filter = filter.trim();
     this.router.navigate([], { queryParams: { filter } });
+  }
+
+  countRows() {
+    return this.dataSource.filteredData.length < this.previewSize
+      ? this.dataSource.filteredData.length
+      : this.previewSize;
   }
 }

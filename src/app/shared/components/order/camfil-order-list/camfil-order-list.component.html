@@ -157,7 +157,7 @@
     <tr
       mat-row
       *matRowDef="let order; columns: displayedColumns; let i = index"
-      [class.d-none]="i > previewSize"
+      [class.d-none]="i >= previewSize + 2"
       (click)="navigateTo(order)"
       class="orderlist-row"
     ></tr>
@@ -167,15 +167,19 @@
     <p class="text-center m-3" data-testing-id="emptyList">{{ 'account.orderlist.no_orders_message' | translate }}</p>
   </div>
 
-  <div class="show-more-overlay col-12" *ngIf="displayShowMoreLink()">
-    <div class="my-auto text-center pt-1">
-      {{ 'camfil.account.orderlist.showing_of' | translate: { '0': previewSize, '1': dataSource.data.length } }}
-    </div>
+  <div
+    class="show-more-overlay col-12 d-flex flex-row justify-content-center align-items-center"
+    *ngIf="displayShowMoreLink()"
+  >
     <div class="my-auto text-center p-1">
       <button type="button" mat-stroked-button color="primary" (click)="showAllOrders()">
         {{ 'camfil.account.orderlist.show_more' | translate }}
       </button>
     </div>
+  </div>
+
+  <div class="my-3 text-center pt-1">
+    {{ 'camfil.account.orderlist.showing_of' | translate: { '0': countRows(), '1': dataSource.data.length } }}
   </div>
 
   <ish-loading *ngIf="loading$ | async"></ish-loading>
