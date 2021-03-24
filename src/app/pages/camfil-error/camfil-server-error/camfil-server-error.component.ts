@@ -6,9 +6,9 @@ import { HttpError } from 'ish-core/models/http-error/http-error.model';
  * The Server Error Page Component informs the user about an occurred error on server side.
  *
  * @example
- * <ish-server-error-page
+ * <camfil-server-error-page
  *               [error]="generalError"
- * ></ish-server-error-page>
+ * ></camfil-server-error-page>
  */
 @Component({
   selector: 'camfil-server-error',
