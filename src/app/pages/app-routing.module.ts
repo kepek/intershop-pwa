@@ -22,7 +22,7 @@ const routes: Routes = [
   },
   {
     path: 'error',
-    loadChildren: () => import('./error/error-page.module').then(m => m.ErrorPageModule),
+    loadChildren: () => import('./camfil-error/camfil-error-page.module').then(m => m.CamfilErrorPageModule),
     data: {
       meta: {
         title: 'seo.title.error',

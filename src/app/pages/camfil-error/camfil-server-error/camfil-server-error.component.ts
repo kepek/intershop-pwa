@@ -1,0 +1,30 @@
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+
+import { HttpError } from 'ish-core/models/http-error/http-error.model';
+
+/**
+ * The Server Error Page Component informs the user about an occurred error on server side.
+ *
+ * @example
+ * <camfil-server-error-page
+ *               [error]="generalError"
+ * ></camfil-server-error-page>
+ */
+@Component({
+  selector: 'camfil-server-error',
+  templateUrl: './camfil-server-error.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class CamfilServerErrorComponent {
+  /**
+   * The occured error.
+   */
+  @Input() error: HttpError;
+  @Input() type: string;
+
+  expanded = false;
+
+  expand() {
+    this.expanded = true;
+  }
+}

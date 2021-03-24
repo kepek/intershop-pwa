@@ -5,7 +5,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
  * It uses the {@link SearchBoxContainerComponent}.
  *
  * @example
- * <ish-error-page></ish-error-page>
+ * <camfil-error-text></camfil-error-text>
  */
 @Component({
   selector: 'camfil-error-text',

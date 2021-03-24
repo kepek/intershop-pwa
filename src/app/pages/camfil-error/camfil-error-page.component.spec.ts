@@ -4,24 +4,28 @@ import { instance, mock } from 'ts-mockito';
 
 import { AppFacade } from 'ish-core/facades/app.facade';
 
-import { ErrorPageComponent } from './error-page.component';
-import { ErrorComponent } from './error/error.component';
-import { ServerErrorComponent } from './server-error/server-error.component';
+import { CamfilErrorPageComponent } from './camfil-error-page.component';
+import { CamfilErrorComponent } from './camfil-error/camfil-error.component';
+import { CamfilServerErrorComponent } from './camfil-server-error/camfil-server-error.component';
 
-describe('Error Page Component', () => {
-  let component: ErrorPageComponent;
-  let fixture: ComponentFixture<ErrorPageComponent>;
+describe('Camfil Error Page Component', () => {
+  let component: CamfilErrorPageComponent;
+  let fixture: ComponentFixture<CamfilErrorPageComponent>;
   let element: HTMLElement;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ErrorPageComponent, MockComponent(ErrorComponent), MockComponent(ServerErrorComponent)],
+      declarations: [
+        CamfilErrorPageComponent,
+        MockComponent(CamfilErrorComponent),
+        MockComponent(CamfilServerErrorComponent),
+      ],
       providers: [{ provide: AppFacade, useFactory: () => instance(mock(AppFacade)) }],
     }).compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ErrorPageComponent);
+    fixture = TestBed.createComponent(CamfilErrorPageComponent);
     component = fixture.componentInstance;
     element = fixture.nativeElement;
   });
