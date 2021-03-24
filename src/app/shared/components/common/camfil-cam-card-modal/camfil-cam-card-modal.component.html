@@ -1,5 +1,14 @@
 <div class="camfil-cam-card-modal">
   <ish-loading *ngIf="loading"></ish-loading>
+  <button
+      type="button"
+      class="close"
+      [title]="'dialog.close.text' | translate"
+      [attr.aria-label]="'dialog.close.text' | translate"
+      (click)="emitHidden()"
+    >
+      <mat-icon svgIcon="inactive" class="size-30 color-dark"></mat-icon>
+    </button>
 
   <div class="border-bottom">
     <div *ngIf="!customHeaderTemplate" class="camfil-cam-card-modal__title">

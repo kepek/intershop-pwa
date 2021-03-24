@@ -11,6 +11,7 @@
       [secondaryButtonTitle]="'camfil.modal.addToCart.button.create_new_order' | translate"
       (secondaryButtonClicked)="openCreateOrderModal(createModal)"
       [loading]="submitted && !showSuccess"
+      (hiddenClicked)="hide()"
     >
     </camfil-cam-card-modal>
   </ng-container>

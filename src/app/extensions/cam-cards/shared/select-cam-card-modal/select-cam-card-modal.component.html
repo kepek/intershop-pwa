@@ -13,6 +13,7 @@
       [secondaryButtonTitle]="'camfil.modal.addToCamcard.button.add_to_camcard' | translate"
       (secondaryButtonClicked)="addToCamcard()"
       [secondaryDisabled]="!camCardSelected"
+      (hiddenClicked)="hide()"
     >
     </camfil-cam-card-modal>
   </ng-container>
@@ -28,6 +29,7 @@
     (primaryButtonClicked)="hide()"
     [secondaryButtonTitle]="'camfil.modal.addToCamcard.success.button.goToCamCard' | translate"
     (secondaryButtonClicked)="goToCamcard()"
+    (hiddenClicked)="hide()"
   >
   </camfil-cam-card-modal>
 </ng-template>

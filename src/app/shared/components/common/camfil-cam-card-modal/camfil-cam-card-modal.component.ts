@@ -26,6 +26,7 @@ export class CamfilCamCardModalComponent {
 
   @Output() primaryButtonClicked = new EventEmitter<any>();
   @Output() secondaryButtonClicked = new EventEmitter<any>();
+  @Output() hiddenClicked = new EventEmitter<any>();
 
   @Input() loading?: boolean;
 
@@ -35,5 +36,9 @@ export class CamfilCamCardModalComponent {
 
   emitSecondary() {
     this.secondaryButtonClicked.emit();
+  }
+
+  emitHidden() {
+    this.hiddenClicked.emit();
   }
 }
