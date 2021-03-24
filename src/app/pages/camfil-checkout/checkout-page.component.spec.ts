@@ -22,6 +22,7 @@ import { CamfilCheckoutHeaderComponent } from './camfil-checkout-header/camfil-c
 import { CamfilCheckoutListComponent } from './camfil-checkout-list/camfil-checkout-list.component';
 import { CamfilCheckoutSummaryComponent } from './camfil-checkout-summary/camfil-checkout-summary.component';
 import { CamfilCheckoutToolbarComponent } from './camfil-checkout-toolbar/camfil-checkout-toolbar.component';
+import { CamfilCheckoutValidationComponent } from './camfil-checkout-validation/camfil-checkout-validation.component';
 import { CheckoutPageComponent } from './checkout-page.component';
 
 describe('Checkout Page Component', () => {
@@ -99,6 +100,7 @@ describe('Checkout Page Component', () => {
         MockComponent(CamfilCheckoutListComponent),
         MockComponent(CamfilCheckoutSummaryComponent),
         MockComponent(CamfilCheckoutToolbarComponent),
+        MockComponent(CamfilCheckoutValidationComponent),
         MockComponent(LoadingComponent),
       ],
       imports: [RouterTestingModule],

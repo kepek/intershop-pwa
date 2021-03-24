@@ -12,17 +12,16 @@ import {
 } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { TranslateService } from '@ngx-translate/core';
 import { Observable, Subject } from 'rxjs';
 import { debounceTime, take, takeUntil } from 'rxjs/operators';
 
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
-import { AttributeGroupTypes } from 'ish-core/models/attribute-group/attribute-group.types';
 import { AttributeHelper } from 'ish-core/models/attribute/attribute.helper';
 import { Attribute } from 'ish-core/models/attribute/attribute.model';
 import { LineItemUpdate } from 'ish-core/models/line-item-update/line-item-update.model';
 import { LineItem, LineItemView } from 'ish-core/models/line-item/line-item.model';
+import { ProductViewHelper } from 'ish-core/models/product-view/product-view.helper';
 import { ProductView } from 'ish-core/models/product-view/product-view.model';
 import { ProductCompletenessLevel } from 'ish-core/models/product/product.model';
 import { whenTruthy } from 'ish-core/utils/operators';
@@ -40,8 +39,7 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
   constructor(
     private shoppingFacade: ShoppingFacade,
     private checkoutFacade: CheckoutFacade,
-    public dialog: MatDialog,
-    private translate: TranslateService
+    public dialog: MatDialog
   ) {}
 
   get isEditMode() {
@@ -186,22 +184,9 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
       } else {
         this.product$.pipe(take(1), takeUntil(this.destroy$)).subscribe((res: ProductView) => {
           const today = new Date();
-          let daysTillReady: number;
-          if (res.attributeGroups && res.attributeGroups[AttributeGroupTypes.ProductsListLabelAttributes]) {
-            daysTillReady = Number(
-              res.attributeGroups[AttributeGroupTypes.ProductsListLabelAttributes].attributes.find(
-                a => a.name === 'Deliverydays'
-              )?.value || 7
-            );
-          } else {
-            // TODO To remove. Should use only Deliverydays when attribute value is provided
-            daysTillReady = res.readyForShipmentMin;
-
-            if (Number.isNaN(daysTillReady)) {
-              return (this.earliestDeliveryDate = this.translate.instant('camfil.checkout.line_item.article_expired'));
-            }
-          }
+          const daysTillReady = ProductViewHelper.getDeliveryDateDays(res);
           const delivery = today.setDate(today.getDate() + daysTillReady);
+
           return this.orderDeliveryDate && delivery < this.orderDeliveryDate
             ? (this.earliestDeliveryDate = AttributeHelper.formatDeliveryDate(new Date(this.orderDeliveryDate)))
             : (this.earliestDeliveryDate = AttributeHelper.formatDeliveryDate(new Date(delivery)));
