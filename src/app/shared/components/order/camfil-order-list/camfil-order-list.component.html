@@ -157,7 +157,7 @@
     <tr
       mat-row
       *matRowDef="let order; columns: displayedColumns; let i = index"
-      [class.d-none]="i >= previewSize + 2"
+      [class.d-none]="i >= tableSize + 2"
       (click)="navigateTo(order)"
       class="orderlist-row"
     ></tr>
