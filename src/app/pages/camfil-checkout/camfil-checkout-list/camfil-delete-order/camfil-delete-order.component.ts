@@ -30,7 +30,7 @@ export class CamfilDeleteOrderComponent {
     this.loading = true;
     type === 'emptyBucket'
       ? this.checkoutFacade.deleteEmptyBucket(this.order.id)
-      : this.checkoutFacade.deleteOrder(this.order.basket, this.order.id);
+      : this.checkoutFacade.deleteOrder(this.order.basket, this.order.shipToAddressFull.id);
     this.modal.hide();
   }
 }
