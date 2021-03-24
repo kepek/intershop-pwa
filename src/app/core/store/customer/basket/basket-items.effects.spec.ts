@@ -34,7 +34,6 @@ import {
   updateBasketItems,
   updateBasketItemsFail,
   updateBasketItemsSuccess,
-  updateBucket,
   updateBucketsQueue,
   validateBasket,
 } from './basket.actions';
