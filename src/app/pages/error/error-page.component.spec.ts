@@ -5,8 +5,8 @@ import { instance, mock } from 'ts-mockito';
 import { AppFacade } from 'ish-core/facades/app.facade';
 
 import { ErrorPageComponent } from './error-page.component';
-import { ServerErrorComponent } from './server-error/server-error.component';
 import { ErrorComponent } from './error/error.component';
+import { ServerErrorComponent } from './server-error/server-error.component';
 
 describe('Error Page Component', () => {
   let component: ErrorPageComponent;
