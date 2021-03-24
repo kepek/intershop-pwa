@@ -780,7 +780,7 @@
   "camfil.checkout.invoice_address": "Fakturaadress ",
   "camfil.checkout.line_item.article_expired": "Produkten har utgått",
   "camfil.checkout.message.order_created": "Order skapad",
-  "camfil.checkout.message.order_failed": "sv_Order failed",
+  "camfil.checkout.message.order_failed": "Ordern misslyckades att skapas",
   "camfil.checkout.new_camcard.button.create": "Skapa CamCards",
   "camfil.checkout.new_camcard.header": "{{0}} nya CamCards skapas från dina beställningar",
   "camfil.checkout.number_of_orders": "Antal ordrar",
