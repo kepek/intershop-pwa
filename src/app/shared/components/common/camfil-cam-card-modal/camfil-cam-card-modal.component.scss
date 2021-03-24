@@ -6,6 +6,16 @@
   flex-direction: column;
   width: 506px;
   height: 100%;
+  position: relative;
+
+  .close {
+    position: absolute;
+    right: 0;
+    opacity: 1;
+    &:focus {
+      outline: 0;
+    }
+  }
 
   &__title {
     display: flex;
