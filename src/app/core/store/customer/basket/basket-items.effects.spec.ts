@@ -22,17 +22,20 @@ import { BasketItemsEffects } from './basket-items.effects';
 import {
   addItemsToBasket,
   addItemsToBasketFail,
+  addItemsToBasketFromCamCard,
   addItemsToBasketSuccess,
   addProductToBasket,
   deleteBasketItem,
   deleteBasketItemFail,
   deleteBasketItemSuccess,
   loadBasket,
+  loadBasketAddresses,
   loadBasketSuccess,
   updateBasketItems,
   updateBasketItemsFail,
   updateBasketItemsSuccess,
   updateBucket,
+  updateBucketsQueue,
   validateBasket,
 } from './basket.actions';
 
@@ -70,7 +73,6 @@ describe('Basket Items Effects', () => {
       const action1 = addProductToBasket({
         sku: 'SKU1',
         addressId: 'qwerty',
-        basketExtension: {},
         lineItemAttributes: undefined,
         quantity: 1,
         shipToAddress: 'urn',
@@ -79,19 +81,21 @@ describe('Basket Items Effects', () => {
       const action2 = addProductToBasket({
         sku: 'SKU2',
         addressId: 'qwerty',
-        basketExtension: {},
+        basketExtension: {
+          contactPerson: { profileId: 'profileId' },
+          phoneNumber: '12345',
+        },
         lineItemAttributes: undefined,
         quantity: 1,
         shipToAddress: 'urn',
         shippingMethod: 'METHOD',
       });
-      const completion = addItemsToBasket({
+      const completion = updateBucketsQueue({
         items: [
           {
             sku: 'SKU2',
             unit: 'pcs.',
             addressId: 'qwerty',
-            basketExtension: {},
             lineItemAttributes: undefined,
             quantity: 1,
             shipToAddress: 'urn',
@@ -101,7 +105,6 @@ describe('Basket Items Effects', () => {
             sku: 'SKU1',
             unit: 'pcs.',
             addressId: 'qwerty',
-            basketExtension: {},
             lineItemAttributes: undefined,
             quantity: 1,
             shipToAddress: 'urn',
@@ -111,7 +114,6 @@ describe('Basket Items Effects', () => {
             sku: 'SKU2',
             unit: 'pcs.',
             addressId: 'qwerty',
-            basketExtension: {},
             lineItemAttributes: undefined,
             quantity: 1,
             shipToAddress: 'urn',
@@ -121,11 +123,19 @@ describe('Basket Items Effects', () => {
             sku: 'SKU1',
             unit: 'pcs.',
             addressId: 'qwerty',
-            basketExtension: {},
             lineItemAttributes: undefined,
             quantity: 1,
             shipToAddress: 'urn',
             shippingMethod: 'METHOD',
+          },
+        ],
+        extentions: [
+          {
+            addressId: 'qwerty',
+            basketExtension: {
+              contactPerson: { profileId: 'profileId' },
+              phoneNumber: '12345',
+            },
           },
         ],
       });
@@ -169,13 +179,14 @@ describe('Basket Items Effects', () => {
       actions$ = of(action);
 
       effects.addItemsToBasket$.subscribe(() => {
-        verify(basketServiceMock.createBasket()).once();
+        // verify(basketServiceMock.createBasket()).once();
         verify(basketServiceMock.addItemsToBasket(items)).once();
         done();
       });
     });
 
-    it('should map to action of type AddItemsToBasketSuccess', () => {
+    it('should map to action of type addItemsToBasketFromCamCard', () => {
+      // old AddItemsToBasketSuccess
       store$.dispatch(
         loadBasketSuccess({
           basket: {
@@ -185,22 +196,22 @@ describe('Basket Items Effects', () => {
         })
       );
 
-      const items = [
-        { sku: 'SKU', quantity: 1, unit: 'pcs.', basketExtension: { name: 'lorem' }, addressId: 'addressId' },
-      ];
-      const action = addItemsToBasket({ items });
-      const completion = addItemsToBasketSuccess({ info: [] });
-      const completion2 = updateBucket({
-        basketId: 'BID',
-        addressId: items[0].addressId,
-        basketExtension: items[0].basketExtension,
+      const items = [{ sku: 'SKU', quantity: 1, unit: 'pcs.', addressId: 'addressId' }];
+      const action = addItemsToBasketFromCamCard({ items });
+      const completion = loadBasket();
+      const completion2 = loadBasketAddresses();
+      const completion3 = addItemsToBasketSuccess({ info: [] });
+      const completion4 = displaySuccessMessage({ message: 'camfil.add_items_to_basket.camfil.message.success' });
+
+      actions$ = hot('-a------a------a------|', { a: action });
+      const expected$ = cold('-(cdef)-(cdef)-(cdef)-|', {
+        c: completion,
+        d: completion2,
+        e: completion3,
+        f: completion4,
       });
-      const completion3 = displaySuccessMessage({ message: 'camfil.add_items_to_basket.camfil.message.success' });
 
-      actions$ = hot('-a-----a-----a-----|', { a: action });
-      const expected$ = cold('-(cde)-(cde)-(cde)-|', { c: completion, d: completion2, e: completion3 });
-
-      expect(effects.addItemsToBasket$).toBeObservable(expected$);
+      expect(effects.addItemsToBasketFromCamCard$).toBeObservable(expected$);
     });
 
     it('should map invalid request to action of type AddItemsToBasketFail', () => {
