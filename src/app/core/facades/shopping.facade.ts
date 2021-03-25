@@ -20,6 +20,7 @@ import {
   getCurrentBasket,
   getProductAdded,
   getProductUpdated,
+  hideSearchBox,
   loadBasketAddresses,
   resetProductAdded,
   updateBucket,
@@ -371,5 +372,9 @@ export class ShoppingFacade {
 
   getCustomerPrices$(customerId: string) {
     return this.store.pipe(select(getCustomerPrices, { customerId }));
+  }
+
+  hideSearchBox() {
+    this.store.dispatch(hideSearchBox());
   }
 }

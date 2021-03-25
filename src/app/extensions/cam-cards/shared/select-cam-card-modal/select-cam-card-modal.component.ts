@@ -18,6 +18,7 @@ import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
+import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { Product } from 'ish-core/models/product/product.model';
 import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
 
@@ -106,7 +107,8 @@ export class SelectCamCardModalComponent implements OnInit, OnDestroy, OnChanges
     private fb: FormBuilder,
     private camCardsFacade: CamCardsFacade,
     public dialog: MatDialog,
-    private router: Router
+    private router: Router,
+    private shoppingFacade: ShoppingFacade
   ) {}
 
   ngOnInit() {
@@ -312,6 +314,7 @@ export class SelectCamCardModalComponent implements OnInit, OnDestroy, OnChanges
 
     this.router.navigate([`/account/camcards/${rootCamCardId}`]);
     this.hide();
+    this.shoppingFacade.hideSearchBox();
   }
 
   /** close modal */

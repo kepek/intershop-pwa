@@ -500,3 +500,5 @@ export const loadCustomerDeliveryTermSuccess = createAction(
   '[Basket API] Load Customer Delivery Term Success',
   payload<{ customerId: string; term: CustomerDeliveryTerm }>()
 );
+
+export const hideSearchBox = createAction('[Basket] Hide search box');

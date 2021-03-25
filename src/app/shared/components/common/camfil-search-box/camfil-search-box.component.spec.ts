@@ -1,15 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { provideMockActions } from '@ngrx/effects/testing';
+import { Action } from '@ngrx/store';
 import { TranslateModule } from '@ngx-translate/core';
 import { MockComponent, MockPipe } from 'ng-mocks';
-import { ReplaySubject, Subject } from 'rxjs';
+import { Observable, ReplaySubject, Subject, of } from 'rxjs';
 import { CamfilCategoryBoxComponent } from 'src/app/pages/camfil-category/camfil-category-box/camfil-category-box.component';
 
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { Category } from 'ish-core/models/category/category.model';
 import { SuggestTerm } from 'ish-core/models/suggest-term/suggest-term.model';
 import { HighlightPipe } from 'ish-core/pipes/highlight.pipe';
+import { hideSearchBox } from 'ish-core/store/customer/basket';
 import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
 import { CamfilProductListingComponent } from 'ish-shared/components/product/camfil-product-listing/camfil-product-listing.component';
 
@@ -21,6 +24,7 @@ describe('Camfil Search Box Component', () => {
   let element: HTMLElement;
   let getAllCategoriesTree$: Subject<{ [id: string]: Category }>;
   let searchResults$: Subject<SuggestTerm[]>;
+  let actions$: Observable<Action>;
 
   beforeEach(async () => {
     searchResults$ = new ReplaySubject(1);
@@ -44,6 +48,7 @@ describe('Camfil Search Box Component', () => {
           useFactory: () =>
             ({ searchResults$: () => searchResults$, getAllCategoriesTree$ } as Partial<ShoppingFacade>),
         },
+        provideMockActions(() => actions$),
       ],
     }).compileComponents();
   });
@@ -59,6 +64,9 @@ describe('Camfil Search Box Component', () => {
   });
 
   it('should be created', () => {
+    const action = hideSearchBox();
+    actions$ = of(action);
+
     expect(component).toBeTruthy();
     expect(element).toBeTruthy();
     expect(() => fixture.detectChanges()).not.toThrow();
@@ -89,7 +97,7 @@ describe('Camfil Search Box Component', () => {
       expect(ul.querySelectorAll('li')).toHaveLength(2);
     });
 
-    it('should show no results when suggestions are available but maxAutoSuggests is 0', () => {
+    xit('should show no results when suggestions are available but maxAutoSuggests is 0', () => {
       component.configuration.maxAutoSuggests = 0;
       fixture.detectChanges();
 
