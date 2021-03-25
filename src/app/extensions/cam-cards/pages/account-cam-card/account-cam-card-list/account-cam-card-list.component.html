@@ -60,14 +60,14 @@
               </div>
               <div class="row text-center">
                 <div class="col-4">{{ 'camfil.account.cam_card.itemsCount' | translate }}</div>
-                <div class="col-4" *ngIf="isCustomerAdmin()">
+                <div class="col-4" *ngIf="isCustomerAdmin">
                   {{ 'camfil.account.cam_card.userAccess' | translate }}
                 </div>
                 <div class="col-4">{{ 'camfil.account.cam_card.edit' | translate }}</div>
               </div>
               <div class="row text-center">
                 <div class="col-4">{{ camCards.itemsCount }}</div>
-                <div class="col-4" *ngIf="isCustomerAdmin()">
+                <div class="col-4" *ngIf="isCustomerAdmin">
                   <a
                     class="btn-tool"
                     [title]="'camfil.account.cam_card.userAccess' | translate"

@@ -35,4 +35,21 @@ export class AuthorizationToggleService {
       map(permissions => checkPermission(permissions, permission))
     );
   }
+
+  isAuthorizedToCheckArr(permissions: string[]): Observable<boolean> {
+    // special case shortcut
+    if (permissions.includes('always') || permissions.includes('never')) {
+      return of(
+        checkPermission(
+          [],
+          permissions.find(p => p === 'always' || p === 'never')
+        )
+      );
+    }
+    return this.permissions$.pipe(
+      // wait for permissions to be loaded
+      whenTruthy(),
+      map(allPermissions => permissions.filter(p => checkPermission(allPermissions, p)).length === permissions.length)
+    );
+  }
 }
