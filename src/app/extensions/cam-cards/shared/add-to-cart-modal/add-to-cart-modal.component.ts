@@ -97,14 +97,6 @@ export class AddToCartModalComponent implements OnInit, OnDestroy {
         this.product.sku,
         quantity,
         this.basketId,
-        {
-          orderMark: currentBucket.orderMark,
-          invoiceLabel: currentBucket.invoiceLabel,
-          contactPerson: currentBucket.contactPerson,
-          info: currentBucket.info,
-          phoneNumber: currentBucket.phoneNumber,
-          customer: currentBucket.customer,
-        },
         lineItemAttributes
       );
     } else {

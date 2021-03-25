@@ -100,7 +100,6 @@ export const addProductToBucketWithUrn = createAction(
     sku: string;
     quantity: number;
     basketId: string;
-    basketExtension: BasketExtensions;
     lineItemAttributes?: Attribute;
   }>()
 );
@@ -462,13 +461,7 @@ export const addItemsToBasketFromCamCard = createAction(
       addressId?: string;
       lineItemAttributes?: Attribute;
     }[];
-    basketExtensions?: { addressId: string; extension: BasketExtensions }[];
   }>()
-);
-
-export const addItemsToBasketFromCamCardSuccess = createAction(
-  '[Basket API] Add Items To Basket from CamCard Success',
-  payload<{ info: BasketInfo[] }>()
 );
 
 export const addItemsToBasketFromCamCardFail = createAction(
@@ -478,11 +471,19 @@ export const addItemsToBasketFromCamCardFail = createAction(
 
 export const updateBucketsQueue = createAction(
   '[Basket API] Update Buckets in queue',
-  payload<
-    {
-      basketId: string;
+  payload<{
+    items: {
+      sku: string;
+      quantity: number;
+      unit: string;
+      shippingMethod?: string;
+      shipToAddress?: string;
+      addressId?: string;
+      lineItemAttributes?: Attribute;
+    }[];
+    extentions: {
       addressId: string;
       basketExtension: BasketExtensions;
-    }[]
-  >()
+    }[];
+  }>()
 );

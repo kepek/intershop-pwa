@@ -525,7 +525,7 @@ export class BasketService {
       shipToAddress?: string;
       lineItemAttributes?: Attribute;
     }[]
-  ): Observable<LineItem[]> {
+  ): Observable<BasketInfo[]> {
     if (!items) {
       return throwError('addItemsToBasket() called without items');
     }
@@ -544,11 +544,9 @@ export class BasketService {
       };
     });
 
-    return this.apiService
-      .post(`baskets/current/items`, body, {
-        headers: this.basketHeaders,
-      })
-      .pipe(map(BasketInfoMapper.fromData));
+    return this.apiService.post(`baskets/current/items`, body, {
+      headers: this.basketHeaders,
+    });
   }
 
   /**

@@ -186,8 +186,7 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy {
         this.order.shippingMethod,
         sku,
         quantity,
-        this.order.basket,
-        { ...this.order }
+        this.order.basket
       );
     }
   }

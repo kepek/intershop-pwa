@@ -16,7 +16,6 @@ import {
   addEmptyBucket,
   addItemsToBasket,
   addItemsToBasketFail,
-  addItemsToBasketFromCamCardSuccess,
   addItemsToBasketSuccess,
   addProductToBasket,
   addProductToBucketAddressFromCamCardFail,
@@ -173,7 +172,6 @@ export const basketReducer = createReducer(
     updateBasketItemsSuccess,
     deleteBasketItemSuccess,
     addItemsToBasketSuccess,
-    addItemsToBasketFromCamCardSuccess,
     setBasketPaymentSuccess,
     createBasketPaymentSuccess,
     updateBasketPaymentSuccess,
@@ -287,7 +285,7 @@ export const basketReducer = createReducer(
       validationResults: initialValidationResults,
     })
   ),
-  on(addItemsToBasketSuccess, addItemsToBasketFromCamCardSuccess, (state: BasketState, action) => ({
+  on(addItemsToBasketSuccess, (state: BasketState, action) => ({
     ...state,
     info: action.payload.info,
     lastTimeProductAdded: new Date().getTime(),

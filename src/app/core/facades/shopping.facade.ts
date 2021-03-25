@@ -175,7 +175,6 @@ export class ShoppingFacade {
     sku: string,
     quantity: number,
     basketId: string,
-    basketExtension: BasketExtensions,
     lineItemAttributes?: Attribute
   ) {
     this.store.dispatch(
@@ -186,7 +185,6 @@ export class ShoppingFacade {
         sku,
         quantity,
         basketId,
-        basketExtension,
         lineItemAttributes,
       })
     );

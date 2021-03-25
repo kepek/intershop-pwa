@@ -186,7 +186,7 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
             daysTillReady = Number(
               res.attributeGroups[AttributeGroupTypes.ProductsListLabelAttributes].attributes.find(
                 a => a.name === 'Deliverydays'
-              ).value
+              )?.value || 7
             );
           } else {
             // TODO To remove. Should use only Deliverydays when attribute value is provided
