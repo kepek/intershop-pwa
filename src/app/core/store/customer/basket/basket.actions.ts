@@ -489,8 +489,6 @@ export const updateBucketsQueue = createAction(
   }>()
 );
 
-export const hideSearchBox = createAction('[Basket] Hide search box');
-
 export const loadCustomerDeliveryTerm = createAction(
   '[Basket API] Load Customer Delivery Term',
   payload<{ customerId: string }>()
@@ -500,3 +498,5 @@ export const loadCustomerDeliveryTermSuccess = createAction(
   '[Basket API] Load Customer Delivery Term Success',
   payload<{ customerId: string; term: CustomerDeliveryTerm }>()
 );
+
+export const hideSearchBox = createAction('[Basket] Hide search box');
