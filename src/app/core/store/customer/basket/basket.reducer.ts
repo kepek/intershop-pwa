@@ -224,17 +224,6 @@ export const basketReducer = createReducer(
     addProductsFromCamCardFail
   ),
 
-  on(loadBasketSuccess, mergeBasketSuccess, (state: BasketState, action) => {
-    const basket = {
-      ...action.payload.basket,
-    };
-
-    return {
-      ...state,
-      basket,
-      submittedBasket: undefined,
-    };
-  }),
   on(updateBasketItemsSuccess, deleteBasketItemSuccess, (state: BasketState, action) => ({
     ...state,
     info: action.payload.info,
@@ -325,6 +314,7 @@ export const basketReducer = createReducer(
       basket,
       loading: false,
       error: undefined,
+      submittedBasket: undefined,
     };
   }),
   on(startCheckoutSuccess, continueCheckoutSuccess, continueCheckoutWithIssues, (state: BasketState, action) => {

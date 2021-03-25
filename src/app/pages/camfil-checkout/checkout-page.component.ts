@@ -64,7 +64,9 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
       this.basketId = basket.id;
       this.basket = basket;
       this.shippingMethodId = basket.commonShippingMethod?.id;
-      this.validation = false;
+      if (basket.lineItems?.length) {
+        this.validation = false;
+      }
       this.cdr.detectChanges();
     });
 

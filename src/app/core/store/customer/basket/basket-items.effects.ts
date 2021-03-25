@@ -59,6 +59,7 @@ import {
   deleteBucketFail,
   loadBasket,
   loadBasketAddresses,
+  loadBasketSuccess,
   loadBuckets,
   loadBucketsFail,
   loadBucketsSuccess,
@@ -166,6 +167,7 @@ export class BasketItemsEffects {
         if (!payload.basketId) {
           return this.basketService.createBasket().pipe(
             mergeMap(basket => [
+              loadBasketSuccess({ basket }),
               addProductToBucketWithBasketId({
                 address: payload.address,
                 shippingMethod: STANDARD_SHIPPING_METHOD,
