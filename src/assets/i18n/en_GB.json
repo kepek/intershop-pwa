@@ -563,8 +563,8 @@
   "camfil.account.cam_card.delete_cam_card.confirmation": "The {{0}} Cam Card has been deleted",
   "camfil.account.cam_card.deliveryInterval": "Order Interval",
   "camfil.account.cam_card.deliveryInterval.value": {
-    "=0": "not set",
     "=-1": "not set",
+    "=0": "not set",
     "=1": "1 week",
     "other": "# weeks"
   },
@@ -576,6 +576,7 @@
   "camfil.account.cam_card.details.total.text": "Your total (net price)",
   "camfil.account.cam_card.edit": "Edit",
   "camfil.account.cam_card.edit.button.back.label": "Back to CamCards",
+  "camfil.account.cam_card.edit.confirmation": "{{0}} has now been updated",
   "camfil.account.cam_card.edit.header": "Create new camcard",
   "camfil.account.cam_card.edit.heading": "Edit CamCard",
   "camfil.account.cam_card.edit_form.save_button.text": "Save",
@@ -775,6 +776,8 @@
   "camfil.checkout.form.invoice_mark": "Invoice mark",
   "camfil.checkout.form.note": "Add note to the customer service",
   "camfil.checkout.form.order_mark": "Order mark",
+  "camfil.checkout.free_delivery": "Free shipping",
+  "camfil.checkout.free_delivery.threshold": "According to delivery terms you have {{0}} left to free shipping.",
   "camfil.checkout.invoice": "Invoice",
   "camfil.checkout.invoice_address": "Invoice address",
   "camfil.checkout.line_item.article_expired": "Article has expired",
@@ -1480,6 +1483,5 @@
   "tacton.submit.error.message": "A technical error occurred while processing your request. Please try again later.",
   "tacton.submit.success.message": "Your request has been successfully submitted. We will e-mail <strong>{{0}}</strong> to keep you updated on the status of your request.",
   "tacton.undo.tooltip": "Undo",
-  "textarea.max_limit": "Your message: {{0}} characters remaining.",
-  "camfil.account.cam_card.edit.confirmation": "{{0}} has now been updated"
+  "textarea.max_limit": "Your message: {{0}} characters remaining."
 }

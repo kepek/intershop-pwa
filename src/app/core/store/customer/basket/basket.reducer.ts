@@ -6,6 +6,7 @@ import { BasketInfo } from 'ish-core/models/basket-info/basket-info.model';
 import { BasketValidationResultType } from 'ish-core/models/basket-validation/basket-validation.model';
 import { Basket } from 'ish-core/models/basket/basket.model';
 import { Bucket } from 'ish-core/models/basket/bucket.model';
+import { CustomerDeliveryTerm } from 'ish-core/models/customer/customer.interface';
 import { HttpError } from 'ish-core/models/http-error/http-error.model';
 import { PaymentMethod } from 'ish-core/models/payment-method/payment-method.model';
 import { ShippingMethod } from 'ish-core/models/shipping-method/shipping-method.model';
@@ -58,6 +59,7 @@ import {
   loadBasketSuccess,
   loadBucketsFail,
   loadBucketsSuccess,
+  loadCustomerDeliveryTermSuccess,
   mergeBasketFail,
   mergeBasketSuccess,
   removePromotionCodeFromBasket,
@@ -112,6 +114,9 @@ export interface BasketState {
   emptyBuckets: Bucket[];
   productUpdated: boolean;
   basketAddresses: Address[];
+  deliveryTerms: {
+    [customerId: string]: CustomerDeliveryTerm;
+  };
 }
 
 const initialValidationResults: BasketValidationResultType = {
@@ -137,6 +142,7 @@ export const initialState: BasketState = {
   emptyBuckets: [],
   productUpdated: false,
   basketAddresses: [],
+  deliveryTerms: {},
 };
 
 export const basketReducer = createReducer(
@@ -185,7 +191,8 @@ export const basketReducer = createReducer(
     submitBasketSuccess,
     startCheckoutSuccess,
     updateConcardisCvcLastUpdated,
-    camfilDragLineItem
+    camfilDragLineItem,
+    loadCustomerDeliveryTermSuccess
   ),
   setErrorOn(
     mergeBasketFail,
@@ -271,6 +278,13 @@ export const basketReducer = createReducer(
   on(updateBucket, (state: BasketState) => ({
     ...state,
     productUpdated: false,
+  })),
+  on(loadCustomerDeliveryTermSuccess, (state: BasketState, action) => ({
+    ...state,
+    deliveryTerms: {
+      ...state.deliveryTerms,
+      [action.payload.customerId]: action.payload.term,
+    },
   })),
   on(
     setBasketPaymentSuccess,

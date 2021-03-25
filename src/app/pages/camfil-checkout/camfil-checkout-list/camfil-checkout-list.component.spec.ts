@@ -104,6 +104,7 @@ describe('Camfil Checkout List Component', () => {
     when(shoppingFacadeMock.basketAddresses$).thenReturn(of([]));
     when(shoppingFacadeMock.productUpdated$).thenReturn(of(false));
     when(shoppingFacadeMock.productAdded$).thenReturn(of(false));
+    when(checkoutFacadeMock.getCustomersDeliveryTerms$).thenReturn(of({}));
   });
 
   it('should be created', () => {

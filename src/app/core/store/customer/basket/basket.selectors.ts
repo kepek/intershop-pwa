@@ -101,3 +101,5 @@ export const isBasketInvoiceAndShippingAddressEqual = createSelector(
   getBasketShippingAddress,
   AddressHelper.equal
 );
+
+export const getCustomersDeliveryTerms = createSelector(getBasketState, basket => basket.deliveryTerms);

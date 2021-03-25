@@ -776,6 +776,8 @@
   "camfil.checkout.form.invoice_mark": "Fakturamärkning",
   "camfil.checkout.form.note": "Lägg till notering till kundtjänst",
   "camfil.checkout.form.order_mark": "Ordermärke",
+  "camfil.checkout.free_delivery": "sv_Free shipping",
+  "camfil.checkout.free_delivery.threshold": "sv_According to delivery terms you have {{0}} left to free shipping.",
   "camfil.checkout.invoice": "Faktura",
   "camfil.checkout.invoice_address": "Fakturaadress ",
   "camfil.checkout.line_item.article_expired": "Produkten har utgått",

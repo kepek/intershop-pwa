@@ -39,12 +39,14 @@ import {
   getBasketValidationResults,
   getCurrentBasket,
   getCurrentBuckets,
+  getCustomersDeliveryTerms,
   getEmptyBuckets,
   getSubmittedBasket,
   isBasketInvoiceAndShippingAddressEqual,
   loadBasketEligiblePaymentMethods,
   loadBasketEligibleShippingMethods,
   loadBuckets,
+  loadCustomerDeliveryTerm,
   removePromotionCodeFromBasket,
   setBasketAttribute,
   setBasketPayment,
@@ -253,5 +255,11 @@ export class CheckoutFacade {
 
   deleteOrder(basketId: string, bucketId: string) {
     this.store.dispatch(deleteBucket({ basketId, bucketId }));
+  }
+
+  getCustomersDeliveryTerms$ = this.store.pipe(select(getCustomersDeliveryTerms));
+
+  loadCustomerDeliveryTerm(customerId: string) {
+    this.store.dispatch(loadCustomerDeliveryTerm({ customerId }));
   }
 }

@@ -19,6 +19,7 @@ import { BasketMapper } from 'ish-core/models/basket/basket.mapper';
 import { Basket } from 'ish-core/models/basket/basket.model';
 import { BucketMapper } from 'ish-core/models/basket/bucket.mapper';
 import { Bucket, Buckets } from 'ish-core/models/basket/bucket.model';
+import { CustomerDeliveryTerm } from 'ish-core/models/customer/customer.interface';
 import { LineItem } from 'ish-core/models/line-item/line-item.model';
 import { ShippingMethodData } from 'ish-core/models/shipping-method/shipping-method.interface';
 import { ShippingMethodMapper } from 'ish-core/models/shipping-method/shipping-method.mapper';
@@ -598,5 +599,12 @@ export class BasketService {
     return this.apiService.delete(`baskets/${basketId}/buckets/${bucketId}`, {
       headers: this.basketHeaders,
     });
+  }
+
+  loadCustomerDeliveryTerm(customerId: string): Observable<CustomerDeliveryTerm> {
+    if (!customerId) {
+      return throwError('loadCustomerDeliveryTerm() called without customerId');
+    }
+    return this.apiService.get(`camfilcustomers/${customerId}/deliveryterm`);
   }
 }
