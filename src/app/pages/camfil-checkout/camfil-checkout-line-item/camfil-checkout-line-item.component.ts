@@ -165,10 +165,15 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
       if (!newValue) {
         this.checkoutFacade.deleteBasketItemAttributes(this.basketId, this.product.id, this.bucketId, 'boxLabel');
       } else if (newValue !== oldValue) {
-        this.checkoutFacade.updateBasketItemAttributes(this.basketId, this.product.id, boxLabelAttribute);
+        this.checkoutFacade.updateBasketItemAttributes(
+          this.basketId,
+          this.product.id,
+          this.bucketId,
+          boxLabelAttribute
+        );
       }
     } else if (newValue) {
-      this.checkoutFacade.addBasketItemAttributes(this.basketId, this.product.id, boxLabelAttribute);
+      this.checkoutFacade.addBasketItemAttributes(this.basketId, this.product.id, this.bucketId, boxLabelAttribute);
     }
 
     this.boxLabel = newValue;

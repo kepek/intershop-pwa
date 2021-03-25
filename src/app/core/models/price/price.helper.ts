@@ -1,3 +1,4 @@
+import { LineItem, LineItemView } from 'ish-core/models/line-item/line-item.model';
 import { PriceItem } from 'ish-core/models/price-item/price-item.model';
 
 import { Price } from './price.model';
@@ -65,5 +66,52 @@ export class PriceHelper {
       value: 0,
       currency,
     };
+  }
+
+  static totalPrice(items: LineItemView[], type = 'net'): Price {
+    const getCurrency = element => element.price?.currency;
+    const getValue = element => element.totals?.total[type];
+
+    return PriceHelper.getPrice(getCurrency, getValue, items);
+  }
+
+  static totalTax(items: LineItemView[]): Price {
+    const getCurrency = element => element.totals?.salesTaxTotal.currency;
+    const getValue = element => element.totals?.salesTaxTotal.value;
+
+    return PriceHelper.getPrice(getCurrency, getValue, items);
+  }
+
+  static savedAmount(items: LineItemView[]): Price {
+    const getCurrency = element => element.price?.currency;
+    const getValue = element => element.totals?.total.gross - element.price?.gross;
+
+    return PriceHelper.getPrice(getCurrency, getValue, items);
+  }
+
+  static discount(items: LineItemView[]): Price {
+    const getCurrency = element => element.price?.currency;
+    const getValue = element => element.totals?.total.gross - element.totals?.undiscountedTotal.gross;
+
+    return PriceHelper.getPrice(getCurrency, getValue, items);
+  }
+
+  static getPrice(
+    getCurrency: (item: LineItem) => string,
+    getValue: (item: LineItem) => number,
+    items: LineItemView[] = []
+  ): Price {
+    const price: Price = {
+      type: 'Money',
+      currency: 'USD',
+      value: 0,
+    };
+
+    items?.forEach(element => {
+      price.currency = getCurrency(element);
+      price.value = price.value + getValue(element);
+    });
+
+    return price;
   }
 }

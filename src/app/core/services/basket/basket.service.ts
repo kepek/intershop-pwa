@@ -575,16 +575,20 @@ export class BasketService {
       );
   }
 
-  addLineItemAttribute(basketId: string, lineItemId: string, boxLabelAttribute: Attribute) {
-    return this.apiService.post(`baskets/${basketId}/items/${lineItemId}/attributes`, boxLabelAttribute, {
-      headers: this.camfilBasketHeaders,
-    });
+  addLineItemAttribute(basketId: string, lineItemId: string, bucketId: string, boxLabelAttribute: Attribute) {
+    return this.apiService
+      .post(`baskets/${basketId}/items/${lineItemId}/attributes`, boxLabelAttribute, {
+        headers: this.camfilBasketHeaders,
+      })
+      .pipe(map(() => ({ lineItemId, bucketId, attribute: boxLabelAttribute })));
   }
 
-  updateLineItemAttributes(basketId: string, lineItemId: string, boxLabelAttribute: Attribute) {
-    return this.apiService.patch(`baskets/${basketId}/items/${lineItemId}/attributes/boxLabel`, boxLabelAttribute, {
-      headers: this.camfilBasketHeaders,
-    });
+  updateLineItemAttributes(basketId: string, lineItemId: string, bucketId: string, boxLabelAttribute: Attribute) {
+    return this.apiService
+      .patch(`baskets/${basketId}/items/${lineItemId}/attributes/boxLabel`, boxLabelAttribute, {
+        headers: this.camfilBasketHeaders,
+      })
+      .pipe(map(() => ({ lineItemId, bucketId, attribute: boxLabelAttribute })));
   }
 
   deleteLineItemAttributes(basketId: string, lineItemId: string, bucketId: string, attributeName: string) {

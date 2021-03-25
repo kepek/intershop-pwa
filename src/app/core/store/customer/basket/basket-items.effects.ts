@@ -400,7 +400,7 @@ export class BasketItemsEffects {
       mapToPayload(),
       mergeMap(payload =>
         this.basketService
-          .addLineItemAttribute(payload.basketId, payload.lineItemId, payload.lineItemAttribute)
+          .addLineItemAttribute(payload.basketId, payload.lineItemId, payload.bucketId, payload.lineItemAttribute)
           .pipe(map(addBasketItemAttributesSuccess), mapErrorToAction(addBasketItemAttributesFail))
       )
     )
@@ -412,7 +412,7 @@ export class BasketItemsEffects {
       mapToPayload(),
       mergeMap(payload =>
         this.basketService
-          .updateLineItemAttributes(payload.basketId, payload.lineItemId, payload.lineItemAttribute)
+          .updateLineItemAttributes(payload.basketId, payload.lineItemId, payload.bucketId, payload.lineItemAttribute)
           .pipe(map(updateBasketItemAttributesSuccess), mapErrorToAction(updateBasketItemAttributesFail))
       )
     )

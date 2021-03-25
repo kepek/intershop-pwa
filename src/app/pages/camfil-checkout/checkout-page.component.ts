@@ -15,8 +15,6 @@ import { ProductCompletenessLevel } from 'ish-core/models/product/product.model'
 import { createOrderSuccess } from 'ish-core/store/customer/orders/orders.actions';
 import { whenTruthy } from 'ish-core/utils/operators';
 
-import { CamCard } from '../../extensions/cam-cards/models/cam-card/cam-card.model';
-
 @Component({
   templateUrl: './checkout-page.component.html',
   styleUrls: ['./checkout-page.component.scss'],
@@ -38,8 +36,6 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
   selectedOrder$: Observable<any>;
 
   private destroy$ = new Subject<void>();
-
-  camCards: CamCard[];
 
   unavailableProducts = {};
 

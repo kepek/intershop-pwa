@@ -8,12 +8,14 @@ import { Basket } from 'ish-core/models/basket/basket.model';
 import { Bucket } from 'ish-core/models/basket/bucket.model';
 import { CustomerDeliveryTerm } from 'ish-core/models/customer/customer.interface';
 import { HttpError } from 'ish-core/models/http-error/http-error.model';
+import { LineItemView } from 'ish-core/models/line-item/line-item.model';
 import { PaymentMethod } from 'ish-core/models/payment-method/payment-method.model';
 import { ShippingMethod } from 'ish-core/models/shipping-method/shipping-method.model';
 import { createOrderSuccess } from 'ish-core/store/customer/orders';
 import { setErrorOn, setLoadingOn, unsetLoadingAndErrorOn } from 'ish-core/utils/ngrx-creators';
 
 import {
+  addBasketItemAttributesSuccess,
   addEmptyBucket,
   addItemsToBasket,
   addItemsToBasketFail,
@@ -81,6 +83,7 @@ import {
   submitBasketSuccess,
   updateBasket,
   updateBasketFail,
+  updateBasketItemAttributesSuccess,
   updateBasketItems,
   updateBasketItemsFail,
   updateBasketItemsSuccess,
@@ -406,24 +409,59 @@ export const basketReducer = createReducer(
     ...state,
     basketAddresses: action.payload.basketAddresses,
   })),
-
-  on(deleteBasketItemAttributesSuccess, (state: BasketState, action) => {
-    const { bucketId, lineItemId, attributeName } = action.payload;
-
+  on(updateBasketItemAttributesSuccess, addBasketItemAttributesSuccess, (state: BasketState, action) => {
+    const { bucketId, lineItemId, attribute } = action.payload;
+    const lineItems = state.basket.lineItems.map(li =>
+      li.id === lineItemId
+        ? {
+            ...li,
+            attributes: li.attributes?.length
+              ? li.attributes.map(att => (att.name === attribute.name ? attribute : att))
+              : [attribute],
+          }
+        : li
+    );
     return {
       ...state,
-      buckets: state.buckets.map(b => {
-        if (b.id === bucketId) {
-          return {
-            ...b,
-            lineItems: b.lineItems.map(li =>
-              li.id === lineItemId ? { ...li, attributes: li.attributes.filter(att => att.name !== attributeName) } : li
-            ),
-          };
-        } else {
-          return b;
-        }
-      }),
+      basket: {
+        ...state.basket,
+        lineItems,
+      },
+      buckets: state.buckets.map(b =>
+        b.id === bucketId
+          ? {
+              ...b,
+              lineItems,
+            }
+          : b
+      ),
+    };
+  }),
+  on(deleteBasketItemAttributesSuccess, (state: BasketState, action) => {
+    const { bucketId, lineItemId, attributeName } = action.payload;
+    const filteredItems = (items: LineItemView[]) =>
+      items?.map(li =>
+        li.id === lineItemId
+          ? {
+              ...li,
+              attributes: li.attributes.filter(att => att.name !== attributeName),
+            }
+          : li
+      );
+    return {
+      ...state,
+      basket: {
+        ...state.basket,
+        lineItems: filteredItems(state.basket.lineItems),
+      },
+      buckets: state.buckets.map(b =>
+        b.id === bucketId
+          ? {
+              ...b,
+              lineItems: filteredItems(b.lineItems),
+            }
+          : b
+      ),
     };
   })
 );
