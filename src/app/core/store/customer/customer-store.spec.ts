@@ -219,15 +219,16 @@ describe('Customer Store', () => {
               sku: "test"
               quantity: 1
               shippingMethod: "STD_GROUND"
-            [Basket Internal] Add Items To Basket:
+            [Basket Internal] Add Items To Basket from CamCard:
               items: [{"sku":"test","quantity":1,"shippingMethod":"STD_GROUND","u...
+            [Basket Internal] Load Basket
+            [Basket API] Load Basket Addresses
             [Basket API] Add Items To Basket Success:
               info: undefined
-            [Products Internal] Load Product:
-              sku: "test"
+            [Basket API] Load Basket Success:
+              basket: {"id":"test","lineItems":[1]}
             [Basket Internal] Load Basket
-            [Products API] Load Product Success:
-              product: {"name":"test","shortDescription":"test","longDescription":"...
+            [Basket] Load Buckets
             [Basket API] Load Basket Success:
               basket: {"id":"test","lineItems":[1]}
             [Basket] Load Buckets

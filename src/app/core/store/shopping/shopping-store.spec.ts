@@ -246,15 +246,32 @@ describe('Shopping Store', () => {
             categories: tree(A.123,A.123.456)
           [Categories Internal] Load Category:
             categoryId: "A"
+          [Product Listing] Load More Products:
+            id: {"type":"category","value":"A.123"}
           [Viewconf Internal] Set Breadcrumb Data:
             breadcrumbData: [{"text":"nA123"}]
           [Categories API] Load Category Success:
             categories: tree(A,A.123)
+          [Product Listing Internal] Load More Products For Params:
+            id: {"type":"category","value":"A.123"}
+            filters: undefined
+            sorting: undefined
+            page: undefined
           [Viewconf Internal] Set Breadcrumb Data:
             breadcrumbData: [{"text":"nA","link":"/nA-catA"},{"text":"nA123"}]
+          [Products Internal] Load Products for Category:
+            categoryId: "A.123"
+            page: undefined
+            sorting: undefined
+          [Filter Internal] Load Filter For Category:
+            uniqueId: "A.123"
+          [Filter API] Load Filter Success:
+            filterNavigation: {}
           @ngrx/router-store/navigated:
             routerState: {"url":"/category/A.123","params":{"categoryUniqueId":"A.123...
             event: {"id":2,"url":"/category/A.123","urlAfterRedirects":"/catego...
+          [Product Listing] Load More Products:
+            id: {"type":"category","value":"A.123"}
           [Viewconf Internal] Set Breadcrumb Data:
             breadcrumbData: [{"text":"nA","link":"/nA-catA"},{"text":"nA123"}]
         `);
@@ -397,8 +414,23 @@ describe('Shopping Store', () => {
         @ngrx/router-store/navigated:
           routerState: {"url":"/category/A.123","params":{"categoryUniqueId":"A.123...
           event: {"id":1,"url":"/category/A.123","urlAfterRedirects":"/catego...
+        [Product Listing] Load More Products:
+          id: {"type":"category","value":"A.123"}
         [Viewconf Internal] Set Breadcrumb Data:
           breadcrumbData: [{"text":"nA","link":"/nA-catA"},{"text":"nA123"}]
+        [Product Listing Internal] Load More Products For Params:
+          id: {"type":"category","value":"A.123"}
+          filters: undefined
+          sorting: undefined
+          page: undefined
+        [Products Internal] Load Products for Category:
+          categoryId: "A.123"
+          page: undefined
+          sorting: undefined
+        [Filter Internal] Load Filter For Category:
+          uniqueId: "A.123"
+        [Filter API] Load Filter Success:
+          filterNavigation: {}
       `);
     }));
 
