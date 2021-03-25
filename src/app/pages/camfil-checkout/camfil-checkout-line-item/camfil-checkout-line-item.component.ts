@@ -42,7 +42,7 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
     private checkoutFacade: CheckoutFacade,
     public dialog: MatDialog,
     private translate: TranslateService
-  ) { }
+  ) {}
 
   get isEditMode() {
     return this.mode === 'edit';
