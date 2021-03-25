@@ -8,6 +8,7 @@ import { of } from 'rxjs';
 import { instance, mock, when } from 'ts-mockito';
 
 import { ServerHtmlDirective } from 'ish-core/directives/server-html.directive';
+import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { Product } from 'ish-core/models/product/product.model';
 import { CoreStoreModule } from 'ish-core/store/core/core-store.module';
 import { CamfilCamCardModalComponent } from 'ish-shared/components/common/camfil-cam-card-modal/camfil-cam-card-modal.component';
@@ -28,6 +29,7 @@ describe('Select Cam Card Modal Component', () => {
   let fixture: ComponentFixture<SelectCamCardModalComponent>;
   let element: HTMLElement;
   let camCardFacadeMock: CamCardsFacade;
+  let shoppingFacadeMock: ShoppingFacade;
   const camCardDetails = {
     name: 'testing cam cards',
     id: '.SKsEQAE4FIAAAFuNiUBWx0d',
@@ -36,6 +38,7 @@ describe('Select Cam Card Modal Component', () => {
 
   beforeEach(async () => {
     camCardFacadeMock = mock(CamCardsFacade);
+    shoppingFacadeMock = mock(ShoppingFacade);
 
     await TestBed.configureTestingModule({
       declarations: [
@@ -57,7 +60,10 @@ describe('Select Cam Card Modal Component', () => {
         RouterTestingModule,
         TranslateModule.forRoot(),
       ],
-      providers: [{ provide: CamCardsFacade, useFactory: () => instance(camCardFacadeMock) }],
+      providers: [
+        { provide: CamCardsFacade, useFactory: () => instance(camCardFacadeMock) },
+        { provide: ShoppingFacade, useFactory: () => instance(shoppingFacadeMock) },
+      ],
     }).compileComponents();
   });
 

@@ -1,11 +1,22 @@
-import { ChangeDetectionStrategy, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  Input,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { Router } from '@angular/router';
+import { Actions, ofType } from '@ngrx/effects';
 import { ReplaySubject, Subject } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { Category } from 'ish-core/models/category/category.model';
 import { ProductListingID } from 'ish-core/models/product-listing/product-listing.model';
+import { hideSearchBox } from 'ish-core/store/customer/basket';
 
 interface SearchBoxConfiguration {
   /**
@@ -72,7 +83,12 @@ export class CamfilSearchBoxComponent implements OnInit, OnDestroy {
 
   private destroy$ = new Subject();
 
-  constructor(private shoppingFacade: ShoppingFacade, private router: Router) {}
+  constructor(
+    private shoppingFacade: ShoppingFacade,
+    private router: Router,
+    private updates$: Actions,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit() {
     this.shoppingFacade.getAllCategoriesTree$.pipe(takeUntil(this.destroy$)).subscribe(list => {
@@ -82,6 +98,11 @@ export class CamfilSearchBoxComponent implements OnInit, OnDestroy {
     // products are triggered solely via stream
     this.inputSearchTerms$.pipe(debounceTime(1000), takeUntil(this.destroy$)).subscribe(() => {
       this.shoppingFacade.searchProductsInSearchBox(this.productListId);
+    });
+
+    this.updates$.pipe(ofType(hideSearchBox), takeUntil(this.destroy$)).subscribe(() => {
+      this.out();
+      this.cdr.detectChanges();
     });
   }
 
