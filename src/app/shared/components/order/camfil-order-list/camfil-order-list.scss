@@ -90,6 +90,8 @@ button {
 .show-more-overlay {
   position: relative;
   top: -80px;
+  min-height: 80px;
+  margin-bottom: -80px;
   background-color: rgb(255 255 255 / 90%);
   mat-stroked-button {
     padding: 0 28px;

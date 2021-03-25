@@ -51,7 +51,7 @@ export class CamfilOrderListComponent implements OnInit, AfterViewInit, OnDestro
   dataSource = new MatTableDataSource<Order>();
   isActive = false;
   showPreview = true;
-  previewSize = 16;
+  tableSize = 16;
   inputFocused: boolean;
   statuses = [];
   customers = [];
@@ -277,16 +277,20 @@ export class CamfilOrderListComponent implements OnInit, AfterViewInit, OnDestro
 
   showAllOrders() {
     this.showPreview = false;
-    this.previewSize = Number.MAX_VALUE;
+    this.tableSize = this.dataSource.filteredData.length;
   }
 
   isMaxTableLength() {
-    return this.dataSource.filteredData.length >= this.previewSize;
+    return this.dataSource.filteredData.length >= this.tableSize + 2; // 2 preview rows will be visible below "show more" overlay
   }
 
   updateFilter(filteredValues) {
     const filter = JSON.stringify(filteredValues);
     this.dataSource.filter = filter.trim();
     this.router.navigate([], { queryParams: { filter } });
+  }
+
+  countRows() {
+    return this.dataSource.filteredData.length < this.tableSize ? this.dataSource.filteredData.length : this.tableSize;
   }
 }
