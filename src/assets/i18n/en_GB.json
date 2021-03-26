@@ -623,6 +623,8 @@
   "camfil.account.cam_card.pdf.box_label": "Box label:",
   "camfil.account.cam_card.pdf.customer_account": "Customer account",
   "camfil.account.cam_card.pdf.delivery_address": "Delivery address",
+  "camfil.account.cam_card.pdf.order_interval": "Order interval",
+  "camfil.account.cam_card.pdf.next_order": "Next order",
   "camfil.account.cam_card.pdf.dimensions": "Dimensions:",
   "camfil.account.cam_card.pdf.eficciency": "Eficciency:",
   "camfil.account.cam_card.pdf.invoice_mark": "Invoice mark",

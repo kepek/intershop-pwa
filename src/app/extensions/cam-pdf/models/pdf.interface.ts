@@ -7,13 +7,6 @@ export interface DataToPdf {
   images: {};
 }
 
-export interface PDFProductLine {
-  line1: any[];
-  line2: any[];
-  line3: any[];
-  line4: any[];
-}
-
 export interface ProductsObj {
   [sku: string]: ProductView;
 }

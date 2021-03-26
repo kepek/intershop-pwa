@@ -16,12 +16,7 @@ import { formatISHDate } from 'ish-core/pipes/date.pipe';
 import { whenTruthy } from 'ish-core/utils/operators';
 import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
 
-import {
-  CamCardTotalPricesObj,
-  DataToPdf,
-  PDFProductLine,
-  ProductsObj,
-} from '../../../../cam-pdf/models/pdf.interface';
+import { CamCardTotalPricesObj, DataToPdf, ProductsObj } from '../../../../cam-pdf/models/pdf.interface';
 import { CamPdfService } from '../../../../cam-pdf/services/cam-pdf/cam-pdf.service';
 import { CamCardHelper } from '../../../models/cam-card/cam-card.helper';
 import { CamCard, CamCardItem } from '../../../models/cam-card/cam-card.model';
@@ -55,11 +50,8 @@ export class AccountCamCardPdfComponent implements OnInit {
   texts = {
     customerAccount: this.translate.instant('camfil.account.cam_card.pdf.customer_account'),
     artNr: this.translate.instant('camfil.account.cam_card.pdf.art_nr'),
-    dimensions: this.translate.instant('camfil.account.cam_card.pdf.dimensions'),
-    eficciency: this.translate.instant('camfil.account.cam_card.pdf.eficciency'),
     boxLabel: this.translate.instant('camfil.account.cam_card.pdf.box_label'),
     quantity: this.translate.instant('camfil.account.cam_card.pdf.quantity'),
-    packSize: this.translate.instant('camfil.account.cam_card.pdf.pack_size'),
     price: this.translate.instant('camfil.account.cam_card.pdf.price'),
     orderMark: this.translate.instant('camfil.account.cam_card.pdf.order_mark'),
     invoiceMark: this.translate.instant('camfil.account.cam_card.pdf.invoice_mark'),
@@ -68,6 +60,8 @@ export class AccountCamCardPdfComponent implements OnInit {
     printDate: this.translate.instant('camfil.account.cam_card.pdf.print_date'),
     printedBy: this.translate.instant('camfil.account.cam_card.pdf.printed_by'),
     deliveryAddress: this.translate.instant('camfil.account.cam_card.pdf.delivery_address'),
+    orderInterval: this.translate.instant('camfil.account.cam_card.pdf.order_interval'),
+    nextOrder: this.translate.instant('camfil.account.cam_card.pdf.next_order'),
   };
 
   ngOnInit() {
@@ -219,10 +213,10 @@ export class AccountCamCardPdfComponent implements OnInit {
               {
                 svg:
                   '<svg viewBox="0 0 26 26" xmlns="http://www.w3.org/2000/svg" fit="" height="100%" width="100%" preserveAspectRatio="xMidYMid meet" focusable="false"><g fill="none" stroke="#00673e" stroke-linecap="round" stroke-miterlimit="10"><path d="M5 23v2H2.1c-.6 0-1.1-.5-1.1-1.1V2.1C1 1.5 1.5 1 2.1 1h21.8c.6 0 1.1.5 1.1 1.1v21.8c0 .6-.5 1.1-1.1 1.1H8.6v-2M1 12.7h11.1M12.2 5.8v15.3M24.9 13h-8.3"></path></g></svg>',
-                fit: [30, 30],
-                margin: [10, 6, 0, 0],
+                fit: [20, 20],
+                margin: [5, 3, 0, 3],
               },
-              { text: name, margin: [10, 10, 10, 10] },
+              { text: name, margin: [10, 5, 0, 0] },
             ],
           ],
         },
@@ -237,6 +231,8 @@ export class AccountCamCardPdfComponent implements OnInit {
                 [this.texts.orderMark, { text: camCard.orderLabel, bold: true }],
                 [this.texts.invoiceMark, { text: camCard.invoiceLabel, bold: true }],
                 [this.texts.lastOrder, { text: camCard.lastDeliveryDate, bold: true }],
+                [this.texts.orderInterval, { text: camCard.deliveryInterval, bold: true }],
+                [this.texts.nextOrder, { text: camCard.nextDeliveryDate, bold: true }],
               ],
             },
             widths: ['*', 'auto'],
@@ -250,9 +246,9 @@ export class AccountCamCardPdfComponent implements OnInit {
                   this.texts.deliveryAddress,
                   [
                     { text: deliveryAddress.addressLine1, bold: true },
-                    { text: deliveryAddress.addressLine1, bold: true },
-                    { text: deliveryAddress.postalCode, bold: true },
-                    { text: `${deliveryAddress.city}, ${deliveryAddress.country}`, bold: true },
+                    { text: deliveryAddress.addressLine2, bold: true },
+                    { text: `${deliveryAddress.postalCode}, ${deliveryAddress.city}`, bold: true },
+                    { text: deliveryAddress.country, bold: true },
                   ],
                 ],
               ],
@@ -269,6 +265,7 @@ export class AccountCamCardPdfComponent implements OnInit {
                   [
                     { text: customer.companyName, bold: true },
                     { text: customer.companyName2, bold: true },
+                    { text: customer.customerNo, bold: true },
                     { text: customer.description, bold: true },
                   ],
                 ],
@@ -282,45 +279,34 @@ export class AccountCamCardPdfComponent implements OnInit {
     ];
   }
 
-  pdfProductRow(camCard: CamCard, item: CamCardItem, index: number, showPrice: boolean): PDFProductLine {
+  pdfProductRow(camCard: CamCard, item: CamCardItem, index: number, showPrice: boolean) {
     const sku = item.product.sku;
     const artNo = `${this.texts.artNr} `;
     const artNoVal = { text: sku, bold: true };
-    const dimen = ` | ${this.texts.dimensions} `;
-    const dimenVal = { text: '123x23x23', bold: true }; // TODO: Dimensions val
-    const eficc = ` | ${this.texts.eficciency} `;
-    const eficcVal = { text: 'XXxxXX', bold: true }; // TODO: Eficciency val
     const labelText = item.comment?.label;
     const label = labelText ? ` | ${this.texts.boxLabel} ` : '';
     const labelVal = labelText ? { text: labelText, bold: true } : '';
 
     const qty = `${this.texts.quantity} `;
     const qtyVal = { text: item.quantity, bold: true };
-    const size = ` | ${this.texts.packSize} `;
-    const sizeVal = { text: 'xxx', bold: true }; // TODO: Pack size val
     const priceObj = this.getCustomerPriceForItem(camCard, item) || this.products[sku]?.salePrice;
     const priceVal = this.handlePrice(priceObj);
     const priceLabel = showPrice ? ` | ${this.texts.price} ` : '';
     const price = showPrice ? { text: priceVal, bold: true } : '';
-    const arrLine3a = [artNo, artNoVal, dimen, dimenVal, eficc, eficcVal, label, labelVal];
-    const arrLine3b = [qty, qtyVal, size, sizeVal, priceLabel, price];
+    const arrRightInfo = [artNo, artNoVal, label, labelVal];
+    const arrLeftInfo = [qty, qtyVal, priceLabel, price];
 
-    return PdfHelper.pdfProductRow(index, item.product.name, arrLine3a, arrLine3b);
+    return PdfHelper.pdfProductRow(index, item.product.name, arrRightInfo, arrLeftInfo);
   }
 
   pdfItemsRow(camCard: CamCard, showPrice: boolean) {
-    return camCard.camCardItems
-      .map((el, i) => {
-        const id = camCard.rootCamCard || camCard.id;
-        const price =
-          this.getCustomerPriceForItem(camCard, el)?.value || this.products[el.product.sku].salePrice?.value || 0;
-        this.sumPrice[id].value = (this.sumPrice[id].value || 0) + price * el.quantity;
-        return this.pdfProductRow(camCard, el, i, showPrice);
-      })
-      .reduce((res, { line1, line2, line3, line4 }) => {
-        res.push(line1, line2, line3, line4);
-        return res;
-      }, []);
+    return camCard.camCardItems.map((el, i) => {
+      const id = camCard.rootCamCard || camCard.id;
+      const price =
+        this.getCustomerPriceForItem(camCard, el)?.value || this.products[el.product.sku].salePrice?.value || 0;
+      this.sumPrice[id].value = (this.sumPrice[id].value || 0) + price * el.quantity;
+      return this.pdfProductRow(camCard, el, i, showPrice);
+    });
   }
 
   getCustomerPriceForItem(camCard: CamCard, el: CamCardItem) {
@@ -331,17 +317,15 @@ export class AccountCamCardPdfComponent implements OnInit {
   }
 
   pdfSubItemsRowToTable(camCard: CamCard, showPrice: boolean) {
-    const items = this.pdfItemsRow(camCard, showPrice);
-    items.unshift([
-      { text: `\n \u00A0 \u00A0  ${camCard.name} \n `, fillColor: '#F2F2F2', colSpan: 3, style: 'subHeader' },
-      '',
-      '',
-    ]);
-    return [this.pdfCamCardTable(items, true)];
+    const items = [
+      [{ text: camCard.name, fillColor: '#F2F2F2', colSpan: 3, style: 'subHeader' }, '', ''],
+      ...this.pdfItemsRow(camCard, showPrice),
+    ];
+    return [this.pdfCamCardTable(items)];
   }
 
-  pdfCamCardTable(body, sub?: boolean) {
-    return PdfHelper.pdfTable(body, sub);
+  pdfCamCardTable(body) {
+    return PdfHelper.pdfTable(body);
   }
 
   pdfTotal(id: string) {

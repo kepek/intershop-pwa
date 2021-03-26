@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
 import { take } from 'rxjs/operators';
 import { PdfHelper } from 'src/app/extensions/cam-pdf/models/pdf.helper';
-import { DataToPdf, PDFProductLine } from 'src/app/extensions/cam-pdf/models/pdf.interface';
+import { DataToPdf } from 'src/app/extensions/cam-pdf/models/pdf.interface';
 import { CamPdfService } from 'src/app/extensions/cam-pdf/services/cam-pdf/cam-pdf.service';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
@@ -64,15 +64,10 @@ export class PrintOrderComponent implements OnInit {
   texts = {
     customerAccount: this.translate.instant('camfil.account.cam_card.pdf.customer_account'),
     artNr: this.translate.instant('camfil.account.cam_card.pdf.art_nr'),
-    // dimensions: this.translate.instant('camfil.account.cam_card.pdf.dimensions'),
-    // eficciency: this.translate.instant('camfil.account.cam_card.pdf.eficciency'),
     boxLabel: this.translate.instant('camfil.account.cam_card.pdf.box_label'),
     quantity: this.translate.instant('camfil.account.cam_card.pdf.quantity'),
-    // packSize: this.translate.instant('camfil.account.cam_card.pdf.pack_size'),
     price: this.translate.instant('camfil.account.cam_card.pdf.price'),
     orderMark: this.translate.instant('camfil.account.cam_card.pdf.order_mark'),
-    // invoiceMark: this.translate.instant('camfil.account.cam_card.pdf.invoice_mark'),
-    // lastOrder: this.translate.instant('camfil.account.cam_card.pdf.last_order'),
     yourTotal: this.translate.instant('camfil.account.cam_card.pdf.your_total'),
     printDate: this.translate.instant('camfil.account.cam_card.pdf.print_date'),
     printedBy: this.translate.instant('camfil.account.cam_card.pdf.printed_by'),
@@ -168,11 +163,10 @@ export class PrintOrderComponent implements OnInit {
             table: {
               body: [
                 ['deliveryDate', { text: bucket.deliveryDate, bold: true }],
-                ['invoiceLabel', { text: bucket.invoiceLabel, bold: true }],
-                ['orderMark', { text: bucket.orderMark, bold: true }],
-                ['phoneNumber', { text: bucket.phoneNumber, bold: true }],
-                ['orderMark', { text: bucket.orderMark, bold: true }],
-                ['info', { text: bucket.info, bold: true }],
+                ['invoiceLabel', { text: bucket.invoiceLabel || '---', bold: true }],
+                ['orderMark', { text: bucket.orderMark || '---', bold: true }],
+                ['phoneNumber', { text: bucket.phoneNumber || '---', bold: true }],
+                ['info', { text: bucket.info || '---', bold: true }],
               ],
             },
             widths: ['*', 'auto'],
@@ -224,7 +218,7 @@ export class PrintOrderComponent implements OnInit {
     ];
   }
 
-  pdfProductRow(item: LineItemView, index: number): PDFProductLine {
+  pdfProductRow(item: LineItemView, index: number) {
     const sku = item.productSKU;
     const artNo = `${this.texts.artNr} `;
     const artNoVal = { text: sku, bold: true };
@@ -233,29 +227,28 @@ export class PrintOrderComponent implements OnInit {
     const boxLabelVal = { text: label, bold: true };
 
     const today = new Date();
-    const deliveryDays = this.handleDate(
-      new Date(today.setDate(today.getDate() + this.productsInfo[sku].deliveryDays))
-    );
-    const deliveryDaysText = 'deliveryDays: ';
+    const deliveryDays = this.productsInfo[sku].deliveryDays
+      ? this.handleDate(new Date(today.setDate(today.getDate() + this.productsInfo[sku].deliveryDays)), 'shortDate')
+      : undefined;
+    const deliveryDaysText = deliveryDays ? ' | deliveryDays: ' : '';
     const deliveryDaysVal = { text: deliveryDays, bold: true };
-    const qty = ` | ${this.texts.quantity} `;
+    const qty = `${this.texts.quantity} `;
     const qtyVal = { text: item.quantity.value, bold: true };
-    const priceVal = item.totals.total.gross;
+    const priceVal = this.handlePrice({
+      value: item.totals.total.gross,
+      currency: item.totals.total.currency,
+      type: 'Money',
+    });
     const priceLabel = ` | ${this.texts.price} `;
     const price = { text: priceVal, bold: true };
-    const arrLine3a = [artNo, artNoVal, boxLabelText, boxLabelVal];
-    const arrLine3b = [deliveryDaysText, deliveryDaysVal, qty, qtyVal, priceLabel, price];
+    const arrRightInfo = [artNo, artNoVal, boxLabelText, boxLabelVal, deliveryDaysText, deliveryDaysVal];
+    const arrLeftInfo = [qty, qtyVal, priceLabel, price];
 
-    return PdfHelper.pdfProductRow(index, this.productsInfo[sku].name, arrLine3a, arrLine3b);
+    return PdfHelper.pdfProductRow(index, this.productsInfo[sku].name, arrRightInfo, arrLeftInfo);
   }
 
   pdfItemsRow(bucket: Bucket) {
-    return bucket.lineItems
-      .map((el, i) => this.pdfProductRow(el, i))
-      .reduce((res, { line1, line2, line3, line4 }) => {
-        res.push(line1, line2, line3, line4);
-        return res;
-      }, []);
+    return bucket.lineItems.map((el, i) => this.pdfProductRow(el, i));
   }
 
   pdfTotal(id: string) {
@@ -289,7 +282,7 @@ export class PrintOrderComponent implements OnInit {
     return data ? formatPrice(data, this.translate.currentLang) : '---';
   }
 
-  handleDate(data: Date) {
-    return formatISHDate(data, 'medium', this.translate.currentLang);
+  handleDate(data: Date, format = 'medium') {
+    return formatISHDate(data, format, this.translate.currentLang);
   }
 }
