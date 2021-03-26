@@ -17,7 +17,6 @@ import { first, take, takeUntil } from 'rxjs/operators';
 
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
-import { AttributeGroupTypes } from 'ish-core/models/attribute-group/attribute-group.types';
 import { AttributeHelper } from 'ish-core/models/attribute/attribute.helper';
 import { BasketExtensions } from 'ish-core/models/basket/basket.interface';
 import { Bucket } from 'ish-core/models/basket/bucket.model';
@@ -25,6 +24,7 @@ import { CustomerDeliveryTerm } from 'ish-core/models/customer/customer.interfac
 import { LineItemData } from 'ish-core/models/line-item/line-item.interface';
 import { LineItem } from 'ish-core/models/line-item/line-item.model';
 import { Price, PriceHelper } from 'ish-core/models/price/price.model';
+import { ProductViewHelper } from 'ish-core/models/product-view/product-view.helper';
 import { ProductView } from 'ish-core/models/product-view/product-view.model';
 import { ProductCompletenessLevel } from 'ish-core/models/product/product.model';
 import { whenTruthy } from 'ish-core/utils/operators';
@@ -279,17 +279,7 @@ export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
     let delivery;
     productDetail$.pipe(take(1), takeUntil(this.destroy$)).subscribe((res: ProductView) => {
       const today = new Date();
-      let daysTillReady: number;
-      if (res.attributeGroups && res.attributeGroups[AttributeGroupTypes.ProductsListLabelAttributes]) {
-        daysTillReady = Number(
-          res.attributeGroups[AttributeGroupTypes.ProductsListLabelAttributes].attributes.find(
-            a => a.name?.toLowerCase() === 'deliverydays'
-          )?.value || 7
-        );
-      } else {
-        // TODO To remove. Should use only Deliverydays when attribute value is provided
-        daysTillReady = res.readyForShipmentMin;
-      }
+      const daysTillReady = ProductViewHelper.getDeliveryDateDays(res);
       delivery = today.setDate(today.getDate() + daysTillReady);
     });
 
