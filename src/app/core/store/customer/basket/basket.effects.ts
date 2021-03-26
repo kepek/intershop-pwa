@@ -29,6 +29,8 @@ import {
   camfilDragLineItem,
   camfilDragLineItemFail,
   camfilDragLineItemSuccess,
+  checkCurrentBasket,
+  createBasket,
   deleteBasketAttribute,
   deleteBasketAttributeFail,
   deleteBasketAttributeSuccess,
@@ -192,8 +194,12 @@ export class BasketEffects {
    * loading and handling merges of the users baskets, when the user logs in
    */
   loadOrMergeBasketAfterLogin$ = createEffect(() =>
+    this.actions$.pipe(ofType(loginUserSuccess), map(checkCurrentBasket))
+  );
+
+  checkCurrentBasket$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(loginUserSuccess),
+      ofType(checkCurrentBasket),
       withLatestFrom(this.anonymousBasket$),
       switchMap(([, [sourceBasketId, sourceApiToken]]) =>
         this.basketService.getBaskets().pipe(
@@ -218,7 +224,7 @@ export class BasketEffects {
             } else {
               // no anonymous or user basket -> do nothing
               // TODO: this is tmp solution to fix CAM-789 - Multiple baskets are created
-              return this.basketService.createBasket().pipe(map(basket => mergeBasketSuccess({ basket })));
+              return this.basketService.createBasket().pipe(map(basket => loadBasketSuccess({ basket })));
             }
           })
         )
@@ -288,6 +294,8 @@ export class BasketEffects {
       )
     )
   );
+
+  createBasket$ = createEffect(() => this.actions$.pipe(ofType(createBasket), map(checkCurrentBasket)));
 
   /** check whether a specific custom attribute exists at basket.
    * @param basket

@@ -428,8 +428,6 @@ export const deleteBucket = createAction('[Basket] Delete Bucket', payload<{ bas
 
 export const deleteBucketFail = createAction('[Basket API] Delete Bucket Fail', httpError());
 
-export const createBasket = createAction('[Basket API] Create new Basket');
-
 export const addProductsFromCamCard = createAction(
   '[Basket API] Add Products From CamCard',
   payload<{ itemsInfo: CamCamProductsAddToCartItems; commonShippingMethodId: string; basketId: string }>()
@@ -502,3 +500,9 @@ export const loadCustomerDeliveryTermSuccess = createAction(
 );
 
 export const hideSearchBox = createAction('[Basket] Hide search box');
+
+export const createBasket = createAction('[Basket API] Create new Basket');
+
+export const createBasketFail = createAction('[Basket API] Create new Basket Fail', httpError());
+
+export const checkCurrentBasket = createAction('[Basket API] Check Current Basket');
