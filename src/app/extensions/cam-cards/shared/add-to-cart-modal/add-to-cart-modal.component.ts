@@ -106,7 +106,7 @@ export class AddToCartModalComponent implements OnInit, OnDestroy {
 
   /** close modal */
   hide() {
-    this.modal.close();
+    this.dialog.closeAll();
   }
 
   /** open modal */

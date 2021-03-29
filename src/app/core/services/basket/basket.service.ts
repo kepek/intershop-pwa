@@ -545,9 +545,11 @@ export class BasketService {
       };
     });
 
-    return this.apiService.post(`baskets/current/items`, body, {
-      headers: this.basketHeaders,
-    });
+    return this.apiService
+      .post(`baskets/current/items`, body, {
+        headers: this.basketHeaders,
+      })
+      .pipe(map(BasketInfoMapper.fromInfo));
   }
 
   /**

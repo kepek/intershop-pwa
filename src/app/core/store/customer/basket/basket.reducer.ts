@@ -19,6 +19,7 @@ import {
   addEmptyBucket,
   addItemsToBasket,
   addItemsToBasketFail,
+  addItemsToBasketFromCamCard,
   addItemsToBasketSuccess,
   addProductToBasket,
   addProductToBucketAddressFromCamCardFail,
@@ -91,9 +92,7 @@ import {
   updateBasketPaymentFail,
   updateBasketPaymentSuccess,
   updateBasketShippingMethod,
-  updateBucket,
   updateBucketFail,
-  updateBucketSuccess,
   updateConcardisCvcLastUpdated,
   updateConcardisCvcLastUpdatedFail,
   updateConcardisCvcLastUpdatedSuccess,
@@ -263,14 +262,6 @@ export const basketReducer = createReducer(
       return bucket;
     }),
   })),
-  on(updateBucketSuccess, (state: BasketState) => ({
-    ...state,
-    productUpdated: true,
-  })),
-  on(updateBucket, (state: BasketState) => ({
-    ...state,
-    productUpdated: false,
-  })),
   on(loadCustomerDeliveryTermSuccess, (state: BasketState, action) => ({
     ...state,
     deliveryTerms: {
@@ -291,6 +282,10 @@ export const basketReducer = createReducer(
       validationResults: initialValidationResults,
     })
   ),
+  on(addItemsToBasket, addItemsToBasketFromCamCard, (state: BasketState) => ({
+    ...state,
+    productUpdated: false,
+  })),
   on(addItemsToBasketSuccess, (state: BasketState, action) => ({
     ...state,
     info: action.payload.info,
@@ -299,6 +294,7 @@ export const basketReducer = createReducer(
     loading: false,
     error: undefined,
     productAdded: true,
+    productUpdated: true,
   })),
   on(resetProductAdded, (state: BasketState) => ({
     ...state,
