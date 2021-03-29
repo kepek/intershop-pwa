@@ -3,14 +3,5 @@
     channel: Camfil-CamfilSE-Site
     lang: sv_SE
   - baseHref: /fi-fi
-    channel: Camfil-CamfilSE-Site
+    channel: Camfil-CamfilFI-Site
     lang: fi_FI
-  - baseHref: /en-gb
-    channel: Camfil-CamfilSE-Site
-    lang: en_GB
-  - baseHref: /de-de
-    channel: Camfil-CamfilSE-Site
-    lang: de_DE
-  - baseHref: /fr-fr
-    channel: Camfil-CamfilSE-Site
-    lang: fr_FR
