@@ -27,8 +27,9 @@ import { VariationProduct } from 'ish-core/models/product/product-variation.mode
 import { Product, ProductCompletenessLevel, ProductHelper } from 'ish-core/models/product/product.model';
 import { ofProductUrl } from 'ish-core/routing/product/product.route';
 import { ProductsService } from 'ish-core/services/products/products.service';
-import { selectRouteParam } from 'ish-core/store/core/router';
+import { selectQueryParam, selectRouteParam } from 'ish-core/store/core/router';
 import { setBreadcrumbData } from 'ish-core/store/core/viewconf';
+import { setPGID } from 'ish-core/store/customer/user';
 import { loadCategory } from 'ish-core/store/shopping/categories';
 import { setProductListingPages } from 'ish-core/store/shopping/product-listing';
 import { HttpStatusCodeService } from 'ish-core/utils/http-status-code/http-status-code.service';
@@ -41,6 +42,7 @@ import {
 } from 'ish-core/utils/operators';
 
 import {
+  loadCategoryProducts,
   loadCustomerPrices,
   loadCustomerPricesFail,
   loadCustomerPricesSuccess,
@@ -117,27 +119,7 @@ export class ProductsEffects {
       ofType(loadProductsForCategory),
       mapToPayload(),
       map(payload => ({ ...payload, page: payload.page ? payload.page : 1 })),
-      concatMap(({ categoryId, page, sorting }) =>
-        this.productsService.getCategoryProducts(categoryId, page, sorting).pipe(
-          concatMap(({ total, products, sortableAttributes }) => [
-            ...products.map(product => loadProductSuccess({ product })),
-            setProductListingPages(
-              this.productListingMapper.createPages(
-                products.map(p => p.sku),
-                'category',
-                categoryId,
-                {
-                  startPage: page,
-                  sortableAttributes,
-                  sorting,
-                  itemCount: total,
-                }
-              )
-            ),
-          ]),
-          mapErrorToAction(loadProductsForCategoryFail, { categoryId })
-        )
-      )
+      concatMap(({ categoryId, page, sorting }) => [loadCategoryProducts({ categoryId, page, sorting })])
     )
   );
 
@@ -409,6 +391,50 @@ export class ProductsEffects {
             : EMPTY.pipe(map(() => loadCustomerPricesSuccess({ customerId, products: [] })));
         }
       })
+    )
+  );
+
+  loadCategoryProducts$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loadCategoryProducts),
+      mapToPayload(),
+      mergeMap(({ categoryId, page, sorting }) =>
+        this.productsService.getCategoryProducts(categoryId, page, sorting).pipe(
+          concatMap(({ total, products, sortableAttributes }) => [
+            ...products.map(product => loadProductSuccess({ product })),
+            setProductListingPages(
+              this.productListingMapper.createPages(
+                products.map(p => p.sku),
+                'category',
+                categoryId,
+                {
+                  startPage: page,
+                  sortableAttributes,
+                  itemCount: total,
+                }
+              )
+            ),
+          ]),
+          mapErrorToAction(loadProductsForCategoryFail, { categoryId })
+        )
+      )
+    )
+  );
+
+  /**
+   * extra getCategoryProducts when user on catPage after login (set PGID; onLoad),
+   * because of prices
+   */
+  logInOnCatPage$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(setPGID),
+      withLatestFrom(
+        this.store.pipe(select(selectRouteParam('categoryUniqueId'))),
+        this.store.pipe(select(selectQueryParam('page')))
+      ),
+      concatMap(([, categoryId, page]) =>
+        categoryId ? [loadCategoryProducts({ categoryId, page: Number(page) || 1 })] : EMPTY
+      )
     )
   );
 

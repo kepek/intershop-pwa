@@ -2,6 +2,7 @@ import { EntityState, createEntityAdapter } from '@ngrx/entity';
 import { createReducer, on } from '@ngrx/store';
 
 import { AllProductTypes, Product } from 'ish-core/models/product/product.model';
+import { loginUserSuccess, logoutUser } from 'ish-core/store/customer/user';
 
 import {
   loadCustomerPricesFail,
@@ -105,5 +106,26 @@ export const productsReducer = createReducer(
   on(loadCustomerPricesFail, (state: ProductsState, action) => {
     const { customerId } = action.payload;
     return addCustomerPrices(state, customerId, []);
+  }),
+  on(logoutUser, (state: ProductsState) => {
+    const entities = Object.values(state.entities).reduce((acc, prod) => {
+      // tslint:disable-next-line:no-unused
+      const { listPrice, salePrice, ...prodNoPrice } = prod;
+      return { ...acc, [prod.sku]: prodNoPrice };
+    }, {});
+    return {
+      ...state,
+      entities,
+    };
+  }),
+  on(loginUserSuccess, (state: ProductsState) => {
+    const entities = Object.values(state.entities).reduce(
+      (acc, prod) => ({ ...acc, [prod.sku]: { ...prod, completenessLevel: 1 } }),
+      {}
+    );
+    return {
+      ...state,
+      entities,
+    };
   })
 );
