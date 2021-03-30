@@ -5,7 +5,6 @@ import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, Subject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
 
-import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { AddressHelper } from 'ish-core/models/address/address.helper';
 import { Address } from 'ish-core/models/address/address.model';
@@ -30,7 +29,6 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy {
   constructor(
     private productFacade: ShoppingFacade,
     private camCardsFacade: CamCardsFacade,
-    private checkoutFacade: CheckoutFacade,
     public dialog: MatDialog
   ) {}
 
@@ -88,15 +86,9 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy {
         this.hide();
       });
 
-      this.productFacade.productAdded$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(() => {
-        const type = this.order.id.split('_')[0];
-
+      this.productFacade.productAdded$.pipe(whenTruthy(), take(1)).subscribe(() => {
         this.loading = false;
         this.hide();
-
-        if (type === 'emptyBucket') {
-          this.checkoutFacade.deleteEmptyBucket(this.order.id);
-        }
       });
     } else {
       this.currentCamCard$?.pipe(takeUntil(this.destroy$)).subscribe(camCard => {
@@ -152,7 +144,7 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy {
           this.addToExistingOrder(sku, quantity, this.order.shipToAddress, lineItemAttribute);
         } else {
           const deliveryAddress = this.order.shipToAddressFull as Address;
-          this.addToNewOrder(sku, quantity, deliveryAddress);
+          this.addToNewOrder(sku, quantity, deliveryAddress, this.order.id);
         }
       } else {
         this.camCardsFacade.addProductToCamCard(this.rootCamCardId, sku, quantity, comment, 0, true);
@@ -167,7 +159,7 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy {
     this.productFacade.addProductToBasket(sku, quantity, this.shippingMethodId, shipToAddress, lineItemAttribute);
   }
 
-  addToNewOrder(sku, quantity, deliveryAddress) {
+  addToNewOrder(sku, quantity, deliveryAddress, bucketId) {
     if (this.isNewAddress(deliveryAddress)) {
       this.productFacade.addProductToBucket(
         deliveryAddress,
@@ -177,7 +169,9 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy {
         this.order.basket,
         {
           ...this.order,
-        }
+        },
+        undefined,
+        bucketId
       );
     } else {
       this.productFacade.addProductToBucketWithUrn(

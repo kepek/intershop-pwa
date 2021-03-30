@@ -76,6 +76,7 @@ export const addProductToBucket = createAction(
     basketId?: string;
     basketExtension: BasketExtensions;
     lineItemAttributes?: Attribute;
+    bucketId?: string;
   }>()
 );
 
@@ -89,6 +90,7 @@ export const addProductToBucketWithBasketId = createAction(
     basketId: string;
     basketExtension: BasketExtensions;
     lineItemAttributes?: Attribute;
+    bucketId?: string;
   }>()
 );
 
@@ -119,6 +121,7 @@ export const addProductToBasket = createAction(
     basketExtension?: BasketExtensions;
     addressId?: string;
     lineItemAttributes?: Attribute;
+    bucketId?: string;
   }>()
 );
 
@@ -462,6 +465,7 @@ export const addItemsToBasketFromCamCard = createAction(
       addressId?: string;
       lineItemAttributes?: Attribute;
     }[];
+    bucketIds?: string[];
   }>()
 );
 
@@ -486,6 +490,7 @@ export const updateBucketsQueue = createAction(
       addressId: string;
       basketExtension: BasketExtensions;
     }[];
+    bucketIds?: string[];
   }>()
 );
 
