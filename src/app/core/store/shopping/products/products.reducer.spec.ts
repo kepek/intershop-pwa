@@ -138,7 +138,7 @@ describe('Products Reducer', () => {
           })
         );
 
-        expect(state.entities.SKU).toHaveProperty('variationSKUs', ['VAR']);
+        expect(state.entities[product.sku]).toHaveProperty('variationSKUs', ['VAR']);
       });
     });
 
