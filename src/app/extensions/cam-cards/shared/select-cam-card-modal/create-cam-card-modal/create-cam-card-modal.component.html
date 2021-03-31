@@ -131,7 +131,9 @@
         ></camfil-error>
       </div>
 
-      <mat-form-field appearance="outline" class="col-sm-12 form__field">
+      <!--
+        // because of CAM-911 
+        <mat-form-field appearance="outline" class="col-sm-12 form__field">
         <mat-label>{{ 'camfil.account.cam_card.add_to_form.country' | translate }}</mat-label>
         <mat-select formControlName="countryCode">
           <mat-option>--</mat-option>
@@ -144,7 +146,7 @@
         [errors]="getField('countryCode').errors"
         [errorValidators]="validators.countryCode"
         [touched]="getField('countryCode').touched || getField('countryCode').dirty"
-      ></camfil-error>
+      ></camfil-error> -->
 
       <button class="form__field--button" mat-raised-button (click)="addSubLevel()">
         <mat-icon svgIcon="plus" class="color-dark form__field--button-icon"></mat-icon>
