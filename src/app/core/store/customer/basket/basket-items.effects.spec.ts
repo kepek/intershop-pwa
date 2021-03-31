@@ -137,6 +137,7 @@ describe('Basket Items Effects', () => {
             },
           },
         ],
+        bucketIds: [],
       });
       actions$ = hot('        -b-a-b-a--|', { a: action1, b: action2 });
       const expected$ = cold('----------(c|)', { c: completion });
