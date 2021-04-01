@@ -1,16 +1,40 @@
 <div *ngIf="selected" class="row">
   <div class="col-12 applied-filters bg-primary">
     <mat-chip-list aria-label="Fish selection">
-      <mat-chip *ngIf="selected.length >= 2">
+      <mat-chip
+        *ngIf="
+          selected.length >= 2 ||
+          countNotNull([width, height, depth]) >= 2 ||
+          (selected.length >= 1 && countNotNull([width, height, depth]) >= 1)
+        "
+      >
         {{ 'camfil.navigation.filterClearAll.message' | translate }}
         <mat-icon color="primary" (click)="clear()">cancel</mat-icon>
       </mat-chip>
+
+      <!-- Render all filters except Width, Height, Depth -->
       <ng-container *ngFor="let select of selected">
-        <mat-chip>
-          {{ select.filterName }} - {{ select.displayName }}
-          <mat-icon color="primary" (click)="apply(select.searchParameter)">cancel</mat-icon>
-        </mat-chip>
+        <ng-container *ngIf="select.filterId != 'Width' && select.filterId != 'Height' && select.filterId != 'Depth'">
+          <mat-chip>
+            {{ select.filterName }} - {{ select.displayName }}
+            <mat-icon color="primary" (click)="apply(select.searchParameter)">cancel</mat-icon>
+          </mat-chip>
+        </ng-container>
       </ng-container>
+
+      <!-- Always display measurement filters Width, Height, Depth when applied, even if not considered 'selected' -->
+      <mat-chip *ngIf="width">
+        {{ 'camfil.navigation.filter.measurements.width' | translate }} - {{ width }}
+        <mat-icon color="primary" (click)="removeFilter('Width')">cancel</mat-icon>
+      </mat-chip>
+      <mat-chip *ngIf="height">
+        {{ 'camfil.navigation.filter.measurements.height' | translate }} - {{ height }}
+        <mat-icon color="primary" (click)="removeFilter('Height')">cancel</mat-icon>
+      </mat-chip>
+      <mat-chip *ngIf="depth">
+        {{ 'camfil.navigation.filter.measurements.depth' | translate }} - {{ depth }}
+        <mat-icon color="primary" (click)="removeFilter('Depth')">cancel</mat-icon>
+      </mat-chip>
     </mat-chip-list>
   </div>
 </div>
