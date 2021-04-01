@@ -50,6 +50,12 @@
         width: $space-box;
       }
     }
+    .attributes {
+      width: 31vw;
+      @media (min-width: $screen-xl-min) {
+        max-width: 550px;
+      }
+    }
   }
 
   ::ng-deep {
