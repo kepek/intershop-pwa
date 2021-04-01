@@ -4,7 +4,7 @@
   [ngClass]="pagelet.stringParam('CSSClass')"
   [ngStyle]="{ 'background-image': 'url(' + this.pagelet.stringParam('Image') + ')' }"
 >
-  <div class="banner-text px-5 py-5">
+  <div class="container banner-text py-5">
     <h1 class="text-capitalize" *ngIf="pagelet.hasParam('Heading1')">
       {{ pagelet.stringParam('Heading1') }}
     </h1>
