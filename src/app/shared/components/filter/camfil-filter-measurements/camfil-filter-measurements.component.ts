@@ -63,23 +63,30 @@ export class CamfilFilterMeasurementsComponent implements OnInit, OnDestroy {
     this.currentFilters$ = this.shoppingFacade.currentFilter$(this.showCategoryFilter);
     this.currentFilters$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(currentFilters => {
       currentFilterParams = this.stripMeasurementSearchParameters(
-        currentFilters?.filter?.filter(filterElement => filterElement.id === 'Width')[0]?.facets[0].searchParameter
+        currentFilters?.filter?.filter(
+          filterElement => filterElement.id === 'Width' || filterElement.id === 'Height' || filterElement.id === 'Depth'
+        )[0]?.facets[0].searchParameter
       );
     });
 
-    const filter = [
-      !!this.width && `Width%5Bgte%5D=${this.width - 10}&Width%5Blte%5D=${+this.width + 10}`,
-      !!this.height && `Height%5Bgte%5D=${+this.height - 10}&Height%5Blte%5D=${+this.height + 10}`,
-      !!this.depth && `Depth%5Bgte%5D=${+this.depth - 50}&Depth%5Blte%5D=${+this.depth + 50}`,
-      formParamsToString(currentFilterParams),
-    ].join('&');
+    const filter = [];
+    if (this.width) {
+      filter.push(`Width%5Bgte%5D=${this.width - 10}&Width%5Blte%5D=${+this.width + 10}`);
+    }
+    if (this.height) {
+      filter.push(`Height%5Bgte%5D=${+this.height - 10}&Height%5Blte%5D=${+this.height + 10}`);
+    }
+    if (this.depth) {
+      filter.push(`Depth%5Bgte%5D=${+this.depth - 50}&Depth%5Blte%5D=${+this.depth + 50}`);
+    }
+    filter.push(formParamsToString(currentFilterParams));
 
     if (+this.width || +this.height || +this.depth) {
       this.router.navigate([], {
         queryParamsHandling: 'merge',
         relativeTo: this.activatedRoute,
         queryParams: {
-          filters: filter,
+          filters: filter.join('&'),
         },
         fragment: this.fragmentOnRouting,
       });
@@ -94,9 +101,24 @@ export class CamfilFilterMeasurementsComponent implements OnInit, OnDestroy {
    *  Remove 'Width', 'Height', 'Depth' from search parameters
    * */
   stripMeasurementSearchParameters(params: URLFormParams) {
-    const forbiddenKeys = ['Width', 'Height', 'Depth'];
+    if (!params) {
+      return;
+    }
+
+    const forbiddenParams = [
+      'Width',
+      'Height',
+      'Depth',
+      'Width%5Blte%5D',
+      'Width%5Bgte%5D',
+      'Height%5Blte%5D',
+      'Height%5Bgte%5D',
+      'Depth%5Blte%5D',
+      'Depth%5Bgte%5D',
+    ];
+
     return Object.keys(params)
-      .filter(key => !forbiddenKeys.includes(key))
+      .filter(key => !forbiddenParams.includes(key))
       .reduce((obj, key) => {
         obj[key] = params[key];
         return obj;
