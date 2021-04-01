@@ -15,6 +15,7 @@ import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
 
 import { AppFacade } from 'ish-core/facades/app.facade';
+import { Channel } from 'ish-core/models/channel/channel.types';
 import { Country } from 'ish-core/models/country/country.model';
 import { Product } from 'ish-core/models/product/product.model';
 import { whenTruthy } from 'ish-core/utils/operators';
@@ -47,6 +48,7 @@ export class CreateCamCardModalComponent implements OnInit, AfterViewInit {
   customers$: Observable<CamCardCustomer[]>;
   countries$: Observable<Country[]>;
 
+  defaultCountryCode: string;
   showNewSegment = false;
 
   @Output() createAndEditEmitter = new EventEmitter<{
@@ -71,6 +73,10 @@ export class CreateCamCardModalComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    this.appFacade.getCamfilChannel$.pipe(whenTruthy(), take(1)).subscribe(channel => {
+      this.defaultCountryCode = Object.keys(Channel).find(key => Channel[key] === channel) || 'SE';
+    });
+
     this.countries$ = this.appFacade.countries$();
     this.addresses$ = this.camCardsFacade.addresses$;
     this.customers$ = this.camCardsFacade.customers$;
@@ -97,7 +103,7 @@ export class CreateCamCardModalComponent implements OnInit, AfterViewInit {
       address: ['', [Validators.required]],
       zipCode: ['', [Validators.required, Validators.pattern('[0-9]{5}')]],
       area: ['', [Validators.required]],
-      countryCode: ['', [Validators.required, Validators.maxLength(35)]],
+      countryCode: [this.defaultCountryCode, [Validators.required, Validators.maxLength(35)]],
       newCamCard: ['', [Validators.maxLength(30)]],
     });
 
@@ -133,7 +139,7 @@ export class CreateCamCardModalComponent implements OnInit, AfterViewInit {
           address: address.addressLine1,
           zipCode: address.postalCode,
           area: address.city,
-          countryCode: address.countryCode,
+          countryCode: address.countryCode || this.defaultCountryCode,
         });
       }
     });
@@ -154,7 +160,7 @@ export class CreateCamCardModalComponent implements OnInit, AfterViewInit {
         addressLine2: this.camCardForm.get('company').value,
         postalCode: this.camCardForm.get('zipCode').value,
         city: this.camCardForm.get('area').value,
-        countryCode: this.camCardForm.get('countryCode').value,
+        countryCode: this.camCardForm.get('countryCode').value || this.defaultCountryCode,
       },
     };
 
