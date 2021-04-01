@@ -45,9 +45,9 @@ describe('Countries Effects', () => {
       const action = { type: loadCountries.type } as Action;
       const expected = loadCountriesSuccess({ countries });
 
-      actions$ = hot('-a-------', { a: action });
+      actions$ = hot('-a----|', { a: action });
 
-      expect(effects.loadCountries$).toBeObservable(cold('-b-------', { b: expected }));
+      expect(effects.loadCountries$).toBeObservable(cold('------(b|)', { b: expected }));
     });
 
     it('should dispatch a LoadCountriesFail action if a load error occurs', () => {
@@ -56,9 +56,9 @@ describe('Countries Effects', () => {
       const action = { type: loadCountries.type } as Action;
       const expected = loadCountriesFail({ error: makeHttpError({ message: 'error' }) });
 
-      actions$ = hot('-a', { a: action });
+      actions$ = hot('-a-|', { a: action });
 
-      expect(effects.loadCountries$).toBeObservable(cold('-b', { b: expected }));
+      expect(effects.loadCountries$).toBeObservable(cold('---(b|)', { b: expected }));
     });
   });
 });
