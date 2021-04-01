@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store, select } from '@ngrx/store';
-import { map, mergeMap } from 'rxjs/operators';
+import { map, mergeMap, tap } from 'rxjs/operators';
 
 import { CMSService } from 'ish-core/services/cms/cms.service';
 import { selectRouteParam } from 'ish-core/store/core/router';
@@ -13,16 +14,23 @@ import { getSelectedContentPage } from './pages.selectors';
 
 @Injectable()
 export class PagesEffects {
-  constructor(private actions$: Actions, private store: Store, private cmsService: CMSService) {}
+  constructor(
+    private actions$: Actions,
+    private store: Store,
+    private cmsService: CMSService,
+    private router: Router
+  ) {}
 
   loadContentPage$ = createEffect(() =>
     this.actions$.pipe(
       ofType(loadContentPage),
       mapToPayloadProperty('contentPageId'),
       mergeMap(contentPageId =>
-        this.cmsService
-          .getContentPage(contentPageId)
-          .pipe(map(loadContentPageSuccess), mapErrorToAction(loadContentPageFail))
+        this.cmsService.getContentPage(contentPageId).pipe(
+          map(loadContentPageSuccess),
+          mapErrorToAction(loadContentPageFail),
+          tap(data => (data.payload.hasOwnProperty('error') ? this.router.navigate(['/error']) : undefined))
+        )
       )
     )
   );
