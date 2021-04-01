@@ -18,7 +18,7 @@
     "ng": "ng",
     "test": "jest --ci",
     "test:watch": "jest --watch",
-  "test:update-snapshot": "jest --updateSnapshot --forceExit --ci -w=4",
+    "test:update-snapshot": "jest --updateSnapshot --forceExit --ci -w=4",
     "test:health-check": "jest --runInBand --detectOpenHandles",
     "test:report-leaks": "node --expose-gc ./node_modules/.bin/jest --runInBand --logHeapUsage",
     "test:detect-leaks": "node --inspect-brk --expose-gc ./node_modules/.bin/jest --runInBand --logHeapUsage",

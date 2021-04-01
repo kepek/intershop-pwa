@@ -86,3 +86,8 @@ export const loadCustomerPricesSuccess = createAction(
   '[Products API] Load Customer Prices Success',
   payload<{ customerId: string; products: Product[] }>()
 );
+
+export const loadCategoryProducts = createAction(
+  '[Products API] load Category Products',
+  payload<{ categoryId: string; page: number; sorting?: string }>()
+);
