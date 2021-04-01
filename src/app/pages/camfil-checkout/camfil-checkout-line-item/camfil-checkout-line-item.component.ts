@@ -184,7 +184,7 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
       } else {
         this.product$.pipe(take(1), takeUntil(this.destroy$)).subscribe((res: ProductView) => {
           const today = new Date();
-          const daysTillReady = ProductViewHelper.getDeliveryDateDays(res);
+          const daysTillReady = ProductViewHelper.getDeliveryDateDays(res) + 1;
           const delivery = today.setDate(today.getDate() + daysTillReady);
 
           return this.orderDeliveryDate && delivery < this.orderDeliveryDate
