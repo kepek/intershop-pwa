@@ -162,10 +162,20 @@ export class ShoppingFacade {
     quantity: number,
     basketId: string,
     basketExtension: BasketExtensions,
-    lineItemAttributes?: Attribute
+    lineItemAttributes?: Attribute,
+    bucketId?: string
   ) {
     this.store.dispatch(
-      addProductToBucket({ address, shippingMethod, sku, quantity, basketId, basketExtension, lineItemAttributes })
+      addProductToBucket({
+        address,
+        shippingMethod,
+        sku,
+        quantity,
+        basketId,
+        basketExtension,
+        lineItemAttributes,
+        bucketId,
+      })
     );
   }
 

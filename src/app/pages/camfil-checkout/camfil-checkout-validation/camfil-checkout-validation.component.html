@@ -4,7 +4,7 @@
       <div
         class="alert alert-danger"
         role="alert"
-        *ngIf="calculateBucketPosition(error.parameters.addressId, buckets) as id"
+        *ngIf="calculateBucketPosition(error.parameters?.addressId, buckets) as id"
       >
         {{ error.code | translate }}
         {{ 'camfil.checkout.validation.for_order' | translate }}
