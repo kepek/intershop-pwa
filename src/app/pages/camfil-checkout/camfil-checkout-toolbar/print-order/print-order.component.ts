@@ -180,7 +180,6 @@ export class PrintOrderComponent implements OnInit {
                   this.texts.deliveryAddress,
                   [
                     { text: shipToAddressFull.companyName1, bold: true },
-                    { text: `${shipToAddressFull.firstName} ${shipToAddressFull.lastName}`, bold: true },
                     { text: shipToAddressFull.addressLine1, bold: true },
                     { text: shipToAddressFull.addressLine2, bold: true },
                     { text: `${shipToAddressFull.postalCode}, ${shipToAddressFull.city}`, bold: true },
