@@ -253,6 +253,7 @@ describe('Customer Store', () => {
           [User API] Login User Success:
             customer: {"isBusinessCustomer":false,"customerNo":"test"}
             user: {"title":"","firstName":"test","lastName":"test","phoneHome"...
+          [Basket API] Check Current Basket
           [Basket API] Merge two baskets Success:
             basket: {"id":"test","lineItems":[1]}
         `);
