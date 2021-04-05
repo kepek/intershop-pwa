@@ -1,4 +1,5 @@
 import { TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 import { Store, select } from '@ngrx/store';
 import { identity, of } from 'rxjs';
 import { anything, capture, instance, mock, spy, verify, when } from 'ts-mockito';
@@ -31,7 +32,7 @@ describe('Content Store', () => {
     );
 
     TestBed.configureTestingModule({
-      imports: [ContentStoreModule, CoreStoreModule.forTesting([], true)],
+      imports: [ContentStoreModule, CoreStoreModule.forTesting([], true), RouterTestingModule],
       providers: [{ provide: CMSService, useFactory: () => instance(cmsService) }],
     });
 
