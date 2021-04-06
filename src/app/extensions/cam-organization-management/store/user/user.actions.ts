@@ -87,7 +87,7 @@ export const updateCustomerUserSuccess = createAction(
 
 export const resetCustomerUserPassword = createAction(
   '[Camfil User] Reset Customer User Password',
-  payload<{ customerId: string; userId: string; login: string }>()
+  payload<{ customerId: string; userId: string; email: string }>()
 );
 
 export const resetCustomerUserPasswordFail = createAction(
@@ -97,5 +97,5 @@ export const resetCustomerUserPasswordFail = createAction(
 
 export const resetCustomerUserPasswordSuccess = createAction(
   '[Camfil User] Reset Customer User Password Success',
-  payload<{ customerId: string; userId: string; login: string; successMessage?: string }>()
+  payload<{ customerId: string; userId: string; email: string; successMessage?: string }>()
 );

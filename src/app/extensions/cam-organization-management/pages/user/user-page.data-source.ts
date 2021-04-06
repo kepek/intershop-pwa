@@ -93,11 +93,11 @@ export abstract class UserPageDataSourceComponent implements OnInit, AfterViewIn
 
   onUpdateSelectedCustomerUserPassword() {
     this.selectedContext$.pipe(take(1), whenTruthy()).subscribe(({ customer, user }) => {
-      const { login } = user;
+      const { email } = user;
       const customerId = customer?.id;
       const userId = user?.id;
 
-      return this.organizationFacade.resetCustomerUserPassword(customerId, userId, login);
+      return this.organizationFacade.resetCustomerUserPassword(customerId, userId, email);
     });
   }
 
