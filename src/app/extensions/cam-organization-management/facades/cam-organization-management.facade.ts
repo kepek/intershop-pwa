@@ -477,9 +477,9 @@ export class CamOrganizationManagementFacade {
    * Reset Customer User Password
    * @param customerId
    * @param userId
-   * @param login
+   * @param email
    */
-  resetCustomerUserPassword(customerId: string, userId: string, login: string) {
-    this.store.dispatch(resetCustomerUserPassword({ customerId, userId, login }));
+  resetCustomerUserPassword(customerId: string, userId: string, email: string) {
+    this.store.dispatch(resetCustomerUserPassword({ customerId, userId, email }));
   }
 }
