@@ -25,7 +25,6 @@ COPY --from=configstep / /
 RUN chmod 777 /gomplate
 ENV NPSC_ENABLE_FILTERS=in_place_optimize_for_browser,prioritize_critical_css,inline_preview_images,lazyload_images,rewrite_images,rewrite_css,remove_comments,move_css_to_head,move_css_above_scripts,collapse_whitespace,combine_javascript,extend_cache NPSC_JsPreserveURLs=off NPSC_ImagePreserveURLs=on NPSC_ForceCaching=off CACHE=on COMPRESSION=on PAGESPEED=on DEVICE_DETECTION=on
 ENV MULTI_CHANNEL_SOURCE='./multi-channel.yaml'
-
 EXPOSE 80 443 9113
 
 ENTRYPOINT [ "sh", "entrypoint.sh" ]
