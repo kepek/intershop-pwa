@@ -9,6 +9,7 @@
 
   .section {
     padding: $space-default;
+    margin-bottom: 0;
 
     &--roles,
     &--customers {
