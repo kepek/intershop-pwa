@@ -15,6 +15,7 @@ export interface CamCard extends CamCardHeader {
   id?: string;
   orderLabel?: string;
   invoiceLabel?: string;
+  customerId?: string;
   customer?: CamCardCustomer;
   rootCamCard?: string; // TODO: id from root
   subCamCards?: CamCard[];

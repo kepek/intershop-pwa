@@ -1,0 +1,89 @@
+<ng-template #userHeader>
+  <camfil-organization-header>
+    <ng-container slot="back">
+      <button
+        mat-stroked-button
+        [routerLink]="['/account/organization']"
+        queryParamsHandling="preserve"
+        color="primary"
+      >
+        <mat-icon class="mt-n1">arrow_left</mat-icon>
+        {{ 'camfil.account.organization.user_management.back_to_list' | translate }}
+      </button>
+    </ng-container>
+    <ng-container slot="title">
+      {{ 'camfil.account.organization.edit_user.header.text' | translate }}
+    </ng-container>
+    <ng-container slot="extra">
+      <button mat-flat-button color="primary" [routerLink]="['/account/orders']">
+        {{ 'camfil.account.organization.edit_user.show_orders.button.text' | translate }}
+      </button>
+    </ng-container>
+  </camfil-organization-header>
+</ng-template>
+
+<ng-template #userDetails>
+  <camfil-organization-user-details-form
+    [customer]="selectedCustomer$() | async"
+    [user]="selectedUser$() | async"
+    (updateUser)="onUpdateSelectedCustomerUserDetails($event)"
+    (updateUserActive)="onUpdateSelectedCustomerUserActive($event)"
+    (updateUserPassword)="onUpdateSelectedCustomerUserPassword()"
+  ></camfil-organization-user-details-form>
+</ng-template>
+
+<ng-template #userCustomersContacts>
+  <div class="section section--customers">
+    <h2 class="section__title">
+      {{ 'camfil.account.organization.edit_user.customers.header.text' | translate }}
+    </h2>
+    <div class="section__content">
+      <camfil-organization-customer-user-contact-form
+        *ngFor="let customer of customers$() | async"
+        [selectedContact]="customerUserContact$(customer.id) | async"
+        [contacts]="customerContacts$(customer.id) | async"
+        [customer]="customer"
+        [user]="selectedUser$() | async"
+        (assignCustomerUserContact)="onAssignCustomerUserContact($event)"
+        (unassignCustomerUserContact)="onUnassignCustomerUserContact($event)"
+      ></camfil-organization-customer-user-contact-form>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #userRoles>
+  <div class="section section--roles">
+    <h2 class="section__title">
+      {{ 'camfil.account.organization.edit_user.roles.header.text' | translate }}
+    </h2>
+    <div class="section__content">
+      <camfil-organization-user-roles-form
+        [user]="selectedUser$() | async"
+        [roles]="selectedCustomerRoles$() | async"
+        [staticRoles]="selectedUserStaticRoles$() | async"
+        [selectedRoles]="selectedUserRoles$() | async"
+        (selectCustomerUserRoles)="onUpdateSelectedCustomerUserRoles($event)"
+      ></camfil-organization-user-roles-form>
+    </div>
+  </div>
+</ng-template>
+
+<ng-container *ngTemplateOutlet="userHeader"></ng-container>
+
+<mat-card class="mb-3 box-shadow--dark mat-elevation-z clearfix">
+  <div class="row">
+    <div class="col-12">
+      <ng-container *ngTemplateOutlet="userDetails"></ng-container>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-7 col-12">
+      <ng-container *ngTemplateOutlet="userCustomersContacts"></ng-container>
+    </div>
+    <div class="col-sm-5 col-12">
+      <ng-container *ngTemplateOutlet="userRoles"></ng-container>
+    </div>
+  </div>
+</mat-card>
+
+<ish-loading *ngIf="loading$() | async"></ish-loading>

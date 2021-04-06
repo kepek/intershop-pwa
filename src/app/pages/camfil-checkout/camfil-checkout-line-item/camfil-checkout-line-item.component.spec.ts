@@ -20,6 +20,7 @@ import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfi
 import { CamfilProductAddToBasketComponent } from 'ish-shared/components/product/camfil-product-add-to-basket/camfil-product-add-to-basket.component';
 import { CamfilProductAttributeComponent } from 'ish-shared/components/product/camfil-product-attribute/camfil-product-attribute.component';
 import { CamfilProductIdComponent } from 'ish-shared/components/product/camfil-product-id/camfil-product-id.component';
+import { CamfilProductImageComponent } from 'ish-shared/components/product/camfil-product-image/camfil-product-image.component';
 import { CamfilProductInventoryComponent } from 'ish-shared/components/product/camfil-product-inventory/camfil-product-inventory.component';
 import { CamfilProductPriceComponent } from 'ish-shared/components/product/camfil-product-price/camfil-product-price.component';
 import { CamfilProductQuantityComponent } from 'ish-shared/components/product/camfil-product-quantity/camfil-product-quantity.component';
@@ -28,7 +29,6 @@ import { ProductBundleDisplayComponent } from 'ish-shared/components/product/pro
 import { ProductVariationDisplayComponent } from 'ish-shared/components/product/product-variation-display/product-variation-display.component';
 import { CheckboxComponent } from 'ish-shared/forms/components/checkbox/checkbox.component';
 import { InputComponent } from 'ish-shared/forms/components/input/input.component';
-import { CamfilProductImageComponent } from 'ish-shell/header/camfil-product-image/camfil-product-image.component';
 
 import { CamfilCheckoutLineItemComponent } from './camfil-checkout-line-item.component';
 

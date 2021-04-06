@@ -2,11 +2,6 @@
 @import '~src/styles/themes/camfil/variables.scss';
 
 :host {
-  tr.mat-header-row,
-  tr.mat-row {
-    height: 42px;
-  }
-
   // reduce height of filter select boxes
   ::ng-deep .mat-form-field-appearance-fill {
     .mat-form-field-flex {

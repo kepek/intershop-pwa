@@ -13,10 +13,10 @@ import { ProductRoutePipe } from 'ish-core/routing/product/product-route.pipe';
 import { findAllCustomElements, findAllDataTestingIDs } from 'ish-core/utils/dev/html-query-utils';
 import { ProductBundleDisplayComponent } from 'ish-shared/components/product/product-bundle-display/product-bundle-display.component';
 import { ProductIdComponent } from 'ish-shared/components/product/product-id/product-id.component';
+import { ProductImageComponent } from 'ish-shared/components/product/product-image/product-image.component';
 import { ProductInventoryComponent } from 'ish-shared/components/product/product-inventory/product-inventory.component';
 import { ProductVariationDisplayComponent } from 'ish-shared/components/product/product-variation-display/product-variation-display.component';
 import { InputComponent } from 'ish-shared/forms/components/input/input.component';
-import { ProductImageComponent } from 'ish-shell/header/product-image/product-image.component';
 
 import { LazyProductAddToOrderTemplateComponent } from '../../../order-templates/exports/lazy-product-add-to-order-template/lazy-product-add-to-order-template.component';
 import { LazyProductAddToWishlistComponent } from '../../../wishlists/exports/lazy-product-add-to-wishlist/lazy-product-add-to-wishlist.component';

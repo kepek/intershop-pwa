@@ -1,0 +1,106 @@
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { NgbCollapse } from '@ng-bootstrap/ng-bootstrap';
+import { TranslateModule } from '@ngx-translate/core';
+import { MockComponent } from 'ng-mocks';
+
+import { FeatureToggleModule } from 'ish-core/feature-toggle.module';
+import { findAllCustomElements } from 'ish-core/utils/dev/html-query-utils';
+import { CamfilHeaderNavigationComponent } from 'ish-shell/header/camfil-header-navigation/camfil-header-navigation.component';
+import { CamfilLanguageSwitchComponent } from 'ish-shell/header/camfil-language-switch/camfil-language-switch.component';
+import { CamfilLoginStatusComponent } from 'ish-shell/header/camfil-login-status/camfil-login-status.component';
+import { CamfilMiniBasketComponent } from 'ish-shell/header/camfil-mini-basket/camfil-mini-basket.component';
+import { CamfilProductCompareStatusComponent } from 'ish-shell/header/camfil-product-compare-status/camfil-product-compare-status.component';
+import { CamfilUserLinksComponent } from 'ish-shell/header/camfil-user-links/camfil-user-links.component';
+import { CamfilSearchBoxComponent } from 'ish-shell/header/header/camfil-search-box/camfil-search-box.component';
+import { UserInformationMobileComponent } from 'ish-shell/header/user-information-mobile/user-information-mobile.component';
+import { LazyContentIncludeComponent } from 'ish-shell/shared/lazy-content-include/lazy-content-include.component';
+
+import { LazyHeaderQuickorderComponent } from '../../../extensions/quickorder/exports/lazy-header-quickorder/lazy-header-quickorder.component';
+import { LazyWishlistsLinkComponent } from '../../../extensions/wishlists/exports/lazy-wishlists-link/lazy-wishlists-link.component';
+
+import { CamfilHeaderDefaultComponent } from './camfil-header-default.component';
+
+describe('Camfil Header Default Component', () => {
+  let fixture: ComponentFixture<CamfilHeaderDefaultComponent>;
+  let element: HTMLElement;
+  let component: CamfilHeaderDefaultComponent;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [FeatureToggleModule.forTesting('compare'), RouterTestingModule, TranslateModule.forRoot()],
+      declarations: [
+        CamfilHeaderDefaultComponent,
+        MockComponent(CamfilHeaderNavigationComponent),
+        MockComponent(CamfilLanguageSwitchComponent),
+        MockComponent(CamfilLoginStatusComponent),
+        MockComponent(CamfilMiniBasketComponent),
+        MockComponent(CamfilProductCompareStatusComponent),
+        MockComponent(CamfilSearchBoxComponent),
+        MockComponent(CamfilUserLinksComponent),
+        MockComponent(FaIconComponent),
+        MockComponent(LazyContentIncludeComponent),
+        MockComponent(LazyHeaderQuickorderComponent),
+        MockComponent(LazyWishlistsLinkComponent),
+        MockComponent(NgbCollapse),
+        MockComponent(UserInformationMobileComponent),
+      ],
+    }).compileComponents();
+  });
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(CamfilHeaderDefaultComponent);
+    component = fixture.componentInstance;
+    element = fixture.nativeElement;
+  });
+
+  it('should be created', () => {
+    expect(component).toBeTruthy();
+    expect(element).toBeTruthy();
+    expect(() => fixture.detectChanges()).not.toThrow();
+  });
+
+  it('should render User Links on template', () => {
+    fixture.detectChanges();
+    expect(findAllCustomElements(element)).toIncludeAllMembers(['camfil-login-status', 'camfil-user-links']);
+  });
+
+  it('should render sticky header adequately for mobile devices', () => {
+    component.deviceType = 'mobile';
+    component.isSticky = true;
+    fixture.detectChanges();
+
+    expect(element).toMatchSnapshot();
+  });
+
+  it('should render normal header adequately for tablet devices', () => {
+    component.deviceType = 'tablet';
+    fixture.detectChanges();
+
+    expect(element).toMatchSnapshot();
+  });
+
+  it('should render sticky header adequately for tablet devices', () => {
+    component.deviceType = 'tablet';
+    component.isSticky = true;
+    fixture.detectChanges();
+
+    expect(element).toMatchSnapshot();
+  });
+
+  it('should render normal header adequately for desktop', () => {
+    component.deviceType = 'desktop';
+    fixture.detectChanges();
+
+    expect(element).toMatchSnapshot();
+  });
+
+  it('should render sticky header adequately for desktop', () => {
+    component.deviceType = 'desktop';
+    component.isSticky = true;
+    fixture.detectChanges();
+
+    expect(element).toMatchSnapshot();
+  });
+});

@@ -1,0 +1,108 @@
+<ng-container *ngIf="users$ | async as users">
+  <ul>
+    <mat-card *ngFor="let user of users" class="mb-3">
+      <h1>{{ user.customerId }} // {{ user.id }} -> {{ user.firstName }}</h1>
+      <ng-container *ngIf="organizationFacade.getCustomer$(user.customerId) | async as customer">
+        <h2>{{ customer.companyName }}</h2>
+        <hr />
+        <ng-container *ngIf="organizationFacade.getCustomers$() | async as customers">
+          <h2>Customers</h2>
+          <fieldset *ngFor="let customer of customers">
+            <h3>{{ customer.companyName }} // {{ customer.id }}</h3>
+            <ng-container *ngIf="organizationFacade.getCustomerContacts$(customer.id) | async as contacts">
+              <ol>
+                <li *ngFor="let contact of contacts">
+                  {{ contact.firstName }} {{ contact.lastName }} // {{ contact.erpId }}
+                  <ng-container
+                    *ngIf="
+                      organizationFacade.getCustomerUserContact$(customer.id, user.id) | async as customerUserContact;
+                      else noCustomerUserContact
+                    "
+                  >
+                    {{ customerUserContact === contact | json }} //
+                    <mat-button-toggle-group appearance="legacy">
+                      <mat-button-toggle
+                        *ngIf="customerUserContact !== contact"
+                        (click)="
+                          organizationFacade.unassignCustomerUserContact$(customer.id, user.id, customerUserContact);
+                          organizationFacade.assignCustomerUserContact$(customer.id, user.id, contact)
+                        "
+                        >Assign</mat-button-toggle
+                      >
+                      <mat-button-toggle
+                        *ngIf="customerUserContact === contact"
+                        (click)="
+                          organizationFacade.unassignCustomerUserContact$(customer.id, user.id, customerUserContact)
+                        "
+                        >Unassign</mat-button-toggle
+                      >
+                    </mat-button-toggle-group>
+                  </ng-container>
+                  <ng-template #noCustomerUserContact>
+                    <mat-button-toggle-group appearance="legacy">
+                      <mat-button-toggle
+                        (click)="organizationFacade.assignCustomerUserContact$(customer.id, user.id, contact)"
+                        >Assign</mat-button-toggle
+                      >
+                    </mat-button-toggle-group>
+                  </ng-template>
+                </li>
+              </ol>
+            </ng-container>
+          </fieldset>
+        </ng-container>
+        <hr />
+        <ng-container *ngIf="organizationFacade.getSelectedRoles$(customer.roleIDs) | async as customerRoles">
+          <h2>Roles</h2>
+          <ul>
+            <li *ngFor="let customerRole of customerRoles">{{ customerRole.id }} -> {{ customerRole.displayName }}</li>
+          </ul>
+        </ng-container>
+      </ng-container>
+    </mat-card>
+  </ul>
+</ng-container>
+
+<h1>Organization</h1>
+
+<mat-button-toggle-group appearance="legacy">
+  <mat-button-toggle (click)="loadUsers()">Load Organization</mat-button-toggle>
+</mat-button-toggle-group>
+
+<hr />
+
+<h1>Michal @ Atrium Ljungberg Skotten AB</h1>
+
+<pre>
+customerId: {{ michalCustomerId }}
+userId: {{ michalUserId }}
+</pre>
+
+<mat-button-toggle-group appearance="legacy">
+  <mat-button-toggle (click)="loadUser(michalCustomerId, michalUserId)">Load User</mat-button-toggle>
+  <mat-button-toggle (click)="activateUser(michalCustomerId, michalUserId)">Activate User</mat-button-toggle>
+  <mat-button-toggle (click)="deactivateUser(michalCustomerId, michalUserId)">Deactivate User</mat-button-toggle>
+  <mat-button-toggle [routerLink]="['customers', michalCustomerId, 'users', michalUserId]"
+    >Go to User Page</mat-button-toggle
+  >
+</mat-button-toggle-group>
+
+<hr />
+
+<h1>Marcin @ Atrium Ljungberg AB</h1>
+
+<pre>
+customerId: {{ marcinCustomerId }}
+userId: {{ marcinUserId }}
+</pre>
+
+<mat-button-toggle-group appearance="legacy">
+  <mat-button-toggle (click)="loadUser(marcinCustomerId, marcinUserId)">Load User</mat-button-toggle>
+  <mat-button-toggle (click)="activateUser(marcinCustomerId, marcinUserId)">Activate User</mat-button-toggle>
+  <mat-button-toggle (click)="deactivateUser(marcinCustomerId, marcinUserId)">Deactivate User</mat-button-toggle>
+  <mat-button-toggle [routerLink]="['customers', marcinCustomerId, 'users', marcinUserId]"
+    >Go to User Page</mat-button-toggle
+  >
+</mat-button-toggle-group>
+
+<br />

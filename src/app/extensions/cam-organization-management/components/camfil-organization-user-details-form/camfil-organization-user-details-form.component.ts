@@ -1,0 +1,100 @@
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+
+import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
+import { SpecialValidators } from 'ish-shared/forms/validators/special-validators';
+
+import { CamfilB2bCustomer } from '../../models/camfil-b2b-customer/camfil-b2b-customer.model';
+import { CamfilB2bUser } from '../../models/camfil-b2b-user/camfil-b2b-user.model';
+
+@Component({
+  selector: 'camfil-organization-user-details-form',
+  templateUrl: './camfil-organization-user-details-form.component.html',
+  styleUrls: ['./camfil-organization-user-details-form.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Default,
+})
+export class CamfilOrganizationUserDetailsFormComponent implements OnInit {
+  @Input() customer: CamfilB2bCustomer;
+  @Input() user: CamfilB2bUser;
+
+  @Output() updateUser = new EventEmitter<{ customer: CamfilB2bCustomer; user: CamfilB2bUser }>();
+  @Output() updateUserActive = new EventEmitter<{ active: boolean }>();
+  @Output() updateUserPassword = new EventEmitter();
+
+  userForm: FormGroup;
+  userActiveForm: FormGroup;
+
+  isUserFormSubmitted = false;
+
+  constructor(private fb: FormBuilder) {}
+
+  private initUserForm() {
+    this.userForm = this.fb.group({
+      firstName: new FormControl(this.user?.firstName, {
+        validators: [Validators.required, Validators.maxLength(60)],
+      }),
+      lastName: new FormControl(this.user?.lastName, {
+        validators: [Validators.required, Validators.maxLength(60)],
+      }),
+      phoneHome: new FormControl(this.user?.phoneHome, {
+        validators: [
+          Validators.required,
+          Validators.pattern(
+            '(([+]?[(]?[0-9]{1,3}[)]?)|([(]?[0-9]{4}[)]?))s*[)]?[-s.]?[(]?[0-9]{1,3}[)]?([-s.]?[0-9]{3})([-s.]?[0-9]{3,4})'
+          ),
+          Validators.maxLength(30),
+        ],
+      }),
+      email: new FormControl(this.user?.email, {
+        validators: [Validators.required, SpecialValidators.email],
+      }), // TODO (extMlk): Verify if Validators.email is required?
+    });
+  }
+
+  private initUserActiveForm() {
+    this.userActiveForm = this.fb.group({
+      active: [!this.user?.active],
+    });
+  }
+
+  ngOnInit() {
+    this.initUserForm();
+    this.initUserActiveForm();
+  }
+
+  submitUserForm() {
+    if (this.userForm.invalid) {
+      this.isUserFormSubmitted = true;
+      markAsDirtyRecursive(this.userForm);
+      return;
+    }
+
+    const firstName = this.userForm.get('firstName').value;
+    const lastName = this.userForm.get('lastName').value;
+    const phoneHome = this.userForm.get('phoneHome').value;
+    const email = this.userForm.get('email').value;
+
+    const customer = this.customer;
+    const user = { ...this.user, firstName, lastName, phoneHome, email };
+
+    this.updateUser.emit({ customer, user });
+  }
+
+  resetUserPassword() {
+    const { customer, user } = this;
+    this.updateUserPassword.emit({ customer, user });
+  }
+
+  toggleActiveFlag() {
+    const active = !this.user?.active;
+    this.updateUserActive.emit({ active });
+  }
+
+  get isUserFormSubmitButtonDisabled() {
+    return this.userForm?.invalid && this.isUserFormSubmitted;
+  }
+
+  get isUserLocked() {
+    return !this.user.active;
+  }
+}

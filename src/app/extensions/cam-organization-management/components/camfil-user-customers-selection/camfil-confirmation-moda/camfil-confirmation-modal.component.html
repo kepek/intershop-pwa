@@ -1,0 +1,15 @@
+<ng-template #modal>
+  <div class="cta-modal-container">
+    <div class="cta-modal__header">
+      <h2 class="cta-modal__header--text">{{ actionTitle }}</h2>
+    </div>
+    <div *ngIf="confirmationBody">
+      <ng-container [ngTemplateOutlet]="confirmationBody"></ng-container>
+    </div>
+    <div class="cta-modal__links">
+      <button class="btn btn-link cta-modal__links--link" (click)="hide()">
+        {{ 'camfil.account.useredit.confirm_modal.button.text' | translate }}
+      </button>
+    </div>
+  </div>
+</ng-template>

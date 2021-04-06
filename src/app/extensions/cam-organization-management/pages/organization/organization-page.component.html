@@ -1,0 +1,14 @@
+<camfil-organization-header>
+  <ng-container slot="title">
+    {{ 'camfil.account.organization.edit_user.header.text' | translate }}
+  </ng-container>
+</camfil-organization-header>
+
+<camfil-organization-users-list-toolbar [dataSource]="dataSource"></camfil-organization-users-list-toolbar>
+
+<camfil-organization-users-list
+  [dataSource]="dataSource"
+  [dataSourceColumns]="dataSourceColumns"
+></camfil-organization-users-list>
+
+<ish-loading *ngIf="loading$() | async"></ish-loading>

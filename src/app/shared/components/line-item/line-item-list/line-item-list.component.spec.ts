@@ -15,8 +15,8 @@ import { BasketMockData } from 'ish-core/utils/dev/basket-mock-data';
 import { findAllCustomElements } from 'ish-core/utils/dev/html-query-utils';
 import { BasketPromotionComponent } from 'ish-shared/components/basket/basket-promotion/basket-promotion.component';
 import { LineItemDescriptionComponent } from 'ish-shared/components/line-item/line-item-description/line-item-description.component';
+import { CamfilProductImageComponent } from 'ish-shared/components/product/camfil-product-image/camfil-product-image.component';
 import { InputComponent } from 'ish-shared/forms/components/input/input.component';
-import { CamfilProductImageComponent } from 'ish-shell/header/camfil-product-image/camfil-product-image.component';
 
 import { LazyProductAddToOrderTemplateComponent } from '../../../../extensions/order-templates/exports/lazy-product-add-to-order-template/lazy-product-add-to-order-template.component';
 import { LazyProductAddToWishlistComponent } from '../../../../extensions/wishlists/exports/lazy-product-add-to-wishlist/lazy-product-add-to-wishlist.component';

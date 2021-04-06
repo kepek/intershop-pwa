@@ -1,0 +1,43 @@
+@import '~src/styles/themes/camfil/colors.scss';
+@import '~src/styles/themes/camfil/variables.scss';
+
+:host {
+  .user-edit-top-row {
+    max-width: 460px;
+  }
+  .user-edit-header {
+    font-size: $font-size-lg;
+    line-height: $line-height-overline;
+    color: $camfil-color-dark;
+  }
+  .user-id-text {
+    strong {
+      margin-left: $space-box;
+    }
+  }
+  .top-spacing {
+    margin-top: $space-user-header-form;
+  }
+  .personal-info-container {
+    border-bottom: 1px solid #eaeaea;
+  }
+
+  .customer-list-container {
+    padding-right: 0;
+    padding-left: 24px;
+    border-right: 1px solid #eaeaea;
+  }
+
+  .personal-form {
+    width: 100%;
+  }
+
+  ::ng-deep {
+    .mat-card {
+      padding: 5px 0 25px 0;
+    }
+    camfil-user-personal-form {
+      width: 100%;
+    }
+  }
+}

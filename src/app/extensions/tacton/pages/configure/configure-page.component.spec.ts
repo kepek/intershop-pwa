@@ -8,7 +8,7 @@ import { instance, mock, when } from 'ts-mockito';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { CamfilModalDialogComponent } from 'ish-shared/components/common/camfil-modal-dialog/camfil-modal-dialog.component';
 import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
-import { CamfilProductImageComponent } from 'ish-shell/header/camfil-product-image/camfil-product-image.component';
+import { CamfilProductImageComponent } from 'ish-shared/components/product/camfil-product-image/camfil-product-image.component';
 
 import { TactonFacade } from '../../facades/tacton.facade';
 

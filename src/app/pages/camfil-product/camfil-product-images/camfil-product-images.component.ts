@@ -11,7 +11,7 @@ import { Product, ProductHelper } from 'ish-core/models/product/product.model';
  * It uses the {@link ProductImageComponent} for the rendering of product images.
  *
  * @example
- * <ish-product-images [product]="product"></ish-product-images>
+ * <camfil-product-images [product]="product"></camfil-product-images>
  */
 @Component({
   selector: 'camfil-product-images',

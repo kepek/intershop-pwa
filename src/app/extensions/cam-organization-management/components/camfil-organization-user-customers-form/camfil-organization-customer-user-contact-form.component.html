@@ -1,0 +1,25 @@
+<form [formGroup]="form">
+  <mat-card class="mat-elevation-z box-shadow mb-2">
+    <mat-card-content>
+      <div class="d-flex justify-content-between align-items-center">
+        <mat-checkbox color="primary" formControlName="canSelectCustomerContact" [checked]="!!customerContact">
+          <span class="text-truncate pl-2" [class.font-weight-bold]="canSelectCustomerContact && customerContact">
+            {{ customer.companyName }}
+          </span>
+        </mat-checkbox>
+        <mat-form-field appearance="fill">
+          <mat-label>{{ 'Contact Person' | translate }}</mat-label>
+          <mat-select
+            color="primary"
+            formControlName="customerContact"
+            (selectionChange)="onCustomerUserContactChange($event)"
+          >
+            <mat-option *ngFor="let contact of contacts" [value]="contact.erpId">
+              {{ contact.fullName }} ({{ contact.erpId }})
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</form>

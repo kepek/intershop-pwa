@@ -15,11 +15,11 @@ import { ProductRoutePipe } from 'ish-core/routing/product/product-route.pipe';
 import { categoryTree } from 'ish-core/utils/dev/test-data-utils';
 import { CamfilProductAddToBasketComponent } from 'ish-shared/components/product/camfil-product-add-to-basket/camfil-product-add-to-basket.component';
 import { CamfilProductIdComponent } from 'ish-shared/components/product/camfil-product-id/camfil-product-id.component';
+import { CamfilProductImageComponent } from 'ish-shared/components/product/camfil-product-image/camfil-product-image.component';
 import { CamfilProductInventoryComponent } from 'ish-shared/components/product/camfil-product-inventory/camfil-product-inventory.component';
 import { CamfilProductPriceComponent } from 'ish-shared/components/product/camfil-product-price/camfil-product-price.component';
 import { CamfilProductRatingComponent } from 'ish-shared/components/product/camfil-product-rating/camfil-product-rating.component';
 import { ProductAttributesComponent } from 'ish-shared/components/product/product-attributes/product-attributes.component';
-import { CamfilProductImageComponent } from 'ish-shell/header/camfil-product-image/camfil-product-image.component';
 
 import { ProductComparePagingComponent } from '../product-compare-paging/product-compare-paging.component';
 

@@ -9,10 +9,10 @@ import { ContentIncludeComponent } from 'ish-shared/cms/components/content-inclu
 import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
 import { CamfilProductAttributesComponent } from 'ish-shared/components/product/camfil-product-attributes/camfil-product-attributes.component';
 import { CamfilProductGuidesComponent } from 'ish-shared/components/product/camfil-product-guides/camfil-product-guides.component';
+import { CamfilProductImageComponent } from 'ish-shared/components/product/camfil-product-image/camfil-product-image.component';
 import { CamfilProductInventoryComponent } from 'ish-shared/components/product/camfil-product-inventory/camfil-product-inventory.component';
 import { CamfilProductQuantityComponent } from 'ish-shared/components/product/camfil-product-quantity/camfil-product-quantity.component';
 import { CamfilProductShipmentComponent } from 'ish-shared/components/product/camfil-product-shipment/camfil-product-shipment.component';
-import { CamfilProductImageComponent } from 'ish-shell/header/camfil-product-image/camfil-product-image.component';
 
 import { CamAhuFacade } from '../../facades/cam-ahu.facade';
 

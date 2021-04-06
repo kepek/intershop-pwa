@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { AuthorizationToggleGuard } from 'ish-core/authorization-toggle.module';
+import { BreadcrumbComponent } from 'ish-shared/components/common/breadcrumb/breadcrumb.component';
 import { SharedModule } from 'ish-shared/shared.module';
 
 import { AccountOverviewPageModule } from '../account-overview/account-overview-page.module';
@@ -88,6 +89,6 @@ const accountPageRoutes: Routes = [
 
 @NgModule({
   imports: [AccountOverviewPageModule, RouterModule.forChild(accountPageRoutes), SharedModule],
-  declarations: [AccountNavigationComponent, AccountPageComponent, AccountUserInfoComponent],
+  declarations: [AccountNavigationComponent, AccountPageComponent, AccountUserInfoComponent, BreadcrumbComponent],
 })
 export class AccountPageModule {}

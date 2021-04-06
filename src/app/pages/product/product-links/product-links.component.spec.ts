@@ -6,7 +6,7 @@ import { instance, mock } from 'ts-mockito';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { CamfilProductItemComponent } from 'ish-shared/components/product/camfil-product-item/camfil-product-item.component';
 
-import { CamfilProductLinksCarouselComponent } from '../camfil-product-links-carousel/camfil-product-links-carousel.component';
+import { ProductLinksCarouselComponent } from '../product-links-carousel/product-links-carousel.component';
 import { ProductLinksListComponent } from '../product-links-list/product-links-list.component';
 
 import { ProductLinksComponent } from './product-links.component';
@@ -21,7 +21,7 @@ describe('Product Links Component', () => {
       imports: [TranslateModule.forRoot()],
       declarations: [
         MockComponent(CamfilProductItemComponent),
-        MockComponent(CamfilProductLinksCarouselComponent),
+        MockComponent(ProductLinksCarouselComponent),
         MockComponent(ProductLinksListComponent),
         ProductLinksComponent,
       ],

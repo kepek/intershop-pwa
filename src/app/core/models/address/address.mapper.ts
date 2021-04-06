@@ -1,4 +1,4 @@
-import { CamCard } from 'src/app/extensions/cam-cards/models/cam-card/cam-card.model';
+import { CamCard } from '../../../extensions/cam-cards/models/cam-card/cam-card.model';
 
 import { AddressData } from './address.interface';
 import { Address } from './address.model';

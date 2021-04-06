@@ -16,7 +16,7 @@ type CollapsibleComponent = 'search' | 'navbar' | 'minibasket';
  * It uses the {@link MiniBasketContainerComponent} for rendering mini basket on desktop sized viewports.
  *
  * @example
- * <camfil-header></camfil-header>
+ * <ish-header-default></ish-header-default>
  */
 @Component({
   selector: 'ish-header-default',

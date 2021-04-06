@@ -1,3 +1,4 @@
+// tslint:disable: ish-ordered-imports ban-specific-imports
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import {
   ChangeDetectionStrategy,

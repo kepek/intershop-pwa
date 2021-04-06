@@ -20,6 +20,7 @@ export class CamCardMapper {
     const { company, street2, ...deliveryAddress } = deprecatedDeliveryAddress;
     return deliveryAddress as CamCardAddress;
   }
+
   fromData(camCardData: CamCardData): CamCard {
     if (camCardData) {
       const items = camCardData.camCardItems ? camCardData.camCardItems.length : 0;
@@ -46,6 +47,10 @@ export class CamCardMapper {
     } else {
       throw new Error(`camCardData is required`);
     }
+  }
+
+  fromListData(camCards: CamCardData[]): CamCard[] {
+    return camCards.map(this.fromData);
   }
 
   fromUpdate(camCard: CamCard, id: string): CamCard {

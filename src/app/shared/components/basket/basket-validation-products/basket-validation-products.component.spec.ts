@@ -8,8 +8,8 @@ import { anything, instance, mock, when } from 'ts-mockito';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { PricePipe } from 'ish-core/models/price/price.pipe';
 import { ProductRoutePipe } from 'ish-core/routing/product/product-route.pipe';
+import { CamfilProductImageComponent } from 'ish-shared/components/product/camfil-product-image/camfil-product-image.component';
 import { CamfilProductInventoryComponent } from 'ish-shared/components/product/camfil-product-inventory/camfil-product-inventory.component';
-import { CamfilProductImageComponent } from 'ish-shell/header/camfil-product-image/camfil-product-image.component';
 
 import { BasketValidationProductsComponent } from './basket-validation-products.component';
 

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, OnChanges, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnChanges, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
@@ -16,9 +16,9 @@ interface NavigationItems {
 @Component({
   selector: 'camfil-account-navigation',
   templateUrl: './camfil-account-navigation.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.Default,
 })
-export class CamfilAccountNavigationComponent implements OnInit, OnChanges {
+export class CamfilAccountNavigationComponent implements OnInit, AfterViewInit, OnChanges {
   @Input() deviceType: DeviceType;
 
   isMobileView = false;
@@ -35,21 +35,15 @@ export class CamfilAccountNavigationComponent implements OnInit, OnChanges {
       dataTestingId: 'cam-cards-link',
     },
     '/account/orders': { localizationKey: 'account.order_history.link' },
-    /**
     '/account/organization': {
       localizationKey: 'camfil.account.organization.user_management',
       feature: 'camOrganizationManagement',
       permission: 'APP_B2B_MANAGE_USERS',
     },
-    **/
-    '/account/organization': {
-      localizationKey: 'account.organization.user_management',
-      permission: 'APP_B2B_MANAGE_USERS',
-    },
     '/logout': { localizationKey: 'account.navigation.logout.link' },
   };
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private cdr: ChangeDetectorRef) {}
 
   ngOnInit() {
     this.isMobileView = this.deviceType === 'tablet' || this.deviceType === 'mobile';
@@ -57,6 +51,12 @@ export class CamfilAccountNavigationComponent implements OnInit, OnChanges {
 
   ngOnChanges() {
     this.isMobileView = this.deviceType === 'tablet' || this.deviceType === 'mobile';
+  }
+
+  ngAfterViewInit() {
+    setTimeout(() => {
+      this.cdr.markForCheck();
+    }, 500);
   }
 
   get currentPath() {

@@ -101,14 +101,14 @@ export const deleteSubCamCardSuccess = createAction(
 
 export const deleteSubCamCardFail = createAction('[Cam Cards API] Delete Sub Cam Card Fail', httpError());
 
-export const loadCustomers = createAction('[Cam Cards] load available customer', payload<boolean>());
+export const loadCustomers = createAction('[Cam Cards] load available customers', payload<boolean>());
 
 export const loadCustomersSuccess = createAction(
-  '[Cam Cards API] load available customer Success',
+  '[Cam Cards API] load available customers Success',
   payload<{ customers: CamCardCustomer[] }>()
 );
 
-export const loadCustomersdFail = createAction('[Cam Cards API] load available customer Fail', httpError());
+export const loadCustomersdFail = createAction('[Cam Cards API] load available customers Fail', httpError());
 
 export const loadContactsByCustomer = createAction(
   '[Cam Cards] load Contacts by customer',

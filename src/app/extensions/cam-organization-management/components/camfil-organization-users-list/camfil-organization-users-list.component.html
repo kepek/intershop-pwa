@@ -1,0 +1,107 @@
+<table [dataSource]="dataSource" class="mat-elevation-z8" mat-table matSort>
+  <!-- CustomerNo Column -->
+  <ng-container matColumnDef="customer.customerNo" sticky>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-nowrap">
+      {{ 'camfil.account.organization.list.header.customerNo' | translate }}
+    </th>
+    <td mat-cell *matCellDef="let user">
+      {{ user?.customer?.customerNo }}
+    </td>
+  </ng-container>
+
+  <!-- Company Column -->
+  <ng-container matColumnDef="customer.companyName">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+      {{ 'camfil.account.organization.list.header.company' | translate }}
+    </th>
+    <td mat-cell *matCellDef="let user">
+      {{ user?.customer?.companyName }}
+    </td>
+  </ng-container>
+
+  <!-- Department Column -->
+  <ng-container matColumnDef="department">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+      {{ 'camfil.account.organization.list.header.department' | translate }}
+    </th>
+    <td mat-cell *matCellDef="let user">
+      {{ user?.department }}
+    </td>
+  </ng-container>
+
+  <!-- City Column -->
+  <ng-container matColumnDef="customer.preferredInvoiceToAddress.city">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+      {{ 'camfil.account.organization.list.header.city' | translate }}
+    </th>
+    <td mat-cell *matCellDef="let user">
+      {{ user?.city || user?.customer?.preferredInvoiceToAddress?.city }}
+    </td>
+  </ng-container>
+
+  <!-- Email Column -->
+  <ng-container matColumnDef="login">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+      {{ 'camfil.account.organization.list.header.email' | translate }}
+    </th>
+    <td mat-cell *matCellDef="let user">{{ user?.login }}</td>
+  </ng-container>
+
+  <!-- Roles Column -->
+  <ng-container matColumnDef="roleIDs">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+      {{ 'camfil.account.organization.list.header.roles' | translate }}
+    </th>
+    <td mat-cell *matCellDef="let user">
+      <camfil-organization-roles-names [roleIDs]="user?.roleIDs"></camfil-organization-roles-names>
+    </td>
+  </ng-container>
+
+  <!-- Status Column -->
+  <ng-container matColumnDef="active">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+      {{ 'camfil.account.organization.list.header.status' | translate }}
+    </th>
+    <td mat-cell *matCellDef="let user">
+      <mat-icon
+        svgIcon="eye"
+        *ngIf="user?.active"
+        [title]="'camfil.account.organization.user.status.active' | translate"
+      ></mat-icon>
+      <mat-icon
+        svgIcon="lock"
+        *ngIf="!user?.active"
+        [title]="'camfil.account.organization.user.status.inactive' | translate"
+      ></mat-icon>
+    </td>
+  </ng-container>
+
+  <!-- Edit Column -->
+  <ng-container matColumnDef="edit" stickyEnd>
+    <th mat-header-cell *matHeaderCellDef class="text-right">
+      {{ 'camfil.account.organization.list.header.edit' | translate }}
+    </th>
+    <td mat-cell *matCellDef="let user" class="text-right">
+      <button class="edit-btn">
+        <a [routerLink]="['customers', user?.customerId, 'users', user?.id]">
+          <mat-icon svgIcon="edit"></mat-icon>
+        </a>
+      </button>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="dataSourceColumns"></tr>
+  <tr
+    mat-row
+    *matRowDef="let user; columns: dataSourceColumns"
+    [class.disabled]="!user?.active"
+    [routerLink]="['customers', user?.customerId, 'users', user?.id]"
+    class="users-list-row"
+  ></tr>
+
+  <tr *matNoDataRow>
+    <td class="mat-cell" colspan="8">Dupa{{ 'camfil.account.organization.list.no_data.text' | translate }}</td>
+  </tr>
+</table>
+
+<!--<mat-paginator [length]="resultsLength" [pageSize]="30"></mat-paginator>-->

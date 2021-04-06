@@ -1,5 +1,4 @@
 // tslint:disable: ish-ordered-imports ban-specific-imports
-
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -43,7 +42,21 @@ import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfi
 import { CamfilProductAddToBasketModalComponent } from 'ish-shared/components/product/camfil-product-add-to-basket/camfil-product-add-to-basket-modal/camfil-product-add-to-basket-modal.component';
 import { CamfilProductGuidesComponent } from 'ish-shared/components/product/camfil-product-guides/camfil-product-guides.component';
 import { MaterialModule } from 'ish-shared/material/material.module';
-import { ShellModule } from 'ish-shell/shell.module';
+
+import { CamAccountExportsModule } from '../extensions/cam-account/exports/cam-account-exports.module';
+import { CamAhuExportsModule } from '../extensions/cam-ahu/exports/cam-ahu-exports.module';
+import { CamCaptchaExportsModule } from '../extensions/cam-captcha/exports/cam-captcha-exports.module';
+import { CamCardsExportsModule } from '../extensions/cam-cards/exports/cam-cards-exports.module';
+import { CamConfigurationExportsModule } from '../extensions/cam-configuration/exports/cam-configuration-exports.module';
+import { CamDemoExportsModule } from '../extensions/cam-demo/exports/cam-demo-exports.module';
+import { CamIccExportsModule } from '../extensions/cam-icc/exports/cam-icc-exports.module';
+import { CamOrganizationManagementExportsModule } from '../extensions/cam-organization-management/exports/cam-organization-management-exports.module';
+import { CaptchaExportsModule } from '../extensions/captcha/exports/captcha-exports.module';
+import { OrderTemplatesExportsModule } from '../extensions/order-templates/exports/order-templates-exports.module';
+import { QuickorderExportsModule } from '../extensions/quickorder/exports/quickorder-exports.module';
+import { QuotingExportsModule } from '../extensions/quoting/exports/quoting-exports.module';
+import { TactonExportsModule } from '../extensions/tacton/exports/tacton-exports.module';
+import { WishlistsExportsModule } from '../extensions/wishlists/exports/wishlists-exports.module';
 
 import { ModalAddNewProductComponent } from '../extensions/cam-cards/pages/account-cam-card-detail/modal-add-new-product/modal-add-new-product.component';
 import { AddToCartModalComponent } from '../extensions/cam-cards/shared/add-to-cart-modal/add-to-cart-modal.component';
@@ -94,10 +107,6 @@ import { BasketInvoiceAddressWidgetComponent } from './components/checkout/baske
 import { BasketShippingAddressWidgetComponent } from './components/checkout/basket-shipping-address-widget/basket-shipping-address-widget.component';
 import { AccordionItemComponent } from './components/common/accordion-item/accordion-item.component';
 import { AccordionComponent } from './components/common/accordion/accordion.component';
-import { CamfilBreadcrumbComponent } from './components/common/camfil-breadcrumb/camfil-breadcrumb.component';
-import { CamfilFooterComponent } from './components/common/camfil-footer/camfil-footer.component';
-import { CamfilHeaderDefaultComponent } from './components/common/camfil-header-default/camfil-header-default.component';
-import { CamfilHeaderComponent } from './components/common/camfil-header/camfil-header.component';
 import { CamfilLinksBlockComponent } from './components/common/camfil-links-block/camfil-links-block.component';
 import { CamfilModalDialogComponent } from './components/common/camfil-modal-dialog/camfil-modal-dialog.component';
 import { CamfilQuickViewModalComponent } from './components/common/camfil-quick-view-modal/camfil-quick-view-modal.component';
@@ -184,17 +193,41 @@ import { RecentlyViewedComponent } from './components/recently/recently-viewed/r
 import { FormsDynamicModule } from './forms-dynamic/forms-dynamic.module';
 import { FormsSharedModule } from './forms/forms.module';
 import { CamfilProductTechnicalDocumentsComponent } from './components/common/camfil-product-technical-documents/camfil-product-technical-documents.component';
-import { CamfilSearchBoxComponent } from './components/common/camfil-search-box/camfil-search-box.component';
 import { CamfilCategoryBoxComponent } from '../pages/camfil-category/camfil-category-box/camfil-category-box.component';
 import { DATAPICKER_PROVIDERS_FORMAT } from './material/models/material.helper';
+import { ProductImageComponent } from 'ish-shared/components/product/product-image/product-image.component';
+import { CamfilProductImageComponent } from 'ish-shared/components/product/camfil-product-image/camfil-product-image.component';
+import { DirectivesModule } from 'ish-core/directives.module';
+import { ProductLinksListComponent } from '../pages/product/product-links-list/product-links-list.component';
+import { CamfilProductLinksComponent } from '../pages/product/camfil-product-links/camfil-product-links.component';
+import { RetailSetPartsComponent } from '../pages/product/retail-set-parts/retail-set-parts.component';
+import { CamfilProductLinksCarouselComponent } from '../pages/product/camfil-product-links-carousel/camfil-product-links-carousel.component';
+import { ProductMasterVariationsComponent } from '../pages/product/product-master-variations/product-master-variations.component';
+import { ProductBundlePartsComponent } from '../pages/product/product-bundle-parts/product-bundle-parts.component';
+import { ProductDetailActionsComponent } from '../pages/product/product-detail-actions/product-detail-actions.component';
+import { ProductDetailComponent } from '../pages/product/product-detail/product-detail.component';
+import { ProductImagesComponent } from '../pages/product/product-images/product-images.component';
+import { ProductLinksCarouselComponent } from '../pages/product/product-links-carousel/product-links-carousel.component';
+import { ProductLinksComponent } from '../pages/product/product-links/product-links.component';
+import { ProductPageComponent } from '../pages/product/product-page.component';
 
 const importExportModules = [
   AddressFormsSharedModule,
   AuthorizationToggleModule,
   CMSModule,
+  CamAccountExportsModule,
+  CamAhuExportsModule,
+  CamCaptchaExportsModule,
+  CamCardsExportsModule,
+  CamConfigurationExportsModule,
+  CamDemoExportsModule,
+  CamIccExportsModule,
+  CamOrganizationManagementExportsModule,
   CamfilIconsModule,
+  CaptchaExportsModule,
   CommonModule,
   DeferLoadModule,
+  DirectivesModule,
   FeatureToggleModule,
   FormlyModule,
   FormsDynamicModule,
@@ -208,12 +241,16 @@ const importExportModules = [
   NgbDropdownModule,
   NgbModalModule,
   NgbPopoverModule,
+  OrderTemplatesExportsModule,
   PipesModule,
+  QuickorderExportsModule,
+  QuotingExportsModule,
   ReactiveFormsModule,
   RouterModule,
-  ShellModule,
   SwiperModule,
+  TactonExportsModule,
   TranslateModule,
+  WishlistsExportsModule,
 ];
 
 const declaredComponents = [
@@ -250,10 +287,6 @@ const declaredComponents = [
   CamfilFilterDropdownComponent,
   CamfilFilterNavigationBadgesComponent,
   CamfilFilterTextComponent,
-  CamfilFooterComponent,
-  CamfilHeaderBoxComponent,
-  CamfilHeaderComponent,
-  CamfilHeaderDefaultComponent,
   CamfilProductAddToBasketModalComponent,
   CamfilProductAttributeComponent,
   CamfilProductAttributesComponent,
@@ -270,7 +303,6 @@ const declaredComponents = [
   CamfilProductTechnicalDocumentsComponent,
   CamfilProductTitleComponent,
   CamfilSmallCtaModalComponent,
-  ContentIncludeComponent,
   ContentSlotComponent,
   CreateOrderModalComponent,
   CreateOrderSuccessComponent,
@@ -331,7 +363,6 @@ const exportedComponents = [
   CamCardModalDetailsComponent,
   CamfilBannerComponent,
   CamfilBasketCostSummaryComponent,
-  CamfilBreadcrumbComponent,
   CamfilBulletListComponent,
   CamfilCamCardModalComponent,
   CamfilCategoryBoxComponent,
@@ -339,9 +370,7 @@ const exportedComponents = [
   CamfilFilterInfoComponent,
   CamfilFilterMeasurementsComponent,
   CamfilFilterNavigationComponent,
-  CamfilFooterComponent,
   CamfilHeaderBoxComponent,
-  CamfilHeaderComponent,
   CamfilLineItemTableComponent,
   CamfilLinksBlockComponent,
   CamfilModalDialogComponent,
@@ -352,9 +381,12 @@ const exportedComponents = [
   CamfilProductAttributesComponent,
   CamfilProductGuidesComponent,
   CamfilProductIdComponent,
+  CamfilProductImageComponent,
   CamfilProductInventoryComponent,
   CamfilProductItemComponent,
   CamfilProductLabelComponent,
+  CamfilProductLinksCarouselComponent,
+  CamfilProductLinksComponent,
   CamfilProductListingComponent,
   CamfilProductPriceComponent,
   CamfilProductPromotionComponent,
@@ -365,7 +397,6 @@ const exportedComponents = [
   CamfilProductTitleComponent,
   CamfilProductVariationSelectComponent,
   CamfilQuickViewModalComponent,
-  CamfilSearchBoxComponent,
   CamfilSmallCtaModalComponent,
   ContentIncludeComponent,
   ContentPageletComponent,
@@ -389,14 +420,25 @@ const exportedComponents = [
   ProductAddToBasketComponent,
   ProductAttributesComponent,
   ProductBundleDisplayComponent,
+  ProductBundlePartsComponent,
+  ProductDetailActionsComponent,
+  ProductDetailComponent,
   ProductIdComponent,
+  ProductImageComponent,
+  ProductImagesComponent,
   ProductInventoryComponent,
   ProductItemComponent,
+  ProductLinksCarouselComponent,
+  ProductLinksComponent,
+  ProductLinksListComponent,
+  ProductMasterVariationsComponent,
+  ProductPageComponent,
   ProductPriceComponent,
   ProductVariationDisplayComponent,
   PromotionDetailsComponent,
   PromotionRemoveComponent,
   RecentlyViewedComponent,
+  RetailSetPartsComponent,
   SuccessMessageComponent,
 ];
 

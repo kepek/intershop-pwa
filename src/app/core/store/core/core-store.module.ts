@@ -46,6 +46,7 @@ const coreMetaReducers: MetaReducer<CoreState>[] = [
         strictActionSerializability: !environment.production,
         strictStateImmutability: !environment.production,
         strictStateSerializability: !environment.production,
+        strictActionTypeUniqueness: !environment.production,
       },
     }),
     StoreRouterConnectingModule.forRoot({ serializer: CustomRouterSerializer }),
@@ -79,6 +80,7 @@ export class CoreStoreModule {
           strictActionSerializability: true,
           strictStateImmutability: true,
           strictStateSerializability: true,
+          strictActionTypeUniqueness: false,
         },
       }),
     ];

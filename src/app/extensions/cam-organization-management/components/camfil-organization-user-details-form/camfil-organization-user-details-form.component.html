@@ -1,0 +1,47 @@
+<div class="form__section form__personal-info">
+  <h3 class="form__subtitle">
+    {{ 'camfil.account.organization.edit_user.personal_info.header.text' | translate }}
+    <small [formGroup]="userActiveForm" class="ml-3">
+      <mat-checkbox color="primary" formControlName="active" (change)="toggleActiveFlag()">
+        <ng-container *ngIf="user?.active; else unlockText">
+          {{ 'camfil.account.organization.edit_user.lock.checkbox.text' | translate }}
+        </ng-container>
+        <ng-template #unlockText>
+          {{ 'camfil.account.organization.edit_user.unlock.checkbox.text' | translate }}
+        </ng-template>
+      </mat-checkbox>
+    </small>
+    <button mat-stroked-button color="primary" class="ml-3" (click)="resetUserPassword()">
+      {{ 'camfil.account.organization.edit_user.reset_password.button.text' | translate }}
+    </button>
+  </h3>
+  <p>
+    {{ 'camfil.account.organization.edit_user.personal_info.user_id.text' | translate }}
+    <strong class="ml-2">{{ user?.id }}</strong>
+  </p>
+  <form [formGroup]="userForm" (ngSubmit)="submitUserForm()" class="form-horizontal" novalidate="novalidate">
+    <div>
+      <mat-form-field appearance="fill" class="form__field mb-3 mr-3">
+        <mat-label>{{ 'camfil.account.organization.user_details.form.firstname.label' | translate }}</mat-label>
+        <input matInput formControlName="firstName" type="text" (blur)="submitUserForm()" />
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="form__field mb-3">
+        <mat-label>{{ 'camfil.account.organization.user_details.form.lastname.label' | translate }}</mat-label>
+        <input matInput formControlName="lastName" type="text" (blur)="submitUserForm()" />
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field appearance="fill" class="form__field mr-3">
+        <mat-label>{{ 'camfil.account.organization.user_details.form.phone.label' | translate }}</mat-label>
+        <input matInput formControlName="phoneHome" type="tel" (blur)="submitUserForm()" />
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="form__field">
+        <mat-label>{{ 'camfil.account.organization.user_details.form.email.label' | translate }}</mat-label>
+        <input matInput formControlName="email" type="email" (blur)="submitUserForm()" />
+      </mat-form-field>
+    </div>
+    <button hidden mat-raised-button type="submit" [disabled]="isUserFormSubmitButtonDisabled">
+      {{ 'camfil.account.organization.user_details.form.submit.label' | translate }}
+    </button>
+  </form>
+</div>
