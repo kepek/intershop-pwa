@@ -1,5 +1,7 @@
-import { ChangeDetectionStrategy, Component, Input, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Observable, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { CamCardsFacade } from 'src/app/extensions/cam-cards/facades/cam-cards.facade';
 import { CamCard, CamCardItem } from 'src/app/extensions/cam-cards/models/cam-card/cam-card.model';
 
@@ -13,19 +15,31 @@ import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfi
   styleUrls: ['./create-new-camcard.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CreateNewCamcardComponent {
+export class CreateNewCamcardComponent implements OnInit, OnDestroy {
   @ViewChild(CamfilSmallCtaModalComponent) modal: CamfilSmallCtaModalComponent;
 
   products: Product[];
+  private destroy$ = new Subject();
+
+  camCardLoading$: Observable<boolean>;
 
   @Input() buckets: Bucket[] = [];
 
   constructor(private camCardsFacade: CamCardsFacade, public dialog: MatDialog) {}
 
-  create() {
-    this.convertToPermanent();
+  ngOnInit() {
+    this.camCardLoading$ = this.camCardsFacade.camCardLoading$;
   }
 
+  create() {
+    this.convertToPermanent();
+
+    this.camCardLoading$.pipe(takeUntil(this.destroy$)).subscribe(value => {
+      if (!value) {
+        this.modal.hide();
+      }
+    });
+  }
   convertToPermanent() {
     const newCamCards = this.buckets.map((bucket, idx) => {
       const name = this.getNewName(bucket.orderMark, idx);
@@ -68,5 +82,10 @@ export class CreateNewCamcardComponent {
 
   getTimestamp(): string {
     return new Date().toLocaleString().replace(', ', '_');
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }
