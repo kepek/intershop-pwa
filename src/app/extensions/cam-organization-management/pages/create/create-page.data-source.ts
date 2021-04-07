@@ -1,6 +1,6 @@
 // tslint:disable: ish-ordered-imports project-structure
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
-import { Observable, Subject, combineLatest } from 'rxjs';
+import { Observable, Subject, combineLatest, BehaviorSubject } from 'rxjs';
 import { map, switchMap, take } from 'rxjs/operators';
 
 import { CamOrganizationManagementFacade } from '../../facades/cam-organization-management.facade';
@@ -10,24 +10,24 @@ import { whenTruthy } from 'ish-core/utils/operators';
 
 @Component({ template: '' })
 // tslint:disable-next-line: component-creation-test
-export abstract class UserPageDataSourceComponent implements OnInit, AfterViewInit, OnDestroy {
+export abstract class CreatePageDataSourceComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(private organizationFacade: CamOrganizationManagementFacade) {}
 
   private destroy$ = new Subject();
 
-  customer$: Observable<CamfilB2bCustomer>;
+  customer$: Observable<Partial<CamfilB2bCustomer>>;
   customerId$: Observable<string>;
-  user$: Observable<CamfilB2bUser>;
+  user$: Observable<Partial<CamfilB2bUser>>;
   userId$: Observable<string>;
-  context$: Observable<{ customer: CamfilB2bCustomer; user: CamfilB2bUser }>;
+  context$: Observable<{ customer: Partial<CamfilB2bCustomer>; user: Partial<CamfilB2bUser> }>;
 
   // tslint:disable-next-line:no-empty
   ngOnInit() {
-    this.customer$ = this.organizationFacade.selectedCustomer$.pipe(whenTruthy(), take(1));
-    this.customerId$ = this.organizationFacade.selectedCustomerId$.pipe(whenTruthy(), take(1));
+    this.customer$ = this.organizationFacade.currentCustomer$;
+    this.customerId$ = this.customer$.pipe(map(customer => customer.id));
 
-    this.user$ = this.organizationFacade.selectedUser$.pipe(whenTruthy(), take(1));
-    this.userId$ = this.organizationFacade.selectedUserId$.pipe(whenTruthy(), take(1));
+    this.user$ = new BehaviorSubject<Partial<CamfilB2bUser>>({});
+    this.userId$ = this.user$.pipe(map(user => user.id));
 
     this.context$ = combineLatest([this.customer$, this.user$]).pipe(map(([customer, user]) => ({ customer, user })));
   }
@@ -44,15 +44,18 @@ export abstract class UserPageDataSourceComponent implements OnInit, AfterViewIn
     return this.organizationFacade.getOrganizationLoading$();
   }
 
-  selectedUser$() {
+  newUser$() {
     return this.userId$.pipe(switchMap(userId => this.organizationFacade.getUser$(userId)));
   }
 
-  selectedUserRoles$() {
-    return this.userId$.pipe(switchMap(userId => this.organizationFacade.getUserRoles$(userId)));
+  newUserRoles$() {
+    return combineLatest([
+      this.userId$.pipe(switchMap(userId => this.organizationFacade.getUserRoles$(userId))),
+      this.organizationFacade.getSelectedRoles$(['APP_B2B_BUYER']),
+    ]).pipe(map(([userRoles, newUserRoles]) => [...userRoles, ...newUserRoles]));
   }
 
-  selectedUserStaticRoles$() {
+  newUserStaticRoles$() {
     return this.userId$.pipe(switchMap(userId => this.organizationFacade.getUserStaticRoles$(userId)));
   }
 

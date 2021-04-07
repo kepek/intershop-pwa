@@ -1,7 +1,7 @@
 <div class="d-flex justify-content-between py-3">
   <div>
     <ng-content select="[slot=back]"></ng-content>
-    <h1 #title [hidden]="!showTitleContent" class="align-middle d-none d-md-inline pl-3">
+    <h1 #title [hidden]="!showTitleContent" class="align-middle d-none d-md-inline">
       <ng-content select="[slot=title]"></ng-content>
     </h1>
   </div>

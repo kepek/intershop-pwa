@@ -1,0 +1,31 @@
+@import '~src/styles/themes/camfil/variables';
+@import '~src/styles/themes/camfil/mixins.scss';
+
+:host {
+  &::ng-deep .mat-checkbox-layout,
+  &::ng-deep .mat-form-field-wrapper {
+    margin: 0;
+  }
+
+  .section {
+    padding: $space-default;
+    margin-bottom: 0;
+
+    &--roles,
+    &--customers {
+      .section__content {
+        max-height: 400px;
+        padding-right: 1px;
+        padding-left: 1px;
+        overflow-y: auto;
+      }
+    }
+
+    &__title {
+      @include font-size-h3;
+
+      font-weight: bold;
+      text-transform: none;
+    }
+  }
+}

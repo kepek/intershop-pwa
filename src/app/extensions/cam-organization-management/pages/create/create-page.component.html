@@ -15,8 +15,11 @@
       {{ 'camfil.account.organization.edit_user.header.text' | translate }}
     </ng-container>
     <ng-container slot="extra">
-      <button mat-flat-button color="primary" [routerLink]="['/account/orders']">
-        {{ 'camfil.account.organization.edit_user.show_orders.button.text' | translate }}
+      <button mat-stroked-button [routerLink]="['/account/organization']" class="mr-2">
+        {{ 'camfil.account.organization.list.cancel.button.text' | translate }}
+      </button>
+      <button mat-flat-button color="primary" [routerLink]="['/account/organization/create']">
+        {{ 'camfil.account.organization.list.create_new_user.button.text' | translate }}
       </button>
     </ng-container>
   </camfil-my-page-header>
@@ -25,7 +28,7 @@
 <ng-template #userDetails>
   <camfil-organization-user-details-form
     [customer]="selectedCustomer$() | async"
-    [user]="selectedUser$() | async"
+    [user]="newUser$() | async"
     (updateUser)="onUpdateSelectedCustomerUserDetails($event)"
     (updateUserActive)="onUpdateSelectedCustomerUserActive($event)"
     (updateUserPassword)="onUpdateSelectedCustomerUserPassword()"
@@ -43,7 +46,7 @@
         [selectedContact]="customerUserContact$(customer.id) | async"
         [contacts]="customerContacts$(customer.id) | async"
         [customer]="customer"
-        [user]="selectedUser$() | async"
+        [user]="newUser$() | async"
         (assignCustomerUserContact)="onAssignCustomerUserContact($event)"
         (unassignCustomerUserContact)="onUnassignCustomerUserContact($event)"
       ></camfil-organization-customer-user-contact-form>
@@ -59,8 +62,8 @@
     <div class="section__content">
       <camfil-organization-user-roles-form
         [roles]="roles$() | async"
-        [staticRoles]="selectedUserStaticRoles$() | async"
-        [selectedRoles]="selectedUserRoles$() | async"
+        [staticRoles]="newUserStaticRoles$() | async"
+        [selectedRoles]="newUserRoles$() | async"
         (selectCustomerUserRoles)="onUpdateSelectedCustomerUserRoles($event)"
       ></camfil-organization-user-roles-form>
     </div>

@@ -8,12 +8,12 @@ import {
 } from '@angular/core';
 
 @Component({
-  selector: 'camfil-organization-header',
-  templateUrl: './camfil-organization-header.component.html',
-  styleUrls: ['./camfil-organization-header.component.scss'],
+  selector: 'camfil-my-page-header',
+  templateUrl: './camfil-my-page-header.component.html',
+  styleUrls: ['./camfil-my-page-header.component.scss'],
   changeDetection: ChangeDetectionStrategy.Default,
 })
-export class CamfilOrganizationHeaderComponent implements AfterViewInit {
+export class CamfilMyPageHeaderComponent implements AfterViewInit {
   constructor(private cd: ChangeDetectorRef) {}
 
   @ViewChild('back') back: ElementRef;

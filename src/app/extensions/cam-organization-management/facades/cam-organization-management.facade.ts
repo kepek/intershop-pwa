@@ -88,6 +88,22 @@ export class CamOrganizationManagementFacade {
     });
   }
 
+  currentUser$ = this.accountFacade.user$.pipe(
+    switchMap(currentUser => this.getUsers$().pipe(map(users => users.find(user => user.login === currentUser.login)))),
+    whenTruthy(),
+    take(1)
+  );
+
+  currentCustomer$ = this.accountFacade.customer$.pipe(
+    switchMap(currentCustomer =>
+      this.getCustomers$().pipe(
+        map(customers => customers.find(customer => customer.customerNo === currentCustomer.customerNo))
+      )
+    ),
+    whenTruthy(),
+    take(1)
+  );
+
   camOrganizationManagementState$ = this.store.pipe(select(getCamOrganizationManagementState));
 
   selectedCustomer$ = this.store.pipe(select(getSelectedCustomer));
@@ -306,20 +322,24 @@ export class CamOrganizationManagementFacade {
       this.loadCustomerRoles$(customer.id);
     });
 
-    this.store.dispatch(loadCustomerUser({ customerId, userId }));
+    if (customerId && userId) {
+      this.store.dispatch(loadCustomerUser({ customerId, userId }));
+    }
 
-    this.getUser$(userId)
-      .pipe(whenTruthy(), take(1))
-      .subscribe(user => {
-        this.getCustomers$()
-          .pipe(whenTruthy(), skipRelations(camfilB2bCustomerRelationsKeys))
-          .subscribe(customers => {
-            customers.forEach(customer => {
-              this.loadCustomerContacts$(customer.id);
-              this.loadCustomerUserContact$(customer.id, user.id);
+    if (userId) {
+      this.getUser$(userId)
+        .pipe(whenTruthy(), take(1))
+        .subscribe(user => {
+          this.getCustomers$()
+            .pipe(whenTruthy(), skipRelations(camfilB2bCustomerRelationsKeys))
+            .subscribe(customers => {
+              customers.forEach(customer => {
+                this.loadCustomerContacts$(customer.id);
+                this.loadCustomerUserContact$(customer.id, user.id);
+              });
             });
-          });
-      });
+        });
+    }
   }
   /**
    * Get Customer User Contact

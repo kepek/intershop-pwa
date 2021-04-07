@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 
 import { SharedModule } from 'ish-shared/shared.module';
 
-import { CamfilOrganizationHeaderComponent } from './components/camfil-organization-header/camfil-organization-header.component';
 import { CamfilOrganizationRolesNamesComponent } from './components/camfil-organization-roles-names/camfil-organization-roles-names.component';
 import { CamfilOrganizationCustomerUserContactFormComponent } from './components/camfil-organization-user-customers-form/camfil-organization-customer-user-contact-form.component';
 import { CamfilOrganizationUserDetailsFormComponent } from './components/camfil-organization-user-details-form/camfil-organization-user-details-form.component';
@@ -18,7 +17,6 @@ import { CamfilUserRolesSelectionComponent } from './components/camfil-user-role
 const exportedComponents = [
   CamfilConfirmationModalComponent,
   CamfilOrganizationCustomerUserContactFormComponent,
-  CamfilOrganizationHeaderComponent,
   CamfilOrganizationRolesNamesComponent,
   CamfilOrganizationUserDetailsFormComponent,
   CamfilOrganizationUserRolesFormComponent,
