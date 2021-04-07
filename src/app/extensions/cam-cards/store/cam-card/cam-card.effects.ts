@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { RouterNavigatedPayload, routerNavigatedAction } from '@ngrx/router-store';
 import { Store, select } from '@ngrx/store';
-import { concat, fromEvent } from 'rxjs';
+import { EMPTY, concat, fromEvent } from 'rxjs';
 import {
   concatMap,
   distinctUntilChanged,
@@ -14,7 +14,6 @@ import {
   mapTo,
   mergeMap,
   switchMap,
-  take,
   takeWhile,
   tap,
   withLatestFrom,
@@ -114,6 +113,8 @@ import {
   updateSubCamCardSuccess,
 } from './cam-card.actions';
 import {
+  getAllCamCards,
+  getCamCardCustomers,
   getCamCardDetails,
   getSelectedCamCardDetails,
   getSelectedCamCardId,
@@ -130,23 +131,13 @@ export class CamCardEffects {
     @Inject(PLATFORM_ID) private platformId: string
   ) {}
 
-  routeListenerForCamCustomers$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(routerNavigatedAction),
-      mapToPayloadProperty<RouterNavigatedPayload<RouterState>>('routerState'),
-      filter((routerState: RouterState) => /^\/(account\/camcards)/.test(routerState.url)),
-      take(1),
-      mapTo(loadCustomers(true))
-    )
-  );
-
   routeListenerForCamCards$ = createEffect(() =>
     this.actions$.pipe(
       ofType(routerNavigatedAction),
       mapToPayloadProperty<RouterNavigatedPayload<RouterState>>('routerState'),
       filter((routerState: RouterState) => /^\/(account\/camcards)/.test(routerState.url)),
-      take(1),
-      mapTo(loadCamCards())
+      withLatestFrom(this.store.pipe(select(getAllCamCards)), this.store.pipe(select(getCamCardCustomers))),
+      mergeMap(([, cc, customers]) => (cc.length && customers.length ? EMPTY : [loadCustomers(true), loadCamCards()]))
     )
   );
 
