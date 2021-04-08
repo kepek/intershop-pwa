@@ -135,6 +135,7 @@
               <p class="quantity-form-text">{{ 'camfil.product.quantity.text' | translate }}</p>
               <camfil-product-quantity
                 *ngIf="!isRetailSet(product)"
+                [allowZeroQuantity]="true"
                 [product]="product"
                 [parentForm]="productDetailForm"
                 [controlName]="quantityControlName"

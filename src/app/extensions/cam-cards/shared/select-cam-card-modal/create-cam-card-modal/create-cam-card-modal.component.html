@@ -164,5 +164,6 @@
         [touched]="getField('newCamCard').touched || getField('newCamCard').dirty"
       ></camfil-error>
     </form>
+    <div *ngIf="!showNewSegment" class="sublevel-placeholder"></div>
   </div>
 </ng-template>
