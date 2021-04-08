@@ -96,8 +96,8 @@ export class CreateCamCardModalComponent implements OnInit, AfterViewInit {
     this.camCardForm = this.fb.group({
       name: ['', [Validators.required, Validators.maxLength(35)]],
       customerSelect: [''],
-      orderMark: ['', [Validators.required]],
-      invoiceMark: ['', [Validators.required]],
+      orderMark: [''],
+      invoiceMark: [''],
       deliveryAddressSelect: ['', []],
       company: ['', [Validators.required]],
       address: ['', [Validators.required]],
