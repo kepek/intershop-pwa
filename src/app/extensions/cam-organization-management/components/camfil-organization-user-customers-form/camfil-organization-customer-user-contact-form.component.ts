@@ -43,36 +43,51 @@ export class CamfilOrganizationCustomerUserContactFormComponent implements OnIni
     this.destroy$.complete();
   }
 
+  // tslint:disable-next-line:lifecycle-cyclomatic-complexity
   ngOnInit() {
     this.form = this.fb.group({
-      canSelectCustomerContact: new FormControl({
-        value: !!this.selectedContact,
-        disabled: this.contacts?.length === 0,
+      customerContactCheckbox: new FormControl({
+        value: false,
+        disabled: false,
       }),
-      customerContact: new FormControl({ value: this.selectedContact?.erpId, disabled: !this.selectedContact }, [
-        Validators.required,
-      ]),
+      customerContactSelect: new FormControl({
+        value: undefined,
+        disabled: true,
+        validators: [Validators.required],
+      }),
     });
 
-    const canSelectCustomerContact = this.form.get('canSelectCustomerContact');
-    const customerContact = this.form.get('customerContact');
+    const checkboxControl = this.form.get('customerContactCheckbox');
+    const selectControl = this.form.get('customerContactSelect');
 
-    canSelectCustomerContact.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(value => {
-      customerContact?.[value ? 'enable' : 'disable']();
+    checkboxControl.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(value => {
+      selectControl?.[value ? 'enable' : 'disable']();
 
       if (!value) {
-        customerContact.reset();
+        selectControl.reset();
         this.onCustomerUserContactChange({ value });
       }
     });
+
+    if (this.selectedContact?.erpId) {
+      checkboxControl.setValue(true);
+      selectControl.enable();
+    } else {
+      checkboxControl.setValue(false);
+      selectControl.disable();
+    }
+
+    if (this.customer?.parent) {
+      checkboxControl.setValue(true);
+      checkboxControl.disable();
+      selectControl.enable();
+    }
+
+    selectControl.setValue(this.selectedContact?.erpId);
   }
 
-  get canSelectCustomerContact() {
-    return this.form.get('canSelectCustomerContact').value;
-  }
-
-  get customerContact() {
-    return this.form.get('customerContact').value;
+  get isSelected() {
+    return !this.form?.get('customerContactCheckbox')?.value && !!this.form?.get('customerContactSelect')?.value;
   }
 
   onCustomerUserContactChange(event) {
@@ -91,7 +106,7 @@ export class CamfilOrganizationCustomerUserContactFormComponent implements OnIni
         user,
         contact,
       });
-    } else {
+    } else if (this.selectedContact) {
       this.unassignCustomerUserContact.emit({
         customer,
         user,

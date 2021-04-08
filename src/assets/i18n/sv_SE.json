@@ -716,6 +716,7 @@
   "camfil.account.organization.edit_user.reset_password.button.text": "Återställ användarlösenord",
   "camfil.account.organization.edit_user.roles.header.text": "Roller",
   "camfil.account.organization.edit_user.show_orders.button.text": "Visa beställningar",
+  "camfil.account.organization.edit_user.form.customerContactSelect.error.required": "Välj en kontaktperson",
   "camfil.account.organization.list.create_new_user.button.text": "Skapa Ny Användare",
   "camfil.account.organization.list.cancel.button.text": "Avbryt",
   "camfil.account.organization.edit_user.unassign_customer_user_contact.modal.text": "'{{0}}' har inte tilldelats från '{{1}}' som kontaktperson.",

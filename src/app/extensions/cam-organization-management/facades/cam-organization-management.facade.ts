@@ -132,10 +132,15 @@ export class CamOrganizationManagementFacade {
   rolesInitialized$ = this.store.pipe(select(isRoleInitialized));
 
   /**
-   * Get Customers
+   * Get Customers (sorted by parent company flag).
    */
   getCustomers$(): Observable<CamfilB2bCustomer[]> {
-    return this.store.pipe(select(getCustomers));
+    return this.store.pipe(
+      select(getCustomers),
+      map(customers => {
+        return [...customers].sort((x, y) => Number(x.parent) - Number(y.parent)).reverse();
+      })
+    );
   }
 
   /**
@@ -199,14 +204,13 @@ export class CamOrganizationManagementFacade {
   getUserStaticRoles$(userId: string) {
     const disabledRoleIDs = ['APP_B2B_OCI_USER'];
 
-    const selectedUser$ = this.getUser$(userId).pipe(whenTruthy(), take(1));
-
-    const currentUser$ = this.accountFacade.user$.pipe(whenTruthy(), take(1));
+    const selectedUser$ = this.getUser$(userId).pipe(take(1));
+    const currentUser$ = this.accountFacade.user$.pipe(take(1));
 
     return combineLatest([selectedUser$, currentUser$]).pipe(
       map(([selectedUser, currentUser]) => selectedUser?.login === currentUser?.login),
       switchMap(isCurrentUser =>
-        isCurrentUser ? of([...disabledRoleIDs, 'APP_B2B_ACCOUNT_OWNER']) : of(disabledRoleIDs)
+        isCurrentUser ? of([...disabledRoleIDs, 'APP_B2B_ACCOUNT_OWNER']) : of([...disabledRoleIDs])
       ),
       switchMap(roleIDs => this.getSelectedRoles$(roleIDs))
     );
@@ -326,6 +330,14 @@ export class CamOrganizationManagementFacade {
       this.store.dispatch(loadCustomerUser({ customerId, userId }));
     }
 
+    this.getCustomers$()
+      .pipe(whenTruthy(), skipRelations(camfilB2bCustomerRelationsKeys))
+      .subscribe(customers => {
+        customers.forEach(customer => {
+          this.loadCustomerContacts$(customer.id);
+        });
+      });
+
     if (userId) {
       this.getUser$(userId)
         .pipe(whenTruthy(), take(1))
@@ -334,7 +346,6 @@ export class CamOrganizationManagementFacade {
             .pipe(whenTruthy(), skipRelations(camfilB2bCustomerRelationsKeys))
             .subscribe(customers => {
               customers.forEach(customer => {
-                this.loadCustomerContacts$(customer.id);
                 this.loadCustomerUserContact$(customer.id, user.id);
               });
             });

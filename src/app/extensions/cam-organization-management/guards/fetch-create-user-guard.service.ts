@@ -5,6 +5,7 @@ import { Observable, of } from 'rxjs';
 import { whenTruthy } from 'ish-core/utils/operators';
 
 import { CamOrganizationManagementFacade } from '../facades/cam-organization-management.facade';
+import { take } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -13,8 +14,8 @@ export class FetchCreateUserGuard implements CanActivate {
   constructor(private organizationFacade: CamOrganizationManagementFacade) {}
 
   canActivate(): Observable<boolean> {
-    this.organizationFacade.currentCustomer$.pipe(whenTruthy()).subscribe(({ id }) => {
-      this.organizationFacade.loadCustomerRoles$(id);
+    this.organizationFacade.currentCustomer$.pipe(whenTruthy(), take(1)).subscribe(customer => {
+      this.organizationFacade.loadCustomerUser$(customer.id, undefined);
     });
 
     return of(true);

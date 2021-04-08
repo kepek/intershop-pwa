@@ -716,6 +716,7 @@
   "camfil.account.organization.edit_user.reset_password.button.text": "fi_Reset user password",
   "camfil.account.organization.edit_user.roles.header.text": "fi_Roles",
   "camfil.account.organization.edit_user.show_orders.button.text": "fi_Show Orders",
+  "camfil.account.organization.edit_user.form.customerContactSelect.error.required": "fi_Please select a contact person",
   "camfil.account.organization.list.create_new_user.button.text": "fi_Create New User",
   "camfil.account.organization.list.cancel.button.text": "fi_Cancel",
   "camfil.account.organization.edit_user.unassign_customer_user_contact.modal.text": "fi_The '{{0}}' has been unassigned from '{{1}}' as contact person.",

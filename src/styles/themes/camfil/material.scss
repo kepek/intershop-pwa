@@ -315,11 +315,11 @@ a {
   }
 }
 
-.mat-form-field {
-  &-wrapper {
+.mat-form-field:not(.mat-form-field-invalid) {
+  .mat-form-field-wrapper {
     padding-bottom: 0;
   }
-  &-underline {
+  .mat-form-field-underline {
     bottom: 0;
   }
 }
