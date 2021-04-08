@@ -291,6 +291,7 @@ export const camCardReducer = createReducer(
     const { camCardId, contacts } = action.payload;
     return {
       ...state,
+      loading: false,
       entities: {
         ...state.entities,
         [camCardId]: {
