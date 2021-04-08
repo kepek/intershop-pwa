@@ -16,7 +16,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { first, takeUntil } from 'rxjs/operators';
 
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { Product } from 'ish-core/models/product/product.model';
@@ -112,7 +112,6 @@ export class SelectCamCardModalComponent implements OnInit, OnDestroy, OnChanges
   ) {}
 
   ngOnInit() {
-    this.determineSelectOptions();
     this.formsInit();
 
     this.currentCamCard$ = this.camCardsFacade.currentCamCard$;
@@ -137,7 +136,8 @@ export class SelectCamCardModalComponent implements OnInit, OnDestroy, OnChanges
   }
 
   private determineSelectOptions() {
-    this.camCardsFacade.camCard$.pipe(takeUntil(this.destroy$)).subscribe(camCards => {
+    const camCards$ = this.camCardsFacade.camCard$;
+    camCards$.pipe(takeUntil(this.destroy$)).subscribe(camCards => {
       if (camCards && camCards.length > 0) {
         const realCamCards = CamCardHelper.getRealCamCards(camCards);
         this.camCards = realCamCards;
@@ -162,6 +162,7 @@ export class SelectCamCardModalComponent implements OnInit, OnDestroy, OnChanges
         this.camCardOptions = [];
       }
     });
+    camCards$.pipe(first()).subscribe(camCards => (!camCards?.length ? this.camCardsFacade.loadCamCards() : ''));
   }
 
   private formsInit() {
@@ -325,6 +326,7 @@ export class SelectCamCardModalComponent implements OnInit, OnDestroy, OnChanges
 
   /** open modal */
   show() {
+    this.determineSelectOptions();
     this.camCardsFacade.unSelectCamCard();
     this.showForm = true;
     return this.modalTemplate;
