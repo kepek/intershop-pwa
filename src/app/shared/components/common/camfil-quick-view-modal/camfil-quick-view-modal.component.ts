@@ -74,9 +74,9 @@ export class CamfilQuickViewModalComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.product$ = this.shoppingFacade.product$(this.data.sku, ProductCompletenessLevel.Detail);
     this.product$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(product => {
-      this.quantity = product.minOrderQuantity;
+      this.quantity = 0;
       this.productDetailForm = new FormGroup({
-        [this.quantityControlName]: new FormControl(this.quantity || product.minOrderQuantity),
+        [this.quantityControlName]: new FormControl(this.quantity),
       });
 
       this.isShipmentInformationAvailable =
