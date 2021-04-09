@@ -1,8 +1,8 @@
-import { ChangeDetectionStrategy, Component, Input, OnDestroy, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { Subject } from 'rxjs';
-import { take, takeUntil } from 'rxjs/operators';
+import { Observable, Subject } from 'rxjs';
+import { first, take, takeUntil } from 'rxjs/operators';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
 import { Product } from 'ish-core/models/product/product.model';
@@ -10,6 +10,7 @@ import { GenerateLazyComponent } from 'ish-core/utils/module-loader/generate-laz
 import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
 
 import { CamCardsFacade } from '../../facades/cam-cards.facade';
+import { CamCard } from '../../models/cam-card/cam-card.model';
 import { SelectCamCardModalComponent } from '../select-cam-card-modal/select-cam-card-modal.component';
 
 @Component({
@@ -28,13 +29,15 @@ import { SelectCamCardModalComponent } from '../select-cam-card-modal/select-cam
  * ></camfil-product-add-to-cam-card>
  */
 @GenerateLazyComponent()
-export class ProductAddToCamCardComponent implements OnDestroy {
+export class ProductAddToCamCardComponent implements OnInit, OnDestroy {
   @Input() product: Product;
   @Input() quantity: number;
   @Input() displayType?: 'icon' | 'link' | 'animated' | 'round-btn' = 'link';
   @Input() class?: string;
   @Input() hasIcon = false;
   private destroy$ = new Subject();
+
+  camCards$: Observable<CamCard[]>;
 
   @ViewChild(CamfilSmallCtaModalComponent) errorModal: CamfilSmallCtaModalComponent;
 
@@ -44,6 +47,16 @@ export class ProductAddToCamCardComponent implements OnDestroy {
     private router: Router,
     public dialog: MatDialog
   ) {}
+
+  ngOnInit() {
+    this.camCardsFacade.camCardsLoading$.pipe(take(1)).subscribe(loading => {
+      if (!loading) {
+        this.camCardsFacade.camCard$
+          .pipe(first())
+          .subscribe(camCards => (!camCards?.length ? this.camCardsFacade.loadCamCards() : ''));
+      }
+    });
+  }
 
   /**
    * if the user is not logged in display login dialog, else open select cam cards dialog
