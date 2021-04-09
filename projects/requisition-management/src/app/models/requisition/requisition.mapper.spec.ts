@@ -66,6 +66,7 @@ describe('Requisition Mapper', () => {
           "customerNo": "OilCorp",
           "dynamicMessages": undefined,
           "email": "bboldner@test.intershop.de",
+          "externalOrderReference": undefined,
           "id": "testUUDI",
           "infos": undefined,
           "invoiceToAddress": undefined,
