@@ -11,6 +11,7 @@ import { HttpError } from 'ish-core/models/http-error/http-error.model';
 import { PasswordReminder } from 'ish-core/models/password-reminder/password-reminder.model';
 import { ApiService, AvailableOptions, unpackEnvelope } from 'ish-core/services/api/api.service';
 
+import { B2bUser } from '../../../../../../projects/organization-management/src/app/models/b2b-user/b2b-user.model';
 import { CamCardData } from '../../../cam-cards/models/cam-card/cam-card.interface';
 import { CamCardMapper } from '../../../cam-cards/models/cam-card/cam-card.mapper';
 import { CamCard } from '../../../cam-cards/models/cam-card/cam-card.model';
@@ -27,7 +28,6 @@ import { CamfilB2bRole } from '../../models/camfil-b2b-role/camfil-b2b-role.mode
 import { CamfilB2bUserData } from '../../models/camfil-b2b-user/camfil-b2b-user.interface';
 import { CamfilB2bUserMapper } from '../../models/camfil-b2b-user/camfil-b2b-user.mapper';
 import { CamfilB2bUser } from '../../models/camfil-b2b-user/camfil-b2b-user.model';
-import { B2bUser } from '../../../../../../projects/organization-management/src/app/models/b2b-user/b2b-user.model';
 
 @Injectable({ providedIn: 'root' })
 export class CamOrganizationService {

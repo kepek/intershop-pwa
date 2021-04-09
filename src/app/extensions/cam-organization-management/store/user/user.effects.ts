@@ -17,6 +17,9 @@ import {
   activateCustomerUser,
   activateCustomerUserFail,
   activateCustomerUserSuccess,
+  createCustomerUser,
+  createCustomerUserFail,
+  createCustomerUserSuccess,
   deactivateCustomerUser,
   deactivateCustomerUserFail,
   deactivateCustomerUserSuccess,
@@ -33,9 +36,6 @@ import {
   updateCustomerUser,
   updateCustomerUserFail,
   updateCustomerUserSuccess,
-  createCustomerUser,
-  createCustomerUserSuccess,
-  createCustomerUserFail,
 } from './user.actions';
 import { getSelectedUserId } from './user.selectors';
 

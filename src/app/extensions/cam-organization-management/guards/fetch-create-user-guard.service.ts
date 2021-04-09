@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { CanActivate } from '@angular/router';
 import { Observable, of } from 'rxjs';
+import { take } from 'rxjs/operators';
 
 import { whenTruthy } from 'ish-core/utils/operators';
 
 import { CamOrganizationManagementFacade } from '../facades/cam-organization-management.facade';
-import { take } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',

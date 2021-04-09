@@ -137,9 +137,7 @@ export class CamOrganizationManagementFacade {
   getCustomers$(): Observable<CamfilB2bCustomer[]> {
     return this.store.pipe(
       select(getCustomers),
-      map(customers => {
-        return [...customers].sort((x, y) => Number(x.parent) - Number(y.parent)).reverse();
-      })
+      map(customers => [...customers].sort((x, y) => Number(x.parent) - Number(y.parent)).reverse())
     );
   }
 
