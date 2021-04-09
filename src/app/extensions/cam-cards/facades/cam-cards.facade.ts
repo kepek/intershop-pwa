@@ -33,6 +33,7 @@ import {
   getCamCardCustomers,
   getCamCardError,
   getCamCardLoading,
+  getCamCardsLoading,
   getContactsbyCustomerId,
   getCustomerAddresses,
   getSelectedCamCardDetails,
@@ -41,6 +42,7 @@ import {
   isStickyCamCardToolbar,
   loadCamCards,
   loadContactsByCustomer,
+  loadCustomers,
   loadDeliveryAddresses,
   moveCamCard,
   moveCamCardItem,
@@ -61,6 +63,7 @@ export class CamCardsFacade {
   camCard$: Observable<CamCard[]> = this.store.pipe(select(getAllCamCards));
   currentCamCard$: Observable<CamCard> = this.store.pipe(select(getSelectedCamCardDetails));
   camCardLoading$: Observable<boolean> = this.store.pipe(select(getCamCardLoading));
+  camCardsLoading$: Observable<boolean> = this.store.pipe(select(getCamCardsLoading));
   camCardError$: Observable<HttpError> = this.store.pipe(select(getCamCardError));
   isStickyCamCardToolbar$: Observable<boolean> = this.store.pipe(select(isStickyCamCardToolbar));
   customers$: Observable<CamCardCustomer[]> = this.store.pipe(select(getCamCardCustomers));
@@ -81,6 +84,10 @@ export class CamCardsFacade {
 
   loadCamCards() {
     this.store.dispatch(loadCamCards());
+  }
+
+  loadCustomers() {
+    this.store.dispatch(loadCustomers());
   }
 
   copyCamCard(camCardId: string, name: string): void | HttpError {

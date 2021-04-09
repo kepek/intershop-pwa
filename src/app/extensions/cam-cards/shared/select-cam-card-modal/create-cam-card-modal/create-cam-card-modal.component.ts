@@ -88,6 +88,8 @@ export class CreateCamCardModalComponent implements OnInit, AfterViewInit {
           customerSelect: customers[0].id,
         });
         this.pickCustomer({ value: customers[0].id });
+      } else if (!customers.length) {
+        this.camCardsFacade.loadCustomers();
       }
     });
   }

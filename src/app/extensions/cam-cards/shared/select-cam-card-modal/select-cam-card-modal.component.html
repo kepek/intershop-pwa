@@ -89,7 +89,7 @@
       <button
         type="submit"
         name="search"
-        [title]="'camfil.account.orderlist.seach.button.title' | translate"
+        [title]="'camfil.account.orderlist.seach.button.title' | translate" 
         mat-flat-button
         color="primary"
       >
@@ -98,9 +98,9 @@
     </div>
   </div>
 </ng-template>
-
 <ng-template #mainContentTemplate>
   <div mat-dialog-content class="cam-card-list">
+    <ish-loading *ngIf="camCardsLoading$ | async"></ish-loading>
     <form [formGroup]="newSegmentForm">
       <div *ngFor="let option of camCardOptions; let i = index">
         <div

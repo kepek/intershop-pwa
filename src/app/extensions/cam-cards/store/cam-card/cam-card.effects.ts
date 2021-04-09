@@ -75,8 +75,8 @@ import {
   loadContactsByCustomerFail,
   loadContactsByCustomerSuccess,
   loadCustomers,
+  loadCustomersFail,
   loadCustomersSuccess,
-  loadCustomersdFail,
   loadDeliveryAddresses,
   loadDeliveryAddressesFail,
   loadDeliveryAddressesSuccess,
@@ -137,7 +137,7 @@ export class CamCardEffects {
       mapToPayloadProperty<RouterNavigatedPayload<RouterState>>('routerState'),
       filter((routerState: RouterState) => /^\/(account\/camcards)/.test(routerState.url)),
       withLatestFrom(this.store.pipe(select(getAllCamCards)), this.store.pipe(select(getCamCardCustomers))),
-      mergeMap(([, cc, customers]) => (cc.length && customers.length ? EMPTY : [loadCustomers(true), loadCamCards()]))
+      mergeMap(([, cc, customers]) => (cc.length && customers.length ? EMPTY : [loadCustomers(), loadCamCards()]))
     )
   );
 
@@ -284,7 +284,7 @@ export class CamCardEffects {
         this.camCardService.getCustomers().pipe(
           /* Make sure to do not remove `loadUserContactForCustomers` since this is required to be fulfilled and it is used in CamCard Helper */
           mergeMap(customers => [loadCustomersSuccess({ customers }), loadUserContactForCustomers({ customers })]),
-          mapErrorToAction(loadCustomersdFail)
+          mapErrorToAction(loadCustomersFail)
         )
       )
     )

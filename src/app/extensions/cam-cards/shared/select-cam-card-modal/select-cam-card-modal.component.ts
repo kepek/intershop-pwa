@@ -16,7 +16,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, Subject } from 'rxjs';
-import { first, takeUntil } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { Product } from 'ish-core/models/product/product.model';
@@ -82,11 +82,13 @@ export class SelectCamCardModalComponent implements OnInit, OnDestroy, OnChanges
 
   camCards: CamCard[];
 
+  camCards$: Observable<CamCard[]>;
   currentCamCard$: Observable<CamCard>;
   currentCamCard: CamCard;
 
   currentSubCamCardName: string;
   useSubCamCard = false;
+  camCardsLoading$: Observable<boolean>;
 
   newSegmentValidator = [
     {
@@ -113,11 +115,14 @@ export class SelectCamCardModalComponent implements OnInit, OnDestroy, OnChanges
 
   ngOnInit() {
     this.formsInit();
+    this.determineSelectOptions();
 
     this.currentCamCard$ = this.camCardsFacade.currentCamCard$;
     this.currentCamCard$.pipe(takeUntil(this.destroy$)).subscribe(currentCamCard => {
       this.currentCamCard = currentCamCard;
     });
+
+    this.camCardsLoading$ = this.camCardsFacade.camCardsLoading$;
 
     this.searchInputFilter.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(filterValue => {
       this.applyFilter(filterValue);
@@ -136,8 +141,7 @@ export class SelectCamCardModalComponent implements OnInit, OnDestroy, OnChanges
   }
 
   private determineSelectOptions() {
-    const camCards$ = this.camCardsFacade.camCard$;
-    camCards$.pipe(takeUntil(this.destroy$)).subscribe(camCards => {
+    this.camCardsFacade.camCard$.pipe(takeUntil(this.destroy$)).subscribe(camCards => {
       if (camCards && camCards.length > 0) {
         const realCamCards = CamCardHelper.getRealCamCards(camCards);
         this.camCards = realCamCards;
@@ -162,7 +166,6 @@ export class SelectCamCardModalComponent implements OnInit, OnDestroy, OnChanges
         this.camCardOptions = [];
       }
     });
-    camCards$.pipe(first()).subscribe(camCards => (!camCards?.length ? this.camCardsFacade.loadCamCards() : ''));
   }
 
   private formsInit() {
@@ -326,7 +329,6 @@ export class SelectCamCardModalComponent implements OnInit, OnDestroy, OnChanges
 
   /** open modal */
   show() {
-    this.determineSelectOptions();
     this.camCardsFacade.unSelectCamCard();
     this.showForm = true;
     return this.modalTemplate;
