@@ -80,7 +80,7 @@ export const addProductToBucket = createAction(
     quantity: number;
     basketId?: string;
     basketExtension: BasketExtensions;
-    lineItemAttributes?: Attribute;
+    lineItemAttributes?: Attribute[];
     bucketId?: string;
   }>()
 );
@@ -94,7 +94,7 @@ export const addProductToBucketWithBasketId = createAction(
     quantity: number;
     basketId: string;
     basketExtension: BasketExtensions;
-    lineItemAttributes?: Attribute;
+    lineItemAttributes?: Attribute[];
     bucketId?: string;
   }>()
 );
@@ -108,7 +108,7 @@ export const addProductToBucketWithUrn = createAction(
     sku: string;
     quantity: number;
     basketId: string;
-    lineItemAttributes?: Attribute;
+    lineItemAttributes?: Attribute[];
   }>()
 );
 
@@ -125,7 +125,7 @@ export const addProductToBasket = createAction(
     shipToAddress?: string;
     basketExtension?: BasketExtensions;
     addressId?: string;
-    lineItemAttributes?: Attribute;
+    lineItemAttributes?: Attribute[];
     bucketId?: string;
   }>()
 );
@@ -171,7 +171,7 @@ export const addItemsToBasket = createAction(
       shipToAddress?: string;
       basketExtension?: BasketExtensions;
       addressId?: string;
-      lineItemAttributes?: Attribute;
+      lineItemAttributes?: Attribute[];
     }[];
   }>()
 );
@@ -404,7 +404,12 @@ export const addBasketItemAttributesSuccess = createAction(
 
 export const updateBasketItemAttributes = createAction(
   '[Basket API] Update Attributes for selected line item ',
-  payload<{ basketId: string; lineItemId: string; bucketId: string; lineItemAttribute: Attribute }>()
+  payload<{
+    basketId: string;
+    lineItemId: string;
+    bucketId: string;
+    lineItemAttribute: Attribute;
+  }>()
 );
 
 export const updateBasketItemAttributesFail = createAction(
@@ -468,7 +473,7 @@ export const addItemsToBasketFromCamCard = createAction(
       shippingMethod?: string;
       shipToAddress?: string;
       addressId?: string;
-      lineItemAttributes?: Attribute;
+      lineItemAttributes?: Attribute[];
     }[];
     bucketIds?: string[];
   }>()
@@ -489,7 +494,7 @@ export const updateBucketsQueue = createAction(
       shippingMethod?: string;
       shipToAddress?: string;
       addressId?: string;
-      lineItemAttributes?: Attribute;
+      lineItemAttributes?: Attribute[];
     }[];
     extentions: {
       addressId: string;

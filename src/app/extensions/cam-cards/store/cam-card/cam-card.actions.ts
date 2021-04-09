@@ -9,6 +9,7 @@ import {
   CamCardCustomer,
   CamCardItem,
   CamCardItemComment,
+  CamCardMeasurement,
 } from '../../models/cam-card/cam-card.model';
 
 export const loadCamCards = createAction('[Cam Cards Internal] Load Cam Cards');
@@ -163,13 +164,21 @@ export const addProductToCamCard = createAction(
     quantity?: number;
     position?: number;
     comment?: CamCardItemComment;
+    measurement?: CamCardMeasurement;
     showSuccessToast?: boolean;
   }>()
 );
 
 export const addProductToSubCamCard = createAction(
   '[Cam Cards] Add Item to Sub Cam Card',
-  payload<{ camCardId: string; refreshCamCardId: string; sku: string; quantity?: number; boxLabel?: string }>()
+  payload<{
+    camCardId: string;
+    refreshCamCardId: string;
+    sku: string;
+    quantity?: number;
+    boxLabel?: string;
+    measurement?: CamCardMeasurement;
+  }>()
 );
 
 export const addProductToNewSubCamCard = createAction(
@@ -180,6 +189,7 @@ export const addProductToNewSubCamCard = createAction(
     sku: string;
     quantity?: number;
     boxLabel?: string;
+    measurement?: CamCardMeasurement;
     edit?: boolean;
   }>()
 );
@@ -214,13 +224,21 @@ export const addToNewCamCardWithNewSubCamCard = createAction(
     sku: string;
     quantity?: number;
     boxLabel?: string;
+    measurement?: CamCardMeasurement;
     edit?: boolean;
   }>()
 );
 
 export const addProductToNewCamCardAndEdit = createAction(
   '[Cam Cards Internal] Add Product To Cam Card And Update',
-  payload<{ camCard: CamCard; sku: string; quantity?: number; boxLabel?: string; edit?: boolean }>()
+  payload<{
+    camCard: CamCard;
+    sku: string;
+    quantity?: number;
+    boxLabel?: string;
+    measurement?: CamCardMeasurement;
+    edit?: boolean;
+  }>()
 );
 
 export const createAndUpdateCamCardSuccess = createAction(

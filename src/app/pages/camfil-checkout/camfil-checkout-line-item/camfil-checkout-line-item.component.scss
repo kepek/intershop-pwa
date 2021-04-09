@@ -41,7 +41,6 @@
     flex-direction: column;
     .line-item-data-bottom {
       width: 180px;
-      height: 19px;
       line-height: 16px;
       .mat-button {
         box-sizing: content-box;
@@ -109,9 +108,10 @@
         border-right: none;
       }
     }
+    // .measurements, // no edit for measurements on checkout now
     .box-label {
       div.mat-form-field-infix {
-        padding: 1em 0 1em 0;
+        padding: 1em 0;
         border-top: none;
       }
     }
@@ -179,16 +179,31 @@
     margin-left: $space-box;
   }
 
-  .box-label__form {
-    margin-right: $space-box;
+  // .measurements, // no edit for measurements on checkout now
+  .box-label {
+    &__form {
+      margin-right: $space-box;
 
-    &--field {
-      width: 200px;
-    }
-    .mat-form-field-wrapper {
-      .mat-form-field-outline {
-        background-color: rgba(0, 0, 0, 0.04);
+      &--field {
+        width: 200px;
+      }
+      .mat-form-field-wrapper {
+        .mat-form-field-outline {
+          background-color: rgba(0, 0, 0, 0.04);
+        }
       }
     }
   }
+  // out because of no edit for measurements on checkout now
+  // .measurements__form--field {
+  //   width: 80px;
+  //   ::ng-deep {
+  //     .mat-form-field {
+  //       &-wrapper,
+  //       &-flex {
+  //         margin-top: 0;
+  //       }
+  //     }
+  //   }
+  // }
 }

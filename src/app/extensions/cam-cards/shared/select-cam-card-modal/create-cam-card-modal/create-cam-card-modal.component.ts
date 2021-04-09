@@ -22,9 +22,18 @@ import { whenTruthy } from 'ish-core/utils/operators';
 import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
 
 import { CamCardsFacade } from '../../../facades/cam-cards.facade';
-import { CamCard, CamCardAddress, CamCardCustomer } from '../../../models/cam-card/cam-card.model';
+import { CamCard, CamCardAddress, CamCardCustomer, CamCardMeasurement } from '../../../models/cam-card/cam-card.model';
 
 import { CREATE_CAMCARD_VALIDATORS } from './validators';
+
+export interface CamCardCreateAndEmitter {
+  camCard: CamCard;
+  quantity?: number;
+  boxLabel?: string;
+  edit?: boolean;
+  subCamCard?: CamCard;
+  measurement?: CamCardMeasurement;
+}
 
 @Component({
   selector: 'camfil-create-cam-card-modal',
@@ -51,26 +60,12 @@ export class CreateCamCardModalComponent implements OnInit, AfterViewInit {
   defaultCountryCode: string;
   showNewSegment = false;
 
-  @Output() createAndEditEmitter = new EventEmitter<{
-    camCard: CamCard;
-    quantity?: number;
-    boxLabel?: string;
-    edit?: boolean;
-    subCamCard?: CamCard;
-  }>();
-  @Output() createAndContinueEmitter = new EventEmitter<{
-    camCard: CamCard;
-    quantity?: number;
-    boxLabel?: string;
-    edit?: boolean;
-    subCamCard?: CamCard;
-  }>();
+  @Output() createAndEditEmitter = new EventEmitter<CamCardCreateAndEmitter>();
+  @Output() createAndContinueEmitter = new EventEmitter<CamCardCreateAndEmitter>();
 
   @ViewChild('modal', { static: false }) modalTemplate: TemplateRef<unknown>;
 
-  constructor(private fb: FormBuilder, private camCardsFacade: CamCardsFacade, private appFacade: AppFacade) {
-    this.initForm();
-  }
+  constructor(private fb: FormBuilder, private camCardsFacade: CamCardsFacade, private appFacade: AppFacade) {}
 
   ngOnInit() {
     this.appFacade.getCamfilChannel$.pipe(whenTruthy(), take(1)).subscribe(channel => {
@@ -118,7 +113,7 @@ export class CreateCamCardModalComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.quantityForm.setValue({ quantity: this.product.minOrderQuantity || 1, boxLabel: '' });
+    // this.quantityForm.setValue({ quantity: this.product.minOrderQuantity || 1, boxLabel: '' });
   }
 
   addSubLevel() {
@@ -168,11 +163,17 @@ export class CreateCamCardModalComponent implements OnInit, AfterViewInit {
 
     const quantity = this.quantityForm.get('quantity').value;
     const boxLabel = this.quantityForm.get('boxLabel').value;
+    const measurement = {
+      width: this.quantityForm.get('measurementWidth').value,
+      height: this.quantityForm.get('measurementHeight').value,
+      diameter: this.quantityForm.get('measurementDiameter').value,
+    };
 
     return {
       camCard,
       quantity,
       boxLabel,
+      measurement,
     };
   }
 

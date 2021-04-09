@@ -28,6 +28,7 @@ import {
   CamCard,
   CamCardAddress,
   CamCardItemComment,
+  CamCardMeasurement,
   CreateCamCardData,
   SelectCamCardOption,
 } from '../../models/cam-card/cam-card.model';
@@ -175,6 +176,9 @@ export class SelectCamCardModalComponent implements OnInit, OnDestroy, OnChanges
     this.quantityForm = new FormGroup({
       quantity: new FormControl(this.quantity),
       boxLabel: new FormControl('', Validators.maxLength(60)),
+      measurementWidth: new FormControl(),
+      measurementHeight: new FormControl(),
+      measurementDiameter: new FormControl(),
     });
   }
 
@@ -196,7 +200,7 @@ export class SelectCamCardModalComponent implements OnInit, OnDestroy, OnChanges
     return JSON.stringify(fields).trim().toLowerCase().indexOf(filter.trim().toLowerCase()) !== -1;
   }
 
-  createCamcardAndAdd({ camCard, quantity, boxLabel, edit, subCamCard }: CreateCamCardData) {
+  createCamcardAndAdd({ camCard, quantity, boxLabel, edit, subCamCard, measurement }: CreateCamCardData) {
     if (subCamCard) {
       this.camCardsFacade.addToNewCamCardWithNewSubCamCard(
         camCard,
@@ -204,10 +208,18 @@ export class SelectCamCardModalComponent implements OnInit, OnDestroy, OnChanges
         this.product.sku,
         quantity,
         boxLabel,
+        measurement,
         edit
       );
     } else {
-      this.camCardsFacade.addProductToNewCamCardAndEdit(camCard, this.product.sku, quantity, boxLabel, edit);
+      this.camCardsFacade.addProductToNewCamCardAndEdit(
+        camCard,
+        this.product.sku,
+        quantity,
+        boxLabel,
+        measurement,
+        edit
+      );
     }
 
     this.dialog.closeAll();
@@ -225,7 +237,7 @@ export class SelectCamCardModalComponent implements OnInit, OnDestroy, OnChanges
 
   isAddedToNewSubCamCard = () => this.segmentSelected && this.segmentSelected === this.newSegmentValue;
 
-  addToNewSubCamCard(quantity?: number, boxLabel?: string) {
+  addToNewSubCamCard(quantity?: number, boxLabel?: string, measurement?: CamCardMeasurement) {
     if (this.newSegmentForm.valid) {
       const newSegmentValue = this.newSegmentForm.get('newCamCard').value;
       const rootCamCard = this.camCards.find(camCard => camCard.id === this.camCardSelected);
@@ -244,6 +256,7 @@ export class SelectCamCardModalComponent implements OnInit, OnDestroy, OnChanges
         this.product.sku,
         quantity,
         boxLabel,
+        measurement,
         false
       );
     } else {
@@ -254,9 +267,14 @@ export class SelectCamCardModalComponent implements OnInit, OnDestroy, OnChanges
   addToCamcard() {
     const quantity = this.quantityForm.get('quantity').value;
     const boxLabel = this.quantityForm.get('boxLabel').value;
+    const measurement = {
+      width: this.quantityForm.get('measurementWidth').value,
+      height: this.quantityForm.get('measurementHeight').value,
+      diameter: this.quantityForm.get('measurementDiameter').value,
+    };
 
     if (this.camCardSelected && this.isAddedToNewSubCamCard()) {
-      this.addToNewSubCamCard(quantity, boxLabel);
+      this.addToNewSubCamCard(quantity, boxLabel, measurement);
       return;
     }
 
@@ -268,14 +286,15 @@ export class SelectCamCardModalComponent implements OnInit, OnDestroy, OnChanges
           this.camCardSelected,
           this.product.sku,
           quantity,
-          boxLabel
+          boxLabel,
+          measurement
         );
 
         this.currentSubCamCardName = rootCamCard.subCamCards.find(sub => sub.id === this.segmentSelected).name;
         this.useSubCamCard = true;
       } else {
         const comment: CamCardItemComment = { label: boxLabel };
-        this.camCardsFacade.addProductToCamCard(this.camCardSelected, this.product.sku, quantity, comment);
+        this.camCardsFacade.addProductToCamCard(this.camCardSelected, this.product.sku, quantity, comment, measurement);
         this.useSubCamCard = false;
       }
     }

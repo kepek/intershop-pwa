@@ -14,6 +14,7 @@ import {
   CamCardCustomerData,
   CamCardItem,
   CamCardItemComment,
+  CamCardMeasurement,
 } from '../../models/cam-card/cam-card.model';
 import { ContactMapper } from '../../models/cam-card/contact.mapper';
 
@@ -291,7 +292,9 @@ export class CamCardService {
    * @param camCardId
    * @param sku           The product sku.
    * @param quantity      The products quantity
-   * @param comment      Comment label
+   * @param comment       Comment label
+   * @param measurement   Measurement values
+   * @param position      Position on list
    * @returns             The changed cam_cards.
    */
   addProductToCamCard(
@@ -299,6 +302,7 @@ export class CamCardService {
     sku: string,
     quantity: number,
     comment?: CamCardItemComment,
+    measurement?: CamCardMeasurement,
     position?: number
   ): Observable<CamCard> {
     return this.apiService
@@ -307,25 +311,28 @@ export class CamCardService {
         position,
         product: { sku },
         comment,
+        measurement,
       })
       .pipe(concatMap(() => this.getCamCard(camCardId)));
   }
 
   /**
    * Add product to subCamCard and reload root CamCard
-   * @param rootCamCardId     Parent for sub cam card
-   * @param camCardId       SubCamCard id
+   * @param rootCamCardId Parent for sub cam card
+   * @param camCardId     SubCamCard id
    * @param sku           The product sku.
    * @param quantity      The products quantity
    * @param boxLabel      Comment label
-   * @returns                 The created cam_card.
+   * @param measurement   Measurement values
+   * @returns             The created cam_card.
    */
   addProductToSubCamCard(
     camCardId: string,
     rootCamCardId: string,
     sku: string,
     quantity: number,
-    boxLabel?: string
+    boxLabel?: string,
+    measurement?: CamCardMeasurement
   ): Observable<CamCard> {
     return this.apiService
       .post(`camcards/${rootCamCardId}/childcamcards/${camCardId}/product`, {
@@ -334,6 +341,7 @@ export class CamCardService {
         comment: {
           label: boxLabel,
         },
+        measurement,
       })
       .pipe(concatMap(() => this.getCamCard(rootCamCardId)));
   }

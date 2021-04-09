@@ -14,6 +14,7 @@ import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Observable, Subject } from 'rxjs';
 import { debounceTime, take, takeUntil } from 'rxjs/operators';
+import { CamCardMeasurement } from 'src/app/extensions/cam-cards/models/cam-card/cam-card.model';
 
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
@@ -64,19 +65,27 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
   @Input() isConfirmed;
   @Output() handleLoad = new EventEmitter<ProductView>();
   @Output() handleUpdate = new EventEmitter<{ res: ProductView; quantity: number }>();
+
   earliestDeliveryDate: string;
   quantity = 0;
   boxLabel: string;
-  boxLabelValidator = {
+  measurementsValues = ['width', 'height', 'diameter'];
+  measurements: CamCardMeasurement;
+  attrsValidator = {
     boxLabel: [{ error: 'maxlength', message: 'MAX length exceeded' }],
   };
 
   @Input() product: LineItemView;
   @Input() id: string;
 
+  selectItemForm: FormGroup;
   addToCartForm: FormGroup;
   boxLabelForm: FormGroup;
-  selectItemForm: FormGroup;
+  /**
+    // no edit for measurements on checkout now
+    measurementsForm: FormGroup;
+    requiresMeasurement: boolean;
+  **/
 
   product$: Observable<ProductView>;
 
@@ -84,8 +93,12 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
 
   ngOnInit() {
     this.checkoutFacade.basketLineItems$?.pipe(whenTruthy(), take(1)).subscribe((res: LineItem[]) => {
-      const lineItem = res.find(li => li.id === this.product.id);
-      this.boxLabel = (lineItem?.attributes?.find(att => att.name === 'boxLabel')?.value as string) || '';
+      this.boxLabel = (this.getValFromAttrs(res, 'boxLabel') as string) || '';
+      this.measurements = {
+        [this.measurementsValues[0]]: (this.getValFromAttrs(res, 'width') as number) || undefined,
+        [this.measurementsValues[1]]: (this.getValFromAttrs(res, 'height') as number) || undefined,
+        [this.measurementsValues[2]]: (this.getValFromAttrs(res, 'diameter') as number) || undefined,
+      };
     });
 
     this.initForm();
@@ -106,6 +119,12 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  measurementsToShow() {
+    return Object.values(this.measurements)
+      .filter(item => item)
+      .join('x');
   }
 
   updateQuantities() {
@@ -131,6 +150,15 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
     this.boxLabelForm = new FormGroup({
       boxLabel: new FormControl(this.boxLabel, [Validators.maxLength(60)]),
     });
+
+    /**
+     * no edit for measurements on checkout now
+     * */
+    // this.measurementsForm = new FormGroup({
+    //   width: new FormControl(this.measurements.width, [Validators.maxLength(4)]),
+    //   height: new FormControl(this.measurements.height, [Validators.maxLength(4)]),
+    //   diameter: new FormControl(this.measurements.diameter, [Validators.maxLength(4)]),
+    // });
   }
 
   /**if the camCardItem is loaded, get product details*/
@@ -141,28 +169,45 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
         CamfilCheckoutLineItemComponent.REQUIRED_COMPLETENESS_LEVEL
       );
 
-      this.product$.pipe(take(1), takeUntil(this.destroy$)).subscribe((res: ProductView) => this.handleLoad.emit(res));
+      this.product$.pipe(take(1), takeUntil(this.destroy$)).subscribe((res: ProductView) => {
+        /**
+         * no edit for measurements on checkout now
+        // this.requiresMeasurement = ProductHelper.getRequiresMeasurement(res);
+         * */
+        this.handleLoad.emit(res);
+      });
     }
   }
 
-  getField(name: string) {
-    return this.boxLabelForm.get(name);
+  getValFromAttrs(res: LineItem[], name: string) {
+    const lineItem = res.find(li => li.id === this.product.id);
+    return lineItem?.attributes?.find(att => att.name === name)?.value;
   }
 
-  onBlur(target: HTMLDataElement) {
-    if (this.boxLabelForm.invalid) {
-      markAsDirtyRecursive(this.boxLabelForm);
+  getField(name: string, form: FormGroup) {
+    return form.get(name);
+  }
+
+  onBlur(target: HTMLDataElement, form: FormGroup) {
+    if (form.invalid) {
+      markAsDirtyRecursive(form);
       return;
     }
 
-    const oldValue = this.boxLabel;
-    const newValue = target.value;
-    const boxLabelAttribute: Attribute = { name: 'boxLabel', type: 'String', value: newValue };
+    const name = target.getAttribute('name');
+    const ifLabel = name === 'boxLabel';
+
+    const oldValue = ifLabel ? this.boxLabel : this.measurements[name];
+    let value: string | number = target.value;
+    if (!ifLabel && value) {
+      value = +value;
+    }
+    const boxLabelAttribute: Attribute = { name, type: ifLabel ? 'String' : 'Double', value };
 
     if (oldValue) {
-      if (!newValue) {
-        this.checkoutFacade.deleteBasketItemAttributes(this.basketId, this.product.id, this.bucketId, 'boxLabel');
-      } else if (newValue !== oldValue) {
+      if (!value) {
+        this.checkoutFacade.deleteBasketItemAttributes(this.basketId, this.product.id, this.bucketId, name);
+      } else if (value !== oldValue) {
         this.checkoutFacade.updateBasketItemAttributes(
           this.basketId,
           this.product.id,
@@ -170,11 +215,15 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
           boxLabelAttribute
         );
       }
-    } else if (newValue) {
+    } else if (value) {
       this.checkoutFacade.addBasketItemAttributes(this.basketId, this.product.id, this.bucketId, boxLabelAttribute);
     }
 
-    this.boxLabel = newValue;
+    if (ifLabel) {
+      this.boxLabel = value as string;
+    } else {
+      this.measurements[name] = value as number;
+    }
   }
 
   calculateDeliveryDate() {

@@ -11,6 +11,7 @@ import {
   CamCardCustomer,
   CamCardItem,
   CamCardItemComment,
+  CamCardMeasurement,
 } from '../models/cam-card/cam-card.model';
 import {
   addBasketToNewCamCard,
@@ -148,9 +149,12 @@ export class CamCardsFacade {
     sku: string,
     quantity?: number,
     boxLabel?: string,
+    measurement?: CamCardMeasurement,
     edit?: boolean
   ): void {
-    this.store.dispatch(addToNewCamCardWithNewSubCamCard({ newCamCard, newSubCamCard, sku, quantity, boxLabel, edit }));
+    this.store.dispatch(
+      addToNewCamCardWithNewSubCamCard({ newCamCard, newSubCamCard, sku, quantity, boxLabel, measurement, edit })
+    );
   }
 
   addProductToNewCamCard(name: string, sku: string, quantity?: number): void {
@@ -162,10 +166,13 @@ export class CamCardsFacade {
     sku: string,
     quantity?: number,
     comment?: CamCardItemComment,
+    measurement?: CamCardMeasurement,
     position?: number,
     showSuccessToast?: boolean
   ): void {
-    this.store.dispatch(addProductToCamCard({ camCardId, sku, quantity, position, comment, showSuccessToast }));
+    this.store.dispatch(
+      addProductToCamCard({ camCardId, sku, quantity, position, comment, measurement, showSuccessToast })
+    );
   }
 
   addProductToSubCamCard(
@@ -173,9 +180,10 @@ export class CamCardsFacade {
     refreshCamCardId: string,
     sku: string,
     quantity?: number,
-    boxLabel?: string
+    boxLabel?: string,
+    measurement?: CamCardMeasurement
   ): void {
-    this.store.dispatch(addProductToSubCamCard({ camCardId, refreshCamCardId, sku, quantity, boxLabel }));
+    this.store.dispatch(addProductToSubCamCard({ camCardId, refreshCamCardId, sku, quantity, boxLabel, measurement }));
   }
 
   addProductToNewSubCamCard(
@@ -184,9 +192,12 @@ export class CamCardsFacade {
     sku: string,
     quantity?: number,
     boxLabel?: string,
+    measurement?: CamCardMeasurement,
     edit?: boolean
   ): void {
-    this.store.dispatch(addProductToNewSubCamCard({ subCamCard, rootCamCard, sku, quantity, boxLabel, edit }));
+    this.store.dispatch(
+      addProductToNewSubCamCard({ subCamCard, rootCamCard, sku, quantity, boxLabel, measurement, edit })
+    );
   }
 
   addProductToNewCamCardAndEdit(
@@ -194,9 +205,10 @@ export class CamCardsFacade {
     sku: string,
     quantity?: number,
     boxLabel?: string,
+    measurement?: CamCardMeasurement,
     edit?: boolean
   ): void {
-    this.store.dispatch(addProductToNewCamCardAndEdit({ camCard, sku, quantity, boxLabel, edit }));
+    this.store.dispatch(addProductToNewCamCardAndEdit({ camCard, sku, quantity, boxLabel, measurement, edit }));
   }
 
   updateCamCardProduct(

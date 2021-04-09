@@ -35,22 +35,21 @@ export class CamfilProductListComponent implements OnInit {
 
   listingLoading$: Observable<boolean>;
   minForBottomLoading: number;
-  isLoggedIn$: Observable<boolean>;
 
   constructor(
-    private accountFacade: AccountFacade,
     private shoppingFacade: ShoppingFacade,
     private appFacade: AppFacade,
     private checkoutFacade: CheckoutFacade,
+    private accountFacade: AccountFacade,
     @Inject(PRODUCT_LISTING_ITEMS_PER_PAGE) private itemsPerPage: number
-  ) {}
+  ) { }
   deviceType$: Observable<DeviceType>;
   ngOnInit(): void {
-    this.isLoggedIn$ = this.accountFacade.isLoggedIn$;
-
-    this.isLoggedIn$.pipe(take(1), whenTruthy()).subscribe(() => {
-      this.shoppingFacade.loadBasketAddresses();
-      this.checkoutFacade.loadBuckets();
+    this.accountFacade.user$.pipe(whenTruthy(), take(1)).subscribe(user => {
+      if (user) {
+        this.checkoutFacade.loadBuckets();
+        this.shoppingFacade.loadBasketAddresses();
+      }
     });
 
     this.listingLoading$ = this.shoppingFacade.productListingLoading$;

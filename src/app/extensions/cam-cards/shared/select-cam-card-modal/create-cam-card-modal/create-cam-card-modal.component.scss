@@ -4,14 +4,15 @@
 .camfil-create-cam-card-modal {
   .form {
     &__wrapper {
-      padding: 16px 40px 0 40px;
+      padding: $space-box 40px 0 40px;
+      max-height: 50vh;
     }
 
     &__field {
       padding: 0;
 
       ::ng-deep .mat-form-field-wrapper {
-        margin-top: 16px;
+        margin-top: $space-box;
         margin-bottom: 0;
       }
 
@@ -40,11 +41,11 @@
       }
 
       &--error {
-        padding-left: 16px;
+        padding-left: $space-box;
       }
 
       &--button {
-        margin-top: 16px;
+        margin-top: $space-box;
         text-decoration: underline;
       }
 
@@ -55,7 +56,7 @@
   }
 
   .border-bottom {
-    padding-bottom: 16px;
+    padding-bottom: $space-box;
     border-bottom: $border-width-default solid $border-color-lighter;
   }
 

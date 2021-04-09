@@ -7,7 +7,7 @@ import { takeUntil } from 'rxjs/operators';
 
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
-import { Attribute } from 'ish-core/models/attribute/attribute.model';
+import { AttributeHelper } from 'ish-core/models/attribute/attribute.helper';
 import { BasketView } from 'ish-core/models/basket/basket.model';
 import { Bucket } from 'ish-core/models/basket/bucket.model';
 import { Product } from 'ish-core/models/product/product.model';
@@ -53,6 +53,9 @@ export class AddToCartModalComponent implements OnInit, OnDestroy {
     this.quantityForm = new FormGroup({
       quantity: new FormControl(this.quantity || this.product.minOrderQuantity),
       boxLabel: new FormControl(this.boxLabel || '', Validators.maxLength(60)),
+      measurementWidth: new FormControl(),
+      measurementHeight: new FormControl(),
+      measurementDiameter: new FormControl(),
     });
 
     this.shoppingFacade.productUpdated$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(() => {
@@ -82,12 +85,11 @@ export class AddToCartModalComponent implements OnInit, OnDestroy {
 
   addToOrder() {
     if (this.quantityForm.valid && this.selectedOrderId) {
-      const quantity = this.quantityForm.get('quantity').value;
-      const boxLabel = this.quantityForm.get('boxLabel').value;
       const currentBucket = this.buckets.find(bucket => bucket.id === this.selectedOrderId);
-      const lineItemAttributes: Attribute = boxLabel
-        ? { name: 'boxLabel', type: 'String', value: boxLabel }
-        : undefined;
+
+      const quantity = this.quantityForm.get('quantity').value;
+      const lineItemAttributes = AttributeHelper.calculateAttrsToAddFromForm(this.quantityForm);
+
       this.submitted = true;
 
       this.shoppingFacade.addProductToBucketWithUrn(

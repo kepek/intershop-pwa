@@ -1,3 +1,5 @@
+import { CamCamProductChecked } from 'src/app/extensions/cam-cards/models/cam-card/cam-card.model';
+
 import { Attribute } from './attribute.model';
 
 export class AttributeHelper {
@@ -29,5 +31,40 @@ export class AttributeHelper {
     const day = `0 ${value.getDate()}`.slice(-2);
     const year = value.getFullYear();
     return [year, month, day].join('-');
+  }
+
+  static getAttrsBeforeAddToCart(measurements, boxLabel) {
+    const measurementsObj = measurements
+      .map(([key, val]) => ({
+        name: key,
+        type: 'Double',
+        value: val,
+      }))
+      .filter(item => item.value);
+
+    const lineItemAttributes = [...measurementsObj] as Attribute[];
+    if (boxLabel) {
+      lineItemAttributes.push({ name: 'boxLabel', type: 'String', value: boxLabel });
+    }
+
+    return lineItemAttributes;
+  }
+
+  static calculateAttrsToAddFromForm(form) {
+    const boxLabel = form.get('boxLabel').value;
+    const measurements = {
+      width: form.get('measurementWidth').value,
+      height: form.get('measurementHeight').value,
+      diameter: form.get('measurementDiameter').value,
+    };
+    return AttributeHelper.getAttrsBeforeAddToCart(measurements, boxLabel);
+  }
+
+  static calculateAttrsToAddFromCC(product: CamCamProductChecked) {
+    const boxLabel = product.boxLabel;
+    const measurements = product.measurement
+      ? Object.entries(product.measurement).filter(([, item]) => item && typeof item === 'number')
+      : [];
+    return AttributeHelper.getAttrsBeforeAddToCart(measurements, boxLabel);
   }
 }

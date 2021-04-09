@@ -8,6 +8,8 @@ import { PriceHelper } from 'ish-core/models/price/price.model';
 import { ProductTechnicalDocument } from 'ish-core/models/product-technical-document/product-technical-document.model';
 import { VariationProductMasterView, VariationProductView } from 'ish-core/models/product-view/product-view.model';
 
+import { AttributeHelper } from '../attribute/attribute.helper';
+
 import { ProductBundle } from './product-bundle.model';
 import { ProductRetailSet } from './product-retail-set.model';
 import { VariationProductMaster } from './product-variation-master.model';
@@ -274,5 +276,11 @@ export class ProductHelper {
     } else {
       return false;
     }
+  }
+
+  static getRequiresMeasurement(data: Product): boolean {
+    const label = AttributeGroupTypes.ProductsListLabelAttributes;
+    const attrs = data.attributeGroups?.[label]?.attributes;
+    return AttributeHelper.getAttributeValueByAttributeName<boolean>(attrs, 'Requiresmeasures') || false;
   }
 }

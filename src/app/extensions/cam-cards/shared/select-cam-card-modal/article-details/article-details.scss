@@ -5,7 +5,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: $space-box 0;
+  padding: $space-box/2 0;
+  flex-wrap: wrap;
 
   &__quantity {
     display: flex;
@@ -24,5 +25,18 @@
     font-weight: 400;
     color: $text-color-quarternary;
     @include font-size-subtitle1;
+  }
+
+  &__measurement {
+    input {
+      max-width: 110px;
+      margin: 0 $space-box 0 $space-box/2;
+      padding: $space-box / 2;
+    }
+  }
+  &__ico {
+    width: 25px;
+    height: 25px;
+    border: 2px solid $camfil-color-primary;
   }
 }
