@@ -6,7 +6,13 @@ import { SharedModule } from 'ish-shared/shared.module';
 import { CamfilAccountOrderHistoryPageComponent } from './camfil-account-order-history-page.component';
 
 const routes: Routes = [
-  { path: '', component: CamfilAccountOrderHistoryPageComponent },
+  {
+    path: '',
+    data: {
+      breadcrumbData: [{ key: 'account.order_history.link', link: '/account/orders' }],
+    },
+    component: CamfilAccountOrderHistoryPageComponent,
+  },
   {
     path: ':orderId',
     data: {

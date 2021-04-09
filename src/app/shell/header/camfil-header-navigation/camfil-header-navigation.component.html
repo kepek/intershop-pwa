@@ -39,4 +39,8 @@
   <li *ngIf="!isProdEnv" class="dropdown with-separator">
     <a [routerLink]="['/demo']">Demo</a>
   </li>
+  <!-- Show order history when logged in -->
+  <li *ngIf="user$ | async as user" class="dropdown with-separator">
+    <a [routerLink]="['/account/orders']">{{ 'account.order_history.link' | translate }}</a>
+  </li>
 </ng-template>

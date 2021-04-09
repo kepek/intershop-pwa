@@ -1,5 +1,11 @@
 <div class="account-wrapper">
-  <div class="row account-main" *ngIf="!_router.url.startsWith('/account/camcards'); else camCards">
+  <div
+    class="row account-main"
+    *ngIf="
+      !_router.url.startsWith('/account/camcards') && !_router.url.startsWith('/account/orders');
+      else noAccountNavigation
+    "
+  >
     <div class="col-lg-3 account-nav-box">
       <camfil-account-navigation [deviceType]="deviceType$ | async"></camfil-account-navigation>
     </div>
@@ -9,6 +15,6 @@
   </div>
 </div>
 
-<ng-template #camCards>
+<ng-template #noAccountNavigation>
   <router-outlet></router-outlet>
 </ng-template>

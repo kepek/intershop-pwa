@@ -6,8 +6,10 @@ import { MockComponent } from 'ng-mocks';
 import { of } from 'rxjs';
 import { instance, mock, when } from 'ts-mockito';
 
+import { AccountFacade } from 'ish-core/facades/account.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { NavigationCategory } from 'ish-core/models/navigation-category/navigation-category.model';
+import { User } from 'ish-core/models/user/user.model';
 import { CategoryRoutePipe } from 'ish-core/routing/category/category-route.pipe';
 import { CamfilSubCategoryNavigationComponent } from 'ish-shell/header/camfil-sub-category-navigation/camfil-sub-category-navigation.component';
 
@@ -18,10 +20,12 @@ describe('Camfil Header Navigation Component', () => {
   let fixture: ComponentFixture<CamfilHeaderNavigationComponent>;
   let element: HTMLElement;
   let shoppingFacade: ShoppingFacade;
+  let accountFacade: AccountFacade;
   let translate: TranslateService;
 
   beforeEach(async () => {
     shoppingFacade = mock(ShoppingFacade);
+    accountFacade = mock(AccountFacade);
 
     await TestBed.configureTestingModule({
       imports: [RouterTestingModule, TranslateModule.forRoot()],
@@ -31,7 +35,10 @@ describe('Camfil Header Navigation Component', () => {
         MockComponent(CamfilSubCategoryNavigationComponent),
         MockComponent(FaIconComponent),
       ],
-      providers: [{ provide: ShoppingFacade, useFactory: () => instance(shoppingFacade) }],
+      providers: [
+        { provide: ShoppingFacade, useFactory: () => instance(shoppingFacade) },
+        { provide: AccountFacade, useFactory: () => instance(accountFacade) },
+      ],
     }).compileComponents();
   });
 
@@ -49,7 +56,14 @@ describe('Camfil Header Navigation Component', () => {
       { uniqueId: 'B', name: 'CAT_B', url: '/cat/B' },
       { uniqueId: 'C', name: 'CAT_C', url: '/cat/C' },
     ] as NavigationCategory[];
+
+    const userData = {
+      firstName: 'Patricia',
+      lastName: 'Miller',
+    } as User;
+
     when(shoppingFacade.navigationCategories$()).thenReturn(of(categories));
+    when(accountFacade.user$).thenReturn(of(userData));
   });
 
   it('should be created', () => {
@@ -91,6 +105,11 @@ describe('Camfil Header Navigation Component', () => {
           >
         </li>
         <li class="dropdown with-separator"><a ng-reflect-router-link="/demo" href="/demo">Demo</a></li>
+        <li class="dropdown with-separator">
+          <a ng-reflect-router-link="/account/orders" href="/account/orders"
+            >account.order_history.link</a
+          >
+        </li>
       </ul>
     `);
   });
