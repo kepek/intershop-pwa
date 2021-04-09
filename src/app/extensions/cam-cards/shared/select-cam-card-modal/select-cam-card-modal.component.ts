@@ -82,7 +82,6 @@ export class SelectCamCardModalComponent implements OnInit, OnDestroy, OnChanges
 
   camCards: CamCard[];
 
-  camCards$: Observable<CamCard[]>;
   currentCamCard$: Observable<CamCard>;
   currentCamCard: CamCard;
 
