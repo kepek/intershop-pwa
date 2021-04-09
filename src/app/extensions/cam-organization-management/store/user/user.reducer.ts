@@ -11,6 +11,9 @@ import {
   activateCustomerUser,
   activateCustomerUserFail,
   activateCustomerUserSuccess,
+  createCustomerUser,
+  createCustomerUserFail,
+  createCustomerUserSuccess,
   deactivateCustomerUser,
   deactivateCustomerUserFail,
   deactivateCustomerUserSuccess,
@@ -46,20 +49,29 @@ const initialState: UserState = userAdapter.getInitialState({
 
 export const userReducer = createReducer(
   initialState,
-  setLoadingOn(loadCustomerUsers, loadCustomerUser, activateCustomerUser, deactivateCustomerUser, updateCustomerUser),
+  setLoadingOn(
+    loadCustomerUsers,
+    loadCustomerUser,
+    activateCustomerUser,
+    deactivateCustomerUser,
+    updateCustomerUser,
+    createCustomerUser
+  ),
   setErrorOn(
     loadCustomerUsersFail,
     loadCustomerUserFail,
     activateCustomerUserFail,
     deactivateCustomerUserFail,
-    updateCustomerUserFail
+    updateCustomerUserFail,
+    createCustomerUserFail
   ),
   unsetLoadingAndErrorOn(
     loadCustomerUsersSuccess,
     loadCustomerUserSuccess,
     activateCustomerUserSuccess,
     deactivateCustomerUserSuccess,
-    updateCustomerUserSuccess
+    updateCustomerUserSuccess,
+    createCustomerUserSuccess
   ),
   on(
     loadCustomerUsersSuccess,
@@ -67,6 +79,7 @@ export const userReducer = createReducer(
     activateCustomerUserSuccess,
     deactivateCustomerUserSuccess,
     updateCustomerUserSuccess,
+    createCustomerUserSuccess,
     state => ({ ...state, initialized: true })
   ),
   on(selectUser, (state: UserState, action) => ({
@@ -92,7 +105,7 @@ export const userReducer = createReducer(
 
     return userAdapter.upsertOne(changedUser, state);
   }),
-  on(updateCustomerUserSuccess, (state: UserState, action) => {
+  on(updateCustomerUserSuccess, createCustomerUserSuccess, (state: UserState, action) => {
     const { user } = action.payload;
 
     // Dirty hack since we are using existing Intershop API which does not return `user.id`

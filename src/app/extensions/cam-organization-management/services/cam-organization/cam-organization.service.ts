@@ -27,6 +27,7 @@ import { CamfilB2bRole } from '../../models/camfil-b2b-role/camfil-b2b-role.mode
 import { CamfilB2bUserData } from '../../models/camfil-b2b-user/camfil-b2b-user.interface';
 import { CamfilB2bUserMapper } from '../../models/camfil-b2b-user/camfil-b2b-user.mapper';
 import { CamfilB2bUser } from '../../models/camfil-b2b-user/camfil-b2b-user.model';
+import { B2bUser } from '../../../../../../projects/organization-management/src/app/models/b2b-user/b2b-user.model';
 
 @Injectable({ providedIn: 'root' })
 export class CamOrganizationService {
@@ -191,6 +192,38 @@ export class CamOrganizationService {
         preferredInvoiceToAddressUrn: undefined,
         preferredShipToAddressUrn: undefined,
         preferredPaymentInstrumentId: undefined,
+      })
+      .pipe(map(CamfilB2bUserMapper.fromData));
+  }
+
+  // Customer -> User -> Create
+
+  createCustomerUser(customer: CamfilB2bCustomer, user: CamfilB2bUser) {
+    if (!customer) {
+      return throwError('updateCustomerUser() called without required customer data');
+    }
+
+    if (!user) {
+      return throwError('updateCustomerUser() called without required user data');
+    }
+
+    return this.apiService
+      .post<B2bUser>(`customers/${customer.customerNo}/users`, {
+        elements: [
+          {
+            ...customer,
+            ...user,
+            preferredInvoiceToAddress: { urn: user.preferredInvoiceToAddressUrn },
+            preferredShipToAddress: { urn: user.preferredShipToAddressUrn },
+            preferredPaymentInstrument: { id: user.preferredPaymentInstrumentId },
+            preferredInvoiceToAddressUrn: undefined,
+            preferredShipToAddressUrn: undefined,
+            preferredPaymentInstrumentId: undefined,
+            preferredLanguage: 'en_US', // TODO (extMlk): add current locale usage
+            userBudgets: undefined,
+            roleIds: undefined,
+          },
+        ],
       })
       .pipe(map(CamfilB2bUserMapper.fromData));
   }

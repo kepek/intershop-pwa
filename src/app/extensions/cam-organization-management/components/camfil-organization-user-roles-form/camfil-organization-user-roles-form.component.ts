@@ -28,10 +28,10 @@ export class CamfilOrganizationUserRolesFormComponent implements OnInit {
   get roles() {
     return this.rolesValue;
   }
-  set roles(roles: (CamfilB2bRole & { disabled?: boolean })[]) {
+  set roles(roles: CamfilB2bRole[]) {
     this.rolesValue = roles;
   }
-  private rolesValue: (CamfilB2bRole & { disabled?: boolean })[] = [];
+  private rolesValue: CamfilB2bRole[] = [];
 
   // Selected Roles
 

@@ -26,9 +26,9 @@
   <camfil-organization-user-details-form
     [customer]="selectedCustomer$() | async"
     [user]="selectedUser$() | async"
-    (updateUser)="onUpdateSelectedCustomerUserDetails($event)"
-    (updateUserActive)="onUpdateSelectedCustomerUserActive($event)"
-    (updateUserPassword)="onUpdateSelectedCustomerUserPassword()"
+    (changeUser)="onUpdateSelectedCustomerUserDetails($event)"
+    (changeUserActive)="onUpdateSelectedCustomerUserActive($event)"
+    (changeUserPassword)="onUpdateSelectedCustomerUserPassword()"
   ></camfil-organization-user-details-form>
 </ng-template>
 
