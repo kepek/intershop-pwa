@@ -29,6 +29,7 @@ export interface AbstractBasket<T> {
   basketExtensions?: BasketExtensions[];
   approval?: BasketApproval;
   attributes?: Attribute[];
+  externalOrderReference?: string;
 }
 
 export interface Basket extends AbstractBasket<LineItem> {}

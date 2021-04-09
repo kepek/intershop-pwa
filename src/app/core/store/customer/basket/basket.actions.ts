@@ -57,6 +57,11 @@ export const updateBasketShippingMethod = createAction(
   payload<{ shippingId: string }>()
 );
 
+export const updateBasketExternalOrderReference = createAction(
+  '[Basket] Update Baskets External Order Reference',
+  payload<{ externalOrderReference: string }>()
+);
+
 export const updateBasket = createAction('[Basket Internal] Update Basket', payload<{ update: BasketUpdateType }>());
 
 export const updateBasketFail = createAction('[Basket API] Update Basket Fail', httpError());

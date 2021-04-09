@@ -20,6 +20,12 @@ export class CamfilCheckoutSummaryComponent {
   submitOrder() {
     this.update.emit();
 
+    // In case of user from ICM back office, add employeeID as externalOrderReference
+    const erpEmployeeId = localStorage.getItem('erpEmployeeId');
+    if (erpEmployeeId) {
+      this.checkoutFacade.updateBasketExternalOrderReference(erpEmployeeId);
+    }
+
     this.checkoutFacade.continue(5);
   }
 

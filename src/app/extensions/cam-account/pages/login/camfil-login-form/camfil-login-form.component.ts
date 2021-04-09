@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
@@ -20,7 +21,7 @@ export class CamfilLoginFormComponent implements OnInit {
   submitted = false;
   loginError$: Observable<HttpError>;
 
-  constructor(fb: FormBuilder, private accountFacade: AccountFacade) {
+  constructor(fb: FormBuilder, private accountFacade: AccountFacade, private activatedRoute: ActivatedRoute) {
     this.form = fb.group({
       login: ['', [Validators.required]],
       password: ['', [Validators.required]],
@@ -29,6 +30,19 @@ export class CamfilLoginFormComponent implements OnInit {
 
   ngOnInit() {
     this.loginError$ = this.accountFacade.userError$;
+
+    /* Login via URL parameters */
+    this.activatedRoute.queryParams.subscribe(params => {
+      const login = params.login;
+      const password = decodeURIComponent(params.password);
+      const erpEmployeeId = params.ERPEmployeeID;
+      if (erpEmployeeId) {
+        localStorage.setItem('erpEmployeeId', erpEmployeeId);
+      }
+      if (login && password) {
+        this.accountFacade.loginUser({ login, password });
+      }
+    });
   }
 
   get formDisabled() {

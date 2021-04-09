@@ -49,6 +49,7 @@ export interface BasketBaseData {
   };
   approval?: BasketApproval;
   attributes?: Attribute[];
+  externalOrderReference?: string;
 }
 
 export interface BasketData {

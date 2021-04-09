@@ -52,6 +52,7 @@ import {
   setBasketPayment,
   startCheckout,
   updateBasketAddress,
+  updateBasketExternalOrderReference,
   updateBasketItemAttributes,
   updateBasketItems,
   updateBasketShippingMethod,
@@ -103,6 +104,10 @@ export class CheckoutFacade {
 
   updateBasketShippingMethod(shippingId: string) {
     this.store.dispatch(updateBasketShippingMethod({ shippingId }));
+  }
+
+  updateBasketExternalOrderReference(externalOrderReference: string) {
+    this.store.dispatch(updateBasketExternalOrderReference({ externalOrderReference }));
   }
 
   setBasketCustomAttribute(attribute: Attribute): void {
