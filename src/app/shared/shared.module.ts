@@ -210,6 +210,7 @@ import { ProductImagesComponent } from '../pages/product/product-images/product-
 import { ProductLinksCarouselComponent } from '../pages/product/product-links-carousel/product-links-carousel.component';
 import { ProductLinksComponent } from '../pages/product/product-links/product-links.component';
 import { ProductPageComponent } from '../pages/product/product-page.component';
+import { CamfilMyPageHeaderComponent } from 'ish-shared/components/camfil-my-page-header/camfil-my-page-header.component';
 
 const importExportModules = [
   AddressFormsSharedModule,
@@ -374,6 +375,7 @@ const exportedComponents = [
   CamfilLineItemTableComponent,
   CamfilLinksBlockComponent,
   CamfilModalDialogComponent,
+  CamfilMyPageHeaderComponent,
   CamfilOrderListComponent,
   CamfilProductAddToBasketComponent,
   CamfilProductAddToCompareComponent,

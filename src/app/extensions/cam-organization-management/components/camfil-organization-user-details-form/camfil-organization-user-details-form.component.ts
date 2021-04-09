@@ -17,9 +17,9 @@ export class CamfilOrganizationUserDetailsFormComponent implements OnInit {
   @Input() customer: CamfilB2bCustomer;
   @Input() user: CamfilB2bUser;
 
-  @Output() updateUser = new EventEmitter<{ customer: CamfilB2bCustomer; user: CamfilB2bUser }>();
-  @Output() updateUserActive = new EventEmitter<{ active: boolean }>();
-  @Output() updateUserPassword = new EventEmitter();
+  @Output() changeUser = new EventEmitter<{ customer: CamfilB2bCustomer; user: CamfilB2bUser }>();
+  @Output() changeUserActive = new EventEmitter<{ active: boolean }>();
+  @Output() changeUserPassword = new EventEmitter();
 
   userForm: FormGroup;
   userActiveForm: FormGroup;
@@ -77,17 +77,17 @@ export class CamfilOrganizationUserDetailsFormComponent implements OnInit {
     const customer = this.customer;
     const user = { ...this.user, firstName, lastName, phoneHome, email };
 
-    this.updateUser.emit({ customer, user });
+    this.changeUser.emit({ customer, user });
   }
 
   resetUserPassword() {
     const { customer, user } = this;
-    this.updateUserPassword.emit({ customer, user });
+    this.changeUserPassword.emit({ customer, user });
   }
 
   toggleActiveFlag() {
     const active = !this.user?.active;
-    this.updateUserActive.emit({ active });
+    this.changeUserActive.emit({ active });
   }
 
   get isUserFormSubmitButtonDisabled() {

@@ -11,6 +11,7 @@ import { HttpError } from 'ish-core/models/http-error/http-error.model';
 import { PasswordReminder } from 'ish-core/models/password-reminder/password-reminder.model';
 import { ApiService, AvailableOptions, unpackEnvelope } from 'ish-core/services/api/api.service';
 
+import { B2bUser } from '../../../../../../projects/organization-management/src/app/models/b2b-user/b2b-user.model';
 import { CamCardData } from '../../../cam-cards/models/cam-card/cam-card.interface';
 import { CamCardMapper } from '../../../cam-cards/models/cam-card/cam-card.mapper';
 import { CamCard } from '../../../cam-cards/models/cam-card/cam-card.model';
@@ -191,6 +192,38 @@ export class CamOrganizationService {
         preferredInvoiceToAddressUrn: undefined,
         preferredShipToAddressUrn: undefined,
         preferredPaymentInstrumentId: undefined,
+      })
+      .pipe(map(CamfilB2bUserMapper.fromData));
+  }
+
+  // Customer -> User -> Create
+
+  createCustomerUser(customer: CamfilB2bCustomer, user: CamfilB2bUser) {
+    if (!customer) {
+      return throwError('updateCustomerUser() called without required customer data');
+    }
+
+    if (!user) {
+      return throwError('updateCustomerUser() called without required user data');
+    }
+
+    return this.apiService
+      .post<B2bUser>(`customers/${customer.customerNo}/users`, {
+        elements: [
+          {
+            ...customer,
+            ...user,
+            preferredInvoiceToAddress: { urn: user.preferredInvoiceToAddressUrn },
+            preferredShipToAddress: { urn: user.preferredShipToAddressUrn },
+            preferredPaymentInstrument: { id: user.preferredPaymentInstrumentId },
+            preferredInvoiceToAddressUrn: undefined,
+            preferredShipToAddressUrn: undefined,
+            preferredPaymentInstrumentId: undefined,
+            preferredLanguage: 'en_US', // TODO (extMlk): add current locale usage
+            userBudgets: undefined,
+            roleIds: undefined,
+          },
+        ],
       })
       .pipe(map(CamfilB2bUserMapper.fromData));
   }

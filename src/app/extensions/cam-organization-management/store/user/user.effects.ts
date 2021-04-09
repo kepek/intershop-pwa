@@ -17,6 +17,9 @@ import {
   activateCustomerUser,
   activateCustomerUserFail,
   activateCustomerUserSuccess,
+  createCustomerUser,
+  createCustomerUserFail,
+  createCustomerUserSuccess,
   deactivateCustomerUser,
   deactivateCustomerUserFail,
   deactivateCustomerUserSuccess,
@@ -169,6 +172,27 @@ export class UserEffects {
             })
           ),
           mapErrorToAction(updateCustomerUserFail)
+        )
+      )
+    )
+  );
+
+  // Create Customer User
+
+  createCustomerUser$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(createCustomerUser),
+      mapToPayload(),
+      concatMap(({ customer, user }) =>
+        this.organizationService.updateCustomerUser(customer, user).pipe(
+          map(changedUser =>
+            createCustomerUserSuccess({
+              customer,
+              user: changedUser,
+              successMessage: 'camfil.account.organization.user_details.form.update.success.message',
+            })
+          ),
+          mapErrorToAction(createCustomerUserFail)
         )
       )
     )

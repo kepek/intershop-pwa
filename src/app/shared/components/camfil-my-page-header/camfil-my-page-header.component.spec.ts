@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CamfilOrganizationHeaderComponent } from './camfil-organization-header.component';
+import { CamfilMyPageHeaderComponent } from './camfil-my-page-header.component';
 
-describe('Camfil Organization Header Component', () => {
-  let component: CamfilOrganizationHeaderComponent;
-  let fixture: ComponentFixture<CamfilOrganizationHeaderComponent>;
+describe('Camfil My Page Header Component', () => {
+  let component: CamfilMyPageHeaderComponent;
+  let fixture: ComponentFixture<CamfilMyPageHeaderComponent>;
   let element: HTMLElement;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CamfilOrganizationHeaderComponent],
+      declarations: [CamfilMyPageHeaderComponent],
     }).compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CamfilOrganizationHeaderComponent);
+    fixture = TestBed.createComponent(CamfilMyPageHeaderComponent);
     component = fixture.componentInstance;
     element = fixture.nativeElement;
   });

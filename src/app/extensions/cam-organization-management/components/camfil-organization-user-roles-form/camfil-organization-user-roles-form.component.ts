@@ -1,7 +1,7 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+// tslint:disable: ish-ordered-imports project-structure
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
 
 import { CamfilB2bRole } from '../../models/camfil-b2b-role/camfil-b2b-role.model';
-import { CamfilB2bUser } from '../../models/camfil-b2b-user/camfil-b2b-user.model';
 
 @Component({
   selector: 'camfil-organization-user-roles-form',
@@ -10,25 +10,63 @@ import { CamfilB2bUser } from '../../models/camfil-b2b-user/camfil-b2b-user.mode
   changeDetection: ChangeDetectionStrategy.Default,
 })
 export class CamfilOrganizationUserRolesFormComponent implements OnInit {
-  @Input() user: CamfilB2bUser;
-  @Input() roles: CamfilB2bRole[];
-  @Input() staticRoles: CamfilB2bRole[];
-  @Input() selectedRoles: CamfilB2bRole[];
+  // Static Roles
+
+  @Input()
+  get staticRoles() {
+    return this.staticRolesValue;
+  }
+  set staticRoles(staticRoles: CamfilB2bRole[]) {
+    this.staticRolesValue = staticRoles;
+  }
+
+  private staticRolesValue = [];
+
+  // Roles
+
+  @Input()
+  get roles() {
+    return this.rolesValue;
+  }
+  set roles(roles: CamfilB2bRole[]) {
+    this.rolesValue = roles;
+  }
+  private rolesValue: CamfilB2bRole[] = [];
+
+  // Selected Roles
+
+  @Input()
+  get selectedRoles() {
+    return this.selectedRolesValue;
+  }
+  set selectedRoles(selectedRoles: CamfilB2bRole[]) {
+    this.selectedRolesValue = selectedRoles;
+  }
+  private selectedRolesValue: CamfilB2bRole[] = [];
+
+  // Properties
+
+  selectedRoleIDs: string[] = [];
+
+  // Outputs
 
   @Output() selectCustomerUserRoles = new EventEmitter<{ roleIDs: string[] }>();
 
-  options: (CamfilB2bRole & { disabled: boolean })[] = [];
-  selectedOptions: string[] = [];
-
-  ngOnInit() {
-    this.selectedOptions = this.selectedRoles?.map(role => role.id);
-    this.options = this.roles?.map(role => ({
-      ...role,
-      disabled: role.fixed || this.staticRoles?.map(r => r.id)?.includes(role.id),
-    }));
-  }
+  // Handlers
 
   onCustomerUserRolesChange() {
-    this.selectCustomerUserRoles.emit({ roleIDs: this.selectedOptions });
+    this.selectCustomerUserRoles.emit({ roleIDs: this.selectedRoleIDs });
+  }
+
+  // Hooks
+
+  ngOnInit() {
+    this.selectedRoleIDs = this.selectedRoles?.map(role => role.id);
+  }
+
+  // Methods
+
+  isDisabledRole(role: CamfilB2bRole) {
+    return role.fixed || this.staticRoles?.map(r => r.id)?.includes(role.id);
   }
 }

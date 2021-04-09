@@ -83,6 +83,20 @@ export const updateCustomerUserSuccess = createAction(
   payload<{ customer: CamfilB2bCustomer; user: CamfilB2bUser; successMessage?: string }>()
 );
 
+// User -> Create
+
+export const createCustomerUser = createAction(
+  '[Camfil User] Create Customer User',
+  payload<{ customer: CamfilB2bCustomer; user: CamfilB2bUser }>()
+);
+
+export const createCustomerUserFail = createAction('[Camfil Users API] Create Customer User Fail', httpError());
+
+export const createCustomerUserSuccess = createAction(
+  '[Camfil Users API] Create Customer User Success',
+  payload<{ customer: CamfilB2bCustomer; user: CamfilB2bUser; successMessage?: string }>()
+);
+
 // User -> Reset Password
 
 export const resetCustomerUserPassword = createAction(

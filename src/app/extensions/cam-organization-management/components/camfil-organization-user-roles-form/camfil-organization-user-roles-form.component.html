@@ -1,14 +1,14 @@
 <mat-card class="mat-elevation-z box-shadow mb-2 p-0">
   <mat-card-content>
-    <mat-selection-list [(ngModel)]="selectedOptions" (selectionChange)="onCustomerUserRolesChange()" dense>
+    <mat-selection-list [(ngModel)]="selectedRoleIDs" (selectionChange)="onCustomerUserRolesChange()" dense>
       <mat-list-option
-        *ngFor="let option of options"
-        [value]="option.id"
-        [disabled]="option.disabled"
+        *ngFor="let role of roles"
+        [value]="role.id"
+        [disabled]="isDisabledRole(role)"
         checkboxPosition="before"
         color="primary"
       >
-        {{ option.displayName }}
+        {{ role.displayName }}
       </mat-list-option>
     </mat-selection-list>
   </mat-card-content>
