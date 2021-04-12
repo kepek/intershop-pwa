@@ -158,6 +158,21 @@
               >
             </li>
             <li>
+              <button
+                class="mat-button mat-button-base double-qty-btn"
+                [ngClass]="{ 'mat-button-disabled': !order.lineItems?.length }"
+                (click)="doubleArtivlesQuantity(order)"
+                [disabled]="!order.lineItems?.length"
+              >
+                <mat-icon
+                  svgIcon="plus-fab"
+                  class="double-add-icon"
+                  [ngClass]="{ 'mat-icon-no-color': !order.lineItems?.length }"
+                ></mat-icon>
+                {{ 'camfil.checkout.cta.double_quantity' | translate }}
+              </button>
+            </li>
+            <li>
               <camfil-delete-order [order]="order"></camfil-delete-order>
             </li>
           </ul>
@@ -225,8 +240,10 @@
       <mat-icon svgIcon="delivery" class="size-35 ml-2 mr-4"></mat-icon>
       <div class="w-100">
         <b>{{ deliveryTerm.description }}</b>
-        <hr class="m-1">
-        <b *ngIf="freeDelivery.value > 0">{{ 'camfil.checkout.free_delivery.threshold' | translate: { '0': (freeDelivery | ishPrice) } }}</b>
+        <hr class="m-1" />
+        <b *ngIf="freeDelivery.value > 0">{{
+          'camfil.checkout.free_delivery.threshold' | translate: { '0': (freeDelivery | ishPrice) }
+        }}</b>
         <b *ngIf="!(freeDelivery.value > 0)">{{ 'camfil.checkout.free_delivery' | translate }}</b>
       </div>
     </div>

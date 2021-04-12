@@ -35,6 +35,7 @@ import { ModalAddNewProductComponent } from '../../../extensions/cam-cards/pages
 
 import { EditOrderModalComponent } from './edit-order-modal/edit-order-modal.component';
 import { ORDER_HEADER_VALIDATORS } from './validators';
+import { LineItemUpdate } from 'ish-core/models/line-item-update/line-item-update.model';
 
 interface Order extends Bucket {
   totals: number;
@@ -371,5 +372,15 @@ export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
     this.selectedDeliveryDate = dateString.getTime();
 
     return dateString.toISOString();
+  }
+
+  doubleArtivlesQuantity(order) {
+    order.lineItems?.forEach(item => {
+      this.updateBasketItem({ itemId: item.id, quantity: item.quantity.value * 2 });
+    });
+  }
+
+  updateBasketItem(formValue: LineItemUpdate) {
+    this.checkoutFacade.updateBasketItem(formValue);
   }
 }
