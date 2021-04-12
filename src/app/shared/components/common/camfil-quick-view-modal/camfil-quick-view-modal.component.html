@@ -47,30 +47,30 @@
       <div class="row">
         <div class="col-7">
           <strong>{{ 'camfil.product.quickview.details.headline' | translate }}</strong>
-          <div *ngIf="frameSize">
+          <div *ngIf="isNotZero(frameSize)">
             {{ 'camfil.product.quickView.frame.label' | translate }}
             <strong>{{ frameSize }}</strong>
           </div>
-          <div *ngIf="pressureDrop">
+          <div *ngIf="isNotZero(pressureDrop)">
             {{ 'camfil.product.quickView.pressureDrop.label' | translate }}
             <strong>{{ pressureDrop }}</strong>
           </div>
-          <div *ngIf="isoClass">
+          <div *ngIf="isNotZero(isoClass)">
             {{ 'camfil.product.quickView.isoClass.label' | translate }}
             <strong>{{ isoClass }}</strong>
           </div>
-          <div *ngIf="energyClass">
+          <div *ngIf="isNotZero(energyClass)">
             {{ 'camfil.product.quickView.energyClass.label' | translate }}
             <strong>{{ energyClass }}</strong>
           </div>
-          <div *ngIf="width && depth && height">
+          <div *ngIf="+width && +depth && +height">
             {{ 'camfil.product.quickView.dimensions.label' | translate }}
             <strong> {{ product | camfilDimension }}</strong>
           </div>
           <div>
             {{ 'camfil.product.quickView.sku.label' | translate }} <strong>{{ product.sku }}</strong>
           </div>
-          <div *ngIf="bags">
+          <div *ngIf="isNotZero(bags)">
             {{ 'camfil.product.quickView.bags.label' | translate }}
             <strong>{{ bags }}</strong>
           </div>

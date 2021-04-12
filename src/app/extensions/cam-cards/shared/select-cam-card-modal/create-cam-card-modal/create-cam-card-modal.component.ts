@@ -219,6 +219,10 @@ export class CreateCamCardModalComponent implements OnInit, AfterViewInit {
 
   /** open modal */
   show() {
+    this.camCardForm?.reset();
+
+    this.showNewSegment = false;
+
     return this.modalTemplate;
   }
 
