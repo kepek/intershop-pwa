@@ -25,7 +25,7 @@ export class OrderMapper {
         orderDate: orderData.orderDate,
         orderGoodsMark: orderData.orderGoodsMark,
         // If there is no order status then use default status
-        orderStatus: orderData.orderStatus ? orderData.orderStatus : 'Received',
+        orderStatus: orderData.orderStatus ? orderData.orderStatus : 'Created',
         orderNumber: orderData.orderNumber,
         deliveryAddress: DeliveryAddressMapper.fromData(orderData),
         taxAmount: orderData.taxAmount,
