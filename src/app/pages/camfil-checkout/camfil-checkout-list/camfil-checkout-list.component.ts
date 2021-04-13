@@ -37,6 +37,7 @@ import { EditOrderModalComponent } from './edit-order-modal/edit-order-modal.com
 import { ORDER_HEADER_VALIDATORS } from './validators';
 import { LineItemUpdate } from 'ish-core/models/line-item-update/line-item-update.model';
 import { Address } from 'ish-core/models/address/address.model';
+import { AddEmailRecipientModal } from '../add-email-recipient-modal/add-email-recipient-modal.component';
 
 interface Order extends Bucket {
   totals: number;
@@ -407,5 +408,10 @@ export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
 
   updateBasketItem(formValue: LineItemUpdate) {
     this.checkoutFacade.updateBasketItem(formValue);
+  }
+  
+  openAddEmailRecipientModal() {
+    this.dialog.open(AddEmailRecipientModal, { width: '330px', autoFocus: false });
+    this.dialog.closeAll();
   }
 }

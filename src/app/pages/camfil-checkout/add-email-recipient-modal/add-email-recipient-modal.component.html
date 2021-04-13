@@ -1,0 +1,26 @@
+<div class="text-center">
+  <mat-icon svgIcon="contact"></mat-icon>
+</div>
+<h2 class="text-center">Add Email recipients for your order confirmation</h2>
+
+<form>
+  <mat-form-field appearance="outline" class="delivery-address__form--field">
+    <input matInput type="text" formControlName="emailRecipients" />
+  </mat-form-field>
+  <div class="col-12 text-right p-0 mt-5">
+    <button mat-flat-button class="btn-tool text-primary" type="button" (click)="dialogRef.close()">
+      {{ 'camfil.account.cam_card.move.dialog.btn.cancel' | translate }}
+    </button>
+    <button
+      mat-flat-button
+      class="btn-tool text-primary"
+      type="submit"
+      attr.aria-label="{{ 'camfil.account.cam_card.move.dialog.btn.aria' | translate }}"
+      type="submit"
+
+      data-testing-id="cam-card-dialog-move-submit"
+    >
+      {{ 'camfil.account.cam_card.move.dialog.btn.text' | translate }}
+    </button>
+  </div>
+</form>

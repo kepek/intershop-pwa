@@ -149,6 +149,12 @@
         <div class="order-cta-container" [formGroup]="orderForm">
           <ul class="order-cta">
             <li>
+              <a (click)="openAddEmailRecipientModal()">
+                <mat-icon svgIcon="contact" class="add-icon"></mat-icon>
+                {{ 'camfil.checkout.cta.add_product' | translate }}
+              </a>
+            </li>
+            <li>
               <a (click)="openAddToProductModal(addNewProductModal)">
                 <mat-icon svgIcon="plus" class="add-icon"></mat-icon>
                 {{ 'camfil.checkout.cta.add_product' | translate }}
@@ -287,3 +293,5 @@
   icon="calendar"
 >
 </camfil-small-cta-modal>
+
+<camfil-add-email-recipient-modal></camfil-add-email-recipient-modal>

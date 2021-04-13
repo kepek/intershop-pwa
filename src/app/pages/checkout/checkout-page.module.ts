@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { SharedModule } from 'ish-shared/shared.module';
 
 import { CamCardsModule } from '../../extensions/cam-cards/cam-cards.module';
+import { AddEmailRecipientModal } from '../camfil-checkout/add-email-recipient-modal/add-email-recipient-modal.component';
 import { CamfilCheckoutHeaderComponent } from '../camfil-checkout/camfil-checkout-header/camfil-checkout-header.component';
 import { CamfilCheckoutLineItemComponent } from '../camfil-checkout/camfil-checkout-line-item/camfil-checkout-line-item.component';
 import { CamfilCheckoutDeliveryAddressComponent } from '../camfil-checkout/camfil-checkout-list/camfil-checkout-delivery-address/camfil-checkout-delivery-address.component';
@@ -35,6 +36,7 @@ const checkoutPageRoutes: Routes = [
   imports: [CamCardsModule, RouterModule.forChild(checkoutPageRoutes), SharedModule],
   declarations: [
     CamfilCheckoutDeliveryAddressComponent,
+    AddEmailRecipientModal,
     CamfilCheckoutHeaderComponent,
     CamfilCheckoutLineItemComponent,
     CamfilCheckoutListComponent,
