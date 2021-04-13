@@ -28,4 +28,5 @@ export interface Order {
   lineItems?: OrderLineItem[];
   trackAndTrace?: TrackAndTrace;
   additionalTotalCost?: AdditionalTotalCost;
+  phoneNotification: string;
 }

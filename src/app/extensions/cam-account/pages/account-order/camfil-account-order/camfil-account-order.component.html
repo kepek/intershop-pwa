@@ -56,7 +56,7 @@
           {{ order.contactPerson }}
         </dd>
         <dt class="col-6 p-0 pb-4">{{ 'camfil.account.orderdetails.phone_notification.label' | translate }}</dt>
-        <dd class="col-6 p-0" data-testing-id="order-phone_notification">1234567890</dd>
+        <dd class="col-6 p-0" data-testing-id="order-phone_notification">{{ order.phoneNotification || '-' }}</dd>
         <dt class="col-6 p-0">{{ 'camfil.account.orderdetails.delivery_address.label' | translate }}</dt>
         <dd class="col-6 p-0 order-delivery_address" data-testing-id="order-delivery_address">
           <ng-container *ngIf="deliveryAddress.deliveryAddressName"
