@@ -157,7 +157,10 @@ export class CamfilOrderListComponent implements OnInit, AfterViewInit, OnDestro
       this.dateFromFilter.setValue(this.filteredValues.dateFrom);
     }
     this.dateFromFilter.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(filterValue => {
-      this.filteredValues.dateFrom = filterValue;
+      const dateFrom = new Date(filterValue);
+      dateFrom.setHours(0, 0, 0);
+      dateFrom.setTime(dateFrom.getTime() - dateFrom.getTimezoneOffset() * 60 * 1000);
+      this.filteredValues.dateFrom = dateFrom.toISOString();
       this.updateFilter(this.filteredValues);
     });
 
@@ -168,6 +171,7 @@ export class CamfilOrderListComponent implements OnInit, AfterViewInit, OnDestro
     this.dateToFilter.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(filterValue => {
       const dateTo = new Date(filterValue);
       dateTo.setHours(23, 59, 59);
+      dateTo.setTime(dateTo.getTime() - dateTo.getTimezoneOffset() * 60 * 1000);
       this.filteredValues.dateTo = dateTo.toISOString();
       this.updateFilter(this.filteredValues);
     });
