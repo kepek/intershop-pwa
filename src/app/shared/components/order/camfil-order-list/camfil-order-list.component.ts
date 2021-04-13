@@ -95,7 +95,7 @@ export class CamfilOrderListComponent implements OnInit, AfterViewInit, OnDestro
           };
 
           if (this.filteredValues.orderStatus && this.filteredValues.orderStatus.length) {
-            this.updateFilter(this.filteredValues);
+            this.applyFilters();
           }
         }
       });
@@ -107,6 +107,13 @@ export class CamfilOrderListComponent implements OnInit, AfterViewInit, OnDestro
       .subscribe(filter => {
         this.filteredValues = JSON.parse(filter);
       });
+    this.applyFilters();
+
+    // remove time zone shift
+    if (this.filteredValues.dateTo) {
+      const dateTo = new Date(this.filteredValues.dateTo);
+      this.filteredValues.dateTo = dateTo.toISOString();
+    }
 
     this.dataSource.sort = this.sort;
     this.loading$ = this.camAccountFacade.ordersLoading$;
@@ -134,7 +141,7 @@ export class CamfilOrderListComponent implements OnInit, AfterViewInit, OnDestro
     this.filterCheckboxes$.pipe(takeUntil(this.destroy$)).subscribe((stat: []) => {
       if (statusFiltersReady) {
         this.filteredValues.orderStatus = stat;
-        this.updateFilter(this.filteredValues);
+        this.applyFilters();
       }
     });
 
@@ -142,14 +149,14 @@ export class CamfilOrderListComponent implements OnInit, AfterViewInit, OnDestro
     this.searchInputFilter.setValue(this.filteredValues.search);
     this.searchInputFilter.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(filterValue => {
       this.filteredValues.search = filterValue;
-      this.updateFilter(this.filteredValues);
+      this.applyFilters();
     });
 
     // set and subscribe to customer select changes
     this.customerFilter.setValue(this.filteredValues.customer);
     this.customerFilter.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(filterValue => {
       this.filteredValues.customer = filterValue;
-      this.updateFilter(this.filteredValues);
+      this.applyFilters();
     });
 
     // set and subscribe to dateFrom changes
@@ -161,19 +168,21 @@ export class CamfilOrderListComponent implements OnInit, AfterViewInit, OnDestro
       dateFrom.setHours(0, 0, 0);
       dateFrom.setTime(dateFrom.getTime() - dateFrom.getTimezoneOffset() * 60 * 1000);
       this.filteredValues.dateFrom = dateFrom.toISOString();
-      this.updateFilter(this.filteredValues);
+      this.applyFilters();
     });
 
     // set and subscribe to dateTo changes
     if (this.filteredValues.dateTo) {
-      this.dateToFilter.setValue(this.filteredValues.dateTo);
+      const dateTo = new Date(this.filteredValues.dateTo);
+      dateTo.setDate(dateTo.getDate() - 1);
+      this.dateToFilter.setValue(dateTo.toISOString());
     }
     this.dateToFilter.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(filterValue => {
       const dateTo = new Date(filterValue);
       dateTo.setHours(23, 59, 59);
       dateTo.setTime(dateTo.getTime() - dateTo.getTimezoneOffset() * 60 * 1000);
       this.filteredValues.dateTo = dateTo.toISOString();
-      this.updateFilter(this.filteredValues);
+      this.applyFilters();
     });
   }
 
@@ -207,7 +216,7 @@ export class CamfilOrderListComponent implements OnInit, AfterViewInit, OnDestro
         orderStatus: this.filteredValues.orderStatus.concat(change.source.value),
       };
 
-      this.updateFilter(this.filteredValues);
+      this.applyFilters();
     } else if (!change.source.checked) {
       this.filteredValues = {
         ...this.filteredValues,
@@ -216,7 +225,7 @@ export class CamfilOrderListComponent implements OnInit, AfterViewInit, OnDestro
         ),
       };
 
-      this.updateFilter(this.filteredValues);
+      this.applyFilters();
     }
   }
 
@@ -246,7 +255,6 @@ export class CamfilOrderListComponent implements OnInit, AfterViewInit, OnDestro
       let isStatusMatching = false;
       if (filters.orderStatus && filters.orderStatus.length) {
         for (const status of filters.orderStatus) {
-          // console.log('data.orderStatus', data.orderStatus);
           if (data.orderStatus.trim().toLowerCase() === status.trim().toLowerCase()) {
             isStatusMatching = true;
             break;
@@ -288,8 +296,11 @@ export class CamfilOrderListComponent implements OnInit, AfterViewInit, OnDestro
     return this.dataSource.filteredData.length >= this.tableSize + 2; // 2 preview rows will be visible below "show more" overlay
   }
 
-  updateFilter(filteredValues) {
-    const filter = JSON.stringify(filteredValues);
+  /**
+   * Apply the active filters on the data source and update the url parameters
+   */
+  applyFilters() {
+    const filter = JSON.stringify(this.filteredValues);
     this.dataSource.filter = filter.trim();
     this.router.navigate([], { queryParams: { filter } });
   }
