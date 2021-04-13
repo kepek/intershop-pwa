@@ -374,7 +374,7 @@ export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
     return dateString.toISOString();
   }
 
-  doubleArtivlesQuantity(order) {
+  doubleArticlesQuantity(order) {
     order.lineItems?.forEach(item => {
       this.updateBasketItem({ itemId: item.id, quantity: item.quantity.value * 2 });
     });

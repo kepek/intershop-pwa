@@ -152,25 +152,25 @@
               </a>
             </li>
             <li>
-              <a (click)="openEditModal(editModal)"
-                ><mat-icon svgIcon="edit" class="edit-icon"></mat-icon>
-                {{ 'camfil.checkout.cta.edit_details' | translate }}</a
-              >
-            </li>
-            <li>
               <button
                 class="mat-button mat-button-base double-qty-btn"
                 [ngClass]="{ 'mat-button-disabled': !order.lineItems?.length }"
-                (click)="doubleArtivlesQuantity(order)"
+                (click)="doubleArticlesQuantity(order)"
                 [disabled]="!order.lineItems?.length"
               >
                 <mat-icon
-                  svgIcon="plus-fab"
+                  svgIcon="copy"
                   class="double-add-icon"
                   [ngClass]="{ 'mat-icon-no-color': !order.lineItems?.length }"
                 ></mat-icon>
                 {{ 'camfil.checkout.cta.double_quantity' | translate }}
               </button>
+            </li>
+            <li>
+              <a (click)="openEditModal(editModal)"
+                ><mat-icon svgIcon="edit" class="edit-icon"></mat-icon>
+                {{ 'camfil.checkout.cta.edit_details' | translate }}</a
+              >
             </li>
             <li>
               <camfil-delete-order [order]="order"></camfil-delete-order>
