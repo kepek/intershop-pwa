@@ -827,6 +827,7 @@
   "camfil.checkout.cta.add_product": "LisÃ¤Ã¤ tuote",
   "camfil.checkout.cta.delete_order": "Poista tilaus",
   "camfil.checkout.cta.edit_details": "Muokkaa tilauksen tietoja",
+  "camfil.checkout.cta.double_quantity": "fi_Double quantity",
   "camfil.checkout.excl_vat": "ilman arvonlisÃ¤veroa",
   "camfil.checkout.form.delivery_date": "Valitse toivottu toimituspÃ¤ivÃ¤",
   "camfil.checkout.form.invoice_mark": "Laskun merkki",

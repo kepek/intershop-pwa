@@ -827,6 +827,7 @@
   "camfil.checkout.cta.add_product": "Lägg till produkt",
   "camfil.checkout.cta.delete_order": "Radera order",
   "camfil.checkout.cta.edit_details": "Redigera orderdetaljer",
+  "camfil.checkout.cta.double_quantity": "sv_Double quantity",
   "camfil.checkout.excl_vat": "exklusive moms",
   "camfil.checkout.form.delivery_date": "Välj leveransdatum",
   "camfil.checkout.form.invoice_mark": "Fakturamärkning",

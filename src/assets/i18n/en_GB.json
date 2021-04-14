@@ -827,6 +827,7 @@
   "camfil.checkout.cta.add_product": "Add product",
   "camfil.checkout.cta.delete_order": "Delete order",
   "camfil.checkout.cta.edit_details": "Edit order details",
+  "camfil.checkout.cta.double_quantity": "Double quantity",
   "camfil.checkout.excl_vat": "excl. VAT",
   "camfil.checkout.form.delivery_date": "Choose delivery date",
   "camfil.checkout.form.invoice_mark": "Invoice mark",

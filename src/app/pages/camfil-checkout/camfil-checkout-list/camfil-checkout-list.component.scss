@@ -77,6 +77,32 @@
     line-height: 26px;
   }
 
+  .double-qty-btn {
+    display: flex;
+    align-items: center;
+    height: $h3-line-height;
+    padding: 0;
+    font-size: $font-size-base;
+    font-weight: 500;
+    line-height: $h3-line-height;
+    color: $camfil-color-primary;
+    &:hover {
+      color: $camfil-color-secondary;
+    }
+    .double-add-icon {
+      width: $space-box;
+      height: $space-box;
+      margin-right: $space-half;
+    }
+    &:disabled {
+      color: $gray-600;
+      cursor: initial;
+      .double-add-icon {
+        color: $gray-600;
+      }
+    }
+  }
+
   .list-item-row {
     margin-top: 12px;
     background-color: $white;
