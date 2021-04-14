@@ -844,6 +844,7 @@
   "camfil.checkout.create_new_order": "Create new order",
   "camfil.checkout.create_new_order.temporary_order.header": "The order is created temporarily. Please add a product to save it permanently.",
   "camfil.checkout.create_new_order.temporary_order.ok": "OK",
+  "camfil.checkout.cta.add_email_recipient": "Add Email recipient",
   "camfil.checkout.cta.add_product": "Add product",
   "camfil.checkout.cta.delete_order": "Delete order",
   "camfil.checkout.cta.double_quantity": "Double quantity",

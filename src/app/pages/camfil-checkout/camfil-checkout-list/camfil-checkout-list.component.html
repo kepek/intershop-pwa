@@ -150,8 +150,8 @@
           <ul class="order-cta">
             <li>
               <a (click)="openAddEmailRecipientModal()">
-                <mat-icon svgIcon="contact" class="add-icon"></mat-icon>
-                {{ 'camfil.checkout.cta.add_product' | translate }}
+                <mat-icon svgIcon="contact" class="add-email-recipient-icon"></mat-icon>
+                {{ 'camfil.checkout.cta.add_email_recipient' | translate }}
               </a>
             </li>
             <li>
@@ -293,5 +293,6 @@
   icon="calendar"
 >
 </camfil-small-cta-modal>
-
-<camfil-add-email-recipient-modal></camfil-add-email-recipient-modal>
+<div *ngIf="order" class="d-none">
+  <camfil-add-email-recipient-modal #addEmailRecipientsModal [order]="order"></camfil-add-email-recipient-modal>
+</div>

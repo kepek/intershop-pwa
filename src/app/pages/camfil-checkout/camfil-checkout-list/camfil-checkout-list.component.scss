@@ -219,6 +219,11 @@
           margin-left: -4px;
         }
 
+        &.add-email-recipient-icon {
+          width: $space-box;
+          height: $space-box;
+        }
+
         &::ng-deep {
           svg {
             vertical-align: top;

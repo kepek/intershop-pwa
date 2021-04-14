@@ -411,7 +411,7 @@ export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
   }
   
   openAddEmailRecipientModal() {
-    this.dialog.open(AddEmailRecipientModal, { width: '330px', autoFocus: false });
-    this.dialog.closeAll();
+    this.dialog.open(AddEmailRecipientModal, { width: '360px', autoFocus: false, data: this.order, });
+    // this.dialog.closeAll();
   }
 }

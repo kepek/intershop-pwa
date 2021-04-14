@@ -844,6 +844,7 @@
   "camfil.checkout.create_new_order.temporary_order.header": "Tilaus luodaan tilapäisesti. Lisää tuote tallentaaksesi sen pysyvästi.",
   "camfil.checkout.create_new_order.temporary_order.ok": "OK",
   "camfil.checkout.cta.add_product": "Lisää tuote",
+  "camfil.checkout.cta.add_email_recipient": "fi_Add Email recipient",
   "camfil.checkout.cta.delete_order": "Poista tilaus",
   "camfil.checkout.cta.double_quantity": "Double quantity",
   "camfil.checkout.cta.edit_details": "Muokkaa tilauksen tietoja",

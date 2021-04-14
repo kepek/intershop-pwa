@@ -1,13 +1,26 @@
 <div class="text-center">
   <mat-icon svgIcon="contact"></mat-icon>
 </div>
-<h2 class="text-center">Add Email recipients for your order confirmation</h2>
+<p class="text-center"><strong>Add Email recipients for your order confirmation</strong></p>
 
-<form>
-  <mat-form-field appearance="outline" class="delivery-address__form--field">
-    <input matInput type="text" formControlName="emailRecipients" />
+<form [formGroup]="recipientsForm" (ngSubmit)="submitAddEmailRecipientForm($event)">
+  <mat-form-field appearance="fill" class="d-block">
+    <mat-label>Enter email address</mat-label>
+    <input
+      matInput
+      type="text"
+      label="Enter email address"
+      formControlName="emailRecipients"
+      aria-controls="my-helper-id"
+    />
   </mat-form-field>
-  <div class="col-12 text-right p-0 mt-5">
+  <camfil-error
+    [errors]="getField('emailRecipients').errors"
+    [errorValidators]="validators.emailRecipients"
+    [touched]="getField('emailRecipients').touched || getField('emailRecipients').dirty"
+  ></camfil-error>
+  <p>Separate multiple addresses with a comma sign</p>
+  <div class="col-12 text-right p-0 mt-2">
     <button mat-flat-button class="btn-tool text-primary" type="button" (click)="dialogRef.close()">
       {{ 'camfil.account.cam_card.move.dialog.btn.cancel' | translate }}
     </button>
@@ -17,10 +30,11 @@
       type="submit"
       attr.aria-label="{{ 'camfil.account.cam_card.move.dialog.btn.aria' | translate }}"
       type="submit"
-
       data-testing-id="cam-card-dialog-move-submit"
+      (click)="submitAddEmailRecipientForm($event)"
     >
-      {{ 'camfil.account.cam_card.move.dialog.btn.text' | translate }}
+      <!-- {{ 'camfil.account.cam_card.move.dialog.btn.text' | translate }} -->
+      Save
     </button>
   </div>
 </form>

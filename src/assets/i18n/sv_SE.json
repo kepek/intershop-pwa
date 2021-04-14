@@ -844,6 +844,7 @@
   "camfil.checkout.create_new_order": "Skapa ny order",
   "camfil.checkout.create_new_order.temporary_order.header": "Beställningen skapas tillfälligt. Lägg till en produkt för att spara den permanent.",
   "camfil.checkout.create_new_order.temporary_order.ok": "OK",
+  "camfil.checkout.cta.add_email_recipient": "sv_Add Email recipient",
   "camfil.checkout.cta.add_product": "Lägg till produkt",
   "camfil.checkout.cta.delete_order": "Radera order",
   "camfil.checkout.cta.double_quantity": "Dubblera antalet produkter",
