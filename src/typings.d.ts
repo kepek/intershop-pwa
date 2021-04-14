@@ -20,3 +20,13 @@ declare interface PromiseConstructor {
 }
 
 type PropType<TObj, TProp extends keyof TObj> = TObj[TProp];
+
+interface ComponentChange<T, P extends keyof T> {
+  previousValue: T[P];
+  currentValue: T[P];
+  firstChange: boolean;
+}
+
+type ComponentChanges<T> = {
+  [P in keyof T]?: ComponentChange<T, P>;
+};

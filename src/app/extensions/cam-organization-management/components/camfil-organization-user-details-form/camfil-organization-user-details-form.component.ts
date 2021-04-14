@@ -28,6 +28,14 @@ export class CamfilOrganizationUserDetailsFormComponent implements OnInit {
 
   constructor(private fb: FormBuilder) {}
 
+  get isUserFormSubmitButtonDisabled() {
+    return this.userForm?.invalid && this.isUserFormSubmitted;
+  }
+
+  get isEditMode() {
+    return this.user.hasOwnProperty('id') && this.user.hasOwnProperty('active');
+  }
+
   private initUserForm() {
     this.userForm = this.fb.group({
       firstName: new FormControl(this.user?.firstName, {
@@ -62,8 +70,8 @@ export class CamfilOrganizationUserDetailsFormComponent implements OnInit {
     this.initUserActiveForm();
   }
 
-  submitUserForm() {
-    if (this.userForm.invalid) {
+  handleChangeUser() {
+    if (!this.isEditMode && this.userForm.invalid) {
       this.isUserFormSubmitted = true;
       markAsDirtyRecursive(this.userForm);
       return;
@@ -80,21 +88,15 @@ export class CamfilOrganizationUserDetailsFormComponent implements OnInit {
     this.changeUser.emit({ customer, user });
   }
 
-  resetUserPassword() {
+  handleResetUserPassword() {
     const { customer, user } = this;
+
     this.changeUserPassword.emit({ customer, user });
   }
 
-  toggleActiveFlag() {
+  handleToggleActiveFlag() {
     const active = !this.user?.active;
+
     this.changeUserActive.emit({ active });
-  }
-
-  get isUserFormSubmitButtonDisabled() {
-    return this.userForm?.invalid && this.isUserFormSubmitted;
-  }
-
-  get isUserLocked() {
-    return !this.user.active;
   }
 }

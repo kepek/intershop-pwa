@@ -200,11 +200,11 @@ export class CamOrganizationService {
 
   createCustomerUser(customer: CamfilB2bCustomer, user: CamfilB2bUser) {
     if (!customer) {
-      return throwError('updateCustomerUser() called without required customer data');
+      return throwError('createCustomerUser() called without required customer data');
     }
 
     if (!user) {
-      return throwError('updateCustomerUser() called without required user data');
+      return throwError('createCustomerUser() called without required user data');
     }
 
     return this.apiService

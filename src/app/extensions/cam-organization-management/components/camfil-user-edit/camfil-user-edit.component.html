@@ -7,8 +7,8 @@
           <p class="user-edit-header">
             {{ 'camfil.account.organization.edit_user.personal_info.header.text' | translate }}
           </p>
-          <mat-checkbox [checked]="isUserLocked()" (change)="changeUserStatus()">{{
-            isUserLocked()
+          <mat-checkbox [checked]="isUserLocked" (change)="changeUserStatus()">{{
+            isUserLocked
               ? ('camfil.account.organization.edit_user.unlock.checkbox.text' | translate)
               : ('camfil.account.organization.edit_user.lock.checkbox.text' | translate)
           }}</mat-checkbox>
@@ -49,7 +49,7 @@
 <camfil-confirmation-modal
   #userStatusChangeModal
   actionTitle="{{
-    isUserLocked()
+    isUserLocked
       ? ('camfil.account.organization.edit_user.lock_user.modal.text' | translate)
       : ('camfil.account.organization.edit_user.unlock_user.modal.text' | translate)
   }}"

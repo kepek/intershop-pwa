@@ -43,7 +43,7 @@ export class CamfilUserEditComponent implements OnDestroy {
     );
   }
 
-  isUserLocked() {
+  get isUserLocked() {
     return !!this.user?.active;
   }
 

@@ -62,6 +62,7 @@ import {
 } from '../store/role';
 import {
   activateCustomerUser,
+  createCustomerUser,
   deactivateCustomerUser,
   getSelectedUser,
   getSelectedUserId,
@@ -510,5 +511,19 @@ export class CamOrganizationManagementFacade {
    */
   resetCustomerUserPassword(customerId: string, userId: string, email: string) {
     this.store.dispatch(resetCustomerUserPassword({ customerId, userId, email }));
+  }
+
+  /**
+   * Create Customer User
+   * @param customer
+   * @param user
+   */
+  createCustomerUser$(customer: CamfilB2bCustomer, user: CamfilB2bUser) {
+    this.store.dispatch(
+      createCustomerUser({
+        customer,
+        user,
+      })
+    );
   }
 }

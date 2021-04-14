@@ -184,7 +184,7 @@ export class UserEffects {
       ofType(createCustomerUser),
       mapToPayload(),
       concatMap(({ customer, user }) =>
-        this.organizationService.updateCustomerUser(customer, user).pipe(
+        this.organizationService.createCustomerUser(customer, user).pipe(
           map(changedUser =>
             createCustomerUserSuccess({
               customer,
