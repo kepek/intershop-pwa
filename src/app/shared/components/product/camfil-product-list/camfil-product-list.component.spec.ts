@@ -3,9 +3,10 @@ import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { MockComponent } from 'ng-mocks';
-import { of } from 'rxjs';
+import { EMPTY, of } from 'rxjs';
 import { instance, mock, when } from 'ts-mockito';
 
+import { AccountFacade } from 'ish-core/facades/account.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { PricePipe } from 'ish-core/models/price/price.pipe';
 import { CoreStoreModule } from 'ish-core/store/core/core-store.module';
@@ -21,9 +22,13 @@ describe('Camfil Product List Component', () => {
   let fixture: ComponentFixture<CamfilProductListComponent>;
   let element: HTMLElement;
   let shoppingFacade: ShoppingFacade;
+  let accountFacade: AccountFacade;
 
   beforeEach(async () => {
     shoppingFacade = mock(ShoppingFacade);
+    accountFacade = mock(AccountFacade);
+    when(accountFacade.isLoggedIn$).thenReturn(EMPTY);
+
     await TestBed.configureTestingModule({
       imports: [
         CoreStoreModule.forTesting(),
@@ -37,7 +42,10 @@ describe('Camfil Product List Component', () => {
         MockComponent(LoadingComponent),
         PricePipe,
       ],
-      providers: [{ provide: ShoppingFacade, useFactory: () => instance(shoppingFacade) }],
+      providers: [
+        { provide: ShoppingFacade, useFactory: () => instance(shoppingFacade) },
+        { provide: AccountFacade, useFactory: () => instance(accountFacade) },
+      ],
     }).compileComponents();
   });
 
