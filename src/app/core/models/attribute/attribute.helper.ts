@@ -34,7 +34,7 @@ export class AttributeHelper {
   }
 
   static getAttrsBeforeAddToCart(measurements, boxLabel) {
-    const measurementsObj = measurements
+    const measurementsObj = Object.entries(measurements)
       .map(([key, val]) => ({
         name: key,
         type: 'Double',
