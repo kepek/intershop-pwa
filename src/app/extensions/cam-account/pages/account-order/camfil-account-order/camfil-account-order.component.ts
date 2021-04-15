@@ -97,7 +97,7 @@ export class CamfilAccountOrderComponent implements OnInit, OnDestroy {
       currency,
       type: 'Money',
     };
-    return priceData ? formatPrice(priceData, this.translate.currentLang) : '---';
+    return value && currency ? formatPrice(priceData, this.translate.currentLang) : '---';
   }
 
   ngOnDestroy() {
