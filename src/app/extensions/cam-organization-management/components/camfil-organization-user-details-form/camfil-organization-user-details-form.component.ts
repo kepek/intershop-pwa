@@ -21,23 +21,23 @@ export class CamfilOrganizationUserDetailsFormComponent implements OnInit {
   @Output() changeUserActive = new EventEmitter<{ active: boolean }>();
   @Output() changeUserPassword = new EventEmitter();
 
-  userForm: FormGroup;
-  userActiveForm: FormGroup;
+  form: FormGroup;
+  activeForm: FormGroup;
 
   isUserFormSubmitted = false;
 
   constructor(private fb: FormBuilder) {}
 
   get isUserFormSubmitButtonDisabled() {
-    return this.userForm?.invalid && this.isUserFormSubmitted;
+    return this.form?.invalid && this.isUserFormSubmitted;
   }
 
   get isEditMode() {
-    return this.user.hasOwnProperty('id') && this.user.hasOwnProperty('active');
+    return this.user?.hasOwnProperty('id') && this.user?.hasOwnProperty('active');
   }
 
   private initUserForm() {
-    this.userForm = this.fb.group({
+    this.form = this.fb.group({
       firstName: new FormControl(this.user?.firstName, {
         validators: [Validators.required, Validators.maxLength(60)],
       }),
@@ -60,7 +60,7 @@ export class CamfilOrganizationUserDetailsFormComponent implements OnInit {
   }
 
   private initUserActiveForm() {
-    this.userActiveForm = this.fb.group({
+    this.activeForm = this.fb.group({
       active: [!this.user?.active],
     });
   }
@@ -71,16 +71,16 @@ export class CamfilOrganizationUserDetailsFormComponent implements OnInit {
   }
 
   handleChangeUser() {
-    if (!this.isEditMode && this.userForm.invalid) {
+    if (!this.isEditMode && this.form.invalid) {
       this.isUserFormSubmitted = true;
-      markAsDirtyRecursive(this.userForm);
+      markAsDirtyRecursive(this.form);
       return;
     }
 
-    const firstName = this.userForm.get('firstName').value;
-    const lastName = this.userForm.get('lastName').value;
-    const phoneHome = this.userForm.get('phoneHome').value;
-    const email = this.userForm.get('email').value;
+    const firstName = this.form.get('firstName').value;
+    const lastName = this.form.get('lastName').value;
+    const phoneHome = this.form.get('phoneHome').value;
+    const email = this.form.get('email').value;
 
     const customer = this.customer;
     const user = { ...this.user, firstName, lastName, phoneHome, email };

@@ -1,17 +1,15 @@
 <mat-card class="mat-elevation-z box-shadow mb-2 p-0">
-  <mat-card-content>
-    <form [formGroup]="form">
-      <mat-selection-list formControlName="roleIDs" (selectionChange)="onCustomerUserRolesChange($event)" dense>
-        <mat-list-option
-          *ngFor="let role of roles"
-          [value]="role.id"
-          [disabled]="isDisabledRole(role)"
-          checkboxPosition="before"
-          color="primary"
-        >
-          {{ role.displayName }}
-        </mat-list-option>
-      </mat-selection-list>
-    </form>
+  <mat-card-content [formGroup]="form">
+    <mat-selection-list formControlName="roleIDs" (selectionChange)="onCustomerUserRolesChange($event)" dense>
+      <mat-list-option
+        *ngFor="let role of roles"
+        [value]="role.id"
+        [disabled]="isDisabledRole(role)"
+        checkboxPosition="before"
+        color="primary"
+      >
+        {{ role.displayName }}
+      </mat-list-option>
+    </mat-selection-list>
   </mat-card-content>
 </mat-card>

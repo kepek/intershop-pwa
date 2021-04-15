@@ -2,7 +2,7 @@
   <h3 class="form__subtitle">
     {{ 'camfil.account.organization.edit_user.personal_info.header.text' | translate }}
     <ng-container *ngIf="isEditMode">
-      <small [formGroup]="userActiveForm" class="ml-3">
+      <small [formGroup]="activeForm" class="ml-3">
         <mat-checkbox color="primary" formControlName="active" (change)="handleToggleActiveFlag()">
           <ng-container *ngIf="user?.active; else unlockText">
             {{ 'camfil.account.organization.edit_user.lock.checkbox.text' | translate }}
@@ -23,7 +23,7 @@
       <strong class="ml-2">{{ user?.id }}</strong>
     </p>
   </ng-container>
-  <form [formGroup]="userForm" (ngSubmit)="handleChangeUser()" class="form-horizontal" novalidate="novalidate">
+  <div [formGroup]="form" (ngSubmit)="handleChangeUser()" class="form-horizontal" novalidate="novalidate">
     <div>
       <mat-form-field appearance="fill" class="form__field mb-3 mr-3">
         <mat-label>{{ 'camfil.account.organization.user_details.form.firstname.label' | translate }}</mat-label>
@@ -47,5 +47,5 @@
     <button hidden mat-raised-button type="submit" [disabled]="isUserFormSubmitButtonDisabled">
       {{ 'camfil.account.organization.user_details.form.submit.label' | translate }}
     </button>
-  </form>
+  </div>
 </div>

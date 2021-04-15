@@ -22,7 +22,7 @@
         mat-flat-button
         color="primary"
         [routerLink]="['/account/organization/create']"
-        (click)="onCreateCustomerUser($event)"
+        (click)="onCreateCustomerUser()"
       >
         {{ 'camfil.account.organization.list.create_new_user.button.text' | translate }}
       </button>
@@ -75,20 +75,22 @@
 
 <ng-container *ngTemplateOutlet="userHeader"></ng-container>
 
-<mat-card class="mat-elevation-z2 clearfix">
-  <div class="row no-gutters">
-    <div class="col-12">
-      <ng-container *ngTemplateOutlet="userDetails"></ng-container>
+<form (ngSubmit)="onCreateCustomerUser()">
+  <mat-card class="mat-elevation-z2 clearfix">
+    <div class="row no-gutters">
+      <div class="col-12">
+        <ng-container *ngTemplateOutlet="userDetails"></ng-container>
+      </div>
     </div>
-  </div>
-  <div class="row no-gutters">
-    <div class="col-sm-7 col-12">
-      <ng-container *ngTemplateOutlet="userCustomersContacts"></ng-container>
+    <div class="row no-gutters">
+      <div class="col-sm-7 col-12">
+        <ng-container *ngTemplateOutlet="userCustomersContacts"></ng-container>
+      </div>
+      <div class="col-sm-5 col-12">
+        <ng-container *ngTemplateOutlet="userRoles"></ng-container>
+      </div>
     </div>
-    <div class="col-sm-5 col-12">
-      <ng-container *ngTemplateOutlet="userRoles"></ng-container>
-    </div>
-  </div>
-</mat-card>
+  </mat-card>
+</form>
 
 <ish-loading *ngIf="loading$() | async"></ish-loading>

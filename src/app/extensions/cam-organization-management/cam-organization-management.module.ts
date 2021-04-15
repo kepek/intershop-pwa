@@ -9,8 +9,6 @@ import { CamfilOrganizationUserRolesFormComponent } from './components/camfil-or
 import { CamfilOrganizationUsersListToolbarComponent } from './components/camfil-organization-users-list-filters/camfil-organization-users-list-toolbar.component';
 import { CamfilOrganizationUsersListComponent } from './components/camfil-organization-users-list/camfil-organization-users-list.component';
 import { CamfilConfirmationModalComponent } from './components/camfil-user-customers-selection/camfil-confirmation-moda/camfil-confirmation-modal.component';
-import { CamfilUserCustomerSelectionFormItemComponent } from './components/camfil-user-customers-selection/camfil-user-customer-selection-form-item/camfil-user-customer-selection-form-item.component';
-import { CamfilUserCustomersSelectionComponent } from './components/camfil-user-customers-selection/camfil-user-customers-selection.component';
 import { CamfilUserProfileFormComponent } from './components/camfil-user-profile-form/camfil-user-profile-form.component';
 import { CamfilUserRolesSelectionComponent } from './components/camfil-user-roles-selection/camfil-user-roles-selection.component';
 
@@ -22,8 +20,6 @@ const exportedComponents = [
   CamfilOrganizationUserRolesFormComponent,
   CamfilOrganizationUsersListComponent,
   CamfilOrganizationUsersListToolbarComponent,
-  CamfilUserCustomerSelectionFormItemComponent,
-  CamfilUserCustomersSelectionComponent,
   CamfilUserProfileFormComponent,
   CamfilUserRolesSelectionComponent,
 ];

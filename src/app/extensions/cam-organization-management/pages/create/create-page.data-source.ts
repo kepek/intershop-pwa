@@ -19,7 +19,8 @@ interface CustomerContact {
 export abstract class CreatePageDataSourceComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(private organizationFacade: CamOrganizationManagementFacade) {}
 
-  private destroy$ = new Subject();
+  // tslint:disable-next-line:private-destroy-field
+  protected destroy$ = new Subject();
   // tslint:disable-next-line:force-jsdoc-comments
   // @ts-ignore
   private isCreated$ = new BehaviorSubject(false);
@@ -34,7 +35,12 @@ export abstract class CreatePageDataSourceComponent implements OnInit, AfterView
   newUserRoles$: BehaviorSubject<CamfilB2bRole[]>;
   newUserStaticRoles$: Observable<CamfilB2bRole[]>;
 
-  context$: Observable<{ customer: CamfilB2bCustomer; user: Partial<CamfilB2bUser> }>;
+  context$: Observable<{
+    customer: CamfilB2bCustomer;
+    user: CamfilB2bUser;
+    contacts: CustomerContact[];
+    roles: CamfilB2bRole[];
+  }>;
 
   // tslint:disable-next-line:no-empty
   ngOnInit() {
@@ -59,9 +65,13 @@ export abstract class CreatePageDataSourceComponent implements OnInit, AfterView
         this.newUserRoles$.next(newUserRoles);
       });
 
-    this.context$ = combineLatest([this.currentCustomer$, this.newUser$]).pipe(
-      map(([customer, user]) => ({ customer, user }))
-    );
+    this.context$ = combineLatest([
+      this.currentCustomer$,
+      this.newUser$,
+      this.newUserContacts$,
+      this.newUserRoles$,
+    ]).pipe(map(([customer, user, contacts, roles]) => ({ customer, user, contacts, roles })));
+
     this.newUser$.pipe(distinctUntilChanged()).subscribe(x => console.log('newUser$', x));
     this.newUserContacts$.pipe(distinctUntilChanged()).subscribe(x => console.log('newUserContacts$', x));
     this.newUserRoles$.pipe(distinctUntilChanged()).subscribe(x => console.log('newUserRoles$', x));
@@ -102,10 +112,6 @@ export abstract class CreatePageDataSourceComponent implements OnInit, AfterView
   }
 
   onUpdateSelectedCustomerUserRoles({ roleIDs }) {
-    console.log(`this.context$.pipe(take(1), whenTruthy()).subscribe(({ customer, user }) => {
-      this.organizationFacade.updateCustomerUserRoles$(customer.id, user.id, roleIDs);
-    });`);
-
     this.organizationFacade
       .getSelectedRoles$(roleIDs)
       .pipe(
@@ -113,11 +119,6 @@ export abstract class CreatePageDataSourceComponent implements OnInit, AfterView
         distinctUntilChanged()
       )
       .subscribe(roles => this.newUserRoles$.next(roles));
-  }
-
-  onCreateCustomerUser(event) {
-    console.log('this.organizationFacade.createCustomerUser$(customer, user) => customer', event.customer);
-    console.log('this.organizationFacade.createCustomerUser$(customer, user) => user', event.user);
   }
 
   onAssignCustomerUserContact({ customer, contact }) {
