@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { provideMockStore } from '@ngrx/store/testing';
 import { MockDirective } from 'ng-mocks';
 
@@ -17,7 +17,11 @@ describe('Move Cam Card Dialog Component', () => {
     await TestBed.configureTestingModule({
       declarations: [MockDirective(ServerHtmlDirective), MoveCamCardDialogComponent],
       imports: [ReactiveFormsModule],
-      providers: [{ provide: MAT_DIALOG_DATA, selectedCamCard: [] }, provideMockStore({})],
+      providers: [
+        { provide: MAT_DIALOG_DATA, useValue: [] },
+        { provide: MatDialogRef, useValue: {} },
+        provideMockStore({}),
+      ],
     }).compileComponents();
   });
 
