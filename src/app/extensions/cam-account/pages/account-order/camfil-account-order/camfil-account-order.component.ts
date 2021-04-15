@@ -1,9 +1,12 @@
 import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { TranslateService } from '@ngx-translate/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
+import { Price } from 'ish-core/models/price/price.model';
+import { formatPrice } from 'ish-core/models/price/price.pipe';
 import { ProductCompletenessLevel } from 'ish-core/models/product/product.model';
 import { mapToProperty, whenTruthy } from 'ish-core/utils/operators';
 import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
@@ -29,7 +32,8 @@ export class CamfilAccountOrderComponent implements OnInit, OnDestroy {
   constructor(
     public dialog: MatDialog,
     private camAccountFacade: CamAccountFacade,
-    private shoppingFacade: ShoppingFacade
+    private shoppingFacade: ShoppingFacade,
+    private translate: TranslateService
   ) {}
   private static REQUIRED_COMPLETENESS_LEVEL = ProductCompletenessLevel.List;
   private destroy$ = new Subject();
@@ -85,6 +89,15 @@ export class CamfilAccountOrderComponent implements OnInit, OnDestroy {
           }
         })
     );
+  }
+
+  handlePrice(value, currency) {
+    const priceData: Price = {
+      value,
+      currency,
+      type: 'Money',
+    };
+    return value && currency ? formatPrice(priceData, this.translate.currentLang) : '---';
   }
 
   ngOnDestroy() {

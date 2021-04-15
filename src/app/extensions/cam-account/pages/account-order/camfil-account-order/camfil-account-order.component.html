@@ -56,7 +56,7 @@
           {{ order.contactPerson }}
         </dd>
         <dt class="col-6 p-0 pb-4">{{ 'camfil.account.orderdetails.phone_notification.label' | translate }}</dt>
-        <dd class="col-6 p-0" data-testing-id="order-phone_notification">1234567890</dd>
+        <dd class="col-6 p-0" data-testing-id="order-phone_notification">{{ order.phoneNotification || '-' }}</dd>
         <dt class="col-6 p-0">{{ 'camfil.account.orderdetails.delivery_address.label' | translate }}</dt>
         <dd class="col-6 p-0 order-delivery_address" data-testing-id="order-delivery_address">
           <ng-container *ngIf="deliveryAddress.deliveryAddressName"
@@ -74,6 +74,10 @@
           <ng-container *ngIf="deliveryAddress.deliveryAddressCity"
             >{{ deliveryAddress.deliveryAddressCity }}<br
           /></ng-container>
+        </dd>
+        <dt class="col-6 p-0">{{ 'camfil.account.orderdetails.order_comment.label' | translate }}</dt>
+        <dd class="col-6 p-0" data-testing-id="order-contact_person">
+          {{ order.orderComment }}
         </dd>
       </dl>
       <ng-container *ngIf="order?.trackAndTrace">
@@ -108,13 +112,13 @@
         <dt class="col-8">{{ 'camfil.account.orderdetails.summary.qty_delivered' | translate }}</dt>
         <dd class="col-4">{{ order.totalDeliveredQty }}</dd>
         <dt class="col-8">{{ 'camfil.account.orderdetails.your.total_price.text' | translate }}</dt>
-        <dd class="col-4">{{ order.totalCustomerPriceSum }}</dd>
+        <dd class="col-4">{{ handlePrice(order.totalCustomerPriceSum, order.currency) }}</dd>
         <dt class="col-8 total-price">{{ 'camfil.account.orderdetails.your.total_price_exl_vat.text' | translate }}</dt>
         <dd class="col-4 total-price-value">
-          {{ order.totalPriceAfterDiscountExVAT }}
+          {{ handlePrice(order.totalPriceAfterDiscountExVAT, order.currency) }}
         </dd>
         <dt class="col-8">{{ 'camfil.account.orderdetails.your.tax_amount.text' | translate }}</dt>
-        <dd class="col-4">{{ order.taxAmount }}</dd>
+        <dd class="col-4">{{ handlePrice(order.taxAmount, order.currency) }}</dd>
       </dl>
       <!-- <camfil-basket-cost-summary [totals]="order.totals"></camfil-basket-cost-summary> -->
     </div>

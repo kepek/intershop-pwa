@@ -682,6 +682,7 @@
   "camfil.account.orderdetails.delivery_date.label": "Leveransdatum",
   "camfil.account.orderdetails.goods_mark.label": "Godsmärke",
   "camfil.account.orderdetails.links.order_again": "Beställ igen",
+  "camfil.account.orderdetails.order_comment.label": "Sv_Order comment",
   "camfil.account.orderdetails.links.track_order": "Följ din beställning",
   "camfil.account.orderdetails.order_channel.label": "Beställningskanal",
   "camfil.account.orderdetails.order_status.label": "Status",

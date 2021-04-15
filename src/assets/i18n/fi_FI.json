@@ -682,6 +682,7 @@
   "camfil.account.orderdetails.delivery_date.label": "ToimituspÃ¤ivÃ¤",
   "camfil.account.orderdetails.goods_mark.label": "Toimitusmerkki",
   "camfil.account.orderdetails.links.order_again": "Tilaa uudelleen",
+  "camfil.account.orderdetails.order_comment.label": "Fi_Order comment",
   "camfil.account.orderdetails.links.track_order": "Seuraa tilaustasi",
   "camfil.account.orderdetails.order_channel.label": "Tilauskanava",
   "camfil.account.orderdetails.order_status.label": "Tila",
