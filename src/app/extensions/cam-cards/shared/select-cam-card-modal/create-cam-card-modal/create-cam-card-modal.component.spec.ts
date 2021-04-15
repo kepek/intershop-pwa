@@ -4,7 +4,9 @@ import { MockComponent } from 'ng-mocks';
 import { of } from 'rxjs';
 import { instance, mock, when } from 'ts-mockito';
 
+import { AccountFacade } from 'ish-core/facades/account.facade';
 import { Product } from 'ish-core/models/product/product.model';
+import { User } from 'ish-core/models/user/user.model';
 import { CoreStoreModule } from 'ish-core/store/core/core-store.module';
 import { CamfilCamCardModalComponent } from 'ish-shared/components/common/camfil-cam-card-modal/camfil-cam-card-modal.component';
 import { CamfilErrorComponent } from 'ish-shared/components/common/camfil-error/camfil-error.component';
@@ -22,9 +24,11 @@ describe('Create Cam Card Modal Component', () => {
   let fixture: ComponentFixture<CreateCamCardModalComponent>;
   let element: HTMLElement;
   let camCardFacadeMock: CamCardsFacade;
+  let accountFacade: AccountFacade;
 
   beforeEach(async () => {
     camCardFacadeMock = mock(CamCardsFacade);
+    accountFacade = mock(AccountFacade);
 
     await TestBed.configureTestingModule({
       declarations: [
@@ -47,6 +51,7 @@ describe('Create Cam Card Modal Component', () => {
     element = fixture.nativeElement;
 
     component.product = { name: 'Test Product', sku: 'test sku', minOrderQuantity: 1 } as Product;
+    when(accountFacade.user$).thenReturn(of({} as User));
     when(camCardFacadeMock.customers$).thenReturn(of([]));
   });
 

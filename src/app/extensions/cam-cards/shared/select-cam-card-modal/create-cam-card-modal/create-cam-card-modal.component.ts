@@ -14,6 +14,7 @@ import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
 
+import { AccountFacade } from 'ish-core/facades/account.facade';
 import { AppFacade } from 'ish-core/facades/app.facade';
 import { Channel } from 'ish-core/models/channel/channel.types';
 import { Country } from 'ish-core/models/country/country.model';
@@ -65,7 +66,12 @@ export class CreateCamCardModalComponent implements OnInit, AfterViewInit {
 
   @ViewChild('modal', { static: false }) modalTemplate: TemplateRef<unknown>;
 
-  constructor(private fb: FormBuilder, private camCardsFacade: CamCardsFacade, private appFacade: AppFacade) {}
+  constructor(
+    private fb: FormBuilder,
+    private camCardsFacade: CamCardsFacade,
+    private appFacade: AppFacade,
+    private accountFacade: AccountFacade
+  ) {}
 
   ngOnInit() {
     this.appFacade.getCamfilChannel$.pipe(whenTruthy(), take(1)).subscribe(channel => {
@@ -77,15 +83,17 @@ export class CreateCamCardModalComponent implements OnInit, AfterViewInit {
     this.customers$ = this.camCardsFacade.customers$;
     this.initForm();
 
-    this.customers$.pipe(whenTruthy(), take(1)).subscribe(customers => {
-      if (customers.length === 1) {
-        this.camCardForm.patchValue({
-          customerSelect: customers[0].id,
-        });
-        this.pickCustomer({ value: customers[0].id });
-      } else if (!customers.length) {
-        this.camCardsFacade.loadCustomers();
-      }
+    this.accountFacade.user$.pipe(whenTruthy(), take(1)).subscribe(() => {
+      this.customers$.pipe(whenTruthy(), take(1)).subscribe(customers => {
+        if (customers.length === 1) {
+          this.camCardForm.patchValue({
+            customerSelect: customers[0].id,
+          });
+          this.pickCustomer({ value: customers[0].id });
+        } else if (!customers.length) {
+          this.camCardsFacade.loadCustomers();
+        }
+      });
     });
   }
 
