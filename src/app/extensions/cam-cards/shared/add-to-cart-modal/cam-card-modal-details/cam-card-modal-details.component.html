@@ -14,4 +14,22 @@
     </div>
     <div class="cam-card__details--value">{{ orderMark }}</div>
   </div>
+  <ng-container *ngIf="isClicked">
+    <div class="cam-card__details">
+      <div class="cam-card__details--left">
+        <div class="cam-card__details--label">Invoice mark:</div>
+        <div class="cam-card__details--value">{{ nextDelivery }}</div>
+      </div>
+      <div class="cam-card__details--label">Box label:</div>
+      <div class="cam-card__details--value">{{ orderMark }}</div>
+    </div>
+    <div class="cam-card__details">
+      <div class="cam-card__details--left">
+        <div class="cam-card__details--label">Delivery address:</div>
+        <div class="cam-card__details--value">
+          {{ deliveryAddress.addressLine1 }}, {{ deliveryAddress.city }}, {{ deliveryAddress.postalCode }}
+        </div>
+      </div>
+    </div>
+  </ng-container>
 </div>

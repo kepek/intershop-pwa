@@ -61,6 +61,8 @@ export class AddToCartModalComponent implements OnInit, OnDestroy {
     this.shoppingFacade.productUpdated$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(() => {
       this.showSuccess = true;
     });
+
+
   }
 
   initBasket() {

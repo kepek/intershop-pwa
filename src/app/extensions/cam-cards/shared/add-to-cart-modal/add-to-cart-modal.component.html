@@ -31,6 +31,9 @@
       <camfil-cam-card-modal-details
         [nextDelivery]="option.nextDelivery"
         [orderMark]="option.orderMark"
+        [invoiceMark]="option.invoiceLabel"
+        [boxLabel]="option.name"
+        [deliveryAddress]="option.shipToAddressFull"
         (click)="onOrderClicked(option.id)"
         [isClicked]="selectedOrderId === option.id"
       >
