@@ -15,7 +15,7 @@
           <div class="flex-row line-item-data-top">
             <camfil-product-title [product]="productData"></camfil-product-title>
           </div>
-          <div class="line-item-data-bottom d-flex flex-row">
+          <div class="line-item-data-bottom d-flex flex-row flex-wrap">
             <camfil-product-attribute
               [name]="'camfil.cam_card.product.id.label' | translate"
               [value]="productData.sku"
@@ -30,24 +30,57 @@
               <mat-icon svgIcon="search" class="size-15"></mat-icon>
             </button>
             <camfil-product-inventory class="px-2" [product]="productData"></camfil-product-inventory>
+            <camfil-product-attribute
+              *ngIf="measurementsToShow()"
+              [name]="'camfil.checkout.product.measurements.label' | translate"
+              class="box-label-attribute ml-0"
+              [value]="measurementsToShow()"
+            ></camfil-product-attribute>
           </div>
         </div>
       </div>
     </div>
+    <div>
+      <div class="box-label" *ngIf="!isConfirmed">
+        <form [formGroup]="boxLabelForm" class="box-label__form">
+          <mat-form-field appearance="outline" class="box-label__form--field">
+            <mat-label>{{ 'camfil.cam_card.product.comment.label' | translate }}</mat-label>
+            <input
+              matInput
+              type="text"
+              formControlName="boxLabel"
+              name="boxLabel"
+              (blur)="onBlur($event.target, boxLabelForm)"
+            />
+          </mat-form-field>
+          <camfil-error
+            [errors]="getField('boxLabel', boxLabelForm).errors"
+            [errorValidators]="attrsValidator.boxLabel"
+            [touched]="getField('boxLabel', boxLabelForm).touched || getField('boxLabel', boxLabelForm).dirty"
+          ></camfil-error>
+        </form>
+      </div>
 
-    <div class="box-label" *ngIf="!isConfirmed">
-      <form [formGroup]="boxLabelForm" class="box-label__form">
-        <mat-form-field appearance="outline" class="box-label__form--field">
-          <mat-label>{{ 'camfil.cam_card.product.comment.label' | translate }}</mat-label>
-          <input matInput type="text" formControlName="boxLabel" (blur)="onBlur($event.target)" />
-        </mat-form-field>
-        <camfil-error
-          [errors]="getField('boxLabel').errors"
-          [errorValidators]="boxLabelValidator.boxLabel"
-          [touched]="getField('boxLabel').touched || getField('boxLabel').dirty"
-        ></camfil-error>
-      </form>
+      <!-- // if client will want to edit measurements on checkout -->
+      <!-- <div class="measurements" *ngIf="!isConfirmed && requiresMeasurement">
+        <form [formGroup]="measurementsForm" class="measurements__form justify-content-between flex-nowrap d-flex">
+          <ng-container *ngFor="let measurement of measurementsValues">
+            <mat-form-field appearance="outline" class="measurements__form--field">
+              <mat-label>{{ 'camfil.dynamic.cart.product.' + measurement + '.label' | translate }}</mat-label>
+              <input
+                matInput
+                type="text"
+                [id]="measurement"
+                [name]="measurement"
+                [formControlName]="measurement"
+                (blur)="onBlur($event.target, measurementsForm)"
+              />
+            </mat-form-field>
+          </ng-container>
+        </form>
+      </div> -->
     </div>
+
     <ng-container *ngIf="!productData.failed; else productNotAvailable">
       <div class="delivery-date-container">
         <p class="delivery-date-para">

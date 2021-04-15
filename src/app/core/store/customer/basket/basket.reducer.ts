@@ -403,9 +403,9 @@ export const basketReducer = createReducer(
       li.id === lineItemId
         ? {
             ...li,
-            attributes: li.attributes?.length
+            attributes: li.attributes.find(att => att.name === attribute.name)
               ? li.attributes.map(att => (att.name === attribute.name ? attribute : att))
-              : [attribute],
+              : [...li.attributes, attribute],
           }
         : li
     );

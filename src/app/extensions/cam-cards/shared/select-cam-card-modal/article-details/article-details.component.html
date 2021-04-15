@@ -1,4 +1,55 @@
 <div class="article-details">
+  <ng-container *ngIf="requiresMeasurement">
+    <h3 class="m-0 text-center text-capitalize w-100">
+      <b>{{ 'camfil.modal.addToCamcard.measurement.choose.header' | translate }}</b>
+    </h3>
+    <div class="article-details__measurement d-flex flex-wrap w-100 pt-3">
+      <div [formGroup]="quantityForm" class="form-group">
+        <input
+          matInput
+          [placeholder]="'camfil.modal.addToCamcard.width.label' | translate"
+          formControlName="measurementWidth"
+          (keyup)="validateVal()"
+          type="number"
+          class="mat-elevation-z2"
+        />
+      </div>
+      <div [formGroup]="quantityForm" class="form-group">
+        <input
+          matInput
+          [placeholder]="'camfil.modal.addToCamcard.height.label' | translate"
+          formControlName="measurementHeight"
+          (keyup)="validateVal()"
+          type="number"
+          class="mat-elevation-z2"
+        />
+      </div>
+      <div [formGroup]="quantityForm" class="form-group">
+        <input
+          matInput
+          [placeholder]="'camfil.modal.addToCamcard.diameter.label' | translate"
+          formControlName="measurementDiameter"
+          (keyup)="validateVal()"
+          type="number"
+          class="mat-elevation-z2"
+        />
+      </div>
+      <div
+        *ngIf="filledMeasurements?.length"
+        class="article-details__ico mt-2"
+        [ngClass]="{ 'rounded-circle': filledMeasurements?.length === 1 }"
+      ></div>
+
+      <div class="w-100">
+        <span innerHTML="{{ 'camfil.modal.addToCamcard.measurement.note.text' | translate }}"></span>
+        <div *ngIf="showError" class="text-danger">
+          {{ 'camfil.modal.addToCamcard.measurement.error' | translate: {'0': maxVal } }}
+        </div>
+        <hr class="m-2" />
+      </div>
+    </div>
+  </ng-container>
+
   <div>
     <mat-form-field [formGroup]="quantityForm" appearance="outline">
       <mat-label>{{ 'camfil.modal.addToCamcard.box.label' | translate }}</mat-label>

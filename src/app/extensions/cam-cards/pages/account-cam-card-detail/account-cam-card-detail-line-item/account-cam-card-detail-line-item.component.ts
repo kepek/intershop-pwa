@@ -110,6 +110,14 @@ export class AccountCamCardDetailLineItemComponent implements OnChanges, OnInit,
     }
   }
 
+  measurementToShow() {
+    return this.camCardItemData.measurement
+      ? Object.values(this.camCardItemData.measurement)
+          .filter(item => item && typeof item === 'number')
+          .join('x')
+      : undefined;
+  }
+
   moveItemToOtherCamCard(camCardItemId: string, sku: string, camCardMoveData: { id: string; name: string }) {
     if (camCardMoveData.id) {
       this.camCardsFacade.moveItemToCamCard(

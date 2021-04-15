@@ -8,6 +8,7 @@ import { take, takeUntil } from 'rxjs/operators';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { AddressHelper } from 'ish-core/models/address/address.helper';
 import { Address } from 'ish-core/models/address/address.model';
+import { AttributeHelper } from 'ish-core/models/attribute/attribute.helper';
 import { Bucket } from 'ish-core/models/basket/bucket.model';
 import { ProductView } from 'ish-core/models/product-view/product-view.model';
 import { Product, ProductCompletenessLevel } from 'ish-core/models/product/product.model';
@@ -132,7 +133,7 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy {
       const quantity = this.getField('quantity') ? Number(this.getField('quantity')?.value) : 1;
       const label = this.getField('boxLabel') ? String(this.getField('boxLabel').value) : undefined;
       const comment: CamCardItemComment = { label };
-      const lineItemAttribute = label ? { name: 'boxLabel', type: 'String', value: label } : undefined;
+      const lineItemAttributes = AttributeHelper.calculateAttrsToAddFromForm(this.productForm);
 
       this.isSubmitted = true;
 
@@ -141,13 +142,14 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy {
         this.loading = true;
 
         if (this.order.id && type !== 'emptyBucket' && this.order.shipToAddress) {
-          this.addToExistingOrder(sku, quantity, this.order.shipToAddress, lineItemAttribute);
+          this.addToExistingOrder(sku, quantity, this.order.shipToAddress, lineItemAttributes);
         } else {
           const deliveryAddress = this.order.shipToAddressFull as Address;
           this.addToNewOrder(sku, quantity, deliveryAddress, this.order.id);
         }
       } else {
-        this.camCardsFacade.addProductToCamCard(this.rootCamCardId, sku, quantity, comment, 0, true);
+        const measurement = undefined;
+        this.camCardsFacade.addProductToCamCard(this.rootCamCardId, sku, quantity, comment, measurement, 0, true);
         this.hide();
       }
     } else {
@@ -155,8 +157,8 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy {
     }
   }
 
-  addToExistingOrder(sku, quantity, shipToAddress, lineItemAttribute) {
-    this.productFacade.addProductToBasket(sku, quantity, this.shippingMethodId, shipToAddress, lineItemAttribute);
+  addToExistingOrder(sku, quantity, shipToAddress, lineItemAttributes) {
+    this.productFacade.addProductToBasket(sku, quantity, this.shippingMethodId, shipToAddress, lineItemAttributes);
   }
 
   addToNewOrder(sku, quantity, deliveryAddress, bucketId) {

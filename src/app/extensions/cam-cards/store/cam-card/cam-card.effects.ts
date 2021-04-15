@@ -7,15 +7,18 @@ import { Store, select } from '@ngrx/store';
 import { EMPTY, concat, fromEvent } from 'rxjs';
 import {
   concatMap,
+  debounceTime,
   distinctUntilChanged,
   filter,
   last,
   map,
   mapTo,
   mergeMap,
+  reduce,
   switchMap,
   takeWhile,
   tap,
+  window as windowRxOperator,
   withLatestFrom,
 } from 'rxjs/operators';
 
@@ -280,11 +283,18 @@ export class CamCardEffects {
       ofType(loadCustomers),
       withLatestFrom(this.store.pipe(select(getUserAuthorized))),
       filter(([, authorized]) => authorized),
-      switchMap(() =>
-        this.camCardService.getCustomers().pipe(
-          /* Make sure to do not remove `loadUserContactForCustomers` since this is required to be fulfilled and it is used in CamCard Helper */
-          mergeMap(customers => [loadCustomersSuccess({ customers }), loadUserContactForCustomers({ customers })]),
-          mapErrorToAction(loadCustomersFail)
+      // accumulate all actions
+      windowRxOperator(this.actions$.pipe(ofType(loadCustomers), debounceTime(1000))),
+      mergeMap(window$ =>
+        window$.pipe(
+          reduce(acc => acc, {}),
+          mergeMap(() =>
+            this.camCardService.getCustomers().pipe(
+              /* Make sure to do not remove `loadUserContactForCustomers` since this is required to be fulfilled and it is used in CamCard Helper */
+              mergeMap(customers => [loadCustomersSuccess({ customers }), loadUserContactForCustomers({ customers })]),
+              mapErrorToAction(loadCustomersFail)
+            )
+          )
         )
       )
     )
@@ -311,7 +321,13 @@ export class CamCardEffects {
           mergeMap(newCamCard =>
             concat(
               ...camCards.camCardItems.map(item =>
-                this.camCardService.addProductToCamCard(newCamCard.id, item.product.sku, item.quantity, item.comment)
+                this.camCardService.addProductToCamCard(
+                  newCamCard.id,
+                  item.product.sku,
+                  item.quantity,
+                  item.comment,
+                  item.measurement
+                )
               )
             ).pipe(
               last(),
@@ -442,7 +458,8 @@ export class CamCardEffects {
             payload.refreshCamCardId,
             payload.sku,
             payload.quantity,
-            payload.boxLabel
+            payload.boxLabel,
+            payload.measurement
           )
           .pipe(
             mergeMap(camCard => [
@@ -459,24 +476,22 @@ export class CamCardEffects {
     this.actions$.pipe(
       ofType(addProductToCamCard),
       mapToPayload(),
-      mergeMap(payload =>
-        this.camCardService
-          .addProductToCamCard(payload.camCardId, payload.sku, payload.quantity, payload.comment, payload.position)
-          .pipe(
-            mergeMap(camCard =>
-              payload.showSuccessToast
-                ? [
-                    addProductToCamCardSuccess({ camCard }),
-                    displaySuccessMessage({
-                      message: 'camfil.modal.addNewProduct.confirmation',
-                      messageParams: { 0: payload.sku },
-                    }),
-                    selectCamCard({ id: camCard.id }),
-                  ]
-                : [addProductToCamCardSuccess({ camCard }), selectCamCard({ id: camCard.id })]
-            ),
-            mapErrorToAction(addProductToCamCardFail)
-          )
+      mergeMap(({ camCardId, sku, quantity, comment, measurement, position, showSuccessToast }) =>
+        this.camCardService.addProductToCamCard(camCardId, sku, quantity, comment, measurement, position).pipe(
+          mergeMap(camCard =>
+            showSuccessToast
+              ? [
+                  addProductToCamCardSuccess({ camCard }),
+                  displaySuccessMessage({
+                    message: 'camfil.modal.addNewProduct.confirmation',
+                    messageParams: { 0: sku },
+                  }),
+                  selectCamCard({ id: camCard.id }),
+                ]
+              : [addProductToCamCardSuccess({ camCard }), selectCamCard({ id: camCard.id })]
+          ),
+          mapErrorToAction(addProductToCamCardFail)
+        )
       )
     )
   );
@@ -494,6 +509,7 @@ export class CamCardEffects {
               sku: payload.sku,
               quantity: payload.quantity,
               boxLabel: payload.boxLabel,
+              measurement: payload.measurement,
               edit: payload.edit,
             })
           ),
@@ -518,6 +534,7 @@ export class CamCardEffects {
               sku: payload.sku,
               quantity: payload.quantity,
               comment,
+              measurement: payload.measurement,
             };
 
             return payload.edit
@@ -552,6 +569,7 @@ export class CamCardEffects {
               sku: payload.sku,
               quantity: payload.quantity,
               boxLabel: payload.boxLabel,
+              measurement: payload.measurement,
             };
 
             return payload.edit
@@ -731,6 +749,7 @@ export class CamCardEffects {
             payload.source.camCardItem.product.sku,
             payload.source.camCardItem.quantity,
             payload.source.camCardItem.comment,
+            payload.source.camCardItem.measurement,
             payload.target.position
           )
           .pipe(

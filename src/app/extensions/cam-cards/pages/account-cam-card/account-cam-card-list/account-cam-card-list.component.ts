@@ -418,6 +418,7 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
         sku: item.product.sku,
         quantity: item.quantity,
         boxLabel: CamCardHelper.handleBoxLabelToOrderItem(camCard, item),
+        measurement: item.measurement,
       };
       this.productsChecked[item.id] = element;
     } else if (!event.checked && productOnList) {
