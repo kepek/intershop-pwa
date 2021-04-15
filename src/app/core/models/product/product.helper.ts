@@ -1,14 +1,13 @@
 import { intersection } from 'lodash-es';
 
 import { AttributeGroupTypes } from 'ish-core/models/attribute-group/attribute-group.types';
+import { AttributeHelper } from 'ish-core/models/attribute/attribute.helper';
 import { Attribute } from 'ish-core/models/attribute/attribute.model';
 import { Image } from 'ish-core/models/image/image.model';
 import { ImageTypes } from 'ish-core/models/image/image.types';
 import { PriceHelper } from 'ish-core/models/price/price.model';
 import { ProductTechnicalDocument } from 'ish-core/models/product-technical-document/product-technical-document.model';
 import { VariationProductMasterView, VariationProductView } from 'ish-core/models/product-view/product-view.model';
-
-import { AttributeHelper } from '../attribute/attribute.helper';
 
 import { ProductBundle } from './product-bundle.model';
 import { ProductRetailSet } from './product-retail-set.model';
