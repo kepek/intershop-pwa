@@ -73,7 +73,7 @@
         >{{ 'camfil.account.orderlist.status.' + status.replace(' ', '_').toLowerCase() | translate }}</mat-checkbox
       >
       <div class="orders-count float-right">
-        {{ 'camfil.account.orderlist.count' | translate }} <strong>{{ dataSource.data.length }}</strong>
+        {{ 'camfil.account.orderlist.count' | translate }} <strong>{{ dataSource.filteredData.length }}</strong>
       </div>
     </section>
   </mat-card>
@@ -179,7 +179,7 @@
   </div>
 
   <div class="my-3 text-center pt-1">
-    {{ 'camfil.account.orderlist.showing_of' | translate: { '0': countRows(), '1': dataSource.data.length } }}
+    {{ 'camfil.account.orderlist.showing_of' | translate: { '0': countRows(), '1': dataSource.filteredData.length } }}
   </div>
 
   <ish-loading *ngIf="loading$ | async"></ish-loading>
