@@ -1,12 +1,15 @@
 import { ChangeDetectionStrategy, Component, Inject, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
+import { take } from 'rxjs/operators';
 
 import { PRODUCT_LISTING_ITEMS_PER_PAGE } from 'ish-core/configurations/injection-keys';
+import { AccountFacade } from 'ish-core/facades/account.facade';
 import { AppFacade } from 'ish-core/facades/app.facade';
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { Category } from 'ish-core/models/category/category.model';
 import { DeviceType, ViewType } from 'ish-core/models/viewtype/viewtype.types';
+import { whenTruthy } from 'ish-core/utils/operators';
 
 /**
  * The Product List Component displays a list of products.
@@ -32,8 +35,10 @@ export class CamfilProductListComponent implements OnInit {
 
   listingLoading$: Observable<boolean>;
   minForBottomLoading: number;
+  isLoggedIn$: Observable<boolean>;
 
   constructor(
+    private accountFacade: AccountFacade,
     private shoppingFacade: ShoppingFacade,
     private appFacade: AppFacade,
     private checkoutFacade: CheckoutFacade,
@@ -41,8 +46,12 @@ export class CamfilProductListComponent implements OnInit {
   ) {}
   deviceType$: Observable<DeviceType>;
   ngOnInit(): void {
-    this.checkoutFacade.loadBuckets();
-    this.shoppingFacade.loadBasketAddresses();
+    this.isLoggedIn$ = this.accountFacade.isLoggedIn$;
+
+    this.isLoggedIn$.pipe(take(1), whenTruthy()).subscribe(() => {
+      this.shoppingFacade.loadBasketAddresses();
+      this.checkoutFacade.loadBuckets();
+    });
 
     this.listingLoading$ = this.shoppingFacade.productListingLoading$;
     this.deviceType$ = this.appFacade.deviceType$;
