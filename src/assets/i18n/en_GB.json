@@ -682,6 +682,7 @@
   "camfil.account.orderdetails.delivery_date.label": "Delivery date",
   "camfil.account.orderdetails.goods_mark.label": "Goods mark",
   "camfil.account.orderdetails.links.order_again": "Order again",
+  "camfil.account.orderdetails.order_comment.label": "Order comment",
   "camfil.account.orderdetails.links.track_order": "Track your order",
   "camfil.account.orderdetails.order_channel.label": "Order channel",
   "camfil.account.orderdetails.order_status.label": "Status",

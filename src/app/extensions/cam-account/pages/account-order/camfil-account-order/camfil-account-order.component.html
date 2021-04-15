@@ -75,6 +75,10 @@
             >{{ deliveryAddress.deliveryAddressCity }}<br
           /></ng-container>
         </dd>
+        <dt class="col-6 p-0">{{ 'camfil.account.orderdetails.order_comment.label' | translate }}</dt>
+        <dd class="col-6 p-0" data-testing-id="order-contact_person">
+          {{ order.orderComment }}
+        </dd>
       </dl>
       <ng-container *ngIf="order?.trackAndTrace">
         <a
