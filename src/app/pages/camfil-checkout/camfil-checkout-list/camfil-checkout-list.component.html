@@ -57,6 +57,14 @@
             <dd class="col-6 p-0" data-testing-id="order-customer_id">{{ order?.deliveryDate || '-' }}</dd>
           </ng-container>
         </dl>
+        <ng-container *ngIf="emailRecipients">
+          <dt class="col-6 p-0">Email recipients</dt>
+          <div *ngFor="let recipient of emailRecipients">
+            <button class="mat-focus-indicator button-bold mat-stroked-button mat-button-base mat-primary">
+              {{ recipient }}
+            </button>
+          </div>
+        </ng-container>
       </div>
       <div
         class="order-summary-info col-sm-3 border-sm-right"

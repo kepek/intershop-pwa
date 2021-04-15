@@ -78,6 +78,7 @@ export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
   calendarExceptions$: Observable<[]>;
   calendarException = [];
   orderAddress = {};
+  emailRecipients: ['name.lastname@mail.com', 'name2.lastname2.mail2.com'];
 
   @ViewChild(CamfilSmallCtaModalComponent) modal: CamfilSmallCtaModalComponent;
 
@@ -409,9 +410,9 @@ export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
   updateBasketItem(formValue: LineItemUpdate) {
     this.checkoutFacade.updateBasketItem(formValue);
   }
-  
+
   openAddEmailRecipientModal() {
-    this.dialog.open(AddEmailRecipientModal, { width: '360px', autoFocus: false, data: this.order, });
+    this.dialog.open(AddEmailRecipientModal, { width: '360px', autoFocus: false, data: this.order });
     // this.dialog.closeAll();
   }
 }
