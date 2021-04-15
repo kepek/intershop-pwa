@@ -26,22 +26,34 @@
   <div [formGroup]="form" (ngSubmit)="handleChangeUser()" class="form-horizontal" novalidate="novalidate">
     <div>
       <mat-form-field appearance="fill" class="form__field mb-3 mr-3">
-        <mat-label>{{ 'camfil.account.organization.user_details.form.firstname.label' | translate }}</mat-label>
+        <mat-label>{{ 'camfil.account.organization.user_details.form.first_name.label' | translate }}</mat-label>
         <input matInput formControlName="firstName" type="text" (blur)="handleChangeUser()" />
+        <mat-error *ngIf="form.controls.firstName.hasError('required')">
+          {{ 'camfil.account.organization.user_details.form.first_name.error.required' | translate }}
+        </mat-error>
       </mat-form-field>
       <mat-form-field appearance="fill" class="form__field mb-3">
-        <mat-label>{{ 'camfil.account.organization.user_details.form.lastname.label' | translate }}</mat-label>
+        <mat-label>{{ 'camfil.account.organization.user_details.form.last_name.label' | translate }}</mat-label>
         <input matInput formControlName="lastName" type="text" (blur)="handleChangeUser()" />
+        <mat-error *ngIf="form.controls.lastName.hasError('required')">
+          {{ 'camfil.account.organization.user_details.form.last_name.error.required' | translate }}
+        </mat-error>
       </mat-form-field>
     </div>
     <div>
       <mat-form-field appearance="fill" class="form__field mb-3 mr-3">
-        <mat-label>{{ 'camfil.account.organization.user_details.form.phone.label' | translate }}</mat-label>
+        <mat-label>{{ 'camfil.account.organization.user_details.form.phone_home.label' | translate }}</mat-label>
         <input matInput formControlName="phoneHome" type="tel" (blur)="handleChangeUser()" />
+        <mat-error *ngIf="form.controls.phoneHome.hasError('required')">
+          {{ 'camfil.account.organization.user_details.form.phone_home.error.required' | translate }}
+        </mat-error>
       </mat-form-field>
       <mat-form-field appearance="fill" class="form__field mb-3">
         <mat-label>{{ 'camfil.account.organization.user_details.form.email.label' | translate }}</mat-label>
         <input matInput formControlName="email" type="email" (blur)="handleChangeUser()" />
+        <mat-error *ngIf="form.controls.email.hasError('required')">
+          {{ 'camfil.account.organization.user_details.form.email.error.required' | translate }}
+        </mat-error>
       </mat-form-field>
     </div>
     <button hidden mat-raised-button type="submit" [disabled]="isUserFormSubmitButtonDisabled">

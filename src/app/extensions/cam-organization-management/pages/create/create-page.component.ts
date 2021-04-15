@@ -3,11 +3,11 @@ import { FormArray } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { CamfilOrganizationCustomerUserContactFormComponent } from '../../components/camfil-organization-user-customers-form/camfil-organization-customer-user-contact-form.component';
 import { CamfilOrganizationUserDetailsFormComponent } from '../../components/camfil-organization-user-details-form/camfil-organization-user-details-form.component';
 import { CamfilOrganizationUserRolesFormComponent } from '../../components/camfil-organization-user-roles-form/camfil-organization-user-roles-form.component';
 
 import { CreatePageDataSourceComponent } from './create-page.data-source';
+import { CamfilOrganizationUserCustomerContactFormComponent } from '../../components/camfil-organization-user-customer-contact-form/camfil-organization-user-customer-contact-form.component';
 
 @Component({
   selector: 'camfil-user-detail-page',
@@ -18,8 +18,8 @@ import { CreatePageDataSourceComponent } from './create-page.data-source';
 // tslint:disable-next-line:component-creation-test
 export class CreatePageComponent extends CreatePageDataSourceComponent implements AfterViewInit {
   @ViewChild(CamfilOrganizationUserDetailsFormComponent) user: CamfilOrganizationUserDetailsFormComponent;
-  @ViewChildren(CamfilOrganizationCustomerUserContactFormComponent)
-  contacts!: QueryList<CamfilOrganizationCustomerUserContactFormComponent>;
+  @ViewChildren(CamfilOrganizationUserCustomerContactFormComponent)
+  contacts!: QueryList<CamfilOrganizationUserCustomerContactFormComponent>;
   @ViewChild(CamfilOrganizationUserRolesFormComponent) roles: CamfilOrganizationUserRolesFormComponent;
 
   form = new FormArray([]);

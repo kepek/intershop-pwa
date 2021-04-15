@@ -45,13 +45,7 @@ export class CamfilOrganizationUserDetailsFormComponent implements OnInit {
         validators: [Validators.required, Validators.maxLength(60)],
       }),
       phoneHome: new FormControl(this.user?.phoneHome, {
-        validators: [
-          Validators.required,
-          Validators.pattern(
-            '(([+]?[(]?[0-9]{1,3}[)]?)|([(]?[0-9]{4}[)]?))s*[)]?[-s.]?[(]?[0-9]{1,3}[)]?([-s.]?[0-9]{3})([-s.]?[0-9]{3,4})'
-          ),
-          Validators.maxLength(30),
-        ],
+        validators: [],
       }),
       email: new FormControl(this.user?.email, {
         validators: [Validators.required, SpecialValidators.email],
@@ -68,6 +62,10 @@ export class CamfilOrganizationUserDetailsFormComponent implements OnInit {
   ngOnInit() {
     this.initUserForm();
     this.initUserActiveForm();
+
+    // setTimeout(() => {
+    //   console.log(this.form);
+    // }, 2500);
   }
 
   handleChangeUser() {

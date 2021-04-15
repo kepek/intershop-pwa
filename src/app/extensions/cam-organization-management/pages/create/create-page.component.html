@@ -44,7 +44,7 @@
       {{ 'camfil.account.organization.edit_user.customers.header.text' | translate }}
     </h2>
     <div class="section__content">
-      <camfil-organization-customer-user-contact-form
+      <camfil-organization-user-customer-contact-form
         *ngFor="let customer of customers$() | async"
         [selectedContact]="customerUserContact$(customer.id) | async"
         [contacts]="customerContacts$(customer.id) | async"
@@ -52,7 +52,7 @@
         [user]="newUser$ | async"
         (assignCustomerUserContact)="onAssignCustomerUserContact($event)"
         (unassignCustomerUserContact)="onUnassignCustomerUserContact($event)"
-      ></camfil-organization-customer-user-contact-form>
+      ></camfil-organization-user-customer-contact-form>
     </div>
   </div>
 </ng-template>
