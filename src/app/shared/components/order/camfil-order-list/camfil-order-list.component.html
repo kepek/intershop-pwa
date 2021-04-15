@@ -69,7 +69,7 @@
         value="{{ status }}"
         class="mr-3"
         (change)="addStatusFilter($event)"
-        checked="checked"
+        [checked]="isStatusFilterChecked(status)"
         >{{ 'camfil.account.orderlist.status.' + status.replace(' ', '_').toLowerCase() | translate }}</mat-checkbox
       >
       <div class="orders-count float-right">
