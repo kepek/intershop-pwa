@@ -328,6 +328,7 @@ export class SelectCamCardModalComponent implements OnInit, OnDestroy, OnChanges
 
   /** open modal */
   show() {
+    this.quantityForm?.controls.boxLabel.setValue('');
     this.camCardsFacade.unSelectCamCard();
     this.showForm = true;
     return this.modalTemplate;

@@ -34,6 +34,9 @@
     </li>
   </ng-container>
   <li class="dropdown with-separator">
+    <a [routerLink]="['/air-handling-unit-guide']">{{ 'camfil.ahu.link' | translate }}</a>
+  </li>
+  <li class="dropdown with-separator">
     <a [routerLink]="['/account/camcards']">{{ 'camfil.account.cam_card.link' | translate }}</a>
   </li>
   <li *ngIf="!isProdEnv" class="dropdown with-separator">

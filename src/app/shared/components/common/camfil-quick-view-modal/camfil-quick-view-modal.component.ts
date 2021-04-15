@@ -131,4 +131,12 @@ export class CamfilQuickViewModalComponent implements OnInit, OnDestroy {
   closeDialog() {
     this.dialogRef.close();
   }
+
+  isNotZero(property: any) {
+    if (!property) {
+      return false;
+    }
+
+    return String(property) !== '0';
+  }
 }
