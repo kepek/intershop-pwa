@@ -57,12 +57,26 @@
             <dd class="col-6 p-0" data-testing-id="order-customer_id">{{ order?.deliveryDate || '-' }}</dd>
           </ng-container>
         </dl>
-        <ng-container *ngIf="emailRecipients">
-          <dt class="col-6 p-0">Email recipients</dt>
-          <div *ngFor="let recipient of emailRecipients">
-            <button class="mat-focus-indicator button-bold mat-stroked-button mat-button-base mat-primary">
-              {{ recipient }}
-            </button>
+        <ng-container *ngIf="emailRecipients.length">
+          <div class="row recipients-container">
+            <dt class="col-6 p-0">Email recipients</dt>
+            <div *ngFor="let recipient of emailRecipients">
+              <button mat-stroked-button color="primary" class="recipient-button d-flex align-items-center">
+                {{ recipient }}
+                <span
+                  class="delete-recipient-icon-wrapper d-inline-flex align-items-center justify-content-center"
+                  (click)="removeSelectedRecipient(recipient)"
+                  ><mat-icon
+                    _ngcontent-intershop-pwa-c283=""
+                    role="img"
+                    class="notranslate material-icons color-light"
+                    aria-hidden="true"
+                    data-mat-icon-type="font"
+                    >close</mat-icon
+                  ></span
+                >
+              </button>
+            </div>
           </div>
         </ng-container>
       </div>
@@ -302,5 +316,5 @@
 >
 </camfil-small-cta-modal>
 <div *ngIf="order" class="d-none">
-  <camfil-add-email-recipient-modal #addEmailRecipientsModal [order]="order"></camfil-add-email-recipient-modal>
+  <camfil-add-email-recipient-modal #addEmailRecipientsModal></camfil-add-email-recipient-modal>
 </div>

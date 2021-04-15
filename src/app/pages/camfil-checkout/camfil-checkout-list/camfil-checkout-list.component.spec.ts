@@ -33,6 +33,7 @@ import { CamfilCheckoutDeliveryAddressComponent } from './camfil-checkout-delive
 import { CamfilCheckoutListComponent } from './camfil-checkout-list.component';
 import { CamfilDeleteOrderComponent } from './camfil-delete-order/camfil-delete-order.component';
 import { EditOrderModalComponent } from './edit-order-modal/edit-order-modal.component';
+import { AddEmailRecipientModalComponent } from '../add-email-recipient-modal/add-email-recipient-modal.component';
 
 describe('Camfil Checkout List Component', () => {
   let component: CamfilCheckoutListComponent;
@@ -49,6 +50,7 @@ describe('Camfil Checkout List Component', () => {
 
     await TestBed.configureTestingModule({
       declarations: [
+        AddEmailRecipientModalComponent,
         CamfilCamCardModalComponent,
         CamfilCheckoutDeliveryAddressComponent,
         CamfilCheckoutListComponent,

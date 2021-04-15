@@ -82,5 +82,5 @@ export interface BasketExtensions {
   deliveryDate?: string;
   isPartialDelivery?: boolean;
   createdFromCamCardId?: string;
-  emailRecipients?: [string];
+  emailRecipients?: string[];
 }

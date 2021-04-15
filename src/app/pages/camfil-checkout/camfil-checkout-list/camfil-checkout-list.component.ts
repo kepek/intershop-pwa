@@ -38,6 +38,7 @@ import { ORDER_HEADER_VALIDATORS } from './validators';
 import { LineItemUpdate } from 'ish-core/models/line-item-update/line-item-update.model';
 import { Address } from 'ish-core/models/address/address.model';
 import { AddEmailRecipientModal } from '../add-email-recipient-modal/add-email-recipient-modal.component';
+import { AddEmailRecipientModalComponent } from '../add-email-recipient-modal/add-email-recipient-modal.component';
 
 interface Order extends Bucket {
   totals: number;
@@ -79,6 +80,7 @@ export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
   calendarException = [];
   orderAddress = {};
   emailRecipients: ['name.lastname@mail.com', 'name2.lastname2.mail2.com'];
+  // emailRecipients: string[];
 
   @ViewChild(CamfilSmallCtaModalComponent) modal: CamfilSmallCtaModalComponent;
 
@@ -112,6 +114,8 @@ export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
       this.checkoutFacade.getCustomersDeliveryTerms$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(terms => {
         this.deliveryTerm = terms[this.order.customer.id];
       });
+
+      this.emailRecipients = ['name.lastname@mail.com', 'name2.lastname2.mail2.com'];
     }
   }
 
@@ -414,5 +418,21 @@ export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
   openAddEmailRecipientModal() {
     this.dialog.open(AddEmailRecipientModal, { width: '360px', autoFocus: false, data: this.order });
     // this.dialog.closeAll();
+    this.dialog.open(AddEmailRecipientModalComponent, { width: '360px', autoFocus: false, data: this.order });
+  }
+
+  removeSelectedRecipient(recipient) {
+    const updatedRecipients = this.emailRecipients.filter(er => er !== recipient);
+
+    // const { basket, deliveryAddressId } = this.order;
+    // const basketExtensionUpdate: BasketExtensions = {
+    //   ...this.order,
+    //   emailRecipients: updatedRecipients,
+    // };
+
+    this.emailRecipients = updatedRecipients;
+
+    // Call facede for update bucket
+    // this.shoppingFacade.updateBucket(basket, deliveryAddressId, basketExtensionUpdate);
   }
 }
