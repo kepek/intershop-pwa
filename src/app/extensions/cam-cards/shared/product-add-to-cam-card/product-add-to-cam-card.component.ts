@@ -7,6 +7,7 @@ import { first, take, takeUntil } from 'rxjs/operators';
 import { AccountFacade } from 'ish-core/facades/account.facade';
 import { Product } from 'ish-core/models/product/product.model';
 import { GenerateLazyComponent } from 'ish-core/utils/module-loader/generate-lazy-component.decorator';
+import { whenFalsy } from 'ish-core/utils/operators';
 import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
 
 import { CamCardsFacade } from '../../facades/cam-cards.facade';
@@ -49,12 +50,10 @@ export class ProductAddToCamCardComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.camCardsFacade.camCardsLoading$.pipe(take(1)).subscribe(loading => {
-      if (!loading) {
-        this.camCardsFacade.camCard$
-          .pipe(first())
-          .subscribe(camCards => (!camCards?.length ? this.camCardsFacade.loadCamCards() : ''));
-      }
+    this.camCardsFacade.camCardsLoading$.pipe(whenFalsy(), take(1)).subscribe(() => {
+      this.camCardsFacade.camCard$
+        .pipe(first())
+        .subscribe(camCards => (!camCards?.length ? this.camCardsFacade.loadCamCards() : ''));
     });
   }
 

@@ -42,14 +42,12 @@ export class CamfilProductListComponent implements OnInit {
     private checkoutFacade: CheckoutFacade,
     private accountFacade: AccountFacade,
     @Inject(PRODUCT_LISTING_ITEMS_PER_PAGE) private itemsPerPage: number
-  ) { }
+  ) {}
   deviceType$: Observable<DeviceType>;
   ngOnInit(): void {
-    this.accountFacade.user$.pipe(whenTruthy(), take(1)).subscribe(user => {
-      if (user) {
-        this.checkoutFacade.loadBuckets();
-        this.shoppingFacade.loadBasketAddresses();
-      }
+    this.accountFacade.user$.pipe(whenTruthy(), take(1)).subscribe(() => {
+      this.checkoutFacade.loadBuckets();
+      this.shoppingFacade.loadBasketAddresses();
     });
 
     this.listingLoading$ = this.shoppingFacade.productListingLoading$;

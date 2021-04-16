@@ -24,7 +24,6 @@ import { CamfilCounterComponent } from 'ish-shared/forms/components/camfil-count
 import { CamfilSearchBoxComponent } from 'ish-shell/header/header/camfil-search-box/camfil-search-box.component';
 
 import { CamCardsFacade } from '../../../extensions/cam-cards/facades/cam-cards.facade';
-// tslint:disable-next-line:ban-specific-imports
 import { ModalAddNewProductComponent } from '../../../extensions/cam-cards/pages/account-cam-card-detail/modal-add-new-product/modal-add-new-product.component';
 import { OrderFormComponent } from '../../../extensions/cam-cards/shared/add-to-cart-modal/create-order-modal/order-form/order-form.component';
 import { CamfilCheckoutLineItemComponent } from '../camfil-checkout-line-item/camfil-checkout-line-item.component';

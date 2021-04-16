@@ -15,7 +15,6 @@ import {
   mapTo,
   mergeMap,
   reduce,
-  switchMap,
   takeWhile,
   tap,
   window as windowRxOperator,
@@ -160,16 +159,17 @@ export class CamCardEffects {
     this.actions$.pipe(
       ofType(loadCamCards),
       withLatestFrom(this.store.pipe(select(getUserAuthorized))),
-      filter(([, authorized]) => authorized),
-      switchMap(() =>
-        this.camCardService.getCamCards().pipe(
-          map(items => {
-            // TODO: to improve - move filter to selectors like getRootCamCards
-            const camCards = items.filter(item => !item.rootCamCard);
-            return loadCamCardsSuccess({ camCards });
-          }),
-          mapErrorToAction(loadCamCardsFail)
-        )
+      mergeMap(([, authorized]) =>
+        authorized
+          ? this.camCardService.getCamCards().pipe(
+              map(items => {
+                // TODO: to improve - move filter to selectors like getRootCamCards
+                const camCards = items.filter(item => !item.rootCamCard);
+                return loadCamCardsSuccess({ camCards });
+              }),
+              mapErrorToAction(loadCamCardsFail)
+            )
+          : [loadCamCardsSuccess({ camCards: [] })]
       )
     )
   );
