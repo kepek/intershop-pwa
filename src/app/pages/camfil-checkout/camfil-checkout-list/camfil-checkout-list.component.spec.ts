@@ -1,3 +1,4 @@
+// tslint:disable: ish-ordered-imports ban-specific-imports
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MockComponent, MockDirective, MockPipe } from 'ng-mocks';
