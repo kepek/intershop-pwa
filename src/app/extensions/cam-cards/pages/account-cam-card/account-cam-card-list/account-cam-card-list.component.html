@@ -132,7 +132,15 @@
         </ng-template>
       </ng-container>
 
-      <table *ngIf="!isMobileView" mat-table [dataSource]="camCardsProcessed" multiTemplateDataRows matSort>
+      <table
+        *ngIf="!isMobileView"
+        mat-table
+        [dataSource]="camCardsProcessed"
+        multiTemplateDataRows
+        matSort
+        matSortActive="name"
+        matSortDirection="asc"
+      >
         <ng-container matColumnDef="{{ column }}" *ngFor="let column of columnsToDisplay; last as isLast">
           <ng-container *ngIf="!isLast; else checkbox">
             <ng-container *ngIf="column !== 'edit' && column !== 'userAccess'; else noSort">
