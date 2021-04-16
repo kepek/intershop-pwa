@@ -31,12 +31,18 @@
         <mat-error *ngIf="form.controls.firstName.hasError('required')">
           {{ 'camfil.account.organization.user_details.form.first_name.error.required' | translate }}
         </mat-error>
+        <mat-error *ngIf="form.controls.firstName.hasError('maxLength')">
+          {{ 'camfil.account.organization.user_details.form.first_name.error.maxLength' | translate }}
+        </mat-error>
       </mat-form-field>
       <mat-form-field appearance="fill" class="form__field mb-3">
         <mat-label>{{ 'camfil.account.organization.user_details.form.last_name.label' | translate }}</mat-label>
         <input matInput formControlName="lastName" type="text" (blur)="handleChangeUser()" />
         <mat-error *ngIf="form.controls.lastName.hasError('required')">
           {{ 'camfil.account.organization.user_details.form.last_name.error.required' | translate }}
+        </mat-error>
+        <mat-error *ngIf="form.controls.lastName.hasError('maxLength')">
+          {{ 'camfil.account.organization.user_details.form.last_name.error.maxLength' | translate }}
         </mat-error>
       </mat-form-field>
     </div>
@@ -53,6 +59,9 @@
         <input matInput formControlName="email" type="email" (blur)="handleChangeUser()" />
         <mat-error *ngIf="form.controls.email.hasError('required')">
           {{ 'camfil.account.organization.user_details.form.email.error.required' | translate }}
+        </mat-error>
+        <mat-error *ngIf="form.controls.email.hasError('email')">
+          {{ 'camfil.account.organization.user_details.form.email.error.email' | translate }}
         </mat-error>
       </mat-form-field>
     </div>
