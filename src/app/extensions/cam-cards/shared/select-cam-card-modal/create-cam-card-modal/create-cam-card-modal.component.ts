@@ -57,6 +57,7 @@ export class CreateCamCardModalComponent implements OnInit, AfterViewInit {
   addresses$: Observable<CamCardAddress[]>;
   customers$: Observable<CamCardCustomer[]>;
   countries$: Observable<Country[]>;
+  customers: CamCardCustomer[];
 
   defaultCountryCode: string;
   showNewSegment = false;
@@ -93,6 +94,7 @@ export class CreateCamCardModalComponent implements OnInit, AfterViewInit {
         } else if (!customers.length) {
           this.camCardsFacade.loadCustomers();
         }
+        this.customers = customers;
       });
     });
   }
@@ -151,13 +153,14 @@ export class CreateCamCardModalComponent implements OnInit, AfterViewInit {
   }
 
   create() {
+    const customerId = this.camCardForm.get('customerSelect').value;
     const camCard = {
       name: this.camCardForm.get('name').value,
       orderLabel: this.camCardForm.get('orderMark').value,
       invoiceLabel: this.camCardForm.get('invoiceMark').value,
       customer: {
-        id: this.camCardForm.get('customerSelect').value,
-        customerNo: this.camCardForm.get('customerSelect').value,
+        id: customerId,
+        customerNo: this.customers.find(item => item.id === customerId).customerNo,
       },
       deliveryAddress: {
         ...this.rootCamCardAddress,
@@ -188,14 +191,15 @@ export class CreateCamCardModalComponent implements OnInit, AfterViewInit {
   emitCamCardData(edit) {
     if (this.camCardForm.valid) {
       const newCamCard = this.camCardForm.get('newCamCard').value;
+      const customerId = this.camCardForm.get('customerSelect').value;
       const camCardData = this.create();
 
       const newSubCamCard: CamCard = {
         name: newCamCard,
         deliveryAddress: this.rootCamCardAddress,
         customer: {
-          id: this.camCardForm.get('customerSelect').value,
-          customerNo: this.camCardForm.get('customerSelect').value,
+          id: customerId,
+          customerNo: this.customers.find(item => item.id === customerId).customerNo,
         },
       };
 
