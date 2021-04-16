@@ -70,6 +70,7 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit {
   customers$: Observable<CamCardCustomer[]>;
   addresses$: Observable<CamCardAddress[]>;
   countries$: Observable<Country[]>;
+  customers: CamCardCustomer[];
 
   /**
    *  A reference to the current modal  .
@@ -167,10 +168,11 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit {
     this.customers$.pipe(whenTruthy(), take(2)).subscribe(customers => {
       if (customers.length === 1) {
         this.camCardForm.patchValue({
-          customerName: customers[0].customerNo,
+          customerName: customers[0].id,
         });
         this.pickCustomer({ value: customers[0].id });
       }
+      this.customers = customers;
     });
   }
 
@@ -216,7 +218,7 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit {
       const { addressLine1, addressLine2, postalCode, city, countryCode, companyName1 } = deliveryAddress;
       this.camCardForm.patchValue({
         title: name,
-        customerName: customer.customerNo,
+        customerName: customer.id,
         orderMark: orderLabel,
         invoiceMark: invoiceLabel,
         companyName1,
@@ -244,6 +246,7 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit {
     if (this.camCardForm.valid) {
       const nextDelivery = this.camCardForm.get('nextDelivery').value;
       const lastDelivery = this.camCardForm.get('lastDelivery').value;
+      const customerId = this.camCardForm.get('customerName').value;
       this.submit.emit({
         ...this.camCard,
         id: this.camCard?.id,
@@ -251,8 +254,8 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit {
         orderLabel: this.camCardForm.get('orderMark').value,
         invoiceLabel: this.camCardForm.get('invoiceMark').value,
         customer: {
-          id: this.camCardForm.get('customerName').value,
-          customerNo: this.camCardForm.get('customerName').value,
+          id: customerId,
+          customerNo: this.customers.find(item => item.id === customerId).customerNo,
         },
         deliveryAddress: {
           ...this.camCard?.deliveryAddress,
