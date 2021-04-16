@@ -1,7 +1,8 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 
 import { AttributeGroupTypes } from 'ish-core/models/attribute-group/attribute-group.types';
-import { Product } from 'ish-core/models/product/product.model';
+import { Attribute } from 'ish-core/models/attribute/attribute.model';
+import { Product, ProductHelper } from 'ish-core/models/product/product.model';
 
 /**
  * The Product Attributes Component renders all attributes of the product detail attribute group in a description list
@@ -21,21 +22,14 @@ import { Product } from 'ish-core/models/product/product.model';
 export class CamfilProductAttributesComponent implements OnInit {
   @Input() product: Product;
   @Input() multipleValuesSeparator = ', ';
-  productListAttributes;
+
+  productListAttributes: Attribute[];
 
   ngOnInit(): void {
     const attributes = (this.productListAttributes =
       this.product?.attributeGroups[AttributeGroupTypes.ProductsDetailAttributes]?.attributes ||
       this.product?.attributes);
 
-    this.productListAttributes = attributes.filter(attribute => this.isNotZero(attribute.value));
-  }
-
-  isNotZero(property: any) {
-    if (!property) {
-      return false;
-    }
-
-    return String(property) !== '0';
+    this.productListAttributes = attributes.filter(attribute => ProductHelper.isNotZero(attribute.value));
   }
 }
