@@ -282,4 +282,12 @@ export class ProductHelper {
     const attrs = data.attributeGroups?.[label]?.attributes;
     return AttributeHelper.getAttributeValueByAttributeName<boolean>(attrs, 'Requiresmeasures') || false;
   }
+
+  static isNotZero(property: any) {
+    if (!property) {
+      return false;
+    }
+
+    return String(property) !== '0';
+  }
 }

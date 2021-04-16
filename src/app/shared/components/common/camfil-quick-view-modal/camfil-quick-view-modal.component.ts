@@ -42,6 +42,10 @@ export class CamfilQuickViewModalComponent implements OnInit, OnDestroy {
     private dialogRef: MatDialogRef<CamfilQuickViewModalComponent>
   ) {}
 
+  get quantityCount() {
+    return this.productDetailForm.get(this.quantityControlName).value;
+  }
+
   product$: Observable<ProductView | VariationProductView | VariationProductMasterView>;
   quantity: number;
   price$: Observable<ProductPrices>;
@@ -70,6 +74,8 @@ export class CamfilQuickViewModalComponent implements OnInit, OnDestroy {
   getImageViewIDs = ProductHelper.getImageViewIDs;
   getImageCdnUrl = ProductHelper.getImageCdnUrl;
   showAvailabilityDot = ProductHelper.showAvailabilityDot;
+
+  isNotZero = ProductHelper.isNotZero;
 
   ngOnInit(): void {
     this.product$ = this.shoppingFacade.product$(this.data.sku, ProductCompletenessLevel.Detail);
@@ -110,10 +116,6 @@ export class CamfilQuickViewModalComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  get quantityCount() {
-    return this.productDetailForm.get(this.quantityControlName).value;
-  }
-
   getAttributeValue(attributes: Attribute[], attributeName: string) {
     return attributes.find(x => x.name === attributeName)?.value;
   }
@@ -130,13 +132,5 @@ export class CamfilQuickViewModalComponent implements OnInit, OnDestroy {
 
   closeDialog() {
     this.dialogRef.close();
-  }
-
-  isNotZero(property: any) {
-    if (!property) {
-      return false;
-    }
-
-    return String(property) !== '0';
   }
 }
