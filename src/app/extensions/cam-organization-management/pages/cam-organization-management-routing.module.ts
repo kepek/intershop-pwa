@@ -41,7 +41,7 @@ export const routes: Routes = [
     canActivate: [FeatureToggleGuard, AuthGuard, FetchCreateUserGuard],
     data: {
       feature: 'camOrganizationManagement',
-      permission: 'CAMFIL_APP_B2B_MANAGE_USERS', // TODO (extMlk): Remove CAMFIL_ prefix to enable this route.
+      permission: 'APP_B2B_MANAGE_USERS',
     },
     loadChildren: () => import('./create/create-page.module').then(m => m.CreatePageModule),
   },

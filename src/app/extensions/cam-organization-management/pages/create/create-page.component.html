@@ -18,7 +18,12 @@
       <button mat-stroked-button [routerLink]="['/account/organization']" class="mr-2">
         {{ 'camfil.account.organization.list.cancel.button.text' | translate }}
       </button>
-      <button mat-flat-button color="primary" [routerLink]="['/account/organization/create']">
+      <button
+        mat-flat-button
+        color="primary"
+        [routerLink]="['/account/organization/create']"
+        (click)="onCreateCustomerUser()"
+      >
         {{ 'camfil.account.organization.list.create_new_user.button.text' | translate }}
       </button>
     </ng-container>
@@ -27,11 +32,9 @@
 
 <ng-template #userDetails>
   <camfil-organization-user-details-form
-    [customer]="selectedCustomer$() | async"
-    [user]="newUser$() | async"
-    (changeUser)="onUpdateSelectedCustomerUserDetails($event)"
-    (changeUserActive)="onUpdateSelectedCustomerUserActive($event)"
-    (changeUserPassword)="onUpdateSelectedCustomerUserPassword()"
+    [customer]="newUserCustomer$ | async"
+    [user]="newUser$ | async"
+    (changeUser)="onUpdateNewCustomerUser($event)"
   ></camfil-organization-user-details-form>
 </ng-template>
 
@@ -41,15 +44,15 @@
       {{ 'camfil.account.organization.edit_user.customers.header.text' | translate }}
     </h2>
     <div class="section__content">
-      <camfil-organization-customer-user-contact-form
+      <camfil-organization-user-customer-contact-form
         *ngFor="let customer of customers$() | async"
         [selectedContact]="customerUserContact$(customer.id) | async"
         [contacts]="customerContacts$(customer.id) | async"
         [customer]="customer"
-        [user]="newUser$() | async"
+        [user]="newUser$ | async"
         (assignCustomerUserContact)="onAssignCustomerUserContact($event)"
         (unassignCustomerUserContact)="onUnassignCustomerUserContact($event)"
-      ></camfil-organization-customer-user-contact-form>
+      ></camfil-organization-user-customer-contact-form>
     </div>
   </div>
 </ng-template>
@@ -62,8 +65,8 @@
     <div class="section__content">
       <camfil-organization-user-roles-form
         [roles]="roles$() | async"
-        [staticRoles]="newUserStaticRoles$() | async"
-        [selectedRoles]="newUserRoles$() | async"
+        [staticRoles]="newUserStaticRoles$ | async"
+        [selectedRoles]="newUserRoles$ | async"
         (selectCustomerUserRoles)="onUpdateSelectedCustomerUserRoles($event)"
       ></camfil-organization-user-roles-form>
     </div>
@@ -72,20 +75,22 @@
 
 <ng-container *ngTemplateOutlet="userHeader"></ng-container>
 
-<mat-card class="mat-elevation-z2 clearfix">
-  <div class="row no-gutters">
-    <div class="col-12">
-      <ng-container *ngTemplateOutlet="userDetails"></ng-container>
+<form (ngSubmit)="onCreateCustomerUser()">
+  <mat-card class="mat-elevation-z2 clearfix">
+    <div class="row no-gutters">
+      <div class="col-12">
+        <ng-container *ngTemplateOutlet="userDetails"></ng-container>
+      </div>
     </div>
-  </div>
-  <div class="row no-gutters">
-    <div class="col-sm-7 col-12">
-      <ng-container *ngTemplateOutlet="userCustomersContacts"></ng-container>
+    <div class="row no-gutters">
+      <div class="col-sm-7 col-12">
+        <ng-container *ngTemplateOutlet="userCustomersContacts"></ng-container>
+      </div>
+      <div class="col-sm-5 col-12">
+        <ng-container *ngTemplateOutlet="userRoles"></ng-container>
+      </div>
     </div>
-    <div class="col-sm-5 col-12">
-      <ng-container *ngTemplateOutlet="userRoles"></ng-container>
-    </div>
-  </div>
-</mat-card>
+  </mat-card>
+</form>
 
 <ish-loading *ngIf="loading$() | async"></ish-loading>

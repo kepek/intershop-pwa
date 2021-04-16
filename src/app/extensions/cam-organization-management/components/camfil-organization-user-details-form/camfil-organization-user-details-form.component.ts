@@ -21,15 +21,23 @@ export class CamfilOrganizationUserDetailsFormComponent implements OnInit {
   @Output() changeUserActive = new EventEmitter<{ active: boolean }>();
   @Output() changeUserPassword = new EventEmitter();
 
-  userForm: FormGroup;
-  userActiveForm: FormGroup;
+  form: FormGroup;
+  activeForm: FormGroup;
 
   isUserFormSubmitted = false;
 
   constructor(private fb: FormBuilder) {}
 
+  get isUserFormSubmitButtonDisabled() {
+    return this.form?.invalid && this.isUserFormSubmitted;
+  }
+
+  get isEditMode() {
+    return this.user?.hasOwnProperty('id') && this.user?.id;
+  }
+
   private initUserForm() {
-    this.userForm = this.fb.group({
+    this.form = this.fb.group({
       firstName: new FormControl(this.user?.firstName, {
         validators: [Validators.required, Validators.maxLength(60)],
       }),
@@ -37,13 +45,7 @@ export class CamfilOrganizationUserDetailsFormComponent implements OnInit {
         validators: [Validators.required, Validators.maxLength(60)],
       }),
       phoneHome: new FormControl(this.user?.phoneHome, {
-        validators: [
-          Validators.required,
-          Validators.pattern(
-            '(([+]?[(]?[0-9]{1,3}[)]?)|([(]?[0-9]{4}[)]?))s*[)]?[-s.]?[(]?[0-9]{1,3}[)]?([-s.]?[0-9]{3})([-s.]?[0-9]{3,4})'
-          ),
-          Validators.maxLength(30),
-        ],
+        validators: [],
       }),
       email: new FormControl(this.user?.email, {
         validators: [Validators.required, SpecialValidators.email],
@@ -52,7 +54,7 @@ export class CamfilOrganizationUserDetailsFormComponent implements OnInit {
   }
 
   private initUserActiveForm() {
-    this.userActiveForm = this.fb.group({
+    this.activeForm = this.fb.group({
       active: [!this.user?.active],
     });
   }
@@ -62,17 +64,17 @@ export class CamfilOrganizationUserDetailsFormComponent implements OnInit {
     this.initUserActiveForm();
   }
 
-  submitUserForm() {
-    if (this.userForm.invalid) {
+  handleChangeUser() {
+    if (!this.isEditMode && this.form.invalid) {
       this.isUserFormSubmitted = true;
-      markAsDirtyRecursive(this.userForm);
+      markAsDirtyRecursive(this.form);
       return;
     }
 
-    const firstName = this.userForm.get('firstName').value;
-    const lastName = this.userForm.get('lastName').value;
-    const phoneHome = this.userForm.get('phoneHome').value;
-    const email = this.userForm.get('email').value;
+    const firstName = this.form.get('firstName').value;
+    const lastName = this.form.get('lastName').value;
+    const phoneHome = this.form.get('phoneHome').value;
+    const email = this.form.get('email').value;
 
     const customer = this.customer;
     const user = { ...this.user, firstName, lastName, phoneHome, email };
@@ -80,21 +82,15 @@ export class CamfilOrganizationUserDetailsFormComponent implements OnInit {
     this.changeUser.emit({ customer, user });
   }
 
-  resetUserPassword() {
+  handleResetUserPassword() {
     const { customer, user } = this;
+
     this.changeUserPassword.emit({ customer, user });
   }
 
-  toggleActiveFlag() {
+  handleToggleActiveFlag() {
     const active = !this.user?.active;
+
     this.changeUserActive.emit({ active });
-  }
-
-  get isUserFormSubmitButtonDisabled() {
-    return this.userForm?.invalid && this.isUserFormSubmitted;
-  }
-
-  get isUserLocked() {
-    return !this.user.active;
   }
 }

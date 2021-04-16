@@ -8,13 +8,13 @@ import { CamfilB2bCustomer } from '../../models/camfil-b2b-customer/camfil-b2b-c
 import { CamfilB2bUser } from '../../models/camfil-b2b-user/camfil-b2b-user.model';
 
 @Component({
-  selector: 'camfil-organization-customer-user-contact-form',
-  templateUrl: './camfil-organization-customer-user-contact-form.component.html',
-  styleUrls: ['./camfil-organization-customer-user-contact-form.component.scss'],
+  selector: 'camfil-organization-user-customer-contact-form',
+  templateUrl: './camfil-organization-user-customer-contact-form.component.html',
+  styleUrls: ['./camfil-organization-user-customer-contact-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.Default,
 })
 // tslint:disable-next-line:component-creation-test
-export class CamfilOrganizationCustomerUserContactFormComponent implements OnInit, OnDestroy {
+export class CamfilOrganizationUserCustomerContactFormComponent implements OnInit, OnDestroy {
   @Input() contacts: CamfilB2bContact[];
   @Input() selectedContact: CamfilB2bContact;
   @Input() customer: CamfilB2bCustomer;

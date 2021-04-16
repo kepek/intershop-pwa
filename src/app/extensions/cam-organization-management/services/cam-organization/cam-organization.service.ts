@@ -2,8 +2,9 @@ import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { pick } from 'lodash-es';
 import { Observable, forkJoin, iif, of, throwError } from 'rxjs';
-import { catchError, concatAll, concatMap, map } from 'rxjs/operators';
+import { catchError, concatAll, concatMap, map, switchMap } from 'rxjs/operators';
 
+import { AppFacade } from 'ish-core/facades/app.facade';
 import { AddressData } from 'ish-core/models/address/address.interface';
 import { AddressMapper } from 'ish-core/models/address/address.mapper';
 import { Address } from 'ish-core/models/address/address.model';
@@ -34,7 +35,8 @@ export class CamOrganizationService {
   constructor(
     private apiService: ApiService,
     private b2bRoleMapper: CamfilB2bRoleMapper,
-    private camCardMapper: CamCardMapper
+    private camCardMapper: CamCardMapper,
+    private appFacade: AppFacade
   ) {}
 
   private static isUsersNotFoundError(err: HttpError) {
@@ -200,32 +202,47 @@ export class CamOrganizationService {
 
   createCustomerUser(customer: CamfilB2bCustomer, user: CamfilB2bUser) {
     if (!customer) {
-      return throwError('updateCustomerUser() called without required customer data');
+      return throwError('createCustomerUser() called without required customer data');
     }
 
     if (!user) {
-      return throwError('updateCustomerUser() called without required user data');
+      return throwError('createCustomerUser() called without required user data');
     }
 
-    return this.apiService
-      .post<B2bUser>(`customers/${customer.customerNo}/users`, {
-        elements: [
-          {
-            ...customer,
-            ...user,
-            preferredInvoiceToAddress: { urn: user.preferredInvoiceToAddressUrn },
-            preferredShipToAddress: { urn: user.preferredShipToAddressUrn },
-            preferredPaymentInstrument: { id: user.preferredPaymentInstrumentId },
-            preferredInvoiceToAddressUrn: undefined,
-            preferredShipToAddressUrn: undefined,
-            preferredPaymentInstrumentId: undefined,
-            preferredLanguage: 'en_US', // TODO (extMlk): add current locale usage
-            userBudgets: undefined,
-            roleIds: undefined,
-          },
-        ],
-      })
-      .pipe(map(CamfilB2bUserMapper.fromData));
+    return this.appFacade.currentLocale$.pipe(
+      switchMap(currentLocale =>
+        this.apiService
+          .post<B2bUser>(`customers/${customer.customerNo}/users`, {
+            elements: [
+              {
+                ...customer,
+                ...user,
+                preferredInvoiceToAddress: { urn: user.preferredInvoiceToAddressUrn },
+                preferredShipToAddress: { urn: user.preferredShipToAddressUrn },
+                preferredPaymentInstrument: { id: user.preferredPaymentInstrumentId },
+                preferredInvoiceToAddressUrn: undefined,
+                preferredShipToAddressUrn: undefined,
+                preferredPaymentInstrumentId: undefined,
+                preferredLanguage: currentLocale.lang ?? 'en_US',
+                userBudgets: undefined,
+                roleIds: undefined,
+              },
+            ],
+          })
+          .pipe(
+            concatMap(() =>
+              this.getCustomerUsers(customer.id).pipe(map(users => users.find(u => u.login === user.login)))
+            )
+          )
+          .pipe(
+            switchMap(createdUser =>
+              this.updateCustomerUserRoles(customer.id, createdUser.id, user.roleIDs).pipe(
+                switchMap(() => this.getCustomerUser(customer.id, createdUser.id))
+              )
+            )
+          )
+      )
+    );
   }
 
   // Customer -> User -> Active Flag

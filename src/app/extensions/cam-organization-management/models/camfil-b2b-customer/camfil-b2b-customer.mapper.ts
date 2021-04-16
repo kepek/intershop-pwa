@@ -15,7 +15,6 @@ export class CamfilB2bCustomerMapper extends CustomerMapper {
       id,
       parent,
       preferredInvoiceToAddress,
-      isBusinessCustomer: false, // TODO (extMlk): Verify if Camfil Customers are always B2B? Seems to be 100% true but worth to double-check.
     };
   }
 

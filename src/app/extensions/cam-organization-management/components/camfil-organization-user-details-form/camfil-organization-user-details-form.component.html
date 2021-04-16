@@ -1,9 +1,9 @@
 <div class="form__section form__personal-info">
   <h3 class="form__subtitle">
     {{ 'camfil.account.organization.edit_user.personal_info.header.text' | translate }}
-    <ng-container *ngIf="user">
-      <small [formGroup]="userActiveForm" class="ml-3">
-        <mat-checkbox color="primary" formControlName="active" (change)="toggleActiveFlag()">
+    <ng-container *ngIf="isEditMode">
+      <small [formGroup]="activeForm" class="ml-3">
+        <mat-checkbox color="primary" formControlName="active" (change)="handleToggleActiveFlag()">
           <ng-container *ngIf="user?.active; else unlockText">
             {{ 'camfil.account.organization.edit_user.lock.checkbox.text' | translate }}
           </ng-container>
@@ -12,40 +12,61 @@
           </ng-template>
         </mat-checkbox>
       </small>
-      <button mat-stroked-button color="primary" class="ml-3" (click)="resetUserPassword()">
+      <button mat-stroked-button color="primary" class="ml-3" (click)="handleResetUserPassword()">
         {{ 'camfil.account.organization.edit_user.reset_password.button.text' | translate }}
       </button>
     </ng-container>
   </h3>
-  <ng-container *ngIf="user">
+  <ng-container *ngIf="isEditMode">
     <p>
       {{ 'camfil.account.organization.edit_user.personal_info.user_id.text' | translate }}
       <strong class="ml-2">{{ user?.id }}</strong>
     </p>
   </ng-container>
-  <form [formGroup]="userForm" (ngSubmit)="submitUserForm()" class="form-horizontal" novalidate="novalidate">
+  <div [formGroup]="form" (ngSubmit)="handleChangeUser()" class="form-horizontal" novalidate="novalidate">
     <div>
       <mat-form-field appearance="fill" class="form__field mb-3 mr-3">
-        <mat-label>{{ 'camfil.account.organization.user_details.form.firstname.label' | translate }}</mat-label>
-        <input matInput formControlName="firstName" type="text" (blur)="submitUserForm()" />
+        <mat-label>{{ 'camfil.account.organization.user_details.form.first_name.label' | translate }}</mat-label>
+        <input matInput formControlName="firstName" type="text" (blur)="handleChangeUser()" />
+        <mat-error *ngIf="form.controls.firstName.hasError('required')">
+          {{ 'camfil.account.organization.user_details.form.first_name.error.required' | translate }}
+        </mat-error>
+        <mat-error *ngIf="form.controls.firstName.hasError('maxLength')">
+          {{ 'camfil.account.organization.user_details.form.first_name.error.maxLength' | translate }}
+        </mat-error>
       </mat-form-field>
       <mat-form-field appearance="fill" class="form__field mb-3">
-        <mat-label>{{ 'camfil.account.organization.user_details.form.lastname.label' | translate }}</mat-label>
-        <input matInput formControlName="lastName" type="text" (blur)="submitUserForm()" />
+        <mat-label>{{ 'camfil.account.organization.user_details.form.last_name.label' | translate }}</mat-label>
+        <input matInput formControlName="lastName" type="text" (blur)="handleChangeUser()" />
+        <mat-error *ngIf="form.controls.lastName.hasError('required')">
+          {{ 'camfil.account.organization.user_details.form.last_name.error.required' | translate }}
+        </mat-error>
+        <mat-error *ngIf="form.controls.lastName.hasError('maxLength')">
+          {{ 'camfil.account.organization.user_details.form.last_name.error.maxLength' | translate }}
+        </mat-error>
       </mat-form-field>
     </div>
     <div>
       <mat-form-field appearance="fill" class="form__field mb-3 mr-3">
-        <mat-label>{{ 'camfil.account.organization.user_details.form.phone.label' | translate }}</mat-label>
-        <input matInput formControlName="phoneHome" type="tel" (blur)="submitUserForm()" />
+        <mat-label>{{ 'camfil.account.organization.user_details.form.phone_home.label' | translate }}</mat-label>
+        <input matInput formControlName="phoneHome" type="tel" (blur)="handleChangeUser()" />
+        <mat-error *ngIf="form.controls.phoneHome.hasError('required')">
+          {{ 'camfil.account.organization.user_details.form.phone_home.error.required' | translate }}
+        </mat-error>
       </mat-form-field>
       <mat-form-field appearance="fill" class="form__field mb-3">
         <mat-label>{{ 'camfil.account.organization.user_details.form.email.label' | translate }}</mat-label>
-        <input matInput formControlName="email" type="email" (blur)="submitUserForm()" />
+        <input matInput formControlName="email" type="email" (blur)="handleChangeUser()" />
+        <mat-error *ngIf="form.controls.email.hasError('required')">
+          {{ 'camfil.account.organization.user_details.form.email.error.required' | translate }}
+        </mat-error>
+        <mat-error *ngIf="form.controls.email.hasError('email')">
+          {{ 'camfil.account.organization.user_details.form.email.error.email' | translate }}
+        </mat-error>
       </mat-form-field>
     </div>
     <button hidden mat-raised-button type="submit" [disabled]="isUserFormSubmitButtonDisabled">
       {{ 'camfil.account.organization.user_details.form.submit.label' | translate }}
     </button>
-  </form>
+  </div>
 </div>

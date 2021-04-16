@@ -1,7 +1,18 @@
 // tslint:disable: ish-ordered-imports project-structure
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  OnChanges,
+  SimpleChange,
+  OnInit,
+} from '@angular/core';
 
 import { CamfilB2bRole } from '../../models/camfil-b2b-role/camfil-b2b-role.model';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { MatSelectionListChange } from '@angular/material/list';
 
 @Component({
   selector: 'camfil-organization-user-roles-form',
@@ -9,64 +20,114 @@ import { CamfilB2bRole } from '../../models/camfil-b2b-role/camfil-b2b-role.mode
   styleUrls: ['./camfil-organization-user-roles-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.Default,
 })
-export class CamfilOrganizationUserRolesFormComponent implements OnInit {
-  // Static Roles
+export class CamfilOrganizationUserRolesFormComponent implements OnInit, OnChanges {
+  constructor(private fb: FormBuilder) {}
 
-  @Input()
-  get staticRoles() {
-    return this.staticRolesValue;
-  }
-  set staticRoles(staticRoles: CamfilB2bRole[]) {
+  @Input() set staticRoles(staticRoles: CamfilB2bRole[]) {
     this.staticRolesValue = staticRoles;
   }
 
-  private staticRolesValue = [];
+  get staticRoles() {
+    return this.staticRolesValue;
+  }
 
-  // Roles
+  @Input() set roles(roles: CamfilB2bRole[]) {
+    this.rolesValue = roles;
+  }
 
-  @Input()
   get roles() {
     return this.rolesValue;
   }
-  set roles(roles: CamfilB2bRole[]) {
-    this.rolesValue = roles;
+
+  @Input() set selectedRoles(selectedRoles: CamfilB2bRole[]) {
+    this.selectedRolesValue = selectedRoles;
   }
-  private rolesValue: CamfilB2bRole[] = [];
 
-  // Selected Roles
-
-  @Input()
   get selectedRoles() {
     return this.selectedRolesValue;
   }
-  set selectedRoles(selectedRoles: CamfilB2bRole[]) {
-    this.selectedRolesValue = selectedRoles;
-  }
-  private selectedRolesValue: CamfilB2bRole[] = [];
 
   // Properties
 
-  selectedRoleIDs: string[] = [];
+  form: FormGroup;
+
+  //  Input Properties -> Static Roles
+
+  private staticRolesValue = [];
+
+  // Input Properties -> Roles
+
+  private rolesValue: CamfilB2bRole[] = [];
+
+  // Input Properties -> Selected Roles
+
+  private selectedRolesValue: CamfilB2bRole[] = [];
 
   // Outputs
 
   @Output() selectCustomerUserRoles = new EventEmitter<{ roleIDs: string[] }>();
 
-  // Handlers
+  // Private Static Methods
 
-  onCustomerUserRolesChange() {
-    this.selectCustomerUserRoles.emit({ roleIDs: this.selectedRoleIDs });
+  private static handlePropertyChange(
+    changes: ComponentChanges<CamfilOrganizationUserRolesFormComponent>,
+    propertyName?: string,
+    fn?: (change: SimpleChange) => void
+  ) {
+    const property: SimpleChange = changes[propertyName];
+
+    if (!property) {
+      return;
+    }
+
+    if (JSON.stringify(property.previousValue) !== JSON.stringify(property.currentValue)) {
+      fn(property);
+    }
   }
 
-  // Hooks
-
-  ngOnInit() {
-    this.selectedRoleIDs = this.selectedRoles?.map(role => role.id);
+  private static toRoleIDs(roles: CamfilB2bRole[]): string[] {
+    return roles.map(r => r.id);
   }
 
   // Methods
 
   isDisabledRole(role: CamfilB2bRole) {
     return role.fixed || this.staticRoles?.map(r => r.id)?.includes(role.id);
+  }
+
+  // Handlers
+
+  onCustomerUserRolesChange(selectionChange: MatSelectionListChange) {
+    const roleIDs: string[] = [
+      ...selectionChange?.source?.selectedOptions?.selected?.map(selectedOption => selectedOption.value),
+    ];
+
+    this.selectCustomerUserRoles.emit({ roleIDs });
+  }
+
+  // Hooks
+
+  ngOnInit() {
+    this.form = this.fb.group({
+      roleIDs: new FormControl([]),
+    });
+
+    this.form?.patchValue({
+      roleIDs: CamfilOrganizationUserRolesFormComponent.toRoleIDs(this.selectedRoles),
+    });
+  }
+
+  ngOnChanges(changes: ComponentChanges<CamfilOrganizationUserRolesFormComponent>) {
+    CamfilOrganizationUserRolesFormComponent.handlePropertyChange(
+      changes,
+      'selectedRoles',
+      ({ currentValue, firstChange }) => {
+        if (!firstChange) {
+          this.form?.patchValue({
+            roleIDs: CamfilOrganizationUserRolesFormComponent.toRoleIDs(currentValue),
+          });
+        }
+      }
+    );
   }
 }
