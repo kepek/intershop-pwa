@@ -1,13 +1,15 @@
 import { AfterViewInit, ChangeDetectionStrategy, Component, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { FormArray } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { take, takeUntil } from 'rxjs/operators';
 
+import { whenTruthy } from 'ish-core/utils/operators';
+
+import { CamfilOrganizationUserCustomerContactFormComponent } from '../../components/camfil-organization-user-customer-contact-form/camfil-organization-user-customer-contact-form.component';
 import { CamfilOrganizationUserDetailsFormComponent } from '../../components/camfil-organization-user-details-form/camfil-organization-user-details-form.component';
 import { CamfilOrganizationUserRolesFormComponent } from '../../components/camfil-organization-user-roles-form/camfil-organization-user-roles-form.component';
 
 import { CreatePageDataSourceComponent } from './create-page.data-source';
-import { CamfilOrganizationUserCustomerContactFormComponent } from '../../components/camfil-organization-user-customer-contact-form/camfil-organization-user-customer-contact-form.component';
 
 @Component({
   selector: 'camfil-user-detail-page',
@@ -36,23 +38,15 @@ export class CreatePageComponent extends CreatePageDataSourceComponent implement
     this.form.markAllAsTouched();
 
     if (this.form.valid) {
-      console.log('onCreateCustomerUser', 'SUCCESS');
-    } else {
-      console.log('onCreateCustomerUser', 'FAILURE');
+      // @ts-ignore
+      // tslint:disable-next-line:no-unused
+      this.context$.pipe(take(1), whenTruthy()).subscribe(({ customer, user, contacts, roles }) => {
+        this.organizationFacade.createCustomerUser$(customer, user);
+      });
     }
-
-    // this.context$.pipe(take(1), whenTruthy()).subscribe(({ customer, user, contacts, roles }) => {
-    //   // this.organizationFacade.createCustomerUser$(customer, user);
-    //   // console.log('customer', customer);
-    //   // console.log('user', user);
-    //   // console.log('contacts', contacts);
-    //   // console.log('roles', roles);
-    // });
   }
 
   ngAfterViewInit() {
-    super.ngAfterViewInit();
-
     if (this.contactsSubscription) {
       // tslint:disable-next-line: ban
       this.contactsSubscription.unsubscribe();

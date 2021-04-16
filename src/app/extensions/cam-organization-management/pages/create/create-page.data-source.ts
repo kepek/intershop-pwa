@@ -1,6 +1,6 @@
-// tslint:disable: ish-ordered-imports project-structure
-import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
-import { Observable, Subject, combineLatest, BehaviorSubject } from 'rxjs';
+// tslint:disable: ish-ordered-imports project-structure rxjs-no-subject-value
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Observable, Subject, combineLatest, BehaviorSubject, throwError } from 'rxjs';
 import { distinctUntilChanged, filter, map, switchMap } from 'rxjs/operators';
 
 import { CamOrganizationManagementFacade } from '../../facades/cam-organization-management.facade';
@@ -16,14 +16,11 @@ interface CustomerContact {
 
 @Component({ template: '' })
 // tslint:disable-next-line: component-creation-test
-export abstract class CreatePageDataSourceComponent implements OnInit, AfterViewInit, OnDestroy {
-  constructor(private organizationFacade: CamOrganizationManagementFacade) {}
+export abstract class CreatePageDataSourceComponent implements OnInit, OnDestroy {
+  constructor(protected organizationFacade: CamOrganizationManagementFacade) {}
 
   // tslint:disable-next-line:private-destroy-field
   protected destroy$ = new Subject();
-  // tslint:disable-next-line:force-jsdoc-comments
-  // @ts-ignore
-  private isCreated$ = new BehaviorSubject(false);
 
   currentCustomer$: Observable<CamfilB2bCustomer>;
   currentCustomerId$: Observable<string>;
@@ -42,7 +39,22 @@ export abstract class CreatePageDataSourceComponent implements OnInit, AfterView
     roles: CamfilB2bRole[];
   }>;
 
-  // tslint:disable-next-line:no-empty
+  // Methods
+
+  static createLogin(customer: CamfilB2bCustomer, user: CamfilB2bUser) {
+    if (!user) {
+      return throwError('createLogin() called without required user data');
+    }
+
+    if (!customer) {
+      return throwError('createLogin() called without required customer data');
+    }
+
+    return `${user.email.split('@')[0]}-${customer.customerNo}`;
+  }
+
+  // Hooks
+
   ngOnInit() {
     this.currentCustomer$ = this.organizationFacade.currentCustomer$;
     this.currentCustomerId$ = this.currentCustomer$.pipe(map(customer => customer.id));
@@ -71,19 +83,50 @@ export abstract class CreatePageDataSourceComponent implements OnInit, AfterView
       this.newUserContacts$,
       this.newUserRoles$,
     ]).pipe(map(([customer, user, contacts, roles]) => ({ customer, user, contacts, roles })));
-
-    this.newUser$.pipe(distinctUntilChanged()).subscribe(x => console.log('newUser$', x));
-    this.newUserContacts$.pipe(distinctUntilChanged()).subscribe(x => console.log('newUserContacts$', x));
-    this.newUserRoles$.pipe(distinctUntilChanged()).subscribe(x => console.log('newUserRoles$', x));
   }
-
-  // tslint:disable-next-line:no-empty
-  ngAfterViewInit() {}
 
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
   }
+
+  // Handlers
+
+  onUpdateNewCustomerUser({ customer, user }) {
+    user.active = user.active || true;
+    user.login = CreatePageDataSourceComponent.createLogin(customer, user); // TODO (extMlk): Verify why `login` is required when trying to create new user.
+
+    this.newUser$.next(user);
+  }
+
+  onUpdateSelectedCustomerUserRoles({ roleIDs }) {
+    this.organizationFacade
+      .getSelectedRoles$(roleIDs)
+      .pipe(
+        filter(r => r.length !== 0),
+        distinctUntilChanged()
+      )
+      .subscribe(roles => this.newUserRoles$.next(roles));
+  }
+
+  onAssignCustomerUserContact({ customer, contact }) {
+    const assignment: CustomerContact = { customerId: customer?.id, contactId: contact?.erpId };
+    const newAssignments = [...this.newUserContacts$.getValue(), assignment];
+
+    this.newUserContacts$.next(newAssignments);
+  }
+
+  onUnassignCustomerUserContact({ customer, contact }) {
+    const newAssignments = [
+      ...this.newUserContacts$
+        .getValue()
+        .filter(({ customerId, contactId }) => customerId !== customer?.id && contactId !== contact?.erpId),
+    ];
+
+    this.newUserContacts$.next(newAssignments);
+  }
+
+  // Observables
 
   loading$() {
     return this.organizationFacade.getOrganizationLoading$();
@@ -105,40 +148,5 @@ export abstract class CreatePageDataSourceComponent implements OnInit, AfterView
 
   roles$() {
     return this.organizationFacade.getRoles$();
-  }
-
-  onUpdateNewCustomerUser({ user }) {
-    this.newUser$.next(user);
-  }
-
-  onUpdateSelectedCustomerUserRoles({ roleIDs }) {
-    this.organizationFacade
-      .getSelectedRoles$(roleIDs)
-      .pipe(
-        filter(r => r.length !== 0),
-        distinctUntilChanged()
-      )
-      .subscribe(roles => this.newUserRoles$.next(roles));
-  }
-
-  onAssignCustomerUserContact({ customer, contact }) {
-    console.log('this.organizationFacade.assignCustomerUserContact$(customer.id, user.id, contact)');
-
-    const assignment: CustomerContact = { customerId: customer?.id, contactId: contact?.erpId };
-    const newAssignments = [...this.newUserContacts$.getValue(), assignment];
-
-    this.newUserContacts$.next(newAssignments);
-  }
-
-  onUnassignCustomerUserContact({ customer, contact }) {
-    console.log('this.organizationFacade.unassignCustomerUserContact$(customer.id, user.id, contact)');
-
-    const newAssignments = [
-      ...this.newUserContacts$
-        .getValue()
-        .filter(({ customerId, contactId }) => customerId !== customer?.id && contactId !== contact?.erpId),
-    ];
-
-    this.newUserContacts$.next(newAssignments);
   }
 }

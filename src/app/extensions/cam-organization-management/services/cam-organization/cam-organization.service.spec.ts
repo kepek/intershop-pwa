@@ -1,7 +1,9 @@
 import { TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 import { provideMockStore } from '@ngrx/store/testing';
 import { instance, mock } from 'ts-mockito';
 
+import { AppFacade } from 'ish-core/facades/app.facade';
 import { ApiService } from 'ish-core/services/api/api.service';
 
 import { getSelectedCustomerId } from '../../store/customer';
@@ -9,13 +11,17 @@ import { getSelectedCustomerId } from '../../store/customer';
 import { CamOrganizationService } from './cam-organization.service';
 
 describe('Cam Organization Service', () => {
+  let appFacade: AppFacade;
   let apiServiceMock: ApiService;
   let camOrganizationService: CamOrganizationService;
 
   beforeEach(() => {
     apiServiceMock = mock(ApiService);
+    appFacade = mock(AppFacade);
     TestBed.configureTestingModule({
+      imports: [RouterTestingModule],
       providers: [
+        { provide: AppFacade, useFactory: () => instance(appFacade) },
         { provide: ApiService, useFactory: () => instance(apiServiceMock) },
         provideMockStore({
           selectors: [{ selector: getSelectedCustomerId, value: '12345' }],

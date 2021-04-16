@@ -1,5 +1,6 @@
 import { isPlatformBrowser } from '@angular/common';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { routerNavigatedAction } from '@ngrx/router-store';
 import { Store, select } from '@ngrx/store';
@@ -45,6 +46,7 @@ export class UserEffects {
     private actions$: Actions,
     private organizationService: CamOrganizationService,
     private store: Store,
+    private router: Router,
     @Inject(PLATFORM_ID) private platformId: string
   ) {}
 
@@ -185,10 +187,10 @@ export class UserEffects {
       mapToPayload(),
       concatMap(({ customer, user }) =>
         this.organizationService.createCustomerUser(customer, user).pipe(
-          map(changedUser =>
+          map(createdUser =>
             createCustomerUserSuccess({
               customer,
-              user: changedUser,
+              user: createdUser,
               successMessage: 'camfil.account.organization.user_details.form.update.success.message',
             })
           ),
@@ -228,7 +230,8 @@ export class UserEffects {
         activateCustomerUserSuccess,
         deactivateCustomerUserSuccess,
         updateCustomerUserSuccess,
-        resetCustomerUserPasswordSuccess
+        resetCustomerUserPasswordSuccess,
+        createCustomerUserSuccess
       ),
       mapToPayloadProperty('successMessage'),
       filter(successMessage => !!successMessage),
@@ -248,7 +251,8 @@ export class UserEffects {
         activateCustomerUserFail,
         deactivateCustomerUserFail,
         updateCustomerUserFail,
-        resetCustomerUserPasswordFail
+        resetCustomerUserPasswordFail,
+        createCustomerUserFail
       ),
       mapToPayloadProperty('error'),
       filter(error => !!error?.message),
@@ -259,4 +263,16 @@ export class UserEffects {
       )
     )
   );
+
+  // tslint:disable-next-line:force-jsdoc-comments
+  // @ts-ignore
+  private navigateTo(path: string): void {
+    let currentRoute = this.router.routerState.root;
+
+    while (currentRoute.firstChild) {
+      currentRoute = currentRoute.firstChild;
+    }
+
+    this.router.navigate([path], { relativeTo: currentRoute });
+  }
 }

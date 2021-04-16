@@ -33,7 +33,7 @@ export class CamfilOrganizationUserDetailsFormComponent implements OnInit {
   }
 
   get isEditMode() {
-    return this.user?.hasOwnProperty('id') && this.user?.hasOwnProperty('active');
+    return this.user?.hasOwnProperty('id') && this.user?.id;
   }
 
   private initUserForm() {
@@ -62,10 +62,6 @@ export class CamfilOrganizationUserDetailsFormComponent implements OnInit {
   ngOnInit() {
     this.initUserForm();
     this.initUserActiveForm();
-
-    // setTimeout(() => {
-    //   console.log(this.form);
-    // }, 2500);
   }
 
   handleChangeUser() {
