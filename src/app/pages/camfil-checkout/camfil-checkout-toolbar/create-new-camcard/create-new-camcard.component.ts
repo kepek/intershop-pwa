@@ -63,6 +63,7 @@ export class CreateNewCamcardComponent implements OnInit, OnDestroy {
         deliveryAddress: { addressLine1, addressLine2, city, countryCode, postalCode },
         invoiceLabel: bucket.invoiceLabel,
         orderLabel: bucket.orderMark,
+        reminderFlag: 1,
         camCardItems,
       };
     }) as CamCard[];
