@@ -4,8 +4,8 @@
 .camfil-create-cam-card-modal {
   .form {
     &__wrapper {
-      padding: $space-box 40px 0 40px;
       max-height: 50vh;
+      padding: $space-box 40px 0 40px;
     }
 
     &__field {
@@ -62,5 +62,16 @@
 
   .sublevel-placeholder {
     height: 74px;
+  }
+
+  .sublevel-input {
+    ::ng-deep {
+      .mat-form-field-wrapper {
+        .mat-form-field-outline {
+          color: rgba($color-primary, 0.87);
+          opacity: 1;
+        }
+      }
+    }
   }
 }
