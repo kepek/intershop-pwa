@@ -89,7 +89,7 @@
       <button
         type="submit"
         name="search"
-        [title]="'camfil.account.orderlist.seach.button.title' | translate" 
+        [title]="'camfil.account.orderlist.seach.button.title' | translate"
         mat-flat-button
         color="primary"
       >
@@ -107,6 +107,8 @@
           class="modal__cam-card"
           [ngClass]="{ 'modal__cam-card--selected': camCardSelected === option.value }"
           (click)="selectCamCard(option.value)"
+          (keypress)="selectCamCard(option.value)"
+          tabindex="0"
         >
           <div class="modal__cam-card--title">{{ option.label }}</div>
           <table>
@@ -185,7 +187,7 @@
 
             <div class="modal__new-segment">
               <mat-icon svgIcon="plus" class="color-dark size-24 modal__new-segment--icon"></mat-icon>
-              <a class="modal__link" (click)="showNewSegmant()">{{
+              <a class="modal__link" (click)="showNewSegmant()" tabindex="0" (keypress)="showNewSegmant()">{{
                 'camfil.modal.addToCamcard.camcard.new_segment' | translate
               }}</a>
             </div>

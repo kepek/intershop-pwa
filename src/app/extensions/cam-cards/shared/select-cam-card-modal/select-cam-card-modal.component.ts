@@ -322,6 +322,8 @@ export class SelectCamCardModalComponent implements OnInit, OnDestroy, OnChanges
   selectCamCard(camCardID) {
     if (this.camCardSelected !== camCardID) {
       this.newSegmentForm.reset('newCamCard');
+      this.segmentSelected = undefined;
+      this.showNewSegment = false;
     }
     this.camCardSelected = camCardID;
     this.rootCamCardAddress = this.getSelectedCamCard(this.camCardSelected).deliveryAddress;
@@ -329,6 +331,7 @@ export class SelectCamCardModalComponent implements OnInit, OnDestroy, OnChanges
 
   showNewSegmant() {
     this.showNewSegment = true;
+    this.segmentSelected = this.newSegmentValue;
   }
 
   goToCamcard() {
