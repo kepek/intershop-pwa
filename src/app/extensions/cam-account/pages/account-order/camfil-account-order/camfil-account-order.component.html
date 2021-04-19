@@ -85,8 +85,9 @@
           mat-stroked-button
           class="btn-track-order float-right mr-n4"
           color="primary"
-          routerLink="{{ order?.trackAndTrace.link }}"
+          href="{{ order.trackAndTrace.link }}"
           data-testing-id="orders-link"
+          target="_blank"
         >
           {{ 'camfil.account.orderdetails.links.track_order' | translate }}</a
         >
