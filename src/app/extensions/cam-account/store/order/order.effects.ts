@@ -110,7 +110,7 @@ export class OrderEffects {
       ofType(loadOrderAdditionalTotalCost),
       mapToPayloadProperty('orderId'),
       concatMap(orderId =>
-        this.camfilOrderService.getOrderTrackAndTrace(orderId).pipe(
+        this.camfilOrderService.getOrderAdditionalTotalCost(orderId).pipe(
           map(additionalTotalCost => loadOrderAdditionalTotalCostSuccess({ orderId, additionalTotalCost })),
           mapErrorToAction(loadOrderAdditionalTotalCostFail)
         )

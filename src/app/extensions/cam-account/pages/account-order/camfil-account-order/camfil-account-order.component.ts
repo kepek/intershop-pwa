@@ -54,7 +54,7 @@ export class CamfilAccountOrderComponent implements OnInit, OnDestroy {
         this.lineItems = lineItems;
         if (this.lineItems && this.lineItems.length) {
           this.camAccountFacade.orderTrackAndTrace$(this.order?.id);
-          this.camAccountFacade.orderAdditionalTotalCost$(this.order?.id);
+          // this.camAccountFacade.orderAdditionalTotalCost$(this.order?.id);
           this.areProductsAvailable();
         }
       });
