@@ -6,6 +6,7 @@ import { CamCardsFacade } from 'src/app/extensions/cam-cards/facades/cam-cards.f
 import { CamCard, CamCardItem } from 'src/app/extensions/cam-cards/models/cam-card/cam-card.model';
 
 import { Bucket } from 'ish-core/models/basket/bucket.model';
+import { LineItemView } from 'ish-core/models/line-item/line-item.model';
 import { Product } from 'ish-core/models/product/product.model';
 import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
 
@@ -40,12 +41,17 @@ export class CreateNewCamcardComponent implements OnInit, OnDestroy {
       }
     });
   }
+
+  getValFromAttr<T>(item: LineItemView, name: string) {
+    return item.attributes?.find(attr => attr.name === name)?.value as T;
+  }
+
   convertToPermanent() {
     const newCamCards = this.buckets.map((bucket, idx) => {
       const name = this.getNewName(bucket.orderMark, idx);
       const { addressLine1, addressLine2, city, countryCode, postalCode } = bucket.shipToAddressFull;
       const camCardItems = bucket.lineItems.map(item => {
-        const label = item.attributes?.find(attr => attr.name === 'boxLabel')?.value as string;
+        const label = this.getValFromAttr<string>(item, 'boxLabel');
         const data: CamCardItem = {
           quantity: item.quantity.value,
           product: {
@@ -55,6 +61,16 @@ export class CreateNewCamcardComponent implements OnInit, OnDestroy {
         if (label) {
           data.comment = { label };
         }
+
+        const measurement = {
+          width: this.getValFromAttr<number>(item, 'width'),
+          height: this.getValFromAttr<number>(item, 'height'),
+          diameter: this.getValFromAttr<number>(item, 'diameter'),
+        };
+        if (Object.values(measurement).filter(x => x).length) {
+          data.measurement = measurement;
+        }
+
         return data;
       });
       return {
