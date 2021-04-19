@@ -34,18 +34,33 @@
     </button>
     <camfil-account-cam-card-pdf [camCards]="checkedCamCards" class="btn-tool"></camfil-account-cam-card-pdf>
 
-    <button
-      mat-stroked-button
-      color="primary"
-      class="btn-tool"
-      data-testing-id="add-cam-card"
-      (click)="addToCart()"
-      [disabled]="!isProductsChecked()"
+    <ng-container *ngIf="basketLoading$ | async; else showButton">
+      <button
+        mat-stroked-button
+        color="primary"
+        class="btn-tool"
+        data-testing-id="add-cam-card"
+        (click)="addToCart()"
+        [disabled]="!isProductsChecked()"
+      >
+        <mat-icon svgIcon="cart" class="size-15"></mat-icon>
+        {{ 'camfil.account.cam_card.list.button.add_to_cart.label' | translate }}
+      </button>
+      <ish-loading></ish-loading>
+    </ng-container>
+    <ng-template #showButton
+      ><button
+        mat-stroked-button
+        color="primary"
+        class="btn-tool"
+        data-testing-id="add-cam-card"
+        (click)="addToCart()"
+        [disabled]="!isProductsChecked()"
+      >
+        <mat-icon svgIcon="cart" class="size-15"></mat-icon>
+        {{ 'camfil.account.cam_card.list.button.add_to_cart.label' | translate }}
+      </button></ng-template
     >
-      <mat-icon svgIcon="cart" class="size-15"></mat-icon>
-      {{ 'camfil.account.cam_card.list.button.add_to_cart.label' | translate }}
-    </button>
   </div>
 </div>
-
 <camfil-cam-card-preferences-dialog #addCamCardDialog (submit)="add($event)"></camfil-cam-card-preferences-dialog>
