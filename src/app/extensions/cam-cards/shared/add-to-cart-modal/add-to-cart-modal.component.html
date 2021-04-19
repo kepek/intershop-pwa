@@ -29,10 +29,9 @@
 
     <div *ngFor="let option of buckets; let i = index">
       <camfil-cam-card-modal-details
-        [nextDelivery]="option.nextDelivery"
+        [nextDelivery]="option.deliveryDate"
         [orderMark]="option.orderMark"
         [invoiceMark]="option.invoiceLabel"
-        [boxLabel]="option.name"
         [deliveryAddress]="option.shipToAddressFull"
         (click)="onOrderClicked(option.id)"
         [isClicked]="selectedOrderId === option.id"

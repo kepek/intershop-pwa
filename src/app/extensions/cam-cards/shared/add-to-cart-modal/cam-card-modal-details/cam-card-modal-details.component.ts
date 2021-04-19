@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+
 import { Address } from 'ish-core/models/address/address.model';
 
 @Component({
@@ -12,7 +13,6 @@ export class CamCardModalDetailsComponent {
   @Input() nextDelivery: string;
   @Input() orderMark: string;
   @Input() invoiceMark: string;
-  @Input() boxLabel: string;
   @Input() deliveryAddress: Address;
   @Input() isClicked = false;
 }
