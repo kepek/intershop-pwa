@@ -17,7 +17,7 @@ export class MakeHrefPipe implements PipeTransform {
 
     // for change language only
     const splitUrl = newUrl.split('/').filter(x => x);
-    const splitLocal = splitUrl[0].split('-');
+    const splitLocal = splitUrl[0]?.split('-') || [];
 
     if (this.isChannelContextPath(splitUrl, splitLocal, urlParams?.value)) {
       splitLocal[1] = urlParams.value;
@@ -43,7 +43,7 @@ export class MakeHrefPipe implements PipeTransform {
 
   isChannelContextPath(url: string[], local: string[], value: string) {
     return (
-      url[0].length === 5 && // ex.: sv-se
+      url[0]?.length === 5 && // ex.: sv-se
       local.length === 2 && // ex.: ['sv', 'se']
       Object.keys(Channel).includes(local[1].toLocaleUpperCase()) &&
       value
