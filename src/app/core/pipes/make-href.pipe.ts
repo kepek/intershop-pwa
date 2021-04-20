@@ -19,7 +19,7 @@ export class MakeHrefPipe implements PipeTransform {
     const splitUrl = newUrl.split('/').filter(x => x);
     const splitLocal = splitUrl[0].split('-');
 
-    if (this.isChannelContextPath(splitUrl, splitLocal, urlParams.value)) {
+    if (this.isChannelContextPath(splitUrl, splitLocal, urlParams?.value)) {
       splitLocal[1] = urlParams.value;
       splitUrl[0] = splitLocal.join('-');
       return splitUrl.join('/') + (split.length > 1 ? `?${split[1]}` : '');

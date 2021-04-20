@@ -34,6 +34,7 @@ describe('Camfil Language Switch Component', () => {
     }).compileComponents();
 
     when(appFacade.availableLocales$).thenReturn(of(locales));
+    when(appFacade.getCamfilChannel$).thenReturn(of('SEChannel'));
   });
 
   beforeEach(() => {
