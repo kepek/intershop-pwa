@@ -451,13 +451,11 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
   }
 
   masterToggle(event: MatCheckboxChange) {
-    console.log('CALL masterToggle');
     this.camCardsProcessed.data.forEach(row => {
       this.handleProductsCheck(row, event);
     });
 
     this.checkedCamCard = event.checked ? this.camCardsProcessed.data.map(cc => cc.id) : [];
-    console.log('this.checkedCamCard', this.checkedCamCard);
   }
 
   camCardToggle(camCard: CamCard, event: MatCheckboxChange) {

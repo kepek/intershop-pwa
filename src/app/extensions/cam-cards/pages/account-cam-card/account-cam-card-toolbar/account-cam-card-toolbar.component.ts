@@ -1,11 +1,11 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 
 import { CamCardsFacade } from '../../../facades/cam-cards.facade';
 import { CamCard } from '../../../models/cam-card/cam-card.model';
-import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'camfil-account-cam-card-toolbar',
@@ -57,10 +57,6 @@ export class AccountCamCardToolbarComponent implements OnInit, OnDestroy {
 
   isAddToCartBtnDisabled() {
     return this.basketLoading || !this.isProductsChecked() || this.productAddingInProgress;
-  }
-
-  isProductAdding() {
-    return this.productAddingInProgress;
   }
 
   ngOnDestroy() {
