@@ -56,4 +56,9 @@ export class SpecialValidators {
     const moneyAmountPattern = /^$|^\d{1,9}(\.\d{1,2})?$/;
     return moneyAmountPattern.test(control.value) ? undefined : { moneyAmount: { valid: false } };
   }
+
+  static username(control: FormControl): { [error: string]: { valid: boolean } } {
+    const usernamePattern = /^[a-zA-Z0-9]([._-](?![._-])|[a-zA-Z0-9]){3,36}[a-zA-Z0-9]$/;
+    return usernamePattern.test(control.value) ? undefined : { username: { valid: false } };
+  }
 }

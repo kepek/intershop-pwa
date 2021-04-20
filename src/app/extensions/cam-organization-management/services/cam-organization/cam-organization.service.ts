@@ -2,7 +2,7 @@ import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { pick } from 'lodash-es';
 import { Observable, forkJoin, iif, of, throwError } from 'rxjs';
-import { catchError, concatAll, concatMap, map, switchMap } from 'rxjs/operators';
+import { catchError, concatAll, concatMap, map, mergeMap, switchMap } from 'rxjs/operators';
 
 import { AppFacade } from 'ish-core/facades/app.facade';
 import { AddressData } from 'ish-core/models/address/address.interface';
@@ -12,7 +12,6 @@ import { HttpError } from 'ish-core/models/http-error/http-error.model';
 import { PasswordReminder } from 'ish-core/models/password-reminder/password-reminder.model';
 import { ApiService, AvailableOptions, unpackEnvelope } from 'ish-core/services/api/api.service';
 
-import { B2bUser } from '../../../../../../projects/organization-management/src/app/models/b2b-user/b2b-user.model';
 import { CamCardData } from '../../../cam-cards/models/cam-card/cam-card.interface';
 import { CamCardMapper } from '../../../cam-cards/models/cam-card/cam-card.mapper';
 import { CamCard } from '../../../cam-cards/models/cam-card/cam-card.model';
@@ -21,7 +20,10 @@ import { CamfilB2bContactMapper } from '../../models/camfil-b2b-contact/camfil-b
 import { CamfilB2bContact } from '../../models/camfil-b2b-contact/camfil-b2b-contact.model';
 import { CamfilB2bCustomerData } from '../../models/camfil-b2b-customer/camfil-b2b-customer.interface';
 import { CamfilB2bCustomerMapper } from '../../models/camfil-b2b-customer/camfil-b2b-customer.mapper';
-import { CamfilB2bCustomer } from '../../models/camfil-b2b-customer/camfil-b2b-customer.model';
+import {
+  CamfilB2bCustomer,
+  CamfilB2bCustomerContact,
+} from '../../models/camfil-b2b-customer/camfil-b2b-customer.model';
 import { CamfilB2bOrganizationUser } from '../../models/camfil-b2b-organization/camfil-b2b-organization.model';
 import { CamfilB2bRoleData, CamfilB2bRoleIDsData } from '../../models/camfil-b2b-role/camfil-b2b-role.interface';
 import { CamfilB2bRoleMapper } from '../../models/camfil-b2b-role/camfil-b2b-role.mapper';
@@ -200,7 +202,14 @@ export class CamOrganizationService {
 
   // Customer -> User -> Create
 
-  createCustomerUser(customer: CamfilB2bCustomer, user: CamfilB2bUser) {
+  createCustomerUser(
+    customer: CamfilB2bCustomer,
+    user: CamfilB2bUser,
+    contacts: CamfilB2bCustomerContact[],
+    roles: CamfilB2bRole[]
+  ) {
+    const roleIDs = [...roles].map(r => r.id);
+
     if (!customer) {
       return throwError('createCustomerUser() called without required customer data');
     }
@@ -212,7 +221,7 @@ export class CamOrganizationService {
     return this.appFacade.currentLocale$.pipe(
       switchMap(currentLocale =>
         this.apiService
-          .post<B2bUser>(`customers/${customer.customerNo}/users`, {
+          .post<CamfilB2bUser>(`customers/${customer.customerNo}/users`, {
             elements: [
               {
                 ...customer,
@@ -230,16 +239,26 @@ export class CamOrganizationService {
             ],
           })
           .pipe(
-            concatMap(() =>
+            mergeMap(() =>
               this.getCustomerUsers(customer.id).pipe(map(users => users.find(u => u.login === user.login)))
             )
           )
           .pipe(
-            switchMap(createdUser =>
-              this.updateCustomerUserRoles(customer.id, createdUser.id, user.roleIDs).pipe(
-                switchMap(() => this.getCustomerUser(customer.id, createdUser.id))
-              )
-            )
+            mergeMap(createdUser => {
+              const updateContacts = contacts.map(payload =>
+                this.updateCustomerUserContact(payload.customer.id, createdUser.id, payload.contact)
+              );
+
+              const newUser$ = this.getCustomerUser(customer.id, createdUser.id);
+
+              return forkJoin([
+                this.updateCustomerUserRoles(customer.id, createdUser.id, roleIDs),
+                ...updateContacts,
+              ]).pipe(
+                mergeMap(() => newUser$),
+                catchError(() => newUser$)
+              );
+            })
           )
       )
     );
@@ -280,10 +299,11 @@ export class CamOrganizationService {
     return this.apiService
       .post<CamfilB2bContactData>(`privatecamfilcustomers/${customerId}/users/${userId}/contact`, body)
       .pipe(
-        map(CamfilB2bContactMapper.fromData),
+        map(CamfilB2bContactMapper.fromData)
         // TODO (extMlk): This need to be removed whenever Back-end will be fixed. See the error details below.
         // Error: Forbidden (The supplied user is not allowed to access 'privatecamfilcustomers/XXXX/users/YYY/contact' using 'POST')
-        catchError(() => of(body))
+        // tslint:disable-next-line:no-commented-out-code
+        // catchError(() => of(body))
       );
   }
 
@@ -296,10 +316,11 @@ export class CamOrganizationService {
     return this.apiService
       .delete<CamfilB2bContact>(`privatecamfilcustomers/${customerId}/users/${userId}/contact/${contact.erpId}`)
       .pipe(
-        map(CamfilB2bContactMapper.fromData),
+        map(CamfilB2bContactMapper.fromData)
         // TODO (extMlk): This need to be removed whenever Back-end will be fixed. See the error details below.
         // Error: Forbidden (The supplied user is not allowed to access 'privatecamfilcustomers/XXXX/users/YYY/contact' using 'DELETE')
-        catchError(() => of(contact))
+        // tslint:disable-next-line:no-commented-out-code
+        // catchError(() => of(contact))
       );
   }
 

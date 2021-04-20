@@ -41,7 +41,7 @@ export class CreatePageComponent extends CreatePageDataSourceComponent implement
       // @ts-ignore
       // tslint:disable-next-line:no-unused
       this.context$.pipe(take(1), whenTruthy()).subscribe(({ customer, user, contacts, roles }) => {
-        this.organizationFacade.createCustomerUser$(customer, user);
+        this.organizationFacade.createCustomerUser$(customer, user, contacts, roles);
       });
     }
   }

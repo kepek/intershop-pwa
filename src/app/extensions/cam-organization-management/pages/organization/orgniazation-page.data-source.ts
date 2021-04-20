@@ -1,6 +1,6 @@
 // tslint:disable: project-structure ish-ordered-imports
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
-import { MatSortHeader, MatSortable, Sort } from '@angular/material/sort';
+import { MatSortable, MatSortHeader, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Subject } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
@@ -56,6 +56,25 @@ export abstract class OrganizationPageDataSourceComponent implements OnInit, Aft
     private router: Router
   ) {}
 
+  private get currentFilter(): OrganizationFilter {
+    return {
+      ...OrganizationPageDataSourceComponent.defaultFilterValues,
+      ...(this.dataSource.filter?.length ? JSON.parse(this.dataSource.filter) : {}),
+    };
+  }
+
+  static defaultSortValues: MatSortable = {
+    id: 'customer.customerNo',
+    start: 'desc',
+    disableClear: false,
+  };
+
+  static defaultFilterValues: OrganizationFilter = {
+    search: '',
+    activeUsers: true,
+    fullAccessUsers: false,
+  };
+
   private destroy$ = new Subject();
 
   dataSource = new MatTableDataSource<CamfilB2bOrganizationUser>([]);
@@ -71,22 +90,73 @@ export abstract class OrganizationPageDataSourceComponent implements OnInit, Aft
     'edit',
   ];
 
-  defaultSort: MatSortable = {
-    id: 'customer.customerNo',
-    start: 'desc',
-    disableClear: false,
-  };
-
   private isDefaultSortApplied = false;
 
-  defaultFilter: OrganizationFilter = {
-    search: '',
-    activeUsers: false,
-    fullAccessUsers: false,
-  };
+  private isDefaultFilterApplied = false;
 
-  private applySort(sortable: MatSortable) {
-    if (!sortable) {
+  static serializeFilter<T extends {}>(filterObject: T): string {
+    if (!filterObject) {
+      return;
+    }
+
+    return JSON.stringify(filterObject).trim();
+  }
+
+  static deserializeFilter<T>(filterString: string): T {
+    if (!filterString) {
+      return;
+    }
+
+    return { ...JSON.parse(filterString) };
+  }
+
+  static serializeSort<T extends Sort>(sort: T): string {
+    if (!sort?.direction) {
+      return;
+    }
+
+    return JSON.stringify(sort);
+  }
+
+  static deserializeSort<T extends MatSortable>(sortString: string): T {
+    if (!sortString) {
+      return;
+    }
+
+    const sort = JSON.parse(sortString) as Sort;
+
+    if (!sort.active) {
+      return;
+    }
+
+    return OrganizationPageDataSourceComponent.mapSortToSortable(sort) as T;
+  }
+
+  static mapSortToSortable(sort: Sort): MatSortable {
+    return {
+      id: sort.active,
+      start: sort.direction as PropType<MatSortable, 'start'>,
+      disableClear: OrganizationPageDataSourceComponent.defaultSortValues.disableClear,
+    };
+  }
+
+  static mapSortableToSort(sortable: MatSortable): Sort {
+    return {
+      active: sortable.id,
+      direction: sortable.start,
+    };
+  }
+
+  private initDataSource() {
+    this.users$()
+      .pipe(whenTruthy(), takeUntil(this.destroy$))
+      .subscribe(users => {
+        this.dataSource.data = users;
+      });
+  }
+
+  applySort(sortable: MatSortable) {
+    if (!sortable?.id) {
       return;
     }
 
@@ -104,38 +174,84 @@ export abstract class OrganizationPageDataSourceComponent implements OnInit, Aft
 
   private applyDefaultSortIfNotSet() {
     if (!this.isDefaultSortApplied) {
-      this.applySort(this.defaultSort);
+      this.applySort(OrganizationPageDataSourceComponent.defaultSortValues);
     }
 
     this.isDefaultSortApplied = true;
   }
 
-  private initDataSource() {
-    this.users$()
-      .pipe(whenTruthy(), takeUntil(this.destroy$))
-      .subscribe(users => {
-        this.dataSource.data = users;
-      });
-  }
-
   private initDataSourceSort() {
+    this.dataSource.sortingDataAccessor = sortingDataAccessor;
+
     this.applyDefaultSortIfNotSet();
 
-    this.dataSource.sortingDataAccessor = sortingDataAccessor;
     this.dataSource.sort.sortChange.subscribe((sort: Sort) => {
-      this.router
-        .navigate([], { queryParams: { sort: this.serializeSort(sort) }, queryParamsHandling: 'merge' })
-        .then(() => {
-          // noop
-        });
+      if (this.isDefaultSortApplied) {
+        this.router
+          .navigate([], {
+            queryParams: { sort: OrganizationPageDataSourceComponent.serializeSort(sort) },
+            queryParamsHandling: 'merge',
+          })
+          .then(() => {
+            // noop
+          });
+      }
     });
+  }
+
+  private applyDefaultFilterIfNotSet() {
+    if (!this.isDefaultFilterApplied) {
+      this.applyFilter(OrganizationPageDataSourceComponent.defaultFilterValues);
+    }
+
+    this.isDefaultFilterApplied = true;
+  }
+
+  private initDataSourceFilter() {
+    this.applyDefaultFilterIfNotSet();
+
+    // @ts-ignore
+    this.dataSource?._filter.subscribe((filter: string) => {
+      if (this.isDefaultFilterApplied) {
+        this.router
+          .navigate([], {
+            queryParams: { filter },
+            queryParamsHandling: 'merge',
+          })
+          .then(() => {
+            // noop
+          });
+      }
+    });
+  }
+
+  applyFilter(filterValues: OrganizationFilter) {
+    if (!filterValues) {
+      return;
+    }
+
+    this.dataSource.filter = OrganizationPageDataSourceComponent.serializeFilter({
+      ...this.currentFilter,
+      ...filterValues,
+    });
+  }
+
+  private initDataSourceFilterQueryParamsObserver() {
+    this.activatedRoute.queryParams
+      .pipe(
+        map(({ filter }) => OrganizationPageDataSourceComponent.deserializeFilter<OrganizationFilter>(filter)),
+        whenTruthy()
+      )
+      .subscribe(filter => {
+        this.applyFilter(filter);
+      });
   }
 
   private initDataSourceSortQueryParamsObserver() {
     this.activatedRoute.queryParams
       .pipe(
         whenTruthy(),
-        map(({ sort }) => this.deserializeSort<MatSortable>(sort))
+        map(({ sort }) => OrganizationPageDataSourceComponent.deserializeSort<MatSortable>(sort))
       )
       .subscribe(sort => {
         this.applySort(sort);
@@ -146,49 +262,14 @@ export abstract class OrganizationPageDataSourceComponent implements OnInit, Aft
     this.dataSource.filterPredicate = filterPredicate;
   }
 
-  private serializeSort<T extends Sort>(sort: T): string {
-    if (!sort?.direction) {
-      return;
-    }
-
-    return JSON.stringify(sort);
-  }
-
-  private deserializeSort<T extends MatSortable>(sortString: string): T {
-    if (!sortString) {
-      return;
-    }
-
-    const sort = JSON.parse(sortString) as Sort;
-
-    if (!sort.active) {
-      return;
-    }
-
-    return this.mapSortToSortable(sort) as T;
-  }
-
-  protected mapSortToSortable(sort: Sort): MatSortable {
-    return {
-      id: sort.active,
-      start: sort.direction as PropType<MatSortable, 'start'>,
-      disableClear: this.defaultSort.disableClear,
-    };
-  }
-
-  protected mapSortableToSort(sortable: MatSortable): Sort {
-    return {
-      active: sortable.id,
-      direction: sortable.start,
-    };
-  }
-
   ngOnInit() {
     this.initDataSource();
   }
 
   ngAfterViewInit() {
+    this.initDataSourceFilter();
     this.initDataSourceFilterPredicate();
+    this.initDataSourceFilterQueryParamsObserver();
     this.initDataSourceSort();
     this.initDataSourceSortQueryParamsObserver();
   }

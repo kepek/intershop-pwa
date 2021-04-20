@@ -168,10 +168,10 @@ export class ContactEffects {
     this.actions$.pipe(
       ofType(assignCustomerUserContactFail, unassignCustomerUserContactFail),
       mapToPayloadProperty('error'),
-      filter(error => !!error?.message),
+      whenTruthy(),
       map(error =>
         displayErrorMessage({
-          message: error?.message,
+          message: error?.message || error?.code,
         })
       )
     )

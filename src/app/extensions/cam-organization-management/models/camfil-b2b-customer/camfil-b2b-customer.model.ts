@@ -1,6 +1,8 @@
 import { Address } from 'ish-core/models/address/address.model';
 import { Customer } from 'ish-core/models/customer/customer.model';
 
+import { CamfilB2bContact } from '../camfil-b2b-contact/camfil-b2b-contact.model';
+
 export interface CamfilB2bCustomerRelations {
   contactIDs?: string[];
   roleIDs?: string[];
@@ -16,3 +18,8 @@ export interface CamfilB2bCustomer extends Customer, CamfilB2bCustomerRelations 
 }
 
 export type CamfilB2bCustomerKeys = keyof CamfilB2bCustomer;
+
+export interface CamfilB2bCustomerContact {
+  customer: CamfilB2bCustomer;
+  contact: CamfilB2bContact;
+}

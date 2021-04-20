@@ -77,12 +77,6 @@ export class CamfilOrganizationUserCustomerContactFormComponent implements OnIni
       selectControl.disable();
     }
 
-    if (this.customer?.parent) {
-      checkboxControl.setValue(true);
-      checkboxControl.disable();
-      selectControl.enable();
-    }
-
     selectControl.setValue(this.selectedContact?.erpId);
   }
 

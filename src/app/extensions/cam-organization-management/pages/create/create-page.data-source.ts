@@ -4,15 +4,13 @@ import { Observable, Subject, combineLatest, BehaviorSubject, throwError } from 
 import { distinctUntilChanged, filter, map, switchMap } from 'rxjs/operators';
 
 import { CamOrganizationManagementFacade } from '../../facades/cam-organization-management.facade';
-import { CamfilB2bCustomer } from '../../models/camfil-b2b-customer/camfil-b2b-customer.model';
+import {
+  CamfilB2bCustomer,
+  CamfilB2bCustomerContact,
+} from '../../models/camfil-b2b-customer/camfil-b2b-customer.model';
 import { CamfilB2bUser } from '../../models/camfil-b2b-user/camfil-b2b-user.model';
-import { CamfilB2bContact } from '../../models/camfil-b2b-contact/camfil-b2b-contact.model';
 import { CamfilB2bRole } from '../../models/camfil-b2b-role/camfil-b2b-role.model';
-
-interface CustomerContact {
-  customerId: PropType<CamfilB2bCustomer, 'id'>;
-  contactId: PropType<CamfilB2bContact, 'erpId'>;
-}
+import { CamfilB2bContact } from '../../models/camfil-b2b-contact/camfil-b2b-contact.model';
 
 @Component({ template: '' })
 // tslint:disable-next-line: component-creation-test
@@ -28,14 +26,14 @@ export abstract class CreatePageDataSourceComponent implements OnInit, OnDestroy
   newUser$: BehaviorSubject<CamfilB2bUser>;
   newUserId$: Observable<string>;
   newUserCustomer$: Observable<CamfilB2bCustomer>;
-  newUserContacts$: BehaviorSubject<CustomerContact[]>;
+  newUserContacts$: BehaviorSubject<CamfilB2bCustomerContact[]>;
   newUserRoles$: BehaviorSubject<CamfilB2bRole[]>;
   newUserStaticRoles$: Observable<CamfilB2bRole[]>;
 
   context$: Observable<{
     customer: CamfilB2bCustomer;
     user: CamfilB2bUser;
-    contacts: CustomerContact[];
+    contacts: CamfilB2bCustomerContact[];
     roles: CamfilB2bRole[];
   }>;
 
@@ -64,7 +62,7 @@ export abstract class CreatePageDataSourceComponent implements OnInit, OnDestroy
     this.newUserCustomer$ = this.currentCustomerId$.pipe(
       switchMap(customerId => this.organizationFacade.getCustomer$(customerId))
     );
-    this.newUserContacts$ = new BehaviorSubject<CustomerContact[]>([]);
+    this.newUserContacts$ = new BehaviorSubject<CamfilB2bCustomerContact[]>([]);
     this.newUserRoles$ = new BehaviorSubject<CamfilB2bRole[]>([]);
     this.newUserStaticRoles$ = this.newUserId$.pipe(
       switchMap(userId => this.organizationFacade.getUserStaticRoles$(userId))
@@ -92,9 +90,8 @@ export abstract class CreatePageDataSourceComponent implements OnInit, OnDestroy
 
   // Handlers
 
-  onUpdateNewCustomerUser({ customer, user }) {
+  onUpdateNewCustomerUser({ user }) {
     user.active = user.active || true;
-    user.login = CreatePageDataSourceComponent.createLogin(customer, user); // TODO (extMlk): Verify why `login` is required when trying to create new user.
 
     this.newUser$.next(user);
   }
@@ -109,18 +106,27 @@ export abstract class CreatePageDataSourceComponent implements OnInit, OnDestroy
       .subscribe(roles => this.newUserRoles$.next(roles));
   }
 
-  onAssignCustomerUserContact({ customer, contact }) {
-    const assignment: CustomerContact = { customerId: customer?.id, contactId: contact?.erpId };
+  onAssignCustomerUserContact(event: { customer: CamfilB2bCustomer; user: CamfilB2bUser; contact: CamfilB2bContact }) {
+    const { customer, contact } = event;
+
+    const assignment: CamfilB2bCustomerContact = { customer, contact };
     const newAssignments = [...this.newUserContacts$.getValue(), assignment];
 
     this.newUserContacts$.next(newAssignments);
   }
 
-  onUnassignCustomerUserContact({ customer, contact }) {
+  onUnassignCustomerUserContact(event: {
+    customer: CamfilB2bCustomer;
+    user: CamfilB2bUser;
+    contact: CamfilB2bContact;
+  }) {
+    const newCustomer = event?.customer;
+    const newContact = event?.contact;
+
     const newAssignments = [
       ...this.newUserContacts$
         .getValue()
-        .filter(({ customerId, contactId }) => customerId !== customer?.id && contactId !== contact?.erpId),
+        .filter(({ customer, contact }) => newCustomer.id !== customer.id && newContact.erpId !== contact.erpId),
     ];
 
     this.newUserContacts$.next(newAssignments);

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { Observable, combineLatest, forkJoin, of } from 'rxjs';
-import { concatMap, first, map, mergeMap, switchMap, take } from 'rxjs/operators';
+import { concatMap, first, map, switchMap, take } from 'rxjs/operators';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
 import { toObservable } from 'ish-core/utils/functions';
@@ -10,6 +10,7 @@ import { skipRelations, whenTruthy } from 'ish-core/utils/operators';
 import { CamfilB2bContact } from '../models/camfil-b2b-contact/camfil-b2b-contact.model';
 import {
   CamfilB2bCustomer,
+  CamfilB2bCustomerContact,
   camfilB2bCustomerRelationsKeys,
 } from '../models/camfil-b2b-customer/camfil-b2b-customer.model';
 import { CamfilB2bOrganizationUser } from '../models/camfil-b2b-organization/camfil-b2b-organization.model';
@@ -472,9 +473,9 @@ export class CamOrganizationManagementFacade {
   /**
    * Get Organization Loading
    */
-  getOrganizationLoading$(): Observable<boolean> {
+  getOrganizationLoading$() {
     return combineLatest([this.customersLoading$, this.usersLoading$, this.contactsLoading$, this.rolesLoading$]).pipe(
-      mergeMap(x => x)
+      map(resources => resources.some(loading => loading))
     );
   }
 
@@ -517,12 +518,21 @@ export class CamOrganizationManagementFacade {
    * Create Customer User
    * @param customer
    * @param user
+   * @param contacts
+   * @param roles
    */
-  createCustomerUser$(customer: CamfilB2bCustomer, user: CamfilB2bUser) {
+  createCustomerUser$(
+    customer: CamfilB2bCustomer,
+    user: CamfilB2bUser,
+    contacts: CamfilB2bCustomerContact[],
+    roles: CamfilB2bRole[]
+  ) {
     this.store.dispatch(
       createCustomerUser({
         customer,
         user,
+        contacts,
+        roles,
       })
     );
   }

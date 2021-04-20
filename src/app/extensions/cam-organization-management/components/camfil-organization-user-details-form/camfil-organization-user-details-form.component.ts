@@ -1,11 +1,15 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+// tslint:disable: ish-ordered-imports project-structure ban-specific-imports
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
 import { SpecialValidators } from 'ish-shared/forms/validators/special-validators';
 
 import { CamfilB2bCustomer } from '../../models/camfil-b2b-customer/camfil-b2b-customer.model';
 import { CamfilB2bUser } from '../../models/camfil-b2b-user/camfil-b2b-user.model';
+import { CreatePageDataSourceComponent } from '../../pages/create/create-page.data-source';
 
 @Component({
   selector: 'camfil-organization-user-details-form',
@@ -13,13 +17,15 @@ import { CamfilB2bUser } from '../../models/camfil-b2b-user/camfil-b2b-user.mode
   styleUrls: ['./camfil-organization-user-details-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.Default,
 })
-export class CamfilOrganizationUserDetailsFormComponent implements OnInit {
+export class CamfilOrganizationUserDetailsFormComponent implements OnInit, OnDestroy {
   @Input() customer: CamfilB2bCustomer;
   @Input() user: CamfilB2bUser;
 
   @Output() changeUser = new EventEmitter<{ customer: CamfilB2bCustomer; user: CamfilB2bUser }>();
   @Output() changeUserActive = new EventEmitter<{ active: boolean }>();
   @Output() changeUserPassword = new EventEmitter();
+
+  private destroy$ = new Subject();
 
   form: FormGroup;
   activeForm: FormGroup;
@@ -33,7 +39,7 @@ export class CamfilOrganizationUserDetailsFormComponent implements OnInit {
   }
 
   get isEditMode() {
-    return this.user?.hasOwnProperty('id') && this.user?.id;
+    return !!(this.user?.hasOwnProperty('id') && this.user?.id);
   }
 
   private initUserForm() {
@@ -48,9 +54,27 @@ export class CamfilOrganizationUserDetailsFormComponent implements OnInit {
         validators: [],
       }),
       email: new FormControl(this.user?.email, {
-        validators: [Validators.required, SpecialValidators.email],
-      }), // TODO (extMlk): Verify if Validators.email is required?
+        validators: [SpecialValidators.email],
+      }),
     });
+
+    if (!this.isEditMode) {
+      this.form.addControl(
+        'login',
+        new FormControl(this.user?.login, {
+          validators: [SpecialValidators.username],
+        })
+      );
+
+      const emailControl = this.form.get('email');
+      const loginControl = this.form.get('login');
+
+      emailControl.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(email => {
+        if (emailControl.valid && !loginControl.valid) {
+          loginControl.setValue(CreatePageDataSourceComponent.createLogin(this.customer, { ...this.user, email }));
+        }
+      });
+    }
   }
 
   private initUserActiveForm() {
@@ -62,6 +86,11 @@ export class CamfilOrganizationUserDetailsFormComponent implements OnInit {
   ngOnInit() {
     this.initUserForm();
     this.initUserActiveForm();
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   handleChangeUser() {
@@ -78,6 +107,10 @@ export class CamfilOrganizationUserDetailsFormComponent implements OnInit {
 
     const customer = this.customer;
     const user = { ...this.user, firstName, lastName, phoneHome, email };
+
+    if (!this.isEditMode) {
+      user.login = this.form.get('login').value;
+    }
 
     this.changeUser.emit({ customer, user });
   }
