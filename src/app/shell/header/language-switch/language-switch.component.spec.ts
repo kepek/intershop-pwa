@@ -32,6 +32,8 @@ describe('Language Switch Component', () => {
       imports: [NgbDropdownModule, RouterTestingModule],
       providers: [{ provide: AppFacade, useFactory: () => instance(appFacade) }],
     }).compileComponents();
+
+    when(appFacade.availableLocales$).thenReturn(of(locales));
   });
 
   beforeEach(() => {
