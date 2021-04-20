@@ -1392,8 +1392,6 @@
   "promotion.detailslink.label": "Kampanjatiedot",
   "promotion.detailslink.text": "Tiedot",
   "promotion.removelink.text": "Poista",
-  "punchout.error.missing.parameters": "fi_Error connecting to the punchout catalog. Required start parameters are missing.",
-  "punchout.login_already_exists.error": "fi_A punchout user with that user name already exists. Please check the information for accuracy or enter a different name.",
   "quickorder.page.add.cart": "LisÃ¤Ã¤ ostoskoriin",
   "quickorder.page.add.row": "LisÃ¤Ã¤ rivejÃ¤",
   "quickorder.page.breadcrumb": "Nopea tilaus",
