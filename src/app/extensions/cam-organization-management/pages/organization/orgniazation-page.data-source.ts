@@ -182,6 +182,9 @@ export abstract class OrganizationPageDataSourceComponent implements OnInit, Aft
 
   private initDataSourceSort() {
     this.dataSource.sortingDataAccessor = sortingDataAccessor;
+
+    this.applyDefaultSortIfNotSet();
+
     this.dataSource.sort.sortChange.subscribe((sort: Sort) => {
       if (this.isDefaultSortApplied) {
         this.router
@@ -194,8 +197,6 @@ export abstract class OrganizationPageDataSourceComponent implements OnInit, Aft
           });
       }
     });
-
-    this.applyDefaultSortIfNotSet();
   }
 
   private applyDefaultFilterIfNotSet() {
@@ -207,6 +208,8 @@ export abstract class OrganizationPageDataSourceComponent implements OnInit, Aft
   }
 
   private initDataSourceFilter() {
+    this.applyDefaultFilterIfNotSet();
+
     // @ts-ignore
     this.dataSource?._filter.subscribe((filter: string) => {
       if (this.isDefaultFilterApplied) {
@@ -220,8 +223,6 @@ export abstract class OrganizationPageDataSourceComponent implements OnInit, Aft
           });
       }
     });
-
-    this.applyDefaultFilterIfNotSet();
   }
 
   applyFilter(filterValues: OrganizationFilter) {

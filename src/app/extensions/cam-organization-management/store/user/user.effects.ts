@@ -5,7 +5,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { routerNavigatedAction } from '@ngrx/router-store';
 import { Store, select } from '@ngrx/store';
 import { iif } from 'rxjs';
-import { concatMap, filter, map, mergeMap, switchMap, switchMapTo, withLatestFrom } from 'rxjs/operators';
+import { concatMap, filter, map, mergeMap, switchMap, switchMapTo, tap, withLatestFrom } from 'rxjs/operators';
 
 import { displayErrorMessage, displaySuccessMessage } from 'ish-core/store/core/messages';
 import { ofUrl, selectRouteParam } from 'ish-core/store/core/router';
@@ -179,14 +179,29 @@ export class UserEffects {
     )
   );
 
+  // tslint:disable:no-commented-out-code
+  // redirectAfterUpdateCustomerUser$ = createEffect(
+  //   () =>
+  //     this.actions$.pipe(
+  //       ofType(updateCustomerUser),
+  //       tap(() => {
+  //         this.navigateTo('../');
+  //       })
+  //     ),
+  //   { dispatch: false }
+  // );
+
   // Create Customer User
 
   createCustomerUser$ = createEffect(() =>
     this.actions$.pipe(
       ofType(createCustomerUser),
       mapToPayload(),
-      concatMap(({ customer, user }) =>
-        this.organizationService.createCustomerUser(customer, user).pipe(
+      concatMap(({ customer, user, contacts, roles }) =>
+        this.organizationService.createCustomerUser(customer, user, contacts, roles).pipe(
+          tap(createdUser => {
+            this.navigateTo(`../customers/${customer.id}/users/${createdUser.id}`);
+          }),
           map(createdUser =>
             createCustomerUserSuccess({
               customer,
@@ -255,17 +270,15 @@ export class UserEffects {
         createCustomerUserFail
       ),
       mapToPayloadProperty('error'),
-      filter(error => !!error?.message),
+      whenTruthy(),
       map(error =>
         displayErrorMessage({
-          message: error?.message,
+          message: error?.message || error?.code,
         })
       )
     )
   );
 
-  // tslint:disable-next-line:force-jsdoc-comments
-  // @ts-ignore
   private navigateTo(path: string): void {
     let currentRoute = this.router.routerState.root;
 

@@ -137,10 +137,10 @@ export class RoleEffects {
     this.actions$.pipe(
       ofType(updateCustomerUserRolesFail),
       mapToPayloadProperty('error'),
-      filter(error => !!error?.message),
+      whenTruthy(),
       map(error =>
         displayErrorMessage({
-          message: error?.message,
+          message: error?.message || error?.code,
         })
       )
     )

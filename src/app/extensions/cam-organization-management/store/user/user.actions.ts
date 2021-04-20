@@ -2,7 +2,11 @@ import { createAction } from '@ngrx/store';
 
 import { httpError, payload } from 'ish-core/utils/ngrx-creators';
 
-import { CamfilB2bCustomer } from '../../models/camfil-b2b-customer/camfil-b2b-customer.model';
+import {
+  CamfilB2bCustomer,
+  CamfilB2bCustomerContact,
+} from '../../models/camfil-b2b-customer/camfil-b2b-customer.model';
+import { CamfilB2bRole } from '../../models/camfil-b2b-role/camfil-b2b-role.model';
 import { CamfilB2bUser } from '../../models/camfil-b2b-user/camfil-b2b-user.model';
 
 // Initialized
@@ -87,7 +91,12 @@ export const updateCustomerUserSuccess = createAction(
 
 export const createCustomerUser = createAction(
   '[Camfil User] Create Customer User',
-  payload<{ customer: CamfilB2bCustomer; user: CamfilB2bUser }>()
+  payload<{
+    customer: CamfilB2bCustomer;
+    user: CamfilB2bUser;
+    contacts: CamfilB2bCustomerContact[];
+    roles: CamfilB2bRole[];
+  }>()
 );
 
 export const createCustomerUserFail = createAction('[Camfil Users API] Create Customer User Fail', httpError());

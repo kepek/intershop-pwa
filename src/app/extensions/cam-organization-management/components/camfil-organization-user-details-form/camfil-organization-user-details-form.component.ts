@@ -39,7 +39,7 @@ export class CamfilOrganizationUserDetailsFormComponent implements OnInit, OnDes
   }
 
   get isEditMode() {
-    return this.user?.hasOwnProperty('id') && this.user?.id;
+    return !!(this.user?.hasOwnProperty('id') && this.user?.id);
   }
 
   private initUserForm() {
@@ -56,19 +56,25 @@ export class CamfilOrganizationUserDetailsFormComponent implements OnInit, OnDes
       email: new FormControl(this.user?.email, {
         validators: [SpecialValidators.email],
       }),
-      login: new FormControl(this.user?.login, {
-        validators: [SpecialValidators.username],
-      }),
     });
 
-    const emailControl = this.form.get('email');
-    const loginControl = this.form.get('login');
+    if (!this.isEditMode) {
+      this.form.addControl(
+        'login',
+        new FormControl(this.user?.login, {
+          validators: [SpecialValidators.username],
+        })
+      );
 
-    emailControl.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(email => {
-      if (emailControl.valid && !loginControl.valid) {
-        loginControl.setValue(CreatePageDataSourceComponent.createLogin(this.customer, { ...this.user, email }));
-      }
-    });
+      const emailControl = this.form.get('email');
+      const loginControl = this.form.get('login');
+
+      emailControl.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(email => {
+        if (emailControl.valid && !loginControl.valid) {
+          loginControl.setValue(CreatePageDataSourceComponent.createLogin(this.customer, { ...this.user, email }));
+        }
+      });
+    }
   }
 
   private initUserActiveForm() {
@@ -98,10 +104,13 @@ export class CamfilOrganizationUserDetailsFormComponent implements OnInit, OnDes
     const lastName = this.form.get('lastName').value;
     const phoneHome = this.form.get('phoneHome').value;
     const email = this.form.get('email').value;
-    const login = this.form.get('email').value;
 
     const customer = this.customer;
-    const user = { ...this.user, firstName, lastName, phoneHome, email, login };
+    const user = { ...this.user, firstName, lastName, phoneHome, email };
+
+    if (!this.isEditMode) {
+      user.login = this.form.get('login').value;
+    }
 
     this.changeUser.emit({ customer, user });
   }
