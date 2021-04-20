@@ -46,7 +46,12 @@
           <!-- Date Picker From -->
           <mat-form-field appearance="fill" class="select-filter">
             <mat-label>{{ 'camfil.account.orderlist.filter.fromDate.title' | translate }}</mat-label>
-            <input matInput [matDatepicker]="dateFromPicker" [formControl]="dateFromFilter" />
+            <input
+              matInput
+              [matDatepicker]="dateFromPicker"
+              [max]="dateToFilter.value"
+              [formControl]="dateFromFilter"
+            />
             <mat-datepicker-toggle matSuffix [for]="dateFromPicker"></mat-datepicker-toggle>
             <mat-datepicker #dateFromPicker></mat-datepicker>
           </mat-form-field>
@@ -54,7 +59,7 @@
           <!-- Date Picker To -->
           <mat-form-field appearance="fill" class="select-filter">
             <mat-label>{{ 'camfil.account.orderlist.filter.toDate.title' | translate }}</mat-label>
-            <input matInput [matDatepicker]="dateToPicker" [formControl]="dateToFilter" />
+            <input matInput [matDatepicker]="dateToPicker" [min]="dateFromFilter.value" [formControl]="dateToFilter" />
             <mat-datepicker-toggle matSuffix [for]="dateToPicker"></mat-datepicker-toggle>
             <mat-datepicker #dateToPicker></mat-datepicker>
           </mat-form-field>
