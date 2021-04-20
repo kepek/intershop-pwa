@@ -10,7 +10,7 @@ import { CustomerData } from 'ish-core/models/customer/customer.interface';
 import { Customer, CustomerRegistrationType, CustomerUserType } from 'ish-core/models/customer/customer.model';
 import { Locale } from 'ish-core/models/locale/locale.model';
 import { User } from 'ish-core/models/user/user.model';
-import { ApiService } from 'ish-core/services/api/api.service';
+import { ApiService, AvailableOptions } from 'ish-core/services/api/api.service';
 
 import { UserService } from './user.service';
 
@@ -102,10 +102,19 @@ describe('User Service', () => {
       });
     });
 
-    it('should not throw errors when logging in a user by token is unsuccessful', done => {
-      when(apiServiceMock.get(anything(), anything())).thenReturn(throwError(new Error()));
+    it('should login a user by given token when requested and successful', done => {
+      when(apiServiceMock.get(anything(), anything())).thenReturn(
+        of({ customerNo: '4711', type: 'SMBCustomer', companyName: 'xyz' } as CustomerData)
+      );
 
-      userService.signinUserByToken().subscribe(fail, fail, done);
+      userService.signinUserByToken('12345').subscribe(() => {
+        verify(apiServiceMock.get('customers/-', anything())).once();
+        verify(apiServiceMock.get('privatecustomers/-', anything())).never();
+        const [path, options] = capture<string, AvailableOptions>(apiServiceMock.get).last();
+        expect(options.headers.get(ApiService.TOKEN_HEADER_KEY)).toMatchInlineSnapshot(`"12345"`);
+        expect(path).toEqual('customers/-');
+        done();
+      });
     });
   });
 

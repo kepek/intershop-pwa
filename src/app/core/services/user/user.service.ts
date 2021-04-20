@@ -2,8 +2,8 @@ import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import b64u from 'b64u';
 import { pick } from 'lodash-es';
-import { EMPTY, Observable, of, throwError } from 'rxjs';
-import { catchError, concatMap, first, map, withLatestFrom } from 'rxjs/operators';
+import { Observable, of, throwError } from 'rxjs';
+import { concatMap, first, map, withLatestFrom } from 'rxjs/operators';
 
 import { AppFacade } from 'ish-core/facades/app.facade';
 import { Address } from 'ish-core/models/address/address.model';
@@ -56,9 +56,21 @@ export class UserService {
 
     return this.fetchCustomer({ headers });
   }
-
-  signinUserByToken(): Observable<CustomerUserType> {
-    return this.fetchCustomer({ skipApiErrorHandling: true, runExclusively: true }).pipe(catchError(() => EMPTY));
+  /**
+   * Sign in an existing user with the given token or if no token is given, using token stored in cookie.
+   * @param token             The token that is used to login user.
+   * @returns                 The logged in customer data.
+   *                          For private customers user data are also returned.
+   *                          For business customers user data are returned by a separate call (getCompanyUserData).
+   */
+  signinUserByToken(token?: string): Observable<CustomerUserType> {
+    if (token) {
+      return this.fetchCustomer({
+        headers: new HttpHeaders().set(ApiService.TOKEN_HEADER_KEY, token),
+      });
+    } else {
+      return this.fetchCustomer({ skipApiErrorHandling: true, runExclusively: true });
+    }
   }
 
   private fetchCustomer(options?: AvailableOptions): Observable<CustomerUserType> {
