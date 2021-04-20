@@ -24,6 +24,7 @@ import {
   addProductToBasket,
   addProductToBucketAddressFromCamCardFail,
   addProductsFromCamCardFail,
+  addProductsFromCamCard,
   addProductsToBasketFromCamCard,
   addPromotionCodeToBasket,
   addPromotionCodeToBasketFail,
@@ -284,9 +285,10 @@ export const basketReducer = createReducer(
       validationResults: initialValidationResults,
     })
   ),
-  on(addItemsToBasket, addItemsToBasketFromCamCard, (state: BasketState) => ({
+  on(addItemsToBasket, addItemsToBasketFromCamCard, addProductsFromCamCard, (state: BasketState) => ({
     ...state,
     productUpdated: false,
+    productAdded: false,
   })),
   on(addItemsToBasketSuccess, (state: BasketState, action) => ({
     ...state,

@@ -3,10 +3,10 @@
 
 .article-details {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   padding: $space-box/2 0;
-  flex-wrap: wrap;
 
   &__quantity {
     display: flex;
@@ -30,8 +30,8 @@
   &__measurement {
     input {
       max-width: 110px;
-      margin: 0 $space-box 0 $space-box/2;
       padding: $space-box / 2;
+      margin: 0 $space-box 0 $space-box/2;
     }
   }
   &__ico {

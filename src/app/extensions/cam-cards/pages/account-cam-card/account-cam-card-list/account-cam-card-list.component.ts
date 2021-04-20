@@ -115,6 +115,9 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
   basketAddresses: Address[];
   checkedCamCard = [];
   isCustomerAdmin: boolean;
+  basketLoading = false;
+  totalProductsInBasket: number;
+  productAddingInProgress = false;
 
   ngOnInit() {
     this.isMobileView = this.isMobile();
@@ -138,6 +141,10 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
     });
     this.productFacade.basketAddresses$.pipe(takeUntil(this.destroy$)).subscribe((basketAddresses: Address[]) => {
       this.basketAddresses = basketAddresses;
+    });
+
+    this.checkoutFacade.basketLoading$.pipe(takeUntil(this.destroy$)).subscribe(value => {
+      this.basketLoading = value;
     });
   }
 
@@ -312,7 +319,16 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
     );
 
     const event = { checked: false };
-    this.masterToggle(event as MatCheckboxChange);
+    this.productAddingInProgress = true;
+    this.loading = true;
+    this.productFacade.productAdded$.pipe(whenTruthy(), take(1)).subscribe(val => {
+      if (val) {
+        this.masterToggle(event as MatCheckboxChange);
+        this.productAddingInProgress = false;
+        this.loading = false;
+        this.changeDetectorRefs.detectChanges();
+      }
+    });
   }
 
   notAvailbaleProdList(modal: CamfilModalDialogComponent<any>) {
@@ -386,6 +402,8 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
             : true
         )
       : true;
+
+
     return itemsCount > notAvailableProducts ? items && itemsChecked && itemsInSubChecked : this.isOnCheckedList(id);
   }
 
@@ -434,11 +452,13 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
   }
 
   masterToggle(event: MatCheckboxChange) {
+    console.log('CALL masterToggle');
     this.camCardsProcessed.data.forEach(row => {
       this.handleProductsCheck(row, event);
     });
 
     this.checkedCamCard = event.checked ? this.camCardsProcessed.data.map(cc => cc.id) : [];
+    console.log('this.checkedCamCard', this.checkedCamCard);
   }
 
   camCardToggle(camCard: CamCard, event: MatCheckboxChange) {
