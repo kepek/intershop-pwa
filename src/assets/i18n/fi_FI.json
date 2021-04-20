@@ -787,6 +787,7 @@
   "camfil.account.useredit.contact.form.error.text": "Jokaisella valitulla asiakkaalla on oltava yhteyshenkilö",
   "camfil.account.useredit.personal.form.phone.error.text": "Virheellinen puhelinnumero",
   "camfil.add_items_to_basket.camfil.message.success": "Tuote/Tuotteet lisätty ostoskoriin",
+  "camfil.address_form.post_code.invalid": "fi_Invalid postcode",
   "camfil.ahu.detail.add.to.list": "Lisää listaan",
   "camfil.ahu.detail.broschure": "Esite",
   "camfil.ahu.detail.filter-slots": "Sijoittelu:",

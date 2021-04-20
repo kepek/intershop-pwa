@@ -4,6 +4,7 @@ import {
   EventEmitter,
   Input,
   OnChanges,
+  OnDestroy,
   OnInit,
   Output,
   TemplateRef,
@@ -12,7 +13,7 @@ import {
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { take } from 'rxjs/operators';
 
 import { AppFacade } from 'ish-core/facades/app.facade';
@@ -37,7 +38,7 @@ import { CamCard, CamCardAddress, CamCardCustomer } from '../../models/cam-card/
   styleUrls: ['./cam-card-preferences.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CamCardPreferencesComponent implements OnChanges, OnInit {
+export class CamCardPreferencesComponent implements OnChanges, OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private camCardsFacade: CamCardsFacade,
@@ -72,6 +73,10 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit {
   countries$: Observable<Country[]>;
   customers: CamCardCustomer[];
 
+  countryChangeDetect$: Subject<boolean> = new Subject();
+
+  private destroy$ = new Subject();
+
   /**
    *  A reference to the current modal  .
    */
@@ -105,6 +110,10 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit {
     {
       error: 'required',
       message: 'helpdesk.contactus.indicates',
+    },
+    {
+      error: 'incorrect',
+      message: 'camfil.address_form.post_code.invalid',
     },
   ];
 
@@ -176,6 +185,11 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit {
     });
   }
 
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
   initForm() {
     this.camCardForm = this.fb.group({
       title: ['', [Validators.required, Validators.maxLength(35)]],
@@ -187,11 +201,11 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit {
       addressLine1: ['', [Validators.required, Validators.maxLength(35)]],
       addressLine2: ['', [Validators.maxLength(35)]],
       postalCode: ['', [Validators.required, Validators.maxLength(35)]],
-      city: ['', [Validators.required, Validators.maxLength(35)]],
+      city: [{ value: '', disabled: true }, [Validators.maxLength(35)]],
       countryCode: ['', [Validators.required, Validators.maxLength(35)]],
       lastDelivery: ['', [Validators.maxLength(35)]],
       deliveryInterval: ['', [Validators.maxLength(35)]],
-      nextDelivery: ['', [Validators.maxLength(35)]],
+      nextDelivery: [{ value: '', disabled: true }, [Validators.maxLength(35)]],
       reminder: [true, [Validators.maxLength(35)]],
     });
   }
@@ -239,6 +253,15 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit {
     if (this.camCard) {
       this.submitCamCardForm();
     }
+  }
+
+  setZipCodeError(event) {
+    this.camCardForm.controls.postalCode.setErrors(event);
+    this.camCardForm.updateValueAndValidity();
+  }
+
+  checkZipCode() {
+    this.countryChangeDetect$.next(true);
   }
 
   /** Emits the cam cards data, when the form was valid. */

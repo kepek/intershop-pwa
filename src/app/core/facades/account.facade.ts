@@ -18,7 +18,10 @@ import {
   getAddressesLoading,
   getAllAddresses,
   getCreatedAddress,
+  getZipCode,
+  getZipCodesLoading,
   loadAddresses,
+  loadZipCode,
 } from 'ish-core/store/customer/addresses';
 import { getUserPermissions, getUserRoles } from 'ish-core/store/customer/authorization';
 import { getOrders, getOrdersLoading, getSelectedOrder, loadOrders } from 'ish-core/store/customer/orders';
@@ -197,5 +200,13 @@ export class AccountFacade {
   }
   createContact(contact: Contact) {
     this.store.dispatch(createContact({ contact }));
+  }
+
+  // CAMFIL CUSTOM
+
+  zipCodesLoading$ = this.store.pipe(select(getZipCodesLoading));
+  getZipCode$(code: string, countryCode: string) {
+    this.store.dispatch(loadZipCode({ code, countryCode }));
+    return this.store.pipe(select(getZipCode(code)));
   }
 }

@@ -105,6 +105,7 @@
     "bootstrap": "^4.5.2",
     "camelcase-keys": "^6.2.2",
     "core-js": "^3.8.1",
+    "country-iso-2-to-3": "^1.1.0",
     "debug": "^4.3.1",
     "express": "^4.17.1",
     "express-http-proxy": "^1.6.2",

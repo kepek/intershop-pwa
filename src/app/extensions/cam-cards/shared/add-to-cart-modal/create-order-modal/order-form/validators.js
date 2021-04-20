@@ -46,6 +46,10 @@ export const ADDRESS_VALIDATORS = {
       error: 'pattern',
       message: 'camfil.modal.createOrder.order-form.input.zipcode.error.pattern',
     },
+    {
+      error: 'incorrect',
+      message: 'camfil.address_form.post_code.invalid',
+    },
   ],
   area: [
     {

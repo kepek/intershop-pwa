@@ -17,6 +17,7 @@ import { LoadingComponent } from 'ish-shared/components/common/loading/loading.c
 import { CamfilProductAddToBasketModalComponent } from 'ish-shared/components/product/camfil-product-add-to-basket/camfil-product-add-to-basket-modal/camfil-product-add-to-basket-modal.component';
 import { CamfilProductQuantityComponent } from 'ish-shared/components/product/camfil-product-quantity/camfil-product-quantity.component';
 import { ProductAddToBasketComponent } from 'ish-shared/components/product/product-add-to-basket/product-add-to-basket.component';
+import { ZipCodeComponent } from 'ish-shared/components/zip-code/zip-code.component';
 import { CamfilCounterComponent } from 'ish-shared/forms/components/camfil-counter/camfil-counter.component';
 
 import { AddToCartModalComponent } from '../../../../extensions/cam-cards/shared/add-to-cart-modal/add-to-cart-modal.component';
@@ -58,6 +59,7 @@ describe('Camfil Product Add To Basket Component', () => {
         CreateOrderSuccessComponent,
         MockComponent(FaIconComponent),
         MockComponent(LoadingComponent),
+        MockComponent(ZipCodeComponent),
         OrderFormComponent,
         ProductAddToBasketComponent,
       ],

@@ -12,8 +12,9 @@ import {
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { take, takeUntil } from 'rxjs/operators';
 
+import { AppFacade } from 'ish-core/facades/app.facade';
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { AddressHelper } from 'ish-core/models/address/address.helper';
@@ -22,6 +23,7 @@ import { AttributeHelper } from 'ish-core/models/attribute/attribute.helper';
 import { BasketExtensions } from 'ish-core/models/basket/basket.interface';
 import { BasketView } from 'ish-core/models/basket/basket.model';
 import { Bucket } from 'ish-core/models/basket/bucket.model';
+import { Channel } from 'ish-core/models/channel/channel.types';
 import { Product } from 'ish-core/models/product/product.model';
 import { whenTruthy } from 'ish-core/utils/operators';
 import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
@@ -40,7 +42,8 @@ export class CreateOrderModalComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private shoppingFacade: ShoppingFacade,
-    private checkoutFacade: CheckoutFacade
+    private checkoutFacade: CheckoutFacade,
+    private appFacade: AppFacade
   ) {}
 
   /**
@@ -73,6 +76,8 @@ export class CreateOrderModalComponent implements OnInit, OnDestroy {
   basketId: string;
   commonShippingMethodId: string;
 
+  countryByChannel: string;
+
   @Input() order?: Bucket;
   @Input() edit = false;
 
@@ -82,6 +87,9 @@ export class CreateOrderModalComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.initForms();
     this.initBasket();
+    this.appFacade.getCamfilChannel$.pipe(whenTruthy(), take(1)).subscribe(channel => {
+      this.countryByChannel = Object.entries(Channel).find(([, val]) => val === channel)[0];
+    });
   }
 
   initForms() {
@@ -184,7 +192,7 @@ export class CreateOrderModalComponent implements OnInit, OnDestroy {
       postalCode: addressForm.get('zipCode').value,
       city: addressForm.get('area').value,
       companyName1: addressForm.get('company').value,
-      countryCode: 'SE',
+      countryCode: this.countryByChannel,
       eligibleShipToAddress: true,
     };
   }

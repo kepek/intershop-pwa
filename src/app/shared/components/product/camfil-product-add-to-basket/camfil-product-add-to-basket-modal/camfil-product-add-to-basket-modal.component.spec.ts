@@ -18,6 +18,7 @@ import { CamfilErrorComponent } from 'ish-shared/components/common/camfil-error/
 import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
 import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
 import { CamfilProductQuantityComponent } from 'ish-shared/components/product/camfil-product-quantity/camfil-product-quantity.component';
+import { ZipCodeComponent } from 'ish-shared/components/zip-code/zip-code.component';
 import { CamfilCounterComponent } from 'ish-shared/forms/components/camfil-counter/camfil-counter.component';
 
 import { CamCardsFacade } from '../../../../../extensions/cam-cards/facades/cam-cards.facade';
@@ -80,12 +81,13 @@ describe('Camfil Product Add To Basket Modal Component', () => {
         CamfilErrorComponent,
         CamfilProductAddToBasketModalComponent,
         CamfilProductQuantityComponent,
-        CamfilSmallCtaModalComponent,
-        CreateOrderModalComponent,
-        CreateOrderSuccessComponent,
         FaIconComponent,
+        MockComponent(CamfilSmallCtaModalComponent),
+        MockComponent(CreateOrderModalComponent),
+        MockComponent(CreateOrderSuccessComponent),
         MockComponent(LoadingComponent),
-        OrderFormComponent,
+        MockComponent(OrderFormComponent),
+        MockComponent(ZipCodeComponent),
       ],
       imports: [NgbModalModule, ReactiveFormsModule, RouterTestingModule, TranslateModule.forRoot()],
       providers: [

@@ -5,6 +5,7 @@ import { provideMockStore } from '@ngrx/store/testing';
 import { MockComponent } from 'ng-mocks';
 
 import { CamfilErrorComponent } from 'ish-shared/components/common/camfil-error/camfil-error.component';
+import { ZipCodeComponent } from 'ish-shared/components/zip-code/zip-code.component';
 
 import { CamCardPreferencesComponent } from './cam-card-preferences.component';
 
@@ -15,7 +16,12 @@ describe('Cam Card Preferences Component', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CamCardPreferencesComponent, CamfilErrorComponent, MockComponent(NgbCollapse)],
+      declarations: [
+        CamCardPreferencesComponent,
+        CamfilErrorComponent,
+        MockComponent(NgbCollapse),
+        MockComponent(ZipCodeComponent),
+      ],
       imports: [RouterTestingModule],
       providers: [provideMockStore({})],
     }).compileComponents();
