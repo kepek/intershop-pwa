@@ -317,10 +317,6 @@ export class CamfilOrderListComponent implements OnInit, AfterViewInit, OnDestro
   }
 
   isStatusFilterActive(status: string) {
-    if (this.filteredValues.orderStatus && this.filteredValues.orderStatus.indexOf(status) > -1) {
-      return true;
-    } else {
-      return false;
-    }
+    return (this.filteredValues.orderStatus && this.filteredValues.orderStatus.indexOf(status) > -1) || false;
   }
 }
