@@ -403,7 +403,6 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
         )
       : true;
 
-
     return itemsCount > notAvailableProducts ? items && itemsChecked && itemsInSubChecked : this.isOnCheckedList(id);
   }
 
