@@ -9,7 +9,10 @@
   </ng-container>
 </camfil-my-page-header>
 
-<camfil-organization-users-list-toolbar [dataSource]="dataSource"></camfil-organization-users-list-toolbar>
+<camfil-organization-users-list-toolbar
+  [dataSource]="dataSource"
+  (applyFilter)="applyFilter($event)"
+></camfil-organization-users-list-toolbar>
 
 <camfil-organization-users-list
   [dataSource]="dataSource"

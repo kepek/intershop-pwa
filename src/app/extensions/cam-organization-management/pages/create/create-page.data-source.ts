@@ -92,9 +92,8 @@ export abstract class CreatePageDataSourceComponent implements OnInit, OnDestroy
 
   // Handlers
 
-  onUpdateNewCustomerUser({ customer, user }) {
+  onUpdateNewCustomerUser({ user }) {
     user.active = user.active || true;
-    user.login = CreatePageDataSourceComponent.createLogin(customer, user); // TODO (extMlk): Verify why `login` is required when trying to create new user.
 
     this.newUser$.next(user);
   }
