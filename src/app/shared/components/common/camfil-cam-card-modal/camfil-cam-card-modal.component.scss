@@ -2,11 +2,11 @@
 @import '../../../../../styles/themes/camfil/mixins';
 
 .camfil-cam-card-modal {
+  position: relative;
   display: flex;
   flex-direction: column;
   width: 506px;
   height: 100%;
-  position: relative;
 
   .close {
     position: absolute;

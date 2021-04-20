@@ -525,15 +525,14 @@ export class BasketService {
       unit: string;
       shippingMethod?: string;
       shipToAddress?: string;
-      lineItemAttributes?: Attribute;
+      lineItemAttributes?: Attribute[];
     }[]
   ): Observable<BasketInfo[]> {
     if (!items) {
       return throwError('addItemsToBasket() called without items');
     }
     const body = items.map(item => {
-      const attrs = item.lineItemAttributes;
-      const attributes = attrs ? [attrs] : [];
+      const attributes = item.lineItemAttributes || [];
       return {
         product: item.sku,
         quantity: {
@@ -578,20 +577,20 @@ export class BasketService {
       );
   }
 
-  addLineItemAttribute(basketId: string, lineItemId: string, bucketId: string, boxLabelAttribute: Attribute) {
+  addLineItemAttribute(basketId: string, lineItemId: string, bucketId: string, attribute: Attribute) {
     return this.apiService
-      .post(`baskets/${basketId}/items/${lineItemId}/attributes`, boxLabelAttribute, {
+      .post(`baskets/${basketId}/items/${lineItemId}/attributes`, attribute, {
         headers: this.camfilBasketHeaders,
       })
-      .pipe(map(() => ({ lineItemId, bucketId, attribute: boxLabelAttribute })));
+      .pipe(map(() => ({ lineItemId, bucketId, attribute })));
   }
 
-  updateLineItemAttributes(basketId: string, lineItemId: string, bucketId: string, boxLabelAttribute: Attribute) {
+  updateLineItemAttributes(basketId: string, lineItemId: string, bucketId: string, attribute: Attribute) {
     return this.apiService
-      .patch(`baskets/${basketId}/items/${lineItemId}/attributes/boxLabel`, boxLabelAttribute, {
+      .patch(`baskets/${basketId}/items/${lineItemId}/attributes/${attribute.name}`, attribute, {
         headers: this.camfilBasketHeaders,
       })
-      .pipe(map(() => ({ lineItemId, bucketId, attribute: boxLabelAttribute })));
+      .pipe(map(() => ({ lineItemId, bucketId, attribute })));
   }
 
   deleteLineItemAttributes(basketId: string, lineItemId: string, bucketId: string, attributeName: string) {

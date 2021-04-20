@@ -318,6 +318,9 @@ describe('Cam Card Effects', () => {
         label: 'boxLabel',
         text: 'text',
       } as CamCardItemComment,
+      measurement: {
+        width: 1000,
+      },
       position: 1000,
     };
 
@@ -339,6 +342,7 @@ describe('Cam Card Effects', () => {
             payload.sku,
             payload.quantity,
             payload.comment,
+            payload.measurement,
             payload.position
           )
         ).once();

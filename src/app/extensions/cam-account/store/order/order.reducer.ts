@@ -78,9 +78,8 @@ export const orderReducer = createReducer(
   }),
   on(loadOrderTrackAndTraceSuccess, (state: OrdersState, action) => {
     const { trackAndTrace, orderId } = action.payload;
-
     return {
-      ...orderAdapter.updateOne({ id: orderId, changes: { trackAndTrace: trackAndTrace?.elements } }, state),
+      ...orderAdapter.updateOne({ id: orderId, changes: { trackAndTrace } }, state),
     };
   }),
   on(loadOrderAdditionalTotalCostSuccess, (state: OrdersState, action) => {

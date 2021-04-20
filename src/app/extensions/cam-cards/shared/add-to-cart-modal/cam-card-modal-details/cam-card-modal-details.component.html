@@ -14,4 +14,23 @@
     </div>
     <div class="cam-card__details--value">{{ orderMark }}</div>
   </div>
+  <ng-container *ngIf="isClicked">
+    <div class="cam-card__details">
+      <div class="cam-card__details--left">
+        <div class="cam-card__details--label">{{ 'camfil.checkout.form.invoice_mark' | translate }}:</div>
+        <div class="cam-card__details--value">{{ invoiceMark }}</div>
+      </div>
+    </div>
+    <div class="cam-card__details">
+      <div class="cam-card__details--left no-right-border">
+        <div class="cam-card__details--label">
+          {{ 'camfil.account.cam_card.add_to_form.delivery_address' | translate }}:
+        </div>
+        <div class="cam-card__details--value">
+          {{ deliveryAddress.firstName }} {{ deliveryAddress.lastName }}, {{ deliveryAddress.addressLine1 }},
+          {{ deliveryAddress.postalCode }}, {{ deliveryAddress.city }}
+        </div>
+      </div>
+    </div>
+  </ng-container>
 </div>

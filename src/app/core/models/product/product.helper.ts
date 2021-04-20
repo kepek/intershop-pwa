@@ -1,6 +1,7 @@
 import { intersection } from 'lodash-es';
 
 import { AttributeGroupTypes } from 'ish-core/models/attribute-group/attribute-group.types';
+import { AttributeHelper } from 'ish-core/models/attribute/attribute.helper';
 import { Attribute } from 'ish-core/models/attribute/attribute.model';
 import { Image } from 'ish-core/models/image/image.model';
 import { ImageTypes } from 'ish-core/models/image/image.types';
@@ -274,5 +275,19 @@ export class ProductHelper {
     } else {
       return false;
     }
+  }
+
+  static getRequiresMeasurement(data: Product): boolean {
+    const label = AttributeGroupTypes.ProductsListLabelAttributes;
+    const attrs = data.attributeGroups?.[label]?.attributes;
+    return AttributeHelper.getAttributeValueByAttributeName<boolean>(attrs, 'Requiresmeasures') || false;
+  }
+
+  static isNotZero(property: any) {
+    if (!property) {
+      return false;
+    }
+
+    return String(property) !== '0';
   }
 }

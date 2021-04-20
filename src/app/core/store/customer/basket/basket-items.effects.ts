@@ -19,7 +19,7 @@ import {
 } from 'rxjs/operators';
 
 import { Address } from 'ish-core/models/address/address.model';
-import { Attribute } from 'ish-core/models/attribute/attribute.model';
+import { AttributeHelper } from 'ish-core/models/attribute/attribute.helper';
 import { Bucket } from 'ish-core/models/basket/bucket.model';
 import {
   LineItemUpdateHelper,
@@ -402,9 +402,9 @@ export class BasketItemsEffects {
     this.actions$.pipe(
       ofType(updateBasketItemAttributes),
       mapToPayload(),
-      mergeMap(payload =>
+      mergeMap(({ basketId, lineItemId, bucketId, lineItemAttribute }) =>
         this.basketService
-          .updateLineItemAttributes(payload.basketId, payload.lineItemId, payload.bucketId, payload.lineItemAttribute)
+          .updateLineItemAttributes(basketId, lineItemId, bucketId, lineItemAttribute)
           .pipe(map(updateBasketItemAttributesSuccess), mapErrorToAction(updateBasketItemAttributesFail))
       )
     )
@@ -462,11 +462,7 @@ export class BasketItemsEffects {
             (acc, [val, entities]) => {
               const { addressId, basketExtension, shippingMethod, shipToAddress, products } = val;
               products.forEach(p => {
-                const lineItemAttributes: Attribute = p.boxLabel && {
-                  name: 'boxLabel',
-                  type: 'String',
-                  value: p.boxLabel,
-                };
+                const lineItemAttributes = AttributeHelper.calculateAttrsToAddFromCC(p);
                 const data = {
                   sku: p.sku,
                   quantity: p.quantity,

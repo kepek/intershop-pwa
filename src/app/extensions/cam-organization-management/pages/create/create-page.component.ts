@@ -1,4 +1,13 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { FormArray } from '@angular/forms';
+import { Subscription } from 'rxjs';
+import { take, takeUntil } from 'rxjs/operators';
+
+import { whenTruthy } from 'ish-core/utils/operators';
+
+import { CamfilOrganizationUserCustomerContactFormComponent } from '../../components/camfil-organization-user-customer-contact-form/camfil-organization-user-customer-contact-form.component';
+import { CamfilOrganizationUserDetailsFormComponent } from '../../components/camfil-organization-user-details-form/camfil-organization-user-details-form.component';
+import { CamfilOrganizationUserRolesFormComponent } from '../../components/camfil-organization-user-roles-form/camfil-organization-user-roles-form.component';
 
 import { CreatePageDataSourceComponent } from './create-page.data-source';
 
@@ -9,4 +18,44 @@ import { CreatePageDataSourceComponent } from './create-page.data-source';
   changeDetection: ChangeDetectionStrategy.Default,
 })
 // tslint:disable-next-line:component-creation-test
-export class CreatePageComponent extends CreatePageDataSourceComponent {}
+export class CreatePageComponent extends CreatePageDataSourceComponent implements AfterViewInit {
+  @ViewChild(CamfilOrganizationUserDetailsFormComponent) user: CamfilOrganizationUserDetailsFormComponent;
+  @ViewChildren(CamfilOrganizationUserCustomerContactFormComponent)
+  contacts!: QueryList<CamfilOrganizationUserCustomerContactFormComponent>;
+  @ViewChild(CamfilOrganizationUserRolesFormComponent) roles: CamfilOrganizationUserRolesFormComponent;
+
+  form = new FormArray([]);
+
+  contactsSubscription: Subscription;
+
+  private populateForm() {
+    this.form.clear();
+
+    [this.user, this.roles, ...this.contacts].forEach(control => this.form.push(control.form));
+  }
+
+  onCreateCustomerUser() {
+    this.form.markAllAsTouched();
+
+    if (this.form.valid) {
+      // @ts-ignore
+      // tslint:disable-next-line:no-unused
+      this.context$.pipe(take(1), whenTruthy()).subscribe(({ customer, user, contacts, roles }) => {
+        this.organizationFacade.createCustomerUser$(customer, user);
+      });
+    }
+  }
+
+  ngAfterViewInit() {
+    if (this.contactsSubscription) {
+      // tslint:disable-next-line: ban
+      this.contactsSubscription.unsubscribe();
+    }
+
+    this.contactsSubscription = this.contacts.changes.pipe(takeUntil(this.destroy$)).subscribe(() => {
+      this.populateForm();
+    });
+
+    this.populateForm();
+  }
+}

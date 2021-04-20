@@ -39,6 +39,7 @@ export interface CamCardItem {
   product: CamCardProduct;
   creationDate?: number;
   comment?: CamCardItemComment;
+  measurement?: CamCardMeasurement;
 }
 
 export interface CamCardProduct {
@@ -95,6 +96,7 @@ export interface CreateCamCardData {
   boxLabel?: string;
   edit?: boolean;
   subCamCard?: CamCard;
+  measurement?: CamCardMeasurement;
 }
 
 export interface CamCamProductChecked {
@@ -103,6 +105,7 @@ export interface CamCamProductChecked {
   sku: string;
   quantity: number;
   boxLabel?: string;
+  measurement?: CamCardMeasurement;
 }
 
 export interface CamCamProductsAddToCartItems {
@@ -113,4 +116,8 @@ export interface CamCamProductsAddToCartItems {
 
 export interface CamCamProductsAddToCart {
   [id: string]: CamCamProductsAddToCartItems;
+}
+
+export interface CamCardMeasurement {
+  [key: string]: number;
 }

@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit, ViewChild } from '@angular/core';
 
 import { AttributeGroupTypes } from 'ish-core/models/attribute-group/attribute-group.types';
-import { Product } from 'ish-core/models/product/product.model';
+import { Product, ProductHelper } from 'ish-core/models/product/product.model';
 
 /**
  * The Product Attributes Preview Component renders the SKU & the first five attributes of the product detail attribute group in a description list
@@ -25,9 +25,11 @@ export class CamfilProductAttributesPreviewComponent implements OnInit {
   productListAttributes;
 
   ngOnInit(): void {
-    this.productListAttributes = this.product?.attributeGroups[
-      AttributeGroupTypes.ProductsDetailAttributes
-    ]?.attributes;
+    const attributes = (this.productListAttributes =
+      this.product?.attributeGroups[AttributeGroupTypes.ProductsDetailAttributes]?.attributes ||
+      this.product?.attributes);
+
+    this.productListAttributes = attributes.filter(attribute => ProductHelper.isNotZero(attribute.value));
   }
 
   scrollToAttributes(): void {

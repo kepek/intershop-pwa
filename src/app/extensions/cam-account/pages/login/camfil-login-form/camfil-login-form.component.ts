@@ -33,14 +33,13 @@ export class CamfilLoginFormComponent implements OnInit {
 
     /* Login via URL parameters */
     this.activatedRoute.queryParams.subscribe(params => {
-      const login = params.login;
-      const password = decodeURIComponent(params.password);
+      const token = params['access-token'];
       const erpEmployeeId = params.ERPEmployeeID;
       if (erpEmployeeId) {
         localStorage.setItem('erpEmployeeId', erpEmployeeId);
       }
-      if (login && password) {
-        this.accountFacade.loginUser({ login, password });
+      if (token) {
+        this.accountFacade.loginUserWithToken(token);
       }
     });
   }

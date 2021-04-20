@@ -1,6 +1,6 @@
 <mat-card class="mat-elevation-z box-shadow mb-2 p-0">
-  <mat-card-content>
-    <mat-selection-list [(ngModel)]="selectedRoleIDs" (selectionChange)="onCustomerUserRolesChange()" dense>
+  <mat-card-content [formGroup]="form">
+    <mat-selection-list formControlName="roleIDs" (selectionChange)="onCustomerUserRolesChange($event)" dense>
       <mat-list-option
         *ngFor="let role of roles"
         [value]="role.id"

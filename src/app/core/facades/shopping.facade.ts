@@ -162,7 +162,7 @@ export class ShoppingFacade {
     quantity: number,
     basketId: string,
     basketExtension: BasketExtensions,
-    lineItemAttributes?: Attribute,
+    lineItemAttributes?: Attribute[],
     bucketId?: string
   ) {
     this.store.dispatch(
@@ -186,7 +186,7 @@ export class ShoppingFacade {
     sku: string,
     quantity: number,
     basketId: string,
-    lineItemAttributes?: Attribute
+    lineItemAttributes?: Attribute[]
   ) {
     this.store.dispatch(
       addProductToBucketWithUrn({
@@ -206,7 +206,7 @@ export class ShoppingFacade {
     quantity: number,
     shippingMethod?: string,
     shipToAddress?: string,
-    lineItemAttributes?: Attribute
+    lineItemAttributes?: Attribute[]
   ) {
     this.store.dispatch(addProductToBasket({ sku, quantity, shippingMethod, shipToAddress, lineItemAttributes }));
   }

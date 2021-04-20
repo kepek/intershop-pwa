@@ -180,11 +180,7 @@ export class ProductMapper {
       minOrderQuantity: data.minOrderQuantity || 1,
       packingUnit: data.packingUnit,
       maxOrderQuantity: data.maxOrderQuantity || 100,
-      attributes:
-        (data.attributeGroups &&
-          data.attributeGroups.PRODUCT_DETAIL_ATTRIBUTES &&
-          data.attributeGroups.PRODUCT_DETAIL_ATTRIBUTES.attributes) ||
-        data.attributes,
+      attributes: data.attributeGroups?.PRODUCT_DETAIL_ATTRIBUTES?.attributes || data.attributes,
       attributeGroups: data.attributeGroups,
       images: this.imageMapper.fromImages(data.images),
       listPrice: PriceMapper.fromData(data.listPrice),

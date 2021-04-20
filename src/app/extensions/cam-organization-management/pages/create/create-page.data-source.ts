@@ -1,74 +1,135 @@
-// tslint:disable: ish-ordered-imports project-structure
-import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
-import { Observable, Subject, combineLatest, BehaviorSubject } from 'rxjs';
-import { map, switchMap, take } from 'rxjs/operators';
+// tslint:disable: ish-ordered-imports project-structure rxjs-no-subject-value
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Observable, Subject, combineLatest, BehaviorSubject, throwError } from 'rxjs';
+import { distinctUntilChanged, filter, map, switchMap } from 'rxjs/operators';
 
 import { CamOrganizationManagementFacade } from '../../facades/cam-organization-management.facade';
 import { CamfilB2bCustomer } from '../../models/camfil-b2b-customer/camfil-b2b-customer.model';
 import { CamfilB2bUser } from '../../models/camfil-b2b-user/camfil-b2b-user.model';
-import { whenTruthy } from 'ish-core/utils/operators';
+import { CamfilB2bContact } from '../../models/camfil-b2b-contact/camfil-b2b-contact.model';
+import { CamfilB2bRole } from '../../models/camfil-b2b-role/camfil-b2b-role.model';
+
+interface CustomerContact {
+  customerId: PropType<CamfilB2bCustomer, 'id'>;
+  contactId: PropType<CamfilB2bContact, 'erpId'>;
+}
 
 @Component({ template: '' })
 // tslint:disable-next-line: component-creation-test
-export abstract class CreatePageDataSourceComponent implements OnInit, AfterViewInit, OnDestroy {
-  constructor(private organizationFacade: CamOrganizationManagementFacade) {}
+export abstract class CreatePageDataSourceComponent implements OnInit, OnDestroy {
+  constructor(protected organizationFacade: CamOrganizationManagementFacade) {}
 
-  private destroy$ = new Subject();
+  // tslint:disable-next-line:private-destroy-field
+  protected destroy$ = new Subject();
 
-  customer$: Observable<Partial<CamfilB2bCustomer>>;
-  customerId$: Observable<string>;
-  user$: Observable<Partial<CamfilB2bUser>>;
-  userId$: Observable<string>;
-  context$: Observable<{ customer: Partial<CamfilB2bCustomer>; user: Partial<CamfilB2bUser> }>;
+  currentCustomer$: Observable<CamfilB2bCustomer>;
+  currentCustomerId$: Observable<string>;
 
-  // tslint:disable-next-line:no-empty
-  ngOnInit() {
-    this.customer$ = this.organizationFacade.currentCustomer$;
-    this.customerId$ = this.customer$.pipe(map(customer => customer.id));
+  newUser$: BehaviorSubject<CamfilB2bUser>;
+  newUserId$: Observable<string>;
+  newUserCustomer$: Observable<CamfilB2bCustomer>;
+  newUserContacts$: BehaviorSubject<CustomerContact[]>;
+  newUserRoles$: BehaviorSubject<CamfilB2bRole[]>;
+  newUserStaticRoles$: Observable<CamfilB2bRole[]>;
 
-    this.user$ = new BehaviorSubject<Partial<CamfilB2bUser>>({});
-    this.userId$ = this.user$.pipe(map(user => user.id));
+  context$: Observable<{
+    customer: CamfilB2bCustomer;
+    user: CamfilB2bUser;
+    contacts: CustomerContact[];
+    roles: CamfilB2bRole[];
+  }>;
 
-    this.context$ = combineLatest([this.customer$, this.user$]).pipe(map(([customer, user]) => ({ customer, user })));
+  // Methods
+
+  static createLogin(customer: CamfilB2bCustomer, user: CamfilB2bUser) {
+    if (!user) {
+      return throwError('createLogin() called without required user data');
+    }
+
+    if (!customer) {
+      return throwError('createLogin() called without required customer data');
+    }
+
+    return `${user.email.split('@')[0]}-${customer.customerNo}`;
   }
 
-  // tslint:disable-next-line:no-empty
-  ngAfterViewInit() {}
+  // Hooks
+
+  ngOnInit() {
+    this.currentCustomer$ = this.organizationFacade.currentCustomer$;
+    this.currentCustomerId$ = this.currentCustomer$.pipe(map(customer => customer.id));
+
+    this.newUser$ = new BehaviorSubject<CamfilB2bUser>({ id: undefined });
+    this.newUserId$ = this.newUser$.pipe(map(user => user.id));
+    this.newUserCustomer$ = this.currentCustomerId$.pipe(
+      switchMap(customerId => this.organizationFacade.getCustomer$(customerId))
+    );
+    this.newUserContacts$ = new BehaviorSubject<CustomerContact[]>([]);
+    this.newUserRoles$ = new BehaviorSubject<CamfilB2bRole[]>([]);
+    this.newUserStaticRoles$ = this.newUserId$.pipe(
+      switchMap(userId => this.organizationFacade.getUserStaticRoles$(userId))
+    );
+
+    this.organizationFacade
+      .getSelectedRoles$(['APP_B2B_BUYER'])
+      .pipe(filter(r => r.length !== 0))
+      .subscribe(newUserRoles => {
+        this.newUserRoles$.next(newUserRoles);
+      });
+
+    this.context$ = combineLatest([
+      this.currentCustomer$,
+      this.newUser$,
+      this.newUserContacts$,
+      this.newUserRoles$,
+    ]).pipe(map(([customer, user, contacts, roles]) => ({ customer, user, contacts, roles })));
+  }
 
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
   }
 
+  // Handlers
+
+  onUpdateNewCustomerUser({ customer, user }) {
+    user.active = user.active || true;
+    user.login = CreatePageDataSourceComponent.createLogin(customer, user); // TODO (extMlk): Verify why `login` is required when trying to create new user.
+
+    this.newUser$.next(user);
+  }
+
+  onUpdateSelectedCustomerUserRoles({ roleIDs }) {
+    this.organizationFacade
+      .getSelectedRoles$(roleIDs)
+      .pipe(
+        filter(r => r.length !== 0),
+        distinctUntilChanged()
+      )
+      .subscribe(roles => this.newUserRoles$.next(roles));
+  }
+
+  onAssignCustomerUserContact({ customer, contact }) {
+    const assignment: CustomerContact = { customerId: customer?.id, contactId: contact?.erpId };
+    const newAssignments = [...this.newUserContacts$.getValue(), assignment];
+
+    this.newUserContacts$.next(newAssignments);
+  }
+
+  onUnassignCustomerUserContact({ customer, contact }) {
+    const newAssignments = [
+      ...this.newUserContacts$
+        .getValue()
+        .filter(({ customerId, contactId }) => customerId !== customer?.id && contactId !== contact?.erpId),
+    ];
+
+    this.newUserContacts$.next(newAssignments);
+  }
+
+  // Observables
+
   loading$() {
     return this.organizationFacade.getOrganizationLoading$();
-  }
-
-  newUser$() {
-    return this.userId$.pipe(switchMap(userId => this.organizationFacade.getUser$(userId)));
-  }
-
-  newUserRoles$() {
-    return combineLatest([
-      this.userId$.pipe(switchMap(userId => this.organizationFacade.getUserRoles$(userId))),
-      this.organizationFacade.getSelectedRoles$(['APP_B2B_BUYER']),
-    ]).pipe(map(([userRoles, newUserRoles]) => [...userRoles, ...newUserRoles]));
-  }
-
-  newUserStaticRoles$() {
-    return this.userId$.pipe(switchMap(userId => this.organizationFacade.getUserStaticRoles$(userId)));
-  }
-
-  selectedCustomer$() {
-    return this.customerId$.pipe(switchMap(customerId => this.organizationFacade.getCustomer$(customerId)));
-  }
-
-  selectedCustomerRoles$() {
-    return this.customerId$.pipe(switchMap(customerId => this.organizationFacade.getCustomerRoles$(customerId)));
-  }
-
-  roles$() {
-    return this.organizationFacade.getRoles$();
   }
 
   customers$() {
@@ -79,48 +140,13 @@ export abstract class CreatePageDataSourceComponent implements OnInit, AfterView
     return this.organizationFacade.getCustomerContacts$(customerId);
   }
 
-  customerUserContact$(customerId) {
-    return this.userId$.pipe(switchMap(userId => this.organizationFacade.getCustomerUserContact$(customerId, userId)));
+  customerUserContact$(customerId: string) {
+    return this.newUserId$.pipe(
+      switchMap(userId => this.organizationFacade.getCustomerUserContact$(customerId, userId))
+    );
   }
 
-  onUpdateSelectedCustomerUserActive({ active }) {
-    // TODO (extMlk): This one suppose to be do the job but then the changes are not reflected in Camfil Customers API endpoints;
-    // tslint:disable-next-line:no-commented-out-code
-    // this.organizationFacade.updateCustomerUser$(customer, { ...user, active });
-    this.context$.pipe(take(1), whenTruthy()).subscribe(({ customer, user }) => {
-      if (active) {
-        this.organizationFacade.activateCustomerUser$(customer.id, user.id);
-      } else {
-        this.organizationFacade.deactivateCustomerUser$(customer.id, user.id);
-      }
-    });
-  }
-
-  onUpdateSelectedCustomerUserPassword() {
-    this.context$.pipe(take(1), whenTruthy()).subscribe(({ customer, user }) => {
-      const { email } = user;
-      const customerId = customer?.id;
-      const userId = user?.id;
-
-      return this.organizationFacade.resetCustomerUserPassword(customerId, userId, email);
-    });
-  }
-
-  onUpdateSelectedCustomerUserRoles({ roleIDs }) {
-    this.context$.pipe(take(1), whenTruthy()).subscribe(({ customer, user }) => {
-      this.organizationFacade.updateCustomerUserRoles$(customer.id, user.id, roleIDs);
-    });
-  }
-
-  onUpdateSelectedCustomerUserDetails({ customer, user }) {
-    this.organizationFacade.updateCustomerUser$(customer, user);
-  }
-
-  onAssignCustomerUserContact({ customer, user, contact }) {
-    this.organizationFacade.assignCustomerUserContact$(customer.id, user.id, contact);
-  }
-
-  onUnassignCustomerUserContact({ customer, user, contact }) {
-    this.organizationFacade.unassignCustomerUserContact$(customer.id, user.id, contact);
+  roles$() {
+    return this.organizationFacade.getRoles$();
   }
 }

@@ -6,8 +6,10 @@ import { MockComponent } from 'ng-mocks';
 import { of } from 'rxjs';
 import { instance, mock, when } from 'ts-mockito';
 
+import { AccountFacade } from 'ish-core/facades/account.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { PricePipe } from 'ish-core/models/price/price.pipe';
+import { User } from 'ish-core/models/user/user.model';
 import { CoreStoreModule } from 'ish-core/store/core/core-store.module';
 import { ShoppingStoreModule } from 'ish-core/store/shopping/shopping-store.module';
 import { findAllCustomElements } from 'ish-core/utils/dev/html-query-utils';
@@ -21,9 +23,11 @@ describe('Camfil Product List Component', () => {
   let fixture: ComponentFixture<CamfilProductListComponent>;
   let element: HTMLElement;
   let shoppingFacade: ShoppingFacade;
+  let accountFacade: AccountFacade;
 
   beforeEach(async () => {
     shoppingFacade = mock(ShoppingFacade);
+    accountFacade = mock(AccountFacade);
     await TestBed.configureTestingModule({
       imports: [
         CoreStoreModule.forTesting(),
@@ -37,8 +41,13 @@ describe('Camfil Product List Component', () => {
         MockComponent(LoadingComponent),
         PricePipe,
       ],
-      providers: [{ provide: ShoppingFacade, useFactory: () => instance(shoppingFacade) }],
+      providers: [
+        { provide: ShoppingFacade, useFactory: () => instance(shoppingFacade) },
+        { provide: AccountFacade, useFactory: () => instance(accountFacade) },
+      ],
     }).compileComponents();
+
+    when(accountFacade.user$).thenReturn(of({} as User));
   });
 
   beforeEach(() => {

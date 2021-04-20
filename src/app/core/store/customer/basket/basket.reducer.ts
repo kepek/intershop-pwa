@@ -23,6 +23,7 @@ import {
   addItemsToBasketSuccess,
   addProductToBasket,
   addProductToBucketAddressFromCamCardFail,
+  addProductsFromCamCard,
   addProductsFromCamCardFail,
   addProductsToBasketFromCamCard,
   addPromotionCodeToBasket,
@@ -284,9 +285,10 @@ export const basketReducer = createReducer(
       validationResults: initialValidationResults,
     })
   ),
-  on(addItemsToBasket, addItemsToBasketFromCamCard, (state: BasketState) => ({
+  on(addItemsToBasket, addItemsToBasketFromCamCard, addProductsFromCamCard, (state: BasketState) => ({
     ...state,
     productUpdated: false,
+    productAdded: false,
   })),
   on(addItemsToBasketSuccess, (state: BasketState, action) => ({
     ...state,
@@ -403,9 +405,9 @@ export const basketReducer = createReducer(
       li.id === lineItemId
         ? {
             ...li,
-            attributes: li.attributes?.length
+            attributes: li.attributes.find(att => att.name === attribute.name)
               ? li.attributes.map(att => (att.name === attribute.name ? attribute : att))
-              : [attribute],
+              : [...li.attributes, attribute],
           }
         : li
     );
