@@ -37,6 +37,8 @@ import {
   isBusinessCustomer,
   loadUserPaymentMethods,
   loginUser,
+  loginUserWithToken,
+  logoutUser,
   requestPasswordReminder,
   resetPasswordReminder,
   updateCustomer,
@@ -76,6 +78,14 @@ export class AccountFacade {
 
   loginUser(credentials: Credentials) {
     this.store.dispatch(loginUser({ credentials }));
+  }
+
+  loginUserWithToken(token: string) {
+    this.store.dispatch(loginUserWithToken({ token }));
+  }
+
+  logoutUser() {
+    this.store.dispatch(logoutUser());
   }
 
   createUser(body: CustomerRegistrationType) {
