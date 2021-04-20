@@ -53,9 +53,9 @@ export class AttributeHelper {
   static calculateAttrsToAddFromForm(form) {
     const boxLabel = form.get('boxLabel').value;
     const measurements = {
-      width: form.get('measurementWidth').value,
-      height: form.get('measurementHeight').value,
-      diameter: form.get('measurementDiameter').value,
+      width: form.get('measurementWidth')?.value,
+      height: form.get('measurementHeight')?.value,
+      diameter: form.get('measurementDiameter')?.value,
     };
     return AttributeHelper.getAttrsBeforeAddToCart(measurements, boxLabel);
   }
