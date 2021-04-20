@@ -14,10 +14,10 @@
       </span>
     </a>
     <mat-menu #menu="matMenu">
-      <ng-container *ngIf="availableLocales$ | async as availableLocales">
+      <ng-container *ngIf="availableLocales$ | async">
         <ng-container *ngFor="let l of availableLocales">
           <ng-container *ngIf="l.lang !== locale.lang">
-            <a mat-menu-item [href]="location | makeHref: { redirect: '1', lang: l.lang }">
+            <a mat-menu-item [href]="location | makeHref: { redirect: '1', lang: l.lang, value: l.value }">
               {{ l.displayName | translate }}</a
             >
           </ng-container>
@@ -36,11 +36,11 @@
       <span class="language-switch-current-selection d-inline">{{ locale.displayName | translate }}</span>
       <mat-icon class="language-switch--arrow">arrow_{{ showList ? 'left' : 'right' }}</mat-icon>
     </a>
-    <ng-container *ngIf="availableLocales$ | async as availableLocales">
+    <ng-container *ngIf="availableLocales$ | async">
       <ul *ngIf="availableLocales.length && showList">
         <ng-container *ngFor="let l of availableLocales">
           <li *ngIf="l.lang !== locale.lang">
-            <a [href]="location | makeHref: { redirect: '1', lang: l.lang }"> {{ l.displayName | translate }} </a>
+            <a [href]="location | makeHref: { redirect: '1', lang: l.lang, value: l.value }"> {{ l.displayName | translate }} </a>
           </li>
         </ng-container>
       </ul>

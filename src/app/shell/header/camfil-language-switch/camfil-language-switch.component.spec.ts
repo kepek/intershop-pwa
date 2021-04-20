@@ -32,6 +32,8 @@ describe('Camfil Language Switch Component', () => {
       imports: [NgbDropdownModule, RouterTestingModule],
       providers: [{ provide: AppFacade, useFactory: () => instance(appFacade) }],
     }).compileComponents();
+
+    when(appFacade.availableLocales$).thenReturn(of(locales));
   });
 
   beforeEach(() => {
@@ -49,7 +51,6 @@ describe('Camfil Language Switch Component', () => {
   });
 
   it('should show the available language options when rendered', () => {
-    when(appFacade.availableLocales$).thenReturn(of(locales));
     when(appFacade.currentLocale$).thenReturn(of(locales[1]));
 
     fixture.detectChanges();
