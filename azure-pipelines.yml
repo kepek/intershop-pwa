@@ -14,15 +14,15 @@ resources:
   - repo: self
 
 variables:
-  - group:  acr_ishpwa
+  - group: acr_ishpwa
 
-  - name:   projectName
+  - name: projectName
     value: 'cmflz'
 
-  - name:   registryServerName
-    value:  $(registryName).azurecr.io
+  - name: registryServerName
+    value: $(registryName).azurecr.io
 
-  - name:  tag
+  - name: tag
     value: '$(Build.BuildId)'
 
   - name: imageSuffix
@@ -31,16 +31,16 @@ variables:
     ${{ if not(eq(variables['Build.SourceBranchName'] , 'master')) }}:
       value: -dev
 
-  - name:  'pwaSSR.imageName'
+  - name: 'pwaSSR.imageName'
     value: '$(projectName)-pwa-ssr$(imageSuffix)'
 
-  - name:  'pwaNginx.imageName'
+  - name: 'pwaNginx.imageName'
     value: '$(projectName)-pwa-nginx$(imageSuffix)'
 
-  - name:  'pwaSSR.imageFullName'
+  - name: 'pwaSSR.imageFullName'
     value: '$(registryServerName)/$(pwaSSR.imageName):$(tag)'
 
-  - name:  'pwaNginx.imageFullName'
+  - name: 'pwaNginx.imageFullName'
     value: '$(registryServerName)/$(pwaNginx.imageName):$(tag)'
 
 stages:
@@ -73,14 +73,13 @@ stages:
               docker push $(pwaNginx.imageFullName)
             displayName: 'docker push pwa-nginx'
 
-
   - stage: Release
     displayName: 'Realease'
     dependsOn: Build
     condition: startsWith(variables['build.sourceBranch'], 'refs/tags/release')
 
     variables:
-      pwaSSR.imageFullReleaseName:  '$(registryServerName)/$(pwaSSR.imageName):release-$(tag)'
+      pwaSSR.imageFullReleaseName: '$(registryServerName)/$(pwaSSR.imageName):release-$(tag)'
       pwaNginx.imageFullReleaseName: '$(registryServerName)/$(pwaNginx.imageName):release-$(tag)'
 
     jobs:
@@ -116,4 +115,3 @@ stages:
           - bash: |
               docker push $(pwaNginx.imageFullReleaseName)
             displayName: 'docker push pwa-nginx'
-

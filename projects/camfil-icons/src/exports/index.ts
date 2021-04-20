@@ -2,9 +2,7 @@
 
 import { CamfilIcon } from './build/camfil-icon.model';
 
-export type IconNameSubset<
-  T extends Readonly<CamfilIcon[]>
-> = T[number]['name'];
+export type IconNameSubset<T extends Readonly<CamfilIcon[]>> = T[number]['name'];
 
 export * from './build/camfilIcon-add-camcard.icon';
 export * from './build/camfilIcon-address-pin.icon';

@@ -1,4 +1,8 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+
+import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 
 import { CamCardsFacade } from '../../../facades/cam-cards.facade';
 import { CamCard } from '../../../models/cam-card/cam-card.model';
@@ -9,7 +13,7 @@ import { CamCard } from '../../../models/cam-card/cam-card.model';
   styleUrls: ['./account-cam-card-toolbar.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AccountCamCardToolbarComponent implements OnInit {
+export class AccountCamCardToolbarComponent implements OnInit, OnDestroy {
   @Output() addCamCard = new EventEmitter<CamCard>();
   @Output() openMoveCamCardDialog = new EventEmitter<Event>();
   @Output() addSelectedItemsToCart = new EventEmitter();
@@ -17,11 +21,18 @@ export class AccountCamCardToolbarComponent implements OnInit {
   @Input() isSticky: boolean;
   @Input() checkedCamCards: CamCard[];
   @Input() productsChecked = {};
+  basketLoading = false;
+  @Input() productAddingInProgress: boolean;
 
-  constructor(private camCardsFacade: CamCardsFacade) {}
+  private destroy$ = new Subject<void>();
+
+  constructor(private camCardsFacade: CamCardsFacade, private checkoutFacade: CheckoutFacade) {}
 
   ngOnInit() {
     this.camCardsFacade.detectCamCardToolbar();
+    this.checkoutFacade.basketLoading$.pipe(takeUntil(this.destroy$)).subscribe(bl => {
+      this.basketLoading = bl;
+    });
   }
 
   add(camCard: CamCard) {
@@ -42,5 +53,14 @@ export class AccountCamCardToolbarComponent implements OnInit {
 
   isProductsChecked() {
     return Object.keys(this.productsChecked).length;
+  }
+
+  isAddToCartBtnDisabled() {
+    return this.basketLoading || !this.isProductsChecked() || this.productAddingInProgress;
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }
