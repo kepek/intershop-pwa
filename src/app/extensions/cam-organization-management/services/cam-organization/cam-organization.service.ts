@@ -370,9 +370,9 @@ export class CamOrganizationService {
     );
   }
 
-  resetCustomerUserPassword(customerId: string, userId: string, email: string) {
+  resetCustomerUserPassword(customerId: string, userId: string, login: string) {
     const data: PasswordReminder = {
-      email,
+      email: login, // We are not using email addresses, so we pass any string.
     };
 
     const options: AvailableOptions = {
@@ -386,7 +386,7 @@ export class CamOrganizationService {
       map(() => ({
         customerId,
         userId,
-        email,
+        login,
         data,
       }))
     );
