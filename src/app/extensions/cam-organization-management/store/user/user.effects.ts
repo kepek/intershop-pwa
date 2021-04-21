@@ -221,13 +221,13 @@ export class UserEffects {
     this.actions$.pipe(
       ofType(resetCustomerUserPassword),
       mapToPayload(),
-      concatMap(({ customerId, userId, email }) =>
-        this.organizationService.resetCustomerUserPassword(customerId, userId, email).pipe(
+      concatMap(({ customerId, userId, login }) =>
+        this.organizationService.resetCustomerUserPassword(customerId, userId, login).pipe(
           map(() =>
             resetCustomerUserPasswordSuccess({
               customerId,
               userId,
-              email,
+              login,
               successMessage: 'camfil.account.organization.user_details.form.change_password.success.message',
             })
           ),

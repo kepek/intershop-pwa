@@ -510,8 +510,8 @@ export class CamOrganizationManagementFacade {
    * @param userId
    * @param email
    */
-  resetCustomerUserPassword(customerId: string, userId: string, email: string) {
-    this.store.dispatch(resetCustomerUserPassword({ customerId, userId, email }));
+  resetCustomerUserPassword(customerId: string, userId: string, login: string) {
+    this.store.dispatch(resetCustomerUserPassword({ customerId, userId, login }));
   }
 
   /**

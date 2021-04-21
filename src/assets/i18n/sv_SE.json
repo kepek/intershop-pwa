@@ -120,7 +120,7 @@
   "account.forgotdata.email.invalid_login_or_name.error": "Den angivna e-postadressen är felaktig. Var god försök igen.",
   "account.forgotdata.email.label": "E-postadress",
   "account.forgotdata.password_retrieval.heading": "Glömt lösenord?",
-  "account.forgotdata.password_retrieval_info.text": "For security purposes, please provide your e-mail address and submit the form. If the information you entered is correct, we will send you an e-mail with a link. Follow this link to create a new password. If you have any problems or need help, please contact our <a href=\"route://contact\">Customer Service</a>.",
+  "account.forgotdata.password_retrieval_info.text": "For security purposes, please provide your login and submit the form. If the information you entered is correct, we will send you an e-mail with a link. Follow this link to create a new password. If you have any problems or need help, please contact our <a href=\"route://contact\">Customer Service</a>.",
   "account.help.heading": "Support och vanliga frågor",
   "account.lastname.error.required": "Ange efternamn.",
   "account.login.addresses.message": "Logga in på ditt konto för att uppdatera adresser.",
