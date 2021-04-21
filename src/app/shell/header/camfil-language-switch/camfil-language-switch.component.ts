@@ -1,8 +1,18 @@
-import { APP_BASE_HREF, Location } from '@angular/common';
-import { ChangeDetectionStrategy, Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
+import { APP_BASE_HREF, DOCUMENT, Location } from '@angular/common';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Inject,
+  Input,
+  OnInit,
+  Optional,
+  Output,
+} from '@angular/core';
+import { REQUEST } from '@nguniversal/express-engine/tokens';
+import { Request } from 'express';
 import { Observable } from 'rxjs';
-import { filter, take } from 'rxjs/operators';
+import { take } from 'rxjs/operators';
 
 import { AppFacade } from 'ish-core/facades/app.facade';
 import { Channel } from 'ish-core/models/channel/channel.types';
@@ -31,7 +41,8 @@ export class CamfilLanguageSwitchComponent implements OnInit {
   constructor(
     private appFacade: AppFacade,
     public location: Location,
-    private router: Router,
+    @Inject(DOCUMENT) private doc: Document,
+    @Optional() @Inject(REQUEST) private request: Request,
     @Inject(APP_BASE_HREF) private baseHref: string
   ) {}
 
@@ -44,14 +55,6 @@ export class CamfilLanguageSwitchComponent implements OnInit {
           .find(([, val]) => val === channel)[0]
           .toLowerCase();
         this.availableLocales = availableLocales.filter(loc => [channelCode, 'gb'].includes(loc.value));
-
-        // TODO: tmp part
-        this.router.events.pipe(filter((event: any) => event instanceof NavigationEnd)).subscribe(event => {
-          console.log(event.url, 'event.url');
-          console.log(this.router.url, 'url');
-          console.log(this.baseHref, 'baseHref');
-          console.log(this.location.path(), 'location');
-        });
       });
     });
   }
@@ -61,6 +64,11 @@ export class CamfilLanguageSwitchComponent implements OnInit {
   }
 
   getLanguageSwitchUrl(value: string) {
+    let uri = this.doc.baseURI.replace(new RegExp(`${this.baseHref}$`), '');
+    if (this.request) {
+      uri = `${this.request.protocol}://${this.request.get('host')}`;
+    }
+
     const baseHrefArr = this.baseHref.split('/').filter(x => x);
     const locals = baseHrefArr[0]?.split('-');
 
@@ -72,7 +80,7 @@ export class CamfilLanguageSwitchComponent implements OnInit {
       locals[1] = value;
       baseHrefArr[0] = locals.join('-');
 
-      return `/${baseHrefArr.join('/')}${this.location.path()}`;
+      return `${uri}/${baseHrefArr.join('/')}${this.location.path()}`;
     }
     return false;
   }
