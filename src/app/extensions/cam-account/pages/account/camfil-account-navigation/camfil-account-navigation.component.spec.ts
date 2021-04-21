@@ -9,6 +9,8 @@ import { AccountFacade } from 'ish-core/facades/account.facade';
 import { FeatureToggleModule } from 'ish-core/feature-toggle.module';
 
 import { CamfilAccountNavigationComponent } from './camfil-account-navigation.component';
+import { MockComponent } from 'ng-mocks';
+import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
 
 describe('Camfil Account Navigation Component', () => {
   let component: CamfilAccountNavigationComponent;
@@ -19,7 +21,7 @@ describe('Camfil Account Navigation Component', () => {
   beforeEach(async () => {
     accountFacadeMock = mock(AccountFacade);
     await TestBed.configureTestingModule({
-      declarations: [CamfilAccountNavigationComponent],
+      declarations: [CamfilAccountNavigationComponent, MockComponent(LoadingComponent)],
       imports: [
         AuthorizationToggleModule.forTesting('APP_B2B_MANAGE_USERS'),
         FeatureToggleModule.forTesting('quoting', 'orderTemplates'),
