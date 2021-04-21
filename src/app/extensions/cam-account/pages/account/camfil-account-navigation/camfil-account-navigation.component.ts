@@ -8,12 +8,11 @@ import {
   OnInit,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { select, Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 
 import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
 import { getUserPermissions } from 'ish-core/store/customer/authorization';
 import { checkPermission } from 'ish-core/utils/authorization-toggle/authorization-toggle.service';
-
 import { whenTruthy } from 'ish-core/utils/operators';
 
 interface NavigationItems {

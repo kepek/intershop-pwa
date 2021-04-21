@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
+import { MockComponent } from 'ng-mocks';
 import { of } from 'rxjs';
 import { mock, when } from 'ts-mockito';
 
 import { AuthorizationToggleModule } from 'ish-core/authorization-toggle.module';
 import { AccountFacade } from 'ish-core/facades/account.facade';
 import { FeatureToggleModule } from 'ish-core/feature-toggle.module';
+import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
 
 import { CamfilAccountNavigationComponent } from './camfil-account-navigation.component';
-import { MockComponent } from 'ng-mocks';
-import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
 
 describe('Camfil Account Navigation Component', () => {
   let component: CamfilAccountNavigationComponent;
