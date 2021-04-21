@@ -64,9 +64,10 @@ export class CamfilLanguageSwitchComponent implements OnInit {
   }
 
   getLanguageSwitchUrl(value: string) {
-    let uri = this.doc.baseURI.replace(new RegExp(`${this.baseHref}$`), '');
+    let url = this.doc.baseURI.replace(new RegExp(`${this.baseHref}$`), '');
+
     if (this.request) {
-      uri = `${this.request.protocol}://${this.request.get('host')}`;
+      url = `${this.request.protocol}://${this.request.get('host')}`;
     }
 
     const baseHrefArr = this.baseHref.split('/').filter(x => x);
@@ -80,7 +81,7 @@ export class CamfilLanguageSwitchComponent implements OnInit {
       locals[1] = value;
       baseHrefArr[0] = locals.join('-');
 
-      return `${uri}/${baseHrefArr.join('/')}${this.location.path()}`;
+      return `${url}/${baseHrefArr.join('/')}${this.location.path()}`;
     }
     return false;
   }
