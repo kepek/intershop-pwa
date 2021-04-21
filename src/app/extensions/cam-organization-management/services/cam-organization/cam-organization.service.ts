@@ -186,8 +186,11 @@ export class CamOrganizationService {
       return throwError('updateCustomerUser() called without required user data');
     }
 
+    // TODO (extMlk): See CAM-979
+    const login = user?.currentLogin || user.login;
+
     return this.apiService
-      .put(`customers/${customer.customerNo}/users/${user.login}`, {
+      .put(`customers/${customer.customerNo}/users/${login}`, {
         ...customer,
         ...user,
         preferredInvoiceToAddress: { urn: user.preferredInvoiceToAddressUrn },
