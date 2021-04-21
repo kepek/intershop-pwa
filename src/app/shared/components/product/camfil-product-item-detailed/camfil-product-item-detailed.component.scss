@@ -50,6 +50,7 @@
     }
   }
   .product-prices-container {
+    min-height: 20px;
     margin-bottom: $space-box-half;
     line-height: $h4-line-height;
     .camfil-product-attribute__label {
