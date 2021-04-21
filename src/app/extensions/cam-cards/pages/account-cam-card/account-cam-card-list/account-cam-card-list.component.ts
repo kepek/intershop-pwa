@@ -152,7 +152,7 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
     if (changes.camCards) {
       if (this.camCards.length) {
         this.authorizationToggle
-          .isAuthorizedToCheckArr(AccountCamCardListComponent.CUSTOMER_ADMIN_PERMISSIONS)
+          .isAuthorizedToCheckArrAll(AccountCamCardListComponent.CUSTOMER_ADMIN_PERMISSIONS)
           .pipe(take(1))
           .subscribe(p => {
             this.isCustomerAdmin = p;

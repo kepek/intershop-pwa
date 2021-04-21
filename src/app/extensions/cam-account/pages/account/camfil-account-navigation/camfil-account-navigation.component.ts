@@ -16,7 +16,7 @@ interface NavigationItems {
     localizationKey: string;
     dataTestingId?: string;
     feature?: string;
-    permission?: string;
+    permissions?: string[];
     children?: NavigationItems;
   };
 }
@@ -42,11 +42,14 @@ export class CamfilAccountNavigationComponent implements OnInit, AfterViewInit, 
       feature: 'camCards',
       dataTestingId: 'cam-cards-link',
     },
-    '/account/orders': { localizationKey: 'account.order_history.link' },
+    '/account/orders': {
+      localizationKey: 'account.order_history.link',
+      permissions: ['APP_B2B_MANAGE_ALL_ORDERS', 'APP_B2B_MANAGE_OWN_ORDERS'],
+    },
     '/account/organization': {
       localizationKey: 'camfil.account.organization.user_management',
       feature: 'camOrganizationManagement',
-      permission: 'APP_B2B_MANAGE_USERS',
+      permissions: ['APP_B2B_MANAGE_USERS'],
     },
     '/logout': { localizationKey: 'account.navigation.logout.link' },
   };
