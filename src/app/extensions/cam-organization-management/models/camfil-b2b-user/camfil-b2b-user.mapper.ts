@@ -6,10 +6,12 @@ export class CamfilB2bUserMapper {
     if (camfilB2bUserData) {
       const { active, userRoles, ...rest } = camfilB2bUserData;
       const roleIDs = userRoles?.userRoles?.map(role => role.roleID);
+      const currentLogin = camfilB2bUserData?.login;
 
       return {
         ...rest,
         roleIDs,
+        currentLogin,
         active: active && JSON.parse(String(active)),
       };
     } else {
