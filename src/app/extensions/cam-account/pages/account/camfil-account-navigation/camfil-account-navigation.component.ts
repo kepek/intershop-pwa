@@ -8,10 +8,9 @@ import {
   OnInit,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { Store, select } from '@ngrx/store';
 
+import { AccountFacade } from 'ish-core/facades/account.facade';
 import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
-import { getUserPermissions } from 'ish-core/store/customer/authorization';
 import { checkPermission } from 'ish-core/utils/authorization-toggle/authorization-toggle.service';
 import { whenTruthy } from 'ish-core/utils/operators';
 
@@ -55,11 +54,11 @@ export class CamfilAccountNavigationComponent implements OnInit, AfterViewInit, 
     '/logout': { localizationKey: 'account.navigation.logout.link' },
   };
   permissions: string[] = [];
-  constructor(private router: Router, private cdr: ChangeDetectorRef, private store: Store) {}
+  constructor(private router: Router, private cdr: ChangeDetectorRef, private accountFacade: AccountFacade) {}
 
   ngOnInit() {
     this.isMobileView = this.deviceType === 'tablet' || this.deviceType === 'mobile';
-    this.store.pipe(select(getUserPermissions), whenTruthy()).subscribe(permissions => {
+    this.accountFacade.userPermissions$.pipe(whenTruthy()).subscribe(permissions => {
       this.permissions = permissions;
       if (permissions) {
         this.loading = false;
