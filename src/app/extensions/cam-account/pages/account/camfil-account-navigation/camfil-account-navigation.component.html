@@ -1,7 +1,7 @@
 <ng-container *ngIf="!isMobileView; else mobileNavigation">
   <ul class="account-navigation list-unstyled" data-testing-id="myaccount-navigation">
     <ng-container *ngFor="let item of navigationItems | keyvalue: unsorted; let first = first">
-      <ng-container *ishIsAuthorizedTo="item.value.permission || 'always'">
+      <ng-container *ngIf="checkUserPermissionToLink(item.value.permission || 'always')">
         <li
           *ishFeature="item.value.feature || 'always'"
           routerLinkActive="active"
@@ -42,3 +42,4 @@
     </ng-container>
   </select>
 </ng-template>
+<ish-loading *ngIf="loading"></ish-loading>
