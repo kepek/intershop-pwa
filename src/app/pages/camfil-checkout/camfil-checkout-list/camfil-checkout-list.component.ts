@@ -329,7 +329,7 @@ export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
       this.modalDeliveryText = 'camfil.modal.checkout.full-delivery.title';
       this.updateBucketDeliveryDate(false, selectedDD);
     } else {
-      this.modalDeliveryText = 'camfil.modal.checkout.parital-delivery.title';
+      this.modalDeliveryText = 'camfil.modal.checkout.partial-delivery.title';
       this.updateBucketDeliveryDate(true, selectedDD);
     }
   }
