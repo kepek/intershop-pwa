@@ -38,6 +38,7 @@
         [showText]="true"
       ></camfil-product-inventory>
       <camfil-product-add-to-compare
+        *ngIf="showAddToCompare"
         [isInCompareList]="isInCompareList"
         (compareToggle)="toggleCompare(product.sku)"
         class="btn-link py-0 px-0"
