@@ -33,6 +33,7 @@
         [orderMark]="option.orderMark"
         [invoiceMark]="option.invoiceLabel"
         [deliveryAddress]="option.shipToAddressFull"
+        [customerName]="option.customer?.companyName"
         (click)="onOrderClicked(option.id)"
         [isClicked]="selectedOrderId === option.id"
       >

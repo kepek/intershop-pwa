@@ -27,8 +27,9 @@
           {{ 'camfil.account.cam_card.add_to_form.delivery_address' | translate }}:
         </div>
         <div class="cam-card__details--value">
-          {{ deliveryAddress.firstName }} {{ deliveryAddress.lastName }}, {{ deliveryAddress.addressLine1 }},
-          {{ deliveryAddress.postalCode }}, {{ deliveryAddress.city }}
+          {{ customerName }}, {{ deliveryAddress.addressLine2 }}, {{ deliveryAddress.addressLine1 }},
+          {{ deliveryAddress.postalCode }},
+          {{ deliveryAddress.city }}
         </div>
       </div>
     </div>

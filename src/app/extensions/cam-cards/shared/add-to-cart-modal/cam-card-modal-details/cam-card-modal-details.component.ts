@@ -15,4 +15,5 @@ export class CamCardModalDetailsComponent {
   @Input() invoiceMark: string;
   @Input() deliveryAddress: Address;
   @Input() isClicked = false;
+  @Input() customerName: string;
 }
