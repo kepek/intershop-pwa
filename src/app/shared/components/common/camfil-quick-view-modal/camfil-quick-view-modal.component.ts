@@ -56,7 +56,7 @@ export class CamfilQuickViewModalComponent implements OnInit, OnDestroy {
   isShipmentInformationAvailable = false;
   readonly quantityControlName = 'quantity';
   secureVideoUrl: SafeResourceUrl;
-
+  showAddToCompare = false;
   // tslint:disable-next-line:force-jsdoc-comments
   // product attributes
   frameSize;

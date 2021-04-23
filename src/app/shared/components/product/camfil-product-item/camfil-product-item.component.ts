@@ -44,7 +44,7 @@ export const DEFAULT_CONFIGURATION: Readonly<ProductItemContainerConfiguration> 
   displayAddToWishlist: true,
   displayAddToOrderTemplate: true,
   displayAddToCamCard: true,
-  displayAddToCompare: true,
+  displayAddToCompare: false,
   displayAddToQuote: true,
   displayType: 'simple',
 };

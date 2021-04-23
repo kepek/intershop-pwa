@@ -37,6 +37,7 @@ export class CamfilProductDetailComponent implements OnInit, OnDestroy {
 
   isInCompareList$: Observable<boolean>;
   isInCompareList: boolean;
+  showAddToCompare = false;
   private sku$ = new ReplaySubject<string>(1);
 
   constructor(private shoppingFacade: ShoppingFacade) {}
