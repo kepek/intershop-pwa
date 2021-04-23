@@ -18,7 +18,6 @@ import { AppFacade } from 'ish-core/facades/app.facade';
 import { Channel } from 'ish-core/models/channel/channel.types';
 import { Locale } from 'ish-core/models/locale/locale.model';
 import { whenTruthy } from 'ish-core/utils/operators';
-import { lookup } from 'dns';
 
 @Component({
   selector: 'camfil-language-switch',
