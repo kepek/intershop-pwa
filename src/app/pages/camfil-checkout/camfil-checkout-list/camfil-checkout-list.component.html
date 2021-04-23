@@ -278,8 +278,9 @@
 <camfil-edit-order-modal #editModal [order]="order"></camfil-edit-order-modal>
 
 <camfil-small-cta-modal
-  actionTitle="{{ modalDeliveryText | translate }}{{ order?.id }}"
+  actionTitle="{{ modalDeliveryText | translate }}"
   actionButtonTitle="{{ 'camfil.checkout.create_new_order.temporary_order.ok' | translate }}"
   onlyAccept="true"
+  icon="calendar"
 >
 </camfil-small-cta-modal>
