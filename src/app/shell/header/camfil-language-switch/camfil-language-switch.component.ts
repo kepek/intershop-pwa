@@ -18,6 +18,7 @@ import { AppFacade } from 'ish-core/facades/app.facade';
 import { Channel } from 'ish-core/models/channel/channel.types';
 import { Locale } from 'ish-core/models/locale/locale.model';
 import { whenTruthy } from 'ish-core/utils/operators';
+import { lookup } from 'dns';
 
 @Component({
   selector: 'camfil-language-switch',
@@ -76,7 +77,7 @@ export class CamfilLanguageSwitchComponent implements OnInit {
     if (
       baseHrefArr[0]?.length === 5 && // ex.: sv-se
       locals.length === 2 && // ex.: ['sv', 'se']
-      Object.keys(Channel).includes(locals[1].toLocaleUpperCase())
+      this.availableLocales.find(loc => loc.value === locals[1])
     ) {
       locals[1] = value;
       baseHrefArr[0] = locals.join('-');
