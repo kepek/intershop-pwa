@@ -76,7 +76,7 @@ export class CamfilLanguageSwitchComponent implements OnInit {
     if (
       baseHrefArr[0]?.length === 5 && // ex.: sv-se
       locals.length === 2 && // ex.: ['sv', 'se']
-      Object.keys(Channel).includes(locals[1].toLocaleUpperCase())
+      this.availableLocales.find(loc => loc.value === locals[1])
     ) {
       locals[1] = value;
       baseHrefArr[0] = locals.join('-');
