@@ -6,6 +6,8 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MockComponent, MockDirective, MockPipe } from 'ng-mocks';
 
 import { FeatureToggleDirective } from 'ish-core/directives/feature-toggle.directive';
+import { AttributeGroup } from 'ish-core/models/attribute-group/attribute-group.model';
+import { AttributeGroupTypes } from 'ish-core/models/attribute-group/attribute-group.types';
 import { PricePipe } from 'ish-core/models/price/price.pipe';
 import { ProductView } from 'ish-core/models/product-view/product-view.model';
 import { CamfilDimensionPipe } from 'ish-core/pipes/camfil-dimension.pipe';
@@ -80,7 +82,16 @@ describe('Camfil Product Item Detailed Component', () => {
     fixture = TestBed.createComponent(CamfilProductItemDetailedComponent);
     component = fixture.componentInstance;
     element = fixture.nativeElement;
-    component.product = { sku: 'sku' } as ProductView;
+    const attributeGroup = {
+      attributes: [{ name: 'sale', type: 'String', value: 'sale' }],
+    } as AttributeGroup;
+
+    component.product = {
+      sku: 'sku',
+      attributeGroups: {
+        [AttributeGroupTypes.ProductLabelAttributes]: attributeGroup,
+      } as { [id: string]: AttributeGroup },
+    } as ProductView;
   });
 
   it('should be created', () => {
@@ -101,12 +112,6 @@ describe('Camfil Product Item Detailed Component', () => {
         "camfil-product-quickview",
         "camfil-product-id",
         "camfil-product-attribute",
-        "camfil-product-attribute",
-        "camfil-product-attribute",
-        "camfil-product-attribute",
-        "camfil-product-attribute",
-        "camfil-product-attribute",
-        "camfil-product-attribute",
         "camfil-product-quantity",
         "camfil-product-add-to-basket",
         "camfil-lazy-product-add-to-cam-card",
@@ -120,12 +125,6 @@ describe('Camfil Product Item Detailed Component', () => {
         "camfil-product-inventory",
         "camfil-product-quickview",
         "camfil-product-id",
-        "camfil-product-attribute",
-        "camfil-product-attribute",
-        "camfil-product-attribute",
-        "camfil-product-attribute",
-        "camfil-product-attribute",
-        "camfil-product-attribute",
         "camfil-product-attribute",
         "camfil-product-quantity",
         "camfil-product-add-to-basket",
@@ -142,12 +141,6 @@ describe('Camfil Product Item Detailed Component', () => {
         "camfil-product-image",
         "camfil-product-label",
         "camfil-product-quickview",
-        "camfil-product-attribute",
-        "camfil-product-attribute",
-        "camfil-product-attribute",
-        "camfil-product-attribute",
-        "camfil-product-attribute",
-        "camfil-product-attribute",
         "camfil-product-attribute",
       ]
     `);

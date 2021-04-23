@@ -44,10 +44,12 @@
         [value]="product | camfilDimension"
       ></camfil-product-attribute>
       <camfil-product-attribute
+        *ngIf="isNotZero(isoEfficiency)"
         [name]="'camfil.product.efficiency.label' | translate"
         [value]="product | camfilProductAttributeVal: 'IsoEfficiency'"
       ></camfil-product-attribute>
       <camfil-product-attribute
+        *ngIf="isNotZero(energyclass)"
         name="camfil.product.energyClass.label"
         [value]="product | camfilProductAttributeVal: 'Energyclass'"
       ></camfil-product-attribute>
@@ -56,18 +58,22 @@
   <div class="product-detailed-col-3 d-flex flex-column">
     <div class="product-detailed-inner-col">
       <camfil-product-attribute
+        *ngIf="isNotZero(frameProduct)"
         name="camfil.product.frame.label"
         [value]="product | camfilProductAttributeVal: 'FrameProduct'"
       ></camfil-product-attribute>
       <camfil-product-attribute
+        *ngIf="isNotZero(pressuredrop)"
         name="camfil.product.pressureDrop.label"
         [value]="product | camfilProductAttributeVal: 'Pressuredrop'"
       ></camfil-product-attribute>
       <camfil-product-attribute
+        *ngIf="isNotZero(isoClass)"
         name="camfil.product.isoClass.label"
         [value]="product | camfilProductAttributeVal: 'IsoClass'"
       ></camfil-product-attribute>
       <camfil-product-attribute
+        *ngIf="isNotZero(filterbags)"
         name="camfil.product.bags.label"
         [value]="product | camfilProductAttributeVal: 'Filterbags'"
       ></camfil-product-attribute>
