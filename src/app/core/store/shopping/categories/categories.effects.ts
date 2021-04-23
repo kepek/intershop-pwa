@@ -16,6 +16,7 @@ import { mapErrorToAction, mapToPayloadProperty, mapToProperty, whenTruthy } fro
 
 import {
   loadCategory,
+  loadCategoryByRef,
   loadCategoryFail,
   loadCategorySuccess,
   loadTopLevelCategories,
@@ -24,7 +25,12 @@ import {
   updateCategory,
   updateCategorySuccess,
 } from './categories.actions';
-import { getBreadcrumbForCategoryPage, getCategoryEntities, getSelectedCategory } from './categories.selectors';
+import {
+  getBreadcrumbForCategoryPage,
+  getCategoryEntities,
+  getCategoryRefs,
+  getSelectedCategory,
+} from './categories.selectors';
 
 @Injectable()
 export class CategoriesEffects {
@@ -47,6 +53,23 @@ export class CategoriesEffects {
       withLatestFrom(this.store.pipe(select(getCategoryEntities))),
       filter(([id, entities]) => !CategoryHelper.isCategoryCompletelyLoaded(entities[id])),
       map(([categoryId]) => loadCategory({ categoryId }))
+    )
+  );
+
+  /**
+   * listens to routing and fires {@link loadCategoryByRef}
+   * when the requested ref in {@link getCategoryRefs} is not available, yet
+   */
+  selectedCategoryRef$ = createEffect(() =>
+    this.store.pipe(
+      select(selectRouteParam('categoryRefId')),
+      whenTruthy(),
+      withLatestFrom(this.store.pipe(select(getCategoryRefs)), this.store.pipe(select(getCategoryEntities))),
+      filter(
+        ([id, refs, entities]) =>
+          !refs[id] || (refs[id] && !CategoryHelper.isCategoryCompletelyLoaded(entities[refs[id]]))
+      ),
+      map(([categoryRefId]) => loadCategoryByRef({ categoryRefId }))
     )
   );
 
@@ -87,6 +110,22 @@ export class CategoriesEffects {
       mergeMap(uniqueId =>
         this.categoryService.getCategory(uniqueId).pipe(
           map(categories => updateCategorySuccess({ categories })),
+          mapErrorToAction(loadCategoryFail)
+        )
+      )
+    )
+  );
+
+  /**
+   * loads a {@link Category} using the {@link CategoriesService}
+   */
+  loadCategoryByRef$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loadCategoryByRef),
+      mapToPayloadProperty('categoryRefId'),
+      mergeMap(categoryRefId =>
+        this.categoryService.getCategory(categoryRefId).pipe(
+          map(categories => loadCategorySuccess({ categories })),
           mapErrorToAction(loadCategoryFail)
         )
       )
