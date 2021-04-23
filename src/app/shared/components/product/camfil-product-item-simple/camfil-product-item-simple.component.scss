@@ -63,6 +63,11 @@
       .camfil-product-attribute__value {
         float: right;
       }
+      &.camfil-product-id {
+        .camfil-product-attribute__value {
+          text-overflow: unset;
+        }
+      }
     }
     camfil-product-quantity {
       .form-group {
