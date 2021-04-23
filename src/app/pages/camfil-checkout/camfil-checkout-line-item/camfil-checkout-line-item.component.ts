@@ -228,7 +228,7 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
 
   calculateDeliveryDate() {
     if (this.product$) {
-      this.product$.pipe(take(1), takeUntil(this.destroy$)).subscribe((res: ProductView) => {
+      this.product$.pipe(take(1)).subscribe((res: ProductView) => {
         const today = new Date();
         const daysTillReady = ProductViewHelper.getDeliveryDateDays(res) + 1;
         const delivery = today.setDate(today.getDate() + daysTillReady);
