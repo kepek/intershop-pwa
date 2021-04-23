@@ -11,12 +11,24 @@ import {
   activateCustomerUser,
   activateCustomerUserFail,
   activateCustomerUserSuccess,
+  connectContactWithUserAndCustomer,
+  connectContactWithUserAndCustomerFail,
+  connectContactWithUserAndCustomerSuccess,
+  connectUserWithCustomer,
+  connectUserWithCustomerFail,
+  connectUserWithCustomerSuccess,
   createCustomerUser,
   createCustomerUserFail,
   createCustomerUserSuccess,
   deactivateCustomerUser,
   deactivateCustomerUserFail,
   deactivateCustomerUserSuccess,
+  disconnectContactFromUserAndCustomer,
+  disconnectContactFromUserAndCustomerFail,
+  disconnectContactFromUserAndCustomerSuccess,
+  disconnectUserFromCustomer,
+  disconnectUserFromCustomerFail,
+  disconnectUserFromCustomerSuccess,
   loadCustomerUser,
   loadCustomerUserFail,
   loadCustomerUserSuccess,
@@ -55,7 +67,11 @@ export const userReducer = createReducer(
     activateCustomerUser,
     deactivateCustomerUser,
     updateCustomerUser,
-    createCustomerUser
+    createCustomerUser,
+    connectUserWithCustomer,
+    disconnectUserFromCustomer,
+    connectContactWithUserAndCustomer,
+    disconnectContactFromUserAndCustomer
   ),
   setErrorOn(
     loadCustomerUsersFail,
@@ -63,7 +79,11 @@ export const userReducer = createReducer(
     activateCustomerUserFail,
     deactivateCustomerUserFail,
     updateCustomerUserFail,
-    createCustomerUserFail
+    createCustomerUserFail,
+    connectUserWithCustomerFail,
+    disconnectUserFromCustomerFail,
+    connectContactWithUserAndCustomerFail,
+    disconnectContactFromUserAndCustomerFail
   ),
   unsetLoadingAndErrorOn(
     loadCustomerUsersSuccess,
@@ -71,7 +91,11 @@ export const userReducer = createReducer(
     activateCustomerUserSuccess,
     deactivateCustomerUserSuccess,
     updateCustomerUserSuccess,
-    createCustomerUserSuccess
+    createCustomerUserSuccess,
+    connectUserWithCustomerSuccess,
+    disconnectUserFromCustomerSuccess,
+    connectContactWithUserAndCustomerSuccess,
+    disconnectContactFromUserAndCustomerSuccess
   ),
   on(
     loadCustomerUsersSuccess,
@@ -80,6 +104,10 @@ export const userReducer = createReducer(
     deactivateCustomerUserSuccess,
     updateCustomerUserSuccess,
     createCustomerUserSuccess,
+    connectUserWithCustomerSuccess,
+    disconnectUserFromCustomerSuccess,
+    connectContactWithUserAndCustomerSuccess,
+    disconnectContactFromUserAndCustomerSuccess,
     state => ({ ...state, initialized: true })
   ),
   on(selectUser, (state: UserState, action) => ({
@@ -130,5 +158,16 @@ export const userReducer = createReducer(
       },
       state
     );
-  })
+  }),
+  on(
+    connectUserWithCustomerSuccess,
+    disconnectUserFromCustomerSuccess,
+    connectContactWithUserAndCustomerSuccess,
+    disconnectContactFromUserAndCustomerSuccess,
+    (state: UserState, action) => {
+      const { user } = action.payload;
+
+      return userAdapter.upsertOne(user, state);
+    }
+  )
 );

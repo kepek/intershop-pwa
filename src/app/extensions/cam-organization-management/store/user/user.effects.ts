@@ -18,12 +18,22 @@ import {
   activateCustomerUser,
   activateCustomerUserFail,
   activateCustomerUserSuccess,
+  connectContactWithUserAndCustomerFail,
+  connectContactWithUserAndCustomerSuccess,
+  connectUserWithCustomer,
+  connectUserWithCustomerFail,
+  connectUserWithCustomerSuccess,
   createCustomerUser,
   createCustomerUserFail,
   createCustomerUserSuccess,
   deactivateCustomerUser,
   deactivateCustomerUserFail,
   deactivateCustomerUserSuccess,
+  disconnectContactFromUserAndCustomerFail,
+  disconnectContactFromUserAndCustomerSuccess,
+  disconnectUserFromCustomer,
+  disconnectUserFromCustomerFail,
+  disconnectUserFromCustomerSuccess,
   loadCustomerUser,
   loadCustomerUserFail,
   loadCustomerUserSuccess,
@@ -246,7 +256,11 @@ export class UserEffects {
         deactivateCustomerUserSuccess,
         updateCustomerUserSuccess,
         resetCustomerUserPasswordSuccess,
-        createCustomerUserSuccess
+        createCustomerUserSuccess,
+        connectUserWithCustomerSuccess,
+        disconnectUserFromCustomerSuccess,
+        connectContactWithUserAndCustomerSuccess,
+        disconnectContactFromUserAndCustomerSuccess
       ),
       mapToPayloadProperty('successMessage'),
       filter(successMessage => !!successMessage),
@@ -267,7 +281,11 @@ export class UserEffects {
         deactivateCustomerUserFail,
         updateCustomerUserFail,
         resetCustomerUserPasswordFail,
-        createCustomerUserFail
+        createCustomerUserFail,
+        connectUserWithCustomerFail,
+        disconnectUserFromCustomerFail,
+        connectContactWithUserAndCustomerFail,
+        disconnectContactFromUserAndCustomerFail
       ),
       mapToPayloadProperty('error'),
       whenTruthy(),
@@ -275,6 +293,50 @@ export class UserEffects {
         displayErrorMessage({
           message: error?.message || error?.code,
         })
+      )
+    )
+  );
+
+  // Customer -> User -> Connect
+
+  connectUserWithCustomer$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(connectUserWithCustomer),
+      mapToPayload(),
+      switchMap(({ customerId, userId }) =>
+        this.organizationService.connectUserWithCustomerPlusReload(customerId, userId).pipe(
+          map(user =>
+            connectUserWithCustomerSuccess({
+              customerId,
+              userId,
+              user,
+              successMessage: 'camfil.account.organization.edit_user.connect_user_with_customer.modal.text',
+            })
+          ),
+          mapErrorToAction(connectUserWithCustomerFail, { customerId, userId })
+        )
+      )
+    )
+  );
+
+  // Customer -> User -> Disconnect
+
+  disconnectUserFromCustomer$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(disconnectUserFromCustomer),
+      mapToPayload(),
+      switchMap(({ customerId, userId }) =>
+        this.organizationService.disconnectUserFromCustomerPlusReload(customerId, userId).pipe(
+          map(user =>
+            disconnectUserFromCustomerSuccess({
+              customerId,
+              userId,
+              user,
+              successMessage: 'camfil.account.organization.edit_user.disconnect_user_from_customer.modal.text',
+            })
+          ),
+          mapErrorToAction(disconnectUserFromCustomerFail, { customerId, userId })
+        )
       )
     )
   );

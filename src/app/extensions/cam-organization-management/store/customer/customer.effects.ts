@@ -4,10 +4,10 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { routerNavigatedAction } from '@ngrx/router-store';
 import { Store, select } from '@ngrx/store';
 import { iif } from 'rxjs';
-import { concatMap, filter, map, mergeMap, switchMapTo, withLatestFrom } from 'rxjs/operators';
+import { concatMap, filter, map, mapTo, mergeMap, switchMapTo, withLatestFrom } from 'rxjs/operators';
 
 import { ofUrl, selectRouteParam } from 'ish-core/store/core/router';
-import { mapErrorToAction, mapToPayloadProperty, whenTruthy } from 'ish-core/utils/operators';
+import { mapErrorToAction, mapToPayloadProperty, whenFalsy, whenTruthy } from 'ish-core/utils/operators';
 
 import { CamOrganizationService } from '../../services/cam-organization/cam-organization.service';
 
@@ -20,7 +20,7 @@ import {
   loadCustomersSuccess,
   selectCustomer,
 } from './customer.actions';
-import { getSelectedCustomerId } from './customer.selectors';
+import { getSelectedCustomerId, isCustomerInitialized } from './customer.selectors';
 
 @Injectable()
 export class CustomerEffects {
@@ -30,6 +30,22 @@ export class CustomerEffects {
     private store: Store,
     @Inject(PLATFORM_ID) private platformId: string
   ) {}
+
+  // Customer -> Route Listener For Customers
+
+  routeListenerForCustomers$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(routerNavigatedAction),
+      switchMapTo(
+        this.store.pipe(
+          ofUrl(/^\/(account\/organization.*)/),
+          select(isCustomerInitialized),
+          whenFalsy(),
+          mapTo(loadCustomers())
+        )
+      )
+    )
+  );
 
   // Customers - Load Customers
 

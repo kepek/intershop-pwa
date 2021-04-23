@@ -11,5 +11,5 @@ export interface CamfilB2bContact extends CamfilB2bContactRelations {
   firstName: string;
   lastName: string;
   erpId: string;
-  fullName: string;
+  fullName?: string;
 }

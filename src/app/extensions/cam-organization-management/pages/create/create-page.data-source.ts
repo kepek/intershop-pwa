@@ -1,6 +1,6 @@
-// tslint:disable: ish-ordered-imports project-structure rxjs-no-subject-value
+// tslint:disable: ish-ordered-imports project-structure
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Observable, Subject, combineLatest, BehaviorSubject, throwError } from 'rxjs';
+import { Observable, Subject, combineLatest, throwError, BehaviorSubject } from 'rxjs';
 import { distinctUntilChanged, filter, map, switchMap } from 'rxjs/operators';
 
 import { CamOrganizationManagementFacade } from '../../facades/cam-organization-management.facade';
@@ -90,15 +90,19 @@ export abstract class CreatePageDataSourceComponent implements OnInit, OnDestroy
 
   // Handlers
 
-  onUpdateNewCustomerUser({ user }) {
-    user.active = user.active || true;
+  onUpdateNewCustomerUser(event: { customer: CamfilB2bCustomer; user: CamfilB2bUser }) {
+    const newUser = event?.user;
 
-    this.newUser$.next(user);
+    newUser.active = newUser.active || true;
+
+    this.newUser$.next({ ...newUser });
   }
 
-  onUpdateSelectedCustomerUserRoles({ roleIDs }) {
+  onUpdateSelectedCustomerUserRoles(event: { roleIDs: string[] }) {
+    const newRoleIDs = event?.roleIDs;
+
     this.organizationFacade
-      .getSelectedRoles$(roleIDs)
+      .getSelectedRoles$(newRoleIDs)
       .pipe(
         filter(r => r.length !== 0),
         distinctUntilChanged()
@@ -106,30 +110,72 @@ export abstract class CreatePageDataSourceComponent implements OnInit, OnDestroy
       .subscribe(roles => this.newUserRoles$.next(roles));
   }
 
-  onAssignCustomerUserContact(event: { customer: CamfilB2bCustomer; user: CamfilB2bUser; contact: CamfilB2bContact }) {
-    const { customer, contact } = event;
+  onConnectUserWithCustomer(event: { customer: CamfilB2bCustomer; user: CamfilB2bUser }) {
+    const newCustomer = event?.customer;
+    const newUser = event?.user;
 
-    const assignment: CamfilB2bCustomerContact = { customer, contact };
-    const newAssignments = [...this.newUserContacts$.getValue(), assignment];
+    newUser.customers = newUser.customers || [];
+    newUser.customers = [...newUser?.customers, newCustomer];
 
-    this.newUserContacts$.next(newAssignments);
+    this.newUser$.next({ ...newUser });
   }
 
-  onUnassignCustomerUserContact(event: {
+  onDisconnectUserFromCustomer(event: { customer: CamfilB2bCustomer; user: CamfilB2bUser }) {
+    const newCustomer = event?.customer;
+    const newUser = event?.user;
+
+    if (newUser?.customers) {
+      newUser.customers = [...newUser.customers.filter(c => c.id !== newCustomer?.id)];
+    }
+
+    this.newUser$.next({ ...newUser });
+  }
+
+  onConnectContactWithUserAndCustomer(event: {
     customer: CamfilB2bCustomer;
     user: CamfilB2bUser;
     contact: CamfilB2bContact;
   }) {
     const newCustomer = event?.customer;
+    const newUser = event?.user;
     const newContact = event?.contact;
 
-    const newAssignments = [
+    const connection: CamfilB2bCustomerContact = { customer: newCustomer, contact: newContact };
+    const connections = [...this.newUserContacts$.getValue(), connection];
+
+    this.newUserContacts$.next(connections);
+
+    const updatedCustomer = { ...newCustomer, userContact: newContact };
+
+    newUser.customers = newUser.customers || [];
+    newUser.customers = [...newUser?.customers?.filter(c => c.id !== updatedCustomer.id), updatedCustomer];
+
+    this.newUser$.next({ ...newUser });
+  }
+
+  onDisconnectContactFromUserAndCustomer(event: {
+    customer: CamfilB2bCustomer;
+    user: CamfilB2bUser;
+    contact: CamfilB2bContact;
+  }) {
+    const newCustomer = event?.customer;
+    const newUser = event?.user;
+    const newContact = event?.contact;
+
+    const connections = [
       ...this.newUserContacts$
         .getValue()
         .filter(({ customer, contact }) => newCustomer.id !== customer.id && newContact.erpId !== contact.erpId),
     ];
 
-    this.newUserContacts$.next(newAssignments);
+    this.newUserContacts$.next(connections);
+
+    const updatedCustomer = { ...newCustomer, userContact: undefined };
+
+    newUser.customers = newUser.customers || [];
+    newUser.customers = [...newUser?.customers?.filter(c => c.id !== updatedCustomer.id), updatedCustomer];
+
+    this.newUser$.next({ ...newUser });
   }
 
   // Observables

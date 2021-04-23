@@ -62,7 +62,7 @@ export class CamfilOrganizationUserDetailsFormComponent implements OnInit, OnDes
           disabled: this.isEditMode, // TODO (extMlk): [CAM-979] Field is disabled since BE does not support login changes.
         },
         {
-          validators: [SpecialValidators.username],
+          validators: [Validators.required, SpecialValidators.username],
         }
       ),
     });

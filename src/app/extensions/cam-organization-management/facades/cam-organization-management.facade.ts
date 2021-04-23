@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { Observable, combineLatest, forkJoin, of } from 'rxjs';
-import { concatMap, first, map, switchMap, take } from 'rxjs/operators';
+import { concatMap, map, switchMap, take } from 'rxjs/operators';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
 import { toObservable } from 'ish-core/utils/functions';
@@ -19,7 +19,6 @@ import { CamfilB2bUser } from '../models/camfil-b2b-user/camfil-b2b-user.model';
 import { getCamOrganizationManagementState } from '../store/cam-organization-management-store';
 import { canHaveOnly1ParentCompany } from '../store/cam-organization-management-store.config';
 import {
-  assignCustomerUserContact,
   getContacts,
   getContactsCount,
   getContactsError,
@@ -28,7 +27,6 @@ import {
   loadCustomerContact,
   loadCustomerContacts,
   loadCustomerUserContact,
-  unassignCustomerUserContact,
 } from '../store/contact';
 import {
   getCustomer,
@@ -63,8 +61,12 @@ import {
 } from '../store/role';
 import {
   activateCustomerUser,
+  connectContactWithUserAndCustomer,
+  connectUserWithCustomer,
   createCustomerUser,
   deactivateCustomerUser,
+  disconnectContactFromUserAndCustomer,
+  disconnectUserFromCustomer,
   getSelectedUser,
   getSelectedUserId,
   getUser,
@@ -82,13 +84,7 @@ import {
 // tslint:disable:member-ordering
 @Injectable({ providedIn: 'root' })
 export class CamOrganizationManagementFacade {
-  constructor(private store: Store, private accountFacade: AccountFacade) {
-    this.store.pipe(first()).subscribe(state => {
-      if (!isCustomerInitialized(state)) {
-        this.loadCustomers$();
-      }
-    });
-  }
+  constructor(private store: Store, private accountFacade: AccountFacade) {}
 
   currentUser$ = this.accountFacade.user$.pipe(
     switchMap(currentUser => this.getUsers$().pipe(map(users => users.find(user => user.login === currentUser.login)))),
@@ -329,28 +325,6 @@ export class CamOrganizationManagementFacade {
     if (customerId && userId) {
       this.store.dispatch(loadCustomerUser({ customerId, userId }));
     }
-
-    this.getCustomers$()
-      .pipe(whenTruthy(), skipRelations(camfilB2bCustomerRelationsKeys))
-      .subscribe(customers => {
-        customers.forEach(customer => {
-          this.loadCustomerContacts$(customer.id);
-        });
-      });
-
-    if (userId) {
-      this.getUser$(userId)
-        .pipe(whenTruthy(), take(1))
-        .subscribe(user => {
-          this.getCustomers$()
-            .pipe(whenTruthy(), skipRelations(camfilB2bCustomerRelationsKeys))
-            .subscribe(customers => {
-              customers.forEach(customer => {
-                this.loadCustomerUserContact$(customer.id, user.id);
-              });
-            });
-        });
-    }
   }
   /**
    * Get Customer User Contact
@@ -420,10 +394,28 @@ export class CamOrganizationManagementFacade {
    * Activate User
    * @param customerId
    * @param userId
+   */
+  connectUserWithCustomer$(customerId: string, userId: string) {
+    this.store.dispatch(connectUserWithCustomer({ customerId, userId }));
+  }
+
+  /**
+   * Deactivate User
+   * @param customerId
+   * @param userId
+   */
+  disconnectUserFromCustomer$(customerId: string, userId: string) {
+    this.store.dispatch(disconnectUserFromCustomer({ customerId, userId }));
+  }
+
+  /**
+   * Activate User
+   * @param customerId
+   * @param userId
    * @param contact
    */
-  assignCustomerUserContact$(customerId: string, userId: string, contact: CamfilB2bContact) {
-    this.store.dispatch(assignCustomerUserContact({ customerId, userId, contact }));
+  connectContactWithUserAndCustomer$(customerId: string, userId: string, contact: CamfilB2bContact) {
+    this.store.dispatch(connectContactWithUserAndCustomer({ customerId, userId, contact }));
   }
 
   /**
@@ -432,8 +424,8 @@ export class CamOrganizationManagementFacade {
    * @param userId
    * @param contact
    */
-  unassignCustomerUserContact$(customerId: string, userId: string, contact: CamfilB2bContact) {
-    this.store.dispatch(unassignCustomerUserContact({ customerId, userId, contact }));
+  disconnectContactFromUserAndCustomer$(customerId: string, userId: string, contact: CamfilB2bContact) {
+    this.store.dispatch(disconnectContactFromUserAndCustomer({ customerId, userId, contact }));
   }
 
   getRoles$() {
