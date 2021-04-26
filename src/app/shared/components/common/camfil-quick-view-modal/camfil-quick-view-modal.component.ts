@@ -5,6 +5,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
+import { AccountFacade } from 'ish-core/facades/account.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { Attribute } from 'ish-core/models/attribute/attribute.model';
 import { ImageTypes } from 'ish-core/models/image/image.types';
@@ -39,7 +40,8 @@ export class CamfilQuickViewModalComponent implements OnInit, OnDestroy {
     public dialog: MatDialog,
     private shoppingFacade: ShoppingFacade,
     private sanitizer: DomSanitizer,
-    private dialogRef: MatDialogRef<CamfilQuickViewModalComponent>
+    private dialogRef: MatDialogRef<CamfilQuickViewModalComponent>,
+    private accountFacade: AccountFacade
   ) {}
 
   get quantityCount() {
@@ -57,6 +59,7 @@ export class CamfilQuickViewModalComponent implements OnInit, OnDestroy {
   readonly quantityControlName = 'quantity';
   secureVideoUrl: SafeResourceUrl;
   showAddToCompare = false;
+  isLoggedIn = false;
   // tslint:disable-next-line:force-jsdoc-comments
   // product attributes
   frameSize;
@@ -78,6 +81,9 @@ export class CamfilQuickViewModalComponent implements OnInit, OnDestroy {
   isNotZero = ProductHelper.isNotZero;
 
   ngOnInit(): void {
+    this.accountFacade.isLoggedIn$.pipe(takeUntil(this.destroy$)).subscribe(value => {
+      this.isLoggedIn = value;
+    });
     this.product$ = this.shoppingFacade.product$(this.data.sku, ProductCompletenessLevel.Detail);
     this.product$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(product => {
       this.quantity = 0;
