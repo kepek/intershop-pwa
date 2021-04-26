@@ -41,10 +41,6 @@ export class OrderFormComponent implements OnInit, OnDestroy {
       this.customersArr = customers;
     });
 
-    if (this.orderToEdit && this.orderToEdit.customerId) {
-      this.pickCustomer({ value: this.orderToEdit.customerId });
-    }
-
     this.addressForm = this.fb.group({
       customer: [this.orderToEdit?.customerId || this.setDefaultCustomer(this.customersArr), [Validators.required]],
       contact: [this.orderToEdit?.contactPerson?.erpId || '', Validators.required],
@@ -60,8 +56,12 @@ export class OrderFormComponent implements OnInit, OnDestroy {
       info: [this.orderToEdit?.info || '', [Validators.maxLength(150)]],
       contactFull: [],
       addressFull: [],
-      customerFull: this.customersArr,
+      customerFull: [],
     });
+
+    if (this.orderToEdit && this.orderToEdit.customerId) {
+      this.pickCustomer({ value: this.orderToEdit.customerId });
+    }
   }
 
   pickAddress(event) {
