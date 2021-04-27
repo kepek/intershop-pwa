@@ -38,4 +38,12 @@
   button {
     margin-bottom: $space-box/2;
   }
+
+  ::ng-deep {
+    ish-loading {
+      .loading {
+        background: #fff;
+      }
+    }
+  }
 }
