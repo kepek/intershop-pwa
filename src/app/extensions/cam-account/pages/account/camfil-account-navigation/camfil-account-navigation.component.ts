@@ -9,7 +9,10 @@ import {
 } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { AccountFacade } from 'ish-core/facades/account.facade';
 import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
+import { checkPermission } from 'ish-core/utils/authorization-toggle/authorization-toggle.service';
+import { whenTruthy } from 'ish-core/utils/operators';
 
 interface NavigationItems {
   [link: string]: {
@@ -24,13 +27,13 @@ interface NavigationItems {
 @Component({
   selector: 'camfil-account-navigation',
   templateUrl: './camfil-account-navigation.component.html',
-  changeDetection: ChangeDetectionStrategy.Default,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CamfilAccountNavigationComponent implements OnInit, AfterViewInit, OnChanges {
   @Input() deviceType: DeviceType;
 
   isMobileView = false;
-
+  loading = true;
   /**
    * Manages the Account Navigation items.
    */
@@ -53,11 +56,18 @@ export class CamfilAccountNavigationComponent implements OnInit, AfterViewInit, 
     },
     '/logout': { localizationKey: 'account.navigation.logout.link' },
   };
-
-  constructor(private router: Router, private cdr: ChangeDetectorRef) {}
+  permissions: string[] = [];
+  constructor(private router: Router, private cdr: ChangeDetectorRef, private accountFacade: AccountFacade) {}
 
   ngOnInit() {
     this.isMobileView = this.deviceType === 'tablet' || this.deviceType === 'mobile';
+    this.accountFacade.userPermissions$.pipe(whenTruthy()).subscribe(permissions => {
+      this.permissions = permissions;
+      if (permissions) {
+        this.loading = false;
+        this.refreshLinkList();
+      }
+    });
   }
 
   ngOnChanges() {
@@ -68,6 +78,18 @@ export class CamfilAccountNavigationComponent implements OnInit, AfterViewInit, 
     setTimeout(() => {
       this.cdr.markForCheck();
     }, 500);
+  }
+
+  refreshLinkList() {
+    this.cdr.detectChanges();
+  }
+
+  checkUserPermissionToLink(permission: string): boolean {
+    // const permObservable = toObservable(permission)
+    if (permission === 'always' || permission === 'never') {
+      return checkPermission([], permission);
+    }
+    return checkPermission(this.permissions, permission);
   }
 
   get currentPath() {

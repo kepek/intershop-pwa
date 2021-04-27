@@ -85,7 +85,6 @@ describe('Product Row Component', () => {
         "camfil-product-id",
         "camfil-product-promotion",
         "ish-lazy-product-add-to-quote",
-        "camfil-product-add-to-compare",
         "ish-lazy-product-add-to-wishlist",
         "ish-lazy-product-add-to-order-template",
         "camfil-product-price",

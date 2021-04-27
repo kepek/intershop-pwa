@@ -228,19 +228,13 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
 
   calculateDeliveryDate() {
     if (this.product$) {
-      if (!this.isPartialDelivery && this.orderDeliveryDate) {
-        return (this.earliestDeliveryDate = AttributeHelper.formatDeliveryDate(new Date(this.orderDeliveryDate)));
-      } else {
-        this.product$.pipe(take(1), takeUntil(this.destroy$)).subscribe((res: ProductView) => {
-          const today = new Date();
-          const daysTillReady = ProductViewHelper.getDeliveryDateDays(res) + 1;
-          const delivery = today.setDate(today.getDate() + daysTillReady);
+      this.product$.pipe(take(1)).subscribe((res: ProductView) => {
+        const today = new Date();
+        const daysTillReady = ProductViewHelper.getDeliveryDateDays(res) + 1;
+        const delivery = today.setDate(today.getDate() + daysTillReady);
 
-          return this.orderDeliveryDate && delivery < this.orderDeliveryDate
-            ? (this.earliestDeliveryDate = AttributeHelper.formatDeliveryDate(new Date(this.orderDeliveryDate)))
-            : (this.earliestDeliveryDate = AttributeHelper.formatDeliveryDate(new Date(delivery)));
-        });
-      }
+        return (this.earliestDeliveryDate = AttributeHelper.formatDeliveryDate(new Date(delivery)));
+      });
     }
   }
 

@@ -12,6 +12,7 @@ import {
 import { Observable, ReplaySubject, Subject } from 'rxjs';
 import { filter, startWith, take, takeUntil } from 'rxjs/operators';
 
+import { AccountFacade } from 'ish-core/facades/account.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { Category } from 'ish-core/models/category/category.model';
 import { ProductVariationHelper } from 'ish-core/models/product-variation/product-variation.helper';
@@ -43,7 +44,7 @@ export const DEFAULT_CONFIGURATION: Readonly<ProductItemContainerConfiguration> 
   displayAddToWishlist: true,
   displayAddToOrderTemplate: true,
   displayAddToCamCard: true,
-  displayAddToCompare: true,
+  displayAddToCompare: false,
   displayAddToQuote: true,
   displayType: 'simple',
 };
@@ -87,11 +88,11 @@ export class CamfilProductItemComponent implements OnInit, OnChanges, OnDestroy 
   loading$: Observable<boolean>;
   productVariationOptions$: Observable<VariationOptionGroup[]>;
   isInCompareList$: Observable<boolean>;
-
+  isLoggedIn$: Observable<boolean>;
   private sku$ = new ReplaySubject<string>(1);
   private destroy$ = new Subject();
 
-  constructor(private shoppingFacade: ShoppingFacade) {}
+  constructor(private shoppingFacade: ShoppingFacade, private accountFacade: AccountFacade) {}
 
   ngOnDestroy() {
     this.destroy$.next();
@@ -112,6 +113,8 @@ export class CamfilProductItemComponent implements OnInit, OnChanges, OnDestroy 
 
     this.isInCompareList$ = this.shoppingFacade.inCompareProducts$(this.sku$);
     this.isMobileView = this.deviceType === 'mobile';
+
+    this.isLoggedIn$ = this.accountFacade.isLoggedIn$;
   }
 
   ngOnChanges(changes: SimpleChanges) {

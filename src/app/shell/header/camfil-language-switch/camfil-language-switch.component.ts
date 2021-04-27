@@ -1,5 +1,16 @@
-import { Location } from '@angular/common';
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { APP_BASE_HREF, DOCUMENT, Location } from '@angular/common';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Inject,
+  Input,
+  OnInit,
+  Optional,
+  Output,
+} from '@angular/core';
+import { REQUEST } from '@nguniversal/express-engine/tokens';
+import { Request } from 'express';
 import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
 
@@ -27,7 +38,13 @@ export class CamfilLanguageSwitchComponent implements OnInit {
   availableLocales$: Observable<Locale[]>;
   availableLocales: Locale[];
 
-  constructor(private appFacade: AppFacade, public location: Location) {}
+  constructor(
+    private appFacade: AppFacade,
+    public location: Location,
+    @Inject(DOCUMENT) private doc: Document,
+    @Optional() @Inject(REQUEST) private request: Request,
+    @Inject(APP_BASE_HREF) private baseHref: string
+  ) {}
 
   ngOnInit() {
     this.locale$ = this.appFacade.currentLocale$;
@@ -44,5 +61,28 @@ export class CamfilLanguageSwitchComponent implements OnInit {
 
   toggleLevel(val: boolean) {
     this.isClosedLangList.emit(val);
+  }
+
+  getLanguageSwitchUrl(value: string) {
+    let url = this.doc.baseURI.replace(new RegExp(`${this.baseHref}$`), '');
+
+    if (this.request) {
+      url = `${this.request.protocol}://${this.request.get('host')}`;
+    }
+
+    const baseHrefArr = this.baseHref.split('/').filter(x => x);
+    const locals = baseHrefArr[0]?.split('-');
+
+    if (
+      baseHrefArr[0]?.length === 5 && // ex.: sv-se
+      locals.length === 2 && // ex.: ['sv', 'se']
+      this.availableLocales.find(loc => loc.value === locals[1])
+    ) {
+      locals[1] = value;
+      baseHrefArr[0] = locals.join('-');
+
+      return `${url}/${baseHrefArr.join('/')}${this.location.path()}`;
+    }
+    return false;
   }
 }

@@ -35,12 +35,12 @@ export class AttributeHelper {
 
   static getAttrsBeforeAddToCart(measurements, boxLabel) {
     const measurementsObj = Object.entries(measurements)
-      .map(([key, val]) => ({
+      .map(([key, value]) => ({
         name: key,
         type: 'Double',
-        value: val,
+        value,
       }))
-      .filter(item => item.value);
+      .filter(({ value }) => value && typeof value === 'number');
 
     const lineItemAttributes = [...measurementsObj] as Attribute[];
     if (boxLabel) {
@@ -62,9 +62,7 @@ export class AttributeHelper {
 
   static calculateAttrsToAddFromCC(product: CamCamProductChecked) {
     const boxLabel = product.boxLabel;
-    const measurements = product.measurement
-      ? Object.entries(product.measurement).filter(([, item]) => item && typeof item === 'number')
-      : [];
+    const measurements = product.measurement;
     return AttributeHelper.getAttrsBeforeAddToCart(measurements, boxLabel);
   }
 }

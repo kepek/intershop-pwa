@@ -186,8 +186,11 @@ export class CamOrganizationService {
       return throwError('updateCustomerUser() called without required user data');
     }
 
+    // TODO (extMlk): See CAM-979
+    const login = user?.currentLogin || user.login;
+
     return this.apiService
-      .put(`customers/${customer.customerNo}/users/${user.login}`, {
+      .put(`customers/${customer.customerNo}/users/${login}`, {
         ...customer,
         ...user,
         preferredInvoiceToAddress: { urn: user.preferredInvoiceToAddressUrn },
@@ -367,9 +370,9 @@ export class CamOrganizationService {
     );
   }
 
-  resetCustomerUserPassword(customerId: string, userId: string, email: string) {
+  resetCustomerUserPassword(customerId: string, userId: string, login: string) {
     const data: PasswordReminder = {
-      email,
+      email: login, // We are not using email addresses, so we pass any string.
     };
 
     const options: AvailableOptions = {
@@ -383,7 +386,7 @@ export class CamOrganizationService {
       map(() => ({
         customerId,
         userId,
-        email,
+        login,
         data,
       }))
     );

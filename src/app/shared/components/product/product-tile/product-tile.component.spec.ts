@@ -80,7 +80,6 @@ describe('Product Tile Component', () => {
         "camfil-product-price",
         "camfil-product-price",
         "ish-lazy-product-add-to-quote",
-        "camfil-product-add-to-compare",
         "ish-lazy-product-add-to-order-template",
         "ish-lazy-product-add-to-wishlist",
         "camfil-product-add-to-basket",

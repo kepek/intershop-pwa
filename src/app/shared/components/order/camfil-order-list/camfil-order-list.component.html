@@ -75,7 +75,10 @@
         class="mr-3"
         (change)="addStatusFilter($event)"
         [checked]="isStatusFilterActive(status)"
-        >{{ 'camfil.account.orderlist.status.' + status.replace(' ', '_').toLowerCase() | translate }}</mat-checkbox
+      >
+        {{
+          'camfil.dynamic.account.orderlist.status.' + status.replace(' ', '_').toLowerCase() | translate
+        }}</mat-checkbox
       >
       <div class="orders-count float-right">
         {{ 'camfil.account.orderlist.count' | translate }} <strong>{{ dataSource.filteredData.length }}</strong>
