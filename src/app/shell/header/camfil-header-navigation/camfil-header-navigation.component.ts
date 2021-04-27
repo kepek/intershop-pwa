@@ -1,4 +1,13 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
@@ -15,7 +24,7 @@ import { environment } from '../../../../environments/environment';
   styleUrls: ['./camfil-header-navigation.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CamfilHeaderNavigationComponent implements OnInit {
+export class CamfilHeaderNavigationComponent implements OnInit, AfterViewInit {
   @Input() view: 'auto' | 'small' | 'full' = 'auto';
   @Output() isClosedCat = new EventEmitter<NextOpenLevelOnMobileNavType>();
 
@@ -26,11 +35,21 @@ export class CamfilHeaderNavigationComponent implements OnInit {
   isProdEnv = environment.production;
   user$: Observable<User>;
 
-  constructor(private shoppingFacade: ShoppingFacade, private accountFacade: AccountFacade) {}
+  constructor(
+    private shoppingFacade: ShoppingFacade,
+    private accountFacade: AccountFacade,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit() {
     this.categories$ = this.shoppingFacade.navigationCategories$();
     this.user$ = this.accountFacade.user$;
+  }
+
+  ngAfterViewInit() {
+    setTimeout(() => {
+      this.cdr.markForCheck();
+    }, 500);
   }
 
   /**

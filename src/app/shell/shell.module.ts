@@ -85,7 +85,6 @@ const exportedComponents = [
 @NgModule({
   imports: [
     ...importExportModules,
-    AuthorizationToggleModule,
     CamfilIconsModule,
     CommonModule,
     DeferLoadModule,
