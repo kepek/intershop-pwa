@@ -16,6 +16,21 @@ export function checkPermission(permissions: string[], permission: string): bool
   }
 }
 
+export function checkPermissionList(permissions: string[], permissionList: string[]): boolean {
+  if (permissionList.includes('always')) {
+    return true;
+  } else if (permissionList.includes('never')) {
+    return false;
+  } else {
+    for (const permission of permissionList) {
+      if (permissions.includes(permission)) {
+        return true;
+      }
+    }
+    return false;
+  }
+}
+
 @Injectable({ providedIn: 'root' })
 export class AuthorizationToggleService {
   private permissions$: Observable<string[]>;
@@ -36,7 +51,12 @@ export class AuthorizationToggleService {
     );
   }
 
-  isAuthorizedToCheckArr(permissions: string[]): Observable<boolean> {
+  /**
+   *
+   * @param permissions
+   * @returns true, if all of the provided permissions are matching
+   */
+  isAuthorizedToCheckArrAll(permissions: string[]): Observable<boolean> {
     // special case shortcut
     if (permissions.includes('always') || permissions.includes('never')) {
       return of(
@@ -50,6 +70,27 @@ export class AuthorizationToggleService {
       // wait for permissions to be loaded
       whenTruthy(),
       map(allPermissions => permissions.filter(p => checkPermission(allPermissions, p)).length === permissions.length)
+    );
+  }
+  /**
+   *
+   * @param permissions
+   * @returns true, if any of the provided permissions are matching
+   */
+  isAuthorizedToCheckArrAny(permissions: string[]): Observable<boolean> {
+    // special case shortcut
+    if (permissions.includes('always') || permissions.includes('never')) {
+      return of(
+        checkPermission(
+          [],
+          permissions.find(p => p === 'always' || p === 'never')
+        )
+      );
+    }
+    return this.permissions$.pipe(
+      // wait for permissions to be loaded
+      whenTruthy(),
+      map(allPermissions => permissions.filter(p => checkPermission(allPermissions, p)).length >= 1)
     );
   }
 }

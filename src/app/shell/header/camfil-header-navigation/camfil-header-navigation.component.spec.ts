@@ -6,6 +6,7 @@ import { MockComponent } from 'ng-mocks';
 import { of } from 'rxjs';
 import { instance, mock, when } from 'ts-mockito';
 
+import { AuthorizationToggleModule } from 'ish-core/authorization-toggle.module';
 import { AccountFacade } from 'ish-core/facades/account.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { NavigationCategory } from 'ish-core/models/navigation-category/navigation-category.model';
@@ -28,17 +29,18 @@ describe('Camfil Header Navigation Component', () => {
     accountFacade = mock(AccountFacade);
 
     await TestBed.configureTestingModule({
-      imports: [RouterTestingModule, TranslateModule.forRoot()],
+      imports: [
+        AuthorizationToggleModule.forTesting('APP_B2B_MANAGE_ALL_ORDERS'),
+        RouterTestingModule,
+        TranslateModule.forRoot(),
+      ],
       declarations: [
         CamfilHeaderNavigationComponent,
         CategoryRoutePipe,
         MockComponent(CamfilSubCategoryNavigationComponent),
         MockComponent(FaIconComponent),
       ],
-      providers: [
-        { provide: ShoppingFacade, useFactory: () => instance(shoppingFacade) },
-        { provide: AccountFacade, useFactory: () => instance(accountFacade) },
-      ],
+      providers: [{ provide: ShoppingFacade, useFactory: () => instance(shoppingFacade) }],
     }).compileComponents();
   });
 
