@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { Observable } from 'rxjs';
 
 import { AttributeGroupTypes } from 'ish-core/models/attribute-group/attribute-group.types';
 import { AttributeHelper } from 'ish-core/models/attribute/attribute.helper';
@@ -19,6 +20,7 @@ export class ArticleDetailsComponent implements OnInit {
 
   maxVal: number;
   showError: boolean;
+  measurementGlobalError$: Observable<boolean>;
   filledMeasurements: any[];
   requiresMeasurement: boolean;
   validators = {
@@ -29,6 +31,7 @@ export class ArticleDetailsComponent implements OnInit {
       },
     ],
   };
+
   ngOnInit() {
     const attributes =
       this.product.attributeGroups?.[AttributeGroupTypes.ProductsListLabelAttributes]?.attributes ||
@@ -36,6 +39,7 @@ export class ArticleDetailsComponent implements OnInit {
       [];
     this.maxVal = AttributeHelper.getAttributeValueByAttributeName(attributes, 'Width') || undefined;
     this.requiresMeasurement = ProductHelper.getRequiresMeasurement(this.product);
+    this.measurementGlobalError$ = this.quantityForm.get('measurementErrorInfo')?.valueChanges;
   }
 
   getField(name: string) {
@@ -43,9 +47,12 @@ export class ArticleDetailsComponent implements OnInit {
   }
 
   validateVal() {
-    if (this.maxVal) {
-      this.filledMeasurements = this.MEASUREMENTS.map(val => this.getField(val).value).filter(val => val);
-      this.showError = !this.filledMeasurements.find(val => this.maxVal > val);
-    }
+    this.filledMeasurements = this.MEASUREMENTS.map(val => this.getField(val).value).filter(val => val);
+
+    this.showError =
+      this.filledMeasurements.length && this.maxVal
+        ? !this.filledMeasurements.find(val => this.maxVal > val)
+        : undefined;
+    this.quantityForm?.patchValue({ measurementErrorInfo: !this.filledMeasurements.length });
   }
 }
