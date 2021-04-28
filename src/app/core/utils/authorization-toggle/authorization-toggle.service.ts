@@ -27,6 +27,7 @@ export function checkPermissionList(permissions: string[], permissionList: strin
         return true;
       }
     }
+    return false;
   }
 }
 
