@@ -61,6 +61,10 @@ export class OrderFormComponent implements OnInit, OnDestroy {
       customerFull: [],
     });
 
+    if (!this.orderToEdit && this.customersArr?.length === 1) {
+      this.setDefaultFullCustomer(this.setDefaultCustomer(this.customersArr));
+    }
+
     if (this.orderToEdit && this.orderToEdit.customerId) {
       this.pickCustomer({ value: this.orderToEdit.customerId });
     }
@@ -145,5 +149,10 @@ export class OrderFormComponent implements OnInit, OnDestroy {
     }
 
     return defaultCustomerId;
+  }
+
+  setDefaultFullCustomer(customerId: string) {
+    const selectedCustomer = this.customersArr?.find(customer => customer.id === customerId);
+    this.addressForm?.patchValue({ customerFull: selectedCustomer });
   }
 }
