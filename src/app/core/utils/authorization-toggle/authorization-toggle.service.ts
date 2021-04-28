@@ -16,6 +16,20 @@ export function checkPermission(permissions: string[], permission: string): bool
   }
 }
 
+export function checkPermissionList(permissions: string[], permissionList: string[]): boolean {
+  if (permissionList.includes('always')) {
+    return true;
+  } else if (permissionList.includes('never')) {
+    return false;
+  } else {
+    for (const permission of permissionList) {
+      if (permissions.includes(permission)) {
+        return true;
+      }
+    }
+  }
+}
+
 @Injectable({ providedIn: 'root' })
 export class AuthorizationToggleService {
   private permissions$: Observable<string[]>;

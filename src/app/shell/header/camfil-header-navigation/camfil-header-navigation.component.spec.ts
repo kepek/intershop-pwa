@@ -14,6 +14,7 @@ import { CategoryRoutePipe } from 'ish-core/routing/category/category-route.pipe
 import { CamfilSubCategoryNavigationComponent } from 'ish-shell/header/camfil-sub-category-navigation/camfil-sub-category-navigation.component';
 
 import { CamfilHeaderNavigationComponent } from './camfil-header-navigation.component';
+import { AuthorizationToggleModule } from 'ish-core/authorization-toggle.module';
 
 describe('Camfil Header Navigation Component', () => {
   let component: CamfilHeaderNavigationComponent;
@@ -28,7 +29,11 @@ describe('Camfil Header Navigation Component', () => {
     accountFacade = mock(AccountFacade);
 
     await TestBed.configureTestingModule({
-      imports: [RouterTestingModule, TranslateModule.forRoot()],
+      imports: [
+        RouterTestingModule,
+        TranslateModule.forRoot(),
+        AuthorizationToggleModule.forTesting('APP_B2B_MANAGE_ALL_ORDERS'),
+      ],
       declarations: [
         CamfilHeaderNavigationComponent,
         CategoryRoutePipe,

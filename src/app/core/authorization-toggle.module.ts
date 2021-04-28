@@ -4,7 +4,11 @@ import { map } from 'rxjs/operators';
 
 import { AuthorizationToggleDirective } from './directives/authorization-toggle.directive';
 import { CamfilAuthorizationToggleDirective } from './directives/camfil-authorization-toggle.directive';
-import { AuthorizationToggleService, checkPermission } from './utils/authorization-toggle/authorization-toggle.service';
+import {
+  AuthorizationToggleService,
+  checkPermission,
+  checkPermissionList,
+} from './utils/authorization-toggle/authorization-toggle.service';
 import { whenTruthy } from './utils/operators';
 
 @NgModule({
@@ -26,6 +30,16 @@ export class AuthorizationToggleModule {
               AuthorizationToggleModule.permissions.pipe(
                 whenTruthy(),
                 map(perms => checkPermission(perms, permission))
+              ),
+          },
+        },
+        {
+          provide: AuthorizationToggleService,
+          useValue: {
+            isAuthorizedToCheckArrAny: (permissionArray: string[]) =>
+              AuthorizationToggleModule.permissions.pipe(
+                whenTruthy(),
+                map(perms => checkPermissionList(perms, permissionArray))
               ),
           },
         },

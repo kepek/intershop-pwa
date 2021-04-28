@@ -10,6 +10,7 @@ import { CamfilIconsModule } from 'camfil-icons';
 
 import { AuthorizationToggleModule } from 'ish-core/authorization-toggle.module';
 import { DirectivesModule } from 'ish-core/directives.module';
+import { CamfilAuthorizationToggleDirective } from 'ish-core/directives/camfil-authorization-toggle.directive';
 import { FeatureToggleModule } from 'ish-core/feature-toggle.module';
 import { IconModule } from 'ish-core/icon.module';
 import { PipesModule } from 'ish-core/pipes.module';
@@ -102,6 +103,7 @@ const exportedComponents = [
   ],
   declarations: [
     ...exportedComponents,
+    CamfilAuthorizationToggleDirective,
     CamfilHeaderNavigationComponent,
     CamfilLoginStatusComponent,
     CamfilMiniBasketComponent,

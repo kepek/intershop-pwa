@@ -8,7 +8,7 @@ import { AuthorizationToggleModule } from 'ish-core/authorization-toggle.module'
     <div>unrelated</div>
     <div *camfilIsAuthorizedTo="['DO_THIS']">content1</div>
     <div *camfilIsAuthorizedTo="['DO_THAT']">content2</div>
-    <div *ishIsAuthorizedTo="dynamicPermission">content3</div>
+    <div *camfilIsAuthorizedTo="dynamicPermission">content3</div>
   `,
   // Default change detection for dynamic permission test
   changeDetection: ChangeDetectionStrategy.Default,
