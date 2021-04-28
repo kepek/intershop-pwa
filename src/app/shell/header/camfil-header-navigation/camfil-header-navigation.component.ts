@@ -10,10 +10,8 @@ import {
 } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { AccountFacade } from 'ish-core/facades/account.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { NavigationCategory } from 'ish-core/models/navigation-category/navigation-category.model';
-import { User } from 'ish-core/models/user/user.model';
 import { NextOpenLevelOnMobileNavType } from 'ish-core/models/viewtype/viewtype.types';
 
 import { environment } from '../../../../environments/environment';
@@ -33,17 +31,11 @@ export class CamfilHeaderNavigationComponent implements OnInit, AfterViewInit {
   openedCategories = [];
 
   isProdEnv = environment.production;
-  user$: Observable<User>;
 
-  constructor(
-    private shoppingFacade: ShoppingFacade,
-    private accountFacade: AccountFacade,
-    private cdr: ChangeDetectorRef
-  ) {}
+  constructor(private shoppingFacade: ShoppingFacade, private cdr: ChangeDetectorRef) {}
 
   ngOnInit() {
     this.categories$ = this.shoppingFacade.navigationCategories$();
-    this.user$ = this.accountFacade.user$;
   }
 
   ngAfterViewInit() {
