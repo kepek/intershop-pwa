@@ -34,6 +34,7 @@ export class OrderMapper {
         totalOrderedQty: orderData.totalOrderedQty,
         totalPriceAfterDiscountExVAT: orderData.totalPriceAfterDiscountExVAT,
         phoneNotification: orderData.phoneNotification,
+        volumeDiscount: orderData.volumeDiscount,
       };
     }
   }

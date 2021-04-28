@@ -26,6 +26,7 @@ export class OrderLineMockData {
       totalDeliveredQty: 4,
       totalOrderedQty: 6,
       totalPriceAfterDiscountExVAT: 4350,
+      volumeDiscount: 1,
       trackAndTrace: OrderLineMockData.getTrackAndTrace(),
       lineItems: OrderLineMockData.getOrderLineItems(),
     } as Order;

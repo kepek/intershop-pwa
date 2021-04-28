@@ -687,6 +687,7 @@
   "camfil.account.orderdetails.order_comment.label": "Notering till kundtjänst",
   "camfil.account.orderdetails.order_status.label": "Status",
   "camfil.account.orderdetails.phone_notification.label": "Telefonnotifikation",
+  "camfil.account.orderdetails.rebate.text": "Rabatt",
   "camfil.account.orderdetails.summary.qty_delivered": "Total leveransvolym",
   "camfil.account.orderdetails.summary.qty_ordered": "Total beställningsvolym",
   "camfil.account.orderdetails.your.tax_amount.text": "Moms",

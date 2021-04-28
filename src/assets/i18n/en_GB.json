@@ -687,6 +687,7 @@
   "camfil.account.orderdetails.order_comment.label": "Order comment",
   "camfil.account.orderdetails.order_status.label": "Status",
   "camfil.account.orderdetails.phone_notification.label": "Phone notification",
+  "camfil.account.orderdetails.rebate.text": "Discount",
   "camfil.account.orderdetails.summary.qty_delivered": "Total delivered quantity",
   "camfil.account.orderdetails.summary.qty_ordered": "Total ordered quantity",
   "camfil.account.orderdetails.your.tax_amount.text": "Tax amount",
