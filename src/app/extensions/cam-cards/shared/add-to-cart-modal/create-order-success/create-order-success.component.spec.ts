@@ -8,6 +8,7 @@ import { MockComponent } from 'ng-mocks';
 import { Product } from 'ish-core/models/product/product.model';
 import { CamfilCamCardModalComponent } from 'ish-shared/components/common/camfil-cam-card-modal/camfil-cam-card-modal.component';
 import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
+import { ZipCodeComponent } from 'ish-shared/components/zip-code/zip-code.component';
 
 import { CreateOrderSuccessComponent } from './create-order-success.component';
 
@@ -18,7 +19,12 @@ describe('Create Order Success Component', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CamfilCamCardModalComponent, CreateOrderSuccessComponent, MockComponent(LoadingComponent)],
+      declarations: [
+        CamfilCamCardModalComponent,
+        CreateOrderSuccessComponent,
+        MockComponent(LoadingComponent),
+        MockComponent(ZipCodeComponent),
+      ],
       imports: [NgbModalModule, ReactiveFormsModule, RouterTestingModule, TranslateModule.forRoot()],
     }).compileComponents();
   });

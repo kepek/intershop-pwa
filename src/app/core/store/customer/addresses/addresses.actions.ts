@@ -1,6 +1,7 @@
 import { createAction } from '@ngrx/store';
 
 import { Address } from 'ish-core/models/address/address.model';
+import { ZipCodeInfo } from 'ish-core/models/zip-codes/zip-codes.interface';
 import { httpError, payload } from 'ish-core/utils/ngrx-creators';
 
 export const loadAddresses = createAction('[Address Internal] Load Addresses');
@@ -38,4 +39,16 @@ export const deleteCustomerAddressFail = createAction('[Address API] Delete Cust
 export const deleteCustomerAddressSuccess = createAction(
   '[Address API] Delete Customer Address Success',
   payload<{ addressId: string }>()
+);
+
+export const loadZipCode = createAction(
+  '[Address API] load Zip Code',
+  payload<{ code: string; countryCode: string }>()
+);
+
+export const loadZipCodeFail = createAction('[Address API] load Zip Code Fail', httpError());
+
+export const loadZipCodeSuccess = createAction(
+  '[Address API] load Zip Code Success',
+  payload<{ codeInfo: ZipCodeInfo }>()
 );

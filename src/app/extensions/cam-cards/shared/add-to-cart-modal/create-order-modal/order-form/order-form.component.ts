@@ -26,6 +26,8 @@ export class OrderFormComponent implements OnInit, OnDestroy {
   customersArr: CamCardCustomer[];
   contacts: CamCardContact[];
 
+  countryChangeDetect$: Subject<boolean> = new Subject();
+
   @Input() orderToEdit?: EditBucket;
   @Input() edit?: boolean;
 
@@ -52,7 +54,7 @@ export class OrderFormComponent implements OnInit, OnDestroy {
       building: [this.orderToEdit?.building || ''],
       address: [this.orderToEdit?.address || '', [Validators.required]],
       zipCode: [this.orderToEdit?.zipCode || '', [Validators.required, Validators.pattern('[0-9]{5}')]],
-      area: [this.orderToEdit?.area || '', [Validators.required]],
+      area: [{ value: this.orderToEdit?.area || '', disabled: true }, [Validators.required]],
       info: [this.orderToEdit?.info || '', [Validators.maxLength(150)]],
       contactFull: [],
       addressFull: [],
@@ -113,6 +115,15 @@ export class OrderFormComponent implements OnInit, OnDestroy {
   pickContact(event) {
     const selectedContact = this.contacts?.find(contact => contact.erpId === event.value);
     this.addressForm?.patchValue({ contactFull: selectedContact });
+  }
+
+  setZipCodeError(event) {
+    this.addressForm.controls.zipCode.setErrors(event);
+    this.addressForm.updateValueAndValidity();
+  }
+
+  checkZipCode() {
+    this.countryChangeDetect$.next(true);
   }
 
   ngOnDestroy() {

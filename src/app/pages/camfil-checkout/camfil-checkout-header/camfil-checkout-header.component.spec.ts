@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { provideMockStore } from '@ngrx/store/testing';
 import { MockComponent } from 'ng-mocks';
 import { of } from 'rxjs';
 import { instance, mock, when } from 'ts-mockito';
@@ -12,6 +11,7 @@ import { CamfilErrorComponent } from 'ish-shared/components/common/camfil-error/
 import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
 import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
 import { CamfilProductQuantityComponent } from 'ish-shared/components/product/camfil-product-quantity/camfil-product-quantity.component';
+import { ZipCodeComponent } from 'ish-shared/components/zip-code/zip-code.component';
 import { CamfilCounterComponent } from 'ish-shared/forms/components/camfil-counter/camfil-counter.component';
 
 import { CamCardsFacade } from '../../../extensions/cam-cards/facades/cam-cards.facade';
@@ -76,19 +76,19 @@ describe('Camfil Checkout Header Component', () => {
         CamfilErrorComponent,
         CamfilProductQuantityComponent,
         CamfilSmallCtaModalComponent,
-        CreateNewCamcardComponent,
-        CreateOrderButtonComponent,
-        CreateOrderModalComponent,
-        CreateOrderSuccessComponent,
+        MockComponent(CreateNewCamcardComponent),
+        MockComponent(CreateOrderButtonComponent),
+        MockComponent(CreateOrderModalComponent),
+        MockComponent(CreateOrderSuccessComponent),
         MockComponent(LoadingComponent),
-        OrderFormComponent,
-        PrintOrderComponent,
+        MockComponent(OrderFormComponent),
+        MockComponent(PrintOrderComponent),
+        MockComponent(ZipCodeComponent),
       ],
       providers: [
         { provide: CamCardsFacade, useFactory: () => instance(camCardFacadeMock) },
         { provide: CheckoutFacade, useFactory: () => instance(checkoutFacadeMock) },
         { provide: ShoppingFacade, useFactory: () => instance(shoppingFacadeMock) },
-        provideMockStore({}),
       ],
     }).compileComponents();
   });

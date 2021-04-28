@@ -1,4 +1,3 @@
-// tslint:disable: ish-ordered-imports ban-specific-imports
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MockComponent, MockDirective, MockPipe } from 'ng-mocks';
@@ -21,6 +20,7 @@ import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfi
 import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
 import { CamfilProductAddToBasketComponent } from 'ish-shared/components/product/camfil-product-add-to-basket/camfil-product-add-to-basket.component';
 import { CamfilProductQuantityComponent } from 'ish-shared/components/product/camfil-product-quantity/camfil-product-quantity.component';
+import { ZipCodeComponent } from 'ish-shared/components/zip-code/zip-code.component';
 import { CamfilCounterComponent } from 'ish-shared/forms/components/camfil-counter/camfil-counter.component';
 import { CamfilSearchBoxComponent } from 'ish-shell/header/header/camfil-search-box/camfil-search-box.component';
 
@@ -64,6 +64,7 @@ describe('Camfil Checkout List Component', () => {
         MockComponent(ContentIncludeComponent),
         MockComponent(FaIconComponent),
         MockComponent(LoadingComponent),
+        MockComponent(ZipCodeComponent),
         MockDirective(ServerHtmlDirective),
         MockPipe(DatePipe),
         MockPipe(HighlightPipe),

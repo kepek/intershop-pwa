@@ -787,6 +787,7 @@
   "camfil.account.useredit.contact.form.error.text": "Each selected customer must have a contact person",
   "camfil.account.useredit.personal.form.phone.error.text": "Incorrect phone number pattern",
   "camfil.add_items_to_basket.camfil.message.success": "Product/s was/were added to basket",
+  "camfil.address_form.post_code.invalid": "Invalid postcode",
   "camfil.ahu.detail.add.to.list": "Add to list",
   "camfil.ahu.detail.broschure": "Broschure",
   "camfil.ahu.detail.filter-slots": "Filter Slots:",

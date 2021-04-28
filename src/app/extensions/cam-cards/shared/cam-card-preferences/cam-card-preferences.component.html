@@ -114,26 +114,24 @@
                 (change)="onBlurSubmit()"
               />
             </mat-form-field>
+            <camfil-error
+              [errors]="camCardForm.controls.addressLine1.errors"
+              [errorValidators]="errorValidator"
+              [touched]="camCardForm.controls.addressLine1.touched"
+            >
+            </camfil-error>
             <div class="row no-gutters">
               <div class="col-md-3">
-                <mat-form-field appearance="fill">
-                  <mat-label>{{ 'camfil.account.cam_card.add_to_form.postal_code' | translate }}</mat-label>
-                  <input
-                    matInput
-                    formControlName="postalCode"
-                    label="camfil.account.cam_card.add_to_form.postal_code"
-                    markRequiredLabel="off"
-                    maxlength="35"
-                    data-testing-id="cam-card-dialog-name"
-                    (change)="onBlurSubmit()"
-                  />
-                </mat-form-field>
-                <camfil-error
-                  [errors]="camCardForm.controls.postalCode.errors"
-                  [errorValidators]="errorValidator"
-                  [touched]="camCardForm.controls.postalCode.touched"
-                >
-                </camfil-error>
+                <camfil-zip-code
+                  fieldName="postalCode"
+                  fieldCity="city"
+                  [errorValidator]="errorValidator"
+                  [checkOnInitObj]="camCard"
+                  [form]="camCardForm"
+                  [countryChangeDetect]="countryChangeDetect$"
+                  (zipCodeErrorEmit)="setZipCodeError($event)"
+                  (submitEmitter)="onBlurSubmit()"
+                ></camfil-zip-code>
               </div>
               <div class="col-md-9 pl-md-3">
                 <mat-form-field appearance="fill">
@@ -145,32 +143,19 @@
                     markRequiredLabel="off"
                     maxlength="35"
                     data-testing-id="cam-card-dialog-name"
-                    (change)="onBlurSubmit()"
                   />
                 </mat-form-field>
-                <camfil-error
-                  [errors]="camCardForm.controls.city.errors"
-                  [errorValidators]="errorValidator"
-                  [touched]="camCardForm.controls.city.touched"
-                >
-                </camfil-error>
               </div>
             </div>
             <mat-form-field appearance="fill">
               <mat-label>{{ 'camfil.account.cam_card.add_to_form.country' | translate }}</mat-label>
-              <mat-select formControlName="countryCode" (selectionChange)="onBlurSubmit()">
+              <mat-select formControlName="countryCode" (selectionChange)="checkZipCode()">
                 <mat-option>--</mat-option>
                 <mat-option *ngFor="let country of countries$ | async" [value]="country.countryCode">
                   {{ country.name }}
                 </mat-option>
               </mat-select>
             </mat-form-field>
-            <camfil-error
-              [errors]="camCardForm.controls.countryCode.errors"
-              [errorValidators]="errorValidator"
-              [touched]="camCardForm.controls.countryCode.touched"
-            >
-            </camfil-error>
           </div>
           <div class="col-md-4">
             <h3>{{ 'camfil.account.cam_card.add_to_form.delivery_time' | translate }}</h3>
@@ -199,7 +184,7 @@
             </mat-form-field>
             <mat-form-field appearance="fill">
               <mat-label>{{ 'camfil.account.cam_card.add_to_form.next_delivery' | translate }}</mat-label>
-              <input matInput [matDatepicker]="pickerNext" formControlName="nextDelivery" disabled />
+              <input matInput [matDatepicker]="pickerNext" formControlName="nextDelivery" />
               <mat-datepicker-toggle matSuffix [for]="pickerNext">
                 <mat-icon svgIcon="calendar" matDatepickerToggleIcon></mat-icon>
               </mat-datepicker-toggle>
@@ -220,7 +205,6 @@
             [disabled]="formDisabled"
             color="primary"
             type="submit"
-            [disabled]="formDisabled"
             (click)="submitCamCardForm()"
             data-testing-id="cam-card-dialog-submit"
           >

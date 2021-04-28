@@ -211,6 +211,7 @@ import { ProductLinksCarouselComponent } from '../pages/product/product-links-ca
 import { ProductLinksComponent } from '../pages/product/product-links/product-links.component';
 import { ProductPageComponent } from '../pages/product/product-page.component';
 import { CamfilMyPageHeaderComponent } from 'ish-shared/components/camfil-my-page-header/camfil-my-page-header.component';
+import { ZipCodeComponent } from './components/zip-code/zip-code.component';
 
 const importExportModules = [
   AddressFormsSharedModule,
@@ -442,6 +443,7 @@ const exportedComponents = [
   RecentlyViewedComponent,
   RetailSetPartsComponent,
   SuccessMessageComponent,
+  ZipCodeComponent,
 ];
 
 @NgModule({
