@@ -6,6 +6,7 @@ import { of } from 'rxjs';
 import { CamAccountFacade } from 'src/app/extensions/cam-account/facades/cam-account.facade';
 import { instance, mock, when } from 'ts-mockito';
 
+import { AuthorizationToggleModule } from 'ish-core/authorization-toggle.module';
 import { PricePipe } from 'ish-core/models/price/price.pipe';
 import { DatePipe } from 'ish-core/pipes/date.pipe';
 import { AddressComponent } from 'ish-shared/components/address/address/address.component';
@@ -31,7 +32,11 @@ describe('Camfil Order List Component', () => {
         MockPipe(PricePipe),
       ],
       providers: [{ provide: CamAccountFacade, useFactory: () => instance(camAccountFacade) }],
-      imports: [RouterTestingModule, TranslateModule.forRoot()],
+      imports: [
+        AuthorizationToggleModule.forTesting('APP_B2B_MANAGE_ALL_ORDERS'),
+        RouterTestingModule,
+        TranslateModule.forRoot(),
+      ],
     }).compileComponents();
   });
 

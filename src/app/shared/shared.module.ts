@@ -211,6 +211,7 @@ import { ProductLinksCarouselComponent } from '../pages/product/product-links-ca
 import { ProductLinksComponent } from '../pages/product/product-links/product-links.component';
 import { ProductPageComponent } from '../pages/product/product-page.component';
 import { CamfilMyPageHeaderComponent } from 'ish-shared/components/camfil-my-page-header/camfil-my-page-header.component';
+import { CamfilAuthorizationToggleDirective } from 'ish-core/directives/camfil-authorization-toggle.directive';
 
 const importExportModules = [
   AddressFormsSharedModule,
@@ -274,6 +275,7 @@ const declaredComponents = [
   CMSTextComponent,
   CMSVideoComponent,
   CamCardModalDetailsComponent,
+  CamfilAuthorizationToggleDirective,
   CamfilBannerComponent,
   CamfilBulletListComponent,
   CamfilCMSBigBannerWithButtonComponent,
@@ -362,6 +364,7 @@ const exportedComponents = [
   BasketShippingAddressWidgetComponent,
   BasketValidationResultsComponent,
   CamCardModalDetailsComponent,
+  CamfilAuthorizationToggleDirective,
   CamfilBannerComponent,
   CamfilBasketCostSummaryComponent,
   CamfilBulletListComponent,
