@@ -6,6 +6,7 @@ import { MockComponent } from 'ng-mocks';
 import { of } from 'rxjs';
 import { instance, mock, when } from 'ts-mockito';
 
+import { AuthorizationToggleModule } from 'ish-core/authorization-toggle.module';
 import { AccountFacade } from 'ish-core/facades/account.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { NavigationCategory } from 'ish-core/models/navigation-category/navigation-category.model';
@@ -14,7 +15,6 @@ import { CategoryRoutePipe } from 'ish-core/routing/category/category-route.pipe
 import { CamfilSubCategoryNavigationComponent } from 'ish-shell/header/camfil-sub-category-navigation/camfil-sub-category-navigation.component';
 
 import { CamfilHeaderNavigationComponent } from './camfil-header-navigation.component';
-import { AuthorizationToggleModule } from 'ish-core/authorization-toggle.module';
 
 describe('Camfil Header Navigation Component', () => {
   let component: CamfilHeaderNavigationComponent;
@@ -30,9 +30,9 @@ describe('Camfil Header Navigation Component', () => {
 
     await TestBed.configureTestingModule({
       imports: [
+        AuthorizationToggleModule.forTesting('APP_B2B_MANAGE_ALL_ORDERS'),
         RouterTestingModule,
         TranslateModule.forRoot(),
-        AuthorizationToggleModule.forTesting('APP_B2B_MANAGE_ALL_ORDERS'),
       ],
       declarations: [
         CamfilHeaderNavigationComponent,
