@@ -4,6 +4,7 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnDestroy,
   OnInit,
   Output,
   TemplateRef,
@@ -11,8 +12,8 @@ import {
 } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { Observable } from 'rxjs';
-import { take } from 'rxjs/operators';
+import { Observable, Subject } from 'rxjs';
+import { take, takeUntil } from 'rxjs/operators';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
 import { AppFacade } from 'ish-core/facades/app.facade';
@@ -42,10 +43,11 @@ export interface CamCardCreateAndEmitter {
   styleUrls: ['./create-cam-card-modal.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CreateCamCardModalComponent implements OnInit, AfterViewInit {
+export class CreateCamCardModalComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() product: Product;
   @Input() rootCamCardAddress: CamCardAddress;
   @Input() parentForm: FormGroup;
+  private destroy$ = new Subject();
 
   modal: NgbModalRef;
 
@@ -85,20 +87,25 @@ export class CreateCamCardModalComponent implements OnInit, AfterViewInit {
     this.initForm();
 
     this.accountFacade.user$.pipe(whenTruthy(), take(1)).subscribe(() => {
-      this.customers$.pipe(whenTruthy(), take(1)).subscribe(customers => {
+      this.customers$.pipe(takeUntil(this.destroy$)).subscribe(customers => {
+        this.customers = customers;
+        this.camCardForm.patchValue({
+          customerSelect: customers[0]?.id, //TODO: Check why is not selected by default
+        });
+        console.log('this.camCardForm ', this.camCardForm);
         if (customers.length === 1) {
-          this.camCardForm.patchValue({
-            customerSelect: customers[0].id,
-          });
           this.pickCustomer({ value: customers[0].id });
         } else if (!customers.length) {
           this.camCardsFacade.loadCustomers();
         }
-        this.customers = customers;
       });
     });
-  }
 
+    console.log('customers', this.customers);
+  }
+  sayHello() {
+    console.log('LOG', this.camCardForm);
+  }
   initForm() {
     this.camCardForm = this.fb.group({
       name: ['', [Validators.required, Validators.maxLength(35)]],
@@ -132,6 +139,7 @@ export class CreateCamCardModalComponent implements OnInit, AfterViewInit {
 
   pickCustomer(event) {
     if (event.value) {
+      console.log('pickCustomer', event.value, this.customers);
       this.camCardsFacade.getDeliveryAddress(event.value);
     }
   }
@@ -154,6 +162,12 @@ export class CreateCamCardModalComponent implements OnInit, AfterViewInit {
 
   create() {
     const customerId = this.camCardForm.get('customerSelect').value;
+
+    console.log('customerId', customerId, '  this.customers', this.customers);
+    this.customers.map(item => {
+      console.log('item.id', item.id, 'customerId', customerId);
+      return item.id === customerId;
+    });
     const camCard = {
       name: this.camCardForm.get('name').value,
       orderLabel: this.camCardForm.get('orderMark').value,
@@ -246,5 +260,10 @@ export class CreateCamCardModalComponent implements OnInit, AfterViewInit {
     return () => {
       this.hide();
     };
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

@@ -38,7 +38,7 @@
       <!--name-->
       <mat-form-field appearance="outline" class="col-sm-12 form__field">
         <mat-label>{{ 'camfil.modal.createCamcard.input.name' | translate }}</mat-label>
-        <input matInput type="text" maxlength="35" formControlName="name" />
+        <input matInput type="text" maxlength="35" formControlName="name" (keydown)="sayHello()"/>
       </mat-form-field>
       <camfil-error
         [errors]="getField('name').errors"
@@ -131,7 +131,7 @@
       </div>
 
       <!--
-        // because of CAM-911 
+        // because of CAM-911
         <mat-form-field appearance="outline" class="col-sm-12 form__field">
         <mat-label>{{ 'camfil.account.cam_card.add_to_form.country' | translate }}</mat-label>
         <mat-select formControlName="countryCode">
