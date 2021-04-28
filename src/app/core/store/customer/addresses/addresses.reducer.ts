@@ -3,6 +3,7 @@ import { createReducer, on } from '@ngrx/store';
 
 import { Address } from 'ish-core/models/address/address.model';
 import { HttpError } from 'ish-core/models/http-error/http-error.model';
+import { ZipCodeInfo } from 'ish-core/models/zip-codes/zip-codes.interface';
 import {
   createBasketAddress,
   createBasketAddressSuccess,
@@ -21,6 +22,9 @@ import {
   loadAddresses,
   loadAddressesFail,
   loadAddressesSuccess,
+  loadZipCode,
+  loadZipCodeFail,
+  loadZipCodeSuccess,
   updateCustomerAddressFail,
   updateCustomerAddressSuccess,
 } from './addresses.actions';
@@ -31,12 +35,18 @@ export interface AddressesState extends EntityState<Address> {
   loading: boolean;
   error: HttpError;
   createdAddress: Address;
+  zipCodes?: {
+    [code: string]: ZipCodeInfo;
+  };
+  zipCodesLoading?: boolean;
 }
 
 export const initialState: AddressesState = addressAdapter.getInitialState({
   loading: false,
   error: undefined,
   createdAddress: undefined,
+  zipCodes: undefined,
+  zipCodesLoading: false,
 });
 
 export const addressesReducer = createReducer(
@@ -49,13 +59,20 @@ export const addressesReducer = createReducer(
     deleteCustomerAddress,
     deleteBasketShippingAddress
   ),
-  setErrorOn(loadAddressesFail, createCustomerAddressFail, updateCustomerAddressFail, deleteCustomerAddressFail),
+  setErrorOn(
+    loadAddressesFail,
+    createCustomerAddressFail,
+    updateCustomerAddressFail,
+    deleteCustomerAddressFail,
+    loadZipCodeFail
+  ),
   unsetLoadingAndErrorOn(
     loadAddressesSuccess,
     createCustomerAddressSuccess,
     createBasketAddressSuccess,
     updateCustomerAddressSuccess,
-    deleteCustomerAddressSuccess
+    deleteCustomerAddressSuccess,
+    loadZipCodeSuccess
   ),
   on(loadAddressesSuccess, (state: AddressesState, action) => addressAdapter.setAll(action.payload.addresses, state)),
   on(
@@ -74,5 +91,21 @@ export const addressesReducer = createReducer(
   })),
   on(deleteCustomerAddressSuccess, (state: AddressesState, action) =>
     addressAdapter.removeOne(action.payload.addressId, state)
-  )
+  ),
+  on(loadZipCode, (state: AddressesState) => ({
+    ...state,
+    zipCodesLoading: true,
+  })),
+  on(loadZipCodeFail, (state: AddressesState) => ({
+    ...state,
+    zipCodesLoading: false,
+  })),
+  on(loadZipCodeSuccess, (state: AddressesState, { payload }) => ({
+    ...state,
+    zipCodes: {
+      ...state.zipCodes,
+      [payload.codeInfo.zipCode]: payload.codeInfo,
+    },
+    zipCodesLoading: false,
+  }))
 );

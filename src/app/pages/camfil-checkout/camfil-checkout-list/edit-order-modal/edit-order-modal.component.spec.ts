@@ -7,6 +7,7 @@ import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { CamfilCamCardModalComponent } from 'ish-shared/components/common/camfil-cam-card-modal/camfil-cam-card-modal.component';
 import { CamfilErrorComponent } from 'ish-shared/components/common/camfil-error/camfil-error.component';
 import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
+import { ZipCodeComponent } from 'ish-shared/components/zip-code/zip-code.component';
 
 import { OrderFormComponent } from '../../../../extensions/cam-cards/shared/add-to-cart-modal/create-order-modal/order-form/order-form.component';
 
@@ -27,6 +28,7 @@ describe('Edit Order Modal Component', () => {
         CamfilErrorComponent,
         EditOrderModalComponent,
         MockComponent(LoadingComponent),
+        MockComponent(ZipCodeComponent),
         OrderFormComponent,
       ],
       providers: [

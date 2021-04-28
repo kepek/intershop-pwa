@@ -1,4 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { provideMockStore } from '@ngrx/store/testing';
 import { MockComponent } from 'ng-mocks';
 import { of } from 'rxjs';
 import { instance, mock, when } from 'ts-mockito';
@@ -11,6 +13,7 @@ import { CamfilCamCardModalComponent } from 'ish-shared/components/common/camfil
 import { CamfilErrorComponent } from 'ish-shared/components/common/camfil-error/camfil-error.component';
 import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
 import { CamfilProductQuantityComponent } from 'ish-shared/components/product/camfil-product-quantity/camfil-product-quantity.component';
+import { ZipCodeComponent } from 'ish-shared/components/zip-code/zip-code.component';
 import { CamfilCounterComponent } from 'ish-shared/forms/components/camfil-counter/camfil-counter.component';
 
 import { CamCardsFacade } from '../../../facades/cam-cards.facade';
@@ -60,20 +63,23 @@ describe('Create Order Modal Component', () => {
 
     await TestBed.configureTestingModule({
       declarations: [
-        ArticleDetailsComponent,
-        CamfilCamCardModalComponent,
-        CamfilCounterComponent,
-        CamfilErrorComponent,
-        CamfilProductQuantityComponent,
         CreateOrderModalComponent,
-        CreateOrderSuccessComponent,
+        MockComponent(ArticleDetailsComponent),
+        MockComponent(CamfilCamCardModalComponent),
+        MockComponent(CamfilCounterComponent),
+        MockComponent(CamfilErrorComponent),
+        MockComponent(CamfilProductQuantityComponent),
+        MockComponent(CreateOrderSuccessComponent),
         MockComponent(LoadingComponent),
-        OrderFormComponent,
+        MockComponent(OrderFormComponent),
+        MockComponent(ZipCodeComponent),
       ],
+      imports: [RouterTestingModule],
       providers: [
         { provide: CamCardsFacade, useFactory: () => instance(camCardFacadeMock) },
         { provide: CheckoutFacade, useFactory: () => instance(checkoutFacadeMock) },
         { provide: ShoppingFacade, useFactory: () => instance(shoppingFacadeMock) },
+        provideMockStore({}),
       ],
     }).compileComponents();
   });

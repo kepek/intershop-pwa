@@ -8,13 +8,13 @@ import { CamPdfService } from 'src/app/extensions/cam-pdf/services/cam-pdf/cam-p
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
-import { AttributeGroupTypes } from 'ish-core/models/attribute-group/attribute-group.types';
 import { AttributeHelper } from 'ish-core/models/attribute/attribute.helper';
 import { Bucket } from 'ish-core/models/basket/bucket.model';
 import { LineItemView } from 'ish-core/models/line-item/line-item.model';
 import { PriceHelper } from 'ish-core/models/price/price.helper';
 import { Price } from 'ish-core/models/price/price.model';
 import { formatPrice } from 'ish-core/models/price/price.pipe';
+import { ProductViewHelper } from 'ish-core/models/product-view/product-view.helper';
 import { ProductView } from 'ish-core/models/product-view/product-view.model';
 import { ProductCompletenessLevel } from 'ish-core/models/product/product.model';
 import { User } from 'ish-core/models/user/user.model';
@@ -23,7 +23,7 @@ import { whenTruthy } from 'ish-core/utils/operators';
 
 export interface PdfProductInfo {
   name?: string;
-  deliveryDays?: number;
+  deliveryDays?: string;
 }
 
 @Component({
@@ -67,17 +67,32 @@ export class PrintOrderComponent implements OnInit {
     boxLabel: this.translate.instant('camfil.account.cam_card.pdf.box_label'),
     quantity: this.translate.instant('camfil.account.cam_card.pdf.quantity'),
     price: this.translate.instant('camfil.account.cam_card.pdf.price'),
-    orderMark: this.translate.instant('camfil.account.cam_card.pdf.order_mark'),
     yourTotal: this.translate.instant('camfil.account.cam_card.pdf.your_total'),
     printDate: this.translate.instant('camfil.account.cam_card.pdf.print_date'),
     printedBy: this.translate.instant('camfil.account.cam_card.pdf.printed_by'),
     deliveryAddress: this.translate.instant('camfil.account.cam_card.pdf.delivery_address'),
+
+    deliveryDate: this.translate.instant('camfil.account.pdf.delivery_date'),
+    invoiceLabel: this.translate.instant('camfil.account.pdf.invoice_label'),
+    orderMark: this.translate.instant('camfil.account.pdf.order_mark'),
+    phoneNumber: this.translate.instant('camfil.account.pdf.phone_number'),
+    info: this.translate.instant('camfil.account.pdf.information'),
+    contactPerson: this.translate.instant('camfil.account.pdf.contact_person'),
+    deliveryDays: this.translate.instant('camfil.account.pdf.deliver_days'),
   };
 
   ngOnInit() {
     this.accountFacade.user$.pipe(whenTruthy(), take(1)).subscribe(user => {
       this.user = user;
     });
+  }
+
+  calculateDeliveryDate(product: ProductView) {
+    const today = new Date();
+    const daysTillReady = ProductViewHelper.getDeliveryDateDays(product) + 1;
+    const delivery = today.setDate(today.getDate() + daysTillReady);
+
+    return this.handleDate(AttributeHelper.formatDeliveryDate(new Date(delivery)), 'shortDate');
   }
 
   handlePrint() {
@@ -95,11 +110,7 @@ export class PrintOrderComponent implements OnInit {
         .subscribe((res: ProductView) => {
           this.productsInfo[sku] = {
             name: res.name,
-            deliveryDays:
-              AttributeHelper.getAttributeValueByAttributeName<number>(
-                res.attributeGroups[AttributeGroupTypes.ProductsListLabelAttributes].attributes,
-                'Deliverydays'
-              ) || 0,
+            deliveryDays: this.calculateDeliveryDate(res),
           };
         });
     });
@@ -162,11 +173,11 @@ export class PrintOrderComponent implements OnInit {
             width: '30%',
             table: {
               body: [
-                ['deliveryDate', { text: bucket.deliveryDate, bold: true }],
-                ['invoiceLabel', { text: bucket.invoiceLabel || '---', bold: true }],
-                ['orderMark', { text: bucket.orderMark || '---', bold: true }],
-                ['phoneNumber', { text: bucket.phoneNumber || '---', bold: true }],
-                ['info', { text: bucket.info || '---', bold: true }],
+                [this.texts.deliveryDate, { text: bucket.deliveryDate, bold: true }],
+                [this.texts.invoiceLabel, { text: bucket.invoiceLabel || '---', bold: true }],
+                [this.texts.orderMark, { text: bucket.orderMark || '---', bold: true }],
+                [this.texts.phoneNumber, { text: bucket.phoneNumber || '---', bold: true }],
+                [this.texts.info, { text: bucket.info || '---', bold: true }],
               ],
             },
             widths: ['*', 'auto'],
@@ -204,7 +215,7 @@ export class PrintOrderComponent implements OnInit {
                   ],
                 ],
                 [
-                  { text: 'contactPerson' },
+                  { text: this.texts.contactPerson },
                   [{ text: `${contactPerson.firstName} ${contactPerson.lastName}`, bold: true }],
                 ],
               ],
@@ -225,11 +236,8 @@ export class PrintOrderComponent implements OnInit {
     const boxLabelText = label ? ` | ${this.texts.boxLabel}: ` : '';
     const boxLabelVal = { text: label, bold: true };
 
-    const today = new Date();
-    const deliveryDays = this.productsInfo[sku].deliveryDays
-      ? this.handleDate(new Date(today.setDate(today.getDate() + this.productsInfo[sku].deliveryDays)), 'shortDate')
-      : undefined;
-    const deliveryDaysText = deliveryDays ? ' | deliveryDays: ' : '';
+    const deliveryDays = this.productsInfo[sku].deliveryDays;
+    const deliveryDaysText = deliveryDays ? ` | ${this.texts.deliveryDays}: ` : '';
     const deliveryDaysVal = { text: deliveryDays, bold: true };
     const qty = `${this.texts.quantity} `;
     const qtyVal = { text: item.quantity.value, bold: true };
@@ -281,7 +289,7 @@ export class PrintOrderComponent implements OnInit {
     return data ? formatPrice(data, this.translate.currentLang) : '---';
   }
 
-  handleDate(data: Date, format = 'medium') {
+  handleDate(data: Date | string, format = 'medium') {
     return formatISHDate(data, format, this.translate.currentLang);
   }
 }

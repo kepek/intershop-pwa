@@ -6,7 +6,7 @@ import { concatMap, filter, map, mergeMap, switchMap, withLatestFrom } from 'rxj
 import { AddressService } from 'ish-core/services/address/address.service';
 import { displaySuccessMessage } from 'ish-core/store/core/messages';
 import { getLoggedInCustomer } from 'ish-core/store/customer/user';
-import { mapErrorToAction, mapToPayloadProperty } from 'ish-core/utils/operators';
+import { mapErrorToAction, mapToPayload, mapToPayloadProperty } from 'ish-core/utils/operators';
 
 import {
   createCustomerAddress,
@@ -18,7 +18,11 @@ import {
   loadAddresses,
   loadAddressesFail,
   loadAddressesSuccess,
+  loadZipCode,
+  loadZipCodeFail,
+  loadZipCodeSuccess,
 } from './addresses.actions';
+import { getZipCodes } from './addresses.selectors';
 
 @Injectable()
 export class AddressesEffects {
@@ -76,6 +80,25 @@ export class AddressesEffects {
           ]),
           mapErrorToAction(deleteCustomerAddressFail)
         )
+      )
+    )
+  );
+
+  /**
+   * Load Zip Code.
+   */
+  loadZipCode$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loadZipCode),
+      mapToPayload(),
+      withLatestFrom(this.store.pipe(select(getZipCodes))),
+      mergeMap(([{ code, countryCode }, codes]) =>
+        !codes || !codes[code]
+          ? this.addressService.loadZipCode(code, countryCode).pipe(
+              mergeMap(codeInfo => [loadZipCodeSuccess({ codeInfo })]),
+              mapErrorToAction(loadZipCodeFail)
+            )
+          : [loadZipCodeSuccess({ codeInfo: codes[code] })]
       )
     )
   );

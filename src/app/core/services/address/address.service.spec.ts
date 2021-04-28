@@ -4,6 +4,7 @@ import { anything, instance, mock, verify, when } from 'ts-mockito';
 
 import { AppFacade } from 'ish-core/facades/app.facade';
 import { ApiService } from 'ish-core/services/api/api.service';
+import { CoreStoreModule } from 'ish-core/store/core/core-store.module';
 import { BasketMockData } from 'ish-core/utils/dev/basket-mock-data';
 
 import { AddressService } from './address.service';
@@ -18,6 +19,7 @@ describe('Address Service', () => {
     appFacade = mock(AppFacade);
 
     TestBed.configureTestingModule({
+      imports: [CoreStoreModule.forTesting(['configuration'])],
       providers: [
         { provide: ApiService, useFactory: () => instance(apiService) },
         { provide: AppFacade, useFactory: () => instance(appFacade) },

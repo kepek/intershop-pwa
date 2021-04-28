@@ -1,19 +1,23 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { concatMap, first, map, mapTo } from 'rxjs/operators';
+import { Store, select } from '@ngrx/store';
+import { Observable, throwError } from 'rxjs';
+import { concatMap, first, map, mapTo, withLatestFrom } from 'rxjs/operators';
 
 import { AppFacade } from 'ish-core/facades/app.facade';
 import { AddressMapper } from 'ish-core/models/address/address.mapper';
 import { Address } from 'ish-core/models/address/address.model';
 import { Link } from 'ish-core/models/link/link.model';
+import { ZipCodeData, ZipCodeInfo } from 'ish-core/models/zip-codes/zip-codes.interface';
 import { ApiService, unpackEnvelope } from 'ish-core/services/api/api.service';
+import { getCurrentLocale } from 'ish-core/store/core/configuration';
 
 /**
  * The Address Service handles the interaction with the REST API concerning addresses.
  */
 @Injectable({ providedIn: 'root' })
 export class AddressService {
-  constructor(private apiService: ApiService, private appFacade: AppFacade) {}
+  getCountryISO3 = require('country-iso-2-to-3');
+  constructor(private apiService: ApiService, private store: Store, private appFacade: AppFacade) {}
 
   /**
    * Gets the addresses for the given customer id. Falls back to '-' as customer id to get the addresses for the current user.
@@ -88,6 +92,21 @@ export class AddressService {
       concatMap(restResource =>
         this.apiService.delete(`${restResource}/${customerId}/addresses/${addressId}`).pipe(mapTo(addressId))
       )
+    );
+  }
+
+  loadZipCode(code: string, countryCod: string): Observable<ZipCodeInfo> {
+    if (!code || !countryCod) {
+      return throwError('loadZipCode() called without code or countryCod');
+    }
+
+    const data = {
+      country: countryCod.length === 2 ? this.getCountryISO3(countryCod) : countryCod,
+      zipCode: code.replace(' ', ''),
+    };
+    return this.apiService.post<ZipCodeData[]>(`zipcodequery`, data).pipe(
+      withLatestFrom(this.store.pipe(select(getCurrentLocale))),
+      map(([info, currentLocale]) => AddressMapper.zipCodefromData(code, info, currentLocale))
     );
   }
 }
