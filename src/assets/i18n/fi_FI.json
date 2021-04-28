@@ -687,6 +687,7 @@
   "camfil.account.orderdetails.order_comment.label": "fi_Order comment",
   "camfil.account.orderdetails.order_status.label": "Tila",
   "camfil.account.orderdetails.phone_notification.label": "Puhelinilmoitus",
+  "camfil.account.orderdetails.rebate.text": "fi_Rabatt",
   "camfil.account.orderdetails.summary.qty_delivered": "Toimitettu kokonaismäärä",
   "camfil.account.orderdetails.summary.qty_ordered": "Tilattu kokonaismäärä",
   "camfil.account.orderdetails.your.tax_amount.text": "Arvonlisävero",

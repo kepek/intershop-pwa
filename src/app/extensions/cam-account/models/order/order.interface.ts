@@ -25,4 +25,5 @@ export interface OrderData {
   totalDeliveredQty: number;
   totalOrderedQty: number;
   totalPriceAfterDiscountExVAT: number;
+  volumeDiscount: number;
 }

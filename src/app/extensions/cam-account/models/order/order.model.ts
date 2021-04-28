@@ -29,4 +29,5 @@ export interface Order {
   trackAndTrace?: TrackAndTrace;
   additionalTotalCost?: AdditionalTotalCost;
   phoneNotification: string;
+  volumeDiscount: number;
 }

@@ -28,6 +28,7 @@ describe('Order Mapper', () => {
     totalDeliveredQty: 1,
     totalOrderedQty: 1,
     totalPriceAfterDiscountExVAT: 1,
+    volumeDiscount: 1,
   } as OrderData;
 
   describe('fromData', () => {
