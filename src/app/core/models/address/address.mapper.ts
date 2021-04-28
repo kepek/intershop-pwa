@@ -1,8 +1,7 @@
 import { CamCard } from 'src/app/extensions/cam-cards/models/cam-card/cam-card.model';
 
+import { Locale } from 'ish-core/models/locale/locale.model';
 import { ZipCodeData, ZipCodeInfo } from 'ish-core/models/zip-codes/zip-codes.interface';
-
-import { Locale } from '../locale/locale.model';
 
 import { AddressData } from './address.interface';
 import { Address } from './address.model';
