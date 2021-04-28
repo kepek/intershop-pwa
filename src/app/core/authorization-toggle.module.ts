@@ -31,11 +31,6 @@ export class AuthorizationToggleModule {
                 whenTruthy(),
                 map(perms => checkPermission(perms, permission))
               ),
-          },
-        },
-        {
-          provide: AuthorizationToggleService,
-          useValue: {
             isAuthorizedToCheckArrAny: (permissionArray: string[]) =>
               AuthorizationToggleModule.permissions.pipe(
                 whenTruthy(),
