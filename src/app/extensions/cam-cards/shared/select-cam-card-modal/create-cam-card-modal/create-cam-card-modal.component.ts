@@ -90,9 +90,9 @@ export class CreateCamCardModalComponent implements OnInit, AfterViewInit, OnDes
       this.customers$.pipe(takeUntil(this.destroy$)).subscribe(customers => {
         this.customers = customers;
         this.camCardForm.patchValue({
-          customerSelect: customers[0]?.id, //TODO: Check why is not selected by default
+          customerSelect: customers[0]?.id, // TODO: Check why is not selected by default
         });
-        console.log('this.camCardForm ', this.camCardForm);
+
         if (customers.length === 1) {
           this.pickCustomer({ value: customers[0].id });
         } else if (!customers.length) {
@@ -100,11 +100,6 @@ export class CreateCamCardModalComponent implements OnInit, AfterViewInit, OnDes
         }
       });
     });
-
-    console.log('customers', this.customers);
-  }
-  sayHello() {
-    console.log('LOG', this.camCardForm);
   }
   initForm() {
     this.camCardForm = this.fb.group({
@@ -139,7 +134,6 @@ export class CreateCamCardModalComponent implements OnInit, AfterViewInit, OnDes
 
   pickCustomer(event) {
     if (event.value) {
-      console.log('pickCustomer', event.value, this.customers);
       this.camCardsFacade.getDeliveryAddress(event.value);
     }
   }
@@ -163,11 +157,7 @@ export class CreateCamCardModalComponent implements OnInit, AfterViewInit, OnDes
   create() {
     const customerId = this.camCardForm.get('customerSelect').value;
 
-    console.log('customerId', customerId, '  this.customers', this.customers);
-    this.customers.map(item => {
-      console.log('item.id', item.id, 'customerId', customerId);
-      return item.id === customerId;
-    });
+    this.customers.map(item => item.id === customerId);
     const camCard = {
       name: this.camCardForm.get('name').value,
       orderLabel: this.camCardForm.get('orderMark').value,
