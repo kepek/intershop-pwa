@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
 
@@ -14,7 +14,7 @@ import { whenTruthy } from 'ish-core/utils/operators';
   styleUrls: ['./camfil-login-status.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CamfilLoginStatusComponent implements OnInit {
+export class CamfilLoginStatusComponent implements OnInit, OnDestroy {
   @Input() logoutOnly = false;
   @Input() view: 'auto' | 'small' | 'full' = 'auto';
 
@@ -39,5 +39,10 @@ export class CamfilLoginStatusComponent implements OnInit {
 
   setRedirectParam() {
     return { returnUrl: `/${String(this.countryByChannel).toLowerCase()}-${this.languageSymbol}/home` };
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }
