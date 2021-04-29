@@ -37,11 +37,13 @@ import {
   getBasketPromotionError,
   getBasketShippingAddress,
   getBasketValidationResults,
+  getCalendarExceptions,
   getCurrentBasket,
   getCurrentBuckets,
   getCustomersDeliveryTerms,
   getEmptyBuckets,
   getSubmittedBasket,
+  getWarehouseCalendar,
   isBasketInvoiceAndShippingAddressEqual,
   loadBasketEligiblePaymentMethods,
   loadBasketEligibleShippingMethods,
@@ -93,6 +95,7 @@ export class CheckoutFacade {
     map(basket => (basket && basket.lineItems && basket.lineItems.length ? basket.lineItems : undefined))
   );
   submittedBasket$ = this.store.pipe(select(getSubmittedBasket));
+  calendarExceptions$ = this.store.pipe(select(getCalendarExceptions));
 
   deleteBasketItem(itemId: string) {
     this.store.dispatch(deleteBasketItem({ itemId }));
@@ -266,5 +269,9 @@ export class CheckoutFacade {
 
   loadCustomerDeliveryTerm(customerId: string) {
     this.store.dispatch(loadCustomerDeliveryTerm({ customerId }));
+  }
+
+  getWarehouseCalendar() {
+    this.store.dispatch(getWarehouseCalendar());
   }
 }

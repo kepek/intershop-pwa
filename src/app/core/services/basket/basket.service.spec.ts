@@ -2,6 +2,7 @@ import { HttpHeaders } from '@angular/common/http';
 import { of, throwError } from 'rxjs';
 import { anyString, anything, capture, instance, mock, verify, when } from 'ts-mockito';
 
+import { AppFacade } from 'ish-core/facades/app.facade';
 import { Address } from 'ish-core/models/address/address.model';
 import { ApiService } from 'ish-core/services/api/api.service';
 import { OrderService } from 'ish-core/services/order/order.service';
@@ -14,6 +15,7 @@ describe('Basket Service', () => {
   let basketService: BasketService;
   let apiService: ApiService;
   let orderService: OrderService;
+  let appFacade: AppFacade;
 
   const basketMockData = {
     data: {
@@ -52,8 +54,10 @@ describe('Basket Service', () => {
   beforeEach(() => {
     apiService = mock(ApiService);
     orderService = mock(OrderService);
+    appFacade = mock(AppFacade);
     // @ts-ignore
     basketService = new BasketService(instance(apiService), instance(orderService));
+    when(appFacade.getCountryByChannel$).thenReturn(of('SE'));
   });
 
   it("should get basket data when 'getBasket' is called", done => {
