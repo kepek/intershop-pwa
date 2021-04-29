@@ -36,6 +36,7 @@ import { ModalAddNewProductComponent } from '../../../extensions/cam-cards/pages
 import { EditOrderModalComponent } from './edit-order-modal/edit-order-modal.component';
 import { ORDER_HEADER_VALIDATORS } from './validators';
 import { LineItemUpdate } from 'ish-core/models/line-item-update/line-item-update.model';
+import { Address } from 'ish-core/models/address/address.model';
 
 interface Order extends Bucket {
   totals: number;
@@ -71,6 +72,7 @@ export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
   modalDeliveryText: string;
   isPartialDelivery = false;
   deliveryTerm: CustomerDeliveryTerm;
+  basketInvoiceAddress: Address;
 
   @ViewChild(CamfilSmallCtaModalComponent) modal: CamfilSmallCtaModalComponent;
 
@@ -85,6 +87,9 @@ export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     if (this.order) {
+      this.checkoutFacade.basketInvoiceAddress$
+        .pipe(whenTruthy(), takeUntil(this.destroy$))
+        .subscribe(address => (this.basketInvoiceAddress = address));
       this.initForm();
       this.checkoutFacade.getCustomersDeliveryTerms$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(terms => {
         this.deliveryTerm = terms[this.order.customer.id];
