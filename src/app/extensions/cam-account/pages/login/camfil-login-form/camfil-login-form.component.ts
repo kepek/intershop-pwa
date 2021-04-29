@@ -33,7 +33,9 @@ export class CamfilLoginFormComponent implements OnInit {
 
     /* Login via URL parameters */
     this.activatedRoute.queryParams.subscribe(params => {
-      const token = params['access-token'];
+      let token: string = params['access-token'];
+      // token is not encoded by ICM URL, so we need to reinsert '+'
+      token = token.split(' ').join('+');
       const erpEmployeeId = params.ERPEmployeeID;
       if (erpEmployeeId) {
         localStorage.setItem('erpEmployeeId', erpEmployeeId);
