@@ -120,7 +120,7 @@
         <dl class="row dl-horizontal dl-separator mb-0">
           <dt class="col-6 p-0">{{ 'camfil.checkout.invoice_address' | translate }}</dt>
           <dd class="col-6 p-0" data-testing-id="order-delivery_address">
-            <ish-address [address]="order.shipToAddressFull"></ish-address>
+            <ish-address [address]="basketInvoiceAddress"></ish-address>
           </dd>
           <dt class="col-6 p-0">{{ 'camfil.checkout.shipping_method' | translate }}</dt>
           <dd class="col-6 p-0" data-testing-id="order-channel">
