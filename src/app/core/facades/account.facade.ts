@@ -89,6 +89,7 @@ export class AccountFacade {
   }
 
   logoutUser() {
+    console.log('facade logout');
     this.store.dispatch(logoutUser());
   }
 

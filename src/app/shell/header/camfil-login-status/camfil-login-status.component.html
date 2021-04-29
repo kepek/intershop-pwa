@@ -21,7 +21,12 @@
       >
     </a>
     <span class="separator">&#124;</span>
-    <a href="/logout" class="my-account-link my-account-logout" data-testing-id="link-logout">
+    <a
+      routerLink="/logout"
+      [queryParams]="setRedirectParam()"
+      class="my-account-link my-account-logout"
+      data-testing-id="link-logout"
+    >
       <span>{{ 'account.logout.link' | translate }}</span>
     </a>
   </ng-container>
