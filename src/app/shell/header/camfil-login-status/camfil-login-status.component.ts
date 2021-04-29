@@ -24,6 +24,12 @@ export class CamfilLoginStatusComponent implements OnInit, OnDestroy {
 
   private destroy$ = new Subject();
 
+  get redirectParam() {
+    return {
+      returnUrl: `/${String(this.countryByChannel).toLowerCase()}-${this.languageSymbol}/home`,
+    };
+  }
+
   constructor(private accountFacade: AccountFacade, private appFacade: AppFacade) {}
 
   ngOnInit() {
@@ -35,10 +41,6 @@ export class CamfilLoginStatusComponent implements OnInit, OnDestroy {
     this.appFacade.currentLocale$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(locale => {
       this.languageSymbol = locale?.value;
     });
-  }
-
-  setRedirectParam() {
-    return { returnUrl: `/${String(this.countryByChannel).toLowerCase()}-${this.languageSymbol}/home` };
   }
 
   ngOnDestroy() {
