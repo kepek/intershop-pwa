@@ -28,10 +28,27 @@
   }
 
   &__measurement {
-    input {
-      max-width: 110px;
-      padding: $space-box / 2;
-      margin: 0 $space-box 0 $space-box/2;
+    ::ng-deep & {
+      .mat-form-field {
+        margin: 0 $space-box/2 0;
+      }
+      .mat-form-field-infix {
+        width: 110px;
+        border-top-width: 0;
+        padding: $space-box 0;
+      }
+      .mat-form-field-label {
+        margin-top: 6px;
+      }
+      input {
+        -moz-appearance: textfield;
+        &::-webkit-outer-spin-button,
+        &::-webkit-inner-spin-button {
+          margin: 0;
+          -webkit-appearance: none;
+
+        }
+      }
     }
   }
   &__ico {

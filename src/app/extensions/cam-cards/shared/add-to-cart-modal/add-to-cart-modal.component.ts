@@ -10,7 +10,7 @@ import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { AttributeHelper } from 'ish-core/models/attribute/attribute.helper';
 import { BasketView } from 'ish-core/models/basket/basket.model';
 import { Bucket } from 'ish-core/models/basket/bucket.model';
-import { Product } from 'ish-core/models/product/product.model';
+import { Product, ProductHelper } from 'ish-core/models/product/product.model';
 import { whenTruthy } from 'ish-core/utils/operators';
 import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
 
@@ -56,6 +56,7 @@ export class AddToCartModalComponent implements OnInit, OnDestroy {
       measurementWidth: new FormControl(),
       measurementHeight: new FormControl(),
       measurementDiameter: new FormControl(),
+      measurementErrorInfo: new FormControl(),
     });
 
     this.shoppingFacade.productUpdated$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(() => {
@@ -84,6 +85,18 @@ export class AddToCartModalComponent implements OnInit, OnDestroy {
   }
 
   addToOrder() {
+    const requiresMeasurement = ProductHelper.getRequiresMeasurement(this.product);
+    const measurements =
+      this.quantityForm.get('measurementWidth')?.value ||
+      this.quantityForm.get('measurementHeight')?.value ||
+      this.quantityForm.get('measurementDiameter')?.value;
+
+    if (requiresMeasurement && !measurements) {
+      this.quantityForm.patchValue({ measurementErrorInfo: true });
+      markAsDirtyRecursive(this.quantityForm);
+      return;
+    }
+
     if (this.quantityForm.valid && this.selectedOrderId) {
       const currentBucket = this.buckets.find(bucket => bucket.id === this.selectedOrderId);
 

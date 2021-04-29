@@ -19,7 +19,7 @@ import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
-import { Product } from 'ish-core/models/product/product.model';
+import { Product, ProductHelper } from 'ish-core/models/product/product.model';
 import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
 
 import { CamCardsFacade } from '../../facades/cam-cards.facade';
@@ -179,6 +179,7 @@ export class SelectCamCardModalComponent implements OnInit, OnDestroy, OnChanges
       measurementWidth: new FormControl(),
       measurementHeight: new FormControl(),
       measurementDiameter: new FormControl(),
+      measurementErrorInfo: new FormControl(),
     });
   }
 
@@ -272,6 +273,12 @@ export class SelectCamCardModalComponent implements OnInit, OnDestroy, OnChanges
       height: this.quantityForm.get('measurementHeight').value,
       diameter: this.quantityForm.get('measurementDiameter').value,
     };
+    const requiresMeasurement = ProductHelper.getRequiresMeasurement(this.product);
+
+    if (requiresMeasurement && !Object.values(measurement).find(e => e)) {
+      this.quantityForm.patchValue({ measurementErrorInfo: true });
+      return;
+    }
 
     if (this.camCardSelected && this.isAddedToNewSubCamCard()) {
       this.addToNewSubCamCard(quantity, boxLabel, measurement);
