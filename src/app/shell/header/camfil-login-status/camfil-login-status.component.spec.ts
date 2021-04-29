@@ -7,6 +7,9 @@ import { of } from 'rxjs';
 import { instance, mock, when } from 'ts-mockito';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
+import { AppFacade } from 'ish-core/facades/app.facade';
+import { Channel } from 'ish-core/models/channel/channel.types';
+import { Locale } from 'ish-core/models/locale/locale.model';
 import { User } from 'ish-core/models/user/user.model';
 
 import { CamfilLoginStatusComponent } from './camfil-login-status.component';
@@ -16,6 +19,7 @@ describe('Camfil Login Status Component', () => {
   let fixture: ComponentFixture<CamfilLoginStatusComponent>;
   let element: HTMLElement;
   let accountFacade: AccountFacade;
+  let appFacade: AppFacade;
 
   const userData = {
     firstName: 'Patricia',
@@ -24,10 +28,14 @@ describe('Camfil Login Status Component', () => {
 
   beforeEach(async () => {
     accountFacade = mock(AccountFacade);
+    appFacade = mock(AppFacade);
     await TestBed.configureTestingModule({
       declarations: [CamfilLoginStatusComponent, MockComponent(FaIconComponent)],
       imports: [RouterTestingModule, TranslateModule.forRoot()],
-      providers: [{ provide: AccountFacade, useFactory: () => instance(accountFacade) }],
+      providers: [
+        { provide: AccountFacade, useFactory: () => instance(accountFacade) },
+        { provide: AppFacade, useFactory: () => instance(appFacade) },
+      ],
     }).compileComponents();
   });
 
@@ -35,6 +43,9 @@ describe('Camfil Login Status Component', () => {
     fixture = TestBed.createComponent(CamfilLoginStatusComponent);
     component = fixture.componentInstance;
     element = fixture.nativeElement;
+
+    when(appFacade.getCamfilChannel$).thenReturn(of('SE' as Channel));
+    when(appFacade.currentLocale$).thenReturn(of({ value: 'gb' } as Locale));
   });
 
   it('should be created', () => {
