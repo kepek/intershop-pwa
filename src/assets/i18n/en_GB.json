@@ -702,7 +702,7 @@
   "camfil.account.orderlist.seach.button.title": "Search",
   "camfil.account.orderlist.show_more": "Show more",
   "camfil.account.orderlist.showing_of": "Showing {{0}} of {{1}}",
-  "camfil.account.orderlist.table.camfil_order_number": "Camfil Order No.",
+  "camfil.account.orderlist.table.camfil_order_number": "Customer order no.",
   "camfil.account.orderlist.table.customer": "Customer",
   "camfil.account.orderlist.table.goods_mark": "Goods mark",
   "camfil.account.organization.edit_user.assign_customer_user_contact.modal.text": "Contact person is now updated",
