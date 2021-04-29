@@ -6,15 +6,15 @@
     <div class="article-details__measurement d-flex flex-wrap w-100 pt-1">
       <mat-form-field [formGroup]="quantityForm" appearance="outline">
         <mat-label>{{ 'camfil.modal.addToCamcard.width.label' | translate }}</mat-label>
-        <input matInput formControlName="measurementWidth" (keyup)="validateVal()" />
+        <input matInput formControlName="measurementWidth" (keyup)="validateVal()" type="number" />
       </mat-form-field>
       <mat-form-field [formGroup]="quantityForm" appearance="outline">
         <mat-label>{{ 'camfil.modal.addToCamcard.height.label' | translate }}</mat-label>
-        <input matInput formControlName="measurementHeight" (keyup)="validateVal()" />
+        <input matInput formControlName="measurementHeight" (keyup)="validateVal()" type="number" />
       </mat-form-field>
       <mat-form-field [formGroup]="quantityForm" appearance="outline">
         <mat-label>{{ 'camfil.modal.addToCamcard.diameter.label' | translate }}</mat-label>
-        <input matInput formControlName="measurementDiameter" (keyup)="validateVal()" />
+        <input matInput formControlName="measurementDiameter" (keyup)="validateVal()" type="number" />
       </mat-form-field>
       <div
         *ngIf="filledMeasurements?.length"
