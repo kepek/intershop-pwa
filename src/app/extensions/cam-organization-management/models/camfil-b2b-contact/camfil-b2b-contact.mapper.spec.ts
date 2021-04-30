@@ -15,10 +15,10 @@ describe('Camfil B2b Contact Mapper', () => {
 
     it('should map incoming data to model data', () => {
       const data = {
-        profileId: 'test',
+        erpId: 'test',
       } as CamfilB2bContactData;
       const mapped = CamfilB2bContactMapper.fromData(data);
-      expect(mapped).toHaveProperty('profileId', 'test');
+      expect(mapped).toHaveProperty('erpId', 'test');
       expect(mapped).not.toHaveProperty('otherField');
     });
   });

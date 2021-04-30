@@ -1,4 +1,4 @@
-// tslint:disable: ish-ordered-imports project-structure
+// tslint:disable: ish-ordered-imports project-structure rxjs-no-subject-value
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subject, combineLatest, throwError, BehaviorSubject } from 'rxjs';
 import { distinctUntilChanged, filter, map, switchMap } from 'rxjs/operators';

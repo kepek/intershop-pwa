@@ -1,7 +1,7 @@
 import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { pick } from 'lodash-es';
-import { Observable, forkJoin, iif, of, throwError, EMPTY } from 'rxjs';
+import { EMPTY, Observable, forkJoin, iif, of, throwError } from 'rxjs';
 import { catchError, concatAll, concatMap, defaultIfEmpty, map, switchMap, withLatestFrom } from 'rxjs/operators';
 
 import { AppFacade } from 'ish-core/facades/app.facade';
@@ -292,7 +292,7 @@ export class CamOrganizationService {
   connectUserWithCustomerPlusReload(customerId: string, userId: string): Observable<CamfilB2bUser> {
     return this.connectUserWithCustomer(customerId, userId).pipe(
       withLatestFrom(this.organizationFacade.getUser$(userId).pipe(whenTruthy())),
-      concatMap(([_, user]) => this.getCustomerUser(user.customerId, userId))
+      concatMap(([, user]) => this.getCustomerUser(user.customerId, userId))
     );
   }
 
@@ -316,7 +316,7 @@ export class CamOrganizationService {
   disconnectUserFromCustomerPlusReload(customerId: string, userId: string): Observable<CamfilB2bUser> {
     return this.disconnectUserFromCustomer(customerId, userId).pipe(
       withLatestFrom(this.organizationFacade.getUser$(userId).pipe(whenTruthy())),
-      concatMap(([_, user]) => this.getCustomerUser(user.customerId, userId))
+      concatMap(([, user]) => this.getCustomerUser(user.customerId, userId))
     );
   }
 
@@ -341,7 +341,7 @@ export class CamOrganizationService {
   ): Observable<CamfilB2bUser> {
     return this.connectContactWithUserCustomer(customerId, userId, contact).pipe(
       withLatestFrom(this.organizationFacade.getUser$(userId).pipe(whenTruthy())),
-      concatMap(([_, user]) => this.getCustomerUser(user.customerId, userId))
+      concatMap(([, user]) => this.getCustomerUser(user.customerId, userId))
     );
   }
 
@@ -366,7 +366,7 @@ export class CamOrganizationService {
   ): Observable<CamfilB2bUser> {
     return this.disconnectContactWithUserCustomer(customerId, userId, contact).pipe(
       withLatestFrom(this.organizationFacade.getUser$(userId).pipe(whenTruthy())),
-      concatMap(([_, user]) => this.getCustomerUser(user.customerId, userId))
+      concatMap(([, user]) => this.getCustomerUser(user.customerId, userId))
     );
   }
 
