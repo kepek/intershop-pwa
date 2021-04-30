@@ -34,6 +34,8 @@ import {
   deleteBasketAttribute,
   deleteBasketAttributeFail,
   deleteBasketAttributeSuccess,
+  getWarehouseCalendar,
+  getWarehouseCalendarSuccess,
   loadBasket,
   loadBasketByAPIToken,
   loadBasketEligibleShippingMethods,
@@ -308,6 +310,18 @@ export class BasketEffects {
   );
 
   createBasket$ = createEffect(() => this.actions$.pipe(ofType(createBasket), map(checkCurrentBasket)));
+
+  getWarehouseCalendar$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(getWarehouseCalendar),
+      mergeMap(() =>
+        this.basketService.getWarehouseCalendar().pipe(
+          map((dates: []) => getWarehouseCalendarSuccess({ dates })),
+          mapErrorToAction(loadBasketFail)
+        )
+      )
+    )
+  );
 
   /** check whether a specific custom attribute exists at basket.
    * @param basket

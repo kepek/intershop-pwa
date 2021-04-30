@@ -521,3 +521,12 @@ export const createBasket = createAction('[Basket API] Create new Basket');
 export const createBasketFail = createAction('[Basket API] Create new Basket Fail', httpError());
 
 export const checkCurrentBasket = createAction('[Basket API] Check Current Basket');
+
+export const getWarehouseCalendar = createAction('[Basket] Get warehouse calendar');
+
+export const getWarehouseCalendarSuccess = createAction(
+  '[Basket] Get warehouse calendar Success',
+  payload<{ dates: [] }>()
+);
+
+export const getWarehouseCalendarFail = createAction('[Basket] Get warehouse calendar Fail', httpError());

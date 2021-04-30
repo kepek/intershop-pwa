@@ -66,7 +66,6 @@ describe('Camfil B2b User Mapper', () => {
       expect(users).toMatchInlineSnapshot(`
         Array [
           Object {
-            "active": undefined,
             "currentLogin": "pmiller@test.intershop.de",
             "id": "1",
             "login": "pmiller@test.intershop.de",
