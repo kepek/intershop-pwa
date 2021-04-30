@@ -15,7 +15,7 @@ import { CreatePageDataSourceComponent } from './create-page.data-source';
   selector: 'camfil-user-detail-page',
   templateUrl: './create-page.component.html',
   styleUrls: ['./create-page.component.scss'],
-  changeDetection: ChangeDetectionStrategy.Default,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 // tslint:disable-next-line:component-creation-test
 export class CreatePageComponent extends CreatePageDataSourceComponent implements AfterViewInit {
@@ -38,8 +38,6 @@ export class CreatePageComponent extends CreatePageDataSourceComponent implement
     this.form.markAllAsTouched();
 
     if (this.form.valid) {
-      // @ts-ignore
-      // tslint:disable-next-line:no-unused
       this.context$.pipe(take(1), whenTruthy()).subscribe(({ customer, user, contacts, roles }) => {
         this.organizationFacade.createCustomerUser$(customer, user, contacts, roles);
       });

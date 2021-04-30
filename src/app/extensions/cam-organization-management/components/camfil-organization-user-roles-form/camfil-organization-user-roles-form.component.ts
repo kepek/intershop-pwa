@@ -86,7 +86,7 @@ export class CamfilOrganizationUserRolesFormComponent implements OnInit, OnChang
   }
 
   private static toRoleIDs(roles: CamfilB2bRole[]): string[] {
-    return roles.map(r => r.id);
+    return [].concat(roles).map(r => r?.id);
   }
 
   // Methods

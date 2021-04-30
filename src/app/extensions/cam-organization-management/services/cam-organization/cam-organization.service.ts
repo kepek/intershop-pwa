@@ -1,20 +1,21 @@
 import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { pick } from 'lodash-es';
-import { Observable, forkJoin, iif, of, throwError } from 'rxjs';
-import { catchError, concatAll, concatMap, map, mergeMap, switchMap } from 'rxjs/operators';
+import { EMPTY, Observable, forkJoin, iif, of, throwError } from 'rxjs';
+import { catchError, concatAll, concatMap, defaultIfEmpty, map, switchMap, withLatestFrom } from 'rxjs/operators';
 
 import { AppFacade } from 'ish-core/facades/app.facade';
 import { AddressData } from 'ish-core/models/address/address.interface';
 import { AddressMapper } from 'ish-core/models/address/address.mapper';
 import { Address } from 'ish-core/models/address/address.model';
-import { HttpError } from 'ish-core/models/http-error/http-error.model';
 import { PasswordReminder } from 'ish-core/models/password-reminder/password-reminder.model';
 import { ApiService, AvailableOptions, unpackEnvelope } from 'ish-core/services/api/api.service';
+import { whenTruthy } from 'ish-core/utils/operators';
 
 import { CamCardData } from '../../../cam-cards/models/cam-card/cam-card.interface';
 import { CamCardMapper } from '../../../cam-cards/models/cam-card/cam-card.mapper';
 import { CamCard } from '../../../cam-cards/models/cam-card/cam-card.model';
+import { CamOrganizationManagementFacade } from '../../facades/cam-organization-management.facade';
 import { CamfilB2bContactData } from '../../models/camfil-b2b-contact/camfil-b2b-contact.interface';
 import { CamfilB2bContactMapper } from '../../models/camfil-b2b-contact/camfil-b2b-contact.mapper';
 import { CamfilB2bContact } from '../../models/camfil-b2b-contact/camfil-b2b-contact.model';
@@ -38,32 +39,22 @@ export class CamOrganizationService {
     private apiService: ApiService,
     private b2bRoleMapper: CamfilB2bRoleMapper,
     private camCardMapper: CamCardMapper,
-    private appFacade: AppFacade
+    private appFacade: AppFacade,
+    private organizationFacade: CamOrganizationManagementFacade
   ) {}
-
-  private static isUsersNotFoundError(err: HttpError) {
-    return err.name === 'HttpErrorResponse' && err.message === 'The user could not be found.' && err.status === 404;
-  }
-
-  // Customers
 
   getCustomers(): Observable<CamfilB2bCustomer[]> {
     return this.apiService
       .get<CamfilB2bCustomerData[]>(`camfilcustomers`)
-      .pipe(unpackEnvelope(), map(CamfilB2bCustomerMapper.fromListData));
+      .pipe(unpackEnvelope(), map(CamfilB2bCustomerMapper.fromListData), defaultIfEmpty([]));
   }
 
   // Customer
 
   getCustomer(customerId: string): Observable<CamfilB2bCustomer> {
-    return this.apiService.get<CamfilB2bCustomerData>(`camfilcustomers/${customerId}`).pipe(
-      map(CamfilB2bCustomerMapper.fromData),
-      // TODO (extMlk): This need to be removed whenever Back-end will be fixed. See the error details below.
-      // Error: Forbidden (The supplied user is not allowed to access 'camfilcustomers/XXXX' using 'GET')
-      catchError(() =>
-        this.getCustomers().pipe(map(customers => customers.find(customer => customer.id === customerId)))
-      )
-    );
+    return this.apiService
+      .get<CamfilB2bCustomerData>(`camfilcustomers/${customerId}`)
+      .pipe(map(CamfilB2bCustomerMapper.fromData));
   }
 
   // Customer -> Delivery Addresses
@@ -71,7 +62,7 @@ export class CamOrganizationService {
   getCustomerDeliveryAddresses(customerId: string): Observable<Address[]> {
     return this.apiService.get<AddressData[]>(`camfilcustomers/${customerId}/deliveryaddresses`).pipe(
       unpackEnvelope(),
-      map(deliverAddresses => deliverAddresses.map(AddressMapper.fromData))
+      map(deliverAddresses => deliverAddresses.map(AddressMapper.fromData), defaultIfEmpty([]))
     );
   }
 
@@ -96,13 +87,9 @@ export class CamOrganizationService {
   // Customer -> Roles
 
   getCustomerRoles(customerId: string): Observable<CamfilB2bRole[]> {
-    const options: AvailableOptions = {
-      skipApiErrorHandling: true,
-    };
-
-    return this.apiService.get(`camfilcustomers/${customerId}/roles`, options).pipe(
+    return this.apiService.get(`camfilcustomers/${customerId}/roles`).pipe(
       unpackEnvelope<CamfilB2bRoleData>('userRoles'),
-      map(data => this.b2bRoleMapper.fromData(data))
+      map(data => this.b2bRoleMapper.fromData(data), defaultIfEmpty([]))
     );
   }
 
@@ -111,7 +98,7 @@ export class CamOrganizationService {
   getCustomerCamCards(customerId: string): Observable<CamCard[]> {
     return this.apiService
       .get<CamCardData[]>(`privatecamfilcustomers/${customerId}/camcards`)
-      .pipe(unpackEnvelope<CamCardData>(), map(this.camCardMapper.fromListData));
+      .pipe(unpackEnvelope<CamCardData>(), map(this.camCardMapper.fromListData), defaultIfEmpty([]));
   }
 
   // Customer -> Contacts
@@ -119,7 +106,7 @@ export class CamOrganizationService {
   getCustomerContacts(customerId: string): Observable<CamfilB2bContact[]> {
     return this.apiService
       .get<CamfilB2bContactData[]>(`privatecamfilcustomers/${customerId}/contacts`)
-      .pipe(unpackEnvelope(), map(CamfilB2bContactMapper.fromListData));
+      .pipe(unpackEnvelope(), map(CamfilB2bContactMapper.fromListData), defaultIfEmpty([]));
   }
 
   // Customer -> Contact
@@ -147,32 +134,17 @@ export class CamOrganizationService {
   }
 
   getCustomerUsers(customerId: string): Observable<CamfilB2bUser[]> {
-    const options: AvailableOptions = {
-      skipApiErrorHandling: true,
-    };
-
-    return this.apiService.get<CamfilB2bUserData>(`privatecamfilcustomers/${customerId}/users`, options).pipe(
-      unpackEnvelope(),
-      map(CamfilB2bUserMapper.fromListData),
-      catchError(err => {
-        if (CamOrganizationService.isUsersNotFoundError(err)) {
-          return of([]);
-        }
-
-        return throwError(err);
-      })
-    );
+    return this.apiService
+      .get<CamfilB2bUserData>(`privatecamfilcustomers/${customerId}/users`)
+      .pipe(unpackEnvelope(), map(CamfilB2bUserMapper.fromListData), defaultIfEmpty([]));
   }
 
   // Customer -> User
 
   getCustomerUser(customerId: string, userId: string): Observable<CamfilB2bUser> {
-    return this.apiService.get<CamfilB2bUserData>(`privatecamfilcustomers/${customerId}/users/${userId}`).pipe(
-      map(CamfilB2bUserMapper.fromData),
-      // TODO (extMlk): This need to be removed whenever Back-end will be fixed. See the error details below.
-      // Error: Forbidden (The supplied user is not allowed to access 'privatecamfilcustomers/XXXX/users/YYY' using 'GET')
-      catchError(() => this.getCustomerUsers(customerId).pipe(map(users => users.find(user => user.id === userId))))
-    );
+    return this.apiService
+      .get<CamfilB2bUserData>(`privatecamfilcustomers/${customerId}/users/${userId}`)
+      .pipe(map(CamfilB2bUserMapper.fromData));
   }
 
   // Customer -> User -> Update
@@ -211,7 +183,7 @@ export class CamOrganizationService {
     contacts: CamfilB2bCustomerContact[],
     roles: CamfilB2bRole[]
   ) {
-    const roleIDs = [...roles].map(r => r.id);
+    const roleIDs = [].concat(roles).map(r => r?.id);
 
     if (!customer) {
       return throwError('createCustomerUser() called without required customer data');
@@ -242,26 +214,34 @@ export class CamOrganizationService {
             ],
           })
           .pipe(
-            mergeMap(() =>
+            concatMap(() =>
               this.getCustomerUsers(customer.id).pipe(map(users => users.find(u => u.login === user.login)))
             )
           )
           .pipe(
-            mergeMap(createdUser => {
-              const updateContacts = contacts.map(payload =>
-                this.updateCustomerUserContact(payload.customer.id, createdUser.id, payload.contact)
-              );
-
-              const newUser$ = this.getCustomerUser(customer.id, createdUser.id);
-
-              return forkJoin([
-                this.updateCustomerUserRoles(customer.id, createdUser.id, roleIDs),
-                ...updateContacts,
-              ]).pipe(
-                mergeMap(() => newUser$),
-                catchError(() => newUser$)
-              );
-            })
+            switchMap(createdUser =>
+              forkJoin(
+                contacts.map(item =>
+                  this.connectUserWithCustomer(item.customer.id, createdUser.id).pipe(catchError(() => EMPTY))
+                )
+              ).pipe(map(() => createdUser))
+            ),
+            switchMap(createdUser =>
+              forkJoin(
+                contacts.map(item =>
+                  this.connectContactWithUserCustomer(item.customer.id, createdUser.id, item.contact).pipe(
+                    catchError(() => EMPTY)
+                  )
+                )
+              ).pipe(map(() => createdUser))
+            ),
+            switchMap(createdUser =>
+              this.updateCustomerUserRoles(customer.id, createdUser.id, roleIDs).pipe(
+                map(() => createdUser),
+                catchError(() => EMPTY)
+              )
+            ),
+            switchMap(createdUser => this.getCustomerUser(customer.id, createdUser.id))
           )
       )
     );
@@ -292,7 +272,57 @@ export class CamOrganizationService {
       .pipe(map(CamfilB2bContactMapper.fromData));
   }
 
-  updateCustomerUserContact(
+  // Customer -> User -> Connect
+
+  connectUserWithCustomer(customerId: string, userId: string): Observable<boolean> {
+    const body = true;
+
+    const options: AvailableOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'text/plain',
+        Accept: 'application/json',
+      }),
+    };
+
+    return this.apiService
+      .post<void>(`camfilcustomers/${customerId}/users/${userId}/grantRevoke`, body, options)
+      .pipe(map(() => body));
+  }
+
+  connectUserWithCustomerPlusReload(customerId: string, userId: string): Observable<CamfilB2bUser> {
+    return this.connectUserWithCustomer(customerId, userId).pipe(
+      withLatestFrom(this.organizationFacade.getUser$(userId).pipe(whenTruthy())),
+      concatMap(([, user]) => this.getCustomerUser(user.customerId, userId))
+    );
+  }
+
+  // Customer -> User -> Disconnect
+
+  disconnectUserFromCustomer(customerId: string, userId: string): Observable<boolean> {
+    const body = false;
+
+    const options: AvailableOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'text/plain',
+        Accept: 'application/json',
+      }),
+    };
+
+    return this.apiService
+      .post<void>(`camfilcustomers/${customerId}/users/${userId}/grantRevoke`, body, options)
+      .pipe(map(() => body));
+  }
+
+  disconnectUserFromCustomerPlusReload(customerId: string, userId: string): Observable<CamfilB2bUser> {
+    return this.disconnectUserFromCustomer(customerId, userId).pipe(
+      withLatestFrom(this.organizationFacade.getUser$(userId).pipe(whenTruthy())),
+      concatMap(([, user]) => this.getCustomerUser(user.customerId, userId))
+    );
+  }
+
+  // Customer -> User -> Contact -> Connect
+
+  connectContactWithUserCustomer(
     customerId: string,
     userId: string,
     contact: CamfilB2bContact
@@ -301,46 +331,56 @@ export class CamOrganizationService {
 
     return this.apiService
       .post<CamfilB2bContactData>(`privatecamfilcustomers/${customerId}/users/${userId}/contact`, body)
-      .pipe(
-        map(CamfilB2bContactMapper.fromData)
-        // TODO (extMlk): This need to be removed whenever Back-end will be fixed. See the error details below.
-        // Error: Forbidden (The supplied user is not allowed to access 'privatecamfilcustomers/XXXX/users/YYY/contact' using 'POST')
-        // tslint:disable-next-line:no-commented-out-code
-        // catchError(() => of(body))
-      );
+      .pipe(map(() => body));
   }
 
-  deleteCustomerUserContact(
+  connectContactWithUserCustomerPlusReload(
+    customerId: string,
+    userId: string,
+    contact: CamfilB2bContact
+  ): Observable<CamfilB2bUser> {
+    return this.connectContactWithUserCustomer(customerId, userId, contact).pipe(
+      withLatestFrom(this.organizationFacade.getUser$(userId).pipe(whenTruthy())),
+      concatMap(([, user]) => this.getCustomerUser(user.customerId, userId))
+    );
+  }
+
+  // Customer -> User -> Contact -> Disconnect
+
+  disconnectContactWithUserCustomer(
     customerId: string,
     userId: string,
     contact: CamfilB2bContact
   ): Observable<CamfilB2bContact> {
-    // TODO (extMlk): Talk to BE that body entity when using DELETE request method is not necessary and suggest passing additional ID param in the url.
+    const body = contact;
+
     return this.apiService
-      .delete<CamfilB2bContact>(`privatecamfilcustomers/${customerId}/users/${userId}/contact/${contact.erpId}`)
-      .pipe(
-        map(CamfilB2bContactMapper.fromData)
-        // TODO (extMlk): This need to be removed whenever Back-end will be fixed. See the error details below.
-        // Error: Forbidden (The supplied user is not allowed to access 'privatecamfilcustomers/XXXX/users/YYY/contact' using 'DELETE')
-        // tslint:disable-next-line:no-commented-out-code
-        // catchError(() => of(contact))
-      );
+      .delete<CamfilB2bContactData>(`privatecamfilcustomers/${customerId}/users/${userId}/contact/${contact.erpId}`)
+      .pipe(map(() => body));
+  }
+
+  disconnectContactFromUserAndCustomerPlusReload(
+    customerId: string,
+    userId: string,
+    contact: CamfilB2bContact
+  ): Observable<CamfilB2bUser> {
+    return this.disconnectContactWithUserCustomer(customerId, userId, contact).pipe(
+      withLatestFrom(this.organizationFacade.getUser$(userId).pipe(whenTruthy())),
+      concatMap(([, user]) => this.getCustomerUser(user.customerId, userId))
+    );
   }
 
   // Customer -> User -> Roles
 
   getCustomerUserRoles(customerId: string, userId: string): Observable<CamfilB2bRole[]> {
-    const options: AvailableOptions = {
-      skipApiErrorHandling: true,
-    };
-
-    return this.apiService
-      .get<CamfilB2bRoleData>(`privatecamfilcustomers/${customerId}/users/${userId}/role`, options)
-      .pipe(
-        unpackEnvelope<CamfilB2bRoleData>('userRoles'),
-        map(data => this.b2bRoleMapper.fromData(data))
-      );
+    return this.apiService.get<CamfilB2bRoleData>(`privatecamfilcustomers/${customerId}/users/${userId}/role`).pipe(
+      unpackEnvelope<CamfilB2bRoleData>('userRoles'),
+      map(data => this.b2bRoleMapper.fromData(data)),
+      defaultIfEmpty([])
+    );
   }
+
+  // Customer -> User -> Roles -> Update
 
   updateCustomerUserRoles(customerId: string, userId: string, roleIDs: string[]): Observable<CamfilB2bRole[]> {
     const body: CamfilB2bRoleIDsData = { userRoles: roleIDs };
@@ -353,26 +393,11 @@ export class CamOrganizationService {
       );
   }
 
-  // Organization -> Users
-
-  getOrganizationUsers(): Observable<CamfilB2bOrganizationUser[]> {
-    return this.getCustomers().pipe(
-      map(customers =>
-        customers.map(customer =>
-          this.getCustomerUsers(customer.id).pipe(
-            map(users => users.map(user => ({ ...user, customer, customerId: customer.id }))),
-            catchError(of)
-          )
-        )
-      ),
-      concatMap(obsArray => iif(() => !!obsArray.length, forkJoin([...obsArray]), of([]))),
-      concatAll()
-    );
-  }
+  // Customer -> User -> Reset Password
 
   resetCustomerUserPassword(customerId: string, userId: string, login: string) {
     const data: PasswordReminder = {
-      email: login, // We are not using email addresses, so we pass any string.
+      email: login, // Camfil uses `login` instead of email address to recognize user.
     };
 
     const options: AvailableOptions = {
@@ -389,6 +414,22 @@ export class CamOrganizationService {
         login,
         data,
       }))
+    );
+  }
+
+  // Organization -> Users
+
+  getOrganizationUsers(): Observable<CamfilB2bOrganizationUser[]> {
+    return this.getCustomers().pipe(
+      map(customers =>
+        customers.map(customer =>
+          this.getCustomerUsers(customer.id).pipe(
+            map(users => users.map(user => ({ ...user, customer, customerId: customer.id })))
+          )
+        )
+      ),
+      concatMap(obsArray => iif(() => !!obsArray.length, forkJoin([...obsArray]), of([]))),
+      concatAll()
     );
   }
 }
