@@ -12,7 +12,7 @@ import {
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, Subject } from 'rxjs';
-import { take, takeUntil } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 
 import { AppFacade } from 'ish-core/facades/app.facade';
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
@@ -23,7 +23,6 @@ import { AttributeHelper } from 'ish-core/models/attribute/attribute.helper';
 import { BasketExtensions } from 'ish-core/models/basket/basket.interface';
 import { BasketView } from 'ish-core/models/basket/basket.model';
 import { Bucket } from 'ish-core/models/basket/bucket.model';
-import { Channel } from 'ish-core/models/channel/channel.types';
 import { Product } from 'ish-core/models/product/product.model';
 import { whenTruthy } from 'ish-core/utils/operators';
 import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
@@ -87,9 +86,9 @@ export class CreateOrderModalComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.initForms();
     this.initBasket();
-    this.appFacade.getCamfilChannel$.pipe(whenTruthy(), take(1)).subscribe(channel => {
-      this.countryByChannel = Object.entries(Channel).find(([, val]) => val === channel)[0];
-    });
+    this.appFacade.getCountryByChannel$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(code => (this.countryByChannel = code));
   }
 
   initForms() {

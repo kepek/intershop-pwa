@@ -1,6 +1,7 @@
 import { createSelector, createSelectorFactory, defaultMemoize } from '@ngrx/store';
 import { isEqual } from 'lodash-es';
 
+import { Channel } from 'ish-core/models/channel/channel.types';
 import { getCoreState } from 'ish-core/store/core/core-store';
 
 import { ConfigurationState } from './configuration.reducer';
@@ -55,3 +56,8 @@ export const getIdentityProvider = createSelectorFactory(projector => defaultMem
 );
 
 export const getCamfilChannel = createSelector(getConfigurationState, state => state?.channel);
+
+export const getCountryByChannel = createSelector(
+  getConfigurationState,
+  state => Object.entries(Channel).find(([, val]) => val === state?.channel)[0]
+);

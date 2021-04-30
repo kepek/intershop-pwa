@@ -15,7 +15,6 @@ import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
 
 import { AppFacade } from 'ish-core/facades/app.facade';
-import { Channel } from 'ish-core/models/channel/channel.types';
 import { Locale } from 'ish-core/models/locale/locale.model';
 import { whenTruthy } from 'ish-core/utils/operators';
 
@@ -50,11 +49,8 @@ export class CamfilLanguageSwitchComponent implements OnInit {
     this.locale$ = this.appFacade.currentLocale$;
     this.availableLocales$ = this.appFacade.availableLocales$;
     this.availableLocales$.pipe(whenTruthy(), take(1)).subscribe(availableLocales => {
-      this.appFacade.getCamfilChannel$.pipe(take(1)).subscribe(channel => {
-        const channelCode = Object.entries(Channel)
-          .find(([, val]) => val === channel)[0]
-          .toLowerCase();
-        this.availableLocales = availableLocales.filter(loc => [channelCode, 'gb'].includes(loc.value));
+      this.appFacade.getCountryByChannel$.pipe(take(1)).subscribe(code => {
+        this.availableLocales = availableLocales.filter(loc => [code.toLowerCase(), 'gb'].includes(loc.value));
       });
     });
   }

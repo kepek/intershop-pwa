@@ -5,7 +5,6 @@ import { distinctUntilChanged, take, takeUntil } from 'rxjs/operators';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
 import { AppFacade } from 'ish-core/facades/app.facade';
-import { Channel } from 'ish-core/models/channel/channel.types';
 
 @Component({
   selector: 'camfil-zip-code',
@@ -35,9 +34,10 @@ export class ZipCodeComponent implements OnInit, OnDestroy {
   constructor(private accountFacade: AccountFacade, private appFacade: AppFacade) {}
 
   ngOnInit() {
-    this.appFacade.getCamfilChannel$.pipe(take(1)).subscribe(channel => {
-      this.countryByChannel = Object.entries(Channel).find(([, val]) => val === channel)[0];
-    });
+    this.appFacade.getCountryByChannel$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(code => (this.countryByChannel = code));
+
     this.zipCodesLoading$ = this.accountFacade.zipCodesLoading$;
     this.countryChangeDetect.pipe(takeUntil(this.destroy$)).subscribe(() => {
       this.checkZipCode();
