@@ -224,7 +224,10 @@ export class CamOrganizationService {
                 contacts.map(item =>
                   this.connectUserWithCustomer(item.customer.id, createdUser.id).pipe(catchError(() => EMPTY))
                 )
-              ).pipe(map(() => createdUser))
+              ).pipe(
+                defaultIfEmpty([]),
+                map(() => createdUser)
+              )
             ),
             switchMap(createdUser =>
               forkJoin(
@@ -233,7 +236,10 @@ export class CamOrganizationService {
                     catchError(() => EMPTY)
                   )
                 )
-              ).pipe(map(() => createdUser))
+              ).pipe(
+                defaultIfEmpty([]),
+                map(() => createdUser)
+              )
             ),
             switchMap(createdUser =>
               this.updateCustomerUserRoles(customer.id, createdUser.id, roleIDs).pipe(
