@@ -29,6 +29,7 @@ describe('Camfil Login Status Component', () => {
   beforeEach(async () => {
     accountFacade = mock(AccountFacade);
     appFacade = mock(AppFacade);
+
     await TestBed.configureTestingModule({
       declarations: [CamfilLoginStatusComponent, MockComponent(FaIconComponent)],
       imports: [RouterTestingModule, TranslateModule.forRoot()],
@@ -45,6 +46,7 @@ describe('Camfil Login Status Component', () => {
     element = fixture.nativeElement;
 
     when(appFacade.getCamfilChannel$).thenReturn(of('SE' as Channel));
+    when(appFacade.getCountryByChannel$).thenReturn(of('SE'));
     when(appFacade.currentLocale$).thenReturn(of({ value: 'gb' } as Locale));
   });
 

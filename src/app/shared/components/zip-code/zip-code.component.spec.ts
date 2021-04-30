@@ -45,6 +45,7 @@ describe('Zip Code Component', () => {
 
     when(accountFacade.zipCodesLoading$).thenReturn(of(false));
     when(appFacade.getCamfilChannel$).thenReturn(of('SE'));
+    when(appFacade.getCountryByChannel$).thenReturn(of('SE'));
   }));
 
   it('should be created', () => {
