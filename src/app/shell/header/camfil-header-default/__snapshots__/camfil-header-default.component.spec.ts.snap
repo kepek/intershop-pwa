@@ -51,11 +51,7 @@ exports[`Camfil Header Default Component should render normal header adequately 
     </div>
     <div class="col-lg-5 col-xl-6 col-sm-12 search-container"></div>
     <div class="col-3 col-md-6 col-lg-3 col-xl-3 d-flex align-items-center justify-content-end">
-      <camfil-product-compare-status
-        class="justify-content-end"
-        data-testing-id="compare-status-desktop"
-      ></camfil-product-compare-status
-      ><camfil-mini-basket
+      <camfil-mini-basket
         data-testing-id="mini-basket-desktop"
         class="d-md-block"
         ng-reflect-ng-class="d-md-block"
@@ -123,11 +119,7 @@ exports[`Camfil Header Default Component should render normal header adequately 
     </div>
     <div class="col-lg-5 col-xl-6 col-sm-12 search-container"></div>
     <div class="col-3 col-md-6 col-lg-3 col-xl-3 d-flex align-items-center justify-content-end">
-      <camfil-product-compare-status
-        class="justify-content-end"
-        data-testing-id="compare-status-desktop"
-      ></camfil-product-compare-status
-      ><camfil-mini-basket
+      <camfil-mini-basket
         data-testing-id="mini-basket-desktop"
         class="d-md-block"
         ng-reflect-ng-class="d-md-block"
@@ -194,11 +186,7 @@ exports[`Camfil Header Default Component should render sticky header adequately 
 exports[`Camfil Header Default Component should render sticky header adequately for mobile devices 1`] = `
 <div class="header container mobile" ng-reflect-ng-class="mobile">
   <div class="row align-items-center header__first">
-    <div class="col-7 col-md-8 d-flex align-items-center">
-      <camfil-product-compare-status
-        data-testing-id="compare-status-desktop"
-      ></camfil-product-compare-status>
-    </div>
+    <div class="col-7 col-md-8 d-flex align-items-center"></div>
     <div class="col-5 col-md-4">
       <div class="header-utility">
         <div class="language-switch-container d-flex align-items-center">
