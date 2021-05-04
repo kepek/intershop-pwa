@@ -4,7 +4,6 @@
 </h2>
 
 <form [formGroup]="accessForm" (ngSubmit)="submit(); dialogRef.close()">
-  {{ camCard.contacts }}
   <mat-radio-group aria-label="Select an option" formControlName="user" [(ngModel)]="selectedUser">
     <mat-radio-button class="d-block" *ngFor="let user of users" [value]="user">
       {{ 'camfil.dynamic.account.cam_card.access_user.dialog.input_user_radio.' + user | translate }}
