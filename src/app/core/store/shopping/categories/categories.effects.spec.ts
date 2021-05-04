@@ -325,10 +325,10 @@ describe('Categories Effects', () => {
         () => {
           verify(httpStatusCodeService.setStatus(anything())).once();
           expect(capture(httpStatusCodeService.setStatus).last()).toMatchInlineSnapshot(`
-                    Array [
-                      404,
-                    ]
-                `);
+                      Array [
+                        404,
+                      ]
+                  `);
           done();
         },
         fail,
