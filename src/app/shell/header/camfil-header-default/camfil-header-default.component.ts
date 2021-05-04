@@ -31,6 +31,7 @@ export class CamfilHeaderDefaultComponent implements OnChanges {
 
   activeComponent: CollapsibleComponent = undefined;
   nextOpenLevelOnMobileNav: NextOpenLevelOnMobileNavType = '';
+  showAddToCompare = false;
 
   ngOnChanges() {
     this.activeComponent = 'search';
