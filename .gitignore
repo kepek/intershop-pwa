@@ -41,6 +41,8 @@
 /junit.xml
 *.log
 /typings
+/src/environments/environment.local.ts
+/src/environments/environment.proxy.ts
 
 # System Files
 .DS_Store
