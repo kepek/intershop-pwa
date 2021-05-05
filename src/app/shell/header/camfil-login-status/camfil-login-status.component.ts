@@ -1,11 +1,8 @@
 import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
-import { AppFacade } from 'ish-core/facades/app.facade';
 import { User } from 'ish-core/models/user/user.model';
-import { whenTruthy } from 'ish-core/utils/operators';
 
 @Component({
   selector: 'camfil-login-status',
@@ -18,28 +15,19 @@ export class CamfilLoginStatusComponent implements OnInit, OnDestroy {
   @Input() view: 'auto' | 'small' | 'full' = 'auto';
 
   user$: Observable<User>;
-  countryByChannel: string;
-  languageSymbol: string;
 
   private destroy$ = new Subject();
 
   get redirectParam() {
     return {
-      returnUrl: `/${this.countryByChannel}-${this.languageSymbol}/home`,
+      returnUrl: `/home`,
     };
   }
 
-  constructor(private accountFacade: AccountFacade, private appFacade: AppFacade) {}
+  constructor(private accountFacade: AccountFacade) {}
 
   ngOnInit() {
     this.user$ = this.accountFacade.user$;
-    this.appFacade.getCountryByChannel$.pipe(takeUntil(this.destroy$)).subscribe(code => {
-      this.countryByChannel = code.toLowerCase();
-    });
-
-    this.appFacade.currentLocale$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(locale => {
-      this.languageSymbol = locale?.value;
-    });
   }
 
   ngOnDestroy() {
