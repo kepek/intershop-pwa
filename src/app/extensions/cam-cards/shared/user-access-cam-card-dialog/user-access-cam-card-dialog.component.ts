@@ -16,6 +16,7 @@ export class UserAccessCamCardDialogComponent implements OnInit, OnDestroy {
   accessForm: FormGroup;
   allContacts$: Observable<CamCardContact[]>;
   users: string[] = ['all', 'single'];
+  selectedUser: string;
   validators = {
     user: [
       {
@@ -44,6 +45,13 @@ export class UserAccessCamCardDialogComponent implements OnInit, OnDestroy {
       const { id } = this.camCard.customer;
       this.camCardsFacade.loadContactsByCustomer(id);
       this.allContacts$ = this.camCardsFacade.contactsByCustomer$(id);
+    }
+
+    // determine which radio button is preselected
+    if (this.camCard?.contacts?.length) {
+      this.selectedUser = 'single';
+    } else {
+      this.selectedUser = 'all';
     }
 
     this.initForm();
