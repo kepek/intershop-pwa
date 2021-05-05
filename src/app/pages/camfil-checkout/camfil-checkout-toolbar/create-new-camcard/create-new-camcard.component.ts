@@ -23,6 +23,7 @@ export class CreateNewCamcardComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject();
 
   camCardLoading$: Observable<boolean>;
+  loading = false;
 
   @Input() buckets: Bucket[] = [];
 
@@ -34,10 +35,12 @@ export class CreateNewCamcardComponent implements OnInit, OnDestroy {
 
   create() {
     this.convertToPermanent();
+    this.loading = true;
 
     this.camCardLoading$.pipe(takeUntil(this.destroy$)).subscribe(value => {
       if (!value) {
         this.modal.hide();
+        this.loading = false;
       }
     });
   }
