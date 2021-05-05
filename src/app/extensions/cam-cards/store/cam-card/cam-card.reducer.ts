@@ -63,6 +63,11 @@ import {
   updateSubCamCard,
   updateSubCamCardFail,
   updateSubCamCardSuccess,
+  importCamCardSuccess,
+  importCamCard,
+  importCamCardFail,
+  validateCamCardImport,
+  validateCamCardImportFail,
 } from './cam-card.actions';
 
 export interface CamCardState extends EntityState<CamCard> {
@@ -142,7 +147,9 @@ export const camCardReducer = createReducer(
     loadDeliveryAddresses,
     updateSubCamCard,
     moveItemToCamCard,
-    moveCamCardItem
+    moveCamCardItem,
+    importCamCard,
+    validateCamCardImport
   ),
   on(
     loadCamCardsFail,
@@ -157,7 +164,8 @@ export const camCardReducer = createReducer(
     loadUserContactForCustomerFail,
     loadDeliveryAddressesFail,
     updateSubCamCardFail,
-
+    importCamCardFail,
+    validateCamCardImportFail,
     (state: CamCardState, action) => {
       const { error } = action.payload;
       return {
@@ -331,5 +339,16 @@ export const camCardReducer = createReducer(
   on(clearVirtualCamCard, (state: CamCardState) => ({
     ...state,
     virtualCamCard: undefined,
-  }))
+  })),
+  on(importCamCardSuccess, (state: CamCardState, action) => {
+    const { camCardData } = action.payload;
+
+    const CamCard = camCardData['elements'][0];
+
+    console.log('camCard from action', CamCard);
+    return camCardAdapter.upsertOne(CamCard, {
+      ...state,
+      loading: false,
+    });
+  })
 );

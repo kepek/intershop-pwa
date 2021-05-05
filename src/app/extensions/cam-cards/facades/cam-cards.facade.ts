@@ -40,6 +40,7 @@ import {
   getSelectedCamCardDetails,
   getUserContactForCustomer,
   getVirtualCamCard,
+  importCamCard,
   isStickyCamCardToolbar,
   loadCamCards,
   loadContactsByCustomer,
@@ -55,6 +56,7 @@ import {
   updateCamCardContacts,
   updateCamCardProduct,
   updateSubCamCard,
+  validateCamCardImport
 } from '../store/cam-card';
 
 @Injectable({ providedIn: 'root' })
@@ -274,5 +276,13 @@ export class CamCardsFacade {
 
   resetItemPositions(camCard: CamCard) {
     this.store.dispatch(resetCamCardItemPositions({ camCard }));
+  }
+
+  validateCamCardImport(camCardData): void | HttpError{
+    this.store.dispatch(validateCamCardImport({ camCardData }));
+  }
+
+  importCamCard(camCardData): void | HttpError {
+    this.store.dispatch(importCamCard({ camCardData }));
   }
 }

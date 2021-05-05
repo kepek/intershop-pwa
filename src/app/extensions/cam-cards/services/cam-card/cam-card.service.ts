@@ -406,4 +406,13 @@ export class CamCardService {
     }
     return this.apiService.delete(`camcards/${camCardId}/products`).pipe(concatMap(() => this.getCamCard(camCardId)));
   }
+
+  validateCamCardImport(camCardData) {
+    const camCardArr = camCardData[Object.keys(camCardData)[0]];
+    return this.apiService.put('camcardsbulk', camCardArr);
+  }
+
+  importCamCard(camCardData): Observable<CamCard> {
+    return this.apiService.post('camcardsbulk', camCardData);
+  }
 }
