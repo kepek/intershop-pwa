@@ -20,7 +20,7 @@
   <ng-container *ngIf="isEditMode">
     <p>
       {{ 'camfil.account.organization.edit_user.personal_info.user_id.text' | translate }}
-      <strong class="ml-2">{{ user?.login }}</strong>
+      <strong class="ml-2">{{ user?.businessPartnerNo }}</strong>
     </p>
   </ng-container>
   <div [formGroup]="form" (ngSubmit)="handleChangeUser()" class="form-horizontal" novalidate="novalidate">

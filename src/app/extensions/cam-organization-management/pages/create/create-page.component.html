@@ -48,6 +48,7 @@
         *ngFor="let customer of customers$() | async"
         [customer]="customer"
         [user]="newUser$ | async"
+        [staticCustomers]="newUserStaticCustomers$ | async"
         (connectUserWithCustomer)="onConnectUserWithCustomer($event)"
         (disconnectUserFromCustomer)="onDisconnectUserFromCustomer($event)"
         (connectContactWithUserAndCustomer)="onConnectContactWithUserAndCustomer($event)"

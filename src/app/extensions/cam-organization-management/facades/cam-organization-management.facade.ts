@@ -200,15 +200,23 @@ export class CamOrganizationManagementFacade {
   getUserStaticRoles$(userId: string) {
     const disabledRoleIDs = ['APP_B2B_OCI_USER'];
 
-    const selectedUser$ = this.getUser$(userId).pipe(take(1));
-    const currentUser$ = this.accountFacade.user$.pipe(take(1));
-
-    return combineLatest([selectedUser$, currentUser$]).pipe(
-      map(([selectedUser, currentUser]) => selectedUser?.login === currentUser?.login),
+    return this.isCurrentUser$(userId).pipe(
       switchMap(isCurrentUser =>
-        isCurrentUser ? of([...disabledRoleIDs, 'APP_B2B_ACCOUNT_OWNER']) : of([...disabledRoleIDs])
+        isCurrentUser
+          ? of([...disabledRoleIDs, 'APP_B2B_ACCOUNT_OWNER', 'APP_B2B_CUSTOMER_ADMIN_USER'])
+          : of([...disabledRoleIDs])
       ),
       switchMap(roleIDs => this.getSelectedRoles$(roleIDs))
+    );
+  }
+
+  getUserStaticCustomers$(userId: string): Observable<CamfilB2bCustomer[]> {
+    return this.isCurrentUser$(userId).pipe(
+      switchMap(isCurrentUser =>
+        isCurrentUser
+          ? this.getUser$(userId).pipe(map(user => user?.customers.filter(customer => customer?.parent)))
+          : of([])
+      )
     );
   }
 
@@ -326,6 +334,20 @@ export class CamOrganizationManagementFacade {
       this.store.dispatch(loadCustomerUser({ customerId, userId }));
     }
   }
+
+  /**
+   * Is Current User?
+   * @param userId
+   */
+  isCurrentUser$(userId: string): Observable<boolean> {
+    const selectedUser$ = this.getUser$(userId).pipe(take(1));
+    const currentUser$ = this.accountFacade.user$.pipe(take(1));
+
+    return combineLatest([selectedUser$, currentUser$]).pipe(
+      map(([selectedUser, currentUser]) => selectedUser?.login === currentUser?.login)
+    );
+  }
+
   /**
    * Get Customer User Contact
    * @param customerId
