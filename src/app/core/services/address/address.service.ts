@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { Observable, throwError } from 'rxjs';
-import { concatMap, first, map, mapTo, withLatestFrom } from 'rxjs/operators';
+import { concatMap, first, map, mapTo, switchMap, withLatestFrom } from 'rxjs/operators';
 
 import { AppFacade } from 'ish-core/facades/app.facade';
 import { AddressMapper } from 'ish-core/models/address/address.mapper';
@@ -16,7 +16,24 @@ import { getCurrentLocale } from 'ish-core/store/core/configuration';
  */
 @Injectable({ providedIn: 'root' })
 export class AddressService {
-  getCountryISO3 = require('country-iso-2-to-3');
+  getCountryISO3$: Observable<(countryCode: string) => string> = new Observable(observer => {
+    // tslint:disable-next-line:project-structure
+    const countryIso2To3Module: Promise<{ default(countryCode: string): string }> = import('country-iso-2-to-3');
+
+    countryIso2To3Module
+      .then(module => {
+        if (module?.default) {
+          observer.next(module?.default);
+          observer.complete();
+        } else {
+          observer.error(new Error('AddressService could not load the `country-iso-2-to-3` module.'));
+        }
+      })
+      .catch(err => {
+        observer.error(err);
+      });
+  });
+
   constructor(private apiService: ApiService, private store: Store, private appFacade: AppFacade) {}
 
   /**
@@ -83,7 +100,7 @@ export class AddressService {
   /**
    * Deletes an address for the given customer id. Falls back to '-' as customer id if no customer id is given
    * @param customerId  The customer id.
-   * @param address     The address id
+   * @param addressId
    * @returns           The id of the deleted address.
    */
   deleteCustomerAddress(customerId: string = '-', addressId: string): Observable<string> {
@@ -95,18 +112,23 @@ export class AddressService {
     );
   }
 
-  loadZipCode(code: string, countryCod: string): Observable<ZipCodeInfo> {
-    if (!code || !countryCod) {
-      return throwError('loadZipCode() called without code or countryCod');
+  loadZipCode(code: string, countryCode: string): Observable<ZipCodeInfo> {
+    if (!code || !countryCode) {
+      return throwError('loadZipCode() called without code or countryCode');
     }
 
-    const data = {
-      country: countryCod.length === 2 ? this.getCountryISO3(countryCod) : countryCod,
-      zipCode: code.replace(' ', ''),
-    };
-    return this.apiService.post<ZipCodeData[]>(`zipcodequery`, data).pipe(
-      withLatestFrom(this.store.pipe(select(getCurrentLocale))),
-      map(([info, currentLocale]) => AddressMapper.zipCodefromData(code, info, currentLocale))
+    return this.getCountryISO3$.pipe(
+      switchMap(getCountryISO3 => {
+        const data = {
+          country: countryCode.length === 2 ? getCountryISO3(countryCode) : countryCode,
+          zipCode: code.replace(' ', ''),
+        };
+
+        return this.apiService.post<ZipCodeData[]>(`zipcodequery`, data).pipe(
+          withLatestFrom(this.store.pipe(select(getCurrentLocale))),
+          map(([info, currentLocale]) => AddressMapper.zipCodefromData(code, info, currentLocale))
+        );
+      })
     );
   }
 }

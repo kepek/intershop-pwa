@@ -56,6 +56,10 @@ export abstract class UserPageDataSourceComponent implements OnInit, AfterViewIn
     return this.userId$.pipe(switchMap(userId => this.organizationFacade.getUserStaticRoles$(userId)));
   }
 
+  selectedUserStaticCustomers$() {
+    return this.userId$.pipe(switchMap(userId => this.organizationFacade.getUserStaticCustomers$(userId)));
+  }
+
   selectedCustomer$() {
     return this.customerId$.pipe(switchMap(customerId => this.organizationFacade.getCustomer$(customerId)));
   }

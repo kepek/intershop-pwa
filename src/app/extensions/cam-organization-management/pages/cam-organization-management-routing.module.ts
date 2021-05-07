@@ -6,7 +6,6 @@ import { AuthGuard } from 'ish-core/guards/auth.guard';
 
 import { FetchCreateUserGuard } from '../guards/fetch-create-user-guard.service';
 import { FetchCustomerUserGuard } from '../guards/fetch-customer-user-guard.service';
-import { FetchCustomersUsersGuard } from '../guards/fetch-customers-users-guard.service';
 
 /**
  * routes for the organization management
@@ -16,7 +15,7 @@ import { FetchCustomersUsersGuard } from '../guards/fetch-customers-users-guard.
 export const routes: Routes = [
   {
     path: '',
-    canActivate: [FeatureToggleGuard, AuthGuard, FetchCustomersUsersGuard],
+    canActivate: [FeatureToggleGuard, AuthGuard],
     data: {
       feature: 'camOrganizationManagement',
       permission: 'APP_B2B_MANAGE_USERS',

@@ -56,18 +56,22 @@ export class CamfilOrganizationUserDetailsFormComponent implements OnInit, OnDes
       email: new FormControl(this.user?.email, {
         validators: [SpecialValidators.email],
       }),
-      login: new FormControl(
-        {
-          value: this.user?.login,
-          disabled: this.isEditMode, // TODO (extMlk): [CAM-979] Field is disabled since BE does not support login changes.
-        },
-        {
-          validators: [Validators.required, SpecialValidators.username],
-        }
-      ),
     });
 
     if (!this.isEditMode) {
+      this.form.addControl(
+        'login',
+        new FormControl(
+          {
+            value: this.user?.login,
+            disabled: this.isEditMode, // TODO (extMlk): [CAM-979] Field is disabled since BE does not support login changes.
+          },
+          {
+            validators: [Validators.required, SpecialValidators.username],
+          }
+        )
+      );
+
       const emailControl = this.form.get('email');
       const loginControl = this.form.get('login');
 
@@ -106,10 +110,13 @@ export class CamfilOrganizationUserDetailsFormComponent implements OnInit, OnDes
     const lastName = this.form.get('lastName').value;
     const phoneHome = this.form.get('phoneHome').value;
     const email = this.form.get('email').value;
-    const login = this.form.get('login').value;
 
     const customer = this.customer;
-    const user = { ...this.user, firstName, lastName, phoneHome, email, login };
+    const user = { ...this.user, firstName, lastName, phoneHome, email };
+
+    if (!this.isEditMode) {
+      user.login = this.form.get('login').value;
+    }
 
     this.changeUser.emit({ customer, user });
   }

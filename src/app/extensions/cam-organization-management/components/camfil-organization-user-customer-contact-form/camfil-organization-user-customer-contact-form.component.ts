@@ -35,6 +35,16 @@ export class CamfilOrganizationUserCustomerContactFormComponent implements OnIni
 
   private userValue: CamfilB2bUser;
 
+  @Input() set staticCustomers(staticCustomers: CamfilB2bCustomer[]) {
+    this.staticCustomersValue = staticCustomers;
+  }
+
+  get staticCustomers() {
+    return this.staticCustomersValue;
+  }
+
+  private staticCustomersValue: CamfilB2bCustomer[];
+
   @Output() connectUserWithCustomer = new EventEmitter<{
     customer: CamfilB2bCustomer;
     user: CamfilB2bUser;
@@ -85,6 +95,8 @@ export class CamfilOrganizationUserCustomerContactFormComponent implements OnIni
     return !!this.userCustomerSelectedContact;
   }
 
+  // Methods
+
   private initForm() {
     this.form = this.fb.group({
       customerContactCheckbox: new FormControl({
@@ -116,7 +128,17 @@ export class CamfilOrganizationUserCustomerContactFormComponent implements OnIni
     }
 
     selectControl.setValue(this.userCustomerSelectedContact?.erpId);
+
+    if (this.isDisabledCustomer(this.customer)) {
+      checkboxControl.disable();
+    }
   }
+
+  isDisabledCustomer(customer: CamfilB2bCustomer) {
+    return this.staticCustomers?.map(c => c.id)?.includes(customer.id);
+  }
+
+  // Handlers
 
   onCheckboxChange(event: MatCheckboxChange) {
     const value = {
@@ -146,6 +168,8 @@ export class CamfilOrganizationUserCustomerContactFormComponent implements OnIni
       this.disconnectUserFromCustomer.emit(value);
     }
   }
+
+  // Hooks
 
   ngOnInit() {
     this.initForm();

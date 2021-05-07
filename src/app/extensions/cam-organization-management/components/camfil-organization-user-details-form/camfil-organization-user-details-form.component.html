@@ -20,7 +20,7 @@
   <ng-container *ngIf="isEditMode">
     <p>
       {{ 'camfil.account.organization.edit_user.personal_info.user_id.text' | translate }}
-      <strong class="ml-2">{{ user?.login }}</strong>
+      <strong class="ml-2">{{ user?.businessPartnerNo }}</strong>
     </p>
   </ng-container>
   <div [formGroup]="form" (ngSubmit)="handleChangeUser()" class="form-horizontal" novalidate="novalidate">
@@ -64,7 +64,7 @@
           {{ 'camfil.account.organization.user_details.form.email.error.email' | translate }}
         </mat-error>
       </mat-form-field>
-      <mat-form-field appearance="fill" class="form__field mb-3 ml-3">
+      <mat-form-field appearance="fill" class="form__field mb-3 ml-3" *ngIf="!isEditMode">
         <mat-label>{{ 'camfil.account.organization.user_details.form.login.label' | translate }}</mat-label>
         <input matInput formControlName="login" type="text" (blur)="handleChangeUser()" />
         <mat-error *ngIf="form.controls.login.hasError('required')">

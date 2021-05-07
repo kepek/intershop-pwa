@@ -40,6 +40,9 @@ import {
   loadCustomerUsers,
   loadCustomerUsersFail,
   loadCustomerUsersSuccess,
+  loadOrganizationUsers,
+  loadOrganizationUsersFail,
+  loadOrganizationUsersSuccess,
   resetCustomerUserPassword,
   resetCustomerUserPasswordFail,
   resetCustomerUserPasswordSuccess,
@@ -94,7 +97,7 @@ export class UserEffects {
     )
   );
 
-  // Customer -> User -> Load Customer User for Select CustomerID and UserID (browser only)
+  // Customer -> User -> Load Customer User for Selected CustomerID and UserID (browser only)
 
   loadCustomerUserForSelectedCustomerIdAndSelectedUserId$ = createEffect(() =>
     iif(
@@ -336,6 +339,26 @@ export class UserEffects {
             })
           ),
           mapErrorToAction(disconnectUserFromCustomerFail, { customerId, userId })
+        )
+      )
+    )
+  );
+
+  // Organization - Load Users
+
+  loadOrganizationUsers$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loadOrganizationUsers),
+      mapToPayload(),
+      switchMap(({ customerIDs }) =>
+        this.organizationService.getOrganizationUsers(customerIDs).pipe(
+          map(users =>
+            loadOrganizationUsersSuccess({
+              customerIDs,
+              users,
+            })
+          ),
+          mapErrorToAction(loadOrganizationUsersFail, { customerIDs })
         )
       )
     )

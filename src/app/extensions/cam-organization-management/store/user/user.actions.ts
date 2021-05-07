@@ -191,3 +191,17 @@ export const disconnectContactFromUserAndCustomerSuccess = createAction(
   '[Camfil Contact API] Disconnect Contact from User and Customer Success',
   payload<{ customerId: string; userId: string; user: CamfilB2bUser; successMessage?: string }>()
 );
+
+// Organization -> Users
+
+export const loadOrganizationUsers = createAction(
+  '[Camfil Organization] Load Users',
+  payload<{ customerIDs: string[] }>()
+);
+
+export const loadOrganizationUsersFail = createAction('[Camfil Organization API] Load Users Fail', httpError());
+
+export const loadOrganizationUsersSuccess = createAction(
+  '[Camfil Organization API] Load Users Success',
+  payload<{ customerIDs: string[]; users: CamfilB2bUser[] }>()
+);

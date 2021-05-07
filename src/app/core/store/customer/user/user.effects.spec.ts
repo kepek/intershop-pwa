@@ -506,7 +506,6 @@ describe('User Effects', () => {
 
   describe('loadUserByAPIToken$', () => {
     it('should call the user service on LoadUserByAPIToken action and load user on success', done => {
-      store$.dispatch(loginUserSuccess({ customer }));
       when(userServiceMock.signinUserByToken()).thenReturn(
         of({ user: { email: 'test@intershop.de' } } as CustomerUserType)
       );
