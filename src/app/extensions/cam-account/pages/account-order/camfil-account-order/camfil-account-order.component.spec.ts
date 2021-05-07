@@ -15,6 +15,7 @@ import { AddressComponent } from 'ish-shared/components/address/address/address.
 import { CamfilBasketCostSummaryComponent } from 'ish-shared/components/basket/camfil-basket-cost-summary/camfil-basket-cost-summary.component';
 import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
 import { InfoBoxComponent } from 'ish-shared/components/common/info-box/info-box.component';
+import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
 import { CamfilLineItemTableComponent } from 'ish-shared/components/line-item/camfil-line-item-table/camfil-line-item-table.component';
 
 import { CamAccountFacade } from '../../../facades/cam-account.facade';
@@ -40,6 +41,7 @@ describe('Camfil Account Order Component', () => {
         MockComponent(CamfilLineItemTableComponent),
         MockComponent(FaIconComponent),
         MockComponent(InfoBoxComponent),
+        MockComponent(LoadingComponent),
         MockPipe(DatePipe),
       ],
       imports: [RouterTestingModule, TranslateModule.forRoot()],
