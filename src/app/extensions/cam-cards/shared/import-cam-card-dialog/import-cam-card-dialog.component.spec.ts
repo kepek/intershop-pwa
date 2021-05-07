@@ -5,17 +5,18 @@ import { provideMockStore } from '@ngrx/store/testing';
 import { MockDirective } from 'ng-mocks';
 
 import { ServerHtmlDirective } from 'ish-core/directives/server-html.directive';
+import { ImportCamCardDialogComponent } from './import-cam-card-dialog.component';
 
-import { MoveCamCardDialogComponent } from './move-cam-card-dialog.component';
+
 
 describe('Move Cam Card Dialog Component', () => {
-  let component: MoveCamCardDialogComponent;
-  let fixture: ComponentFixture<MoveCamCardDialogComponent>;
+  let component: ImportCamCardDialogComponent;
+  let fixture: ComponentFixture<ImportCamCardDialogComponent>;
   let element: HTMLElement;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [MockDirective(ServerHtmlDirective), MoveCamCardDialogComponent],
+      declarations: [MockDirective(ServerHtmlDirective), ImportCamCardDialogComponent],
       imports: [ReactiveFormsModule],
       providers: [
         { provide: MAT_DIALOG_DATA, useValue: [] },
@@ -26,7 +27,7 @@ describe('Move Cam Card Dialog Component', () => {
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MoveCamCardDialogComponent);
+    fixture = TestBed.createComponent(ImportCamCardDialogComponent);
     component = fixture.componentInstance;
     element = fixture.nativeElement;
   });

@@ -51,3 +51,5 @@ export const getUserContactForCustomer = createSelector(
 export const isStickyCamCardToolbar = createSelector(getCamCardState, state => state.stickyToolbar);
 
 export const getVirtualCamCard = createSelector(getCamCardState, state => state.virtualCamCard);
+
+export const getValidationErrors = createSelector(getCamCardState, state => state.validationErrors);

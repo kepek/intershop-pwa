@@ -86,6 +86,7 @@ export interface CamCardState extends EntityState<CamCard> {
   };
   addresses?: CamCardAddress[];
   virtualCamCard: CamCard;
+  validationErrors: HttpError;
 }
 
 export const camCardAdapter = createEntityAdapter<CamCard>({
@@ -104,6 +105,7 @@ export const initialState: CamCardState = camCardAdapter.getInitialState({
   addresses: [],
   stickyToolbar: false,
   virtualCamCard: undefined,
+  validationErrors: undefined,
 });
 
 /** Returns a new state with replaced camcard or subcamcard */
@@ -165,7 +167,6 @@ export const camCardReducer = createReducer(
     loadDeliveryAddressesFail,
     updateSubCamCardFail,
     importCamCardFail,
-    validateCamCardImportFail,
     (state: CamCardState, action) => {
       const { error } = action.payload;
       return {
@@ -176,6 +177,14 @@ export const camCardReducer = createReducer(
       };
     }
   ),
+  on(validateCamCardImportFail, (state: CamCardState, action) => {
+    const { error } = action.payload;
+    return {
+      ...state,
+      loading: false,
+      validationErrors: error,
+    };
+  }),
   on(loadCamCards, (state: CamCardState) => ({
     ...state,
     camCardsLoading: true,

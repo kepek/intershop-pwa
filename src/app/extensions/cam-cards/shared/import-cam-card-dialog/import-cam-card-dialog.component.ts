@@ -5,6 +5,7 @@ import { Observable, Subject } from 'rxjs';
 
 import { CamCardsFacade } from '../../facades/cam-cards.facade';
 import { takeUntil } from 'rxjs/operators';
+import { HttpError } from 'ish-core/models/http-error/http-error.model';
 
 @Component({
   selector: 'camfil-import-cam-card-dialog',
@@ -15,12 +16,14 @@ import { takeUntil } from 'rxjs/operators';
 export class ImportCamCardDialogComponent implements OnInit, OnDestroy {
   parsedFile;
   files: any[] = [];
+  file: any = {};
   loading = false;
   validRows = [];
   invalidRows = [];
   camCard = [];
   isValidationCompleted = false;
   camCardLoading$: Observable<boolean>;
+  validationErrors$: Observable<HttpError>;
   private destroy$ = new Subject<void>();
 
   validationErrors: string[];
@@ -32,6 +35,7 @@ export class ImportCamCardDialogComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.validationErrors = [];
+    this.validationErrors$ = this.camCardsFacade.validationErrors$;
   }
 
   ngOnDestroy() {
@@ -39,18 +43,20 @@ export class ImportCamCardDialogComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  onFileChange(event) {
+  onFileChange(files) {
     //TODO: check excel types
     this.loading = true;
     const allowedFileTypes = [
       'application/vnd.ms-excel',
       'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
     ];
-    if (event.target.files.length > 0) {
-      const file = event.target.files[0];
+
+    if (files.length > 0) {
+      const file = files[0];
       const fileType = file.type;
       if (allowedFileTypes?.includes(fileType)) {
-        this.files.push(file);
+        // this.files.push(file);
+        this.file = file;
         xlsxParser.onFileSelection(file).then(data => {
           this.parsedFile = data;
           // this.validateProcessedData(data);
@@ -64,6 +70,12 @@ export class ImportCamCardDialogComponent implements OnInit, OnDestroy {
                 this.loading = false;
                 this.ref.detectChanges();
               }, 1000);
+            }
+          });
+          this.validationErrors$.pipe(takeUntil(this.destroy$)).subscribe(value => {
+            console.log('validationErrors', value);
+            if (value) {
+              this.validationErrors = [value?.message];
             }
           });
         });
@@ -83,26 +95,6 @@ export class ImportCamCardDialogComponent implements OnInit, OnDestroy {
         }
       });
     }
-  }
-
-  /**
-   * Simulate the upload process
-   */
-  uploadFilesSimulator(index: number) {
-    setTimeout(() => {
-      if (index === this.files.length) {
-        return;
-      } else {
-        const progressInterval = setInterval(() => {
-          if (this.files[index].progress === 100) {
-            clearInterval(progressInterval);
-            this.uploadFilesSimulator(index + 1);
-          } else {
-            this.files[index].progress += 5;
-          }
-        }, 200);
-      }
-    }, 1000);
   }
 
   /**

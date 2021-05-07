@@ -1,6 +1,6 @@
 <h2 class="text-center">
   <mat-icon svgIcon="camcard"></mat-icon>
-  <div class="mt-3 mb-5">Import CamCard</div>
+  <div class="mt-3 mb-5">{{ 'camfil.account.import.header.text' | translate }}</div>
 </h2>
 
 <div class="dnd-container" filednd (fileDropped)="onFileDropped($event)">
@@ -8,46 +8,45 @@
     type="file"
     #fileDropRef
     id="fileDropRef"
-    (change)="onFileChange($event)"
-    accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+    (change)="onFileChange($event.target.files)"
+    accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
   />
-  <h3>Drag and drop file here</h3>
-  <h3>or</h3>
-  <label for="fileDropRef">Browse for file</label>
-</div>
-<div class="errors-container" *ngIf="validationErrors.length">
-  <p class="error-text" *ngFor="let error of validationErrors">
-    {{ error }}
-  </p>
+  <h3>{{ 'camfil.account.import.dnd.text_pt1' | translate }}</h3>
+  <h3>{{ 'camfil.account.import.dnd.text_pt2' | translate }}</h3>
+  <label for="fileDropRef">{{ 'camfil.account.import.dnd.browse_file.label' | translate }}</label>
 </div>
 <div class="files-list">
-  <div class="single-file" *ngFor="let file of files; let i = index">
-    <div class="file-icon" style="width: 50px">
-      <mat-icon svgIcon="camcard"></mat-icon>
-    </div>
-    <div class="info">
+  <div class="single-file" *ngIf="file && file?.name">
+    <mat-icon svgIcon="camcard"></mat-icon>
+
+    <div class="info ml-2">
       <h4 class="name">
         {{ file?.name }}
       </h4>
     </div>
   </div>
-  <div class="invalid-rows-container" *ngIf="isValidationCompleted && invalidRows?.length">
-    <p>There are some rows that contain invalid data. Do you want to import valid rows?</p>
-  </div>
 
+  <div class="errors-container mt-3" *ngIf="validationErrors.length">
+    <mat-error *ngFor="let error of validationErrors" role="alert" class="mat-error error-field ng-star-inserted">
+      {{ error }}
+    </mat-error>
+    <p>{{ 'camfil.account.import.invalid_rows.text' | translate }}</p>
+  </div>
   <div class="col-12 text-right p-0">
     <button
-      *ngIf="isValidationCompleted && validRows?.length && camCard?.length"
+      [disabled]="!isValidationCompleted"
       mat-flat-button
-      class="btn-tool text-primary"
+      class="btn-tool mat-raised-button"
       type="submit"
-      type="submit"
+      color="primary"
       (click)="submitImportCamCardForm()"
       data-testing-id="cam-card-dialog-import-submit"
     >
-      Import
+      {{ 'camfil.account.import.confirm.label' | translate }}
     </button>
-    <button mat-flat-button class="btn-tool text-primary" type="button" (click)="dialogRef.close()">Cancel</button>
+    <button mat-flat-button class="btn-tool text-primary mat-raised-button" type="button" (click)="dialogRef.close()">
+      {{ 'camfil.modal.addNewProduct.button.cancel' | translate }}
+    </button>
   </div>
 </div>
 

@@ -900,19 +900,19 @@ export class CamCardEffects {
     )
   );
 
-  displayValidateCamCardImportFailMessage$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(validateCamCardImportFail),
-      mapToPayloadProperty('error'),
-      whenTruthy(),
-      map(error => {
-        console.log('Error', error);
-        return displayErrorMessage({
-          message: error?.message || error?.code,
-        });
-      })
-    )
-  );
+  // displayValidateCamCardImportFailMessage$ = createEffect(() =>
+  //   this.actions$.pipe(
+  //     ofType(validateCamCardImportFail),
+  //     mapToPayloadProperty('error'),
+  //     whenTruthy(),
+  //     map(error => {
+  //       console.log('Error', error);
+  //       return displayErrorMessage({
+  //         message: error?.message || error?.code,
+  //       });
+  //     })
+  //   )
+  // );
 
   // CamCard Import
 
