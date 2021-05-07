@@ -3,14 +3,16 @@ import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { RouterNavigatedPayload, routerNavigatedAction } from '@ngrx/router-store';
 import { Store, select } from '@ngrx/store';
-import { EMPTY, iif } from 'rxjs';
-import { concatMap, filter, map, mergeMap, switchMapTo, withLatestFrom } from 'rxjs/operators';
+import { iif } from 'rxjs';
+import { concatMap, filter, map, mapTo, mergeMap, switchMapTo, withLatestFrom } from 'rxjs/operators';
 
-import { ofUrl, selectRouteParam } from 'ish-core/store/core/router';
+import { ofUrl, selectPath, selectRouteParam } from 'ish-core/store/core/router';
 import { RouterState } from 'ish-core/store/core/router/router.reducer';
+import { getLoggedInCustomer } from 'ish-core/store/customer/user';
 import { mapErrorToAction, mapToPayloadProperty, whenTruthy } from 'ish-core/utils/operators';
 
 import { CamOrganizationService } from '../../services/cam-organization/cam-organization.service';
+import { loadCustomerRoles } from '../role';
 import { loadOrganizationUsers } from '../user';
 
 import {
@@ -22,7 +24,7 @@ import {
   loadCustomersSuccess,
   selectCustomer,
 } from './customer.actions';
-import { getCustomers, getSelectedCustomerId } from './customer.selectors';
+import { getSelectedCustomerId } from './customer.selectors';
 
 @Injectable()
 export class CustomerEffects {
@@ -40,8 +42,7 @@ export class CustomerEffects {
       ofType(routerNavigatedAction),
       mapToPayloadProperty<RouterNavigatedPayload<RouterState>>('routerState'),
       filter((routerState: RouterState) => /^\/(account\/organization)/.test(routerState.url)),
-      withLatestFrom(this.store.pipe(select(getCustomers))),
-      mergeMap(([, customers]) => (customers.length ? EMPTY : [loadCustomers()]))
+      mapTo(loadCustomers())
     )
   );
 
@@ -52,10 +53,26 @@ export class CustomerEffects {
       ofType(loadCustomers),
       mergeMap(() =>
         this.organizationService.getCustomers().pipe(
-          mergeMap(customers => [
-            loadCustomersSuccess({ customers }),
-            loadOrganizationUsers({ customerIDs: customers.map(c => c.id) }),
-          ]),
+          withLatestFrom(
+            this.store.pipe(select(selectPath)),
+            this.store.pipe(select(getLoggedInCustomer), whenTruthy())
+          ),
+          mergeMap(([customers, path, currentCustomer]) => {
+            const actions = [];
+            const currentCustomerId = customers.find(c => c.customerNo === currentCustomer.customerNo)?.id;
+
+            actions.push(loadCustomersSuccess({ customers }));
+
+            if (path.endsWith('account/organization')) {
+              actions.push(loadOrganizationUsers({ customerIDs: customers.map(c => c.id) }));
+            }
+
+            if (path.endsWith('account/organization/create') && currentCustomerId) {
+              actions.push(loadCustomerRoles({ customerId: currentCustomerId }));
+            }
+
+            return actions;
+          }),
           mapErrorToAction(loadCustomersFail)
         )
       )
