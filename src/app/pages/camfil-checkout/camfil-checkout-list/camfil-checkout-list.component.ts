@@ -76,6 +76,7 @@ export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
   closedDates;
   calendarExceptions$: Observable<[]>;
   calendarException = [];
+  orderAddress = {};
 
   @ViewChild(CamfilSmallCtaModalComponent) modal: CamfilSmallCtaModalComponent;
 
@@ -90,6 +91,8 @@ export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.calendarExceptions$ = this.checkoutFacade.calendarExceptions$;
+
+    this.orderAddress = { ...this.order.shipToAddressFull, countryCode: '' };
 
     this.calendarExceptions$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(exceptions => {
       this.calendarException = exceptions.map((element: { date: string }) => {
