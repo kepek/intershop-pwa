@@ -66,16 +66,16 @@
   }
 
   .validation-error-container {
-    border-radius: 4px;
-    margin: 24px 0;
+    max-height: 300px;
     padding: 14px 16px;
+    margin: 24px 0;
+    overflow-y: auto;
     color: #222;
     background-color: #ff4c45;
-    max-height: 300px;
-    overflow-y: auto;
+    border-radius: 4px;
     .line-number {
-      text-decoration: underline;
       font-weight: 600;
+      text-decoration: underline;
     }
   }
 }

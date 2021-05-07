@@ -1,6 +1,7 @@
-import { Directive, Output, EventEmitter, HostBinding, HostListener } from '@angular/core';
+import { Directive, EventEmitter, HostBinding, HostListener, Output } from '@angular/core';
 
 @Directive({
+  // tslint:disable-next-line:directive-selector
   selector: '[filednd]',
 })
 export class DndDirective {
@@ -15,18 +16,18 @@ export class DndDirective {
   }
 
   // Dragleave listener
-  @HostListener('dragleave', ['$event']) public onDragLeave(event: DragEvent) {
+  @HostListener('dragleave', ['$event']) onDragLeave(event: DragEvent) {
     event.preventDefault();
     event.stopPropagation();
     this.fileOver = false;
   }
 
   // Drop listener
-  @HostListener('drop', ['$event']) public ondrop(event: DragEvent) {
+  @HostListener('drop', ['$event']) ondrop(event: DragEvent) {
     event.preventDefault();
     event.stopPropagation();
     this.fileOver = false;
-    let files = event.dataTransfer.files;
+    const files = event.dataTransfer.files;
     if (files.length > 0) {
       this.fileDropped.emit(files);
     }
