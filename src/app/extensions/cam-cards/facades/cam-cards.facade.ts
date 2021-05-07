@@ -40,6 +40,7 @@ import {
   getSelectedCamCardDetails,
   getUserContactForCustomer,
   getValidationErrors,
+  getValidationResponse,
   getVirtualCamCard,
   importCamCard,
   isStickyCamCardToolbar,
@@ -74,6 +75,7 @@ export class CamCardsFacade {
   addresses$: Observable<CamCardAddress[]> = this.store.pipe(select(getCustomerAddresses));
   virtualCamCard$: Observable<CamCard> = this.store.pipe(select(getVirtualCamCard));
   validationErrors$:  Observable<HttpError> = this.store.pipe(select(getValidationErrors));
+  validationResponse$:  Observable<[]> = this.store.pipe(select(getValidationResponse));
 
   contactsByCustomer$(id: string): Observable<CamCardContact[]> {
     return this.store.pipe(select(getContactsbyCustomerId, { id }));

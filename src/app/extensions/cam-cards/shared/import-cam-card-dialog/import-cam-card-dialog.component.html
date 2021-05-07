@@ -32,6 +32,18 @@
     </mat-error>
     <p>{{ 'camfil.account.import.invalid_rows.text' | translate }}</p>
   </div>
+
+  <div class="validation-error-container" *ngIf="errorArr?.length">
+    <div class="one-line-error" *ngFor="let lineErrors of errorArr">
+      <p class="m-0 line-number">Line {{ lineErrors.lineNumber }} contains errors:</p>
+      <div class="line-error-list" *ngFor="let err of lineErrors.errors">
+        {{ err.errorCode }} for following paramater(s):<br />
+        <span *ngFor="let parameter of err.errorParameters"
+          ><strong>{{ parameter }}</strong></span
+        >
+      </div>
+    </div>
+  </div>
   <div class="col-12 text-right p-0">
     <button
       [disabled]="!isValidationCompleted"

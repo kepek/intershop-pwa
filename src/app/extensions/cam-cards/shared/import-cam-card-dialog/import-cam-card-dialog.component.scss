@@ -64,4 +64,18 @@
       }
     }
   }
+
+  .validation-error-container {
+    border-radius: 4px;
+    margin: 24px 0;
+    padding: 14px 16px;
+    color: #222;
+    background-color: #ff4c45;
+    max-height: 300px;
+    overflow-y: auto;
+    .line-number {
+      text-decoration: underline;
+      font-weight: 600;
+    }
+  }
 }

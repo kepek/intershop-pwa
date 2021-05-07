@@ -68,6 +68,7 @@ import {
   importCamCardFail,
   validateCamCardImport,
   validateCamCardImportFail,
+  validateCamCardImportSuccess,
 } from './cam-card.actions';
 
 export interface CamCardState extends EntityState<CamCard> {
@@ -87,6 +88,7 @@ export interface CamCardState extends EntityState<CamCard> {
   addresses?: CamCardAddress[];
   virtualCamCard: CamCard;
   validationErrors: HttpError;
+  validationResponse: [];
 }
 
 export const camCardAdapter = createEntityAdapter<CamCard>({
@@ -106,6 +108,7 @@ export const initialState: CamCardState = camCardAdapter.getInitialState({
   stickyToolbar: false,
   virtualCamCard: undefined,
   validationErrors: undefined,
+  validationResponse: undefined,
 });
 
 /** Returns a new state with replaced camcard or subcamcard */
@@ -167,6 +170,7 @@ export const camCardReducer = createReducer(
     loadDeliveryAddressesFail,
     updateSubCamCardFail,
     importCamCardFail,
+    validateCamCardImportFail,
     (state: CamCardState, action) => {
       const { error } = action.payload;
       return {
@@ -177,14 +181,14 @@ export const camCardReducer = createReducer(
       };
     }
   ),
-  on(validateCamCardImportFail, (state: CamCardState, action) => {
-    const { error } = action.payload;
-    return {
-      ...state,
-      loading: false,
-      validationErrors: error,
-    };
-  }),
+  // on(validateCamCardImportFail, (state: CamCardState, action) => {
+  //   const { error } = action.payload;
+  //   return {
+  //     ...state,
+  //     loading: false,
+  //     validationErrors: error,
+  //   };
+  // }),
   on(loadCamCards, (state: CamCardState) => ({
     ...state,
     camCardsLoading: true,
@@ -349,6 +353,15 @@ export const camCardReducer = createReducer(
     ...state,
     virtualCamCard: undefined,
   })),
+  on(validateCamCardImportSuccess, (state: CamCardState, action) => {
+    const { validationResponse } = action.payload;
+    console.log('validationResponse', validationResponse);
+    return {
+      ...state,
+      loading: false,
+      validationResponse: validationResponse,
+    };
+  }),
   on(importCamCardSuccess, (state: CamCardState, action) => {
     const { camCardData } = action.payload;
 

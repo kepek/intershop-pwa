@@ -53,3 +53,4 @@ export const isStickyCamCardToolbar = createSelector(getCamCardState, state => s
 export const getVirtualCamCard = createSelector(getCamCardState, state => state.virtualCamCard);
 
 export const getValidationErrors = createSelector(getCamCardState, state => state.validationErrors);
+export const getValidationResponse = createSelector(getCamCardState, state => state.validationResponse);

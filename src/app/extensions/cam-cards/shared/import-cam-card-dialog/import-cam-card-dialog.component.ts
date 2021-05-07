@@ -6,6 +6,99 @@ import { Observable, Subject } from 'rxjs';
 import { CamCardsFacade } from '../../facades/cam-cards.facade';
 import { takeUntil } from 'rxjs/operators';
 import { HttpError } from 'ish-core/models/http-error/http-error.model';
+const mockResponse = [
+  {
+    originalLineNumber: 1,
+    name: 'Columbus SE_2',
+    customerNumber: '111811',
+    orderMark: 'Test Order',
+    invoiceMark: 'Test Invoice',
+    customerRecipientName: 'Columbus Gothenburg',
+    deliveryAddressBuilding: 'A',
+    deliveryAddressStreet: 'Drottninggatan 71D',
+    deliveryAddressZipCode: '11220',
+    deliveryAddressCity: 'Stockholm',
+    deliveryAddressCountryCode: null,
+    deliveryInterval: 12,
+    boxLabel: 'This is for Pawel',
+    camCardLines: [
+      {
+        originalLineNumber: 1,
+        sku: null,
+        quantity: 42,
+        width: null,
+        height: null,
+        diameter: null,
+        errors: [
+          {
+            errorCode: 'web_cc_import.validation_error.empty_or_invalid_value',
+            errorParameters: ['SKU'],
+          },
+        ],
+        name: null,
+        customerNumber: null,
+        orderMark: null,
+        invoiceMark: null,
+        customerRecipientName: null,
+        deliveryAddressBuilding: null,
+        deliveryAddressStreet: null,
+        deliveryAddressZipCode: null,
+        deliveryAddressCity: null,
+        deliveryAddressCountryCode: null,
+        deliveryInterval: null,
+        boxLabel: null,
+      },
+      {
+        originalLineNumber: 2,
+        sku: '1004670',
+        quantity: 43,
+        width: null,
+        height: null,
+        diameter: null,
+        errors: [],
+        name: null,
+        customerNumber: null,
+        orderMark: null,
+        invoiceMark: null,
+        customerRecipientName: null,
+        deliveryAddressBuilding: null,
+        deliveryAddressStreet: null,
+        deliveryAddressZipCode: null,
+        deliveryAddressCity: null,
+        deliveryAddressCountryCode: null,
+        deliveryInterval: null,
+        boxLabel: null,
+      },
+      {
+        originalLineNumber: 3,
+        sku: '1000301',
+        quantity: 44,
+        width: null,
+        height: null,
+        diameter: null,
+        errors: [
+          {
+            errorCode: 'web_cc_import.validation_error.empty_or_invalid_value',
+            errorParameters: ['Quantity'],
+          },
+        ],
+        name: null,
+        customerNumber: null,
+        orderMark: null,
+        invoiceMark: null,
+        customerRecipientName: null,
+        deliveryAddressBuilding: null,
+        deliveryAddressStreet: null,
+        deliveryAddressZipCode: null,
+        deliveryAddressCity: null,
+        deliveryAddressCountryCode: null,
+        deliveryInterval: null,
+        boxLabel: null,
+      },
+    ],
+    errors: [],
+  },
+];
 
 @Component({
   selector: 'camfil-import-cam-card-dialog',
@@ -24,6 +117,8 @@ export class ImportCamCardDialogComponent implements OnInit, OnDestroy {
   isValidationCompleted = false;
   camCardLoading$: Observable<boolean>;
   validationErrors$: Observable<HttpError>;
+  validationResponse$: Observable<[]>;
+  errorArr: any[];
   private destroy$ = new Subject<void>();
 
   validationErrors: string[];
@@ -36,6 +131,7 @@ export class ImportCamCardDialogComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.validationErrors = [];
     this.validationErrors$ = this.camCardsFacade.validationErrors$;
+    this.validationResponse$ = this.camCardsFacade.validationResponse$;
   }
 
   ngOnDestroy() {
@@ -72,6 +168,20 @@ export class ImportCamCardDialogComponent implements OnInit, OnDestroy {
               }, 1000);
             }
           });
+          // TODO: Change to get valdiation response and extract errors
+
+          let errorsArr = mockResponse[0].camCardLines?.map(line => {
+            if (line.errors && line.errors.length) {
+              return { lineNumber: line.originalLineNumber, errors: [...line.errors] };
+            }
+          });
+          //.map(error => `Parameter: ${error.errorParameters.join(",")} error code: ${error.errorCode}`)
+          // this.validationErrors = [...errorsArr]
+          console.log(
+            'errorsArr',
+            errorsArr.filter(item => item)
+          );
+          this.errorArr = [...errorsArr.filter(item => item)];
           this.validationErrors$.pipe(takeUntil(this.destroy$)).subscribe(value => {
             console.log('validationErrors', value);
             if (value) {

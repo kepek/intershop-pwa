@@ -893,7 +893,7 @@ export class CamCardEffects {
       mapToPayload(),
       mergeMap(payload =>
         this.camCardService.validateCamCardImport(payload.camCardData).pipe(
-          mergeMap(payload => [validateCamCardImportSuccess({ camCardData: payload })]),
+          mergeMap(payload => [validateCamCardImportSuccess({ validationResponse: payload })]),
           mapErrorToAction(validateCamCardImportFail)
         )
       )

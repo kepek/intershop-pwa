@@ -359,7 +359,7 @@ export const setStickyCamCardToolbar = createAction(
 
 export const validateCamCardImport = createAction('[Cam Cards] Validate Cam Card Import', payload<{ camCardData: {} }>());
 
-export const validateCamCardImportSuccess = createAction('[Cam Cards API] Validate Cam Card Import Success', payload<{ camCardData }>());
+export const validateCamCardImportSuccess = createAction('[Cam Cards API] Validate Cam Card Import Success', payload<{ validationResponse }>());
 
 export const validateCamCardImportFail = createAction('[Cam Cards API] Validate Cam Card Import Fail', httpError());
 
