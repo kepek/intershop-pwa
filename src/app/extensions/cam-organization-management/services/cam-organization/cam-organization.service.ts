@@ -1,7 +1,7 @@
 import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { pick } from 'lodash-es';
-import { EMPTY, Observable, forkJoin, iif, of, throwError } from 'rxjs';
+import { EMPTY, Observable, forkJoin, of, throwError } from 'rxjs';
 import { catchError, concatAll, concatMap, defaultIfEmpty, map, switchMap, withLatestFrom } from 'rxjs/operators';
 
 import { AppFacade } from 'ish-core/facades/app.facade';
@@ -25,7 +25,6 @@ import {
   CamfilB2bCustomer,
   CamfilB2bCustomerContact,
 } from '../../models/camfil-b2b-customer/camfil-b2b-customer.model';
-import { CamfilB2bOrganizationUser } from '../../models/camfil-b2b-organization/camfil-b2b-organization.model';
 import { CamfilB2bRoleData, CamfilB2bRoleIDsData } from '../../models/camfil-b2b-role/camfil-b2b-role.interface';
 import { CamfilB2bRoleMapper } from '../../models/camfil-b2b-role/camfil-b2b-role.mapper';
 import { CamfilB2bRole } from '../../models/camfil-b2b-role/camfil-b2b-role.model';
@@ -425,17 +424,15 @@ export class CamOrganizationService {
 
   // Organization -> Users
 
-  getOrganizationUsers(): Observable<CamfilB2bOrganizationUser[]> {
-    return this.getCustomers().pipe(
-      map(customers =>
-        customers.map(customer =>
-          this.getCustomerUsers(customer.id).pipe(
-            map(users => users.map(user => ({ ...user, customer, customerId: customer.id })))
-          )
+  getOrganizationUsers(customerIDs: string[]): Observable<CamfilB2bUser[]> {
+    return forkJoin([
+      ...customerIDs.map(customerId =>
+        this.getCustomerUsers(customerId).pipe(
+          map(users => users.map(user => ({ ...user, customerId }))),
+          defaultIfEmpty([]),
+          catchError(() => of([]))
         )
       ),
-      concatMap(obsArray => iif(() => !!obsArray.length, forkJoin([...obsArray]), of([]))),
-      concatAll()
-    );
+    ]).pipe(concatAll());
   }
 }

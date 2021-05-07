@@ -35,6 +35,9 @@ import {
   loadCustomerUsers,
   loadCustomerUsersFail,
   loadCustomerUsersSuccess,
+  loadOrganizationUsers,
+  loadOrganizationUsersFail,
+  loadOrganizationUsersSuccess,
   selectUser,
   updateCustomerUser,
   updateCustomerUserFail,
@@ -71,7 +74,8 @@ export const userReducer = createReducer(
     connectUserWithCustomer,
     disconnectUserFromCustomer,
     connectContactWithUserAndCustomer,
-    disconnectContactFromUserAndCustomer
+    disconnectContactFromUserAndCustomer,
+    loadOrganizationUsers
   ),
   setErrorOn(
     loadCustomerUsersFail,
@@ -83,7 +87,8 @@ export const userReducer = createReducer(
     connectUserWithCustomerFail,
     disconnectUserFromCustomerFail,
     connectContactWithUserAndCustomerFail,
-    disconnectContactFromUserAndCustomerFail
+    disconnectContactFromUserAndCustomerFail,
+    loadOrganizationUsersFail
   ),
   unsetLoadingAndErrorOn(
     loadCustomerUsersSuccess,
@@ -95,7 +100,8 @@ export const userReducer = createReducer(
     connectUserWithCustomerSuccess,
     disconnectUserFromCustomerSuccess,
     connectContactWithUserAndCustomerSuccess,
-    disconnectContactFromUserAndCustomerSuccess
+    disconnectContactFromUserAndCustomerSuccess,
+    loadOrganizationUsersSuccess
   ),
   on(
     loadCustomerUsersSuccess,
@@ -108,6 +114,7 @@ export const userReducer = createReducer(
     disconnectUserFromCustomerSuccess,
     connectContactWithUserAndCustomerSuccess,
     disconnectContactFromUserAndCustomerSuccess,
+    loadOrganizationUsersSuccess,
     state => ({ ...state, initialized: true })
   ),
   on(selectUser, (state: UserState, action) => ({
@@ -169,5 +176,10 @@ export const userReducer = createReducer(
 
       return userAdapter.upsertOne(user, state);
     }
-  )
+  ),
+  on(loadOrganizationUsersSuccess, (state: UserState, action) => {
+    const { users } = action.payload;
+
+    return userAdapter.upsertMany(users, state);
+  })
 );
