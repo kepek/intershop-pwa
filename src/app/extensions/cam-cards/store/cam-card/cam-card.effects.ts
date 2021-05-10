@@ -281,13 +281,13 @@ export class CamCardEffects {
   loadCustomers$ = createEffect(() =>
     this.actions$.pipe(
       ofType(loadCustomers),
-      withLatestFrom(this.store.pipe(select(getUserAuthorized))),
-      filter(([, authorized]) => authorized),
       // accumulate all actions
       windowRxOperator(this.actions$.pipe(ofType(loadCustomers), debounceTime(1000))),
       mergeMap(window$ =>
         window$.pipe(
           reduce(acc => acc, {}),
+          withLatestFrom(this.store.pipe(select(getUserAuthorized))),
+          filter(([, authorized]) => authorized),
           mergeMap(() =>
             this.camCardService.getCustomers().pipe(
               /* Make sure to do not remove `loadUserContactForCustomers` since this is required to be fulfilled and it is used in CamCard Helper */
