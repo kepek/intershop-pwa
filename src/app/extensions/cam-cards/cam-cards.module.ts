@@ -24,20 +24,20 @@ import { UserAccessCamCardDialogComponent } from './shared/user-access-cam-card-
     CamCardPreferencesDialogComponent,
     CamCardProductCommentComponent,
     CreateCamCardModalComponent,
-    MoveCamCardDialogComponent,
+    DndDirective,
     ImportCamCardDialogComponent,
+    MoveCamCardDialogComponent,
     ProductAddToCamCardComponent,
     SelectCamCardModalComponent,
     UserAccessCamCardDialogComponent,
-    DndDirective
   ],
   exports: [
     AccountCamCardDetailLineItemComponent,
     CamCardPreferencesComponent,
     CamCardPreferencesDialogComponent,
     CamCardProductCommentComponent,
-    MoveCamCardDialogComponent,
     ImportCamCardDialogComponent,
+    MoveCamCardDialogComponent,
     SelectCamCardModalComponent,
   ],
 })
