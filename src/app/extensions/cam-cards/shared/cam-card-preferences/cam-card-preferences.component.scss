@@ -4,7 +4,10 @@
   .form-field,
   .mat-form-field {
     width: 100%;
-    margin-bottom: $space-box;
+    
+    &:not(.mat-form-field-invalid) {
+      margin-bottom: $space-box;
+    }
   }
   .mat-card {
     padding: 24px;

@@ -911,6 +911,7 @@
   "camfil.dynamic.cart.product.width.label": "Width",
   "camfil.forgot_password.form.send.button.label": "Send",
   "camfil.forgot_username.form.send.button.label": "Send",
+  "camfil.form.error.maxLength": "The field must not exceed {{0}} characters.",
   "camfil.guide_article.headline": "Guides",
   "camfil.guide_article.read_more.text": "Read air filter guide",
   "camfil.header.dropdown.title": "Webshop",

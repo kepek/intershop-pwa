@@ -45,9 +45,7 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit, OnDestroy
     private appFacade: AppFacade,
     public dialog: MatDialog,
     private activatedRoute: ActivatedRoute
-  ) {
-    this.initForm();
-  }
+  ) {}
 
   get formDisabled() {
     return this.camCardForm.invalid && this.submitted;
@@ -86,6 +84,7 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit, OnDestroy
 
   primaryButton = 'camfil.account.cam_card.new_from_order.button.create.label';
   camCardTitle = 'camfil.account.cam_card.new_cam_card.text';
+  maxLength = 35;
 
   locations = [
     {
@@ -115,6 +114,11 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit, OnDestroy
     {
       error: 'incorrect',
       message: 'camfil.address_form.post_code.invalid',
+    },
+    {
+      error: 'maxlength',
+      message: 'camfil.form.error.maxLength',
+      messageVariables: [],
     },
   ];
 
@@ -155,13 +159,17 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit, OnDestroy
   }
 
   ngOnChanges() {
-    this.patchForm();
+    if (this.camCardForm) {
+      this.patchForm();
+    }
     if (this.camCard) {
       this.primaryButton = 'camfil.account.cam_card.edit_form.save_button.text';
     }
   }
 
   ngOnInit() {
+    this.errorValidator.find(item => item.error === 'maxlength').messageVariables = ['' + this.maxLength];
+    this.initForm();
     this.countries$ = this.appFacade.countries$();
     this.customers$ = this.camCardsFacade.customers$;
     this.addresses$ = this.camCardsFacade.addresses$;
@@ -196,22 +204,24 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit, OnDestroy
   }
 
   initForm() {
+    const maxL = this.maxLength;
     this.camCardForm = this.fb.group({
-      title: ['', [Validators.required, Validators.maxLength(35)]],
-      customerName: ['', [Validators.required, Validators.maxLength(35)]],
-      orderMark: ['', [Validators.maxLength(35)]],
-      invoiceMark: ['', [Validators.maxLength(35)]],
-      deliveryAddress: ['', [Validators.maxLength(35)]],
-      companyName1: ['', [Validators.maxLength(35)]],
-      addressLine1: ['', [Validators.required, Validators.maxLength(35)]],
-      addressLine2: ['', [Validators.maxLength(35)]],
-      postalCode: ['', [Validators.required, Validators.maxLength(35)]],
-      city: [{ value: '', disabled: true }, [Validators.maxLength(35)]],
-      lastDelivery: ['', [Validators.maxLength(35)]],
-      deliveryInterval: ['', [Validators.maxLength(35)]],
-      nextDelivery: [{ value: '', disabled: true }, [Validators.maxLength(35)]],
-      reminder: [true, [Validators.maxLength(35)]],
+      title: ['', [Validators.required, Validators.maxLength(maxL)]],
+      customerName: ['', [Validators.required, Validators.maxLength(maxL)]],
+      orderMark: ['', [Validators.maxLength(maxL)]],
+      invoiceMark: ['', [Validators.maxLength(maxL)]],
+      deliveryAddress: ['', [Validators.maxLength(maxL)]],
+      companyName1: ['', [Validators.maxLength(maxL)]],
+      addressLine1: ['', [Validators.required, Validators.maxLength(maxL)]],
+      addressLine2: ['', [Validators.maxLength(maxL)]],
+      postalCode: ['', [Validators.required, Validators.maxLength(maxL)]],
+      city: [{ value: '', disabled: true }, [Validators.maxLength(maxL)]],
+      lastDelivery: ['', [Validators.maxLength(maxL)]],
+      deliveryInterval: ['', [Validators.maxLength(maxL)]],
+      nextDelivery: [{ value: '', disabled: true }, [Validators.maxLength(maxL)]],
+      reminder: [true, [Validators.maxLength(maxL)]],
     });
+    this.patchForm();
   }
   compareFn(x, y): boolean {
     return x && y ? x.id === y.id : x === y;

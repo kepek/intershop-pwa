@@ -92,6 +92,12 @@
                 (change)="onBlurSubmit()"
               />
             </mat-form-field>
+            <camfil-error
+              [errors]="camCardForm.controls.companyName1.errors"
+              [errorValidators]="errorValidator"
+              [touched]="camCardForm.controls.companyName1.touched"
+            >
+            </camfil-error>
             <mat-form-field appearance="fill" class="form-field">
               <mat-label>{{ 'camfil.account.cam_card.add_to_form.building' | translate }}</mat-label>
               <input
