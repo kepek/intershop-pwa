@@ -9,6 +9,7 @@ import {
   CamCardAddress,
   CamCardContact,
   CamCardCustomer,
+  CamCardImportValidationResponse,
   CamCardItem,
 } from '../../models/cam-card/cam-card.model';
 
@@ -30,6 +31,9 @@ import {
   deleteSubCamCard,
   deleteSubCamCardFail,
   deleteSubCamCardSuccess,
+  importCamCard,
+  importCamCardFail,
+  importCamCardSuccess,
   loadCamCardSuccess,
   loadCamCards,
   loadCamCardsFail,
@@ -63,9 +67,6 @@ import {
   updateSubCamCard,
   updateSubCamCardFail,
   updateSubCamCardSuccess,
-  importCamCardSuccess,
-  importCamCard,
-  importCamCardFail,
   validateCamCardImport,
   validateCamCardImportFail,
   validateCamCardImportSuccess,
@@ -88,7 +89,7 @@ export interface CamCardState extends EntityState<CamCard> {
   addresses?: CamCardAddress[];
   virtualCamCard: CamCard;
   validationErrors: HttpError;
-  validationResponse: [];
+  validationResponse: CamCardImportValidationResponse;
 }
 
 export const camCardAdapter = createEntityAdapter<CamCard>({
@@ -181,14 +182,6 @@ export const camCardReducer = createReducer(
       };
     }
   ),
-  // on(validateCamCardImportFail, (state: CamCardState, action) => {
-  //   const { error } = action.payload;
-  //   return {
-  //     ...state,
-  //     loading: false,
-  //     validationErrors: error,
-  //   };
-  // }),
   on(loadCamCards, (state: CamCardState) => ({
     ...state,
     camCardsLoading: true,
@@ -355,20 +348,18 @@ export const camCardReducer = createReducer(
   })),
   on(validateCamCardImportSuccess, (state: CamCardState, action) => {
     const { validationResponse } = action.payload;
-    console.log('validationResponse', validationResponse);
     return {
       ...state,
       loading: false,
-      validationResponse: validationResponse,
+      validationResponse: validationResponse[0],
     };
   }),
   on(importCamCardSuccess, (state: CamCardState, action) => {
     const { camCardData } = action.payload;
 
-    const CamCard = camCardData['elements'][0];
+    const importedCamCard = camCardData.elements[0];
 
-    console.log('camCard from action', CamCard);
-    return camCardAdapter.upsertOne(CamCard, {
+    return camCardAdapter.upsertOne(importedCamCard, {
       ...state,
       loading: false,
     });

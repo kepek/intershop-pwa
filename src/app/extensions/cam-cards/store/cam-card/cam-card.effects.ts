@@ -67,6 +67,9 @@ import {
   deleteSubCamCardSuccess,
   detectCamCardToolbar,
   editCamCard,
+  importCamCard,
+  importCamCardFail,
+  importCamCardSuccess,
   loadCamCard,
   loadCamCardSuccess,
   loadCamCards,
@@ -113,12 +116,9 @@ import {
   updateSubCamCard,
   updateSubCamCardFail,
   updateSubCamCardSuccess,
-  importCamCard,
-  importCamCardSuccess,
-  importCamCardFail,
   validateCamCardImport,
-  validateCamCardImportSuccess,
   validateCamCardImportFail,
+  validateCamCardImportSuccess,
 } from './cam-card.actions';
 import {
   getAllCamCards,
@@ -874,25 +874,14 @@ export class CamCardEffects {
     { dispatch: false }
   );
 
-  /** Action after update CamCard Contacts
-   * @param camCardId
-   * @param newContacts
-   * @param contact
-   */
-  private handleCamCardContactsSuccess(camCardId: string, contacts: CamCardContact[], contact: CamCardContact) {
-    const isInclude =
-      !contacts.length || contacts.findIndex(newContact => newContact.profileId === contact.profileId) > -1;
-    return isInclude ? updateCamCardContactsSuccess({ camCardId, contacts }) : deleteCamCardSuccess({ camCardId });
-  }
-
   // CamCard Import validation
 
   validateCamCardImport$ = createEffect(() =>
     this.actions$.pipe(
       ofType(validateCamCardImport),
       mapToPayload(),
-      mergeMap(payload =>
-        this.camCardService.validateCamCardImport(payload.camCardData).pipe(
+      mergeMap(camCardData =>
+        this.camCardService.validateCamCardImport(camCardData).pipe(
           mergeMap(payload => [validateCamCardImportSuccess({ validationResponse: payload })]),
           mapErrorToAction(validateCamCardImportFail)
         )
@@ -900,28 +889,14 @@ export class CamCardEffects {
     )
   );
 
-  // displayValidateCamCardImportFailMessage$ = createEffect(() =>
-  //   this.actions$.pipe(
-  //     ofType(validateCamCardImportFail),
-  //     mapToPayloadProperty('error'),
-  //     whenTruthy(),
-  //     map(error => {
-  //       console.log('Error', error);
-  //       return displayErrorMessage({
-  //         message: error?.message || error?.code,
-  //       });
-  //     })
-  //   )
-  // );
-
   // CamCard Import
 
   importCamCard$ = createEffect(() =>
     this.actions$.pipe(
       ofType(importCamCard),
       mapToPayload(),
-      mergeMap(payload =>
-        this.camCardService.importCamCard(payload.camCardData).pipe(
+      mergeMap(camCardData =>
+        this.camCardService.importCamCard(camCardData).pipe(
           mergeMap(payload => [
             importCamCardSuccess({ camCardData: payload }),
             displaySuccessMessage({
@@ -947,4 +922,15 @@ export class CamCardEffects {
       })
     )
   );
+
+  /** Action after update CamCard Contacts
+   * @param camCardId
+   * @param newContacts
+   * @param contact
+   */
+  private handleCamCardContactsSuccess(camCardId: string, contacts: CamCardContact[], contact: CamCardContact) {
+    const isInclude =
+      !contacts.length || contacts.findIndex(newContact => newContact.profileId === contact.profileId) > -1;
+    return isInclude ? updateCamCardContactsSuccess({ camCardId, contacts }) : deleteCamCardSuccess({ camCardId });
+  }
 }

@@ -12,6 +12,7 @@ import {
   CamCardAddress,
   CamCardContact,
   CamCardCustomerData,
+  CamCardImportValidationResponse,
   CamCardItem,
   CamCardItemComment,
   CamCardMeasurement,
@@ -407,7 +408,7 @@ export class CamCardService {
     return this.apiService.delete(`camcards/${camCardId}/products`).pipe(concatMap(() => this.getCamCard(camCardId)));
   }
 
-  validateCamCardImport(camCardData) {
+  validateCamCardImport(camCardData): Observable<CamCardImportValidationResponse> {
     const camCardArr = camCardData[Object.keys(camCardData)[0]];
     return this.apiService.put('camcardsbulk', camCardArr);
   }

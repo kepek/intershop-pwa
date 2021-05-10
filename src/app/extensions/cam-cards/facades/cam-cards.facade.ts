@@ -9,6 +9,7 @@ import {
   CamCardAddress,
   CamCardContact,
   CamCardCustomer,
+  CamCardImportValidationResponse,
   CamCardItem,
   CamCardItemComment,
   CamCardMeasurement,
@@ -58,7 +59,7 @@ import {
   updateCamCardContacts,
   updateCamCardProduct,
   updateSubCamCard,
-  validateCamCardImport
+  validateCamCardImport,
 } from '../store/cam-card';
 
 @Injectable({ providedIn: 'root' })
@@ -74,8 +75,8 @@ export class CamCardsFacade {
   customers$: Observable<CamCardCustomer[]> = this.store.pipe(select(getCamCardCustomers));
   addresses$: Observable<CamCardAddress[]> = this.store.pipe(select(getCustomerAddresses));
   virtualCamCard$: Observable<CamCard> = this.store.pipe(select(getVirtualCamCard));
-  validationErrors$:  Observable<HttpError> = this.store.pipe(select(getValidationErrors));
-  validationResponse$:  Observable<[]> = this.store.pipe(select(getValidationResponse));
+  validationErrors$: Observable<HttpError> = this.store.pipe(select(getValidationErrors));
+  validationResponse$: Observable<CamCardImportValidationResponse> = this.store.pipe(select(getValidationResponse));
 
   contactsByCustomer$(id: string): Observable<CamCardContact[]> {
     return this.store.pipe(select(getContactsbyCustomerId, { id }));
@@ -282,7 +283,7 @@ export class CamCardsFacade {
     this.store.dispatch(resetCamCardItemPositions({ camCard }));
   }
 
-  validateCamCardImport(camCardData): void | HttpError{
+  validateCamCardImport(camCardData): void | HttpError {
     this.store.dispatch(validateCamCardImport({ camCardData }));
   }
 
