@@ -23,6 +23,9 @@ import { ProductCompletenessLevel, ProductHelper } from 'ish-core/models/product
 import { DeviceType, ViewType } from 'ish-core/models/viewtype/viewtype.types';
 import { ProductItemDetailedComponentConfiguration } from 'ish-shared/components/product/camfil-product-item-detailed/camfil-product-item-detailed.component';
 import { ProductItemSimpleComponentConfiguration } from 'ish-shared/components/product/camfil-product-item-simple/camfil-product-item-simple.component';
+import { AppFacade } from 'ish-core/facades/app.facade';
+import { whenTruthy } from 'ish-core/utils/operators';
+import { Locale } from 'ish-core/models/locale/locale.model';
 
 export type ProductItemContainerConfiguration = ProductItemSimpleComponentConfiguration &
   ProductItemDetailedComponentConfiguration & { displayType: ViewType };
@@ -89,10 +92,16 @@ export class CamfilProductItemComponent implements OnInit, OnChanges, OnDestroy 
   productVariationOptions$: Observable<VariationOptionGroup[]>;
   isInCompareList$: Observable<boolean>;
   isLoggedIn$: Observable<boolean>;
+  showArticleNumText = true;
+  currentLocale$: Observable<Locale>;
   private sku$ = new ReplaySubject<string>(1);
   private destroy$ = new Subject();
 
-  constructor(private shoppingFacade: ShoppingFacade, private accountFacade: AccountFacade) {}
+  constructor(
+    private shoppingFacade: ShoppingFacade,
+    private accountFacade: AccountFacade,
+    private appFacade: AppFacade
+  ) {}
 
   ngOnDestroy() {
     this.destroy$.next();
@@ -115,6 +124,14 @@ export class CamfilProductItemComponent implements OnInit, OnChanges, OnDestroy 
     this.isMobileView = this.deviceType === 'mobile';
 
     this.isLoggedIn$ = this.accountFacade.isLoggedIn$;
+
+    this.currentLocale$ = this.appFacade.currentLocale$;
+
+    this.currentLocale$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(locale => {
+      if (locale) {
+        this.showArticleNumText = locale.value == 'fi' ? false : true;
+      }
+    });
   }
 
   ngOnChanges(changes: SimpleChanges) {
