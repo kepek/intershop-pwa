@@ -54,6 +54,7 @@ export class CamfilProductItemBaseComponent implements OnInit, OnDestroy {
   @Output() selectVariation = new EventEmitter<{ selection: VariationSelection; changedAttribute?: string }>();
   @Input() isMobileView: boolean;
   @Input() isLoggedIn: boolean;
+  @Input() hideAttributeName?: boolean;
   isMasterProduct = ProductHelper.isMasterProduct;
   updatedQuantity: number;
 

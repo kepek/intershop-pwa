@@ -13,6 +13,7 @@
     (selectVariation)="replaceVariation($event)"
     [isMobileView]="isMobileView"
     [isLoggedIn]="isLoggedIn$ | async"
+    [hideAttributeName]="hideAttributeName"
   ></camfil-product-item-simple>
 
   <camfil-product-item-detailed
@@ -28,6 +29,7 @@
     (compareToggle)="toggleCompare()"
     (selectVariation)="replaceVariation($event)"
     [isLoggedIn]="isLoggedIn$ | async"
+    [hideAttributeName]="hideAttributeName"
   ></camfil-product-item-detailed>
 </ng-container>
 

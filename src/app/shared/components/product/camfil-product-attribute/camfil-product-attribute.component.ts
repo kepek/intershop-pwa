@@ -27,6 +27,7 @@ export class CamfilProductAttributeComponent implements OnInit {
   @Input() identifier?: string;
   @Input() itemProp?: string;
   @Input() multipleValuesSeparator = ', ';
+  @Input() hideAttributeName = false;
 
   attribute: Attribute;
 
