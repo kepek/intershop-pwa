@@ -60,7 +60,7 @@ export class AccountCamCardToolbarComponent implements OnInit, OnDestroy {
     return this.basketLoading || !this.isProductsChecked() || this.productAddingInProgress;
   }
 
-  importCamCard(event: Event){
+  importCamCard(event: Event) {
     this.openImportCamCardDialog.emit(event);
   }
 
