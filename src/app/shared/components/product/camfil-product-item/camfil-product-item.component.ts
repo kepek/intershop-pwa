@@ -127,10 +127,8 @@ export class CamfilProductItemComponent implements OnInit, OnChanges, OnDestroy 
 
     this.currentLocale$ = this.appFacade.currentLocale$;
 
-    this.currentLocale$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(locale => {
-      if (locale) {
-        this.hideAttributeName = locale.value === 'fi' ? true : false;
-      }
+    this.currentLocale$?.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(locale => {
+      this.hideAttributeName = locale?.value === 'fi';
     });
   }
 
