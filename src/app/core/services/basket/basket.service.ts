@@ -4,6 +4,7 @@ import { Store, select } from '@ngrx/store';
 import { EMPTY, Observable, of, throwError } from 'rxjs';
 import { catchError, concatMap, map, switchMap, take } from 'rxjs/operators';
 
+import { AppFacade } from 'ish-core/facades/app.facade';
 import { AddressMapper } from 'ish-core/models/address/address.mapper';
 import { Address } from 'ish-core/models/address/address.model';
 import { Attribute } from 'ish-core/models/attribute/attribute.model';
@@ -80,7 +81,12 @@ type ValidationBasketIncludeType =
  */
 @Injectable({ providedIn: 'root' })
 export class BasketService {
-  constructor(private apiService: ApiService, private orderService: OrderService, private store: Store) {}
+  constructor(
+    private apiService: ApiService,
+    private orderService: OrderService,
+    private store: Store,
+    private appFacade: AppFacade
+  ) {}
 
   /**
    * http header for Basket API v1
@@ -612,5 +618,28 @@ export class BasketService {
       return throwError('loadCustomerDeliveryTerm() called without customerId');
     }
     return this.apiService.get(`camfilcustomers/${customerId}/deliveryterm`);
+  }
+
+  /**
+   * Get warehouse calendar.
+   * @returns         The basket.
+   */
+  getWarehouseCalendar() {
+    const currentDate = new Date();
+    const futureDate = new Date();
+
+    futureDate.setDate(futureDate.getDate() + 1000);
+
+    return this.appFacade.getCountryByChannel$.pipe(
+      take(1),
+      switchMap(countryCode =>
+        this.apiService.post('calendar', {
+          startDate: currentDate,
+          endDate: futureDate,
+          state: 'Closed',
+          countryCode,
+        })
+      )
+    );
   }
 }

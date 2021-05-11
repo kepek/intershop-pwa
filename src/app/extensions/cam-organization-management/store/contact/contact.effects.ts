@@ -1,7 +1,5 @@
-import { isPlatformBrowser } from '@angular/common';
-import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { iif } from 'rxjs';
 import { concatMap, filter, map, switchMap } from 'rxjs/operators';
 
 import { displayErrorMessage, displaySuccessMessage } from 'ish-core/store/core/messages';
@@ -14,12 +12,16 @@ import {
 } from 'ish-core/utils/operators';
 
 import { CamOrganizationService } from '../../services/cam-organization/cam-organization.service';
-import { selectCustomer } from '../customer';
+import {
+  connectContactWithUserAndCustomer,
+  connectContactWithUserAndCustomerFail,
+  connectContactWithUserAndCustomerSuccess,
+  disconnectContactFromUserAndCustomer,
+  disconnectContactFromUserAndCustomerFail,
+  disconnectContactFromUserAndCustomerSuccess,
+} from '../user';
 
 import {
-  assignCustomerUserContact,
-  assignCustomerUserContactFail,
-  assignCustomerUserContactSuccess,
   loadCustomerContact,
   loadCustomerContactFail,
   loadCustomerContactSuccess,
@@ -29,32 +31,11 @@ import {
   loadCustomerUserContact,
   loadCustomerUserContactFail,
   loadCustomerUserContactSuccess,
-  unassignCustomerUserContact,
-  unassignCustomerUserContactFail,
-  unassignCustomerUserContactSuccess,
 } from './contact.actions';
 
 @Injectable()
 export class ContactEffects {
-  constructor(
-    private actions$: Actions,
-    private organizationService: CamOrganizationService,
-    @Inject(PLATFORM_ID) private platformId: string
-  ) {}
-
-  // Customer -> Contacts
-
-  loadContactsForSelectedCustomerId$ = createEffect(() =>
-    iif(
-      () => isPlatformBrowser(this.platformId),
-      this.actions$.pipe(
-        ofType(selectCustomer),
-        mapToPayloadProperty('customerId'),
-        whenTruthy(),
-        map(customerId => loadCustomerContacts({ customerId }))
-      )
-    )
-  );
+  constructor(private actions$: Actions, private organizationService: CamOrganizationService) {}
 
   // Customer -> Contacts
 
@@ -102,45 +83,46 @@ export class ContactEffects {
     )
   );
 
-  // Customer -> User -> Contact -> Assign
+  // Customer -> User -> Contact -> Connect
 
-  assignCustomerUserContact$ = createEffect(() =>
+  connectContactWithUserAndCustomer$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(assignCustomerUserContact),
+      ofType(connectContactWithUserAndCustomer),
       mapToPayload(),
       switchMap(({ customerId, userId, contact }) =>
-        this.organizationService.updateCustomerUserContact(customerId, userId, contact).pipe(
-          map(response =>
-            assignCustomerUserContactSuccess({
+        this.organizationService.connectContactWithUserCustomerPlusReload(customerId, userId, contact).pipe(
+          map(user =>
+            connectContactWithUserAndCustomerSuccess({
               customerId,
               userId,
-              contact: response,
-              successMessage: 'camfil.account.organization.edit_user.assign_customer_user_contact.modal.text',
+              user,
+              successMessage: 'camfil.account.organization.edit_user.connect_contact_with_user_and_customer.modal.text',
             })
           ),
-          mapErrorToAction(assignCustomerUserContactFail, { customerId, userId, contact })
+          mapErrorToAction(connectContactWithUserAndCustomerFail, { customerId, userId, contact })
         )
       )
     )
   );
 
-  // Customer -> User -> Contact -> Unassign
+  // Customer -> User -> Contact -> Disconnect
 
-  unassignCustomerUserContact$ = createEffect(() =>
+  disconnectContactFromUserAndCustomer$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(unassignCustomerUserContact),
+      ofType(disconnectContactFromUserAndCustomer),
       mapToPayload(),
       switchMap(({ customerId, userId, contact }) =>
-        this.organizationService.deleteCustomerUserContact(customerId, userId, contact).pipe(
-          map(response =>
-            unassignCustomerUserContactSuccess({
+        this.organizationService.disconnectContactFromUserAndCustomerPlusReload(customerId, userId, contact).pipe(
+          map(user =>
+            disconnectContactFromUserAndCustomerSuccess({
               customerId,
               userId,
-              contact: response,
-              successMessage: 'camfil.account.organization.edit_user.unassign_customer_user_contact.modal.text',
+              user,
+              successMessage:
+                'camfil.account.organization.edit_user.disconnect_contact_from_user_and_customer.modal.text',
             })
           ),
-          mapErrorToAction(unassignCustomerUserContactFail, { customerId, userId, contact })
+          mapErrorToAction(disconnectContactFromUserAndCustomerFail, { customerId, userId, contact })
         )
       )
     )
@@ -150,7 +132,7 @@ export class ContactEffects {
 
   displayUpdateCustomerUserContactSuccessMessage$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(assignCustomerUserContactSuccess, unassignCustomerUserContactSuccess),
+      ofType(connectContactWithUserAndCustomerSuccess, disconnectContactFromUserAndCustomerSuccess),
       mapToPayload(),
       mapToProperty('successMessage'),
       filter(successMessage => !!successMessage),
@@ -166,7 +148,7 @@ export class ContactEffects {
 
   displayUpdateCustomerUserFailMessage$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(assignCustomerUserContactFail, unassignCustomerUserContactFail),
+      ofType(connectContactWithUserAndCustomerFail, disconnectContactFromUserAndCustomerFail),
       mapToPayloadProperty('error'),
       whenTruthy(),
       map(error =>

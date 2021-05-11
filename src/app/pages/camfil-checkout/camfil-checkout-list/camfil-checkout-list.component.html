@@ -45,7 +45,7 @@
           <dd class="col-6 p-0" data-testing-id="order-camfil_no">{{ order?.phoneNumber || '-' }}</dd>
           <dt class="col-6 p-0">{{ 'camfil.account.orderdetails.delivery_address.label' | translate }}</dt>
           <dd class="col-6 p-0" data-testing-id="order-delivery_address">
-            <ish-address [address]="order.shipToAddressFull"></ish-address>
+            <ish-address [address]="orderAddress"></ish-address>
           </dd>
           <ng-container *ngIf="isConfirmed">
             <dt class="col-6 p-0">{{ 'camfil.account.orderdetails.goods_mark.label' | translate }}</dt>
@@ -101,8 +101,10 @@
             <mat-form-field appearance="fill">
               <mat-label>{{ 'camfil.checkout.form.delivery_date' | translate }}</mat-label>
               <input
+                [disabled]="!calendarException.length"
                 matInput
                 [matDatepicker]="pickerLast"
+                [matDatepickerFilter]="filterDates.bind(this)"
                 formControlName="deliveryDate"
                 [min]="firstAvailableDelivery"
                 [value]="orderFullDeliveryDate"
@@ -120,7 +122,7 @@
         <dl class="row dl-horizontal dl-separator mb-0">
           <dt class="col-6 p-0">{{ 'camfil.checkout.invoice_address' | translate }}</dt>
           <dd class="col-6 p-0" data-testing-id="order-delivery_address">
-            <ish-address [address]="order.shipToAddressFull"></ish-address>
+            <ish-address [address]="basketInvoiceAddress"></ish-address>
           </dd>
           <dt class="col-6 p-0">{{ 'camfil.checkout.shipping_method' | translate }}</dt>
           <dd class="col-6 p-0" data-testing-id="order-channel">

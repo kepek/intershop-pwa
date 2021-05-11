@@ -33,7 +33,9 @@ export const filterPredicate = (data: CamfilB2bOrganizationUser, filter: string)
   let fullAccessUsers = true;
 
   if (filters.fullAccessUsers) {
-    fullAccessUsers = !!data.roleIDs.find(role => role === 'APP_B2B_ACCOUNT_OWNER');
+    fullAccessUsers = !!data.roleIDs.find(
+      role => role === 'APP_B2B_ACCOUNT_OWNER' || role === 'APP_B2B_CUSTOMER_ADMIN_USER'
+    );
   }
 
   // Filter "activeUsers"
@@ -185,7 +187,7 @@ export abstract class OrganizationPageDataSourceComponent implements OnInit, Aft
 
     this.applyDefaultSortIfNotSet();
 
-    this.dataSource.sort.sortChange.subscribe((sort: Sort) => {
+    this.dataSource.sort.sortChange.pipe(takeUntil(this.destroy$)).subscribe((sort: Sort) => {
       if (this.isDefaultSortApplied) {
         this.router
           .navigate([], {

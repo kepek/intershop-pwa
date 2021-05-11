@@ -8,5 +8,10 @@
   actionButtonTitle="{{ 'camfil.checkout.new_camcard.button.create' | translate }}"
   showCloseIcon="true"
   (actionClicked)="create()"
+  [actionTemplate]="spinner"
 >
 </camfil-small-cta-modal>
+
+<ng-template #spinner>
+  <ish-loading *ngIf="loading"></ish-loading>
+</ng-template>

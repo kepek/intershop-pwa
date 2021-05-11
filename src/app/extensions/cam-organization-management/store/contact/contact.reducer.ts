@@ -7,9 +7,6 @@ import { setErrorOn, setLoadingOn, unsetLoadingAndErrorOn } from 'ish-core/utils
 import { CamfilB2bContact } from '../../models/camfil-b2b-contact/camfil-b2b-contact.model';
 
 import {
-  assignCustomerUserContact,
-  assignCustomerUserContactFail,
-  assignCustomerUserContactSuccess,
   loadCustomerContact,
   loadCustomerContactFail,
   loadCustomerContactSuccess,
@@ -19,9 +16,6 @@ import {
   loadCustomerUserContact,
   loadCustomerUserContactFail,
   loadCustomerUserContactSuccess,
-  unassignCustomerUserContact,
-  unassignCustomerUserContactFail,
-  unassignCustomerUserContactSuccess,
 } from './contact.actions';
 
 export const contactAdapter = createEntityAdapter<CamfilB2bContact>({
@@ -42,35 +36,13 @@ const initialState: ContactState = contactAdapter.getInitialState({
 
 export const contactReducer = createReducer(
   initialState,
-  setLoadingOn(
-    loadCustomerContacts,
-    loadCustomerContact,
-    loadCustomerUserContact,
-    assignCustomerUserContact,
-    unassignCustomerUserContact
-  ),
-  setErrorOn(
-    loadCustomerContactsFail,
-    loadCustomerContactFail,
-    loadCustomerUserContactFail,
-    assignCustomerUserContactFail,
-    unassignCustomerUserContactFail
-  ),
-  unsetLoadingAndErrorOn(
-    loadCustomerContactsSuccess,
-    loadCustomerContactSuccess,
-    loadCustomerUserContactSuccess,
-    assignCustomerUserContactSuccess,
-    unassignCustomerUserContactSuccess
-  ),
-  on(
-    loadCustomerContactsSuccess,
-    loadCustomerContactSuccess,
-    loadCustomerUserContactSuccess,
-    assignCustomerUserContactSuccess,
-    unassignCustomerUserContactSuccess,
-    state => ({ ...state, initialized: true })
-  ),
+  setLoadingOn(loadCustomerContacts, loadCustomerContact, loadCustomerUserContact),
+  setErrorOn(loadCustomerContactsFail, loadCustomerContactFail, loadCustomerUserContactFail),
+  unsetLoadingAndErrorOn(loadCustomerContactsSuccess, loadCustomerContactSuccess, loadCustomerUserContactSuccess),
+  on(loadCustomerContactsSuccess, loadCustomerContactSuccess, loadCustomerUserContactSuccess, state => ({
+    ...state,
+    initialized: true,
+  })),
   on(loadCustomerContactsSuccess, (state: ContactState, action) => {
     const { contacts, customerId } = action.payload;
 
@@ -96,24 +68,13 @@ export const contactReducer = createReducer(
 
     return contactAdapter.upsertOne(entity, state);
   }),
-  on(loadCustomerUserContactSuccess, assignCustomerUserContactSuccess, (state: ContactState, action) => {
+  on(loadCustomerUserContactSuccess, (state: ContactState, action) => {
     const { contact, userId } = action.payload;
 
     const entityId = contact?.erpId;
 
     const contactUserIDs = state?.entities?.[entityId]?.userIDs || [];
     const userIDs = [...new Set([...contactUserIDs, userId])];
-    const entity = { ...contact, userIDs };
-
-    return contactAdapter.upsertOne(entity, state);
-  }),
-  on(unassignCustomerUserContactSuccess, (state: ContactState, action) => {
-    const { contact, userId } = action.payload;
-
-    const entityId = contact?.erpId;
-
-    const contactUserIDs = state?.entities?.[entityId]?.userIDs || [];
-    const userIDs = [...new Set([...contactUserIDs].filter(id => id !== userId))];
     const entity = { ...contact, userIDs };
 
     return contactAdapter.upsertOne(entity, state);

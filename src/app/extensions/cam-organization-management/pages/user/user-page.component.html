@@ -40,12 +40,13 @@
     <div class="section__content">
       <camfil-organization-user-customer-contact-form
         *ngFor="let customer of customers$() | async"
-        [selectedContact]="customerUserContact$(customer.id) | async"
-        [contacts]="customerContacts$(customer.id) | async"
         [customer]="customer"
         [user]="selectedUser$() | async"
-        (assignCustomerUserContact)="onAssignCustomerUserContact($event)"
-        (unassignCustomerUserContact)="onUnassignCustomerUserContact($event)"
+        [staticCustomers]="selectedUserStaticCustomers$() | async"
+        (connectUserWithCustomer)="onConnectUserWithCustomer($event)"
+        (disconnectUserFromCustomer)="onDisconnectUserFromCustomer($event)"
+        (connectContactWithUserAndCustomer)="onConnectContactWithUserAndCustomer($event)"
+        (disconnectContactFromUserAndCustomer)="onDisconnectContactFromUserAndCustomer($event)"
       ></camfil-organization-user-customer-contact-form>
     </div>
   </div>

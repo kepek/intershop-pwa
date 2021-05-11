@@ -78,7 +78,7 @@ export const customerReducer = createReducer(
     const { customerId, user } = action.payload;
 
     const customerUserIDs = state?.entities?.[customerId]?.userIDs || [];
-    const userIDs = [...new Set([...customerUserIDs, user.id])];
+    const userIDs = [...new Set([...customerUserIDs, user?.id])];
 
     return customerAdapter.updateOne(
       {

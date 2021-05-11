@@ -40,6 +40,7 @@ export class CamfilAccountOrderComponent implements OnInit, OnDestroy {
 
   @Input() order: Order;
   deliveryAddress: DeliveryAddress;
+  loading = false;
 
   lineItems: OrderLineItem[];
   reOrderText: string;
@@ -65,6 +66,7 @@ export class CamfilAccountOrderComponent implements OnInit, OnDestroy {
   placeReOrder() {
     // Check products availability
     if (this.productsAvailability) {
+      this.loading = true;
       // API call /camfilorder/orderId Place reorder and redirect to checkout page
       this.camAccountFacade.createOrderDuplicate(this.order.id);
     } else {

@@ -64,7 +64,7 @@ import {
   updateUserSuccess,
   userErrorReset,
 } from './user.actions';
-import { getLoggedInCustomer, getLoggedInUser, getUserAuthorized, getUserError } from './user.selectors';
+import { getLoggedInCustomer, getLoggedInUser, getUserError } from './user.selectors';
 
 @Injectable()
 export class UserEffects {
@@ -75,7 +75,6 @@ export class UserEffects {
     private paymentService: PaymentService,
     private personalizationService: PersonalizationService,
     private router: Router,
-    private store: Store,
     @Inject(PLATFORM_ID) private platformId: string
   ) {}
 
@@ -229,8 +228,6 @@ export class UserEffects {
   loadUserByAPIToken$ = createEffect(() =>
     this.actions$.pipe(
       ofType(loadUserByAPIToken),
-      withLatestFrom(this.store.pipe(select(getUserAuthorized))),
-      filter(([, authorized]) => authorized),
       concatMap(() => this.userService.signinUserByToken().pipe(map(loginUserSuccess)))
     )
   );

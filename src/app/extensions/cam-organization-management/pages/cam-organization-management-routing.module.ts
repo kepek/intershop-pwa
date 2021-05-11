@@ -4,10 +4,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { FeatureToggleGuard } from 'ish-core/feature-toggle.module';
 import { AuthGuard } from 'ish-core/guards/auth.guard';
 
-import { FetchCreateUserGuard } from '../guards/fetch-create-user-guard.service';
-import { FetchCustomerUserGuard } from '../guards/fetch-customer-user-guard.service';
-import { FetchCustomersUsersGuard } from '../guards/fetch-customers-users-guard.service';
-
 /**
  * routes for the organization management
  *
@@ -16,7 +12,7 @@ import { FetchCustomersUsersGuard } from '../guards/fetch-customers-users-guard.
 export const routes: Routes = [
   {
     path: '',
-    canActivate: [FeatureToggleGuard, AuthGuard, FetchCustomersUsersGuard],
+    canActivate: [FeatureToggleGuard, AuthGuard],
     data: {
       feature: 'camOrganizationManagement',
       permission: 'APP_B2B_MANAGE_USERS',
@@ -29,7 +25,7 @@ export const routes: Routes = [
   { path: 'customers/:CamfilB2BCustomerId/users', redirectTo: '', pathMatch: 'full' },
   {
     path: 'customers/:CamfilB2BCustomerId/users/:CamfilB2BUserId',
-    canActivate: [FeatureToggleGuard, AuthGuard, FetchCustomerUserGuard],
+    canActivate: [FeatureToggleGuard, AuthGuard],
     data: {
       feature: 'camOrganizationManagement',
       permission: 'APP_B2B_MANAGE_USERS',
@@ -38,7 +34,7 @@ export const routes: Routes = [
   },
   {
     path: 'create',
-    canActivate: [FeatureToggleGuard, AuthGuard, FetchCreateUserGuard],
+    canActivate: [FeatureToggleGuard, AuthGuard],
     data: {
       feature: 'camOrganizationManagement',
       permission: 'APP_B2B_MANAGE_USERS',

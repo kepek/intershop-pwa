@@ -7,6 +7,8 @@ export interface CamfilB2bCustomerRelations {
   contactIDs?: string[];
   roleIDs?: string[];
   userIDs?: string[];
+  contacts?: CamfilB2bContact[];
+  userContact?: CamfilB2bContact;
 }
 
 export const camfilB2bCustomerRelationsKeys = ['contactIDs', 'roleIDs', 'userIDs'];
@@ -16,8 +18,6 @@ export interface CamfilB2bCustomer extends Customer, CamfilB2bCustomerRelations 
   parent: boolean;
   preferredInvoiceToAddress: Address;
 }
-
-export type CamfilB2bCustomerKeys = keyof CamfilB2bCustomer;
 
 export interface CamfilB2bCustomerContact {
   customer: CamfilB2bCustomer;

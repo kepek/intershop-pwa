@@ -51,6 +51,7 @@ import {
   deleteBasketPaymentFail,
   deleteBasketPaymentSuccess,
   deleteEmptyBucket,
+  getWarehouseCalendarSuccess,
   loadBasket,
   loadBasketAddressesSuccess,
   loadBasketEligiblePaymentMethods,
@@ -121,6 +122,7 @@ export interface BasketState {
   deliveryTerms: {
     [customerId: string]: CustomerDeliveryTerm;
   };
+  calendarExceptions: [];
 }
 
 const initialValidationResults: BasketValidationResultType = {
@@ -147,6 +149,7 @@ export const initialState: BasketState = {
   productUpdated: false,
   basketAddresses: [],
   deliveryTerms: {},
+  calendarExceptions: [],
 };
 
 export const basketReducer = createReducer(
@@ -352,6 +355,15 @@ export const basketReducer = createReducer(
     loading: false,
     promotionError: undefined,
   })),
+
+  on(getWarehouseCalendarSuccess, (state: BasketState, action) => {
+    const { dates } = action.payload;
+
+    return {
+      ...state,
+      calendarExceptions: dates,
+    };
+  }),
 
   on(addPromotionCodeToBasketFail, (state: BasketState, action) => {
     const { error } = action.payload;

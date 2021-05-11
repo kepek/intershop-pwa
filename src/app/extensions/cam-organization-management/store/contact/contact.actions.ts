@@ -55,37 +55,3 @@ export const loadCustomerUserContactSuccess = createAction(
   '[Camfil Contact API] Load Customer User Contact Success',
   payload<{ customerId: string; userId: string; contact: CamfilB2bContact }>()
 );
-
-// Customer -> User -> Contact -> Assign
-
-export const assignCustomerUserContact = createAction(
-  '[Camfil Contact] Assign Customer User Contact',
-  payload<{ customerId: string; userId: string; contact: CamfilB2bContact }>()
-);
-
-export const assignCustomerUserContactFail = createAction(
-  '[Camfil Contact API] Assign Customer User Contact Fail',
-  httpError()
-);
-
-export const assignCustomerUserContactSuccess = createAction(
-  '[Camfil Contact API] Assign Customer Contact User Success',
-  payload<{ customerId: string; userId: string; contact: CamfilB2bContact; successMessage?: string }>()
-);
-
-// Customer -> User -> Contact -> Unassign
-
-export const unassignCustomerUserContact = createAction(
-  '[Camfil Contact] Unassign Customer User Contact',
-  payload<{ customerId: string; userId: string; contact: CamfilB2bContact }>()
-);
-
-export const unassignCustomerUserContactFail = createAction(
-  '[Camfil Contact API] Unassign Customer User Contact Fail',
-  httpError()
-);
-
-export const unassignCustomerUserContactSuccess = createAction(
-  '[Camfil Contact API] Unassign Customer Contact User Success',
-  payload<{ customerId: string; userId: string; contact: CamfilB2bContact; successMessage?: string }>()
-);

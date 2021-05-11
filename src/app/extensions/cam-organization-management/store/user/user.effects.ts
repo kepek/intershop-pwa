@@ -18,18 +18,31 @@ import {
   activateCustomerUser,
   activateCustomerUserFail,
   activateCustomerUserSuccess,
+  connectContactWithUserAndCustomerFail,
+  connectContactWithUserAndCustomerSuccess,
+  connectUserWithCustomer,
+  connectUserWithCustomerFail,
+  connectUserWithCustomerSuccess,
   createCustomerUser,
   createCustomerUserFail,
   createCustomerUserSuccess,
   deactivateCustomerUser,
   deactivateCustomerUserFail,
   deactivateCustomerUserSuccess,
+  disconnectContactFromUserAndCustomerFail,
+  disconnectContactFromUserAndCustomerSuccess,
+  disconnectUserFromCustomer,
+  disconnectUserFromCustomerFail,
+  disconnectUserFromCustomerSuccess,
   loadCustomerUser,
   loadCustomerUserFail,
   loadCustomerUserSuccess,
   loadCustomerUsers,
   loadCustomerUsersFail,
   loadCustomerUsersSuccess,
+  loadOrganizationUsers,
+  loadOrganizationUsersFail,
+  loadOrganizationUsersSuccess,
   resetCustomerUserPassword,
   resetCustomerUserPasswordFail,
   resetCustomerUserPasswordSuccess,
@@ -84,7 +97,7 @@ export class UserEffects {
     )
   );
 
-  // Customer -> User -> Load Customer User for Select CustomerID and UserID (browser only)
+  // Customer -> User -> Load Customer User for Selected CustomerID and UserID (browser only)
 
   loadCustomerUserForSelectedCustomerIdAndSelectedUserId$ = createEffect(() =>
     iif(
@@ -246,7 +259,11 @@ export class UserEffects {
         deactivateCustomerUserSuccess,
         updateCustomerUserSuccess,
         resetCustomerUserPasswordSuccess,
-        createCustomerUserSuccess
+        createCustomerUserSuccess,
+        connectUserWithCustomerSuccess,
+        disconnectUserFromCustomerSuccess,
+        connectContactWithUserAndCustomerSuccess,
+        disconnectContactFromUserAndCustomerSuccess
       ),
       mapToPayloadProperty('successMessage'),
       filter(successMessage => !!successMessage),
@@ -267,7 +284,11 @@ export class UserEffects {
         deactivateCustomerUserFail,
         updateCustomerUserFail,
         resetCustomerUserPasswordFail,
-        createCustomerUserFail
+        createCustomerUserFail,
+        connectUserWithCustomerFail,
+        disconnectUserFromCustomerFail,
+        connectContactWithUserAndCustomerFail,
+        disconnectContactFromUserAndCustomerFail
       ),
       mapToPayloadProperty('error'),
       whenTruthy(),
@@ -275,6 +296,70 @@ export class UserEffects {
         displayErrorMessage({
           message: error?.message || error?.code,
         })
+      )
+    )
+  );
+
+  // Customer -> User -> Connect
+
+  connectUserWithCustomer$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(connectUserWithCustomer),
+      mapToPayload(),
+      switchMap(({ customerId, userId }) =>
+        this.organizationService.connectUserWithCustomerPlusReload(customerId, userId).pipe(
+          map(user =>
+            connectUserWithCustomerSuccess({
+              customerId,
+              userId,
+              user,
+              successMessage: 'camfil.account.organization.edit_user.connect_user_with_customer.modal.text',
+            })
+          ),
+          mapErrorToAction(connectUserWithCustomerFail, { customerId, userId })
+        )
+      )
+    )
+  );
+
+  // Customer -> User -> Disconnect
+
+  disconnectUserFromCustomer$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(disconnectUserFromCustomer),
+      mapToPayload(),
+      switchMap(({ customerId, userId }) =>
+        this.organizationService.disconnectUserFromCustomerPlusReload(customerId, userId).pipe(
+          map(user =>
+            disconnectUserFromCustomerSuccess({
+              customerId,
+              userId,
+              user,
+              successMessage: 'camfil.account.organization.edit_user.disconnect_user_from_customer.modal.text',
+            })
+          ),
+          mapErrorToAction(disconnectUserFromCustomerFail, { customerId, userId })
+        )
+      )
+    )
+  );
+
+  // Organization - Load Users
+
+  loadOrganizationUsers$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loadOrganizationUsers),
+      mapToPayload(),
+      switchMap(({ customerIDs }) =>
+        this.organizationService.getOrganizationUsers(customerIDs).pipe(
+          map(users =>
+            loadOrganizationUsersSuccess({
+              customerIDs,
+              users,
+            })
+          ),
+          mapErrorToAction(loadOrganizationUsersFail, { customerIDs })
+        )
       )
     )
   );

@@ -56,6 +56,10 @@ export abstract class UserPageDataSourceComponent implements OnInit, AfterViewIn
     return this.userId$.pipe(switchMap(userId => this.organizationFacade.getUserStaticRoles$(userId)));
   }
 
+  selectedUserStaticCustomers$() {
+    return this.userId$.pipe(switchMap(userId => this.organizationFacade.getUserStaticCustomers$(userId)));
+  }
+
   selectedCustomer$() {
     return this.customerId$.pipe(switchMap(customerId => this.organizationFacade.getCustomer$(customerId)));
   }
@@ -109,11 +113,19 @@ export abstract class UserPageDataSourceComponent implements OnInit, AfterViewIn
     this.organizationFacade.updateCustomerUser$(customer, user);
   }
 
-  onAssignCustomerUserContact({ customer, user, contact }) {
-    this.organizationFacade.assignCustomerUserContact$(customer.id, user.id, contact);
+  onConnectUserWithCustomer({ customer, user }) {
+    this.organizationFacade.connectUserWithCustomer$(customer.id, user.id);
   }
 
-  onUnassignCustomerUserContact({ customer, user, contact }) {
-    this.organizationFacade.unassignCustomerUserContact$(customer.id, user.id, contact);
+  onDisconnectUserFromCustomer({ customer, user }) {
+    this.organizationFacade.disconnectUserFromCustomer$(customer.id, user.id);
+  }
+
+  onConnectContactWithUserAndCustomer({ customer, user, contact }) {
+    this.organizationFacade.connectContactWithUserAndCustomer$(customer.id, user.id, contact);
+  }
+
+  onDisconnectContactFromUserAndCustomer({ customer, user, contact }) {
+    this.organizationFacade.disconnectContactFromUserAndCustomer$(customer.id, user.id, contact);
   }
 }

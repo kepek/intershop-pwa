@@ -105,9 +105,11 @@ describe('Camfil Checkout List Component', () => {
     element = fixture.nativeElement;
 
     when(shoppingFacadeMock.basketAddresses$).thenReturn(of([]));
+    when(checkoutFacadeMock.calendarExceptions$).thenReturn(of([]));
     when(shoppingFacadeMock.productUpdated$).thenReturn(of(false));
     when(shoppingFacadeMock.productAdded$).thenReturn(of(false));
     when(checkoutFacadeMock.getCustomersDeliveryTerms$).thenReturn(of({}));
+    when(checkoutFacadeMock.basketInvoiceAddress$).thenReturn(of({}));
   });
 
   it('should be created', () => {

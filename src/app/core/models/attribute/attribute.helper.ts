@@ -34,13 +34,15 @@ export class AttributeHelper {
   }
 
   static getAttrsBeforeAddToCart(measurements, boxLabel) {
-    const measurementsObj = Object.entries(measurements)
-      .map(([key, value]) => ({
-        name: key,
-        type: 'Double',
-        value,
-      }))
-      .filter(({ value }) => value && typeof value === 'number');
+    const measurementsObj = measurements
+      ? Object.entries(measurements)
+          .map(([key, value]) => ({
+            name: key,
+            type: 'Double',
+            value,
+          }))
+          .filter(({ value }) => value && typeof value === 'number')
+      : [];
 
     const lineItemAttributes = [...measurementsObj] as Attribute[];
     if (boxLabel) {

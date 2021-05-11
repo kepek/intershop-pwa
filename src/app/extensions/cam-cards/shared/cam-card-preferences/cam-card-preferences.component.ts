@@ -14,7 +14,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
-import { take } from 'rxjs/operators';
+import { take, takeUntil } from 'rxjs/operators';
 
 import { AppFacade } from 'ish-core/facades/app.facade';
 import { Country } from 'ish-core/models/country/country.model';
@@ -74,6 +74,7 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit, OnDestroy
   customers: CamCardCustomer[];
 
   countryChangeDetect$: Subject<boolean> = new Subject();
+  defaultCountryCode: string;
 
   private destroy$ = new Subject();
 
@@ -165,6 +166,10 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit, OnDestroy
     this.customers$ = this.camCardsFacade.customers$;
     this.addresses$ = this.camCardsFacade.addresses$;
 
+    this.appFacade.getCountryByChannel$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(code => (this.defaultCountryCode = code));
+
     this.activatedRoute.queryParams.pipe(take(1)).subscribe(queryParam => {
       const copy = 'copy';
       if (queryParam[copy] === 'true') {
@@ -202,7 +207,6 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit, OnDestroy
       addressLine2: ['', [Validators.maxLength(35)]],
       postalCode: ['', [Validators.required, Validators.maxLength(35)]],
       city: [{ value: '', disabled: true }, [Validators.maxLength(35)]],
-      countryCode: ['', [Validators.required, Validators.maxLength(35)]],
       lastDelivery: ['', [Validators.maxLength(35)]],
       deliveryInterval: ['', [Validators.maxLength(35)]],
       nextDelivery: [{ value: '', disabled: true }, [Validators.maxLength(35)]],
@@ -229,7 +233,7 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit, OnDestroy
         nextDeliveryDate,
         reminderFlag,
       } = this.camCard;
-      const { addressLine1, addressLine2, postalCode, city, countryCode, companyName1 } = deliveryAddress;
+      const { addressLine1, addressLine2, postalCode, city, companyName1 } = deliveryAddress;
       this.camCardForm.patchValue({
         title: name,
         customerName: customer.id,
@@ -240,7 +244,6 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit, OnDestroy
         addressLine2,
         postalCode,
         city,
-        countryCode,
         lastDelivery: lastDeliveryDate ? new Date(lastDeliveryDate) : '',
         deliveryInterval,
         nextDelivery: nextDeliveryDate ? new Date(nextDeliveryDate) : '',
@@ -288,7 +291,7 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit, OnDestroy
           addressLine2: this.camCardForm.get('addressLine2').value,
           postalCode: this.camCardForm.get('postalCode').value,
           city: this.camCardForm.get('city').value,
-          countryCode: this.camCardForm.get('countryCode').value,
+          countryCode: this.defaultCountryCode,
         },
         nextDeliveryDate: nextDelivery ? this.dateToSend(nextDelivery) : '',
         lastDeliveryDate: lastDelivery ? this.dateToSend(lastDelivery) : '',
@@ -327,7 +330,6 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit, OnDestroy
           addressLine2: address.addressLine2,
           postalCode: address.postalCode,
           city: address.city,
-          countryCode: address.countryCode,
         });
       }
       this.onBlurSubmit();

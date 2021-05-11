@@ -7,6 +7,7 @@ import { filter, map, mapTo, shareReplay, startWith, withLatestFrom } from 'rxjs
 import {
   getAvailableLocales,
   getCamfilChannel,
+  getCountryByChannel,
   getCurrentLocale,
   getDeviceType,
   getICMBaseURL,
@@ -111,7 +112,9 @@ export class AppFacade {
     return this.store.pipe(select(getRegionsByCountryCode, { countryCode }));
   }
 
-  // TODO: CAMFIL Additions, it should be separated to avoid core modifications;
+  /**
+   * CAMFIL Additions, it should be separated to avoid core modifications
+   **/
 
   // tslint:disable-next-line:member-ordering
   breadcrumbCategoryNames$ = this.store.pipe(
@@ -121,4 +124,7 @@ export class AppFacade {
 
   // tslint:disable-next-line:member-ordering
   getCamfilChannel$ = this.store.pipe(select(getCamfilChannel));
+
+  // tslint:disable-next-line:member-ordering
+  getCountryByChannel$ = this.store.pipe(select(getCountryByChannel));
 }

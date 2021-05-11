@@ -47,7 +47,7 @@ export const getRolesByCustomerId = (customerId: string) =>
  * @param userId
  */
 export const getRolesByUserId = (userId: string) =>
-  createSelector(getRoles, getUser(userId), (roles, user) => roles.filter(({ id }) => user?.roleIDs.includes(id)));
+  createSelector(getRoles, getUser(userId), (roles, user) => roles.filter(({ id }) => user?.roleIDs?.includes(id)));
 
 // Users
 

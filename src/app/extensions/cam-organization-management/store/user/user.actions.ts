@@ -2,6 +2,7 @@ import { createAction } from '@ngrx/store';
 
 import { httpError, payload } from 'ish-core/utils/ngrx-creators';
 
+import { CamfilB2bContact } from '../../models/camfil-b2b-contact/camfil-b2b-contact.model';
 import {
   CamfilB2bCustomer,
   CamfilB2bCustomerContact,
@@ -121,4 +122,86 @@ export const resetCustomerUserPasswordFail = createAction(
 export const resetCustomerUserPasswordSuccess = createAction(
   '[Camfil User] Reset Customer User Password Success',
   payload<{ customerId: string; userId: string; login: string; successMessage?: string }>()
+);
+
+// User -> Customer -> Connect
+
+export const connectUserWithCustomer = createAction(
+  '[Camfil Contact] Connect User with Customer',
+  payload<{ customerId: string; userId: string }>()
+);
+
+export const connectUserWithCustomerFail = createAction(
+  '[Camfil Contact API] Connect User with Customer Fail',
+  httpError()
+);
+
+export const connectUserWithCustomerSuccess = createAction(
+  '[Camfil Contact API] Connect User with Customer Success',
+  payload<{ customerId: string; userId: string; user: CamfilB2bUser; successMessage?: string }>()
+);
+
+// User -> Customer -> Disconnect
+
+export const disconnectUserFromCustomer = createAction(
+  '[Camfil Contact] Disconnect User from Customer',
+  payload<{ customerId: string; userId: string }>()
+);
+
+export const disconnectUserFromCustomerFail = createAction(
+  '[Camfil Contact API] Disconnect User from Customer Fail',
+  httpError()
+);
+
+export const disconnectUserFromCustomerSuccess = createAction(
+  '[Camfil Contact API] Disconnect User from Customer Success',
+  payload<{ customerId: string; userId: string; user: CamfilB2bUser; successMessage?: string }>()
+);
+
+// Customer -> User -> Contact -> Connect
+
+export const connectContactWithUserAndCustomer = createAction(
+  '[Camfil Contact] Connect Contact with User and Customer',
+  payload<{ customerId: string; userId: string; contact: CamfilB2bContact }>()
+);
+
+export const connectContactWithUserAndCustomerFail = createAction(
+  '[Camfil Contact API] Connect Contact with User and Customer Fail',
+  httpError()
+);
+
+export const connectContactWithUserAndCustomerSuccess = createAction(
+  '[Camfil Contact API] Connect Contact with User and Customer Success',
+  payload<{ customerId: string; userId: string; user: CamfilB2bUser; successMessage?: string }>()
+);
+
+// Customer -> User -> Contact -> Disconnect
+
+export const disconnectContactFromUserAndCustomer = createAction(
+  '[Camfil Contact] Disconnect Contact from User and Customer',
+  payload<{ customerId: string; userId: string; contact: CamfilB2bContact }>()
+);
+
+export const disconnectContactFromUserAndCustomerFail = createAction(
+  '[Camfil Contact API] Disconnect Contact from User and Customer Fail',
+  httpError()
+);
+
+export const disconnectContactFromUserAndCustomerSuccess = createAction(
+  '[Camfil Contact API] Disconnect Contact from User and Customer Success',
+  payload<{ customerId: string; userId: string; user: CamfilB2bUser; successMessage?: string }>()
+);
+
+// Organization -> Users
+
+export const loadOrganizationUsers = createAction(
+  '[Camfil Organization] Load Users',
+  payload<{ customerIDs: string[] }>()
+);
+
+export const loadOrganizationUsersFail = createAction('[Camfil Organization API] Load Users Fail', httpError());
+
+export const loadOrganizationUsersSuccess = createAction(
+  '[Camfil Organization API] Load Users Success',
+  payload<{ customerIDs: string[]; users: CamfilB2bUser[] }>()
 );
