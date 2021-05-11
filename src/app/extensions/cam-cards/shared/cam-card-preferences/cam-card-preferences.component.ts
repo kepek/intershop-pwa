@@ -117,7 +117,9 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit, OnDestroy
     },
     {
       error: 'maxlength',
+
       message: 'camfil.form.error.maxLength',
+
       messageVariables: [],
     },
   ];
