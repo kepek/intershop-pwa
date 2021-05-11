@@ -1,7 +1,9 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
+import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { BasketView } from 'ish-core/models/basket/basket.model';
 
 @Component({
@@ -10,12 +12,18 @@ import { BasketView } from 'ish-core/models/basket/basket.model';
   styleUrls: ['./camfil-checkout-summary.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CamfilCheckoutSummaryComponent {
+export class CamfilCheckoutSummaryComponent implements OnInit {
   @Input() basket: BasketView;
   @Input() isConfirmed;
   @Output() update = new EventEmitter();
 
-  constructor(private checkoutFacade: CheckoutFacade, private router: Router) {}
+  productsReadyToPlaceOrder$: Observable<boolean>;
+
+  constructor(private checkoutFacade: CheckoutFacade, private shoppingFacade: ShoppingFacade, private router: Router) {}
+
+  ngOnInit() {
+    this.productsReadyToPlaceOrder$ = this.shoppingFacade.productsReadyToPlaceOrder$;
+  }
 
   submitOrder() {
     this.update.emit();

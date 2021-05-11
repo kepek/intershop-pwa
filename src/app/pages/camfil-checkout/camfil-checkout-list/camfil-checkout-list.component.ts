@@ -245,7 +245,7 @@ export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
   }
 
   getField(name: string) {
-    return this.orderForm.get(name);
+    return this.orderForm?.get(name);
   }
 
   openEditModal(modal: EditOrderModalComponent) {

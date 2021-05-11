@@ -25,7 +25,13 @@
     <br />
     <mat-divider></mat-divider>
     <br />
-    <button mat-flat-button color="primary" (click)="submitOrder()" *ngIf="!isConfirmed">
+    <button
+      *ngIf="!isConfirmed"
+      mat-flat-button
+      color="primary"
+      [disabled]="!(productsReadyToPlaceOrder$ | async)"
+      (click)="submitOrder()"
+    >
       {{ 'camfil.checkout.place_your_orders' | translate }}
     </button>
     <button mat-flat-button color="primary" (click)="continueShopping()" *ngIf="isConfirmed">

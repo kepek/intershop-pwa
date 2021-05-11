@@ -105,3 +105,12 @@ export const isBasketInvoiceAndShippingAddressEqual = createSelector(
 export const getCustomersDeliveryTerms = createSelector(getBasketState, basket => basket.deliveryTerms);
 
 export const getCalendarExceptions = createSelector(getBasketState, basket => basket.calendarExceptions);
+
+export const isProductsReadyToPlaceOrder = createSelector(
+  getBasketValidationResults,
+  getBasketLastTimeProductAdded,
+  getProductAdded,
+  getProductUpdated,
+  (validation, lastAdded, added, updated) =>
+    (validation.valid || !validation?.errors?.length) && lastAdded ? added && updated : true
+);
