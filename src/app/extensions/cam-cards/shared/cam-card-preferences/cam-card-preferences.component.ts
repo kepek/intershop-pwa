@@ -32,6 +32,7 @@ import { CamCard, CamCardAddress, CamCardCustomer } from '../../models/cam-card/
     (submit)="createCamCard($event)">
    </camfil-cam-card-preferences-dialog>
  */
+
 @Component({
   selector: 'camfil-cam-card-preferences',
   templateUrl: './cam-card-preferences.component.html',
@@ -70,7 +71,7 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit, OnDestroy
   addresses$: Observable<CamCardAddress[]>;
   countries$: Observable<Country[]>;
   customers: CamCardCustomer[];
-
+  selectedAddress: CamCardAddress;
   countryChangeDetect$: Subject<boolean> = new Subject();
   defaultCountryCode: string;
 
@@ -334,18 +335,22 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit, OnDestroy
     const id = event.value;
     this.addresses$.subscribe(addresses => {
       const address = addresses.filter(element => element.id === id)[0];
-
       if (address) {
-        this.camCardForm.patchValue({
-          companyName1: address.companyName1,
-          addressLine1: address.addressLine1,
-          addressLine2: address.addressLine2,
-          postalCode: address.postalCode,
-          city: address.city,
-        });
+        this.selectedAddress = address;
       }
-      this.onBlurSubmit();
     });
+
+    if (this.selectedAddress) {
+      this.camCardForm.patchValue({
+        deliveryAddress: this.selectedAddress.id,
+        companyName1: this.selectedAddress.companyName1,
+        addressLine1: this.selectedAddress.addressLine1,
+        addressLine2: this.selectedAddress.addressLine2,
+        postalCode: this.selectedAddress.postalCode,
+        city: this.selectedAddress.city,
+      });
+      this.onBlurSubmit();
+    }
   }
 
   pickOrder() {
