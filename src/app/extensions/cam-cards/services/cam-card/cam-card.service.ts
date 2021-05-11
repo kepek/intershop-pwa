@@ -410,10 +410,10 @@ export class CamCardService {
 
   validateCamCardImport(camCardData): Observable<CamCardImportValidationResponse> {
     const camCardArr = camCardData[Object.keys(camCardData)[0]];
-    return this.apiService.put('camcardsbulk', camCardArr);
+    return this.apiService.put('camcardsbulk', camCardArr[Object.keys(camCardArr)[0]]);
   }
 
   importCamCard(camCardData): Observable<CamCard> {
-    return this.apiService.post('camcardsbulk', camCardData);
+    return this.apiService.post('camcardsbulk', camCardData[Object.keys(camCardData)[0]]);
   }
 }

@@ -16,7 +16,7 @@
   <label for="fileDropRef">{{ 'camfil.account.import.dnd.browse_file.label' | translate }}</label>
 </div>
 <div class="files-list">
-  <div class="single-file" *ngIf="file && file?.name">
+  <div class="single-file" *ngIf="file?.name">
     <mat-icon svgIcon="camcard"></mat-icon>
 
     <div class="info ml-2">
@@ -69,5 +69,4 @@
   </div>
 </div>
 
-<ish-loading *ngIf="loading"></ish-loading>
 <ish-loading *ngIf="camCardLoading$ | async"></ish-loading>

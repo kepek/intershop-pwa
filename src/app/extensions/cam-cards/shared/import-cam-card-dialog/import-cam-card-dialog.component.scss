@@ -32,7 +32,7 @@
       text-align: center;
       cursor: pointer;
       background-color: $camfil-color-primary;
-      border-radius: 20px;
+      border-radius: $font-size-xlg;
     }
   }
 
@@ -54,7 +54,7 @@
 
       .name {
         margin: 0;
-        font-size: 14px;
+        font-size: $font-size-corporate;
         font-weight: 500;
         color: $camfil-color-special-quarternary;
       }
@@ -67,11 +67,11 @@
 
   .validation-error-container {
     max-height: 300px;
-    padding: 14px 16px;
-    margin: 24px 0;
+    padding: $space-box;
+    margin: $space-detail-item-margin 0;
     overflow-y: auto;
-    color: #222;
-    background-color: #ff4c45;
+    color: $camfil-text-color-primary;
+    background-color: $camfil-color-special-primary;
     border-radius: 4px;
     .line-number {
       font-weight: 600;

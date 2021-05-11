@@ -214,6 +214,7 @@ export const camCardReducer = createReducer(
     return {
       ...state,
       userContact: { ...state.userContact, [customerId]: contact },
+      loading: false,
     };
   }),
   on(loadDeliveryAddressesSuccess, (state: CamCardState, action) => {

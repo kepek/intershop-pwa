@@ -914,12 +914,11 @@ export class CamCardEffects {
       ofType(importCamCardFail),
       mapToPayloadProperty('error'),
       whenTruthy(),
-      map(error => {
-        console.log('Error', error);
-        return displayErrorMessage({
+      map(error =>
+        displayErrorMessage({
           message: error?.message || error?.code,
-        });
-      })
+        })
+      )
     )
   );
 

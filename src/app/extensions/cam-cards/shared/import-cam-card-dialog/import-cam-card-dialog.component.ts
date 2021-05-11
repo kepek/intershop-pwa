@@ -16,8 +16,8 @@ import { CamCardImportValidationResponse } from '../../models/cam-card/cam-card.
 export class ImportCamCardDialogComponent implements OnInit, OnDestroy {
   parsedFile: File = undefined;
   file: File = undefined;
-  loading = false;
   isValidationCompleted = false;
+  importSubmitted = false;
   camCardLoading$: Observable<boolean>;
   validationResponse$: Observable<CamCardImportValidationResponse>;
   errorsArr = [];
@@ -33,6 +33,13 @@ export class ImportCamCardDialogComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.validationErrors = [];
     this.validationResponse$ = this.camCardsFacade.validationResponse$;
+    this.camCardLoading$ = this.camCardsFacade.camCardLoading$;
+
+    this.camCardLoading$.pipe(takeUntil(this.destroy$)).subscribe(value => {
+      if (!value && this.importSubmitted) {
+        this.dialogRef.close();
+      }
+    });
   }
 
   ngOnDestroy() {
@@ -41,13 +48,12 @@ export class ImportCamCardDialogComponent implements OnInit, OnDestroy {
   }
 
   onFileChange(files) {
-    this.loading = true;
     const allowedFileTypes = [
       'application/vnd.ms-excel',
       'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
     ];
 
-    if (files.length > 0) {
+    if (files.length) {
       const file = files[0];
       const fileType = file.type;
       if (allowedFileTypes?.includes(fileType)) {
@@ -79,10 +85,9 @@ export class ImportCamCardDialogComponent implements OnInit, OnDestroy {
 
               setTimeout(() => {
                 this.isValidationCompleted = true;
-                this.loading = false;
                 this.errorsArr = [...camCardErrors, ...artiCleLinesErrors.filter(item => item)];
                 this.ref.detectChanges();
-              }, 1000);
+              }, 300);
             }
           });
         });
@@ -98,14 +103,9 @@ export class ImportCamCardDialogComponent implements OnInit, OnDestroy {
 
   submitImportCamCardForm() {
     if (this.isValidationCompleted && this.parsedFile) {
+      this.importSubmitted = true;
       const dataToSend = this.parsedFile[Object.keys(this.parsedFile)[0]];
       this.camCardsFacade.importCamCard(dataToSend);
-      this.camCardLoading$ = this.camCardsFacade.camCardLoading$;
-      this.camCardLoading$.pipe(takeUntil(this.destroy$)).subscribe(value => {
-        if (!value) {
-          this.dialogRef.close();
-        }
-      });
     }
   }
 
