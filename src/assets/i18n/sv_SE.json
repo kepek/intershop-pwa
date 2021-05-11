@@ -911,6 +911,7 @@
   "camfil.dynamic.cart.product.width.label": "Bredd",
   "camfil.forgot_password.form.send.button.label": "Skickat",
   "camfil.forgot_username.form.send.button.label": "Skicka",
+  "camfil.form.error.maxLength": "Fältet får inte överstiga {{0}} tecken.",
   "camfil.guide_article.headline": "Instruktioner",
   "camfil.guide_article.read_more.text": "Läs filterinstruktion",
   "camfil.header.dropdown.title": "Webshop",

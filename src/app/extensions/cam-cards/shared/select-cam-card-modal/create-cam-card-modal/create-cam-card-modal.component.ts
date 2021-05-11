@@ -167,8 +167,8 @@ export class CreateCamCardModalComponent implements OnInit, AfterViewInit, OnDes
       },
       deliveryAddress: {
         ...this.rootCamCardAddress,
+        companyName1: this.camCardForm.get('company').value,
         addressLine1: this.camCardForm.get('address').value,
-        addressLine2: this.camCardForm.get('company').value,
         postalCode: this.camCardForm.get('zipCode').value,
         city: this.camCardForm.get('area').value,
         countryCode: this.camCardForm.get('countryCode').value || this.defaultCountryCode,

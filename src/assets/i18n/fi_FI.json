@@ -911,6 +911,7 @@
   "camfil.dynamic.cart.product.width.label": "fi_Width",
   "camfil.forgot_password.form.send.button.label": "Lähetä",
   "camfil.forgot_username.form.send.button.label": "Lähetä",
+  "camfil.form.error.maxLength": "fi_The field must not exceed {{0}} characters.",
   "camfil.guide_article.headline": "Oppaat",
   "camfil.guide_article.read_more.text": "Lue ilmansuodattin opas",
   "camfil.header.dropdown.title": "Webkauppa",
