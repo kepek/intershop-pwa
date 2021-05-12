@@ -7,7 +7,6 @@ import { ofUrl, selectQueryParams } from 'ish-core/store/core/router';
 import { mapErrorToAction, mapToPayloadProperty, whenTruthy } from 'ish-core/utils/operators';
 
 import { AhuService } from '../../services/ahu/ahu.service';
-import { selectAhuManufacturer } from '../manufacturer';
 
 import {
   loadAhuUnit,
@@ -25,7 +24,7 @@ export class UnitEffects {
 
   loadAhuUnits$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(loadAhuUnits, selectAhuManufacturer),
+      ofType(loadAhuUnits),
       mapToPayloadProperty('manufacturerId'),
       whenTruthy(),
       switchMap(manufacturerId =>
@@ -48,6 +47,15 @@ export class UnitEffects {
           mapErrorToAction(loadAhuUnitFail)
         )
       )
+    )
+  );
+
+  selectAhuUnit$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(selectAhuUnit),
+      mapToPayloadProperty('unitId'),
+      whenTruthy(),
+      map(unitId => loadAhuUnit({ unitId }))
     )
   );
 

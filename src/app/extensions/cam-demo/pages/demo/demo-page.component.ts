@@ -120,9 +120,11 @@ export class DemoPageComponent implements AfterViewInit, OnInit, OnDestroy {
   selectedAhuManufacturer$: Observable<Manufacturer>;
   ahuForm: FormGroup;
   ahuUnits$: Observable<Unit[]>;
+  ahuUnitsByManufacturerId$: Observable<Unit[]>;
   ahuUnitsLoading$: Observable<boolean>;
   ahuUnitsError$: Observable<HttpError>;
   selectedAhuUnit$: Observable<Unit>;
+  ahuLoading$: Observable<boolean>;
 
   product$: Observable<ProductView>;
   category$: Observable<CategoryView>;
@@ -300,15 +302,19 @@ export class DemoPageComponent implements AfterViewInit, OnInit, OnDestroy {
       })
     );
     // AHU-Manufacturers
-    this.ahuManufacturers$ = this.ahuFacade.ahuManufacturers$();
+    this.ahuFacade.loadAhuManufacturers$();
+    this.ahuManufacturers$ = this.ahuFacade.ahuManufacturers$;
     this.ahuManufacturersLoading$ = this.ahuFacade.ahuManufacturersLoading$;
     this.ahuManufacturersError$ = this.ahuFacade.ahuManufacturersError$;
     this.selectedAhuManufacturer$ = this.ahuFacade.selectedAhuManufacturer$;
     // AHU-Unit
     this.ahuUnits$ = this.ahuFacade.ahuUnits$;
+    this.ahuUnitsByManufacturerId$ = this.ahuFacade.ahuUnitsByManufacturerId$;
     this.ahuUnitsLoading$ = this.ahuFacade.ahuUnitsLoading$;
     this.ahuUnitsError$ = this.ahuFacade.ahuUnitsError$;
     this.selectedAhuUnit$ = this.ahuFacade.selectedAhuUnit$;
+    // AHU-Common
+    this.ahuLoading$ = this.ahuFacade.ahuLoading$();
     // AHU-Form
     this.ahuForm = this.fb.group({
       manufacturer: new FormControl(undefined, [Validators.required]),
@@ -317,6 +323,9 @@ export class DemoPageComponent implements AfterViewInit, OnInit, OnDestroy {
     // AHU-Form: Manufacturer-Select-Toggle
     this.ahuManufacturersLoading$.pipe(takeUntil(this.destroy$)).subscribe(loading => {
       this.ahuForm.controls.manufacturer[loading ? 'disable' : 'enable']();
+    });
+    this.ahuUnitsLoading$.pipe(takeUntil(this.destroy$)).subscribe(loading => {
+      this.ahuForm.controls.unit[loading ? 'disable' : 'enable']();
     });
     // AHU-Form: Manufacturer-Selection-Logic
     this.selectedAhuManufacturer$.pipe(takeUntil(this.destroy$)).subscribe(manufacturer => {

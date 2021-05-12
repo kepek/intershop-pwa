@@ -8,7 +8,6 @@
       <mat-card>
         <mat-card-content>
           <h2 class="example-h2">Manufacturers</h2>
-
           <form [formGroup]="ahuForm" (ngSubmit)="submitAhuForm()">
             <mat-form-field appearance="fill">
               <mat-label>Manufacturer</mat-label>
@@ -25,24 +24,27 @@
               <mat-label>Model</mat-label>
               <mat-select formControlName="unit" (selectionChange)="selectAhuUnit($event)">
                 <mat-option [value]="undefined">None</mat-option>
-                <ng-container *ngIf="ahuUnits$ | async as ahuUnits">
-                  <mat-option *ngFor="let unit of ahuUnits" [value]="unit.ahu.id">
-                    {{ unit.ahu.airHandlingUnitName | unitAhuLongDescription }}
+                <ng-container *ngIf="ahuUnitsByManufacturerId$ | async as ahuUnitsByManufacturerId">
+                  <mat-option *ngFor="let unit of ahuUnitsByManufacturerId" [value]="unit.ahu.id">
+                    {{ unit.ahu.airHandlingUnitName }}
                   </mat-option>
                 </ng-container>
               </mat-select>
             </mat-form-field>
           </form>
           <hr />
+          <pre>ahuLoading$ {{ ahuLoading$ | async | json }}</pre>
+          <hr />
           <pre>ahuManufacturers$ {{ ahuManufacturers$ | async }}</pre>
-          <pre>ahuManufacturersLoading$ {{ ahuManufacturersLoading$ | async }}</pre>
-          <pre>ahuManufacturersError$ {{ ahuManufacturersError$ | async }}</pre>
-          <pre>selectedAhuManufacturer$ {{ selectedAhuManufacturer$ | async }}</pre>
+          <pre>ahuManufacturersLoading$ {{ ahuManufacturersLoading$ | async | json }}</pre>
+          <pre>ahuManufacturersError$ {{ ahuManufacturersError$ | async | json }}</pre>
+          <pre>selectedAhuManufacturer$ {{ selectedAhuManufacturer$ | async | json }}</pre>
           <hr />
           <pre>ahuUnits$ {{ ahuUnits$ | async }}</pre>
-          <pre>ahuUnitsLoading$ {{ ahuUnitsLoading$ | async }}</pre>
-          <pre>ahuUnitsError$ {{ ahuUnitsError$ | async }}</pre>
-          <pre>selectedAhuUnit$ {{ selectedAhuUnit$ | async }}</pre>
+          <pre>ahuUnitsByManufacturerId$ {{ ahuUnitsByManufacturerId$ | async }}</pre>
+          <pre>ahuUnitsLoading$ {{ ahuUnitsLoading$ | async | json }}</pre>
+          <pre>ahuUnitsError$ {{ ahuUnitsError$ | async | json }}</pre>
+          <pre>selectedAhuUnit$ {{ selectedAhuUnit$ | async | json }}</pre>
           <ng-template #ahuLoading>Loading AHU Data... </ng-template>
         </mat-card-content>
       </mat-card>

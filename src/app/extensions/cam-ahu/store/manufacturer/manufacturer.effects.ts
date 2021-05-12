@@ -4,9 +4,10 @@ import { Store, select } from '@ngrx/store';
 import { filter, map, switchMap } from 'rxjs/operators';
 
 import { ofUrl, selectQueryParams } from 'ish-core/store/core/router';
-import { mapErrorToAction, mapToPayloadProperty } from 'ish-core/utils/operators';
+import { mapErrorToAction, mapToPayloadProperty, whenTruthy } from 'ish-core/utils/operators';
 
 import { AhuService } from '../../services/ahu/ahu.service';
+import { loadAhuUnits } from '../unit';
 
 import {
   loadAhuManufacturer,
@@ -44,6 +45,15 @@ export class ManufacturerEffects {
           mapErrorToAction(loadAhuManufacturerFail)
         )
       )
+    )
+  );
+
+  selectAhuManufacturer$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(selectAhuManufacturer),
+      mapToPayloadProperty('manufacturerId'),
+      whenTruthy(),
+      map(manufacturerId => loadAhuUnits({ manufacturerId }))
     )
   );
 

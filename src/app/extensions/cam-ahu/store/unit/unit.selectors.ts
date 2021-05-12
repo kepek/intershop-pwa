@@ -19,7 +19,7 @@ export const getAhuUnitsCount = selectTotal;
 
 export const getSelectedAhuUnitId = createSelector(getUnitState, state => state.selected);
 
-export const getSelectedAhuUnitDetails = createSelector(
+export const getSelectedAhuUnit = createSelector(
   selectEntities,
   getSelectedAhuUnitId,
   (entities, id): Unit => id && entities[id]

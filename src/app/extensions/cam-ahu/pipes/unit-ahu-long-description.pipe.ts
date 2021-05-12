@@ -10,8 +10,6 @@ export class UnitAhuLongDescriptionPipe implements PipeTransform {
   transform(value: UnitAhuLongDescription[]): string {
     const currentLang = this.translateService.currentLang.replace(/_/, '-').toUpperCase();
 
-    if (value.length) {
-      return value.find(v => v.lang === currentLang || v.lang.startsWith(currentLang))?.text || value[0]?.text;
-    }
+    return value?.find(v => v.lang === currentLang || v.lang.startsWith(currentLang))?.text || value[0]?.text;
   }
 }
