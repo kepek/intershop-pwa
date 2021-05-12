@@ -43,7 +43,7 @@ export class FilterNavigationMapper {
     const rawDisplayName = displayName.replace(/\s/g, '');
 
     if (!rawDisplayName.match(regexp)?.length) {
-      return rawDisplayName;
+      return displayName;
     }
 
     const formattedDisplayName = [...rawDisplayName.matchAll(regexp)]
