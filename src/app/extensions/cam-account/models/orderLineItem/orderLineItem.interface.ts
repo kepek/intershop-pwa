@@ -11,4 +11,8 @@ export interface OrderLineItem {
   sku: string;
   totalRowCustomerPrice: number;
   type: string;
+  width?: string;
+  hight?: string;
+  diameter?: string;
+  depth?: string;
 }

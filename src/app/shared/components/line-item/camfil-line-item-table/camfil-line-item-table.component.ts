@@ -78,4 +78,11 @@ export class CamfilLineItemTableComponent implements OnInit, OnChanges, AfterVie
   product$(sku: string) {
     return this.shoppingFacade.product$(sku, ProductCompletenessLevel.List);
   }
+
+  measurement({ width, hight, diameter }: OrderLineItem) {
+    if (!width && !hight && !diameter) {
+      return;
+    }
+    return [width, hight, diameter].filter(e => e).join('x');
+  }
 }
