@@ -65,9 +65,12 @@ export class ZipCodeComponent implements OnInit, OnDestroy {
         .pipe(distinctUntilChanged())
         .subscribe(data => {
           const city = data?.city || data?.id;
+          const formCity = this.form.get('city').value;
           if (city) {
-            this.form.patchValue({ [this.fieldCity]: city });
-            this.submitEmitter.emit();
+            if (city !== formCity) {
+              this.form.patchValue({ [this.fieldCity]: city });
+              this.submitEmitter.emit();
+            }
           } else {
             this.zipCodesLoading$.pipe(take(1)).subscribe(loading => {
               if (!loading) {
