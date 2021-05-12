@@ -25,6 +25,7 @@ describe('Camfil Product Attribute Component', () => {
     element = fixture.nativeElement;
     component.identifier = 'dimensions';
     component.name = 'dimensions';
+    component.hideAttributeName = true;
     translate = TestBed.inject(TranslateService);
     translate.setDefaultLang('en');
     translate.use('en');

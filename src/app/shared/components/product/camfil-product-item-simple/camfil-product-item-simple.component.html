@@ -13,7 +13,7 @@
     </div>
     <div class="product-item-attributes d-flex flex-nowrap">
       <div class="col-sm-6">
-        <camfil-product-id *ngIf="configuration.displaySKU" [product]="product"></camfil-product-id>
+        <camfil-product-id *ngIf="configuration.displaySKU" [product]="product" [hideAttributeName]="hideAttributeName"></camfil-product-id>
         <camfil-product-attribute
           identifier="dimensions"
           name="camfil.product.dimensions.label"
@@ -118,7 +118,7 @@
           <camfil-product-title *ngIf="configuration.displayName" [product]="product"></camfil-product-title>
         </p>
         <div class="product-item-attributes justify-content-between">
-          <camfil-product-id *ngIf="configuration.displaySKU" [product]="product"></camfil-product-id>
+          <camfil-product-id *ngIf="configuration.displaySKU" [product]="product" [hideAttributeName]="hideAttributeName"></camfil-product-id>
           <camfil-product-attribute
             identifier="dimensions"
             name="camfil.product.dimensions.label"

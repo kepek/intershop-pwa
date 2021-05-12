@@ -13,14 +13,17 @@ import { Observable, ReplaySubject, Subject } from 'rxjs';
 import { filter, startWith, take, takeUntil } from 'rxjs/operators';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
+import { AppFacade } from 'ish-core/facades/app.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { Category } from 'ish-core/models/category/category.model';
+import { Locale } from 'ish-core/models/locale/locale.model';
 import { ProductVariationHelper } from 'ish-core/models/product-variation/product-variation.helper';
 import { VariationOptionGroup } from 'ish-core/models/product-variation/variation-option-group.model';
 import { VariationSelection } from 'ish-core/models/product-variation/variation-selection.model';
 import { ProductView, VariationProductView } from 'ish-core/models/product-view/product-view.model';
 import { ProductCompletenessLevel, ProductHelper } from 'ish-core/models/product/product.model';
 import { DeviceType, ViewType } from 'ish-core/models/viewtype/viewtype.types';
+import { whenTruthy } from 'ish-core/utils/operators';
 import { ProductItemDetailedComponentConfiguration } from 'ish-shared/components/product/camfil-product-item-detailed/camfil-product-item-detailed.component';
 import { ProductItemSimpleComponentConfiguration } from 'ish-shared/components/product/camfil-product-item-simple/camfil-product-item-simple.component';
 
@@ -89,10 +92,16 @@ export class CamfilProductItemComponent implements OnInit, OnChanges, OnDestroy 
   productVariationOptions$: Observable<VariationOptionGroup[]>;
   isInCompareList$: Observable<boolean>;
   isLoggedIn$: Observable<boolean>;
+  hideAttributeName = false;
+  currentLocale$: Observable<Locale>;
   private sku$ = new ReplaySubject<string>(1);
   private destroy$ = new Subject();
 
-  constructor(private shoppingFacade: ShoppingFacade, private accountFacade: AccountFacade) {}
+  constructor(
+    private shoppingFacade: ShoppingFacade,
+    private accountFacade: AccountFacade,
+    private appFacade: AppFacade
+  ) {}
 
   ngOnDestroy() {
     this.destroy$.next();
@@ -115,6 +124,12 @@ export class CamfilProductItemComponent implements OnInit, OnChanges, OnDestroy 
     this.isMobileView = this.deviceType === 'mobile';
 
     this.isLoggedIn$ = this.accountFacade.isLoggedIn$;
+
+    this.currentLocale$ = this.appFacade.currentLocale$;
+
+    this.currentLocale$?.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(locale => {
+      this.hideAttributeName = locale?.value === 'fi';
+    });
   }
 
   ngOnChanges(changes: SimpleChanges) {

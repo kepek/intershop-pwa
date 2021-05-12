@@ -16,4 +16,5 @@ import { Product } from 'ish-core/models/product/product.model';
 export class CamfilProductIdComponent {
   @Input() label = 'camfil.product.id.label';
   @Input() product: Product;
+  @Input() hideAttributeName?: boolean;
 }
