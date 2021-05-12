@@ -112,6 +112,7 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
+            "disableHostCheck": true,
             "browserTarget": "intershop-pwa:build"
           },
           "configurations": {

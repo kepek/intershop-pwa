@@ -24,7 +24,7 @@ export function createDevProxy(env: Environment) {
 
     const { route, changeOrigin = true, logLevel = 'debug', secure = true, ...rest } = proxy;
 
-    devProxy[`/${route}/*`] = {
+    devProxy[`/${route}/**`] = {
       ...rest,
       changeOrigin,
       logLevel,
