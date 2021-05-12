@@ -7,6 +7,7 @@ import {
   CamCardAddress,
   CamCardContact,
   CamCardCustomer,
+  CamCardImportValidationResponse,
   CamCardItem,
   CamCardItemComment,
   CamCardMeasurement,
@@ -356,3 +357,21 @@ export const setStickyCamCardToolbar = createAction(
   '[Cam Cards API] Set Sticky Toolbar',
   payload<{ sticky: boolean }>()
 );
+
+export const validateCamCardImport = createAction(
+  '[Cam Cards] Validate Cam Card Import',
+  payload<{ camCardData: {} }>()
+);
+
+export const validateCamCardImportSuccess = createAction(
+  '[Cam Cards API] Validate Cam Card Import Success',
+  payload<{ validationResponse: CamCardImportValidationResponse }>()
+);
+
+export const validateCamCardImportFail = createAction('[Cam Cards API] Validate Cam Card Import Fail', httpError());
+
+export const importCamCard = createAction('[Cam Cards] Import Cam Card', payload<{ camCardData: {} }>());
+
+export const importCamCardSuccess = createAction('[Cam Cards API] Import Cam Card Success', payload<{ camCardData }>());
+
+export const importCamCardFail = createAction('[Cam Cards API] Import Cam Card Fail', httpError());

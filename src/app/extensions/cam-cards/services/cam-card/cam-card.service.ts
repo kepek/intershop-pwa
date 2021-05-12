@@ -12,6 +12,7 @@ import {
   CamCardAddress,
   CamCardContact,
   CamCardCustomerData,
+  CamCardImportValidationResponse,
   CamCardItem,
   CamCardItemComment,
   CamCardMeasurement,
@@ -405,5 +406,14 @@ export class CamCardService {
       return throwError('removeAllProductsFromCamCard() called without camCardId');
     }
     return this.apiService.delete(`camcards/${camCardId}/products`).pipe(concatMap(() => this.getCamCard(camCardId)));
+  }
+
+  validateCamCardImport(camCardData): Observable<CamCardImportValidationResponse> {
+    const camCardArr = camCardData[Object.keys(camCardData)[0]];
+    return this.apiService.put('camcardsbulk', camCardArr[Object.keys(camCardArr)[0]]);
+  }
+
+  importCamCard(camCardData): Observable<CamCard> {
+    return this.apiService.post('camcardsbulk', camCardData[Object.keys(camCardData)[0]]);
   }
 }

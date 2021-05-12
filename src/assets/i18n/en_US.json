@@ -1024,7 +1024,6 @@
   "camfil.modal.createOrder.order-form.input.phone_number": "Phone number",
   "camfil.modal.createOrder.order-form.input.phone_number.error.pattern": "Please enter a valid phone number.",
   "camfil.modal.createOrder.order-form.input.recipient": "Recipient",
-  "camfil.modal.createOrder.order-form.input.zipcode": "Zip Code",
   "camfil.modal.createOrder.order-form.input.zipcode.error.pattern": "Please enter a valid 5-digit ZIP code.",
   "camfil.modal.createOrder.order-form.input.zipcode.error.required": "Please enter a zip code.",
   "camfil.modal.createOrder.order-form.select.address": "Choose address or enter below",

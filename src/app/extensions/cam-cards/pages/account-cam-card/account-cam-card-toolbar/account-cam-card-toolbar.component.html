@@ -4,6 +4,16 @@
       mat-stroked-button
       color="primary"
       class="btn-tool"
+      data-testing-id="import-cam-card"
+      (click)="importCamCard($event)"
+    >
+      <mat-icon svgIcon="create-camcard" class="size-15"></mat-icon>
+      {{ 'camfil.account.import.header.text' | translate }}
+    </button>
+    <button
+      mat-stroked-button
+      color="primary"
+      class="btn-tool"
       data-testing-id="add-cam-card"
       routerLink="/account/camcards/create"
     >

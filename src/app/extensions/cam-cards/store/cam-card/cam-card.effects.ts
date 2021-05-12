@@ -22,7 +22,7 @@ import {
 } from 'rxjs/operators';
 
 import { getDeviceType } from 'ish-core/store/core/configuration';
-import { displaySuccessMessage } from 'ish-core/store/core/messages';
+import { displayErrorMessage, displaySuccessMessage } from 'ish-core/store/core/messages';
 import { ofUrl, selectQueryParam, selectRouteParam, selectUrl } from 'ish-core/store/core/router';
 import { RouterState } from 'ish-core/store/core/router/router.reducer';
 import { setBreadcrumbData } from 'ish-core/store/core/viewconf';
@@ -67,6 +67,9 @@ import {
   deleteSubCamCardSuccess,
   detectCamCardToolbar,
   editCamCard,
+  importCamCard,
+  importCamCardFail,
+  importCamCardSuccess,
   loadCamCard,
   loadCamCardSuccess,
   loadCamCards,
@@ -113,6 +116,9 @@ import {
   updateSubCamCard,
   updateSubCamCardFail,
   updateSubCamCardSuccess,
+  validateCamCardImport,
+  validateCamCardImportFail,
+  validateCamCardImportSuccess,
 } from './cam-card.actions';
 import {
   getAllCamCards,
@@ -866,6 +872,54 @@ export class CamCardEffects {
         })
       ),
     { dispatch: false }
+  );
+
+  // CamCard Import validation
+
+  validateCamCardImport$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(validateCamCardImport),
+      mapToPayload(),
+      mergeMap(camCardData =>
+        this.camCardService.validateCamCardImport(camCardData).pipe(
+          mergeMap(payload => [validateCamCardImportSuccess({ validationResponse: payload })]),
+          mapErrorToAction(validateCamCardImportFail)
+        )
+      )
+    )
+  );
+
+  // CamCard Import
+
+  importCamCard$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(importCamCard),
+      mapToPayload(),
+      mergeMap(camCardData =>
+        this.camCardService.importCamCard(camCardData).pipe(
+          mergeMap(payload => [
+            importCamCardSuccess({ camCardData: payload }),
+            displaySuccessMessage({
+              message: 'CamCard has been imported',
+            }),
+          ]),
+          mapErrorToAction(importCamCardFail)
+        )
+      )
+    )
+  );
+
+  displayImportCamCardFailMessage$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(importCamCardFail),
+      mapToPayloadProperty('error'),
+      whenTruthy(),
+      map(error =>
+        displayErrorMessage({
+          message: error?.message || error?.code,
+        })
+      )
+    )
   );
 
   /** Action after update CamCard Contacts

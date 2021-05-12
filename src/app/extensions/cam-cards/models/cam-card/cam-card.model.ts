@@ -121,3 +121,39 @@ export interface CamCamProductsAddToCart {
 export interface CamCardMeasurement {
   [key: string]: number;
 }
+
+export interface CamCardImportValidationResponse {
+  boxLabel?: string;
+  camCardLines: CamCardValidationLine[];
+  camCardName?: string;
+  customerNumber?: string;
+  customerRecipientName?: string;
+  deliveryAddressBuilding?: string;
+  deliveryAddressCity?: string;
+  deliveryAddressCountryCode?: string;
+  deliveryAddressStreet?: string;
+  deliveryAddressZipCode?: string;
+  deliveryInterval?: number;
+  errors: [];
+  invoiceMark?: string;
+  name?: string;
+  orderMark?: string;
+  originalLineNumber?: number;
+  type?: string;
+}
+
+export interface CamCardValidationLine {
+  errors: CamCardLineValidationError[];
+  name?: string;
+  originalLineNumber?: number;
+  quantity?: number;
+  sku?: string;
+  type?: string;
+}
+
+export interface CamCardLineValidationError {
+  errorCode: string;
+  errorParameters: string[];
+  name: string;
+  type: string;
+}

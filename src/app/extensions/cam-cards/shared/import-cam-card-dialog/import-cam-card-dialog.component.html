@@ -1,0 +1,72 @@
+<h2 class="text-center">
+  <mat-icon svgIcon="camcard"></mat-icon>
+  <div class="mt-3 mb-5">{{ 'camfil.account.import.header.text' | translate }}</div>
+</h2>
+
+<div class="dnd-container" filednd (fileDropped)="onFileDropped($event)">
+  <input
+    type="file"
+    #fileDropRef
+    id="fileDropRef"
+    (change)="onFileChange($event.target.files)"
+    accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+  />
+  <h3>{{ 'camfil.account.import.dnd.text_pt1' | translate }}</h3>
+  <h3>{{ 'camfil.account.import.dnd.text_pt2' | translate }}</h3>
+  <label for="fileDropRef">{{ 'camfil.account.import.dnd.browse_file.label' | translate }}</label>
+</div>
+<div class="files-list">
+  <div class="single-file" *ngIf="file?.name">
+    <mat-icon svgIcon="camcard"></mat-icon>
+
+    <div class="info ml-2">
+      <h4 class="name">
+        {{ file?.name }}
+      </h4>
+    </div>
+  </div>
+
+  <div class="errors-container mt-3" *ngIf="validationErrors.length">
+    <mat-error *ngFor="let error of validationErrors" role="alert" class="mat-error error-field ng-star-inserted">
+      {{ error | translate }}
+    </mat-error>
+  </div>
+  <div class="validation-error-container" *ngIf="errorsArr?.length">
+    <div class="one-line-error" *ngFor="let lineErrors of errorsArr">
+      <p class="m-0 line-number">
+        {{ lineErrors.lineErrorHeaderType | translate
+        }}{{ lineErrors.lineErrorNumber ? lineErrors.lineErrorNumber : ('' | translate)
+        }}{{ 'camfil.account.import.line_contains_errors.text' | translate }}
+      </p>
+      <div class="line-error-list" *ngFor="let err of lineErrors.errors">
+        {{ err.errorCode }} {{ 'camfil.account.import.parameter_error.text' | translate }}<br />
+        <span class="mr-1" *ngFor="let parameter of err.errorParameters"
+          ><strong>{{ parameter }}</strong></span
+        >
+      </div>
+    </div>
+  </div>
+  <div class="errors-container mt-3 mb-3" *ngIf="errorsArr?.length">
+    <mat-error role="alert" class="mat-error error-field ng-star-inserted">{{
+      'camfil.account.import.invalid_rows.text' | translate
+    }}</mat-error>
+  </div>
+  <div class="col-12 text-right p-0">
+    <button
+      [disabled]="!isValidationCompleted"
+      mat-flat-button
+      class="btn-tool mat-raised-button"
+      type="submit"
+      color="primary"
+      (click)="submitImportCamCardForm()"
+      data-testing-id="cam-card-dialog-import-submit"
+    >
+      {{ 'camfil.account.import.confirm.label' | translate }}
+    </button>
+    <button mat-flat-button class="btn-tool text-primary mat-raised-button" type="button" (click)="dialogRef.close()">
+      {{ 'camfil.modal.addNewProduct.button.cancel' | translate }}
+    </button>
+  </div>
+</div>
+
+<ish-loading *ngIf="camCardLoading$ | async"></ish-loading>

@@ -9,6 +9,7 @@ import {
   CamCardAddress,
   CamCardContact,
   CamCardCustomer,
+  CamCardImportValidationResponse,
   CamCardItem,
 } from '../../models/cam-card/cam-card.model';
 
@@ -30,6 +31,9 @@ import {
   deleteSubCamCard,
   deleteSubCamCardFail,
   deleteSubCamCardSuccess,
+  importCamCard,
+  importCamCardFail,
+  importCamCardSuccess,
   loadCamCardSuccess,
   loadCamCards,
   loadCamCardsFail,
@@ -63,6 +67,9 @@ import {
   updateSubCamCard,
   updateSubCamCardFail,
   updateSubCamCardSuccess,
+  validateCamCardImport,
+  validateCamCardImportFail,
+  validateCamCardImportSuccess,
 } from './cam-card.actions';
 
 export interface CamCardState extends EntityState<CamCard> {
@@ -81,6 +88,8 @@ export interface CamCardState extends EntityState<CamCard> {
   };
   addresses?: CamCardAddress[];
   virtualCamCard: CamCard;
+  validationErrors: HttpError;
+  validationResponse: CamCardImportValidationResponse;
 }
 
 export const camCardAdapter = createEntityAdapter<CamCard>({
@@ -99,6 +108,8 @@ export const initialState: CamCardState = camCardAdapter.getInitialState({
   addresses: [],
   stickyToolbar: false,
   virtualCamCard: undefined,
+  validationErrors: undefined,
+  validationResponse: undefined,
 });
 
 /** Returns a new state with replaced camcard or subcamcard */
@@ -142,7 +153,9 @@ export const camCardReducer = createReducer(
     loadDeliveryAddresses,
     updateSubCamCard,
     moveItemToCamCard,
-    moveCamCardItem
+    moveCamCardItem,
+    importCamCard,
+    validateCamCardImport
   ),
   on(
     loadCamCardsFail,
@@ -157,7 +170,8 @@ export const camCardReducer = createReducer(
     loadUserContactForCustomerFail,
     loadDeliveryAddressesFail,
     updateSubCamCardFail,
-
+    importCamCardFail,
+    validateCamCardImportFail,
     (state: CamCardState, action) => {
       const { error } = action.payload;
       return {
@@ -200,6 +214,7 @@ export const camCardReducer = createReducer(
     return {
       ...state,
       userContact: { ...state.userContact, [customerId]: contact },
+      loading: false,
     };
   }),
   on(loadDeliveryAddressesSuccess, (state: CamCardState, action) => {
@@ -331,5 +346,23 @@ export const camCardReducer = createReducer(
   on(clearVirtualCamCard, (state: CamCardState) => ({
     ...state,
     virtualCamCard: undefined,
-  }))
+  })),
+  on(validateCamCardImportSuccess, (state: CamCardState, action) => {
+    const { validationResponse } = action.payload;
+    return {
+      ...state,
+      loading: false,
+      validationResponse: validationResponse[0],
+    };
+  }),
+  on(importCamCardSuccess, (state: CamCardState, action) => {
+    const { camCardData } = action.payload;
+
+    const importedCamCard = camCardData.elements[0];
+
+    return camCardAdapter.upsertOne(importedCamCard, {
+      ...state,
+      loading: false,
+    });
+  })
 );

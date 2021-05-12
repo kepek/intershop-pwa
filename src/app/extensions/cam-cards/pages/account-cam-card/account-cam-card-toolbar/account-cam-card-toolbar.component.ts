@@ -16,6 +16,7 @@ import { CamCard } from '../../../models/cam-card/cam-card.model';
 export class AccountCamCardToolbarComponent implements OnInit, OnDestroy {
   @Output() addCamCard = new EventEmitter<CamCard>();
   @Output() openMoveCamCardDialog = new EventEmitter<Event>();
+  @Output() openImportCamCardDialog = new EventEmitter<Event>();
   @Output() addSelectedItemsToCart = new EventEmitter();
   @Output() copyCamCard = new EventEmitter<Event>();
   @Input() isSticky: boolean;
@@ -57,6 +58,10 @@ export class AccountCamCardToolbarComponent implements OnInit, OnDestroy {
 
   isAddToCartBtnDisabled() {
     return this.basketLoading || !this.isProductsChecked() || this.productAddingInProgress;
+  }
+
+  importCamCard(event: Event) {
+    this.openImportCamCardDialog.emit(event);
   }
 
   ngOnDestroy() {

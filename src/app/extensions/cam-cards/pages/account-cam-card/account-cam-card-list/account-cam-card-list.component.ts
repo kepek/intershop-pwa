@@ -40,6 +40,7 @@ import {
   CamCard,
   CamCardItem,
 } from '../../../models/cam-card/cam-card.model';
+import { ImportCamCardDialogComponent } from '../../../shared/import-cam-card-dialog/import-cam-card-dialog.component';
 import { MoveCamCardDialogComponent } from '../../../shared/move-cam-card-dialog/move-cam-card-dialog.component';
 import { UserAccessCamCardDialogComponent } from '../../../shared/user-access-cam-card-dialog/user-access-cam-card-dialog.component';
 
@@ -470,5 +471,13 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
 
   handleProductCheckbox(item: CamCardItem, camCard: CamCard, event: MatCheckboxChange) {
     this.handleProductCheck(item, camCard, event);
+  }
+
+  // Emit camcard import
+  importCamCard() {
+    this.dialog.open(ImportCamCardDialogComponent, {
+      width: '600px',
+      autoFocus: false,
+    });
   }
 }
