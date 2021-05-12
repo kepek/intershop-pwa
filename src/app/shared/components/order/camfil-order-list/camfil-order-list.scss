@@ -28,6 +28,7 @@ table {
     background-color: $greyF5;
   }
   tr.orderlist-row:hover {
+    cursor: pointer;
     background: $greyF5;
   }
   tr.orderlist-row:active {
