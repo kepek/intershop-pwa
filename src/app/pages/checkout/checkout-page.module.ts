@@ -6,6 +6,7 @@ import { SharedModule } from 'ish-shared/shared.module';
 import { CamCardsModule } from '../../extensions/cam-cards/cam-cards.module';
 import { CamfilCheckoutHeaderComponent } from '../camfil-checkout/camfil-checkout-header/camfil-checkout-header.component';
 import { CamfilCheckoutLineItemComponent } from '../camfil-checkout/camfil-checkout-line-item/camfil-checkout-line-item.component';
+import { CamfilCheckoutDeliveryAddressComponent } from '../camfil-checkout/camfil-checkout-list/camfil-checkout-delivery-address/camfil-checkout-delivery-address.component';
 import { CamfilCheckoutListComponent } from '../camfil-checkout/camfil-checkout-list/camfil-checkout-list.component';
 import { CamfilDeleteOrderComponent } from '../camfil-checkout/camfil-checkout-list/camfil-delete-order/camfil-delete-order.component';
 import { EditOrderModalComponent } from '../camfil-checkout/camfil-checkout-list/edit-order-modal/edit-order-modal.component';
@@ -33,6 +34,7 @@ const checkoutPageRoutes: Routes = [
 @NgModule({
   imports: [CamCardsModule, RouterModule.forChild(checkoutPageRoutes), SharedModule],
   declarations: [
+    CamfilCheckoutDeliveryAddressComponent,
     CamfilCheckoutHeaderComponent,
     CamfilCheckoutLineItemComponent,
     CamfilCheckoutListComponent,

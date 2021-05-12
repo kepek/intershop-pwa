@@ -65,7 +65,7 @@ export class ZipCodeComponent implements OnInit, OnDestroy {
         .pipe(distinctUntilChanged())
         .subscribe(data => {
           const city = data?.city || data?.id;
-          const formCity = this.form.get('city').value;
+          const formCity = this.form.get('city')?.value;
           if (city) {
             if (city !== formCity) {
               this.form.patchValue({ [this.fieldCity]: city });
