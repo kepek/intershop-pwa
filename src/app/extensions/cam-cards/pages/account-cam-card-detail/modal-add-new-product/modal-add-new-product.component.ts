@@ -151,6 +151,7 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy {
         const measurement = undefined;
         this.camCardsFacade.addProductToCamCard(this.rootCamCardId, sku, quantity, comment, measurement, 0, true);
         this.hide();
+        this.resetFormValues();
       }
     } else {
       markAsDirtyRecursive(this.productForm);
@@ -202,6 +203,10 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy {
   resetError() {
     this.showSkuError = false;
     this.product = undefined;
+  }
+
+  resetFormValues() {
+    this.productForm.reset();
   }
 
   getField(name: string) {
