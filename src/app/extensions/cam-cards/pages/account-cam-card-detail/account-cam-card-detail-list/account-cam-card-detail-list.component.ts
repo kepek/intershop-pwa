@@ -79,6 +79,8 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges, OnD
 
   showPrice: boolean;
 
+  loading = false;
+
   private destroy$ = new Subject();
 
   constructor(
@@ -220,6 +222,14 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges, OnD
       this.commonShippingMethodId,
       this.basketId
     );
+
+    this.loading = true;
+    this.shoppingFacade.productAdded$.pipe(whenTruthy(), take(1)).subscribe(val => {
+      if (val) {
+        this.loading = false;
+        this.changeDetectorRefs.detectChanges();
+      }
+    });
   }
 
   deleteCamCard() {
