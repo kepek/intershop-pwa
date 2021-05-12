@@ -229,10 +229,23 @@ export const basketReducer = createReducer(
     addProductsFromCamCardFail
   ),
 
+  on(updateBasketItems, deleteBasketItem, (state: BasketState) => ({
+    ...state,
+    productUpdated: false,
+    productAdded: false,
+    lastTimeProductAdded: state.lastTimeProductAdded || 1,
+  })),
+  on(updateBasketItemsFail, deleteBasketItemFail, (state: BasketState) => ({
+    ...state,
+    productUpdated: true,
+    productAdded: true,
+  })),
   on(updateBasketItemsSuccess, deleteBasketItemSuccess, (state: BasketState, action) => ({
     ...state,
     info: action.payload.info,
     validationResults: initialValidationResults,
+    productUpdated: true,
+    productAdded: true,
   })),
   on(loadBucketsSuccess, (state: BasketState, action) => {
     const addresses = action.payload.buckets.map(bucket => bucket.shipToAddressFull);
@@ -290,6 +303,7 @@ export const basketReducer = createReducer(
   ),
   on(addItemsToBasket, addItemsToBasketFromCamCard, addProductsFromCamCard, (state: BasketState) => ({
     ...state,
+    lastTimeProductAdded: state.lastTimeProductAdded || 1,
     productUpdated: false,
     productAdded: false,
   })),

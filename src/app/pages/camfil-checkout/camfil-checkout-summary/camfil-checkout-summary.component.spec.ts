@@ -5,6 +5,7 @@ import { of } from 'rxjs';
 import { instance, mock, when } from 'ts-mockito';
 
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
+import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { Basket } from 'ish-core/models/basket/basket.model';
 import { PricePipe } from 'ish-core/models/price/price.pipe';
 import { ContentIncludeComponent } from 'ish-shared/cms/components/content-include/content-include.component';
@@ -17,14 +18,19 @@ describe('Camfil Checkout Summary Component', () => {
   let element: HTMLElement;
   let basket: Basket;
   let checkoutFacade: CheckoutFacade;
+  let shoppingFacade: ShoppingFacade;
 
   beforeEach(async () => {
     checkoutFacade = mock(CheckoutFacade);
+    shoppingFacade = mock(ShoppingFacade);
 
     await TestBed.configureTestingModule({
       declarations: [CamfilCheckoutSummaryComponent, MockComponent(ContentIncludeComponent), MockPipe(PricePipe)],
       imports: [RouterTestingModule],
-      providers: [{ provide: CheckoutFacade, useFactory: () => instance(checkoutFacade) }],
+      providers: [
+        { provide: CheckoutFacade, useFactory: () => instance(checkoutFacade) },
+        { provide: ShoppingFacade, useFactory: () => instance(shoppingFacade) },
+      ],
     }).compileComponents();
   });
 
@@ -44,6 +50,7 @@ describe('Camfil Checkout Summary Component', () => {
         adjusted: false,
       })
     );
+    when(shoppingFacade.productsReadyToPlaceOrder$).thenReturn(of(true));
   });
 
   it('should be created', () => {

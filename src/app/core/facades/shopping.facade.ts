@@ -21,6 +21,7 @@ import {
   getProductAdded,
   getProductUpdated,
   hideSearchBox,
+  isProductsReadyToPlaceOrder,
   loadBasketAddresses,
   resetProductAdded,
   updateBucket,
@@ -330,6 +331,7 @@ export class ShoppingFacade {
   productAdded$ = this.store.pipe(select(getProductAdded));
   productUpdated$ = this.store.pipe(select(getProductUpdated));
   basketAddresses$ = this.store.pipe(select(getBasketAddresses));
+  productsReadyToPlaceOrder$ = this.store.pipe(select(isProductsReadyToPlaceOrder));
 
   categories$(ids: string[]) {
     return this.store.pipe(
