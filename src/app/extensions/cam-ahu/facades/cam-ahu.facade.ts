@@ -19,12 +19,14 @@ import {
   selectAhuManufacturer,
 } from '../store/manufacturer';
 import {
+  addToList,
   getAhuUnitsError,
   getAhuUnitsLoading,
   getAllAhuUnits,
   getSelectedAhuUnit,
   loadAhuUnit,
   loadAhuUnits,
+  removeFromList,
   selectAhuUnit,
 } from '../store/unit';
 
@@ -123,5 +125,13 @@ export class CamAhuFacade {
     );
   }
 
-  // Slots
+  // List
+
+  addToList$(manufacturerId: string, unitId: string, slotId: string, sku: string) {
+    this.store.dispatch(addToList({ manufacturerId, unitId, slotId, sku }));
+  }
+
+  removeFromList$(manufacturerId: string, unitId: string, slotId: string, sku: string) {
+    this.store.dispatch(removeFromList({ manufacturerId, unitId, slotId, sku }));
+  }
 }

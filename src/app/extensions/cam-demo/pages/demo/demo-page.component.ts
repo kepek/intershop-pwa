@@ -292,6 +292,14 @@ export class DemoPageComponent implements AfterViewInit, OnInit, OnDestroy {
     });
   }
 
+  addToList(manufacturerId: string, unitId: string, slotId: string, sku: string) {
+    this.ahuFacade.addToList$(manufacturerId, unitId, slotId, sku);
+  }
+
+  removeFromList(manufacturerId: string, unitId: string, slotId: string, sku: string) {
+    this.ahuFacade.removeFromList$(manufacturerId, unitId, slotId, sku);
+  }
+
   submitAhuForm() {
     console.log('submitAhuForm', this.ahuForm);
   }

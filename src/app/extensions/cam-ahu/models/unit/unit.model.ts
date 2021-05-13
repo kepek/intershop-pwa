@@ -1,3 +1,5 @@
+// API Models
+
 export interface Unit {
   id: string; // TODO (extMlk): Verify with Integration Team if missing `id` field is 100% okay... cuz it does not make sense...
   ahu: UnitAhu;
@@ -46,6 +48,8 @@ export interface UnitAHUAirSlot {
 export interface UnitAHUAirSlotItem {
   item: string;
 }
+
+// Internal Models
 
 export interface UnitAHUAirSlotType {
   name: string;

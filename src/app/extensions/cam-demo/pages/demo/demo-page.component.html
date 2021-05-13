@@ -36,6 +36,13 @@
           <hr />
           <pre>ahuLoading$ {{ ahuLoading$ | async | json }}</pre>
           <hr />
+          <button (click)="addToList('15', '59535', '0', '1008065')">
+            Add To List (manufacturerId=15&unitId=59535&slotId=0&sku=1008065)
+          </button>
+          <button (click)="removeFromList('15', '59535', '0', '1008065')">
+            Remove From List (manufacturerId=15&unitId=59535&slotId=0&sku=1008065)
+          </button>
+          <hr />
           <pre>ahuManufacturers$ {{ ahuManufacturers$ | async }}</pre>
           <pre>ahuManufacturersLoading$ {{ ahuManufacturersLoading$ | async | json }}</pre>
           <pre>ahuManufacturersError$ {{ ahuManufacturersError$ | async | json }}</pre>

@@ -24,8 +24,8 @@ export class UnitMapper {
     }
 
     if (unit?.ahuAirSlots) {
-      unit.ahuAirSlots.map(s => {
-        s.ahuSlotId = String(s.ahuSlotId);
+      unit.ahuAirSlots.map((s, i) => {
+        s.ahuSlotId = String(i); // TODO (extMlk): Talk to ICC Team and ask why `s..ahuSlotId` is not unique (always = 0);
         return s;
       });
     }
