@@ -75,6 +75,7 @@ export class SelectCamCardModalComponent implements OnInit, OnDestroy, OnChanges
 
   quantityForm: FormGroup;
 
+  shouldClearNewSegment = false;
   newSegmentForm: FormGroup;
   camCardSelected: string;
   segmentSelected: string;
@@ -120,6 +121,10 @@ export class SelectCamCardModalComponent implements OnInit, OnDestroy, OnChanges
     this.currentCamCard$ = this.camCardsFacade.currentCamCard$;
     this.currentCamCard$.pipe(takeUntil(this.destroy$)).subscribe(currentCamCard => {
       this.currentCamCard = currentCamCard;
+      if (this.shouldClearNewSegment && !currentCamCard) {
+        this.shouldClearNewSegment = false;
+        this.resetNewSegmentForm();
+      }
     });
 
     this.camCardsLoading$ = this.camCardsFacade.camCardsLoading$;
@@ -260,6 +265,7 @@ export class SelectCamCardModalComponent implements OnInit, OnDestroy, OnChanges
         measurement,
         false
       );
+      this.shouldClearNewSegment = true;
     } else {
       markAsDirtyRecursive(this.newSegmentForm);
     }
@@ -328,12 +334,16 @@ export class SelectCamCardModalComponent implements OnInit, OnDestroy, OnChanges
 
   selectCamCard(camCardID) {
     if (this.camCardSelected !== camCardID) {
-      this.newSegmentForm.reset('newCamCard');
-      this.segmentSelected = undefined;
-      this.showNewSegment = false;
+      this.resetNewSegmentForm();
     }
     this.camCardSelected = camCardID;
     this.rootCamCardAddress = this.getSelectedCamCard(this.camCardSelected).deliveryAddress;
+  }
+
+  resetNewSegmentForm() {
+    this.newSegmentForm.reset('newCamCard');
+    this.segmentSelected = undefined;
+    this.showNewSegment = false;
   }
 
   showNewSegmant() {
