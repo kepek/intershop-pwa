@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store, select } from '@ngrx/store';
-import { filter, map, switchMap } from 'rxjs/operators';
+import { filter, map, switchMap, withLatestFrom } from 'rxjs/operators';
 
 import { ofUrl, selectQueryParams } from 'ish-core/store/core/router';
-import { mapErrorToAction, mapToPayloadProperty, whenTruthy } from 'ish-core/utils/operators';
+import { mapErrorToAction, mapToPayloadProperty } from 'ish-core/utils/operators';
 
 import { AhuService } from '../../services/ahu/ahu.service';
 import { loadAhuUnits } from '../unit';
@@ -18,6 +18,7 @@ import {
   loadAhuManufacturersSuccess,
   selectAhuManufacturer,
 } from './manufacturer.actions';
+import { getSelectedAhuManufacturerId } from './manufacturer.selectors';
 
 @Injectable()
 export class ManufacturerEffects {
@@ -52,7 +53,6 @@ export class ManufacturerEffects {
     this.actions$.pipe(
       ofType(selectAhuManufacturer),
       mapToPayloadProperty('manufacturerId'),
-      whenTruthy(),
       map(manufacturerId => loadAhuUnits({ manufacturerId }))
     )
   );
@@ -61,8 +61,9 @@ export class ManufacturerEffects {
     this.store.pipe(
       ofUrl(/^\/(demo|air-handling-unit-guide)/),
       select(selectQueryParams),
-      filter(({ manufacturerId }) => !!manufacturerId),
-      map(({ manufacturerId }) => selectAhuManufacturer({ manufacturerId }))
+      withLatestFrom(this.store.pipe(select(getSelectedAhuManufacturerId))),
+      filter(([params, selectedAhuManufacturerId]) => params?.manufacturerId !== selectedAhuManufacturerId),
+      map(([params]) => selectAhuManufacturer({ manufacturerId: params?.manufacturerId }))
     )
   );
 }

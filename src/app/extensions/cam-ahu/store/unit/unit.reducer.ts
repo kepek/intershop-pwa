@@ -5,6 +5,7 @@ import { HttpError } from 'ish-core/models/http-error/http-error.model';
 import { setLoadingOn } from 'ish-core/utils/ngrx-creators';
 
 import { Unit } from '../../models/unit/unit.model';
+import { selectAhuManufacturer } from '../manufacturer';
 
 import {
   loadAhuUnit,
@@ -67,5 +68,9 @@ export const unitReducer = createReducer(
       ...state,
       selected: unitId,
     };
-  })
+  }),
+  on(selectAhuManufacturer, (state: UnitState) => ({
+    ...state,
+    selected: undefined,
+  }))
 );

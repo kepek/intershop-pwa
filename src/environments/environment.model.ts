@@ -138,12 +138,12 @@ export const ENVIRONMENT_DEFAULTS: Environment = {
     'advancedVariationHandling',
     'businessCustomerRegistration',
     /* Camfil features */
-    'camOrganizationManagement',
     'camIcc',
-    'camCards',
     'camAccount',
-    'camDemo',
+    'camOrganizationManagement',
+    'camCards',
     'camAhu',
+    'camDemo',
   ],
 
   /* PROGRESSIVE WEB APP CONFIGURATIONS */

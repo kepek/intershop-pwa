@@ -29,3 +29,5 @@ export const getAhuManufacturerDetails = createSelector(
   selectEntities,
   (entities, props: { id: string }): Manufacturer => props.id && entities[props.id]
 );
+
+export const isManufacturerInitialized = createSelector(getManufacturerState, state => state.initialized);

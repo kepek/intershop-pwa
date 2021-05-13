@@ -46,3 +46,9 @@ export interface UnitAHUAirSlot {
 export interface UnitAHUAirSlotItem {
   item: string;
 }
+
+export interface UnitAHUAirSlotType {
+  name: string;
+  count: number;
+  dimensions: string[];
+}

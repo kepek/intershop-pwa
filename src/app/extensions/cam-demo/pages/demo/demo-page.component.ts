@@ -42,7 +42,7 @@ import { whenTruthy } from 'ish-core/utils/operators';
 
 import { CamAhuFacade } from '../../../cam-ahu/facades/cam-ahu.facade';
 import { Manufacturer } from '../../../cam-ahu/models/manufacturer/manufacturer.model';
-import { Unit } from '../../../cam-ahu/models/unit/unit.model';
+import { Unit, UnitAHUAirSlotType } from '../../../cam-ahu/models/unit/unit.model';
 
 import { DemoBottomSheetComponent } from './demo-bottom-sheet/demo-bottom-sheet.component';
 import { DemoDialogComponent } from './demo-dialog/demo-dialog.component';
@@ -117,6 +117,7 @@ export class DemoPageComponent implements AfterViewInit, OnInit, OnDestroy {
   ahuManufacturers$: Observable<Manufacturer[]>;
   ahuManufacturersLoading$: Observable<boolean>;
   ahuManufacturersError$: Observable<HttpError>;
+  ahuManufacturersInitialized$: Observable<boolean>;
   selectedAhuManufacturer$: Observable<Manufacturer>;
   ahuForm: FormGroup;
   ahuUnits$: Observable<Unit[]>;
@@ -124,6 +125,7 @@ export class DemoPageComponent implements AfterViewInit, OnInit, OnDestroy {
   ahuUnitsLoading$: Observable<boolean>;
   ahuUnitsError$: Observable<HttpError>;
   selectedAhuUnit$: Observable<Unit>;
+  selectedAhuUnitAirSlotTypes$: Observable<UnitAHUAirSlotType[]>;
   ahuLoading$: Observable<boolean>;
 
   product$: Observable<ProductView>;
@@ -156,7 +158,7 @@ export class DemoPageComponent implements AfterViewInit, OnInit, OnDestroy {
       this.progress = (this.progress + Math.floor(Math.random() * 4) + 1) % 100;
     }, 200);
 
-    console.log('this.lang', lang);
+    console.log('LOCALE_ID', lang);
   }
   isDarkTheme = false;
   lastDialogResult: string;
@@ -302,10 +304,10 @@ export class DemoPageComponent implements AfterViewInit, OnInit, OnDestroy {
       })
     );
     // AHU-Manufacturers
-    this.ahuFacade.loadAhuManufacturers$();
     this.ahuManufacturers$ = this.ahuFacade.ahuManufacturers$;
     this.ahuManufacturersLoading$ = this.ahuFacade.ahuManufacturersLoading$;
     this.ahuManufacturersError$ = this.ahuFacade.ahuManufacturersError$;
+    this.ahuManufacturersInitialized$ = this.ahuFacade.ahuManufacturersInitialized$;
     this.selectedAhuManufacturer$ = this.ahuFacade.selectedAhuManufacturer$;
     // AHU-Unit
     this.ahuUnits$ = this.ahuFacade.ahuUnits$;
@@ -313,6 +315,7 @@ export class DemoPageComponent implements AfterViewInit, OnInit, OnDestroy {
     this.ahuUnitsLoading$ = this.ahuFacade.ahuUnitsLoading$;
     this.ahuUnitsError$ = this.ahuFacade.ahuUnitsError$;
     this.selectedAhuUnit$ = this.ahuFacade.selectedAhuUnit$;
+    this.selectedAhuUnitAirSlotTypes$ = this.ahuFacade.selectedAhuUnitAirSlotTypes$;
     // AHU-Common
     this.ahuLoading$ = this.ahuFacade.ahuLoading$();
     // AHU-Form

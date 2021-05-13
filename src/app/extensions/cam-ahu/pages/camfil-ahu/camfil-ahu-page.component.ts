@@ -32,8 +32,6 @@ export class CamfilAHUPageComponent implements OnInit, OnChanges {
     this.manufacturerSelect = undefined;
     this.modelSelect = undefined;
 
-    this.ahuFacade.loadAhuManufacturers$();
-
     this.ahuManufacturers$ = this.ahuFacade.ahuManufacturers$;
     this.ahuUnits$ = this.ahuFacade.ahuUnits$;
     // AHU-Form

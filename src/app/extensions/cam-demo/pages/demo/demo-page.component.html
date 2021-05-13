@@ -4,6 +4,7 @@
       <span class="title">AHU Demo</span>
     </mat-toolbar>
     <div class="demo-content">
+      <ish-loading *ngIf="ahuLoading$ | async"></ish-loading>
       <!-- Manufacturers -->
       <mat-card>
         <mat-card-content>
@@ -38,12 +39,14 @@
           <pre>ahuManufacturers$ {{ ahuManufacturers$ | async }}</pre>
           <pre>ahuManufacturersLoading$ {{ ahuManufacturersLoading$ | async | json }}</pre>
           <pre>ahuManufacturersError$ {{ ahuManufacturersError$ | async | json }}</pre>
+          <pre>ahuManufacturersInitialized$ {{ ahuManufacturersInitialized$ | async | json }}</pre>
           <pre>selectedAhuManufacturer$ {{ selectedAhuManufacturer$ | async | json }}</pre>
           <hr />
           <pre>ahuUnits$ {{ ahuUnits$ | async }}</pre>
           <pre>ahuUnitsByManufacturerId$ {{ ahuUnitsByManufacturerId$ | async }}</pre>
           <pre>ahuUnitsLoading$ {{ ahuUnitsLoading$ | async | json }}</pre>
           <pre>ahuUnitsError$ {{ ahuUnitsError$ | async | json }}</pre>
+          <pre>selectedAhuUnitAirSlotTypes$ {{ selectedAhuUnitAirSlotTypes$ | async | json }}</pre>
           <pre>selectedAhuUnit$ {{ selectedAhuUnit$ | async | json }}</pre>
           <ng-template #ahuLoading>Loading AHU Data... </ng-template>
         </mat-card-content>

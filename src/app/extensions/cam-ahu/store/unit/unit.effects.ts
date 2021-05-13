@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store, select } from '@ngrx/store';
-import { map, switchMap } from 'rxjs/operators';
+import { filter, map, switchMap, withLatestFrom } from 'rxjs/operators';
 
 import { ofUrl, selectQueryParams } from 'ish-core/store/core/router';
 import { mapErrorToAction, mapToPayloadProperty, whenTruthy } from 'ish-core/utils/operators';
 
 import { AhuService } from '../../services/ahu/ahu.service';
+import { getSelectedAhuManufacturerId } from '../manufacturer';
 
 import {
   loadAhuUnit,
@@ -17,6 +18,7 @@ import {
   loadAhuUnitsSuccess,
   selectAhuUnit,
 } from './unit.actions';
+import { getSelectedAhuUnitId } from './unit.selectors';
 
 @Injectable()
 export class UnitEffects {
@@ -54,8 +56,9 @@ export class UnitEffects {
     this.actions$.pipe(
       ofType(selectAhuUnit),
       mapToPayloadProperty('unitId'),
-      whenTruthy(),
-      map(unitId => loadAhuUnit({ unitId }))
+      withLatestFrom(this.store.pipe(select(getSelectedAhuManufacturerId))),
+      filter(([unitId, selectedAhuManufacturerId]) => unitId !== selectedAhuManufacturerId),
+      map(([unitId]) => loadAhuUnit({ unitId }))
     )
   );
 
@@ -63,7 +66,10 @@ export class UnitEffects {
     this.store.pipe(
       ofUrl(/^\/(demo|air-handling-unit-guide)/),
       select(selectQueryParams),
-      map(({ unitId }) => selectAhuUnit({ unitId }))
+      filter(params => !!params?.unitId),
+      withLatestFrom(this.store.pipe(select(getSelectedAhuUnitId))),
+      filter(([params, selectedAhuUnitId]) => params?.unitId !== selectedAhuUnitId),
+      map(([params]) => selectAhuUnit({ unitId: params?.unitId }))
     )
   );
 }

@@ -17,3 +17,13 @@ export const loadAhuUnit = createAction('[AHU Unit Internal] Load AHU Unit', pay
 export const loadAhuUnitSuccess = createAction('[AHU Unit API] Load AHU Unit Success', payload<{ unit: Unit }>());
 
 export const loadAhuUnitFail = createAction('[AHU Unit API] Load AHU Unit Fail', httpError());
+
+export const addToList = createAction(
+  '[AHU Unit Internal] Add To List',
+  payload<{ manufacturerId: string; unitId: string; sku: string }>()
+);
+
+export const removeFromList = createAction(
+  '[AHU Unit Internal] Remove From List',
+  payload<{ manufacturerId: string; unitId: string; sku: string }>()
+);

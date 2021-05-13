@@ -20,6 +20,7 @@ export interface ManufacturerState extends EntityState<Manufacturer> {
   loading: boolean;
   selected: string;
   error: HttpError;
+  initialized: boolean;
 }
 
 export const manufacturerAdapter = createEntityAdapter<Manufacturer>({
@@ -30,11 +31,13 @@ export const initialState: ManufacturerState = manufacturerAdapter.getInitialSta
   loading: false,
   selected: undefined,
   error: undefined,
+  initialized: false,
 });
 
 export const manufacturerReducer = createReducer(
   initialState,
   setLoadingOn(loadAhuManufacturer, loadAhuManufacturers),
+  on(loadAhuManufacturersSuccess, state => ({ ...state, initialized: true })),
   on(loadAhuManufacturerFail, loadAhuManufacturersFail, (state: ManufacturerState, action) => {
     const { error } = action.payload;
     return {
