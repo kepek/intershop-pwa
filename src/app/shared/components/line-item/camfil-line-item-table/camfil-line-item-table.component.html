@@ -22,7 +22,12 @@
       {{ 'camfil.lineitem.table.product' | translate }}
     </th>
     <td mat-cell *matCellDef="let pli">
-      <div class="text-truncate">{{ pli.articleName }}</div>
+      <div class="text-truncate">
+        {{ pli.articleName }}
+        <div *ngIf="measurement(pli)">
+          {{ 'camfil.checkout.product.measurements.label' | translate }}: {{ measurement(pli) }}
+        </div>
+      </div>
     </td>
   </ng-container>
 
