@@ -30,6 +30,9 @@
       mat-flat-button
       color="primary"
       [disabled]="!(productsReadyToPlaceOrder$ | async)"
+      title="{{
+        !(productsReadyToPlaceOrder$ | async) ? ('camfil.checkout.wait_till_validation.button.text' | translate) : ''
+      }} "
       (click)="submitOrder()"
     >
       {{ 'camfil.checkout.place_your_orders' | translate }}
