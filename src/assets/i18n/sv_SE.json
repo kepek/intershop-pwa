@@ -889,6 +889,7 @@
   "camfil.checkout.total_price_after": "Totalt pris efter rabatt",
   "camfil.checkout.validation.for_order": "för order",
   "camfil.checkout.volume_discount": "Rabatt",
+  "camfil.checkout.wait_till_validation.button.text": "sv_Please wait till the system has validated your cart",
   "camfil.checkout.your_total_price": "Ditt totala pris",
   "camfil.common.button.navbarCollapsed.close.text": "Stäng",
   "camfil.common.button.navbarCollapsed.menu.aria_label": "Knapp med meny ikon för att öppna/stänga navigation",
