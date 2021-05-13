@@ -2,8 +2,9 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NgbCollapse } from '@ng-bootstrap/ng-bootstrap';
 import { provideMockStore } from '@ngrx/store/testing';
-import { MockComponent } from 'ng-mocks';
+import { MockComponent, MockPipe } from 'ng-mocks';
 
+import { AddressSortPipe } from 'ish-core/pipes/camfil-address-sort.pipe';
 import { CamfilErrorComponent } from 'ish-shared/components/common/camfil-error/camfil-error.component';
 import { ZipCodeComponent } from 'ish-shared/components/zip-code/zip-code.component';
 
@@ -21,6 +22,7 @@ describe('Cam Card Preferences Component', () => {
         CamfilErrorComponent,
         MockComponent(NgbCollapse),
         MockComponent(ZipCodeComponent),
+        MockPipe(AddressSortPipe),
       ],
       imports: [RouterTestingModule],
       providers: [provideMockStore({})],

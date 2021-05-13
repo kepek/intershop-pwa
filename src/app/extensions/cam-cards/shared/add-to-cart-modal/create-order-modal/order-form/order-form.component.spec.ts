@@ -1,8 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MockComponent } from 'ng-mocks';
+import { MockComponent, MockPipe } from 'ng-mocks';
 import { of } from 'rxjs';
 import { instance, mock, when } from 'ts-mockito';
 
+import { AddressSortPipe } from 'ish-core/pipes/camfil-address-sort.pipe';
 import { CamfilErrorComponent } from 'ish-shared/components/common/camfil-error/camfil-error.component';
 import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
 import { ZipCodeComponent } from 'ish-shared/components/zip-code/zip-code.component';
@@ -25,6 +26,7 @@ describe('Order Form Component', () => {
         CamfilErrorComponent,
         MockComponent(LoadingComponent),
         MockComponent(ZipCodeComponent),
+        MockPipe(AddressSortPipe),
         OrderFormComponent,
       ],
       providers: [{ provide: CamCardsFacade, useFactory: () => instance(camCardFacadeMock) }],

@@ -2,6 +2,7 @@ import { ModuleWithProviders, NgModule } from '@angular/core';
 
 import { AttributeToStringPipe } from './models/attribute/attribute.pipe';
 import { PricePipe } from './models/price/price.pipe';
+import { AddressSortPipe } from './pipes/camfil-address-sort.pipe';
 import { CamfilDatePipe } from './pipes/camfil-date.pipe';
 import { CamfilDimensionPipe } from './pipes/camfil-dimension.pipe';
 import { CamfilProductAttributeValPipe } from './pipes/camfil-product-attribute-val';
@@ -15,6 +16,7 @@ import { CategoryRoutePipe } from './routing/category/category-route.pipe';
 import { ProductRoutePipe } from './routing/product/product-route.pipe';
 
 const pipes = [
+  AddressSortPipe,
   AttributeToStringPipe,
   CamfilDatePipe,
   CamfilDimensionPipe,
@@ -33,7 +35,7 @@ const pipes = [
 @NgModule({
   declarations: [...pipes],
   exports: [...pipes],
-  providers: [CamfilDatePipe],
+  providers: [CamfilDatePipe, AddressSortPipe],
 })
 export class PipesModule {
   static forRoot(): ModuleWithProviders<PipesModule> {
