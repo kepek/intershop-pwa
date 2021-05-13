@@ -124,6 +124,7 @@ import {
   getAllCamCards,
   getCamCardCustomers,
   getCamCardDetails,
+  getCustomerAddresses,
   getSelectedCamCardDetails,
   getSelectedCamCardId,
   getUserContactForCustomer,
@@ -309,10 +310,19 @@ export class CamCardEffects {
   loadDeliveryAddresses$ = createEffect(() =>
     this.actions$.pipe(
       ofType(loadDeliveryAddresses),
-      mergeMap(payload =>
-        this.camCardService.getDeliveryAddresses(payload.payload.id).pipe(
-          map(addresses => loadDeliveryAddressesSuccess({ addresses })),
-          mapErrorToAction(loadDeliveryAddressesFail)
+      mapToPayload(),
+      windowRxOperator(this.actions$.pipe(ofType(loadDeliveryAddresses), debounceTime(1000))),
+      mergeMap(window$ =>
+        window$.pipe(
+          last(),
+          withLatestFrom(this.store.pipe(select(getCustomerAddresses))),
+          filter(([, savedAddresses]) => !savedAddresses.length),
+          mergeMap(([payload]) =>
+            this.camCardService.getDeliveryAddresses(payload.id).pipe(
+              map(addresses => loadDeliveryAddressesSuccess({ addresses })),
+              mapErrorToAction(loadDeliveryAddressesFail)
+            )
+          )
         )
       )
     )
