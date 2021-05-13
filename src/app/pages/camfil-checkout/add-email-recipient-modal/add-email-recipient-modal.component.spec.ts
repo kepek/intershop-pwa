@@ -1,13 +1,15 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { provideMockStore } from '@ngrx/store/testing';
-
-import { AddEmailRecipientModalComponent } from './add-email-recipient-modal.component';
-import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { instance, mock } from 'ts-mockito';
 
-describe('Add email recipients modal Component', () => {
+import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
+import { CamfilErrorComponent } from 'ish-shared/components/common/camfil-error/camfil-error.component';
+
+import { AddEmailRecipientModalComponent } from './add-email-recipient-modal.component';
+
+describe('Add Email Recipient Modal Component', () => {
   let component: AddEmailRecipientModalComponent;
   let fixture: ComponentFixture<AddEmailRecipientModalComponent>;
   let element: HTMLElement;
@@ -16,7 +18,7 @@ describe('Add email recipients modal Component', () => {
   beforeEach(async () => {
     shoppingFacadeMock = mock(ShoppingFacade);
     await TestBed.configureTestingModule({
-      declarations: [AddEmailRecipientModalComponent],
+      declarations: [AddEmailRecipientModalComponent, CamfilErrorComponent],
       imports: [ReactiveFormsModule],
       providers: [
         { provide: MAT_DIALOG_DATA, bucket: {} },

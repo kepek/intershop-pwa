@@ -1,11 +1,12 @@
-import { ChangeDetectionStrategy, Component, Inject, OnDestroy, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { BasketExtensions } from 'ish-core/models/basket/basket.interface';
 import { Bucket } from 'ish-core/models/basket/bucket.model';
 import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
-import { Subject } from 'rxjs';
+import { SpecialValidators } from 'ish-shared/forms/validators/special-validators';
 
 import { ORDER_HEADER_VALIDATORS } from '../camfil-checkout-list/validators';
 
@@ -14,8 +15,7 @@ import { ORDER_HEADER_VALIDATORS } from '../camfil-checkout-list/validators';
   templateUrl: './add-email-recipient-modal.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AddEmailRecipientModalComponent implements OnInit, OnDestroy {
-  private destroy$ = new Subject<void>();
+export class AddEmailRecipientModalComponent implements OnInit {
   recipientsForm: FormGroup;
   validators = ORDER_HEADER_VALIDATORS;
   constructor(
@@ -31,13 +31,8 @@ export class AddEmailRecipientModalComponent implements OnInit, OnDestroy {
 
   private initForm() {
     this.recipientsForm = this.fb.group({
-      emailRecipients: ['', [Validators.required, this.commaSeparatedEmailValidator]],
+      emailRecipients: ['', [Validators.required, SpecialValidators.commaSeparatedEmailValidator]],
     });
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 
   hide() {
@@ -53,9 +48,11 @@ export class AddEmailRecipientModalComponent implements OnInit, OnDestroy {
       const addedEmailRecipients = this.recipientsForm.get('emailRecipients').value.split(',');
       const { basket, deliveryAddressId } = this.bucket;
 
+      const emailRecipients = this.bucket?.emailRecipients || [];
+
       const basketExtensionUpdate: BasketExtensions = {
         ...this.bucket,
-        emailRecipients: addedEmailRecipients,
+        emailRecipients: [...emailRecipients, ...addedEmailRecipients],
       };
 
       this.shoppingFacade.updateBucket(basket, deliveryAddressId, basketExtensionUpdate);
@@ -64,10 +61,4 @@ export class AddEmailRecipientModalComponent implements OnInit, OnDestroy {
       markAsDirtyRecursive(this.recipientsForm);
     }
   }
-
-  commaSeparatedEmailValidator = (control: AbstractControl): { [key: string]: any } | undefined => {
-    const emails = control.value.split(',').map(e => e.trim());
-    const forbidden = emails.some(email => Validators.email(new FormControl(email)));
-    return forbidden ? { toAddress: { value: control.value } } : undefined;
-  };
 }

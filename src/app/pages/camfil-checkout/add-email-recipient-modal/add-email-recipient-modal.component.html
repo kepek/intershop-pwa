@@ -1,11 +1,13 @@
 <div class="text-center">
   <mat-icon svgIcon="contact"></mat-icon>
 </div>
-<p class="text-center"><strong>Add Email recipients for your order confirmation</strong></p>
+<p class="text-center">
+  <strong>{{ 'camfil.checkout.cta.add_email_recipients_for' | translate }}</strong>
+</p>
 
 <form [formGroup]="recipientsForm" (ngSubmit)="submitAddEmailRecipientForm($event)">
   <mat-form-field appearance="fill" class="d-block">
-    <mat-label>Enter email address</mat-label>
+    <mat-label>{{ 'camfil.checkout.cta.enter_email_address' | translate }}</mat-label>
     <input
       matInput
       type="text"
@@ -19,7 +21,7 @@
     [errorValidators]="validators.emailRecipients"
     [touched]="getField('emailRecipients').touched || getField('emailRecipients').dirty"
   ></camfil-error>
-  <p>Separate multiple addresses with a comma sign</p>
+  <p>{{ 'camfil.checkout.cta.separate_multiple_addresses' | translate }}</p>
   <div class="col-12 text-right p-0 mt-2">
     <button mat-flat-button class="btn-tool text-primary" type="button" (click)="dialogRef.close()">
       {{ 'camfil.account.cam_card.move.dialog.btn.cancel' | translate }}
@@ -33,8 +35,7 @@
       data-testing-id="cam-card-dialog-move-submit"
       (click)="submitAddEmailRecipientForm($event)"
     >
-      <!-- {{ 'camfil.account.cam_card.move.dialog.btn.text' | translate }} -->
-      Save
+      {{ 'camfil.checkout.cta.recipients_save' | translate }}
     </button>
   </div>
 </form>

@@ -59,24 +59,26 @@
         </dl>
         <ng-container *ngIf="emailRecipients.length">
           <div class="row recipients-container">
-            <dt class="col-6 p-0">Email recipients</dt>
-            <div *ngFor="let recipient of emailRecipients">
-              <button mat-stroked-button color="primary" class="recipient-button d-flex align-items-center">
-                {{ recipient }}
-                <span
-                  class="delete-recipient-icon-wrapper d-inline-flex align-items-center justify-content-center"
-                  (click)="removeSelectedRecipient(recipient)"
-                  ><mat-icon
-                    _ngcontent-intershop-pwa-c283=""
-                    role="img"
-                    class="notranslate material-icons color-light"
-                    aria-hidden="true"
-                    data-mat-icon-type="font"
-                    >close</mat-icon
-                  ></span
-                >
-              </button>
-            </div>
+            <dt class="col-12 p-0">{{ 'camfil.checkout.cta.email_recipients' | translate }}</dt>
+            <dd class="col-12 p-0 d-flex flex-column">
+              <div *ngFor="let recipient of emailRecipients">
+                <button mat-stroked-button color="primary" class="recipient-button d-flex align-items-center">
+                  {{ recipient }}
+                  <span
+                    class="delete-recipient-icon-wrapper d-inline-flex align-items-center justify-content-center"
+                    (click)="removeSelectedRecipient(recipient)"
+                    ><mat-icon
+                      _ngcontent-intershop-pwa-c283=""
+                      role="img"
+                      class="notranslate material-icons color-light"
+                      aria-hidden="true"
+                      data-mat-icon-type="font"
+                      >close</mat-icon
+                    ></span
+                  >
+                </button>
+              </div>
+            </dd>
           </div>
         </ng-container>
       </div>

@@ -27,13 +27,13 @@ import { CamfilSearchBoxComponent } from 'ish-shell/header/header/camfil-search-
 import { CamCardsFacade } from '../../../extensions/cam-cards/facades/cam-cards.facade';
 import { ModalAddNewProductComponent } from '../../../extensions/cam-cards/pages/account-cam-card-detail/modal-add-new-product/modal-add-new-product.component';
 import { OrderFormComponent } from '../../../extensions/cam-cards/shared/add-to-cart-modal/create-order-modal/order-form/order-form.component';
+import { AddEmailRecipientModalComponent } from '../add-email-recipient-modal/add-email-recipient-modal.component';
 import { CamfilCheckoutLineItemComponent } from '../camfil-checkout-line-item/camfil-checkout-line-item.component';
 
 import { CamfilCheckoutDeliveryAddressComponent } from './camfil-checkout-delivery-address/camfil-checkout-delivery-address.component';
 import { CamfilCheckoutListComponent } from './camfil-checkout-list.component';
 import { CamfilDeleteOrderComponent } from './camfil-delete-order/camfil-delete-order.component';
 import { EditOrderModalComponent } from './edit-order-modal/edit-order-modal.component';
-import { AddEmailRecipientModalComponent } from '../add-email-recipient-modal/add-email-recipient-modal.component';
 
 describe('Camfil Checkout List Component', () => {
   let component: CamfilCheckoutListComponent;
@@ -50,7 +50,6 @@ describe('Camfil Checkout List Component', () => {
 
     await TestBed.configureTestingModule({
       declarations: [
-        AddEmailRecipientModalComponent,
         CamfilCamCardModalComponent,
         CamfilCheckoutDeliveryAddressComponent,
         CamfilCheckoutListComponent,
@@ -59,6 +58,7 @@ describe('Camfil Checkout List Component', () => {
         CamfilProductQuantityComponent,
         CamfilSmallCtaModalComponent,
         EditOrderModalComponent,
+        MockComponent(AddEmailRecipientModalComponent),
         MockComponent(AddressComponent),
         MockComponent(CamfilBasketCostSummaryComponent),
         MockComponent(CamfilCheckoutLineItemComponent),
@@ -104,6 +104,14 @@ describe('Camfil Checkout List Component', () => {
       ],
       lineItems: [],
       totals: 999,
+    };
+
+    component.basket = {
+      basketExtensions: [
+        {
+          emailRecipients: ['test@test.se'],
+        },
+      ],
     };
 
     element = fixture.nativeElement;

@@ -1,4 +1,4 @@
-import { FormControl, FormGroup, ValidationErrors, ValidatorFn } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 
 export class SpecialValidators {
   /**
@@ -61,4 +61,10 @@ export class SpecialValidators {
     const usernamePattern = /^[a-zA-Z0-9]([._-](?![._-])|[a-zA-Z0-9]){3,36}[a-zA-Z0-9]$/;
     return usernamePattern.test(control.value) ? undefined : { username: { valid: false } };
   }
+
+  static commaSeparatedEmailValidator = (control: AbstractControl): { [key: string]: any } | undefined => {
+    const emails = control.value.split(',').map(e => e.trim());
+    const forbidden = emails.some(email => Validators.email(new FormControl(email)));
+    return forbidden ? { toAddress: { value: control.value } } : undefined;
+  };
 }
