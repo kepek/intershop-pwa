@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store, select } from '@ngrx/store';
+import { EMPTY } from 'rxjs';
 import { concatMapTo, map, mergeMap, withLatestFrom } from 'rxjs/operators';
 
 import { Address } from 'ish-core/models/address/address.model';
@@ -29,6 +30,7 @@ import {
   updateBasket,
   updateBasketAddress,
 } from './basket.actions';
+import { getCurrentBasketId } from './basket.selectors';
 
 @Injectable()
 export class BasketAddressesEffects {
@@ -179,11 +181,14 @@ export class BasketAddressesEffects {
   loadBasketAddresses$ = createEffect(() =>
     this.actions$.pipe(
       ofType(loadBasketAddresses),
-      mergeMap(() =>
-        this.basketService.getBasketAddresses().pipe(
-          mergeMap((basketAddresses: Address[]) => [loadBasketAddressesSuccess({ basketAddresses })]),
-          mapErrorToAction(loadBasketAddressesFail)
-        )
+      withLatestFrom(this.store.pipe(select(getCurrentBasketId))),
+      mergeMap(([, basket]) =>
+        basket
+          ? this.basketService.getBasketAddresses().pipe(
+              mergeMap((basketAddresses: Address[]) => [loadBasketAddressesSuccess({ basketAddresses })]),
+              mapErrorToAction(loadBasketAddressesFail)
+            )
+          : EMPTY
       )
     )
   );

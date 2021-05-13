@@ -1,5 +1,4 @@
 import {
-  AfterViewInit,
   ChangeDetectionStrategy,
   Component,
   EventEmitter,
@@ -42,7 +41,7 @@ export interface CamCardCreateAndEmitter {
   styleUrls: ['./create-cam-card-modal.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CreateCamCardModalComponent implements OnInit, AfterViewInit, OnDestroy {
+export class CreateCamCardModalComponent implements OnInit, OnDestroy {
   @Input() product: Product;
   @Input() rootCamCardAddress: CamCardAddress;
   @Input() parentForm: FormGroup;
@@ -88,17 +87,22 @@ export class CreateCamCardModalComponent implements OnInit, AfterViewInit, OnDes
     this.accountFacade.user$.pipe(whenTruthy(), take(1)).subscribe(() => {
       this.customers$.pipe(takeUntil(this.destroy$)).subscribe(customers => {
         this.customers = customers;
-        this.camCardForm.patchValue({
-          customerSelect: customers[0]?.id, // TODO: Check why is not selected by default
-        });
+        this.setDefaultCustomer();
 
-        if (customers.length === 1) {
-          this.pickCustomer({ value: customers[0].id });
-        } else if (!customers.length) {
+        if (!customers.length) {
           this.camCardsFacade.loadCustomers();
         }
       });
     });
+  }
+  setDefaultCustomer() {
+    if (this.customers.length === 1) {
+      const id = this.customers[0]?.id;
+      this.camCardForm.patchValue({
+        customerSelect: id,
+      });
+      this.pickCustomer({ value: id });
+    }
   }
   initForm() {
     this.camCardForm = this.fb.group({
@@ -121,10 +125,6 @@ export class CreateCamCardModalComponent implements OnInit, AfterViewInit, OnDes
           quantity: new FormControl(0),
           boxLabel: new FormControl('', Validators.maxLength(60)),
         });
-  }
-
-  ngAfterViewInit() {
-    // this.quantityForm.setValue({ quantity: this.product.minOrderQuantity || 1, boxLabel: '' });
   }
 
   addSubLevel() {
@@ -236,7 +236,7 @@ export class CreateCamCardModalComponent implements OnInit, AfterViewInit, OnDes
   /** open modal */
   show() {
     this.camCardForm?.reset();
-
+    this.setDefaultCustomer();
     this.showNewSegment = false;
 
     return this.modalTemplate;
