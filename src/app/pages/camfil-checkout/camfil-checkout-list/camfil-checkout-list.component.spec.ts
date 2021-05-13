@@ -29,6 +29,7 @@ import { ModalAddNewProductComponent } from '../../../extensions/cam-cards/pages
 import { OrderFormComponent } from '../../../extensions/cam-cards/shared/add-to-cart-modal/create-order-modal/order-form/order-form.component';
 import { CamfilCheckoutLineItemComponent } from '../camfil-checkout-line-item/camfil-checkout-line-item.component';
 
+import { CamfilCheckoutDeliveryAddressComponent } from './camfil-checkout-delivery-address/camfil-checkout-delivery-address.component';
 import { CamfilCheckoutListComponent } from './camfil-checkout-list.component';
 import { CamfilDeleteOrderComponent } from './camfil-delete-order/camfil-delete-order.component';
 import { EditOrderModalComponent } from './edit-order-modal/edit-order-modal.component';
@@ -49,6 +50,7 @@ describe('Camfil Checkout List Component', () => {
     await TestBed.configureTestingModule({
       declarations: [
         CamfilCamCardModalComponent,
+        CamfilCheckoutDeliveryAddressComponent,
         CamfilCheckoutListComponent,
         CamfilCounterComponent,
         CamfilDeleteOrderComponent,

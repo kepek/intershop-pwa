@@ -1,9 +1,5 @@
 <address *ngIf="address">
-  <!-- b2b Customer only -->
   <ng-container *ngIf="address.companyName1"> {{ address.companyName1 }}<br /> </ng-container>
-  <ng-container *ngIf="address.companyName2"> {{ address.companyName2 }}<br /> </ng-container>
-  <!-- all customers -->
-
   <ng-container *ngIf="address.addressLine2">{{ address.addressLine2 }}<br /></ng-container>
   <ng-container *ngIf="address.addressLine1">{{ address.addressLine1 }}<br /></ng-container>
   <ng-container *ngIf="address.addressLine3">{{ address.addressLine3 }}<br /></ng-container>
