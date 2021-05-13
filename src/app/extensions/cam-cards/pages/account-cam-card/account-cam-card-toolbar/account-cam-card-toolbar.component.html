@@ -3,7 +3,7 @@
     <button
       mat-stroked-button
       color="primary"
-      class="btn-tool"
+      class="btn-tool secondary-button"
       data-testing-id="import-cam-card"
       (click)="importCamCard($event)"
     >
@@ -13,7 +13,7 @@
     <button
       mat-stroked-button
       color="primary"
-      class="btn-tool"
+      class="btn-tool secondary-button"
       data-testing-id="add-cam-card"
       routerLink="/account/camcards/create"
     >
@@ -23,7 +23,7 @@
     <button
       mat-stroked-button
       color="primary"
-      class="btn-tool"
+      class="btn-tool secondary-button"
       disabled="{{ checkedCamCards?.length !== 1 }}"
       data-testing-id="copy-cam-card"
       (click)="copy($event)"
@@ -34,7 +34,7 @@
     <button
       mat-stroked-button
       color="primary"
-      class="btn-tool"
+      class="btn-tool secondary-button"
       disabled="{{ !checkedCamCards?.length }}"
       data-testing-id="move-cam-card"
       (click)="move($event)"
@@ -42,12 +42,15 @@
       <mat-icon svgIcon="move" class="size-15"></mat-icon>
       {{ 'camfil.account.cam_card.list.button.move.label' | translate }}
     </button>
-    <camfil-account-cam-card-pdf [camCards]="checkedCamCards" class="btn-tool"></camfil-account-cam-card-pdf>
+    <camfil-account-cam-card-pdf
+      [camCards]="checkedCamCards"
+      class="btn-tool secondary-button"
+    ></camfil-account-cam-card-pdf>
 
     <button
       mat-stroked-button
       color="primary"
-      class="btn-tool"
+      class="btn-tool secondary-button"
       data-testing-id="add-cam-card"
       (click)="addToCart()"
       [disabled]="isAddToCartBtnDisabled()"
