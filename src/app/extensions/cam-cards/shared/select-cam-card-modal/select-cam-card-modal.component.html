@@ -108,7 +108,7 @@
           [ngClass]="{ 'modal__cam-card--selected': camCardSelected === option.value }"
           (click)="selectCamCard(option.value)"
           (keypress)="selectCamCard(option.value)"
-          tabindex="0"
+          tabindex="{{ tabindex }}"
         >
           <div class="modal__cam-card--title">{{ option.label }}</div>
           <table>

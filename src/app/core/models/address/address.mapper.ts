@@ -82,8 +82,8 @@ export class AddressMapper {
     const info = data.find(el => el.language === currentLocale.value.toUpperCase()) || data[0];
 
     return {
-      id: info.cityId,
-      city: info.cityAlias,
+      id: info.cityAlias || info.cityId,
+      city: info.cityId,
       country: info.countryRegionId,
       zipCode: info.zipCode || code,
     };

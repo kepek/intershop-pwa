@@ -90,6 +90,7 @@ export class SelectCamCardModalComponent implements OnInit, OnDestroy, OnChanges
   currentSubCamCardName: string;
   useSubCamCard = false;
   camCardsLoading$: Observable<boolean>;
+  tabindex = 0;
 
   newSegmentValidator = [
     {
@@ -337,6 +338,7 @@ export class SelectCamCardModalComponent implements OnInit, OnDestroy, OnChanges
       this.resetNewSegmentForm();
     }
     this.camCardSelected = camCardID;
+    this.tabindex = -1;
     this.rootCamCardAddress = this.getSelectedCamCard(this.camCardSelected).deliveryAddress;
   }
 
