@@ -40,7 +40,10 @@ describe('Camfil Header Navigation Component', () => {
         MockComponent(CamfilSubCategoryNavigationComponent),
         MockComponent(FaIconComponent),
       ],
-      providers: [{ provide: ShoppingFacade, useFactory: () => instance(shoppingFacade) }],
+      providers: [
+        { provide: ShoppingFacade, useFactory: () => instance(shoppingFacade) },
+        { provide: AccountFacade, useFactory: () => instance(accountFacade) },
+      ],
     }).compileComponents();
   });
 
