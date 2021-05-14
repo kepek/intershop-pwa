@@ -50,6 +50,27 @@
       font-weight: bold;
     }
 
+    .recipients-container {
+      dt {
+        margin-bottom: $space-box-half;
+      }
+      .recipient-button {
+        margin: $space-box-half/2 0;
+      }
+      .delete-recipient-icon-wrapper {
+        width: 18px;
+        height: 18px;
+        margin-left: $space-box-half;
+        color: $camfil-color-light;
+        background-color: $camfil-color-primary;
+        border-radius: 50%;
+        mat-icon {
+          height: $space-box;
+          font-size: $space-box;
+        }
+      }
+    }
+
     @media (min-width: $screen-xl-min) {
       padding: $space-default $space-default * 3;
     }
@@ -217,6 +238,11 @@
         &.add-icon {
           margin-right: 5px;
           margin-left: -4px;
+        }
+
+        &.add-email-recipient-icon {
+          width: $space-box;
+          height: $space-box;
         }
 
         &::ng-deep {

@@ -1,0 +1,41 @@
+<div class="text-center">
+  <mat-icon svgIcon="contact"></mat-icon>
+</div>
+<p class="text-center">
+  <strong>{{ 'camfil.checkout.cta.add_email_recipients_for' | translate }}</strong>
+</p>
+
+<form [formGroup]="recipientsForm" (ngSubmit)="submitAddEmailRecipientForm($event)">
+  <mat-form-field appearance="fill" class="d-block">
+    <mat-label>{{ 'camfil.checkout.cta.enter_email_address' | translate }}</mat-label>
+    <input
+      matInput
+      type="text"
+      label="Enter email address"
+      formControlName="emailRecipients"
+      aria-controls="my-helper-id"
+    />
+  </mat-form-field>
+  <camfil-error
+    [errors]="getField('emailRecipients').errors"
+    [errorValidators]="validators.emailRecipients"
+    [touched]="getField('emailRecipients').touched || getField('emailRecipients').dirty"
+  ></camfil-error>
+  <p>{{ 'camfil.checkout.cta.separate_multiple_addresses' | translate }}</p>
+  <div class="col-12 text-right p-0 mt-2">
+    <button mat-flat-button class="btn-tool text-primary" type="button" (click)="dialogRef.close()">
+      {{ 'camfil.account.cam_card.move.dialog.btn.cancel' | translate }}
+    </button>
+    <button
+      mat-flat-button
+      class="btn-tool text-primary"
+      type="submit"
+      attr.aria-label="{{ 'camfil.account.cam_card.move.dialog.btn.aria' | translate }}"
+      type="submit"
+      data-testing-id="cam-card-dialog-move-submit"
+      (click)="submitAddEmailRecipientForm($event)"
+    >
+      {{ 'camfil.checkout.cta.recipients_save' | translate }}
+    </button>
+  </div>
+</form>

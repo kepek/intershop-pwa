@@ -25,4 +25,10 @@ export const ORDER_HEADER_VALIDATORS = {
       message: 'camfil.checkout.order_header.note.error.maxLength',
     },
   ],
+  emailRecipients: [
+    {
+      error: 'email',
+      message: 'Please provide a valid email address',
+    },
+  ],
 };

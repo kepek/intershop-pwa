@@ -57,6 +57,30 @@
             <dd class="col-6 p-0" data-testing-id="order-customer_id">{{ order?.deliveryDate || '-' }}</dd>
           </ng-container>
         </dl>
+        <ng-container *ngIf="emailRecipients.length">
+          <div class="row recipients-container">
+            <dt class="col-12 p-0">{{ 'camfil.checkout.cta.email_recipients' | translate }}</dt>
+            <dd class="col-12 p-0 d-flex flex-column">
+              <div *ngFor="let recipient of emailRecipients">
+                <button mat-stroked-button color="primary" class="recipient-button d-flex align-items-center">
+                  {{ recipient }}
+                  <span
+                    class="delete-recipient-icon-wrapper d-inline-flex align-items-center justify-content-center"
+                    (click)="removeSelectedRecipient(recipient)"
+                    ><mat-icon
+                      _ngcontent-intershop-pwa-c283=""
+                      role="img"
+                      class="notranslate material-icons color-light"
+                      aria-hidden="true"
+                      data-mat-icon-type="font"
+                      >close</mat-icon
+                    ></span
+                  >
+                </button>
+              </div>
+            </dd>
+          </div>
+        </ng-container>
       </div>
       <div
         class="order-summary-info col-sm-3 border-sm-right"
@@ -148,6 +172,12 @@
       <div class="order-summary-info col-sm-4" data-testing-id="order-summary-info" *ngIf="!isConfirmed">
         <div class="order-cta-container" [formGroup]="orderForm">
           <ul class="order-cta">
+            <li>
+              <a (click)="openAddEmailRecipientModal()">
+                <mat-icon svgIcon="contact" class="add-email-recipient-icon"></mat-icon>
+                {{ 'camfil.checkout.cta.add_email_recipient' | translate }}
+              </a>
+            </li>
             <li>
               <a (click)="openAddToProductModal(addNewProductModal)">
                 <mat-icon svgIcon="plus" class="add-icon"></mat-icon>
@@ -287,3 +317,6 @@
   icon="calendar"
 >
 </camfil-small-cta-modal>
+<div *ngIf="order" class="d-none">
+  <camfil-add-email-recipient-modal #addEmailRecipientsModal></camfil-add-email-recipient-modal>
+</div>

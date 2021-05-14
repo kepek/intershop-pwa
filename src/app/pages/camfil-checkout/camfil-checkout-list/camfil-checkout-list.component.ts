@@ -7,6 +7,7 @@ import {
   Input,
   OnDestroy,
   OnInit,
+  OnChanges,
   Output,
   ViewChild,
 } from '@angular/core';
@@ -37,6 +38,7 @@ import { EditOrderModalComponent } from './edit-order-modal/edit-order-modal.com
 import { ORDER_HEADER_VALIDATORS } from './validators';
 import { LineItemUpdate } from 'ish-core/models/line-item-update/line-item-update.model';
 import { Address } from 'ish-core/models/address/address.model';
+import { AddEmailRecipientModalComponent } from '../add-email-recipient-modal/add-email-recipient-modal.component';
 
 interface Order extends Bucket {
   totals: number;
@@ -48,7 +50,7 @@ interface Order extends Bucket {
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['./camfil-checkout-list.component.scss'],
 })
-export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
+export class CamfilCheckoutListComponent implements OnInit, OnChanges, OnDestroy {
   private static REQUIRED_COMPLETENESS_LEVEL = ProductCompletenessLevel.List;
   @Input() order: Order;
   @Input() buckets: Bucket[];
@@ -77,6 +79,8 @@ export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
   calendarExceptions$: Observable<[]>;
   calendarException = [];
   orderAddress = {};
+  emailRecipients: string[];
+  basketExtensions: BasketExtensions;
 
   @ViewChild(CamfilSmallCtaModalComponent) modal: CamfilSmallCtaModalComponent;
 
@@ -110,7 +114,13 @@ export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
       this.checkoutFacade.getCustomersDeliveryTerms$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(terms => {
         this.deliveryTerm = terms[this.order.customer.id];
       });
+
+      this.updateEmailRecipients();
     }
+  }
+
+  ngOnChanges(): void {
+    this.updateEmailRecipients();
   }
 
   filterDates(date) {
@@ -258,11 +268,8 @@ export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
     let items = this.order && this.order.lineItems;
 
     /** Get this order extensions */
-    const basketExtension = this.basket?.basketExtensions.find(
-      bucket => bucket.shippingAddress.id === this.order.shipToAddressFull.id
-    );
-
-    this.isPartialDelivery = basketExtension?.isPartialDelivery || false;
+    this.updateBasketExtensions();
+    this.isPartialDelivery = this.basketExtensions?.isPartialDelivery || false;
     if (items?.length) {
       items = items.map(li => {
         const earliestDeliveryDate = this.getDeliveryDate(li.productSKU);
@@ -375,6 +382,7 @@ export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
 
     const basketExtensionUpdate = {
       ...this.order,
+      ...this.basketExtensions,
       deliveryDate: deliveryDateValue,
       isPartialDelivery: isPartial,
     };
@@ -407,5 +415,38 @@ export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
 
   updateBasketItem(formValue: LineItemUpdate) {
     this.checkoutFacade.updateBasketItem(formValue);
+  }
+
+  openAddEmailRecipientModal() {
+    this.updateBasketExtensions();
+    this.dialog.open(AddEmailRecipientModalComponent, {
+      width: '360px',
+      autoFocus: false,
+      data: { ...this.order, emailRecipients: this.basketExtensions?.emailRecipients || [] },
+    });
+  }
+
+  removeSelectedRecipient(recipient) {
+    const updatedRecipients = this.emailRecipients.filter(er => er !== recipient);
+
+    const { basket, deliveryAddressId } = this.order;
+    const basketExtensionUpdate: BasketExtensions = {
+      ...this.order,
+      ...this.basketExtensions,
+      emailRecipients: updatedRecipients,
+    };
+
+    this.shoppingFacade.updateBucket(basket, deliveryAddressId, basketExtensionUpdate);
+  }
+
+  updateBasketExtensions() {
+    this.basketExtensions = this.basket?.basketExtensions?.find(
+      bucket => bucket?.shippingAddress?.id === this.order?.shipToAddressFull?.id
+    );
+  }
+
+  updateEmailRecipients() {
+    this.updateBasketExtensions();
+    this.emailRecipients = this.basketExtensions?.emailRecipients?.filter(er => er !== '');
   }
 }
