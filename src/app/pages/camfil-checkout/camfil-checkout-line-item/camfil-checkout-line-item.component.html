@@ -89,7 +89,7 @@
         <p class="delivery-date-para">{{ earliestDeliveryDate | ishDate: 'shortDate' }}</p>
       </div>
       <div class="quantity-row d-flex flex-row justify-content-between align-items-center py-3 py-md-0">
-        <span *ngIf="isConfirmed" class="quantity-confirmed">{{ product.quantity.value }}</span>
+        <span *ngIf="isConfirmed" class="quantity-confirmed">{{ item.quantity.value }}</span>
         <a
           class="btn-tool delete-cam-card"
           (click)="openDeleteModal()"
@@ -133,11 +133,11 @@
   <ng-template #price>
     <camfil-product-attribute
       [name]="'camfil.cam_card.product.list_price.label' | translate"
-      [value]="productData.listPrice | ishPrice"
+      [value]="listPriceRow.value ? (listPriceRow | ishPrice) : '----'"
     ></camfil-product-attribute>
     <camfil-product-attribute
       [name]="'camfil.cam_card.product.your_price.label' | translate"
-      [value]="productData.salePrice | ishPrice"
+      [value]="item.price | ishPrice"
     ></camfil-product-attribute>
   </ng-template>
 
@@ -202,7 +202,7 @@
   showCloseIcon="true"
   hideIcon="true"
   [actionTemplate]="actionTemplate"
-  (actionClicked)="removeProduct(product.id)"
+  (actionClicked)="removeProduct(item.id)"
 >
 </camfil-small-cta-modal>
 

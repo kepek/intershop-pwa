@@ -81,7 +81,7 @@ describe('Camfil Checkout Line Item Component', () => {
     component = fixture.componentInstance;
     element = fixture.nativeElement;
 
-    component.product = ({
+    component.item = ({
       quantity: {
         value: 5,
       },

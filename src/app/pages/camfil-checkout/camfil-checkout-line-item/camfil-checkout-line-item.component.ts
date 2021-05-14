@@ -22,6 +22,7 @@ import { AttributeHelper } from 'ish-core/models/attribute/attribute.helper';
 import { Attribute } from 'ish-core/models/attribute/attribute.model';
 import { LineItemUpdate } from 'ish-core/models/line-item-update/line-item-update.model';
 import { LineItem, LineItemView } from 'ish-core/models/line-item/line-item.model';
+import { Price } from 'ish-core/models/price/price.model';
 import { ProductViewHelper } from 'ish-core/models/product-view/product-view.helper';
 import { ProductView } from 'ish-core/models/product-view/product-view.model';
 import { ProductCompletenessLevel } from 'ish-core/models/product/product.model';
@@ -74,8 +75,9 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
   attrsValidator = {
     boxLabel: [{ error: 'maxlength', message: 'MAX length exceeded' }],
   };
+  listPriceRow: Price;
 
-  @Input() product: LineItemView;
+  @Input() item: LineItemView;
   @Input() id: string;
 
   selectItemForm: FormGroup;
@@ -102,13 +104,13 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
     });
 
     this.initForm();
-    this.quantity = this.product.quantity.value;
+    this.quantity = this.item.quantity.value;
     this.updateQuantities();
     this.calculateDeliveryDate();
   }
 
   ngOnChanges(s: SimpleChanges) {
-    if (s.product) {
+    if (s.item) {
       this.loadProductDetails();
     }
     if (s.orderDeliveryDate || s.isPartialDelivery) {
@@ -130,7 +132,7 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
   updateQuantities() {
     this.addToCartForm.valueChanges
       .pipe(debounceTime(500), takeUntil(this.destroy$))
-      .subscribe(val => this.updateBasketItem({ itemId: this.product.id, quantity: val.quantity }));
+      .subscribe(val => this.updateBasketItem({ itemId: this.item.id, quantity: val.quantity }));
   }
 
   updateBasketItem(formValue: LineItemUpdate) {
@@ -145,7 +147,7 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
   /** init form in the beginning */
   private initForm() {
     this.addToCartForm = new FormGroup({
-      quantity: new FormControl(this.product.quantity.value || 1),
+      quantity: new FormControl(this.quantity || 1),
     });
     this.boxLabelForm = new FormGroup({
       boxLabel: new FormControl(this.boxLabel, [Validators.maxLength(60)]),
@@ -174,13 +176,18 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
          * no edit for measurements on checkout now
         // this.requiresMeasurement = ProductHelper.getRequiresMeasurement(res);
          * */
+        const lPrice = res.listPrice?.value;
+        this.listPriceRow = {
+          ...res.listPrice,
+          value: lPrice * this.quantity,
+        };
         this.handleLoad.emit(res);
       });
     }
   }
 
   getValFromAttrs(res: LineItem[], name: string) {
-    const lineItem = res.find(li => li.id === this.product.id);
+    const lineItem = res.find(li => li.id === this.item.id);
     return lineItem?.attributes?.find(att => att.name === name)?.value;
   }
 
@@ -206,17 +213,12 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
 
     if (oldValue) {
       if (!value) {
-        this.checkoutFacade.deleteBasketItemAttributes(this.basketId, this.product.id, this.bucketId, name);
+        this.checkoutFacade.deleteBasketItemAttributes(this.basketId, this.item.id, this.bucketId, name);
       } else if (value !== oldValue) {
-        this.checkoutFacade.updateBasketItemAttributes(
-          this.basketId,
-          this.product.id,
-          this.bucketId,
-          boxLabelAttribute
-        );
+        this.checkoutFacade.updateBasketItemAttributes(this.basketId, this.item.id, this.bucketId, boxLabelAttribute);
       }
     } else if (value) {
-      this.checkoutFacade.addBasketItemAttributes(this.basketId, this.product.id, this.bucketId, boxLabelAttribute);
+      this.checkoutFacade.addBasketItemAttributes(this.basketId, this.item.id, this.bucketId, boxLabelAttribute);
     }
 
     if (ifLabel) {
@@ -243,7 +245,7 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
       width: '768px',
       autoFocus: false,
       maxHeight: '80vh',
-      data: { sku: this.product.productSKU },
+      data: { sku: this.item.productSKU },
     });
   }
 
