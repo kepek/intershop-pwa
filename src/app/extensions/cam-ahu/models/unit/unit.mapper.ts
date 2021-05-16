@@ -11,26 +11,48 @@ export class UnitMapper {
       throw new Error(`unitData is required`);
     }
 
-    const unit = UnitMapper.parseData(unitData);
+    const ahuUnit = UnitMapper.parseData(unitData);
 
-    unit.id = String(unit.id || unit?.ahu?.id);
+    ahuUnit.id = String(ahuUnit.id || ahuUnit?.ahu?.id);
 
-    if (unit?.ahu?.id) {
-      unit.ahu.id = String(unit.ahu.id);
+    if (ahuUnit?.ahu?.id) {
+      ahuUnit.ahu.id = String(ahuUnit.ahu.id);
     }
 
-    if (unit?.ahu?.ahuManufacturerId) {
-      unit.ahu.ahuManufacturerId = String(unit.ahu.ahuManufacturerId);
+    if (ahuUnit?.ahu?.ahuManufacturerId) {
+      ahuUnit.ahu.ahuManufacturerId = String(ahuUnit.ahu.ahuManufacturerId);
     }
 
-    if (unit?.ahuAirSlots) {
-      unit.ahuAirSlots.map((s, i) => {
-        s.ahuSlotId = String(i); // TODO (extMlk): Talk to ICC Team and ask why `s..ahuSlotId` is not unique (always = 0);
-        return s;
+    const distinctTypes = [...new Set(ahuUnit.ahuAirSlots.map(airSlot => airSlot.ahuSlotType))].reduce((obj, type) => {
+      obj[type] = ahuUnit?.ahuAirSlots?.filter(airSlot => airSlot.ahuSlotType === type)?.length || 0;
+      return obj;
+    }, {});
+
+    let ahuSlotTypeId = 0;
+
+    if (ahuUnit?.ahuAirSlots) {
+      ahuUnit.ahuAirSlots.map((airSlot, index) => {
+        if (String(airSlot.ahuSlotId) === '0') {
+          airSlot.ahuSlotId = String(index + 1); // TODO (extMlk): Talk to ICC Team and ask why `s.ahuSlotId` is not unique (always = 0);
+        }
+
+        const max = distinctTypes[airSlot?.ahuSlotType] || 0;
+
+        ahuSlotTypeId = (ahuSlotTypeId % max) + 1;
+
+        airSlot.ahuSlotTypeId = ahuSlotTypeId;
+        airSlot.ahuSlotTypeName = `${airSlot?.ahuSlotType} Slot ${ahuSlotTypeId}`;
+        airSlot.ahuSlotDimensions = [airSlot?.ahuSlotWidthMm, airSlot?.ahuSlotLengthMm, airSlot?.ahuSlotDepthMm].join(
+          'x'
+        );
+
+        return airSlot;
       });
     }
 
-    return unit;
+    console.log('ahuUnit', ahuUnit);
+
+    return ahuUnit;
   }
 
   static fromListData(unitsData: UnitData[]): Unit[] {

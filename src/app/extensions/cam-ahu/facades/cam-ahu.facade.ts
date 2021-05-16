@@ -6,7 +6,7 @@ import { defaultIfEmpty, first, map, switchMap } from 'rxjs/operators';
 import { HttpError } from 'ish-core/models/http-error/http-error.model';
 
 import { Manufacturer } from '../models/manufacturer/manufacturer.model';
-import { Unit, UnitAHUAirSlotType } from '../models/unit/unit.model';
+import { Unit, UnitAHUAirSlot, UnitAHUAirSlotType, UnitAhu } from '../models/unit/unit.model';
 import { getCamAhuState } from '../store/cam-ahu-store';
 import {
   getAhuManufacturerError,
@@ -96,6 +96,15 @@ export class CamAhuFacade {
     )
   );
   selectedAhuUnit$: Observable<Unit> = this.store.pipe(select(getSelectedAhuUnit));
+  selectedAhuUnitDetails$: Observable<UnitAhu> = this.store.pipe(
+    select(getSelectedAhuUnit),
+    map(unit => unit?.ahu)
+  );
+  selectedAhuUnitSlots$: Observable<UnitAHUAirSlot[]> = this.store.pipe(
+    select(getSelectedAhuUnit),
+    map(unit => unit?.ahuAirSlots),
+    defaultIfEmpty([])
+  );
   selectedAhuUnitAirSlotTypes$: Observable<UnitAHUAirSlotType[]> = this.store.pipe(
     select(getSelectedAhuUnit),
     map(ahuUnit => {
@@ -106,12 +115,12 @@ export class CamAhuFacade {
       const distinctTypes = [...new Set(ahuUnit.ahuAirSlots.map(airSlot => airSlot.ahuSlotType))];
 
       return distinctTypes.map(type => {
-        const filterSlots = ahuUnit?.ahuAirSlots.filter(airSlot => airSlot.ahuSlotType === type) || [];
+        const slots = ahuUnit?.ahuAirSlots.filter(airSlot => airSlot.ahuSlotType === type) || [];
         return {
           type,
           name: `${type} Air`,
-          count: filterSlots.length,
-          dimensions: filterSlots.map(airSlot => airSlot.ahuSlotName),
+          count: slots.length,
+          dimensions: slots.map(airSlot => airSlot.ahuSlotName),
         };
       });
     })

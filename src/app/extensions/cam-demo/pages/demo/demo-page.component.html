@@ -4,7 +4,7 @@
       <span class="title">AHU Demo</span>
     </mat-toolbar>
     <div class="demo-content">
-      <ish-loading *ngIf="ahuLoading$ | async"></ish-loading>
+      <!-- <ish-loading *ngIf="ahuLoading$ | async"></ish-loading> -->
       <!-- Manufacturers -->
       <mat-card>
         <mat-card-content>
@@ -33,15 +33,48 @@
               </mat-select>
             </mat-form-field>
           </form>
+          <ng-template #airSlots>
+            <fieldset *ngFor="let slot of selectedAhuUnitSlots$ | async">
+              <legend>{{ slot.name }}</legend>
+            </fieldset>
+          </ng-template>
+          <ng-container *ngTemplateOutlet="airSlots"></ng-container>
           <hr />
           <pre>ahuLoading$ {{ ahuLoading$ | async | json }}</pre>
           <hr />
-          <button (click)="addToList('15', '59535', '0', '1008065')">
-            Add To List (manufacturerId=15&unitId=59535&slotId=0&sku=1008065)
-          </button>
-          <button (click)="removeFromList('15', '59535', '0', '1008065')">
-            Remove From List (manufacturerId=15&unitId=59535&slotId=0&sku=1008065)
-          </button>
+          <ul>
+            <li>
+              <h3>Slot 0</h3>
+              <ol>
+                <li>
+                  <span>#1008065</span>
+                  <span>&nbsp;/&nbsp;</span>
+                  <button (click)="addToList('15', '59535', '0', '1008065')">Add</button>
+                  <span>&nbsp;/&nbsp;</span>
+                  <button (click)="removeFromList('15', '59535', '0', '1008065')">Remove</button>
+                </li>
+                <li>
+                  <span>#8128381</span>
+                  <span>&nbsp;/&nbsp;</span>
+                  <button (click)="addToList('15', '59535', '0', '8128381')">Add</button>
+                  <span>&nbsp;/&nbsp;</span>
+                  <button (click)="removeFromList('15', '59535', '0', '8128381')">Remove</button>
+                </li>
+              </ol>
+            </li>
+            <li>
+              <h3>Slot 1</h3>
+              <ol>
+                <li>
+                  <span>#91239419</span>
+                  <span>&nbsp;/&nbsp;</span>
+                  <button (click)="addToList('15', '59535', '1', '91239419')">Add</button>
+                  <span>&nbsp;/&nbsp;</span>
+                  <button (click)="removeFromList('15', '59535', '1', '91239419')">Remove</button>
+                </li>
+              </ol>
+            </li>
+          </ul>
           <hr />
           <pre>ahuManufacturers$ {{ ahuManufacturers$ | async }}</pre>
           <pre>ahuManufacturersLoading$ {{ ahuManufacturersLoading$ | async | json }}</pre>

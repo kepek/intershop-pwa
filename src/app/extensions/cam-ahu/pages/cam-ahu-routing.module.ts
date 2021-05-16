@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule, Routes, UrlSerializer } from '@angular/router';
+import { CamUrlSerializer } from '../serializers/cam-url-serializer';
 
 const routes: Routes = [
   {
@@ -21,5 +22,6 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
+  providers: [{ provide: UrlSerializer, useClass: CamUrlSerializer }],
 })
 export class CamAhuRoutingModule {}

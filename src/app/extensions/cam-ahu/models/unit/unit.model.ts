@@ -34,6 +34,7 @@ export interface UnitAhuLongDescription {
 }
 
 export interface UnitAHUAirSlot {
+  // API Props
   ahuSlotType: string;
   ahuSlotOrder: number;
   ahuSlotId: string;
@@ -43,6 +44,10 @@ export interface UnitAHUAirSlot {
   ahuSlotLengthMm: string;
   ahuSlotDepthMm: string;
   items: UnitAHUAirSlotItem[];
+  // Internal Props
+  ahuSlotTypeId?: number;
+  ahuSlotTypeName?: string;
+  ahuSlotDimensions?: string;
 }
 
 export interface UnitAHUAirSlotItem {
