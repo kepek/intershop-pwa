@@ -111,11 +111,21 @@ export class AccountCamCardDetailLineItemComponent implements OnChanges, OnInit,
   }
 
   measurementToShow() {
-    return this.camCardItemData.measurement
-      ? Object.values(this.camCardItemData.measurement)
-          .filter(item => item && typeof item === 'number')
-          .join('x')
-      : undefined;
+    const mObj = this.camCardItemData.measurement;
+    if (!mObj) {
+      return;
+    }
+    const sortedKeys = Object.keys(mObj)
+      .sort()
+      .reverse()
+      .reduce((r, k) => {
+        r[k] = mObj[k];
+        return r;
+      }, {});
+
+    return Object.values(sortedKeys)
+      .filter(item => item && typeof item === 'number')
+      .join('x');
   }
 
   moveItemToOtherCamCard(camCardItemId: string, sku: string, camCardMoveData: { id: string; name: string }) {
