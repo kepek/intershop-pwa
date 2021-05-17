@@ -3,13 +3,14 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
-import { MockComponent, MockDirective } from 'ng-mocks';
+import { MockComponent, MockDirective, MockPipe } from 'ng-mocks';
 import { of } from 'rxjs';
 import { instance, mock, when } from 'ts-mockito';
 
 import { ServerHtmlDirective } from 'ish-core/directives/server-html.directive';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { Product } from 'ish-core/models/product/product.model';
+import { AddressSortPipe } from 'ish-core/pipes/camfil-address-sort.pipe';
 import { CoreStoreModule } from 'ish-core/store/core/core-store.module';
 import { CamfilCamCardModalComponent } from 'ish-shared/components/common/camfil-cam-card-modal/camfil-cam-card-modal.component';
 import { CamfilErrorComponent } from 'ish-shared/components/common/camfil-error/camfil-error.component';
@@ -51,6 +52,7 @@ describe('Select Cam Card Modal Component', () => {
         MockComponent(InputComponent),
         MockComponent(LoadingComponent),
         MockDirective(ServerHtmlDirective),
+        MockPipe(AddressSortPipe),
         SelectCamCardModalComponent,
       ],
       imports: [

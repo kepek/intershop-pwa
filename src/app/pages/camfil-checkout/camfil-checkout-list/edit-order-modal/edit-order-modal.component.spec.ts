@@ -1,9 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MockComponent } from 'ng-mocks';
+import { MockComponent, MockPipe } from 'ng-mocks';
 import { instance, mock } from 'ts-mockito';
 
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
+import { AddressSortPipe } from 'ish-core/pipes/camfil-address-sort.pipe';
 import { CamfilCamCardModalComponent } from 'ish-shared/components/common/camfil-cam-card-modal/camfil-cam-card-modal.component';
 import { CamfilErrorComponent } from 'ish-shared/components/common/camfil-error/camfil-error.component';
 import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
@@ -29,6 +30,7 @@ describe('Edit Order Modal Component', () => {
         EditOrderModalComponent,
         MockComponent(LoadingComponent),
         MockComponent(ZipCodeComponent),
+        MockPipe(AddressSortPipe),
         OrderFormComponent,
       ],
       providers: [
