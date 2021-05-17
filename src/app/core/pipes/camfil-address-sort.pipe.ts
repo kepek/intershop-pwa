@@ -10,7 +10,7 @@ export class AddressSortPipe implements PipeTransform {
     if (!Array.isArray(array)) {
       return;
     }
-   return array.slice().sort((a: any, b: any) => {
+    return array.slice().sort((a: any, b: any) => {
       if (a[fieldName] < b[fieldName]) {
         return -1;
       } else if (a[fieldName] > b[fieldName]) {
