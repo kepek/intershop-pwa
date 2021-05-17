@@ -112,8 +112,16 @@
         <dd class="col-4">{{ order.totalOrderedQty }}</dd>
         <dt class="col-8">{{ 'camfil.account.orderdetails.summary.qty_delivered' | translate }}</dt>
         <dd class="col-4">{{ order.totalDeliveredQty }}</dd>
-        <dt *ngIf="order.volumeDiscount" class="col-8">{{ 'camfil.account.orderdetails.rebate.text' | translate }}</dt>
-        <dd *ngIf="order.volumeDiscount" class="col-4">{{ handlePrice(order.volumeDiscount, order.currency) }}</dd>
+        <ng-container *ngIf="order.additionalTotalCost">
+          <ng-container *ngFor="let element of order.additionalTotalCost">
+            <dt class="col-8">{{ element.label }}</dt>
+            <dd class="col-4">{{ handlePrice(element.value, order.currency) }}</dd>
+          </ng-container>
+        </ng-container>
+        <ng-container *ngIf="order.volumeDiscount">
+          <dt class="col-8">{{ 'camfil.account.orderdetails.rebate.text' | translate }}</dt>
+          <dd class="col-4">{{ handlePrice(order.volumeDiscount, order.currency) }}</dd>
+        </ng-container>
         <dt class="col-8">{{ 'camfil.account.orderdetails.your.total_price.text' | translate }}</dt>
         <dd class="col-4">{{ handlePrice(order.totalCustomerPriceSum, order.currency) }}</dd>
         <dt class="col-8 total-price">{{ 'camfil.account.orderdetails.your.total_price_exl_vat.text' | translate }}</dt>

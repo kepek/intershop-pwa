@@ -27,7 +27,7 @@ export interface Order {
   totalPriceAfterDiscountExVAT: number;
   lineItems?: OrderLineItem[];
   trackAndTrace?: TrackAndTrace;
-  additionalTotalCost?: AdditionalTotalCost;
+  additionalTotalCost?: AdditionalTotalCost[];
   phoneNotification: string;
   volumeDiscount: number;
 }
