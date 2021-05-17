@@ -1,18 +1,12 @@
-import {
-  AfterViewInit,
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Observable } from 'rxjs';
 
+import { AccountFacade } from 'ish-core/facades/account.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { NavigationCategory } from 'ish-core/models/navigation-category/navigation-category.model';
+import { User } from 'ish-core/models/user/user.model';
 import { NextOpenLevelOnMobileNavType } from 'ish-core/models/viewtype/viewtype.types';
+import { AuthorizationToggleService } from 'ish-core/utils/authorization-toggle/authorization-toggle.service';
 
 import { environment } from '../../../../environments/environment';
 
@@ -22,26 +16,30 @@ import { environment } from '../../../../environments/environment';
   styleUrls: ['./camfil-header-navigation.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CamfilHeaderNavigationComponent implements OnInit, AfterViewInit {
+export class CamfilHeaderNavigationComponent implements OnInit {
   @Input() view: 'auto' | 'small' | 'full' = 'auto';
   @Output() isClosedCat = new EventEmitter<NextOpenLevelOnMobileNavType>();
 
   categories$: Observable<NavigationCategory[]>;
+  user$: Observable<User>;
 
   openedCategories = [];
 
   isProdEnv = environment.production;
 
-  constructor(private shoppingFacade: ShoppingFacade, private cdr: ChangeDetectorRef) {}
+  constructor(
+    private shoppingFacade: ShoppingFacade,
+    private accountFacade: AccountFacade,
+    private authorizationToggle: AuthorizationToggleService
+  ) {}
 
   ngOnInit() {
     this.categories$ = this.shoppingFacade.navigationCategories$();
+    this.user$ = this.accountFacade.user$;
   }
 
-  ngAfterViewInit() {
-    setTimeout(() => {
-      this.cdr.markForCheck();
-    }, 500);
+  authorization$(permissions: string[]) {
+    return this.authorizationToggle.isAuthorizedToCheckArrAny(permissions);
   }
 
   /**
