@@ -39,7 +39,8 @@
         }}{{ 'camfil.account.import.line_contains_errors.text' | translate }}
       </p>
       <div class="line-error-list" *ngFor="let err of lineErrors.errors">
-        {{ err.errorCode }} {{ 'camfil.account.import.parameter_error.text' | translate }}<br />
+        {{ 'camfil.error.' + err.errorCode | translate }} {{ 'camfil.account.import.parameter_error.text' | translate
+        }}<br />
         <span class="mr-1" *ngFor="let parameter of err.errorParameters"
           ><strong>{{ parameter }}</strong></span
         >
