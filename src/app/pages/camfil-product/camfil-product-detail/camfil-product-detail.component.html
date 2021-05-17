@@ -60,6 +60,7 @@
             <camfil-product-quantity
               *ngIf="!isRetailSet(product)"
               [product]="product"
+              [allowZeroQuantity]="true"
               [parentForm]="productDetailForm"
               [controlName]="quantityControlName"
             ></camfil-product-quantity>

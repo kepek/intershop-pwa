@@ -54,7 +54,7 @@ export class CamfilProductDetailComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.productDetailForm = new FormGroup({
-      [this.quantityControlName]: new FormControl(this.quantity || this.product.minOrderQuantity),
+      [this.quantityControlName]: new FormControl(),
     });
 
     this.productDetailForm
