@@ -1,5 +1,16 @@
 // tslint:disable: ish-ordered-imports project-structure ban-specific-imports
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -17,14 +28,14 @@ import { CreatePageDataSourceComponent } from '../../pages/create/create-page.da
   styleUrls: ['./camfil-organization-user-details-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.Default,
 })
-export class CamfilOrganizationUserDetailsFormComponent implements OnInit, OnDestroy {
+export class CamfilOrganizationUserDetailsFormComponent implements OnInit, OnDestroy, AfterViewInit {
   @Input() customer: CamfilB2bCustomer;
   @Input() user: CamfilB2bUser;
 
   @Output() changeUser = new EventEmitter<{ customer: CamfilB2bCustomer; user: CamfilB2bUser }>();
   @Output() changeUserActive = new EventEmitter<{ active: boolean }>();
   @Output() changeUserPassword = new EventEmitter();
-
+  @ViewChild('firstName') firstNameInput: ElementRef;
   private destroy$ = new Subject();
 
   form: FormGroup;
@@ -92,6 +103,10 @@ export class CamfilOrganizationUserDetailsFormComponent implements OnInit, OnDes
   ngOnInit() {
     this.initUserForm();
     this.initUserActiveForm();
+  }
+
+  ngAfterViewInit() {
+    this.firstNameInput?.nativeElement.focus();
   }
 
   ngOnDestroy() {
