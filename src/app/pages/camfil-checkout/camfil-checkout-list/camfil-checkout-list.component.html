@@ -57,7 +57,7 @@
             <dd class="col-6 p-0" data-testing-id="order-customer_id">{{ order?.deliveryDate || '-' }}</dd>
           </ng-container>
         </dl>
-        <ng-container *ngIf="emailRecipients.length">
+        <ng-container *ngIf="emailRecipients?.length">
           <div class="row recipients-container">
             <dt class="col-12 p-0">{{ 'camfil.checkout.cta.email_recipients' | translate }}</dt>
             <dd class="col-12 p-0 d-flex flex-column">
