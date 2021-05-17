@@ -33,48 +33,43 @@
               </mat-select>
             </mat-form-field>
           </form>
-          <ng-template #airSlots>
-            <fieldset *ngFor="let slot of selectedAhuUnitSlots$ | async">
-              <legend>{{ slot.name }}</legend>
+          <hr />
+          <ng-container *ngIf="selectedAhuUnit$ | async as ahuUnit">
+            <h2>Summary</h2>
+            <pre>{{ selectedAhuUnitSlotsSummary$ | async | json }}</pre>
+            <hr />
+            <h1>Unit: {{ ahuUnit.ahu.ahuManufacturerName }} {{ isAhuUnitValid$(ahuUnit) | async | json }}</h1>
+            <fieldset *ngFor="let ahuAirSlot of ahuUnit?.ahuAirSlots">
+              <legend>
+                {{ ahuAirSlot.ahuSlotTypeName }} / {{ ahuAirSlot.ahuSlotId }}
+                /
+                {{ isAhuUnitSlotValid$(ahuUnit, ahuAirSlot.ahuSlotId) | async | json }}
+              </legend>
+              <ol>
+                <li *ngFor="let item of ahuAirSlot.items">
+                  {{ item.sku }} / {{ ahuUnit.ahu.ahuManufacturerId }} / {{ ahuUnit.id }} / {{ ahuAirSlot.ahuSlotId }}
+                  /
+                  <button
+                    (click)="addAhuSlotItemToList(ahuUnit, ahuAirSlot.ahuSlotId, item.sku)"
+                    [disabled]="isAhuUnitSlotValid$(ahuUnit, ahuAirSlot.ahuSlotId) | async"
+                  >
+                    Add
+                  </button>
+                  /
+                  <button
+                    (click)="removeAhuSlotItemFromList(ahuUnit, ahuAirSlot.ahuSlotId, item.sku)"
+                    [disabled]="!(isAhuUnitSlotItemAdded$(ahuUnit, ahuAirSlot.ahuSlotId, item.sku) | async)"
+                  >
+                    Remove
+                  </button>
+                  /
+                  {{ isAhuUnitSlotItemAdded$(ahuUnit, ahuAirSlot.ahuSlotId, item.sku) | async | json }}
+                </li>
+              </ol>
             </fieldset>
-          </ng-template>
-          <ng-container *ngTemplateOutlet="airSlots"></ng-container>
+          </ng-container>
           <hr />
           <pre>ahuLoading$ {{ ahuLoading$ | async | json }}</pre>
-          <hr />
-          <ul>
-            <li>
-              <h3>Slot 0</h3>
-              <ol>
-                <li>
-                  <span>#1008065</span>
-                  <span>&nbsp;/&nbsp;</span>
-                  <button (click)="addToList('15', '59535', '0', '1008065')">Add</button>
-                  <span>&nbsp;/&nbsp;</span>
-                  <button (click)="removeFromList('15', '59535', '0', '1008065')">Remove</button>
-                </li>
-                <li>
-                  <span>#8128381</span>
-                  <span>&nbsp;/&nbsp;</span>
-                  <button (click)="addToList('15', '59535', '0', '8128381')">Add</button>
-                  <span>&nbsp;/&nbsp;</span>
-                  <button (click)="removeFromList('15', '59535', '0', '8128381')">Remove</button>
-                </li>
-              </ol>
-            </li>
-            <li>
-              <h3>Slot 1</h3>
-              <ol>
-                <li>
-                  <span>#91239419</span>
-                  <span>&nbsp;/&nbsp;</span>
-                  <button (click)="addToList('15', '59535', '1', '91239419')">Add</button>
-                  <span>&nbsp;/&nbsp;</span>
-                  <button (click)="removeFromList('15', '59535', '1', '91239419')">Remove</button>
-                </li>
-              </ol>
-            </li>
-          </ul>
           <hr />
           <pre>ahuManufacturers$ {{ ahuManufacturers$ | async }}</pre>
           <pre>ahuManufacturersLoading$ {{ ahuManufacturersLoading$ | async | json }}</pre>

@@ -2,7 +2,7 @@ import { createAction } from '@ngrx/store';
 
 import { httpError, payload } from 'ish-core/utils/ngrx-creators';
 
-import { Unit } from '../../models/unit/unit.model';
+import { Unit, UnitAHUAirSlotItemParams } from '../../models/unit/unit.model';
 
 export const loadAhuUnits = createAction('[AHU Unit Internal] Load AHU Units', payload<{ manufacturerId: string }>());
 
@@ -18,12 +18,12 @@ export const loadAhuUnitSuccess = createAction('[AHU Unit API] Load AHU Unit Suc
 
 export const loadAhuUnitFail = createAction('[AHU Unit API] Load AHU Unit Fail', httpError());
 
-export const addToList = createAction(
-  '[AHU Unit Internal] Add To List',
-  payload<{ manufacturerId: string; unitId: string; slotId: string; sku: string }>()
+export const addAhuSlotItemToList = createAction(
+  '[AHU Unit Internal] Add AHU Unit Slot Item To List',
+  payload<UnitAHUAirSlotItemParams>()
 );
 
-export const removeFromList = createAction(
-  '[AHU Unit Internal] Remove From List',
-  payload<{ manufacturerId: string; unitId: string; slotId: string; sku: string }>()
+export const removeAhuSlotItemFromList = createAction(
+  '[AHU Unit Internal] Remove AHU Unit Slot Item From List',
+  payload<UnitAHUAirSlotItemParams>()
 );

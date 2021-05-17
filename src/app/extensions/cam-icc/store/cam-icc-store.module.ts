@@ -8,7 +8,7 @@ import { IccEffects } from './icc/icc.effects';
 import { iccReducer } from './icc/icc.reducer';
 
 const camIccReducers: ActionReducerMap<CamIccState> = {
-  _icc: iccReducer,
+  icc: iccReducer,
 };
 
 const camIccEffects = [IccEffects];

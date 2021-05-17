@@ -46,11 +46,14 @@ export class UnitMapper {
           'x'
         );
 
+        airSlot.items.map(item => {
+          item.sku = item.item;
+          return item;
+        });
+
         return airSlot;
       });
     }
-
-    console.log('ahuUnit', ahuUnit);
 
     return ahuUnit;
   }

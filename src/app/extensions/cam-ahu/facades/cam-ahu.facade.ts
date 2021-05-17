@@ -1,12 +1,21 @@
 import { Injectable } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { Observable, combineLatest } from 'rxjs';
-import { defaultIfEmpty, first, map, switchMap } from 'rxjs/operators';
+import { defaultIfEmpty, first, map, switchMap, withLatestFrom } from 'rxjs/operators';
 
 import { HttpError } from 'ish-core/models/http-error/http-error.model';
+import { selectQueryParams } from 'ish-core/store/core/router';
 
 import { Manufacturer } from '../models/manufacturer/manufacturer.model';
-import { Unit, UnitAHUAirSlot, UnitAHUAirSlotType, UnitAhu } from '../models/unit/unit.model';
+import { UnitHelper } from '../models/unit/unit.helper';
+import {
+  Unit,
+  UnitAHUAirSlot,
+  UnitAHUAirSlotItemParams,
+  UnitAHUAirSlotParams,
+  UnitAHUAirSlotType,
+  UnitAhu,
+} from '../models/unit/unit.model';
 import { getCamAhuState } from '../store/cam-ahu-store';
 import {
   getAhuManufacturerError,
@@ -19,14 +28,15 @@ import {
   selectAhuManufacturer,
 } from '../store/manufacturer';
 import {
-  addToList,
+  addAhuSlotItemToList,
+  getAhuUnitDetails,
   getAhuUnitsError,
   getAhuUnitsLoading,
   getAllAhuUnits,
   getSelectedAhuUnit,
   loadAhuUnit,
   loadAhuUnits,
-  removeFromList,
+  removeAhuSlotItemFromList,
   selectAhuUnit,
 } from '../store/unit';
 
@@ -96,17 +106,35 @@ export class CamAhuFacade {
     )
   );
   selectedAhuUnit$: Observable<Unit> = this.store.pipe(select(getSelectedAhuUnit));
-  selectedAhuUnitDetails$: Observable<UnitAhu> = this.store.pipe(
-    select(getSelectedAhuUnit),
-    map(unit => unit?.ahu)
-  );
-  selectedAhuUnitSlots$: Observable<UnitAHUAirSlot[]> = this.store.pipe(
-    select(getSelectedAhuUnit),
+  selectedAhuUnitDetails$: Observable<UnitAhu> = this.selectedAhuUnit$.pipe(map(unit => unit?.ahu));
+  selectedAhuUnitSlots$: Observable<UnitAHUAirSlot[]> = this.selectedAhuUnit$.pipe(
     map(unit => unit?.ahuAirSlots),
     defaultIfEmpty([])
   );
-  selectedAhuUnitAirSlotTypes$: Observable<UnitAHUAirSlotType[]> = this.store.pipe(
-    select(getSelectedAhuUnit),
+  selectedAhuUnitSlotsSummary$ = this.selectedAhuUnitSlots$.pipe(
+    withLatestFrom(this.store.pipe(select(selectQueryParams))),
+    map(([ahuSlots, queryParams]) => {
+      return ahuSlots.map(ahuSlot => {
+        const newAhuSlot = { ...ahuSlot };
+
+        newAhuSlot.items = ahuSlot.items.filter(item => {
+          const ahuSlotItemParams: UnitAHUAirSlotItemParams = {
+            manufacturerId: queryParams?.[UnitHelper.MANUFACTURER_ID_QUERY_PARAM_NAME],
+            unitId: queryParams?.[UnitHelper.UNIT_ID_QUERY_PARAM_NAME],
+            slotId: ahuSlot.ahuSlotId,
+            sku: item.sku,
+          };
+
+          // Add Quantity/Qty
+
+          return UnitHelper.isAhuUnitSlotItemAdded(queryParams, ahuSlotItemParams);
+        });
+
+        return newAhuSlot;
+      });
+    })
+  );
+  selectedAhuUnitAirSlotTypes$: Observable<UnitAHUAirSlotType[]> = this.selectedAhuUnit$.pipe(
     map(ahuUnit => {
       if (!ahuUnit) {
         return [];
@@ -126,21 +154,54 @@ export class CamAhuFacade {
     })
   );
 
-  // Common
+  // Unit
+
+  isAhuUnitValid$(ahuUnit: Unit) {
+    const slots = ahuUnit?.ahuAirSlots.map(ahuSlot => {
+      const ahuSlotParams: UnitAHUAirSlotParams = {
+        manufacturerId: ahuUnit.ahu.ahuManufacturerId,
+        unitId: ahuUnit.id,
+        slotId: ahuSlot.ahuSlotId,
+      };
+
+      return this.isAhuUnitSlotValid$(ahuSlotParams);
+    });
+
+    return combineLatest(slots).pipe(map(s => s.every(valid => valid)));
+  }
+
+  // Unit -> Slot
+
+  isAhuUnitSlotValid$(ahuSlotParams: UnitAHUAirSlotParams): Observable<boolean> {
+    return this.store.pipe(select(selectQueryParams)).pipe(
+      withLatestFrom(this.store.pipe(select(getAhuUnitDetails, { id: ahuSlotParams?.unitId }))),
+      map(([queryParams, ahuUnit]) => UnitHelper.isAhuUnitSlotValid(queryParams, ahuSlotParams, ahuUnit))
+    );
+  }
+
+  // Unit -> Slot -> Item
+
+  addAhuUnitSlotItemToList(ahuSlotItemParams: UnitAHUAirSlotItemParams) {
+    this.store.dispatch(addAhuSlotItemToList(ahuSlotItemParams));
+  }
+
+  removeAhuUnitSlotItemFromList(ahuSlotItemParams: UnitAHUAirSlotItemParams) {
+    this.store.dispatch(removeAhuSlotItemFromList(ahuSlotItemParams));
+  }
+
+  isAhuUnitSlotItemAdded$(ahuSlotItemParams: UnitAHUAirSlotItemParams): Observable<boolean> {
+    return this.store
+      .pipe(select(selectQueryParams))
+      .pipe(map(queryParams => UnitHelper.isAhuUnitSlotItemAdded(queryParams, ahuSlotItemParams)));
+  }
+
+  /**
+   * Common
+   */
 
   ahuLoading$() {
     return combineLatest([this.ahuManufacturersLoading$, this.ahuUnitsLoading$]).pipe(
       map(resources => resources.some(loading => loading))
     );
-  }
-
-  // List
-
-  addToList$(manufacturerId: string, unitId: string, slotId: string, sku: string) {
-    this.store.dispatch(addToList({ manufacturerId, unitId, slotId, sku }));
-  }
-
-  removeFromList$(manufacturerId: string, unitId: string, slotId: string, sku: string) {
-    this.store.dispatch(removeFromList({ manufacturerId, unitId, slotId, sku }));
   }
 }

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes, UrlSerializer } from '@angular/router';
+
 import { CamUrlSerializer } from '../serializers/cam-url-serializer';
 
 const routes: Routes = [

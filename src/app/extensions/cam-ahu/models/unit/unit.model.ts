@@ -52,6 +52,7 @@ export interface UnitAHUAirSlot {
 
 export interface UnitAHUAirSlotItem {
   item: string;
+  sku?: string;
 }
 
 // Internal Models
@@ -60,4 +61,17 @@ export interface UnitAHUAirSlotType {
   name: string;
   count: number;
   dimensions: string[];
+}
+
+export interface UnitAHUAirSlotParams {
+  manufacturerId: string;
+  unitId: string;
+  slotId: string;
+}
+
+export interface UnitAHUAirSlotItemParams {
+  manufacturerId: string;
+  unitId: string;
+  slotId: string;
+  sku: string;
 }

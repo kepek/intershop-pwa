@@ -2,24 +2,24 @@ import { Injectable } from '@angular/core';
 import { Params, Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store, select } from '@ngrx/store';
-import * as qs from 'qs';
 import { filter, map, switchMap, tap, withLatestFrom } from 'rxjs/operators';
 
 import { ofUrl, selectQueryParams } from 'ish-core/store/core/router';
 import { mapErrorToAction, mapToPayload, mapToPayloadProperty, whenTruthy } from 'ish-core/utils/operators';
 
+import { UnitHelper } from '../../models/unit/unit.helper';
 import { AhuService } from '../../services/ahu/ahu.service';
 import { getSelectedAhuManufacturerId } from '../manufacturer';
 
 import {
-  addToList,
+  addAhuSlotItemToList,
   loadAhuUnit,
   loadAhuUnitFail,
   loadAhuUnitSuccess,
   loadAhuUnits,
   loadAhuUnitsFail,
   loadAhuUnitsSuccess,
-  removeFromList,
+  removeAhuSlotItemFromList,
   selectAhuUnit,
 } from './unit.actions';
 import { getSelectedAhuUnitId } from './unit.selectors';
@@ -85,20 +85,11 @@ export class UnitEffects {
   addToList$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(addToList),
+        ofType(addAhuSlotItemToList),
         mapToPayload(),
         withLatestFrom(this.store.pipe(select(selectQueryParams))),
-        tap(([{ manufacturerId, unitId, slotId, sku }, queryParams]) => {
-          const prevSlots = this.parseQs(queryParams?.slots) as {};
-
-          console.log('prevSlots', prevSlots);
-
-          const nextSlots = {};
-          nextSlots[slotId] = prevSlots[slotId] ? [...prevSlots[slotId], sku] : [sku];
-
-          const slots = { ...prevSlots, ...nextSlots };
-
-          this.navigateTo(undefined, { manufacturerId, unitId, slots: this.stringifyToQs(slots) });
+        tap(([slotItem, queryParams]) => {
+          this.navigateTo(undefined, UnitHelper.addAhuSlotItemToList(queryParams, slotItem));
         })
       ),
     { dispatch: false }
@@ -107,20 +98,11 @@ export class UnitEffects {
   removeFromList$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(removeFromList),
+        ofType(removeAhuSlotItemFromList),
         mapToPayload(),
         withLatestFrom(this.store.pipe(select(selectQueryParams))),
-        tap(([{ manufacturerId, unitId, slotId, sku }, queryParams]) => {
-          const prevSlots = { ...this.parseQs(queryParams?.slots) } as {};
-
-          const nextSlots = {};
-          nextSlots[slotId] = prevSlots[slotId] ? [...prevSlots[slotId]].filter(item => item !== sku) : [];
-
-          const slots = { ...prevSlots, ...nextSlots };
-
-          const newQueryParams = { manufacturerId, unitId, slots: this.stringifyToQs(slots) };
-
-          this.navigateTo(undefined, newQueryParams);
+        tap(([slotItem, queryParams]) => {
+          this.navigateTo(undefined, UnitHelper.removeAhuSlotItemFromList(queryParams, slotItem));
         })
       ),
     { dispatch: false }
@@ -133,20 +115,10 @@ export class UnitEffects {
       currentRoute = currentRoute.firstChild;
     }
 
-    console.log('queryParams', queryParams);
-
     this.router.navigate(path ? [path] : [], {
       relativeTo: currentRoute,
       queryParams,
       queryParamsHandling: 'merge',
     });
-  }
-
-  private stringifyToQs(obj: {}): string {
-    return qs.stringify(obj, { encode: false });
-  }
-
-  private parseQs(str: string): qs.ParsedQs {
-    return qs.parse(str);
   }
 }

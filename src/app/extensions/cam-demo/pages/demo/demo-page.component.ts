@@ -42,7 +42,14 @@ import { whenTruthy } from 'ish-core/utils/operators';
 
 import { CamAhuFacade } from '../../../cam-ahu/facades/cam-ahu.facade';
 import { Manufacturer } from '../../../cam-ahu/models/manufacturer/manufacturer.model';
-import { Unit, UnitAHUAirSlot, UnitAHUAirSlotType, UnitAhu } from '../../../cam-ahu/models/unit/unit.model';
+import {
+  Unit,
+  UnitAHUAirSlot,
+  UnitAHUAirSlotType,
+  UnitAhu,
+  UnitAHUAirSlotItemParams,
+  UnitAHUAirSlotParams,
+} from '../../../cam-ahu/models/unit/unit.model';
 
 import { DemoBottomSheetComponent } from './demo-bottom-sheet/demo-bottom-sheet.component';
 import { DemoDialogComponent } from './demo-dialog/demo-dialog.component';
@@ -127,6 +134,7 @@ export class DemoPageComponent implements AfterViewInit, OnInit, OnDestroy {
   selectedAhuUnit$: Observable<Unit>;
   selectedAhuUnitDetails$: Observable<UnitAhu>;
   selectedAhuUnitSlots$: Observable<UnitAHUAirSlot[]>;
+  selectedAhuUnitSlotsSummary$: Observable<UnitAHUAirSlot[]>;
   selectedAhuUnitAirSlotTypes$: Observable<UnitAHUAirSlotType[]>;
   ahuLoading$: Observable<boolean>;
 
@@ -294,12 +302,51 @@ export class DemoPageComponent implements AfterViewInit, OnInit, OnDestroy {
     });
   }
 
-  addToList(manufacturerId: string, unitId: string, slotId: string, sku: string) {
-    this.ahuFacade.addToList$(manufacturerId, unitId, slotId, sku);
+  addAhuSlotItemToList(ahuUnit: Unit, slotId: string, sku: string) {
+    const ahuSlotItemParams: UnitAHUAirSlotItemParams = {
+      manufacturerId: ahuUnit.ahu.ahuManufacturerId,
+      unitId: ahuUnit.id,
+      slotId,
+      sku,
+    };
+
+    this.ahuFacade.addAhuUnitSlotItemToList(ahuSlotItemParams);
   }
 
-  removeFromList(manufacturerId: string, unitId: string, slotId: string, sku: string) {
-    this.ahuFacade.removeFromList$(manufacturerId, unitId, slotId, sku);
+  removeAhuSlotItemFromList(ahuUnit: Unit, slotId: string, sku: string) {
+    const ahuSlotItemParams: UnitAHUAirSlotItemParams = {
+      manufacturerId: ahuUnit.ahu.ahuManufacturerId,
+      unitId: ahuUnit.id,
+      slotId,
+      sku,
+    };
+
+    this.ahuFacade.removeAhuUnitSlotItemFromList(ahuSlotItemParams);
+  }
+
+  isAhuUnitSlotItemAdded$(ahuUnit: Unit, slotId: string, sku: string) {
+    const ahuSlotItemParams: UnitAHUAirSlotItemParams = {
+      manufacturerId: ahuUnit.ahu.ahuManufacturerId,
+      unitId: ahuUnit.id,
+      slotId,
+      sku,
+    };
+
+    return this.ahuFacade.isAhuUnitSlotItemAdded$(ahuSlotItemParams);
+  }
+
+  isAhuUnitSlotValid$(ahuUnit: Unit, slotId: string) {
+    const ahuSlotParams: UnitAHUAirSlotParams = {
+      manufacturerId: ahuUnit.ahu.ahuManufacturerId,
+      unitId: ahuUnit.id,
+      slotId,
+    };
+
+    return this.ahuFacade.isAhuUnitSlotValid$(ahuSlotParams);
+  }
+
+  isAhuUnitValid$(ahuUnit: Unit) {
+    return this.ahuFacade.isAhuUnitValid$(ahuUnit);
   }
 
   submitAhuForm() {
@@ -327,6 +374,7 @@ export class DemoPageComponent implements AfterViewInit, OnInit, OnDestroy {
     this.selectedAhuUnit$ = this.ahuFacade.selectedAhuUnit$;
     this.selectedAhuUnitDetails$ = this.ahuFacade.selectedAhuUnitDetails$;
     this.selectedAhuUnitSlots$ = this.ahuFacade.selectedAhuUnitSlots$;
+    this.selectedAhuUnitSlotsSummary$ = this.ahuFacade.selectedAhuUnitSlotsSummary$;
     this.selectedAhuUnitAirSlotTypes$ = this.ahuFacade.selectedAhuUnitAirSlotTypes$;
     // AHU-Common
     this.ahuLoading$ = this.ahuFacade.ahuLoading$();
