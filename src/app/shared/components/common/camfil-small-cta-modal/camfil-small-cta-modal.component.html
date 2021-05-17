@@ -1,12 +1,17 @@
 <ng-template #modal>
   <div class="cta-modal-container">
-    <div *ngIf="showCloseIcon" class="cta-modal__close">
-      <button mat-button matSuffix mat-icon-button aria-label="Clear" (click)="hide()">
-        <mat-icon class="cta-modal__close--icon">close</mat-icon>
+    <div *ngIf="showCloseIcon" class="clearfix">
+      <button
+        class="close"
+        [title]="'dialog.close.text' | translate"
+        [attr.aria-label]="'dialog.close.text' | translate"
+        (click)="hide()"
+      >
+        <mat-icon svgIcon="inactive" aria-hidden="true"></mat-icon>
       </button>
     </div>
 
-    <div class="cta-modal__header">
+    <div class="cta-modal__header text-center">
       <mat-icon *ngIf="hasError" svgIcon="error"></mat-icon>
       <mat-icon *ngIf="!hasError && !hideIcon" svgIcon="{{ icon || 'add-camcard' }}"></mat-icon>
       <h2 class="cta-modal__header--text">{{ actionTitle }}</h2>
@@ -16,7 +21,7 @@
       <ng-container [ngTemplateOutlet]="actionTemplate"></ng-container>
     </div>
 
-    <div *ngIf="onlyAccept" class="cta-modal__link--accept">
+    <div *ngIf="onlyAccept" class="text-center">
       <button class="btn btn-link cta-modal__links--link" (click)="hide()">
         {{ 'camfil.modal.cta.button.ok' | translate }}
       </button>

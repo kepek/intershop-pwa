@@ -3,27 +3,11 @@
 
 .cta-modal-container {
   .cta-modal {
-    &__close {
-      text-align: right;
-
-      &--icon {
-        margin-bottom: 2px;
-      }
-    }
-
     &__header {
-      text-align: center;
-
       &--text {
         margin-top: $space-box;
         text-transform: none;
         @include font-size-subtitle1;
-      }
-    }
-
-    &__link {
-      &--accept {
-        text-align: center;
       }
     }
 

@@ -103,3 +103,10 @@ header {
   font-weight: 600;
   color: $camfil-color-primary;
 }
+
+.close {
+  opacity: 1;
+  &:focus {
+    outline: 0;
+  }
+}
