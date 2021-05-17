@@ -32,7 +32,7 @@
     }
 
     &--dimensions {
-      width: 180px;
+      width: 130px;
       height: 14px;
     }
 
@@ -47,8 +47,14 @@
     }
 
     &--id {
-      width: 98px;
+      width: 60px;
       height: 14px;
+    }
+
+    &--iso_class {
+      width: 240px;
+      height: 14px;
+      border-right: none;
     }
   }
 }
