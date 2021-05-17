@@ -8,6 +8,7 @@ import { ServerHtmlDirective } from 'ish-core/directives/server-html.directive';
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { PricePipe } from 'ish-core/models/price/price.pipe';
+import { AddressSortPipe } from 'ish-core/pipes/camfil-address-sort.pipe';
 import { DatePipe } from 'ish-core/pipes/date.pipe';
 import { HighlightPipe } from 'ish-core/pipes/highlight.pipe';
 import { ProductRoutePipe } from 'ish-core/routing/product/product-route.pipe';
@@ -70,6 +71,7 @@ describe('Camfil Checkout List Component', () => {
         MockComponent(LoadingComponent),
         MockComponent(ZipCodeComponent),
         MockDirective(ServerHtmlDirective),
+        MockPipe(AddressSortPipe),
         MockPipe(DatePipe),
         MockPipe(HighlightPipe),
         MockPipe(PricePipe),
