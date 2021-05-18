@@ -57,16 +57,6 @@ export class UnitEffects {
       whenTruthy(),
       switchMap(unitId =>
         this.ahuService.getUnit(unitId).pipe(
-          tap(unit => {
-            unit?.ahuAirSlots?.forEach(ahuSlot => {
-              ahuSlot?.items.forEach(item => {
-                loadProductIfNotLoaded({
-                  sku: item.sku,
-                  level: ProductCompletenessLevel.List,
-                });
-              });
-            });
-          }),
           map(unit => loadAhuUnitSuccess({ unit })),
           mapErrorToAction(loadAhuUnitFail)
         )

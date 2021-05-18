@@ -121,7 +121,7 @@ export const ENVIRONMENT_DEFAULTS: Environment = {
   /* INTERSHOP COMMERCE MANAGEMENT REST API CONFIGURATION */
 
   icmBaseURL: 'NOT SET',
-  icmChannel: 'Camfil-CamfilSE-Site',
+  icmChannel: 'Camfil-CamfilFI-Site',
   icmServer: 'INTERSHOP/rest/WFS',
   icmServerStatic: 'INTERSHOP/static/WFS',
   icmApplication: 'rest',
@@ -158,8 +158,8 @@ export const ENVIRONMENT_DEFAULTS: Environment = {
   defaultProductListingViewType: 'simple',
   defaultDeviceType: 'mobile',
   locales: [
-    { lang: 'sv_SE', currency: 'SEK', value: 'se', displayName: 'Swedish', displayLong: 'Swedish (Sweden)' },
     { lang: 'fi_FI', currency: 'EUR', value: 'fi', displayName: 'Finnish', displayLong: 'Finnish (Finland)' },
+    { lang: 'sv_SE', currency: 'SEK', value: 'se', displayName: 'Swedish', displayLong: 'Swedish (Sweden)' },
     {
       lang: 'en_GB',
       currency: 'GBP',

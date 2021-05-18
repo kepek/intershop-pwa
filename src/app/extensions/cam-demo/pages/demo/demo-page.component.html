@@ -36,7 +36,9 @@
           <hr />
           <ng-container *ngIf="selectedAhuUnit$ | async as ahuUnit">
             <h2>Summary</h2>
-            <pre>{{ selectedAhuUnitSlotsSummary$ | async | json }}</pre>
+            <pre>selectedAhuUnitSlotItemsTotalPrice$: {{ selectedAhuUnitSlotItemsTotalPrice$ | async | json }}</pre>
+            <pre>selectedAhuUnitSlotItemsTotalPrice$: {{ selectedAhuUnitSlotItemsTotalPrice$ | async | ishPrice }}</pre>
+            <pre>selectedAhuUnitSlotsSummary$: {{ selectedAhuUnitSlotsSummary$ | async | json }}</pre>
             <hr />
             <h1>Unit: {{ ahuUnit.ahu.ahuManufacturerName }} {{ isAhuUnitValid$(ahuUnit) | async | json }}</h1>
             <fieldset *ngFor="let ahuAirSlot of ahuUnit?.ahuAirSlots">

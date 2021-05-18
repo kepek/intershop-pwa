@@ -30,6 +30,7 @@ import { Router } from '@angular/router';
 import { completeIconSet } from 'camfil-icons';
 import { Observable, Subject } from 'rxjs';
 import { map, startWith, take, takeUntil, tap } from 'rxjs/operators';
+import { UnitHelper } from '../../../cam-ahu/models/unit/unit.helper';
 
 import { AppFacade } from 'ish-core/facades/app.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
@@ -45,10 +46,10 @@ import { Manufacturer } from '../../../cam-ahu/models/manufacturer/manufacturer.
 import {
   Unit,
   UnitAHUAirSlot,
-  UnitAHUAirSlotType,
-  UnitAhu,
   UnitAHUAirSlotItemParams,
   UnitAHUAirSlotParams,
+  UnitAHUAirSlotType,
+  UnitAhu,
 } from '../../../cam-ahu/models/unit/unit.model';
 
 import { DemoBottomSheetComponent } from './demo-bottom-sheet/demo-bottom-sheet.component';
@@ -135,6 +136,7 @@ export class DemoPageComponent implements AfterViewInit, OnInit, OnDestroy {
   selectedAhuUnitDetails$: Observable<UnitAhu>;
   selectedAhuUnitSlots$: Observable<UnitAHUAirSlot[]>;
   selectedAhuUnitSlotsSummary$: Observable<UnitAHUAirSlot[]>;
+  selectedAhuUnitSlotItemsTotalPrice$: Observable<any>;
   selectedAhuUnitAirSlotTypes$: Observable<UnitAHUAirSlotType[]>;
   ahuLoading$: Observable<boolean>;
 
@@ -280,24 +282,27 @@ export class DemoPageComponent implements AfterViewInit, OnInit, OnDestroy {
   selectAhuManufacturer(event) {
     const manufacturerId = event.value;
     const unitId = undefined;
+    const slots = undefined;
 
-    this.router.navigate(['/demo'], {
+    this.router.navigate([], {
       queryParamsHandling: 'merge',
-
       queryParams: {
-        manufacturerId,
-        unitId,
+        [UnitHelper.MANUFACTURER_ID_QUERY_PARAM_NAME]: manufacturerId,
+        [UnitHelper.UNIT_ID_QUERY_PARAM_NAME]: unitId,
+        [UnitHelper.SLOTS_QUERY_PARAM_NAME]: slots,
       },
     });
   }
 
   selectAhuUnit(event) {
     const unitId = event.value;
+    const slots = undefined;
 
-    this.router.navigate(['/demo'], {
+    this.router.navigate([], {
       queryParamsHandling: 'merge',
       queryParams: {
-        unitId,
+        [UnitHelper.UNIT_ID_QUERY_PARAM_NAME]: unitId,
+        [UnitHelper.SLOTS_QUERY_PARAM_NAME]: slots,
       },
     });
   }
@@ -375,6 +380,7 @@ export class DemoPageComponent implements AfterViewInit, OnInit, OnDestroy {
     this.selectedAhuUnitDetails$ = this.ahuFacade.selectedAhuUnitDetails$;
     this.selectedAhuUnitSlots$ = this.ahuFacade.selectedAhuUnitSlots$;
     this.selectedAhuUnitSlotsSummary$ = this.ahuFacade.selectedAhuUnitSlotsSummary$;
+    this.selectedAhuUnitSlotItemsTotalPrice$ = this.ahuFacade.selectedAhuUnitSlotItemsTotalPrice$;
     this.selectedAhuUnitAirSlotTypes$ = this.ahuFacade.selectedAhuUnitAirSlotTypes$;
     // AHU-Common
     this.ahuLoading$ = this.ahuFacade.ahuLoading$();

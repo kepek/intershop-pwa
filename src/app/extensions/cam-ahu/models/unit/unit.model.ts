@@ -1,5 +1,11 @@
 // API Models
 
+import {
+  ProductView,
+  VariationProductMasterView,
+  VariationProductView,
+} from 'ish-core/models/product-view/product-view.model';
+
 export interface Unit {
   id: string; // TODO (extMlk): Verify with Integration Team if missing `id` field is 100% okay... cuz it does not make sense...
   ahu: UnitAhu;
@@ -53,10 +59,17 @@ export interface UnitAHUAirSlot {
 export interface UnitAHUAirSlotItem {
   item: string;
   sku: string;
-  quantity?: number;
 }
 
 // Internal Models
+
+export interface UnitAHUAirSlotItemSummary extends UnitAHUAirSlotItem {
+  quantity: number;
+}
+
+export interface UnitAHUAirSlotSummary extends UnitAHUAirSlot {
+  items: UnitAHUAirSlotItemSummary[];
+}
 
 export interface UnitAHUAirSlotType {
   name: string;
@@ -76,3 +89,5 @@ export interface UnitAHUAirSlotItemParams {
   slotId: string;
   sku: string;
 }
+
+export type UnitAhuAirSlotProductView = ProductView | VariationProductView | VariationProductMasterView;

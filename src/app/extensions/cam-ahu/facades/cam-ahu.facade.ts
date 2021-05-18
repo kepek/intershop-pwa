@@ -5,6 +5,7 @@ import { defaultIfEmpty, first, map, switchMap, withLatestFrom } from 'rxjs/oper
 
 import { HttpError } from 'ish-core/models/http-error/http-error.model';
 import { selectQueryParams } from 'ish-core/store/core/router';
+import { getProducts } from 'ish-core/store/shopping/products';
 
 import { Manufacturer } from '../models/manufacturer/manufacturer.model';
 import { UnitHelper } from '../models/unit/unit.helper';
@@ -12,7 +13,9 @@ import {
   Unit,
   UnitAHUAirSlot,
   UnitAHUAirSlotItemParams,
+  UnitAHUAirSlotItemSummary,
   UnitAHUAirSlotParams,
+  UnitAHUAirSlotSummary,
   UnitAHUAirSlotType,
   UnitAhu,
 } from '../models/unit/unit.model';
@@ -61,7 +64,7 @@ export class CamAhuFacade {
   /**
    * Manufacturers
    */
-  loadAhuManufacturers$() {
+  loadAhuManufacturers() {
     this.store.dispatch(loadAhuManufacturers());
   }
 
@@ -69,7 +72,7 @@ export class CamAhuFacade {
     this.store.dispatch(loadAhuManufacturer({ manufacturerId }));
   }
 
-  selectAhuManufacturer$(manufacturerId) {
+  selectAhuManufacturer(manufacturerId) {
     this.store.dispatch(selectAhuManufacturer({ manufacturerId }));
   }
 
@@ -82,15 +85,15 @@ export class CamAhuFacade {
   /**
    * Units
    */
-  loadAhuUnits$(manufacturerId: string) {
+  loadAhuUnits(manufacturerId: string) {
     this.store.dispatch(loadAhuUnits({ manufacturerId }));
   }
 
-  loadAhuUnit$(unitId: string) {
+  loadAhuUnit(unitId: string) {
     this.store.dispatch(loadAhuUnit({ unitId }));
   }
 
-  selectAhuUnit$(unitId: string) {
+  selectAhuUnit(unitId: string) {
     this.store.dispatch(selectAhuUnit({ unitId }));
   }
 
@@ -115,7 +118,7 @@ export class CamAhuFacade {
     withLatestFrom(this.selectedAhuUnitSlots$),
     map(([queryParams, ahuSlots]) =>
       ahuSlots.map(ahuSlot => {
-        const newAhuSlot = { ...ahuSlot };
+        const newAhuSlot = { ...ahuSlot } as UnitAHUAirSlotSummary;
 
         const getSlotItemParams = (item): UnitAHUAirSlotItemParams => ({
           manufacturerId: queryParams?.[UnitHelper.MANUFACTURER_ID_QUERY_PARAM_NAME],
@@ -137,6 +140,20 @@ export class CamAhuFacade {
         return newAhuSlot;
       })
     )
+  );
+  selectedAhuUnitSlotItemsTotalPrice$ = this.selectedAhuUnitSlotsSummary$.pipe(
+    switchMap(ahuAirSlotsSummary => {
+      const items: UnitAHUAirSlotItemSummary[] = [].concat(
+        ...ahuAirSlotsSummary.map(ahuAirSlotSummary => ahuAirSlotSummary?.items)
+      );
+      const skus = items.map(item => item.sku);
+
+      return this.store.pipe(
+        select(getProducts, { skus }),
+        map(products => products.filter(product => !product.failed)),
+        map(products => UnitHelper.totalPrice(products))
+      );
+    })
   );
   selectedAhuUnitAirSlotTypes$: Observable<UnitAHUAirSlotType[]> = this.selectedAhuUnit$.pipe(
     map(ahuUnit => {

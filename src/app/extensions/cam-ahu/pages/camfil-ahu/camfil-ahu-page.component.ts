@@ -49,7 +49,7 @@ export class CamfilAHUPageComponent implements OnInit, OnChanges {
 
   selectAhuManufacturer(event) {
     this.manufacturerId = event.value;
-    this.ahuFacade.selectAhuManufacturer$(this.manufacturerId);
+    this.ahuFacade.selectAhuManufacturer(this.manufacturerId);
   }
 
   // on changes check for 2 varaibles to be true

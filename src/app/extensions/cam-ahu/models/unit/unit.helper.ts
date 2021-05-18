@@ -1,7 +1,9 @@
 import { Params } from '@angular/router';
 import * as qs from 'qs';
 
-import { Unit, UnitAHUAirSlotItemParams, UnitAHUAirSlotParams } from './unit.model';
+import { Unit, UnitAHUAirSlotItemParams, UnitAHUAirSlotParams, UnitAhuAirSlotProductView } from './unit.model';
+import { LineItemView } from 'ish-core/models/line-item/line-item.model';
+import { Price, PriceHelper } from 'ish-core/models/price/price.model';
 
 export class UnitHelper {
   static MANUFACTURER_ID_QUERY_PARAM_NAME = 'manufacturerId';
@@ -90,5 +92,12 @@ export class UnitHelper {
     const isMatchingUnitId = queryParams?.[UnitHelper.UNIT_ID_QUERY_PARAM_NAME] === unitId;
 
     return isValid && isMatchingManufacturerId && isMatchingUnitId;
+  }
+
+  static totalPrice(items: UnitAhuAirSlotProductView[]): Price {
+    const getCurrency = element => element.listPrice?.currency;
+    const getValue = element => element.listPrice?.value;
+
+    return PriceHelper.getPrice(getCurrency, getValue, (items as unknown) as LineItemView[]);
   }
 }
