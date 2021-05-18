@@ -1064,6 +1064,7 @@
   "camfil.product.details.guides.headline": "Guides & Technical Documents",
   "camfil.product.dimensions.label": "Dimensions",
   "camfil.product.efficiency.label": "Efficiency",
+  "camfil.product.class_and_efficiency.label": "Iso class and efficiency",
   "camfil.product.energyClass.label": "Energy class",
   "camfil.product.frame.label": "Frame",
   "camfil.product.handling_maintenance.text": "Handling & Maintenance",

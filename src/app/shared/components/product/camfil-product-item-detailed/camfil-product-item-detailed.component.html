@@ -45,8 +45,9 @@
       ></camfil-product-attribute>
       <camfil-product-attribute
         *ngIf="isNotZero(isoEfficiency)"
-        [name]="'camfil.product.efficiency.label' | translate"
-        [value]="product | camfilProductAttributeVal: 'IsoEfficiency'"
+        identifier="iso_class"
+        [name]="'camfil.product.class_and_efficiency.label' | translate"
+        [value]="product | camfilProductAttributeVal: 'IsoClassAndEfficiency'"
       ></camfil-product-attribute>
       <camfil-product-attribute
         *ngIf="isNotZero(energyclass)"

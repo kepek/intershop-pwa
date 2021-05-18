@@ -7,6 +7,7 @@ import { takeUntil } from 'rxjs/operators';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
+import { AttributeGroupTypes } from 'ish-core/models/attribute-group/attribute-group.types';
 import { Attribute } from 'ish-core/models/attribute/attribute.model';
 import { ImageTypes } from 'ish-core/models/image/image.types';
 import {
@@ -102,14 +103,19 @@ export class CamfilQuickViewModalComponent implements OnInit, OnDestroy {
           this.isInCompareList = state;
         });
 
-      this.frameSize = this.getAttributeValue(product.attributes, 'FrameSize');
-      this.pressureDrop = this.getAttributeValue(product.attributes, 'Pressuredrop');
-      this.isoClass = this.getAttributeValue(product.attributes, 'IsoClass');
-      this.energyClass = this.getAttributeValue(product.attributes, 'Energyclass');
-      this.bags = this.getAttributeValue(product.attributes, 'Filterbags');
-      this.width = this.getAttributeValue(product.attributes, 'Width');
-      this.depth = this.getAttributeValue(product.attributes, 'Depth');
-      this.height = this.getAttributeValue(product.attributes, 'Height');
+      const attributes =
+        product.attributeGroups?.[AttributeGroupTypes.ProductsListLabelAttributes]?.attributes ||
+        product.attributes ||
+        [];
+
+      this.frameSize = this.getAttributeValue(attributes, 'FrameSize');
+      this.pressureDrop = this.getAttributeValue(attributes, 'Pressuredrop');
+      this.isoClass = this.getAttributeValue(attributes, 'IsoClassAndEfficiency');
+      this.energyClass = this.getAttributeValue(attributes, 'Energyclass');
+      this.bags = this.getAttributeValue(attributes, 'Filterbags');
+      this.width = this.getAttributeValue(attributes, 'Width');
+      this.depth = this.getAttributeValue(attributes, 'Depth');
+      this.height = this.getAttributeValue(attributes, 'Height');
       const videoUrl = this.getImageCdnUrl(product, ImageTypes.YtVideo, 'view1');
       if (videoUrl) {
         this.secureVideoUrl = this.sanitizer.bypassSecurityTrustResourceUrl(videoUrl);
@@ -123,6 +129,7 @@ export class CamfilQuickViewModalComponent implements OnInit, OnDestroy {
   }
 
   getAttributeValue(attributes: Attribute[], attributeName: string) {
+    console.log('ATTR', attributes);
     return attributes.find(x => x.name === attributeName)?.value;
   }
 

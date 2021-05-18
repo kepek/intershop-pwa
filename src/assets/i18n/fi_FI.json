@@ -1083,6 +1083,7 @@
   "camfil.product.details.guides.headline": "Oppaat ja tekniset asiakirjat",
   "camfil.product.dimensions.label": "Mitat",
   "camfil.product.efficiency.label": "Tehokkuus",
+  "camfil.product.class_and_efficiency.label": "fi_Iso class and efficiency",
   "camfil.product.energyClass.label": "Energialuokka",
   "camfil.product.frame.label": "Kehys",
   "camfil.product.handling_maintenance.text": "Käyttö- ja huolto-ohjeet",

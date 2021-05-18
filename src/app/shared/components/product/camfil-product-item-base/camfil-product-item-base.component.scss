@@ -11,6 +11,7 @@
     height: $common-height;
   }
   .product-item-details-container {
+    width: 510px;
     height: $common-height;
     @media (max-width: $screen-md-max) {
       height: auto;
