@@ -84,9 +84,8 @@ export const orderReducer = createReducer(
   }),
   on(loadOrderAdditionalTotalCostSuccess, (state: OrdersState, action) => {
     const { additionalTotalCost, orderId } = action.payload;
-
     return {
-      ...orderAdapter.updateOne({ id: orderId, changes: { additionalTotalCost } }, state),
+      ...orderAdapter.updateOne({ id: orderId, changes: { additionalTotalCost: additionalTotalCost.elements } }, state),
     };
   })
 );
