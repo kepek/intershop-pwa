@@ -42,17 +42,46 @@ export class ArticleDetailsComponent implements OnInit {
     this.measurementGlobalError$ = this.quantityForm.get('measurementErrorInfo')?.valueChanges;
   }
 
+  get diameterDisabled() {
+    return this.quantityForm.get('measurementWidth')?.value || this.quantityForm.get('measurementHeight')?.value
+      ? true
+      : false;
+  }
+
+  get widthAndHeightDisabled() {
+    return this.quantityForm.get('measurementDiameter')?.value ? true : false;
+  }
+
   getField(name: string) {
     return this.quantityForm.get(name);
   }
 
   validateVal() {
     this.filledMeasurements = this.MEASUREMENTS.map(val => this.getField(val).value).filter(val => val);
-
+    this.enableFields();
     this.showError =
       this.filledMeasurements.length && this.maxVal
         ? !this.filledMeasurements.find(val => this.maxVal > val)
         : undefined;
     this.quantityForm?.patchValue({ measurementErrorInfo: !this.filledMeasurements.length });
+
+    if (!this.diameterDisabled && !this.widthAndHeightDisabled) {
+      this.enableFields();
+    } else if (this.diameterDisabled) {
+      this.dsiableField('measurementDiameter');
+    } else if (this.widthAndHeightDisabled) {
+      this.dsiableField('measurementWidth');
+      this.dsiableField('measurementHeight');
+    }
+  }
+
+  dsiableField(fieldName) {
+    this.quantityForm.controls[fieldName].disable();
+  }
+
+  enableFields() {
+    this.quantityForm.controls['measurementHeight'].enable();
+    this.quantityForm.controls['measurementWidth'].enable();
+    this.quantityForm.controls['measurementDiameter'].enable();
   }
 }
