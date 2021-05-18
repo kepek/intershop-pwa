@@ -20,7 +20,11 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "allowedCommonJsDependencies": ["camelcase-keys"],
+            "allowedCommonJsDependencies": [
+              "camelcase-keys",
+              "qs",
+              "xlsx-parse-json"
+            ],
             "outputPath": "dist/browser",
             "index": "src/index.html",
             "main": "src/main.ts",

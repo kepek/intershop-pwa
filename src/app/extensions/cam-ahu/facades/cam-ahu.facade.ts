@@ -111,28 +111,32 @@ export class CamAhuFacade {
     map(unit => unit?.ahuAirSlots),
     defaultIfEmpty([])
   );
-  selectedAhuUnitSlotsSummary$ = this.selectedAhuUnitSlots$.pipe(
-    withLatestFrom(this.store.pipe(select(selectQueryParams))),
-    map(([ahuSlots, queryParams]) => {
-      return ahuSlots.map(ahuSlot => {
+  selectedAhuUnitSlotsSummary$ = this.store.pipe(select(selectQueryParams)).pipe(
+    withLatestFrom(this.selectedAhuUnitSlots$),
+    map(([queryParams, ahuSlots]) =>
+      ahuSlots.map(ahuSlot => {
         const newAhuSlot = { ...ahuSlot };
 
-        newAhuSlot.items = ahuSlot.items.filter(item => {
-          const ahuSlotItemParams: UnitAHUAirSlotItemParams = {
-            manufacturerId: queryParams?.[UnitHelper.MANUFACTURER_ID_QUERY_PARAM_NAME],
-            unitId: queryParams?.[UnitHelper.UNIT_ID_QUERY_PARAM_NAME],
-            slotId: ahuSlot.ahuSlotId,
-            sku: item.sku,
-          };
-
-          // Add Quantity/Qty
-
-          return UnitHelper.isAhuUnitSlotItemAdded(queryParams, ahuSlotItemParams);
+        const getSlotItemParams = (item): UnitAHUAirSlotItemParams => ({
+          manufacturerId: queryParams?.[UnitHelper.MANUFACTURER_ID_QUERY_PARAM_NAME],
+          unitId: queryParams?.[UnitHelper.UNIT_ID_QUERY_PARAM_NAME],
+          slotId: newAhuSlot.ahuSlotId,
+          sku: item.sku,
         });
 
+        newAhuSlot.items = newAhuSlot?.items.map(item => {
+          const newAhuSlotItem = { ...item };
+          newAhuSlotItem.quantity = UnitHelper.countAddedItemsBySku(queryParams, getSlotItemParams(item));
+          return newAhuSlotItem;
+        });
+
+        newAhuSlot.items = newAhuSlot.items?.filter(item =>
+          UnitHelper.isAhuUnitSlotItemAdded(queryParams, getSlotItemParams(item))
+        );
+
         return newAhuSlot;
-      });
-    })
+      })
+    )
   );
   selectedAhuUnitAirSlotTypes$: Observable<UnitAHUAirSlotType[]> = this.selectedAhuUnit$.pipe(
     map(ahuUnit => {

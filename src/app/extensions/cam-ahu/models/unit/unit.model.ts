@@ -52,7 +52,8 @@ export interface UnitAHUAirSlot {
 
 export interface UnitAHUAirSlotItem {
   item: string;
-  sku?: string;
+  sku: string;
+  quantity?: number;
 }
 
 // Internal Models

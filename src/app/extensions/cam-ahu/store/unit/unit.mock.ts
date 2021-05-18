@@ -40,7 +40,10 @@ export const units: Unit[] = [
         ahuSlotWidthMm: '460',
         ahuSlotLengthMm: '460',
         ahuSlotDepthMm: '540',
-        items: [{ item: 'item1' }, { item: 'item2' }],
+        items: [
+          { item: 'item1', sku: 'sku1' },
+          { item: 'item2', sku: 'sku2' },
+        ],
       },
       {
         ahuSlotType: 'Supply',
@@ -51,7 +54,7 @@ export const units: Unit[] = [
         ahuSlotWidthMm: '200',
         ahuSlotLengthMm: '200',
         ahuSlotDepthMm: '320',
-        items: [{ item: 'item1' }],
+        items: [{ item: 'item1', sku: 'sku1' }],
       },
       {
         ahuSlotType: 'Exhaust',
@@ -62,7 +65,11 @@ export const units: Unit[] = [
         ahuSlotWidthMm: '640',
         ahuSlotLengthMm: '640',
         ahuSlotDepthMm: '880',
-        items: [{ item: 'item1' }, { item: 'item2' }, { item: 'item3' }],
+        items: [
+          { item: 'item1', sku: 'sku1' },
+          { item: 'item2', sku: 'sku2' },
+          { item: 'item3', sku: 'sku3' },
+        ],
       },
     ],
   },

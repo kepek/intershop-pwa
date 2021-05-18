@@ -62,11 +62,17 @@ export class UnitHelper {
     };
   }
 
-  static isAhuUnitSlotItemAdded(queryParams: Params, ahuSlotItemParams: UnitAHUAirSlotItemParams) {
-    const { manufacturerId, unitId, slotId, sku } = ahuSlotItemParams;
+  static countAddedItemsBySku(queryParams: Params, ahuSlotItemParams: UnitAHUAirSlotItemParams) {
+    const { slotId, sku } = ahuSlotItemParams;
     const slots = UnitHelper.parseQs(queryParams?.[UnitHelper.SLOTS_QUERY_PARAM_NAME]);
 
-    const isAdded = [].concat(slots?.[slotId]).includes(sku);
+    return [].concat(slots?.[slotId]).filter(item => item === sku)?.length;
+  }
+
+  static isAhuUnitSlotItemAdded(queryParams: Params, ahuSlotItemParams: UnitAHUAirSlotItemParams) {
+    const { manufacturerId, unitId } = ahuSlotItemParams;
+
+    const isAdded = Boolean(UnitHelper.countAddedItemsBySku(queryParams, ahuSlotItemParams));
     const isMatchingManufacturerId = queryParams?.[UnitHelper.MANUFACTURER_ID_QUERY_PARAM_NAME] === manufacturerId;
     const isMatchingUnitId = queryParams?.[UnitHelper.UNIT_ID_QUERY_PARAM_NAME] === unitId;
 
