@@ -27,9 +27,10 @@ import { VariationProduct } from 'ish-core/models/product/product-variation.mode
 import { Product, ProductCompletenessLevel, ProductHelper } from 'ish-core/models/product/product.model';
 import { ofProductUrl } from 'ish-core/routing/product/product.route';
 import { ProductsService } from 'ish-core/services/products/products.service';
+import { getCurrentLocale } from 'ish-core/store/core/configuration';
 import { selectQueryParam, selectRouteParam } from 'ish-core/store/core/router';
 import { setBreadcrumbData } from 'ish-core/store/core/viewconf';
-import { setPGID } from 'ish-core/store/customer/user';
+import { getLoggedInCustomer, loginUserSuccess, setPGID } from 'ish-core/store/customer/user';
 import { loadCategory } from 'ish-core/store/shopping/categories';
 import { setProductListingPages } from 'ish-core/store/shopping/product-listing';
 import { HttpStatusCodeService } from 'ish-core/utils/http-status-code/http-status-code.service';
@@ -42,6 +43,7 @@ import {
 } from 'ish-core/utils/operators';
 
 import {
+  getCustomerPricesForProductsSuccess,
   loadCategoryProducts,
   loadCustomerPrices,
   loadCustomerPricesFail,
@@ -374,10 +376,10 @@ export class ProductsEffects {
     this.actions$.pipe(
       ofType(loadCustomerPrices),
       mapToPayload(),
-      withLatestFrom(this.store.pipe(select(getCustomersPrices))),
-      concatMap(([{ customerId, skus }, prices]) => {
+      withLatestFrom(this.store.pipe(select(getCustomersPrices)), this.store.pipe(select(getCurrentLocale))),
+      concatMap(([{ customerId, skus }, prices, { currency }]) => {
         const getAction = arr =>
-          this.productsService.loadCustomerPrices(customerId, arr).pipe(
+          this.productsService.loadCustomerPrices(customerId, arr, currency).pipe(
             map(products => loadCustomerPricesSuccess({ customerId, products })),
             mapErrorToAction(loadCustomerPricesFail, { customerId })
           );
@@ -418,6 +420,29 @@ export class ProductsEffects {
           mapErrorToAction(loadProductsForCategoryFail, { categoryId })
         )
       )
+    )
+  );
+
+  loginUserSuccess$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loginUserSuccess),
+      withLatestFrom(
+        this.store.pipe(select(getProductEntities)),
+        this.store.pipe(select(getCurrentLocale)),
+        this.store.pipe(select(getLoggedInCustomer))
+      ),
+      filter(([, entities]) => !!Object.keys(entities).length),
+      concatMap(([, entities, { currency }, customer]) => {
+        const skus = Object.keys(entities);
+        const customerId = customer.customerNo;
+        return this.productsService.loadCustomerPrices(customerId, skus, currency).pipe(
+          mergeMap(products => [
+            loadCustomerPricesSuccess({ customerId, products }),
+            getCustomerPricesForProductsSuccess({ products }),
+          ]),
+          mapErrorToAction(loadCustomerPricesFail, { customerId })
+        );
+      })
     )
   );
 

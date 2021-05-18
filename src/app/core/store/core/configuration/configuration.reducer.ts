@@ -1,5 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 
+import { Channel, ChannelCurrency } from 'ish-core/models/channel/channel.types';
 import { Locale } from 'ish-core/models/locale/locale.model';
 import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
 
@@ -40,7 +41,16 @@ const initialState: ConfigurationState = {
 
 export const configurationReducer = createReducer(
   initialState,
-  on(applyConfiguration, (state: ConfigurationState, action) => ({ ...state, ...action.payload })),
+  on(applyConfiguration, (state: ConfigurationState, { payload }) => {
+    const currentChannel = Object.entries(Channel).find(([, val]) => val === payload.channel) || [];
+    const channel = payload.channel ? currentChannel[0] : '';
+    const locales = state.locales.map(l => ({
+      ...l,
+      currency: l.lang === payload.lang ? ChannelCurrency[channel] : l.currency,
+    }));
+
+    return { ...state, ...payload, locales };
+  }),
   on(setGTMToken, (state: ConfigurationState, action) => {
     const { gtmToken } = action.payload;
     return { ...state, gtmToken };
