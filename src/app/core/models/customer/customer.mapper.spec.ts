@@ -26,7 +26,6 @@ describe('Customer Mapper', () => {
       expect(customer).toBeTruthy();
       expect(customer.isBusinessCustomer).toBeFalse();
       expect(customer.customerNo).toEqual(customerData.customerNo);
-      expect(customer.department).toEqual(customerData.department);
 
       expect(user.firstName).toBe(customerData.firstName);
       expect(user.lastName).toBe(customerData.lastName);
@@ -50,7 +49,7 @@ describe('Customer Mapper', () => {
       expect(customer.customerNo).toEqual(customerData.customerNo);
       expect(customer.companyName).toEqual(customerData.companyName);
       expect(customer.taxationID).toEqual(customerData.taxationID);
-
+      expect(customer.department).toEqual(customerData.department);
       expect(loginData.user).toBeUndefined();
     });
   });
