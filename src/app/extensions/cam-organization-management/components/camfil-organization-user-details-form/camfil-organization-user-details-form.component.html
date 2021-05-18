@@ -27,7 +27,7 @@
     <div>
       <mat-form-field appearance="fill" class="form__field mb-3 mr-3">
         <mat-label>{{ 'camfil.account.organization.user_details.form.first_name.label' | translate }}</mat-label>
-        <input matInput formControlName="firstName" type="text" (blur)="handleChangeUser()" />
+        <input matInput id="firstName" formControlName="firstName" type="text" (blur)="handleChangeUser()" />
         <mat-error *ngIf="form.controls.firstName.hasError('required')">
           {{ 'camfil.account.organization.user_details.form.first_name.error.required' | translate }}
         </mat-error>
