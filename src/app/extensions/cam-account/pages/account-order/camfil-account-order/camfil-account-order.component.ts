@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
@@ -39,15 +39,26 @@ export class CamfilAccountOrderComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject();
 
   @Input() order: Order;
+
   deliveryAddress: DeliveryAddress;
   loading = false;
-
+  orderLoading$: Observable<boolean>;
   lineItems: OrderLineItem[];
   reOrderText: string;
   productsAvailability = true;
   @ViewChild(CamfilSmallCtaModalComponent) modal: CamfilSmallCtaModalComponent;
 
   ngOnInit() {
+    this.loading = true;
+    this.orderLoading$ = this.camAccountFacade.loading$;
+
+    this.orderLoading$?.pipe(takeUntil(this.destroy$)).subscribe(value => {
+      if (!value) {
+        setTimeout(() => {
+          this.loading = false;
+        }, 300);
+      }
+    });
     this.camAccountFacade
       .orderLineItems$(this.order?.id)
       .pipe(whenTruthy(), takeUntil(this.destroy$))
@@ -57,6 +68,9 @@ export class CamfilAccountOrderComponent implements OnInit, OnDestroy {
           this.camAccountFacade.orderTrackAndTrace$(this.order?.id);
           this.camAccountFacade.orderAdditionalTotalCost$(this.order?.id);
           this.areProductsAvailable();
+          if (!this.order?.totalOrderedQty) {
+            this.camAccountFacade.orderLineItems$(this.order?.id);
+          }
         }
       });
 
