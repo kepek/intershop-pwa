@@ -11,9 +11,9 @@ import { CamfilB2bCustomer } from './camfil-b2b-customer.model';
 export class CamfilB2bCustomerMapper extends CustomerMapper {
   static fromData(data: CamfilB2bCustomerData): CamfilB2bCustomer {
     if (data?.id) {
-      const { id, parent, preferredInvoiceToAddress, contacts, userContact } = data;
+      const { id, parent, preferredInvoiceToAddress, contacts, userContact, department } = data;
       const customer = CustomerMapper.fromData(data);
-      const camfilB2bCustomer: CamfilB2bCustomer = { ...customer, id, parent, preferredInvoiceToAddress };
+      const camfilB2bCustomer: CamfilB2bCustomer = { ...customer, id, parent, preferredInvoiceToAddress, department };
 
       if (contacts?.length) {
         camfilB2bCustomer.contacts = CamfilB2bContactMapper.fromListData(contacts);
