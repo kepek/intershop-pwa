@@ -17,6 +17,7 @@ export interface CamfilB2bCustomer extends Customer, CamfilB2bCustomerRelations 
   id: string;
   parent: boolean;
   preferredInvoiceToAddress: Address;
+  department?: string;
 }
 
 export interface CamfilB2bCustomerContact {

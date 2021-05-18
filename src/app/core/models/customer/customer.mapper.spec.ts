@@ -13,7 +13,6 @@ describe('Customer Mapper', () => {
         customerNo: 'test',
         firstName: 'Patricia',
         lastName: 'Miller',
-        department: 'Test Department',
         preferredInvoiceToAddress: BasketMockData.getAddress(),
         preferredShipToAddress: { urn: 'urn:1234' } as Address,
         preferredPaymentInstrument: { id: '1234' } as PaymentInstrument,
@@ -49,7 +48,6 @@ describe('Customer Mapper', () => {
       expect(customer.customerNo).toEqual(customerData.customerNo);
       expect(customer.companyName).toEqual(customerData.companyName);
       expect(customer.taxationID).toEqual(customerData.taxationID);
-      expect(customer.department).toEqual(customerData.department);
       expect(loginData.user).toBeUndefined();
     });
   });
