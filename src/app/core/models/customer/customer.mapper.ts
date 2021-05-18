@@ -45,6 +45,7 @@ export class CustomerMapper {
           taxationID: data.taxationID,
           industry: data.industry,
           description: data.description,
+          department: data.department,
         }
       : {
           customerNo: data.customerNo,

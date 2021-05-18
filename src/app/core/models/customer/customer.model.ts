@@ -13,6 +13,7 @@ export interface Customer {
   taxationID?: string;
   industry?: string;
   description?: string;
+  department?: string;
 }
 
 /**

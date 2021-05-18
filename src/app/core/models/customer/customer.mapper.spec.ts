@@ -13,6 +13,7 @@ describe('Customer Mapper', () => {
         customerNo: 'test',
         firstName: 'Patricia',
         lastName: 'Miller',
+        department: 'Test Department',
         preferredInvoiceToAddress: BasketMockData.getAddress(),
         preferredShipToAddress: { urn: 'urn:1234' } as Address,
         preferredPaymentInstrument: { id: '1234' } as PaymentInstrument,
@@ -25,6 +26,7 @@ describe('Customer Mapper', () => {
       expect(customer).toBeTruthy();
       expect(customer.isBusinessCustomer).toBeFalse();
       expect(customer.customerNo).toEqual(customerData.customerNo);
+      expect(customer.department).toEqual(customerData.department);
 
       expect(user.firstName).toBe(customerData.firstName);
       expect(user.lastName).toBe(customerData.lastName);

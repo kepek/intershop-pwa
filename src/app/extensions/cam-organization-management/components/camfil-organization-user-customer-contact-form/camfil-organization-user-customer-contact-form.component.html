@@ -2,9 +2,12 @@
   <mat-card-content [formGroup]="form">
     <div class="d-flex justify-content-between align-items-center">
       <mat-checkbox color="primary" formControlName="customerContactCheckbox" (change)="onCheckboxChange($event)">
-        <span class="text-truncate pl-2" [class.font-weight-bold]="hasUserCustomerSelectedContact">
+        <div class="text-truncate pl-2" [class.font-weight-bold]="hasUserCustomerSelectedContact">
           {{ customer.companyName }}
-        </span>
+          <div class="d-block">
+            <span *ngIf="customer.department">{{ customer.department }},</span> {{ customer.customerNo }}
+          </div>
+        </div>
       </mat-checkbox>
       <mat-form-field appearance="fill">
         <mat-label>{{ 'Contact Person' | translate }}</mat-label>
