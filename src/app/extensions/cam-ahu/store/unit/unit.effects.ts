@@ -4,10 +4,13 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store, select } from '@ngrx/store';
 import { filter, map, switchMap, tap, withLatestFrom } from 'rxjs/operators';
 
+import { ProductCompletenessLevel } from 'ish-core/models/product/product.helper';
 import { ofUrl, selectQueryParams } from 'ish-core/store/core/router';
+import { loadProductIfNotLoaded } from 'ish-core/store/shopping/products';
 import { mapErrorToAction, mapToPayload, mapToPayloadProperty, whenTruthy } from 'ish-core/utils/operators';
 
 import { UnitHelper } from '../../models/unit/unit.helper';
+import { UnitAHUAirSlotItem } from '../../models/unit/unit.model';
 import { AhuService } from '../../services/ahu/ahu.service';
 import { getSelectedAhuManufacturerId } from '../manufacturer';
 
@@ -54,10 +57,31 @@ export class UnitEffects {
       whenTruthy(),
       switchMap(unitId =>
         this.ahuService.getUnit(unitId).pipe(
+          tap(unit => {
+            unit?.ahuAirSlots?.forEach(ahuSlot => {
+              ahuSlot?.items.forEach(item => {
+                loadProductIfNotLoaded({
+                  sku: item.sku,
+                  level: ProductCompletenessLevel.List,
+                });
+              });
+            });
+          }),
           map(unit => loadAhuUnitSuccess({ unit })),
           mapErrorToAction(loadAhuUnitFail)
         )
       )
+    )
+  );
+
+  loadProductsForSelectedAhuUnit$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loadAhuUnitSuccess),
+      mapToPayloadProperty('unit'),
+      switchMap(unit => {
+        const lineItems: UnitAHUAirSlotItem[] = [].concat(...unit?.ahuAirSlots.map(ahuSlot => ahuSlot?.items));
+        return [...lineItems.map(({ sku }) => loadProductIfNotLoaded({ sku, level: ProductCompletenessLevel.List }))];
+      })
     )
   );
 
