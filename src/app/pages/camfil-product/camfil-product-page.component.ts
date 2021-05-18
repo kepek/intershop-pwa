@@ -61,7 +61,6 @@ export class CamfilProductPageComponent implements OnInit, OnDestroy {
     this.productLoading$ = this.shoppingFacade.productDetailLoading$;
 
     this.product$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(product => {
-      this.quantity = product.minOrderQuantity;
       if (
         ProductHelper.isMasterProduct(product) &&
         ProductVariationHelper.hasDefaultVariation(product) &&
