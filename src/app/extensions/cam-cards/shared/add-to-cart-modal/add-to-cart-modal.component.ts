@@ -55,7 +55,7 @@ export class AddToCartModalComponent implements OnInit, OnDestroy {
       boxLabel: new FormControl(this.boxLabel || '', Validators.maxLength(60)),
       measurementWidth: new FormControl(),
       measurementHeight: new FormControl(),
-      measurementDiameter: new FormControl({ value: '', disabled: true }),
+      measurementDiameter: new FormControl(),
       measurementErrorInfo: new FormControl(),
     });
 
