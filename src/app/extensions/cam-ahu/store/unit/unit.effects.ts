@@ -2,15 +2,15 @@ import { Injectable } from '@angular/core';
 import { Params, Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store, select } from '@ngrx/store';
-import { filter, map, switchMap, tap, withLatestFrom } from 'rxjs/operators';
+import { filter, map, mergeMap, switchMap, tap, withLatestFrom } from 'rxjs/operators';
 
 import { ProductCompletenessLevel } from 'ish-core/models/product/product.helper';
 import { ofUrl, selectQueryParams } from 'ish-core/store/core/router';
-import { loadProductIfNotLoaded } from 'ish-core/store/shopping/products';
+import { loadProductFail, loadProductIfNotLoaded, loadProductVariationsFail } from 'ish-core/store/shopping/products';
 import { mapErrorToAction, mapToPayload, mapToPayloadProperty, whenTruthy } from 'ish-core/utils/operators';
 
 import { UnitHelper } from '../../models/unit/unit.helper';
-import { UnitAHUAirSlotItem } from '../../models/unit/unit.model';
+import { UnitAHUAirSlotItem, UnitAHUAirSlotItemQueryParam } from '../../models/unit/unit.model';
 import { AhuService } from '../../services/ahu/ahu.service';
 import { getSelectedAhuManufacturerId } from '../manufacturer';
 
@@ -96,7 +96,7 @@ export class UnitEffects {
     )
   );
 
-  addToList$ = createEffect(
+  addAhuSlotItemToList$ = createEffect(
     () =>
       this.actions$.pipe(
         ofType(addAhuSlotItemToList),
@@ -109,17 +109,52 @@ export class UnitEffects {
     { dispatch: false }
   );
 
-  removeFromList$ = createEffect(
+  removeAhuSlotItemFromList$ = createEffect(
     () =>
       this.actions$.pipe(
         ofType(removeAhuSlotItemFromList),
         mapToPayload(),
         withLatestFrom(this.store.pipe(select(selectQueryParams))),
-        tap(([slotItem, queryParams]) => {
-          this.navigateTo(undefined, UnitHelper.removeAhuSlotItemFromList(queryParams, slotItem));
+        tap(([ahuSlotItemParams, queryParams]) => {
+          this.navigateTo(undefined, UnitHelper.removeAhuSlotItemFromList(queryParams, ahuSlotItemParams));
         })
       ),
     { dispatch: false }
+  );
+
+  removeFromListWhenProductFail$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loadProductFail, loadProductVariationsFail),
+      mapToPayloadProperty('sku'),
+      withLatestFrom(this.store.pipe(select(selectQueryParams))),
+      mergeMap(([productSku, queryParams]) => {
+        const slots: UnitAHUAirSlotItemQueryParam = UnitHelper.parseQs(
+          queryParams?.[UnitHelper.SLOTS_QUERY_PARAM_NAME]
+        );
+        const manufacturerId = queryParams[UnitHelper.MANUFACTURER_ID_QUERY_PARAM_NAME];
+        const unitId = queryParams[UnitHelper.UNIT_ID_QUERY_PARAM_NAME];
+        const sku = String(productSku);
+        const removeActions = [];
+
+        for (const slotId in slots) {
+          if (slots.hasOwnProperty(slotId)) {
+            const canBeRemoved = Boolean(slots[slotId]?.filter(item => item === sku)?.length);
+            if (canBeRemoved) {
+              removeActions.push(
+                removeAhuSlotItemFromList({
+                  manufacturerId,
+                  unitId,
+                  slotId,
+                  sku,
+                })
+              );
+            }
+          }
+        }
+
+        return removeActions;
+      })
+    )
   );
 
   private navigateTo(path: string, queryParams?: Params): void {

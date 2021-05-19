@@ -1,5 +1,3 @@
-// API Models
-
 import {
   ProductView,
   VariationProductMasterView,
@@ -88,6 +86,10 @@ export interface UnitAHUAirSlotItemParams {
   unitId: string;
   slotId: string;
   sku: string;
+}
+
+export interface UnitAHUAirSlotItemQueryParam {
+  [key: string]: string[];
 }
 
 export type UnitAhuAirSlotProductView = ProductView | VariationProductView | VariationProductMasterView;

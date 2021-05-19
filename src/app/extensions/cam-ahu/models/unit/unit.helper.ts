@@ -1,9 +1,16 @@
 import { Params } from '@angular/router';
 import * as qs from 'qs';
 
-import { Unit, UnitAHUAirSlotItemParams, UnitAHUAirSlotParams, UnitAhuAirSlotProductView } from './unit.model';
 import { LineItemView } from 'ish-core/models/line-item/line-item.model';
 import { Price, PriceHelper } from 'ish-core/models/price/price.model';
+
+import {
+  Unit,
+  UnitAHUAirSlotItemParams,
+  UnitAHUAirSlotItemQueryParam,
+  UnitAHUAirSlotParams,
+  UnitAhuAirSlotProductView,
+} from './unit.model';
 
 export class UnitHelper {
   static MANUFACTURER_ID_QUERY_PARAM_NAME = 'manufacturerId';
@@ -25,8 +32,10 @@ export class UnitHelper {
   static addAhuSlotItemToList(queryParams: Params, ahuSlotItemParams: UnitAHUAirSlotItemParams) {
     const { manufacturerId, unitId, slotId, sku } = ahuSlotItemParams;
 
-    const prevSlots = UnitHelper.parseQs(queryParams?.[UnitHelper.SLOTS_QUERY_PARAM_NAME]);
-    const nextSlots = {};
+    const prevSlots: UnitAHUAirSlotItemQueryParam = UnitHelper.parseQs(
+      queryParams?.[UnitHelper.SLOTS_QUERY_PARAM_NAME]
+    );
+    const nextSlots: UnitAHUAirSlotItemQueryParam = {};
 
     nextSlots[slotId] = prevSlots[slotId] ? [...prevSlots[slotId], sku] : [sku];
 
@@ -44,8 +53,10 @@ export class UnitHelper {
   static removeAhuSlotItemFromList(queryParams: Params, ahuSlotItemParams: UnitAHUAirSlotItemParams) {
     const { manufacturerId, unitId, slotId, sku } = ahuSlotItemParams;
 
-    const prevSlots = UnitHelper.parseQs(queryParams?.[UnitHelper.SLOTS_QUERY_PARAM_NAME]);
-    const nextSlots = {};
+    const prevSlots: UnitAHUAirSlotItemQueryParam = UnitHelper.parseQs(
+      queryParams?.[UnitHelper.SLOTS_QUERY_PARAM_NAME]
+    );
+    const nextSlots: UnitAHUAirSlotItemQueryParam = {};
 
     nextSlots[slotId] = prevSlots[slotId] ? [...prevSlots[slotId]].filter(item => item !== sku) : [];
 
@@ -66,7 +77,7 @@ export class UnitHelper {
 
   static countAddedItemsBySku(queryParams: Params, ahuSlotItemParams: UnitAHUAirSlotItemParams) {
     const { slotId, sku } = ahuSlotItemParams;
-    const slots = UnitHelper.parseQs(queryParams?.[UnitHelper.SLOTS_QUERY_PARAM_NAME]);
+    const slots: UnitAHUAirSlotItemQueryParam = UnitHelper.parseQs(queryParams?.[UnitHelper.SLOTS_QUERY_PARAM_NAME]);
 
     return [].concat(slots?.[slotId]).filter(item => item === sku)?.length;
   }
@@ -83,7 +94,7 @@ export class UnitHelper {
 
   static isAhuUnitSlotValid(queryParams: Params, ahuSlotParams: UnitAHUAirSlotParams, ahuUnit: Unit) {
     const { manufacturerId, unitId, slotId } = ahuSlotParams;
-    const slots = UnitHelper.parseQs(queryParams?.[UnitHelper.SLOTS_QUERY_PARAM_NAME]);
+    const slots: UnitAHUAirSlotItemQueryParam = UnitHelper.parseQs(queryParams?.[UnitHelper.SLOTS_QUERY_PARAM_NAME]);
     const currentSlotAmount = slots?.[slotId]?.length || 0;
     const requiredSlotAmount = Number(ahuUnit.ahuAirSlots?.find(slot => slot.ahuSlotId === slotId)?.ahuSlotAmount || 0);
 
