@@ -51,21 +51,25 @@
                 <li *ngFor="let item of ahuAirSlot.items">
                   {{ item.sku }} / {{ ahuUnit.ahu.ahuManufacturerId }} / {{ ahuUnit.id }} / {{ ahuAirSlot.ahuSlotId }}
                   /
-                  <button
-                    (click)="addAhuSlotItemToList(ahuUnit, ahuAirSlot.ahuSlotId, item.sku)"
-                    [disabled]="isAhuUnitSlotValid$(ahuUnit, ahuAirSlot.ahuSlotId) | async"
-                  >
-                    Add
-                  </button>
-                  /
-                  <button
-                    (click)="removeAhuSlotItemFromList(ahuUnit, ahuAirSlot.ahuSlotId, item.sku)"
-                    [disabled]="!(isAhuUnitSlotItemAdded$(ahuUnit, ahuAirSlot.ahuSlotId, item.sku) | async)"
-                  >
-                    Remove
-                  </button>
-                  /
                   {{ isAhuUnitSlotItemAdded$(ahuUnit, ahuAirSlot.ahuSlotId, item.sku) | async | json }}
+                  /
+                  {{ isAhuUnitSlotItemProductAvailable$({ sku: item.sku }) | async | json }}
+                  /
+                  <ng-container *ngIf="isAhuUnitSlotItemProductAvailable$({ sku: item.sku }) | async">
+                    <button
+                      (click)="addAhuSlotItemToList(ahuUnit, ahuAirSlot.ahuSlotId, item.sku)"
+                      [disabled]="isAhuUnitSlotValid$(ahuUnit, ahuAirSlot.ahuSlotId) | async"
+                    >
+                      Add
+                    </button>
+                    /
+                    <button
+                      (click)="removeAhuSlotItemFromList(ahuUnit, ahuAirSlot.ahuSlotId, item.sku)"
+                      [disabled]="!(isAhuUnitSlotItemAdded$(ahuUnit, ahuAirSlot.ahuSlotId, item.sku) | async)"
+                    >
+                      Remove
+                    </button>
+                  </ng-container>
                 </li>
               </ol>
             </fieldset>

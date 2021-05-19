@@ -30,7 +30,6 @@ import { Router } from '@angular/router';
 import { completeIconSet } from 'camfil-icons';
 import { Observable, Subject } from 'rxjs';
 import { map, startWith, take, takeUntil, tap } from 'rxjs/operators';
-import { UnitHelper } from '../../../cam-ahu/models/unit/unit.helper';
 
 import { AppFacade } from 'ish-core/facades/app.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
@@ -43,6 +42,7 @@ import { whenTruthy } from 'ish-core/utils/operators';
 
 import { CamAhuFacade } from '../../../cam-ahu/facades/cam-ahu.facade';
 import { Manufacturer } from '../../../cam-ahu/models/manufacturer/manufacturer.model';
+import { UnitHelper } from '../../../cam-ahu/models/unit/unit.helper';
 import {
   Unit,
   UnitAHUAirSlot,
@@ -338,6 +338,10 @@ export class DemoPageComponent implements AfterViewInit, OnInit, OnDestroy {
     };
 
     return this.ahuFacade.isAhuUnitSlotItemAdded$(ahuSlotItemParams);
+  }
+
+  isAhuUnitSlotItemProductAvailable$(props: { sku: string }) {
+    return this.ahuFacade.isAhuUnitSlotItemProductAvailable$(props);
   }
 
   isAhuUnitSlotValid$(ahuUnit: Unit, slotId: string) {

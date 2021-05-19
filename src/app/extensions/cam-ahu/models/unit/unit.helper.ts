@@ -105,9 +105,12 @@ export class UnitHelper {
     return isValid && isMatchingManufacturerId && isMatchingUnitId;
   }
 
-  static totalPrice(items: UnitAhuAirSlotProductView[]): Price {
-    const getCurrency = element => element.listPrice?.currency;
-    const getValue = element => element.listPrice?.value;
+  static totalPrice(
+    items: UnitAhuAirSlotProductView[],
+    defaults: { currency: string; value: number } = { currency: 'USD', value: 0 }
+  ): Price {
+    const getCurrency = element => element.listPrice?.currency || defaults?.currency;
+    const getValue = element => element.listPrice?.value || defaults?.value;
 
     return PriceHelper.getPrice(getCurrency, getValue, (items as unknown) as LineItemView[]);
   }

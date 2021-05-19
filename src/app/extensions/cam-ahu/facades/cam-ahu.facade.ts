@@ -4,8 +4,10 @@ import { Observable, combineLatest } from 'rxjs';
 import { defaultIfEmpty, first, map, switchMap, withLatestFrom } from 'rxjs/operators';
 
 import { HttpError } from 'ish-core/models/http-error/http-error.model';
+import { getCurrentLocale } from 'ish-core/store/core/configuration';
 import { selectQueryParams } from 'ish-core/store/core/router';
-import { getProducts } from 'ish-core/store/shopping/products';
+import { getProduct, getProducts } from 'ish-core/store/shopping/products';
+import { whenTruthy } from 'ish-core/utils/operators';
 
 import { Manufacturer } from '../models/manufacturer/manufacturer.model';
 import { UnitHelper } from '../models/unit/unit.helper';
@@ -118,6 +120,7 @@ export class CamAhuFacade {
     withLatestFrom(this.selectedAhuUnitSlots$),
     map(([queryParams, ahuSlots]) =>
       ahuSlots.map(ahuSlot => {
+        // tslint:disable-next-line: ish-no-object-literal-type-assertion
         const newAhuSlot = { ...ahuSlot } as UnitAHUAirSlotSummary;
 
         const getSlotItemParams = (item): UnitAHUAirSlotItemParams => ({
@@ -151,7 +154,10 @@ export class CamAhuFacade {
       return this.store.pipe(
         select(getProducts, { skus }),
         map(products => products.filter(product => !product.failed)),
-        map(products => UnitHelper.totalPrice(products))
+        withLatestFrom(this.store.pipe(select(getCurrentLocale))),
+        map(([products, currentLocale]) =>
+          UnitHelper.totalPrice(products, { currency: currentLocale?.currency, value: 0 })
+        )
       );
     })
   );
@@ -214,6 +220,16 @@ export class CamAhuFacade {
     return this.store
       .pipe(select(selectQueryParams))
       .pipe(map(queryParams => UnitHelper.isAhuUnitSlotItemAdded(queryParams, ahuSlotItemParams)));
+  }
+
+  isAhuUnitSlotItemProductAvailable$(props: { sku: string }): Observable<boolean> {
+    const { sku } = props;
+
+    return this.store.pipe(
+      select(getProduct, { sku }),
+      whenTruthy(),
+      map(product => !product.failed)
+    );
   }
 
   /**
