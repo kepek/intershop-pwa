@@ -104,7 +104,6 @@ describe('Camfil Header Navigation Component', () => {
             CAT_C
           </a>
         </li>
-        <li class="dropdown with-separator"><a ng-reflect-router-link="/demo" href="/demo">Demo</a></li>
         <li class="dropdown with-separator">
           <a ng-reflect-router-link="/air-handling-unit-guide" href="/air-handling-unit-guide"
             >camfil.ahu.link</a
@@ -120,6 +119,7 @@ describe('Camfil Header Navigation Component', () => {
             >account.order_history.link</a
           >
         </li>
+        <li class="dropdown with-separator"><a ng-reflect-router-link="/demo" href="/demo">Demo</a></li>
       </ul>
     `);
   });

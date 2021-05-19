@@ -23,7 +23,7 @@ export class UnitMapper {
       ahuUnit.ahu.ahuManufacturerId = String(ahuUnit.ahu.ahuManufacturerId);
     }
 
-    const distinctTypes = [...new Set(ahuUnit.ahuAirSlots.map(airSlot => airSlot.ahuSlotType))].reduce((obj, type) => {
+    const distinctTypes = [...new Set(ahuUnit.ahuAirSlots?.map(airSlot => airSlot.ahuSlotType))].reduce((obj, type) => {
       obj[type] = ahuUnit?.ahuAirSlots?.filter(airSlot => airSlot.ahuSlotType === type)?.length || 0;
       return obj;
     }, {});
