@@ -58,7 +58,6 @@ export class ArticleDetailsComponent implements OnInit {
 
   validateVal() {
     this.filledMeasurements = this.MEASUREMENTS.map(val => this.getField(val).value).filter(val => val);
-    this.enableFields();
     this.showError =
       this.filledMeasurements.length && this.maxVal
         ? !this.filledMeasurements.find(val => this.maxVal > val)
@@ -68,20 +67,17 @@ export class ArticleDetailsComponent implements OnInit {
     if (!this.diameterDisabled && !this.widthAndHeightDisabled) {
       this.enableFields();
     } else if (this.diameterDisabled) {
-      this.dsiableField('measurementDiameter');
-    } else if (this.widthAndHeightDisabled) {
-      this.dsiableField('measurementWidth');
-      this.dsiableField('measurementHeight');
+      this.dsiableField(['measurementDiameter']);
+    } else {
+      this.dsiableField(['measurementWidth', 'measurementHeight']);
     }
   }
 
-  dsiableField(fieldName) {
-    this.quantityForm.controls[fieldName].disable();
+  dsiableField(fieldNames: string[]) {
+    fieldNames?.forEach(field => this.quantityForm.controls[field].disable());
   }
 
   enableFields() {
-    this.quantityForm.controls['measurementHeight'].enable();
-    this.quantityForm.controls['measurementWidth'].enable();
-    this.quantityForm.controls['measurementDiameter'].enable();
+    this.MEASUREMENTS?.forEach(m => this.quantityForm.controls[m].enable());
   }
 }
