@@ -16,11 +16,6 @@
         <mat-label>{{ 'camfil.modal.addToCamcard.diameter.label' | translate }}</mat-label>
         <input matInput formControlName="measurementDiameter" (keyup)="validateVal()" type="number" />
       </mat-form-field>
-      <div
-        *ngIf="filledMeasurements?.length"
-        class="article-details__ico mt-3"
-        [ngClass]="{ 'rounded-circle': filledMeasurements?.length === 1 }"
-      ></div>
 
       <div class="w-100">
         <span innerHTML="{{ 'camfil.modal.addToCamcard.measurement.note.text' | translate }}"></span>
