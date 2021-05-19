@@ -54,4 +54,9 @@
   margin-top: $space-box;
   background-color: $white;
   box-shadow: $header-shadow;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: $gray-100;
+  }
 }

@@ -129,7 +129,6 @@ export class CamfilQuickViewModalComponent implements OnInit, OnDestroy {
   }
 
   getAttributeValue(attributes: Attribute[], attributeName: string) {
-    console.log('ATTR', attributes);
     return attributes.find(x => x.name === attributeName)?.value;
   }
 
