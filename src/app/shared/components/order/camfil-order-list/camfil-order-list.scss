@@ -37,7 +37,7 @@ table {
 }
 
 .search-container {
-  width: 308px;
+  width: 100%;
   margin-right: 16px;
 }
 
@@ -94,10 +94,33 @@ button {
     font-size: 12px;
   }
 }
-
-mat-form-field.select-filter {
-  width: 160px;
-  margin-right: 16px;
-  font-size: 12px;
-  letter-spacing: 1px;
+@media (min-width: $screen-md-min) {
+  mat-form-field.select-filter {
+    margin-right: 16px;
+    font-size: 12px;
+    letter-spacing: 1px;
+  }
 }
+
+// for mobile
+@media (max-width: $screen-sm-max) {
+  .orders-item {
+    line-height: 24px;
+    color: $camfil-text-color-tertiary;
+    .row:nth-of-type(2n + 1) {
+      margin-top: $space-box/2;
+      margin-bottom: $space-box/2;
+      font-size: $font-size-xs;
+      font-weight: 600;
+      color: $camfil-text-color-primary;
+      background-color: rgba($color-corporate, 0.1);
+    }
+
+    ::ng-deep {
+      .mat-expansion-panel-body {
+        padding: 0;
+      }
+    }
+  }
+}
+// EOF for mobile
