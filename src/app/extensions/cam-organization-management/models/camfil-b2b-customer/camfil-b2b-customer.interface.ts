@@ -10,4 +10,5 @@ export interface CamfilB2bCustomerDataRelations {
 export interface CamfilB2bCustomerData extends CustomerData, CamfilB2bCustomerDataRelations {
   id: string;
   parent: boolean;
+  department?: string;
 }
