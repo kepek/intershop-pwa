@@ -29,8 +29,6 @@ import {
   deactivateCustomerUser,
   deactivateCustomerUserFail,
   deactivateCustomerUserSuccess,
-  disconnectContactFromUserAndCustomerFail,
-  disconnectContactFromUserAndCustomerSuccess,
   disconnectUserFromCustomer,
   disconnectUserFromCustomerFail,
   disconnectUserFromCustomerSuccess,
@@ -262,8 +260,7 @@ export class UserEffects {
         createCustomerUserSuccess,
         connectUserWithCustomerSuccess,
         disconnectUserFromCustomerSuccess,
-        connectContactWithUserAndCustomerSuccess,
-        disconnectContactFromUserAndCustomerSuccess
+        connectContactWithUserAndCustomerSuccess
       ),
       mapToPayloadProperty('successMessage'),
       filter(successMessage => !!successMessage),
@@ -287,8 +284,7 @@ export class UserEffects {
         createCustomerUserFail,
         connectUserWithCustomerFail,
         disconnectUserFromCustomerFail,
-        connectContactWithUserAndCustomerFail,
-        disconnectContactFromUserAndCustomerFail
+        connectContactWithUserAndCustomerFail
       ),
       mapToPayloadProperty('error'),
       whenTruthy(),

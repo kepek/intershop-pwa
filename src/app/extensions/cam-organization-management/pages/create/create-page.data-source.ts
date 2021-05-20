@@ -1,7 +1,7 @@
 // tslint:disable: ish-ordered-imports project-structure rxjs-no-subject-value
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subject, combineLatest, throwError, BehaviorSubject } from 'rxjs';
-import { distinctUntilChanged, filter, map, switchMap, takeUntil } from 'rxjs/operators';
+import { distinctUntilChanged, filter, map, switchMap, take, takeUntil } from 'rxjs/operators';
 
 import { CamOrganizationManagementFacade } from '../../facades/cam-organization-management.facade';
 import {
@@ -30,12 +30,14 @@ export abstract class CreatePageDataSourceComponent implements OnInit, OnDestroy
   newUserRoles$: BehaviorSubject<CamfilB2bRole[]>;
   newUserStaticRoles$: Observable<CamfilB2bRole[]>;
   newUserStaticCustomers$: Observable<CamfilB2bCustomer[]>;
+  validCustomerAndContact$: BehaviorSubject<boolean>;
 
   context$: Observable<{
     customer: CamfilB2bCustomer;
     user: CamfilB2bUser;
     contacts: CamfilB2bCustomerContact[];
     roles: CamfilB2bRole[];
+    validCustomerAndContact: boolean;
   }>;
 
   // Methods
@@ -62,6 +64,7 @@ export abstract class CreatePageDataSourceComponent implements OnInit, OnDestroy
   // Hooks
 
   ngOnInit() {
+    this.validCustomerAndContact$ = new BehaviorSubject(true);
     this.currentCustomer$ = this.organizationFacade.currentCustomer$;
     this.currentCustomerId$ = this.currentCustomer$.pipe(map(customer => customer.id));
 
@@ -94,7 +97,16 @@ export abstract class CreatePageDataSourceComponent implements OnInit, OnDestroy
       this.newUser$,
       this.newUserContacts$,
       this.newUserRoles$,
-    ]).pipe(map(([customer, user, contacts, roles]) => ({ customer, user, contacts, roles })));
+      this.validCustomerAndContact$,
+    ]).pipe(
+      map(([customer, user, contacts, roles, validCustomerAndContact]) => ({
+        customer,
+        user,
+        contacts,
+        roles,
+        validCustomerAndContact,
+      }))
+    );
   }
 
   ngOnDestroy() {
@@ -138,12 +150,22 @@ export abstract class CreatePageDataSourceComponent implements OnInit, OnDestroy
   onDisconnectUserFromCustomer(event: { customer: CamfilB2bCustomer; user: CamfilB2bUser }) {
     const newCustomer = event?.customer;
     const newUser = event?.user;
+    const connections = [...this.newUserContacts$.getValue().filter(c => c.customer.id !== newCustomer.id)];
 
     if (newUser?.customers) {
       newUser.customers = [...newUser.customers.filter(c => c.id !== newCustomer?.id)];
     }
 
     this.newUser$.next({ ...newUser });
+    this.newUserContacts$.next(connections);
+    this.context$
+      .pipe(
+        take(1),
+        filter(({ customer, contacts }) => !customer && !contacts.length)
+      )
+      .subscribe(() => {
+        this.validCustomerAndContact$.next(false);
+      });
   }
 
   onConnectContactWithUserAndCustomer(event: {
@@ -156,7 +178,7 @@ export abstract class CreatePageDataSourceComponent implements OnInit, OnDestroy
     const newContact = event?.contact;
 
     const connection: CamfilB2bCustomerContact = { customer: newCustomer, contact: newContact };
-    const connections = [...this.newUserContacts$.getValue(), connection];
+    const connections = [...this.newUserContacts$.getValue().filter(c => c.customer.id !== newCustomer.id), connection];
 
     this.newUserContacts$.next(connections);
 
@@ -166,31 +188,7 @@ export abstract class CreatePageDataSourceComponent implements OnInit, OnDestroy
     newUser.customers = [...newUser?.customers?.filter(c => c.id !== updatedCustomer.id), updatedCustomer];
 
     this.newUser$.next({ ...newUser });
-  }
-
-  onDisconnectContactFromUserAndCustomer(event: {
-    customer: CamfilB2bCustomer;
-    user: CamfilB2bUser;
-    contact: CamfilB2bContact;
-  }) {
-    const newCustomer = event?.customer;
-    const newUser = event?.user;
-    const newContact = event?.contact;
-
-    const connections = [
-      ...this.newUserContacts$
-        .getValue()
-        .filter(({ customer, contact }) => newCustomer.id !== customer.id && newContact.erpId !== contact.erpId),
-    ];
-
-    this.newUserContacts$.next(connections);
-
-    const updatedCustomer = { ...newCustomer, userContact: undefined };
-
-    newUser.customers = newUser.customers || [];
-    newUser.customers = [...newUser?.customers?.filter(c => c.id !== updatedCustomer.id), updatedCustomer];
-
-    this.newUser$.next({ ...newUser });
+    this.validCustomerAndContact$.next(true);
   }
 
   // Observables

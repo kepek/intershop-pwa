@@ -61,12 +61,6 @@ export class CamfilOrganizationUserCustomerContactFormComponent implements OnIni
     contact: CamfilB2bContact;
   }>();
 
-  @Output() disconnectContactFromUserAndCustomer = new EventEmitter<{
-    customer: CamfilB2bCustomer;
-    user: CamfilB2bUser;
-    contact: CamfilB2bContact;
-  }>();
-
   form: FormGroup;
 
   constructor(private fb: FormBuilder) {}

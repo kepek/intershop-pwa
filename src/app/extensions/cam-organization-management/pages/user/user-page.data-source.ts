@@ -124,8 +124,4 @@ export abstract class UserPageDataSourceComponent implements OnInit, AfterViewIn
   onConnectContactWithUserAndCustomer({ customer, user, contact }) {
     this.organizationFacade.connectContactWithUserAndCustomer$(customer.id, user.id, contact);
   }
-
-  onDisconnectContactFromUserAndCustomer({ customer, user, contact }) {
-    this.organizationFacade.disconnectContactFromUserAndCustomer$(customer.id, user.id, contact);
-  }
 }

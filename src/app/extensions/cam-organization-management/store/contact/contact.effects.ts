@@ -16,9 +16,6 @@ import {
   connectContactWithUserAndCustomer,
   connectContactWithUserAndCustomerFail,
   connectContactWithUserAndCustomerSuccess,
-  disconnectContactFromUserAndCustomer,
-  disconnectContactFromUserAndCustomerFail,
-  disconnectContactFromUserAndCustomerSuccess,
 } from '../user';
 
 import {
@@ -105,34 +102,11 @@ export class ContactEffects {
     )
   );
 
-  // Customer -> User -> Contact -> Disconnect
-
-  disconnectContactFromUserAndCustomer$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(disconnectContactFromUserAndCustomer),
-      mapToPayload(),
-      switchMap(({ customerId, userId, contact }) =>
-        this.organizationService.disconnectContactFromUserAndCustomerPlusReload(customerId, userId, contact).pipe(
-          map(user =>
-            disconnectContactFromUserAndCustomerSuccess({
-              customerId,
-              userId,
-              user,
-              successMessage:
-                'camfil.account.organization.edit_user.disconnect_contact_from_user_and_customer.modal.text',
-            })
-          ),
-          mapErrorToAction(disconnectContactFromUserAndCustomerFail, { customerId, userId, contact })
-        )
-      )
-    )
-  );
-
   // Display Success Message for Updates
 
   displayUpdateCustomerUserContactSuccessMessage$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(connectContactWithUserAndCustomerSuccess, disconnectContactFromUserAndCustomerSuccess),
+      ofType(connectContactWithUserAndCustomerSuccess),
       mapToPayload(),
       mapToProperty('successMessage'),
       filter(successMessage => !!successMessage),
@@ -148,7 +122,7 @@ export class ContactEffects {
 
   displayUpdateCustomerUserFailMessage$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(connectContactWithUserAndCustomerFail, disconnectContactFromUserAndCustomerFail),
+      ofType(connectContactWithUserAndCustomerFail),
       mapToPayloadProperty('error'),
       whenTruthy(),
       map(error =>
