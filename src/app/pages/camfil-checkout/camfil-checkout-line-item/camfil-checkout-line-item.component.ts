@@ -102,9 +102,9 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
         [this.measurementsValues[2]]: (this.getValFromAttrs(res, 'diameter') as number) || undefined,
       };
     });
-
-    this.initForm();
     this.quantity = this.item.quantity.value;
+    this.initForm();
+
     this.updateQuantities();
     this.calculateDeliveryDate();
   }
@@ -147,7 +147,7 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
   /** init form in the beginning */
   private initForm() {
     this.addToCartForm = new FormGroup({
-      quantity: new FormControl(this.quantity || 1),
+      quantity: new FormControl(this.item?.quantity?.value || 1),
     });
     this.boxLabelForm = new FormGroup({
       boxLabel: new FormControl(this.boxLabel, [Validators.maxLength(60)]),
