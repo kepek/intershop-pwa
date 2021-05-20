@@ -15,7 +15,7 @@ const routes: Routes = [
       import('./camfil-ahu-detail/camfil-ahu-page-detail.module').then(m => m.CamfilAHUPageDetailModule),
     data: {
       feature: 'camAhu',
-      breadcrumbData: [{ key: 'camfil.ahu.link', link: '/air-handling-unit-guide' }, { key: 'Air Handling Unit Name' }],
+      breadcrumbData: [{ key: 'camfil.ahu.link', link: '/air-handling-unit-guide' }],
     },
   },
 ];

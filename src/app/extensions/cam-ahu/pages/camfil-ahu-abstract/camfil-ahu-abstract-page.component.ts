@@ -41,7 +41,7 @@ export abstract class CamAhuAbstractComponent implements OnInit, OnDestroy {
   selectedAhuUnitAirSlotTypes$: Observable<UnitAHUAirSlotType[]>;
   ahuLoading$: Observable<boolean>;
 
-  protected constructor(protected router: Router, protected fb: FormBuilder, protected ahuFacade: CamAhuFacade) {}
+  constructor(protected router: Router, protected fb: FormBuilder, protected ahuFacade: CamAhuFacade) {}
 
   // tslint:disable-next-line:private-destroy-field
   protected destroy$ = new Subject();

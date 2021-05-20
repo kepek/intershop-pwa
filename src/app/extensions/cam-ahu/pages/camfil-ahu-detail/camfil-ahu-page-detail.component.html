@@ -1,3 +1,4 @@
+<!--
 <div class="ahu-detail">
   <div class="row">
     <div class="col-md-9 col-sm-12">
@@ -51,7 +52,7 @@
         </div>
       </div>
 
-      <camfil-ahu-slots [product]="product" [unitAHUAirSlots]="unitAHUAirSlots"></camfil-ahu-slots>
+      <camfil-ahu-slots [product]="product" [unitAHUAirSlots]="selectedAhuUnitSlots$ | async"></camfil-ahu-slots>
 
       <div class="row product-data my-4">
         <div class="col-12 col-md-6 product-attributes">
@@ -72,4 +73,4 @@
   </div>
 </div>
 <ish-content-include includeId="camfil.include.ahu-detail.content.pagelet2-Include"></ish-content-include>
-<!-- <camfil-product-guides></camfil-product-guides> -->
+-->

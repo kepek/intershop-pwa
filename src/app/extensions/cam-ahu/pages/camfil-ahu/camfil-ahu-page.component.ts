@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -12,7 +12,7 @@ import { UnitHelper } from '../../models/unit/unit.helper';
   templateUrl: './camfil-ahu-page.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CamfilAHUPageComponent extends CamAhuAbstractComponent implements OnInit {
+export class CamfilAHUPageComponent extends CamAhuAbstractComponent {
   constructor(protected router: Router, protected ahuFacade: CamAhuFacade, protected fb: FormBuilder) {
     super(router, fb, ahuFacade);
   }

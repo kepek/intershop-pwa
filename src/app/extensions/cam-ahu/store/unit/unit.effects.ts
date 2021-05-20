@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Params, Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { routerNavigatedAction } from '@ngrx/router-store';
 import { Store, select } from '@ngrx/store';
-import { filter, map, mergeMap, switchMap, tap, withLatestFrom } from 'rxjs/operators';
+import { filter, map, mergeMap, switchMap, switchMapTo, tap, withLatestFrom } from 'rxjs/operators';
 
 import { ProductCompletenessLevel } from 'ish-core/models/product/product.helper';
 import { ofUrl, selectQueryParams } from 'ish-core/store/core/router';
+import { setBreadcrumbData } from 'ish-core/store/core/viewconf';
 import { loadProductFail, loadProductIfNotLoaded, loadProductVariationsFail } from 'ish-core/store/shopping/products';
 import { mapErrorToAction, mapToPayload, mapToPayloadProperty, whenTruthy } from 'ish-core/utils/operators';
 
@@ -25,7 +27,7 @@ import {
   removeAhuSlotItemFromList,
   selectAhuUnit,
 } from './unit.actions';
-import { getSelectedAhuUnitId } from './unit.selectors';
+import { getBreadcrumbForSelectedAhuUnit, getSelectedAhuUnitId } from './unit.selectors';
 
 @Injectable()
 export class UnitEffects {
@@ -155,6 +157,19 @@ export class UnitEffects {
 
         return removeActions;
       })
+    )
+  );
+
+  setBreadcrumbForSelectedAhuUnit$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(routerNavigatedAction),
+      switchMapTo(
+        this.store.pipe(
+          select(getBreadcrumbForSelectedAhuUnit),
+          whenTruthy(),
+          map(breadcrumbData => setBreadcrumbData({ breadcrumbData }))
+        )
+      )
     )
   );
 
