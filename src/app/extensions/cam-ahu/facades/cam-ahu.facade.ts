@@ -7,7 +7,6 @@ import { HttpError } from 'ish-core/models/http-error/http-error.model';
 import { getCurrentLocale } from 'ish-core/store/core/configuration';
 import { selectQueryParams } from 'ish-core/store/core/router';
 import { getProduct, getProducts } from 'ish-core/store/shopping/products';
-import { whenTruthy } from 'ish-core/utils/operators';
 
 import { Manufacturer } from '../models/manufacturer/manufacturer.model';
 import { UnitHelper } from '../models/unit/unit.helper';
@@ -227,8 +226,7 @@ export class CamAhuFacade {
 
     return this.store.pipe(
       select(getProduct, { sku }),
-      whenTruthy(),
-      map(product => !product.failed)
+      map(product => (product ? Boolean(!product?.failed) : false))
     );
   }
 
