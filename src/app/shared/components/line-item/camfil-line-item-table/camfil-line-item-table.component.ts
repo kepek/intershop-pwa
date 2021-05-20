@@ -18,6 +18,7 @@ import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { LineItemUpdate } from 'ish-core/models/line-item-update/line-item-update.model';
 import { Price } from 'ish-core/models/price/price.model';
 import { ProductCompletenessLevel } from 'ish-core/models/product/product.model';
+import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
 
 /**
  * The Line Item table Component displays a line items.
@@ -44,6 +45,7 @@ export class CamfilLineItemTableComponent implements OnInit, OnChanges, AfterVie
   @Input() lineItems: Partial<OrderLineItem>[];
   @Input() total: Price;
   @Input() lineItemViewType?: 'simple' | 'availability';
+  @Input() deviceType: DeviceType;
   @Output() updateItem = new EventEmitter<LineItemUpdate>();
   @Output() deleteItem = new EventEmitter<string>();
   @ViewChild(MatSort) sort: MatSort;
@@ -58,10 +60,12 @@ export class CamfilLineItemTableComponent implements OnInit, OnChanges, AfterVie
     'totalRowCustomerPrice',
   ];
   lineItemsProcessed: MatTableDataSource<Partial<OrderLineItem>>;
+  isMobileView = false;
 
   constructor(private shoppingFacade: ShoppingFacade) {}
 
   ngOnInit() {
+    this.isMobileView = this.isMobile();
     this.lineItemsProcessed = new MatTableDataSource(this.lineItems);
   }
 
@@ -69,6 +73,7 @@ export class CamfilLineItemTableComponent implements OnInit, OnChanges, AfterVie
     if (changes.lineItems) {
       this.lineItemsProcessed = new MatTableDataSource(this.lineItems);
     }
+    this.isMobileView = this.isMobile();
   }
 
   ngAfterViewInit() {
@@ -84,5 +89,9 @@ export class CamfilLineItemTableComponent implements OnInit, OnChanges, AfterVie
       return;
     }
     return [width, hight, diameter].filter(e => e).join('x');
+  }
+
+  isMobile() {
+    return this.deviceType === 'mobile'; // || this.deviceType === 'tablet';
   }
 }
