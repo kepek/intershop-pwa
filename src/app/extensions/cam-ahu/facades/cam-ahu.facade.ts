@@ -26,6 +26,7 @@ import {
   getAhuManufacturerLoading,
   getAllAhuManufacturers,
   getSelectedAhuManufacturer,
+  getSelectedAhuManufacturerId,
   isManufacturerInitialized,
   loadAhuManufacturer,
   loadAhuManufacturers,
@@ -38,6 +39,7 @@ import {
   getAhuUnitsLoading,
   getAllAhuUnits,
   getSelectedAhuUnit,
+  getSelectedAhuUnitId,
   loadAhuUnit,
   loadAhuUnits,
   removeAhuSlotItemFromList,
@@ -82,6 +84,9 @@ export class CamAhuFacade {
   ahuManufacturersError$: Observable<HttpError> = this.store.pipe(select(getAhuManufacturerError));
   ahuManufacturersInitialized$: Observable<boolean> = this.store.pipe(select(isManufacturerInitialized));
   selectedAhuManufacturer$: Observable<Manufacturer> = this.store.pipe(select(getSelectedAhuManufacturer));
+  selectedAhuManufacturerId$: Observable<PropType<Manufacturer, 'id'>> = this.store.pipe(
+    select(getSelectedAhuManufacturerId)
+  );
 
   /**
    * Units
@@ -110,6 +115,7 @@ export class CamAhuFacade {
     )
   );
   selectedAhuUnit$: Observable<Unit> = this.store.pipe(select(getSelectedAhuUnit));
+  selectedAhuUnitId$: Observable<PropType<Unit, 'id'>> = this.store.pipe(select(getSelectedAhuUnitId));
   selectedAhuUnitDetails$: Observable<UnitAhu> = this.selectedAhuUnit$.pipe(map(unit => unit?.ahu));
   selectedAhuUnitSlots$: Observable<UnitAHUAirSlot[]> = this.selectedAhuUnit$.pipe(
     map(unit => unit?.ahuAirSlots),

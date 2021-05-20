@@ -1,6 +1,10 @@
 <div class="ahu">
-  <img class="ahu__banner" src="{{ banner.url }}" />
+  <img
+    class="ahu__banner"
+    src="https://assets.new.siemens.com/siemens/assets/api/uuid:4b8847bc-99a5-4ee2-b3d0-ebdc64f8e91c/width:1266/quality:high/cnc-system-for-machine-tools.jpg"
+  />
   <mat-card class="ahu__card text-center">
+    <ish-loading *ngIf="ahuLoading$ | async"></ish-loading>
     <mat-card-header class="ahu__card-header">
       <mat-card-title class="ahu__card-title mat-headline">{{ 'camfil.ahu.heading' | translate }}</mat-card-title>
       <mat-card-subtitle class="ahu__card-subtitle"
@@ -10,31 +14,31 @@
     <mat-card-content>
       <div class="ahu__form">
         <span class="ahu__subheading">{{ 'camfil.ahu.subheading' | translate }}</span>
-        <form [formGroup]="ahuForm" (ngSubmit)="submitAhuForm()">
+        <form [formGroup]="ahuForm">
           <p>
             <mat-form-field appearance="fill" class="ahu__field">
-              <mat-label>{{ 'camfil.ahu.select.manufacturer' | translate }}</mat-label>
+              <mat-label>{{ 'camfil.ahu.form.select.manufacturer' | translate }}</mat-label>
               <mat-select formControlName="manufacturer" (selectionChange)="selectAhuManufacturer($event)">
-                <mat-option [value]="undefined">None</mat-option>
-                <ng-container *ngIf="ahuManufacturers$ | async as ahuManufacturers">
-                  <mat-option *ngFor="let manufacturer of ahuManufacturers" [value]="manufacturer.id">
-                    {{ manufacturer.name }}
-                  </mat-option>
-                </ng-container>
+                <mat-option *ngFor="let manufacturer of ahuManufacturers$ | async" [value]="manufacturer.id">
+                  {{ manufacturer.name }}
+                </mat-option>
               </mat-select>
+              <mat-error *ngIf="ahuForm.controls.manufacturer.hasError('required')">
+                {{ 'camfil.ahu.form.select.manufacturer.error.required' | translate }}
+              </mat-error>
             </mat-form-field>
           </p>
           <p>
             <mat-form-field appearance="fill" class="ahu__field">
-              <mat-label>{{ 'camfil.ahu.select.model' | translate }}</mat-label>
+              <mat-label>{{ 'camfil.ahu.form.select.unit' | translate }}</mat-label>
               <mat-select formControlName="unit" (selectionChange)="selectAhuUnit($event)">
-                <mat-option [value]="undefined">None</mat-option>
-                <ng-container *ngIf="ahuUnits$ | async as ahuUnits">
-                  <mat-option *ngFor="let unit of ahuUnits" [value]="unit.ahu.id">
-                    {{ unit.ahu.airHandlingUnitName }}
-                  </mat-option>
-                </ng-container>
+                <mat-option *ngFor="let unit of ahuUnits$ | async" [value]="unit.ahu.id">
+                  {{ unit.ahu.airHandlingUnitName }}
+                </mat-option>
               </mat-select>
+              <mat-error *ngIf="ahuForm.controls.manufacturer.hasError('required')">
+                {{ 'camfil.ahu.form.select.unit.error.required' | translate }}
+              </mat-error>
             </mat-form-field>
           </p>
         </form>

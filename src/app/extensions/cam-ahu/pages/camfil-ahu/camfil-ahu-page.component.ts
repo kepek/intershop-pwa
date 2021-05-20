@@ -1,13 +1,10 @@
-import { ChangeDetectionStrategy, Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
 
 import { CamAhuFacade } from '../../facades/cam-ahu.facade';
-import { Manufacturer } from '../../models/manufacturer/manufacturer.model';
-import { Unit } from '../../models/unit/unit.model';
-
-import { AHUBanner, AHUManufacturer, AHUModel, IMAGE, MANUFACTURERS, MODELS } from './database';
+import { CamAhuAbstractComponent } from '../camfil-ahu-abstract/camfil-ahu-abstract-page.component';
+import { UnitHelper } from '../../models/unit/unit.helper';
 
 @Component({
   selector: 'camfil-ahu-page',
@@ -15,65 +12,21 @@ import { AHUBanner, AHUManufacturer, AHUModel, IMAGE, MANUFACTURERS, MODELS } fr
   templateUrl: './camfil-ahu-page.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CamfilAHUPageComponent implements OnInit, OnChanges {
-  ahuManufacturers$: Observable<Manufacturer[]>;
-  ahuUnits$: Observable<Unit[]>;
-  ahuForm: FormGroup;
-  constructor(private router: Router, private ahuFacade: CamAhuFacade, private fb: FormBuilder) {}
-  banner: AHUBanner = IMAGE;
-  manufacturers: AHUManufacturer[] = MANUFACTURERS;
-  models: AHUModel[] = MODELS;
-  manufacturerSelect: number;
-  modelSelect: number;
-  manufacturerId: number;
-  unitId: number;
-
-  ngOnInit() {
-    this.manufacturerSelect = undefined;
-    this.modelSelect = undefined;
-
-    this.ahuManufacturers$ = this.ahuFacade.ahuManufacturers$;
-    this.ahuUnits$ = this.ahuFacade.ahuUnits$;
-    // AHU-Form
-    this.ahuForm = this.fb.group({
-      manufacturer: new FormControl(undefined, [Validators.required]),
-      unit: new FormControl(undefined, [Validators.required]),
-    });
+export class CamfilAHUPageComponent extends CamAhuAbstractComponent implements OnInit {
+  constructor(protected router: Router, protected ahuFacade: CamAhuFacade, protected fb: FormBuilder) {
+    super(router, fb, ahuFacade);
   }
-
-  ngOnChanges(c: SimpleChanges) {
-    if (c.unitId || c.manufacturerId) {
-      this.submitAhuForm();
-    }
-  }
-
-  selectAhuManufacturer(event) {
-    this.manufacturerId = event.value;
-    this.ahuFacade.selectAhuManufacturer(this.manufacturerId);
-  }
-
-  // on changes check for 2 varaibles to be true
 
   selectAhuUnit(event) {
-    this.unitId = event.value;
-    if (this.unitId) {
-      this.submitAhuForm();
-    }
-  }
+    const unitId = event.value;
+    const slots = undefined;
 
-  submitAhuForm() {
-    const manufacturerId = this.manufacturerId;
-    const unitId = this.unitId;
-
-    if (this.manufacturerId && this.unitId) {
-      this.router.navigate(['/air-handling-unit-guide/detail'], {
-        queryParamsHandling: 'merge',
-
-        queryParams: {
-          manufacturerId,
-          unitId,
-        },
-      });
-    }
+    this.router.navigate(['/air-handling-unit-guide/detail'], {
+      queryParamsHandling: 'merge',
+      queryParams: {
+        [UnitHelper.UNIT_ID_QUERY_PARAM_NAME]: unitId,
+        [UnitHelper.SLOTS_QUERY_PARAM_NAME]: slots,
+      },
+    });
   }
 }

@@ -81,15 +81,16 @@ export class UnitEffects {
       mapToPayloadProperty('unitId'),
       withLatestFrom(this.store.pipe(select(getSelectedAhuManufacturerId))),
       filter(([unitId, selectedAhuManufacturerId]) => unitId !== selectedAhuManufacturerId),
-      map(([unitId]) => loadAhuUnit({ unitId }))
+      map(([unitId]) => unitId),
+      whenTruthy(),
+      map(unitId => loadAhuUnit({ unitId }))
     )
   );
 
   determineSelectedUnitId$ = createEffect(() =>
     this.store.pipe(
-      ofUrl(/^\/(demo|air-handling-unit-guide)/),
+      ofUrl(/^\/(demo|ahu|air-handling-unit-guide)/),
       select(selectQueryParams),
-      filter(params => !!params?.unitId),
       withLatestFrom(this.store.pipe(select(getSelectedAhuUnitId))),
       filter(([params, selectedAhuUnitId]) => params?.unitId !== selectedAhuUnitId),
       map(([params]) => selectAhuUnit({ unitId: params?.unitId }))

@@ -28,13 +28,12 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { completeIconSet } from 'camfil-icons';
-import { Observable, Subject } from 'rxjs';
+import { Observable } from 'rxjs';
 import { map, startWith, take, takeUntil, tap } from 'rxjs/operators';
 
 import { AppFacade } from 'ish-core/facades/app.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { CategoryView } from 'ish-core/models/category-view/category-view.model';
-import { HttpError } from 'ish-core/models/http-error/http-error.model';
 import { Locale } from 'ish-core/models/locale/locale.model';
 import { ProductView } from 'ish-core/models/product-view/product-view.model';
 import { ProductCompletenessLevel } from 'ish-core/models/product/product.helper';
@@ -42,15 +41,7 @@ import { whenTruthy } from 'ish-core/utils/operators';
 
 import { CamAhuFacade } from '../../../cam-ahu/facades/cam-ahu.facade';
 import { Manufacturer } from '../../../cam-ahu/models/manufacturer/manufacturer.model';
-import { UnitHelper } from '../../../cam-ahu/models/unit/unit.helper';
-import {
-  Unit,
-  UnitAHUAirSlot,
-  UnitAHUAirSlotItemParams,
-  UnitAHUAirSlotParams,
-  UnitAHUAirSlotType,
-  UnitAhu,
-} from '../../../cam-ahu/models/unit/unit.model';
+import { CamAhuAbstractComponent } from '../../../cam-ahu/pages/camfil-ahu-abstract/camfil-ahu-abstract-page.component';
 
 import { DemoBottomSheetComponent } from './demo-bottom-sheet/demo-bottom-sheet.component';
 import { DemoDialogComponent } from './demo-dialog/demo-dialog.component';
@@ -121,25 +112,7 @@ export const CAMFIL_FORMATS: MatDateFormats = {
     { provide: MAT_DATE_FORMATS, useValue: CAMFIL_FORMATS },
   ],
 })
-export class DemoPageComponent implements AfterViewInit, OnInit, OnDestroy {
-  ahuManufacturers$: Observable<Manufacturer[]>;
-  ahuManufacturersLoading$: Observable<boolean>;
-  ahuManufacturersError$: Observable<HttpError>;
-  ahuManufacturersInitialized$: Observable<boolean>;
-  selectedAhuManufacturer$: Observable<Manufacturer>;
-  ahuForm: FormGroup;
-  ahuUnits$: Observable<Unit[]>;
-  ahuUnitsByManufacturerId$: Observable<Unit[]>;
-  ahuUnitsLoading$: Observable<boolean>;
-  ahuUnitsError$: Observable<HttpError>;
-  selectedAhuUnit$: Observable<Unit>;
-  selectedAhuUnitDetails$: Observable<UnitAhu>;
-  selectedAhuUnitSlots$: Observable<UnitAHUAirSlot[]>;
-  selectedAhuUnitSlotsSummary$: Observable<UnitAHUAirSlot[]>;
-  selectedAhuUnitSlotItemsTotalPrice$: Observable<any>;
-  selectedAhuUnitAirSlotTypes$: Observable<UnitAHUAirSlotType[]>;
-  ahuLoading$: Observable<boolean>;
-
+export class DemoPageComponent extends CamAhuAbstractComponent implements AfterViewInit, OnInit, OnDestroy {
   product$: Observable<ProductView>;
   category$: Observable<CategoryView>;
 
@@ -151,20 +124,20 @@ export class DemoPageComponent implements AfterViewInit, OnInit, OnDestroy {
   productItemForm: FormGroup;
   readonly quantityControlName = 'quantity';
 
-  private destroy$ = new Subject();
-
   constructor(
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
     private bottomSheet: MatBottomSheet,
     private shoppingFacade: ShoppingFacade,
-    private fb: FormBuilder,
-    private ahuFacade: CamAhuFacade,
+    protected router: Router,
+    protected fb: FormBuilder,
+    protected ahuFacade: CamAhuFacade,
     private appFacade: AppFacade,
-    private router: Router,
     private dateAdapter: DateAdapter<any>,
     @Inject(LOCALE_ID) lang: string
   ) {
+    super(router, fb, ahuFacade);
+
     // Update the value for the progress-bar on an interval.
     setInterval(() => {
       this.progress = (this.progress + Math.floor(Math.random() * 4) + 1) % 100;
@@ -279,136 +252,15 @@ export class DemoPageComponent implements AfterViewInit, OnInit, OnDestroy {
     this.currentDatePickerValue = eventValue;
   }
 
-  selectAhuManufacturer(event) {
-    const manufacturerId = event.value;
-    const unitId = undefined;
-    const slots = undefined;
-
-    this.router.navigate([], {
-      queryParamsHandling: 'merge',
-      queryParams: {
-        [UnitHelper.MANUFACTURER_ID_QUERY_PARAM_NAME]: manufacturerId,
-        [UnitHelper.UNIT_ID_QUERY_PARAM_NAME]: unitId,
-        [UnitHelper.SLOTS_QUERY_PARAM_NAME]: slots,
-      },
-    });
-  }
-
-  selectAhuUnit(event) {
-    const unitId = event.value;
-    const slots = undefined;
-
-    this.router.navigate([], {
-      queryParamsHandling: 'merge',
-      queryParams: {
-        [UnitHelper.UNIT_ID_QUERY_PARAM_NAME]: unitId,
-        [UnitHelper.SLOTS_QUERY_PARAM_NAME]: slots,
-      },
-    });
-  }
-
-  addAhuSlotItemToList(ahuUnit: Unit, slotId: string, sku: string) {
-    const ahuSlotItemParams: UnitAHUAirSlotItemParams = {
-      manufacturerId: ahuUnit.ahu.ahuManufacturerId,
-      unitId: ahuUnit.id,
-      slotId,
-      sku,
-    };
-
-    this.ahuFacade.addAhuUnitSlotItemToList(ahuSlotItemParams);
-  }
-
-  removeAhuSlotItemFromList(ahuUnit: Unit, slotId: string, sku: string) {
-    const ahuSlotItemParams: UnitAHUAirSlotItemParams = {
-      manufacturerId: ahuUnit.ahu.ahuManufacturerId,
-      unitId: ahuUnit.id,
-      slotId,
-      sku,
-    };
-
-    this.ahuFacade.removeAhuUnitSlotItemFromList(ahuSlotItemParams);
-  }
-
-  isAhuUnitSlotItemAdded$(ahuUnit: Unit, slotId: string, sku: string) {
-    const ahuSlotItemParams: UnitAHUAirSlotItemParams = {
-      manufacturerId: ahuUnit.ahu.ahuManufacturerId,
-      unitId: ahuUnit.id,
-      slotId,
-      sku,
-    };
-
-    return this.ahuFacade.isAhuUnitSlotItemAdded$(ahuSlotItemParams);
-  }
-
-  isAhuUnitSlotItemProductAvailable$(props: { sku: string }) {
-    return this.ahuFacade.isAhuUnitSlotItemProductAvailable$(props);
-  }
-
-  isAhuUnitSlotValid$(ahuUnit: Unit, slotId: string) {
-    const ahuSlotParams: UnitAHUAirSlotParams = {
-      manufacturerId: ahuUnit.ahu.ahuManufacturerId,
-      unitId: ahuUnit.id,
-      slotId,
-    };
-
-    return this.ahuFacade.isAhuUnitSlotValid$(ahuSlotParams);
-  }
-
-  isAhuUnitValid$(ahuUnit: Unit) {
-    return this.ahuFacade.isAhuUnitValid$(ahuUnit);
-  }
-
-  submitAhuForm() {
-    console.log('submitAhuForm', this.ahuForm);
-  }
-
   ngOnInit() {
+    super.ngOnInit();
+
     // Camfil Date Picker
     this.appFacade.currentLocale$.pipe(
       tap(currentLocale => {
         this.currentLocale = currentLocale;
       })
     );
-    // AHU-Manufacturers
-    this.ahuManufacturers$ = this.ahuFacade.ahuManufacturers$;
-    this.ahuManufacturersLoading$ = this.ahuFacade.ahuManufacturersLoading$;
-    this.ahuManufacturersError$ = this.ahuFacade.ahuManufacturersError$;
-    this.ahuManufacturersInitialized$ = this.ahuFacade.ahuManufacturersInitialized$;
-    this.selectedAhuManufacturer$ = this.ahuFacade.selectedAhuManufacturer$;
-    // AHU-Unit
-    this.ahuUnits$ = this.ahuFacade.ahuUnits$;
-    this.ahuUnitsByManufacturerId$ = this.ahuFacade.ahuUnitsByManufacturerId$;
-    this.ahuUnitsLoading$ = this.ahuFacade.ahuUnitsLoading$;
-    this.ahuUnitsError$ = this.ahuFacade.ahuUnitsError$;
-    this.selectedAhuUnit$ = this.ahuFacade.selectedAhuUnit$;
-    this.selectedAhuUnitDetails$ = this.ahuFacade.selectedAhuUnitDetails$;
-    this.selectedAhuUnitSlots$ = this.ahuFacade.selectedAhuUnitSlots$;
-    this.selectedAhuUnitSlotsSummary$ = this.ahuFacade.selectedAhuUnitSlotsSummary$;
-    this.selectedAhuUnitSlotItemsTotalPrice$ = this.ahuFacade.selectedAhuUnitSlotItemsTotalPrice$;
-    this.selectedAhuUnitAirSlotTypes$ = this.ahuFacade.selectedAhuUnitAirSlotTypes$;
-    // AHU-Common
-    this.ahuLoading$ = this.ahuFacade.ahuLoading$();
-    // AHU-Form
-    this.ahuForm = this.fb.group({
-      manufacturer: new FormControl(undefined, [Validators.required]),
-      unit: new FormControl(undefined, [Validators.required]),
-    });
-    // AHU-Form: Manufacturer-Select-Toggle
-    this.ahuManufacturersLoading$.pipe(takeUntil(this.destroy$)).subscribe(loading => {
-      this.ahuForm.controls.manufacturer[loading ? 'disable' : 'enable']();
-    });
-    this.ahuUnitsLoading$.pipe(takeUntil(this.destroy$)).subscribe(loading => {
-      this.ahuForm.controls.unit[loading ? 'disable' : 'enable']();
-    });
-    // AHU-Form: Manufacturer-Selection-Logic
-    this.selectedAhuManufacturer$.pipe(takeUntil(this.destroy$)).subscribe(manufacturer => {
-      this.ahuForm.controls.manufacturer.setValue(manufacturer?.id);
-      this.ahuForm.controls.unit[manufacturer ? 'enable' : 'disable']();
-    });
-    // AHU-Form: Unit-Selection-Logic
-    this.selectedAhuUnit$.pipe(takeUntil(this.destroy$)).subscribe(unit => {
-      this.ahuForm.controls.unit.setValue(unit?.ahu?.id);
-    });
 
     this.now = new Date();
     this.product$ = this.shoppingFacade.product$('1004670', ProductCompletenessLevel.List);
@@ -461,11 +313,6 @@ export class DemoPageComponent implements AfterViewInit, OnInit, OnDestroy {
 
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
-  }
-
-  ngOnDestroy() {
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 
   openBottomSheet(): void {

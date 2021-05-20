@@ -1,0 +1,344 @@
+[
+  {
+    "Description": [],
+    "Id": "1",
+    "Market": ["FI", "SE"],
+    "Name": "Airmaster"
+  },
+  {
+    "Description": [],
+    "Id": "2",
+    "Market": ["FI", "SE"],
+    "Name": "Amalva (Komfovent)"
+  },
+  {
+    "Description": [],
+    "Id": "3",
+    "Market": ["FI", "SE"],
+    "Name": "Auranor (Trox Auranor)"
+  },
+  {
+    "Description": [],
+    "Id": "4",
+    "Market": ["FI", "SE"],
+    "Name": "Carrier"
+  },
+  {
+    "Description": [],
+    "Id": "5",
+    "Market": ["FI", "SE"],
+    "Name": "Climapac"
+  },
+  {
+    "Description": [],
+    "Id": "6",
+    "Market": ["FI", "SE"],
+    "Name": "Climax"
+  },
+  {
+    "Description": [],
+    "Id": "7",
+    "Market": ["FI", "SE"],
+    "Name": "Covent"
+  },
+  {
+    "Description": [],
+    "Id": "8",
+    "Market": ["FI", "SE"],
+    "Name": "Dantherm"
+  },
+  {
+    "Description": [],
+    "Id": "9",
+    "Market": ["FI", "SE"],
+    "Name": "Danvent (Systemair)"
+  },
+  {
+    "Description": [],
+    "Id": "10",
+    "Market": ["FI", "SE"],
+    "Name": "El-Björn"
+  },
+  {
+    "Description": [],
+    "Id": "11",
+    "Market": ["FI", "SE"],
+    "Name": "Enervent"
+  },
+  {
+    "Description": [],
+    "Id": "12",
+    "Market": ["FI", "SE"],
+    "Name": "Enessen"
+  },
+  {
+    "Description": [],
+    "Id": "13",
+    "Market": ["FI", "SE"],
+    "Name": "Exhausto"
+  },
+  {
+    "Description": [],
+    "Id": "14",
+    "Market": ["FI", "SE"],
+    "Name": "Exos"
+  },
+  {
+    "Description": [],
+    "Id": "15",
+    "Market": ["FI", "SE"],
+    "Name": "Flexit"
+  },
+  {
+    "Description": [],
+    "Id": "16",
+    "Market": ["FI", "SE"],
+    "Name": "Fellingsbro"
+  },
+  {
+    "Description": [],
+    "Id": "17",
+    "Market": ["FI", "SE"],
+    "Name": "Flexivent"
+  },
+  {
+    "Description": [],
+    "Id": "18",
+    "Market": ["FI", "SE"],
+    "Name": "Fläkt Woods"
+  },
+  {
+    "Description": [],
+    "Id": "19",
+    "Market": ["FI", "SE"],
+    "Name": "Fläktteknik"
+  },
+  {
+    "Description": [],
+    "Id": "20",
+    "Market": ["FI", "SE"],
+    "Name": "Östberg (Suxess)"
+  },
+  {
+    "Description": [],
+    "Id": "21",
+    "Market": ["FI", "SE"],
+    "Name": "Fresh"
+  },
+  {
+    "Description": [],
+    "Id": "22",
+    "Market": ["FI", "SE"],
+    "Name": "IV Produkt (Industriventilation)"
+  },
+  {
+    "Description": [],
+    "Id": "23",
+    "Market": ["FI", "SE"],
+    "Name": "Genvex"
+  },
+  {
+    "Description": [],
+    "Id": "24",
+    "Market": ["FI", "SE"],
+    "Name": "Hiros"
+  },
+  {
+    "Description": [],
+    "Id": "25",
+    "Market": ["FI", "SE"],
+    "Name": "Koja"
+  },
+  {
+    "Description": [],
+    "Id": "26",
+    "Market": ["FI", "SE"],
+    "Name": "Kryotherm"
+  },
+  {
+    "Description": [],
+    "Id": "27",
+    "Market": ["FI", "SE"],
+    "Name": "Kuben Ventilation"
+  },
+  {
+    "Description": [],
+    "Id": "28",
+    "Market": ["FI", "SE"],
+    "Name": "Lennox"
+  },
+  {
+    "Description": [],
+    "Id": "29",
+    "Market": ["FI", "SE"],
+    "Name": "Kvickluft"
+  },
+  {
+    "Description": [],
+    "Id": "30",
+    "Market": ["FI", "SE"],
+    "Name": "LTS"
+  },
+  {
+    "Description": [],
+    "Id": "31",
+    "Market": ["FI", "SE"],
+    "Name": "Mastervent Oy"
+  },
+  {
+    "Description": [],
+    "Id": "32",
+    "Market": ["FI", "SE"],
+    "Name": "Luftmiljö"
+  },
+  {
+    "Description": [],
+    "Id": "33",
+    "Market": ["FI", "SE"],
+    "Name": "Metsovent"
+  },
+  {
+    "Description": [],
+    "Id": "34",
+    "Market": ["FI", "SE"],
+    "Name": "Munthers"
+  },
+  {
+    "Description": [],
+    "Id": "35",
+    "Market": ["FI", "SE"],
+    "Name": "Nilan"
+  },
+  {
+    "Description": [],
+    "Id": "36",
+    "Market": ["FI", "SE"],
+    "Name": "Novema"
+  },
+  {
+    "Description": [],
+    "Id": "37",
+    "Market": ["FI", "SE"],
+    "Name": "Nordic Blue"
+  },
+  {
+    "Description": [],
+    "Id": "38",
+    "Market": ["FI", "SE"],
+    "Name": "Nordiska Klimat"
+  },
+  {
+    "Description": [],
+    "Id": "39",
+    "Market": ["FI", "SE"],
+    "Name": "Novenco (Exhausto)"
+  },
+  {
+    "Description": [],
+    "Id": "40",
+    "Market": ["FI", "SE"],
+    "Name": "Orion"
+  },
+  {
+    "Description": [],
+    "Id": "41",
+    "Market": ["FI", "SE"],
+    "Name": "Recair Oy"
+  },
+  {
+    "Description": [],
+    "Id": "42",
+    "Market": ["FI", "SE"],
+    "Name": "PBH-Produkter"
+  },
+  {
+    "Description": [],
+    "Id": "43",
+    "Market": ["FI", "SE"],
+    "Name": "Rannila"
+  },
+  {
+    "Description": [],
+    "Id": "44",
+    "Market": ["FI", "SE"],
+    "Name": "Regenair"
+  },
+  {
+    "Description": [],
+    "Id": "45",
+    "Market": ["FI", "SE"],
+    "Name": "Renair"
+  },
+  {
+    "Description": [],
+    "Id": "46",
+    "Market": ["FI", "SE"],
+    "Name": "Sebo"
+  },
+  {
+    "Description": [],
+    "Id": "47",
+    "Market": ["FI", "SE"],
+    "Name": "Recool"
+  },
+  {
+    "Description": [],
+    "Id": "48",
+    "Market": ["FI", "SE"],
+    "Name": "Sefovent"
+  },
+  {
+    "Description": [],
+    "Id": "49",
+    "Market": ["FI", "SE"],
+    "Name": "Stratos Bahco"
+  },
+  {
+    "Description": [],
+    "Id": "50",
+    "Market": ["FI", "SE"],
+    "Name": "Swegon (PM-Luft)"
+  },
+  {
+    "Description": [],
+    "Id": "51",
+    "Market": ["FI", "SE"],
+    "Name": "Systemair"
+  },
+  {
+    "Description": [],
+    "Id": "52",
+    "Market": ["FI", "SE"],
+    "Name": "Temovex"
+  },
+  {
+    "Description": [],
+    "Id": "53",
+    "Market": ["FI", "SE"],
+    "Name": "Weland"
+  },
+  {
+    "Description": [],
+    "Id": "54",
+    "Market": ["FI", "SE"],
+    "Name": "Ventilationsteknik"
+  },
+  {
+    "Description": [],
+    "Id": "55",
+    "Market": ["FI", "SE"],
+    "Name": "Wolf"
+  },
+  {
+    "Description": [],
+    "Id": "56",
+    "Market": ["FI", "SE"],
+    "Name": "Villavent (Systemair)"
+  },
+  {
+    "Description": [],
+    "Id": "57",
+    "Market": ["FI", "SE"],
+    "Name": "Zerowatt"
+  }
+]

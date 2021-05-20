@@ -59,7 +59,7 @@ export class ManufacturerEffects {
 
   determineSelectedManufacturerId$ = createEffect(() =>
     this.store.pipe(
-      ofUrl(/^\/(demo|air-handling-unit-guide)/),
+      ofUrl(/^\/(demo|ahu|air-handling-unit-guide)/),
       select(selectQueryParams),
       withLatestFrom(this.store.pipe(select(getSelectedAhuManufacturerId))),
       filter(([params, selectedAhuManufacturerId]) => params?.manufacturerId !== selectedAhuManufacturerId),
