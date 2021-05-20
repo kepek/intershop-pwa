@@ -364,7 +364,7 @@ export const camCardReducer = createReducer(
 
     const camCardObj = {
       ...importedCamCard,
-      itemsCount: itemsCount,
+      itemsCount,
     };
 
     return camCardAdapter.upsertOne(camCardObj, {
