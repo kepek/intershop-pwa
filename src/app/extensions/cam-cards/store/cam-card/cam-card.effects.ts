@@ -316,12 +316,13 @@ export class CamCardEffects {
         window$.pipe(
           last(),
           withLatestFrom(this.store.pipe(select(getCustomerAddresses))),
-          filter(([, savedAddresses]) => !savedAddresses.length),
-          mergeMap(([payload]) =>
-            this.camCardService.getDeliveryAddresses(payload.id).pipe(
-              map(addresses => loadDeliveryAddressesSuccess({ addresses })),
-              mapErrorToAction(loadDeliveryAddressesFail)
-            )
+          mergeMap(([payload, savedAddresses]) =>
+            savedAddresses?.length
+              ? [loadDeliveryAddressesSuccess({ addresses: savedAddresses })]
+              : this.camCardService.getDeliveryAddresses(payload.id).pipe(
+                  map(addresses => loadDeliveryAddressesSuccess({ addresses })),
+                  mapErrorToAction(loadDeliveryAddressesFail)
+                )
           )
         )
       )
