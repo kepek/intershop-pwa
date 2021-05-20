@@ -23,6 +23,42 @@ export class UnitMapper {
       ahuUnit.ahu.ahuManufacturerId = String(ahuUnit.ahu.ahuManufacturerId);
     }
 
+    if (!ahuUnit?.ahu?.ahuShortDescription || ahuUnit?.ahu?.ahuShortDescription?.length === 0) {
+      ahuUnit.ahu.ahuShortDescription = [
+        { lang: 'EN-US', text: 'A short english description' },
+        { lang: 'FI-FI', text: 'Lyhyt kuvaus englanniksi' },
+        { lang: 'SV-SE', text: 'En kort svensk beskrivning' },
+      ];
+    }
+
+    if (!ahuUnit?.ahu?.ahuLongDescription || ahuUnit?.ahu?.ahuLongDescription?.length === 0) {
+      ahuUnit.ahu.ahuLongDescription = [
+        { lang: 'EN-US', text: 'A long english description' },
+        { lang: 'FI-FI', text: 'Pitkä englanninkielinen kuvaus' },
+        { lang: 'SV-SE', text: 'En lång svensk beskrivning' },
+      ];
+    }
+
+    if (!ahuUnit?.ahu?.ahuImages || ahuUnit?.ahu?.ahuImages?.length === 0) {
+      ahuUnit.ahu.ahuImages = [
+        {
+          image: 'https://www.acetec.se/thumb/1111/1024x0/85573be13ec7eeb479afb2277d458c53.jpg?q=50',
+          type: 'Image',
+        },
+      ];
+    }
+
+    ahuUnit.ahu.ahuImages = ahuUnit.ahu.ahuImages.map(ahuImage => ({
+      ...ahuImage,
+      name: 'AHU Image',
+      imageActualHeight: 1024,
+      imageActualWidth: 683,
+      viewID: 'front',
+      effectiveUrl: ahuImage.image,
+      typeID: 'S',
+      primaryImage: true,
+    }));
+
     const distinctTypes = [...new Set(ahuUnit.ahuAirSlots?.map(airSlot => airSlot.ahuSlotType))].reduce((obj, type) => {
       obj[type] = ahuUnit?.ahuAirSlots?.filter(airSlot => airSlot.ahuSlotType === type)?.length || 0;
       return obj;

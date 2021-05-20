@@ -3,8 +3,8 @@ import { TranslateService } from '@ngx-translate/core';
 
 import { UnitAhuLongDescription } from '../models/unit/unit.model';
 
-@Pipe({ name: 'unitAhuLongDescription', pure: true })
-export class UnitAhuLongDescriptionPipe implements PipeTransform {
+@Pipe({ name: 'ahuTranslate', pure: true })
+export class AhuTranslatePipe implements PipeTransform {
   constructor(private translateService: TranslateService) {}
 
   transform(value: UnitAhuLongDescription[]): string {

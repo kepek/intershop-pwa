@@ -253,7 +253,7 @@ export class DemoPageComponent extends CamAhuAbstractComponent implements AfterV
   }
 
   ngOnInit() {
-    super.ngOnInit();
+    super.init();
 
     // Camfil Date Picker
     this.appFacade.currentLocale$.pipe(

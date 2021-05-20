@@ -17,8 +17,8 @@ import { CamfilProductShipmentComponent } from 'ish-shared/components/product/ca
 import { CamAhuFacade } from '../../facades/cam-ahu.facade';
 
 import { CamfilAhuCartComponent } from './camfil-ahu-cart/camfil-ahu-cart.component';
-import { CamfilAhuFiltersComponent } from './camfil-ahu-filters/camfil-ahu-filters.component';
 import { CamfilAHUPageDetailComponent } from './camfil-ahu-page-detail.component';
+import { CamfilAhuSlotTypeComponent } from './camfil-ahu-slot-type/camfil-ahu-slot-type.component';
 import { CamfilAhuSlotsComponent } from './camfil-ahu-slots/camfil-ahu-slots.component';
 
 describe('Camfil Ahu Page Detail Component', () => {
@@ -32,7 +32,7 @@ describe('Camfil Ahu Page Detail Component', () => {
       declarations: [
         CamfilAHUPageDetailComponent,
         MockComponent(CamfilAhuCartComponent),
-        MockComponent(CamfilAhuFiltersComponent),
+        MockComponent(CamfilAhuSlotTypeComponent),
         MockComponent(CamfilAhuSlotsComponent),
         MockComponent(CamfilProductAttributesComponent),
         MockComponent(CamfilProductGuidesComponent),

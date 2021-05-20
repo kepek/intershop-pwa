@@ -2,12 +2,13 @@ import { NgModule } from '@angular/core';
 
 import { SharedModule } from 'ish-shared/shared.module';
 
-import { UnitAhuLongDescriptionPipe } from './pipes/unit-ahu-long-description.pipe';
+import { CamfilAhuSlotTypeComponent } from './pages/camfil-ahu-detail/camfil-ahu-slot-type/camfil-ahu-slot-type.component';
+import { AhuTranslatePipe } from './pipes/ahu-translate.pipe';
 
 @NgModule({
   imports: [SharedModule],
-  declarations: [UnitAhuLongDescriptionPipe],
-  exports: [SharedModule, UnitAhuLongDescriptionPipe],
-  providers: [UnitAhuLongDescriptionPipe],
+  declarations: [AhuTranslatePipe, CamfilAhuSlotTypeComponent],
+  exports: [AhuTranslatePipe, CamfilAhuSlotTypeComponent, SharedModule],
+  providers: [AhuTranslatePipe],
 })
 export class CamAhuModule {}

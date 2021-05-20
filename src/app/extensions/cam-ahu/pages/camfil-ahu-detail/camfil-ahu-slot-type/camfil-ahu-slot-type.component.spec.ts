@@ -2,23 +2,23 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideMockStore } from '@ngrx/store/testing';
 import { TranslateModule } from '@ngx-translate/core';
 
-import { CamfilAhuFiltersComponent } from './camfil-ahu-filters.component';
+import { CamfilAhuSlotTypeComponent } from './camfil-ahu-slot-type.component';
 
-describe('Camfil Ahu Filters Component', () => {
-  let component: CamfilAhuFiltersComponent;
-  let fixture: ComponentFixture<CamfilAhuFiltersComponent>;
+describe('Camfil Ahu Slot Type Component', () => {
+  let component: CamfilAhuSlotTypeComponent;
+  let fixture: ComponentFixture<CamfilAhuSlotTypeComponent>;
   let element: HTMLElement;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CamfilAhuFiltersComponent],
+      declarations: [CamfilAhuSlotTypeComponent],
       imports: [TranslateModule.forRoot()],
       providers: [provideMockStore()],
     }).compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CamfilAhuFiltersComponent);
+    fixture = TestBed.createComponent(CamfilAhuSlotTypeComponent);
     component = fixture.componentInstance;
     element = fixture.nativeElement;
   });

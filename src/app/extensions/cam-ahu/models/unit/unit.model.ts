@@ -1,3 +1,5 @@
+import { Image } from 'ish-core/models/image/image.model';
+import { Price } from 'ish-core/models/price/price.model';
 import {
   ProductView,
   VariationProductMasterView,
@@ -11,6 +13,7 @@ export interface Unit {
 }
 
 export interface UnitAhu {
+  // API Props
   id?: string; // TODO (extMlk): Verify with Integration Team if `id` field is 100% "optional" cuz it does not make sense...
   market?: string[];
   airHandlingUnitName: UnitAhuLongDescription[];
@@ -18,8 +21,8 @@ export interface UnitAhu {
   ahuManufacturerId?: string;
   ahuShortDescription: UnitAhuLongDescription[];
   ahuLongDescription: UnitAhuLongDescription[];
-  ahUimages: UnitAHUImage[];
-  ahUdocuments: UnitAHUDocument[];
+  ahuImages: UnitAHUImage[];
+  ahuDocuments: UnitAHUDocument[];
 }
 
 export interface UnitAHUDocument {
@@ -27,7 +30,7 @@ export interface UnitAHUDocument {
   type: string;
 }
 
-export interface UnitAHUImage {
+export interface UnitAHUImage extends Partial<Image> {
   image: string;
   type: string;
 }
@@ -61,15 +64,20 @@ export interface UnitAHUAirSlotItem {
 
 // Internal Models
 
-export interface UnitAHUAirSlotItemSummary extends UnitAHUAirSlotItem {
+export interface UnitAHUBasketItem extends UnitAHUAirSlotItem {
   quantity: number;
 }
 
-export interface UnitAHUAirSlotSummary extends UnitAHUAirSlot {
-  items: UnitAHUAirSlotItemSummary[];
+export interface UnitAHUBasket extends UnitAHUAirSlot {
+  items: UnitAHUBasketItem[];
+}
+
+export interface UnitAHUBasketSummary {
+  total: Price;
 }
 
 export interface UnitAHUAirSlotType {
+  type: string;
   name: string;
   count: number;
   dimensions: string[];

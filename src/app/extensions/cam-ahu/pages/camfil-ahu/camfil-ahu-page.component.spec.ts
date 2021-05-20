@@ -10,7 +10,7 @@ import { LoadingComponent } from 'ish-shared/components/common/loading/loading.c
 import { CamfilProductGuidesComponent } from 'ish-shared/components/product/camfil-product-guides/camfil-product-guides.component';
 
 import { CamAhuFacade } from '../../facades/cam-ahu.facade';
-import { UnitAhuLongDescriptionPipe } from '../../pipes/unit-ahu-long-description.pipe';
+import { AhuTranslatePipe } from '../../pipes/ahu-translate.pipe';
 
 import { CamfilAHUPageComponent } from './camfil-ahu-page.component';
 
@@ -27,7 +27,7 @@ describe('Camfil Ahu Page Component', () => {
         MockComponent(CamfilProductGuidesComponent),
         MockComponent(ContentIncludeComponent),
         MockComponent(LoadingComponent),
-        MockPipe(UnitAhuLongDescriptionPipe),
+        MockPipe(AhuTranslatePipe),
       ],
       providers: [
         { provide: AccountFacade, useFactory: () => instance(mock(AccountFacade)) },

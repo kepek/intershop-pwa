@@ -14,9 +14,9 @@ import {
   Unit,
   UnitAHUAirSlot,
   UnitAHUAirSlotItemParams,
-  UnitAHUAirSlotItemSummary,
+  UnitAHUBasketItem,
   UnitAHUAirSlotParams,
-  UnitAHUAirSlotSummary,
+  UnitAHUBasket,
   UnitAHUAirSlotType,
   UnitAhu,
 } from '../models/unit/unit.model';
@@ -121,12 +121,12 @@ export class CamAhuFacade {
     map(unit => unit?.ahuAirSlots),
     defaultIfEmpty([])
   );
-  selectedAhuUnitSlotsSummary$ = this.store.pipe(select(selectQueryParams)).pipe(
+  selectedAhuUnitBasket$ = this.store.pipe(select(selectQueryParams)).pipe(
     withLatestFrom(this.selectedAhuUnitSlots$),
     map(([queryParams, ahuSlots]) =>
       ahuSlots.map(ahuSlot => {
         // tslint:disable-next-line: ish-no-object-literal-type-assertion
-        const newAhuSlot = { ...ahuSlot } as UnitAHUAirSlotSummary;
+        const newAhuSlot = { ...ahuSlot } as UnitAHUBasket;
 
         const getSlotItemParams = (item): UnitAHUAirSlotItemParams => ({
           manufacturerId: queryParams?.[UnitHelper.MANUFACTURER_ID_QUERY_PARAM_NAME],
@@ -149,9 +149,9 @@ export class CamAhuFacade {
       })
     )
   );
-  selectedAhuUnitSlotItemsTotalPrice$ = this.selectedAhuUnitSlotsSummary$.pipe(
+  selectedAhuUnitBasketSummary$ = this.selectedAhuUnitBasket$.pipe(
     switchMap(ahuAirSlotsSummary => {
-      const items: UnitAHUAirSlotItemSummary[] = [].concat(
+      const items: UnitAHUBasketItem[] = [].concat(
         ...ahuAirSlotsSummary.map(ahuAirSlotSummary => ahuAirSlotSummary?.items)
       );
       const skus = items.map(item => item.sku);
@@ -160,9 +160,9 @@ export class CamAhuFacade {
         select(getProducts, { skus }),
         map(products => products.filter(product => !product.failed)),
         withLatestFrom(this.store.pipe(select(getCurrentLocale))),
-        map(([products, currentLocale]) =>
-          UnitHelper.totalPrice(products, { currency: currentLocale?.currency, value: 0 })
-        )
+        map(([products, currentLocale]) => ({
+          total: UnitHelper.totalPrice(products, { currency: currentLocale?.currency, value: 0 }),
+        }))
       );
     })
   );

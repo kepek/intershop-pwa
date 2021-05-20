@@ -21,11 +21,11 @@ export const units: Unit[] = [
         { lang: 'EN-US', text: 'A long english description' },
         { lang: 'SV-SE', text: 'En lång svensk beskrivning' },
       ],
-      ahUimages: [
+      ahuImages: [
         { image: 'https://image.url/image1.png', type: 'FrontView' },
         { image: 'https://image.url/image2.png', type: 'IsoView' },
       ],
-      ahUdocuments: [
+      ahuDocuments: [
         { document: 'https://document.url/document1.pdf', type: 'Manual' },
         { document: 'https://document.url/document2.pdf', type: 'Certificate' },
       ],

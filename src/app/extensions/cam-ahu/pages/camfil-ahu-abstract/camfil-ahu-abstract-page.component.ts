@@ -15,7 +15,9 @@ import {
   UnitAHUAirSlotItemParams,
   UnitAHUAirSlotParams,
   UnitAHUAirSlotType,
+  UnitAHUBasketSummary,
   UnitAhu,
+  UnitAHUBasket,
 } from '../../models/unit/unit.model';
 
 @Component({ template: '' })
@@ -36,8 +38,8 @@ export abstract class CamAhuAbstractComponent implements OnInit, OnDestroy {
   selectedAhuUnitId$: Observable<PropType<Unit, 'id'>>;
   selectedAhuUnitDetails$: Observable<UnitAhu>;
   selectedAhuUnitSlots$: Observable<UnitAHUAirSlot[]>;
-  selectedAhuUnitSlotsSummary$: Observable<UnitAHUAirSlot[]>;
-  selectedAhuUnitSlotItemsTotalPrice$: Observable<any>;
+  selectedAhuUnitBasket$: Observable<UnitAHUBasket[]>;
+  selectedAhuUnitBasketSummary$: Observable<UnitAHUBasketSummary>;
   selectedAhuUnitAirSlotTypes$: Observable<UnitAHUAirSlotType[]>;
   ahuLoading$: Observable<boolean>;
 
@@ -46,12 +48,7 @@ export abstract class CamAhuAbstractComponent implements OnInit, OnDestroy {
   // tslint:disable-next-line:private-destroy-field
   protected destroy$ = new Subject();
 
-  ngOnDestroy() {
-    this.destroy$.next();
-    this.destroy$.complete();
-  }
-
-  ngOnInit() {
+  init() {
     // AHU-Manufacturers
     this.ahuManufacturers$ = this.ahuFacade.ahuManufacturers$;
     this.ahuManufacturersLoading$ = this.ahuFacade.ahuManufacturersLoading$;
@@ -68,8 +65,8 @@ export abstract class CamAhuAbstractComponent implements OnInit, OnDestroy {
     this.selectedAhuUnitId$ = this.ahuFacade.selectedAhuUnitId$;
     this.selectedAhuUnitDetails$ = this.ahuFacade.selectedAhuUnitDetails$;
     this.selectedAhuUnitSlots$ = this.ahuFacade.selectedAhuUnitSlots$;
-    this.selectedAhuUnitSlotsSummary$ = this.ahuFacade.selectedAhuUnitSlotsSummary$;
-    this.selectedAhuUnitSlotItemsTotalPrice$ = this.ahuFacade.selectedAhuUnitSlotItemsTotalPrice$;
+    this.selectedAhuUnitBasket$ = this.ahuFacade.selectedAhuUnitBasket$;
+    this.selectedAhuUnitBasketSummary$ = this.ahuFacade.selectedAhuUnitBasketSummary$;
     this.selectedAhuUnitAirSlotTypes$ = this.ahuFacade.selectedAhuUnitAirSlotTypes$;
     // AHU-Common
     this.ahuLoading$ = this.ahuFacade.ahuLoading$();
@@ -104,6 +101,15 @@ export abstract class CamAhuAbstractComponent implements OnInit, OnDestroy {
           this.submitAhuForm(manufacturerId, unitId);
         }
       });
+  }
+
+  ngOnInit() {
+    this.init();
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   selectAhuManufacturer(event) {
