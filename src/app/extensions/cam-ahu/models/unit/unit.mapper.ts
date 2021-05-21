@@ -3,6 +3,7 @@ import * as camelcaseKeys from 'camelcase-keys';
 
 import { UnitData } from './unit.interface';
 import { Unit } from './unit.model';
+import { isEmpty } from 'lodash-es';
 
 @Injectable({ providedIn: 'root' })
 export class UnitMapper {
@@ -13,7 +14,15 @@ export class UnitMapper {
 
     const ahuUnit = UnitMapper.parseData(unitData);
 
-    ahuUnit.id = String(ahuUnit.id || ahuUnit?.ahu?.id);
+    if (isEmpty(ahuUnit?.ahu) || isEmpty(ahuUnit?.ahuAirSlots)) {
+      return ahuUnit;
+    }
+
+    const ahuUnitId = ahuUnit.id || ahuUnit?.ahu?.id;
+
+    if (ahuUnitId) {
+      ahuUnit.id = String(ahuUnitId);
+    }
 
     if (ahuUnit?.ahu?.id) {
       ahuUnit.ahu.id = String(ahuUnit.ahu.id);

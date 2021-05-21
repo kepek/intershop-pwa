@@ -16,6 +16,7 @@ import { CamAhuAbstractComponent } from '../camfil-ahu-abstract/camfil-ahu-abstr
   templateUrl: './camfil-ahu-page-detail.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
+// tslint:disable-next-line:component-creation-test
 export class CamfilAHUPageDetailComponent extends CamAhuAbstractComponent implements OnInit {
   constructor(
     protected router: Router,
