@@ -1,22 +1,22 @@
-<!-- Product Details -->
-<ng-template #selectedAhuUnitProductDetails>
-  <ng-container *ngIf="product$ | async as product">
-    <div class="row product-data my-4" *ngIf="!product.failed">
-      <div class="col-12 col-md-6 product-attributes">
-        <h2>{{ 'product.details.heading' | translate }}</h2>
-        <camfil-product-attributes [product]="product"></camfil-product-attributes>
-      </div>
-      <div class="col-12 col-md-6 product-description">
-        <h2>{{ 'product.description.heading' | translate }}</h2>
-        <p [innerHTML]="product.longDescription"></p>
-        <h2>{{ 'product.shipping.heading' | translate }}</h2>
-        <camfil-product-shipment [product]="product"></camfil-product-shipment>
-      </div>
-    </div>
-  </ng-container>
-</ng-template>
-<!-- Unit -->
 <ng-container *ngIf="selectedAhuUnit$ | async as selectedAhuUnit">
+  <!-- Product Details -->
+  <ng-template #selectedAhuUnitProductDetails>
+    <ng-container *ngIf="product$ | async as product">
+      <div class="row product-data my-4" *ngIf="!product.failed">
+        <div class="col-12 col-md-6 product-attributes">
+          <h2>{{ 'product.details.heading' | translate }}</h2>
+          <camfil-product-attributes [product]="product"></camfil-product-attributes>
+        </div>
+        <div class="col-12 col-md-6 product-description">
+          <h2>{{ 'product.description.heading' | translate }}</h2>
+          <p [innerHTML]="product.longDescription"></p>
+          <h2>{{ 'product.shipping.heading' | translate }}</h2>
+          <camfil-product-shipment [product]="product"></camfil-product-shipment>
+        </div>
+      </div>
+    </ng-container>
+  </ng-template>
+  <!-- Unit -->
   <!-- Image -->
   <ng-template #selectedAhuUnitImage>
     <camfil-product-image [product]="selectedAhuUnit" imageType="S" class="product-image"></camfil-product-image>
@@ -109,7 +109,7 @@
             <ng-container *ngTemplateOutlet="selectedAhuUnitHeadline"></ng-container>
             <ng-container *ngTemplateOutlet="selectedAhuUnitTypes"></ng-container>
             <ng-container *ngTemplateOutlet="selectedAhuUnitDescription"></ng-container>
-            <ng-container *ngTemplateOutlet="selectedAhuUnitGuides"></ng-container>
+            <!--<ng-container *ngTemplateOutlet="selectedAhuUnitGuides"></ng-container>-->
           </div>
         </div>
         <ng-container *ngTemplateOutlet="selectedAhuUnitSlots"></ng-container>
@@ -121,9 +121,9 @@
   </div>
 </ng-container>
 
-<ng-container *ngTemplateOutlet="selectedAhuUnitProductDetails"></ng-container>
+<!--<ng-container *ngTemplateOutlet="selectedAhuUnitProductDetails"></ng-container>-->
 
-<camfil-product-guides></camfil-product-guides>
+<!--<camfil-product-guides></camfil-product-guides>-->
 
 <ish-content-include includeId="camfil.include.ahu-detail.content.pagelet2-Include"></ish-content-include>
 
