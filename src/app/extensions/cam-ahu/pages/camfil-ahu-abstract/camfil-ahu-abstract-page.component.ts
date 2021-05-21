@@ -184,6 +184,10 @@ export abstract class CamAhuAbstractComponent implements OnInit, OnDestroy {
     this.ahuFacade.removeAhuUnitSlotItemFromList(ahuSlotItemParams);
   }
 
+  addSelectedAhuUnitSlotItemProductsToBasket() {
+    this.ahuFacade.addSelectedAhuUnitSlotItemProductsToBasket();
+  }
+
   getAhuUnitSlotItemQuantity$(ahuUnit: Unit, slotId: string, sku: string) {
     const ahuSlotItemParams: UnitAHUAirSlotItemParams = {
       manufacturerId: ahuUnit.ahu.ahuManufacturerId,

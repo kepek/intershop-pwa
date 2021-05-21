@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes, UrlSerializer } from '@angular/router';
 
+import { AuthGuard } from 'ish-core/guards/auth.guard';
+
 import { SelectedUnitGuard } from '../guards/selected-unit.guard';
 import { CamUrlSerializer } from '../serializers/cam-url-serializer';
 
@@ -8,13 +10,14 @@ const routes: Routes = [
   {
     path: 'air-handling-unit-guide',
     loadChildren: () => import('./camfil-ahu/camfil-ahu-page.module').then(m => m.CamfilAHUPageModule),
+    canActivate: [AuthGuard],
     data: { feature: 'camAhu', breadcrumbData: [{ key: 'camfil.ahu.link' }] },
   },
   {
     path: 'air-handling-unit-guide/detail',
     loadChildren: () =>
       import('./camfil-ahu-detail/camfil-ahu-page-detail.module').then(m => m.CamfilAHUPageDetailModule),
-    canActivate: [SelectedUnitGuard],
+    canActivate: [AuthGuard, SelectedUnitGuard],
     data: {
       feature: 'camAhu',
       breadcrumbData: [{ key: 'camfil.ahu.link', link: '/air-handling-unit-guide' }],

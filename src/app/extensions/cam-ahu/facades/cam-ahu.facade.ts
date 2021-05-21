@@ -151,22 +151,27 @@ export class CamAhuFacade {
       })
     )
   );
-  selectedAhuUnitBasketSummary$ = this.selectedAhuUnitBasket$.pipe(
-    switchMap(ahuAirSlotsSummary => {
-      const items: UnitAHUBasketItem[] = [].concat(
-        ...ahuAirSlotsSummary.map(ahuAirSlotSummary => ahuAirSlotSummary?.items)
-      );
+  selectedAhuUnitBasketItems$ = this.selectedAhuUnitBasket$.pipe(
+    map(
+      ahuAirSlotsSummary =>
+        [].concat(...ahuAirSlotsSummary.map(ahuAirSlotSummary => ahuAirSlotSummary?.items)) as UnitAHUBasketItem[]
+    )
+  );
+  selectedAhuUnitBasketProducts$ = this.selectedAhuUnitBasketItems$.pipe(
+    switchMap(items => {
       const skus = items.map(item => item.sku);
 
       return this.store.pipe(
         select(getProducts, { skus }),
-        map(products => products.filter(product => !product.failed)),
-        withLatestFrom(this.store.pipe(select(getCurrentLocale))),
-        map(([products, currentLocale]) => ({
-          total: UnitHelper.totalPrice(products, { currency: currentLocale?.currency, value: 0 }),
-        }))
+        map(products => products.filter(product => !product.failed))
       );
     })
+  );
+  selectedAhuUnitBasketSummary$ = this.selectedAhuUnitBasketProducts$.pipe(
+    withLatestFrom(this.store.pipe(select(getCurrentLocale))),
+    map(([products, currentLocale]) => ({
+      total: UnitHelper.totalPrice(products, { currency: currentLocale?.currency, value: 0 }),
+    }))
   );
   selectedAhuUnitAirSlotTypes$: Observable<UnitAHUAirSlotType[]> = this.selectedAhuUnit$.pipe(
     map(ahuUnit => {
@@ -221,6 +226,16 @@ export class CamAhuFacade {
 
   removeAhuUnitSlotItemFromList(ahuSlotItemParams: UnitAHUAirSlotItemParams) {
     this.store.dispatch(removeAhuSlotItemFromList(ahuSlotItemParams));
+  }
+
+  addSelectedAhuUnitSlotItemProductsToBasket() {
+    this.selectedAhuUnitBasketItems$.pipe(take(1)).subscribe(products => {
+      if (products.length > 0) {
+        products.forEach(product => {
+          this.shoppingFacade.addProductToBasket(product.sku, product.quantity);
+        });
+      }
+    });
   }
 
   isAhuUnitSlotItemAdded$(ahuSlotItemParams: UnitAHUAirSlotItemParams): Observable<boolean> {
