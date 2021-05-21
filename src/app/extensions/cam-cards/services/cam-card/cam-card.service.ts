@@ -260,7 +260,6 @@ export class CamCardService {
    * @returns            The created cam_cards.
    */
   getDeliveryAddresses(customerId: string): Observable<CamCardAddress[]> {
-    console.log('getDeliveryAddresses service', customerId)
     if (!customerId) {
       return throwError('getDeliveryAddresses() called without customerId');
     }
