@@ -47,3 +47,24 @@ table {
     background: $greyEF;
   }
 }
+
+@media (max-width: $screen-sm-max) {
+  .pli-mobile {
+    line-height: 24px;
+    color: $camfil-text-color-tertiary;
+    .row:nth-of-type(2n + 1) {
+      margin-top: $space-box/2;
+      margin-bottom: $space-box/2;
+      font-size: $font-size-xs;
+      font-weight: 600;
+      color: $camfil-text-color-primary;
+      background-color: rgba($color-corporate, 0.1);
+    }
+
+    ::ng-deep {
+      .mat-expansion-panel-body {
+        padding: 0;
+      }
+    }
+  }
+}

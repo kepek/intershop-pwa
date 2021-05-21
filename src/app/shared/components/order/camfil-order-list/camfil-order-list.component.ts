@@ -3,6 +3,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
+  OnChanges,
   OnDestroy,
   OnInit,
   QueryList,
@@ -39,8 +40,12 @@ export interface OrderFilter {
   templateUrl: './camfil-order-list.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['./camfil-order-list.scss'],
+  // tslint:disable-next-line: no-host-metadata-property
+  host: {
+    '(window:resize)': 'onResize()',
+  },
 })
-export class CamfilOrderListComponent implements OnInit, AfterViewInit, OnDestroy {
+export class CamfilOrderListComponent implements OnInit, AfterViewInit, OnDestroy, OnChanges {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild('searchInput') searchInput: ElementRef;
   @ViewChildren('statusFilters') statusFilters: QueryList<MatCheckbox>;
@@ -72,6 +77,8 @@ export class CamfilOrderListComponent implements OnInit, AfterViewInit, OnDestro
     'orderChannel',
   ];
   private destroy$ = new Subject();
+  isMobileView = false;
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
@@ -117,6 +124,9 @@ export class CamfilOrderListComponent implements OnInit, AfterViewInit, OnDestro
 
     this.dataSource.sort = this.sort;
     this.loading$ = this.camAccountFacade.ordersLoading$;
+
+    // Mobile view?
+    this.onResize();
   }
 
   ngAfterViewInit() {
@@ -185,6 +195,8 @@ export class CamfilOrderListComponent implements OnInit, AfterViewInit, OnDestro
       this.applyFilters();
     });
   }
+
+  ngOnChanges() {}
 
   ngOnDestroy() {
     this.destroy$.next();
@@ -318,5 +330,9 @@ export class CamfilOrderListComponent implements OnInit, AfterViewInit, OnDestro
 
   isStatusFilterActive(status: string) {
     return (this.filteredValues.orderStatus && this.filteredValues.orderStatus.indexOf(status) > -1) || false;
+  }
+
+  onResize() {
+    this.isMobileView = window.innerWidth <= 768;
   }
 }

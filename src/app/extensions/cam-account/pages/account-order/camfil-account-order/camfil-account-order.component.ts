@@ -8,6 +8,7 @@ import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { Price } from 'ish-core/models/price/price.model';
 import { formatPrice } from 'ish-core/models/price/price.pipe';
 import { ProductCompletenessLevel } from 'ish-core/models/product/product.model';
+import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
 import { mapToProperty, whenTruthy } from 'ish-core/utils/operators';
 import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
 
@@ -39,6 +40,7 @@ export class CamfilAccountOrderComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject();
 
   @Input() order: Order;
+  @Input() deviceType: DeviceType;
 
   deliveryAddress: DeliveryAddress;
   loading = false;

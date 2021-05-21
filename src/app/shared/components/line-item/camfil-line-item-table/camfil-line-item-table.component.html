@@ -1,4 +1,5 @@
 <table
+  *ngIf="!isMobileView"
   mat-table
   [dataSource]="lineItemsProcessed"
   matSort
@@ -69,7 +70,7 @@
       {{ 'camfil.lineitem.table.box_label' | translate }}
     </th>
     <td mat-cell *matCellDef="let pli">
-      <div class="text-truncate">{{ pli.boxLabel }}</div>
+      <div class="text-truncate">{{ pli.boxLabel || '---' }}</div>
     </td>
   </ng-container>
 
@@ -97,3 +98,55 @@
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let pli; columns: displayedColumns; let i = index" class="orderlist-row"></tr>
 </table>
+
+<ng-container *ngIf="isMobileView">
+  <ng-container *ngFor="let pli of lineItemsProcessed.data">
+    <ng-container *ngTemplateOutlet="mobileRow; context: { pli: pli }"></ng-container>
+  </ng-container>
+</ng-container>
+
+<ng-template #mobileRow let-pli="pli">
+  <mat-card *ngIf="pli" class="mat-elevation-z box-shadow box-shadow--dark">
+    <mat-card-content data-testing-id="line-item-container" class="pli-mobile">
+      <b>{{ 'camfil.lineitem.table.art_nr' | translate }}</b
+      ><br />
+      {{ pli.sku || '---' }}<br />
+      <div class="row text-center">
+        <div class="col-4">{{ 'camfil.lineitem.table.product' | translate }}</div>
+        <div class="col-4">{{ 'camfil.lineitem.table.qty_ordered' | translate }}</div>
+        <div class="col-4">{{ 'camfil.lineitem.table.qty_delivered' | translate }}</div>
+      </div>
+      <div class="row text-center">
+        <div class="col-4">
+          {{ pli.articleName }}
+          <div *ngIf="measurement(pli)">
+            {{ 'camfil.checkout.product.measurements.label' | translate }}: {{ measurement(pli) }}
+          </div>
+        </div>
+        <div class="col-4">
+          <div class="text-truncate">{{ pli.orderedQty }}</div>
+        </div>
+        <div class="col-4">
+          <div class="text-truncate">{{ pli.deliveredQty }}</div>
+        </div>
+      </div>
+      <div class="row text-center">
+        <div class="col-4">{{ 'camfil.lineitem.table.box_label' | translate }}</div>
+        <div class="col-4">{{ 'camfil.lineitem.table.delivery_date' | translate }}</div>
+        <div class="col-4">{{ 'camfil.lineitem.table.price' | translate }}</div>
+      </div>
+      <div class="row text-center">
+        <div class="col-4">
+          <div class="text-truncate">{{ pli.boxLabel || '---' }}</div>
+        </div>
+        <div class="col-4">
+          <strong>{{ pli.deliveryDate | ishDate }}</strong>
+        </div>
+        <div class="col-4">
+          {{ 'camfil.lineitem.table.price_label' | translate }} <strong>{{ pli.totalRowCustomerPrice }}</strong>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+  <br />
+</ng-template>

@@ -2,6 +2,9 @@ import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
+import { AppFacade } from 'ish-core/facades/app.facade';
+import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
+
 import { CamAccountFacade } from '../../facades/cam-account.facade';
 import { Order } from '../../models/order/order.model';
 
@@ -17,10 +20,11 @@ import { Order } from '../../models/order/order.model';
 export class CamfilAccountOrderPageComponent implements OnInit, OnDestroy {
   orders: Order[];
   order$: Observable<Order>;
+  deviceType$: Observable<DeviceType>;
 
   private destroy$ = new Subject();
 
-  constructor(private camAccountFacade: CamAccountFacade) {}
+  constructor(private camAccountFacade: CamAccountFacade, private appFacade: AppFacade) {}
 
   ngOnInit() {
     this.camAccountFacade
@@ -30,6 +34,7 @@ export class CamfilAccountOrderPageComponent implements OnInit, OnDestroy {
         this.orders = orders;
         this.order$ = this.camAccountFacade.selectedOrder$;
       });
+    this.deviceType$ = this.appFacade.deviceType$;
   }
 
   ngOnDestroy() {

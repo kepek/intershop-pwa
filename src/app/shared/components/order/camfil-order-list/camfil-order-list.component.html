@@ -1,10 +1,9 @@
 <div *camfilIsAuthorizedTo="['APP_B2B_MANAGE_ALL_ORDERS', 'APP_B2B_MANAGE_OWN_ORDERS']" class="loading-container">
   <mat-card class="mb-3 clearfix">
-    <section>
-      <div class="container">
-        <div class="row">
-          <!-- <div class="col-md-12"> -->
-          <!-- Search Box -->
+    <mat-card-content data-testing-id="orders-list-item-container">
+      <div class="row">
+        <!-- Search Box -->
+        <div class="col-12 col-md-6 col-lg-3 d-flex align-items-center pr-0 mb-2 mt-0">
           <div class="search-container">
             <mat-icon svgIcon="search" class="search__icon background-icon"></mat-icon>
             <input
@@ -32,9 +31,10 @@
               </button>
             </div>
           </div>
-
+        </div>
+        <div class="col-12 col-md-6 col-lg-3 d-flex align-items-center mb-2 mt-2 mt-md-0 px-lg-2">
           <!-- Customer Filter -->
-          <mat-form-field appearance="fill" class="select-filter">
+          <mat-form-field appearance="fill" class="select-filter w-100 w-md-auto">
             <mat-label>{{ 'camfil.account.orderlist.filter.customer.title' | translate }}</mat-label>
             <mat-select [formControl]="customerFilter">
               <mat-option *ngFor="let customer of customers" [value]="customer">
@@ -42,9 +42,10 @@
               </mat-option>
             </mat-select>
           </mat-form-field>
-
+        </div>
+        <div class="col-12 col-md-6 col-lg-3 d-flex align-items-center mb-2 mt-2 mt-md-0 pr-md-0 px-lg-2">
           <!-- Date Picker From -->
-          <mat-form-field appearance="fill" class="select-filter">
+          <mat-form-field appearance="fill" class="select-filter w-100 w-md-auto">
             <mat-label>{{ 'camfil.account.orderlist.filter.fromDate.title' | translate }}</mat-label>
             <input
               matInput
@@ -55,9 +56,10 @@
             <mat-datepicker-toggle matSuffix [for]="dateFromPicker"></mat-datepicker-toggle>
             <mat-datepicker #dateFromPicker></mat-datepicker>
           </mat-form-field>
-
+        </div>
+        <div class="col-12 col-md-6 col-lg-3 d-flex align-items-center mb-0 mt-2 mt-md-0 mb-md-2 pl-lg-2">
           <!-- Date Picker To -->
-          <mat-form-field appearance="fill" class="select-filter">
+          <mat-form-field appearance="fill" class="select-filter w-100 w-md-auto">
             <mat-label>{{ 'camfil.account.orderlist.filter.toDate.title' | translate }}</mat-label>
             <input matInput [matDatepicker]="dateToPicker" [min]="dateFromFilter.value" [formControl]="dateToFilter" />
             <mat-datepicker-toggle matSuffix [for]="dateToPicker"></mat-datepicker-toggle>
@@ -65,9 +67,8 @@
           </mat-form-field>
         </div>
       </div>
-    </section>
-    <hr />
-    <section>
+
+      <hr />
       <mat-checkbox
         #statusFilters
         *ngFor="let status of statuses"
@@ -83,7 +84,7 @@
       <div class="orders-count float-right">
         {{ 'camfil.account.orderlist.count' | translate }} <strong>{{ dataSource.filteredData.length }}</strong>
       </div>
-    </section>
+    </mat-card-content>
   </mat-card>
 
   <table
@@ -93,6 +94,7 @@
     matSortActive="orderDate"
     matSortDirection="desc"
     class="mat-elevation-z2"
+    *ngIf="!isMobileView"
   >
     <!--- Note that these columns can be defined in any order.
           The actual rendered columns are set as a property on the row definition" -->
@@ -102,7 +104,7 @@
       <th mat-header-cell *matHeaderCellDef mat-sort-header>
         {{ 'camfil.account.orderlist.table.customer' | translate }}
       </th>
-      <td mat-cell *matCellDef="let order">{{ order.customerName }}</td>
+      <td mat-cell *matCellDef="let order">{{ order.customerName || '---' }}</td>
     </ng-container>
 
     <!-- Order No. Column -->
@@ -110,7 +112,7 @@
       <th mat-header-cell *matHeaderCellDef mat-sort-header>
         {{ 'account.orderlist.table.order_number' | translate }}
       </th>
-      <td mat-cell *matCellDef="let order">{{ order.orderNumber }}</td>
+      <td mat-cell *matCellDef="let order">{{ order.orderNumber || '---' }}</td>
     </ng-container>
 
     <!-- Camfil Order No. Column -->
@@ -118,7 +120,7 @@
       <th mat-header-cell *matHeaderCellDef mat-sort-header>
         {{ 'camfil.account.orderlist.table.camfil_order_number' | translate }}
       </th>
-      <td mat-cell *matCellDef="let order">{{ order.camfilNo }}</td>
+      <td mat-cell *matCellDef="let order">{{ order.camfilNo || '---' }}</td>
     </ng-container>
 
     <!-- Goods Mark Column -->
@@ -126,7 +128,7 @@
       <th mat-header-cell *matHeaderCellDef mat-sort-header>
         {{ 'camfil.account.orderlist.table.goods_mark' | translate }}
       </th>
-      <td mat-cell *matCellDef="let order">{{ order.orderGoodsMark }}</td>
+      <td mat-cell *matCellDef="let order">{{ order.orderGoodsMark || '---' }}</td>
     </ng-container>
 
     <!-- Order Date Column -->
@@ -150,7 +152,7 @@
       <th mat-header-cell *matHeaderCellDef mat-sort-header>
         {{ 'account.orderlist.table.order_status' | translate }}
       </th>
-      <td mat-cell *matCellDef="let order">{{ order.orderStatus }}</td>
+      <td mat-cell *matCellDef="let order">{{ order.orderStatus || '---' }}</td>
     </ng-container>
 
     <!-- Order Channel Column -->
@@ -158,7 +160,7 @@
       <th mat-header-cell *matHeaderCellDef mat-sort-header>
         {{ 'camfil.account.orderlist.order_channel' | translate }}
       </th>
-      <td mat-cell *matCellDef="let order">{{ order.orderChannel }}</td>
+      <td mat-cell *matCellDef="let order">{{ order.orderChannel || '---' }}</td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -170,6 +172,12 @@
       class="orderlist-row"
     ></tr>
   </table>
+
+  <ng-container *ngIf="isMobileView">
+    <ng-container *ngFor="let orders of dataSource.filteredData">
+      <ng-container *ngTemplateOutlet="ordersMobileRow; context: { orders: orders }"></ng-container>
+    </ng-container>
+  </ng-container>
 
   <div class="empty-list col-12" *ngIf="dataSource.data.length === 0">
     <p class="text-center m-3" data-testing-id="emptyList">{{ 'account.orderlist.no_orders_message' | translate }}</p>
@@ -192,3 +200,50 @@
 
   <ish-loading *ngIf="loading$ | async"></ish-loading>
 </div>
+
+<ng-template #ordersMobileRow let-orders="orders">
+  <mat-card *ngIf="orders" class="mat-elevation-z box-shadow box-shadow--dark">
+    <mat-card-content data-testing-id="orders-list-item-container" class="orders-item">
+      <b>{{ 'camfil.account.orderlist.table.customer' | translate }}</b
+      ><br />
+      {{ orders.customerName || '---' }}<br />
+      <b>{{ 'account.orderlist.table.order_number' | translate }}</b
+      ><br />
+      {{ orders.orderNumber || '---' }}<br />
+
+      <div class="row text-center">
+        <div class="col-4">{{ 'camfil.account.orderlist.table.camfil_order_number' | translate }}</div>
+        <div class="col-4">{{ 'camfil.account.orderlist.table.goods_mark' | translate }}</div>
+        <div class="col-4">{{ 'account.orderlist.table.date_of_order' | translate }}</div>
+      </div>
+      <div class="row text-center">
+        <div class="col-4">{{ orders.camfilNo || '---' }}</div>
+        <div class="col-4">{{ orders.orderGoodsMark || '---' }}</div>
+        <div class="col-4">{{ orders.orderDate | ishDate }}</div>
+      </div>
+      <div class="row text-center">
+        <div class="col-4">{{ 'camfil.account.orderlist.delivery_date' | translate }}</div>
+        <div class="col-4">{{ 'account.orderlist.table.order_status' | translate }}</div>
+        <div class="col-4">{{ 'camfil.account.orderlist.order_channel' | translate }}</div>
+      </div>
+      <div class="row text-center">
+        <div class="col-4">{{ orders.deliveryDate | ishDate }}</div>
+        <div class="col-4">{{ orders.orderStatus || '---' }}</div>
+        <div class="col-4">{{ orders.orderChannel || '---' }}</div>
+      </div>
+      <hr />
+      <div class="text-right">
+        <button
+          mat-stroked-button
+          color="primary"
+          [title]="'camfil.account.orderlist.show_more' | translate"
+          [id]="'order_' + orders.id"
+          (click)="navigateTo(orders)"
+        >
+          <b>{{ 'camfil.account.orderlist.show_more' | translate }}</b>
+        </button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+  <br />
+</ng-template>
