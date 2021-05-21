@@ -212,7 +212,7 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges, OnD
         });
     });
 
-    const list: CamCamProductsAddToCart = { [ccId]: { products } };
+    const list: CamCamProductsAddToCart = { [ccId]: { products, allProductsSelected: true } };
 
     CamCardHelper.addToCartFromCamCards(
       this.camCardsFacade,
