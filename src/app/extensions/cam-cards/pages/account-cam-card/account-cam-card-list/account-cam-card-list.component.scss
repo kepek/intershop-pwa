@@ -109,9 +109,14 @@
     }
     &-product {
       padding: $space-box $space-default $space-box $space-default * 2;
+      transition: background-color 0.3s;
 
       &:nth-child(even) {
         background-color: $greyF5;
+      }
+
+      &:hover {
+        background-color: $gray-100;
       }
     }
     &-comment {

@@ -1,30 +1,37 @@
 <ng-container *ngIf="mode === 'edit'">
   <form [formGroup]="commentForm">
-    <mat-form-field appearance="fill" class="form-field ml-md-2" *ngFor="let input of inputs">
-      <mat-label>{{ 'camfil.dynamic.account.cam_card.edit.comment.' + input + '.label' | translate }}</mat-label>
-      <input
-        matInput
-        formControlName="{{ input }}"
-        markRequiredLabel="off"
-        maxlength="{{ input === 'text' ? '200' : '30' }}"
-        attr.data-testing-id="cam-card-edit-comment-{{ input }}"
-        (blur)="onBlur($event.target, input)"
-        (keyup.enter)="keyupEnter($event.target)"
-      />
-    </mat-form-field>
+    <ng-container *ngFor="let input of inputs">
+      <mat-form-field
+        appearance="fill"
+        class="form-field ml-md-2"
+        ngClass="field_{{ input }}"
+        *ngIf="input !== 'text' || visibility"
+      >
+        <mat-label>{{ 'camfil.dynamic.account.cam_card.edit.comment.' + input + '.label' | translate }}</mat-label>
+        <input
+          matInput
+          formControlName="{{ input }}"
+          markRequiredLabel="off"
+          maxlength="{{ input === 'text' ? '200' : '30' }}"
+          attr.data-testing-id="cam-card-edit-comment-{{ input }}"
+          (blur)="onBlur($event.target, input)"
+          (keyup.enter)="keyupEnter($event.target)"
+        />
+      </mat-form-field>
+    </ng-container>
   </form>
 </ng-container>
 
-<ng-container *ngIf="camCardItem?.comment?.text && mode === 'view'">
+<ng-container *ngIf="(camCardItem?.comment?.text && mode === 'view') || (mode === 'edit' && !visibility)">
   <span
     #tooltip="matTooltip"
     matTooltip="{{ camCardItem.comment.text }}"
     matTooltipPosition="below"
     matTooltipClass="cam-card-tooltip"
-    class="cam-card-comment"
-    (click)="tooltip.show()"
+    class="cam-card-comment ml-2"
+    (click)="mode === 'edit' ? toggleVisibility() : tooltip.show()"
     (mouseenter)="$event.stopImmediatePropagation()"
   >
-    <mat-icon svgIcon="comment" class="size-14"></mat-icon> {{ 'camfil.account.cam_card.list.comment' | translate }}
+    <mat-icon svgIcon="comment" class="size-24"></mat-icon>
   </span>
 </ng-container>

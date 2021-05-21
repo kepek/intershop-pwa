@@ -19,11 +19,6 @@
             [value]="product.sku"
           ></camfil-product-attribute>
           <camfil-product-attribute
-            identifier="dimensions"
-            [name]="'camfil.cam_card.product.dimensions' | translate"
-            [value]="product | camfilDimension"
-          ></camfil-product-attribute>
-          <camfil-product-attribute
             *ngIf="measurementToShow()"
             identifier="measurement"
             [name]="'camfil.cam_card.product.measurements.label' | translate"

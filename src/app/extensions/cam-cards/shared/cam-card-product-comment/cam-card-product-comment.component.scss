@@ -1,0 +1,10 @@
+@import '~src/styles/themes/camfil/variables';
+
+:host {
+  display: flex;
+  align-items: center;
+
+  .field_label {
+    width: 300px;
+  }
+}

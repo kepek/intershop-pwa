@@ -8,6 +8,7 @@ import { CamCard, CamCardItem } from '../../models/cam-card/cam-card.model';
 @Component({
   selector: 'camfil-cam-card-product-comment',
   templateUrl: './cam-card-product-comment.component.html',
+  styleUrls: ['./cam-card-product-comment.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CamCardProductCommentComponent implements OnInit, OnDestroy {
@@ -17,6 +18,7 @@ export class CamCardProductCommentComponent implements OnInit, OnDestroy {
 
   commentForm: FormGroup;
   inputs = [];
+  visibility = false;
 
   private destroy$ = new Subject<void>();
   constructor(private fb: FormBuilder, private camCardsFacade: CamCardsFacade) {}
@@ -50,5 +52,9 @@ export class CamCardProductCommentComponent implements OnInit, OnDestroy {
       const newItem = { ...this.camCardItem, comment: { ...this.commentForm.value } };
       this.camCardsFacade.updateCamCardProduct(this.currentCamCard.rootCamCard, this.currentCamCard.id, newItem);
     }
+  }
+
+  toggleVisibility() {
+    this.visibility = true;
   }
 }
