@@ -238,6 +238,10 @@ export class CamAhuFacade {
     });
   }
 
+  addSelectedAhuUnitSlotItemProductsToCamCard() {
+    console.log('addSelectedAhuUnitSlotItemProductsToCamCard');
+  }
+
   isAhuUnitSlotItemAdded$(ahuSlotItemParams: UnitAHUAirSlotItemParams): Observable<boolean> {
     return this.store
       .pipe(select(selectQueryParams))
