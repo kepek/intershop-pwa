@@ -39,6 +39,10 @@
 </ng-template>
 
 <ng-template #userCustomersContacts>
+  
+  <p *ngIf="!(validCustomerAndContact$ | async)" class="mt-4 text-danger">
+    {{ 'camfil.account.organization.list.cancel.button.text' | translate }}
+  </p>
   <div class="section section--customers">
     <h2 class="section__title">
       {{ 'camfil.account.organization.edit_user.customers.header.text' | translate }}
@@ -52,7 +56,6 @@
         (connectUserWithCustomer)="onConnectUserWithCustomer($event)"
         (disconnectUserFromCustomer)="onDisconnectUserFromCustomer($event)"
         (connectContactWithUserAndCustomer)="onConnectContactWithUserAndCustomer($event)"
-        (disconnectContactFromUserAndCustomer)="onDisconnectContactFromUserAndCustomer($event)"
       ></camfil-organization-user-customer-contact-form>
     </div>
   </div>

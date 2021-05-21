@@ -65,7 +65,6 @@ import {
   connectUserWithCustomer,
   createCustomerUser,
   deactivateCustomerUser,
-  disconnectContactFromUserAndCustomer,
   disconnectUserFromCustomer,
   getSelectedUser,
   getSelectedUserId,
@@ -438,16 +437,6 @@ export class CamOrganizationManagementFacade {
    */
   connectContactWithUserAndCustomer$(customerId: string, userId: string, contact: CamfilB2bContact) {
     this.store.dispatch(connectContactWithUserAndCustomer({ customerId, userId, contact }));
-  }
-
-  /**
-   * Deactivate User
-   * @param customerId
-   * @param userId
-   * @param contact
-   */
-  disconnectContactFromUserAndCustomer$(customerId: string, userId: string, contact: CamfilB2bContact) {
-    this.store.dispatch(disconnectContactFromUserAndCustomer({ customerId, userId, contact }));
   }
 
   getRoles$() {

@@ -1,7 +1,7 @@
 import { AfterViewInit, ChangeDetectionStrategy, Component, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { FormArray } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { take, takeUntil } from 'rxjs/operators';
+import { filter, take, takeUntil } from 'rxjs/operators';
 
 import { whenTruthy } from 'ish-core/utils/operators';
 
@@ -38,9 +38,19 @@ export class CreatePageComponent extends CreatePageDataSourceComponent implement
     this.form.markAllAsTouched();
 
     if (this.form.valid) {
-      this.context$.pipe(take(1), whenTruthy()).subscribe(({ customer, user, contacts, roles }) => {
-        this.organizationFacade.createCustomerUser$(customer, user, contacts, roles);
-      });
+      this.context$
+        .pipe(
+          take(1),
+          whenTruthy(),
+          filter(({ validCustomerAndContact }) => validCustomerAndContact)
+        )
+        .subscribe(({ customer, user, contacts, roles }) => {
+          if (customer && contacts.length) {
+            this.organizationFacade.createCustomerUser$(customer, user, contacts, roles);
+          } else {
+            this.validCustomerAndContact$.next(false);
+          }
+        });
     }
   }
 

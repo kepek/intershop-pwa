@@ -350,31 +350,6 @@ export class CamOrganizationService {
     );
   }
 
-  // Customer -> User -> Contact -> Disconnect
-
-  disconnectContactWithUserCustomer(
-    customerId: string,
-    userId: string,
-    contact: CamfilB2bContact
-  ): Observable<CamfilB2bContact> {
-    const body = contact;
-
-    return this.apiService
-      .delete<CamfilB2bContactData>(`privatecamfilcustomers/${customerId}/users/${userId}/contact/${contact.erpId}`)
-      .pipe(map(() => body));
-  }
-
-  disconnectContactFromUserAndCustomerPlusReload(
-    customerId: string,
-    userId: string,
-    contact: CamfilB2bContact
-  ): Observable<CamfilB2bUser> {
-    return this.disconnectContactWithUserCustomer(customerId, userId, contact).pipe(
-      withLatestFrom(this.organizationFacade.getUser$(userId).pipe(whenTruthy())),
-      concatMap(([, user]) => this.getCustomerUser(user.customerId, userId))
-    );
-  }
-
   // Customer -> User -> Roles
 
   getCustomerUserRoles(customerId: string, userId: string): Observable<CamfilB2bRole[]> {

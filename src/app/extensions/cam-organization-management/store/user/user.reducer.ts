@@ -23,9 +23,6 @@ import {
   deactivateCustomerUser,
   deactivateCustomerUserFail,
   deactivateCustomerUserSuccess,
-  disconnectContactFromUserAndCustomer,
-  disconnectContactFromUserAndCustomerFail,
-  disconnectContactFromUserAndCustomerSuccess,
   disconnectUserFromCustomer,
   disconnectUserFromCustomerFail,
   disconnectUserFromCustomerSuccess,
@@ -74,7 +71,6 @@ export const userReducer = createReducer(
     connectUserWithCustomer,
     disconnectUserFromCustomer,
     connectContactWithUserAndCustomer,
-    disconnectContactFromUserAndCustomer,
     loadOrganizationUsers
   ),
   setErrorOn(
@@ -87,7 +83,6 @@ export const userReducer = createReducer(
     connectUserWithCustomerFail,
     disconnectUserFromCustomerFail,
     connectContactWithUserAndCustomerFail,
-    disconnectContactFromUserAndCustomerFail,
     loadOrganizationUsersFail
   ),
   unsetLoadingAndErrorOn(
@@ -100,7 +95,6 @@ export const userReducer = createReducer(
     connectUserWithCustomerSuccess,
     disconnectUserFromCustomerSuccess,
     connectContactWithUserAndCustomerSuccess,
-    disconnectContactFromUserAndCustomerSuccess,
     loadOrganizationUsersSuccess
   ),
   on(
@@ -113,7 +107,6 @@ export const userReducer = createReducer(
     connectUserWithCustomerSuccess,
     disconnectUserFromCustomerSuccess,
     connectContactWithUserAndCustomerSuccess,
-    disconnectContactFromUserAndCustomerSuccess,
     loadOrganizationUsersSuccess,
     state => ({ ...state, initialized: true })
   ),
@@ -170,7 +163,6 @@ export const userReducer = createReducer(
     connectUserWithCustomerSuccess,
     disconnectUserFromCustomerSuccess,
     connectContactWithUserAndCustomerSuccess,
-    disconnectContactFromUserAndCustomerSuccess,
     (state: UserState, action) => {
       const { user } = action.payload;
 
