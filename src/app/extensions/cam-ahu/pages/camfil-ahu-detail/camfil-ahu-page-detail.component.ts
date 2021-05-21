@@ -31,8 +31,8 @@ export class CamfilAHUPageDetailComponent extends CamAhuAbstractComponent implem
 
   ngOnInit() {
     super.init();
-    // We do NOT know what's the selected AHU Unit Product is...
-    this.product$ = this.shoppingFacade.product$('1004670', ProductCompletenessLevel.Detail);
+    // TODO (extMlk): We do NOT know what's the selected AHU Unit Product is... Need to be clarified;
+    this.product$ = this.shoppingFacade.product$('610959', ProductCompletenessLevel.Detail);
   }
 
   toggleDetails() {

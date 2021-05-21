@@ -8,6 +8,7 @@ import { UnitAHUAirSlotType } from '../../../models/unit/unit.model';
   styleUrls: ['./camfil-ahu-slot-type.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
+// tslint:disable-next-line:component-creation-test
 export class CamfilAhuSlotTypeComponent {
   /**
    * The product with the image information.

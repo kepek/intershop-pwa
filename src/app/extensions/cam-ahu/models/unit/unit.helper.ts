@@ -29,15 +29,17 @@ export class UnitHelper {
     return { ...JSON.parse(JSON.stringify(qs.parse(str))) };
   }
 
-  static addAhuSlotItemToList(queryParams: Params, ahuSlotItemParams: UnitAHUAirSlotItemParams) {
-    const { manufacturerId, unitId, slotId, sku } = ahuSlotItemParams;
+  static addAhuSlotItemToList(queryParams: Params, ahuSlotItemParams: UnitAHUAirSlotItemParams & { quantity: number }) {
+    const { manufacturerId, unitId, slotId, sku, quantity } = ahuSlotItemParams;
 
     const prevSlots: UnitAHUAirSlotItemQueryParam = UnitHelper.parseQs(
       queryParams?.[UnitHelper.SLOTS_QUERY_PARAM_NAME]
     );
     const nextSlots: UnitAHUAirSlotItemQueryParam = {};
 
-    nextSlots[slotId] = prevSlots[slotId] ? [...prevSlots[slotId], sku] : [sku];
+    const skus = new Array(quantity).fill(sku);
+
+    nextSlots[slotId] = prevSlots[slotId] ? [...prevSlots[slotId], ...skus] : skus;
 
     const newSlots = { ...prevSlots, ...nextSlots };
 

@@ -14,10 +14,10 @@ import {
   Unit,
   UnitAHUAirSlot,
   UnitAHUAirSlotItemParams,
-  UnitAHUBasketItem,
   UnitAHUAirSlotParams,
-  UnitAHUBasket,
   UnitAHUAirSlotType,
+  UnitAHUBasket,
+  UnitAHUBasketItem,
   UnitAhu,
 } from '../models/unit/unit.model';
 import { getCamAhuState } from '../store/cam-ahu-store';
@@ -213,7 +213,7 @@ export class CamAhuFacade {
 
   // Unit -> Slot -> Item
 
-  addAhuUnitSlotItemToList(ahuSlotItemParams: UnitAHUAirSlotItemParams) {
+  addAhuUnitSlotItemToList(ahuSlotItemParams: UnitAHUAirSlotItemParams & { quantity: number }) {
     this.store.dispatch(addAhuSlotItemToList(ahuSlotItemParams));
   }
 
@@ -225,6 +225,12 @@ export class CamAhuFacade {
     return this.store
       .pipe(select(selectQueryParams))
       .pipe(map(queryParams => UnitHelper.isAhuUnitSlotItemAdded(queryParams, ahuSlotItemParams)));
+  }
+
+  getAhuUnitSlotItemQuantity(ahuSlotItemParams: UnitAHUAirSlotItemParams): Observable<number> {
+    return this.store
+      .pipe(select(selectQueryParams))
+      .pipe(map(queryParams => UnitHelper.countAddedItemsBySku(queryParams, ahuSlotItemParams)));
   }
 
   isAhuUnitSlotItemProductAvailable$(props: { sku: string }): Observable<boolean> {

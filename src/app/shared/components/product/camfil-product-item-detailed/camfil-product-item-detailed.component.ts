@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core
 import { FormControl, FormGroup } from '@angular/forms';
 import { map, takeUntil } from 'rxjs/operators';
 
+import { AttributeGroupTypes } from 'ish-core/models/attribute-group/attribute-group.types';
 import { Attribute } from 'ish-core/models/attribute/attribute.model';
 import {
   ProductView,
@@ -37,7 +38,8 @@ export class CamfilProductItemDetailedComponent extends CamfilProductItemBaseCom
   isNotZero = ProductHelper.isNotZero;
 
   ngOnInit(): void {
-    const attributes = this.product?.attributeGroups?.PRODUCT_LIST_LABEL_ATTRIBUTES?.attributes || [];
+    const attributes =
+      this.product?.attributeGroups?.[AttributeGroupTypes.ProductsListLabelAttributes]?.attributes || [];
 
     this.updatedQuantity = this.quantity || 0;
 

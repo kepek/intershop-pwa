@@ -1,3 +1,21 @@
+<!-- Product Details -->
+<ng-template #selectedAhuUnitProductDetails>
+  <ng-container *ngIf="product$ | async as product">
+    <div class="row product-data my-4" *ngIf="!product.failed">
+      <div class="col-12 col-md-6 product-attributes">
+        <h2>{{ 'product.details.heading' | translate }}</h2>
+        <camfil-product-attributes [product]="product"></camfil-product-attributes>
+      </div>
+      <div class="col-12 col-md-6 product-description">
+        <h2>{{ 'product.description.heading' | translate }}</h2>
+        <p [innerHTML]="product.longDescription"></p>
+        <h2>{{ 'product.shipping.heading' | translate }}</h2>
+        <camfil-product-shipment [product]="product"></camfil-product-shipment>
+      </div>
+    </div>
+  </ng-container>
+</ng-template>
+<!-- Unit -->
 <ng-container *ngIf="selectedAhuUnit$ | async as selectedAhuUnit">
   <!-- Image -->
   <ng-template #selectedAhuUnitImage>
@@ -42,7 +60,6 @@
   <ng-template #selectedAhuUnitGuides>
     <div class="mt-4">
       <strong>{{ 'camfil.ahu.detail.guides' | translate }}</strong>
-      <ish-content-include includeId="camfil.include.ahu-detail.content.pagelet2-Include"></ish-content-include>
       <ul class="product-details-guides mt-2">
         <li>
           <a>
@@ -53,7 +70,7 @@
         <li>
           <a>
             <mat-icon svgIcon="pdf"></mat-icon>
-            {{ 'camfil.ahu.detail.broschure' | translate }}</a
+            {{ 'camfil.ahu.detail.brochure' | translate }}</a
           >
         </li>
         <li>
@@ -65,22 +82,16 @@
       </ul>
     </div>
   </ng-template>
-  <!-- Product Details -->
-  <ng-template #selectedAhuUnitProductDetails>
-    <ng-container *ngIf="product$ | async as product">
-      <div class="row product-data my-4" *ngIf="!product.failed">
-        <div class="col-12 col-md-6 product-attributes">
-          <h2>{{ 'product.details.heading' | translate }}</h2>
-          <camfil-product-attributes [product]="product"></camfil-product-attributes>
-        </div>
-        <div class="col-12 col-md-6 product-description">
-          <h2>{{ 'product.description.heading' | translate }}</h2>
-          <p [innerHTML]="product.longDescription"></p>
-          <h2>{{ 'product.shipping.heading' | translate }}</h2>
-          <camfil-product-shipment [product]="product"></camfil-product-shipment>
-        </div>
-      </div>
-    </ng-container>
+  <ng-template #selectedAhuUnitSlots>
+    <camfil-ahu-slots [ahuUnit]="selectedAhuUnit"></camfil-ahu-slots>
+  </ng-template>
+  <!-- Cart -->
+  <ng-template #selectedAhuUnitCart>
+    <camfil-ahu-cart
+      [basket]="selectedAhuUnitBasket$ | async"
+      [summary]="selectedAhuUnitBasketSummary$ | async"
+      [isConfirmed]="isAhuUnitValid$(selectedAhuUnit) | async"
+    ></camfil-ahu-cart>
   </ng-template>
   <!-- Layout -->
   <div class="ahu-detail">
@@ -97,54 +108,19 @@
             <ng-container *ngTemplateOutlet="selectedAhuUnitGuides"></ng-container>
           </div>
         </div>
-        <ng-contaienr *ngTemplateOutlet="selectedAhuUnitProductDetails"></ng-contaienr>
+        <ng-container *ngTemplateOutlet="selectedAhuUnitSlots"></ng-container>
       </div>
       <div class="col-sm-12 col-md-3">
-        <camfil-ahu-cart
-          [basket]="selectedAhuUnitBasket$ | async"
-          [summary]="selectedAhuUnitBasketSummary$ | async"
-          [isConfirmed]="isAhuUnitValid$(selectedAhuUnit) | async"
-        ></camfil-ahu-cart>
+        <ng-container *ngTemplateOutlet="selectedAhuUnitCart"></ng-container>
       </div>
     </div>
   </div>
-  <hr />
-  <pre>{{ selectedAhuUnit | json }}</pre>
 </ng-container>
 
-<ish-loading *ngIf="ahuUnitsLoading$ | async"></ish-loading>
+<ng-container *ngTemplateOutlet="selectedAhuUnitProductDetails"></ng-container>
 
-<!--
-<div class="ahu-detail">
-  <div class="row">
-    <div class="col-md-9 col-sm-12">
-      <div class="row">
-        <div class="col-sm-12 col-md-6">
-          <camfil-product-image [product]="product" imageType="S" class="product-image"></camfil-product-image>
-        </div>
-        <div class="col-sm-12 col-md-6 ahu-detail__content">
-        </div>
-      </div>
+<camfil-product-guides></camfil-product-guides>
 
-      <camfil-ahu-slots [product]="product" [unitAHUAirSlots]="selectedAhuUnitSlots$ | async"></camfil-ahu-slots>
-
-      <div class="row product-data my-4">
-        <div class="col-12 col-md-6 product-attributes">
-          <h2>{{ 'product.details.heading' | translate }}</h2>
-          <camfil-product-attributes [product]="product"></camfil-product-attributes>
-        </div>
-        <div class="col-12 col-md-6 product-description">
-          <h2>{{ 'product.description.heading' | translate }}</h2>
-          <p [innerHTML]="product.longDescription"></p>
-          <h2>{{ 'product.shipping.heading' | translate }}</h2>
-          <camfil-product-shipment [product]="product"></camfil-product-shipment>
-        </div>
-      </div>
-    </div>
-    <div class="col-sm-12 col-md-3">
-      <camfil-ahu-cart [unitAHUAirSlots]="unitAHUAirSlots"></camfil-ahu-cart>
-    </div>
-  </div>
-</div>
 <ish-content-include includeId="camfil.include.ahu-detail.content.pagelet2-Include"></ish-content-include>
--->
+
+<ish-loading *ngIf="ahuUnitsLoading$ | async"></ish-loading>

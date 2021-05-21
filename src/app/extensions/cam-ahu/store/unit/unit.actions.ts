@@ -20,7 +20,7 @@ export const loadAhuUnitFail = createAction('[AHU Unit API] Load AHU Unit Fail',
 
 export const addAhuSlotItemToList = createAction(
   '[AHU Unit Internal] Add AHU Unit Slot Item To List',
-  payload<UnitAHUAirSlotItemParams>()
+  payload<UnitAHUAirSlotItemParams & { quantity: number }>()
 );
 
 export const removeAhuSlotItemFromList = createAction(

@@ -15,9 +15,9 @@ import {
   UnitAHUAirSlotItemParams,
   UnitAHUAirSlotParams,
   UnitAHUAirSlotType,
+  UnitAHUBasket,
   UnitAHUBasketSummary,
   UnitAhu,
-  UnitAHUBasket,
 } from '../../models/unit/unit.model';
 
 @Component({ template: '' })
@@ -140,7 +140,7 @@ export abstract class CamAhuAbstractComponent implements OnInit, OnDestroy {
     });
   }
 
-  addAhuSlotItemToList(ahuUnit: Unit, slotId: string, sku: string) {
+  addAhuSlotItemToList(ahuUnit: Unit, slotId: string, sku: string, quantity = 1) {
     const ahuSlotItemParams: UnitAHUAirSlotItemParams = {
       manufacturerId: ahuUnit.ahu.ahuManufacturerId,
       unitId: ahuUnit.id,
@@ -148,7 +148,7 @@ export abstract class CamAhuAbstractComponent implements OnInit, OnDestroy {
       sku,
     };
 
-    this.ahuFacade.addAhuUnitSlotItemToList(ahuSlotItemParams);
+    this.ahuFacade.addAhuUnitSlotItemToList({ ...ahuSlotItemParams, quantity });
   }
 
   removeAhuSlotItemFromList(ahuUnit: Unit, slotId: string, sku: string) {
@@ -160,6 +160,17 @@ export abstract class CamAhuAbstractComponent implements OnInit, OnDestroy {
     };
 
     this.ahuFacade.removeAhuUnitSlotItemFromList(ahuSlotItemParams);
+  }
+
+  getAhuUnitSlotItemQuantity$(ahuUnit: Unit, slotId: string, sku: string) {
+    const ahuSlotItemParams: UnitAHUAirSlotItemParams = {
+      manufacturerId: ahuUnit.ahu.ahuManufacturerId,
+      unitId: ahuUnit.id,
+      slotId,
+      sku,
+    };
+
+    return this.ahuFacade.getAhuUnitSlotItemQuantity(ahuSlotItemParams);
   }
 
   isAhuUnitSlotItemAdded$(ahuUnit: Unit, slotId: string, sku: string) {
@@ -191,7 +202,8 @@ export abstract class CamAhuAbstractComponent implements OnInit, OnDestroy {
     return this.ahuFacade.isAhuUnitValid$(ahuUnit);
   }
 
-  submitAhuForm(manufacturerId: string, unitId: string) {
-    console.log('submitAhuForm', manufacturerId, unitId);
-  }
+  // tslint:disable-next-line:force-jsdoc-comments
+  // @ts-ignore
+  // tslint:disable-next-line:no-unused
+  submitAhuForm(manufacturerId: string, unitId: string) {}
 }

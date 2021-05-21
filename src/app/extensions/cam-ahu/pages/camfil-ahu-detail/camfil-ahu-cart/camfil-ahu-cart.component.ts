@@ -8,6 +8,7 @@ import { UnitAHUBasket, UnitAHUBasketSummary } from '../../../models/unit/unit.m
   styleUrls: ['./camfil-ahu-cart.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
+// tslint:disable-next-line:component-creation-test
 export class CamfilAhuCartComponent {
   /**
    * The product with the image information.

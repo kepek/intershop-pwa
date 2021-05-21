@@ -88,6 +88,12 @@
               colorIcon="color-light"
               [hasIcon]="true"
             ></camfil-product-add-to-basket>
+
+            <ng-container
+              *ngIf="configuration.displayActionTemplate"
+              [ngTemplateOutlet]="actionTemplate"
+              [ngTemplateOutletContext]="{ $implicit: product, quantity: updatedQuantity }"
+            ></ng-container>
           </div>
         </form>
       </ng-container>
@@ -193,6 +199,12 @@
               colorIcon="color-light"
               [hasIcon]="true"
             ></camfil-product-add-to-basket>
+
+            <ng-container
+              *ngIf="configuration.displayActionTemplate"
+              [ngTemplateOutlet]="actionTemplate"
+              [ngTemplateOutletContext]="{ $implicit: product, quantity: updatedQuantity }"
+            ></ng-container>
           </div>
         </form>
       </ng-container>
