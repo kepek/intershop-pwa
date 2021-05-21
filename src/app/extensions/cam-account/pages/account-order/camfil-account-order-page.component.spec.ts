@@ -1,8 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { CoreStoreModule } from 'ish-core/store/core/core-store.module';
 import { MockComponent } from 'ng-mocks';
 import { instance, mock } from 'ts-mockito';
+
+import { CoreStoreModule } from 'ish-core/store/core/core-store.module';
 
 import { CamAccountFacade } from '../../facades/cam-account.facade';
 
