@@ -73,6 +73,11 @@ export class CamCardHelper {
                 },
                 address,
               };
+
+              if (!productsToAdd.allProductsSelected) {
+                delete productsToAdd.extensions.createdFromCamCardId;
+              }
+
               productFacade.addProductsFromCamCard(productsToAdd, commonShippingMethodId, currentBasketId);
             });
         }

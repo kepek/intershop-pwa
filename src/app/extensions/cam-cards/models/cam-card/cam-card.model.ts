@@ -112,6 +112,7 @@ export interface CamCamProductsAddToCartItems {
   products: CamCamProductChecked[];
   extensions?: BasketExtensions;
   address?: Address;
+  allProductsSelected?: boolean;
 }
 
 export interface CamCamProductsAddToCart {

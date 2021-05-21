@@ -304,11 +304,18 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
     const list = Object.values(this.productsChecked).reduce((acc, val: CamCamProductChecked) => {
       const key = val.camCardRoot || val.camCardId;
       const products = acc[key]?.products || [];
+
       acc[key] = {
         products: [...products, val],
       };
       return acc;
     }, {}) as CamCamProductsAddToCart;
+
+    for (const property in list) {
+      if (list.hasOwnProperty(property)) {
+        list[property].allProductsSelected = this.checkIfAllProductsSelected(property, list[property].products);
+      }
+    }
 
     CamCardHelper.addToCartFromCamCards(
       this.camCardsFacade,
@@ -479,5 +486,12 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
       width: '600px',
       autoFocus: false,
     });
+  }
+
+  // Check if all product from CamCard are selected
+
+  checkIfAllProductsSelected(camCardId, products) {
+    const camCard = this.camCards.find(c => c.id === camCardId);
+    return camCard.itemsCount === products?.length;
   }
 }
