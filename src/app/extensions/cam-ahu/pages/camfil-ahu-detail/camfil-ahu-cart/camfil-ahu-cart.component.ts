@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
-import { UnitAHUBasket, UnitAHUBasketSummary } from '../../../models/unit/unit.model';
+import { Unit, UnitAHUBasket, UnitAHUBasketSummary } from '../../../models/unit/unit.model';
+import { CamAhuAbstractComponent } from '../../camfil-ahu-abstract/camfil-ahu-abstract-page.component';
 
 @Component({
   selector: 'camfil-ahu-cart',
@@ -9,10 +10,11 @@ import { UnitAHUBasket, UnitAHUBasketSummary } from '../../../models/unit/unit.m
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 // tslint:disable-next-line:component-creation-test
-export class CamfilAhuCartComponent {
+export class CamfilAhuCartComponent extends CamAhuAbstractComponent {
   /**
    * The product with the image information.
    */
+  @Input() unit: Unit;
   @Input() basket: UnitAHUBasket[];
   @Input() summary: UnitAHUBasketSummary;
   @Input() isConfirmed: boolean;

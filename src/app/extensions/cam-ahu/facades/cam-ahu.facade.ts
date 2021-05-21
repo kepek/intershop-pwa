@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { Observable, combineLatest } from 'rxjs';
-import { defaultIfEmpty, first, map, switchMap, withLatestFrom } from 'rxjs/operators';
+import { defaultIfEmpty, first, map, switchMap, take, withLatestFrom } from 'rxjs/operators';
 
 import { HttpError } from 'ish-core/models/http-error/http-error.model';
 import { getCurrentLocale } from 'ish-core/store/core/configuration';
 import { selectQueryParams } from 'ish-core/store/core/router';
 import { getProduct, getProducts } from 'ish-core/store/shopping/products';
 
+import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
+import { ProductCompletenessLevel } from 'ish-core/models/product/product.helper';
 import { Manufacturer } from '../models/manufacturer/manufacturer.model';
 import { UnitHelper } from '../models/unit/unit.helper';
 import {
@@ -49,7 +51,7 @@ import {
 // tslint:disable:member-ordering
 @Injectable({ providedIn: 'root' })
 export class CamAhuFacade {
-  constructor(private store: Store) {
+  constructor(private store: Store, private shoppingFacade: ShoppingFacade) {
     setTimeout(() => {
       store.pipe(first()).subscribe(state => {
         if (!isManufacturerInitialized(state)) {
@@ -227,10 +229,29 @@ export class CamAhuFacade {
       .pipe(map(queryParams => UnitHelper.isAhuUnitSlotItemAdded(queryParams, ahuSlotItemParams)));
   }
 
-  getAhuUnitSlotItemQuantity(ahuSlotItemParams: UnitAHUAirSlotItemParams): Observable<number> {
+  getAhuUnitSlotItemQuantity$(ahuSlotItemParams: UnitAHUAirSlotItemParams): Observable<number> {
     return this.store
       .pipe(select(selectQueryParams))
       .pipe(map(queryParams => UnitHelper.countAddedItemsBySku(queryParams, ahuSlotItemParams)));
+  }
+
+  getAhuUnitSlotItemProduct$(ahuSlotItemParams: UnitAHUAirSlotItemParams, level = ProductCompletenessLevel.Detail) {
+    const { sku, unitId, slotId } = ahuSlotItemParams;
+
+    return this.shoppingFacade.product$(sku, level).pipe(
+      take(1),
+      withLatestFrom(this.store.pipe(select(getAhuUnitDetails, { id: unitId }))),
+      map(([product, ahuUnit]) => {
+        const ahuAirSlot = ahuUnit?.ahuAirSlots.find(s => s.ahuSlotId === slotId);
+        const maxOrderQuantity = Number(ahuAirSlot?.ahuSlotAmount || 0);
+
+        if (maxOrderQuantity) {
+          product.maxOrderQuantity = maxOrderQuantity;
+        }
+
+        return product;
+      })
+    );
   }
 
   isAhuUnitSlotItemProductAvailable$(props: { sku: string }): Observable<boolean> {

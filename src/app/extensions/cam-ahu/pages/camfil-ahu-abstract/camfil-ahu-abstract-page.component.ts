@@ -1,3 +1,4 @@
+import { ViewportScroller } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -43,7 +44,12 @@ export abstract class CamAhuAbstractComponent implements OnInit, OnDestroy {
   selectedAhuUnitAirSlotTypes$: Observable<UnitAHUAirSlotType[]>;
   ahuLoading$: Observable<boolean>;
 
-  constructor(protected router: Router, protected fb: FormBuilder, protected ahuFacade: CamAhuFacade) {}
+  constructor(
+    protected router: Router,
+    protected fb: FormBuilder,
+    protected ahuFacade: CamAhuFacade,
+    protected scroller: ViewportScroller
+  ) {}
 
   // tslint:disable-next-line:private-destroy-field
   protected destroy$ = new Subject();
@@ -170,7 +176,18 @@ export abstract class CamAhuAbstractComponent implements OnInit, OnDestroy {
       sku,
     };
 
-    return this.ahuFacade.getAhuUnitSlotItemQuantity(ahuSlotItemParams);
+    return this.ahuFacade.getAhuUnitSlotItemQuantity$(ahuSlotItemParams);
+  }
+
+  getAhuUnitSlotItemProduct$(ahuUnit: Unit, slotId: string, sku: string) {
+    const ahuSlotItemParams: UnitAHUAirSlotItemParams = {
+      manufacturerId: ahuUnit.ahu.ahuManufacturerId,
+      unitId: ahuUnit.id,
+      slotId,
+      sku,
+    };
+
+    return this.ahuFacade.getAhuUnitSlotItemProduct$(ahuSlotItemParams);
   }
 
   isAhuUnitSlotItemAdded$(ahuUnit: Unit, slotId: string, sku: string) {
@@ -200,6 +217,10 @@ export abstract class CamAhuAbstractComponent implements OnInit, OnDestroy {
 
   isAhuUnitValid$(ahuUnit: Unit) {
     return this.ahuFacade.isAhuUnitValid$(ahuUnit);
+  }
+
+  scrollToAnchor(anchor: string) {
+    this.scroller.scrollToAnchor(anchor);
   }
 
   // tslint:disable-next-line:force-jsdoc-comments

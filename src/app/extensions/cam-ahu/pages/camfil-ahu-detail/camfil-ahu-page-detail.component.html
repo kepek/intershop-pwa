@@ -27,7 +27,10 @@
       <h1 class="ahu-detail__title">
         <span itemprop="name">{{ selectedAhuUnit.ahu.airHandlingUnitName }}</span>
       </h1>
-      <a routerLink="/air-handling-unit-guide">
+      <a
+        [routerLink]="['/air-handling-unit-guide']"
+        [queryParams]="{ manufacturerId: selectedAhuUnit.ahu.ahuManufacturerId }"
+      >
         {{ 'camfil.ahu.detail.select.unit' | translate }}
       </a>
     </div>
@@ -88,6 +91,7 @@
   <!-- Cart -->
   <ng-template #selectedAhuUnitCart>
     <camfil-ahu-cart
+      [unit]="selectedAhuUnit"
       [basket]="selectedAhuUnitBasket$ | async"
       [summary]="selectedAhuUnitBasketSummary$ | async"
       [isConfirmed]="isAhuUnitValid$(selectedAhuUnit) | async"

@@ -54,6 +54,7 @@ export interface UnitAHUAirSlot {
   // Internal Props
   ahuSlotTypeId?: number;
   ahuSlotTypeName?: string;
+  ahuSlotTypeSlug?: string;
   ahuSlotDimensions?: string;
 }
 

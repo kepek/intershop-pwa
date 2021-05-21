@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import * as camelcaseKeys from 'camelcase-keys';
+import { isEmpty, kebabCase } from 'lodash-es';
 
 import { UnitData } from './unit.interface';
 import { Unit } from './unit.model';
-import { isEmpty } from 'lodash-es';
 
 @Injectable({ providedIn: 'root' })
 export class UnitMapper {
@@ -87,6 +87,7 @@ export class UnitMapper {
 
         airSlot.ahuSlotTypeId = ahuSlotTypeId;
         airSlot.ahuSlotTypeName = `${airSlot?.ahuSlotType} Slot ${ahuSlotTypeId}`;
+        airSlot.ahuSlotTypeSlug = kebabCase(airSlot.ahuSlotTypeName);
         airSlot.ahuSlotDimensions = [airSlot?.ahuSlotWidthMm, airSlot?.ahuSlotLengthMm, airSlot?.ahuSlotDepthMm].join(
           'x'
         );

@@ -1,8 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
-import { Router } from '@angular/router';
 
-import { CamAhuFacade } from '../../facades/cam-ahu.facade';
 import { UnitHelper } from '../../models/unit/unit.helper';
 import { CamAhuAbstractComponent } from '../camfil-ahu-abstract/camfil-ahu-abstract-page.component';
 
@@ -14,10 +11,6 @@ import { CamAhuAbstractComponent } from '../camfil-ahu-abstract/camfil-ahu-abstr
 })
 // tslint:disable-next-line:component-creation-test
 export class CamfilAHUPageComponent extends CamAhuAbstractComponent {
-  constructor(protected router: Router, protected ahuFacade: CamAhuFacade, protected fb: FormBuilder) {
-    super(router, fb, ahuFacade);
-  }
-
   selectAhuUnit(event) {
     const unitId = event.value;
     const slots = undefined;

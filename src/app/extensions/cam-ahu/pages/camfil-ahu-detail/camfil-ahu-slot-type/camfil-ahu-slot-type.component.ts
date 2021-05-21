@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
 import { UnitAHUAirSlotType } from '../../../models/unit/unit.model';
+import { CamAhuAbstractComponent } from '../../camfil-ahu-abstract/camfil-ahu-abstract-page.component';
 
 @Component({
   selector: 'camfil-ahu-slot-type',
@@ -9,7 +10,7 @@ import { UnitAHUAirSlotType } from '../../../models/unit/unit.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 // tslint:disable-next-line:component-creation-test
-export class CamfilAhuSlotTypeComponent {
+export class CamfilAhuSlotTypeComponent extends CamAhuAbstractComponent {
   /**
    * The product with the image information.
    */

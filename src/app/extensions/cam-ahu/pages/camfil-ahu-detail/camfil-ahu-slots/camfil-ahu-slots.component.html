@@ -1,6 +1,10 @@
-<mat-card class="slots mt-4">
+<mat-card class="slots mt-4" id="slots">
   <ng-container *ngFor="let ahuAirSlot of ahuUnit?.ahuAirSlots">
-    <div class="slot" [class.slot--valid]="isAhuUnitSlotValid$(ahuUnit, ahuAirSlot.ahuSlotId) | async">
+    <div
+      class="slot"
+      [class.slot--valid]="isAhuUnitSlotValid$(ahuUnit, ahuAirSlot.ahuSlotId) | async"
+      [id]="ahuAirSlot.ahuSlotTypeSlug"
+    >
       <div class="slot__heading d-flex align-items-baseline">
         <div class="d-flex align-items-center">
           <ng-container *ngIf="isAhuUnitSlotValid$(ahuUnit, ahuAirSlot.ahuSlotId) | async; else invalidSlotIcon">
@@ -26,14 +30,14 @@
             </div>
           </div>
         </div>
-        <a href="" class="d-block text-right">
+        <a class="d-block text-right">
           <mat-icon svgIcon="search" class="size-15"></mat-icon>
           {{ 'camfil.ahu.slot.how_to_choose' | translate: { '0': ahuAirSlot.ahuSlotType } }}
         </a>
       </div>
       <div class="slot__products">
         <ng-container *ngFor="let item of ahuAirSlot.items">
-          <ng-container *ngIf="getAhuUnitSlotItemProduct$(ahuAirSlot, item.sku) | async as product">
+          <ng-container *ngIf="getAhuUnitSlotItemProduct$(ahuUnit, ahuAirSlot.ahuSlotId, item.sku) | async as product">
             <camfil-product-item-simple
               *ngIf="!product.failed"
               class="mt-1 mb-1 slot-product"
@@ -46,7 +50,11 @@
             </camfil-product-item-simple>
             <ng-template #actionTemplate let-quantity="quantity">
               <button
-                [disabled]="!quantity"
+                [disabled]="
+                  !quantity ||
+                  ((isAhuUnitSlotValid$(ahuUnit, ahuAirSlot.ahuSlotId) | async) &&
+                    !(isAhuUnitSlotItemAdded$(ahuUnit, ahuAirSlot.ahuSlotId, item.sku) | async))
+                "
                 (click)="toggleAhuSlotItem(ahuAirSlot, item, quantity)"
                 mat-raised-button
                 class="slot-product__btn ml-2"
