@@ -1,4 +1,5 @@
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { ViewportScroller } from '@angular/common';
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
@@ -45,7 +46,6 @@ import { CamAhuAbstractComponent } from '../../../cam-ahu/pages/camfil-ahu-abstr
 
 import { DemoBottomSheetComponent } from './demo-bottom-sheet/demo-bottom-sheet.component';
 import { DemoDialogComponent } from './demo-dialog/demo-dialog.component';
-import { ViewportScroller } from '@angular/common';
 
 export interface PeriodicElement {
   name: string;

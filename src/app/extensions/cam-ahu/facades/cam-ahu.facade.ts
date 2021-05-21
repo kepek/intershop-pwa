@@ -3,13 +3,13 @@ import { Store, select } from '@ngrx/store';
 import { Observable, combineLatest } from 'rxjs';
 import { defaultIfEmpty, first, map, switchMap, take, withLatestFrom } from 'rxjs/operators';
 
+import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { HttpError } from 'ish-core/models/http-error/http-error.model';
+import { ProductCompletenessLevel } from 'ish-core/models/product/product.helper';
 import { getCurrentLocale } from 'ish-core/store/core/configuration';
 import { selectQueryParams } from 'ish-core/store/core/router';
 import { getProduct, getProducts } from 'ish-core/store/shopping/products';
 
-import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
-import { ProductCompletenessLevel } from 'ish-core/models/product/product.helper';
 import { Manufacturer } from '../models/manufacturer/manufacturer.model';
 import { UnitHelper } from '../models/unit/unit.helper';
 import {

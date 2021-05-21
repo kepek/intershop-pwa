@@ -3,8 +3,8 @@ import { Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
 import { ProductView } from 'ish-core/models/product-view/product-view.model';
-
 import { whenTruthy } from 'ish-core/utils/operators';
+
 import { UnitAHUAirSlotItemParams } from '../../models/unit/unit.model';
 import { CamAhuAbstractComponent } from '../camfil-ahu-abstract/camfil-ahu-abstract-page.component';
 

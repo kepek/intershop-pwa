@@ -5,7 +5,12 @@
     </mat-card-title>
     <dl clas="ahu-cart__products">
       <ng-container *ngFor="let ahuAirSlot of basket">
-        <dt class="ahu-cart__slot">{{ ahuAirSlot.ahuSlotTypeName }}</dt>
+        <dt class="ahu-cart__slot">
+          <ng-container *ngIf="isAhuUnitSlotValid$(unit, ahuAirSlot.ahuSlotId) | async">
+            <mat-icon svgIcon="checkmark" class="slot__icon mr-2"></mat-icon>
+          </ng-container>
+          {{ ahuAirSlot.ahuSlotTypeName }}
+        </dt>
         <dd>
           <ng-container *ngIf="ahuAirSlot.items.length; else noItems">
             <div *ngFor="let item of ahuAirSlot.items">

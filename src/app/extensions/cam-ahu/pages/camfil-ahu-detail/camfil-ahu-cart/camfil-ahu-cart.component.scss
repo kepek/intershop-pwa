@@ -11,6 +11,10 @@
   &__header {
     flex-wrap: wrap;
     padding: 16px 16px 0;
+
+    &::ng-deep .mat-card-header-text {
+      margin: 0;
+    }
   }
 
   &__title {
@@ -22,6 +26,7 @@
   }
 
   &__slot {
+    display: flex;
     font-weight: 400;
     color: $color-secondary;
   }

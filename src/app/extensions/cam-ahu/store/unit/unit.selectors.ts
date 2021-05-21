@@ -3,7 +3,6 @@ import { isEqual } from 'lodash-es';
 
 import { BreadcrumbItem } from 'ish-core/models/breadcrumb-item/breadcrumb-item.interface';
 
-import { UnitHelper } from '../../models/unit/unit.helper';
 import { Unit } from '../../models/unit/unit.model';
 import { getCamAhuState } from '../cam-ahu-store';
 
@@ -41,17 +40,11 @@ export const getBreadcrumbForSelectedAhuUnit = createSelectorFactory(projector =
     return;
   }
 
-  const qs = UnitHelper.stringifyToQs({
-    [UnitHelper.MANUFACTURER_ID_QUERY_PARAM_NAME]: unit?.ahu?.ahuManufacturerId,
-    [UnitHelper.UNIT_ID_QUERY_PARAM_NAME]: unit?.ahu?.id,
-  });
-
   const ahuLink = '/air-handling-unit-guide';
-  const ahuDetailLink = `${ahuLink}/detail${qs ? '?' + qs : ''}`;
 
   return [
     { key: 'camfil.ahu.link', link: ahuLink },
-    { text: unit?.ahu?.ahuManufacturerName, link: ahuDetailLink },
-    { text: unit?.ahu?.airHandlingUnitName, link: ahuDetailLink },
+    { text: unit?.ahu?.ahuManufacturerName, link: ahuLink },
+    { text: unit?.ahu?.airHandlingUnitName, link: ahuLink },
   ] as BreadcrumbItem[];
 });
