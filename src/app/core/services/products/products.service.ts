@@ -301,14 +301,14 @@ export class ProductsService {
     );
   }
 
-  loadCustomerPrices(customerId: string, skus: string[]): Observable<Product[]> {
+  loadCustomerPrices(customerId: string, skus: string[], currency = 'SEK'): Observable<Product[]> {
     if (!customerId) {
       return throwError('loadCustomerPrices() called without a customerId');
     }
     if (!skus.length) {
       return throwError('loadCustomerPrices() skus is empty');
     }
-    const params = new HttpParams().set('skus', skus.join(','));
+    const params = new HttpParams().set('skus', skus.join(',')).set('currency', currency);
     const options: AvailableOptions = { params };
     return this.apiService.get(`camfilcustomers/${customerId}/prices`, options);
   }

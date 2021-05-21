@@ -2,9 +2,10 @@ import { EntityState, createEntityAdapter } from '@ngrx/entity';
 import { createReducer, on } from '@ngrx/store';
 
 import { AllProductTypes, Product } from 'ish-core/models/product/product.model';
-import { loginUserSuccess, logoutUser } from 'ish-core/store/customer/user';
+import { logoutUser } from 'ish-core/store/customer/user';
 
 import {
+  getCustomerPricesForProductsSuccess,
   loadCustomerPricesFail,
   loadCustomerPricesSuccess,
   loadProductBundlesSuccess,
@@ -116,13 +117,18 @@ export const productsReducer = createReducer(
     return {
       ...state,
       entities,
+      customerPrices: {},
     };
   }),
-  on(loginUserSuccess, (state: ProductsState) => {
-    const entities = Object.values(state.entities).reduce(
-      (acc, prod) => ({ ...acc, [prod.sku]: { ...prod, completenessLevel: 1 } }),
-      {}
-    );
+  on(getCustomerPricesForProductsSuccess, (state: ProductsState, action) => {
+    const { products } = action.payload;
+    const entities = products.reduce((acc, val) => {
+      const { currency, value } = val.salePrice;
+      const salePrice = { type: 'Money', currency, value };
+      const product = state.entities[val.sku];
+      return { ...acc, [val.sku]: { ...product, salePrice } };
+    }, {});
+
     return {
       ...state,
       entities,
