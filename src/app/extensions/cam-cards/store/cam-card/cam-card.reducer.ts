@@ -360,7 +360,14 @@ export const camCardReducer = createReducer(
 
     const importedCamCard = camCardData.elements[0];
 
-    return camCardAdapter.upsertOne(importedCamCard, {
+    const itemsCount = importedCamCard.camCardItems?.length;
+
+    const camCardObj = {
+      ...importedCamCard,
+      itemsCount,
+    };
+
+    return camCardAdapter.upsertOne(camCardObj, {
       ...state,
       loading: false,
     });
