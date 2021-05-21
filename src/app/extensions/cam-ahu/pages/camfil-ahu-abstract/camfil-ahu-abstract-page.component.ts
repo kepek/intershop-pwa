@@ -1,9 +1,9 @@
 import { ViewportScroller } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivationStart, NavigationEnd, NavigationStart, Router } from '@angular/router';
 import { Observable, Subject, combineLatest } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { debounce, filter, map, takeUntil } from 'rxjs/operators';
 
 import { HttpError } from 'ish-core/models/http-error/http-error.model';
 
@@ -97,6 +97,22 @@ export abstract class CamAhuAbstractComponent implements OnInit, OnDestroy {
     this.selectedAhuUnit$.pipe(takeUntil(this.destroy$)).subscribe(unit => {
       this.ahuForm.controls.unit.setValue(unit?.ahu?.id);
     });
+
+    this.router.events
+      .pipe(
+        // start when navigated
+        filter(event => event instanceof NavigationStart),
+        // remember current scroll position
+        map(() => this.scroller.getScrollPosition()),
+        // wait till navigation end
+        debounce(() => this.router.events.pipe(filter(event => event instanceof NavigationEnd))),
+        // take until routing away
+        takeUntil(this.router.events.pipe(filter(event => event instanceof ActivationStart)))
+      )
+      // tslint:disable-next-line: rxjs-prefer-angular-takeuntil
+      .subscribe(position => {
+        this.scroller.scrollToPosition(position);
+      });
 
     combineLatest([this.selectedAhuManufacturer$, this.selectedAhuUnit$])
       .pipe(takeUntil(this.destroy$))
