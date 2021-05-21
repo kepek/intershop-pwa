@@ -69,11 +69,6 @@
         [value]="product | camfilProductAttributeVal: 'Pressuredrop'"
       ></camfil-product-attribute>
       <camfil-product-attribute
-        *ngIf="isNotZero(isoClass)"
-        name="camfil.product.isoClass.label"
-        [value]="product | camfilProductAttributeVal: 'IsoClass'"
-      ></camfil-product-attribute>
-      <camfil-product-attribute
         *ngIf="isNotZero(filterbags)"
         name="camfil.product.bags.label"
         [value]="product | camfilProductAttributeVal: 'Filterbags'"
