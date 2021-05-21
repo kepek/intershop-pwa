@@ -51,5 +51,6 @@ const camfilProductPageRoutes: Routes = [
     CamfilProductImagesComponent,
     CamfilProductPageComponent,
   ],
+  exports: [CamfilProductDetailComponent],
 })
 export class CamfilProductPageModule {}

@@ -6,25 +6,25 @@ import { CoreStoreModule } from 'ish-core/store/core/core-store.module';
 
 import { UnitAhuLongDescription } from '../models/unit/unit.model';
 
-import { UnitAhuLongDescriptionPipe } from './unit-ahu-long-description.pipe';
+import { AhuTranslatePipe } from './ahu-translate.pipe';
 
-describe('Unit Ahu Long Description Pipe', () => {
-  let unitAhuLongDescriptionPipe: UnitAhuLongDescriptionPipe;
+describe('Ahu Translate Pipe', () => {
+  let ahuTranslatePipe: AhuTranslatePipe;
   let translateService: TranslateService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [CoreStoreModule.forTesting(), RouterTestingModule, TranslateModule.forRoot()],
-      providers: [UnitAhuLongDescriptionPipe],
+      providers: [AhuTranslatePipe],
     });
-    unitAhuLongDescriptionPipe = TestBed.inject(UnitAhuLongDescriptionPipe);
+    ahuTranslatePipe = TestBed.inject(AhuTranslatePipe);
     translateService = TestBed.inject(TranslateService);
     translateService.setDefaultLang('en');
     translateService.use('en');
   });
 
   it('should be created', () => {
-    expect(unitAhuLongDescriptionPipe).toBeTruthy();
+    expect(ahuTranslatePipe).toBeTruthy();
   });
 
   it('should transform UnitAhuLongDescription to English', () => {
@@ -38,6 +38,6 @@ describe('Unit Ahu Long Description Pipe', () => {
         text: 'eQ MASTER® 2000 X Swedish',
       },
     ];
-    expect(unitAhuLongDescriptionPipe.transform(value)).toEqual('eQ MASTER® 2000 X English');
+    expect(ahuTranslatePipe.transform(value)).toEqual('eQ MASTER® 2000 X English');
   });
 });

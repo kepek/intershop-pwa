@@ -14,6 +14,7 @@
     [isMobileView]="isMobileView"
     [isLoggedIn]="isLoggedIn$ | async"
     [hideAttributeName]="hideAttributeName"
+    [actionTemplate]="actionTemplate"
   ></camfil-product-item-simple>
 
   <camfil-product-item-detailed
@@ -30,6 +31,7 @@
     (selectVariation)="replaceVariation($event)"
     [isLoggedIn]="isLoggedIn$ | async"
     [hideAttributeName]="hideAttributeName"
+    [actionTemplate]="actionTemplate"
   ></camfil-product-item-detailed>
 </ng-container>
 

@@ -1,21 +1,51 @@
 <mat-card class="ahu-cart">
   <mat-card-header class="ahu-cart__header">
-    <mat-card-title class="ahu-cart__title">Scroll down to select your air filter</mat-card-title>
+    <mat-card-title class="ahu-cart__title">
+      {{ 'camfil.ahu.cart.scroll_down_to_select_air_filter' | translate }}
+    </mat-card-title>
     <dl clas="ahu-cart__products">
-      <ng-container *ngFor="let s of unitAHUAirSlots">
-        <dt class="ahu-cart__slot">Supply Slot 1</dt>
-        <dd><a href="">Select air filter</a></dd>
+      <ng-container *ngFor="let ahuAirSlot of basket">
+        <dt class="ahu-cart__slot">
+          <ng-container *ngIf="isAhuUnitSlotValid$(unit, ahuAirSlot.ahuSlotId) | async">
+            <mat-icon svgIcon="checkmark" class="slot__icon mr-2"></mat-icon>
+          </ng-container>
+          {{ ahuAirSlot.ahuSlotTypeName }}
+        </dt>
+        <dd>
+          <ng-container *ngIf="ahuAirSlot.items.length; else noItems">
+            <div *ngFor="let item of ahuAirSlot.items">
+              <ng-container *ngIf="getAhuUnitSlotItemProduct$(unit, ahuAirSlot.ahuSlotId, item.sku) | async as product">
+                <small>{{ item.quantity }} x {{ product.name }}</small>
+              </ng-container>
+            </div>
+          </ng-container>
+        </dd>
+        <ng-template #noItems>
+          <a (click)="scrollToAnchor(ahuAirSlot.ahuSlotTypeSlug)">
+            {{ 'camfil.ahu.cart.select_air_filter' | translate }}
+          </a>
+        </ng-template>
       </ng-container>
     </dl>
   </mat-card-header>
   <mat-card-content class="ahu-cart__content text-center">
-    <span class="ahu-cart__total">Total cost</span>
-    <span class="ahu-cart__total-value">–</span>
-    <button mat-raised-button class="ahu-cart__btn secondary-button mt-2 mb-2">
-      <mat-icon svgIcon="plus"></mat-icon>Add selected products to CamCard
+    <span class="ahu-cart__total">
+      {{ 'camfil.ahu.cart.summary.total_cost.label' | translate }}
+    </span>
+    <span class="ahu-cart__total-value">{{ summary.total | ishPrice }}</span>
+    <button mat-raised-button class="ahu-cart__btn secondary-button mt-2 mb-2" [disabled]="!isConfirmed">
+      <mat-icon svgIcon="plus"></mat-icon>
+      {{ 'camfil.ahu.cart.summary.button.add_selected_to_camcard.label' | translate }}
     </button>
-    <button mat-raised-button class="ahu-cart__btn" color="primary">
-      <mat-icon svgIcon="cart" class="color-light"></mat-icon>Add selected products to cart
+    <button
+      mat-raised-button
+      class="ahu-cart__btn"
+      color="primary"
+      [disabled]="!isConfirmed"
+      (click)="addSelectedAhuUnitSlotItemProductsToBasket()"
+    >
+      <mat-icon svgIcon="cart" class="color-light"></mat-icon>
+      {{ 'camfil.ahu.cart.summary.button.add_selected_to_cart.label' | translate }}
     </button>
   </mat-card-content>
 </mat-card>

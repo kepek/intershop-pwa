@@ -1,31 +1,46 @@
 import { Injectable } from '@angular/core';
+import { Params, Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { routerNavigatedAction } from '@ngrx/router-store';
 import { Store, select } from '@ngrx/store';
-import { map, switchMap } from 'rxjs/operators';
+import { filter, map, mergeMap, switchMap, switchMapTo, tap, withLatestFrom } from 'rxjs/operators';
 
+import { ProductCompletenessLevel } from 'ish-core/models/product/product.helper';
 import { ofUrl, selectQueryParams } from 'ish-core/store/core/router';
-import { mapErrorToAction, mapToPayloadProperty, whenTruthy } from 'ish-core/utils/operators';
+import { setBreadcrumbData } from 'ish-core/store/core/viewconf';
+import { loadProductFail, loadProductIfNotLoaded, loadProductVariationsFail } from 'ish-core/store/shopping/products';
+import { mapErrorToAction, mapToPayload, mapToPayloadProperty, whenTruthy } from 'ish-core/utils/operators';
 
+import { UnitHelper } from '../../models/unit/unit.helper';
+import { UnitAHUAirSlotItem, UnitAHUAirSlotItemQueryParam } from '../../models/unit/unit.model';
 import { AhuService } from '../../services/ahu/ahu.service';
-import { selectAhuManufacturer } from '../manufacturer';
+import { getSelectedAhuManufacturerId } from '../manufacturer';
 
 import {
+  addAhuSlotItemToList,
   loadAhuUnit,
   loadAhuUnitFail,
   loadAhuUnitSuccess,
   loadAhuUnits,
   loadAhuUnitsFail,
   loadAhuUnitsSuccess,
+  removeAhuSlotItemFromList,
   selectAhuUnit,
 } from './unit.actions';
+import { getBreadcrumbForSelectedAhuUnit, getSelectedAhuUnitId } from './unit.selectors';
 
 @Injectable()
 export class UnitEffects {
-  constructor(private actions$: Actions, private store: Store, private ahuService: AhuService) {}
+  constructor(
+    private actions$: Actions,
+    private ahuService: AhuService,
+    private router: Router,
+    private store: Store
+  ) {}
 
   loadAhuUnits$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(loadAhuUnits, selectAhuManufacturer),
+      ofType(loadAhuUnits),
       mapToPayloadProperty('manufacturerId'),
       whenTruthy(),
       switchMap(manufacturerId =>
@@ -51,11 +66,124 @@ export class UnitEffects {
     )
   );
 
-  determineSelectedUnitId$ = createEffect(() =>
-    this.store.pipe(
-      ofUrl(/^\/(demo|air-handling-unit-guide)/),
-      select(selectQueryParams),
-      map(({ unitId }) => selectAhuUnit({ unitId }))
+  loadProductsForSelectedAhuUnit$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loadAhuUnitSuccess),
+      mapToPayloadProperty('unit'),
+      switchMap(unit => {
+        const lineItems: UnitAHUAirSlotItem[] = [].concat(...unit?.ahuAirSlots.map(ahuSlot => ahuSlot?.items));
+        return [...lineItems.map(({ sku }) => loadProductIfNotLoaded({ sku, level: ProductCompletenessLevel.List }))];
+      })
     )
   );
+
+  selectAhuUnit$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(selectAhuUnit),
+      mapToPayloadProperty('unitId'),
+      withLatestFrom(this.store.pipe(select(getSelectedAhuManufacturerId))),
+      filter(([unitId, selectedAhuManufacturerId]) => unitId !== selectedAhuManufacturerId),
+      map(([unitId]) => unitId),
+      whenTruthy(),
+      map(unitId => loadAhuUnit({ unitId }))
+    )
+  );
+
+  determineSelectedUnitId$ = createEffect(() =>
+    this.store.pipe(
+      ofUrl(/^\/(demo|ahu|air-handling-unit-guide)/),
+      select(selectQueryParams),
+      withLatestFrom(this.store.pipe(select(getSelectedAhuUnitId))),
+      filter(([params, selectedAhuUnitId]) => params?.unitId !== selectedAhuUnitId),
+      map(([params]) => selectAhuUnit({ unitId: params?.unitId }))
+    )
+  );
+
+  addAhuSlotItemToList$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(addAhuSlotItemToList),
+        mapToPayload(),
+        withLatestFrom(this.store.pipe(select(selectQueryParams))),
+        tap(([slotItem, queryParams]) => {
+          this.navigateTo(undefined, UnitHelper.addAhuSlotItemToList(queryParams, slotItem));
+        })
+      ),
+    { dispatch: false }
+  );
+
+  removeAhuSlotItemFromList$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(removeAhuSlotItemFromList),
+        mapToPayload(),
+        withLatestFrom(this.store.pipe(select(selectQueryParams))),
+        tap(([ahuSlotItemParams, queryParams]) => {
+          this.navigateTo(undefined, UnitHelper.removeAhuSlotItemFromList(queryParams, ahuSlotItemParams));
+        })
+      ),
+    { dispatch: false }
+  );
+
+  removeFromListWhenProductFail$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loadProductFail, loadProductVariationsFail),
+      mapToPayloadProperty('sku'),
+      withLatestFrom(this.store.pipe(select(selectQueryParams))),
+      mergeMap(([productSku, queryParams]) => {
+        const slots: UnitAHUAirSlotItemQueryParam = UnitHelper.parseQs(
+          queryParams?.[UnitHelper.SLOTS_QUERY_PARAM_NAME]
+        );
+        const manufacturerId = queryParams[UnitHelper.MANUFACTURER_ID_QUERY_PARAM_NAME];
+        const unitId = queryParams[UnitHelper.UNIT_ID_QUERY_PARAM_NAME];
+        const sku = String(productSku);
+        const removeActions = [];
+
+        for (const slotId in slots) {
+          if (slots.hasOwnProperty(slotId)) {
+            const canBeRemoved = Boolean(slots[slotId]?.filter(item => item === sku)?.length);
+            if (canBeRemoved) {
+              removeActions.push(
+                removeAhuSlotItemFromList({
+                  manufacturerId,
+                  unitId,
+                  slotId,
+                  sku,
+                })
+              );
+            }
+          }
+        }
+
+        return removeActions;
+      })
+    )
+  );
+
+  setBreadcrumbForSelectedAhuUnit$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(routerNavigatedAction),
+      switchMapTo(
+        this.store.pipe(
+          select(getBreadcrumbForSelectedAhuUnit),
+          whenTruthy(),
+          map(breadcrumbData => setBreadcrumbData({ breadcrumbData }))
+        )
+      )
+    )
+  );
+
+  private navigateTo(path: string, queryParams?: Params): void {
+    let currentRoute = this.router.routerState.root;
+
+    while (currentRoute.firstChild) {
+      currentRoute = currentRoute.firstChild;
+    }
+
+    this.router.navigate(path ? [path] : [], {
+      relativeTo: currentRoute,
+      queryParams,
+      queryParamsHandling: 'merge',
+    });
+  }
 }

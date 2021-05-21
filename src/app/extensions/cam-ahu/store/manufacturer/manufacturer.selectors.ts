@@ -19,7 +19,7 @@ export const getAhuManufacturerError = createSelector(getManufacturerState, stat
 
 export const getSelectedAhuManufacturerId = createSelector(getManufacturerState, state => state.selected);
 
-export const getSelectedAhuManufacturerDetails = createSelector(
+export const getSelectedAhuManufacturer = createSelector(
   selectEntities,
   getSelectedAhuManufacturerId,
   (entities, id): Manufacturer => id && entities[id]
@@ -29,3 +29,5 @@ export const getAhuManufacturerDetails = createSelector(
   selectEntities,
   (entities, props: { id: string }): Manufacturer => props.id && entities[props.id]
 );
+
+export const isManufacturerInitialized = createSelector(getManufacturerState, state => state.initialized);

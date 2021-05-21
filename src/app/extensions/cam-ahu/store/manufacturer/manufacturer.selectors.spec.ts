@@ -18,7 +18,7 @@ import {
   getAhuManufacturerError,
   getAhuManufacturerLoading,
   getAllAhuManufacturers,
-  getSelectedAhuManufacturerDetails,
+  getSelectedAhuManufacturer,
   getSelectedAhuManufacturerId,
 } from './manufacturer.selectors';
 
@@ -111,7 +111,7 @@ describe('Manufacturer Selectors', () => {
     });
 
     it('should return correct ahu manufacturers details for given id', () => {
-      expect(getSelectedAhuManufacturerDetails(store$.state)).toEqual(manufacturers[1]);
+      expect(getSelectedAhuManufacturer(store$.state)).toEqual(manufacturers[1]);
     });
   });
 

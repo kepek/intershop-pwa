@@ -8,6 +8,7 @@ import {
   OnInit,
   Output,
   SimpleChanges,
+  TemplateRef,
 } from '@angular/core';
 import { Observable, ReplaySubject, Subject } from 'rxjs';
 import { filter, startWith, take, takeUntil } from 'rxjs/operators';
@@ -49,6 +50,7 @@ export const DEFAULT_CONFIGURATION: Readonly<ProductItemContainerConfiguration> 
   displayAddToCamCard: true,
   displayAddToCompare: false,
   displayAddToQuote: true,
+  displayActionTemplate: true,
   displayType: 'simple',
 };
 
@@ -66,6 +68,19 @@ export const DEFAULT_CONFIGURATION: Readonly<ProductItemContainerConfiguration> 
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CamfilProductItemComponent implements OnInit, OnChanges, OnDestroy {
+  constructor(
+    private shoppingFacade: ShoppingFacade,
+    private accountFacade: AccountFacade,
+    private appFacade: AppFacade
+  ) {}
+
+  get isSimpleView() {
+    return !!this.configuration && this.configuration.displayType === 'simple';
+  }
+
+  get isDetailedView() {
+    return !!this.configuration && this.configuration.displayType === 'detailed';
+  }
   private static REQUIRED_COMPLETENESS_LEVEL = ProductCompletenessLevel.List;
   /**
    * The Product SKU to render a product item for.
@@ -85,7 +100,15 @@ export class CamfilProductItemComponent implements OnInit, OnChanges, OnDestroy 
    * configuration
    */
   @Input() configuration: ProductItemContainerConfiguration = DEFAULT_CONFIGURATION;
+  /**
+   * Device Type
+   */
   @Input() deviceType: DeviceType;
+  /**
+   * Optional Action Template
+   */
+  @Input() actionTemplate?: TemplateRef<unknown>;
+
   isMobileView = false;
   product$: Observable<ProductView>;
   loading$: Observable<boolean>;
@@ -94,14 +117,9 @@ export class CamfilProductItemComponent implements OnInit, OnChanges, OnDestroy 
   isLoggedIn$: Observable<boolean>;
   hideAttributeName = false;
   currentLocale$: Observable<Locale>;
+
   private sku$ = new ReplaySubject<string>(1);
   private destroy$ = new Subject();
-
-  constructor(
-    private shoppingFacade: ShoppingFacade,
-    private accountFacade: AccountFacade,
-    private appFacade: AppFacade
-  ) {}
 
   ngOnDestroy() {
     this.destroy$.next();
@@ -170,13 +188,5 @@ export class CamfilProductItemComponent implements OnInit, OnChanges, OnDestroy 
         );
         this.productSkuChange.emit(sku);
       });
-  }
-
-  get isSimpleView() {
-    return !!this.configuration && this.configuration.displayType === 'simple';
-  }
-
-  get isDetailedView() {
-    return !!this.configuration && this.configuration.displayType === 'detailed';
   }
 }

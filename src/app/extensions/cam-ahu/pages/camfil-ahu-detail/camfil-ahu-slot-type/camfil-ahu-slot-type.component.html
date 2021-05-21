@@ -1,0 +1,19 @@
+<mat-card class="filter">
+  <mat-card-header class="d-flex align-items-center filter__header">
+    <mat-card-title>{{ unitAHUAirSlotType.name }}</mat-card-title>
+    <mat-icon svgIcon="question-mark" [matTooltip]="unitAHUAirSlotType.type"></mat-icon>
+  </mat-card-header>
+  <mat-card-content class="filter__content">
+    <dl>
+      <dt class="filter__attr">{{ 'camfil.ahu.detail.filter-slots' | translate }}</dt>
+      <dd class="filter__attr-value">{{ unitAHUAirSlotType.count }}</dd>
+      <dt class="filter__attr">{{ 'camfil.product.dimensions.label' | translate }}</dt>
+      <dd *ngIf="unitAHUAirSlotType.dimensions.length">
+        <ng-container *ngFor="let dimension of unitAHUAirSlotType.dimensions">
+          <span class="filter__attr-value">{{ dimension }}</span>
+        </ng-container>
+      </dd>
+    </dl>
+    <a (click)="scrollToAnchor('slots')">{{ 'camfil.ahu.detail.select.filters' | translate }}</a>
+  </mat-card-content>
+</mat-card>

@@ -1,4 +1,13 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  TemplateRef,
+} from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
@@ -33,6 +42,7 @@ export interface ProductItemBaseComponentConfiguration {
   displayAddToCamCard: boolean;
   displayAddToCompare: boolean;
   displayAddToQuote: boolean;
+  displayActionTemplate: boolean;
 }
 
 @Component({
@@ -55,9 +65,9 @@ export class CamfilProductItemBaseComponent implements OnInit, OnDestroy {
   @Input() isMobileView: boolean;
   @Input() isLoggedIn: boolean;
   @Input() hideAttributeName?: boolean;
+  @Input() actionTemplate?: TemplateRef<unknown>;
   isMasterProduct = ProductHelper.isMasterProduct;
   updatedQuantity: number;
-
   productItemForm: FormGroup;
 
   readonly quantityControlName = 'quantity';

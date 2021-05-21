@@ -17,7 +17,7 @@
     bottom: 0;
     left: 0;
     max-width: 550px;
-    max-height: 355px;
+    max-height: 375px;
     padding: 20px;
     margin: auto;
   }
@@ -48,17 +48,20 @@
   &__form {
     max-width: 370px;
     padding: 15px;
-    margin: 0 auto;
+    margin-right: auto;
+    margin-bottom: $space-default;
+    margin-left: auto;
     background-color: rgba($camfil-color-primary, 0.1);
   }
 
   &__field {
     width: 100%;
     color: rgba($camfil-color-dark, 0.74);
-    background-color: $camfil-color-light;
+    background-color: rgba(255, 255, 255, 0.75);
 
-    .mat-form-field-appearance-fill .mat-form-field-flex {
-      background: none;
+    &::ng-deep .mat-form-field-appearance-fill .mat-form-field-subscript-wrapper,
+    &::ng-deep .mat-form-field-appearance-fill .mat-form-field-flex {
+      background-color: transparent;
     }
   }
 }

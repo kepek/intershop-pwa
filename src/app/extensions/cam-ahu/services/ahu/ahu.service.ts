@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable, OperatorFunction, throwError } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, switchMap, take } from 'rxjs/operators';
+
+import { AppFacade } from 'ish-core/facades/app.facade';
 
 import { ApiService as IccApiService } from '../../../cam-icc/services/api/api.service';
 import { ManufacturerData } from '../../models/manufacturer/manufacturer.interface';
@@ -9,8 +11,6 @@ import { Manufacturer } from '../../models/manufacturer/manufacturer.model';
 import { UnitData } from '../../models/unit/unit.interface';
 import { UnitMapper } from '../../models/unit/unit.mapper';
 import { Unit } from '../../models/unit/unit.model';
-import { manufacturers } from '../../store/manufacturer/manufacturer.mock';
-import { units } from '../../store/unit/unit.mock';
 
 export function unpackHeap<T>(): OperatorFunction<[], T[]> {
   return map(data => (!!data && !!data.length ? data : []));
@@ -18,48 +18,52 @@ export function unpackHeap<T>(): OperatorFunction<[], T[]> {
 
 @Injectable({ providedIn: 'root' })
 export class AhuService {
-  constructor(private iccApiService: IccApiService) {}
+  constructor(private iccApiService: IccApiService, private appFacade: AppFacade) {}
+
+  market$ = this.appFacade.getCountryByChannel$.pipe(take(1));
 
   /**
-   * List manufacturers for different markets.
-   *
-   * @param market              Specify market or get all results matching the query
+   * List manufacturers for a current channel/market.
    */
-  getManufacturers(market?: string): Observable<Manufacturer[]> {
-    const requestBody = { market };
+  getManufacturers(): Observable<Manufacturer[]> {
+    return this.appFacade.getCountryByChannel$.pipe(
+      take(1),
+      switchMap(countryCode => {
+        const requestBody = { market: countryCode };
 
-    return this.iccApiService.post<ManufacturerData[]>('ahu/manufacturer', requestBody).pipe(
-      unpackHeap<ManufacturerData>(),
-      map(data => {
-        if (data && data.length) {
-          return ManufacturerMapper.fromListData(data);
-        }
-
-        // TODO (extMlk): Remove when ICC/AHU Team will fix the API.
-        console.warn('[AHU] Mocking response in AhuService.getManufacturers().');
-
-        return manufacturers;
+        return this.iccApiService.post<ManufacturerData[]>('ahu/manufacturer', requestBody).pipe(
+          unpackHeap<ManufacturerData>(),
+          map(data => {
+            if (data && data.length) {
+              return ManufacturerMapper.fromListData(data);
+            }
+          })
+        );
       })
     );
   }
 
-  getManufacturer(id: string, market?: string): Observable<Manufacturer> {
-    const requestBody = { id, market };
+  /**
+   * Get Manufacturer by ID for a current channel/market.
+   * @param id
+   */
+  getManufacturer(id: string): Observable<Manufacturer> {
+    return this.appFacade.getCountryByChannel$.pipe(
+      take(1),
+      switchMap(countryCode => {
+        const requestBody = { id, market: countryCode };
 
-    return this.iccApiService.post<ManufacturerData>('ahu/manufacturer', requestBody).pipe(
-      map(data => {
-        if (Array.isArray(data)) {
-          return ManufacturerMapper.fromListData(data).find(m => m.id === id);
-        }
+        return this.iccApiService.post<ManufacturerData>('ahu/manufacturer', requestBody).pipe(
+          map(data => {
+            if (Array.isArray(data)) {
+              return ManufacturerMapper.fromListData(data).find(m => m.id === id);
+            }
 
-        if (data) {
-          return ManufacturerMapper.fromData(data);
-        }
-
-        // TODO (extMlk): Remove when ICC/AHU Team will fix the API.
-        console.warn('[AHU] Mocking response in AhuService.getManufacturer().');
-
-        return manufacturers[0];
+            if (data) {
+              return ManufacturerMapper.fromData(data);
+            }
+          })
+        );
       })
     );
   }
@@ -67,29 +71,28 @@ export class AhuService {
   /**
    * Get air handling units.
    * @param manufacturerId
-   * @param market
    */
-  getUnits(manufacturerId: string, market?: string): Observable<Unit[]> {
+  getUnits(manufacturerId: string): Observable<Unit[]> {
     if (!manufacturerId) {
       return throwError('getUnits() called without manufacturerId');
     }
 
-    const requestBody = {
-      ManufacturerId: manufacturerId,
-      Market: market,
-    };
+    return this.appFacade.getCountryByChannel$.pipe(
+      take(1),
+      switchMap(countryCode => {
+        const requestBody = {
+          ManufacturerId: manufacturerId,
+          Market: countryCode,
+        };
 
-    return this.iccApiService.post<UnitData[]>('ahu/unit', requestBody).pipe(
-      unpackHeap<UnitData>(),
-      map(data => {
-        if (data && data.length) {
-          return UnitMapper.fromListData(data);
-        }
-
-        // TODO (extMlk): Remove when ICC/AHU Team will fix the API.
-        console.warn('[AHU] Mocking response in AhuService.getUnits().');
-
-        return units;
+        return this.iccApiService.post<UnitData[]>('ahu/unit', requestBody).pipe(
+          unpackHeap<UnitData>(),
+          map(data => {
+            if (data && data.length) {
+              return UnitMapper.fromListData(data);
+            }
+          })
+        );
       })
     );
   }
@@ -98,34 +101,33 @@ export class AhuService {
    * Get air handling units. If no unitId is provided, the AHUAirSlots will be supressed from the output.
    *
    * @param unitId              Id of the Air Handling Unit
-   * @param market              Market the AHU is released for
    * @param slotId              Id of the slot in the AHU
    */
-  getUnit(unitId: string, market?: string, slotId?: string): Observable<Unit> {
+  getUnit(unitId: string, slotId?: string): Observable<Unit> {
     if (!unitId) {
       return throwError('getUnits() called without unitId');
     }
 
-    const requestBody = {
-      UnitId: unitId,
-      Market: market,
-      SlotId: slotId,
-    };
+    return this.appFacade.getCountryByChannel$.pipe(
+      take(1),
+      switchMap(countryCode => {
+        const requestBody = {
+          UnitId: unitId,
+          SlotId: slotId,
+          Market: countryCode,
+        };
 
-    return this.iccApiService.post<UnitData>('ahu/unit', requestBody).pipe(
-      map(data => {
-        if (Array.isArray(data)) {
-          return UnitMapper.fromListData(data).find(u => u?.ahu?.id === unitId);
-        }
+        return this.iccApiService.post<UnitData>('ahu/unit', requestBody).pipe(
+          map(data => {
+            if (Array.isArray(data)) {
+              return UnitMapper.fromListData(data).find(u => u?.ahu?.id === unitId);
+            }
 
-        if (data) {
-          return UnitMapper.fromData(data);
-        }
-
-        // TODO (extMlk): Remove when ICC/AHU Team will fix the API.
-        console.warn('[AHU] Mocking response in AhuService.getUnit().');
-
-        return units[0];
+            if (data) {
+              return UnitMapper.fromData(data);
+            }
+          })
+        );
       })
     );
   }

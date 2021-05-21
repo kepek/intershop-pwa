@@ -1,13 +1,12 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
-import { Product } from 'ish-core/models/product/product.model';
+import { ProductView } from 'ish-core/models/product-view/product-view.model';
+import { whenTruthy } from 'ish-core/utils/operators';
 
-import { CamAhuFacade } from '../../facades/cam-ahu.facade';
-import { Unit, UnitAHUAirSlot } from '../../models/unit/unit.model';
-
-import { PRODUCT } from './database';
+import { UnitAHUAirSlotItemParams } from '../../models/unit/unit.model';
+import { CamAhuAbstractComponent } from '../camfil-ahu-abstract/camfil-ahu-abstract-page.component';
 
 @Component({
   selector: 'camfil-ahu-page-detail',
@@ -15,24 +14,30 @@ import { PRODUCT } from './database';
   templateUrl: './camfil-ahu-page-detail.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CamfilAHUPageDetailComponent implements OnInit, OnDestroy {
-  product: Product = PRODUCT;
-  unitAHUAirSlots: UnitAHUAirSlot[];
+// tslint:disable-next-line:component-creation-test
+export class CamfilAHUPageDetailComponent extends CamAhuAbstractComponent implements OnInit {
+  product$: Observable<ProductView>;
+
   isMoreDetailsOpen = false;
-  selectedAhuUnit$: Observable<Unit>;
-  selectedAhuUnit: Unit;
-  constructor(private ahuFacade: CamAhuFacade) {}
 
-  private destroy$ = new Subject<void>();
   ngOnInit() {
-    this.ahuFacade.selectedAhuUnit$?.pipe(takeUntil(this.destroy$)).subscribe(unit => {
-      this.unitAHUAirSlots = unit?.ahuAirSlots;
-    });
-  }
+    super.init();
 
-  ngOnDestroy() {
-    this.destroy$.next();
-    this.destroy$.complete();
+    // TODO (extMlk): We do NOT know what's the selected AHU Unit Product is... Need to be clarified;
+
+    this.product$ = this.ahuFacade.selectedAhuUnit$.pipe(
+      whenTruthy(),
+      switchMap(ahuUnit => {
+        const ahuSlotItemParams: UnitAHUAirSlotItemParams = {
+          manufacturerId: ahuUnit.ahu.ahuManufacturerId,
+          unitId: ahuUnit.id,
+          slotId: '1',
+          sku: '610959',
+        };
+
+        return this.ahuFacade.getAhuUnitSlotItemProduct$(ahuSlotItemParams);
+      })
+    );
   }
 
   toggleDetails() {

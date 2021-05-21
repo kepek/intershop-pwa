@@ -5,6 +5,15 @@
 }
 
 .slot {
+  &--valid {
+    &::ng-deep .slot-product mat-card {
+      cursor: not-allowed;
+      opacity: 0.5;
+    }
+    &::ng-deep .slot-product--added mat-card {
+      opacity: 1;
+    }
+  }
   &__heading {
     justify-content: space-between;
     padding: 10px 16px 5px;
@@ -22,52 +31,27 @@
   }
 
   &__products {
-    padding: 10px;
+    padding: 0 10px 10px 10px;
   }
 }
 
 .slot-product {
-  flex-wrap: wrap;
-  justify-content: space-between;
-  padding-top: 5px;
-  margin-bottom: 10px;
-
-  .product-image {
-    display: block;
-    width: 40px;
-    padding-bottom: 16px;
-    margin-right: 16px;
+  &::ng-deep mat-card {
+    margin-top: 10px;
   }
 
-  &__price {
-    display: block;
+  &::ng-deep .product-actions-container .product-form {
+    max-width: 290px;
   }
 
-  &__attributes {
-    padding-left: 0;
-    margin-bottom: 0;
-    list-style-type: none;
-
-    li {
-      display: inline-block;
-
-      &::after {
-        display: inline-block;
-        padding: 0 10px;
-        font-weight: 400;
-        color: $color-secondary;
-        content: '|';
-      }
-
-      &:last-child::after {
-        display: none;
-      }
-    }
-
-    camfil-product-inventory {
-      display: inherit;
-      height: 0;
-    }
+  &::ng-deep .addtocart-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: space-between;
+    justify-content: flex-end;
+    min-width: 168px;
+    padding: 0;
   }
 
   &__btn {

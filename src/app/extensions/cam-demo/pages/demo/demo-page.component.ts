@@ -1,4 +1,5 @@
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { ViewportScroller } from '@angular/common';
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
@@ -28,13 +29,12 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { completeIconSet } from 'camfil-icons';
-import { Observable, Subject } from 'rxjs';
+import { Observable } from 'rxjs';
 import { map, startWith, take, takeUntil, tap } from 'rxjs/operators';
 
 import { AppFacade } from 'ish-core/facades/app.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { CategoryView } from 'ish-core/models/category-view/category-view.model';
-import { HttpError } from 'ish-core/models/http-error/http-error.model';
 import { Locale } from 'ish-core/models/locale/locale.model';
 import { ProductView } from 'ish-core/models/product-view/product-view.model';
 import { ProductCompletenessLevel } from 'ish-core/models/product/product.helper';
@@ -42,7 +42,7 @@ import { whenTruthy } from 'ish-core/utils/operators';
 
 import { CamAhuFacade } from '../../../cam-ahu/facades/cam-ahu.facade';
 import { Manufacturer } from '../../../cam-ahu/models/manufacturer/manufacturer.model';
-import { Unit } from '../../../cam-ahu/models/unit/unit.model';
+import { CamAhuAbstractComponent } from '../../../cam-ahu/pages/camfil-ahu-abstract/camfil-ahu-abstract-page.component';
 
 import { DemoBottomSheetComponent } from './demo-bottom-sheet/demo-bottom-sheet.component';
 import { DemoDialogComponent } from './demo-dialog/demo-dialog.component';
@@ -113,17 +113,7 @@ export const CAMFIL_FORMATS: MatDateFormats = {
     { provide: MAT_DATE_FORMATS, useValue: CAMFIL_FORMATS },
   ],
 })
-export class DemoPageComponent implements AfterViewInit, OnInit, OnDestroy {
-  ahuManufacturers$: Observable<Manufacturer[]>;
-  ahuManufacturersLoading$: Observable<boolean>;
-  ahuManufacturersError$: Observable<HttpError>;
-  selectedAhuManufacturer$: Observable<Manufacturer>;
-  ahuForm: FormGroup;
-  ahuUnits$: Observable<Unit[]>;
-  ahuUnitsLoading$: Observable<boolean>;
-  ahuUnitsError$: Observable<HttpError>;
-  selectedAhuUnit$: Observable<Unit>;
-
+export class DemoPageComponent extends CamAhuAbstractComponent implements AfterViewInit, OnInit, OnDestroy {
   product$: Observable<ProductView>;
   category$: Observable<CategoryView>;
 
@@ -135,26 +125,27 @@ export class DemoPageComponent implements AfterViewInit, OnInit, OnDestroy {
   productItemForm: FormGroup;
   readonly quantityControlName = 'quantity';
 
-  private destroy$ = new Subject();
-
   constructor(
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
     private bottomSheet: MatBottomSheet,
     private shoppingFacade: ShoppingFacade,
-    private fb: FormBuilder,
-    private ahuFacade: CamAhuFacade,
+    protected router: Router,
+    protected fb: FormBuilder,
+    protected ahuFacade: CamAhuFacade,
+    protected scroller: ViewportScroller,
     private appFacade: AppFacade,
-    private router: Router,
     private dateAdapter: DateAdapter<any>,
     @Inject(LOCALE_ID) lang: string
   ) {
+    super(router, fb, ahuFacade, scroller);
+
     // Update the value for the progress-bar on an interval.
     setInterval(() => {
       this.progress = (this.progress + Math.floor(Math.random() * 4) + 1) % 100;
     }, 200);
 
-    console.log('this.lang', lang);
+    console.log('LOCALE_ID', lang);
   }
   isDarkTheme = false;
   lastDialogResult: string;
@@ -263,70 +254,15 @@ export class DemoPageComponent implements AfterViewInit, OnInit, OnDestroy {
     this.currentDatePickerValue = eventValue;
   }
 
-  selectAhuManufacturer(event) {
-    const manufacturerId = event.value;
-    const unitId = undefined;
-
-    this.router.navigate(['/demo'], {
-      queryParamsHandling: 'merge',
-
-      queryParams: {
-        manufacturerId,
-        unitId,
-      },
-    });
-  }
-
-  selectAhuUnit(event) {
-    const unitId = event.value;
-
-    this.router.navigate(['/demo'], {
-      queryParamsHandling: 'merge',
-      queryParams: {
-        unitId,
-      },
-    });
-  }
-
-  submitAhuForm() {
-    console.log('submitAhuForm', this.ahuForm);
-  }
-
   ngOnInit() {
+    super.init();
+
     // Camfil Date Picker
     this.appFacade.currentLocale$.pipe(
       tap(currentLocale => {
         this.currentLocale = currentLocale;
       })
     );
-    // AHU-Manufacturers
-    this.ahuManufacturers$ = this.ahuFacade.ahuManufacturers$();
-    this.ahuManufacturersLoading$ = this.ahuFacade.ahuManufacturersLoading$;
-    this.ahuManufacturersError$ = this.ahuFacade.ahuManufacturersError$;
-    this.selectedAhuManufacturer$ = this.ahuFacade.selectedAhuManufacturer$;
-    // AHU-Unit
-    this.ahuUnits$ = this.ahuFacade.ahuUnits$;
-    this.ahuUnitsLoading$ = this.ahuFacade.ahuUnitsLoading$;
-    this.ahuUnitsError$ = this.ahuFacade.ahuUnitsError$;
-    this.selectedAhuUnit$ = this.ahuFacade.selectedAhuUnit$;
-    // AHU-Form
-    this.ahuForm = this.fb.group({
-      manufacturer: new FormControl(undefined, [Validators.required]),
-      unit: new FormControl(undefined, [Validators.required]),
-    });
-    // AHU-Form: Manufacturer-Select-Toggle
-    this.ahuManufacturersLoading$.pipe(takeUntil(this.destroy$)).subscribe(loading => {
-      this.ahuForm.controls.manufacturer[loading ? 'disable' : 'enable']();
-    });
-    // AHU-Form: Manufacturer-Selection-Logic
-    this.selectedAhuManufacturer$.pipe(takeUntil(this.destroy$)).subscribe(manufacturer => {
-      this.ahuForm.controls.manufacturer.setValue(manufacturer?.id);
-      this.ahuForm.controls.unit[manufacturer ? 'enable' : 'disable']();
-    });
-    // AHU-Form: Unit-Selection-Logic
-    this.selectedAhuUnit$.pipe(takeUntil(this.destroy$)).subscribe(unit => {
-      this.ahuForm.controls.unit.setValue(unit?.ahu?.id);
-    });
 
     this.now = new Date();
     this.product$ = this.shoppingFacade.product$('1004670', ProductCompletenessLevel.List);
@@ -379,11 +315,6 @@ export class DemoPageComponent implements AfterViewInit, OnInit, OnDestroy {
 
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
-  }
-
-  ngOnDestroy() {
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 
   openBottomSheet(): void {

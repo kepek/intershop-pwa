@@ -1,75 +1,130 @@
-<div class="ahu-detail">
-  <div class="row">
-    <div class="col-md-9 col-sm-12">
-      <div class="row">
-        <div class="col-sm-12 col-md-6">
-          <camfil-product-image [product]="product" imageType="S" class="product-image"></camfil-product-image>
-        </div>
-        <div class="col-sm-12 col-md-6 ahu-detail__content">
-          <div class="d-flex align-items-baseline">
-            <h1 class="ahu-detail__title">
-              <span itemprop="name">{{ product.name }}</span>
-            </h1>
-            <a href="/air-handling-unit-guide">{{ 'camfil.ahu.detail.select.unit' | translate }}</a>
-          </div>
-          <span class="ahu-detail__manufacturer">{{ product.manufacturer }}</span>
-
-          <camfil-ahu-filters [product]="product"></camfil-ahu-filters>
-
-          <div class="ahu-detail__descrition mt-4">
-            <p>{{ product.shortDescription }}</p>
-            <p *ngIf="isMoreDetailsOpen">{{ product.longDescription }}</p>
-          </div>
-          <a (click)="toggleDetails()">
-            <span *ngIf="!isMoreDetailsOpen">{{ 'camfil.ahu.detail.more.details' | translate }}</span>
-            <span *ngIf="isMoreDetailsOpen">{{ 'camfil.ahu.detail.less.details' | translate }}</span>
-          </a>
-
-          <div class="mt-4">
-            <strong>{{ 'camfil.ahu.detail.guides' | translate }}</strong>
-            <ul class="product-details-guides mt-2">
-              <li>
-                <a>
-                  <mat-icon svgIcon="pdf"></mat-icon>
-                  {{ 'camfil.ahu.detail.technical.specification' | translate }}</a
-                >
-              </li>
-              <li>
-                <a>
-                  <mat-icon svgIcon="pdf"></mat-icon>
-                  {{ 'camfil.ahu.detail.broschure' | translate }}</a
-                >
-              </li>
-              <li>
-                <a>
-                  <mat-icon svgIcon="error" class="error"></mat-icon>
-                  {{ 'camfil.ahu.detail.howToMeasureFilter' | translate }}
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
+<!-- Product Details -->
+<ng-template #selectedAhuUnitProductDetails>
+  <ng-container *ngIf="product$ | async as product">
+    <div class="row product-data my-4" *ngIf="!product.failed">
+      <div class="col-12 col-md-6 product-attributes">
+        <h2>{{ 'product.details.heading' | translate }}</h2>
+        <camfil-product-attributes [product]="product"></camfil-product-attributes>
       </div>
-
-      <camfil-ahu-slots [product]="product" [unitAHUAirSlots]="unitAHUAirSlots"></camfil-ahu-slots>
-
-      <div class="row product-data my-4">
-        <div class="col-12 col-md-6 product-attributes">
-          <h2>{{ 'product.details.heading' | translate }}</h2>
-          <camfil-product-attributes [product]="product"></camfil-product-attributes>
-        </div>
-        <div class="col-12 col-md-6 product-description">
-          <h2>{{ 'product.description.heading' | translate }}</h2>
-          <p [innerHTML]="product.longDescription"></p>
-          <h2>{{ 'product.shipping.heading' | translate }}</h2>
-          <camfil-product-shipment [product]="product"></camfil-product-shipment>
-        </div>
+      <div class="col-12 col-md-6 product-description">
+        <h2>{{ 'product.description.heading' | translate }}</h2>
+        <p [innerHTML]="product.longDescription"></p>
+        <h2>{{ 'product.shipping.heading' | translate }}</h2>
+        <camfil-product-shipment [product]="product"></camfil-product-shipment>
       </div>
     </div>
-    <div class="col-sm-12 col-md-3">
-      <camfil-ahu-cart [unitAHUAirSlots]="unitAHUAirSlots"></camfil-ahu-cart>
+  </ng-container>
+</ng-template>
+<!-- Unit -->
+<ng-container *ngIf="selectedAhuUnit$ | async as selectedAhuUnit">
+  <!-- Image -->
+  <ng-template #selectedAhuUnitImage>
+    <camfil-product-image [product]="selectedAhuUnit" imageType="S" class="product-image"></camfil-product-image>
+  </ng-template>
+  <!-- Headline -->
+  <ng-template #selectedAhuUnitHeadline>
+    <div class="d-flex align-items-baseline">
+      <h1 class="ahu-detail__title">
+        <span itemprop="name">{{ selectedAhuUnit.ahu.airHandlingUnitName }}</span>
+      </h1>
+      <a
+        [routerLink]="['/air-handling-unit-guide']"
+        [queryParams]="{ manufacturerId: selectedAhuUnit.ahu.ahuManufacturerId }"
+      >
+        {{ 'camfil.ahu.detail.select.unit' | translate }}
+      </a>
+    </div>
+    <span class="ahu-detail__manufacturer">
+      {{ selectedAhuUnit.ahu.ahuManufacturerName }}
+    </span>
+  </ng-template>
+  <!-- Types -->
+  <ng-template #selectedAhuUnitTypes>
+    <div class="row" *ngIf="selectedAhuUnitAirSlotTypes$ | async as selectedAhuUnitAirSlotTypes">
+      <ng-container *ngFor="let selectedAhuUnitAirSlotType of selectedAhuUnitAirSlotTypes">
+        <div class="col-6">
+          <camfil-ahu-slot-type [unitAHUAirSlotType]="selectedAhuUnitAirSlotType"></camfil-ahu-slot-type>
+        </div>
+      </ng-container>
+    </div>
+  </ng-template>
+  <!-- Description -->
+  <ng-template #selectedAhuUnitDescription>
+    <div class="ahu-detail__description mt-4">
+      <p>{{ selectedAhuUnit.ahu.ahuShortDescription | ahuTranslate }}</p>
+      <p *ngIf="isMoreDetailsOpen">{{ selectedAhuUnit.ahu.ahuLongDescription | ahuTranslate }}</p>
+    </div>
+    <a (click)="toggleDetails()">
+      <span *ngIf="!isMoreDetailsOpen">{{ 'camfil.ahu.detail.more.details' | translate }}</span>
+      <span *ngIf="isMoreDetailsOpen">{{ 'camfil.ahu.detail.less.details' | translate }}</span>
+    </a>
+  </ng-template>
+  <!-- Guides -->
+  <ng-template #selectedAhuUnitGuides>
+    <div class="mt-4">
+      <strong>{{ 'camfil.ahu.detail.guides' | translate }}</strong>
+      <ul class="product-details-guides mt-2">
+        <li>
+          <a>
+            <mat-icon svgIcon="pdf"></mat-icon>
+            {{ 'camfil.ahu.detail.technical.specification' | translate }}</a
+          >
+        </li>
+        <li>
+          <a>
+            <mat-icon svgIcon="pdf"></mat-icon>
+            {{ 'camfil.ahu.detail.brochure' | translate }}</a
+          >
+        </li>
+        <li>
+          <a>
+            <mat-icon svgIcon="error" class="error"></mat-icon>
+            {{ 'camfil.ahu.detail.howToMeasureFilter' | translate }}
+          </a>
+        </li>
+      </ul>
+    </div>
+  </ng-template>
+  <ng-template #selectedAhuUnitSlots>
+    <camfil-ahu-slots [ahuUnit]="selectedAhuUnit"></camfil-ahu-slots>
+  </ng-template>
+  <!-- Cart -->
+  <ng-template #selectedAhuUnitCart>
+    <camfil-ahu-cart
+      [unit]="selectedAhuUnit"
+      [basket]="selectedAhuUnitBasket$ | async"
+      [summary]="selectedAhuUnitBasketSummary$ | async"
+      [isConfirmed]="isAhuUnitValid$(selectedAhuUnit) | async"
+    ></camfil-ahu-cart>
+  </ng-template>
+  <!-- Layout -->
+  <div class="ahu-detail">
+    <div class="row">
+      <div class="col-md-9 col-sm-12">
+        <div class="row">
+          <div class="col-sm-12 col-md-6">
+            <ng-container *ngTemplateOutlet="selectedAhuUnitImage"></ng-container>
+          </div>
+          <div class="col-sm-12 col-md-6 ahu-detail__content">
+            <ng-container *ngTemplateOutlet="selectedAhuUnitHeadline"></ng-container>
+            <ng-container *ngTemplateOutlet="selectedAhuUnitTypes"></ng-container>
+            <ng-container *ngTemplateOutlet="selectedAhuUnitDescription"></ng-container>
+            <ng-container *ngTemplateOutlet="selectedAhuUnitGuides"></ng-container>
+          </div>
+        </div>
+        <ng-container *ngTemplateOutlet="selectedAhuUnitSlots"></ng-container>
+      </div>
+      <div class="col-sm-12 col-md-3">
+        <ng-container *ngTemplateOutlet="selectedAhuUnitCart"></ng-container>
+      </div>
     </div>
   </div>
-</div>
+</ng-container>
+
+<ng-container *ngTemplateOutlet="selectedAhuUnitProductDetails"></ng-container>
+
+<camfil-product-guides></camfil-product-guides>
+
 <ish-content-include includeId="camfil.include.ahu-detail.content.pagelet2-Include"></ish-content-include>
-<!-- <camfil-product-guides></camfil-product-guides> -->
+
+<ish-loading *ngIf="ahuUnitsLoading$ | async"></ish-loading>

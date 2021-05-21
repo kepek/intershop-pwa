@@ -105,10 +105,14 @@ export function createProxiesConfig(env: Environment): Config {
     agent: getHttpAgent(ICC_TARGET),
     headers: {
       ...defaultHeaders,
+      'content-type': 'application/json',
       [getSysEnvOrAppEnv('ICC_TOKEN_HEADER_KEY', 'iccTokenHeaderKey')]: getSysEnvOrAppEnv('ICC_TOKEN', 'iccToken'),
     },
     pathRewrite: {
       [`^/${getSysEnvOrAppEnv('ICC_SERVER', 'iccServer')}`]: '', // `http://localhost:4200/ICC/very/deep/path` -> `http://example.com/very/deep/path`
+    },
+    onProxyReq(proxyReq) {
+      proxyReq.removeHeader('origin'); // ¯\_(ツ)_/¯
     },
   });
 

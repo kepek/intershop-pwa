@@ -1,0 +1,7968 @@
+[
+  {
+    "AHU": {
+      "AHULongDescription": [],
+      "AHUManufacturerId": "9",
+      "AHUManufacturerName": "Danvent (Systemair)",
+      "AHUShortDescription": [],
+      "AirHandlingUnitName": "DV 150",
+      "Id": "58915",
+      "Market": ["FI", "SE"]
+    },
+    "AHUAirSlots": [
+      {
+        "AHUSlotAmount": "9",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "490",
+        "AHUSlotName": "9 x 592x490x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Supply",
+        "AHUSlotWidthMM": "592",
+        "items": [
+          {
+            "item": "1008370"
+          },
+          {
+            "item": "1008410"
+          },
+          {
+            "item": "1008669"
+          },
+          {
+            "item": "612793"
+          },
+          {
+            "item": "612796"
+          },
+          {
+            "item": "612799"
+          },
+          {
+            "item": "612856"
+          },
+          {
+            "item": "612859"
+          }
+        ]
+      },
+      {
+        "AHUSlotAmount": "6",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "490",
+        "AHUSlotName": "6 x 490x490x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Supply",
+        "AHUSlotWidthMM": "490",
+        "items": [
+          {
+            "item": "1008195"
+          },
+          {
+            "item": "1008553"
+          },
+          {
+            "item": "1008720"
+          },
+          {
+            "item": "1008769"
+          },
+          {
+            "item": "612801"
+          },
+          {
+            "item": "612804"
+          },
+          {
+            "item": "612807"
+          },
+          {
+            "item": "613347"
+          }
+        ]
+      },
+      {
+        "AHUSlotAmount": "9",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "490",
+        "AHUSlotName": "9 x 592x490x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Exhaust",
+        "AHUSlotWidthMM": "592",
+        "items": [
+          {
+            "item": "1008370"
+          },
+          {
+            "item": "1008410"
+          },
+          {
+            "item": "1008669"
+          },
+          {
+            "item": "612793"
+          },
+          {
+            "item": "612796"
+          },
+          {
+            "item": "612799"
+          },
+          {
+            "item": "612856"
+          },
+          {
+            "item": "612859"
+          }
+        ]
+      },
+      {
+        "AHUSlotAmount": "6",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "490",
+        "AHUSlotName": "6 x 490x490x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Exhaust",
+        "AHUSlotWidthMM": "490",
+        "items": [
+          {
+            "item": "1008195"
+          },
+          {
+            "item": "1008553"
+          },
+          {
+            "item": "1008720"
+          },
+          {
+            "item": "1008769"
+          },
+          {
+            "item": "612801"
+          },
+          {
+            "item": "612804"
+          },
+          {
+            "item": "612807"
+          },
+          {
+            "item": "613347"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "AHU": {
+      "AHULongDescription": [],
+      "AHUManufacturerId": "9",
+      "AHUManufacturerName": "Danvent (Systemair)",
+      "AHUShortDescription": [],
+      "AirHandlingUnitName": "SPAR 8",
+      "Id": "58920",
+      "Market": ["FI", "SE"]
+    },
+    "AHUAirSlots": [
+      {
+        "AHUSlotAmount": "2",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "389",
+        "AHUSlotName": "2 x 287x389x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Supply",
+        "AHUSlotWidthMM": "287",
+        "items": []
+      },
+      {
+        "AHUSlotAmount": "2",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "389",
+        "AHUSlotName": "2 x 287x389x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Exhaust",
+        "AHUSlotWidthMM": "287",
+        "items": []
+      }
+    ]
+  },
+  {
+    "AHU": {
+      "AHULongDescription": [],
+      "AHUManufacturerId": "9",
+      "AHUManufacturerName": "Danvent (Systemair)",
+      "AHUShortDescription": [],
+      "AirHandlingUnitName": "SPAR 13",
+      "Id": "58923",
+      "Market": ["FI", "SE"]
+    },
+    "AHUAirSlots": [
+      {
+        "AHUSlotAmount": "2",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "490",
+        "AHUSlotName": "2 x 892x490x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Supply",
+        "AHUSlotWidthMM": "892",
+        "items": [
+          {
+            "item": "1008000"
+          },
+          {
+            "item": "1008201"
+          },
+          {
+            "item": "1008279"
+          },
+          {
+            "item": "1008432"
+          },
+          {
+            "item": "1008434"
+          },
+          {
+            "item": "1008859"
+          }
+        ]
+      },
+      {
+        "AHUSlotAmount": "2",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "490",
+        "AHUSlotName": "2 x 892x490x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Exhaust",
+        "AHUSlotWidthMM": "892",
+        "items": [
+          {
+            "item": "1008000"
+          },
+          {
+            "item": "1008201"
+          },
+          {
+            "item": "1008279"
+          },
+          {
+            "item": "1008432"
+          },
+          {
+            "item": "1008434"
+          },
+          {
+            "item": "1008859"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "AHU": {
+      "AHULongDescription": [],
+      "AHUManufacturerId": "9",
+      "AHUManufacturerName": "Danvent (Systemair)",
+      "AHUShortDescription": [],
+      "AirHandlingUnitName": "SPAR 18",
+      "Id": "58926",
+      "Market": ["FI", "SE"]
+    },
+    "AHUAirSlots": [
+      {
+        "AHUSlotAmount": "2",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "287",
+        "AHUSlotName": "2 x 592x287x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Supply",
+        "AHUSlotWidthMM": "592",
+        "items": [
+          {
+            "item": "1007906"
+          },
+          {
+            "item": "1007908"
+          },
+          {
+            "item": "1007987"
+          },
+          {
+            "item": "1008211"
+          },
+          {
+            "item": "1008331"
+          },
+          {
+            "item": "1008697"
+          },
+          {
+            "item": "610951"
+          },
+          {
+            "item": "610957"
+          },
+          {
+            "item": "610959"
+          },
+          {
+            "item": "612843"
+          },
+          {
+            "item": "612846"
+          },
+          {
+            "item": "612849"
+          }
+        ]
+      },
+      {
+        "AHUSlotAmount": "2",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "287",
+        "AHUSlotName": "2 x 592x287x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Exhaust",
+        "AHUSlotWidthMM": "592",
+        "items": [
+          {
+            "item": "1007906"
+          },
+          {
+            "item": "1007908"
+          },
+          {
+            "item": "1007987"
+          },
+          {
+            "item": "1008211"
+          },
+          {
+            "item": "1008331"
+          },
+          {
+            "item": "1008697"
+          },
+          {
+            "item": "610951"
+          },
+          {
+            "item": "610957"
+          },
+          {
+            "item": "610959"
+          },
+          {
+            "item": "612843"
+          },
+          {
+            "item": "612846"
+          },
+          {
+            "item": "612849"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "AHU": {
+      "AHULongDescription": [],
+      "AHUManufacturerId": "9",
+      "AHUManufacturerName": "Danvent (Systemair)",
+      "AHUShortDescription": [],
+      "AirHandlingUnitName": "TCF 08",
+      "Id": "58974",
+      "Market": ["FI", "SE"]
+    },
+    "AHUAirSlots": [
+      {
+        "AHUSlotAmount": "1",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "490",
+        "AHUSlotName": "1 x 592x490x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Supply",
+        "AHUSlotWidthMM": "592",
+        "items": [
+          {
+            "item": "1008370"
+          },
+          {
+            "item": "1008410"
+          },
+          {
+            "item": "1008669"
+          },
+          {
+            "item": "612793"
+          },
+          {
+            "item": "612796"
+          },
+          {
+            "item": "612799"
+          },
+          {
+            "item": "612856"
+          },
+          {
+            "item": "612859"
+          }
+        ]
+      },
+      {
+        "AHUSlotAmount": "1",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "490",
+        "AHUSlotName": "1 x 592x490x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Exhaust",
+        "AHUSlotWidthMM": "592",
+        "items": [
+          {
+            "item": "1008370"
+          },
+          {
+            "item": "1008410"
+          },
+          {
+            "item": "1008669"
+          },
+          {
+            "item": "612793"
+          },
+          {
+            "item": "612796"
+          },
+          {
+            "item": "612799"
+          },
+          {
+            "item": "612856"
+          },
+          {
+            "item": "612859"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "AHU": {
+      "AHULongDescription": [],
+      "AHUManufacturerId": "9",
+      "AHUManufacturerName": "Danvent (Systemair)",
+      "AHUShortDescription": [],
+      "AirHandlingUnitName": "TCF 12",
+      "Id": "58977",
+      "Market": ["FI", "SE"]
+    },
+    "AHUAirSlots": [
+      {
+        "AHUSlotAmount": "1",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "490",
+        "AHUSlotName": "1 x 592x490x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Supply",
+        "AHUSlotWidthMM": "592",
+        "items": [
+          {
+            "item": "1008370"
+          },
+          {
+            "item": "1008410"
+          },
+          {
+            "item": "1008669"
+          },
+          {
+            "item": "612793"
+          },
+          {
+            "item": "612796"
+          },
+          {
+            "item": "612799"
+          },
+          {
+            "item": "612856"
+          },
+          {
+            "item": "612859"
+          }
+        ]
+      },
+      {
+        "AHUSlotAmount": "1",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "490",
+        "AHUSlotName": "1 x 592x490x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Exhaust",
+        "AHUSlotWidthMM": "592",
+        "items": [
+          {
+            "item": "1008370"
+          },
+          {
+            "item": "1008410"
+          },
+          {
+            "item": "1008669"
+          },
+          {
+            "item": "612793"
+          },
+          {
+            "item": "612796"
+          },
+          {
+            "item": "612799"
+          },
+          {
+            "item": "612856"
+          },
+          {
+            "item": "612859"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "AHU": {
+      "AHULongDescription": [],
+      "AHUManufacturerId": "9",
+      "AHUManufacturerName": "Danvent (Systemair)",
+      "AHUShortDescription": [],
+      "AirHandlingUnitName": "TCF 18",
+      "Id": "58980",
+      "Market": ["FI", "SE"]
+    },
+    "AHUAirSlots": [
+      {
+        "AHUSlotAmount": "1",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "592",
+        "AHUSlotName": "1 x 592x592x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Supply",
+        "AHUSlotWidthMM": "592",
+        "items": [
+          {
+            "item": "1012469"
+          },
+          {
+            "item": "1013238"
+          },
+          {
+            "item": "1013247"
+          },
+          {
+            "item": "1013402"
+          },
+          {
+            "item": "1014157"
+          },
+          {
+            "item": "1007902"
+          },
+          {
+            "item": "1007942"
+          },
+          {
+            "item": "1007962"
+          },
+          {
+            "item": "1008004"
+          },
+          {
+            "item": "1008005"
+          },
+          {
+            "item": "1008042"
+          },
+          {
+            "item": "1008079"
+          },
+          {
+            "item": "1008081"
+          },
+          {
+            "item": "1008239"
+          },
+          {
+            "item": "1008369"
+          },
+          {
+            "item": "1008593"
+          },
+          {
+            "item": "1008847"
+          },
+          {
+            "item": "610153"
+          },
+          {
+            "item": "610162"
+          },
+          {
+            "item": "610171"
+          },
+          {
+            "item": "612758"
+          },
+          {
+            "item": "612759"
+          },
+          {
+            "item": "612808"
+          }
+        ]
+      },
+      {
+        "AHUSlotAmount": "1",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "592",
+        "AHUSlotName": "1 x 287x592x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Supply",
+        "AHUSlotWidthMM": "287",
+        "items": [
+          {
+            "item": "1008024"
+          },
+          {
+            "item": "1009434"
+          },
+          {
+            "item": "1013163"
+          },
+          {
+            "item": "1013518"
+          },
+          {
+            "item": "1015360"
+          },
+          {
+            "item": "1007903"
+          },
+          {
+            "item": "1007904"
+          },
+          {
+            "item": "1007964"
+          },
+          {
+            "item": "1008014"
+          },
+          {
+            "item": "1008024"
+          },
+          {
+            "item": "1008187"
+          },
+          {
+            "item": "1008421"
+          },
+          {
+            "item": "1008443"
+          },
+          {
+            "item": "1008595"
+          },
+          {
+            "item": "610154"
+          },
+          {
+            "item": "610163"
+          },
+          {
+            "item": "610172"
+          },
+          {
+            "item": "611533"
+          },
+          {
+            "item": "612830"
+          },
+          {
+            "item": "612833"
+          },
+          {
+            "item": "612836"
+          }
+        ]
+      },
+      {
+        "AHUSlotAmount": "1",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "592",
+        "AHUSlotName": "1 x 592x592x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Exhaust",
+        "AHUSlotWidthMM": "592",
+        "items": [
+          {
+            "item": "1012469"
+          },
+          {
+            "item": "1013238"
+          },
+          {
+            "item": "1013247"
+          },
+          {
+            "item": "1013402"
+          },
+          {
+            "item": "1014157"
+          },
+          {
+            "item": "1007902"
+          },
+          {
+            "item": "1007942"
+          },
+          {
+            "item": "1007962"
+          },
+          {
+            "item": "1008004"
+          },
+          {
+            "item": "1008005"
+          },
+          {
+            "item": "1008042"
+          },
+          {
+            "item": "1008079"
+          },
+          {
+            "item": "1008081"
+          },
+          {
+            "item": "1008239"
+          },
+          {
+            "item": "1008369"
+          },
+          {
+            "item": "1008593"
+          },
+          {
+            "item": "1008847"
+          },
+          {
+            "item": "610153"
+          },
+          {
+            "item": "610162"
+          },
+          {
+            "item": "610171"
+          },
+          {
+            "item": "612758"
+          },
+          {
+            "item": "612759"
+          },
+          {
+            "item": "612808"
+          }
+        ]
+      },
+      {
+        "AHUSlotAmount": "1",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "592",
+        "AHUSlotName": "1 x 287x592x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Exhaust",
+        "AHUSlotWidthMM": "287",
+        "items": [
+          {
+            "item": "1008024"
+          },
+          {
+            "item": "1009434"
+          },
+          {
+            "item": "1013163"
+          },
+          {
+            "item": "1013518"
+          },
+          {
+            "item": "1015360"
+          },
+          {
+            "item": "1007903"
+          },
+          {
+            "item": "1007904"
+          },
+          {
+            "item": "1007964"
+          },
+          {
+            "item": "1008014"
+          },
+          {
+            "item": "1008024"
+          },
+          {
+            "item": "1008187"
+          },
+          {
+            "item": "1008421"
+          },
+          {
+            "item": "1008443"
+          },
+          {
+            "item": "1008595"
+          },
+          {
+            "item": "610154"
+          },
+          {
+            "item": "610163"
+          },
+          {
+            "item": "610172"
+          },
+          {
+            "item": "611533"
+          },
+          {
+            "item": "612830"
+          },
+          {
+            "item": "612833"
+          },
+          {
+            "item": "612836"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "AHU": {
+      "AHULongDescription": [],
+      "AHUManufacturerId": "9",
+      "AHUManufacturerName": "Danvent (Systemair)",
+      "AHUShortDescription": [],
+      "AirHandlingUnitName": "TCF 30",
+      "Id": "58985",
+      "Market": ["FI", "SE"]
+    },
+    "AHUAirSlots": [
+      {
+        "AHUSlotAmount": "2",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "287",
+        "AHUSlotName": "2 x 592x287x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Supply",
+        "AHUSlotWidthMM": "592",
+        "items": [
+          {
+            "item": "1007906"
+          },
+          {
+            "item": "1007908"
+          },
+          {
+            "item": "1007987"
+          },
+          {
+            "item": "1008211"
+          },
+          {
+            "item": "1008331"
+          },
+          {
+            "item": "1008697"
+          },
+          {
+            "item": "610951"
+          },
+          {
+            "item": "610957"
+          },
+          {
+            "item": "610959"
+          },
+          {
+            "item": "612843"
+          },
+          {
+            "item": "612846"
+          },
+          {
+            "item": "612849"
+          }
+        ]
+      },
+      {
+        "AHUSlotAmount": "2",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "490",
+        "AHUSlotName": "2 x 592x490x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Supply",
+        "AHUSlotWidthMM": "592",
+        "items": [
+          {
+            "item": "1008370"
+          },
+          {
+            "item": "1008410"
+          },
+          {
+            "item": "1008669"
+          },
+          {
+            "item": "612793"
+          },
+          {
+            "item": "612796"
+          },
+          {
+            "item": "612799"
+          },
+          {
+            "item": "612856"
+          },
+          {
+            "item": "612859"
+          }
+        ]
+      },
+      {
+        "AHUSlotAmount": "2",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "287",
+        "AHUSlotName": "2 x 592x287x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Exhaust",
+        "AHUSlotWidthMM": "592",
+        "items": [
+          {
+            "item": "1007906"
+          },
+          {
+            "item": "1007908"
+          },
+          {
+            "item": "1007987"
+          },
+          {
+            "item": "1008211"
+          },
+          {
+            "item": "1008331"
+          },
+          {
+            "item": "1008697"
+          },
+          {
+            "item": "610951"
+          },
+          {
+            "item": "610957"
+          },
+          {
+            "item": "610959"
+          },
+          {
+            "item": "612843"
+          },
+          {
+            "item": "612846"
+          },
+          {
+            "item": "612849"
+          }
+        ]
+      },
+      {
+        "AHUSlotAmount": "2",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "490",
+        "AHUSlotName": "2 x 592x490x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Exhaust",
+        "AHUSlotWidthMM": "592",
+        "items": [
+          {
+            "item": "1008370"
+          },
+          {
+            "item": "1008410"
+          },
+          {
+            "item": "1008669"
+          },
+          {
+            "item": "612793"
+          },
+          {
+            "item": "612796"
+          },
+          {
+            "item": "612799"
+          },
+          {
+            "item": "612856"
+          },
+          {
+            "item": "612859"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "AHU": {
+      "AHULongDescription": [],
+      "AHUManufacturerId": "9",
+      "AHUManufacturerName": "Danvent (Systemair)",
+      "AHUShortDescription": [],
+      "AirHandlingUnitName": "TCF 31",
+      "Id": "58990",
+      "Market": ["FI", "SE"]
+    },
+    "AHUAirSlots": [
+      {
+        "AHUSlotAmount": "2",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "287",
+        "AHUSlotName": "2 x 592x287x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Supply",
+        "AHUSlotWidthMM": "592",
+        "items": [
+          {
+            "item": "1007906"
+          },
+          {
+            "item": "1007908"
+          },
+          {
+            "item": "1007987"
+          },
+          {
+            "item": "1008211"
+          },
+          {
+            "item": "1008331"
+          },
+          {
+            "item": "1008697"
+          },
+          {
+            "item": "610951"
+          },
+          {
+            "item": "610957"
+          },
+          {
+            "item": "610959"
+          },
+          {
+            "item": "612843"
+          },
+          {
+            "item": "612846"
+          },
+          {
+            "item": "612849"
+          }
+        ]
+      },
+      {
+        "AHUSlotAmount": "2",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "490",
+        "AHUSlotName": "2 x 592x490x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Supply",
+        "AHUSlotWidthMM": "592",
+        "items": [
+          {
+            "item": "1008370"
+          },
+          {
+            "item": "1008410"
+          },
+          {
+            "item": "1008669"
+          },
+          {
+            "item": "612793"
+          },
+          {
+            "item": "612796"
+          },
+          {
+            "item": "612799"
+          },
+          {
+            "item": "612856"
+          },
+          {
+            "item": "612859"
+          }
+        ]
+      },
+      {
+        "AHUSlotAmount": "2",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "287",
+        "AHUSlotName": "2 x 592x287x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Exhaust",
+        "AHUSlotWidthMM": "592",
+        "items": [
+          {
+            "item": "1007906"
+          },
+          {
+            "item": "1007908"
+          },
+          {
+            "item": "1007987"
+          },
+          {
+            "item": "1008211"
+          },
+          {
+            "item": "1008331"
+          },
+          {
+            "item": "1008697"
+          },
+          {
+            "item": "610951"
+          },
+          {
+            "item": "610957"
+          },
+          {
+            "item": "610959"
+          },
+          {
+            "item": "612843"
+          },
+          {
+            "item": "612846"
+          },
+          {
+            "item": "612849"
+          }
+        ]
+      },
+      {
+        "AHUSlotAmount": "2",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "490",
+        "AHUSlotName": "2 x 592x490x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Exhaust",
+        "AHUSlotWidthMM": "592",
+        "items": [
+          {
+            "item": "1008370"
+          },
+          {
+            "item": "1008410"
+          },
+          {
+            "item": "1008669"
+          },
+          {
+            "item": "612793"
+          },
+          {
+            "item": "612796"
+          },
+          {
+            "item": "612799"
+          },
+          {
+            "item": "612856"
+          },
+          {
+            "item": "612859"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "AHU": {
+      "AHULongDescription": [],
+      "AHUManufacturerId": "9",
+      "AHUManufacturerName": "Danvent (Systemair)",
+      "AHUShortDescription": [],
+      "AirHandlingUnitName": "DV 30",
+      "Id": "58995",
+      "Market": ["FI", "SE"]
+    },
+    "AHUAirSlots": [
+      {
+        "AHUSlotAmount": "1",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "592",
+        "AHUSlotName": "1 x 592x592x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Supply",
+        "AHUSlotWidthMM": "592",
+        "items": [
+          {
+            "item": "1012469"
+          },
+          {
+            "item": "1013238"
+          },
+          {
+            "item": "1013247"
+          },
+          {
+            "item": "1013402"
+          },
+          {
+            "item": "1014157"
+          },
+          {
+            "item": "1007902"
+          },
+          {
+            "item": "1007942"
+          },
+          {
+            "item": "1007962"
+          },
+          {
+            "item": "1008004"
+          },
+          {
+            "item": "1008005"
+          },
+          {
+            "item": "1008042"
+          },
+          {
+            "item": "1008079"
+          },
+          {
+            "item": "1008081"
+          },
+          {
+            "item": "1008239"
+          },
+          {
+            "item": "1008369"
+          },
+          {
+            "item": "1008593"
+          },
+          {
+            "item": "1008847"
+          },
+          {
+            "item": "610153"
+          },
+          {
+            "item": "610162"
+          },
+          {
+            "item": "610171"
+          },
+          {
+            "item": "612758"
+          },
+          {
+            "item": "612759"
+          },
+          {
+            "item": "612808"
+          }
+        ]
+      },
+      {
+        "AHUSlotAmount": "1",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "592",
+        "AHUSlotName": "1 x 490x592x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Supply",
+        "AHUSlotWidthMM": "490",
+        "items": [
+          {
+            "item": "1007944"
+          },
+          {
+            "item": "1008396"
+          },
+          {
+            "item": "1008560"
+          },
+          {
+            "item": "610441"
+          },
+          {
+            "item": "612785"
+          },
+          {
+            "item": "612788"
+          },
+          {
+            "item": "612791"
+          },
+          {
+            "item": "612820"
+          },
+          {
+            "item": "612823"
+          }
+        ]
+      },
+      {
+        "AHUSlotAmount": "1",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "592",
+        "AHUSlotName": "1 x 287x592x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Supply",
+        "AHUSlotWidthMM": "287",
+        "items": [
+          {
+            "item": "1008024"
+          },
+          {
+            "item": "1009434"
+          },
+          {
+            "item": "1013163"
+          },
+          {
+            "item": "1013518"
+          },
+          {
+            "item": "1015360"
+          },
+          {
+            "item": "1007903"
+          },
+          {
+            "item": "1007904"
+          },
+          {
+            "item": "1007964"
+          },
+          {
+            "item": "1008014"
+          },
+          {
+            "item": "1008024"
+          },
+          {
+            "item": "1008187"
+          },
+          {
+            "item": "1008421"
+          },
+          {
+            "item": "1008443"
+          },
+          {
+            "item": "1008595"
+          },
+          {
+            "item": "610154"
+          },
+          {
+            "item": "610163"
+          },
+          {
+            "item": "610172"
+          },
+          {
+            "item": "611533"
+          },
+          {
+            "item": "612830"
+          },
+          {
+            "item": "612833"
+          },
+          {
+            "item": "612836"
+          }
+        ]
+      },
+      {
+        "AHUSlotAmount": "1",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "592",
+        "AHUSlotName": "1 x 592x592x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Exhaust",
+        "AHUSlotWidthMM": "592",
+        "items": [
+          {
+            "item": "1012469"
+          },
+          {
+            "item": "1013238"
+          },
+          {
+            "item": "1013247"
+          },
+          {
+            "item": "1013402"
+          },
+          {
+            "item": "1014157"
+          },
+          {
+            "item": "1007902"
+          },
+          {
+            "item": "1007942"
+          },
+          {
+            "item": "1007962"
+          },
+          {
+            "item": "1008004"
+          },
+          {
+            "item": "1008005"
+          },
+          {
+            "item": "1008042"
+          },
+          {
+            "item": "1008079"
+          },
+          {
+            "item": "1008081"
+          },
+          {
+            "item": "1008239"
+          },
+          {
+            "item": "1008369"
+          },
+          {
+            "item": "1008593"
+          },
+          {
+            "item": "1008847"
+          },
+          {
+            "item": "610153"
+          },
+          {
+            "item": "610162"
+          },
+          {
+            "item": "610171"
+          },
+          {
+            "item": "612758"
+          },
+          {
+            "item": "612759"
+          },
+          {
+            "item": "612808"
+          }
+        ]
+      },
+      {
+        "AHUSlotAmount": "1",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "592",
+        "AHUSlotName": "1 x 490x592x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Exhaust",
+        "AHUSlotWidthMM": "490",
+        "items": [
+          {
+            "item": "1007944"
+          },
+          {
+            "item": "1008396"
+          },
+          {
+            "item": "1008560"
+          },
+          {
+            "item": "610441"
+          },
+          {
+            "item": "612785"
+          },
+          {
+            "item": "612788"
+          },
+          {
+            "item": "612791"
+          },
+          {
+            "item": "612820"
+          },
+          {
+            "item": "612823"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "AHU": {
+      "AHULongDescription": [],
+      "AHUManufacturerId": "9",
+      "AHUManufacturerName": "Danvent (Systemair)",
+      "AHUShortDescription": [],
+      "AirHandlingUnitName": "SPAR 20",
+      "Id": "58929",
+      "Market": ["FI", "SE"]
+    },
+    "AHUAirSlots": [
+      {
+        "AHUSlotAmount": "4",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "490",
+        "AHUSlotName": "4 x 592x490x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Supply",
+        "AHUSlotWidthMM": "592",
+        "items": [
+          {
+            "item": "1008370"
+          },
+          {
+            "item": "1008410"
+          },
+          {
+            "item": "1008669"
+          },
+          {
+            "item": "612793"
+          },
+          {
+            "item": "612796"
+          },
+          {
+            "item": "612799"
+          },
+          {
+            "item": "612856"
+          },
+          {
+            "item": "612859"
+          }
+        ]
+      },
+      {
+        "AHUSlotAmount": "4",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "490",
+        "AHUSlotName": "4 x 592x490x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Exhaust",
+        "AHUSlotWidthMM": "592",
+        "items": [
+          {
+            "item": "1008370"
+          },
+          {
+            "item": "1008410"
+          },
+          {
+            "item": "1008669"
+          },
+          {
+            "item": "612793"
+          },
+          {
+            "item": "612796"
+          },
+          {
+            "item": "612799"
+          },
+          {
+            "item": "612856"
+          },
+          {
+            "item": "612859"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "AHU": {
+      "AHULongDescription": [],
+      "AHUManufacturerId": "9",
+      "AHUManufacturerName": "Danvent (Systemair)",
+      "AHUShortDescription": [],
+      "AirHandlingUnitName": "SPAR 28",
+      "Id": "58932",
+      "Market": ["FI", "SE"]
+    },
+    "AHUAirSlots": [
+      {
+        "AHUSlotAmount": "2",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "287",
+        "AHUSlotName": "2 x 592x287x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Supply",
+        "AHUSlotWidthMM": "592",
+        "items": [
+          {
+            "item": "1007906"
+          },
+          {
+            "item": "1007908"
+          },
+          {
+            "item": "1007987"
+          },
+          {
+            "item": "1008211"
+          },
+          {
+            "item": "1008331"
+          },
+          {
+            "item": "1008697"
+          },
+          {
+            "item": "610951"
+          },
+          {
+            "item": "610957"
+          },
+          {
+            "item": "610959"
+          },
+          {
+            "item": "612843"
+          },
+          {
+            "item": "612846"
+          },
+          {
+            "item": "612849"
+          }
+        ]
+      },
+      {
+        "AHUSlotAmount": "2",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "287",
+        "AHUSlotName": "2 x 592x287x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Exhaust",
+        "AHUSlotWidthMM": "592",
+        "items": [
+          {
+            "item": "1007906"
+          },
+          {
+            "item": "1007908"
+          },
+          {
+            "item": "1007987"
+          },
+          {
+            "item": "1008211"
+          },
+          {
+            "item": "1008331"
+          },
+          {
+            "item": "1008697"
+          },
+          {
+            "item": "610951"
+          },
+          {
+            "item": "610957"
+          },
+          {
+            "item": "610959"
+          },
+          {
+            "item": "612843"
+          },
+          {
+            "item": "612846"
+          },
+          {
+            "item": "612849"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "AHU": {
+      "AHULongDescription": [],
+      "AHUManufacturerId": "9",
+      "AHUManufacturerName": "Danvent (Systemair)",
+      "AHUShortDescription": [],
+      "AirHandlingUnitName": "SPAR 32",
+      "Id": "58935",
+      "Market": ["FI", "SE"]
+    },
+    "AHUAirSlots": [
+      {
+        "AHUSlotAmount": "2",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "592",
+        "AHUSlotName": "2 x 592x592x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Supply",
+        "AHUSlotWidthMM": "592",
+        "items": [
+          {
+            "item": "1012469"
+          },
+          {
+            "item": "1013238"
+          },
+          {
+            "item": "1013247"
+          },
+          {
+            "item": "1013402"
+          },
+          {
+            "item": "1014157"
+          },
+          {
+            "item": "1007902"
+          },
+          {
+            "item": "1007942"
+          },
+          {
+            "item": "1007962"
+          },
+          {
+            "item": "1008004"
+          },
+          {
+            "item": "1008005"
+          },
+          {
+            "item": "1008042"
+          },
+          {
+            "item": "1008079"
+          },
+          {
+            "item": "1008081"
+          },
+          {
+            "item": "1008239"
+          },
+          {
+            "item": "1008369"
+          },
+          {
+            "item": "1008593"
+          },
+          {
+            "item": "1008847"
+          },
+          {
+            "item": "610153"
+          },
+          {
+            "item": "610162"
+          },
+          {
+            "item": "610171"
+          },
+          {
+            "item": "612758"
+          },
+          {
+            "item": "612759"
+          },
+          {
+            "item": "612808"
+          }
+        ]
+      },
+      {
+        "AHUSlotAmount": "2",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "592",
+        "AHUSlotName": "2 x 490x592x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Supply",
+        "AHUSlotWidthMM": "490",
+        "items": [
+          {
+            "item": "1007944"
+          },
+          {
+            "item": "1008396"
+          },
+          {
+            "item": "1008560"
+          },
+          {
+            "item": "610441"
+          },
+          {
+            "item": "612785"
+          },
+          {
+            "item": "612788"
+          },
+          {
+            "item": "612791"
+          },
+          {
+            "item": "612820"
+          },
+          {
+            "item": "612823"
+          }
+        ]
+      },
+      {
+        "AHUSlotAmount": "2",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "592",
+        "AHUSlotName": "2 x 592x592x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Exhaust",
+        "AHUSlotWidthMM": "592",
+        "items": [
+          {
+            "item": "1012469"
+          },
+          {
+            "item": "1013238"
+          },
+          {
+            "item": "1013247"
+          },
+          {
+            "item": "1013402"
+          },
+          {
+            "item": "1014157"
+          },
+          {
+            "item": "1007902"
+          },
+          {
+            "item": "1007942"
+          },
+          {
+            "item": "1007962"
+          },
+          {
+            "item": "1008004"
+          },
+          {
+            "item": "1008005"
+          },
+          {
+            "item": "1008042"
+          },
+          {
+            "item": "1008079"
+          },
+          {
+            "item": "1008081"
+          },
+          {
+            "item": "1008239"
+          },
+          {
+            "item": "1008369"
+          },
+          {
+            "item": "1008593"
+          },
+          {
+            "item": "1008847"
+          },
+          {
+            "item": "610153"
+          },
+          {
+            "item": "610162"
+          },
+          {
+            "item": "610171"
+          },
+          {
+            "item": "612758"
+          },
+          {
+            "item": "612759"
+          },
+          {
+            "item": "612808"
+          }
+        ]
+      },
+      {
+        "AHUSlotAmount": "2",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "592",
+        "AHUSlotName": "2 x 490x592x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Exhaust",
+        "AHUSlotWidthMM": "490",
+        "items": [
+          {
+            "item": "1007944"
+          },
+          {
+            "item": "1008396"
+          },
+          {
+            "item": "1008560"
+          },
+          {
+            "item": "610441"
+          },
+          {
+            "item": "612785"
+          },
+          {
+            "item": "612788"
+          },
+          {
+            "item": "612791"
+          },
+          {
+            "item": "612820"
+          },
+          {
+            "item": "612823"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "AHU": {
+      "AHULongDescription": [],
+      "AHUManufacturerId": "9",
+      "AHUManufacturerName": "Danvent (Systemair)",
+      "AHUShortDescription": [],
+      "AirHandlingUnitName": "SPAR 43",
+      "Id": "58940",
+      "Market": ["FI", "SE"]
+    },
+    "AHUAirSlots": [
+      {
+        "AHUSlotAmount": "6",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "287",
+        "AHUSlotName": "6 x 592x287x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Supply",
+        "AHUSlotWidthMM": "592",
+        "items": [
+          {
+            "item": "1007906"
+          },
+          {
+            "item": "1007908"
+          },
+          {
+            "item": "1007987"
+          },
+          {
+            "item": "1008211"
+          },
+          {
+            "item": "1008331"
+          },
+          {
+            "item": "1008697"
+          },
+          {
+            "item": "610951"
+          },
+          {
+            "item": "610957"
+          },
+          {
+            "item": "610959"
+          },
+          {
+            "item": "612843"
+          },
+          {
+            "item": "612846"
+          },
+          {
+            "item": "612849"
+          }
+        ]
+      },
+      {
+        "AHUSlotAmount": "6",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "490",
+        "AHUSlotName": "6 x 592x490x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Supply",
+        "AHUSlotWidthMM": "592",
+        "items": [
+          {
+            "item": "1008370"
+          },
+          {
+            "item": "1008410"
+          },
+          {
+            "item": "1008669"
+          },
+          {
+            "item": "612793"
+          },
+          {
+            "item": "612796"
+          },
+          {
+            "item": "612799"
+          },
+          {
+            "item": "612856"
+          },
+          {
+            "item": "612859"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "AHU": {
+      "AHULongDescription": [],
+      "AHUManufacturerId": "9",
+      "AHUManufacturerName": "Danvent (Systemair)",
+      "AHUShortDescription": [],
+      "AirHandlingUnitName": "SPAR 45",
+      "Id": "58945",
+      "Market": ["FI", "SE"]
+    },
+    "AHUAirSlots": [
+      {
+        "AHUSlotAmount": "2",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "490",
+        "AHUSlotName": "2 x 592x490x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Supply",
+        "AHUSlotWidthMM": "592",
+        "items": [
+          {
+            "item": "1008370"
+          },
+          {
+            "item": "1008410"
+          },
+          {
+            "item": "1008669"
+          },
+          {
+            "item": "612793"
+          },
+          {
+            "item": "612796"
+          },
+          {
+            "item": "612799"
+          },
+          {
+            "item": "612856"
+          },
+          {
+            "item": "612859"
+          }
+        ]
+      },
+      {
+        "AHUSlotAmount": "2",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "490",
+        "AHUSlotName": "2 x 592x490x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Exhaust",
+        "AHUSlotWidthMM": "592",
+        "items": [
+          {
+            "item": "1008370"
+          },
+          {
+            "item": "1008410"
+          },
+          {
+            "item": "1008669"
+          },
+          {
+            "item": "612793"
+          },
+          {
+            "item": "612796"
+          },
+          {
+            "item": "612799"
+          },
+          {
+            "item": "612856"
+          },
+          {
+            "item": "612859"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "AHU": {
+      "AHULongDescription": [],
+      "AHUManufacturerId": "9",
+      "AHUManufacturerName": "Danvent (Systemair)",
+      "AHUShortDescription": [],
+      "AirHandlingUnitName": "SPAR 70",
+      "Id": "58948",
+      "Market": ["FI", "SE"]
+    },
+    "AHUAirSlots": [
+      {
+        "AHUSlotAmount": "2",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "592",
+        "AHUSlotName": "2 x 490x592x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Supply",
+        "AHUSlotWidthMM": "490",
+        "items": [
+          {
+            "item": "1007944"
+          },
+          {
+            "item": "1008396"
+          },
+          {
+            "item": "1008560"
+          },
+          {
+            "item": "610441"
+          },
+          {
+            "item": "612785"
+          },
+          {
+            "item": "612788"
+          },
+          {
+            "item": "612791"
+          },
+          {
+            "item": "612820"
+          },
+          {
+            "item": "612823"
+          }
+        ]
+      },
+      {
+        "AHUSlotAmount": "2",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "592",
+        "AHUSlotName": "2 x 287x592x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Supply",
+        "AHUSlotWidthMM": "287",
+        "items": [
+          {
+            "item": "1008024"
+          },
+          {
+            "item": "1009434"
+          },
+          {
+            "item": "1013163"
+          },
+          {
+            "item": "1013518"
+          },
+          {
+            "item": "1015360"
+          },
+          {
+            "item": "1007903"
+          },
+          {
+            "item": "1007904"
+          },
+          {
+            "item": "1007964"
+          },
+          {
+            "item": "1008014"
+          },
+          {
+            "item": "1008024"
+          },
+          {
+            "item": "1008187"
+          },
+          {
+            "item": "1008421"
+          },
+          {
+            "item": "1008443"
+          },
+          {
+            "item": "1008595"
+          },
+          {
+            "item": "610154"
+          },
+          {
+            "item": "610163"
+          },
+          {
+            "item": "610172"
+          },
+          {
+            "item": "611533"
+          },
+          {
+            "item": "612830"
+          },
+          {
+            "item": "612833"
+          },
+          {
+            "item": "612836"
+          }
+        ]
+      },
+      {
+        "AHUSlotAmount": "2",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "592",
+        "AHUSlotName": "2 x 490x592x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Exhaust",
+        "AHUSlotWidthMM": "490",
+        "items": [
+          {
+            "item": "1007944"
+          },
+          {
+            "item": "1008396"
+          },
+          {
+            "item": "1008560"
+          },
+          {
+            "item": "610441"
+          },
+          {
+            "item": "612785"
+          },
+          {
+            "item": "612788"
+          },
+          {
+            "item": "612791"
+          },
+          {
+            "item": "612820"
+          },
+          {
+            "item": "612823"
+          }
+        ]
+      },
+      {
+        "AHUSlotAmount": "2",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "592",
+        "AHUSlotName": "2 x 287x592x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Exhaust",
+        "AHUSlotWidthMM": "287",
+        "items": [
+          {
+            "item": "1008024"
+          },
+          {
+            "item": "1009434"
+          },
+          {
+            "item": "1013163"
+          },
+          {
+            "item": "1013518"
+          },
+          {
+            "item": "1015360"
+          },
+          {
+            "item": "1007903"
+          },
+          {
+            "item": "1007904"
+          },
+          {
+            "item": "1007964"
+          },
+          {
+            "item": "1008014"
+          },
+          {
+            "item": "1008024"
+          },
+          {
+            "item": "1008187"
+          },
+          {
+            "item": "1008421"
+          },
+          {
+            "item": "1008443"
+          },
+          {
+            "item": "1008595"
+          },
+          {
+            "item": "610154"
+          },
+          {
+            "item": "610163"
+          },
+          {
+            "item": "610172"
+          },
+          {
+            "item": "611533"
+          },
+          {
+            "item": "612830"
+          },
+          {
+            "item": "612833"
+          },
+          {
+            "item": "612836"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "AHU": {
+      "AHULongDescription": [],
+      "AHUManufacturerId": "9",
+      "AHUManufacturerName": "Danvent (Systemair)",
+      "AHUShortDescription": [],
+      "AirHandlingUnitName": "SPAR 100",
+      "Id": "58953",
+      "Market": ["FI", "SE"]
+    },
+    "AHUAirSlots": [
+      {
+        "AHUSlotAmount": "2",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "592",
+        "AHUSlotName": "2 x 592x592x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Supply",
+        "AHUSlotWidthMM": "592",
+        "items": [
+          {
+            "item": "1012469"
+          },
+          {
+            "item": "1013238"
+          },
+          {
+            "item": "1013247"
+          },
+          {
+            "item": "1013402"
+          },
+          {
+            "item": "1014157"
+          },
+          {
+            "item": "1007902"
+          },
+          {
+            "item": "1007942"
+          },
+          {
+            "item": "1007962"
+          },
+          {
+            "item": "1008004"
+          },
+          {
+            "item": "1008005"
+          },
+          {
+            "item": "1008042"
+          },
+          {
+            "item": "1008079"
+          },
+          {
+            "item": "1008081"
+          },
+          {
+            "item": "1008239"
+          },
+          {
+            "item": "1008369"
+          },
+          {
+            "item": "1008593"
+          },
+          {
+            "item": "1008847"
+          },
+          {
+            "item": "610153"
+          },
+          {
+            "item": "610162"
+          },
+          {
+            "item": "610171"
+          },
+          {
+            "item": "612758"
+          },
+          {
+            "item": "612759"
+          },
+          {
+            "item": "612808"
+          }
+        ]
+      },
+      {
+        "AHUSlotAmount": "2",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "592",
+        "AHUSlotName": "2 x 490x592x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Supply",
+        "AHUSlotWidthMM": "490",
+        "items": [
+          {
+            "item": "1007944"
+          },
+          {
+            "item": "1008396"
+          },
+          {
+            "item": "1008560"
+          },
+          {
+            "item": "610441"
+          },
+          {
+            "item": "612785"
+          },
+          {
+            "item": "612788"
+          },
+          {
+            "item": "612791"
+          },
+          {
+            "item": "612820"
+          },
+          {
+            "item": "612823"
+          }
+        ]
+      },
+      {
+        "AHUSlotAmount": "2",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "592",
+        "AHUSlotName": "2 x 592x592x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Exhaust",
+        "AHUSlotWidthMM": "592",
+        "items": [
+          {
+            "item": "1012469"
+          },
+          {
+            "item": "1013238"
+          },
+          {
+            "item": "1013247"
+          },
+          {
+            "item": "1013402"
+          },
+          {
+            "item": "1014157"
+          },
+          {
+            "item": "1007902"
+          },
+          {
+            "item": "1007942"
+          },
+          {
+            "item": "1007962"
+          },
+          {
+            "item": "1008004"
+          },
+          {
+            "item": "1008005"
+          },
+          {
+            "item": "1008042"
+          },
+          {
+            "item": "1008079"
+          },
+          {
+            "item": "1008081"
+          },
+          {
+            "item": "1008239"
+          },
+          {
+            "item": "1008369"
+          },
+          {
+            "item": "1008593"
+          },
+          {
+            "item": "1008847"
+          },
+          {
+            "item": "610153"
+          },
+          {
+            "item": "610162"
+          },
+          {
+            "item": "610171"
+          },
+          {
+            "item": "612758"
+          },
+          {
+            "item": "612759"
+          },
+          {
+            "item": "612808"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "AHU": {
+      "AHULongDescription": [],
+      "AHUManufacturerId": "9",
+      "AHUManufacturerName": "Danvent (Systemair)",
+      "AHUShortDescription": [],
+      "AirHandlingUnitName": "DV 10",
+      "Id": "58912",
+      "Market": ["FI", "SE"]
+    },
+    "AHUAirSlots": [
+      {
+        "AHUSlotAmount": "1",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "392",
+        "AHUSlotName": "1 x 792x392x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Supply",
+        "AHUSlotWidthMM": "792",
+        "items": [
+          {
+            "item": "1008206"
+          },
+          {
+            "item": "1008208"
+          },
+          {
+            "item": "1008551"
+          },
+          {
+            "item": "1008756"
+          }
+        ]
+      },
+      {
+        "AHUSlotAmount": "1",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "392",
+        "AHUSlotName": "1 x 792x392x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Exhaust",
+        "AHUSlotWidthMM": "792",
+        "items": [
+          {
+            "item": "1008206"
+          },
+          {
+            "item": "1008208"
+          },
+          {
+            "item": "1008551"
+          },
+          {
+            "item": "1008756"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "AHU": {
+      "AHULongDescription": [],
+      "AHUManufacturerId": "9",
+      "AHUManufacturerName": "Danvent (Systemair)",
+      "AHUShortDescription": [],
+      "AirHandlingUnitName": "SPC F 8000-A-F",
+      "Id": "58966",
+      "Market": ["FI", "SE"]
+    },
+    "AHUAirSlots": [
+      {
+        "AHUSlotAmount": "2",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "592",
+        "AHUSlotName": "2 x 592x592x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Supply",
+        "AHUSlotWidthMM": "592",
+        "items": [
+          {
+            "item": "1012469"
+          },
+          {
+            "item": "1013238"
+          },
+          {
+            "item": "1013247"
+          },
+          {
+            "item": "1013402"
+          },
+          {
+            "item": "1014157"
+          },
+          {
+            "item": "1007902"
+          },
+          {
+            "item": "1007942"
+          },
+          {
+            "item": "1007962"
+          },
+          {
+            "item": "1008004"
+          },
+          {
+            "item": "1008005"
+          },
+          {
+            "item": "1008042"
+          },
+          {
+            "item": "1008079"
+          },
+          {
+            "item": "1008081"
+          },
+          {
+            "item": "1008239"
+          },
+          {
+            "item": "1008369"
+          },
+          {
+            "item": "1008593"
+          },
+          {
+            "item": "1008847"
+          },
+          {
+            "item": "610153"
+          },
+          {
+            "item": "610162"
+          },
+          {
+            "item": "610171"
+          },
+          {
+            "item": "612758"
+          },
+          {
+            "item": "612759"
+          },
+          {
+            "item": "612808"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "AHU": {
+      "AHULongDescription": [],
+      "AHUManufacturerId": "9",
+      "AHUManufacturerName": "Danvent (Systemair)",
+      "AHUShortDescription": [],
+      "AirHandlingUnitName": "SPC F 8000-B-F",
+      "Id": "58968",
+      "Market": ["FI", "SE"]
+    },
+    "AHUAirSlots": [
+      {
+        "AHUSlotAmount": "1",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "592",
+        "AHUSlotName": "1 x 592x592x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Supply",
+        "AHUSlotWidthMM": "592",
+        "items": [
+          {
+            "item": "1012469"
+          },
+          {
+            "item": "1013238"
+          },
+          {
+            "item": "1013247"
+          },
+          {
+            "item": "1013402"
+          },
+          {
+            "item": "1014157"
+          },
+          {
+            "item": "1007902"
+          },
+          {
+            "item": "1007942"
+          },
+          {
+            "item": "1007962"
+          },
+          {
+            "item": "1008004"
+          },
+          {
+            "item": "1008005"
+          },
+          {
+            "item": "1008042"
+          },
+          {
+            "item": "1008079"
+          },
+          {
+            "item": "1008081"
+          },
+          {
+            "item": "1008239"
+          },
+          {
+            "item": "1008369"
+          },
+          {
+            "item": "1008593"
+          },
+          {
+            "item": "1008847"
+          },
+          {
+            "item": "610153"
+          },
+          {
+            "item": "610162"
+          },
+          {
+            "item": "610171"
+          },
+          {
+            "item": "612758"
+          },
+          {
+            "item": "612759"
+          },
+          {
+            "item": "612808"
+          }
+        ]
+      },
+      {
+        "AHUSlotAmount": "2",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "592",
+        "AHUSlotName": "2 x 287x592x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Supply",
+        "AHUSlotWidthMM": "287",
+        "items": [
+          {
+            "item": "1008024"
+          },
+          {
+            "item": "1009434"
+          },
+          {
+            "item": "1013163"
+          },
+          {
+            "item": "1013518"
+          },
+          {
+            "item": "1015360"
+          },
+          {
+            "item": "1007903"
+          },
+          {
+            "item": "1007904"
+          },
+          {
+            "item": "1007964"
+          },
+          {
+            "item": "1008014"
+          },
+          {
+            "item": "1008024"
+          },
+          {
+            "item": "1008187"
+          },
+          {
+            "item": "1008421"
+          },
+          {
+            "item": "1008443"
+          },
+          {
+            "item": "1008595"
+          },
+          {
+            "item": "610154"
+          },
+          {
+            "item": "610163"
+          },
+          {
+            "item": "610172"
+          },
+          {
+            "item": "611533"
+          },
+          {
+            "item": "612830"
+          },
+          {
+            "item": "612833"
+          },
+          {
+            "item": "612836"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "AHU": {
+      "AHULongDescription": [],
+      "AHUManufacturerId": "9",
+      "AHUManufacturerName": "Danvent (Systemair)",
+      "AHUShortDescription": [],
+      "AirHandlingUnitName": "TCF 05",
+      "Id": "58971",
+      "Market": ["FI", "SE"]
+    },
+    "AHUAirSlots": [
+      {
+        "AHUSlotAmount": "1",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "287",
+        "AHUSlotName": "1 x 592x287x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Supply",
+        "AHUSlotWidthMM": "592",
+        "items": [
+          {
+            "item": "1007906"
+          },
+          {
+            "item": "1007908"
+          },
+          {
+            "item": "1007987"
+          },
+          {
+            "item": "1008211"
+          },
+          {
+            "item": "1008331"
+          },
+          {
+            "item": "1008697"
+          },
+          {
+            "item": "610951"
+          },
+          {
+            "item": "610957"
+          },
+          {
+            "item": "610959"
+          },
+          {
+            "item": "612843"
+          },
+          {
+            "item": "612846"
+          },
+          {
+            "item": "612849"
+          }
+        ]
+      },
+      {
+        "AHUSlotAmount": "1",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "287",
+        "AHUSlotName": "1 x 592x287x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Exhaust",
+        "AHUSlotWidthMM": "592",
+        "items": [
+          {
+            "item": "1007906"
+          },
+          {
+            "item": "1007908"
+          },
+          {
+            "item": "1007987"
+          },
+          {
+            "item": "1008211"
+          },
+          {
+            "item": "1008331"
+          },
+          {
+            "item": "1008697"
+          },
+          {
+            "item": "610951"
+          },
+          {
+            "item": "610957"
+          },
+          {
+            "item": "610959"
+          },
+          {
+            "item": "612843"
+          },
+          {
+            "item": "612846"
+          },
+          {
+            "item": "612849"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "AHU": {
+      "AHULongDescription": [],
+      "AHUManufacturerId": "9",
+      "AHUManufacturerName": "Danvent (Systemair)",
+      "AHUShortDescription": [],
+      "AirHandlingUnitName": "DV 40",
+      "Id": "59002",
+      "Market": ["FI", "SE"]
+    },
+    "AHUAirSlots": [
+      {
+        "AHUSlotAmount": "3",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "742",
+        "AHUSlotName": "3 x 490x742x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Supply",
+        "AHUSlotWidthMM": "490",
+        "items": [
+          {
+            "item": "1007994"
+          },
+          {
+            "item": "1008417"
+          },
+          {
+            "item": "608385"
+          },
+          {
+            "item": "608938"
+          }
+        ]
+      },
+      {
+        "AHUSlotAmount": "3",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "742",
+        "AHUSlotName": "3 x 490x742x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Exhaust",
+        "AHUSlotWidthMM": "490",
+        "items": [
+          {
+            "item": "1007994"
+          },
+          {
+            "item": "1008417"
+          },
+          {
+            "item": "608385"
+          },
+          {
+            "item": "608938"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "AHU": {
+      "AHULongDescription": [],
+      "AHUManufacturerId": "9",
+      "AHUManufacturerName": "Danvent (Systemair)",
+      "AHUShortDescription": [],
+      "AirHandlingUnitName": "DV 50",
+      "Id": "59005",
+      "Market": ["FI", "SE"]
+    },
+    "AHUAirSlots": [
+      {
+        "AHUSlotAmount": "3",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "490",
+        "AHUSlotName": "3 x 592x490x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Supply",
+        "AHUSlotWidthMM": "592",
+        "items": [
+          {
+            "item": "1008370"
+          },
+          {
+            "item": "1008410"
+          },
+          {
+            "item": "1008669"
+          },
+          {
+            "item": "612793"
+          },
+          {
+            "item": "612796"
+          },
+          {
+            "item": "612799"
+          },
+          {
+            "item": "612856"
+          },
+          {
+            "item": "612859"
+          }
+        ]
+      },
+      {
+        "AHUSlotAmount": "3",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "287",
+        "AHUSlotName": "3 x 592x287x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Supply",
+        "AHUSlotWidthMM": "592",
+        "items": [
+          {
+            "item": "1007906"
+          },
+          {
+            "item": "1007908"
+          },
+          {
+            "item": "1007987"
+          },
+          {
+            "item": "1008211"
+          },
+          {
+            "item": "1008331"
+          },
+          {
+            "item": "1008697"
+          },
+          {
+            "item": "610951"
+          },
+          {
+            "item": "610957"
+          },
+          {
+            "item": "610959"
+          },
+          {
+            "item": "612843"
+          },
+          {
+            "item": "612846"
+          },
+          {
+            "item": "612849"
+          }
+        ]
+      },
+      {
+        "AHUSlotAmount": "3",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "490",
+        "AHUSlotName": "3 x 592x490x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Exhaust",
+        "AHUSlotWidthMM": "592",
+        "items": [
+          {
+            "item": "1008370"
+          },
+          {
+            "item": "1008410"
+          },
+          {
+            "item": "1008669"
+          },
+          {
+            "item": "612793"
+          },
+          {
+            "item": "612796"
+          },
+          {
+            "item": "612799"
+          },
+          {
+            "item": "612856"
+          },
+          {
+            "item": "612859"
+          }
+        ]
+      },
+      {
+        "AHUSlotAmount": "3",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "287",
+        "AHUSlotName": "3 x 592x287x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Exhaust",
+        "AHUSlotWidthMM": "592",
+        "items": [
+          {
+            "item": "1007906"
+          },
+          {
+            "item": "1007908"
+          },
+          {
+            "item": "1007987"
+          },
+          {
+            "item": "1008211"
+          },
+          {
+            "item": "1008331"
+          },
+          {
+            "item": "1008697"
+          },
+          {
+            "item": "610951"
+          },
+          {
+            "item": "610957"
+          },
+          {
+            "item": "610959"
+          },
+          {
+            "item": "612843"
+          },
+          {
+            "item": "612846"
+          },
+          {
+            "item": "612849"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "AHU": {
+      "AHULongDescription": [],
+      "AHUManufacturerId": "9",
+      "AHUManufacturerName": "Danvent (Systemair)",
+      "AHUShortDescription": [],
+      "AirHandlingUnitName": "DV 60",
+      "Id": "59010",
+      "Market": ["FI", "SE"]
+    },
+    "AHUAirSlots": [
+      {
+        "AHUSlotAmount": "8",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "490",
+        "AHUSlotName": "8 x 490x490x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Supply",
+        "AHUSlotWidthMM": "490",
+        "items": [
+          {
+            "item": "1008195"
+          },
+          {
+            "item": "1008553"
+          },
+          {
+            "item": "1008720"
+          },
+          {
+            "item": "1008769"
+          },
+          {
+            "item": "612801"
+          },
+          {
+            "item": "612804"
+          },
+          {
+            "item": "612807"
+          },
+          {
+            "item": "613347"
+          }
+        ]
+      },
+      {
+        "AHUSlotAmount": "8",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "490",
+        "AHUSlotName": "8 x 490x490x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Exhaust",
+        "AHUSlotWidthMM": "490",
+        "items": [
+          {
+            "item": "1008195"
+          },
+          {
+            "item": "1008553"
+          },
+          {
+            "item": "1008720"
+          },
+          {
+            "item": "1008769"
+          },
+          {
+            "item": "612801"
+          },
+          {
+            "item": "612804"
+          },
+          {
+            "item": "612807"
+          },
+          {
+            "item": "613347"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "AHU": {
+      "AHULongDescription": [],
+      "AHUManufacturerId": "9",
+      "AHUManufacturerName": "Danvent (Systemair)",
+      "AHUShortDescription": [],
+      "AirHandlingUnitName": "DV 80",
+      "Id": "59013",
+      "Market": ["FI", "SE"]
+    },
+    "AHUAirSlots": [
+      {
+        "AHUSlotAmount": "4",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "592",
+        "AHUSlotName": "4 x 490x592x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Supply",
+        "AHUSlotWidthMM": "490",
+        "items": [
+          {
+            "item": "1007944"
+          },
+          {
+            "item": "1008396"
+          },
+          {
+            "item": "1008560"
+          },
+          {
+            "item": "610441"
+          },
+          {
+            "item": "612785"
+          },
+          {
+            "item": "612788"
+          },
+          {
+            "item": "612791"
+          },
+          {
+            "item": "612820"
+          },
+          {
+            "item": "612823"
+          }
+        ]
+      },
+      {
+        "AHUSlotAmount": "4",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "490",
+        "AHUSlotName": "4 x 490x490x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Supply",
+        "AHUSlotWidthMM": "490",
+        "items": [
+          {
+            "item": "1008195"
+          },
+          {
+            "item": "1008553"
+          },
+          {
+            "item": "1008720"
+          },
+          {
+            "item": "1008769"
+          },
+          {
+            "item": "612801"
+          },
+          {
+            "item": "612804"
+          },
+          {
+            "item": "612807"
+          },
+          {
+            "item": "613347"
+          }
+        ]
+      },
+      {
+        "AHUSlotAmount": "4",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "592",
+        "AHUSlotName": "4 x 490x592x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Exhaust",
+        "AHUSlotWidthMM": "490",
+        "items": [
+          {
+            "item": "1007944"
+          },
+          {
+            "item": "1008396"
+          },
+          {
+            "item": "1008560"
+          },
+          {
+            "item": "610441"
+          },
+          {
+            "item": "612785"
+          },
+          {
+            "item": "612788"
+          },
+          {
+            "item": "612791"
+          },
+          {
+            "item": "612820"
+          },
+          {
+            "item": "612823"
+          }
+        ]
+      },
+      {
+        "AHUSlotAmount": "4",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "490",
+        "AHUSlotName": "4 x 490x490x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Exhaust",
+        "AHUSlotWidthMM": "490",
+        "items": [
+          {
+            "item": "1008195"
+          },
+          {
+            "item": "1008553"
+          },
+          {
+            "item": "1008720"
+          },
+          {
+            "item": "1008769"
+          },
+          {
+            "item": "612801"
+          },
+          {
+            "item": "612804"
+          },
+          {
+            "item": "612807"
+          },
+          {
+            "item": "613347"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "AHU": {
+      "AHULongDescription": [],
+      "AHUManufacturerId": "9",
+      "AHUManufacturerName": "Danvent (Systemair)",
+      "AHUShortDescription": [],
+      "AirHandlingUnitName": "DV 100",
+      "Id": "59018",
+      "Market": ["FI", "SE"]
+    },
+    "AHUAirSlots": [
+      {
+        "AHUSlotAmount": "4",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "592",
+        "AHUSlotName": "4 x 592x592x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Supply",
+        "AHUSlotWidthMM": "592",
+        "items": [
+          {
+            "item": "1012469"
+          },
+          {
+            "item": "1013238"
+          },
+          {
+            "item": "1013247"
+          },
+          {
+            "item": "1013402"
+          },
+          {
+            "item": "1014157"
+          },
+          {
+            "item": "1007902"
+          },
+          {
+            "item": "1007942"
+          },
+          {
+            "item": "1007962"
+          },
+          {
+            "item": "1008004"
+          },
+          {
+            "item": "1008005"
+          },
+          {
+            "item": "1008042"
+          },
+          {
+            "item": "1008079"
+          },
+          {
+            "item": "1008081"
+          },
+          {
+            "item": "1008239"
+          },
+          {
+            "item": "1008369"
+          },
+          {
+            "item": "1008593"
+          },
+          {
+            "item": "1008847"
+          },
+          {
+            "item": "610153"
+          },
+          {
+            "item": "610162"
+          },
+          {
+            "item": "610171"
+          },
+          {
+            "item": "612758"
+          },
+          {
+            "item": "612759"
+          },
+          {
+            "item": "612808"
+          }
+        ]
+      },
+      {
+        "AHUSlotAmount": "4",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "592",
+        "AHUSlotName": "4 x 490x592x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Supply",
+        "AHUSlotWidthMM": "490",
+        "items": [
+          {
+            "item": "1007944"
+          },
+          {
+            "item": "1008396"
+          },
+          {
+            "item": "1008560"
+          },
+          {
+            "item": "610441"
+          },
+          {
+            "item": "612785"
+          },
+          {
+            "item": "612788"
+          },
+          {
+            "item": "612791"
+          },
+          {
+            "item": "612820"
+          },
+          {
+            "item": "612823"
+          }
+        ]
+      },
+      {
+        "AHUSlotAmount": "4",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "592",
+        "AHUSlotName": "4 x 592x592x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Exhaust",
+        "AHUSlotWidthMM": "592",
+        "items": [
+          {
+            "item": "1012469"
+          },
+          {
+            "item": "1013238"
+          },
+          {
+            "item": "1013247"
+          },
+          {
+            "item": "1013402"
+          },
+          {
+            "item": "1014157"
+          },
+          {
+            "item": "1007902"
+          },
+          {
+            "item": "1007942"
+          },
+          {
+            "item": "1007962"
+          },
+          {
+            "item": "1008004"
+          },
+          {
+            "item": "1008005"
+          },
+          {
+            "item": "1008042"
+          },
+          {
+            "item": "1008079"
+          },
+          {
+            "item": "1008081"
+          },
+          {
+            "item": "1008239"
+          },
+          {
+            "item": "1008369"
+          },
+          {
+            "item": "1008593"
+          },
+          {
+            "item": "1008847"
+          },
+          {
+            "item": "610153"
+          },
+          {
+            "item": "610162"
+          },
+          {
+            "item": "610171"
+          },
+          {
+            "item": "612758"
+          },
+          {
+            "item": "612759"
+          },
+          {
+            "item": "612808"
+          }
+        ]
+      },
+      {
+        "AHUSlotAmount": "4",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "592",
+        "AHUSlotName": "4 x 490x592x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Exhaust",
+        "AHUSlotWidthMM": "490",
+        "items": [
+          {
+            "item": "1007944"
+          },
+          {
+            "item": "1008396"
+          },
+          {
+            "item": "1008560"
+          },
+          {
+            "item": "610441"
+          },
+          {
+            "item": "612785"
+          },
+          {
+            "item": "612788"
+          },
+          {
+            "item": "612791"
+          },
+          {
+            "item": "612820"
+          },
+          {
+            "item": "612823"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "AHU": {
+      "AHULongDescription": [],
+      "AHUManufacturerId": "9",
+      "AHUManufacturerName": "Danvent (Systemair)",
+      "AHUShortDescription": [],
+      "AirHandlingUnitName": "DV 120",
+      "Id": "59023",
+      "Market": ["FI", "SE"]
+    },
+    "AHUAirSlots": [
+      {
+        "AHUSlotAmount": "4",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "592",
+        "AHUSlotName": "4 x 592x592x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Supply",
+        "AHUSlotWidthMM": "592",
+        "items": [
+          {
+            "item": "1012469"
+          },
+          {
+            "item": "1013238"
+          },
+          {
+            "item": "1013247"
+          },
+          {
+            "item": "1013402"
+          },
+          {
+            "item": "1014157"
+          },
+          {
+            "item": "1007902"
+          },
+          {
+            "item": "1007942"
+          },
+          {
+            "item": "1007962"
+          },
+          {
+            "item": "1008004"
+          },
+          {
+            "item": "1008005"
+          },
+          {
+            "item": "1008042"
+          },
+          {
+            "item": "1008079"
+          },
+          {
+            "item": "1008081"
+          },
+          {
+            "item": "1008239"
+          },
+          {
+            "item": "1008369"
+          },
+          {
+            "item": "1008593"
+          },
+          {
+            "item": "1008847"
+          },
+          {
+            "item": "610153"
+          },
+          {
+            "item": "610162"
+          },
+          {
+            "item": "610171"
+          },
+          {
+            "item": "612758"
+          },
+          {
+            "item": "612759"
+          },
+          {
+            "item": "612808"
+          }
+        ]
+      },
+      {
+        "AHUSlotAmount": "4",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "490",
+        "AHUSlotName": "4 x 592x490x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Supply",
+        "AHUSlotWidthMM": "592",
+        "items": [
+          {
+            "item": "1008370"
+          },
+          {
+            "item": "1008410"
+          },
+          {
+            "item": "1008669"
+          },
+          {
+            "item": "612793"
+          },
+          {
+            "item": "612796"
+          },
+          {
+            "item": "612799"
+          },
+          {
+            "item": "612856"
+          },
+          {
+            "item": "612859"
+          }
+        ]
+      },
+      {
+        "AHUSlotAmount": "4",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "287",
+        "AHUSlotName": "4 x 592x287x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Supply",
+        "AHUSlotWidthMM": "592",
+        "items": [
+          {
+            "item": "1007906"
+          },
+          {
+            "item": "1007908"
+          },
+          {
+            "item": "1007987"
+          },
+          {
+            "item": "1008211"
+          },
+          {
+            "item": "1008331"
+          },
+          {
+            "item": "1008697"
+          },
+          {
+            "item": "610951"
+          },
+          {
+            "item": "610957"
+          },
+          {
+            "item": "610959"
+          },
+          {
+            "item": "612843"
+          },
+          {
+            "item": "612846"
+          },
+          {
+            "item": "612849"
+          }
+        ]
+      },
+      {
+        "AHUSlotAmount": "4",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "592",
+        "AHUSlotName": "4 x 592x592x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Exhaust",
+        "AHUSlotWidthMM": "592",
+        "items": [
+          {
+            "item": "1012469"
+          },
+          {
+            "item": "1013238"
+          },
+          {
+            "item": "1013247"
+          },
+          {
+            "item": "1013402"
+          },
+          {
+            "item": "1014157"
+          },
+          {
+            "item": "1007902"
+          },
+          {
+            "item": "1007942"
+          },
+          {
+            "item": "1007962"
+          },
+          {
+            "item": "1008004"
+          },
+          {
+            "item": "1008005"
+          },
+          {
+            "item": "1008042"
+          },
+          {
+            "item": "1008079"
+          },
+          {
+            "item": "1008081"
+          },
+          {
+            "item": "1008239"
+          },
+          {
+            "item": "1008369"
+          },
+          {
+            "item": "1008593"
+          },
+          {
+            "item": "1008847"
+          },
+          {
+            "item": "610153"
+          },
+          {
+            "item": "610162"
+          },
+          {
+            "item": "610171"
+          },
+          {
+            "item": "612758"
+          },
+          {
+            "item": "612759"
+          },
+          {
+            "item": "612808"
+          }
+        ]
+      },
+      {
+        "AHUSlotAmount": "4",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "490",
+        "AHUSlotName": "4 x 592x490x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Exhaust",
+        "AHUSlotWidthMM": "592",
+        "items": [
+          {
+            "item": "1008370"
+          },
+          {
+            "item": "1008410"
+          },
+          {
+            "item": "1008669"
+          },
+          {
+            "item": "612793"
+          },
+          {
+            "item": "612796"
+          },
+          {
+            "item": "612799"
+          },
+          {
+            "item": "612856"
+          },
+          {
+            "item": "612859"
+          }
+        ]
+      },
+      {
+        "AHUSlotAmount": "4",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "287",
+        "AHUSlotName": "4 x 592x287x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Exhaust",
+        "AHUSlotWidthMM": "592",
+        "items": [
+          {
+            "item": "1007906"
+          },
+          {
+            "item": "1007908"
+          },
+          {
+            "item": "1007987"
+          },
+          {
+            "item": "1008211"
+          },
+          {
+            "item": "1008331"
+          },
+          {
+            "item": "1008697"
+          },
+          {
+            "item": "610951"
+          },
+          {
+            "item": "610957"
+          },
+          {
+            "item": "610959"
+          },
+          {
+            "item": "612843"
+          },
+          {
+            "item": "612846"
+          },
+          {
+            "item": "612849"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "AHU": {
+      "AHULongDescription": [],
+      "AHUManufacturerId": "9",
+      "AHUManufacturerName": "Danvent (Systemair)",
+      "AHUShortDescription": [],
+      "AirHandlingUnitName": "SPC F 2000-A-F",
+      "Id": "58958",
+      "Market": ["FI", "SE"]
+    },
+    "AHUAirSlots": [
+      {
+        "AHUSlotAmount": "1",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "592",
+        "AHUSlotName": "1 x 490x592x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Supply",
+        "AHUSlotWidthMM": "490",
+        "items": [
+          {
+            "item": "1007944"
+          },
+          {
+            "item": "1008396"
+          },
+          {
+            "item": "1008560"
+          },
+          {
+            "item": "610441"
+          },
+          {
+            "item": "612785"
+          },
+          {
+            "item": "612788"
+          },
+          {
+            "item": "612791"
+          },
+          {
+            "item": "612820"
+          },
+          {
+            "item": "612823"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "AHU": {
+      "AHULongDescription": [],
+      "AHUManufacturerId": "9",
+      "AHUManufacturerName": "Danvent (Systemair)",
+      "AHUShortDescription": [],
+      "AirHandlingUnitName": "SPC F 2000-B-F",
+      "Id": "58960",
+      "Market": ["FI", "SE"]
+    },
+    "AHUAirSlots": [
+      {
+        "AHUSlotAmount": "1",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "592",
+        "AHUSlotName": "1 x 490x592x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Supply",
+        "AHUSlotWidthMM": "490",
+        "items": [
+          {
+            "item": "1007944"
+          },
+          {
+            "item": "1008396"
+          },
+          {
+            "item": "1008560"
+          },
+          {
+            "item": "610441"
+          },
+          {
+            "item": "612785"
+          },
+          {
+            "item": "612788"
+          },
+          {
+            "item": "612791"
+          },
+          {
+            "item": "612820"
+          },
+          {
+            "item": "612823"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "AHU": {
+      "AHULongDescription": [],
+      "AHUManufacturerId": "9",
+      "AHUManufacturerName": "Danvent (Systemair)",
+      "AHUShortDescription": [],
+      "AirHandlingUnitName": "SPC F 4000-A-F",
+      "Id": "58962",
+      "Market": ["FI", "SE"]
+    },
+    "AHUAirSlots": [
+      {
+        "AHUSlotAmount": "1",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "592",
+        "AHUSlotName": "1 x 592x592x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Supply",
+        "AHUSlotWidthMM": "592",
+        "items": [
+          {
+            "item": "1012469"
+          },
+          {
+            "item": "1013238"
+          },
+          {
+            "item": "1013247"
+          },
+          {
+            "item": "1013402"
+          },
+          {
+            "item": "1014157"
+          },
+          {
+            "item": "1007902"
+          },
+          {
+            "item": "1007942"
+          },
+          {
+            "item": "1007962"
+          },
+          {
+            "item": "1008004"
+          },
+          {
+            "item": "1008005"
+          },
+          {
+            "item": "1008042"
+          },
+          {
+            "item": "1008079"
+          },
+          {
+            "item": "1008081"
+          },
+          {
+            "item": "1008239"
+          },
+          {
+            "item": "1008369"
+          },
+          {
+            "item": "1008593"
+          },
+          {
+            "item": "1008847"
+          },
+          {
+            "item": "610153"
+          },
+          {
+            "item": "610162"
+          },
+          {
+            "item": "610171"
+          },
+          {
+            "item": "612758"
+          },
+          {
+            "item": "612759"
+          },
+          {
+            "item": "612808"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "AHU": {
+      "AHULongDescription": [],
+      "AHUManufacturerId": "9",
+      "AHUManufacturerName": "Danvent (Systemair)",
+      "AHUShortDescription": [],
+      "AirHandlingUnitName": "SPC F 4000-B-F",
+      "Id": "58964",
+      "Market": ["FI", "SE"]
+    },
+    "AHUAirSlots": [
+      {
+        "AHUSlotAmount": "1",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "592",
+        "AHUSlotName": "1 x 592x592x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Supply",
+        "AHUSlotWidthMM": "592",
+        "items": [
+          {
+            "item": "1012469"
+          },
+          {
+            "item": "1013238"
+          },
+          {
+            "item": "1013247"
+          },
+          {
+            "item": "1013402"
+          },
+          {
+            "item": "1014157"
+          },
+          {
+            "item": "1007902"
+          },
+          {
+            "item": "1007942"
+          },
+          {
+            "item": "1007962"
+          },
+          {
+            "item": "1008004"
+          },
+          {
+            "item": "1008005"
+          },
+          {
+            "item": "1008042"
+          },
+          {
+            "item": "1008079"
+          },
+          {
+            "item": "1008081"
+          },
+          {
+            "item": "1008239"
+          },
+          {
+            "item": "1008369"
+          },
+          {
+            "item": "1008593"
+          },
+          {
+            "item": "1008847"
+          },
+          {
+            "item": "610153"
+          },
+          {
+            "item": "610162"
+          },
+          {
+            "item": "610171"
+          },
+          {
+            "item": "612758"
+          },
+          {
+            "item": "612759"
+          },
+          {
+            "item": "612808"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "AHU": {
+      "AHULongDescription": [],
+      "AHUManufacturerId": "9",
+      "AHUManufacturerName": "Danvent (Systemair)",
+      "AHUShortDescription": [],
+      "AirHandlingUnitName": "MFB 110",
+      "Id": "59041",
+      "Market": ["FI", "SE"]
+    },
+    "AHUAirSlots": [
+      {
+        "AHUSlotAmount": "1",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "592",
+        "AHUSlotName": "1 x 592x592x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Supply",
+        "AHUSlotWidthMM": "592",
+        "items": [
+          {
+            "item": "1012469"
+          },
+          {
+            "item": "1013238"
+          },
+          {
+            "item": "1013247"
+          },
+          {
+            "item": "1013402"
+          },
+          {
+            "item": "1014157"
+          },
+          {
+            "item": "1007902"
+          },
+          {
+            "item": "1007942"
+          },
+          {
+            "item": "1007962"
+          },
+          {
+            "item": "1008004"
+          },
+          {
+            "item": "1008005"
+          },
+          {
+            "item": "1008042"
+          },
+          {
+            "item": "1008079"
+          },
+          {
+            "item": "1008081"
+          },
+          {
+            "item": "1008239"
+          },
+          {
+            "item": "1008369"
+          },
+          {
+            "item": "1008593"
+          },
+          {
+            "item": "1008847"
+          },
+          {
+            "item": "610153"
+          },
+          {
+            "item": "610162"
+          },
+          {
+            "item": "610171"
+          },
+          {
+            "item": "612758"
+          },
+          {
+            "item": "612759"
+          },
+          {
+            "item": "612808"
+          }
+        ]
+      },
+      {
+        "AHUSlotAmount": "2",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "592",
+        "AHUSlotName": "2 x 287x592x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Supply",
+        "AHUSlotWidthMM": "287",
+        "items": [
+          {
+            "item": "1008024"
+          },
+          {
+            "item": "1009434"
+          },
+          {
+            "item": "1013163"
+          },
+          {
+            "item": "1013518"
+          },
+          {
+            "item": "1015360"
+          },
+          {
+            "item": "1007903"
+          },
+          {
+            "item": "1007904"
+          },
+          {
+            "item": "1007964"
+          },
+          {
+            "item": "1008014"
+          },
+          {
+            "item": "1008024"
+          },
+          {
+            "item": "1008187"
+          },
+          {
+            "item": "1008421"
+          },
+          {
+            "item": "1008443"
+          },
+          {
+            "item": "1008595"
+          },
+          {
+            "item": "610154"
+          },
+          {
+            "item": "610163"
+          },
+          {
+            "item": "610172"
+          },
+          {
+            "item": "611533"
+          },
+          {
+            "item": "612830"
+          },
+          {
+            "item": "612833"
+          },
+          {
+            "item": "612836"
+          }
+        ]
+      },
+      {
+        "AHUSlotAmount": "1",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "592",
+        "AHUSlotName": "1 x 592x592x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Exhaust",
+        "AHUSlotWidthMM": "592",
+        "items": [
+          {
+            "item": "1012469"
+          },
+          {
+            "item": "1013238"
+          },
+          {
+            "item": "1013247"
+          },
+          {
+            "item": "1013402"
+          },
+          {
+            "item": "1014157"
+          },
+          {
+            "item": "1007902"
+          },
+          {
+            "item": "1007942"
+          },
+          {
+            "item": "1007962"
+          },
+          {
+            "item": "1008004"
+          },
+          {
+            "item": "1008005"
+          },
+          {
+            "item": "1008042"
+          },
+          {
+            "item": "1008079"
+          },
+          {
+            "item": "1008081"
+          },
+          {
+            "item": "1008239"
+          },
+          {
+            "item": "1008369"
+          },
+          {
+            "item": "1008593"
+          },
+          {
+            "item": "1008847"
+          },
+          {
+            "item": "610153"
+          },
+          {
+            "item": "610162"
+          },
+          {
+            "item": "610171"
+          },
+          {
+            "item": "612758"
+          },
+          {
+            "item": "612759"
+          },
+          {
+            "item": "612808"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "AHU": {
+      "AHULongDescription": [],
+      "AHUManufacturerId": "9",
+      "AHUManufacturerName": "Danvent (Systemair)",
+      "AHUShortDescription": [],
+      "AirHandlingUnitName": "MFB 160",
+      "Id": "59046",
+      "Market": ["FI", "SE"]
+    },
+    "AHUAirSlots": [
+      {
+        "AHUSlotAmount": "2",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "592",
+        "AHUSlotName": "2 x 592x592x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Supply",
+        "AHUSlotWidthMM": "592",
+        "items": [
+          {
+            "item": "1012469"
+          },
+          {
+            "item": "1013238"
+          },
+          {
+            "item": "1013247"
+          },
+          {
+            "item": "1013402"
+          },
+          {
+            "item": "1014157"
+          },
+          {
+            "item": "1007902"
+          },
+          {
+            "item": "1007942"
+          },
+          {
+            "item": "1007962"
+          },
+          {
+            "item": "1008004"
+          },
+          {
+            "item": "1008005"
+          },
+          {
+            "item": "1008042"
+          },
+          {
+            "item": "1008079"
+          },
+          {
+            "item": "1008081"
+          },
+          {
+            "item": "1008239"
+          },
+          {
+            "item": "1008369"
+          },
+          {
+            "item": "1008593"
+          },
+          {
+            "item": "1008847"
+          },
+          {
+            "item": "610153"
+          },
+          {
+            "item": "610162"
+          },
+          {
+            "item": "610171"
+          },
+          {
+            "item": "612758"
+          },
+          {
+            "item": "612759"
+          },
+          {
+            "item": "612808"
+          }
+        ]
+      },
+      {
+        "AHUSlotAmount": "2",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "592",
+        "AHUSlotName": "2 x 287x592x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Supply",
+        "AHUSlotWidthMM": "287",
+        "items": [
+          {
+            "item": "1008024"
+          },
+          {
+            "item": "1009434"
+          },
+          {
+            "item": "1013163"
+          },
+          {
+            "item": "1013518"
+          },
+          {
+            "item": "1015360"
+          },
+          {
+            "item": "1007903"
+          },
+          {
+            "item": "1007904"
+          },
+          {
+            "item": "1007964"
+          },
+          {
+            "item": "1008014"
+          },
+          {
+            "item": "1008024"
+          },
+          {
+            "item": "1008187"
+          },
+          {
+            "item": "1008421"
+          },
+          {
+            "item": "1008443"
+          },
+          {
+            "item": "1008595"
+          },
+          {
+            "item": "610154"
+          },
+          {
+            "item": "610163"
+          },
+          {
+            "item": "610172"
+          },
+          {
+            "item": "611533"
+          },
+          {
+            "item": "612830"
+          },
+          {
+            "item": "612833"
+          },
+          {
+            "item": "612836"
+          }
+        ]
+      },
+      {
+        "AHUSlotAmount": "2",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "592",
+        "AHUSlotName": "2 x 592x592x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Exhaust",
+        "AHUSlotWidthMM": "592",
+        "items": [
+          {
+            "item": "1012469"
+          },
+          {
+            "item": "1013238"
+          },
+          {
+            "item": "1013247"
+          },
+          {
+            "item": "1013402"
+          },
+          {
+            "item": "1014157"
+          },
+          {
+            "item": "1007902"
+          },
+          {
+            "item": "1007942"
+          },
+          {
+            "item": "1007962"
+          },
+          {
+            "item": "1008004"
+          },
+          {
+            "item": "1008005"
+          },
+          {
+            "item": "1008042"
+          },
+          {
+            "item": "1008079"
+          },
+          {
+            "item": "1008081"
+          },
+          {
+            "item": "1008239"
+          },
+          {
+            "item": "1008369"
+          },
+          {
+            "item": "1008593"
+          },
+          {
+            "item": "1008847"
+          },
+          {
+            "item": "610153"
+          },
+          {
+            "item": "610162"
+          },
+          {
+            "item": "610171"
+          },
+          {
+            "item": "612758"
+          },
+          {
+            "item": "612759"
+          },
+          {
+            "item": "612808"
+          }
+        ]
+      },
+      {
+        "AHUSlotAmount": "2",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "592",
+        "AHUSlotName": "2 x 287x592x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Exhaust",
+        "AHUSlotWidthMM": "287",
+        "items": [
+          {
+            "item": "1008024"
+          },
+          {
+            "item": "1009434"
+          },
+          {
+            "item": "1013163"
+          },
+          {
+            "item": "1013518"
+          },
+          {
+            "item": "1015360"
+          },
+          {
+            "item": "1007903"
+          },
+          {
+            "item": "1007904"
+          },
+          {
+            "item": "1007964"
+          },
+          {
+            "item": "1008014"
+          },
+          {
+            "item": "1008024"
+          },
+          {
+            "item": "1008187"
+          },
+          {
+            "item": "1008421"
+          },
+          {
+            "item": "1008443"
+          },
+          {
+            "item": "1008595"
+          },
+          {
+            "item": "610154"
+          },
+          {
+            "item": "610163"
+          },
+          {
+            "item": "610172"
+          },
+          {
+            "item": "611533"
+          },
+          {
+            "item": "612830"
+          },
+          {
+            "item": "612833"
+          },
+          {
+            "item": "612836"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "AHU": {
+      "AHULongDescription": [],
+      "AHUManufacturerId": "9",
+      "AHUManufacturerName": "Danvent (Systemair)",
+      "AHUShortDescription": [],
+      "AirHandlingUnitName": "MFB 220",
+      "Id": "59051",
+      "Market": ["FI", "SE"]
+    },
+    "AHUAirSlots": [
+      {
+        "AHUSlotAmount": "4",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "592",
+        "AHUSlotName": "4 x 592x592x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Supply",
+        "AHUSlotWidthMM": "592",
+        "items": [
+          {
+            "item": "1012469"
+          },
+          {
+            "item": "1013238"
+          },
+          {
+            "item": "1013247"
+          },
+          {
+            "item": "1013402"
+          },
+          {
+            "item": "1014157"
+          },
+          {
+            "item": "1007902"
+          },
+          {
+            "item": "1007942"
+          },
+          {
+            "item": "1007962"
+          },
+          {
+            "item": "1008004"
+          },
+          {
+            "item": "1008005"
+          },
+          {
+            "item": "1008042"
+          },
+          {
+            "item": "1008079"
+          },
+          {
+            "item": "1008081"
+          },
+          {
+            "item": "1008239"
+          },
+          {
+            "item": "1008369"
+          },
+          {
+            "item": "1008593"
+          },
+          {
+            "item": "1008847"
+          },
+          {
+            "item": "610153"
+          },
+          {
+            "item": "610162"
+          },
+          {
+            "item": "610171"
+          },
+          {
+            "item": "612758"
+          },
+          {
+            "item": "612759"
+          },
+          {
+            "item": "612808"
+          }
+        ]
+      },
+      {
+        "AHUSlotAmount": "4",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "592",
+        "AHUSlotName": "4 x 592x592x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Exhaust",
+        "AHUSlotWidthMM": "592",
+        "items": [
+          {
+            "item": "1012469"
+          },
+          {
+            "item": "1013238"
+          },
+          {
+            "item": "1013247"
+          },
+          {
+            "item": "1013402"
+          },
+          {
+            "item": "1014157"
+          },
+          {
+            "item": "1007902"
+          },
+          {
+            "item": "1007942"
+          },
+          {
+            "item": "1007962"
+          },
+          {
+            "item": "1008004"
+          },
+          {
+            "item": "1008005"
+          },
+          {
+            "item": "1008042"
+          },
+          {
+            "item": "1008079"
+          },
+          {
+            "item": "1008081"
+          },
+          {
+            "item": "1008239"
+          },
+          {
+            "item": "1008369"
+          },
+          {
+            "item": "1008593"
+          },
+          {
+            "item": "1008847"
+          },
+          {
+            "item": "610153"
+          },
+          {
+            "item": "610162"
+          },
+          {
+            "item": "610171"
+          },
+          {
+            "item": "612758"
+          },
+          {
+            "item": "612759"
+          },
+          {
+            "item": "612808"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "AHU": {
+      "AHULongDescription": [],
+      "AHUManufacturerId": "9",
+      "AHUManufacturerName": "Danvent (Systemair)",
+      "AHUShortDescription": [],
+      "AirHandlingUnitName": "MFB 310",
+      "Id": "59054",
+      "Market": ["FI", "SE"]
+    },
+    "AHUAirSlots": [
+      {
+        "AHUSlotAmount": "4",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "592",
+        "AHUSlotName": "4 x 592x592x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Supply",
+        "AHUSlotWidthMM": "592",
+        "items": [
+          {
+            "item": "1012469"
+          },
+          {
+            "item": "1013238"
+          },
+          {
+            "item": "1013247"
+          },
+          {
+            "item": "1013402"
+          },
+          {
+            "item": "1014157"
+          },
+          {
+            "item": "1007902"
+          },
+          {
+            "item": "1007942"
+          },
+          {
+            "item": "1007962"
+          },
+          {
+            "item": "1008004"
+          },
+          {
+            "item": "1008005"
+          },
+          {
+            "item": "1008042"
+          },
+          {
+            "item": "1008079"
+          },
+          {
+            "item": "1008081"
+          },
+          {
+            "item": "1008239"
+          },
+          {
+            "item": "1008369"
+          },
+          {
+            "item": "1008593"
+          },
+          {
+            "item": "1008847"
+          },
+          {
+            "item": "610153"
+          },
+          {
+            "item": "610162"
+          },
+          {
+            "item": "610171"
+          },
+          {
+            "item": "612758"
+          },
+          {
+            "item": "612759"
+          },
+          {
+            "item": "612808"
+          }
+        ]
+      },
+      {
+        "AHUSlotAmount": "4",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "592",
+        "AHUSlotName": "4 x 287x592x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Supply",
+        "AHUSlotWidthMM": "287",
+        "items": [
+          {
+            "item": "1008024"
+          },
+          {
+            "item": "1009434"
+          },
+          {
+            "item": "1013163"
+          },
+          {
+            "item": "1013518"
+          },
+          {
+            "item": "1015360"
+          },
+          {
+            "item": "1007903"
+          },
+          {
+            "item": "1007904"
+          },
+          {
+            "item": "1007964"
+          },
+          {
+            "item": "1008014"
+          },
+          {
+            "item": "1008024"
+          },
+          {
+            "item": "1008187"
+          },
+          {
+            "item": "1008421"
+          },
+          {
+            "item": "1008443"
+          },
+          {
+            "item": "1008595"
+          },
+          {
+            "item": "610154"
+          },
+          {
+            "item": "610163"
+          },
+          {
+            "item": "610172"
+          },
+          {
+            "item": "611533"
+          },
+          {
+            "item": "612830"
+          },
+          {
+            "item": "612833"
+          },
+          {
+            "item": "612836"
+          }
+        ]
+      },
+      {
+        "AHUSlotAmount": "4",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "592",
+        "AHUSlotName": "4 x 592x592x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Exhaust",
+        "AHUSlotWidthMM": "592",
+        "items": [
+          {
+            "item": "1012469"
+          },
+          {
+            "item": "1013238"
+          },
+          {
+            "item": "1013247"
+          },
+          {
+            "item": "1013402"
+          },
+          {
+            "item": "1014157"
+          },
+          {
+            "item": "1007902"
+          },
+          {
+            "item": "1007942"
+          },
+          {
+            "item": "1007962"
+          },
+          {
+            "item": "1008004"
+          },
+          {
+            "item": "1008005"
+          },
+          {
+            "item": "1008042"
+          },
+          {
+            "item": "1008079"
+          },
+          {
+            "item": "1008081"
+          },
+          {
+            "item": "1008239"
+          },
+          {
+            "item": "1008369"
+          },
+          {
+            "item": "1008593"
+          },
+          {
+            "item": "1008847"
+          },
+          {
+            "item": "610153"
+          },
+          {
+            "item": "610162"
+          },
+          {
+            "item": "610171"
+          },
+          {
+            "item": "612758"
+          },
+          {
+            "item": "612759"
+          },
+          {
+            "item": "612808"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "AHU": {
+      "AHULongDescription": [],
+      "AHUManufacturerId": "9",
+      "AHUManufacturerName": "Danvent (Systemair)",
+      "AHUShortDescription": [],
+      "AirHandlingUnitName": "MFB 450",
+      "Id": "59059",
+      "Market": ["FI", "SE"]
+    },
+    "AHUAirSlots": [
+      {
+        "AHUSlotAmount": "8",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "592",
+        "AHUSlotName": "8 x 592x592x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Supply",
+        "AHUSlotWidthMM": "592",
+        "items": [
+          {
+            "item": "1012469"
+          },
+          {
+            "item": "1013238"
+          },
+          {
+            "item": "1013247"
+          },
+          {
+            "item": "1013402"
+          },
+          {
+            "item": "1014157"
+          },
+          {
+            "item": "1007902"
+          },
+          {
+            "item": "1007942"
+          },
+          {
+            "item": "1007962"
+          },
+          {
+            "item": "1008004"
+          },
+          {
+            "item": "1008005"
+          },
+          {
+            "item": "1008042"
+          },
+          {
+            "item": "1008079"
+          },
+          {
+            "item": "1008081"
+          },
+          {
+            "item": "1008239"
+          },
+          {
+            "item": "1008369"
+          },
+          {
+            "item": "1008593"
+          },
+          {
+            "item": "1008847"
+          },
+          {
+            "item": "610153"
+          },
+          {
+            "item": "610162"
+          },
+          {
+            "item": "610171"
+          },
+          {
+            "item": "612758"
+          },
+          {
+            "item": "612759"
+          },
+          {
+            "item": "612808"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "AHU": {
+      "AHULongDescription": [],
+      "AHUManufacturerId": "9",
+      "AHUManufacturerName": "Danvent (Systemair)",
+      "AHUShortDescription": [],
+      "AirHandlingUnitName": "MFB 650",
+      "Id": "59062",
+      "Market": ["FI", "SE"]
+    },
+    "AHUAirSlots": [
+      {
+        "AHUSlotAmount": "8",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "592",
+        "AHUSlotName": "8 x 592x592x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Supply",
+        "AHUSlotWidthMM": "592",
+        "items": [
+          {
+            "item": "1012469"
+          },
+          {
+            "item": "1013238"
+          },
+          {
+            "item": "1013247"
+          },
+          {
+            "item": "1013402"
+          },
+          {
+            "item": "1014157"
+          },
+          {
+            "item": "1007902"
+          },
+          {
+            "item": "1007942"
+          },
+          {
+            "item": "1007962"
+          },
+          {
+            "item": "1008004"
+          },
+          {
+            "item": "1008005"
+          },
+          {
+            "item": "1008042"
+          },
+          {
+            "item": "1008079"
+          },
+          {
+            "item": "1008081"
+          },
+          {
+            "item": "1008239"
+          },
+          {
+            "item": "1008369"
+          },
+          {
+            "item": "1008593"
+          },
+          {
+            "item": "1008847"
+          },
+          {
+            "item": "610153"
+          },
+          {
+            "item": "610162"
+          },
+          {
+            "item": "610171"
+          },
+          {
+            "item": "612758"
+          },
+          {
+            "item": "612759"
+          },
+          {
+            "item": "612808"
+          }
+        ]
+      },
+      {
+        "AHUSlotAmount": "8",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "592",
+        "AHUSlotName": "8 x 287x592x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Supply",
+        "AHUSlotWidthMM": "287",
+        "items": [
+          {
+            "item": "1008024"
+          },
+          {
+            "item": "1009434"
+          },
+          {
+            "item": "1013163"
+          },
+          {
+            "item": "1013518"
+          },
+          {
+            "item": "1015360"
+          },
+          {
+            "item": "1007903"
+          },
+          {
+            "item": "1007904"
+          },
+          {
+            "item": "1007964"
+          },
+          {
+            "item": "1008014"
+          },
+          {
+            "item": "1008024"
+          },
+          {
+            "item": "1008187"
+          },
+          {
+            "item": "1008421"
+          },
+          {
+            "item": "1008443"
+          },
+          {
+            "item": "1008595"
+          },
+          {
+            "item": "610154"
+          },
+          {
+            "item": "610163"
+          },
+          {
+            "item": "610172"
+          },
+          {
+            "item": "611533"
+          },
+          {
+            "item": "612830"
+          },
+          {
+            "item": "612833"
+          },
+          {
+            "item": "612836"
+          }
+        ]
+      },
+      {
+        "AHUSlotAmount": "8",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "592",
+        "AHUSlotName": "8 x 592x592x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Exhaust",
+        "AHUSlotWidthMM": "592",
+        "items": [
+          {
+            "item": "1012469"
+          },
+          {
+            "item": "1013238"
+          },
+          {
+            "item": "1013247"
+          },
+          {
+            "item": "1013402"
+          },
+          {
+            "item": "1014157"
+          },
+          {
+            "item": "1007902"
+          },
+          {
+            "item": "1007942"
+          },
+          {
+            "item": "1007962"
+          },
+          {
+            "item": "1008004"
+          },
+          {
+            "item": "1008005"
+          },
+          {
+            "item": "1008042"
+          },
+          {
+            "item": "1008079"
+          },
+          {
+            "item": "1008081"
+          },
+          {
+            "item": "1008239"
+          },
+          {
+            "item": "1008369"
+          },
+          {
+            "item": "1008593"
+          },
+          {
+            "item": "1008847"
+          },
+          {
+            "item": "610153"
+          },
+          {
+            "item": "610162"
+          },
+          {
+            "item": "610171"
+          },
+          {
+            "item": "612758"
+          },
+          {
+            "item": "612759"
+          },
+          {
+            "item": "612808"
+          }
+        ]
+      },
+      {
+        "AHUSlotAmount": "8",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "592",
+        "AHUSlotName": "8 x 287x592x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Exhaust",
+        "AHUSlotWidthMM": "287",
+        "items": [
+          {
+            "item": "1008024"
+          },
+          {
+            "item": "1009434"
+          },
+          {
+            "item": "1013163"
+          },
+          {
+            "item": "1013518"
+          },
+          {
+            "item": "1015360"
+          },
+          {
+            "item": "1007903"
+          },
+          {
+            "item": "1007904"
+          },
+          {
+            "item": "1007964"
+          },
+          {
+            "item": "1008014"
+          },
+          {
+            "item": "1008024"
+          },
+          {
+            "item": "1008187"
+          },
+          {
+            "item": "1008421"
+          },
+          {
+            "item": "1008443"
+          },
+          {
+            "item": "1008595"
+          },
+          {
+            "item": "610154"
+          },
+          {
+            "item": "610163"
+          },
+          {
+            "item": "610172"
+          },
+          {
+            "item": "611533"
+          },
+          {
+            "item": "612830"
+          },
+          {
+            "item": "612833"
+          },
+          {
+            "item": "612836"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "AHU": {
+      "AHULongDescription": [],
+      "AHUManufacturerId": "9",
+      "AHUManufacturerName": "Danvent (Systemair)",
+      "AHUShortDescription": [],
+      "AirHandlingUnitName": "TCF  45",
+      "Id": "59067",
+      "Market": ["FI", "SE"]
+    },
+    "AHUAirSlots": [
+      {
+        "AHUSlotAmount": "2",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "592",
+        "AHUSlotName": "2 x 592x592x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Supply",
+        "AHUSlotWidthMM": "592",
+        "items": [
+          {
+            "item": "1012469"
+          },
+          {
+            "item": "1013238"
+          },
+          {
+            "item": "1013247"
+          },
+          {
+            "item": "1013402"
+          },
+          {
+            "item": "1014157"
+          },
+          {
+            "item": "1007902"
+          },
+          {
+            "item": "1007942"
+          },
+          {
+            "item": "1007962"
+          },
+          {
+            "item": "1008004"
+          },
+          {
+            "item": "1008005"
+          },
+          {
+            "item": "1008042"
+          },
+          {
+            "item": "1008079"
+          },
+          {
+            "item": "1008081"
+          },
+          {
+            "item": "1008239"
+          },
+          {
+            "item": "1008369"
+          },
+          {
+            "item": "1008593"
+          },
+          {
+            "item": "1008847"
+          },
+          {
+            "item": "610153"
+          },
+          {
+            "item": "610162"
+          },
+          {
+            "item": "610171"
+          },
+          {
+            "item": "612758"
+          },
+          {
+            "item": "612759"
+          },
+          {
+            "item": "612808"
+          }
+        ]
+      },
+      {
+        "AHUSlotAmount": "2",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "287",
+        "AHUSlotName": "2 x 592x287x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Supply",
+        "AHUSlotWidthMM": "592",
+        "items": [
+          {
+            "item": "1007906"
+          },
+          {
+            "item": "1007908"
+          },
+          {
+            "item": "1007987"
+          },
+          {
+            "item": "1008211"
+          },
+          {
+            "item": "1008331"
+          },
+          {
+            "item": "1008697"
+          },
+          {
+            "item": "610951"
+          },
+          {
+            "item": "610957"
+          },
+          {
+            "item": "610959"
+          },
+          {
+            "item": "612843"
+          },
+          {
+            "item": "612846"
+          },
+          {
+            "item": "612849"
+          }
+        ]
+      },
+      {
+        "AHUSlotAmount": "2",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "592",
+        "AHUSlotName": "2 x 592x592x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Exhaust",
+        "AHUSlotWidthMM": "592",
+        "items": [
+          {
+            "item": "1012469"
+          },
+          {
+            "item": "1013238"
+          },
+          {
+            "item": "1013247"
+          },
+          {
+            "item": "1013402"
+          },
+          {
+            "item": "1014157"
+          },
+          {
+            "item": "1007902"
+          },
+          {
+            "item": "1007942"
+          },
+          {
+            "item": "1007962"
+          },
+          {
+            "item": "1008004"
+          },
+          {
+            "item": "1008005"
+          },
+          {
+            "item": "1008042"
+          },
+          {
+            "item": "1008079"
+          },
+          {
+            "item": "1008081"
+          },
+          {
+            "item": "1008239"
+          },
+          {
+            "item": "1008369"
+          },
+          {
+            "item": "1008593"
+          },
+          {
+            "item": "1008847"
+          },
+          {
+            "item": "610153"
+          },
+          {
+            "item": "610162"
+          },
+          {
+            "item": "610171"
+          },
+          {
+            "item": "612758"
+          },
+          {
+            "item": "612759"
+          },
+          {
+            "item": "612808"
+          }
+        ]
+      },
+      {
+        "AHUSlotAmount": "2",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "287",
+        "AHUSlotName": "2 x 592x287x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Exhaust",
+        "AHUSlotWidthMM": "592",
+        "items": [
+          {
+            "item": "1007906"
+          },
+          {
+            "item": "1007908"
+          },
+          {
+            "item": "1007987"
+          },
+          {
+            "item": "1008211"
+          },
+          {
+            "item": "1008331"
+          },
+          {
+            "item": "1008697"
+          },
+          {
+            "item": "610951"
+          },
+          {
+            "item": "610957"
+          },
+          {
+            "item": "610959"
+          },
+          {
+            "item": "612843"
+          },
+          {
+            "item": "612846"
+          },
+          {
+            "item": "612849"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "AHU": {
+      "AHULongDescription": [],
+      "AHUManufacturerId": "9",
+      "AHUManufacturerName": "Danvent (Systemair)",
+      "AHUShortDescription": [],
+      "AirHandlingUnitName": "MFB 028",
+      "Id": "59030",
+      "Market": ["FI", "SE"]
+    },
+    "AHUAirSlots": [
+      {
+        "AHUSlotAmount": "1",
+        "AHUSlotDepthMM": "535",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "592",
+        "AHUSlotName": "1 x 490x592x535",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Supply",
+        "AHUSlotWidthMM": "490",
+        "items": []
+      },
+      {
+        "AHUSlotAmount": "1",
+        "AHUSlotDepthMM": "535",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "592",
+        "AHUSlotName": "1 x 490x592x535",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Exhaust",
+        "AHUSlotWidthMM": "490",
+        "items": []
+      }
+    ]
+  },
+  {
+    "AHU": {
+      "AHULongDescription": [],
+      "AHUManufacturerId": "9",
+      "AHUManufacturerName": "Danvent (Systemair)",
+      "AHUShortDescription": [],
+      "AirHandlingUnitName": "MFB 055",
+      "Id": "59033",
+      "Market": ["FI", "SE"]
+    },
+    "AHUAirSlots": [
+      {
+        "AHUSlotAmount": "1",
+        "AHUSlotDepthMM": "535",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "592",
+        "AHUSlotName": "1 x 592x592x535",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Supply",
+        "AHUSlotWidthMM": "592",
+        "items": []
+      },
+      {
+        "AHUSlotAmount": "1",
+        "AHUSlotDepthMM": "535",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "592",
+        "AHUSlotName": "1 x 592x592x535",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Exhaust",
+        "AHUSlotWidthMM": "592",
+        "items": []
+      }
+    ]
+  },
+  {
+    "AHU": {
+      "AHULongDescription": [],
+      "AHUManufacturerId": "9",
+      "AHUManufacturerName": "Danvent (Systemair)",
+      "AHUShortDescription": [],
+      "AirHandlingUnitName": "MFB 075",
+      "Id": "59036",
+      "Market": ["FI", "SE"]
+    },
+    "AHUAirSlots": [
+      {
+        "AHUSlotAmount": "1",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "592",
+        "AHUSlotName": "1 x 592x592x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Supply",
+        "AHUSlotWidthMM": "592",
+        "items": [
+          {
+            "item": "1012469"
+          },
+          {
+            "item": "1013238"
+          },
+          {
+            "item": "1013247"
+          },
+          {
+            "item": "1013402"
+          },
+          {
+            "item": "1014157"
+          },
+          {
+            "item": "1007902"
+          },
+          {
+            "item": "1007942"
+          },
+          {
+            "item": "1007962"
+          },
+          {
+            "item": "1008004"
+          },
+          {
+            "item": "1008005"
+          },
+          {
+            "item": "1008042"
+          },
+          {
+            "item": "1008079"
+          },
+          {
+            "item": "1008081"
+          },
+          {
+            "item": "1008239"
+          },
+          {
+            "item": "1008369"
+          },
+          {
+            "item": "1008593"
+          },
+          {
+            "item": "1008847"
+          },
+          {
+            "item": "610153"
+          },
+          {
+            "item": "610162"
+          },
+          {
+            "item": "610171"
+          },
+          {
+            "item": "612758"
+          },
+          {
+            "item": "612759"
+          },
+          {
+            "item": "612808"
+          }
+        ]
+      },
+      {
+        "AHUSlotAmount": "1",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "592",
+        "AHUSlotName": "1 x 287x592x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Supply",
+        "AHUSlotWidthMM": "287",
+        "items": [
+          {
+            "item": "1008024"
+          },
+          {
+            "item": "1009434"
+          },
+          {
+            "item": "1013163"
+          },
+          {
+            "item": "1013518"
+          },
+          {
+            "item": "1015360"
+          },
+          {
+            "item": "1007903"
+          },
+          {
+            "item": "1007904"
+          },
+          {
+            "item": "1007964"
+          },
+          {
+            "item": "1008014"
+          },
+          {
+            "item": "1008024"
+          },
+          {
+            "item": "1008187"
+          },
+          {
+            "item": "1008421"
+          },
+          {
+            "item": "1008443"
+          },
+          {
+            "item": "1008595"
+          },
+          {
+            "item": "610154"
+          },
+          {
+            "item": "610163"
+          },
+          {
+            "item": "610172"
+          },
+          {
+            "item": "611533"
+          },
+          {
+            "item": "612830"
+          },
+          {
+            "item": "612833"
+          },
+          {
+            "item": "612836"
+          }
+        ]
+      },
+      {
+        "AHUSlotAmount": "1",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "592",
+        "AHUSlotName": "1 x 592x592x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Exhaust",
+        "AHUSlotWidthMM": "592",
+        "items": [
+          {
+            "item": "1012469"
+          },
+          {
+            "item": "1013238"
+          },
+          {
+            "item": "1013247"
+          },
+          {
+            "item": "1013402"
+          },
+          {
+            "item": "1014157"
+          },
+          {
+            "item": "1007902"
+          },
+          {
+            "item": "1007942"
+          },
+          {
+            "item": "1007962"
+          },
+          {
+            "item": "1008004"
+          },
+          {
+            "item": "1008005"
+          },
+          {
+            "item": "1008042"
+          },
+          {
+            "item": "1008079"
+          },
+          {
+            "item": "1008081"
+          },
+          {
+            "item": "1008239"
+          },
+          {
+            "item": "1008369"
+          },
+          {
+            "item": "1008593"
+          },
+          {
+            "item": "1008847"
+          },
+          {
+            "item": "610153"
+          },
+          {
+            "item": "610162"
+          },
+          {
+            "item": "610171"
+          },
+          {
+            "item": "612758"
+          },
+          {
+            "item": "612759"
+          },
+          {
+            "item": "612808"
+          }
+        ]
+      },
+      {
+        "AHUSlotAmount": "1",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "592",
+        "AHUSlotName": "1 x 287x592x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Exhaust",
+        "AHUSlotWidthMM": "287",
+        "items": [
+          {
+            "item": "1008024"
+          },
+          {
+            "item": "1009434"
+          },
+          {
+            "item": "1013163"
+          },
+          {
+            "item": "1013518"
+          },
+          {
+            "item": "1015360"
+          },
+          {
+            "item": "1007903"
+          },
+          {
+            "item": "1007904"
+          },
+          {
+            "item": "1007964"
+          },
+          {
+            "item": "1008014"
+          },
+          {
+            "item": "1008024"
+          },
+          {
+            "item": "1008187"
+          },
+          {
+            "item": "1008421"
+          },
+          {
+            "item": "1008443"
+          },
+          {
+            "item": "1008595"
+          },
+          {
+            "item": "610154"
+          },
+          {
+            "item": "610163"
+          },
+          {
+            "item": "610172"
+          },
+          {
+            "item": "611533"
+          },
+          {
+            "item": "612830"
+          },
+          {
+            "item": "612833"
+          },
+          {
+            "item": "612836"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "AHU": {
+      "AHULongDescription": [],
+      "AHUManufacturerId": "9",
+      "AHUManufacturerName": "Danvent (Systemair)",
+      "AHUShortDescription": [],
+      "AirHandlingUnitName": "DV 20",
+      "Id": "59100",
+      "Market": ["FI", "SE"]
+    },
+    "AHUAirSlots": [
+      {
+        "AHUSlotAmount": "1",
+        "AHUSlotDepthMM": "535",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "490",
+        "AHUSlotName": "1 x 592x490x535",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Supply",
+        "AHUSlotWidthMM": "592",
+        "items": []
+      },
+      {
+        "AHUSlotAmount": "1",
+        "AHUSlotDepthMM": "535",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "490",
+        "AHUSlotName": "1 x 490x490x535",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Supply",
+        "AHUSlotWidthMM": "490",
+        "items": []
+      },
+      {
+        "AHUSlotAmount": "1",
+        "AHUSlotDepthMM": "535",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "490",
+        "AHUSlotName": "1 x 592x490x535",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Exhaust",
+        "AHUSlotWidthMM": "592",
+        "items": []
+      },
+      {
+        "AHUSlotAmount": "1",
+        "AHUSlotDepthMM": "535",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "490",
+        "AHUSlotName": "1 x 490x490x535",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Exhaust",
+        "AHUSlotWidthMM": "490",
+        "items": []
+      }
+    ]
+  },
+  {
+    "AHU": {
+      "AHULongDescription": [],
+      "AHUManufacturerId": "9",
+      "AHUManufacturerName": "Danvent (Systemair)",
+      "AHUShortDescription": [],
+      "AirHandlingUnitName": "DV 25",
+      "Id": "59105",
+      "Market": ["FI", "SE"]
+    },
+    "AHUAirSlots": [
+      {
+        "AHUSlotAmount": "2",
+        "AHUSlotDepthMM": "535",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "592",
+        "AHUSlotName": "2 x 592x592x535",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Supply",
+        "AHUSlotWidthMM": "592",
+        "items": []
+      },
+      {
+        "AHUSlotAmount": "2",
+        "AHUSlotDepthMM": "535",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "592",
+        "AHUSlotName": "2 x 592x592x535",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Exhaust",
+        "AHUSlotWidthMM": "592",
+        "items": []
+      }
+    ]
+  },
+  {
+    "AHU": {
+      "AHULongDescription": [],
+      "AHUManufacturerId": "9",
+      "AHUManufacturerName": "Danvent (Systemair)",
+      "AHUShortDescription": [],
+      "AirHandlingUnitName": "TCF  46",
+      "Id": "59072",
+      "Market": ["FI", "SE"]
+    },
+    "AHUAirSlots": [
+      {
+        "AHUSlotAmount": "2",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "592",
+        "AHUSlotName": "2 x 592x592x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Supply",
+        "AHUSlotWidthMM": "592",
+        "items": [
+          {
+            "item": "1012469"
+          },
+          {
+            "item": "1013238"
+          },
+          {
+            "item": "1013247"
+          },
+          {
+            "item": "1013402"
+          },
+          {
+            "item": "1014157"
+          },
+          {
+            "item": "1007902"
+          },
+          {
+            "item": "1007942"
+          },
+          {
+            "item": "1007962"
+          },
+          {
+            "item": "1008004"
+          },
+          {
+            "item": "1008005"
+          },
+          {
+            "item": "1008042"
+          },
+          {
+            "item": "1008079"
+          },
+          {
+            "item": "1008081"
+          },
+          {
+            "item": "1008239"
+          },
+          {
+            "item": "1008369"
+          },
+          {
+            "item": "1008593"
+          },
+          {
+            "item": "1008847"
+          },
+          {
+            "item": "610153"
+          },
+          {
+            "item": "610162"
+          },
+          {
+            "item": "610171"
+          },
+          {
+            "item": "612758"
+          },
+          {
+            "item": "612759"
+          },
+          {
+            "item": "612808"
+          }
+        ]
+      },
+      {
+        "AHUSlotAmount": "1",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "592",
+        "AHUSlotName": "1 x 287x592x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Supply",
+        "AHUSlotWidthMM": "287",
+        "items": [
+          {
+            "item": "1008024"
+          },
+          {
+            "item": "1009434"
+          },
+          {
+            "item": "1013163"
+          },
+          {
+            "item": "1013518"
+          },
+          {
+            "item": "1015360"
+          },
+          {
+            "item": "1007903"
+          },
+          {
+            "item": "1007904"
+          },
+          {
+            "item": "1007964"
+          },
+          {
+            "item": "1008014"
+          },
+          {
+            "item": "1008024"
+          },
+          {
+            "item": "1008187"
+          },
+          {
+            "item": "1008421"
+          },
+          {
+            "item": "1008443"
+          },
+          {
+            "item": "1008595"
+          },
+          {
+            "item": "610154"
+          },
+          {
+            "item": "610163"
+          },
+          {
+            "item": "610172"
+          },
+          {
+            "item": "611533"
+          },
+          {
+            "item": "612830"
+          },
+          {
+            "item": "612833"
+          },
+          {
+            "item": "612836"
+          }
+        ]
+      },
+      {
+        "AHUSlotAmount": "2",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "592",
+        "AHUSlotName": "2 x 592x592x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Exhaust",
+        "AHUSlotWidthMM": "592",
+        "items": [
+          {
+            "item": "1012469"
+          },
+          {
+            "item": "1013238"
+          },
+          {
+            "item": "1013247"
+          },
+          {
+            "item": "1013402"
+          },
+          {
+            "item": "1014157"
+          },
+          {
+            "item": "1007902"
+          },
+          {
+            "item": "1007942"
+          },
+          {
+            "item": "1007962"
+          },
+          {
+            "item": "1008004"
+          },
+          {
+            "item": "1008005"
+          },
+          {
+            "item": "1008042"
+          },
+          {
+            "item": "1008079"
+          },
+          {
+            "item": "1008081"
+          },
+          {
+            "item": "1008239"
+          },
+          {
+            "item": "1008369"
+          },
+          {
+            "item": "1008593"
+          },
+          {
+            "item": "1008847"
+          },
+          {
+            "item": "610153"
+          },
+          {
+            "item": "610162"
+          },
+          {
+            "item": "610171"
+          },
+          {
+            "item": "612758"
+          },
+          {
+            "item": "612759"
+          },
+          {
+            "item": "612808"
+          }
+        ]
+      },
+      {
+        "AHUSlotAmount": "1",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "592",
+        "AHUSlotName": "1 x 287x592x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Exhaust",
+        "AHUSlotWidthMM": "287",
+        "items": [
+          {
+            "item": "1008024"
+          },
+          {
+            "item": "1009434"
+          },
+          {
+            "item": "1013163"
+          },
+          {
+            "item": "1013518"
+          },
+          {
+            "item": "1015360"
+          },
+          {
+            "item": "1007903"
+          },
+          {
+            "item": "1007904"
+          },
+          {
+            "item": "1007964"
+          },
+          {
+            "item": "1008014"
+          },
+          {
+            "item": "1008024"
+          },
+          {
+            "item": "1008187"
+          },
+          {
+            "item": "1008421"
+          },
+          {
+            "item": "1008443"
+          },
+          {
+            "item": "1008595"
+          },
+          {
+            "item": "610154"
+          },
+          {
+            "item": "610163"
+          },
+          {
+            "item": "610172"
+          },
+          {
+            "item": "611533"
+          },
+          {
+            "item": "612830"
+          },
+          {
+            "item": "612833"
+          },
+          {
+            "item": "612836"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "AHU": {
+      "AHULongDescription": [],
+      "AHUManufacturerId": "9",
+      "AHUManufacturerName": "Danvent (Systemair)",
+      "AHUShortDescription": [],
+      "AirHandlingUnitName": "TCF  65",
+      "Id": "59077",
+      "Market": ["FI", "SE"]
+    },
+    "AHUAirSlots": [
+      {
+        "AHUSlotAmount": "4",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "592",
+        "AHUSlotName": "4 x 592x592x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Supply",
+        "AHUSlotWidthMM": "592",
+        "items": [
+          {
+            "item": "1012469"
+          },
+          {
+            "item": "1013238"
+          },
+          {
+            "item": "1013247"
+          },
+          {
+            "item": "1013402"
+          },
+          {
+            "item": "1014157"
+          },
+          {
+            "item": "1007902"
+          },
+          {
+            "item": "1007942"
+          },
+          {
+            "item": "1007962"
+          },
+          {
+            "item": "1008004"
+          },
+          {
+            "item": "1008005"
+          },
+          {
+            "item": "1008042"
+          },
+          {
+            "item": "1008079"
+          },
+          {
+            "item": "1008081"
+          },
+          {
+            "item": "1008239"
+          },
+          {
+            "item": "1008369"
+          },
+          {
+            "item": "1008593"
+          },
+          {
+            "item": "1008847"
+          },
+          {
+            "item": "610153"
+          },
+          {
+            "item": "610162"
+          },
+          {
+            "item": "610171"
+          },
+          {
+            "item": "612758"
+          },
+          {
+            "item": "612759"
+          },
+          {
+            "item": "612808"
+          }
+        ]
+      },
+      {
+        "AHUSlotAmount": "2",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "592",
+        "AHUSlotName": "2 x 287x592x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Supply",
+        "AHUSlotWidthMM": "287",
+        "items": [
+          {
+            "item": "1008024"
+          },
+          {
+            "item": "1009434"
+          },
+          {
+            "item": "1013163"
+          },
+          {
+            "item": "1013518"
+          },
+          {
+            "item": "1015360"
+          },
+          {
+            "item": "1007903"
+          },
+          {
+            "item": "1007904"
+          },
+          {
+            "item": "1007964"
+          },
+          {
+            "item": "1008014"
+          },
+          {
+            "item": "1008024"
+          },
+          {
+            "item": "1008187"
+          },
+          {
+            "item": "1008421"
+          },
+          {
+            "item": "1008443"
+          },
+          {
+            "item": "1008595"
+          },
+          {
+            "item": "610154"
+          },
+          {
+            "item": "610163"
+          },
+          {
+            "item": "610172"
+          },
+          {
+            "item": "611533"
+          },
+          {
+            "item": "612830"
+          },
+          {
+            "item": "612833"
+          },
+          {
+            "item": "612836"
+          }
+        ]
+      },
+      {
+        "AHUSlotAmount": "4",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "592",
+        "AHUSlotName": "4 x 592x592x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Exhaust",
+        "AHUSlotWidthMM": "592",
+        "items": [
+          {
+            "item": "1012469"
+          },
+          {
+            "item": "1013238"
+          },
+          {
+            "item": "1013247"
+          },
+          {
+            "item": "1013402"
+          },
+          {
+            "item": "1014157"
+          },
+          {
+            "item": "1007902"
+          },
+          {
+            "item": "1007942"
+          },
+          {
+            "item": "1007962"
+          },
+          {
+            "item": "1008004"
+          },
+          {
+            "item": "1008005"
+          },
+          {
+            "item": "1008042"
+          },
+          {
+            "item": "1008079"
+          },
+          {
+            "item": "1008081"
+          },
+          {
+            "item": "1008239"
+          },
+          {
+            "item": "1008369"
+          },
+          {
+            "item": "1008593"
+          },
+          {
+            "item": "1008847"
+          },
+          {
+            "item": "610153"
+          },
+          {
+            "item": "610162"
+          },
+          {
+            "item": "610171"
+          },
+          {
+            "item": "612758"
+          },
+          {
+            "item": "612759"
+          },
+          {
+            "item": "612808"
+          }
+        ]
+      },
+      {
+        "AHUSlotAmount": "2",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "592",
+        "AHUSlotName": "2 x 287x592x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Exhaust",
+        "AHUSlotWidthMM": "287",
+        "items": [
+          {
+            "item": "1008024"
+          },
+          {
+            "item": "1009434"
+          },
+          {
+            "item": "1013163"
+          },
+          {
+            "item": "1013518"
+          },
+          {
+            "item": "1015360"
+          },
+          {
+            "item": "1007903"
+          },
+          {
+            "item": "1007904"
+          },
+          {
+            "item": "1007964"
+          },
+          {
+            "item": "1008014"
+          },
+          {
+            "item": "1008024"
+          },
+          {
+            "item": "1008187"
+          },
+          {
+            "item": "1008421"
+          },
+          {
+            "item": "1008443"
+          },
+          {
+            "item": "1008595"
+          },
+          {
+            "item": "610154"
+          },
+          {
+            "item": "610163"
+          },
+          {
+            "item": "610172"
+          },
+          {
+            "item": "611533"
+          },
+          {
+            "item": "612830"
+          },
+          {
+            "item": "612833"
+          },
+          {
+            "item": "612836"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "AHU": {
+      "AHULongDescription": [],
+      "AHUManufacturerId": "9",
+      "AHUManufacturerName": "Danvent (Systemair)",
+      "AHUShortDescription": [],
+      "AirHandlingUnitName": "TCF  66",
+      "Id": "59082",
+      "Market": ["FI", "SE"]
+    },
+    "AHUAirSlots": [
+      {
+        "AHUSlotAmount": "6",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "592",
+        "AHUSlotName": "6 x 592x592x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Supply",
+        "AHUSlotWidthMM": "592",
+        "items": [
+          {
+            "item": "1012469"
+          },
+          {
+            "item": "1013238"
+          },
+          {
+            "item": "1013247"
+          },
+          {
+            "item": "1013402"
+          },
+          {
+            "item": "1014157"
+          },
+          {
+            "item": "1007902"
+          },
+          {
+            "item": "1007942"
+          },
+          {
+            "item": "1007962"
+          },
+          {
+            "item": "1008004"
+          },
+          {
+            "item": "1008005"
+          },
+          {
+            "item": "1008042"
+          },
+          {
+            "item": "1008079"
+          },
+          {
+            "item": "1008081"
+          },
+          {
+            "item": "1008239"
+          },
+          {
+            "item": "1008369"
+          },
+          {
+            "item": "1008593"
+          },
+          {
+            "item": "1008847"
+          },
+          {
+            "item": "610153"
+          },
+          {
+            "item": "610162"
+          },
+          {
+            "item": "610171"
+          },
+          {
+            "item": "612758"
+          },
+          {
+            "item": "612759"
+          },
+          {
+            "item": "612808"
+          }
+        ]
+      },
+      {
+        "AHUSlotAmount": "6",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "692",
+        "AHUSlotName": "6 x 592x692x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Exhaust",
+        "AHUSlotWidthMM": "592",
+        "items": []
+      }
+    ]
+  },
+  {
+    "AHU": {
+      "AHULongDescription": [],
+      "AHUManufacturerId": "9",
+      "AHUManufacturerName": "Danvent (Systemair)",
+      "AHUShortDescription": [],
+      "AirHandlingUnitName": "TCF  95",
+      "Id": "59085",
+      "Market": ["FI", "SE"]
+    },
+    "AHUAirSlots": [
+      {
+        "AHUSlotAmount": "3",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "592",
+        "AHUSlotName": "3 x 592x592x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Supply",
+        "AHUSlotWidthMM": "592",
+        "items": [
+          {
+            "item": "1012469"
+          },
+          {
+            "item": "1013238"
+          },
+          {
+            "item": "1013247"
+          },
+          {
+            "item": "1013402"
+          },
+          {
+            "item": "1014157"
+          },
+          {
+            "item": "1007902"
+          },
+          {
+            "item": "1007942"
+          },
+          {
+            "item": "1007962"
+          },
+          {
+            "item": "1008004"
+          },
+          {
+            "item": "1008005"
+          },
+          {
+            "item": "1008042"
+          },
+          {
+            "item": "1008079"
+          },
+          {
+            "item": "1008081"
+          },
+          {
+            "item": "1008239"
+          },
+          {
+            "item": "1008369"
+          },
+          {
+            "item": "1008593"
+          },
+          {
+            "item": "1008847"
+          },
+          {
+            "item": "610153"
+          },
+          {
+            "item": "610162"
+          },
+          {
+            "item": "610171"
+          },
+          {
+            "item": "612758"
+          },
+          {
+            "item": "612759"
+          },
+          {
+            "item": "612808"
+          }
+        ]
+      },
+      {
+        "AHUSlotAmount": "3",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "490",
+        "AHUSlotName": "3 x 592x490x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Supply",
+        "AHUSlotWidthMM": "592",
+        "items": [
+          {
+            "item": "1008370"
+          },
+          {
+            "item": "1008410"
+          },
+          {
+            "item": "1008669"
+          },
+          {
+            "item": "612793"
+          },
+          {
+            "item": "612796"
+          },
+          {
+            "item": "612799"
+          },
+          {
+            "item": "612856"
+          },
+          {
+            "item": "612859"
+          }
+        ]
+      },
+      {
+        "AHUSlotAmount": "3",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "287",
+        "AHUSlotName": "3 x 592x287x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Supply",
+        "AHUSlotWidthMM": "592",
+        "items": [
+          {
+            "item": "1007906"
+          },
+          {
+            "item": "1007908"
+          },
+          {
+            "item": "1007987"
+          },
+          {
+            "item": "1008211"
+          },
+          {
+            "item": "1008331"
+          },
+          {
+            "item": "1008697"
+          },
+          {
+            "item": "610951"
+          },
+          {
+            "item": "610957"
+          },
+          {
+            "item": "610959"
+          },
+          {
+            "item": "612843"
+          },
+          {
+            "item": "612846"
+          },
+          {
+            "item": "612849"
+          }
+        ]
+      },
+      {
+        "AHUSlotAmount": "3",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "592",
+        "AHUSlotName": "3 x 592x592x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Exhaust",
+        "AHUSlotWidthMM": "592",
+        "items": [
+          {
+            "item": "1012469"
+          },
+          {
+            "item": "1013238"
+          },
+          {
+            "item": "1013247"
+          },
+          {
+            "item": "1013402"
+          },
+          {
+            "item": "1014157"
+          },
+          {
+            "item": "1007902"
+          },
+          {
+            "item": "1007942"
+          },
+          {
+            "item": "1007962"
+          },
+          {
+            "item": "1008004"
+          },
+          {
+            "item": "1008005"
+          },
+          {
+            "item": "1008042"
+          },
+          {
+            "item": "1008079"
+          },
+          {
+            "item": "1008081"
+          },
+          {
+            "item": "1008239"
+          },
+          {
+            "item": "1008369"
+          },
+          {
+            "item": "1008593"
+          },
+          {
+            "item": "1008847"
+          },
+          {
+            "item": "610153"
+          },
+          {
+            "item": "610162"
+          },
+          {
+            "item": "610171"
+          },
+          {
+            "item": "612758"
+          },
+          {
+            "item": "612759"
+          },
+          {
+            "item": "612808"
+          }
+        ]
+      },
+      {
+        "AHUSlotAmount": "3",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "490",
+        "AHUSlotName": "3 x 592x490x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Exhaust",
+        "AHUSlotWidthMM": "592",
+        "items": [
+          {
+            "item": "1008370"
+          },
+          {
+            "item": "1008410"
+          },
+          {
+            "item": "1008669"
+          },
+          {
+            "item": "612793"
+          },
+          {
+            "item": "612796"
+          },
+          {
+            "item": "612799"
+          },
+          {
+            "item": "612856"
+          },
+          {
+            "item": "612859"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "AHU": {
+      "AHULongDescription": [],
+      "AHUManufacturerId": "9",
+      "AHUManufacturerName": "Danvent (Systemair)",
+      "AHUShortDescription": [],
+      "AirHandlingUnitName": "TCF 150",
+      "Id": "59092",
+      "Market": ["FI", "SE"]
+    },
+    "AHUAirSlots": [
+      {
+        "AHUSlotAmount": "9",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "592",
+        "AHUSlotName": "9 x 592x592x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Supply",
+        "AHUSlotWidthMM": "592",
+        "items": [
+          {
+            "item": "1012469"
+          },
+          {
+            "item": "1013238"
+          },
+          {
+            "item": "1013247"
+          },
+          {
+            "item": "1013402"
+          },
+          {
+            "item": "1014157"
+          },
+          {
+            "item": "1007902"
+          },
+          {
+            "item": "1007942"
+          },
+          {
+            "item": "1007962"
+          },
+          {
+            "item": "1008004"
+          },
+          {
+            "item": "1008005"
+          },
+          {
+            "item": "1008042"
+          },
+          {
+            "item": "1008079"
+          },
+          {
+            "item": "1008081"
+          },
+          {
+            "item": "1008239"
+          },
+          {
+            "item": "1008369"
+          },
+          {
+            "item": "1008593"
+          },
+          {
+            "item": "1008847"
+          },
+          {
+            "item": "610153"
+          },
+          {
+            "item": "610162"
+          },
+          {
+            "item": "610171"
+          },
+          {
+            "item": "612758"
+          },
+          {
+            "item": "612759"
+          },
+          {
+            "item": "612808"
+          }
+        ]
+      },
+      {
+        "AHUSlotAmount": "3",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "592",
+        "AHUSlotName": "3 x 287x592x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Supply",
+        "AHUSlotWidthMM": "287",
+        "items": [
+          {
+            "item": "1008024"
+          },
+          {
+            "item": "1009434"
+          },
+          {
+            "item": "1013163"
+          },
+          {
+            "item": "1013518"
+          },
+          {
+            "item": "1015360"
+          },
+          {
+            "item": "1007903"
+          },
+          {
+            "item": "1007904"
+          },
+          {
+            "item": "1007964"
+          },
+          {
+            "item": "1008014"
+          },
+          {
+            "item": "1008024"
+          },
+          {
+            "item": "1008187"
+          },
+          {
+            "item": "1008421"
+          },
+          {
+            "item": "1008443"
+          },
+          {
+            "item": "1008595"
+          },
+          {
+            "item": "610154"
+          },
+          {
+            "item": "610163"
+          },
+          {
+            "item": "610172"
+          },
+          {
+            "item": "611533"
+          },
+          {
+            "item": "612830"
+          },
+          {
+            "item": "612833"
+          },
+          {
+            "item": "612836"
+          }
+        ]
+      },
+      {
+        "AHUSlotAmount": "9",
+        "AHUSlotDepthMM": "520",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "592",
+        "AHUSlotName": "9 x 592x592x520",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Exhaust",
+        "AHUSlotWidthMM": "592",
+        "items": [
+          {
+            "item": "1012469"
+          },
+          {
+            "item": "1013238"
+          },
+          {
+            "item": "1013247"
+          },
+          {
+            "item": "1013402"
+          },
+          {
+            "item": "1014157"
+          },
+          {
+            "item": "1007902"
+          },
+          {
+            "item": "1007942"
+          },
+          {
+            "item": "1007962"
+          },
+          {
+            "item": "1008004"
+          },
+          {
+            "item": "1008005"
+          },
+          {
+            "item": "1008042"
+          },
+          {
+            "item": "1008079"
+          },
+          {
+            "item": "1008081"
+          },
+          {
+            "item": "1008239"
+          },
+          {
+            "item": "1008369"
+          },
+          {
+            "item": "1008593"
+          },
+          {
+            "item": "1008847"
+          },
+          {
+            "item": "610153"
+          },
+          {
+            "item": "610162"
+          },
+          {
+            "item": "610171"
+          },
+          {
+            "item": "612758"
+          },
+          {
+            "item": "612759"
+          },
+          {
+            "item": "612808"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "AHU": {
+      "AHULongDescription": [],
+      "AHUManufacturerId": "9",
+      "AHUManufacturerName": "Danvent (Systemair)",
+      "AHUShortDescription": [],
+      "AirHandlingUnitName": "DV 15",
+      "Id": "59097",
+      "Market": ["FI", "SE"]
+    },
+    "AHUAirSlots": [
+      {
+        "AHUSlotAmount": "2",
+        "AHUSlotDepthMM": "535",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "392",
+        "AHUSlotName": "2 x 490x392x535",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Supply",
+        "AHUSlotWidthMM": "490",
+        "items": []
+      },
+      {
+        "AHUSlotAmount": "2",
+        "AHUSlotDepthMM": "535",
+        "AHUSlotId": 0,
+        "AHUSlotLengthMM": "392",
+        "AHUSlotName": "2 x 490x392x535",
+        "AHUSlotOrder": 0,
+        "AHUSlotType": "Exhaust",
+        "AHUSlotWidthMM": "490",
+        "items": []
+      }
+    ]
+  }
+]

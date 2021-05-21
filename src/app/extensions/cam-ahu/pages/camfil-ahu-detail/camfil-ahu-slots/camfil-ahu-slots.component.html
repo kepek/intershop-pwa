@@ -1,98 +1,81 @@
-<mat-card class="slots mt-4">
-  <ng-container *ngFor="let s of unitAHUAirSlots">
-    <div class="slot__heading d-flex align-items-baseline">
-      <div class="d-flex align-items-center">
-        <mat-icon svgIcon="error" class="slot__icon"></mat-icon>
-        <div>
-          <span class="slot__title">Supply Slot 1</span>
-          <div class="attributes">
-            <camfil-product-attribute
-              [name]="'camfil.ahu.detail.filters.needed' | translate"
-              [value]="2"
-            ></camfil-product-attribute>
-            <camfil-product-attribute
-              [name]="'camfil.ahu.detail.filter.dimension' | translate"
-              [value]="550"
-            ></camfil-product-attribute>
+<mat-card class="slots mt-4" id="slots">
+  <ng-container *ngFor="let ahuAirSlot of ahuUnit?.ahuAirSlots">
+    <div
+      class="slot"
+      [class.slot--valid]="isAhuUnitSlotValid$(ahuUnit, ahuAirSlot.ahuSlotId) | async"
+      [id]="ahuAirSlot.ahuSlotTypeSlug"
+    >
+      <div class="slot__heading d-flex align-items-baseline">
+        <div class="d-flex align-items-center">
+          <ng-container *ngIf="isAhuUnitSlotValid$(ahuUnit, ahuAirSlot.ahuSlotId) | async; else invalidSlotIcon">
+            <mat-icon svgIcon="checkmark" class="slot__icon"></mat-icon>
+          </ng-container>
+          <ng-template #invalidSlotIcon>
+            <mat-icon svgIcon="error" class="slot__icon"></mat-icon>
+          </ng-template>
+          <div>
+            <span class="slot__title">
+              {{ ahuAirSlot.ahuSlotTypeName }}
+            </span>
+            <div class="attributes">
+              <camfil-product-attribute
+                [name]="'camfil.ahu.slot.amount' | translate"
+                [value]="ahuAirSlot.ahuSlotAmount"
+              ></camfil-product-attribute>
+              <camfil-product-attribute
+                [name]="'camfil.ahu.slot.dimensions' | translate"
+                [value]="ahuAirSlot.ahuSlotDimensions"
+                class="ml-2"
+              ></camfil-product-attribute>
+            </div>
           </div>
         </div>
+        <a class="d-block text-right">
+          <mat-icon svgIcon="search" class="size-15"></mat-icon>
+          {{ 'camfil.ahu.slot.how_to_choose' | translate: { '0': ahuAirSlot.ahuSlotType } }}
+        </a>
       </div>
-      <a href="" class="d-block text-right">
-        <mat-icon svgIcon="search" class="size-15"></mat-icon>
-        {{ 'How to choose supply filter' | translate }}
-      </a>
-    </div>
-
-    <div class="slot__products">
-      <ng-container *ngFor="let s of items">
-        <mat-card class="d-flex align-items-center slot-product">
-          <a class="slot-product__image">
-            <camfil-product-image [product]="product" imageType="S" class="product-image"></camfil-product-image>
-          </a>
-          <div>
-            <camfil-product-title [product]="product"></camfil-product-title>
-            <ul class="slot-product__attributes">
-              <li>
-                <camfil-product-attribute
-                  [name]="'camfil.product.id.label' | translate"
-                  [value]="product.sku"
-                ></camfil-product-attribute>
-              </li>
-              <li>
-                <camfil-product-attribute
-                  [name]="'camfil.product.ISO.class' | translate"
-                  [value]="1"
-                ></camfil-product-attribute>
-              </li>
-              <li>
-                <camfil-product-attribute
-                  [name]="'camfil.product.efficiency' | translate"
-                  [value]="2"
-                ></camfil-product-attribute>
-              </li>
-              <li>
-                <a href="">
-                  <mat-icon svgIcon="search" class="size-15"></mat-icon>
-                  {{ 'Quickview' | translate }}
-                </a>
-              </li>
-              <li>
-                <camfil-product-inventory [product]="product"></camfil-product-inventory>
-              </li>
-            </ul>
-          </div>
-
-          <ng-container>
-            <div class="prices">
-              <ng-container *ngTemplateOutlet="price"></ng-container>
-            </div>
-            <!-- <form>
-              <camfil-product-quantity
-                [allowZeroQuantity]="false"
-                [quantityLabel]="''"
-                [product]="product"
-                controlName="quantity"
-              ></camfil-product-quantity>
-            </form> -->
-            <button mat-raised-button class="slot-product__btn" color="accent">
-              <mat-icon svgIcon="plus"></mat-icon>{{ 'camfil.ahu.detail.add.to.list' | translate }}
-            </button>
+      <div class="slot__products">
+        <ng-container *ngFor="let item of ahuAirSlot.items">
+          <ng-container *ngIf="getAhuUnitSlotItemProduct$(ahuUnit, ahuAirSlot.ahuSlotId, item.sku) | async as product">
+            <camfil-product-item-simple
+              *ngIf="!product.failed"
+              class="mt-1 mb-1 slot-product"
+              [class.slot-product--added]="isAhuUnitSlotItemAdded$(ahuUnit, ahuAirSlot.ahuSlotId, item.sku) | async"
+              [quantity]="getAhuUnitSlotItemQuantity$(ahuUnit, ahuAirSlot.ahuSlotId, item.sku) | async"
+              [configuration]="productConfiguration"
+              [product]="product"
+              [actionTemplate]="actionTemplate"
+            >
+            </camfil-product-item-simple>
+            <ng-template #actionTemplate let-quantity="quantity">
+              <button
+                [disabled]="
+                  !quantity ||
+                  ((isAhuUnitSlotValid$(ahuUnit, ahuAirSlot.ahuSlotId) | async) &&
+                    !(isAhuUnitSlotItemAdded$(ahuUnit, ahuAirSlot.ahuSlotId, item.sku) | async))
+                "
+                (click)="toggleAhuSlotItem(ahuAirSlot, item, quantity)"
+                mat-raised-button
+                class="slot-product__btn ml-2"
+                color="accent"
+              >
+                <ng-container
+                  *ngIf="isAhuUnitSlotItemAdded$(ahuUnit, ahuAirSlot.ahuSlotId, item.sku) | async; else addToList"
+                >
+                  <mat-icon svgIcon="checkmark"></mat-icon>
+                  {{ 'camfil.ahu.slot.item.button.added_to_list.label' | translate }}
+                </ng-container>
+              </button>
+            </ng-template>
           </ng-container>
-        </mat-card>
-      </ng-container>
+        </ng-container>
+      </div>
     </div>
   </ng-container>
 </mat-card>
 
-<ng-template #price>
-  <camfil-product-attribute
-    [name]="'camfil.product.list_price.label' | translate"
-    [value]="product.listPrice | ishPrice"
-    class="slot-product__price"
-  ></camfil-product-attribute>
-  <camfil-product-attribute
-    [name]="'camfil.product.your_price.label' | translate"
-    [value]="product.salePrice | ishPrice"
-    class="slot-product__price"
-  ></camfil-product-attribute>
+<ng-template #addToList>
+  <mat-icon svgIcon="plus"></mat-icon>
+  {{ 'camfil.ahu.slot.item.button.add_to_list.label' | translate }}
 </ng-template>

@@ -31,10 +31,27 @@
 }
 
 .product-data {
-  background-color: rgba($color-corporate, 0.1);
+  background-color: rgba(0, 103, 62, 0.1);
 
-  .product-attributes,
+  h2 {
+    margin: 32px 0 16px 0;
+    text-transform: none;
+  }
+
+  .product-description,
+  .product-attributes {
+    padding: ($space-default * 2) $space-default;
+
+    @media (min-width: $screen-md-min) {
+      padding: 50px $space-default * 2;
+    }
+
+    @media (min-width: $screen-lg-min) {
+      padding: 60px 135px;
+    }
+  }
+
   .product-description {
-    padding: 60px 135px;
+    border-left: 1px solid $greyD9;
   }
 }

@@ -24,7 +24,7 @@ describe('Icc Effects', () => {
     TestBed.configureTestingModule({
       imports: [
         BrowserTransferStateModule,
-        CamIccStoreModule.forTesting('_icc'),
+        CamIccStoreModule.forTesting('icc'),
         CoreStoreModule.forTesting(['configuration'], [ConfigurationEffects, IccEffects]),
       ],
       providers: [

@@ -4,12 +4,12 @@
       <span class="title">AHU Demo</span>
     </mat-toolbar>
     <div class="demo-content">
+      <!-- <ish-loading *ngIf="ahuLoading$ | async"></ish-loading> -->
       <!-- Manufacturers -->
       <mat-card>
         <mat-card-content>
           <h2 class="example-h2">Manufacturers</h2>
-
-          <form [formGroup]="ahuForm" (ngSubmit)="submitAhuForm()">
+          <form [formGroup]="ahuForm">
             <mat-form-field appearance="fill">
               <mat-label>Manufacturer</mat-label>
               <mat-select formControlName="manufacturer" (selectionChange)="selectAhuManufacturer($event)">
@@ -25,24 +25,69 @@
               <mat-label>Model</mat-label>
               <mat-select formControlName="unit" (selectionChange)="selectAhuUnit($event)">
                 <mat-option [value]="undefined">None</mat-option>
-                <ng-container *ngIf="ahuUnits$ | async as ahuUnits">
-                  <mat-option *ngFor="let unit of ahuUnits" [value]="unit.ahu.id">
-                    {{ unit.ahu.airHandlingUnitName | unitAhuLongDescription }}
+                <ng-container *ngIf="ahuUnitsByManufacturerId$ | async as ahuUnitsByManufacturerId">
+                  <mat-option *ngFor="let unit of ahuUnitsByManufacturerId" [value]="unit.ahu.id">
+                    {{ unit.ahu.airHandlingUnitName }}
                   </mat-option>
                 </ng-container>
               </mat-select>
             </mat-form-field>
           </form>
           <hr />
+          <ng-container *ngIf="selectedAhuUnit$ | async as ahuUnit">
+            <h2>Summary</h2>
+            <pre>selectedAhuUnitBasketSummary$: {{ selectedAhuUnitBasketSummary$ | async | json }}</pre>
+            <pre>selectedAhuUnitBasket$: {{ selectedAhuUnitBasket$ | async | json }}</pre>
+            <hr />
+            <h1>Unit: {{ ahuUnit.ahu.ahuManufacturerName }} {{ isAhuUnitValid$(ahuUnit) | async | json }}</h1>
+            <fieldset *ngFor="let ahuAirSlot of ahuUnit?.ahuAirSlots">
+              <legend>
+                {{ ahuAirSlot.ahuSlotTypeName }} / {{ ahuAirSlot.ahuSlotId }}
+                /
+                {{ isAhuUnitSlotValid$(ahuUnit, ahuAirSlot.ahuSlotId) | async | json }}
+              </legend>
+              <ol>
+                <li *ngFor="let item of ahuAirSlot.items">
+                  {{ item.sku }} / {{ ahuUnit.ahu.ahuManufacturerId }} / {{ ahuUnit.id }} / {{ ahuAirSlot.ahuSlotId }}
+                  /
+                  {{ isAhuUnitSlotItemAdded$(ahuUnit, ahuAirSlot.ahuSlotId, item.sku) | async | json }}
+                  /
+                  {{ isAhuUnitSlotItemProductAvailable$({ sku: item.sku }) | async | json }}
+                  /
+                  <ng-container *ngIf="isAhuUnitSlotItemProductAvailable$({ sku: item.sku }) | async">
+                    <button
+                      (click)="addAhuSlotItemToList(ahuUnit, ahuAirSlot.ahuSlotId, item.sku)"
+                      [disabled]="isAhuUnitSlotValid$(ahuUnit, ahuAirSlot.ahuSlotId) | async"
+                    >
+                      Add
+                    </button>
+                    /
+                    <button
+                      (click)="removeAhuSlotItemFromList(ahuUnit, ahuAirSlot.ahuSlotId, item.sku)"
+                      [disabled]="!(isAhuUnitSlotItemAdded$(ahuUnit, ahuAirSlot.ahuSlotId, item.sku) | async)"
+                    >
+                      Remove
+                    </button>
+                  </ng-container>
+                </li>
+              </ol>
+            </fieldset>
+          </ng-container>
+          <hr />
+          <pre>ahuLoading$ {{ ahuLoading$ | async | json }}</pre>
+          <hr />
           <pre>ahuManufacturers$ {{ ahuManufacturers$ | async }}</pre>
-          <pre>ahuManufacturersLoading$ {{ ahuManufacturersLoading$ | async }}</pre>
-          <pre>ahuManufacturersError$ {{ ahuManufacturersError$ | async }}</pre>
-          <pre>selectedAhuManufacturer$ {{ selectedAhuManufacturer$ | async }}</pre>
+          <pre>ahuManufacturersLoading$ {{ ahuManufacturersLoading$ | async | json }}</pre>
+          <pre>ahuManufacturersError$ {{ ahuManufacturersError$ | async | json }}</pre>
+          <pre>ahuManufacturersInitialized$ {{ ahuManufacturersInitialized$ | async | json }}</pre>
+          <pre>selectedAhuManufacturer$ {{ selectedAhuManufacturer$ | async | json }}</pre>
           <hr />
           <pre>ahuUnits$ {{ ahuUnits$ | async }}</pre>
-          <pre>ahuUnitsLoading$ {{ ahuUnitsLoading$ | async }}</pre>
-          <pre>ahuUnitsError$ {{ ahuUnitsError$ | async }}</pre>
-          <pre>selectedAhuUnit$ {{ selectedAhuUnit$ | async }}</pre>
+          <pre>ahuUnitsByManufacturerId$ {{ ahuUnitsByManufacturerId$ | async }}</pre>
+          <pre>ahuUnitsLoading$ {{ ahuUnitsLoading$ | async | json }}</pre>
+          <pre>ahuUnitsError$ {{ ahuUnitsError$ | async | json }}</pre>
+          <pre>selectedAhuUnitAirSlotTypes$ {{ selectedAhuUnitAirSlotTypes$ | async | json }}</pre>
+          <pre>selectedAhuUnit$ {{ selectedAhuUnit$ | async | json }}</pre>
           <ng-template #ahuLoading>Loading AHU Data... </ng-template>
         </mat-card-content>
       </mat-card>

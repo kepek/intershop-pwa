@@ -2,19 +2,31 @@ import { TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
 import { anything, instance, mock, verify, when } from 'ts-mockito';
 
+import { AppFacade } from 'ish-core/facades/app.facade';
+
 import { ApiService as IccApiService } from '../../../cam-icc/services/api/api.service';
 
 import { AhuService } from './ahu.service';
 
 describe('Ahu Service', () => {
+  let appFacade: AppFacade;
   let iccApiServiceMock: IccApiService;
   let ahuService: AhuService;
 
   beforeEach(() => {
+    appFacade = mock(AppFacade);
     iccApiServiceMock = mock(IccApiService);
+
+    when(appFacade.getCamfilChannel$).thenReturn(of('SE'));
+    when(appFacade.getCountryByChannel$).thenReturn(of('SE'));
+
     TestBed.configureTestingModule({
-      providers: [{ provide: IccApiService, useFactory: () => instance(iccApiServiceMock) }],
+      providers: [
+        { provide: AppFacade, useFactory: () => instance(appFacade) },
+        { provide: IccApiService, useFactory: () => instance(iccApiServiceMock) },
+      ],
     });
+
     ahuService = TestBed.inject(AhuService);
   });
 
