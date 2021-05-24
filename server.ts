@@ -35,6 +35,18 @@ global['navigator'] = win.navigator;
 export function app(): express.Express {
   const logging = /on|1|true|yes/.test(process.env.LOGGING?.toLowerCase());
 
+  console.log({
+    'process.env.PORT': process.env.PORT,
+    'process.env.LOGGING': process.env.LOGGING,
+    'process.env.ICM_BASE_URL': process.env.ICM_BASE_URL,
+    'process.env.TRUST_ICM': process.env.TRUST_ICM,
+    'process.env.NODE_TLS_REJECT_UNAUTHORIZED': process.env.NODE_TLS_REJECT_UNAUTHORIZED,
+    'process.env.SSR_HYBRID': process.env.SSR_HYBRID,
+    'process.env.PROXY_ICM': process.env.PROXY_ICM,
+    'process.env.PROMETHEUS': process.env.PROMETHEUS,
+    'process.env.SSL': process.env.SSL,
+  });
+
   const ICM_BASE_URL = process.env.ICM_BASE_URL || environment.icmBaseURL;
   if (!ICM_BASE_URL) {
     console.error('ICM_BASE_URL not set');
@@ -125,7 +137,7 @@ export function app(): express.Express {
     },
     // fool ICM so it thinks it's running here
     // https://www.npmjs.com/package/express-http-proxy#preservehosthdr
-    preserveHostHdr: true,
+    preserveHostHdr: false,
   });
 
   const angularUniversal = (req: express.Request, res: express.Response) => {
