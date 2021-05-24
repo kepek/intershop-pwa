@@ -9,7 +9,7 @@ import { Address } from 'ish-core/models/address/address.model';
 import { Link } from 'ish-core/models/link/link.model';
 import { ZipCodeData, ZipCodeInfo } from 'ish-core/models/zip-codes/zip-codes.interface';
 import { ApiService, unpackEnvelope } from 'ish-core/services/api/api.service';
-import { getCurrentLocale } from 'ish-core/store/core/configuration';
+import { getCountryByChannel, getCurrentLocale } from 'ish-core/store/core/configuration';
 
 /**
  * The Address Service handles the interaction with the REST API concerning addresses.
@@ -125,8 +125,10 @@ export class AddressService {
         };
 
         return this.apiService.post<ZipCodeData[]>(`zipcodequery`, data).pipe(
-          withLatestFrom(this.store.pipe(select(getCurrentLocale))),
-          map(([info, currentLocale]) => AddressMapper.zipCodefromData(code, info, currentLocale))
+          withLatestFrom(this.store.pipe(select(getCurrentLocale)), this.store.pipe(select(getCountryByChannel))),
+          map(([info, currentLocale, countryChannel]) =>
+            AddressMapper.zipCodefromData(code, info, currentLocale, countryChannel)
+          )
         );
       })
     );

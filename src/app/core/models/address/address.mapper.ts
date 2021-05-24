@@ -74,12 +74,20 @@ export class AddressMapper {
       throw new Error(`'camCard' is required for the mapping`);
     }
   }
-  static zipCodefromData(code: string, data: ZipCodeData[], currentLocale: Locale): ZipCodeInfo {
+  static zipCodefromData(
+    code: string,
+    data: ZipCodeData[],
+    { value }: Locale,
+    countryFromChannel: string
+  ): ZipCodeInfo {
     if (!data.length) {
       return { city: undefined, zipCode: code };
     }
 
-    const info = data.find(el => el.language === currentLocale.value.toUpperCase()) || data[0];
+    const info =
+      data.find(el => el.language === value.toUpperCase()) ||
+      data.find(el => el.language === countryFromChannel) ||
+      data[0];
 
     return {
       id: info.cityAlias || info.cityId,
