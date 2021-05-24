@@ -7,7 +7,7 @@ const getIccState = createSelector(getCamIccState, state => state?.icc);
 export const getICCProxyURL = createSelector(getIccState, state => state?.iccProxyURL);
 
 export const getICCServerURL = createSelector(getIccState, state =>
-  state?.iccProxyURL && state?.iccServer ? `${state.iccProxyURL}/${state.iccServer}` : undefined
+  state?.iccServer ? `/${state.iccServer}`.replace(/\/+$/, '') : undefined
 );
 
 export const getIccRestEndpoint = getICCServerURL;

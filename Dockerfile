@@ -28,6 +28,7 @@ COPY --from=buildstep /workspace/dist /dist
 ARG displayVersion=
 LABEL displayVersion="${displayVersion}"
 ENV DISPLAY_VERSION=${displayVersion}
+ENV PROXY_ICM=true
 ARG configuration=production
 LABEL configuration="${configuration}"
 EXPOSE 4200

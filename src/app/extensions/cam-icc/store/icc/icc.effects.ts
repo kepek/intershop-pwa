@@ -28,7 +28,7 @@ export class IccEffects implements OnInitEffects {
         ofType(initIcc),
         take(1),
         withLatestFrom(
-          this.stateProperties.getStateOrEnvOrDefault<string>('ICM_BASE_URL', 'icmBaseURL'),
+          this.stateProperties.getStateOrEnvOrDefault<string>('ICC_PROXY_URL', 'iccProxyURL'),
           this.stateProperties.getStateOrEnvOrDefault<string>('ICC_SERVER', 'iccServer'),
           this.stateProperties.getStateOrEnvOrDefault<string>('ICC_TOKEN', 'iccToken'),
           this.stateProperties.getStateOrEnvOrDefault<string>('ICC_TOKEN_HEADER_KEY', 'iccTokenHeaderKey')

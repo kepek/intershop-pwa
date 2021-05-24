@@ -22,7 +22,7 @@ export function createDevProxy(env: Environment) {
     delete proxy.allowedDomains;
     delete proxy.allowedMethods;
 
-    const { route, changeOrigin = true, logLevel = 'debug', secure = true, ...rest } = proxy;
+    const { route, changeOrigin = true, logLevel = 'debug', secure = false, ...rest } = proxy;
 
     devProxy[`/${route}/**`] = {
       ...rest,
@@ -65,7 +65,13 @@ export function createProxy(env: Environment) {
       // Check only in production environment;
       // Check if the request origin header value is one of the allowed domains;
       if (NODE_ENV === 'production' && req?.headers?.origin) {
-        checks.push([...globalAllowedDomains, ...allowedDomains].includes(req.headers.origin));
+        const isAllowedDomain = [...globalAllowedDomains, ...allowedDomains].includes(req.headers.origin);
+
+        if (!isAllowedDomain) {
+          console.log(`Your domain ${req.headers.origin} is not whitelisted.`);
+        }
+
+        checks.push(isAllowedDomain);
       }
 
       return checks.every(check => check === true);

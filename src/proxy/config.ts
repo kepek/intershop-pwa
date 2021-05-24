@@ -66,7 +66,7 @@ export function createProxiesConfig(env: Environment): Config {
   }
 
   const config: Config = {
-    allowedDomains: ['http://example.com', ...defaultAllowedDomains],
+    allowedDomains: [`http://example.com:${PORT}`, ...defaultAllowedDomains],
     proxies: [],
   };
 
@@ -109,7 +109,7 @@ export function createProxiesConfig(env: Environment): Config {
       [getSysEnvOrAppEnv('ICC_TOKEN_HEADER_KEY', 'iccTokenHeaderKey')]: getSysEnvOrAppEnv('ICC_TOKEN', 'iccToken'),
     },
     pathRewrite: {
-      [`^/${getSysEnvOrAppEnv('ICC_SERVER', 'iccServer')}`]: '', // `http://localhost:4200/ICC/very/deep/path` -> `http://example.com/very/deep/path`
+      [`^/${getSysEnvOrAppEnv('ICC_SERVER', 'iccServer')}`]: '', // `http://localhost:4200/ICC/very/deep/path` -> `http://api.service.com/very/deep/path`
     },
     onProxyReq(proxyReq) {
       proxyReq.removeHeader('origin'); // ¯\_(ツ)_/¯
