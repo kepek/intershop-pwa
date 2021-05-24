@@ -7,9 +7,10 @@ import {
   Input,
   OnDestroy,
   OnInit,
-  OnChanges,
+
   Output,
   ViewChild,
+
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
@@ -50,7 +51,7 @@ interface Order extends Bucket {
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['./camfil-checkout-list.component.scss'],
 })
-export class CamfilCheckoutListComponent implements OnInit, OnChanges, OnDestroy {
+export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
   private static REQUIRED_COMPLETENESS_LEVEL = ProductCompletenessLevel.List;
   @Input() order: Order;
   @Input() buckets: Bucket[];
@@ -80,7 +81,8 @@ export class CamfilCheckoutListComponent implements OnInit, OnChanges, OnDestroy
   calendarException = [];
   orderAddress = {};
   emailRecipients: string[];
-  basketExtensions: BasketExtensions;
+  basketExtensions: BasketExtensions[];
+  basketExtensions$: Observable<BasketExtensions[]>;
 
   @ViewChild(CamfilSmallCtaModalComponent) modal: CamfilSmallCtaModalComponent;
 
@@ -97,6 +99,12 @@ export class CamfilCheckoutListComponent implements OnInit, OnChanges, OnDestroy
     this.calendarExceptions$ = this.checkoutFacade.calendarExceptions$;
 
     this.orderAddress = { ...this.order.shipToAddressFull, countryCode: '' };
+
+    this.basketExtensions$ = this.checkoutFacade.basketExtensions$;
+
+    this.basketExtensions$?.pipe(takeUntil(this.destroy$)).subscribe(basketExtensions => {
+      this.basketExtensions = basketExtensions;
+    });
 
     this.calendarExceptions$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(exceptions => {
       this.calendarException = exceptions.map((element: { date: string }) => {
@@ -117,10 +125,6 @@ export class CamfilCheckoutListComponent implements OnInit, OnChanges, OnDestroy
 
       this.updateEmailRecipients();
     }
-  }
-
-  ngOnChanges(): void {
-    this.updateEmailRecipients();
   }
 
   filterDates(date) {
@@ -151,6 +155,7 @@ export class CamfilCheckoutListComponent implements OnInit, OnChanges, OnDestroy
 
       const updated: BasketExtensions = {
         ...this.order,
+        ...this.selectCurrentExtensions(),
         [field]: formField.value,
       };
 
@@ -268,8 +273,8 @@ export class CamfilCheckoutListComponent implements OnInit, OnChanges, OnDestroy
     let items = this.order && this.order.lineItems;
 
     /** Get this order extensions */
-    this.updateBasketExtensions();
-    this.isPartialDelivery = this.basketExtensions?.isPartialDelivery || false;
+    // this.updateBasketExtensions();
+    this.isPartialDelivery = this.selectCurrentExtensions()?.isPartialDelivery || false;
     if (items?.length) {
       items = items.map(li => {
         const earliestDeliveryDate = this.getDeliveryDate(li.productSKU);
@@ -382,7 +387,7 @@ export class CamfilCheckoutListComponent implements OnInit, OnChanges, OnDestroy
 
     const basketExtensionUpdate = {
       ...this.order,
-      ...this.basketExtensions,
+      ...this.selectCurrentExtensions(),
       deliveryDate: deliveryDateValue,
       isPartialDelivery: isPartial,
     };
@@ -418,11 +423,11 @@ export class CamfilCheckoutListComponent implements OnInit, OnChanges, OnDestroy
   }
 
   openAddEmailRecipientModal() {
-    this.updateBasketExtensions();
+    // this.updateBasketExtensions();
     this.dialog.open(AddEmailRecipientModalComponent, {
       width: '360px',
       autoFocus: false,
-      data: { ...this.order, emailRecipients: this.basketExtensions?.emailRecipients || [] },
+      data: { ...this.order, emailRecipients: this.selectCurrentExtensions()?.emailRecipients || [] },
     });
   }
 
@@ -432,21 +437,41 @@ export class CamfilCheckoutListComponent implements OnInit, OnChanges, OnDestroy
     const { basket, deliveryAddressId } = this.order;
     const basketExtensionUpdate: BasketExtensions = {
       ...this.order,
-      ...this.basketExtensions,
+      ...this.selectCurrentExtensions(),
       emailRecipients: updatedRecipients,
     };
 
     this.shoppingFacade.updateBucket(basket, deliveryAddressId, basketExtensionUpdate);
   }
 
-  updateBasketExtensions() {
-    this.basketExtensions = this.basket?.basketExtensions?.find(
-      bucket => bucket?.shippingAddress?.id === this.order?.shipToAddressFull?.id
-    );
+  // updateBasketExtensions() {
+  //   // this.basketExtensions = this.basket?.basketExtensions?.find(
+  //   //   bucket => bucket?.shippingAddress?.id === this.order?.shipToAddressFull?.id
+  //   // );
+
+  //   this.basketExtensions$?.pipe(takeUntil(this.destroy$)).subscribe(basketExtensions => {
+  //     this.basketExtensions = basketExtensions?.find(
+  //       extension => extension?.shippingAddress?.id === this.order?.shipToAddressFull?.id
+  //     );
+  //   });
+  // }
+
+  selectCurrentExtensions() {
+    return this.basketExtensions?.find(  extension => extension?.shippingAddress?.id === this.order?.shipToAddressFull?.id)
   }
 
   updateEmailRecipients() {
-    this.updateBasketExtensions();
-    this.emailRecipients = this.basketExtensions?.emailRecipients?.filter(er => er !== '');
+    // this.updateBasketExtensions();
+    // console.log('this.basketExtensions', this.basketExtensions, 'order', this.order);
+    // this.emailRecipients = this.basketExtensions?.emailRecipients?.filter(er => er !== '');
+
+    // this.basketExtensions$?.pipe(takeUntil(this.destroy$)).subscribe(basketExtensions => {
+    //   const currentExtension = basketExtensions?.find(
+    //     extension => extension?.shippingAddress?.id === this.order?.shipToAddressFull?.id
+    //   );
+    //   this.emailRecipients = this.selectCurrentExtensions()?.emailRecipients?.filter(er => er !== '');
+    // });
+
+    this.emailRecipients = this.selectCurrentExtensions()?.emailRecipients?.filter(er => er !== '');
   }
 }
