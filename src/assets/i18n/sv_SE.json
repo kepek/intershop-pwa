@@ -690,6 +690,7 @@
   "camfil.account.login_status.my_pages": "Min sidor",
   "camfil.account.orderdetails.camfil_no.label": "Camfils ordernummer",
   "camfil.account.orderdetails.contact_person.label": "Kontaktperson",
+  "camfil.account.orderdetails.customer_department.label": "sv_Department",
   "camfil.account.orderdetails.customer_id.label": "Kund ID",
   "camfil.account.orderdetails.customer_name.label": "Kundnamn",
   "camfil.account.orderdetails.date_of_order.label": "Beställningsdatum",

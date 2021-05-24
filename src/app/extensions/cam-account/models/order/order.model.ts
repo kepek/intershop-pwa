@@ -8,6 +8,7 @@ export interface Order {
   contactPerson?: string;
   currency?: string;
   customerName?: string;
+  customerDepartment?: string;
   customerNo?: string;
   customerOrderNumber?: string;
   deliveryDate?: number;
