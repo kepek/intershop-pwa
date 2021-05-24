@@ -45,6 +45,7 @@ export function app(): express.Express {
     'process.env.PROXY_ICM': process.env.PROXY_ICM,
     'process.env.PROMETHEUS': process.env.PROMETHEUS,
     'process.env.SSL': process.env.SSL,
+    'process.env.UPSTREAM_PWA': process.env.UPSTREAM_PWA,
   });
 
   const ICM_BASE_URL = process.env.ICM_BASE_URL || environment.icmBaseURL;
