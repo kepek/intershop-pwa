@@ -11,6 +11,7 @@ import {
   OnInit,
   Output,
   SimpleChanges,
+  TemplateRef,
   ViewChild,
 } from '@angular/core';
 import { MatCheckboxChange } from '@angular/material/checkbox';
@@ -84,6 +85,7 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
   @Input() camCardLoading: boolean;
   @Output() addCamCard = new EventEmitter<CamCard>();
   @ViewChild(MatSort) sort: MatSort;
+  @ViewChild('needToCompleteAddress') needToCompleteAddress: TemplateRef<unknown>;
   isStickyCamCardToolbar$: Observable<boolean>;
   camCardsProcessed: MatTableDataSource<CamCard>;
   columnsToDisplay = [
@@ -119,6 +121,7 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
   basketLoading = false;
   totalProductsInBasket: number;
   productAddingInProgress = false;
+  camCardsWithNoCompleteAddresses: CamCard[];
 
   ngOnInit() {
     this.isMobileView = this.isMobile();
@@ -310,6 +313,17 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
       };
       return acc;
     }, {}) as CamCamProductsAddToCart;
+
+    this.camCardsWithNoCompleteAddresses = this.camCards.filter(({ deliveryAddress, id }) => {
+      const { postalCode, city, addressLine1 } = deliveryAddress;
+      // + add filter by checked CC
+      return list[id] && (!postalCode || !city || !addressLine1);
+    });
+
+    if (this.camCardsWithNoCompleteAddresses.length) {
+      this.dialog.open(this.needToCompleteAddress, {});
+      return;
+    }
 
     for (const property in list) {
       if (list.hasOwnProperty(property)) {
