@@ -115,5 +115,4 @@ export const isProductsReadyToPlaceOrder = createSelector(
     (validation.valid || !validation?.errors?.length) && lastAdded ? added && updated : true
 );
 
-
 export const getBasketExtensions = createSelector(getBasketState, basket => basket.basket.basketExtensions);

@@ -443,8 +443,6 @@ export const deleteBucketFail = createAction('[Basket API] Delete Bucket Fail', 
 
 export const deleteBucketSuccess = createAction('[Basket API] Delete Bucket Success');
 
-
-
 export const addProductsFromCamCard = createAction(
   '[Basket API] Add Products From CamCard',
   payload<{ itemsInfo: CamCamProductsAddToCartItems; commonShippingMethodId: string; basketId: string }>()
