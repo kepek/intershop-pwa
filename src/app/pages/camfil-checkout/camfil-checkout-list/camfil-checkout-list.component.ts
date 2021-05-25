@@ -7,10 +7,8 @@ import {
   Input,
   OnDestroy,
   OnInit,
-
   Output,
   ViewChild,
-
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
@@ -96,7 +94,9 @@ export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
   ) {}
 
   get currentBasketExtensions() {
-    return this.basketExtensions?.find(  extension => extension?.shippingAddress?.id === this.order?.shipToAddressFull?.id)
+    return this.basketExtensions?.find(
+      extension => extension?.shippingAddress?.id === this.order?.shipToAddressFull?.id
+    );
   }
 
   ngOnInit(): void {
@@ -447,13 +447,7 @@ export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
     this.shoppingFacade.updateBucket(basket, deliveryAddressId, basketExtensionUpdate);
   }
 
-
-  selectCurrentExtensions() {
-    return this.basketExtensions?.find(  extension => extension?.shippingAddress?.id === this.order?.shipToAddressFull?.id)
-  }
-
   updateEmailRecipients() {
-
     this.emailRecipients = this.currentBasketExtensions?.emailRecipients?.filter(er => er !== '');
   }
 }
