@@ -7,6 +7,8 @@ import { createProxiesConfig, RequestMethod } from './config';
 
 const NODE_ENV = process.env.NODE_ENV;
 
+const STRICT = false;
+
 /**
  * Create Development Proxy
  * @param env
@@ -69,7 +71,7 @@ export function createProxy(env: Environment) {
 
       // Check only in production environment;
       // Check if the request origin header value is one of the allowed domains;
-      if (NODE_ENV === 'production' && req?.headers?.origin) {
+      if (STRICT && req?.headers?.origin) {
         const isAllowedDomain = [...globalAllowedDomains, ...allowedDomains].includes(req.headers.origin);
 
         if (!isAllowedDomain) {
