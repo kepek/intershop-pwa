@@ -20,7 +20,7 @@ export class CamfilB2bContactMapper {
   }
 
   static fromListData(data: CamfilB2bContactData[]): CamfilB2bContact[] {
-    if (data?.length) {
+    if (data) {
       return data.map(CamfilB2bContactMapper.fromData);
     } else {
       throw new Error('CamfilB2bContactData[] is required');

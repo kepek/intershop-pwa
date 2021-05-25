@@ -27,7 +27,7 @@ export class CamfilB2bUserMapper {
   }
 
   static fromListData(data: CamfilB2bUserData[]): CamfilB2bUser[] {
-    if (data?.length) {
+    if (data) {
       return data.map(CamfilB2bUserMapper.fromData);
     } else {
       throw new Error('camfilB2bUsersData is required');

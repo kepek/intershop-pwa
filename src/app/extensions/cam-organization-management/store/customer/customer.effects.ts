@@ -63,7 +63,7 @@ export class CustomerEffects {
 
             actions.push(loadCustomersSuccess({ customers }));
 
-            if (path.endsWith('account/organization')) {
+            if (customers?.length > 0 && path.endsWith('account/organization')) {
               actions.push(loadOrganizationUsers({ customerIDs: customers.map(c => c.id) }));
             }
 
