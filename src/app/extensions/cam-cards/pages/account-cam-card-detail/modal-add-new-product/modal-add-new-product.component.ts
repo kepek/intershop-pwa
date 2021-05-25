@@ -74,7 +74,7 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy {
     this.productForm = new FormGroup({
       quantity: new FormControl(1),
       sku: new FormControl('', [Validators.required]),
-      boxLabel: new FormControl('', [Validators.max(60)]),
+      boxLabel: new FormControl('', [Validators.maxLength(60)]),
     });
 
     if (this.addToOrder) {
