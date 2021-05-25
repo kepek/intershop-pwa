@@ -1052,6 +1052,7 @@
   "camfil.navigation.filter.measurements.width": "Bredd",
   "camfil.navigation.filterClearAll.message": "Rensa alla filter",
   "camfil.navigation.see.all.airFilters": "Se alla luftfilter",
+  "camfil.order_delete.confirmation": "sv_Order succesfully deleted",
   "camfil.product.add_to_cart.not_logged.label": "Logga in för att köpa",
   "camfil.product.add_to_compare.label": "Lägg till för att jämföra",
   "camfil.product.attributes.more": "Mer information",

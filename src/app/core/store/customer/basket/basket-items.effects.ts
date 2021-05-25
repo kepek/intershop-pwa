@@ -355,10 +355,9 @@ export class BasketItemsEffects {
       ofType(deleteBucket),
       mapToPayload(),
       concatMap(payload =>
-        this.basketService.deleteBucket(payload.basketId, payload.bucketId).pipe(
-          map(deleteBucketSuccess),
-          mapErrorToAction(deleteBucketFail)
-        )
+        this.basketService
+          .deleteBucket(payload.basketId, payload.bucketId)
+          .pipe(map(deleteBucketSuccess), mapErrorToAction(deleteBucketFail))
       )
     )
   );
@@ -368,7 +367,7 @@ export class BasketItemsEffects {
       ofType(deleteBucketSuccess),
       map(() =>
         displaySuccessMessage({
-          message: 'Order has been removed',
+          message: 'camfil.order_delete.confirmation',
         })
       )
     )

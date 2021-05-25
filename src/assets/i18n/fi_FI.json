@@ -1052,6 +1052,7 @@
   "camfil.navigation.filter.measurements.width": "Leveys",
   "camfil.navigation.filterClearAll.message": "Tyhjennä kaikki suodattimet",
   "camfil.navigation.see.all.airFilters": "Näytä kaikki suodattimet",
+  "camfil.order_delete.confirmation": "fi_Order succesfully deleted",
   "camfil.product.add_to_cart.not_logged.label": "Kirjaudu sisään tilataksesi tuotteita",
   "camfil.product.add_to_compare.label": "Lisää vertailuun",
   "camfil.product.attributes.more": "Lisätietoja",
