@@ -42,7 +42,9 @@ export function createDevProxy(env: Environment) {
 export function createProxy(env: Environment) {
   const config = createProxiesConfig(env);
 
-  const { allowedDomains: globalAllowedDomains = [], proxies } = config;
+  const { proxies } = config;
+
+  const globalAllowedDomains = config?.allowedDomains || [];
 
   let prodProxies = [...proxies];
 
@@ -51,7 +53,10 @@ export function createProxy(env: Environment) {
   }
 
   return prodProxies.map(proxy => {
-    const { route, allowedDomains = [], allowedMethods = ['GET'], changeOrigin = true, ...rest } = proxy;
+    const { route, changeOrigin = true, ...rest } = proxy;
+
+    const allowedDomains = proxy?.allowedDomains || [];
+    const allowedMethods = proxy?.allowedMethods || [];
 
     const filter = (pathname: string, req: Request) => {
       const checks = [];
