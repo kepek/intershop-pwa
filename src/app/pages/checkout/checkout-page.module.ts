@@ -19,7 +19,7 @@ import { CreateOrderButtonComponent } from '../camfil-checkout/camfil-checkout-t
 import { PrintOrderComponent } from '../camfil-checkout/camfil-checkout-toolbar/print-order/print-order.component';
 import { CamfilCheckoutValidationComponent } from '../camfil-checkout/camfil-checkout-validation/camfil-checkout-validation.component';
 import { CheckoutPageComponent } from '../camfil-checkout/checkout-page.component';
-
+import {MatDialogModule} from '@angular/material/dialog';
 const checkoutPageRoutes: Routes = [
   {
     path: '',
@@ -34,7 +34,7 @@ const checkoutPageRoutes: Routes = [
 ];
 
 @NgModule({
-  imports: [CamCardsModule, RouterModule.forChild(checkoutPageRoutes), SharedModule],
+  imports: [CamCardsModule, MatDialogModule, RouterModule.forChild(checkoutPageRoutes), SharedModule],
   declarations: [
     AddEmailRecipientModalComponent,
     CamfilCheckoutDeliveryAddressComponent,
