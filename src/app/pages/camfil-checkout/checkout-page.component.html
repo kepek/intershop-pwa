@@ -3,7 +3,7 @@
 <ng-container *ngIf="basket">
   <div class="checkout row">
     <div class="col-sm-12 col-lg-9">
-      <camfil-checkout-header [basket]="basket" [buckets]="buckets" [isConfirmed]="validation"></camfil-checkout-header>
+      <camfil-checkout-header [basket]="basket$ | async" [buckets]="buckets$ | async" [isConfirmed]="validation"></camfil-checkout-header>
 
       <mat-divider></mat-divider>
 
@@ -20,22 +20,22 @@
           <camfil-checkout-list [order]="item"></camfil-checkout-list>
         </ng-container>
 
-        <ng-container *ngFor="let item of buckets; index as i">
+        <ng-container *ngFor="let item of buckets$ | async; index as i">
           <camfil-checkout-list
             [order]="item"
-            [buckets]="buckets"
+            [buckets]="buckets$ | async"
             [shippingMethodId]="shippingMethodId"
             [isConfirmed]="validation"
-            [totalOrders]="buckets.length"
+            [totalOrders]="buckets?.length"
             [index]="i + 1"
             (handleProduct)="handleProductLoad($event)"
-            [basket]="basket"
+            [basket]="basket$ | async"
           ></camfil-checkout-list>
         </ng-container>
       </div>
     </div>
     <div class="col-sm-12 col-lg-3">
-      <camfil-checkout-summary [basket]="basket" [isConfirmed]="validation"></camfil-checkout-summary>
+      <camfil-checkout-summary [basket]="basket$ | async" [isConfirmed]="validation"></camfil-checkout-summary>
     </div>
   </div>
 </ng-container>

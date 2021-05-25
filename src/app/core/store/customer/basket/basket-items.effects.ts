@@ -57,6 +57,7 @@ import {
   deleteBasketItemSuccess,
   deleteBucket,
   deleteBucketFail,
+  deleteBucketSuccess,
   deleteEmptyBucket,
   loadBasket,
   loadBasketAddresses,
@@ -356,7 +357,18 @@ export class BasketItemsEffects {
       concatMap(payload =>
         this.basketService
           .deleteBucket(payload.basketId, payload.bucketId)
-          .pipe(map(loadBuckets), mapErrorToAction(deleteBucketFail))
+          .pipe(map(deleteBucketSuccess), mapErrorToAction(deleteBucketFail))
+      )
+    )
+  );
+
+  deleteBucketSuccess$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(deleteBucketSuccess),
+      map(() =>
+        displaySuccessMessage({
+          message: 'camfil.order_delete.confirmation',
+        })
       )
     )
   );
@@ -384,6 +396,11 @@ export class BasketItemsEffects {
       )
     )
   );
+
+  loadBasketAfterBucketChangeSuccess$ = createEffect(() =>
+    this.actions$.pipe(ofType(deleteBucketSuccess), mapTo(loadBasket()))
+  );
+
   // CAMFIL
 
   addLineItemAttribute$ = createEffect(() =>

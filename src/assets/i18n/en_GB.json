@@ -1052,6 +1052,7 @@
   "camfil.navigation.filter.measurements.width": "Width",
   "camfil.navigation.filterClearAll.message": "Clear all filters",
   "camfil.navigation.see.all.airFilters": "See all air filters",
+  "camfil.order_delete.confirmation": "Order succesfully deleted",
   "camfil.product.add_to_cart.not_logged.label": "Log in, in order to buy",
   "camfil.product.add_to_compare.label": "Add to compare",
   "camfil.product.attributes.more": "More details",
