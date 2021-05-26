@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Store, select } from '@ngrx/store';
+import { flatten } from 'lodash-es';
 import { Observable, combineLatest } from 'rxjs';
 import { defaultIfEmpty, first, map, switchMap, take, withLatestFrom } from 'rxjs/operators';
 
@@ -159,7 +160,7 @@ export class CamAhuFacade {
   );
   selectedAhuUnitBasketProducts$ = this.selectedAhuUnitBasketItems$.pipe(
     switchMap(items => {
-      const skus = items.map(item => item.sku);
+      const skus = flatten(items.map(item => new Array(item.quantity).fill(item.sku))); // TODO sum up all of the products by quantityF
 
       return this.store.pipe(
         select(getProducts, { skus }),

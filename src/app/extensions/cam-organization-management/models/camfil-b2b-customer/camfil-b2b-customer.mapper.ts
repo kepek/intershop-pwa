@@ -30,7 +30,7 @@ export class CamfilB2bCustomerMapper extends CustomerMapper {
   }
 
   static fromListData(data: CamfilB2bCustomerData[]): CamfilB2bCustomer[] {
-    if (data?.length) {
+    if (data) {
       return data.map(customer => CamfilB2bCustomerMapper.fromData(customer));
     } else {
       throw new Error('CamfilB2bCustomerData[] is required');

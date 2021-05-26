@@ -124,7 +124,7 @@ export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
         .subscribe(address => (this.basketInvoiceAddress = address));
       this.initForm();
       this.checkoutFacade.getCustomersDeliveryTerms$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(terms => {
-        this.deliveryTerm = terms[this.order.customer.id];
+        this.deliveryTerm = terms[this.order?.customer?.id];
       });
 
       this.updateEmailRecipients();

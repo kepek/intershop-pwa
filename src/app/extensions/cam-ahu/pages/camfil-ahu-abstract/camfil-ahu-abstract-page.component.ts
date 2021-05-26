@@ -5,6 +5,7 @@ import { ActivationStart, NavigationEnd, NavigationStart, Router } from '@angula
 import { Observable, Subject, combineLatest } from 'rxjs';
 import { debounce, filter, map, takeUntil } from 'rxjs/operators';
 
+import { AccountFacade } from 'ish-core/facades/account.facade';
 import { HttpError } from 'ish-core/models/http-error/http-error.model';
 
 import { CamAhuFacade } from '../../facades/cam-ahu.facade';
@@ -24,6 +25,7 @@ import {
 @Component({ template: '' })
 // tslint:disable-next-line: component-creation-test project-structure
 export abstract class CamAhuAbstractComponent implements OnInit, OnDestroy {
+  isLoggedIn$: Observable<boolean>;
   ahuManufacturers$: Observable<Manufacturer[]>;
   ahuManufacturersLoading$: Observable<boolean>;
   ahuManufacturersError$: Observable<HttpError>;
@@ -47,14 +49,17 @@ export abstract class CamAhuAbstractComponent implements OnInit, OnDestroy {
   constructor(
     protected router: Router,
     protected fb: FormBuilder,
+    protected scroller: ViewportScroller,
     protected ahuFacade: CamAhuFacade,
-    protected scroller: ViewportScroller
+    protected accountFacade: AccountFacade
   ) {}
 
   // tslint:disable-next-line:private-destroy-field
   protected destroy$ = new Subject();
 
   init() {
+    // Is LoggedIn?
+    this.isLoggedIn$ = this.accountFacade.isLoggedIn$;
     // AHU-Manufacturers
     this.ahuManufacturers$ = this.ahuFacade.ahuManufacturers$;
     this.ahuManufacturersLoading$ = this.ahuFacade.ahuManufacturersLoading$;

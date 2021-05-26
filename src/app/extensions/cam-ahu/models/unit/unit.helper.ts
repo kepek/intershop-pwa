@@ -111,8 +111,8 @@ export class UnitHelper {
     items: UnitAhuAirSlotProductView[],
     defaults: { currency: string; value: number } = { currency: 'USD', value: 0 }
   ): Price {
-    const getCurrency = element => element.listPrice?.currency || defaults?.currency;
-    const getValue = element => element.listPrice?.value || defaults?.value;
+    const getCurrency = element => element.salePrice?.currency || element.listPrice?.currency || defaults?.currency;
+    const getValue = element => element.salePrice?.value || element.listPrice?.value || defaults?.value;
 
     return PriceHelper.getPrice(getCurrency, getValue, (items as unknown) as LineItemView[]);
   }

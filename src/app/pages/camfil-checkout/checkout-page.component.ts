@@ -70,7 +70,7 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
     this.buckets$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe((buckets: Bucket[]) => {
       if (!this.buckets && buckets.length) {
         buckets
-          .reduce((acc, item) => (acc.includes(item.customer.id) ? acc : [...acc, item.customer.id]), [])
+          .reduce((acc, item) => (acc.includes(item?.customer?.id) ? acc : [...acc, item?.customer?.id]), [])
           .forEach(customerId => this.checkoutFacade.loadCustomerDeliveryTerm(customerId));
       }
       this.buckets = buckets;

@@ -32,6 +32,7 @@ import { completeIconSet } from 'camfil-icons';
 import { Observable } from 'rxjs';
 import { map, startWith, take, takeUntil, tap } from 'rxjs/operators';
 
+import { AccountFacade } from 'ish-core/facades/account.facade';
 import { AppFacade } from 'ish-core/facades/app.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { CategoryView } from 'ish-core/models/category-view/category-view.model';
@@ -132,13 +133,14 @@ export class DemoPageComponent extends CamAhuAbstractComponent implements AfterV
     private shoppingFacade: ShoppingFacade,
     protected router: Router,
     protected fb: FormBuilder,
-    protected ahuFacade: CamAhuFacade,
     protected scroller: ViewportScroller,
+    protected accountFacade: AccountFacade,
+    protected ahuFacade: CamAhuFacade,
     private appFacade: AppFacade,
     private dateAdapter: DateAdapter<any>,
     @Inject(LOCALE_ID) lang: string
   ) {
-    super(router, fb, ahuFacade, scroller);
+    super(router, fb, scroller, ahuFacade, accountFacade);
 
     // Update the value for the progress-bar on an interval.
     setInterval(() => {
