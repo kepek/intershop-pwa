@@ -12,15 +12,15 @@ import {
 } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { TranslateService } from '@ngx-translate/core';
 import { OrderLineItem } from 'src/app/extensions/cam-account/models/orderLineItem/orderLineItem.interface';
 
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { LineItemUpdate } from 'ish-core/models/line-item-update/line-item-update.model';
 import { Price } from 'ish-core/models/price/price.model';
+import { formatPrice } from 'ish-core/models/price/price.pipe';
 import { ProductCompletenessLevel } from 'ish-core/models/product/product.model';
 import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
-import { formatPrice } from 'ish-core/models/price/price.pipe';
-import { TranslateService } from '@ngx-translate/core';
 
 /**
  * The Line Item table Component displays a line items.
