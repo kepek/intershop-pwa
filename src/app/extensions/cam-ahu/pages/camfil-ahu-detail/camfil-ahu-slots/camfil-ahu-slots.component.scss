@@ -54,8 +54,7 @@
     padding: 0;
   }
 
-  &__btn {
-    font-weight: 600;
+  &__btn.mat-accent {
     color: $color-corporate;
 
     .mat-icon {
