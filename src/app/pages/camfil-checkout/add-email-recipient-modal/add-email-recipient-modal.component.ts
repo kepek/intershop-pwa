@@ -55,7 +55,6 @@ export class AddEmailRecipientModalComponent implements OnInit {
         emailRecipients: [...emailRecipients, ...addedEmailRecipients],
       };
 
-
       this.shoppingFacade.updateBucket(basket, deliveryAddressId, basketExtensionUpdate);
       this.hide();
     } else {

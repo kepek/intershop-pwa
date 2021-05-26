@@ -62,7 +62,6 @@ import {
   updateBasketShippingMethod,
   updateConcardisCvcLastUpdated,
   updateEmptyBucket,
-
 } from 'ish-core/store/customer/basket';
 import { getOrdersError, getOrdersLoading, getSelectedOrder } from 'ish-core/store/customer/orders';
 import { getLoggedInUser } from 'ish-core/store/customer/user';
@@ -282,5 +281,3 @@ export class CheckoutFacade {
     this.store.dispatch(getWarehouseCalendar());
   }
 }
-
-
