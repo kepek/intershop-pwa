@@ -659,6 +659,7 @@
   "camfil.account.login_status.my_pages": "Omat sivuni",
   "camfil.account.orderdetails.camfil_no.label": "Camfil-tilausnumero",
   "camfil.account.orderdetails.contact_person.label": "Yhteyshenkilö",
+  "camfil.account.orderdetails.customer_department.label": "fi_Customer department",
   "camfil.account.orderdetails.customer_id.label": "Asiakasnumero",
   "camfil.account.orderdetails.customer_name.label": "Asiakkaan nimi",
   "camfil.account.orderdetails.date_of_order.label": "Tilauspäivä",
