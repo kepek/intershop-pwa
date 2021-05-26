@@ -71,6 +71,7 @@ export interface UnitAHUBasketItem extends UnitAHUAirSlotItem {
 
 export interface UnitAHUBasket extends UnitAHUAirSlot {
   items: UnitAHUBasketItem[];
+  ahuSlotRemainingAmount?: string;
 }
 
 export interface UnitAHUBasketSummary {
