@@ -659,6 +659,7 @@
   "camfil.account.login_status.my_pages": "My pages",
   "camfil.account.orderdetails.camfil_no.label": "Invoice mark",
   "camfil.account.orderdetails.contact_person.label": "Contact person",
+  "camfil.account.orderdetails.customer_department.label": "Customer department",
   "camfil.account.orderdetails.customer_id.label": "Customer id",
   "camfil.account.orderdetails.customer_name.label": "Customer name",
   "camfil.account.orderdetails.date_of_order.label": "Order date",

@@ -19,6 +19,7 @@ export class OrderMapper {
         customerName: orderData.customerName,
         customerNo: orderData.customerNo,
         customerOrderNumber: orderData.customerOrderNumber,
+        customerDepartment: orderData.customerDepartment,
         ishOrderUUID: orderData.ishOrderUUID,
         orderChannel: orderData.orderChannel,
         orderComment: orderData.orderComment,
