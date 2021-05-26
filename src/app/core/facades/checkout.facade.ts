@@ -38,6 +38,7 @@ import {
   getBasketPromotionError,
   getBasketShippingAddress,
   getBasketValidationResults,
+  getBucketEmailRecipients,
   getCalendarExceptions,
   getCurrentBasket,
   getCurrentBuckets,
@@ -98,6 +99,9 @@ export class CheckoutFacade {
   submittedBasket$ = this.store.pipe(select(getSubmittedBasket));
   calendarExceptions$ = this.store.pipe(select(getCalendarExceptions));
   basketExtensions$ = this.store.pipe(select(getBasketExtensions));
+  getBucketEmailRecipients$(urn: string) {
+    return this.store.pipe(select(getBucketEmailRecipients(urn)));
+  }
 
   deleteBasketItem(itemId: string) {
     this.store.dispatch(deleteBasketItem({ itemId }));

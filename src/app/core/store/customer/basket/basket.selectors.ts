@@ -116,3 +116,16 @@ export const isProductsReadyToPlaceOrder = createSelector(
 );
 
 export const getBasketExtensions = createSelector(getBasketState, basket => basket.basket.basketExtensions);
+
+export const selectEmailRecipients = createSelector(getBasketState, basket =>
+  basket.basket?.basketExtensions?.map(({ emailRecipients, shippingAddress }) => ({
+    urn: shippingAddress?.id,
+    emailRecipients,
+  }))
+);
+
+export const getBucketEmailRecipients = (addressId: string) =>
+  createSelector(
+    selectEmailRecipients,
+    allRecipients => allRecipients?.find(ar => ar.urn === addressId)?.emailRecipients || []
+  );

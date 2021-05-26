@@ -56,6 +56,8 @@
             <dt class="col-6 p-0">{{ 'camfil.checkout.form.delivery_date' | translate }}</dt>
             <dd class="col-6 p-0" data-testing-id="order-customer_id">{{ order?.deliveryDate || '-' }}</dd>
           </ng-container>
+
+
         </dl>
         <ng-container *ngIf="emailRecipients?.length">
           <div class="row recipients-container">
@@ -317,3 +319,4 @@
   icon="calendar"
 >
 </camfil-small-cta-modal>
+<ish-loading *ngIf="basketLoading$ | async"></ish-loading>
