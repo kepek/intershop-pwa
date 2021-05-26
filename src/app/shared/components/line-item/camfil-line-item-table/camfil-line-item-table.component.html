@@ -90,8 +90,7 @@
       {{ 'camfil.lineitem.table.price' | translate }}
     </th>
     <td mat-cell *matCellDef="let pli">
-      {{ 'camfil.lineitem.table.price_label' | translate }}
-      <strong>{{ pli.totalRowCustomerPrice }}</strong>
+      <strong>{{ handlePrice(pli.totalRowCustomerPrice, pli.currency) }}</strong>
     </td>
   </ng-container>
 

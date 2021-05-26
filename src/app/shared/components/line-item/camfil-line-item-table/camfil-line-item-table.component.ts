@@ -19,6 +19,8 @@ import { LineItemUpdate } from 'ish-core/models/line-item-update/line-item-updat
 import { Price } from 'ish-core/models/price/price.model';
 import { ProductCompletenessLevel } from 'ish-core/models/product/product.model';
 import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
+import { formatPrice } from 'ish-core/models/price/price.pipe';
+import { TranslateService } from '@ngx-translate/core';
 
 /**
  * The Line Item table Component displays a line items.
@@ -62,7 +64,7 @@ export class CamfilLineItemTableComponent implements OnInit, OnChanges, AfterVie
   lineItemsProcessed: MatTableDataSource<Partial<OrderLineItem>>;
   isMobileView = false;
 
-  constructor(private shoppingFacade: ShoppingFacade) {}
+  constructor(private shoppingFacade: ShoppingFacade, private translate: TranslateService) {}
 
   ngOnInit() {
     this.isMobileView = this.isMobile();
@@ -93,5 +95,14 @@ export class CamfilLineItemTableComponent implements OnInit, OnChanges, AfterVie
 
   isMobile() {
     return this.deviceType === 'mobile'; // || this.deviceType === 'tablet';
+  }
+
+  handlePrice(value, currency) {
+    const priceData: Price = {
+      value,
+      currency,
+      type: 'Money',
+    };
+    return (value || value === 0) && currency ? formatPrice(priceData, this.translate.currentLang) : '---';
   }
 }
