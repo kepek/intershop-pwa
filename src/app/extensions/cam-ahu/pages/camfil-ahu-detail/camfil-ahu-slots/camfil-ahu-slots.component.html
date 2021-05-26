@@ -59,12 +59,13 @@
                 (click)="toggleAhuSlotItem(ahuAirSlot, item, quantity)"
                 mat-raised-button
                 class="slot-product__btn ml-2"
-                color="accent"
+                [color]="
+                  (isAhuUnitSlotItemAdded$(ahuUnit, ahuAirSlot.ahuSlotId, item.sku) | async) ? 'primary' : 'accent'
+                "
               >
                 <ng-container
                   *ngIf="isAhuUnitSlotItemAdded$(ahuUnit, ahuAirSlot.ahuSlotId, item.sku) | async; else addToList"
                 >
-                  <mat-icon svgIcon="checkmark"></mat-icon>
                   {{ 'camfil.ahu.slot.item.button.added_to_list.label' | translate }}
                 </ng-container>
               </button>

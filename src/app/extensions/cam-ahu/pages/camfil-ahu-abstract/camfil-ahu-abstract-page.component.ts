@@ -208,6 +208,16 @@ export abstract class CamAhuAbstractComponent implements OnInit, OnDestroy {
     return this.ahuFacade.getAhuUnitSlotItemQuantity$(ahuSlotItemParams);
   }
 
+  getAhuUnitSlotMaxQuantity$(ahuUnit: Unit, slotId: string) {
+    const ahuSlotParams: UnitAHUAirSlotParams = {
+      manufacturerId: ahuUnit.ahu.ahuManufacturerId,
+      unitId: ahuUnit.id,
+      slotId,
+    };
+
+    return this.ahuFacade.getAhuUnitSlotMaxQuantity$(ahuSlotParams);
+  }
+
   getAhuUnitSlotItemProduct$(ahuUnit: Unit, slotId: string, sku: string) {
     const ahuSlotItemParams: UnitAHUAirSlotItemParams = {
       manufacturerId: ahuUnit.ahu.ahuManufacturerId,

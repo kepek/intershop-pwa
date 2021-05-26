@@ -1,54 +1,55 @@
 @import '~src/styles/themes/camfil/colors';
 
 :host {
-  display: inline-block;
-  margin-top: 0;
-  margin-bottom: 0;
+	display: inline-block;
+	margin-top: 0;
+	margin-bottom: 0;
 
-  &:empty {
-    display: none;
-  }
+	&:empty {
+		display: none;
+	}
 
-  .camfil-product-attribute {
-    display: flex;
-    margin-bottom: 0;
+	.camfil-product-attribute {
+		display: flex;
+		margin-bottom: 0;
 
-    &__label,
-    &__value {
-      display: inline-block;
-      margin-bottom: 0;
-      margin-left: 0;
-    }
-    &__label {
-      font-weight: normal;
-    }
-    &__value {
-      margin-right: 5px;
-      margin-left: 5px;
-      overflow: hidden;
-      font-weight: bold;
-      color: $camfil-text-color-primary;
-      text-overflow: ellipsis;
-    }
+		&__label,
+		&__value {
+			display: inline-block;
+			margin-bottom: 0;
+			margin-left: 0;
+		}
+		&__label {
+			font-weight: normal;
+			white-space: nowrap;
+		}
+		&__value {
+			margin-right: 5px;
+			margin-left: 5px;
+			overflow: hidden;
+			font-weight: bold;
+			color: $camfil-text-color-primary;
+			text-overflow: ellipsis;
+		}
 
-    &--dimensions {
-      width: 140px;
-      height: 14px;
-    }
+		&--dimensions {
+			width: 140px;
+			height: 14px;
+		}
 
-    &--quantity {
-      width: 66px;
-      height: 14px;
-    }
+		&--quantity {
+			width: 66px;
+			height: 14px;
+		}
 
-    &--id {
-      width: 60px;
-      height: 14px;
-    }
+		&--id {
+			width: 60px;
+			height: 14px;
+		}
 
-    [mode="view"] &--iso_class {
-      min-width: 170px;
-      border-right: none;
-    }
-  }
+		[mode="view"] &--iso_class {
+			min-width: 170px;
+			border-right: none;
+		}
+	}
 }

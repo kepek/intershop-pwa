@@ -2,11 +2,11 @@ import { Injectable } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { flatten } from 'lodash-es';
 import { Observable, combineLatest } from 'rxjs';
-import { defaultIfEmpty, first, map, switchMap, take, withLatestFrom } from 'rxjs/operators';
+import { defaultIfEmpty, filter, first, map, switchMap, take, withLatestFrom } from 'rxjs/operators';
 
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { HttpError } from 'ish-core/models/http-error/http-error.model';
-import { ProductCompletenessLevel } from 'ish-core/models/product/product.helper';
+import { ProductCompletenessLevel, ProductHelper } from 'ish-core/models/product/product.helper';
 import { getCurrentLocale } from 'ish-core/store/core/configuration';
 import { selectQueryParams } from 'ish-core/store/core/router';
 import { getProduct, getProducts } from 'ish-core/store/shopping/products';
@@ -148,6 +148,10 @@ export class CamAhuFacade {
           UnitHelper.isAhuUnitSlotItemAdded(queryParams, getSlotItemParams(item))
         );
 
+        const addedItems = flatten(newAhuSlot.items.map(item => new Array(item.quantity).fill(1)));
+
+        newAhuSlot.ahuSlotRemainingAmount = String(Number(newAhuSlot.ahuSlotAmount) - addedItems?.length);
+
         return newAhuSlot;
       })
     )
@@ -160,7 +164,7 @@ export class CamAhuFacade {
   );
   selectedAhuUnitBasketProducts$ = this.selectedAhuUnitBasketItems$.pipe(
     switchMap(items => {
-      const skus = flatten(items.map(item => new Array(item.quantity).fill(item.sku))); // TODO sum up all of the products by quantityF
+      const skus = flatten(items.map(item => new Array(item.quantity).fill(item.sku)));
 
       return this.store.pipe(
         select(getProducts, { skus }),
@@ -255,16 +259,26 @@ export class CamAhuFacade {
       .pipe(map(queryParams => UnitHelper.countAddedItemsBySku(queryParams, ahuSlotItemParams)));
   }
 
+  getAhuUnitSlotMaxQuantity$(ahuSlotParams: UnitAHUAirSlotParams): Observable<number> {
+    return this.selectedAhuUnitBasket$.pipe(
+      map(baskets => Number(baskets.find(basket => basket.ahuSlotId === ahuSlotParams.slotId).ahuSlotRemainingAmount))
+    );
+  }
+
   getAhuUnitSlotItemProduct$(ahuSlotItemParams: UnitAHUAirSlotItemParams, level = ProductCompletenessLevel.Detail) {
-    const { sku, unitId, slotId } = ahuSlotItemParams;
+    const { manufacturerId, unitId, slotId, sku } = ahuSlotItemParams;
 
-    return this.shoppingFacade.product$(sku, level).pipe(
-      take(1),
-      withLatestFrom(this.store.pipe(select(getAhuUnitDetails, { id: unitId }))),
-      map(([product, ahuUnit]) => {
-        const ahuAirSlot = ahuUnit?.ahuAirSlots.find(s => s.ahuSlotId === slotId);
-        const maxOrderQuantity = Number(ahuAirSlot?.ahuSlotAmount || 0);
+    const ahuSlotParams: UnitAHUAirSlotParams = {
+      manufacturerId,
+      unitId,
+      slotId,
+    };
 
+    return this.store.pipe(
+      select(getProduct, { sku }),
+      filter(p => ProductHelper.isReadyForDisplay(p, level)),
+      withLatestFrom(this.getAhuUnitSlotMaxQuantity$(ahuSlotParams)),
+      map(([product, maxOrderQuantity]) => {
         if (maxOrderQuantity) {
           product.maxOrderQuantity = maxOrderQuantity;
         }

@@ -11,6 +11,7 @@
       opacity: 0.5;
     }
     &::ng-deep .slot-product--added mat-card {
+      cursor: default;
       opacity: 1;
     }
   }
@@ -54,8 +55,7 @@
     padding: 0;
   }
 
-  &__btn {
-    font-weight: 600;
+  &__btn.mat-accent {
     color: $color-corporate;
 
     .mat-icon {
