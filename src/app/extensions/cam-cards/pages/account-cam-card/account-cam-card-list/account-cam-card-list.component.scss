@@ -26,6 +26,7 @@
       margin-right: $space-default/2;
       vertical-align: bottom;
       transform: rotate(-90deg);
+      cursor: pointer;
 
       &--expanded {
         transform: rotate(-270deg);
@@ -75,6 +76,9 @@
       &:nth-child(4n-1) {
         background-color: $greyF5;
       }
+      &:hover {
+        background-color: $gray-100;
+      }
 
       &:nth-child(4n + 1) {
         + tr td .cam-card-row-details__detail > .cam-card-product {
@@ -83,6 +87,9 @@
           }
           &:nth-child(even) {
             background-color: transparent;
+          }
+          &:hover {
+            background-color: $gray-100;
           }
         }
       }

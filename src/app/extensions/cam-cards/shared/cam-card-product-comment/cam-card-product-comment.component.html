@@ -32,6 +32,6 @@
     (click)="mode === 'edit' ? toggleVisibility() : tooltip.show()"
     (mouseenter)="$event.stopImmediatePropagation()"
   >
-    <mat-icon svgIcon="comment" class="size-24"></mat-icon>
+    <mat-icon svgIcon="comment" class="size-24" [ngClass]="{'color-secondary': !camCardItem?.comment?.text}"></mat-icon>
   </span>
 </ng-container>

@@ -7,4 +7,15 @@
   .field_label {
     width: 300px;
   }
+  ::ng-deep {
+    .mat-icon {
+      vertical-align: middle;
+      &:hover {
+        cursor: pointer;
+      }
+      &.color-secondary:hover *[stroke]:not([stroke='none']) {
+        stroke: $camfil-color-primary;
+      }
+    }
+  }
 }
