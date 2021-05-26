@@ -19,30 +19,30 @@
             [value]="product.sku"
           ></camfil-product-attribute>
           <camfil-product-attribute
-            *ngIf="measurementToShow()"
-            identifier="measurement"
-            [name]="'camfil.cam_card.product.measurements.label' | translate"
-            [value]="measurementToShow()"
-          ></camfil-product-attribute>
-          <camfil-product-attribute
             identifier="iso_class"
             [name]="'camfil.product.class_and_efficiency.label' | translate"
             [value]="product | camfilProductAttributeVal: 'IsoClassAndEfficiency'"
           ></camfil-product-attribute>
           <ng-container *ngIf="isViewMode">
             <camfil-product-attribute
-              identifier="label"
-              [name]="'camfil.cam_card.product.comment.label' | translate"
-              [value]="camCardItemData.comment.label | slice: 0:40"
-              *ngIf="camCardItemData.comment.label"
-            ></camfil-product-attribute>
-            <camfil-product-attribute
               identifier="quantity"
               [name]="'camfil.cam_card.product.quantity' | translate"
               [value]="camCardItemData.quantity"
             ></camfil-product-attribute>
             <ng-container *ngTemplateOutlet="price"></ng-container>
+            <camfil-product-attribute
+              identifier="label"
+              [name]="'camfil.cam_card.product.comment.label' | translate"
+              [value]="camCardItemData.comment.label"
+              *ngIf="camCardItemData.comment.label"
+            ></camfil-product-attribute>
           </ng-container>
+          <camfil-product-attribute
+            *ngIf="measurementToShow()"
+            identifier="measurement"
+            [name]="'camfil.cam_card.product.measurements.label' | translate"
+            [value]="measurementToShow()"
+          ></camfil-product-attribute>
           <a class="quick-view text-nowrap" (click)="openQuickViewDialog(camCardItemData); $event.stopPropagation()">
             <mat-icon svgIcon="search" class="size-16"></mat-icon>
             {{ 'Quickview' | translate }}
