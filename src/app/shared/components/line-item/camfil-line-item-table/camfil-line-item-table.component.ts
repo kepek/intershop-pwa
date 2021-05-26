@@ -12,11 +12,13 @@ import {
 } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { TranslateService } from '@ngx-translate/core';
 import { OrderLineItem } from 'src/app/extensions/cam-account/models/orderLineItem/orderLineItem.interface';
 
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { LineItemUpdate } from 'ish-core/models/line-item-update/line-item-update.model';
 import { Price } from 'ish-core/models/price/price.model';
+import { formatPrice } from 'ish-core/models/price/price.pipe';
 import { ProductCompletenessLevel } from 'ish-core/models/product/product.model';
 import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
 
@@ -62,7 +64,7 @@ export class CamfilLineItemTableComponent implements OnInit, OnChanges, AfterVie
   lineItemsProcessed: MatTableDataSource<Partial<OrderLineItem>>;
   isMobileView = false;
 
-  constructor(private shoppingFacade: ShoppingFacade) {}
+  constructor(private shoppingFacade: ShoppingFacade, private translate: TranslateService) {}
 
   ngOnInit() {
     this.isMobileView = this.isMobile();
@@ -93,5 +95,14 @@ export class CamfilLineItemTableComponent implements OnInit, OnChanges, AfterVie
 
   isMobile() {
     return this.deviceType === 'mobile'; // || this.deviceType === 'tablet';
+  }
+
+  handlePrice(value, currency) {
+    const priceData: Price = {
+      value,
+      currency,
+      type: 'Money',
+    };
+    return (value || value === 0) && currency ? formatPrice(priceData, this.translate.currentLang) : '---';
   }
 }
