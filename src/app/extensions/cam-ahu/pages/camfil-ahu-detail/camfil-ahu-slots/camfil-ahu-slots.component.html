@@ -46,6 +46,7 @@
               [configuration]="productConfiguration"
               [product]="product"
               [actionTemplate]="actionTemplate"
+              [isLoggedIn]="isLoggedIn$ | async"
             >
             </camfil-product-item-simple>
             <ng-template #actionTemplate let-quantity="quantity">

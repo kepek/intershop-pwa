@@ -20,10 +20,12 @@ import {
   UnitAHUBasketSummary,
   UnitAhu,
 } from '../../models/unit/unit.model';
+import { AccountFacade } from '../../../../core/facades/account.facade';
 
 @Component({ template: '' })
 // tslint:disable-next-line: component-creation-test project-structure
 export abstract class CamAhuAbstractComponent implements OnInit, OnDestroy {
+  isLoggedIn$: Observable<boolean>;
   ahuManufacturers$: Observable<Manufacturer[]>;
   ahuManufacturersLoading$: Observable<boolean>;
   ahuManufacturersError$: Observable<HttpError>;
@@ -47,14 +49,17 @@ export abstract class CamAhuAbstractComponent implements OnInit, OnDestroy {
   constructor(
     protected router: Router,
     protected fb: FormBuilder,
+    protected scroller: ViewportScroller,
     protected ahuFacade: CamAhuFacade,
-    protected scroller: ViewportScroller
+    protected accountFacade: AccountFacade
   ) {}
 
   // tslint:disable-next-line:private-destroy-field
   protected destroy$ = new Subject();
 
   init() {
+    // Is LoggedIn?
+    this.isLoggedIn$ = this.accountFacade.isLoggedIn$;
     // AHU-Manufacturers
     this.ahuManufacturers$ = this.ahuFacade.ahuManufacturers$;
     this.ahuManufacturersLoading$ = this.ahuFacade.ahuManufacturersLoading$;

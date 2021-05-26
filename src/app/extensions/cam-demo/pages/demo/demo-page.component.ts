@@ -46,6 +46,7 @@ import { CamAhuAbstractComponent } from '../../../cam-ahu/pages/camfil-ahu-abstr
 
 import { DemoBottomSheetComponent } from './demo-bottom-sheet/demo-bottom-sheet.component';
 import { DemoDialogComponent } from './demo-dialog/demo-dialog.component';
+import { AccountFacade } from '../../../../core/facades/account.facade';
 
 export interface PeriodicElement {
   name: string;
@@ -132,13 +133,14 @@ export class DemoPageComponent extends CamAhuAbstractComponent implements AfterV
     private shoppingFacade: ShoppingFacade,
     protected router: Router,
     protected fb: FormBuilder,
-    protected ahuFacade: CamAhuFacade,
     protected scroller: ViewportScroller,
+    protected accountFacade: AccountFacade,
+    protected ahuFacade: CamAhuFacade,
     private appFacade: AppFacade,
     private dateAdapter: DateAdapter<any>,
     @Inject(LOCALE_ID) lang: string
   ) {
-    super(router, fb, ahuFacade, scroller);
+    super(router, fb, scroller, ahuFacade, accountFacade);
 
     // Update the value for the progress-bar on an interval.
     setInterval(() => {
