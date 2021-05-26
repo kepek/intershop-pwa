@@ -79,8 +79,11 @@ export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
   calendarException = [];
   orderAddress = {};
   emailRecipients: string[];
+  emailRecipients$: Observable<string[]>;
   basketExtensions: BasketExtensions[];
   basketExtensions$: Observable<BasketExtensions[]>;
+  deliveryDateValue: string;
+  basketLoading$: Observable<boolean>;
 
   @ViewChild(CamfilSmallCtaModalComponent) modal: CamfilSmallCtaModalComponent;
 
@@ -94,20 +97,33 @@ export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
   ) {}
 
   get currentBasketExtensions() {
-    return this.basketExtensions?.find(
-      extension => extension?.shippingAddress?.id === this.order?.shipToAddressFull?.id
-    );
+    return {
+      ...this.order,
+      ...this.currentFormFields,
+      deliveryDate: this.deliveryDate,
+      emailRecipients: this.emailRecipients ? [...this.emailRecipients] : [],
+      isPartialDelivery: this.isPartialDelivery,
+    };
+  }
+
+  get currentFormFields() {
+    return this.orderForm?.value;
+  }
+
+  get deliveryDate() {
+    return this.deliveryDateValue ? this.deliveryDateValue : this.order?.deliveryDate;
   }
 
   ngOnInit(): void {
     this.calendarExceptions$ = this.checkoutFacade.calendarExceptions$;
 
     this.orderAddress = { ...this.order.shipToAddressFull, countryCode: '' };
+    this.basketLoading$ = this.checkoutFacade.basketLoading$;
 
-    this.basketExtensions$ = this.checkoutFacade.basketExtensions$;
+    this.emailRecipients$ = this.checkoutFacade.getBucketEmailRecipients$(this.order?.shipToAddressFull?.id);
 
-    this.basketExtensions$?.pipe(takeUntil(this.destroy$)).subscribe(basketExtensions => {
-      this.basketExtensions = basketExtensions;
+    this.emailRecipients$.subscribe(value => {
+      this.emailRecipients = value?.filter(er => er !== '');
     });
 
     this.calendarExceptions$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(exceptions => {
@@ -126,8 +142,6 @@ export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
       this.checkoutFacade.getCustomersDeliveryTerms$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(terms => {
         this.deliveryTerm = terms[this.order?.customer?.id];
       });
-
-      this.updateEmailRecipients();
     }
   }
 
@@ -158,7 +172,6 @@ export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
       const { basket, deliveryAddressId } = this.order;
 
       const updated: BasketExtensions = {
-        ...this.order,
         ...this.currentBasketExtensions,
         [field]: formField.value,
       };
@@ -277,7 +290,6 @@ export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
     let items = this.order && this.order.lineItems;
 
     /** Get this order extensions */
-    // this.updateBasketExtensions();
     this.isPartialDelivery = this.currentBasketExtensions?.isPartialDelivery || false;
     if (items?.length) {
       items = items.map(li => {
@@ -385,12 +397,12 @@ export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
     const shipAddressId = this.order.deliveryAddressId;
 
     const deliveryDateValue = AttributeHelper.formatDeliveryDate(new Date(deliveryDate));
+    this.deliveryDateValue = deliveryDateValue;
 
     this.selectedDeliveryDate = deliveryDate;
     this.isPartialDelivery = isPartial;
 
     const basketExtensionUpdate = {
-      ...this.order,
       ...this.currentBasketExtensions,
       deliveryDate: deliveryDateValue,
       isPartialDelivery: isPartial,
@@ -430,7 +442,7 @@ export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
     this.dialog.open(AddEmailRecipientModalComponent, {
       width: '360px',
       autoFocus: false,
-      data: { ...this.order, emailRecipients: this.currentBasketExtensions?.emailRecipients || [] },
+      data: { ...this.currentBasketExtensions, emailRecipients: this.currentBasketExtensions?.emailRecipients || [] },
     });
   }
 
@@ -445,9 +457,5 @@ export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
     };
 
     this.shoppingFacade.updateBucket(basket, deliveryAddressId, basketExtensionUpdate);
-  }
-
-  updateEmailRecipients() {
-    this.emailRecipients = this.currentBasketExtensions?.emailRecipients?.filter(er => er !== '');
   }
 }

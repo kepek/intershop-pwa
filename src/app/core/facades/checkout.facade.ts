@@ -38,6 +38,7 @@ import {
   getBasketPromotionError,
   getBasketShippingAddress,
   getBasketValidationResults,
+  getBucketEmailRecipients,
   getCalendarExceptions,
   getCurrentBasket,
   getCurrentBuckets,
@@ -61,6 +62,7 @@ import {
   updateBasketShippingMethod,
   updateConcardisCvcLastUpdated,
   updateEmptyBucket,
+
 } from 'ish-core/store/customer/basket';
 import { getOrdersError, getOrdersLoading, getSelectedOrder } from 'ish-core/store/customer/orders';
 import { getLoggedInUser } from 'ish-core/store/customer/user';
@@ -98,6 +100,9 @@ export class CheckoutFacade {
   submittedBasket$ = this.store.pipe(select(getSubmittedBasket));
   calendarExceptions$ = this.store.pipe(select(getCalendarExceptions));
   basketExtensions$ = this.store.pipe(select(getBasketExtensions));
+  getBucketEmailRecipients$(urn: string) {
+    return this.store.pipe(select(getBucketEmailRecipients(urn)));
+  }
 
   deleteBasketItem(itemId: string) {
     this.store.dispatch(deleteBasketItem({ itemId }));
@@ -277,3 +282,5 @@ export class CheckoutFacade {
     this.store.dispatch(getWarehouseCalendar());
   }
 }
+
+
