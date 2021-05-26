@@ -122,7 +122,7 @@ export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
 
     this.emailRecipients$ = this.checkoutFacade.getBucketEmailRecipients$(this.order?.shipToAddressFull?.id);
 
-    this.emailRecipients$.subscribe(value => {
+    this.emailRecipients$?.subscribe(value => {
       this.emailRecipients = value?.filter(er => er !== '');
     });
 
