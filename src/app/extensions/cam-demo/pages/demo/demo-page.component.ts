@@ -32,6 +32,7 @@ import { completeIconSet } from 'camfil-icons';
 import { Observable } from 'rxjs';
 import { map, startWith, take, takeUntil, tap } from 'rxjs/operators';
 
+import { AccountFacade } from 'ish-core/facades/account.facade';
 import { AppFacade } from 'ish-core/facades/app.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { CategoryView } from 'ish-core/models/category-view/category-view.model';
@@ -46,7 +47,6 @@ import { CamAhuAbstractComponent } from '../../../cam-ahu/pages/camfil-ahu-abstr
 
 import { DemoBottomSheetComponent } from './demo-bottom-sheet/demo-bottom-sheet.component';
 import { DemoDialogComponent } from './demo-dialog/demo-dialog.component';
-import { AccountFacade } from '../../../../core/facades/account.facade';
 
 export interface PeriodicElement {
   name: string;
