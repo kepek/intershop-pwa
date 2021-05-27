@@ -152,20 +152,26 @@ export class SelectCamCardModalComponent implements OnInit, OnDestroy, OnChanges
         const realCamCards = CamCardHelper.getRealCamCards(camCards);
         this.camCards = realCamCards;
 
-        this.camCardOptionsAll = realCamCards.map(camCard => ({
-          value: camCard.id,
-          label: camCard.name,
-          nextDelivery: camCard.nextDeliveryDate,
-          orderLabel: camCard.orderLabel,
-          invoiceLabel: camCard.invoiceLabel,
-          deliveryAddressDisplay: this.formatDeliveryAddress(camCard.deliveryAddress),
-          deliveryAddress: camCard.deliveryAddress,
-          subCamCards: camCard.subCamCards,
-          boxLabels: camCard.camCardItems.map(item => item.comment.label),
-          camCardItems: camCard.camCardItems,
-          customer: camCard.customer,
-          name: camCard.name,
-        }));
+        this.camCardOptionsAll = realCamCards
+          .map(camCard => ({
+            value: camCard.id,
+            label: camCard.name,
+            nextDelivery: camCard.nextDeliveryDate,
+            orderLabel: camCard.orderLabel,
+            invoiceLabel: camCard.invoiceLabel,
+            deliveryAddressDisplay: this.formatDeliveryAddress(camCard.deliveryAddress),
+            deliveryAddress: camCard.deliveryAddress,
+            subCamCards: camCard.subCamCards,
+            boxLabels: camCard.camCardItems.map(item => item.comment.label),
+            camCardItems: camCard.camCardItems,
+            customer: camCard.customer,
+            name: camCard.name,
+          }))
+          .sort((a, b) => {
+            const nameA = a.name.toLowerCase();
+            const nameB = b.name.toLowerCase();
+            return nameA < nameB ? -1 : nameA > nameB ? 1 : 0;
+          });
 
         this.camCardOptions = this.camCardOptionsAll;
       } else {
