@@ -11,9 +11,9 @@ export class AddressSortPipe implements PipeTransform {
       return;
     }
     return array.slice().sort((a: any, b: any) => {
-      if (a[fieldName] < b[fieldName]) {
+      if (a[fieldName]?.toLowerCase() < b[fieldName].toLowerCase()) {
         return -1;
-      } else if (a[fieldName] > b[fieldName]) {
+      } else if (a[fieldName].toLowerCase() > b[fieldName].toLowerCase()) {
         return 1;
       } else {
         return 0;
