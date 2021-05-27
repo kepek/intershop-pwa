@@ -15,4 +15,5 @@ export interface OrderLineItem {
   hight?: string;
   diameter?: string;
   depth?: string;
+  rowNumber?: number;
 }

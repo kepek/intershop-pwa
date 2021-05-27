@@ -7,6 +7,16 @@
   matSortDirection="desc"
   class="mt-4 mb-2 box-shadow--dark"
 >
+  <!-- rowNum Column -->
+  <ng-container matColumnDef="rowNumber">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+      {{ 'camfil.lineitem.table.row_number' | translate }}
+    </th>
+    <td mat-cell *matCellDef="let pli">
+      {{ pli.rowNumber }}
+    </td>
+  </ng-container>
+
   <!-- Art Nr. Column -->
   <ng-container matColumnDef="sku">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>

@@ -55,6 +55,7 @@ export class OrderMapper {
         sku: lineItemData.sku,
         totalRowCustomerPrice: lineItemData.totalRowCustomerPrice,
         type: lineItemData.type,
+        rowNumber: lineItemData.rowNumber,
       };
     }
   }

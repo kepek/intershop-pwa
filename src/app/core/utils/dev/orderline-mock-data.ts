@@ -64,6 +64,7 @@ export class OrderLineMockData {
         ownerId: '4711',
         sku: '12345',
         totalRowCustomerPrice: 2030,
+        rowNumber: 2,
         type: 'Type',
       },
     ];

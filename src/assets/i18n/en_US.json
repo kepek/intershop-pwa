@@ -927,6 +927,7 @@
   "camfil.lineitem.table.product": "Product",
   "camfil.lineitem.table.qty_delivered": "Delivered qty",
   "camfil.lineitem.table.qty_ordered": "Ordered qty",
+  "camfil.lineitem.table.row_number": "Row number",
   "camfil.listing.only.list.products.showing": "Showing {{0}} of {{1}}",
   "camfil.listing.only.list.products.title": "Products",
   "camfil.login.info.administer_users": "Administer users",
