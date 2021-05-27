@@ -1044,7 +1044,7 @@
   "camfil.modal.edit_order.button.header": "Ändra orderdetaljer",
   "camfil.modal.edit_order.button.save": "Spara",
   "camfil.modal.measurement.error": "Felaktiga mått - bredd eller längd får inte överstiga - {{0}} mm",
-  "camfil.modal.measurement.error.global": "sv_Some measurement has to be filled!!",
+  "camfil.modal.measurement.error.global": "Vänligen fyll i mått!",
   "camfil.modal.place_reorder_fail.text": "Det går inte att skapa ordern då vissa produkter inte längre är tillgängliga",
   "camfil.navigation.filter.headline": "Förfina resultatet",
   "camfil.navigation.filter.measurements.depth": "Djup",
