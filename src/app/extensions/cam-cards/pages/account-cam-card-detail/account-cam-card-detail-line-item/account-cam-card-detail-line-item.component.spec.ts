@@ -28,8 +28,8 @@ import { CheckboxComponent } from 'ish-shared/forms/components/checkbox/checkbox
 import { InputComponent } from 'ish-shared/forms/components/input/input.component';
 
 import { CamCardsFacade } from '../../../facades/cam-cards.facade';
+import { AddProductToCamCardModalComponent } from '../../../shared/add-product-to-cam-card-modal/add-product-to-cam-card-modal.component';
 import { CamCardProductCommentComponent } from '../../../shared/cam-card-product-comment/cam-card-product-comment.component';
-import { SelectCamCardModalComponent } from '../../../shared/select-cam-card-modal/select-cam-card-modal.component';
 
 import { AccountCamCardDetailLineItemComponent } from './account-cam-card-detail-line-item.component';
 
@@ -45,6 +45,7 @@ describe('Account Cam Card Detail Line Item Component', () => {
     await TestBed.configureTestingModule({
       declarations: [
         AccountCamCardDetailLineItemComponent,
+        MockComponent(AddProductToCamCardModalComponent),
         MockComponent(CamCardProductCommentComponent),
         MockComponent(CamfilProductAddToBasketComponent),
         MockComponent(CamfilProductAttributeComponent),
@@ -59,7 +60,6 @@ describe('Account Cam Card Detail Line Item Component', () => {
         MockComponent(InputComponent),
         MockComponent(ProductBundleDisplayComponent),
         MockComponent(ProductVariationDisplayComponent),
-        MockComponent(SelectCamCardModalComponent),
         MockPipe(CamfilDimensionPipe),
         MockPipe(CamfilProductAttributeValPipe),
         MockPipe(DatePipe),

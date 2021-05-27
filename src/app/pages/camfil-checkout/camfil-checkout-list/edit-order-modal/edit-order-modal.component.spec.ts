@@ -10,7 +10,7 @@ import { CamfilErrorComponent } from 'ish-shared/components/common/camfil-error/
 import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
 import { ZipCodeComponent } from 'ish-shared/components/zip-code/zip-code.component';
 
-import { OrderFormComponent } from '../../../../extensions/cam-cards/shared/add-to-cart-modal/create-order-modal/order-form/order-form.component';
+import { OrderFormComponent } from '../../../../extensions/cam-cards/shared/add-product-to-cart-modal/create-order-product-modal/order-form/order-form.component';
 
 import { EditOrderModalComponent } from './edit-order-modal.component';
 

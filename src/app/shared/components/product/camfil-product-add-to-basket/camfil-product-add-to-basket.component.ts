@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { take, takeUntil } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
@@ -16,7 +16,7 @@ import { whenFalsy } from 'ish-core/utils/operators';
     [product]="product"
     [class]="'btn-lg btn-block'"
     [disabled]="productDetailForm.invalid"
-    [translationKey]="isRetailSet(product) ? 'product.add_to_cart.retailset.link' : 'product.add_to_cart.link'"
+    [translationKey]="isRetailSet(product) ? 'product.add_to_cart.retail_set.link' : 'product.add_to_cart.link'"
     (productToBasket)="addToBasket()"
   ></camfil-product-add-to-basket>
  */
@@ -77,7 +77,7 @@ export class CamfilProductAddToBasketComponent implements OnInit, OnDestroy {
 
     // update emitted to display spinning animation
     this.basketLoading$.pipe(whenFalsy(), takeUntil(this.destroy$)).subscribe(this.displaySpinner$); // false
-    this.accountFacade.isLoggedIn$.pipe(take(1), takeUntil(this.destroy$)).subscribe(isLoggedIn => {
+    this.accountFacade.isLoggedIn$.pipe(takeUntil(this.destroy$)).subscribe(isLoggedIn => {
       if (!isLoggedIn) {
         this.buttonTranslationKey = 'camfil.product.add_to_cart.not_logged.label';
       } else {

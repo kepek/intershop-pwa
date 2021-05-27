@@ -55,6 +55,7 @@ export interface UnitAHUAirSlot {
   ahuSlotTypeId?: number;
   ahuSlotTypeName?: string;
   ahuSlotTypeSlug?: string;
+
   ahuSlotDimensions?: string;
 }
 

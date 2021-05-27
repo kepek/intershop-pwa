@@ -14,7 +14,7 @@ import { whenFalsy } from 'ish-core/utils/operators';
     [product]="product"
     [class]="'btn-lg btn-block'"
     [disabled]="productDetailForm.invalid"
-    [translationKey]="isRetailSet(product) ? 'product.add_to_cart.retailset.link' : 'product.add_to_cart.link'"
+    [translationKey]="isRetailSet(product) ? 'product.add_to_cart.retail_set.link' : 'product.add_to_cart.link'"
     (productToBasket)="addToBasket()"
   ></ish-product-add-to-basket>
  */

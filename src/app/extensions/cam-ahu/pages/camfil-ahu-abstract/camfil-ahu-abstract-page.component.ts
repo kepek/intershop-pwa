@@ -7,6 +7,7 @@ import { debounce, filter, map, takeUntil } from 'rxjs/operators';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
 import { HttpError } from 'ish-core/models/http-error/http-error.model';
+import { ProductItem } from 'ish-core/models/product/product-item';
 
 import { CamAhuFacade } from '../../facades/cam-ahu.facade';
 import { Manufacturer } from '../../models/manufacturer/manufacturer.model';
@@ -18,6 +19,7 @@ import {
   UnitAHUAirSlotParams,
   UnitAHUAirSlotType,
   UnitAHUBasket,
+  UnitAHUBasketItem,
   UnitAHUBasketSummary,
   UnitAhu,
 } from '../../models/unit/unit.model';
@@ -42,7 +44,9 @@ export abstract class CamAhuAbstractComponent implements OnInit, OnDestroy {
   selectedAhuUnitDetails$: Observable<UnitAhu>;
   selectedAhuUnitSlots$: Observable<UnitAHUAirSlot[]>;
   selectedAhuUnitBasket$: Observable<UnitAHUBasket[]>;
+  selectedAhuUnitBasketItems$: Observable<UnitAHUBasketItem[]>;
   selectedAhuUnitBasketSummary$: Observable<UnitAHUBasketSummary>;
+  selectedAhuUnitBasketProducts$: Observable<ProductItem[]>;
   selectedAhuUnitAirSlotTypes$: Observable<UnitAHUAirSlotType[]>;
   ahuLoading$: Observable<boolean>;
 
@@ -77,7 +81,9 @@ export abstract class CamAhuAbstractComponent implements OnInit, OnDestroy {
     this.selectedAhuUnitDetails$ = this.ahuFacade.selectedAhuUnitDetails$;
     this.selectedAhuUnitSlots$ = this.ahuFacade.selectedAhuUnitSlots$;
     this.selectedAhuUnitBasket$ = this.ahuFacade.selectedAhuUnitBasket$;
+    this.selectedAhuUnitBasketItems$ = this.ahuFacade.selectedAhuUnitBasketItems$;
     this.selectedAhuUnitBasketSummary$ = this.ahuFacade.selectedAhuUnitBasketSummary$;
+    this.selectedAhuUnitBasketProducts$ = this.ahuFacade.selectedAhuUnitBasketProducts$;
     this.selectedAhuUnitAirSlotTypes$ = this.ahuFacade.selectedAhuUnitAirSlotTypes$;
     // AHU-Common
     this.ahuLoading$ = this.ahuFacade.ahuLoading$();

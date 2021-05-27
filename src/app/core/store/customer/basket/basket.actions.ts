@@ -500,7 +500,7 @@ export const updateBucketsQueue = createAction(
       addressId?: string;
       lineItemAttributes?: Attribute[];
     }[];
-    extentions: {
+    extensions: {
       addressId: string;
       basketExtension: BasketExtensions;
     }[];

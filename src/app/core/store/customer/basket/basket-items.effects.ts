@@ -115,7 +115,7 @@ export class BasketItemsEffects {
                 addressId,
               });
               if (basketExtension) {
-                acc.extentions.push({ addressId, basketExtension });
+                acc.extensions.push({ addressId, basketExtension });
               }
               if (bucketId) {
                 acc.bucketIds.push(bucketId);
@@ -124,18 +124,18 @@ export class BasketItemsEffects {
             },
             {
               items: [],
-              extentions: [],
+              extensions: [],
               bucketIds: [],
             }
           ),
           map(infoToAdd => {
-            const extentions = infoToAdd.extentions.filter(
+            const extensions = infoToAdd.extensions.filter(
               ({ addressId }, i, arr) => arr.findIndex(el => el.addressId === addressId) === i
             );
-            return { ...infoToAdd, extentions };
+            return { ...infoToAdd, extensions };
           }),
           map(info =>
-            Object.values(info.extentions).length
+            Object.values(info.extensions).length
               ? updateBucketsQueue(info)
               : addItemsToBasketFromCamCard({ items: info.items })
           )
@@ -493,15 +493,15 @@ export class BasketItemsEffects {
 
                 acc.items.push(data);
               });
-              acc.extentions.push({ addressId, basketExtension });
+              acc.extensions.push({ addressId, basketExtension });
               return acc;
             },
             {
               items: [],
-              extentions: [],
+              extensions: [],
             }
           ),
-          map(({ items, extentions }) => updateBucketsQueue({ items, extentions }))
+          map(({ items, extensions }) => updateBucketsQueue({ items, extensions }))
         )
       )
     )
@@ -512,9 +512,9 @@ export class BasketItemsEffects {
       ofType(updateBucketsQueue),
       mapToPayload(),
       withLatestFrom(this.store.pipe(select(getCurrentBasketId))),
-      concatMap(([{ items, extentions, bucketIds }, basketId]) =>
+      concatMap(([{ items, extensions, bucketIds }, basketId]) =>
         concat(
-          ...Object.values(extentions).map(({ addressId, basketExtension }) =>
+          ...Object.values(extensions).map(({ addressId, basketExtension }) =>
             this.basketService.updateBucket(basketId, addressId, basketExtension)
           )
         ).pipe(

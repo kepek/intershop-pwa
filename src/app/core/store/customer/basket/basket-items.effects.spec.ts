@@ -129,7 +129,7 @@ describe('Basket Items Effects', () => {
             shippingMethod: 'METHOD',
           },
         ],
-        extentions: [
+        extensions: [
           {
             addressId: 'qwerty',
             basketExtension: {

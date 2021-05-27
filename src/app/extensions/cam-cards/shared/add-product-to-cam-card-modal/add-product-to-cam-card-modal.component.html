@@ -1,0 +1,192 @@
+<ng-template #modal>
+  <ng-container *ngIf="!(currentCamCard$ | async); else showSuccess">
+    <camfil-cam-card-modal
+      [title]="'camfil.modal.addToCamcard.header' | translate"
+      iconName="note_add"
+      [subtitle]="product.name"
+      [detailsTemplate]="detailsTemplate"
+      [searchTitle]="'camfil.camcards.modal.add.search.subtitle' | translate"
+      [searchTemplate]="searchTemplate"
+      [mainContentTemplate]="mainContentTemplate"
+      [primaryButtonTitle]="'camfil.modal.addToCamcard.button.create_new' | translate"
+      (primaryButtonClicked)="openModal(createModal)"
+      [secondaryButtonTitle]="'camfil.modal.addToCamcard.button.add_to_camcard' | translate"
+      (secondaryButtonClicked)="addToCamcard()"
+      [secondaryDisabled]="!camCardSelected"
+      [primaryDisabled]="disableIfNoMeasurements()"
+      (hiddenClicked)="hide()"
+    >
+    </camfil-cam-card-modal>
+  </ng-container>
+</ng-template>
+
+<ng-template #showSuccess>
+  <camfil-cam-card-modal
+    [title]="'camfil.modal.addToCamcard.header' | translate"
+    [subtitle]="product.name"
+    iconName="checkmark"
+    [customHeaderTemplate]="customSuccessHeader"
+    [primaryButtonTitle]="'camfil.modal.addToCamcard.success.button.continue' | translate"
+    (primaryButtonClicked)="hide()"
+    [secondaryButtonTitle]="'camfil.modal.addToCamcard.success.button.goToCamCard' | translate"
+    (secondaryButtonClicked)="goToCamcard()"
+    (hiddenClicked)="hide()"
+  >
+  </camfil-cam-card-modal>
+</ng-template>
+
+<ng-template #customSuccessHeader>
+  <div class="modal__success--header">
+    <mat-icon class="size-24 color-dark" svgIcon="checkmark"></mat-icon>
+    <h2 mat-dialog-title class="modal__success--text">
+      {{ 'camfil.modal.addToCamcard.success.title' | translate }}
+      {{ useSubCamCard ? currentSubCamCardName : (currentCamCard$ | async).name }}
+    </h2>
+  </div>
+</ng-template>
+
+<camfil-create-product-cam-card-modal
+  #createModal
+  [product]="product"
+  (createAndEditEmitter)="createCamCardAndAdd($event)"
+  (createAndContinueEmitter)="createCamCardAndAdd($event)"
+  [rootCamCardAddress]="rootCamCardAddress"
+  [parentForm]="quantityForm"
+></camfil-create-product-cam-card-modal>
+
+<ng-template #detailsTemplate>
+  <camfil-article-details [product]="product" [quantityForm]="quantityForm"></camfil-article-details>
+</ng-template>
+
+<ng-template #searchTemplate>
+  <!-- Search Box -->
+  <div class="search-container">
+    <mat-icon svgIcon="search" class="search__icon background-icon"></mat-icon>
+    <input
+      #searchInput
+      matInput
+      placeholder="Search orders"
+      autocomplete="off"
+      type="text"
+      class="search-input"
+      [value]="inputSearchTerm"
+      [formControl]="searchInputFilter"
+      [class.mat-elevation-z2]="!isActive"
+      [class.mat-elevation-z4]="isActive"
+      (focus)="isActive = !isActive"
+      (focusout)="isActive = !isActive"
+    />
+    <div class="buttons">
+      <button
+        *ngIf="inputSearchTerm"
+        class="btn-reset btn btn-primary"
+        type="reset"
+        name="reset"
+        [title]="'account.orderlist.seach.reset.title' | translate"
+        style="right: 40px"
+        (click)="searchInput.focus()"
+      ></button>
+
+      <button
+        type="submit"
+        name="search"
+        [title]="'camfil.account.orderlist.search.button.title' | translate"
+        mat-flat-button
+        color="primary"
+      >
+        {{ 'camfil.account.orderlist.search.button.title' | translate }}
+      </button>
+    </div>
+  </div>
+</ng-template>
+<ng-template #mainContentTemplate>
+  <div mat-dialog-content class="cam-card-list">
+    <ish-loading *ngIf="camCardsLoading$ | async"></ish-loading>
+    <form [formGroup]="newSegmentForm">
+      <div *ngFor="let option of camCardOptions; let i = index">
+        <div
+          class="modal__cam-card"
+          [ngClass]="{ 'modal__cam-card--selected': camCardSelected === option.value }"
+          (click)="selectCamCard(option.value)"
+          (keypress)="selectCamCard(option.value)"
+          tabindex="{{ tabindex }}"
+        >
+          <div class="modal__cam-card--title">{{ option.label }}</div>
+          <table>
+            <tr>
+              <td class="modal__cam-card--column-right">
+                <div class="modal__cam-card--details">
+                  <div class="modal__cam-card--label">
+                    {{ 'camfil.modal.addToCamcard.camcard.order_mark' | translate }}
+                  </div>
+                  <div class="modal__cam-card--value">{{ option.orderLabel }}</div>
+                </div>
+              </td>
+            </tr>
+            <tr *ngIf="camCardSelected === option.value">
+              <td>
+                <div class="modal__cam-card--details">
+                  <div class="modal__cam-card--label">
+                    {{ 'camfil.modal.addToCamcard.camcard.invoice_mark' | translate }}
+                  </div>
+                  <div class="modal__cam-card--value">{{ option.invoiceLabel }}</div>
+                </div>
+              </td>
+            </tr>
+          </table>
+
+          <div *ngIf="camCardSelected === option.value">
+            <div class="modal__cam-card--details border-bottom modal__cam-card--delivery-address">
+              <div class="modal__cam-card--label">
+                {{ 'camfil.modal.addToCamcard.camcard.delivery_address' | translate }}
+              </div>
+              <div class="modal__cam-card--value">{{ option.deliveryAddressDisplay }}</div>
+            </div>
+            <div class="modal__label">
+              {{ 'camfil.modal.addToCamcard.camcard.sublist.title' | translate }}
+            </div>
+
+            <mat-radio-group
+              aria-labelledby="segment-radio-group"
+              [(ngModel)]="segmentSelected"
+              [ngModelOptions]="{ standalone: true }"
+            >
+              <div
+                *ngIf="camCardSelected === option.value && option.subCamCards.length"
+                class="modal__cam-card--sublist"
+              >
+                <div class="modal__radio" *ngFor="let subCamCard of option.subCamCards; let i = index">
+                  <mat-radio-button name="subCamCard" [value]="subCamCard.id">{{ subCamCard.name }}</mat-radio-button>
+                </div>
+              </div>
+              <div *ngIf="showNewSegment" class="modal__radio modal__new-segment--radio">
+                <mat-radio-button name="subCamCard" [value]="newSegmentValue">
+                  <mat-form-field appearance="outline" class="modal__input--small">
+                    <input
+                      matInput
+                      formControlName="newCamCard"
+                      [placeholder]="'camfil.account.cam_card.new_cam_card.text' | translate"
+                    />
+                  </mat-form-field>
+                </mat-radio-button>
+                <camfil-error
+                  [errors]="newSegmentForm.controls.newCamCard.errors"
+                  [errorValidators]="newSegmentValidator"
+                  [touched]="newSegmentForm.controls.newCamCard.touched"
+                >
+                </camfil-error>
+              </div>
+            </mat-radio-group>
+
+            <div class="modal__new-segment">
+              <mat-icon svgIcon="plus" class="color-dark size-24 modal__new-segment--icon"></mat-icon>
+              <a class="modal__link" (click)="showNewSegmant()" tabindex="0" (keypress)="showNewSegmant()">{{
+                'camfil.modal.addToCamcard.camcard.new_segment' | translate
+              }}</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</ng-template>
