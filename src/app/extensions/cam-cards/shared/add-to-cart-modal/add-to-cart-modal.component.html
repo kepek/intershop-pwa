@@ -12,6 +12,7 @@
       (secondaryButtonClicked)="openCreateOrderModal(createModal)"
       [loading]="submitted && !showSuccess"
       (hiddenClicked)="hide()"
+      [primaryDisabled]="!selectedOrderId"
     >
     </camfil-cam-card-modal>
   </ng-container>

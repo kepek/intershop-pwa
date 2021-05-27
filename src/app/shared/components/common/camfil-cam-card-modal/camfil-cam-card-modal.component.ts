@@ -23,6 +23,7 @@ export class CamfilCamCardModalComponent {
   @Input() primaryButtonTitle?: string;
   @Input() secondaryButtonTitle?: string;
   @Input() secondaryDisabled?: boolean;
+  @Input() primaryDisabled?: boolean;
 
   @Output() primaryButtonClicked = new EventEmitter<any>();
   @Output() secondaryButtonClicked = new EventEmitter<any>();
