@@ -792,6 +792,7 @@
   "camfil.ahu.detail.howToMeasureFilter": "Suodattimen mittausohje",
   "camfil.ahu.detail.less.details": "Vähemmän tietoja",
   "camfil.ahu.detail.more.details": "Lisää tietoja",
+  "camfil.ahu.detail.product.dimensions.label": "Mitat",
   "camfil.ahu.detail.select.filters": "Valitse tuloilmasuodattimet",
   "camfil.ahu.detail.select.unit": "Valitse toinen laite",
   "camfil.ahu.detail.technical.specification": "Tekniset tiedot",

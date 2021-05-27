@@ -7,7 +7,7 @@
     <dl>
       <dt class="filter__attr">{{ 'camfil.ahu.detail.filter-slots' | translate }}</dt>
       <dd class="filter__attr-value">{{ unitAHUAirSlotType.count }}</dd>
-      <dt class="filter__attr">{{ 'camfil.product.dimensions.label' | translate }}</dt>
+      <dt class="filter__attr">{{ 'camfil.ahu.detail.product.dimensions.label' | translate }}</dt>
       <dd *ngIf="unitAHUAirSlotType.dimensions.length">
         <ng-container *ngFor="let dimension of unitAHUAirSlotType.dimensions">
           <span class="filter__attr-value">{{ dimension }}</span>
