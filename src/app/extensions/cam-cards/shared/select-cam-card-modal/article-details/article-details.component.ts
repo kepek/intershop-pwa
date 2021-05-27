@@ -43,13 +43,15 @@ export class ArticleDetailsComponent implements OnInit {
   }
 
   get diameterDisabled() {
-    return this.quantityForm.get('measurementWidth')?.value || this.quantityForm.get('measurementHeight')?.value
-      ? true
-      : false;
+    return !!this.quantityForm.get('measurementWidth')?.value || !!this.quantityForm.get('measurementHeight')?.value;
+  }
+
+  get widthAndHeightFilled() {
+    return !!this.quantityForm.get('measurementWidth')?.value && !!this.quantityForm.get('measurementHeight')?.value;
   }
 
   get widthAndHeightDisabled() {
-    return this.quantityForm.get('measurementDiameter')?.value ? true : false;
+    return !!this.quantityForm.get('measurementDiameter')?.value;
   }
 
   getField(name: string) {
@@ -62,7 +64,8 @@ export class ArticleDetailsComponent implements OnInit {
       this.filledMeasurements.length && this.maxVal
         ? !this.filledMeasurements.find(val => this.maxVal > val)
         : undefined;
-    this.quantityForm?.patchValue({ measurementErrorInfo: !this.filledMeasurements.length });
+    const showGlobalError = !this.filledMeasurements.length || (this.diameterDisabled && !this.widthAndHeightFilled);
+    this.quantityForm?.patchValue({ measurementErrorInfo: showGlobalError });
 
     if (!this.diameterDisabled && !this.widthAndHeightDisabled) {
       this.enableFields();
