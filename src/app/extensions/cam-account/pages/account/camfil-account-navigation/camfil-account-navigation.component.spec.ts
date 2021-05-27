@@ -7,6 +7,7 @@ import { instance, mock, when } from 'ts-mockito';
 
 import { AuthorizationToggleModule } from 'ish-core/authorization-toggle.module';
 import { AccountFacade } from 'ish-core/facades/account.facade';
+import { AppFacade } from 'ish-core/facades/app.facade';
 import { FeatureToggleModule } from 'ish-core/feature-toggle.module';
 import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
 
@@ -17,9 +18,11 @@ describe('Camfil Account Navigation Component', () => {
   let fixture: ComponentFixture<CamfilAccountNavigationComponent>;
   let element: HTMLElement;
   let accountFacadeMock: AccountFacade;
+  let appFacadeMock: AppFacade;
 
   beforeEach(async () => {
     accountFacadeMock = mock(AccountFacade);
+    appFacadeMock = mock(AppFacade);
     await TestBed.configureTestingModule({
       declarations: [CamfilAccountNavigationComponent, MockComponent(LoadingComponent)],
       imports: [
@@ -28,7 +31,10 @@ describe('Camfil Account Navigation Component', () => {
         RouterTestingModule,
         TranslateModule.forRoot(),
       ],
-      providers: [{ provide: AccountFacade, useFactory: () => instance(accountFacadeMock) }],
+      providers: [
+        { provide: AccountFacade, useFactory: () => instance(accountFacadeMock) },
+        { provide: AppFacade, useFactory: () => instance(appFacadeMock) },
+      ],
     }).compileComponents();
 
     when(accountFacadeMock.isBusinessCustomer$).thenReturn(of(true));
