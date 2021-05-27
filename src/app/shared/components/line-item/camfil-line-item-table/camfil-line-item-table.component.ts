@@ -53,6 +53,7 @@ export class CamfilLineItemTableComponent implements OnInit, OnChanges, AfterVie
   @ViewChild(MatSort) sort: MatSort;
 
   displayedColumns: string[] = [
+    'rowNumber',
     'sku',
     'articleName',
     'orderedQty',

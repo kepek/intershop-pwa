@@ -927,6 +927,7 @@
   "camfil.lineitem.table.product": "Tuote",
   "camfil.lineitem.table.qty_delivered": "Toimitettu määrä",
   "camfil.lineitem.table.qty_ordered": "Tilattu määrä",
+  "camfil.lineitem.table.row_number": "fi_Row number",
   "camfil.listing.only.list.products.showing": "Näytetään {{0}} / {{1}}",
   "camfil.listing.only.list.products.title": "Tuotteet",
   "camfil.login.info.administer_users": "Hallinnoi käyttäjiä",
