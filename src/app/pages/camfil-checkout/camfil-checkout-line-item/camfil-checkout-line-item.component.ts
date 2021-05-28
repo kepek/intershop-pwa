@@ -59,7 +59,7 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
   @Input() index: number;
   @Input() basketId: string;
   @Input() bucketId: string;
-  @Input() orderDeliveryDate: number;
+  @Input() orderDeliveryDate: Date;
   @Input() isPartialDelivery: boolean;
   @Input() lineItemIndex: number;
 
@@ -113,8 +113,8 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
     if (s.item) {
       this.loadProductDetails();
     }
-    if (s.orderDeliveryDate || s.isPartialDelivery) {
-      this.calculateDeliveryDate();
+    if (s.isConfirmed || s.orderDeliveryDate) {
+      this.deliveryAfterOrderConfirmed();
     }
   }
 
@@ -233,11 +233,53 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
       this.product$.pipe(take(1)).subscribe((res: ProductView) => {
         const today = new Date();
         const daysTillReady = ProductViewHelper.getDeliveryDateDays(res) + 1;
-        const delivery = today.setDate(today.getDate() + daysTillReady);
+        let delivery = today.setDate(today.getDate() + daysTillReady);
+
+        if (this.checkIfWeekend(new Date(delivery))) {
+          delivery = this.setToClosestMonday(new Date(delivery));
+        }
 
         return (this.earliestDeliveryDate = AttributeHelper.formatDeliveryDate(new Date(delivery)));
       });
     }
+  }
+
+  deliveryAfterOrderConfirmed() {
+    if (this.earliestDeliveryDate) {
+      const newEarliestDeliveryDate = new Date(this.earliestDeliveryDate).getTime();
+      const newOrderDeliveryDate = new Date(this.orderDeliveryDate).getTime();
+      let deliveryDate: string;
+
+      if (newEarliestDeliveryDate < newOrderDeliveryDate) {
+        const tempDeliveryDate = new Date(this.orderDeliveryDate).setDate(
+          new Date(this.orderDeliveryDate).getDate() + 1
+        );
+        deliveryDate = AttributeHelper.formatDeliveryDate(new Date(tempDeliveryDate));
+      } else {
+        deliveryDate = this.earliestDeliveryDate;
+      }
+
+      return deliveryDate;
+    }
+  }
+
+  checkIfWeekend(date) {
+    return date?.getDay() === 6 || date?.getDay() === 0;
+  }
+
+  setToClosestMonday(date) {
+    switch (date?.getDay()) {
+      case 6:
+        date.setDate(date.getDate() + 3);
+        break;
+      case 0:
+        date.setDate(date.getDate() + 2);
+        break;
+      default:
+        break;
+    }
+
+    return new Date(date).getTime();
   }
 
   openQuickViewDialog() {

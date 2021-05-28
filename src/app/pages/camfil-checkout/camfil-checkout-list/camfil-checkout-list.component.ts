@@ -315,7 +315,7 @@ export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
       }
 
       this.fullDeliveryDate = fullDeliveryDate;
-      console.log('fullDeliveryDate', Number(fullDeliveryDate));
+
       return fullDeliveryDate;
     } else {
       return new Date().toISOString();
@@ -347,7 +347,6 @@ export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
   }
 
   setDaysClass(startDate: number, endDate: Date) {
-    console.log('setDaysClass', new Date(startDate), 'end', new Date(endDate));
     let dates = [];
     const days = [];
     const theDate = new Date(startDate);
@@ -407,7 +406,7 @@ export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
 
     this.selectedDeliveryDate = deliveryDate;
     this.isPartialDelivery = isPartial;
-    console.log('updateBucketDeliveryDate', isPartial, 'deliveryDateValue', deliveryDateValue);
+
     const basketExtensionUpdate = {
       ...this.currentBasketExtensions,
       deliveryDate: deliveryDateValue,
