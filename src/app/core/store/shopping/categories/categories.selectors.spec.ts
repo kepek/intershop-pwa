@@ -195,12 +195,16 @@ describe('Categories Selectors', () => {
           Array [
             Object {
               "hasChildren": true,
+              "hasOnlineProducts": undefined,
+              "hasOnlineSubCategories": undefined,
               "name": "name_A",
               "uniqueId": "A",
               "url": "/name_A-catA",
             },
             Object {
               "hasChildren": false,
+              "hasOnlineProducts": undefined,
+              "hasOnlineSubCategories": undefined,
               "name": "name_B",
               "uniqueId": "B",
               "url": "/name_B-catB",
@@ -214,12 +218,16 @@ describe('Categories Selectors', () => {
           Array [
             Object {
               "hasChildren": true,
+              "hasOnlineProducts": undefined,
+              "hasOnlineSubCategories": undefined,
               "name": "name_A.1",
               "uniqueId": "A.1",
               "url": "/name_A.1-catA.1",
             },
             Object {
               "hasChildren": false,
+              "hasOnlineProducts": undefined,
+              "hasOnlineSubCategories": undefined,
               "name": "name_A.2",
               "uniqueId": "A.2",
               "url": "/name_A.2-catA.2",
@@ -233,12 +241,16 @@ describe('Categories Selectors', () => {
           Array [
             Object {
               "hasChildren": false,
+              "hasOnlineProducts": undefined,
+              "hasOnlineSubCategories": undefined,
               "name": "name_A.1.a",
               "uniqueId": "A.1.a",
               "url": "/name_A.1.a-catA.1.a",
             },
             Object {
               "hasChildren": false,
+              "hasOnlineProducts": undefined,
+              "hasOnlineSubCategories": undefined,
               "name": "name_A.1.b",
               "uniqueId": "A.1.b",
               "url": "/name_A.1.b-catA.1.b",

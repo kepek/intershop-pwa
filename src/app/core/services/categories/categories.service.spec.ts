@@ -41,7 +41,7 @@ describe('Categories Service', () => {
       expect(capture(apiServiceMock.get).last()[0].toString()).toMatchInlineSnapshot(`"categories"`);
       const options: AvailableOptions = capture(apiServiceMock.get).last()[1];
       expect(options.params.toString()).toMatchInlineSnapshot(
-        `"imageView=NO-IMAGE&view=tree&limit=1&omitHasOnlineProducts=true"`
+        `"imageView=NO-IMAGE&view=tree&limit=1&omitHasOnlineProducts=false"`
       );
     });
 

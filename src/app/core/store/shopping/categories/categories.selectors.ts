@@ -65,6 +65,8 @@ function mapNavigationCategoryFromId(uniqueId: string): NavigationCategory {
     name: this.nodes[uniqueId].name,
     url: generateCategoryUrl(this.nodes[uniqueId]),
     hasChildren: !!this.edges[uniqueId]?.length,
+    hasOnlineProducts: this.nodes[uniqueId].hasOnlineProducts,
+    hasOnlineSubCategories: this.nodes[uniqueId].hasOnlineSubCategories,
   };
 }
 

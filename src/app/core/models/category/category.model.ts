@@ -9,6 +9,7 @@ export interface Category {
   categoryPath: string[];
   name: string;
   hasOnlineProducts: boolean;
+  hasOnlineSubCategories: boolean;
   description: string;
   images: Image[];
   attributes: Attribute[];

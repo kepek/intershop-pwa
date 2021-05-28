@@ -104,6 +104,7 @@ export class CategoryMapper {
         categoryPath,
         name: categoryData.name,
         hasOnlineProducts: categoryData.hasOnlineProducts,
+        hasOnlineSubCategories: categoryData.hasOnlineSubCategories,
         description: categoryData.description,
         images: this.imageMapper.fromImages(categoryData.images),
         attributes: categoryData.attributes,
