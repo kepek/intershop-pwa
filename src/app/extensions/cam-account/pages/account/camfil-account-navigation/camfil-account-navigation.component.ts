@@ -5,9 +5,11 @@ import {
   Component,
   Input,
   OnChanges,
+  OnDestroy,
   OnInit,
 } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subject } from 'rxjs';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
 import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
@@ -29,7 +31,7 @@ interface NavigationItems {
   templateUrl: './camfil-account-navigation.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CamfilAccountNavigationComponent implements OnInit, AfterViewInit, OnChanges {
+export class CamfilAccountNavigationComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy {
   @Input() deviceType: DeviceType;
 
   isMobileView = false;
@@ -57,6 +59,8 @@ export class CamfilAccountNavigationComponent implements OnInit, AfterViewInit, 
     '/logout': { localizationKey: 'account.navigation.logout.link' },
   };
   permissions: string[] = [];
+
+  private destroy$ = new Subject();
   constructor(private router: Router, private cdr: ChangeDetectorRef, private accountFacade: AccountFacade) {}
 
   ngOnInit() {
@@ -72,6 +76,7 @@ export class CamfilAccountNavigationComponent implements OnInit, AfterViewInit, 
 
   ngOnChanges() {
     this.isMobileView = this.deviceType === 'tablet' || this.deviceType === 'mobile';
+    this.refreshLinkList();
   }
 
   ngAfterViewInit() {
@@ -104,5 +109,10 @@ export class CamfilAccountNavigationComponent implements OnInit, AfterViewInit, 
 
   get unsorted() {
     return () => 0;
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }
