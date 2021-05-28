@@ -7,14 +7,11 @@ import {
   OnChanges,
   OnDestroy,
   OnInit,
-  SimpleChanges,
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
-import { AppFacade } from 'ish-core/facades/app.facade';
 import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
 import { checkPermission } from 'ish-core/utils/authorization-toggle/authorization-toggle.service';
 import { whenTruthy } from 'ish-core/utils/operators';
@@ -36,7 +33,7 @@ interface NavigationItems {
 })
 export class CamfilAccountNavigationComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy {
   @Input() deviceType: DeviceType;
-  currentLang: string;
+
   isMobileView = false;
   loading = true;
   /**
@@ -64,12 +61,7 @@ export class CamfilAccountNavigationComponent implements OnInit, AfterViewInit, 
   permissions: string[] = [];
 
   private destroy$ = new Subject();
-  constructor(
-    private router: Router,
-    private cdr: ChangeDetectorRef,
-    private accountFacade: AccountFacade,
-    private appFacade: AppFacade
-  ) {}
+  constructor(private router: Router, private cdr: ChangeDetectorRef, private accountFacade: AccountFacade) {}
 
   ngOnInit() {
     this.isMobileView = this.deviceType === 'tablet' || this.deviceType === 'mobile';
@@ -80,16 +72,11 @@ export class CamfilAccountNavigationComponent implements OnInit, AfterViewInit, 
         this.refreshLinkList();
       }
     });
-    this.appFacade.currentLocale$?.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(locale => {
-      this.currentLang = locale.value;
-    });
   }
 
-  ngOnChanges(changes: SimpleChanges) {
+  ngOnChanges() {
     this.isMobileView = this.deviceType === 'tablet' || this.deviceType === 'mobile';
-    if (changes.currentLang) {
-      this.refreshLinkList();
-    }
+    this.refreshLinkList();
   }
 
   ngAfterViewInit() {
