@@ -6,7 +6,6 @@ export class ProductViewHelper {
     const groupName = AttributeGroupTypes.ProductsListLabelAttributes;
     const attributeGroups = res.attributeGroups && res.attributeGroups[groupName];
     const deliveryDaysAttribute = attributeGroups?.attributes.find(a => a.name?.toLowerCase() === 'deliverydays');
-
     return Number(deliveryDaysAttribute?.value || 7);
   }
 }

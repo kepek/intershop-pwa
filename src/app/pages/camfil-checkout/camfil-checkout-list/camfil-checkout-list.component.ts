@@ -315,6 +315,7 @@ export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
       }
 
       this.fullDeliveryDate = fullDeliveryDate;
+      console.log('fullDeliveryDate', Number(fullDeliveryDate));
       return fullDeliveryDate;
     } else {
       return new Date().toISOString();
@@ -336,12 +337,17 @@ export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
       const today = new Date();
       const daysTillReady = ProductViewHelper.getDeliveryDateDays(res);
       delivery = today.setDate(today.getDate() + daysTillReady);
+
+      if (this.checkIfWeekend(new Date(delivery))) {
+        delivery = this.setToClosestMonday(new Date(delivery));
+      }
     });
 
     return delivery;
   }
 
   setDaysClass(startDate: number, endDate: Date) {
+    console.log('setDaysClass', new Date(startDate), 'end', new Date(endDate));
     let dates = [];
     const days = [];
     const theDate = new Date(startDate);
@@ -401,7 +407,7 @@ export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
 
     this.selectedDeliveryDate = deliveryDate;
     this.isPartialDelivery = isPartial;
-
+    console.log('updateBucketDeliveryDate', isPartial, 'deliveryDateValue', deliveryDateValue);
     const basketExtensionUpdate = {
       ...this.currentBasketExtensions,
       deliveryDate: deliveryDateValue,
@@ -421,11 +427,33 @@ export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
 
   toDate(dateStr) {
     const parts = dateStr.split('-');
-    const dateString = new Date(parts[0], parts[1] - 1, parts[2]);
+    let dateString = new Date(parts[0], parts[1] - 1, parts[2]);
+
+    if (this.checkIfWeekend(dateString)) {
+      dateString = this.setToClosestMonday(dateString);
+    }
 
     this.selectedDeliveryDate = dateString.getTime();
 
     return dateString.toISOString();
+  }
+
+  checkIfWeekend(date) {
+    return date?.getDay() === 6 || date?.getDay() === 0;
+  }
+
+  setToClosestMonday(date) {
+    switch (date?.getDay()) {
+      case 6:
+        date.setDate(date.getDate() + 2);
+        break;
+      case 0:
+        date.setDate(date.getDate() + 1);
+        break;
+      default:
+        break;
+    }
+    return new Date(date);
   }
 
   doubleArticlesQuantity(order) {
