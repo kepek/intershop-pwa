@@ -38,6 +38,7 @@ import {
   addItemsToBasketFail,
   addItemsToBasketFromCamCard,
   addItemsToBasketFromCamCardFail,
+  addItemsToBasketFromCamCardSuccess,
   addItemsToBasketSuccess,
   addProductToBasket,
   addProductToBucket,
@@ -531,7 +532,7 @@ export class BasketItemsEffects {
       mapToPayload(),
       mergeMap(payload =>
         this.basketService.addItemsToBasket(payload.items).pipe(
-          mergeMap(info => {
+          mergeMap(() => {
             const emptyBuckets =
               payload.bucketIds
                 ?.filter(id => id.split('_')[0] === 'emptyBucket')
@@ -539,7 +540,8 @@ export class BasketItemsEffects {
             return [
               loadBasket(),
               loadBasketAddresses(),
-              addItemsToBasketSuccess({ info }),
+              // addItemsToBasketSuccess({ info }),
+              addItemsToBasketFromCamCardSuccess(),
               ...emptyBuckets,
               displaySuccessMessage({
                 message: 'camfil.add_items_to_basket.camfil.message.success',
