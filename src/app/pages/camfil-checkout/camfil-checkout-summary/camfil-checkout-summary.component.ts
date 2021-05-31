@@ -14,7 +14,7 @@ import { PriceHelper } from 'ish-core/models/price/price.helper';
   styleUrls: ['./camfil-checkout-summary.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CamfilCheckoutSummaryComponent implements OnInit, OnDestroy {
+export class CamfilCheckoutSummaryComponent implements OnInit {
   @Input() basket: BasketView;
   @Input() isConfirmed;
   @Output() update = new EventEmitter();
@@ -22,8 +22,6 @@ export class CamfilCheckoutSummaryComponent implements OnInit, OnDestroy {
   productsReadyToPlaceOrder$: Observable<boolean>;
   bucketsVolumeDiscounts$: Observable<number>;
   basketVolumeDiscount;
-
-  private destroy$ = new Subject<void>();
 
   constructor(
     private checkoutFacade: CheckoutFacade,
@@ -55,10 +53,5 @@ export class CamfilCheckoutSummaryComponent implements OnInit, OnDestroy {
 
   getVolumeDiscountPrice(value, currency) {
     return PriceHelper.getVolumeDiscountPrice(value, currency, this.translate.currentLang);
-  }
-
-  ngOnDestroy() {
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 }
