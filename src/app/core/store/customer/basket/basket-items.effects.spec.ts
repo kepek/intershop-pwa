@@ -23,6 +23,7 @@ import {
   addItemsToBasket,
   addItemsToBasketFail,
   addItemsToBasketFromCamCard,
+  addItemsToBasketFromCamCardSuccess,
   addItemsToBasketSuccess,
   addProductToBasket,
   deleteBasketItem,
@@ -200,7 +201,7 @@ describe('Basket Items Effects', () => {
       const action = addItemsToBasketFromCamCard({ items });
       const completion = loadBasket();
       const completion2 = loadBasketAddresses();
-      const completion3 = addItemsToBasketSuccess({ info: [] });
+      const completion3 = addItemsToBasketFromCamCardSuccess();
       const completion4 = displaySuccessMessage({ message: 'camfil.add_items_to_basket.camfil.message.success' });
 
       actions$ = hot('-a------a------a------|', { a: action });
