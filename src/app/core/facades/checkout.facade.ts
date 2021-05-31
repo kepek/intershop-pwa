@@ -39,6 +39,7 @@ import {
   getBasketShippingAddress,
   getBasketValidationResults,
   getBucketEmailRecipients,
+  getBucketsVolumeDiscounts,
   getCalendarExceptions,
   getCurrentBasket,
   getCurrentBuckets,
@@ -230,6 +231,7 @@ export class CheckoutFacade {
 
   buckets$ = this.store.pipe(select(getCurrentBuckets));
   emptyBuckets$ = this.store.pipe(select(getEmptyBuckets));
+  bucketsVolumeDiscounts$ = this.store.pipe(select(getBucketsVolumeDiscounts));
 
   loadBuckets() {
     this.store.dispatch(loadBuckets());

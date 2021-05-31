@@ -31,6 +31,7 @@ export class BucketMapper {
         orderMark: extension ? extension.orderMark : '',
         invoiceLabel: extension ? extension.invoiceLabel : '',
         deliveryDate: extension ? extension.deliveryDate : '',
+        volumeDiscount: extension ? extension.volumeDiscount : 0,
       };
     });
   }

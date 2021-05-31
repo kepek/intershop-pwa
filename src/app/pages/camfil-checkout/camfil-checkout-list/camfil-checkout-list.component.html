@@ -285,8 +285,10 @@
     <div *ngIf="order">
       <div class="section cost-summary float-right box-shadow--dark mat-elevation-z">
         <dl class="row dl-horizontal dl-separator mb-0">
-          <dt class="col-6">{{ 'camfil.checkout.volume_discount' | translate }}</dt>
-          <dd class="col-6">{{ discount() | ishPrice }}</dd>
+          <ng-container *ngIf="order.volumeDiscount">
+            <dt class="col-6">{{ 'camfil.checkout.volume_discount' | translate }}</dt>
+            <dd class="col-6">{{ getVolumeDiscountPrice(order.volumeDiscount, purchaseCurrency) }}</dd>
+          </ng-container>
           <dt class="col-6">{{ 'camfil.checkout.single_total_price_after' | translate }}</dt>
           <dd class="col-6">{{ totalPrice() | ishPrice }}</dd>
           <dt class="col-6">{{ 'camfil.checkout.tax_amount' | translate }}</dt>

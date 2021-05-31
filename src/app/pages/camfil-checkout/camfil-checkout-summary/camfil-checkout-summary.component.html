@@ -8,9 +8,9 @@
       <p>{{ 'camfil.checkout.your_total_price' | translate }}</p>
       <p>{{ basket.totals?.total | ishPrice }}</p>
     </div>
-    <div class="summary-line">
+    <div class="summary-line" *ngIf="bucketsVolumeDiscounts$ | async">
       <p>{{ 'camfil.checkout.volume_discount' | translate }}</p>
-      <p>0</p>
+      <p>{{ getVolumeDiscountPrice(bucketsVolumeDiscounts$ | async, basket.purchaseCurrency) }}</p>
     </div>
     <div class="summary-line">
       <p>
