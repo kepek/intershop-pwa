@@ -540,7 +540,6 @@ export class BasketItemsEffects {
             return [
               loadBasket(),
               loadBasketAddresses(),
-              // addItemsToBasketSuccess({ info }),
               addItemsToBasketFromCamCardSuccess(),
               ...emptyBuckets,
               displaySuccessMessage({
