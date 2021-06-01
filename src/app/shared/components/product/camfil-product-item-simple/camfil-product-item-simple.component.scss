@@ -6,8 +6,6 @@
     padding: $space-half $space-box;
   }
   .product-item-attributes {
-    position: absolute;
-    top: 55%;
     line-height: $line-height-overline;
     @media (max-width: $screen-md-max) {
       flex-wrap: wrap;
