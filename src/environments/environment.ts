@@ -9,6 +9,5 @@ export const environment: Environment = {
   ...ENVIRONMENT_DEFAULTS,
 
   /* INTERSHOP COMMERCE MANAGEMENT REST API CONFIGURATION */
-  icmBaseURL: 'https://uat-api.shop.camfil.com/',
-  theme: 'camfil',
+  icmBaseURL: 'https://int-api.shop.camfil.com/',
 };
