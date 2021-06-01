@@ -30,6 +30,7 @@
             [index]="i + 1"
             (handleProduct)="handleProductLoad($event)"
             [basket]="basket"
+            [purchaseCurrency]="basket.purchaseCurrency"
           ></camfil-checkout-list>
         </ng-container>
       </div>

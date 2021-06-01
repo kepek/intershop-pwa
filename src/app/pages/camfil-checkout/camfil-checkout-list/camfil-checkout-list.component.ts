@@ -38,6 +38,7 @@ import { ORDER_HEADER_VALIDATORS } from './validators';
 import { LineItemUpdate } from 'ish-core/models/line-item-update/line-item-update.model';
 import { Address } from 'ish-core/models/address/address.model';
 import { AddEmailRecipientModalComponent } from '../add-email-recipient-modal/add-email-recipient-modal.component';
+import { TranslateService } from '@ngx-translate/core';
 
 interface Order extends Bucket {
   totals: number;
@@ -53,6 +54,7 @@ export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
   private static REQUIRED_COMPLETENESS_LEVEL = ProductCompletenessLevel.List;
   @Input() order: Order;
   @Input() buckets: Bucket[];
+  @Input() purchaseCurrency: string;
   isOrderOpen = true;
   orderForm: FormGroup;
 
@@ -62,6 +64,7 @@ export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
   @Input() isConfirmed;
   @Input() totalOrders;
   @Input() index;
+
   @Output() handleProduct = new EventEmitter<ProductView>();
   calculatedOrder;
 
@@ -93,7 +96,8 @@ export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     public dialog: MatDialog,
     private checkoutFacade: CheckoutFacade,
-    private shoppingFacade: ShoppingFacade
+    private shoppingFacade: ShoppingFacade,
+    private translate: TranslateService
   ) {}
 
   get currentBasketExtensions() {
@@ -202,6 +206,10 @@ export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
 
   discount(): Price {
     return PriceHelper.discount(this.order?.lineItems);
+  }
+
+  getVolumeDiscountPrice(value, currency) {
+    return PriceHelper.getVolumeDiscountPrice(value, currency, this.translate.currentLang);
   }
 
   get freeDelivery() {

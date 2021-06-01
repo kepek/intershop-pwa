@@ -2,6 +2,7 @@ import { LineItem, LineItemView } from 'ish-core/models/line-item/line-item.mode
 import { PriceItem } from 'ish-core/models/price-item/price-item.model';
 
 import { Price } from './price.model';
+import { formatPrice } from './price.pipe';
 
 export class PriceHelper {
   private static sanityChecks(p1: Price, p2: Price) {
@@ -113,5 +114,14 @@ export class PriceHelper {
     });
 
     return price;
+  }
+
+  static getVolumeDiscountPrice(value, currency, currentLang) {
+    const priceData: Price = {
+      value,
+      currency,
+      type: 'Money',
+    };
+    return (value || value === 0) && currency ? formatPrice(priceData, currentLang) : 0;
   }
 }

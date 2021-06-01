@@ -129,3 +129,7 @@ export const getBucketEmailRecipients = (addressId: string) =>
     selectEmailRecipients,
     allRecipients => allRecipients?.find(ar => ar.urn === addressId)?.emailRecipients || []
   );
+
+export const getBucketsVolumeDiscounts = createSelector(getBasketState, basket =>
+  basket.basket.basketExtensions.map(be => be.volumeDiscount).reduce((prev, next) => prev + next)
+);
