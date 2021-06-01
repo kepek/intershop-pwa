@@ -17,7 +17,7 @@ import { take, takeUntil } from 'rxjs/operators';
 import { AccountFacade } from 'ish-core/facades/account.facade';
 import { AppFacade } from 'ish-core/facades/app.facade';
 import { Country } from 'ish-core/models/country/country.model';
-import { Product } from 'ish-core/models/product/product.model';
+import { Product, ProductHelper } from 'ish-core/models/product/product.model';
 import { whenTruthy } from 'ish-core/utils/operators';
 import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
 
@@ -226,6 +226,10 @@ export class CreateCamCardModalComponent implements OnInit, OnDestroy {
 
   getField(name: string) {
     return this.camCardForm.get(name);
+  }
+
+  disableIfNoMeasurements() {
+    return ProductHelper.disableIfNoMeasurements(this.product, this.quantityForm);
   }
 
   /** close modal */

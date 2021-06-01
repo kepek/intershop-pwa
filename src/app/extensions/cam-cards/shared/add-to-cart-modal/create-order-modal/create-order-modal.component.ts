@@ -23,7 +23,7 @@ import { AttributeHelper } from 'ish-core/models/attribute/attribute.helper';
 import { BasketExtensions } from 'ish-core/models/basket/basket.interface';
 import { BasketView } from 'ish-core/models/basket/basket.model';
 import { Bucket } from 'ish-core/models/basket/bucket.model';
-import { Product } from 'ish-core/models/product/product.model';
+import { Product, ProductHelper } from 'ish-core/models/product/product.model';
 import { whenTruthy } from 'ish-core/utils/operators';
 import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
 
@@ -229,6 +229,10 @@ export class CreateOrderModalComponent implements OnInit, OnDestroy {
 
   cancel() {
     this.hide();
+  }
+
+  disableIfNoMeasurements() {
+    return ProductHelper.disableIfNoMeasurements(this.product, this.quantityForm);
   }
 
   /** close modal */

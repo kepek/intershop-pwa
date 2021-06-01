@@ -87,8 +87,7 @@ export class AddToCartModalComponent implements OnInit, OnDestroy {
   addToOrder() {
     const requiresMeasurement = ProductHelper.getRequiresMeasurement(this.product);
     const measurements =
-      this.quantityForm.get('measurementWidth')?.value ||
-      this.quantityForm.get('measurementHeight')?.value ||
+      (this.quantityForm.get('measurementWidth')?.value && this.quantityForm.get('measurementHeight')?.value) ||
       this.quantityForm.get('measurementDiameter')?.value;
 
     if (requiresMeasurement && !measurements) {
@@ -117,6 +116,10 @@ export class AddToCartModalComponent implements OnInit, OnDestroy {
     } else {
       markAsDirtyRecursive(this.quantityForm);
     }
+  }
+
+  disableIfNoMeasurements() {
+    return ProductHelper.disableIfNoMeasurements(this.product, this.quantityForm);
   }
 
   /** close modal */

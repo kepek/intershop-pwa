@@ -13,6 +13,7 @@
       [secondaryButtonTitle]="'camfil.modal.addToCamcard.button.add_to_camcard' | translate"
       (secondaryButtonClicked)="addToCamcard()"
       [secondaryDisabled]="!camCardSelected"
+      [primaryDisabled]="disableIfNoMeasurements()"
       (hiddenClicked)="hide()"
     >
     </camfil-cam-card-modal>
