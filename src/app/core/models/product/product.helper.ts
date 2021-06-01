@@ -290,4 +290,16 @@ export class ProductHelper {
 
     return String(property) !== '0';
   }
+
+  static disableIfNoMeasurements(product: Product, form) {
+    const requiresMeasurement = ProductHelper.getRequiresMeasurement(product);
+    const measurements =
+      (form?.get('measurementWidth')?.value && form?.get('measurementHeight')?.value) ||
+      form?.get('measurementDiameter')?.value;
+    if (requiresMeasurement && !measurements) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

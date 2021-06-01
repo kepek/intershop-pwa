@@ -11,6 +11,7 @@
       (primaryButtonClicked)="submitForm()"
       (hiddenClicked)="cancel()"
       [loading]="loading"
+      [primaryDisabled]="disableIfNoMeasurements()"
     >
     </camfil-cam-card-modal>
   </ng-container>

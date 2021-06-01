@@ -11,6 +11,7 @@
     (primaryButtonClicked)="createAndEdit()"
     (secondaryButtonClicked)="createAndContinue()"
     (hiddenClicked)="hide()"
+    [primaryDisabled]="disableIfNoMeasurements()"
   >
   </camfil-cam-card-modal>
 </ng-template>

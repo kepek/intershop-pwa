@@ -367,6 +367,10 @@ export class SelectCamCardModalComponent implements OnInit, OnDestroy, OnChanges
     this.shoppingFacade.hideSearchBox();
   }
 
+  disableIfNoMeasurements() {
+    return ProductHelper.disableIfNoMeasurements(this.product, this.quantityForm);
+  }
+
   /** close modal */
   hide() {
     this.modal.close();
