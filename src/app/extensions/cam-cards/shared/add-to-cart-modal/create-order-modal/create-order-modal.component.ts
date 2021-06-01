@@ -235,7 +235,6 @@ export class CreateOrderModalComponent implements OnInit, OnDestroy {
     return ProductHelper.disableIfNoMeasurements(this.product, this.quantityForm);
   }
 
-
   /** close modal */
   hide() {
     this.modal.close();
