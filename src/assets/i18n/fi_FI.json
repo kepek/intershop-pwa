@@ -609,6 +609,7 @@
   "camfil.account.cam_card.pdf.printed_by": "Tulostanut",
   "camfil.account.cam_card.pdf.quantity": "Määrä:",
   "camfil.account.cam_card.pdf.your_total": "Kokonaishinta (ei sis. Alv)",
+  "camfil.account.cam_card.pdf.measurements": "fi_Measurements",
   "camfil.account.cam_card.print.dialog.btn.no_price": "Tulosta ilman hintoja",
   "camfil.account.cam_card.print.dialog.btn.with_price": "Tulosta hintojen kanssa",
   "camfil.account.cam_card.print.dialog.title": "Miten haluat tulostaa Suodatinluettelosi?",

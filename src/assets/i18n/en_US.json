@@ -609,6 +609,7 @@
   "camfil.account.cam_card.pdf.printed_by": "Printed by",
   "camfil.account.cam_card.pdf.quantity": "Quantity:",
   "camfil.account.cam_card.pdf.your_total": "Your total (net price): ",
+  "camfil.account.cam_card.pdf.measurements": "Measurements",
   "camfil.account.cam_card.print.dialog.btn.no_price": "Print w/o price",
   "camfil.account.cam_card.print.dialog.btn.with_price": "Print w/ price",
   "camfil.account.cam_card.print.dialog.title": "How would you like to print your CamCard?",
