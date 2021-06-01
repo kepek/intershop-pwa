@@ -1,5 +1,8 @@
 import { NgModule } from '@angular/core';
 
+import { environment } from '../../environments/environment';
+
+import * as injectionKeys from './configurations/injection-keys';
 import { SPECIAL_HTTP_ERROR_HANDLER } from './interceptors/icm-error-mapper.interceptor';
 import { createPaymentErrorHandler } from './utils/http-error/create-payment.error-handler';
 import { editPasswordErrorHandler } from './utils/http-error/edit-password.error-handler';
@@ -9,6 +12,7 @@ import { updatePasswordErrorHandler } from './utils/http-error/update-password.e
 
 @NgModule({
   providers: [
+    { provide: injectionKeys.CHANNEL_CONFIGURATION, useValue: environment.channelConfs },
     { provide: SPECIAL_HTTP_ERROR_HANDLER, useValue: updatePasswordErrorHandler, multi: true },
     { provide: SPECIAL_HTTP_ERROR_HANDLER, useClass: LoginUserErrorHandler, multi: true },
     { provide: SPECIAL_HTTP_ERROR_HANDLER, useValue: requestReminderErrorHandler, multi: true },
