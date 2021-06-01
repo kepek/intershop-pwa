@@ -122,8 +122,10 @@
         </ng-container>
         <dt class="col-8">{{ 'camfil.account.orderdetails.your.total_price.text' | translate }}</dt>
         <dd class="col-4">{{ handlePrice(order.totalCustomerPriceSum, order.currency) }}</dd>
-        <dt class="col-8">{{ 'camfil.account.orderdetails.volume_discount.text' | translate }}</dt>
-        <dd class="col-4">{{ handlePrice(order.volumeDiscount, order.currency) }}</dd>
+        <ng-container *ngIf="order.volumeDiscount">
+          <dt class="col-8">{{ 'camfil.checkout.volume_discount' | translate }}</dt>
+          <dd class="col-4">{{ handlePrice(order.volumeDiscount, order.currency) }}</dd>
+        </ng-container>
         <dt class="col-8 total-price">{{ 'camfil.account.orderdetails.your.total_price_exl_vat.text' | translate }}</dt>
         <dd class="col-4 total-price-value">
           {{ handlePrice(order.totalPriceAfterDiscountExVAT, order.currency) }}
