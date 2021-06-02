@@ -12,6 +12,10 @@ import { CamfilBreadcrumbComponent } from 'ish-shell/header/camfil-breadcrumb/ca
 import { CamfilHeaderComponent } from 'ish-shell/header/camfil-header/camfil-header.component';
 
 import { AppComponent } from './app.component';
+import { CHANNEL_CONFIGURATION } from 'ish-core/configurations/injection-keys';
+import { CookiesService } from 'ngx-utils-cookies-port';
+import { BrowserTransferStateModule } from '@angular/platform-browser';
+import { FeatureToggleModule } from 'ish-core/feature-toggle.module';
 
 let translate: TranslateService;
 
@@ -21,6 +25,7 @@ describe('App Component', () => {
   let element: HTMLElement;
 
   beforeEach(async () => {
+    const cookiesServiceMock = mock(CookiesService);
     await TestBed.configureTestingModule({
       declarations: [
         AppComponent,
@@ -29,8 +34,17 @@ describe('App Component', () => {
         MockComponent(CamfilHeaderComponent),
         MockComponent(CookiesBannerComponent),
       ],
-      imports: [RouterTestingModule, TranslateModule.forRoot()],
-      providers: [{ provide: AppFacade, useFactory: () => instance(mock(AppFacade)) }],
+      imports: [
+        RouterTestingModule,
+        BrowserTransferStateModule,
+        FeatureToggleModule.forTesting('recently'),
+        TranslateModule.forRoot(),
+      ],
+      providers: [
+        { provide: AppFacade, useFactory: () => instance(mock(AppFacade)) },
+        { provide: CHANNEL_CONFIGURATION, useValue: [] },
+        { provide: CookiesService, useValue: instance(cookiesServiceMock) },
+      ],
     }).compileComponents();
   });
 
