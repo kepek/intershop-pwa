@@ -146,9 +146,11 @@ export class PrintOrderComponent implements OnInit {
 
   pdfInfoPart(bucket: Bucket, idx: number) {
     const { shipToAddressFull, customer, contactPerson } = bucket;
-    const title = `Order ${idx + 1}/${this.buckets.length} - ${customer.customerNo}, ${customer.companyName} ${
-      customer.department ? `,${customer.department}` : ''
-    }`;
+    const orderNo = `${idx + 1}/${this.buckets?.length}`;
+    const { customerNo, companyName, department } = customer;
+    const infoParts = [customerNo, companyName, department].filter(Boolean);
+
+    const title = `Order ${orderNo} - ${infoParts.join(', ')}`;
     return [
       {
         style: 'header',
