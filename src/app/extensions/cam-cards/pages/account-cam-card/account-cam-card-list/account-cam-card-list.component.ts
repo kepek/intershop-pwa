@@ -165,6 +165,7 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
               this.columnsToDisplay.splice(6, 0, 'userAccess');
             }
             const realCamCards = CamCardHelper.getRealCamCards(this.camCards);
+
             this.camCardsProcessed = new MatTableDataSource(realCamCards);
             this.changeDetectorRefs.detectChanges();
 
@@ -188,10 +189,14 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
                 !!additionalFields.filter(item => this.simplifyData(item).indexOf(filtered) !== -1).length
               );
             };
-            this.camCardsProcessed.sort = this.sort;
-            this.camCardsProcessed.sortingDataAccessor = (item, property) =>
-              property === 'customer' ? item.customer.companyName : item[property];
 
+            this.camCardsProcessed.sortingDataAccessor = (item, property) =>
+              property === 'customer'
+                ? item.customer.companyName
+                : property === 'name'
+                ? item[property].toLocaleLowerCase()
+                : item[property];
+            this.camCardsProcessed.sort = this.sort;
             this.goToExpandedCamCard();
             this.loading = this.camCardLoading;
           });
