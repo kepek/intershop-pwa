@@ -1,5 +1,6 @@
 import { Auth0Config } from 'ish-core/identity-provider/auth0.identity-provider';
 import { ChannelConfiguration } from 'ish-core/models/channel-configuration/channel-configuration.model';
+import { Channel } from 'ish-core/models/channel/channel.types';
 import { CookieConsentOptions } from 'ish-core/models/cookies/cookies.model';
 import { Locale } from 'ish-core/models/locale/locale.model';
 import { DeviceType, ViewType } from 'ish-core/models/viewtype/viewtype.types';
@@ -195,8 +196,8 @@ export const ENVIRONMENT_DEFAULTS: Environment = {
 
   /* ToDo: Config for testing. Replace with correct gtmContainerId/tokens when provided by Camfil */
   channelConfs: [
-    { channel: 'Camfil-CamfilFI-Site', gtmContainerId: 'GTM-TSM3JN4' },
-    { channel: 'Camfil-CamfilSE-Site', gtmContainerId: 'GTM-TSM3JN4' },
+    { channel: Channel.FI, gtmContainerId: 'GTM-TSM3JN4' },
+    { channel: Channel.SE, gtmContainerId: 'GTM-TSM3JN4' },
   ],
   /* ICC API CONFIGURATION */
 
