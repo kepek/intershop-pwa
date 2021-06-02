@@ -30,7 +30,7 @@ export class PdfHelper {
       table: {
         headerRows: 1,
         body,
-        widths: [10, '*', 'auto'],
+        widths: [10, '*', '20%'],
       },
       style: 'row',
       layout: {
