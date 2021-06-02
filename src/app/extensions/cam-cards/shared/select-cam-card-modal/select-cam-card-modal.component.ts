@@ -292,30 +292,37 @@ export class SelectCamCardModalComponent implements OnInit, OnDestroy, OnChanges
       this.quantityForm.patchValue({ measurementErrorInfo: true });
       return;
     }
+    if (!this.disableIfNoMeasurements()) {
+      if (this.camCardSelected && this.isAddedToNewSubCamCard()) {
+        this.addToNewSubCamCard(quantity, boxLabel, measurement);
+        return;
+      }
 
-    if (this.camCardSelected && this.isAddedToNewSubCamCard()) {
-      this.addToNewSubCamCard(quantity, boxLabel, measurement);
-      return;
-    }
+      if (this.camCardSelected) {
+        if (this.isAddedToExistingSubCamCard()) {
+          const rootCamCard = this.camCards.find(camCard => camCard.id === this.camCardSelected);
+          this.camCardsFacade.addProductToSubCamCard(
+            this.segmentSelected,
+            this.camCardSelected,
+            this.product.sku,
+            quantity,
+            boxLabel,
+            measurement
+          );
 
-    if (this.camCardSelected) {
-      if (this.isAddedToExistingSubCamCard()) {
-        const rootCamCard = this.camCards.find(camCard => camCard.id === this.camCardSelected);
-        this.camCardsFacade.addProductToSubCamCard(
-          this.segmentSelected,
-          this.camCardSelected,
-          this.product.sku,
-          quantity,
-          boxLabel,
-          measurement
-        );
-
-        this.currentSubCamCardName = rootCamCard.subCamCards.find(sub => sub.id === this.segmentSelected).name;
-        this.useSubCamCard = true;
-      } else {
-        const comment: CamCardItemComment = { label: boxLabel };
-        this.camCardsFacade.addProductToCamCard(this.camCardSelected, this.product.sku, quantity, comment, measurement);
-        this.useSubCamCard = false;
+          this.currentSubCamCardName = rootCamCard.subCamCards.find(sub => sub.id === this.segmentSelected).name;
+          this.useSubCamCard = true;
+        } else {
+          const comment: CamCardItemComment = { label: boxLabel };
+          this.camCardsFacade.addProductToCamCard(
+            this.camCardSelected,
+            this.product.sku,
+            quantity,
+            comment,
+            measurement
+          );
+          this.useSubCamCard = false;
+        }
       }
     }
   }
