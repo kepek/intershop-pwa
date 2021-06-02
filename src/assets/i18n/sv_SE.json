@@ -601,6 +601,7 @@
   "camfil.account.cam_card.pdf.delivery_address": "Leveransadress",
   "camfil.account.cam_card.pdf.invoice_mark": "Fakturamärkning",
   "camfil.account.cam_card.pdf.last_order": "Senaste order",
+  "camfil.account.cam_card.pdf.measurements": "sv_Measurements",
   "camfil.account.cam_card.pdf.next_order": "Nästa beställning",
   "camfil.account.cam_card.pdf.order_interval": "Bytesintervall*",
   "camfil.account.cam_card.pdf.order_mark": "Ordermärkning",

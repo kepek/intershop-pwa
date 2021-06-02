@@ -71,6 +71,7 @@ export class PrintOrderComponent implements OnInit {
     printDate: this.translate.instant('camfil.account.cam_card.pdf.print_date'),
     printedBy: this.translate.instant('camfil.account.cam_card.pdf.printed_by'),
     deliveryAddress: this.translate.instant('camfil.account.cam_card.pdf.delivery_address'),
+    measurements: this.translate.instant('camfil.account.cam_card.pdf.measurements'),
 
     deliveryDate: this.translate.instant('camfil.account.pdf.delivery_date'),
     invoiceLabel: this.translate.instant('camfil.account.pdf.invoice_label'),
@@ -145,7 +146,11 @@ export class PrintOrderComponent implements OnInit {
 
   pdfInfoPart(bucket: Bucket, idx: number) {
     const { shipToAddressFull, customer, contactPerson } = bucket;
-    const title = `Order ${idx + 1}/${this.buckets.length} - ${customer.customerNo}, ${customer.companyName}`;
+    const orderNo = `${idx + 1}/${this.buckets?.length}`;
+    const { customerNo, companyName, department } = customer;
+    const infoParts = [customerNo, companyName, department].filter(Boolean);
+
+    const title = `Order ${orderNo} - ${infoParts.join(', ')}`;
     return [
       {
         style: 'header',
@@ -242,13 +247,31 @@ export class PrintOrderComponent implements OnInit {
     const qty = `${this.texts.quantity} `;
     const qtyVal = { text: item.quantity.value, bold: true };
     const priceVal = this.handlePrice({
-      value: item.totals.total.gross,
+      value: item.totals.total.net,
       currency: item.totals.total.currency,
       type: 'Money',
     });
+    const measurementsValues = ['width', 'height', 'diameter'];
+    const measurements = {
+      [measurementsValues[0]]: (this.getValFromAttrs(item, 'width') as number) || undefined,
+      [measurementsValues[1]]: (this.getValFromAttrs(item, 'height') as number) || undefined,
+      [measurementsValues[2]]: (this.getValFromAttrs(item, 'diameter') as number) || undefined,
+    };
+    const measurementsToShow = this.measurementsToShow(measurements);
+    const measurementsText = measurementsToShow ? ` | ${this.texts.measurements}: ` : '';
     const priceLabel = ` | ${this.texts.price} `;
     const price = { text: priceVal, bold: true };
-    const arrRightInfo = [artNo, artNoVal, boxLabelText, boxLabelVal, deliveryDaysText, deliveryDaysVal];
+    const arrRightInfo = [
+      artNo,
+      artNoVal,
+      boxLabelText,
+      boxLabelVal,
+      deliveryDaysText,
+      deliveryDaysVal,
+      measurementsText,
+      measurementsToShow,
+    ];
+
     const arrLeftInfo = [qty, qtyVal, priceLabel, price];
 
     return PdfHelper.pdfProductRow(index, this.productsInfo[sku].name, arrRightInfo, arrLeftInfo);
@@ -291,5 +314,15 @@ export class PrintOrderComponent implements OnInit {
 
   handleDate(data: Date | string, format = 'medium') {
     return formatISHDate(data, format, this.translate.currentLang);
+  }
+
+  getValFromAttrs(item: LineItemView, name: string) {
+    return item?.attributes?.find(att => att.name === name)?.value;
+  }
+
+  measurementsToShow(measurements) {
+    return Object.values(measurements)
+      .filter(item => item)
+      .join('x');
   }
 }

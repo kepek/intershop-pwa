@@ -52,10 +52,12 @@ export interface CamCardProduct {
 
 export interface CamCardCustomer extends Customer {
   id: string;
+  department?: string;
 }
 
 export interface CamCardCustomerData extends CustomerData {
   id: string;
+  department?: string;
 }
 
 export interface CamCardContact {

@@ -601,6 +601,7 @@
   "camfil.account.cam_card.pdf.delivery_address": "Delivery address",
   "camfil.account.cam_card.pdf.invoice_mark": "Invoice mark",
   "camfil.account.cam_card.pdf.last_order": "Last order",
+  "camfil.account.cam_card.pdf.measurements": "Measurements",
   "camfil.account.cam_card.pdf.next_order": "Next order",
   "camfil.account.cam_card.pdf.order_interval": "Order interval",
   "camfil.account.cam_card.pdf.order_mark": "Order mark",

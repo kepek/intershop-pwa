@@ -601,6 +601,7 @@
   "camfil.account.cam_card.pdf.delivery_address": "Toimitusosoite",
   "camfil.account.cam_card.pdf.invoice_mark": "Tilausnumero",
   "camfil.account.cam_card.pdf.last_order": "Viimeisin tilaus",
+  "camfil.account.cam_card.pdf.measurements": "fi_Measurements",
   "camfil.account.cam_card.pdf.next_order": "Seuraava tilaus",
   "camfil.account.cam_card.pdf.order_interval": "Tilausväli",
   "camfil.account.cam_card.pdf.order_mark": "Tilausmerkki/-tunnus",
