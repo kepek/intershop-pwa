@@ -7,9 +7,9 @@ import { take, takeUntil } from 'rxjs/operators';
 import { AccountFacade } from 'ish-core/facades/account.facade';
 import { PriceItemHelper } from 'ish-core/models/price-item/price-item.helper';
 import { PriceItem } from 'ish-core/models/price-item/price-item.model';
+import { AuthorizationToggleService } from 'ish-core/utils/authorization-toggle/authorization-toggle.service';
 
 import { Price } from './price.model';
-import { AuthorizationToggleService } from 'ish-core/utils/authorization-toggle/authorization-toggle.service';
 
 export function formatPrice(price: Price, lang: string): string {
   const symbol = getCurrencySymbol(price.currency, 'wide', lang);
