@@ -2,18 +2,17 @@ import { registerLocaleData } from '@angular/common';
 import localeDe from '@angular/common/locales/de';
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { provideMockStore } from '@ngrx/store/testing';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { of } from 'rxjs';
 import { instance, mock, when } from 'ts-mockito';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
 import { PriceItem } from 'ish-core/models/price-item/price-item.model';
+import { getUserPermissions } from 'ish-core/store/customer/authorization';
 
 import { Price } from './price.model';
 import { PricePipe } from './price.pipe';
-import { provideMockStore } from '@ngrx/store/testing';
-import { AuthorizationToggleService } from 'ish-core/utils/authorization-toggle/authorization-toggle.service';
-import { getUserPermissions } from 'ish-core/store/customer/authorization';
 
 describe('Price Pipe', () => {
   let fixture: ComponentFixture<DummyComponent>;
