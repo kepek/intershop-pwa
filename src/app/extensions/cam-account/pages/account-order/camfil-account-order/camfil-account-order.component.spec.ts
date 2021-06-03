@@ -21,6 +21,8 @@ import { CamfilLineItemTableComponent } from 'ish-shared/components/line-item/ca
 import { CamAccountFacade } from '../../../facades/cam-account.facade';
 
 import { CamfilAccountOrderComponent } from './camfil-account-order.component';
+import { PricePipe } from 'ish-core/models/price/price.pipe';
+import { Price } from 'ish-core/models/price/price.model';
 
 describe('Camfil Account Order Component', () => {
   let component: CamfilAccountOrderComponent;
@@ -43,6 +45,7 @@ describe('Camfil Account Order Component', () => {
         MockComponent(InfoBoxComponent),
         MockComponent(LoadingComponent),
         MockPipe(DatePipe),
+        MockPipe(PricePipe, (price: Price) => `${price.currency} ${price.value}`),
       ],
       imports: [RouterTestingModule, TranslateModule.forRoot()],
       providers: [
