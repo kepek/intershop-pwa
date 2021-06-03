@@ -1,10 +1,14 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { BrowserTransferStateModule } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MockComponent } from 'ng-mocks';
+import { CookiesService } from 'ngx-utils-cookies-port';
 import { instance, mock } from 'ts-mockito';
 
+import { CHANNEL_CONFIGURATION } from 'ish-core/configurations/injection-keys';
 import { AppFacade } from 'ish-core/facades/app.facade';
+import { FeatureToggleModule } from 'ish-core/feature-toggle.module';
 import { findAllCustomElements } from 'ish-core/utils/dev/html-query-utils';
 import { CookiesBannerComponent } from 'ish-shell/application/cookies-banner/cookies-banner.component';
 import { CamfilFooterComponent } from 'ish-shell/footer/camfil-footer/camfil-footer.component';
@@ -12,10 +16,6 @@ import { CamfilBreadcrumbComponent } from 'ish-shell/header/camfil-breadcrumb/ca
 import { CamfilHeaderComponent } from 'ish-shell/header/camfil-header/camfil-header.component';
 
 import { AppComponent } from './app.component';
-import { CHANNEL_CONFIGURATION } from 'ish-core/configurations/injection-keys';
-import { CookiesService } from 'ngx-utils-cookies-port';
-import { BrowserTransferStateModule } from '@angular/platform-browser';
-import { FeatureToggleModule } from 'ish-core/feature-toggle.module';
 
 let translate: TranslateService;
 
@@ -35,9 +35,9 @@ describe('App Component', () => {
         MockComponent(CookiesBannerComponent),
       ],
       imports: [
-        RouterTestingModule,
         BrowserTransferStateModule,
         FeatureToggleModule.forTesting('recently'),
+        RouterTestingModule,
         TranslateModule.forRoot(),
       ],
       providers: [
