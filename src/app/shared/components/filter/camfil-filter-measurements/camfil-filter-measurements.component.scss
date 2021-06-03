@@ -33,9 +33,6 @@
   }
 }
 .form {
-  display: flex;
-  align-items: flex-start;
-  height: 80px;
   padding-left: 8px;
   margin: -8px 0 10px;
   border-left: 2px solid $camfil-color-primary;
@@ -76,7 +73,7 @@ label {
 }
 
 .form-group {
-  display: flex;
+  display: inline-block;
   flex-direction: column;
   max-width: 60px;
   margin: 8px 6px;
