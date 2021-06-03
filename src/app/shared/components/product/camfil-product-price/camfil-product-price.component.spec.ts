@@ -9,6 +9,8 @@ import { PricePipe } from 'ish-core/models/price/price.pipe';
 import { AnyProductType } from 'ish-core/models/product/product.model';
 
 import { CamfilProductPriceComponent } from './camfil-product-price.component';
+import { getUserPermissions } from 'ish-core/store/customer/authorization';
+import { provideMockStore } from '@ngrx/store/testing';
 
 describe('Camfil Product Price Component', () => {
   let component: CamfilProductPriceComponent;
@@ -24,7 +26,10 @@ describe('Camfil Product Price Component', () => {
     await TestBed.configureTestingModule({
       imports: [CommonModule, TranslateModule.forRoot()],
       declarations: [CamfilProductPriceComponent, PricePipe],
-      providers: [{ provide: AccountFacade, useFactory: () => instance(accountFacade) }],
+      providers: [
+        { provide: AccountFacade, useFactory: () => instance(accountFacade) },
+        provideMockStore({ selectors: [{ selector: getUserPermissions, value: ['APP_B2B_VIEW_PRICES'] }] }),
+      ],
     }).compileComponents();
   });
 
