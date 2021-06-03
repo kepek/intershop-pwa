@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideMockStore } from '@ngrx/store/testing';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { of } from 'rxjs';
 import { instance, mock, when } from 'ts-mockito';
@@ -7,10 +8,9 @@ import { instance, mock, when } from 'ts-mockito';
 import { AccountFacade } from 'ish-core/facades/account.facade';
 import { PricePipe } from 'ish-core/models/price/price.pipe';
 import { AnyProductType } from 'ish-core/models/product/product.model';
+import { getUserPermissions } from 'ish-core/store/customer/authorization';
 
 import { CamfilProductPriceComponent } from './camfil-product-price.component';
-import { getUserPermissions } from 'ish-core/store/customer/authorization';
-import { provideMockStore } from '@ngrx/store/testing';
 
 describe('Camfil Product Price Component', () => {
   let component: CamfilProductPriceComponent;
