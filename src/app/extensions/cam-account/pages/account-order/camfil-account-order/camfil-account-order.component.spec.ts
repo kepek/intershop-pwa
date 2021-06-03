@@ -8,6 +8,8 @@ import { of } from 'rxjs';
 import { anything, instance, mock, when } from 'ts-mockito';
 
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
+import { Price } from 'ish-core/models/price/price.model';
+import { PricePipe } from 'ish-core/models/price/price.pipe';
 import { ProductView } from 'ish-core/models/product-view/product-view.model';
 import { DatePipe } from 'ish-core/pipes/date.pipe';
 import { OrderLineMockData } from 'ish-core/utils/dev/orderline-mock-data';
@@ -21,8 +23,6 @@ import { CamfilLineItemTableComponent } from 'ish-shared/components/line-item/ca
 import { CamAccountFacade } from '../../../facades/cam-account.facade';
 
 import { CamfilAccountOrderComponent } from './camfil-account-order.component';
-import { PricePipe } from 'ish-core/models/price/price.pipe';
-import { Price } from 'ish-core/models/price/price.model';
 
 describe('Camfil Account Order Component', () => {
   let component: CamfilAccountOrderComponent;
