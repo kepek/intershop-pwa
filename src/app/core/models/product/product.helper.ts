@@ -279,7 +279,7 @@ export class ProductHelper {
 
   static getRequiresMeasurement(data: Product): boolean {
     const label = AttributeGroupTypes.ProductsListLabelAttributes;
-    const attrs = data.attributeGroups?.[label]?.attributes;
+    const attrs = data?.attributeGroups?.[label]?.attributes;
     return AttributeHelper.getAttributeValueByAttributeName<boolean>(attrs, 'Requiresmeasures') || false;
   }
 
