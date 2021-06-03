@@ -2,13 +2,14 @@ import { formatCurrency, getCurrencySymbol } from '@angular/common';
 import { ChangeDetectorRef, OnDestroy, Pipe, PipeTransform } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { take, takeUntil } from 'rxjs/operators';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
 import { PriceItemHelper } from 'ish-core/models/price-item/price-item.helper';
 import { PriceItem } from 'ish-core/models/price-item/price-item.model';
 
 import { Price } from './price.model';
+import { AuthorizationToggleService } from 'ish-core/utils/authorization-toggle/authorization-toggle.service';
 
 export function formatPrice(price: Price, lang: string): string {
   const symbol = getCurrencySymbol(price.currency, 'wide', lang);
@@ -18,13 +19,16 @@ export function formatPrice(price: Price, lang: string): string {
 @Pipe({ name: 'ishPrice', pure: false })
 export class PricePipe implements PipeTransform, OnDestroy {
   displayText: string;
+  viewPricesPermissions = ['APP_B2B_VIEW_PRICES'];
+  isAuthorizedToViewPrices = false;
 
   private destroy$ = new Subject();
 
   constructor(
     private translateService: TranslateService,
     private cdRef: ChangeDetectorRef,
-    private accountFacade: AccountFacade
+    private accountFacade: AccountFacade,
+    private authorizationToggle: AuthorizationToggleService
   ) {}
 
   ngOnDestroy() {
@@ -33,6 +37,17 @@ export class PricePipe implements PipeTransform, OnDestroy {
   }
 
   transform(data: Price | PriceItem, priceType?: 'gross' | 'net'): string {
+    this.authorizationToggle
+      .isAuthorizedToCheckArrAll(this.viewPricesPermissions)
+      .pipe(take(1))
+      .subscribe(permitted => {
+        this.isAuthorizedToViewPrices = permitted;
+      });
+
+    if (!this.isAuthorizedToViewPrices) {
+      return '-';
+    }
+
     if (!data) {
       return this.translateService.instant('product.price.na.text');
     }

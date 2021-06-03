@@ -138,7 +138,7 @@
   <ng-template #price>
     <camfil-product-attribute
       [name]="'camfil.cam_card.product.list_price.label' | translate"
-      [value]="listPriceRow.value ? (listPriceRow | ishPrice) : '----'"
+      [value]="listPriceRow.value ? (listPriceRow | ishPrice) : '-'"
     ></camfil-product-attribute>
     <camfil-product-attribute
       [name]="'camfil.cam_card.product.your_price.label' | translate"
