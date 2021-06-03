@@ -106,12 +106,12 @@ export class CamfilAccountOrderComponent implements OnInit, OnDestroy {
     );
   }
 
-  handlePrice(value, currency) {
+  handlePrice(value, currency): Price {
     return {
       value,
       currency,
       type: 'Money',
-    } as Price;
+    };
   }
 
   ngOnDestroy() {

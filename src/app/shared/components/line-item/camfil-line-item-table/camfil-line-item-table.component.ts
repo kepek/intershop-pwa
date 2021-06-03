@@ -96,11 +96,11 @@ export class CamfilLineItemTableComponent implements OnInit, OnChanges, AfterVie
     return this.deviceType === 'mobile'; // || this.deviceType === 'tablet';
   }
 
-  handlePrice(value, currency) {
+  handlePrice(value, currency): Price {
     return {
       value,
       currency,
       type: 'Money',
-    } as Price;
+    };
   }
 }
