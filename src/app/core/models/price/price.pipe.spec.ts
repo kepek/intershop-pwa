@@ -108,7 +108,6 @@ describe('Price Pipe', () => {
   let element: HTMLElement;
   let translateService: TranslateService;
   let accountFacade: AccountFacade;
-  let authToggle: AuthorizationToggleService;
 
   @Component({
     template: ` flex: {{ price | ishPrice }} pinned: {{ price | ishPrice: 'net' }} `,
@@ -133,7 +132,6 @@ describe('Price Pipe', () => {
 
   beforeEach(() => {
     registerLocaleData(localeDe);
-    authToggle = TestBed.inject(AuthorizationToggleService);
     translateService = TestBed.inject(TranslateService);
     translateService.setDefaultLang('en');
     fixture = TestBed.createComponent(DummyComponent);
