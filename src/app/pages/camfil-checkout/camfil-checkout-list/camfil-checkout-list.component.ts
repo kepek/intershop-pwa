@@ -157,8 +157,8 @@ export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
     const defaultDeliveryDate = this.setFullDeliveryDate();
 
     this.orderForm = this.fb.group({
-      orderMark: [this.order.orderMark, [Validators.required, Validators.maxLength(60)]],
-      invoiceLabel: [this.order.invoiceLabel, [Validators.required, Validators.maxLength(20)]],
+      orderMark: [this.order.orderMark, [Validators.maxLength(60)]],
+      invoiceLabel: [this.order.invoiceLabel, [Validators.maxLength(20)]],
       info: [this.order.info, [Validators.maxLength(150)]],
       deliveryDate: [
         this.order?.deliveryDate?.length ? this.toDate(this.order.deliveryDate) : defaultDeliveryDate,

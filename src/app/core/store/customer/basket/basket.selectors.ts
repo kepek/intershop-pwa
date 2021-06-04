@@ -131,5 +131,5 @@ export const getBucketEmailRecipients = (addressId: string) =>
   );
 
 export const getBucketsVolumeDiscounts = createSelector(getBasketState, basket =>
-  basket.basket.basketExtensions.map(be => be.volumeDiscount).reduce((prev, next) => prev + next)
+  basket.basket?.basketExtensions?.map(be => be.volumeDiscount).reduce((prev, next) => prev + next)
 );
