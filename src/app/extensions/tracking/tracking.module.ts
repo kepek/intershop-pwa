@@ -1,12 +1,15 @@
-import { NgModule } from '@angular/core';
+import { Inject, NgModule } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { Angulartics2Module } from 'angulartics2';
 import { Angulartics2GoogleTagManager } from 'angulartics2/gtm';
-import { filter, take } from 'rxjs/operators';
+import { take } from 'rxjs/operators';
 
+import { CHANNEL_CONFIGURATION } from 'ish-core/configurations/injection-keys';
 import { FeatureToggleModule, FeatureToggleService } from 'ish-core/feature-toggle.module';
-import { getGTMToken } from 'ish-core/store/core/configuration';
+import { ChannelConfiguration } from 'ish-core/models/channel-configuration/channel-configuration.model';
+import { getCamfilChannel } from 'ish-core/store/core/configuration';
 import { CookiesService } from 'ish-core/utils/cookies/cookies.service';
+import { whenTruthy } from 'ish-core/utils/operators';
 
 @NgModule({
   imports: [Angulartics2Module.forRoot(), FeatureToggleModule],
@@ -27,19 +30,19 @@ export class TrackingModule {
     angulartics2GoogleTagManager: Angulartics2GoogleTagManager,
     featureToggleService: FeatureToggleService,
     store: Store,
-    cookiesService: CookiesService
+    cookiesService: CookiesService,
+    @Inject(CHANNEL_CONFIGURATION) public channelConfs: ChannelConfiguration[]
   ) {
     if (cookiesService.cookieConsentFor('tracking')) {
-      store
-        .pipe(
-          select(getGTMToken),
-          filter(gtmToken => gtmToken && featureToggleService.enabled('tracking')),
-          take(1)
-        )
-        .subscribe(gtmToken => {
-          this.gtm(window, 'dataLayer', gtmToken);
+      store.pipe(select(getCamfilChannel), whenTruthy(), take(1)).subscribe(camfilChannel => {
+        const gtmToken = this.channelConfs
+          .filter(item => item.channel === camfilChannel)
+          .map(item => item.gtmContainerId);
+        if (gtmToken.length > 0 && featureToggleService.enabled('tracking')) {
+          this.gtm(window, 'dataLayer', gtmToken[0]);
           angulartics2GoogleTagManager.startTracking();
-        });
+        }
+      });
     }
   }
 }

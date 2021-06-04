@@ -1,10 +1,14 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { BrowserTransferStateModule } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MockComponent } from 'ng-mocks';
+import { CookiesService } from 'ngx-utils-cookies-port';
 import { instance, mock } from 'ts-mockito';
 
+import { CHANNEL_CONFIGURATION } from 'ish-core/configurations/injection-keys';
 import { AppFacade } from 'ish-core/facades/app.facade';
+import { FeatureToggleModule } from 'ish-core/feature-toggle.module';
 import { findAllCustomElements } from 'ish-core/utils/dev/html-query-utils';
 import { CookiesBannerComponent } from 'ish-shell/application/cookies-banner/cookies-banner.component';
 import { CamfilFooterComponent } from 'ish-shell/footer/camfil-footer/camfil-footer.component';
@@ -21,6 +25,7 @@ describe('App Component', () => {
   let element: HTMLElement;
 
   beforeEach(async () => {
+    const cookiesServiceMock = mock(CookiesService);
     await TestBed.configureTestingModule({
       declarations: [
         AppComponent,
@@ -29,8 +34,17 @@ describe('App Component', () => {
         MockComponent(CamfilHeaderComponent),
         MockComponent(CookiesBannerComponent),
       ],
-      imports: [RouterTestingModule, TranslateModule.forRoot()],
-      providers: [{ provide: AppFacade, useFactory: () => instance(mock(AppFacade)) }],
+      imports: [
+        BrowserTransferStateModule,
+        FeatureToggleModule.forTesting('recently'),
+        RouterTestingModule,
+        TranslateModule.forRoot(),
+      ],
+      providers: [
+        { provide: AppFacade, useFactory: () => instance(mock(AppFacade)) },
+        { provide: CHANNEL_CONFIGURATION, useValue: [] },
+        { provide: CookiesService, useValue: instance(cookiesServiceMock) },
+      ],
     }).compileComponents();
   });
 

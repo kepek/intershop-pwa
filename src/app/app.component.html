@@ -1,3 +1,16 @@
+<!-- Google Tag Manager (noscript) -->
+<ng-container *ngIf="gtmToken">
+  <noscript
+    ><iframe
+      src="https://www.googletagmanager.com/ns.html?id={{ gtmToken }}"
+      height="0"
+      width="0"
+      style="display: none; visibility: hidden"
+    ></iframe
+  ></noscript>
+</ng-container>
+<!-- End Google Tag Manager (noscript) -->
+
 <div [ngClass]="wrapperClasses$ | async">
   <header data-testing-id="page-header" class="top"><camfil-header></camfil-header></header>
 
