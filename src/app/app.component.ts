@@ -1,5 +1,6 @@
 import { isPlatformBrowser } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Inject, OnDestroy, OnInit, PLATFORM_ID, ViewChild } from '@angular/core';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
@@ -29,6 +30,7 @@ export class AppComponent implements OnInit, OnDestroy {
   deviceType$: Observable<DeviceType>;
   camfilChannel$: Observable<string>;
   gtmToken: string;
+  gtmUrl: SafeUrl;
   private destroy$ = new Subject();
 
   constructor(
@@ -37,7 +39,8 @@ export class AppComponent implements OnInit, OnDestroy {
     @Inject(CHANNEL_CONFIGURATION) private channelConfs: ChannelConfiguration[],
     private cookiesService: CookiesService,
     private featureToggleService: FeatureToggleService,
-    private router: Router
+    private router: Router,
+    private sanitizer: DomSanitizer
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
   }
@@ -48,9 +51,13 @@ export class AppComponent implements OnInit, OnDestroy {
     this.camfilChannel$ = this.appFacade.getCamfilChannel$;
     if (this.featureToggleService.enabled('tracking') && this.cookiesService.cookieConsentFor('tracking')) {
       this.camfilChannel$.pipe(whenTruthy(), take(1), takeUntil(this.destroy$)).subscribe(camfilChannel => {
-        this.gtmToken = this.channelConfs
+        const gtmToken = this.channelConfs
           .filter(item => item.channel === camfilChannel)
           .map(item => item.gtmContainerId)[0];
+        this.gtmUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
+          `https://www.googletagmanager.com/ns.html?id=${gtmToken}`
+        );
+        this.gtmToken = gtmToken;
       });
     }
   }
