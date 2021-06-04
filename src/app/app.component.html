@@ -1,13 +1,6 @@
 <!-- Google Tag Manager (noscript) -->
 <ng-container *ngIf="gtmToken">
-  <noscript
-    ><iframe
-      src="https://www.googletagmanager.com/ns.html?id={{ gtmToken }}"
-      height="0"
-      width="0"
-      style="display: none; visibility: hidden"
-    ></iframe
-  ></noscript>
+  <noscript><iframe [src]="gtmUrl" height="0" width="0" style="display: none; visibility: hidden"></iframe></noscript>
 </ng-container>
 <!-- End Google Tag Manager (noscript) -->
 
