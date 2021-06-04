@@ -223,12 +223,7 @@ describe('Customer Store', () => {
               items: [{"sku":"test","quantity":1,"shippingMethod":"STD_GROUND","u...
             [Basket Internal] Load Basket
             [Basket API] Load Basket Addresses
-            [Basket API] Add Items To Basket Success:
-              info: undefined
-            [Basket API] Load Basket Success:
-              basket: {"id":"test","lineItems":[1]}
-            [Basket Internal] Load Basket
-            [Basket] Load Buckets
+            [Basket API] Add Items To Basket from CamCard Success
             [Basket API] Load Basket Success:
               basket: {"id":"test","lineItems":[1]}
             [Basket] Load Buckets
