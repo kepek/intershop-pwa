@@ -1,10 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideMockStore } from '@ngrx/store/testing';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { of } from 'rxjs';
 import { instance, mock, when } from 'ts-mockito';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
 import { PricePipe } from 'ish-core/models/price/price.pipe';
+import { getUserPermissions } from 'ish-core/store/customer/authorization';
 
 import { BudgetBarComponent } from './budget-bar.component';
 
@@ -20,7 +22,11 @@ describe('Budget Bar Component', () => {
     await TestBed.configureTestingModule({
       imports: [TranslateModule.forRoot()],
       declarations: [BudgetBarComponent, PricePipe],
-      providers: [{ provide: AccountFacade, useFactory: () => instance(accountFacade) }],
+      providers: [
+        { provide: AccountFacade, useFactory: () => instance(accountFacade) },
+        // tslint:disable-next-line: no-intelligence-in-artifacts
+        provideMockStore({ selectors: [{ selector: getUserPermissions, value: ['APP_B2B_VIEW_PRICES'] }] }),
+      ],
     }) // tslint:disable-next-line: no-any
       .configureCompiler({ preserveWhitespaces: true } as any)
       .compileComponents();
@@ -65,7 +71,7 @@ describe('Budget Bar Component', () => {
     fixture.detectChanges();
     expect(element).toMatchInlineSnapshot(`
       <div class="budget-bar-overflow">
-        <div class="overflow-indicator" style="width: 71%" title="$500.00">
+        <div class="overflow-indicator" title="$500.00" style="width: 71%">
           <span class="overflow-display">71%</span>
         </div>
       </div>
@@ -73,9 +79,9 @@ describe('Budget Bar Component', () => {
         <div
           aria-hidden="true"
           class="budget-bar-used bg-danger"
+          title="$700.00"
           ng-reflect-ng-class="bg-danger"
           style="width: 140%"
-          title="$700.00"
         >
           $700.00
         </div>
@@ -94,12 +100,12 @@ describe('Budget Bar Component', () => {
     fixture.detectChanges();
     expect(element.querySelector('.budget-bar-used-additional')).toMatchInlineSnapshot(`
       <div
+        role="progressbar"
         aria-hidden="true"
         class="budget-bar-used budget-bar-used-additional border-left bg-danger"
-        role="progressbar"
+        title="$300.00"
         ng-reflect-ng-class="bg-danger"
         style="width: 30%"
-        title="$300.00"
       >
         <span>$300.00</span>
       </div>

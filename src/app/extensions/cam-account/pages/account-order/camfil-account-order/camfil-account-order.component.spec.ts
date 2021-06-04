@@ -8,6 +8,8 @@ import { of } from 'rxjs';
 import { anything, instance, mock, when } from 'ts-mockito';
 
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
+import { Price } from 'ish-core/models/price/price.model';
+import { PricePipe } from 'ish-core/models/price/price.pipe';
 import { ProductView } from 'ish-core/models/product-view/product-view.model';
 import { DatePipe } from 'ish-core/pipes/date.pipe';
 import { OrderLineMockData } from 'ish-core/utils/dev/orderline-mock-data';
@@ -43,6 +45,7 @@ describe('Camfil Account Order Component', () => {
         MockComponent(InfoBoxComponent),
         MockComponent(LoadingComponent),
         MockPipe(DatePipe),
+        MockPipe(PricePipe, (price: Price) => `${price.currency} ${price.value}`),
       ],
       imports: [RouterTestingModule, TranslateModule.forRoot()],
       providers: [

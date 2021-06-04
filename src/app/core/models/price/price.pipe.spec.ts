@@ -2,12 +2,14 @@ import { registerLocaleData } from '@angular/common';
 import localeDe from '@angular/common/locales/de';
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { provideMockStore } from '@ngrx/store/testing';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { of } from 'rxjs';
 import { instance, mock, when } from 'ts-mockito';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
 import { PriceItem } from 'ish-core/models/price-item/price-item.model';
+import { getUserPermissions } from 'ish-core/store/customer/authorization';
 
 import { Price } from './price.model';
 import { PricePipe } from './price.pipe';
@@ -27,7 +29,7 @@ describe('Price Pipe', () => {
     await TestBed.configureTestingModule({
       declarations: [DummyComponent, PricePipe],
       imports: [TranslateModule.forRoot()],
-      providers: [{ provide: AccountFacade, useFactory: () => instance(mock(AccountFacade)) }],
+      providers: [provideMockStore({}), { provide: AccountFacade, useFactory: () => instance(mock(AccountFacade)) }],
     }).compileComponents();
   });
 
@@ -50,7 +52,7 @@ describe('Price Pipe', () => {
   it('should display N/A for default', () => {
     translateService.use('en');
     fixture.detectChanges();
-    expect(element).toMatchInlineSnapshot(`~product.price.na.text~`);
+    expect(element).toMatchInlineSnapshot(`~-~`);
   });
 
   describe('Price', () => {
@@ -71,7 +73,7 @@ describe('Price Pipe', () => {
       translateService.use('en');
 
       fixture.detectChanges();
-      expect(element).toMatchInlineSnapshot(`~$24,680.35~`);
+      expect(element).toMatchInlineSnapshot(`~-~`);
     });
 
     it('should display dollar price for german', () => {
@@ -79,7 +81,7 @@ describe('Price Pipe', () => {
       translateService.use('de');
 
       fixture.detectChanges();
-      expect(element).toMatchInlineSnapshot(`~24.680,35&nbsp;$~`);
+      expect(element).toMatchInlineSnapshot(`~-~`);
     });
 
     it('should display euro price for english', () => {
@@ -87,14 +89,14 @@ describe('Price Pipe', () => {
       translateService.use('en');
 
       fixture.detectChanges();
-      expect(element).toMatchInlineSnapshot(`~€12,391.98~`);
+      expect(element).toMatchInlineSnapshot(`~-~`);
     });
     it('should display euro price for german', () => {
       component.price = euroPrice;
       translateService.use('de');
 
       fixture.detectChanges();
-      expect(element).toMatchInlineSnapshot(`~12.391,98&nbsp;€~`);
+      expect(element).toMatchInlineSnapshot(`~-~`);
     });
   });
 });
@@ -120,7 +122,10 @@ describe('Price Pipe', () => {
     await TestBed.configureTestingModule({
       declarations: [DummyComponent, PricePipe],
       imports: [TranslateModule.forRoot()],
-      providers: [{ provide: AccountFacade, useFactory: () => instance(accountFacade) }],
+      providers: [
+        { provide: AccountFacade, useFactory: () => instance(accountFacade) },
+        provideMockStore({ selectors: [{ selector: getUserPermissions, value: ['APP_B2B_VIEW_PRICES'] }] }),
+      ],
     }).compileComponents();
   });
 
@@ -128,7 +133,6 @@ describe('Price Pipe', () => {
     registerLocaleData(localeDe);
     translateService = TestBed.inject(TranslateService);
     translateService.setDefaultLang('en');
-
     fixture = TestBed.createComponent(DummyComponent);
     component = fixture.componentInstance;
     element = fixture.nativeElement;
