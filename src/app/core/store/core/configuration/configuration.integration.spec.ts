@@ -124,11 +124,11 @@ describe('Configuration Integration', () => {
     expect(location.path()).toMatchInlineSnapshot(`"/home"`);
     expect(getCurrentLocale(store$.state)).toMatchInlineSnapshot(`
       Object {
-        "currency": "EUR",
-        "displayLong": "Finnish (Finland)",
-        "displayName": "Finnish",
-        "lang": "fi_FI",
-        "value": "fi",
+        "currency": "GBP",
+        "displayLong": "English (Great Britain)",
+        "displayName": "English",
+        "lang": "en_GB",
+        "value": "gb",
       }
     `);
   }));
@@ -136,15 +136,22 @@ describe('Configuration Integration', () => {
   it('should have a default locale on startup in state', fakeAsync(() => {
     expect(getCurrentLocale(store$.state)).toMatchInlineSnapshot(`
       Object {
-        "currency": "EUR",
-        "displayLong": "Finnish (Finland)",
-        "displayName": "Finnish",
-        "lang": "fi_FI",
-        "value": "fi",
+        "currency": "GBP",
+        "displayLong": "English (Great Britain)",
+        "displayName": "English",
+        "lang": "en_GB",
+        "value": "gb",
       }
     `);
     expect(getAvailableLocales(store$.state)).toMatchInlineSnapshot(`
       Array [
+        Object {
+          "currency": "GBP",
+          "displayLong": "English (Great Britain)",
+          "displayName": "English",
+          "lang": "en_GB",
+          "value": "gb",
+        },
         Object {
           "currency": "EUR",
           "displayLong": "Finnish (Finland)",
@@ -158,13 +165,6 @@ describe('Configuration Integration', () => {
           "displayName": "Swedish",
           "lang": "sv_SE",
           "value": "se",
-        },
-        Object {
-          "currency": "GBP",
-          "displayLong": "English (Great Britain)",
-          "displayName": "English",
-          "lang": "en_GB",
-          "value": "gb",
         },
       ]
     `);
