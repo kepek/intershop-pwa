@@ -868,6 +868,7 @@
   "camfil.checkout.product.measurements.label": "Mitat",
   "camfil.checkout.shipping_method": "Toimitustapa",
   "camfil.checkout.single_total_price_after": "Tilauksen summa alennuksen jälkeen (ilman alv)",
+  "camfil.checkout.order_total_price": "fi_Order total price",
   "camfil.checkout.standard_shipping": "Normaali toimitus",
   "camfil.checkout.tax.text": "Alv",
   "camfil.checkout.tax_amount": "Alv",

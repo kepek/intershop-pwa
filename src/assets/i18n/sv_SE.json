@@ -868,6 +868,7 @@
   "camfil.checkout.product.measurements.label": "Mått",
   "camfil.checkout.shipping_method": "Leveransmetod",
   "camfil.checkout.single_total_price_after": "Order pris efter rabatt (exkl. moms)",
+  "camfil.checkout.order_total_price": "sv_Order total price",
   "camfil.checkout.standard_shipping": "Standardleverans",
   "camfil.checkout.tax.text": "Momsbelopp",
   "camfil.checkout.tax_amount": "Momsbelopp",

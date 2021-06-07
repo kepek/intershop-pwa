@@ -868,6 +868,7 @@
   "camfil.checkout.product.measurements.label": "Measurements",
   "camfil.checkout.shipping_method": "Shipping method",
   "camfil.checkout.single_total_price_after": "Order price after volume discount (excl. VAT)",
+  "camfil.checkout.order_total_price": "us_Order total price",
   "camfil.checkout.standard_shipping": "Standard shipping",
   "camfil.checkout.tax.text": "Tax amount",
   "camfil.checkout.tax_amount": "Tax amount",
