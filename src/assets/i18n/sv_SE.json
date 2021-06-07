@@ -862,6 +862,7 @@
   "camfil.checkout.order_header.note.error.maxLength": "Infofältet får inte innehålla mer än 150 tecken.",
   "camfil.checkout.order_header.order_mark.error.maxLength": "Ordermärkningen får inte innehålla mer än 60 tecken.",
   "camfil.checkout.order_header.order_mark.error.required": "Ange ordermärkning",
+  "camfil.checkout.order_total_price": "sv_Order total price",
   "camfil.checkout.payment_method": "Betalmetod",
   "camfil.checkout.phone": "Telefonnotifikation",
   "camfil.checkout.place_your_orders": "Lägg order",

@@ -862,6 +862,7 @@
   "camfil.checkout.order_header.note.error.maxLength": "Info must not exceed 150 characters.",
   "camfil.checkout.order_header.order_mark.error.maxLength": "Order mark not exceed 60 characters.",
   "camfil.checkout.order_header.order_mark.error.required": "Please enter order mark",
+  "camfil.checkout.order_total_price": "us_Order total price",
   "camfil.checkout.payment_method": "Payment method",
   "camfil.checkout.phone": "Phone notification",
   "camfil.checkout.place_your_orders": "Place your orders",

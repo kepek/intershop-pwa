@@ -862,6 +862,7 @@
   "camfil.checkout.order_header.note.error.maxLength": "Tieto ei voi olla yli 150 merkkiä.",
   "camfil.checkout.order_header.order_mark.error.maxLength": "Tilausmerkki/-tunnus ei voi olla yli 60 merkkiä.",
   "camfil.checkout.order_header.order_mark.error.required": "Syötä tilausnumero",
+  "camfil.checkout.order_total_price": "fi_Order total price",
   "camfil.checkout.payment_method": "Maksutapa",
   "camfil.checkout.phone": "Puhelinilmoitus",
   "camfil.checkout.place_your_orders": "Tee tilaus",

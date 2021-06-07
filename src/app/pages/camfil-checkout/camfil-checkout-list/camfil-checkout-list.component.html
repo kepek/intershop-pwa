@@ -293,7 +293,7 @@
           <dd class="col-6">{{ totalPrice() | ishPrice }}</dd>
           <dt class="col-6">{{ 'camfil.checkout.tax_amount' | translate }}</dt>
           <dd class="col-6">{{ totalTax() | ishPrice }}</dd>
-          <dt class="col-6">{{ 'camfil.checkout.single_total_price_after' | translate }}</dt>
+          <dt class="col-6">{{ 'camfil.checkout.order_total_price' | translate }}</dt>
           <dd class="col-6">{{ totalPrice('gross') | ishPrice }}</dd>
         </dl>
         <camfil-basket-cost-summary [totals]="order.totals"></camfil-basket-cost-summary>
