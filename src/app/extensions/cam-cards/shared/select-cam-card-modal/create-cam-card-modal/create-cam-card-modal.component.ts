@@ -239,7 +239,6 @@ export class CreateCamCardModalComponent implements OnInit, OnDestroy {
     this.camCardForm.updateValueAndValidity();
   }
 
-
   /** close modal */
   hide() {
     this.modal.close();
