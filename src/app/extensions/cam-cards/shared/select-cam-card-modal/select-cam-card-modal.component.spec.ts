@@ -16,6 +16,7 @@ import { CamfilCamCardModalComponent } from 'ish-shared/components/common/camfil
 import { CamfilErrorComponent } from 'ish-shared/components/common/camfil-error/camfil-error.component';
 import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
 import { CamfilProductQuantityComponent } from 'ish-shared/components/product/camfil-product-quantity/camfil-product-quantity.component';
+import { ZipCodeComponent } from 'ish-shared/components/zip-code/zip-code.component';
 import { CamfilCounterComponent } from 'ish-shared/forms/components/camfil-counter/camfil-counter.component';
 import { InputComponent } from 'ish-shared/forms/components/input/input.component';
 
@@ -51,6 +52,7 @@ describe('Select Cam Card Modal Component', () => {
         CreateCamCardModalComponent,
         MockComponent(InputComponent),
         MockComponent(LoadingComponent),
+        MockComponent(ZipCodeComponent),
         MockDirective(ServerHtmlDirective),
         MockPipe(AddressSortPipe),
         SelectCamCardModalComponent,
