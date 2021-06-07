@@ -20,6 +20,7 @@
       appearance: none;
     }
 
+    appearance: textfield;
     @include mat-elevation-transition;
     @include mat-elevation(2);
     &:active {
