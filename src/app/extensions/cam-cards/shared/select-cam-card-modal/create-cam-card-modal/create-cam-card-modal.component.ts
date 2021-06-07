@@ -62,6 +62,8 @@ export class CreateCamCardModalComponent implements OnInit, OnDestroy {
   defaultCountryCode: string;
   showNewSegment = false;
 
+  countryChangeDetect$: Subject<boolean> = new Subject();
+
   @Output() createAndEditEmitter = new EventEmitter<CamCardCreateAndEmitter>();
   @Output() createAndContinueEmitter = new EventEmitter<CamCardCreateAndEmitter>();
 
@@ -230,6 +232,11 @@ export class CreateCamCardModalComponent implements OnInit, OnDestroy {
 
   disableIfNoMeasurements() {
     return ProductHelper.disableIfNoMeasurements(this.product, this.quantityForm);
+  }
+
+  setZipCodeError(event) {
+    this.camCardForm.controls.zipCode.setErrors(event);
+    this.camCardForm.updateValueAndValidity();
   }
 
   /** close modal */

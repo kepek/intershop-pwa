@@ -13,6 +13,7 @@ import { CamfilCamCardModalComponent } from 'ish-shared/components/common/camfil
 import { CamfilErrorComponent } from 'ish-shared/components/common/camfil-error/camfil-error.component';
 import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
 import { CamfilProductQuantityComponent } from 'ish-shared/components/product/camfil-product-quantity/camfil-product-quantity.component';
+import { ZipCodeComponent } from 'ish-shared/components/zip-code/zip-code.component';
 import { CamfilCounterComponent } from 'ish-shared/forms/components/camfil-counter/camfil-counter.component';
 
 import { CamCardsFacade } from '../../../facades/cam-cards.facade';
@@ -40,6 +41,7 @@ describe('Create Cam Card Modal Component', () => {
         CamfilProductQuantityComponent,
         CreateCamCardModalComponent,
         MockComponent(LoadingComponent),
+        MockComponent(ZipCodeComponent),
         MockPipe(AddressSortPipe),
       ],
       imports: [CoreStoreModule.forTesting(), RouterTestingModule],
