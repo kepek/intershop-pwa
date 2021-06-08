@@ -215,8 +215,7 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit, OnDestroy
       invoiceMark: ['', [Validators.maxLength(maxL)]],
       deliveryAddress: ['', [Validators.maxLength(maxL)]],
       companyName1: ['', [Validators.maxLength(maxL)]],
-      addressLine1: ['', [Validators.required, Validators.maxLength(maxL)]],
-      addressLine2: ['', [Validators.maxLength(maxL)]],
+      addressLine1: ['', [Validators.required, Validators.maxLength(250)]],
       postalCode: ['', [Validators.required, Validators.maxLength(maxL)]],
       city: [{ value: '', disabled: true }, [Validators.maxLength(maxL)]],
       lastDelivery: ['', [Validators.maxLength(maxL)]],
@@ -246,7 +245,7 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit, OnDestroy
         nextDeliveryDate,
         reminderFlag,
       } = this.camCard;
-      const { addressLine1, addressLine2, postalCode, city, companyName1 } = deliveryAddress;
+      const { addressLine1, postalCode, city, companyName1 } = deliveryAddress;
       this.camCardForm.patchValue({
         title: name,
         customerName: customer.id,
@@ -254,7 +253,6 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit, OnDestroy
         invoiceMark: invoiceLabel,
         companyName1,
         addressLine1,
-        addressLine2,
         postalCode,
         city,
         lastDelivery: lastDeliveryDate ? new Date(lastDeliveryDate) : '',
@@ -301,7 +299,6 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit, OnDestroy
           companyName1: this.camCardForm.get('companyName1').value,
           addressLine1: this.camCardForm.get('addressLine1').value,
           street: this.camCardForm.get('addressLine1').value,
-          addressLine2: this.camCardForm.get('addressLine2').value,
           postalCode: this.camCardForm.get('postalCode').value,
           city: this.camCardForm.get('city').value,
           countryCode: this.defaultCountryCode,
@@ -345,7 +342,6 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit, OnDestroy
         deliveryAddress: this.selectedAddress.id,
         companyName1: this.selectedAddress.companyName1,
         addressLine1: this.selectedAddress.addressLine1,
-        addressLine2: this.selectedAddress.addressLine2,
         postalCode: this.selectedAddress.postalCode,
         city: this.selectedAddress.city,
       });

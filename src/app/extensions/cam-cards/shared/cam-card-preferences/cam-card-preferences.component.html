@@ -102,24 +102,13 @@
             >
             </camfil-error>
             <mat-form-field appearance="fill" class="form-field">
-              <mat-label>{{ 'camfil.account.cam_card.add_to_form.building' | translate }}</mat-label>
-              <input
-                matInput
-                formControlName="addressLine2"
-                label="camfil.account.cam_card.add_to_form.building"
-                markRequiredLabel="off"
-                maxlength="35"
-                (change)="onBlurSubmit()"
-              />
-            </mat-form-field>
-            <mat-form-field appearance="fill" class="form-field">
               <mat-label>{{ 'camfil.account.cam_card.add_to_form.address' | translate }}</mat-label>
               <textarea
                 matInput
                 formControlName="addressLine1"
                 label="camfil.account.cam_card.add_to_form.address"
                 markRequiredLabel="off"
-                maxlength="35"
+                maxlength="250"
                 (change)="onBlurSubmit()"
                 rows="5"
               ></textarea>
