@@ -159,9 +159,10 @@ export class CamOrganizationService {
 
     // TODO (extMlk): See CAM-979
     const login = user?.currentLogin || user.login;
+    const customerNo = customer?.parentCustomer?.customerNo || customer.customerNo;
 
     return this.apiService
-      .put(`customers/${customer.customerNo}/users/${login}`, {
+      .put(`customers/${customerNo}/users/${login}`, {
         ...customer,
         ...user,
         preferredInvoiceToAddress: { urn: user.preferredInvoiceToAddressUrn },
@@ -213,9 +214,8 @@ export class CamOrganizationService {
             ],
           })
           .pipe(
-            concatMap(() =>
-              this.getCustomerUsers(customer.id).pipe(map(users => users.find(u => u.login === user.login)))
-            )
+            unpackEnvelope<CamfilB2bUser>(),
+            map(users => users[0])
           )
           .pipe(
             switchMap(createdUser =>
@@ -246,7 +246,9 @@ export class CamOrganizationService {
                 catchError(() => EMPTY)
               )
             ),
-            switchMap(createdUser => this.getCustomerUser(customer.id, createdUser.id))
+            switchMap(createdUser =>
+              this.getCustomerUser(contacts[0].customer.parentCustomer?.id || contacts[0].customer.id, createdUser.id)
+            )
           )
       )
     );

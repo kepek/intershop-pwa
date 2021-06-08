@@ -105,7 +105,8 @@ export abstract class UserPageDataSourceComponent implements OnInit, AfterViewIn
 
   onUpdateSelectedCustomerUserRoles({ roleIDs }) {
     this.context$.pipe(take(1), whenTruthy()).subscribe(({ customer, user }) => {
-      this.organizationFacade.updateCustomerUserRoles$(customer.id, user.id, roleIDs);
+      const customerId = customer?.parentCustomer?.id || customer.id;
+      this.organizationFacade.updateCustomerUserRoles$(customerId, user.id, roleIDs);
     });
   }
 

@@ -42,4 +42,8 @@ export class CamfilOrganizationUsersListComponent implements AfterViewInit {
   onSortChange(sort: Sort) {
     this.applySort.emit(OrganizationPageDataSourceComponent.mapSortToSortable(sort));
   }
+
+  parentCustomerId(user: CamfilB2bOrganizationUser) {
+    return user?.customer.parentCustomer?.id || user?.customerId;
+  }
 }
