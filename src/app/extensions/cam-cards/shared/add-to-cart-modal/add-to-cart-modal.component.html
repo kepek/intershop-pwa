@@ -31,6 +31,7 @@
 
     <div *ngFor="let option of buckets; let i = index">
       <camfil-cam-card-modal-details
+        [index]="i + 1"
         [nextDelivery]="option.deliveryDate"
         [orderMark]="option.orderMark"
         [invoiceMark]="option.invoiceLabel"
