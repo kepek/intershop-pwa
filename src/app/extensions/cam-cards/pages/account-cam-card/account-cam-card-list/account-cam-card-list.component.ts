@@ -165,8 +165,10 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
               this.columnsToDisplay.splice(6, 0, 'userAccess');
             }
             const realCamCards = CamCardHelper.getRealCamCards(this.camCards);
+            const camCardsToFilter = this.addCustomerNoToData(realCamCards);
 
-            this.camCardsProcessed = new MatTableDataSource(realCamCards);
+            this.camCardsProcessed = new MatTableDataSource(camCardsToFilter);
+
             this.changeDetectorRefs.detectChanges();
 
             this.camCardsProcessed.filterPredicate = (data, filter) => {
@@ -185,6 +187,7 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
               }, additionalFields);
               return (
                 this.simplifyData(data.customer.companyName).indexOf(filtered) !== -1 ||
+                this.simplifyData(data.customer.customerNo).indexOf(filtered) !== -1 ||
                 this.simplifyData(data.name).indexOf(filtered) !== -1 ||
                 !!additionalFields.filter(item => this.simplifyData(item).indexOf(filtered) !== -1).length
               );
@@ -214,6 +217,13 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
 
   simplifyData(data) {
     return data.toLowerCase().trim();
+  }
+
+  addCustomerNoToData(realCamCards) {
+    return realCamCards?.map(rc => ({
+      ...rc,
+      customerNo: rc.customer.customerNo,
+    }));
   }
 
   applyfilters(filter) {
