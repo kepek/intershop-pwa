@@ -26,7 +26,7 @@
           <mat-label>{{ 'camfil.account.cam_card.search.select.label' | translate }}</mat-label>
           <mat-select [(ngModel)]="selectInput" (selectionChange)="submit($event.value)">
             <mat-option>{{ 'camfil.account.cam_card.search.select.all.customers' | translate }}</mat-option>
-            <mat-option *ngFor="let customer of customers" [value]="customer.companyName">
+            <mat-option *ngFor="let customer of customers" [value]="customer.customerNo">
               {{ customer.companyName }}
             </mat-option>
           </mat-select>
