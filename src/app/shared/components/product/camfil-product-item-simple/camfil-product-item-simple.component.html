@@ -21,7 +21,7 @@
         <camfil-product-attribute
           identifier="dimensions"
           name="camfil.product.dimensions.label"
-          [value]="product | camfilDimension"
+          [value]="product | camfilDimension | camfilRemoveWhiteSpacesPipe"
         ></camfil-product-attribute>
         <camfil-product-attribute
           identifier="iso_class"
@@ -137,7 +137,7 @@
           <camfil-product-attribute
             identifier="dimensions"
             name="camfil.product.dimensions.label"
-            [value]="product | camfilDimension"
+            [value]="product | camfilDimension | camfilRemoveWhiteSpacesPipe"
           ></camfil-product-attribute>
           <camfil-product-attribute
             identifier="iso_class"
