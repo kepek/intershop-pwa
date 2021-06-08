@@ -16,6 +16,7 @@ export class CamCardModalDetailsComponent {
   @Input() deliveryAddress: Address;
   @Input() isClicked = false;
   @Input() customerName: string;
+  @Input() index: number;
 
   createDeliveryAddress() {
     const addressObj = {
