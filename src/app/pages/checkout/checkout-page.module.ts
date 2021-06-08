@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { DateAdapter } from '@angular/material/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { SharedModule } from 'ish-shared/shared.module';
@@ -10,7 +9,6 @@ import { CamfilCheckoutHeaderComponent } from '../camfil-checkout/camfil-checkou
 import { CamfilCheckoutLineItemComponent } from '../camfil-checkout/camfil-checkout-line-item/camfil-checkout-line-item.component';
 import { CamfilCheckoutDeliveryAddressComponent } from '../camfil-checkout/camfil-checkout-list/camfil-checkout-delivery-address/camfil-checkout-delivery-address.component';
 import { CamfilCheckoutListComponent } from '../camfil-checkout/camfil-checkout-list/camfil-checkout-list.component';
-import { CamfilDateAdapter } from '../camfil-checkout/camfil-checkout-list/camfil-date-adapter';
 import { CamfilDeleteOrderComponent } from '../camfil-checkout/camfil-checkout-list/camfil-delete-order/camfil-delete-order.component';
 import { EditOrderModalComponent } from '../camfil-checkout/camfil-checkout-list/edit-order-modal/edit-order-modal.component';
 import { CamfilCheckoutSummaryComponent } from '../camfil-checkout/camfil-checkout-summary/camfil-checkout-summary.component';
@@ -52,6 +50,5 @@ const checkoutPageRoutes: Routes = [
     EditOrderModalComponent,
     PrintOrderComponent,
   ],
-  providers: [{ provide: DateAdapter, useClass: CamfilDateAdapter }],
 })
 export class CheckoutPageModule {}
