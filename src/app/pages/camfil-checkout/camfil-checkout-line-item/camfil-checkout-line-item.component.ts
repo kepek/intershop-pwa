@@ -124,9 +124,11 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
   }
 
   measurementsToShow() {
-    return Object.values(this.measurements)
-      .filter(item => item)
-      .join('x');
+    return this.measurements
+      ? Object?.values(this.measurements)
+          .filter(item => item)
+          .join('x')
+      : false;
   }
 
   updateQuantities() {
@@ -239,7 +241,7 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
           delivery = this.setToClosestMonday(new Date(delivery));
         }
 
-        return (this.earliestDeliveryDate = AttributeHelper.formatDeliveryDate(new Date(delivery)));
+        return (this.earliestDeliveryDate = AttributeHelper.formatDeliveryDate(new Date(delivery)).replace(/-/g, '/'));
       });
     }
   }
@@ -254,7 +256,7 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
         const tempDeliveryDate = new Date(this.orderDeliveryDate).setDate(
           new Date(this.orderDeliveryDate).getDate() + 1
         );
-        deliveryDate = AttributeHelper.formatDeliveryDate(new Date(tempDeliveryDate));
+        deliveryDate = AttributeHelper.formatDeliveryDate(new Date(tempDeliveryDate)).replace(/-/g, '/');
       } else {
         deliveryDate = this.earliestDeliveryDate;
       }

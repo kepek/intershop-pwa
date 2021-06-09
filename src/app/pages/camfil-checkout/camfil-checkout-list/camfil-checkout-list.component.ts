@@ -88,7 +88,6 @@ export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
   deliveryDateValue: string;
   basketLoading$: Observable<boolean>;
   ordersLoading$: Observable<boolean>;
-
   @ViewChild(CamfilSmallCtaModalComponent) modal: CamfilSmallCtaModalComponent;
 
   private destroy$ = new Subject<void>();
