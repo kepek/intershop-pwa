@@ -20,7 +20,7 @@
     </div>
     <div class="summary-line">
       <p>{{ 'camfil.checkout.your_total_price' | translate }}</p>
-      <p>{{ basket.totals?.total | ishPrice }}</p>
+      <p>{{ basket.totals?.total | ishPrice: 'gross' }}</p>
     </div>
     <br />
     <mat-divider></mat-divider>
