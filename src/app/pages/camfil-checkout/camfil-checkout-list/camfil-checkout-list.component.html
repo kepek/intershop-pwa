@@ -15,7 +15,7 @@
 <ng-template #orderHeader let-camCard="camCard">
   <div class="d-inline-flex">
     <strong *ngIf="order">
-      {{ 'camfil.checkout.order' | translate }} {{ !!totalOrders ? index + ' / ' + totalOrders : '' }}</strong
+      {{ 'camfil.checkout.order' | translate }} {{ !!buckets?.length ? index + ' / ' + buckets?.length : '' }}</strong
     >
     <span data-id-id="order-number" class="order-number"
       >{{ order?.customer?.customerNo }}, {{ order?.customer?.companyName }}</span
@@ -300,6 +300,8 @@
       </div>
     </div>
   </ng-container>
+  <ish-loading *ngIf="basketLoading$ | async"></ish-loading>
+  <ish-loading *ngIf="ordersLoading$ | async"></ish-loading>
 </ng-template>
 
 <camfil-modal-add-new-product
@@ -319,4 +321,5 @@
   icon="calendar"
 >
 </camfil-small-cta-modal>
-<ish-loading *ngIf="basketLoading$ | async"></ish-loading>
+<!-- <ish-loading *ngIf="basketLoading$ | async"></ish-loading>
+<ish-loading *ngIf="ordersLoading$ | async"></ish-loading> -->

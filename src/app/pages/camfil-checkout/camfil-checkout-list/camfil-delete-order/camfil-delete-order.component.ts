@@ -15,7 +15,6 @@ export class CamfilDeleteOrderComponent {
   @ViewChild(CamfilSmallCtaModalComponent) modal: CamfilSmallCtaModalComponent;
 
   @Input() order: Bucket;
-  loading = false;
 
   constructor(public dialog: MatDialog, private checkoutFacade: CheckoutFacade) {}
 
@@ -27,7 +26,6 @@ export class CamfilDeleteOrderComponent {
   deleteOrder() {
     const type = this.order.id.split('_')[0];
 
-    this.loading = true;
     type === 'emptyBucket'
       ? this.checkoutFacade.deleteEmptyBucket(this.order.id)
       : this.checkoutFacade.deleteOrder(this.order.basket, this.order.shipToAddressFull.id);

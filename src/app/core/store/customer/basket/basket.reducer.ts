@@ -52,6 +52,7 @@ import {
   deleteBasketPaymentFail,
   deleteBasketPaymentSuccess,
   deleteEmptyBucket,
+  deleteBucket,
   getWarehouseCalendarSuccess,
   loadBasket,
   loadBasketAddressesSuccess,
@@ -63,6 +64,7 @@ import {
   loadBasketEligibleShippingMethodsSuccess,
   loadBasketFail,
   loadBasketSuccess,
+  loadBuckets,
   loadBucketsFail,
   loadBucketsSuccess,
   loadCustomerDeliveryTermSuccess,
@@ -101,6 +103,8 @@ import {
   updateConcardisCvcLastUpdatedFail,
   updateConcardisCvcLastUpdatedSuccess,
   updateEmptyBucket,
+  deleteBucketSuccess,
+  deleteBucketFail,
 } from './basket.actions';
 
 export interface BasketState {
@@ -157,6 +161,8 @@ export const basketReducer = createReducer(
   initialState,
   setLoadingOn(
     loadBasket,
+    loadBuckets,
+    deleteBucket,
     assignBasketAddress,
     updateBasketShippingMethod,
     updateBasketExternalOrderReference,
@@ -183,6 +189,7 @@ export const basketReducer = createReducer(
   ),
   unsetLoadingAndErrorOn(
     loadBasketSuccess,
+    loadBucketsSuccess,
     mergeBasketSuccess,
     updateBasketItemsSuccess,
     deleteBasketItemSuccess,
@@ -202,7 +209,8 @@ export const basketReducer = createReducer(
     startCheckoutSuccess,
     updateConcardisCvcLastUpdated,
     camfilDragLineItem,
-    loadCustomerDeliveryTermSuccess
+    loadCustomerDeliveryTermSuccess,
+    deleteBucketSuccess
   ),
   setErrorOn(
     mergeBasketFail,
@@ -228,7 +236,8 @@ export const basketReducer = createReducer(
     startCheckoutFail,
     camfilDragLineItemFail,
     addProductToBucketAddressFromCamCardFail,
-    addProductsFromCamCardFail
+    addProductsFromCamCardFail,
+    deleteBucketFail
   ),
 
   on(updateBasketItems, deleteBasketItem, (state: BasketState) => ({

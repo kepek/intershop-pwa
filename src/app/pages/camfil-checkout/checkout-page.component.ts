@@ -53,7 +53,8 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
   initBasket() {
     this.basket$ = this.checkoutFacade.basket$;
     this.buckets$ = this.checkoutFacade.buckets$;
-    this.basketLoading$ = this.checkoutFacade.ordersLoading$;
+    this.basketLoading$ = this.checkoutFacade.basketLoading$;
+    this.ordersLoading$ = this.checkoutFacade.ordersLoading$;
     this.validationResults$ = this.checkoutFacade.basketValidationResults$;
     this.selectedOrder$ = this.checkoutFacade.selectedOrder$;
 

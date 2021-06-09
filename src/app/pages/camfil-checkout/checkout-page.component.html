@@ -20,10 +20,10 @@
           <camfil-checkout-list [order]="item"></camfil-checkout-list>
         </ng-container>
 
-        <ng-container *ngFor="let item of buckets; index as i">
+        <ng-container *ngFor="let item of buckets$ | async; index as i">
           <camfil-checkout-list
             [order]="item"
-            [buckets]="buckets"
+            [buckets]="buckets$ | async"
             [shippingMethodId]="shippingMethodId"
             [isConfirmed]="validation"
             [totalOrders]="buckets?.length"
