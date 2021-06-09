@@ -76,7 +76,7 @@
         <div class="row box-gutters col-12">
           <ng-container *ngFor="let category of categoriesFiltered">
             <camfil-category-box
-              (click)="(!inputFocused)"
+              (click)="out()"
               size="small"
               [category]="category"
               class="col-md-4 col-6"
