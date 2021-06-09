@@ -51,8 +51,10 @@ import {
   deleteBasketPayment,
   deleteBasketPaymentFail,
   deleteBasketPaymentSuccess,
-  deleteEmptyBucket,
   deleteBucket,
+  deleteBucketFail,
+  deleteBucketSuccess,
+  deleteEmptyBucket,
   getWarehouseCalendarSuccess,
   loadBasket,
   loadBasketAddressesSuccess,
@@ -103,8 +105,6 @@ import {
   updateConcardisCvcLastUpdatedFail,
   updateConcardisCvcLastUpdatedSuccess,
   updateEmptyBucket,
-  deleteBucketSuccess,
-  deleteBucketFail,
 } from './basket.actions';
 
 export interface BasketState {
