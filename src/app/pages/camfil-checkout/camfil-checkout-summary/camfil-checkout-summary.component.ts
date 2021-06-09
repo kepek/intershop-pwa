@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
@@ -14,7 +14,7 @@ import { PriceHelper } from 'ish-core/models/price/price.helper';
   styleUrls: ['./camfil-checkout-summary.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CamfilCheckoutSummaryComponent implements OnInit {
+export class CamfilCheckoutSummaryComponent implements OnInit, OnChanges {
   @Input() basket: BasketView;
   @Input() isConfirmed;
   @Output() update = new EventEmitter();
@@ -22,6 +22,7 @@ export class CamfilCheckoutSummaryComponent implements OnInit {
   productsReadyToPlaceOrder$: Observable<boolean>;
   bucketsVolumeDiscounts$: Observable<number>;
   basketVolumeDiscount;
+  isTracked = false;
 
   constructor(
     private checkoutFacade: CheckoutFacade,
@@ -33,6 +34,13 @@ export class CamfilCheckoutSummaryComponent implements OnInit {
   ngOnInit() {
     this.productsReadyToPlaceOrder$ = this.shoppingFacade.productsReadyToPlaceOrder$;
     this.bucketsVolumeDiscounts$ = this.checkoutFacade.bucketsVolumeDiscounts$;
+  }
+
+  ngOnChanges() {
+    if (this.isConfirmed && !this.isTracked) {
+      this.checkoutFacade.trackPurchase(this.basket);
+      this.isTracked = true;
+    }
   }
 
   submitOrder() {
