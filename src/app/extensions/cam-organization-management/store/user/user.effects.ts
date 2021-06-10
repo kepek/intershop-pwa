@@ -211,7 +211,8 @@ export class UserEffects {
       concatMap(({ customer, user, contacts, roles }) =>
         this.organizationService.createCustomerUser(customer, user, contacts, roles).pipe(
           tap(createdUser => {
-            this.navigateTo(`../customers/${customer.id}/users/${createdUser.id}`);
+            const customerId = contacts[0].customer.parentCustomer?.id || contacts[0].customer.id;
+            this.navigateTo(`../customers/${customerId}/users/${createdUser.id}`);
           }),
           map(createdUser =>
             createCustomerUserSuccess({

@@ -1,7 +1,7 @@
 // tslint:disable: ish-ordered-imports project-structure rxjs-no-subject-value
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subject, combineLatest, throwError, BehaviorSubject } from 'rxjs';
-import { distinctUntilChanged, filter, map, switchMap, take, takeUntil } from 'rxjs/operators';
+import { distinctUntilChanged, filter, first, map, switchMap, take, takeUntil } from 'rxjs/operators';
 
 import { CamOrganizationManagementFacade } from '../../facades/cam-organization-management.facade';
 import {
@@ -66,7 +66,7 @@ export abstract class CreatePageDataSourceComponent implements OnInit, OnDestroy
   ngOnInit() {
     this.validCustomerAndContact$ = new BehaviorSubject(true);
     this.currentCustomer$ = this.organizationFacade.currentCustomer$;
-    this.currentCustomerId$ = this.currentCustomer$.pipe(map(customer => customer.id));
+    this.currentCustomerId$ = this.currentCustomer$.pipe(map(customer => customer?.parentCustomer?.id || customer.id));
 
     this.newUser$ = new BehaviorSubject<CamfilB2bUser>({ id: undefined });
     this.newUserId$ = this.newUser$.pipe(map(user => user.id));
@@ -81,6 +81,16 @@ export abstract class CreatePageDataSourceComponent implements OnInit, OnDestroy
     this.newUserStaticCustomers$ = this.newUserId$.pipe(
       switchMap(userId => this.organizationFacade.getUserStaticCustomers$(userId))
     );
+
+    this.roles$()
+      .pipe(take(1))
+      .subscribe(roles => {
+        if (!roles.length) {
+          this.customers$()
+            .pipe(first(customers => !!customers.length))
+            .subscribe(customers => this.organizationFacade.loadCustomerRoles$(customers[0].id));
+        }
+      });
 
     this.organizationFacade
       .getSelectedRoles$(['APP_B2B_BUYER'])

@@ -13,7 +13,7 @@ import {
 } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { take, takeUntil } from 'rxjs/operators';
 
 import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
 import { SpecialValidators } from 'ish-shared/forms/validators/special-validators';
@@ -21,6 +21,7 @@ import { SpecialValidators } from 'ish-shared/forms/validators/special-validator
 import { CamfilB2bCustomer } from '../../models/camfil-b2b-customer/camfil-b2b-customer.model';
 import { CamfilB2bUser } from '../../models/camfil-b2b-user/camfil-b2b-user.model';
 import { CreatePageDataSourceComponent } from '../../pages/create/create-page.data-source';
+import { AccountFacade } from 'ish-core/facades/account.facade';
 
 @Component({
   selector: 'camfil-organization-user-details-form',
@@ -42,8 +43,9 @@ export class CamfilOrganizationUserDetailsFormComponent implements OnInit, OnDes
   activeForm: FormGroup;
 
   isUserFormSubmitted = false;
+  loggedInCustomer: CamfilB2bCustomer;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private accountFacade: AccountFacade) {}
 
   get isUserFormSubmitButtonDisabled() {
     return this.form?.invalid && this.isUserFormSubmitted;
@@ -88,7 +90,8 @@ export class CamfilOrganizationUserDetailsFormComponent implements OnInit, OnDes
 
       emailControl.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(email => {
         if (emailControl.valid && !loginControl.valid) {
-          loginControl.setValue(CreatePageDataSourceComponent.createLogin(this.customer, { ...this.user, email }));
+          const customer = this.customer || this.loggedInCustomer;
+          loginControl.setValue(CreatePageDataSourceComponent.createLogin(customer, { ...this.user, email }));
         }
       });
     }
@@ -101,6 +104,10 @@ export class CamfilOrganizationUserDetailsFormComponent implements OnInit, OnDes
   }
 
   ngOnInit() {
+    this.accountFacade.customer$.pipe(take(1)).subscribe(customer => {
+      this.loggedInCustomer = customer as CamfilB2bCustomer;
+    });
+
     this.initUserForm();
     this.initUserActiveForm();
   }

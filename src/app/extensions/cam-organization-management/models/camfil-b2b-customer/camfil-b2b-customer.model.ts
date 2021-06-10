@@ -16,6 +16,7 @@ export const camfilB2bCustomerRelationsKeys = ['contactIDs', 'roleIDs', 'userIDs
 export interface CamfilB2bCustomer extends Customer, CamfilB2bCustomerRelations {
   id: string;
   parent: boolean;
+  parentCustomer?: CamfilB2bCustomer;
   preferredInvoiceToAddress: Address;
   department?: string;
 }

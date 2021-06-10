@@ -295,7 +295,7 @@ export class CamOrganizationManagementFacade {
             this.loadCustomerRoles$(customer.id);
           }
 
-          this.loadCustomerUsers$(customer.id);
+          this.loadCustomerUsers$(customer.parentCustomer?.id || customer.id);
         });
       });
   }
@@ -468,6 +468,7 @@ export class CamOrganizationManagementFacade {
         users.map(user => ({
           ...user,
           customer: customers.find(c => c.id === user.customerId),
+          customers: user.customers.filter(cust => customers.find(c => c.id === cust.id)),
         }))
       )
     );

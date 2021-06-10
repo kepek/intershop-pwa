@@ -8,6 +8,7 @@ import { concatMap, filter, map, mapTo, mergeMap, switchMapTo, withLatestFrom } 
 
 import { ofUrl, selectPath, selectRouteParam } from 'ish-core/store/core/router';
 import { RouterState } from 'ish-core/store/core/router/router.reducer';
+import { getUserPermissions } from 'ish-core/store/customer/authorization';
 import { getLoggedInCustomer } from 'ish-core/store/customer/user';
 import { mapErrorToAction, mapToPayloadProperty, whenTruthy } from 'ish-core/utils/operators';
 
@@ -55,20 +56,27 @@ export class CustomerEffects {
         this.organizationService.getCustomers().pipe(
           withLatestFrom(
             this.store.pipe(select(selectPath)),
-            this.store.pipe(select(getLoggedInCustomer), whenTruthy())
+            this.store.pipe(select(getLoggedInCustomer), whenTruthy()),
+            this.store.pipe(select(getUserPermissions))
           ),
-          mergeMap(([customers, path, currentCustomer]) => {
+          mergeMap(([customers, path, currentCustomer, permissions]) => {
             const actions = [];
-            const currentCustomerId = customers.find(c => c.customerNo === currentCustomer.customerNo)?.id;
+            const userAdmin = permissions.find(p => p === 'APP_B2B_MANAGE_USERS');
+            let currentCustomerId = customers.find(c => c.customerNo === currentCustomer.customerNo)?.id;
+
+            if (path.endsWith('account/organization/create') && userAdmin) {
+              if (!currentCustomerId) {
+                currentCustomerId = customers[0].parentCustomer.id;
+                actions.push(loadCustomer({ customerId: currentCustomerId }));
+              } else {
+                actions.push(loadCustomerRoles({ customerId: currentCustomerId }));
+              }
+            }
 
             actions.push(loadCustomersSuccess({ customers }));
 
             if (customers?.length > 0 && path.endsWith('account/organization')) {
               actions.push(loadOrganizationUsers({ customerIDs: customers.map(c => c.id) }));
-            }
-
-            if (path.endsWith('account/organization/create') && currentCustomerId) {
-              actions.push(loadCustomerRoles({ customerId: currentCustomerId }));
             }
 
             return actions;
