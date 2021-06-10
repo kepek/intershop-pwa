@@ -31,7 +31,8 @@
         >
           <mat-option>--</mat-option>
           <mat-option *ngFor="let customer of customers$ | async" [value]="customer.id">
-            {{ customer.companyName }}
+            {{ customer.companyName
+            }}<ng-container *ngIf="customer.department">, {{ customer.department }}</ng-container>
           </mat-option>
         </mat-select>
       </mat-form-field>
