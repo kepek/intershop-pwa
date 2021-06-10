@@ -1,4 +1,4 @@
-<div class="ahu">
+<div class="ahu" *ngIf="!showComingSoon; else comingSoon">
   <img
     class="ahu__banner"
     src="https://assets.new.siemens.com/siemens/assets/api/uuid:4b8847bc-99a5-4ee2-b3d0-ebdc64f8e91c/width:1266/quality:high/cnc-system-for-machine-tools.jpg"
@@ -47,4 +47,7 @@
   </mat-card>
 </div>
 <ish-content-include includeId="camfil.include.ahu.content.pagelet2-Include"></ish-content-include>
-<!-- <camfil-product-guides></camfil-product-guides> -->
+
+<ng-template #comingSoon>
+  <ish-content-include includeId="camfil.include.ahu.coming-soon.pagelet2-Include"></ish-content-include>
+</ng-template>
