@@ -23,15 +23,6 @@
         [category]="category"
         [viewType]="viewType$ | async"
       ></camfil-product-list>
-
-      <div class="row justify-content-center">
-        <ish-product-list-paging
-          *ngIf="!listing.allPagesAvailable()"
-          [currentPage]="listing.lastPage"
-          [pageIndices]="listing.pageIndices()"
-          [fragmentOnRouting]="fragmentOnRouting"
-        ></ish-product-list-paging>
-      </div>
     </div>
 
     <div *ngIf="isPaging">
