@@ -87,7 +87,7 @@ export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
   basketExtensions$: Observable<BasketExtensions[]>;
   deliveryDateValue: string;
   basketLoading$: Observable<boolean>;
-
+  ordersLoading$: Observable<boolean>;
   @ViewChild(CamfilSmallCtaModalComponent) modal: CamfilSmallCtaModalComponent;
 
   private destroy$ = new Subject<void>();
@@ -123,7 +123,7 @@ export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
 
     this.orderAddress = { ...this.order.shipToAddressFull, countryCode: '' };
     this.basketLoading$ = this.checkoutFacade.basketLoading$;
-
+    this.ordersLoading$ = this.checkoutFacade.ordersLoading$;
     this.emailRecipients$ = this.checkoutFacade.getBucketEmailRecipients$(this.order?.shipToAddressFull?.id);
 
     this.emailRecipients$?.subscribe(value => {
