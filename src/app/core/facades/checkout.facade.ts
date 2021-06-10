@@ -2,9 +2,11 @@ import { Injectable } from '@angular/core';
 import { Store, createSelector, select } from '@ngrx/store';
 import { merge } from 'rxjs';
 import { map, switchMap, take, tap } from 'rxjs/operators';
+import { TrackingService } from 'src/app/extensions/tracking/services/tracking.service';
 
 import { Address } from 'ish-core/models/address/address.model';
 import { Attribute } from 'ish-core/models/attribute/attribute.model';
+import { BasketView } from 'ish-core/models/basket/basket.model';
 import { Bucket } from 'ish-core/models/basket/bucket.model';
 import { LineItemUpdate } from 'ish-core/models/line-item-update/line-item-update.model';
 import { LineItem } from 'ish-core/models/line-item/line-item.model';
@@ -72,7 +74,7 @@ import { whenTruthy } from 'ish-core/utils/operators';
 // tslint:disable:member-ordering
 @Injectable({ providedIn: 'root' })
 export class CheckoutFacade {
-  constructor(private store: Store) {}
+  constructor(private store: Store, private tracking: TrackingService) {}
 
   checkoutStep$ = this.store.pipe(select(selectRouteData<number>('checkoutStep')));
 
@@ -281,5 +283,9 @@ export class CheckoutFacade {
 
   getWarehouseCalendar() {
     this.store.dispatch(getWarehouseCalendar());
+  }
+
+  trackPurchase(basket: BasketView) {
+    this.tracking.trackPurchase(basket);
   }
 }
