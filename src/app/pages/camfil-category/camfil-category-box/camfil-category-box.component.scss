@@ -48,4 +48,9 @@
       box-shadow: $header-shadow;
     }
   }
+  .logo {
+    width: $space-detail-item-margin;
+    height: $space-detail-item-margin;
+    margin: 0;
+  }
 }
