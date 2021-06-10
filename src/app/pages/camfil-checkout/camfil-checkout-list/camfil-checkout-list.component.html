@@ -300,10 +300,10 @@
       </div>
     </div>
   </ng-container>
-  <ng-container *ngif="!isConfirmed">
+  <ng-container *ngIf="!isConfirmed">
     <ish-loading *ngIf="ordersLoading$ | async"></ish-loading>
+    <ish-loading *ngIf="basketLoading$ | async"></ish-loading>
   </ng-container>
-  <ish-loading *ngIf="basketLoading$ | async"></ish-loading>
 </ng-template>
 
 <camfil-modal-add-new-product
