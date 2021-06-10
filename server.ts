@@ -19,17 +19,21 @@ const DIST_FOLDER = join(process.cwd(), 'dist');
 // uncomment this block to prevent ssr issues with third-party libraries regarding window, document, HTMLElement and navigator
 // tslint:disable-next-line: no-commented-out-code
 /*
-const domino = require('domino');
-const template = fs.readFileSync(join(DIST_FOLDER, 'browser', 'index.html')).toString();
-const win = domino.createWindow(template);
 
 // tslint:disable:no-string-literal
-global['window'] = win;
 global['document'] = win.document;
 global['HTMLElement'] = win.HTMLElement;
-global['navigator'] = win.navigator;
 // tslint:enable:no-string-literal
 */
+const domino = require('domino');
+
+const template = fs.readFileSync(join(DIST_FOLDER, 'browser', 'index.html')).toString();
+
+const win = domino.createWindow(template);
+
+global.window = win;
+
+global.navigator = win.navigator;
 
 // The Express app is exported so that it can be used by serverless Functions.
 export function app(): express.Express {
