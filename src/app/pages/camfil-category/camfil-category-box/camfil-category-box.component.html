@@ -5,7 +5,7 @@
         <mat-card-title>{{ category.name }}</mat-card-title>
       </mat-card-header>
       <img mat-card-image *ngIf="category.images" src="{{ category.images[0].effectiveUrl }}" alt="" />
-      <mat-icon *ngIf="!category.images" svgIcon="logo" class="logo"></mat-icon>
+      <mat-icon *ngIf="!category.images" svgIcon="logo" class="logo m-0"></mat-icon>
     </a>
     <mat-card-content>
       <p>
@@ -24,9 +24,9 @@
 <ng-template #small>
   <mat-card>
     <a routerLink="/{{ getCategoryUrl(category) }}" (click)="handleClick()" class="d-flex align-items-center">
-      <figure>
+      <figure class="d-flex justify-content-center align-items-center">
         <img *ngIf="category.images" src="{{ category.images[0].effectiveUrl }}" alt="" />
-        <mat-icon *ngIf="!category.images" svgIcon="logo" class="logo"></mat-icon>
+        <mat-icon *ngIf="!category.images" svgIcon="logo" class="logo m-0"></mat-icon>
       </figure>
       <strong>
         {{ category.name }}<br />
