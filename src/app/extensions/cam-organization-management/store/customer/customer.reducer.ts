@@ -48,8 +48,9 @@ export const customerReducer = createReducer(
   })),
   on(loadCustomersSuccess, (state: CustomerState, action) => {
     const { customers } = action.payload;
+    const assignedCustomers = customers.map(c => ({ ...c, assignedToLoggedUser: true }));
 
-    return customerAdapter.upsertMany(customers, state);
+    return customerAdapter.upsertMany(assignedCustomers, state);
   }),
   on(loadCustomerSuccess, (state: CustomerState, action) => {
     const { customer } = action.payload;

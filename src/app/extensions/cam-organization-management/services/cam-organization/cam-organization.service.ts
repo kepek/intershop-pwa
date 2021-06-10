@@ -2,7 +2,16 @@ import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { pick } from 'lodash-es';
 import { EMPTY, Observable, forkJoin, of, throwError } from 'rxjs';
-import { catchError, concatAll, concatMap, defaultIfEmpty, map, switchMap, withLatestFrom } from 'rxjs/operators';
+import {
+  catchError,
+  concatAll,
+  concatMap,
+  defaultIfEmpty,
+  map,
+  mergeMap,
+  switchMap,
+  withLatestFrom,
+} from 'rxjs/operators';
 
 import { AppFacade } from 'ish-core/facades/app.facade';
 import { AddressData } from 'ish-core/models/address/address.interface';
@@ -247,7 +256,7 @@ export class CamOrganizationService {
               )
             ),
             switchMap(createdUser =>
-              this.getCustomerUser(contacts[0].customer.parentCustomer?.id || contacts[0].customer.id, createdUser.id)
+              this.getCustomerUser(contacts[0].customer?.parentCustomer?.id || contacts[0].customer.id, createdUser.id)
             )
           )
       )
@@ -298,8 +307,7 @@ export class CamOrganizationService {
 
   connectUserWithCustomerPlusReload(customerId: string, userId: string): Observable<CamfilB2bUser> {
     return this.connectUserWithCustomer(customerId, userId).pipe(
-      withLatestFrom(this.organizationFacade.getUser$(userId).pipe(whenTruthy())),
-      concatMap(([, user]) => this.getCustomerUser(user.customerId, userId))
+      mergeMap(() => this.getCustomerUser(customerId, userId))
     );
   }
 
@@ -323,7 +331,10 @@ export class CamOrganizationService {
   disconnectUserFromCustomerPlusReload(customerId: string, userId: string): Observable<CamfilB2bUser> {
     return this.disconnectUserFromCustomer(customerId, userId).pipe(
       withLatestFrom(this.organizationFacade.getUser$(userId).pipe(whenTruthy())),
-      concatMap(([, user]) => this.getCustomerUser(user.customerId, userId))
+      concatMap(([, user]) => {
+        const id = user.customers.find(customer => customer.id !== customerId)?.id;
+        return id ? this.getCustomerUser(id, userId) : of({ ...user, customers: [], customerId: '' });
+      })
     );
   }
 
@@ -347,8 +358,7 @@ export class CamOrganizationService {
     contact: CamfilB2bContact
   ): Observable<CamfilB2bUser> {
     return this.connectContactWithUserCustomer(customerId, userId, contact).pipe(
-      withLatestFrom(this.organizationFacade.getUser$(userId).pipe(whenTruthy())),
-      concatMap(([, user]) => this.getCustomerUser(user.customerId, userId))
+      mergeMap(() => this.getCustomerUser(customerId, userId))
     );
   }
 

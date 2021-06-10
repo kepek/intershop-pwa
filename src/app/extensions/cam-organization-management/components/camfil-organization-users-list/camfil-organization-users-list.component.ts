@@ -44,6 +44,6 @@ export class CamfilOrganizationUsersListComponent implements AfterViewInit {
   }
 
   parentCustomerId(user: CamfilB2bOrganizationUser) {
-    return user?.customer.parentCustomer?.id || user?.customerId;
+    return user?.customer?.parentCustomer?.id || user?.customerId;
   }
 }
