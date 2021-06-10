@@ -72,7 +72,6 @@ export class CustomerEffects {
                 actions.push(loadCustomerRoles({ customerId: currentCustomerId }));
               }
             }
-
             actions.push(loadCustomersSuccess({ customers }));
 
             if (customers?.length > 0 && path.endsWith('account/organization')) {

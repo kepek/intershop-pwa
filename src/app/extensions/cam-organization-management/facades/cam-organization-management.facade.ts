@@ -294,8 +294,7 @@ export class CamOrganizationManagementFacade {
           } else {
             this.loadCustomerRoles$(customer.id);
           }
-
-          this.loadCustomerUsers$(customer.parentCustomer?.id || customer.id);
+          this.loadCustomerUsers$(customer?.parentCustomer?.id || customer.id);
         });
       });
   }

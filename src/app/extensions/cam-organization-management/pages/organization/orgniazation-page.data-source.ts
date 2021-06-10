@@ -84,7 +84,7 @@ export abstract class OrganizationPageDataSourceComponent implements OnInit, Aft
   dataSourceColumns: string[] = [
     'customer.customerNo',
     'customer.companyName',
-    // 'department', // TODO (extMlk): Verify if this column is required?
+    'department',
     'customer.preferredInvoiceToAddress.city',
     'login',
     'roleIDs',

@@ -69,7 +69,9 @@ export abstract class UserPageDataSourceComponent implements OnInit, AfterViewIn
   }
 
   customers$() {
-    return this.organizationFacade.getCustomers$();
+    return this.organizationFacade
+      .getCustomers$()
+      .pipe(map(customers => customers.filter(customer => customer.assignedToLoggedUser)));
   }
 
   customerContacts$(customerId: string) {
