@@ -1,7 +1,9 @@
 import { isPlatformBrowser } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Inject, OnDestroy, OnInit, PLATFORM_ID, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { Observable, Subject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
 
@@ -12,6 +14,7 @@ import { ChannelConfiguration } from 'ish-core/models/channel-configuration/chan
 import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
 import { CookiesService } from 'ish-core/utils/cookies/cookies.service';
 import { whenTruthy } from 'ish-core/utils/operators';
+import { CamfilIEModalComponent } from 'ish-shell/header/camfil-ie-modal/camfil-ie-modal.component';
 
 /**
  * The App Component provides the application frame for the single page application.
@@ -40,11 +43,17 @@ export class AppComponent implements OnInit, OnDestroy {
     private cookiesService: CookiesService,
     private featureToggleService: FeatureToggleService,
     private router: Router,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    public dialog: MatDialog,
+    private translateService: TranslateService
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
   }
-
+  @ViewChild(CamfilIEModalComponent) modal: CamfilIEModalComponent;
+  get isIeBrowser() {
+    const userAgent = window.navigator.userAgent;
+    return userAgent.indexOf('MSIE ') > -1 || userAgent.indexOf('Trident/') > -1;
+  }
   ngOnInit() {
     this.deviceType$ = this.appFacade.deviceType$;
     this.wrapperClasses$ = this.appFacade.appWrapperClasses$;
@@ -59,6 +68,9 @@ export class AppComponent implements OnInit, OnDestroy {
         );
         this.gtmToken = gtmToken;
       });
+    }
+    if (this.isIeBrowser) {
+      this.openIeDialog();
     }
   }
 
@@ -76,5 +88,15 @@ export class AppComponent implements OnInit, OnDestroy {
 
   isCheckoutPage() {
     return this.router.url.includes('/checkout');
+  }
+
+  openIeDialog() {
+    this.dialog.open(CamfilIEModalComponent, {
+      width: '600px',
+      autoFocus: true,
+      data: {
+        modalText: this.translateService.instant('camfil.modal.ie.text'),
+      },
+    });
   }
 }

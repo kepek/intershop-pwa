@@ -14,6 +14,7 @@ import { CookiesBannerComponent } from 'ish-shell/application/cookies-banner/coo
 import { CamfilFooterComponent } from 'ish-shell/footer/camfil-footer/camfil-footer.component';
 import { CamfilBreadcrumbComponent } from 'ish-shell/header/camfil-breadcrumb/camfil-breadcrumb.component';
 import { CamfilHeaderComponent } from 'ish-shell/header/camfil-header/camfil-header.component';
+import { CamfilIEModalComponent } from 'ish-shell/header/camfil-ie-modal/camfil-ie-modal.component';
 
 import { AppComponent } from './app.component';
 
@@ -32,6 +33,7 @@ describe('App Component', () => {
         MockComponent(CamfilBreadcrumbComponent),
         MockComponent(CamfilFooterComponent),
         MockComponent(CamfilHeaderComponent),
+        MockComponent(CamfilIEModalComponent),
         MockComponent(CookiesBannerComponent),
       ],
       imports: [
