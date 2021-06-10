@@ -13,7 +13,7 @@
 </ng-template>
 
 <div class="header container" [ngClass]="deviceType">
-  <div *ngIf="!isSticky || deviceType === 'mobile'" class="row align-items-center header__first">
+  <div *ngIf="!isSticky || deviceType === 'mobile'" class="row header__first">
     <div class="col-7 col-md-8 d-flex align-items-center">
       <camfil-user-links [deviceType]="deviceType" *ngIf="deviceType !== 'mobile'"></camfil-user-links>
       <camfil-product-compare-status
