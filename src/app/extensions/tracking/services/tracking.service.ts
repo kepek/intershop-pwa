@@ -3,6 +3,7 @@ import { Store, select } from '@ngrx/store';
 import { Observable, combineLatest } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 
+import { FeatureToggleService } from 'ish-core/feature-toggle.module';
 import { BasketView } from 'ish-core/models/basket/basket.model';
 import { LineItemView } from 'ish-core/models/line-item/line-item.model';
 import { getProduct } from 'ish-core/store/shopping/products';
@@ -18,7 +19,7 @@ declare var dataLayer: any;
  */
 @Injectable({ providedIn: 'root' })
 export class TrackingService {
-  constructor(private store: Store) {}
+  constructor(private store: Store, private featureToggleService: FeatureToggleService) {}
 
   trackPurchase(basket: BasketView) {
     const event: DataLayerEvent = {
@@ -50,12 +51,18 @@ export class TrackingService {
         products.forEach(product => event.ecommerce.purchase.products.push(product));
       });
 
-    dataLayer.push(event);
+    this.push(event);
   }
 
   /**
    * Private methods
    */
+
+  private push(event) {
+    if (dataLayer && this.featureToggleService.enabled('tracking')) {
+      dataLayer.push(event);
+    }
+  }
 
   private getProductData(sku: string, quantity?: number): Observable<DataLayerProduct> {
     return this.store.pipe(select(getProduct, { sku })).pipe(
