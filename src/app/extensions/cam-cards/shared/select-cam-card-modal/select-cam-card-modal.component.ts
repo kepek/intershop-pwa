@@ -187,7 +187,7 @@ export class SelectCamCardModalComponent implements OnInit, OnDestroy, OnChanges
 
     this.quantityForm = new FormGroup({
       quantity: new FormControl(this.quantity),
-      boxLabel: new FormControl('', Validators.maxLength(60)),
+      boxLabel: new FormControl('', Validators.maxLength(40)),
       measurementWidth: new FormControl(),
       measurementHeight: new FormControl(),
       measurementDiameter: new FormControl(),
