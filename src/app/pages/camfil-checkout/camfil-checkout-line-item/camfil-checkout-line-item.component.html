@@ -87,10 +87,10 @@
           <strong>{{ 'camfil.checkout.order.earliest_delivery_date.text' | translate }}</strong>
         </p>
         <p *ngIf="isConfirmed; else eariestDelivery" class="delivery-date-para">
-          {{ deliveryAfterOrderConfirmed() | ishDate: 'shortDate' }}
+          {{ deliveryAfterOrderConfirmed() | ishDate: 'yyyy-MM-dd' }}
         </p>
         <ng-template #eariestDelivery>
-          <p class="delivery-date-para">{{ earliestDeliveryDate | ishDate: 'shortDate' }}</p>
+          <p class="delivery-date-para">{{ earliestDeliveryDate | ishDate: 'yyyy-MM-dd' }}</p>
         </ng-template>
       </div>
       <div class="quantity-row d-flex flex-row justify-content-between align-items-center py-3 py-md-0">
