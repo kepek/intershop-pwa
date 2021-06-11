@@ -5,14 +5,13 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { routerNavigatedAction } from '@ngrx/router-store';
 import { Store, select } from '@ngrx/store';
 import { iif } from 'rxjs';
-import { concatMap, filter, map, mergeMap, switchMap, switchMapTo, tap, withLatestFrom } from 'rxjs/operators';
+import { concatMap, filter, first, map, mergeMap, switchMap, switchMapTo, tap, withLatestFrom } from 'rxjs/operators';
 
 import { displayErrorMessage, displaySuccessMessage } from 'ish-core/store/core/messages';
 import { ofUrl, selectRouteParam } from 'ish-core/store/core/router';
 import { mapErrorToAction, mapToPayload, mapToPayloadProperty, whenTruthy } from 'ish-core/utils/operators';
 
 import { CamOrganizationService } from '../../services/cam-organization/cam-organization.service';
-import { getSelectedCustomerId } from '../customer';
 
 import {
   activateCustomerUser,
@@ -49,7 +48,7 @@ import {
   updateCustomerUserFail,
   updateCustomerUserSuccess,
 } from './user.actions';
-import { getSelectedUserId } from './user.selectors';
+import { getSelectedUserId, getUser } from './user.selectors';
 
 @Injectable()
 export class UserEffects {
@@ -104,8 +103,8 @@ export class UserEffects {
         ofType(selectUser),
         mapToPayloadProperty('userId'),
         whenTruthy(),
-        withLatestFrom(this.store.pipe(select(getSelectedCustomerId), whenTruthy())),
-        map(([userId, customerId]) => loadCustomerUser({ customerId, userId }))
+        switchMap(userId => this.store.pipe(select(getUser(userId)), whenTruthy(), first())),
+        map(user => loadCustomerUser({ customerId: user.customers[0].id, userId: user.id }))
       )
     )
   );

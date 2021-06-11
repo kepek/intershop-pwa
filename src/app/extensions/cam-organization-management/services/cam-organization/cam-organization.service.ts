@@ -255,9 +255,7 @@ export class CamOrganizationService {
                 catchError(() => EMPTY)
               )
             ),
-            switchMap(createdUser =>
-              this.getCustomerUser(contacts[0].customer?.parentCustomer?.id || contacts[0].customer.id, createdUser.id)
-            )
+            switchMap(createdUser => this.getCustomerUser(contacts[0].customer.id, createdUser.id))
           )
       )
     );
