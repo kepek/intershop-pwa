@@ -88,6 +88,9 @@ export class PdfHelper {
         fontSize: 10,
         margin: [0, 10, 0, 30],
       },
+      content: {
+        margin: [0, 10, 0, 10],
+      },
     };
   }
 }
