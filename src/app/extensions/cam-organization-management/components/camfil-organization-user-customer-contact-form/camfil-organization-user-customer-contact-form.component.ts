@@ -74,7 +74,7 @@ export class CamfilOrganizationUserCustomerContactFormComponent implements OnIni
   }
 
   get userCustomerContacts() {
-    return this.userCustomer?.contacts;
+    return this.userCustomer?.contacts || this.customer.contacts;
   }
 
   get userCustomerSelectedContact() {
@@ -103,12 +103,6 @@ export class CamfilOrganizationUserCustomerContactFormComponent implements OnIni
         validators: [Validators.required],
       }),
     });
-  }
-
-  private updateForm() {
-    if (!(this.form instanceof FormGroup)) {
-      return;
-    }
 
     const checkboxControl = this.form.get('customerContactCheckbox');
     const selectControl = this.form.get('customerContactSelect');
@@ -120,6 +114,15 @@ export class CamfilOrganizationUserCustomerContactFormComponent implements OnIni
       checkboxControl.setValue(false);
       selectControl.disable();
     }
+  }
+
+  private updateForm() {
+    if (!(this.form instanceof FormGroup)) {
+      return;
+    }
+
+    const checkboxControl = this.form.get('customerContactCheckbox');
+    const selectControl = this.form.get('customerContactSelect');
 
     selectControl.setValue(this.userCustomerSelectedContact?.erpId);
 
@@ -140,10 +143,19 @@ export class CamfilOrganizationUserCustomerContactFormComponent implements OnIni
       user: this.user,
     };
 
+    const checkboxControl = this.form.get('customerContactCheckbox');
+    const selectControl = this.form.get('customerContactSelect');
+
     if (event.checked) {
-      this.connectUserWithCustomer.emit(value);
+      checkboxControl.setValue(true);
+
+      selectControl.enable();
+      selectControl.setErrors({ required: true });
+      selectControl.markAsTouched();
     } else {
       this.disconnectUserFromCustomer.emit(value);
+      selectControl.disable();
+      selectControl.setValue('');
     }
   }
 

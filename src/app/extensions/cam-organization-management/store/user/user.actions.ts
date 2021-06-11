@@ -124,23 +124,6 @@ export const resetCustomerUserPasswordSuccess = createAction(
   payload<{ customerId: string; userId: string; login: string; successMessage?: string }>()
 );
 
-// User -> Customer -> Connect
-
-export const connectUserWithCustomer = createAction(
-  '[Camfil Contact] Connect User with Customer',
-  payload<{ customerId: string; userId: string }>()
-);
-
-export const connectUserWithCustomerFail = createAction(
-  '[Camfil Contact API] Connect User with Customer Fail',
-  httpError()
-);
-
-export const connectUserWithCustomerSuccess = createAction(
-  '[Camfil Contact API] Connect User with Customer Success',
-  payload<{ customerId: string; userId: string; user: CamfilB2bUser; successMessage?: string }>()
-);
-
 // User -> Customer -> Disconnect
 
 export const disconnectUserFromCustomer = createAction(

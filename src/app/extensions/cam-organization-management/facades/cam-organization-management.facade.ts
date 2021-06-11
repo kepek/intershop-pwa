@@ -62,7 +62,6 @@ import {
 import {
   activateCustomerUser,
   connectContactWithUserAndCustomer,
-  connectUserWithCustomer,
   createCustomerUser,
   deactivateCustomerUser,
   disconnectUserFromCustomer,
@@ -408,15 +407,6 @@ export class CamOrganizationManagementFacade {
    */
   deactivateCustomerUser$(customerId, userId) {
     this.store.dispatch(deactivateCustomerUser({ customerId, userId }));
-  }
-
-  /**
-   * Activate User
-   * @param customerId
-   * @param userId
-   */
-  connectUserWithCustomer$(customerId: string, userId: string) {
-    this.store.dispatch(connectUserWithCustomer({ customerId, userId }));
   }
 
   /**

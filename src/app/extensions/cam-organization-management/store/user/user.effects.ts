@@ -19,9 +19,6 @@ import {
   activateCustomerUserSuccess,
   connectContactWithUserAndCustomerFail,
   connectContactWithUserAndCustomerSuccess,
-  connectUserWithCustomer,
-  connectUserWithCustomerFail,
-  connectUserWithCustomerSuccess,
   createCustomerUser,
   createCustomerUserFail,
   createCustomerUserSuccess,
@@ -258,7 +255,6 @@ export class UserEffects {
         updateCustomerUserSuccess,
         resetCustomerUserPasswordSuccess,
         createCustomerUserSuccess,
-        connectUserWithCustomerSuccess,
         disconnectUserFromCustomerSuccess,
         connectContactWithUserAndCustomerSuccess
       ),
@@ -282,7 +278,6 @@ export class UserEffects {
         updateCustomerUserFail,
         resetCustomerUserPasswordFail,
         createCustomerUserFail,
-        connectUserWithCustomerFail,
         disconnectUserFromCustomerFail,
         connectContactWithUserAndCustomerFail
       ),
@@ -292,28 +287,6 @@ export class UserEffects {
         displayErrorMessage({
           message: error?.message || error?.code,
         })
-      )
-    )
-  );
-
-  // Customer -> User -> Connect
-
-  connectUserWithCustomer$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(connectUserWithCustomer),
-      mapToPayload(),
-      switchMap(({ customerId, userId }) =>
-        this.organizationService.connectUserWithCustomerPlusReload(customerId, userId).pipe(
-          map(user =>
-            connectUserWithCustomerSuccess({
-              customerId,
-              userId,
-              user,
-              successMessage: 'camfil.account.organization.edit_user.connect_user_with_customer.modal.text',
-            })
-          ),
-          mapErrorToAction(connectUserWithCustomerFail, { customerId, userId })
-        )
       )
     )
   );
