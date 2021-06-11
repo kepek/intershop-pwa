@@ -1297,7 +1297,7 @@
   "cookies.modal.accept_all": "Accept All",
   "cookies.modal.cancel": "Cancel",
   "cookies.modal.save": "Save Settings",
-  "customer.credentials.login.not_unique.error": "A user with that e-mail address already exists. Please check the information for accuracy or enter a different e-mail address.",
+  "customer.credentials.login.not_unique.error": "Login name is already taken.",
   "customer.credentials.passwordreset.invalid_password.error.PasswordExpressionViolation": "The password must include 7 characters minimum, containing numbers and letters, no spaces.",
   "customer.missing_fields.error": "Missing fields",
   "dialog.close.text": "Close",
