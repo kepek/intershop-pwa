@@ -467,7 +467,7 @@ export class CamOrganizationManagementFacade {
         users.map(user => ({
           ...user,
           customer: customers.find(c => c.id === user.customerId),
-          customers: user.customers.filter(cust => customers.find(c => c.id === cust.id)),
+          customers: user.customers?.filter(cust => customers.find(c => c.id === cust.id)) || [],
         }))
       )
     );
