@@ -29,6 +29,7 @@ import { WishlistsExportsModule } from '../extensions/wishlists/exports/wishlist
 import { CookiesBannerComponent } from './application/cookies-banner/cookies-banner.component';
 import { FooterComponent } from './footer/footer/footer.component';
 import { CamfilHeaderNavigationComponent } from './header/camfil-header-navigation/camfil-header-navigation.component';
+import { CamfilIEModalComponent } from './header/camfil-ie-modal/camfil-ie-modal.component';
 import { CamfilLanguageSwitchComponent } from './header/camfil-language-switch/camfil-language-switch.component';
 import { CamfilLoginStatusComponent } from './header/camfil-login-status/camfil-login-status.component';
 import { CamfilMiniBasketComponent } from './header/camfil-mini-basket/camfil-mini-basket.component';
@@ -66,6 +67,7 @@ const exportedComponents = [
   CamfilHeaderComponent,
   CamfilHeaderDefaultComponent,
   CamfilHeaderNavigationComponent,
+  CamfilIEModalComponent,
   CamfilLanguageSwitchComponent,
   CamfilLoginStatusComponent,
   CamfilMiniBasketComponent,
