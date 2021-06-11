@@ -52,7 +52,7 @@ export class AddToCartModalComponent implements OnInit, OnDestroy {
     this.initBasket();
     this.quantityForm = new FormGroup({
       quantity: new FormControl(this.quantity || this.product.minOrderQuantity),
-      boxLabel: new FormControl(this.boxLabel || '', Validators.maxLength(60)),
+      boxLabel: new FormControl(this.boxLabel || '', Validators.maxLength(40)),
       measurementWidth: new FormControl(),
       measurementHeight: new FormControl(),
       measurementDiameter: new FormControl(),

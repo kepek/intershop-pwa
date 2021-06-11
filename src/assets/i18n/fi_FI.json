@@ -994,7 +994,7 @@
   "camfil.modal.createCamcard.input.address.error.required": "Syötä osoite.",
   "camfil.modal.createCamcard.input.area": "Alue",
   "camfil.modal.createCamcard.input.area.error.required": "Syötä alue.",
-  "camfil.modal.createCamcard.input.box_label.error.maxLength": "Pakkausmerkintä saa olla enintään 60 merkkiä pitkä.",
+  "camfil.modal.createCamcard.input.box_label.error.maxLength": "Pakkausmerkintä saa olla enintään 40 merkkiä pitkä.",
   "camfil.modal.createCamcard.input.company": "Yritys",
   "camfil.modal.createCamcard.input.company.error.required": "Syötä yritys.",
   "camfil.modal.createCamcard.input.countryCode.error.format": "Valitse maa.",

@@ -994,7 +994,7 @@
   "camfil.modal.createCamcard.input.address.error.required": "Lägg till adress",
   "camfil.modal.createCamcard.input.area": "Plats",
   "camfil.modal.createCamcard.input.area.error.required": "Fyll i plats.",
-  "camfil.modal.createCamcard.input.box_label.error.maxLength": "Boxetiketten kan inte vara mer än 60 bokstäver.",
+  "camfil.modal.createCamcard.input.box_label.error.maxLength": "Boxetiketten kan inte vara mer än 40 bokstäver.",
   "camfil.modal.createCamcard.input.company": "Företag",
   "camfil.modal.createCamcard.input.company.error.required": "Ange företag.",
   "camfil.modal.createCamcard.input.countryCode.error.format": "Vänligen ange land.",
