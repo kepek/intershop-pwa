@@ -5,6 +5,7 @@ export interface DataToPdf {
   content: {};
   styles: {};
   images: {};
+  showFooter: boolean;
 }
 
 export interface ProductsObj {

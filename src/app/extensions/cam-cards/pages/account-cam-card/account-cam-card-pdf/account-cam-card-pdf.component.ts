@@ -10,7 +10,7 @@ import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { Price } from 'ish-core/models/price/price.model';
 import { formatPrice } from 'ish-core/models/price/price.pipe';
 import { ProductView } from 'ish-core/models/product-view/product-view.model';
-import { ProductCompletenessLevel } from 'ish-core/models/product/product.model';
+import { ProductCompletenessLevel, ProductHelper } from 'ish-core/models/product/product.model';
 import { User } from 'ish-core/models/user/user.model';
 import { formatISHDate } from 'ish-core/pipes/date.pipe';
 import { whenTruthy } from 'ish-core/utils/operators';
@@ -156,7 +156,7 @@ export class AccountCamCardPdfComponent implements OnInit {
             const styles = PdfHelper.pdfStyles();
             const images = PdfHelper.pdfImages();
             const content = this.preparePdfContent(showPrice);
-            const data: DataToPdf = { content, styles, images };
+            const data: DataToPdf = { content, styles, images, showFooter: true };
 
             this.pdfService.printPdf(data);
             this.dialog.closeAll();
@@ -182,6 +182,7 @@ export class AccountCamCardPdfComponent implements OnInit {
       if (camCard.camCardItems.length) {
         subs.unshift(firstLevelItems);
       }
+
       res.push(this.pdfHeader(i), this.pdfInfoPart(camCard), subs, showPrice ? this.pdfTotal(camCard.id) : '');
       return res;
     }, []);
@@ -231,7 +232,12 @@ export class AccountCamCardPdfComponent implements OnInit {
                 [this.texts.orderMark, { text: camCard.orderLabel, bold: true }],
                 [this.texts.invoiceMark, { text: camCard.invoiceLabel, bold: true }],
                 [this.texts.lastOrder, { text: camCard.lastDeliveryDate, bold: true }],
-                [this.texts.orderInterval, { text: camCard.deliveryInterval, bold: true }],
+                camCard.deliveryInterval
+                  ? [
+                      this.texts.orderInterval,
+                      { text: camCard.deliveryInterval ? camCard.deliveryInterval : '', bold: true },
+                    ]
+                  : [this.texts.orderInterval, { text: '' }],
                 [this.texts.nextOrder, { text: camCard.nextDeliveryDate, bold: true }],
               ],
             },
@@ -266,6 +272,7 @@ export class AccountCamCardPdfComponent implements OnInit {
                     { text: customer.companyName, bold: true },
                     { text: customer.companyName2, bold: true },
                     { text: customer.customerNo, bold: true },
+                    { text: customer.department, bold: true },
                     { text: customer.description, bold: true },
                   ],
                 ],
@@ -293,9 +300,11 @@ export class AccountCamCardPdfComponent implements OnInit {
     const priceVal = this.handlePrice(priceObj);
     const priceLabel = showPrice ? ` | ${this.texts.price} ` : '';
     const price = showPrice ? { text: priceVal, bold: true } : '';
-    const arrRightInfo = [artNo, artNoVal, label, labelVal];
+    const currentProd = this.products[sku];
+    const showAvailabilityDot = ProductHelper.showAvailabilityDot(currentProd);
+    const dotText = showAvailabilityDot ? { text: ' •', color: '#006a3a', fontSize: 12 } : '';
+    const arrRightInfo = [artNo, artNoVal, label, labelVal, dotText];
     const arrLeftInfo = [qty, qtyVal, priceLabel, price];
-
     return PdfHelper.pdfProductRow(index, item.product.name, arrRightInfo, arrLeftInfo);
   }
 

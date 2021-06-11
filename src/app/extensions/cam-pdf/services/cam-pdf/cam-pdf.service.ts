@@ -18,10 +18,17 @@ export class CamPdfService {
   }
 
   async generatePdf(data: DataToPdf) {
-    const { content, styles, images } = data;
+    const { content, styles, images, showFooter } = data;
     await this.loadPdfMaker();
 
-    const def = { content, styles, images };
+    const def = {
+      content,
+      styles,
+      images,
+      footer: showFooter
+        ? (currentPage, pageCount) => [{ text: currentPage.toString() + '/' + pageCount, alignment: 'center' }]
+        : '',
+    };
     return this.pdfMake.createPdf(def);
   }
 

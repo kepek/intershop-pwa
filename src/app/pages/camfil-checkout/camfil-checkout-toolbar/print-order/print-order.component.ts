@@ -119,7 +119,7 @@ export class PrintOrderComponent implements OnInit {
     const styles = PdfHelper.pdfStyles();
     const images = PdfHelper.pdfImages();
     const content = this.preparePdfContent();
-    const data: DataToPdf = { content, styles, images };
+    const data: DataToPdf = { content, styles, images, showFooter: false };
 
     this.pdfService.printPdf(data);
   }
