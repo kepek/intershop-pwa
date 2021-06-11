@@ -2,7 +2,7 @@
 
 exports[`Camfil Header Default Component should render normal header adequately for desktop 1`] = `
 <div class="header container desktop" ng-reflect-ng-class="desktop">
-  <div class="row align-items-center header__first">
+  <div class="row header__first">
     <div class="col-7 col-md-8 d-flex align-items-center">
       <camfil-user-links ng-reflect-device-type="desktop"></camfil-user-links>
     </div>
@@ -70,7 +70,7 @@ exports[`Camfil Header Default Component should render normal header adequately 
 
 exports[`Camfil Header Default Component should render normal header adequately for tablet devices 1`] = `
 <div class="header container tablet" ng-reflect-ng-class="tablet">
-  <div class="row align-items-center header__first">
+  <div class="row header__first">
     <div class="col-7 col-md-8 d-flex align-items-center">
       <camfil-user-links ng-reflect-device-type="tablet"></camfil-user-links>
     </div>
@@ -185,7 +185,7 @@ exports[`Camfil Header Default Component should render sticky header adequately 
 
 exports[`Camfil Header Default Component should render sticky header adequately for mobile devices 1`] = `
 <div class="header container mobile" ng-reflect-ng-class="mobile">
-  <div class="row align-items-center header__first">
+  <div class="row header__first">
     <div class="col-7 col-md-8 d-flex align-items-center"></div>
     <div class="col-5 col-md-4">
       <div class="header-utility">
