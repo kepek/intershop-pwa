@@ -87,7 +87,7 @@ export class ContactEffects {
       ofType(connectContactWithUserAndCustomer),
       mapToPayload(),
       switchMap(({ customerId, userId, contact }) =>
-        this.organizationService.connectContactWithUserCustomerPlusReload(customerId, userId, contact).pipe(
+        this.organizationService.connectUserFromCustomerAndContactPlusReload(customerId, userId, contact).pipe(
           map(user =>
             connectContactWithUserAndCustomerSuccess({
               customerId,

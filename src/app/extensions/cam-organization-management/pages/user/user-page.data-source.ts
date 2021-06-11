@@ -116,10 +116,6 @@ export abstract class UserPageDataSourceComponent implements OnInit, AfterViewIn
     this.organizationFacade.updateCustomerUser$(customer, user);
   }
 
-  onConnectUserWithCustomer({ customer, user }) {
-    this.organizationFacade.connectUserWithCustomer$(customer.id, user.id);
-  }
-
   onDisconnectUserFromCustomer({ customer, user }) {
     this.organizationFacade.disconnectUserFromCustomer$(customer.id, user.id);
   }

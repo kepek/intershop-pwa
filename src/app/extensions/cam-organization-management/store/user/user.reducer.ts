@@ -14,9 +14,6 @@ import {
   connectContactWithUserAndCustomer,
   connectContactWithUserAndCustomerFail,
   connectContactWithUserAndCustomerSuccess,
-  connectUserWithCustomer,
-  connectUserWithCustomerFail,
-  connectUserWithCustomerSuccess,
   createCustomerUser,
   createCustomerUserFail,
   createCustomerUserSuccess,
@@ -68,7 +65,6 @@ export const userReducer = createReducer(
     deactivateCustomerUser,
     updateCustomerUser,
     createCustomerUser,
-    connectUserWithCustomer,
     disconnectUserFromCustomer,
     connectContactWithUserAndCustomer,
     loadOrganizationUsers
@@ -80,7 +76,6 @@ export const userReducer = createReducer(
     deactivateCustomerUserFail,
     updateCustomerUserFail,
     createCustomerUserFail,
-    connectUserWithCustomerFail,
     disconnectUserFromCustomerFail,
     connectContactWithUserAndCustomerFail,
     loadOrganizationUsersFail
@@ -92,7 +87,6 @@ export const userReducer = createReducer(
     deactivateCustomerUserSuccess,
     updateCustomerUserSuccess,
     createCustomerUserSuccess,
-    connectUserWithCustomerSuccess,
     disconnectUserFromCustomerSuccess,
     connectContactWithUserAndCustomerSuccess,
     loadOrganizationUsersSuccess
@@ -104,7 +98,6 @@ export const userReducer = createReducer(
     deactivateCustomerUserSuccess,
     updateCustomerUserSuccess,
     createCustomerUserSuccess,
-    connectUserWithCustomerSuccess,
     disconnectUserFromCustomerSuccess,
     connectContactWithUserAndCustomerSuccess,
     loadOrganizationUsersSuccess,
@@ -159,16 +152,11 @@ export const userReducer = createReducer(
       state
     );
   }),
-  on(
-    connectUserWithCustomerSuccess,
-    disconnectUserFromCustomerSuccess,
-    connectContactWithUserAndCustomerSuccess,
-    (state: UserState, action) => {
-      const { user } = action.payload;
+  on(disconnectUserFromCustomerSuccess, connectContactWithUserAndCustomerSuccess, (state: UserState, action) => {
+    const { user } = action.payload;
 
-      return userAdapter.upsertOne(user, state);
-    }
-  ),
+    return userAdapter.upsertOne(user, state);
+  }),
   on(loadOrganizationUsersSuccess, (state: UserState, action) => {
     const { users } = action.payload;
 

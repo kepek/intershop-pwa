@@ -303,12 +303,6 @@ export class CamOrganizationService {
       .pipe(map(() => body));
   }
 
-  connectUserWithCustomerPlusReload(customerId: string, userId: string): Observable<CamfilB2bUser> {
-    return this.connectUserWithCustomer(customerId, userId).pipe(
-      mergeMap(() => this.getCustomerUser(customerId, userId))
-    );
-  }
-
   // Customer -> User -> Disconnect
 
   disconnectUserFromCustomer(customerId: string, userId: string): Observable<boolean> {
@@ -357,6 +351,20 @@ export class CamOrganizationService {
   ): Observable<CamfilB2bUser> {
     return this.connectContactWithUserCustomer(customerId, userId, contact).pipe(
       mergeMap(() => this.getCustomerUser(customerId, userId))
+    );
+  }
+
+  connectUserFromCustomerAndContactPlusReload(
+    customerId: string,
+    userId: string,
+    contact: CamfilB2bContact
+  ): Observable<CamfilB2bUser> {
+    return this.connectUserWithCustomer(customerId, userId).pipe(
+      mergeMap(() =>
+        this.connectContactWithUserCustomer(customerId, userId, contact).pipe(
+          mergeMap(() => this.getCustomerUser(customerId, userId))
+        )
+      )
     );
   }
 
