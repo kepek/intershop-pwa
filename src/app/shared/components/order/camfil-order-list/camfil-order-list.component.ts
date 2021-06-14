@@ -212,15 +212,7 @@ export class CamfilOrderListComponent implements OnInit, AfterViewInit, OnDestro
   }
 
   getStatuses() {
-    const correctValues = [
-      'Created',
-      'Received',
-      'Confirmed',
-      'Part Delivered',
-      'Delivered',
-      'Part Invoiced',
-      'Invoiced',
-    ];
+    const correctValues = ['Created', 'Received', 'Confirmed', 'Delivered', 'Invoiced'];
     return [...new Set(correctValues)];
   }
 
