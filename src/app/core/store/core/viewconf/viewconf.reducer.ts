@@ -1,14 +1,16 @@
 import { createReducer, on } from '@ngrx/store';
 
 import { BreadcrumbItem } from 'ish-core/models/breadcrumb-item/breadcrumb-item.interface';
+import { CheckoutFocusedElement } from 'ish-core/models/checkout-focused-element/checkout-focused-element.interface';
 import { ScrollInfo } from 'ish-core/models/scroll-info/scroll-info.interface';
 
-import { setBreadcrumbData, setScroll, setStickyHeader } from './viewconf.actions';
+import { setBreadcrumbData, setCheckoutFocusedElement, setScroll, setStickyHeader } from './viewconf.actions';
 
 export interface ViewconfState {
   breadcrumbData: BreadcrumbItem[];
   stickyHeader: boolean;
   scroll: ScrollInfo;
+  focusedCheckoutElement: CheckoutFocusedElement;
 }
 
 export const initialState: ViewconfState = {
@@ -18,6 +20,7 @@ export const initialState: ViewconfState = {
     position: 0,
     isDown: false,
   },
+  focusedCheckoutElement: {},
 };
 
 export const viewconfReducer = createReducer(
@@ -33,5 +36,13 @@ export const viewconfReducer = createReducer(
   on(setScroll, (state: ViewconfState, action) => ({
     ...state,
     scroll: { position: action.payload.position, isDown: action.payload.isDown },
+  })),
+  on(setCheckoutFocusedElement, (state: ViewconfState, action) => ({
+    ...state,
+    focusedCheckoutElement: {
+      orderId: action.payload.orderId,
+      lineItemIndex: action.payload.lineItemIndex,
+      elementId: action.payload.elementId,
+    },
   }))
 );

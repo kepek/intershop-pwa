@@ -14,3 +14,8 @@ export const setScroll = createAction(
   '[Viewconf Internal] Set Scroll',
   payload<{ position: number; isDown: boolean }>()
 );
+
+export const setCheckoutFocusedElement = createAction(
+  '[Viewconf Internal] Set Checkout Focused Element',
+  payload<{ orderId: string; lineItemIndex: number; elementId: string }>()
+);

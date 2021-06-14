@@ -29,6 +29,7 @@ import {
   deleteBasketShippingAddress,
   deleteBucket,
   deleteEmptyBucket,
+  focusedCheckoutElement,
   getBasketEligiblePaymentMethods,
   getBasketEligibleShippingMethods,
   getBasketError,
@@ -70,6 +71,8 @@ import { getOrdersError, getOrdersLoading, getSelectedOrder } from 'ish-core/sto
 import { getLoggedInUser } from 'ish-core/store/customer/user';
 import { getServerConfigParameter } from 'ish-core/store/general/server-config';
 import { whenTruthy } from 'ish-core/utils/operators';
+import { setCheckoutFocusedElement } from 'ish-core/store/core/viewconf/viewconf.actions';
+import { getFocusedCheckoutElement } from 'ish-core/store/core/viewconf/viewconf.selectors';
 
 // tslint:disable:member-ordering
 @Injectable({ providedIn: 'root' })
@@ -102,6 +105,7 @@ export class CheckoutFacade {
   submittedBasket$ = this.store.pipe(select(getSubmittedBasket));
   calendarExceptions$ = this.store.pipe(select(getCalendarExceptions));
   basketExtensions$ = this.store.pipe(select(getBasketExtensions));
+  getFocusedCheckoutElement$  = this.store.pipe(select(getFocusedCheckoutElement));
   getBucketEmailRecipients$(urn: string) {
     return this.store.pipe(select(getBucketEmailRecipients(urn)));
   }
@@ -287,5 +291,11 @@ export class CheckoutFacade {
 
   trackPurchase(basket: BasketView) {
     this.tracking.trackPurchase(basket);
+  }
+
+  setCheckoutFocusedElement(orderId: string, lineItemIndex: number, elementId: string) {
+    console.log('fasada');
+
+    this.store.dispatch(focusedCheckoutElement({ orderId, lineItemIndex, elementId }));
   }
 }

@@ -30,6 +30,7 @@ import { whenTruthy } from 'ish-core/utils/operators';
 import { CamfilQuickViewModalComponent } from 'ish-shared/components/common/camfil-quick-view-modal/camfil-quick-view-modal.component';
 import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
 import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
+import { CheckoutFocusedElement } from 'ish-core/models/scroll-info copy/checkout-focused-element.interface';
 
 @Component({
   selector: 'camfil-checkout-line-item',
@@ -62,6 +63,7 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
   @Input() orderDeliveryDate: Date;
   @Input() isPartialDelivery: boolean;
   @Input() lineItemIndex: number;
+  @Input() focusedCheckoutElement: CheckoutFocusedElement;
 
   @Input() isConfirmed;
   @Output() handleLoad = new EventEmitter<ProductView>();
@@ -83,6 +85,9 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
   selectItemForm: FormGroup;
   addToCartForm: FormGroup;
   boxLabelForm: FormGroup;
+  focusedCheckoutElement$: Observable<CheckoutFocusedElement>;
+  focusedElement: CheckoutFocusedElement;
+  tabIndex: number = 100;
   /**
     // no edit for measurements on checkout now
     measurementsForm: FormGroup;
@@ -107,6 +112,27 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
 
     this.updateQuantities();
     this.calculateDeliveryDate();
+    this.focusedCheckoutElement$ = this.checkoutFacade.getFocusedCheckoutElement$;
+
+    this.focusedCheckoutElement$
+      .pipe(whenTruthy(), takeUntil(this.destroy$))
+      .subscribe((focusedElement: CheckoutFocusedElement) => {
+        if (focusedElement) {
+          this.focusedElement = focusedElement;
+
+          if (focusedElement.orderId === this.bucketId) {
+            this.tabIndex = 101;
+            if (focusedElement.lineItemIndex === this.lineItemIndex) {
+              this.tabIndex = 102;
+
+            }
+          } else {
+            this.tabIndex = 100;
+          }
+        } else {
+          this.tabIndex = 100;
+        }
+      });
   }
 
   ngOnChanges(s: SimpleChanges) {
@@ -296,5 +322,10 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
   openDeleteModal() {
     this.dialog.open(this.modal.show());
     this.modal.hide = () => this.dialog.closeAll();
+  }
+
+  setFocusedElement(target: HTMLDataElement) {
+    console.log('setFocusedElement data: Order Id ', this.bucketId, 'line item', this.id, 'edited element', target.id);
+    this.checkoutFacade.setCheckoutFocusedElement(this.bucketId, this.lineItemIndex, target.id);
   }
 }

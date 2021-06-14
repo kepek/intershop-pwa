@@ -7,6 +7,8 @@ import { combineLatest, iif, of } from 'rxjs';
 import {
   concatMap,
   concatMapTo,
+  debounceTime,
+  distinctUntilChanged,
   filter,
   map,
   mapTo,
@@ -34,6 +36,7 @@ import {
   deleteBasketAttribute,
   deleteBasketAttributeFail,
   deleteBasketAttributeSuccess,
+  focusedCheckoutElement,
   getWarehouseCalendar,
   getWarehouseCalendarSuccess,
   loadBasket,
@@ -61,6 +64,7 @@ import {
   updateBasketShippingMethod,
 } from './basket.actions';
 import { getCurrentBasket, getCurrentBasketId, getCustomersDeliveryTerms } from './basket.selectors';
+import { setCheckoutFocusedElement } from 'ish-core/store/core/viewconf/viewconf.actions';
 
 @Injectable()
 export class BasketEffects {
@@ -330,4 +334,14 @@ export class BasketEffects {
   private basketContainsAttribute(basket: Basket, attributeName: string): boolean {
     return !!basket?.attributes?.find(attr => attr.name === attributeName);
   }
+
+  setCheckoutFocusedElement$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(focusedCheckoutElement),
+      debounceTime(300),
+      distinctUntilChanged(),
+      mapToPayload(),
+      map(selectData => setCheckoutFocusedElement(selectData))
+    )
+  );
 }

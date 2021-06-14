@@ -39,6 +39,7 @@ import { LineItemUpdate } from 'ish-core/models/line-item-update/line-item-updat
 import { Address } from 'ish-core/models/address/address.model';
 import { AddEmailRecipientModalComponent } from '../add-email-recipient-modal/add-email-recipient-modal.component';
 import { TranslateService } from '@ngx-translate/core';
+import { CheckoutFocusedElement } from 'ish-core/models/scroll-info copy/checkout-focused-element.interface';
 
 interface Order extends Bucket {
   totals: number;
@@ -64,6 +65,8 @@ export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
   @Input() isConfirmed;
   @Input() totalOrders;
   @Input() index;
+  @Input() tabIndex;
+  @Input() focusedCheckoutElement: CheckoutFocusedElement;
 
   @Output() handleProduct = new EventEmitter<ProductView>();
   calculatedOrder;

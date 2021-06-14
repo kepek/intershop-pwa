@@ -24,3 +24,5 @@ export const isStickyHeader = createSelector(
 );
 
 export const getScroll = createSelector(getViewconfState, state => state.scroll);
+
+export const getFocusedCheckoutElement = createSelector(getViewconfState, state => state.focusedCheckoutElement);
