@@ -27,8 +27,13 @@ export class CamfilAHUPageComponent extends CamAhuAbstractComponent implements O
   ) {
     super(router, fb, scroller, ahuFacade, accountFacade);
   }
+
   showComingSoon = true;
-  ngOnInit(): void {
+
+  init() {
+    super.init();
+
+    // tslint:disable-next-line:no-any
     if ((this.platformLocation as any).location.hostname !== 'shop.camfil.com') {
       this.showComingSoon = false;
     }
