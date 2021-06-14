@@ -5,7 +5,7 @@ import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { Bucket } from 'ish-core/models/basket/bucket.model';
 import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
 
-import { CreateOrderModalComponent } from '../../../../extensions/cam-cards/shared/add-to-cart-modal/create-order-modal/create-order-modal.component';
+import { CreateOrderProductModalComponent } from '../../../../extensions/cam-cards/shared/add-product-to-cart-modal/create-order-product-modal/create-order-product-modal.component';
 
 @Component({
   selector: 'camfil-create-order-button',
@@ -41,7 +41,7 @@ export class CreateOrderButtonComponent {
     this.openSuccessModal();
   }
 
-  openModal(modal: CreateOrderModalComponent) {
+  openModal(modal: CreateOrderProductModalComponent) {
     this.dialog.open(modal.show());
     modal.hide = () => this.dialog.closeAll();
   }

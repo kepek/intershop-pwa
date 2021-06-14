@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ThemePalette } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
@@ -10,7 +11,7 @@ import { BasketView } from 'ish-core/models/basket/basket.model';
 import { Product } from 'ish-core/models/product/product.model';
 import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
 
-import { AddToCartModalComponent } from '../../../../../extensions/cam-cards/shared/add-to-cart-modal/add-to-cart-modal.component';
+import { AddProductToCartModalComponent } from '../../../../../extensions/cam-cards/shared/add-product-to-cart-modal/add-product-to-cart-modal.component';
 
 @Component({
   selector: 'camfil-product-add-to-basket-modal',
@@ -34,6 +35,8 @@ export class CamfilProductAddToBasketModalComponent implements OnInit, OnDestroy
    */
   @Input() class?: string;
 
+  @Input() color?: ThemePalette = 'primary';
+
   @Input() colorIcon?: string;
 
   /**
@@ -45,15 +48,16 @@ export class CamfilProductAddToBasketModalComponent implements OnInit, OnDestroy
 
   @Input() quantity: number;
 
-  private destroy$ = new Subject();
+  // tslint:disable-next-line:private-destroy-field
+  protected destroy$ = new Subject();
 
   @ViewChild(CamfilSmallCtaModalComponent) errorModal: CamfilSmallCtaModalComponent;
 
   constructor(
     public dialog: MatDialog,
-    private accountFacade: AccountFacade,
-    private router: Router,
-    private checkoutFacade: CheckoutFacade
+    protected accountFacade: AccountFacade,
+    protected router: Router,
+    protected checkoutFacade: CheckoutFacade
   ) {}
 
   /**
@@ -65,7 +69,7 @@ export class CamfilProductAddToBasketModalComponent implements OnInit, OnDestroy
     this.basket$ = this.checkoutFacade.basket$;
   }
 
-  openModal(modal: AddToCartModalComponent) {
+  openModal(modal: AddProductToCartModalComponent) {
     this.dialog.open(modal.show());
     modal.hide = () => this.dialog.closeAll();
   }
@@ -74,7 +78,7 @@ export class CamfilProductAddToBasketModalComponent implements OnInit, OnDestroy
     this.router.navigate(['/login']);
   }
 
-  openModalIfLoggedIn(modal: AddToCartModalComponent) {
+  openModalIfLoggedIn(modal: AddProductToCartModalComponent) {
     this.accountFacade.isLoggedIn$.pipe(take(1), takeUntil(this.destroy$)).subscribe(isLoggedIn => {
       if (isLoggedIn) {
         this.quantity ? this.openModal(modal) : this.openErrorModal();

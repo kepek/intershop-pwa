@@ -9,7 +9,7 @@ import { BasketExtensions } from 'ish-core/models/basket/basket.interface';
 import { Bucket, EditBucket } from 'ish-core/models/basket/bucket.model';
 import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
 
-import { OrderFormComponent } from '../../../../extensions/cam-cards/shared/add-to-cart-modal/create-order-modal/order-form/order-form.component';
+import { OrderFormComponent } from '../../../../extensions/cam-cards/shared/add-product-to-cart-modal/create-order-product-modal/order-form/order-form.component';
 
 @Component({
   selector: 'camfil-edit-order-modal',

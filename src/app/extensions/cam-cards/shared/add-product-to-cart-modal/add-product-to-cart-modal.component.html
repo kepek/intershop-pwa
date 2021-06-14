@@ -1,0 +1,54 @@
+<ng-template #modal>
+  <ng-container *ngIf="!(showSuccess && submitted); else success">
+    <camfil-cam-card-modal
+      [title]="'camfil.modal.addToCart.title' | translate"
+      svgIcon="cart"
+      [subtitle]="product.name"
+      [detailsTemplate]="detailsTemplate"
+      [mainContentTemplate]="mainContentTemplate"
+      [primaryButtonTitle]="'camfil.modal.addToCart.button.add_to_existing_order' | translate"
+      (primaryButtonClicked)="addToOrder()"
+      [secondaryButtonTitle]="'camfil.modal.addToCart.button.create_new_order' | translate"
+      (secondaryButtonClicked)="openCreateOrderModal(createModal)"
+      [loading]="submitted && !showSuccess"
+      (hiddenClicked)="hide()"
+      [primaryDisabled]="!selectedOrderId"
+      [secondaryDisabled]="disableIfNoMeasurements()"
+    >
+    </camfil-cam-card-modal>
+  </ng-container>
+</ng-template>
+
+<camfil-create-order-product-modal
+  [product]="product"
+  #createModal
+  [parentForm]="quantityForm"
+></camfil-create-order-product-modal>
+
+<ng-template #detailsTemplate>
+  <camfil-article-details [product]="product" [quantityForm]="quantityForm"></camfil-article-details>
+</ng-template>
+
+<ng-template #mainContentTemplate>
+  <div mat-dialog-content class="add-to-cart-modal__content">
+    <div class="add-to-cart-modal__content--title">{{ 'camfil.modal.addToCart.order-list.title' | translate }}</div>
+
+    <div *ngFor="let option of buckets; let i = index">
+      <camfil-cam-card-modal-details
+        [index]="i + 1"
+        [nextDelivery]="option.deliveryDate"
+        [orderMark]="option.orderMark"
+        [invoiceMark]="option.invoiceLabel"
+        [deliveryAddress]="option.shipToAddressFull"
+        [customerName]="option.customer?.companyName"
+        (click)="onOrderClicked(option.id)"
+        [isClicked]="selectedOrderId === option.id"
+      >
+      </camfil-cam-card-modal-details>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #success>
+  <camfil-create-order-product-success (hideEmitter)="hide()" [product]="product"></camfil-create-order-product-success>
+</ng-template>

@@ -1,0 +1,64 @@
+<ng-template #modal>
+  <ng-container *ngIf="!(showSuccess && submitted); else success">
+    <camfil-cam-card-modal
+      svgIcon="cart"
+      [title]="'camfil.modal.addToCart.title' | translate"
+      [detailsTemplate]="detailsTemplate"
+      [mainContentTemplate]="mainContentTemplate"
+      [primaryButtonTitle]="'camfil.modal.addToCart.button.add_to_existing_order' | translate"
+      (primaryButtonClicked)="addToOrder()"
+      [secondaryButtonTitle]="'camfil.modal.addToCart.button.create_new_order' | translate"
+      (secondaryButtonClicked)="openCreateOrderModal(createModal)"
+      [loading]="submitted && !showSuccess"
+      (hiddenClicked)="hide()"
+      [primaryDisabled]="!selectedOrderId"
+      [secondaryDisabled]="disableIfNoMeasurements()"
+      class="kepek"
+    >
+    </camfil-cam-card-modal>
+  </ng-container>
+</ng-template>
+
+<camfil-create-order-products-modal
+  #createModal
+  [products]="products"
+  [parentForm]="quantityForm"
+></camfil-create-order-products-modal>
+
+<ng-template #detailsTemplate>
+  <ng-container *ngFor="let item of items; index as i">
+    <camfil-article-details
+      [showProductName]="true"
+      [product]="item.product"
+      [quantityForm]="item.quantityForm"
+      [class.border-bottom]="i + 1 !== items?.length"
+    ></camfil-article-details>
+  </ng-container>
+</ng-template>
+
+<ng-template #mainContentTemplate>
+  <div mat-dialog-content class="add-to-cart-modal__content">
+    <div class="add-to-cart-modal__content--title">
+      {{ 'camfil.modal.addToCart.order-list.title' | translate }}
+    </div>
+    <div *ngFor="let option of buckets; let i = index">
+      <camfil-cam-card-modal-details
+        [nextDelivery]="option.deliveryDate"
+        [orderMark]="option.orderMark"
+        [invoiceMark]="option.invoiceLabel"
+        [deliveryAddress]="option.shipToAddressFull"
+        [customerName]="option.customer?.companyName"
+        (click)="onOrderClicked(option.id)"
+        [isClicked]="selectedOrderId === option.id"
+      >
+      </camfil-cam-card-modal-details>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #success>
+  <camfil-create-order-products-success
+    (hideEmitter)="hide()"
+    [products]="products"
+  ></camfil-create-order-products-success>
+</ng-template>

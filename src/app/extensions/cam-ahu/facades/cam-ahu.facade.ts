@@ -164,15 +164,31 @@ export class CamAhuFacade {
   );
   selectedAhuUnitBasketProducts$ = this.selectedAhuUnitBasketItems$.pipe(
     switchMap(items => {
+      const skus = [...new Set(flatten(items.map(item => new Array(item.quantity).fill(item.sku))))];
+
+      return this.store.pipe(
+        select(getProducts, { skus }),
+        map(products => products.filter(product => !product.failed)),
+        map(products =>
+          items
+            .map(({ quantity, sku }) => ({
+              quantity,
+              product: products.find(p => p.sku === sku),
+            }))
+            .filter(item => !!item.product?.sku)
+        )
+      );
+    })
+  );
+  selectedAhuUnitBasketSummary$ = this.selectedAhuUnitBasketItems$.pipe(
+    switchMap(items => {
       const skus = flatten(items.map(item => new Array(item.quantity).fill(item.sku)));
 
       return this.store.pipe(
         select(getProducts, { skus }),
         map(products => products.filter(product => !product.failed))
       );
-    })
-  );
-  selectedAhuUnitBasketSummary$ = this.selectedAhuUnitBasketProducts$.pipe(
+    }),
     withLatestFrom(this.store.pipe(select(getCurrentLocale))),
     map(([products, currentLocale]) => ({
       total: UnitHelper.totalPrice(products, { currency: currentLocale?.currency, value: 0 }),

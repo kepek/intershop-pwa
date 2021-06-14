@@ -71,19 +71,20 @@
         <div class="col-lg-6 col-12 d-flex justify-content-center align-items-center">
           <camfil-lazy-product-add-to-cam-card
             class="btn-link cart-big-round-btn secondary-button"
+            displayType="round-btn"
+            hasIcon="true"
             [product]="product"
             [quantity]="quantity"
-            displayType="round-btn"
-            [hasIcon]="true"
           ></camfil-lazy-product-add-to-cam-card>
         </div>
         <div class="col-lg-6 col-12 d-flex justify-content-center align-items-center">
           <camfil-product-add-to-basket
-            [product]="product"
-            [translationKey]="isRetailSet(product) ? 'product.add_to_cart.retailset.link' : 'product.add_to_cart.link'"
-            (productToBasket)="addToBasket()"
+            class="btn-link"
             displayType="button"
             hasIcon="true"
+            [product]="product"
+            [translationKey]="isRetailSet(product) ? 'product.add_to_cart.retail_set.link' : 'product.add_to_cart.link'"
+            (productToBasket)="addToBasket()"
             [quantity]="quantity"
           ></camfil-product-add-to-basket>
         </div>

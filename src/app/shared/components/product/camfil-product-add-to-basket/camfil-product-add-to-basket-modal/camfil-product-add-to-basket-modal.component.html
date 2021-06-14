@@ -1,37 +1,58 @@
-<div *ngIf="product?.inStock && product?.availability" class="add-to-cart">
-  <button
-    type="submit"
-    name="addProduct"
-    class="btn"
-    [ngClass]="class"
-    [class.btn-primary]="!displayIcon"
-    [class.mat-flat-button]="displayType === 'button' && !hasIcon"
-    [class.mat-raised-button]="hasIcon"
-    [disabled]="disabled || (displaySpinner$ | async)"
-    [attr.title]="translationKey | translate"
-    data-testing-id="addToCartButton"
-    (click)="openModalIfLoggedIn(addToCartModal)"
-  >
-    <ng-container *ngIf="!(displaySpinner$ | async); else spinning">
-      <!-- Add to Cart button -->
-      <ng-container *ngIf="displayIcon; else defaultButton">
-        <mat-icon svgIcon="cart" class="mat-icon notranslate color-light"></mat-icon>
-      </ng-container>
-
-      <ng-template #defaultButton>
-        <mat-icon svgIcon="cart" *ngIf="hasIcon" class="mat-icon notranslate color-light"></mat-icon
-        ><span class="button-text">{{ translationKey | translate }}</span></ng-template
-      >
+<ng-template #buttonInner>
+  <ng-container *ngIf="!(displaySpinner$ | async); else spinning">
+    <!-- Add to Cart button -->
+    <ng-container *ngIf="displayIcon; else defaultButton">
+      <mat-icon svgIcon="cart" class="mat-icon notranslate color-light"></mat-icon>
     </ng-container>
-    <!-- button with spinning animation after Add to Cart -->
-    <ng-template #spinning>
-      <fa-icon [icon]="['fas', 'spinner']" [spin]="true" [ngClass]="{ 'pr-3': !displayIcon }"></fa-icon>
-      <span *ngIf="!displayIcon">{{ 'common.button.spinning.label' | translate }}</span>
-    </ng-template>
-  </button>
+
+    <ng-template #defaultButton>
+      <mat-icon svgIcon="cart" *ngIf="hasIcon" class="mat-icon notranslate color-light"></mat-icon
+      ><span class="button-text">{{ translationKey | translate }}</span></ng-template
+    >
+  </ng-container>
+  <!-- button with spinning animation after Add to Cart -->
+  <ng-template #spinning>
+    <fa-icon [icon]="['fas', 'spinner']" [spin]="true" [ngClass]="{ 'pr-3': !displayIcon }"></fa-icon>
+    <span *ngIf="!displayIcon">{{ 'common.button.spinning.label' | translate }}</span>
+  </ng-template>
+</ng-template>
+
+<div *ngIf="product?.inStock && product?.availability" class="add-to-cart">
+  <ng-container *ngIf="hasIcon">
+    <button
+      mat-raised-button
+      data-testing-id="addToCartButton"
+      class="btn btn-link"
+      [color]="color"
+      [ngClass]="class"
+      [disabled]="disabled || (displaySpinner$ | async)"
+      [attr.title]="translationKey | translate"
+      (click)="openModalIfLoggedIn(addProductToCartModal)"
+    >
+      <ng-container *ngTemplateOutlet="buttonInner"></ng-container>
+    </button>
+  </ng-container>
+  <ng-container *ngIf="displayType === 'button' && !hasIcon">
+    <button
+      mat-flat-button
+      data-testing-id="addToCartButton"
+      class="btn btn-link"
+      [color]="color"
+      [ngClass]="class"
+      [disabled]="disabled || (displaySpinner$ | async)"
+      [attr.title]="translationKey | translate"
+      (click)="openModalIfLoggedIn(addProductToCartModal)"
+    >
+      <ng-container *ngTemplateOutlet="buttonInner"></ng-container>
+    </button>
+  </ng-container>
 </div>
 
-<camfil-add-to-cart-modal #addToCartModal [product]="product" [quantity]="quantity"> </camfil-add-to-cart-modal>
+<camfil-add-product-to-cart-modal
+  #addProductToCartModal
+  [product]="product"
+  [quantity]="quantity"
+></camfil-add-product-to-cart-modal>
 
 <camfil-small-cta-modal
   actionTitle="{{ 'camfil.account.cam_card.add_to_cart.error.quantity.header' | translate }}"

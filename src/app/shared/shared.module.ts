@@ -59,12 +59,12 @@ import { TactonExportsModule } from '../extensions/tacton/exports/tacton-exports
 import { WishlistsExportsModule } from '../extensions/wishlists/exports/wishlists-exports.module';
 
 import { ModalAddNewProductComponent } from '../extensions/cam-cards/pages/account-cam-card-detail/modal-add-new-product/modal-add-new-product.component';
-import { AddToCartModalComponent } from '../extensions/cam-cards/shared/add-to-cart-modal/add-to-cart-modal.component';
-import { CamCardModalDetailsComponent } from '../extensions/cam-cards/shared/add-to-cart-modal/cam-card-modal-details/cam-card-modal-details.component';
-import { CreateOrderModalComponent } from '../extensions/cam-cards/shared/add-to-cart-modal/create-order-modal/create-order-modal.component';
-import { OrderFormComponent } from '../extensions/cam-cards/shared/add-to-cart-modal/create-order-modal/order-form/order-form.component';
-import { CreateOrderSuccessComponent } from '../extensions/cam-cards/shared/add-to-cart-modal/create-order-success/create-order-success.component';
-import { ArticleDetailsComponent } from '../extensions/cam-cards/shared/select-cam-card-modal/article-details/article-details.component';
+import { AddProductToCartModalComponent } from '../extensions/cam-cards/shared/add-product-to-cart-modal/add-product-to-cart-modal.component';
+import { CamCardModalDetailsComponent } from '../extensions/cam-cards/shared/add-product-to-cart-modal/cam-card-modal-details/cam-card-modal-details.component';
+import { CreateOrderProductModalComponent } from '../extensions/cam-cards/shared/add-product-to-cart-modal/create-order-product-modal/create-order-product-modal.component';
+import { OrderFormComponent } from '../extensions/cam-cards/shared/add-product-to-cart-modal/create-order-product-modal/order-form/order-form.component';
+import { CreateOrderProductSuccessComponent } from '../extensions/cam-cards/shared/add-product-to-cart-modal/create-order-product-success/create-order-product-success.component';
+import { ArticleDetailsComponent } from '../extensions/cam-cards/shared/add-product-to-cam-card-modal/article-details/article-details.component';
 
 import { AddressFormsSharedModule } from './address-forms/address-forms.module';
 import { CMSModule } from './cms/cms.module';
@@ -214,6 +214,11 @@ import { CamfilMyPageHeaderComponent } from 'ish-shared/components/camfil-my-pag
 import { ZipCodeComponent } from './components/zip-code/zip-code.component';
 import { DateAdapter } from '@angular/material/core';
 import { CamfilDateAdapter } from '../pages/camfil-checkout/camfil-checkout-list/camfil-date-adapter';
+import { CamfilProductsAddToBasketComponent } from 'ish-shared/components/product/camfil-products-add-to-basket/camfil-products-add-to-basket.component';
+import { CamfilProductsAddToBasketModalComponent } from 'ish-shared/components/product/camfil-products-add-to-basket/camfil-products-add-to-basket-modal/camfil-products-add-to-basket-modal.component';
+import { AddProductsToCartModalComponent } from '../extensions/cam-cards/shared/add-products-to-cart-modal/add-products-to-cart-modal.component';
+import { CreateOrderProductsSuccessComponent } from '../extensions/cam-cards/shared/add-products-to-cart-modal/create-order-products-success/create-order-products-success.component';
+import { CreateOrderProductsModalComponent } from '../extensions/cam-cards/shared/add-product-to-cart-modal/create-order-products-modal/create-order-products-modal.component';
 
 const importExportModules = [
   AddressFormsSharedModule,
@@ -258,7 +263,8 @@ const importExportModules = [
 ];
 
 const declaredComponents = [
-  AddToCartModalComponent,
+  AddProductToCartModalComponent,
+  AddProductsToCartModalComponent,
   ArticleDetailsComponent,
   Auth0SigninComponent,
   BasketCostSummaryComponent,
@@ -304,10 +310,13 @@ const declaredComponents = [
   CamfilProductRatingStarComponent,
   CamfilProductTechnicalDocumentsComponent,
   CamfilProductTitleComponent,
+  CamfilProductsAddToBasketModalComponent,
   CamfilSmallCtaModalComponent,
   ContentSlotComponent,
-  CreateOrderModalComponent,
-  CreateOrderSuccessComponent,
+  CreateOrderProductModalComponent,
+  CreateOrderProductSuccessComponent,
+  CreateOrderProductsModalComponent,
+  CreateOrderProductsSuccessComponent,
   FilterCheckboxComponent,
   FilterCollapsableComponent,
   FilterDropdownComponent,
@@ -348,7 +357,8 @@ const declaredComponents = [
 const exportedComponents = [
   AccordionComponent,
   AccordionItemComponent,
-  AddToCartModalComponent,
+  AddProductToCartModalComponent,
+  AddProductsToCartModalComponent,
   AddressComponent,
   ArticleDetailsComponent,
   BasketAddressSummaryComponent,
@@ -401,13 +411,16 @@ const exportedComponents = [
   CamfilProductTechnicalDocumentsComponent,
   CamfilProductTitleComponent,
   CamfilProductVariationSelectComponent,
+  CamfilProductsAddToBasketComponent,
   CamfilQuickViewModalComponent,
   CamfilSmallCtaModalComponent,
   ContentIncludeComponent,
   ContentPageletComponent,
   ContentViewcontextComponent,
-  CreateOrderModalComponent,
-  CreateOrderSuccessComponent,
+  CreateOrderProductModalComponent,
+  CreateOrderProductSuccessComponent,
+  CreateOrderProductsModalComponent,
+  CreateOrderProductsSuccessComponent,
   ErrorMessageComponent,
   FilterNavigationComponent,
   IdentityProviderLoginComponent,

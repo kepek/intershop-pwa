@@ -7,6 +7,7 @@ import { CamPdfService } from '../../cam-pdf/services/cam-pdf/cam-pdf.service';
 
 import { LazyBasketCreateCamCardComponent } from './lazy-basket-create-cam-card/lazy-basket-create-cam-card.component';
 import { LazyProductAddToCamCardComponent } from './lazy-product-add-to-cam-card/lazy-product-add-to-cam-card.component';
+import { LazyProductsAddToCamCardComponent } from './lazy-products-add-to-cam-card/lazy-products-add-to-cam-card.component';
 
 @NgModule({
   imports: [FeatureToggleModule],
@@ -18,7 +19,7 @@ import { LazyProductAddToCamCardComponent } from './lazy-product-add-to-cam-card
     },
     CamPdfService,
   ],
-  declarations: [LazyBasketCreateCamCardComponent, LazyProductAddToCamCardComponent],
-  exports: [LazyBasketCreateCamCardComponent, LazyProductAddToCamCardComponent],
+  declarations: [LazyBasketCreateCamCardComponent, LazyProductAddToCamCardComponent, LazyProductsAddToCamCardComponent],
+  exports: [LazyBasketCreateCamCardComponent, LazyProductAddToCamCardComponent, LazyProductsAddToCamCardComponent],
 })
 export class CamCardsExportsModule {}

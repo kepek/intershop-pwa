@@ -100,10 +100,10 @@
     </ng-container>
   </ng-template>
 
-  <camfil-select-cam-card-modal
+  <camfil-add-product-to-cam-card-modal
     #moveDialog
     addMoveProduct="move"
     [product]="product"
     (submitEmitter)="moveItemToOtherCamCard(camCardItemData?.id, product.sku, $event)"
-  ></camfil-select-cam-card-modal>
+  ></camfil-add-product-to-cam-card-modal>
 </ng-container>

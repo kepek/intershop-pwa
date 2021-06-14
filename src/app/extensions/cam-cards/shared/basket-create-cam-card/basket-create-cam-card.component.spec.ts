@@ -7,8 +7,8 @@ import { instance, mock } from 'ts-mockito';
 import { AccountFacade } from 'ish-core/facades/account.facade';
 
 import { CamCardsFacade } from '../../facades/cam-cards.facade';
+import { AddProductToCamCardModalComponent } from '../add-product-to-cam-card-modal/add-product-to-cam-card-modal.component';
 import { CamCardPreferencesDialogComponent } from '../cam-card-preferences-dialog/cam-card-preferences-dialog.component';
-import { SelectCamCardModalComponent } from '../select-cam-card-modal/select-cam-card-modal.component';
 
 import { BasketCreateCamCardComponent } from './basket-create-cam-card.component';
 
@@ -21,8 +21,8 @@ describe('Basket Create Cam Card Component', () => {
     await TestBed.configureTestingModule({
       declarations: [
         BasketCreateCamCardComponent,
+        MockComponent(AddProductToCamCardModalComponent),
         MockComponent(CamCardPreferencesDialogComponent),
-        MockComponent(SelectCamCardModalComponent),
       ],
       imports: [RouterTestingModule, TranslateModule.forRoot()],
       providers: [

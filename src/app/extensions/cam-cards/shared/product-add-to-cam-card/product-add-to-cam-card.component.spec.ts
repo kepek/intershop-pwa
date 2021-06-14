@@ -12,7 +12,7 @@ import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfi
 
 import { CamCardsFacade } from '../../facades/cam-cards.facade';
 import { CamCard } from '../../models/cam-card/cam-card.model';
-import { SelectCamCardModalComponent } from '../select-cam-card-modal/select-cam-card-modal.component';
+import { AddProductToCamCardModalComponent } from '../add-product-to-cam-card-modal/add-product-to-cam-card-modal.component';
 
 import { ProductAddToCamCardComponent } from './product-add-to-cam-card.component';
 
@@ -48,8 +48,8 @@ describe('Product Add To Cam Card Component', () => {
     await TestBed.configureTestingModule({
       declarations: [
         CamfilSmallCtaModalComponent,
+        MockComponent(AddProductToCamCardModalComponent),
         MockComponent(FaIconComponent),
-        MockComponent(SelectCamCardModalComponent),
         ProductAddToCamCardComponent,
       ],
       imports: [RouterTestingModule, TranslateModule.forRoot()],
@@ -66,6 +66,7 @@ describe('Product Add To Cam Card Component', () => {
     element = fixture.nativeElement;
     when(camCardFacadeMock.camCard$).thenReturn(of(camCardDetails));
     when(camCardFacadeMock.camCardsLoading$).thenReturn(of(false));
+    when(accountFacadeMock.isLoggedIn$).thenReturn(of(false));
     component.product = { name: 'Test Product', sku: 'test sku' } as Product;
     component.quantity = 1;
   });

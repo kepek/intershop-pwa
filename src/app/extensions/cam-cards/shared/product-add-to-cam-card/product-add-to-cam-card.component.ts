@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { first, take, takeUntil } from 'rxjs/operators';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
@@ -11,8 +11,7 @@ import { whenFalsy } from 'ish-core/utils/operators';
 import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
 
 import { CamCardsFacade } from '../../facades/cam-cards.facade';
-import { CamCard } from '../../models/cam-card/cam-card.model';
-import { SelectCamCardModalComponent } from '../select-cam-card-modal/select-cam-card-modal.component';
+import { AddProductToCamCardModalComponent } from '../add-product-to-cam-card-modal/add-product-to-cam-card-modal.component';
 
 @Component({
   selector: 'camfil-product-add-to-cam-card',
@@ -36,9 +35,12 @@ export class ProductAddToCamCardComponent implements OnInit, OnDestroy {
   @Input() displayType?: 'icon' | 'link' | 'animated' | 'round-btn' = 'link';
   @Input() class?: string;
   @Input() hasIcon = false;
-  private destroy$ = new Subject();
+  @Input() disabled = false;
+  @Input() translationKey = 'camfil.account.cam_card.add_to_template.button.add_to_template.label';
 
-  camCards$: Observable<CamCard[]>;
+  buttonTranslationKey = 'camfil.account.cam_card.add_to_template.button.add_to_template.label';
+
+  private destroy$ = new Subject();
 
   @ViewChild(CamfilSmallCtaModalComponent) errorModal: CamfilSmallCtaModalComponent;
 
@@ -49,18 +51,30 @@ export class ProductAddToCamCardComponent implements OnInit, OnDestroy {
     public dialog: MatDialog
   ) {}
 
-  ngOnInit() {
+  protected init() {
     this.camCardsFacade.camCardsLoading$.pipe(whenFalsy(), take(1)).subscribe(() => {
       this.camCardsFacade.camCard$
         .pipe(first())
         .subscribe(camCards => (!camCards?.length ? this.camCardsFacade.loadCamCards() : ''));
     });
+
+    this.accountFacade.isLoggedIn$.pipe(takeUntil(this.destroy$)).subscribe(isLoggedIn => {
+      if (!isLoggedIn) {
+        this.buttonTranslationKey = 'camfil.product.add_to_camcard.not_logged.label';
+      } else {
+        this.buttonTranslationKey = this.translationKey;
+      }
+    });
+  }
+
+  ngOnInit() {
+    this.init();
   }
 
   /**
    * if the user is not logged in display login dialog, else open select cam cards dialog
    */
-  openModal(modal: SelectCamCardModalComponent) {
+  openModal(modal: AddProductToCamCardModalComponent) {
     this.accountFacade.isLoggedIn$.pipe(take(1), takeUntil(this.destroy$)).subscribe(isLoggedIn => {
       if (isLoggedIn) {
         this.quantity ? this.openAddModal(modal) : this.openErrorModal();
@@ -72,7 +86,7 @@ export class ProductAddToCamCardComponent implements OnInit, OnDestroy {
     });
   }
 
-  openAddModal(modal: SelectCamCardModalComponent) {
+  openAddModal(modal: AddProductToCamCardModalComponent) {
     modal.quantity = this.quantity;
     this.dialog.open(modal.show());
     modal.hide = () => this.dialog.closeAll();

@@ -21,12 +21,12 @@ import { ProductAddToBasketComponent } from 'ish-shared/components/product/produ
 import { ZipCodeComponent } from 'ish-shared/components/zip-code/zip-code.component';
 import { CamfilCounterComponent } from 'ish-shared/forms/components/camfil-counter/camfil-counter.component';
 
-import { AddToCartModalComponent } from '../../../../extensions/cam-cards/shared/add-to-cart-modal/add-to-cart-modal.component';
-import { CamCardModalDetailsComponent } from '../../../../extensions/cam-cards/shared/add-to-cart-modal/cam-card-modal-details/cam-card-modal-details.component';
-import { CreateOrderModalComponent } from '../../../../extensions/cam-cards/shared/add-to-cart-modal/create-order-modal/create-order-modal.component';
-import { OrderFormComponent } from '../../../../extensions/cam-cards/shared/add-to-cart-modal/create-order-modal/order-form/order-form.component';
-import { CreateOrderSuccessComponent } from '../../../../extensions/cam-cards/shared/add-to-cart-modal/create-order-success/create-order-success.component';
-import { ArticleDetailsComponent } from '../../../../extensions/cam-cards/shared/select-cam-card-modal/article-details/article-details.component';
+import { ArticleDetailsComponent } from '../../../../extensions/cam-cards/shared/add-product-to-cam-card-modal/article-details/article-details.component';
+import { AddProductToCartModalComponent } from '../../../../extensions/cam-cards/shared/add-product-to-cart-modal/add-product-to-cart-modal.component';
+import { CamCardModalDetailsComponent } from '../../../../extensions/cam-cards/shared/add-product-to-cart-modal/cam-card-modal-details/cam-card-modal-details.component';
+import { CreateOrderProductModalComponent } from '../../../../extensions/cam-cards/shared/add-product-to-cart-modal/create-order-product-modal/create-order-product-modal.component';
+import { OrderFormComponent } from '../../../../extensions/cam-cards/shared/add-product-to-cart-modal/create-order-product-modal/order-form/order-form.component';
+import { CreateOrderProductSuccessComponent } from '../../../../extensions/cam-cards/shared/add-product-to-cart-modal/create-order-product-success/create-order-product-success.component';
 
 import { CamfilProductAddToBasketComponent } from './camfil-product-add-to-basket.component';
 
@@ -46,7 +46,7 @@ describe('Camfil Product Add To Basket Component', () => {
     await TestBed.configureTestingModule({
       imports: [FeatureToggleModule.forTesting(), ToastrModule.forRoot(), TranslateModule.forRoot()],
       declarations: [
-        AddToCartModalComponent,
+        AddProductToCartModalComponent,
         ArticleDetailsComponent,
         CamCardModalDetailsComponent,
         CamfilCamCardModalComponent,
@@ -56,8 +56,8 @@ describe('Camfil Product Add To Basket Component', () => {
         CamfilProductAddToBasketModalComponent,
         CamfilProductQuantityComponent,
         CamfilSmallCtaModalComponent,
-        CreateOrderModalComponent,
-        CreateOrderSuccessComponent,
+        CreateOrderProductModalComponent,
+        CreateOrderProductSuccessComponent,
         MockComponent(FaIconComponent),
         MockComponent(LoadingComponent),
         MockComponent(ZipCodeComponent),
