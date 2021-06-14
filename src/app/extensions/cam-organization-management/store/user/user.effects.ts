@@ -204,7 +204,7 @@ export class UserEffects {
     this.actions$.pipe(
       ofType(createCustomerUser),
       mapToPayload(),
-      concatMap(({ customer, user, contacts, roles }) =>
+      mergeMap(({ customer, user, contacts, roles }) =>
         this.organizationService.createCustomerUser(customer, user, contacts, roles).pipe(
           tap(createdUser => {
             const customerId = contacts[0].customer?.parentCustomer?.id || contacts[0].customer.id;
