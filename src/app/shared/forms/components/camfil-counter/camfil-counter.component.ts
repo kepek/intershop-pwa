@@ -3,8 +3,10 @@ import { FormControl } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable, ReplaySubject, Subject } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
-import { FormElementComponent } from 'ish-shared/forms/components/form-element/form-element.component';
+
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
+import { FormElementComponent } from 'ish-shared/forms/components/form-element/form-element.component';
+
 @Component({
   selector: 'camfil-counter',
   templateUrl: './camfil-counter.component.html',
@@ -51,7 +53,7 @@ export class CamfilCounterComponent extends FormElementComponent implements OnIn
 
   ngOnInit() {
     super.init();
-      (this.cannotDecrease$ = this.value$.pipe(map(value => this.min !== undefined && value <= this.min)));
+    this.cannotDecrease$ = this.value$.pipe(map(value => this.min !== undefined && value <= this.min));
     this.cannotIncrease$ = this.value$.pipe(map(value => this.max !== undefined && value >= this.max));
 
     this.formControl.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(this.value$);
@@ -72,6 +74,4 @@ export class CamfilCounterComponent extends FormElementComponent implements OnIn
   setFocusedElement(target: HTMLDataElement) {
     this.checkoutFacade.setCheckoutFocusedElement(target.id);
   }
-
-
 }

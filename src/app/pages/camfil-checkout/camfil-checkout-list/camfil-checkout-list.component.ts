@@ -163,7 +163,7 @@ export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
 
     if (this.focusedElementId) {
       setTimeout(() => {
-        let element = document.querySelector(`#${this.focusedElementId}`) as HTMLElement;
+        const element = document.querySelector(`#${this.focusedElementId}`) as HTMLElement;
         element?.focus();
       }, 300);
     }

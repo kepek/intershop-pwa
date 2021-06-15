@@ -12,6 +12,7 @@ import { LineItemUpdate } from 'ish-core/models/line-item-update/line-item-updat
 import { LineItem } from 'ish-core/models/line-item/line-item.model';
 import { PaymentInstrument } from 'ish-core/models/payment-instrument/payment-instrument.model';
 import { selectRouteData } from 'ish-core/store/core/router';
+import { getFocusedCheckoutElement } from 'ish-core/store/core/viewconf/viewconf.selectors';
 import { getAllAddresses } from 'ish-core/store/customer/addresses';
 import {
   addBasketItemAttributes,
@@ -71,7 +72,6 @@ import { getOrdersError, getOrdersLoading, getSelectedOrder } from 'ish-core/sto
 import { getLoggedInUser } from 'ish-core/store/customer/user';
 import { getServerConfigParameter } from 'ish-core/store/general/server-config';
 import { whenTruthy } from 'ish-core/utils/operators';
-import { getFocusedCheckoutElement } from 'ish-core/store/core/viewconf/viewconf.selectors';
 
 // tslint:disable:member-ordering
 @Injectable({ providedIn: 'root' })
