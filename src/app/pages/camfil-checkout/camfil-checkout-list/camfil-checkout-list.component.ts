@@ -65,8 +65,6 @@ export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
   @Input() isConfirmed;
   @Input() totalOrders;
   @Input() index;
-  @Input() tabIndex;
-  @Input() focusedCheckoutElement: CheckoutFocusedElement;
 
   @Output() handleProduct = new EventEmitter<ProductView>();
   calculatedOrder;
@@ -91,6 +89,9 @@ export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
   deliveryDateValue: string;
   basketLoading$: Observable<boolean>;
   ordersLoading$: Observable<boolean>;
+  focusedCheckoutElement$: Observable<CheckoutFocusedElement>;
+  focusedElement: CheckoutFocusedElement;
+  focusedElementId: string;
   @ViewChild(CamfilSmallCtaModalComponent) modal: CamfilSmallCtaModalComponent;
 
   private destroy$ = new Subject<void>();
@@ -141,6 +142,15 @@ export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
       });
     });
 
+    this.focusedCheckoutElement$ = this.checkoutFacade.getFocusedCheckoutElement$;
+
+    this.focusedCheckoutElement$.pipe(takeUntil(this.destroy$)).subscribe((focusedElement: CheckoutFocusedElement) => {
+      if (focusedElement) {
+        this.focusedElement = focusedElement;
+        this.focusedElementId = focusedElement.elementId;
+      }
+    });
+
     if (this.order) {
       this.checkoutFacade.basketInvoiceAddress$
         .pipe(whenTruthy(), takeUntil(this.destroy$))
@@ -149,6 +159,13 @@ export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
       this.checkoutFacade.getCustomersDeliveryTerms$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(terms => {
         this.deliveryTerm = terms[this.order?.customer?.id];
       });
+    }
+
+    if (this.focusedElementId) {
+      setTimeout(() => {
+        let element = document.querySelector(`#${this.focusedElementId}`) as HTMLElement;
+        element?.focus();
+      }, 300);
     }
   }
 
@@ -185,6 +202,10 @@ export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
 
       this.shoppingFacade.updateBucket(basket, deliveryAddressId, updated);
     }
+  }
+
+  setFocusedElement(target: HTMLDataElement) {
+    this.checkoutFacade.setCheckoutFocusedElement(target.id);
   }
 
   handleProductLoad(product) {

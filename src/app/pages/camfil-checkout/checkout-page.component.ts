@@ -10,7 +10,7 @@ import { BasketView } from 'ish-core/models/basket/basket.model';
 import { Bucket } from 'ish-core/models/basket/bucket.model';
 import { createOrderSuccess } from 'ish-core/store/customer/orders/orders.actions';
 import { whenTruthy } from 'ish-core/utils/operators';
-import { CheckoutFocusedElement } from 'ish-core/models/checkout-focused-element/checkout-focused-element.interface';
+import { CheckoutFocusedElement } from 'ish-core/models/scroll-info copy/checkout-focused-element.interface';
 
 @Component({
   templateUrl: './checkout-page.component.html',
@@ -98,5 +98,6 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
+    this.checkoutFacade.setCheckoutFocusedElement("");
   }
 }

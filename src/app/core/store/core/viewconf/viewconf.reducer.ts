@@ -1,7 +1,7 @@
 import { createReducer, on } from '@ngrx/store';
 
 import { BreadcrumbItem } from 'ish-core/models/breadcrumb-item/breadcrumb-item.interface';
-import { CheckoutFocusedElement } from 'ish-core/models/checkout-focused-element/checkout-focused-element.interface';
+import { CheckoutFocusedElement } from 'ish-core/models/scroll-info copy/checkout-focused-element.interface';
 import { ScrollInfo } from 'ish-core/models/scroll-info/scroll-info.interface';
 
 import { setBreadcrumbData, setCheckoutFocusedElement, setScroll, setStickyHeader } from './viewconf.actions';
@@ -40,8 +40,6 @@ export const viewconfReducer = createReducer(
   on(setCheckoutFocusedElement, (state: ViewconfState, action) => ({
     ...state,
     focusedCheckoutElement: {
-      orderId: action.payload.orderId,
-      lineItemIndex: action.payload.lineItemIndex,
       elementId: action.payload.elementId,
     },
   }))

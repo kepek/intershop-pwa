@@ -64,6 +64,8 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
   @Input() isPartialDelivery: boolean;
   @Input() lineItemIndex: number;
   @Input() focusedCheckoutElement: CheckoutFocusedElement;
+  @Input() focusedElement: CheckoutFocusedElement;
+  @Input() focusedElementId: string;
 
   @Input() isConfirmed;
   @Output() handleLoad = new EventEmitter<ProductView>();
@@ -85,9 +87,7 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
   selectItemForm: FormGroup;
   addToCartForm: FormGroup;
   boxLabelForm: FormGroup;
-  focusedCheckoutElement$: Observable<CheckoutFocusedElement>;
-  focusedElement: CheckoutFocusedElement;
-  tabIndex: number = 100;
+
   /**
     // no edit for measurements on checkout now
     measurementsForm: FormGroup;
@@ -112,27 +112,6 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
 
     this.updateQuantities();
     this.calculateDeliveryDate();
-    this.focusedCheckoutElement$ = this.checkoutFacade.getFocusedCheckoutElement$;
-
-    this.focusedCheckoutElement$
-      .pipe(whenTruthy(), takeUntil(this.destroy$))
-      .subscribe((focusedElement: CheckoutFocusedElement) => {
-        if (focusedElement) {
-          this.focusedElement = focusedElement;
-
-          if (focusedElement.orderId === this.bucketId) {
-            this.tabIndex = 101;
-            if (focusedElement.lineItemIndex === this.lineItemIndex) {
-              this.tabIndex = 102;
-
-            }
-          } else {
-            this.tabIndex = 100;
-          }
-        } else {
-          this.tabIndex = 100;
-        }
-      });
   }
 
   ngOnChanges(s: SimpleChanges) {
@@ -244,9 +223,12 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
         this.checkoutFacade.deleteBasketItemAttributes(this.basketId, this.item.id, this.bucketId, name);
       } else if (value !== oldValue) {
         this.checkoutFacade.updateBasketItemAttributes(this.basketId, this.item.id, this.bucketId, boxLabelAttribute);
+        this.setFocusedElement(target);
       }
     } else if (value) {
       this.checkoutFacade.addBasketItemAttributes(this.basketId, this.item.id, this.bucketId, boxLabelAttribute);
+      // FOCUS ostatni element
+      this.setFocusedElement(target);
     }
 
     if (ifLabel) {
@@ -325,7 +307,10 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
   }
 
   setFocusedElement(target: HTMLDataElement) {
-    console.log('setFocusedElement data: Order Id ', this.bucketId, 'line item', this.id, 'edited element', target.id);
-    this.checkoutFacade.setCheckoutFocusedElement(this.bucketId, this.lineItemIndex, target.id);
+    this.checkoutFacade.setCheckoutFocusedElement(target.id);
+  }
+
+  removeDots(value) {
+    return value.replaceAll('.', '');
   }
 }

@@ -537,5 +537,5 @@ export const getWarehouseCalendarFail = createAction('[Basket] Get warehouse cal
 
 export const focusedCheckoutElement = createAction(
   '[Basket] Focused checkout element',
-  payload<{ orderId: string; lineItemIndex: number; elementId: string }>()
+  payload<{ elementId: string }>()
 );

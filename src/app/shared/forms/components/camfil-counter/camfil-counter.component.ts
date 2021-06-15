@@ -3,9 +3,8 @@ import { FormControl } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable, ReplaySubject, Subject } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
-
 import { FormElementComponent } from 'ish-shared/forms/components/form-element/form-element.component';
-
+import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 @Component({
   selector: 'camfil-counter',
   templateUrl: './camfil-counter.component.html',
@@ -15,14 +14,15 @@ import { FormElementComponent } from 'ish-shared/forms/components/form-element/f
 export class CamfilCounterComponent extends FormElementComponent implements OnInit, OnDestroy, OnChanges {
   @Input() min: number;
   @Input() max: number;
-
+  @Input() isInLineItem = false;
+  @Input() lineItemId?: string;
   value$ = new ReplaySubject<number>(1);
   cannotDecrease$: Observable<boolean>;
   cannotIncrease$: Observable<boolean>;
 
   private destroy$ = new Subject();
 
-  constructor(protected translate: TranslateService) {
+  constructor(protected translate: TranslateService, private checkoutFacade: CheckoutFacade) {
     super(translate);
   }
 
@@ -51,8 +51,7 @@ export class CamfilCounterComponent extends FormElementComponent implements OnIn
 
   ngOnInit() {
     super.init();
-
-    this.cannotDecrease$ = this.value$.pipe(map(value => this.min !== undefined && value <= this.min));
+      (this.cannotDecrease$ = this.value$.pipe(map(value => this.min !== undefined && value <= this.min)));
     this.cannotIncrease$ = this.value$.pipe(map(value => this.max !== undefined && value >= this.max));
 
     this.formControl.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(this.value$);
@@ -69,4 +68,10 @@ export class CamfilCounterComponent extends FormElementComponent implements OnIn
   get displayLabel(): boolean {
     return !!this.label && !!this.label.trim();
   }
+
+  setFocusedElement(target: HTMLDataElement) {
+    this.checkoutFacade.setCheckoutFocusedElement(target.id);
+  }
+
+
 }
