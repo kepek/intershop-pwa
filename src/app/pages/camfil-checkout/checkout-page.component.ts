@@ -8,9 +8,9 @@ import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { BasketValidationResultType } from 'ish-core/models/basket-validation/basket-validation.model';
 import { BasketView } from 'ish-core/models/basket/basket.model';
 import { Bucket } from 'ish-core/models/basket/bucket.model';
+import { CheckoutFocusedElement } from 'ish-core/models/scroll-info copy/checkout-focused-element.interface';
 import { createOrderSuccess } from 'ish-core/store/customer/orders/orders.actions';
 import { whenTruthy } from 'ish-core/utils/operators';
-import { CheckoutFocusedElement } from 'ish-core/models/scroll-info copy/checkout-focused-element.interface';
 
 @Component({
   templateUrl: './checkout-page.component.html',
@@ -31,7 +31,7 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
   validation = false;
   tabIndex = 0;
   selectedOrder$: Observable<any>;
-  focusedCheckoutElement$: Observable<CheckoutFocusedElement>
+  focusedCheckoutElement$: Observable<CheckoutFocusedElement>;
   private destroy$ = new Subject<void>();
 
   unavailableProducts = {};
@@ -58,7 +58,7 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
     this.ordersLoading$ = this.checkoutFacade.ordersLoading$;
     this.validationResults$ = this.checkoutFacade.basketValidationResults$;
     this.selectedOrder$ = this.checkoutFacade.selectedOrder$;
-    this.focusedCheckoutElement$ = this.checkoutFacade.getFocusedCheckoutElement$
+    this.focusedCheckoutElement$ = this.checkoutFacade.getFocusedCheckoutElement$;
 
     this.basket$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe((basket: BasketView) => {
       this.basketId = basket.id;
@@ -98,6 +98,6 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
-    this.checkoutFacade.setCheckoutFocusedElement("");
+    this.checkoutFacade.setCheckoutFocusedElement('');
   }
 }
