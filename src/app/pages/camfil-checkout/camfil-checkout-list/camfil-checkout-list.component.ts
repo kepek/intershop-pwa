@@ -1,6 +1,7 @@
 // tslint:disable: ish-ordered-imports ban-specific-imports
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import {
+  AfterViewInit,
   ChangeDetectionStrategy,
   Component,
   EventEmitter,
@@ -51,7 +52,7 @@ interface Order extends Bucket {
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['./camfil-checkout-list.component.scss'],
 })
-export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
+export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDestroy {
   private static REQUIRED_COMPLETENESS_LEVEL = ProductCompletenessLevel.List;
   @Input() order: Order;
   @Input() buckets: Bucket[];
@@ -160,7 +161,9 @@ export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
         this.deliveryTerm = terms[this.order?.customer?.id];
       });
     }
+  }
 
+  ngAfterViewInit() {
     if (this.focusedElementId) {
       setTimeout(() => {
         const element = document.querySelector(`#${this.focusedElementId}`) as HTMLElement;
