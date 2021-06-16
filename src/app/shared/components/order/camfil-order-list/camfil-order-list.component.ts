@@ -217,7 +217,11 @@ export class CamfilOrderListComponent implements OnInit, AfterViewInit, OnDestro
   }
 
   getCustomers(data) {
-    return [undefined, ...new Set(data.map(item => item.customerName))];
+    const customersList = [
+      undefined,
+      ...new Set(data.map(item => ({ customerName: item.customerName, customerNo: item.customerNo }))),
+    ];
+    return [...new Map(customersList?.map(item => [JSON.stringify(item), item]))?.values()];
   }
 
   addStatusFilter(change: MatCheckboxChange) {
@@ -277,7 +281,7 @@ export class CamfilOrderListComponent implements OnInit, AfterViewInit, OnDestro
       const isCustomerMatching = true;
       if (
         filters.customer &&
-        data.customerName.toString().trim().toLowerCase().indexOf(filters.customer.trim().toLowerCase()) === -1
+        data.customerNo.toString().trim().toLowerCase().indexOf(filters.customer.trim().toLowerCase()) === -1
       ) {
         return false;
       }

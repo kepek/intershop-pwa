@@ -691,7 +691,6 @@
   "camfil.account.orderlist.table.goods_mark": "Goods mark",
   "camfil.account.organization.create_new_user.customers_contacts_roles.validation.text": "Please select customer, contact and role.",
   "camfil.account.organization.edit_user.connect_contact_with_user_and_customer.modal.text": "Contact person has been updated.",
-  "camfil.account.organization.edit_user.connect_user_with_customer.modal.text": "Access to the customer has been granted.",
   "camfil.account.organization.edit_user.customers.header.text": "Customers",
   "camfil.account.organization.edit_user.disconnect_user_from_customer.modal.text": "Access to the customer has been revoked.",
   "camfil.account.organization.edit_user.form.customerContactSelect.error.required": "Please select a contact person",
