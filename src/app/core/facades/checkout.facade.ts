@@ -12,6 +12,7 @@ import { LineItemUpdate } from 'ish-core/models/line-item-update/line-item-updat
 import { LineItem } from 'ish-core/models/line-item/line-item.model';
 import { PaymentInstrument } from 'ish-core/models/payment-instrument/payment-instrument.model';
 import { selectRouteData } from 'ish-core/store/core/router';
+import { getFocusedCheckoutElement } from 'ish-core/store/core/viewconf/viewconf.selectors';
 import { getAllAddresses } from 'ish-core/store/customer/addresses';
 import {
   addBasketItemAttributes,
@@ -29,6 +30,7 @@ import {
   deleteBasketShippingAddress,
   deleteBucket,
   deleteEmptyBucket,
+  focusedCheckoutElement,
   getBasketEligiblePaymentMethods,
   getBasketEligibleShippingMethods,
   getBasketError,
@@ -102,6 +104,7 @@ export class CheckoutFacade {
   submittedBasket$ = this.store.pipe(select(getSubmittedBasket));
   calendarExceptions$ = this.store.pipe(select(getCalendarExceptions));
   basketExtensions$ = this.store.pipe(select(getBasketExtensions));
+  getFocusedCheckoutElement$ = this.store.pipe(select(getFocusedCheckoutElement));
   getBucketEmailRecipients$(urn: string) {
     return this.store.pipe(select(getBucketEmailRecipients(urn)));
   }
@@ -287,5 +290,9 @@ export class CheckoutFacade {
 
   trackPurchase(basket: BasketView) {
     this.tracking.trackPurchase(basket);
+  }
+
+  setCheckoutFocusedElement(elementId: string) {
+    this.store.dispatch(focusedCheckoutElement({ elementId }));
   }
 }

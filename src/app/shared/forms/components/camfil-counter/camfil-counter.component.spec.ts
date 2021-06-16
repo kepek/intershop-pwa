@@ -2,7 +2,10 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { TranslateModule } from '@ngx-translate/core';
-import { spy, verify } from 'ts-mockito';
+import { of } from 'rxjs';
+import { instance, mock, spy, verify, when } from 'ts-mockito';
+
+import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 
 import { CamfilCounterComponent } from './camfil-counter.component';
 
@@ -10,13 +13,17 @@ describe('Camfil Counter Component', () => {
   let component: CamfilCounterComponent;
   let fixture: ComponentFixture<CamfilCounterComponent>;
   let element: HTMLElement;
+  let checkoutFacadeMock: CheckoutFacade;
 
   const controlName = 'quantity';
 
   beforeEach(async () => {
+    checkoutFacadeMock = mock(CheckoutFacade);
+
     await TestBed.configureTestingModule({
       imports: [ReactiveFormsModule, TranslateModule.forRoot()],
       declarations: [CamfilCounterComponent],
+      providers: [{ provide: CheckoutFacade, useFactory: () => instance(checkoutFacadeMock) }],
     }).compileComponents();
   });
 
@@ -24,6 +31,8 @@ describe('Camfil Counter Component', () => {
     fixture = TestBed.createComponent(CamfilCounterComponent);
     component = fixture.componentInstance;
     element = fixture.nativeElement;
+
+    when(checkoutFacadeMock.getFocusedCheckoutElement$).thenReturn(of({}));
 
     component.form = new FormGroup({
       [controlName]: new FormControl(),

@@ -1,6 +1,7 @@
 // tslint:disable: ish-ordered-imports ban-specific-imports
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import {
+  AfterViewInit,
   ChangeDetectionStrategy,
   Component,
   EventEmitter,
@@ -39,6 +40,7 @@ import { LineItemUpdate } from 'ish-core/models/line-item-update/line-item-updat
 import { Address } from 'ish-core/models/address/address.model';
 import { AddEmailRecipientModalComponent } from '../add-email-recipient-modal/add-email-recipient-modal.component';
 import { TranslateService } from '@ngx-translate/core';
+import { CheckoutFocusedElement } from 'ish-core/models/scroll-info copy/checkout-focused-element.interface';
 
 interface Order extends Bucket {
   totals: number;
@@ -50,7 +52,7 @@ interface Order extends Bucket {
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['./camfil-checkout-list.component.scss'],
 })
-export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
+export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDestroy {
   private static REQUIRED_COMPLETENESS_LEVEL = ProductCompletenessLevel.List;
   @Input() order: Order;
   @Input() buckets: Bucket[];
@@ -88,6 +90,9 @@ export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
   deliveryDateValue: string;
   basketLoading$: Observable<boolean>;
   ordersLoading$: Observable<boolean>;
+  focusedCheckoutElement$: Observable<CheckoutFocusedElement>;
+  focusedElement: CheckoutFocusedElement;
+  focusedElementId: string;
   @ViewChild(CamfilSmallCtaModalComponent) modal: CamfilSmallCtaModalComponent;
 
   private destroy$ = new Subject<void>();
@@ -138,6 +143,15 @@ export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
       });
     });
 
+    this.focusedCheckoutElement$ = this.checkoutFacade.getFocusedCheckoutElement$;
+
+    this.focusedCheckoutElement$.pipe(takeUntil(this.destroy$)).subscribe((focusedElement: CheckoutFocusedElement) => {
+      if (focusedElement) {
+        this.focusedElement = focusedElement;
+        this.focusedElementId = focusedElement.elementId;
+      }
+    });
+
     if (this.order) {
       this.checkoutFacade.basketInvoiceAddress$
         .pipe(whenTruthy(), takeUntil(this.destroy$))
@@ -146,6 +160,15 @@ export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
       this.checkoutFacade.getCustomersDeliveryTerms$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(terms => {
         this.deliveryTerm = terms[this.order?.customer?.id];
       });
+    }
+  }
+
+  ngAfterViewInit() {
+    if (this.focusedElementId) {
+      setTimeout(() => {
+        const element = document.querySelector(`#${this.focusedElementId}`) as HTMLElement;
+        element?.focus();
+      }, 300);
     }
   }
 
@@ -182,6 +205,10 @@ export class CamfilCheckoutListComponent implements OnInit, OnDestroy {
 
       this.shoppingFacade.updateBucket(basket, deliveryAddressId, updated);
     }
+  }
+
+  setFocusedElement(target: HTMLDataElement) {
+    this.checkoutFacade.setCheckoutFocusedElement(target.id);
   }
 
   handleProductLoad(product) {

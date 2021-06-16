@@ -28,6 +28,8 @@
           [min]="allowZeroQuantity ? 0 : product.minOrderQuantity"
           [max]="product.maxOrderQuantity"
           inputClass=""
+          [isInLineItem]="isInLineItem"
+          [lineItemId]="lineItemId"
         ></camfil-counter>
       </ng-container>
     </ng-container>

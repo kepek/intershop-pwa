@@ -28,9 +28,7 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
   ordersLoading$: Observable<boolean>;
   validationResults$: Observable<BasketValidationResultType>;
   validation = false;
-
   selectedOrder$: Observable<any>;
-
   private destroy$ = new Subject<void>();
 
   unavailableProducts = {};
@@ -96,5 +94,6 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
+    this.checkoutFacade.setCheckoutFocusedElement('');
   }
 }

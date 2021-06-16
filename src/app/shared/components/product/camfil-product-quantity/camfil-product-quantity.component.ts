@@ -36,6 +36,8 @@ export class CamfilProductQuantityComponent implements OnInit, OnChanges {
   @Input() controlName: string;
   @Input() type?: CamfilProductQuantityType = 'counter';
   @Input() class?: string;
+  @Input() isInLineItem = false;
+  @Input() lineItemId?: string;
 
   quantityOptions: SelectOption[];
 

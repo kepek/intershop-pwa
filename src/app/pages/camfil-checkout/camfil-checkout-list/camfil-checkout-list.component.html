@@ -96,6 +96,8 @@
                 formControlName="orderMark"
                 label="camfil.checkout.form.order_mark"
                 (change)="onBlurSubmit('orderMark')"
+                (focus)="setFocusedElement($event.target)"
+                [id]="'orderMark-' + order.id"
               />
             </mat-form-field>
             <camfil-error
@@ -113,6 +115,8 @@
                 formControlName="invoiceLabel"
                 label="camfil.checkout.form.invoice_mark"
                 (change)="onBlurSubmit('invoiceLabel')"
+                (focus)="setFocusedElement($event.target)"
+                [id]="'invoiceLabel-' + order.id"
               />
             </mat-form-field>
             <camfil-error
@@ -217,6 +221,8 @@
               formControlName="info"
               label="camfil.checkout.form.note"
               (change)="onBlurSubmit('info')"
+              (focus)="setFocusedElement($event.target)"
+              [id]="'info-' + order.id"
             ></textarea>
           </mat-form-field>
           <camfil-error

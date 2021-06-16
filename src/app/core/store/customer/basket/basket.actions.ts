@@ -534,3 +534,8 @@ export const getWarehouseCalendarSuccess = createAction(
 );
 
 export const getWarehouseCalendarFail = createAction('[Basket] Get warehouse calendar Fail', httpError());
+
+export const focusedCheckoutElement = createAction(
+  '[Basket] Focused checkout element',
+  payload<{ elementId: string }>()
+);

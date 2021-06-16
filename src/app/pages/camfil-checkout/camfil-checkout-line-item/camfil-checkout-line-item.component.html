@@ -51,6 +51,8 @@
               formControlName="boxLabel"
               name="boxLabel"
               (blur)="onBlur($event.target, boxLabelForm)"
+              [id]="'line-item-box-label-'+removeDots(item?.id)"
+              (focus)="setFocusedElement($event.target)"
             />
           </mat-form-field>
           <camfil-error
@@ -112,6 +114,8 @@
             [parentForm]="addToCartForm"
             [ngClass]="{ 'ml-md-auto': isEditMode }"
             controlName="quantity"
+            [isInLineItem]="true"
+            [lineItemId]="removeDots(item?.id)"
           ></camfil-product-quantity>
         </form>
         <div class="prices" [ngClass]="{ 'ml-md-auto': isEditMode }">

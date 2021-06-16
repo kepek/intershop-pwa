@@ -26,6 +26,7 @@ import { Price } from 'ish-core/models/price/price.model';
 import { ProductViewHelper } from 'ish-core/models/product-view/product-view.helper';
 import { ProductView } from 'ish-core/models/product-view/product-view.model';
 import { ProductCompletenessLevel } from 'ish-core/models/product/product.model';
+import { CheckoutFocusedElement } from 'ish-core/models/scroll-info copy/checkout-focused-element.interface';
 import { whenTruthy } from 'ish-core/utils/operators';
 import { CamfilQuickViewModalComponent } from 'ish-shared/components/common/camfil-quick-view-modal/camfil-quick-view-modal.component';
 import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
@@ -62,6 +63,9 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
   @Input() orderDeliveryDate: Date;
   @Input() isPartialDelivery: boolean;
   @Input() lineItemIndex: number;
+  @Input() focusedCheckoutElement: CheckoutFocusedElement;
+  @Input() focusedElement: CheckoutFocusedElement;
+  @Input() focusedElementId: string;
 
   @Input() isConfirmed;
   @Output() handleLoad = new EventEmitter<ProductView>();
@@ -83,6 +87,7 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
   selectItemForm: FormGroup;
   addToCartForm: FormGroup;
   boxLabelForm: FormGroup;
+
   /**
     // no edit for measurements on checkout now
     measurementsForm: FormGroup;
@@ -218,9 +223,12 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
         this.checkoutFacade.deleteBasketItemAttributes(this.basketId, this.item.id, this.bucketId, name);
       } else if (value !== oldValue) {
         this.checkoutFacade.updateBasketItemAttributes(this.basketId, this.item.id, this.bucketId, boxLabelAttribute);
+        this.setFocusedElement(target);
       }
     } else if (value) {
       this.checkoutFacade.addBasketItemAttributes(this.basketId, this.item.id, this.bucketId, boxLabelAttribute);
+      // FOCUS ostatni element
+      this.setFocusedElement(target);
     }
 
     if (ifLabel) {
@@ -296,5 +304,13 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
   openDeleteModal() {
     this.dialog.open(this.modal.show());
     this.modal.hide = () => this.dialog.closeAll();
+  }
+
+  setFocusedElement(target: HTMLDataElement) {
+    this.checkoutFacade.setCheckoutFocusedElement(target.id);
+  }
+
+  removeDots(value) {
+    return value.replaceAll('.', '');
   }
 }
