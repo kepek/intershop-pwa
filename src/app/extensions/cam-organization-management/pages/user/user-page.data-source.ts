@@ -20,6 +20,7 @@ export abstract class UserPageDataSourceComponent implements OnInit, AfterViewIn
   user$: Observable<CamfilB2bUser>;
   userId$: Observable<string>;
   context$: Observable<{ customer: CamfilB2bCustomer; user: CamfilB2bUser }>;
+  validRoles = true;
 
   // tslint:disable-next-line:no-empty
   ngOnInit() {
@@ -107,8 +108,11 @@ export abstract class UserPageDataSourceComponent implements OnInit, AfterViewIn
 
   onUpdateSelectedCustomerUserRoles({ roleIDs }) {
     this.context$.pipe(take(1), whenTruthy()).subscribe(({ customer, user }) => {
-      const customerId = customer?.parentCustomer?.id || customer.id;
-      this.organizationFacade.updateCustomerUserRoles$(customerId, user.id, roleIDs);
+      this.validRoles = roleIDs.length;
+      if (this.validRoles) {
+        const customerId = customer?.parentCustomer?.id || customer.id;
+        this.organizationFacade.updateCustomerUserRoles$(customerId, user.id, roleIDs);
+      }
     });
   }
 

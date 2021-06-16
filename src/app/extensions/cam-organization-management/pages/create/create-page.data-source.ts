@@ -30,14 +30,14 @@ export abstract class CreatePageDataSourceComponent implements OnInit, OnDestroy
   newUserRoles$: BehaviorSubject<CamfilB2bRole[]>;
   newUserStaticRoles$: Observable<CamfilB2bRole[]>;
   newUserStaticCustomers$: Observable<CamfilB2bCustomer[]>;
-  validCustomerAndContact$: BehaviorSubject<boolean>;
+  validCustomerContactRoles$: BehaviorSubject<boolean>;
 
   context$: Observable<{
     customer: CamfilB2bCustomer;
     user: CamfilB2bUser;
     contacts: CamfilB2bCustomerContact[];
     roles: CamfilB2bRole[];
-    validCustomerAndContact: boolean;
+    validCustomerContactRoles: boolean;
   }>;
 
   // Methods
@@ -64,7 +64,7 @@ export abstract class CreatePageDataSourceComponent implements OnInit, OnDestroy
   // Hooks
 
   ngOnInit() {
-    this.validCustomerAndContact$ = new BehaviorSubject(true);
+    this.validCustomerContactRoles$ = new BehaviorSubject(true);
     this.currentCustomer$ = this.organizationFacade.currentCustomer$;
     this.currentCustomerId$ = this.currentCustomer$.pipe(map(customer => customer?.parentCustomer?.id || customer.id));
 
@@ -107,14 +107,14 @@ export abstract class CreatePageDataSourceComponent implements OnInit, OnDestroy
       this.newUser$,
       this.newUserContacts$,
       this.newUserRoles$,
-      this.validCustomerAndContact$,
+      this.validCustomerContactRoles$,
     ]).pipe(
-      map(([customer, user, contacts, roles, validCustomerAndContact]) => ({
+      map(([customer, user, contacts, roles, validCustomerContactRoles]) => ({
         customer,
         user,
         contacts,
         roles,
-        validCustomerAndContact,
+        validCustomerContactRoles,
       }))
     );
   }
@@ -139,12 +139,11 @@ export abstract class CreatePageDataSourceComponent implements OnInit, OnDestroy
 
     this.organizationFacade
       .getSelectedRoles$(newRoleIDs)
-      .pipe(
-        filter(r => r.length !== 0),
-        distinctUntilChanged(),
-        takeUntil(this.destroy$)
-      )
-      .subscribe(roles => this.newUserRoles$.next(roles));
+      .pipe(distinctUntilChanged(), takeUntil(this.destroy$))
+      .subscribe(roles => {
+        this.newUserRoles$.next(roles);
+        this.validationCustomerContactRoles();
+      });
   }
 
   onConnectUserWithCustomer(event: { customer: CamfilB2bCustomer; user: CamfilB2bUser }) {
@@ -168,14 +167,7 @@ export abstract class CreatePageDataSourceComponent implements OnInit, OnDestroy
 
     this.newUser$.next({ ...newUser });
     this.newUserContacts$.next(connections);
-    this.context$
-      .pipe(
-        take(1),
-        filter(({ customer, contacts }) => !customer && !contacts.length)
-      )
-      .subscribe(() => {
-        this.validCustomerAndContact$.next(false);
-      });
+    this.validationCustomerContactRoles();
   }
 
   onConnectContactWithUserAndCustomer(event: {
@@ -198,7 +190,13 @@ export abstract class CreatePageDataSourceComponent implements OnInit, OnDestroy
     newUser.customers = [...newUser?.customers?.filter(c => c.id !== updatedCustomer.id), updatedCustomer];
 
     this.newUser$.next({ ...newUser });
-    this.validCustomerAndContact$.next(true);
+    this.validationCustomerContactRoles();
+  }
+
+  validationCustomerContactRoles() {
+    this.context$.pipe(take(1)).subscribe(({ customer, contacts, roles }) => {
+      this.validCustomerContactRoles$.next(!!customer && !!contacts.length && !!roles.length);
+    });
   }
 
   // Observables
