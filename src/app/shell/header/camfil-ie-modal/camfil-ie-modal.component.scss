@@ -1,0 +1,13 @@
+@import '~src/styles/themes/camfil/colors.scss';
+@import '~src/styles/themes/camfil/variables.scss';
+
+:host {
+  .ie-modal-container {
+    padding: $space-box;
+    background-color: $camfil-color-special-primary;
+    .modal-text {
+      margin: 0;
+      font-weight: 600;
+    }
+  }
+}

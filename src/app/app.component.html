@@ -8,10 +8,15 @@
   <header data-testing-id="page-header" class="top"><camfil-header></camfil-header></header>
 
   <div class="wrapper">
-    <div role="main" class="container main-container" style="position: relative; min-height: 200px">
-      <camfil-breadcrumb [checkout]="isCheckoutPage()" [url]="_router.url"></camfil-breadcrumb>
-      <router-outlet></router-outlet>
-    </div>
+    <ng-container *ngIf="!isIeBrowser; else ieBlock">
+      <div role="main" class="container main-container" style="position: relative; min-height: 200px">
+        <camfil-breadcrumb [checkout]="isCheckoutPage()" [url]="_router.url"></camfil-breadcrumb>
+        <router-outlet></router-outlet>
+      </div>
+    </ng-container>
+    <ng-template #ieBlock>
+      <camfil-ie-modal></camfil-ie-modal>
+    </ng-template>
   </div>
 
   <footer data-testing-id="section-footer"><camfil-footer [deviceType]="deviceType$ | async"></camfil-footer></footer>
