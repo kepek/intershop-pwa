@@ -39,9 +39,8 @@
 </ng-template>
 
 <ng-template #userCustomersContacts>
-  
-  <p *ngIf="!(validCustomerAndContact$ | async)" class="mt-4 text-danger">
-    {{ 'camfil.account.organization.list.cancel.button.text' | translate }}
+  <p *ngIf="!(validCustomerContactRoles$ | async)" class="mt-4 text-danger">
+    {{ 'camfil.account.organization.create_new_user.customers_contacts_roles.validation.text' | translate }}
   </p>
   <div class="section section--customers">
     <h2 class="section__title">

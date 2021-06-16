@@ -42,13 +42,13 @@ export class CreatePageComponent extends CreatePageDataSourceComponent implement
         .pipe(
           take(1),
           whenTruthy(),
-          filter(({ validCustomerAndContact }) => validCustomerAndContact)
+          filter(({ validCustomerContactRoles }) => validCustomerContactRoles)
         )
         .subscribe(({ customer, user, contacts, roles }) => {
-          if (customer && contacts.length) {
+          if (customer && contacts.length && roles.length) {
             this.organizationFacade.createCustomerUser$(customer, user, contacts, roles);
           } else {
-            this.validCustomerAndContact$.next(false);
+            this.validCustomerContactRoles$.next(false);
           }
         });
     }

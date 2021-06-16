@@ -56,6 +56,9 @@
       {{ 'camfil.account.organization.edit_user.roles.header.text' | translate }}
     </h2>
     <div class="section__content">
+      <p *ngIf="!validRoles" class="mt-4 text-danger">
+        {{ 'camfil.account.organization.edit_user.roles.validation.text' | translate }}
+      </p>
       <camfil-organization-user-roles-form
         [roles]="roles$() | async"
         [staticRoles]="selectedUserStaticRoles$() | async"
