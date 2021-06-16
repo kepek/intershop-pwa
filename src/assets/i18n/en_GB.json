@@ -1044,7 +1044,7 @@
   "camfil.modal.cta.button.ok": "OK",
   "camfil.modal.edit_order.button.header": "Edit order details",
   "camfil.modal.edit_order.button.save": "Save",
-  "camfil.modal.ie.text": "Unfortunately we do not support Internet Explorer, please use Chrome, Edge, Safari or Firefox, thanks",
+  "camfil.modal.ie.text": "Unfortunately we do not support Internet Explorer. Please use one of the following browsers to explore our web shop: Google Chrome, Microsoft Edge, or Mozilla Firefox. Thank you!",
   "camfil.modal.measurement.error": "Wrong data - any input must have max value - {{0}}",
   "camfil.modal.measurement.error.global": "Please fill in measurement!",
   "camfil.modal.place_reorder_fail.text": "Can't place order because some of products are no longer available",

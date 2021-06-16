@@ -1044,7 +1044,7 @@
   "camfil.modal.cta.button.ok": "OK",
   "camfil.modal.edit_order.button.header": "Ändra orderdetaljer",
   "camfil.modal.edit_order.button.save": "Spara",
-  "camfil.modal.ie.text": "sv_Unfortunately we do not support Internet Explorer, please use Chrome, Edge, Safari or Firefox, thanks",
+  "camfil.modal.ie.text": "sv_Unfortunately we do not support Internet Explorer. Please use one of the following browsers to explore our web shop: Google Chrome, Microsoft Edge, or Mozilla Firefox. Thank you!",
   "camfil.modal.measurement.error": "Felaktiga mått - bredd eller längd får inte överstiga - {{0}} mm",
   "camfil.modal.measurement.error.global": "Vänligen fyll i mått!",
   "camfil.modal.place_reorder_fail.text": "Det går inte att skapa ordern då vissa produkter inte längre är tillgängliga",
