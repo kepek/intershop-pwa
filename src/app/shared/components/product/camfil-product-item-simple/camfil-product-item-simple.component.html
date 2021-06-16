@@ -16,7 +16,7 @@
         <camfil-product-id
           *ngIf="configuration.displaySKU"
           [product]="product"
-          [hideAttributeName]="hideAttributeName"
+          [hideAttributeName]="false"
         ></camfil-product-id>
         <camfil-product-attribute
           identifier="dimensions"
@@ -25,7 +25,7 @@
         ></camfil-product-attribute>
         <camfil-product-attribute
           identifier="iso_class"
-          [name]="'camfil.product.iso_and_efficiency.label' | translate"
+          [name]="'camfil.product.class_and_efficiency.label' | translate"
           [value]="product | camfilProductAttributeVal: 'IsoClassAndEfficiency'"
         ></camfil-product-attribute>
       </div>
