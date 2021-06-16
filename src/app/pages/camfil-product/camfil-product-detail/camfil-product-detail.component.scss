@@ -201,6 +201,8 @@ strong {
       .button-text {
         display: inline-block;
         width: 85%;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
       .mat-icon {
         vertical-align: middle;
@@ -225,6 +227,8 @@ strong {
         .button-text {
           display: inline-block;
           width: 85%;
+          overflow: hidden;
+          text-overflow: ellipsis;
         }
       }
     }

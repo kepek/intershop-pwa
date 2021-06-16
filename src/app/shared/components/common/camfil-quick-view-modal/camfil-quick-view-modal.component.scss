@@ -54,6 +54,8 @@
       .button-text {
         display: inline-block;
         width: 85%;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
     }
     camfil-product-add-to-basket {
@@ -76,6 +78,8 @@
         .button-text {
           display: inline-block;
           width: 85%;
+          overflow: hidden;
+          text-overflow: ellipsis;
         }
       }
     }

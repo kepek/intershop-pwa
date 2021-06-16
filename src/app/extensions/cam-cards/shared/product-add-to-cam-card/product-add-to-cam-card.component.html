@@ -2,48 +2,59 @@
 <ng-template #buttonInner>
   <ng-container [ngSwitch]="displayType">
     <ng-template [ngSwitchCase]="'animated'">
-      <fa-icon [icon]="['fas', 'list']" [title]="translationKey | translate"></fa-icon>
-      <span class="share-label">{{ translationKey | translate }}</span>
+      <fa-icon [icon]="['fas', 'list']" [title]="buttonTranslationKey | translate"></fa-icon>
+      <span class="share-label">{{ buttonTranslationKey | translate }}</span>
     </ng-template>
     <ng-template [ngSwitchCase]="'icon'">
-      <mat-icon svgIcon="add-camcard" [title]="translationKey | translate"></mat-icon>
+      <mat-icon svgIcon="add-camcard" [title]="buttonTranslationKey | translate"></mat-icon>
     </ng-template>
     <ng-template [ngSwitchCase]="'round-btn'">
       <mat-icon svgIcon="add-camcard" *ngIf="hasIcon"></mat-icon>
-      <span class="button-text">{{ translationKey | translate }} </span></ng-template
-    >
+      <span class="button-text">{{ buttonTranslationKey | translate }}</span>
+    </ng-template>
     <ng-template ngSwitchDefault>
-      {{ translationKey | translate }}
+      {{ buttonTranslationKey | translate }}
     </ng-template>
   </ng-container>
 </ng-template>
 
-<ng-container *ngIf="hasIcon">
-  <button
-    mat-raised-button
-    data-testing-id="addToCamCardButton"
-    class="btn btn-link"
-    [ngClass]="class"
-    [disabled]="disabled"
-    (click)="openModal(modal)"
-    [class.camcard-big-round-btn]="displayType === 'round-btn' && !hasIcon"
-  >
-    <ng-container *ngTemplateOutlet="buttonInner"></ng-container>
-  </button>
-</ng-container>
-
-<ng-container *ngIf="displayType === 'round-btn' && !hasIcon">
-  <button
-    mat-stroked-button
-    data-testing-id="addToCamCardButton"
-    class="btn btn-link"
-    [ngClass]="class"
-    [disabled]="disabled"
-    (click)="openModal(modal)"
-    [class.camcard-big-round-btn]="displayType === 'round-btn' && !hasIcon"
-  >
-    <ng-container *ngTemplateOutlet="buttonInner"></ng-container>
-  </button>
+<ng-container [ngSwitch]="displayType">
+  <ng-template [ngSwitchCase]="'icon'">
+    <button
+      mat-mini-fab
+      data-testing-id="addToCamCardButton"
+      class="btn btn-link"
+      [ngClass]="class"
+      [disabled]="disabled"
+      (click)="openModal(modal)"
+    >
+      <ng-container *ngTemplateOutlet="buttonInner"></ng-container>
+    </button>
+  </ng-template>
+  <ng-template [ngSwitchCase]="'round-btn'">
+    <button
+      mat-stroked-button
+      data-testing-id="addToCamCardButton"
+      class="btn btn-link camcard-big-round-btn"
+      [ngClass]="class"
+      [disabled]="disabled"
+      (click)="openModal(modal)"
+    >
+      <ng-container *ngTemplateOutlet="buttonInner"></ng-container>
+    </button>
+  </ng-template>
+  <ng-template ngSwitchDefault>
+    <button
+      mat-raised-button
+      data-testing-id="addToCamCardButton"
+      class="btn btn-link camcard-btn"
+      [ngClass]="class"
+      [disabled]="disabled"
+      (click)="openModal(modal)"
+    >
+      <ng-container *ngTemplateOutlet="buttonInner"></ng-container>
+    </button>
+  </ng-template>
 </ng-container>
 
 <camfil-add-product-to-cam-card-modal
