@@ -9,7 +9,7 @@
     line-height: $line-height-overline;
     @media (max-width: $screen-md-max) {
       flex-wrap: wrap;
-      width: auto;
+      width: 100%;
       height: auto;
     }
   }
@@ -33,7 +33,7 @@
   }
   .product-actions-container {
     margin: 0 $space-box;
-    @media (max-width: $screen-md-max) {
+    @media (max-width: $screen-xs-max) {
       margin: 0 auto;
     }
   }
