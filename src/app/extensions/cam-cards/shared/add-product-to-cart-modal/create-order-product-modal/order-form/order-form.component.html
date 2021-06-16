@@ -110,7 +110,14 @@
     <!--address-->
     <mat-form-field appearance="outline" class="delivery-address__form--field">
       <mat-label>{{ 'camfil.modal.createOrder.order-form.input.address' | translate }}</mat-label>
-      <input matInput type="text" formControlName="address" />
+      <textarea
+        matInput
+        formControlName="address"
+        label="camfil.modal.createOrder.order-form.input.address"
+        markRequiredLabel="off"
+        maxlength="250"
+        rows="5"
+      ></textarea>
     </mat-form-field>
     <camfil-error
       [errors]="getField('address').errors"
