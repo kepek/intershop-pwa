@@ -38,7 +38,9 @@ export class CamfilCategoryNavigationComponent implements OnInit, OnChanges, OnD
     this.trail$ = this.appFacade.breadcrumbCategoryNames$;
 
     this.activatedRoute.queryParams.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(params => {
-      this.filterParams = params.filters;
+      if (params.filters) {
+        this.filterParams = params.filters.split('&category')[0];
+      }
     });
   }
 
@@ -50,5 +52,9 @@ export class CamfilCategoryNavigationComponent implements OnInit, OnChanges, OnD
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  getFilterString(uniqueId: string) {
+    return this.filterParams + '&category=' + uniqueId.split('.').join('/');
   }
 }

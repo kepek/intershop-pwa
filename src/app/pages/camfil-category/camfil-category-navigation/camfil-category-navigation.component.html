@@ -8,7 +8,7 @@
               class="filter-item-name"
               [ngClass]="{ 'filter-selected': category.uniqueId === currentCategoryId || user.includes(category.name) }"
               [routerLink]="category.url"
-              [queryParams]="{ filters: filterParams }"
+              [queryParams]="{ filters: getFilterString(category.uniqueId) }"
             >
               <span>{{ category.name }}</span>
               <ng-container *ngIf="!user.includes(category.name)">
