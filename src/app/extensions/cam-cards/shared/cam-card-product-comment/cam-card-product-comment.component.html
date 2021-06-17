@@ -12,7 +12,7 @@
           matInput
           formControlName="{{ input }}"
           markRequiredLabel="off"
-          maxlength="{{ input === 'text' ? '200' : '30' }}"
+          maxlength="{{ input === 'text' ? '200' : '40' }}"
           attr.data-testing-id="cam-card-edit-comment-{{ input }}"
           (blur)="onBlur($event.target, input)"
           (keyup.enter)="keyupEnter($event.target)"
@@ -32,6 +32,10 @@
     (click)="mode === 'edit' ? toggleVisibility() : tooltip.show()"
     (mouseenter)="$event.stopImmediatePropagation()"
   >
-    <mat-icon svgIcon="comment" class="size-24" [ngClass]="{'color-secondary': !camCardItem?.comment?.text}"></mat-icon>
+    <mat-icon
+      svgIcon="comment"
+      class="size-24"
+      [ngClass]="{ 'color-secondary': !camCardItem?.comment?.text }"
+    ></mat-icon>
   </span>
 </ng-container>
