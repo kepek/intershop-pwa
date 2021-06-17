@@ -217,7 +217,8 @@ export class CamfilOrderListComponent implements OnInit, AfterViewInit, OnDestro
   }
 
   getCustomers(data) {
-    return [undefined, ...new Set(data.map(item => item.customerName))];
+    const customers = [...new Map(data.map(item => [item.customerNo, item])).values()];
+    return [undefined, ...customers];
   }
 
   addStatusFilter(change: MatCheckboxChange) {
@@ -277,7 +278,7 @@ export class CamfilOrderListComponent implements OnInit, AfterViewInit, OnDestro
       const isCustomerMatching = true;
       if (
         filters.customer &&
-        data.customerName.toString().trim().toLowerCase().indexOf(filters.customer.trim().toLowerCase()) === -1
+        data.customerNo.toString().trim().toLowerCase().indexOf(filters.customer.trim().toLowerCase()) === -1
       ) {
         return false;
       }
@@ -326,5 +327,11 @@ export class CamfilOrderListComponent implements OnInit, AfterViewInit, OnDestro
 
   onResize() {
     this.isMobileView = window.innerWidth <= 768;
+  }
+
+  getOrderStatusText(orderStatus) {
+    return orderStatus
+      ? `camfil.dynamic.account.orderlist.status.${orderStatus.trim().replace(' ', '_').toLowerCase()}`
+      : '---';
   }
 }
