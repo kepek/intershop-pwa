@@ -121,6 +121,7 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
     if (s.isConfirmed || s.orderDeliveryDate) {
       this.deliveryAfterOrderConfirmed();
     }
+    console.log('BOXLABEL', this.boxLabel);
   }
 
   ngOnDestroy() {
@@ -312,5 +313,9 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
 
   removeDots(value) {
     return value.replaceAll('.', '');
+  }
+
+  getBoxLabelValue(item) {
+    return item?.attributes?.find(att => att.name === 'boxLabel')?.value;
   }
 }
