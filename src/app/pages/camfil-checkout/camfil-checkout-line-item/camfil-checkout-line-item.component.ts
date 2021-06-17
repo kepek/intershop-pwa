@@ -107,7 +107,6 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
         [this.measurementsValues[2]]: (this.getValFromAttrs(res, 'diameter') as number) || undefined,
       };
     });
-    this.quantity = this.item.quantity.value;
     this.initForm();
 
     this.updateQuantities();
@@ -116,6 +115,7 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
 
   ngOnChanges(s: SimpleChanges) {
     if (s.item) {
+      this.quantity = this.item.quantity.value;
       this.loadProductDetails();
     }
     if (s.isConfirmed || s.orderDeliveryDate) {

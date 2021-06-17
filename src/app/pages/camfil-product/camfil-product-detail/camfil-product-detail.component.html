@@ -35,7 +35,7 @@
           itemtype="http://schema.org/Offer"
         >
           <div class="row">
-            <div class="col-12 prices-col">
+            <div class="col-12 prices-col" *ngIf="userPermissions$ | async">
               <camfil-product-attribute
                 *ngIf="product.listPrice?.value > 0"
                 name="camfil.product.list_price.label"
