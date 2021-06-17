@@ -121,7 +121,6 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
     if (s.isConfirmed || s.orderDeliveryDate) {
       this.deliveryAfterOrderConfirmed();
     }
-    console.log('BOXLABEL', this.boxLabel);
   }
 
   ngOnDestroy() {
