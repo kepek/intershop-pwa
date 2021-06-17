@@ -24,7 +24,7 @@
               *ngIf="isConfirmed"
               [name]="'camfil.cam_card.product.comment.label' | translate"
               class="box-label-attribute"
-              [value]="boxLabel"
+              [value]="getBoxLabelValue(item)"
             ></camfil-product-attribute>
             <button mat-button (click)="openQuickViewDialog(); $event.stopPropagation()">
               <mat-icon svgIcon="search" class="size-15"></mat-icon>
@@ -51,7 +51,7 @@
               formControlName="boxLabel"
               name="boxLabel"
               (blur)="onBlur($event.target, boxLabelForm)"
-              [id]="'line-item-box-label-'+removeDots(item?.id)"
+              [id]="'line-item-box-label-' + removeDots(item?.id)"
               (focus)="setFocusedElement($event.target)"
             />
           </mat-form-field>
