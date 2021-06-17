@@ -76,12 +76,14 @@
               <mat-label>{{ 'camfil.account.cam_card.add_to_form.choose_address' | translate }}</mat-label>
               <mat-select formControlName="deliveryAddress" (selectionChange)="pickAddress($event)">
                 <mat-option>--</mat-option>
-                <mat-option
-                  *ngFor="let location of addresses$ | async | addressSort: 'addressLine1'"
-                  [value]="location.id"
-                >
-                  {{ location.addressLine1 }}
-                </mat-option>
+                <ng-container *ngIf="addresses$ | async as locations">
+                  <mat-option
+                    *ngFor="let location of locations[customerId] | addressSort: 'addressLine1'"
+                    [value]="location.id"
+                  >
+                    {{ location.addressLine1 }}
+                  </mat-option>
+                </ng-container>
               </mat-select>
             </mat-form-field>
             <mat-form-field appearance="fill" class="form-field">

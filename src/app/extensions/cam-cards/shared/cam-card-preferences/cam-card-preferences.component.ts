@@ -22,7 +22,12 @@ import { whenTruthy } from 'ish-core/utils/operators';
 import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
 
 import { CamCardsFacade } from '../../facades/cam-cards.facade';
-import { CamCard, CamCardAddress, CamCardCustomer } from '../../models/cam-card/cam-card.model';
+import {
+  CamCard,
+  CamCardAddress,
+  CamCardCustomer,
+  CamCardCustomersAddresses,
+} from '../../models/cam-card/cam-card.model';
 
 /**
  * The Cam Cards Preferences Dialog shows the modal to create/edit a cam_cards.
@@ -68,7 +73,7 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit, OnDestroy
   pickerLast;
   pickerNext;
   customers$: Observable<CamCardCustomer[]>;
-  addresses$: Observable<CamCardAddress[]>;
+  addresses$: Observable<CamCardCustomersAddresses>;
   countries$: Observable<Country[]>;
   customers: CamCardCustomer[];
   selectedAddress: CamCardAddress;
@@ -283,7 +288,7 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit, OnDestroy
     if (this.camCardForm.valid) {
       const nextDelivery = this.camCardForm.get('nextDelivery').value;
       const lastDelivery = this.camCardForm.get('lastDelivery').value;
-      const customerId = this.camCardForm.get('customerName').value;
+      const customerId = this.customerId;
       this.submit.emit({
         ...this.camCard,
         id: this.camCard?.id,
@@ -331,7 +336,8 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit, OnDestroy
   pickAddress(event) {
     const id = event.value;
     this.addresses$.subscribe(addresses => {
-      const address = addresses.filter(element => element.id === id)[0];
+      const customerId = this.customerId;
+      const address = addresses[customerId].filter(element => element.id === id)[0];
       if (address) {
         this.selectedAddress = address;
       }
@@ -370,9 +376,14 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit, OnDestroy
       nextDelivery: date,
     });
   }
+
   get collapseFormTranslationKey() {
     return this.isCollapsed
       ? 'camfil.account.cam_card_preferences.maximize'
       : 'camfil.account.cam_card_preferences.minimize';
+  }
+
+  get customerId() {
+    return this.camCardForm?.get('customerName')?.value || '';
   }
 }

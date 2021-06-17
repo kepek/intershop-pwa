@@ -22,7 +22,13 @@ import { whenTruthy } from 'ish-core/utils/operators';
 import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
 
 import { CamCardsFacade } from '../../../facades/cam-cards.facade';
-import { CamCard, CamCardAddress, CamCardCustomer, CamCardMeasurement } from '../../../models/cam-card/cam-card.model';
+import {
+  CamCard,
+  CamCardAddress,
+  CamCardCustomer,
+  CamCardCustomersAddresses,
+  CamCardMeasurement,
+} from '../../../models/cam-card/cam-card.model';
 
 import { CREATE_CAMCARD_VALIDATORS } from './validators';
 
@@ -54,7 +60,7 @@ export class CreateProductCamCardModalComponent implements OnInit, OnDestroy {
 
   validators = CREATE_CAMCARD_VALIDATORS;
 
-  addresses$: Observable<CamCardAddress[]>;
+  addresses$: Observable<CamCardCustomersAddresses>;
   customers$: Observable<CamCardCustomer[]>;
   countries$: Observable<Country[]>;
   customers: CamCardCustomer[];
@@ -158,7 +164,7 @@ export class CreateProductCamCardModalComponent implements OnInit, OnDestroy {
   pickAddress(event) {
     const id = event.value;
     this.addresses$.subscribe(addresses => {
-      const address = addresses.filter(element => element.id === id)[0];
+      const address = addresses[this.customerId].filter(element => element.id === id)[0];
       if (address) {
         this.camCardForm.patchValue({
           company: address.companyName1,
@@ -172,7 +178,7 @@ export class CreateProductCamCardModalComponent implements OnInit, OnDestroy {
   }
 
   create() {
-    const customerId = this.camCardForm.get('customerSelect').value;
+    const customerId = this.customerId;
 
     this.customers.map(item => item.id === customerId);
     const camCard = {
@@ -212,7 +218,7 @@ export class CreateProductCamCardModalComponent implements OnInit, OnDestroy {
   emitCamCardData(edit) {
     if (this.camCardForm.valid) {
       const newCamCard = this.camCardForm.get('newCamCard').value;
-      const customerId = this.camCardForm.get('customerSelect').value;
+      const customerId = this.customerId;
       const camCardData = this.create();
 
       const newSubCamCard: CamCard = {
@@ -281,5 +287,9 @@ export class CreateProductCamCardModalComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  get customerId() {
+    return this.camCardForm?.get('customerSelect')?.value || '';
   }
 }
