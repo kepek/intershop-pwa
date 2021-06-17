@@ -209,7 +209,7 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit, OnDestroy
   initForm() {
     const maxL = this.maxLength;
     this.camCardForm = this.fb.group({
-      title: ['', [Validators.required, Validators.maxLength(maxL)]],
+      title: ['', [Validators.required, Validators.maxLength(40)]],
       customerName: ['', [Validators.required, Validators.maxLength(maxL)]],
       orderMark: ['', [Validators.maxLength(maxL)]],
       invoiceMark: ['', [Validators.maxLength(maxL)]],
