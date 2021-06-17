@@ -3,6 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { Observable, ReplaySubject, Subject } from 'rxjs';
 import { startWith, take, takeUntil } from 'rxjs/operators';
 
+import { AccountFacade } from 'ish-core/facades/account.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { CategoryView } from 'ish-core/models/category-view/category-view.model';
 import { VariationOptionGroup } from 'ish-core/models/product-variation/variation-option-group.model';
@@ -35,12 +36,13 @@ export class CamfilProductDetailComponent implements OnInit, OnDestroy {
   @Input() productSku: string;
   @Output() productSkuChange = new EventEmitter<string>();
 
+  userPermissions$: Observable<string[]>;
   isInCompareList$: Observable<boolean>;
   isInCompareList: boolean;
   showAddToCompare = false;
   private sku$ = new ReplaySubject<string>(1);
 
-  constructor(private shoppingFacade: ShoppingFacade) {}
+  constructor(private shoppingFacade: ShoppingFacade, private accountFacade: AccountFacade) {}
 
   productDetailForm: FormGroup;
   readonly quantityControlName = 'quantity';
@@ -79,6 +81,8 @@ export class CamfilProductDetailComponent implements OnInit, OnDestroy {
         this.isInCompareList = isInCompare;
       });
     }
+
+    this.userPermissions$ = this.accountFacade.userPermissions$.pipe(takeUntil(this.destroy$));
   }
 
   ngOnDestroy() {
