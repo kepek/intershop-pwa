@@ -46,6 +46,7 @@ export class CamfilAccountOrderComponent implements OnInit, OnDestroy {
   lineItems: OrderLineItem[];
   reOrderText: string;
   productsAvailability = true;
+  getOrderStatusText = OrderHelper.getOrderStatusText;
   @ViewChild(CamfilSmallCtaModalComponent) modal: CamfilSmallCtaModalComponent;
 
   ngOnInit() {
@@ -118,9 +119,5 @@ export class CamfilAccountOrderComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
-  }
-
-  getOrderStatusText(orderStatus) {
-    return OrderHelper.getOrderStatusText(orderStatus);
   }
 }

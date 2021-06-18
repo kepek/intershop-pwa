@@ -80,6 +80,7 @@ export class CamfilOrderListComponent implements OnInit, AfterViewInit, OnDestro
   ];
   private destroy$ = new Subject();
   isMobileView = false;
+  getOrderStatusText = OrderHelper.getOrderStatusText;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -329,9 +330,5 @@ export class CamfilOrderListComponent implements OnInit, AfterViewInit, OnDestro
 
   onResize() {
     this.isMobileView = window.innerWidth <= 768;
-  }
-
-  getOrderStatusText(orderStatus) {
-    return OrderHelper.getOrderStatusText(orderStatus);
   }
 }
