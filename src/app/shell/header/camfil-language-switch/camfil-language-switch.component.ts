@@ -1,11 +1,9 @@
 import { Location } from '@angular/common';
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Observable } from 'rxjs';
-import { take } from 'rxjs/operators';
 
 import { AppFacade } from 'ish-core/facades/app.facade';
 import { Locale } from 'ish-core/models/locale/locale.model';
-import { whenTruthy } from 'ish-core/utils/operators';
 
 @Component({
   selector: 'camfil-language-switch',
@@ -24,18 +22,14 @@ export class CamfilLanguageSwitchComponent implements OnInit {
 
   locale$: Observable<Locale>;
   availableLocales$: Observable<Locale[]>;
-  availableLocales: Locale[];
+  availableLocalesByCountryCode$: Observable<Locale[]>;
 
   constructor(private appFacade: AppFacade, public location: Location) {}
 
   ngOnInit() {
     this.locale$ = this.appFacade.currentLocale$;
     this.availableLocales$ = this.appFacade.availableLocales$;
-    this.availableLocales$.pipe(whenTruthy(), take(1)).subscribe(availableLocales => {
-      this.appFacade.getCountryByChannel$.pipe(take(1)).subscribe(code => {
-        this.availableLocales = availableLocales.filter(loc => [code.toLowerCase(), 'gb'].includes(loc.value));
-      });
-    });
+    this.availableLocalesByCountryCode$ = this.appFacade.availableLocalesByCountryCode$;
   }
 
   toggleLevel(val: boolean) {

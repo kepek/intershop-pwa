@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { NavigationCancel, NavigationEnd, NavigationStart, Router } from '@angular/router';
 import { Store, select } from '@ngrx/store';
 import { combineLatest, merge, noop } from 'rxjs';
-import { filter, map, mapTo, shareReplay, startWith, withLatestFrom } from 'rxjs/operators';
+import { filter, map, mapTo, shareReplay, startWith, switchMap, take, withLatestFrom } from 'rxjs/operators';
 
 import {
   getAvailableLocales,
@@ -19,6 +19,7 @@ import { getLoggedInCustomer } from 'ish-core/store/customer/user';
 import { getAllCountries, getCountriesLoading, loadCountries } from 'ish-core/store/general/countries';
 import { getRegionsByCountryCode, loadRegions } from 'ish-core/store/general/regions';
 import { getServerConfigParameter } from 'ish-core/store/general/server-config';
+import { whenTruthy } from 'ish-core/utils/operators';
 
 @Injectable({ providedIn: 'root' })
 export class AppFacade {
@@ -35,6 +36,15 @@ export class AppFacade {
 
   currentLocale$ = this.store.pipe(select(getCurrentLocale));
   availableLocales$ = this.store.pipe(select(getAvailableLocales));
+  availableLocalesByCountryCode$ = this.availableLocales$.pipe(
+    whenTruthy(),
+    switchMap(availableLocales =>
+      this.getCountryByChannel$.pipe(
+        take(1),
+        map(countryCode => availableLocales.filter(loc => [countryCode.toLowerCase(), 'gb'].includes(loc.value)))
+      )
+    )
+  );
 
   generalError$ = this.store.pipe(select(getGeneralError));
   generalErrorType$ = this.store.pipe(select(getGeneralErrorType));
