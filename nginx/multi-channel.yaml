@@ -1,13 +1,7 @@
 '.+':
-  - baseHref: /sv-se
-    channel: Camfil-CamfilSE-Site
-    lang: sv_SE
-  - baseHref: /sv-gb
-    channel: Camfil-CamfilSE-Site
-    lang: en_GB
-  - baseHref: /fi-fi
+  - baseHref: /fi
     channel: Camfil-CamfilFI-Site
     lang: fi_FI
-  - baseHref: /fi-gb
-    channel: Camfil-CamfilFI-Site
-    lang: en_GB
+  - baseHref: /se
+    channel: Camfil-CamfilSE-Site
+    lang: sv_SE
