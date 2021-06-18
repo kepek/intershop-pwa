@@ -4,6 +4,7 @@ import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
+import { OrderHelper } from 'ish-core/models/order/order.helper';
 import { Price } from 'ish-core/models/price/price.model';
 import { ProductCompletenessLevel } from 'ish-core/models/product/product.model';
 import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
@@ -14,7 +15,6 @@ import { CamAccountFacade } from '../../../facades/cam-account.facade';
 import { DeliveryAddress } from '../../../models/deliveryAddress/deliveryAddress.interface';
 import { Order } from '../../../models/order/order.model';
 import { OrderLineItem } from '../../../models/orderLineItem/orderLineItem.interface';
-import { OrderHelper } from 'ish-core/models/order/order.helper';
 
 /**
  * The Order Page Component displays the details of an order. See also {@link OrderPageContainerComponent}
