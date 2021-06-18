@@ -118,4 +118,10 @@ export class CamfilAccountOrderComponent implements OnInit, OnDestroy {
     this.destroy$.next();
     this.destroy$.complete();
   }
+
+  getOrderStatusText(orderStatus) {
+    return orderStatus
+      ? `camfil.dynamic.account.orderlist.status.${orderStatus.trim().replace(' ', '_').toLowerCase()}`
+      : '---';
+  }
 }
