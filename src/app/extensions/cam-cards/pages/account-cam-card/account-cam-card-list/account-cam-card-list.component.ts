@@ -257,6 +257,10 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
     }
   }
 
+  isCamCardExpanded(cc: CamCard) {
+    return cc.id === this.expandedCamCard?.id;
+  }
+
   openSubLevels(camCard: CamCard) {
     camCard.subCamCards.forEach(sub => {
       if (!this.isSubOpen.includes(sub.id)) {
