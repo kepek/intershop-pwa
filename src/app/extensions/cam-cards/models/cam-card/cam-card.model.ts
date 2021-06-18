@@ -79,6 +79,10 @@ export interface CamCardAddress extends Address {
   street?: string;
 }
 
+export interface CamCardCustomersAddresses {
+  [customerId: string]: CamCardAddress[];
+}
+
 export interface SelectCamCardOption extends SelectOption {
   nextDelivery: string;
   orderLabel?: string;

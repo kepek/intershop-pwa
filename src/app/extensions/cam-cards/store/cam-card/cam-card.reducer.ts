@@ -6,9 +6,9 @@ import { setLoadingOn } from 'ish-core/utils/ngrx-creators';
 
 import {
   CamCard,
-  CamCardAddress,
   CamCardContact,
   CamCardCustomer,
+  CamCardCustomersAddresses,
   CamCardImportValidationResponse,
   CamCardItem,
 } from '../../models/cam-card/cam-card.model';
@@ -86,7 +86,7 @@ export interface CamCardState extends EntityState<CamCard> {
   userContact: {
     [key: string]: CamCardContact[];
   };
-  addresses?: CamCardAddress[];
+  addresses?: CamCardCustomersAddresses;
   virtualCamCard: CamCard;
   validationErrors: HttpError;
   validationResponse: CamCardImportValidationResponse;
@@ -105,7 +105,7 @@ export const initialState: CamCardState = camCardAdapter.getInitialState({
   addProductSuccess: false,
   contacts: {},
   userContact: {},
-  addresses: [],
+  addresses: {},
   stickyToolbar: false,
   virtualCamCard: undefined,
   validationErrors: undefined,
@@ -218,22 +218,20 @@ export const camCardReducer = createReducer(
     };
   }),
   on(loadDeliveryAddressesSuccess, (state: CamCardState, action) => {
-    const { addresses } = action.payload;
+    const { addresses, customerId } = action.payload;
     return {
       ...state,
-      addresses,
+      addresses: {
+        ...state.addresses,
+        [customerId]: addresses,
+      },
       loading: false,
     };
   }),
-  on(loadDeliveryAddressesFail, (state: CamCardState) => {
-    const addresses = [];
-
-    return {
-      ...state,
-      addresses,
-      loading: false,
-    };
-  }),
+  on(loadDeliveryAddressesFail, (state: CamCardState) => ({
+    ...state,
+    loading: false,
+  })),
   on(
     loadCamCardSuccess,
     addBasketToNewCamCardSuccess,

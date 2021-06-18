@@ -38,7 +38,7 @@ describe('Order Form Component', () => {
     component = fixture.componentInstance;
     element = fixture.nativeElement;
 
-    when(camCardFacadeMock.addresses$).thenReturn(of([]));
+    when(camCardFacadeMock.addresses$).thenReturn(of({}));
     when(camCardFacadeMock.customers$).thenReturn(of([]));
   });
 

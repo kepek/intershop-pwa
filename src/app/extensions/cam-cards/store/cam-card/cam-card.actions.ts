@@ -148,7 +148,7 @@ export const loadDeliveryAddresses = createAction('[Cam Cards] load available ad
 
 export const loadDeliveryAddressesSuccess = createAction(
   '[Cam Cards API] load available addressses Success',
-  payload<{ addresses: CamCardAddress[] }>()
+  payload<{ customerId: string; addresses: CamCardAddress[] }>()
 );
 
 export const loadDeliveryAddressesFail = createAction('[Cam Cards API] load available addresses Fail', httpError());

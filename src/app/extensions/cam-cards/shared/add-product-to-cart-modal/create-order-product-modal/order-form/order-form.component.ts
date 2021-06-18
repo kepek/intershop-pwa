@@ -7,7 +7,7 @@ import { EditBucket } from 'ish-core/models/basket/bucket.model';
 import { whenTruthy } from 'ish-core/utils/operators';
 
 import { CamCardsFacade } from '../../../../facades/cam-cards.facade';
-import { CamCardAddress, CamCardContact, CamCardCustomer } from '../../../../models/cam-card/cam-card.model';
+import { CamCardContact, CamCardCustomer, CamCardCustomersAddresses } from '../../../../models/cam-card/cam-card.model';
 
 import { ADDRESS_VALIDATORS } from './validators.js';
 
@@ -19,7 +19,7 @@ import { ADDRESS_VALIDATORS } from './validators.js';
 })
 export class OrderFormComponent implements OnInit, OnDestroy {
   addressForm: FormGroup;
-  addresses$: Observable<CamCardAddress[]>;
+  addresses$: Observable<CamCardCustomersAddresses>;
   validators = ADDRESS_VALIDATORS;
 
   customers$: Observable<CamCardCustomer[]>;
@@ -73,7 +73,7 @@ export class OrderFormComponent implements OnInit, OnDestroy {
   pickAddress(event) {
     const id = event.value;
     this.addresses$.subscribe(addresses => {
-      const address = addresses.filter(element => element.id === id)[0];
+      const address = addresses[this.customerId].filter(element => element.id === id)[0];
       this.addressForm?.patchValue({
         company: address?.addressName,
         address: address?.addressLine1,
@@ -100,7 +100,7 @@ export class OrderFormComponent implements OnInit, OnDestroy {
       .subscribe((contacts: CamCardContact[]) => {
         this.contacts = contacts;
 
-        if (this.orderToEdit?.contactPerson && this.orderToEdit.customerId === this.getField('customer')?.value) {
+        if (this.orderToEdit?.contactPerson && this.orderToEdit.customerId === this.customerId) {
           const erpId = this.orderToEdit.contactPerson.erpId;
           this.addressForm?.patchValue({ contact: erpId });
           this.pickContact({ value: erpId });
@@ -154,5 +154,9 @@ export class OrderFormComponent implements OnInit, OnDestroy {
   setDefaultFullCustomer(customerId: string) {
     const selectedCustomer = this.customersArr?.find(customer => customer.id === customerId);
     this.addressForm?.patchValue({ customerFull: selectedCustomer });
+  }
+
+  get customerId() {
+    return this.addressForm?.get('customer')?.value || '';
   }
 }
