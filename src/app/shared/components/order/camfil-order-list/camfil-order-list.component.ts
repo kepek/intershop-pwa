@@ -15,11 +15,12 @@ import { MatCheckbox, MatCheckboxChange } from '@angular/material/checkbox';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
-import { OrderHelper } from 'ish-core/models/order/order.helper';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
 import { CamAccountFacade } from 'src/app/extensions/cam-account/facades/cam-account.facade';
 import { Order } from 'src/app/extensions/cam-account/models/order/order.model';
+
+import { OrderHelper } from 'ish-core/models/order/order.helper';
 
 /**
  * The Order List Container Component fetches order data and displays them all
