@@ -2,15 +2,15 @@ import { AfterViewInit, ChangeDetectionStrategy, Component, Input, OnChanges, On
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { FilterNavigation } from 'ish-core/models/filter-navigation/filter-navigation.model';
 import { SortableAttributesType } from 'ish-core/models/product-listing/product-listing.model';
 import { ViewType } from 'ish-core/models/viewtype/viewtype.types';
+import { whenTruthy } from 'ish-core/utils/operators';
 import { URLFormParams, formParamsToString } from 'ish-core/utils/url-form-params';
 import { SelectOption } from 'ish-shared/forms/components/select/select.component';
-import { whenTruthy } from 'ish-core/utils/operators';
-import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'camfil-product-list-toolbar',
