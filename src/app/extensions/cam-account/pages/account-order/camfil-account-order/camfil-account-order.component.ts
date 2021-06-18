@@ -14,6 +14,7 @@ import { CamAccountFacade } from '../../../facades/cam-account.facade';
 import { DeliveryAddress } from '../../../models/deliveryAddress/deliveryAddress.interface';
 import { Order } from '../../../models/order/order.model';
 import { OrderLineItem } from '../../../models/orderLineItem/orderLineItem.interface';
+import { OrderHelper } from 'ish-core/models/order/order.helper';
 
 /**
  * The Order Page Component displays the details of an order. See also {@link OrderPageContainerComponent}
@@ -120,8 +121,6 @@ export class CamfilAccountOrderComponent implements OnInit, OnDestroy {
   }
 
   getOrderStatusText(orderStatus) {
-    return orderStatus
-      ? `camfil.dynamic.account.orderlist.status.${orderStatus.trim().replace(' ', '_').toLowerCase()}`
-      : '---';
+    return OrderHelper.getOrderStatusText(orderStatus);
   }
 }

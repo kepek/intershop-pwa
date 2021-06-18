@@ -15,6 +15,7 @@ import { MatCheckbox, MatCheckboxChange } from '@angular/material/checkbox';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
+import { OrderHelper } from 'ish-core/models/order/order.helper';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
 import { CamAccountFacade } from 'src/app/extensions/cam-account/facades/cam-account.facade';
@@ -330,8 +331,6 @@ export class CamfilOrderListComponent implements OnInit, AfterViewInit, OnDestro
   }
 
   getOrderStatusText(orderStatus) {
-    return orderStatus
-      ? `camfil.dynamic.account.orderlist.status.${orderStatus.trim().replace(' ', '_').toLowerCase()}`
-      : '---';
+    return OrderHelper.getOrderStatusText(orderStatus);
   }
 }
