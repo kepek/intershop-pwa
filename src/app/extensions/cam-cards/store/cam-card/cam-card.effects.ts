@@ -712,7 +712,6 @@ export class CamCardEffects {
             this.handleCamCardContactsSuccess(camCardId, camCardContacts, contact),
             displaySuccessMessage({
               message: 'camfil.account.cam_card.update.contacts.confirmation',
-              messageParams: { 0: camCardId },
             }),
           ]),
           mapErrorToAction(updateCamCardContactsFail)
