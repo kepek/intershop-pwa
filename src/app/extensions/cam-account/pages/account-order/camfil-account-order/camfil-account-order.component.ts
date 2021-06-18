@@ -4,6 +4,7 @@ import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
+import { OrderHelper } from 'ish-core/models/order/order.helper';
 import { Price } from 'ish-core/models/price/price.model';
 import { ProductCompletenessLevel } from 'ish-core/models/product/product.model';
 import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
@@ -45,6 +46,7 @@ export class CamfilAccountOrderComponent implements OnInit, OnDestroy {
   lineItems: OrderLineItem[];
   reOrderText: string;
   productsAvailability = true;
+  getOrderStatusText = OrderHelper.getOrderStatusText;
   @ViewChild(CamfilSmallCtaModalComponent) modal: CamfilSmallCtaModalComponent;
 
   ngOnInit() {
@@ -117,11 +119,5 @@ export class CamfilAccountOrderComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
-  }
-
-  getOrderStatusText(orderStatus) {
-    return orderStatus
-      ? `camfil.dynamic.account.orderlist.status.${orderStatus.trim().replace(' ', '_').toLowerCase()}`
-      : '---';
   }
 }

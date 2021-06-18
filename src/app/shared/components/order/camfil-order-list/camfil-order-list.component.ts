@@ -20,6 +20,8 @@ import { map, takeUntil } from 'rxjs/operators';
 import { CamAccountFacade } from 'src/app/extensions/cam-account/facades/cam-account.facade';
 import { Order } from 'src/app/extensions/cam-account/models/order/order.model';
 
+import { OrderHelper } from 'ish-core/models/order/order.helper';
+
 /**
  * The Order List Container Component fetches order data and displays them all
  *
@@ -78,6 +80,7 @@ export class CamfilOrderListComponent implements OnInit, AfterViewInit, OnDestro
   ];
   private destroy$ = new Subject();
   isMobileView = false;
+  getOrderStatusText = OrderHelper.getOrderStatusText;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -327,11 +330,5 @@ export class CamfilOrderListComponent implements OnInit, AfterViewInit, OnDestro
 
   onResize() {
     this.isMobileView = window.innerWidth <= 768;
-  }
-
-  getOrderStatusText(orderStatus) {
-    return orderStatus
-      ? `camfil.dynamic.account.orderlist.status.${orderStatus.trim().replace(' ', '_').toLowerCase()}`
-      : '---';
   }
 }
