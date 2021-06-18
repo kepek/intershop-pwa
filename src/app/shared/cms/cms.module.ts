@@ -10,7 +10,10 @@ import { CamfilCmsCookieDisclaimerComponent } from './components/camfil-cms-cook
 import { CamfilCmsEdpComponent } from './components/camfil-cms-edp/camfil-cms-edp.component';
 import { CamfilCmsFaqComponent } from './components/camfil-cms-faq/camfil-cms-faq.component';
 import { CamfilCMSImageTextButtonComponent } from './components/camfil-cms-image-text-button/camfil-cms-image-text-button.component';
-import { CamfilCmsLightboxLinkComponent } from './components/camfil-cms-lightbox-link/camfil-cms-lightbox-link.component';
+import {
+  CamfilCmsLightboxLinkArticleComponent,
+  CamfilCmsLightboxLinkComponent,
+} from './components/camfil-cms-lightbox-link/camfil-cms-lightbox-link.component';
 import { CamfilCMSSmallImageTextLinkComponent } from './components/camfil-cms-small-image-text-link/camfil-cms-small-image-text-link.component';
 import { CMSCarouselComponent } from './components/cms-carousel/cms-carousel.component';
 import { CMSContainerComponent } from './components/cms-container/cms-container.component';
@@ -182,7 +185,7 @@ import { SfeAdapterService } from './sfe-adapter/sfe-adapter.service';
       multi: true,
     },
   ],
-  declarations: [CamfilCmsLightboxLinkComponent],
+  declarations: [CamfilCmsLightboxLinkArticleComponent, CamfilCmsLightboxLinkComponent],
   imports: [CamfilIconsModule, CommonModule, IconModule, MatIconModule],
 })
 export class CMSModule {
