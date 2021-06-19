@@ -76,7 +76,7 @@
     </div>
   </div>
   <div class="product-detailed-col-4">
-    <div class="product-prices-container d-flex justify-content-between">
+    <div class="product-prices-container d-flex justify-content-between" *ngIf="userPermissions$ | async">
       <camfil-product-attribute
         *ngIf="product.listPrice?.value > 0"
         name="camfil.product.list_price.label"

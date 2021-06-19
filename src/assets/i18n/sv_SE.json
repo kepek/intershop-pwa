@@ -1494,7 +1494,7 @@
   "restricted-items.error.message1": "Denna artikel kan inte levereras till den adress du angett",
   "restricted-items.error.message2": "Du kan antingen ta bort denna artikel/artiklar från din varukorg eller välja en annan leveransadress",
   "search.breadcrumbs.your_search.label": "Sökresultat:",
-  "search.filter.show_all.link": "Visa alla",
+  "search.filter.show_all.link": "Visa alla (+{{0}})",
   "search.filter.show_less.link": "Visa mindre",
   "search.mobile.filter.trigger": "Filtrera",
   "search.noResult.heading": "Inga sökresultat",
