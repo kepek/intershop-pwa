@@ -531,6 +531,7 @@
   "camfil.account.cam_card.add_to_form.postal_code": "Postnr",
   "camfil.account.cam_card.add_to_form.reminder": "Påminn via e-post när det är dags att beställa",
   "camfil.account.cam_card.add_to_template.button.add_to_template.label": "Lägg till i CamCard",
+  "camfil.account.cam_card.copy_cam_card.confirmation": "sv_The CamCard {{0}} has been created and all items have been transferred.",
   "camfil.account.cam_card.customer": "Kund ID",
   "camfil.account.cam_card.delete.button.text": "Radera",
   "camfil.account.cam_card.delete.do_you_really.text": "Är du säker på att du vill ta bort detta CamCard?",
