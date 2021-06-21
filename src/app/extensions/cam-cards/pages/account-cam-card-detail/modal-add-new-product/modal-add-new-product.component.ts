@@ -11,7 +11,7 @@ import { Address } from 'ish-core/models/address/address.model';
 import { AttributeHelper } from 'ish-core/models/attribute/attribute.helper';
 import { Bucket } from 'ish-core/models/basket/bucket.model';
 import { ProductView } from 'ish-core/models/product-view/product-view.model';
-import { Product, ProductCompletenessLevel } from 'ish-core/models/product/product.model';
+import { Product, ProductCompletenessLevel, ProductHelper } from 'ish-core/models/product/product.model';
 import { whenTruthy } from 'ish-core/utils/operators';
 import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
 
@@ -60,7 +60,7 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy {
   showSkuError = false;
   loading = false;
   isSubmitted = false;
-
+  requiresMeasurement: boolean;
   private destroy$ = new Subject();
   basketAddresses: Address[];
 
@@ -75,6 +75,10 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy {
       quantity: new FormControl(1),
       sku: new FormControl('', [Validators.required]),
       boxLabel: new FormControl('', [Validators.maxLength(60)]),
+      measurementWidth: new FormControl(),
+      measurementHeight: new FormControl(),
+      measurementDiameter: new FormControl(),
+      measurementErrorInfo: new FormControl(),
     });
 
     if (this.addToOrder) {
@@ -98,12 +102,13 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy {
     }
   }
 
-  isSkuValid = () => this.isSubmitted || (!this.product.failed && this.product.availability);
+  isSkuValid = () => this.isSubmitted || (!this.product?.failed && this.product?.availability);
 
   validateSku() {
     const sku = this.productForm.get('sku').value;
 
     if (sku) {
+      this.requiresMeasurement = false;
       this.loading = true;
       this.product$ = this.productFacade.product$(sku, ModalAddNewProductComponent.REQUIRED_COMPLETENESS_LEVEL);
 
@@ -116,6 +121,7 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy {
         }
 
         if (this.isSkuValid()) {
+          this.requiresMeasurement = ProductHelper.getRequiresMeasurement(this.product);
           this.setQuantityValidation(this.product.minOrderQuantity, this.product.maxOrderQuantity);
         }
       });
@@ -148,11 +154,16 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy {
           this.addToNewOrder(sku, quantity, deliveryAddress, this.order.id);
         }
       } else {
-        const measurement = undefined;
+        const measurement = {
+          width: this.productForm.get('measurementWidth').value,
+          height: this.productForm.get('measurementHeight').value,
+          diameter: this.productForm.get('measurementDiameter').value,
+        };
         this.camCardsFacade.addProductToCamCard(this.rootCamCardId, sku, quantity, comment, measurement, 0, true);
         this.hide();
         this.resetFormValues();
       }
+      this.requiresMeasurement = false;
     } else {
       markAsDirtyRecursive(this.productForm);
     }
@@ -221,6 +232,10 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy {
   /** open modal */
   show() {
     return this.modalTemplate;
+  }
+
+  disableIfNoMeasurements(): boolean {
+    return ProductHelper.disableIfNoMeasurements(this.product, this.productForm);
   }
 
   ngOnDestroy(): void {

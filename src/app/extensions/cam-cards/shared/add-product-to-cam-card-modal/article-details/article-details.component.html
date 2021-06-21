@@ -1,11 +1,73 @@
-<ng-container *ngIf="showProductName">
-  <div class="article-product-name">
-    <small>{{ product.name }}</small>
+<ng-container *ngIf="!isInAddNewProductModal; else measurementsOnly">
+  <ng-container *ngIf="showProductName">
+    <div class="article-product-name">
+      <small>{{ product.name }}</small>
+    </div>
+  </ng-container>
+
+  <div class="article-details" [class.article-details--show-product-name]="showProductName">
+    <ng-container *ngIf="requiresMeasurement">
+      <h3 class="m-0 text-center text-capitalize w-100">
+        <b>{{ 'camfil.modal.addToCamcard.measurement.choose.header' | translate }}</b>
+      </h3>
+      <div class="article-details__measurement d-flex flex-wrap w-100 pt-1">
+        <mat-form-field [formGroup]="quantityForm" appearance="outline">
+          <mat-label>{{ 'camfil.modal.addToCamcard.width.label' | translate }}</mat-label>
+          <input matInput formControlName="measurementWidth" (keyup)="validateVal()" type="number" />
+        </mat-form-field>
+        <mat-form-field [formGroup]="quantityForm" appearance="outline">
+          <mat-label>{{ 'camfil.modal.addToCamcard.height.label' | translate }}</mat-label>
+          <input matInput formControlName="measurementHeight" (keyup)="validateVal()" type="number" />
+        </mat-form-field>
+        <mat-form-field [formGroup]="quantityForm" appearance="outline">
+          <mat-label>{{ 'camfil.modal.addToCamcard.diameter.label' | translate }}</mat-label>
+          <input matInput formControlName="measurementDiameter" (keyup)="validateVal()" type="number" />
+        </mat-form-field>
+
+        <div class="w-100">
+          <span innerHTML="{{ 'camfil.modal.addToCamcard.measurement.note.text' | translate }}"></span>
+          <div *ngIf="showError" class="text-danger">
+            {{ 'camfil.modal.measurement.error' | translate: { '0': maxVal } }}
+          </div>
+          <div *ngIf="measurementGlobalError$ | async" class="text-danger">
+            {{ 'camfil.modal.measurement.error.global' | translate }}
+          </div>
+          <hr class="m-2" />
+        </div>
+      </div>
+    </ng-container>
+
+    <div>
+      <mat-form-field [formGroup]="quantityForm" appearance="outline">
+        <mat-label>{{ 'camfil.modal.addToCamcard.box.label' | translate }}</mat-label>
+        <input matInput formControlName="boxLabel" />
+      </mat-form-field>
+
+      <camfil-error
+        [errors]="getField('boxLabel').errors"
+        [errorValidators]="validators.boxLabel"
+        [touched]="getField('boxLabel').touched || getField('boxLabel').dirty"
+      ></camfil-error>
+    </div>
+
+    <div class="article-details__quantity">
+      <mat-label class="article-details__label article-details__quantity--label">{{
+        'camfil.modal.addToCamcard.quantity.label' | translate
+      }}</mat-label>
+      <camfil-product-quantity
+        class="article-details__quantity--input"
+        [type]="'counter'"
+        [allowZeroQuantity]="false"
+        [quantityLabel]="'camfil.modal.addToCamcard.quantity.label' | translate"
+        [product]="product"
+        [parentForm]="quantityForm"
+        controlName="quantity"
+      ></camfil-product-quantity>
+    </div>
   </div>
 </ng-container>
-
-<div class="article-details" [class.article-details--show-product-name]="showProductName">
-  <ng-container *ngIf="requiresMeasurement">
+<ng-template #measurementsOnly>
+  <ng-container *ngIf="showMeasurementsForm">
     <h3 class="m-0 text-center text-capitalize w-100">
       <b>{{ 'camfil.modal.addToCamcard.measurement.choose.header' | translate }}</b>
     </h3>
@@ -35,32 +97,4 @@
       </div>
     </div>
   </ng-container>
-
-  <div>
-    <mat-form-field [formGroup]="quantityForm" appearance="outline">
-      <mat-label>{{ 'camfil.modal.addToCamcard.box.label' | translate }}</mat-label>
-      <input matInput formControlName="boxLabel" />
-    </mat-form-field>
-
-    <camfil-error
-      [errors]="getField('boxLabel').errors"
-      [errorValidators]="validators.boxLabel"
-      [touched]="getField('boxLabel').touched || getField('boxLabel').dirty"
-    ></camfil-error>
-  </div>
-
-  <div class="article-details__quantity">
-    <mat-label class="article-details__label article-details__quantity--label">{{
-      'camfil.modal.addToCamcard.quantity.label' | translate
-    }}</mat-label>
-    <camfil-product-quantity
-      class="article-details__quantity--input"
-      [type]="'counter'"
-      [allowZeroQuantity]="false"
-      [quantityLabel]="'camfil.modal.addToCamcard.quantity.label' | translate"
-      [product]="product"
-      [parentForm]="quantityForm"
-      controlName="quantity"
-    ></camfil-product-quantity>
-  </div>
-</div>
+</ng-template>

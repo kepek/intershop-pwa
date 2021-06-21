@@ -16,7 +16,8 @@ export class ArticleDetailsComponent implements OnInit {
   @Input() product: Product;
   @Input() quantityForm: FormGroup;
   @Input() showProductName?: boolean;
-
+  @Input() isInAddNewProductModal = false;
+  @Input() showMeasurementsForm = false;
   MEASUREMENTS = ['measurementWidth', 'measurementHeight', 'measurementDiameter'];
 
   maxVal: number;
@@ -24,6 +25,7 @@ export class ArticleDetailsComponent implements OnInit {
   measurementGlobalError$: Observable<boolean>;
   filledMeasurements: any[];
   requiresMeasurement: boolean;
+
   validators = {
     boxLabel: [
       {
