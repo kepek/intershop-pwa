@@ -67,7 +67,7 @@ export class CamCardHelper {
                 extensions: {
                   customer: cc.customer,
                   contactPerson,
-                  orderMark: cc.orderLabel,
+                  orderMark: cc.orderLabel || cc.name,
                   invoiceLabel: cc.invoiceLabel,
                   createdFromCamCardId: cc.id,
                 },
