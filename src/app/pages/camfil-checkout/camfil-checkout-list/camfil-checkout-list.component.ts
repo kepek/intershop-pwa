@@ -36,7 +36,6 @@ import { ModalAddNewProductComponent } from '../../../extensions/cam-cards/pages
 
 import { EditOrderModalComponent } from './edit-order-modal/edit-order-modal.component';
 import { ORDER_HEADER_VALIDATORS } from './validators';
-import { LineItemUpdate } from 'ish-core/models/line-item-update/line-item-update.model';
 import { Address } from 'ish-core/models/address/address.model';
 import { AddEmailRecipientModalComponent } from '../add-email-recipient-modal/add-email-recipient-modal.component';
 import { TranslateService } from '@ngx-translate/core';
@@ -88,8 +87,6 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
   basketExtensions: BasketExtensions[];
   basketExtensions$: Observable<BasketExtensions[]>;
   deliveryDateValue: string;
-  basketLoading$: Observable<boolean>;
-  ordersLoading$: Observable<boolean>;
   focusedCheckoutElement$: Observable<CheckoutFocusedElement>;
   focusedElement: CheckoutFocusedElement;
   focusedElementId: string;
@@ -127,8 +124,6 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
     this.calendarExceptions$ = this.checkoutFacade.calendarExceptions$;
 
     this.orderAddress = { ...this.order.shipToAddressFull, countryCode: '' };
-    this.basketLoading$ = this.checkoutFacade.basketLoading$;
-    this.ordersLoading$ = this.checkoutFacade.ordersLoading$;
     this.emailRecipients$ = this.checkoutFacade.getBucketEmailRecipients$(this.order?.shipToAddressFull?.id);
 
     this.emailRecipients$?.subscribe(value => {
@@ -490,14 +485,11 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
     return new Date(date);
   }
 
-  doubleArticlesQuantity(order) {
-    order.lineItems?.forEach(item => {
-      this.updateBasketItem({ itemId: item.id, quantity: item.quantity.value * 2 });
-    });
-  }
-
-  updateBasketItem(formValue: LineItemUpdate) {
-    this.checkoutFacade.updateBasketItem(formValue);
+  doubleArticlesQuantity() {
+    const list = this.order.lineItems?.map(item => ({ itemId: item.id, quantity: item.quantity.value * 2 }));
+    if (list?.length) {
+      this.checkoutFacade.updateBasketItems(list);
+    }
   }
 
   openAddEmailRecipientModal() {

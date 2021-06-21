@@ -61,4 +61,4 @@
   </div>
 </ng-container>
 
-<ish-loading *ngIf="ordersLoading$ | async"></ish-loading>
+<ish-loading *ngIf="(ordersLoading$ | async) || (basketLoading$ | async)"></ish-loading>

@@ -295,4 +295,8 @@ export class CheckoutFacade {
   setCheckoutFocusedElement(elementId: string) {
     this.store.dispatch(focusedCheckoutElement({ elementId }));
   }
+
+  updateBasketItems(lineItemUpdates: LineItemUpdate[]) {
+    this.store.dispatch(updateBasketItems({ lineItemUpdates }));
+  }
 }
