@@ -192,7 +192,7 @@
               <button
                 class="mat-button mat-button-base double-qty-btn"
                 [ngClass]="{ 'mat-button-disabled': !order.lineItems?.length }"
-                (click)="doubleArticlesQuantity(order)"
+                (click)="doubleArticlesQuantity()"
                 [disabled]="!order.lineItems?.length"
               >
                 <mat-icon
@@ -305,10 +305,6 @@
         <camfil-basket-cost-summary [totals]="order.totals"></camfil-basket-cost-summary>
       </div>
     </div>
-  </ng-container>
-  <ng-container *ngIf="!isConfirmed">
-    <ish-loading *ngIf="ordersLoading$ | async"></ish-loading>
-    <ish-loading *ngIf="basketLoading$ | async"></ish-loading>
   </ng-container>
 </ng-template>
 
