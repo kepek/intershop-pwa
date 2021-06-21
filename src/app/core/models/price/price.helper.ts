@@ -104,7 +104,7 @@ export class PriceHelper {
   ): Price {
     const price: Price = {
       type: 'Money',
-      currency: 'USD',
+      currency: 'USD', // currency z locals ChannelCurrency - pobrać channel a następnie channelcurrency
       value: 0,
     };
 
