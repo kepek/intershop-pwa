@@ -204,7 +204,8 @@ export class OrdersEffects {
    */
   routeListenerForSelectingOrder$ = createEffect(() =>
     this.store.pipe(
-      ofUrl(/^\/(account\/orders.*|checkout\/receipt)/),
+      // ofUrl(/^\/(account\/orders.*|checkout\/receipt)/), // CAM-1018
+      ofUrl(/^\/checkout\/receipt/),
       select(selectRouteParam('orderId')),
       withLatestFrom(this.store.pipe(select(getSelectedOrderId))),
       filter(([fromAction, selectedOrderId]) => fromAction && fromAction !== selectedOrderId),
