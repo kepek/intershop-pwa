@@ -808,7 +808,7 @@
   "camfil.ahu.link": "Air Handling Unit Guide",
   "camfil.ahu.slot.amount": "Filter som behövs",
   "camfil.ahu.slot.dimensions": "Filterdimensioner",
-  "camfil.ahu.slot.how_to_choose": "sv_How to choose {{0}} Filter",
+  "camfil.ahu.slot.how_to_choose": "How to choose {{0}} Filter",
   "camfil.ahu.slot.item.button.add_to_list.label": "Add to list",
   "camfil.ahu.slot.item.button.added_to_list.label": "Added to list",
   "camfil.ahu.subheading": "Select AHU manufacturer and model",
