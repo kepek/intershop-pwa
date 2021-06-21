@@ -1494,7 +1494,7 @@
   "restricted-items.error.message1": "Seuraavia tuotteita ei voida lähettää valitsemaasi osoitteeseen.",
   "restricted-items.error.message2": "Voit joko poistaa tuotteet ostoskoristasi tai antaa toisen osoitteen alla.",
   "search.breadcrumbs.your_search.label": "Hakutulokset:",
-  "search.filter.show_all.link": "Näytä kaikki",
+  "search.filter.show_all.link": "Näytä kaikki (+{{0}})",
   "search.filter.show_less.link": "Näytä vähemmän",
   "search.mobile.filter.trigger": "Suodattimet",
   "search.noResult.heading": "Ei tuloksia:",

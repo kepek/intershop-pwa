@@ -9,7 +9,7 @@ import {
   TemplateRef,
 } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
 
 import { CategoryView } from 'ish-core/models/category-view/category-view.model';
@@ -66,6 +66,7 @@ export class CamfilProductItemBaseComponent implements OnInit, OnDestroy {
   @Input() isLoggedIn: boolean;
   @Input() hideAttributeName?: boolean;
   @Input() actionTemplate?: TemplateRef<unknown>;
+  @Input() userPermissions$: Observable<string[]>;
   isMasterProduct = ProductHelper.isMasterProduct;
   updatedQuantity: number;
   productItemForm: FormGroup;

@@ -30,10 +30,8 @@
   >
     <a class="btn-link" (click)="showAll = !showAll">
       {{
-        showAll
-          ? ('search.filter.show_less.link' | translate)
-          : (facets.length - filterElement.limitCount
-            | i18nPlural: ('camfil.search.filter.show.link' | translate) || { other: '#' })
+        (showAll ? 'search.filter.show_less.link' : 'search.filter.show_all.link')
+          | translate: { '0': facets.length - filterElement.limitCount }
       }}
     </a>
   </li>

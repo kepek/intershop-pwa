@@ -117,6 +117,7 @@ export class CamfilProductItemComponent implements OnInit, OnChanges, OnDestroy 
   isLoggedIn$: Observable<boolean>;
   hideAttributeName = false;
   currentLocale$: Observable<Locale>;
+  userPermissions$: Observable<string[]>;
 
   private sku$ = new ReplaySubject<string>(1);
   private destroy$ = new Subject();
@@ -148,6 +149,8 @@ export class CamfilProductItemComponent implements OnInit, OnChanges, OnDestroy 
     this.currentLocale$?.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(locale => {
       this.hideAttributeName = locale?.value === 'fi';
     });
+
+    this.userPermissions$ = this.accountFacade.userPermissions$.pipe(takeUntil(this.destroy$));
   }
 
   ngOnChanges(changes: SimpleChanges) {

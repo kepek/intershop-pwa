@@ -46,6 +46,8 @@ describe('Camfil Product Item Component', () => {
     element = fixture.nativeElement;
     component.productSku = 'sku';
     component.hideAttributeName = true;
+
+    when(accountFacade.userPermissions$).thenReturn(of([]));
   });
 
   it('should be created', () => {
