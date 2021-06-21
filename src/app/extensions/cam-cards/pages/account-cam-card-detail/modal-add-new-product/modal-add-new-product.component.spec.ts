@@ -11,6 +11,7 @@ import { CamfilProductQuantityComponent } from 'ish-shared/components/product/ca
 import { CamfilCounterComponent } from 'ish-shared/forms/components/camfil-counter/camfil-counter.component';
 
 import { CamCardsFacade } from '../../../facades/cam-cards.facade';
+import { ArticleDetailsComponent } from '../../../shared/add-product-to-cam-card-modal/article-details/article-details.component';
 
 import { ModalAddNewProductComponent } from './modal-add-new-product.component';
 
@@ -27,6 +28,7 @@ describe('Modal Add New Product Component', () => {
 
     await TestBed.configureTestingModule({
       declarations: [
+        ArticleDetailsComponent,
         CamfilCounterComponent,
         CamfilErrorComponent,
         CamfilProductQuantityComponent,
