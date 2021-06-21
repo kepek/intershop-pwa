@@ -396,7 +396,7 @@ export class CamCardEffects {
           mergeMap(camCard => [
             createCamCardSuccess({ camCard }),
             displaySuccessMessage({
-              message: 'camfil.account.cam_card.delete_cam_card.confirmation',
+              message: 'camfil.account.cam_card.copy_cam_card.confirmation',
               messageParams: { 0: camCard.name },
             }),
           ]),
