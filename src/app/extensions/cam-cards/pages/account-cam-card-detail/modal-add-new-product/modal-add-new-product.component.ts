@@ -128,7 +128,7 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy {
   }
 
   submitForm() {
-    if (this.productForm.valid) {
+    if (this.productForm.valid && !this.showSkuError) {
       const sku = this.getField('sku') ? String(this.getField('sku').value) : undefined;
       const quantity = this.getField('quantity') ? Number(this.getField('quantity')?.value) : 1;
       const label = this.getField('boxLabel') ? String(this.getField('boxLabel').value) : undefined;
