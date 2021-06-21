@@ -104,7 +104,7 @@ export class PriceHelper {
   ): Price {
     const price: Price = {
       type: 'Money',
-      currency: 'USD',
+      currency: 'EUR',
       value: 0,
     };
 

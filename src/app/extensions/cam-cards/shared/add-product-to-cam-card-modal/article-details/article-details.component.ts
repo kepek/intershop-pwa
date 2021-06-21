@@ -16,8 +16,8 @@ export class ArticleDetailsComponent implements OnInit {
   @Input() product: Product;
   @Input() quantityForm: FormGroup;
   @Input() showProductName?: boolean;
-  @Input() isInAddNewProductModal = false;
-  @Input() showMeasurementsForm = false;
+  @Input() isInAddNewProductModal?: boolean;
+  @Input() showMeasurementsForm?: boolean;
   MEASUREMENTS = ['measurementWidth', 'measurementHeight', 'measurementDiameter'];
 
   maxVal: number;

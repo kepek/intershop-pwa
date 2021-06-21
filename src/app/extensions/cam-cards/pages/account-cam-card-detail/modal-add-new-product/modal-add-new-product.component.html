@@ -29,9 +29,8 @@
         <mat-error *ngIf="showSkuError" class="add-new-product__field add-new-product__field--error">
           {{ 'camfil.modal.addNewProduct.error' | translate }}
         </mat-error>
-        <div class="article-details-container">
+        <div class="article-details-container" *ngIf="product">
           <camfil-article-details
-            *ngIf="product"
             [product]="product"
             [quantityForm]="productForm"
             [isInAddNewProductModal]="true"
