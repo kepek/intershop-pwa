@@ -54,9 +54,14 @@ export class CamfilCategoryNavigationComponent implements OnInit, OnChanges, OnD
     this.destroy$.complete();
   }
 
-  getFilterString(uniqueId: string) {
+  getQueryParams(uniqueId: string) {
     const category = '&category=' + uniqueId?.split('.').join('/');
     const productFilter = '&productFilter=fallback_searchquerydefinition';
-    return this.filterParams + productFilter + category;
+
+    if (!category || !this.filterParams) {
+      return {};
+    } else {
+      return { filters: this.filterParams + productFilter + category };
+    }
   }
 }
