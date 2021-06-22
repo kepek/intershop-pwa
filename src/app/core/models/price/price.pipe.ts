@@ -49,7 +49,7 @@ export class PricePipe implements PipeTransform, OnDestroy {
         this.isAuthorizedToViewPrices = permitted;
       });
 
-    this.appFacade.getCurrencyForChannel$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(currencyForChanel => {
+    this.appFacade.getCurrencyByChannel$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(currencyForChanel => {
       this.currencyForChanel = currencyForChanel;
     });
 

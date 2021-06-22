@@ -125,7 +125,7 @@ describe('Price Pipe', () => {
     accountFacade = mock(AccountFacade);
     appFacade = mock(AppFacade);
     when(accountFacade.userPriceDisplayType$).thenReturn(of('gross'));
-    when(appFacade.getCurrencyForChannel$).thenReturn(of('EUR'));
+    when(appFacade.getCurrencyByChannel$).thenReturn(of('EUR'));
 
     await TestBed.configureTestingModule({
       declarations: [DummyComponent, PricePipe],
