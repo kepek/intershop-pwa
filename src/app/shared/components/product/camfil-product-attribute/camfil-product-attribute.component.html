@@ -1,6 +1,6 @@
 <dl *ngIf="attribute && value" [ngClass]="classObject">
   <ng-container *ngIf="!hideAttributeName">
-    <dt class="camfil-product-attribute__label">{{ attribute.name | translate }}:</dt>
+    <dt class="camfil-product-attribute__label">{{ name }}:</dt>
   </ng-container>
   <dd
     [attr.itemprop]="itemProp"
