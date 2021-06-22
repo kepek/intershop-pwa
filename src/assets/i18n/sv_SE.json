@@ -666,6 +666,7 @@
   "camfil.account.orderdetails.date_of_order.label": "Beställningsdatum",
   "camfil.account.orderdetails.delivery_address.label": "Leveransadress",
   "camfil.account.orderdetails.delivery_date.label": "Leveransdatum",
+  "camfil.account.orderdetails.delivery_date.split.label": "sv_Split delivery:",
   "camfil.account.orderdetails.goods_mark.label": "Godsmärke",
   "camfil.account.orderdetails.links.order_again": "Beställ igen",
   "camfil.account.orderdetails.links.track_order": "Följ din beställning",

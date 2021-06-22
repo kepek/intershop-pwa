@@ -666,6 +666,7 @@
   "camfil.account.orderdetails.date_of_order.label": "Order date",
   "camfil.account.orderdetails.delivery_address.label": "Delivery address",
   "camfil.account.orderdetails.delivery_date.label": "Delivery date",
+  "camfil.account.orderdetails.delivery_date.split.label": "Split delivery:",
   "camfil.account.orderdetails.goods_mark.label": "Goods mark",
   "camfil.account.orderdetails.links.order_again": "Order again",
   "camfil.account.orderdetails.links.track_order": "Track your order",
