@@ -38,7 +38,7 @@ describe('Camfil Language Switch Component', () => {
     }).compileComponents();
 
     when(appFacade.availableLocales$).thenReturn(of(locales));
-    when(appFacade.getCamfilChannel$).thenReturn(of('SEChannel'));
+    when(appFacade.getChannel$).thenReturn(of('SEChannel'));
   });
 
   beforeEach(() => {
@@ -61,6 +61,8 @@ describe('Camfil Language Switch Component', () => {
     fixture.detectChanges();
 
     expect(element.querySelectorAll('mat-menu')).toHaveLength(1);
-    expect(element.querySelector('.language-switch-current-selection').textContent).toMatchInlineSnapshot(`" de "`);
+    expect(element.querySelector('.language-switch-current-selection').textContent).toMatchInlineSnapshot(
+      `" Deutsch "`
+    );
   });
 });

@@ -630,7 +630,7 @@ export class BasketService {
 
     futureDate.setDate(futureDate.getDate() + 1000);
 
-    return this.appFacade.getCountryByChannel$.pipe(
+    return this.appFacade.getCountryCodeByChannel$.pipe(
       take(1),
       switchMap(countryCode =>
         this.apiService.post('calendar', {

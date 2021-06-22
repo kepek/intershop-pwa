@@ -80,7 +80,7 @@ describe('Account Cam Card Detail Line Item Component', () => {
     component = fixture.componentInstance;
     element = fixture.nativeElement;
 
-    when(appFacadeMock.getCamfilChannel$).thenReturn(of('channel'));
+    when(appFacadeMock.getChannel$).thenReturn(of('channel'));
 
     component.camCardItemData = {
       id: '1234',

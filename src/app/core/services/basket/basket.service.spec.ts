@@ -57,7 +57,7 @@ describe('Basket Service', () => {
     appFacade = mock(AppFacade);
     // @ts-ignore
     basketService = new BasketService(instance(apiService), instance(orderService));
-    when(appFacade.getCountryByChannel$).thenReturn(of('SE'));
+    when(appFacade.getCountryCodeByChannel$).thenReturn(of('SE'));
   });
 
   it("should get basket data when 'getBasket' is called", done => {

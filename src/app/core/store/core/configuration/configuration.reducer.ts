@@ -42,9 +42,9 @@ const initialState: ConfigurationState = {
 export const configurationReducer = createReducer(
   initialState,
   on(applyConfiguration, (state: ConfigurationState, { payload }) => {
-    const channelCode = Object.entries(Channel).find(([, val]) => {
-      return val === payload.channel || val === state.channel;
-    })?.[0];
+    const channelCode = Object.entries(Channel).find(
+      ([, val]) => val === payload.channel || val === state.channel
+    )?.[0];
 
     const locales = state.locales.map(l => {
       const currency = l.lang === payload.lang ? ChannelCurrency[channelCode] || l.currency : l.currency;

@@ -125,8 +125,8 @@ describe('Configuration Integration', () => {
     expect(getCurrentLocale(store$.state)).toMatchInlineSnapshot(`
       Object {
         "currency": "EUR",
-        "displayLong": "Finnish (Finland)",
-        "displayName": "Finnish",
+        "displayLong": "Finnish",
+        "displayName": "FI",
         "lang": "fi_FI",
         "value": "fi",
       }
@@ -137,8 +137,8 @@ describe('Configuration Integration', () => {
     expect(getCurrentLocale(store$.state)).toMatchInlineSnapshot(`
       Object {
         "currency": "EUR",
-        "displayLong": "Finnish (Finland)",
-        "displayName": "Finnish",
+        "displayLong": "Finnish",
+        "displayName": "FI",
         "lang": "fi_FI",
         "value": "fi",
       }
@@ -147,22 +147,22 @@ describe('Configuration Integration', () => {
       Array [
         Object {
           "currency": "EUR",
-          "displayLong": "Finnish (Finland)",
-          "displayName": "Finnish",
+          "displayLong": "Finnish",
+          "displayName": "FI",
           "lang": "fi_FI",
           "value": "fi",
         },
         Object {
           "currency": "SEK",
-          "displayLong": "Swedish (Sweden)",
-          "displayName": "Swedish",
+          "displayLong": "Swedish",
+          "displayName": "SV",
           "lang": "sv_SE",
           "value": "se",
         },
         Object {
           "currency": "GBP",
-          "displayLong": "English (Great Britain)",
-          "displayName": "English",
+          "displayLong": "English",
+          "displayName": "EN",
           "lang": "en_GB",
           "value": "gb",
         },

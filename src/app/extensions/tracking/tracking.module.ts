@@ -7,7 +7,7 @@ import { take } from 'rxjs/operators';
 import { CHANNEL_CONFIGURATION } from 'ish-core/configurations/injection-keys';
 import { FeatureToggleModule, FeatureToggleService } from 'ish-core/feature-toggle.module';
 import { ChannelConfiguration } from 'ish-core/models/channel-configuration/channel-configuration.model';
-import { getCamfilChannel } from 'ish-core/store/core/configuration';
+import { getChannel } from 'ish-core/store/core/configuration';
 import { CookiesService } from 'ish-core/utils/cookies/cookies.service';
 import { whenTruthy } from 'ish-core/utils/operators';
 
@@ -34,10 +34,8 @@ export class TrackingModule {
     @Inject(CHANNEL_CONFIGURATION) public channelConfs: ChannelConfiguration[]
   ) {
     if (cookiesService.cookieConsentFor('tracking')) {
-      store.pipe(select(getCamfilChannel), whenTruthy(), take(1)).subscribe(camfilChannel => {
-        const gtmToken = this.channelConfs
-          .filter(item => item.channel === camfilChannel)
-          .map(item => item.gtmContainerId);
+      store.pipe(select(getChannel), whenTruthy(), take(1)).subscribe(channel => {
+        const gtmToken = this.channelConfs.filter(item => item.channel === channel).map(item => item.gtmContainerId);
         if (gtmToken.length > 0 && featureToggleService.enabled('tracking')) {
           this.gtm(window, 'dataLayer', gtmToken[0]);
           angulartics2GoogleTagManager.startTracking();

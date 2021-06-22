@@ -182,7 +182,7 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit, OnDestroy
     this.customers$ = this.camCardsFacade.customers$;
     this.addresses$ = this.camCardsFacade.addresses$;
 
-    this.appFacade.getCountryByChannel$
+    this.appFacade.getCountryCodeByChannel$
       .pipe(takeUntil(this.destroy$))
       .subscribe(code => (this.defaultCountryCode = code));
 

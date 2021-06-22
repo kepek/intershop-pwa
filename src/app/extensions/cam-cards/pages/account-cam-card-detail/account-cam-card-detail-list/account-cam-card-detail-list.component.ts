@@ -118,7 +118,7 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges, OnD
       this.basketAddresses = basketAddresses;
     });
 
-    this.appFacade.getCamfilChannel$
+    this.appFacade.getChannel$
       .pipe(whenTruthy(), take(1))
       .subscribe(channel => (this.showPrice = channel !== Channel.SE));
   }

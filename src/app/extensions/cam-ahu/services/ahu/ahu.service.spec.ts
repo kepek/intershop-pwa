@@ -17,8 +17,8 @@ describe('Ahu Service', () => {
     appFacade = mock(AppFacade);
     iccApiServiceMock = mock(IccApiService);
 
-    when(appFacade.getCamfilChannel$).thenReturn(of('SE'));
-    when(appFacade.getCountryByChannel$).thenReturn(of('SE'));
+    when(appFacade.getChannel$).thenReturn(of('SE'));
+    when(appFacade.getCountryCodeByChannel$).thenReturn(of('SE'));
 
     TestBed.configureTestingModule({
       providers: [

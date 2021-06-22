@@ -17,7 +17,12 @@
       <ng-container *ngIf="availableLocalesByCountryCode$ | async as availableLocales">
         <ng-container *ngFor="let l of availableLocales">
           <ng-container *ngIf="l.lang !== locale.lang">
-            <a mat-menu-item [href]="getBaseUrl() || (location | makeHref: { redirect: '1', lang: l.lang })">
+            <a
+              mat-menu-item
+              [href]="
+                getBaseUrl({ redirect: '1', lang: l.lang }) || (location | makeHref: { redirect: '1', lang: l.lang })
+              "
+            >
               {{ l.displayLong }}
             </a>
           </ng-container>
@@ -40,7 +45,11 @@
       <ul *ngIf="availableLocales.length && showList">
         <ng-container *ngFor="let l of availableLocales">
           <li *ngIf="l.lang !== locale.lang">
-            <a [href]="getBaseUrl() || (location | makeHref: { redirect: '1', lang: l.lang })">
+            <a
+              [href]="
+                getBaseUrl({ redirect: '1', lang: l.lang }) || (location | makeHref: { redirect: '1', lang: l.lang })
+              "
+            >
               {{ l.displayLong | translate }}
             </a>
           </li>

@@ -6,8 +6,9 @@ import { filter, map, mapTo, shareReplay, startWith, switchMap, withLatestFrom }
 
 import {
   getAvailableLocales,
-  getCamfilChannel,
-  getCountryByChannel,
+  getChannel,
+  getCountryCodeByChannel,
+  getCurrencyByChannel,
   getCurrentLocale,
   getDeviceType,
   getICMBaseURL,
@@ -39,7 +40,7 @@ export class AppFacade {
   availableLocalesByCountryCode$ = this.availableLocales$.pipe(
     whenTruthy(),
     switchMap(availableLocales =>
-      this.getCountryByChannel$.pipe(
+      this.getCountryCodeByChannel$.pipe(
         map(countryCode => availableLocales.filter(loc => [countryCode.toLowerCase(), 'gb'].includes(loc.value)))
       )
     )
@@ -132,8 +133,11 @@ export class AppFacade {
   );
 
   // tslint:disable-next-line:member-ordering
-  getCamfilChannel$ = this.store.pipe(select(getCamfilChannel));
+  getChannel$ = this.store.pipe(select(getChannel));
 
   // tslint:disable-next-line:member-ordering
-  getCountryByChannel$ = this.store.pipe(select(getCountryByChannel));
+  getCountryCodeByChannel$ = this.store.pipe(select(getCountryCodeByChannel));
+
+  // tslint:disable-next-line:member-ordering
+  getCurrencyByChannel$ = this.store.pipe(select(getCurrencyByChannel));
 }

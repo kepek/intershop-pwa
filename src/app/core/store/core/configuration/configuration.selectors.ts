@@ -38,9 +38,7 @@ export const getTheme = createSelector(getConfigurationState, state => state.the
 
 export const getAvailableLocales = createSelector(getConfigurationState, state => state.locales);
 
-export const getLang = createSelector(getConfigurationState, state => {
-  return state.lang;
-});
+export const getLang = createSelector(getConfigurationState, state => state.lang);
 
 export const getDeviceType = createSelector(getConfigurationState, state => state._deviceType);
 
@@ -51,25 +49,21 @@ export const getIdentityProvider = createSelectorFactory(projector => defaultMem
     (state.identityProvider === 'ICM' ? { type: 'ICM' } : state.identityProviders?.[state.identityProvider])
 );
 
-export const getCamfilChannel = createSelector(getConfigurationState, state => state?.channel);
+export const getChannel = createSelector(getConfigurationState, state => state?.channel);
 
-export const getCountryByChannel = createSelector(
-  getConfigurationState,
-  state => Object.entries(Channel).find(([, val]) => val === state?.channel)?.[0]
+export const getCountryCodeByChannel = createSelector(
+  getChannel,
+  channel => Object.entries(Channel).find(([, val]) => val === channel)?.[0]
 );
 
-/**
- * selects the current locale if set. If not returns the first available locale
- */
 export const getCurrentLocale = createSelector(
   getLang,
   getAvailableLocales,
-  getCountryByChannel,
-  (lang, availableLocales, countryCode) => {
-    return (
-      availableLocales.find(l => l.lang === lang) ||
-      availableLocales.find(l => l.value === countryCode?.toLowerCase()) ||
-      availableLocales[0]
-    );
-  }
+  getCountryCodeByChannel,
+  (lang, availableLocales, countryCode) =>
+    availableLocales.find(l => l.lang === lang) ||
+    availableLocales.find(l => l.value === countryCode?.toLowerCase()) ||
+    availableLocales[0]
 );
+
+export const getCurrencyByChannel = createSelector(getCurrentLocale, locale => locale?.currency);

@@ -94,7 +94,7 @@ export class CreateOrderProductModalComponent implements OnInit, OnDestroy {
   }
 
   initCountryByChannel() {
-    this.appFacade.getCountryByChannel$
+    this.appFacade.getCountryCodeByChannel$
       .pipe(takeUntil(this.destroy$))
       .subscribe(code => (this.countryByChannel = code));
   }

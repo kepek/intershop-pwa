@@ -65,17 +65,42 @@ export class CamfilLanguageSwitchComponent implements OnInit {
     return [url, value, this.location.path()].filter(Boolean).join('/');
   }
 
-  getBaseUrl() {
-    return this.baseURL(true);
+  getBaseUrl(urlParams: { [key: string]: string }) {
+    const baseURL = this.baseURL(true);
+    const splitPath = this.location?.path()?.split('?');
+    const queryParams = splitPath[1];
+
+    let url = baseURL.toString();
+    let path = splitPath[0];
+
+    if (baseURL instanceof URL) {
+      path = path?.replace(/^\/+/, '');
+    }
+
+    if (urlParams) {
+      path += Object.keys(urlParams)
+        .map(k => `;${k}=${urlParams[k]}`)
+        .join('');
+    }
+
+    url = [url, path].filter(Boolean).join('/');
+
+    if (splitPath.length > 1) {
+      url += `?${queryParams}`;
+    }
+
+    return url;
   }
 
   private baseURL(includeBaseHref: boolean) {
     let url: string;
+
     if (this.request) {
       url = `${this.request.protocol}://${this.request.get('host')}${includeBaseHref ? this.baseHref : ''}`;
     } else {
       url = includeBaseHref ? this.doc.baseURI : this.doc.baseURI.replace(new RegExp(`${this.baseHref}$`), '');
     }
-    return url.endsWith('/') ? url : url + '/';
+
+    return new URL(url);
   }
 }
