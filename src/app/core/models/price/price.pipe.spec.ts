@@ -13,6 +13,7 @@ import { getUserPermissions } from 'ish-core/store/customer/authorization';
 
 import { Price } from './price.model';
 import { PricePipe } from './price.pipe';
+import { AppFacade } from 'ish-core/facades/app.facade';
 
 describe('Price Pipe', () => {
   let fixture: ComponentFixture<DummyComponent>;
@@ -29,7 +30,11 @@ describe('Price Pipe', () => {
     await TestBed.configureTestingModule({
       declarations: [DummyComponent, PricePipe],
       imports: [TranslateModule.forRoot()],
-      providers: [provideMockStore({}), { provide: AccountFacade, useFactory: () => instance(mock(AccountFacade)) }],
+      providers: [
+        provideMockStore({}),
+        { provide: AccountFacade, useFactory: () => instance(mock(AccountFacade)) },
+        { provide: AppFacade, useFactory: () => instance(mock(AppFacade)) },
+      ],
     }).compileComponents();
   });
 
@@ -107,6 +112,7 @@ describe('Price Pipe', () => {
   let element: HTMLElement;
   let translateService: TranslateService;
   let accountFacade: AccountFacade;
+  let appFacade: AppFacade;
 
   @Component({
     template: ` flex: {{ price | ishPrice }} pinned: {{ price | ishPrice: 'net' }} `,
@@ -117,13 +123,16 @@ describe('Price Pipe', () => {
 
   beforeEach(async () => {
     accountFacade = mock(AccountFacade);
+    appFacade = mock(AppFacade);
     when(accountFacade.userPriceDisplayType$).thenReturn(of('gross'));
+    when(appFacade.getCurrencyByChannel$).thenReturn(of('EUR'));
 
     await TestBed.configureTestingModule({
       declarations: [DummyComponent, PricePipe],
       imports: [TranslateModule.forRoot()],
       providers: [
         { provide: AccountFacade, useFactory: () => instance(accountFacade) },
+        { provide: AppFacade, useFactory: () => instance(appFacade) },
         provideMockStore({ selectors: [{ selector: getUserPermissions, value: ['APP_B2B_VIEW_PRICES'] }] }),
       ],
     }).compileComponents();

@@ -1,13 +1,9 @@
 import { createReducer, on } from '@ngrx/store';
-
 import { Channel, ChannelCurrency } from 'ish-core/models/channel/channel.types';
 import { Locale } from 'ish-core/models/locale/locale.model';
 import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
-
 import { environment } from '../../../../../environments/environment';
-
 import { applyConfiguration, setCurrentLocale, setGTMToken } from './configuration.actions';
-
 export interface ConfigurationState {
   baseURL?: string;
   server?: string;
@@ -24,7 +20,6 @@ export interface ConfigurationState {
   // not synced via state transfer
   _deviceType?: DeviceType;
 }
-
 const initialState: ConfigurationState = {
   baseURL: undefined,
   server: undefined,
@@ -38,7 +33,6 @@ const initialState: ConfigurationState = {
   lang: undefined,
   _deviceType: environment.defaultDeviceType,
 };
-
 export const configurationReducer = createReducer(
   initialState,
   on(applyConfiguration, (state: ConfigurationState, { payload }) => {
