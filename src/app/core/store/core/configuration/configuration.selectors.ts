@@ -1,7 +1,7 @@
 import { createSelector, createSelectorFactory, defaultMemoize } from '@ngrx/store';
 import { isEqual } from 'lodash-es';
 
-import { Channel, ChannelCurrency } from 'ish-core/models/channel/channel.types';
+import { Channel } from 'ish-core/models/channel/channel.types';
 import { getCoreState } from 'ish-core/store/core/core-store';
 
 import { ConfigurationState } from './configuration.reducer';
