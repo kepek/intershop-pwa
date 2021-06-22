@@ -39,7 +39,7 @@ export class CamfilCategoryNavigationComponent implements OnInit, OnChanges, OnD
 
     this.activatedRoute.queryParams.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(params => {
       if (params.filters) {
-        this.filterParams = params.filters.split('&category')[0];
+        this.filterParams = params.filters.split('&category')[0].split('&productFilter')[0];
       }
     });
   }
@@ -55,6 +55,8 @@ export class CamfilCategoryNavigationComponent implements OnInit, OnChanges, OnD
   }
 
   getFilterString(uniqueId: string) {
-    return this.filterParams + '&category=' + uniqueId.split('.').join('/');
+    const category = '&category=' + uniqueId?.split('.').join('/');
+    const productFilter = '&productFilter=fallback_searchquerydefinition';
+    return this.filterParams + productFilter + category;
   }
 }
