@@ -12,7 +12,6 @@ import { AuthorizationToggleService } from 'ish-core/utils/authorization-toggle/
 import { Price } from './price.model';
 import { AppFacade } from 'ish-core/facades/app.facade';
 import { whenTruthy } from 'ish-core/utils/operators';
-import { Channel, ChannelCurrency } from '../channel/channel.types';
 
 export function formatPrice(price: Price, lang: string, currencyForChanel?: string): string {
   const symbol = currencyForChanel
@@ -26,7 +25,7 @@ export class PricePipe implements PipeTransform, OnDestroy {
   displayText: string;
   viewPricesPermissions = ['APP_B2B_VIEW_PRICES'];
   isAuthorizedToViewPrices = false;
-  currencyForChanel: string = 'EUR';
+  currencyForChanel: string = 'USD';
 
   private destroy$ = new Subject();
 
@@ -37,7 +36,6 @@ export class PricePipe implements PipeTransform, OnDestroy {
     private authorizationToggle: AuthorizationToggleService,
     private appFacade: AppFacade
   ) {}
-  //get current locale - > currency
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
@@ -51,10 +49,8 @@ export class PricePipe implements PipeTransform, OnDestroy {
         this.isAuthorizedToViewPrices = permitted;
       });
 
-    this.appFacade.getCamfilChannel$.pipe(whenTruthy(), take(1)).subscribe(value => {
-      const currentChanel = Object.entries(Channel).find(([, val]) => val === value) || [];
-      const chanel = value ? currentChanel[0] : '';
-      this.currencyForChanel = ChannelCurrency[chanel];
+    this.appFacade.getCurrencyForChannel$.pipe(whenTruthy()).subscribe(currencyForChanel => {
+      this.currencyForChanel = currencyForChanel;
     });
 
     if (!this.isAuthorizedToViewPrices) {
