@@ -10,9 +10,14 @@ import { PriceItem } from 'ish-core/models/price-item/price-item.model';
 import { AuthorizationToggleService } from 'ish-core/utils/authorization-toggle/authorization-toggle.service';
 
 import { Price } from './price.model';
+import { AppFacade } from 'ish-core/facades/app.facade';
+import { whenTruthy } from 'ish-core/utils/operators';
+import { Channel, ChannelCurrency } from '../channel/channel.types';
 
-export function formatPrice(price: Price, lang: string): string {
-  const symbol = getCurrencySymbol(price.currency, 'wide', lang);
+export function formatPrice(price: Price, lang: string, currencyForChanel?: string): string {
+  const symbol = currencyForChanel
+    ? getCurrencySymbol(currencyForChanel, 'wide', lang)
+    : getCurrencySymbol(price.currency, 'wide', lang);
   return formatCurrency(price.value, lang, symbol);
 }
 
@@ -21,6 +26,7 @@ export class PricePipe implements PipeTransform, OnDestroy {
   displayText: string;
   viewPricesPermissions = ['APP_B2B_VIEW_PRICES'];
   isAuthorizedToViewPrices = false;
+  currencyForChanel: string = 'EUR';
 
   private destroy$ = new Subject();
 
@@ -28,9 +34,10 @@ export class PricePipe implements PipeTransform, OnDestroy {
     private translateService: TranslateService,
     private cdRef: ChangeDetectorRef,
     private accountFacade: AccountFacade,
-    private authorizationToggle: AuthorizationToggleService
+    private authorizationToggle: AuthorizationToggleService,
+    private appFacade: AppFacade
   ) {}
-
+  //get current locale - > currency
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
@@ -43,6 +50,12 @@ export class PricePipe implements PipeTransform, OnDestroy {
       .subscribe(permitted => {
         this.isAuthorizedToViewPrices = permitted;
       });
+
+    this.appFacade.getCamfilChannel$.pipe(whenTruthy(), take(1)).subscribe(value => {
+      const currentChanel = Object.entries(Channel).find(([, val]) => val === value) || [];
+      const chanel = value ? currentChanel[0] : '';
+      this.currencyForChanel = ChannelCurrency[chanel];
+    });
 
     if (!this.isAuthorizedToViewPrices) {
       return '-';
@@ -67,7 +80,9 @@ export class PricePipe implements PipeTransform, OnDestroy {
         });
         return this.displayText;
       default:
-        return formatPrice(data as Price, this.translateService.currentLang);
+        return data.value <= 0
+          ? formatPrice(data as Price, this.translateService.currentLang, this.currencyForChanel)
+          : formatPrice(data as Price, this.translateService.currentLang);
     }
   }
 }
