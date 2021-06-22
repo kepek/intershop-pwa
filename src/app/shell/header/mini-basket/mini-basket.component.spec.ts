@@ -8,6 +8,7 @@ import { EMPTY, of } from 'rxjs';
 import { anything, instance, mock, when } from 'ts-mockito';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
+import { AppFacade } from 'ish-core/facades/app.facade';
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { PricePipe } from 'ish-core/models/price/price.pipe';
@@ -27,10 +28,14 @@ describe('Mini Basket Component', () => {
 
   beforeEach(async () => {
     checkoutFacade = mock(CheckoutFacade);
+
     const accountFacade = mock(AccountFacade);
-    when(accountFacade.userPriceDisplayType$).thenReturn(of('gross'));
     const shoppingFacade = mock(ShoppingFacade);
+    const appFacade = mock(AppFacade);
+
+    when(accountFacade.userPriceDisplayType$).thenReturn(of('gross'));
     when(shoppingFacade.product$(anything(), anything())).thenReturn(of({} as ProductView));
+    when(appFacade.getCurrencyByChannel$).thenReturn(of('EUR'));
 
     await TestBed.configureTestingModule({
       declarations: [
@@ -45,6 +50,7 @@ describe('Mini Basket Component', () => {
         { provide: CheckoutFacade, useFactory: () => instance(checkoutFacade) },
         { provide: AccountFacade, useFactory: () => instance(accountFacade) },
         { provide: ShoppingFacade, useFactory: () => instance(shoppingFacade) },
+        { provide: AppFacade, useFactory: () => instance(appFacade) },
         provideMockStore({ selectors: [{ selector: getUserPermissions, value: ['APP_B2B_VIEW_PRICES'] }] }),
       ],
     }).compileComponents();

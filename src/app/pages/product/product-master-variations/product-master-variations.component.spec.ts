@@ -44,8 +44,8 @@ describe('Product Master Variations Component', () => {
         ng-reflect-orientation="horizontal"
       ></camfil-filter-navigation
       ><camfil-product-listing
-        mode="paging"
         fragmentonrouting="variation-list-top"
+        mode="paging"
         ng-reflect-mode="paging"
         ng-reflect-fragment-on-routing="variation-list-top"
       ></camfil-product-listing>

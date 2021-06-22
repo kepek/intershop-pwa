@@ -8,18 +8,30 @@ import { of } from 'rxjs';
 import { instance, mock, when } from 'ts-mockito';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
+import { AppFacade } from 'ish-core/facades/app.facade';
+import { Locale } from 'ish-core/models/locale/locale.model';
 import { PriceItem } from 'ish-core/models/price-item/price-item.model';
+import {
+  getAvailableLocales,
+  getChannel,
+  getCountryCodeByChannel,
+  getCurrentLocale,
+  getLang,
+} from 'ish-core/store/core/configuration';
 import { getUserPermissions } from 'ish-core/store/customer/authorization';
 
 import { Price } from './price.model';
 import { PricePipe } from './price.pipe';
-import { AppFacade } from 'ish-core/facades/app.facade';
 
 describe('Price Pipe', () => {
   let fixture: ComponentFixture<DummyComponent>;
   let component: DummyComponent;
   let element: HTMLElement;
   let translateService: TranslateService;
+  let accountFacade: AccountFacade;
+  let appFacade: AppFacade;
+
+  const locale = { currency: 'EUR', lang: 'de_DE', value: 'de' } as Locale;
 
   @Component({ template: '~{{ price | ishPrice }}~' })
   class DummyComponent {
@@ -27,13 +39,28 @@ describe('Price Pipe', () => {
   }
 
   beforeEach(async () => {
+    accountFacade = mock(AccountFacade);
+    appFacade = mock(AppFacade);
+
+    when(accountFacade.userPriceDisplayType$).thenReturn(of('gross'));
+    when(appFacade.getCurrencyByChannel$).thenReturn(of('EUR'));
+
     await TestBed.configureTestingModule({
       declarations: [DummyComponent, PricePipe],
       imports: [TranslateModule.forRoot()],
       providers: [
-        provideMockStore({}),
-        { provide: AccountFacade, useFactory: () => instance(mock(AccountFacade)) },
-        { provide: AppFacade, useFactory: () => instance(mock(AppFacade)) },
+        provideMockStore({
+          selectors: [
+            { selector: getUserPermissions, value: ['APP_B2B_VIEW_PRICES'] },
+            { selector: getChannel, value: 'Project-PageDE-Site' },
+            { selector: getCountryCodeByChannel, value: 'DE' },
+            { selector: getLang, value: 'de_DE' },
+            { selector: getAvailableLocales, value: [locale] },
+            { selector: getCurrentLocale, value: locale },
+          ],
+        }),
+        { provide: AccountFacade, useFactory: () => instance(accountFacade) },
+        { provide: AppFacade, useFactory: () => instance(appFacade) },
       ],
     }).compileComponents();
   });
@@ -42,7 +69,6 @@ describe('Price Pipe', () => {
     registerLocaleData(localeDe);
     translateService = TestBed.inject(TranslateService);
     translateService.setDefaultLang('en');
-
     fixture = TestBed.createComponent(DummyComponent);
     component = fixture.componentInstance;
     element = fixture.nativeElement;
@@ -57,7 +83,7 @@ describe('Price Pipe', () => {
   it('should display N/A for default', () => {
     translateService.use('en');
     fixture.detectChanges();
-    expect(element).toMatchInlineSnapshot(`~-~`);
+    expect(element).toMatchInlineSnapshot(`~product.price.na.text~`);
   });
 
   describe('Price', () => {
@@ -78,7 +104,7 @@ describe('Price Pipe', () => {
       translateService.use('en');
 
       fixture.detectChanges();
-      expect(element).toMatchInlineSnapshot(`~-~`);
+      expect(element).toMatchInlineSnapshot(`~$24,680.35~`);
     });
 
     it('should display dollar price for german', () => {
@@ -86,7 +112,7 @@ describe('Price Pipe', () => {
       translateService.use('de');
 
       fixture.detectChanges();
-      expect(element).toMatchInlineSnapshot(`~-~`);
+      expect(element).toMatchInlineSnapshot(`~24.680,35&nbsp;$~`);
     });
 
     it('should display euro price for english', () => {
@@ -94,14 +120,14 @@ describe('Price Pipe', () => {
       translateService.use('en');
 
       fixture.detectChanges();
-      expect(element).toMatchInlineSnapshot(`~-~`);
+      expect(element).toMatchInlineSnapshot(`~€12,391.98~`);
     });
     it('should display euro price for german', () => {
       component.price = euroPrice;
       translateService.use('de');
 
       fixture.detectChanges();
-      expect(element).toMatchInlineSnapshot(`~-~`);
+      expect(element).toMatchInlineSnapshot(`~12.391,98&nbsp;€~`);
     });
   });
 });
@@ -114,6 +140,8 @@ describe('Price Pipe', () => {
   let accountFacade: AccountFacade;
   let appFacade: AppFacade;
 
+  const locale = { currency: 'EUR', lang: 'de_DE', value: 'de' } as Locale;
+
   @Component({
     template: ` flex: {{ price | ishPrice }} pinned: {{ price | ishPrice: 'net' }} `,
   })
@@ -124,6 +152,7 @@ describe('Price Pipe', () => {
   beforeEach(async () => {
     accountFacade = mock(AccountFacade);
     appFacade = mock(AppFacade);
+
     when(accountFacade.userPriceDisplayType$).thenReturn(of('gross'));
     when(appFacade.getCurrencyByChannel$).thenReturn(of('EUR'));
 
@@ -133,7 +162,16 @@ describe('Price Pipe', () => {
       providers: [
         { provide: AccountFacade, useFactory: () => instance(accountFacade) },
         { provide: AppFacade, useFactory: () => instance(appFacade) },
-        provideMockStore({ selectors: [{ selector: getUserPermissions, value: ['APP_B2B_VIEW_PRICES'] }] }),
+        provideMockStore({
+          selectors: [
+            { selector: getUserPermissions, value: ['APP_B2B_VIEW_PRICES'] },
+            { selector: getChannel, value: 'Project-PageDE-Site' },
+            { selector: getCountryCodeByChannel, value: 'DE' },
+            { selector: getLang, value: 'de_DE' },
+            { selector: getAvailableLocales, value: [locale] },
+            { selector: getCurrentLocale, value: locale },
+          ],
+        }),
       ],
     }).compileComponents();
   });

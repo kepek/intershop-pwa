@@ -6,6 +6,7 @@ import { EMPTY, of } from 'rxjs';
 import { instance, mock, when } from 'ts-mockito';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
+import { AppFacade } from 'ish-core/facades/app.facade';
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ProductRoutePipe } from 'ish-core/routing/product/product-route.pipe';
 import { BasketMockData } from 'ish-core/utils/dev/basket-mock-data';
@@ -24,7 +25,10 @@ describe('Camfil Mini Basket Component', () => {
     checkoutFacade = mock(CheckoutFacade);
     const accountFacade = mock(AccountFacade);
     const camCardsFacade = mock(CamCardsFacade);
+    const appFacade = mock(AppFacade);
+
     when(accountFacade.userPriceDisplayType$).thenReturn(of('gross'));
+    when(appFacade.getCurrencyByChannel$).thenReturn(of('EUR'));
 
     await TestBed.configureTestingModule({
       declarations: [CamfilMiniBasketComponent, MockPipe(ProductRoutePipe)],
@@ -33,6 +37,7 @@ describe('Camfil Mini Basket Component', () => {
         { provide: CheckoutFacade, useFactory: () => instance(checkoutFacade) },
         { provide: AccountFacade, useFactory: () => instance(accountFacade) },
         { provide: CamCardsFacade, useFactory: () => instance(camCardsFacade) },
+        { provide: AppFacade, useFactory: () => instance(appFacade) },
       ],
     }).compileComponents();
   });

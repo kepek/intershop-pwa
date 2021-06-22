@@ -5,13 +5,13 @@ import { Subject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
+import { AppFacade } from 'ish-core/facades/app.facade';
 import { PriceItemHelper } from 'ish-core/models/price-item/price-item.helper';
 import { PriceItem } from 'ish-core/models/price-item/price-item.model';
 import { AuthorizationToggleService } from 'ish-core/utils/authorization-toggle/authorization-toggle.service';
+import { whenTruthy } from 'ish-core/utils/operators';
 
 import { Price } from './price.model';
-import { AppFacade } from 'ish-core/facades/app.facade';
-import { whenTruthy } from 'ish-core/utils/operators';
 
 export function formatPrice(price: Price, lang: string, currencyForChanel?: string): string {
   const symbol = currencyForChanel
@@ -25,7 +25,7 @@ export class PricePipe implements PipeTransform, OnDestroy {
   displayText: string;
   viewPricesPermissions = ['APP_B2B_VIEW_PRICES'];
   isAuthorizedToViewPrices = false;
-  currencyForChanel: string = 'USD';
+  currencyForChanel = 'USD';
 
   private destroy$ = new Subject();
 

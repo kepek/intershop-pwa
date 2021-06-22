@@ -6,6 +6,7 @@ import { of } from 'rxjs';
 import { instance, mock, when } from 'ts-mockito';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
+import { AppFacade } from 'ish-core/facades/app.facade';
 import { BasketTotal } from 'ish-core/models/basket-total/basket-total.model';
 import { PricePipe } from 'ish-core/models/price/price.pipe';
 import { getUserPermissions } from 'ish-core/store/customer/authorization';
@@ -23,7 +24,10 @@ describe('Requisition Buyer Approval Component', () => {
 
   beforeEach(async () => {
     const accountFacade = mock(AccountFacade);
+    const appFacade = mock(AppFacade);
+
     when(accountFacade.userPriceDisplayType$).thenReturn(of('gross'));
+    when(appFacade.getCurrencyByChannel$).thenReturn(of('EUR'));
 
     await TestBed.configureTestingModule({
       imports: [TranslateModule.forRoot()],
@@ -35,6 +39,7 @@ describe('Requisition Buyer Approval Component', () => {
       ],
       providers: [
         { provide: AccountFacade, useFactory: () => instance(accountFacade) },
+        { provide: AppFacade, useFactory: () => instance(appFacade) },
         // tslint:disable-next-line: no-intelligence-in-artifacts
         provideMockStore({ selectors: [{ selector: getUserPermissions, value: ['APP_B2B_VIEW_PRICES'] }] }),
       ],
