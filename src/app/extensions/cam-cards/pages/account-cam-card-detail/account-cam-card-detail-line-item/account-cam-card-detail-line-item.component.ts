@@ -68,7 +68,7 @@ export class AccountCamCardDetailLineItemComponent implements OnChanges, OnInit,
 
     this.updateQuantities();
 
-    this.appFacade.getCamfilChannel$
+    this.appFacade.getChannel$
       .pipe(whenTruthy(), take(1))
       .subscribe(channel => (this.showPrice = channel !== Channel.SE));
   }

@@ -44,8 +44,8 @@ describe('Zip Code Component', () => {
     component.countryChangeDetect = of(false) as Subject<boolean>;
 
     when(accountFacade.zipCodesLoading$).thenReturn(of(false));
-    when(appFacade.getCamfilChannel$).thenReturn(of('SE'));
-    when(appFacade.getCountryByChannel$).thenReturn(of('SE'));
+    when(appFacade.getChannel$).thenReturn(of('SE'));
+    when(appFacade.getCountryCodeByChannel$).thenReturn(of('SE'));
   }));
 
   it('should be created', () => {

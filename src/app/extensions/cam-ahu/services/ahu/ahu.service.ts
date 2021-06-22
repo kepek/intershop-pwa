@@ -20,13 +20,13 @@ export function unpackHeap<T>(): OperatorFunction<[], T[]> {
 export class AhuService {
   constructor(private iccApiService: IccApiService, private appFacade: AppFacade) {}
 
-  market$ = this.appFacade.getCountryByChannel$.pipe(take(1));
+  market$ = this.appFacade.getCountryCodeByChannel$.pipe(take(1));
 
   /**
    * List manufacturers for a current channel/market.
    */
   getManufacturers(): Observable<Manufacturer[]> {
-    return this.appFacade.getCountryByChannel$.pipe(
+    return this.appFacade.getCountryCodeByChannel$.pipe(
       take(1),
       switchMap(countryCode => {
         const requestBody = { market: countryCode };
@@ -48,7 +48,7 @@ export class AhuService {
    * @param id
    */
   getManufacturer(id: string): Observable<Manufacturer> {
-    return this.appFacade.getCountryByChannel$.pipe(
+    return this.appFacade.getCountryCodeByChannel$.pipe(
       take(1),
       switchMap(countryCode => {
         const requestBody = { id, market: countryCode };
@@ -77,7 +77,7 @@ export class AhuService {
       return throwError('getUnits() called without manufacturerId');
     }
 
-    return this.appFacade.getCountryByChannel$.pipe(
+    return this.appFacade.getCountryCodeByChannel$.pipe(
       take(1),
       switchMap(countryCode => {
         const requestBody = {
@@ -108,7 +108,7 @@ export class AhuService {
       return throwError('getUnits() called without unitId');
     }
 
-    return this.appFacade.getCountryByChannel$.pipe(
+    return this.appFacade.getCountryCodeByChannel$.pipe(
       take(1),
       switchMap(countryCode => {
         const requestBody = {

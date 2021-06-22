@@ -34,7 +34,7 @@ export class ZipCodeComponent implements OnInit, OnDestroy {
   constructor(private accountFacade: AccountFacade, private appFacade: AppFacade) {}
 
   ngOnInit() {
-    this.appFacade.getCountryByChannel$
+    this.appFacade.getCountryCodeByChannel$
       .pipe(takeUntil(this.destroy$))
       .subscribe(code => (this.countryByChannel = code));
 

@@ -9,17 +9,22 @@
     <a class="language-switch-link dropdown-toggle" [matMenuTriggerFor]="menu">
       <mat-icon svgIcon="globe" class="color-secondary language-switch--globe"></mat-icon>
       <span class="language-switch-current-selection d-inline">
-        {{ (view === 'accordion' ? locale.displayName : locale.value) | translate }}
+        {{ (view === 'accordion' ? locale.displayLong : locale.displayName) | translate }}
         <span class="switch_arrow"></span>
       </span>
     </a>
     <mat-menu #menu="matMenu">
-      <ng-container *ngIf="availableLocales$ | async">
+      <ng-container *ngIf="availableLocalesByCountryCode$ | async as availableLocales">
         <ng-container *ngFor="let l of availableLocales">
           <ng-container *ngIf="l.lang !== locale.lang">
-            <a mat-menu-item [href]="getLanguageSwitchUrl(l.value) || (location | makeHref: { redirect: '1', lang: l.lang })">
-              {{ l.displayName | translate }}</a
+            <a
+              mat-menu-item
+              [href]="
+                getBaseUrl({ redirect: '1', lang: l.lang }) || (location | makeHref: { redirect: '1', lang: l.lang })
+              "
             >
+              {{ l.displayLong }}
+            </a>
           </ng-container>
         </ng-container>
       </ng-container>
@@ -33,15 +38,19 @@
       class="d-flex align-items-center"
     >
       <mat-icon svgIcon="globe" class="color-primary language-switch--globe"></mat-icon>
-      <span class="language-switch-current-selection d-inline">{{ locale.displayName | translate }}</span>
+      <span class="language-switch-current-selection d-inline">{{ locale.displayLong | translate }}</span>
       <mat-icon class="language-switch--arrow">arrow_{{ showList ? 'left' : 'right' }}</mat-icon>
     </a>
-    <ng-container *ngIf="availableLocales$ | async">
+    <ng-container *ngIf="availableLocalesByCountryCode$ | async as availableLocales">
       <ul *ngIf="availableLocales.length && showList">
         <ng-container *ngFor="let l of availableLocales">
           <li *ngIf="l.lang !== locale.lang">
-            <a [href]="getLanguageSwitchUrl(l.value) || (location | makeHref: { redirect: '1', lang: l.lang })">
-              {{ l.displayName | translate }}
+            <a
+              [href]="
+                getBaseUrl({ redirect: '1', lang: l.lang }) || (location | makeHref: { redirect: '1', lang: l.lang })
+              "
+            >
+              {{ l.displayLong | translate }}
             </a>
           </li>
         </ng-container>

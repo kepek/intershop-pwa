@@ -29,7 +29,7 @@ export class AppComponent implements OnInit, OnDestroy {
   isBrowser: boolean;
   wrapperClasses$: Observable<string[]>;
   deviceType$: Observable<DeviceType>;
-  camfilChannel$: Observable<string>;
+  channel$: Observable<string>;
   gtmToken: string;
   gtmUrl: SafeUrl;
   private destroy$ = new Subject();
@@ -53,12 +53,10 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.deviceType$ = this.appFacade.deviceType$;
     this.wrapperClasses$ = this.appFacade.appWrapperClasses$;
-    this.camfilChannel$ = this.appFacade.getCamfilChannel$;
+    this.channel$ = this.appFacade.getChannel$;
     if (this.featureToggleService.enabled('tracking') && this.cookiesService.cookieConsentFor('tracking')) {
-      this.camfilChannel$.pipe(whenTruthy(), take(1), takeUntil(this.destroy$)).subscribe(camfilChannel => {
-        const gtmToken = this.channelConfs
-          .filter(item => item.channel === camfilChannel)
-          .map(item => item.gtmContainerId)[0];
+      this.channel$.pipe(whenTruthy(), take(1), takeUntil(this.destroy$)).subscribe(channel => {
+        const gtmToken = this.channelConfs.filter(item => item.channel === channel).map(item => item.gtmContainerId)[0];
         this.gtmUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
           `https://www.googletagmanager.com/ns.html?id=${gtmToken}`
         );

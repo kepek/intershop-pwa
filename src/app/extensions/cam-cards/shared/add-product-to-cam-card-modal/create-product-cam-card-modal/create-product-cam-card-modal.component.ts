@@ -89,7 +89,7 @@ export class CreateProductCamCardModalComponent implements OnInit, OnDestroy {
   }
 
   initCountryCode() {
-    this.appFacade.getCountryByChannel$
+    this.appFacade.getCountryCodeByChannel$
       .pipe(takeUntil(this.destroy$))
       .subscribe(code => (this.defaultCountryCode = code));
   }

@@ -12,11 +12,9 @@ import {
 import { REQUEST } from '@nguniversal/express-engine/tokens';
 import { Request } from 'express';
 import { Observable } from 'rxjs';
-import { take } from 'rxjs/operators';
 
 import { AppFacade } from 'ish-core/facades/app.facade';
 import { Locale } from 'ish-core/models/locale/locale.model';
-import { whenTruthy } from 'ish-core/utils/operators';
 
 @Component({
   selector: 'camfil-language-switch',
@@ -35,7 +33,7 @@ export class CamfilLanguageSwitchComponent implements OnInit {
 
   locale$: Observable<Locale>;
   availableLocales$: Observable<Locale[]>;
-  availableLocales: Locale[];
+  availableLocalesByCountryCode$: Observable<Locale[]>;
 
   constructor(
     private appFacade: AppFacade,
@@ -48,37 +46,61 @@ export class CamfilLanguageSwitchComponent implements OnInit {
   ngOnInit() {
     this.locale$ = this.appFacade.currentLocale$;
     this.availableLocales$ = this.appFacade.availableLocales$;
-    this.availableLocales$.pipe(whenTruthy(), take(1)).subscribe(availableLocales => {
-      this.appFacade.getCountryByChannel$.pipe(take(1)).subscribe(code => {
-        this.availableLocales = availableLocales.filter(loc => [code.toLowerCase(), 'gb'].includes(loc.value));
-      });
-    });
+    this.availableLocalesByCountryCode$ = this.appFacade.availableLocalesByCountryCode$;
   }
 
   toggleLevel(val: boolean) {
     this.isClosedLangList.emit(val);
   }
 
-  getLanguageSwitchUrl(value: string) {
-    let url = this.doc.baseURI.replace(new RegExp(`${this.baseHref}$`), '');
+  getLanguageSwitchUrl(value: string = '', includeBaseHref = false) {
+    let url: string;
 
     if (this.request) {
-      url = `${this.request.protocol}://${this.request.get('host')}`;
+      url = `${this.request.protocol}://${this.request.get('host')}${includeBaseHref ? this.baseHref : ''}`;
+    } else {
+      url = includeBaseHref ? this.doc.baseURI : this.doc.baseURI.replace(new RegExp(`${this.baseHref}$`), '');
     }
 
-    const baseHrefArr = this.baseHref.split('/').filter(x => x);
-    const locals = baseHrefArr[0]?.split('-');
+    return [url, value, this.location.path()].filter(Boolean).join('/');
+  }
 
-    if (
-      baseHrefArr[0]?.length === 5 && // ex.: sv-se
-      locals.length === 2 && // ex.: ['sv', 'se']
-      this.availableLocales.find(loc => loc.value === locals[1])
-    ) {
-      locals[1] = value;
-      baseHrefArr[0] = locals.join('-');
+  getBaseUrl(urlParams: { [key: string]: string }) {
+    const baseURL = this.baseURL(true);
+    const splitPath = this.location?.path()?.split('?');
+    const queryParams = splitPath[1];
 
-      return `${url}/${baseHrefArr.join('/')}${this.location.path()}`;
+    let url = baseURL.toString();
+    let path = splitPath[0];
+
+    if (baseURL instanceof URL) {
+      path = path?.replace(/^\/+/, '');
     }
-    return false;
+
+    if (urlParams) {
+      path += Object.keys(urlParams)
+        .map(k => `;${k}=${urlParams[k]}`)
+        .join('');
+    }
+
+    url = [url, path].filter(Boolean).join('/');
+
+    if (splitPath.length > 1) {
+      url += `?${queryParams}`;
+    }
+
+    return url;
+  }
+
+  private baseURL(includeBaseHref: boolean) {
+    let url: string;
+
+    if (this.request) {
+      url = `${this.request.protocol}://${this.request.get('host')}${includeBaseHref ? this.baseHref : ''}`;
+    } else {
+      url = includeBaseHref ? this.doc.baseURI : this.doc.baseURI.replace(new RegExp(`${this.baseHref}$`), '');
+    }
+
+    return new URL(url);
   }
 }
