@@ -73,6 +73,7 @@ export class CamfilLineItemTableComponent implements OnInit, OnChanges, AfterVie
   ngOnChanges(changes: SimpleChanges) {
     if (changes.lineItems) {
       this.lineItemsProcessed = new MatTableDataSource(this.lineItems);
+      this.lineItemsProcessed.sort = this.sort;
     }
     this.isMobileView = this.isMobile();
   }
