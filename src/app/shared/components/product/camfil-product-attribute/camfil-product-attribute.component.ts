@@ -33,22 +33,15 @@ export class CamfilProductAttributeComponent implements OnInit {
   classObject: { [key: string]: boolean };
 
   ngOnInit() {
-    const name = this.name
-      ? {
-          [`camfil-product-attribute--${this.name.replace(/[\W_]/g, '')}`]: !!this.name,
-        }
-      : {};
-
     this.classObject = {
       'camfil-product-attribute': true,
       [`camfil-product-attribute--${this.identifier}`]: !!this.identifier,
-      ...name,
     };
 
     this.attribute = {
       name: this.name,
       value: this.value,
-      type: 'String',
+      type: typeof this.value === 'number' ? 'Integer' : 'String',
     };
   }
 }
