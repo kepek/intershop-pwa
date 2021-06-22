@@ -9,6 +9,7 @@ import { LoadingComponent } from 'ish-shared/components/common/loading/loading.c
 import { CamfilProductQuantityComponent } from 'ish-shared/components/product/camfil-product-quantity/camfil-product-quantity.component';
 import { CamfilCounterComponent } from 'ish-shared/forms/components/camfil-counter/camfil-counter.component';
 
+import { ArticleDetailsComponent } from '../../../shared/add-product-to-cam-card-modal/article-details/article-details.component';
 import { CamCardPreferencesDialogComponent } from '../../../shared/cam-card-preferences-dialog/cam-card-preferences-dialog.component';
 import { ModalAddNewProductComponent } from '../modal-add-new-product/modal-add-new-product.component';
 import { ModalAddNewSectionComponent } from '../modal-add-new-section/modal-add-new-section.component';
@@ -24,6 +25,7 @@ describe('Account Cam Card Detail Toolbar Component', () => {
     await TestBed.configureTestingModule({
       declarations: [
         AccountCamCardDetailToolbarComponent,
+        ArticleDetailsComponent,
         CamfilCounterComponent,
         CamfilErrorComponent,
         CamfilProductQuantityComponent,

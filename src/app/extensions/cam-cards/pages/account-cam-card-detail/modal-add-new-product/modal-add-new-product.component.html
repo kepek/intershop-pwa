@@ -4,7 +4,6 @@
   <div class="add-new-product">
     <mat-icon svgIcon="add-camcard"></mat-icon>
     <h2 class="add-new-product__header">{{ 'camfil.modal.addNewProduct.title' | translate }}</h2>
-
     <form [formGroup]="productForm">
       <div>
         <mat-form-field appearance="fill" class="add-new-product__field">
@@ -30,10 +29,17 @@
         <mat-error *ngIf="showSkuError" class="add-new-product__field add-new-product__field--error">
           {{ 'camfil.modal.addNewProduct.error' | translate }}
         </mat-error>
-
+        <div class="article-details-container" *ngIf="product">
+          <camfil-article-details
+            [product]="product"
+            [quantityForm]="productForm"
+            [isInAddNewProductModal]="true"
+            [showMeasurementsForm]="requiresMeasurement"
+          ></camfil-article-details>
+        </div>
         <mat-form-field appearance="fill" class="add-new-product__field">
           <mat-label>{{ 'camfil.modal.addNewProduct.input.box_label' | translate }}</mat-label>
-          <input  matInput type="text" maxlength="60" formControlName="boxLabel" />
+          <input matInput type="text" maxlength="60" formControlName="boxLabel" />
         </mat-form-field>
       </div>
 
@@ -62,7 +68,12 @@
           {{ 'camfil.modal.addNewProduct.button.cancel' | translate }}
         </button>
 
-        <button type="submit" (click)="submitForm()" class="btn btn-link add-new-product__buttons--link">
+        <button
+          type="submit"
+          (click)="submitForm()"
+          class="btn btn-link add-new-product__buttons--link"
+          [disabled]="disableIfNoMeasurements() || !this.isSkuValid()"
+        >
           {{ 'camfil.modal.addNewProduct.button.add_product' | translate }}
         </button>
       </div>

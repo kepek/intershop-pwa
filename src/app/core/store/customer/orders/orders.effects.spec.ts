@@ -312,7 +312,8 @@ describe('Orders Effects', () => {
   });
 
   describe('routeListenerForSelectingOrder$', () => {
-    it('should fire SelectOrder when route account/order/XXX is navigated', done => {
+    // CAM-1018
+    xit('should fire SelectOrder when route account/order/XXX is navigated', done => {
       router.navigateByUrl('/account/orders/123');
 
       effects.routeListenerForSelectingOrder$.subscribe(action => {
