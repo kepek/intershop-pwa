@@ -537,11 +537,14 @@ export class BasketItemsEffects {
               payload.bucketIds
                 ?.filter(id => id.split('_')[0] === 'emptyBucket')
                 ?.map(id => deleteEmptyBucket({ id })) || [];
+            const validBasket = emptyBuckets.length ? [validateBasket({ scopes: ['Products'] })] : [];
+
             return [
               loadBasket(),
               loadBasketAddresses(),
               addItemsToBasketFromCamCardSuccess(),
               ...emptyBuckets,
+              ...validBasket,
               displaySuccessMessage({
                 message: 'camfil.add_items_to_basket.camfil.message.success',
               }),
