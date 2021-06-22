@@ -117,13 +117,13 @@
               <div class="col-12 prices-col">
                 <camfil-product-attribute
                   *ngIf="product.salePrice?.value > 0 && isLoggedIn"
-                  name="camfil.product.list_price.label"
+                  [name]="'camfil.product.list_price.label' | translate"
                   [value]="product.listPrice | ishPrice"
                 ></camfil-product-attribute>
 
                 <camfil-product-attribute
                   *ngIf="product.salePrice?.value > 0 && isLoggedIn"
-                  name="camfil.product.your_price.label"
+                  [name]="'camfil.product.your_price.label' | translate"
                   [value]="product.salePrice | ishPrice"
                 ></camfil-product-attribute>
               </div>

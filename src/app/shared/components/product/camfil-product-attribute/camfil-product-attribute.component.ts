@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
 
 import { Attribute } from 'ish-core/models/attribute/attribute.model';
 
@@ -33,13 +32,17 @@ export class CamfilProductAttributeComponent implements OnInit {
 
   classObject: { [key: string]: boolean };
 
-  constructor(private translateService: TranslateService) {}
-
   ngOnInit() {
+    const name = this.name
+      ? {
+          [`camfil-product-attribute--${this.name.replace(/[\W_]/g, '')}`]: !!this.name,
+        }
+      : {};
+
     this.classObject = {
       'camfil-product-attribute': true,
       [`camfil-product-attribute--${this.identifier}`]: !!this.identifier,
-      [`camfil-product-attribute--${this.translateService.instant(this.name)}`]: !!this.name,
+      ...name,
     };
 
     this.attribute = {
