@@ -1,3 +1,4 @@
+import { Platform } from '@angular/cdk/platform';
 import { isPlatformBrowser } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Inject, OnDestroy, OnInit, PLATFORM_ID, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
@@ -42,13 +43,13 @@ export class AppComponent implements OnInit, OnDestroy {
     private featureToggleService: FeatureToggleService,
     private router: Router,
     private sanitizer: DomSanitizer,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    public platform: Platform
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
   }
   get isIeBrowser() {
-    const userAgent = window.navigator.userAgent;
-    return userAgent.indexOf('MSIE ') > -1 || userAgent.indexOf('Trident/') > -1;
+    return this.platform.TRIDENT;
   }
   ngOnInit() {
     this.deviceType$ = this.appFacade.deviceType$;
