@@ -40,7 +40,7 @@
       <camfil-product-id *ngIf="configuration.displaySKU" [product]="product"></camfil-product-id>
       <camfil-product-attribute
         identifier="dimensions"
-        name="camfil.product.dimensions.label"
+        [name]="'camfil.product.dimensions.label' | translate"
         [value]="product | camfilDimension | camfilRemoveWhiteSpacesPipe"
       ></camfil-product-attribute>
       <camfil-product-attribute
@@ -51,7 +51,7 @@
       ></camfil-product-attribute>
       <camfil-product-attribute
         *ngIf="isNotZero(energyclass)"
-        name="camfil.product.energyClass.label"
+        [name]="'camfil.product.energyClass.label' | translate"
         [value]="product | camfilProductAttributeVal: 'Energyclass'"
       ></camfil-product-attribute>
     </div>
@@ -60,17 +60,17 @@
     <div class="product-detailed-inner-col">
       <camfil-product-attribute
         *ngIf="isNotZero(frameProduct)"
-        name="camfil.product.frame.label"
+        [name]="'camfil.product.frame.label' | translate"
         [value]="product | camfilProductAttributeVal: 'FrameProduct'"
       ></camfil-product-attribute>
       <camfil-product-attribute
         *ngIf="isNotZero(pressuredrop)"
-        name="camfil.product.pressureDrop.label"
+        [name]="'camfil.product.pressureDrop.label' | translate"
         [value]="product | camfilProductAttributeVal: 'Pressuredrop'"
       ></camfil-product-attribute>
       <camfil-product-attribute
         *ngIf="isNotZero(filterbags)"
-        name="camfil.product.bags.label"
+        [name]="'camfil.product.bags.label' | translate"
         [value]="product | camfilProductAttributeVal: 'Filterbags'"
       ></camfil-product-attribute>
     </div>
@@ -79,13 +79,13 @@
     <div class="product-prices-container d-flex justify-content-between" *ngIf="userPermissions$ | async">
       <camfil-product-attribute
         *ngIf="product.listPrice?.value > 0"
-        name="camfil.product.list_price.label"
+        [name]="'camfil.product.list_price.label' | translate"
         [value]="product.listPrice | ishPrice"
       ></camfil-product-attribute>
 
       <camfil-product-attribute
         *ngIf="product.salePrice?.value > 0"
-        name="camfil.product.your_price.label"
+        [name]="'camfil.product.your_price.label' | translate"
         [value]="product.salePrice | ishPrice"
       ></camfil-product-attribute>
     </div>

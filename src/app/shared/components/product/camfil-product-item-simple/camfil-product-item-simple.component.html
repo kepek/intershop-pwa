@@ -20,7 +20,7 @@
         ></camfil-product-id>
         <camfil-product-attribute
           identifier="dimensions"
-          name="camfil.product.dimensions.label"
+          [name]="'camfil.product.dimensions.label' | translate"
           [value]="product | camfilDimension | camfilRemoveWhiteSpacesPipe"
         ></camfil-product-attribute>
         <camfil-product-attribute
@@ -44,12 +44,12 @@
         <ng-container *ngIf="userPermissions$ | async">
           <camfil-product-attribute
             *ngIf="product.listPrice?.value > 0 && isLoggedIn; else emptyBlock"
-            name="camfil.product.list_price.label"
+            [name]="'camfil.product.list_price.label' | translate"
             [value]="product.listPrice | ishPrice"
           ></camfil-product-attribute>
           <camfil-product-attribute
             *ngIf="product.salePrice?.value > 0 && isLoggedIn; else emptyBlock"
-            name="camfil.product.your_price.label"
+            [name]="'camfil.product.your_price.label' | translate"
             [value]="product.salePrice | ishPrice"
           ></camfil-product-attribute>
         </ng-container>
@@ -137,7 +137,7 @@
           ></camfil-product-id>
           <camfil-product-attribute
             identifier="dimensions"
-            name="camfil.product.dimensions.label"
+            [name]="'camfil.product.dimensions.label' | translate"
             [value]="product | camfilDimension | camfilRemoveWhiteSpacesPipe"
           ></camfil-product-attribute>
           <camfil-product-attribute
@@ -157,13 +157,13 @@
     <div class="product-prices-container d-flex flex-column justify-content-between" *ngIf="userPermissions$ | async">
       <camfil-product-attribute
         *ngIf="product.listPrice?.value > 0 && isLoggedIn; else emptyBlock"
-        name="camfil.product.list_price.label"
+        [name]="'camfil.product.list_price.label' | translate"
         [value]="product.listPrice | ishPrice"
       ></camfil-product-attribute>
 
       <camfil-product-attribute
         *ngIf="product.salePrice?.value > 0 && isLoggedIn; else emptyBlock"
-        name="camfil.product.your_price.label"
+        [name]="'camfil.product.your_price.label' | translate"
         [value]="product.salePrice | ishPrice"
       ></camfil-product-attribute>
     </div>
