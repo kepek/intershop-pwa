@@ -42,14 +42,21 @@ const initialState: ConfigurationState = {
 export const configurationReducer = createReducer(
   initialState,
   on(applyConfiguration, (state: ConfigurationState, { payload }) => {
-    const currentChannel = Object.entries(Channel).find(([, val]) => val === payload.channel) || [];
-    const channel = payload.channel ? currentChannel[0] : '';
-    const locales = state.locales.map(l => ({
-      ...l,
-      currency: l.lang === payload.lang ? ChannelCurrency[channel] : l.currency,
-    }));
+    const channelCode = Object.entries(Channel).find(([, val]) => {
+      return val === payload.channel || val === state.channel;
+    })?.[0];
 
-    return { ...state, ...payload, locales };
+    const locales = state.locales.map(l => {
+      const currency = l.lang === payload.lang ? ChannelCurrency[channelCode] || l.currency : l.currency;
+      return {
+        ...l,
+        currency,
+      };
+    });
+
+    const lang = payload?.lang || locales?.find(l => l?.value === channelCode?.toLowerCase())?.lang;
+
+    return { ...state, ...payload, locales, lang };
   }),
   on(setGTMToken, (state: ConfigurationState, action) => {
     const { gtmToken } = action.payload;

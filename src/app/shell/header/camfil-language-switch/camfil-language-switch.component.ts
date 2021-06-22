@@ -1,5 +1,16 @@
-import { Location } from '@angular/common';
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { APP_BASE_HREF, DOCUMENT, Location } from '@angular/common';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Inject,
+  Input,
+  OnInit,
+  Optional,
+  Output,
+} from '@angular/core';
+import { REQUEST } from '@nguniversal/express-engine/tokens';
+import { Request } from 'express';
 import { Observable } from 'rxjs';
 
 import { AppFacade } from 'ish-core/facades/app.facade';
@@ -24,7 +35,13 @@ export class CamfilLanguageSwitchComponent implements OnInit {
   availableLocales$: Observable<Locale[]>;
   availableLocalesByCountryCode$: Observable<Locale[]>;
 
-  constructor(private appFacade: AppFacade, public location: Location) {}
+  constructor(
+    private appFacade: AppFacade,
+    public location: Location,
+    @Inject(DOCUMENT) private doc: Document,
+    @Optional() @Inject(REQUEST) private request: Request,
+    @Inject(APP_BASE_HREF) private baseHref: string
+  ) {}
 
   ngOnInit() {
     this.locale$ = this.appFacade.currentLocale$;
@@ -34,5 +51,31 @@ export class CamfilLanguageSwitchComponent implements OnInit {
 
   toggleLevel(val: boolean) {
     this.isClosedLangList.emit(val);
+  }
+
+  getLanguageSwitchUrl(value: string = '', includeBaseHref = false) {
+    let url: string;
+
+    if (this.request) {
+      url = `${this.request.protocol}://${this.request.get('host')}${includeBaseHref ? this.baseHref : ''}`;
+    } else {
+      url = includeBaseHref ? this.doc.baseURI : this.doc.baseURI.replace(new RegExp(`${this.baseHref}$`), '');
+    }
+
+    return [url, value, this.location.path()].filter(Boolean).join('/');
+  }
+
+  getBaseUrl() {
+    return this.baseURL(true);
+  }
+
+  private baseURL(includeBaseHref: boolean) {
+    let url: string;
+    if (this.request) {
+      url = `${this.request.protocol}://${this.request.get('host')}${includeBaseHref ? this.baseHref : ''}`;
+    } else {
+      url = includeBaseHref ? this.doc.baseURI : this.doc.baseURI.replace(new RegExp(`${this.baseHref}$`), '');
+    }
+    return url.endsWith('/') ? url : url + '/';
   }
 }

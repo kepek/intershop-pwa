@@ -163,14 +163,14 @@ export const ENVIRONMENT_DEFAULTS: Environment = {
   defaultProductListingViewType: 'simple',
   defaultDeviceType: 'mobile',
   locales: [
-    { lang: 'fi_FI', currency: 'EUR', value: 'fi', displayName: 'Finnish', displayLong: 'Finnish (Finland)' },
-    { lang: 'sv_SE', currency: 'SEK', value: 'se', displayName: 'Swedish', displayLong: 'Swedish (Sweden)' },
+    { lang: 'fi_FI', currency: 'EUR', value: 'fi', displayName: 'FI', displayLong: 'Finnish' },
+    { lang: 'sv_SE', currency: 'SEK', value: 'se', displayName: 'SV', displayLong: 'Swedish' },
     {
       lang: 'en_GB',
       currency: 'GBP',
       value: 'gb',
-      displayName: 'English',
-      displayLong: 'English (Great Britain)',
+      displayName: 'EN',
+      displayLong: 'English',
     },
   ],
   cookieConsentOptions: {

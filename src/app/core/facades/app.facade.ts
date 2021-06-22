@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { NavigationCancel, NavigationEnd, NavigationStart, Router } from '@angular/router';
 import { Store, select } from '@ngrx/store';
 import { combineLatest, merge, noop } from 'rxjs';
-import { filter, map, mapTo, shareReplay, startWith, switchMap, take, withLatestFrom } from 'rxjs/operators';
+import { filter, map, mapTo, shareReplay, startWith, switchMap, withLatestFrom } from 'rxjs/operators';
 
 import {
   getAvailableLocales,
@@ -40,7 +40,6 @@ export class AppFacade {
     whenTruthy(),
     switchMap(availableLocales =>
       this.getCountryByChannel$.pipe(
-        take(1),
         map(countryCode => availableLocales.filter(loc => [countryCode.toLowerCase(), 'gb'].includes(loc.value)))
       )
     )
