@@ -666,6 +666,7 @@
   "camfil.account.orderdetails.date_of_order.label": "Tilauspäivä",
   "camfil.account.orderdetails.delivery_address.label": "Toimitusosoite",
   "camfil.account.orderdetails.delivery_date.label": "Toimituspäivä",
+  "camfil.account.orderdetails.delivery_date.split.label": "fi_Split delivery:",
   "camfil.account.orderdetails.goods_mark.label": "Tilausmerkki",
   "camfil.account.orderdetails.links.order_again": "Tilaa uudelleen",
   "camfil.account.orderdetails.links.track_order": "Seuraa tilaustasi",

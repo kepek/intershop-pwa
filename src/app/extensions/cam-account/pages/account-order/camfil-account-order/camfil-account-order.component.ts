@@ -120,4 +120,26 @@ export class CamfilAccountOrderComponent implements OnInit, OnDestroy {
     this.destroy$.next();
     this.destroy$.complete();
   }
+
+  get deliveryDatesForItems() {
+    return (
+      this.lineItems
+        ?.reduce((acc, { deliveryDate }) => (acc.includes(deliveryDate) ? acc : [...acc, deliveryDate]), [])
+        .sort() || []
+    );
+  }
+
+  isDeliveryPartial() {
+    const d = this.deliveryDatesForItems;
+    return d.length > 1 && this.dateWithoutTime(d[d.length - 1]) > this.dateWithoutTime(this.order.deliveryDate);
+  }
+
+  /**
+   *
+   * @param n date in milliseconds
+   * @returns number
+   */
+  dateWithoutTime(n: number) {
+    return Math.floor(n / (24 * 60 * 60 * 1000));
+  }
 }
