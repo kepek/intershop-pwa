@@ -6,6 +6,7 @@ import { of } from 'rxjs';
 import { instance, mock, when } from 'ts-mockito';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
+import { AppFacade } from 'ish-core/facades/app.facade';
 import { PricePipe } from 'ish-core/models/price/price.pipe';
 import { AnyProductType } from 'ish-core/models/product/product.model';
 import { getUserPermissions } from 'ish-core/store/customer/authorization';
@@ -21,13 +22,17 @@ describe('Camfil Product Price Component', () => {
 
   beforeEach(async () => {
     const accountFacade = mock(AccountFacade);
+    const appFacade = mock(AppFacade);
+
     when(accountFacade.userPriceDisplayType$).thenReturn(of('gross'));
+    when(appFacade.getCurrencyByChannel$).thenReturn(of('EUR'));
 
     await TestBed.configureTestingModule({
       imports: [CommonModule, TranslateModule.forRoot()],
       declarations: [CamfilProductPriceComponent, PricePipe],
       providers: [
         { provide: AccountFacade, useFactory: () => instance(accountFacade) },
+        { provide: AppFacade, useFactory: () => instance(appFacade) },
         provideMockStore({ selectors: [{ selector: getUserPermissions, value: ['APP_B2B_VIEW_PRICES'] }] }),
       ],
     }).compileComponents();

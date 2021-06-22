@@ -73,7 +73,7 @@ describe('Requisition Detail Page Component', () => {
         <div class="float-right">
           <ul class="share-tools">
             <li>
-              <a href="javascript:window.print();" rel="nofollow" class="link-print"
+              <a class="link-print" href="javascript:window.print();" rel="nofollow"
                 ><fa-icon ng-reflect-icon="fas,print"></fa-icon
                 ><span class="share-label">account.orderdetails.print_link.text</span></a
               >
