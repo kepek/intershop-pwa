@@ -156,11 +156,11 @@
                 class="modal__cam-card--sublist"
               >
                 <div class="modal__radio" *ngFor="let subCamCard of option.subCamCards; let i = index">
-                  <mat-radio-button name="subCamCard" [value]="subCamCard.id">{{ subCamCard.name }}</mat-radio-button>
+                  <mat-radio-button #button (click)="unselectRadio($event, button)" name="subCamCard" [value]="subCamCard.id">{{ subCamCard.name }}</mat-radio-button>
                 </div>
               </div>
               <div *ngIf="showNewSegment" class="modal__radio modal__new-segment--radio">
-                <mat-radio-button name="subCamCard" [value]="newSegmentValue">
+                <mat-radio-button #button (click)="unselectRadio($event, button)" name="subCamCard" [value]="newSegmentValue">
                   <mat-form-field appearance="outline" class="modal__input--small">
                     <input
                       matInput
