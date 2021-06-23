@@ -76,11 +76,12 @@
     </div>
   </div>
   <div class="product-detailed-col-4">
-    <div class="product-prices-container d-flex justify-content-between" *ngIf="userPermissions$ | async">
+    <div class="product-prices-container d-flex justify-content-center" *ngIf="userPermissions$ | async">
       <camfil-product-attribute
         *ngIf="product.listPrice?.value > 0"
         [name]="'camfil.product.list_price.label' | translate"
         [value]="product.listPrice | ishPrice"
+        class="pr-2"
       ></camfil-product-attribute>
 
       <camfil-product-attribute
@@ -101,6 +102,7 @@
             [product]="product"
             [parentForm]="productItemForm"
             [controlName]="quantityControlName"
+            class="mb-2"
           >
           </camfil-product-quantity>
 
