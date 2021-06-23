@@ -15,7 +15,7 @@
         <!-- Info messages -->
         <ish-basket-info></ish-basket-info>
         <!-- Validation messages-->
-        <ng-container *ngIf="isEmptyBucketsVisible">
+        <ng-container *ngIf="!isEmptyBucketsVisible">
           <camfil-basket-validation-results></camfil-basket-validation-results>
         </ng-container>
         <camfil-checkout-validation></camfil-checkout-validation>
