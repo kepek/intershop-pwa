@@ -1,0 +1,17 @@
+<div class="change-language">
+  <form [formGroup]="form" class="form-horizontal" novalidate="novalidate" (ngSubmit)="onSubmit()">
+    <div id="current-password-section">
+      <mat-form-field appearance="outline">
+        <mat-label>{{ 'camfil.account.profile.change_language' | translate }}</mat-label>
+        <mat-select formControlName="languageCode" (selectionChange)="onSubmit()">
+          <mat-option *ngFor="let locale of availableLocales" [value]="locale.lang">
+            {{ locale.displayLong }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="form.controls.languageCode.hasError('required')">
+          {{ 'camfil.account.profile.change_language.error.required' | translate }}
+        </mat-error>
+      </mat-form-field>
+    </div>
+  </form>
+</div>

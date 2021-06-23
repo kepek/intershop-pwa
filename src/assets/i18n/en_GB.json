@@ -755,6 +755,8 @@
   "camfil.account.pdf.phone_number": "Phone notification",
   "camfil.account.profile.change_password": "Change password",
   "camfil.account.profile.change_password.button.aria": "Change Password",
+  "camfil.account.profile.change_language": "Preferred language",
+  "camfil.account.profile.change_language.error.required": "Please select your preferred language",
   "camfil.account.profile.heading": "My profile",
   "camfil.account.profile.link": "My Profile",
   "camfil.account.profile.personal_info": "Personal info",

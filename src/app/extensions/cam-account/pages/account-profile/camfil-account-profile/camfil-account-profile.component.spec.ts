@@ -13,8 +13,8 @@ import { DatePipe } from 'ish-core/pipes/date.pipe';
 import { CamfilErrorComponent } from 'ish-shared/components/common/camfil-error/camfil-error.component';
 import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
 
-import { CamfilChangePasswordComponent } from '../camfil-change-password/camfil-change-password.component';
-import { CamfilPersonalInfoComponent } from '../camfil-personal-info-form/camfil-personal-info.component';
+import { CamfilAccountDetailsFormComponent } from '../camfil-account-details-form/camfil-account-details-form.component';
+import { CamfilAccountPasswordFormComponent } from '../camfil-account-password-form/camfil-account-password-form.component';
 
 import { CamfilAccountProfileComponent } from './camfil-account-profile.component';
 
@@ -33,10 +33,10 @@ describe('Camfil Account Profile Component', () => {
 
     await TestBed.configureTestingModule({
       declarations: [
+        CamfilAccountDetailsFormComponent,
+        CamfilAccountPasswordFormComponent,
         CamfilAccountProfileComponent,
-        CamfilChangePasswordComponent,
         CamfilErrorComponent,
-        CamfilPersonalInfoComponent,
         MockComponent(FaIconComponent),
         MockComponent(LoadingComponent),
         MockDirective(ServerHtmlDirective),
@@ -63,7 +63,7 @@ describe('Camfil Account Profile Component', () => {
 
   it('should display customer data and edit links after creation ', () => {
     fixture.detectChanges();
-    expect(element.querySelector('camfil-account-personal-info-form')).toBeTruthy();
-    expect(element.querySelector('camfil-account-change-password-form')).toBeTruthy();
+    expect(element.querySelector('camfil-account-details-form')).toBeTruthy();
+    expect(element.querySelector('camfil-account-password-form')).toBeTruthy();
   });
 });

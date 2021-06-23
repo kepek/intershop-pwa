@@ -6,15 +6,15 @@ import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
 import { SpecialValidators } from 'ish-shared/forms/validators/special-validators';
 
 @Component({
-  selector: 'camfil-account-change-password-form',
-  templateUrl: './camfil-change-password.component.html',
+  selector: 'camfil-account-password-form',
+  templateUrl: './camfil-account-password-form.component.html',
   styleUrls: [
-    './camfil-change-password.component.scss',
-    '../camil-account-profile/camfil-account-profile.component.scss',
+    './camfil-account-password-form.component.scss',
+    '../camfil-account-profile/camfil-account-profile.component.scss',
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CamfilChangePasswordComponent implements OnInit {
+export class CamfilAccountPasswordFormComponent implements OnInit {
   form: FormGroup;
   submitted = false;
 

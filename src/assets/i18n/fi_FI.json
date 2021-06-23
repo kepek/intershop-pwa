@@ -755,6 +755,8 @@
   "camfil.account.pdf.phone_number": "Puhelinilmoitus",
   "camfil.account.profile.change_password": "Vaihda salasana",
   "camfil.account.profile.change_password.button.aria": "Vaihda salasana",
+  "camfil.account.profile.change_language": "fi_Preferred language",
+  "camfil.account.profile.change_language.error.required": "fi_Please select your preferred language",
   "camfil.account.profile.heading": "Profiilini",
   "camfil.account.profile.link": "Profiilini",
   "camfil.account.profile.personal_info": "Henkilötiedot",

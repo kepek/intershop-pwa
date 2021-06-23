@@ -755,6 +755,8 @@
   "camfil.account.pdf.phone_number": "Telefonavisering",
   "camfil.account.profile.change_password": "Ändra lösenord",
   "camfil.account.profile.change_password.button.aria": "Ändra lösenord",
+  "camfil.account.profile.change_language": "sv_Preferred language",
+  "camfil.account.profile.change_language.error.required": "sv_Please select your preferred language",
   "camfil.account.profile.heading": "Min profil",
   "camfil.account.profile.link": "Min profil",
   "camfil.account.profile.personal_info": "Personlig info",

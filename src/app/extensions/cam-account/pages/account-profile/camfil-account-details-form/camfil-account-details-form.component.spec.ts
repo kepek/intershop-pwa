@@ -8,11 +8,11 @@ import { Customer } from 'ish-core/models/customer/customer.model';
 import { User } from 'ish-core/models/user/user.model';
 import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
 
-import { CamfilPersonalInfoComponent } from './camfil-personal-info.component';
+import { CamfilAccountDetailsFormComponent } from './camfil-account-details-form.component';
 
-describe('Camfil Personal Info Component', () => {
-  let component: CamfilPersonalInfoComponent;
-  let fixture: ComponentFixture<CamfilPersonalInfoComponent>;
+describe('Camfil Account Details Form Component', () => {
+  let component: CamfilAccountDetailsFormComponent;
+  let fixture: ComponentFixture<CamfilAccountDetailsFormComponent>;
   let element: HTMLElement;
 
   const customer = {
@@ -32,13 +32,13 @@ describe('Camfil Personal Info Component', () => {
     when(accountFacade.customer$).thenReturn(of(customer));
 
     await TestBed.configureTestingModule({
-      declarations: [CamfilPersonalInfoComponent, MockComponent(LoadingComponent)],
+      declarations: [CamfilAccountDetailsFormComponent, MockComponent(LoadingComponent)],
       providers: [{ provide: AccountFacade, useFactory: () => instance(accountFacade) }],
     }).compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CamfilPersonalInfoComponent);
+    fixture = TestBed.createComponent(CamfilAccountDetailsFormComponent);
     component = fixture.componentInstance;
     element = fixture.nativeElement;
   });
