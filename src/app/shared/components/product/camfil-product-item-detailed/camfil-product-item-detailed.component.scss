@@ -6,6 +6,9 @@
     grid-template-columns: 350px repeat(3, 1fr);
     grid-row-gap: 0;
     grid-column-gap: 10px;
+    @media (max-width: map-get($container-max-widths, 'xl')) {
+      grid-template-columns: auto;
+    }
   }
   .camfil-product-category-label {
     margin: 4px 0;
@@ -14,18 +17,32 @@
   .product-detailed-left-col {
     grid-area: 1 / 1 / 2 / 2;
     padding: $space-box-half $space-box;
+    @media (max-width: map-get($container-max-widths, 'xl')) {
+      grid-area: 1 / 1 / 2 / 5;
+    }
   }
   .product-detailed-col-2 {
     grid-area: 1 / 2 / 2 / 3;
+    @media (max-width: map-get($container-max-widths, 'xl')) {
+      grid-area: 2 / 1 / 3 / 3;
+      padding: $space-box-half $space-box;
+    }
   }
   .product-detailed-col-3 {
     grid-area: 1 / 3 / 2 / 4;
+    @media (max-width: map-get($container-max-widths, 'xl')) {
+      grid-area: 2 / 3 / 3 / 5;
+      padding: $space-box-half $space-box;
+    }
   }
   .product-detailed-col-4 {
     grid-area: 1 / 4 / 2 / 5;
     padding: $space-box-half $space-box;
     text-align: center;
     background-color: $greyF5;
+    @media (max-width: map-get($container-max-widths, 'xl')) {
+      grid-area: 3 / 1 / 4 / 5;
+    }
   }
   .product-image-container {
     margin-right: $space-box-half;
@@ -36,9 +53,15 @@
   }
   .product-detail-action-col {
     height: $camfil-product-image-size;
+    @media (max-width: map-get($container-max-widths, 'xl')) {
+      height: unset;
+    }
   }
   .product-detailed-inner-col {
     padding-top: $space-detail-padding-top;
+    @media (max-width: map-get($container-max-widths, 'xl')) {
+      padding-top: 0;
+    }
   }
 
   .product-data-col > * {
@@ -107,11 +130,6 @@
         width: 100%;
         color: $camfil-color-light;
         background-color: $camfil-color-primary;
-      }
-    }
-    camfil-product-quantity {
-      .form-group {
-        margin-bottom: $space-box-half;
       }
     }
 
