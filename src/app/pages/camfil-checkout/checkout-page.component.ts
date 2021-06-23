@@ -40,6 +40,10 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
     private updates$: Actions
   ) {}
 
+  get isEmptyBucketsVisible() {
+    return this.emptyBuckets?.length;
+  }
+
   ngOnInit() {
     this.checkoutFacade.setBasketPayment('ISH_INVOICE');
     this.checkoutFacade.getWarehouseCalendar();
