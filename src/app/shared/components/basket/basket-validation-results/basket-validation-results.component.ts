@@ -38,7 +38,6 @@ export class BasketValidationResultsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.validationResults$ = this.checkoutFacade.basketValidationResults$;
-
     // update emitted to display spinning animation
     this.validationResults$.pipe(takeUntil(this.destroy$)).subscribe(() => {
       if (this.itemHasBeenRemoved) {

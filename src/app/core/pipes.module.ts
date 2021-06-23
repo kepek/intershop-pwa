@@ -7,6 +7,7 @@ import { CamfilDatePipe } from './pipes/camfil-date.pipe';
 import { CamfilDimensionPipe } from './pipes/camfil-dimension.pipe';
 import { CamfilProductAttributeValPipe } from './pipes/camfil-product-attribute-val';
 import { CamfilRemoveWhiteSpacesPipe } from './pipes/camfil-remove-white-space.pipe';
+import { CamfilSlugifyPipe } from './pipes/camfil-slugify.pipe';
 import { DatePipe } from './pipes/date.pipe';
 import { FeatureTogglePipe } from './pipes/feature-toggle.pipe';
 import { HighlightPipe } from './pipes/highlight.pipe';
@@ -23,6 +24,7 @@ const pipes = [
   CamfilDimensionPipe,
   CamfilProductAttributeValPipe,
   CamfilRemoveWhiteSpacesPipe,
+  CamfilSlugifyPipe,
   CategoryRoutePipe,
   DatePipe,
   FeatureTogglePipe,

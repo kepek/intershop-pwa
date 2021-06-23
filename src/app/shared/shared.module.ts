@@ -219,6 +219,7 @@ import { CamfilProductsAddToBasketModalComponent } from 'ish-shared/components/p
 import { AddProductsToCartModalComponent } from '../extensions/cam-cards/shared/add-products-to-cart-modal/add-products-to-cart-modal.component';
 import { CreateOrderProductsSuccessComponent } from '../extensions/cam-cards/shared/add-products-to-cart-modal/create-order-products-success/create-order-products-success.component';
 import { CreateOrderProductsModalComponent } from '../extensions/cam-cards/shared/add-product-to-cart-modal/create-order-products-modal/create-order-products-modal.component';
+import { CamfilBasketValidationResultsComponent } from './components/basket/camfil-basket-validation-results/camfil-basket-validation-results.component';
 
 const importExportModules = [
   AddressFormsSharedModule,
@@ -284,6 +285,7 @@ const declaredComponents = [
   CMSVideoComponent,
   CamCardModalDetailsComponent,
   CamfilBannerComponent,
+  CamfilBasketValidationResultsComponent,
   CamfilBulletListComponent,
   CamfilCMSBigBannerWithButtonComponent,
   CamfilCMSImageTextButtonComponent,
@@ -375,6 +377,7 @@ const exportedComponents = [
   CamCardModalDetailsComponent,
   CamfilBannerComponent,
   CamfilBasketCostSummaryComponent,
+  CamfilBasketValidationResultsComponent,
   CamfilBulletListComponent,
   CamfilCamCardModalComponent,
   CamfilCategoryBoxComponent,

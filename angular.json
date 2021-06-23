@@ -22,6 +22,7 @@
           "options": {
             "allowedCommonJsDependencies": [
               "camelcase-keys",
+              "slugify",
               "qs",
               "xlsx-parse-json"
             ],

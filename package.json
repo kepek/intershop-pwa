@@ -126,6 +126,7 @@
     "qs": "^6.10.1",
     "require-context": "^1.1.0",
     "rxjs": "~6.6.3",
+    "slugify": "^1.5.3",
     "swiper": "^6.3.5",
     "tslib": "^2.0.3",
     "typeface-roboto": "1.1.13",
