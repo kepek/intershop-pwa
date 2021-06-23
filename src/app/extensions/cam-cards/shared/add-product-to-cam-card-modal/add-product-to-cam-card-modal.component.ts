@@ -13,6 +13,7 @@ import {
 } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { MatRadioButton } from '@angular/material/radio';
 import { Router } from '@angular/router';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, Subject } from 'rxjs';
@@ -368,6 +369,14 @@ export class AddProductToCamCardModalComponent implements OnInit, OnDestroy, OnC
   showNewSegmant() {
     this.showNewSegment = true;
     this.segmentSelected = this.newSegmentValue;
+  }
+
+  unselectRadio(event, el: MatRadioButton) {
+    if (el.checked && event.target.type !== 'text') {
+      event.preventDefault();
+      this.segmentSelected = undefined;
+      el.checked = false;
+    }
   }
 
   goToCamcard() {
