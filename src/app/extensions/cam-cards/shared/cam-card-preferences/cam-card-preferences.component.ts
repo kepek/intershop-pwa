@@ -303,6 +303,7 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit, OnDestroy
           ...this.camCard?.deliveryAddress,
           companyName1: this.camCardForm.get('companyName1').value,
           addressLine1: this.camCardForm.get('addressLine1').value,
+          addressLine2: '',
           street: this.camCardForm.get('addressLine1').value,
           postalCode: this.camCardForm.get('postalCode').value,
           city: this.camCardForm.get('city').value,
