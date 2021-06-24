@@ -53,7 +53,7 @@ export class PricePipe implements PipeTransform, OnDestroy {
       this.currencyForChanel = currencyForChanel;
     });
 
-    if (!this.isAuthorizedToViewPrices) {
+    if (!this.isAuthorizedToViewPrices || !data) {
       return '-';
     }
 
