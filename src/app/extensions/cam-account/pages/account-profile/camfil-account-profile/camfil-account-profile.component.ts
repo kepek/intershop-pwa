@@ -4,7 +4,7 @@ import { Customer } from 'ish-core/models/customer/customer.model';
 import { Locale } from 'ish-core/models/locale/locale.model';
 import { User } from 'ish-core/models/user/user.model';
 
-import { ChangeLanguagePayload } from '../camfil-account-language-form/camfil-account-language-form.component';
+import { LangSubject } from '../../../models/lang/lang.model';
 
 @Component({
   selector: 'camfil-account-profile',
@@ -18,10 +18,9 @@ export class CamfilAccountProfileComponent {
   @Input() locale: Locale;
   @Input() availableLocales: Locale[];
 
-  @Output() changeLanguage = new EventEmitter<ChangeLanguagePayload>();
+  @Output() changeLanguage = new EventEmitter<LangSubject>();
 
-  onChangeLanguage(payload: ChangeLanguagePayload) {
-    console.log('camfil-account-profile@onChangeLanguage', payload);
-    this.changeLanguage.emit(payload);
+  onChangeLanguage(subject: LangSubject) {
+    this.changeLanguage.emit(subject);
   }
 }

@@ -25,6 +25,7 @@ import { CustomerRegistrationType } from 'ish-core/models/customer/customer.mode
 import { PaymentService } from 'ish-core/services/payment/payment.service';
 import { PersonalizationService } from 'ish-core/services/personalization/personalization.service';
 import { UserService } from 'ish-core/services/user/user.service';
+import { getAvailableLocales, setCurrentLocale } from 'ish-core/store/core/configuration';
 import { displaySuccessMessage } from 'ish-core/store/core/messages';
 import { selectQueryParam, selectUrl } from 'ish-core/store/core/router';
 import { mapErrorToAction, mapToPayload, mapToPayloadProperty, whenTruthy } from 'ish-core/utils/operators';
@@ -101,9 +102,23 @@ export class UserEffects {
   loadCompanyUser$ = createEffect(() =>
     this.actions$.pipe(
       ofType(loadCompanyUser),
-      mergeMap(() =>
+      withLatestFrom(this.store$.pipe(select(getAvailableLocales))),
+      mergeMap(([_, locales]) =>
         this.userService.getCompanyUserData().pipe(
-          map(user => loadCompanyUserSuccess({ user })),
+          mergeMap(user => {
+            const actions = [];
+            const lang = user?.preferredLanguage;
+            const isActiveLocale = locales.filter(l => l.lang === lang)?.length;
+
+            actions.push(loadCompanyUserSuccess({ user }));
+
+            if (isActiveLocale) {
+              // CAM-1147
+              actions.push(setCurrentLocale({ lang }));
+            }
+
+            return actions;
+          }),
           mapErrorToAction(loadCompanyUserFail)
         )
       )

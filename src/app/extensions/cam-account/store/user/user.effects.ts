@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { concatMap, map } from 'rxjs/operators';
+import { concatMap, filter, map, mergeMap } from 'rxjs/operators';
 
-import { mapErrorToAction, mapToPayload, mapToPayloadProperty } from 'ish-core/utils/operators';
+import { setCurrentLocale } from 'ish-core/store/core/configuration';
+import { displayErrorMessage, displaySuccessMessage } from 'ish-core/store/core/messages';
+import { mapErrorToAction, mapToPayload, mapToPayloadProperty, whenTruthy } from 'ish-core/utils/operators';
 
 import { CamAccountService } from '../../services/cam-account/cam-account.service';
 
@@ -38,9 +40,9 @@ export class UserEffects {
     this.actions$.pipe(
       ofType(loadCustomerUserPreferredLanguage),
       mapToPayload(),
-      concatMap(payload =>
+      concatMap(subject =>
         this.userService
-          .getCustomerUserPreferredLanguage(payload)
+          .getCustomerUserPreferredLanguage(subject)
           .pipe(map(loadCustomerUserPreferredLanguageSuccess), mapErrorToAction(loadCustomerUserPreferredLanguageFail))
       )
     )
@@ -50,13 +52,48 @@ export class UserEffects {
     this.actions$.pipe(
       ofType(updateCustomerUserPreferredLanguage),
       mapToPayload(),
-      concatMap(payload =>
-        this.userService
-          .updateCustomerUserPreferredLanguage(payload)
-          .pipe(
-            map(updateCustomerUserPreferredLanguageSuccess),
-            mapErrorToAction(updateCustomerUserPreferredLanguageFail)
-          )
+      concatMap(subject =>
+        this.userService.updateCustomerUserPreferredLanguage(subject).pipe(
+          mergeMap(data => [
+            // TODO (extMlk): Probably we should debounce locale change and display success message in previous language.
+            setCurrentLocale(data),
+            updateCustomerUserPreferredLanguageSuccess({
+              ...data,
+              successMessage: 'camfil.account.profile.change_language.message.success',
+            }),
+          ]),
+          mapErrorToAction(updateCustomerUserPreferredLanguageFail)
+        )
+      )
+    )
+  );
+
+  // Display Success Message for Updates
+
+  displayUpdateCustomerUserSuccessMessage$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(updateCustomerUserPreferredLanguageSuccess),
+      mapToPayloadProperty('successMessage'),
+      filter(successMessage => !!successMessage),
+      map(successMessage =>
+        displaySuccessMessage({
+          message: successMessage,
+        })
+      )
+    )
+  );
+
+  // Display Fail Message for Updates
+
+  displayUpdateCustomerUserFailMessage$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(updateCustomerUserPreferredLanguageFail),
+      mapToPayloadProperty('error'),
+      whenTruthy(),
+      map(error =>
+        displayErrorMessage({
+          message: error?.message || error?.code,
+        })
       )
     )
   );

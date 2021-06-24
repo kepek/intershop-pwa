@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 
 import { Applicant } from '../models/applicant/applicant.model';
+import { LangSubject } from '../models/lang/lang.model';
 import { UsernameReminder } from '../models/username-reminder/username-reminder.model';
-import { ChangeLanguagePayload } from '../pages/account-profile/camfil-account-language-form/camfil-account-language-form.component';
 import { applyForAnAccount, getApplicant, getApplicantError, getApplicantLoading } from '../store/applicant';
 import { getCamAccountState } from '../store/cam-account-store';
 import {
@@ -88,11 +88,11 @@ export class CamAccountFacade {
 
   // Preferred Language
 
-  getCustomerUserPreferredLanguage$(payload: { customerId: string; userId: string }) {
-    this.store.dispatch(loadCustomerUserPreferredLanguage(payload));
+  getCustomerUserPreferredLanguage$(subject: Omit<LangSubject, 'lang'>) {
+    this.store.dispatch(loadCustomerUserPreferredLanguage(subject));
   }
 
-  updateCustomerUserPreferredLanguage$(payload: ChangeLanguagePayload) {
-    this.store.dispatch(updateCustomerUserPreferredLanguage(payload));
+  updateCustomerUserPreferredLanguage$(subject: LangSubject) {
+    this.store.dispatch(updateCustomerUserPreferredLanguage(subject));
   }
 }

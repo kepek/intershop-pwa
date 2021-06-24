@@ -8,8 +8,7 @@ import { Locale } from 'ish-core/models/locale/locale.model';
 import { User } from 'ish-core/models/user/user.model';
 
 import { CamAccountFacade } from '../../facades/cam-account.facade';
-
-import { ChangeLanguagePayload } from './camfil-account-language-form/camfil-account-language-form.component';
+import { LangSubject } from '../../models/lang/lang.model';
 
 @Component({
   selector: 'camfil-account-profile-page',
@@ -35,8 +34,7 @@ export class CamfilAccountProfilePageComponent implements OnInit {
     this.availableLocales$ = this.appFacade.availableLocalesByCountryCode$;
   }
 
-  changeLanguage(payload: ChangeLanguagePayload) {
-    console.log('camfil-account-profile-page@changeLanguage', payload);
-    this.camAccountFacade.updateCustomerUserPreferredLanguage$(payload);
+  changeLanguage(subject: LangSubject) {
+    this.camAccountFacade.updateCustomerUserPreferredLanguage$(subject);
   }
 }

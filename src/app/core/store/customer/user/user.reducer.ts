@@ -8,6 +8,11 @@ import { loadRolesAndPermissionsFail } from 'ish-core/store/customer/authorizati
 import { setErrorOn, setLoadingOn } from 'ish-core/utils/ngrx-creators';
 
 import {
+  updateCustomerUserPreferredLanguage,
+  updateCustomerUserPreferredLanguageSuccess,
+} from '../../../../extensions/cam-account/store/user';
+
+import {
   createUser,
   createUserFail,
   deleteUserPaymentInstrument,
@@ -78,7 +83,8 @@ export const userReducer = createReducer(
     updateUserPassword,
     updateCustomer,
     loadUserPaymentMethods,
-    deleteUserPaymentInstrument
+    deleteUserPaymentInstrument,
+    updateCustomerUserPreferredLanguage
   ),
   on(loginUserFail, loadCompanyUserFail, createUserFail, (_, action) => {
     const error = action.payload.error;
@@ -182,5 +188,15 @@ export const userReducer = createReducer(
     ...state,
     passwordReminderSuccess: undefined,
     passwordReminderError: undefined,
-  }))
+  })),
+  on(updateCustomerUserPreferredLanguageSuccess, (state: UserState, action) => {
+    const user = { ...state.user, preferredLanguage: action.payload.lang };
+
+    return {
+      ...state,
+      user,
+      loading: false,
+      error: undefined,
+    };
+  })
 );

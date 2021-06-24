@@ -6,10 +6,10 @@ import { Locale } from 'ish-core/models/locale/locale.model';
 import { User } from 'ish-core/models/user/user.model';
 import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
 
-export interface ChangeLanguagePayload {
-  customerId: string;
-  userId: string;
-  languageCode: string;
+import { LangSubject } from '../../../models/lang/lang.model';
+
+enum FormControlName {
+  Lang = 'lang',
 }
 
 @Component({
@@ -28,16 +28,15 @@ export class CamfilAccountLanguageFormComponent implements OnInit {
   @Input() availableLocales: Locale[];
   @Input() locale: Locale;
 
-  @Output() submit = new EventEmitter<ChangeLanguagePayload>();
+  @Output() submit = new EventEmitter<LangSubject>();
 
   form: FormGroup;
+  FormControlName = FormControlName;
   submitted = false;
-
-  languageCode = new FormControl('', [Validators.required]);
 
   ngOnInit() {
     this.form = new FormGroup({
-      languageCode: this.languageCode,
+      [FormControlName.Lang]: new FormControl(this?.user?.preferredLanguage, [Validators.required]),
     });
   }
 
@@ -48,14 +47,12 @@ export class CamfilAccountLanguageFormComponent implements OnInit {
       return;
     }
 
-    const payload = {
-      userId: this.user?.login,
+    const subject = {
       customerId: this.customer?.customerNo,
-      languageCode: this.form.get('languageCode').value,
+      userId: '-',
+      lang: this?.form?.get(FormControlName.Lang)?.value,
     };
 
-    console.log('camfil-account-language-form@onSubmit', payload);
-
-    this.submit.emit(payload);
+    this.submit.emit(subject);
   }
 }
