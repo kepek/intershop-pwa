@@ -12,6 +12,7 @@ import { Product } from 'ish-core/models/product/product.model';
 export class CreateOrderProductSuccessComponent {
   @Input() product: Product;
   @Output() hideEmitter = new EventEmitter<void>();
+  @Output() hideSearchBox = new EventEmitter<void>();
 
   constructor(private router: Router) {}
 
@@ -19,8 +20,13 @@ export class CreateOrderProductSuccessComponent {
     this.hideEmitter.emit();
   }
 
+  hideSearchDialog() {
+    this.hideSearchBox.emit();
+  }
+
   goToCart() {
     this.router.navigate(['/checkout']);
     this.hide();
+    this.hideSearchDialog();
   }
 }

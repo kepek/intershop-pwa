@@ -50,5 +50,9 @@
 </ng-template>
 
 <ng-template #success>
-  <camfil-create-order-product-success (hideEmitter)="hide()" [product]="product"></camfil-create-order-product-success>
+  <camfil-create-order-product-success
+    (hideSearchBox)="hideSearchDialog()"
+    (hideEmitter)="hide()"
+    [product]="product"
+  ></camfil-create-order-product-success>
 </ng-template>

@@ -138,6 +138,10 @@ export class AddProductToCartModalComponent implements OnInit, OnDestroy {
     this.dialog.closeAll();
   }
 
+  hideSearchDialog() {
+    this.shoppingFacade.hideSearchBox();
+  }
+
   /** open modal */
   show() {
     this.quantityForm?.controls.quantity.setValue(this.quantity);
