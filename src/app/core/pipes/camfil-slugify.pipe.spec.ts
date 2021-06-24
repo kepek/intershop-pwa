@@ -5,7 +5,7 @@ import { CoreStoreModule } from 'ish-core/store/core/core-store.module';
 
 import { CamfilSlugifyPipe } from './camfil-slugify.pipe';
 
-describe('Camfil Slugify Pipe?', () => {
+describe('Camfil Slugify Pipe', () => {
   let camfilSlugifyPipe: CamfilSlugifyPipe;
 
   beforeEach(() => {
