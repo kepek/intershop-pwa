@@ -13,7 +13,7 @@ import { BasketView } from 'ish-core/models/basket/basket.model';
 import { Order } from 'ish-core/models/order/order.model';
 import { createOrderSuccess } from 'ish-core/store/customer/orders/orders.actions';
 import { BasketInfoComponent } from 'ish-shared/components/basket/basket-info/basket-info.component';
-import { BasketValidationResultsComponent } from 'ish-shared/components/basket/basket-validation-results/basket-validation-results.component';
+import { CamfilBasketValidationResultsComponent } from 'ish-shared/components/basket/camfil-basket-validation-results/camfil-basket-validation-results.component';
 import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
 
 import { CamCardsFacade } from '../../extensions/cam-cards/facades/cam-cards.facade';
@@ -95,7 +95,7 @@ describe('Checkout Page Component', () => {
       declarations: [
         CheckoutPageComponent,
         MockComponent(BasketInfoComponent),
-        MockComponent(BasketValidationResultsComponent),
+        MockComponent(CamfilBasketValidationResultsComponent),
         MockComponent(CamfilCheckoutHeaderComponent),
         MockComponent(CamfilCheckoutListComponent),
         MockComponent(CamfilCheckoutSummaryComponent),
