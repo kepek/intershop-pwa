@@ -150,7 +150,7 @@
       <div class="order-summary-info col-sm-6" data-testing-id="order-summary-info" *ngIf="isConfirmed">
         <dl class="row dl-horizontal dl-separator mb-0">
           <dt class="col-6 p-0" data-testing-id="order-form-note">{{ 'camfil.checkout.form.note' | translate }}</dt>
-          <dd class="col-6 p-0" data-testing-id="order-customer_id">{{ order?.info || '-' }}</dd>
+          <dd class="col-6 p-0 text-break text-right" data-testing-id="order-customer_id">{{ order?.info || '-' }}</dd>
         </dl>
       </div>
       <div class="order-summary-info col-sm-4" data-testing-id="order-summary-info" *ngIf="!isConfirmed">
