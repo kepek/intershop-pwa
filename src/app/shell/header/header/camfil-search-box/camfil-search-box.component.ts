@@ -11,12 +11,12 @@ import {
 import { Router } from '@angular/router';
 import { Actions, ofType } from '@ngrx/effects';
 import { ReplaySubject, Subject } from 'rxjs';
-import { debounceTime, takeUntil } from 'rxjs/operators';
+import { debounceTime, map, takeUntil } from 'rxjs/operators';
 
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { Category } from 'ish-core/models/category/category.model';
 import { ProductListingID } from 'ish-core/models/product-listing/product-listing.model';
-import { hideSearchBox } from 'ish-core/store/customer/basket';
+import { hideSearchBox } from 'ish-core/store/shopping/search';
 
 interface SearchBoxConfiguration {
   /**
@@ -94,6 +94,13 @@ export class CamfilSearchBoxComponent implements OnInit, OnDestroy {
     this.shoppingFacade.getAllCategoriesTree$.pipe(takeUntil(this.destroy$)).subscribe(list => {
       this.categoriesTree = Object.values(list);
     });
+
+    this.shoppingFacade.searchTerm$
+      .pipe(
+        map(x => (x ? x : '')),
+        takeUntil(this.destroy$)
+      )
+      .subscribe(term => this.inputSearchTerms$.next(term));
 
     // products are triggered solely via stream
     this.inputSearchTerms$.pipe(debounceTime(1000), takeUntil(this.destroy$)).subscribe(() => {

@@ -30,3 +30,5 @@ export const setCurrentTerm = createAction(
   '[Suggest Search Internal] Set Current Search Term',
   payload<{ searchTerm: string }>()
 );
+
+export const hideSearchBox = createAction('[Search Internal] Hide Search Box');

@@ -3,13 +3,14 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { routerNavigatedAction } from '@ngrx/router-store';
 import { Store, select } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
-import { isEqual } from 'lodash-es';
+import { isEmpty, isEqual } from 'lodash-es';
 import { EMPTY } from 'rxjs';
 import {
   catchError,
   concatMap,
   debounceTime,
   distinctUntilChanged,
+  filter,
   map,
   mergeMap,
   sample,
@@ -22,17 +23,20 @@ import {
 import { ProductListingMapper } from 'ish-core/models/product-listing/product-listing.mapper';
 import { ProductsService } from 'ish-core/services/products/products.service';
 import { SuggestService } from 'ish-core/services/suggest/suggest.service';
-import { ofUrl, selectRouteParam } from 'ish-core/store/core/router';
+import { ofUrl, selectPath, selectRouteParam } from 'ish-core/store/core/router';
 import { setBreadcrumbData } from 'ish-core/store/core/viewconf';
 import { getProductListing, loadMoreProducts, setProductListingPages } from 'ish-core/store/shopping/product-listing';
 import { loadProductSuccess } from 'ish-core/store/shopping/products';
+import { getCurrentTerm } from 'ish-core/store/shopping/search/search.selectors';
 import { HttpStatusCodeService } from 'ish-core/utils/http-status-code/http-status-code.service';
 import { mapErrorToAction, mapToPayload, mapToPayloadProperty, whenTruthy } from 'ish-core/utils/operators';
 
 import {
+  hideSearchBox,
   searchProducts,
   searchProductsFail,
   searchProductsInSearchBox,
+  setCurrentTerm,
   suggestSearch,
   suggestSearchSuccess,
 } from './search.actions';
@@ -144,11 +148,34 @@ export class SearchEffects {
       mergeMap(({ id }) =>
         this.store.pipe(
           select(getProductListing, id),
-          map(view => !view && searchProducts({ searchTerm: id.value })),
+          mergeMap(view => {
+            const actions = [];
+            const payload = { searchTerm: id.value };
+
+            actions.push(setCurrentTerm(payload));
+
+            if (!view) {
+              actions.push(searchProducts(payload));
+            }
+
+            return actions;
+          }),
           whenTruthy(),
           distinctUntilChanged(isEqual)
         )
       )
+    )
+  );
+
+  hideSearchBoxOnRoutePathChange$ = createEffect(() =>
+    this.store.pipe(
+      sample(this.actions$.pipe(ofType(routerNavigatedAction))),
+      select(selectPath),
+      whenTruthy(),
+      distinctUntilChanged(),
+      withLatestFrom(this.store.pipe(select(getCurrentTerm))),
+      filter(([, searchTerm]) => !isEmpty(searchTerm)),
+      map(() => hideSearchBox())
     )
   );
 }
