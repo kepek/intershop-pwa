@@ -268,7 +268,7 @@ export class UserEffects {
     )
   );
 
-  // Display Success Message for Updates
+  // Display Fail Message for Updates
 
   displayUpdateCustomerUserFailMessage$ = createEffect(() =>
     this.actions$.pipe(

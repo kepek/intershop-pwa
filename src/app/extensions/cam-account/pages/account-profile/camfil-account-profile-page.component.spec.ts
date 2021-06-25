@@ -5,13 +5,17 @@ import { instance, mock } from 'ts-mockito';
 
 import { ServerHtmlDirective } from 'ish-core/directives/server-html.directive';
 import { AccountFacade } from 'ish-core/facades/account.facade';
+import { AppFacade } from 'ish-core/facades/app.facade';
 import { CamfilErrorComponent } from 'ish-shared/components/common/camfil-error/camfil-error.component';
 import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
 
+import { CamAccountFacade } from '../../facades/cam-account.facade';
+
+import { CamfilAccountDetailsFormComponent } from './camfil-account-details-form/camfil-account-details-form.component';
+import { CamfilAccountLanguageFormComponent } from './camfil-account-language-form/camfil-account-language-form.component';
+import { CamfilAccountPasswordFormComponent } from './camfil-account-password-form/camfil-account-password-form.component';
 import { CamfilAccountProfilePageComponent } from './camfil-account-profile-page.component';
-import { CamfilChangePasswordComponent } from './camfil-change-password/camfil-change-password.component';
-import { CamfilPersonalInfoComponent } from './camfil-personal-info-form/camfil-personal-info.component';
-import { CamfilAccountProfileComponent } from './camil-account-profile/camfil-account-profile.component';
+import { CamfilAccountProfileComponent } from './camfil-account-profile/camfil-account-profile.component';
 
 describe('Camfil Account Profile Page Component', () => {
   let component: CamfilAccountProfilePageComponent;
@@ -21,16 +25,21 @@ describe('Camfil Account Profile Page Component', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [
+        CamfilAccountDetailsFormComponent,
+        CamfilAccountLanguageFormComponent,
+        CamfilAccountPasswordFormComponent,
         CamfilAccountProfileComponent,
         CamfilAccountProfilePageComponent,
-        CamfilChangePasswordComponent,
         CamfilErrorComponent,
-        CamfilPersonalInfoComponent,
         MockComponent(FaIconComponent),
         MockComponent(LoadingComponent),
         MockDirective(ServerHtmlDirective),
       ],
-      providers: [{ provide: AccountFacade, useFactory: () => instance(mock(AccountFacade)) }],
+      providers: [
+        { provide: AccountFacade, useFactory: () => instance(mock(AccountFacade)) },
+        { provide: AppFacade, useFactory: () => instance(mock(AppFacade)) },
+        { provide: CamAccountFacade, useFactory: () => instance(mock(CamAccountFacade)) },
+      ],
     }).compileComponents();
   });
 

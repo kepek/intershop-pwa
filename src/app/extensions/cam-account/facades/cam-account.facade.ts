@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 
 import { Applicant } from '../models/applicant/applicant.model';
+import { LangSubject } from '../models/lang/lang.model';
 import { UsernameReminder } from '../models/username-reminder/username-reminder.model';
 import { applyForAnAccount, getApplicant, getApplicantError, getApplicantLoading } from '../store/applicant';
 import { getCamAccountState } from '../store/cam-account-store';
@@ -21,8 +22,10 @@ import {
   getLoading,
   getUsernameReminderError,
   getUsernameReminderSuccess,
+  loadCustomerUserPreferredLanguage,
   requestUsernameReminder,
   resetUsernameReminder,
+  updateCustomerUserPreferredLanguage,
 } from '../store/user';
 
 // tslint:disable:member-ordering
@@ -72,14 +75,24 @@ export class CamAccountFacade {
   ordersLoading$ = this.store.pipe(select(getOrdersLoading));
 
   orderTrackAndTrace$(orderId: string) {
-    return this.store.dispatch(loadOrderTrackAndTrace({ orderId }));
+    this.store.dispatch(loadOrderTrackAndTrace({ orderId }));
   }
 
   orderAdditionalTotalCost$(orderId: string) {
-    return this.store.dispatch(loadOrderAdditionalTotalCost({ orderId }));
+    this.store.dispatch(loadOrderAdditionalTotalCost({ orderId }));
   }
 
   createOrderDuplicate(orderId: string) {
-    return this.store.dispatch(createOrderDuplicate({ orderId }));
+    this.store.dispatch(createOrderDuplicate({ orderId }));
+  }
+
+  // Preferred Language
+
+  getCustomerUserPreferredLanguage$(subject: Omit<LangSubject, 'lang'>) {
+    this.store.dispatch(loadCustomerUserPreferredLanguage(subject));
+  }
+
+  updateCustomerUserPreferredLanguage$(subject: LangSubject) {
+    this.store.dispatch(updateCustomerUserPreferredLanguage(subject));
   }
 }

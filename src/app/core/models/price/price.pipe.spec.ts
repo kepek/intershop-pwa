@@ -83,7 +83,7 @@ describe('Price Pipe', () => {
   it('should display N/A for default', () => {
     translateService.use('en');
     fixture.detectChanges();
-    expect(element).toMatchInlineSnapshot(`~product.price.na.text~`);
+    expect(element).toMatchInlineSnapshot(`~-~`);
   });
 
   describe('Price', () => {

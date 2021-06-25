@@ -1,5 +1,9 @@
-<camfil-account-profile
-  *ngIf="user$ | async as user"
-  [user]="user"
-  [customer]="customer$ | async"
-></camfil-account-profile>
+<ng-container *ngIf="user$ | async as user">
+  <camfil-account-profile
+    [user]="user"
+    [customer]="customer$ | async"
+    [locale]="locale$ | async"
+    [availableLocales]="availableLocales$ | async"
+    (changeLanguage)="changeLanguage($event)"
+  ></camfil-account-profile>
+</ng-container>

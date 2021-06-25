@@ -70,7 +70,7 @@ export class CamfilLanguageSwitchComponent implements OnInit {
     const splitPath = this.location?.path()?.split('?');
     const queryParams = splitPath[1];
 
-    let url = baseURL.toString();
+    let url = baseURL.toString().replace(/\/+$/, '');
     let path = splitPath[0];
 
     if (baseURL instanceof URL) {

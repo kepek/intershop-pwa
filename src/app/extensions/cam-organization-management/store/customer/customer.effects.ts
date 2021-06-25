@@ -61,7 +61,7 @@ export class CustomerEffects {
           ),
           mergeMap(([customers, path, currentCustomer, permissions]) => {
             const actions = [];
-            const userAdmin = permissions.find(p => p === 'APP_B2B_MANAGE_USERS');
+            const userAdmin = permissions?.find(p => p === 'APP_B2B_MANAGE_USERS');
             let currentCustomerId = customers.find(c => c.customerNo === currentCustomer.customerNo)?.id;
 
             if (path.endsWith('account/organization/create') && userAdmin) {

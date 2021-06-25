@@ -9,15 +9,15 @@ import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
 import { SpecialValidators } from 'ish-shared/forms/validators/special-validators';
 
 @Component({
-  selector: 'camfil-account-personal-info-form',
-  templateUrl: './camfil-personal-info.component.html',
+  selector: 'camfil-account-details-form',
+  templateUrl: './camfil-account-details-form.component.html',
   styleUrls: [
-    './camfil-personal-info.component.scss',
-    '../camil-account-profile/camfil-account-profile.component.scss',
+    './camfil-account-details-form.component.scss',
+    '../camfil-account-profile/camfil-account-profile.component.scss',
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CamfilPersonalInfoComponent implements OnInit, OnDestroy {
+export class CamfilAccountDetailsFormComponent implements OnInit, OnDestroy {
   user$: Observable<User>;
   user: User;
   userLoading$: Observable<boolean>;

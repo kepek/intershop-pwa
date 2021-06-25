@@ -39,31 +39,38 @@ const initialState: ConfigurationState = {
   _deviceType: environment.defaultDeviceType,
 };
 
+const updateLocalesAndLang = (state: ConfigurationState, payload: Partial<ConfigurationState>) => {
+  const channelCode = Object.entries(Channel).find(([, val]) => val === payload.channel || val === state.channel)?.[0];
+
+  const locales = state.locales.map(l => {
+    const currency = l.lang === payload.lang ? ChannelCurrency[channelCode] || l.currency : l.currency;
+    return {
+      ...l,
+      currency,
+    };
+  });
+
+  const lang = payload?.lang || locales?.find(l => l?.value === channelCode?.toLowerCase())?.lang;
+
+  return {
+    locales,
+    lang,
+  };
+};
+
 export const configurationReducer = createReducer(
   initialState,
-  on(applyConfiguration, (state: ConfigurationState, { payload }) => {
-    const channelCode = Object.entries(Channel).find(
-      ([, val]) => val === payload.channel || val === state.channel
-    )?.[0];
-
-    const locales = state.locales.map(l => {
-      const currency = l.lang === payload.lang ? ChannelCurrency[channelCode] || l.currency : l.currency;
-      return {
-        ...l,
-        currency,
-      };
-    });
-
-    const lang = payload?.lang || locales?.find(l => l?.value === channelCode?.toLowerCase())?.lang;
-
-    return { ...state, ...payload, locales, lang };
-  }),
+  on(applyConfiguration, (state: ConfigurationState, action) => ({
+    ...state,
+    ...action.payload,
+    ...updateLocalesAndLang(state, action.payload),
+  })),
   on(setGTMToken, (state: ConfigurationState, action) => {
     const { gtmToken } = action.payload;
     return { ...state, gtmToken };
   }),
-  on(setCurrentLocale, (state: ConfigurationState, action) => {
-    const { lang } = action.payload;
-    return { ...state, lang };
-  })
+  on(setCurrentLocale, (state: ConfigurationState, action) => ({
+    ...state,
+    ...updateLocalesAndLang(state, action.payload),
+  }))
 );
