@@ -60,12 +60,17 @@ const updateLocalesAndLang = (state: ConfigurationState, payload: Partial<Config
 
 export const configurationReducer = createReducer(
   initialState,
-  on(applyConfiguration, (state: ConfigurationState, action) =>
-    ({ ...state, ...action.payload, ...updateLocalesAndLang(state, action.payload) })),
+  on(applyConfiguration, (state: ConfigurationState, action) => ({
+    ...state,
+    ...action.payload,
+    ...updateLocalesAndLang(state, action.payload),
+  })),
   on(setGTMToken, (state: ConfigurationState, action) => {
     const { gtmToken } = action.payload;
     return { ...state, gtmToken };
   }),
-  on(setCurrentLocale, (state: ConfigurationState, action) =>
-    ({ ...state, ...updateLocalesAndLang(state, action.payload) }))
+  on(setCurrentLocale, (state: ConfigurationState, action) => ({
+    ...state,
+    ...updateLocalesAndLang(state, action.payload),
+  }))
 );

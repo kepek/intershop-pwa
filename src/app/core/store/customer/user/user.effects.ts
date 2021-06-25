@@ -103,7 +103,7 @@ export class UserEffects {
     this.actions$.pipe(
       ofType(loadCompanyUser),
       withLatestFrom(this.store$.pipe(select(getAvailableLocales))),
-      mergeMap(([_, locales]) =>
+      mergeMap(([, locales]) =>
         this.userService.getCompanyUserData().pipe(
           mergeMap(user => {
             const actions = [];
