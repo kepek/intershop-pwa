@@ -518,8 +518,6 @@ export const loadCustomerDeliveryTermSuccess = createAction(
   payload<{ customerId: string; term: CustomerDeliveryTerm }>()
 );
 
-export const hideSearchBox = createAction('[Basket] Hide search box');
-
 export const createBasket = createAction('[Basket API] Create new Basket');
 
 export const createBasketFail = createAction('[Basket API] Create new Basket Fail', httpError());
