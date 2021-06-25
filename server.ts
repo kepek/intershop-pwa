@@ -35,6 +35,7 @@ global.window = win;
 
 global.navigator = win.navigator;
 
+
 // The Express app is exported so that it can be used by serverless Functions.
 export function app(): express.Express {
   const logging = /on|1|true|yes/.test(process.env.LOGGING?.toLowerCase());

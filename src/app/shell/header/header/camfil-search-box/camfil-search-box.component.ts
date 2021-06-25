@@ -11,12 +11,13 @@ import {
 import { Router } from '@angular/router';
 import { Actions, ofType } from '@ngrx/effects';
 import { ReplaySubject, Subject } from 'rxjs';
-import { debounceTime, map, takeUntil } from 'rxjs/operators';
+import { debounceTime, take, takeUntil } from 'rxjs/operators';
 
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { Category } from 'ish-core/models/category/category.model';
 import { ProductListingID } from 'ish-core/models/product-listing/product-listing.model';
 import { hideSearchBox } from 'ish-core/store/shopping/search';
+import { whenTruthy } from 'ish-core/utils/operators';
 
 interface SearchBoxConfiguration {
   /**
@@ -95,20 +96,23 @@ export class CamfilSearchBoxComponent implements OnInit, OnDestroy {
       this.categoriesTree = Object.values(list);
     });
 
-    this.shoppingFacade.searchTerm$
-      .pipe(
-        map(x => (x ? x : '')),
-        takeUntil(this.destroy$)
-      )
-      .subscribe(term => this.inputSearchTerms$.next(term));
-
+    this.shoppingFacade.searchTerm$?.pipe(whenTruthy(), take(1)).subscribe(term => {
+      this.productListId = { type: 'search', page: 1, value: term };
+      this.inputSearchTerms$.next(term);
+    });
     // products are triggered solely via stream
     this.inputSearchTerms$.pipe(debounceTime(1000), takeUntil(this.destroy$)).subscribe(() => {
-      this.shoppingFacade.searchProductsInSearchBox(this.productListId);
+      if (this.productListId?.value) {
+        this.shoppingFacade.searchProductsInSearchBox(this.productListId);
+      }
     });
 
     this.updates$.pipe(ofType(hideSearchBox), takeUntil(this.destroy$)).subscribe(() => {
+      if (this.router.url.indexOf('search') === -1) {
+        this.clearResults();
+      }
       this.out();
+
       this.cdr.detectChanges();
     });
   }
@@ -143,12 +147,21 @@ export class CamfilSearchBoxComponent implements OnInit, OnDestroy {
 
   searchResults(searchTerm: string) {
     if (searchTerm.length > 2) {
-      this.inputSearchTerms$.next(searchTerm);
-      this.categoriesFiltered = this.getFilteredCategories(searchTerm);
-      this.productListId = { type: 'search', page: 1, value: searchTerm };
+      this.setSearchTerm(searchTerm);
       this.noResults = false;
       this.loading = true;
     }
+  }
+
+  clearResults() {
+    this.shoppingFacade.setCurrentTerm('');
+    this.setSearchTerm('');
+  }
+
+  setSearchTerm(searchTerm) {
+    this.inputSearchTerms$.next(searchTerm);
+    this.productListId = { type: 'search', page: 1, value: searchTerm };
+    this.categoriesFiltered = this.getFilteredCategories(searchTerm);
   }
 
   submitSearch(searchTerm: string) {
@@ -157,7 +170,6 @@ export class CamfilSearchBoxComponent implements OnInit, OnDestroy {
       this.shoppingFacade.setCurrentTerm(searchTerm);
       this.router.navigate(['/search', searchTerm]);
     }
-
     // prevent form submission
     return false;
   }

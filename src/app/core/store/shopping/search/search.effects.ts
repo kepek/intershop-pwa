@@ -23,7 +23,7 @@ import {
 import { ProductListingMapper } from 'ish-core/models/product-listing/product-listing.mapper';
 import { ProductsService } from 'ish-core/services/products/products.service';
 import { SuggestService } from 'ish-core/services/suggest/suggest.service';
-import { ofUrl, selectPath, selectRouteParam } from 'ish-core/store/core/router';
+import { ofUrl, selectRouteParam, selectUrl } from 'ish-core/store/core/router';
 import { setBreadcrumbData } from 'ish-core/store/core/viewconf';
 import { getProductListing, loadMoreProducts, setProductListingPages } from 'ish-core/store/shopping/product-listing';
 import { loadProductSuccess } from 'ish-core/store/shopping/products';
@@ -170,12 +170,12 @@ export class SearchEffects {
   hideSearchBoxOnRoutePathChange$ = createEffect(() =>
     this.store.pipe(
       sample(this.actions$.pipe(ofType(routerNavigatedAction))),
-      select(selectPath),
+      select(selectUrl),
       whenTruthy(),
-      distinctUntilChanged(),
+      distinctUntilChanged((x, y) => isEqual(x?.split('?')?.[0], y?.split('?')?.[0])),
       withLatestFrom(this.store.pipe(select(getCurrentTerm))),
       filter(([, searchTerm]) => !isEmpty(searchTerm)),
-      map(() => hideSearchBox())
+      map(hideSearchBox)
     )
   );
 }
