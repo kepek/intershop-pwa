@@ -162,6 +162,18 @@ describe('User Effects', () => {
   });
 
   describe('loadCompanyUser$', () => {
+    beforeEach(() => {
+      store$.dispatch(
+        loginUserSuccess({
+          customer: {
+            customerNo: '4711',
+            isBusinessCustomer: false,
+          } as Customer,
+          user: {} as User,
+        })
+      );
+    });
+
     it('should call the registationService for LoadCompanyUser', done => {
       const action = loadCompanyUser();
       actions$ = of(action);

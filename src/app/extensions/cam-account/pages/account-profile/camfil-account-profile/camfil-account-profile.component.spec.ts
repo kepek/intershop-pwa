@@ -14,6 +14,7 @@ import { CamfilErrorComponent } from 'ish-shared/components/common/camfil-error/
 import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
 
 import { CamfilAccountDetailsFormComponent } from '../camfil-account-details-form/camfil-account-details-form.component';
+import { CamfilAccountLanguageFormComponent } from '../camfil-account-language-form/camfil-account-language-form.component';
 import { CamfilAccountPasswordFormComponent } from '../camfil-account-password-form/camfil-account-password-form.component';
 
 import { CamfilAccountProfileComponent } from './camfil-account-profile.component';
@@ -34,6 +35,7 @@ describe('Camfil Account Profile Component', () => {
     await TestBed.configureTestingModule({
       declarations: [
         CamfilAccountDetailsFormComponent,
+        CamfilAccountLanguageFormComponent,
         CamfilAccountPasswordFormComponent,
         CamfilAccountProfileComponent,
         CamfilErrorComponent,
