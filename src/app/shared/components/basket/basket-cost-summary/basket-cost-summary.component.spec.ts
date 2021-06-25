@@ -73,7 +73,7 @@ describe('Basket Cost Summary Component', () => {
       $141,796.98
       -$11.90
       checkout.order.shipping.label
-      product.price.na.text
+      -
       Battery Deposit Surcharge
       shopping_cart.detail.text
       $595.00
