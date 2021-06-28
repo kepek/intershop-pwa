@@ -195,6 +195,7 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges, OnD
       sku: item.product.sku,
       quantity: item.quantity,
       boxLabel: CamCardHelper.handleBoxLabelToOrderItem(parent, item),
+      measurement: item.measurement,
     };
   }
 
