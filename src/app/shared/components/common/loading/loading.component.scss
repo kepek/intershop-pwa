@@ -9,6 +9,10 @@
   min-height: 50px;
   background: #fff url('/assets/img/loading.gif') center center no-repeat;
   opacity: 0.5;
+
+  &--fixed {
+    position: fixed;
+  }
 }
 
 .loading-wrapper {

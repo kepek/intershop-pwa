@@ -1,5 +1,5 @@
+<ish-loading *ngIf="(ordersLoading$ | async) || (basketLoading$ | async)" fixed="true"></ish-loading>
 <br />
-
 <ng-container *ngIf="basket">
   <div class="checkout row">
     <div class="col-sm-12 col-lg-9">
@@ -62,5 +62,3 @@
     </div>
   </div>
 </ng-container>
-
-<ish-loading *ngIf="(ordersLoading$ | async) || (basketLoading$ | async)"></ish-loading>
