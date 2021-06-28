@@ -10,8 +10,8 @@
       >
         <mat-option>--</mat-option>
         <mat-option *ngFor="let customer of customers$ | async" [value]="customer.id">
-          {{ customer.companyName }}
-          <ng-container *ngIf="customer?.department">, {{ customer.department }} </ng-container>
+          {{ customer.companyName }}, {{ customer.customerNo
+          }}<ng-container *ngIf="customer?.department">, {{ customer.department }} </ng-container>
         </mat-option>
       </mat-select>
     </mat-form-field>
@@ -81,7 +81,10 @@
       >
         <mat-option>--</mat-option>
         <ng-container *ngIf="addresses$ | async as locations">
-          <mat-option *ngFor="let location of locations[customerId] | addressSort: 'addressLine1'" [value]="location.id">
+          <mat-option
+            *ngFor="let location of locations[customerId] | addressSort: 'addressLine1'"
+            [value]="location.id"
+          >
             {{ location.addressLine1 }}
           </mat-option>
         </ng-container>
