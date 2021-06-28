@@ -65,8 +65,15 @@ export class OrdersEffects {
       ofType(createOrder),
       withLatestFrom(this.store.select(getCurrentBasketId)),
       mergeMap(([, basketId]) => {
-        const erpEmployeeId = localStorage.getItem('erpEmployeeId');
-        return this.orderService.createOrder(basketId, true, erpEmployeeId).pipe(
+        const erpEmployeeId = localStorage?.getItem('erpEmployeeId');
+
+        let createOrder$ = this.orderService.createOrder(basketId, true);
+
+        if (erpEmployeeId) {
+          createOrder$ = this.orderService.createOrder(basketId, true, erpEmployeeId);
+        }
+
+        return createOrder$.pipe(
           map(order => createOrderSuccess({ order })),
           mapErrorToAction(createOrderFail)
         );
