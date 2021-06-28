@@ -47,11 +47,16 @@ export class OrderService {
 
   /**
    * Creates an order based on the given basket. If a redirect is necessary for payment, the return URLs will be sent after order creation in case they are required.
-   * @param basket                      The (current) basket.
+   * @param basketId
    * @param termsAndConditionsAccepted  indicates whether the user has accepted terms and conditions
+   * @param externalOrderReference
    * @returns                           The order.
    */
-  createOrder(basketId: string, termsAndConditionsAccepted: boolean = false): Observable<Order> {
+  createOrder(
+    basketId: string,
+    termsAndConditionsAccepted: boolean = false,
+    externalOrderReference?: string
+  ): Observable<Order> {
     const params = new HttpParams().set('include', this.allOrderIncludes.join());
 
     if (!basketId) {
@@ -64,6 +69,7 @@ export class OrderService {
         {
           basket: basketId,
           termsAndConditionsAccepted,
+          externalOrderReference,
         },
         {
           headers: this.orderHeaders,
