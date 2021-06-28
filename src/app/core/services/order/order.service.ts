@@ -51,7 +51,11 @@ export class OrderService {
    * @param termsAndConditionsAccepted  indicates whether the user has accepted terms and conditions
    * @returns                           The order.
    */
-  createOrder(basketId: string, termsAndConditionsAccepted: boolean = false): Observable<Order> {
+  createOrder(
+    basketId: string,
+    termsAndConditionsAccepted: boolean = false,
+    externalOrderReference?: string
+  ): Observable<Order> {
     const params = new HttpParams().set('include', this.allOrderIncludes.join());
 
     if (!basketId) {
@@ -64,6 +68,7 @@ export class OrderService {
         {
           basket: basketId,
           termsAndConditionsAccepted,
+          externalOrderReference,
         },
         {
           headers: this.orderHeaders,

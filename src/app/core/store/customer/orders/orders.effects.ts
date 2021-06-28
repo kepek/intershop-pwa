@@ -64,12 +64,13 @@ export class OrdersEffects {
     this.actions$.pipe(
       ofType(createOrder),
       withLatestFrom(this.store.select(getCurrentBasketId)),
-      mergeMap(([, basketId]) =>
-        this.orderService.createOrder(basketId, true).pipe(
+      mergeMap(([, basketId]) => {
+        const erpEmployeeId = localStorage.getItem('erpEmployeeId');
+        return this.orderService.createOrder(basketId, true, erpEmployeeId).pipe(
           map(order => createOrderSuccess({ order })),
           mapErrorToAction(createOrderFail)
-        )
-      )
+        );
+      })
     )
   );
 
