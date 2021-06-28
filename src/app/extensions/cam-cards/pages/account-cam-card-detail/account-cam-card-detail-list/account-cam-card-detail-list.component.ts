@@ -132,12 +132,10 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges, OnD
     if (changes.camCard) {
       this.changeDetectorRefs.detectChanges();
 
-      if (this.showPrice) {
-        // update priceSum
-        const currentCamCardItemsId = CamCardHelper.getCamCardItemsId(this.camCard);
-        const priceItemToRemove = Object.keys(this.priceSum).filter(key => !currentCamCardItemsId.includes(key));
-        priceItemToRemove.forEach(item => this.cleanPriceSum(item));
-      }
+      const currentCamCardItemsId = CamCardHelper.getCamCardItemsId(this.camCard);
+      // if removed/moved item from camCard
+      const priceItemToRemove = Object.keys(this.priceSum).filter(key => !currentCamCardItemsId.includes(key));
+      priceItemToRemove.forEach(item => this.cleanPriceSum(item));
 
       if (this.camCard?.subCamCards) {
         const { currentValue, previousValue } = changes?.camCard;
@@ -172,6 +170,9 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges, OnD
   }
 
   get totalPrice(): Price {
+    if (!this.showPrice) {
+      return;
+    }
     const list = Object.values(this.priceSum);
     const currency = list.length ? list.find(([item]) => item.currency)[0]?.currency : '';
     const value = list.reduce((res, [item, , qty]) => res + (item?.value || 0) * qty, 0);
@@ -183,7 +184,7 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges, OnD
   }
 
   productUpdate(event, item: CamCardItem) {
-    if (this.showPrice && event.res.salePrice?.value) {
+    if (event.res.salePrice?.value) {
       this.priceSum[item.id] = [event.res.salePrice, item.product.sku, item.quantity];
     }
   }
