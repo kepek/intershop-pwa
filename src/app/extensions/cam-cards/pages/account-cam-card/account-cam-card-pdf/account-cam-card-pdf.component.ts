@@ -12,6 +12,7 @@ import { formatPrice } from 'ish-core/models/price/price.pipe';
 import { ProductView } from 'ish-core/models/product-view/product-view.model';
 import { ProductCompletenessLevel, ProductHelper } from 'ish-core/models/product/product.model';
 import { User } from 'ish-core/models/user/user.model';
+import { CamfilPriceSummaryPipe } from 'ish-core/pipes/camfil-price-summary.pipe';
 import { formatISHDate } from 'ish-core/pipes/date.pipe';
 import { whenTruthy } from 'ish-core/utils/operators';
 import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
@@ -33,7 +34,8 @@ export class AccountCamCardPdfComponent implements OnInit {
     private accountFacade: AccountFacade,
     public dialog: MatDialog,
     private translate: TranslateService,
-    private authorizationToggle: AuthorizationToggleService
+    private authorizationToggle: AuthorizationToggleService,
+    private priceSummaryPipe: CamfilPriceSummaryPipe
   ) {}
 
   private static REQUIRED_COMPLETENESS_LEVEL = ProductCompletenessLevel.List;
@@ -296,7 +298,9 @@ export class AccountCamCardPdfComponent implements OnInit {
 
     const qty = `${this.texts.quantity} `;
     const qtyVal = { text: item.quantity, bold: true };
-    const priceObj = this.getCustomerPriceForItem(camCard, item) || this.products[sku]?.salePrice;
+    const priceObj =
+      this.getCustomerPriceForItem(camCard, item) ||
+      this.priceSummaryPipe.transform(this.products[sku]?.salePrice, item.quantity);
     const priceVal = this.handlePrice(priceObj);
     const priceLabel = showPrice ? ` | ${this.texts.price} ` : '';
     const price = showPrice ? { text: priceVal, bold: true } : '';
@@ -312,8 +316,10 @@ export class AccountCamCardPdfComponent implements OnInit {
     return camCard.camCardItems.map((el, i) => {
       const id = camCard.rootCamCard || camCard.id;
       const price =
-        this.getCustomerPriceForItem(camCard, el)?.value || this.products[el.product.sku].salePrice?.value || 0;
-      this.sumPrice[id].value = (this.sumPrice[id].value || 0) + price * el.quantity;
+        this.getCustomerPriceForItem(camCard, el)?.value ||
+        this.priceSummaryPipe.transform(this.products[el.product.sku].salePrice, el.quantity)?.value ||
+        0;
+      this.sumPrice[id].value = (this.sumPrice[id].value || 0) + price;
       return this.pdfProductRow(camCard, el, i, showPrice);
     });
   }
@@ -322,7 +328,7 @@ export class AccountCamCardPdfComponent implements OnInit {
     const productCustomerPrice = this.listForCustomerPrices[camCard.customer.id]?.find(
       product => product.sku === el.product.sku
     );
-    return productCustomerPrice?.salePrice || undefined;
+    return this.priceSummaryPipe.transform(productCustomerPrice?.salePrice, el.quantity);
   }
 
   pdfSubItemsRowToTable(camCard: CamCard, showPrice: boolean) {

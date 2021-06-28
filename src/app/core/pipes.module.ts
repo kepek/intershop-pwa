@@ -5,6 +5,7 @@ import { PricePipe } from './models/price/price.pipe';
 import { AddressSortPipe } from './pipes/camfil-address-sort.pipe';
 import { CamfilDatePipe } from './pipes/camfil-date.pipe';
 import { CamfilDimensionPipe } from './pipes/camfil-dimension.pipe';
+import { CamfilPriceSummaryPipe } from './pipes/camfil-price-summary.pipe';
 import { CamfilProductAttributeValPipe } from './pipes/camfil-product-attribute-val';
 import { CamfilRemoveWhiteSpacesPipe } from './pipes/camfil-remove-white-space.pipe';
 import { CamfilSlugifyPipe } from './pipes/camfil-slugify.pipe';
@@ -22,6 +23,7 @@ const pipes = [
   AttributeToStringPipe,
   CamfilDatePipe,
   CamfilDimensionPipe,
+  CamfilPriceSummaryPipe,
   CamfilProductAttributeValPipe,
   CamfilRemoveWhiteSpacesPipe,
   CamfilSlugifyPipe,
@@ -39,7 +41,6 @@ const pipes = [
 @NgModule({
   declarations: [...pipes],
   exports: [...pipes],
-  providers: [CamfilDatePipe, AddressSortPipe],
 })
 export class PipesModule {
   static forRoot(): ModuleWithProviders<PipesModule> {

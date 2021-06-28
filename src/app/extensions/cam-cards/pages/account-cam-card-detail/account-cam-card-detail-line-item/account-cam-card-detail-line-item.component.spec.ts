@@ -11,6 +11,7 @@ import { AppFacade } from 'ish-core/facades/app.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { PricePipe } from 'ish-core/models/price/price.pipe';
 import { CamfilDimensionPipe } from 'ish-core/pipes/camfil-dimension.pipe';
+import { CamfilPriceSummaryPipe } from 'ish-core/pipes/camfil-price-summary.pipe';
 import { CamfilProductAttributeValPipe } from 'ish-core/pipes/camfil-product-attribute-val';
 import { DatePipe } from 'ish-core/pipes/date.pipe';
 import { ProductRoutePipe } from 'ish-core/routing/product/product-route.pipe';
@@ -61,6 +62,7 @@ describe('Account Cam Card Detail Line Item Component', () => {
         MockComponent(ProductBundleDisplayComponent),
         MockComponent(ProductVariationDisplayComponent),
         MockPipe(CamfilDimensionPipe),
+        MockPipe(CamfilPriceSummaryPipe),
         MockPipe(CamfilProductAttributeValPipe),
         MockPipe(DatePipe),
         MockPipe(PricePipe),
