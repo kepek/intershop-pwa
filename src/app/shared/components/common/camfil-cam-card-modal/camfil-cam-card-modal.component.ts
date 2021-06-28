@@ -1,4 +1,14 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, TemplateRef } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  TemplateRef,
+  ViewChild,
+} from '@angular/core';
+import { MatButton } from '@angular/material/button';
 
 @Component({
   selector: 'camfil-cam-card-modal',
@@ -6,7 +16,7 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, Templa
   styleUrls: ['./camfil-cam-card-modal.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CamfilCamCardModalComponent {
+export class CamfilCamCardModalComponent implements AfterViewInit {
   @Input() title?: string;
   @Input() iconName?: string;
   @Input() svgIcon?: string;
@@ -30,6 +40,17 @@ export class CamfilCamCardModalComponent {
   @Output() hiddenClicked = new EventEmitter<any>();
 
   @Input() loading?: boolean;
+  @Input() focus?: 'secondaryButton' | 'primaryButton';
+
+  @ViewChild('secondaryButton') secondaryButton: MatButton;
+  @ViewChild('primaryButton') primaryButton: MatButton;
+
+  ngAfterViewInit() {
+    if (this.focus) {
+      const label = this.focus;
+      this[label]?.focus();
+    }
+  }
 
   emitPrimary() {
     this.primaryButtonClicked.emit();
