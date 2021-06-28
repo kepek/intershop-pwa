@@ -2,6 +2,7 @@
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   ElementRef,
   EventEmitter,
@@ -45,7 +46,7 @@ export class CamfilOrganizationUserDetailsFormComponent implements OnInit, OnDes
   isUserFormSubmitted = false;
   loggedInCustomer: CamfilB2bCustomer;
 
-  constructor(private fb: FormBuilder, private accountFacade: AccountFacade) {}
+  constructor(private fb: FormBuilder, private accountFacade: AccountFacade, private cdr: ChangeDetectorRef) {}
 
   get isUserFormSubmitButtonDisabled() {
     return this.form?.invalid && this.isUserFormSubmitted;
@@ -113,7 +114,10 @@ export class CamfilOrganizationUserDetailsFormComponent implements OnInit, OnDes
   }
 
   ngAfterViewInit() {
-    this.firstNameInput?.nativeElement.focus();
+    if (!this.isEditMode) {
+      this.firstNameInput?.nativeElement.focus();
+      this.cdr.detectChanges();
+    }
   }
 
   ngOnDestroy() {
