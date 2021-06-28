@@ -44,6 +44,7 @@
 
   <div class="camfil-cam-card-modal__buttons-wrapper">
     <button
+      #secondaryButton
       *ngIf="secondaryButtonTitle"
       class="camfil-cam-card-modal__buttons-wrapper--button secondary-button"
       mat-raised-button
@@ -54,6 +55,7 @@
     </button>
 
     <button
+      #primaryButton
       *ngIf="primaryButtonTitle"
       class="camfil-cam-card-modal__buttons-wrapper--button button__ghost"
       mat-raised-button
