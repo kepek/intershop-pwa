@@ -321,7 +321,9 @@ export class CamfilOrderListComponent implements OnInit, AfterViewInit, OnDestro
   }
 
   countRows() {
-    return this.dataSource.filteredData.length < this.tableSize ? this.dataSource.filteredData.length : this.tableSize;
+    return this.dataSource.filteredData.length < this.tableSize + 2
+      ? this.dataSource.filteredData.length
+      : this.tableSize;
   }
 
   isStatusFilterActive(status: string) {
