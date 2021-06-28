@@ -169,6 +169,8 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges, OnD
     return this.camCard?.name;
   }
 
+  // tslint:disable-next-line:force-jsdoc-comments
+  // TODO (extMlk): Total price returns 0 when visiting directly form the overview page (works only after hard refresh)
   get totalPrice(): Price {
     if (!this.showPrice) {
       return;
