@@ -8,7 +8,7 @@
         checkboxPosition="before"
         color="primary"
       >
-        {{ role.displayName }}
+        {{ role.displayName | slugify: 'camfil.dynamic' | translate }}
       </mat-list-option>
     </mat-selection-list>
   </mat-card-content>
