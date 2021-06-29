@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { routerNavigatedAction } from '@ngrx/router-store';
 import { Store, select } from '@ngrx/store';
-import { EMPTY } from 'rxjs';
+import { EMPTY, from } from 'rxjs';
 import {
   catchError,
   concatMap,
@@ -123,15 +123,17 @@ export class UserEffects {
     )
   );
 
+  /**
+   * redirects to the returnUrl after successful login
+   * does not redirect at all, if no returnUrl is defined
+   */
   redirectAfterLogin$ = createEffect(
     () =>
       this.store$.pipe(select(selectQueryParam('returnUrl'))).pipe(
         takeWhile(() => isPlatformBrowser(this.platformId)),
         whenTruthy(),
         sample(this.actions$.pipe(ofType(loginUserSuccess))),
-        tap(navigateTo => {
-          this.router.navigateByUrl(navigateTo);
-        })
+        concatMap(navigateTo => from(this.router.navigateByUrl(navigateTo)))
       ),
     { dispatch: false }
   );

@@ -1,5 +1,4 @@
-import { isPlatformBrowser } from '@angular/common';
-import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { RouterNavigatedPayload, routerNavigatedAction } from '@ngrx/router-store';
@@ -15,7 +14,6 @@ import {
   mapTo,
   mergeMap,
   reduce,
-  takeWhile,
   tap,
   window as windowRxOperator,
   withLatestFrom,
@@ -23,10 +21,10 @@ import {
 
 import { getDeviceType } from 'ish-core/store/core/configuration';
 import { displayErrorMessage, displaySuccessMessage } from 'ish-core/store/core/messages';
-import { ofUrl, selectQueryParam, selectRouteParam, selectUrl } from 'ish-core/store/core/router';
+import { ofUrl, selectRouteParam } from 'ish-core/store/core/router';
 import { RouterState } from 'ish-core/store/core/router/router.reducer';
 import { setBreadcrumbData } from 'ish-core/store/core/viewconf';
-import { getUserAuthorized, loginUserSuccess } from 'ish-core/store/customer/user';
+import { getUserAuthorized } from 'ish-core/store/customer/user';
 import {
   distinctCompareWith,
   mapErrorToAction,
@@ -136,8 +134,7 @@ export class CamCardEffects {
     private actions$: Actions,
     private camCardService: CamCardService,
     private store: Store,
-    private router: Router,
-    @Inject(PLATFORM_ID) private platformId: string
+    private router: Router
   ) {}
 
   routeListenerForCamCards$ = createEffect(() =>
@@ -862,26 +859,6 @@ export class CamCardEffects {
         )
       )
     )
-  );
-
-  redirectAfterLogin$ = createEffect(
-    () =>
-      this.actions$.pipe(
-        ofType(loginUserSuccess),
-        takeWhile(() => isPlatformBrowser(this.platformId)),
-        whenTruthy(),
-        withLatestFrom(this.store.pipe(select(selectUrl)), this.store.pipe(select(selectQueryParam('returnUrl')))),
-        tap(([, url, returnUrl]) => {
-          if (url.startsWith('/login')) {
-            if (returnUrl) {
-              this.router.navigateByUrl(returnUrl);
-            } else {
-              this.router.navigateByUrl('account/camcards');
-            }
-          }
-        })
-      ),
-    { dispatch: false }
   );
 
   // CamCard Import validation
