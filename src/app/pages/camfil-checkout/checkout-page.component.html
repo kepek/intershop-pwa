@@ -3,14 +3,15 @@
 <ng-container *ngIf="basket">
   <div class="checkout row">
     <div class="col-sm-12 col-lg-9">
-      <camfil-checkout-header
-        [basket]="basket$ | async"
-        [buckets]="buckets$ | async"
-        [isConfirmed]="validation"
-      ></camfil-checkout-header>
+      <div [ngClass]="{ 'header-divider-container': validation }">
+        <camfil-checkout-header
+          [basket]="basket$ | async"
+          [buckets]="buckets$ | async"
+          [isConfirmed]="validation"
+        ></camfil-checkout-header>
 
-      <mat-divider></mat-divider>
-
+        <mat-divider></mat-divider>
+      </div>
       <div>
         <!-- Info messages -->
         <ish-basket-info></ish-basket-info>
