@@ -32,12 +32,7 @@
   </ng-container>
   <!-- not logged in -->
   <ng-template #notLoggedIn>
-    <a
-      routerLink="/login"
-      [queryParams]="{ returnUrl: '/account/camcards' }"
-      class="my-account-link my-account-login"
-      rel="nofollow"
-    >
+    <a routerLink="/login" class="my-account-link my-account-login" rel="nofollow">
       <mat-icon svgIcon="profile-fab" class="header-icon"></mat-icon>
       <span>{{ 'account.login.link' | translate }}</span>
     </a>
