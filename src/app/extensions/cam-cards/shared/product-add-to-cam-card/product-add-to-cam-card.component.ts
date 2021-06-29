@@ -93,8 +93,10 @@ export class ProductAddToCamCardComponent implements OnInit, OnDestroy {
   }
 
   openErrorModal() {
-    this.dialog.open(this.errorModal?.show());
-    this.errorModal.hide = () => this.dialog.closeAll();
+    const refErrorModalDialog = this.dialog.open(this.errorModal?.show());
+    this.errorModal.hide = () => {
+      refErrorModalDialog.close();
+    };
   }
 
   addProductToCamCard(camCard: { id: string; name: string }) {
