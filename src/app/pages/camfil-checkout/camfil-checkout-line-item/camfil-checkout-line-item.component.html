@@ -1,6 +1,6 @@
 <ng-container *ngIf="product$ | async as productData">
   <div class="line-item d-flex align-items-center text-left" [class]="{ 'line-item__confirmed': isConfirmed }">
-    <div class="d-flex align-items-center align-self-start align-self-md-center text-left w-100 min-w-345">
+    <div class="d-flex align-items-center align-self-start align-self-md-center text-left w-100">
       <!-- <ng-container *ngIf="isViewMode">{{ index }}</ng-container> -->
       <a class="image ml-0 mx-md-3" [routerLink]="productData | ishProductRoute">
         <camfil-product-image
