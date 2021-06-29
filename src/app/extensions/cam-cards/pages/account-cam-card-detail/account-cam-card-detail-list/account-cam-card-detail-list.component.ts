@@ -19,6 +19,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Observable, Subject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
 
+import { AuthorizationToggleService } from 'ish-core/authorization-toggle.module';
 import { AppFacade } from 'ish-core/facades/app.facade';
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
@@ -27,6 +28,7 @@ import { BasketView } from 'ish-core/models/basket/basket.model';
 import { Bucket } from 'ish-core/models/basket/bucket.model';
 import { Channel } from 'ish-core/models/channel/channel.types';
 import { Price } from 'ish-core/models/price/price.model';
+import { Product } from 'ish-core/models/product/product.model';
 import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
 import { whenTruthy } from 'ish-core/utils/operators';
 import { CamfilModalDialogComponent } from 'ish-shared/components/common/camfil-modal-dialog/camfil-modal-dialog.component';
@@ -74,12 +76,14 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges, OnD
 
   isSubOpen = [];
   isStickyCamCardToolbar$: Observable<boolean>;
+  customerPrices$: Observable<Product[]>;
+  productsCustomerPrices: Product[];
   priceSum: Prices = {};
   POSITION_GAP_SIZE = 999;
 
-  showPrice: boolean;
-
   loading = false;
+  showPrice = true;
+  newSkusAfterUpdate = [];
 
   private destroy$ = new Subject();
 
@@ -91,7 +95,8 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges, OnD
     private appFacade: AppFacade,
     private changeDetectorRefs: ChangeDetectorRef,
     public router: Router,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private authorizationToggle: AuthorizationToggleService
   ) {}
 
   ngOnInit(): void {
@@ -118,9 +123,25 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges, OnD
       this.basketAddresses = basketAddresses;
     });
 
-    this.appFacade.getChannel$
-      .pipe(whenTruthy(), take(1))
-      .subscribe(channel => (this.showPrice = channel !== Channel.SE));
+    const { id, parent } = this.camCard.customer;
+    this.customerPrices$ = this.shoppingFacade.getCustomerPrices$(id);
+
+    this.appFacade.getChannel$.pipe(whenTruthy(), take(1)).subscribe(channel => {
+      this.authorizationToggle
+        .isAuthorizedToCheckArrAll(['APP_B2B_VIEW_PRICES'])
+        .pipe(take(1))
+        .subscribe(permitted => {
+          this.showPrice = channel !== Channel.SE && permitted;
+          if (this.showPrice && !parent) {
+            this.shoppingFacade.loadCustomerPrices(id, CamCardHelper.getCamCardSkus(this.camCard));
+            this.customerPrices$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(prices => {
+              this.newSkusAfterUpdate = [];
+              this.productsCustomerPrices = prices;
+            });
+          }
+          this.changeDetectorRefs.detectChanges();
+        });
+    });
   }
 
   ngOnDestroy() {
@@ -130,26 +151,45 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges, OnD
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.camCard) {
-      this.changeDetectorRefs.detectChanges();
+      const { currentValue, previousValue } = changes?.camCard;
 
-      const currentCamCardItemsId = CamCardHelper.getCamCardItemsId(this.camCard);
       // if removed/moved item from camCard
-      const priceItemToRemove = Object.keys(this.priceSum).filter(key => !currentCamCardItemsId.includes(key));
-      priceItemToRemove.forEach(item => this.cleanPriceSum(item));
+      const currentCamCardItemsId = CamCardHelper.getCamCardItemsId(this.camCard);
+      const itemToRemove = Object.keys(this.priceSum).filter(key => !currentCamCardItemsId.includes(key));
+      itemToRemove.forEach(item => this.cleanPriceSum(item));
 
-      if (this.camCard?.subCamCards) {
-        const { currentValue, previousValue } = changes?.camCard;
+      // if new product added to CamCard
+      if (previousValue) {
+        const currentSkus = CamCardHelper.getCamCardSkus(currentValue);
+        const previousSkus = CamCardHelper.getCamCardSkus(previousValue);
+        this.newSkusAfterUpdate = currentSkus.filter(x => !previousSkus.includes(x));
+        if (this.showPrice && this.newSkusAfterUpdate.length) {
+          this.shoppingFacade.loadCustomerPrices(this.camCard.customer.id, this.newSkusAfterUpdate);
+        }
 
-        const currentChanges = currentValue.subCamCards.map(element => element.id);
-        const previousChanges = previousValue?.subCamCards.map(element => element.id);
-        const difference = currentChanges.filter(element => !previousChanges?.includes(element));
+        if (this.camCard?.subCamCards) {
+          const currentChanges = currentValue.subCamCards.map(element => element.id);
+          const previousChanges = previousValue?.subCamCards.map(element => element.id);
+          const difference = currentChanges.filter(element => !previousChanges?.includes(element));
 
-        if (difference.length) {
-          this.isSubOpen = this.isSubOpen.concat(difference);
+          if (difference.length) {
+            this.isSubOpen = this.isSubOpen.concat(difference);
+          }
         }
       }
+
+      this.changeDetectorRefs.detectChanges();
     }
     this.isMobileView = this.isMobile();
+  }
+
+  getCustomerPriceForSku(sku: string) {
+    const item = this.productsCustomerPrices?.find(prod => prod.sku === sku);
+    return { listPrice: item?.listPrice, salePrice: item?.salePrice };
+  }
+
+  isNewSku(sku: string) {
+    return this.showPrice && this.newSkusAfterUpdate.includes(sku);
   }
 
   isMobile() {
@@ -169,8 +209,6 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges, OnD
     return this.camCard?.name;
   }
 
-  // tslint:disable-next-line:force-jsdoc-comments
-  // TODO (extMlk): Total price returns 0 when visiting directly form the overview page (works only after hard refresh)
   get totalPrice(): Price {
     if (!this.showPrice) {
       return;
@@ -187,7 +225,8 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges, OnD
 
   productUpdate(event, item: CamCardItem) {
     if (event.res.salePrice?.value) {
-      this.priceSum[item.id] = [event.res.salePrice, item.product.sku, item.quantity];
+      const salePrice = this.getCustomerPriceForSku(item.product.sku)?.salePrice || event.res.salePrice;
+      this.priceSum[item.id] = [salePrice, item.product.sku, item.quantity];
     }
   }
 

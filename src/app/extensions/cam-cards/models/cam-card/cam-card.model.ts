@@ -53,11 +53,13 @@ export interface CamCardProduct {
 export interface CamCardCustomer extends Customer {
   id: string;
   department?: string;
+  parent?: boolean;
 }
 
 export interface CamCardCustomerData extends CustomerData {
   id: string;
   department?: string;
+  parent?: boolean;
 }
 
 export interface CamCardContact {

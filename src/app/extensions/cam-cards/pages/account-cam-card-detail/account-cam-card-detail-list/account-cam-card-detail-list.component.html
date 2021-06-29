@@ -6,98 +6,102 @@
       [isSticky]="isStickyCamCardToolbar$ | async"
       [title]="getCamCardName()"
     ></camfil-account-cam-card-detail-toolbar>
-
-    <div cdkDropListGroup class="list-body mt-2" *ngIf="camCard">
-      <div
-        cdkDropList
-        class="d-flex flex-column"
-        [attr.data-cam-card-id]="camCard.id"
-        [cdkDropListData]="camCard.camCardItems"
-        (cdkDropListDropped)="drop($event, camCard)"
-      >
-        <ng-container *ngFor="let item of camCard.camCardItems; index as i">
-          <div
-            class="list-item-row list-item-row-big"
-            [ngStyle]="{ order: item.position }"
-            [cdkDragData]="item"
-            cdkDrag
-          >
-            <div class="d-flex align-items-center">
-              <mat-icon svgIcon="move" class="size-24 handle" cdkDragHandle></mat-icon>
-              <camfil-account-cam-card-detail-line-item
-                [camCardItemData]="item"
-                [currentCamCard]="camCard"
-                [selectedItemsForm]="selectedItemsForm"
-                [index]="i + 1"
-                (handleLoad)="productUpdate($event, item)"
-                (handleUpdate)="productUpdate($event, item)"
-                (delete)="openDeleteConfirmationDialog(productDeleteDialog, null, 'product', $event)"
-                mode="edit"
-              ></camfil-account-cam-card-detail-line-item>
-            </div>
-          </div>
-        </ng-container>
-      </div>
-      <div *ngFor="let sub of camCard.subCamCards">
+    <ng-container *ngIf="!showPrice || camCard.customer.parent || (customerPrices$ | async)">
+      <div cdkDropListGroup class="list-body mt-2" *ngIf="camCard">
         <div
-          class="sub-camcard-collapse px-4 my-2"
-          (click)="toggleSubCamCard(sub.id)"
-          [attr.aria-expanded]="isSubCamCardOpen(sub.id)"
+          cdkDropList
+          class="d-flex flex-column"
+          [attr.data-cam-card-id]="camCard.id"
+          [cdkDropListData]="camCard.camCardItems"
+          (cdkDropListDropped)="drop($event, camCard)"
         >
-          <mat-icon class="arrow_down" [class.arrow_down--expanded]="isSubCamCardOpen(sub.id)">arrow_left</mat-icon>
-          <camfil-account-cam-card-detail-sub-title
-            [sub]="sub"
-            (delete)="openDeleteConfirmationDialog(subDeleteDialog, sub, 'sub')"
-          ></camfil-account-cam-card-detail-sub-title>
-        </div>
-        <mat-expansion-panel class="mat-elevation-z0" [expanded]="isSubCamCardOpen(sub.id)">
-          <div
-            cdkDropList
-            class="d-flex flex-column"
-            [attr.data-cam-card-id]="sub.id"
-            [cdkDropListData]="sub.camCardItems"
-            (cdkDropListDropped)="drop($event, sub)"
-          >
-            <ng-container *ngFor="let subItem of sub.camCardItems; index as i2">
-              <div
-                class="list-item-row list-item-row-big"
-                [ngStyle]="{ order: subItem.position }"
-                [cdkDragData]="subItem"
-                cdkDrag
-              >
-                <div class="d-flex align-items-center">
-                  <mat-icon svgIcon="move" class="size-24 handle" cdkDragHandle></mat-icon>
+          <ng-container *ngFor="let item of camCard.camCardItems; index as i">
+            <div
+              class="list-item-row list-item-row-big"
+              [ngStyle]="{ order: item.position }"
+              [cdkDragData]="item"
+              cdkDrag
+            >
+              <div class="d-flex align-items-center">
+                <mat-icon svgIcon="move" class="size-24 handle" cdkDragHandle></mat-icon>
+                <ng-container *ngIf="!isNewSku(item.product.sku)">
                   <camfil-account-cam-card-detail-line-item
-                    [camCardItemData]="subItem"
-                    [currentCamCard]="sub"
+                    [camCardItemData]="item"
+                    [currentCamCard]="camCard"
                     [selectedItemsForm]="selectedItemsForm"
-                    [index]="i2 + 1"
-                    (handleLoad)="productUpdate($event, subItem)"
-                    (handleUpdate)="productUpdate($event, subItem)"
+                    [index]="i + 1"
+                    [customerPrices]="getCustomerPriceForSku(item.product.sku)"
+                    (handleLoad)="productUpdate($event, item)"
+                    (handleUpdate)="productUpdate($event, item)"
                     (delete)="openDeleteConfirmationDialog(productDeleteDialog, null, 'product', $event)"
                     mode="edit"
                   ></camfil-account-cam-card-detail-line-item>
-                </div>
+                </ng-container>
               </div>
-            </ng-container>
-            <ng-container *ngIf="!sub.camCardItems.length">
-              <p class="p-2 pl-3 pr-3 m-2 bg-light">
-                {{ 'camfil.account.cam_card.details.no_items_in_section' | translate }}
-              </p>
-            </ng-container>
+            </div>
+          </ng-container>
+        </div>
+        <div *ngFor="let sub of camCard.subCamCards">
+          <div
+            class="sub-camcard-collapse px-4 my-2"
+            (click)="toggleSubCamCard(sub.id)"
+            [attr.aria-expanded]="isSubCamCardOpen(sub.id)"
+          >
+            <mat-icon class="arrow_down" [class.arrow_down--expanded]="isSubCamCardOpen(sub.id)">arrow_left</mat-icon>
+            <camfil-account-cam-card-detail-sub-title
+              [sub]="sub"
+              (delete)="openDeleteConfirmationDialog(subDeleteDialog, sub, 'sub')"
+            ></camfil-account-cam-card-detail-sub-title>
           </div>
-        </mat-expansion-panel>
-      </div>
+          <mat-expansion-panel class="mat-elevation-z0" [expanded]="isSubCamCardOpen(sub.id)">
+            <div
+              cdkDropList
+              class="d-flex flex-column"
+              [attr.data-cam-card-id]="sub.id"
+              [cdkDropListData]="sub.camCardItems"
+              (cdkDropListDropped)="drop($event, sub)"
+            >
+              <ng-container *ngFor="let subItem of sub.camCardItems; index as i2">
+                <div
+                  class="list-item-row list-item-row-big"
+                  [ngStyle]="{ order: subItem.position }"
+                  [cdkDragData]="subItem"
+                  cdkDrag
+                >
+                  <div class="d-flex align-items-center">
+                    <mat-icon svgIcon="move" class="size-24 handle" cdkDragHandle></mat-icon>
+                    <camfil-account-cam-card-detail-line-item
+                      [camCardItemData]="subItem"
+                      [currentCamCard]="sub"
+                      [selectedItemsForm]="selectedItemsForm"
+                      [index]="i2 + 1"
+                      [customerPrices]="getCustomerPriceForSku(subItem.product.sku)"
+                      (handleLoad)="productUpdate($event, subItem)"
+                      (handleUpdate)="productUpdate($event, subItem)"
+                      (delete)="openDeleteConfirmationDialog(productDeleteDialog, null, 'product', $event)"
+                      mode="edit"
+                    ></camfil-account-cam-card-detail-line-item>
+                  </div>
+                </div>
+              </ng-container>
+              <ng-container *ngIf="!sub.camCardItems.length">
+                <p class="p-2 pl-3 pr-3 m-2 bg-light">
+                  {{ 'camfil.account.cam_card.details.no_items_in_section' | translate }}
+                </p>
+              </ng-container>
+            </div>
+          </mat-expansion-panel>
+        </div>
 
-      <div class="text-right cam-card-total" *ngIf="showPrice">
-        <div class="pt-4 pb-2 px-4">
-          {{ 'camfil.account.cam_card.details.total.text' | translate }}:<strong class="pl-3">{{
-            totalPrice | ishPrice
-          }}</strong>
+        <div class="text-right cam-card-total" *ngIf="showPrice">
+          <div class="pt-4 pb-2 px-4">
+            {{ 'camfil.account.cam_card.details.total.text' | translate }}:<strong class="pl-3">{{
+              totalPrice | ishPrice
+            }}</strong>
+          </div>
         </div>
       </div>
-    </div>
-
+    </ng-container>
     <ng-container *ngIf="camCard; else noCamCard"> </ng-container>
   </mat-card-content>
 </mat-card>

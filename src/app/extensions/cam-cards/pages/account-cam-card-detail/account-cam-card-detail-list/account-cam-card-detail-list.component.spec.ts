@@ -14,6 +14,7 @@ import { CamfilModalDialogComponent } from 'ish-shared/components/common/camfil-
 import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
 import { CamfilProductAddToBasketComponent } from 'ish-shared/components/product/camfil-product-add-to-basket/camfil-product-add-to-basket.component';
 
+import { CamCard } from '../../../models/cam-card/cam-card.model';
 import { CamCardProductCommentComponent } from '../../../shared/cam-card-product-comment/cam-card-product-comment.component';
 import { AccountCamCardDetailLineItemComponent } from '../account-cam-card-detail-line-item/account-cam-card-detail-line-item.component';
 import { AccountCamCardDetailSubTitleComponent } from '../account-cam-card-detail-sub-title/account-cam-card-detail-sub-title.component';
@@ -26,6 +27,27 @@ describe('Account Cam Card Detail List Component', () => {
   let fixture: ComponentFixture<AccountCamCardDetailListComponent>;
   let element: HTMLElement;
   let shoppingFacadeMock: ShoppingFacade;
+
+  const camCard: CamCard = {
+    name: 'testing cam cards',
+    id: '.SKsEQAE4FIAAAFuNiUBWx0d',
+    itemsCount: 1,
+    customer: {
+      customerNo: 'no12345',
+      id: '12345',
+      parent: false,
+    },
+    camCardItems: [
+      {
+        id: '12345',
+        quantity: 1,
+        creationDate: 123124125,
+        product: {
+          sku: '1234',
+        },
+      },
+    ],
+  };
 
   beforeEach(async () => {
     shoppingFacadeMock = mock(ShoppingFacade);
@@ -57,6 +79,7 @@ describe('Account Cam Card Detail List Component', () => {
   });
 
   it('should be created', () => {
+    component.camCard = camCard;
     expect(component).toBeTruthy();
     expect(element).toBeTruthy();
     expect(() => fixture.detectChanges()).not.toThrow();

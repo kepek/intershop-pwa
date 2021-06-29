@@ -17,6 +17,7 @@ import { debounceTime, take, takeUntil } from 'rxjs/operators';
 import { AppFacade } from 'ish-core/facades/app.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { Channel } from 'ish-core/models/channel/channel.types';
+import { Price } from 'ish-core/models/price/price.model';
 import { ProductView } from 'ish-core/models/product-view/product-view.model';
 import { ProductCompletenessLevel } from 'ish-core/models/product/product.model';
 import { whenTruthy } from 'ish-core/utils/operators';
@@ -45,6 +46,7 @@ export class AccountCamCardDetailLineItemComponent implements OnChanges, OnInit,
   @Input() selectedItemsForm?: FormArray;
   @Input() mode?: 'edit' | 'view';
   @Input() index: number;
+  @Input() customerPrices?: { listPrice: Price; salePrice: Price };
   @Output() handleLoad = new EventEmitter<{ res: ProductView; quantity: number }>();
   @Output() handleUpdate = new EventEmitter<{ res: ProductView; quantity: number }>();
   @Output() delete = new EventEmitter<CamCardItem>();
