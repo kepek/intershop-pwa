@@ -70,7 +70,7 @@ export class AddProductToCartModalComponent implements OnInit, OnDestroy {
 
     combineLatest([
       this.checkoutFacade.buckets$.pipe(whenTruthy()),
-      this.checkoutFacade.emptyBuckets$.pipe(whenTruthy()),
+      this.checkoutFacade.emptyBuckets$?.pipe(whenTruthy()),
     ])
       .pipe(whenTruthy(), takeUntil(this.destroy$))
       .subscribe(res => {
