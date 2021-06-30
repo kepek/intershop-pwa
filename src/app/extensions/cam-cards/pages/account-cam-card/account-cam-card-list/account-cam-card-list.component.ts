@@ -29,6 +29,7 @@ import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { Address } from 'ish-core/models/address/address.model';
 import { BasketView } from 'ish-core/models/basket/basket.model';
 import { Bucket } from 'ish-core/models/basket/bucket.model';
+import { Product } from 'ish-core/models/product/product.model';
 import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
 import { whenTruthy } from 'ish-core/utils/operators';
 import { CamfilModalDialogComponent } from 'ish-shared/components/common/camfil-modal-dialog/camfil-modal-dialog.component';
@@ -78,6 +79,7 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
   }
 
   private static CUSTOMER_ADMIN_PERMISSIONS = ['APP_B2B_MANAGE_USERS', 'APP_B2B_PURCHASE', 'APP_B2B_MANAGE_ALL_ORDERS'];
+  private static PRICE_PERMISSIONS = ['APP_B2B_VIEW_PRICES'];
 
   /** The list of cam cards of the customer. */
   @Input() camCards: CamCard[];
@@ -122,6 +124,10 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
   totalProductsInBasket: number;
   productAddingInProgress = false;
   camCardsWithNoCompleteAddresses: CamCard[];
+
+  productsCustomerPrices: {
+    [customerId: string]: Product[];
+  };
 
   ngOnInit() {
     this.isMobileView = this.isMobile();
@@ -203,6 +209,38 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
             this.goToExpandedCamCard();
             this.loading = this.camCardLoading;
           });
+
+        // for get CustomerPrice
+        this.authorizationToggle
+          .isAuthorizedToCheckArrAll(AccountCamCardListComponent.PRICE_PERMISSIONS)
+          .pipe(take(1))
+          .subscribe(permitted => {
+            if (permitted && !this.productsCustomerPrices) {
+              this.productsCustomerPrices = {};
+              const customersAndSkus = this.camCards.reduce((acc, cc) => {
+                const skus = CamCardHelper.getCamCardSkus(cc);
+                const currentSkus = acc?.[cc.customer.id] || [];
+
+                return {
+                  ...acc,
+                  [cc.customer.id]: [...new Set([...currentSkus, ...skus])],
+                };
+              }, {}) as { key: string[] };
+
+              Object.entries(customersAndSkus).forEach(([customerId, skus]) => {
+                const { parent } = this.camCards.find(cc => cc.customer.id === customerId).customer;
+                if (!parent) {
+                  this.productFacade.loadCustomerPrices(customerId, skus);
+                  this.productFacade
+                    .getCustomerPrices$(customerId)
+                    .pipe(whenTruthy(), take(1))
+                    .subscribe(prices => {
+                      this.productsCustomerPrices[customerId] = prices;
+                    });
+                }
+              });
+            }
+          });
       } else {
         this.loading = this.camCardLoading;
       }
@@ -213,6 +251,11 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  getCustomerPriceForSkuInCustomer(id: string, sku: string) {
+    const item = this.productsCustomerPrices?.[id]?.find(prod => prod.sku === sku);
+    return { listPrice: item?.listPrice, salePrice: item?.salePrice };
   }
 
   simplifyData(data) {

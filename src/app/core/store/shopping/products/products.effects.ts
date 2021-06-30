@@ -377,7 +377,7 @@ export class ProductsEffects {
       ofType(loadCustomerPrices),
       mapToPayload(),
       withLatestFrom(this.store.pipe(select(getCustomersPrices)), this.store.pipe(select(getCurrentLocale))),
-      concatMap(([{ customerId, skus }, prices, { currency }]) => {
+      mergeMap(([{ customerId, skus }, prices, { currency }]) => {
         const getAction = arr =>
           this.productsService.loadCustomerPrices(customerId, arr, currency).pipe(
             map(products => loadCustomerPricesSuccess({ customerId, products })),
@@ -388,9 +388,7 @@ export class ProductsEffects {
           return getAction(skus);
         } else {
           const newSkus = skus.filter(sku => !prices[customerId].find(prod => prod.sku === sku));
-          return newSkus.length
-            ? getAction(newSkus)
-            : EMPTY.pipe(map(() => loadCustomerPricesSuccess({ customerId, products: [] })));
+          return newSkus.length ? getAction(newSkus) : [loadCustomerPricesSuccess({ customerId, products: [] })];
         }
       })
     )

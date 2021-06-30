@@ -270,6 +270,7 @@
       [camCardItemData]="camCardItem"
       [showCheckbox]="!maintenance(camCard, ['INACTIVE'])"
       [checked]="isProductChecked(camCardItem.id)"
+      [customerPrices]="getCustomerPriceForSkuInCustomer(camCard.customer.id, camCardItem.product.sku)"
       (changeCheckbox)="handleProductCheckbox(camCardItem, camCard, $event)"
     ></camfil-account-cam-card-detail-line-item>
   </div>
