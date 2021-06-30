@@ -72,7 +72,7 @@ export class AddProductToCartModalComponent implements OnInit, OnDestroy {
       this.buckets = buckets;
     });
 
-    this.checkoutFacade.emptyBuckets$.pipe(takeUntil(this.destroy$)).subscribe(emptyBuckets => {
+    this.checkoutFacade.emptyBuckets$?.pipe(takeUntil(this.destroy$)).subscribe(emptyBuckets => {
       this.emptyBuckets = emptyBuckets;
     });
 
