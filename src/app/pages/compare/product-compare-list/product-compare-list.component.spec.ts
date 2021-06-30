@@ -17,9 +17,9 @@ import { CamfilProductAddToBasketComponent } from 'ish-shared/components/product
 import { CamfilProductIdComponent } from 'ish-shared/components/product/camfil-product-id/camfil-product-id.component';
 import { CamfilProductImageComponent } from 'ish-shared/components/product/camfil-product-image/camfil-product-image.component';
 import { CamfilProductInventoryComponent } from 'ish-shared/components/product/camfil-product-inventory/camfil-product-inventory.component';
-import { CamfilProductPriceComponent } from 'ish-shared/components/product/camfil-product-price/camfil-product-price.component';
 import { CamfilProductRatingComponent } from 'ish-shared/components/product/camfil-product-rating/camfil-product-rating.component';
 import { ProductAttributesComponent } from 'ish-shared/components/product/product-attributes/product-attributes.component';
+import { ProductPriceComponent } from 'ish-shared/components/product/product-price/product-price.component';
 
 import { ProductComparePagingComponent } from '../product-compare-paging/product-compare-paging.component';
 
@@ -69,18 +69,18 @@ describe('Product Compare List Component', () => {
     when(shoppingFacade.product$(compareProduct1.sku, anything())).thenReturn(of(compareProduct1));
     when(shoppingFacade.product$(compareProduct2.sku, anything())).thenReturn(of(compareProduct2));
 
-    TestBed.configureTestingModule({
+    await TestBed.configureTestingModule({
       imports: [RouterTestingModule, TranslateModule.forRoot()],
       declarations: [
         MockComponent(CamfilProductAddToBasketComponent),
         MockComponent(CamfilProductIdComponent),
         MockComponent(CamfilProductImageComponent),
         MockComponent(CamfilProductInventoryComponent),
-        MockComponent(CamfilProductPriceComponent),
         MockComponent(CamfilProductRatingComponent),
         MockComponent(FaIconComponent),
         MockComponent(ProductAttributesComponent),
         MockComponent(ProductComparePagingComponent),
+        MockComponent(ProductPriceComponent),
         MockDirective(FeatureToggleDirective),
         MockPipe(AttributeToStringPipe),
         MockPipe(ProductRoutePipe),

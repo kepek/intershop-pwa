@@ -271,7 +271,7 @@ export class ProductHelper {
         a => a.name?.toLowerCase() === 'arrigocode'
       )?.value;
 
-      return arrigocodeValue === 'A1' ? true : false;
+      return arrigocodeValue === 'A1';
     } else {
       return false;
     }
@@ -296,10 +296,6 @@ export class ProductHelper {
     const measurements =
       (form?.get('measurementWidth')?.value && form?.get('measurementHeight')?.value) ||
       form?.get('measurementDiameter')?.value;
-    if (requiresMeasurement && !measurements) {
-      return true;
-    } else {
-      return false;
-    }
+    return requiresMeasurement && !measurements;
   }
 }

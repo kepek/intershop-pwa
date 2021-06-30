@@ -29,7 +29,7 @@
     width: 150px;
     min-width: 100px;
     max-width: 160px;
-    height: $common-height;
+    min-height: $common-height;
   }
   .product-actions-container {
     margin: 0 $space-box;

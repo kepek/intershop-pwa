@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideMockStore } from '@ngrx/store/testing';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { MockComponent } from 'ng-mocks';
 import { of } from 'rxjs';
 import { instance, mock, when } from 'ts-mockito';
 
@@ -10,6 +11,7 @@ import { AppFacade } from 'ish-core/facades/app.facade';
 import { PricePipe } from 'ish-core/models/price/price.pipe';
 import { AnyProductType } from 'ish-core/models/product/product.model';
 import { getUserPermissions } from 'ish-core/store/customer/authorization';
+import { CamfilProductAttributeComponent } from 'ish-shared/components/product/camfil-product-attribute/camfil-product-attribute.component';
 
 import { CamfilProductPriceComponent } from './camfil-product-price.component';
 
@@ -29,7 +31,7 @@ describe('Camfil Product Price Component', () => {
 
     await TestBed.configureTestingModule({
       imports: [CommonModule, TranslateModule.forRoot()],
-      declarations: [CamfilProductPriceComponent, PricePipe],
+      declarations: [CamfilProductPriceComponent, MockComponent(CamfilProductAttributeComponent), PricePipe],
       providers: [
         { provide: AccountFacade, useFactory: () => instance(accountFacade) },
         { provide: AppFacade, useFactory: () => instance(appFacade) },
@@ -88,12 +90,12 @@ describe('Camfil Product Price Component', () => {
   });
 
   describe('template rendering', () => {
-    it('should show "N/A" text when sale price is not available', () => {
-      translate.set('product.price.na.text', 'N/A');
+    it('should show "-" text when sale price is not available', () => {
+      translate.set('camfil.product.price.na.text', '-');
       product.salePrice = undefined;
       component.ngOnChanges();
       fixture.detectChanges();
-      expect(element.querySelector('.current-price').textContent.trim()).toEqual('N/A');
+      expect(element.querySelector('[data-current-price]').getAttribute('data-current-price').trim()).toEqual('-');
     });
 
     it('should show "$10.00" when no list price is available but a sale price', () => {
@@ -101,7 +103,7 @@ describe('Camfil Product Price Component', () => {
       product.listPrice = undefined;
       component.ngOnChanges();
       fixture.detectChanges();
-      expect(element.querySelector('.current-price').textContent.trim()).toEqual('$10.00');
+      expect(element.querySelector('[data-current-price]').getAttribute('data-current-price').trim()).toEqual('$10.00');
     });
 
     it('should show sale price with salePricePrefix text when sale price < list price', () => {
@@ -109,7 +111,7 @@ describe('Camfil Product Price Component', () => {
       component.isListPriceGreaterThanSalePrice = true;
       component.isListPriceLessThanSalePrice = false;
       fixture.detectChanges();
-      expect(element.querySelector('.current-price').textContent.trim()).toEqual('$10.00');
+      expect(element.querySelector('[data-current-price]').getAttribute('data-current-price').trim()).toEqual('$10.00');
     });
 
     it('should show sale price with salePriceFallback text when sale price = list price', () => {
@@ -117,7 +119,7 @@ describe('Camfil Product Price Component', () => {
       component.isListPriceGreaterThanSalePrice = false;
       component.isListPriceLessThanSalePrice = false;
       fixture.detectChanges();
-      expect(element.querySelector('.current-price').textContent.trim()).toEqual('$10.00');
+      expect(element.querySelector('[data-current-price]').getAttribute('data-current-price').trim()).toEqual('$10.00');
     });
 
     it('should show list price as old price when showInformationalPrice = true and sale price < list price', () => {
@@ -126,7 +128,7 @@ describe('Camfil Product Price Component', () => {
       component.isListPriceGreaterThanSalePrice = true;
       component.isListPriceLessThanSalePrice = false;
       fixture.detectChanges();
-      expect(element.querySelector('.old-price').textContent.trim()).toEqual('$11.00');
+      expect(element.querySelector('[data-old-price]').getAttribute('data-old-price').trim()).toEqual('$11.00');
     });
 
     it('should show price saving when showPriceSavings = true and sale price < list price', () => {
@@ -136,7 +138,7 @@ describe('Camfil Product Price Component', () => {
       component.isListPriceLessThanSalePrice = false;
       component.ngOnChanges();
       fixture.detectChanges();
-      expect(element.querySelector('.price-savings').textContent.trim()).toEqual('you saved $1.00');
+      expect(element.querySelector('[data-price-savings]').getAttribute('data-price-savings').trim()).toEqual('$1.00');
     });
 
     describe('sale price css', () => {

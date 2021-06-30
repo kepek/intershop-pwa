@@ -31,7 +31,6 @@ import { RecentlyViewedComponent } from 'ish-shared/components/recently/recently
 
 import { CamfilProductLinksComponent } from '../product/camfil-product-links/camfil-product-links.component';
 import { ProductBundlePartsComponent } from '../product/product-bundle-parts/product-bundle-parts.component';
-import { ProductDetailComponent } from '../product/product-detail/product-detail.component';
 import { ProductMasterVariationsComponent } from '../product/product-master-variations/product-master-variations.component';
 import { RetailSetPartsComponent } from '../product/retail-set-parts/retail-set-parts.component';
 
@@ -70,7 +69,6 @@ describe('Camfil Product Page Component', () => {
         MockComponent(ContentViewcontextComponent),
         MockComponent(LoadingComponent),
         MockComponent(ProductBundlePartsComponent),
-        MockComponent(ProductDetailComponent),
         MockComponent(ProductMasterVariationsComponent),
         MockComponent(RecentlyViewedComponent),
         MockComponent(RetailSetPartsComponent),

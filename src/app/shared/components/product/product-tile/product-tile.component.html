@@ -3,7 +3,7 @@
     <a [routerLink]="product | ishProductRoute: category" queryParamsHandling="merge">
       <ish-product-image [product]="product" imageType="M" class="product-image"></ish-product-image>
     </a>
-    <camfil-product-label [product]="product"></camfil-product-label>
+    <ish-product-label [product]="product"></ish-product-label>
   </div>
 
   <a
@@ -14,34 +14,34 @@
     >{{ product.name }}</a
   >
 
-  <camfil-product-rating *ishFeature="'rating'" [product]="product"></camfil-product-rating>
+  <ish-product-rating *ishFeature="'rating'" [product]="product"></ish-product-rating>
 
   <ng-container *ishFeature="'tacton'; else standardInformation">
     <ng-container *ishIsTactonProduct="product; else standardInformation"></ng-container>
   </ng-container>
 
   <ng-template #standardInformation>
-    <camfil-product-promotion
+    <ish-product-promotion
       *ngIf="configuration.displayPromotions"
       [product]="product"
       displayType="simple"
-    ></camfil-product-promotion>
+    ></ish-product-promotion>
 
     <div *ngIf="configuration.displayPrice" class="price-container">
-      <camfil-product-price [product]="product" [showInformationalPrice]="true"></camfil-product-price>
+      <ish-product-price [product]="product" [showInformationalPrice]="true"></ish-product-price>
     </div>
   </ng-template>
 
   <div *ngIf="configuration.displayPrice" class="price-container">
-    <camfil-product-price [product]="product" [showInformationalPrice]="true"></camfil-product-price>
+    <ish-product-price [product]="product" [showInformationalPrice]="true"></ish-product-price>
   </div>
 
-  <camfil-product-variation-select
+  <ish-product-variation-select
     *ngIf="variationOptions && configuration.displayVariations"
     [readOnly]="configuration.readOnly"
     [variationOptions]="variationOptions"
     (selectVariation)="variationSelected($event)"
-  ></camfil-product-variation-select>
+  ></ish-product-variation-select>
   <ng-container *ngIf="isMasterProduct(product)">
     <span class="product-variation read-only"
       >{{ variationCount$ | async }} {{ 'product.variations.text' | translate }}</span
@@ -55,13 +55,13 @@
       displayType="icon"
       class="btn-link"
     ></ish-lazy-product-add-to-quote>
-    <camfil-product-add-to-compare
+    <ish-product-add-to-compare
       *ngIf="configuration.displayAddToCompare"
       [isInCompareList]="isInCompareList"
       (compareToggle)="toggleCompare()"
       displayType="icon"
       class="btn-link"
-    ></camfil-product-add-to-compare>
+    ></ish-product-add-to-compare>
     <ish-lazy-product-add-to-order-template
       *ngIf="configuration.displayAddToOrderTemplate"
       [class]="'btn btn-link mr-0'"
@@ -75,12 +75,12 @@
       [product]="product"
       displayType="icon"
     ></ish-lazy-product-add-to-wishlist>
-    <camfil-product-add-to-basket
+    <ish-product-add-to-basket
       *ngIf="configuration.displayAddToBasket && !isMasterProduct(product)"
       [product]="product"
       displayType="icon"
       class="btn-link"
       (productToBasket)="addToBasket()"
-    ></camfil-product-add-to-basket>
+    ></ish-product-add-to-basket>
   </div>
 </div>

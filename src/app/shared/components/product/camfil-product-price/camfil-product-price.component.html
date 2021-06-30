@@ -1,38 +1,62 @@
 <ng-container *ngIf="isPriceRange; then priceRange; else singlePrice"></ng-container>
 
 <ng-template #singlePrice>
-  <div
-    class="current-price"
-    [ngClass]="{
-      'sale-price': showInformationalPrice && isListPriceGreaterThanSalePrice,
-      'sale-price-higher': showInformationalPrice && isListPriceLessThanSalePrice
-    }"
-    data-testing-id="current-price"
-  >
-    <ng-container *ngIf="product.salePrice; else salePriceNotAvailable">
-      {{
+  <camfil-product-attribute
+    *ngIf="showInformationalPrice; else emptyBlock"
+    class="old-price"
+    data-testing-id="old-price"
+    [attr.data-old-price]="product.listPrice | ishPrice"
+    [name]="'camfil.product.list_price.label' | translate"
+    [value]="'product.price.listPriceFallback.text' | translate: { '0': product.listPrice | ishPrice }"
+  ></camfil-product-attribute>
+
+  <ng-container *ngIf="product.salePrice; else salePriceNotAvailable">
+    <camfil-product-attribute
+      class="current-price"
+      data-testing-id="current-price"
+      [ngClass]="{
+        'sale-price': showInformationalPrice && isListPriceGreaterThanSalePrice,
+        'sale-price-higher': showInformationalPrice && isListPriceLessThanSalePrice
+      }"
+      [attr.data-current-price]="product.salePrice | ishPrice"
+      [name]="'camfil.product.your_price.label' | translate"
+      [value]="
         (isListPriceGreaterThanSalePrice
           ? 'product.price.salePricePrefix.text'
           : 'product.price.salePriceFallback.text'
         ) | translate: { '0': product.salePrice | ishPrice }
-      }}
-      <meta itemprop="price" [attr.content]="product.salePrice.value | number: '1.2-2':'en_US'" />
-      <meta itemprop="priceCurrency" [attr.content]="product.salePrice.currency" />
-    </ng-container>
-    <ng-template #salePriceNotAvailable> {{ 'product.price.na.text' | translate }} </ng-template>
-  </div>
+      "
+    ></camfil-product-attribute>
+    <meta itemprop="price" [attr.content]="product.salePrice.value | number: '1.2-2':'en_US'" />
+    <meta itemprop="priceCurrency" [attr.content]="product.salePrice.currency" />
+  </ng-container>
 
-  <div *ngIf="showInformationalPrice && isListPriceGreaterThanSalePrice" class="old-price" data-testing-id="old-price">
-    {{ 'product.price.listPriceFallback.text' | translate: { '0': product.listPrice | ishPrice } }}
-  </div>
+  <ng-template #salePriceNotAvailable>
+    <camfil-product-attribute
+      [attr.data-current-price]="'camfil.product.price.na.text' | translate"
+      [name]="'camfil.product.your_price.label' | translate"
+      [value]="'camfil.product.price.na.text' | translate"
+    ></camfil-product-attribute>
+  </ng-template>
 
-  <span *ngIf="showPriceSavings && isListPriceGreaterThanSalePrice" class="price-savings">
-    {{ 'product.price.savingsFallback.text' | translate: { '0': priceSavings | ishPrice } }}
-  </span>
+  <camfil-product-attribute
+    *ngIf="showPriceSavings && isListPriceGreaterThanSalePrice"
+    class="price-savings"
+    data-testing-id="price-savings"
+    [attr.data-price-savings]="priceSavings | ishPrice"
+    [name]="'camfil.product.your_savings.label' | translate"
+    [value]="'product.price.savingsFallback.text' | translate: { '0': priceSavings | ishPrice }"
+  ></camfil-product-attribute>
 </ng-template>
 
 <ng-template #priceRange>
-  <div class="current-price" data-testing-id="current-price">
-    {{ product.minSalePrice | ishPrice }} - {{ upperPrice | ishPrice }}
-  </div>
+  <camfil-product-attribute
+    [attr.data-current-price]="(product.minSalePrice | ishPrice) + ' - ' + (upperPrice | ishPrice)"
+    [name]="'camfil.product.your_price.label' | translate"
+    [value]="(product.minSalePrice | ishPrice) + ' - ' + (upperPrice | ishPrice)"
+  ></camfil-product-attribute>
+</ng-template>
+
+<ng-template #emptyBlock>
+  <span>&nbsp;</span>
 </ng-template>

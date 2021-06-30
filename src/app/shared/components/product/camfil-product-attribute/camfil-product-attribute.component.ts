@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnChanges } from '@angular/core';
 
 import { Attribute } from 'ish-core/models/attribute/attribute.model';
 
@@ -19,7 +19,7 @@ import { Attribute } from 'ish-core/models/attribute/attribute.model';
   styleUrls: ['./camfil-product-attribute.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CamfilProductAttributeComponent implements OnInit {
+export class CamfilProductAttributeComponent implements OnChanges {
   // tslint:disable-next-line:no-any
   @Input() value?: any;
   @Input() name: string;
@@ -32,7 +32,11 @@ export class CamfilProductAttributeComponent implements OnInit {
 
   classObject: { [key: string]: boolean };
 
-  ngOnInit() {
+  ngOnChanges() {
+    this.determineAttributeDetails();
+  }
+
+  private determineAttributeDetails() {
     this.classObject = {
       'camfil-product-attribute': true,
       [`camfil-product-attribute--${this.identifier}`]: !!this.identifier,
