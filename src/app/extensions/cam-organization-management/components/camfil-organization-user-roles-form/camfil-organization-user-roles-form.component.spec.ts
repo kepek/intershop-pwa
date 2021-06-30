@@ -1,4 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MockPipe } from 'ng-mocks';
+
+import { CamfilSlugifyPipe } from 'ish-core/pipes/camfil-slugify.pipe';
 
 import { CamfilOrganizationUserRolesFormComponent } from './camfil-organization-user-roles-form.component';
 
@@ -9,7 +12,7 @@ describe('Camfil Organization User Roles Form Component', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CamfilOrganizationUserRolesFormComponent],
+      declarations: [CamfilOrganizationUserRolesFormComponent, MockPipe(CamfilSlugifyPipe)],
     }).compileComponents();
   });
 
