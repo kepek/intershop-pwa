@@ -193,11 +193,15 @@ export const ENVIRONMENT_DEFAULTS: Environment = {
   },
   cookieConsentVersion: 1,
 
-  /* ToDo: Config for testing. Replace with correct gtmContainerId/tokens when provided by Camfil */
-  channelConfs: [
-    { channel: 'Camfil-CamfilFI-Site', gtmContainerId: 'GTM-TSM3JN4' },
-    { channel: 'Camfil-CamfilSE-Site', gtmContainerId: 'GTM-TSM3JN4' },
-  ],
+  /* GTM Config */
+
+  gtmToken: 'NOT SET',
+  // Individual channel config (not required at the moment)
+  // channelConfs: [
+  //   { channel: 'Camfil-CamfilFI-Site', gtmContainerId: 'GTM-TSM3JN4' },
+  //   { channel: 'Camfil-CamfilSE-Site', gtmContainerId: 'GTM-TSM3JN4' },
+  // ],
+
   /* ICC API CONFIGURATION */
 
   iccProxyURL: 'https://apim-icc.azure-api.net',
