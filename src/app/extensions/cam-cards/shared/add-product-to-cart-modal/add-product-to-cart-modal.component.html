@@ -32,22 +32,9 @@
 <ng-template #mainContentTemplate>
   <div mat-dialog-content class="add-to-cart-modal__content">
     <div class="add-to-cart-modal__content--title">{{ 'camfil.modal.addToCart.order-list.title' | translate }}</div>
-    <div *ngFor="let emptyOption of emptyBuckets; let i = index">
-      <camfil-cam-card-modal-details
-        [index]="i + 1"
-        [nextDelivery]="emptyOption.deliveryDate"
-        [orderMark]="emptyOption.orderMark"
-        [invoiceMark]="emptyOption.invoiceLabel"
-        [deliveryAddress]="emptyOption.shipToAddressFull"
-        [customerName]="emptyOption.customer?.companyName"
-        (click)="onOrderClicked(emptyOption.id, true)"
-        [isClicked]="selectedOrderId === emptyOption.id"
-      >
-      </camfil-cam-card-modal-details>
-    </div>
     <div *ngFor="let option of buckets; let i = index">
       <camfil-cam-card-modal-details
-        [index]="i + emptyBuckets?.length + 1"
+        [index]="i + 1"
         [nextDelivery]="option.deliveryDate"
         [orderMark]="option.orderMark"
         [invoiceMark]="option.invoiceLabel"

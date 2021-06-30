@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit, TemplateR
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { Subject } from 'rxjs';
+import { combineLatest, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
@@ -11,12 +11,13 @@ import { AddressHelper } from 'ish-core/models/address/address.helper';
 import { Address } from 'ish-core/models/address/address.model';
 import { AttributeHelper } from 'ish-core/models/attribute/attribute.helper';
 import { BasketView } from 'ish-core/models/basket/basket.model';
-import { Bucket } from 'ish-core/models/basket/bucket.model';
+
 import { Product, ProductHelper } from 'ish-core/models/product/product.model';
 import { whenTruthy } from 'ish-core/utils/operators';
 import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
 
 import { CreateOrderProductModalComponent } from './create-order-product-modal/create-order-product-modal.component';
+import { flatten } from 'lodash-es';
 
 @Component({
   selector: 'camfil-add-product-to-cart-modal',
@@ -34,16 +35,15 @@ export class AddProductToCartModalComponent implements OnInit, OnDestroy {
   quantityForm: FormGroup;
 
   selectedOrderId: string;
-  isEmptyBucketSelected = false;
 
   basketId: string;
   commonShippingMethodId: string;
-  buckets: Bucket[];
-  emptyBuckets: Bucket[];
+  buckets = [];
 
   showSuccess = false;
   submitted = false;
   basketAddresses: Address[];
+  isNewAddress = AddressHelper.isNewAddress;
   private destroy$ = new Subject<void>();
 
   constructor(
@@ -68,13 +68,14 @@ export class AddProductToCartModalComponent implements OnInit, OnDestroy {
       this.commonShippingMethodId = basket.commonShippingMethod?.id;
     });
 
-    this.checkoutFacade.buckets$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe((buckets: Bucket[]) => {
-      this.buckets = buckets;
-    });
-
-    this.checkoutFacade.emptyBuckets$?.pipe(takeUntil(this.destroy$)).subscribe(emptyBuckets => {
-      this.emptyBuckets = emptyBuckets;
-    });
+    combineLatest([
+      this.checkoutFacade.buckets$.pipe(whenTruthy()),
+      this.checkoutFacade.emptyBuckets$.pipe(whenTruthy()),
+    ])
+      .pipe(whenTruthy(), takeUntil(this.destroy$))
+      .subscribe(res => {
+        this.buckets = flatten(res);
+      });
 
     this.shoppingFacade.basketAddresses$.pipe(takeUntil(this.destroy$)).subscribe((basketAddresses: Address[]) => {
       this.basketAddresses = basketAddresses;
@@ -98,9 +99,8 @@ export class AddProductToCartModalComponent implements OnInit, OnDestroy {
     });
   }
 
-  onOrderClicked(orderId: string, isEmptyBucketSelected?: boolean) {
+  onOrderClicked(orderId: string) {
     this.selectedOrderId = orderId;
-    this.isEmptyBucketSelected = isEmptyBucketSelected;
   }
 
   openCreateOrderModal(modal: CreateOrderProductModalComponent) {
@@ -121,9 +121,7 @@ export class AddProductToCartModalComponent implements OnInit, OnDestroy {
     }
 
     if (this.quantityForm.valid && this.selectedOrderId) {
-      const currentBucket = this.isEmptyBucketSelected
-        ? this.emptyBuckets.find(emptyBucket => emptyBucket.id === this.selectedOrderId)
-        : this.buckets.find(bucket => bucket.id === this.selectedOrderId);
+      const currentBucket = this.buckets.find(bucket => bucket.id === this.selectedOrderId);
 
       const quantity = this.quantityForm.get('quantity').value;
       const lineItemAttributes = AttributeHelper.calculateAttrsToAddFromForm(this.quantityForm);
@@ -156,10 +154,6 @@ export class AddProductToCartModalComponent implements OnInit, OnDestroy {
     } else {
       markAsDirtyRecursive(this.quantityForm);
     }
-  }
-
-  isNewAddress(currentAddress: Address, basketAddresses: Address[]): boolean {
-    return AddressHelper.isNewAddress(currentAddress, basketAddresses);
   }
 
   disableIfNoMeasurements(): boolean {
