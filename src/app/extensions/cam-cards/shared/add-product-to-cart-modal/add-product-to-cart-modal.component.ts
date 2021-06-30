@@ -15,6 +15,8 @@ import { whenTruthy } from 'ish-core/utils/operators';
 import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
 
 import { CreateOrderProductModalComponent } from './create-order-product-modal/create-order-product-modal.component';
+import { AddressHelper } from 'ish-core/models/address/address.helper';
+import { Address } from 'ish-core/models/address/address.model';
 
 @Component({
   selector: 'camfil-add-product-to-cart-modal',
@@ -32,14 +34,16 @@ export class AddProductToCartModalComponent implements OnInit, OnDestroy {
   quantityForm: FormGroup;
 
   selectedOrderId: string;
+  isEmptyBucketSelected = false;
 
   basketId: string;
   commonShippingMethodId: string;
   buckets: Bucket[];
+  emptyBuckets: Bucket[];
 
   showSuccess = false;
   submitted = false;
-
+  basketAddresses: Address[];
   private destroy$ = new Subject<void>();
 
   constructor(
@@ -67,6 +71,14 @@ export class AddProductToCartModalComponent implements OnInit, OnDestroy {
     this.checkoutFacade.buckets$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe((buckets: Bucket[]) => {
       this.buckets = buckets;
     });
+
+    this.checkoutFacade.emptyBuckets$.pipe(takeUntil(this.destroy$)).subscribe(emptyBuckets => {
+      this.emptyBuckets = emptyBuckets;
+    });
+
+    this.shoppingFacade.basketAddresses$.pipe(takeUntil(this.destroy$)).subscribe((basketAddresses: Address[]) => {
+      this.basketAddresses = basketAddresses;
+    });
   }
 
   initQuantityForm() {
@@ -86,8 +98,9 @@ export class AddProductToCartModalComponent implements OnInit, OnDestroy {
     });
   }
 
-  onOrderClicked(orderId: string) {
+  onOrderClicked(orderId: string, isEmptyBucketSelected?: boolean) {
     this.selectedOrderId = orderId;
+    this.isEmptyBucketSelected = isEmptyBucketSelected;
   }
 
   openCreateOrderModal(modal: CreateOrderProductModalComponent) {
@@ -108,25 +121,45 @@ export class AddProductToCartModalComponent implements OnInit, OnDestroy {
     }
 
     if (this.quantityForm.valid && this.selectedOrderId) {
-      const currentBucket = this.buckets.find(bucket => bucket.id === this.selectedOrderId);
+      const currentBucket = this.isEmptyBucketSelected
+        ? this.emptyBuckets.find(emptyBucket => emptyBucket.id === this.selectedOrderId)
+        : this.buckets.find(bucket => bucket.id === this.selectedOrderId);
 
       const quantity = this.quantityForm.get('quantity').value;
       const lineItemAttributes = AttributeHelper.calculateAttrsToAddFromForm(this.quantityForm);
 
       this.submitted = true;
-
-      this.shoppingFacade.addProductToBucketWithUrn(
-        currentBucket.shipToAddress,
-        currentBucket.shipToAddressFull.id,
-        this.commonShippingMethodId,
-        this.product.sku,
-        quantity,
-        this.basketId,
-        lineItemAttributes
-      );
+      if (this.isNewAddress(currentBucket.shipToAddressFull, this.basketAddresses)) {
+        this.shoppingFacade.addProductToBucket(
+          currentBucket.shipToAddressFull,
+          this.commonShippingMethodId,
+          this.product.sku,
+          quantity,
+          this.basketId,
+          {
+            ...currentBucket,
+          },
+          undefined,
+          currentBucket.id
+        );
+      } else {
+        this.shoppingFacade.addProductToBucketWithUrn(
+          currentBucket.shipToAddress,
+          currentBucket.shipToAddressFull.id,
+          this.commonShippingMethodId,
+          this.product.sku,
+          quantity,
+          this.basketId,
+          lineItemAttributes
+        );
+      }
     } else {
       markAsDirtyRecursive(this.quantityForm);
     }
+  }
+
+  isNewAddress(currentAddress: Address, basketAddresses: Address[]): boolean {
+    return AddressHelper.isNewAddress(currentAddress, basketAddresses);
   }
 
   disableIfNoMeasurements(): boolean {
