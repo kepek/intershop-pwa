@@ -6,7 +6,6 @@ import { MockComponent } from 'ng-mocks';
 import { CookiesService } from 'ngx-utils-cookies-port';
 import { instance, mock } from 'ts-mockito';
 
-import { CHANNEL_CONFIGURATION } from 'ish-core/configurations/injection-keys';
 import { AppFacade } from 'ish-core/facades/app.facade';
 import { FeatureToggleModule } from 'ish-core/feature-toggle.module';
 import { findAllCustomElements } from 'ish-core/utils/dev/html-query-utils';
@@ -44,7 +43,6 @@ describe('App Component', () => {
       ],
       providers: [
         { provide: AppFacade, useFactory: () => instance(mock(AppFacade)) },
-        { provide: CHANNEL_CONFIGURATION, useValue: [] },
         { provide: CookiesService, useValue: instance(cookiesServiceMock) },
       ],
     }).compileComponents();

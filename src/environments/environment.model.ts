@@ -1,5 +1,4 @@
 import { Auth0Config } from 'ish-core/identity-provider/auth0.identity-provider';
-import { ChannelConfiguration } from 'ish-core/models/channel-configuration/channel-configuration.model';
 import { CookieConsentOptions } from 'ish-core/models/cookies/cookies.model';
 import { Locale } from 'ish-core/models/locale/locale.model';
 import { DeviceType, ViewType } from 'ish-core/models/viewtype/viewtype.types';
@@ -110,8 +109,6 @@ export interface Environment {
       | Auth0Config;
   };
 
-  channelConfs?: ChannelConfiguration[];
-
   /* ICC API CONFIGURATION */
 
   iccProxyURL: string;
@@ -195,12 +192,7 @@ export const ENVIRONMENT_DEFAULTS: Environment = {
 
   /* GTM Config */
 
-  gtmToken: 'NOT SET',
-  // Individual channel config (not required at the moment)
-  // channelConfs: [
-  //   { channel: 'Camfil-CamfilFI-Site', gtmContainerId: 'GTM-TSM3JN4' },
-  //   { channel: 'Camfil-CamfilSE-Site', gtmContainerId: 'GTM-TSM3JN4' },
-  // ],
+  gtmToken: undefined, // set by env variable GTM_TOKEN
 
   /* ICC API CONFIGURATION */
 

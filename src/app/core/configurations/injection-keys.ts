@@ -1,6 +1,5 @@
 import { InjectionToken } from '@angular/core';
 
-import { ChannelConfiguration } from 'ish-core/models/channel-configuration/channel-configuration.model';
 import { CookieConsentOptions } from 'ish-core/models/cookies/cookies.model';
 import { ViewType } from 'ish-core/models/viewtype/viewtype.types';
 
@@ -58,8 +57,3 @@ export const MEDIUM_BREAKPOINT_WIDTH = new InjectionToken<number>('mediumBreakpo
 export const LARGE_BREAKPOINT_WIDTH = new InjectionToken<number>('largeBreakpointWidth', {
   factory: () => environment.largeBreakpointWidth,
 });
-
-/**
- * the channel specific configuration
- */
-export const CHANNEL_CONFIGURATION = new InjectionToken<ChannelConfiguration>('channelConfs');

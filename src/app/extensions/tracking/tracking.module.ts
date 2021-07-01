@@ -1,9 +1,9 @@
-import { isPlatformServer } from '@angular/common';
-import { Inject, NgModule, PLATFORM_ID } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { Actions, createEffect } from '@ngrx/effects';
 import { Store, select } from '@ngrx/store';
 import { Angulartics2Module } from 'angulartics2';
 import { Angulartics2GoogleTagManager } from 'angulartics2/gtm';
+import { iif } from 'rxjs';
 import { filter, map, take, takeWhile, withLatestFrom } from 'rxjs/operators';
 
 import { FeatureToggleModule, FeatureToggleService } from 'ish-core/feature-toggle.module';
@@ -19,11 +19,10 @@ export class TrackingModule {
   constructor(
     private actions$: Actions,
     private featureToggleService: FeatureToggleService,
-    @Inject(PLATFORM_ID) private platformId: string,
     private stateProperties: StatePropertiesService,
     angulartics2GoogleTagManager: Angulartics2GoogleTagManager,
     store: Store,
-    cookiesService: CookiesService
+    private cookiesService: CookiesService
   ) {
     if (cookiesService.cookieConsentFor('tracking')) {
       store
@@ -39,15 +38,20 @@ export class TrackingModule {
     }
   }
 
-  setGTMToken$ = createEffect(() =>
-    this.actions$.pipe(
-      takeWhile(() => isPlatformServer(this.platformId) && this.featureToggleService.enabled('tracking')),
-      take(1),
-      withLatestFrom(this.stateProperties.getStateOrEnvOrDefault<string>('GTM_TOKEN', 'gtmToken')),
-      map(([, gtmToken]) => gtmToken),
-      whenTruthy(),
-      map(gtmToken => setGTMToken({ gtmToken }))
-    )
+  setGTMToken$ = createEffect(
+    () =>
+      iif(
+        () => this.cookiesService.cookieConsentFor('tracking'),
+        this.actions$.pipe(
+          takeWhile(() => this.featureToggleService.enabled('tracking')),
+          take(1),
+          withLatestFrom(this.stateProperties.getStateOrEnvOrDefault<string>('GTM_TOKEN', 'gtmToken')),
+          map(([, gtmToken]) => gtmToken),
+          whenTruthy(),
+          map(gtmToken => setGTMToken({ gtmToken }))
+        )
+      ),
+    { dispatch: false }
   );
   // tslint:disable-next-line: no-any - gtm library access
   private gtm(w: any, l: string, i: string) {
