@@ -17,7 +17,7 @@ import { MatRadioButton } from '@angular/material/radio';
 import { Router } from '@angular/router';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { take, takeUntil } from 'rxjs/operators';
 
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { Product, ProductHelper } from 'ish-core/models/product/product.model';
@@ -406,8 +406,15 @@ export class AddProductToCamCardModalComponent implements OnInit, OnDestroy, OnC
   }
 
   openModal(modal: CreateProductCamCardModalComponent) {
-    this.dialog.open(modal.show());
+    const dialogRef = this.dialog.open(modal.show());
     modal.hide = () => this.dialog.closeAll();
+
+    dialogRef
+      .afterOpened()
+      .pipe(take(1), takeUntil(this.destroy$))
+      .subscribe(() => {
+        modal.setFocusOnCamCardNameInputField();
+      });
   }
 
   /**

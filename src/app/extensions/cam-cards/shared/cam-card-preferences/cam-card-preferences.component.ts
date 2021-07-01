@@ -1,6 +1,9 @@
 import {
+  AfterViewInit,
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
+  ElementRef,
   EventEmitter,
   Input,
   OnChanges,
@@ -44,14 +47,17 @@ import {
   styleUrls: ['./cam-card-preferences.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CamCardPreferencesComponent implements OnChanges, OnInit, OnDestroy {
+export class CamCardPreferencesComponent implements OnChanges, OnInit, AfterViewInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private camCardsFacade: CamCardsFacade,
     private appFacade: AppFacade,
     public dialog: MatDialog,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private cdr: ChangeDetectorRef
   ) {}
+
+  @ViewChild('title') titleInput: ElementRef;
 
   get formDisabled() {
     return this.camCardForm.invalid && this.submitted;
@@ -206,6 +212,10 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit, OnDestroy
     });
   }
 
+  ngAfterViewInit() {
+    this.setFocusOnCamCardTitleInputField();
+  }
+
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
@@ -230,6 +240,16 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit, OnDestroy
     });
     this.patchForm();
   }
+
+  setFocusOnCamCardTitleInputField() {
+    this.customers$.pipe(whenTruthy(), take(2)).subscribe(customers => {
+      if (customers.length === 1) {
+        this.titleInput?.nativeElement.focus();
+        this.cdr.detectChanges();
+      }
+    });
+  }
+
   compareFn(x, y): boolean {
     return x && y ? x.id === y.id : x === y;
   }
