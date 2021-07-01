@@ -416,4 +416,15 @@ export class CamCardService {
   importCamCard(camCardData): Observable<CamCard> {
     return this.apiService.post('camcardsbulk', camCardData[Object.keys(camCardData)[0]]);
   }
+
+  /**
+   * Updates a cam card attribute with given Id
+   * @param camCard
+   * @returns          The updated cam_card.
+   */
+  updateCamCardAttribute(camCardId: string, camCardAttribute): Observable<CamCard> {
+    return this.apiService
+      .patch(`camcards/${camCardId}`, camCardAttribute)
+      .pipe(map((response: CamCard) => this.camCardMapper.fromUpdate(response, camCardId)));
+  }
 }

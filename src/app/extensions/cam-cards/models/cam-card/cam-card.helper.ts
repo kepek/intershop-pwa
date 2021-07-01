@@ -78,6 +78,12 @@ export class CamCardHelper {
                 delete productsToAdd.extensions.createdFromCamCardId;
               }
 
+              const lastDeliveryDate = new Date().setHours(0, 0, 0, 0);
+
+              camCardsFacade.updateCamCardAttribute(cc.id, {
+                lastDeliveryDate: new Date(lastDeliveryDate).toISOString(),
+              });
+
               productFacade.addProductsFromCamCard(productsToAdd, commonShippingMethodId, currentBasketId);
             });
         }
