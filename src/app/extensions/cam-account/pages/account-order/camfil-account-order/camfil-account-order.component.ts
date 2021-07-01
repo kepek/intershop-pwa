@@ -91,7 +91,6 @@ export class CamfilAccountOrderComponent implements OnInit, OnDestroy {
         .product$(item.sku, CamfilAccountOrderComponent.REQUIRED_COMPLETENESS_LEVEL)
         .pipe(mapToProperty('availability'), takeUntil(this.destroy$))
         .subscribe(availability => {
-          console.log("availability", availability)
           if (!availability) {
             this.productsAvailability = false;
           }
