@@ -41,7 +41,6 @@ export class CamfilAccountOrderComponent implements OnInit, OnDestroy {
   @Input() deviceType: DeviceType;
 
   deliveryAddress: DeliveryAddress;
-  loading = false;
   orderLoading$: Observable<boolean>;
   lineItems: OrderLineItem[];
   reOrderText: string;
@@ -50,16 +49,8 @@ export class CamfilAccountOrderComponent implements OnInit, OnDestroy {
   @ViewChild(CamfilSmallCtaModalComponent) modal: CamfilSmallCtaModalComponent;
 
   ngOnInit() {
-    this.loading = true;
-    this.orderLoading$ = this.camAccountFacade.loading$;
+    this.orderLoading$ = this.camAccountFacade.ordersLoading$;
 
-    this.orderLoading$?.pipe(takeUntil(this.destroy$)).subscribe(value => {
-      if (!value) {
-        setTimeout(() => {
-          this.loading = false;
-        }, 300);
-      }
-    });
     this.camAccountFacade
       .orderLineItems$(this.order?.id)
       .pipe(whenTruthy(), takeUntil(this.destroy$))
@@ -81,7 +72,6 @@ export class CamfilAccountOrderComponent implements OnInit, OnDestroy {
   placeReOrder() {
     // Check products availability
     if (this.productsAvailability) {
-      this.loading = true;
       // API call /camfilorder/orderId Place reorder and redirect to checkout page
       this.camAccountFacade.createOrderDuplicate(this.order.id);
     } else {

@@ -5,6 +5,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store, select } from '@ngrx/store';
 import { concatMap, filter, map, takeWhile, tap, withLatestFrom } from 'rxjs/operators';
 
+import { displayErrorMessage } from 'ish-core/store/core/messages';
 import { ofUrl, selectRouteParam } from 'ish-core/store/core/router';
 import { mapErrorToAction, mapToPayloadProperty, whenTruthy } from 'ish-core/utils/operators';
 
@@ -141,5 +142,18 @@ export class OrderEffects {
         })
       ),
     { dispatch: false }
+  );
+
+  displaycreateOrderDuplicateFailMessage$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(createOrderDuplicateFail),
+      mapToPayloadProperty('error'),
+      whenTruthy(),
+      map(error =>
+        displayErrorMessage({
+          message: error?.message || error?.code,
+        })
+      )
+    )
   );
 }
