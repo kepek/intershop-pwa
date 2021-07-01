@@ -6,6 +6,7 @@ import { MockComponent } from 'ng-mocks';
 import { CookiesService } from 'ngx-utils-cookies-port';
 import { instance, mock } from 'ts-mockito';
 
+import { CHANNEL_CONFIGURATION } from 'ish-core/configurations/injection-keys';
 import { AppFacade } from 'ish-core/facades/app.facade';
 import { FeatureToggleModule } from 'ish-core/feature-toggle.module';
 import { findAllCustomElements } from 'ish-core/utils/dev/html-query-utils';
@@ -13,7 +14,6 @@ import { CookiesBannerComponent } from 'ish-shell/application/cookies-banner/coo
 import { CamfilFooterComponent } from 'ish-shell/footer/camfil-footer/camfil-footer.component';
 import { CamfilBreadcrumbComponent } from 'ish-shell/header/camfil-breadcrumb/camfil-breadcrumb.component';
 import { CamfilHeaderComponent } from 'ish-shell/header/camfil-header/camfil-header.component';
-import { CamfilIEModalComponent } from 'ish-shell/header/camfil-ie-modal/camfil-ie-modal.component';
 
 import { AppComponent } from './app.component';
 
@@ -32,7 +32,6 @@ describe('App Component', () => {
         MockComponent(CamfilBreadcrumbComponent),
         MockComponent(CamfilFooterComponent),
         MockComponent(CamfilHeaderComponent),
-        MockComponent(CamfilIEModalComponent),
         MockComponent(CookiesBannerComponent),
       ],
       imports: [
@@ -43,6 +42,7 @@ describe('App Component', () => {
       ],
       providers: [
         { provide: AppFacade, useFactory: () => instance(mock(AppFacade)) },
+        { provide: CHANNEL_CONFIGURATION, useValue: [] },
         { provide: CookiesService, useValue: instance(cookiesServiceMock) },
       ],
     }).compileComponents();
