@@ -1,21 +1,21 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { BrowserTransferStateModule } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MockComponent } from 'ng-mocks';
-import { CookiesService } from 'ngx-utils-cookies-port';
 import { instance, mock } from 'ts-mockito';
 
-import { CHANNEL_CONFIGURATION } from 'ish-core/configurations/injection-keys';
 import { AppFacade } from 'ish-core/facades/app.facade';
 import { FeatureToggleModule } from 'ish-core/feature-toggle.module';
+import { CookiesService } from 'ish-core/utils/cookies/cookies.service';
 import { findAllCustomElements } from 'ish-core/utils/dev/html-query-utils';
 import { CookiesBannerComponent } from 'ish-shell/application/cookies-banner/cookies-banner.component';
 import { CamfilFooterComponent } from 'ish-shell/footer/camfil-footer/camfil-footer.component';
 import { CamfilBreadcrumbComponent } from 'ish-shell/header/camfil-breadcrumb/camfil-breadcrumb.component';
 import { CamfilHeaderComponent } from 'ish-shell/header/camfil-header/camfil-header.component';
+import { CamfilIEModalComponent } from 'ish-shell/header/camfil-ie-modal/camfil-ie-modal.component';
 
 import { AppComponent } from './app.component';
+import { StatePropertiesService } from 'ish-core/utils/state-transfer/state-properties.service';
 
 let translate: TranslateService;
 
@@ -26,24 +26,21 @@ describe('App Component', () => {
 
   beforeEach(async () => {
     const cookiesServiceMock = mock(CookiesService);
+    const statePropertiesServiceMock = mock(StatePropertiesService);
     await TestBed.configureTestingModule({
       declarations: [
         AppComponent,
         MockComponent(CamfilBreadcrumbComponent),
         MockComponent(CamfilFooterComponent),
         MockComponent(CamfilHeaderComponent),
+        MockComponent(CamfilIEModalComponent),
         MockComponent(CookiesBannerComponent),
       ],
-      imports: [
-        BrowserTransferStateModule,
-        FeatureToggleModule.forTesting('recently'),
-        RouterTestingModule,
-        TranslateModule.forRoot(),
-      ],
+      imports: [FeatureToggleModule.forTesting('recently'), RouterTestingModule, TranslateModule.forRoot()],
       providers: [
         { provide: AppFacade, useFactory: () => instance(mock(AppFacade)) },
-        { provide: CHANNEL_CONFIGURATION, useValue: [] },
-        { provide: CookiesService, useValue: instance(cookiesServiceMock) },
+        { provide: CookiesService, useValue: instance(statePropertiesServiceMock) },
+        { provide: StatePropertiesService, useValue: instance(cookiesServiceMock) },
       ],
     }).compileComponents();
   });
