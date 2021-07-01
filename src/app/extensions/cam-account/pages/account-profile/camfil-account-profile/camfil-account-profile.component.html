@@ -5,6 +5,8 @@
     <h3 class="account-profile__subtitle">{{ 'camfil.account.profile.personal_info' | translate }}</h3>
     <camfil-account-details-form></camfil-account-details-form>
   </div>
+  <!-- Preferred language is hidden as per client request, @see CAM-1322 -->
+  <!--
   <div class="account-profile__section border-bottom">
     <h3 class="account-profile__subtitle">{{ 'camfil.account.profile.change_language' | translate }}</h3>
     <camfil-account-language-form
@@ -15,6 +17,7 @@
       (submit)="onChangeLanguage($event)"
     ></camfil-account-language-form>
   </div>
+  -->
   <div class="account-profile__section">
     <h3 class="account-profile__subtitle">{{ 'camfil.account.profile.change_password' | translate }}</h3>
     <camfil-account-password-form></camfil-account-password-form>
