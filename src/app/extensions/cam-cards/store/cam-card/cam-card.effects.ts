@@ -103,6 +103,8 @@ import {
   selectCamCard,
   setStickyCamCardToolbar,
   updateCamCard,
+  updateCamCardAttribute,
+  updateCamCardAttributeSuccess,
   updateCamCardContacts,
   updateCamCardContactsFail,
   updateCamCardContactsSuccess,
@@ -117,8 +119,6 @@ import {
   validateCamCardImport,
   validateCamCardImportFail,
   validateCamCardImportSuccess,
-  updateCamCardAttribute,
-  updateCamCardAttributeSuccess,
 } from './cam-card.actions';
 import {
   getAllCamCards,
@@ -911,17 +911,6 @@ export class CamCardEffects {
     )
   );
 
-  /** Action after update CamCard Contacts
-   * @param camCardId
-   * @param newContacts
-   * @param contact
-   */
-  private handleCamCardContactsSuccess(camCardId: string, contacts: CamCardContact[], contact: CamCardContact) {
-    const isInclude =
-      !contacts.length || contacts.findIndex(newContact => newContact.profileId === contact.profileId) > -1;
-    return isInclude ? updateCamCardContactsSuccess({ camCardId, contacts }) : deleteCamCardSuccess({ camCardId });
-  }
-
   updateCamCardAttribute$ = createEffect(() =>
     this.actions$.pipe(
       ofType(updateCamCardAttribute),
@@ -934,4 +923,15 @@ export class CamCardEffects {
       )
     )
   );
+
+  /** Action after update CamCard Contacts
+   * @param camCardId
+   * @param newContacts
+   * @param contact
+   */
+  private handleCamCardContactsSuccess(camCardId: string, contacts: CamCardContact[], contact: CamCardContact) {
+    const isInclude =
+      !contacts.length || contacts.findIndex(newContact => newContact.profileId === contact.profileId) > -1;
+    return isInclude ? updateCamCardContactsSuccess({ camCardId, contacts }) : deleteCamCardSuccess({ camCardId });
+  }
 }
