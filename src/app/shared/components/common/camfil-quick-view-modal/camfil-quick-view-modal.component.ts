@@ -49,6 +49,7 @@ export class CamfilQuickViewModalComponent implements OnInit, OnDestroy {
     return this.productDetailForm.get(this.quantityControlName).value;
   }
 
+  userPermissions$: Observable<string[]>;
   product$: Observable<ProductView | VariationProductView | VariationProductMasterView>;
   quantity: number;
   price$: Observable<ProductPrices>;
@@ -85,6 +86,7 @@ export class CamfilQuickViewModalComponent implements OnInit, OnDestroy {
     this.accountFacade.isLoggedIn$.pipe(takeUntil(this.destroy$)).subscribe(value => {
       this.isLoggedIn = value;
     });
+    this.userPermissions$ = this.accountFacade.userPermissions$.pipe(takeUntil(this.destroy$));
     this.product$ = this.shoppingFacade.product$(this.data.sku, ProductCompletenessLevel.Detail);
     this.product$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(product => {
       this.quantity = 0;

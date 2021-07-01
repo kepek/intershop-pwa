@@ -219,6 +219,7 @@ import { AddProductsToCartModalComponent } from '../extensions/cam-cards/shared/
 import { CreateOrderProductsSuccessComponent } from '../extensions/cam-cards/shared/add-products-to-cart-modal/create-order-products-success/create-order-products-success.component';
 import { CreateOrderProductsModalComponent } from '../extensions/cam-cards/shared/add-product-to-cart-modal/create-order-products-modal/create-order-products-modal.component';
 import { CamfilBasketValidationResultsComponent } from './components/basket/camfil-basket-validation-results/camfil-basket-validation-results.component';
+import { ProductRowComponent } from 'ish-shared/components/product/product-row/product-row.component';
 
 const importExportModules = [
   AddressFormsSharedModule,
@@ -349,6 +350,7 @@ const declaredComponents = [
   ProductQuantityComponent,
   ProductRatingComponent,
   ProductRatingStarComponent,
+  ProductRowComponent,
   ProductShipmentComponent,
   ProductTileComponent,
   ProductVariationSelectComponent,
