@@ -7,6 +7,7 @@ import { setLoadingOn, unsetLoadingAndErrorOn } from 'ish-core/utils/ngrx-creato
 import { Order } from '../../models/order/order.model';
 
 import {
+  createOrderDuplicateFail,
   loadOrder,
   loadOrderAdditionalTotalCost,
   loadOrderAdditionalTotalCostSuccess,
@@ -18,6 +19,8 @@ import {
   loadOrders,
   loadOrdersSuccess,
   selectOrder,
+  createOrderDuplicate,
+  createOrderDuplicateSuccess,
 } from './order.actions';
 
 export const orderAdapter = createEntityAdapter<Order>({
@@ -38,8 +41,17 @@ export const initialState: OrdersState = orderAdapter.getInitialState({
 
 export const orderReducer = createReducer(
   initialState,
-  setLoadingOn(loadOrder, loadOrders, loadOrderLineItems, loadOrderTrackAndTrace, loadOrderAdditionalTotalCost),
+  setLoadingOn(
+    createOrderDuplicate,
+    loadOrder,
+    loadOrders,
+    loadOrderLineItems,
+    loadOrderTrackAndTrace,
+    loadOrderAdditionalTotalCost
+  ),
   unsetLoadingAndErrorOn(
+    createOrderDuplicateFail,
+    createOrderDuplicateSuccess,
     loadOrderSuccess,
     loadOrdersSuccess,
     loadOrderLineItemsSuccess,

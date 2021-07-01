@@ -32,6 +32,7 @@ import {
   selectOrder,
 } from './order.actions';
 import { getSelectedOrderId } from './order.selectors';
+import { displayErrorMessage } from 'ish-core/store/core/messages';
 
 @Injectable()
 export class OrderEffects {
@@ -141,5 +142,18 @@ export class OrderEffects {
         })
       ),
     { dispatch: false }
+  );
+
+  displaycreateOrderDuplicateFailMessage$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(createOrderDuplicateFail),
+      mapToPayloadProperty('error'),
+      whenTruthy(),
+      map(error =>
+        displayErrorMessage({
+          message: error?.message || error?.code,
+        })
+      )
+    )
   );
 }
