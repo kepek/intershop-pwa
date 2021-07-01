@@ -12,9 +12,9 @@ import { ProductRoutePipe } from 'ish-core/routing/product/product-route.pipe';
 import { CamfilProductAddToBasketComponent } from 'ish-shared/components/product/camfil-product-add-to-basket/camfil-product-add-to-basket.component';
 import { CamfilProductIdComponent } from 'ish-shared/components/product/camfil-product-id/camfil-product-id.component';
 import { CamfilProductImageComponent } from 'ish-shared/components/product/camfil-product-image/camfil-product-image.component';
-import { CamfilProductPriceComponent } from 'ish-shared/components/product/camfil-product-price/camfil-product-price.component';
 import { CamfilProductQuantityComponent } from 'ish-shared/components/product/camfil-product-quantity/camfil-product-quantity.component';
 import { ProductBundleDisplayComponent } from 'ish-shared/components/product/product-bundle-display/product-bundle-display.component';
+import { ProductPriceComponent } from 'ish-shared/components/product/product-price/product-price.component';
 import { ProductVariationDisplayComponent } from 'ish-shared/components/product/product-variation-display/product-variation-display.component';
 import { InputComponent } from 'ish-shared/forms/components/input/input.component';
 
@@ -35,11 +35,11 @@ describe('Account Wishlist Detail Line Item Component', () => {
         MockComponent(CamfilProductAddToBasketComponent),
         MockComponent(CamfilProductIdComponent),
         MockComponent(CamfilProductImageComponent),
-        MockComponent(CamfilProductPriceComponent),
         MockComponent(CamfilProductQuantityComponent),
         MockComponent(FaIconComponent),
         MockComponent(InputComponent),
         MockComponent(ProductBundleDisplayComponent),
+        MockComponent(ProductPriceComponent),
         MockComponent(ProductVariationDisplayComponent),
         MockComponent(SelectWishlistModalComponent),
         MockPipe(DatePipe),

@@ -35,21 +35,10 @@ a.product-title {
   }
 
   .current-price {
-    font-family: $font-family-condensedregular;
-    font-size: 30px;
-
     .price-note {
       margin-left: $space-default;
       font-size: $font-size-corporate;
     }
-  }
-
-  .sale-price {
-    font-size: 30px;
-  }
-
-  .old-price {
-    margin: 0;
   }
 
   .was-price {

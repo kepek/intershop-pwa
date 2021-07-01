@@ -77,18 +77,7 @@
   </div>
   <div class="product-detailed-col-4">
     <div class="product-prices-container d-flex justify-content-center" *ngIf="userPermissions$ | async">
-      <camfil-product-attribute
-        *ngIf="product.listPrice?.value > 0"
-        [name]="'camfil.product.list_price.label' | translate"
-        [value]="product.listPrice | ishPrice"
-        class="pr-2"
-      ></camfil-product-attribute>
-
-      <camfil-product-attribute
-        *ngIf="product.salePrice?.value > 0"
-        [name]="'camfil.product.your_price.label' | translate"
-        [value]="product.salePrice | ishPrice"
-      ></camfil-product-attribute>
+      <camfil-product-price [product]="product"></camfil-product-price>
     </div>
 
     <div class="product-list-actions-container d-flex flex-column justify-content-between">

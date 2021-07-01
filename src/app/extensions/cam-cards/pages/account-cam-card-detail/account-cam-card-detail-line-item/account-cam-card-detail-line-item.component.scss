@@ -16,12 +16,14 @@
   .image {
     margin: 0 $space-box;
   }
-  .attributes > * {
+  ::ng-deep camfil-product-price > camfil-product-attribute,
+  .attributes > camfil-product-attribute {
     padding-right: 10px;
     margin-right: 10px;
     line-height: 14px;
     border-right: 1px solid $gray-600;
   }
+  ::ng-deep camfil-product-price > camfil-product-attribute:last-child,
   .attributes > .quick-view {
     border: none;
   }
@@ -37,7 +39,7 @@
     z-index: 1;
   }
   @media (max-width: $screen-sm-max) {
-    .attributes > * {
+    .attributes > camfil-product-attribute {
       line-height: 20px;
       border-right: none;
     }

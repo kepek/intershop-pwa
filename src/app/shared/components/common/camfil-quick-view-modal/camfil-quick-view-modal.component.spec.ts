@@ -15,6 +15,7 @@ import { CamfilProductAddToCompareComponent } from 'ish-shared/components/produc
 import { CamfilProductAttributeComponent } from 'ish-shared/components/product/camfil-product-attribute/camfil-product-attribute.component';
 import { CamfilProductImageComponent } from 'ish-shared/components/product/camfil-product-image/camfil-product-image.component';
 import { CamfilProductInventoryComponent } from 'ish-shared/components/product/camfil-product-inventory/camfil-product-inventory.component';
+import { CamfilProductPriceComponent } from 'ish-shared/components/product/camfil-product-price/camfil-product-price.component';
 import { CamfilProductPromotionComponent } from 'ish-shared/components/product/camfil-product-promotion/camfil-product-promotion.component';
 import { CamfilProductQuantityComponent } from 'ish-shared/components/product/camfil-product-quantity/camfil-product-quantity.component';
 
@@ -33,6 +34,7 @@ describe('Camfil Quick View Modal Component', () => {
         MockComponent(CamfilProductAttributeComponent),
         MockComponent(CamfilProductImageComponent),
         MockComponent(CamfilProductInventoryComponent),
+        MockComponent(CamfilProductPriceComponent),
         MockComponent(CamfilProductPromotionComponent),
         MockComponent(CamfilProductQuantityComponent),
         MockComponent(CamfilProductTechnicalDocumentsComponent),

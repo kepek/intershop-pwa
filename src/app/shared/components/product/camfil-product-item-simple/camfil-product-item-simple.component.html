@@ -8,7 +8,6 @@
       <a [routerLink]="product | ishProductRoute: category" class="product-image-box">
         <camfil-product-image [product]="product" imageType="S" class="product-image"></camfil-product-image>
       </a>
-
       <camfil-product-title *ngIf="configuration.displayName" [product]="product"></camfil-product-title>
     </div>
     <div class="product-item-attributes d-flex flex-nowrap">
@@ -42,16 +41,7 @@
           ></camfil-product-quickview>
         </div>
         <ng-container *ngIf="userPermissions$ | async">
-          <camfil-product-attribute
-            *ngIf="product.listPrice?.value > 0 && isLoggedIn; else emptyBlock"
-            [name]="'camfil.product.list_price.label' | translate"
-            [value]="product.listPrice | ishPrice"
-          ></camfil-product-attribute>
-          <camfil-product-attribute
-            *ngIf="product.salePrice?.value > 0 && isLoggedIn; else emptyBlock"
-            [name]="'camfil.product.your_price.label' | translate"
-            [value]="product.salePrice | ishPrice"
-          ></camfil-product-attribute>
+          <camfil-product-price [product]="product"></camfil-product-price>
         </ng-container>
       </div>
     </div>
@@ -155,17 +145,7 @@
       </div>
     </div>
     <div class="product-prices-container d-flex flex-column justify-content-between" *ngIf="userPermissions$ | async">
-      <camfil-product-attribute
-        *ngIf="product.listPrice?.value > 0 && isLoggedIn; else emptyBlock"
-        [name]="'camfil.product.list_price.label' | translate"
-        [value]="product.listPrice | ishPrice"
-      ></camfil-product-attribute>
-
-      <camfil-product-attribute
-        *ngIf="product.salePrice?.value > 0 && isLoggedIn; else emptyBlock"
-        [name]="'camfil.product.your_price.label' | translate"
-        [value]="product.salePrice | ishPrice"
-      ></camfil-product-attribute>
+      <camfil-product-price [product]="product"></camfil-product-price>
     </div>
 
     <div class="product-actions-container">

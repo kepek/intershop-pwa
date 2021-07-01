@@ -182,7 +182,6 @@ import { ProductPromotionComponent } from './components/product/product-promotio
 import { ProductQuantityComponent } from './components/product/product-quantity/product-quantity.component';
 import { ProductRatingStarComponent } from './components/product/product-rating-star/product-rating-star.component';
 import { ProductRatingComponent } from './components/product/product-rating/product-rating.component';
-import { ProductRowComponent } from './components/product/product-row/product-row.component';
 import { ProductShipmentComponent } from './components/product/product-shipment/product-shipment.component';
 import { ProductTileComponent } from './components/product/product-tile/product-tile.component';
 import { ProductVariationDisplayComponent } from './components/product/product-variation-display/product-variation-display.component';
@@ -220,6 +219,7 @@ import { AddProductsToCartModalComponent } from '../extensions/cam-cards/shared/
 import { CreateOrderProductsSuccessComponent } from '../extensions/cam-cards/shared/add-products-to-cart-modal/create-order-products-success/create-order-products-success.component';
 import { CreateOrderProductsModalComponent } from '../extensions/cam-cards/shared/add-product-to-cart-modal/create-order-products-modal/create-order-products-modal.component';
 import { CamfilBasketValidationResultsComponent } from './components/basket/camfil-basket-validation-results/camfil-basket-validation-results.component';
+import { ProductRowComponent } from 'ish-shared/components/product/product-row/product-row.component';
 
 const importExportModules = [
   AddressFormsSharedModule,

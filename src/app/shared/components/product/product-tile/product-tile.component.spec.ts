@@ -9,15 +9,15 @@ import { FeatureToggleModule } from 'ish-core/feature-toggle.module';
 import { ProductView } from 'ish-core/models/product-view/product-view.model';
 import { ProductRoutePipe } from 'ish-core/routing/product/product-route.pipe';
 import { findAllCustomElements } from 'ish-core/utils/dev/html-query-utils';
-import { CamfilProductAddToBasketComponent } from 'ish-shared/components/product/camfil-product-add-to-basket/camfil-product-add-to-basket.component';
-import { CamfilProductAddToCompareComponent } from 'ish-shared/components/product/camfil-product-add-to-compare/camfil-product-add-to-compare.component';
 import { DEFAULT_CONFIGURATION } from 'ish-shared/components/product/camfil-product-item/camfil-product-item.component';
-import { CamfilProductLabelComponent } from 'ish-shared/components/product/camfil-product-label/camfil-product-label.component';
-import { CamfilProductPriceComponent } from 'ish-shared/components/product/camfil-product-price/camfil-product-price.component';
-import { CamfilProductPromotionComponent } from 'ish-shared/components/product/camfil-product-promotion/camfil-product-promotion.component';
-import { CamfilProductRatingComponent } from 'ish-shared/components/product/camfil-product-rating/camfil-product-rating.component';
-import { CamfilProductVariationSelectComponent } from 'ish-shared/components/product/camfil-product-variation-select/camfil-product-variation-select.component';
+import { ProductAddToBasketComponent } from 'ish-shared/components/product/product-add-to-basket/product-add-to-basket.component';
+import { ProductAddToCompareComponent } from 'ish-shared/components/product/product-add-to-compare/product-add-to-compare.component';
 import { ProductImageComponent } from 'ish-shared/components/product/product-image/product-image.component';
+import { ProductLabelComponent } from 'ish-shared/components/product/product-label/product-label.component';
+import { ProductPriceComponent } from 'ish-shared/components/product/product-price/product-price.component';
+import { ProductPromotionComponent } from 'ish-shared/components/product/product-promotion/product-promotion.component';
+import { ProductRatingComponent } from 'ish-shared/components/product/product-rating/product-rating.component';
+import { ProductVariationSelectComponent } from 'ish-shared/components/product/product-variation-select/product-variation-select.component';
 
 import { LazyProductAddToOrderTemplateComponent } from '../../../../extensions/order-templates/exports/lazy-product-add-to-order-template/lazy-product-add-to-order-template.component';
 import { LazyProductAddToQuoteComponent } from '../../../../extensions/quoting/exports/lazy-product-add-to-quote/lazy-product-add-to-quote.component';
@@ -36,18 +36,18 @@ describe('Product Tile Component', () => {
     await TestBed.configureTestingModule({
       imports: [FeatureToggleModule.forTesting(), RouterTestingModule, TranslateModule.forRoot()],
       declarations: [
-        MockComponent(CamfilProductAddToBasketComponent),
-        MockComponent(CamfilProductAddToCompareComponent),
-        MockComponent(CamfilProductLabelComponent),
-        MockComponent(CamfilProductPriceComponent),
-        MockComponent(CamfilProductPromotionComponent),
-        MockComponent(CamfilProductRatingComponent),
-        MockComponent(CamfilProductVariationSelectComponent),
         MockComponent(LazyProductAddToOrderTemplateComponent),
         MockComponent(LazyProductAddToQuoteComponent),
         MockComponent(LazyProductAddToWishlistComponent),
         MockComponent(LazyTactonConfigureProductComponent),
+        MockComponent(ProductAddToBasketComponent),
+        MockComponent(ProductAddToCompareComponent),
         MockComponent(ProductImageComponent),
+        MockComponent(ProductLabelComponent),
+        MockComponent(ProductPriceComponent),
+        MockComponent(ProductPromotionComponent),
+        MockComponent(ProductRatingComponent),
+        MockComponent(ProductVariationSelectComponent),
         MockDirective(IsTactonProductDirective),
         MockPipe(ProductRoutePipe),
         ProductTileComponent,
@@ -75,14 +75,14 @@ describe('Product Tile Component', () => {
     expect(findAllCustomElements(element)).toMatchInlineSnapshot(`
       Array [
         "ish-product-image",
-        "camfil-product-label",
-        "camfil-product-promotion",
-        "camfil-product-price",
-        "camfil-product-price",
+        "ish-product-label",
+        "ish-product-promotion",
+        "ish-product-price",
+        "ish-product-price",
         "ish-lazy-product-add-to-quote",
         "ish-lazy-product-add-to-order-template",
         "ish-lazy-product-add-to-wishlist",
-        "camfil-product-add-to-basket",
+        "ish-product-add-to-basket",
       ]
     `);
   });
@@ -93,7 +93,7 @@ describe('Product Tile Component', () => {
     expect(findAllCustomElements(element)).toMatchInlineSnapshot(`
       Array [
         "ish-product-image",
-        "camfil-product-label",
+        "ish-product-label",
       ]
     `);
   });

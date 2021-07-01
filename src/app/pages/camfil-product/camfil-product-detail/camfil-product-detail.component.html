@@ -27,26 +27,17 @@
       <!-- <camfil-product-id [product]="product"></camfil-product-id> -->
 
       <camfil-product-promotion [product]="product"></camfil-product-promotion>
-      <div class="d-flex justify-content-between align-items-center row flex-wrap">
+      <div class="d-flex justify-content-center align-items-center row flex-wrap">
         <div
+          *ngIf="userPermissions$ | async"
           class="price-container col-lg-6 col-md-12 col-12"
           itemprop="offers"
           itemscope
           itemtype="http://schema.org/Offer"
         >
           <div class="row">
-            <div class="col-12 prices-col" *ngIf="userPermissions$ | async">
-              <camfil-product-attribute
-                *ngIf="product.listPrice?.value > 0"
-                [name]="'camfil.product.list_price.label' | translate"
-                [value]="product.listPrice | ishPrice"
-              ></camfil-product-attribute>
-
-              <camfil-product-attribute
-                *ngIf="product.salePrice?.value > 0"
-                [name]="'camfil.product.your_price.label' | translate"
-                [value]="product.salePrice | ishPrice"
-              ></camfil-product-attribute>
+            <div class="col-12 prices-col">
+              <camfil-product-price [product]="product"></camfil-product-price>
             </div>
           </div>
         </div>

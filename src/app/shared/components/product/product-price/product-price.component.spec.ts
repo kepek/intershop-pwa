@@ -87,12 +87,12 @@ describe('Product Price Component', () => {
   });
 
   describe('template rendering', () => {
-    it('should show "N/A" text when sale price is not available', () => {
-      translate.set('product.price.na.text', 'N/A');
+    it('should show "-" text when sale price is not available', () => {
+      translate.set('product.price.na.text', '-');
       product.salePrice = undefined;
       component.ngOnChanges();
       fixture.detectChanges();
-      expect(element.querySelector('.current-price').textContent.trim()).toEqual('N/A');
+      expect(element.querySelector('.current-price').textContent.trim()).toEqual('-');
     });
 
     it('should show "$10.00" when no list price is available but a sale price', () => {
