@@ -88,7 +88,7 @@ export class ProductAddToCamCardComponent implements OnInit, OnDestroy {
 
   openAddModal(modal: AddProductToCamCardModalComponent) {
     modal.quantity = this.quantity;
-    this.dialog.open(modal.show());
+    this.dialog.open(modal.show(), { maxHeight: '100vh' });
     modal.hide = () => this.dialog.closeAll();
   }
 
