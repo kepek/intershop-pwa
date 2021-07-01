@@ -70,7 +70,7 @@ export class CamfilProductAddToBasketModalComponent implements OnInit, OnDestroy
   }
 
   openModal(modal: AddProductToCartModalComponent) {
-    this.dialog.open(modal.show());
+    this.dialog.open(modal.show(), { maxHeight: '100vh' });
     modal.hide = () => this.dialog.closeAll();
   }
 
