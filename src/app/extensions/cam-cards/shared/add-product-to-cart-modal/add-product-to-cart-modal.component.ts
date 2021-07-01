@@ -2,7 +2,8 @@ import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit, TemplateR
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { combineLatest, Subject } from 'rxjs';
+import { flatten } from 'lodash-es';
+import { Subject, combineLatest } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
@@ -11,13 +12,11 @@ import { AddressHelper } from 'ish-core/models/address/address.helper';
 import { Address } from 'ish-core/models/address/address.model';
 import { AttributeHelper } from 'ish-core/models/attribute/attribute.helper';
 import { BasketView } from 'ish-core/models/basket/basket.model';
-
 import { Product, ProductHelper } from 'ish-core/models/product/product.model';
 import { whenTruthy } from 'ish-core/utils/operators';
 import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
 
 import { CreateOrderProductModalComponent } from './create-order-product-modal/create-order-product-modal.component';
-import { flatten } from 'lodash-es';
 
 @Component({
   selector: 'camfil-add-product-to-cart-modal',

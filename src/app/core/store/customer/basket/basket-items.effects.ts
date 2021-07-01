@@ -460,7 +460,7 @@ export class BasketItemsEffects {
                 ]
               : [addProductToBucketAddressFromCamCardFail()];
           }),
-          mapErrorToAction(addProductsFromCamCardFail)
+          mapErrorToAction(addProductsFromCamCardFail),
         )
       )
     )
