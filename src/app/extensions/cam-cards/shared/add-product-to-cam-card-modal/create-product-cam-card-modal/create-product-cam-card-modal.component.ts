@@ -1,6 +1,8 @@
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
+  ElementRef,
   EventEmitter,
   Input,
   OnDestroy,
@@ -51,6 +53,9 @@ export class CreateProductCamCardModalComponent implements OnInit, OnDestroy {
   @Input() product: Product;
   @Input() rootCamCardAddress: CamCardAddress;
   @Input() parentForm: FormGroup;
+
+  @ViewChild('name') nameInput: ElementRef;
+
   private destroy$ = new Subject();
 
   modal: NgbModalRef;
@@ -79,7 +84,8 @@ export class CreateProductCamCardModalComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private camCardsFacade: CamCardsFacade,
     private appFacade: AppFacade,
-    private accountFacade: AccountFacade
+    private accountFacade: AccountFacade,
+    private cdr: ChangeDetectorRef
   ) {}
 
   initObservables() {
@@ -139,6 +145,15 @@ export class CreateProductCamCardModalComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.init();
+  }
+
+  setFocusOnCamCardNameInputField() {
+    if (this.customers.length === 1) {
+      setTimeout(() => {
+        this.nameInput?.nativeElement.focus();
+        this.cdr.detectChanges();
+      });
+    }
   }
 
   setDefaultCustomer() {
