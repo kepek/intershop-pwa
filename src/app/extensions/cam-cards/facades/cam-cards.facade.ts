@@ -56,6 +56,7 @@ import {
   resetCamCardItemPositions,
   unselectCamCard,
   updateCamCard,
+  updateCamCardAttribute,
   updateCamCardContacts,
   updateCamCardProduct,
   updateSubCamCard,
@@ -289,5 +290,9 @@ export class CamCardsFacade {
 
   importCamCard(camCardData): void | HttpError {
     this.store.dispatch(importCamCard({ camCardData }));
+  }
+
+  updateCamCardAttribute(camCardId: string, camCardAttribute) {
+    this.store.dispatch(updateCamCardAttribute({ camCardId, camCardAttribute }));
   }
 }

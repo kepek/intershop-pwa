@@ -375,3 +375,15 @@ export const importCamCard = createAction('[Cam Cards] Import Cam Card', payload
 export const importCamCardSuccess = createAction('[Cam Cards API] Import Cam Card Success', payload<{ camCardData }>());
 
 export const importCamCardFail = createAction('[Cam Cards API] Import Cam Card Fail', httpError());
+
+export const updateCamCardAttribute = createAction(
+  '[Cam Cards] Update Cam Card Attribute',
+  payload<{ camCardId: string; camCardAttribute }>()
+);
+
+export const updateCamCardAttributeSuccess = createAction(
+  '[Cam Cards API] Update Cam Card Attribute Success',
+  payload<{ camCard: CamCard }>()
+);
+
+export const updateCamCardAttributeFail = createAction('[Cam Cards API] Update Cam Card Attribute Fail', httpError());

@@ -103,6 +103,8 @@ import {
   selectCamCard,
   setStickyCamCardToolbar,
   updateCamCard,
+  updateCamCardAttribute,
+  updateCamCardAttributeSuccess,
   updateCamCardContacts,
   updateCamCardContactsFail,
   updateCamCardContactsSuccess,
@@ -905,6 +907,19 @@ export class CamCardEffects {
         displayErrorMessage({
           message: error?.message || error?.code,
         })
+      )
+    )
+  );
+
+  updateCamCardAttribute$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(updateCamCardAttribute),
+      mapToPayload(),
+      mergeMap(({ camCardId, camCardAttribute }) =>
+        this.camCardService.updateCamCardAttribute(camCardId, camCardAttribute).pipe(
+          map(camCard => updateCamCardAttributeSuccess({ camCard })),
+          mapErrorToAction(updateCamCardFail)
+        )
       )
     )
   );

@@ -2,14 +2,16 @@ import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit, TemplateR
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { Subject } from 'rxjs';
+import { flatten } from 'lodash-es';
+import { Subject, combineLatest } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
+import { AddressHelper } from 'ish-core/models/address/address.helper';
+import { Address } from 'ish-core/models/address/address.model';
 import { AttributeHelper } from 'ish-core/models/attribute/attribute.helper';
 import { BasketView } from 'ish-core/models/basket/basket.model';
-import { Bucket } from 'ish-core/models/basket/bucket.model';
 import { Product, ProductHelper } from 'ish-core/models/product/product.model';
 import { whenTruthy } from 'ish-core/utils/operators';
 import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
@@ -35,11 +37,12 @@ export class AddProductToCartModalComponent implements OnInit, OnDestroy {
 
   basketId: string;
   commonShippingMethodId: string;
-  buckets: Bucket[];
+  buckets = [];
 
   showSuccess = false;
   submitted = false;
-
+  basketAddresses: Address[];
+  isNewAddress = AddressHelper.isNewAddress;
   private destroy$ = new Subject<void>();
 
   constructor(
@@ -64,8 +67,17 @@ export class AddProductToCartModalComponent implements OnInit, OnDestroy {
       this.commonShippingMethodId = basket.commonShippingMethod?.id;
     });
 
-    this.checkoutFacade.buckets$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe((buckets: Bucket[]) => {
-      this.buckets = buckets;
+    combineLatest([
+      this.checkoutFacade.buckets$.pipe(whenTruthy()),
+      this.checkoutFacade.emptyBuckets$?.pipe(whenTruthy()),
+    ])
+      .pipe(whenTruthy(), takeUntil(this.destroy$))
+      .subscribe(res => {
+        this.buckets = flatten(res);
+      });
+
+    this.shoppingFacade.basketAddresses$.pipe(takeUntil(this.destroy$)).subscribe((basketAddresses: Address[]) => {
+      this.basketAddresses = basketAddresses;
     });
   }
 
@@ -114,16 +126,30 @@ export class AddProductToCartModalComponent implements OnInit, OnDestroy {
       const lineItemAttributes = AttributeHelper.calculateAttrsToAddFromForm(this.quantityForm);
 
       this.submitted = true;
-
-      this.shoppingFacade.addProductToBucketWithUrn(
-        currentBucket.shipToAddress,
-        currentBucket.shipToAddressFull.id,
-        this.commonShippingMethodId,
-        this.product.sku,
-        quantity,
-        this.basketId,
-        lineItemAttributes
-      );
+      if (this.isNewAddress(currentBucket.shipToAddressFull, this.basketAddresses)) {
+        this.shoppingFacade.addProductToBucket(
+          currentBucket.shipToAddressFull,
+          this.commonShippingMethodId,
+          this.product.sku,
+          quantity,
+          this.basketId,
+          {
+            ...currentBucket,
+          },
+          undefined,
+          currentBucket.id
+        );
+      } else {
+        this.shoppingFacade.addProductToBucketWithUrn(
+          currentBucket.shipToAddress,
+          currentBucket.shipToAddressFull.id,
+          this.commonShippingMethodId,
+          this.product.sku,
+          quantity,
+          this.basketId,
+          lineItemAttributes
+        );
+      }
     } else {
       markAsDirtyRecursive(this.quantityForm);
     }
