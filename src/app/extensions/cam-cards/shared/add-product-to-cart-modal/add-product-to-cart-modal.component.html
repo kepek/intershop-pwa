@@ -32,7 +32,6 @@
 <ng-template #mainContentTemplate>
   <div mat-dialog-content class="add-to-cart-modal__content">
     <div class="add-to-cart-modal__content--title">{{ 'camfil.modal.addToCart.order-list.title' | translate }}</div>
-
     <div *ngFor="let option of buckets; let i = index">
       <camfil-cam-card-modal-details
         [index]="i + 1"

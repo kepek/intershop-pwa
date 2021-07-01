@@ -94,6 +94,7 @@ describe('Add Product To Cart Modal Component', () => {
     when(camCardFacadeMock.camCard$).thenReturn(of([camCardDetails]));
     when(camCardFacadeMock.virtualCamCard$).thenReturn(of(camCardDetails));
     when(checkoutFacadeMock.buckets$).thenReturn(of([]));
+    when(checkoutFacadeMock.emptyBuckets$).thenReturn(of([]));
     when(checkoutFacadeMock.basket$).thenReturn(of(basketDetails));
     when(shoppingFacadeMock.productAdded$).thenReturn(of(true));
     when(shoppingFacadeMock.productUpdated$).thenReturn(of(false));
