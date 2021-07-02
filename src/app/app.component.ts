@@ -32,6 +32,7 @@ export class AppComponent implements OnInit, OnDestroy {
   channel$: Observable<string>;
   gtmToken: string;
   gtmUrl: SafeUrl;
+
   private destroy$ = new Subject();
 
   constructor(
@@ -47,9 +48,11 @@ export class AppComponent implements OnInit, OnDestroy {
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
   }
+
   get isIeBrowser() {
     return this.platform.TRIDENT;
   }
+
   ngOnInit() {
     this.deviceType$ = this.appFacade.deviceType$;
     this.wrapperClasses$ = this.appFacade.appWrapperClasses$;
@@ -75,6 +78,7 @@ export class AppComponent implements OnInit, OnDestroy {
   get _router(): Router {
     return this.router;
   }
+
   set _router(value: Router) {
     this.router = value;
   }

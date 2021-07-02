@@ -12,6 +12,7 @@ import {
   getCurrentLocale,
   getDeviceType,
   getICMBaseURL,
+  setCurrentLocale,
 } from 'ish-core/store/core/configuration';
 import { getGeneralError, getGeneralErrorType } from 'ish-core/store/core/error';
 import { selectPath } from 'ish-core/store/core/router';
@@ -125,6 +126,10 @@ export class AppFacade {
   /**
    * CAMFIL Additions, it should be separated to avoid core modifications
    **/
+
+  setCurrentLocale$(locale: string) {
+    this.store.dispatch(setCurrentLocale({ lang: locale.replace(/-/, '_') }));
+  }
 
   // tslint:disable-next-line:member-ordering
   breadcrumbCategoryNames$ = this.store.pipe(

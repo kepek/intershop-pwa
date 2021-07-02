@@ -46,17 +46,17 @@
           {{ getOrderStatusText(order.orderStatus) | translate }}
         </dd>
         <dt class="col-6 p-0">{{ 'camfil.account.orderdetails.date_of_order.label' | translate }}</dt>
-        <dd class="col-6 p-0" data-testing-id="order-creationDate">{{ order.orderDate | ishDate: 'yyyy-MM-dd' }}</dd>
+        <dd class="col-6 p-0" data-testing-id="order-creationDate">{{ order.orderDate | ishDate }}</dd>
         <dt class="col-6 p-0">{{ 'camfil.account.orderdetails.delivery_date.label' | translate }}</dt>
         <dd class="col-6 p-0" data-testing-id="order-deliveryDate">
           <ng-container *ngIf="lineItems?.length">
             <ng-container *ngIf="isDeliveryPartial(); else orderDeliveryDate">
               {{ 'camfil.account.orderdetails.delivery_date.split.label' | translate }}
               <ng-container *ngFor="let item of deliveryDatesForItems; last as isLast">
-                {{ item | ishDate: 'yyyy-MM-dd' }}<ng-container *ngIf="!isLast">, </ng-container>
+                {{ item | ishDate }}<ng-container *ngIf="!isLast">, </ng-container>
               </ng-container>
             </ng-container>
-            <ng-template #orderDeliveryDate>{{ order.deliveryDate | ishDate: 'yyyy-MM-dd' }}</ng-template>
+            <ng-template #orderDeliveryDate>{{ order.deliveryDate | ishDate }}</ng-template>
           </ng-container>
         </dd>
       </dl>

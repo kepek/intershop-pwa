@@ -23,7 +23,7 @@ import {
   NgbPopoverModule,
 } from '@ng-bootstrap/ng-bootstrap';
 import { FormlyModule } from '@ngx-formly/core';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { DeferLoadModule } from '@trademe/ng-defer-load';
 import { CamfilIconsModule } from 'camfil-icons';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
@@ -193,7 +193,6 @@ import { FormsDynamicModule } from './forms-dynamic/forms-dynamic.module';
 import { FormsSharedModule } from './forms/forms.module';
 import { CamfilProductTechnicalDocumentsComponent } from './components/common/camfil-product-technical-documents/camfil-product-technical-documents.component';
 import { CamfilCategoryBoxComponent } from '../pages/camfil-category/camfil-category-box/camfil-category-box.component';
-import { DATAPICKER_PROVIDERS_FORMAT } from './material/models/material.helper';
 import { ProductImageComponent } from 'ish-shared/components/product/product-image/product-image.component';
 import { CamfilProductImageComponent } from 'ish-shared/components/product/camfil-product-image/camfil-product-image.component';
 import { DirectivesModule } from 'ish-core/directives.module';
@@ -211,8 +210,6 @@ import { ProductLinksComponent } from '../pages/product/product-links/product-li
 import { ProductPageComponent } from '../pages/product/product-page.component';
 import { CamfilMyPageHeaderComponent } from 'ish-shared/components/camfil-my-page-header/camfil-my-page-header.component';
 import { ZipCodeComponent } from './components/zip-code/zip-code.component';
-import { DateAdapter } from '@angular/material/core';
-import { CamfilDateAdapter } from '../pages/camfil-checkout/camfil-checkout-list/camfil-date-adapter';
 import { CamfilProductsAddToBasketComponent } from 'ish-shared/components/product/camfil-products-add-to-basket/camfil-products-add-to-basket.component';
 import { CamfilProductsAddToBasketModalComponent } from 'ish-shared/components/product/camfil-products-add-to-basket/camfil-products-add-to-basket-modal/camfil-products-add-to-basket-modal.component';
 import { AddProductsToCartModalComponent } from '../extensions/cam-cards/shared/add-products-to-cart-modal/add-products-to-cart-modal.component';
@@ -220,6 +217,11 @@ import { CreateOrderProductsSuccessComponent } from '../extensions/cam-cards/sha
 import { CreateOrderProductsModalComponent } from '../extensions/cam-cards/shared/add-product-to-cart-modal/create-order-products-modal/create-order-products-modal.component';
 import { CamfilBasketValidationResultsComponent } from './components/basket/camfil-basket-validation-results/camfil-basket-validation-results.component';
 import { ProductRowComponent } from 'ish-shared/components/product/product-row/product-row.component';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { CamfilDateAdapter } from 'ish-core/adapters/camfil-date-adapter';
+import { MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
+import { CAMFIL_DEFAULT_LANG, CAMFIL_FORMATS } from 'ish-core/internationalization.module';
+import { LangChangeEvent } from '@ngx-translate/core/lib/translate.service';
 
 const importExportModules = [
   AddressFormsSharedModule,
@@ -482,6 +484,29 @@ const exportedComponents = [
   ],
   declarations: [...declaredComponents, ...exportedComponents],
   exports: [...exportedComponents, ...importExportModules],
-  providers: [...DATAPICKER_PROVIDERS_FORMAT, { provide: DateAdapter, useClass: CamfilDateAdapter }],
+  providers: [
+    { provide: MAT_DATE_LOCALE, useValue: CAMFIL_DEFAULT_LANG },
+    {
+      provide: DateAdapter,
+      useClass: CamfilDateAdapter,
+      deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS],
+    },
+    // { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS },
+    { provide: MAT_DATE_FORMATS, useValue: CAMFIL_FORMATS },
+  ],
 })
-export class SharedModule {}
+export class SharedModule {
+  // tslint:disable-next-line:no-any
+  constructor(private dateAdapter: DateAdapter<any>, private translateService: TranslateService) {
+    const currentLang = this.translateService.currentLang?.replace(/_/, '-');
+
+    if (currentLang) {
+      this.dateAdapter.setLocale(currentLang);
+    }
+
+    this.translateService.onLangChange.subscribe((event: LangChangeEvent) => {
+      const { lang } = event;
+      this.dateAdapter.setLocale(lang.replace(/_/, '-'));
+    });
+  }
+}
