@@ -8,6 +8,7 @@ import { AppFacade } from 'ish-core/facades/app.facade';
 import { FeatureToggleModule } from 'ish-core/feature-toggle.module';
 import { CookiesService } from 'ish-core/utils/cookies/cookies.service';
 import { findAllCustomElements } from 'ish-core/utils/dev/html-query-utils';
+import { StatePropertiesService } from 'ish-core/utils/state-transfer/state-properties.service';
 import { CookiesBannerComponent } from 'ish-shell/application/cookies-banner/cookies-banner.component';
 import { CamfilFooterComponent } from 'ish-shell/footer/camfil-footer/camfil-footer.component';
 import { CamfilBreadcrumbComponent } from 'ish-shell/header/camfil-breadcrumb/camfil-breadcrumb.component';
@@ -15,7 +16,6 @@ import { CamfilHeaderComponent } from 'ish-shell/header/camfil-header/camfil-hea
 import { CamfilIEModalComponent } from 'ish-shell/header/camfil-ie-modal/camfil-ie-modal.component';
 
 import { AppComponent } from './app.component';
-import { StatePropertiesService } from 'ish-core/utils/state-transfer/state-properties.service';
 
 let translate: TranslateService;
 
