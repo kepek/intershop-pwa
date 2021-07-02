@@ -93,7 +93,7 @@ export class CamfilProductAddToBasketComponent implements OnInit, OnDestroy {
   }
 
   resetFormValues() {
-    this.resetQuantityValue.emit()
+    this.resetQuantityValue.emit();
   }
 
   get displayIcon(): boolean {

@@ -10,6 +10,7 @@ import {
   SimpleChanges,
   TemplateRef,
 } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { Observable, ReplaySubject, Subject } from 'rxjs';
 import { filter, startWith, take, takeUntil } from 'rxjs/operators';
 
@@ -27,7 +28,6 @@ import { DeviceType, ViewType } from 'ish-core/models/viewtype/viewtype.types';
 import { whenTruthy } from 'ish-core/utils/operators';
 import { ProductItemDetailedComponentConfiguration } from 'ish-shared/components/product/camfil-product-item-detailed/camfil-product-item-detailed.component';
 import { ProductItemSimpleComponentConfiguration } from 'ish-shared/components/product/camfil-product-item-simple/camfil-product-item-simple.component';
-import { FormGroup } from '@angular/forms';
 
 export type ProductItemContainerConfiguration = ProductItemSimpleComponentConfiguration &
   ProductItemDetailedComponentConfiguration & { displayType: ViewType };

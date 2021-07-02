@@ -1,4 +1,13 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { ThemePalette } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
@@ -102,9 +111,8 @@ export class CamfilProductAddToBasketModalComponent implements OnInit, OnDestroy
   }
 
   resetFormValues() {
-    this.resetQuantityValue.emit()
+    this.resetQuantityValue.emit();
   }
-
 
   ngOnDestroy() {
     this.destroy$.next();
