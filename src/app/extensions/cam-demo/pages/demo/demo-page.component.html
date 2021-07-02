@@ -121,9 +121,8 @@
           </mat-button-toggle>
         </mat-button-toggle-group>
         <hr />
-        <p>currentDatePickerValue: {{ currentDatePickerValue }}</p>
-        <p>CurrentLocale: {{ currentLocale }}</p>
-        <p>CurrentDate: {{ currentDate }}</p>
+        <pre>currentDatePickerValue: {{ currentDatePickerValue | json }}</pre>
+        <pre>currentLocale: {{ currentLocale | json }}</pre>
       </mat-card-content>
     </mat-card>
     <!-- CamfilProductTitleComponent -->
@@ -145,7 +144,10 @@
               <li>{{ now | camfilDate }} <small>camfilDate</small></li>
               <li>{{ now | ishDate: 'shortDate' }} <small>ishDate 'shortDate'</small></li>
               <li>{{ now | ishDate: 'mediumDate' }} <small>ishDate 'mediumDate'</small></li>
+              <li>{{ now | ishDate: 'mediumTime' }} <small>ishDate 'mediumTime'</small></li>
               <li>{{ now | ishDate: 'fullDate' }} <small>ishDate 'fullDate'</small></li>
+              <li>{{ now | ishDate: 'YYYY-MM-dd' }} <small>ishDate 'YYYY-MM-dd'</small></li>
+              <li>{{ now | ishDate: 'dd-MM-YY' }} <small>ishDate 'dd-MM-YY'</small></li>
             </ul>
           </mat-card-content>
         </mat-card>

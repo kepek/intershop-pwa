@@ -90,7 +90,7 @@
       {{ 'camfil.lineitem.table.delivery_date' | translate }}
     </th>
     <td mat-cell *matCellDef="let pli">
-      <strong>{{ pli.deliveryDate | ishDate: 'yyyy-MM-dd' }}</strong>
+      <strong>{{ pli.deliveryDate | ishDate }}</strong>
     </td>
   </ng-container>
 
@@ -149,7 +149,7 @@
           <div>{{ pli.boxLabel || '---' }}</div>
         </div>
         <div class="col-4">
-          <strong>{{ pli.deliveryDate | ishDate: 'yyyy-MM-dd' }}</strong>
+          <strong>{{ pli.deliveryDate | ishDate }}</strong>
         </div>
         <div class="col-4">
           {{ 'camfil.lineitem.table.price_label' | translate }} <strong>{{ pli.totalRowCustomerPrice }}</strong>

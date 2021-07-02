@@ -58,7 +58,7 @@ import { ModuleLoaderService } from './utils/module-loader/module-loader.service
     },
   ],
   // exports needed to use the cookie banner in the AppComponent
-  exports: [TranslateModule],
+  exports: [InternationalizationModule, TranslateModule],
 })
 export class CoreModule {
   constructor(@Optional() @SkipSelf() parentModule: CoreModule, moduleLoader: ModuleLoaderService) {
