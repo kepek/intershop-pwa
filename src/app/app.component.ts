@@ -5,15 +5,14 @@ import { MatDialog } from '@angular/material/dialog';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
-import { take, takeUntil } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 
-import { CHANNEL_CONFIGURATION } from 'ish-core/configurations/injection-keys';
 import { AppFacade } from 'ish-core/facades/app.facade';
 import { FeatureToggleService } from 'ish-core/feature-toggle.module';
-import { ChannelConfiguration } from 'ish-core/models/channel-configuration/channel-configuration.model';
 import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
 import { CookiesService } from 'ish-core/utils/cookies/cookies.service';
 import { whenTruthy } from 'ish-core/utils/operators';
+import { StatePropertiesService } from 'ish-core/utils/state-transfer/state-properties.service';
 
 /**
  * The App Component provides the application frame for the single page application.
@@ -38,13 +37,13 @@ export class AppComponent implements OnInit, OnDestroy {
   constructor(
     private appFacade: AppFacade,
     @Inject(PLATFORM_ID) platformId: string,
-    @Inject(CHANNEL_CONFIGURATION) private channelConfs: ChannelConfiguration[],
     private cookiesService: CookiesService,
     private featureToggleService: FeatureToggleService,
     private router: Router,
     private sanitizer: DomSanitizer,
     public dialog: MatDialog,
-    public platform: Platform
+    public platform: Platform,
+    private stateProperties: StatePropertiesService
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
   }
@@ -56,13 +55,15 @@ export class AppComponent implements OnInit, OnDestroy {
     this.wrapperClasses$ = this.appFacade.appWrapperClasses$;
     this.channel$ = this.appFacade.getChannel$;
     if (this.featureToggleService.enabled('tracking') && this.cookiesService.cookieConsentFor('tracking')) {
-      this.channel$.pipe(whenTruthy(), take(1), takeUntil(this.destroy$)).subscribe(channel => {
-        const gtmToken = this.channelConfs.filter(item => item.channel === channel).map(item => item.gtmContainerId)[0];
-        this.gtmUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
-          `https://www.googletagmanager.com/ns.html?id=${gtmToken}`
-        );
-        this.gtmToken = gtmToken;
-      });
+      this.stateProperties
+        .getStateOrEnvOrDefault<string>('GTM_TOKEN', 'gtmToken')
+        .pipe(whenTruthy(), takeUntil(this.destroy$))
+        .subscribe(gtmToken => {
+          this.gtmUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
+            `https://www.googletagmanager.com/ns.html?id=${gtmToken}`
+          );
+          this.gtmToken = gtmToken;
+        });
     }
   }
 
