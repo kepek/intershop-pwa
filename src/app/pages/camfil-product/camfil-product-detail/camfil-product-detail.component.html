@@ -76,6 +76,7 @@
             [product]="product"
             [translationKey]="isRetailSet(product) ? 'product.add_to_cart.retail_set.link' : 'product.add_to_cart.link'"
             (productToBasket)="addToBasket()"
+            (resetFormValues)="resetProductDetailForm()"
             [quantity]="quantity"
           ></camfil-product-add-to-basket>
         </div>

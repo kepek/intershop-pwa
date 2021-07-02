@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
@@ -31,6 +31,7 @@ export class AddProductToCartModalComponent implements OnInit, OnDestroy {
   @Input() quantity: number;
   @Input() product: Product;
   @Input() boxLabel: string;
+  @Output() resetQuantityValue = new EventEmitter<void>();
   quantityForm: FormGroup;
 
   selectedOrderId: string;
@@ -150,6 +151,7 @@ export class AddProductToCartModalComponent implements OnInit, OnDestroy {
           lineItemAttributes
         );
       }
+
     } else {
       markAsDirtyRecursive(this.quantityForm);
     }
@@ -175,6 +177,10 @@ export class AddProductToCartModalComponent implements OnInit, OnDestroy {
     this.showSuccess = false;
     this.submitted = false;
     return this.modalTemplate;
+  }
+
+  resetFormValues() {
+    this.resetQuantityValue.emit()
   }
 
   ngOnDestroy() {
