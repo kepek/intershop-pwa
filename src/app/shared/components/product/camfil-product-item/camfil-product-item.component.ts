@@ -27,6 +27,7 @@ import { DeviceType, ViewType } from 'ish-core/models/viewtype/viewtype.types';
 import { whenTruthy } from 'ish-core/utils/operators';
 import { ProductItemDetailedComponentConfiguration } from 'ish-shared/components/product/camfil-product-item-detailed/camfil-product-item-detailed.component';
 import { ProductItemSimpleComponentConfiguration } from 'ish-shared/components/product/camfil-product-item-simple/camfil-product-item-simple.component';
+import { FormGroup } from '@angular/forms';
 
 export type ProductItemContainerConfiguration = ProductItemSimpleComponentConfiguration &
   ProductItemDetailedComponentConfiguration & { displayType: ViewType };
@@ -191,5 +192,10 @@ export class CamfilProductItemComponent implements OnInit, OnChanges, OnDestroy 
         );
         this.productSkuChange.emit(sku);
       });
+  }
+
+  resetFormValues(form: FormGroup) {
+    console.log('form', form);
+    form.reset();
   }
 }

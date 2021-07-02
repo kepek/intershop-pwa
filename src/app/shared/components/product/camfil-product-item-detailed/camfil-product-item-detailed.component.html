@@ -102,6 +102,7 @@
               [quantity]="updatedQuantity"
               (productToBasket)="addToBasket()"
               displayType="button"
+              (resetQuantityValue)="resetFormValues()"
             ></camfil-product-add-to-basket>
             <camfil-lazy-product-add-to-cam-card
               *ngIf="configuration.displayAddToCamCard"

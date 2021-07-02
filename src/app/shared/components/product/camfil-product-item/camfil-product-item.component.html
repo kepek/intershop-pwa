@@ -16,6 +16,7 @@
     [hideAttributeName]="true"
     [actionTemplate]="actionTemplate"
     [userPermissions$]="userPermissions$"
+    (resetQuantityValue)="resetFormValues($event)"
   ></camfil-product-item-simple>
 
   <camfil-product-item-detailed
@@ -34,6 +35,7 @@
     [hideAttributeName]="hideAttributeName"
     [actionTemplate]="actionTemplate"
     [userPermissions$]="userPermissions$"
+    (resetQuantityValue)="resetFormValues($event)"
   ></camfil-product-item-detailed>
 </ng-container>
 

@@ -111,6 +111,6 @@ export class CamfilProductDetailComponent implements OnInit, OnDestroy {
   }
 
   resetProductDetailForm() {
-    this.productDetailForm.reset()
+    this.productDetailForm.reset();
   }
 }

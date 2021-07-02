@@ -85,6 +85,7 @@ export class AddProductsToCamCardModalComponent extends AddProductToCamCardModal
         }
       }
     });
+    this.resetFormValues();
   }
 
   createCamCardAndAdd({ camCard, edit, subCamCard, measurement }: CreateCamCardData) {
@@ -118,7 +119,7 @@ export class AddProductsToCamCardModalComponent extends AddProductToCamCardModal
         );
       });
     }
-
+    this.resetFormValues();
     this.dialog.closeAll();
     this.hide();
   }
@@ -133,5 +134,9 @@ export class AddProductsToCamCardModalComponent extends AddProductToCamCardModal
     this.showForm = true;
 
     return this.modalTemplate;
+  }
+
+  resetFormValues() {
+    this.resetQuantityValue.emit();
   }
 }

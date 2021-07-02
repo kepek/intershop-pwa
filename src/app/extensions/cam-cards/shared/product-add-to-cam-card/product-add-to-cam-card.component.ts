@@ -1,4 +1,13 @@
-import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
@@ -37,6 +46,7 @@ export class ProductAddToCamCardComponent implements OnInit, OnDestroy {
   @Input() hasIcon = false;
   @Input() disabled = false;
   @Input() translationKey = 'camfil.account.cam_card.add_to_template.button.add_to_template.label';
+  @Output() resetQuantityValue = new EventEmitter<void>();
 
   buttonTranslationKey = 'camfil.account.cam_card.add_to_template.button.add_to_template.label';
 
@@ -105,6 +115,10 @@ export class ProductAddToCamCardComponent implements OnInit, OnDestroy {
     } else {
       this.camCardsFacade.addProductToCamCard(camCard.id, this.product.sku, this.quantity);
     }
+  }
+
+  resetFormValues() {
+    this.resetQuantityValue.emit();
   }
 
   ngOnDestroy() {

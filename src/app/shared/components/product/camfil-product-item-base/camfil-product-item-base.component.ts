@@ -67,6 +67,7 @@ export class CamfilProductItemBaseComponent implements OnInit, OnDestroy {
   @Input() hideAttributeName?: boolean;
   @Input() actionTemplate?: TemplateRef<unknown>;
   @Input() userPermissions$: Observable<string[]>;
+  @Output() resetQuantityValue = new EventEmitter<FormGroup>();
   isMasterProduct = ProductHelper.isMasterProduct;
   updatedQuantity: number;
   productItemForm: FormGroup;
@@ -106,6 +107,10 @@ export class CamfilProductItemBaseComponent implements OnInit, OnDestroy {
     if (ProductHelper.isVariationProduct(this.product)) {
       this.selectVariation.emit(event);
     }
+  }
+
+  resetFormValues() {
+    this.resetQuantityValue.emit(this.productItemForm);
   }
 
   ngOnDestroy() {

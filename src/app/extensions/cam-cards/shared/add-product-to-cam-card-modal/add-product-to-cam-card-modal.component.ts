@@ -58,7 +58,7 @@ export class AddProductToCamCardModalComponent implements OnInit, OnDestroy, OnC
    * submit success event
    */
   @Output() submitEmitter = new EventEmitter<{ id: string; name: string }>();
-
+  @Output() resetQuantityValue = new EventEmitter<FormGroup>();
   // search
   isActive = false;
   inputSearchTerm = '';
@@ -239,7 +239,7 @@ export class AddProductToCamCardModalComponent implements OnInit, OnDestroy, OnC
         edit
       );
     }
-
+    this.resetFormValues();
     this.dialog.closeAll();
     this.hide();
   }
@@ -317,6 +317,7 @@ export class AddProductToCamCardModalComponent implements OnInit, OnDestroy, OnC
 
           this.currentSubCamCardName = rootCamCard.subCamCards.find(sub => sub.id === this.segmentSelected).name;
           this.useSubCamCard = true;
+          this.resetFormValues();
         } else {
           const comment: CamCardItemComment = { label: boxLabel };
           this.camCardsFacade.addProductToCamCard(
@@ -327,6 +328,7 @@ export class AddProductToCamCardModalComponent implements OnInit, OnDestroy, OnC
             measurement
           );
           this.useSubCamCard = false;
+          this.resetFormValues();
         }
       }
     }
@@ -424,5 +426,9 @@ export class AddProductToCamCardModalComponent implements OnInit, OnDestroy, OnC
     return () => {
       this.hide();
     };
+  }
+
+  resetFormValues() {
+    this.resetQuantityValue.emit();
   }
 }

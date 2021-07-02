@@ -62,6 +62,7 @@
   [product]="product"
   [quantity]="quantity"
   (submitEmitter)="addProductToCamCard($event)"
+  (resetQuantityValue)="resetFormValues()"
 ></camfil-add-product-to-cam-card-modal>
 
 <camfil-small-cta-modal
