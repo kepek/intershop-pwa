@@ -91,11 +91,11 @@
     <ng-container *ngIf="showPrice">
       <camfil-product-attribute
         [name]="'camfil.cam_card.product.list_price.label' | translate"
-        [value]="(customers.length > 1 && customerPrices?.salePrice && customerPrices?.listPrice || product.listPrice) | camfilPriceSummary: camCardItemData.quantity | ishPrice"
+        [value]="getListPrice(product.listPrice) | camfilPriceSummary: camCardItemData.quantity | ishPrice"
       ></camfil-product-attribute>
       <camfil-product-attribute
         [name]="'camfil.cam_card.product.your_price.label' | translate"
-        [value]="(customers.length > 1 && customerPrices?.salePrice || product.salePrice) | camfilPriceSummary: camCardItemData.quantity | ishPrice"
+        [value]="getSalePrice(product.salePrice) | camfilPriceSummary: camCardItemData.quantity | ishPrice"
       ></camfil-product-attribute>
     </ng-container>
   </ng-template>
