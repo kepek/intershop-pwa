@@ -542,8 +542,8 @@
   "camfil.account.cam_card.deliveryInterval.value": {
     "=-1": "ei valittu",
     "=0": "ei valittu",
-    "=1": "1 viikko",
-    "other": "# viikkoa"
+    "=1": "1 kuukausi",
+    "other": "# kuukautta"
   },
   "camfil.account.cam_card.details.button.add_product.label": "Lisää uusi tuote",
   "camfil.account.cam_card.details.button.add_section.label": "Lisää uusi osio",
