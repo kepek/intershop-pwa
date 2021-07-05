@@ -1,6 +1,7 @@
 import { isPlatformBrowser } from '@angular/common';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { TransferState } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 import { CookiesOptions, CookiesService as ForeignCookiesService } from 'ngx-utils-cookies-port';
 
 import { COOKIE_CONSENT_OPTIONS } from 'ish-core/configurations/injection-keys';
@@ -18,7 +19,8 @@ export class CookiesService {
     @Inject(PLATFORM_ID) private platformId: string,
     @Inject(COOKIE_CONSENT_OPTIONS) private cookieConsentOptions: CookieConsentOptions,
     private transferState: TransferState,
-    private cookiesService: ForeignCookiesService
+    private cookiesService: ForeignCookiesService,
+    private router: Router
   ) {}
 
   get(key: string): string {
@@ -44,7 +46,7 @@ export class CookiesService {
     this.put('cookieConsent', JSON.stringify({ enabledOptions: options, version: cookieConsentVersion }), {
       expires: new Date(new Date().setFullYear(new Date().getFullYear() + 1)),
     });
-    window.location.reload();
+    this.silentReload();
   }
 
   setCookiesConsentForAll() {
@@ -77,5 +79,11 @@ export class CookiesService {
         this.cookiesService.remove(cookie);
       }
     }
+  }
+
+  private silentReload() {
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.router.navigateByUrl(this.router?.url || '/');
+    });
   }
 }

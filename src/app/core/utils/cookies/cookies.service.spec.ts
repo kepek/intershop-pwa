@@ -1,5 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { BrowserTransferStateModule } from '@angular/platform-browser';
+import { RouterTestingModule } from '@angular/router/testing';
 import { CookiesService as ForeignCookiesService } from 'ngx-utils-cookies-port';
 import { anything, instance, mock, verify } from 'ts-mockito';
 
@@ -12,7 +13,7 @@ describe('Cookies Service', () => {
   beforeEach(() => {
     foreignCookiesServiceMock = mock(ForeignCookiesService);
     TestBed.configureTestingModule({
-      imports: [BrowserTransferStateModule],
+      imports: [BrowserTransferStateModule, RouterTestingModule],
       providers: [{ provide: ForeignCookiesService, useFactory: () => instance(foreignCookiesServiceMock) }],
     });
     cookiesService = TestBed.inject(CookiesService);
