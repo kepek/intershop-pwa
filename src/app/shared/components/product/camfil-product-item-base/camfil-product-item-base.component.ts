@@ -114,7 +114,6 @@ export class CamfilProductItemBaseComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.updatedQuantity = 0;
     this.destroy$.next();
     this.destroy$.complete();
   }
