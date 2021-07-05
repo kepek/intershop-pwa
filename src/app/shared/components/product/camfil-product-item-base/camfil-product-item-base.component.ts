@@ -11,6 +11,7 @@ import {
 import { FormControl, FormGroup } from '@angular/forms';
 import { Observable, Subject } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
+import { CamCardsFacade } from 'src/app/extensions/cam-cards/facades/cam-cards.facade';
 
 import { CategoryView } from 'ish-core/models/category-view/category-view.model';
 import { VariationOptionGroup } from 'ish-core/models/product-variation/variation-option-group.model';
@@ -22,7 +23,6 @@ import {
 } from 'ish-core/models/product-view/product-view.model';
 import { ProductHelper } from 'ish-core/models/product/product.helper';
 import { ProductItemDetailedComponentConfiguration } from 'ish-shared/components/product/camfil-product-item-detailed/camfil-product-item-detailed.component';
-import { CamCardsFacade } from 'src/app/extensions/cam-cards/facades/cam-cards.facade';
 
 export interface ProductItemBaseComponentConfiguration {
   readOnly: boolean;
