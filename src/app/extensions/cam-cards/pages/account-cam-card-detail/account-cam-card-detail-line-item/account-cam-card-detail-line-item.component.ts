@@ -24,7 +24,7 @@ import { whenTruthy } from 'ish-core/utils/operators';
 import { CamfilQuickViewModalComponent } from 'ish-shared/components/common/camfil-quick-view-modal/camfil-quick-view-modal.component';
 
 import { CamCardsFacade } from '../../../facades/cam-cards.facade';
-import { CamCard, CamCardItem } from '../../../models/cam-card/cam-card.model';
+import { CamCard, CamCardCustomer, CamCardItem } from '../../../models/cam-card/cam-card.model';
 
 @Component({
   selector: 'camfil-account-cam-card-detail-line-item',
@@ -57,6 +57,7 @@ export class AccountCamCardDetailLineItemComponent implements OnChanges, OnInit,
   addToCartForm: FormGroup;
   selectItemForm: FormGroup;
   product$: Observable<ProductView>;
+  customers: CamCardCustomer[];
 
   @Input() showCheckbox: boolean;
   @Input() checked: boolean;
@@ -67,6 +68,7 @@ export class AccountCamCardDetailLineItemComponent implements OnChanges, OnInit,
   ngOnInit() {
     this.initForm();
     this.quantity = this.camCardItemData.quantity;
+    this.camCardsFacade.customers$.pipe(whenTruthy(), take(1)).subscribe(c => (this.customers = c));
 
     this.updateQuantities();
 

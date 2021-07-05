@@ -39,9 +39,11 @@ describe('Account Cam Card Detail Line Item Component', () => {
   let fixture: ComponentFixture<AccountCamCardDetailLineItemComponent>;
   let element: HTMLElement;
   let appFacadeMock: AppFacade;
+  let camCardsFacadeMock: CamCardsFacade;
 
   beforeEach(async () => {
     appFacadeMock = mock(AppFacade);
+    camCardsFacadeMock = mock(CamCardsFacade);
 
     await TestBed.configureTestingModule({
       declarations: [
@@ -73,6 +75,7 @@ describe('Account Cam Card Detail Line Item Component', () => {
         { provide: CamCardsFacade, useFactory: () => instance(mock(CamCardsFacade)) },
         { provide: ShoppingFacade, useFactory: () => instance(mock(ShoppingFacade)) },
         { provide: AppFacade, useFactory: () => instance(appFacadeMock) },
+        { provide: CamCardsFacade, useFactory: () => instance(camCardsFacadeMock) },
       ],
     }).compileComponents();
   });
@@ -83,6 +86,7 @@ describe('Account Cam Card Detail Line Item Component', () => {
     element = fixture.nativeElement;
 
     when(appFacadeMock.getChannel$).thenReturn(of('channel'));
+    when(camCardsFacadeMock.customers$).thenReturn(of([]));
 
     component.camCardItemData = {
       id: '1234',
