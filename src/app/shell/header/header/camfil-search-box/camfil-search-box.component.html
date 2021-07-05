@@ -51,7 +51,7 @@
       <!-- search button with text -->
       <ng-template #textBlock> {{ configuration?.buttonText }} </ng-template>
     </button>
-    <mat-icon svgIcon="inactive" *ngIf="inputFocused" class="search-close" (click)="out()"></mat-icon>
+    <mat-icon svgIcon="inactive" *ngIf="inputFocused" class="search-close" (click)="clearResults()"></mat-icon>
   </div>
 
   <ng-container *ngIf="inputFocused">
