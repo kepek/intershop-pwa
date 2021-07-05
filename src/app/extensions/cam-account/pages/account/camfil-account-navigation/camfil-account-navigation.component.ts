@@ -40,7 +40,6 @@ export class CamfilAccountNavigationComponent implements OnInit, AfterViewInit, 
    * Manages the Account Navigation items.
    */
   navigationItems: NavigationItems = {
-    '/account': { localizationKey: 'account.my_account.link' },
     '/account/profile': { localizationKey: 'camfil.account.profile.link' },
     '/account/camcards': {
       localizationKey: 'camfil.account.cam_card.link',
