@@ -150,6 +150,10 @@ export class CamfilSearchBoxComponent implements OnInit, OnDestroy {
       this.setSearchTerm(searchTerm);
       this.noResults = false;
       this.loading = true;
+    } else {
+      this.productListId = { type: 'search', page: 1, value: '' };
+      this.loading = false;
+      this.noResults = true;
     }
   }
 
