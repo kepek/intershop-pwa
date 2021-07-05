@@ -22,6 +22,7 @@ import {
 } from 'ish-core/models/product-view/product-view.model';
 import { ProductHelper } from 'ish-core/models/product/product.helper';
 import { ProductItemDetailedComponentConfiguration } from 'ish-shared/components/product/camfil-product-item-detailed/camfil-product-item-detailed.component';
+import { CamCardsFacade } from 'src/app/extensions/cam-cards/facades/cam-cards.facade';
 
 export interface ProductItemBaseComponentConfiguration {
   readOnly: boolean;
@@ -77,6 +78,8 @@ export class CamfilProductItemBaseComponent implements OnInit, OnDestroy {
   // tslint:disable-next-line: private-destroy-field
   protected destroy$ = new Subject();
 
+  constructor(private camCardsFacade: CamCardsFacade) {}
+
   ngOnInit() {
     this.updatedQuantity = this.quantity || 0;
 
@@ -93,6 +96,12 @@ export class CamfilProductItemBaseComponent implements OnInit, OnDestroy {
         this.updatedQuantity = quantity;
         this.quantityChange.emit(quantity);
       });
+
+    this.camCardsFacade.getAddProductSuccess$.pipe(takeUntil(this.destroy$)).subscribe(value => {
+      if (value) {
+        this.resetFormValues();
+      }
+    });
   }
 
   addToBasket() {

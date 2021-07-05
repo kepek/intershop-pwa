@@ -195,7 +195,6 @@ export class CamfilProductItemComponent implements OnInit, OnChanges, OnDestroy 
   }
 
   resetFormValues(form: FormGroup) {
-    console.log('form', form);
     form.reset();
   }
 }
