@@ -206,6 +206,7 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
                 ? item[property].toLocaleLowerCase()
                 : item[property];
             this.camCardsProcessed.sort = this.sort;
+            this.camCardsProcessed.sort.disableClear = true;
             this.goToExpandedCamCard();
             this.loading = this.camCardLoading;
           });
