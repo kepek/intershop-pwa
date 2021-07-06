@@ -35,13 +35,20 @@ import { LazyProductAddToQuoteComponent } from '../../../../extensions/quoting/e
 import { LazyProductAddToWishlistComponent } from '../../../../extensions/wishlists/exports/lazy-product-add-to-wishlist/lazy-product-add-to-wishlist.component';
 
 import { CamfilProductItemSimpleComponent } from './camfil-product-item-simple.component';
+import { CamCardsFacade } from '../../../../extensions/cam-cards/facades/cam-cards.facade';
+import { instance, mock, when } from 'ts-mockito';
+import { of } from 'rxjs';
 
 describe('Camfil Product Item Simple Component', () => {
   let component: CamfilProductItemSimpleComponent;
   let fixture: ComponentFixture<CamfilProductItemSimpleComponent>;
   let element: HTMLElement;
+  let camCardFacadeMock: CamCardsFacade;
 
   beforeEach(async () => {
+    camCardFacadeMock = mock(CamCardsFacade);
+    when(camCardFacadeMock.getAddProductSuccess$).thenReturn(of(true));
+
     await TestBed.configureTestingModule({
       imports: [ReactiveFormsModule, RouterTestingModule, TranslateModule.forRoot()],
       declarations: [
@@ -72,6 +79,7 @@ describe('Camfil Product Item Simple Component', () => {
         MockPipe(PricePipe),
         MockPipe(ProductRoutePipe),
       ],
+      providers: [{ provide: CamCardsFacade, useFactory: () => instance(camCardFacadeMock) }],
     }).compileComponents();
   });
 
