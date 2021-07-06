@@ -58,7 +58,6 @@ export class AddProductToCamCardModalComponent implements OnInit, OnDestroy, OnC
    * submit success event
    */
   @Output() submitEmitter = new EventEmitter<{ id: string; name: string }>();
-
   // search
   isActive = false;
   inputSearchTerm = '';
@@ -239,7 +238,6 @@ export class AddProductToCamCardModalComponent implements OnInit, OnDestroy, OnC
         edit
       );
     }
-
     this.dialog.closeAll();
     this.hide();
   }

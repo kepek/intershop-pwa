@@ -38,6 +38,7 @@ export class CamfilCamCardModalComponent implements AfterViewInit {
   @Output() primaryButtonClicked = new EventEmitter<any>();
   @Output() secondaryButtonClicked = new EventEmitter<any>();
   @Output() hiddenClicked = new EventEmitter<any>();
+  @Output() resetQuantityValue = new EventEmitter<void>();
 
   @Input() loading?: boolean;
   @Input() focus?: 'secondaryButton' | 'primaryButton';
@@ -62,5 +63,9 @@ export class CamfilCamCardModalComponent implements AfterViewInit {
 
   emitHidden() {
     this.hiddenClicked.emit();
+  }
+
+  resetFormValues() {
+    this.resetQuantityValue.emit();
   }
 }

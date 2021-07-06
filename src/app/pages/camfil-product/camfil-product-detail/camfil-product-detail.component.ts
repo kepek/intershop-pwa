@@ -109,4 +109,8 @@ export class CamfilProductDetailComponent implements OnInit, OnDestroy {
   variationSelected(event: { selection: VariationSelection; changedAttribute?: string }) {
     this.selectVariation.emit(event);
   }
+
+  resetProductDetailForm() {
+    this.productDetailForm.reset();
+  }
 }

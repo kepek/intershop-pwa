@@ -61,6 +61,7 @@ export class CamfilProductAddToBasketComponent implements OnInit, OnDestroy {
    * button was clicked event
    */
   @Output() productToBasket = new EventEmitter<void>();
+  @Output() resetQuantityValue = new EventEmitter<void>();
 
   @Input() quantity?: number;
   constructor(private checkoutFacade: CheckoutFacade, public dialog: MatDialog, private accountFacade: AccountFacade) {}
@@ -89,6 +90,10 @@ export class CamfilProductAddToBasketComponent implements OnInit, OnDestroy {
   addToBasket() {
     this.productToBasket.emit();
     this.displaySpinner$.next(true);
+  }
+
+  resetFormValues() {
+    this.resetQuantityValue.emit();
   }
 
   get displayIcon(): boolean {

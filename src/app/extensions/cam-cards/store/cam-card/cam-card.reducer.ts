@@ -17,6 +17,7 @@ import {
   addBasketToNewCamCard,
   addBasketToNewCamCardFail,
   addBasketToNewCamCardSuccess,
+  addProductToCamCard,
   addProductToCamCardSuccess,
   clearVirtualCamCard,
   copyCamCard,
@@ -256,6 +257,14 @@ export const camCardReducer = createReducer(
       });
     }
   ),
+  on(addProductToCamCard, (state: CamCardState) => ({
+    ...state,
+    addProductSuccess: false,
+  })),
+  on(addProductToCamCardSuccess, (state: CamCardState) => ({
+    ...state,
+    addProductSuccess: true,
+  })),
   on(deleteCamCardSuccess, (state: CamCardState, action) => {
     const { camCardId } = action.payload;
     return camCardAdapter.removeOne(camCardId, {

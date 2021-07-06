@@ -37,7 +37,6 @@ export class ProductAddToCamCardComponent implements OnInit, OnDestroy {
   @Input() hasIcon = false;
   @Input() disabled = false;
   @Input() translationKey = 'camfil.account.cam_card.add_to_template.button.add_to_template.label';
-
   buttonTranslationKey = 'camfil.account.cam_card.add_to_template.button.add_to_template.label';
 
   private destroy$ = new Subject();

@@ -31,6 +31,7 @@ import {
   deleteCamCard,
   deleteSubCamCard,
   detectCamCardToolbar,
+  getAddProductSuccess,
   getAllCamCards,
   getCamCardCustomers,
   getCamCardError,
@@ -78,6 +79,7 @@ export class CamCardsFacade {
   virtualCamCard$: Observable<CamCard> = this.store.pipe(select(getVirtualCamCard));
   validationErrors$: Observable<HttpError> = this.store.pipe(select(getValidationErrors));
   validationResponse$: Observable<CamCardImportValidationResponse> = this.store.pipe(select(getValidationResponse));
+  getAddProductSuccess$: Observable<boolean> = this.store.pipe(select(getAddProductSuccess));
 
   contactsByCustomer$(id: string): Observable<CamCardContact[]> {
     return this.store.pipe(select(getContactsbyCustomerId, { id }));

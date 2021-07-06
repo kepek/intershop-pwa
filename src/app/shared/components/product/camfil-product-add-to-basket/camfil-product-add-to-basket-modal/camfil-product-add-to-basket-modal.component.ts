@@ -1,4 +1,13 @@
-import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { ThemePalette } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
@@ -47,6 +56,8 @@ export class CamfilProductAddToBasketModalComponent implements OnInit, OnDestroy
   basket$: Observable<BasketView>;
 
   @Input() quantity: number;
+
+  @Output() resetQuantityValue = new EventEmitter<void>();
 
   // tslint:disable-next-line:private-destroy-field
   protected destroy$ = new Subject();
@@ -97,6 +108,10 @@ export class CamfilProductAddToBasketModalComponent implements OnInit, OnDestroy
 
   get displayIcon(): boolean {
     return this.displayType === 'icon';
+  }
+
+  resetFormValues() {
+    this.resetQuantityValue.emit();
   }
 
   ngOnDestroy() {

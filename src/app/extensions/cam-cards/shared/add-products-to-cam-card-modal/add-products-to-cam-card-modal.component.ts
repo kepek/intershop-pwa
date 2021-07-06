@@ -118,7 +118,6 @@ export class AddProductsToCamCardModalComponent extends AddProductToCamCardModal
         );
       });
     }
-
     this.dialog.closeAll();
     this.hide();
   }

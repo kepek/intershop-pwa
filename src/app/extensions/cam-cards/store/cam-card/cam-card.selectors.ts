@@ -55,3 +55,5 @@ export const getVirtualCamCard = createSelector(getCamCardState, state => state.
 export const getValidationErrors = createSelector(getCamCardState, state => state.validationErrors);
 
 export const getValidationResponse = createSelector(getCamCardState, state => state.validationResponse);
+
+export const getAddProductSuccess = createSelector(getCamCardState, state => state.addProductSuccess);

@@ -11,6 +11,7 @@ import {
 import { FormControl, FormGroup } from '@angular/forms';
 import { Observable, Subject } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
+import { CamCardsFacade } from 'src/app/extensions/cam-cards/facades/cam-cards.facade';
 
 import { CategoryView } from 'ish-core/models/category-view/category-view.model';
 import { VariationOptionGroup } from 'ish-core/models/product-variation/variation-option-group.model';
@@ -67,6 +68,7 @@ export class CamfilProductItemBaseComponent implements OnInit, OnDestroy {
   @Input() hideAttributeName?: boolean;
   @Input() actionTemplate?: TemplateRef<unknown>;
   @Input() userPermissions$: Observable<string[]>;
+  @Output() resetQuantityValue = new EventEmitter<FormGroup>();
   isMasterProduct = ProductHelper.isMasterProduct;
   updatedQuantity: number;
   productItemForm: FormGroup;
@@ -75,6 +77,8 @@ export class CamfilProductItemBaseComponent implements OnInit, OnDestroy {
 
   // tslint:disable-next-line: private-destroy-field
   protected destroy$ = new Subject();
+
+  constructor(private camCardsFacade: CamCardsFacade) {}
 
   ngOnInit() {
     this.updatedQuantity = this.quantity || 0;
@@ -92,6 +96,12 @@ export class CamfilProductItemBaseComponent implements OnInit, OnDestroy {
         this.updatedQuantity = quantity;
         this.quantityChange.emit(quantity);
       });
+
+    this.camCardsFacade.getAddProductSuccess$.pipe(takeUntil(this.destroy$)).subscribe(value => {
+      if (value) {
+        this.resetFormValues();
+      }
+    });
   }
 
   addToBasket() {
@@ -106,6 +116,10 @@ export class CamfilProductItemBaseComponent implements OnInit, OnDestroy {
     if (ProductHelper.isVariationProduct(this.product)) {
       this.selectVariation.emit(event);
     }
+  }
+
+  resetFormValues() {
+    this.resetQuantityValue.emit(this.productItemForm);
   }
 
   ngOnDestroy() {

@@ -10,6 +10,7 @@ import {
   SimpleChanges,
   TemplateRef,
 } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { Observable, ReplaySubject, Subject } from 'rxjs';
 import { filter, startWith, take, takeUntil } from 'rxjs/operators';
 
@@ -191,5 +192,9 @@ export class CamfilProductItemComponent implements OnInit, OnChanges, OnDestroy 
         );
         this.productSkuChange.emit(sku);
       });
+  }
+
+  resetFormValues(form: FormGroup) {
+    form.reset();
   }
 }
