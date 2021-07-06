@@ -13,16 +13,6 @@
   </div>
 
   <div class="modal-body">
-    <button
-      type="button"
-      mat-flat-button
-      color="primary"
-      (click)="acceptAll()"
-      class="order-2 ml-sm-2"
-      data-testing-id="acceptAllButton"
-    >
-      {{ 'cookies.banner.accept_all' | translate }}
-    </button>
     <div *ngFor="let option of cookieConsentOptions?.options | keyvalue: unsorted" class="cookie-option">
       <label>
         <input
