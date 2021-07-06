@@ -1,15 +1,29 @@
 @import '~src/styles/themes/camfil/variables';
 
 :host {
+  button {
+    @media (max-width: $screen-xs-max) {
+      display: block;
+      width: 100%;
+      margin-bottom: $space-default/2;
+    }
+  }
   .cookies-banner {
     position: fixed;
-    bottom: 0;
-    left: 0;
+    top: 20%;
+    right: 1em;
+    left: 1em;
     z-index: 1000;
-    width: 100%;
-    padding: 20px;
-    color: #fff;
-    background-color: #222 !important;
-    opacity: 0.9;
+    width: 90%;
+    padding: $space-default;
+    margin: 0 auto;
+    background-color: #fff;
+    border-radius: 2.5px;
+    box-shadow: 0 0 18px rgb(0 0 0 / 20%);
+    @media (min-width: $screen-md-min) {
+      top: 15%;
+      width: 60%;
+      max-width: 650px;
+    }
   }
 }
