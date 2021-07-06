@@ -1,0 +1,44 @@
+@import '~src/styles/themes/camfil/variables';
+
+:host {
+  .camfil-logo {
+    display: block;
+    width: $logo-mobile-width;
+    height: $logo-mobile-height;
+    margin: 0;
+    background: url('/assets/themes/camfil/img/logo.svg') left no-repeat;
+    background-size: $logo-mobile-width $logo-mobile-height;
+  }
+  .preference-title {
+    font-size: initial;
+    font-weight: bold;
+  }
+  .preference-accordion-wrapper {
+    border-top: 1px solid #d8d8d8;
+    border-radius: 8px;
+  }
+  .modal-body {
+    padding: 1rem 2rem;
+  }
+  .preference-required {
+    color: #3860be;
+  }
+  .xs-full-width {
+    @media (max-width: $screen-xs-max) {
+      display: block;
+      width: 100%;
+    }
+  }
+  ::ng-deep {
+    .mat-expansion-panel-body {
+      padding-top: $space-default;
+      background: #f8f8f8;
+    }
+    .mat-expansion-panel {
+      border: 1px solid #d8d8d8;
+      border-top: none;
+      border-radius: 2px !important;
+      box-shadow: none;
+    }
+  }
+}

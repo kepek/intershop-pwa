@@ -3,8 +3,11 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 
-import { CookiesModalComponent } from './cookies-modal/cookies-modal.component';
+import { CamfilCookiesModalComponent } from './camfil-cookies-modal/camfil-cookies-modal.component';
 import { CookiesPageGuard } from './cookies-page.guard';
+import { CookiesModalComponent } from './cookies-modal/cookies-modal.component';
+import { MatButtonModule } from '@angular/material/button';
+import { SharedModule } from 'ish-shared/shared.module';
 
 const cookiesPageRoutes: Routes = [
   {
@@ -21,8 +24,8 @@ const cookiesPageRoutes: Routes = [
 ];
 
 @NgModule({
-  imports: [CommonModule, RouterModule.forChild(cookiesPageRoutes), TranslateModule],
+  imports: [SharedModule, CommonModule, RouterModule.forChild(cookiesPageRoutes), TranslateModule, MatButtonModule],
   providers: [CookiesPageGuard],
-  declarations: [CookiesModalComponent],
+  declarations: [CamfilCookiesModalComponent, CookiesModalComponent],
 })
 export class CookiesPageModule {}

@@ -3,7 +3,7 @@ import { CanActivate, NavigationEnd, Router } from '@angular/router';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { filter, first } from 'rxjs/operators';
 
-import { CookiesModalComponent } from './cookies-modal/cookies-modal.component';
+import { CamfilCookiesModalComponent } from './camfil-cookies-modal/camfil-cookies-modal.component';
 
 @Injectable()
 export class CookiesPageGuard implements CanActivate {
@@ -12,13 +12,13 @@ export class CookiesPageGuard implements CanActivate {
   constructor(private modalService: NgbModal, private router: Router) {}
 
   async canActivate() {
-    this.currentDialog = this.modalService.open(CookiesModalComponent, {
+    this.currentDialog = this.modalService.open(CamfilCookiesModalComponent, {
       centered: true,
       size: 'lg',
       backdrop: 'static',
     });
 
-    const cookiesModalComponent = this.currentDialog.componentInstance as CookiesModalComponent;
+    const cookiesModalComponent = this.currentDialog.componentInstance as CamfilCookiesModalComponent;
 
     // dialog closed
     cookiesModalComponent.close.pipe(first()).subscribe(() => {

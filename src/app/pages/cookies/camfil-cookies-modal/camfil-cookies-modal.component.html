@@ -1,0 +1,79 @@
+<div class="cookies-modal">
+  <div class="modal-header">
+    <div class="camfil-logo"></div>
+    <button
+      type="button"
+      class="close"
+      [title]="'dialog.close.text' | translate"
+      [attr.aria-label]="'dialog.close.text' | translate"
+      (click)="hide()"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <h2 class="text-capitalize mb-2">{{ 'cookies.modal.description.headline' | translate }}</h2>
+    <p class="mb-3">
+      {{ 'cookies.modal.description' | translate }}
+      <a
+        href="{{ 'cookies.modal.description.more.url' | translate }}"
+        class="privacy-notice-link"
+        target="_blank"
+        attr.aria-label="{{ 'cookies.modal.description.more.aria_label' | translate }}"
+        tabindex="0"
+        >{{ 'cookies.modal.description.more.label' | translate }}</a
+      >
+    </p>
+    <button
+      class="text-capitalize xs-full-width mt-2 mb-4"
+      type="button"
+      mat-flat-button
+      color="primary"
+      (click)="acceptAll()"
+    >
+      {{ 'cookies.modal.accept_all' | translate }}
+    </button>
+    <h2 class="text-capitalize mb-3">{{ 'cookies.modal.preferences.headline' | translate }}</h2>
+
+    <div class="preference-accordion-wrapper"></div>
+    <div *ngFor="let option of cookieConsentOptions?.options | keyvalue: unsorted; let i = index" class="cookie-option">
+      <mat-accordion>
+        <mat-expansion-panel hideToggle (opened)="panelOpenState[i] = true" (closed)="panelOpenState[i] = false">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <mat-icon *ngIf="!panelOpenState[i]" class="mr-2">add</mat-icon>
+              <mat-icon *ngIf="panelOpenState[i]" class="mr-2">remove</mat-icon>
+              <span class="preference-title">{{ option.value.name | translate }}</span>
+            </mat-panel-title>
+            <mat-panel-description>
+              <ng-container *ngIf="!option.value.required; else alwaysActive">
+                <mat-slide-toggle
+                  color="primary"
+                  class="ml-auto"
+                  [checked]="option.value.required || cookieConsentSettings?.enabledOptions.includes(option.key)"
+                  [disabled]="option.value.required"
+                  (click)="$event.stopPropagation()"
+                  (change)="selectedIds[option.key] = !selectedIds[option.key]"
+                ></mat-slide-toggle>
+              </ng-container>
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <p>{{ option.value.description | translate }}</p>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="xs-full-width m-3" mat-flat-button color="primary" (click)="submit()">
+      {{ 'cookies.modal.save' | translate }}
+    </button>
+  </div>
+</div>
+
+<ng-template #alwaysActive>
+  <span class="ml-auto preference-required"
+    ><strong>{{ 'cookies.modal.preference.required' | translate }}</strong></span
+  >
+</ng-template>
