@@ -21,8 +21,8 @@ describe('Add Email Recipient Modal Component', () => {
       declarations: [AddEmailRecipientModalComponent, CamfilErrorComponent],
       imports: [ReactiveFormsModule],
       providers: [
-        { provide: MAT_DIALOG_DATA, bucket: {} },
-        { provide: MatDialogRef, bucket: {} },
+        { provide: MAT_DIALOG_DATA, useValue: {} },
+        { provide: MatDialogRef, useValue: {} },
         { provide: ShoppingFacade, useFactory: () => instance(shoppingFacadeMock) },
         provideMockStore(),
       ],
@@ -32,7 +32,6 @@ describe('Add Email Recipient Modal Component', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(AddEmailRecipientModalComponent);
     component = fixture.componentInstance;
-    component.bucket = { basket: 'test_basketId', id: 'text_id' };
     element = fixture.nativeElement;
   });
 
