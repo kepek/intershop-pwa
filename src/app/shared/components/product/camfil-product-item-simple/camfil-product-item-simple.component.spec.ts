@@ -3,6 +3,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { MockComponent, MockDirective, MockPipe } from 'ng-mocks';
+import { of } from 'rxjs';
+import { instance, mock, when } from 'ts-mockito';
 
 import { FeatureToggleDirective } from 'ish-core/directives/feature-toggle.directive';
 import { PricePipe } from 'ish-core/models/price/price.pipe';
@@ -30,14 +32,12 @@ import { CamfilProductTitleComponent } from 'ish-shared/components/product/camfi
 import { CamfilProductVariationSelectComponent } from 'ish-shared/components/product/camfil-product-variation-select/camfil-product-variation-select.component';
 
 import { LazyProductAddToCamCardComponent } from '../../../../extensions/cam-cards/exports/lazy-product-add-to-cam-card/lazy-product-add-to-cam-card.component';
+import { CamCardsFacade } from '../../../../extensions/cam-cards/facades/cam-cards.facade';
 import { LazyProductAddToOrderTemplateComponent } from '../../../../extensions/order-templates/exports/lazy-product-add-to-order-template/lazy-product-add-to-order-template.component';
 import { LazyProductAddToQuoteComponent } from '../../../../extensions/quoting/exports/lazy-product-add-to-quote/lazy-product-add-to-quote.component';
 import { LazyProductAddToWishlistComponent } from '../../../../extensions/wishlists/exports/lazy-product-add-to-wishlist/lazy-product-add-to-wishlist.component';
 
 import { CamfilProductItemSimpleComponent } from './camfil-product-item-simple.component';
-import { CamCardsFacade } from '../../../../extensions/cam-cards/facades/cam-cards.facade';
-import { instance, mock, when } from 'ts-mockito';
-import { of } from 'rxjs';
 
 describe('Camfil Product Item Simple Component', () => {
   let component: CamfilProductItemSimpleComponent;
