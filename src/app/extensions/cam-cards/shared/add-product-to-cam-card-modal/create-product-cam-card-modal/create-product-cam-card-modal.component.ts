@@ -55,6 +55,7 @@ export class CreateProductCamCardModalComponent implements OnInit, OnDestroy {
   @Input() parentForm: FormGroup;
 
   @ViewChild('name') nameInput: ElementRef;
+  @ViewChild('newSubCamCard') newSubCamCardInput: ElementRef;
 
   private destroy$ = new Subject();
 
@@ -168,6 +169,10 @@ export class CreateProductCamCardModalComponent implements OnInit, OnDestroy {
 
   addSubLevel() {
     this.showNewSegment = true;
+    setTimeout(() => {
+      this.newSubCamCardInput?.nativeElement.focus();
+      this.cdr.detectChanges();
+    });
   }
 
   pickCustomer(event) {

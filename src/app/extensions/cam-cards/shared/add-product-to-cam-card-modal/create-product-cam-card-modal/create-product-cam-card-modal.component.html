@@ -168,15 +168,17 @@
       </button>
 
       <!--subcamcard-->
-      <mat-form-field *ngIf="showNewSegment" appearance="outline" class="col-sm-12 form__field sublevel-input">
-        <mat-label>{{ 'camfil.modal.createCamcard.input.new_subcamcard' | translate }}</mat-label>
-        <input matInput type="text" formControlName="newCamCard" autofocus cdkFocusInitial />
-      </mat-form-field>
-      <camfil-error
-        [errors]="getField('newCamCard').errors"
-        [errorValidators]="validators.newCamCard"
-        [touched]="getField('newCamCard').touched || getField('newCamCard').dirty"
-      ></camfil-error>
+      <div [ngClass]="{ hidden: !showNewSegment }" class="input-container">
+        <mat-form-field appearance="outline" class="col-sm-12 form__field sublevel-input">
+          <mat-label>{{ 'camfil.modal.createCamcard.input.new_subcamcard' | translate }}</mat-label>
+          <input matInput type="text" formControlName="newCamCard" #newSubCamCard />
+        </mat-form-field>
+        <camfil-error
+          [errors]="getField('newCamCard').errors"
+          [errorValidators]="validators.newCamCard"
+          [touched]="getField('newCamCard').touched || getField('newCamCard').dirty"
+        ></camfil-error>
+      </div>
     </form>
     <div *ngIf="!showNewSegment" class="sublevel-placeholder"></div>
   </div>
