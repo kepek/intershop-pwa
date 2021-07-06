@@ -70,7 +70,15 @@
       }
     }
   }
-
+  .loader-container {
+    ish-loading {
+      ::ng-deep {
+        .loading {
+          background-attachment: fixed;
+        }
+      }
+    }
+  }
   .cam-card {
     &-row-element {
       &:nth-child(4n-1) {
