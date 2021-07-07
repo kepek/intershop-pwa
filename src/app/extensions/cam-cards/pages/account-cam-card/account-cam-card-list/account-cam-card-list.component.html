@@ -142,6 +142,7 @@
         matSort
         matSortActive="name"
         matSortDirection="asc"
+        (matSortChange)="sortData($event)"
       >
         <ng-container matColumnDef="{{ column }}" *ngFor="let column of columnsToDisplay; last as isLast">
           <ng-container *ngIf="!isLast; else checkbox">
