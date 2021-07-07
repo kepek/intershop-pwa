@@ -122,6 +122,9 @@
         overflow: hidden;
       }
     }
+    &-name {
+      white-space: pre;
+    }
     &-product {
       padding: $space-box $space-default $space-box $space-default * 2;
       transition: background-color 0.3s;

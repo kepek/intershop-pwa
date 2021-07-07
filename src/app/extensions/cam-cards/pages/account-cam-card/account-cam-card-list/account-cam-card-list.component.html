@@ -40,7 +40,7 @@
 
               <b>{{ 'camfil.account.cam_card.name' | translate }}</b
               ><br />
-              {{ camCards.name }}<br />
+              <span class="cam-card-name">{{ camCards.name }}</span><br />
               <b>{{ 'camfil.account.cam_card.customer' | translate }}</b
               ><br />
               {{ camCards.customer.companyName }}<br />
@@ -155,7 +155,7 @@
                 <mat-icon class="arrow_down" [class.arrow_down--expanded]="isCamCardExpanded(camCard)">
                   arrow_left</mat-icon
                 >
-                <strong>{{ camCard[column] }}</strong>
+                <strong class="cam-card-name">{{ camCard[column] }}</strong>
               </ng-container>
               <ng-container *ngIf="column === 'customer'">{{ camCard[column].companyName }}</ng-container>
               <ng-container *ngIf="column === 'lastDeliveryDate'">{{
