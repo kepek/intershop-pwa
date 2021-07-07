@@ -27,6 +27,6 @@ describe('Camfil Price Summary Pipe', () => {
   });
 
   it('should return 0 when price is undefined', () => {
-    expect(camfilPriceSummaryPipe.transform(undefined)).toEqual({ ...price, value: 0 });
+    expect(camfilPriceSummaryPipe.transform(undefined)).toBeUndefined();
   });
 });

@@ -68,8 +68,7 @@ export class AccountCamCardDetailLineItemComponent implements OnChanges, OnInit,
   ngOnInit() {
     this.initForm();
     this.quantity = this.camCardItemData.quantity;
-    this.camCardsFacade.customers$.pipe(whenTruthy(), take(1)).subscribe(c => (this.customers = c));
-
+    this.camCardsFacade.customers$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(c => (this.customers = c));
     this.updateQuantities();
 
     this.appFacade.getChannel$
@@ -112,6 +111,14 @@ export class AccountCamCardDetailLineItemComponent implements OnChanges, OnInit,
 
       this.selectedItemsForm.push(this.selectItemForm);
     }
+  }
+
+  getListPrice(listPrice) {
+    return this.customers.length > 1 && this.customerPrices?.salePrice ? this.customerPrices?.listPrice : listPrice;
+  }
+
+  getSalePrice(salePrice) {
+    return (this.customers.length > 1 && this.customerPrices?.salePrice) || salePrice;
   }
 
   measurementToShow() {
