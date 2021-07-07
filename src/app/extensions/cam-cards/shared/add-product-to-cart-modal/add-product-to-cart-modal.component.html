@@ -23,6 +23,7 @@
   [product]="product"
   #createModal
   [parentForm]="quantityForm"
+  (resetQuantityValue)="resetFormValues()"
 ></camfil-create-order-product-modal>
 
 <ng-template #detailsTemplate>
