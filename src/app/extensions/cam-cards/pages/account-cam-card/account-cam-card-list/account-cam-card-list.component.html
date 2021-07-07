@@ -51,14 +51,14 @@
                 <div class="col-4">{{ 'camfil.account.cam_card.nextDeliveryDate' | translate }}</div>
               </div>
               <div class="row text-center">
-                <div class="col-4">{{ camCards.lastDeliveryDate || '---' }}</div>
+                <div class="col-4">{{ camCards.lastDeliveryDate ? (camCards.lastDeliveryDate | ishDate) : '---' }}</div>
                 <div class="col-4">
                   {{
                     camCards.deliveryInterval
                       | i18nPlural: ('camfil.account.cam_card.deliveryInterval.value' | translate) || { other: '#' }
                   }}
                 </div>
-                <div class="col-4">{{ camCards.nextDeliveryDate || '---' }}</div>
+                <div class="col-4">{{ camCards.nextDeliveryDate ? (camCards.nextDeliveryDate | ishDate) : '---' }}</div>
               </div>
               <div class="row text-center">
                 <div class="col-4">{{ 'camfil.account.cam_card.itemsCount' | translate }}</div>
@@ -158,14 +158,18 @@
                 <strong>{{ camCard[column] }}</strong>
               </ng-container>
               <ng-container *ngIf="column === 'customer'">{{ camCard[column].companyName }}</ng-container>
-              <ng-container *ngIf="column === 'lastDeliveryDate'">{{ camCard[column] || '---' }}</ng-container>
+              <ng-container *ngIf="column === 'lastDeliveryDate'">{{
+                camCard[column] ? (camCard[column] | ishDate) : '---'
+              }}</ng-container>
               <ng-container *ngIf="column === 'deliveryInterval'">
                 {{
                   camCard[column]
                     | i18nPlural: ('camfil.account.cam_card.deliveryInterval.value' | translate) || { other: '#' }
                 }}
               </ng-container>
-              <ng-container *ngIf="column === 'nextDeliveryDate'">{{ camCard[column] || '---' }}</ng-container>
+              <ng-container *ngIf="column === 'nextDeliveryDate'">{{
+                camCard[column] ? (camCard[column] | ishDate) : '---'
+              }}</ng-container>
               <!-- <ng-container *ngIf="column === 'creationDate'">{{ camCard[column] | ishDate: 'shortDate' }}</ng-container> -->
               <ng-container *ngIf="column === 'itemsCount'">{{ camCard[column] }}</ng-container>
               <ng-container *ngIf="column === 'userAccess'">

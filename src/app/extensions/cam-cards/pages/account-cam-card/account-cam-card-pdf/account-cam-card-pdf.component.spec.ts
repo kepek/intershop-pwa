@@ -27,7 +27,7 @@ describe('Account Cam Card Pdf Component', () => {
         MockPipe(PricePipe),
       ],
       imports: [TranslateModule.forRoot()],
-      providers: [provideMockStore(), CamfilPriceSummaryPipe],
+      providers: [provideMockStore(), CamfilPriceSummaryPipe, DatePipe],
     }).compileComponents();
   });
 
