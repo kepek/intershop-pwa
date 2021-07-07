@@ -18,26 +18,26 @@ exports[`Camfil Header Default Component should render normal header adequately 
   <div class="row align-items-center header__second">
     <div class="col-9 col-md-6 col-lg-4 col-xl-3 logo-col d-flex">
       <button
-        class="navbar-toggler mat-focus-indicator mat-stroked-button mat-button-base mat-accent _mat-animation-noopable"
-        color="accent"
         mat-stroked-button=""
+        color="accent"
+        class="mat-focus-indicator navbar-toggler mat-stroked-button mat-button-base mat-accent _mat-animation-noopable"
         ng-reflect-color="accent"
         aria-label="camfil.common.button.navbarCollapsed.menu.aria_label"
       >
         <span class="mat-button-wrapper"
           ><mat-icon
-            class="mat-icon notranslate material-icons mat-icon-no-color"
             role="img"
+            class="mat-icon notranslate material-icons mat-icon-no-color"
             aria-hidden="true"
             data-mat-icon-type="font"
             >close</mat-icon
           >
           camfil.common.button.navbarCollapsed.close.text </span
         ><span
-          class="mat-button-ripple mat-ripple"
           matripple=""
-          ng-reflect-centered="false"
+          class="mat-ripple mat-button-ripple"
           ng-reflect-disabled="false"
+          ng-reflect-centered="false"
           ng-reflect-trigger="[object HTMLButtonElement]"
         ></span
         ><span class="mat-button-focus-overlay"></span>
@@ -53,14 +53,14 @@ exports[`Camfil Header Default Component should render normal header adequately 
     <div class="col-3 col-md-6 col-lg-3 col-xl-3 d-flex align-items-center justify-content-end">
       <camfil-mini-basket
         data-testing-id="mini-basket-desktop"
-        class="d-md-block"
         ng-reflect-ng-class="d-md-block"
+        class="d-md-block"
       ></camfil-mini-basket>
     </div>
   </div>
   <div class="global-nav-container">
     <nav class="global-nav navbar-expand-md" ng-reflect-collapsed="false">
-      <div class="main-navigation" role="navigation">
+      <div role="navigation" class="main-navigation">
         <camfil-header-navigation></camfil-header-navigation>
       </div>
     </nav>
@@ -86,26 +86,26 @@ exports[`Camfil Header Default Component should render normal header adequately 
   <div class="row align-items-center header__second">
     <div class="col-9 col-md-6 col-lg-4 col-xl-3 logo-col d-flex">
       <button
-        class="navbar-toggler mat-focus-indicator mat-stroked-button mat-button-base mat-accent _mat-animation-noopable"
-        color="accent"
         mat-stroked-button=""
+        color="accent"
+        class="mat-focus-indicator navbar-toggler mat-stroked-button mat-button-base mat-accent _mat-animation-noopable"
         ng-reflect-color="accent"
         aria-label="camfil.common.button.navbarCollapsed.menu.aria_label"
       >
         <span class="mat-button-wrapper"
           ><mat-icon
-            class="mat-icon notranslate material-icons mat-icon-no-color"
             role="img"
+            class="mat-icon notranslate material-icons mat-icon-no-color"
             aria-hidden="true"
             data-mat-icon-type="font"
             >close</mat-icon
           >
           camfil.common.button.navbarCollapsed.close.text </span
         ><span
-          class="mat-button-ripple mat-ripple"
           matripple=""
-          ng-reflect-centered="false"
+          class="mat-ripple mat-button-ripple"
           ng-reflect-disabled="false"
+          ng-reflect-centered="false"
           ng-reflect-trigger="[object HTMLButtonElement]"
         ></span
         ><span class="mat-button-focus-overlay"></span>
@@ -121,14 +121,14 @@ exports[`Camfil Header Default Component should render normal header adequately 
     <div class="col-3 col-md-6 col-lg-3 col-xl-3 d-flex align-items-center justify-content-end">
       <camfil-mini-basket
         data-testing-id="mini-basket-desktop"
-        class="d-md-block"
         ng-reflect-ng-class="d-md-block"
+        class="d-md-block"
       ></camfil-mini-basket>
     </div>
   </div>
   <div class="global-nav-container">
     <nav class="global-nav navbar-expand-md" ng-reflect-collapsed="false">
-      <div class="main-navigation" role="navigation">
+      <div role="navigation" class="main-navigation">
         <camfil-header-navigation></camfil-header-navigation>
       </div>
     </nav>
@@ -141,26 +141,26 @@ exports[`Camfil Header Default Component should render sticky header adequately 
   <div class="row align-items-center header__second">
     <div class="col-9 col-md-6 col-lg-4 col-xl-3 logo-col d-flex">
       <button
-        class="navbar-toggler mat-focus-indicator mat-stroked-button mat-button-base mat-accent _mat-animation-noopable"
-        color="accent"
         mat-stroked-button=""
+        color="accent"
+        class="mat-focus-indicator navbar-toggler mat-stroked-button mat-button-base mat-accent _mat-animation-noopable"
         ng-reflect-color="accent"
         aria-label="camfil.common.button.navbarCollapsed.menu.aria_label"
       >
         <span class="mat-button-wrapper"
           ><mat-icon
-            class="mat-icon notranslate material-icons mat-icon-no-color"
             role="img"
+            class="mat-icon notranslate material-icons mat-icon-no-color"
             aria-hidden="true"
             data-mat-icon-type="font"
             >close</mat-icon
           >
           camfil.common.button.navbarCollapsed.close.text </span
         ><span
-          class="mat-button-ripple mat-ripple"
           matripple=""
-          ng-reflect-centered="false"
+          class="mat-ripple mat-button-ripple"
           ng-reflect-disabled="false"
+          ng-reflect-centered="false"
           ng-reflect-trigger="[object HTMLButtonElement]"
         ></span
         ><span class="mat-button-focus-overlay"></span>
@@ -175,7 +175,7 @@ exports[`Camfil Header Default Component should render sticky header adequately 
   </div>
   <div class="global-nav-container">
     <nav class="global-nav navbar-expand-md" ng-reflect-collapsed="false">
-      <div class="main-navigation" role="navigation">
+      <div role="navigation" class="main-navigation">
         <camfil-header-navigation></camfil-header-navigation>
       </div>
     </nav>
@@ -198,26 +198,26 @@ exports[`Camfil Header Default Component should render sticky header adequately 
   <div class="row align-items-center header__second">
     <div class="col-9 col-md-6 col-lg-4 col-xl-3 logo-col d-flex">
       <button
-        class="navbar-toggler mat-focus-indicator mat-stroked-button mat-button-base mat-accent _mat-animation-noopable"
-        color="accent"
         mat-stroked-button=""
+        color="accent"
+        class="mat-focus-indicator navbar-toggler mat-stroked-button mat-button-base mat-accent _mat-animation-noopable"
         ng-reflect-color="accent"
         aria-label="camfil.common.button.navbarCollapsed.menu.aria_label"
       >
         <span class="mat-button-wrapper"
           ><mat-icon
-            class="mat-icon notranslate material-icons mat-icon-no-color"
             role="img"
+            class="mat-icon notranslate material-icons mat-icon-no-color"
             aria-hidden="true"
             data-mat-icon-type="font"
             >menu</mat-icon
           >
           camfil.common.button.navbarCollapsed.text </span
         ><span
-          class="mat-button-ripple mat-ripple"
           matripple=""
-          ng-reflect-centered="false"
+          class="mat-ripple mat-button-ripple"
           ng-reflect-disabled="false"
+          ng-reflect-centered="false"
           ng-reflect-trigger="[object HTMLButtonElement]"
         ></span
         ><span class="mat-button-focus-overlay"></span>
@@ -237,14 +237,14 @@ exports[`Camfil Header Default Component should render sticky header adequately 
     <div class="col-3 col-md-6 col-lg-3 col-xl-3 d-flex align-items-center justify-content-end">
       <camfil-mini-basket
         data-testing-id="mini-basket-desktop"
-        class="d-lg-block"
         ng-reflect-ng-class="d-lg-block"
+        class="d-lg-block"
       ></camfil-mini-basket>
     </div>
   </div>
   <div class="global-nav-container">
     <nav class="global-nav navbar-expand-md" ng-reflect-collapsed="true">
-      <div class="main-navigation" role="navigation">
+      <div role="navigation" class="main-navigation">
         <camfil-header-navigation></camfil-header-navigation
         ><camfil-user-links
           ng-reflect-device-type="mobile"
@@ -261,26 +261,26 @@ exports[`Camfil Header Default Component should render sticky header adequately 
   <div class="row align-items-center header__second">
     <div class="col-9 col-md-6 col-lg-4 col-xl-3 logo-col d-flex">
       <button
-        class="navbar-toggler mat-focus-indicator mat-stroked-button mat-button-base mat-accent _mat-animation-noopable"
-        color="accent"
         mat-stroked-button=""
+        color="accent"
+        class="mat-focus-indicator navbar-toggler mat-stroked-button mat-button-base mat-accent _mat-animation-noopable"
         ng-reflect-color="accent"
         aria-label="camfil.common.button.navbarCollapsed.menu.aria_label"
       >
         <span class="mat-button-wrapper"
           ><mat-icon
-            class="mat-icon notranslate material-icons mat-icon-no-color"
             role="img"
+            class="mat-icon notranslate material-icons mat-icon-no-color"
             aria-hidden="true"
             data-mat-icon-type="font"
             >close</mat-icon
           >
           camfil.common.button.navbarCollapsed.close.text </span
         ><span
-          class="mat-button-ripple mat-ripple"
           matripple=""
-          ng-reflect-centered="false"
+          class="mat-ripple mat-button-ripple"
           ng-reflect-disabled="false"
+          ng-reflect-centered="false"
           ng-reflect-trigger="[object HTMLButtonElement]"
         ></span
         ><span class="mat-button-focus-overlay"></span>
@@ -295,7 +295,7 @@ exports[`Camfil Header Default Component should render sticky header adequately 
   </div>
   <div class="global-nav-container">
     <nav class="global-nav navbar-expand-md" ng-reflect-collapsed="false">
-      <div class="main-navigation" role="navigation">
+      <div role="navigation" class="main-navigation">
         <camfil-header-navigation></camfil-header-navigation>
       </div>
     </nav>

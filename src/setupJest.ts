@@ -11,6 +11,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { MaterialModule } from 'ish-shared/material/material.module';
+import '@angular/localize/init';
 
 beforeEach(() => {
   const testBed = getTestBed();
