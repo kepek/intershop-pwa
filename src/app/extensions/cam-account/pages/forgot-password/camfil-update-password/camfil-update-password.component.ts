@@ -42,7 +42,7 @@ export class CamfilUpdatePasswordComponent implements OnInit, OnDestroy {
     });
 
     this.accountFacade.passwordReminderSuccess$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(() => {
-      this.router.navigate(['/login'], { queryParams: { forcePageView: true, returnUrl: '/account' } });
+      this.router.navigate(['/login'], { queryParams: { forcePageView: true, returnUrl: '/account/camcards' } });
     });
   }
 
