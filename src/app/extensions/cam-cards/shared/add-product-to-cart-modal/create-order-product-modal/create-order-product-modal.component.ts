@@ -57,6 +57,7 @@ export class CreateOrderProductModalComponent implements OnInit, OnDestroy {
   @Input() product?: Product;
   @Input() parentForm: FormGroup;
   @Output() createEmitter = new EventEmitter<Bucket>();
+  @Output() resetQuantityValue = new EventEmitter<void>();
 
   modal: NgbModalRef;
   @ViewChild('modal', { static: false }) modalTemplate: TemplateRef<unknown>;
@@ -167,6 +168,7 @@ export class CreateOrderProductModalComponent implements OnInit, OnDestroy {
         this.getBasketExtension(),
         lineItemAttributes
       );
+      this.resetFormValues();
     } else {
       this.shoppingFacade.addProductToBucketWithUrn(
         this.getUrn(address),
@@ -177,6 +179,7 @@ export class CreateOrderProductModalComponent implements OnInit, OnDestroy {
         this.basketId,
         lineItemAttributes
       );
+      this.resetFormValues();
     }
   }
 
@@ -252,6 +255,10 @@ export class CreateOrderProductModalComponent implements OnInit, OnDestroy {
   show() {
     this.showSuccess = false;
     return this.modalTemplate;
+  }
+
+  resetFormValues() {
+    this.resetQuantityValue.emit();
   }
 
   ngOnDestroy() {
