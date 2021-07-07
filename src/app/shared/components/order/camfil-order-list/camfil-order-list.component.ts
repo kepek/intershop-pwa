@@ -133,6 +133,7 @@ export class CamfilOrderListComponent implements OnInit, AfterViewInit, OnDestro
   }
 
   ngAfterViewInit() {
+    this.dataSource.sort = this.sort;
     let statusFiltersReady = false;
     this.statusFilters.changes.pipe(takeUntil(this.destroy$)).subscribe(() => {
       // set order status checkboxes according to url parans
