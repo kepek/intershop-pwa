@@ -405,12 +405,10 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
 
     const event = { checked: false };
     this.productAddingInProgress = true;
-    this.loading = true;
     this.productFacade.productAdded$.pipe(whenTruthy(), take(1)).subscribe(val => {
       if (val) {
         this.masterToggle(event as MatCheckboxChange);
         this.productAddingInProgress = false;
-        this.loading = false;
         this.changeDetectorRefs.detectChanges();
       }
     });
