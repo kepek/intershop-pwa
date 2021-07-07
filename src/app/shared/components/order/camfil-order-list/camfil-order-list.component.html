@@ -94,8 +94,10 @@
     matSort
     matSortActive="orderDate"
     matSortDirection="desc"
+    matSortDisableClear
     class="mat-elevation-z2"
     *ngIf="!isMobileView"
+    (matSortChange)="sortData($event)"
   >
     <!--- Note that these columns can be defined in any order.
           The actual rendered columns are set as a property on the row definition" -->

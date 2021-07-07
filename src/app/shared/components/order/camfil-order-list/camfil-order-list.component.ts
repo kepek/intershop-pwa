@@ -133,7 +133,6 @@ export class CamfilOrderListComponent implements OnInit, AfterViewInit, OnDestro
   }
 
   ngAfterViewInit() {
-    this.dataSource.sort = this.sort;
     let statusFiltersReady = false;
     this.statusFilters.changes.pipe(takeUntil(this.destroy$)).subscribe(() => {
       // set order status checkboxes according to url parans
@@ -332,5 +331,20 @@ export class CamfilOrderListComponent implements OnInit, AfterViewInit, OnDestro
 
   onResize() {
     this.isMobileView = window.innerWidth <= 768;
+  }
+
+  sortData(event) {
+    const sortedOrders = this.orderSort(event.direction, event.active);
+    this.dataSource.data = sortedOrders;
+  }
+
+  orderSort(direction: string, active: string) {
+    const currentOrders = this.orders;
+
+    return direction === 'asc'
+      ? currentOrders.sort((x, y) => (x[active] > y[active] ? 1 : y[active] > x[active] ? -1 : 0))
+      : direction === 'desc'
+      ? currentOrders.sort((x, y) => (x[active] > y[active] ? -1 : y[active] > x[active] ? 1 : 0))
+      : currentOrders;
   }
 }
