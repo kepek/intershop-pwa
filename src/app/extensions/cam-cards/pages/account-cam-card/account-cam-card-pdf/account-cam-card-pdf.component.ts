@@ -13,7 +13,7 @@ import { ProductView } from 'ish-core/models/product-view/product-view.model';
 import { ProductCompletenessLevel, ProductHelper } from 'ish-core/models/product/product.model';
 import { User } from 'ish-core/models/user/user.model';
 import { CamfilPriceSummaryPipe } from 'ish-core/pipes/camfil-price-summary.pipe';
-import { formatISHDate } from 'ish-core/pipes/date.pipe';
+import { DatePipe, formatISHDate } from 'ish-core/pipes/date.pipe';
 import { whenTruthy } from 'ish-core/utils/operators';
 import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
 
@@ -35,7 +35,8 @@ export class AccountCamCardPdfComponent implements OnInit {
     public dialog: MatDialog,
     private translate: TranslateService,
     private authorizationToggle: AuthorizationToggleService,
-    private priceSummaryPipe: CamfilPriceSummaryPipe
+    private priceSummaryPipe: CamfilPriceSummaryPipe,
+    private datePipe: DatePipe
   ) {}
 
   private static REQUIRED_COMPLETENESS_LEVEL = ProductCompletenessLevel.List;
@@ -233,14 +234,26 @@ export class AccountCamCardPdfComponent implements OnInit {
               body: [
                 [this.texts.orderMark, { text: camCard.orderLabel, bold: true }],
                 [this.texts.invoiceMark, { text: camCard.invoiceLabel, bold: true }],
-                [this.texts.lastOrder, { text: camCard.lastDeliveryDate, bold: true }],
+                [
+                  this.texts.lastOrder,
+                  {
+                    text: camCard.lastDeliveryDate ? this.datePipe.transform(camCard.lastDeliveryDate) : '---',
+                    bold: true,
+                  },
+                ],
                 camCard.deliveryInterval
                   ? [
                       this.texts.orderInterval,
                       { text: camCard.deliveryInterval ? camCard.deliveryInterval : '', bold: true },
                     ]
                   : [this.texts.orderInterval, { text: '' }],
-                [this.texts.nextOrder, { text: camCard.nextDeliveryDate, bold: true }],
+                [
+                  this.texts.nextOrder,
+                  {
+                    text: camCard.nextDeliveryDate ? this.datePipe.transform(camCard.nextDeliveryDate) : '---',
+                    bold: true,
+                  },
+                ],
               ],
             },
             widths: ['*', 'auto'],
