@@ -355,6 +355,6 @@
   </div>
 </ng-template>
 
-<div *ngIf="loading" class="loader-container">
+<div *ngIf="loading || productAddingInProgress" class="loader-container">
   <ish-loading></ish-loading>
 </div>
