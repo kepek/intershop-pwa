@@ -217,6 +217,7 @@ export class CreateProductCamCardModalComponent implements OnInit, OnDestroy {
         city: this.camCardForm.get('area').value,
         countryCode: this.camCardForm.get('countryCode').value || this.defaultCountryCode,
       },
+      reminderFlag: 1,
     };
 
     const quantity = this.quantityForm.get('quantity').value;
