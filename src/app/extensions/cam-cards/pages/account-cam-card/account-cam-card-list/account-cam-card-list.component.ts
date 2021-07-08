@@ -20,6 +20,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { flatten, groupBy, toArray } from 'lodash-es';
 import { Observable, Subject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
 
@@ -568,5 +569,24 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
   checkIfAllProductsSelected(camCardId, products) {
     const camCard = this.camCards.find(c => c.id === camCardId);
     return camCard.itemsCount === products?.length;
+  }
+
+  sortData(event) {
+    if (event.active !== 'name') {
+      // Divide array to arrays based on value of active sort
+      const groupedArrays = groupBy(this.camCardsProcessed.filteredData, event.active);
+      // Sort each property in object by name - Ascending
+      for (const property in groupedArrays) {
+        if (groupedArrays.hasOwnProperty(property)) {
+          groupedArrays[property].sort((x, y) =>
+            x.name.toLowerCase() > y.name.toLowerCase() ? 1 : y.name.toLowerCase() > x.name.toLowerCase() ? -1 : 0
+          );
+        }
+      }
+
+      // Join results into one array
+      const newGroup = flatten(toArray(groupedArrays)?.sort((a, b) => a[0][event.active] - b[0][event.active]));
+      this.camCardsProcessed.data = newGroup;
+    }
   }
 }
