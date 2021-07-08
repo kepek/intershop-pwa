@@ -1042,6 +1042,7 @@
   "camfil.modal.createOrder.order-form.input.company.error.required": "Please enter a company.",
   "camfil.modal.createOrder.order-form.input.invoice_mark": "Invoice mark",
   "camfil.modal.createOrder.order-form.input.invoice_mark.error.maxLength": "Invoice must not exceed 20 characters.",
+  "camfil.modal.createOrder.order-form.input.order_mark.error.maxLength": "Order mark must not exceed 60 characters.",
   "camfil.modal.createOrder.order-form.input.invoice_mark.error.required": "Please enter a invoice mark.",
   "camfil.modal.createOrder.order-form.input.order_mark": "Order mark",
   "camfil.modal.createOrder.order-form.input.order_mark.error.required": "Please enter an order mark.",

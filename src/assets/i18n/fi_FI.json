@@ -1036,6 +1036,7 @@
   "camfil.modal.createOrder.order-form.input.company.error.required": "Syötä yritys.",
   "camfil.modal.createOrder.order-form.input.invoice_mark": "Tilausnumero",
   "camfil.modal.createOrder.order-form.input.invoice_mark.error.maxLength": "Laskussa saa olla enintään 60 merkkiä.",
+  "camfil.modal.createOrder.order-form.input.order_mark.error.maxLength": "fi_Order mark must not exceed 60 characters.",
   "camfil.modal.createOrder.order-form.input.invoice_mark.error.required": "Syötä laskumerkki.",
   "camfil.modal.createOrder.order-form.input.order_mark": "Tilausmerkki",
   "camfil.modal.createOrder.order-form.input.order_mark.error.required": "Syötä tilausmerkki.",
