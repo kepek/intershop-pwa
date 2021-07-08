@@ -48,7 +48,7 @@ export class OrderFormComponent implements OnInit, OnDestroy {
       contact: [this.orderToEdit?.contactPerson?.erpId || '', Validators.required],
       invoiceLabel: [this.orderToEdit?.invoiceLabel || '', [Validators.maxLength(20)]],
       phoneNumber: [this.orderToEdit?.phoneNumber || '', Validators.pattern('[0-9+-/]*')],
-      orderMark: [this.orderToEdit?.orderMark || ''],
+      orderMark: [this.orderToEdit?.orderMark || '', [Validators.maxLength(60)]],
       deliveryAddressSelect: [this.orderToEdit?.deliveryAddressId || '', []],
       company: [this.orderToEdit?.company || '', [Validators.required]],
       building: [this.orderToEdit?.building || ''],
