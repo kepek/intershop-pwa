@@ -20,6 +20,7 @@ import {
   addPromotionCodeToBasket,
   assignBasketAddress,
   camfilDragLineItem,
+  checkCurrentBasket,
   continueCheckout,
   createBasketAddress,
   createBasketPayment,
@@ -131,6 +132,10 @@ export class CheckoutFacade {
 
   deleteBasketCustomAttribute(attributeName: string): void {
     this.store.dispatch(deleteBasketAttribute({ attributeName }));
+  }
+
+  checkCurrentBasket() {
+    this.store.dispatch(checkCurrentBasket());
   }
 
   // ORDERS
