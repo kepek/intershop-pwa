@@ -151,7 +151,7 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy {
           this.addToExistingOrder(sku, quantity, this.order.shipToAddress, lineItemAttributes);
         } else {
           const deliveryAddress = this.order.shipToAddressFull as Address;
-          this.addToNewOrder(sku, quantity, deliveryAddress, this.order.id);
+          this.addToNewOrder(sku, quantity, deliveryAddress, this.order.id, lineItemAttributes);
         }
       } else {
         const measurement = {
@@ -173,7 +173,7 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy {
     this.productFacade.addProductToBasket(sku, quantity, this.shippingMethodId, shipToAddress, lineItemAttributes);
   }
 
-  addToNewOrder(sku, quantity, deliveryAddress, bucketId) {
+  addToNewOrder(sku, quantity, deliveryAddress, bucketId, lineItemAttributes) {
     if (this.isNewAddress(deliveryAddress)) {
       this.productFacade.addProductToBucket(
         deliveryAddress,
@@ -184,7 +184,7 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy {
         {
           ...this.order,
         },
-        undefined,
+        lineItemAttributes,
         bucketId
       );
     } else {
@@ -194,7 +194,8 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy {
         this.order.shippingMethod,
         sku,
         quantity,
-        this.order.basket
+        this.order.basket,
+        lineItemAttributes
       );
     }
   }
