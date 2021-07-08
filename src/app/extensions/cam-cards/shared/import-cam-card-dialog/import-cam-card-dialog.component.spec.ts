@@ -4,7 +4,7 @@ import { provideMockStore } from '@ngrx/store/testing';
 import { MockComponent, MockDirective } from 'ng-mocks';
 
 import { ServerHtmlDirective } from 'ish-core/directives/server-html.directive';
-import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
+import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
 
 import { ImportCamCardDialogComponent } from './import-cam-card-dialog.component';
 
@@ -15,7 +15,11 @@ describe('Import Cam Card Dialog Component', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ImportCamCardDialogComponent, MockComponent(LoadingComponent), MockDirective(ServerHtmlDirective)],
+      declarations: [
+        ImportCamCardDialogComponent,
+        MockComponent(CamfilLoadingComponent),
+        MockDirective(ServerHtmlDirective),
+      ],
       imports: [],
       providers: [{ provide: MatDialogRef, useValue: {} }, provideMockStore({})],
     }).compileComponents();

@@ -6,8 +6,8 @@ import { MockComponent } from 'ng-mocks';
 import { of } from 'rxjs';
 import { instance, mock, when } from 'ts-mockito';
 
+import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
 import { ErrorMessageComponent } from 'ish-shared/components/common/error-message/error-message.component';
-import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
 
 import { RequisitionsListComponent } from '../../components/requisitions-list/requisitions-list.component';
 import { RequisitionManagementFacade } from '../../facades/requisition-management.facade';
@@ -26,8 +26,8 @@ describe('Buyer Page Component', () => {
       imports: [NgbNavModule, RouterTestingModule, TranslateModule.forRoot()],
       declarations: [
         BuyerPageComponent,
+        MockComponent(CamfilLoadingComponent),
         MockComponent(ErrorMessageComponent),
-        MockComponent(LoadingComponent),
         MockComponent(RequisitionsListComponent),
       ],
       providers: [{ provide: RequisitionManagementFacade, useFactory: () => instance(reqFacade) }],
@@ -50,7 +50,7 @@ describe('Buyer Page Component', () => {
   it('should display loading overlay if requisitions are loading', () => {
     when(reqFacade.requisitionsLoading$).thenReturn(of(true));
     fixture.detectChanges();
-    expect(element.querySelector('ish-loading')).toBeTruthy();
+    expect(element.querySelector('camfil-loading')).toBeTruthy();
   });
 
   it('should display pending tab as active if status is PENDING', () => {

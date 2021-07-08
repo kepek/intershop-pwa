@@ -6,7 +6,7 @@ import { instance, mock, when } from 'ts-mockito';
 import { AccountFacade } from 'ish-core/facades/account.facade';
 import { Customer } from 'ish-core/models/customer/customer.model';
 import { User } from 'ish-core/models/user/user.model';
-import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
+import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
 
 import { CamfilAccountDetailsFormComponent } from './camfil-account-details-form.component';
 
@@ -32,7 +32,7 @@ describe('Camfil Account Details Form Component', () => {
     when(accountFacade.customer$).thenReturn(of(customer));
 
     await TestBed.configureTestingModule({
-      declarations: [CamfilAccountDetailsFormComponent, MockComponent(LoadingComponent)],
+      declarations: [CamfilAccountDetailsFormComponent, MockComponent(CamfilLoadingComponent)],
       providers: [{ provide: AccountFacade, useFactory: () => instance(accountFacade) }],
     }).compileComponents();
   });

@@ -8,8 +8,8 @@ import { PricePipe } from 'ish-core/models/price/price.pipe';
 import { CamfilDimensionPipe } from 'ish-core/pipes/camfil-dimension.pipe';
 import { ContentIncludeComponent } from 'ish-shared/cms/components/content-include/content-include.component';
 import { ContentViewcontextComponent } from 'ish-shared/cms/components/content-viewcontext/content-viewcontext.component';
+import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
 import { CamfilProductTechnicalDocumentsComponent } from 'ish-shared/components/common/camfil-product-technical-documents/camfil-product-technical-documents.component';
-import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
 import { CamfilProductAddToBasketComponent } from 'ish-shared/components/product/camfil-product-add-to-basket/camfil-product-add-to-basket.component';
 import { CamfilProductAddToCompareComponent } from 'ish-shared/components/product/camfil-product-add-to-compare/camfil-product-add-to-compare.component';
 import { CamfilProductAttributeComponent } from 'ish-shared/components/product/camfil-product-attribute/camfil-product-attribute.component';
@@ -29,6 +29,7 @@ describe('Camfil Quick View Modal Component', () => {
     await TestBed.configureTestingModule({
       declarations: [
         CamfilQuickViewModalComponent,
+        MockComponent(CamfilLoadingComponent),
         MockComponent(CamfilProductAddToBasketComponent),
         MockComponent(CamfilProductAddToCompareComponent),
         MockComponent(CamfilProductAttributeComponent),
@@ -41,7 +42,6 @@ describe('Camfil Quick View Modal Component', () => {
         MockComponent(ContentIncludeComponent),
         MockComponent(ContentViewcontextComponent),
         MockComponent(LazyProductAddToCamCardComponent),
-        MockComponent(LoadingComponent),
         MockPipe(CamfilDimensionPipe),
         MockPipe(PricePipe),
       ],

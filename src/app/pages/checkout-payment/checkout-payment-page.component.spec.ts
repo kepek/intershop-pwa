@@ -6,7 +6,7 @@ import { instance, mock, when } from 'ts-mockito';
 
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { BasketMockData } from 'ish-core/utils/dev/basket-mock-data';
-import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
+import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
 
 import { CheckoutPaymentPageComponent } from './checkout-payment-page.component';
 import { CheckoutPaymentComponent } from './checkout-payment/checkout-payment.component';
@@ -24,8 +24,8 @@ describe('Checkout Payment Page Component', () => {
     await TestBed.configureTestingModule({
       declarations: [
         CheckoutPaymentPageComponent,
+        MockComponent(CamfilLoadingComponent),
         MockComponent(CheckoutPaymentComponent),
-        MockComponent(LoadingComponent),
       ],
 
       imports: [TranslateModule.forRoot()],

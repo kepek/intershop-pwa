@@ -55,7 +55,7 @@
         [viewType]="viewType$ | async"
       ></ish-product-list>
 
-      <ish-loading *ngIf="listingLoading$ | async" [standalone]="true"></ish-loading>
+      <camfil-loading *ngIf="listingLoading$ | async" [standalone]="true"></camfil-loading>
 
       <ng-container *ngTemplateOutlet="pagingToolbar"></ng-container>
     </ng-container>

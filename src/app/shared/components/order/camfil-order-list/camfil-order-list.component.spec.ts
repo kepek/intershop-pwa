@@ -10,7 +10,7 @@ import { AuthorizationToggleModule } from 'ish-core/authorization-toggle.module'
 import { PricePipe } from 'ish-core/models/price/price.pipe';
 import { DatePipe } from 'ish-core/pipes/date.pipe';
 import { AddressComponent } from 'ish-shared/components/address/address/address.component';
-import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
+import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
 
 import { CamfilOrderListComponent } from './camfil-order-list.component';
 
@@ -27,7 +27,7 @@ describe('Camfil Order List Component', () => {
       declarations: [
         CamfilOrderListComponent,
         MockComponent(AddressComponent),
-        MockComponent(LoadingComponent),
+        MockComponent(CamfilLoadingComponent),
         MockPipe(DatePipe),
         MockPipe(PricePipe),
       ],

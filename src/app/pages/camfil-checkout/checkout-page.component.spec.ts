@@ -14,7 +14,7 @@ import { Order } from 'ish-core/models/order/order.model';
 import { createOrderSuccess } from 'ish-core/store/customer/orders/orders.actions';
 import { BasketInfoComponent } from 'ish-shared/components/basket/basket-info/basket-info.component';
 import { CamfilBasketValidationResultsComponent } from 'ish-shared/components/basket/camfil-basket-validation-results/camfil-basket-validation-results.component';
-import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
+import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
 
 import { CamCardsFacade } from '../../extensions/cam-cards/facades/cam-cards.facade';
 
@@ -101,7 +101,7 @@ describe('Checkout Page Component', () => {
         MockComponent(CamfilCheckoutSummaryComponent),
         MockComponent(CamfilCheckoutToolbarComponent),
         MockComponent(CamfilCheckoutValidationComponent),
-        MockComponent(LoadingComponent),
+        MockComponent(CamfilLoadingComponent),
       ],
       imports: [RouterTestingModule],
       providers: [

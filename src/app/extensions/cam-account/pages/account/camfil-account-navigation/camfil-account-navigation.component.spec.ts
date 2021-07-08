@@ -8,7 +8,7 @@ import { instance, mock, when } from 'ts-mockito';
 import { AuthorizationToggleModule } from 'ish-core/authorization-toggle.module';
 import { AccountFacade } from 'ish-core/facades/account.facade';
 import { FeatureToggleModule } from 'ish-core/feature-toggle.module';
-import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
+import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
 
 import { CamfilAccountNavigationComponent } from './camfil-account-navigation.component';
 
@@ -21,7 +21,7 @@ describe('Camfil Account Navigation Component', () => {
   beforeEach(async () => {
     accountFacadeMock = mock(AccountFacade);
     await TestBed.configureTestingModule({
-      declarations: [CamfilAccountNavigationComponent, MockComponent(LoadingComponent)],
+      declarations: [CamfilAccountNavigationComponent, MockComponent(CamfilLoadingComponent)],
       imports: [
         AuthorizationToggleModule.forTesting('APP_B2B_MANAGE_USERS'),
         FeatureToggleModule.forTesting('quoting', 'orderTemplates'),

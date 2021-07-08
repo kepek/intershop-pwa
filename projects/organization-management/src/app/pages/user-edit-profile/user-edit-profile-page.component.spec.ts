@@ -5,7 +5,7 @@ import { MockComponent } from 'ng-mocks';
 import { of } from 'rxjs';
 import { instance, mock, when } from 'ts-mockito';
 
-import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
+import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
 
 import { UserProfileFormComponent } from '../../components/user-profile-form/user-profile-form.component';
 import { OrganizationManagementFacade } from '../../facades/organization-management.facade';
@@ -35,7 +35,7 @@ describe('User Edit Profile Page Component', () => {
     await TestBed.configureTestingModule({
       imports: [ReactiveFormsModule, TranslateModule.forRoot()],
       declarations: [
-        MockComponent(LoadingComponent),
+        MockComponent(CamfilLoadingComponent),
         MockComponent(UserProfileFormComponent),
         UserEditProfilePageComponent,
       ],

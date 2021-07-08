@@ -10,8 +10,8 @@ import { ContentIncludeComponent } from 'ish-shared/cms/components/content-inclu
 import { CamfilBulletListComponent } from 'ish-shared/components/common/camfil-bullet-list/camfil-bullet-list.component';
 import { CamfilDetailsBoxComponent } from 'ish-shared/components/common/camfil-details-box/camfil-details-box.component';
 import { CamfilHeaderBoxComponent } from 'ish-shared/components/common/camfil-header-box/camfil-header-box.component';
+import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
 import { ErrorMessageComponent } from 'ish-shared/components/common/error-message/error-message.component';
-import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
 
 import { CamfilLoginFormComponent } from './camfil-login-form/camfil-login-form.component';
 import { LoginInfoSectionComponent } from './camfil-login-info-section/login-info-section.component';
@@ -34,9 +34,9 @@ describe('Camfil Login Page Component', () => {
         CamfilLoginNewCustomerComponent,
         CamfilLoginPageComponent,
         LoginInfoSectionComponent,
+        MockComponent(CamfilLoadingComponent),
         MockComponent(ContentIncludeComponent),
         MockComponent(ErrorMessageComponent),
-        MockComponent(LoadingComponent),
       ],
       providers: [
         { provide: AccountFacade, useFactory: () => instance(mock(AccountFacade)) },

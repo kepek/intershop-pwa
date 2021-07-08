@@ -5,7 +5,7 @@ import { instance, mock, when } from 'ts-mockito';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
 import { AppFacade } from 'ish-core/facades/app.facade';
-import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
+import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
 
 import { AccountProfileUserPageComponent } from './account-profile-user-page.component';
 import { AccountProfileUserComponent } from './account-profile-user/account-profile-user.component';
@@ -23,7 +23,7 @@ describe('Account Profile User Page Component', () => {
       declarations: [
         AccountProfileUserPageComponent,
         MockComponent(AccountProfileUserComponent),
-        MockComponent(LoadingComponent),
+        MockComponent(CamfilLoadingComponent),
       ],
       providers: [
         { provide: AccountFacade, useFactory: () => instance(mock(AccountFacade)) },

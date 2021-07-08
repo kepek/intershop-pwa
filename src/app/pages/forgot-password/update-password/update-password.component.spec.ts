@@ -6,8 +6,8 @@ import { EMPTY } from 'rxjs';
 import { instance, mock, when } from 'ts-mockito';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
+import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
 import { ErrorMessageComponent } from 'ish-shared/components/common/error-message/error-message.component';
-import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
 
 import { UpdatePasswordFormComponent } from '../update-password-form/update-password-form.component';
 
@@ -24,8 +24,8 @@ describe('Update Password Component', () => {
 
     await TestBed.configureTestingModule({
       declarations: [
+        MockComponent(CamfilLoadingComponent),
         MockComponent(ErrorMessageComponent),
-        MockComponent(LoadingComponent),
         MockComponent(UpdatePasswordFormComponent),
         UpdatePasswordComponent,
       ],

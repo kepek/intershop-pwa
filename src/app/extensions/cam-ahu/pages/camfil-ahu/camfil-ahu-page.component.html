@@ -4,7 +4,7 @@
     src="https://assets.new.siemens.com/siemens/assets/api/uuid:4b8847bc-99a5-4ee2-b3d0-ebdc64f8e91c/width:1266/quality:high/cnc-system-for-machine-tools.jpg"
   />
   <mat-card class="ahu__card text-center">
-    <ish-loading *ngIf="ahuLoading$ | async"></ish-loading>
+    <camfil-loading *ngIf="ahuLoading$ | async"></camfil-loading>
     <mat-card-header class="ahu__card-header">
       <mat-card-title class="ahu__card-title mat-headline">{{ 'camfil.ahu.heading' | translate }}</mat-card-title>
       <mat-card-subtitle class="ahu__card-subtitle"

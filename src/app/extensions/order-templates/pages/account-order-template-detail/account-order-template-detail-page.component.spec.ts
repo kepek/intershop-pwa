@@ -5,8 +5,8 @@ import { EMPTY } from 'rxjs';
 import { instance, mock, when } from 'ts-mockito';
 
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
+import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
 import { ErrorMessageComponent } from 'ish-shared/components/common/error-message/error-message.component';
-import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
 import { ProductAddToBasketComponent } from 'ish-shared/components/product/product-add-to-basket/product-add-to-basket.component';
 
 import { OrderTemplatesFacade } from '../../facades/order-templates.facade';
@@ -29,8 +29,8 @@ describe('Account Order Template Detail Page Component', () => {
       declarations: [
         AccountOrderTemplateDetailPageComponent,
         MockComponent(AccountOrderTemplateDetailLineItemComponent),
+        MockComponent(CamfilLoadingComponent),
         MockComponent(ErrorMessageComponent),
-        MockComponent(LoadingComponent),
         MockComponent(OrderTemplatePreferencesDialogComponent),
         MockComponent(ProductAddToBasketComponent),
       ],

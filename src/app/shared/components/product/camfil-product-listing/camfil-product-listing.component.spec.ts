@@ -10,7 +10,7 @@ import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { Category } from 'ish-core/models/category/category.model';
 import { ProductListingView } from 'ish-core/models/product-listing/product-listing.model';
 import { findAllCustomElements } from 'ish-core/utils/dev/html-query-utils';
-import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
+import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
 import { CamfilProductListToolbarComponent } from 'ish-shared/components/product/camfil-product-list-toolbar/camfil-product-list-toolbar.component';
 import { CamfilProductListComponent } from 'ish-shared/components/product/camfil-product-list/camfil-product-list.component';
 import { ProductListPagingComponent } from 'ish-shared/components/product/product-list-paging/product-list-paging.component';
@@ -53,9 +53,9 @@ describe('Camfil Product Listing Component', () => {
       imports: [InfiniteScrollModule, RouterTestingModule],
       declarations: [
         CamfilProductListingComponent,
+        MockComponent(CamfilLoadingComponent),
         MockComponent(CamfilProductListComponent),
         MockComponent(CamfilProductListToolbarComponent),
-        MockComponent(LoadingComponent),
         MockComponent(ProductListPagingComponent),
       ],
       providers: [{ provide: ShoppingFacade, useFactory: () => instance(shoppingFacade) }],

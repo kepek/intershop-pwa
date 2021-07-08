@@ -5,7 +5,7 @@ import { MockComponent } from 'ng-mocks';
 import { instance, mock } from 'ts-mockito';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
-import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
+import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
 
 import { ContactConfirmationComponent } from './contact-confirmation/contact-confirmation.component';
 import { ContactFormComponent } from './contact-form/contact-form.component';
@@ -21,9 +21,9 @@ describe('Contact Page Component', () => {
       imports: [RouterTestingModule, TranslateModule.forRoot()],
       declarations: [
         ContactPageComponent,
+        MockComponent(CamfilLoadingComponent),
         MockComponent(ContactConfirmationComponent),
         MockComponent(ContactFormComponent),
-        MockComponent(LoadingComponent),
       ],
       providers: [{ provide: AccountFacade, useFactory: () => instance(mock(AccountFacade)) }],
     }).compileComponents();

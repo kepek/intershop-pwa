@@ -9,7 +9,7 @@ import { PricePipe } from 'ish-core/models/price/price.pipe';
 import { VariationProductView } from 'ish-core/models/product-view/product-view.model';
 import { ProductCompletenessLevel } from 'ish-core/models/product/product.model';
 import { findAllCustomElements } from 'ish-core/utils/dev/html-query-utils';
-import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
+import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
 import { CamfilProductIdComponent } from 'ish-shared/components/product/camfil-product-id/camfil-product-id.component';
 import { CamfilProductImageComponent } from 'ish-shared/components/product/camfil-product-image/camfil-product-image.component';
 import { CamfilProductInventoryComponent } from 'ish-shared/components/product/camfil-product-inventory/camfil-product-inventory.component';
@@ -32,6 +32,7 @@ describe('Line Item Edit Dialog Component', () => {
     await TestBed.configureTestingModule({
       declarations: [
         LineItemEditDialogComponent,
+        MockComponent(CamfilLoadingComponent),
         MockComponent(CamfilProductIdComponent),
         MockComponent(CamfilProductImageComponent),
         MockComponent(CamfilProductInventoryComponent),
@@ -39,7 +40,6 @@ describe('Line Item Edit Dialog Component', () => {
         MockComponent(CamfilProductItemSimpleComponent),
         MockComponent(CamfilProductVariationSelectComponent),
         MockComponent(InputComponent),
-        MockComponent(LoadingComponent),
         MockPipe(PricePipe),
       ],
       providers: [{ provide: ShoppingFacade, useFactory: () => instance(shoppingFacade) }],
@@ -90,6 +90,6 @@ describe('Line Item Edit Dialog Component', () => {
   it('should display loading-components on the container', () => {
     when(shoppingFacade.productNotReady$(anything(), anything())).thenReturn(of(true));
     fixture.detectChanges();
-    expect(findAllCustomElements(element)).toIncludeAllMembers(['ish-input', 'ish-loading']);
+    expect(findAllCustomElements(element)).toIncludeAllMembers(['ish-input', 'camfil-loading']);
   });
 });

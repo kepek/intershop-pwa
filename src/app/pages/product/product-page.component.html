@@ -1,5 +1,5 @@
 <div class="clearfix" data-testing-id="product-detail-page" itemscope itemtype="http://schema.org/Product">
-  <ish-loading *ngIf="productLoading$ | async; else productDetail"></ish-loading>
+  <camfil-loading *ngIf="productLoading$ | async; else productDetail"></camfil-loading>
 
   <ng-template #productDetail>
     <ng-container *ngIf="product$ | async as product">

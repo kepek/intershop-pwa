@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MockComponent } from 'ng-mocks';
 
-import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
+import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
 
 import { CamfilCamCardModalComponent } from './camfil-cam-card-modal.component';
 
@@ -12,7 +12,7 @@ describe('Camfil Cam Card Modal Component', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CamfilCamCardModalComponent, MockComponent(LoadingComponent)],
+      declarations: [CamfilCamCardModalComponent, MockComponent(CamfilLoadingComponent)],
     }).compileComponents();
   });
 

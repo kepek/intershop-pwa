@@ -5,7 +5,7 @@ import { anything, capture, instance, mock, spy, verify, when } from 'ts-mockito
 
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { VariationProductView } from 'ish-core/models/product-view/product-view.model';
-import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
+import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
 import { ProductRowComponent } from 'ish-shared/components/product/product-row/product-row.component';
 import { ProductTileComponent } from 'ish-shared/components/product/product-tile/product-tile.component';
 
@@ -21,7 +21,7 @@ describe('Product Item Component', () => {
     shoppingFacade = mock(ShoppingFacade);
     await TestBed.configureTestingModule({
       declarations: [
-        MockComponent(LoadingComponent),
+        MockComponent(CamfilLoadingComponent),
         MockComponent(ProductRowComponent),
         MockComponent(ProductTileComponent),
         ProductItemComponent,

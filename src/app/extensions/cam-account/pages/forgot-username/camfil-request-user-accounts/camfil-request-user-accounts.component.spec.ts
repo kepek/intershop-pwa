@@ -8,8 +8,8 @@ import { instance, mock } from 'ts-mockito';
 import { ServerHtmlDirective } from 'ish-core/directives/server-html.directive';
 import { AccountFacade } from 'ish-core/facades/account.facade';
 import { CamfilErrorComponent } from 'ish-shared/components/common/camfil-error/camfil-error.component';
+import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
 import { ErrorMessageComponent } from 'ish-shared/components/common/error-message/error-message.component';
-import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
 
 import { LazyCamCaptchaComponent } from '../../../../cam-captcha/exports/lazy-cam-captcha/lazy-cam-captcha.component';
 import { CamAccountFacade } from '../../../facades/cam-account.facade';
@@ -29,8 +29,8 @@ describe('Camfil Request User Accounts Component', () => {
         CamfilRequestUserAccountsComponent,
         CamfilRequestUserAccountsFormComponent,
         ErrorMessageComponent,
+        MockComponent(CamfilLoadingComponent),
         MockComponent(LazyCamCaptchaComponent),
-        MockComponent(LoadingComponent),
         MockDirective(ServerHtmlDirective),
       ],
       imports: [RouterTestingModule, TranslateModule.forRoot()],

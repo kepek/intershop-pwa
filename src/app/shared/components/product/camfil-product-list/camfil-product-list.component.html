@@ -4,7 +4,7 @@
   </div>
 
   <div *ngIf="listingLoading$ | async" class="product-list-loading">
-    <ish-loading [standalone]="true"></ish-loading>
+    <camfil-loading [standalone]="true"></camfil-loading>
   </div>
 
   <ng-container *ngFor="let sku of products; let i = index">
@@ -27,6 +27,6 @@
   </ng-container>
 
   <div *ngIf="products.length > minForBottomLoading && listingLoading$ | async" class="col-12">
-    <ish-loading [standalone]="true"></ish-loading>
+    <camfil-loading [standalone]="true"></camfil-loading>
   </div>
 </div>

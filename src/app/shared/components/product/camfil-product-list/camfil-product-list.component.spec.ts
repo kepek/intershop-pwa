@@ -13,7 +13,7 @@ import { User } from 'ish-core/models/user/user.model';
 import { CoreStoreModule } from 'ish-core/store/core/core-store.module';
 import { ShoppingStoreModule } from 'ish-core/store/shopping/shopping-store.module';
 import { findAllCustomElements } from 'ish-core/utils/dev/html-query-utils';
-import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
+import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
 import { CamfilProductItemComponent } from 'ish-shared/components/product/camfil-product-item/camfil-product-item.component';
 
 import { CamfilProductListComponent } from './camfil-product-list.component';
@@ -37,8 +37,8 @@ describe('Camfil Product List Component', () => {
       ],
       declarations: [
         CamfilProductListComponent,
+        MockComponent(CamfilLoadingComponent),
         MockComponent(CamfilProductItemComponent),
-        MockComponent(LoadingComponent),
         PricePipe,
       ],
       providers: [
@@ -85,6 +85,6 @@ describe('Camfil Product List Component', () => {
 
     fixture.detectChanges();
 
-    expect(findAllCustomElements(element)).toEqual(['ish-loading']);
+    expect(findAllCustomElements(element)).toEqual(['camfil-loading']);
   }));
 });

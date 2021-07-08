@@ -7,7 +7,7 @@ import { instance, mock, when } from 'ts-mockito';
 import { AccountFacade } from 'ish-core/facades/account.facade';
 import { AppFacade } from 'ish-core/facades/app.facade';
 import { CamfilErrorComponent } from 'ish-shared/components/common/camfil-error/camfil-error.component';
-import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
+import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
 
 import { ZipCodeComponent } from './zip-code.component';
 
@@ -23,7 +23,7 @@ describe('Zip Code Component', () => {
     appFacade = mock(AppFacade);
 
     await TestBed.configureTestingModule({
-      declarations: [CamfilErrorComponent, MockComponent(LoadingComponent), ZipCodeComponent],
+      declarations: [CamfilErrorComponent, MockComponent(CamfilLoadingComponent), ZipCodeComponent],
       providers: [
         { provide: AccountFacade, useFactory: () => instance(accountFacade) },
         { provide: AppFacade, useFactory: () => instance(appFacade) },

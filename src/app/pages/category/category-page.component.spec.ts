@@ -9,7 +9,7 @@ import { createCategoryView } from 'ish-core/models/category-view/category-view.
 import { Category } from 'ish-core/models/category/category.model';
 import { findAllCustomElements } from 'ish-core/utils/dev/html-query-utils';
 import { categoryTree } from 'ish-core/utils/dev/test-data-utils';
-import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
+import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
 
 import { CamfilCategoryCategoriesComponent } from '../camfil-category/camfil-category-categories/camfil-category-categories.component';
 import { CamfilCategoryProductsComponent } from '../camfil-category/camfil-category-products/camfil-category-products.component';
@@ -30,8 +30,8 @@ describe('Category Page Component', () => {
         CategoryPageComponent,
         MockComponent(CamfilCategoryCategoriesComponent),
         MockComponent(CamfilCategoryProductsComponent),
+        MockComponent(CamfilLoadingComponent),
         MockComponent(CategoryCategoriesComponent),
-        MockComponent(LoadingComponent),
       ],
       providers: [
         { provide: ShoppingFacade, useFactory: () => instance(shoppingFacade) },

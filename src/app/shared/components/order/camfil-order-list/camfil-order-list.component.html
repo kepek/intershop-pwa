@@ -206,7 +206,7 @@
     {{ 'camfil.account.orderlist.showing_of' | translate: { '0': countRows(), '1': dataSource.filteredData.length } }}
   </div>
 
-  <ish-loading *ngIf="loading$ | async"></ish-loading>
+  <camfil-loading *ngIf="loading$ | async"></camfil-loading>
 </div>
 
 <ng-template #ordersMobileRow let-orders="orders">

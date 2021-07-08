@@ -4,7 +4,7 @@ import { MockComponent } from 'ng-mocks';
 import { of } from 'rxjs';
 import { instance, mock, when } from 'ts-mockito';
 
-import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
+import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
 
 import { QuotingFacade } from '../../facades/quoting.facade';
 import { Quote } from '../../models/quoting/quoting.model';
@@ -21,7 +21,7 @@ describe('Quote List Page Component', () => {
   beforeEach(async () => {
     quotingFacade = mock(QuotingFacade);
     await TestBed.configureTestingModule({
-      declarations: [MockComponent(LoadingComponent), MockComponent(QuoteListComponent), QuoteListPageComponent],
+      declarations: [MockComponent(CamfilLoadingComponent), MockComponent(QuoteListComponent), QuoteListPageComponent],
       imports: [TranslateModule.forRoot()],
       providers: [{ provide: QuotingFacade, useFactory: () => instance(quotingFacade) }],
     }).compileComponents();
@@ -43,7 +43,7 @@ describe('Quote List Page Component', () => {
     when(quotingFacade.loading$).thenReturn(of(true));
 
     fixture.detectChanges();
-    expect(element.querySelector('ish-loading')).toBeTruthy();
+    expect(element.querySelector('camfil-loading')).toBeTruthy();
   });
 
   it('should render quote list component if quotes present', () => {

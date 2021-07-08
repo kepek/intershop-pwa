@@ -25,7 +25,7 @@ import { findAllCustomElements } from 'ish-core/utils/dev/html-query-utils';
 import { categoryTree } from 'ish-core/utils/dev/test-data-utils';
 import { ContentIncludeComponent } from 'ish-shared/cms/components/content-include/content-include.component';
 import { ContentViewcontextComponent } from 'ish-shared/cms/components/content-viewcontext/content-viewcontext.component';
-import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
+import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
 import { CamfilProductGuidesComponent } from 'ish-shared/components/product/camfil-product-guides/camfil-product-guides.component';
 import { RecentlyViewedComponent } from 'ish-shared/components/recently/recently-viewed/recently-viewed.component';
 
@@ -60,6 +60,7 @@ describe('Camfil Product Page Component', () => {
       ],
       declarations: [
         CamfilProductPageComponent,
+        MockComponent(CamfilLoadingComponent),
         MockComponent(CamfilProductAttributesPreviewComponent),
         MockComponent(CamfilProductDetailComponent),
         MockComponent(CamfilProductGuidesComponent),
@@ -67,7 +68,6 @@ describe('Camfil Product Page Component', () => {
         MockComponent(CamfilProductLinksComponent),
         MockComponent(ContentIncludeComponent),
         MockComponent(ContentViewcontextComponent),
-        MockComponent(LoadingComponent),
         MockComponent(ProductBundlePartsComponent),
         MockComponent(ProductMasterVariationsComponent),
         MockComponent(RecentlyViewedComponent),
@@ -96,7 +96,7 @@ describe('Camfil Product Page Component', () => {
 
     fixture.detectChanges();
 
-    expect(findAllCustomElements(element)).toEqual(['ish-loading']);
+    expect(findAllCustomElements(element)).toEqual(['camfil-loading']);
   });
 
   xit('should display product-detail when product is available', () => {

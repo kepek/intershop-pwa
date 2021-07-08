@@ -7,7 +7,7 @@ import { instance, mock } from 'ts-mockito';
 import { AccountFacade } from 'ish-core/facades/account.facade';
 import { AppFacade } from 'ish-core/facades/app.facade';
 import { findAllCustomElements } from 'ish-core/utils/dev/html-query-utils';
-import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
+import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
 import { IdentityProviderLoginComponent } from 'ish-shared/components/login/identity-provider-login/identity-provider-login.component';
 
 import { LoginPageComponent } from './login-page.component';
@@ -22,8 +22,8 @@ describe('Login Page Component', () => {
       imports: [RouterTestingModule, TranslateModule.forRoot()],
       declarations: [
         LoginPageComponent,
+        MockComponent(CamfilLoadingComponent),
         MockComponent(IdentityProviderLoginComponent),
-        MockComponent(LoadingComponent),
       ],
       providers: [
         { provide: AccountFacade, useFactory: () => instance(mock(AccountFacade)) },

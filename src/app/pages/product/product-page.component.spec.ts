@@ -22,7 +22,7 @@ import { VariationProduct } from 'ish-core/models/product/product-variation.mode
 import { Product, ProductCompletenessLevel } from 'ish-core/models/product/product.model';
 import { findAllCustomElements } from 'ish-core/utils/dev/html-query-utils';
 import { categoryTree } from 'ish-core/utils/dev/test-data-utils';
-import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
+import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
 import { RecentlyViewedComponent } from 'ish-shared/components/recently/recently-viewed/recently-viewed.component';
 
 import { CamfilProductLinksComponent } from './camfil-product-links/camfil-product-links.component';
@@ -52,8 +52,8 @@ describe('Product Page Component', () => {
         RouterTestingModule.withRoutes([{ path: '**', component: ProductPageComponent }]),
       ],
       declarations: [
+        MockComponent(CamfilLoadingComponent),
         MockComponent(CamfilProductLinksComponent),
-        MockComponent(LoadingComponent),
         MockComponent(ProductBundlePartsComponent),
         MockComponent(ProductDetailComponent),
         MockComponent(ProductMasterVariationsComponent),
@@ -84,7 +84,7 @@ describe('Product Page Component', () => {
 
     fixture.detectChanges();
 
-    expect(findAllCustomElements(element)).toEqual(['ish-loading', 'ish-recently-viewed']);
+    expect(findAllCustomElements(element)).toEqual(['camfil-loading', 'ish-recently-viewed']);
   });
 
   it('should display product-detail when product is available', () => {

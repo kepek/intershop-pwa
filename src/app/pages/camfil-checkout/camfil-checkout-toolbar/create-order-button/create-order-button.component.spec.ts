@@ -8,8 +8,8 @@ import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { BasketView } from 'ish-core/models/basket/basket.model';
 import { CamfilCamCardModalComponent } from 'ish-shared/components/common/camfil-cam-card-modal/camfil-cam-card-modal.component';
 import { CamfilErrorComponent } from 'ish-shared/components/common/camfil-error/camfil-error.component';
+import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
 import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
-import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
 import { CamfilProductQuantityComponent } from 'ish-shared/components/product/camfil-product-quantity/camfil-product-quantity.component';
 import { ZipCodeComponent } from 'ish-shared/components/zip-code/zip-code.component';
 import { CamfilCounterComponent } from 'ish-shared/forms/components/camfil-counter/camfil-counter.component';
@@ -68,10 +68,10 @@ describe('Create Order Button Component', () => {
         CamfilErrorComponent,
         CamfilProductQuantityComponent,
         CreateOrderButtonComponent,
+        MockComponent(CamfilLoadingComponent),
         MockComponent(CamfilSmallCtaModalComponent),
         MockComponent(CreateOrderProductModalComponent),
         MockComponent(CreateOrderProductSuccessComponent),
-        MockComponent(LoadingComponent),
         MockComponent(OrderFormComponent),
         MockComponent(ZipCodeComponent),
       ],

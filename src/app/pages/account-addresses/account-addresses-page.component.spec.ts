@@ -3,7 +3,7 @@ import { MockComponent } from 'ng-mocks';
 import { instance, mock } from 'ts-mockito';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
-import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
+import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
 
 import { AccountAddressesPageComponent } from './account-addresses-page.component';
 import { AccountAddressesComponent } from './account-addresses/account-addresses.component';
@@ -18,7 +18,7 @@ describe('Account Addresses Page Component', () => {
       declarations: [
         AccountAddressesPageComponent,
         MockComponent(AccountAddressesComponent),
-        MockComponent(LoadingComponent),
+        MockComponent(CamfilLoadingComponent),
       ],
       providers: [{ provide: AccountFacade, useFactory: () => instance(mock(AccountFacade)) }],
     }).compileComponents();

@@ -7,7 +7,7 @@ import { instance, mock, when } from 'ts-mockito';
 
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { findAllCustomElements } from 'ish-core/utils/dev/html-query-utils';
-import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
+import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
 import { ProductItemComponent } from 'ish-shared/components/product/product-item/product-item.component';
 
 import { ProductListComponent } from './product-list.component';
@@ -22,7 +22,7 @@ describe('Product List Component', () => {
     shoppingFacade = mock(ShoppingFacade);
     await TestBed.configureTestingModule({
       imports: [TranslateModule.forRoot()],
-      declarations: [MockComponent(LoadingComponent), MockComponent(ProductItemComponent), ProductListComponent],
+      declarations: [MockComponent(CamfilLoadingComponent), MockComponent(ProductItemComponent), ProductListComponent],
       providers: [{ provide: ShoppingFacade, useFactory: () => instance(shoppingFacade) }],
     }).compileComponents();
   });
@@ -62,6 +62,6 @@ describe('Product List Component', () => {
 
     fixture.detectChanges();
 
-    expect(findAllCustomElements(element)).toEqual(['ish-loading', 'ish-loading']);
+    expect(findAllCustomElements(element)).toEqual(['camfil-loading', 'camfil-loading']);
   }));
 });
