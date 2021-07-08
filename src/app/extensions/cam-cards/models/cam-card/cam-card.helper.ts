@@ -81,6 +81,7 @@ export class CamCardHelper {
               const lastDeliveryDate = new Date().setHours(0, 0, 0, 0);
 
               camCardsFacade.updateCamCardAttribute(cc.id, {
+                orderLabel: cc.orderLabel,
                 lastDeliveryDate: new Date(lastDeliveryDate).toISOString(),
               });
 
