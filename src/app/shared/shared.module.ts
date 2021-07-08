@@ -113,7 +113,7 @@ import { CamfilQuickViewModalComponent } from './components/common/camfil-quick-
 import { ErrorMessageComponent } from './components/common/error-message/error-message.component';
 import { InfoBoxComponent } from './components/common/info-box/info-box.component';
 import { InplaceEditComponent } from './components/common/inplace-edit/inplace-edit.component';
-import { LoadingComponent } from './components/common/loading/loading.component';
+import { CamfilLoadingComponent } from './components/common/camfil-loading/camfil-loading.component';
 import { ModalDialogLinkComponent } from './components/common/modal-dialog-link/modal-dialog-link.component';
 import { ModalDialogComponent } from './components/common/modal-dialog/modal-dialog.component';
 import { SuccessMessageComponent } from './components/common/success-message/success-message.component';
@@ -222,6 +222,7 @@ import { CamfilDateAdapter } from 'ish-core/adapters/camfil-date-adapter';
 import { MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
 import { CAMFIL_DEFAULT_LANG, CAMFIL_FORMATS } from 'ish-core/internationalization.module';
 import { LangChangeEvent } from '@ngx-translate/core/lib/translate.service';
+import { LoadingComponent } from './components/common/loading/loading.component';
 
 const importExportModules = [
   AddressFormsSharedModule,
@@ -333,6 +334,7 @@ const declaredComponents = [
   LineItemEditComponent,
   LineItemEditDialogComponent,
   LineItemListComponent,
+  LoadingComponent,
   LoginFormComponent,
   LoginModalComponent,
   ModalAddNewProductComponent,
@@ -390,6 +392,7 @@ const exportedComponents = [
   CamfilHeaderBoxComponent,
   CamfilLineItemTableComponent,
   CamfilLinksBlockComponent,
+  CamfilLoadingComponent,
   CamfilModalDialogComponent,
   CamfilMyPageHeaderComponent,
   CamfilOrderListComponent,
@@ -432,7 +435,6 @@ const exportedComponents = [
   InfoBoxComponent,
   InplaceEditComponent,
   LineItemListComponent,
-  LoadingComponent,
   LoginFormComponent,
   ModalAddNewProductComponent,
   ModalDialogComponent,

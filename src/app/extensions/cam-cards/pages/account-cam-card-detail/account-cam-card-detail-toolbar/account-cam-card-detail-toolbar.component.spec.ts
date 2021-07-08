@@ -4,8 +4,8 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MockComponent } from 'ng-mocks';
 
 import { CamfilErrorComponent } from 'ish-shared/components/common/camfil-error/camfil-error.component';
+import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
 import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
-import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
 import { CamfilProductQuantityComponent } from 'ish-shared/components/product/camfil-product-quantity/camfil-product-quantity.component';
 import { CamfilCounterComponent } from 'ish-shared/forms/components/camfil-counter/camfil-counter.component';
 
@@ -31,7 +31,7 @@ describe('Account Cam Card Detail Toolbar Component', () => {
         CamfilProductQuantityComponent,
         CamfilSmallCtaModalComponent,
         MockComponent(CamCardPreferencesDialogComponent),
-        MockComponent(LoadingComponent),
+        MockComponent(CamfilLoadingComponent),
         ModalAddNewProductComponent,
         ModalAddNewSectionComponent,
       ],

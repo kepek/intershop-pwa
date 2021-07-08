@@ -4,7 +4,7 @@ import { MockComponent } from 'ng-mocks';
 import { instance, mock } from 'ts-mockito';
 
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
-import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
+import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
 
 import { CheckoutShippingPageComponent } from './checkout-shipping-page.component';
 import { CheckoutShippingComponent } from './checkout-shipping/checkout-shipping.component';
@@ -18,8 +18,8 @@ describe('Checkout Shipping Page Component', () => {
     await TestBed.configureTestingModule({
       declarations: [
         CheckoutShippingPageComponent,
+        MockComponent(CamfilLoadingComponent),
         MockComponent(CheckoutShippingComponent),
-        MockComponent(LoadingComponent),
       ],
       imports: [TranslateModule.forRoot()],
       providers: [{ provide: CheckoutFacade, useFactory: () => instance(mock(CheckoutFacade)) }],

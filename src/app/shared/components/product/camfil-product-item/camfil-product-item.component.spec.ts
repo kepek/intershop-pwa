@@ -7,7 +7,7 @@ import { AccountFacade } from 'ish-core/facades/account.facade';
 import { AppFacade } from 'ish-core/facades/app.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { VariationProductView } from 'ish-core/models/product-view/product-view.model';
-import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
+import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
 import { CamfilProductItemDetailedComponent } from 'ish-shared/components/product/camfil-product-item-detailed/camfil-product-item-detailed.component';
 import { CamfilProductItemSimpleComponent } from 'ish-shared/components/product/camfil-product-item-simple/camfil-product-item-simple.component';
 
@@ -28,9 +28,9 @@ describe('Camfil Product Item Component', () => {
     await TestBed.configureTestingModule({
       declarations: [
         CamfilProductItemComponent,
+        MockComponent(CamfilLoadingComponent),
         MockComponent(CamfilProductItemDetailedComponent),
         MockComponent(CamfilProductItemSimpleComponent),
-        MockComponent(LoadingComponent),
       ],
       providers: [
         { provide: ShoppingFacade, useFactory: () => instance(shoppingFacade) },

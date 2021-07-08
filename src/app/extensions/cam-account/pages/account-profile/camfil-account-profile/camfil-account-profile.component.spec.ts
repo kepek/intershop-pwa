@@ -11,7 +11,7 @@ import { Customer } from 'ish-core/models/customer/customer.model';
 import { User } from 'ish-core/models/user/user.model';
 import { DatePipe } from 'ish-core/pipes/date.pipe';
 import { CamfilErrorComponent } from 'ish-shared/components/common/camfil-error/camfil-error.component';
-import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
+import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
 
 import { CamfilAccountDetailsFormComponent } from '../camfil-account-details-form/camfil-account-details-form.component';
 import { CamfilAccountLanguageFormComponent } from '../camfil-account-language-form/camfil-account-language-form.component';
@@ -39,8 +39,8 @@ describe('Camfil Account Profile Component', () => {
         CamfilAccountPasswordFormComponent,
         CamfilAccountProfileComponent,
         CamfilErrorComponent,
+        MockComponent(CamfilLoadingComponent),
         MockComponent(FaIconComponent),
-        MockComponent(LoadingComponent),
         MockDirective(ServerHtmlDirective),
         MockPipe(DatePipe),
       ],

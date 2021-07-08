@@ -3,8 +3,8 @@ import { MockComponent } from 'ng-mocks';
 import { instance, mock } from 'ts-mockito';
 
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
+import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
 import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
-import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
 
 import { CamfilDeleteOrderComponent } from './camfil-delete-order.component';
 
@@ -18,7 +18,7 @@ describe('Camfil Delete Order Component', () => {
     checkoutFacadeMock = mock(CheckoutFacade);
 
     await TestBed.configureTestingModule({
-      declarations: [CamfilDeleteOrderComponent, CamfilSmallCtaModalComponent, MockComponent(LoadingComponent)],
+      declarations: [CamfilDeleteOrderComponent, CamfilSmallCtaModalComponent, MockComponent(CamfilLoadingComponent)],
       providers: [{ provide: CheckoutFacade, useFactory: () => instance(checkoutFacadeMock) }],
     }).compileComponents();
   });

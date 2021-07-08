@@ -3,7 +3,7 @@ import { provideMockStore } from '@ngrx/store/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { MockComponent } from 'ng-mocks';
 
-import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
+import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
 
 import { CamCardPreferencesDialogComponent } from '../../../shared/cam-card-preferences-dialog/cam-card-preferences-dialog.component';
 import { AccountCamCardPdfComponent } from '../account-cam-card-pdf/account-cam-card-pdf.component';
@@ -21,7 +21,7 @@ describe('Account Cam Card Toolbar Component', () => {
         AccountCamCardToolbarComponent,
         MockComponent(AccountCamCardPdfComponent),
         MockComponent(CamCardPreferencesDialogComponent),
-        MockComponent(LoadingComponent),
+        MockComponent(CamfilLoadingComponent),
       ],
       imports: [TranslateModule.forRoot()],
       providers: [provideMockStore()],

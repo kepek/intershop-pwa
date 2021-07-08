@@ -6,8 +6,8 @@ import { instance, mock, when } from 'ts-mockito';
 
 import { Price } from 'ish-core/models/price/price.model';
 import { PricePipe } from 'ish-core/models/price/price.pipe';
+import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
 import { InfoBoxComponent } from 'ish-shared/components/common/info-box/info-box.component';
-import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
 
 import { RequisitionManagementFacade } from '../../facades/requisition-management.facade';
 import { Requisition } from '../../models/requisition/requisition.model';
@@ -77,8 +77,8 @@ describe('Requisition Widget Component', () => {
     await TestBed.configureTestingModule({
       imports: [TranslateModule.forRoot()],
       declarations: [
+        MockComponent(CamfilLoadingComponent),
         MockComponent(InfoBoxComponent),
-        MockComponent(LoadingComponent),
         MockPipe(PricePipe, (price: Price) => `${price.currency} ${price.value}`),
         RequisitionWidgetComponent,
       ],
@@ -104,7 +104,7 @@ describe('Requisition Widget Component', () => {
   it('should render loading component if requisitions loading', () => {
     when(requisitionManagementFacade.requisitionsLoading$).thenReturn(of(true));
     fixture.detectChanges();
-    expect(element.querySelector('ish-loading')).toBeTruthy();
+    expect(element.querySelector('camfil-loading')).toBeTruthy();
   });
 
   it('should display right amount of approvals', () => {

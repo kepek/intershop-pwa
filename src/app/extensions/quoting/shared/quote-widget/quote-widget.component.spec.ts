@@ -5,8 +5,8 @@ import { MockComponent } from 'ng-mocks';
 import { of } from 'rxjs';
 import { instance, mock, when } from 'ts-mockito';
 
+import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
 import { InfoBoxComponent } from 'ish-shared/components/common/info-box/info-box.component';
-import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
 
 import { QuotingFacade } from '../../facades/quoting.facade';
 import { Quote } from '../../models/quoting/quoting.model';
@@ -25,7 +25,7 @@ describe('Quote Widget Component', () => {
 
     await TestBed.configureTestingModule({
       imports: [TranslateModule.forRoot()],
-      declarations: [MockComponent(InfoBoxComponent), MockComponent(LoadingComponent), QuoteWidgetComponent],
+      declarations: [MockComponent(CamfilLoadingComponent), MockComponent(InfoBoxComponent), QuoteWidgetComponent],
       providers: [{ provide: QuotingFacade, useFactory: () => instance(quotingFacade) }],
     }).compileComponents();
   });
@@ -45,7 +45,7 @@ describe('Quote Widget Component', () => {
   it('should render loading component if quotes or quoteRequests loading', () => {
     when(quotingFacade.loading$).thenReturn(of(true));
     fixture.detectChanges();
-    expect(element.querySelector('ish-loading')).toBeTruthy();
+    expect(element.querySelector('camfil-loading')).toBeTruthy();
   });
 
   it('should calculate and display the right amounts when rendered', () => {

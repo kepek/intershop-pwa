@@ -7,8 +7,8 @@ import { instance, mock } from 'ts-mockito';
 import { ServerHtmlDirective } from 'ish-core/directives/server-html.directive';
 import { AccountFacade } from 'ish-core/facades/account.facade';
 import { ContentIncludeComponent } from 'ish-shared/cms/components/content-include/content-include.component';
+import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
 import { ErrorMessageComponent } from 'ish-shared/components/common/error-message/error-message.component';
-import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
 
 import { CamfilRemindPasswordFormComponent } from '../camfil-remind-password-form/camfil-remind-password-form.component';
 import { CamfilUpdatePasswordFormComponent } from '../camfil-update-password-form/camfil-update-password-form.component';
@@ -24,11 +24,11 @@ describe('Camfil Remind Password Component', () => {
     await TestBed.configureTestingModule({
       declarations: [
         CamfilRemindPasswordComponent,
+        MockComponent(CamfilLoadingComponent),
         MockComponent(CamfilRemindPasswordFormComponent),
         MockComponent(CamfilUpdatePasswordFormComponent),
         MockComponent(ContentIncludeComponent),
         MockComponent(ErrorMessageComponent),
-        MockComponent(LoadingComponent),
         MockDirective(ServerHtmlDirective),
       ],
       imports: [RouterTestingModule, TranslateModule.forRoot()],

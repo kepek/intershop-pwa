@@ -10,7 +10,7 @@ import { Order } from 'ish-core/models/order/order.model';
 import { PricePipe } from 'ish-core/models/price/price.pipe';
 import { DatePipe } from 'ish-core/pipes/date.pipe';
 import { AddressComponent } from 'ish-shared/components/address/address/address.component';
-import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
+import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
 
 import { OrderListComponent } from './order-list.component';
 
@@ -30,7 +30,7 @@ describe('Order List Component', () => {
     await TestBed.configureTestingModule({
       declarations: [
         MockComponent(AddressComponent),
-        MockComponent(LoadingComponent),
+        MockComponent(CamfilLoadingComponent),
         MockPipe(DatePipe),
         MockPipe(PricePipe),
         OrderListComponent,
@@ -61,7 +61,7 @@ describe('Order List Component', () => {
   it('should display loading overlay if orders are loading', () => {
     when(accountFacade.ordersLoading$).thenReturn(of(true));
     fixture.detectChanges();
-    expect(element.querySelector('ish-loading')).toBeTruthy();
+    expect(element.querySelector('camfil-loading')).toBeTruthy();
   });
 
   it('should display a list if there are orders', () => {

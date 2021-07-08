@@ -40,7 +40,8 @@
 
               <b>{{ 'camfil.account.cam_card.name' | translate }}</b
               ><br />
-              <span class="cam-card-name">{{ camCards.name }}</span><br />
+              <span class="cam-card-name">{{ camCards.name }}</span
+              ><br />
               <b>{{ 'camfil.account.cam_card.customer' | translate }}</b
               ><br />
               {{ camCards.customer.companyName }}<br />
@@ -361,5 +362,5 @@
 </ng-template>
 
 <div *ngIf="loading || productAddingInProgress" class="loader-container">
-  <ish-loading></ish-loading>
+  <camfil-loading></camfil-loading>
 </div>

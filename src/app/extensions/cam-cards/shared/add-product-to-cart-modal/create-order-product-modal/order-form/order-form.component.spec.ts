@@ -5,7 +5,7 @@ import { instance, mock, when } from 'ts-mockito';
 
 import { AddressSortPipe } from 'ish-core/pipes/camfil-address-sort.pipe';
 import { CamfilErrorComponent } from 'ish-shared/components/common/camfil-error/camfil-error.component';
-import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
+import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
 import { ZipCodeComponent } from 'ish-shared/components/zip-code/zip-code.component';
 
 import { CamCardsFacade } from '../../../../facades/cam-cards.facade';
@@ -24,7 +24,7 @@ describe('Order Form Component', () => {
     await TestBed.configureTestingModule({
       declarations: [
         CamfilErrorComponent,
-        MockComponent(LoadingComponent),
+        MockComponent(CamfilLoadingComponent),
         MockComponent(ZipCodeComponent),
         MockPipe(AddressSortPipe),
         OrderFormComponent,

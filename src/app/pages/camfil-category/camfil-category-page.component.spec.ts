@@ -5,7 +5,7 @@ import { instance, mock } from 'ts-mockito';
 import { AppFacade } from 'ish-core/facades/app.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { findAllCustomElements } from 'ish-core/utils/dev/html-query-utils';
-import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
+import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
 
 import { CategoryCategoriesComponent } from '../category/category-categories/category-categories.component';
 
@@ -26,8 +26,8 @@ describe('Camfil Category Page Component', () => {
         CamfilCategoryPageComponent,
         MockComponent(CamfilCategoryCategoriesComponent),
         MockComponent(CamfilCategoryProductsComponent),
+        MockComponent(CamfilLoadingComponent),
         MockComponent(CategoryCategoriesComponent),
-        MockComponent(LoadingComponent),
       ],
       providers: [
         { provide: ShoppingFacade, useFactory: () => instance(shoppingFacade) },

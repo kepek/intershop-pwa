@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { MockComponent } from 'ng-mocks';
 
-import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
+import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
 import { CamfilProductItemComponent } from 'ish-shared/components/product/camfil-product-item/camfil-product-item.component';
 
 import { RecentlyViewedAllComponent } from './recently-viewed-all.component';
@@ -15,8 +15,8 @@ describe('Recently Viewed All Component', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [
+        MockComponent(CamfilLoadingComponent),
         MockComponent(CamfilProductItemComponent),
-        MockComponent(LoadingComponent),
         RecentlyViewedAllComponent,
       ],
       imports: [TranslateModule.forRoot()],

@@ -8,9 +8,9 @@ import { instance, mock, when } from 'ts-mockito';
 
 import { AddressComponent } from 'ish-shared/components/address/address/address.component';
 import { BasketCostSummaryComponent } from 'ish-shared/components/basket/basket-cost-summary/basket-cost-summary.component';
+import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
 import { ErrorMessageComponent } from 'ish-shared/components/common/error-message/error-message.component';
 import { InfoBoxComponent } from 'ish-shared/components/common/info-box/info-box.component';
-import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
 import { LineItemListComponent } from 'ish-shared/components/line-item/line-item-list/line-item-list.component';
 
 import { RequisitionBuyerApprovalComponent } from '../../components/requisition-buyer-approval/requisition-buyer-approval.component';
@@ -34,11 +34,11 @@ describe('Requisition Detail Page Component', () => {
       declarations: [
         MockComponent(AddressComponent),
         MockComponent(BasketCostSummaryComponent),
+        MockComponent(CamfilLoadingComponent),
         MockComponent(ErrorMessageComponent),
         MockComponent(FaIconComponent),
         MockComponent(InfoBoxComponent),
         MockComponent(LineItemListComponent),
-        MockComponent(LoadingComponent),
         MockComponent(RequisitionBuyerApprovalComponent),
         MockComponent(RequisitionRejectDialogComponent),
         MockComponent(RequisitionSummaryComponent),

@@ -11,7 +11,7 @@ import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { BasketView } from 'ish-core/models/basket/basket.model';
 import { User } from 'ish-core/models/user/user.model';
 import { BasketMockData } from 'ish-core/utils/dev/basket-mock-data';
-import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
+import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
 
 import { CheckoutAddressAnonymousComponent } from './checkout-address-anonymous/checkout-address-anonymous.component';
 import { CheckoutAddressPageComponent } from './checkout-address-page.component';
@@ -36,9 +36,9 @@ describe('Checkout Address Page Component', () => {
       declarations: [
         CheckoutAddressPageComponent,
         DummyComponent,
+        MockComponent(CamfilLoadingComponent),
         MockComponent(CheckoutAddressAnonymousComponent),
         MockComponent(CheckoutAddressComponent),
-        MockComponent(LoadingComponent),
       ],
 
       imports: [

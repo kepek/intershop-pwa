@@ -17,8 +17,8 @@ import { AddressComponent } from 'ish-shared/components/address/address/address.
 import { CamfilBasketCostSummaryComponent } from 'ish-shared/components/basket/camfil-basket-cost-summary/camfil-basket-cost-summary.component';
 import { CamfilCamCardModalComponent } from 'ish-shared/components/common/camfil-cam-card-modal/camfil-cam-card-modal.component';
 import { CamfilErrorComponent } from 'ish-shared/components/common/camfil-error/camfil-error.component';
+import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
 import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
-import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
 import { CamfilProductAddToBasketComponent } from 'ish-shared/components/product/camfil-product-add-to-basket/camfil-product-add-to-basket.component';
 import { CamfilProductQuantityComponent } from 'ish-shared/components/product/camfil-product-quantity/camfil-product-quantity.component';
 import { ZipCodeComponent } from 'ish-shared/components/zip-code/zip-code.component';
@@ -66,11 +66,11 @@ describe('Camfil Checkout List Component', () => {
         MockComponent(CamfilBasketCostSummaryComponent),
         MockComponent(CamfilCheckoutLineItemComponent),
         MockComponent(CamfilErrorComponent),
+        MockComponent(CamfilLoadingComponent),
         MockComponent(CamfilProductAddToBasketComponent),
         MockComponent(CamfilSearchBoxComponent),
         MockComponent(ContentIncludeComponent),
         MockComponent(FaIconComponent),
-        MockComponent(LoadingComponent),
         MockComponent(ZipCodeComponent),
         MockDirective(ServerHtmlDirective),
         MockPipe(AddressSortPipe),

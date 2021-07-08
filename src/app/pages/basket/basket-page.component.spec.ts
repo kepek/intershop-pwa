@@ -7,7 +7,7 @@ import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { FeatureToggleModule } from 'ish-core/feature-toggle.module';
 import { BasketView } from 'ish-core/models/basket/basket.model';
 import { LineItem } from 'ish-core/models/line-item/line-item.model';
-import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
+import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
 import { RecentlyViewedComponent } from 'ish-shared/components/recently/recently-viewed/recently-viewed.component';
 
 import { BasketPageComponent } from './basket-page.component';
@@ -25,7 +25,7 @@ describe('Basket Page Component', () => {
     await TestBed.configureTestingModule({
       declarations: [
         BasketPageComponent,
-        MockComponent(LoadingComponent),
+        MockComponent(CamfilLoadingComponent),
         MockComponent(RecentlyViewedComponent),
         MockComponent(ShoppingBasketComponent),
         MockComponent(ShoppingBasketEmptyComponent),
@@ -51,7 +51,7 @@ describe('Basket Page Component', () => {
     when(checkoutFacade.basketLoading$).thenReturn(of(true));
 
     fixture.detectChanges();
-    expect(element.querySelector('ish-loading')).toBeTruthy();
+    expect(element.querySelector('camfil-loading')).toBeTruthy();
   });
 
   it('should render empty basket component if the basket has no line items', () => {

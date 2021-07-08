@@ -7,7 +7,7 @@ import { ServerHtmlDirective } from 'ish-core/directives/server-html.directive';
 import { AccountFacade } from 'ish-core/facades/account.facade';
 import { AppFacade } from 'ish-core/facades/app.facade';
 import { CamfilErrorComponent } from 'ish-shared/components/common/camfil-error/camfil-error.component';
-import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
+import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
 
 import { CamAccountFacade } from '../../facades/cam-account.facade';
 
@@ -31,8 +31,8 @@ describe('Camfil Account Profile Page Component', () => {
         CamfilAccountProfileComponent,
         CamfilAccountProfilePageComponent,
         CamfilErrorComponent,
+        MockComponent(CamfilLoadingComponent),
         MockComponent(FaIconComponent),
-        MockComponent(LoadingComponent),
         MockDirective(ServerHtmlDirective),
       ],
       providers: [

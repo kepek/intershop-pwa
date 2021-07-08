@@ -9,8 +9,8 @@ import { instance, mock, when } from 'ts-mockito';
 
 import { AppFacade } from 'ish-core/facades/app.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
+import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
 import { ErrorMessageComponent } from 'ish-shared/components/common/error-message/error-message.component';
-import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
 import { CamfilProductAddToBasketComponent } from 'ish-shared/components/product/camfil-product-add-to-basket/camfil-product-add-to-basket.component';
 
 import { CamCardsFacade } from '../../facades/cam-cards.facade';
@@ -44,10 +44,10 @@ describe('Account Cam Card Detail Page Component', () => {
         MockComponent(CamCardPreferencesComponent),
         MockComponent(CamCardPreferencesDialogComponent),
         MockComponent(CamCardProductCommentComponent),
+        MockComponent(CamfilLoadingComponent),
         MockComponent(CamfilProductAddToBasketComponent),
         MockComponent(ErrorMessageComponent),
         MockComponent(FaIconComponent),
-        MockComponent(LoadingComponent),
       ],
       providers: [
         { provide: CamCardsFacade, useFactory: () => instance(camCardsFacade) },

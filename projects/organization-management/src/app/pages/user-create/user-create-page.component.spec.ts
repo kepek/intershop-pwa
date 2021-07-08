@@ -5,7 +5,7 @@ import { MockComponent, MockPipe } from 'ng-mocks';
 import { instance, mock } from 'ts-mockito';
 
 import { ServerSettingPipe } from 'ish-core/pipes/server-setting.pipe';
-import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
+import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
 import { SpecialValidators } from 'ish-shared/forms/validators/special-validators';
 
 import { UserBudgetFormComponent } from '../../components/user-budget-form/user-budget-form.component';
@@ -27,7 +27,7 @@ describe('User Create Page Component', () => {
     await TestBed.configureTestingModule({
       imports: [ReactiveFormsModule, TranslateModule.forRoot()],
       declarations: [
-        MockComponent(LoadingComponent),
+        MockComponent(CamfilLoadingComponent),
         MockComponent(UserBudgetFormComponent),
         MockComponent(UserProfileFormComponent),
         MockComponent(UserRolesSelectionComponent),

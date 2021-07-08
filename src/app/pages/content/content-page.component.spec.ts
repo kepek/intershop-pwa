@@ -8,7 +8,7 @@ import { CMSFacade } from 'ish-core/facades/cms.facade';
 import { createContentPageletEntryPointView } from 'ish-core/models/content-view/content-view.model';
 import { findAllCustomElements } from 'ish-core/utils/dev/html-query-utils';
 import { ContentPageletComponent } from 'ish-shared/cms/components/content-pagelet/content-pagelet.component';
-import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
+import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
 
 import { ContentPageComponent } from './content-page.component';
 
@@ -33,7 +33,11 @@ describe('Content Page Component', () => {
     when(cmsFacade.contentPageLoading$).thenReturn(EMPTY);
 
     await TestBed.configureTestingModule({
-      declarations: [ContentPageComponent, MockComponent(ContentPageletComponent), MockComponent(LoadingComponent)],
+      declarations: [
+        ContentPageComponent,
+        MockComponent(CamfilLoadingComponent),
+        MockComponent(ContentPageletComponent),
+      ],
       providers: [{ provide: CMSFacade, useFactory: () => instance(cmsFacade) }],
     }).compileComponents();
   });
@@ -56,7 +60,7 @@ describe('Content Page Component', () => {
 
     expect(findAllCustomElements(element)).toMatchInlineSnapshot(`
       Array [
-        "ish-loading",
+        "camfil-loading",
       ]
     `);
   });

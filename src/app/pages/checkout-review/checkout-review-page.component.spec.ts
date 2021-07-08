@@ -4,7 +4,7 @@ import { instance, mock } from 'ts-mockito';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
-import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
+import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
 
 import { CheckoutReviewPageComponent } from './checkout-review-page.component';
 import { CheckoutReviewComponent } from './checkout-review/checkout-review.component';
@@ -18,8 +18,8 @@ describe('Checkout Review Page Component', () => {
     await TestBed.configureTestingModule({
       declarations: [
         CheckoutReviewPageComponent,
+        MockComponent(CamfilLoadingComponent),
         MockComponent(CheckoutReviewComponent),
-        MockComponent(LoadingComponent),
       ],
       providers: [
         { provide: CheckoutFacade, useFactory: () => instance(mock(CheckoutFacade)) },

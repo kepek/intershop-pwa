@@ -13,7 +13,7 @@ import { Category } from 'ish-core/models/category/category.model';
 import { SuggestTerm } from 'ish-core/models/suggest-term/suggest-term.model';
 import { HighlightPipe } from 'ish-core/pipes/highlight.pipe';
 import { hideSearchBox } from 'ish-core/store/shopping/search';
-import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
+import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
 import { CamfilProductListingComponent } from 'ish-shared/components/product/camfil-product-listing/camfil-product-listing.component';
 
 import { CamfilSearchBoxComponent } from './camfil-search-box.component';
@@ -37,9 +37,9 @@ describe('Camfil Search Box Component', () => {
       declarations: [
         CamfilSearchBoxComponent,
         MockComponent(CamfilCategoryBoxComponent),
+        MockComponent(CamfilLoadingComponent),
         MockComponent(CamfilProductListingComponent),
         MockComponent(FaIconComponent),
-        MockComponent(LoadingComponent),
         MockPipe(HighlightPipe),
       ],
       providers: [

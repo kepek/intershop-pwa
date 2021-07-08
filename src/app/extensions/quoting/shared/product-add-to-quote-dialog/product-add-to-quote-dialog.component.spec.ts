@@ -6,8 +6,8 @@ import { of } from 'rxjs';
 import { instance, mock, when } from 'ts-mockito';
 
 import { findAllCustomElements } from 'ish-core/utils/dev/html-query-utils';
+import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
 import { ErrorMessageComponent } from 'ish-shared/components/common/error-message/error-message.component';
-import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
 
 import { QuoteContextFacade } from '../../facades/quote-context.facade';
 import { Quote, QuoteRequest } from '../../models/quoting/quoting.model';
@@ -29,8 +29,8 @@ describe('Product Add To Quote Dialog Component', () => {
     await TestBed.configureTestingModule({
       imports: [RouterTestingModule, TranslateModule.forRoot()],
       declarations: [
+        MockComponent(CamfilLoadingComponent),
         MockComponent(ErrorMessageComponent),
-        MockComponent(LoadingComponent),
         MockComponent(QuoteEditComponent),
         MockComponent(QuoteInteractionsComponent),
         MockComponent(QuoteViewComponent),
