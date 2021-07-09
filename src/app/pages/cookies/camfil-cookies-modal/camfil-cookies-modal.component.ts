@@ -28,6 +28,7 @@ export class CamfilCookiesModalComponent implements OnInit {
 
   ngOnInit() {
     this.cookieConsentSettings = JSON.parse(this.cookiesService.get('cookieConsent') || 'null');
+
     Object.keys(this.cookieConsentOptions.options).forEach(option => {
       if (
         this.cookieConsentOptions.options[option].required ||
@@ -46,6 +47,7 @@ export class CamfilCookiesModalComponent implements OnInit {
     this.cookiesService.setCookiesConsentFor(
       Object.keys(this.selectedIds).reduce((acc, x) => (this.selectedIds[x] ? acc.push(x) && acc : acc), [])
     );
+
     this.close.emit();
   }
 
