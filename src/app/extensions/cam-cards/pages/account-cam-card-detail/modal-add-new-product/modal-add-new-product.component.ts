@@ -137,7 +137,7 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy {
     if (this.productForm.valid && !this.showSkuError) {
       const sku = this.getField('sku')?.value ? String(this.getField('sku').value) : undefined;
       const quantity = this.getField('quantity')?.value ? Number(this.getField('quantity')?.value) : 1;
-      const label = this.getField('boxLabel')?.value !== '' ? String(this.getField('boxLabel').value) : undefined;
+      const label = this.getField('boxLabel')?.value ? String(this.getField('boxLabel').value) : undefined;
       const comment: CamCardItemComment = label ? { label } : undefined;
       const lineItemAttributes = AttributeHelper.calculateAttrsToAddFromForm(this.productForm);
 
