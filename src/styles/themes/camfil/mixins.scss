@@ -131,3 +131,43 @@
   text-align: left;
   text-decoration: underline;
 }
+
+@mixin table-sort-arrow {
+  position: relative;
+  opacity: 1 !important;
+  transform: translateY(0%) !important;
+
+  &::before,
+  &::after {
+    position: absolute;
+    top: -1px;
+    left: 2px;
+    content: '';
+    @include triangle(top, 5px, 5px, #222);
+  }
+  &::after {
+    top: 9px;
+    transform: rotate(180deg);
+  }
+
+  * {
+    visibility: hidden;
+  }
+
+  [aria-sort='ascending'] & {
+    &::after {
+      display: none;
+    }
+    &::before {
+      top: 3px;
+    }
+  }
+  [aria-sort='descending'] & {
+    &::before {
+      display: none;
+    }
+    &::after {
+      top: 5px;
+    }
+  }
+}
