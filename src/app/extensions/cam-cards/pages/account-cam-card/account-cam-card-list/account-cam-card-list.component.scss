@@ -71,13 +71,7 @@
     }
   }
   .loader-container {
-    camfil-loading {
-      ::ng-deep {
-        .loading {
-          background-attachment: fixed;
-        }
-      }
-    }
+    @include fixed_loading;
   }
   .cam-card {
     &-row-element {
