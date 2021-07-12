@@ -25,7 +25,8 @@ export class ArticleDetailsComponent implements OnInit {
   measurementGlobalError$: Observable<boolean>;
   filledMeasurements: any[];
   requiresMeasurement: boolean;
-
+  filterArea: number;
+  filterAreaValidated = true;
   validators = {
     boxLabel: [
       {
@@ -42,6 +43,7 @@ export class ArticleDetailsComponent implements OnInit {
       [];
     this.maxVal = AttributeHelper.getAttributeValueByAttributeName(attributes, 'Width') || undefined;
     this.requiresMeasurement = ProductHelper.getRequiresMeasurement(this.product);
+    this.filterArea = ProductHelper.getFilterArea(this.product);
     this.measurementGlobalError$ = this.quantityForm.get('measurementErrorInfo')?.valueChanges;
   }
 
@@ -63,6 +65,9 @@ export class ArticleDetailsComponent implements OnInit {
 
   validateVal() {
     this.filledMeasurements = this.MEASUREMENTS.map(val => this.getField(val).value).filter(val => val);
+    if (this.filterArea && this.filledMeasurements?.length > 1 && this.diameterDisabled) {
+      this.filterAreaValidated = this.validateFilterArea(this.filledMeasurements);
+    }
     this.showError =
       this.filledMeasurements.length && this.maxVal
         ? !this.filledMeasurements.find(val => this.maxVal > val)
@@ -70,7 +75,7 @@ export class ArticleDetailsComponent implements OnInit {
     const showGlobalError = !this.filledMeasurements.length || (this.diameterDisabled && !this.widthAndHeightFilled);
     this.quantityForm?.patchValue({ measurementErrorInfo: showGlobalError });
 
-    if (!this.diameterDisabled && !this.widthAndHeightDisabled) {
+    if (!this.diameterDisabled && !this.widthAndHeightDisabled && this.filterAreaValidated) {
       this.enableFields();
     } else if (this.diameterDisabled) {
       this.disableField(['measurementDiameter']);
@@ -85,5 +90,9 @@ export class ArticleDetailsComponent implements OnInit {
 
   enableFields() {
     this.MEASUREMENTS?.forEach(m => this.quantityForm.controls[m].enable());
+  }
+
+  validateFilterArea(filledMeasurements): boolean {
+    return (filledMeasurements[0] * filledMeasurements[1]) / 1000000 <= this.filterArea;
   }
 }

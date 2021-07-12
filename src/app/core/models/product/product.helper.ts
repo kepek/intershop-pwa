@@ -298,4 +298,10 @@ export class ProductHelper {
       form?.get('measurementDiameter')?.value;
     return requiresMeasurement && !measurements;
   }
+
+  static getFilterArea(data: Product): number {
+    const label = AttributeGroupTypes.ProductsListLabelAttributes;
+    const attrs = data?.attributeGroups?.[label]?.attributes;
+    return AttributeHelper.getAttributeValueByAttributeName<number>(attrs, 'FilterArea') || 0;
+  }
 }
