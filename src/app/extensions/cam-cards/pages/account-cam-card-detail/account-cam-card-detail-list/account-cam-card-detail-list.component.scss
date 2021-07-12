@@ -13,6 +13,10 @@
       }
     }
   }
+
+  .loader-container {
+    @include fixed_loading;
+  }
 }
 
 .sub-camcard-collapse {

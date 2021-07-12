@@ -171,3 +171,13 @@
     }
   }
 }
+
+@mixin fixed_loading {
+  camfil-loading {
+    ::ng-deep {
+      .loading {
+        background-attachment: fixed;
+      }
+    }
+  }
+}
