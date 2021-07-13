@@ -16,6 +16,7 @@ import { CamfilProductAttributeValPipe } from 'ish-core/pipes/camfil-product-att
 import { DatePipe } from 'ish-core/pipes/date.pipe';
 import { ProductRoutePipe } from 'ish-core/routing/product/product-route.pipe';
 import { CamfilErrorComponent } from 'ish-shared/components/common/camfil-error/camfil-error.component';
+import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
 import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
 import { CamfilProductAddToBasketComponent } from 'ish-shared/components/product/camfil-product-add-to-basket/camfil-product-add-to-basket.component';
 import { CamfilProductAttributeComponent } from 'ish-shared/components/product/camfil-product-attribute/camfil-product-attribute.component';
@@ -49,6 +50,7 @@ describe('Camfil Checkout Line Item Component', () => {
         CamfilCheckoutLineItemComponent,
         CamfilErrorComponent,
         CamfilSmallCtaModalComponent,
+        MockComponent(CamfilLoadingComponent),
         MockComponent(CamfilProductAddToBasketComponent),
         MockComponent(CamfilProductAttributeComponent),
         MockComponent(CamfilProductIdComponent),
