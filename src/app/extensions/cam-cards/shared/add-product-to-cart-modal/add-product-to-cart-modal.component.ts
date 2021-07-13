@@ -54,6 +54,7 @@ export class AddProductToCartModalComponent implements OnInit, OnDestroy {
   submitted = false;
   basketAddresses: Address[];
   isNewAddress = AddressHelper.isNewAddress;
+  validateFilterArea = ProductHelper.validateFilterArea;
   private destroy$ = new Subject<void>();
 
   constructor(
@@ -124,13 +125,15 @@ export class AddProductToCartModalComponent implements OnInit, OnDestroy {
       (this.quantityForm.get('measurementWidth')?.value && this.quantityForm.get('measurementHeight')?.value) ||
       this.quantityForm.get('measurementDiameter')?.value;
 
-    if (requiresMeasurement && !measurements) {
+    const filterAreaValidated = this.validateFilterArea(this.product, this.quantityForm);
+
+    if (requiresMeasurement && !measurements && filterAreaValidated) {
       this.quantityForm.patchValue({ measurementErrorInfo: true });
       markAsDirtyRecursive(this.quantityForm);
       return;
     }
 
-    if (this.quantityForm.valid && this.selectedOrderId) {
+    if (this.quantityForm.valid && this.selectedOrderId && filterAreaValidated) {
       const currentBucket = this.buckets.find(bucket => bucket.id === this.selectedOrderId);
 
       const quantity = this.quantityForm.get('quantity').value;

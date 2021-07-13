@@ -72,7 +72,7 @@
           type="submit"
           (click)="submitForm()"
           class="btn btn-link add-new-product__buttons--link"
-          [disabled]="disableIfNoMeasurements() || !this.isSkuValid()"
+          [disabled]="disableIfNoMeasurements() || !this.isSkuValid() || !validateFilterArea(product, productForm)"
         >
           {{ 'camfil.modal.addNewProduct.button.add_product' | translate }}
         </button>

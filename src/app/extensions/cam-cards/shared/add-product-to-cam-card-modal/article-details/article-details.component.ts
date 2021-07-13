@@ -19,13 +19,14 @@ export class ArticleDetailsComponent implements OnInit {
   @Input() isInAddNewProductModal?: boolean;
   @Input() showMeasurementsForm?: boolean;
   MEASUREMENTS = ['measurementWidth', 'measurementHeight', 'measurementDiameter'];
-
+  validateFilterArea = ProductHelper.validateFilterArea;
   maxVal: number;
   showError: boolean;
   measurementGlobalError$: Observable<boolean>;
   filledMeasurements: any[];
   requiresMeasurement: boolean;
-
+  filterArea: number;
+  filterAreaValidated = true;
   validators = {
     boxLabel: [
       {
@@ -42,6 +43,7 @@ export class ArticleDetailsComponent implements OnInit {
       [];
     this.maxVal = AttributeHelper.getAttributeValueByAttributeName(attributes, 'Width') || undefined;
     this.requiresMeasurement = ProductHelper.getRequiresMeasurement(this.product);
+    this.filterArea = ProductHelper.getFilterArea(this.product);
     this.measurementGlobalError$ = this.quantityForm.get('measurementErrorInfo')?.valueChanges;
   }
 
@@ -63,14 +65,16 @@ export class ArticleDetailsComponent implements OnInit {
 
   validateVal() {
     this.filledMeasurements = this.MEASUREMENTS.map(val => this.getField(val).value).filter(val => val);
+    if (this.filterArea && this.filledMeasurements?.length > 1 && this.diameterDisabled) {
+      this.filterAreaValidated = this.validateFilterArea(this.product, this.quantityForm);
+    }
     this.showError =
       this.filledMeasurements.length && this.maxVal
         ? !this.filledMeasurements.find(val => this.maxVal > val)
         : undefined;
     const showGlobalError = !this.filledMeasurements.length || (this.diameterDisabled && !this.widthAndHeightFilled);
     this.quantityForm?.patchValue({ measurementErrorInfo: showGlobalError });
-
-    if (!this.diameterDisabled && !this.widthAndHeightDisabled) {
+    if (!this.diameterDisabled && !this.widthAndHeightDisabled && this.filterAreaValidated) {
       this.enableFields();
     } else if (this.diameterDisabled) {
       this.disableField(['measurementDiameter']);

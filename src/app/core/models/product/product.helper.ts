@@ -298,4 +298,21 @@ export class ProductHelper {
       form?.get('measurementDiameter')?.value;
     return requiresMeasurement && !measurements;
   }
+
+  static getFilterArea(data: Product): number {
+    const label = AttributeGroupTypes.ProductsListLabelAttributes;
+    const attrs = data?.attributeGroups?.[label]?.attributes;
+    return AttributeHelper.getAttributeValueByAttributeName<number>(attrs, 'FilterArea') || 0;
+  }
+
+  static validateFilterArea(product: Product, form): boolean {
+    const filterArea = ProductHelper.getFilterArea(product);
+    const width = form?.get('measurementWidth')?.value;
+    const height = form?.get('measurementHeight')?.value;
+    if (!filterArea) {
+      return true;
+    } else {
+      return (width * height) / 1000000 <= filterArea;
+    }
+  }
 }

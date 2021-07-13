@@ -1063,6 +1063,7 @@
   "camfil.modal.cta.button.ok": "OK",
   "camfil.modal.edit_order.button.header": "Edit order details",
   "camfil.modal.edit_order.button.save": "Save",
+  "camfil.modal.filter_area.error.text": "The measurement is too high",
   "camfil.modal.ie.text": "Unfortunately we do not support Internet Explorer. Please use one of the following browsers to explore our web shop: Google Chrome, Microsoft Edge, or Mozilla Firefox. Thank you!",
   "camfil.modal.measurement.error": "Wrong data - any input must have max value - {{0}}",
   "camfil.modal.measurement.error.global": "Please fill in measurement!",

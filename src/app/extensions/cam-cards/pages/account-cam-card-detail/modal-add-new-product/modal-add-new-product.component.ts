@@ -65,7 +65,7 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy {
   basketAddresses: Address[];
 
   validators = ADD_NEW_PRODUCT_VALIDATORS;
-
+  validateFilterArea = ProductHelper.validateFilterArea;
   @ViewChild('modal', { static: false }) modalTemplate: TemplateRef<unknown>;
 
   ngOnInit() {

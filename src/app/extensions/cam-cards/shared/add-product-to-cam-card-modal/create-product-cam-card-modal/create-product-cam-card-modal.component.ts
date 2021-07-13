@@ -80,7 +80,7 @@ export class CreateProductCamCardModalComponent implements OnInit, OnDestroy {
   @Output() createAndContinueEmitter = new EventEmitter<CreateProductCamCardAndEmitter>();
 
   @ViewChild('modal', { static: false }) modalTemplate: TemplateRef<unknown>;
-
+  validateFilterArea = ProductHelper.validateFilterArea;
   constructor(
     private fb: FormBuilder,
     private camCardsFacade: CamCardsFacade,
