@@ -78,7 +78,7 @@ export class CamCardHelper {
                 delete productsToAdd.extensions.createdFromCamCardId;
               }
 
-              const lastDeliveryDate = new Date().setHours(0, 0, 0, 0);
+              const lastDeliveryDate = new Date();
 
               camCardsFacade.updateCamCardAttribute(cc.id, {
                 orderLabel: cc.orderLabel,
