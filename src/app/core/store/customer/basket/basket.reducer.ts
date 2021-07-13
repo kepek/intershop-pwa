@@ -15,6 +15,7 @@ import { createOrderSuccess } from 'ish-core/store/customer/orders';
 import { setErrorOn, setLoadingOn, unsetLoadingAndErrorOn } from 'ish-core/utils/ngrx-creators';
 
 import {
+  addBasketItemAttributes,
   addBasketItemAttributesSuccess,
   addEmptyBucket,
   addItemsToBasket,
@@ -45,6 +46,7 @@ import {
   deleteBasketAttributeFail,
   deleteBasketAttributeSuccess,
   deleteBasketItem,
+  deleteBasketItemAttributes,
   deleteBasketItemAttributesSuccess,
   deleteBasketItemFail,
   deleteBasketItemSuccess,
@@ -92,6 +94,7 @@ import {
   updateBasket,
   updateBasketExternalOrderReference,
   updateBasketFail,
+  updateBasketItemAttributes,
   updateBasketItemAttributesSuccess,
   updateBasketItems,
   updateBasketItemsFail,
@@ -112,6 +115,7 @@ export interface BasketState {
   eligibleShippingMethods: ShippingMethod[];
   eligiblePaymentMethods: PaymentMethod[];
   loading: boolean;
+  lineItemUpdating: boolean;
   promotionError: HttpError; // for promotion-errors
   error: HttpError; // add, update and delete errors
   info: BasketInfo[];
@@ -141,6 +145,7 @@ export const initialState: BasketState = {
   eligibleShippingMethods: undefined,
   eligiblePaymentMethods: undefined,
   loading: false,
+  lineItemUpdating: false,
   error: undefined,
   info: undefined,
   promotionError: undefined,
@@ -239,7 +244,10 @@ export const basketReducer = createReducer(
     addProductsFromCamCardFail,
     deleteBucketFail
   ),
-
+  on(updateBasketItemAttributes, addBasketItemAttributes, deleteBasketItemAttributes, (state: BasketState) => ({
+    ...state,
+    lineItemUpdating: true,
+  })),
   on(updateBasketItems, deleteBasketItem, (state: BasketState) => ({
     ...state,
     productUpdated: false,
@@ -459,6 +467,7 @@ export const basketReducer = createReducer(
     );
     return {
       ...state,
+      lineItemUpdating: false,
       basket: {
         ...state.basket,
         lineItems,
@@ -486,6 +495,7 @@ export const basketReducer = createReducer(
       );
     return {
       ...state,
+      lineItemUpdating: false,
       basket: {
         ...state.basket,
         lineItems: filteredItems(state.basket.lineItems),
