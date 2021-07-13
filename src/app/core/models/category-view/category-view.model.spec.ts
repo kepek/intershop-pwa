@@ -86,11 +86,4 @@ describe('Category View Model', () => {
     expect(translateRef(tree, 'cat1@catalog-domain')).toEqual('cat1');
     expect(translateRef(tree, 'anyvalue')).toEqual('anyvalue');
   });
-
-  it('should fail to translate category-ref values to uniqueId on undefined input', () => {
-    const tree = categoryTree([cat1, cat11, cat111]);
-    expect(translateRef(undefined, 'cat1@catalog-domain')).toBeUndefined();
-    expect(translateRef(tree, undefined)).toBeUndefined();
-    expect(translateRef(undefined, undefined)).toBeUndefined();
-  });
 });

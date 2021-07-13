@@ -23,6 +23,11 @@ const camfilCategoryPageRoutes: Routes = [
     path: 'category/:categoryUniqueId',
     component: CamfilCategoryPageComponent,
   },
+  {
+    // route to handle category links managed by CMS
+    path: 'categoryref/:categoryRefId',
+    component: CamfilCategoryPageComponent,
+  },
   { path: '**', component: CamfilCategoryPageComponent },
 ];
 
