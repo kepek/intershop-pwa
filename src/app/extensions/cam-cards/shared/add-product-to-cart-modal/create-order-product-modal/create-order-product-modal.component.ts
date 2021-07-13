@@ -83,7 +83,7 @@ export class CreateOrderProductModalComponent implements OnInit, OnDestroy {
 
   contacts: CamCardContact[];
   basketAddresses: Address[];
-
+  validateFilterArea = ProductHelper.validateFilterArea;
   ngOnInit() {
     this.init();
   }

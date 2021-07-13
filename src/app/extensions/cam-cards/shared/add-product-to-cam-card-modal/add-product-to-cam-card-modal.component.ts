@@ -106,7 +106,7 @@ export class AddProductToCamCardModalComponent implements OnInit, OnDestroy, OnC
   rootCamCardAddress?: CamCardAddress;
 
   @ViewChild('modal', { static: false }) modalTemplate: TemplateRef<unknown>;
-
+  validateFilterArea = ProductHelper.validateFilterArea;
   constructor(
     public dialog: MatDialog,
     protected fb: FormBuilder,

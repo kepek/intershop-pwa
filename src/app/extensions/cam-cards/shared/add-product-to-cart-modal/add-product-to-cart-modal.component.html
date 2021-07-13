@@ -13,7 +13,7 @@
       [loading]="submitted && !showSuccess"
       (hiddenClicked)="hide()"
       [primaryDisabled]="!selectedOrderId"
-      [secondaryDisabled]="disableIfNoMeasurements()"
+      [secondaryDisabled]="disableIfNoMeasurements() || !validateFilterArea(product, quantityForm)"
     >
     </camfil-cam-card-modal>
   </ng-container>
