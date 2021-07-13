@@ -1,8 +1,10 @@
+import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import {
   ChangeDetectionStrategy,
   Component,
   EventEmitter,
   Input,
+  NgZone,
   OnChanges,
   OnDestroy,
   OnInit,
@@ -42,7 +44,8 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
   constructor(
     private shoppingFacade: ShoppingFacade,
     private checkoutFacade: CheckoutFacade,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private ngZone: NgZone
   ) {}
 
   get isEditMode() {
@@ -55,6 +58,7 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
 
   private static REQUIRED_COMPLETENESS_LEVEL = ProductCompletenessLevel.List;
   @ViewChild(CamfilSmallCtaModalComponent) modal: CamfilSmallCtaModalComponent;
+  @ViewChild('autosize') autosize: CdkTextareaAutosize;
   @Input() selectedItemsForm?: FormArray;
   @Input() mode?: 'edit' | 'view';
   @Input() index: number;
@@ -87,6 +91,8 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
   selectItemForm: FormGroup;
   addToCartForm: FormGroup;
   boxLabelForm: FormGroup;
+  lineItemUpdating$: Observable<boolean>;
+  lineItemUpdating = false;
 
   /**
     // no edit for measurements on checkout now
@@ -111,6 +117,8 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
 
     this.updateQuantities();
     this.calculateDeliveryDate();
+
+    this.lineItemUpdating$ = this.checkoutFacade.lineItemUpdating$;
   }
 
   ngOnChanges(s: SimpleChanges) {
@@ -207,7 +215,7 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
       markAsDirtyRecursive(form);
       return;
     }
-
+    this.lineItemUpdating = true;
     const name = target.getAttribute('name');
     const ifLabel = name === 'boxLabel';
 
@@ -236,6 +244,10 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
     } else {
       this.measurements[name] = value as number;
     }
+
+    this.lineItemUpdating$.pipe(takeUntil(this.destroy$)).subscribe(isLineItemUpdating => {
+      this.lineItemUpdating = isLineItemUpdating;
+    });
   }
 
   calculateDeliveryDate() {
@@ -316,5 +328,9 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
 
   getBoxLabelValue(item) {
     return item?.attributes?.find(att => att.name === 'boxLabel')?.value;
+  }
+
+  triggerResize() {
+    this.ngZone.onStable.pipe(take(1)).subscribe(() => this.autosize.resizeToFitContent(true));
   }
 }
