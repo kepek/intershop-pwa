@@ -192,7 +192,7 @@ export const ENVIRONMENT_DEFAULTS: Environment = {
 
   /* GTM Config */
 
-  gtmToken: undefined, // set by env variable GTM_TOKEN
+  gtmToken: 'GTM_ASDF12345', // set by env variable GTM_TOKEN
 
   /* ICC API CONFIGURATION */
 

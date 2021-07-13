@@ -21,7 +21,9 @@ export class CookiesService {
     private transferState: TransferState,
     private cookiesService: ForeignCookiesService,
     private router: Router
-  ) {}
+  ) {
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+  }
 
   get(key: string): string {
     return isPlatformBrowser(this.platformId) ? this.cookiesService.get(key) : undefined;
@@ -82,8 +84,10 @@ export class CookiesService {
   }
 
   private silentReload() {
-    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-      this.router.navigateByUrl(this.router?.url || '/');
+    const prevUrl = this.router?.url || '/';
+
+    this.router.navigateByUrl('/?silentReload=true', { skipLocationChange: true }).then(() => {
+      this.router.navigateByUrl(prevUrl);
     });
   }
 }

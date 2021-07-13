@@ -3,9 +3,9 @@ import { isPlatformBrowser } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Inject, OnDestroy, OnInit, PLATFORM_ID, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { filter, first, takeUntil } from 'rxjs/operators';
 
 import { AppFacade } from 'ish-core/facades/app.facade';
 import { FeatureToggleService } from 'ish-core/feature-toggle.module';
@@ -57,17 +57,17 @@ export class AppComponent implements OnInit, OnDestroy {
     this.deviceType$ = this.appFacade.deviceType$;
     this.wrapperClasses$ = this.appFacade.appWrapperClasses$;
     this.channel$ = this.appFacade.getChannel$;
-    if (this.featureToggleService.enabled('tracking') && this.cookiesService.cookieConsentFor('tracking')) {
-      this.stateProperties
-        .getStateOrEnvOrDefault<string>('GTM_TOKEN', 'gtmToken')
-        .pipe(whenTruthy(), takeUntil(this.destroy$))
-        .subscribe(gtmToken => {
-          this.gtmUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
-            `https://www.googletagmanager.com/ns.html?id=${gtmToken}`
-          );
-          this.gtmToken = gtmToken;
-        });
-    }
+
+    this.router.events
+      .pipe(
+        filter(event => event instanceof NavigationEnd),
+        filter(() => this.featureToggleService.enabled('tracking') && this.cookiesService.cookieConsentFor('tracking')),
+        first(),
+        takeUntil(this.destroy$)
+      )
+      .subscribe(() => {
+        this.initTracking();
+      });
   }
 
   ngOnDestroy(): void {
@@ -85,5 +85,17 @@ export class AppComponent implements OnInit, OnDestroy {
 
   isCheckoutPage() {
     return this.router.url.includes('/checkout');
+  }
+
+  private initTracking() {
+    this.stateProperties
+      .getStateOrEnvOrDefault<string>('GTM_TOKEN', 'gtmToken')
+      .pipe(whenTruthy(), takeUntil(this.destroy$))
+      .subscribe(gtmToken => {
+        this.gtmUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
+          `https://www.googletagmanager.com/ns.html?id=${gtmToken}`
+        );
+        this.gtmToken = gtmToken;
+      });
   }
 }
