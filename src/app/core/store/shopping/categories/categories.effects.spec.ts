@@ -6,7 +6,7 @@ import { provideMockActions } from '@ngrx/effects/testing';
 import { Action, Store } from '@ngrx/store';
 import { cold, hot } from 'jest-marbles';
 import { Observable, noop, of, throwError } from 'rxjs';
-import { anyNumber, anything, capture, instance, mock, verify, when } from 'ts-mockito';
+import { anyNumber, anything, capture, instance, mock, spy, verify, when } from 'ts-mockito';
 
 import { MAIN_NAVIGATION_MAX_SUB_CATEGORIES_DEPTH } from 'ish-core/configurations/injection-keys';
 import { CategoryView } from 'ish-core/models/category-view/category-view.model';
@@ -82,6 +82,7 @@ describe('Categories Effects', () => {
     store$ = TestBed.inject(Store);
     location = TestBed.inject(Location);
     router = TestBed.inject(Router);
+    httpStatusCodeService = spy(TestBed.inject(HttpStatusCodeService));
   });
 
   describe('selectedCategoryRef$', () => {
