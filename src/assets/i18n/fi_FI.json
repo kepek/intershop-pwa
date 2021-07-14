@@ -710,7 +710,7 @@
   "camfil.account.organization.edit_user.unlock.checkbox.text": "Poista käyttäjän lukitus",
   "camfil.account.organization.edit_user.unlock_user.modal.text": "Käyttäjän lukitus poistettu",
   "camfil.account.organization.edit_user.update_customer_user_roles_success.modal.text": "Roolit käyttäjälle '{{0}}' on vaihdettu.",
-  "camfil.account.organization.list.cancel.button.text": "Luo uusi käyttäjä",
+  "camfil.account.organization.list.cancel.button.text": "Peruuttaa",
   "camfil.account.organization.list.create_new_user.button.text": "Luo uusi käyttäjä",
   "camfil.account.organization.list.header.city": "Kaupunki",
   "camfil.account.organization.list.header.company": "Yritys",
