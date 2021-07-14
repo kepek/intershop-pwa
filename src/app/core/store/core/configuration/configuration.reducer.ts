@@ -15,7 +15,7 @@ export interface ConfigurationState {
   channel?: string;
   application?: string;
   identityProvider?: string;
-  identityProviders?: { [id: string]: { type?: string;[key: string]: unknown } };
+  identityProviders?: { [id: string]: { type?: string; [key: string]: unknown } };
   features?: string[];
   theme?: string;
   locales?: Locale[];

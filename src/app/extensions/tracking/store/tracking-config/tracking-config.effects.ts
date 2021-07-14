@@ -26,12 +26,13 @@ export class TrackingConfigEffects {
     private router: Router,
     @Inject(PLATFORM_ID) private platformId: string
   ) {
-    if (isPlatformServer(this.platformId)) {
+    if (this.isTrackingAllowed()) {
       this.startTracking();
     } else {
       this.router.events
         .pipe(
           filter(event => event instanceof NavigationEnd),
+          filter(() => this.isTrackingAllowed()),
           first()
         )
         .subscribe(() => {
@@ -51,13 +52,15 @@ export class TrackingConfigEffects {
     )
   );
 
+  private isTrackingAllowed() {
+    return this.featureToggleService.enabled('tracking') && this.cookiesService.cookieConsentFor('tracking');
+  }
+
   private startTracking() {
-    if (this.featureToggleService.enabled('tracking') && this.cookiesService.cookieConsentFor('tracking')) {
-      this.store.pipe(select(getGTMToken), whenTruthy(), take(1)).subscribe(gtmToken => {
-        this.gtm(window, 'dataLayer', gtmToken);
-        this.angulartics2GoogleTagManager.startTracking();
-      });
-    }
+    this.store.pipe(select(getGTMToken), whenTruthy(), take(1)).subscribe(gtmToken => {
+      this.gtm(window, 'dataLayer', gtmToken);
+      this.angulartics2GoogleTagManager.startTracking();
+    });
   }
 
   private gtm(w, l: string, i: string) {
