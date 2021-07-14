@@ -46,7 +46,7 @@ export class OrderFormComponent implements OnInit, OnDestroy {
     this.addressForm = this.fb.group({
       customer: [this.orderToEdit?.customerId || this.setDefaultCustomer(this.customersArr), [Validators.required]],
       contact: [this.orderToEdit?.contactPerson?.erpId || '', Validators.required],
-      invoiceLabel: [this.orderToEdit?.invoiceLabel || '', [Validators.maxLength(20)]],
+      invoiceLabel: [this.orderToEdit?.invoiceLabel || '', [Validators.maxLength(60)]],
       phoneNumber: [this.orderToEdit?.phoneNumber || '', Validators.pattern('[0-9+-/]*')],
       orderMark: [this.orderToEdit?.orderMark || '', [Validators.maxLength(60)]],
       deliveryAddressSelect: [this.orderToEdit?.deliveryAddressId || '', []],

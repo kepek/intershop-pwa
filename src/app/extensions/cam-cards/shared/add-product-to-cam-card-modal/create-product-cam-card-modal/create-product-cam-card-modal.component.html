@@ -62,7 +62,7 @@
       <!--invoice mark-->
       <mat-form-field appearance="outline" class="col-sm-12 form__field">
         <mat-label>{{ 'camfil.modal.createCamcard.input.invoice_mark' | translate }}</mat-label>
-        <input matInput type="text" formControlName="invoiceMark" />
+        <input matInput type="text" formControlName="invoiceMark" maxlength="60" />
       </mat-form-field>
       <camfil-error
         [errors]="getField('invoiceMark').errors"
