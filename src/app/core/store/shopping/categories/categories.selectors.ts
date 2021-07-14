@@ -1,5 +1,5 @@
 import { Dictionary } from '@ngrx/entity';
-import { createSelector, createSelectorFactory, defaultMemoize } from '@ngrx/store';
+import { createSelector, createSelectorFactory, defaultMemoize, resultMemoize } from '@ngrx/store';
 import { isEqual } from 'lodash-es';
 
 import { CategoryTree, CategoryTreeHelper } from 'ish-core/models/category-tree/category-tree.model';
@@ -7,7 +7,7 @@ import { CategoryView, createCategoryView } from 'ish-core/models/category-view/
 import { Category, CategoryHelper } from 'ish-core/models/category/category.model';
 import { NavigationCategory } from 'ish-core/models/navigation-category/navigation-category.model';
 import { generateCategoryUrl } from 'ish-core/routing/category/category.route';
-import { selectRouteParam } from 'ish-core/store/core/router';
+import { selectRouteParamAorB } from 'ish-core/store/core/router';
 import { ShoppingState, getShoppingState } from 'ish-core/store/shopping/shopping-store';
 
 const getCategoriesState = createSelector(getShoppingState, (state: ShoppingState) => state.categories);
@@ -18,6 +18,8 @@ export const getCategoryTree = createSelector(getCategoriesState, state => state
  * Retrieve the {@link Dictionary} of {@link Category} entities.
  */
 export const getCategoryEntities = createSelector(getCategoryTree, tree => tree.nodes);
+
+export const getCategoryRefs = createSelector(getCategoryTree, tree => tree.categoryRefs);
 
 const getCategorySubTree = (uniqueId: string) =>
   createSelectorFactory(projector =>
@@ -39,11 +41,9 @@ export const getCategories = (ids: string[]) =>
 /**
  * Retrieves the currently resolved selected category.
  */
-export const getSelectedCategory = createSelectorFactory(projector => defaultMemoize(projector, undefined, isEqual))(
-  getCategoryTree,
-  selectRouteParam('categoryUniqueId'),
-  createCategoryView
-);
+export const getSelectedCategory = createSelectorFactory<object, CategoryView>(projector =>
+  resultMemoize(projector, isEqual)
+)(getCategoryTree, selectRouteParamAorB('categoryUniqueId', 'categoryRefId'), createCategoryView);
 
 export const getBreadcrumbForCategoryPage = createSelectorFactory(projector =>
   defaultMemoize(projector, undefined, isEqual)

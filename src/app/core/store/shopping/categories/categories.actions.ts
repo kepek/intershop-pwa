@@ -27,3 +27,8 @@ export const updateCategorySuccess = createAction(
   '[Categories API] update Category Success',
   payload<{ categories: CategoryTree }>()
 );
+
+export const loadCategoryByRef = createAction(
+  '[Categories Internal] Load Category By Reference',
+  payload<{ categoryRefId: string }>()
+);
