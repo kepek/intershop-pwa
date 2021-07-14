@@ -80,7 +80,6 @@ describe('Categories Effects', () => {
 
     effects = TestBed.inject(CategoriesEffects);
     store$ = TestBed.inject(Store);
-    location = TestBed.inject(Location);
     router = TestBed.inject(Router);
     httpStatusCodeService = spy(TestBed.inject(HttpStatusCodeService));
   });
