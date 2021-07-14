@@ -7,6 +7,7 @@ import { instance, mock, when } from 'ts-mockito';
 
 import { AppFacade } from 'ish-core/facades/app.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
+import { CategoryView } from 'ish-core/models/category-view/category-view.model';
 import { NavigationCategory } from 'ish-core/models/navigation-category/navigation-category.model';
 import { CategoryRoutePipe } from 'ish-core/routing/category/category-route.pipe';
 
@@ -20,7 +21,7 @@ describe('Camfil Category Navigation Component', () => {
   beforeEach(async () => {
     const shoppingFacade = mock(ShoppingFacade);
     const appFacade = mock(AppFacade);
-    when(shoppingFacade.selectedCategory$).thenReturn(of({ uniqueId: 'A.1' }));
+    when(shoppingFacade.selectedCategory$).thenReturn(of({ uniqueId: 'A.1' } as CategoryView));
     when(shoppingFacade.navigationCategories$(undefined)).thenReturn(
       of([
         { uniqueId: 'A', name: 'nA', url: '/c/A' },
