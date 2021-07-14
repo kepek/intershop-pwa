@@ -16,6 +16,7 @@ import { CoreStoreModule } from 'ish-core/store/core/core-store.module';
 import { ShoppingStoreModule } from 'ish-core/store/shopping/shopping-store.module';
 import { makeHttpError } from 'ish-core/utils/dev/api-service-utils';
 import { categoryTree } from 'ish-core/utils/dev/test-data-utils';
+import { HttpStatusCodeService } from 'ish-core/utils/http-status-code/http-status-code.service';
 
 import {
   loadCategory,
@@ -27,7 +28,6 @@ import {
   loadTopLevelCategoriesSuccess,
 } from './categories.actions';
 import { CategoriesEffects } from './categories.effects';
-import { HttpStatusCodeService } from 'ish-core/utils/http-status-code/http-status-code.service';
 
 describe('Categories Effects', () => {
   let actions$: Observable<Action>;
