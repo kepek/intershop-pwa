@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormArray } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
-import { takeUntil, withLatestFrom } from 'rxjs/operators';
+import { take, takeUntil, withLatestFrom } from 'rxjs/operators';
 
 import { AppFacade } from 'ish-core/facades/app.facade';
 import { HttpError } from 'ish-core/models/http-error/http-error.model';
@@ -27,10 +27,19 @@ export class AccountCamCardDetailPageComponent implements OnInit, OnDestroy {
   selectedItemsForm: FormArray;
   selectedItems: CamCardItem[];
   maintenance = CamCardHelper.maintenance;
+  sortParam = {
+    activeSort: '',
+    sortDirection: '',
+  };
 
   private destroy$ = new Subject();
 
-  constructor(private camCardsFacade: CamCardsFacade, public router: Router, private appFacade: AppFacade) {}
+  constructor(
+    private camCardsFacade: CamCardsFacade,
+    public router: Router,
+    private appFacade: AppFacade,
+    private activatedRoute: ActivatedRoute
+  ) {}
 
   ngOnInit() {
     this.camCard$ = this.camCardsFacade.currentCamCard$;
@@ -44,6 +53,15 @@ export class AccountCamCardDetailPageComponent implements OnInit, OnDestroy {
       .subscribe(([, camCards]) => {
         this.selectedItems = this.filterItems(camCards);
       });
+
+    this.activatedRoute.queryParams.pipe(take(1)).subscribe(queryParam => {
+      if (queryParam.activeSort && queryParam.sortDirection) {
+        this.sortParam = {
+          activeSort: queryParam.activeSort,
+          sortDirection: queryParam.sortDirection,
+        };
+      }
+    });
   }
 
   private initForm() {
@@ -87,5 +105,9 @@ export class AccountCamCardDetailPageComponent implements OnInit, OnDestroy {
   /** dispatch edit request */
   updateCamCard(camCard: CamCard) {
     this.camCardsFacade.updateCamCard(camCard);
+  }
+
+  get sortQueryParam() {
+    return this.sortParam;
   }
 }

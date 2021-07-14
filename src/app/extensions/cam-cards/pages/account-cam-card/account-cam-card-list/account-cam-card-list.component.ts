@@ -134,6 +134,15 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
     this.isMobileView = this.isMobile();
     this.isStickyCamCardToolbar$ = this.camCardsFacade.isStickyCamCardToolbar$;
 
+    this.activatedRoute.queryParams.pipe(take(1)).subscribe(queryParam => {
+      if (queryParam.activeSort && queryParam.sortDirection && this.sort) {
+        this.sort.active = queryParam.activeSort;
+        this.sort.direction = queryParam.sortDirection;
+
+        this.camCardsProcessed.sort = this.sort;
+      }
+    });
+
     this.activatedRoute.fragment.pipe(take(1)).subscribe((fragment: string) => {
       this.fragment = fragment;
       this.goToExpandedCamCard();
@@ -588,5 +597,12 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
       const newGroup = flatten(toArray(groupedArrays)?.sort((a, b) => a[0][event.active] - b[0][event.active]));
       this.camCardsProcessed.data = newGroup;
     }
+  }
+
+  setSortParam() {
+    return {
+      activeSort: this.sort?.active,
+      sortDirection: this.sort?.direction,
+    };
   }
 }
