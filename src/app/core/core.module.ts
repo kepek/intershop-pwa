@@ -12,7 +12,6 @@ import { environment } from '../../environments/environment';
 
 import { AppearanceModule } from './appearance.module';
 import { ConfigurationModule } from './configuration.module';
-import { ExtrasModule } from './extras.module';
 import { FeatureToggleModule } from './feature-toggle.module';
 import { IdentityProviderModule } from './identity-provider.module';
 import { ICMErrorMapperInterceptor } from './interceptors/icm-error-mapper.interceptor';
@@ -28,7 +27,6 @@ import { ModuleLoaderService } from './utils/module-loader/module-loader.service
     AppearanceModule,
     BrowserCookiesModule.forRoot(),
     ConfigurationModule,
-    ExtrasModule,
     FeatureToggleModule,
     FormlyModule.forRoot(),
     HttpClientModule,

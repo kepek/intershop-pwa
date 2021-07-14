@@ -1,9 +1,10 @@
 import { isPlatformServer } from '@angular/common';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
 import { Actions, createEffect } from '@ngrx/effects';
 import { Store, select } from '@ngrx/store';
 import { Angulartics2GoogleTagManager } from 'angulartics2/gtm';
-import { filter, map, take, takeWhile, withLatestFrom } from 'rxjs/operators';
+import { filter, first, map, take, takeWhile, withLatestFrom } from 'rxjs/operators';
 
 import { FeatureToggleService } from 'ish-core/feature-toggle.module';
 import { CookiesService } from 'ish-core/utils/cookies/cookies.service';
@@ -18,22 +19,23 @@ export class TrackingConfigEffects {
   constructor(
     private actions$: Actions,
     private featureToggleService: FeatureToggleService,
-    @Inject(PLATFORM_ID) private platformId: string,
     private stateProperties: StatePropertiesService,
-    angulartics2GoogleTagManager: Angulartics2GoogleTagManager,
-    store: Store,
-    cookiesService: CookiesService
+    private angulartics2GoogleTagManager: Angulartics2GoogleTagManager,
+    private store: Store,
+    private cookiesService: CookiesService,
+    private router: Router,
+    @Inject(PLATFORM_ID) private platformId: string
   ) {
-    if (cookiesService.cookieConsentFor('tracking')) {
-      store
+    if (isPlatformServer(this.platformId)) {
+      this.startTracking();
+    } else {
+      this.router.events
         .pipe(
-          select(getGTMToken),
-          filter(gtmToken => gtmToken && featureToggleService.enabled('tracking')),
-          take(1)
+          filter(event => event instanceof NavigationEnd),
+          first()
         )
-        .subscribe(gtmToken => {
-          this.gtm(window, 'dataLayer', gtmToken);
-          angulartics2GoogleTagManager.startTracking();
+        .subscribe(() => {
+          this.startTracking();
         });
     }
   }
@@ -48,6 +50,15 @@ export class TrackingConfigEffects {
       map(gtmToken => setGTMToken({ gtmToken }))
     )
   );
+
+  private startTracking() {
+    if (this.featureToggleService.enabled('tracking') && this.cookiesService.cookieConsentFor('tracking')) {
+      this.store.pipe(select(getGTMToken), whenTruthy(), take(1)).subscribe(gtmToken => {
+        this.gtm(window, 'dataLayer', gtmToken);
+        this.angulartics2GoogleTagManager.startTracking();
+      });
+    }
+  }
 
   private gtm(w, l: string, i: string) {
     w[l] = w[l] || [];

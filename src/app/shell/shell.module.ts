@@ -9,6 +9,7 @@ import { DeferLoadModule } from '@trademe/ng-defer-load';
 import { CamfilIconsModule } from 'camfil-icons';
 
 import { DirectivesModule } from 'ish-core/directives.module';
+import { ExtrasModule } from 'ish-core/extras.module';
 import { FeatureToggleModule } from 'ish-core/feature-toggle.module';
 import { IconModule } from 'ish-core/icon.module';
 import { PipesModule } from 'ish-core/pipes.module';
@@ -50,6 +51,7 @@ import { UserInformationMobileComponent } from './header/user-information-mobile
 const importExportModules = [
   CommonModule,
   DirectivesModule,
+  ExtrasModule,
   FeatureToggleModule,
   IconModule,
   NgbCollapseModule,
