@@ -25,7 +25,7 @@
   <ng-container *ngIf="camCard$ | async as camCard">
     <ng-container *ngIf="maintenance(camCard, ['MAINTENANCE', 'ACTIVE']); else nonActiveStatus">
       <div class="d-flex flex-column flex-sm-row pb-2">
-        <a class="py-3 pr-4 pl-2" routerLink="/account/camcards" [fragment]="camCard.id">
+        <a class="py-3 pr-4 pl-2" routerLink="/account/camcards" [queryParams]="sortQueryParam" [fragment]="camCard.id">
           <mat-icon class="align-bottom pr-2">arrow_left</mat-icon
           >{{ 'camfil.account.cam_card.edit.button.back.label' | translate }}</a
         >
