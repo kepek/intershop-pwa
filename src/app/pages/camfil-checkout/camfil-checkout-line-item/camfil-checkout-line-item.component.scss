@@ -23,8 +23,17 @@
   }
   .prices {
     min-width: 130px;
+
     camfil-product-attribute {
       display: block;
+
+      ::ng-deep {
+        .camfil-product-attribute__label,
+        .camfil-product-attribute__value {
+          text-align: right;
+          width: 100%;
+        }
+      }
     }
   }
   .delete-cam-card {
