@@ -278,7 +278,10 @@ export class PrintOrderComponent implements OnInit {
   }
 
   pdfItemsRow(bucket: Bucket) {
-    return bucket.lineItems.map((el, i) => this.pdfProductRow(el, i));
+    const sortedLineItems = bucket.lineItems
+      .slice()
+      .sort((a, b) => (a.position > b.position ? 1 : b.position > a.position ? -1 : 0));
+    return sortedLineItems.map((el, i) => this.pdfProductRow(el, i));
   }
 
   pdfTotal(id: string) {
