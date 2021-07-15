@@ -58,7 +58,12 @@
       transform: none;
 
       .mat-select-arrow {
+        margin: 0;
         color: $text-color-corporate;
+        border-top: 8px solid;
+        border-right: 8px solid transparent;
+        border-left: 8px solid transparent;
+        border-radius: 2px;
       }
     }
     &-label-wrapper {
