@@ -32,7 +32,8 @@ export class CamfilProductListComponent implements OnInit {
   @Input() category?: Category;
   @Input() viewType?: ViewType = 'simple';
   @Input() limit?: number;
-
+  @Input() isInSearchBox = false;
+  @Input() searchTerm?: string;
   listingLoading$: Observable<boolean>;
   minForBottomLoading: number;
 
@@ -66,5 +67,9 @@ export class CamfilProductListComponent implements OnInit {
 
   ifLimit(idx: number) {
     return this.limit && idx + 1 > this.limit;
+  }
+
+  showLoader(): boolean {
+    return (this.category && !this.searchTerm) || (!this.category && this.searchTerm?.length > 0);
   }
 }
