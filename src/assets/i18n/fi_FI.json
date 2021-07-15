@@ -540,8 +540,8 @@
   "camfil.account.cam_card.delete_cam_card.confirmation": "{{0}} Suodatinluettelo poistettu",
   "camfil.account.cam_card.deliveryInterval": "Tilausväli",
   "camfil.account.cam_card.deliveryInterval.value": {
-    "=-1": "ei valittu",
-    "=0": "ei valittu",
+    "=-1": "---",
+    "=0": "---",
     "=1": "1 kuukausi",
     "other": "# kuukautta"
   },
