@@ -66,6 +66,7 @@ describe('Content Store', () => {
             "1",
           ],
           "resourceSetId": undefined,
+          "seoAttributes": undefined,
           "stringParam": [Function],
         },
       ]
@@ -101,6 +102,7 @@ describe('Content Store', () => {
             "2",
           ],
           "resourceSetId": undefined,
+          "seoAttributes": undefined,
           "stringParam": [Function],
         },
       ]

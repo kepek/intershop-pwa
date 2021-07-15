@@ -10,7 +10,7 @@ import { setBreadcrumbData } from 'ish-core/store/core/viewconf';
 import { mapErrorToAction, mapToPayloadProperty, whenTruthy } from 'ish-core/utils/operators';
 
 import { loadContentPage, loadContentPageFail, loadContentPageSuccess } from './pages.actions';
-import { getSelectedContentPage } from './pages.selectors';
+import { getBreadcrumbForContentPage } from './pages.selectors';
 
 @Injectable()
 export class PagesEffects {
@@ -44,10 +44,9 @@ export class PagesEffects {
   );
 
   setBreadcrumbForContentPage$ = createEffect(() =>
-    this.store.pipe(
-      select(getSelectedContentPage),
+    this.store.pipe(select(getBreadcrumbForContentPage)).pipe(
       whenTruthy(),
-      map(contentPage => setBreadcrumbData({ breadcrumbData: [{ key: contentPage.displayName }] }))
+      map(breadcrumbData => setBreadcrumbData({ breadcrumbData }))
     )
   );
 }

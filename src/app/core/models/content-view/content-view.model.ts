@@ -4,6 +4,7 @@ import { ContentConfigurationParameters } from 'ish-core/models/content-configur
 import { ContentPageletEntryPoint } from 'ish-core/models/content-pagelet-entry-point/content-pagelet-entry-point.model';
 import { ContentPagelet } from 'ish-core/models/content-pagelet/content-pagelet.model';
 import { ContentSlot } from 'ish-core/models/content-slot/content-slot.model';
+import { SeoAttributes } from 'ish-core/models/seo-attributes/seo-attributes.model';
 
 export interface ContentConfigurationParameterView {
   hasParam(key: string): boolean;
@@ -28,6 +29,7 @@ export interface ContentPageletEntryPointView extends ContentEntryPointView, Con
   displayName: string;
   resourceSetId: string;
   pageletIDs: string[];
+  seoAttributes: SeoAttributes;
 }
 
 export interface ContentPageletView extends ContentConfigurationParameterView {
@@ -61,8 +63,13 @@ export const createContentConfigurationParameterView = (
         : defaultValue,
     paramMemoize
   ),
-  numberParam: memoize((key, defaultValue = NaN) => Number(params[key]) || defaultValue, paramMemoize),
-  configParam: <T extends object>(key) => params[key] as T,
+  numberParam: memoize(
+    (key, defaultValue = NaN) =>
+      Number(params[key]) === 0 ? Number(params[key]) : Number(params[key]) || defaultValue,
+    paramMemoize
+  ),
+  // tslint:disable-next-line: no-unnecessary-type-annotation
+  configParam: <T extends object>(key: string) => params[key] as T,
 });
 
 export const createContentPageletView = (pagelet: ContentPagelet): ContentPageletView =>
@@ -102,4 +109,5 @@ export const createContentPageletEntryPointView = (
     displayName: pageletEntryPoint.displayName,
     pageletIDs: pageletEntryPoint.pageletIDs || [],
     ...createContentConfigurationParameterView(pageletEntryPoint.configurationParameters || {}),
+    seoAttributes: pageletEntryPoint.seoAttributes,
   };
