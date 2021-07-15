@@ -18,7 +18,7 @@ import { MatCheckboxChange } from '@angular/material/checkbox';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { flatten, groupBy, toArray } from 'lodash-es';
 import { Observable, Subject } from 'rxjs';
@@ -67,7 +67,6 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
     private camCardsFacade: CamCardsFacade,
     private changeDetectorRefs: ChangeDetectorRef,
     public dialog: MatDialog,
-    private router: Router,
     private activatedRoute: ActivatedRoute,
     private scroller: ViewportScroller,
     private translate: TranslateService,
@@ -221,37 +220,7 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
             this.loading = this.camCardLoading;
           });
 
-        // for get CustomerPrice
-        this.authorizationToggle
-          .isAuthorizedToCheckArrAll(AccountCamCardListComponent.PRICE_PERMISSIONS)
-          .pipe(take(1))
-          .subscribe(permitted => {
-            if (permitted && !this.productsCustomerPrices) {
-              this.productsCustomerPrices = {};
-              const customersAndSkus = this.camCards.reduce((acc, cc) => {
-                const skus = CamCardHelper.getCamCardSkus(cc);
-                const currentSkus = acc?.[cc.customer.id] || [];
-
-                return {
-                  ...acc,
-                  [cc.customer.id]: [...new Set([...currentSkus, ...skus])],
-                };
-              }, {}) as { key: string[] };
-
-              Object.entries(customersAndSkus).forEach(([customerId, skus]) => {
-                const { parent } = this.camCards.find(cc => cc.customer.id === customerId).customer;
-                if (!parent) {
-                  this.productFacade.loadCustomerPrices(customerId, skus);
-                  this.productFacade
-                    .getCustomerPrices$(customerId)
-                    .pipe(whenTruthy(), take(1))
-                    .subscribe(prices => {
-                      this.productsCustomerPrices[customerId] = prices;
-                    });
-                }
-              });
-            }
-          });
+        this.loadCustomerPrices();
       } else {
         this.loading = this.camCardLoading;
       }
@@ -262,6 +231,39 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  loadCustomerPrices() {
+    this.authorizationToggle
+      .isAuthorizedToCheckArrAll(AccountCamCardListComponent.PRICE_PERMISSIONS)
+      .pipe(take(1))
+      .subscribe(permitted => {
+        if (permitted && !this.productsCustomerPrices) {
+          this.productsCustomerPrices = {};
+          const customersAndSkus = this.camCards.reduce((acc, cc) => {
+            const skus = CamCardHelper.getCamCardSkus(cc);
+            const currentSkus = acc?.[cc.customer.id] || [];
+
+            return {
+              ...acc,
+              [cc.customer.id]: [...new Set([...currentSkus, ...skus])],
+            };
+          }, {}) as { key: string[] };
+
+          Object.entries(customersAndSkus).forEach(([customerId, skus]) => {
+            const { parent } = this.camCards.find(cc => cc.customer.id === customerId).customer;
+            if (!parent) {
+              this.productFacade.loadCustomerPrices(customerId, skus);
+              this.productFacade
+                .getCustomerPrices$(customerId)
+                .pipe(whenTruthy(), take(1))
+                .subscribe(prices => {
+                  this.productsCustomerPrices[customerId] = prices;
+                });
+            }
+          });
+        }
+      });
   }
 
   getCustomerPriceForSkuInCustomer(id: string, sku: string) {
@@ -301,10 +303,7 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
     const isExpanded = this.expandedCamCard && this.expandedCamCard.id === camCard.id;
     this.expandedCamCard = isExpanded ? undefined : camCard;
     if (!isExpanded) {
-      this.router.navigate([], {
-        relativeTo: this.activatedRoute,
-        fragment: camCard.id,
-      });
+      this.location.replaceState(this.location.path(false) + '#' + camCard.id);
       this.openSubLevels(camCard);
     } else {
       this.location.replaceState(this.location.path(false));
