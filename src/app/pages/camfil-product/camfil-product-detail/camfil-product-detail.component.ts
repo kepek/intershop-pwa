@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, OnI
 import { FormControl, FormGroup } from '@angular/forms';
 import { Observable, ReplaySubject, Subject } from 'rxjs';
 import { startWith, take, takeUntil } from 'rxjs/operators';
+import { CamCardsFacade } from 'src/app/extensions/cam-cards/facades/cam-cards.facade';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
@@ -42,7 +43,11 @@ export class CamfilProductDetailComponent implements OnInit, OnDestroy {
   showAddToCompare = false;
   private sku$ = new ReplaySubject<string>(1);
 
-  constructor(private shoppingFacade: ShoppingFacade, private accountFacade: AccountFacade) {}
+  constructor(
+    private shoppingFacade: ShoppingFacade,
+    private accountFacade: AccountFacade,
+    private camCardsFacade: CamCardsFacade
+  ) {}
 
   productDetailForm: FormGroup;
   readonly quantityControlName = 'quantity';
@@ -83,6 +88,12 @@ export class CamfilProductDetailComponent implements OnInit, OnDestroy {
     }
 
     this.userPermissions$ = this.accountFacade.userPermissions$.pipe(takeUntil(this.destroy$));
+
+    this.camCardsFacade.getAddProductSuccess$.pipe(takeUntil(this.destroy$)).subscribe(value => {
+      if (value) {
+        this.resetProductDetailForm();
+      }
+    });
   }
 
   ngOnDestroy() {

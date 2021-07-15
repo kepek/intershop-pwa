@@ -188,7 +188,6 @@ export class AddProductToCamCardModalComponent implements OnInit, OnDestroy, OnC
     this.newSegmentForm = this.fb.group({
       newCamCard: [{ value: '' }, [Validators.required, Validators.maxLength(30)]],
     });
-
     this.quantityForm = new FormGroup({
       quantity: new FormControl(this.quantity),
       boxLabel: new FormControl('', Validators.maxLength(40)),
@@ -398,6 +397,7 @@ export class AddProductToCamCardModalComponent implements OnInit, OnDestroy, OnC
   /** open modal */
   show() {
     this.quantityForm?.controls.boxLabel.setValue('');
+    this.quantityForm?.controls.quantity.setValue(this.quantity);
     this.camCardsFacade.unSelectCamCard();
     this.showForm = true;
     return this.modalTemplate;
@@ -406,7 +406,6 @@ export class AddProductToCamCardModalComponent implements OnInit, OnDestroy, OnC
   openModal(modal: CreateProductCamCardModalComponent) {
     const dialogRef = this.dialog.open(modal.show());
     modal.hide = () => this.dialog.closeAll();
-
     dialogRef
       .afterOpened()
       .pipe(take(1), takeUntil(this.destroy$))
