@@ -62,13 +62,6 @@ export class CMSService {
       );
   }
 
-  private mapSeoAttributes(
-    page: ContentPageletEntryPoint,
-    pagelets: ContentPagelet[]
-  ): [ContentPageletEntryPoint, ContentPagelet[]] {
-    return [{ ...page, seoAttributes: SeoAttributesMapper.fromCMSData(pagelets.length && pagelets[0]) }, pagelets];
-  }
-
   /**
    * Get the page tree for the given root page with the given depth.
    * @param rootId: The page tree root page id
@@ -90,12 +83,12 @@ export class CMSService {
       .pipe(map(data => this.contentPageTreeMapper.fromData(data)));
   }
 
-  // private mapSeoAttributes(
-  //   page: ContentPageletEntryPoint,
-  //   pagelets: ContentPagelet[]
-  // ): [ContentPageletEntryPoint, ContentPagelet[]] {
-  //   return [{ ...page, seoAttributes: SeoAttributesMapper.fromCMSData(pagelets.length && pagelets[0]) }, pagelets];
-  // }
+  private mapSeoAttributes(
+    page: ContentPageletEntryPoint,
+    pagelets: ContentPagelet[]
+  ): [ContentPageletEntryPoint, ContentPagelet[]] {
+    return [{ ...page, seoAttributes: SeoAttributesMapper.fromCMSData(pagelets.length && pagelets[0]) }, pagelets];
+  }
 
   /**
    * Get the content for the given View Context with the given context (e.g. Product or Category).
