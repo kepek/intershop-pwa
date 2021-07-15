@@ -59,8 +59,12 @@ export class TrackingService {
    */
 
   private push(event) {
-    if (dataLayer && this.featureToggleService.enabled('tracking')) {
-      dataLayer.push(event);
+    try {
+      if (dataLayer && this.featureToggleService.enabled('tracking')) {
+        dataLayer.push(event);
+      }
+    } catch (err) {
+      console.error('We could not push your event. Tracking has not been initialized properly.', err);
     }
   }
 
