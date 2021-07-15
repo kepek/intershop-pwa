@@ -14,7 +14,7 @@ import { Locale } from 'ish-core/models/locale/locale.model';
 import { getCurrentLocale } from 'ish-core/store/core/configuration/configuration.selectors';
 import { CoreStoreModule } from 'ish-core/store/core/core-store.module';
 
-import { applyConfiguration, setGTMToken } from './configuration.actions';
+import { applyConfiguration } from './configuration.actions';
 import { ConfigurationEffects } from './configuration.effects';
 
 describe('Configuration Effects', () => {
@@ -67,37 +67,6 @@ describe('Configuration Effects', () => {
         expect(params[0]).toEqual('en_US');
         done();
       }, 1000);
-    });
-  });
-
-  describe('setGTMToken$', () => {
-    beforeEach(() => {
-      // on server
-      process.env.GTM_TOKEN = 'dummy';
-    });
-
-    afterEach(() => {
-      process.env.GTM_TOKEN = undefined;
-    });
-
-    it('should set the token once on effects init and complete', done => {
-      // tslint:disable:use-async-synchronization-in-tests
-      const testComplete$ = new Subject<void>();
-
-      actions$ = of({ type: ROOT_EFFECTS_INIT });
-
-      testComplete$.pipe(take(2)).subscribe({ complete: done });
-
-      effects.setGTMToken$.subscribe(
-        data => {
-          expect(data.type).toEqual(setGTMToken.type);
-          expect(data.payload).toHaveProperty('gtmToken', 'dummy');
-          testComplete$.next();
-        },
-        fail,
-        () => testComplete$.next()
-      );
-      // tslint:enable:use-async-synchronization-in-tests
     });
   });
 });

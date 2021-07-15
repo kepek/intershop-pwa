@@ -1,4 +1,4 @@
-import { isPlatformBrowser, isPlatformServer } from '@angular/common';
+import { isPlatformBrowser } from '@angular/common';
 import { ApplicationRef, Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { TransferState } from '@angular/platform-browser';
 import { Actions, ROOT_EFFECTS_INIT, createEffect, ofType } from '@ngrx/effects';
@@ -13,7 +13,7 @@ import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
 import { distinctCompareWith, mapToProperty, whenTruthy } from 'ish-core/utils/operators';
 import { StatePropertiesService } from 'ish-core/utils/state-transfer/state-properties.service';
 
-import { applyConfiguration, setGTMToken } from './configuration.actions';
+import { applyConfiguration } from './configuration.actions';
 import { getCurrentLocale, getDeviceType } from './configuration.selectors';
 
 @Injectable()
@@ -104,18 +104,6 @@ export class ConfigurationEffects {
         tap(lang => this.translateService.use(lang))
       ),
     { dispatch: false }
-  );
-
-  setGTMToken$ = createEffect(() =>
-    this.actions$.pipe(
-      takeWhile(() => isPlatformServer(this.platformId)),
-      ofType(ROOT_EFFECTS_INIT),
-      take(1),
-      withLatestFrom(this.stateProperties.getStateOrEnvOrDefault<string>('GTM_TOKEN', 'gtmToken')),
-      map(([, gtmToken]) => gtmToken),
-      whenTruthy(),
-      map(gtmToken => setGTMToken({ gtmToken }))
-    )
   );
 
   setDeviceType$ = createEffect(() =>
