@@ -101,13 +101,8 @@
       }
     }
     camfil-product-attribute {
-      display: block;
-
       .camfil-product-attribute {
-        &--dimensions,
-        &--id {
-          min-height: 24px;
-        }
+        min-height: 24px;
       }
       &.camfil-product-id {
         .camfil-product-attribute__value {
