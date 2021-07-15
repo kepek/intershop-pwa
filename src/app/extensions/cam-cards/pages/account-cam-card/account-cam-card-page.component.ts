@@ -34,7 +34,7 @@ export class AccountCamCardPageComponent implements OnInit {
 
   ngOnInit() {
     this.camCard$ = this.camCardsFacade.camCard$;
-    this.camCardLoading$ = this.camCardsFacade.camCardLoading$;
+    this.camCardLoading$ = this.camCardsFacade.camCardsLoading$;
     this.camCardError$ = this.camCardsFacade.camCardError$;
     this.deviceType$ = this.appFacade.deviceType$;
   }
