@@ -92,7 +92,7 @@
       <!--company-->
       <mat-form-field appearance="outline" class="col-sm-12 form__field">
         <mat-label>{{ 'camfil.modal.createCamcard.input.company' | translate }}</mat-label>
-        <input matInput type="text" formControlName="company" />
+        <input matInput type="text" maxlength="60" formControlName="company" />
       </mat-form-field>
       <camfil-error
         [errors]="getField('company').errors"
