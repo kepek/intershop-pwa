@@ -81,7 +81,9 @@ describe('Camfil Product List Component', () => {
 
   it('should display loading when product list is loading', fakeAsync(() => {
     component.products = [];
+    component.searchTerm = 'Test';
     when(shoppingFacade.productListingLoading$).thenReturn(of(true));
+    expect(component.showLoader()).toBeTrue();
 
     fixture.detectChanges();
 
