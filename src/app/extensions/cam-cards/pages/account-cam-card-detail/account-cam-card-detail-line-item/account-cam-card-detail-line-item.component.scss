@@ -10,6 +10,24 @@
     }
     .prices {
       min-width: 140px;
+
+      camfil-product-attribute {
+        display: block;
+
+        ::ng-deep {
+          .camfil-product-attribute {
+            display: flex;
+            align-items: center;
+            min-height: 24px;
+            text-align: right;
+          }
+          .camfil-product-attribute__label,
+          .camfil-product-attribute__value {
+            width: 100%;
+            text-align: right;
+          }
+        }
+      }
     }
   }
 
