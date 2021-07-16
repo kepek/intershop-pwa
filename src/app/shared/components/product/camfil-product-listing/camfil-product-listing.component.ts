@@ -31,7 +31,7 @@ export class CamfilProductListingComponent implements OnInit, OnChanges, OnDestr
   @Input() fragmentOnRouting = 'product-list-top';
   @Input() onlyList = false;
   @Input() limitItemsOnList?: number;
-
+  searchTerm$: Observable<string>;
   @Output() productListInfo = new EventEmitter<ProductListingView>();
 
   productListingView$: Observable<ProductListingView>;
@@ -58,6 +58,8 @@ export class CamfilProductListingComponent implements OnInit, OnChanges, OnDestr
         takeUntil(this.destroy$)
       )
       .subscribe(view => this.changeViewType(view));
+
+    this.searchTerm$ = this.shoppingFacade.getCurrentTerm$;
   }
 
   ngOnChanges(changes: SimpleChanges): void {
