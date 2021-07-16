@@ -21,8 +21,14 @@ export class CamPdfService {
     const { content, styles, images, showFooter } = data;
     await this.loadPdfMaker();
 
+    const pageBreakBefore = ({ id }, _followingNodesOnPage: any, nodesOnNextPage) => {
+      const start = id?.replace('rowIndex', '')?.replace('rowName', '');
+      return nodesOnNextPage.find(node => node?.id === 'rowEnd' + start);
+    };
+
     const def = {
       content,
+      pageBreakBefore,
       styles,
       images,
       footer: showFooter

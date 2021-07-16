@@ -306,7 +306,7 @@ export class AccountCamCardPdfComponent implements OnInit {
     const artNo = `${this.texts.artNr} `;
     const artNoVal = { text: sku, bold: true };
     const labelText = item.comment?.label;
-    const label = labelText ? ` | ${this.texts.boxLabel} ` : '';
+    const label = labelText ? `${this.texts.boxLabel} ` : '';
     const labelVal = labelText ? { text: labelText, bold: true } : '';
 
     const qty = `${this.texts.quantity} `;
@@ -319,10 +319,9 @@ export class AccountCamCardPdfComponent implements OnInit {
     const price = showPrice ? { text: priceVal, bold: true } : '';
     const currentProd = this.products[sku];
     const showAvailabilityDot = ProductHelper.showAvailabilityDot(currentProd);
-    const dotText = showAvailabilityDot ? { text: ' •', color: '#006a3a', fontSize: 12 } : '';
-    const arrRightInfo = [artNo, artNoVal, label, labelVal, dotText];
+    const arrRightInfo = [{ text: [artNo, artNoVal] }, { text: [label, labelVal] }];
     const arrLeftInfo = [qty, qtyVal, priceLabel, price];
-    return PdfHelper.pdfProductRow(index, item.product.name, arrRightInfo, arrLeftInfo);
+    return PdfHelper.pdfProductRow(index, item.product.name, arrRightInfo, arrLeftInfo, camCard.id, showAvailabilityDot);
   }
 
   pdfItemsRow(camCard: CamCard, showPrice: boolean) {
