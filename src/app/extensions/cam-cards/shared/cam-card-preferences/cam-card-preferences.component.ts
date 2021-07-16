@@ -228,7 +228,7 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit, AfterView
       invoiceMark: ['', [Validators.maxLength(maxL)]],
       deliveryAddress: ['', [Validators.maxLength(maxL)]],
       companyName1: ['', [Validators.maxLength(60)]],
-      addressLine1: ['', [Validators.required, Validators.maxLength(250)]],
+      addressLine1: ['', [Validators.maxLength(250)]],
       postalCode: ['', [Validators.required, Validators.maxLength(maxL)]],
       city: [{ value: '', disabled: true }, [Validators.maxLength(maxL)]],
       lastDelivery: ['', [Validators.maxLength(maxL)]],
