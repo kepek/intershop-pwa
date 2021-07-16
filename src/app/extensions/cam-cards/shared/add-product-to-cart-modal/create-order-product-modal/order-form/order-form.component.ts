@@ -50,7 +50,7 @@ export class OrderFormComponent implements OnInit, OnDestroy {
       phoneNumber: [this.orderToEdit?.phoneNumber || '', Validators.pattern('[0-9+-/]*')],
       orderMark: [this.orderToEdit?.orderMark || '', [Validators.maxLength(60)]],
       deliveryAddressSelect: [this.orderToEdit?.deliveryAddressId || '', []],
-      company: [this.orderToEdit?.company || '', [Validators.required]],
+      company: [this.orderToEdit?.company || '', [Validators.required, Validators.maxLength(60)]],
       building: [this.orderToEdit?.building || ''],
       address: [this.orderToEdit?.address || '', [Validators.required]],
       zipCode: [this.orderToEdit?.zipCode || '', [Validators.required, Validators.pattern('[0-9]{5}')]],
