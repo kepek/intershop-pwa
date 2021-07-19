@@ -21,6 +21,7 @@ export class CamPdfService {
     const { content, styles, images, showFooter } = data;
     await this.loadPdfMaker();
 
+    // tslint:disable-next-line:variable-name
     const pageBreakBefore = ({ id }, _followingNodesOnPage: any, nodesOnNextPage) => {
       const start = id?.replace('rowIndex', '')?.replace('rowName', '');
       return nodesOnNextPage.find(node => node?.id === 'rowEnd' + start);

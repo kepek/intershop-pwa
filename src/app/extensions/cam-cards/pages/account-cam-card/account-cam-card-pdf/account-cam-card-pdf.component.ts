@@ -321,7 +321,14 @@ export class AccountCamCardPdfComponent implements OnInit {
     const showAvailabilityDot = ProductHelper.showAvailabilityDot(currentProd);
     const arrRightInfo = [{ text: [artNo, artNoVal] }, { text: [label, labelVal] }];
     const arrLeftInfo = [qty, qtyVal, priceLabel, price];
-    return PdfHelper.pdfProductRow(index, item.product.name, arrRightInfo, arrLeftInfo, camCard.id, showAvailabilityDot);
+    return PdfHelper.pdfProductRow(
+      index,
+      item.product.name,
+      arrRightInfo,
+      arrLeftInfo,
+      camCard.id,
+      showAvailabilityDot
+    );
   }
 
   pdfItemsRow(camCard: CamCard, showPrice: boolean) {

@@ -46,12 +46,19 @@ export class PdfHelper {
     };
   }
 
-  static pdfProductRow(index: number, name: string, arrRightInfo: any[], arrLeftInfo: any[], ccId?: string,  ifDot?: boolean) {
+  static pdfProductRow(
+    index: number,
+    name: string,
+    arrRightInfo: any[],
+    arrLeftInfo: any[],
+    ccId?: string,
+    ifDot?: boolean
+  ) {
     arrLeftInfo.unshift('\n');
     return [
       { text: index + 1, alignment: 'center', id: 'rowIndex_' + index + '_' + ccId },
       [
-        {text: name, id: 'rowName_' + index + '_' + ccId },
+        { text: name, id: 'rowName_' + index + '_' + ccId },
         {
           layout: 'noBorders',
           margin: [0, 0, 0, 0],
@@ -61,7 +68,7 @@ export class PdfHelper {
           },
         },
       ],
-      { text: arrLeftInfo, alignment: 'right', id: 'rowEnd_' + index + '_' + ccId},
+      { text: arrLeftInfo, alignment: 'right', id: 'rowEnd_' + index + '_' + ccId },
     ];
   }
 
