@@ -1,8 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MockComponent } from 'ng-mocks';
 
-import { FilterNavigation } from 'ish-core/models/filter-navigation/filter-navigation.model';
-import { Filter } from 'ish-core/models/filter/filter.model';
 import { findAllCustomElements } from 'ish-core/utils/dev/html-query-utils';
 import { CamfilFilterCollapsableComponent } from 'ish-shared/components/filter/camfil-filter-collapsable/camfil-filter-collapsable.component';
 import { CamfilFilterDropdownComponent } from 'ish-shared/components/filter/camfil-filter-dropdown/camfil-filter-dropdown.component';
@@ -12,7 +10,7 @@ import { FilterSwatchImagesComponent } from 'ish-shared/components/filter/filter
 
 import { CamfilFilterNavigationSidebarComponent } from './camfil-filter-navigation-sidebar.component';
 
-describe('Filter Navigation Sidebar Component', () => {
+describe('Camfil Filter Navigation Sidebar Component', () => {
   let component: CamfilFilterNavigationSidebarComponent;
   let fixture: ComponentFixture<CamfilFilterNavigationSidebarComponent>;
   let element: HTMLElement;
@@ -45,42 +43,5 @@ describe('Filter Navigation Sidebar Component', () => {
   it('should not display anything when filter is not set', () => {
     fixture.detectChanges();
     expect(findAllCustomElements(element)).toBeEmpty();
-  });
-
-  it('should display filter-dropdown if facet with displayType dropdown is present', () => {
-    component.filterNavigation = {
-      filter: [{ selectionType: 'single', displayType: 'dropdown' } as Filter],
-    } as FilterNavigation;
-
-    fixture.detectChanges();
-    expect(findAllCustomElements(element)).toEqual(['camfil-filter-collapsable', 'camfil-filter-dropdown']);
-  });
-
-  it('should display filter-text if facet with displayType text_clear is present', () => {
-    component.filterNavigation = { filter: [{ displayType: 'text_clear' } as Filter] } as FilterNavigation;
-
-    fixture.detectChanges();
-    expect(findAllCustomElements(element)).toEqual(['camfil-filter-collapsable', 'camfil-filter-text']);
-  });
-
-  it('should display filter-swatch-images if facet with displayType swatch is present', () => {
-    component.filterNavigation = { filter: [{ displayType: 'swatch' } as Filter] } as FilterNavigation;
-
-    fixture.detectChanges();
-    expect(findAllCustomElements(element)).toEqual(['camfil-filter-collapsable', 'ish-filter-swatch-images']);
-  });
-
-  it('should display filter-text if facet has no displayType set', () => {
-    component.filterNavigation = { filter: [{} as Filter] } as FilterNavigation;
-
-    fixture.detectChanges();
-    expect(findAllCustomElements(element)).toEqual(['camfil-filter-collapsable', 'camfil-filter-text']);
-  });
-
-  it('should display filter-text if facet has a typo in the displayType', () => {
-    component.filterNavigation = { filter: [{ displayType: 'typo' } as Filter] } as FilterNavigation;
-
-    fixture.detectChanges();
-    expect(findAllCustomElements(element)).toEqual(['camfil-filter-collapsable', 'camfil-filter-text']);
   });
 });
