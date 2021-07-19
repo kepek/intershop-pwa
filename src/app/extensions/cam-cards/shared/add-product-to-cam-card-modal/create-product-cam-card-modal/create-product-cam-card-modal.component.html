@@ -62,7 +62,7 @@
       <!--invoice mark-->
       <mat-form-field appearance="outline" class="col-sm-12 form__field">
         <mat-label>{{ 'camfil.modal.createCamcard.input.invoice_mark' | translate }}</mat-label>
-        <input matInput type="text" formControlName="invoiceMark" maxlength="60" />
+        <input matInput type="text" formControlName="invoiceMark" />
       </mat-form-field>
       <camfil-error
         [errors]="getField('invoiceMark').errors"
@@ -92,11 +92,11 @@
       <!--company-->
       <mat-form-field appearance="outline" class="col-sm-12 form__field">
         <mat-label>{{ 'camfil.modal.createCamcard.input.company' | translate }}</mat-label>
-        <input matInput type="text" maxlength="60" formControlName="company" />
+        <input matInput type="text" formControlName="company" />
       </mat-form-field>
       <camfil-error
         [errors]="getField('company').errors"
-        [errorValidators]="validators.company"
+        [errorValidators]="setMaxLengthValidation(60, 'company', validators)"
         [touched]="getField('company').touched || getField('company').dirty"
       ></camfil-error>
 
