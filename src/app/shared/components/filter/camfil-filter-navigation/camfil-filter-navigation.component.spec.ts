@@ -10,7 +10,7 @@ import { Filter } from 'ish-core/models/filter/filter.model';
 import { findAllCustomElements } from 'ish-core/utils/dev/html-query-utils';
 import { CamfilFilterNavigationBadgesComponent } from 'ish-shared/components/filter/camfil-filter-navigation-badges/camfil-filter-navigation-badges.component';
 import { FilterNavigationHorizontalComponent } from 'ish-shared/components/filter/filter-navigation-horizontal/filter-navigation-horizontal.component';
-import { FilterNavigationSidebarComponent } from 'ish-shared/components/filter/filter-navigation-sidebar/filter-navigation-sidebar.component';
+import { CamfilFilterNavigationSidebarComponent } from 'ish-shared/components/filter/camfil-filter-navigation-sidebar/camfil-filter-navigation-sidebar.component';
 
 import { CamfilFilterNavigationComponent } from './camfil-filter-navigation.component';
 
@@ -29,7 +29,7 @@ describe('Camfil Filter Navigation Component', () => {
         CamfilFilterNavigationComponent,
         MockComponent(CamfilFilterNavigationBadgesComponent),
         MockComponent(FilterNavigationHorizontalComponent),
-        MockComponent(FilterNavigationSidebarComponent),
+        MockComponent(CamfilFilterNavigationSidebarComponent),
       ],
       providers: [{ provide: ShoppingFacade, useFactory: () => instance(shoppingFacade) }],
     }).compileComponents();
@@ -54,7 +54,7 @@ describe('Camfil Filter Navigation Component', () => {
     fixture.detectChanges();
     expect(findAllCustomElements(element)).toMatchInlineSnapshot(`
       Array [
-        "ish-filter-navigation-sidebar",
+        "camfil-filter-navigation-sidebar",
       ]
     `);
   });
@@ -64,7 +64,7 @@ describe('Camfil Filter Navigation Component', () => {
 
     expect(findAllCustomElements(element)).toMatchInlineSnapshot(`
       Array [
-        "ish-filter-navigation-sidebar",
+        "camfil-filter-navigation-sidebar",
       ]
     `);
   });

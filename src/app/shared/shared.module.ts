@@ -129,7 +129,7 @@ import { FilterCollapsableComponent } from './components/filter/filter-collapsab
 import { FilterDropdownComponent } from './components/filter/filter-dropdown/filter-dropdown.component';
 import { CamfilFilterNavigationBadgesComponent } from './components/filter/camfil-filter-navigation-badges/camfil-filter-navigation-badges.component';
 import { FilterNavigationHorizontalComponent } from './components/filter/filter-navigation-horizontal/filter-navigation-horizontal.component';
-import { FilterNavigationSidebarComponent } from './components/filter/filter-navigation-sidebar/filter-navigation-sidebar.component';
+import { CamfilFilterNavigationSidebarComponent } from './components/filter/camfil-filter-navigation-sidebar/camfil-filter-navigation-sidebar.component';
 import { FilterNavigationComponent } from './components/filter/filter-navigation/filter-navigation.component';
 import { FilterSwatchImagesComponent } from './components/filter/filter-swatch-images/filter-swatch-images.component';
 import { FilterTextComponent } from './components/filter/filter-text/filter-text.component';
@@ -224,6 +224,7 @@ import { MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapte
 import { CAMFIL_DEFAULT_LANG, CAMFIL_FORMATS } from 'ish-core/internationalization.module';
 import { LangChangeEvent } from '@ngx-translate/core/lib/translate.service';
 import { LoadingComponent } from './components/common/loading/loading.component';
+import { FilterNavigationSidebarComponent } from './components/filter/filter-navigation-sidebar/filter-navigation-sidebar.component';
 
 const importExportModules = [
   AddressFormsSharedModule,
@@ -328,7 +329,7 @@ const declaredComponents = [
   FilterDropdownComponent,
   FilterNavigationComponent,
   FilterNavigationHorizontalComponent,
-  FilterNavigationSidebarComponent,
+  CamfilFilterNavigationSidebarComponent,
   FilterSwatchImagesComponent,
   FilterTextComponent,
   LineItemDescriptionComponent,
@@ -486,7 +487,7 @@ const exportedComponents = [
     MatSortModule,
     MatTableModule,
   ],
-  declarations: [...declaredComponents, ...exportedComponents],
+  declarations: [...declaredComponents, ...exportedComponents, FilterNavigationSidebarComponent],
   exports: [...exportedComponents, ...importExportModules],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: CAMFIL_DEFAULT_LANG },

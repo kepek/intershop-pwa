@@ -60,7 +60,7 @@ export class CamfilFilterTextComponent implements OnInit {
    * sort selected to top, increase limitCount to selectedCount on showLess
    */
   getFacets() {
-    const facets = [...this.facets];
+    const facets = [...this.facets.filter(facet => facet.count > 0)];
 
     if (this.showAll || this.maxLevel >= 1 || this.filterElement.limitCount === -1) {
       return facets;
