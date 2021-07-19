@@ -28,7 +28,7 @@ export class PdfHelper {
   static pdfTable(body) {
     return {
       table: {
-        headerRows: 1,
+        headerRows: 0,
         body,
         widths: [10, '*', '20%'],
       },
