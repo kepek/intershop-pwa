@@ -224,7 +224,6 @@ import { MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapte
 import { CAMFIL_DEFAULT_LANG, CAMFIL_FORMATS } from 'ish-core/internationalization.module';
 import { LangChangeEvent } from '@ngx-translate/core/lib/translate.service';
 import { LoadingComponent } from './components/common/loading/loading.component';
-import { FilterNavigationSidebarComponent } from './components/filter/filter-navigation-sidebar/filter-navigation-sidebar.component';
 
 const importExportModules = [
   AddressFormsSharedModule,
@@ -303,6 +302,7 @@ const declaredComponents = [
   CamfilFilterCollapsableComponent,
   CamfilFilterDropdownComponent,
   CamfilFilterNavigationBadgesComponent,
+  CamfilFilterNavigationSidebarComponent,
   CamfilFilterTextComponent,
   CamfilProductAddToBasketModalComponent,
   CamfilProductAttributeComponent,
@@ -329,7 +329,6 @@ const declaredComponents = [
   FilterDropdownComponent,
   FilterNavigationComponent,
   FilterNavigationHorizontalComponent,
-  CamfilFilterNavigationSidebarComponent,
   FilterSwatchImagesComponent,
   FilterTextComponent,
   LineItemDescriptionComponent,
@@ -487,7 +486,7 @@ const exportedComponents = [
     MatSortModule,
     MatTableModule,
   ],
-  declarations: [...declaredComponents, ...exportedComponents, FilterNavigationSidebarComponent],
+  declarations: [...declaredComponents, ...exportedComponents],
   exports: [...exportedComponents, ...importExportModules],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: CAMFIL_DEFAULT_LANG },

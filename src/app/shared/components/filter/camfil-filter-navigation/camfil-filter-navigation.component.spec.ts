@@ -9,8 +9,8 @@ import { FilterNavigation } from 'ish-core/models/filter-navigation/filter-navig
 import { Filter } from 'ish-core/models/filter/filter.model';
 import { findAllCustomElements } from 'ish-core/utils/dev/html-query-utils';
 import { CamfilFilterNavigationBadgesComponent } from 'ish-shared/components/filter/camfil-filter-navigation-badges/camfil-filter-navigation-badges.component';
-import { FilterNavigationHorizontalComponent } from 'ish-shared/components/filter/filter-navigation-horizontal/filter-navigation-horizontal.component';
 import { CamfilFilterNavigationSidebarComponent } from 'ish-shared/components/filter/camfil-filter-navigation-sidebar/camfil-filter-navigation-sidebar.component';
+import { FilterNavigationHorizontalComponent } from 'ish-shared/components/filter/filter-navigation-horizontal/filter-navigation-horizontal.component';
 
 import { CamfilFilterNavigationComponent } from './camfil-filter-navigation.component';
 
@@ -28,8 +28,8 @@ describe('Camfil Filter Navigation Component', () => {
       declarations: [
         CamfilFilterNavigationComponent,
         MockComponent(CamfilFilterNavigationBadgesComponent),
-        MockComponent(FilterNavigationHorizontalComponent),
         MockComponent(CamfilFilterNavigationSidebarComponent),
+        MockComponent(FilterNavigationHorizontalComponent),
       ],
       providers: [{ provide: ShoppingFacade, useFactory: () => instance(shoppingFacade) }],
     }).compileComponents();
