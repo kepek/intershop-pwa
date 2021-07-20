@@ -94,7 +94,9 @@
       word-wrap: normal;
     }
     .box-label-attribute {
+      max-width: 200px;
       margin-left: 5px;
+      overflow-wrap: break-word;
     }
     mat-form-field {
       .mat-form-field-underline {
