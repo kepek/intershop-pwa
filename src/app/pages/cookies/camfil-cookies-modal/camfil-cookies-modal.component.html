@@ -40,7 +40,7 @@
     <div *ngFor="let option of cookieConsentOptions?.options | keyvalue: unsorted; let i = index" class="cookie-option">
       <mat-accordion>
         <mat-expansion-panel hideToggle (opened)="panelOpenState[i] = true" (closed)="panelOpenState[i] = false">
-          <mat-expansion-panel-header>
+          <mat-expansion-panel-header class="overflow-visible">
             <mat-panel-title>
               <mat-icon *ngIf="!panelOpenState[i]" class="mr-2">add</mat-icon>
               <mat-icon *ngIf="panelOpenState[i]" class="mr-2">remove</mat-icon>
