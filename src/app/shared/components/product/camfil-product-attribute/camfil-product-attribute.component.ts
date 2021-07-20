@@ -27,6 +27,7 @@ export class CamfilProductAttributeComponent implements OnChanges {
   @Input() itemProp?: string;
   @Input() multipleValuesSeparator = ', ';
   @Input() hideAttributeName = false;
+  @Input() overflowVisible = false;
 
   attribute: Attribute;
 
