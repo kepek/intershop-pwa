@@ -237,20 +237,14 @@ export class PrintOrderComponent implements OnInit {
     const sku = item.productSKU;
     const artNo = `${this.texts.artNr} `;
     const artNoVal = { text: sku, bold: true };
+
+    const deliveryDays = this.productsInfo[sku].deliveryDays;
+    const deliveryDaysText = deliveryDays ? `${this.texts.deliveryDays}: ` : '';
+    const deliveryDaysVal = { text: deliveryDays, bold: true };
     const label = item.attributes.find(attr => attr.name === 'boxLabel')?.value;
     const boxLabelText = label ? ` | ${this.texts.boxLabel}: ` : '';
     const boxLabelVal = { text: label, bold: true };
 
-    const deliveryDays = this.productsInfo[sku].deliveryDays;
-    const deliveryDaysText = deliveryDays ? ` | ${this.texts.deliveryDays}: ` : '';
-    const deliveryDaysVal = { text: deliveryDays, bold: true };
-    const qty = `${this.texts.quantity} `;
-    const qtyVal = { text: item.quantity.value, bold: true };
-    const priceVal = this.handlePrice({
-      value: item.totals.total.net,
-      currency: item.totals.total.currency,
-      type: 'Money',
-    });
     const measurementsValues = ['width', 'height', 'diameter'];
     const measurements = {
       [measurementsValues[0]]: (this.getValFromAttrs(item, 'width') as number) || undefined,
@@ -259,22 +253,29 @@ export class PrintOrderComponent implements OnInit {
     };
     const measurementsToShow = this.measurementsToShow(measurements);
     const measurementsText = measurementsToShow ? ` | ${this.texts.measurements}: ` : '';
-    const priceLabel = ` | ${this.texts.price} `;
-    const price = { text: priceVal, bold: true };
     const arrRightInfo = [
-      artNo,
-      artNoVal,
-      boxLabelText,
-      boxLabelVal,
-      deliveryDaysText,
-      deliveryDaysVal,
-      measurementsText,
-      measurementsToShow,
+      { text: [artNo, artNoVal] },
+      {
+        stack: [{ text: [deliveryDaysText, deliveryDaysVal, boxLabelText, boxLabelVal] }],
+      },
     ];
 
+    const qty = `${this.texts.quantity} `;
+    const qtyVal = { text: item.quantity.value, bold: true };
+    const priceVal = this.handlePrice({
+      value: item.totals.total.net,
+      currency: item.totals.total.currency,
+      type: 'Money',
+    });
+    const priceLabel = ` | ${this.texts.price} `;
+    const price = { text: priceVal, bold: true };
     const arrLeftInfo = [qty, qtyVal, priceLabel, price];
 
-    return PdfHelper.pdfProductRow(index, this.productsInfo[sku].name, arrRightInfo, arrLeftInfo);
+    const name = {
+      text: [this.productsInfo[sku].name, measurementsText, { text: measurementsToShow, bold: true }],
+    };
+
+    return PdfHelper.pdfProductRow(index, name, arrRightInfo, arrLeftInfo, item.id);
   }
 
   pdfItemsRow(bucket: Bucket) {
