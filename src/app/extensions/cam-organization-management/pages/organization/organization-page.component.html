@@ -19,4 +19,4 @@
   [dataSourceColumns]="dataSourceColumns"
 ></camfil-organization-users-list>
 
-<div *ngIf="loading$() | async" class="loader-container"><camfil-loading></camfil-loading></div>
+<camfil-loading *ngIf="loading$() | async" fixed="true"></camfil-loading>
