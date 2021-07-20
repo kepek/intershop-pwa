@@ -5,6 +5,7 @@ import { OrganizationPageDataSourceComponent } from './orgniazation-page.data-so
 @Component({
   selector: 'camfil-users-page',
   templateUrl: './organization-page.component.html',
+  styleUrls: ['./organization-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 // tslint:disable-next-line:component-creation-test

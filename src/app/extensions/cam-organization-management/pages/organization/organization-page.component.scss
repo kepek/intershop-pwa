@@ -1,0 +1,8 @@
+@import '~src/styles/themes/camfil/mixins';
+@import '~src/styles/themes/camfil/variables';
+
+:host {
+  .loader-container {
+    @include fixed_loading;
+  }
+}
