@@ -52,7 +52,7 @@ export class OrderFormComponent implements OnInit, OnDestroy {
       deliveryAddressSelect: [this.orderToEdit?.deliveryAddressId || '', []],
       company: [this.orderToEdit?.company || '', [Validators.required, Validators.maxLength(60)]],
       building: [this.orderToEdit?.building || ''],
-      address: [this.orderToEdit?.address || '', [Validators.required]],
+      address: [this.orderToEdit?.address || ''],
       zipCode: [this.orderToEdit?.zipCode || '', [Validators.required, Validators.pattern('[0-9]{5}')]],
       area: [{ value: this.orderToEdit?.area || '', disabled: true }, [Validators.required]],
       info: [this.orderToEdit?.info || '', [Validators.maxLength(150)]],

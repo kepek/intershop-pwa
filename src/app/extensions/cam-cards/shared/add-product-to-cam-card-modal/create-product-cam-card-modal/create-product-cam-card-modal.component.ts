@@ -109,7 +109,7 @@ export class CreateProductCamCardModalComponent implements OnInit, OnDestroy {
       invoiceMark: [''],
       deliveryAddressSelect: ['', []],
       company: ['', [Validators.required, Validators.maxLength(60)]],
-      address: ['', [Validators.required]],
+      address: [''],
       zipCode: ['', [Validators.required, Validators.pattern('[0-9]{5}')]],
       area: [{ value: '', disabled: true }, [Validators.required]],
       countryCode: [this.defaultCountryCode, [Validators.required, Validators.maxLength(35)]],
