@@ -58,7 +58,10 @@ export class PdfHelper {
     return [
       { text: index + 1, alignment: 'center', id: 'rowIndex_' + index + '_' + ccId },
       [
-        { columns: [{text: name, width: 'auto' }, ifDot ? { image: 'dot', width: 5, margin: [3, 2, 0, 0] } : ''], id: 'rowName_' + index + '_' + ccId },
+        {
+          columns: [{ text: name, width: 'auto' }, ifDot ? { image: 'dot', width: 5, margin: [3, 2, 0, 0] } : ''],
+          id: 'rowName_' + index + '_' + ccId,
+        },
         {
           layout: 'noBorders',
           margin: [0, 0, 0, 0],
