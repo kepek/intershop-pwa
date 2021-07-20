@@ -1,9 +1,9 @@
 <ng-container *ngIf="filter$ | async as filterNavigation">
   <ng-container *ngIf="isSideBar; else horizontal">
-    <ish-filter-navigation-sidebar
+    <camfil-filter-navigation-sidebar
       [filterNavigation]="filterNavigation"
       (applyFilter)="applyFilter($event)"
-    ></ish-filter-navigation-sidebar>
+    ></camfil-filter-navigation-sidebar>
   </ng-container>
   <ng-template #horizontal>
     <ish-filter-navigation-horizontal

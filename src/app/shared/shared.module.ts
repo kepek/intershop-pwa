@@ -129,7 +129,7 @@ import { FilterCollapsableComponent } from './components/filter/filter-collapsab
 import { FilterDropdownComponent } from './components/filter/filter-dropdown/filter-dropdown.component';
 import { CamfilFilterNavigationBadgesComponent } from './components/filter/camfil-filter-navigation-badges/camfil-filter-navigation-badges.component';
 import { FilterNavigationHorizontalComponent } from './components/filter/filter-navigation-horizontal/filter-navigation-horizontal.component';
-import { FilterNavigationSidebarComponent } from './components/filter/filter-navigation-sidebar/filter-navigation-sidebar.component';
+import { CamfilFilterNavigationSidebarComponent } from './components/filter/camfil-filter-navigation-sidebar/camfil-filter-navigation-sidebar.component';
 import { FilterNavigationComponent } from './components/filter/filter-navigation/filter-navigation.component';
 import { FilterSwatchImagesComponent } from './components/filter/filter-swatch-images/filter-swatch-images.component';
 import { FilterTextComponent } from './components/filter/filter-text/filter-text.component';
@@ -302,6 +302,7 @@ const declaredComponents = [
   CamfilFilterCollapsableComponent,
   CamfilFilterDropdownComponent,
   CamfilFilterNavigationBadgesComponent,
+  CamfilFilterNavigationSidebarComponent,
   CamfilFilterTextComponent,
   CamfilProductAddToBasketModalComponent,
   CamfilProductAttributeComponent,
@@ -328,7 +329,6 @@ const declaredComponents = [
   FilterDropdownComponent,
   FilterNavigationComponent,
   FilterNavigationHorizontalComponent,
-  FilterNavigationSidebarComponent,
   FilterSwatchImagesComponent,
   FilterTextComponent,
   LineItemDescriptionComponent,
