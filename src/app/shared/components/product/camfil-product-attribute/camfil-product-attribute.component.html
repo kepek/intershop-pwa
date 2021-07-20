@@ -6,6 +6,7 @@
     [attr.itemprop]="itemProp"
     [innerHTML]="attribute | ishAttribute: multipleValuesSeparator"
     class="camfil-product-attribute__value"
+    [ngClass]="{ 'overflow-visible': overflowVisible }"
     [title]="attribute | ishAttribute: multipleValuesSeparator"
   ></dd>
 </dl>
