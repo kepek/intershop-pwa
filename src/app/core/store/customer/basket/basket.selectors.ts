@@ -135,3 +135,5 @@ export const getBucketsVolumeDiscounts = createSelector(getBasketState, basket =
 );
 
 export const getLineItemUpdating = createSelector(getBasketState, basket => basket.lineItemUpdating);
+
+export const getProductAddingError = createSelector(getBasketState, basket => basket.error);

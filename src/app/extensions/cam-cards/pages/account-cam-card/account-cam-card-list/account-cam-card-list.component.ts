@@ -421,6 +421,13 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
         this.changeDetectorRefs.detectChanges();
       }
     });
+
+    this.productFacade.getProductAddingError$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(error => {
+      if (error) {
+        this.productAddingInProgress = false;
+        this.changeDetectorRefs.detectChanges();
+      }
+    });
   }
 
   notAvailbaleProdList(modal: CamfilModalDialogComponent<any>) {

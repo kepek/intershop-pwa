@@ -19,6 +19,7 @@ import {
   getBasketAddresses,
   getCurrentBasket,
   getProductAdded,
+  getProductAddingError,
   getProductUpdated,
   isProductsReadyToPlaceOrder,
   loadBasketAddresses,
@@ -332,6 +333,7 @@ export class ShoppingFacade {
   productUpdated$ = this.store.pipe(select(getProductUpdated));
   basketAddresses$ = this.store.pipe(select(getBasketAddresses));
   productsReadyToPlaceOrder$ = this.store.pipe(select(isProductsReadyToPlaceOrder));
+  getProductAddingError$ = this.store.pipe(select(getProductAddingError));
 
   categories$(ids: string[]) {
     return this.store.pipe(
