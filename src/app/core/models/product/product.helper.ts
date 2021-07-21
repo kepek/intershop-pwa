@@ -315,4 +315,23 @@ export class ProductHelper {
       return (width * height) / 1000000 <= filterArea;
     }
   }
+
+  static setMaxLengthValidation(num: number, fieldName: string, validator) {
+    return fieldName in validator
+      ? [
+          ...validator[fieldName],
+          {
+            error: 'maxlength',
+            message: 'camfil.form.error.maxLength',
+            messageVariables: ['' + num],
+          },
+        ]
+      : validator[fieldName];
+  }
+
+  static setMaxLengthErrorForTableValidator(validator, num?: number) {
+    return num
+      ? validator.map(item => (item.error === 'maxlength' ? { ...item, messageVariables: ['' + num] } : item))
+      : validator;
+  }
 }

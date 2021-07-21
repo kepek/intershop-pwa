@@ -20,6 +20,10 @@ export const CREATE_CAMCARD_VALIDATORS = {
       error: 'required',
       message: 'camfil.modal.createCamcard.input.invoice_mark.error.required',
     },
+    {
+      error: 'maxlength',
+      message: 'camfil.checkout.order_header.invoice_label.error.maxLength',
+    },
   ],
   company: [
     {

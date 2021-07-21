@@ -81,6 +81,7 @@ export class CreateProductCamCardModalComponent implements OnInit, OnDestroy {
 
   @ViewChild('modal', { static: false }) modalTemplate: TemplateRef<unknown>;
   validateFilterArea = ProductHelper.validateFilterArea;
+  setMaxLengthValidation = ProductHelper.setMaxLengthValidation;
   constructor(
     private fb: FormBuilder,
     private camCardsFacade: CamCardsFacade,
@@ -106,7 +107,7 @@ export class CreateProductCamCardModalComponent implements OnInit, OnDestroy {
       name: ['', [Validators.required, Validators.maxLength(40)]],
       customerSelect: [''],
       orderMark: [''],
-      invoiceMark: [''],
+      invoiceMark: ['', Validators.maxLength(60)],
       deliveryAddressSelect: ['', []],
       company: ['', [Validators.required, Validators.maxLength(60)]],
       address: [''],
