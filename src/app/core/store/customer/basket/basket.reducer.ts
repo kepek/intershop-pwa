@@ -21,6 +21,7 @@ import {
   addItemsToBasket,
   addItemsToBasketFail,
   addItemsToBasketFromCamCard,
+  addItemsToBasketFromCamCardFail,
   addItemsToBasketFromCamCardSuccess,
   addItemsToBasketSuccess,
   addProductToBasket,
@@ -215,7 +216,8 @@ export const basketReducer = createReducer(
     updateConcardisCvcLastUpdated,
     camfilDragLineItem,
     loadCustomerDeliveryTermSuccess,
-    deleteBucketSuccess
+    deleteBucketSuccess,
+    addItemsToBasketFromCamCardFail
   ),
   setErrorOn(
     mergeBasketFail,
@@ -242,7 +244,8 @@ export const basketReducer = createReducer(
     camfilDragLineItemFail,
     addProductToBucketAddressFromCamCardFail,
     addProductsFromCamCardFail,
-    deleteBucketFail
+    deleteBucketFail,
+    addItemsToBasketFromCamCardFail
   ),
   on(updateBasketItemAttributes, addBasketItemAttributes, deleteBasketItemAttributes, (state: BasketState) => ({
     ...state,

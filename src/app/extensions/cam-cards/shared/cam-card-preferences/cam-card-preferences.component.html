@@ -66,10 +66,15 @@
                 formControlName="invoiceMark"
                 label="camfil.account.cam_card.add_to_form.invoice_mark"
                 markRequiredLabel="off"
-                maxlength="60"
                 (change)="onBlurSubmit()"
               />
             </mat-form-field>
+            <camfil-error
+              [errors]="camCardForm.controls.invoiceMark.errors"
+              [errorValidators]="setMaxLengthErrorForTableValidator(errorValidator, 60)"
+              [touched]="camCardForm.controls.invoiceMark.touched"
+            >
+            </camfil-error>
           </div>
           <div class="col-md-4">
             <h3>{{ 'camfil.account.cam_card.add_to_form.delivery_address' | translate }}</h3>
@@ -94,13 +99,12 @@
                 formControlName="companyName1"
                 label="camfil.account.cam_card.add_to_form.company_name"
                 markRequiredLabel="off"
-                maxlength="60"
                 (change)="onBlurSubmit()"
               />
             </mat-form-field>
             <camfil-error
               [errors]="camCardForm.controls.companyName1.errors"
-              [errorValidators]="errorValidator"
+              [errorValidators]="setMaxLengthErrorForTableValidator(errorValidator, 60)"
               [touched]="camCardForm.controls.companyName1.touched"
             >
             </camfil-error>

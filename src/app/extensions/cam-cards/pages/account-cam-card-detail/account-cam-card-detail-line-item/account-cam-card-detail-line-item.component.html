@@ -92,10 +92,12 @@
       <camfil-product-attribute
         [name]="'camfil.cam_card.product.list_price.label' | translate"
         [value]="getListPrice(product.listPrice) | camfilPriceSummary: camCardItemData.quantity | ishPrice"
+        [overflowVisible]="true"
       ></camfil-product-attribute>
       <camfil-product-attribute
         [name]="'camfil.cam_card.product.your_price.label' | translate"
         [value]="getSalePrice(product.salePrice) | camfilPriceSummary: camCardItemData.quantity | ishPrice"
+        [overflowVisible]="true"
       ></camfil-product-attribute>
     </ng-container>
   </ng-template>

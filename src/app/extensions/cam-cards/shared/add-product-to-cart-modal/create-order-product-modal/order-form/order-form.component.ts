@@ -4,6 +4,7 @@ import { Observable, Subject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
 
 import { EditBucket } from 'ish-core/models/basket/bucket.model';
+import { ProductHelper } from 'ish-core/models/product/product.helper';
 import { whenTruthy } from 'ish-core/utils/operators';
 
 import { CamCardsFacade } from '../../../../facades/cam-cards.facade';
@@ -30,7 +31,7 @@ export class OrderFormComponent implements OnInit, OnDestroy {
 
   @Input() orderToEdit?: EditBucket;
   @Input() edit?: boolean;
-
+  setMaxLengthValidation = ProductHelper.setMaxLengthValidation;
   private destroy$ = new Subject<void>();
 
   constructor(private fb: FormBuilder, private camCardsFacade: CamCardsFacade) {}

@@ -21,6 +21,7 @@ import { map, startWith, take, takeUntil } from 'rxjs/operators';
 
 import { AppFacade } from 'ish-core/facades/app.facade';
 import { Country } from 'ish-core/models/country/country.model';
+import { ProductHelper } from 'ish-core/models/product/product.helper';
 import { whenTruthy } from 'ish-core/utils/operators';
 import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
 
@@ -89,6 +90,7 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit, AfterView
   deliveryIntervalOptions: string[] = [...Array(1000).keys()].map(i => (i === 0 ? '--' : i.toString()));
   deliveryIntervalFilteredOptions: Observable<string[]>;
 
+  setMaxLengthErrorForTableValidator = ProductHelper.setMaxLengthErrorForTableValidator;
   private destroy$ = new Subject();
 
   /**
@@ -183,7 +185,6 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit, AfterView
   }
 
   ngOnInit() {
-    this.errorValidator.find(item => item.error === 'maxlength').messageVariables = ['' + this.maxLength];
     this.initForm();
     this.countries$ = this.appFacade.countries$();
     this.customers$ = this.camCardsFacade.customers$;
@@ -231,9 +232,9 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit, AfterView
     const maxL = this.maxLength;
     this.camCardForm = this.fb.group({
       title: ['', [Validators.required, Validators.maxLength(40)]],
-      customerName: ['', [Validators.required, Validators.maxLength(maxL)]],
+      customerName: ['', [Validators.required]],
       orderMark: ['', [Validators.maxLength(maxL)]],
-      invoiceMark: ['', [Validators.maxLength(maxL)]],
+      invoiceMark: ['', [Validators.maxLength(60)]],
       deliveryAddress: ['', [Validators.maxLength(maxL)]],
       companyName1: ['', [Validators.maxLength(60)]],
       addressLine1: ['', [Validators.maxLength(250)]],
