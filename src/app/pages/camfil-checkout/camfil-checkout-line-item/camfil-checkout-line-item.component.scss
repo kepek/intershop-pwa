@@ -78,6 +78,11 @@
     .line-item-data-bottom {
       width: 450px;
     }
+    @media (min-width: $screen-xs) {
+      .line-item-data-bottom {
+        width: 180px;
+      }
+    }
   }
 
   @media (max-width: $screen-sm-max) {
@@ -114,6 +119,7 @@
         padding: 0.25em 0 0.5em 0;
       }
     }
+
     .line-item-data-bottom {
       camfil-product-attribute {
         line-height: 19px;
@@ -121,6 +127,24 @@
       }
     }
 
+    .line-item__confirmed {
+      .line-item-data-container {
+        @media (min-width: $screen-xs) {
+          .line-item-data-bottom {
+            flex-direction: column !important;
+            align-items: flex-start;
+            camfil-product-attribute {
+              margin-left: 0;
+              border: none;
+            }
+            .mat-button {
+              padding: 0 1px;
+              border-right: none;
+            }
+          }
+        }
+      }
+    }
     camfil-product-inventory {
       border-right: none;
       .product-availability {

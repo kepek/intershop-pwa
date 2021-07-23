@@ -6,4 +6,14 @@
     display: inline-block;
     width: $space-box;
   }
+
+  .toolbar-container {
+    @media (min-width: $screen-xs) {
+      width: 100%;
+      max-width: 100%;
+      padding: 0 $space-box 0 0;
+      overflow: auto;
+      white-space: nowrap;
+    }
+  }
 }
