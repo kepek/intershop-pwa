@@ -9,7 +9,9 @@
     }
     ish-address address,
     camfil-checkout-delivery-address address {
+      max-width: 200px;
       text-align: right;
+      overflow-wrap: break-word;
     }
     .mat-expansion-panel-body {
       padding: 2px;
@@ -35,6 +37,11 @@
   dd {
     justify-content: flex-end;
     font-weight: 500;
+  }
+  .invoice-label-value {
+    display: block;
+    text-align: right;
+    overflow-wrap: break-word;
   }
 
   .order-summary-info {
