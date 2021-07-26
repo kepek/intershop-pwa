@@ -6,7 +6,7 @@
       <ng-container *ngIf="facet.selected; else notSelectedBox">
         <a (click)="filter(facet)" [attr.data-testing-id]="'filter-link-' + (facet.name | sanitize)">
           <span class="filter-item-name"> {{ facet.displayName }} </span>
-          <mat-checkbox class="example-margin" [(ngModel)]="checked"> </mat-checkbox>
+          <mat-checkbox class="example-margin" color="primary" [(ngModel)]="checked"> </mat-checkbox>
         </a>
       </ng-container>
 
@@ -18,7 +18,7 @@
           [attr.data-testing-id]="'filter-link-' + (facet.name | sanitize)"
         >
           {{ facet.displayName }}
-          <mat-checkbox class="example-margin" [(ngModel)]="unchecked"> </mat-checkbox>
+          <mat-checkbox class="example-margin" color="primary" [(ngModel)]="unchecked"> </mat-checkbox>
         </a>
       </ng-template>
     </li>
