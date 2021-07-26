@@ -920,10 +920,13 @@
     <mat-card>
       <mat-card-content>
         <h2 class="example-h2">Material Checkbox</h2>
-        <mat-checkbox color="warn">Unchecked</mat-checkbox>
-        <mat-checkbox [checked]="true">Checked</mat-checkbox>
-        <mat-checkbox [indeterminate]="true">Indeterminate</mat-checkbox>
-        <mat-checkbox [disabled]="true">Disabled</mat-checkbox>
+        <ng-container *ngFor="let checkboxColor of availableColors">
+          <mat-checkbox [color]="checkboxColor.color">Unchecked</mat-checkbox>
+          <mat-checkbox [color]="checkboxColor.color" [checked]="true">Checked</mat-checkbox>
+          <mat-checkbox [color]="checkboxColor.color" [indeterminate]="true">Indeterminate</mat-checkbox>
+          <mat-checkbox [color]="checkboxColor.color" [disabled]="true">Disabled</mat-checkbox>
+          <hr />
+        </ng-container>
       </mat-card-content>
     </mat-card>
     <!-- /Material Checkbox -->
