@@ -176,9 +176,9 @@
                 type="text"
                 matInput
                 name="deliveryInterval"
-                [formControl]="deliveryIntervalFormControl"
+                [formControl]="camCardForm.get('deliveryInterval')"
                 [matAutocomplete]="filteredIntervals"
-                (focusout)="applyDeliveryInterval()"
+                (change)="applyDeliveryInterval()"
                 (keyup)="validateDeliveryInterval()"
               />
               <mat-autocomplete

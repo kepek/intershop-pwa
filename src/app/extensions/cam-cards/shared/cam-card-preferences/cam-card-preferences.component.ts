@@ -13,7 +13,7 @@ import {
   TemplateRef,
   ViewChild,
 } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
@@ -86,7 +86,7 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit, AfterView
   selectedAddress: CamCardAddress;
   countryChangeDetect$: Subject<boolean> = new Subject();
   defaultCountryCode: string;
-  deliveryIntervalFormControl = new FormControl();
+
   deliveryIntervalOptions: string[] = [...Array(1000).keys()].map(i => (i === 0 ? '--' : i.toString()));
   deliveryIntervalFilteredOptions: Observable<string[]>;
 
@@ -117,11 +117,6 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit, AfterView
       viewValue: 'Sweden',
     },
   ];
-
-  deliveryInterval = [...Array(999).keys()].map(i => ({
-    value: i + 1,
-    viewValue: i + 1,
-  }));
 
   errorValidator = [
     {
@@ -213,7 +208,7 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit, AfterView
       this.customers = customers;
     });
 
-    this.deliveryIntervalFilteredOptions = this.deliveryIntervalFormControl.valueChanges.pipe(
+    this.deliveryIntervalFilteredOptions = this.camCardForm.get('deliveryInterval').valueChanges.pipe(
       startWith(''),
       map(value => this._deliveryIntervalFilter(value))
     );
@@ -292,7 +287,6 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit, AfterView
         nextDelivery: nextDeliveryDate ? new Date(nextDeliveryDate) : '',
         reminder: reminderFlag,
       });
-      this.deliveryIntervalFormControl.setValue(deliveryInterval);
     }
   }
 
@@ -317,9 +311,6 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit, AfterView
       const nextDelivery = this.camCardForm.get('nextDelivery').value;
       const lastDelivery = this.camCardForm.get('lastDelivery').value;
       const customerId = this.customerId;
-      const deliveryInterval = isNaN(this.deliveryIntervalFormControl.value)
-        ? undefined
-        : this.deliveryIntervalFormControl.value;
       this.submit.emit({
         ...this.camCard,
         id: this.camCard?.id,
@@ -342,7 +333,9 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit, AfterView
         },
         nextDeliveryDate: nextDelivery ? this.dateToSend(nextDelivery) : '',
         lastDeliveryDate: lastDelivery ? this.dateToSend(lastDelivery) : '',
-        deliveryInterval,
+        deliveryInterval: isNaN(this.camCardForm.get('deliveryInterval').value)
+          ? undefined
+          : this.camCardForm.get('deliveryInterval').value,
         reminderFlag: this.camCardForm.get('reminder').value,
       });
     } else {
@@ -403,7 +396,8 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit, AfterView
   pickInterval() {
     const date = new Date(this.camCardForm.get('lastDelivery').value);
     date.setMonth(
-      date.getMonth() + (isNaN(this.deliveryIntervalFormControl.value) ? 0 : this.deliveryIntervalFormControl.value)
+      date.getMonth() +
+        (isNaN(this.camCardForm.get('deliveryInterval').value) ? 0 : this.camCardForm.get('deliveryInterval').value)
     );
     this.camCardForm.patchValue({
       nextDelivery: date,
@@ -418,32 +412,25 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit, AfterView
   }
 
   applyDeliveryInterval() {
-    if (this.deliveryIntervalFormControl.value === '--') {
-      this.deliveryIntervalFormControl.setValue(undefined);
-    }
-    // tslint:disable-next-line: triple-equals
-    if (this.deliveryIntervalFormControl.value == this.camCardForm.get('deliveryInterval').value) {
-      return;
-    }
-    if (!isNaN(this.deliveryIntervalFormControl.value)) {
-      this.camCardForm.patchValue({ deliveryInterval: this.deliveryIntervalFormControl.value });
+    if (this.camCardForm.get('deliveryInterval').value === '--') {
+      this.camCardForm.get('deliveryInterval').setValue(undefined);
     }
     this.pickInterval();
     this.onBlurSubmit();
   }
 
   validateDeliveryInterval() {
-    if (this.deliveryIntervalFormControl.value === '--') {
-      this.deliveryIntervalFormControl.setValue(undefined);
+    if (this.camCardForm.get('deliveryInterval').value === '--') {
+      this.camCardForm.get('deliveryInterval').setValue(undefined);
       return;
     }
 
-    if (this.deliveryIntervalFormControl.value > 999) {
-      this.deliveryIntervalFormControl.setValue('999');
+    if (this.camCardForm.get('deliveryInterval').value > 999) {
+      this.camCardForm.get('deliveryInterval').setValue('999');
       return;
     }
-    if (this.deliveryIntervalFormControl.value <= 0) {
-      this.deliveryIntervalFormControl.setValue(undefined);
+    if (this.camCardForm.get('deliveryInterval').value <= 0) {
+      this.camCardForm.get('deliveryInterval').setValue(undefined);
       return;
     }
   }
