@@ -1,10 +1,10 @@
 <button
   mat-stroked-button
   color="primary"
-  disabled
   data-testing-id="pdf-cam-card"
   (click)="openPdfGenDialog()"
-  disabled="{{ !camCards?.length }}"
+  [disabled]="!camCards?.length"
+  class="btn-tool secondary-button"
 >
   <mat-icon svgIcon="print" class="size-15"></mat-icon>
   {{ 'camfil.account.cam_card.list.button.print.label' | translate }}
