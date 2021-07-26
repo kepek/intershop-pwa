@@ -556,15 +556,15 @@ export class BasketItemsEffects {
     )
   );
 
-  addItemsToBasketFromCamCardFailMessage$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(addItemsToBasketFromCamCardFail),
-      mapToPayload(),
-      mergeMap(({ error }) => [
-        displayErrorMessage({
-          message: error?.message,
-        }),
-      ])
-    )
-  );
+  // addItemsToBasketFromCamCardFailMessage$ = createEffect(() =>
+  //   this.actions$.pipe(
+  //     ofType(addItemsToBasketFromCamCardFail),
+  //     mapToPayload(),
+  //     mergeMap(({ error }) => [
+  //       displayErrorMessage({
+  //         message: error?.message,
+  //       }),
+  //     ])
+  //   )
+  // );
 }

@@ -486,6 +486,15 @@ export const addItemsToBasketFromCamCardFail = createAction(
   httpError()
 );
 
+export const showItemsToBasketFromCamCardErrorModal = createAction(
+  '[Basket API] Set Measurements Error',
+  payload<{
+    code?: string;
+    message?: string;
+    status?: number;
+  }>()
+);
+
 export const addItemsToBasketFromCamCardSuccess = createAction('[Basket API] Add Items To Basket from CamCard Success');
 
 export const updateBucketsQueue = createAction(
