@@ -23,6 +23,9 @@
 
     .switch-layout {
       padding-right: 0;
+      @media (min-width: $screen-xs) {
+        padding: 0 24px;
+      }
     }
     .sort-by {
       padding-left: 0;

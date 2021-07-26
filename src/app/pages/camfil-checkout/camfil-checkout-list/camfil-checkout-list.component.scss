@@ -80,6 +80,17 @@
         border-right: 1px solid $greyEA;
       }
     }
+    @media (min-width: $screen-xs) {
+      .order-cta-container {
+        margin: 0 -30px;
+      }
+    }
+  }
+
+  .form-horizontal {
+    @media (min-width: $screen-xs) {
+      margin: 0 -30px;
+    }
   }
 
   .cost-summary {
