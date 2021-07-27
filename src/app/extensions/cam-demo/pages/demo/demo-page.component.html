@@ -1225,8 +1225,8 @@
         </section>
 
         <section class="example-section">
-          <mat-checkbox class="example-margin" [(ngModel)]="slider.showTicks">Show ticks</mat-checkbox>
-          <mat-checkbox class="example-margin" [(ngModel)]="slider.autoTicks" *ngIf="slider.showTicks">
+          <mat-checkbox color="primary" class="example-margin" [(ngModel)]="slider.showTicks">Show ticks</mat-checkbox>
+          <mat-checkbox color="primary" class="example-margin" [(ngModel)]="slider.autoTicks" *ngIf="slider.showTicks">
             Auto ticks
           </mat-checkbox>
           <mat-form-field class="example-margin" *ngIf="slider.showTicks && !slider.autoTicks">
@@ -1235,20 +1235,22 @@
         </section>
 
         <section class="example-section">
-          <mat-checkbox class="example-margin" [(ngModel)]="slider.thumbLabel">Show thumb label</mat-checkbox>
+          <mat-checkbox color="primary" class="example-margin" [(ngModel)]="slider.thumbLabel"
+            >Show thumb label</mat-checkbox
+          >
         </section>
 
         <section class="example-section">
-          <mat-checkbox class="example-margin" [(ngModel)]="slider.checked">Checked</mat-checkbox>
+          <mat-checkbox color="primary" class="example-margin" [(ngModel)]="slider.checked">Checked</mat-checkbox>
         </section>
 
         <section class="example-section">
-          <mat-checkbox class="example-margin" [(ngModel)]="slider.vertical">Vertical</mat-checkbox>
-          <mat-checkbox class="example-margin" [(ngModel)]="slider.invert">Inverted</mat-checkbox>
+          <mat-checkbox color="primary" class="example-margin" [(ngModel)]="slider.vertical">Vertical</mat-checkbox>
+          <mat-checkbox color="primary" class="example-margin" [(ngModel)]="slider.invert">Inverted</mat-checkbox>
         </section>
 
         <section class="example-section">
-          <mat-checkbox class="example-margin" [(ngModel)]="slider.disabled">Disabled</mat-checkbox>
+          <mat-checkbox color="primary" class="example-margin" [(ngModel)]="slider.disabled">Disabled</mat-checkbox>
         </section>
       </mat-card-content>
 

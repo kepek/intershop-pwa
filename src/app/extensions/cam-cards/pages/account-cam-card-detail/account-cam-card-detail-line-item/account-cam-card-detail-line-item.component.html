@@ -81,6 +81,7 @@
     </ng-container>
 
     <mat-checkbox
+      color="primary"
       *ngIf="showCheckbox && product.availability"
       [checked]="checked"
       (change)="changeCheck($event)"

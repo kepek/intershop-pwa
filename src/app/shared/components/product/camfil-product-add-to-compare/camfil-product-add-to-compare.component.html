@@ -5,7 +5,7 @@
   [class.is-selected]="isInCompareList"
   title="{{ 'product.compare.link' | translate }}"
 >
-  <mat-checkbox [(ngModel)]="isInCompareList" (change)="toggleCompare()">
+  <mat-checkbox color="primary" [(ngModel)]="isInCompareList" (change)="toggleCompare()">
     {{ 'camfil.product.add_to_compare.label' | translate }}
   </mat-checkbox>
 </button>

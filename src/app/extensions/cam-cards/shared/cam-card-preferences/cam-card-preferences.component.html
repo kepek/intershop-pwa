@@ -199,7 +199,12 @@
               </mat-datepicker-toggle>
               <mat-datepicker #pickerNext></mat-datepicker>
             </mat-form-field>
-            <mat-checkbox class="example-margin" formControlName="reminder" (click)="preventDefault($event)">
+            <mat-checkbox
+              color="primary"
+              class="example-margin"
+              formControlName="reminder"
+              (click)="preventDefault($event)"
+            >
               {{ 'camfil.account.cam_card.add_to_form.reminder' | translate }}
             </mat-checkbox>
           </div>
