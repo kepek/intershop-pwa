@@ -340,28 +340,6 @@
   </div>
 </camfil-modal-dialog>
 
-<ng-template #needToCompleteAddress>
-  <button class="close" (click)="dialog.closeAll()" aria-label="Close">
-    <mat-icon svgIcon="inactive" aria-hidden="true"></mat-icon>
-  </button>
-  <div class="modal__success--header">
-    <h2 mat-dialog-title class="text-center">
-      {{ 'camfil.account.cam_cards.with.no.completed.address.header' | translate }}
-    </h2>
-  </div>
-  <div mat-dialog-content class="cam-card-list text-center mt-3">
-    <p>
-      {{ 'camfil.account.cam_cards.with.no.completed.address.text' | translate }} <br />
-      <ng-container *ngFor="let cc of camCardsWithNoCompleteAddresses">
-        <a [attr.title]="cc.name" (click)="dialog.closeAll()" [routerLink]="'/account/camcards/' + cc.id">{{
-          cc.name
-        }}</a
-        ><br
-      /></ng-container>
-    </p>
-  </div>
-</ng-template>
-
 <div *ngIf="loading || productAddingInProgress" class="loader-container">
   <camfil-loading></camfil-loading>
 </div>
