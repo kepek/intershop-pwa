@@ -42,6 +42,7 @@ import {
   CamCard,
   CamCardItem,
 } from '../../../models/cam-card/cam-card.model';
+import { ProductAddingErrorDialogComponent } from '../../../shared/cam-card-product-error-dialog/cam-card-product-error-dialog.component';
 import { ImportCamCardDialogComponent } from '../../../shared/import-cam-card-dialog/import-cam-card-dialog.component';
 import { MoveCamCardDialogComponent } from '../../../shared/move-cam-card-dialog/move-cam-card-dialog.component';
 import { UserAccessCamCardDialogComponent } from '../../../shared/user-access-cam-card-dialog/user-access-cam-card-dialog.component';
@@ -417,10 +418,13 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
       }
     });
 
-    this.productFacade.getProductAddingError$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(error => {
+    this.productFacade.getProductAddingError$.pipe(whenTruthy(), take(1)).subscribe(error => {
       if (error) {
         this.productAddingInProgress = false;
         this.changeDetectorRefs.detectChanges();
+        this.productFacade.getFailedCamCardName$.pipe(whenTruthy(), take(1)).subscribe(failedName => {
+          this.showErrorModal(error, failedName);
+        });
       }
     });
   }
@@ -605,5 +609,13 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
       activeSort: this.sort?.active,
       sortDirection: this.sort?.direction,
     };
+  }
+
+  showErrorModal(error, camCardName: string): void {
+    this.dialog.open(ProductAddingErrorDialogComponent, {
+      width: '330px',
+      autoFocus: false,
+      data: { errorMessage: error.message, camCardName },
+    });
   }
 }

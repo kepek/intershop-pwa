@@ -18,6 +18,7 @@ import {
   createBasket,
   getBasketAddresses,
   getCurrentBasket,
+  getFailedCamCardName,
   getProductAdded,
   getProductAddingError,
   getProductUpdated,
@@ -334,6 +335,7 @@ export class ShoppingFacade {
   basketAddresses$ = this.store.pipe(select(getBasketAddresses));
   productsReadyToPlaceOrder$ = this.store.pipe(select(isProductsReadyToPlaceOrder));
   getProductAddingError$ = this.store.pipe(select(getProductAddingError));
+  getFailedCamCardName$ = this.store.pipe(select(getFailedCamCardName));
 
   categories$(ids: string[]) {
     return this.store.pipe(
@@ -360,8 +362,13 @@ export class ShoppingFacade {
     return this.store.pipe(select(getCurrentBasket));
   }
 
-  addProductsFromCamCard(itemsInfo: CamCamProductsAddToCartItems, commonShippingMethodId: string, basketId: string) {
-    this.store.dispatch(addProductsFromCamCard({ itemsInfo, commonShippingMethodId, basketId }));
+  addProductsFromCamCard(
+    itemsInfo: CamCamProductsAddToCartItems,
+    commonShippingMethodId: string,
+    basketId: string,
+    camCardName?: string
+  ) {
+    this.store.dispatch(addProductsFromCamCard({ itemsInfo, commonShippingMethodId, basketId, camCardName }));
   }
 
   searchProductsInSearchBox(id: ProductListingID) {

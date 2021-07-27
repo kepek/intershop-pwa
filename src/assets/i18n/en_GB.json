@@ -1067,6 +1067,7 @@
   "camfil.modal.ie.text": "Unfortunately we do not support Internet Explorer. Please use one of the following browsers to explore our web shop: Google Chrome, Microsoft Edge, or Mozilla Firefox. Thank you!",
   "camfil.modal.measurement.error": "Wrong data - any input must have max value - {{0}}",
   "camfil.modal.measurement.error.global": "Please fill in measurement!",
+  "camfil.add-product.modal.error.header": "CamCard {{0}} contains error",
   "camfil.modal.place_reorder_fail.text": "Can't place order because some of products are no longer available",
   "camfil.navigation.filter.headline": "Refine your product list",
   "camfil.navigation.filter.measurements.depth": "Depth",

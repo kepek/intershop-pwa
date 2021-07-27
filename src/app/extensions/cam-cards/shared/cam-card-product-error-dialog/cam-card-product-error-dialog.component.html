@@ -1,0 +1,14 @@
+<div class="cc-error-modal-container">
+  <div class="text-center"><mat-icon svgIcon="error"></mat-icon></div>
+  <h2 class="text-center">
+    {{ 'camfil.add-product.modal.error.header' | translate: { '0': errorData.camCardName } }}
+  </h2>
+  <h2 class="text-center">
+    {{ errorData.errorMessage }}
+  </h2>
+  <div class="text-center">
+    <button class="btn btn-link cta-modal__links--link" (click)="hide()">
+      {{ 'camfil.modal.cta.button.ok' | translate }}
+    </button>
+  </div>
+</div>

@@ -133,6 +133,7 @@ export interface BasketState {
     [customerId: string]: CustomerDeliveryTerm;
   };
   calendarExceptions: [];
+  failedCamCardName: string;
 }
 
 const initialValidationResults: BasketValidationResultType = {
@@ -148,6 +149,7 @@ export const initialState: BasketState = {
   loading: false,
   lineItemUpdating: false,
   error: undefined,
+  failedCamCardName: undefined,
   info: undefined,
   promotionError: undefined,
   lastTimeProductAdded: undefined,
@@ -244,8 +246,7 @@ export const basketReducer = createReducer(
     camfilDragLineItemFail,
     addProductToBucketAddressFromCamCardFail,
     addProductsFromCamCardFail,
-    deleteBucketFail,
-    addItemsToBasketFromCamCardFail
+    deleteBucketFail
   ),
   on(updateBasketItemAttributes, addBasketItemAttributes, deleteBasketItemAttributes, (state: BasketState) => ({
     ...state,
@@ -512,5 +513,10 @@ export const basketReducer = createReducer(
           : b
       ),
     };
-  })
+  }),
+  on(addItemsToBasketFromCamCardFail, (state: BasketState, action) => ({
+    ...state,
+    error: action.payload.error,
+    failedCamCardName: action.payload.failedCamCardName,
+  }))
 );
