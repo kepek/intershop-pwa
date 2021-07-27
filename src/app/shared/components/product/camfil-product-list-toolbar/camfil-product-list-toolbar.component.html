@@ -10,7 +10,7 @@
       [innerHTML]="itemCount | i18nPlural: ('camfil.product.items.label' | translate) || { other: '#' }"
     ></span>
   </div>
-  <div class="col-5 col-xs-3 switch-layout">
+  <div class="col-md-6 col-xs-3 switch-layout">
     <!--
     [ngClass]="{ 'col-md-5': sortOptions.length, 'col-md-5': !sortOptions.length }"
   > -->
@@ -51,7 +51,7 @@
       </span>
     </div>
   </div>
-  <div *ngIf="sortOptions.length" class="col-8 col-xs-9 col-sm-12 col-md-3 pull-right sort-by">
+  <div *ngIf="sortOptions.length" class="col-xs-9 col-sm-12 col-md-2 pull-right sort-by">
     <div class="row no-gutters">
       <div class="col-6">
         <label>{{ 'camfil.product.list.sorting.label' | translate }}:</label>
