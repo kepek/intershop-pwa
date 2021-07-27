@@ -17,7 +17,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
-import { take, takeUntil } from 'rxjs/operators';
+import { map, startWith, take, takeUntil } from 'rxjs/operators';
 
 import { AppFacade } from 'ish-core/facades/app.facade';
 import { Country } from 'ish-core/models/country/country.model';
@@ -86,6 +86,10 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit, AfterView
   selectedAddress: CamCardAddress;
   countryChangeDetect$: Subject<boolean> = new Subject();
   defaultCountryCode: string;
+
+  deliveryIntervalOptions: string[] = [...Array(1000).keys()].map(i => (i === 0 ? '--' : i.toString()));
+  deliveryIntervalFilteredOptions: Observable<string[]>;
+
   setMaxLengthErrorForTableValidator = ProductHelper.setMaxLengthErrorForTableValidator;
   private destroy$ = new Subject();
 
@@ -113,11 +117,6 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit, AfterView
       viewValue: 'Sweden',
     },
   ];
-
-  deliveryInterval = [...Array(999).keys()].map(i => ({
-    value: i + 1,
-    viewValue: i + 1,
-  }));
 
   errorValidator = [
     {
@@ -208,6 +207,11 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit, AfterView
       }
       this.customers = customers;
     });
+
+    this.deliveryIntervalFilteredOptions = this.camCardForm.get('deliveryInterval').valueChanges.pipe(
+      startWith(''),
+      map(value => this._deliveryIntervalFilter(value))
+    );
   }
 
   ngAfterViewInit() {
@@ -329,7 +333,9 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit, AfterView
         },
         nextDeliveryDate: nextDelivery ? this.dateToSend(nextDelivery) : '',
         lastDeliveryDate: lastDelivery ? this.dateToSend(lastDelivery) : '',
-        deliveryInterval: this.camCardForm.get('deliveryInterval').value,
+        deliveryInterval: isNaN(this.camCardForm.get('deliveryInterval').value)
+          ? undefined
+          : this.camCardForm.get('deliveryInterval').value,
         reminderFlag: this.camCardForm.get('reminder').value,
       });
     } else {
@@ -387,13 +393,46 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit, AfterView
     }
   }
 
-  pickInterval({ value }) {
+  pickInterval() {
     const date = new Date(this.camCardForm.get('lastDelivery').value);
-
-    date.setMonth(date.getMonth() + value);
+    date.setMonth(
+      date.getMonth() +
+        (isNaN(this.camCardForm.get('deliveryInterval').value) ? 0 : this.camCardForm.get('deliveryInterval').value)
+    );
     this.camCardForm.patchValue({
       nextDelivery: date,
     });
+  }
+
+  private _deliveryIntervalFilter(value: string): string[] {
+    if (!value) {
+      return this.deliveryIntervalOptions;
+    }
+    return this.deliveryIntervalOptions.filter(option => option.toLowerCase().startsWith(value.toString()));
+  }
+
+  applyDeliveryInterval() {
+    if (this.camCardForm.get('deliveryInterval').value === '--') {
+      this.camCardForm.get('deliveryInterval').setValue(undefined);
+    }
+    this.pickInterval();
+    this.onBlurSubmit();
+  }
+
+  validateDeliveryInterval() {
+    if (this.camCardForm.get('deliveryInterval').value === '--') {
+      this.camCardForm.get('deliveryInterval').setValue(undefined);
+      return;
+    }
+
+    if (this.camCardForm.get('deliveryInterval').value > 999) {
+      this.camCardForm.get('deliveryInterval').setValue('999');
+      return;
+    }
+    if (this.camCardForm.get('deliveryInterval').value <= 0) {
+      this.camCardForm.get('deliveryInterval').setValue(undefined);
+      return;
+    }
   }
 
   get collapseFormTranslationKey() {

@@ -172,12 +172,24 @@
             </mat-form-field>
             <mat-form-field appearance="fill">
               <mat-label>{{ 'camfil.account.cam_card.add_to_form.delivery_interval' | translate }}</mat-label>
-              <mat-select formControlName="deliveryInterval" (selectionChange)="pickInterval($event); onBlurSubmit()">
-                <mat-option>--</mat-option>
-                <mat-option *ngFor="let delivery of deliveryInterval" [value]="delivery.value">
-                  {{ delivery.viewValue }}
+              <input
+                type="text"
+                matInput
+                name="deliveryInterval"
+                [formControl]="camCardForm.get('deliveryInterval')"
+                [matAutocomplete]="filteredIntervals"
+                (change)="applyDeliveryInterval()"
+                (keyup)="validateDeliveryInterval()"
+              />
+              <mat-autocomplete
+                autoActiveFirstOption
+                #filteredIntervals="matAutocomplete"
+                (optionSelected)="applyDeliveryInterval()"
+              >
+                <mat-option *ngFor="let option of deliveryIntervalFilteredOptions | async" [value]="option">
+                  {{ option }}
                 </mat-option>
-              </mat-select>
+              </mat-autocomplete>
             </mat-form-field>
             <mat-form-field appearance="fill">
               <mat-label>{{ 'camfil.account.cam_card.add_to_form.next_delivery' | translate }}</mat-label>
