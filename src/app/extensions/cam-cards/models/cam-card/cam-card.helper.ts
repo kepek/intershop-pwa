@@ -84,8 +84,7 @@ export class CamCardHelper {
                 orderLabel: cc.orderLabel,
                 lastDeliveryDate: new Date(lastDeliveryDate).toISOString(),
               });
-
-              productFacade.addProductsFromCamCard(productsToAdd, commonShippingMethodId, currentBasketId);
+              productFacade.addProductsFromCamCard(productsToAdd, commonShippingMethodId, currentBasketId, cc.name);
             });
         }
       });

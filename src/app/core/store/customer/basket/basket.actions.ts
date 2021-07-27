@@ -13,6 +13,7 @@ import { BasketExtensions } from 'ish-core/models/basket/basket.interface';
 import { Basket } from 'ish-core/models/basket/basket.model';
 import { Bucket } from 'ish-core/models/basket/bucket.model';
 import { CustomerDeliveryTerm } from 'ish-core/models/customer/customer.interface';
+import { HttpError } from 'ish-core/models/http-error/http-error.model';
 import { LineItemUpdate } from 'ish-core/models/line-item-update/line-item-update.model';
 import { LineItem } from 'ish-core/models/line-item/line-item.model';
 import { PaymentInstrument } from 'ish-core/models/payment-instrument/payment-instrument.model';
@@ -445,7 +446,12 @@ export const deleteBucketSuccess = createAction('[Basket API] Delete Bucket Succ
 
 export const addProductsFromCamCard = createAction(
   '[Basket API] Add Products From CamCard',
-  payload<{ itemsInfo: CamCamProductsAddToCartItems; commonShippingMethodId: string; basketId: string }>()
+  payload<{
+    itemsInfo: CamCamProductsAddToCartItems;
+    commonShippingMethodId: string;
+    basketId: string;
+    camCardName?: string;
+  }>()
 );
 
 export const addProductsFromCamCardFail = createAction('[Basket API] Add Products From CamCard Fail', httpError());
@@ -462,6 +468,7 @@ export const addProductsToBasketFromCamCard = createAction(
     shipToAddress?: string;
     basketExtension?: BasketExtensions;
     addressId?: string;
+    camCardName?: string;
   }>()
 );
 
@@ -478,20 +485,15 @@ export const addItemsToBasketFromCamCard = createAction(
       lineItemAttributes?: Attribute[];
     }[];
     bucketIds?: string[];
+    camCardName?: string;
   }>()
 );
 
 export const addItemsToBasketFromCamCardFail = createAction(
   '[Basket API] Add Items To Basket from CamCard Fail',
-  httpError()
-);
-
-export const showItemsToBasketFromCamCardErrorModal = createAction(
-  '[Basket API] Set Measurements Error',
   payload<{
-    code?: string;
-    message?: string;
-    status?: number;
+    error: HttpError;
+    failedCamCardName: string;
   }>()
 );
 
@@ -514,6 +516,7 @@ export const updateBucketsQueue = createAction(
       basketExtension: BasketExtensions;
     }[];
     bucketIds?: string[];
+    camCardName?: string;
   }>()
 );
 

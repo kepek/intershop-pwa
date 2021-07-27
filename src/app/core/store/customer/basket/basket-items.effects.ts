@@ -456,6 +456,7 @@ export class BasketItemsEffects {
                     shipToAddress: address.urn,
                     basketExtension: payload.itemsInfo.extensions,
                     addressId: address.id,
+                    camCardName: payload.camCardName,
                   }),
                 ]
               : [addProductToBucketAddressFromCamCardFail()];
@@ -478,7 +479,7 @@ export class BasketItemsEffects {
           // accumulate changes
           reduce(
             (acc, [val, entities]) => {
-              const { addressId, basketExtension, shippingMethod, shipToAddress, products } = val;
+              const { addressId, basketExtension, shippingMethod, shipToAddress, products, camCardName } = val;
               products.forEach(p => {
                 const lineItemAttributes = AttributeHelper.calculateAttrsToAddFromCC(p);
                 const data = {
@@ -494,14 +495,16 @@ export class BasketItemsEffects {
                 acc.items.push(data);
               });
               acc.extensions.push({ addressId, basketExtension });
+              acc.camCardName = camCardName;
               return acc;
             },
             {
               items: [],
               extensions: [],
+              camCardName: '',
             }
           ),
-          map(({ items, extensions }) => updateBucketsQueue({ items, extensions }))
+          map(({ items, extensions, camCardName }) => updateBucketsQueue({ items, extensions, camCardName }))
         )
       )
     )
@@ -512,14 +515,14 @@ export class BasketItemsEffects {
       ofType(updateBucketsQueue),
       mapToPayload(),
       withLatestFrom(this.store.pipe(select(getCurrentBasketId))),
-      concatMap(([{ items, extensions, bucketIds }, basketId]) =>
+      concatMap(([{ items, extensions, bucketIds, camCardName }, basketId]) =>
         concat(
           ...Object.values(extensions).map(({ addressId, basketExtension }) =>
             this.basketService.updateBucket(basketId, addressId, basketExtension)
           )
         ).pipe(
           last(),
-          mergeMap(() => [updateBucketSuccess(), addItemsToBasketFromCamCard({ items, bucketIds })]),
+          mergeMap(() => [updateBucketSuccess(), addItemsToBasketFromCamCard({ items, bucketIds, camCardName })]),
           mapErrorToAction(updateBucketFail)
         )
       )
@@ -550,21 +553,14 @@ export class BasketItemsEffects {
               }),
             ];
           }),
-          mapErrorToAction(addItemsToBasketFromCamCardFail)
+          mapErrorToAction(value =>
+            addItemsToBasketFromCamCardFail({
+              error: value.error,
+              failedCamCardName: payload.camCardName,
+            })
+          )
         )
       )
     )
   );
-
-  // addItemsToBasketFromCamCardFailMessage$ = createEffect(() =>
-  //   this.actions$.pipe(
-  //     ofType(addItemsToBasketFromCamCardFail),
-  //     mapToPayload(),
-  //     mergeMap(({ error }) => [
-  //       displayErrorMessage({
-  //         message: error?.message,
-  //       }),
-  //     ])
-  //   )
-  // );
 }

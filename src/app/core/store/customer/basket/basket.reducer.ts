@@ -77,7 +77,6 @@ import {
   mergeBasketSuccess,
   removePromotionCodeFromBasket,
   removePromotionCodeFromBasketFail,
-  showItemsToBasketFromCamCardErrorModal,
   removePromotionCodeFromBasketSuccess,
   resetBasketErrors,
   resetProductAdded,
@@ -134,7 +133,7 @@ export interface BasketState {
     [customerId: string]: CustomerDeliveryTerm;
   };
   calendarExceptions: [];
-  measurmentsError: boolean;
+  failedCamCardName: string;
 }
 
 const initialValidationResults: BasketValidationResultType = {
@@ -150,7 +149,7 @@ export const initialState: BasketState = {
   loading: false,
   lineItemUpdating: false,
   error: undefined,
-  measurmentsError: false,
+  failedCamCardName: undefined,
   info: undefined,
   promotionError: undefined,
   lastTimeProductAdded: undefined,
@@ -247,8 +246,7 @@ export const basketReducer = createReducer(
     camfilDragLineItemFail,
     addProductToBucketAddressFromCamCardFail,
     addProductsFromCamCardFail,
-    deleteBucketFail,
-    showItemsToBasketFromCamCardErrorModal
+    deleteBucketFail
   ),
   on(updateBasketItemAttributes, addBasketItemAttributes, deleteBasketItemAttributes, (state: BasketState) => ({
     ...state,
@@ -519,6 +517,6 @@ export const basketReducer = createReducer(
   on(addItemsToBasketFromCamCardFail, (state: BasketState, action) => ({
     ...state,
     error: action.payload.error,
-    measurmentsError: true,
+    failedCamCardName: action.payload.failedCamCardName,
   }))
 );

@@ -11,6 +11,7 @@ import { BasketCreateCamCardComponent } from './shared/basket-create-cam-card/ba
 import { CamCardPreferencesDialogComponent } from './shared/cam-card-preferences-dialog/cam-card-preferences-dialog.component';
 import { CamCardPreferencesComponent } from './shared/cam-card-preferences/cam-card-preferences.component';
 import { CamCardProductCommentComponent } from './shared/cam-card-product-comment/cam-card-product-comment.component';
+import { ProductAddingErrorDialogComponent } from './shared/cam-card-product-error-dialog/cam-card-product-error-dialog.component';
 import { DndDirective } from './shared/import-cam-card-dialog/dnd.directive';
 import { ImportCamCardDialogComponent } from './shared/import-cam-card-dialog/import-cam-card-dialog.component';
 import { MoveCamCardDialogComponent } from './shared/move-cam-card-dialog/move-cam-card-dialog.component';
@@ -34,6 +35,7 @@ import { UserAccessCamCardDialogComponent } from './shared/user-access-cam-card-
     ImportCamCardDialogComponent,
     MoveCamCardDialogComponent,
     ProductAddToCamCardComponent,
+    ProductAddingErrorDialogComponent,
     ProductsAddToCamCardComponent,
     UserAccessCamCardDialogComponent,
   ],
@@ -47,6 +49,7 @@ import { UserAccessCamCardDialogComponent } from './shared/user-access-cam-card-
     ImportCamCardDialogComponent,
     MoveCamCardDialogComponent,
     ProductAddToCamCardComponent,
+    ProductAddingErrorDialogComponent,
     ProductsAddToCamCardComponent,
   ],
 })
