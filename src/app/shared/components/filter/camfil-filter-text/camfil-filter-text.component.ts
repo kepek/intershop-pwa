@@ -50,6 +50,8 @@ export class CamfilFilterTextComponent implements OnInit {
         this.filterElement.facets.map(o => o.level)
       ) || 0;
     this.facets = this.filterElement.facets.filter(x => x.selected || !this.maxLevel || x.level >= this.maxLevel);
+
+    this.showAll = !!this.facets?.some(f => f.selected);
   }
 
   filter(facet: Facet) {
