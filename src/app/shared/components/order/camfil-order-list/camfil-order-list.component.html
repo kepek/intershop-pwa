@@ -75,6 +75,7 @@
         *ngFor="let status of statuses"
         value="{{ status }}"
         class="mr-3"
+        color="primary"
         (change)="addStatusFilter($event)"
         [checked]="isStatusFilterActive(status)"
       >
