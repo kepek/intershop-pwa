@@ -159,13 +159,15 @@ export class CamfilSearchBoxComponent implements OnInit, OnDestroy {
 
   clearResults() {
     this.shoppingFacade.setCurrentTerm('');
-    this.setSearchTerm('');
+    this.setSearchTerm('', false);
   }
 
-  setSearchTerm(searchTerm) {
+  setSearchTerm(searchTerm, showCategoryBoxes = true) {
     this.inputSearchTerms$.next(searchTerm);
     this.productListId = { type: 'search', page: 1, value: searchTerm };
-    this.categoriesFiltered = this.getFilteredCategories(searchTerm);
+    if (showCategoryBoxes) {
+      this.categoriesFiltered = this.getFilteredCategories(searchTerm);
+    }
   }
 
   submitSearch(searchTerm: string) {
