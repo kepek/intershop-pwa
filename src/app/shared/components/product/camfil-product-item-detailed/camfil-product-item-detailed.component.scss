@@ -110,6 +110,10 @@
         }
       }
     }
+    .camfil-product-title {
+      max-width: 100%;
+      overflow: unset;
+    }
 
     camfil-product-quickview {
       .mat-button {
