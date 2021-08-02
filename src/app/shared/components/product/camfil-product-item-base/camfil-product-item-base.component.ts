@@ -69,6 +69,7 @@ export class CamfilProductItemBaseComponent implements OnInit, OnDestroy {
   @Input() actionTemplate?: TemplateRef<unknown>;
   @Input() userPermissions$: Observable<string[]>;
   @Output() resetQuantityValue = new EventEmitter<FormGroup>();
+  @Input() categoryFilterParams?: string;
   isMasterProduct = ProductHelper.isMasterProduct;
   updatedQuantity: number;
   productItemForm: FormGroup;
@@ -120,6 +121,17 @@ export class CamfilProductItemBaseComponent implements OnInit, OnDestroy {
 
   resetFormValues() {
     this.resetQuantityValue.emit(this.productItemForm);
+  }
+
+  getCategoryFilterParams(uniqueId) {
+    const category = '&category=' + uniqueId?.split('.').join('/');
+    const productFilter = '&productFilter=fallback_searchquerydefinition';
+
+    if (!category || !this.categoryFilterParams) {
+      return {};
+    } else {
+      return { filters: this.categoryFilterParams + productFilter + category };
+    }
   }
 
   ngOnDestroy() {

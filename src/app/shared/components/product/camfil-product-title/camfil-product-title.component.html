@@ -1,3 +1,8 @@
-<a class="camfil-product-title mat-body-2" [ngClass]="class" [routerLink]="product | ishProductRoute: category">
+<a
+  class="camfil-product-title mat-body-2"
+  [ngClass]="class"
+  [routerLink]="product | ishProductRoute: category"
+  [queryParams]="queryParams"
+>
   {{ product.name }}
 </a>
