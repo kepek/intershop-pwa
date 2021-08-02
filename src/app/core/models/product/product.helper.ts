@@ -334,4 +334,8 @@ export class ProductHelper {
       ? validator.map(item => (item.error === 'maxlength' ? { ...item, messageVariables: ['' + num] } : item))
       : validator;
   }
+
+  static disableActionButton(product: Product, form) {
+    return ProductHelper.disableIfNoMeasurements(product, form) || !ProductHelper.validateFilterArea(product, form);
+  }
 }

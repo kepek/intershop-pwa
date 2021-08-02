@@ -82,6 +82,7 @@ export class CreateProductCamCardModalComponent implements OnInit, OnDestroy {
   @ViewChild('modal', { static: false }) modalTemplate: TemplateRef<unknown>;
   validateFilterArea = ProductHelper.validateFilterArea;
   setMaxLengthValidation = ProductHelper.setMaxLengthValidation;
+  disableActionButton = ProductHelper.disableActionButton;
   constructor(
     private fb: FormBuilder,
     private camCardsFacade: CamCardsFacade,
@@ -272,10 +273,6 @@ export class CreateProductCamCardModalComponent implements OnInit, OnDestroy {
 
   getField(name: string) {
     return this.camCardForm.get(name);
-  }
-
-  disableIfNoMeasurements() {
-    return ProductHelper.disableIfNoMeasurements(this.product, this.quantityForm);
   }
 
   setZipCodeError(event) {
