@@ -36,6 +36,7 @@
   }
   ::ng-deep camfil-product-price > camfil-product-attribute,
   .attributes > camfil-product-attribute {
+    display: inline-block;
     padding-right: 10px;
     margin-right: 10px;
     line-height: 14px;
