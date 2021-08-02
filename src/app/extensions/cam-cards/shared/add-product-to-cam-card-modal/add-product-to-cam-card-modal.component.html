@@ -13,7 +13,7 @@
       [secondaryButtonTitle]="'camfil.modal.addToCamcard.button.add_to_camcard' | translate"
       (secondaryButtonClicked)="addToCamcard()"
       [secondaryDisabled]="!camCardSelected || !validateFilterArea(product, quantityForm)"
-      [primaryDisabled]="disableIfNoMeasurements() || !validateFilterArea(product, quantityForm)"
+      [primaryDisabled]="disableActionButton(product, quantityForm)"
       (hiddenClicked)="hide()"
     >
     </camfil-cam-card-modal>

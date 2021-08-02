@@ -86,7 +86,10 @@
         >
           <mat-option>--</mat-option>
           <ng-container *ngIf="addresses$ | async as locations">
-            <mat-option *ngFor="let location of locations[customerId] | addressSort: 'addressLine1'" [value]="location.id">
+            <mat-option
+              *ngFor="let location of locations[customerId] | addressSort: 'addressLine1'"
+              [value]="location.id"
+            >
               {{ location.addressLine1 }}
             </mat-option>
           </ng-container>

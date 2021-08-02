@@ -82,6 +82,7 @@ export class CreateProductCamCardModalComponent implements OnInit, OnDestroy {
   @ViewChild('modal', { static: false }) modalTemplate: TemplateRef<unknown>;
   validateFilterArea = ProductHelper.validateFilterArea;
   setMaxLengthValidation = ProductHelper.setMaxLengthValidation;
+  disableActionButton = ProductHelper.disableActionButton;
   constructor(
     private fb: FormBuilder,
     private camCardsFacade: CamCardsFacade,
@@ -274,10 +275,6 @@ export class CreateProductCamCardModalComponent implements OnInit, OnDestroy {
     return this.camCardForm.get(name);
   }
 
-  disableIfNoMeasurements() {
-    return ProductHelper.disableIfNoMeasurements(this.product, this.quantityForm);
-  }
-
   setZipCodeError(event) {
     this.camCardForm.controls.zipCode.setErrors(event);
     this.camCardForm.updateValueAndValidity();
@@ -314,4 +311,8 @@ export class CreateProductCamCardModalComponent implements OnInit, OnDestroy {
   get customerId() {
     return this.camCardForm?.get('customerSelect')?.value || '';
   }
+
+  // disableActionButton(product, quantityForm) {
+  //   return this.disableIfNoMeasurements(product, quantityForm) || !this.validateFilterArea(product, quantityForm);
+  // }
 }

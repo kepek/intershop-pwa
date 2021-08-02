@@ -11,7 +11,7 @@
     (primaryButtonClicked)="createAndEdit()"
     (secondaryButtonClicked)="createAndContinue()"
     (hiddenClicked)="hide()"
-    [primaryDisabled]="disableIfNoMeasurements() || !validateFilterArea(product, quantityForm)"
+    [primaryDisabled]="disableActionButton(product, quantityForm)"
   >
   </camfil-cam-card-modal>
 </ng-template>

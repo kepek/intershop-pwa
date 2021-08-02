@@ -55,6 +55,7 @@ export class AddProductToCartModalComponent implements OnInit, OnDestroy {
   basketAddresses: Address[];
   isNewAddress = AddressHelper.isNewAddress;
   validateFilterArea = ProductHelper.validateFilterArea;
+  disableActionButton = ProductHelper.disableActionButton;
   private destroy$ = new Subject<void>();
 
   constructor(

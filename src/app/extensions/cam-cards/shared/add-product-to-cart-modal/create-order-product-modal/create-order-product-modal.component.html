@@ -11,7 +11,7 @@
       (primaryButtonClicked)="submitForm()"
       (hiddenClicked)="cancel()"
       [loading]="loading"
-      [primaryDisabled]="disableIfNoMeasurements() || !validateFilterArea(product, quantityForm)"
+      [primaryDisabled]="disableActionButton(product, quantityForm)"
     >
     </camfil-cam-card-modal>
   </ng-container>

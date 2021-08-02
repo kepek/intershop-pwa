@@ -84,6 +84,7 @@ export class CreateOrderProductModalComponent implements OnInit, OnDestroy {
   contacts: CamCardContact[];
   basketAddresses: Address[];
   validateFilterArea = ProductHelper.validateFilterArea;
+  disableActionButton = ProductHelper.disableActionButton;
   ngOnInit() {
     this.init();
   }
@@ -240,10 +241,6 @@ export class CreateOrderProductModalComponent implements OnInit, OnDestroy {
 
   cancel() {
     this.hide();
-  }
-
-  disableIfNoMeasurements() {
-    return ProductHelper.disableIfNoMeasurements(this.product, this.quantityForm);
   }
 
   /** close modal */
