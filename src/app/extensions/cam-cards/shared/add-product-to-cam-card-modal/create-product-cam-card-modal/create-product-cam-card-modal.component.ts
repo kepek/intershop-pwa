@@ -311,8 +311,4 @@ export class CreateProductCamCardModalComponent implements OnInit, OnDestroy {
   get customerId() {
     return this.camCardForm?.get('customerSelect')?.value || '';
   }
-
-  // disableActionButton(product, quantityForm) {
-  //   return this.disableIfNoMeasurements(product, quantityForm) || !this.validateFilterArea(product, quantityForm);
-  // }
 }
