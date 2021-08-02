@@ -12,6 +12,7 @@ import { CamfilProductItemDetailedComponent } from 'ish-shared/components/produc
 import { CamfilProductItemSimpleComponent } from 'ish-shared/components/product/camfil-product-item-simple/camfil-product-item-simple.component';
 
 import { CamfilProductItemComponent } from './camfil-product-item.component';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('Camfil Product Item Component', () => {
   let component: CamfilProductItemComponent;
@@ -26,6 +27,7 @@ describe('Camfil Product Item Component', () => {
     accountFacade = mock(AccountFacade);
     appFacade = mock(AppFacade);
     await TestBed.configureTestingModule({
+      imports: [RouterTestingModule],
       declarations: [
         CamfilProductItemComponent,
         MockComponent(CamfilLoadingComponent),

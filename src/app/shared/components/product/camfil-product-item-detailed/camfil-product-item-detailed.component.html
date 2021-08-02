@@ -4,7 +4,7 @@
       <camfil-product-title
         *ngIf="configuration.displayName"
         [product]="product"
-        [queryParams]="getCategoryFilterParams(category.uniqueId)"
+        [queryParams]="getCategoryFilterParams(category?.uniqueId)"
       ></camfil-product-title>
     </p>
     <p *ngIf="category" class="camfil-product-category-label">
@@ -14,7 +14,7 @@
       <div class="product-image-container">
         <a
           [routerLink]="product | ishProductRoute: category"
-          [queryParams]="getCategoryFilterParams(category.uniqueId)"
+          [queryParams]="getCategoryFilterParams(category?.uniqueId)"
         >
           <camfil-product-image
             [product]="product"
@@ -128,7 +128,7 @@
             [routerLink]="product | ishProductRoute: category"
             class="btn btn-primary"
             role="button"
-            [queryParams]="getCategoryFilterParams(category.uniqueId)"
+            [queryParams]="getCategoryFilterParams(category?.uniqueId)"
           >
             {{ 'product.choose_variation.link' | translate }}
           </a>

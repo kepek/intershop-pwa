@@ -7,7 +7,7 @@
     <div class="d-flex">
       <a
         [routerLink]="product | ishProductRoute: category"
-        [queryParams]="getCategoryFilterParams(category.uniqueId)"
+        [queryParams]="getCategoryFilterParams(category?.uniqueId)"
         class="product-image-box"
       >
         <camfil-product-image [product]="product" imageType="S" class="product-image"></camfil-product-image>
@@ -15,7 +15,7 @@
       <camfil-product-title
         *ngIf="configuration.displayName"
         [product]="product"
-        [queryParams]="getCategoryFilterParams(category.uniqueId)"
+        [queryParams]="getCategoryFilterParams(category?.uniqueId)"
       ></camfil-product-title>
     </div>
     <div class="product-item-attributes d-flex flex-nowrap">
@@ -102,7 +102,7 @@
         <div class="action-container">
           <a
             [routerLink]="product | ishProductRoute: category"
-            [queryParams]="getCategoryFilterParams(category.uniqueId)"
+            [queryParams]="getCategoryFilterParams(category?.uniqueId)"
             class="btn btn-primary"
             role="button"
           >
@@ -122,7 +122,7 @@
     <div class="d-flex">
       <a
         [routerLink]="product | ishProductRoute: category"
-        [queryParams]="getCategoryFilterParams(category.uniqueId)"
+        [queryParams]="getCategoryFilterParams(category?.uniqueId)"
         class="product-image-box"
       >
         <camfil-product-image
@@ -138,7 +138,7 @@
           <camfil-product-title
             *ngIf="configuration.displayName"
             [product]="product"
-            [queryParams]="getCategoryFilterParams(category.uniqueId)"
+            [queryParams]="getCategoryFilterParams(category?.uniqueId)"
           ></camfil-product-title>
         </p>
         <div class="product-item-attributes justify-content-between">
@@ -217,7 +217,7 @@
         <div class="action-container">
           <a
             [routerLink]="product | ishProductRoute: category"
-            [queryParams]="getCategoryFilterParams(category.uniqueId)"
+            [queryParams]="getCategoryFilterParams(category?.uniqueId)"
             class="btn btn-primary"
             role="button"
           >
