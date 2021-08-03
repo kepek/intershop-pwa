@@ -162,7 +162,8 @@ export class CamfilProductItemComponent implements OnInit, OnChanges, OnDestroy 
 
     this.activatedRoute.queryParams.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(params => {
       if (params.filters) {
-        this.filterParams = params.filters.split('&category')[0].split('&productFilter')[0];
+        const filterParams = params?.filters?.split('&category')?.[0].split('&productFilter')?.[0];
+        if (filterParams) this.filterParams = filterParams;
       }
     });
   }

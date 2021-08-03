@@ -41,7 +41,7 @@ export class CamfilBreadcrumbComponent implements OnInit {
   }
 
   getFilterParams() {
-    if (!this.filterParams) {
+    if (!this.filterParams || !this.productDetail) {
       return {};
     } else {
       return { filters: this.filterParams };
