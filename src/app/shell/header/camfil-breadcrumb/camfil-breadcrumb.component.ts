@@ -35,7 +35,10 @@ export class CamfilBreadcrumbComponent implements OnInit {
 
     this.router.events.pipe().subscribe(val => {
       if (val instanceof ActivationEnd) {
-        this.filterParams = val.snapshot.queryParams?.filters?.split('&category')[0].split('&productFilter')[0];
+        const filterParams = val.snapshot.queryParams?.filters?.split('&category')?.[0].split('&productFilter')?.[0];
+        if (filterParams) {
+          this.filterParams = filterParams;
+        }
       }
     });
   }
