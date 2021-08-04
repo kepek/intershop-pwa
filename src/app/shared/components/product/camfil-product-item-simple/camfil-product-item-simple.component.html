@@ -5,10 +5,18 @@
     [class.mat-elevation-z3]="true"
   >
     <div class="d-flex">
-      <a [routerLink]="product | ishProductRoute: category" class="product-image-box">
+      <a
+        [routerLink]="product | ishProductRoute: category"
+        [queryParams]="getCategoryFilterParams(category?.uniqueId)"
+        class="product-image-box"
+      >
         <camfil-product-image [product]="product" imageType="S" class="product-image"></camfil-product-image>
       </a>
-      <camfil-product-title *ngIf="configuration.displayName" [product]="product"></camfil-product-title>
+      <camfil-product-title
+        *ngIf="configuration.displayName"
+        [product]="product"
+        [queryParams]="getCategoryFilterParams(category?.uniqueId)"
+      ></camfil-product-title>
     </div>
     <div class="product-item-attributes d-flex flex-nowrap">
       <div class="col-sm-6">
@@ -92,7 +100,12 @@
 
       <ng-template #masterProductActions>
         <div class="action-container">
-          <a [routerLink]="product | ishProductRoute: category" class="btn btn-primary" role="button">
+          <a
+            [routerLink]="product | ishProductRoute: category"
+            [queryParams]="getCategoryFilterParams(category?.uniqueId)"
+            class="btn btn-primary"
+            role="button"
+          >
             {{ 'product.choose_variation.link' | translate }}
           </a>
         </div>
@@ -107,7 +120,11 @@
     [class.mat-elevation-z3]="true"
   >
     <div class="d-flex">
-      <a [routerLink]="product | ishProductRoute: category" class="product-image-box">
+      <a
+        [routerLink]="product | ishProductRoute: category"
+        [queryParams]="getCategoryFilterParams(category?.uniqueId)"
+        class="product-image-box"
+      >
         <camfil-product-image
           [product]="product"
           imageType="images"
@@ -118,7 +135,11 @@
 
       <div class="product-item-details-container d-flex flex-column justify-content-between">
         <p class="product-title-container">
-          <camfil-product-title *ngIf="configuration.displayName" [product]="product"></camfil-product-title>
+          <camfil-product-title
+            *ngIf="configuration.displayName"
+            [product]="product"
+            [queryParams]="getCategoryFilterParams(category?.uniqueId)"
+          ></camfil-product-title>
         </p>
         <div class="product-item-attributes justify-content-between">
           <camfil-product-id
@@ -194,7 +215,12 @@
 
       <ng-template #masterProductActions>
         <div class="action-container">
-          <a [routerLink]="product | ishProductRoute: category" class="btn btn-primary" role="button">
+          <a
+            [routerLink]="product | ishProductRoute: category"
+            [queryParams]="getCategoryFilterParams(category?.uniqueId)"
+            class="btn btn-primary"
+            role="button"
+          >
             {{ 'product.choose_variation.link' | translate }}
           </a>
         </div>

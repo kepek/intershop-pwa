@@ -11,6 +11,7 @@ import {
   TemplateRef,
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, ReplaySubject, Subject } from 'rxjs';
 import { filter, startWith, take, takeUntil } from 'rxjs/operators';
 
@@ -72,8 +73,13 @@ export class CamfilProductItemComponent implements OnInit, OnChanges, OnDestroy 
   constructor(
     private shoppingFacade: ShoppingFacade,
     private accountFacade: AccountFacade,
-    private appFacade: AppFacade
-  ) {}
+    private appFacade: AppFacade,
+    private router: Router,
+    private activatedRoute: ActivatedRoute
+  ) {
+    // make sure we see the latest queryParams when subscribing to the route in ngOnInit
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+  }
 
   get isSimpleView() {
     return !!this.configuration && this.configuration.displayType === 'simple';
@@ -119,6 +125,7 @@ export class CamfilProductItemComponent implements OnInit, OnChanges, OnDestroy 
   hideAttributeName = false;
   currentLocale$: Observable<Locale>;
   userPermissions$: Observable<string[]>;
+  filterParams: string;
 
   private sku$ = new ReplaySubject<string>(1);
   private destroy$ = new Subject();
@@ -152,6 +159,15 @@ export class CamfilProductItemComponent implements OnInit, OnChanges, OnDestroy 
     });
 
     this.userPermissions$ = this.accountFacade.userPermissions$.pipe(takeUntil(this.destroy$));
+
+    this.activatedRoute.queryParams.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(params => {
+      if (params.filters) {
+        const filterParams = params?.filters?.split('&category')?.[0].split('&productFilter')?.[0];
+        if (filterParams) {
+          this.filterParams = filterParams;
+        }
+      }
+    });
   }
 
   ngOnChanges(changes: SimpleChanges) {

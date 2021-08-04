@@ -17,6 +17,7 @@
     [actionTemplate]="actionTemplate"
     [userPermissions$]="userPermissions$"
     (resetQuantityValue)="resetFormValues($event)"
+    [categoryFilterParams]="filterParams"
   ></camfil-product-item-simple>
 
   <camfil-product-item-detailed
@@ -36,6 +37,7 @@
     [actionTemplate]="actionTemplate"
     [userPermissions$]="userPermissions$"
     (resetQuantityValue)="resetFormValues($event)"
+    [categoryFilterParams]="filterParams"
   ></camfil-product-item-detailed>
 </ng-container>
 

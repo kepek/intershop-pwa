@@ -4,7 +4,11 @@
   <div class="wrapper">
     <ng-container *ngIf="!isIeBrowser; else ieBlock">
       <div role="main" class="container main-container" style="position: relative; min-height: 200px">
-        <camfil-breadcrumb [checkout]="isCheckoutPage()" [url]="_router.url"></camfil-breadcrumb>
+        <camfil-breadcrumb
+          [checkout]="isCheckoutPage()"
+          [productDetail]="isProductDetailPage()"
+          [url]="_router.url"
+        ></camfil-breadcrumb>
         <router-outlet></router-outlet>
       </div>
     </ng-container>

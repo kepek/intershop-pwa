@@ -1,14 +1,21 @@
 <div class="product-item-detailed-container" [attr.data-testing-sku]="product.sku" [class.mat-elevation-z3]="true">
   <div class="product-detailed-left-col">
     <p class="product-title-container">
-      <camfil-product-title *ngIf="configuration.displayName" [product]="product"></camfil-product-title>
+      <camfil-product-title
+        *ngIf="configuration.displayName"
+        [product]="product"
+        [queryParams]="getCategoryFilterParams(category?.uniqueId)"
+      ></camfil-product-title>
     </p>
     <p *ngIf="category" class="camfil-product-category-label">
       {{ category.name }}
     </p>
     <div class="d-flex">
       <div class="product-image-container">
-        <a [routerLink]="product | ishProductRoute: category">
+        <a
+          [routerLink]="product | ishProductRoute: category"
+          [queryParams]="getCategoryFilterParams(category?.uniqueId)"
+        >
           <camfil-product-image
             [product]="product"
             imageType="images"
@@ -117,7 +124,12 @@
 
       <ng-template #masterProductActions>
         <div class="action-container">
-          <a [routerLink]="product | ishProductRoute: category" class="btn btn-primary" role="button">
+          <a
+            [routerLink]="product | ishProductRoute: category"
+            class="btn btn-primary"
+            role="button"
+            [queryParams]="getCategoryFilterParams(category?.uniqueId)"
+          >
             {{ 'product.choose_variation.link' | translate }}
           </a>
         </div>

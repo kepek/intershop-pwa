@@ -63,4 +63,9 @@ export class AppComponent implements OnInit, OnDestroy {
   isCheckoutPage() {
     return this.router.url.includes('/checkout');
   }
+
+  isProductDetailPage() {
+    const re = new RegExp('/(.*-)?sku(.*)$');
+    return re.test(this.router.url);
+  }
 }

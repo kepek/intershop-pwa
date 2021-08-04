@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 import { MockComponent } from 'ng-mocks';
 import { of } from 'rxjs';
 import { anything, capture, instance, mock, spy, verify, when } from 'ts-mockito';
@@ -26,6 +27,7 @@ describe('Camfil Product Item Component', () => {
     accountFacade = mock(AccountFacade);
     appFacade = mock(AppFacade);
     await TestBed.configureTestingModule({
+      imports: [RouterTestingModule],
       declarations: [
         CamfilProductItemComponent,
         MockComponent(CamfilLoadingComponent),

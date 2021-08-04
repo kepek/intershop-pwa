@@ -16,4 +16,5 @@ export class CamfilProductTitleComponent {
   @Input() category?: CategoryView;
   @Input() product: ProductView | VariationProductView | VariationProductMasterView;
   @Input() class?: string;
+  @Input() queryParams?: string;
 }
