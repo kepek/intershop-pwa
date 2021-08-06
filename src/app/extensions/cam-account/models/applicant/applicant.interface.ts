@@ -1,4 +1,5 @@
 export interface ApplicantData {
+  title?: string;
   firstName: string;
   lastName: string;
   email: string;

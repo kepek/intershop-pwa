@@ -3,7 +3,12 @@
 
 <div class="registration__wrapper">
   <div class="col-sm-12 col-lg-4 registration__wrapper--section">
-    <camfil-apply-form [error]="applicantError$ | async" (apply)="onApply($event)" (cancel)="onCancel()">
+    <camfil-apply-form
+      [error]="applicantError$ | async"
+      [preferredTitles]="applicantPreferredTitles$ | async"
+      (apply)="onApply($event)"
+      (cancel)="onCancel()"
+    >
     </camfil-apply-form>
   </div>
   <div class="col-sm-12 col-lg-8 registration__wrapper--section">

@@ -67,4 +67,8 @@ export class CamAccountService {
       catchError(() => of({ lang }))
     );
   }
+
+  loadPreferredTitles() {
+    return this.apiService.get<string[]>('preferredtitles');
+  }
 }
