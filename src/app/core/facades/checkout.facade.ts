@@ -31,6 +31,7 @@ import {
   deleteBasketShippingAddress,
   deleteBucket,
   deleteEmptyBucket,
+  doubleBucketItemsQuantity,
   focusedCheckoutElement,
   getBasketEligiblePaymentMethods,
   getBasketEligibleShippingMethods,
@@ -305,5 +306,9 @@ export class CheckoutFacade {
 
   updateBasketItems(lineItemUpdates: LineItemUpdate[]) {
     this.store.dispatch(updateBasketItems({ lineItemUpdates }));
+  }
+
+  doubleBucketItemsQuantity(basketId: string, bucketId: string) {
+    this.store.dispatch(doubleBucketItemsQuantity({ basketId, bucketId }));
   }
 }
