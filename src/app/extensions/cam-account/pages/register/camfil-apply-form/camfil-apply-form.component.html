@@ -11,7 +11,7 @@
       <mat-label>{{ 'camfil.account.apply_form.title' | translate }}</mat-label>
       <mat-select formControlName="title">
         <mat-option *ngFor="let title of preferredTitles" [value]="title">
-          {{ title }}
+          {{ title | slugify: 'camfil.dynamic.salutation' | translate }}
         </mat-option>
       </mat-select>
     </mat-form-field>
