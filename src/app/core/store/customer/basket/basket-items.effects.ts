@@ -60,6 +60,9 @@ import {
   deleteBucketFail,
   deleteBucketSuccess,
   deleteEmptyBucket,
+  doubleBucketItemsQuantity,
+  doubleBucketItemsQuantityFail,
+  doubleBucketItemsQuantitySuccess,
   loadBasket,
   loadBasketAddresses,
   loadBasketSuccess,
@@ -559,6 +562,19 @@ export class BasketItemsEffects {
               failedCamCardName: payload.camCardName,
             })
           )
+        )
+      )
+    )
+  );
+
+  doubleBucketItemsQuantityItems$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(doubleBucketItemsQuantity),
+      mapToPayload(),
+      mergeMap(({ basketId, bucketId }) =>
+        this.basketService.doubleBucketItemsQuantity(basketId, bucketId).pipe(
+          mergeMap(() => [doubleBucketItemsQuantitySuccess(), loadBasket()]),
+          mapErrorToAction(doubleBucketItemsQuantityFail)
         )
       )
     )

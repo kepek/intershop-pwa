@@ -613,6 +613,18 @@ export class BasketService {
     });
   }
 
+  doubleBucketItemsQuantity(basketId: string, bucketId: string) {
+    const body = {
+      doubleBucketItemsQuantity: true,
+    };
+
+    const options = {
+      headers: this.basketHeaders,
+    };
+
+    return this.apiService.patch(`baskets/${basketId}/buckets/${bucketId}`, body, options);
+  }
+
   loadCustomerDeliveryTerm(customerId: string): Observable<CustomerDeliveryTerm> {
     if (!customerId) {
       return throwError('loadCustomerDeliveryTerm() called without customerId');

@@ -549,3 +549,15 @@ export const focusedCheckoutElement = createAction(
   '[Basket] Focused checkout element',
   payload<{ elementId: string }>()
 );
+
+export const doubleBucketItemsQuantity = createAction(
+  '[Basket] Double Bucket Items Quantity',
+  payload<{ basketId: string; bucketId: string }>()
+);
+
+export const doubleBucketItemsQuantityFail = createAction(
+  '[Basket API] Double Bucket Items Quantity Fail',
+  httpError()
+);
+
+export const doubleBucketItemsQuantitySuccess = createAction('[Basket API] Double Bucket Items Quantity Success');
