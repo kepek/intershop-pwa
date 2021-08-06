@@ -1,10 +1,18 @@
 import { Injectable } from '@angular/core';
 import { Store, select } from '@ngrx/store';
+import { first } from 'rxjs/operators';
 
 import { Applicant } from '../models/applicant/applicant.model';
 import { LangSubject } from '../models/lang/lang.model';
 import { UsernameReminder } from '../models/username-reminder/username-reminder.model';
-import { applyForAnAccount, getApplicant, getApplicantError, getApplicantLoading } from '../store/applicant';
+import {
+  applyForAnAccount,
+  getApplicant,
+  getApplicantError,
+  getApplicantLoading,
+  getApplicantPreferredTitles,
+  loadPreferredTitles,
+} from '../store/applicant';
 import { getCamAccountState } from '../store/cam-account-store';
 import {
   createOrderDuplicate,
@@ -31,11 +39,16 @@ import {
 // tslint:disable:member-ordering
 @Injectable({ providedIn: 'root' })
 export class CamAccountFacade {
-  constructor(private store: Store) {}
+  constructor(private store: Store) {
+    store.pipe(first()).subscribe(() => {
+      this.store.dispatch(loadPreferredTitles());
+    });
+  }
 
   camAccountState$ = this.store.pipe(select(getCamAccountState));
 
   applicant$ = this.store.pipe(select(getApplicant));
+  applicantPreferredTitles$ = this.store.pipe(select(getApplicantPreferredTitles));
   applicantError$ = this.store.pipe(select(getApplicantError));
   applicantLoading$ = this.store.pipe(select(getApplicantLoading));
 

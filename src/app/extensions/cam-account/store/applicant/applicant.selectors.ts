@@ -11,3 +11,5 @@ export const getApplicant = createSelector(getApplicantState, state => state.app
 export const getApplicantLoading = createSelector(getApplicantState, state => state.loading);
 
 export const getApplicantError = createSelector(getApplicantState, state => state.error);
+
+export const getApplicantPreferredTitles = createSelector(getApplicantState, state => state.preferredTitles);

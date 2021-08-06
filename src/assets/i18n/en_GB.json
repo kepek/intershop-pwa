@@ -495,6 +495,7 @@
   "camfil.account.apply_form.customer_name": "Customer name",
   "camfil.account.apply_form.customer_no": "Customer number",
   "camfil.account.apply_form.email": "Email address",
+  "camfil.account.apply_form.title": "Title",
   "camfil.account.apply_form.firstName": "First Name",
   "camfil.account.apply_form.lastName": "Last Name",
   "camfil.account.apply_heading": "Apply for an account",

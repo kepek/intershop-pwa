@@ -14,16 +14,18 @@ import { Applicant } from '../../models/applicant/applicant.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CamfilRegisterPageComponent implements OnInit {
-  applicantError$: Observable<HttpError>;
-  applicantLoading$: Observable<boolean>;
   applicant$: Observable<Applicant>;
+  applicantError$: Observable<HttpError>;
+  applicantPreferredTitles$: Observable<string[]>;
+  applicantLoading$: Observable<boolean>;
 
   constructor(private camAccountFacade: CamAccountFacade, private router: Router) {}
 
   ngOnInit() {
-    this.applicantError$ = this.camAccountFacade.applicantError$;
-    this.applicantLoading$ = this.camAccountFacade.applicantLoading$;
     this.applicant$ = this.camAccountFacade.applicant$;
+    this.applicantError$ = this.camAccountFacade.applicantError$;
+    this.applicantPreferredTitles$ = this.camAccountFacade.applicantPreferredTitles$;
+    this.applicantLoading$ = this.camAccountFacade.applicantLoading$;
   }
 
   onCancel() {
