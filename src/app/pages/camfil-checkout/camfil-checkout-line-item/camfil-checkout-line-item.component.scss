@@ -55,7 +55,7 @@
   .line-item-data-container {
     flex-direction: column;
     .line-item-data-bottom {
-      width: 180px;
+      min-width: 200px;
       line-height: 16px;
       .mat-button {
         box-sizing: content-box;
