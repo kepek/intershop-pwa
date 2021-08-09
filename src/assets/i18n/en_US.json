@@ -502,6 +502,7 @@
   "camfil.account.apply_form.zipCode": "ZIP code",
   "camfil.account.apply_form.zipCode.error.pattern": "Please enter a valid 5-digit ZIP code.",
   "camfil.account.apply_form.zipCode.error.required": "Please enter a ZIP code.",
+  "camfil.account.apply_form.zipCode.error.invalid": "Invalid ZIP code",
   "camfil.account.apply_form.phoneNumber": "Phone Number",
   "camfil.account.apply_form.phoneNumber.error.pattern": "Please enter a valid phone number.",
   "camfil.account.apply_form.gdpr": "By checking this box you confirm that you have read ang agree to GDPR consent.",

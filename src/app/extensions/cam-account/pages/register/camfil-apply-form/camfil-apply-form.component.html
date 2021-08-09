@@ -31,10 +31,17 @@
       <input matInput required formControlName="street" />
     </mat-form-field>
 
-    <mat-form-field appearance="fill" class="form-field">
-      <mat-label>{{ 'camfil.account.apply_form.zipCode' | translate }}</mat-label>
-      <input matInput required formControlName="zipCode" />
-    </mat-form-field>
+    <div class="form-field">
+      <camfil-zip-code
+        fieldName="zipCode"
+        fieldCity="area"
+        appearance="fill"
+        [errorValidator]="validators.zipCode"
+        [form]="form"
+        [countryChangeDetect]="countryChangeDetect$"
+        (zipCodeErrorEmit)="setZipCodeError($event)"
+      ></camfil-zip-code>
+    </div>
 
     <mat-form-field appearance="fill" class="form-field">
       <mat-label>{{ 'camfil.account.apply_form.phoneNumber' | translate }}</mat-label>

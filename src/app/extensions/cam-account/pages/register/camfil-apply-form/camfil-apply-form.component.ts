@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
+import { Subject } from 'rxjs';
 
 import { FeatureToggleService } from 'ish-core/feature-toggle.module';
 import { HttpError } from 'ish-core/models/http-error/http-error.model';
@@ -11,6 +12,8 @@ import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
 import { SpecialValidators } from 'ish-shared/forms/validators/special-validators';
 
 import { Applicant } from '../../../models/applicant/applicant.model';
+
+import { APPLY_VALIDATORS } from './validators';
 
 @Component({
   selector: 'camfil-apply-form',
@@ -31,6 +34,10 @@ export class CamfilApplyFormComponent implements OnInit {
 
   form: FormGroup;
   submitted = false;
+
+  validators = APPLY_VALIDATORS;
+
+  countryChangeDetect$: Subject<boolean> = new Subject();
 
   constructor(
     private fb: FormBuilder,
@@ -75,6 +82,15 @@ export class CamfilApplyFormComponent implements OnInit {
     this.errorModal.hide = () => {
       refErrorModalDialog.close();
     };
+  }
+
+  setZipCodeError(event) {
+    this.form.controls.zipCode.setErrors(event);
+    this.form.updateValueAndValidity();
+  }
+
+  checkZipCode() {
+    this.countryChangeDetect$.next(true);
   }
 
   /**
