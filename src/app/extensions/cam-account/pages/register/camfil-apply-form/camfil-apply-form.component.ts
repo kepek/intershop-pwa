@@ -47,11 +47,15 @@ export class CamfilApplyFormComponent implements OnInit {
       title: [''],
       firstName: ['', [Validators.required]],
       lastName: ['', [Validators.required]],
+      street: ['', [Validators.required]],
+      zipCode: ['', [Validators.required, Validators.pattern('[0-9]{5}')]],
+      phoneNumber: ['', [Validators.pattern('[0-9+-/]*')]],
       email: ['', [Validators.required, SpecialValidators.email]],
       customerName: ['', [Validators.required]],
       customerNo: '',
       comment: '',
       captcha: [''],
+      gdpr: ['', [Validators.required]],
       captchaAction: ['applyForAnAccount'],
     });
 
@@ -79,6 +83,9 @@ export class CamfilApplyFormComponent implements OnInit {
 
     registration.captcha = this.form.get('captcha').value;
     registration.captchaAction = this.form.get('captchaAction').value;
+
+    delete registration.gdpr;
+
     this.apply.emit(registration);
   }
 
