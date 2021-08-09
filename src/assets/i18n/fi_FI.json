@@ -505,6 +505,7 @@
   "camfil.account.apply_form.phoneNumber": "fi_Phone Number",
   "camfil.account.apply_form.phoneNumber.error.pattern": "fi_Please enter a valid phone number.",
   "camfil.account.apply_form.gdpr": "fi_By checking this box you confirm that you have read ang agree to GDPR consent.",
+  "camfil.account.apply_form.gdpr.error.required": "fi_Please accept GDPR consent.",
   "camfil.account.apply_heading": "Hae tiliä",
   "camfil.account.apply_message": "Täytä alla olevat tiedot, niin luomme sinulle käyttäjätilin webkauppaamme. Pakolliset kentät on merkitty tähdellä.",
   "camfil.account.cam_card.access_user.dialog.btn.cancel": "Peruuta",

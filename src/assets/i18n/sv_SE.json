@@ -505,6 +505,7 @@
   "camfil.account.apply_form.phoneNumber": "sv_Phone Number",
   "camfil.account.apply_form.phoneNumber.error.pattern": "sv_Please enter a valid phone number.",
   "camfil.account.apply_form.gdpr": "sv_By checking this box you confirm that you have read ang agree to GDPR consent.",
+  "camfil.account.apply_form.gdpr.error.required": "sv_Please accept GDPR consent.",
   "camfil.account.apply_heading": "Ansök om konto",
   "camfil.account.apply_message": "För att få tillgång till alla kontofördelar ber vi dig att fylla i informationen nedan.",
   "camfil.account.cam_card.access_user.dialog.btn.cancel": "Avbryt",

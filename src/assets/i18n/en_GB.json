@@ -505,6 +505,7 @@
   "camfil.account.apply_form.phoneNumber": "Phone Number",
   "camfil.account.apply_form.phoneNumber.error.pattern": "Please enter a valid phone number.",
   "camfil.account.apply_form.gdpr": "By checking this box you confirm that you have read ang agree to GDPR consent.",
+  "camfil.account.apply_form.gdpr.error.required": "Please accept GDPR consent.",
   "camfil.account.apply_heading": "Apply for an account",
   "camfil.account.apply_message": "To take full advantage of account features and benefits, please provide all the information below.",
   "camfil.account.cam_card.access_user.dialog.btn.cancel": "Cancel",
