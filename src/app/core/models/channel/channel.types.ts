@@ -1,9 +1,11 @@
 export enum Channel {
-  SE = 'Camfil-CamfilSE-Site',
   FI = 'Camfil-CamfilFI-Site',
+  FR = 'Camfil-CamfilFR-Site',
+  SE = 'Camfil-CamfilSE-Site',
 }
 
 export enum ChannelCurrency {
-  SE = 'SEK',
   FI = 'EUR',
+  FR = 'EUR',
+  SE = 'SEK',
 }

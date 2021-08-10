@@ -1,6 +1,7 @@
 {
   "English": "Englanti",
   "Finnish": "Suomi",
+  "French": "fi_French",
   "Swedish": "Ruotsi",
   "account.address.address1.missing.error": "Osoite 1 on pakollinen. Syötä katu.",
   "account.address.apo_fpo.link": "Katuosoite",
