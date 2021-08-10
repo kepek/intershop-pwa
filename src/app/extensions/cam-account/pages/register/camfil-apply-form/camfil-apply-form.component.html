@@ -27,6 +27,28 @@
     </mat-form-field>
 
     <mat-form-field appearance="fill" class="form-field">
+      <mat-label>{{ 'camfil.account.apply_form.street' | translate }}</mat-label>
+      <input matInput required formControlName="street" />
+    </mat-form-field>
+
+    <div class="form-field">
+      <camfil-zip-code
+        fieldName="zipCode"
+        fieldCity="area"
+        appearance="fill"
+        [errorValidator]="validators.zipCode"
+        [form]="form"
+        [countryChangeDetect]="countryChangeDetect$"
+        (zipCodeErrorEmit)="setZipCodeError($event)"
+      ></camfil-zip-code>
+    </div>
+
+    <mat-form-field appearance="fill" class="form-field">
+      <mat-label>{{ 'camfil.account.apply_form.phoneNumber' | translate }}</mat-label>
+      <input matInput required formControlName="phoneNumber" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="form-field">
       <mat-label>{{ 'camfil.account.apply_form.email' | translate }}</mat-label>
       <input matInput required formControlName="email" />
     </mat-form-field>
@@ -44,10 +66,19 @@
     <mat-form-field appearance="fill" class="form-field">
       <textarea
         matInput
+        matTextareaAutosize
+        matAutosizeMinRows="2"
+        matAutosizeMaxRows="5"
         formControlName="comment"
         [placeholder]="'camfil.account.apply_form.add_comment' | translate"
       ></textarea>
     </mat-form-field>
+
+    <div class="form-field">
+      <mat-checkbox color="primary" formControlName="gdpr">
+        <small>{{ 'camfil.account.apply_form.gdpr' | translate }}</small>
+      </mat-checkbox>
+    </div>
 
     <camfil-lazy-captcha topic="applyForAnAccount" [form]="form"></camfil-lazy-captcha>
 
@@ -56,3 +87,11 @@
     </button>
   </form>
 </div>
+
+<camfil-small-cta-modal
+  actionTitle="{{ 'camfil.account.apply_form.gdpr.error.required' | translate }}"
+  actionButtonTitle="{{ 'camfil.modal.cta.button.ok' | translate }}"
+  onlyAccept="true"
+  hasError="true"
+>
+</camfil-small-cta-modal>

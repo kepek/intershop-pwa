@@ -6,8 +6,8 @@
     margin-bottom: 16px;
   }
 
-  &::ng-deep label {
-    span {
+  &::ng-deep .mat-form-field-label {
+    .mat-placeholder-required {
       float: left;
       margin-top: 3px;
       margin-right: 2px;

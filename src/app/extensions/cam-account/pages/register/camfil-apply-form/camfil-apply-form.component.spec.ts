@@ -13,7 +13,9 @@ import { AddressFormFactoryProvider } from 'ish-shared/address-forms/configurati
 import { ContentIncludeComponent } from 'ish-shared/cms/components/content-include/content-include.component';
 import { CamfilHeaderBoxComponent } from 'ish-shared/components/common/camfil-header-box/camfil-header-box.component';
 import { CamfilModalDialogComponent } from 'ish-shared/components/common/camfil-modal-dialog/camfil-modal-dialog.component';
+import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
 import { ErrorMessageComponent } from 'ish-shared/components/common/error-message/error-message.component';
+import { ZipCodeComponent } from 'ish-shared/components/zip-code/zip-code.component';
 import { CheckboxComponent } from 'ish-shared/forms/components/checkbox/checkbox.component';
 import { TacCheckboxComponent } from 'ish-shared/forms/components/tac-checkbox/tac-checkbox.component';
 
@@ -40,12 +42,14 @@ describe('Camfil Apply Form Component', () => {
       declarations: [
         CamfilApplyFormComponent,
         CamfilHeaderBoxComponent,
+        CamfilSmallCtaModalComponent,
         MockComponent(AddressFormContainerComponent),
         MockComponent(CamfilModalDialogComponent),
         MockComponent(CheckboxComponent),
         MockComponent(ContentIncludeComponent),
         MockComponent(ErrorMessageComponent),
         MockComponent(LazyCamCaptchaComponent),
+        MockComponent(ZipCodeComponent),
         MockDirective(TacCheckboxComponent),
       ],
       providers: [
