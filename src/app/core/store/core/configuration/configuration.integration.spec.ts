@@ -153,6 +153,13 @@ describe('Configuration Integration', () => {
           "value": "fi",
         },
         Object {
+          "currency": "EUR",
+          "displayLong": "French",
+          "displayName": "FR",
+          "lang": "fr_FR",
+          "value": "fr",
+        },
+        Object {
           "currency": "SEK",
           "displayLong": "Swedish",
           "displayName": "SV",
