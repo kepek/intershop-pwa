@@ -13,7 +13,10 @@
       <div class="my-2 my-md-0">
         <div class="d-flex line-item-data-container">
           <div class="flex-row line-item-data-top">
-            <camfil-product-title [product]="productData"></camfil-product-title>
+            <camfil-product-title
+              [class.confirmed-product-title]="isConfirmed"
+              [product]="productData"
+            ></camfil-product-title>
           </div>
           <div class="line-item-data-bottom d-flex flex-row flex-wrap">
             <camfil-product-attribute
