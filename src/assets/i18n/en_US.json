@@ -500,6 +500,7 @@
   "camfil.account.apply_form.phoneNumber": "Phone Number",
   "camfil.account.apply_form.phoneNumber.error.pattern": "Please enter a valid phone number.",
   "camfil.account.apply_form.street": "Street",
+  "camfil.account.apply_form.city": "City",
   "camfil.account.apply_form.title": "Title",
   "camfil.account.apply_form.zipCode.error.invalid": "Invalid ZIP code",
   "camfil.account.apply_form.zipCode.error.pattern": "Please enter a valid 5-digit ZIP code.",

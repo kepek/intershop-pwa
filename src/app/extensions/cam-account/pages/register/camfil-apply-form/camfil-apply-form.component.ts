@@ -60,6 +60,7 @@ export class CamfilApplyFormComponent implements OnInit {
       firstName: ['', [Validators.required]],
       lastName: ['', [Validators.required]],
       street: ['', [Validators.required]],
+      city: ['', [Validators.required]],
       zipCode: ['', [Validators.required, Validators.pattern('[0-9]{5}')]],
       phoneNumber: ['', [Validators.pattern('[0-9+-/]*')]],
       email: ['', [Validators.required, SpecialValidators.email]],
