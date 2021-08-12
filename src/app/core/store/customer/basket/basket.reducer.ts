@@ -469,6 +469,8 @@ export const basketReducer = createReducer(
           }
         : li
     );
+    const selectedBucket = state.buckets?.filter(b => b.id === bucketId)[0];
+    const selectedBucketLinetIems = lineItems?.filter(li => selectedBucket?.lineItems.some(item => item.id === li.id));
     return {
       ...state,
       lineItemUpdating: false,
@@ -480,7 +482,7 @@ export const basketReducer = createReducer(
         b.id === bucketId
           ? {
               ...b,
-              lineItems,
+              selectedBucketLinetIems,
             }
           : b
       ),
