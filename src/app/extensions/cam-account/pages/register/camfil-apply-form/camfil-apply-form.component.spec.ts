@@ -2,10 +2,11 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { MockComponent, MockDirective } from 'ng-mocks';
+import { MockComponent, MockDirective, MockPipe } from 'ng-mocks';
 import { anything, instance, mock, when } from 'ts-mockito';
 
 import { FeatureToggleModule } from 'ish-core/feature-toggle.module';
+import { CamfilSlugifyPipe } from 'ish-core/pipes/camfil-slugify.pipe';
 import { CamfilToastrService } from 'ish-core/store/core/messages/CamfilToastrService';
 import { AddressFormContainerComponent } from 'ish-shared/address-forms/components/address-form-container/address-form-container.component';
 import { AddressFormFactory } from 'ish-shared/address-forms/components/address-form/address-form.factory';
@@ -51,6 +52,7 @@ describe('Camfil Apply Form Component', () => {
         MockComponent(LazyCamCaptchaComponent),
         MockComponent(ZipCodeComponent),
         MockDirective(TacCheckboxComponent),
+        MockPipe(CamfilSlugifyPipe),
       ],
       providers: [
         { provide: AddressFormFactoryProvider, useFactory: () => instance(addressFormFactoryProviderMock) },
