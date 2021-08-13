@@ -486,8 +486,8 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
   }
 
   doubleArticlesQuantity() {
-    const { basket, id } = this.order;
-    this.checkoutFacade.doubleBucketItemsQuantity(basket, id);
+    const { basket, deliveryAddressId } = this.order;
+    this.checkoutFacade.doubleBucketItemsQuantity(basket, deliveryAddressId);
   }
 
   openAddEmailRecipientModal() {
