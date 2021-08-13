@@ -35,6 +35,9 @@ table {
   tr.orderlist-row:active {
     background: $greyEF;
   }
+  td {
+    word-break: break-word;
+  }
 }
 
 .search-container {
