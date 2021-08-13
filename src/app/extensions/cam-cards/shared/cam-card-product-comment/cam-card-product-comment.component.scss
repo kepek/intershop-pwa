@@ -18,4 +18,12 @@
       }
     }
   }
+  .form-field {
+    @media (max-width: $screen-md-max) {
+      width: auto;
+    }
+    @media (max-width: $screen-sm-max) {
+      width: 300px;
+    }
+  }
 }
