@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { RouterNavigatedPayload, routerNavigatedAction } from '@ngrx/router-store';
 import { Store, select } from '@ngrx/store';
-import { EMPTY, concat, fromEvent } from 'rxjs';
+import { EMPTY, fromEvent } from 'rxjs';
 import {
   concatMap,
   debounceTime,
@@ -334,29 +334,14 @@ export class CamCardEffects {
       mapToPayloadProperty('camCards'),
       mergeMap(camCards =>
         this.camCardService.createCamCard(camCards).pipe(
-          mergeMap(newCamCard =>
-            concat(
-              ...camCards.camCardItems.map(item =>
-                this.camCardService.addProductToCamCard(
-                  newCamCard.id,
-                  item.product.sku,
-                  item.quantity,
-                  item.comment,
-                  item.measurement
-                )
-              )
-            ).pipe(
-              last(),
-              concatMap(cc => [
-                addBasketToNewCamCardSuccess({ camCard: cc }),
-                displaySuccessMessage({
-                  message: 'camfil.account.cam_card.new_from_basket_confirm.heading',
-                  messageParams: { 0: cc.name },
-                }),
-              ]),
-              mapErrorToAction(addBasketToNewCamCardFail)
-            )
-          )
+          concatMap(cc => [
+            addBasketToNewCamCardSuccess({ camCard: cc }),
+            displaySuccessMessage({
+              message: 'camfil.account.cam_card.new_from_basket_confirm.heading',
+              messageParams: { 0: cc.name },
+            }),
+          ]),
+          mapErrorToAction(addBasketToNewCamCardFail)
         )
       ),
       mapErrorToAction(createCamCardFail)
