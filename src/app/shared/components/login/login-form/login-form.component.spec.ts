@@ -6,7 +6,7 @@ import { MockComponent } from 'ng-mocks';
 import { instance, mock } from 'ts-mockito';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
-import { ErrorMessageComponent } from 'ish-shared/components/common/error-message/error-message.component';
+import { CamfilErrorMessageComponent } from 'ish-shared/components/common/camfil-error-message/camfil-error-message.component';
 import { InputComponent } from 'ish-shared/forms/components/input/input.component';
 
 import { LoginFormComponent } from './login-form.component';
@@ -21,7 +21,7 @@ describe('Login Form Component', () => {
     accountFacade = mock(AccountFacade);
 
     await TestBed.configureTestingModule({
-      declarations: [LoginFormComponent, MockComponent(ErrorMessageComponent), MockComponent(InputComponent)],
+      declarations: [LoginFormComponent, MockComponent(CamfilErrorMessageComponent), MockComponent(InputComponent)],
       imports: [ReactiveFormsModule, RouterTestingModule, TranslateModule.forRoot()],
       providers: [
         {

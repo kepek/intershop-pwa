@@ -6,8 +6,8 @@ import { of } from 'rxjs';
 import { anything, instance, mock, when } from 'ts-mockito';
 
 import { ServerSettingPipe } from 'ish-core/pipes/server-setting.pipe';
+import { CamfilErrorMessageComponent } from 'ish-shared/components/common/camfil-error-message/camfil-error-message.component';
 import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
-import { ErrorMessageComponent } from 'ish-shared/components/common/error-message/error-message.component';
 
 import { UserBudgetFormComponent } from '../../components/user-budget-form/user-budget-form.component';
 import { OrganizationManagementFacade } from '../../facades/organization-management.facade';
@@ -43,8 +43,8 @@ describe('User Edit Budget Page Component', () => {
     await TestBed.configureTestingModule({
       imports: [ReactiveFormsModule, TranslateModule.forRoot()],
       declarations: [
+        MockComponent(CamfilErrorMessageComponent),
         MockComponent(CamfilLoadingComponent),
-        MockComponent(ErrorMessageComponent),
         MockComponent(UserBudgetFormComponent),
         MockPipe(ServerSettingPipe),
         UserEditBudgetPageComponent,

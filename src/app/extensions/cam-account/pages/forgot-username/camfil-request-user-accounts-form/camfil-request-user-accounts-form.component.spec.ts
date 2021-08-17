@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MockComponent } from 'ng-mocks';
 
+import { CamfilErrorMessageComponent } from 'ish-shared/components/common/camfil-error-message/camfil-error-message.component';
 import { CamfilErrorComponent } from 'ish-shared/components/common/camfil-error/camfil-error.component';
-import { ErrorMessageComponent } from 'ish-shared/components/common/error-message/error-message.component';
 
 import { LazyCamCaptchaComponent } from '../../../../cam-captcha/exports/lazy-cam-captcha/lazy-cam-captcha.component';
 
@@ -18,7 +18,7 @@ describe('Camfil Request User Accounts Form Component', () => {
       declarations: [
         CamfilErrorComponent,
         CamfilRequestUserAccountsFormComponent,
-        MockComponent(ErrorMessageComponent),
+        MockComponent(CamfilErrorMessageComponent),
         MockComponent(LazyCamCaptchaComponent),
       ],
     }).compileComponents();

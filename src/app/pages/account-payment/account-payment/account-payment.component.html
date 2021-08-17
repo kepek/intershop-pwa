@@ -1,6 +1,6 @@
 <h1>{{ 'account.payment.heading' | translate }}</h1>
 
-<ish-error-message [error]="error"></ish-error-message>
+<camfil-error-message [error]="error"></camfil-error-message>
 
 <ng-container *ngIf="paymentMethods && paymentMethods.length; else noPaymentMethods">
   <p>{{ 'account.payment.message' | translate }}</p>

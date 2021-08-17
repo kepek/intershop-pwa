@@ -8,7 +8,7 @@ import { FeatureToggleModule } from 'ish-core/feature-toggle.module';
 import { AddressFormContainerComponent } from 'ish-shared/address-forms/components/address-form-container/address-form-container.component';
 import { AddressFormFactory } from 'ish-shared/address-forms/components/address-form/address-form.factory';
 import { AddressFormFactoryProvider } from 'ish-shared/address-forms/configurations/address-form-factory.provider';
-import { ErrorMessageComponent } from 'ish-shared/components/common/error-message/error-message.component';
+import { CamfilErrorMessageComponent } from 'ish-shared/components/common/camfil-error-message/camfil-error-message.component';
 import { TacCheckboxComponent } from 'ish-shared/forms/components/tac-checkbox/tac-checkbox.component';
 
 import { LazyCamCaptchaComponent } from '../../../extensions/cam-captcha/exports/lazy-cam-captcha/lazy-cam-captcha.component';
@@ -33,7 +33,7 @@ describe('Registration Form Component', () => {
     await TestBed.configureTestingModule({
       declarations: [
         MockComponent(AddressFormContainerComponent),
-        MockComponent(ErrorMessageComponent),
+        MockComponent(CamfilErrorMessageComponent),
         MockComponent(LazyCamCaptchaComponent),
         MockComponent(RegistrationCompanyFormComponent),
         MockComponent(RegistrationCredentialsFormComponent),

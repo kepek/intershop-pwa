@@ -7,8 +7,8 @@ import { MockComponent } from 'ng-mocks';
 import { instance, mock } from 'ts-mockito';
 
 import { CoreStoreModule } from 'ish-core/store/core/core-store.module';
+import { CamfilErrorMessageComponent } from 'ish-shared/components/common/camfil-error-message/camfil-error-message.component';
 import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
-import { ErrorMessageComponent } from 'ish-shared/components/common/error-message/error-message.component';
 
 import { CamCardsFacade } from '../../facades/cam-cards.facade';
 import { CamCardPreferencesDialogComponent } from '../../shared/cam-card-preferences-dialog/cam-card-preferences-dialog.component';
@@ -32,8 +32,8 @@ describe('Account Cam Card Page Component', () => {
         MockComponent(AccountCamCardListComponent),
         MockComponent(CamCardPreferencesComponent),
         MockComponent(CamCardPreferencesDialogComponent),
+        MockComponent(CamfilErrorMessageComponent),
         MockComponent(CamfilLoadingComponent),
-        MockComponent(ErrorMessageComponent),
         MockComponent(FaIconComponent),
       ],
       providers: [{ provide: CamCardsFacade, useFactory: () => instance(camCardsFacade) }],

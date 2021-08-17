@@ -8,9 +8,9 @@ import { instance, mock, when } from 'ts-mockito';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
 import { ServerSettingPipe } from 'ish-core/pipes/server-setting.pipe';
+import { CamfilErrorMessageComponent } from 'ish-shared/components/common/camfil-error-message/camfil-error-message.component';
 import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
 import { CamfilModalDialogComponent } from 'ish-shared/components/common/camfil-modal-dialog/camfil-modal-dialog.component';
-import { ErrorMessageComponent } from 'ish-shared/components/common/error-message/error-message.component';
 
 import { UserBudgetComponent } from '../../components/user-budget/user-budget.component';
 import { OrganizationManagementFacade } from '../../facades/organization-management.facade';
@@ -38,9 +38,9 @@ describe('Users Page Component', () => {
     await TestBed.configureTestingModule({
       imports: [RouterTestingModule, TranslateModule.forRoot()],
       declarations: [
+        MockComponent(CamfilErrorMessageComponent),
         MockComponent(CamfilLoadingComponent),
         MockComponent(CamfilModalDialogComponent),
-        MockComponent(ErrorMessageComponent),
         MockComponent(FaIconComponent),
         MockComponent(UserBudgetComponent),
         MockComponent(UserRolesBadgesComponent),

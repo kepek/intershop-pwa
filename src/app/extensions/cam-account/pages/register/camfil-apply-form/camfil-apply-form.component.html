@@ -3,7 +3,7 @@
   [description]="'camfil.account.apply_message' | translate"
 ></camfil-header-box>
 
-<ish-error-message [error]="error"></ish-error-message>
+<camfil-error-message [error]="error"></camfil-error-message>
 
 <div class="registration-form section" data-testing-id="account-create-full-page">
   <form [formGroup]="form" (ngSubmit)="submitForm()" class="form-horizontal" novalidate="novalidate">

@@ -6,8 +6,8 @@ import { MockComponent } from 'ng-mocks';
 import { of } from 'rxjs';
 import { instance, mock, when } from 'ts-mockito';
 
+import { CamfilErrorMessageComponent } from 'ish-shared/components/common/camfil-error-message/camfil-error-message.component';
 import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
-import { ErrorMessageComponent } from 'ish-shared/components/common/error-message/error-message.component';
 
 import { RequisitionsListComponent } from '../../components/requisitions-list/requisitions-list.component';
 import { RequisitionManagementFacade } from '../../facades/requisition-management.facade';
@@ -26,8 +26,8 @@ describe('Buyer Page Component', () => {
       imports: [NgbNavModule, RouterTestingModule, TranslateModule.forRoot()],
       declarations: [
         BuyerPageComponent,
+        MockComponent(CamfilErrorMessageComponent),
         MockComponent(CamfilLoadingComponent),
-        MockComponent(ErrorMessageComponent),
         MockComponent(RequisitionsListComponent),
       ],
       providers: [{ provide: RequisitionManagementFacade, useFactory: () => instance(reqFacade) }],

@@ -6,8 +6,8 @@ import { instance, mock, when } from 'ts-mockito';
 
 import { AuthorizationToggleDirective } from 'ish-core/directives/authorization-toggle.directive';
 import { Price } from 'ish-core/models/price/price.model';
+import { CamfilErrorMessageComponent } from 'ish-shared/components/common/camfil-error-message/camfil-error-message.component';
 import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
-import { ErrorMessageComponent } from 'ish-shared/components/common/error-message/error-message.component';
 import { InfoBoxComponent } from 'ish-shared/components/common/info-box/info-box.component';
 
 import { OrganizationManagementFacade } from '../../facades/organization-management.facade';
@@ -49,8 +49,8 @@ describe('Budget Widget Component', () => {
       imports: [TranslateModule.forRoot()],
       declarations: [
         BudgetWidgetComponent,
+        MockComponent(CamfilErrorMessageComponent),
         MockComponent(CamfilLoadingComponent),
-        MockComponent(ErrorMessageComponent),
         MockComponent(InfoBoxComponent),
         MockComponent(UserBudgetComponent),
         MockDirective(AuthorizationToggleDirective),

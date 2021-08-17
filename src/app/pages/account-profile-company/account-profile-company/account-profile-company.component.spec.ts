@@ -5,7 +5,7 @@ import { MockComponent } from 'ng-mocks';
 import { anything, spy, verify } from 'ts-mockito';
 
 import { Customer } from 'ish-core/models/customer/customer.model';
-import { ErrorMessageComponent } from 'ish-shared/components/common/error-message/error-message.component';
+import { CamfilErrorMessageComponent } from 'ish-shared/components/common/camfil-error-message/camfil-error-message.component';
 import { InputComponent } from 'ish-shared/forms/components/input/input.component';
 
 import { AccountProfileCompanyComponent } from './account-profile-company.component';
@@ -20,7 +20,7 @@ describe('Account Profile Company Component', () => {
       imports: [ReactiveFormsModule, TranslateModule.forRoot()],
       declarations: [
         AccountProfileCompanyComponent,
-        MockComponent(ErrorMessageComponent),
+        MockComponent(CamfilErrorMessageComponent),
         MockComponent(InputComponent),
       ],
     }).compileComponents();

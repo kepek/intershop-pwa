@@ -13,7 +13,7 @@ import { BasketAddressSummaryComponent } from 'ish-shared/components/basket/bask
 import { BasketItemsSummaryComponent } from 'ish-shared/components/basket/basket-items-summary/basket-items-summary.component';
 import { BasketValidationResultsComponent } from 'ish-shared/components/basket/basket-validation-results/basket-validation-results.component';
 import { CamfilBasketCostSummaryComponent } from 'ish-shared/components/basket/camfil-basket-cost-summary/camfil-basket-cost-summary.component';
-import { ErrorMessageComponent } from 'ish-shared/components/common/error-message/error-message.component';
+import { CamfilErrorMessageComponent } from 'ish-shared/components/common/camfil-error-message/camfil-error-message.component';
 
 import { CheckoutShippingComponent } from './checkout-shipping.component';
 
@@ -30,7 +30,7 @@ describe('Checkout Shipping Component', () => {
         MockComponent(BasketItemsSummaryComponent),
         MockComponent(BasketValidationResultsComponent),
         MockComponent(CamfilBasketCostSummaryComponent),
-        MockComponent(ErrorMessageComponent),
+        MockComponent(CamfilErrorMessageComponent),
         MockComponent(FaIconComponent),
         MockComponent(NgbPopover),
         MockDirective(ServerHtmlDirective),
@@ -67,7 +67,7 @@ describe('Checkout Shipping Component', () => {
   it('should render an error if an error occurs', () => {
     component.error = makeHttpError({ status: 404 });
     fixture.detectChanges();
-    expect(element.querySelector('ish-error-message')).toBeTruthy();
+    expect(element.querySelector('camfil-error-message')).toBeTruthy();
   });
 
   it('should not render an error if the user has currently no shipping method selected', () => {

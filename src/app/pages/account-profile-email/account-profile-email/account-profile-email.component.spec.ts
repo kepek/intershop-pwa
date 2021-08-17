@@ -4,7 +4,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MockComponent } from 'ng-mocks';
 import { anything, spy, verify } from 'ts-mockito';
 
-import { ErrorMessageComponent } from 'ish-shared/components/common/error-message/error-message.component';
+import { CamfilErrorMessageComponent } from 'ish-shared/components/common/camfil-error-message/camfil-error-message.component';
 import { InputComponent } from 'ish-shared/forms/components/input/input.component';
 
 import { AccountProfileEmailComponent } from './account-profile-email.component';
@@ -17,7 +17,11 @@ describe('Account Profile Email Component', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [ReactiveFormsModule, TranslateModule.forRoot()],
-      declarations: [AccountProfileEmailComponent, MockComponent(ErrorMessageComponent), MockComponent(InputComponent)],
+      declarations: [
+        AccountProfileEmailComponent,
+        MockComponent(CamfilErrorMessageComponent),
+        MockComponent(InputComponent),
+      ],
     }).compileComponents();
   });
 

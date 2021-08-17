@@ -17,7 +17,7 @@ import { BasketBuyerComponent } from 'ish-shared/components/basket/basket-buyer/
 import { BasketCostSummaryComponent } from 'ish-shared/components/basket/basket-cost-summary/basket-cost-summary.component';
 import { BasketValidationResultsComponent } from 'ish-shared/components/basket/basket-validation-results/basket-validation-results.component';
 import { CamfilBasketCostSummaryComponent } from 'ish-shared/components/basket/camfil-basket-cost-summary/camfil-basket-cost-summary.component';
-import { ErrorMessageComponent } from 'ish-shared/components/common/error-message/error-message.component';
+import { CamfilErrorMessageComponent } from 'ish-shared/components/common/camfil-error-message/camfil-error-message.component';
 import { InfoBoxComponent } from 'ish-shared/components/common/info-box/info-box.component';
 import { ModalDialogLinkComponent } from 'ish-shared/components/common/modal-dialog-link/modal-dialog-link.component';
 import { LineItemListComponent } from 'ish-shared/components/line-item/line-item-list/line-item-list.component';
@@ -40,9 +40,9 @@ describe('Checkout Review Component', () => {
         MockComponent(BasketCostSummaryComponent),
         MockComponent(BasketValidationResultsComponent),
         MockComponent(CamfilBasketCostSummaryComponent),
+        MockComponent(CamfilErrorMessageComponent),
         MockComponent(CheckboxComponent),
         MockComponent(ContentIncludeComponent),
-        MockComponent(ErrorMessageComponent),
         MockComponent(FaIconComponent),
         MockComponent(InfoBoxComponent),
         MockComponent(LineItemListComponent),
@@ -88,7 +88,7 @@ describe('Checkout Review Component', () => {
   it('should display a message if an error occurs', () => {
     component.error = makeHttpError({ status: 400, message: 'Bad request' });
     fixture.detectChanges();
-    expect(element.querySelector('ish-error-message')).toBeTruthy();
+    expect(element.querySelector('camfil-error-message')).toBeTruthy();
   });
 
   it('should display an approval required link if necessary', () => {
