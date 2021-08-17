@@ -5,8 +5,8 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MockComponent } from 'ng-mocks';
 import { instance, mock } from 'ts-mockito';
 
+import { CamfilErrorMessageComponent } from 'ish-shared/components/common/camfil-error-message/camfil-error-message.component';
 import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
-import { ErrorMessageComponent } from 'ish-shared/components/common/error-message/error-message.component';
 
 import { WishlistsFacade } from '../../facades/wishlists.facade';
 import { WishlistPreferencesDialogComponent } from '../../shared/wishlist-preferences-dialog/wishlist-preferences-dialog.component';
@@ -25,8 +25,8 @@ describe('Account Wishlist Detail Page Component', () => {
       declarations: [
         AccountWishlistDetailPageComponent,
         MockComponent(AccountWishlistDetailLineItemComponent),
+        MockComponent(CamfilErrorMessageComponent),
         MockComponent(CamfilLoadingComponent),
-        MockComponent(ErrorMessageComponent),
         MockComponent(FaIconComponent),
         MockComponent(WishlistPreferencesDialogComponent),
       ],

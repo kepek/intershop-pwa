@@ -6,7 +6,7 @@ import { MockComponent } from 'ng-mocks';
 import { User } from 'ish-core/models/user/user.model';
 import { makeHttpError } from 'ish-core/utils/dev/api-service-utils';
 import { BasketMockData } from 'ish-core/utils/dev/basket-mock-data';
-import { ErrorMessageComponent } from 'ish-shared/components/common/error-message/error-message.component';
+import { CamfilErrorMessageComponent } from 'ish-shared/components/common/camfil-error-message/camfil-error-message.component';
 
 import { AccountPaymentConcardisDirectdebitComponent } from '../account-payment-concardis-directdebit/account-payment-concardis-directdebit.component';
 
@@ -23,7 +23,7 @@ describe('Account Payment Component', () => {
       declarations: [
         AccountPaymentComponent,
         MockComponent(AccountPaymentConcardisDirectdebitComponent),
-        MockComponent(ErrorMessageComponent),
+        MockComponent(CamfilErrorMessageComponent),
         MockComponent(FaIconComponent),
       ],
     }).compileComponents();
@@ -103,7 +103,7 @@ describe('Account Payment Component', () => {
     it('should render an error if an error occurs', () => {
       component.error = makeHttpError({ status: 404 });
       fixture.detectChanges();
-      expect(element.querySelector('ish-error-message')).toBeTruthy();
+      expect(element.querySelector('camfil-error-message')).toBeTruthy();
     });
   });
 

@@ -6,8 +6,8 @@ import { of } from 'rxjs';
 import { instance, mock, when } from 'ts-mockito';
 
 import { findAllCustomElements } from 'ish-core/utils/dev/html-query-utils';
+import { CamfilErrorMessageComponent } from 'ish-shared/components/common/camfil-error-message/camfil-error-message.component';
 import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
-import { ErrorMessageComponent } from 'ish-shared/components/common/error-message/error-message.component';
 
 import { QuoteContextFacade } from '../../facades/quote-context.facade';
 import { Quote, QuoteRequest } from '../../models/quoting/quoting.model';
@@ -29,8 +29,8 @@ describe('Product Add To Quote Dialog Component', () => {
     await TestBed.configureTestingModule({
       imports: [RouterTestingModule, TranslateModule.forRoot()],
       declarations: [
+        MockComponent(CamfilErrorMessageComponent),
         MockComponent(CamfilLoadingComponent),
-        MockComponent(ErrorMessageComponent),
         MockComponent(QuoteEditComponent),
         MockComponent(QuoteInteractionsComponent),
         MockComponent(QuoteViewComponent),
@@ -63,7 +63,7 @@ describe('Product Add To Quote Dialog Component', () => {
 
     expect(findAllCustomElements(element)).toMatchInlineSnapshot(`
       Array [
-        "ish-error-message",
+        "camfil-error-message",
         "ish-quote-edit",
         "ish-quote-interactions",
       ]
@@ -78,7 +78,7 @@ describe('Product Add To Quote Dialog Component', () => {
 
     expect(findAllCustomElements(element)).toMatchInlineSnapshot(`
       Array [
-        "ish-error-message",
+        "camfil-error-message",
         "ish-quote-view",
         "ish-quote-interactions",
       ]
@@ -93,7 +93,7 @@ describe('Product Add To Quote Dialog Component', () => {
 
     expect(findAllCustomElements(element)).toMatchInlineSnapshot(`
       Array [
-        "ish-error-message",
+        "camfil-error-message",
         "ish-quote-view",
         "ish-quote-interactions",
       ]

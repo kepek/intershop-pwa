@@ -6,8 +6,8 @@ import { MockComponent } from 'ng-mocks';
 import { instance, mock } from 'ts-mockito';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
+import { CamfilErrorMessageComponent } from 'ish-shared/components/common/camfil-error-message/camfil-error-message.component';
 import { CamfilHeaderBoxComponent } from 'ish-shared/components/common/camfil-header-box/camfil-header-box.component';
-import { ErrorMessageComponent } from 'ish-shared/components/common/error-message/error-message.component';
 
 import { CamfilLoginFormComponent } from './camfil-login-form.component';
 
@@ -19,7 +19,7 @@ describe('Camfil Login Form Component', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CamfilHeaderBoxComponent, CamfilLoginFormComponent, MockComponent(ErrorMessageComponent)],
+      declarations: [CamfilHeaderBoxComponent, CamfilLoginFormComponent, MockComponent(CamfilErrorMessageComponent)],
       imports: [ReactiveFormsModule, RouterTestingModule, TranslateModule.forRoot()],
       providers: [{ provide: AccountFacade, useFactory: () => instance(mock(AccountFacade)) }],
     }).compileComponents();

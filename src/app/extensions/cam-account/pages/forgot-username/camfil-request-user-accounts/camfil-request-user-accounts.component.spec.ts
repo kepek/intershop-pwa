@@ -7,9 +7,9 @@ import { instance, mock } from 'ts-mockito';
 
 import { ServerHtmlDirective } from 'ish-core/directives/server-html.directive';
 import { AccountFacade } from 'ish-core/facades/account.facade';
+import { CamfilErrorMessageComponent } from 'ish-shared/components/common/camfil-error-message/camfil-error-message.component';
 import { CamfilErrorComponent } from 'ish-shared/components/common/camfil-error/camfil-error.component';
 import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
-import { ErrorMessageComponent } from 'ish-shared/components/common/error-message/error-message.component';
 
 import { LazyCamCaptchaComponent } from '../../../../cam-captcha/exports/lazy-cam-captcha/lazy-cam-captcha.component';
 import { CamAccountFacade } from '../../../facades/cam-account.facade';
@@ -26,9 +26,9 @@ describe('Camfil Request User Accounts Component', () => {
     await TestBed.configureTestingModule({
       declarations: [
         CamfilErrorComponent,
+        CamfilErrorMessageComponent,
         CamfilRequestUserAccountsComponent,
         CamfilRequestUserAccountsFormComponent,
-        ErrorMessageComponent,
         MockComponent(CamfilLoadingComponent),
         MockComponent(LazyCamCaptchaComponent),
         MockDirective(ServerHtmlDirective),

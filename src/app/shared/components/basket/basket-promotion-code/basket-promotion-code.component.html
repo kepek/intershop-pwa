@@ -3,7 +3,7 @@
     'shopping_cart.promotional_code.heading' | translate
   }}</a>
 
-  <ish-error-message [error]="promotionError$ | async" [toast]="toast"></ish-error-message>
+  <camfil-error-message [error]="promotionError$ | async" [toast]="toast"></camfil-error-message>
 
   <ish-success-message
     *ngIf="displaySuccessMessage"

@@ -8,8 +8,8 @@ import { instance, mock, when } from 'ts-mockito';
 
 import { AddressComponent } from 'ish-shared/components/address/address/address.component';
 import { BasketCostSummaryComponent } from 'ish-shared/components/basket/basket-cost-summary/basket-cost-summary.component';
+import { CamfilErrorMessageComponent } from 'ish-shared/components/common/camfil-error-message/camfil-error-message.component';
 import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
-import { ErrorMessageComponent } from 'ish-shared/components/common/error-message/error-message.component';
 import { InfoBoxComponent } from 'ish-shared/components/common/info-box/info-box.component';
 import { LineItemListComponent } from 'ish-shared/components/line-item/line-item-list/line-item-list.component';
 
@@ -34,8 +34,8 @@ describe('Requisition Detail Page Component', () => {
       declarations: [
         MockComponent(AddressComponent),
         MockComponent(BasketCostSummaryComponent),
+        MockComponent(CamfilErrorMessageComponent),
         MockComponent(CamfilLoadingComponent),
-        MockComponent(ErrorMessageComponent),
         MockComponent(FaIconComponent),
         MockComponent(InfoBoxComponent),
         MockComponent(LineItemListComponent),
@@ -81,7 +81,7 @@ describe('Requisition Detail Page Component', () => {
           </ul>
         </div>
         <h1>approval.detailspage.approval.heading</h1>
-        <ish-error-message></ish-error-message>
+        <camfil-error-message></camfil-error-message>
       </div>
     `);
   });

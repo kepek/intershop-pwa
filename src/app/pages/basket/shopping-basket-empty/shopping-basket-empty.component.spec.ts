@@ -5,7 +5,7 @@ import { MockComponent } from 'ng-mocks';
 import { makeHttpError } from 'ish-core/utils/dev/api-service-utils';
 import { BasketInfoComponent } from 'ish-shared/components/basket/basket-info/basket-info.component';
 import { BasketValidationResultsComponent } from 'ish-shared/components/basket/basket-validation-results/basket-validation-results.component';
-import { ErrorMessageComponent } from 'ish-shared/components/common/error-message/error-message.component';
+import { CamfilErrorMessageComponent } from 'ish-shared/components/common/camfil-error-message/camfil-error-message.component';
 
 import { ShoppingBasketEmptyComponent } from './shopping-basket-empty.component';
 
@@ -19,7 +19,7 @@ describe('Shopping Basket Empty Component', () => {
       declarations: [
         MockComponent(BasketInfoComponent),
         MockComponent(BasketValidationResultsComponent),
-        MockComponent(ErrorMessageComponent),
+        MockComponent(CamfilErrorMessageComponent),
         ShoppingBasketEmptyComponent,
       ],
       imports: [TranslateModule.forRoot()],
@@ -47,6 +47,6 @@ describe('Shopping Basket Empty Component', () => {
     component.error = makeHttpError({ status: 404 });
 
     fixture.detectChanges();
-    expect(element.querySelector('ish-error-message')).toBeTruthy();
+    expect(element.querySelector('camfil-error-message')).toBeTruthy();
   });
 });

@@ -224,6 +224,7 @@ import { MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapte
 import { CAMFIL_DEFAULT_LANG, CAMFIL_FORMATS } from 'ish-core/internationalization.module';
 import { LangChangeEvent } from '@ngx-translate/core/lib/translate.service';
 import { LoadingComponent } from './components/common/loading/loading.component';
+import { CamfilErrorMessageComponent } from './components/common/camfil-error-message/camfil-error-message.component';
 
 const importExportModules = [
   AddressFormsSharedModule,
@@ -387,6 +388,7 @@ const exportedComponents = [
   CamfilCamCardModalComponent,
   CamfilCategoryBoxComponent,
   CamfilErrorComponent,
+  CamfilErrorMessageComponent,
   CamfilFilterInfoComponent,
   CamfilFilterMeasurementsComponent,
   CamfilFilterNavigationComponent,

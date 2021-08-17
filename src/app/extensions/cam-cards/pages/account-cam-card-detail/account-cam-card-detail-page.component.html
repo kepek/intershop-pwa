@@ -1,7 +1,7 @@
 <br />
 <div class="cam-card">
   <!-- Error message -->
-  <ish-error-message [error]="camCardError$ | async"></ish-error-message>
+  <camfil-error-message [error]="camCardError$ | async"></camfil-error-message>
 
   <!---Create Camcard-->
   <ng-container *ngIf="router.isActive('/account/camcards/create', true)">

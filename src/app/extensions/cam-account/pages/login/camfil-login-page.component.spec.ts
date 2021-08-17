@@ -9,9 +9,9 @@ import { AppFacade } from 'ish-core/facades/app.facade';
 import { ContentIncludeComponent } from 'ish-shared/cms/components/content-include/content-include.component';
 import { CamfilBulletListComponent } from 'ish-shared/components/common/camfil-bullet-list/camfil-bullet-list.component';
 import { CamfilDetailsBoxComponent } from 'ish-shared/components/common/camfil-details-box/camfil-details-box.component';
+import { CamfilErrorMessageComponent } from 'ish-shared/components/common/camfil-error-message/camfil-error-message.component';
 import { CamfilHeaderBoxComponent } from 'ish-shared/components/common/camfil-header-box/camfil-header-box.component';
 import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
-import { ErrorMessageComponent } from 'ish-shared/components/common/error-message/error-message.component';
 
 import { CamfilLoginFormComponent } from './camfil-login-form/camfil-login-form.component';
 import { LoginInfoSectionComponent } from './camfil-login-info-section/login-info-section.component';
@@ -34,9 +34,9 @@ describe('Camfil Login Page Component', () => {
         CamfilLoginNewCustomerComponent,
         CamfilLoginPageComponent,
         LoginInfoSectionComponent,
+        MockComponent(CamfilErrorMessageComponent),
         MockComponent(CamfilLoadingComponent),
         MockComponent(ContentIncludeComponent),
-        MockComponent(ErrorMessageComponent),
       ],
       providers: [
         { provide: AccountFacade, useFactory: () => instance(mock(AccountFacade)) },

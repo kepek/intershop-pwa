@@ -7,7 +7,7 @@
 <ng-template #forgotPasswordForm>
   <p [ishServerHtml]="'account.forgotdata.password_retrieval_info.text' | translate"></p>
 
-  <ish-error-message [error]="error$ | async"></ish-error-message>
+  <camfil-error-message [error]="error$ | async"></camfil-error-message>
 
   <div class="row">
     <div class="col-md-10 col-lg-8 col-xl-6">

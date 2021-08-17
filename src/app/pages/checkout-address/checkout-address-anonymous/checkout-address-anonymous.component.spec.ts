@@ -9,7 +9,7 @@ import { FeatureToggleDirective } from 'ish-core/directives/feature-toggle.direc
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { makeHttpError } from 'ish-core/utils/dev/api-service-utils';
 import { AddressFormContainerComponent } from 'ish-shared/address-forms/components/address-form-container/address-form-container.component';
-import { ErrorMessageComponent } from 'ish-shared/components/common/error-message/error-message.component';
+import { CamfilErrorMessageComponent } from 'ish-shared/components/common/camfil-error-message/camfil-error-message.component';
 import { IdentityProviderLoginComponent } from 'ish-shared/components/login/identity-provider-login/identity-provider-login.component';
 import { InputComponent } from 'ish-shared/forms/components/input/input.component';
 
@@ -29,7 +29,7 @@ describe('Checkout Address Anonymous Component', () => {
       declarations: [
         CheckoutAddressAnonymousComponent,
         MockComponent(AddressFormContainerComponent),
-        MockComponent(ErrorMessageComponent),
+        MockComponent(CamfilErrorMessageComponent),
         MockComponent(IdentityProviderLoginComponent),
         MockComponent(InputComponent),
         MockDirective(FeatureToggleDirective),
@@ -92,7 +92,7 @@ describe('Checkout Address Anonymous Component', () => {
     component.ngOnChanges();
     fixture.detectChanges();
 
-    expect(element.querySelector('ish-error-message')).toBeTruthy();
+    expect(element.querySelector('camfil-error-message')).toBeTruthy();
   });
 
   it('should set submitted flag if submit is clicked and form is not valid', async () => {

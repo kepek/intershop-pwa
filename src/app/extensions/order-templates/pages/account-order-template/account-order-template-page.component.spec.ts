@@ -3,8 +3,8 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MockComponent } from 'ng-mocks';
 import { instance, mock } from 'ts-mockito';
 
+import { CamfilErrorMessageComponent } from 'ish-shared/components/common/camfil-error-message/camfil-error-message.component';
 import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
-import { ErrorMessageComponent } from 'ish-shared/components/common/error-message/error-message.component';
 
 import { OrderTemplatesFacade } from '../../facades/order-templates.facade';
 import { OrderTemplatePreferencesDialogComponent } from '../../shared/order-template-preferences-dialog/order-template-preferences-dialog.component';
@@ -25,8 +25,8 @@ describe('Account Order Template Page Component', () => {
       declarations: [
         AccountOrderTemplatePageComponent,
         MockComponent(AccountOrderTemplateListComponent),
+        MockComponent(CamfilErrorMessageComponent),
         MockComponent(CamfilLoadingComponent),
-        MockComponent(ErrorMessageComponent),
         MockComponent(OrderTemplatePreferencesDialogComponent),
       ],
       providers: [{ provide: OrderTemplatesFacade, useFactory: () => instance(orderTemplatesFacade) }],

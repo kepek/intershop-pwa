@@ -22,7 +22,7 @@
     </div>
 
     <div class="modal-body">
-      <ish-error-message [error]="error$ | async"></ish-error-message>
+      <camfil-error-message [error]="error$ | async"></camfil-error-message>
 
       <ng-container *ngIf="state === 'New'; else elseTemplate">
         <ish-quote-edit></ish-quote-edit>

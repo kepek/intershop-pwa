@@ -12,7 +12,7 @@ import { User } from 'ish-core/models/user/user.model';
 import { makeHttpError } from 'ish-core/utils/dev/api-service-utils';
 import { CustomerAddressFormComponent } from 'ish-shared/address-forms/components/customer-address-form/customer-address-form.component';
 import { AddressComponent } from 'ish-shared/components/address/address/address.component';
-import { ErrorMessageComponent } from 'ish-shared/components/common/error-message/error-message.component';
+import { CamfilErrorMessageComponent } from 'ish-shared/components/common/camfil-error-message/camfil-error-message.component';
 import { ModalDialogComponent } from 'ish-shared/components/common/modal-dialog/modal-dialog.component';
 import { SelectAddressComponent } from 'ish-shared/forms/components/select-address/select-address.component';
 
@@ -29,8 +29,8 @@ describe('Account Addresses Component', () => {
       declarations: [
         AccountAddressesComponent,
         MockComponent(AddressComponent),
+        MockComponent(CamfilErrorMessageComponent),
         MockComponent(CustomerAddressFormComponent),
-        MockComponent(ErrorMessageComponent),
         MockComponent(FaIconComponent),
         MockComponent(ModalDialogComponent),
         MockComponent(SelectAddressComponent),
@@ -232,7 +232,7 @@ describe('Account Addresses Component', () => {
   it('should render an error if an error occurs', () => {
     component.error = makeHttpError({ status: 404 });
     fixture.detectChanges();
-    expect(element.querySelector('ish-error-message')).toBeTruthy();
+    expect(element.querySelector('camfil-error-message')).toBeTruthy();
   });
 
   it('should emit createCustomerAddress event when createCustomerAddress is triggered', () => {

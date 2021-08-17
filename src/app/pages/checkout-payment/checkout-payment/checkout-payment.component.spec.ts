@@ -16,7 +16,7 @@ import { BasketCostSummaryComponent } from 'ish-shared/components/basket/basket-
 import { BasketItemsSummaryComponent } from 'ish-shared/components/basket/basket-items-summary/basket-items-summary.component';
 import { BasketPromotionCodeComponent } from 'ish-shared/components/basket/basket-promotion-code/basket-promotion-code.component';
 import { BasketValidationResultsComponent } from 'ish-shared/components/basket/basket-validation-results/basket-validation-results.component';
-import { ErrorMessageComponent } from 'ish-shared/components/common/error-message/error-message.component';
+import { CamfilErrorMessageComponent } from 'ish-shared/components/common/camfil-error-message/camfil-error-message.component';
 import { CheckboxComponent } from 'ish-shared/forms/components/checkbox/checkbox.component';
 
 import { PaymentConcardisCreditcardCvcDetailComponent } from '../payment-concardis-creditcard-cvc-detail/payment-concardis-creditcard-cvc-detail.component';
@@ -44,8 +44,8 @@ describe('Checkout Payment Component', () => {
         MockComponent(BasketItemsSummaryComponent),
         MockComponent(BasketPromotionCodeComponent),
         MockComponent(BasketValidationResultsComponent),
+        MockComponent(CamfilErrorMessageComponent),
         MockComponent(CheckboxComponent),
-        MockComponent(ErrorMessageComponent),
         MockComponent(FormlyForm),
         MockComponent(NgbCollapse),
         MockComponent(PaymentConcardisCreditcardComponent),
@@ -133,7 +133,7 @@ describe('Checkout Payment Component', () => {
     it('should render an error if an error occurs', () => {
       component.error = makeHttpError({ status: 404 });
       fixture.detectChanges();
-      expect(element.querySelector('ish-error-message')).toBeTruthy();
+      expect(element.querySelector('camfil-error-message')).toBeTruthy();
     });
 
     it('should not render an error if the user has currently no payment method selected', () => {
