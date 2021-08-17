@@ -27,7 +27,7 @@
           <camfil-checkout-list [order]="item"></camfil-checkout-list>
         </ng-container>
         <ng-container *ngIf="validation; else notConfirmed">
-          <ng-container *ngFor="let item of buckets; index as i">
+          <ng-container *ngFor="let item of buckets; index as i; trackBy: trackByItems">
             <camfil-checkout-list
               [order]="item"
               [buckets]="buckets"
@@ -42,7 +42,7 @@
           </ng-container>
         </ng-container>
         <ng-template #notConfirmed>
-          <ng-container *ngFor="let item of buckets$ | async; index as i">
+          <ng-container *ngFor="let item of buckets$ | async; index as i; trackBy: trackByItems">
             <camfil-checkout-list
               [order]="item"
               [buckets]="buckets$ | async"
