@@ -97,6 +97,7 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
   }
 
   /* only rerender the whole bucket when number of included lineItems changes */
+  // tslint:disable-next-line: variable-name
   trackByItems(_index, item: Bucket): number {
     return item.lineItems.length;
   }
