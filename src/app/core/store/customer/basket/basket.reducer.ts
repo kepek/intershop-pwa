@@ -193,7 +193,8 @@ export const basketReducer = createReducer(
     deleteBasketPayment,
     submitBasket,
     updateConcardisCvcLastUpdated,
-    startCheckout
+    startCheckout,
+    updateBasketItemAttributes
   ),
   unsetLoadingAndErrorOn(
     loadBasketSuccess,
@@ -219,7 +220,8 @@ export const basketReducer = createReducer(
     camfilDragLineItem,
     loadCustomerDeliveryTermSuccess,
     deleteBucketSuccess,
-    addItemsToBasketFromCamCardFail
+    addItemsToBasketFromCamCardFail,
+    updateBasketItemAttributesSuccess
   ),
   setErrorOn(
     mergeBasketFail,

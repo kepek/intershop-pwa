@@ -96,6 +96,11 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
     }
   }
 
+  /* only rerender the whole bucket when number of included lineItems changes */
+  trackByItems(_index, item: Bucket): number {
+    return item.lineItems.length;
+  }
+
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();

@@ -215,7 +215,6 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
       markAsDirtyRecursive(form);
       return;
     }
-    this.lineItemUpdating = true;
     const name = target.getAttribute('name');
     const ifLabel = name === 'boxLabel';
 
@@ -326,8 +325,8 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
     return value.replaceAll('.', '');
   }
 
-  getBoxLabelValue(item) {
-    return item?.attributes?.find(att => att.name === 'boxLabel')?.value;
+  getBoxLabelValue() {
+    return this.item?.attributes?.find(att => att.name === 'boxLabel')?.value;
   }
 
   triggerResize() {

@@ -27,7 +27,7 @@
               *ngIf="isConfirmed"
               [name]="'camfil.cam_card.product.comment.label' | translate"
               class="box-label-attribute"
-              [value]="getBoxLabelValue(item)"
+              [value]="getBoxLabelValue()"
             ></camfil-product-attribute>
             <div>
               <button mat-button (click)="openQuickViewDialog(); $event.stopPropagation()">
@@ -216,7 +216,6 @@
     </div>
   </div> -->
 </ng-container>
-<camfil-loading *ngIf="lineItemUpdating"></camfil-loading>
 <camfil-small-cta-modal
   actionButtonTitle="{{ 'camfil.checkout.order.delete_order.modal.yes' | translate }}"
   cancelButtonTitle="{{ 'camfil.checkout.order.delete_order.modal.no' | translate }}"
