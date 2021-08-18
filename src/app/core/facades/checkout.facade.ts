@@ -36,7 +36,6 @@ import {
   getBasketEligiblePaymentMethods,
   getBasketEligibleShippingMethods,
   getBasketError,
-  getBasketExtensions,
   getBasketInfo,
   getBasketInvoiceAddress,
   getBasketLastTimeProductAdded,
@@ -51,7 +50,6 @@ import {
   getCurrentBuckets,
   getCustomersDeliveryTerms,
   getEmptyBuckets,
-  getLineItemUpdating,
   getSubmittedBasket,
   getWarehouseCalendar,
   isBasketInvoiceAndShippingAddressEqual,
@@ -106,9 +104,8 @@ export class CheckoutFacade {
   );
   submittedBasket$ = this.store.pipe(select(getSubmittedBasket));
   calendarExceptions$ = this.store.pipe(select(getCalendarExceptions));
-  basketExtensions$ = this.store.pipe(select(getBasketExtensions));
   getFocusedCheckoutElement$ = this.store.pipe(select(getFocusedCheckoutElement));
-  lineItemUpdating$ = this.store.pipe(select(getLineItemUpdating));
+
   getBucketEmailRecipients$(urn: string) {
     return this.store.pipe(select(getBucketEmailRecipients(urn)));
   }

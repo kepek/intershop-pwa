@@ -1,16 +1,6 @@
 // tslint:disable: ish-ordered-imports ban-specific-imports
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
-import {
-  AfterViewInit,
-  ChangeDetectionStrategy,
-  Component,
-  EventEmitter,
-  Input,
-  OnDestroy,
-  OnInit,
-  Output,
-  ViewChild,
-} from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { MatDialog } from '@angular/material/dialog';
@@ -24,7 +14,7 @@ import { BasketExtensions } from 'ish-core/models/basket/basket.interface';
 import { Bucket } from 'ish-core/models/basket/bucket.model';
 import { CustomerDeliveryTerm } from 'ish-core/models/customer/customer.interface';
 import { LineItemData } from 'ish-core/models/line-item/line-item.interface';
-import { LineItem } from 'ish-core/models/line-item/line-item.model';
+import { LineItem, LineItemView } from 'ish-core/models/line-item/line-item.model';
 import { Price, PriceHelper } from 'ish-core/models/price/price.model';
 import { ProductViewHelper } from 'ish-core/models/product-view/product-view.helper';
 import { ProductView } from 'ish-core/models/product-view/product-view.model';
@@ -40,6 +30,7 @@ import { Address } from 'ish-core/models/address/address.model';
 import { AddEmailRecipientModalComponent } from '../add-email-recipient-modal/add-email-recipient-modal.component';
 import { TranslateService } from '@ngx-translate/core';
 import { CheckoutFocusedElement } from 'ish-core/models/scroll-info copy/checkout-focused-element.interface';
+import { Basket } from 'ish-core/models/basket/basket.model';
 
 interface Order extends Bucket {
   totals: number;
@@ -53,21 +44,17 @@ interface Order extends Bucket {
 })
 export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDestroy {
   private static REQUIRED_COMPLETENESS_LEVEL = ProductCompletenessLevel.List;
+  private destroy$ = new Subject<void>();
+
   @Input() order: Order;
   @Input() buckets: Bucket[];
-  @Input() purchaseCurrency: string;
+  @Input() basket: Basket;
+  @Input() isConfirmed: boolean;
+  @Input() index: number;
+
   isOrderOpen = true;
   orderForm: FormGroup;
-
   validators = ORDER_HEADER_VALIDATORS;
-  @Input() shippingMethodId: string;
-  @Input() basket;
-  @Input() isConfirmed;
-  @Input() index;
-
-  @Output() handleProduct = new EventEmitter<ProductView>();
-  calculatedOrder;
-
   selectedDeliveryDate: number;
   firstAvailableDelivery: string;
   deliveryDatesRange: Date[];
@@ -84,14 +71,11 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
   emailRecipients: string[];
   emailRecipients$: Observable<string[]>;
   basketExtensions: BasketExtensions[];
-  basketExtensions$: Observable<BasketExtensions[]>;
   deliveryDateValue: string;
   focusedCheckoutElement$: Observable<CheckoutFocusedElement>;
   focusedElement: CheckoutFocusedElement;
   focusedElementId: string;
   @ViewChild(CamfilSmallCtaModalComponent) modal: CamfilSmallCtaModalComponent;
-
-  private destroy$ = new Subject<void>();
 
   constructor(
     private fb: FormBuilder,
@@ -99,7 +83,7 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
     private checkoutFacade: CheckoutFacade,
     private shoppingFacade: ShoppingFacade,
     private translate: TranslateService
-  ) {}
+  ) { }
 
   get currentBasketExtensions() {
     return {
@@ -171,7 +155,10 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
   }
 
   initForm() {
-    const defaultDeliveryDate = this.setFullDeliveryDate();
+    // TODO (extMlk): This calls for all prod details.
+    // tslint:disable-next-line:no-commented-out-code
+    // const defaultDeliveryDate = this.setFullDeliveryDate();
+    const defaultDeliveryDate = new Date().toISOString();
 
     this.orderForm = this.fb.group({
       orderMark: [this.order.orderMark, [Validators.maxLength(60)]],
@@ -203,10 +190,6 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
 
   setFocusedElement(target: HTMLDataElement) {
     this.checkoutFacade.setCheckoutFocusedElement(target.id);
-  }
-
-  handleProductLoad(product) {
-    this.handleProduct.emit(product);
   }
 
   toggleOrder() {
@@ -242,12 +225,6 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
   openAddToProductModal(modal: ModalAddNewProductComponent) {
     this.dialog.open(modal.show());
     modal.hide = () => this.dialog.closeAll();
-  }
-
-  sortBy() {
-    const items: LineItemData[] = Object.keys(this.order.lineItems).map(i => this.order.lineItems[i]);
-
-    return items.sort((a, b) => (a.position < b.position ? -1 : 1));
   }
 
   getTargetPosition(previousIndex, currentIndex, items) {
@@ -289,7 +266,7 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
     this.checkoutFacade.camfilDragLineItem(basketId, updatedLineItem, targetBucket);
   }
 
-  drop(event: CdkDragDrop<string[]>, targetOrder: Bucket) {
+  drop(event: CdkDragDrop<LineItemView[]>, targetOrder: Bucket) {
     if (event.previousContainer === event.container) {
       if (event.previousIndex === event.currentIndex) {
         return;
@@ -540,5 +517,11 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
     });
 
     return [...new Set(itemsDeliveryDates)];
+  }
+
+  // tslint:disable-next-line:force-jsdoc-comments
+  // only rerender the whole bucket when number of included lineItems changes
+  trackById(_, lineItem: LineItemView): string {
+    return lineItem?.id;
   }
 }

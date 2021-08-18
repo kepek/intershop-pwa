@@ -85,8 +85,8 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
 
   // tslint:disable-next-line:force-jsdoc-comments
   // only rerender the whole bucket when number of included lineItems changes
-  trackByItems(_, item: Bucket): number {
-    return item.lineItems.length;
+  trackByLineItems(_, bucket: Bucket): number {
+    return bucket.lineItems.length;
   }
 
   ngOnDestroy() {

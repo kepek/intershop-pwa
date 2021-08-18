@@ -134,8 +134,6 @@ export const getBucketsVolumeDiscounts = createSelector(getBasketState, basket =
   basket.basket?.basketExtensions?.map(be => be.volumeDiscount).reduce((prev, next) => prev + next)
 );
 
-export const getLineItemUpdating = createSelector(getBasketState, basket => basket.lineItemUpdating);
-
 export const getProductAddingError = createSelector(getBasketState, basket => basket.error);
 
 export const getFailedCamCardName = createSelector(getBasketState, basket => basket.failedCamCardName);

@@ -45,7 +45,6 @@
           <dd class="col-6 p-0" data-testing-id="order-camfil_no">{{ order?.phoneNumber || '-' }}</dd>
           <dt class="col-6 p-0">{{ 'camfil.account.orderdetails.delivery_address.label' | translate }}</dt>
           <dd class="col-6 p-0" data-testing-id="order-delivery_address">
-            <!-- <ish-address [address]="orderAddress"></ish-address> -->
             <camfil-checkout-delivery-address [address]="orderAddress"></camfil-checkout-delivery-address>
           </dd>
           <ng-container *ngIf="isConfirmed">
@@ -84,15 +83,16 @@
                   <span
                     class="delete-recipient-icon-wrapper d-inline-flex align-items-center justify-content-center"
                     (click)="removeSelectedRecipient(recipient)"
-                    ><mat-icon
+                  >
+                    <mat-icon
                       _ngcontent-intershop-pwa-c283=""
                       role="img"
                       class="notranslate material-icons color-light"
                       aria-hidden="true"
                       data-mat-icon-type="font"
-                      >close</mat-icon
-                    ></span
-                  >
+                      >close
+                    </mat-icon>
+                  </span>
                 </button>
               </div>
             </dd>
@@ -241,12 +241,8 @@
         (cdkDropListDropped)="drop($event, order)"
         [attr.data-order-id]="order?.id"
       >
-        <ng-container *ngFor="let product of order.lineItems; of: sortBy(); index as i">
-          <div
-            class="list-item-row list-item-row-big px-4 py-1 mt-2 line-item-container"
-            [cdkDragData]="product"
-            cdkDrag
-          >
+        <ng-container *ngFor="let item of order.lineItems; index as i; trackBy: trackById">
+          <div class="list-item-row list-item-row-big px-4 py-1 mt-2 line-item-container" [cdkDragData]="item" cdkDrag>
             <div class="d-flex align-items-center">
               <span class="d-flex align-items-center justify-content-center line-item-index">{{ i + 1 }}</span>
               <mat-icon
@@ -256,15 +252,13 @@
                 *ngIf="!isConfirmed"
               ></mat-icon>
               <camfil-checkout-line-item
-                [id]="product.productSKU"
-                [item]="product"
+                [item]="item"
+                [index]="i + 1"
                 [basketId]="order?.basket"
                 [bucketId]="order?.id"
-                [lineItemIndex]="i"
                 [isPartialDelivery]="isPartialDelivery"
                 [orderDeliveryDate]="deliveryDate"
                 [isConfirmed]="isConfirmed"
-                (handleLoad)="handleProductLoad($event)"
               ></camfil-checkout-line-item>
             </div>
           </div>
@@ -290,7 +284,7 @@
         <dl class="row dl-horizontal dl-separator mb-0">
           <ng-container *ngIf="order.volumeDiscount">
             <dt class="col-6">{{ 'camfil.checkout.volume_discount' | translate }}</dt>
-            <dd class="col-6">{{ getVolumeDiscountPrice(order.volumeDiscount, purchaseCurrency) }}</dd>
+            <dd class="col-6">{{ getVolumeDiscountPrice(order.volumeDiscount, basket?.purchaseCurrency) }}</dd>
           </ng-container>
           <dt class="col-8">{{ 'camfil.checkout.single_total_price_after' | translate }}</dt>
           <dd class="col-4">{{ totalPrice() | ishPrice }}</dd>
@@ -309,7 +303,7 @@
   #addNewProductModal
   [order]="order"
   [addToOrder]="true"
-  [shippingMethodId]="shippingMethodId"
+  [shippingMethodId]="basket?.commonShippingMethod?.id"
 >
 </camfil-modal-add-new-product>
 
