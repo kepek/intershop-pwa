@@ -1,14 +1,7 @@
 <ng-template #noProduct>Loading product....</ng-template>
 
 <ng-container *ngIf="product$ | async as product; else noProduct">
-  <camfil-product-image
-    [product]="product"
-    [imageView]="'default'"
-    imageType="images"
-    class="product-image"
-  ></camfil-product-image>
-  <camfil-product-title [product]="product"></camfil-product-title>
-  <camfil-product-price [product]="product"></camfil-product-price>
+  <p>{{ product.name }}</p>
 </ng-container>
 
 <!--
@@ -49,10 +42,10 @@
               <camfil-product-inventory class="px-2" [product]="product"></camfil-product-inventory>
             </div>
             <camfil-product-attribute
-              *ngIf="measurementsToShow()"
+              *ngIf="measurementsToShow"
               [name]="'camfil.checkout.product.measurements.label' | translate"
               class="box-label-attribute ml-0"
-              [value]="measurementsToShow()"
+              [value]="measurementsToShow"
             ></camfil-product-attribute>
           </div>
         </div>

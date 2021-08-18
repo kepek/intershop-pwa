@@ -12,7 +12,7 @@
   </mat-accordion>
 </div>
 
-<ng-template #orderHeader let-camCard="camCard">
+<ng-template #orderHeader>
   <div class="d-inline-flex">
     <strong *ngIf="order">
       {{ 'camfil.checkout.order' | translate }} {{ !!buckets?.length ? index + ' / ' + buckets?.length : '' }}</strong
@@ -22,11 +22,6 @@
     >
   </div>
 </ng-template>
-
-<!-- <h1 *ngIf="order" class="d-block d-md-none">
-  {{ 'account.orderdetails.order_number.label' | translate }}:
-  <span data-testing-id="order-number">{{ order.id }} - {{ order.orderName }}</span>
-</h1> -->
 
 <ng-template #orderContent>
   <mat-card *ngIf="order" class="mb-2 box-shadow--dark mat-elevation-z clearfix">
@@ -147,11 +142,10 @@
             <mat-form-field appearance="fill">
               <mat-label>{{ 'camfil.checkout.form.delivery_date' | translate }}</mat-label>
               <input
-                [disabled]="!calendarException.length"
                 matInput
+                formControlName="deliveryDate"
                 [matDatepicker]="pickerLast"
                 [matDatepickerFilter]="filterDates.bind(this)"
-                formControlName="deliveryDate"
                 [min]="firstAvailableDelivery"
                 [value]="orderFullDeliveryDate"
                 (dateChange)="changeDeliveryDate($event)"
@@ -293,7 +287,7 @@
           <dt class="col-6">{{ 'camfil.checkout.order_total_price' | translate }}</dt>
           <dd class="col-6">{{ totalPrice('gross') | ishPrice }}</dd>
         </dl>
-        <camfil-basket-cost-summary [totals]="order.totals"></camfil-basket-cost-summary>
+        <camfil-basket-cost-summary></camfil-basket-cost-summary>
       </div>
     </div>
   </ng-container>

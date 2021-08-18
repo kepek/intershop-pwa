@@ -20,14 +20,16 @@
         <camfil-checkout-validation></camfil-checkout-validation>
       </div>
 
+      <ng-template #noBucket>Loading bucket....</ng-template>
+
       <div cdkDropListGroup>
-        <ng-container *ngIf="emptyBuckets$ | async as emptyBuckets">
+        <ng-container *ngIf="emptyBuckets$ | async as emptyBuckets; else noBucket">
           <ng-container *ngFor="let emptyBucket of emptyBuckets; trackBy: trackByLineItems">
             <camfil-checkout-list [order]="emptyBucket"></camfil-checkout-list>
           </ng-container>
         </ng-container>
         <ng-container *ngIf="isConfirmed; else notConfirmed">
-          <ng-container *ngIf="confirmedBuckets$ | async as confirmedBuckets">
+          <ng-container *ngIf="confirmedBuckets$ | async as confirmedBuckets; else noBucket">
             <ng-container *ngFor="let confirmedBucket of confirmedBuckets; index as i; trackBy: trackByLineItems">
               <camfil-checkout-list
                 [order]="confirmedBucket"
@@ -40,7 +42,7 @@
           </ng-container>
         </ng-container>
         <ng-template #notConfirmed>
-          <ng-container *ngIf="buckets$ | async as buckets">
+          <ng-container *ngIf="buckets$ | async as buckets; else noBucket">
             <ng-container *ngFor="let bucket of buckets; index as i; trackBy: trackByLineItems">
               <camfil-checkout-list
                 [order]="bucket"

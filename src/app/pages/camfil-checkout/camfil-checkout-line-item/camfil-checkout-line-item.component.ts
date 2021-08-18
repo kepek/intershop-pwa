@@ -11,8 +11,8 @@ import {
 } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { Observable, Subject, of } from 'rxjs';
-import { debounceTime, take, takeUntil, delay } from 'rxjs/operators';
+import { Observable, Subject } from 'rxjs';
+import { debounceTime, take, takeUntil } from 'rxjs/operators';
 
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
@@ -42,7 +42,7 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
     private shoppingFacade: ShoppingFacade,
     private checkoutFacade: CheckoutFacade,
     public dialog: MatDialog
-  ) {}
+  ) { }
 
   private static REQUIRED_COMPLETENESS_LEVEL = ProductCompletenessLevel.List;
 
@@ -78,15 +78,10 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
   boxLabelForm: FormGroup;
 
   ngOnInit() {
-    console.log(this.index, this.lineItem.id, this.lineItem.productSKU);
-
-    // tslint:disable-next-line:no-commented-out-code
     this.product$ = this.shoppingFacade.product$(
       this.lineItem.productSKU,
       CamfilCheckoutLineItemComponent.REQUIRED_COMPLETENESS_LEVEL
     );
-    // @ts-ignore
-    // this.product$ = of({ sku: this.lineItem.productSKU }).pipe(delay(1000));
 
     this.checkoutFacade.basketLineItems$?.pipe(whenTruthy(), take(1)).subscribe((res: LineItem[]) => {
       this.boxLabel = (this.getValFromAttrs(res, 'boxLabel') as string) || '';
@@ -97,9 +92,15 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
       };
     });
 
-    this.initForm();
+    this.addToCartForm = new FormGroup({
+      quantity: new FormControl(this.lineItem?.quantity?.value || 1),
+    });
+    this.boxLabelForm = new FormGroup({
+      boxLabel: new FormControl(this.boxLabel, [Validators.maxLength(60)]),
+    });
+
     this.updateQuantities();
-    // this.calculateDeliveryDate();
+    this.calculateDeliveryDate();
   }
 
   ngOnChanges(s: SimpleChanges) {
@@ -134,16 +135,6 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
   removeProduct(itemId: string) {
     this.checkoutFacade.deleteBasketItem(itemId);
     this.modal.hide();
-  }
-
-  /** init form in the beginning */
-  private initForm() {
-    this.addToCartForm = new FormGroup({
-      quantity: new FormControl(this.lineItem?.quantity?.value || 1),
-    });
-    this.boxLabelForm = new FormGroup({
-      boxLabel: new FormControl(this.boxLabel, [Validators.maxLength(60)]),
-    });
   }
 
   getValFromAttrs(res: LineItem[], name: string) {

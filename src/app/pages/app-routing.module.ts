@@ -1,11 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { FeatureToggleGuard } from 'ish-core/feature-toggle.module';
-import { AuthGuard } from 'ish-core/guards/auth.guard';
 import { IdentityProviderLoginGuard } from 'ish-core/guards/identity-provider-login.guard';
 import { IdentityProviderLogoutGuard } from 'ish-core/guards/identity-provider-logout.guard';
-import { IdentityProviderRegisterGuard } from 'ish-core/guards/identity-provider-register.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },

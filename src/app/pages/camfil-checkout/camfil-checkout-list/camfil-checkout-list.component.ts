@@ -32,10 +32,6 @@ import { TranslateService } from '@ngx-translate/core';
 import { CheckoutFocusedElement } from 'ish-core/models/scroll-info copy/checkout-focused-element.interface';
 import { Basket } from 'ish-core/models/basket/basket.model';
 
-interface Order extends Bucket {
-  totals: number;
-}
-
 @Component({
   selector: 'camfil-checkout-list',
   templateUrl: './camfil-checkout-list.component.html',
@@ -46,7 +42,7 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
   private static REQUIRED_COMPLETENESS_LEVEL = ProductCompletenessLevel.List;
   private destroy$ = new Subject<void>();
 
-  @Input() order: Order;
+  @Input() order: Bucket;
   @Input() buckets: Bucket[];
   @Input() basket: Basket;
   @Input() isConfirmed: boolean;
@@ -104,6 +100,7 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
   }
 
   ngOnInit(): void {
+    console.log('list', this.order.id);
     this.calendarExceptions$ = this.checkoutFacade.calendarExceptions$;
 
     this.orderAddress = { ...this.order.shipToAddressFull, countryCode: '' };
@@ -119,6 +116,16 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
         date.setHours(0, 0, 0);
         return date.getTime();
       });
+
+      const deliveryDateControl = this.orderForm?.get('deliveryDate');
+
+      if (deliveryDateControl) {
+        if (!this.calendarException.length) {
+          deliveryDateControl.disable();
+        } else {
+          deliveryDateControl.enable();
+        }
+      }
     });
 
     this.focusedCheckoutElement$ = this.checkoutFacade.getFocusedCheckoutElement$;
@@ -157,10 +164,10 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
   }
 
   initForm() {
-    // TODO (extMlk): This calls for all prod details.
+    // TODO (extMlk): PERFORMANCE PROBLEM HERE! This calls for all prod details.
     // tslint:disable-next-line:no-commented-out-code
-    // const defaultDeliveryDate = this.setFullDeliveryDate();
-    const defaultDeliveryDate = new Date().toISOString();
+    // const defaultDeliveryDate = new Date().getTime();
+    const defaultDeliveryDate = this.setFullDeliveryDate();
 
     this.orderForm = this.fb.group({
       orderMark: [this.order.orderMark, [Validators.maxLength(60)]],
@@ -198,22 +205,32 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
     this.isOrderOpen = !this.isOrderOpen;
   }
 
+  // tslint:disable-next-line:force-jsdoc-comments
+  // TODO (extMlk) it should be moved to applyPricing method instead of calling fn in template
   totalPrice(type = 'net'): Price {
     return PriceHelper.totalPrice(this.order?.lineItems, type);
   }
 
+  // tslint:disable-next-line:force-jsdoc-comments
+  // TODO (extMlk) it should be moved to applyPricing method instead of calling fn in template
   totalTax(): Price {
     return PriceHelper.totalTax(this.order?.lineItems);
   }
 
+  // tslint:disable-next-line:force-jsdoc-comments
+  // TODO (extMlk) it should be moved to applyPricing method instead of calling fn in template
   savedAmount(): Price {
     return PriceHelper.savedAmount(this.order?.lineItems);
   }
 
+  // tslint:disable-next-line:force-jsdoc-comments
+  // TODO (extMlk) it should be moved to applyPricing method instead of calling fn in template
   discount(): Price {
     return PriceHelper.discount(this.order?.lineItems);
   }
 
+  // tslint:disable-next-line:force-jsdoc-comments
+  // TODO (extMlk) it should be moved to applyPricing method instead of calling fn in template
   getVolumeDiscountPrice(value, currency) {
     return PriceHelper.getVolumeDiscountPrice(value, currency, this.translate.currentLang);
   }
