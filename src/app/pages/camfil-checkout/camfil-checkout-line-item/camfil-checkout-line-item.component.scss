@@ -95,9 +95,11 @@
 
   ::ng-deep {
     camfil-product-title {
+      display: block;
+      max-width: 235px;
       overflow: hidden;
       text-overflow: ellipsis;
-      word-wrap: normal;
+      white-space: nowrap;
     }
     .box-label-attribute {
       max-width: 100%;
@@ -162,10 +164,6 @@
     }
     .camfil-product-attribute {
       margin-bottom: 0;
-    }
-    .camfil-product-title {
-      display: block;
-      max-width: 235px;
     }
     .confirmed-product-title {
       max-width: 100%;

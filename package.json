@@ -118,7 +118,6 @@
     "ng-file-upload": "^12.2.13",
     "ng-recaptcha": "^6.1.0",
     "ngx-infinite-scroll": "^10.0.0",
-    "ngx-pipes": "^2.7.5",
     "ngx-swiper-wrapper": "^10.0.0",
     "ngx-toastr": "^13.2.0",
     "ngx-utils-cookies-port": "^1.0.1",

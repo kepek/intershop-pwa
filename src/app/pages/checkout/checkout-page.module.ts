@@ -18,7 +18,6 @@ import { CreateOrderButtonComponent } from '../camfil-checkout/camfil-checkout-t
 import { PrintOrderComponent } from '../camfil-checkout/camfil-checkout-toolbar/print-order/print-order.component';
 import { CamfilCheckoutValidationComponent } from '../camfil-checkout/camfil-checkout-validation/camfil-checkout-validation.component';
 import { CheckoutPageComponent } from '../camfil-checkout/checkout-page.component';
-import { NgArrayPipesModule } from 'ngx-pipes';
 
 const checkoutPageRoutes: Routes = [
   {
@@ -34,7 +33,7 @@ const checkoutPageRoutes: Routes = [
 ];
 
 @NgModule({
-  imports: [CamCardsModule, RouterModule.forChild(checkoutPageRoutes), SharedModule, NgArrayPipesModule],
+  imports: [CamCardsModule, RouterModule.forChild(checkoutPageRoutes), SharedModule],
   declarations: [
     AddEmailRecipientModalComponent,
     CamfilCheckoutDeliveryAddressComponent,

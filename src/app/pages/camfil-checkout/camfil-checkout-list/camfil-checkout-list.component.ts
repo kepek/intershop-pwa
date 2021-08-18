@@ -31,14 +31,12 @@ import { AddEmailRecipientModalComponent } from '../add-email-recipient-modal/ad
 import { TranslateService } from '@ngx-translate/core';
 import { CheckoutFocusedElement } from 'ish-core/models/scroll-info copy/checkout-focused-element.interface';
 import { Basket } from 'ish-core/models/basket/basket.model';
-import { OrderByPipe } from 'ngx-pipes';
 
 @Component({
   selector: 'camfil-checkout-list',
   templateUrl: './camfil-checkout-list.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['./camfil-checkout-list.component.scss'],
-  providers: [OrderByPipe],
 })
 export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDestroy {
   private static REQUIRED_COMPLETENESS_LEVEL = ProductCompletenessLevel.List;
