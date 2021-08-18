@@ -52,7 +52,6 @@ export class OrderFormComponent implements OnInit, OnDestroy {
       orderMark: [this.orderToEdit?.orderMark || '', [Validators.maxLength(60)]],
       deliveryAddressSelect: [this.orderToEdit?.deliveryAddressId || '', []],
       company: [this.orderToEdit?.company || '', [Validators.required, Validators.maxLength(60)]],
-      building: [this.orderToEdit?.building || ''],
       address: [this.orderToEdit?.address || ''],
       zipCode: [this.orderToEdit?.zipCode || '', [Validators.required, Validators.pattern('[0-9]{5}')]],
       area: [{ value: this.orderToEdit?.area || '', disabled: true }, [Validators.required]],
@@ -78,7 +77,6 @@ export class OrderFormComponent implements OnInit, OnDestroy {
       this.addressForm?.patchValue({
         company: address?.addressName,
         address: address?.addressLine1,
-        building: address?.addressLine2,
         zipCode: address?.postalCode,
         area: address?.city,
         addressFull: address,

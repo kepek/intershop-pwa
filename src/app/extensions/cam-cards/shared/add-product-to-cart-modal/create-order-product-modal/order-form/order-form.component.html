@@ -102,17 +102,6 @@
       [touched]="getField('company').touched || getField('company').dirty"
     ></camfil-error>
 
-    <!--building -->
-    <mat-form-field appearance="outline" class="delivery-address__form--field">
-      <mat-label>{{ 'camfil.modal.createOrder.order-form.input.building' | translate }}</mat-label>
-      <input matInput type="text" formControlName="building" />
-    </mat-form-field>
-    <camfil-error
-      [errors]="getField('building').errors"
-      [errorValidators]="validators.building"
-      [touched]="getField('building').touched || getField('building').dirty"
-    ></camfil-error>
-
     <!--address-->
     <mat-form-field appearance="outline" class="delivery-address__form--field">
       <mat-label>{{ 'camfil.modal.createOrder.order-form.input.address' | translate }}</mat-label>
