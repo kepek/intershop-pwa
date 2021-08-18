@@ -91,7 +91,7 @@ export class BasketEffects {
     )
   );
 
-  loadBasketSuccess$ = createEffect(() => this.actions$.pipe(ofType(loadBasketSuccess), map(loadBuckets)));
+  loadBasketSuccess$ = createEffect(() => this.actions$.pipe(ofType(loadBasketSuccess)));
 
   loadBasketByAPIToken$ = createEffect(() =>
     this.actions$.pipe(

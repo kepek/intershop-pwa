@@ -31,12 +31,14 @@ import { AddEmailRecipientModalComponent } from '../add-email-recipient-modal/ad
 import { TranslateService } from '@ngx-translate/core';
 import { CheckoutFocusedElement } from 'ish-core/models/scroll-info copy/checkout-focused-element.interface';
 import { Basket } from 'ish-core/models/basket/basket.model';
+import { OrderByPipe } from 'ngx-pipes';
 
 @Component({
   selector: 'camfil-checkout-list',
   templateUrl: './camfil-checkout-list.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['./camfil-checkout-list.component.scss'],
+  providers: [OrderByPipe],
 })
 export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDestroy {
   private static REQUIRED_COMPLETENESS_LEVEL = ProductCompletenessLevel.List;
@@ -100,7 +102,7 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
   }
 
   ngOnInit(): void {
-    console.log('list', this.order.id);
+    console.log('order', this.order.id);
     this.calendarExceptions$ = this.checkoutFacade.calendarExceptions$;
 
     this.orderAddress = { ...this.order.shipToAddressFull, countryCode: '' };
@@ -164,10 +166,10 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
   }
 
   initForm() {
-    // TODO (extMlk): PERFORMANCE PROBLEM HERE! This calls for all prod details.
+    // TODO (extMlk): PERFORMANCE - This calls for all prod details.
     // tslint:disable-next-line:no-commented-out-code
-    // const defaultDeliveryDate = new Date().getTime();
-    const defaultDeliveryDate = this.setFullDeliveryDate();
+    const defaultDeliveryDate = new Date().getTime();
+    // const defaultDeliveryDate = this.setFullDeliveryDate();
 
     this.orderForm = this.fb.group({
       orderMark: [this.order.orderMark, [Validators.maxLength(60)]],
@@ -206,25 +208,25 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
   }
 
   // tslint:disable-next-line:force-jsdoc-comments
-  // TODO (extMlk) it should be moved to applyPricing method instead of calling fn in template
+  // TODO (extMlk): PERFORMANCE - it should be moved to applyPricing method instead of calling fn in template
   totalPrice(type = 'net'): Price {
     return PriceHelper.totalPrice(this.order?.lineItems, type);
   }
 
   // tslint:disable-next-line:force-jsdoc-comments
-  // TODO (extMlk) it should be moved to applyPricing method instead of calling fn in template
+  // TODO (extMlk): PERFORMANCE - it should be moved to applyPricing method instead of calling fn in template
   totalTax(): Price {
     return PriceHelper.totalTax(this.order?.lineItems);
   }
 
   // tslint:disable-next-line:force-jsdoc-comments
-  // TODO (extMlk) it should be moved to applyPricing method instead of calling fn in template
+  // TODO (extMlk): PERFORMANCE - it should be moved to applyPricing method instead of calling fn in template
   savedAmount(): Price {
     return PriceHelper.savedAmount(this.order?.lineItems);
   }
 
   // tslint:disable-next-line:force-jsdoc-comments
-  // TODO (extMlk) it should be moved to applyPricing method instead of calling fn in template
+  // TODO (extMlk): PERFORMANCE - it should be moved to applyPricing method instead of calling fn in template
   discount(): Price {
     return PriceHelper.discount(this.order?.lineItems);
   }
@@ -540,7 +542,11 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
 
   // tslint:disable-next-line:force-jsdoc-comments
   // only rerender the whole bucket when number of included lineItems changes
-  trackById(_, lineItem: LineItemView): string {
-    return lineItem?.id;
+  trackBy(_, lineItem: LineItemView): string {
+    return lineItem.productSKU;
+  }
+
+  product$(sku: string) {
+    return this.shoppingFacade.product$(sku, ProductCompletenessLevel.List);
   }
 }

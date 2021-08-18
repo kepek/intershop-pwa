@@ -228,14 +228,14 @@
 
   <ng-container *ngIf="order">
     <!-- Line Items -->
-    <div>
-      <div
-        cdkDropList
-        [cdkDropListData]="order.lineItems"
-        (cdkDropListDropped)="drop($event, order)"
-        [attr.data-order-id]="order?.id"
-      >
-        <ng-container *ngFor="let item of order.lineItems; index as i; trackBy: trackById">
+    <div
+      cdkDropList
+      [cdkDropListData]="order.lineItems"
+      (cdkDropListDropped)="drop($event, order)"
+      [attr.data-order-id]="order?.id"
+    >
+      <cdk-virtual-scroll-viewport itemSize="91" style="height: 455px">
+        <div *cdkVirtualFor="let item of order.lineItems; index as i; trackBy: trackBy">
           <div class="list-item-row list-item-row-big px-4 py-1 mt-2 line-item-container" [cdkDragData]="item" cdkDrag>
             <div class="d-flex align-items-center">
               <span class="d-flex align-items-center justify-content-center line-item-index">{{ i + 1 }}</span>
@@ -256,8 +256,8 @@
               ></camfil-checkout-line-item>
             </div>
           </div>
-        </ng-container>
-      </div>
+        </div>
+      </cdk-virtual-scroll-viewport>
     </div>
 
     <div class="bg-light p-2 box-shadow d-flex align-items-center" *ngIf="deliveryTerm">

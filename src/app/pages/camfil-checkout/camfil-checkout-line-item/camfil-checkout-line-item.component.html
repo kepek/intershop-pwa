@@ -1,11 +1,18 @@
 <ng-template #noProduct>Loading product....</ng-template>
 
-<ng-container *ngIf="product$ | async as product; else noProduct">
-  <p>{{ product.name }}</p>
-</ng-container>
-
 <!--
-<ng-container *ngIf="product; else noProduct">
+<ng-container *ngIf="product$ | async as product; else noProduct">
+  <camfil-product-image
+    [product]="product"
+    imageType="images"
+    [imageView]="'default'"
+    class="product-image"
+  ></camfil-product-image>
+  <camfil-product-title [class.confirmed-product-title]="isConfirmed" [product]="product"></camfil-product-title>
+</ng-container>
+-->
+
+<ng-container *ngIf="product$ | async as product; else noProduct">
   <div class="line-item d-flex align-items-center text-left" [class]="{ 'line-item__confirmed': isConfirmed }">
     <div class="d-flex align-items-center align-self-start align-self-md-center text-left w-100">
       <a class="image ml-0 mx-md-3" [routerLink]="product | ishProductRoute">
@@ -85,15 +92,15 @@
         <p class="delivery-date-para">
           <strong>{{ 'camfil.checkout.order.earliest_delivery_date.text' | translate }}</strong>
         </p>
-        <p *ngIf="isConfirmed; else eariestDelivery" class="delivery-date-para">
+        <p *ngIf="isConfirmed; else earliestDelivery" class="delivery-date-para">
           {{ deliveryAfterOrderConfirmed() | ishDate }}
         </p>
-        <ng-template #eariestDelivery>
+        <ng-template #earliestDelivery>
           <p class="delivery-date-para">{{ earliestDeliveryDate | ishDate }}</p>
         </ng-template>
       </div>
       <div class="quantity-row d-flex flex-row justify-content-between align-items-center py-3 py-md-0">
-        <span *ngIf="isConfirmed" class="quantity-confirmed">{{ item.quantity.value }}</span>
+        <span *ngIf="isConfirmed" class="quantity-confirmed">{{ lineItem.quantity.value }}</span>
         <a
           class="btn-tool delete-cam-card"
           (click)="openDeleteModal()"
@@ -110,7 +117,7 @@
             [parentForm]="addToCartForm"
             controlName="quantity"
             [isInLineItem]="true"
-            [lineItemId]="item?.id | slugify: 'line-item-box-label'"
+            [lineItemId]="lineItem?.id | slugify: 'line-item-box-label'"
           ></camfil-product-quantity>
         </form>
         <div class="prices">
@@ -153,11 +160,10 @@
   showCloseIcon="true"
   hideIcon="true"
   [actionTemplate]="actionTemplate"
-  (actionClicked)="removeProduct(item.id)"
+  (actionClicked)="removeProduct(lineItem.id)"
 >
 </camfil-small-cta-modal>
 
 <ng-template #actionTemplate>
   <div>{{ 'camfil.checkout.order.delete_line_item.modal.subheading' | translate }}</div>
 </ng-template>
--->

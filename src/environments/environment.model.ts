@@ -131,8 +131,6 @@ export const ENVIRONMENT_DEFAULTS: Environment = {
 
   /* FEATURE TOOGLES */
   features: [
-    'compare',
-    'rating',
     'recently',
     /* B2B features */
     'advancedVariationHandling',

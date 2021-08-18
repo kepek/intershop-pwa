@@ -109,7 +109,6 @@ describe('Camfil Checkout List Component', () => {
         },
       ],
       lineItems: [],
-      totals: 999,
     };
 
     component.basket = {
