@@ -12,7 +12,7 @@ export interface OrderLineItem {
   totalRowCustomerPrice: number;
   type: string;
   width?: string;
-  hight?: string;
+  height?: string;
   diameter?: string;
   depth?: string;
   rowNumber?: number;
