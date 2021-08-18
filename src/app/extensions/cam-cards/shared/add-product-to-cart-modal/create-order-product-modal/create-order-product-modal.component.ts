@@ -199,7 +199,6 @@ export class CreateOrderProductModalComponent implements OnInit, OnDestroy {
       shipToAddress: true,
       urn: '',
       addressLine1: addressForm.get('address').value,
-      addressLine2: addressForm.get('building').value,
       postalCode: addressForm.get('zipCode').value,
       city: addressForm.get('area').value,
       companyName1: addressForm.get('company').value,
