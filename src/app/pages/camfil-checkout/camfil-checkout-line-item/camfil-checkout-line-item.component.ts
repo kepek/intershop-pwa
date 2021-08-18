@@ -1,10 +1,8 @@
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import {
-  AfterViewInit,
   ChangeDetectionStrategy,
   Component,
   Input,
-  NgZone,
   OnChanges,
   OnDestroy,
   OnInit,
@@ -13,9 +11,8 @@ import {
 } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { Store, select } from '@ngrx/store';
-import { Observable, Subject } from 'rxjs';
-import { debounceTime, filter, take, takeUntil } from 'rxjs/operators';
+import { Observable, Subject, of } from 'rxjs';
+import { debounceTime, take, takeUntil, delay } from 'rxjs/operators';
 
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
@@ -25,9 +22,8 @@ import { LineItemUpdate } from 'ish-core/models/line-item-update/line-item-updat
 import { LineItem, LineItemView } from 'ish-core/models/line-item/line-item.model';
 import { ProductViewHelper } from 'ish-core/models/product-view/product-view.helper';
 import { ProductView } from 'ish-core/models/product-view/product-view.model';
-import { ProductCompletenessLevel, ProductHelper } from 'ish-core/models/product/product.model';
+import { ProductCompletenessLevel } from 'ish-core/models/product/product.model';
 import { CheckoutFocusedElement } from 'ish-core/models/scroll-info copy/checkout-focused-element.interface';
-import { getProduct, loadProductIfNotLoaded } from 'ish-core/store/shopping/products';
 import { whenTruthy } from 'ish-core/utils/operators';
 import { CamfilQuickViewModalComponent } from 'ish-shared/components/common/camfil-quick-view-modal/camfil-quick-view-modal.component';
 import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
@@ -35,29 +31,24 @@ import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
 
 import { CamCardMeasurement } from '../../../extensions/cam-cards/models/cam-card/cam-card.model';
 
-const sku = '200554';
-
-const level = ProductCompletenessLevel.List;
-
 @Component({
   selector: 'camfil-checkout-line-item',
   templateUrl: './camfil-checkout-line-item.component.html',
   styleUrls: ['./camfil-checkout-line-item.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDestroy, AfterViewInit {
+export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDestroy {
   constructor(
     private shoppingFacade: ShoppingFacade,
     private checkoutFacade: CheckoutFacade,
-    public dialog: MatDialog,
-    private ngZone: NgZone,
-    private store: Store
+    public dialog: MatDialog
   ) {}
+
+  private static REQUIRED_COMPLETENESS_LEVEL = ProductCompletenessLevel.List;
 
   @ViewChild(CamfilSmallCtaModalComponent) modal: CamfilSmallCtaModalComponent;
   @ViewChild('autosize') autosize: CdkTextareaAutosize;
   @Input() selectedItemsForm?: FormArray;
-  @Input() mode?: 'edit' | 'view';
   @Input() index: number;
   @Input() basketId: string;
   @Input() bucketId: string;
@@ -67,7 +58,7 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
   @Input() focusedElement: CheckoutFocusedElement;
   @Input() focusedElementId: string;
   @Input() isConfirmed;
-  @Input() item: LineItemView;
+  @Input() lineItem: LineItemView;
 
   earliestDeliveryDate: string;
   quantity = 0;
@@ -86,32 +77,16 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
   addToCartForm: FormGroup;
   boxLabelForm: FormGroup;
 
-  get isEditMode() {
-    return this.mode === 'edit';
-  }
-
-  get isViewMode() {
-    return this.mode === 'view';
-  }
-
   ngOnInit() {
-    console.log(this.index, this.item.id, this.item.productSKU);
+    console.log(this.index, this.lineItem.id, this.lineItem.productSKU);
 
     // tslint:disable-next-line:no-commented-out-code
-    // this.product$ = this.shoppingFacade.product$(sku, level);
-    // @ts-ignore
-    // this.product$ = of(false);
-
-    this.product$ = this.store.pipe(
-      // tslint:disable-next-line:no-intelligence-in-artifacts
-      select(getProduct, { sku }),
-      filter(p => ProductHelper.isReadyForDisplay(p, level)),
-      take(1)
+    this.product$ = this.shoppingFacade.product$(
+      this.lineItem.productSKU,
+      CamfilCheckoutLineItemComponent.REQUIRED_COMPLETENESS_LEVEL
     );
-
-    this.product$.pipe(takeUntil(this.destroy$)).subscribe(p => {
-      this.product = p;
-    });
+    // @ts-ignore
+    // this.product$ = of({ sku: this.lineItem.productSKU }).pipe(delay(1000));
 
     this.checkoutFacade.basketLineItems$?.pipe(whenTruthy(), take(1)).subscribe((res: LineItem[]) => {
       this.boxLabel = (this.getValFromAttrs(res, 'boxLabel') as string) || '';
@@ -129,7 +104,7 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
 
   ngOnChanges(s: SimpleChanges) {
     if (s.item) {
-      this.quantity = this.item.quantity.value;
+      this.quantity = this.lineItem.quantity.value;
     }
 
     if (s.isConfirmed || s.orderDeliveryDate) {
@@ -142,10 +117,6 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
     this.destroy$.complete();
   }
 
-  ngAfterViewInit() {
-    this.store.dispatch(loadProductIfNotLoaded({ sku, level }));
-  }
-
   measurementsToShow() {
     return AttributeHelper.getMeasurementsText(this.item) || false;
   }
@@ -153,7 +124,7 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
   updateQuantities() {
     this.addToCartForm.valueChanges
       .pipe(debounceTime(500), takeUntil(this.destroy$))
-      .subscribe(val => this.updateBasketItem({ itemId: this.item.id, quantity: val.quantity }));
+      .subscribe(val => this.updateBasketItem({ itemId: this.lineItem.id, quantity: val.quantity }));
   }
 
   updateBasketItem(formValue: LineItemUpdate) {
@@ -168,7 +139,7 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
   /** init form in the beginning */
   private initForm() {
     this.addToCartForm = new FormGroup({
-      quantity: new FormControl(this.item?.quantity?.value || 1),
+      quantity: new FormControl(this.lineItem?.quantity?.value || 1),
     });
     this.boxLabelForm = new FormGroup({
       boxLabel: new FormControl(this.boxLabel, [Validators.maxLength(60)]),
@@ -176,7 +147,7 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
   }
 
   getValFromAttrs(res: LineItem[], name: string) {
-    const lineItem = res.find(li => li.id === this.item.id);
+    const lineItem = res.find(li => li.id === this.lineItem.id);
     return lineItem?.attributes?.find(att => att.name === name)?.value;
   }
 
@@ -201,13 +172,18 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
 
     if (oldValue) {
       if (!value) {
-        this.checkoutFacade.deleteBasketItemAttributes(this.basketId, this.item.id, this.bucketId, name);
+        this.checkoutFacade.deleteBasketItemAttributes(this.basketId, this.lineItem.id, this.bucketId, name);
       } else if (value !== oldValue) {
-        this.checkoutFacade.updateBasketItemAttributes(this.basketId, this.item.id, this.bucketId, boxLabelAttribute);
+        this.checkoutFacade.updateBasketItemAttributes(
+          this.basketId,
+          this.lineItem.id,
+          this.bucketId,
+          boxLabelAttribute
+        );
         this.setFocusedElement(target);
       }
     } else if (value) {
-      this.checkoutFacade.addBasketItemAttributes(this.basketId, this.item.id, this.bucketId, boxLabelAttribute);
+      this.checkoutFacade.addBasketItemAttributes(this.basketId, this.lineItem.id, this.bucketId, boxLabelAttribute);
       this.setFocusedElement(target);
     }
 
@@ -277,7 +253,7 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
       width: '768px',
       autoFocus: false,
       maxHeight: '80vh',
-      data: { sku: this.item.productSKU },
+      data: { sku: this.lineItem.productSKU },
     });
   }
 
@@ -291,10 +267,6 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
   }
 
   getBoxLabelValue() {
-    return this.item?.attributes?.find(att => att.name === 'boxLabel')?.value;
-  }
-
-  triggerResize() {
-    this.ngZone.onStable.pipe(take(1)).subscribe(() => this.autosize.resizeToFitContent(true));
+    return this.lineItem?.attributes?.find(att => att.name === 'boxLabel')?.value;
   }
 }

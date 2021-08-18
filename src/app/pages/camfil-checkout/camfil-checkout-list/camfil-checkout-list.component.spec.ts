@@ -7,6 +7,8 @@ import { instance, mock, when } from 'ts-mockito';
 import { ServerHtmlDirective } from 'ish-core/directives/server-html.directive';
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
+import { BasketBaseData } from 'ish-core/models/basket/basket.interface';
+import { BasketMapper } from 'ish-core/models/basket/basket.mapper';
 import { PricePipe } from 'ish-core/models/price/price.pipe';
 import { AddressSortPipe } from 'ish-core/pipes/camfil-address-sort.pipe';
 import { DatePipe } from 'ish-core/pipes/date.pipe';
@@ -111,6 +113,35 @@ describe('Camfil Checkout List Component', () => {
     };
 
     component.basket = {
+      id: 'test_basketId',
+      totals: BasketMapper.getTotals({
+        totals: {
+          grandTotal: {
+            gross: {
+              value: 141796.98,
+              currency: 'USD',
+            },
+            net: {
+              value: 141796.98,
+              currency: 'USD',
+            },
+            tax: {
+              value: 543.65,
+              currency: 'USD',
+            },
+          },
+          itemTotal: {
+            gross: {
+              value: 141796.98,
+              currency: 'USD',
+            },
+            net: {
+              value: 141796.98,
+              currency: 'USD',
+            },
+          },
+        },
+      } as BasketBaseData),
       basketExtensions: [
         {
           emailRecipients: ['test@test.se'],

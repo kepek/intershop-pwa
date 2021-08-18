@@ -143,10 +143,12 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
 
   ngAfterViewInit() {
     if (this.focusedElementId) {
-      setTimeout(() => {
+      const focusTimeout = setTimeout(() => {
         const element = document.querySelector(`#${this.focusedElementId}`) as HTMLElement;
         element?.focus();
       }, 300);
+
+      clearTimeout(focusTimeout);
     }
   }
 
