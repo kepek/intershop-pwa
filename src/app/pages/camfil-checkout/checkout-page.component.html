@@ -1,65 +1,65 @@
 <camfil-loading *ngIf="(ordersLoading$ | async) || (basketLoading$ | async)" fixed="true"></camfil-loading>
 <br />
-<ng-container *ngIf="basket">
+<ng-container *ngIf="basket$ | async as basket">
   <div class="checkout row">
     <div class="col-sm-12 col-lg-9">
-      <div [ngClass]="{ 'header-divider-container': validation }">
+      <div [ngClass]="{ 'header-divider-container': isConfirmed }">
         <camfil-checkout-header
-          [basket]="basket$ | async"
+          [basket]="basket"
           [buckets]="buckets$ | async"
-          [isConfirmed]="validation"
+          [isConfirmed]="isConfirmed"
         ></camfil-checkout-header>
-
         <mat-divider></mat-divider>
       </div>
+
       <div>
-        <!-- Info messages -->
         <ish-basket-info></ish-basket-info>
-        <!-- Validation messages-->
-        <ng-container *ngIf="!isEmptyBucketsVisible">
+        <ng-container *ngIf="!(emptyBuckets$ | async)?.length">
           <camfil-basket-validation-results></camfil-basket-validation-results>
         </ng-container>
         <camfil-checkout-validation></camfil-checkout-validation>
       </div>
 
       <div cdkDropListGroup>
-        <ng-container *ngFor="let item of emptyBuckets">
-          <camfil-checkout-list [order]="item"></camfil-checkout-list>
+        <ng-container *ngIf="emptyBuckets$ | async as emptyBuckets">
+          <ng-container *ngFor="let emptyBucket of emptyBuckets">
+            <camfil-checkout-list [order]="emptyBucket"></camfil-checkout-list>
+          </ng-container>
         </ng-container>
-        <ng-container *ngIf="validation; else notConfirmed">
-          <ng-container *ngFor="let item of buckets; index as i; trackBy: trackByItems">
-            <camfil-checkout-list
-              [order]="item"
-              [buckets]="buckets"
-              [shippingMethodId]="shippingMethodId"
-              [isConfirmed]="validation"
-              [totalOrders]="buckets?.length"
-              [index]="i + 1"
-              (handleProduct)="handleProductLoad($event)"
-              [basket]="basket"
-              [purchaseCurrency]="basket.purchaseCurrency"
-            ></camfil-checkout-list>
+        <ng-container *ngIf="isConfirmed; else notConfirmed">
+          <ng-container *ngIf="confirmedBuckets$ | async as confirmedBuckets">
+            <ng-container *ngFor="let confirmedBucket of confirmedBuckets; index as i; trackBy: trackByItems">
+              <camfil-checkout-list
+                [order]="confirmedBucket"
+                [buckets]="confirmedBuckets"
+                [shippingMethodId]="basket?.commonShippingMethod?.id"
+                [isConfirmed]="isConfirmed"
+                [index]="i + 1"
+                [basket]="basket"
+                [purchaseCurrency]="basket.purchaseCurrency"
+              ></camfil-checkout-list>
+            </ng-container>
           </ng-container>
         </ng-container>
         <ng-template #notConfirmed>
-          <ng-container *ngFor="let item of buckets$ | async; index as i; trackBy: trackByItems">
-            <camfil-checkout-list
-              [order]="item"
-              [buckets]="buckets$ | async"
-              [shippingMethodId]="shippingMethodId"
-              [isConfirmed]="validation"
-              [totalOrders]="buckets?.length"
-              [index]="i + 1"
-              (handleProduct)="handleProductLoad($event)"
-              [basket]="basket"
-              [purchaseCurrency]="basket.purchaseCurrency"
-            ></camfil-checkout-list>
+          <ng-container *ngIf="buckets$ | async as buckets">
+            <ng-container *ngFor="let bucket of buckets; index as i; trackBy: trackByItems">
+              <camfil-checkout-list
+                [order]="bucket"
+                [buckets]="buckets"
+                [shippingMethodId]="basket?.commonShippingMethod?.id"
+                [isConfirmed]="isConfirmed"
+                [index]="i + 1"
+                [basket]="basket"
+                [purchaseCurrency]="basket.purchaseCurrency"
+              ></camfil-checkout-list>
+            </ng-container>
           </ng-container>
         </ng-template>
       </div>
     </div>
     <div class="col-sm-12 col-lg-3">
-      <camfil-checkout-summary [basket]="basket" [isConfirmed]="validation"></camfil-checkout-summary>
+      <camfil-checkout-summary [basket]="basket" [isConfirmed]="isConfirmed"></camfil-checkout-summary>
     </div>
   </div>
 </ng-container>

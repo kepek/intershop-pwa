@@ -1,7 +1,7 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { Actions, ofType } from '@ngrx/effects';
 import { Observable, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { filter, map, takeUntil } from 'rxjs/operators';
 
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
@@ -14,91 +14,78 @@ import { whenTruthy } from 'ish-core/utils/operators';
 @Component({
   templateUrl: './checkout-page.component.html',
   styleUrls: ['./checkout-page.component.scss'],
-  changeDetection: ChangeDetectionStrategy.Default,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CheckoutPageComponent implements OnInit, OnDestroy {
   basket$: Observable<BasketView>;
-  basketId: string;
-  shippingMethodId: string;
-  buckets$: Observable<any[]>;
-  buckets: Bucket[];
-  basket: BasketView;
-  emptyBuckets: Bucket[];
+  buckets$: Observable<Bucket[]>;
+  emptyBuckets$: Observable<Bucket[]>;
+  confirmedBuckets$: Observable<Bucket[]>;
   basketLoading$: Observable<boolean>;
   ordersLoading$: Observable<boolean>;
   validationResults$: Observable<BasketValidationResultType>;
-  validation = false;
-  selectedOrder$: Observable<any>;
-  private destroy$ = new Subject<void>();
+  isConfirmed = false;
 
-  unavailableProducts = {};
+  private destroy$ = new Subject<void>();
 
   constructor(
     private checkoutFacade: CheckoutFacade,
     private shoppingFacade: ShoppingFacade,
-    private cdr: ChangeDetectorRef,
+    // tslint:disable-next-line:no-intelligence-in-artifacts
     private updates$: Actions
   ) {}
 
-  get isEmptyBucketsVisible() {
-    return this.emptyBuckets?.length;
-  }
-
   ngOnInit() {
-    this.checkoutFacade.checkCurrentBasket();
-    this.checkoutFacade.setBasketPayment('ISH_INVOICE');
-    this.checkoutFacade.getWarehouseCalendar();
-    this.initBasket();
-    this.shoppingFacade.loadBasketAddresses();
-    this.checkoutFacade.start();
-  }
-
-  initBasket() {
     this.basket$ = this.checkoutFacade.basket$;
-    this.buckets$ = this.checkoutFacade.buckets$;
     this.basketLoading$ = this.checkoutFacade.basketLoading$;
+    this.buckets$ = this.checkoutFacade.buckets$;
+    this.emptyBuckets$ = this.checkoutFacade.emptyBuckets$;
     this.ordersLoading$ = this.checkoutFacade.ordersLoading$;
     this.validationResults$ = this.checkoutFacade.basketValidationResults$;
-    this.selectedOrder$ = this.checkoutFacade.selectedOrder$;
+
+    this.initBasket();
+  }
+
+  private initBasket() {
+    this.validationResults$.pipe(takeUntil(this.destroy$)).subscribe(result => {
+      if (result?.valid) {
+        this.checkoutFacade.setBasketPayment('ISH_INVOICE');
+        this.checkoutFacade.getWarehouseCalendar();
+        this.shoppingFacade.loadBasketAddresses();
+        this.checkoutFacade.start();
+      }
+    });
 
     this.basket$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe((basket: BasketView) => {
-      this.basketId = basket.id;
-      this.basket = basket;
-      this.shippingMethodId = basket.commonShippingMethod?.id;
       if (basket.lineItems?.length) {
-        this.validation = false;
+        this.isConfirmed = false;
       }
-      this.cdr.detectChanges();
     });
 
-    this.buckets$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe((buckets: Bucket[]) => {
-      if (!this.buckets && buckets.length) {
-        buckets
-          .reduce((acc, item) => (acc.includes(item?.customer?.id) ? acc : [...acc, item?.customer?.id]), [])
-          .forEach(customerId => this.checkoutFacade.loadCustomerDeliveryTerm(customerId));
-      }
-      this.buckets = buckets;
-      this.cdr.detectChanges();
+    this.confirmedBuckets$ = this.buckets$.pipe(
+      filter(buckets => !!buckets?.length),
+      map(buckets =>
+        buckets.reduce((acc, bucket) => (acc.includes(bucket?.customer?.id) ? acc : [...acc, bucket?.customer?.id]), [])
+      )
+    );
+
+    this.confirmedBuckets$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(buckets => {
+      buckets.forEach(bucket => {
+        if (bucket?.customer?.id) {
+          this.checkoutFacade.loadCustomerDeliveryTerm(bucket.customer.id);
+        }
+      });
     });
 
-    this.checkoutFacade.emptyBuckets$.pipe(takeUntil(this.destroy$)).subscribe(emptyBuckets => {
-      this.emptyBuckets = emptyBuckets;
-    });
-
+    // tslint:disable-next-line:no-intelligence-in-artifacts
     this.updates$.pipe(ofType(createOrderSuccess), takeUntil(this.destroy$)).subscribe(() => {
-      this.validation = true;
+      this.isConfirmed = true;
     });
   }
 
-  handleProductLoad(product) {
-    if (!product?.availability) {
-      this.unavailableProducts[product.sku] = product;
-    }
-  }
-
-  /* only rerender the whole bucket when number of included lineItems changes */
-  // tslint:disable-next-line: variable-name
-  trackByItems(_index, item: Bucket): number {
+  // tslint:disable-next-line:force-jsdoc-comments
+  // only rerender the whole bucket when number of included lineItems changes
+  trackByItems(_, item: Bucket): number {
     return item.lineItems.length;
   }
 

@@ -63,7 +63,6 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
   @Input() shippingMethodId: string;
   @Input() basket;
   @Input() isConfirmed;
-  @Input() totalOrders;
   @Input() index;
 
   @Output() handleProduct = new EventEmitter<ProductView>();
@@ -126,7 +125,7 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
     this.orderAddress = { ...this.order.shipToAddressFull, countryCode: '' };
     this.emailRecipients$ = this.checkoutFacade.getBucketEmailRecipients$(this.order?.shipToAddressFull?.id);
 
-    this.emailRecipients$?.subscribe(value => {
+    this.emailRecipients$?.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(value => {
       this.emailRecipients = value?.filter(er => er !== '');
     });
 
@@ -450,8 +449,8 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
       this.dialog.closeAll();
     };
 
-    /* Call funtion after dialog is closed either by click, backdrop click, or ESC press */
-    this.dialog.afterAllClosed.pipe(first()).subscribe(() => {
+    /* call c after dialog is closed either by click, backdrop click, or ESC press */
+    this.dialog.afterAllClosed.pipe(first(), takeUntil(this.destroy$)).subscribe(() => {
       this.shoppingFacade.updateBucket(basketId, shipAddressId, basketExtensionUpdate);
     });
   }
