@@ -29,7 +29,9 @@ export class CamfilProductAttributesPreviewComponent implements OnInit {
       this.product?.attributeGroups[AttributeGroupTypes.ProductsDetailAttributes]?.attributes ||
       this.product?.attributes);
 
-    this.productListAttributes = attributes.filter(attribute => ProductHelper.isNotZero(attribute.value));
+    this.productListAttributes = attributes.filter(
+      attribute => ProductHelper.isNotExcludedAttribute(attribute.name) && ProductHelper.isNotZero(attribute.value)
+    );
   }
 
   scrollToAttributes(): void {

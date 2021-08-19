@@ -1,5 +1,6 @@
 import { intersection } from 'lodash-es';
 
+import { AttributeExcludedGroupNames } from 'ish-core/models/attribute-excluded-group/attribute-excluded-group.types';
 import { AttributeGroupTypes } from 'ish-core/models/attribute-group/attribute-group.types';
 import { AttributeHelper } from 'ish-core/models/attribute/attribute.helper';
 import { Attribute } from 'ish-core/models/attribute/attribute.model';
@@ -337,5 +338,9 @@ export class ProductHelper {
 
   static disableActionButton(product: Product, form) {
     return ProductHelper.disableIfNoMeasurements(product, form) || !ProductHelper.validateFilterArea(product, form);
+  }
+
+  static isNotExcludedAttribute(attributeName) {
+    return !(attributeName in AttributeExcludedGroupNames);
   }
 }
