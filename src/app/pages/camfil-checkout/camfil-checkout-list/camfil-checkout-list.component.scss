@@ -13,6 +13,7 @@
 
     .cdk-drop-list {
       position: relative;
+      overflow: hidden;
       &::after {
         position: absolute;
         bottom: 0;

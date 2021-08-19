@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { Actions, ofType } from '@ngrx/effects';
-import { Observable, Subject } from 'rxjs';
-import { filter, map, takeUntil } from 'rxjs/operators';
+import { Observable, ReplaySubject, Subject } from 'rxjs';
+import { filter, takeUntil, takeWhile } from 'rxjs/operators';
 
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
@@ -20,11 +20,13 @@ export class CamfilCheckoutPageComponent implements OnInit, OnDestroy {
   basket$: Observable<BasketView>;
   buckets$: Observable<Bucket[]>;
   emptyBuckets$: Observable<Bucket[]>;
-  confirmedBuckets$: Observable<Bucket[]>;
+  confirmedBuckets$ = new ReplaySubject<Bucket[]>(1);
   basketLoading$: Observable<boolean>;
   ordersLoading$: Observable<boolean>;
   validationResults$: Observable<BasketValidationResultType>;
   isConfirmed = false;
+
+  private isValid = false;
 
   private destroy$ = new Subject<void>();
 
@@ -44,17 +46,23 @@ export class CamfilCheckoutPageComponent implements OnInit, OnDestroy {
     this.validationResults$ = this.checkoutFacade.basketValidationResults$;
 
     this.initBasket();
+
+    this.checkoutFacade.start();
   }
 
   private initBasket() {
-    this.validationResults$.pipe(takeUntil(this.destroy$)).subscribe(result => {
-      if (result?.valid) {
-        this.checkoutFacade.setBasketPayment('ISH_INVOICE');
-        this.checkoutFacade.getWarehouseCalendar();
-        this.shoppingFacade.loadBasketAddresses();
-        this.checkoutFacade.start();
-      }
-    });
+    this.validationResults$
+      .pipe(
+        takeUntil(this.destroy$),
+        takeWhile(() => !this.isValid)
+      )
+      .subscribe(result => {
+        if (result?.valid) {
+          this.checkoutFacade.getWarehouseCalendar();
+          this.shoppingFacade.loadBasketAddresses();
+          this.isValid = true;
+        }
+      });
 
     this.basket$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe((basket: BasketView) => {
       if (basket.lineItems?.length) {
@@ -62,12 +70,15 @@ export class CamfilCheckoutPageComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.confirmedBuckets$ = this.buckets$.pipe(
-      filter(buckets => !!buckets?.length),
-      map(buckets =>
-        buckets.reduce((acc, bucket) => (acc.includes(bucket?.customer?.id) ? acc : [...acc, bucket?.customer?.id]), [])
+    this.buckets$
+      .pipe(
+        whenTruthy(),
+        filter(buckets => !!buckets?.length),
+        takeUntil(this.destroy$)
       )
-    );
+      .subscribe((buckets: Bucket[]) => {
+        this.confirmedBuckets$.next(buckets);
+      });
 
     this.confirmedBuckets$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(buckets => {
       buckets.forEach(bucket => {
