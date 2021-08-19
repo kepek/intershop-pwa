@@ -11,7 +11,6 @@ import { LineItem } from 'ish-core/models/line-item/line-item.model';
 })
 export class CamfilLineItemMeasurementsComponent implements OnInit {
   @Input() linetItem: Pick<OrderLineItem, 'width' | 'height' | 'diameter'> | Pick<LineItem, 'attributes'>;
-  @Input() showInTableColumn = false;
   measurementText: string;
 
   ngOnInit() {
