@@ -1,1 +1,10 @@
-<div>{{ measurementText }}</div>
+<ng-container *ngIf="showInTableColumn; else attributeTemplate">
+  <div>{{ measurementText }}</div>
+</ng-container>
+<ng-template #attributeTemplate>
+  <camfil-product-attribute
+    identifier="measurement"
+    [name]="'camfil.cam_card.product.measurements.label' | translate"
+    [value]="measurementText"
+  ></camfil-product-attribute>
+</ng-template>

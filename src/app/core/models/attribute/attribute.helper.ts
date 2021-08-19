@@ -1,4 +1,7 @@
+import { OrderLineItem } from 'src/app/extensions/cam-account/models/orderLineItem/orderLineItem.interface';
 import { CamCamProductChecked } from 'src/app/extensions/cam-cards/models/cam-card/cam-card.model';
+
+import { LineItem, LineItemView } from 'ish-core/models/line-item/line-item.model';
 
 import { Attribute } from './attribute.model';
 
@@ -66,5 +69,34 @@ export class AttributeHelper {
     const boxLabel = product.boxLabel;
     const measurements = product.measurement;
     return AttributeHelper.getAttrsBeforeAddToCart(measurements, boxLabel);
+  }
+
+  static determineLineItemType(lineItem: OrderLineItem | LineItemView) {
+    const isLineItem = (item: any): item is LineItem => 'attributes' in item;
+
+    return isLineItem(lineItem);
+  }
+
+  static getMeasurementsText(lineItem) {
+    if (AttributeHelper.determineLineItemType(lineItem)) {
+      const measurementsNames = ['width', 'height', 'diameter'];
+      const measurementValues = lineItem?.attributes.map(att => {
+        if (measurementsNames.includes(att.name) && att.value) {
+          return att.value;
+        }
+      });
+      return measurementValues.length
+        ? measurementValues
+            .filter(e => e)
+            .reverse()
+            .join('x')
+        : '';
+    } else {
+      const { width, height, diameter } = lineItem;
+      if (!width && !height && !diameter) {
+        return '---';
+      }
+      return [width, height, diameter].filter(e => e).join('x');
+    }
   }
 }
