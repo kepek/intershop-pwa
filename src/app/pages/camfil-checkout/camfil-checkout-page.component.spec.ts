@@ -20,14 +20,14 @@ import { CamCardsFacade } from '../../extensions/cam-cards/facades/cam-cards.fac
 
 import { CamfilCheckoutHeaderComponent } from './camfil-checkout-header/camfil-checkout-header.component';
 import { CamfilCheckoutListComponent } from './camfil-checkout-list/camfil-checkout-list.component';
+import { CamfilCheckoutPageComponent } from './camfil-checkout-page.component';
 import { CamfilCheckoutSummaryComponent } from './camfil-checkout-summary/camfil-checkout-summary.component';
 import { CamfilCheckoutToolbarComponent } from './camfil-checkout-toolbar/camfil-checkout-toolbar.component';
 import { CamfilCheckoutValidationComponent } from './camfil-checkout-validation/camfil-checkout-validation.component';
-import { CheckoutPageComponent } from './checkout-page.component';
 
-describe('Checkout Page Component', () => {
-  let fixture: ComponentFixture<CheckoutPageComponent>;
-  let component: CheckoutPageComponent;
+describe('Camfil Checkout Page Component', () => {
+  let fixture: ComponentFixture<CamfilCheckoutPageComponent>;
+  let component: CamfilCheckoutPageComponent;
   let element: HTMLElement;
   let checkoutFacade: CheckoutFacade;
   let camCardFacadeMock: CamCardsFacade;
@@ -93,7 +93,7 @@ describe('Checkout Page Component', () => {
 
     await TestBed.configureTestingModule({
       declarations: [
-        CheckoutPageComponent,
+        CamfilCheckoutPageComponent,
         MockComponent(BasketInfoComponent),
         MockComponent(CamfilBasketValidationResultsComponent),
         MockComponent(CamfilCheckoutHeaderComponent),
@@ -116,7 +116,7 @@ describe('Checkout Page Component', () => {
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CheckoutPageComponent);
+    fixture = TestBed.createComponent(CamfilCheckoutPageComponent);
     component = fixture.componentInstance;
     element = fixture.nativeElement;
 

@@ -12,11 +12,11 @@ import { createOrderSuccess } from 'ish-core/store/customer/orders/orders.action
 import { whenTruthy } from 'ish-core/utils/operators';
 
 @Component({
-  templateUrl: './checkout-page.component.html',
-  styleUrls: ['./checkout-page.component.scss'],
+  templateUrl: './camfil-checkout-page.component.html',
+  styleUrls: ['./camfil-checkout-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CheckoutPageComponent implements OnInit, OnDestroy {
+export class CamfilCheckoutPageComponent implements OnInit, OnDestroy {
   basket$: Observable<BasketView>;
   buckets$: Observable<Bucket[]>;
   emptyBuckets$: Observable<Bucket[]>;
