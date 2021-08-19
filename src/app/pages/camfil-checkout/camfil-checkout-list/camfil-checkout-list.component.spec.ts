@@ -7,6 +7,7 @@ import { instance, mock, when } from 'ts-mockito';
 import { ServerHtmlDirective } from 'ish-core/directives/server-html.directive';
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
+import { BasketTotal } from 'ish-core/models/basket-total/basket-total.model';
 import { PricePipe } from 'ish-core/models/price/price.pipe';
 import { AddressSortPipe } from 'ish-core/pipes/camfil-address-sort.pipe';
 import { DatePipe } from 'ish-core/pipes/date.pipe';
@@ -36,7 +37,6 @@ import { CamfilCheckoutDeliveryAddressComponent } from './camfil-checkout-delive
 import { CamfilCheckoutListComponent } from './camfil-checkout-list.component';
 import { CamfilDeleteOrderComponent } from './camfil-delete-order/camfil-delete-order.component';
 import { EditOrderModalComponent } from './edit-order-modal/edit-order-modal.component';
-import { BasketTotal } from 'ish-core/models/basket-total/basket-total.model';
 
 describe('Camfil Checkout List Component', () => {
   let component: CamfilCheckoutListComponent;

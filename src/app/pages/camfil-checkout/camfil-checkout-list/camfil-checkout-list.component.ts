@@ -166,8 +166,8 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
   initForm() {
     // TODO (extMlk): PERFORMANCE - This calls for all prod details.
     // tslint:disable-next-line:no-commented-out-code
-    const defaultDeliveryDate = new Date().getTime();
     // const defaultDeliveryDate = this.setFullDeliveryDate();
+    const defaultDeliveryDate = new Date().getTime();
 
     this.orderForm = this.fb.group({
       orderMark: [this.order.orderMark, [Validators.maxLength(60)]],
