@@ -35,9 +35,6 @@
     <td mat-cell *matCellDef="let pli">
       <div>
         {{ pli.articleName }}
-        <div *ngIf="measurement(pli)">
-          {{ 'camfil.checkout.product.measurements.label' | translate }}: {{ measurement(pli) }}
-        </div>
       </div>
     </td>
   </ng-container>
@@ -138,9 +135,6 @@
       <div class="row text-center">
         <div class="col-4">
           {{ pli.articleName }}
-          <div *ngIf="measurement(pli)">
-            {{ 'camfil.checkout.product.measurements.label' | translate }}: {{ measurement(pli) }}
-          </div>
         </div>
         <div class="col-4">
           <div class="text-truncate">{{ pli.orderedQty }}</div>
@@ -150,18 +144,25 @@
         </div>
       </div>
       <div class="row text-center">
-        <div class="col-4">{{ 'camfil.lineitem.table.box_label' | translate }}</div>
-        <div class="col-4">{{ 'camfil.lineitem.table.delivery_date' | translate }}</div>
-        <div class="col-4">{{ 'camfil.lineitem.table.price' | translate }}</div>
+        <div class="col-3">{{ 'camfil.lineitem.table.box_label' | translate }}</div>
+        <div class="col-3">{{ 'camfil.product.dimensions.label' | translate }}</div>
+        <div class="col-3">{{ 'camfil.lineitem.table.delivery_date' | translate }}</div>
+        <div class="col-3">{{ 'camfil.lineitem.table.price' | translate }}</div>
       </div>
       <div class="row text-center">
-        <div class="col-4">
+        <div class="col-12"></div>
+      </div>
+      <div class="row text-center">
+        <div class="col-3">
           <div>{{ pli.boxLabel || '---' }}</div>
         </div>
-        <div class="col-4">
+        <div class="col-3">
+          <camfil-line-item-measurements [linetItem]="pli"></camfil-line-item-measurements>
+        </div>
+        <div class="col-3">
           <strong>{{ pli.deliveryDate | ishDate }}</strong>
         </div>
-        <div class="col-4">
+        <div class="col-3">
           {{ 'camfil.lineitem.table.price_label' | translate }} <strong>{{ pli.totalRowCustomerPrice }}</strong>
         </div>
       </div>
