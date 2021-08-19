@@ -256,11 +256,13 @@ export class PrintOrderComponent implements OnInit {
 
     const qty = `${this.texts.quantity} `;
     const qtyVal = { text: item.quantity.value, bold: true };
-    const priceVal = this.handlePrice({
-      value: item.totals.total.net,
-      currency: item.totals.total.currency,
-      type: 'Money',
-    });
+    const priceVal = PriceHelper.checkIfZeroPrice(item.totals.total)
+      ? '-'
+      : this.handlePrice({
+          value: item.totals.total.net,
+          currency: item.totals.total.currency,
+          type: 'Money',
+        });
     const priceLabel = ` | ${this.texts.price} `;
     const price = { text: priceVal, bold: true };
     const arrLeftInfo = [qty, qtyVal, priceLabel, price];

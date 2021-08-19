@@ -7,7 +7,7 @@ import { PdfHelper } from 'src/app/extensions/cam-pdf/models/pdf.helper';
 import { AuthorizationToggleService } from 'ish-core/authorization-toggle.module';
 import { AccountFacade } from 'ish-core/facades/account.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
-import { Price } from 'ish-core/models/price/price.model';
+import { Price, PriceHelper } from 'ish-core/models/price/price.model';
 import { formatPrice } from 'ish-core/models/price/price.pipe';
 import { ProductView } from 'ish-core/models/product-view/product-view.model';
 import { ProductCompletenessLevel, ProductHelper } from 'ish-core/models/product/product.model';
@@ -314,7 +314,8 @@ export class AccountCamCardPdfComponent implements OnInit {
     const priceObj =
       this.getCustomerPriceForItem(camCard, item) ||
       this.priceSummaryPipe.transform(this.products[sku]?.salePrice, item.quantity);
-    const priceVal = this.handlePrice(priceObj);
+    console.log('wartosc', PriceHelper.checkIfZeroPrice(priceObj));
+    const priceVal = PriceHelper.checkIfZeroPrice(priceObj) ? '-' : this.handlePrice(priceObj);
     const priceLabel = showPrice ? ` | ${this.texts.price} ` : '';
     const price = showPrice ? { text: priceVal, bold: true } : '';
     const currentProd = this.products[sku];

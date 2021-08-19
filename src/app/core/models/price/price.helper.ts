@@ -124,4 +124,10 @@ export class PriceHelper {
     };
     return (value || value === 0) && currency ? formatPrice(priceData, currentLang) : 0;
   }
+
+  static checkIfZeroPrice(data) {
+    return (
+      ('value' in data && data.value === 0) || ('gross' in data && data.gross === 0 && 'net' in data && data.net === 0)
+    );
+  }
 }
