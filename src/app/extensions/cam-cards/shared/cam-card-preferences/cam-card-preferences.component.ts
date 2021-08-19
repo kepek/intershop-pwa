@@ -252,10 +252,6 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit, AfterView
     });
   }
 
-  compareFn(x, y): boolean {
-    return x && y ? x.id === y.id : x === y;
-  }
-
   patchForm() {
     if (this.camCard) {
       if (this.addresses$ === undefined) {
