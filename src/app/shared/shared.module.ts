@@ -225,6 +225,7 @@ import { CAMFIL_DEFAULT_LANG, CAMFIL_FORMATS } from 'ish-core/internationalizati
 import { LangChangeEvent } from '@ngx-translate/core/lib/translate.service';
 import { LoadingComponent } from './components/common/loading/loading.component';
 import { CamfilErrorMessageComponent } from './components/common/camfil-error-message/camfil-error-message.component';
+import { CamfilLineItemMeasurementsComponent } from './components/line-item/camfil-line-item-table/camfil-line-item-measurements/camfil-line-item-measurements.component';
 
 const importExportModules = [
   AddressFormsSharedModule,
@@ -305,6 +306,7 @@ const declaredComponents = [
   CamfilFilterNavigationBadgesComponent,
   CamfilFilterNavigationSidebarComponent,
   CamfilFilterTextComponent,
+  CamfilLineItemMeasurementsComponent,
   CamfilProductAddToBasketModalComponent,
   CamfilProductAttributeComponent,
   CamfilProductAttributesComponent,

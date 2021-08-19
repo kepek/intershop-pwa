@@ -90,7 +90,7 @@
       {{ 'camfil.product.dimensions.label' | translate }}
     </th>
     <td mat-cell *matCellDef="let pli">
-      <div>{{ measurement(pli) || '---' }}</div>
+      <camfil-line-item-measurements [linetItem]="pli"></camfil-line-item-measurements>
     </td>
   </ng-container>
 
