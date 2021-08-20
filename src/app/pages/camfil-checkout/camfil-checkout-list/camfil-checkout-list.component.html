@@ -56,7 +56,20 @@
               {{ order?.invoiceLabel || '-' }}
             </dd>
             <dt class="col-6 p-0">{{ 'camfil.checkout.form.delivery_date' | translate }}</dt>
-            <dd class="col-6 p-0" data-testing-id="order-customer_id">{{ order?.deliveryDate || '-' }}</dd>
+
+            <ng-container *ngIf="deliveryDaysForItemsAfterConfirmation?.length > 1; else fullDeliveryDate">
+              <dd class="col-6 p-0 text-right">
+                {{ 'camfil.account.orderdetails.delivery_date.split.label' | translate }}
+                <ng-container *ngFor="let item of deliveryDaysForItemsAfterConfirmation; last as isLast">
+                  {{ item | ishDate }}<ng-container *ngIf="!isLast">,</ng-container>
+                </ng-container>
+              </dd>
+            </ng-container>
+            <ng-template #fullDeliveryDate
+              ><dd class="col-6 p-0" data-testing-id="order-customer_id">
+                {{ order?.deliveryDate || '-' }}
+              </dd></ng-template
+            >
           </ng-container>
         </dl>
         <ng-container *ngIf="emailRecipients?.length">
