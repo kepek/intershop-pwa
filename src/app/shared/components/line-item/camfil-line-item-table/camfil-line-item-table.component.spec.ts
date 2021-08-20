@@ -22,6 +22,7 @@ import { InputComponent } from 'ish-shared/forms/components/input/input.componen
 import { LazyProductAddToOrderTemplateComponent } from '../../../../extensions/order-templates/exports/lazy-product-add-to-order-template/lazy-product-add-to-order-template.component';
 import { LazyProductAddToWishlistComponent } from '../../../../extensions/wishlists/exports/lazy-product-add-to-wishlist/lazy-product-add-to-wishlist.component';
 
+import { CamfilLineItemMeasurementsComponent } from './camfil-line-item-measurements/camfil-line-item-measurements.component';
 import { CamfilLineItemTableComponent } from './camfil-line-item-table.component';
 
 describe('Camfil Line Item Table Component', () => {
@@ -37,6 +38,7 @@ describe('Camfil Line Item Table Component', () => {
       declarations: [
         CamfilLineItemTableComponent,
         MockComponent(BasketPromotionComponent),
+        MockComponent(CamfilLineItemMeasurementsComponent),
         MockComponent(CamfilProductImageComponent),
         MockComponent(FaIconComponent),
         MockComponent(InputComponent),
