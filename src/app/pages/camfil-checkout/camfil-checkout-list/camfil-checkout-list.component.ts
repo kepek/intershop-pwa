@@ -100,7 +100,6 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
   }
 
   ngOnInit(): void {
-    console.log('order', this.order.id);
     this.calendarExceptions$ = this.checkoutFacade.calendarExceptions$;
 
     this.orderAddress = { ...this.order.shipToAddressFull, countryCode: '' };

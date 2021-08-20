@@ -231,7 +231,12 @@
     <div cdkDropList [cdkDropListData]="order.lineItems" (cdkDropListDropped)="drop($event, order)">
       <cdk-virtual-scroll-viewport itemSize="100" style="height: 325px" minBufferPx="100" maxBufferPx="200">
         <div *cdkVirtualFor="let item of order.lineItems; index as i; trackBy: trackBy">
-          <div cdkDrag [cdkDragData]="item" class="list-item-row list-item-row-big px-4 py-1 mt-2 line-item-container">
+          <div
+            cdkDrag
+            [cdkDragData]="item"
+            [cdkDragDisabled]="isConfirmed"
+            class="list-item-row list-item-row-big px-4 py-1 mt-2 line-item-container"
+          >
             <div class="d-flex align-items-center">
               <span class="d-flex align-items-center justify-content-center line-item-index">{{ i + 1 }}</span>
               <mat-icon

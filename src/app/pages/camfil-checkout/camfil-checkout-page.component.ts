@@ -20,6 +20,7 @@ export class CamfilCheckoutPageComponent implements OnInit, OnDestroy {
   basket$: Observable<BasketView>;
   buckets$: Observable<Bucket[]>;
   emptyBuckets$: Observable<Bucket[]>;
+  confirmedBasket$ = new ReplaySubject<BasketView>(1);
   confirmedBuckets$ = new ReplaySubject<Bucket[]>(1);
   basketLoading$: Observable<boolean>;
   ordersLoading$: Observable<boolean>;
@@ -53,8 +54,8 @@ export class CamfilCheckoutPageComponent implements OnInit, OnDestroy {
   private initBasket() {
     this.validationResults$
       .pipe(
-        takeUntil(this.destroy$),
-        takeWhile(() => !this.isValid)
+        takeWhile(() => !this.isValid),
+        takeUntil(this.destroy$)
       )
       .subscribe(result => {
         if (result?.valid) {
@@ -64,16 +65,27 @@ export class CamfilCheckoutPageComponent implements OnInit, OnDestroy {
         }
       });
 
-    this.basket$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe((basket: BasketView) => {
-      if (basket.lineItems?.length) {
-        this.isConfirmed = false;
-      }
-    });
+    this.basket$
+      .pipe(
+        whenTruthy(),
+        filter(basket => !!basket),
+        takeUntil(this.destroy$)
+      )
+      .subscribe((basket: BasketView) => {
+        if (!this.isConfirmed) {
+          this.confirmedBasket$.next(basket);
+        }
+
+        if (basket?.lineItems?.length) {
+          this.isConfirmed = false;
+        }
+      });
 
     this.buckets$
       .pipe(
         whenTruthy(),
         filter(buckets => !!buckets?.length),
+        takeWhile(() => !this.isConfirmed),
         takeUntil(this.destroy$)
       )
       .subscribe((buckets: Bucket[]) => {
