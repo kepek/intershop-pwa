@@ -471,15 +471,11 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
   }
 
   getInactiveProductsInCamCard(camCard: CamCard) {
-    const inavcite = this.getInactiveProducts(camCard.camCardItems);
-    camCard.subCamCards?.reduce((arr, sub) => {
+    const inactive = this.getInactiveProducts(camCard.camCardItems);
+    return camCard.subCamCards?.reduce((arr, sub) => {
       const sumItem = this.getInactiveProducts(sub.camCardItems);
-      if (sumItem.length) {
-        arr.push(...sumItem);
-      }
-      return arr;
-    }, inavcite);
-    return inavcite;
+      return sumItem.length ? [...arr, ...sumItem] : arr;
+    }, inactive);
   }
 
   isProductChecked(id: string) {
@@ -578,11 +574,15 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
     });
   }
 
-  // Check if all product from CamCard are selected
-
-  checkIfAllProductsSelected(camCardId, products) {
+  /**
+   *
+   * Check if all AVAILABLE product from CamCard are selected
+   *
+   **/
+  checkIfAllProductsSelected(camCardId: string, products: CamCamProductChecked[]) {
     const camCard = this.camCards.find(c => c.id === camCardId);
-    return camCard.itemsCount === products?.length;
+    const allIds = CamCardHelper.getCamCardItemsIds(camCard, true);
+    return allIds.length === products?.length;
   }
 
   sortData(event) {
