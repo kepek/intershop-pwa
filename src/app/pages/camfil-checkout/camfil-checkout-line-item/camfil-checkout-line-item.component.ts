@@ -93,8 +93,9 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
     });
 
     this.addToCartForm = new FormGroup({
-      quantity: new FormControl(this.lineItem?.quantity?.value || 1),
+      quantity: new FormControl(this.quantity || 1),
     });
+
     this.boxLabelForm = new FormGroup({
       boxLabel: new FormControl(this.boxLabel, [Validators.maxLength(60)]),
     });
@@ -104,11 +105,16 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
   }
 
   ngOnChanges(s: SimpleChanges) {
-    if (s.item) {
+    if (s?.lineItem?.previousValue?.quantity !== s?.lineItem?.currentValue?.quantity) {
       this.quantity = this.lineItem.quantity.value;
+      // TODO (extMlk): Infinite loop issue here.
+      // this.addToCartForm?.controls?.quantity.patchValue(this.quantity, false);
     }
 
-    if (s.isConfirmed || s.orderDeliveryDate) {
+    if (
+      s?.isConfirmed?.previousValue !== s?.isConfirmed?.currentValue ||
+      s?.orderDeliveryDate?.previousValue !== s?.orderDeliveryDate?.currentValue
+    ) {
       this.deliveryAfterOrderConfirmed();
     }
   }

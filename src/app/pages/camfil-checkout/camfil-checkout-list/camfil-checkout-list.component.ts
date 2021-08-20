@@ -539,7 +539,7 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
 
   // tslint:disable-next-line:force-jsdoc-comments
   // only rerender the whole bucket when number of included lineItems changes
-  trackBy(_, lineItem: LineItemView): string {
+  trackBy(_, lineItem: LineItemView) {
     return lineItem.productSKU;
   }
 
