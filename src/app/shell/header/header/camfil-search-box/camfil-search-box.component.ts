@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 import { Actions, ofType } from '@ngrx/effects';
 import { ReplaySubject, Subject } from 'rxjs';
 import { debounceTime, take, takeUntil } from 'rxjs/operators';
+import { CamCardsFacade } from 'src/app/extensions/cam-cards/facades/cam-cards.facade';
 
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { Category } from 'ish-core/models/category/category.model';
@@ -85,6 +86,7 @@ export class CamfilSearchBoxComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject();
 
   constructor(
+    private camCardsFacade: CamCardsFacade,
     private shoppingFacade: ShoppingFacade,
     private router: Router,
     private updates$: Actions,
@@ -114,6 +116,18 @@ export class CamfilSearchBoxComponent implements OnInit, OnDestroy {
       this.out();
 
       this.cdr.detectChanges();
+    });
+
+    this.shoppingFacade.productAdded$?.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(val => {
+      if (val) {
+        this.closeAndClear();
+      }
+    });
+
+    this.camCardsFacade.getAddProductSuccess$?.pipe(takeUntil(this.destroy$)).subscribe(value => {
+      if (value) {
+        this.closeAndClear();
+      }
     });
   }
 
@@ -179,5 +193,10 @@ export class CamfilSearchBoxComponent implements OnInit, OnDestroy {
     }
     // prevent form submission
     return false;
+  }
+
+  closeAndClear() {
+    this.clearResults();
+    this.out();
   }
 }
