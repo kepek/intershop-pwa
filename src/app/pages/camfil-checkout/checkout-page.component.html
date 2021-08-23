@@ -7,7 +7,7 @@
         <camfil-checkout-header
           [basket]="basket$ | async"
           [buckets]="buckets$ | async"
-          [isConfirmed]="true"
+          [isConfirmed]="validation"
         ></camfil-checkout-header>
 
         <mat-divider></mat-divider>
@@ -32,7 +32,7 @@
               [order]="item"
               [buckets]="buckets"
               [shippingMethodId]="shippingMethodId"
-              [isConfirmed]="true"
+              [isConfirmed]="validation"
               [totalOrders]="buckets?.length"
               [index]="i + 1"
               (handleProduct)="handleProductLoad($event)"
@@ -47,7 +47,7 @@
               [order]="item"
               [buckets]="buckets$ | async"
               [shippingMethodId]="shippingMethodId"
-              [isConfirmed]="true"
+              [isConfirmed]="validation"
               [totalOrders]="buckets?.length"
               [index]="i + 1"
               (handleProduct)="handleProductLoad($event)"
@@ -59,7 +59,7 @@
       </div>
     </div>
     <div class="col-sm-12 col-lg-3">
-      <camfil-checkout-summary [basket]="basket" [isConfirmed]="true"></camfil-checkout-summary>
+      <camfil-checkout-summary [basket]="basket" [isConfirmed]="validation"></camfil-checkout-summary>
     </div>
   </div>
 </ng-container>
