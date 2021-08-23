@@ -20,11 +20,17 @@ export class CamCardHelper {
     return camCards.filter(camCard => !camCard.transient);
   }
 
-  static getCamCardItemsId(camCard: CamCard) {
-    return [
-      ...camCard.camCardItems?.map(({ id }) => id),
-      ...camCard.subCamCards?.reduce((acc, { camCardItems }) => [...acc, ...camCardItems.map(({ id }) => id)], []),
-    ];
+  static getItems(items: CamCardItem[], onlyAvailable: boolean) {
+    return items?.reduce((acc, item) => (onlyAvailable && !item.product.available ? acc : [...acc, item]), []) || [];
+  }
+
+  static getCamCardItemsIds(camCard: CamCard, onlyAvailable = false) {
+    return camCard.subCamCards
+      ?.reduce(
+        (acc, { camCardItems }) => [...acc, ...CamCardHelper.getItems(camCardItems, onlyAvailable)],
+        CamCardHelper.getItems(camCard.camCardItems, onlyAvailable)
+      )
+      .map(({ id }) => id);
   }
 
   static getCamCardSkus(camCard: CamCard) {

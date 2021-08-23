@@ -154,7 +154,7 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges, OnD
       const { currentValue, previousValue } = changes?.camCard;
 
       // if removed/moved item from camCard
-      const currentCamCardItemsId = CamCardHelper.getCamCardItemsId(this.camCard);
+      const currentCamCardItemsId = CamCardHelper.getCamCardItemsIds(this.camCard);
       const itemToRemove = Object.keys(this.priceSum).filter(key => !currentCamCardItemsId.includes(key));
       itemToRemove.forEach(item => this.cleanPriceSum(item));
 
