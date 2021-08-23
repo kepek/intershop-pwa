@@ -14,6 +14,7 @@
       <div class="my-2 my-md-0">
         <div class="d-flex line-item-data-container">
           <div class="flex-row line-item-data-top">
+            <pre>qty: {{ quantity }}</pre>
             <camfil-product-title
               [class.confirmed-product-title]="isConfirmed"
               [product]="product"
@@ -38,10 +39,10 @@
               <camfil-product-inventory class="px-2" [product]="product"></camfil-product-inventory>
             </div>
             <camfil-product-attribute
-              *ngIf="measurementsToShow"
+              *ngIf="measurementsToShow()"
               [name]="'camfil.checkout.product.measurements.label' | translate"
               class="box-label-attribute ml-0"
-              [value]="measurementsToShow"
+              [value]="measurementsToShow()"
             ></camfil-product-attribute>
           </div>
         </div>
