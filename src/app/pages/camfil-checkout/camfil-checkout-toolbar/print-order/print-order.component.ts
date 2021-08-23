@@ -245,13 +245,7 @@ export class PrintOrderComponent implements OnInit {
     const boxLabelText = label ? ` | ${this.texts.boxLabel}: ` : '';
     const boxLabelVal = { text: label, bold: true };
 
-    const measurementsValues = ['width', 'height', 'diameter'];
-    const measurements = {
-      [measurementsValues[0]]: (this.getValFromAttrs(item, 'width') as number) || undefined,
-      [measurementsValues[1]]: (this.getValFromAttrs(item, 'height') as number) || undefined,
-      [measurementsValues[2]]: (this.getValFromAttrs(item, 'diameter') as number) || undefined,
-    };
-    const measurementsToShow = this.measurementsToShow(measurements);
+    const measurementsToShow = AttributeHelper.getMeasurementsText(item);
     const measurementsText = measurementsToShow ? ` | ${this.texts.measurements}: ` : '';
     const arrRightInfo = [
       { text: [artNo, artNoVal] },
@@ -322,11 +316,5 @@ export class PrintOrderComponent implements OnInit {
 
   getValFromAttrs(item: LineItemView, name: string) {
     return item?.attributes?.find(att => att.name === name)?.value;
-  }
-
-  measurementsToShow(measurements) {
-    return Object.values(measurements)
-      .filter(item => item)
-      .join('x');
   }
 }

@@ -57,6 +57,7 @@ export class CamfilLineItemTableComponent implements OnInit, OnChanges, AfterVie
     'orderedQty',
     'deliveredQty',
     'boxLabel',
+    'measurements',
     'deliveryDate',
     'totalRowCustomerPrice',
   ];
@@ -86,11 +87,11 @@ export class CamfilLineItemTableComponent implements OnInit, OnChanges, AfterVie
     return this.shoppingFacade.product$(sku, ProductCompletenessLevel.List);
   }
 
-  measurement({ width, hight, diameter }: OrderLineItem) {
-    if (!width && !hight && !diameter) {
+  measurement({ width, height, diameter }: OrderLineItem) {
+    if (!width && !height && !diameter) {
       return;
     }
-    return [width, hight, diameter].filter(e => e).join('x');
+    return [width, height, diameter].filter(e => e).join('x');
   }
 
   isMobile() {

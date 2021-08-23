@@ -56,6 +56,9 @@ export class OrderMapper {
         totalRowCustomerPrice: lineItemData.totalRowCustomerPrice,
         type: lineItemData.type,
         rowNumber: lineItemData.rowNumber,
+        diameter: lineItemData.diameter,
+        width: lineItemData.width,
+        height: lineItemData.height,
       };
     }
   }
