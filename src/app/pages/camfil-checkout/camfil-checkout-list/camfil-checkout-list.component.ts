@@ -326,6 +326,7 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
         const earliestDeliveryDate = this.getDeliveryDate(li.productSKU);
         return { ...li, earliestDeliveryDate };
       });
+
       const max = Math.max.apply(
         Math,
         items.map(o => o.earliestDeliveryDate)
@@ -413,6 +414,7 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
   changeDeliveryDate(event: MatDatepickerInputEvent<Date>) {
     const fullDD = new Date(this.fullDeliveryDate).setHours(0, 0, 0, 0);
     const selectedDD = new Date(event.value).setHours(0, 0, 0, 0);
+
     if (fullDD === selectedDD || selectedDD > fullDD) {
       this.modalDeliveryText = 'camfil.modal.checkout.full-delivery.title';
       this.updateBucketDeliveryDate(false, selectedDD);
@@ -509,5 +511,35 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
     };
 
     this.shoppingFacade.updateBucket(basket, deliveryAddressId, basketExtensionUpdate);
+  }
+
+  get deliveryDaysForItemsAfterConfirmation() {
+    // Get Earliest delivery days for each item
+    let items = this.order && this.order.lineItems;
+    let itemsDeliveryDates = [];
+    items = items?.map(li => {
+      const earliestDeliveryDate = this.getDeliveryDate(li.productSKU);
+      return { ...li, earliestDeliveryDate };
+    });
+
+    // Order delivery date
+    const numDeliveryDate = new Date(this.deliveryDate).getTime();
+
+    // Set delivery date for each item
+    itemsDeliveryDates = items.map(li => {
+      let itemDeliveryDate;
+
+      if (new Date(li.earliestDeliveryDate).getTime() < numDeliveryDate) {
+        itemDeliveryDate = numDeliveryDate;
+
+        return itemDeliveryDate;
+      } else {
+        itemDeliveryDate = new Date(li.earliestDeliveryDate).getTime();
+
+        return itemDeliveryDate;
+      }
+    });
+
+    return [...new Set(itemsDeliveryDates)];
   }
 }
