@@ -50,7 +50,7 @@
           </dd>
           <ng-container *ngIf="isConfirmed">
             <dt class="col-6 p-0">{{ 'camfil.account.orderdetails.goods_mark.label' | translate }}</dt>
-            <dd class="col-6 p-0" data-testing-id="order-customer_id">{{ order?.orderMark || '-' }}</dd>
+            <dd class="col-6 p-0 text-right" data-testing-id="order-customer_id">{{ order?.orderMark || '-' }}</dd>
             <dt class="col-6 p-0">{{ 'camfil.checkout.form.invoice_mark' | translate }}</dt>
             <dd class="col-6 p-0 invoice-label-value" data-testing-id="order-customer_id">
               {{ order?.invoiceLabel || '-' }}
