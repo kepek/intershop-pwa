@@ -107,7 +107,7 @@ export class CreateProductCamCardModalComponent implements OnInit, OnDestroy {
     this.camCardForm = this.fb.group({
       name: ['', [Validators.required, Validators.maxLength(40)]],
       customerSelect: [''],
-      orderMark: [''],
+      orderMark: ['', Validators.maxLength(60)],
       invoiceMark: ['', Validators.maxLength(60)],
       deliveryAddressSelect: ['', []],
       company: ['', [Validators.required, Validators.maxLength(60)]],

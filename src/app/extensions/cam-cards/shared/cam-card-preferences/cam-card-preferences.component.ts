@@ -228,7 +228,7 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit, AfterView
     this.camCardForm = this.fb.group({
       title: ['', [Validators.required, Validators.maxLength(40)]],
       customerName: ['', [Validators.required]],
-      orderMark: ['', [Validators.maxLength(maxL)]],
+      orderMark: ['', [Validators.maxLength(60)]],
       invoiceMark: ['', [Validators.maxLength(60)]],
       deliveryAddress: ['', [Validators.maxLength(maxL)]],
       companyName1: ['', [Validators.maxLength(60)]],
