@@ -42,7 +42,7 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
     private shoppingFacade: ShoppingFacade,
     private checkoutFacade: CheckoutFacade,
     public dialog: MatDialog
-  ) { }
+  ) {}
 
   private static REQUIRED_COMPLETENESS_LEVEL = ProductCompletenessLevel.List;
 
