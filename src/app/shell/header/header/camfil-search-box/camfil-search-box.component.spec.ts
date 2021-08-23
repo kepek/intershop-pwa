@@ -6,7 +6,9 @@ import { Action } from '@ngrx/store';
 import { TranslateModule } from '@ngx-translate/core';
 import { MockComponent, MockPipe } from 'ng-mocks';
 import { Observable, ReplaySubject, Subject, of } from 'rxjs';
+import { CamCardsFacade } from 'src/app/extensions/cam-cards/facades/cam-cards.facade';
 import { CamfilCategoryBoxComponent } from 'src/app/pages/camfil-category/camfil-category-box/camfil-category-box.component';
+import { instance, mock } from 'ts-mockito';
 
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { Category } from 'ish-core/models/category/category.model';
@@ -25,12 +27,14 @@ describe('Camfil Search Box Component', () => {
   let getAllCategoriesTree$: Subject<{ [id: string]: Category }>;
   let searchResults$: Subject<SuggestTerm[]>;
   let actions$: Observable<Action>;
+  let camCardFacadeMock: CamCardsFacade;
 
   beforeEach(async () => {
     searchResults$ = new ReplaySubject(1);
     getAllCategoriesTree$ = new ReplaySubject(1);
     searchResults$.next([]);
     getAllCategoriesTree$.next({});
+    camCardFacadeMock = mock(CamCardsFacade);
 
     await TestBed.configureTestingModule({
       imports: [RouterTestingModule, TranslateModule.forRoot()],
@@ -43,6 +47,7 @@ describe('Camfil Search Box Component', () => {
         MockPipe(HighlightPipe),
       ],
       providers: [
+        { provide: CamCardsFacade, useFactory: () => instance(camCardFacadeMock) },
         {
           provide: ShoppingFacade,
           useFactory: () =>
