@@ -6,9 +6,16 @@
     font-size: $camfil-toolbar-font-size;
     color: $text-color-tertiary;
     background-color: transparent;
+    padding: $space-box $space-default;
+
+    @media (min-width: $screen-md) {
+      justify-content: space-between;
+      gap: $space-box;
+      display: flex;
+    }
 
     & + .filters-row {
-      padding-top: 0;
+      padding: 0 0 $space-box;
     }
     b,
     strong {
@@ -21,17 +28,14 @@
       border-right: 1px solid $border-color-light;
     }
 
-    .switch-layout {
-      padding-right: 0;
-      @media (min-width: $screen-xs) {
-        padding: 0 24px;
-      }
-    }
     .sort-by {
       padding-left: 0;
       label {
         margin-right: $space-sm / 2;
         line-height: inherit;
+      }
+      mat-form-field {
+        width: 120px;
       }
     }
   }
