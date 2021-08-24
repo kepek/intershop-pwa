@@ -14,7 +14,6 @@
       <div class="my-2 my-md-0">
         <div class="d-flex line-item-data-container">
           <div class="flex-row line-item-data-top">
-            <pre>qty: {{ quantity }}</pre>
             <camfil-product-title
               [class.confirmed-product-title]="isConfirmed"
               [product]="product"
@@ -130,12 +129,12 @@
   <ng-template #price>
     <camfil-product-attribute
       [name]="'camfil.cam_card.product.list_price.label' | translate"
-      [value]="product.listPrice | camfilPriceSummary: this.quantity | ishPrice"
+      [value]="product.listPrice | camfilPriceSummary: lineItem?.quantity?.value | ishPrice"
       [overflowVisible]="true"
     ></camfil-product-attribute>
     <camfil-product-attribute
       [name]="'camfil.cam_card.product.your_price.label' | translate"
-      [value]="product.salePrice | camfilPriceSummary: this.quantity | ishPrice"
+      [value]="product.salePrice | camfilPriceSummary: lineItem?.quantity?.value | ishPrice"
       [overflowVisible]="true"
     ></camfil-product-attribute>
   </ng-template>

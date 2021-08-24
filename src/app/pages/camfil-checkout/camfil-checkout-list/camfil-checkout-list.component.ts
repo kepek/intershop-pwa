@@ -442,11 +442,6 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
     }
   }
 
-  openSuccessModal() {
-    this.dialog.open(this.modal?.show());
-    this.modal.hide = () => this.dialog.closeAll();
-  }
-
   updateBucketDeliveryDate(isPartial: boolean, deliveryDate: number) {
     const basketId = this.order.basket;
     const shipAddressId = this.order.deliveryAddressId;
@@ -561,8 +556,6 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
     return [...new Set(itemsDeliveryDates)];
   }
 
-  // tslint:disable-next-line:force-jsdoc-comments
-  // only rerender the whole bucket when number of included lineItems changes
   trackBy(_, lineItem: LineItemView) {
     return lineItem.productSKU;
   }

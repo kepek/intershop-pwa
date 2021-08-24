@@ -45,9 +45,11 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
   ) {}
 
   private static REQUIRED_COMPLETENESS_LEVEL = ProductCompletenessLevel.List;
+  private destroy$ = new Subject<void>();
 
   @ViewChild(CamfilSmallCtaModalComponent) modal: CamfilSmallCtaModalComponent;
   @ViewChild('autosize') autosize: CdkTextareaAutosize;
+
   @Input() selectedItemsForm?: FormArray;
   @Input() index: number;
   @Input() basketId: string;
@@ -61,7 +63,6 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
   @Input() lineItem: LineItemView;
 
   earliestDeliveryDate: string;
-  quantity = 0;
   boxLabel: string;
   measurementsValues = ['width', 'height', 'diameter'];
   measurements: CamCardMeasurement;
@@ -70,11 +71,9 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
   };
 
   product$: Observable<ProductView>;
-  product: ProductView;
-
-  private destroy$ = new Subject<void>();
 
   addToCartForm: FormGroup;
+  addToCartQuantityControl: FormControl;
   boxLabelForm: FormGroup;
 
   ngOnInit() {
@@ -92,29 +91,33 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
       };
     });
 
+    this.addToCartQuantityControl = new FormControl(this.lineItem?.quantity?.value || 1);
+
     this.addToCartForm = new FormGroup({
-      quantity: new FormControl(this.quantity || 1),
+      quantity: this.addToCartQuantityControl,
     });
+
+    this.addToCartQuantityControl?.valueChanges
+      .pipe(debounceTime(500), takeUntil(this.destroy$))
+      .subscribe(quantity => {
+        if (this.addToCartQuantityControl?.value !== this.lineItem?.quantity?.value) {
+          this.updateBasketItem({ itemId: this.lineItem.id, quantity });
+        }
+      });
 
     this.boxLabelForm = new FormGroup({
       boxLabel: new FormControl(this.boxLabel, [Validators.maxLength(60)]),
     });
 
-    this.updateQuantities();
     this.calculateDeliveryDate();
   }
 
-  ngOnChanges(s: SimpleChanges) {
-    if (s?.lineItem?.previousValue?.quantity !== s?.lineItem?.currentValue?.quantity) {
-      this.quantity = this.lineItem.quantity.value;
-      // TODO (extMlk): Infinite loop issue here.
-      // this.addToCartForm?.controls?.quantity.patchValue(this.quantity, false);
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes?.lineItem && this.addToCartQuantityControl?.value !== this.lineItem?.quantity?.value) {
+      this.addToCartQuantityControl?.setValue(this.lineItem?.quantity?.value);
     }
 
-    if (
-      s?.isConfirmed?.previousValue !== s?.isConfirmed?.currentValue ||
-      s?.orderDeliveryDate?.previousValue !== s?.orderDeliveryDate?.currentValue
-    ) {
+    if (changes?.isConfirmed || changes?.orderDeliveryDate) {
       this.deliveryAfterOrderConfirmed();
     }
   }
@@ -126,12 +129,6 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
 
   measurementsToShow() {
     return AttributeHelper.getMeasurementsText(this.item) || false;
-  }
-
-  updateQuantities() {
-    this.addToCartForm.valueChanges
-      .pipe(debounceTime(500), takeUntil(this.destroy$))
-      .subscribe(val => this.updateBasketItem({ itemId: this.lineItem.id, quantity: val.quantity }));
   }
 
   updateBasketItem(formValue: LineItemUpdate) {
