@@ -2,7 +2,6 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  ElementRef,
   EventEmitter,
   Input,
   OnChanges,
@@ -50,7 +49,6 @@ import { CreateProductCamCardModalComponent } from './create-product-cam-card-mo
 export class AddProductToCamCardModalComponent implements OnInit, OnDestroy, OnChanges {
   @Input() product: Product;
   @Input() quantity: number;
-  @ViewChild('newSubCamCardSegment') newSubCamCardInput: ElementRef;
 
   /**
    * changes the some logic and the translations keys between add or move a product (default: 'add')

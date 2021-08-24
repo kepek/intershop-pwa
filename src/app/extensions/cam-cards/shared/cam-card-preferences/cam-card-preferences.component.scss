@@ -4,7 +4,7 @@
   .form-field,
   .mat-form-field {
     width: 100%;
-    
+
     &:not(.mat-form-field-invalid) {
       margin-bottom: $space-box;
     }
@@ -73,7 +73,6 @@
 
   ::ng-deep {
     .mat-error {
-      margin-top: -5px !important;
       margin-bottom: 8px;
     }
   }

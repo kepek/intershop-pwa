@@ -39,7 +39,6 @@ export class OrderFormComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.addresses$ = this.camCardsFacade.addresses$;
     this.customers$ = this.camCardsFacade.customers$;
-
     this.customers$?.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(customers => {
       this.customersArr = customers;
     });
@@ -47,11 +46,11 @@ export class OrderFormComponent implements OnInit, OnDestroy {
     this.addressForm = this.fb.group({
       customer: [this.orderToEdit?.customerId || this.setDefaultCustomer(this.customersArr), [Validators.required]],
       contact: [this.orderToEdit?.contactPerson?.erpId || '', Validators.required],
-      invoiceLabel: [this.orderToEdit?.invoiceLabel || '', [Validators.maxLength(60)]],
+      invoiceLabel: [this.orderToEdit?.invoiceLabel || ''],
       phoneNumber: [this.orderToEdit?.phoneNumber || '', Validators.pattern('[0-9+-/]*')],
       orderMark: [this.orderToEdit?.orderMark || '', [Validators.maxLength(60)]],
       deliveryAddressSelect: [this.orderToEdit?.deliveryAddressId || '', []],
-      company: [this.orderToEdit?.company || '', [Validators.required, Validators.maxLength(60)]],
+      company: [this.orderToEdit?.company || '', [Validators.required]],
       address: [this.orderToEdit?.address || ''],
       zipCode: [this.orderToEdit?.zipCode || '', [Validators.required, Validators.pattern('[0-9]{5}')]],
       area: [{ value: this.orderToEdit?.area || '', disabled: true }, [Validators.required]],

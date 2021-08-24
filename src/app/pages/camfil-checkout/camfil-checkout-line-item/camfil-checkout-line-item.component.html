@@ -58,6 +58,7 @@
             type="text"
             formControlName="boxLabel"
             name="boxLabel"
+            [camfilMaxLength]="'BoxLabel'"
             (blur)="onBlur($event.target, boxLabelForm)"
             [id]="lineItem?.id | slugify: 'line-item-box-label'"
             (focus)="setFocusedElement($event.target)"

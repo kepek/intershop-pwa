@@ -42,24 +42,14 @@
     <!--order mark-->
     <mat-form-field appearance="outline" class="delivery-address__form--field">
       <mat-label>{{ 'camfil.modal.createOrder.order-form.input.order_mark' | translate }}</mat-label>
-      <input matInput type="text" formControlName="orderMark" />
+      <input matInput [camfilMaxLength]="'OrderMark'" type="text" formControlName="orderMark" />
     </mat-form-field>
-    <camfil-error
-      [errors]="getField('orderMark').errors"
-      [errorValidators]="validators.orderMark"
-      [touched]="getField('orderMark').touched || getField('orderMark').dirty"
-    ></camfil-error>
 
     <!--invoice mark-->
     <mat-form-field appearance="outline" class="delivery-address__form--field">
       <mat-label>{{ 'camfil.modal.createOrder.order-form.input.invoice_mark' | translate }}</mat-label>
-      <input matInput type="text" formControlName="invoiceLabel" />
+      <input matInput [camfilMaxLength]="'InvoiceLabel'" type="text" formControlName="invoiceLabel" />
     </mat-form-field>
-    <camfil-error
-      [errors]="getField('invoiceLabel').errors"
-      [errorValidators]="validators.invoiceLabel"
-      [touched]="getField('invoiceLabel').touched || getField('invoiceLabel').dirty"
-    ></camfil-error>
 
     <!--phone number-->
     <mat-form-field appearance="outline" class="delivery-address__form--field">
@@ -94,13 +84,8 @@
     <!--recipient-->
     <mat-form-field appearance="outline" class="delivery-address__form--field">
       <mat-label>{{ 'camfil.modal.createOrder.order-form.input.recipient' | translate }}</mat-label>
-      <input matInput type="text" formControlName="company" />
+      <input matInput type="text" formControlName="company" [camfilMaxLength]="'Company'" />
     </mat-form-field>
-    <camfil-error
-      [errors]="getField('company').errors"
-      [errorValidators]="setMaxLengthValidation(60, 'customer', validators)"
-      [touched]="getField('company').touched || getField('company').dirty"
-    ></camfil-error>
 
     <!--address-->
     <mat-form-field appearance="outline" class="delivery-address__form--field">

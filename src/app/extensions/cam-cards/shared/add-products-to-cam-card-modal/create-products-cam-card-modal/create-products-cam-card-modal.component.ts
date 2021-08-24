@@ -31,7 +31,7 @@ export class CreateProductsCamCardModalComponent extends CreateProductCamCardMod
     this.items = this.products.map(item => {
       const quantityForm = new FormGroup({
         quantity: new FormControl(item?.quantity || item?.product?.minOrderQuantity || 0),
-        boxLabel: new FormControl('', Validators.maxLength(60)),
+        boxLabel: new FormControl('', Validators.maxLength(40)),
       });
 
       return {

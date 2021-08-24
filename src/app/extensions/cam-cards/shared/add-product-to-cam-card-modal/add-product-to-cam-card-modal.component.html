@@ -136,7 +136,7 @@
             </tr>
           </table>
 
-          <div [style.display]="camCardSelected === option.value ? 'block' : 'none'">
+          <div *ngIf="camCardSelected === option.value">
             <div class="modal__cam-card--details border-bottom modal__cam-card--delivery-address">
               <div class="modal__cam-card--label">
                 {{ 'camfil.modal.addToCamcard.camcard.delivery_address' | translate }}
@@ -166,10 +166,7 @@
                   >
                 </div>
               </div>
-              <div
-                [ngClass]="{ hidden: !showNewSegment }"
-                class="segment-input-container modal__radio modal__new-segment--radio"
-              >
+              <div *ngIf="showNewSegment" class="modal__radio modal__new-segment--radio">
                 <mat-radio-button
                   #button
                   (click)="unselectRadio($event, button)"
@@ -181,7 +178,6 @@
                       [id]="'new-section-' + option.value"
                       matInput
                       formControlName="newCamCard"
-                      #newSubCamCardSegment
                       [placeholder]="'camfil.account.cam_card.new_cam_card.text' | translate"
                     />
                   </mat-form-field>
