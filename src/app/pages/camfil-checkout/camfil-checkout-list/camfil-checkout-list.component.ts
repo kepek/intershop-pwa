@@ -1,6 +1,15 @@
 // tslint:disable: ish-ordered-imports ban-specific-imports
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
-import { AfterViewInit, ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { MatDialog } from '@angular/material/dialog';
@@ -38,7 +47,7 @@ import { Basket } from 'ish-core/models/basket/basket.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['./camfil-checkout-list.component.scss'],
 })
-export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDestroy {
+export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDestroy, OnChanges {
   private static REQUIRED_COMPLETENESS_LEVEL = ProductCompletenessLevel.List;
   private destroy$ = new Subject<void>();
 
@@ -71,6 +80,7 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
   focusedCheckoutElement$: Observable<CheckoutFocusedElement>;
   focusedElement: CheckoutFocusedElement;
   focusedElementId: string;
+  forceUpdateForm = false;
   @ViewChild(CamfilSmallCtaModalComponent) modal: CamfilSmallCtaModalComponent;
 
   constructor(
@@ -79,7 +89,7 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
     private checkoutFacade: CheckoutFacade,
     private shoppingFacade: ShoppingFacade,
     private translate: TranslateService
-  ) { }
+  ) {}
 
   get currentBasketExtensions() {
     return {
@@ -144,6 +154,17 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
       this.checkoutFacade.getCustomersDeliveryTerms$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(terms => {
         this.deliveryTerm = terms[this.order?.customer?.id];
       });
+    }
+  }
+
+  ngOnChanges(s) {
+    if (s.order && this.forceUpdateForm) {
+      this.orderForm.patchValue({
+        orderMark: this.order.orderMark,
+        invoiceLabel: this.order.invoiceLabel,
+        info: this.order.info,
+      });
+      this.forceUpdateForm = false;
     }
   }
 
@@ -307,6 +328,9 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
   openEditModal(modal: EditOrderModalComponent) {
     this.dialog.open(modal.show());
     modal.hide = () => this.dialog.closeAll();
+    modal.additionalActionOnSubmit = () => {
+      this.forceUpdateForm = true;
+    };
   }
 
   setFullDeliveryDate() {

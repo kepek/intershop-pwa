@@ -124,6 +124,7 @@ describe('Camfil Checkout Page Component', () => {
 
     when(camCardFacadeMock.currentCamCard$).thenReturn(of(camCardDetails));
     when(camCardFacadeMock.camCard$).thenReturn(of([camCardDetails]));
+    when(camCardFacadeMock.customers$).thenReturn(of([]));
 
     when(checkoutFacade.buckets$).thenReturn(of([]));
     when(checkoutFacade.basketValidationResults$).thenReturn(

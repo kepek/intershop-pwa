@@ -1,7 +1,8 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { Actions, ofType } from '@ngrx/effects';
 import { Observable, ReplaySubject, Subject } from 'rxjs';
-import { filter, takeUntil, takeWhile } from 'rxjs/operators';
+import { filter, take, takeUntil, takeWhile } from 'rxjs/operators';
+import { CamCardsFacade } from 'src/app/extensions/cam-cards/facades/cam-cards.facade';
 
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
@@ -34,6 +35,7 @@ export class CamfilCheckoutPageComponent implements OnInit, OnDestroy {
   constructor(
     private checkoutFacade: CheckoutFacade,
     private shoppingFacade: ShoppingFacade,
+    private camCardsFacade: CamCardsFacade,
     // tslint:disable-next-line:no-intelligence-in-artifacts
     private updates$: Actions
   ) {}
@@ -45,6 +47,16 @@ export class CamfilCheckoutPageComponent implements OnInit, OnDestroy {
     this.emptyBuckets$ = this.checkoutFacade.emptyBuckets$;
     this.ordersLoading$ = this.checkoutFacade.ordersLoading$;
     this.validationResults$ = this.checkoutFacade.basketValidationResults$;
+
+    // because of editOrderForm
+    this.camCardsFacade.customers$
+      .pipe(
+        filter(customers => !customers.length),
+        take(1)
+      )
+      .subscribe(() => {
+        this.camCardsFacade.loadCustomers();
+      });
 
     this.initBasket();
 
