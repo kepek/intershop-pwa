@@ -21,11 +21,20 @@
     }
   }
 
+  .segment-input-container {
+    &.hidden {
+      display: none;
+      visibility: hidden;
+    }
+  }
   &__new-segment {
     display: flex;
     align-items: center;
     margin-top: 8px;
-
+    &.hidden {
+      display: none;
+      visibility: hidden;
+    }
     &--icon {
       margin-bottom: 1px;
     }
@@ -139,6 +148,13 @@
         color: $camfil-color-light;
       }
     }
+  }
+}
+
+.segment-input-container {
+  &.hidden {
+    display: none;
+    visibility: hidden;
   }
 }
 

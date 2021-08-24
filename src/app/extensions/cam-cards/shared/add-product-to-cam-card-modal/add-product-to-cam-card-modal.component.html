@@ -175,6 +175,7 @@
                 >
                   <mat-form-field appearance="outline" class="modal__input--small">
                     <input
+                      [id]="'new-section-' + option.value"
                       matInput
                       formControlName="newCamCard"
                       [placeholder]="'camfil.account.cam_card.new_cam_card.text' | translate"
