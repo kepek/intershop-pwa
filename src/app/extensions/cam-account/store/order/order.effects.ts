@@ -33,6 +33,7 @@ import {
   selectOrder,
 } from './order.actions';
 import { getSelectedOrderId } from './order.selectors';
+import { loadBasket } from 'ish-core/store/customer/basket';
 
 @Injectable()
 export class OrderEffects {
@@ -139,12 +140,13 @@ export class OrderEffects {
         whenTruthy(),
         tap(() => {
           this.router.navigateByUrl('/checkout');
-        })
+        }),
+        map(loadBasket)
       ),
-    { dispatch: false }
+    { dispatch: true }
   );
 
-  displaycreateOrderDuplicateFailMessage$ = createEffect(() =>
+  displayCreateOrderDuplicateFailMessage$ = createEffect(() =>
     this.actions$.pipe(
       ofType(createOrderDuplicateFail),
       mapToPayloadProperty('error'),
