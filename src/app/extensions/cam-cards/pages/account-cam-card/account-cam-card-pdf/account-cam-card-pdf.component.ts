@@ -313,13 +313,13 @@ export class AccountCamCardPdfComponent implements OnInit {
     const measurementsToShow = AttributeHelper.getMeasurementsText(item);
     const measurementsText = measurementsToShow ? ` | ${this.texts.measurements}: ` : '';
 
-    const qty = `${this.texts.quantity} `;
+    const qty = this.texts.quantity;
     const qtyVal = { text: item.quantity, bold: true };
     const priceObj =
       this.getCustomerPriceForItem(camCard, item) ||
       this.priceSummaryPipe.transform(this.products[sku]?.salePrice, item.quantity);
     const priceVal = PriceHelper.checkIfZeroPrice(priceObj) ? '-' : this.handlePrice(priceObj);
-    const priceLabel = showPrice ? ` | ${this.texts.price} ` : '';
+    const priceLabel = showPrice ? this.texts.price : '';
     const price = showPrice ? { text: priceVal, bold: true } : '';
     const currentProd = this.products[sku];
     const showAvailabilityDot = ProductHelper.showAvailabilityDot(currentProd);
@@ -380,9 +380,10 @@ export class AccountCamCardPdfComponent implements OnInit {
           [
             {
               fillColor: '#F2F2F2',
+              bold: true,
               text: [
-                { text: `\n ${this.texts.yourTotal} `, bold: true },
-                { text: this.handlePrice(this.sumPrice[id]), fontSize: 15, bold: true },
+                { text: `\n ${this.texts.yourTotal}  ` },
+                { text: this.handlePrice(this.sumPrice[id]), fontSize: 15 },
                 { text: '\n ' },
               ],
             },
