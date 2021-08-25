@@ -132,7 +132,7 @@
       .line-item-data-container {
         @media (min-width: $screen-xs) {
           .line-item-data-bottom {
-            flex-direction: column !important;
+            flex-direction: row !important;
             align-items: flex-start;
             camfil-product-attribute {
               margin-left: 0;
