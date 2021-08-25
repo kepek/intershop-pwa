@@ -7,6 +7,7 @@ import { concatMap, filter, map, takeWhile, tap, withLatestFrom } from 'rxjs/ope
 
 import { displayErrorMessage } from 'ish-core/store/core/messages';
 import { ofUrl, selectRouteParam } from 'ish-core/store/core/router';
+import { loadBasket } from 'ish-core/store/customer/basket';
 import { mapErrorToAction, mapToPayloadProperty, whenTruthy } from 'ish-core/utils/operators';
 
 import { OrderService } from '../../services/order/order.service';
@@ -33,7 +34,6 @@ import {
   selectOrder,
 } from './order.actions';
 import { getSelectedOrderId } from './order.selectors';
-import { loadBasket } from 'ish-core/store/customer/basket';
 
 @Injectable()
 export class OrderEffects {
