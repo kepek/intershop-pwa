@@ -1,5 +1,6 @@
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   EventEmitter,
   Input,
@@ -113,7 +114,8 @@ export class AddProductToCamCardModalComponent implements OnInit, OnDestroy, OnC
     protected fb: FormBuilder,
     protected camCardsFacade: CamCardsFacade,
     protected router: Router,
-    protected shoppingFacade: ShoppingFacade
+    protected shoppingFacade: ShoppingFacade,
+    private cdr: ChangeDetectorRef
   ) {}
 
   protected init() {
@@ -367,6 +369,12 @@ export class AddProductToCamCardModalComponent implements OnInit, OnDestroy, OnC
   showNewSegmant() {
     this.showNewSegment = true;
     this.segmentSelected = this.newSegmentValue;
+
+    setTimeout(() => {
+      const newSegment = document.querySelector(`#new-section-${this.camCardSelected}`) as HTMLElement;
+      newSegment?.focus();
+      this.cdr.detectChanges();
+    });
   }
 
   unselectRadio(event, el: MatRadioButton) {
