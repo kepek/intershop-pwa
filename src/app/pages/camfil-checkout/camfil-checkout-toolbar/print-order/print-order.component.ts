@@ -242,7 +242,7 @@ export class PrintOrderComponent implements OnInit {
     const deliveryDaysText = deliveryDays ? `${this.texts.deliveryDays}: ` : '';
     const deliveryDaysVal = { text: deliveryDays, bold: true };
     const label = item.attributes.find(attr => attr.name === 'boxLabel')?.value;
-    const boxLabelText = label ? ` | ${this.texts.boxLabel}: ` : '';
+    const boxLabelText = label ? `${this.texts.boxLabel} ` : '';
     const boxLabelVal = { text: label, bold: true };
 
     const measurementsToShow = AttributeHelper.getMeasurementsText(item);
@@ -250,11 +250,11 @@ export class PrintOrderComponent implements OnInit {
     const arrRightInfo = [
       { text: [artNo, artNoVal] },
       {
-        stack: [{ text: [deliveryDaysText, deliveryDaysVal, boxLabelText, boxLabelVal] }],
+        stack: [{ text: [deliveryDaysText, deliveryDaysVal] }, { text: [boxLabelText, boxLabelVal] }],
       },
     ];
 
-    const qty = `${this.texts.quantity} `;
+    const qty = this.texts.quantity;
     const qtyVal = { text: item.quantity.value, bold: true };
     const priceVal = PriceHelper.checkIfZeroPrice(item.totals.total)
       ? '-'
@@ -263,7 +263,7 @@ export class PrintOrderComponent implements OnInit {
           currency: item.totals.total.currency,
           type: 'Money',
         });
-    const priceLabel = ` | ${this.texts.price} `;
+    const priceLabel = this.texts.price;
     const price = { text: priceVal, bold: true };
     const arrLeftInfo = [qty, qtyVal, priceLabel, price];
 
@@ -292,9 +292,10 @@ export class PrintOrderComponent implements OnInit {
           [
             {
               fillColor: '#F2F2F2',
+              bold: true,
               text: [
-                { text: `\n ${this.texts.yourTotal} `, bold: true },
-                { text: this.handlePrice(this.summaryObjs[id].total), fontSize: 15, bold: true },
+                { text: `\n ${this.texts.yourTotal}  ` },
+                { text: this.handlePrice(this.summaryObjs[id].total), fontSize: 15 },
                 { text: '\n ' },
               ],
             },

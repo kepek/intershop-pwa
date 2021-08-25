@@ -54,7 +54,7 @@ export class PdfHelper {
     ccId?: string,
     ifDot?: boolean
   ) {
-    arrLeftInfo.unshift('\n');
+    const leftInfo = arrLeftInfo.map((el, i) => ({ text: ['\n', el], alignment: i === 1 ? 'left' : 'right' }));
     return [
       { text: index + 1, alignment: 'center', id: 'rowIndex_' + index + '_' + ccId },
       [
@@ -71,7 +71,20 @@ export class PdfHelper {
           },
         },
       ],
-      { text: arrLeftInfo, alignment: 'right', id: 'rowEnd_' + index + '_' + ccId },
+      {
+        layout: {
+          paddingLeft: () => 1,
+          paddingRight: () => 1,
+          vLineWidth: () => 0,
+          hLineWidth: () => 0,
+        },
+        margin: [0, 0, 0, 0],
+        id: 'rowEnd_' + index + '_' + ccId,
+        table: {
+          widths: [15, 15, 24, 43],
+          body: [leftInfo],
+        },
+      },
     ];
   }
 
