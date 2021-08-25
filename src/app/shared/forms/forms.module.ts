@@ -7,6 +7,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { DirectivesModule } from 'ish-core/directives.module';
 import { FeatureToggleModule } from 'ish-core/feature-toggle.module';
 import { IconModule } from 'ish-core/icon.module';
+import { PipesModule } from 'ish-core/pipes.module';
 import { MaterialModule } from 'ish-shared/material/material.module';
 
 import { CamfilCounterComponent } from './components/camfil-counter/camfil-counter.component';
@@ -50,6 +51,7 @@ const exportedComponents = [
     FeatureToggleModule,
     IconModule,
     MaterialModule,
+    PipesModule,
     ReactiveFormsModule,
     RouterModule,
     TranslateModule,
