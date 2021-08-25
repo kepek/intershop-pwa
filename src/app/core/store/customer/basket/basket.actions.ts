@@ -525,6 +525,8 @@ export const loadCustomerDeliveryTerm = createAction(
   payload<{ customerId: string }>()
 );
 
+export const loadCustomerDeliveryTermFail = createAction('[Basket API] Load Customer Delivery Term Fail', httpError());
+
 export const loadCustomerDeliveryTermSuccess = createAction(
   '[Basket API] Load Customer Delivery Term Success',
   payload<{ customerId: string; term: CustomerDeliveryTerm }>()

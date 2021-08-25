@@ -7,6 +7,7 @@ import { concatMap, filter, map, takeWhile, tap, withLatestFrom } from 'rxjs/ope
 
 import { displayErrorMessage } from 'ish-core/store/core/messages';
 import { ofUrl, selectRouteParam } from 'ish-core/store/core/router';
+import { loadBasket } from 'ish-core/store/customer/basket';
 import { mapErrorToAction, mapToPayloadProperty, whenTruthy } from 'ish-core/utils/operators';
 
 import { OrderService } from '../../services/order/order.service';
@@ -139,12 +140,13 @@ export class OrderEffects {
         whenTruthy(),
         tap(() => {
           this.router.navigateByUrl('/checkout');
-        })
+        }),
+        map(loadBasket)
       ),
-    { dispatch: false }
+    { dispatch: true }
   );
 
-  displaycreateOrderDuplicateFailMessage$ = createEffect(() =>
+  displayCreateOrderDuplicateFailMessage$ = createEffect(() =>
     this.actions$.pipe(
       ofType(createOrderDuplicateFail),
       mapToPayloadProperty('error'),

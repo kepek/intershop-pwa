@@ -4,11 +4,10 @@ import {
   AfterViewInit,
   ChangeDetectionStrategy,
   Component,
-  EventEmitter,
   Input,
+  OnChanges,
   OnDestroy,
   OnInit,
-  Output,
   ViewChild,
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -24,7 +23,7 @@ import { BasketExtensions } from 'ish-core/models/basket/basket.interface';
 import { Bucket } from 'ish-core/models/basket/bucket.model';
 import { CustomerDeliveryTerm } from 'ish-core/models/customer/customer.interface';
 import { LineItemData } from 'ish-core/models/line-item/line-item.interface';
-import { LineItem } from 'ish-core/models/line-item/line-item.model';
+import { LineItem, LineItemView } from 'ish-core/models/line-item/line-item.model';
 import { Price, PriceHelper } from 'ish-core/models/price/price.model';
 import { ProductViewHelper } from 'ish-core/models/product-view/product-view.helper';
 import { ProductView } from 'ish-core/models/product-view/product-view.model';
@@ -40,10 +39,7 @@ import { Address } from 'ish-core/models/address/address.model';
 import { AddEmailRecipientModalComponent } from '../add-email-recipient-modal/add-email-recipient-modal.component';
 import { TranslateService } from '@ngx-translate/core';
 import { CheckoutFocusedElement } from 'ish-core/models/scroll-info copy/checkout-focused-element.interface';
-
-interface Order extends Bucket {
-  totals: number;
-}
+import { Basket } from 'ish-core/models/basket/basket.model';
 
 @Component({
   selector: 'camfil-checkout-list',
@@ -51,24 +47,19 @@ interface Order extends Bucket {
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['./camfil-checkout-list.component.scss'],
 })
-export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDestroy {
+export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDestroy, OnChanges {
   private static REQUIRED_COMPLETENESS_LEVEL = ProductCompletenessLevel.List;
-  @Input() order: Order;
+  private destroy$ = new Subject<void>();
+
+  @Input() order: Bucket;
   @Input() buckets: Bucket[];
-  @Input() purchaseCurrency: string;
+  @Input() basket: Basket;
+  @Input() isConfirmed: boolean;
+  @Input() index: number;
+
   isOrderOpen = true;
   orderForm: FormGroup;
-
   validators = ORDER_HEADER_VALIDATORS;
-  @Input() shippingMethodId: string;
-  @Input() basket;
-  @Input() isConfirmed;
-  @Input() totalOrders;
-  @Input() index;
-
-  @Output() handleProduct = new EventEmitter<ProductView>();
-  calculatedOrder;
-
   selectedDeliveryDate: number;
   firstAvailableDelivery: string;
   deliveryDatesRange: Date[];
@@ -85,14 +76,12 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
   emailRecipients: string[];
   emailRecipients$: Observable<string[]>;
   basketExtensions: BasketExtensions[];
-  basketExtensions$: Observable<BasketExtensions[]>;
   deliveryDateValue: string;
   focusedCheckoutElement$: Observable<CheckoutFocusedElement>;
   focusedElement: CheckoutFocusedElement;
   focusedElementId: string;
+  forceUpdateForm = false;
   @ViewChild(CamfilSmallCtaModalComponent) modal: CamfilSmallCtaModalComponent;
-
-  private destroy$ = new Subject<void>();
 
   constructor(
     private fb: FormBuilder,
@@ -120,13 +109,17 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
     return this.deliveryDateValue ? this.deliveryDateValue : this.order?.deliveryDate;
   }
 
+  get shipToAddress() {
+    return { ...this.order.shipToAddressFull, countryCode: '' };
+  }
+
   ngOnInit(): void {
     this.calendarExceptions$ = this.checkoutFacade.calendarExceptions$;
 
-    this.orderAddress = { ...this.order.shipToAddressFull, countryCode: '' };
+    this.orderAddress = this.shipToAddress;
     this.emailRecipients$ = this.checkoutFacade.getBucketEmailRecipients$(this.order?.shipToAddressFull?.id);
 
-    this.emailRecipients$?.subscribe(value => {
+    this.emailRecipients$?.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(value => {
       this.emailRecipients = value?.filter(er => er !== '');
     });
 
@@ -136,6 +129,16 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
         date.setHours(0, 0, 0);
         return date.getTime();
       });
+
+      const deliveryDateControl = this.orderForm?.get('deliveryDate');
+
+      if (deliveryDateControl) {
+        if (!this.calendarException.length) {
+          deliveryDateControl.disable();
+        } else {
+          deliveryDateControl.enable();
+        }
+      }
     });
 
     this.focusedCheckoutElement$ = this.checkoutFacade.getFocusedCheckoutElement$;
@@ -158,12 +161,26 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
     }
   }
 
+  ngOnChanges(s) {
+    if (s.order && this.forceUpdateForm) {
+      this.orderForm.patchValue({
+        orderMark: this.order.orderMark,
+        invoiceLabel: this.order.invoiceLabel,
+        info: this.order.info,
+      });
+      this.orderAddress = this.shipToAddress;
+      this.forceUpdateForm = false;
+    }
+  }
+
   ngAfterViewInit() {
     if (this.focusedElementId) {
-      setTimeout(() => {
+      const focusTimeout = setTimeout(() => {
         const element = document.querySelector(`#${this.focusedElementId}`) as HTMLElement;
         element?.focus();
       }, 300);
+
+      clearTimeout(focusTimeout);
     }
   }
 
@@ -172,7 +189,10 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
   }
 
   initForm() {
-    const defaultDeliveryDate = this.setFullDeliveryDate();
+    // TODO (extMlk): PERFORMANCE - This calls for all prod details.
+    // tslint:disable-next-line:no-commented-out-code
+    // const defaultDeliveryDate = this.setFullDeliveryDate();
+    const defaultDeliveryDate = new Date().getTime();
 
     this.orderForm = this.fb.group({
       orderMark: [this.order.orderMark, [Validators.maxLength(60)]],
@@ -206,30 +226,36 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
     this.checkoutFacade.setCheckoutFocusedElement(target.id);
   }
 
-  handleProductLoad(product) {
-    this.handleProduct.emit(product);
-  }
-
   toggleOrder() {
     this.isOrderOpen = !this.isOrderOpen;
   }
 
+  // tslint:disable-next-line:force-jsdoc-comments
+  // TODO (extMlk): PERFORMANCE - it should be moved to applyPricing method instead of calling fn in template
   totalPrice(type = 'net'): Price {
     return PriceHelper.totalPrice(this.order?.lineItems, type);
   }
 
+  // tslint:disable-next-line:force-jsdoc-comments
+  // TODO (extMlk): PERFORMANCE - it should be moved to applyPricing method instead of calling fn in template
   totalTax(): Price {
     return PriceHelper.totalTax(this.order?.lineItems);
   }
 
+  // tslint:disable-next-line:force-jsdoc-comments
+  // TODO (extMlk): PERFORMANCE - it should be moved to applyPricing method instead of calling fn in template
   savedAmount(): Price {
     return PriceHelper.savedAmount(this.order?.lineItems);
   }
 
+  // tslint:disable-next-line:force-jsdoc-comments
+  // TODO (extMlk): PERFORMANCE - it should be moved to applyPricing method instead of calling fn in template
   discount(): Price {
     return PriceHelper.discount(this.order?.lineItems);
   }
 
+  // tslint:disable-next-line:force-jsdoc-comments
+  // TODO (extMlk) it should be moved to applyPricing method instead of calling fn in template
   getVolumeDiscountPrice(value, currency) {
     return PriceHelper.getVolumeDiscountPrice(value, currency, this.translate.currentLang);
   }
@@ -243,12 +269,6 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
   openAddToProductModal(modal: ModalAddNewProductComponent) {
     this.dialog.open(modal.show());
     modal.hide = () => this.dialog.closeAll();
-  }
-
-  sortBy() {
-    const items: LineItemData[] = Object.keys(this.order.lineItems).map(i => this.order.lineItems[i]);
-
-    return items.sort((a, b) => (a.position < b.position ? -1 : 1));
   }
 
   getTargetPosition(previousIndex, currentIndex, items) {
@@ -290,7 +310,7 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
     this.checkoutFacade.camfilDragLineItem(basketId, updatedLineItem, targetBucket);
   }
 
-  drop(event: CdkDragDrop<string[]>, targetOrder: Bucket) {
+  drop(event: CdkDragDrop<LineItemView[]>, targetOrder: Bucket) {
     if (event.previousContainer === event.container) {
       if (event.previousIndex === event.currentIndex) {
         return;
@@ -313,6 +333,9 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
   openEditModal(modal: EditOrderModalComponent) {
     this.dialog.open(modal.show());
     modal.hide = () => this.dialog.closeAll();
+    modal.additionalActionOnSubmit = () => {
+      this.forceUpdateForm = true;
+    };
   }
 
   setFullDeliveryDate() {
@@ -424,11 +447,6 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
     }
   }
 
-  openSuccessModal() {
-    this.dialog.open(this.modal?.show());
-    this.modal.hide = () => this.dialog.closeAll();
-  }
-
   updateBucketDeliveryDate(isPartial: boolean, deliveryDate: number) {
     const basketId = this.order.basket;
     const shipAddressId = this.order.deliveryAddressId;
@@ -450,8 +468,8 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
       this.dialog.closeAll();
     };
 
-    /* Call funtion after dialog is closed either by click, backdrop click, or ESC press */
-    this.dialog.afterAllClosed.pipe(first()).subscribe(() => {
+    /* call c after dialog is closed either by click, backdrop click, or ESC press */
+    this.dialog.afterAllClosed.pipe(first(), takeUntil(this.destroy$)).subscribe(() => {
       this.shoppingFacade.updateBucket(basketId, shipAddressId, basketExtensionUpdate);
     });
   }
@@ -541,5 +559,13 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
     });
 
     return [...new Set(itemsDeliveryDates)];
+  }
+
+  trackBy(_, lineItem: LineItemView) {
+    return lineItem.productSKU;
+  }
+
+  product$(sku: string) {
+    return this.shoppingFacade.product$(sku, ProductCompletenessLevel.List);
   }
 }

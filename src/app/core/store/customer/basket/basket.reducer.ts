@@ -116,7 +116,6 @@ export interface BasketState {
   eligibleShippingMethods: ShippingMethod[];
   eligiblePaymentMethods: PaymentMethod[];
   loading: boolean;
-  lineItemUpdating: boolean;
   promotionError: HttpError; // for promotion-errors
   error: HttpError; // add, update and delete errors
   info: BasketInfo[];
@@ -147,7 +146,6 @@ export const initialState: BasketState = {
   eligibleShippingMethods: undefined,
   eligiblePaymentMethods: undefined,
   loading: false,
-  lineItemUpdating: false,
   error: undefined,
   failedCamCardName: undefined,
   info: undefined,
@@ -252,7 +250,6 @@ export const basketReducer = createReducer(
   ),
   on(updateBasketItemAttributes, addBasketItemAttributes, deleteBasketItemAttributes, (state: BasketState) => ({
     ...state,
-    lineItemUpdating: true,
   })),
   on(updateBasketItems, deleteBasketItem, (state: BasketState) => ({
     ...state,
@@ -472,10 +469,9 @@ export const basketReducer = createReducer(
         : li
     );
     const selectedBucket = state.buckets?.filter(b => b.id === bucketId)[0];
-    const selectedBucketLinetIems = lineItems?.filter(li => selectedBucket?.lineItems.some(item => item.id === li.id));
+    const selectedBucketLinetItems = lineItems?.filter(li => selectedBucket?.lineItems.some(item => item.id === li.id));
     return {
       ...state,
-      lineItemUpdating: false,
       basket: {
         ...state.basket,
         lineItems,
@@ -484,7 +480,7 @@ export const basketReducer = createReducer(
         b.id === bucketId
           ? {
               ...b,
-              selectedBucketLinetIems,
+              selectedBucketLinetItems,
             }
           : b
       ),
@@ -503,7 +499,6 @@ export const basketReducer = createReducer(
       );
     return {
       ...state,
-      lineItemUpdating: false,
       basket: {
         ...state.basket,
         lineItems: filteredItems(state.basket.lineItems),

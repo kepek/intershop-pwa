@@ -11,22 +11,22 @@ import { CamfilCheckoutDeliveryAddressComponent } from '../camfil-checkout/camfi
 import { CamfilCheckoutListComponent } from '../camfil-checkout/camfil-checkout-list/camfil-checkout-list.component';
 import { CamfilDeleteOrderComponent } from '../camfil-checkout/camfil-checkout-list/camfil-delete-order/camfil-delete-order.component';
 import { EditOrderModalComponent } from '../camfil-checkout/camfil-checkout-list/edit-order-modal/edit-order-modal.component';
+import { CamfilCheckoutPageComponent } from '../camfil-checkout/camfil-checkout-page.component';
 import { CamfilCheckoutSummaryComponent } from '../camfil-checkout/camfil-checkout-summary/camfil-checkout-summary.component';
 import { CamfilCheckoutToolbarComponent } from '../camfil-checkout/camfil-checkout-toolbar/camfil-checkout-toolbar.component';
 import { CreateNewCamcardComponent } from '../camfil-checkout/camfil-checkout-toolbar/create-new-camcard/create-new-camcard.component';
 import { CreateOrderButtonComponent } from '../camfil-checkout/camfil-checkout-toolbar/create-order-button/create-order-button.component';
 import { PrintOrderComponent } from '../camfil-checkout/camfil-checkout-toolbar/print-order/print-order.component';
 import { CamfilCheckoutValidationComponent } from '../camfil-checkout/camfil-checkout-validation/camfil-checkout-validation.component';
-import { CheckoutPageComponent } from '../camfil-checkout/checkout-page.component';
 
 const checkoutPageRoutes: Routes = [
   {
     path: '',
-    component: CheckoutPageComponent,
+    component: CamfilCheckoutPageComponent,
     children: [
       {
         path: '**',
-        component: CheckoutPageComponent,
+        component: CamfilCheckoutPageComponent,
       },
     ],
   },
@@ -40,11 +40,11 @@ const checkoutPageRoutes: Routes = [
     CamfilCheckoutHeaderComponent,
     CamfilCheckoutLineItemComponent,
     CamfilCheckoutListComponent,
+    CamfilCheckoutPageComponent,
     CamfilCheckoutSummaryComponent,
     CamfilCheckoutToolbarComponent,
     CamfilCheckoutValidationComponent,
     CamfilDeleteOrderComponent,
-    CheckoutPageComponent,
     CreateNewCamcardComponent,
     CreateOrderButtonComponent,
     EditOrderModalComponent,

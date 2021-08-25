@@ -95,9 +95,11 @@
 
   ::ng-deep {
     camfil-product-title {
+      display: block;
+      max-width: 235px;
       overflow: hidden;
       text-overflow: ellipsis;
-      word-wrap: normal;
+      white-space: nowrap;
     }
     .box-label-attribute {
       max-width: 100%;
@@ -163,10 +165,6 @@
     .camfil-product-attribute {
       margin-bottom: 0;
     }
-    .camfil-product-title {
-      display: block;
-      max-width: 235px;
-    }
     .confirmed-product-title {
       max-width: 100%;
       .camfil-product-title {
@@ -174,9 +172,10 @@
         max-width: 100%;
       }
     }
-    .product-image {
-      max-width: 40px;
-      max-height: 40px;
+    camfil-product-image {
+      display: block;
+      width: 40px;
+      height: 40px;
     }
     .form-group {
       margin-bottom: 0;
@@ -231,7 +230,6 @@
     margin-left: $space-box;
   }
 
-  // .measurements, // no edit for measurements on checkout now
   .box-label {
     &__form {
       margin-right: $space-box;
@@ -246,16 +244,4 @@
       }
     }
   }
-  // out because of no edit for measurements on checkout now
-  // .measurements__form--field {
-  //   width: 80px;
-  //   ::ng-deep {
-  //     .mat-form-field {
-  //       &-wrapper,
-  //       &-flex {
-  //         margin-top: 0;
-  //       }
-  //     }
-  //   }
-  // }
 }

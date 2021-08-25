@@ -12,7 +12,9 @@ import { LineItemView } from 'ish-core/models/line-item/line-item.model';
 import { PricePipe } from 'ish-core/models/price/price.pipe';
 import { ProductView } from 'ish-core/models/product-view/product-view.model';
 import { CamfilDimensionPipe } from 'ish-core/pipes/camfil-dimension.pipe';
+import { CamfilPriceSummaryPipe } from 'ish-core/pipes/camfil-price-summary.pipe';
 import { CamfilProductAttributeValPipe } from 'ish-core/pipes/camfil-product-attribute-val';
+import { CamfilSlugifyPipe } from 'ish-core/pipes/camfil-slugify.pipe';
 import { DatePipe } from 'ish-core/pipes/date.pipe';
 import { ProductRoutePipe } from 'ish-core/routing/product/product-route.pipe';
 import { CamfilErrorComponent } from 'ish-shared/components/common/camfil-error/camfil-error.component';
@@ -65,7 +67,9 @@ describe('Camfil Checkout Line Item Component', () => {
         MockComponent(ProductBundleDisplayComponent),
         MockComponent(ProductVariationDisplayComponent),
         MockPipe(CamfilDimensionPipe),
+        MockPipe(CamfilPriceSummaryPipe),
         MockPipe(CamfilProductAttributeValPipe),
+        MockPipe(CamfilSlugifyPipe),
         MockPipe(DatePipe),
         MockPipe(PricePipe),
         MockPipe(ProductRoutePipe),
@@ -83,7 +87,7 @@ describe('Camfil Checkout Line Item Component', () => {
     component = fixture.componentInstance;
     element = fixture.nativeElement;
 
-    component.item = ({
+    component.lineItem = ({
       quantity: {
         value: 5,
       },

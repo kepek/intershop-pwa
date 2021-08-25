@@ -1,4 +1,4 @@
-<mat-card class="mat-elevation-4 summary-container sticky-container">
+<mat-card class="mat-elevation-4 summary-container sticky-container" *ngIf="basket">
   <p class="summary-title">{{ 'camfil.checkout.total_order_summary' | translate }}</p>
   <br />
   <mat-card-content>
@@ -25,21 +25,28 @@
     <br />
     <mat-divider></mat-divider>
     <br />
-    <button
-      *ngIf="!isConfirmed"
-      mat-flat-button
-      color="primary"
-      [disabled]="!(productsReadyToPlaceOrder$ | async)"
-      title="{{
-        !(productsReadyToPlaceOrder$ | async) ? ('camfil.checkout.wait_till_validation.button.text' | translate) : ''
-      }} "
-      (click)="submitOrder()"
-    >
-      {{ 'camfil.checkout.place_your_orders' | translate }}
-    </button>
-    <button mat-flat-button color="primary" (click)="continueShopping()" *ngIf="isConfirmed">
-      {{ 'camfil.checkout.confirmation.continue_shopping' | translate }}
-    </button>
+    <ng-template #noConfirmed>
+      <button
+        mat-flat-button
+        color="primary"
+        [disabled]="!(productsReadyToPlaceOrder$ | async)"
+        (click)="submitOrder()"
+      >
+        <ng-container *ngIf="productsReadyToPlaceOrder$ | async as readyToOrder">
+          <ng-template #notReadyToOrder>
+            {{ 'camfil.checkout.wait_till_validation.button.text' | translate }}
+          </ng-template>
+          <ng-container *ngIf="readyToOrder; else notReadyToOrder">
+            {{ 'camfil.checkout.place_your_orders' | translate }}
+          </ng-container>
+        </ng-container>
+      </button>
+    </ng-template>
+    <ng-container *ngIf="isConfirmed; else noConfirmed">
+      <button mat-flat-button color="primary" (click)="continueShopping()">
+        {{ 'camfil.checkout.confirmation.continue_shopping' | translate }}
+      </button>
+    </ng-container>
     <br />
     <br />
     <mat-divider></mat-divider>

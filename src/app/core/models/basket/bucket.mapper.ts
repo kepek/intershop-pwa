@@ -18,7 +18,8 @@ export class BucketMapper {
         basket: bucketData.basket,
         lineItems: bucketData.lineItems
           .map(id => lineItems.find(element => element.id === id))
-          .filter(element => !!element),
+          .filter(element => !!element)
+          .sort((a, b) => (a.position < b.position ? -1 : 1)),
         shippingMethod: bucketData.shippingMethod,
         deliveryAddressId: shipToAddress ? shipToAddress.id : '',
         shipToAddress: extension ? extension.shippingAddress.urn : '',

@@ -1,10 +1,11 @@
-<ng-container *ngIf="product$ | async as productData">
+<ng-template #noProduct>Loading product...</ng-template>
+
+<ng-container *ngIf="product$ | async as product; else noProduct">
   <div class="line-item d-flex align-items-center text-left" [class]="{ 'line-item__confirmed': isConfirmed }">
     <div class="d-flex align-items-center align-self-start align-self-md-center text-left w-100">
-      <!-- <ng-container *ngIf="isViewMode">{{ index }}</ng-container> -->
-      <a class="image ml-0 mx-md-3" [routerLink]="productData | ishProductRoute">
+      <a class="image ml-0 mx-md-3" [routerLink]="product | ishProductRoute">
         <camfil-product-image
-          [product]="productData"
+          [product]="product"
           imageType="images"
           [imageView]="'default'"
           class="product-image"
@@ -15,13 +16,14 @@
           <div class="flex-row line-item-data-top">
             <camfil-product-title
               [class.confirmed-product-title]="isConfirmed"
-              [product]="productData"
+              [product]="product"
+              [matTooltip]="product.name"
             ></camfil-product-title>
           </div>
           <div class="line-item-data-bottom d-flex flex-row flex-wrap">
             <camfil-product-attribute
               [name]="'camfil.cam_card.product.id.label' | translate"
-              [value]="productData.sku"
+              [value]="product.sku"
             ></camfil-product-attribute>
             <camfil-product-attribute
               *ngIf="isConfirmed"
@@ -33,7 +35,7 @@
               <button mat-button (click)="openQuickViewDialog(); $event.stopPropagation()">
                 <mat-icon svgIcon="search" class="size-15"></mat-icon>
               </button>
-              <camfil-product-inventory class="px-2" [product]="productData"></camfil-product-inventory>
+              <camfil-product-inventory class="px-2" [product]="product"></camfil-product-inventory>
             </div>
             <camfil-product-attribute
               *ngIf="measurementsToShow()"
@@ -45,90 +47,66 @@
         </div>
       </div>
     </div>
-    <div>
-      <div class="box-label" *ngIf="!isConfirmed">
-        <form [formGroup]="boxLabelForm" class="box-label__form">
-          <mat-form-field appearance="outline" class="box-label__form--field">
-            <mat-label>{{ 'camfil.cam_card.product.comment.label' | translate }}</mat-label>
-            <textarea
-              class="overflow-hidden"
-              cdkTextareaAutosize
-              matInput
-              type="text"
-              formControlName="boxLabel"
-              name="boxLabel"
-              (blur)="onBlur($event.target, boxLabelForm)"
-              [id]="'line-item-box-label-' + removeDots(item?.id)"
-              (focus)="setFocusedElement($event.target)"
-              #autosize="cdkTextareaAutosize"
-              cdkAutosizeMinRows="1"
-              cdkAutosizeMaxRows="3"
-            ></textarea>
-          </mat-form-field>
-          <camfil-error
-            [errors]="getField('boxLabel', boxLabelForm).errors"
-            [errorValidators]="attrsValidator.boxLabel"
-            [touched]="getField('boxLabel', boxLabelForm).touched || getField('boxLabel', boxLabelForm).dirty"
-          ></camfil-error>
-        </form>
-      </div>
-
-      <!-- // if client will want to edit measurements on checkout -->
-      <!-- <div class="measurements" *ngIf="!isConfirmed && requiresMeasurement">
-        <form [formGroup]="measurementsForm" class="measurements__form justify-content-between flex-nowrap d-flex">
-          <ng-container *ngFor="let measurement of measurementsValues">
-            <mat-form-field appearance="outline" class="measurements__form--field">
-              <mat-label>{{ 'camfil.dynamic.cart.product.' + measurement + '.label' | translate }}</mat-label>
-              <input
-                matInput
-                type="text"
-                [id]="measurement"
-                [name]="measurement"
-                [formControlName]="measurement"
-                (blur)="onBlur($event.target, measurementsForm)"
-              />
-            </mat-form-field>
-          </ng-container>
-        </form>
-      </div> -->
+    <div class="box-label" *ngIf="!isConfirmed">
+      <form [formGroup]="boxLabelForm" class="box-label__form">
+        <mat-form-field appearance="outline" class="box-label__form--field">
+          <mat-label>{{ 'camfil.cam_card.product.comment.label' | translate }}</mat-label>
+          <textarea
+            class="overflow-hidden"
+            cdkTextareaAutosize
+            matInput
+            type="text"
+            formControlName="boxLabel"
+            name="boxLabel"
+            (blur)="onBlur($event.target, boxLabelForm)"
+            [id]="lineItem?.id | slugify: 'line-item-box-label'"
+            (focus)="setFocusedElement($event.target)"
+            #autosize="cdkTextareaAutosize"
+            cdkAutosizeMinRows="1"
+            cdkAutosizeMaxRows="3"
+          ></textarea>
+        </mat-form-field>
+        <camfil-error
+          [errors]="getField('boxLabel', boxLabelForm).errors"
+          [errorValidators]="attrsValidator.boxLabel"
+          [touched]="getField('boxLabel', boxLabelForm).touched || getField('boxLabel', boxLabelForm).dirty"
+        ></camfil-error>
+      </form>
     </div>
-
-    <ng-container *ngIf="!productData.failed; else productNotAvailable">
+    <ng-container *ngIf="!product.failed; else productNotAvailable">
       <div class="delivery-date-container">
         <p class="delivery-date-para">
           <strong>{{ 'camfil.checkout.order.earliest_delivery_date.text' | translate }}</strong>
         </p>
-        <p *ngIf="isConfirmed; else eariestDelivery" class="delivery-date-para">
+        <p *ngIf="isConfirmed; else earliestDelivery" class="delivery-date-para">
           {{ deliveryAfterOrderConfirmed() | ishDate }}
         </p>
-        <ng-template #eariestDelivery>
+        <ng-template #earliestDelivery>
           <p class="delivery-date-para">{{ earliestDeliveryDate | ishDate }}</p>
         </ng-template>
       </div>
       <div class="quantity-row d-flex flex-row justify-content-between align-items-center py-3 py-md-0">
-        <span *ngIf="isConfirmed" class="quantity-confirmed">{{ item.quantity.value }}</span>
+        <span *ngIf="isConfirmed" class="quantity-confirmed">{{ lineItem.quantity.value }}</span>
         <a
           class="btn-tool delete-cam-card"
           (click)="openDeleteModal()"
-          [ngClass]="{ 'ml-md-auto': isEditMode }"
           data-testing-id="delete-cam-card"
           *ngIf="!isConfirmed"
         >
           <mat-icon svgIcon="delete" class="size-16 mx-2"></mat-icon>
         </a>
-        <form [formGroup]="addToCartForm" *ngIf="productData.inStock && productData.availability && !isConfirmed">
+        <form [formGroup]="addToCartForm" *ngIf="product.inStock && product.availability && !isConfirmed">
           <camfil-product-quantity
             [allowZeroQuantity]="false"
             [quantityLabel]="''"
-            [product]="productData"
+            [product]="product"
             [parentForm]="addToCartForm"
-            [ngClass]="{ 'ml-md-auto': isEditMode }"
             controlName="quantity"
             [isInLineItem]="true"
-            [lineItemId]="removeDots(item?.id)"
+            [lineItemId]="lineItem?.id | slugify: 'line-item-box-label'"
           ></camfil-product-quantity>
         </form>
-        <div class="prices" [ngClass]="{ 'ml-md-auto': isEditMode }">
+        <div class="prices">
           <ng-container *ngTemplateOutlet="price"></ng-container>
         </div>
       </div>
@@ -140,7 +118,6 @@
       <a
         class="btn-tool delete-cam-card"
         (click)="openDeleteModal()"
-        [ngClass]="{ 'ml-md-auto': isEditMode }"
         data-testing-id="delete-cam-card"
         *ngIf="!isConfirmed"
       >
@@ -152,77 +129,24 @@
   <ng-template #price>
     <camfil-product-attribute
       [name]="'camfil.cam_card.product.list_price.label' | translate"
-      [value]="listPriceRow.value ? (listPriceRow | ishPrice) : '-'"
+      [value]="product.listPrice | camfilPriceSummary: lineItem?.quantity?.value | ishPrice"
       [overflowVisible]="true"
     ></camfil-product-attribute>
     <camfil-product-attribute
       [name]="'camfil.cam_card.product.your_price.label' | translate"
-      [value]="item.price | ishPrice"
+      [value]="product.salePrice | camfilPriceSummary: lineItem?.quantity?.value | ishPrice"
       [overflowVisible]="true"
     ></camfil-product-attribute>
   </ng-template>
-
-  <!-- <div class="d-flex">
-    <div class="col-1 col-md-2 list-item d-flex">
-      <ish-checkbox *ngIf="selectItemForm" [form]="selectItemForm" controlName="productDataCheckbox"> </ish-checkbox>
-      <a class="d-none d-md-inline" [routerLink]="productData | ishProductRoute">
-        <camfil-product-image [product]="productData" imageType="S" class="productData-image"></camfil-product-image>
-      </a>
-    </div>
-    <div class="col-8 col-md-6 list-item d-block d-md-flex">
-      <div class="col-12 col-md-9 pli-description">
-        <a [routerLink]="productData | ishProductRoute" class="productData-title" data-testing-id="cam-card-product-link">
-          {{ product.name }}
-        </a>
-        <camfil-product-id [product]="productData"></camfil-product-id>
-        <ish-product-variation-display [product]="productData"></ish-product-variation-display>
-        <ish-product-bundle-display
-          *ngIf="productData.type === 'Bundle'"
-          [productBundleSKU]="productData.sku"
-        ></ish-product-bundle-display>
-        <camfil-product-inventory [product]="productData"></camfil-product-inventory>
-        <div class="btn-group mb-2">
-          <a class="btn-tool" (click)="moveDialog.show()" data-testing-id="move-cam-card">
-            <fa-icon
-              [icon]="['fas', 'arrows-alt']"
-              [title]="'camfil.account.cam_card.table.options.move_to_template' | translate"
-            ></fa-icon>
-          </a>
-          <a class="btn-tool" (click)="removeProductFromCamCard(camCardItemData?.id)" data-testing-id="delete-cam-card">
-            <fa-icon
-              [icon]="['fas', 'trash-alt']"
-              [title]="'modal.heading.remove.cam_card.template' | translate"
-            ></fa-icon>
-          </a>
-        </div>
-      </div>
-      <div class="col-6 col-md-3 p-md-0 text-right">
-        <form [formGroup]="addToCartForm">
-          <camfil-product-quantity
-            [allowZeroQuantity]="false"
-            [quantityLabel]="''"
-            [product]="productData"
-            [parentForm]="addToCartForm"
-            controlName="quantity"
-          ></camfil-product-quantity>
-        </form>
-      </div>
-    </div>
-    <div class="col-2 list-item d-none d-md-block text-right">
-      {{ camCardItemData?.creationDate | ishDate: 'shortDate' }}
-    </div>
-    <div class="col-4 col-md-2 list-item column-price">
-      <camfil-product-price [product]="productData"></camfil-product-price>
-    </div>
-  </div> -->
 </ng-container>
+
 <camfil-small-cta-modal
   actionButtonTitle="{{ 'camfil.checkout.order.delete_order.modal.yes' | translate }}"
   cancelButtonTitle="{{ 'camfil.checkout.order.delete_order.modal.no' | translate }}"
   showCloseIcon="true"
   hideIcon="true"
   [actionTemplate]="actionTemplate"
-  (actionClicked)="removeProduct(item.id)"
+  (actionClicked)="removeProduct(lineItem.id)"
 >
 </camfil-small-cta-modal>
 

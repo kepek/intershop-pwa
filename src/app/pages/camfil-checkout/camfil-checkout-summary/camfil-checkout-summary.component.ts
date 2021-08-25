@@ -21,8 +21,8 @@ export class CamfilCheckoutSummaryComponent implements OnInit, OnChanges {
 
   productsReadyToPlaceOrder$: Observable<boolean>;
   bucketsVolumeDiscounts$: Observable<number>;
-  basketVolumeDiscount;
-  isTracked = false;
+
+  private isTracked = false;
 
   constructor(
     private checkoutFacade: CheckoutFacade,
@@ -48,10 +48,12 @@ export class CamfilCheckoutSummaryComponent implements OnInit, OnChanges {
 
     // In case of user from ICM back office, add employeeID as externalOrderReference
     const erpEmployeeId = localStorage.getItem('erpEmployeeId');
+
     if (erpEmployeeId) {
       this.checkoutFacade.updateBasketExternalOrderReference(erpEmployeeId);
     }
 
+    this.checkoutFacade.setBasketPayment('ISH_INVOICE');
     this.checkoutFacade.continue(5);
   }
 

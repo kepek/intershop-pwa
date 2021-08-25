@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnDestroy, TemplateRef, ViewChild } from '@angular/core';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Subject } from 'rxjs';
 
@@ -16,7 +16,7 @@ import { OrderFormComponent } from '../../../../extensions/cam-cards/shared/add-
   templateUrl: './edit-order-modal.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class EditOrderModalComponent implements OnInit, OnDestroy {
+export class EditOrderModalComponent implements OnDestroy {
   modal: NgbModalRef;
   @ViewChild('modal', { static: false }) modalTemplate: TemplateRef<unknown>;
 
@@ -29,10 +29,6 @@ export class EditOrderModalComponent implements OnInit, OnDestroy {
 
   // @ts-ignore
   constructor(private shoppingFacade: ShoppingFacade, private checkoutFacade: CheckoutFacade) {}
-
-  ngOnInit() {
-    this.editOrder = this.convertToFormValues();
-  }
 
   convertToFormValues() {
     return {
@@ -84,9 +80,16 @@ export class EditOrderModalComponent implements OnInit, OnDestroy {
             address
           );
 
+      this.additionalActionOnSubmit();
       this.hide();
     }
   }
+
+  /**
+   * used in parent component as extra action onSubmit
+   * DO NOT REMOVE
+   */
+  additionalActionOnSubmit() {}
 
   getUpdatedBasketExtension(): BasketExtensions {
     const form = this.orderForm.addressForm;
@@ -129,6 +132,7 @@ export class EditOrderModalComponent implements OnInit, OnDestroy {
 
   /** open modal */
   show() {
+    this.editOrder = this.convertToFormValues();
     return this.modalTemplate;
   }
 

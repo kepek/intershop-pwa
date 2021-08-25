@@ -7,6 +7,7 @@ import { instance, mock, when } from 'ts-mockito';
 import { ServerHtmlDirective } from 'ish-core/directives/server-html.directive';
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
+import { BasketTotal } from 'ish-core/models/basket-total/basket-total.model';
 import { PricePipe } from 'ish-core/models/price/price.pipe';
 import { AddressSortPipe } from 'ish-core/pipes/camfil-address-sort.pipe';
 import { DatePipe } from 'ish-core/pipes/date.pipe';
@@ -107,10 +108,13 @@ describe('Camfil Checkout List Component', () => {
         },
       ],
       lineItems: [],
-      totals: 999,
     };
 
     component.basket = {
+      id: 'test_customerId2',
+      totals: {
+        total: { gross: 2000, net: 1800, currency: 'USD' },
+      } as BasketTotal,
       basketExtensions: [
         {
           emailRecipients: ['test@test.se'],

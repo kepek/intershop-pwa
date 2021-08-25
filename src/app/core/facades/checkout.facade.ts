@@ -6,6 +6,7 @@ import { TrackingService } from 'src/app/extensions/tracking/services/tracking.s
 
 import { Address } from 'ish-core/models/address/address.model';
 import { Attribute } from 'ish-core/models/attribute/attribute.model';
+import { BasketValidationScopeType } from 'ish-core/models/basket-validation/basket-validation.model';
 import { BasketView } from 'ish-core/models/basket/basket.model';
 import { Bucket } from 'ish-core/models/basket/bucket.model';
 import { LineItemUpdate } from 'ish-core/models/line-item-update/line-item-update.model';
@@ -36,7 +37,6 @@ import {
   getBasketEligiblePaymentMethods,
   getBasketEligibleShippingMethods,
   getBasketError,
-  getBasketExtensions,
   getBasketInfo,
   getBasketInvoiceAddress,
   getBasketLastTimeProductAdded,
@@ -51,7 +51,6 @@ import {
   getCurrentBuckets,
   getCustomersDeliveryTerms,
   getEmptyBuckets,
-  getLineItemUpdating,
   getSubmittedBasket,
   getWarehouseCalendar,
   isBasketInvoiceAndShippingAddressEqual,
@@ -70,6 +69,7 @@ import {
   updateBasketShippingMethod,
   updateConcardisCvcLastUpdated,
   updateEmptyBucket,
+  validateBasket,
 } from 'ish-core/store/customer/basket';
 import { getOrdersError, getOrdersLoading, getSelectedOrder } from 'ish-core/store/customer/orders';
 import { getLoggedInUser } from 'ish-core/store/customer/user';
@@ -91,6 +91,10 @@ export class CheckoutFacade {
     this.store.dispatch(continueCheckout({ targetStep }));
   }
 
+  validate(scopes: BasketValidationScopeType[]) {
+    this.store.dispatch(validateBasket({ scopes }));
+  }
+
   // BASKET
 
   basket$ = this.store.pipe(select(getCurrentBasket));
@@ -106,9 +110,8 @@ export class CheckoutFacade {
   );
   submittedBasket$ = this.store.pipe(select(getSubmittedBasket));
   calendarExceptions$ = this.store.pipe(select(getCalendarExceptions));
-  basketExtensions$ = this.store.pipe(select(getBasketExtensions));
   getFocusedCheckoutElement$ = this.store.pipe(select(getFocusedCheckoutElement));
-  lineItemUpdating$ = this.store.pipe(select(getLineItemUpdating));
+
   getBucketEmailRecipients$(urn: string) {
     return this.store.pipe(select(getBucketEmailRecipients(urn)));
   }

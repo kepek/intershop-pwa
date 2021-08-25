@@ -49,6 +49,7 @@ import {
   loadBasketSuccess,
   loadBuckets,
   loadCustomerDeliveryTerm,
+  loadCustomerDeliveryTermFail,
   loadCustomerDeliveryTermSuccess,
   mergeBasketFail,
   mergeBasketSuccess,
@@ -307,7 +308,7 @@ export class BasketEffects {
       concatMap(([{ customerId }]) =>
         this.basketService.loadCustomerDeliveryTerm(customerId).pipe(
           mergeMap(term => [loadCustomerDeliveryTermSuccess({ customerId, term })]),
-          mapErrorToAction(camfilDragLineItemFail)
+          mapErrorToAction(loadCustomerDeliveryTermFail)
         )
       )
     )
