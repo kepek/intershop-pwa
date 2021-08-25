@@ -37,6 +37,13 @@
       margin: 0;
       color: rgba(0, 0, 0, 0.6);
     }
+    camfil-product-price {
+      camfil-product-attribute {
+        .camfil-product-attribute__value {
+          overflow: visible !important;
+        }
+      }
+    }
     camfil-product-attribute {
       .camfil-product-attribute__value {
         font-size: $font-size-xlg;
