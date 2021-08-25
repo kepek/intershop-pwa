@@ -97,7 +97,7 @@ export class AttributeHelper {
             .reverse()
             .join('x')
         : '';
-    } else if (AttributeHelper.determineIfCamCardItem) {
+    } else if (AttributeHelper.determineIfCamCardItem(lineItem)) {
       const measurementsNames = ['width', 'height', 'diameter'];
       const measurementValues = [];
 
