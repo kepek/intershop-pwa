@@ -314,7 +314,6 @@ export class AccountCamCardPdfComponent implements OnInit {
     const priceObj =
       this.getCustomerPriceForItem(camCard, item) ||
       this.priceSummaryPipe.transform(this.products[sku]?.salePrice, item.quantity);
-    console.log('wartosc', PriceHelper.checkIfZeroPrice(priceObj));
     const priceVal = PriceHelper.checkIfZeroPrice(priceObj) ? '-' : this.handlePrice(priceObj);
     const priceLabel = showPrice ? ` | ${this.texts.price} ` : '';
     const price = showPrice ? { text: priceVal, bold: true } : '';
