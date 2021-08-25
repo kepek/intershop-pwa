@@ -26,7 +26,11 @@
           [form]="parentForm"
           [controlName]="controlName"
           [min]="allowZeroQuantity ? 0 : product.minOrderQuantity"
-          [max]="product.maxOrderQuantity"
+          [max]="
+            product.maxOrderQuantity > 0 && product.maxOrderQuantity < ('basket.maxItemQuantity' | ishServerSetting)
+              ? product.maxOrderQuantity
+              : ('basket.maxItemQuantity' | ishServerSetting)
+          "
           inputClass=""
           [isInLineItem]="isInLineItem"
           [lineItemId]="lineItemId"

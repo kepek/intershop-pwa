@@ -179,7 +179,7 @@ export class ProductMapper {
       inStock: data.inStock,
       minOrderQuantity: data.minOrderQuantity || 1,
       packingUnit: data.packingUnit,
-      maxOrderQuantity: data.maxOrderQuantity || 100,
+      maxOrderQuantity: data.maxOrderQuantity,
       attributes: data.attributeGroups?.PRODUCT_DETAIL_ATTRIBUTES?.attributes || data.attributes,
       attributeGroups: data.attributeGroups,
       images: this.imageMapper.fromImages(data.images),
