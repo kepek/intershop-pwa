@@ -137,7 +137,7 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
   }
 
   measurementsToShow() {
-    return this.measurements ? AttributeHelper.getMeasurementsText(this.item) : false;
+    return AttributeHelper.getMeasurementsText(this.item) || false;
   }
 
   updateQuantities() {

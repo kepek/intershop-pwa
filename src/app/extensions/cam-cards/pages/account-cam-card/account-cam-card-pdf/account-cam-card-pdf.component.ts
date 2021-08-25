@@ -8,6 +8,7 @@ import { AuthorizationToggleService } from 'ish-core/authorization-toggle.module
 import { AccountFacade } from 'ish-core/facades/account.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { Price, PriceHelper } from 'ish-core/models/price/price.model';
+import { AttributeHelper } from 'ish-core/models/attribute/attribute.helper';
 import { formatPrice } from 'ish-core/models/price/price.pipe';
 import { ProductView } from 'ish-core/models/product-view/product-view.model';
 import { ProductCompletenessLevel, ProductHelper } from 'ish-core/models/product/product.model';
@@ -65,6 +66,7 @@ export class AccountCamCardPdfComponent implements OnInit {
     deliveryAddress: this.translate.instant('camfil.account.cam_card.pdf.delivery_address'),
     orderInterval: this.translate.instant('camfil.account.cam_card.pdf.order_interval'),
     nextOrder: this.translate.instant('camfil.account.cam_card.pdf.next_order'),
+    measurements: this.translate.instant('camfil.account.cam_card.pdf.measurements'),
   };
 
   ngOnInit() {
@@ -308,19 +310,23 @@ export class AccountCamCardPdfComponent implements OnInit {
     const labelText = item.comment?.label;
     const label = labelText ? `${this.texts.boxLabel} ` : '';
     const labelVal = labelText ? { text: labelText, bold: true } : '';
+    const measurementsToShow = AttributeHelper.getMeasurementsText(item);
+    const measurementsText = measurementsToShow ? ` | ${this.texts.measurements}: ` : '';
 
     const qty = `${this.texts.quantity} `;
     const qtyVal = { text: item.quantity, bold: true };
     const priceObj =
       this.getCustomerPriceForItem(camCard, item) ||
       this.priceSummaryPipe.transform(this.products[sku]?.salePrice, item.quantity);
-    console.log('wartosc', PriceHelper.checkIfZeroPrice(priceObj));
     const priceVal = PriceHelper.checkIfZeroPrice(priceObj) ? '-' : this.handlePrice(priceObj);
     const priceLabel = showPrice ? ` | ${this.texts.price} ` : '';
     const price = showPrice ? { text: priceVal, bold: true } : '';
     const currentProd = this.products[sku];
     const showAvailabilityDot = ProductHelper.showAvailabilityDot(currentProd);
-    const arrRightInfo = [{ text: [artNo, artNoVal] }, { text: [label, labelVal] }];
+    const arrRightInfo = [
+      { text: [artNo, artNoVal] },
+      { stack: [{ text: [label, labelVal] }, { text: [measurementsText, measurementsToShow] }] },
+    ];
     const arrLeftInfo = [qty, qtyVal, priceLabel, price];
     return PdfHelper.pdfProductRow(
       index,

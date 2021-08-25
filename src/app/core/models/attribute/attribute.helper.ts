@@ -1,5 +1,5 @@
 import { OrderLineItem } from 'src/app/extensions/cam-account/models/orderLineItem/orderLineItem.interface';
-import { CamCamProductChecked } from 'src/app/extensions/cam-cards/models/cam-card/cam-card.model';
+import { CamCamProductChecked, CamCardItem } from 'src/app/extensions/cam-cards/models/cam-card/cam-card.model';
 
 import { LineItem, LineItemView } from 'ish-core/models/line-item/line-item.model';
 
@@ -71,10 +71,16 @@ export class AttributeHelper {
     return AttributeHelper.getAttrsBeforeAddToCart(measurements, boxLabel);
   }
 
-  static determineLineItemType(lineItem: OrderLineItem | LineItemView) {
+  static determineLineItemType(lineItem: OrderLineItem | LineItemView | CamCardItem) {
     const isLineItem = (item: any): item is LineItem => 'attributes' in item;
 
     return isLineItem(lineItem);
+  }
+
+  static determineIfCamCardItem(lineItem: OrderLineItem | LineItemView | CamCardItem) {
+    const isCamCardItem = (item: any): item is CamCardItem => 'measurement' in item;
+
+    return isCamCardItem(lineItem);
   }
 
   static getMeasurementsText(lineItem) {
@@ -85,6 +91,22 @@ export class AttributeHelper {
           return att.value;
         }
       });
+      return measurementValues.length
+        ? measurementValues
+            .filter(e => e)
+            .reverse()
+            .join('x')
+        : '';
+    } else if (AttributeHelper.determineIfCamCardItem) {
+      const measurementsNames = ['width', 'height', 'diameter'];
+      const measurementValues = [];
+
+      Object.keys(lineItem?.measurement).map(key => {
+        if (measurementsNames.includes(key)) {
+          measurementValues.push(lineItem.measurement[key]);
+        }
+      });
+
       return measurementValues.length
         ? measurementValues
             .filter(e => e)
