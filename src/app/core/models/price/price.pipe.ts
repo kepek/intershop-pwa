@@ -11,7 +11,7 @@ import { PriceItem } from 'ish-core/models/price-item/price-item.model';
 import { AuthorizationToggleService } from 'ish-core/utils/authorization-toggle/authorization-toggle.service';
 import { whenTruthy } from 'ish-core/utils/operators';
 
-import { Price } from './price.model';
+import { Price, PriceHelper } from './price.model';
 
 export function formatPrice(price: Price, lang: string, currencyForChanel?: string): string {
   const symbol = currencyForChanel
@@ -53,7 +53,7 @@ export class PricePipe implements PipeTransform, OnDestroy {
       this.currencyForChanel = currencyForChanel;
     });
 
-    if (!this.isAuthorizedToViewPrices || !data) {
+    if (!this.isAuthorizedToViewPrices || !data || PriceHelper.checkIfZeroPrice(data)) {
       return '-';
     }
 
