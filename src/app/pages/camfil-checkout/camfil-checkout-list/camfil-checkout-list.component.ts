@@ -109,10 +109,14 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
     return this.deliveryDateValue ? this.deliveryDateValue : this.order?.deliveryDate;
   }
 
+  get shipToAddress() {
+    return { ...this.order.shipToAddressFull, countryCode: '' };
+  }
+
   ngOnInit(): void {
     this.calendarExceptions$ = this.checkoutFacade.calendarExceptions$;
 
-    this.orderAddress = { ...this.order.shipToAddressFull, countryCode: '' };
+    this.orderAddress = this.shipToAddress;
     this.emailRecipients$ = this.checkoutFacade.getBucketEmailRecipients$(this.order?.shipToAddressFull?.id);
 
     this.emailRecipients$?.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(value => {
@@ -164,6 +168,7 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
         invoiceLabel: this.order.invoiceLabel,
         info: this.order.info,
       });
+      this.orderAddress = this.shipToAddress;
       this.forceUpdateForm = false;
     }
   }
