@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { Actions, ofType } from '@ngrx/effects';
 import { Observable, ReplaySubject, Subject } from 'rxjs';
-import { filter, take, takeUntil, takeWhile } from 'rxjs/operators';
+import { distinct, distinctUntilChanged, filter, map, take, takeUntil, takeWhile } from 'rxjs/operators';
 import { CamCardsFacade } from 'src/app/extensions/cam-cards/facades/cam-cards.facade';
 
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
@@ -104,13 +104,18 @@ export class CamfilCheckoutPageComponent implements OnInit, OnDestroy {
         this.confirmedBuckets$.next(buckets);
       });
 
-    this.confirmedBuckets$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(buckets => {
-      buckets.forEach(bucket => {
-        if (bucket?.customer?.id) {
-          this.checkoutFacade.loadCustomerDeliveryTerm(bucket.customer.id);
-        }
+    this.confirmedBuckets$
+      .pipe(
+        map(buckets => buckets.map(bucket => bucket?.customer?.id)),
+        distinct(),
+        distinctUntilChanged((prev, curr) => JSON.stringify(prev) === JSON.stringify(curr)),
+        takeUntil(this.destroy$)
+      )
+      .subscribe(customerIds => {
+        customerIds.forEach(customerId => {
+          this.checkoutFacade.loadCustomerDeliveryTerm(customerId);
+        });
       });
-    });
 
     // tslint:disable-next-line:no-intelligence-in-artifacts
     this.updates$.pipe(ofType(createOrderSuccess), takeUntil(this.destroy$)).subscribe(() => {
