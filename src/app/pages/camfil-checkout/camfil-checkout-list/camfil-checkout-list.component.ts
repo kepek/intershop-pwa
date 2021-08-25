@@ -415,7 +415,7 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
     const fullDD = new Date(this.fullDeliveryDate).setHours(0, 0, 0, 0);
     const selectedDD = new Date(event.value).setHours(0, 0, 0, 0);
 
-    if (fullDD === selectedDD || selectedDD > fullDD) {
+    if (fullDD === selectedDD || selectedDD > fullDD || !fullDD) {
       this.modalDeliveryText = 'camfil.modal.checkout.full-delivery.title';
       this.updateBucketDeliveryDate(false, selectedDD);
     } else {
