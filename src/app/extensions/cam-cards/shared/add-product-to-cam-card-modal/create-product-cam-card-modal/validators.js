@@ -44,7 +44,7 @@ export const CREATE_CAMCARD_VALIDATORS = {
     },
     {
       error: 'pattern',
-      message: 'camfil.modal.createCamcard.input.zip_code',
+      message: 'camfil.modal.createCamcard.input.zip_code.error.format',
     },
   ],
   area: [

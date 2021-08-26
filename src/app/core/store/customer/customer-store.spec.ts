@@ -215,6 +215,9 @@ describe('Customer Store', () => {
           expect(store.actionsArray(/Basket|Products/)).toMatchInlineSnapshot(`
             [Products API] Load Product Success:
               product: {"sku":"test","packingUnit":"pcs.","completenessLevel":2}
+            [Products Internal] Update Product:
+              sku: "test"
+              changes: {}
             [Basket] Add Product To Basket:
               sku: "test"
               quantity: 1

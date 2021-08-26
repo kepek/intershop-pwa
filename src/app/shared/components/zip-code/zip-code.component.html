@@ -10,7 +10,11 @@
     (change)="checkZipCode()"
   />
 </mat-form-field>
-<camfil-error [errors]="formField.errors" [errorValidators]="errorValidator" [touched]="formField.touched">
-</camfil-error>
+
+<camfil-error
+  [errors]="formField.errors"
+  [errorValidators]="errorValidator"
+  [touched]="formField.touched"
+></camfil-error>
 
 <camfil-loading *ngIf="zipCodesLoading$ | async"></camfil-loading>
