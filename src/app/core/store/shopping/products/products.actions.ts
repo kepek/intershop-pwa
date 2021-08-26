@@ -30,6 +30,11 @@ export const loadProductsForMaster = createAction(
   payload<{ masterSKU: string; page?: number; sorting?: string }>()
 );
 
+export const updateProduct = createAction(
+  '[Products Internal] Update Product',
+  payload<{ sku: string; changes: Partial<Product> }>()
+);
+
 export const loadProductsForMasterFail = createAction(
   '[Products API] Load Products for Master Fail',
   httpError<{ masterSKU: string }>()

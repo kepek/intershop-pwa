@@ -15,6 +15,7 @@ import {
   groupBy,
   map,
   mergeMap,
+  switchMap,
   switchMapTo,
   tap,
   throttleTime,
@@ -31,6 +32,7 @@ import { getCurrentLocale } from 'ish-core/store/core/configuration';
 import { selectQueryParam, selectRouteParam } from 'ish-core/store/core/router';
 import { setBreadcrumbData } from 'ish-core/store/core/viewconf';
 import { getLoggedInCustomer, loginUserSuccess, setPGID } from 'ish-core/store/customer/user';
+import { getServerConfigParameter } from 'ish-core/store/general/server-config';
 import { loadCategory } from 'ish-core/store/shopping/categories';
 import { setProductListingPages } from 'ish-core/store/shopping/product-listing';
 import { HttpStatusCodeService } from 'ish-core/utils/http-status-code/http-status-code.service';
@@ -64,6 +66,7 @@ import {
   loadProductsForMaster,
   loadProductsForMasterFail,
   loadRetailSetSuccess,
+  updateProduct,
 } from './products.actions';
 import {
   getBreadcrumbForProductPage,
@@ -92,6 +95,25 @@ export class ProductsEffects {
         this.productsService.getProduct(sku).pipe(
           map(product => loadProductSuccess({ product })),
           mapErrorToAction(loadProductFail, { sku })
+        )
+      )
+    )
+  );
+
+  loadProductSuccess$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loadProductSuccess),
+      mapToPayloadProperty('product'),
+      switchMap(product =>
+        this.store.pipe(select(getServerConfigParameter<number>('basket.maxItemQuantity'))).pipe(
+          map(basketMaxQuantity => {
+            const maxOrderQuantity =
+              product.maxOrderQuantity > 0 && product.maxOrderQuantity < basketMaxQuantity
+                ? product.maxOrderQuantity
+                : basketMaxQuantity;
+
+            return updateProduct({ sku: product.sku, changes: { maxOrderQuantity } });
+          })
         )
       )
     )

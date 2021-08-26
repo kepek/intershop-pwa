@@ -15,6 +15,7 @@ import {
   loadProductVariationsFail,
   loadProductVariationsSuccess,
   loadRetailSetSuccess,
+  updateProduct,
 } from './products.actions';
 
 export const productAdapter = createEntityAdapter<AllProductTypes>({
@@ -76,6 +77,9 @@ export const productsReducer = createReducer(
       failed: removeFailed(state.failed, product.sku),
     });
   }),
+  on(updateProduct, (state: ProductsState, action) =>
+    productAdapter.updateOne({ id: action.payload.sku, changes: action.payload.changes }, state)
+  ),
   on(loadProductVariationsSuccess, (state: ProductsState, action) =>
     productAdapter.updateOne(
       {
