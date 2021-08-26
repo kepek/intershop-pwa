@@ -5,7 +5,7 @@
         class="close"
         [title]="'dialog.close.text' | translate"
         [attr.aria-label]="'dialog.close.text' | translate"
-        (click)="hide()"
+        (mousedown)="hide()"
       >
         <mat-icon svgIcon="inactive" aria-hidden="true"></mat-icon>
       </button>
@@ -22,13 +22,13 @@
     </div>
 
     <div *ngIf="onlyAccept" class="text-center">
-      <button class="btn btn-link cta-modal__links--link" (click)="hide()">
+      <button class="btn btn-link cta-modal__links--link" (mousedown)="hide()">
         {{ 'camfil.modal.cta.button.ok' | translate }}
       </button>
     </div>
 
     <div *ngIf="!onlyAccept && actionButtonTitle" class="cta-modal__links">
-      <button class="btn btn-link cta-modal__links--link" (click)="hide()">
+      <button class="btn btn-link cta-modal__links--link" (mousedown)="hide()">
         {{ cancelButtonTitle ? cancelButtonTitle : ('camfil.modal.cta.button.cancel' | translate) }}
       </button>
 
