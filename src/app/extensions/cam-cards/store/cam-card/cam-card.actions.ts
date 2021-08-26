@@ -45,6 +45,11 @@ export const createSubCamCard = createAction(
 
 export const loadCamCard = createAction('[Cam Cards API] Load Cam Card', payload<{ camCardId: string }>());
 
+export const loadCamCardIfNotLoaded = createAction(
+  '[Cam Cards API] Load Cam Card If Not Loaded',
+  payload<{ camCardId: string }>()
+);
+
 export const loadCamCardSuccess = createAction(
   '[Cam Cards API] Load Cam Card Success',
   payload<{ camCard: CamCard }>()

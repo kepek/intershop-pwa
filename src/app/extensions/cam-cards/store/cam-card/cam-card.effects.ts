@@ -1,20 +1,23 @@
-import { Injectable } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { RouterNavigatedPayload, routerNavigatedAction } from '@ngrx/router-store';
 import { Store, select } from '@ngrx/store';
-import { EMPTY, fromEvent } from 'rxjs';
+import { EMPTY, fromEvent, identity } from 'rxjs';
 import {
   concatMap,
   debounceTime,
   distinctUntilChanged,
   filter,
+  groupBy,
   last,
   map,
   mapTo,
   mergeMap,
   reduce,
   tap,
+  throttleTime,
   window as windowRxOperator,
   withLatestFrom,
 } from 'rxjs/operators';
@@ -69,6 +72,7 @@ import {
   importCamCardFail,
   importCamCardSuccess,
   loadCamCard,
+  loadCamCardIfNotLoaded,
   loadCamCardSuccess,
   loadCamCards,
   loadCamCardsEdit,
@@ -124,6 +128,7 @@ import {
   getAllCamCards,
   getCamCardCustomers,
   getCamCardDetails,
+  getCamCardEntities,
   getCustomerAddresses,
   getSelectedCamCardDetails,
   getSelectedCamCardId,
@@ -136,7 +141,8 @@ export class CamCardEffects {
     private actions$: Actions,
     private camCardService: CamCardService,
     private store: Store,
-    private router: Router
+    private router: Router,
+    @Inject(PLATFORM_ID) private platformId: string
   ) {}
 
   routeListenerForCamCards$ = createEffect(() =>
@@ -188,6 +194,21 @@ export class CamCardEffects {
         this.camCardService.getCamCard(id).pipe(
           map(camCard => loadCamCardSuccess({ camCard })),
           mapErrorToAction(loadCamCardsFail)
+        )
+      )
+    )
+  );
+
+  loadCamCardIfNotLoaded$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loadCamCardIfNotLoaded),
+      mapToPayload(),
+      withLatestFrom(this.store.pipe(select(getCamCardEntities))),
+      groupBy(([{ camCardId }]) => camCardId),
+      mergeMap(group$ =>
+        group$.pipe(
+          this.throttleOnBrowser(),
+          map(([{ camCardId }]) => loadCamCard({ camCardId }))
         )
       )
     )
@@ -918,5 +939,9 @@ export class CamCardEffects {
     const isInclude =
       !contacts.length || contacts.findIndex(newContact => newContact.profileId === contact.profileId) > -1;
     return isInclude ? updateCamCardContactsSuccess({ camCardId, contacts }) : deleteCamCardSuccess({ camCardId });
+  }
+
+  private throttleOnBrowser() {
+    return isPlatformBrowser(this.platformId) && this.router.navigated ? throttleTime(100) : map(identity);
   }
 }

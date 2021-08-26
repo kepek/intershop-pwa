@@ -7,7 +7,7 @@ import { camCardAdapter, initialState } from './cam-card.reducer';
 
 const getCamCardState = createSelector(getCamCardsState, state => (state ? state.camCards : initialState));
 
-const { selectEntities, selectAll } = camCardAdapter.getSelectors(getCamCardState);
+export const { selectEntities: getCamCardEntities, selectAll } = camCardAdapter.getSelectors(getCamCardState);
 
 export const getAllCamCards = selectAll;
 
@@ -28,13 +28,13 @@ export const getCamCardError = createSelector(getCamCardState, state => state.er
 export const getSelectedCamCardId = createSelector(getCamCardState, state => state.selected);
 
 export const getSelectedCamCardDetails = createSelector(
-  selectEntities,
+  getCamCardEntities,
   getSelectedCamCardId,
   (entities, id): CamCard => id && entities[id]
 );
 
 export const getCamCardDetails = createSelector(
-  selectEntities,
+  getCamCardEntities,
   (entities, props: { id: string }): CamCard => props.id && entities[props.id]
 );
 

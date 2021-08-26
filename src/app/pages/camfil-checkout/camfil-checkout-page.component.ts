@@ -87,10 +87,6 @@ export class CamfilCheckoutPageComponent implements OnInit, OnDestroy {
         if (!this.isConfirmed) {
           this.confirmedBasket$.next(basket);
         }
-
-        if (basket?.lineItems?.length) {
-          this.isConfirmed = false;
-        }
       });
 
     this.buckets$
@@ -120,6 +116,18 @@ export class CamfilCheckoutPageComponent implements OnInit, OnDestroy {
     // tslint:disable-next-line:no-intelligence-in-artifacts
     this.updates$.pipe(ofType(createOrderSuccess), takeUntil(this.destroy$)).subscribe(() => {
       this.isConfirmed = true;
+      this.confirmedBuckets$
+        .pipe(
+          map(confirmedBuckets => confirmedBuckets.map(bucket => bucket.createdFromCamCardId)),
+          take(1)
+        )
+        .subscribe(camCardIds => {
+          camCardIds.forEach(camCardId => {
+            this.camCardsFacade.updateCamCardAttribute(camCardId, {
+              lastDeliveryDate: new Date().toISOString(),
+            });
+          });
+        });
     });
   }
 
