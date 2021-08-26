@@ -195,8 +195,12 @@ export class CamfilSearchBoxComponent implements OnInit, OnDestroy {
     return false;
   }
 
-  closeAndClear() {
+  closeAndClear(setFocus = false) {
     this.clearResults();
     this.out();
+
+    if (setFocus) {
+      this.searchInput.nativeElement.focus();
+    }
   }
 }
