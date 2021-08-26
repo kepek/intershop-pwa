@@ -165,6 +165,7 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges, OnD
         this.newSkusAfterUpdate = currentSkus.filter(x => !previousSkus.includes(x));
         if (this.showPrice && this.newSkusAfterUpdate.length) {
           this.shoppingFacade.loadCustomerPrices(this.camCard.customer.id, this.newSkusAfterUpdate);
+          this.newSkusAfterUpdate = [];
         }
 
         if (this.camCard?.subCamCards) {
