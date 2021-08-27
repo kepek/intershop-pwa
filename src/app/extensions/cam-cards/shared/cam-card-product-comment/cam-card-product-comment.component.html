@@ -12,7 +12,7 @@
           matInput
           formControlName="{{ input }}"
           markRequiredLabel="off"
-          maxlength="{{ input === 'text' ? '200' : '40' }}"
+          [camfilMaxLength]="'BoxLabel'"
           attr.data-testing-id="cam-card-edit-comment-{{ input }}"
           (blur)="onBlur($event.target, input)"
           (keyup.enter)="keyupEnter($event.target)"
