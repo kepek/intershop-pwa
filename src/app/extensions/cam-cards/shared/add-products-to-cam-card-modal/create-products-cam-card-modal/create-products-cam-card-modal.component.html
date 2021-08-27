@@ -58,24 +58,14 @@
       <!--order mark-->
       <mat-form-field appearance="outline" class="col-sm-12 form__field">
         <mat-label>{{ 'camfil.modal.createCamcard.input.order_mark' | translate }}</mat-label>
-        <input matInput type="text" formControlName="orderMark" />
+        <input matInput type="text" formControlName="orderMark" [camfilMaxLength]="'OrderMark'" />
       </mat-form-field>
-      <camfil-error
-        [errors]="getField('orderMark').errors"
-        [errorValidators]="validators.orderMark"
-        [touched]="getField('orderMark').touched || getField('orderMark').dirty"
-      ></camfil-error>
 
       <!--invoice mark-->
       <mat-form-field appearance="outline" class="col-sm-12 form__field">
         <mat-label>{{ 'camfil.modal.createCamcard.input.invoice_mark' | translate }}</mat-label>
-        <input matInput type="text" formControlName="invoiceMark" />
+        <input matInput type="text" formControlName="invoiceMark" [camfilMaxLength]="'InvoiceLabel'" />
       </mat-form-field>
-      <camfil-error
-        [errors]="getField('invoiceMark').errors"
-        [errorValidators]="validators.invoiceMark"
-        [touched]="getField('invoiceMark').touched || getField('invoiceMark').dirty"
-      ></camfil-error>
 
       <!--address select-->
       <mat-form-field appearance="outline" class="col-sm-12 form__field">
@@ -99,13 +89,8 @@
       <!--company-->
       <mat-form-field appearance="outline" class="col-sm-12 form__field">
         <mat-label>{{ 'camfil.modal.createCamcard.input.company' | translate }}</mat-label>
-        <input matInput type="text" formControlName="company" />
+        <input matInput type="text" formControlName="company" [camfilMaxLength]="'Company'" />
       </mat-form-field>
-      <camfil-error
-        [errors]="getField('company').errors"
-        [errorValidators]="validators.company"
-        [touched]="getField('company').touched || getField('company').dirty"
-      ></camfil-error>
 
       <!--address-->
       <mat-form-field appearance="outline" class="col-sm-12 form__field">

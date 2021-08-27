@@ -39,7 +39,7 @@
         </div>
         <mat-form-field appearance="fill" class="add-new-product__field">
           <mat-label>{{ 'camfil.modal.addNewProduct.input.box_label' | translate }}</mat-label>
-          <input matInput type="text" maxlength="60" formControlName="boxLabel" />
+          <input matInput type="text" formControlName="boxLabel" [camfilMaxLength]="'BoxLabel'" />
         </mat-form-field>
       </div>
 
