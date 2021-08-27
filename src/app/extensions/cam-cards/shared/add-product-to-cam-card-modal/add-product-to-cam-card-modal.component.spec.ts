@@ -11,6 +11,7 @@ import { ServerHtmlDirective } from 'ish-core/directives/server-html.directive';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { Product } from 'ish-core/models/product/product.model';
 import { AddressSortPipe } from 'ish-core/pipes/camfil-address-sort.pipe';
+import { CamfilSlugifyPipe } from 'ish-core/pipes/camfil-slugify.pipe';
 import { CoreStoreModule } from 'ish-core/store/core/core-store.module';
 import { CamfilCamCardModalComponent } from 'ish-shared/components/common/camfil-cam-card-modal/camfil-cam-card-modal.component';
 import { CamfilErrorComponent } from 'ish-shared/components/common/camfil-error/camfil-error.component';
@@ -56,6 +57,7 @@ describe('Add Product To Cam Card Modal Component', () => {
         MockComponent(ZipCodeComponent),
         MockDirective(ServerHtmlDirective),
         MockPipe(AddressSortPipe),
+        MockPipe(CamfilSlugifyPipe),
       ],
       imports: [
         CoreStoreModule.forTesting(),
