@@ -186,7 +186,7 @@ export class CreateProductCamCardModalComponent implements OnInit, OnDestroy {
   pickAddress(event) {
     const id = event.value;
     this.addresses$.subscribe(addresses => {
-      const address = addresses[this.customerId].filter(element => element.id === id)[0];
+      const address = addresses[this.customerId]?.filter(element => element.id === id)[0];
       if (address) {
         this.camCardForm.patchValue({
           company: address.companyName1,

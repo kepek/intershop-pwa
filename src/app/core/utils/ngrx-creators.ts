@@ -49,7 +49,7 @@ export function setErrorOn<S extends { loading: boolean | number; error: HttpErr
 ): On<S> {
   const stateFnc = (state: S, action: { payload: { error: HttpError }; type: string }) => ({
     ...state,
-    error: action.payload.error,
+    error: action.payload?.error,
     loading: calculateLoading(state),
   });
   if (actionCreators.length === 1) {

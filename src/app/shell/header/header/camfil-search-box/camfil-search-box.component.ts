@@ -146,7 +146,7 @@ export class CamfilSearchBoxComponent implements OnInit, OnDestroy {
 
   out() {
     this.inputFocused = false;
-    this.searchInput.nativeElement.blur();
+    this.searchInput?.nativeElement?.blur();
   }
 
   productListInfo(event) {

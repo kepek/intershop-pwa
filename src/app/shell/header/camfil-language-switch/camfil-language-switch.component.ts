@@ -103,4 +103,10 @@ export class CamfilLanguageSwitchComponent implements OnInit {
 
     return new URL(url);
   }
+
+  changeLocale(event: MouseEvent, lang: string) {
+    event.preventDefault();
+
+    this.appFacade.setCurrentLocale$(lang);
+  }
 }

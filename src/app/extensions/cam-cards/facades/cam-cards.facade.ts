@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { switchMap, tap } from 'rxjs/operators';
 
 import { HttpError } from 'ish-core/models/http-error/http-error.model';
+import { toObservable } from 'ish-core/utils/functions';
 
 import {
   CamCard,
@@ -34,6 +36,7 @@ import {
   getAddProductSuccess,
   getAllCamCards,
   getCamCardCustomers,
+  getCamCardDetails,
   getCamCardError,
   getCamCardLoading,
   getCamCardsLoading,
@@ -46,6 +49,7 @@ import {
   getVirtualCamCard,
   importCamCard,
   isStickyCamCardToolbar,
+  loadCamCardIfNotLoaded,
   loadCamCards,
   loadContactsByCustomer,
   loadCustomers,
@@ -80,6 +84,13 @@ export class CamCardsFacade {
   validationErrors$: Observable<HttpError> = this.store.pipe(select(getValidationErrors));
   validationResponse$: Observable<CamCardImportValidationResponse> = this.store.pipe(select(getValidationResponse));
   getAddProductSuccess$: Observable<boolean> = this.store.pipe(select(getAddProductSuccess));
+
+  getCamCardDetails$(id: string | Observable<string>) {
+    return toObservable(id).pipe(
+      tap(camCardId => this.store.dispatch(loadCamCardIfNotLoaded({ camCardId }))),
+      switchMap(camCardId => this.store.pipe(select(getCamCardDetails, { id: camCardId })))
+    );
+  }
 
   contactsByCustomer$(id: string): Observable<CamCardContact[]> {
     return this.store.pipe(select(getContactsbyCustomerId, { id }));
