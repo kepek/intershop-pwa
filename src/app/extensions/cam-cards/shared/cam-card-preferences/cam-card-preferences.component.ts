@@ -358,7 +358,7 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit, AfterView
     const id = event.value;
     this.addresses$.subscribe(addresses => {
       const customerId = this.customerId;
-      const address = addresses[customerId].filter(element => element.id === id)[0];
+      const address = addresses[customerId]?.filter(element => element.id === id)[0];
       if (address) {
         this.selectedAddress = address;
       }

@@ -73,14 +73,16 @@ export class OrderFormComponent implements OnInit, OnDestroy {
   pickAddress(event) {
     const id = event.value;
     this.addresses$.subscribe(addresses => {
-      const address = addresses[this.customerId].filter(element => element.id === id)[0];
-      this.addressForm?.patchValue({
-        company: address?.addressName,
-        address: address?.addressLine1,
-        zipCode: address?.postalCode,
-        area: address?.city,
-        addressFull: address,
-      });
+      const address = addresses[this.customerId]?.filter(element => element.id === id)[0];
+      if (address) {
+        this.addressForm?.patchValue({
+          company: address?.addressName,
+          address: address?.addressLine1,
+          zipCode: address?.postalCode,
+          area: address?.city,
+          addressFull: address,
+        });
+      }
     });
   }
 
