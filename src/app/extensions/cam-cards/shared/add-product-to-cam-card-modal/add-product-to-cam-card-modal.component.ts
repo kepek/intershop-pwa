@@ -19,6 +19,7 @@ import { Router } from '@angular/router';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, Subject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
+import slugify from 'slugify';
 
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { Product, ProductHelper } from 'ish-core/models/product/product.model';
@@ -371,7 +372,8 @@ export class AddProductToCamCardModalComponent implements OnInit, OnDestroy, OnC
     this.segmentSelected = this.newSegmentValue;
 
     setTimeout(() => {
-      const newSegment = document.querySelector(`#new-section-${this.camCardSelected}`) as HTMLElement;
+      const selectedSectionId = `${slugify('new-section', '.')}.${slugify(this.camCardSelected, '.')?.toLowerCase()}`;
+      const newSegment = document.getElementById(selectedSectionId) as HTMLElement;
       newSegment?.focus();
       this.cdr.detectChanges();
     });
