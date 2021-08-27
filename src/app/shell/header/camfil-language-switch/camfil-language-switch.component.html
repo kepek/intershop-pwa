@@ -19,6 +19,7 @@
           <ng-container *ngIf="l.lang !== locale.lang">
             <a
               mat-menu-item
+              (click)="changeLocale($event, l.lang)"
               [href]="
                 getBaseUrl({ redirect: '1', lang: l.lang }) || (location | makeHref: { redirect: '1', lang: l.lang })
               "
@@ -46,6 +47,7 @@
         <ng-container *ngFor="let l of availableLocales">
           <li *ngIf="l.lang !== locale.lang">
             <a
+              (click)="changeLocale($event, l.lang)"
               [href]="
                 getBaseUrl({ redirect: '1', lang: l.lang }) || (location | makeHref: { redirect: '1', lang: l.lang })
               "
