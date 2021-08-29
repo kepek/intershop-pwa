@@ -228,8 +228,13 @@
 
   <ng-container *ngIf="order">
     <!-- Line Items -->
-    <div cdkDropList [cdkDropListData]="order.lineItems" (cdkDropListDropped)="drop($event, order)">
-      <cdk-virtual-scroll-viewport itemSize="100" style="height: 325px" minBufferPx="100" maxBufferPx="200">
+    <div
+      class="bucket_list-container"
+      cdkDropList
+      [cdkDropListData]="order.lineItems"
+      (cdkDropListDropped)="drop($event, order)"
+    >
+      <cdk-virtual-scroll-viewport itemSize="100">
         <div *cdkVirtualFor="let item of order.lineItems; index as i; trackBy: trackBy">
           <div
             cdkDrag

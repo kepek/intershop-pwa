@@ -40,6 +40,7 @@ import { AddEmailRecipientModalComponent } from '../add-email-recipient-modal/ad
 import { TranslateService } from '@ngx-translate/core';
 import { CheckoutFocusedElement } from 'ish-core/models/scroll-info copy/checkout-focused-element.interface';
 import { Basket } from 'ish-core/models/basket/basket.model';
+import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 
 @Component({
   selector: 'camfil-checkout-list',
@@ -50,6 +51,12 @@ import { Basket } from 'ish-core/models/basket/basket.model';
 export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDestroy, OnChanges {
   private static REQUIRED_COMPLETENESS_LEVEL = ProductCompletenessLevel.List;
   private destroy$ = new Subject<void>();
+
+  private numberOfVisibleLineItems = 20;
+  private lineItemHeight = 91;
+
+  @ViewChild(CamfilSmallCtaModalComponent) modal: CamfilSmallCtaModalComponent;
+  @ViewChild(CdkVirtualScrollViewport, { static: false }) virtualScrollViewport: CdkVirtualScrollViewport;
 
   @Input() order: Bucket;
   @Input() buckets: Bucket[];
@@ -81,7 +88,6 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
   focusedElement: CheckoutFocusedElement;
   focusedElementId: string;
   forceUpdateForm = false;
-  @ViewChild(CamfilSmallCtaModalComponent) modal: CamfilSmallCtaModalComponent;
 
   constructor(
     private fb: FormBuilder,
@@ -174,6 +180,14 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
   }
 
   ngAfterViewInit() {
+    const numberOfItems =
+      this.order?.lineItems?.length >= this.numberOfVisibleLineItems
+        ? this.numberOfVisibleLineItems
+        : this.order?.lineItems?.length + 1;
+
+    // @ts-ignore
+    this.virtualScrollViewport?.elementRef?.nativeElement?.style?.height = `${numberOfItems * this.lineItemHeight}px`;
+
     if (this.focusedElementId) {
       const focusTimeout = setTimeout(() => {
         const element = document.querySelector(`#${this.focusedElementId}`) as HTMLElement;
@@ -534,7 +548,7 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
   get deliveryDaysForItemsAfterConfirmation() {
     // Get Earliest delivery days for each item
     let items = this.order && this.order.lineItems;
-    let itemsDeliveryDates = [];
+    let itemsDeliveryDates: number[];
     items = items?.map(li => {
       const earliestDeliveryDate = this.getDeliveryDate(li.productSKU);
       return { ...li, earliestDeliveryDate };
