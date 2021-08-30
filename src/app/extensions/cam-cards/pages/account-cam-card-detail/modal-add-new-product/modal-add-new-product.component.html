@@ -2,6 +2,9 @@
   <camfil-loading *ngIf="loading"></camfil-loading>
 
   <div class="add-new-product">
+    <button class="close" (click)="hide()" aria-label="Close">
+      <mat-icon svgIcon="inactive" aria-hidden="true"></mat-icon>
+    </button>
     <mat-icon svgIcon="add-camcard"></mat-icon>
     <h2 class="add-new-product__header">{{ 'camfil.modal.addNewProduct.title' | translate }}</h2>
     <form [formGroup]="productForm">
