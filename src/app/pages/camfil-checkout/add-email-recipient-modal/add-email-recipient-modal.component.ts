@@ -13,6 +13,7 @@ import { ORDER_HEADER_VALIDATORS } from '../camfil-checkout-list/validators';
 @Component({
   selector: 'camfil-add-email-recipient-modal',
   templateUrl: './add-email-recipient-modal.component.html',
+  styleUrls: ['./add-email-recipient-modal.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AddEmailRecipientModalComponent implements OnInit {
