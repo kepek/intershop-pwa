@@ -22,7 +22,7 @@
     >
       <mat-option value="all">{{ 'camfil.account.cam_card.move.dialog.all_contacts' | translate }}</mat-option>
       <mat-option *ngFor="let contact of contacts" [value]="contact.profileId" [disabled]="selectAllContacts">
-        {{ contact.firstName }}
+        {{ contact.firstName }} {{ contact.lastName }}
       </mat-option>
     </mat-select>
   </mat-form-field>
