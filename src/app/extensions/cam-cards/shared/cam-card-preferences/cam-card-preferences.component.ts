@@ -279,7 +279,7 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit, AfterView
         postalCode,
         city,
         lastDelivery: lastDeliveryDate ? new Date(lastDeliveryDate) : '',
-        deliveryInterval,
+        deliveryInterval: deliveryInterval === 0 ? '' : deliveryInterval,
         nextDelivery: nextDeliveryDate ? new Date(nextDeliveryDate) : '',
         reminder: reminderFlag,
       });
