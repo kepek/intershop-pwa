@@ -42,13 +42,13 @@
     <!--order mark-->
     <mat-form-field appearance="outline" class="delivery-address__form--field">
       <mat-label>{{ 'camfil.modal.createOrder.order-form.input.order_mark' | translate }}</mat-label>
-      <input matInput [camfilMaxLength]="'OrderMark'" type="text" formControlName="orderMark" />
+      <input matInput camfilMaxLength="'OrderMark'" type="text" formControlName="orderMark" />
     </mat-form-field>
 
     <!--invoice mark-->
     <mat-form-field appearance="outline" class="delivery-address__form--field">
       <mat-label>{{ 'camfil.modal.createOrder.order-form.input.invoice_mark' | translate }}</mat-label>
-      <input matInput [camfilMaxLength]="'InvoiceLabel'" type="text" formControlName="invoiceLabel" />
+      <input matInput camfilMaxLength="'InvoiceLabel'" type="text" formControlName="invoiceLabel" />
     </mat-form-field>
 
     <!--phone number-->
@@ -84,7 +84,7 @@
     <!--recipient-->
     <mat-form-field appearance="outline" class="delivery-address__form--field">
       <mat-label>{{ 'camfil.modal.createOrder.order-form.input.recipient' | translate }}</mat-label>
-      <input matInput type="text" formControlName="company" [camfilMaxLength]="'Company'" />
+      <input matInput type="text" formControlName="company" camfilMaxLength="'Company'" />
     </mat-form-field>
 
     <!--address-->
