@@ -58,13 +58,13 @@
       <!--order mark-->
       <mat-form-field appearance="outline" class="col-sm-12 form__field">
         <mat-label>{{ 'camfil.modal.createCamcard.input.order_mark' | translate }}</mat-label>
-        <input matInput type="text" formControlName="orderMark" [camfilMaxLength]="'OrderMark'" />
+        <input matInput type="text" formControlName="orderMark" camfilMaxLength="'OrderMark'" />
       </mat-form-field>
 
       <!--invoice mark-->
       <mat-form-field appearance="outline" class="col-sm-12 form__field">
         <mat-label>{{ 'camfil.modal.createCamcard.input.invoice_mark' | translate }}</mat-label>
-        <input matInput type="text" formControlName="invoiceMark" [camfilMaxLength]="'InvoiceLabel'" />
+        <input matInput type="text" formControlName="invoiceMark" camfilMaxLength="'InvoiceLabel'" />
       </mat-form-field>
 
       <!--address select-->
@@ -89,7 +89,7 @@
       <!--company-->
       <mat-form-field appearance="outline" class="col-sm-12 form__field">
         <mat-label>{{ 'camfil.modal.createCamcard.input.company' | translate }}</mat-label>
-        <input matInput type="text" formControlName="company" [camfilMaxLength]="'Company'" />
+        <input matInput type="text" formControlName="company" camfilMaxLength="'Company'" />
       </mat-form-field>
 
       <!--address-->
