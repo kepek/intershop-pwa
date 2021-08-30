@@ -49,12 +49,16 @@ export class PdfHelper {
   static pdfProductRow(
     index: number,
     name: any,
-    arrRightInfo: any[],
     arrLeftInfo: any[],
+    arrRightInfo: any[],
     ccId?: string,
-    ifDot?: boolean
+    ifDot?: boolean,
+    showPrice?: boolean
   ) {
-    const leftInfo = arrLeftInfo.map((el, i) => ({ text: ['\n', el], alignment: i === 1 ? 'left' : 'right' }));
+    const rightInfo = arrRightInfo.map((el, i) => ({
+      text: ['\n', el],
+      alignment: showPrice && i === 1 ? 'left' : 'right',
+    }));
     return [
       { text: index + 1, alignment: 'center', id: 'rowIndex_' + index + '_' + ccId },
       [
@@ -67,7 +71,7 @@ export class PdfHelper {
           margin: [0, 0, 0, 0],
           table: {
             widths: [110, 'auto'],
-            body: [arrRightInfo],
+            body: [arrLeftInfo],
           },
         },
       ],
@@ -81,11 +85,35 @@ export class PdfHelper {
         margin: [0, 0, 0, 0],
         id: 'rowEnd_' + index + '_' + ccId,
         table: {
-          widths: [15, 15, 24, 43],
-          body: [leftInfo],
+          widths: showPrice ? [15, 15, 24, 43] : [100, 15],
+          body: [rightInfo],
         },
       },
     ];
+  }
+
+  static pdfTotal(text: string, total: string) {
+    return {
+      alignment: 'right',
+      style: 'total',
+      layout: 'noBorders',
+      table: {
+        widths: ['*', 1],
+        body: [
+          [
+            {
+              fillColor: '#F2F2F2',
+              bold: true,
+              text: [{ text: `\n ${text}  ` }, { text: total, fontSize: 15 }, { text: '\n ' }],
+            },
+            {
+              fillColor: '#F2F2F2',
+              text: '',
+            },
+          ],
+        ],
+      },
+    };
   }
 
   static pdfImages() {

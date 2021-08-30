@@ -47,18 +47,18 @@ describe('Filter Dropdown Component', () => {
   it('should display popup when rendered', () => {
     fixture.detectChanges();
     expect(element).toMatchInlineSnapshot(`
-      <div ngbdropdown="" autoclose="outside">
+      <div autoclose="outside" ngbdropdown="">
         <a
+          aria-expanded="false"
+          aria-haspopup="true"
+          class="form-control"
+          data-toggle="dropdown"
+          id="dropdownMenuLink"
           ngbdropdowntoggle=""
           role="button"
-          id="dropdownMenuLink"
-          data-toggle="dropdown"
-          aria-haspopup="true"
-          aria-expanded="false"
-          class="form-control"
           ><span>Color</span></a
         >
-        <div ngbdropdownmenu="" aria-labelledby="dropdownMenuLink">
+        <div aria-labelledby="dropdownMenuLink" ngbdropdownmenu="">
           <a class="dropdown-item"> red </a
           ><a class="dropdown-item selected">
             blue <fa-icon class="icon-checked" ng-reflect-icon="fas,check"></fa-icon

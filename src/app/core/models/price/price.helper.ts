@@ -127,7 +127,9 @@ export class PriceHelper {
 
   static checkIfZeroPrice(data) {
     return (
-      ('value' in data && data.value === 0) || ('gross' in data && data.gross === 0 && 'net' in data && data.net === 0)
+      !data ||
+      ('value' in data && data.value === 0) ||
+      ('gross' in data && data.gross === 0 && 'net' in data && data.net === 0)
     );
   }
 }
