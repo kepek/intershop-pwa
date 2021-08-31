@@ -41,6 +41,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { CheckoutFocusedElement } from 'ish-core/models/scroll-info copy/checkout-focused-element.interface';
 import { Basket } from 'ish-core/models/basket/basket.model';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
+import { AppFacade } from 'ish-core/facades/app.facade';
 
 @Component({
   selector: 'camfil-checkout-list',
@@ -88,13 +89,15 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
   focusedElement: CheckoutFocusedElement;
   focusedElementId: string;
   forceUpdateForm = false;
+  hideRecipientButton = false;
 
   constructor(
     private fb: FormBuilder,
     public dialog: MatDialog,
     private checkoutFacade: CheckoutFacade,
     private shoppingFacade: ShoppingFacade,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private appFacade: AppFacade
   ) {}
 
   get currentBasketExtensions() {
@@ -165,6 +168,12 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
         this.deliveryTerm = terms[this.order?.customer?.id];
       });
     }
+
+    this.appFacade.getChannel$?.pipe(takeUntil(this.destroy$)).subscribe(channel => {
+      if (channel === 'Camfil-CamfilFI-Site') {
+        this.hideRecipientButton = true;
+      }
+    });
   }
 
   ngOnChanges(s) {

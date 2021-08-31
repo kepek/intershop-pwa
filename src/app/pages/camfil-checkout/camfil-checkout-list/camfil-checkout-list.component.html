@@ -167,7 +167,7 @@
       <div class="order-summary-info col-sm-4" data-testing-id="order-summary-info" *ngIf="!isConfirmed">
         <div class="order-cta-container" [formGroup]="orderForm">
           <ul class="order-cta">
-            <li>
+            <li *ngIf="!hideRecipientButton">
               <a (click)="openAddEmailRecipientModal()">
                 <mat-icon svgIcon="contact" class="add-email-recipient-icon"></mat-icon>
                 {{ 'camfil.checkout.cta.add_email_recipient' | translate }}
