@@ -28,7 +28,7 @@
         formControlName="contact"
         (selectionChange)="pickContact($event)"
       >
-        <mat-option *ngFor="let contact of contacts" [value]="contact.erpId">
+        <mat-option *ngFor="let contact of contacts | camfilContactSort" [value]="contact.erpId">
           {{ contact.fullName }}
         </mat-option>
       </mat-select>

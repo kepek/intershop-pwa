@@ -2,9 +2,10 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { provideMockStore } from '@ngrx/store/testing';
-import { MockDirective } from 'ng-mocks';
+import { MockDirective, MockPipe } from 'ng-mocks';
 
 import { ServerHtmlDirective } from 'ish-core/directives/server-html.directive';
+import { CamfilContactSortPipe } from 'ish-core/pipes/camfil-contact-sort.pipe';
 
 import { MoveCamCardDialogComponent } from './move-cam-card-dialog.component';
 
@@ -15,7 +16,7 @@ describe('Move Cam Card Dialog Component', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [MockDirective(ServerHtmlDirective), MoveCamCardDialogComponent],
+      declarations: [MockDirective(ServerHtmlDirective), MockPipe(CamfilContactSortPipe), MoveCamCardDialogComponent],
       imports: [ReactiveFormsModule],
       providers: [
         { provide: MAT_DIALOG_DATA, useValue: [] },
