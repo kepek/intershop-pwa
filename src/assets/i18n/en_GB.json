@@ -525,7 +525,7 @@
   "camfil.account.cam_card.add_to_form.country": "Country",
   "camfil.account.cam_card.add_to_form.customer_name": "Customer name",
   "camfil.account.cam_card.add_to_form.delivery_address": "Delivery adress",
-  "camfil.account.cam_card.add_to_form.delivery_interval": "Delivery interval",
+  "camfil.account.cam_card.add_to_form.delivery_interval": "Delivery interval (month)",
   "camfil.account.cam_card.add_to_form.delivery_time": "Delivery time",
   "camfil.account.cam_card.add_to_form.dialog.do_you_want": "Do you want to continue?",
   "camfil.account.cam_card.add_to_form.dialog.no": "No Thanks",
