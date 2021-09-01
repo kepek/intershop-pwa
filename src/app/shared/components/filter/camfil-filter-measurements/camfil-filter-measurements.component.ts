@@ -22,6 +22,7 @@ export class CamfilFilterMeasurementsComponent implements OnInit, OnDestroy {
   currentFilters$: Observable<FilterNavigation>;
   filters: URLSearchParams;
   showCategoryFilter = false;
+  categoryUniqueId: string;
   private destroy$ = new Subject();
 
   constructor(private shoppingFacade: ShoppingFacade, private router: Router, private activatedRoute: ActivatedRoute) {
@@ -36,21 +37,14 @@ export class CamfilFilterMeasurementsComponent implements OnInit, OnDestroy {
       this.height = this.calculateFilterValue('Height');
       this.depth = this.calculateFilterValue('Depth');
     });
+    this.activatedRoute.params.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(params => {
+      this.categoryUniqueId = params?.categoryUniqueId;
+    });
   }
 
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
-  }
-
-  calculateFilterValue(name: string) {
-    const lowerBound = parseInt(this.filters.get(name + '[gte]'), 10);
-    const upperBound = parseInt(this.filters.get(name + '[lte]'), 10);
-    if (!isNaN(lowerBound) && !isNaN(upperBound)) {
-      return (lowerBound + upperBound) / 2;
-    } else {
-      return;
-    }
   }
 
   change(facet, type) {
@@ -61,25 +55,35 @@ export class CamfilFilterMeasurementsComponent implements OnInit, OnDestroy {
     // identify current search parameters (category, previous filters) and remove width, height, depth
     let currentFilterParams = {};
     this.currentFilters$ = this.shoppingFacade.currentFilter$(this.showCategoryFilter);
-    this.currentFilters$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(currentFilters => {
-      currentFilterParams = this.stripMeasurementSearchParameters(
-        currentFilters?.filter?.filter(
-          filterElement => filterElement.id === 'Width' || filterElement.id === 'Height' || filterElement.id === 'Depth'
-        )[0]?.facets[0].searchParameter
+    this.currentFilters$
+      .pipe(whenTruthy(), takeUntil(this.destroy$))
+      .subscribe(
+        currentFilters =>
+          (currentFilterParams = this.stripMeasurementSearchParameters(
+            currentFilters?.filter?.filter(
+              filterElement =>
+                filterElement.id === 'Width' || filterElement.id === 'Height' || filterElement.id === 'Depth'
+            )[0]?.facets[0].searchParameter
+          ))
       );
-    });
 
     const filter = [];
     if (this.width) {
-      filter.push(`Width%5Bgte%5D=${this.width - 10}&Width%5Blte%5D=${+this.width + 10}`);
+      filter.push(this.assembleRangeFilterString('Width', +this.width, 10));
     }
     if (this.height) {
-      filter.push(`Height%5Bgte%5D=${+this.height - 10}&Height%5Blte%5D=${+this.height + 10}`);
+      filter.push(this.assembleRangeFilterString('Height', +this.height, 10));
     }
     if (this.depth) {
-      filter.push(`Depth%5Bgte%5D=${+this.depth - 50}&Depth%5Blte%5D=${+this.depth + 50}`);
+      filter.push(this.assembleRangeFilterString('Depth', +this.depth, 50));
     }
-    filter.push(formParamsToString(currentFilterParams));
+
+    if (currentFilterParams) {
+      filter.push(formParamsToString(currentFilterParams));
+    } else {
+      filter.push(this.assembleCategoryFilterString(this.categoryUniqueId));
+      filter.push('productFilter=fallback_searchquerydefinition');
+    }
 
     if (+this.width || +this.height || +this.depth) {
       this.router.navigate([], {
@@ -97,10 +101,20 @@ export class CamfilFilterMeasurementsComponent implements OnInit, OnDestroy {
     return this.width || this.height || this.depth ? !1 : !0;
   }
 
+  private calculateFilterValue(name: string) {
+    const lowerBound = parseInt(this.filters.get(name + '[gte]'), 10);
+    const upperBound = parseInt(this.filters.get(name + '[lte]'), 10);
+    if (!isNaN(lowerBound) && !isNaN(upperBound)) {
+      return (lowerBound + upperBound) / 2;
+    } else {
+      return;
+    }
+  }
+
   /**
    *  Remove 'Width', 'Height', 'Depth' from search parameters
    * */
-  stripMeasurementSearchParameters(params: URLFormParams) {
+  private stripMeasurementSearchParameters(params: URLFormParams) {
     if (!params) {
       return;
     }
@@ -123,5 +137,11 @@ export class CamfilFilterMeasurementsComponent implements OnInit, OnDestroy {
         obj[key] = params[key];
         return obj;
       }, {});
+  }
+  private assembleRangeFilterString(name: string, value: number, precision: number) {
+    return `${name}%5Bgte%5D=${value - precision}&${name}%5Blte%5D=${value + precision}`;
+  }
+  private assembleCategoryFilterString(categoryUniqueId: string) {
+    return `category=${categoryUniqueId.replace(/\./g, '/')}`;
   }
 }
