@@ -401,8 +401,8 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
       CamfilCheckoutListComponent.REQUIRED_COMPLETENESS_LEVEL
     );
     let delivery;
-    productDetail$.pipe(take(1), takeUntil(this.destroy$)).subscribe((res: ProductView) => {
-      const today = new Date();
+    productDetail$.pipe(take(1)).subscribe((res: ProductView) => {
+      const today = this.getDateAt00(new Date());
       const daysTillReady = ProductViewHelper.getDeliveryDateDays(res);
       delivery = today.setDate(today.getDate() + daysTillReady);
 
@@ -410,8 +410,14 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
         delivery = this.setToClosestMonday(new Date(delivery));
       }
     });
-
     return delivery;
+  }
+
+  getDateAt00(date: Date) {
+    const yyyy = date.getFullYear();
+    const mm = date.getMonth() + 1;
+    const dd = date.getDate();
+    return new Date(`${yyyy}-${mm}-${dd} 23:59`);
   }
 
   setDaysClass(startDate: number, endDate: Date) {
@@ -546,33 +552,23 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
   }
 
   get deliveryDaysForItemsAfterConfirmation() {
-    // Get Earliest delivery days for each item
-    let items = this.order && this.order.lineItems;
-    let itemsDeliveryDates: number[];
-    items = items?.map(li => {
-      const earliestDeliveryDate = this.getDeliveryDate(li.productSKU);
-      return { ...li, earliestDeliveryDate };
-    });
-
     // Order delivery date
     const numDeliveryDate = new Date(this.deliveryDate).getTime();
+    // Get Earliest delivery days for each item
+    const items = this.order && this.order.lineItems;
 
-    // Set delivery date for each item
-    itemsDeliveryDates = items.map(li => {
-      let itemDeliveryDate;
+    return (
+      items
+        ?.reduce((acc, li) => {
+          const getEarliestDeliveryDate = this.getDeliveryDate(li.productSKU);
+          // Set delivery date for each item
+          const earliestDeliveryDate = new Date(getEarliestDeliveryDate).getTime();
+          const dateToPush = earliestDeliveryDate < numDeliveryDate ? numDeliveryDate : earliestDeliveryDate;
 
-      if (new Date(li.earliestDeliveryDate).getTime() < numDeliveryDate) {
-        itemDeliveryDate = numDeliveryDate;
-
-        return itemDeliveryDate;
-      } else {
-        itemDeliveryDate = new Date(li.earliestDeliveryDate).getTime();
-
-        return itemDeliveryDate;
-      }
-    });
-
-    return [...new Set(itemsDeliveryDates)];
+          return dateToPush && !acc.includes(dateToPush) ? [...acc, dateToPush] : acc;
+        }, [])
+        .sort() || []
+    );
   }
 
   trackBy(_, lineItem: LineItemView) {
