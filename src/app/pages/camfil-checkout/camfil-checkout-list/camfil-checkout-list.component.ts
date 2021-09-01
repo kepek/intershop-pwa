@@ -476,7 +476,11 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
       deliveryDate: deliveryDateValue,
       isPartialDelivery: isPartial,
     };
-    this.dialog.open(this.modal?.show());
+
+    // CAM-1504: Only display popup when bucket contains more then one line items
+    if (this.order.lineItems?.length > 1) {
+      this.dialog.open(this.modal?.show());
+    }
 
     this.modal.hide = () => {
       this.dialog.closeAll();
