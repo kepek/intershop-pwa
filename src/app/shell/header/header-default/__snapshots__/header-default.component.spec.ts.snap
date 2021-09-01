@@ -16,37 +16,37 @@ exports[`Header Default Component should render normal header adequately for des
       <camfil-language-switch data-testing-id="language-switch-desktop"></camfil-language-switch>
     </div>
     <camfil-mini-basket
-      data-testing-id="mini-basket-desktop"
       class="d-none d-md-block"
+      data-testing-id="mini-basket-desktop"
       ng-reflect-ng-class="d-md-block"
     ></camfil-mini-basket
     ><camfil-mini-basket
       data-testing-id="mini-basket-mobile"
-      ng-reflect-ng-class="d-md-none"
       class="d-md-none"
+      ng-reflect-ng-class="d-md-none"
     ></camfil-mini-basket>
   </div>
   <div class="row align-items-center">
     <div class="col-md-3 logo-col">
       <div class="logo-wrapper">
         <a
+          class="logo"
+          data-testing-id="header-home-link-desktop"
           rel="home"
           routerlink="/home"
-          data-testing-id="header-home-link-desktop"
-          class="logo"
         ></a>
       </div>
     </div>
     <div class="col-md-5 text-right"><ish-lazy-header-quickorder></ish-lazy-header-quickorder></div>
     <div class="col-md-4"><div class="search-container header-search-container"></div></div>
   </div>
-  <button type="button" class="navbar-toggler">
+  <button class="navbar-toggler" type="button">
     <span class="sr-only">common.button.navbarCollapsed.text</span>
     <div class="hamburger-menu open"><span></span><span></span><span></span></div>
   </button>
   <div class="global-nav-container">
     <nav class="global-nav navbar-expand-md" ng-reflect-collapsed="false">
-      <div role="navigation" class="main-navigation">
+      <div class="main-navigation" role="navigation">
         <camfil-header-navigation></camfil-header-navigation
         ><ish-user-information-mobile></ish-user-information-mobile>
       </div>
@@ -73,37 +73,37 @@ exports[`Header Default Component should render normal header adequately for mob
     </div>
     <camfil-login-status view="small" ng-reflect-view="small"></camfil-login-status
     ><camfil-mini-basket
-      data-testing-id="mini-basket-desktop"
       class="d-none d-md-block"
+      data-testing-id="mini-basket-desktop"
       ng-reflect-ng-class="d-md-block"
     ></camfil-mini-basket
     ><camfil-mini-basket
       data-testing-id="mini-basket-mobile"
-      ng-reflect-ng-class="d-md-none"
       class="d-md-none"
+      ng-reflect-ng-class="d-md-none"
     ></camfil-mini-basket>
   </div>
   <div class="row align-items-center">
     <div class="col-md-3 logo-col">
       <div class="logo-wrapper">
         <a
+          class="mobile-logo"
+          data-testing-id="header-home-link-mobile"
           rel="home"
           routerlink="/home"
-          data-testing-id="header-home-link-mobile"
-          class="mobile-logo"
         ></a>
       </div>
     </div>
     <div class="col-md-5 text-right"><ish-lazy-header-quickorder></ish-lazy-header-quickorder></div>
     <div class="col-md-4"></div>
   </div>
-  <button type="button" class="navbar-toggler">
+  <button class="navbar-toggler" type="button">
     <span class="sr-only">common.button.navbarCollapsed.text</span>
     <div class="hamburger-menu"><span></span><span></span><span></span></div>
   </button>
   <div class="global-nav-container">
     <nav class="global-nav navbar-expand-md" ng-reflect-collapsed="true">
-      <div role="navigation" class="main-navigation">
+      <div class="main-navigation" role="navigation">
         <camfil-header-navigation></camfil-header-navigation
         ><ish-user-information-mobile></ish-user-information-mobile>
       </div>
@@ -128,37 +128,37 @@ exports[`Header Default Component should render normal header adequately for tab
       <camfil-language-switch data-testing-id="language-switch-desktop"></camfil-language-switch>
     </div>
     <camfil-mini-basket
-      data-testing-id="mini-basket-desktop"
       class="d-none d-md-block"
+      data-testing-id="mini-basket-desktop"
       ng-reflect-ng-class="d-md-block"
     ></camfil-mini-basket
     ><camfil-mini-basket
       data-testing-id="mini-basket-mobile"
-      ng-reflect-ng-class="d-md-none"
       class="d-md-none"
+      ng-reflect-ng-class="d-md-none"
     ></camfil-mini-basket>
   </div>
   <div class="row align-items-center">
     <div class="col-md-3 logo-col">
       <div class="logo-wrapper">
         <a
+          class="logo"
+          data-testing-id="header-home-link-desktop"
           rel="home"
           routerlink="/home"
-          data-testing-id="header-home-link-desktop"
-          class="logo"
         ></a>
       </div>
     </div>
     <div class="col-md-5 text-right"><ish-lazy-header-quickorder></ish-lazy-header-quickorder></div>
     <div class="col-md-4"><div class="search-container header-search-container"></div></div>
   </div>
-  <button type="button" class="navbar-toggler">
+  <button class="navbar-toggler" type="button">
     <span class="sr-only">common.button.navbarCollapsed.text</span>
     <div class="hamburger-menu open"><span></span><span></span><span></span></div>
   </button>
   <div class="global-nav-container">
     <nav class="global-nav navbar-expand-md" ng-reflect-collapsed="false">
-      <div role="navigation" class="main-navigation">
+      <div class="main-navigation" role="navigation">
         <camfil-header-navigation></camfil-header-navigation
         ><ish-user-information-mobile></ish-user-information-mobile>
       </div>
@@ -177,37 +177,37 @@ exports[`Header Default Component should render sticky header adequately for des
     <div class="language-switch-container d-none d-md-block"></div>
     <camfil-login-status view="small" ng-reflect-view="small"></camfil-login-status
     ><camfil-mini-basket
-      data-testing-id="mini-basket-desktop"
       class="d-none d-lg-block"
+      data-testing-id="mini-basket-desktop"
       ng-reflect-ng-class="d-lg-block"
     ></camfil-mini-basket
     ><camfil-mini-basket
       data-testing-id="mini-basket-mobile"
-      ng-reflect-ng-class="d-lg-none"
       class="d-lg-none"
+      ng-reflect-ng-class="d-lg-none"
     ></camfil-mini-basket>
   </div>
   <div class="row align-items-center">
     <div class="col-md-3 logo-col">
       <div class="logo-wrapper">
         <a
+          class="logo"
+          data-testing-id="header-home-link-desktop"
           rel="home"
           routerlink="/home"
-          data-testing-id="header-home-link-desktop"
-          class="logo"
         ></a>
       </div>
     </div>
     <div class="col-md-5 text-right"><ish-lazy-header-quickorder></ish-lazy-header-quickorder></div>
     <div class="col-md-4"></div>
   </div>
-  <button type="button" class="navbar-toggler">
+  <button class="navbar-toggler" type="button">
     <span class="sr-only">common.button.navbarCollapsed.text</span>
     <div class="hamburger-menu open"><span></span><span></span><span></span></div>
   </button>
   <div class="global-nav-container">
     <nav class="global-nav navbar-expand-md" ng-reflect-collapsed="false">
-      <div role="navigation" class="main-navigation">
+      <div class="main-navigation" role="navigation">
         <camfil-header-navigation></camfil-header-navigation
         ><ish-user-information-mobile></ish-user-information-mobile>
       </div>
@@ -226,37 +226,37 @@ exports[`Header Default Component should render sticky header adequately for mob
     <div class="language-switch-container d-none d-md-block"></div>
     <camfil-login-status view="small" ng-reflect-view="small"></camfil-login-status
     ><camfil-mini-basket
-      data-testing-id="mini-basket-desktop"
       class="d-none d-lg-block"
+      data-testing-id="mini-basket-desktop"
       ng-reflect-ng-class="d-lg-block"
     ></camfil-mini-basket
     ><camfil-mini-basket
       data-testing-id="mini-basket-mobile"
-      ng-reflect-ng-class="d-lg-none"
       class="d-lg-none"
+      ng-reflect-ng-class="d-lg-none"
     ></camfil-mini-basket>
   </div>
   <div class="row align-items-center">
     <div class="col-md-3 logo-col">
       <div class="logo-wrapper">
         <a
+          class="mobile-logo"
+          data-testing-id="header-home-link-mobile"
           rel="home"
           routerlink="/home"
-          data-testing-id="header-home-link-mobile"
-          class="mobile-logo"
         ></a>
       </div>
     </div>
     <div class="col-md-5 text-right"><ish-lazy-header-quickorder></ish-lazy-header-quickorder></div>
     <div class="col-md-4"></div>
   </div>
-  <button type="button" class="navbar-toggler">
+  <button class="navbar-toggler" type="button">
     <span class="sr-only">common.button.navbarCollapsed.text</span>
     <div class="hamburger-menu"><span></span><span></span><span></span></div>
   </button>
   <div class="global-nav-container">
     <nav class="global-nav navbar-expand-md" ng-reflect-collapsed="true">
-      <div role="navigation" class="main-navigation">
+      <div class="main-navigation" role="navigation">
         <camfil-header-navigation></camfil-header-navigation
         ><ish-user-information-mobile></ish-user-information-mobile>
       </div>
@@ -275,37 +275,37 @@ exports[`Header Default Component should render sticky header adequately for tab
     <div class="language-switch-container d-none d-md-block"></div>
     <camfil-login-status view="small" ng-reflect-view="small"></camfil-login-status
     ><camfil-mini-basket
-      data-testing-id="mini-basket-desktop"
       class="d-none d-lg-block"
+      data-testing-id="mini-basket-desktop"
       ng-reflect-ng-class="d-lg-block"
     ></camfil-mini-basket
     ><camfil-mini-basket
       data-testing-id="mini-basket-mobile"
-      ng-reflect-ng-class="d-lg-none"
       class="d-lg-none"
+      ng-reflect-ng-class="d-lg-none"
     ></camfil-mini-basket>
   </div>
   <div class="row align-items-center">
     <div class="col-md-3 logo-col">
       <div class="logo-wrapper">
         <a
+          class="mobile-logo"
+          data-testing-id="header-home-link-mobile"
           rel="home"
           routerlink="/home"
-          data-testing-id="header-home-link-mobile"
-          class="mobile-logo"
         ></a>
       </div>
     </div>
     <div class="col-md-5 text-right"><ish-lazy-header-quickorder></ish-lazy-header-quickorder></div>
     <div class="col-md-4"></div>
   </div>
-  <button type="button" class="navbar-toggler">
+  <button class="navbar-toggler" type="button">
     <span class="sr-only">common.button.navbarCollapsed.text</span>
     <div class="hamburger-menu"><span></span><span></span><span></span></div>
   </button>
   <div class="global-nav-container">
     <nav class="global-nav navbar-expand-md" ng-reflect-collapsed="true">
-      <div role="navigation" class="main-navigation">
+      <div class="main-navigation" role="navigation">
         <camfil-header-navigation></camfil-header-navigation
         ><ish-user-information-mobile></ish-user-information-mobile>
       </div>

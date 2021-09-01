@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { instance, mock } from 'ts-mockito';
 
+import { ServerHtmlDirective } from 'ish-core/directives/server-html.directive';
 import { MessageFacade } from 'ish-core/facades/message.facade';
 
 import { CamfilErrorMessageComponent } from './camfil-error-message.component';
@@ -14,7 +15,7 @@ describe('Camfil Error Message Component', () => {
   beforeEach(async () => {
     messageFacade = mock(MessageFacade);
     await TestBed.configureTestingModule({
-      declarations: [CamfilErrorMessageComponent],
+      declarations: [CamfilErrorMessageComponent, ServerHtmlDirective],
       providers: [{ provide: MessageFacade, useFactory: () => instance(messageFacade) }],
     }).compileComponents();
   });

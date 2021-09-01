@@ -323,18 +323,22 @@ export class AccountCamCardPdfComponent implements OnInit {
     const price = showPrice ? { text: priceVal, bold: true } : '';
     const currentProd = this.products[sku];
     const showAvailabilityDot = ProductHelper.showAvailabilityDot(currentProd);
-    const arrRightInfo = [
+    const arrLeftInfo = [
       { text: [artNo, artNoVal] },
       { stack: [{ text: [label, labelVal] }, { text: [measurementsText, measurementsToShow] }] },
     ];
-    const arrLeftInfo = [qty, qtyVal, priceLabel, price];
+    const arrRightInfo = [qty, qtyVal];
+    if (showPrice) {
+      arrRightInfo.push(priceLabel, price);
+    }
     return PdfHelper.pdfProductRow(
       index,
       item.product.name,
-      arrRightInfo,
       arrLeftInfo,
+      arrRightInfo,
       camCard.id,
-      showAvailabilityDot
+      showAvailabilityDot,
+      showPrice
     );
   }
 
@@ -370,30 +374,8 @@ export class AccountCamCardPdfComponent implements OnInit {
   }
 
   pdfTotal(id: string) {
-    return {
-      alignment: 'right',
-      style: 'total',
-      layout: 'noBorders',
-      table: {
-        widths: ['*', 1],
-        body: [
-          [
-            {
-              fillColor: '#F2F2F2',
-              bold: true,
-              text: [
-                { text: `\n ${this.texts.yourTotal}  ` },
-                { text: this.handlePrice(this.sumPrice[id]), fontSize: 15 },
-                { text: '\n ' },
-              ],
-            },
-            {
-              fillColor: '#F2F2F2',
-              text: '',
-            },
-          ],
-        ],
-      },
-    };
+    const text = this.texts.yourTotal;
+    const total = this.handlePrice(this.sumPrice[id]);
+    return PdfHelper.pdfTotal(text, total);
   }
 }

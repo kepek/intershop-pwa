@@ -247,7 +247,7 @@ export class PrintOrderComponent implements OnInit {
 
     const measurementsToShow = AttributeHelper.getMeasurementsText(item);
     const measurementsText = measurementsToShow ? ` | ${this.texts.measurements}: ` : '';
-    const arrRightInfo = [
+    const arrLeftInfo = [
       { text: [artNo, artNoVal] },
       {
         stack: [{ text: [deliveryDaysText, deliveryDaysVal] }, { text: [boxLabelText, boxLabelVal] }],
@@ -256,7 +256,8 @@ export class PrintOrderComponent implements OnInit {
 
     const qty = this.texts.quantity;
     const qtyVal = { text: item.quantity.value, bold: true };
-    const priceVal = PriceHelper.checkIfZeroPrice(item.totals.total)
+    const noPrice = PriceHelper.checkIfZeroPrice(item.totals.total);
+    const priceVal = noPrice
       ? '-'
       : this.handlePrice({
           value: item.totals.total.net,
@@ -265,13 +266,13 @@ export class PrintOrderComponent implements OnInit {
         });
     const priceLabel = this.texts.price;
     const price = { text: priceVal, bold: true };
-    const arrLeftInfo = [qty, qtyVal, priceLabel, price];
+    const arrRightInfo = [qty, qtyVal, priceLabel, price];
 
     const name = {
       text: [this.productsInfo[sku].name, measurementsText, { text: measurementsToShow, bold: true }],
     };
 
-    return PdfHelper.pdfProductRow(index, name, arrRightInfo, arrLeftInfo, item.id);
+    return PdfHelper.pdfProductRow(index, name, arrLeftInfo, arrRightInfo, item.id, false, true);
   }
 
   pdfItemsRow(bucket: Bucket) {
@@ -282,31 +283,9 @@ export class PrintOrderComponent implements OnInit {
   }
 
   pdfTotal(id: string) {
-    return {
-      alignment: 'right',
-      style: 'total',
-      layout: 'noBorders',
-      table: {
-        widths: ['*', 1],
-        body: [
-          [
-            {
-              fillColor: '#F2F2F2',
-              bold: true,
-              text: [
-                { text: `\n ${this.texts.yourTotal}  ` },
-                { text: this.handlePrice(this.summaryObjs[id].total), fontSize: 15 },
-                { text: '\n ' },
-              ],
-            },
-            {
-              fillColor: '#F2F2F2',
-              text: '',
-            },
-          ],
-        ],
-      },
-    };
+    const text = this.texts.yourTotal;
+    const total = this.handlePrice(this.summaryObjs[id].total);
+    return PdfHelper.pdfTotal(text, total);
   }
 
   handlePrice(data: Price) {
