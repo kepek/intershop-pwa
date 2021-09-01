@@ -525,7 +525,7 @@
   "camfil.account.cam_card.add_to_form.country": "Maa",
   "camfil.account.cam_card.add_to_form.customer_name": "Asiakkaan nimi",
   "camfil.account.cam_card.add_to_form.delivery_address": "Toimitusosoite",
-  "camfil.account.cam_card.add_to_form.delivery_interval": "Toimitusväli",
+  "camfil.account.cam_card.add_to_form.delivery_interval": "Toimitusväli (kuukausia)",
   "camfil.account.cam_card.add_to_form.delivery_time": "Toimitusaika",
   "camfil.account.cam_card.add_to_form.dialog.do_you_want": "Haluatko jatkaa?",
   "camfil.account.cam_card.add_to_form.dialog.no": "Ei kiitos",
