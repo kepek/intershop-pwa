@@ -145,11 +145,11 @@ export class ShoppingFacade {
     return this.store.pipe(select(getProductBundleParts, { sku }));
   }
 
-  productNotReady$(sku$: Observable<string>, level: ProductCompletenessLevel) {
-    return sku$.pipe(
-      switchMap(sku =>
+  productNotReady$(sku: string | Observable<string>, level: ProductCompletenessLevel) {
+    return toObservable(sku).pipe(
+      switchMap(plainSKU =>
         this.store.pipe(
-          select(getProduct, { sku }),
+          select(getProduct, { sku: plainSKU }),
           map(p => !ProductHelper.isReadyForDisplay(p, level))
         )
       )

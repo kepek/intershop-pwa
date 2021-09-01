@@ -24,7 +24,6 @@ import { ProductViewHelper } from 'ish-core/models/product-view/product-view.hel
 import { ProductView } from 'ish-core/models/product-view/product-view.model';
 import { ProductCompletenessLevel } from 'ish-core/models/product/product.model';
 import { CheckoutFocusedElement } from 'ish-core/models/scroll-info copy/checkout-focused-element.interface';
-import { whenTruthy } from 'ish-core/utils/operators';
 import { CamfilQuickViewModalComponent } from 'ish-shared/components/common/camfil-quick-view-modal/camfil-quick-view-modal.component';
 import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
 import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
@@ -82,14 +81,12 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
       CamfilCheckoutLineItemComponent.REQUIRED_COMPLETENESS_LEVEL
     );
 
-    this.checkoutFacade.basketLineItems$?.pipe(whenTruthy(), take(1)).subscribe((res: LineItem[]) => {
-      this.boxLabel = (this.getValFromAttrs(res, 'boxLabel') as string) || '';
-      this.measurements = {
-        [this.measurementsValues[0]]: (this.getValFromAttrs(res, 'width') as number) || undefined,
-        [this.measurementsValues[1]]: (this.getValFromAttrs(res, 'height') as number) || undefined,
-        [this.measurementsValues[2]]: (this.getValFromAttrs(res, 'diameter') as number) || undefined,
-      };
-    });
+    this.boxLabel = (this.getValFromAttrs(this.lineItem, 'boxLabel') as string) || '';
+    this.measurements = {
+      [this.measurementsValues[0]]: (this.getValFromAttrs(this.lineItem, 'width') as number) || undefined,
+      [this.measurementsValues[1]]: (this.getValFromAttrs(this.lineItem, 'height') as number) || undefined,
+      [this.measurementsValues[2]]: (this.getValFromAttrs(this.lineItem, 'diameter') as number) || undefined,
+    };
 
     this.addToCartQuantityControl = new FormControl(this.lineItem?.quantity?.value || 1);
 
@@ -140,8 +137,7 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
     this.modal.hide();
   }
 
-  getValFromAttrs(res: LineItem[], name: string) {
-    const lineItem = res.find(li => li.id === this.lineItem.id);
+  getValFromAttrs(lineItem: LineItem, name: string) {
     return lineItem?.attributes?.find(att => att.name === name)?.value;
   }
 

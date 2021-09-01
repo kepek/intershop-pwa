@@ -12,6 +12,24 @@
   </mat-accordion>
 </div>
 
+<camfil-modal-add-new-product
+  #addNewProductModal
+  [order]="order"
+  [addToOrder]="true"
+  [shippingMethodId]="basket?.commonShippingMethod?.id"
+>
+</camfil-modal-add-new-product>
+
+<camfil-edit-order-modal #editModal [order]="order"></camfil-edit-order-modal>
+
+<camfil-small-cta-modal
+  actionTitle="{{ modalDeliveryText | translate }}"
+  actionButtonTitle="{{ 'camfil.checkout.create_new_order.temporary_order.ok' | translate }}"
+  onlyAccept="true"
+  icon="calendar"
+>
+</camfil-small-cta-modal>
+
 <ng-template #orderHeader>
   <div class="d-inline-flex">
     <strong *ngIf="order">
@@ -297,21 +315,3 @@
     </div>
   </ng-container>
 </ng-template>
-
-<camfil-modal-add-new-product
-  #addNewProductModal
-  [order]="order"
-  [addToOrder]="true"
-  [shippingMethodId]="basket?.commonShippingMethod?.id"
->
-</camfil-modal-add-new-product>
-
-<camfil-edit-order-modal #editModal [order]="order"></camfil-edit-order-modal>
-
-<camfil-small-cta-modal
-  actionTitle="{{ modalDeliveryText | translate }}"
-  actionButtonTitle="{{ 'camfil.checkout.create_new_order.temporary_order.ok' | translate }}"
-  onlyAccept="true"
-  icon="calendar"
->
-</camfil-small-cta-modal>
