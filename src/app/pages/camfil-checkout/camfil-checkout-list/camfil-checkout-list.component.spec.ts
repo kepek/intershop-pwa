@@ -5,6 +5,7 @@ import { of } from 'rxjs';
 import { instance, mock, when } from 'ts-mockito';
 
 import { ServerHtmlDirective } from 'ish-core/directives/server-html.directive';
+import { AppFacade } from 'ish-core/facades/app.facade';
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { BasketTotal } from 'ish-core/models/basket-total/basket-total.model';
@@ -45,8 +46,10 @@ describe('Camfil Checkout List Component', () => {
   let camCardFacadeMock: CamCardsFacade;
   let shoppingFacadeMock: ShoppingFacade;
   let checkoutFacadeMock: CheckoutFacade;
+  let appFacadeMock: AppFacade;
 
   beforeEach(async () => {
+    appFacadeMock = mock(AppFacade);
     camCardFacadeMock = mock(CamCardsFacade);
     shoppingFacadeMock = mock(ShoppingFacade);
     checkoutFacadeMock = mock(CheckoutFacade);
@@ -86,6 +89,7 @@ describe('Camfil Checkout List Component', () => {
         { provide: CamCardsFacade, useFactory: () => instance(camCardFacadeMock) },
         { provide: ShoppingFacade, useFactory: () => instance(shoppingFacadeMock) },
         { provide: CheckoutFacade, useFactory: () => instance(checkoutFacadeMock) },
+        { provide: AppFacade, useFactory: () => instance(appFacadeMock) },
       ],
     }).compileComponents();
   });
