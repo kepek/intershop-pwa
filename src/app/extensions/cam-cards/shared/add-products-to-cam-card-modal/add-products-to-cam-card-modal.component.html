@@ -183,7 +183,7 @@
               </div>
             </mat-radio-group>
 
-            <div class="modal__new-segment">
+            <div class="modal__new-segment" [ngClass]="{ 'hidden-button': showNewSegment }">
               <mat-icon svgIcon="plus" class="color-dark size-24 modal__new-segment--icon"></mat-icon>
               <a class="modal__link" (click)="showNewSegmant()" tabindex="0" (keypress)="showNewSegmant()">{{
                 'camfil.modal.addToCamcard.camcard.new_segment' | translate
