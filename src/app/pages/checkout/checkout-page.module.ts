@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { OrderModule } from 'ngx-order-pipe';
 
 import { SharedModule } from 'ish-shared/shared.module';
 
