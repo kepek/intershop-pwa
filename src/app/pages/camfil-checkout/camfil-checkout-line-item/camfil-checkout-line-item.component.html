@@ -1,4 +1,4 @@
-<ng-template #noProduct>Loading product...</ng-template>
+<ng-template #noProduct>...</ng-template>
 
 <ng-container *ngIf="product$ | async as product; else noProduct">
   <div class="line-item d-flex align-items-center text-left" [class]="{ 'line-item__confirmed': isConfirmed }">
