@@ -33,7 +33,7 @@ const checkoutPageRoutes: Routes = [
 ];
 
 @NgModule({
-  imports: [CamCardsModule, OrderModule, RouterModule.forChild(checkoutPageRoutes), SharedModule],
+  imports: [CamCardsModule, RouterModule.forChild(checkoutPageRoutes), SharedModule],
   declarations: [
     AddEmailRecipientModalComponent,
     CamfilCheckoutDeliveryAddressComponent,
