@@ -2,12 +2,13 @@ import { Inject, Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { routerNavigatedAction } from '@ngrx/router-store';
 import { Store, select } from '@ngrx/store';
-import { filter, map, mergeMap, switchMap, switchMapTo, tap, withLatestFrom } from 'rxjs/operators';
+import { filter, map, mapTo, mergeMap, switchMap, switchMapTo, tap, withLatestFrom } from 'rxjs/operators';
 
 import { MAIN_NAVIGATION_MAX_SUB_CATEGORIES_DEPTH } from 'ish-core/configurations/injection-keys';
 import { CategoryHelper } from 'ish-core/models/category/category.model';
 import { ofCategoryUrl } from 'ish-core/routing/category/category.route';
 import { CategoriesService } from 'ish-core/services/categories/categories.service';
+import { setCurrentLocale } from 'ish-core/store/core/configuration';
 import { selectRouteParam } from 'ish-core/store/core/router';
 import { setBreadcrumbData } from 'ish-core/store/core/viewconf';
 import { loadMoreProducts } from 'ish-core/store/shopping/product-listing';
@@ -181,5 +182,10 @@ export class CategoriesEffects {
         )
       )
     )
+  );
+
+  // Fetch and update category data (display names) when language is changed
+  refreshCategories$ = createEffect(() =>
+    this.actions$.pipe(ofType(setCurrentLocale), mapTo(loadTopLevelCategories()))
   );
 }
