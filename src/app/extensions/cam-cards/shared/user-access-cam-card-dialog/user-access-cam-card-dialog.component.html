@@ -16,7 +16,7 @@
   <mat-form-field appearance="fill" class="offset-sm-1">
     <mat-label>{{ 'camfil.account.cam_card.access_user.dialog.select.label' | translate }}</mat-label>
     <mat-select multiple formControlName="contact" [disabled]="!isUserSingle()" [required]="isUserSingle()">
-      <mat-option *ngFor="let item of allContacts$ | async" [value]="item.profileId">
+      <mat-option *ngFor="let item of allContacts$ | async | camfilContactSort" [value]="item.profileId">
         {{ item.firstName }} {{ item.lastName }}
       </mat-option>
     </mat-select>

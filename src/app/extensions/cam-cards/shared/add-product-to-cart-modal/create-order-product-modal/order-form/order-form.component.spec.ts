@@ -4,6 +4,7 @@ import { of } from 'rxjs';
 import { instance, mock, when } from 'ts-mockito';
 
 import { AddressSortPipe } from 'ish-core/pipes/camfil-address-sort.pipe';
+import { CamfilContactSortPipe } from 'ish-core/pipes/camfil-contact-sort.pipe';
 import { CamfilErrorComponent } from 'ish-shared/components/common/camfil-error/camfil-error.component';
 import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
 import { ZipCodeComponent } from 'ish-shared/components/zip-code/zip-code.component';
@@ -27,6 +28,7 @@ describe('Order Form Component', () => {
         MockComponent(CamfilLoadingComponent),
         MockComponent(ZipCodeComponent),
         MockPipe(AddressSortPipe),
+        MockPipe(CamfilContactSortPipe),
         OrderFormComponent,
       ],
       providers: [{ provide: CamCardsFacade, useFactory: () => instance(camCardFacadeMock) }],
