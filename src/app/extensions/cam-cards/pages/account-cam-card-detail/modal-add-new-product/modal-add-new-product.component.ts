@@ -23,13 +23,13 @@ import { Bucket } from 'ish-core/models/basket/bucket.model';
 import { CategoryTreeHelper } from 'ish-core/models/category-tree/category-tree.helper';
 import { ProductView, createProductView } from 'ish-core/models/product-view/product-view.model';
 import { Product, ProductCompletenessLevel, ProductHelper } from 'ish-core/models/product/product.model';
+import { whenTruthy } from 'ish-core/utils/operators';
 import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
 
 import { CamCardsFacade } from '../../../facades/cam-cards.facade';
 import { CamCard, CamCardItemComment } from '../../../models/cam-card/cam-card.model';
 
 import { ADD_NEW_PRODUCT_VALIDATORS } from './validators';
-import { whenTruthy } from 'ish-core/utils/operators';
 
 const FAKE_SKU = '144c9defac04969c7bfad8efaa8ea194';
 
