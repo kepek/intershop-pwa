@@ -1,24 +1,53 @@
-import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnDestroy,
+  OnInit,
+  TemplateRef,
+  ViewChild,
+} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { Observable, Subject } from 'rxjs';
-import { take, takeUntil } from 'rxjs/operators';
+import { isEmpty } from 'lodash-es';
+import { Observable, ReplaySubject, Subject, of } from 'rxjs';
+import { catchError, debounceTime, map, switchMap, take, takeUntil, tap, withLatestFrom } from 'rxjs/operators';
 
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { AddressHelper } from 'ish-core/models/address/address.helper';
 import { Address } from 'ish-core/models/address/address.model';
 import { AttributeHelper } from 'ish-core/models/attribute/attribute.helper';
 import { Bucket } from 'ish-core/models/basket/bucket.model';
-import { ProductView } from 'ish-core/models/product-view/product-view.model';
+import { CategoryTreeHelper } from 'ish-core/models/category-tree/category-tree.helper';
+import { ProductView, createProductView } from 'ish-core/models/product-view/product-view.model';
 import { Product, ProductCompletenessLevel, ProductHelper } from 'ish-core/models/product/product.model';
-import { whenTruthy } from 'ish-core/utils/operators';
 import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
 
 import { CamCardsFacade } from '../../../facades/cam-cards.facade';
 import { CamCard, CamCardItemComment } from '../../../models/cam-card/cam-card.model';
 
 import { ADD_NEW_PRODUCT_VALIDATORS } from './validators';
+import { whenTruthy } from 'ish-core/utils/operators';
+
+const FAKE_SKU = '144c9defac04969c7bfad8efaa8ea194';
+
+const createFakeProduct = (product?: Product) =>
+  createProductView(
+    // tslint:disable-next-line:ish-no-object-literal-type-assertion
+    {
+      minOrderQuantity: 0,
+      maxOrderQuantity: 0,
+      sku: FAKE_SKU,
+      inStock: true,
+      availability: true,
+      attributes: [],
+      failed: true,
+      ...product,
+    } as Product,
+    CategoryTreeHelper.empty()
+  );
 
 @Component({
   selector: 'camfil-modal-add-new-product',
@@ -26,9 +55,9 @@ import { ADD_NEW_PRODUCT_VALIDATORS } from './validators';
   styleUrls: ['./modal-add-new-product.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ModalAddNewProductComponent implements OnInit, OnDestroy {
+export class ModalAddNewProductComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(
-    private productFacade: ShoppingFacade,
+    private shoppingFacade: ShoppingFacade,
     private camCardsFacade: CamCardsFacade,
     public dialog: MatDialog
   ) {}
@@ -43,37 +72,37 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy {
   }
 
   private static REQUIRED_COMPLETENESS_LEVEL = ProductCompletenessLevel.List;
-  modal: NgbModalRef;
-  productForm: FormGroup;
 
-  dummyProduct = { sku: 'dummy', inStock: true, availability: true };
+  private rootCamCardId: string;
+  private destroy$ = new Subject();
+
+  sku$ = new ReplaySubject<string>(1);
+  productIsLoading$: Observable<boolean>;
   product$: Observable<ProductView>;
-  product: Product;
-
+  productHasValidSku$: Observable<boolean>;
+  productRequiresMeasurement$: Observable<boolean>;
+  productFormIsDisabled$: Observable<boolean>;
   currentCamCard$: Observable<CamCard>;
-  rootCamCardId: string;
 
   @Input() addToOrder = false;
   @Input() order?: Bucket;
   @Input() shippingMethodId?: string;
 
-  showSkuError = false;
-  loading = false;
-  isSubmitted = false;
-  requiresMeasurement: boolean;
-  private destroy$ = new Subject();
-  basketAddresses: Address[];
-
-  validators = ADD_NEW_PRODUCT_VALIDATORS;
-  validateFilterArea = ProductHelper.validateFilterArea;
   @ViewChild('modal', { static: false }) modalTemplate: TemplateRef<unknown>;
 
-  ngOnInit() {
-    this.currentCamCard$ = this.camCardsFacade.currentCamCard$;
+  modal: NgbModalRef;
+  productForm: FormGroup;
+  isSubmitted = false;
+  basketAddresses: Address[];
+  validators = ADD_NEW_PRODUCT_VALIDATORS;
 
+  ngOnInit() {
     this.productForm = new FormGroup({
-      quantity: new FormControl(1),
-      sku: new FormControl('', [Validators.required]),
+      quantity: new FormControl(0),
+      sku: new FormControl('', {
+        validators: [Validators.required],
+        updateOn: 'change',
+      }),
       boxLabel: new FormControl('', [Validators.maxLength(60)]),
       measurementWidth: new FormControl(),
       measurementHeight: new FormControl(),
@@ -81,18 +110,83 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy {
       measurementErrorInfo: new FormControl(),
     });
 
+    this.currentCamCard$ = this.camCardsFacade.currentCamCard$;
+
+    this.product$ = this.sku$
+      .pipe(
+        switchMap(sku =>
+          sku === FAKE_SKU
+            ? of(createFakeProduct())
+            : this.shoppingFacade.product$(sku, ModalAddNewProductComponent.REQUIRED_COMPLETENESS_LEVEL).pipe(
+                catchError(() => of(createFakeProduct())),
+                map(product => (product?.failed ? createFakeProduct(product) : product))
+              )
+        )
+      )
+      .pipe(
+        tap(({ failed, minOrderQuantity, maxOrderQuantity }) => {
+          const quantityControl = this.productForm?.get('quantity');
+          quantityControl?.setValidators([Validators.min(minOrderQuantity), Validators.max(maxOrderQuantity)]);
+          quantityControl?.setValue(failed ? 0 : 1);
+          quantityControl?.updateValueAndValidity();
+        })
+      );
+
+    this.productIsLoading$ = this.sku$.pipe(
+      switchMap(sku =>
+        sku === FAKE_SKU
+          ? of(false)
+          : this.shoppingFacade.productNotReady$(sku, ProductCompletenessLevel.List).pipe(catchError(() => of(false)))
+      )
+    );
+
+    this.productHasValidSku$ = this.product$.pipe(
+      map(product => this.isSubmitted || (!product?.failed && product?.availability)),
+      tap(hasValidSku => {
+        const skuControl = this.productForm?.get('sku');
+        const required = isEmpty(skuControl?.value) || skuControl?.value === FAKE_SKU;
+        const validSku = !hasValidSku && !isEmpty(skuControl?.value);
+
+        skuControl.setErrors(!required && !validSku ? undefined : { required, validSku });
+      })
+    );
+
+    this.productRequiresMeasurement$ = this.product$.pipe(
+      map(product => ProductHelper.getRequiresMeasurement(product)),
+      tap(() => {
+        this.productForm?.get('measurementWidth').reset();
+        this.productForm?.get('measurementHeight').reset();
+        this.productForm?.get('measurementDiameter').reset();
+        this.productForm?.get('measurementErrorInfo').reset();
+      })
+    );
+
+    this.productFormIsDisabled$ = this.productForm?.valueChanges?.pipe(
+      withLatestFrom(this.product$, this.sku$, this.productHasValidSku$),
+      map(([, product, sku, productWithValidSku]) =>
+        sku === FAKE_SKU
+          ? true
+          : ProductHelper.disableIfNoMeasurements(product, this.productForm) ||
+            !productWithValidSku ||
+            !ProductHelper.validateFilterArea(product, this.productForm)
+      )
+    );
+
+    this.productForm
+      ?.get('sku')
+      ?.valueChanges?.pipe(debounceTime(500), takeUntil(this.destroy$))
+      .subscribe(sku => {
+        this.sku$.next(sku || FAKE_SKU);
+      });
+
     if (this.addToOrder) {
-      this.productFacade.basketAddresses$.pipe(takeUntil(this.destroy$)).subscribe((basketAddresses: Address[]) => {
+      this.shoppingFacade.basketAddresses$.pipe(takeUntil(this.destroy$)).subscribe((basketAddresses: Address[]) => {
         this.basketAddresses = basketAddresses;
       });
-
-      this.productFacade.productUpdated$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(() => {
-        this.loading = false;
+      this.shoppingFacade.productUpdated$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(() => {
         this.hide();
       });
-
-      this.productFacade.productAdded$.pipe(whenTruthy(), take(1)).subscribe(() => {
-        this.loading = false;
+      this.shoppingFacade.productAdded$.pipe(whenTruthy(), take(1)).subscribe(() => {
         this.hide();
       });
     } else {
@@ -102,52 +196,26 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy {
     }
   }
 
-  isSkuValid = () => this.isSubmitted || (!this.product?.failed && this.product?.availability);
-
-  validateSku() {
-    const sku = this.productForm.get('sku').value;
-
-    if (sku) {
-      this.requiresMeasurement = false;
-      this.loading = true;
-      this.product$ = this.productFacade.product$(sku, ModalAddNewProductComponent.REQUIRED_COMPLETENESS_LEVEL);
-
-      this.product$.pipe(take(1)).subscribe(product => {
-        this.product = product;
-        this.showSkuError = !this.isSkuValid();
-
-        if (!this.isSubmitted) {
-          this.loading = false;
-        }
-
-        if (this.isSkuValid()) {
-          this.requiresMeasurement = ProductHelper.getRequiresMeasurement(this.product);
-          this.setQuantityValidation(this.product.minOrderQuantity, this.product.maxOrderQuantity);
-        }
-      });
-    }
-  }
-
-  setQuantityValidation(min: number, max: number) {
-    this.productForm.controls.quantity.setValidators([Validators.min(min), Validators.max(max)]);
-    this.productForm.controls.quantity.updateValueAndValidity();
+  ngAfterViewInit() {
+    this.sku$.next(FAKE_SKU);
   }
 
   submitForm() {
-    if (this.productForm.valid && !this.showSkuError) {
-      const sku = this.getField('sku')?.value ? String(this.getField('sku').value) : undefined;
-      const quantity = this.getField('quantity')?.value ? Number(this.getField('quantity')?.value) : 1;
-      const label = this.getField('boxLabel')?.value ? String(this.getField('boxLabel').value) : undefined;
+    if (this.productForm.valid) {
+      const sku = this.productForm?.get('sku')?.value ? String(this.productForm?.get('sku').value) : undefined;
+      const quantity = this.productForm?.get('quantity')?.value ? Number(this.productForm?.get('quantity')?.value) : 1;
+      const label = this.productForm?.get('boxLabel')?.value
+        ? String(this.productForm?.get('boxLabel').value)
+        : undefined;
       const comment: CamCardItemComment = label ? { label } : undefined;
       const lineItemAttributes = AttributeHelper.calculateAttrsToAddFromForm(this.productForm);
 
       this.isSubmitted = true;
 
       if (this.addToOrder) {
-        const type = this.order.id.split('_')[0];
-        this.loading = true;
+        const type = this.order?.id?.split('_')?.[0];
 
-        if (this.order.id && type !== 'emptyBucket' && this.order.shipToAddress) {
+        if (this.order?.id && type !== 'emptyBucket' && this.order?.shipToAddress) {
           this.addToExistingOrder(sku, quantity, this.order.shipToAddress, lineItemAttributes);
         } else {
           const deliveryAddress = this.order.shipToAddressFull as Address;
@@ -161,21 +229,20 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy {
         };
         this.camCardsFacade.addProductToCamCard(this.rootCamCardId, sku, quantity, comment, measurement, 0, true);
         this.hide();
-        this.resetFormValues();
+        this.reset();
       }
-      this.requiresMeasurement = false;
     } else {
       markAsDirtyRecursive(this.productForm);
     }
   }
 
   addToExistingOrder(sku, quantity, shipToAddress, lineItemAttributes) {
-    this.productFacade.addProductToBasket(sku, quantity, this.shippingMethodId, shipToAddress, lineItemAttributes);
+    this.shoppingFacade.addProductToBasket(sku, quantity, this.shippingMethodId, shipToAddress, lineItemAttributes);
   }
 
   addToNewOrder(sku, quantity, deliveryAddress, bucketId, lineItemAttributes) {
     if (this.isNewAddress(deliveryAddress)) {
-      this.productFacade.addProductToBucket(
+      this.shoppingFacade.addProductToBucket(
         deliveryAddress,
         this.order.shippingMethod,
         sku,
@@ -188,7 +255,7 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy {
         bucketId
       );
     } else {
-      this.productFacade.addProductToBucketWithUrn(
+      this.shoppingFacade.addProductToBucketWithUrn(
         this.getUrn(deliveryAddress),
         this.getId(deliveryAddress),
         this.order.shippingMethod,
@@ -212,17 +279,9 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy {
     return AddressHelper.isNewAddress(currentAddress, this.basketAddresses);
   }
 
-  resetError() {
-    this.showSkuError = false;
-    this.product = undefined;
-  }
-
-  resetFormValues() {
-    this.productForm.reset();
-  }
-
-  getField(name: string) {
-    return this.productForm?.get(name);
+  reset() {
+    this.sku$.next(FAKE_SKU);
+    this.productForm?.reset();
   }
 
   /** close modal */
@@ -233,10 +292,6 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy {
   /** open modal */
   show() {
     return this.modalTemplate;
-  }
-
-  disableIfNoMeasurements(): boolean {
-    return ProductHelper.disableIfNoMeasurements(this.product, this.productForm);
   }
 
   ngOnDestroy(): void {

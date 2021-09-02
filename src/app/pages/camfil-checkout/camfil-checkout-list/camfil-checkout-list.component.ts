@@ -290,8 +290,15 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
   }
 
   openAddToProductModal(modal: ModalAddNewProductComponent) {
-    this.dialog.open(modal.show());
+    const dialogRef = this.dialog.open(modal.show());
     modal.hide = () => this.dialog.closeAll();
+
+    dialogRef
+      .afterClosed()
+      .pipe(take(1), takeUntil(this.destroy$))
+      .subscribe(() => {
+        modal.reset();
+      });
   }
 
   getTargetPosition(previousIndex, currentIndex, items) {

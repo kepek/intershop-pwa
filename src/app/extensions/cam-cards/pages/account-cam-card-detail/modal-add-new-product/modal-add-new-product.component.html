@@ -1,85 +1,73 @@
 <ng-template #modal>
-  <camfil-loading *ngIf="loading"></camfil-loading>
-
-  <div class="add-new-product">
-    <button class="close" (click)="hide()" aria-label="Close">
-      <mat-icon svgIcon="inactive" aria-hidden="true"></mat-icon>
-    </button>
-    <mat-icon svgIcon="add-camcard"></mat-icon>
-    <h2 class="add-new-product__header">{{ 'camfil.modal.addNewProduct.title' | translate }}</h2>
-    <form [formGroup]="productForm">
-      <div>
-        <mat-form-field appearance="fill" class="add-new-product__field">
-          <mat-label>{{ 'camfil.modal.addNewProduct.input.product_sku' | translate }}</mat-label>
-          <input
-            matInput
-            maxlength="35"
-            formControlName="sku"
-            (keyup)="resetError()"
-            (focus)="isSubmitted = false"
-            (blur)="validateSku()"
-          />
-          <mat-icon *ngIf="product && !showSkuError" matSuffix svgIcon="checkmark"></mat-icon>
-        </mat-form-field>
-
+  <camfil-loading *ngIf="productIsLoading$ | async"></camfil-loading>
+  <ng-container *ngIf="product$ | async as product">
+    <div class="add-new-product">
+      <button class="close" (click)="hide()" aria-label="Close">
+        <mat-icon svgIcon="inactive" aria-hidden="true"></mat-icon>
+      </button>
+      <mat-icon svgIcon="add-camcard"></mat-icon>
+      <h2 class="add-new-product__header">{{ 'camfil.modal.addNewProduct.title' | translate }}</h2>
+      <form [formGroup]="productForm">
+        <div>
+          <mat-form-field appearance="fill" class="add-new-product__field">
+            <mat-label>{{ 'camfil.modal.addNewProduct.input.product_sku' | translate }}</mat-label>
+            <input matInput maxlength="35" formControlName="sku" (focus)="isSubmitted = false" />
+            <mat-icon *ngIf="productHasValidSku$ | async" matSuffix svgIcon="checkmark"></mat-icon>
+            <mat-error *ngIf="productForm.controls.sku.hasError('required')">
+              {{ 'camfil.modal.addNewProduct.error.required.sku' | translate }}
+            </mat-error>
+            <mat-error
+              *ngIf="productForm.controls.sku.hasError('validSku')"
+              [matTooltip]="'camfil.modal.addNewProduct.error' | translate"
+            >
+              {{ 'camfil.modal.addNewProduct.error' | translate }}
+            </mat-error>
+          </mat-form-field>
+          <div class="article-details-container">
+            <camfil-article-details
+              [product]="product"
+              [quantityForm]="productForm"
+              [isInAddNewProductModal]="true"
+              [showMeasurementsForm]="productRequiresMeasurement$ | async"
+            ></camfil-article-details>
+          </div>
+          <mat-form-field appearance="fill" class="add-new-product__field">
+            <mat-label>{{ 'camfil.modal.addNewProduct.input.box_label' | translate }}</mat-label>
+            <input matInput type="text" formControlName="boxLabel" camfilMaxLength="'BoxLabel'" />
+          </mat-form-field>
+        </div>
+        <div class="add-new-product__quantity-wrapper">
+          <mat-label class="add-new-product__label">{{
+            'camfil.modal.addNewProduct.input.quantity' | translate
+          }}</mat-label>
+          <camfil-product-quantity
+            [allowZeroQuantity]="false"
+            [quantityLabel]="''"
+            [product]="product"
+            [parentForm]="productForm"
+            controlName="quantity"
+          ></camfil-product-quantity>
+        </div>
         <camfil-error
           class="add-new-product__field--camfil-error"
-          [errors]="getField('sku').errors"
-          [errorValidators]="validators.sku"
-          [touched]="getField('sku').touched || getField('sku').dirty"
+          [errors]="productForm?.controls?.quantity?.errors"
+          [errorValidators]="validators.quantity"
+          [touched]="productForm?.controls?.quantity?.touched || productForm?.controls?.quantity?.dirty"
         ></camfil-error>
-
-        <mat-error *ngIf="showSkuError" class="add-new-product__field add-new-product__field--error">
-          {{ 'camfil.modal.addNewProduct.error' | translate }}
-        </mat-error>
-        <div class="article-details-container" *ngIf="product">
-          <camfil-article-details
-            [product]="product"
-            [quantityForm]="productForm"
-            [isInAddNewProductModal]="true"
-            [showMeasurementsForm]="requiresMeasurement"
-          ></camfil-article-details>
+        <div class="add-new-product__buttons">
+          <button class="btn btn-link add-new-product__buttons--link" (mousedown)="hide()">
+            {{ 'camfil.modal.addNewProduct.button.cancel' | translate }}
+          </button>
+          <button
+            type="submit"
+            (click)="submitForm()"
+            class="btn btn-link add-new-product__buttons--link"
+            [disabled]="(productFormIsDisabled$ | async) || productForm?.invalid"
+          >
+            {{ 'camfil.modal.addNewProduct.button.add_product' | translate }}
+          </button>
         </div>
-        <mat-form-field appearance="fill" class="add-new-product__field">
-          <mat-label>{{ 'camfil.modal.addNewProduct.input.box_label' | translate }}</mat-label>
-          <input matInput type="text" formControlName="boxLabel" camfilMaxLength="'BoxLabel'" />
-        </mat-form-field>
-      </div>
-
-      <div class="add-new-product__quantity-wrapper">
-        <mat-label class="add-new-product__label">{{
-          'camfil.modal.addNewProduct.input.quantity' | translate
-        }}</mat-label>
-        <camfil-product-quantity
-          [allowZeroQuantity]="false"
-          [quantityLabel]="''"
-          [product]="dummyProduct"
-          [parentForm]="productForm"
-          controlName="quantity"
-        ></camfil-product-quantity>
-      </div>
-
-      <camfil-error
-        class="add-new-product__field--camfil-error"
-        [errors]="getField('quantity').errors"
-        [errorValidators]="validators.quantity"
-        [touched]="getField('quantity').touched || getField('quantity').dirty"
-      ></camfil-error>
-
-      <div class="add-new-product__buttons">
-        <button class="btn btn-link add-new-product__buttons--link" (mousedown)="hide()">
-          {{ 'camfil.modal.addNewProduct.button.cancel' | translate }}
-        </button>
-
-        <button
-          type="submit"
-          (click)="submitForm()"
-          class="btn btn-link add-new-product__buttons--link"
-          [disabled]="disableIfNoMeasurements() || !this.isSkuValid() || !validateFilterArea(product, productForm)"
-        >
-          {{ 'camfil.modal.addNewProduct.button.add_product' | translate }}
-        </button>
-      </div>
-    </form>
-  </div>
+      </form>
+    </div>
+  </ng-container>
 </ng-template>
