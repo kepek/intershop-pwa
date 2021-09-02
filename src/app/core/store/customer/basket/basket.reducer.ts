@@ -164,6 +164,16 @@ export const initialState: BasketState = {
   calendarExceptions: [],
 };
 
+function handleVisibleAfterDelete(lineItems: LineItemView[], payload): LineItemView[] {
+  let position = 0;
+  return lineItems
+    ?.map(item => (item.id === payload.id ? { ...item, hiddenItem: true } : item))
+    .map(item => ({
+      ...item,
+      position: item.hiddenItem ? undefined : ++position,
+    }));
+}
+
 export const basketReducer = createReducer(
   initialState,
   setLoadingOn(
@@ -273,6 +283,24 @@ export const basketReducer = createReducer(
     productUpdated: true,
     productAdded: true,
   })),
+  on(deleteBasketItemSuccess, (state: BasketState, { payload }) => {
+    const basketItems = handleVisibleAfterDelete(state.basket?.lineItems, payload);
+    const buckets = state.buckets?.map(b => {
+      const lineItems = b?.lineItems.map(item => {
+        const { position, hiddenItem } = basketItems.find(({ id }) => id === item.id);
+        return { ...item, position, hiddenItem };
+      });
+      return { ...b, lineItems };
+    });
+    return {
+      ...state,
+      basket: {
+        ...state.basket,
+        lineItems: basketItems,
+      },
+      buckets,
+    };
+  }),
   on(loadBucketsSuccess, (state: BasketState, action) => {
     const addresses = action.payload.buckets.map(bucket => bucket.shipToAddressFull);
     const onlyEmpty = state.emptyBuckets.filter(emptyBucket =>

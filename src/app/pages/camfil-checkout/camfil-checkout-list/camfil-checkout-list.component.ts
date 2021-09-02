@@ -119,6 +119,10 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
     return { ...this.order.shipToAddressFull, countryCode: '' };
   }
 
+  get onlyVisibleItems() {
+    return this.order.lineItems.filter(el => !el.hiddenItem);
+  }
+
   ngOnInit(): void {
     this.calendarExceptions$ = this.checkoutFacade.calendarExceptions$;
 
@@ -187,16 +191,13 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
       this.orderAddress = this.shipToAddress;
       this.forceUpdateForm = false;
     }
+    if (s.buckets && this.onlyVisibleItems.length !== this.order?.lineItems?.length) {
+      this.handleHeightItemsContainer(this.onlyVisibleItems);
+    }
   }
 
   ngAfterViewInit() {
-    const numberOfItems =
-      this.order?.lineItems?.length >= this.numberOfVisibleLineItems
-        ? this.numberOfVisibleLineItems
-        : this.order?.lineItems?.length + 1;
-
-    // @ts-ignore
-    this.virtualScrollViewport?.elementRef?.nativeElement?.style?.height = `${numberOfItems * this.lineItemHeight}px`;
+    this.handleHeightItemsContainer(this.order?.lineItems);
 
     if (this.focusedElementId) {
       const focusTimeout = setTimeout(() => {
@@ -206,6 +207,14 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
 
       clearTimeout(focusTimeout);
     }
+  }
+
+  handleHeightItemsContainer(lineItems: LineItemView[]) {
+    const numberOfItems =
+      lineItems?.length >= this.numberOfVisibleLineItems ? this.numberOfVisibleLineItems : lineItems?.length + 1;
+
+    // @ts-ignore
+    this.virtualScrollViewport?.elementRef?.nativeElement?.style?.height = `${numberOfItems * this.lineItemHeight}px`;
   }
 
   filterDates(date) {

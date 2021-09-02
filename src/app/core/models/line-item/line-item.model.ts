@@ -44,6 +44,7 @@ export interface LineItem {
   // CAMFIL
   attributes?: Attribute[];
   earliestDeliveryDate?: string;
+  hiddenItem?: boolean;
 }
 
 export interface LineItemView extends LineItem {

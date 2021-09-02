@@ -240,7 +240,7 @@ export const deleteBasketItemFail = createAction('[Basket API] Delete Basket Ite
 
 export const deleteBasketItemSuccess = createAction(
   '[Basket API] Delete Basket Item Success',
-  payload<{ info: BasketInfo[] }>()
+  payload<{ info: BasketInfo[]; id?: string }>()
 );
 
 export const removePromotionCodeFromBasket = createAction(

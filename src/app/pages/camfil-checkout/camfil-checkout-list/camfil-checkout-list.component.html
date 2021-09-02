@@ -254,7 +254,8 @@
       class="bucket_list-container"
     >
       <cdk-virtual-scroll-viewport itemSize="100">
-        <div *cdkVirtualFor="let item of order.lineItems; index as i; trackBy: trackBy">
+        <!-- TODO: improve loop by using some pipe ex. ngx-pipe filterBy instead onlyVisibleItems -->
+        <div *cdkVirtualFor="let item of onlyVisibleItems; index as i; trackBy: trackBy">
           <div
             [cdkDragData]="item"
             [cdkDragDisabled]="isConfirmed"
