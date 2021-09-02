@@ -22,8 +22,6 @@ export class AccountCamCardDetailToolbarComponent implements OnInit {
   @Input() isSticky: boolean;
   @Input() title: string;
 
-  dummyProduct = { sku: 'dummy', inStock: true, availability: true };
-
   eventsSubject: Subject<void> = new Subject<void>();
 
   openAddToProductModal(modal: ModalAddNewProductComponent) {
