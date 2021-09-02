@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { OrderModule } from 'ngx-order-pipe';
 
 import { SharedModule } from 'ish-shared/shared.module';
 
@@ -33,7 +34,7 @@ const checkoutPageRoutes: Routes = [
 ];
 
 @NgModule({
-  imports: [CamCardsModule, RouterModule.forChild(checkoutPageRoutes), SharedModule],
+  imports: [CamCardsModule, OrderModule, RouterModule.forChild(checkoutPageRoutes), SharedModule],
   declarations: [
     AddEmailRecipientModalComponent,
     CamfilCheckoutDeliveryAddressComponent,

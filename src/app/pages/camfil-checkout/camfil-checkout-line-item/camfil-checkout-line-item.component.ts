@@ -81,13 +81,6 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
       CamfilCheckoutLineItemComponent.REQUIRED_COMPLETENESS_LEVEL
     );
 
-    this.boxLabel = (this.getValFromAttrs(this.lineItem, 'boxLabel') as string) || '';
-    this.measurements = {
-      [this.measurementsValues[0]]: (this.getValFromAttrs(this.lineItem, 'width') as number) || undefined,
-      [this.measurementsValues[1]]: (this.getValFromAttrs(this.lineItem, 'height') as number) || undefined,
-      [this.measurementsValues[2]]: (this.getValFromAttrs(this.lineItem, 'diameter') as number) || undefined,
-    };
-
     this.addToCartQuantityControl = new FormControl(this.lineItem?.quantity?.value || 1);
 
     this.addToCartForm = new FormGroup({
@@ -103,13 +96,30 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
       });
 
     this.boxLabelForm = new FormGroup({
-      boxLabel: new FormControl(this.boxLabel, [Validators.maxLength(60)]),
+      boxLabel: new FormControl('', [Validators.maxLength(60)]),
     });
 
     this.calculateDeliveryDate();
   }
 
+  private applyLineItemParameters(lineItem: LineItem) {
+    const boxLabel = (this.getValFromAttrs(lineItem, 'boxLabel') as string) || '';
+    const width = (this.getValFromAttrs(lineItem, 'width') as number) || undefined;
+    const height = (this.getValFromAttrs(lineItem, 'height') as number) || undefined;
+    const diameter = (this.getValFromAttrs(lineItem, 'diameter') as number) || undefined;
+
+    this.boxLabelForm?.get('boxLabel')?.setValue(boxLabel);
+    this.boxLabel = boxLabel;
+    this.measurements = {
+      [this.measurementsValues[0]]: width,
+      [this.measurementsValues[1]]: height,
+      [this.measurementsValues[2]]: diameter,
+    };
+  }
+
   ngOnChanges(changes: SimpleChanges) {
+    this.applyLineItemParameters(this.lineItem);
+
     if (changes?.lineItem && this.addToCartQuantityControl?.value !== this.lineItem?.quantity?.value) {
       this.addToCartQuantityControl?.setValue(this.lineItem?.quantity?.value);
     }
@@ -137,7 +147,7 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
     this.modal.hide();
   }
 
-  getValFromAttrs(lineItem: LineItem, name: string) {
+  private getValFromAttrs(lineItem: LineItem, name: string) {
     return lineItem?.attributes?.find(att => att.name === name)?.value;
   }
 
