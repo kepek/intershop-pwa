@@ -11,7 +11,7 @@ import {
 } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { Observable, Subject } from 'rxjs';
+import { Observable, ReplaySubject, Subject } from 'rxjs';
 import { debounceTime, take, takeUntil } from 'rxjs/operators';
 
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
@@ -45,6 +45,7 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
 
   private static REQUIRED_COMPLETENESS_LEVEL = ProductCompletenessLevel.List;
   private destroy$ = new Subject<void>();
+  private sku$ = new ReplaySubject<string>(1);
 
   @ViewChild(CamfilSmallCtaModalComponent) modal: CamfilSmallCtaModalComponent;
   @ViewChild('autosize') autosize: CdkTextareaAutosize;
@@ -77,7 +78,7 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
 
   ngOnInit() {
     this.product$ = this.shoppingFacade.product$(
-      this.lineItem.productSKU,
+      this.sku$,
       CamfilCheckoutLineItemComponent.REQUIRED_COMPLETENESS_LEVEL
     );
 
@@ -99,6 +100,7 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
       boxLabel: new FormControl('', [Validators.maxLength(60)]),
     });
 
+    this.applyLineItemParameters(this.lineItem);
     this.calculateDeliveryDate();
   }
 
@@ -108,23 +110,28 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
     const height = (this.getValFromAttrs(lineItem, 'height') as number) || undefined;
     const diameter = (this.getValFromAttrs(lineItem, 'diameter') as number) || undefined;
 
-    this.boxLabelForm?.get('boxLabel')?.setValue(boxLabel);
     this.boxLabel = boxLabel;
     this.measurements = {
       [this.measurementsValues[0]]: width,
       [this.measurementsValues[1]]: height,
       [this.measurementsValues[2]]: diameter,
     };
+
+    this.boxLabelForm?.get('boxLabel').setValue(boxLabel);
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    this.applyLineItemParameters(this.lineItem);
+    this.sku$.next(this.lineItem?.productSKU);
 
-    if (changes?.lineItem && this.addToCartQuantityControl?.value !== this.lineItem?.quantity?.value) {
+    if (changes.lineItem) {
+      this.applyLineItemParameters(this.lineItem);
+    }
+
+    if (changes.lineItem && this.addToCartQuantityControl?.value !== this.lineItem?.quantity?.value) {
       this.addToCartQuantityControl?.setValue(this.lineItem?.quantity?.value);
     }
 
-    if (changes?.isConfirmed || changes?.orderDeliveryDate) {
+    if (changes.isConfirmed || changes.orderDeliveryDate) {
       this.deliveryAfterOrderConfirmed();
     }
   }

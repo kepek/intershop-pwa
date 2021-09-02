@@ -176,6 +176,10 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
     });
   }
 
+  getBoxLabel(lineItem: LineItem) {
+    return lineItem?.attributes?.find(att => att.name === 'boxLabel')?.value;
+  }
+
   ngOnChanges(s) {
     if (s.order && this.forceUpdateForm) {
       this.orderForm.patchValue({
@@ -592,7 +596,7 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
   }
 
   trackBy(_, lineItem: LineItemView) {
-    return lineItem.productSKU;
+    return lineItem.id;
   }
 
   product$(sku: string) {
