@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit, ViewChild
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Observable, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { take, takeUntil } from 'rxjs/operators';
 
 import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
 import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
@@ -59,8 +59,15 @@ export class ModalAddNewSectionComponent implements OnInit, OnDestroy {
   }
 
   openModal() {
-    this.dialog.open(this.modal.show());
+    const dialogRef = this.dialog.open(this.modal.show());
     this.modal.hide = () => this.dialog.closeAll();
+
+    dialogRef
+      .afterClosed()
+      .pipe(take(1), takeUntil(this.destroy$))
+      .subscribe(() => {
+        this.newSegmentForm.reset();
+      });
   }
 
   submitForm() {
