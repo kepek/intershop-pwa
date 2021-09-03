@@ -12,7 +12,7 @@ import {
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Observable, ReplaySubject, Subject } from 'rxjs';
-import { debounceTime, take, takeUntil } from 'rxjs/operators';
+import { debounceTime, takeUntil } from 'rxjs/operators';
 
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
@@ -20,7 +20,6 @@ import { AttributeHelper } from 'ish-core/models/attribute/attribute.helper';
 import { Attribute } from 'ish-core/models/attribute/attribute.model';
 import { LineItemUpdate } from 'ish-core/models/line-item-update/line-item-update.model';
 import { LineItem, LineItemView } from 'ish-core/models/line-item/line-item.model';
-import { ProductViewHelper } from 'ish-core/models/product-view/product-view.helper';
 import { ProductView } from 'ish-core/models/product-view/product-view.model';
 import { ProductCompletenessLevel } from 'ish-core/models/product/product.model';
 import { CheckoutFocusedElement } from 'ish-core/models/scroll-info copy/checkout-focused-element.interface';
@@ -202,19 +201,13 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
   }
 
   calculateDeliveryDate() {
-    if (this.product$) {
-      this.product$.pipe(take(1)).subscribe((res: ProductView) => {
-        const today = new Date();
-        const daysTillReady = ProductViewHelper.getDeliveryDateDays(res) + 1;
-        let delivery = today.setDate(today.getDate() + daysTillReady);
+    let delivery = new Date(this.lineItem.earliestDeliveryDate);
 
-        if (this.checkIfWeekend(new Date(delivery))) {
-          delivery = this.setToClosestMonday(new Date(delivery));
-        }
-
-        return (this.earliestDeliveryDate = AttributeHelper.formatDeliveryDate(new Date(delivery)).replace(/-/g, '/'));
-      });
+    if (this.checkIfWeekend(delivery)) {
+      delivery = this.setToClosestMonday(delivery);
     }
+
+    this.earliestDeliveryDate = AttributeHelper.formatDeliveryDate(delivery).replace(/-/g, '/');
   }
 
   deliveryAfterOrderConfirmed() {
@@ -252,7 +245,7 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
         break;
     }
 
-    return new Date(date).getTime();
+    return new Date(date);
   }
 
   openQuickViewDialog() {

@@ -43,6 +43,9 @@ export class BasketMergeHelper {
             payments_paymentInstrument: basketMergeData.included.targetBasket_payments_paymentInstrument
               ? basketMergeData.included.targetBasket_payments_paymentInstrument
               : undefined,
+            camfilProductLineItems: basketMergeData.included.targetBasket_camfilProductLineItem
+              ? basketMergeData.included.targetBasket_camfilProductLineItem
+              : undefined,
           }
         : undefined,
     };

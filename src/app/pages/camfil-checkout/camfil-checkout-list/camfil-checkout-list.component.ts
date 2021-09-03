@@ -25,8 +25,6 @@ import { CustomerDeliveryTerm } from 'ish-core/models/customer/customer.interfac
 import { LineItemData } from 'ish-core/models/line-item/line-item.interface';
 import { LineItem, LineItemView } from 'ish-core/models/line-item/line-item.model';
 import { Price, PriceHelper } from 'ish-core/models/price/price.model';
-import { ProductViewHelper } from 'ish-core/models/product-view/product-view.helper';
-import { ProductView } from 'ish-core/models/product-view/product-view.model';
 import { ProductCompletenessLevel } from 'ish-core/models/product/product.model';
 import { whenTruthy } from 'ish-core/utils/operators';
 import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
@@ -50,7 +48,6 @@ import { AppFacade } from 'ish-core/facades/app.facade';
   styleUrls: ['./camfil-checkout-list.component.scss'],
 })
 export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDestroy, OnChanges {
-  private static REQUIRED_COMPLETENESS_LEVEL = ProductCompletenessLevel.List;
   private destroy$ = new Subject<void>();
 
   private numberOfVisibleLineItems = 20;
@@ -216,10 +213,7 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
   }
 
   initForm() {
-    // TODO (extMlk): PERFORMANCE - This calls for all prod details.
-    // tslint:disable-next-line:no-commented-out-code
-    // const defaultDeliveryDate = this.setFullDeliveryDate();
-    const defaultDeliveryDate = new Date().getTime();
+    const defaultDeliveryDate = this.setFullDeliveryDate();
 
     this.orderForm = this.fb.group({
       orderMark: [this.order.orderMark, [Validators.maxLength(60)]],
@@ -374,70 +368,41 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
 
   setFullDeliveryDate() {
     /** Get earliest delivery date for every line item */
-    let items = this.order && this.order.lineItems;
+    const items = this.order && this.order.lineItems;
 
     /** Get this order extensions */
     this.isPartialDelivery = this.currentBasketExtensions?.isPartialDelivery || false;
     if (items?.length) {
-      items = items.map(li => {
-        const earliestDeliveryDate = this.getDeliveryDate(li.productSKU);
-        return { ...li, earliestDeliveryDate };
-      });
+      const datesList = [
+        ...new Set(
+          items
+            .map(o => {
+              let delivery = new Date(o.earliestDeliveryDate);
+              delivery = this.checkIfWeekend(delivery) ? this.setToClosestMonday(delivery) : delivery;
+              return delivery.getTime();
+            })
+            .sort()
+        ),
+      ];
+      const min = datesList[0];
+      const max = datesList[datesList.length - 1];
 
-      const max = Math.max.apply(
-        Math,
-        items.map(o => o.earliestDeliveryDate)
-      );
-
-      let fullDeliveryDate = max;
-
-      const min = Math.min.apply(
-        Math,
-        items.map(o => o.earliestDeliveryDate)
-      );
-
-      if (min && !Number.isNaN(min) && max && !Number.isNaN(max)) {
+      if (min !== max) {
         this.firstAvailableDelivery = new Date(min).toISOString();
-        fullDeliveryDate = new Date(max).toISOString();
-        this.setDaysClass(min, max);
+        this.setDaysClass(min, new Date(max));
       }
 
-      this.fullDeliveryDate = fullDeliveryDate;
+      this.fullDeliveryDate = new Date(max).toISOString();
 
-      return fullDeliveryDate;
+      return max;
     } else {
-      return new Date().toISOString();
+      return new Date().getTime();
     }
   }
 
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
-  }
-
-  getDeliveryDate(lineItemId: string) {
-    const productDetail$ = this.shoppingFacade.product$(
-      lineItemId,
-      CamfilCheckoutListComponent.REQUIRED_COMPLETENESS_LEVEL
-    );
-    let delivery;
-    productDetail$.pipe(take(1)).subscribe((res: ProductView) => {
-      const today = this.getDateAt00(new Date());
-      const daysTillReady = ProductViewHelper.getDeliveryDateDays(res);
-      delivery = today.setDate(today.getDate() + daysTillReady);
-
-      if (this.checkIfWeekend(new Date(delivery))) {
-        delivery = this.setToClosestMonday(new Date(delivery));
-      }
-    });
-    return delivery;
-  }
-
-  getDateAt00(date: Date) {
-    const yyyy = date.getFullYear();
-    const mm = date.getMonth() + 1;
-    const dd = date.getDate();
-    return new Date(`${yyyy}-${mm}-${dd} 23:59`);
   }
 
   setDaysClass(startDate: number, endDate: Date) {
@@ -584,9 +549,8 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
     return (
       items
         ?.reduce((acc, li) => {
-          const getEarliestDeliveryDate = this.getDeliveryDate(li.productSKU);
           // Set delivery date for each item
-          const earliestDeliveryDate = new Date(getEarliestDeliveryDate).getTime();
+          const earliestDeliveryDate = this.getDateAt24(new Date(li.earliestDeliveryDate)).getTime();
           const dateToPush = earliestDeliveryDate < numDeliveryDate ? numDeliveryDate : earliestDeliveryDate;
 
           return dateToPush && !acc.includes(dateToPush) ? [...acc, dateToPush] : acc;
@@ -601,5 +565,12 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
 
   product$(sku: string) {
     return this.shoppingFacade.product$(sku, ProductCompletenessLevel.List);
+  }
+
+  getDateAt24(date: Date) {
+    const yyyy = date.getFullYear();
+    const mm = date.getMonth() + 1;
+    const dd = date.getDate();
+    return new Date(`${yyyy}-${mm}-${dd} 23:59`);
   }
 }

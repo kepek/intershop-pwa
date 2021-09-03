@@ -11,6 +11,7 @@ import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { FeatureToggleModule } from 'ish-core/feature-toggle.module';
 import { Product } from 'ish-core/models/product/product.model';
 import { AddressSortPipe } from 'ish-core/pipes/camfil-address-sort.pipe';
+import { CamfilContactSortPipe } from 'ish-core/pipes/camfil-contact-sort.pipe';
 import { CamfilCamCardModalComponent } from 'ish-shared/components/common/camfil-cam-card-modal/camfil-cam-card-modal.component';
 import { CamfilErrorComponent } from 'ish-shared/components/common/camfil-error/camfil-error.component';
 import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
@@ -50,6 +51,7 @@ describe('Camfil Product Add To Basket Component', () => {
         ArticleDetailsComponent,
         CamCardModalDetailsComponent,
         CamfilCamCardModalComponent,
+        CamfilContactSortPipe,
         CamfilCounterComponent,
         CamfilErrorComponent,
         CamfilProductAddToBasketComponent,

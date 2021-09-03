@@ -90,6 +90,7 @@ export class PrintOrderComponent implements OnInit {
 
   calculateDeliveryDate(product: ProductView) {
     const today = new Date();
+    // TODO: get from product or orderLine instead ProductViewHelper.getDeliveryDateDays
     const daysTillReady = ProductViewHelper.getDeliveryDateDays(product) + 1;
     const delivery = today.setDate(today.getDate() + daysTillReady);
 

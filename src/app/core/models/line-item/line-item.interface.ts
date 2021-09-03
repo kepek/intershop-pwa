@@ -36,3 +36,8 @@ export interface LineItemData {
   shipToAddress?: string;
   attributes?: Attribute[];
 }
+
+// TODO: fill or change model for complete data structure
+export interface CamfilProductLineItemData {
+  productInfo: { earliestDeliveryDate: string };
+}

@@ -19,6 +19,19 @@ export class BasketMapper {
     if (totals) {
       totals.isEstimated = !data.invoiceToAddress || !data.commonShipToAddress || !data.commonShippingMethod;
     }
+    const lineItems =
+      included && included.lineItems && data.lineItems && data.lineItems.length
+        ? data.lineItems
+            .map(lineItemId => LineItemMapper.fromData(included.lineItems[lineItemId], included.lineItems_discounts))
+            .map(item =>
+              included.camfilProductLineItems?.[item.id]
+                ? {
+                    ...item,
+                    earliestDeliveryDate: included.camfilProductLineItems[item.id].productInfo?.earliestDeliveryDate,
+                  }
+                : item
+            )
+        : [];
 
     return {
       id: data.id,
@@ -41,12 +54,7 @@ export class BasketMapper {
           : undefined,
       customerNo: data.customer,
       email: data.user,
-      lineItems:
-        included && included.lineItems && data.lineItems && data.lineItems.length
-          ? data.lineItems.map(lineItemId =>
-              LineItemMapper.fromData(included.lineItems[lineItemId], included.lineItems_discounts)
-            )
-          : [],
+      lineItems,
       totalProductQuantity: data.totalProductQuantity,
       payment:
         included?.payments && data.payments?.length && included.payments[data.payments[0]]

@@ -1,7 +1,7 @@
 import { AddressData } from 'ish-core/models/address/address.interface';
 import { BasketRebateData } from 'ish-core/models/basket-rebate/basket-rebate.interface';
 import { BasketBaseData } from 'ish-core/models/basket/basket.interface';
-import { LineItemData } from 'ish-core/models/line-item/line-item.interface';
+import { CamfilProductLineItemData, LineItemData } from 'ish-core/models/line-item/line-item.interface';
 import { PaymentInstrument } from 'ish-core/models/payment-instrument/payment-instrument.model';
 import { PaymentMethodBaseData } from 'ish-core/models/payment-method/payment-method.interface';
 import { PaymentData } from 'ish-core/models/payment/payment.interface';
@@ -25,5 +25,6 @@ export interface BasketMergeData {
     targetBasket_payments?: { [id: string]: PaymentData };
     targetBasket_payments_paymentMethod?: { [id: string]: PaymentMethodBaseData };
     targetBasket_payments_paymentInstrument?: { [id: string]: PaymentInstrument };
+    targetBasket_camfilProductLineItem?: { [id: string]: CamfilProductLineItemData };
   };
 }

@@ -57,6 +57,9 @@ export class BasketValidationMapper {
             payments_paymentInstrument: basketValidationData.included.basket_payments_paymentInstrument
               ? basketValidationData.included.basket_payments_paymentInstrument
               : undefined,
+            camfilProductLineItems: basketValidationData.included.basket_camfilProductLineItems
+              ? basketValidationData.included.basket_camfilProductLineItems
+              : undefined,
           }
         : undefined,
     };

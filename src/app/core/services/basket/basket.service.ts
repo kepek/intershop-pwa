@@ -50,7 +50,8 @@ type BasketIncludeType =
   | 'lineItems'
   | 'payments'
   | 'payments_paymentMethod'
-  | 'payments_paymentInstrument';
+  | 'payments_paymentInstrument'
+  | 'camfilProductLineItems';
 
 type MergeBasketIncludeType =
   | 'targetBasket'
@@ -106,6 +107,7 @@ export class BasketService {
     'payments',
     'payments_paymentMethod',
     'payments_paymentInstrument',
+    'camfilProductLineItems',
   ];
 
   private allTargetBasketIncludes: MergeBasketIncludeType[] = [
