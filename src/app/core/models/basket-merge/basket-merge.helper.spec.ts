@@ -159,6 +159,13 @@ describe('Basket Merge Helper', () => {
             freeGift: true,
           } as LineItemData,
         },
+        targetBasket_camfilProductLineItem: {
+          itemID: {
+            productInfo: {
+              earliestDeliveryDate: '2021-09-10',
+            },
+          },
+        },
       },
     } as BasketMergeData;
     const basketMergeDataWithoutIncluded = {

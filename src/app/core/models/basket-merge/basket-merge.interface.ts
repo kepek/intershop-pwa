@@ -25,6 +25,6 @@ export interface BasketMergeData {
     targetBasket_payments?: { [id: string]: PaymentData };
     targetBasket_payments_paymentMethod?: { [id: string]: PaymentMethodBaseData };
     targetBasket_payments_paymentInstrument?: { [id: string]: PaymentInstrument };
-    targetBasket_camfilProductLineItem: { [id: string]: CamfilProductLineItemData };
+    targetBasket_camfilProductLineItem?: { [id: string]: CamfilProductLineItemData };
   };
 }
