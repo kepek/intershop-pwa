@@ -5,6 +5,7 @@ import { AddressHelper } from 'ish-core/models/address/address.helper';
 import { BasketValidationResultType } from 'ish-core/models/basket-validation/basket-validation.model';
 import { BasketView, createBasketView } from 'ish-core/models/basket/basket.model';
 import { getCustomerState } from 'ish-core/store/customer/customer-store';
+import { getOrdersLoading } from 'ish-core/store/customer/orders';
 import { getLoggedInCustomer } from 'ish-core/store/customer/user';
 
 const getBasketState = createSelector(getCustomerState, state => state && state.basket);
@@ -107,12 +108,19 @@ export const getCustomersDeliveryTerms = createSelector(getBasketState, basket =
 export const getCalendarExceptions = createSelector(getBasketState, basket => basket.calendarExceptions);
 
 export const isProductsReadyToPlaceOrder = createSelector(
+  getBasketLoading,
+  getOrdersLoading,
   getBasketValidationResults,
   getBasketLastTimeProductAdded,
   getProductAdded,
   getProductUpdated,
-  (validation, lastAdded, added, updated) =>
-    (validation.valid || !validation?.errors?.length) && lastAdded ? added && updated : true
+  (basketLoading, ordersLoading, validation, lastAdded, added, updated) => {
+    if (basketLoading || ordersLoading) {
+      return false;
+    }
+
+    return (validation.valid || !validation?.errors?.length) && lastAdded ? added && updated : true;
+  }
 );
 
 export const getBasketExtensions = createSelector(getBasketState, basket => basket.basket.basketExtensions);
