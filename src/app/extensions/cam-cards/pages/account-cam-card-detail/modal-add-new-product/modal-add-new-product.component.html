@@ -2,8 +2,8 @@
   <camfil-loading *ngIf="productIsLoading$ | async"></camfil-loading>
   <ng-container *ngIf="product$ | async as product">
     <div class="add-new-product">
-      <button class="close" (click)="hide()" aria-label="Close">
-        <mat-icon svgIcon="inactive" aria-hidden="true"></mat-icon>
+      <button (click)="hide()" aria-label="Close" class="close">
+        <mat-icon aria-hidden="true" svgIcon="inactive"></mat-icon>
       </button>
       <mat-icon svgIcon="add-camcard"></mat-icon>
       <h2 class="add-new-product__header">{{ 'camfil.modal.addNewProduct.title' | translate }}</h2>
@@ -11,7 +11,7 @@
         <div>
           <mat-form-field appearance="fill" class="add-new-product__field">
             <mat-label>{{ 'camfil.modal.addNewProduct.input.product_sku' | translate }}</mat-label>
-            <input matInput maxlength="35" formControlName="sku" (focus)="isSubmitted = false" />
+            <input (focus)="isSubmitted = false" formControlName="sku" matInput maxlength="35" />
             <mat-icon *ngIf="productHasValidSku$ | async" matSuffix svgIcon="checkmark"></mat-icon>
             <mat-error *ngIf="productForm.controls.sku.hasError('required')">
               {{ 'camfil.modal.addNewProduct.error.required.sku' | translate }}
@@ -25,15 +25,15 @@
           </mat-form-field>
           <div class="article-details-container">
             <camfil-article-details
+              [isInAddNewProductModal]="true"
               [product]="product"
               [quantityForm]="productForm"
-              [isInAddNewProductModal]="true"
               [showMeasurementsForm]="productRequiresMeasurement$ | async"
             ></camfil-article-details>
           </div>
           <mat-form-field appearance="fill" class="add-new-product__field">
             <mat-label>{{ 'camfil.modal.addNewProduct.input.box_label' | translate }}</mat-label>
-            <input matInput type="text" formControlName="boxLabel" camfilMaxLength="'BoxLabel'" />
+            <input [camfilMaxLength]="'BoxLabel'" formControlName="boxLabel" matInput type="text" />
           </mat-form-field>
         </div>
         <div class="add-new-product__quantity-wrapper">
@@ -42,27 +42,27 @@
           }}</mat-label>
           <camfil-product-quantity
             [allowZeroQuantity]="false"
-            [quantityLabel]="''"
-            [product]="product"
             [parentForm]="productForm"
+            [product]="product"
+            [quantityLabel]="''"
             controlName="quantity"
           ></camfil-product-quantity>
         </div>
         <camfil-error
-          class="add-new-product__field--camfil-error"
-          [errors]="productForm?.controls?.quantity?.errors"
           [errorValidators]="validators.quantity"
+          [errors]="productForm?.controls?.quantity?.errors"
           [touched]="productForm?.controls?.quantity?.touched || productForm?.controls?.quantity?.dirty"
+          class="add-new-product__field--camfil-error"
         ></camfil-error>
         <div class="add-new-product__buttons">
-          <button class="btn btn-link add-new-product__buttons--link" (mousedown)="hide()">
+          <button (mousedown)="hide()" class="btn btn-link add-new-product__buttons--link">
             {{ 'camfil.modal.addNewProduct.button.cancel' | translate }}
           </button>
           <button
-            type="submit"
             (click)="submitForm()"
-            class="btn btn-link add-new-product__buttons--link"
             [disabled]="(productFormIsDisabled$ | async) || productForm?.invalid"
+            class="btn btn-link add-new-product__buttons--link"
+            type="submit"
           >
             {{ 'camfil.modal.addNewProduct.button.add_product' | translate }}
           </button>

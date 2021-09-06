@@ -5,7 +5,7 @@
     </div>
   </ng-container>
 
-  <div class="article-details" [class.article-details--show-product-name]="showProductName">
+  <div [class.article-details--show-product-name]="showProductName" class="article-details">
     <ng-container *ngIf="requiresMeasurement">
       <h3 class="m-0 text-center text-capitalize w-100">
         <b>{{ 'camfil.modal.addToCamcard.measurement.choose.header' | translate }}</b>
@@ -13,15 +13,15 @@
       <div class="article-details__measurement d-flex flex-wrap w-100 pt-1">
         <mat-form-field [formGroup]="quantityForm" appearance="outline">
           <mat-label>{{ 'camfil.modal.addToCamcard.width.label' | translate }}</mat-label>
-          <input matInput formControlName="measurementWidth" (keyup)="validateVal()" type="number" />
+          <input (keyup)="validateVal()" formControlName="measurementWidth" matInput type="number" />
         </mat-form-field>
         <mat-form-field [formGroup]="quantityForm" appearance="outline">
           <mat-label>{{ 'camfil.modal.addToCamcard.height.label' | translate }}</mat-label>
-          <input matInput formControlName="measurementHeight" (keyup)="validateVal()" type="number" />
+          <input (keyup)="validateVal()" formControlName="measurementHeight" matInput type="number" />
         </mat-form-field>
         <mat-form-field [formGroup]="quantityForm" appearance="outline">
           <mat-label>{{ 'camfil.modal.addToCamcard.diameter.label' | translate }}</mat-label>
-          <input matInput formControlName="measurementDiameter" (keyup)="validateVal()" type="number" />
+          <input (keyup)="validateVal()" formControlName="measurementDiameter" matInput type="number" />
         </mat-form-field>
 
         <div class="w-100">
@@ -43,21 +43,21 @@
     <div>
       <mat-form-field [formGroup]="quantityForm" appearance="outline">
         <mat-label>{{ 'camfil.modal.addToCamcard.box.label' | translate }}</mat-label>
-        <input matInput formControlName="boxLabel" camfilMaxLength="'BoxLabel'" />
+        <input [camfilMaxLength]="'BoxLabel'" formControlName="boxLabel" matInput />
       </mat-form-field>
     </div>
 
     <div class="article-details__quantity">
-      <mat-label class="article-details__label article-details__quantity--label">{{
-        'camfil.modal.addToCamcard.quantity.label' | translate
-      }}</mat-label>
+      <mat-label class="article-details__label article-details__quantity--label">
+        {{ 'camfil.modal.addToCamcard.quantity.label' | translate }}
+      </mat-label>
       <camfil-product-quantity
-        class="article-details__quantity--input"
-        [type]="'counter'"
         [allowZeroQuantity]="false"
-        [quantityLabel]="'camfil.modal.addToCamcard.quantity.label' | translate"
-        [product]="product"
         [parentForm]="quantityForm"
+        [product]="product"
+        [quantityLabel]="'camfil.modal.addToCamcard.quantity.label' | translate"
+        [type]="'counter'"
+        class="article-details__quantity--input"
         controlName="quantity"
       ></camfil-product-quantity>
     </div>
@@ -71,15 +71,15 @@
     <div class="article-details__measurement d-flex flex-wrap w-100 pt-1">
       <mat-form-field [formGroup]="quantityForm" appearance="outline">
         <mat-label>{{ 'camfil.modal.addToCamcard.width.label' | translate }}</mat-label>
-        <input matInput formControlName="measurementWidth" (keyup)="validateVal()" type="number" />
+        <input (keyup)="validateVal()" formControlName="measurementWidth" matInput type="number" />
       </mat-form-field>
       <mat-form-field [formGroup]="quantityForm" appearance="outline">
         <mat-label>{{ 'camfil.modal.addToCamcard.height.label' | translate }}</mat-label>
-        <input matInput formControlName="measurementHeight" (keyup)="validateVal()" type="number" />
+        <input (keyup)="validateVal()" formControlName="measurementHeight" matInput type="number" />
       </mat-form-field>
       <mat-form-field [formGroup]="quantityForm" appearance="outline">
         <mat-label>{{ 'camfil.modal.addToCamcard.diameter.label' | translate }}</mat-label>
-        <input matInput formControlName="measurementDiameter" (keyup)="validateVal()" type="number" />
+        <input (keyup)="validateVal()" formControlName="measurementDiameter" matInput type="number" />
       </mat-form-field>
 
       <div class="w-100">
