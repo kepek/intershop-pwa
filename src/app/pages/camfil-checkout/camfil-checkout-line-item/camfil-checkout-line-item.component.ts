@@ -124,6 +124,7 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
 
     if (changes.lineItem) {
       this.applyLineItemParameters(this.lineItem);
+      this.calculateDeliveryDate();
     }
 
     if (changes.lineItem && this.addToCartQuantityControl?.value !== this.lineItem?.quantity?.value) {
