@@ -1,39 +1,39 @@
 <mat-card class="mb-1">
   <mat-card-content>
-    <a class="collapse-link" (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="!isCollapsed">
+    <a (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="!isCollapsed" class="collapse-link">
       {{ collapseFormTranslationKey | translate }}
       <mat-icon *ngIf="isCollapsed" class="align-bottom pr-2">arrow_drop_up</mat-icon>
       <mat-icon *ngIf="!isCollapsed" class="align-bottom pr-2">arrow_drop_down</mat-icon>
     </a>
-    <div id="camCardFormContainer" [ngbCollapse]="isCollapsed">
-      <form [formGroup]="camCardForm" (ngSubmit)="submitCamCardForm()" class="form-horizontal" novalidate="novalidate">
+    <div [ngbCollapse]="isCollapsed" id="camCardFormContainer">
+      <form (ngSubmit)="submitCamCardForm()" [formGroup]="camCardForm" class="form-horizontal" novalidate="novalidate">
         <div class="row">
           <div class="col-md-4">
             <h3>{{ 'camfil.account.cam_card.add_to_form.camcards_details' | translate }}</h3>
             <mat-form-field appearance="fill" class="form-field">
               <mat-label>{{ 'camfil.account.cam_card.add_to_form.camcards_name' | translate }}</mat-label>
               <input
-                matInput
                 #title
+                (change)="onBlurSubmit()"
                 formControlName="title"
                 label="camfil.account.cam_card.add_to_form.camcards_name"
                 markRequiredLabel="off"
+                matInput
                 maxlength="40"
-                (change)="onBlurSubmit()"
               />
             </mat-form-field>
             <camfil-error
-              [errors]="camCardForm.controls.title.errors"
               [errorValidators]="errorValidator"
+              [errors]="camCardForm.controls.title.errors"
               [touched]="camCardForm.controls.title.touched"
             >
             </camfil-error>
             <mat-form-field appearance="fill">
               <mat-label>{{ 'camfil.account.cam_card.add_to_form.customer_name' | translate }}</mat-label>
               <mat-select
-                formControlName="customerName"
-                (selectionChange)="pickCustomer($event)"
                 (change)="onBlurSubmit()"
+                (selectionChange)="pickCustomer($event)"
+                formControlName="customerName"
               >
                 <mat-option>--</mat-option>
                 <mat-option *ngFor="let customer of customers$ | async" [value]="customer.id">
@@ -42,36 +42,36 @@
               </mat-select>
             </mat-form-field>
             <camfil-error
-              [errors]="camCardForm.controls.customerName.errors"
               [errorValidators]="errorValidator"
+              [errors]="camCardForm.controls.customerName.errors"
               [touched]="camCardForm.controls.customerName.touched"
             >
             </camfil-error>
             <mat-form-field appearance="fill" class="form-field">
               <mat-label>{{ 'camfil.account.cam_card.add_to_form.order_mark' | translate }}</mat-label>
               <input
-                matInput
+                (change)="onBlurSubmit()"
+                [camfilMaxLength]="'OrderMark'"
                 formControlName="orderMark"
                 label="camfil.account.cam_card.add_to_form.order_mark"
                 markRequiredLabel="off"
-                camfilMaxLength="'OrderMark'"
-                (change)="onBlurSubmit()"
+                matInput
               />
             </mat-form-field>
             <mat-form-field appearance="fill" class="form-field">
               <mat-label>{{ 'camfil.account.cam_card.add_to_form.invoice_mark' | translate }}</mat-label>
               <input
-                matInput
+                (change)="onBlurSubmit()"
+                [camfilMaxLength]="'InvoiceLabel'"
                 formControlName="invoiceMark"
-                camfilMaxLength="'InvoiceLabel'"
                 label="camfil.account.cam_card.add_to_form.invoice_mark"
                 markRequiredLabel="off"
-                (change)="onBlurSubmit()"
+                matInput
               />
             </mat-form-field>
             <camfil-error
-              [errors]="camCardForm.controls.invoiceMark.errors"
               [errorValidators]="setMaxLengthErrorForTableValidator(errorValidator, 60)"
+              [errors]="camCardForm.controls.invoiceMark.errors"
               [touched]="camCardForm.controls.invoiceMark.touched"
             >
             </camfil-error>
@@ -80,7 +80,7 @@
             <h3>{{ 'camfil.account.cam_card.add_to_form.delivery_address' | translate }}</h3>
             <mat-form-field appearance="fill">
               <mat-label>{{ 'camfil.account.cam_card.add_to_form.choose_address' | translate }}</mat-label>
-              <mat-select formControlName="deliveryAddress" (selectionChange)="pickAddress($event)">
+              <mat-select (selectionChange)="pickAddress($event)" formControlName="deliveryAddress">
                 <mat-option>--</mat-option>
                 <ng-container *ngIf="addresses$ | async as locations">
                   <mat-option
@@ -95,61 +95,61 @@
             <mat-form-field appearance="fill" class="form-field">
               <mat-label>{{ 'camfil.account.cam_card.add_to_form.company_name' | translate }}</mat-label>
               <input
-                matInput
+                (change)="onBlurSubmit()"
+                [camfilMaxLength]="'Company'"
                 formControlName="companyName1"
-                camfilMaxLength="'Company'"
                 label="camfil.account.cam_card.add_to_form.company_name"
                 markRequiredLabel="off"
-                (change)="onBlurSubmit()"
+                matInput
               />
             </mat-form-field>
             <camfil-error
-              [errors]="camCardForm.controls.companyName1.errors"
               [errorValidators]="setMaxLengthErrorForTableValidator(errorValidator, 60)"
+              [errors]="camCardForm.controls.companyName1.errors"
               [touched]="camCardForm.controls.companyName1.touched"
             >
             </camfil-error>
             <mat-form-field appearance="fill" class="form-field">
               <mat-label>{{ 'camfil.account.cam_card.add_to_form.address' | translate }}</mat-label>
               <textarea
-                matInput
+                (change)="onBlurSubmit()"
                 formControlName="addressLine1"
                 label="camfil.account.cam_card.add_to_form.address"
                 markRequiredLabel="off"
+                matInput
                 maxlength="250"
-                (change)="onBlurSubmit()"
                 rows="5"
               ></textarea>
             </mat-form-field>
             <camfil-error
-              [errors]="camCardForm.controls.addressLine1.errors"
               [errorValidators]="errorValidator"
+              [errors]="camCardForm.controls.addressLine1.errors"
               [touched]="camCardForm.controls.addressLine1.touched"
             >
             </camfil-error>
             <div class="row no-gutters">
               <div class="col-md-3">
                 <camfil-zip-code
-                  fieldName="postalCode"
-                  fieldCity="city"
-                  [errorValidator]="errorValidator"
-                  [checkOnInitObj]="camCard"
-                  [form]="camCardForm"
-                  [countryChangeDetect]="countryChangeDetect$"
-                  (zipCodeErrorEmit)="setZipCodeError($event)"
                   (submitEmitter)="onBlurSubmit()"
+                  (zipCodeErrorEmit)="setZipCodeError($event)"
+                  [checkOnInitObj]="camCard"
+                  [countryChangeDetect]="countryChangeDetect$"
+                  [errorValidator]="errorValidator"
+                  [form]="camCardForm"
+                  fieldCity="city"
+                  fieldName="postalCode"
                 ></camfil-zip-code>
               </div>
               <div class="col-md-9 pl-md-3">
                 <mat-form-field appearance="fill">
                   <mat-label>{{ 'camfil.account.cam_card.add_to_form.city' | translate }}</mat-label>
                   <input
-                    matInput
+                    data-testing-id="cam-card-dialog-name"
                     formControlName="city"
                     label="camfil.account.cam_card.add_to_form.city"
                     markRequiredLabel="off"
+                    matInput
                     maxlength="35"
-                    data-testing-id="cam-card-dialog-name"
                   />
                 </mat-form-field>
               </div>
@@ -160,32 +160,32 @@
             <mat-form-field appearance="fill">
               <mat-label>{{ 'camfil.account.cam_card.add_to_form.last_delivery' | translate }}</mat-label>
               <input
-                matInput
+                (dateChange)="pickOrder()"
                 [matDatepicker]="pickerLast"
                 formControlName="lastDelivery"
-                (dateChange)="pickOrder()"
+                matInput
                 readonly
               />
-              <mat-datepicker-toggle matSuffix [for]="pickerLast">
-                <mat-icon svgIcon="calendar" matDatepickerToggleIcon></mat-icon>
+              <mat-datepicker-toggle [for]="pickerLast" matSuffix>
+                <mat-icon matDatepickerToggleIcon svgIcon="calendar"></mat-icon>
               </mat-datepicker-toggle>
               <mat-datepicker #pickerLast></mat-datepicker>
             </mat-form-field>
             <mat-form-field appearance="fill">
               <mat-label>{{ 'camfil.account.cam_card.add_to_form.delivery_interval' | translate }}</mat-label>
               <input
-                type="text"
-                matInput
-                name="deliveryInterval"
-                [formControl]="camCardForm.get('deliveryInterval')"
-                [matAutocomplete]="filteredIntervals"
                 (change)="applyDeliveryInterval()"
                 (keyup)="validateDeliveryInterval()"
+                [formControl]="camCardForm.get('deliveryInterval')"
+                [matAutocomplete]="filteredIntervals"
+                matInput
+                name="deliveryInterval"
+                type="text"
               />
               <mat-autocomplete
-                autoActiveFirstOption
                 #filteredIntervals="matAutocomplete"
                 (optionSelected)="applyDeliveryInterval()"
+                autoActiveFirstOption
               >
                 <mat-option *ngFor="let option of deliveryIntervalFilteredOptions | async" [value]="option">
                   {{ option }}
@@ -194,34 +194,34 @@
             </mat-form-field>
             <mat-form-field appearance="fill">
               <mat-label>{{ 'camfil.account.cam_card.add_to_form.next_delivery' | translate }}</mat-label>
-              <input matInput [matDatepicker]="pickerNext" formControlName="nextDelivery" />
-              <mat-datepicker-toggle matSuffix [for]="pickerNext">
-                <mat-icon svgIcon="calendar" matDatepickerToggleIcon></mat-icon>
+              <input [matDatepicker]="pickerNext" formControlName="nextDelivery" matInput />
+              <mat-datepicker-toggle [for]="pickerNext" matSuffix>
+                <mat-icon matDatepickerToggleIcon svgIcon="calendar"></mat-icon>
               </mat-datepicker-toggle>
               <mat-datepicker #pickerNext></mat-datepicker>
             </mat-form-field>
             <mat-checkbox
-              color="primary"
-              class="example-margin"
-              formControlName="reminder"
               (click)="preventDefault($event)"
+              class="example-margin"
+              color="primary"
+              formControlName="reminder"
             >
               {{ 'camfil.account.cam_card.add_to_form.reminder' | translate }}
             </mat-checkbox>
           </div>
         </div>
       </form>
-      <div class="row" *ngIf="!camCard">
+      <div *ngIf="!camCard" class="row">
         <div class="col-12 text-right">
           <button
+            (click)="submitCamCardForm()"
+            [disabled]="formDisabled"
+            aria-label="Send application"
+            color="primary"
+            data-testing-id="cam-card-dialog-submit"
             mat-raised-button
             type="submit"
-            aria-label="Send application"
-            [disabled]="formDisabled"
-            color="primary"
             type="submit"
-            (click)="submitCamCardForm()"
-            data-testing-id="cam-card-dialog-submit"
           >
             {{ primaryButton | translate }}
           </button>
@@ -238,10 +238,10 @@
     <p>{{ 'camfil.account.cam_card.add_to_form.dialog.do_you_want' | translate }}</p>
   </div>
   <div mat-dialog-actions>
-    <button mat-button (click)="acceptReminder(false)">
+    <button (click)="acceptReminder(false)" mat-button>
       {{ 'camfil.account.cam_card.add_to_form.dialog.no' | translate }}
     </button>
-    <button mat-button (click)="acceptReminder(true)">
+    <button (click)="acceptReminder(true)" mat-button>
       {{ 'camfil.account.cam_card.add_to_form.dialog.yes' | translate }}
     </button>
   </div>

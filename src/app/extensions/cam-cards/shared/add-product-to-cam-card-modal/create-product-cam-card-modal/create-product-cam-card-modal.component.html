@@ -1,17 +1,17 @@
 <ng-template #modal>
   <camfil-cam-card-modal
     #modal
-    [title]="'camfil.modal.createCamcard.title' | translate"
-    iconName="note_add"
-    [detailsTemplate]="detailsTemplate"
-    [mainContentTemplate]="mainContentTemplate"
-    class="camfil-create-product-cam-card-modal"
-    [primaryButtonTitle]="'camfil.modal.createCamcard.button.create_and_edit' | translate"
-    [secondaryButtonTitle]="'camfil.modal.createCamcard.button.create_and_continue' | translate"
+    (hiddenClicked)="hide()"
     (primaryButtonClicked)="createAndEdit()"
     (secondaryButtonClicked)="createAndContinue()"
-    (hiddenClicked)="hide()"
+    [detailsTemplate]="detailsTemplate"
+    [mainContentTemplate]="mainContentTemplate"
+    [primaryButtonTitle]="'camfil.modal.createCamcard.button.create_and_edit' | translate"
     [primaryDisabled]="disableActionButton(product, quantityForm)"
+    [secondaryButtonTitle]="'camfil.modal.createCamcard.button.create_and_continue' | translate"
+    [title]="'camfil.modal.createCamcard.title' | translate"
+    class="camfil-create-product-cam-card-modal"
+    iconName="note_add"
   >
   </camfil-cam-card-modal>
 </ng-template>
@@ -20,19 +20,19 @@
 </ng-template>
 
 <ng-template #mainContentTemplate>
-  <div mat-dialog-content class="form__wrapper">
+  <div class="form__wrapper" mat-dialog-content>
     <form [formGroup]="camCardForm" class="form-horizontal border-bottom" novalidate="novalidate">
       <!--customer select-->
       <mat-form-field appearance="outline" class="col-sm-12 form__field">
         <mat-select
+          (selectionChange)="pickCustomer($event)"
           [placeholder]="'camfil.modal.createCamcard.select.customer' | translate"
           formControlName="customerSelect"
-          (selectionChange)="pickCustomer($event)"
         >
           <mat-option>--</mat-option>
           <mat-option *ngFor="let customer of customers$ | async" [value]="customer.id">
-            {{ customer.companyName }}, {{ customer.customerNo
-            }}<ng-container *ngIf="customer.department">, {{ customer.department }}</ng-container>
+            {{ customer.companyName }}, {{ customer.customerNo }}
+            <ng-container *ngIf="customer.department">, {{ customer.department }}</ng-container>
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -40,32 +40,32 @@
       <!--name-->
       <mat-form-field appearance="outline" class="col-sm-12 form__field">
         <mat-label>{{ 'camfil.modal.createCamcard.input.name' | translate }}</mat-label>
-        <input matInput type="text" maxlength="40" formControlName="name" #name />
+        <input #name formControlName="name" matInput maxlength="40" type="text" />
       </mat-form-field>
       <camfil-error
-        [errors]="getField('name').errors"
         [errorValidators]="validators.name"
+        [errors]="getField('name').errors"
         [touched]="getField('name').touched || getField('name').dirty"
       ></camfil-error>
 
       <!--order mark-->
       <mat-form-field appearance="outline" class="col-sm-12 form__field">
         <mat-label>{{ 'camfil.modal.createCamcard.input.order_mark' | translate }}</mat-label>
-        <input matInput type="text" formControlName="orderMark" camfilMaxLength="'OrderMark'" />
+        <input [camfilMaxLength]="'OrderMark'" formControlName="orderMark" matInput type="text" />
       </mat-form-field>
 
       <!--invoice mark-->
       <mat-form-field appearance="outline" class="col-sm-12 form__field">
         <mat-label>{{ 'camfil.modal.createCamcard.input.invoice_mark' | translate }}</mat-label>
-        <input matInput type="text" formControlName="invoiceMark" camfilMaxLength="'InvoiceLabel'" />
+        <input [camfilMaxLength]="'InvoiceLabel'" formControlName="invoiceMark" matInput type="text" />
       </mat-form-field>
 
       <!--address select-->
       <mat-form-field appearance="outline" class="col-sm-12 form__field">
         <mat-select
+          (selectionChange)="pickAddress($event)"
           [placeholder]="'camfil.account.cam_card.add_to_form.choose_address' | translate"
           formControlName="deliveryAddressSelect"
-          (selectionChange)="pickAddress($event)"
         >
           <mat-option>--</mat-option>
           <ng-container *ngIf="addresses$ | async as locations">
@@ -82,38 +82,38 @@
       <!--company-->
       <mat-form-field appearance="outline" class="col-sm-12 form__field">
         <mat-label>{{ 'camfil.modal.createCamcard.input.company' | translate }}</mat-label>
-        <input matInput type="text" formControlName="company" camfilMaxLength="'Company'" />
+        <input [camfilMaxLength]="'Company'" formControlName="company" matInput type="text" />
       </mat-form-field>
 
       <!--address-->
       <mat-form-field appearance="outline" class="col-sm-12 form__field">
         <mat-label>{{ 'camfil.modal.createCamcard.input.address' | translate }}</mat-label>
         <textarea
-          matInput
           formControlName="address"
           label="camfil.modal.createCamcard.input.address"
           markRequiredLabel="off"
+          matInput
           maxlength="250"
           rows="5"
         ></textarea>
       </mat-form-field>
       <camfil-error
-        [errors]="getField('address').errors"
         [errorValidators]="validators.address"
+        [errors]="getField('address').errors"
         [touched]="getField('address').touched || getField('address').dirty"
       ></camfil-error>
 
       <!--zip code-->
       <div class="col-sm-12 col-md-5 form__field form__field--neighbour">
         <camfil-zip-code
-          fieldName="zipCode"
-          fieldCity="area"
-          classes="delivery-address__form--field delivery-address__form--field-small"
-          appearance="outline"
+          (zipCodeErrorEmit)="setZipCodeError($event)"
+          [countryChangeDetect]="countryChangeDetect$"
           [errorValidator]="validators.zipCode"
           [form]="camCardForm"
-          [countryChangeDetect]="countryChangeDetect$"
-          (zipCodeErrorEmit)="setZipCodeError($event)"
+          appearance="outline"
+          classes="delivery-address__form--field delivery-address__form--field-small"
+          fieldCity="area"
+          fieldName="zipCode"
         ></camfil-zip-code>
       </div>
 
@@ -121,11 +121,11 @@
       <div class="col-sm-12 col-md-7 form__field form__field--neighbour form__field--neighbour-right">
         <mat-form-field appearance="outline" class="form__field--area">
           <mat-label>{{ 'camfil.modal.createCamcard.input.area' | translate }}</mat-label>
-          <input matInput type="text" formControlName="area" />
+          <input formControlName="area" matInput type="text" />
         </mat-form-field>
         <camfil-error
-          [errors]="getField('area').errors"
           [errorValidators]="validators.area"
+          [errors]="getField('area').errors"
           [touched]="getField('area').touched || getField('area').dirty"
         ></camfil-error>
       </div>
@@ -147,8 +147,8 @@
         [touched]="getField('countryCode').touched || getField('countryCode').dirty"
       ></camfil-error> -->
 
-      <button type="button" class="form__field--button" mat-raised-button (click)="addSubLevel()">
-        <mat-icon svgIcon="plus" class="color-dark form__field--button-icon"></mat-icon>
+      <button (click)="addSubLevel()" class="form__field--button" mat-raised-button type="button">
+        <mat-icon class="color-dark form__field--button-icon" svgIcon="plus"></mat-icon>
         {{ 'camfil.modal.createCamcard.button.add_section' | translate }}
       </button>
 
@@ -156,11 +156,11 @@
       <div [ngClass]="{ hidden: !showNewSegment }" class="input-container">
         <mat-form-field appearance="outline" class="col-sm-12 form__field sublevel-input">
           <mat-label>{{ 'camfil.modal.createCamcard.input.new_subcamcard' | translate }}</mat-label>
-          <input matInput type="text" formControlName="newCamCard" #newSubCamCard />
+          <input #newSubCamCard formControlName="newCamCard" matInput type="text" />
         </mat-form-field>
         <camfil-error
-          [errors]="getField('newCamCard').errors"
           [errorValidators]="validators.newCamCard"
+          [errors]="getField('newCamCard').errors"
           [touched]="getField('newCamCard').touched || getField('newCamCard').dirty"
         ></camfil-error>
       </div>

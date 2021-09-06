@@ -2,20 +2,20 @@
   <form [formGroup]="commentForm">
     <ng-container *ngFor="let input of inputs">
       <mat-form-field
+        *ngIf="input !== 'text' || visibility"
         appearance="fill"
         class="form-field ml-md-2"
         ngClass="field_{{ input }}"
-        *ngIf="input !== 'text' || visibility"
       >
         <mat-label>{{ 'camfil.dynamic.account.cam_card.edit.comment.' + input + '.label' | translate }}</mat-label>
         <input
-          matInput
-          formControlName="{{ input }}"
-          markRequiredLabel="off"
-          camfilMaxLength="'BoxLabel'"
-          attr.data-testing-id="cam-card-edit-comment-{{ input }}"
           (blur)="onBlur($event.target, input)"
           (keyup.enter)="keyupEnter($event.target)"
+          [camfilMaxLength]="'BoxLabel'"
+          attr.data-testing-id="cam-card-edit-comment-{{ input }}"
+          formControlName="{{ input }}"
+          markRequiredLabel="off"
+          matInput
         />
       </mat-form-field>
     </ng-container>
@@ -25,17 +25,17 @@
 <ng-container *ngIf="(camCardItem?.comment?.text && mode === 'view') || (mode === 'edit' && !visibility)">
   <span
     #tooltip="matTooltip"
-    matTooltip="{{ camCardItem.comment.text }}"
-    matTooltipPosition="below"
-    matTooltipClass="cam-card-tooltip"
-    class="cam-card-comment ml-2"
     (click)="mode === 'edit' ? toggleVisibility() : tooltip.show()"
     (mouseenter)="$event.stopImmediatePropagation()"
+    class="cam-card-comment ml-2"
+    matTooltip="{{ camCardItem.comment.text }}"
+    matTooltipClass="cam-card-tooltip"
+    matTooltipPosition="below"
   >
     <mat-icon
-      svgIcon="comment"
-      class="size-24"
       [ngClass]="{ 'color-secondary': !camCardItem?.comment?.text }"
+      class="size-24"
+      svgIcon="comment"
     ></mat-icon>
   </span>
 </ng-container>

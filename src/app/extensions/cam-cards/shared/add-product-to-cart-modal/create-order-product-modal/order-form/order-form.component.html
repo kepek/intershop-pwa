@@ -3,30 +3,30 @@
     <!--customer select-->
     <mat-form-field appearance="outline" class="delivery-address__form--field">
       <mat-select
-        [placeholder]="'camfil.modal.createOrder.order-form.select.customer' | translate"
-        formControlName="customer"
         (selectionChange)="pickCustomer($event)"
         [disabled]="edit"
+        [placeholder]="'camfil.modal.createOrder.order-form.select.customer' | translate"
+        formControlName="customer"
       >
         <mat-option>--</mat-option>
         <mat-option *ngFor="let customer of customers$ | async" [value]="customer.id">
-          {{ customer.companyName }}, {{ customer.customerNo
-          }}<ng-container *ngIf="customer?.department">, {{ customer.department }} </ng-container>
+          {{ customer.companyName }}, {{ customer.customerNo }}
+          <ng-container *ngIf="customer?.department">, {{ customer.department }} </ng-container>
         </mat-option>
       </mat-select>
     </mat-form-field>
     <camfil-error
-      [errors]="getField('customer').errors"
       [errorValidators]="validators.customer"
+      [errors]="getField('customer').errors"
       [touched]="getField('customer').touched || getField('customer').dirty"
     ></camfil-error>
 
     <!--contacts select-->
     <mat-form-field appearance="outline" class="delivery-address__form--field">
       <mat-select
+        (selectionChange)="pickContact($event)"
         [placeholder]="'camfil.modal.createOrder.order-form.select.contact' | translate"
         formControlName="contact"
-        (selectionChange)="pickContact($event)"
       >
         <mat-option *ngFor="let contact of contacts | camfilContactSort" [value]="contact.erpId">
           {{ contact.fullName }}
@@ -34,40 +34,40 @@
       </mat-select>
     </mat-form-field>
     <camfil-error
-      [errors]="getField('contact').errors"
       [errorValidators]="validators.contact"
+      [errors]="getField('contact').errors"
       [touched]="getField('contact').touched || getField('contact').dirty"
     ></camfil-error>
 
     <!--order mark-->
     <mat-form-field appearance="outline" class="delivery-address__form--field">
       <mat-label>{{ 'camfil.modal.createOrder.order-form.input.order_mark' | translate }}</mat-label>
-      <input matInput camfilMaxLength="'OrderMark'" type="text" formControlName="orderMark" />
+      <input [camfilMaxLength]="'OrderMark'" formControlName="orderMark" matInput type="text" />
     </mat-form-field>
 
     <!--invoice mark-->
     <mat-form-field appearance="outline" class="delivery-address__form--field">
       <mat-label>{{ 'camfil.modal.createOrder.order-form.input.invoice_mark' | translate }}</mat-label>
-      <input matInput camfilMaxLength="'InvoiceLabel'" type="text" formControlName="invoiceLabel" />
+      <input [camfilMaxLength]="'InvoiceLabel'" formControlName="invoiceLabel" matInput type="text" />
     </mat-form-field>
 
     <!--phone number-->
     <mat-form-field appearance="outline" class="delivery-address__form--field">
       <mat-label>{{ 'camfil.modal.createOrder.order-form.input.phone_number' | translate }}</mat-label>
-      <input matInput type="tel" formControlName="phoneNumber" />
+      <input formControlName="phoneNumber" matInput type="tel" />
     </mat-form-field>
     <camfil-error
-      [errors]="getField('phoneNumber').errors"
       [errorValidators]="validators.phoneNumber"
+      [errors]="getField('phoneNumber').errors"
       [touched]="getField('phoneNumber').touched || getField('phoneNumber').dirty"
     ></camfil-error>
 
     <!--address select-->
     <mat-form-field appearance="outline" class="delivery-address__form--field">
       <mat-select
+        (selectionChange)="pickAddress($event)"
         [placeholder]="'camfil.modal.createOrder.order-form.select.address' | translate"
         formControlName="deliveryAddressSelect"
-        (selectionChange)="pickAddress($event)"
       >
         <mat-option>--</mat-option>
         <ng-container *ngIf="addresses$ | async as locations">
@@ -84,24 +84,24 @@
     <!--recipient-->
     <mat-form-field appearance="outline" class="delivery-address__form--field">
       <mat-label>{{ 'camfil.modal.createOrder.order-form.input.recipient' | translate }}</mat-label>
-      <input matInput type="text" formControlName="company" camfilMaxLength="'Company'" />
+      <input [camfilMaxLength]="'Company'" formControlName="company" matInput type="text" />
     </mat-form-field>
 
     <!--address-->
     <mat-form-field appearance="outline" class="delivery-address__form--field">
       <mat-label>{{ 'camfil.modal.createOrder.order-form.input.address' | translate }}</mat-label>
       <textarea
-        matInput
         formControlName="address"
         label="camfil.modal.createOrder.order-form.input.address"
         markRequiredLabel="off"
+        matInput
         maxlength="250"
         rows="5"
       ></textarea>
     </mat-form-field>
     <camfil-error
-      [errors]="getField('address').errors"
       [errorValidators]="validators.address"
+      [errors]="getField('address').errors"
       [touched]="getField('address').touched || getField('address').dirty"
     ></camfil-error>
 
@@ -109,15 +109,15 @@
       <!--zip code-->
       <div class="delivery-address__form--zipcode col-sm-12 col-md-5">
         <camfil-zip-code
-          fieldName="zipCode"
-          fieldCity="area"
-          classes="delivery-address__form--field delivery-address__form--field-small"
-          appearance="outline"
-          [errorValidator]="validators.zipCode"
-          [checkOnInitObj]="orderToEdit"
-          [form]="addressForm"
-          [countryChangeDetect]="countryChangeDetect$"
           (zipCodeErrorEmit)="setZipCodeError($event)"
+          [checkOnInitObj]="orderToEdit"
+          [countryChangeDetect]="countryChangeDetect$"
+          [errorValidator]="validators.zipCode"
+          [form]="addressForm"
+          appearance="outline"
+          classes="delivery-address__form--field delivery-address__form--field-small"
+          fieldCity="area"
+          fieldName="zipCode"
         ></camfil-zip-code>
       </div>
 
@@ -125,11 +125,11 @@
       <div class="col-sm-12 col-md-7 delivery-address__form--area">
         <mat-form-field appearance="outline" class="delivery-address__form--field delivery-address__form--field-small">
           <mat-label>{{ 'camfil.modal.createOrder.order-form.input.area' | translate }}</mat-label>
-          <input matInput type="text" formControlName="area" />
+          <input formControlName="area" matInput type="text" />
         </mat-form-field>
         <camfil-error
-          [errors]="getField('area').errors"
           [errorValidators]="validators.area"
+          [errors]="getField('area').errors"
           [touched]="getField('area').touched || getField('area').dirty"
         ></camfil-error>
       </div>
@@ -137,11 +137,11 @@
 
     <mat-form-field appearance="outline" class="delivery-address__form--field">
       <mat-label>{{ 'camfil.modal.createOrder.order-form.info' | translate }}</mat-label>
-      <textarea matInput formControlName="info"></textarea>
+      <textarea formControlName="info" matInput></textarea>
     </mat-form-field>
     <camfil-error
-      [errors]="getField('info').errors"
       [errorValidators]="validators.info"
+      [errors]="getField('info').errors"
       [touched]="getField('info').touched || getField('info').dirty"
     ></camfil-error>
   </form>
