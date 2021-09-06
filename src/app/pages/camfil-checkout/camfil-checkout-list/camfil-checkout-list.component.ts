@@ -542,7 +542,7 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
 
   get deliveryDaysForItemsAfterConfirmation() {
     // Order delivery date
-    const numDeliveryDate = new Date(this.deliveryDate).getTime();
+    const numDeliveryDate = this.getDateAt24(new Date(this.deliveryDate)).getTime();
     // Get Earliest delivery days for each item
     const items = this.order && this.order.lineItems;
 
