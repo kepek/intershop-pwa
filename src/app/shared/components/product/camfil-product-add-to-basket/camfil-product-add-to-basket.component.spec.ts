@@ -64,6 +64,7 @@ describe('Camfil Product Add To Basket Component', () => {
         MockComponent(FaIconComponent),
         MockComponent(ZipCodeComponent),
         MockPipe(AddressSortPipe),
+        MockPipe(CamfilContactSortPipe),
         OrderFormComponent,
         ProductAddToBasketComponent,
       ],

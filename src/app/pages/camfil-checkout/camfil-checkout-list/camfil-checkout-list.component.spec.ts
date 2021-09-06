@@ -80,6 +80,7 @@ describe('Camfil Checkout List Component', () => {
         MockComponent(ZipCodeComponent),
         MockDirective(ServerHtmlDirective),
         MockPipe(AddressSortPipe),
+        MockPipe(CamfilContactSortPipe),
         MockPipe(DatePipe),
         MockPipe(HighlightPipe),
         MockPipe(PricePipe),

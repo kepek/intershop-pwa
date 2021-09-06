@@ -16,6 +16,7 @@ import { setErrorOn, setLoadingOn, unsetLoadingAndErrorOn } from 'ish-core/utils
 
 import {
   addBasketItemAttributes,
+  addBasketItemAttributesFail,
   addBasketItemAttributesSuccess,
   addEmptyBucket,
   addItemsToBasket,
@@ -173,6 +174,7 @@ export const basketReducer = createReducer(
     updateBasketShippingMethod,
     updateBasketExternalOrderReference,
     updateBasket,
+    addBasketItemAttributes,
     addProductToBasket,
     addProductsToBasketFromCamCard,
     addPromotionCodeToBasket,
@@ -198,6 +200,7 @@ export const basketReducer = createReducer(
     loadBasketSuccess,
     loadBucketsSuccess,
     mergeBasketSuccess,
+    addBasketItemAttributesSuccess,
     updateBasketItemsSuccess,
     deleteBasketItemSuccess,
     addItemsToBasketSuccess,
@@ -223,6 +226,7 @@ export const basketReducer = createReducer(
   ),
   setErrorOn(
     mergeBasketFail,
+    addBasketItemAttributesFail,
     loadBasketFail,
     loadBucketsFail,
     updateBasketFail,
