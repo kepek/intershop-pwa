@@ -1,11 +1,14 @@
 @import '~src/styles/themes/camfil/variables';
 @import '~src/styles/themes/camfil/colors';
 
-::ng-deep {
+:host {
   .mat-card {
     padding-top: 0;
     padding-bottom: 0;
   }
+}
+
+::ng-deep {
   ish-address address {
     text-align: right;
   }

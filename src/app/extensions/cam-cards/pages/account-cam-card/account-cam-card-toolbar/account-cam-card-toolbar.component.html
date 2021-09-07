@@ -17,7 +17,7 @@
       data-testing-id="add-cam-card"
       routerLink="/account/camcards/create"
     >
-      <mat-icon svgIcon="plus" class="size-31"></mat-icon>
+      <mat-icon svgIcon="plus" class="crop"></mat-icon>
       {{ 'camfil.account.cam_card.list.button.add_cam_card.label' | translate }}
     </button>
     <button
@@ -29,7 +29,9 @@
       (click)="copy($event)"
     >
       <mat-icon svgIcon="copy" class="size-15"></mat-icon>
-      {{ 'camfil.account.cam_card.list.button.copy.label' | translate }}
+      <span class="d-none d-lg-inline-block pl-1">{{
+        'camfil.account.cam_card.list.button.copy.label' | translate
+      }}</span>
     </button>
     <button
       mat-stroked-button
@@ -40,11 +42,13 @@
       (click)="move($event)"
     >
       <mat-icon svgIcon="move" class="size-15"></mat-icon>
-      {{ 'camfil.account.cam_card.list.button.move.label' | translate }}
+      <span class="d-none d-lg-inline-block pl-1">{{
+        'camfil.account.cam_card.list.button.move.label' | translate
+      }}</span>
     </button>
     <camfil-account-cam-card-pdf
       [camCards]="checkedCamCards"
-      class="btn-tool secondary-button"
+      class="btn-tool secondary-button d-none d-sm-inline-block"
     ></camfil-account-cam-card-pdf>
 
     <button

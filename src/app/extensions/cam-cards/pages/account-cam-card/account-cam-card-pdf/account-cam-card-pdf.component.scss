@@ -1,0 +1,12 @@
+@import '~src/styles/themes/camfil/variables';
+
+:host {
+  button {
+    min-width: unset;
+  }
+  @media (max-width: $screen-md-max) {
+    .mat-stroked-button {
+      padding: 0 10px;
+    }
+  }
+}

@@ -11,6 +11,7 @@
       padding-bottom: $space-default/2;
       font-weight: 600;
       color: $text-color-primary;
+      vertical-align: bottom;
       background-color: rgba($color-corporate, 0.1);
     }
     td {
@@ -36,10 +37,20 @@
     ::ng-deep {
       th,
       td {
+        padding-right: 4px;
         text-align: center;
         &:first-child {
           padding-left: $space-box;
         }
+        &:last-child {
+          padding-right: $space-default;
+        }
+        .mat-sort-header-container {
+          display: inline-block;
+        }
+      }
+      th.mat-header-cell.no-sort {
+        padding-bottom: 38px;
       }
       .mat-column {
         &-customer,
@@ -53,6 +64,9 @@
           .mat-sort-header-container {
             justify-content: center;
           }
+          .mat-sort-header-arrow {
+            margin: 0 auto;
+          }
         }
         &-name {
           .mat-sort-header-container {
@@ -60,13 +74,17 @@
           }
         }
       }
-
       .mat-checkbox-layout {
         display: inline;
         margin: 0 0 0 8px;
       }
       .mat-expansion-panel-body {
         padding: 0;
+      }
+      .mat-sort-header-content {
+        display: inherit;
+        margin-bottom: $space-default/2;
+        line-height: normal;
       }
     }
   }
@@ -118,6 +136,17 @@
     }
     &-name {
       white-space: pre;
+      @media (max-width: $screen-lg-max) {
+        display: inline-block;
+        max-width: 140px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        vertical-align: middle;
+      }
+      @media (max-width: $screen-md-max) {
+        max-width: 80px;
+      }
     }
     &-product {
       padding: $space-box $space-default $space-box $space-default * 2;
@@ -171,6 +200,7 @@
     }
     // EOF for mobile
   }
+
   .mat-action-row {
     align-items: center;
     justify-content: space-between;
@@ -205,6 +235,7 @@
   .mat-sort-header-arrow {
     @include table-sort-arrow;
   }
+
   div.cam-card-tooltip {
     min-width: 100px;
     max-width: 200px;

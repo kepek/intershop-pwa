@@ -159,7 +159,7 @@
                 <mat-icon class="arrow_down" [class.arrow_down--expanded]="isCamCardExpanded(camCard)">
                   arrow_left</mat-icon
                 >
-                <strong class="cam-card-name">{{ camCard[column] }}</strong>
+                <strong class="cam-card-name" [title]="camCard[column]">{{ camCard[column] }}</strong>
               </ng-container>
               <ng-container *ngIf="column === 'customer'">{{ camCard[column].companyName }}</ng-container>
               <ng-container *ngIf="column === 'lastDeliveryDate'">{{
@@ -192,7 +192,7 @@
           </ng-container>
           <ng-template #checkbox>
             <th mat-header-cell *matHeaderCellDef class="text-right">
-              {{ 'camfil.account.cam_card.selectAll' | translate }}
+              <div>{{ 'camfil.account.cam_card.selectAll' | translate }}</div>
               <mat-checkbox
                 color="primary"
                 (change)="masterToggle($event)"
@@ -214,7 +214,7 @@
             </td>
           </ng-template>
           <ng-template #noSort>
-            <th mat-header-cell *matHeaderCellDef class="text-center">
+            <th mat-header-cell *matHeaderCellDef class="text-center no-sort">
               {{ 'camfil.account.cam_card.' + column | translate }}
             </th>
           </ng-template>

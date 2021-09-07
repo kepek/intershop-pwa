@@ -14,26 +14,32 @@
       }
 
       @media (min-width: $screen-md-min) {
-        padding-left: $space-default;
         border-color: $color-inverse;
       }
     }
 
     > li {
       @media (min-width: $screen-md-min) {
-        padding: 0 $space-default * 1.5 0 0;
+        padding: 0 $space-default * 2/3;
 
         &.hover > a {
           border-bottom: 2px solid;
         }
       }
 
+      @media (min-width: $screen-lg-min) {
+        padding: 0 $space-default;
+      }
+
       &.with-separator {
         // My CamCards link
         @media (min-width: $screen-md-min) {
-          padding-left: $space-default * 1.5;
+          padding-left: $space-default * 2/3;
 
           @include nav-back-separator('left', $primary);
+        }
+        @media (min-width: $screen-lg-min) {
+          padding-left: $space-default;
         }
       }
     }
