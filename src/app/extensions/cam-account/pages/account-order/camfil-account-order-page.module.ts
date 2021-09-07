@@ -3,6 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { SharedModule } from 'ish-shared/shared.module';
 
+import { CamAccountModule } from '../../cam-account.module';
+
 import { CamfilAccountOrderPageComponent } from './camfil-account-order-page.component';
 import { CamfilAccountOrderComponent } from './camfil-account-order/camfil-account-order.component';
 
@@ -20,7 +22,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes), SharedModule],
+  imports: [CamAccountModule, RouterModule.forChild(routes), SharedModule],
   declarations: [CamfilAccountOrderComponent, CamfilAccountOrderPageComponent],
 })
 export class CamfilAccountOrderPageModule {}

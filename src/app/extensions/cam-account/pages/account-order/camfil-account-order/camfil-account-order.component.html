@@ -1,11 +1,11 @@
 <div class="d-flex justify-content-between py-3">
   <div>
     <a
-      mat-stroked-button
       color="primary"
-      routerLink="/account/orders"
       data-testing-id="orders-link"
+      mat-stroked-button
       queryParamsHandling="preserve"
+      routerLink="/account/orders"
     >
       <mat-icon class="mt-n1">arrow_left</mat-icon>
       {{ 'account.orderdetails.links.return_to_orders' | translate }}</a
@@ -16,7 +16,7 @@
     </h1>
   </div>
   <div class="">
-    <button mat-flat-button color="primary" data-testing-id="order-again" (click)="placeReOrder()">
+    <button (click)="placeReOrder()" color="primary" data-testing-id="order-again" mat-flat-button>
       {{ 'camfil.account.orderdetails.links.order_again' | translate }}
     </button>
   </div>
@@ -53,7 +53,8 @@
             <ng-container *ngIf="isDeliveryPartial(); else orderDeliveryDate">
               {{ 'camfil.account.orderdetails.delivery_date.split.label' | translate }}
               <ng-container *ngFor="let item of deliveryDatesForItems; last as isLast">
-                {{ item | ishDate }}<ng-container *ngIf="!isLast">, </ng-container>
+                {{ item | ishDate }}
+                <ng-container *ngIf="!isLast">,</ng-container>
               </ng-container>
             </ng-container>
             <ng-template #orderDeliveryDate>{{ order.deliveryDate | ishDate }}</ng-template>
@@ -73,21 +74,7 @@
         <dd class="col-6 p-0" data-testing-id="order-phone_notification">{{ order.phoneNotification || '-' }}</dd>
         <dt class="col-6 p-0">{{ 'camfil.account.orderdetails.delivery_address.label' | translate }}</dt>
         <dd class="col-6 p-0 order-delivery_address" data-testing-id="order-delivery_address">
-          <ng-container *ngIf="deliveryAddress.deliveryAddressName"
-            >{{ deliveryAddress.deliveryAddressName }}<br
-          /></ng-container>
-          <ng-container *ngIf="deliveryAddress.deliveryAddressName2"
-            >{{ deliveryAddress.deliveryAddressName2 }}<br
-          /></ng-container>
-          <ng-container *ngIf="deliveryAddress.deliveryAddressAddress"
-            >{{ deliveryAddress.deliveryAddressAddress }}<br
-          /></ng-container>
-          <ng-container *ngIf="deliveryAddress.deliveryAddressZipCode"
-            >{{ deliveryAddress.deliveryAddressZipCode }}<br
-          /></ng-container>
-          <ng-container *ngIf="deliveryAddress.deliveryAddressCity"
-            >{{ deliveryAddress.deliveryAddressCity }}<br
-          /></ng-container>
+          <camfil-delivery-address [deliveryAddress]="deliveryAddress"></camfil-delivery-address>
         </dd>
         <dt class="col-6 p-0">{{ 'camfil.account.orderdetails.order_comment.label' | translate }}</dt>
         <dd class="col-6 p-0 text-break text-right" data-testing-id="order-contact_person">
@@ -96,11 +83,11 @@
       </dl>
       <ng-container *ngIf="order?.trackAndTrace">
         <a
-          mat-stroked-button
           class="btn-track-order float-right mr-n4"
           color="primary"
-          href="{{ order.trackAndTrace.link }}"
           data-testing-id="orders-link"
+          href="{{ order.trackAndTrace.link }}"
+          mat-stroked-button
           target="_blank"
         >
           {{ 'camfil.account.orderdetails.links.track_order' | translate }}</a
@@ -114,8 +101,8 @@
   <!-- Line Items -->
   <camfil-line-item-table
     *ngIf="lineItems?.length > 0"
-    [lineItems]="lineItems"
     [deviceType]="deviceType"
+    [lineItems]="lineItems"
     lineItemViewType="simple"
   ></camfil-line-item-table>
   <!-- Cost Summary -->
@@ -151,8 +138,8 @@
 </ng-container>
 
 <camfil-small-cta-modal
-  actionTitle="{{ reOrderText | translate }}{{ order?.id }}"
   actionButtonTitle="{{ 'camfil.checkout.create_new_order.temporary_order.ok' | translate }}"
+  actionTitle="{{ reOrderText | translate }}{{ order?.id }}"
   onlyAccept="true"
 >
 </camfil-small-cta-modal>

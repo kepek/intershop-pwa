@@ -6,16 +6,16 @@ import { Address } from 'ish-core/models/address/address.model';
  * The Address Component displays an address. The readout is country-dependent.
  *
  * @example
- * <camfil-checkout-delivery-address
+ * <camfil-address
  *   [address]="order.invoiceToAddress"
- * ></camfil-checkout-delivery-address>
+ * ></camfil-address>
  */
 @Component({
-  selector: 'camfil-checkout-delivery-address',
-  templateUrl: './camfil-checkout-delivery-address.component.html',
+  selector: 'camfil-address',
+  templateUrl: './camfil-address.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CamfilCheckoutDeliveryAddressComponent {
+export class CamfilAddressComponent {
   /**
    * The Address to be displayed.
    *

@@ -2,21 +2,21 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { BasketMockData } from 'ish-core/utils/dev/basket-mock-data';
 
-import { CamfilCheckoutDeliveryAddressComponent } from './camfil-checkout-delivery-address.component';
+import { CamfilAddressComponent } from './camfil-address.component';
 
-describe('Camfil Checkout Delivery Address Component', () => {
-  let component: CamfilCheckoutDeliveryAddressComponent;
-  let fixture: ComponentFixture<CamfilCheckoutDeliveryAddressComponent>;
+describe('Camfil Address Component', () => {
+  let component: CamfilAddressComponent;
+  let fixture: ComponentFixture<CamfilAddressComponent>;
   let element: HTMLElement;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CamfilCheckoutDeliveryAddressComponent],
+      declarations: [CamfilAddressComponent],
     }).compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CamfilCheckoutDeliveryAddressComponent);
+    fixture = TestBed.createComponent(CamfilAddressComponent);
     component = fixture.componentInstance;
     element = fixture.nativeElement;
     component.address = BasketMockData.getAddress();
