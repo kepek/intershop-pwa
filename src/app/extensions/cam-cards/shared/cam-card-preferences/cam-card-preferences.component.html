@@ -15,12 +15,12 @@
               <input
                 #title
                 (change)="onBlurSubmit()"
+                (change)="onBlurSubmit()"
+                [camfilMaxLength]="'CamcardTitle'"
                 formControlName="title"
                 label="camfil.account.cam_card.add_to_form.camcards_name"
                 markRequiredLabel="off"
                 matInput
-                [camfilMaxLength]="'CamcardTitle'"
-                (change)="onBlurSubmit()"
               />
             </mat-form-field>
             <camfil-error
@@ -52,13 +52,13 @@
               <mat-label>{{ 'camfil.account.cam_card.add_to_form.order_mark' | translate }}</mat-label>
               <input
                 (change)="onBlurSubmit()"
+                (change)="onBlurSubmit()"
+                [camfilMaxLength]="'OrderMark'"
                 [camfilMaxLength]="'OrderMark'"
                 formControlName="orderMark"
                 label="camfil.account.cam_card.add_to_form.order_mark"
                 markRequiredLabel="off"
                 matInput
-                [camfilMaxLength]="'OrderMark'"
-                (change)="onBlurSubmit()"
               />
             </mat-form-field>
             <mat-form-field appearance="fill" class="form-field">
@@ -66,8 +66,8 @@
               <input
                 (change)="onBlurSubmit()"
                 [camfilMaxLength]="'InvoiceLabel'"
-                formControlName="invoiceMark"
                 [camfilMaxLength]="'InvoiceLabel'"
+                formControlName="invoiceMark"
                 label="camfil.account.cam_card.add_to_form.invoice_mark"
                 markRequiredLabel="off"
                 matInput
@@ -101,8 +101,8 @@
               <input
                 (change)="onBlurSubmit()"
                 [camfilMaxLength]="'Company'"
-                formControlName="companyName1"
                 [camfilMaxLength]="'Company'"
+                formControlName="companyName1"
                 label="camfil.account.cam_card.add_to_form.company_name"
                 markRequiredLabel="off"
                 matInput
@@ -192,7 +192,7 @@
                 (optionSelected)="applyDeliveryInterval()"
                 autoActiveFirstOption
               >
-                <mat-option *ngFor="let option of deliveryIntervalFilteredOptions | async" [value]="option">
+                <mat-option *ngFor="let option of deliveryIntervalFilteredOptions$ | async" [value]="option">
                   {{ option }}
                 </mat-option>
               </mat-autocomplete>
