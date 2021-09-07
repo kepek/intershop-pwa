@@ -2,7 +2,6 @@
 
 :host {
   display: block;
-  height: 44px;
 
   @media (max-width: $screen-md-max) {
     .toolbar-detail-container {
@@ -12,6 +11,14 @@
       white-space: nowrap;
     }
   }
+
+  .crop {
+    width: 18px;
+    height: 28px;
+    margin-right: 2px;
+    margin-left: -10px;
+  }
+
   .sticky {
     position: fixed;
     top: 48px;

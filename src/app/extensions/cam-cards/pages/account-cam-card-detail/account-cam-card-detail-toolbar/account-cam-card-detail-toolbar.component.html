@@ -1,8 +1,8 @@
-<div class="row px-4 toolbar-detail-container" [ngClass]="{ 'sticky box-shadow': isSticky }">
-  <div class="{{ isSticky ? 'container' : 'col-12' }} text-right">
-    <h2 class="cam-card-title float-left">{{ title }}</h2>
+<div class="toolbar-detail-container" [ngClass]="{ 'sticky box-shadow': isSticky }">
+  <div class="{{ isSticky ? 'container' : 'col-12' }} text-right px-2">
+    <h2 class="cam-card-title text-left px-2 float-lg-left">{{ title }}</h2>
     <button mat-stroked-button color="primary" class="d-none d-sm-inline" (click)="emitEventToChild()">
-      <mat-icon svgIcon="plus" class="size-31"></mat-icon>
+      <mat-icon svgIcon="plus" class="crop"></mat-icon>
       {{ 'camfil.account.cam_card.details.button.add_section.label' | translate }}
     </button>
     <button
@@ -11,12 +11,14 @@
       class="d-none d-sm-inline"
       (click)="openAddToProductModal(addNewProductModal)"
     >
-      <mat-icon svgIcon="plus" class="size-31"></mat-icon>
+      <mat-icon svgIcon="plus" class="crop"></mat-icon>
       {{ 'camfil.account.cam_card.details.button.add_product.label' | translate }}
     </button>
     <button mat-stroked-button color="primary" (click)="deleteCurrentCamCard()" class="d-none d-sm-inline">
       <mat-icon svgIcon="delete" class="size-15"></mat-icon>
-      {{ 'camfil.account.cam_card.details.button.delete_camcard.label' | translate }}
+      <span class="d-none d-lg-inline-block">{{
+        'camfil.account.cam_card.details.button.delete_camcard.label' | translate
+      }}</span>
     </button>
     <button mat-raised-button color="primary" (click)="addToCart()" class="d-none d-sm-inline">
       <mat-icon svgIcon="cart" class="color-light size-15"></mat-icon>

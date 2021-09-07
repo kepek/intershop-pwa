@@ -27,6 +27,7 @@ import { CamCard, CamCardItem } from '../../../models/cam-card/cam-card.model';
   selector: 'camfil-account-cam-card-pdf',
   templateUrl: './account-cam-card-pdf.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  styleUrls: ['./account-cam-card-pdf.component.scss'],
 })
 export class AccountCamCardPdfComponent implements OnInit {
   constructor(

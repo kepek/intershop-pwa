@@ -4,6 +4,10 @@
   display: block;
   height: 44px;
 
+  .toolbar-container {
+    padding: 0 $space-box/2 0 0;
+  }
+
   @media (max-width: $screen-md-max) {
     > .toolbar-container {
       max-width: 100%;
@@ -11,7 +15,22 @@
       overflow: auto;
       white-space: nowrap;
     }
+
+    .btn-tool ~ .btn-tool {
+      margin-left: $space-default/4;
+    }
+    .mat-stroked-button {
+      padding: 0 10px;
+    }
   }
+
+  .crop {
+    width: 18px;
+    height: 28px;
+    margin-right: 2px;
+    margin-left: -10px;
+  }
+
   .sticky {
     position: fixed;
     top: 48px;
@@ -44,6 +63,7 @@
     height: 0;
   }
   button {
+    min-width: unset;
     margin-bottom: $space-box/2;
   }
 
