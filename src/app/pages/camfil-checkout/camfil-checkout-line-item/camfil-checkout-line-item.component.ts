@@ -61,7 +61,7 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
   @Input() isConfirmed;
   @Input() lineItem: LineItemView;
 
-  earliestDeliveryDate: string;
+  earliestDeliveryDate: Date;
   boxLabel: string;
   measurementsValues = ['width', 'height', 'diameter'];
   measurements: CamCardMeasurement;
@@ -208,22 +208,18 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
       delivery = this.setToClosestMonday(delivery);
     }
 
-    this.earliestDeliveryDate = AttributeHelper.formatDeliveryDate(delivery).replace(/-/g, '/');
+    this.earliestDeliveryDate = new Date(AttributeHelper.formatDeliveryDate(delivery));
   }
 
   deliveryAfterOrderConfirmed() {
     if (this.earliestDeliveryDate) {
+      const orderDeliveryDate = new Date(this.orderDeliveryDate);
       const newEarliestDeliveryDate = new Date(this.earliestDeliveryDate).getTime();
-      const newOrderDeliveryDate = new Date(this.orderDeliveryDate).getTime();
-      let deliveryDate: string;
+      const newOrderDeliveryDate = orderDeliveryDate.getTime();
+      let deliveryDate = this.earliestDeliveryDate;
 
       if (newEarliestDeliveryDate < newOrderDeliveryDate) {
-        const tempDeliveryDate = new Date(this.orderDeliveryDate).setDate(
-          new Date(this.orderDeliveryDate).getDate() + 1
-        );
-        deliveryDate = AttributeHelper.formatDeliveryDate(new Date(tempDeliveryDate)).replace(/-/g, '/');
-      } else {
-        deliveryDate = this.earliestDeliveryDate;
+        deliveryDate = new Date(AttributeHelper.formatDeliveryDate(orderDeliveryDate));
       }
 
       return deliveryDate;

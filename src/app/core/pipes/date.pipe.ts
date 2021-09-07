@@ -8,6 +8,7 @@ export function formatISHDate(
   lang: string,
   timezone?: string
 ): string {
+  let dateTimezone
   if (!value || !lang) {
     return 'undefined';
   }
@@ -18,8 +19,12 @@ export function formatISHDate(
     date = new Date(Date.parse(value));
   } else {
     date = value;
+    dateTimezone = new Date(date)
+    .toString()
+    .match(/([A-Z]+[\+-][0-9]+)/)[1]
+    .replace('GMT', '');
   }
-  return formatDate(date, format, lang, timezone || '+0000');
+  return formatDate(date, format, lang, timezone || dateTimezone || '+0000');
 }
 
 /**
