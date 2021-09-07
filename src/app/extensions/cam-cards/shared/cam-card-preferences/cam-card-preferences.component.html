@@ -19,7 +19,8 @@
                 label="camfil.account.cam_card.add_to_form.camcards_name"
                 markRequiredLabel="off"
                 matInput
-                maxlength="40"
+                [camfilMaxLength]="'CamcardTitle'"
+                (change)="onBlurSubmit()"
               />
             </mat-form-field>
             <camfil-error
@@ -56,6 +57,8 @@
                 label="camfil.account.cam_card.add_to_form.order_mark"
                 markRequiredLabel="off"
                 matInput
+                [camfilMaxLength]="'OrderMark'"
+                (change)="onBlurSubmit()"
               />
             </mat-form-field>
             <mat-form-field appearance="fill" class="form-field">
@@ -64,6 +67,7 @@
                 (change)="onBlurSubmit()"
                 [camfilMaxLength]="'InvoiceLabel'"
                 formControlName="invoiceMark"
+                [camfilMaxLength]="'InvoiceLabel'"
                 label="camfil.account.cam_card.add_to_form.invoice_mark"
                 markRequiredLabel="off"
                 matInput
@@ -98,6 +102,7 @@
                 (change)="onBlurSubmit()"
                 [camfilMaxLength]="'Company'"
                 formControlName="companyName1"
+                [camfilMaxLength]="'Company'"
                 label="camfil.account.cam_card.add_to_form.company_name"
                 markRequiredLabel="off"
                 matInput
