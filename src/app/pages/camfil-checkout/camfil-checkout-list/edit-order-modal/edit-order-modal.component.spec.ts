@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MockComponent, MockPipe } from 'ng-mocks';
 import { instance, mock } from 'ts-mockito';
 
+import { CamfilMaxLengthAttributeCreateDirective } from 'ish-core/directives/camfil-max-length-attribute-create.directive';
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { AddressSortPipe } from 'ish-core/pipes/camfil-address-sort.pipe';
@@ -28,6 +29,7 @@ describe('Edit Order Modal Component', () => {
       declarations: [
         CamfilCamCardModalComponent,
         CamfilErrorComponent,
+        CamfilMaxLengthAttributeCreateDirective,
         EditOrderModalComponent,
         MockComponent(CamfilLoadingComponent),
         MockComponent(ZipCodeComponent),

@@ -6,6 +6,7 @@ import { MockComponent, MockPipe } from 'ng-mocks';
 import { of } from 'rxjs';
 import { anything, instance, mock, when } from 'ts-mockito';
 
+import { CamfilMaxLengthAttributeCreateDirective } from 'ish-core/directives/camfil-max-length-attribute-create.directive';
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { LineItemView } from 'ish-core/models/line-item/line-item.model';
@@ -51,6 +52,7 @@ describe('Camfil Checkout Line Item Component', () => {
       declarations: [
         CamfilCheckoutLineItemComponent,
         CamfilErrorComponent,
+        CamfilMaxLengthAttributeCreateDirective,
         CamfilSmallCtaModalComponent,
         MockComponent(CamfilLoadingComponent),
         MockComponent(CamfilProductAddToBasketComponent),

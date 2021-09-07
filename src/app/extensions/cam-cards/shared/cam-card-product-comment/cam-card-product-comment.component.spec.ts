@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideMockStore } from '@ngrx/store/testing';
 
+import { CamfilMaxLengthAttributeCreateDirective } from 'ish-core/directives/camfil-max-length-attribute-create.directive';
+
 import { CamCardProductCommentComponent } from './cam-card-product-comment.component';
 
 describe('Cam Card Product Comment Component', () => {
@@ -10,7 +12,7 @@ describe('Cam Card Product Comment Component', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CamCardProductCommentComponent],
+      declarations: [CamCardProductCommentComponent, CamfilMaxLengthAttributeCreateDirective],
       providers: [provideMockStore({})],
     }).compileComponents();
   });

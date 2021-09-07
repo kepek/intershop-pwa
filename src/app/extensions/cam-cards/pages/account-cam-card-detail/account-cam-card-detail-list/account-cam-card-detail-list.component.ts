@@ -99,6 +99,16 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges, OnD
     private authorizationToggle: AuthorizationToggleService
   ) {}
 
+  get totalPrice(): Price {
+    if (!this.showPrice) {
+      return;
+    }
+    const list = Object.values(this.priceSum);
+    const currency = list.length ? list.find(([item]) => item.currency)[0]?.currency : '';
+    const value = list.reduce((res, [item, , qty]) => res + (item?.value || 0) * qty, 0);
+    return { value, type: 'Money', currency };
+  }
+
   ngOnInit(): void {
     this.isMobileView = this.isMobile();
     this.isStickyCamCardToolbar$ = this.camCardsFacade.isStickyCamCardToolbar$;
@@ -208,16 +218,6 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges, OnD
 
   getCamCardName() {
     return this.camCard?.name;
-  }
-
-  get totalPrice(): Price {
-    if (!this.showPrice) {
-      return;
-    }
-    const list = Object.values(this.priceSum);
-    const currency = list.length ? list.find(([item]) => item.currency)[0]?.currency : '';
-    const value = list.reduce((res, [item, , qty]) => res + (item?.value || 0) * qty, 0);
-    return { value, type: 'Money', currency };
   }
 
   cleanPriceSum(id: string) {

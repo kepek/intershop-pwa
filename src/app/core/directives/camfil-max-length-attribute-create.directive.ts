@@ -7,11 +7,15 @@ import { MaxLengthFieldsValues } from 'ish-core/models/max-length-validator/max-
   selector: '[camfilMaxLength]',
 })
 export class CamfilMaxLengthAttributeCreateDirective implements OnInit, AfterViewInit {
-  maxLengthValues = MaxLengthFieldsValues;
-  maxLength: number;
-  errorElement: HTMLElement;
+  private maxLengthValues = MaxLengthFieldsValues;
+  private maxLength: number;
+  private errorElement: HTMLElement;
 
   constructor(private element: ElementRef, private translateService: TranslateService, private renderer2: Renderer2) {}
+
+  @Input() set camfilMaxLength(fieldName: keyof typeof MaxLengthFieldsValues) {
+    this.maxLength = this.maxLengthValues[fieldName];
+  }
 
   @HostListener('input', ['$event']) onKeyDown(event) {
     const input = event.target;
@@ -26,10 +30,6 @@ export class CamfilMaxLengthAttributeCreateDirective implements OnInit, AfterVie
   @HostListener('focusout', ['$event'])
   onBlur() {
     this.toggleMaxLengthWarning(false);
-  }
-
-  @Input() set camfilMaxLength(fieldName: keyof typeof MaxLengthFieldsValues) {
-    this.maxLength = this.maxLengthValues[fieldName];
   }
 
   ngOnInit() {

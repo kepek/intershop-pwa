@@ -3,6 +3,7 @@ import { MockComponent, MockPipe } from 'ng-mocks';
 import { of } from 'rxjs';
 import { instance, mock, when } from 'ts-mockito';
 
+import { CamfilMaxLengthAttributeCreateDirective } from 'ish-core/directives/camfil-max-length-attribute-create.directive';
 import { AddressSortPipe } from 'ish-core/pipes/camfil-address-sort.pipe';
 import { CamfilContactSortPipe } from 'ish-core/pipes/camfil-contact-sort.pipe';
 import { CamfilErrorComponent } from 'ish-shared/components/common/camfil-error/camfil-error.component';
@@ -25,6 +26,7 @@ describe('Order Form Component', () => {
     await TestBed.configureTestingModule({
       declarations: [
         CamfilErrorComponent,
+        CamfilMaxLengthAttributeCreateDirective,
         MockComponent(CamfilLoadingComponent),
         MockComponent(ZipCodeComponent),
         MockPipe(AddressSortPipe),
