@@ -4,6 +4,7 @@ import { MockComponent, MockPipe } from 'ng-mocks';
 import { of } from 'rxjs';
 import { instance, mock, when } from 'ts-mockito';
 
+import { CamfilMaxLengthAttributeCreateDirective } from 'ish-core/directives/camfil-max-length-attribute-create.directive';
 import { AccountFacade } from 'ish-core/facades/account.facade';
 import { Product } from 'ish-core/models/product/product.model';
 import { User } from 'ish-core/models/user/user.model';
@@ -38,6 +39,7 @@ describe('Create Product Cam Card Modal Component', () => {
         CamfilCamCardModalComponent,
         CamfilCounterComponent,
         CamfilErrorComponent,
+        CamfilMaxLengthAttributeCreateDirective,
         CamfilProductQuantityComponent,
         CreateProductCamCardModalComponent,
         MockComponent(CamfilLoadingComponent),

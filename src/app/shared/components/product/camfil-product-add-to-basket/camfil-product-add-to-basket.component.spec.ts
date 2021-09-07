@@ -6,6 +6,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { of } from 'rxjs';
 import { instance, mock, when } from 'ts-mockito';
 
+import { CamfilMaxLengthAttributeCreateDirective } from 'ish-core/directives/camfil-max-length-attribute-create.directive';
 import { AccountFacade } from 'ish-core/facades/account.facade';
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { FeatureToggleModule } from 'ish-core/feature-toggle.module';
@@ -54,6 +55,7 @@ describe('Camfil Product Add To Basket Component', () => {
         CamfilContactSortPipe,
         CamfilCounterComponent,
         CamfilErrorComponent,
+        CamfilMaxLengthAttributeCreateDirective,
         CamfilProductAddToBasketComponent,
         CamfilProductAddToBasketModalComponent,
         CamfilProductQuantityComponent,

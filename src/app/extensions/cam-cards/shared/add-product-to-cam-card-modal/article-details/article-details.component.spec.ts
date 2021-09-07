@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, FormGroup } from '@angular/forms';
 
+import { CamfilMaxLengthAttributeCreateDirective } from 'ish-core/directives/camfil-max-length-attribute-create.directive';
 import { Product } from 'ish-core/models/product/product.model';
 import { CamfilErrorComponent } from 'ish-shared/components/common/camfil-error/camfil-error.component';
 import { CamfilProductQuantityComponent } from 'ish-shared/components/product/camfil-product-quantity/camfil-product-quantity.component';
@@ -19,6 +20,7 @@ describe('Article Details Component', () => {
         ArticleDetailsComponent,
         CamfilCounterComponent,
         CamfilErrorComponent,
+        CamfilMaxLengthAttributeCreateDirective,
         CamfilProductQuantityComponent,
       ],
     }).compileComponents();

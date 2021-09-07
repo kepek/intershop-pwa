@@ -37,9 +37,7 @@ import {
  * The Cam Cards Preferences Dialog shows the modal to create/edit a cam_cards.
  *
  * @example
- * <camfil-cam-card-preferences-dialog
-    (submit)="createCamCard($event)">
-   </camfil-cam-card-preferences-dialog>
+ * <camfil-cam-card-preferences-dialog (submit)="createCamCard($event)"></camfil-cam-card-preferences-dialog>
  */
 
 @Component({
@@ -49,26 +47,16 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CamCardPreferencesComponent implements OnChanges, OnInit, AfterViewInit, OnDestroy {
-  constructor(
-    private fb: FormBuilder,
-    private camCardsFacade: CamCardsFacade,
-    private appFacade: AppFacade,
-    public dialog: MatDialog,
-    private activatedRoute: ActivatedRoute,
-    private cdr: ChangeDetectorRef
-  ) {}
-
+  private static deliveryIntervalOptions = 100;
   @ViewChild('title') titleInput: ElementRef;
+  @ViewChild('modal', { static: false }) modalTemplate: TemplateRef<unknown>;
 
-  get formDisabled() {
-    return this.camCardForm.invalid && this.submitted;
-  }
   /**
    * Predefined cam cards to fill the form with, if there is no cam cards a new cam cards will be created
    */
   @Input() camCard: CamCard;
-
   @Input() modalTitle?: string;
+
   /**
    * Emits the data of the new cam cards to create.
    */
@@ -86,23 +74,14 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit, AfterView
   selectedAddress: CamCardAddress;
   countryChangeDetect$: Subject<boolean> = new Subject();
   defaultCountryCode: string;
-
-  deliveryIntervalOptions: string[] = [...Array(1000).keys()].map(i => (i === 0 ? '--' : i.toString()));
-  deliveryIntervalFilteredOptions: Observable<string[]>;
-
+  deliveryIntervalOptions: string[] = [...Array(CamCardPreferencesComponent.deliveryIntervalOptions).keys()].map(i =>
+    i === 0 ? '--' : i.toString()
+  );
+  deliveryIntervalFilteredOptions$: Observable<string[]>;
   setMaxLengthErrorForTableValidator = ProductHelper.setMaxLengthErrorForTableValidator;
-  private destroy$ = new Subject();
-
-  /**
-   *  A reference to the current modal  .
-   */
-
-  // localization keys, default = for new
-
   primaryButton = 'camfil.account.cam_card.new_from_order.button.create.label';
   camCardTitle = 'camfil.account.cam_card.new_cam_card.text';
   maxLength = 35;
-
   locations = [
     {
       value: 'poland',
@@ -117,7 +96,6 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit, AfterView
       viewValue: 'Sweden',
     },
   ];
-
   errorValidator = [
     {
       error: 'required',
@@ -134,7 +112,30 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit, AfterView
     },
   ];
 
-  @ViewChild('modal', { static: false }) modalTemplate: TemplateRef<unknown>;
+  private destroy$ = new Subject();
+
+  constructor(
+    private fb: FormBuilder,
+    private camCardsFacade: CamCardsFacade,
+    private appFacade: AppFacade,
+    public dialog: MatDialog,
+    private activatedRoute: ActivatedRoute,
+    private cdr: ChangeDetectorRef
+  ) {}
+
+  get formDisabled() {
+    return this.camCardForm.invalid && this.submitted;
+  }
+
+  get collapseFormTranslationKey() {
+    return this.isCollapsed
+      ? 'camfil.account.cam_card_preferences.maximize'
+      : 'camfil.account.cam_card_preferences.minimize';
+  }
+
+  get customerId() {
+    return this.camCardForm?.get('customerName')?.value || '';
+  }
 
   hide() {
     this.dialog.closeAll();
@@ -208,7 +209,7 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit, AfterView
       this.customers = customers;
     });
 
-    this.deliveryIntervalFilteredOptions = this.camCardForm.get('deliveryInterval').valueChanges.pipe(
+    this.deliveryIntervalFilteredOptions$ = this.camCardForm.get('deliveryInterval').valueChanges.pipe(
       startWith(''),
       map(value => this._deliveryIntervalFilter(value))
     );
@@ -400,13 +401,6 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit, AfterView
     });
   }
 
-  private _deliveryIntervalFilter(value: string): string[] {
-    if (!value) {
-      return this.deliveryIntervalOptions;
-    }
-    return this.deliveryIntervalOptions.filter(option => option.toLowerCase().startsWith(value.toString()));
-  }
-
   applyDeliveryInterval() {
     if (this.camCardForm.get('deliveryInterval').value === '--') {
       this.camCardForm.get('deliveryInterval').setValue(undefined);
@@ -416,13 +410,13 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit, AfterView
   }
 
   validateDeliveryInterval() {
+    const maxDeliveryInterval = CamCardPreferencesComponent.deliveryIntervalOptions - 1;
     if (this.camCardForm.get('deliveryInterval').value === '--') {
       this.camCardForm.get('deliveryInterval').setValue(undefined);
       return;
     }
-
-    if (this.camCardForm.get('deliveryInterval').value > 999) {
-      this.camCardForm.get('deliveryInterval').setValue('999');
+    if (this.camCardForm.get('deliveryInterval').value > maxDeliveryInterval) {
+      this.camCardForm.get('deliveryInterval').setValue(`${maxDeliveryInterval}`);
       return;
     }
     if (this.camCardForm.get('deliveryInterval').value <= 0) {
@@ -431,13 +425,10 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit, AfterView
     }
   }
 
-  get collapseFormTranslationKey() {
-    return this.isCollapsed
-      ? 'camfil.account.cam_card_preferences.maximize'
-      : 'camfil.account.cam_card_preferences.minimize';
-  }
-
-  get customerId() {
-    return this.camCardForm?.get('customerName')?.value || '';
+  private _deliveryIntervalFilter(value: string): string[] {
+    if (!value) {
+      return this.deliveryIntervalOptions;
+    }
+    return this.deliveryIntervalOptions.filter(option => option.toLowerCase().startsWith(value.toString()));
   }
 }
