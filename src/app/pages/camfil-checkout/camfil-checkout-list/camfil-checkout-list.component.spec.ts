@@ -19,6 +19,7 @@ import { ProductRoutePipe } from 'ish-core/routing/product/product-route.pipe';
 import { ContentIncludeComponent } from 'ish-shared/cms/components/content-include/content-include.component';
 import { AddressComponent } from 'ish-shared/components/address/address/address.component';
 import { CamfilBasketCostSummaryComponent } from 'ish-shared/components/basket/camfil-basket-cost-summary/camfil-basket-cost-summary.component';
+import { CamfilAddressComponent } from 'ish-shared/components/camfil-address/camfil-address.component';
 import { CamfilCamCardModalComponent } from 'ish-shared/components/common/camfil-cam-card-modal/camfil-cam-card-modal.component';
 import { CamfilErrorComponent } from 'ish-shared/components/common/camfil-error/camfil-error.component';
 import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
@@ -36,7 +37,6 @@ import { OrderFormComponent } from '../../../extensions/cam-cards/shared/add-pro
 import { AddEmailRecipientModalComponent } from '../add-email-recipient-modal/add-email-recipient-modal.component';
 import { CamfilCheckoutLineItemComponent } from '../camfil-checkout-line-item/camfil-checkout-line-item.component';
 
-import { CamfilCheckoutDeliveryAddressComponent } from './camfil-checkout-delivery-address/camfil-checkout-delivery-address.component';
 import { CamfilCheckoutListComponent } from './camfil-checkout-list.component';
 import { CamfilDeleteOrderComponent } from './camfil-delete-order/camfil-delete-order.component';
 import { EditOrderModalComponent } from './edit-order-modal/edit-order-modal.component';
@@ -59,8 +59,8 @@ describe('Camfil Checkout List Component', () => {
     await TestBed.configureTestingModule({
       declarations: [
         ArticleDetailsComponent,
+        CamfilAddressComponent,
         CamfilCamCardModalComponent,
-        CamfilCheckoutDeliveryAddressComponent,
         CamfilCheckoutListComponent,
         CamfilContactSortPipe,
         CamfilCounterComponent,

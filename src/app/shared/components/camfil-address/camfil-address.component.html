@@ -1,0 +1,14 @@
+<address *ngIf="address">
+  <ng-container *ngIf="address.companyName1">{{ address.companyName1 }}<br /></ng-container>
+  <ng-container *ngIf="address.addressLine2">
+    <span [innerText]="address.addressLine2"></span><br />
+  </ng-container>
+  <ng-container *ngIf="address.addressLine1">
+    <span [innerText]="address.addressLine1"></span><br />
+  </ng-container>
+  <ng-container *ngIf="address.addressLine3">
+    <span [innerText]="address.addressLine3"></span><br />
+  </ng-container>
+  <ng-container *ngIf="address.postalCode">{{ address.postalCode }}&nbsp;</ng-container>
+  <ng-container *ngIf="address.city">{{ address.city }}</ng-container>
+</address>

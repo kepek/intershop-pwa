@@ -14,6 +14,7 @@
     .cdk-drop-list {
       position: relative;
       overflow: hidden;
+
       &::after {
         position: absolute;
         bottom: 0;
@@ -45,12 +46,14 @@
       padding-top: 0;
       padding-bottom: 0;
     }
+
     ish-address address,
-    camfil-checkout-delivery-address address {
+    camfil-address address {
       max-width: 200px;
       text-align: right;
       overflow-wrap: break-word;
     }
+
     .mat-expansion-panel-body {
       padding: 0;
     }
@@ -62,9 +65,11 @@
       font-size: $font-size-base * 1.25;
     }
   }
+
   .dl-horizontal.dl-separator > dt::after {
     content: '';
   }
+
   dd,
   dt {
     display: flex;
@@ -76,6 +81,7 @@
     justify-content: flex-end;
     font-weight: 500;
   }
+
   .invoice-label-value {
     display: block;
     text-align: right;
@@ -99,9 +105,11 @@
       dt {
         margin-bottom: $space-box-half;
       }
+
       .recipient-button {
         margin: $space-box-half/2 0;
       }
+
       .delete-recipient-icon-wrapper {
         width: 18px;
         height: 18px;
@@ -109,6 +117,7 @@
         color: $camfil-color-light;
         background-color: $camfil-color-primary;
         border-radius: 50%;
+
         mat-icon {
           height: $space-box;
           font-size: $space-box;
@@ -164,17 +173,21 @@
     font-weight: 500;
     line-height: $h3-line-height;
     color: $camfil-color-primary;
+
     &:hover {
       color: $camfil-color-secondary;
     }
+
     .double-add-icon {
       width: $space-box;
       height: $space-box;
       margin-right: $space-half;
     }
+
     &:disabled {
       color: $gray-600;
       cursor: initial;
+
       .double-add-icon {
         color: $gray-600;
       }
@@ -190,8 +203,10 @@
   .camfil-checkout-list {
     margin-top: 16px;
   }
+
   .line-item-container {
     position: relative;
+
     .line-item-index {
       position: absolute;
       top: 4px;
@@ -232,6 +247,7 @@
       }
     }
   }
+
   .mat-expansion-panel {
     box-shadow: none;
 
@@ -318,6 +334,7 @@
 .mat-datepicker-popup {
   top: 0;
 }
+
 ::ng-deep {
   mat-datepicker-content {
     .custom-date-class {
@@ -325,23 +342,27 @@
         background: $camfil-color-secondary;
       }
     }
+
     .first-day-range {
       &::before {
         border-top-left-radius: 999px;
         border-bottom-left-radius: 999px;
       }
     }
+
     .last-day-range {
       &::before {
         background: $camfil-color-secondary;
         border-top-right-radius: 999px;
         border-bottom-right-radius: 999px;
       }
+
       .mat-calendar-body-cell-content {
         color: #fff;
         background-color: #006a3a;
       }
     }
+
     .first-day-range,
     .last-day-range {
       .mat-calendar-body-selected {

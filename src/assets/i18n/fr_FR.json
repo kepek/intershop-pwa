@@ -1010,7 +1010,7 @@
   "camfil.modal.addToCart.order-list.title": "fr_Select or create a new order",
   "camfil.modal.addToCart.title": "fr_Add to Cart",
   "camfil.modal.checkout.full-delivery.title": "fr_Joint delivery has been selected.",
-  "camfil.modal.checkout.partial-delivery.title": "fr_Parial delivery has been selected.",
+  "camfil.modal.checkout.partial-delivery.title": "fr_Partial delivery has been selected.",
   "camfil.modal.createCamcard.button.add_section": "fr_Add new Camcard section",
   "camfil.modal.createCamcard.button.cancel": "fr_Cancel",
   "camfil.modal.createCamcard.button.create_and_continue": "fr_Create & continue shopping",
