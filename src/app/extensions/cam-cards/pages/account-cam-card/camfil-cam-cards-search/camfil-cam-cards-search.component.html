@@ -2,31 +2,32 @@
   <mat-card-content>
     <div class="row">
       <div class="col-12 col-md-5 d-flex align-items-center">
-        <form role="search" class="search clearfix" name="SearchBox_Header">
-          <mat-icon svgIcon="search" class="search__icon background-icon"></mat-icon>
+        <form class="search clearfix" name="SearchBox_Header" role="search">
+          <mat-icon class="search__icon background-icon" svgIcon="search"></mat-icon>
           <input
+            (input)="searchInputChanged($event.target)"
+            [class.mat-elevation-z2]="true"
+            class="search-input"
             placeholder="{{ 'camfil.account.cam_card.search.input.placeholder' | translate }}"
             type="text"
-            class="search-input"
-            [class.mat-elevation-z2]="true"
-            [(ngModel)]="searchInput"
-            [ngModelOptions]="{ standalone: true }"
-            (input)="submit($event.target.value)"
           />
-
           <div class="buttons">
-            <button type="submit" name="search" title="Search" mat-flat-button color="primary">
+            <button color="primary" mat-flat-button name="search" title="Search" type="submit">
               {{ 'camfil.account.cam_card.search.btn.label' | translate }}
             </button>
           </div>
         </form>
       </div>
       <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-        <mat-form-field appearance="fill" [class.mat-elevation-z2]="true">
-          <mat-label>{{ 'camfil.account.cam_card.search.select.label' | translate }}</mat-label>
-          <mat-select [(ngModel)]="selectInput" (selectionChange)="submit($event.value)">
-            <mat-option>{{ 'camfil.account.cam_card.search.select.all.customers' | translate }}</mat-option>
-            <mat-option *ngFor="let customer of customers" [value]="customer.customerNo">
+        <mat-form-field [class.mat-elevation-z2]="true" appearance="fill">
+          <mat-label>
+            {{ 'camfil.account.cam_card.search.select.label' | translate }}
+          </mat-label>
+          <mat-select (selectionChange)="selectInputChanged($event)">
+            <mat-option>
+              {{ 'camfil.account.cam_card.search.select.all.customers' | translate }}
+            </mat-option>
+            <mat-option *ngFor="let customer of customers" [value]="customer">
               {{ customer.companyName }}
             </mat-option>
           </mat-select>

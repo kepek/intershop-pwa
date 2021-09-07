@@ -40,6 +40,7 @@ import {
   CamCamProductChecked,
   CamCamProductsAddToCart,
   CamCard,
+  CamCardCustomer,
   CamCardItem,
 } from '../../../models/cam-card/cam-card.model';
 import { ProductAddingErrorDialogComponent } from '../../../shared/cam-card-product-error-dialog/cam-card-product-error-dialog.component';
@@ -61,26 +62,8 @@ import { UserAccessCamCardDialogComponent } from '../../../shared/user-access-ca
   ],
 })
 export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy {
-  constructor(
-    private checkoutFacade: CheckoutFacade,
-    private productFacade: ShoppingFacade,
-    private camCardsFacade: CamCardsFacade,
-    private changeDetectorRefs: ChangeDetectorRef,
-    public dialog: MatDialog,
-    private activatedRoute: ActivatedRoute,
-    private scroller: ViewportScroller,
-    private translate: TranslateService,
-    private location: Location,
-    private authorizationToggle: AuthorizationToggleService
-  ) {}
-
-  get checkedCamCards() {
-    return this.camCards ? this.camCards.filter(camCard => this.isCamCardChecked(camCard)) : [];
-  }
-
   private static CUSTOMER_ADMIN_PERMISSIONS = ['APP_B2B_MANAGE_USERS', 'APP_B2B_PURCHASE', 'APP_B2B_MANAGE_ALL_ORDERS'];
   private static PRICE_PERMISSIONS = ['APP_B2B_VIEW_PRICES'];
-
   /** The list of cam cards of the customer. */
   @Input() camCards: CamCard[];
   @Input() deviceType: DeviceType;
@@ -106,12 +89,7 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
   isSubOpen = [];
   notBuyableElemnts = [];
   maintenance = CamCardHelper.maintenance;
-  private fragment: string;
-
-  private destroy$ = new Subject();
-
   commonShippingMethodId: string;
-
   basket$: Observable<BasketView>;
   buckets$: Observable<any[]>;
   buckets: Bucket[];
@@ -123,10 +101,29 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
   totalProductsInBasket: number;
   productAddingInProgress = false;
   camCardsWithNoCompleteAddresses: CamCard[];
-
   productsCustomerPrices: {
     [customerId: string]: Product[];
   };
+  private selectedCamCardCustomer: CamCardCustomer;
+  private fragment: string;
+  private destroy$ = new Subject();
+
+  constructor(
+    private checkoutFacade: CheckoutFacade,
+    private productFacade: ShoppingFacade,
+    private camCardsFacade: CamCardsFacade,
+    private changeDetectorRefs: ChangeDetectorRef,
+    public dialog: MatDialog,
+    private activatedRoute: ActivatedRoute,
+    private scroller: ViewportScroller,
+    private translate: TranslateService,
+    private location: Location,
+    private authorizationToggle: AuthorizationToggleService
+  ) {}
+
+  get checkedCamCards() {
+    return this.camCards ? this.camCards.filter(camCard => this.isCamCardChecked(camCard)) : [];
+  }
 
   ngOnInit() {
     this.isMobileView = this.isMobile();
@@ -200,10 +197,12 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
                 return res;
               }, additionalFields);
               return (
-                this.simplifyData(data.customer.companyName).indexOf(filtered) !== -1 ||
-                this.simplifyData(data.customer.customerNo).indexOf(filtered) !== -1 ||
-                this.simplifyData(data.name).indexOf(filtered) !== -1 ||
-                !!additionalFields.filter(item => this.simplifyData(item).indexOf(filtered) !== -1).length
+                (this.simplifyData(data.customer.companyName).indexOf(filtered) !== -1 ||
+                  this.simplifyData(data.customer.customerNo).indexOf(filtered) !== -1 ||
+                  this.simplifyData(data.name).indexOf(filtered) !== -1 ||
+                  !!additionalFields.filter(item => this.simplifyData(item).indexOf(filtered) !== -1).length) &&
+                this.simplifyData(this.selectedCamCardCustomer?.customerNo || data?.customer?.customerNo) ===
+                  this.simplifyData(data?.customer?.customerNo)
               );
             };
 
@@ -273,7 +272,7 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
   }
 
   simplifyData(data) {
-    return data.toLowerCase().trim();
+    return data?.toLowerCase()?.trim();
   }
 
   addCustomerNoToData(realCamCards) {
@@ -283,8 +282,15 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
     }));
   }
 
-  applyfilters(filter) {
-    this.camCardsProcessed.filter = filter;
+  applyFilters(filterObject: { query: string; customer?: CamCardCustomer }) {
+    if (!filterObject) {
+      return;
+    }
+
+    const { query, customer } = filterObject;
+
+    this.selectedCamCardCustomer = customer;
+    this.camCardsProcessed.filter = query || customer?.customerNo;
   }
 
   isMobile() {
@@ -516,6 +522,7 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
     camCard.subCamCards?.map(sub => sub.camCardItems?.map(({ id }) => this.isProductChecked(id) && itmsNum++));
     return !this.isCamCardChecked(camCard) && itmsNum > 0;
   }
+
   isAllIndeterminate() {
     return Object.keys(this.productsChecked).length !== 0 && !this.isAllChecked();
   }

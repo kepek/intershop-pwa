@@ -20,6 +20,7 @@ import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfi
 import { InfoBoxComponent } from 'ish-shared/components/common/info-box/info-box.component';
 import { CamfilLineItemTableComponent } from 'ish-shared/components/line-item/camfil-line-item-table/camfil-line-item-table.component';
 
+import { CamfilDeliveryAddressComponent } from '../../../components/camfil-delivery-address/camfil-delivery-address.component';
 import { CamAccountFacade } from '../../../facades/cam-account.facade';
 
 import { CamfilAccountOrderComponent } from './camfil-account-order.component';
@@ -37,6 +38,7 @@ describe('Camfil Account Order Component', () => {
     await TestBed.configureTestingModule({
       declarations: [
         CamfilAccountOrderComponent,
+        CamfilDeliveryAddressComponent,
         CamfilSmallCtaModalComponent,
         MockComponent(AddressComponent),
         MockComponent(CamfilBasketCostSummaryComponent),
