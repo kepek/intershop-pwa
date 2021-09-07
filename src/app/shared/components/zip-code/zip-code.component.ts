@@ -15,6 +15,7 @@ export class ZipCodeComponent implements OnInit, OnDestroy {
   @Input() fieldName: string;
   @Input() fieldCity: string;
   @Input() classes?: string;
+  @Input() fixedLoader?: string;
   @Input() checkOnInitObj: any;
   @Input() form: FormGroup;
   @Input() errorValidator: any[];

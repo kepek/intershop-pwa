@@ -17,4 +17,4 @@
   [touched]="formField.touched"
 ></camfil-error>
 
-<camfil-loading *ngIf="zipCodesLoading$ | async"></camfil-loading>
+<camfil-loading *ngIf="zipCodesLoading$ | async" fixed="{{ fixedLoader }}"></camfil-loading>
