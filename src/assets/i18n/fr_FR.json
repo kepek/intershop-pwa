@@ -981,6 +981,7 @@
   "camfil.modal.addNewProduct.input.product_sku": "fr_Enter product SKU",
   "camfil.modal.addNewProduct.input.quantity": "fr_Select quantity",
   "camfil.modal.addNewProduct.title": "fr_Add product to CamCard",
+  "camfil.modal.addNewProduct.order_title": "fr_Add product to order",
   "camfil.modal.addNewSection.button.confirm": "fr_Save section",
   "camfil.modal.addNewSection.header": "fr_Add new CamCard Section",
   "camfil.modal.addNewSection.input.label": "fr_Enter section name",

@@ -981,6 +981,7 @@
   "camfil.modal.addNewProduct.input.product_sku": "Ange artikelnummer ",
   "camfil.modal.addNewProduct.input.quantity": "Välj antal",
   "camfil.modal.addNewProduct.title": "Lägg till produkt till CamCard",
+  "camfil.modal.addNewProduct.order_title": "sv_Add product to order",
   "camfil.modal.addNewSection.button.confirm": "Spara sektion",
   "camfil.modal.addNewSection.header": "Lägg till ny CamCard-sektion",
   "camfil.modal.addNewSection.input.label": "Lägg till namn",
