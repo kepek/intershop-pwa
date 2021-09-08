@@ -48,12 +48,12 @@
       <mat-form-field appearance="outline" class="col-sm-12 form__field">
         <mat-label>{{ 'camfil.modal.createCamcard.input.name' | translate }}</mat-label>
         <input formControlName="name" matInput maxlength="35" type="text" />
+        <camfil-error
+          [errorValidators]="validators.name"
+          [errors]="getField('name').errors"
+          [touched]="getField('name').touched || getField('name').dirty"
+        ></camfil-error>
       </mat-form-field>
-      <camfil-error
-        [errorValidators]="validators.name"
-        [errors]="getField('name').errors"
-        [touched]="getField('name').touched || getField('name').dirty"
-      ></camfil-error>
 
       <!--order mark-->
       <mat-form-field appearance="outline" class="col-sm-12 form__field">
@@ -103,12 +103,12 @@
           maxlength="250"
           rows="5"
         ></textarea>
+        <camfil-error
+          [errorValidators]="validators.address"
+          [errors]="getField('address').errors"
+          [touched]="getField('address').touched || getField('address').dirty"
+        ></camfil-error>
       </mat-form-field>
-      <camfil-error
-        [errorValidators]="validators.address"
-        [errors]="getField('address').errors"
-        [touched]="getField('address').touched || getField('address').dirty"
-      ></camfil-error>
 
       <!--zip code-->
       <div class="col-sm-12 col-md-5 form__field form__field--neighbour">
@@ -129,12 +129,12 @@
         <mat-form-field appearance="outline" class="form__field--area">
           <mat-label>{{ 'camfil.modal.createCamcard.input.area' | translate }}</mat-label>
           <input formControlName="area" matInput type="text" />
+          <camfil-error
+            [errorValidators]="validators.area"
+            [errors]="getField('area').errors"
+            [touched]="getField('area').touched || getField('area').dirty"
+          ></camfil-error>
         </mat-form-field>
-        <camfil-error
-          [errorValidators]="validators.area"
-          [errors]="getField('area').errors"
-          [touched]="getField('area').touched || getField('area').dirty"
-        ></camfil-error>
       </div>
 
       <!--
@@ -163,12 +163,12 @@
       <mat-form-field *ngIf="showNewSegment" appearance="outline" class="col-sm-12 form__field sublevel-input">
         <mat-label>{{ 'camfil.modal.createCamcard.input.new_subcamcard' | translate }}</mat-label>
         <input autofocus cdkFocusInitial formControlName="newCamCard" matInput type="text" />
+        <camfil-error
+          [errorValidators]="validators.newCamCard"
+          [errors]="getField('newCamCard').errors"
+          [touched]="getField('newCamCard').touched || getField('newCamCard').dirty"
+        ></camfil-error>
       </mat-form-field>
-      <camfil-error
-        [errorValidators]="validators.newCamCard"
-        [errors]="getField('newCamCard').errors"
-        [touched]="getField('newCamCard').touched || getField('newCamCard').dirty"
-      ></camfil-error>
     </form>
     <div *ngIf="!showNewSegment" class="sublevel-placeholder"></div>
   </div>

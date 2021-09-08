@@ -1,42 +1,42 @@
-<button class="close" (click)="dialogRef.close()" aria-label="Close">
-  <mat-icon svgIcon="inactive" aria-hidden="true"></mat-icon>
+<button (click)="dialogRef.close()" aria-label="Close" class="close">
+  <mat-icon aria-hidden="true" svgIcon="inactive"></mat-icon>
 </button>
 <div class="text-center">
-  <mat-icon svgIcon="contact" class="contact-icon"></mat-icon>
+  <mat-icon class="contact-icon" svgIcon="contact"></mat-icon>
 </div>
 <p class="text-center">
   <strong>{{ 'camfil.checkout.cta.add_email_recipients_for' | translate }}</strong>
 </p>
 
-<form [formGroup]="recipientsForm" (ngSubmit)="submitAddEmailRecipientForm($event)">
+<form (ngSubmit)="submitAddEmailRecipientForm($event)" [formGroup]="recipientsForm">
   <mat-form-field appearance="fill" class="d-block">
     <mat-label>{{ 'camfil.checkout.cta.enter_email_address' | translate }}</mat-label>
     <input
+      aria-controls="my-helper-id"
+      formControlName="emailRecipients"
+      label="Enter email address"
       matInput
       type="text"
-      label="Enter email address"
-      formControlName="emailRecipients"
-      aria-controls="my-helper-id"
     />
+    <camfil-error
+      [errorValidators]="validators.emailRecipients"
+      [errors]="getField('emailRecipients').errors"
+      [touched]="getField('emailRecipients').touched || getField('emailRecipients').dirty"
+    ></camfil-error>
   </mat-form-field>
-  <camfil-error
-    [errors]="getField('emailRecipients').errors"
-    [errorValidators]="validators.emailRecipients"
-    [touched]="getField('emailRecipients').touched || getField('emailRecipients').dirty"
-  ></camfil-error>
   <p>{{ 'camfil.checkout.cta.separate_multiple_addresses' | translate }}</p>
   <div class="col-12 text-right p-0 mt-2">
-    <button mat-flat-button class="btn-tool text-primary" type="button" (click)="dialogRef.close()">
+    <button (click)="dialogRef.close()" class="btn-tool text-primary" mat-flat-button type="button">
       {{ 'camfil.account.cam_card.move.dialog.btn.cancel' | translate }}
     </button>
     <button
-      mat-flat-button
-      class="btn-tool text-primary"
-      type="submit"
-      attr.aria-label="{{ 'camfil.account.cam_card.move.dialog.btn.aria' | translate }}"
-      type="submit"
-      data-testing-id="cam-card-dialog-move-submit"
       (click)="submitAddEmailRecipientForm($event)"
+      attr.aria-label="{{ 'camfil.account.cam_card.move.dialog.btn.aria' | translate }}"
+      class="btn-tool text-primary"
+      data-testing-id="cam-card-dialog-move-submit"
+      mat-flat-button
+      type="submit"
+      type="submit"
     >
       {{ 'camfil.checkout.cta.recipients_save' | translate }}
     </button>

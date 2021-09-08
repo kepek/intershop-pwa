@@ -1,27 +1,26 @@
 <camfil-error-message [error]="error"></camfil-error-message>
 
-<form [formGroup]="form" class="form-horizontal" (ngSubmit)="submitForm()">
+<form (ngSubmit)="submitForm()" [formGroup]="form" class="form-horizontal">
   <mat-form-field appearance="fill" class="form-field">
     <mat-label>{{ 'camfil.account.forgotdata.email.label' | translate }}</mat-label>
-    <input matInput required formControlName="email" type="email" />
+    <input formControlName="email" matInput required type="email" />
+    <camfil-error
+      [errorValidators]="emailValidator"
+      [errors]="form.controls.email.errors"
+      [touched]="form.controls.email.touched"
+    >
+    </camfil-error>
   </mat-form-field>
 
-  <camfil-error
-    [errors]="form.controls.email.errors"
-    [errorValidators]="emailValidator"
-    [touched]="form.controls.email.touched"
-  >
-  </camfil-error>
-
-  <camfil-lazy-captcha topic="forgotUsername" [form]="form"></camfil-lazy-captcha>
+  <camfil-lazy-captcha [form]="form" topic="forgotUsername"></camfil-lazy-captcha>
 
   <button
-    mat-raised-button
-    type="submit"
-    color="primary"
+    [disabled]="formDisabled"
     attr.aria-label="{{ 'camfil.account.update_username.button.aria' | translate }}"
     class="form-button"
-    [disabled]="formDisabled"
+    color="primary"
+    mat-raised-button
+    type="submit"
   >
     {{ 'camfil.forgot_username.form.send.button.label' | translate }}
   </button>

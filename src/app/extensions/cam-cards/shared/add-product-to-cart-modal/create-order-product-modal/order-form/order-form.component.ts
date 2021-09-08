@@ -36,6 +36,10 @@ export class OrderFormComponent implements OnInit, OnDestroy {
 
   constructor(private fb: FormBuilder, private camCardsFacade: CamCardsFacade) {}
 
+  get customerId() {
+    return this.addressForm?.get('customer')?.value || '';
+  }
+
   ngOnInit() {
     this.addresses$ = this.camCardsFacade.addresses$;
     this.customers$ = this.camCardsFacade.customers$;
@@ -44,13 +48,13 @@ export class OrderFormComponent implements OnInit, OnDestroy {
     });
 
     this.addressForm = this.fb.group({
-      customer: [this.orderToEdit?.customerId || this.setDefaultCustomer(this.customersArr), [Validators.required]],
+      customer: [this.orderToEdit?.customerId || this.setDefaultCustomer(this.customersArr)],
       contact: [this.orderToEdit?.contactPerson?.erpId || '', Validators.required],
       invoiceLabel: [this.orderToEdit?.invoiceLabel || ''],
       phoneNumber: [this.orderToEdit?.phoneNumber || '', Validators.pattern('[0-9+-/]*')],
       orderMark: [this.orderToEdit?.orderMark || '', [Validators.maxLength(60)]],
       deliveryAddressSelect: [this.orderToEdit?.deliveryAddressId || '', []],
-      company: [this.orderToEdit?.company || '', [Validators.required]],
+      company: [this.orderToEdit?.company || ''],
       address: [this.orderToEdit?.address || ''],
       zipCode: [this.orderToEdit?.zipCode || '', [Validators.required, Validators.pattern('[0-9]{5}')]],
       area: [{ value: this.orderToEdit?.area || '', disabled: true }, [Validators.required]],
@@ -154,9 +158,5 @@ export class OrderFormComponent implements OnInit, OnDestroy {
   setDefaultFullCustomer(customerId: string) {
     const selectedCustomer = this.customersArr?.find(customer => customer.id === customerId);
     this.addressForm?.patchValue({ customerFull: selectedCustomer });
-  }
-
-  get customerId() {
-    return this.addressForm?.get('customer')?.value || '';
   }
 }

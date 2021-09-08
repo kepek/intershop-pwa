@@ -56,33 +56,25 @@ export class CreateProductCamCardModalComponent implements OnInit, OnDestroy {
 
   @ViewChild('name') nameInput: ElementRef;
   @ViewChild('newSubCamCard') newSubCamCardInput: ElementRef;
-
-  private destroy$ = new Subject();
-
   modal: NgbModalRef;
-
   camCardForm: FormGroup;
   quantityForm: FormGroup;
-
   validators = CREATE_CAMCARD_VALIDATORS;
-
   addresses$: Observable<CamCardCustomersAddresses>;
   customers$: Observable<CamCardCustomer[]>;
   countries$: Observable<Country[]>;
   customers: CamCardCustomer[];
-
   defaultCountryCode: string;
   showNewSegment = false;
-
   countryChangeDetect$: Subject<boolean> = new Subject();
-
   @Output() createAndEditEmitter = new EventEmitter<CreateProductCamCardAndEmitter>();
   @Output() createAndContinueEmitter = new EventEmitter<CreateProductCamCardAndEmitter>();
-
   @ViewChild('modal', { static: false }) modalTemplate: TemplateRef<unknown>;
   validateFilterArea = ProductHelper.validateFilterArea;
   setMaxLengthValidation = ProductHelper.setMaxLengthValidation;
   disableActionButton = ProductHelper.disableActionButton;
+  private destroy$ = new Subject();
+
   constructor(
     private fb: FormBuilder,
     private camCardsFacade: CamCardsFacade,
@@ -90,6 +82,19 @@ export class CreateProductCamCardModalComponent implements OnInit, OnDestroy {
     private accountFacade: AccountFacade,
     private cdr: ChangeDetectorRef
   ) {}
+
+  /**
+   * Callback function to hide modal dialog (used with ishServerHtml). - is needed for closing the dialog after the user clicks a message link
+   */
+  get callbackHideDialogModal() {
+    return () => {
+      this.hide();
+    };
+  }
+
+  get customerId() {
+    return this.camCardForm?.get('customerSelect')?.value || '';
+  }
 
   initObservables() {
     this.countries$ = this.appFacade.countries$();
@@ -110,7 +115,7 @@ export class CreateProductCamCardModalComponent implements OnInit, OnDestroy {
       orderMark: [''],
       invoiceMark: [''],
       deliveryAddressSelect: ['', []],
-      company: ['', [Validators.required]],
+      company: [''],
       address: [''],
       zipCode: ['', [Validators.required, Validators.pattern('[0-9]{5}')]],
       area: [{ value: '', disabled: true }, [Validators.required]],
@@ -294,21 +299,8 @@ export class CreateProductCamCardModalComponent implements OnInit, OnDestroy {
     return this.modalTemplate;
   }
 
-  /**
-   * Callback function to hide modal dialog (used with ishServerHtml). - is needed for closing the dialog after the user clicks a message link
-   */
-  get callbackHideDialogModal() {
-    return () => {
-      this.hide();
-    };
-  }
-
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
-  }
-
-  get customerId() {
-    return this.camCardForm?.get('customerSelect')?.value || '';
   }
 }
