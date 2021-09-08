@@ -5,8 +5,14 @@
       <button (click)="hide()" aria-label="Close" class="close">
         <mat-icon aria-hidden="true" svgIcon="inactive"></mat-icon>
       </button>
-      <mat-icon svgIcon="add-camcard"></mat-icon>
-      <h2 class="add-new-product__header">{{ 'camfil.modal.addNewProduct.title' | translate }}</h2>
+      <ng-container *ngIf="!addToOrder">
+        <mat-icon svgIcon="add-camcard"></mat-icon>
+        <h2 class="add-new-product__header">{{ 'camfil.modal.addNewProduct.title' | translate }}</h2>
+      </ng-container>
+      <ng-container *ngIf="addToOrder">
+        <mat-icon *ngIf="addToOrder" svgIcon="cart"></mat-icon>
+        <h2 class="add-new-product__header">{{ 'camfil.modal.addNewProduct.order_title' | translate }}</h2>
+      </ng-container>
       <form [formGroup]="productForm">
         <div>
           <mat-form-field appearance="fill" class="add-new-product__field">

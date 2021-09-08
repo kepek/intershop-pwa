@@ -981,6 +981,7 @@
   "camfil.modal.addNewProduct.input.product_sku": "Syötä tuotenumero",
   "camfil.modal.addNewProduct.input.quantity": "Valitse määrä",
   "camfil.modal.addNewProduct.title": "Lisää tuote Suodatinluetteloon",
+  "camfil.modal.addNewProduct.order_title": "Lisää tuote tilaukselle",
   "camfil.modal.addNewSection.button.confirm": "Tallenna osio",
   "camfil.modal.addNewSection.header": "Luo uusi Suodatinluettelo-osio",
   "camfil.modal.addNewSection.input.label": "Syötä osion nimi",
