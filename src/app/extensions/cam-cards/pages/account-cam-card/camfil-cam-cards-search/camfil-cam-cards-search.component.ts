@@ -8,6 +8,8 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
+import { Subject, combineLatest } from 'rxjs';
+import { debounceTime, distinctUntilChanged, skip, takeUntil } from 'rxjs/operators';
 
 import { CamCard, CamCardCustomer } from '../../../models/cam-card/cam-card.model';
 
@@ -20,15 +22,26 @@ import { CamCard, CamCardCustomer } from '../../../models/cam-card/cam-card.mode
 export class CamfilCamCardsSearchComponent implements OnInit, OnChanges {
   @Input() count: number;
   @Input() camCards: CamCard[];
-  @Output() queryChanged = new EventEmitter<string>();
+  @Output() queryChanged = new EventEmitter<{ query: string; customer?: CamCardCustomer }>();
 
-  searchInput: string;
-  selectInput: string;
   customers: CamCardCustomer[];
 
+  private destroy$ = new Subject();
+  private searchInput$ = new Subject<string>();
+  private selectInput$ = new Subject<CamCardCustomer>();
+
   ngOnInit() {
-    this.searchInput = '';
-    this.selectInput = '';
+    combineLatest([this.searchInput$.pipe(distinctUntilChanged()), this.selectInput$.pipe(distinctUntilChanged())])
+      .pipe(debounceTime(500), skip(1), takeUntil(this.destroy$))
+      .subscribe(([query, customer]) => {
+        this.queryChanged.emit({
+          query,
+          customer,
+        });
+      });
+
+    this.searchInput$.next(undefined);
+    this.selectInput$.next(undefined);
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -43,7 +56,11 @@ export class CamfilCamCardsSearchComponent implements OnInit, OnChanges {
     }
   }
 
-  submit(value) {
-    this.queryChanged.emit(value);
+  searchInputChanged({ value }) {
+    this.searchInput$.next(value);
+  }
+
+  selectInputChanged({ value }) {
+    this.selectInput$.next(value);
   }
 }
