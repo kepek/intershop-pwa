@@ -66,12 +66,12 @@
             name="boxLabel"
             type="text"
           ></textarea>
+          <camfil-error
+            [errorValidators]="attrsValidator.boxLabel"
+            [errors]="getField('boxLabel', boxLabelForm).errors"
+            [touched]="getField('boxLabel', boxLabelForm).touched || getField('boxLabel', boxLabelForm).dirty"
+          ></camfil-error>
         </mat-form-field>
-        <camfil-error
-          [errorValidators]="attrsValidator.boxLabel"
-          [errors]="getField('boxLabel', boxLabelForm).errors"
-          [touched]="getField('boxLabel', boxLabelForm).touched || getField('boxLabel', boxLabelForm).dirty"
-        ></camfil-error>
       </form>
     </div>
     <ng-container *ngIf="!product.failed; else productNotAvailable">

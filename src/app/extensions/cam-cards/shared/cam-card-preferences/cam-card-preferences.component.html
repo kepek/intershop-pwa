@@ -21,13 +21,13 @@
                 markRequiredLabel="off"
                 matInput
               />
+              <camfil-error
+                [errorValidators]="errorValidator"
+                [errors]="camCardForm.controls.title.errors"
+                [touched]="camCardForm.controls.title.touched"
+              >
+              </camfil-error>
             </mat-form-field>
-            <camfil-error
-              [errorValidators]="errorValidator"
-              [errors]="camCardForm.controls.title.errors"
-              [touched]="camCardForm.controls.title.touched"
-            >
-            </camfil-error>
             <mat-form-field appearance="fill">
               <mat-label>{{ 'camfil.account.cam_card.add_to_form.customer_name' | translate }}</mat-label>
               <mat-select
@@ -40,13 +40,13 @@
                   {{ customer.companyName }}
                 </mat-option>
               </mat-select>
+              <camfil-error
+                [errorValidators]="errorValidator"
+                [errors]="camCardForm.controls.customerName.errors"
+                [touched]="camCardForm.controls.customerName.touched"
+              >
+              </camfil-error>
             </mat-form-field>
-            <camfil-error
-              [errorValidators]="errorValidator"
-              [errors]="camCardForm.controls.customerName.errors"
-              [touched]="camCardForm.controls.customerName.touched"
-            >
-            </camfil-error>
             <mat-form-field appearance="fill" class="form-field">
               <mat-label>{{ 'camfil.account.cam_card.add_to_form.order_mark' | translate }}</mat-label>
               <input
@@ -71,13 +71,13 @@
                 markRequiredLabel="off"
                 matInput
               />
+              <camfil-error
+                [errorValidators]="setMaxLengthErrorForTableValidator(errorValidator, 60)"
+                [errors]="camCardForm.controls.invoiceMark.errors"
+                [touched]="camCardForm.controls.invoiceMark.touched"
+              >
+              </camfil-error>
             </mat-form-field>
-            <camfil-error
-              [errorValidators]="setMaxLengthErrorForTableValidator(errorValidator, 60)"
-              [errors]="camCardForm.controls.invoiceMark.errors"
-              [touched]="camCardForm.controls.invoiceMark.touched"
-            >
-            </camfil-error>
           </div>
           <div class="col-md-4">
             <h3>{{ 'camfil.account.cam_card.add_to_form.delivery_address' | translate }}</h3>
@@ -106,13 +106,13 @@
                 markRequiredLabel="off"
                 matInput
               />
+              <camfil-error
+                [errorValidators]="setMaxLengthErrorForTableValidator(errorValidator, 60)"
+                [errors]="camCardForm.controls.companyName1.errors"
+                [touched]="camCardForm.controls.companyName1.touched"
+              >
+              </camfil-error>
             </mat-form-field>
-            <camfil-error
-              [errorValidators]="setMaxLengthErrorForTableValidator(errorValidator, 60)"
-              [errors]="camCardForm.controls.companyName1.errors"
-              [touched]="camCardForm.controls.companyName1.touched"
-            >
-            </camfil-error>
             <mat-form-field appearance="fill" class="form-field">
               <mat-label>{{ 'camfil.account.cam_card.add_to_form.address' | translate }}</mat-label>
               <textarea
@@ -124,13 +124,13 @@
                 maxlength="250"
                 rows="5"
               ></textarea>
+              <camfil-error
+                [errorValidators]="errorValidator"
+                [errors]="camCardForm.controls.addressLine1.errors"
+                [touched]="camCardForm.controls.addressLine1.touched"
+              >
+              </camfil-error>
             </mat-form-field>
-            <camfil-error
-              [errorValidators]="errorValidator"
-              [errors]="camCardForm.controls.addressLine1.errors"
-              [touched]="camCardForm.controls.addressLine1.touched"
-            >
-            </camfil-error>
             <div class="row no-gutters">
               <div class="col-md-3">
                 <camfil-zip-code

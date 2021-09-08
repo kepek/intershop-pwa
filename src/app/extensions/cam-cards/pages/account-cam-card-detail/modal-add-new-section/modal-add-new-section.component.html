@@ -1,27 +1,26 @@
 <camfil-small-cta-modal
   #addNewSectionModal
-  actionTitle="{{ 'camfil.modal.addNewSection.header' | translate }}"
-  actionButtonTitle="{{ 'camfil.modal.addNewSection.button.confirm' | translate }}"
+  (actionClicked)="submitForm()"
   [actionTemplate]="actionTemplate"
   [showCloseIcon]="true"
-  (actionClicked)="submitForm()"
+  actionButtonTitle="{{ 'camfil.modal.addNewSection.button.confirm' | translate }}"
+  actionTitle="{{ 'camfil.modal.addNewSection.header' | translate }}"
 >
 </camfil-small-cta-modal>
 
 <ng-template #actionTemplate>
   <div class="add-new-section">
-    <form [formGroup]="newSegmentForm" (ngSubmit)="submitForm()">
+    <form (ngSubmit)="submitForm()" [formGroup]="newSegmentForm">
       <mat-form-field appearance="fill" class="add-new-section__field">
         <mat-label>{{ 'camfil.modal.addNewSection.input.label' | translate }}</mat-label>
-        <input matInput formControlName="newCamCard" />
+        <input formControlName="newCamCard" matInput />
+        <camfil-error
+          [errorValidators]="newSegmentValidator"
+          [errors]="newSegmentForm.controls.newCamCard.errors"
+          [touched]="newSegmentForm.controls.newCamCard.touched"
+        >
+        </camfil-error>
       </mat-form-field>
-
-      <camfil-error
-        [errors]="newSegmentForm.controls.newCamCard.errors"
-        [errorValidators]="newSegmentValidator"
-        [touched]="newSegmentForm.controls.newCamCard.touched"
-      >
-      </camfil-error>
     </form>
   </div>
 </ng-template>

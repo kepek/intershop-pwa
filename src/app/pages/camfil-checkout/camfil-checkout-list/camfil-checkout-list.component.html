@@ -36,7 +36,7 @@
       {{ 'camfil.checkout.order' | translate }} {{ !!buckets?.length ? index + ' / ' + buckets?.length : '' }}</strong
     >
     <span class="order-number" data-id-id="order-number"
-    >{{ order?.customer?.customerNo }}, {{ order?.customer?.companyName }}</span
+      >{{ order?.customer?.customerNo }}, {{ order?.customer?.companyName }}</span
     >
   </div>
 </ng-template>
@@ -80,13 +80,11 @@
                 </ng-container>
               </dd>
             </ng-container>
-            <ng-template #fullDeliveryDate
-            >
+            <ng-template #fullDeliveryDate>
               <dd class="col-6 p-0" data-testing-id="order-customer_id">
                 {{ order?.deliveryDate || '-' | ishDate }}
               </dd>
-            </ng-template
-            >
+            </ng-template>
           </ng-container>
         </dl>
         <ng-container *ngIf="emailRecipients?.length">
@@ -106,7 +104,7 @@
                       class="notranslate material-icons color-light"
                       data-mat-icon-type="font"
                       role="img"
-                    >close
+                      >close
                     </mat-icon>
                   </span>
                 </button>
@@ -132,12 +130,12 @@
                 label="camfil.checkout.form.order_mark"
                 matInput
               />
+              <camfil-error
+                [errorValidators]="validators.orderMark"
+                [errors]="getField('orderMark').errors"
+                [touched]="getField('orderMark').touched || getField('orderMark').dirty"
+              ></camfil-error>
             </mat-form-field>
-            <camfil-error
-              [errorValidators]="validators.orderMark"
-              [errors]="getField('orderMark').errors"
-              [touched]="getField('orderMark').touched || getField('orderMark').dirty"
-            ></camfil-error>
           </div>
 
           <div class="mat-form-field__wrapper">
@@ -151,12 +149,12 @@
                 label="camfil.checkout.form.invoice_mark"
                 matInput
               />
+              <camfil-error
+                [errorValidators]="validators.invoiceLabel"
+                [errors]="getField('invoiceLabel').errors"
+                [touched]="getField('invoiceLabel').touched || getField('invoiceLabel').dirty"
+              ></camfil-error>
             </mat-form-field>
-            <camfil-error
-              [errorValidators]="validators.invoiceLabel"
-              [errors]="getField('invoiceLabel').errors"
-              [touched]="getField('invoiceLabel').touched || getField('invoiceLabel').dirty"
-            ></camfil-error>
           </div>
 
           <div class="mat-form-field__wrapper">
@@ -216,8 +214,7 @@
               </button>
             </li>
             <li>
-              <a (click)="openEditModal(editModal)"
-              >
+              <a (click)="openEditModal(editModal)">
                 <mat-icon class="edit-icon" svgIcon="edit"></mat-icon>
                 {{ 'camfil.checkout.cta.edit_details' | translate }}</a
               >
@@ -237,12 +234,12 @@
               label="camfil.checkout.form.note"
               matInput
             ></textarea>
+            <camfil-error
+              [errorValidators]="validators.info"
+              [errors]="getField('info').errors"
+              [touched]="getField('info').touched || getField('info').dirty"
+            ></camfil-error>
           </mat-form-field>
-          <camfil-error
-            [errorValidators]="validators.info"
-            [errors]="getField('info').errors"
-            [touched]="getField('info').touched || getField('info').dirty"
-          ></camfil-error>
         </div>
       </div>
     </div>
@@ -296,7 +293,7 @@
         <hr class="m-1" />
         <b *ngIf="freeDelivery.value > 0">{{
           'camfil.checkout.free_delivery.threshold' | translate: { '0': (freeDelivery | ishPrice) }
-          }}</b>
+        }}</b>
         <b *ngIf="!(freeDelivery.value > 0)">{{ 'camfil.checkout.free_delivery' | translate }}</b>
       </div>
     </div>

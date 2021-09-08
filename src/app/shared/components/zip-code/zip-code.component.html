@@ -1,20 +1,19 @@
-<mat-form-field appearance="{{ appearance }}" [formGroup]="form" class="w-100 {{ classes }}">
+<mat-form-field [formGroup]="form" appearance="{{ appearance }}" class="w-100 {{ classes }}">
   <mat-label>{{ 'camfil.account.cam_card.add_to_form.postal_code' | translate }}</mat-label>
   <input
-    matInput
+    (change)="checkZipCode()"
+    data-testing-id="cam-card-dialog-name"
     formControlName="{{ fieldName }}"
     label="camfil.account.cam_card.add_to_form.postal_code"
     markRequiredLabel="off"
+    matInput
     maxlength="35"
-    data-testing-id="cam-card-dialog-name"
-    (change)="checkZipCode()"
   />
+  <camfil-error
+    [errorValidators]="errorValidator"
+    [errors]="formField.errors"
+    [touched]="formField.touched"
+  ></camfil-error>
 </mat-form-field>
-
-<camfil-error
-  [errors]="formField.errors"
-  [errorValidators]="errorValidator"
-  [touched]="formField.touched"
-></camfil-error>
 
 <camfil-loading *ngIf="zipCodesLoading$ | async" fixed="{{ fixedLoader }}"></camfil-loading>

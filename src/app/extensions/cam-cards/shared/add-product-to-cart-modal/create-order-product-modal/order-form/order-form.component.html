@@ -14,12 +14,12 @@
           <ng-container *ngIf="customer?.department">, {{ customer.department }} </ng-container>
         </mat-option>
       </mat-select>
+      <camfil-error
+        [errorValidators]="validators.customer"
+        [errors]="getField('customer').errors"
+        [touched]="getField('customer').touched || getField('customer').dirty"
+      ></camfil-error>
     </mat-form-field>
-    <camfil-error
-      [errorValidators]="validators.customer"
-      [errors]="getField('customer').errors"
-      [touched]="getField('customer').touched || getField('customer').dirty"
-    ></camfil-error>
 
     <!--contacts select-->
     <mat-form-field appearance="outline" class="delivery-address__form--field">
@@ -32,12 +32,12 @@
           {{ contact.fullName }}
         </mat-option>
       </mat-select>
+      <camfil-error
+        [errorValidators]="validators.contact"
+        [errors]="getField('contact').errors"
+        [touched]="getField('contact').touched || getField('contact').dirty"
+      ></camfil-error>
     </mat-form-field>
-    <camfil-error
-      [errorValidators]="validators.contact"
-      [errors]="getField('contact').errors"
-      [touched]="getField('contact').touched || getField('contact').dirty"
-    ></camfil-error>
 
     <!--order mark-->
     <mat-form-field appearance="outline" class="delivery-address__form--field">
@@ -55,12 +55,12 @@
     <mat-form-field appearance="outline" class="delivery-address__form--field">
       <mat-label>{{ 'camfil.modal.createOrder.order-form.input.phone_number' | translate }}</mat-label>
       <input formControlName="phoneNumber" matInput type="tel" />
+      <camfil-error
+        [errorValidators]="validators.phoneNumber"
+        [errors]="getField('phoneNumber').errors"
+        [touched]="getField('phoneNumber').touched || getField('phoneNumber').dirty"
+      ></camfil-error>
     </mat-form-field>
-    <camfil-error
-      [errorValidators]="validators.phoneNumber"
-      [errors]="getField('phoneNumber').errors"
-      [touched]="getField('phoneNumber').touched || getField('phoneNumber').dirty"
-    ></camfil-error>
 
     <!--address select-->
     <mat-form-field appearance="outline" class="delivery-address__form--field">
@@ -98,12 +98,12 @@
         maxlength="250"
         rows="5"
       ></textarea>
+      <camfil-error
+        [errorValidators]="validators.address"
+        [errors]="getField('address').errors"
+        [touched]="getField('address').touched || getField('address').dirty"
+      ></camfil-error>
     </mat-form-field>
-    <camfil-error
-      [errorValidators]="validators.address"
-      [errors]="getField('address').errors"
-      [touched]="getField('address').touched || getField('address').dirty"
-    ></camfil-error>
 
     <div class="delivery-address__form--field-wrapper">
       <!--zip code-->
@@ -126,23 +126,23 @@
         <mat-form-field appearance="outline" class="delivery-address__form--field delivery-address__form--field-small">
           <mat-label>{{ 'camfil.modal.createOrder.order-form.input.area' | translate }}</mat-label>
           <input formControlName="area" matInput type="text" />
+          <camfil-error
+            [errorValidators]="validators.area"
+            [errors]="getField('area').errors"
+            [touched]="getField('area').touched || getField('area').dirty"
+          ></camfil-error>
         </mat-form-field>
-        <camfil-error
-          [errorValidators]="validators.area"
-          [errors]="getField('area').errors"
-          [touched]="getField('area').touched || getField('area').dirty"
-        ></camfil-error>
       </div>
     </div>
 
     <mat-form-field appearance="outline" class="delivery-address__form--field">
       <mat-label>{{ 'camfil.modal.createOrder.order-form.info' | translate }}</mat-label>
       <textarea formControlName="info" matInput></textarea>
+      <camfil-error
+        [errorValidators]="validators.info"
+        [errors]="getField('info').errors"
+        [touched]="getField('info').touched || getField('info').dirty"
+      ></camfil-error>
     </mat-form-field>
-    <camfil-error
-      [errorValidators]="validators.info"
-      [errors]="getField('info').errors"
-      [touched]="getField('info').touched || getField('info').dirty"
-    ></camfil-error>
   </form>
 </div>
