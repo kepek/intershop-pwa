@@ -29,7 +29,7 @@ export class PdfHelper {
     return {
       table: {
         body,
-        widths: [10, '*', '23%'],
+        widths: [15, '*', '23%'],
       },
       style: 'row',
       layout: {
