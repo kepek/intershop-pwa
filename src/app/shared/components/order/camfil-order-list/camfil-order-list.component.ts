@@ -16,7 +16,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { map, takeUntil } from 'rxjs/operators';
+import { debounceTime, map, takeUntil } from 'rxjs/operators';
 import { CamAccountFacade } from 'src/app/extensions/cam-account/facades/cam-account.facade';
 import { Order } from 'src/app/extensions/cam-account/models/order/order.model';
 
@@ -78,9 +78,9 @@ export class CamfilOrderListComponent implements OnInit, AfterViewInit, OnDestro
     'orderStatus',
     'orderChannel',
   ];
-  private destroy$ = new Subject();
   isMobileView = false;
   getOrderStatusText = OrderHelper.getOrderStatusText;
+  private destroy$ = new Subject();
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -117,6 +117,7 @@ export class CamfilOrderListComponent implements OnInit, AfterViewInit, OnDestro
       .subscribe(filter => {
         this.filteredValues = JSON.parse(filter);
       });
+
     this.applyFilters();
 
     // remove time zone shift
@@ -160,8 +161,8 @@ export class CamfilOrderListComponent implements OnInit, AfterViewInit, OnDestro
 
     // set and subscribe to search input changes
     this.searchInputFilter.setValue(this.filteredValues.search);
-    this.searchInputFilter.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(filterValue => {
-      this.filteredValues.search = filterValue;
+    this.searchInputFilter.valueChanges.pipe(debounceTime(500), takeUntil(this.destroy$)).subscribe(filterValue => {
+      this.filteredValues.search = filterValue === '' ? undefined : filterValue;
       this.applyFilters();
     });
 
@@ -196,6 +197,18 @@ export class CamfilOrderListComponent implements OnInit, AfterViewInit, OnDestro
       dateTo.setTime(dateTo.getTime() - dateTo.getTimezoneOffset() * 60 * 1000);
       this.filteredValues.dateTo = dateTo.toISOString();
       this.applyFilters();
+    });
+
+    // @ts-ignore
+    this.dataSource?._filter.subscribe((filter: string) => {
+      this.router
+        .navigate([], {
+          queryParams: { filter },
+          queryParamsHandling: 'merge',
+        })
+        .then(() => {
+          this.searchInput?.nativeElement?.focus();
+        });
     });
   }
 
@@ -317,7 +330,6 @@ export class CamfilOrderListComponent implements OnInit, AfterViewInit, OnDestro
   applyFilters() {
     const filter = JSON.stringify(this.filteredValues);
     this.dataSource.filter = filter.trim();
-    this.router.navigate([], { queryParams: { filter } });
   }
 
   countRows() {
