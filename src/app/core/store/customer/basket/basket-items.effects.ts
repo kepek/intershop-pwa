@@ -336,7 +336,7 @@ export class BasketItemsEffects {
       mapToPayloadProperty('itemId'),
       concatMap(itemId =>
         this.basketService.deleteBasketItem(itemId).pipe(
-          map(info => deleteBasketItemSuccess({ info })),
+          map(info => deleteBasketItemSuccess({ info, id: itemId })),
           mapErrorToAction(deleteBasketItemFail)
         )
       )
@@ -382,7 +382,7 @@ export class BasketItemsEffects {
    */
   loadBasketAfterBasketItemsChangeSuccess$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(addItemsToBasketSuccess, updateBasketItemsSuccess, deleteBasketItemSuccess),
+      ofType(addItemsToBasketSuccess, updateBasketItemsSuccess),
       mapToPayloadProperty('info'),
       tap(info => (info && info.length && info[0].message ? this.router.navigate(['/checkout']) : undefined)),
       mapTo(loadBasket())
