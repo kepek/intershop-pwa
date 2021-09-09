@@ -19,10 +19,6 @@
           <mat-label>{{ 'camfil.modal.addToCamcard.height.label' | translate }}</mat-label>
           <input (keyup)="validateVal()" formControlName="measurementHeight" matInput type="number" />
         </mat-form-field>
-        <mat-form-field [formGroup]="quantityForm" appearance="outline">
-          <mat-label>{{ 'camfil.modal.addToCamcard.diameter.label' | translate }}</mat-label>
-          <input (keyup)="validateVal()" formControlName="measurementDiameter" matInput type="number" />
-        </mat-form-field>
 
         <div class="w-100">
           <span innerHTML="{{ 'camfil.modal.addToCamcard.measurement.note.text' | translate }}"></span>
@@ -76,10 +72,6 @@
       <mat-form-field [formGroup]="quantityForm" appearance="outline">
         <mat-label>{{ 'camfil.modal.addToCamcard.height.label' | translate }}</mat-label>
         <input (keyup)="validateVal()" formControlName="measurementHeight" matInput type="number" />
-      </mat-form-field>
-      <mat-form-field [formGroup]="quantityForm" appearance="outline">
-        <mat-label>{{ 'camfil.modal.addToCamcard.diameter.label' | translate }}</mat-label>
-        <input (keyup)="validateVal()" formControlName="measurementDiameter" matInput type="number" />
       </mat-form-field>
 
       <div class="w-100">
