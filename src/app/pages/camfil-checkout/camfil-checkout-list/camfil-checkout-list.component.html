@@ -245,6 +245,31 @@
     </div>
   </mat-card>
 
+  <ng-template #bucketListItem let-i="i" let-item="item">
+    <div
+      [cdkDragData]="item"
+      [cdkDragDisabled]="isConfirmed"
+      cdkDrag
+      class="list-item-row list-item-row-big px-4 py-1 mt-2 line-item-container"
+    >
+      <div class="d-flex align-items-center">
+        <span class="d-flex align-items-center justify-content-center line-item-index">
+          {{ i + 1 }}
+        </span>
+        <mat-icon *ngIf="!isConfirmed" cdkDragHandle class="size-24 d-none d-md-block handle" svgIcon="move"></mat-icon>
+        <camfil-checkout-line-item
+          [basketId]="order?.basket"
+          [bucketId]="order?.id"
+          [index]="i + 1"
+          [isConfirmed]="isConfirmed"
+          [isPartialDelivery]="isPartialDelivery"
+          [lineItem]="item"
+          [orderDeliveryDate]="deliveryDate"
+        ></camfil-checkout-line-item>
+      </div>
+    </div>
+  </ng-template>
+
   <ng-container *ngIf="order">
     <!-- Line Items -->
     <div
@@ -253,36 +278,10 @@
       cdkDropList
       class="bucket_list-container"
     >
-      <cdk-virtual-scroll-viewport itemSize="100">
+      <cdk-virtual-scroll-viewport [itemSize]="itemSize">
         <!-- TODO: improve loop by using some pipe ex. ngx-pipe filterBy instead onlyVisibleItems -->
         <div *cdkVirtualFor="let item of onlyVisibleItems; index as i; trackBy: trackBy">
-          <div
-            [cdkDragData]="item"
-            [cdkDragDisabled]="isConfirmed"
-            cdkDrag
-            class="list-item-row list-item-row-big px-4 py-1 mt-2 line-item-container"
-          >
-            <div class="d-flex align-items-center">
-              <span class="d-flex align-items-center justify-content-center line-item-index">
-                {{ i + 1 }}
-              </span>
-              <mat-icon
-                *ngIf="!isConfirmed"
-                cdkDragHandle
-                class="size-24 d-none d-md-block handle"
-                svgIcon="move"
-              ></mat-icon>
-              <camfil-checkout-line-item
-                [basketId]="order?.basket"
-                [bucketId]="order?.id"
-                [index]="i + 1"
-                [isConfirmed]="isConfirmed"
-                [isPartialDelivery]="isPartialDelivery"
-                [lineItem]="item"
-                [orderDeliveryDate]="deliveryDate"
-              ></camfil-checkout-line-item>
-            </div>
-          </div>
+          <ng-container *ngTemplateOutlet="bucketListItem; context: { item: item, i: i }"></ng-container>
         </div>
       </cdk-virtual-scroll-viewport>
     </div>

@@ -48,11 +48,6 @@ import { AppFacade } from 'ish-core/facades/app.facade';
   styleUrls: ['./camfil-checkout-list.component.scss'],
 })
 export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDestroy, OnChanges {
-  private destroy$ = new Subject<void>();
-
-  private numberOfVisibleLineItems = 20;
-  private lineItemHeight = 91;
-
   @ViewChild(CamfilSmallCtaModalComponent) modal: CamfilSmallCtaModalComponent;
   @ViewChild(CdkVirtualScrollViewport, { static: false }) virtualScrollViewport: CdkVirtualScrollViewport;
 
@@ -61,7 +56,6 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
   @Input() basket: Basket;
   @Input() isConfirmed: boolean;
   @Input() index: number;
-
   isOrderOpen = true;
   orderForm: FormGroup;
   validators = ORDER_HEADER_VALIDATORS;
@@ -87,6 +81,10 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
   focusedElementId: string;
   forceUpdateForm = false;
   hideRecipientButton = false;
+  itemSize = 88;
+
+  private destroy$ = new Subject<void>();
+  private numberOfVisibleLineItems = 20;
 
   constructor(
     private fb: FormBuilder,
@@ -121,6 +119,31 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
 
   get onlyVisibleItems() {
     return this.order.lineItems.filter(el => !el.hiddenItem);
+  }
+
+  get freeDelivery() {
+    const total = this.totalPrice();
+    const threshold = this.deliveryTerm.threshold;
+    return { ...total, value: threshold - total.value };
+  }
+
+  get deliveryDaysForItemsAfterConfirmation() {
+    // Order delivery date
+    const numDeliveryDate = this.getDateAt24(new Date(this.deliveryDate)).getTime();
+    // Get Earliest delivery days for each item
+    const items = this.order && this.order.lineItems;
+
+    return (
+      items
+        ?.reduce((acc, li) => {
+          // Set delivery date for each item
+          const earliestDeliveryDate = this.getDateAt24(new Date(li.earliestDeliveryDate)).getTime();
+          const dateToPush = earliestDeliveryDate < numDeliveryDate ? numDeliveryDate : earliestDeliveryDate;
+
+          return dateToPush && !acc.includes(dateToPush) ? [...acc, dateToPush] : acc;
+        }, [])
+        .sort() || []
+    );
   }
 
   ngOnInit(): void {
@@ -191,6 +214,7 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
       this.orderAddress = this.shipToAddress;
       this.forceUpdateForm = false;
     }
+
     if (s.buckets && this.onlyVisibleItems.length !== this.order?.lineItems?.length) {
       this.handleHeightItemsContainer(this.onlyVisibleItems);
     }
@@ -210,11 +234,15 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
   }
 
   handleHeightItemsContainer(lineItems: LineItemView[]) {
-    const numberOfItems =
-      lineItems?.length >= this.numberOfVisibleLineItems ? this.numberOfVisibleLineItems : lineItems?.length + 1;
+    const isMoreThanLimit = lineItems?.length >= this.numberOfVisibleLineItems;
+    const numberOfItems = isMoreThanLimit ? this.numberOfVisibleLineItems : lineItems?.length;
+    const viewportElement = this.virtualScrollViewport?.elementRef?.nativeElement;
 
-    // @ts-ignore
-    this.virtualScrollViewport?.elementRef?.nativeElement?.style?.height = `${numberOfItems * this.lineItemHeight}px`;
+    if (viewportElement) {
+      // @ts-ignore
+      viewportElement.style.height = `${numberOfItems * this.itemSize}px`;
+      viewportElement.style.overflowY = isMoreThanLimit ? 'auto' : 'hidden';
+    }
   }
 
   filterDates(date) {
@@ -252,48 +280,47 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
     }
   }
 
+  // tslint:disable-next-line:force-jsdoc-comments
+
   setFocusedElement(target: HTMLDataElement) {
     this.checkoutFacade.setCheckoutFocusedElement(target.id);
   }
+
+  // tslint:disable-next-line:force-jsdoc-comments
 
   toggleOrder() {
     this.isOrderOpen = !this.isOrderOpen;
   }
 
   // tslint:disable-next-line:force-jsdoc-comments
+
   // TODO (extMlk): PERFORMANCE - it should be moved to applyPricing method instead of calling fn in template
   totalPrice(type = 'net'): Price {
     return PriceHelper.totalPrice(this.order?.lineItems, type);
   }
 
   // tslint:disable-next-line:force-jsdoc-comments
+
   // TODO (extMlk): PERFORMANCE - it should be moved to applyPricing method instead of calling fn in template
   totalTax(): Price {
     return PriceHelper.totalTax(this.order?.lineItems);
   }
 
   // tslint:disable-next-line:force-jsdoc-comments
+
   // TODO (extMlk): PERFORMANCE - it should be moved to applyPricing method instead of calling fn in template
   savedAmount(): Price {
     return PriceHelper.savedAmount(this.order?.lineItems);
   }
 
-  // tslint:disable-next-line:force-jsdoc-comments
   // TODO (extMlk): PERFORMANCE - it should be moved to applyPricing method instead of calling fn in template
   discount(): Price {
     return PriceHelper.discount(this.order?.lineItems);
   }
 
-  // tslint:disable-next-line:force-jsdoc-comments
   // TODO (extMlk) it should be moved to applyPricing method instead of calling fn in template
   getVolumeDiscountPrice(value, currency) {
     return PriceHelper.getVolumeDiscountPrice(value, currency, this.translate.currentLang);
-  }
-
-  get freeDelivery() {
-    const total = this.totalPrice();
-    const threshold = this.deliveryTerm.threshold;
-    return { ...total, value: threshold - total.value };
   }
 
   openAddToProductModal(modal: ModalAddNewProductComponent) {
@@ -547,25 +574,6 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
     };
 
     this.shoppingFacade.updateBucket(basket, deliveryAddressId, basketExtensionUpdate);
-  }
-
-  get deliveryDaysForItemsAfterConfirmation() {
-    // Order delivery date
-    const numDeliveryDate = this.getDateAt24(new Date(this.deliveryDate)).getTime();
-    // Get Earliest delivery days for each item
-    const items = this.order && this.order.lineItems;
-
-    return (
-      items
-        ?.reduce((acc, li) => {
-          // Set delivery date for each item
-          const earliestDeliveryDate = this.getDateAt24(new Date(li.earliestDeliveryDate)).getTime();
-          const dateToPush = earliestDeliveryDate < numDeliveryDate ? numDeliveryDate : earliestDeliveryDate;
-
-          return dateToPush && !acc.includes(dateToPush) ? [...acc, dateToPush] : acc;
-        }, [])
-        .sort() || []
-    );
   }
 
   trackBy(_, lineItem: LineItemView) {
