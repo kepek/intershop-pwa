@@ -44,7 +44,7 @@
 <ng-template #orderContent>
   <mat-card *ngIf="order" class="mb-2 box-shadow--dark mat-elevation-z clearfix">
     <div class="row">
-      <div class="order-summary-info col-sm-5 border-sm-right" data-testing-id="order-summary-info">
+      <div class="order-summary-info text-right col-sm-5 border-sm-right" data-testing-id="order-summary-info">
         <dl class="row dl-horizontal dl-separator">
           <dt class="col-6 p-0">{{ 'camfil.account.orderdetails.customer_id.label' | translate }}</dt>
           <dd class="col-6 p-0" data-testing-id="order-customer_id">{{ order?.customer?.customerNo }}</dd>
@@ -177,10 +177,10 @@
           </div>
         </form>
       </div>
-      <div *ngIf="isConfirmed" class="order-summary-info col-sm-6" data-testing-id="order-summary-info">
+      <div *ngIf="isConfirmed" class="order-summary-info text-left col-sm-6" data-testing-id="order-summary-info">
         <dl class="row dl-horizontal dl-separator mb-0">
           <dt class="col-6 p-0" data-testing-id="order-form-note">{{ 'camfil.checkout.form.note' | translate }}</dt>
-          <dd class="col-6 p-0 text-break text-right" data-testing-id="order-customer_id">{{ order?.info || '-' }}</dd>
+          <dd class="col-6 p-0 text-break" data-testing-id="order-customer_id">{{ order?.info || '-' }}</dd>
         </dl>
       </div>
       <div *ngIf="!isConfirmed" class="order-summary-info col-sm-4" data-testing-id="order-summary-info">
