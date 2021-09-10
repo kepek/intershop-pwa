@@ -1,28 +1,28 @@
-<div class="container" *ngIf="product$ | async as product; else spinner">
+<div *ngIf="product$ | async as product; else spinner" class="container">
   <div class="row">
     <div class="col-12 col-sm-2 p-0">
       <div *ngFor="let imageView of getImageViewIDs(product, 'images'); index as i">
         <camfil-product-image
-          [product]="product"
-          imageType="images"
           [imageView]="imageView"
+          [product]="product"
           class="product-image pb-3"
+          imageType="images"
         ></camfil-product-image>
         <!-- Todo: Replace with video URL coming from product attributes: -->
       </div>
       <ng-container *ngIf="secureVideoUrl">
         <iframe
           [src]="secureVideoUrl"
-          frameborder="0"
           allow="clipboard-write; encrypted-media;"
+          frameborder="0"
           scrolling="no"
           width="100%"
         ></iframe>
       </ng-container>
     </div>
     <div class="col-12 col-sm-10 pr-0">
-      <button class="close" (click)="closeDialog()" aria-label="Close">
-        <mat-icon svgIcon="inactive" aria-hidden="true"></mat-icon>
+      <button (click)="closeDialog()" aria-label="Close" class="close">
+        <mat-icon aria-hidden="true" svgIcon="inactive"></mat-icon>
       </button>
       <div class="product-details-title">
         <h1 class="mb-0">
@@ -38,12 +38,12 @@
         [showText]="true"
       ></camfil-product-inventory>
       <camfil-product-add-to-compare
+        (compareToggle)="toggleCompare(product.sku)"
         *ngIf="showAddToCompare"
         [isInCompareList]="isInCompareList"
-        (compareToggle)="toggleCompare(product.sku)"
         class="btn-link py-0 px-0"
       ></camfil-product-add-to-compare>
-      <p class="border-bottom pb-3 mb-3" [innerHTML]="product.longDescription"></p>
+      <p [innerHTML]="product.longDescription" class="border-bottom pb-3 mb-3"></p>
 
       <div class="row">
         <div class="col-7">
@@ -98,8 +98,8 @@
         <div class="col-5 pl-0">
           <strong>{{ 'camfil.product.details.guides.headline' | translate }}</strong>
           <camfil-product-technical-documents
-            [product]="product"
             [getImageCdnUrl]="getImageCdnUrl"
+            [product]="product"
           ></camfil-product-technical-documents>
         </div>
       </div>
@@ -130,32 +130,37 @@
               <camfil-product-quantity
                 *ngIf="!isRetailSet(product)"
                 [allowZeroQuantity]="true"
-                [product]="product"
-                [parentForm]="productDetailForm"
                 [controlName]="quantityControlName"
+                [parentForm]="productDetailForm"
+                [product]="product"
               ></camfil-product-quantity>
             </form>
           </div>
         </div>
         <div class="row flex-wrap buttons-container">
           <div class="col-lg-6 col-12 d-flex justify-content-center align-items-center">
-            <camfil-lazy-product-add-to-cam-card
-              class="btn-link cart-big-round-btn secondary-button"
-              [product]="product"
-              [quantity]="quantityCount"
-              displayType="round-btn"
-              [hasIcon]="true"
-            ></camfil-lazy-product-add-to-cam-card>
+            <!-- TODO: improve - add logic related with lazy component instead ngIf condition -->
+            <ng-container *ngIf="productDetailForm.invalid; else canAddToCC">
+              <camfil-lazy-product-add-to-cam-card
+                [hasIcon]="true"
+                [product]="product"
+                [quantity]="quantityCount"
+                class="btn-link cart-big-round-btn secondary-button"
+                displayType="round-btn"
+                [disabled]="true"
+              ></camfil-lazy-product-add-to-cam-card>
+            </ng-container>
           </div>
           <div class="col-lg-6 col-12 d-flex justify-content-center align-items-center">
             <camfil-product-add-to-basket
+              (productToBasket)="addToBasket(product.sku)"
+              [disabled]="productDetailForm.invalid"
               [product]="product"
+              [quantity]="quantityCount"
               [translationKey]="
                 isRetailSet(product) ? 'product.add_to_cart.retail_set.link' : 'product.add_to_cart.link'
               "
-              (productToBasket)="addToBasket(product.sku)"
               displayType="button"
-              [quantity]="quantityCount"
               hasIcon="true"
             ></camfil-product-add-to-basket>
           </div>
@@ -163,6 +168,16 @@
       </div>
     </div>
   </div>
+
+  <ng-template #canAddToCC>
+    <camfil-lazy-product-add-to-cam-card
+      [hasIcon]="true"
+      [product]="product"
+      [quantity]="quantityCount"
+      class="btn-link cart-big-round-btn secondary-button"
+      displayType="round-btn"
+    ></camfil-lazy-product-add-to-cam-card>
+  </ng-template>
 </div>
 
 <ng-template #spinner>

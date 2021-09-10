@@ -54,12 +54,12 @@
             controlName="quantity"
           ></camfil-product-quantity>
         </div>
-        <camfil-error
+        <!-- <camfil-error
           [errorValidators]="validators.quantity"
           [errors]="productForm?.controls?.quantity?.errors"
           [touched]="productForm?.controls?.quantity?.touched || productForm?.controls?.quantity?.dirty"
           class="add-new-product__field--camfil-error"
-        ></camfil-error>
+        ></camfil-error> -->
         <div class="add-new-product__buttons">
           <button (mousedown)="hide()" class="btn btn-link add-new-product__buttons--link">
             {{ 'camfil.modal.addNewProduct.button.cancel' | translate }}

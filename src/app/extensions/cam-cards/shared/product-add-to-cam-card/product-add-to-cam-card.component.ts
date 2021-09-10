@@ -38,10 +38,8 @@ export class ProductAddToCamCardComponent implements OnInit, OnDestroy {
   @Input() disabled = false;
   @Input() translationKey = 'camfil.account.cam_card.add_to_template.button.add_to_template.label';
   buttonTranslationKey = 'camfil.account.cam_card.add_to_template.button.add_to_template.label';
-
-  private destroy$ = new Subject();
-
   @ViewChild(CamfilSmallCtaModalComponent) errorModal: CamfilSmallCtaModalComponent;
+  private destroy$ = new Subject();
 
   constructor(
     private camCardsFacade: CamCardsFacade,
@@ -49,22 +47,6 @@ export class ProductAddToCamCardComponent implements OnInit, OnDestroy {
     private router: Router,
     public dialog: MatDialog
   ) {}
-
-  protected init() {
-    this.camCardsFacade.camCardsLoading$.pipe(whenFalsy(), take(1)).subscribe(() => {
-      this.camCardsFacade.camCard$
-        .pipe(first())
-        .subscribe(camCards => (!camCards?.length ? this.camCardsFacade.loadCamCards() : ''));
-    });
-
-    this.accountFacade.isLoggedIn$.pipe(takeUntil(this.destroy$)).subscribe(isLoggedIn => {
-      if (!isLoggedIn) {
-        this.buttonTranslationKey = 'camfil.product.add_to_camcard.not_logged.label';
-      } else {
-        this.buttonTranslationKey = this.translationKey;
-      }
-    });
-  }
 
   ngOnInit() {
     this.init();
@@ -76,7 +58,7 @@ export class ProductAddToCamCardComponent implements OnInit, OnDestroy {
   openModal(modal: AddProductToCamCardModalComponent) {
     this.accountFacade.isLoggedIn$.pipe(take(1), takeUntil(this.destroy$)).subscribe(isLoggedIn => {
       if (isLoggedIn) {
-        this.quantity ? this.openAddModal(modal) : this.openErrorModal();
+        this.quantity >= this.product?.minOrderQuantity ? this.openAddModal(modal) : this.openErrorModal();
       } else {
         // stay on the same page after login
         const queryParams = { returnUrl: this.router.routerState.snapshot.url, messageKey: 'cam_cards' };
@@ -109,5 +91,21 @@ export class ProductAddToCamCardComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  protected init() {
+    this.camCardsFacade.camCardsLoading$.pipe(whenFalsy(), take(1)).subscribe(() => {
+      this.camCardsFacade.camCard$
+        .pipe(first())
+        .subscribe(camCards => (!camCards?.length ? this.camCardsFacade.loadCamCards() : ''));
+    });
+
+    this.accountFacade.isLoggedIn$.pipe(takeUntil(this.destroy$)).subscribe(isLoggedIn => {
+      if (!isLoggedIn) {
+        this.buttonTranslationKey = 'camfil.product.add_to_camcard.not_logged.label';
+      } else {
+        this.buttonTranslationKey = this.translationKey;
+      }
+    });
   }
 }
