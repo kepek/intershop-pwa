@@ -213,7 +213,9 @@ export class ApiTokenService {
         if (apiToken.startsWith('AuthenticationTokenOutdated') || apiToken.startsWith('AuthenticationTokenInvalid')) {
           this.invalidateApiToken();
         } else if (!event.url.endsWith('/configurations')) {
-          this.setApiToken(apiToken);
+          this.store.pipe(select(getUserAuthorized), whenTruthy(), take(1)).subscribe(() => {
+            this.setApiToken(apiToken);
+          });
         }
       }
     }
