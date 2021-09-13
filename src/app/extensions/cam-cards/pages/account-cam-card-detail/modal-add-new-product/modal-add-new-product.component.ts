@@ -124,10 +124,10 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy, AfterView
         )
       )
       .pipe(
-        tap(({ failed, minOrderQuantity, maxOrderQuantity }) => {
+        tap(({ minOrderQuantity, maxOrderQuantity }) => {
           const quantityControl = this.productForm?.get('quantity');
           quantityControl?.setValidators([Validators.min(minOrderQuantity), Validators.max(maxOrderQuantity)]);
-          quantityControl?.setValue(failed ? 0 : 1);
+          quantityControl?.setValue(0);
           quantityControl?.updateValueAndValidity();
         })
       );
