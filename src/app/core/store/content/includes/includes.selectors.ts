@@ -22,3 +22,5 @@ const getContentIncludeMemoized = (includeId: string) =>
 
 export const getContentInclude = (includeId: string) =>
   createSelector(getContentIncludeMemoized(includeId), createContentPageletEntryPointView);
+
+export const getAllContentIncludeIds = createSelector(getContentState, state => state.includes.ids);

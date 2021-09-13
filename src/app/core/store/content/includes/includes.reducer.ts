@@ -4,7 +4,12 @@ import { createReducer, on } from '@ngrx/store';
 import { ContentPageletEntryPoint } from 'ish-core/models/content-pagelet-entry-point/content-pagelet-entry-point.model';
 import { setLoadingOn } from 'ish-core/utils/ngrx-creators';
 
-import { loadContentInclude, loadContentIncludeFail, loadContentIncludeSuccess } from './includes.actions';
+import {
+  flushCmsData,
+  loadContentInclude,
+  loadContentIncludeFail,
+  loadContentIncludeSuccess,
+} from './includes.actions';
 
 export const includesAdapter = createEntityAdapter<ContentPageletEntryPoint>({
   selectId: contentInclude => contentInclude.id,
@@ -32,5 +37,9 @@ export const includesReducer = createReducer(
       ...includesAdapter.upsertOne(include, state),
       loading: false,
     };
-  })
+  }),
+  on(flushCmsData, () => ({
+    ...initialState,
+    loading: false,
+  }))
 );
