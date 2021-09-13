@@ -2,16 +2,16 @@
 
 :host ::ng-deep {
   .filters-row {
+    padding: $space-box $space-default;
     margin: 0;
     font-size: $camfil-toolbar-font-size;
     color: $text-color-tertiary;
     background-color: transparent;
-    padding: $space-box $space-default;
 
     @media (min-width: $screen-md) {
-      justify-content: space-between;
-      gap: $space-box;
       display: flex;
+      gap: $space-box;
+      justify-content: space-between;
     }
 
     & + .filters-row {
@@ -35,7 +35,7 @@
         line-height: inherit;
       }
       mat-form-field {
-        width: 120px;
+        width: 150px;
       }
     }
   }
