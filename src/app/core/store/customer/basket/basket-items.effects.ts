@@ -393,7 +393,7 @@ export class BasketItemsEffects {
     this.actions$.pipe(
       ofType(loadBuckets),
       mergeMap(() =>
-        this.basketService.getBuckets()?.pipe(
+        this.basketService.getBuckets().pipe(
           mergeMap((buckets: Bucket[]) => [loadBucketsSuccess({ buckets })]),
           mapErrorToAction(loadBucketsFail)
         )
