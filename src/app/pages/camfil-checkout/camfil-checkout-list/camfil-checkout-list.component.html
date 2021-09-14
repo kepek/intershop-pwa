@@ -129,12 +129,8 @@
                 formControlName="orderMark"
                 label="camfil.checkout.form.order_mark"
                 matInput
+                [camfilMaxLength]="'OrderMark'"
               />
-              <camfil-error
-                [errorValidators]="validators.orderMark"
-                [errors]="getField('orderMark').errors"
-                [touched]="getField('orderMark').touched || getField('orderMark').dirty"
-              ></camfil-error>
             </mat-form-field>
           </div>
 
@@ -148,12 +144,8 @@
                 formControlName="invoiceLabel"
                 label="camfil.checkout.form.invoice_mark"
                 matInput
+                [camfilMaxLength]="'InvoiceLabel'"
               />
-              <camfil-error
-                [errorValidators]="validators.invoiceLabel"
-                [errors]="getField('invoiceLabel').errors"
-                [touched]="getField('invoiceLabel').touched || getField('invoiceLabel').dirty"
-              ></camfil-error>
             </mat-form-field>
           </div>
 
@@ -233,6 +225,7 @@
               formControlName="info"
               label="camfil.checkout.form.note"
               matInput
+              [camfilMaxLength]="'CustomerNote'"
             ></textarea>
             <camfil-error
               [errorValidators]="validators.info"
