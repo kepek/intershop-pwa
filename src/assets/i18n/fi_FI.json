@@ -644,7 +644,7 @@
   "camfil.account.forgotdata.email.label": "Sähköpostiosoite",
   "camfil.account.forgotdata.error.username.required": "Syötä käyttäjätunnus",
   "camfil.account.forgotdata.password_retrieval.heading": "Unohditko salasanasi?",
-  "camfil.account.forgotdata.password_retrieval_info.text": "Anna turvallisuussyistä käyttäjätunnuksesi ja lähetä lomake. Jos antamasi tiedot ovat oikein, lähetämme sinulle linkin sisältävän sähköpostin. Luo uusi salasana painamalla linkkiä. Jos sinulla on ongelmia tai tarvitset apua, ota yhteyttä <a href=\"route://contact\">asiakaspalveluumme</a>.",
+  "camfil.account.forgotdata.password_retrieval_info.text": "Anna turvallisuussyistä käyttäjätunnuksesi ja lähetä lomake. Jos antamasi tiedot ovat oikein, lähetämme sinulle linkin sisältävän sähköpostin. Luo uusi salasana painamalla linkkiä. Jos sinulla on ongelmia tai tarvitset apua, ota yhteyttä <a href=\"route://page/contact\">asiakaspalveluumme</a>.",
   "camfil.account.forgotdata.username.label": "Käyttäjätunnus",
   "camfil.account.forgotdata.username_retrieval.heading": "Unohditko käyttäjätunnuksesi?",
   "camfil.account.forgotdata.username_retrieval_info.text": "Syötä sähköpostiosoitteesi",
