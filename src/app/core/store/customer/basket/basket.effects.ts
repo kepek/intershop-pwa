@@ -24,7 +24,13 @@ import { Basket } from 'ish-core/models/basket/basket.model';
 import { BasketService } from 'ish-core/services/basket/basket.service';
 import { RouterState } from 'ish-core/store/core/router/router.reducer';
 import { setCheckoutFocusedElement } from 'ish-core/store/core/viewconf/viewconf.actions';
-import { createUser, loadUserByAPIToken, loginUser, loginUserSuccess } from 'ish-core/store/customer/user';
+import {
+  createUser,
+  getUserAuthorized,
+  loadUserByAPIToken,
+  loginUser,
+  loginUserSuccess,
+} from 'ish-core/store/customer/user';
 import { ApiTokenService } from 'ish-core/utils/api-token/api-token.service';
 import { mapErrorToAction, mapToPayload, mapToPayloadProperty } from 'ish-core/utils/operators';
 
@@ -85,7 +91,9 @@ export class BasketEffects {
       ofType(loadBasket),
       mergeMap(() =>
         this.basketService.getBasket().pipe(
-          map(basket => loadBasketSuccess({ basket })),
+          withLatestFrom(this.store.pipe(select(getUserAuthorized))),
+          filter(([, user]) => user),
+          map(([basket]) => loadBasketSuccess({ basket })),
           mapErrorToAction(loadBasketFail)
         )
       )

@@ -103,7 +103,7 @@
   "account.login.email.error.invalid": "Syötä voimassa oleva sähköpostiosoite.",
   "account.login.email.error.required": "Syötä sähköpostiosoite.",
   "account.login.email.label": "Sähköposti",
-  "account.login.email_password.error.invalid": "Tilisi on lukittu. Ole hyvä ja ota yhteys asiakaspalveluun: <a href=\"mailto:info.finland@camfil.com\">info.finland@camfil.com</a>.",
+  "account.login.email_password.error.invalid": "Virheellinen käyttäjätunnus tai salasana. Tarkista, että syöttämäsi tiedot ovat oikein.",
   "account.login.link": "Kirjaudu sisään",
   "account.login.message": "Kirjaudu sisään tiliisi syöttämällä sähköpostiosoitteesi ja salasanasi.",
   "account.login.non_approved_customer.error": "Asiakastiliäsi ei ole hyväksytty.",
