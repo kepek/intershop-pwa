@@ -9,9 +9,11 @@ import { EMPTY, Observable, of, throwError } from 'rxjs';
 import { anyString, anything, instance, mock, verify, when } from 'ts-mockito';
 
 import { Basket } from 'ish-core/models/basket/basket.model';
+import { CustomerUserType } from 'ish-core/models/customer/customer.model';
 import { BasketService } from 'ish-core/services/basket/basket.service';
 import { CoreStoreModule } from 'ish-core/store/core/core-store.module';
 import { CustomerStoreModule } from 'ish-core/store/customer/customer-store.module';
+import { loginUserSuccess } from 'ish-core/store/customer/user';
 import { ApiTokenService } from 'ish-core/utils/api-token/api-token.service';
 import { makeHttpError } from 'ish-core/utils/dev/api-service-utils';
 import { BasketMockData } from 'ish-core/utils/dev/basket-mock-data';
@@ -77,6 +79,15 @@ describe('Basket Effects', () => {
   describe('loadBasket$', () => {
     beforeEach(() => {
       when(basketServiceMock.getBasket()).thenCall(() => of({ id: 'BID' } as Basket));
+
+      store$.dispatch(
+        loginUserSuccess({
+          customer: {
+            customerNo: 'PC',
+            isBusinessCustomer: true,
+          },
+        } as CustomerUserType)
+      );
     });
 
     it('should call the basketService for loadBasket', done => {
