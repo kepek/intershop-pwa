@@ -1,16 +1,16 @@
 <div *ngIf="isMobileView; else desktopView">
   <mat-card
-    class="d-flex flex-wrap align-items-center text-left mobile-card-container"
     [attr.data-testing-sku]="product.sku"
     [class.mat-elevation-z3]="true"
+    class="d-flex flex-wrap align-items-center text-left mobile-card-container"
   >
     <div class="d-flex">
       <a
-        [routerLink]="product | ishProductRoute: category"
         [queryParams]="getCategoryFilterParams(category?.uniqueId)"
+        [routerLink]="product | ishProductRoute: category"
         class="product-image-box"
       >
-        <camfil-product-image [product]="product" imageType="S" class="product-image"></camfil-product-image>
+        <camfil-product-image [product]="product" class="product-image" imageType="S"></camfil-product-image>
       </a>
       <camfil-product-title
         *ngIf="configuration.displayName"
@@ -22,18 +22,18 @@
       <div class="col-sm-6">
         <camfil-product-id
           *ngIf="configuration.displaySKU"
-          [product]="product"
           [hideAttributeName]="false"
+          [product]="product"
         ></camfil-product-id>
         <camfil-product-attribute
-          identifier="dimensions"
           [name]="'camfil.product.dimensions.label' | translate"
           [value]="product | camfilDimension | camfilRemoveWhiteSpacesPipe"
+          identifier="dimensions"
         ></camfil-product-attribute>
         <camfil-product-attribute
-          identifier="iso_class"
           [name]="'camfil.product.class_and_efficiency.label' | translate"
           [value]="product | camfilProductAttributeVal: 'IsoClassAndEfficiency'"
+          identifier="iso_class"
         ></camfil-product-attribute>
       </div>
       <div class="col-sm-6 right-col d-flex flex-column">
@@ -43,9 +43,9 @@
             [product]="product"
           ></camfil-product-inventory>
           <camfil-product-quickview
-            class="d-inline-flex align-items-center"
-            [product]="product"
             [hideText]="true"
+            [product]="product"
+            class="d-inline-flex align-items-center"
           ></camfil-product-quickview>
         </div>
         <ng-container *ngIf="userPermissions$ | async">
@@ -59,40 +59,46 @@
           <div class="action-container">
             <camfil-product-quantity
               *ngIf="configuration.displayQuantity"
-              [readOnly]="configuration.readOnly"
               [allowZeroQuantity]="true"
-              [quantityLabel]="configuration.quantityLabel"
-              [product]="product"
-              [parentForm]="productItemForm"
               [controlName]="quantityControlName"
+              [parentForm]="productItemForm"
+              [product]="product"
+              [quantityLabel]="configuration.quantityLabel"
+              [readOnly]="configuration.readOnly"
+              [showErrors]="false"
             ></camfil-product-quantity>
           </div>
 
           <div class="action-container addtocart-container align-items-center">
-            <camfil-lazy-product-add-to-cam-card
-              *ngIf="configuration.displayAddToCamCard"
-              displayType="icon"
-              [quantity]="updatedQuantity"
-              class="btn-link"
-              [product]="product"
-            ></camfil-lazy-product-add-to-cam-card>
+            <!-- TODO: improve - add logic related with lazy component instead ngIf condition -->
+            <ng-container *ngIf="productItemForm.invalid; else canAddToCC">
+              <camfil-lazy-product-add-to-cam-card
+                *ngIf="configuration.displayAddToCamCard"
+                [product]="product"
+                [quantity]="updatedQuantity"
+                class="btn-link"
+                displayType="icon"
+                [disabled]="true"
+              ></camfil-lazy-product-add-to-cam-card>
+            </ng-container>
 
             <camfil-product-add-to-basket
+              (productToBasket)="addToBasket()"
+              (resetQuantityValue)="resetFormValues()"
               *ngIf="configuration.displayAddToBasket"
+              [hasIcon]="true"
               [product]="product"
               [quantity]="updatedQuantity"
-              (productToBasket)="addToBasket()"
-              displayType="icon"
               class="btn-link round-cart-btn"
               colorIcon="color-light"
-              [hasIcon]="true"
-              (resetQuantityValue)="resetFormValues()"
+              displayType="icon"
+              [disabled]="productItemForm.invalid"
             ></camfil-product-add-to-basket>
 
             <ng-container
               *ngIf="configuration.displayActionTemplate"
-              [ngTemplateOutlet]="actionTemplate"
               [ngTemplateOutletContext]="{ $implicit: product, quantity: updatedQuantity }"
+              [ngTemplateOutlet]="actionTemplate"
             ></ng-container>
           </div>
         </form>
@@ -101,8 +107,8 @@
       <ng-template #masterProductActions>
         <div class="action-container">
           <a
-            [routerLink]="product | ishProductRoute: category"
             [queryParams]="getCategoryFilterParams(category?.uniqueId)"
+            [routerLink]="product | ishProductRoute: category"
             class="btn btn-primary"
             role="button"
           >
@@ -115,21 +121,21 @@
 </div>
 <ng-template #desktopView>
   <mat-card
-    class="d-flex align-items-center flex-wrap justify-content-between text-left"
     [attr.data-testing-sku]="product.sku"
     [class.mat-elevation-z3]="true"
+    class="d-flex align-items-center flex-wrap justify-content-between text-left"
   >
     <div class="d-flex">
       <a
-        [routerLink]="product | ishProductRoute: category"
         [queryParams]="getCategoryFilterParams(category?.uniqueId)"
+        [routerLink]="product | ishProductRoute: category"
         class="product-image-box"
       >
         <camfil-product-image
           [product]="product"
+          class="product-image"
           imageType="images"
           imageView="default"
-          class="product-image"
         ></camfil-product-image>
       </a>
 
@@ -144,20 +150,20 @@
         <div class="product-item-attributes justify-content-between">
           <camfil-product-id
             *ngIf="configuration.displaySKU"
-            [product]="product"
             [hideAttributeName]="hideAttributeName"
+            [product]="product"
           ></camfil-product-id>
           <camfil-product-attribute
-            identifier="dimensions"
             [name]="'camfil.product.dimensions.label' | translate"
             [value]="product | camfilDimension | camfilRemoveWhiteSpacesPipe"
+            identifier="dimensions"
           ></camfil-product-attribute>
           <camfil-product-attribute
-            identifier="iso_class"
             [name]="'camfil.product.class_and_efficiency.label' | translate"
             [value]="product | camfilProductAttributeVal: 'IsoClassAndEfficiency'"
+            identifier="iso_class"
           ></camfil-product-attribute>
-          <camfil-product-quickview [product]="product" [hideText]="true"></camfil-product-quickview>
+          <camfil-product-quickview [hideText]="true" [product]="product"></camfil-product-quickview>
 
           <camfil-product-inventory
             *ngIf="configuration.displayInventory && !isMasterProduct(product)"
@@ -166,7 +172,7 @@
         </div>
       </div>
     </div>
-    <div class="product-prices-container d-flex flex-column justify-content-between" *ngIf="userPermissions$ | async">
+    <div *ngIf="userPermissions$ | async" class="product-prices-container d-flex flex-column justify-content-between">
       <camfil-product-price [product]="product"></camfil-product-price>
     </div>
 
@@ -175,39 +181,45 @@
         <form [formGroup]="productItemForm" class="product-form form-horizontal row">
           <camfil-product-quantity
             *ngIf="configuration.displayQuantity"
-            [readOnly]="configuration.readOnly"
             [allowZeroQuantity]="true"
-            [quantityLabel]="configuration.quantityLabel"
-            [product]="product"
-            [parentForm]="productItemForm"
             [controlName]="quantityControlName"
+            [parentForm]="productItemForm"
+            [product]="product"
+            [quantityLabel]="configuration.quantityLabel"
+            [readOnly]="configuration.readOnly"
+            [showErrors]="false"
           ></camfil-product-quantity>
 
           <div class="action-container addtocart-container align-items-center">
-            <camfil-lazy-product-add-to-cam-card
-              *ngIf="configuration.displayAddToCamCard"
-              displayType="icon"
-              [quantity]="updatedQuantity"
-              class="btn-link"
-              [product]="product"
-            ></camfil-lazy-product-add-to-cam-card>
+            <!-- TODO: improve - add logic related with lazy component instead ngIf condition -->
+            <ng-container *ngIf="productItemForm.invalid; else canAddToCC">
+              <camfil-lazy-product-add-to-cam-card
+                *ngIf="configuration.displayAddToCamCard"
+                [product]="product"
+                [quantity]="updatedQuantity"
+                class="btn-link"
+                displayType="icon"
+                [disabled]="true"
+              ></camfil-lazy-product-add-to-cam-card>
+            </ng-container>
 
             <camfil-product-add-to-basket
+              (productToBasket)="addToBasket()"
+              (resetQuantityValue)="resetFormValues()"
               *ngIf="configuration.displayAddToBasket"
+              [hasIcon]="true"
               [product]="product"
               [quantity]="updatedQuantity"
-              (productToBasket)="addToBasket()"
-              displayType="icon"
               class="btn-link round-cart-btn"
               colorIcon="color-light"
-              [hasIcon]="true"
-              (resetQuantityValue)="resetFormValues()"
+              displayType="icon"
+              [disabled]="productItemForm.invalid"
             ></camfil-product-add-to-basket>
 
             <ng-container
               *ngIf="configuration.displayActionTemplate"
-              [ngTemplateOutlet]="actionTemplate"
               [ngTemplateOutletContext]="{ $implicit: product, quantity: updatedQuantity }"
+              [ngTemplateOutlet]="actionTemplate"
             ></ng-container>
           </div>
         </form>
@@ -216,8 +228,8 @@
       <ng-template #masterProductActions>
         <div class="action-container">
           <a
-            [routerLink]="product | ishProductRoute: category"
             [queryParams]="getCategoryFilterParams(category?.uniqueId)"
+            [routerLink]="product | ishProductRoute: category"
             class="btn btn-primary"
             role="button"
           >
@@ -231,4 +243,14 @@
 
 <ng-template #emptyBlock>
   <div>&nbsp;</div>
+</ng-template>
+
+<ng-template #canAddToCC>
+  <camfil-lazy-product-add-to-cam-card
+    *ngIf="configuration.displayAddToCamCard"
+    [product]="product"
+    [quantity]="updatedQuantity"
+    class="btn-link"
+    displayType="icon"
+  ></camfil-lazy-product-add-to-cam-card>
 </ng-template>

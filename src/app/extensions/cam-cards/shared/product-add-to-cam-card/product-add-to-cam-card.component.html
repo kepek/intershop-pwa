@@ -6,10 +6,10 @@
       <span class="share-label">{{ buttonTranslationKey | translate }}</span>
     </ng-template>
     <ng-template [ngSwitchCase]="'icon'">
-      <mat-icon svgIcon="add-camcard" [title]="buttonTranslationKey | translate"></mat-icon>
+      <mat-icon [title]="buttonTranslationKey | translate" svgIcon="add-camcard"></mat-icon>
     </ng-template>
     <ng-template [ngSwitchCase]="'round-btn'">
-      <mat-icon svgIcon="add-camcard" *ngIf="hasIcon"></mat-icon>
+      <mat-icon *ngIf="hasIcon" svgIcon="add-camcard"></mat-icon>
       <span class="button-text">{{ buttonTranslationKey | translate }}</span>
     </ng-template>
     <ng-template ngSwitchDefault>
@@ -21,36 +21,36 @@
 <ng-container [ngSwitch]="displayType">
   <ng-template [ngSwitchCase]="'icon'">
     <button
-      mat-mini-fab
-      data-testing-id="addToCamCardButton"
-      class="btn btn-link bg-white p-0"
-      [ngClass]="class"
-      [disabled]="disabled"
       (click)="openModal(modal)"
+      [disabled]="disabled"
+      [ngClass]="class"
+      class="btn btn-link bg-white p-0"
+      data-testing-id="addToCamCardButton"
+      mat-mini-fab
     >
       <ng-container *ngTemplateOutlet="buttonInner"></ng-container>
     </button>
   </ng-template>
   <ng-template [ngSwitchCase]="'round-btn'">
     <button
-      mat-stroked-button
-      data-testing-id="addToCamCardButton"
-      class="btn btn-link camcard-big-round-btn"
-      [ngClass]="class"
-      [disabled]="disabled"
       (click)="openModal(modal)"
+      [disabled]="disabled"
+      [ngClass]="class"
+      class="btn btn-link camcard-big-round-btn"
+      data-testing-id="addToCamCardButton"
+      mat-stroked-button
     >
       <ng-container *ngTemplateOutlet="buttonInner"></ng-container>
     </button>
   </ng-template>
   <ng-template ngSwitchDefault>
     <button
-      mat-raised-button
-      data-testing-id="addToCamCardButton"
-      class="btn btn-link camcard-btn"
-      [ngClass]="class"
-      [disabled]="disabled"
       (click)="openModal(modal)"
+      [disabled]="disabled"
+      [ngClass]="class"
+      class="btn btn-link camcard-btn"
+      data-testing-id="addToCamCardButton"
+      mat-raised-button
     >
       <ng-container *ngTemplateOutlet="buttonInner"></ng-container>
     </button>
@@ -59,15 +59,15 @@
 
 <camfil-add-product-to-cam-card-modal
   #modal
+  (submitEmitter)="addProductToCamCard($event)"
   [product]="product"
   [quantity]="quantity"
-  (submitEmitter)="addProductToCamCard($event)"
 ></camfil-add-product-to-cam-card-modal>
 
 <camfil-small-cta-modal
-  actionTitle="{{ 'camfil.account.cam_card.add_to_camcard.error.quantity.header' | translate }}"
   actionButtonTitle="{{ 'camfil.account.cam_card.add_to_camcard.error.quantity.button.ok' | translate }}"
-  onlyAccept="true"
+  actionTitle="{{ 'camfil.account.cam_card.add_to_camcard.error.quantity.header' | translate }}"
   hasError="true"
+  onlyAccept="true"
 >
 </camfil-small-cta-modal>

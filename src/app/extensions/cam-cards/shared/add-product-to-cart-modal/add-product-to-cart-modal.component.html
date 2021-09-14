@@ -1,29 +1,29 @@
 <ng-template #modal>
   <ng-container *ngIf="!(showSuccess && submitted); else success">
     <camfil-cam-card-modal
-      [title]="'camfil.modal.addToCart.title' | translate"
-      svgIcon="cart"
-      [subtitle]="product.name"
+      (hiddenClicked)="hide()"
+      (primaryButtonClicked)="addToOrder()"
+      (secondaryButtonClicked)="openCreateOrderModal(createModal)"
       [detailsTemplate]="detailsTemplate"
+      [loading]="submitted && !showSuccess"
       [mainContentTemplate]="mainContentTemplate"
       [primaryButtonTitle]="'camfil.modal.addToCart.button.add_to_existing_order' | translate"
-      (primaryButtonClicked)="addToOrder()"
+      [primaryDisabled]="!selectedOrderId || quantityForm.invalid"
       [secondaryButtonTitle]="'camfil.modal.addToCart.button.create_new_order' | translate"
-      (secondaryButtonClicked)="openCreateOrderModal(createModal)"
-      [loading]="submitted && !showSuccess"
-      (hiddenClicked)="hide()"
-      [primaryDisabled]="!selectedOrderId"
-      [secondaryDisabled]="disableActionButton(product, quantityForm)"
+      [secondaryDisabled]="disableActionButton(product, quantityForm) || quantityForm.invalid"
+      [subtitle]="product.name"
+      [title]="'camfil.modal.addToCart.title' | translate"
+      svgIcon="cart"
     >
     </camfil-cam-card-modal>
   </ng-container>
 </ng-template>
 
 <camfil-create-order-product-modal
-  [product]="product"
   #createModal
-  [parentForm]="quantityForm"
   (resetQuantityValue)="resetFormValues()"
+  [parentForm]="quantityForm"
+  [product]="product"
 ></camfil-create-order-product-modal>
 
 <ng-template #detailsTemplate>
@@ -31,18 +31,18 @@
 </ng-template>
 
 <ng-template #mainContentTemplate>
-  <div mat-dialog-content class="add-to-cart-modal__content">
+  <div class="add-to-cart-modal__content" mat-dialog-content>
     <div class="add-to-cart-modal__content--title">{{ 'camfil.modal.addToCart.order-list.title' | translate }}</div>
     <div *ngFor="let option of buckets; let i = index">
       <camfil-cam-card-modal-details
+        (click)="onOrderClicked(option.id)"
+        [customerName]="option.customer?.companyName"
+        [deliveryAddress]="option.shipToAddressFull"
         [index]="i + 1"
+        [invoiceMark]="option.invoiceLabel"
+        [isClicked]="selectedOrderId === option.id"
         [nextDelivery]="option.deliveryDate"
         [orderMark]="option.orderMark"
-        [invoiceMark]="option.invoiceLabel"
-        [deliveryAddress]="option.shipToAddressFull"
-        [customerName]="option.customer?.companyName"
-        (click)="onOrderClicked(option.id)"
-        [isClicked]="selectedOrderId === option.id"
       >
       </camfil-cam-card-modal-details>
     </div>
@@ -51,8 +51,8 @@
 
 <ng-template #success>
   <camfil-create-order-product-success
-    (hideSearchBox)="hideSearchDialog()"
     (hideEmitter)="hide()"
+    (hideSearchBox)="hideSearchDialog()"
     [product]="product"
   ></camfil-create-order-product-success>
 </ng-template>

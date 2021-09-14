@@ -14,6 +14,8 @@ import { Product } from 'ish-core/models/product/product.model';
 import { SelectOption } from 'ish-shared/forms/components/select/select.component';
 import { SpecialValidators } from 'ish-shared/forms/validators/special-validators';
 
+import { ADD_NEW_PRODUCT_VALIDATORS } from './validators';
+
 function generateSelectOptionsForRange(min: number, max: number): SelectOption[] {
   return range(min, max)
     .map(num => num.toString())
@@ -28,6 +30,7 @@ export type CamfilProductQuantityType = 'input' | 'select' | 'counter';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CamfilProductQuantityComponent implements OnInit, OnChanges {
+  @Input() showErrors = true;
   @Input() readOnly = false;
   @Input() allowZeroQuantity = false;
   @Input() quantityLabel = 'product.quantity.label';
@@ -41,9 +44,7 @@ export class CamfilProductQuantityComponent implements OnInit, OnChanges {
 
   quantityOptions: SelectOption[];
 
-  ngOnInit() {
-    this.parentForm.get(this.controlName).setValidators(this.getValidations());
-  }
+  validators = ADD_NEW_PRODUCT_VALIDATORS;
 
   get quantity() {
     return this.parentForm.get(this.controlName) && this.parentForm.get(this.controlName).value;
@@ -59,8 +60,12 @@ export class CamfilProductQuantityComponent implements OnInit, OnChanges {
       : 'col-6' + (this.class ? this.class : '');
   }
 
+  ngOnInit() {
+    this.parentForm.get(this.controlName).setValidators(this.getValidations());
+  }
+
   getValidations(): ValidatorFn {
-    if (this.type === 'input') {
+    if (this.type === 'input' || this.type === 'counter') {
       return Validators.compose([
         Validators.required,
         Validators.min(this.allowZeroQuantity ? 0 : this.product.minOrderQuantity),

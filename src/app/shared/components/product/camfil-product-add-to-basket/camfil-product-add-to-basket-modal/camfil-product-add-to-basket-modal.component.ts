@@ -58,11 +58,13 @@ export class CamfilProductAddToBasketModalComponent implements OnInit, OnDestroy
   @Input() quantity: number;
 
   @Output() resetQuantityValue = new EventEmitter<void>();
-
+  @ViewChild(CamfilSmallCtaModalComponent) errorModal: CamfilSmallCtaModalComponent;
+  /**
+   * fires 'true' after add To Cart is clicked and basket is loading
+   */
+  displaySpinner$ = new BehaviorSubject(false);
   // tslint:disable-next-line:private-destroy-field
   protected destroy$ = new Subject();
-
-  @ViewChild(CamfilSmallCtaModalComponent) errorModal: CamfilSmallCtaModalComponent;
 
   constructor(
     public dialog: MatDialog,
@@ -71,10 +73,9 @@ export class CamfilProductAddToBasketModalComponent implements OnInit, OnDestroy
     protected checkoutFacade: CheckoutFacade
   ) {}
 
-  /**
-   * fires 'true' after add To Cart is clicked and basket is loading
-   */
-  displaySpinner$ = new BehaviorSubject(false);
+  get displayIcon(): boolean {
+    return this.displayType === 'icon';
+  }
 
   ngOnInit() {
     this.basket$ = this.checkoutFacade.basket$;
@@ -92,7 +93,7 @@ export class CamfilProductAddToBasketModalComponent implements OnInit, OnDestroy
   openModalIfLoggedIn(modal: AddProductToCartModalComponent) {
     this.accountFacade.isLoggedIn$.pipe(take(1), takeUntil(this.destroy$)).subscribe(isLoggedIn => {
       if (isLoggedIn) {
-        this.quantity ? this.openModal(modal) : this.openErrorModal();
+        this.quantity >= this.product?.minOrderQuantity ? this.openModal(modal) : this.openErrorModal();
       } else {
         this.navigateToLogin();
       }
@@ -104,10 +105,6 @@ export class CamfilProductAddToBasketModalComponent implements OnInit, OnDestroy
     this.errorModal.hide = () => {
       refErrorModalDialog.close();
     };
-  }
-
-  get displayIcon(): boolean {
-    return this.displayType === 'icon';
   }
 
   resetFormValues() {

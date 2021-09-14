@@ -9,23 +9,11 @@
       <span>{{ category.name }}</span>
     </p>
   </div>
-
   <div class="col-12 col-md-4 col-lg-3 pt-3">
     <camfil-product-images [product]="product"></camfil-product-images>
   </div>
-
   <div class="col-12 col-md-4 col-lg-5 product-info">
-    <!-- <camfil-product-rating *ishFeature="'rating'" [product]="product"></camfil-product-rating> -->
-
     <div class="mat-card mat-focus-indicator p-3 my-3">
-      <!-- <div *ngIf="product.manufacturer" class="product-brand">
-        <a [routerLink]="['/search', product.manufacturer]">
-          <span itemprop="brand">{{ product.manufacturer }}</span>
-        </a>
-      </div> -->
-
-      <!-- <camfil-product-id [product]="product"></camfil-product-id> -->
-
       <camfil-product-promotion [product]="product"></camfil-product-promotion>
       <div class="d-flex justify-content-center align-items-center row flex-wrap">
         <div
@@ -50,43 +38,48 @@
             <p class="quantity-form-text">{{ 'camfil.product.quantity.text' | translate }}</p>
             <camfil-product-quantity
               *ngIf="!isRetailSet(product)"
-              [product]="product"
               [allowZeroQuantity]="true"
-              [parentForm]="productDetailForm"
               [controlName]="quantityControlName"
+              [parentForm]="productDetailForm"
+              [product]="product"
             ></camfil-product-quantity>
           </form>
         </div>
       </div>
       <div class="row flex-wrap buttons-container">
         <div class="col-lg-6 col-12 d-flex justify-content-center align-items-center">
-          <camfil-lazy-product-add-to-cam-card
-            class="btn-link cart-big-round-btn secondary-button"
-            displayType="round-btn"
-            hasIcon="true"
-            [product]="product"
-            [quantity]="quantity"
-          ></camfil-lazy-product-add-to-cam-card>
+          <!-- TODO: improve - add logic related with lazy component instead ngIf condition -->
+          <ng-container *ngIf="productDetailForm.invalid; else canAddToCC">
+            <camfil-lazy-product-add-to-cam-card
+              [product]="product"
+              [quantity]="quantity"
+              class="btn-link cart-big-round-btn secondary-button"
+              displayType="round-btn"
+              hasIcon="true"
+              [disabled]="true"
+            ></camfil-lazy-product-add-to-cam-card>
+          </ng-container>
         </div>
         <div class="col-lg-6 col-12 d-flex justify-content-center align-items-center">
           <camfil-product-add-to-basket
+            (productToBasket)="addToBasket()"
+            (resetQuantityValue)="resetProductDetailForm()"
+            [product]="product"
+            [quantity]="quantity"
+            [translationKey]="isRetailSet(product) ? 'product.add_to_cart.retail_set.link' : 'product.add_to_cart.link'"
             class="btn-link"
             displayType="button"
             hasIcon="true"
-            [product]="product"
-            [translationKey]="isRetailSet(product) ? 'product.add_to_cart.retail_set.link' : 'product.add_to_cart.link'"
-            (productToBasket)="addToBasket()"
-            (resetQuantityValue)="resetProductDetailForm()"
-            [quantity]="quantity"
+            [disabled]="productDetailForm.invalid"
           ></camfil-product-add-to-basket>
         </div>
       </div>
       <div class="row">
         <div class="col-12 d-flex align-items-center">
           <camfil-product-add-to-compare
+            (compareToggle)="toggleCompare()"
             *ngIf="showAddToCompare"
             [isInCompareList]="isInCompareList"
-            (compareToggle)="toggleCompare()"
             class="btn-link"
           ></camfil-product-add-to-compare>
           <camfil-product-inventory
@@ -96,61 +89,17 @@
           ></camfil-product-inventory>
         </div>
       </div>
-      <!-- <camfil-product-shipment
-        *ngIf="!isRetailSet(product) && !isMasterProduct(product)"
-        [product]="product"
-      ></camfil-product-shipment> -->
-      <!-- <camfil-product-variation-select
-        *ngIf="isVariationProduct(product)"
-        [productMasterSKU]="product.productMasterSKU"
-        [variationOptions]="variationOptions"
-        (selectVariation)="variationSelected($event)"
-      ></camfil-product-variation-select> -->
-
-      <!-- <ish-lazy-product-add-to-order-template
-        [class]="'btn btn-default btn-block'"
-        [product]="product"
-        [quantity]="quantity"
-      ></ish-lazy-product-add-to-order-template>
-
-      <ish-lazy-product-add-to-quote
-        [product]="product"
-        [disabled]="productDetailForm.invalid"
-        [quantity]="quantity"
-        [class]="'btn-block'"
-      ></ish-lazy-product-add-to-quote> -->
     </div>
-
     <camfil-product-attributes-preview [product]="product"></camfil-product-attributes-preview>
-    <!-- <ish-accordion>
-      <ish-accordion-item [heading]="'product.description.heading' | translate">
-        <div [innerHTML]="product.longDescription"></div>
-      </ish-accordion-item>
-      <ish-accordion-item
-        *ngIf="product.attributes && product.attributes.length"
-        [heading]="'product.details.heading' | translate"
-      >
-        <ish-product-attributes [product]="product"></ish-product-attributes>
-      </ish-accordion-item>
-      <ish-accordion-item
-        *ngIf="!isMasterProduct(product)"
-        [heading]="'product.shipping.heading' | translate"
-        dataTestingId="section-shipping-tab"
-      >
-        <camfil-product-shipment [product]="product"></camfil-product-shipment>
-      </ish-accordion-item>
-    </ish-accordion> -->
   </div>
   <div class="col-12 col-md-4 col-lg-4 my-3">
     <strong>{{ 'camfil.product.details.guides.headline' | translate }}</strong>
-
     <camfil-product-technical-documents
-      [product]="product"
       [getImageCdnUrl]="getImageCdnUrl"
+      [product]="product"
     ></camfil-product-technical-documents>
-
     <strong>{{ 'camfil.product.details.badges.headline' | translate }}</strong>
-    <camfil-product-badges [product]="product" [getImageCdnUrl]="getImageCdnUrl"></camfil-product-badges>
+    <camfil-product-badges [getImageCdnUrl]="getImageCdnUrl" [product]="product"></camfil-product-badges>
   </div>
 </div>
 <div class="row product-data my-4">
@@ -168,3 +117,12 @@
     -->
   </div>
 </div>
+<ng-template #canAddToCC>
+  <camfil-lazy-product-add-to-cam-card
+    [product]="product"
+    [quantity]="quantity"
+    class="btn-link cart-big-round-btn secondary-button"
+    displayType="round-btn"
+    hasIcon="true"
+  ></camfil-lazy-product-add-to-cam-card>
+</ng-template>

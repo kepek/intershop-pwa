@@ -1,20 +1,21 @@
 <ng-container *ishFeature="'camCards'; else standardAddProduct">
   <camfil-product-add-to-basket-modal
-    [product]="product"
+    (resetQuantityValue)="resetFormValues()"
+    [disabled]="disabled"
     [displayType]="displayType"
     [hasIcon]="hasIcon"
+    [product]="product"
     [quantity]="quantity"
     [translationKey]="buttonTranslationKey"
-    (resetQuantityValue)="resetFormValues()"
   ></camfil-product-add-to-basket-modal>
 </ng-container>
 
 <ng-template #standardAddProduct>
   <ish-product-add-to-basket
-    [product]="product"
+    (productToBasket)="addToBasket()"
+    [attr.title]="translationKey | translate"
     [class]="'btn-lg btn-block'"
     [disabled]="disabled || (displaySpinner$ | async)"
-    [attr.title]="translationKey | translate"
-    (productToBasket)="addToBasket()"
+    [product]="product"
   ></ish-product-add-to-basket>
 </ng-template>

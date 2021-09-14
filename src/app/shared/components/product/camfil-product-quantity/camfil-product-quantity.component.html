@@ -3,7 +3,7 @@
     <ng-container [ngSwitch]="type">
       <mat-form-field *ngSwitchCase="'select'" appearance="fill">
         <mat-label>{{ quantityLabel | translate }}</mat-label>
-        <mat-select [formGroup]="parentForm" [formControlName]="controlName">
+        <mat-select [formControlName]="controlName" [formGroup]="parentForm">
           <mat-option *ngFor="let quantityOption of quantityOptions" [value]="quantityOption.value">
             {{ quantityOption.label }}
           </mat-option>
@@ -12,27 +12,33 @@
       <mat-form-field *ngSwitchCase="'input'" appearance="fill">
         <mat-label>{{ quantityLabel | translate }}</mat-label>
         <input
-          matInput
-          [type]="'number'"
-          [formGroup]="parentForm"
           [formControlName]="controlName"
-          [min]="allowZeroQuantity ? 0 : product.minOrderQuantity"
+          [formGroup]="parentForm"
           [max]="product.maxOrderQuantity"
+          [min]="allowZeroQuantity ? 0 : product.minOrderQuantity"
           [placeholder]="allowZeroQuantity ? 0 : product.minOrderQuantity"
+          [type]="'number'"
+          matInput
         />
       </mat-form-field>
       <ng-container *ngSwitchDefault>
         <camfil-counter
-          [form]="parentForm"
           [controlName]="controlName"
-          [min]="allowZeroQuantity ? 0 : product.minOrderQuantity"
-          [max]="product.maxOrderQuantity"
-          inputClass=""
+          [form]="parentForm"
           [isInLineItem]="isInLineItem"
           [lineItemId]="lineItemId"
+          [max]="product.maxOrderQuantity"
+          [min]="allowZeroQuantity ? 0 : product.minOrderQuantity"
+          inputClass=""
         ></camfil-counter>
       </ng-container>
     </ng-container>
+    <camfil-error
+      *ngIf="showErrors"
+      [errorValidators]="validators.quantity"
+      [errors]="parentForm?.get(controlName)?.errors"
+      [touched]="parentForm?.get(controlName)?.touched || parentForm?.get(controlName)?.dirty"
+    ></camfil-error>
   </ng-container>
   <ng-container *ngIf="readOnly">
     <span>{{ quantityLabel | translate }}: {{ quantity }}</span>

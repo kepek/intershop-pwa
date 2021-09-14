@@ -36,12 +36,18 @@ export class CamfilProductDetailComponent implements OnInit, OnDestroy {
   @Output() compareToggle = new EventEmitter<void>();
   @Input() productSku: string;
   @Output() productSkuChange = new EventEmitter<string>();
-
+  readonly quantityControlName = 'quantity';
   userPermissions$: Observable<string[]>;
   isInCompareList$: Observable<boolean>;
   isInCompareList: boolean;
   showAddToCompare = false;
+  productDetailForm: FormGroup;
+  isVariationProduct = ProductHelper.isVariationProduct;
+  isMasterProduct = ProductHelper.isMasterProduct;
+  isRetailSet = ProductHelper.isRetailSet;
+  getImageCdnUrl = ProductHelper.getImageCdnUrl;
   private sku$ = new ReplaySubject<string>(1);
+  private destroy$ = new Subject();
 
   constructor(
     private shoppingFacade: ShoppingFacade,
@@ -49,19 +55,9 @@ export class CamfilProductDetailComponent implements OnInit, OnDestroy {
     private camCardsFacade: CamCardsFacade
   ) {}
 
-  productDetailForm: FormGroup;
-  readonly quantityControlName = 'quantity';
-
-  isVariationProduct = ProductHelper.isVariationProduct;
-  isMasterProduct = ProductHelper.isMasterProduct;
-  isRetailSet = ProductHelper.isRetailSet;
-  getImageCdnUrl = ProductHelper.getImageCdnUrl;
-
-  private destroy$ = new Subject();
-
   ngOnInit() {
     this.productDetailForm = new FormGroup({
-      [this.quantityControlName]: new FormControl(),
+      [this.quantityControlName]: new FormControl(0),
     });
 
     this.productDetailForm
