@@ -162,7 +162,9 @@
     <h2>{{ 'product.description.heading' | translate }}</h2>
     <p [innerHTML]="product.shortDescription"></p>
     <p [innerHTML]="product.longDescription"></p>
-    <h2>{{ 'product.shipping.heading' | translate }}</h2>
-    <camfil-product-shipment [product]="product"></camfil-product-shipment>
+    <!-- CAM-1595 (CR) Please remove delivery information on PDP
+      <h2>{{ 'product.shipping.heading' | translate }}</h2>
+      <camfil-product-shipment [product]="product"></camfil-product-shipment>
+    -->
   </div>
 </div>
