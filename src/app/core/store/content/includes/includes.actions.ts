@@ -15,3 +15,5 @@ export const loadContentIncludeSuccess = createAction(
   '[Content Include API] Load Content Include Success',
   payload<{ include: ContentPageletEntryPoint; pagelets: ContentPagelet[] }>()
 );
+
+export const flushCmsData = createAction('[Content Include] Flush CMS Data');
