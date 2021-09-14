@@ -2,7 +2,6 @@ import { TestBed } from '@angular/core/testing';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { Action } from '@ngrx/store';
 import { provideMockStore } from '@ngrx/store/testing';
-import { getAllContentIncludeIds } from 'includes.selectors';
 import { cold, hot } from 'jest-marbles';
 import { Observable, of, throwError } from 'rxjs';
 import { instance, mock, verify, when } from 'ts-mockito';
@@ -13,6 +12,7 @@ import { makeHttpError } from 'ish-core/utils/dev/api-service-utils';
 
 import { loadContentInclude, loadContentIncludeFail } from './includes.actions';
 import { IncludesEffects } from './includes.effects';
+import { getAllContentIncludeIds } from './includes.selectors';
 
 describe('Includes Effects', () => {
   let actions$: Observable<Action>;
