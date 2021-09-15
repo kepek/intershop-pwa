@@ -162,7 +162,7 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
       this.basketLoading = value;
     });
 
-    this.productFacade.getProductAddingError$.subscribe(error => {
+    this.productFacade.getProductAddingError$?.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(error => {
       if (error) {
         this.productAddingInProgress = false;
         this.changeDetectorRefs.detectChanges();
