@@ -283,11 +283,13 @@
       <mat-icon class="size-35 ml-2 mr-4" svgIcon="delivery"></mat-icon>
       <div class="w-100">
         <b>{{ deliveryTerm.description }}</b>
-        <hr class="m-1" />
+        <hr class="m-1" *ngIf="deliveryTerm.id !== 'CPT-RL'" />
         <b *ngIf="freeDelivery.value > 0">{{
           'camfil.checkout.free_delivery.threshold' | translate: { '0': (freeDelivery | ishPrice) }
         }}</b>
-        <b *ngIf="!(freeDelivery.value > 0)">{{ 'camfil.checkout.free_delivery' | translate }}</b>
+        <b *ngIf="!(freeDelivery.value > 0) && deliveryTerm.id !== 'CPT-RL'">{{
+          'camfil.checkout.free_delivery' | translate
+        }}</b>
       </div>
     </div>
 
