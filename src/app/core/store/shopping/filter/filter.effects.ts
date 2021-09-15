@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { map, mergeMap, switchMap } from 'rxjs/operators';
+import { map, mergeMap } from 'rxjs/operators';
 
 import { ProductListingMapper } from 'ish-core/models/product-listing/product-listing.mapper';
 import { Product } from 'ish-core/models/product/product.model';
@@ -85,7 +85,7 @@ export class FilterEffects {
     this.actions$.pipe(
       ofType(loadProductsForFilter),
       mapToPayload(),
-      switchMap(({ id, searchParameter, page, sorting }) =>
+      mergeMap(({ id, searchParameter, page, sorting }) =>
         this.filterService.getFilteredProducts(searchParameter, page, sorting).pipe(
           mergeMap(({ products, total, sortableAttributes }) => [
             ...products.map((product: Product) => loadProductSuccess({ product })),
