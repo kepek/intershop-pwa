@@ -161,6 +161,16 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
     this.checkoutFacade.basketLoading$.pipe(takeUntil(this.destroy$)).subscribe(value => {
       this.basketLoading = value;
     });
+
+    this.productFacade.getProductAddingError$?.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(error => {
+      if (error) {
+        this.productAddingInProgress = false;
+        this.changeDetectorRefs.detectChanges();
+        this.productFacade.getFailedCamCardName$.pipe(whenTruthy(), take(1)).subscribe(failedName => {
+          this.showErrorModal(error, failedName);
+        });
+      }
+    });
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -421,16 +431,6 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
         this.masterToggle(event as MatCheckboxChange);
         this.productAddingInProgress = false;
         this.changeDetectorRefs.detectChanges();
-      }
-    });
-
-    this.productFacade.getProductAddingError$.pipe(whenTruthy(), take(1)).subscribe(error => {
-      if (error) {
-        this.productAddingInProgress = false;
-        this.changeDetectorRefs.detectChanges();
-        this.productFacade.getFailedCamCardName$.pipe(whenTruthy(), take(1)).subscribe(failedName => {
-          this.showErrorModal(error, failedName);
-        });
       }
     });
   }
