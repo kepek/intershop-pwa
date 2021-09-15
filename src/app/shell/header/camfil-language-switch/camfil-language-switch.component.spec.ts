@@ -60,7 +60,7 @@ describe('Camfil Language Switch Component', () => {
 
     fixture.detectChanges();
 
-    expect(element.querySelectorAll('mat-menu')).toHaveLength(1);
+    expect(element.querySelectorAll('.language-switch-link')).toHaveLength(1);
     expect(element.querySelector('.language-switch-current-selection').textContent).toMatchInlineSnapshot(
       `" Deutsch "`
     );
