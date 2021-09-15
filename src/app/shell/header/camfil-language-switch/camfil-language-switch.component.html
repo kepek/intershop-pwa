@@ -6,30 +6,32 @@
   placement="{{ placement === 'up' ? 'top-right' : 'bottom-right' }}"
 >
   <ng-container *ngIf="view !== 'onMobile'; else inMobileNav">
-    <a class="language-switch-link dropdown-toggle" [matMenuTriggerFor]="menu">
-      <mat-icon svgIcon="globe" class="color-secondary language-switch--globe"></mat-icon>
-      <span class="language-switch-current-selection d-inline">
-        {{ (view === 'accordion' ? locale.displayLong : locale.displayName) | translate }}
-        <span class="switch_arrow"></span>
-      </span>
-    </a>
-    <mat-menu #menu="matMenu">
-      <ng-container *ngIf="availableLocalesByCountryCode$ | async as availableLocales">
-        <ng-container *ngFor="let l of availableLocales">
-          <ng-container *ngIf="l.lang !== locale.lang">
-            <a
-              mat-menu-item
-              (click)="changeLocale($event, l.lang)"
-              [href]="
-                getBaseUrl({ redirect: '1', lang: l.lang }) || (location | makeHref: { redirect: '1', lang: l.lang })
-              "
-            >
-              {{ l.displayLong }}
-            </a>
+    <ng-container *ngIf="(availableLocalesByCountryCode$ | async)?.length > 1; else noDropDown">
+      <a class="language-switch-link dropdown-toggle" [matMenuTriggerFor]="menu">
+        <mat-icon svgIcon="globe" class="color-secondary language-switch--globe"></mat-icon>
+        <span class="language-switch-current-selection d-inline">
+          {{ (view === 'accordion' ? locale.displayLong : locale.displayName) | translate }}
+          <span class="switch_arrow"></span>
+        </span>
+      </a>
+      <mat-menu #menu="matMenu">
+        <ng-container *ngIf="availableLocalesByCountryCode$ | async as availableLocales">
+          <ng-container *ngFor="let l of availableLocales">
+            <ng-container *ngIf="l.lang !== locale.lang">
+              <a
+                mat-menu-item
+                (click)="changeLocale($event, l.lang)"
+                [href]="
+                  getBaseUrl({ redirect: '1', lang: l.lang }) || (location | makeHref: { redirect: '1', lang: l.lang })
+                "
+              >
+                {{ l.displayLong }}
+              </a>
+            </ng-container>
           </ng-container>
         </ng-container>
-      </ng-container>
-    </mat-menu>
+      </mat-menu>
+    </ng-container>
   </ng-container>
 
   <ng-template #inMobileNav>
@@ -58,5 +60,14 @@
         </ng-container>
       </ul>
     </ng-container>
+  </ng-template>
+
+  <ng-template #noDropDown>
+    <div class="language-switch-link no-drop-down d-flex align-items-center">
+      <mat-icon svgIcon="globe" class="color-secondary language-switch--globe"></mat-icon>
+      <span class="language-switch-current-selection d-inline">
+        {{ (view === 'accordion' ? locale.displayLong : locale.displayName) | translate }}
+      </span>
+    </div>
   </ng-template>
 </div>
