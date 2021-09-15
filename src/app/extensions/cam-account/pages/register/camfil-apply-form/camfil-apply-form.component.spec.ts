@@ -5,6 +5,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MockComponent, MockDirective, MockPipe } from 'ng-mocks';
 import { anything, instance, mock, when } from 'ts-mockito';
 
+import { AppFacade } from 'ish-core/facades/app.facade';
 import { FeatureToggleModule } from 'ish-core/feature-toggle.module';
 import { CamfilSlugifyPipe } from 'ish-core/pipes/camfil-slugify.pipe';
 import { CamfilToastrService } from 'ish-core/store/core/messages/CamfilToastrService';
@@ -30,9 +31,11 @@ describe('Camfil Apply Form Component', () => {
   let element: HTMLElement;
   let translate: TranslateService;
   let toastrServiceMock: CamfilToastrService;
+  let appFacadeMock: AppFacade;
 
   beforeEach(async () => {
     toastrServiceMock = mock(CamfilToastrService);
+    appFacadeMock = mock(AppFacade);
     const addressFormFactoryMock = mock(AddressFormFactory);
     when(addressFormFactoryMock.getGroup(anything())).thenReturn(new FormGroup({}));
 
@@ -57,6 +60,7 @@ describe('Camfil Apply Form Component', () => {
       providers: [
         { provide: AddressFormFactoryProvider, useFactory: () => instance(addressFormFactoryProviderMock) },
         { provide: CamfilToastrService, useFactory: () => instance(toastrServiceMock) },
+        { provide: AppFacade, useFactory: () => instance(appFacadeMock) },
       ],
       imports: [
         BrowserAnimationsModule,
