@@ -218,6 +218,10 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
     if (s.buckets && this.onlyVisibleItems.length !== this.order?.lineItems?.length) {
       this.handleHeightItemsContainer(this.onlyVisibleItems);
     }
+
+    if (s?.buckets?.previousValue?.length !== s?.buckets?.currentValue?.length) {
+      this.handleHeightItemsContainer(this.order?.lineItems);
+    }
   }
 
   ngAfterViewInit() {
