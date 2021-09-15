@@ -3,10 +3,13 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { MatDialog } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
 import { Subject } from 'rxjs';
+import { take } from 'rxjs/operators';
 
+import { AppFacade } from 'ish-core/facades/app.facade';
 import { FeatureToggleService } from 'ish-core/feature-toggle.module';
 import { HttpError } from 'ish-core/models/http-error/http-error.model';
 import { CamfilToastrService } from 'ish-core/store/core/messages/CamfilToastrService';
+import { whenTruthy } from 'ish-core/utils/operators';
 import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
 import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
 import { SpecialValidators } from 'ish-shared/forms/validators/special-validators';
@@ -37,9 +40,12 @@ export class CamfilApplyFormComponent implements OnInit {
 
   validators = APPLY_VALIDATORS;
 
+  hideTitleField = false;
+
   countryChangeDetect$: Subject<boolean> = new Subject();
 
   constructor(
+    private appFacade: AppFacade,
     private fb: FormBuilder,
     private featureToggle: FeatureToggleService,
     private translate: TranslateService,
@@ -50,6 +56,13 @@ export class CamfilApplyFormComponent implements OnInit {
   ngOnInit() {
     // toggles business / private customer registration
     this.businessCustomerRegistration = this.featureToggle.enabled('businessCustomerRegistration');
+
+    // Hide title field for FI channel
+    this.appFacade.getChannel$?.pipe(whenTruthy(), take(1)).subscribe(channel => {
+      if (channel === 'Camfil-CamfilFI-Site') {
+        this.hideTitleField = true;
+      }
+    });
 
     this.createApplyForm();
   }

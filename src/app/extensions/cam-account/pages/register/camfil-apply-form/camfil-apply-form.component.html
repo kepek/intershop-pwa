@@ -7,7 +7,7 @@
 
 <div class="registration-form section" data-testing-id="account-create-full-page">
   <form [formGroup]="form" (ngSubmit)="submitForm()" class="form-horizontal" novalidate="novalidate">
-    <mat-form-field appearance="fill" class="form-field">
+    <mat-form-field appearance="fill" class="form-field" *ngIf="!hideTitleField">
       <mat-label>{{ 'camfil.account.apply_form.title' | translate }}</mat-label>
       <mat-select formControlName="title">
         <mat-option *ngFor="let title of preferredTitles" [value]="title">
