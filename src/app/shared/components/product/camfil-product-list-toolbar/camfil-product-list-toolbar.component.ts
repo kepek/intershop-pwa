@@ -30,6 +30,7 @@ export class CamfilProductListToolbarComponent implements OnInit, OnChanges, Aft
   @Input() categoryName: string;
   @Input() showCategoryFilter = false;
   sortingParam: string;
+  categoryParam: string;
   sortDropdown = new FormControl('');
   sortOptions: SelectOption[] = [];
   filter$: Observable<FilterNavigation>;
@@ -44,6 +45,9 @@ export class CamfilProductListToolbarComponent implements OnInit, OnChanges, Aft
       if (params) {
         this.sortingParam = params.get('sorting');
       }
+    });
+    this.shoppingFacade.selectedCategory$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(value => {
+      this.categoryParam = value?.uniqueId?.replace(/\./g, '/');
     });
   }
 
@@ -91,7 +95,9 @@ export class CamfilProductListToolbarComponent implements OnInit, OnChanges, Aft
   }
 
   applyFilter(event: { searchParameter: URLFormParams }) {
-    const params = formParamsToString(event.searchParameter);
+    let params = formParamsToString(event.searchParameter);
+    params = this.categoryParam ? params + '&category=' + this.categoryParam : params;
+
     this.router.navigate([], {
       queryParamsHandling: 'merge',
       relativeTo: this.activatedRoute,

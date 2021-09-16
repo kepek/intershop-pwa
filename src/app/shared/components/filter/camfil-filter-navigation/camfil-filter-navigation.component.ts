@@ -1,10 +1,12 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { FilterNavigation } from 'ish-core/models/filter-navigation/filter-navigation.model';
 import { URLFormParams, formParamsToString } from 'ish-core/utils/url-form-params';
+import { whenTruthy } from 'ish-core/utils/operators';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'camfil-filter-navigation',
@@ -12,21 +14,30 @@ import { URLFormParams, formParamsToString } from 'ish-core/utils/url-form-param
   styleUrls: ['./camfil-filter-navigation.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CamfilFilterNavigationComponent implements OnInit {
+export class CamfilFilterNavigationComponent implements OnInit, OnDestroy {
   @Input() fragmentOnRouting: string;
   @Input() orientation: 'sidebar' | 'horizontal' = 'sidebar';
   @Input() showCategoryFilter = true;
 
   filter$: Observable<FilterNavigation>;
+  categoryParam: string;
+
+  private destroy$ = new Subject<void>();
 
   constructor(private shoppingFacade: ShoppingFacade, private router: Router, private activatedRoute: ActivatedRoute) {}
 
   ngOnInit() {
     this.filter$ = this.shoppingFacade.currentFilter$(this.showCategoryFilter);
+
+    this.shoppingFacade.selectedCategory$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(value => {
+      this.categoryParam = value?.uniqueId?.replace(/\./g, '/');
+    });
   }
 
   applyFilter(event: { searchParameter: URLFormParams }) {
-    const params = formParamsToString(event.searchParameter);
+    let params = formParamsToString(event.searchParameter);
+    params = this.categoryParam ? params + '&category=' + this.categoryParam : params;
+
     this.router.navigate([], {
       queryParamsHandling: 'merge',
       relativeTo: this.activatedRoute,
@@ -46,5 +57,10 @@ export class CamfilFilterNavigationComponent implements OnInit {
       queryParams: { filters: undefined, page: 1 },
       fragment: this.fragmentOnRouting,
     });
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }
