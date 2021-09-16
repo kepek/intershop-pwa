@@ -221,6 +221,7 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
 
     if (s?.buckets?.previousValue?.length !== s?.buckets?.currentValue?.length) {
       this.handleHeightItemsContainer(this.order?.lineItems);
+      this.virtualScrollViewport.checkViewportSize();
     }
   }
 
