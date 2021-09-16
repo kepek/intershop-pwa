@@ -91,7 +91,7 @@
                   color="primary"
                   [title]="'camfil.account.cam_card.edit.heading' | translate"
                   [id]="'camCard_' + camCards.id"
-                  (click)="handleExpandedCamCard(camCards)"
+                  (click)="handleExpandedCamCard(camCards, camCards.id)"
                 >
                   <b>{{ 'camfil.account.cam_card.more_info' | translate }}</b>
                 </button>
@@ -264,7 +264,7 @@
           class="cam-card-row-element"
           [id]="'camCard_' + camCard.id"
           [class.cam-card-row-element--expanded]="isCamCardExpanded(camCard)"
-          (click)="handleExpandedCamCard(camCard)"
+          (click)="handleExpandedCamCard(camCard, camCard.id)"
         ></tr>
         <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="cam-card-row-details"></tr>
       </table>
