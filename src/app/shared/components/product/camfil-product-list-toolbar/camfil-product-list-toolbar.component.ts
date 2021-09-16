@@ -46,7 +46,7 @@ export class CamfilProductListToolbarComponent implements OnInit, OnChanges, Aft
         this.sortingParam = params.get('sorting');
       }
     });
-    this.shoppingFacade.selectedCategory$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(value => {
+    this.shoppingFacade.selectedCategory$?.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(value => {
       this.categoryParam = value?.uniqueId?.replace(/\./g, '/');
     });
   }

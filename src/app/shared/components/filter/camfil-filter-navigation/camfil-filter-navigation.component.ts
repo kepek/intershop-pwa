@@ -1,12 +1,12 @@
 import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { FilterNavigation } from 'ish-core/models/filter-navigation/filter-navigation.model';
-import { URLFormParams, formParamsToString } from 'ish-core/utils/url-form-params';
 import { whenTruthy } from 'ish-core/utils/operators';
-import { takeUntil } from 'rxjs/operators';
+import { URLFormParams, formParamsToString } from 'ish-core/utils/url-form-params';
 
 @Component({
   selector: 'camfil-filter-navigation',
@@ -29,7 +29,7 @@ export class CamfilFilterNavigationComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.filter$ = this.shoppingFacade.currentFilter$(this.showCategoryFilter);
 
-    this.shoppingFacade.selectedCategory$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(value => {
+    this.shoppingFacade.selectedCategory$?.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(value => {
       this.categoryParam = value?.uniqueId?.replace(/\./g, '/');
     });
   }
