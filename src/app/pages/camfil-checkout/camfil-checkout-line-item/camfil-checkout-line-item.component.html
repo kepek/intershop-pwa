@@ -15,6 +15,7 @@
         <div class="d-flex line-item-data-container">
           <div class="flex-row line-item-data-top">
             <camfil-product-title
+              [class]="'text-truncate'"
               [class.confirmed-product-title]="isConfirmed"
               [matTooltip]="product.name"
               [product]="product"
