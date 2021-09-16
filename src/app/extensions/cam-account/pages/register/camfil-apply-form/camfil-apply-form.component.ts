@@ -7,6 +7,7 @@ import { take } from 'rxjs/operators';
 
 import { AppFacade } from 'ish-core/facades/app.facade';
 import { FeatureToggleService } from 'ish-core/feature-toggle.module';
+import { Channel } from 'ish-core/models/channel/channel.types';
 import { HttpError } from 'ish-core/models/http-error/http-error.model';
 import { CamfilToastrService } from 'ish-core/store/core/messages/CamfilToastrService';
 import { whenTruthy } from 'ish-core/utils/operators';
@@ -59,7 +60,7 @@ export class CamfilApplyFormComponent implements OnInit {
 
     // Hide title field for FI channel
     this.appFacade.getChannel$?.pipe(whenTruthy(), take(1)).subscribe(channel => {
-      if (channel === 'Camfil-CamfilFI-Site') {
+      if (channel === Channel.FI) {
         this.hideTitleField = true;
       }
     });
