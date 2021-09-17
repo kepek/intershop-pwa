@@ -40,6 +40,7 @@ import { CheckoutFocusedElement } from 'ish-core/models/scroll-info copy/checkou
 import { Basket } from 'ish-core/models/basket/basket.model';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { AppFacade } from 'ish-core/facades/app.facade';
+import { Channel } from 'ish-core/models/channel/channel.types';
 
 @Component({
   selector: 'camfil-checkout-list',
@@ -194,7 +195,7 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
     }
 
     this.appFacade.getChannel$?.pipe(takeUntil(this.destroy$)).subscribe(channel => {
-      if (channel === 'Camfil-CamfilFI-Site') {
+      if (channel === Channel.FI) {
         this.hideRecipientButton = true;
       }
     });
