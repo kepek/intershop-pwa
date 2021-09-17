@@ -49,6 +49,10 @@ export interface OrderFilter {
 })
 export class CamfilOrderListComponent implements OnInit, AfterViewInit, OnDestroy, OnChanges {
   @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatSort) set matSort(ms: MatSort) {
+    this.sort = ms;
+    this.setDataSourceAttributes();
+  }
   @ViewChild('searchInput') searchInput: ElementRef;
   @ViewChildren('statusFilters') statusFilters: QueryList<MatCheckbox>;
 
@@ -359,5 +363,9 @@ export class CamfilOrderListComponent implements OnInit, AfterViewInit, OnDestro
       : direction === 'desc'
       ? currentOrders.sort((x, y) => (x[active] > y[active] ? -1 : y[active] > x[active] ? 1 : 0))
       : currentOrders;
+  }
+
+  setDataSourceAttributes() {
+    this.dataSource.sort = this.sort;
   }
 }
