@@ -227,9 +227,6 @@ describe('Customer Store', () => {
             [Basket Internal] Load Basket
             [Basket API] Load Basket Addresses
             [Basket API] Add Items To Basket from CamCard Success
-            [Basket API] Load Basket Success:
-              basket: {"id":"test","lineItems":[1]}
-            [Basket] Load Buckets
           `);
           done();
         }, 1000);

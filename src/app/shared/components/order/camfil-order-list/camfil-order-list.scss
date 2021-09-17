@@ -17,6 +17,29 @@
     padding: 0 28px;
     font-size: 12px;
   }
+
+  ::ng-deep {
+    th,
+    td {
+      padding-right: 4px;
+      text-align: left;
+      &:first-child {
+        padding-left: $space-box;
+      }
+      &:last-child {
+        padding-right: $space-default;
+      }
+      .mat-sort-header-container {
+        display: inline-block;
+      }
+      .mat-sort-header-content {
+        text-align: left;
+      }
+      .mat-sort-header-arrow {
+        margin: 0 0 $space-box-half 0;
+      }
+    }
+  }
 }
 
 table {
@@ -24,6 +47,7 @@ table {
 
   th {
     height: 45px;
+    padding-right: $space-box;
     font-size: $font-size-corporate;
     color: #000;
     background-color: $greyF5;

@@ -70,23 +70,9 @@ describe('Camfil Basket Cost Summary Component', () => {
     fixture.detectChanges();
     tick(500);
 
-    expect(element.textContent.replace(/^\s*[\r\n]*/gm, '')).toMatchInlineSnapshot(`
-      "checkout.cart.subtotal.heading
-      $141,796.98
-      -$11.90
-      checkout.order.shipping.label
-      -
-      Battery Deposit Surcharge
-      shopping_cart.detail.text
-      $595.00
-      checkout.cart.payment_cost.label
-      $3.57
-      checkout.order.total_cost.label
-      $142,470.71
-      checkout.tax.TaxesLabel.TotalOrderVat
-      $22,747.55
-      "
-    `);
+    expect(element.textContent.replace(/^\s*[\r\n]*/gm, '')).toMatchInlineSnapshot(
+      `"checkout.cart.subtotal.heading$141,796.98-$11.90checkout.order.shipping.label- Battery Deposit Surcharge  shopping_cart.detail.text $595.00checkout.cart.payment_cost.label$3.57checkout.order.total_cost.label$142,470.71checkout.tax.TaxesLabel.TotalOrderVat$22,747.55"`
+    );
   }));
 
   it('should not display estimated prices if estimated flag is not set', fakeAsync(() => {
