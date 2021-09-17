@@ -318,15 +318,16 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
 
   handleExpandedCamCard(camCard: CamCard, rowId) {
     this.scrollToSelectedRow(rowId);
-
     const isExpanded = this.expandedCamCard && this.expandedCamCard.id === camCard.id;
     this.expandedCamCard = isExpanded ? undefined : camCard;
-    if (!isExpanded) {
-      this.location.replaceState(this.location.path(false) + '#' + camCard.id);
-      this.openSubLevels(camCard);
-    } else {
-      this.location.replaceState(this.location.path(false));
-    }
+    setTimeout(() => {
+      if (!isExpanded) {
+        this.location.replaceState(this.location.path(false) + '#' + camCard.id);
+        this.openSubLevels(camCard);
+      } else {
+        this.location.replaceState(this.location.path(false));
+      }
+    }, 100);
   }
 
   isCamCardExpanded(cc: CamCard) {
@@ -361,8 +362,7 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
 
   scrollToSelectedRow(rowId) {
     const rowEl = document.getElementById('camCard_' + rowId) as HTMLElement;
-    const top = rowEl.getBoundingClientRect().top + window.pageYOffset - 132;
-
+    const top = rowEl.getBoundingClientRect().top + window.scrollY - 132;
     window.scrollTo({ top, behavior: 'auto' });
   }
 
