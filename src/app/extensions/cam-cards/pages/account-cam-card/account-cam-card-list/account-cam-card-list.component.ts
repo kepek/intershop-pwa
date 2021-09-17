@@ -316,7 +316,9 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
     this.isSubCamCardOpen(id) ? this.isSubOpen.splice(index, 1) : this.isSubOpen.push(id);
   }
 
-  handleExpandedCamCard(camCard: CamCard) {
+  handleExpandedCamCard(camCard: CamCard, rowId) {
+    this.scrollToSelectedRow(rowId);
+
     const isExpanded = this.expandedCamCard && this.expandedCamCard.id === camCard.id;
     this.expandedCamCard = isExpanded ? undefined : camCard;
     if (!isExpanded) {
@@ -355,6 +357,13 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
         this.expandCamCardByFragment();
       }
     }
+  }
+
+  scrollToSelectedRow(rowId) {
+    const rowEl = document.getElementById('camCard_' + rowId) as HTMLElement;
+    const top = rowEl.getBoundingClientRect().top + window.pageYOffset - 132;
+
+    window.scrollTo({ top, behavior: 'auto' });
   }
 
   /** addToCartItems */
