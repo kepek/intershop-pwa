@@ -166,10 +166,25 @@
       margin-bottom: 0;
     }
     .confirmed-product-title {
-      max-width: 100%;
+      max-width: 450px;
       .camfil-product-title {
         display: block;
-        max-width: 100%;
+        max-width: 450px;
+      }
+      @media (max-width: $screen-lg-max) {
+        .camfil-product-title {
+          max-width: 160px;
+        }
+      }
+      @media (max-width: $screen-sm-max) {
+        .camfil-product-title {
+          max-width: 325px;
+        }
+      }
+      @media (max-width: $screen-xs-max) {
+        .camfil-product-title {
+          max-width: 200px;
+        }
       }
     }
     camfil-product-image {
