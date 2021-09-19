@@ -33,7 +33,7 @@ export class AttributeHelper {
     const month = `0 ${value.getMonth() + 1}`.slice(-2).replace(/\s/g, '');
     const day = `0 ${value.getDate()}`.slice(-2);
     const year = value.getFullYear();
-    return [year, month, day].join('-');
+    return [year, month, day].join('-').replace(/\s/g, '');
   }
 
   static getAttrsBeforeAddToCart(measurements, boxLabel) {
