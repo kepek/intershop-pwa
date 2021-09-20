@@ -2,9 +2,10 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { provideMockStore } from '@ngrx/store/testing';
-import { MockDirective } from 'ng-mocks';
+import { MockDirective, MockPipe } from 'ng-mocks';
 
 import { ServerHtmlDirective } from 'ish-core/directives/server-html.directive';
+import { CamfilSlugifyPipe } from 'ish-core/pipes/camfil-slugify.pipe';
 
 import { ProductAddingErrorDialogComponent } from './cam-card-product-error-dialog.component';
 
@@ -15,7 +16,11 @@ describe('Cam Card Product Error Dialog Component', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [MockDirective(ServerHtmlDirective), ProductAddingErrorDialogComponent],
+      declarations: [
+        MockDirective(ServerHtmlDirective),
+        MockPipe(CamfilSlugifyPipe),
+        ProductAddingErrorDialogComponent,
+      ],
       imports: [ReactiveFormsModule],
       providers: [
         { provide: MAT_DIALOG_DATA, useValue: [] },
