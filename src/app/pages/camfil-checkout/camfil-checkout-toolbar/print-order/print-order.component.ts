@@ -62,6 +62,7 @@ export class PrintOrderComponent implements OnInit {
   } = {};
 
   texts = {
+    orderHeader: this.translate.instant('camfil.checkout.order'),
     customerAccount: this.translate.instant('camfil.account.cam_card.pdf.customer_account'),
     artNr: this.translate.instant('camfil.account.cam_card.pdf.art_nr'),
     boxLabel: this.translate.instant('camfil.account.cam_card.pdf.box_label'),
@@ -151,7 +152,7 @@ export class PrintOrderComponent implements OnInit {
     const { customerNo, companyName, department } = customer;
     const infoParts = [customerNo, companyName, department].filter(Boolean);
 
-    const title = `Order ${orderNo} - ${infoParts.join(', ')}`;
+    const title = `${this.texts.orderHeader} ${orderNo} - ${infoParts.join(', ')}`;
     return [
       {
         style: 'header',
