@@ -42,7 +42,7 @@ describe('Recently Viewed Component', () => {
     fixture.detectChanges();
 
     expect(element).toMatchInlineSnapshot(`
-      <div data-testing-id="recently-viewed" class="product-list-container">
+      <div class="product-list-container" data-testing-id="recently-viewed">
         <h2>recentlyViewed.component.heading</h2>
         <div class="product-list row">
           <div class="col-6 col-lg-3 product-list-item">
@@ -55,7 +55,7 @@ describe('Recently Viewed Component', () => {
             <camfil-product-item ng-reflect-product-sku="C"></camfil-product-item>
           </div>
         </div>
-        <a routerlink="/recently" data-testing-id="view-all" class="view-all">common.view_all.link</a>
+        <a class="view-all" data-testing-id="view-all" routerlink="/recently">common.view_all.link</a>
       </div>
     `);
   });
