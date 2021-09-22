@@ -347,8 +347,7 @@
   </div>
 
   <p class="mt-3 font-weight-bold" *ngIf="invalidMesurementsElements?.length">
-    You are trying add to cart a whole CamCard or CamCard section which contains product/s with material measurements
-    higher than allowed maxiumum.
+    {{ 'camfil.account.cam_card.trying_add_to_cart_invalid_measurements_elements.text' | translate }}
   </p>
   <div *ngFor="let cc of invalidMesurementsElements">
     <b>
