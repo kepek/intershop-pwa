@@ -4,7 +4,7 @@
     {{ 'camfil.add-product.modal.error.header' | translate: { '0': errorData.camCardName } }}
   </h2>
   <h2 class="text-center">
-    {{ errorData.errorMessage }}
+    {{ errorData.errorMessage | slugify: 'camfil.dynamic.product.error' | translate }}
   </h2>
   <div class="text-center">
     <button class="btn btn-link cta-modal__links--link" (click)="hide()">

@@ -934,6 +934,7 @@
   "camfil.dynamic.error.web_cc_import.validation_error.zero_or_negative_value": "Nolla tai negatiivinen arvo",
   "camfil.dynamic.external.user.(belongs.to.a.customer)": "Ulkopuolinen käyttäjä (kuuluu asiakastilille)",
   "camfil.dynamic.oci.punchout.user": "PunchOut OCI käyttäjä",
+  "camfil.dynamic.product.error.material.measurements.are.higher.than.allowed.maximum": "Mitat ovat suurempia kuin sallittu enimmäismäärä",
   "camfil.dynamic.salutation.miss": "Neiti",
   "camfil.dynamic.salutation.mr": "Herra",
   "camfil.dynamic.salutation.mrs": "Rouva",

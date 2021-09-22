@@ -934,6 +934,7 @@
   "camfil.dynamic.error.web_cc_import.validation_error.zero_or_negative_value": "Zero or negative value",
   "camfil.dynamic.external.user.(belongs.to.a.customer)": "External user (belongs to a customer)",
   "camfil.dynamic.oci.punchout.user": "Punchout User OCI",
+  "camfil.dynamic.product.error.material.measurements.are.higher.than.allowed.maximum": "Material measurements are higher than allowed maximum",
   "camfil.dynamic.salutation.miss": "Miss",
   "camfil.dynamic.salutation.mr": "Mr",
   "camfil.dynamic.salutation.mrs": "Mrs",

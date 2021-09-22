@@ -81,7 +81,7 @@
               </dd>
             </ng-container>
             <ng-template #fullDeliveryDate>
-              <dd class="col-6 p-0" data-testing-id="order-customer_id">
+              <dd class="col-6 p-0" data-testing-id="order-customer_id" *ngIf="order?.deliveryDate">
                 {{ order?.deliveryDate || '-' | ishDate }}
               </dd>
             </ng-template>
