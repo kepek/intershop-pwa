@@ -631,6 +631,7 @@
   "camfil.account.cam_card.trying_add_to_cart_not_buyable_elements.header": "Attention",
   "camfil.account.cam_card.trying_add_to_cart_not_buyable_elements.section": "Section",
   "camfil.account.cam_card.trying_add_to_cart_not_buyable_elements.text": "You are trying add to cart a whole CamCard or CamCard section which contains not-for-sale product/s. These products will be not added:",
+  "camfil.account.cam_card.trying_add_to_cart_invalid_measurements_elements.text": "You are trying add to cart a whole CamCard or CamCard section which contains product/s with material measurements higher than allowed maxiumum:",
   "camfil.account.cam_card.update.contacts.confirmation": "Contacts have been updated on CamCard",
   "camfil.account.cam_card.update.product.confirmation": "The {{0}} has been updated on Cam Card",
   "camfil.account.cam_card.userAccess": "User Access",

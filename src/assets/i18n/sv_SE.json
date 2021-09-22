@@ -631,6 +631,7 @@
   "camfil.account.cam_card.trying_add_to_cart_not_buyable_elements.header": "Varning",
   "camfil.account.cam_card.trying_add_to_cart_not_buyable_elements.section": "Sektion",
   "camfil.account.cam_card.trying_add_to_cart_not_buyable_elements.text": "Du försöker lägga till ett helt CamCard eller en hel CamCard-sektion som innehåller ogiltiga produkter. Följande produkter kommer inte att läggas till:",
+  "camfil.account.cam_card.trying_add_to_cart_invalid_measurements_elements.text": "sv_You are trying add to cart a whole CamCard or CamCard section which contains product/s with material measurements higher than allowed maxiumum:",
   "camfil.account.cam_card.update.contacts.confirmation": "Kontakter har blivit uppdatera i CamCard",
   "camfil.account.cam_card.update.product.confirmation": "{{0}} har uppdaterats i CamCard",
   "camfil.account.cam_card.userAccess": "Användaråtkomst",
