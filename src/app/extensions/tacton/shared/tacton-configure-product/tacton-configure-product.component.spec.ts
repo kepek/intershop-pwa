@@ -48,8 +48,8 @@ describe('Tacton Configure Product Component', () => {
 
       expect(element).toMatchInlineSnapshot(`
         <a
-          role="button"
           class="btn btn-primary btn-lg btn-block"
+          role="button"
           ng-reflect-router-link="/configure,CONFIGURABLE_PRODUC"
           title="tacton.configure_product.product.label"
           href="/configure/CONFIGURABLE_PRODUCT"

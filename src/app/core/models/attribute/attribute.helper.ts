@@ -30,8 +30,8 @@ export class AttributeHelper {
   // CAMFIL
 
   static formatDeliveryDate(value: Date) {
-    const month = `0 ${value.getMonth() + 1}`.slice(-2).replace(/\s/g, '');
-    const day = `0 ${value.getDate()}`.slice(-2);
+    const month = `0 ${value.getMonth() + 1}`.slice(-3).replace(/\s/g, '');
+    const day = `0 ${value.getDate()}`.slice(-3);
     const year = value.getFullYear();
     return [year, month, day].join('-').replace(/\s/g, '');
   }
