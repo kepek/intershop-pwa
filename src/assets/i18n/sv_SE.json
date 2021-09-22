@@ -731,7 +731,7 @@
   "camfil.account.organization.list.no_data.text": "Inga användare hittades",
   "camfil.account.organization.user.status.active": "Aktiva",
   "camfil.account.organization.user.status.inactive": "Inaktiv",
-  "camfil.account.organization.user_details.form.change_password.success.message": "Ett e-postmeddelande med en länk för att återställa lösenordet har skickats till e-postadressen '{{0}}'.",
+  "camfil.account.organization.user_details.form.change_password.success.message": "Ett e-postmeddelande med en länk för att återställa lösenordet har skickats.",
   "camfil.account.organization.user_details.form.email.error.email": "sv_Please enter a valid e-mail address.",
   "camfil.account.organization.user_details.form.email.error.required": "Vänligen ange en e-postadress.",
   "camfil.account.organization.user_details.form.email.label": "E-post",

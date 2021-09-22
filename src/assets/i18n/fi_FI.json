@@ -731,7 +731,7 @@
   "camfil.account.organization.list.no_data.text": "Kriteerejä vastaavia tietoja ei löydy.",
   "camfil.account.organization.user.status.active": "Aktiivinen",
   "camfil.account.organization.user.status.inactive": "Ei-aktiivinen",
-  "camfil.account.organization.user_details.form.change_password.success.message": "Linkki salasanan vaihtamiseen on lähetetty sähköpostitse '{{0}}' osoitteeseen.",
+  "camfil.account.organization.user_details.form.change_password.success.message": "Linkki salasanan vaihtamiseen on lähetetty sähköpostitse.",
   "camfil.account.organization.user_details.form.email.error.email": "Syötä voimassaoleva sähköpostiosoite.",
   "camfil.account.organization.user_details.form.email.error.required": "Syötä sähköpostiosoite.",
   "camfil.account.organization.user_details.form.email.label": "Sähköpostiosoite",
