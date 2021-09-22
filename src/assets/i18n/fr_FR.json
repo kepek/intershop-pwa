@@ -731,7 +731,7 @@
   "camfil.account.organization.list.no_data.text": "fr_No data matching the filters.",
   "camfil.account.organization.user.status.active": "fr_Active",
   "camfil.account.organization.user.status.inactive": "fr_Inactive",
-  "camfil.account.organization.user_details.form.change_password.success.message": "fr_An e-mail with a link to reset password has been sent to '{{0}}' e-mail address.",
+  "camfil.account.organization.user_details.form.change_password.success.message": "fr_An e-mail with a link to reset password has been sent.",
   "camfil.account.organization.user_details.form.email.error.email": "fr_Please enter a valid e-mail address.",
   "camfil.account.organization.user_details.form.email.error.required": "fr_Please enter an e-mail.",
   "camfil.account.organization.user_details.form.email.label": "fr_E-mail",
