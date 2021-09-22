@@ -240,7 +240,7 @@ export const deleteBasketItemFail = createAction('[Basket API] Delete Basket Ite
 
 export const deleteBasketItemSuccess = createAction(
   '[Basket API] Delete Basket Item Success',
-  payload<{ info: BasketInfo[]; id?: string }>()
+  payload<{ info: BasketInfo[] }>()
 );
 
 export const removePromotionCodeFromBasket = createAction(
@@ -563,3 +563,8 @@ export const doubleBucketItemsQuantityFail = createAction(
 );
 
 export const doubleBucketItemsQuantitySuccess = createAction('[Basket API] Double Bucket Items Quantity Success');
+
+export const setBucketScrollIndex = createAction(
+  '[Basket] Set Bucket Scroll Index',
+  payload<{ urn: string; index: number }>()
+);

@@ -61,6 +61,7 @@ import {
   removePromotionCodeFromBasket,
   setBasketAttribute,
   setBasketPayment,
+  setBucketScrollIndex,
   startCheckout,
   updateBasketAddress,
   updateBasketExternalOrderReference,
@@ -313,5 +314,9 @@ export class CheckoutFacade {
 
   doubleBucketItemsQuantity(basketId: string, bucketId: string) {
     this.store.dispatch(doubleBucketItemsQuantity({ basketId, bucketId }));
+  }
+
+  setBucketScrollIndex(urn: string, index: number) {
+    this.store.dispatch(setBucketScrollIndex({ urn, index }));
   }
 }
