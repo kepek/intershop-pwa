@@ -7,6 +7,7 @@ import { takeUntil } from 'rxjs/operators';
 import { AccountFacade } from 'ish-core/facades/account.facade';
 import { Credentials } from 'ish-core/models/credentials/credentials.model';
 import { HttpError } from 'ish-core/models/http-error/http-error.model';
+import { ApiTokenService } from 'ish-core/utils/api-token/api-token.service';
 import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
 
 @Component({
@@ -24,7 +25,12 @@ export class CamfilLoginFormComponent implements OnInit, OnDestroy {
 
   private destroy$ = new Subject();
 
-  constructor(fb: FormBuilder, private accountFacade: AccountFacade, private activatedRoute: ActivatedRoute) {
+  constructor(
+    fb: FormBuilder,
+    private accountFacade: AccountFacade,
+    private activatedRoute: ActivatedRoute,
+    private apiTokenService: ApiTokenService
+  ) {
     this.form = fb.group({
       login: ['', [Validators.required]],
       password: ['', [Validators.required]],
@@ -41,12 +47,12 @@ export class CamfilLoginFormComponent implements OnInit, OnDestroy {
       token = token?.split(' ')?.join('+');
 
       const erpEmployeeId = params?.ERPEmployeeID;
-
       if (erpEmployeeId) {
         localStorage.setItem('erpEmployeeId', erpEmployeeId);
       }
 
       if (token) {
+        this.apiTokenService.removeApiToken();
         this.accountFacade.loginUserWithToken(token);
       }
     });

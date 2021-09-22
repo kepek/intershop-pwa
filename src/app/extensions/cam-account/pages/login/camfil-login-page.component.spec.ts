@@ -1,11 +1,14 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { BrowserTransferStateModule } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { MockComponent } from 'ng-mocks';
+import { CookiesService } from 'ngx-utils-cookies-port';
 import { instance, mock } from 'ts-mockito';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
 import { AppFacade } from 'ish-core/facades/app.facade';
+import { CoreStoreModule } from 'ish-core/store/core/core-store.module';
 import { ContentIncludeComponent } from 'ish-shared/cms/components/content-include/content-include.component';
 import { CamfilBulletListComponent } from 'ish-shared/components/common/camfil-bullet-list/camfil-bullet-list.component';
 import { CamfilDetailsBoxComponent } from 'ish-shared/components/common/camfil-details-box/camfil-details-box.component';
@@ -24,8 +27,14 @@ describe('Camfil Login Page Component', () => {
   let element: HTMLElement;
 
   beforeEach(async () => {
+    const cookiesServiceMock = mock(CookiesService);
     await TestBed.configureTestingModule({
-      imports: [RouterTestingModule, TranslateModule.forRoot()],
+      imports: [
+        BrowserTransferStateModule,
+        CoreStoreModule.forTesting(),
+        RouterTestingModule,
+        TranslateModule.forRoot(),
+      ],
       declarations: [
         CamfilBulletListComponent,
         CamfilDetailsBoxComponent,
@@ -41,6 +50,7 @@ describe('Camfil Login Page Component', () => {
       providers: [
         { provide: AccountFacade, useFactory: () => instance(mock(AccountFacade)) },
         { provide: AppFacade, useFactory: () => instance(mock(AppFacade)) },
+        { provide: CookiesService, useValue: instance(cookiesServiceMock) },
       ],
     }).compileComponents();
   });

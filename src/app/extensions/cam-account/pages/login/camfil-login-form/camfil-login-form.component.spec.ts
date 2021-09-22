@@ -1,11 +1,14 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
+import { BrowserTransferStateModule } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MockComponent } from 'ng-mocks';
+import { CookiesService } from 'ngx-utils-cookies-port';
 import { instance, mock } from 'ts-mockito';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
+import { ApiTokenService } from 'ish-core/utils/api-token/api-token.service';
 import { CamfilErrorMessageComponent } from 'ish-shared/components/common/camfil-error-message/camfil-error-message.component';
 import { CamfilHeaderBoxComponent } from 'ish-shared/components/common/camfil-header-box/camfil-header-box.component';
 
@@ -18,10 +21,15 @@ describe('Camfil Login Form Component', () => {
   let translate: TranslateService;
 
   beforeEach(async () => {
+    const cookiesServiceMock = mock(CookiesService);
     await TestBed.configureTestingModule({
       declarations: [CamfilHeaderBoxComponent, CamfilLoginFormComponent, MockComponent(CamfilErrorMessageComponent)],
-      imports: [ReactiveFormsModule, RouterTestingModule, TranslateModule.forRoot()],
-      providers: [{ provide: AccountFacade, useFactory: () => instance(mock(AccountFacade)) }],
+      imports: [BrowserTransferStateModule, ReactiveFormsModule, RouterTestingModule, TranslateModule.forRoot()],
+      providers: [
+        { provide: AccountFacade, useFactory: () => instance(mock(AccountFacade)) },
+        { provide: ApiTokenService, useFactory: () => instance(mock(ApiTokenService)) },
+        { provide: CookiesService, useValue: instance(cookiesServiceMock) },
+      ],
     }).compileComponents();
   });
 
