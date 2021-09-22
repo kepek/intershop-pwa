@@ -627,6 +627,7 @@
   "camfil.account.cam_card.search.select.label": "Suodata asiakkaan mukaan",
   "camfil.account.cam_card.search.total": "Suodatinluetteloita yhteensä",
   "camfil.account.cam_card.selectAll": "Valitse kaikki",
+  "camfil.account.cam_card.trying_add_to_cart_invalid_measurements_elements.text": "fi_You are trying add to cart a whole CamCard or CamCard section which contains product/s with material measurements higher than allowed maxiumum:",
   "camfil.account.cam_card.trying_add_to_cart_not_buyable_elements.btn": "OK",
   "camfil.account.cam_card.trying_add_to_cart_not_buyable_elements.header": "Huomio",
   "camfil.account.cam_card.trying_add_to_cart_not_buyable_elements.section": "Osio",

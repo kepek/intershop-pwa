@@ -88,6 +88,7 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
   loading = true;
   isSubOpen = [];
   notBuyableElemnts = [];
+  invalidMesurementsElements = [];
   maintenance = CamCardHelper.maintenance;
   commonShippingMethodId: string;
   basket$: Observable<BasketView>;
@@ -368,33 +369,14 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
 
   /** addToCartItems */
   addToCart(modal: CamfilModalDialogComponent<any>) {
-    const notBuyableElemnts = this.camCardsProcessed.data
-      // Checked CamCards
-      .reduce((output, camcard) => {
-        if (this.isCamCardChecked(camcard)) {
-          output.push(camcard);
-        } else {
-          const checkedSubs = camcard.subCamCards.filter(sub => this.isCamCardChecked(sub));
-          if (checkedSubs.length) {
-            output.push(checkedSubs);
-          }
-        }
-        return output;
-      }, [])
-      // mapping checked CamCards for view
-      .map((cc: CamCard) => {
-        const allNotAvailableItems = this.getInactiveProductsInCamCard(cc);
-        // clean up duplicate products
-        const items = allNotAvailableItems.filter(
-          (item, i, arr) => arr.findIndex(el => el.product.sku === item.product.sku) === i
-        );
-        return { name: cc.name, isChild: !!cc.rootCamCard, items };
-      })
-      // remove empty camCards (without not available items)
-      .filter(item => item.items.length);
+    const incorrectElemetns = {
+      notBuyableElemnts: this.getIncorrectCamCardsElements('inactive'),
+      invalidMesurementsElements: this.getIncorrectCamCardsElements('measurements'),
+    };
 
-    if (notBuyableElemnts.length) {
-      this.notBuyableElemnts = notBuyableElemnts;
+    if (incorrectElemetns.notBuyableElemnts.length || incorrectElemetns.invalidMesurementsElements.length) {
+      this.notBuyableElemnts = incorrectElemetns.notBuyableElemnts;
+      this.invalidMesurementsElements = incorrectElemetns.invalidMesurementsElements;
       this.notAvailbaleProdList(modal);
     } else {
       this.addSelectedItemsToCart();
@@ -402,16 +384,17 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
   }
 
   addSelectedItemsToCart() {
-    const list = Object.values(this.productsChecked).reduce((acc, val: CamCamProductChecked) => {
-      const key = val.camCardRoot || val.camCardId;
-      const products = acc[key]?.products || [];
+    const list = Object.values(this.productsChecked)
+      .filter((item: CamCamProductChecked) => item.measurement.valid)
+      .reduce((acc, val: CamCamProductChecked) => {
+        const key = val.camCardRoot || val.camCardId;
+        const products = acc[key]?.products || [];
 
-      acc[key] = {
-        products: [...products, val],
-      };
-      return acc;
-    }, {}) as CamCamProductsAddToCart;
-
+        acc[key] = {
+          products: [...products, val],
+        };
+        return acc;
+      }, {}) as CamCamProductsAddToCart;
     this.camCardsWithNoCompleteAddresses = this.camCards.filter(({ deliveryAddress, id }) => {
       const { postalCode, city, addressLine1 } = deliveryAddress;
       // + add filter by checked CC
@@ -448,6 +431,10 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
     modal.show();
   }
 
+  invalidMeasurementsProdList(modal: CamfilModalDialogComponent<any>) {
+    modal.show();
+  }
+
   /** Emits the camCard to add new one. */
   add(camCard: CamCard) {
     this.addCamCard.emit(camCard);
@@ -481,6 +468,40 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
     return camCard.itemsCount > 0 && !this.maintenance(camCard, ['INACTIVE']);
   }
 
+  getIncorrectCamCardsElements(type) {
+    return (
+      this.camCardsProcessed.data
+        // Checked CamCards
+        .reduce((output, camcard) => {
+          if (this.isCamCardChecked(camcard)) {
+            output.push(camcard);
+          } else {
+            const checkedSubs = camcard.subCamCards.filter(sub => this.isCamCardChecked(sub));
+            if (checkedSubs.length) {
+              output.push(checkedSubs);
+            }
+          }
+          return output;
+        }, [])
+        // mapping checked CamCards for view
+        .map((cc: CamCard) => {
+          const allInvalidElements =
+            type === 'inactive'
+              ? this.getInactiveProductsInCamCard(cc)
+              : this.getInvalidMeasurementsProductsInCamCard(cc);
+
+          // clean up duplicate products
+          const items = allInvalidElements.filter(
+            (item, i, arr) => arr.findIndex(el => el.product.sku === item.product.sku) === i
+          );
+
+          return { name: cc.name, isChild: !!cc.rootCamCard, items };
+        })
+        // remove empty camCards (without not available items)
+        .filter(item => item.items.length)
+    );
+  }
+
   getInactiveProducts(items: CamCardItem[]) {
     return items?.filter(el => !el.product.available) || [];
   }
@@ -491,6 +512,18 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
       const sumItem = this.getInactiveProducts(sub.camCardItems);
       return sumItem.length ? [...arr, ...sumItem] : arr;
     }, inactive);
+  }
+
+  getInvalidMeasurements(items: CamCardItem[]) {
+    return items?.filter(el => !el.measurement.valid) || [];
+  }
+
+  getInvalidMeasurementsProductsInCamCard(camCard: CamCard) {
+    const invalidMeasurements = this.getInvalidMeasurements(camCard.camCardItems);
+    return camCard.subCamCards?.reduce((arr, sub) => {
+      const sumItem = this.getInvalidMeasurements(sub.camCardItems);
+      return sumItem.length ? [...arr, ...sumItem] : arr;
+    }, invalidMeasurements);
   }
 
   isProductChecked(id: string) {
