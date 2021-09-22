@@ -190,7 +190,7 @@ export class ApiTokenService {
     this.apiToken$.next(undefined);
   }
 
-  private invalidateApiToken() {
+  invalidateApiToken() {
     const cookie = this.parseCookie();
 
     this.removeApiToken();
