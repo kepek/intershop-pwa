@@ -23,8 +23,6 @@ import { getRegionsByCountryCode, loadRegions } from 'ish-core/store/general/reg
 import { getServerConfigParameter } from 'ish-core/store/general/server-config';
 import { whenTruthy } from 'ish-core/utils/operators';
 
-import { environment } from '../../../environments/environment';
-
 @Injectable({ providedIn: 'root' })
 export class AppFacade {
   constructor(private store: Store, private router: Router) {
@@ -47,9 +45,9 @@ export class AppFacade {
         map(countryCode =>
           availableLocales.filter(loc => {
             const additionalCountryCodes = [];
-            if (!environment.production || countryCode.toLowerCase() !== 'fi') {
-              additionalCountryCodes.push('gb');
-            }
+
+            additionalCountryCodes.push('gb');
+
             return [countryCode.toLowerCase(), ...additionalCountryCodes].includes(loc.value);
           })
         )
