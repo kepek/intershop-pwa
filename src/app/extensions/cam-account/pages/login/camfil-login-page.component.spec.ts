@@ -1,11 +1,14 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { BrowserTransferStateModule } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { MockComponent } from 'ng-mocks';
+import { CookiesService } from 'ngx-utils-cookies-port';
 import { instance, mock } from 'ts-mockito';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
 import { AppFacade } from 'ish-core/facades/app.facade';
+import { CoreStoreModule } from 'ish-core/store/core/core-store.module';
 import { ContentIncludeComponent } from 'ish-shared/cms/components/content-include/content-include.component';
 import { CamfilBulletListComponent } from 'ish-shared/components/common/camfil-bullet-list/camfil-bullet-list.component';
 import { CamfilDetailsBoxComponent } from 'ish-shared/components/common/camfil-details-box/camfil-details-box.component';
@@ -17,9 +20,6 @@ import { CamfilLoginFormComponent } from './camfil-login-form/camfil-login-form.
 import { LoginInfoSectionComponent } from './camfil-login-info-section/login-info-section.component';
 import { CamfilLoginNewCustomerComponent } from './camfil-login-new-customer/camfil-login-new-customer.component';
 import { CamfilLoginPageComponent } from './camfil-login-page.component';
-import { BrowserTransferStateModule } from '@angular/platform-browser';
-import { CookiesService } from 'ngx-utils-cookies-port';
-import { CoreStoreModule } from 'ish-core/store/core/core-store.module';
 
 describe('Camfil Login Page Component', () => {
   let fixture: ComponentFixture<CamfilLoginPageComponent>;
@@ -30,10 +30,10 @@ describe('Camfil Login Page Component', () => {
     const cookiesServiceMock = mock(CookiesService);
     await TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule,
-        TranslateModule.forRoot(),
         BrowserTransferStateModule,
         CoreStoreModule.forTesting(),
+        RouterTestingModule,
+        TranslateModule.forRoot(),
       ],
       declarations: [
         CamfilBulletListComponent,
