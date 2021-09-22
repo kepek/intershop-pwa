@@ -2,10 +2,12 @@ import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import {
   ChangeDetectionStrategy,
   Component,
+  EventEmitter,
   Input,
   OnChanges,
   OnDestroy,
   OnInit,
+  Output,
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
@@ -60,6 +62,7 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
   @Input() focusedElementId: string;
   @Input() isConfirmed;
   @Input() lineItem: LineItemView;
+  @Output() openDeleteModalAction = new EventEmitter();
 
   earliestDeliveryDate: Date;
   boxLabel: string;
@@ -257,6 +260,7 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
   openDeleteModal() {
     this.dialog.open(this.modal.show());
     this.modal.hide = () => this.dialog.closeAll();
+    this.openDeleteModalAction.emit();
   }
 
   setFocusedElement(target: HTMLDataElement) {

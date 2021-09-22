@@ -252,6 +252,7 @@
         [isPartialDelivery]="isPartialDelivery"
         [lineItem]="item"
         [orderDeliveryDate]="deliveryDate"
+        (openDeleteModalAction)="changeScrollIndex()"
       ></camfil-checkout-line-item>
     </div>
   </ng-template>
@@ -265,8 +266,7 @@
       class="bucket_list-container"
     >
       <cdk-virtual-scroll-viewport [itemSize]="itemSize">
-        <!-- TODO: improve loop by using some pipe ex. ngx-pipe filterBy instead onlyVisibleItems -->
-        <div *cdkVirtualFor="let item of onlyVisibleItems; index as i; trackBy: trackBy">
+        <div *cdkVirtualFor="let item of order.lineItems; index as i; trackBy: trackBy">
           <div
             [cdkDragData]="item"
             [cdkDragDisabled]="isConfirmed"

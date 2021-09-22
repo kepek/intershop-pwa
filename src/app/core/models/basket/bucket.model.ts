@@ -29,6 +29,7 @@ export interface Bucket extends BasketExtensions {
   contact?: string;
   shippingMethod?: string;
   createdFromCamCardId?: string;
+  currentScrollIndex?: number;
 }
 
 export interface BucketData {

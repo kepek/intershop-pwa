@@ -1,21 +1,21 @@
-<camfil-loading *ngIf='(ordersLoading$ | async) || (basketLoading$ | async)' fixed='true'></camfil-loading>
+<camfil-loading *ngIf="(ordersLoading$ | async) || (basketLoading$ | async)" fixed="true"></camfil-loading>
 
 <br />
 
-<div class='checkout row'>
-  <div class='col-sm-12 col-lg-9'>
+<div class="checkout row">
+  <div class="col-sm-12 col-lg-9">
     <div [ngClass]="{ 'header-divider-container': isConfirmed }">
       <camfil-checkout-header
-        [basket]='basket$ | async'
-        [buckets]='buckets$ | async'
-        [isConfirmed]='isConfirmed'
+        [basket]="basket$ | async"
+        [buckets]="buckets$ | async"
+        [isConfirmed]="isConfirmed"
       ></camfil-checkout-header>
       <mat-divider></mat-divider>
     </div>
 
     <div>
       <ish-basket-info></ish-basket-info>
-      <ng-container *ngIf='!(emptyBuckets$ | async)?.length'>
+      <ng-container *ngIf="!(emptyBuckets$ | async)?.length">
         <camfil-basket-validation-results></camfil-basket-validation-results>
       </ng-container>
       <camfil-checkout-validation></camfil-checkout-validation>
@@ -24,40 +24,40 @@
     <ng-template #noBucket></ng-template>
 
     <div cdkDropListGroup>
-      <ng-container *ngIf='emptyBuckets$ | async as emptyBuckets; else noBucket'>
-        <ng-container *ngFor='let emptyBucket of emptyBuckets; trackBy: trackByLineItems'>
-          <camfil-checkout-list [order]='emptyBucket'></camfil-checkout-list>
+      <ng-container *ngIf="emptyBuckets$ | async as emptyBuckets; else noBucket">
+        <ng-container *ngFor="let emptyBucket of emptyBuckets; trackBy: trackByLineItems">
+          <camfil-checkout-list [order]="emptyBucket"></camfil-checkout-list>
         </ng-container>
       </ng-container>
-      <ng-container *ngIf='isConfirmed; else notConfirmed'>
-        <ng-container *ngIf='confirmedBuckets$ | async as confirmedBuckets; else noBucket'>
-          <ng-container *ngFor='let confirmedBucket of confirmedBuckets; index as i; trackBy: trackByLineItems'>
+      <ng-container *ngIf="isConfirmed; else notConfirmed">
+        <ng-container *ngIf="confirmedBuckets$ | async as confirmedBuckets; else noBucket">
+          <ng-container *ngFor="let confirmedBucket of confirmedBuckets; index as i; trackBy: trackByLineItems">
             <camfil-checkout-list
-              [basket]='basket$ | async'
-              [buckets]='confirmedBuckets'
-              [index]='i + 1'
-              [isConfirmed]='isConfirmed'
-              [order]='confirmedBucket'
+              [basket]="basket$ | async"
+              [buckets]="confirmedBuckets"
+              [index]="i + 1"
+              [isConfirmed]="isConfirmed"
+              [order]="confirmedBucket"
             ></camfil-checkout-list>
           </ng-container>
         </ng-container>
       </ng-container>
       <ng-template #notConfirmed>
-        <ng-container *ngIf='buckets$ | async as buckets; else noBucket'>
-          <ng-container *ngFor='let bucket of buckets; index as i; trackBy: trackByLineItems'>
+        <ng-container *ngIf="buckets$ | async as buckets; else noBucket">
+          <ng-container *ngFor="let bucket of buckets; index as i; trackBy: trackByLineItems">
             <camfil-checkout-list
-              [basket]='basket$ | async'
-              [buckets]='buckets'
-              [index]='i + 1'
-              [isConfirmed]='isConfirmed'
-              [order]='bucket'
+              [basket]="basket$ | async"
+              [buckets]="buckets"
+              [index]="i + 1"
+              [isConfirmed]="isConfirmed"
+              [order]="bucket"
             ></camfil-checkout-list>
           </ng-container>
         </ng-container>
       </ng-template>
     </div>
   </div>
-  <div class='col-sm-12 col-lg-3'>
-    <camfil-checkout-summary [basket]='confirmedBasket$ | async' [isConfirmed]='isConfirmed'></camfil-checkout-summary>
+  <div class="col-sm-12 col-lg-3">
+    <camfil-checkout-summary [basket]="confirmedBasket$ | async" [isConfirmed]="isConfirmed"></camfil-checkout-summary>
   </div>
 </div>

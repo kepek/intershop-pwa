@@ -87,6 +87,7 @@ import {
   setBasketPayment,
   setBasketPaymentFail,
   setBasketPaymentSuccess,
+  setBucketScrollIndex,
   startCheckout,
   startCheckoutFail,
   startCheckoutSuccess,
@@ -163,16 +164,6 @@ export const initialState: BasketState = {
   deliveryTerms: {},
   calendarExceptions: [],
 };
-
-function handleVisibleAfterDelete(lineItems: LineItemView[], payload): LineItemView[] {
-  let position = 0;
-  return lineItems
-    ?.map(item => (item.id === payload.id ? { ...item, hiddenItem: true } : item))
-    .map(item => ({
-      ...item,
-      position: item.hiddenItem ? undefined : ++position,
-    }));
-}
 
 export const basketReducer = createReducer(
   initialState,
@@ -283,33 +274,21 @@ export const basketReducer = createReducer(
     productUpdated: true,
     productAdded: true,
   })),
-  on(deleteBasketItemSuccess, (state: BasketState, { payload }) => {
-    const basketItems = handleVisibleAfterDelete(state.basket?.lineItems, payload);
-    const buckets = state.buckets?.map(b => {
-      const lineItems = b?.lineItems.map(item => {
-        const { position, hiddenItem } = basketItems.find(({ id }) => id === item.id);
-        return { ...item, position, hiddenItem };
-      });
-      return { ...b, lineItems };
-    });
-    return {
-      ...state,
-      basket: {
-        ...state.basket,
-        lineItems: basketItems,
-      },
-      buckets,
-    };
-  }),
   on(loadBucketsSuccess, (state: BasketState, action) => {
     const addresses = action.payload.buckets.map(bucket => bucket.shipToAddressFull);
     const onlyEmpty = state.emptyBuckets.filter(emptyBucket =>
       AddressHelper.isNewAddress(emptyBucket.shipToAddressFull as Address, addresses)
     );
+    const buckets = action.payload.buckets?.map(b => {
+      const isScrollIndex = state.buckets?.find(
+        sb => sb.shipToAddress === b.shipToAddress && sb.currentScrollIndex !== undefined
+      );
+      return isScrollIndex ? { ...b, currentScrollIndex: isScrollIndex.currentScrollIndex } : b;
+    });
 
     return {
       ...state,
-      buckets: action.payload.buckets,
+      buckets,
       emptyBuckets: onlyEmpty,
     };
   }),
@@ -549,5 +528,13 @@ export const basketReducer = createReducer(
     ...state,
     error: action.payload.error,
     failedCamCardName: action.payload.failedCamCardName,
-  }))
+  })),
+  on(setBucketScrollIndex, (state: BasketState, action) => {
+    const { urn, index } = action.payload;
+    const buckets = state.buckets?.map(b => (b.shipToAddress === urn ? { ...b, currentScrollIndex: index } : b));
+    return {
+      ...state,
+      buckets,
+    };
+  })
 );

@@ -14,7 +14,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { MatDialog } from '@angular/material/dialog';
 import { Observable, Subject } from 'rxjs';
-import { first, take, takeUntil } from 'rxjs/operators';
+import { first, skip, take, takeUntil } from 'rxjs/operators';
 
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
@@ -57,6 +57,7 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
   @Input() basket: Basket;
   @Input() isConfirmed: boolean;
   @Input() index: number;
+  currentScrollIndex?: number;
   isOrderOpen = true;
   orderForm: FormGroup;
   validators = ORDER_HEADER_VALIDATORS;
@@ -116,10 +117,6 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
 
   get shipToAddress() {
     return { ...this.order.shipToAddressFull, countryCode: '' };
-  }
-
-  get onlyVisibleItems() {
-    return this.order.lineItems.filter(el => !el.hiddenItem);
   }
 
   get freeDelivery() {
@@ -216,14 +213,13 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
       this.forceUpdateForm = false;
     }
 
-    if (s.buckets && this.onlyVisibleItems.length !== this.order?.lineItems?.length) {
-      this.handleHeightItemsContainer(this.onlyVisibleItems);
-    }
-
     if (s?.buckets?.previousValue?.length !== s?.buckets?.currentValue?.length) {
       this.handleHeightItemsContainer(this.order?.lineItems);
       this.virtualScrollViewport?.checkViewportSize();
     }
+
+    const scroll = this.currentScrollIndex || this.order.currentScrollIndex;
+    setTimeout(() => this.virtualScrollViewport?.scrollToIndex(scroll));
   }
 
   ngAfterViewInit() {
@@ -237,6 +233,10 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
 
       clearTimeout(focusTimeout);
     }
+
+    this.virtualScrollViewport?.scrolledIndexChange.pipe(skip(1), takeUntil(this.destroy$)).subscribe(el => {
+      this.currentScrollIndex = el;
+    });
   }
 
   handleHeightItemsContainer(lineItems: LineItemView[]) {
@@ -249,6 +249,10 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
       viewportElement.style.height = `${numberOfItems * this.itemSize}px`;
       viewportElement.style.overflowY = isMoreThanLimit ? 'auto' : 'hidden';
     }
+  }
+
+  changeScrollIndex() {
+    this.checkoutFacade.setBucketScrollIndex(this.order.shipToAddress, this.currentScrollIndex);
   }
 
   filterDates(date) {
