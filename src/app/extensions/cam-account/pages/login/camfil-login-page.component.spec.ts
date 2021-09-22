@@ -17,6 +17,9 @@ import { CamfilLoginFormComponent } from './camfil-login-form/camfil-login-form.
 import { LoginInfoSectionComponent } from './camfil-login-info-section/login-info-section.component';
 import { CamfilLoginNewCustomerComponent } from './camfil-login-new-customer/camfil-login-new-customer.component';
 import { CamfilLoginPageComponent } from './camfil-login-page.component';
+import { BrowserTransferStateModule } from '@angular/platform-browser';
+import { CookiesService } from 'ngx-utils-cookies-port';
+import { CoreStoreModule } from 'ish-core/store/core/core-store.module';
 
 describe('Camfil Login Page Component', () => {
   let fixture: ComponentFixture<CamfilLoginPageComponent>;
@@ -24,8 +27,14 @@ describe('Camfil Login Page Component', () => {
   let element: HTMLElement;
 
   beforeEach(async () => {
+    const cookiesServiceMock = mock(CookiesService);
     await TestBed.configureTestingModule({
-      imports: [RouterTestingModule, TranslateModule.forRoot()],
+      imports: [
+        RouterTestingModule,
+        TranslateModule.forRoot(),
+        BrowserTransferStateModule,
+        CoreStoreModule.forTesting(),
+      ],
       declarations: [
         CamfilBulletListComponent,
         CamfilDetailsBoxComponent,
@@ -41,6 +50,7 @@ describe('Camfil Login Page Component', () => {
       providers: [
         { provide: AccountFacade, useFactory: () => instance(mock(AccountFacade)) },
         { provide: AppFacade, useFactory: () => instance(mock(AppFacade)) },
+        { provide: CookiesService, useValue: instance(cookiesServiceMock) },
       ],
     }).compileComponents();
   });

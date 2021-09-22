@@ -10,6 +10,9 @@ import { CamfilErrorMessageComponent } from 'ish-shared/components/common/camfil
 import { CamfilHeaderBoxComponent } from 'ish-shared/components/common/camfil-header-box/camfil-header-box.component';
 
 import { CamfilLoginFormComponent } from './camfil-login-form.component';
+import { ApiTokenService } from 'ish-core/utils/api-token/api-token.service';
+import { BrowserTransferStateModule } from '@angular/platform-browser';
+import { CookiesService } from 'ngx-utils-cookies-port';
 
 describe('Camfil Login Form Component', () => {
   let component: CamfilLoginFormComponent;
@@ -18,10 +21,15 @@ describe('Camfil Login Form Component', () => {
   let translate: TranslateService;
 
   beforeEach(async () => {
+    const cookiesServiceMock = mock(CookiesService);
     await TestBed.configureTestingModule({
       declarations: [CamfilHeaderBoxComponent, CamfilLoginFormComponent, MockComponent(CamfilErrorMessageComponent)],
-      imports: [ReactiveFormsModule, RouterTestingModule, TranslateModule.forRoot()],
-      providers: [{ provide: AccountFacade, useFactory: () => instance(mock(AccountFacade)) }],
+      imports: [ReactiveFormsModule, RouterTestingModule, TranslateModule.forRoot(), BrowserTransferStateModule],
+      providers: [
+        { provide: AccountFacade, useFactory: () => instance(mock(AccountFacade)) },
+        { provide: ApiTokenService, useFactory: () => instance(mock(ApiTokenService)) },
+        { provide: CookiesService, useValue: instance(cookiesServiceMock) },
+      ],
     }).compileComponents();
   });
 
