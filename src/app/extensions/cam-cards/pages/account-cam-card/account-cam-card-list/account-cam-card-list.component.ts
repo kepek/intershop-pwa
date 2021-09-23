@@ -328,7 +328,7 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
       } else {
         this.location.replaceState(this.location.path(false));
       }
-    }, 100);
+    });
   }
 
   isCamCardExpanded(cc: CamCard) {

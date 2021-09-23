@@ -1,5 +1,5 @@
 <div class="filters-row">
-  <div>
+  <div class="line-height-adjustment">
     <ng-container *ngIf="categoryName">
       {{ 'camfil.product.items.showing.text' | translate }}
       <strong class="filters-row__showing">{{ categoryName }}</strong>
@@ -52,7 +52,7 @@
     </div>
   </div>
   <div *ngIf="sortOptions.length" class="sort-by">
-    <div class="d-flex align-items-center">
+    <div class="d-flex align-items-center line-height-adjustment">
       <label>{{ 'camfil.product.list.sorting.label' | translate }}:</label>
       <mat-form-field appearance="fill">
         <mat-label>{{ 'camfil.product.list.toolbar.choose.option' | translate }}</mat-label>
