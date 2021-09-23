@@ -8,6 +8,13 @@
     color: $text-color-tertiary;
     background-color: transparent;
 
+    .line-height-adjustment {
+      line-height: 28px;
+    }
+    .switch-layout {
+      line-height: $space-box;
+    }
+
     @media (min-width: $screen-md) {
       display: flex;
       gap: $space-box;
