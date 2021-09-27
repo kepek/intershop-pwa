@@ -75,6 +75,7 @@
             {{ 'camfil.product.quickView.bags.label' | translate }}
             <strong>{{ bags }}</strong>
           </div>
+          <!-- CAM-1667 Please remove shipping information on product quick view
           <div>
             {{ 'camfil.product.quickView.deliveryInfo.label' | translate }}
             <strong *ngIf="isShipmentInformationAvailable && product.availability">
@@ -94,6 +95,7 @@
               </ng-template>
             </strong>
           </div>
+          -->
         </div>
         <div class="col-5 pl-0">
           <strong>{{ 'camfil.product.details.guides.headline' | translate }}</strong>
