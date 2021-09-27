@@ -318,10 +318,10 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
   }
 
   handleExpandedCamCard(camCard: CamCard, rowId) {
-    this.scrollToSelectedRow(rowId);
     const isExpanded = this.expandedCamCard && this.expandedCamCard.id === camCard.id;
     this.expandedCamCard = isExpanded ? undefined : camCard;
     setTimeout(() => {
+      this.scrollToSelectedRow(rowId);
       if (!isExpanded) {
         this.location.replaceState(this.location.path(false) + '#' + camCard.id);
         this.openSubLevels(camCard);
