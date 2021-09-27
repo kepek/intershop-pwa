@@ -65,6 +65,7 @@ export class CamCardMapper {
         lastDeliveryDate,
         deliveryInterval,
         reminderFlag,
+        erpId,
       } = camCard;
 
       const deliveryAddress = CamCardMapper.cleanupDeliveryAddress(camCard.deliveryAddress);
@@ -81,6 +82,7 @@ export class CamCardMapper {
         lastDeliveryDate,
         deliveryInterval,
         reminderFlag,
+        erpId,
       };
     }
   }
