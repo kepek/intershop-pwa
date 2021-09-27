@@ -394,7 +394,7 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit, AfterView
     const date = new Date(this.camCardForm.get('lastDelivery').value);
     date.setMonth(
       date.getMonth() +
-        (isNaN(this.camCardForm.get('deliveryInterval').value) ? 0 : this.camCardForm.get('deliveryInterval').value)
+        (isNaN(this.camCardForm.get('deliveryInterval').value) ? 0 : +this.camCardForm.get('deliveryInterval').value)
     );
     this.camCardForm.patchValue({
       nextDelivery: date,
