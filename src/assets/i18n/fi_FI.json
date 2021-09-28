@@ -489,7 +489,7 @@
   "basket.validation.camfil.illegalstate.contactperson.error": "Virheellinen yhteyshenkilö",
   "basket.validation.camfil.illegalvalue.deliverydate.error": "Virheellinen toimituspäivä",
   "basket.validation.general.error": "Ostoskorisi ei ole enää voimassa. Korjaa alla ilmoitetut virheet.",
-  "camfil.account .cam_card.no .erpId.tooltip": "fi_FI The CamCard cannot be placed yet, please try again in a few minutes.",
+  "camfil.account.cam_card.no.erpId.tooltip": "fi_FI The CamCard cannot be placed yet, please try again in a few minutes.",
   "camfil.account.apply_form.add_comment": "Lisää kommentti",
   "camfil.account.apply_form.city": "Kaupunki",
   "camfil.account.apply_form.customer_name": "Asiakkaan nimi",

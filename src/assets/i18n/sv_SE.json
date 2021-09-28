@@ -489,7 +489,7 @@
   "basket.validation.camfil.illegalstate.contactperson.error": "Ogiltig kontaktperson",
   "basket.validation.camfil.illegalvalue.deliverydate.error": "Fel leveransdatum",
   "basket.validation.general.error": "Din varukorg är inte lägre tillgänglig. Vänligen se över felen nedan.",
-  "camfil.account .cam_card.no .erpId.tooltip": "sv_SE The CamCard cannot be placed yet, please try again in a few minutes.",
+  "camfil.account.cam_card.no.erpId.tooltip": "sv_SE The CamCard cannot be placed yet, please try again in a few minutes.",
   "camfil.account.apply_form.add_comment": "Lägg till kommentar",
   "camfil.account.apply_form.city": "sv_City",
   "camfil.account.apply_form.customer_name": "Kundens namn",

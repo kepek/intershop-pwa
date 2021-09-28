@@ -489,7 +489,7 @@
   "basket.validation.camfil.illegalstate.contactperson.error": "Invalid contact person",
   "basket.validation.camfil.illegalvalue.deliverydate.error": "Incorect delivery date",
   "basket.validation.general.error": "Your shopping cart is not valid anymore. Please correct the errors indicated below.",
-  "camfil.account .cam_card.no .erpId.tooltip": "The CamCard cannot be placed yet, please try again in a few minutes.",
+  "camfil.account.cam_card.no.erpId.tooltip": "The CamCard cannot be placed yet, please try again in a few minutes.",
   "camfil.account.apply_form.add_comment": "Add comment",
   "camfil.account.apply_form.city": "City",
   "camfil.account.apply_form.customer_name": "Customer name",

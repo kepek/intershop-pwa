@@ -253,12 +253,8 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges, OnD
   }
 
   addItemsToCart(modal: CamfilModalDialogComponent<any>) {
-    if (!this.camCard.erpId) {
-      modal.show();
-      return;
-    }
     const { postalCode, city } = this.camCard.deliveryAddress;
-    if (!postalCode || !city) {
+    if (!this.camCard.erpId || !postalCode || !city) {
       modal.show();
       return;
     }
