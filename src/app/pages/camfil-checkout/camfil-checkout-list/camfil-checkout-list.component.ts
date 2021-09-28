@@ -83,7 +83,7 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
   focusedElementId: string;
   forceUpdateForm = false;
   hideRecipientButton = false;
-  itemSize = 88;
+  itemSize = 91;
 
   private destroy$ = new Subject<void>();
   private numberOfVisibleLineItems = 20;
