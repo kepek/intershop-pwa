@@ -282,6 +282,7 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy, AfterView
   reset() {
     this.sku$.next(FAKE_SKU);
     this.productForm?.reset();
+    this.isSubmitted = false;
   }
 
   /** close modal */
