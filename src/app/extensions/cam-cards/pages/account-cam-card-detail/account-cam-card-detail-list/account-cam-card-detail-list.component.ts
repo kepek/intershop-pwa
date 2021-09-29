@@ -234,6 +234,7 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges, OnD
   prepereItemToAdd(parent: CamCard, item: CamCardItem): CamCamProductChecked {
     return {
       camCardId: this.camCard.id,
+      camCardErpId: !!this.camCard.erpId,
       camCardRoot: this.camCard.rootCamCard,
       sku: item.product.sku,
       quantity: item.quantity,
@@ -242,23 +243,30 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges, OnD
     };
   }
 
+  get handleModalTexts() {
+    const type = this.camCard.erpId ? 'with_no_completed_address' : 'no_erp_id';
+    return {
+      titleText: `camfil.dynamic.cam_card.${type}.header`,
+      confirmText: `camfil.dynamic.cam_card.${type}.btn`,
+      content: `camfil.dynamic.cam_card.${type}.text`,
+    };
+  }
+
   addItemsToCart(modal: CamfilModalDialogComponent<any>) {
     const { postalCode, city } = this.camCard.deliveryAddress;
-    if (!postalCode || !city) {
+    if (!this.camCard.erpId || !postalCode || !city) {
       modal.show();
       return;
     }
 
     const ccId = this.camCard.id;
     const products = this.camCard.camCardItems
-      ?.filter(cc => cc.measurement.valid)
-      ?.filter(x => x.product.available)
+      ?.filter(cc => cc.measurement.valid && cc.product.available)
       .map(item => this.prepereItemToAdd(this.camCard, item));
 
     this.camCard.subCamCards?.forEach(sub => {
       sub.camCardItems
-        ?.filter(sc => sc.measurement.valid)
-        ?.filter(x => x.product.available)
+        ?.filter(sc => sc.measurement.valid && sc.product.available)
         .forEach(item => {
           products.push(this.prepereItemToAdd(sub, item));
         });

@@ -30,6 +30,7 @@ export interface CamCard extends CamCardHeader {
   deliveryInterval?: number;
   reminderFlag?: number;
   transient?: boolean;
+  erpId?: string;
 }
 
 export interface CamCardItem {
@@ -109,6 +110,7 @@ export interface CreateCamCardData {
 
 export interface CamCamProductChecked {
   camCardId: string;
+  camCardErpId: boolean;
   camCardRoot: string;
   sku: string;
   quantity: number;

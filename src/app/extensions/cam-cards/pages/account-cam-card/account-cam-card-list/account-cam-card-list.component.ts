@@ -126,6 +126,14 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
     return this.camCards ? this.camCards.filter(camCard => this.isCamCardChecked(camCard)) : [];
   }
 
+  get noErpIdCamCardsInSelectedProducts() {
+    return (
+      this.camCards?.filter(
+        cc => !cc.erpId && Object.values(this.productsChecked)?.find((p: CamCamProductChecked) => cc.id === p.camCardId)
+      ) || []
+    );
+  }
+
   ngOnInit() {
     this.isMobileView = this.isMobile();
     this.isStickyCamCardToolbar$ = this.camCardsFacade.isStickyCamCardToolbar$;
@@ -176,7 +184,7 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.camCards) {
-      if (this.camCards.length) {
+      if (this.camCards?.length) {
         this.authorizationToggle
           .isAuthorizedToCheckArrAll(AccountCamCardListComponent.CUSTOMER_ADMIN_PERMISSIONS)
           .pipe(take(1))
@@ -374,7 +382,13 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
       invalidMesurementsElements: this.getIncorrectCamCardsElements('measurements'),
     };
 
-    if (incorrectElemetns.notBuyableElemnts.length || incorrectElemetns.invalidMesurementsElements.length) {
+    const noEroId = this.noErpIdCamCardsInSelectedProducts;
+
+    if (
+      noEroId.length ||
+      incorrectElemetns.notBuyableElemnts.length ||
+      incorrectElemetns.invalidMesurementsElements.length
+    ) {
       this.notBuyableElemnts = incorrectElemetns.notBuyableElemnts;
       this.invalidMesurementsElements = incorrectElemetns.invalidMesurementsElements;
       this.notAvailbaleProdList(modal);
@@ -385,7 +399,7 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
 
   addSelectedItemsToCart() {
     const list = Object.values(this.productsChecked)
-      .filter((item: CamCamProductChecked) => item.measurement.valid)
+      .filter((item: CamCamProductChecked) => item.measurement.valid && item.camCardErpId)
       .reduce((acc, val: CamCamProductChecked) => {
         const key = val.camCardRoot || val.camCardId;
         const products = acc[key]?.products || [];
@@ -395,6 +409,10 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
         };
         return acc;
       }, {}) as CamCamProductsAddToCart;
+
+    if (!Object.keys(list).length) {
+      return;
+    }
     this.camCardsWithNoCompleteAddresses = this.camCards.filter(({ deliveryAddress, id }) => {
       const { postalCode, city, addressLine1 } = deliveryAddress;
       // + add filter by checked CC
@@ -574,6 +592,7 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
     if (event.checked && !productOnList && item.product.available) {
       const element: CamCamProductChecked = {
         camCardId: camCard.id,
+        camCardErpId: !!camCard.erpId,
         camCardRoot: camCard.rootCamCard,
         sku: item.product.sku,
         quantity: item.quantity,

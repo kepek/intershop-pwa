@@ -151,11 +151,11 @@
   #needToCompleteAddress
   (confirmed)="dialog.closeAll()"
   [options]="{
-    titleText: 'camfil.account.cam_card.with.no.completed.address.header' | translate,
-    confirmText: 'camfil.account.cam_card.with.no.completed.address.btn' | translate
+    titleText: handleModalTexts.titleText | translate,
+    confirmText: handleModalTexts.confirmText | translate
   }"
 >
-  {{ 'camfil.account.cam_card.with.no.completed.address.text' | translate }}
+  {{ handleModalTexts.content | translate }}
 </camfil-modal-dialog>
 
 <div *ngIf="loading" class="loader-container">
