@@ -189,6 +189,7 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
       this.checkoutFacade.getCustomersDeliveryTerms$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(terms => {
         this.deliveryTerm = terms[this.order?.customer?.id];
       });
+      this.handleDeliveryDateIfOutOfDate();
     }
 
     this.appFacade.getChannel$?.pipe(takeUntil(this.destroy$)).subscribe(channel => {
@@ -434,10 +435,10 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
       const max = datesList[datesList.length - 1];
 
       if (min !== max) {
-        this.firstAvailableDelivery = new Date(min).toISOString();
         this.setDaysClass(min, new Date(max));
       }
 
+      this.firstAvailableDelivery = new Date(min).toISOString();
       this.fullDeliveryDate = new Date(max).toISOString();
 
       return max;
@@ -449,6 +450,17 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  handleDeliveryDateIfOutOfDate() {
+    const firstAvailable = new Date(this.firstAvailableDelivery).getTime();
+    const orderDeliveryDate = new Date(this.order.deliveryDate).getTime();
+
+    if (orderDeliveryDate < firstAvailable) {
+      // tslint:disable-next-line:ish-no-object-literal-type-assertion
+      const date = { value: new Date(this.firstAvailableDelivery) } as MatDatepickerInputEvent<Date>;
+      this.changeDeliveryDate(date);
+    }
   }
 
   setDaysClass(startDate: number, endDate: Date) {
