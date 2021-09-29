@@ -265,18 +265,27 @@
       cdkDropList
       class="bucket_list-container"
     >
-      <cdk-virtual-scroll-viewport [itemSize]="itemSize">
-        <div *cdkVirtualFor="let item of order.lineItems; index as i; trackBy: trackBy">
-          <div
-            [cdkDragData]="item"
-            [cdkDragDisabled]="isConfirmed"
-            cdkDrag
-            class="list-item-row list-item-row-big px-4 py-1 mt-2 line-item-container"
-          >
+      <ng-container *ngIf="isConfirmed; else noConfirmed">
+        <div *ngFor="let item of order.lineItems; index as i; trackBy: trackBy">
+          <div class="list-item-row list-item-row-big px-4 py-1 mt-2 line-item-container">
             <ng-container *ngTemplateOutlet="bucketListItem; context: { item: item, i: i }"></ng-container>
           </div>
         </div>
-      </cdk-virtual-scroll-viewport>
+      </ng-container>
+      <ng-template #noConfirmed>
+        <cdk-virtual-scroll-viewport [itemSize]="itemSize">
+          <div *cdkVirtualFor="let item of order.lineItems; index as i; trackBy: trackBy">
+            <div
+              [cdkDragData]="item"
+              [cdkDragDisabled]="isConfirmed"
+              cdkDrag
+              class="list-item-row list-item-row-big px-4 py-1 mt-2 line-item-container"
+            >
+              <ng-container *ngTemplateOutlet="bucketListItem; context: { item: item, i: i }"></ng-container>
+            </div>
+          </div>
+        </cdk-virtual-scroll-viewport>
+      </ng-template>
     </div>
 
     <div *ngIf="deliveryTerm" class="bg-light p-2 box-shadow d-flex align-items-center">
