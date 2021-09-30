@@ -167,10 +167,10 @@
       margin-bottom: 0;
     }
     .confirmed-product-title {
-      max-width: 450px;
+      max-width: none;
+      margin-right: 10px;
       .camfil-product-title {
-        display: block;
-        max-width: 450px;
+        white-space: normal;
       }
       @media (max-width: $screen-lg-max) {
         .camfil-product-title {
