@@ -46,7 +46,6 @@ import {
 
 import {
   getCustomerPricesForProductsSuccess,
-  loadCategoryProducts,
   loadCustomerPrices,
   loadCustomerPricesFail,
   loadCustomerPricesSuccess,
@@ -143,7 +142,27 @@ export class ProductsEffects {
       ofType(loadProductsForCategory),
       mapToPayload(),
       map(payload => ({ ...payload, page: payload.page ? payload.page : 1 })),
-      concatMap(({ categoryId, page, sorting }) => [loadCategoryProducts({ categoryId, page, sorting })])
+      concatMap(({ categoryId, page, sorting }) =>
+        this.productsService.getCategoryProducts(categoryId, page, sorting).pipe(
+          concatMap(({ total, products, sortableAttributes }) => [
+            ...products.map(product => loadProductSuccess({ product })),
+            setProductListingPages(
+              this.productListingMapper.createPages(
+                products.map(p => p.sku),
+                'category',
+                categoryId,
+                {
+                  startPage: page,
+                  sortableAttributes,
+                  sorting,
+                  itemCount: total,
+                }
+              )
+            ),
+          ]),
+          mapErrorToAction(loadProductsForCategoryFail, { categoryId })
+        )
+      )
     )
   );
 
@@ -416,33 +435,6 @@ export class ProductsEffects {
     )
   );
 
-  loadCategoryProducts$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(loadCategoryProducts),
-      mapToPayload(),
-      mergeMap(({ categoryId, page, sorting }) =>
-        this.productsService.getCategoryProducts(categoryId, page, sorting).pipe(
-          concatMap(({ total, products, sortableAttributes }) => [
-            ...products.map(product => loadProductSuccess({ product })),
-            setProductListingPages(
-              this.productListingMapper.createPages(
-                products.map(p => p.sku),
-                'category',
-                categoryId,
-                {
-                  startPage: page,
-                  sortableAttributes,
-                  itemCount: total,
-                }
-              )
-            ),
-          ]),
-          mapErrorToAction(loadProductsForCategoryFail, { categoryId })
-        )
-      )
-    )
-  );
-
   loginUserSuccess$ = createEffect(() =>
     this.actions$.pipe(
       ofType(loginUserSuccess),
@@ -478,7 +470,7 @@ export class ProductsEffects {
         this.store.pipe(select(selectQueryParam('page')))
       ),
       concatMap(([, categoryId, page]) =>
-        categoryId ? [loadCategoryProducts({ categoryId, page: Number(page) || 1 })] : EMPTY
+        categoryId ? [loadProductsForCategory({ categoryId, page: Number(page) || 1 })] : EMPTY
       )
     )
   );

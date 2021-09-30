@@ -92,11 +92,6 @@ export const loadCustomerPricesSuccess = createAction(
   payload<{ customerId: string; products: Product[] }>()
 );
 
-export const loadCategoryProducts = createAction(
-  '[Products API] load Category Products',
-  payload<{ categoryId: string; page: number; sorting?: string }>()
-);
-
 export const getCustomerPricesForProductsSuccess = createAction(
   '[Products API] Customer Prices For Products Success',
   payload<{ products: Product[] }>()
