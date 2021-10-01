@@ -57,7 +57,6 @@ export class CamfilLineItemTableComponent implements OnInit, OnChanges, AfterVie
     'orderedQty',
     'deliveredQty',
     'boxLabel',
-    'measurements',
     'deliveryDate',
     'totalRowCustomerPrice',
   ];
