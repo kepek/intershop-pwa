@@ -22,7 +22,6 @@ import { ShoppingStoreModule } from 'ish-core/store/shopping/shopping-store.modu
 import { makeHttpError } from 'ish-core/utils/dev/api-service-utils';
 
 import {
-  loadProductsForCategory,
   loadProduct,
   loadProductFail,
   loadProductIfNotLoaded,
@@ -33,6 +32,7 @@ import {
   loadProductVariations,
   loadProductVariationsFail,
   loadProductVariationsSuccess,
+  loadProductsForCategory,
   loadProductsForCategoryFail,
 } from './products.actions';
 import { ProductsEffects } from './products.effects';
