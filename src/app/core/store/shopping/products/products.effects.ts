@@ -5,7 +5,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Dictionary } from '@ngrx/entity';
 import { routerNavigatedAction } from '@ngrx/router-store';
 import { Store, select } from '@ngrx/store';
-import { EMPTY, identity } from 'rxjs';
+import { identity } from 'rxjs';
 import {
   concatMap,
   distinct,
@@ -46,7 +46,6 @@ import {
 
 import {
   getCustomerPricesForProductsSuccess,
-  loadCategoryProducts,
   loadCustomerPrices,
   loadCustomerPricesFail,
   loadCustomerPricesSuccess,
@@ -77,16 +76,6 @@ import {
 
 @Injectable()
 export class ProductsEffects {
-  constructor(
-    private actions$: Actions,
-    private store: Store,
-    private productsService: ProductsService,
-    private httpStatusCodeService: HttpStatusCodeService,
-    private productListingMapper: ProductListingMapper,
-    @Inject(PLATFORM_ID) private platformId: string,
-    private router: Router
-  ) {}
-
   loadProduct$ = createEffect(() =>
     this.actions$.pipe(
       ofType(loadProduct),
@@ -99,7 +88,6 @@ export class ProductsEffects {
       )
     )
   );
-
   loadProductSuccess$ = createEffect(() =>
     this.actions$.pipe(
       ofType(loadProductSuccess),
@@ -118,7 +106,6 @@ export class ProductsEffects {
       )
     )
   );
-
   loadProductIfNotLoaded$ = createEffect(() =>
     this.actions$.pipe(
       ofType(loadProductIfNotLoaded),
@@ -134,7 +121,6 @@ export class ProductsEffects {
       )
     )
   );
-
   /**
    * retrieve products for category incremental respecting paging
    */
@@ -143,10 +129,29 @@ export class ProductsEffects {
       ofType(loadProductsForCategory),
       mapToPayload(),
       map(payload => ({ ...payload, page: payload.page ? payload.page : 1 })),
-      concatMap(({ categoryId, page, sorting }) => [loadCategoryProducts({ categoryId, page, sorting })])
+      concatMap(({ categoryId, page, sorting }) =>
+        this.productsService.getCategoryProducts(categoryId, page, sorting).pipe(
+          concatMap(({ total, products, sortableAttributes }) => [
+            ...products.map(product => loadProductSuccess({ product })),
+            setProductListingPages(
+              this.productListingMapper.createPages(
+                products.map(p => p.sku),
+                'category',
+                categoryId,
+                {
+                  startPage: page,
+                  sortableAttributes,
+                  sorting,
+                  itemCount: total,
+                }
+              )
+            ),
+          ]),
+          mapErrorToAction(loadProductsForCategoryFail, { categoryId })
+        )
+      )
     )
   );
-
   /**
    * retrieve products for category incremental respecting paging
    */
@@ -178,7 +183,6 @@ export class ProductsEffects {
       )
     )
   );
-
   loadProductBundles$ = createEffect(() =>
     this.actions$.pipe(
       ofType(loadProductSuccess),
@@ -195,7 +199,6 @@ export class ProductsEffects {
       )
     )
   );
-
   /**
    * The load product variations effect.
    */
@@ -218,7 +221,6 @@ export class ProductsEffects {
       )
     )
   );
-
   /**
    * Trigger load product action if productMasterSKU is set in product success action payload.
    * Ignores products that are already present.
@@ -246,7 +248,6 @@ export class ProductsEffects {
       )
     )
   );
-
   /**
    * Trigger load product variations action on product success action for master products.
    * Ignores product variation entries for products that are already present.
@@ -270,7 +271,6 @@ export class ProductsEffects {
       )
     )
   );
-
   /**
    * reloads product when it is selected (usually product detail page)
    * change to {@link LoadProductIfNotLoaded} if no reload is needed
@@ -282,7 +282,6 @@ export class ProductsEffects {
       map(sku => loadProduct({ sku }))
     )
   );
-
   loadDefaultCategoryContextForProduct$ = createEffect(() =>
     this.store.pipe(
       ofProductUrl(),
@@ -296,7 +295,6 @@ export class ProductsEffects {
       map(categoryId => loadCategory({ categoryId }))
     )
   );
-
   loadRetailSetProductDetail$ = createEffect(() =>
     this.actions$.pipe(
       ofType(loadProductSuccess),
@@ -311,7 +309,6 @@ export class ProductsEffects {
       )
     )
   );
-
   loadPartsOfRetailSet$ = createEffect(() =>
     this.actions$.pipe(
       ofType(loadProductSuccess),
@@ -330,7 +327,6 @@ export class ProductsEffects {
       )
     )
   );
-
   redirectIfErrorInProducts$ = createEffect(
     () =>
       this.store.pipe(
@@ -343,7 +339,6 @@ export class ProductsEffects {
       ),
     { dispatch: false }
   );
-
   redirectIfErrorInCategoryProducts$ = createEffect(
     () =>
       this.actions$.pipe(
@@ -352,7 +347,6 @@ export class ProductsEffects {
       ),
     { dispatch: false }
   );
-
   loadProductLinks$ = createEffect(() =>
     this.actions$.pipe(
       ofType(loadProductLinks),
@@ -366,7 +360,6 @@ export class ProductsEffects {
       )
     )
   );
-
   loadLinkedCategories$ = createEffect(() =>
     this.actions$.pipe(
       ofType(loadProductLinksSuccess),
@@ -379,7 +372,6 @@ export class ProductsEffects {
       mergeMap(ids => ids.map(categoryId => loadCategory({ categoryId })))
     )
   );
-
   setBreadcrumbForProductPage$ = createEffect(() =>
     this.actions$.pipe(
       ofType(routerNavigatedAction),
@@ -393,7 +385,6 @@ export class ProductsEffects {
       )
     )
   );
-
   loadCustomerPrices$ = createEffect(() =>
     this.actions$.pipe(
       ofType(loadCustomerPrices),
@@ -415,34 +406,6 @@ export class ProductsEffects {
       })
     )
   );
-
-  loadCategoryProducts$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(loadCategoryProducts),
-      mapToPayload(),
-      mergeMap(({ categoryId, page, sorting }) =>
-        this.productsService.getCategoryProducts(categoryId, page, sorting).pipe(
-          concatMap(({ total, products, sortableAttributes }) => [
-            ...products.map(product => loadProductSuccess({ product })),
-            setProductListingPages(
-              this.productListingMapper.createPages(
-                products.map(p => p.sku),
-                'category',
-                categoryId,
-                {
-                  startPage: page,
-                  sortableAttributes,
-                  itemCount: total,
-                }
-              )
-            ),
-          ]),
-          mapErrorToAction(loadProductsForCategoryFail, { categoryId })
-        )
-      )
-    )
-  );
-
   loginUserSuccess$ = createEffect(() =>
     this.actions$.pipe(
       ofType(loginUserSuccess),
@@ -465,7 +428,6 @@ export class ProductsEffects {
       })
     )
   );
-
   /**
    * extra getCategoryProducts when user on catPage after login (set PGID; onLoad),
    * because of prices
@@ -473,15 +435,29 @@ export class ProductsEffects {
   logInOnCatPage$ = createEffect(() =>
     this.actions$.pipe(
       ofType(setPGID),
+      mapToPayloadProperty('pgid'),
       withLatestFrom(
         this.store.pipe(select(selectRouteParam('categoryUniqueId'))),
-        this.store.pipe(select(selectQueryParam('page')))
+        this.store.pipe(select(selectQueryParam('page'))),
+        this.store.pipe(select(selectQueryParam('sorting')))
       ),
-      concatMap(([, categoryId, page]) =>
-        categoryId ? [loadCategoryProducts({ categoryId, page: Number(page) || 1 })] : EMPTY
-      )
+      filter(([, categoryId]) => !!categoryId),
+      map(([, categoryId, currentPage, sorting]) => {
+        const page = currentPage && Number(currentPage);
+        return loadProductsForCategory({ categoryId, page, sorting });
+      })
     )
   );
+
+  constructor(
+    private actions$: Actions,
+    private store: Store,
+    private productsService: ProductsService,
+    private httpStatusCodeService: HttpStatusCodeService,
+    private productListingMapper: ProductListingMapper,
+    private router: Router,
+    @Inject(PLATFORM_ID) private platformId: string
+  ) {}
 
   private throttleOnBrowser() {
     return isPlatformBrowser(this.platformId) && this.router.navigated ? throttleTime(100) : map(identity);

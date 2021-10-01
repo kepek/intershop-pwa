@@ -22,7 +22,6 @@ import { ShoppingStoreModule } from 'ish-core/store/shopping/shopping-store.modu
 import { makeHttpError } from 'ish-core/utils/dev/api-service-utils';
 
 import {
-  loadCategoryProducts,
   loadProduct,
   loadProductFail,
   loadProductIfNotLoaded,
@@ -33,6 +32,7 @@ import {
   loadProductVariations,
   loadProductVariationsFail,
   loadProductVariationsSuccess,
+  loadProductsForCategory,
   loadProductsForCategoryFail,
 } from './products.actions';
 import { ProductsEffects } from './products.effects';
@@ -147,9 +147,9 @@ describe('Products Effects', () => {
 
   describe('loadProductsForCategory$', () => {
     it('should call service for SKU list', done => {
-      actions$ = of(loadCategoryProducts({ categoryId: '123', page: 1, sorting: 'name-asc' }));
+      actions$ = of(loadProductsForCategory({ categoryId: '123', page: 1, sorting: 'name-asc' }));
 
-      effects.loadCategoryProducts$.subscribe(() => {
+      effects.loadProductsForCategory$.subscribe(() => {
         verify(productsServiceMock.getCategoryProducts('123', anyNumber(), 'name-asc')).once();
         done();
       });
@@ -157,7 +157,7 @@ describe('Products Effects', () => {
 
     it('should trigger actions for loading content for the product list', () => {
       actions$ = hot('a', {
-        a: loadCategoryProducts({ categoryId: '123', page: 1 }),
+        a: loadProductsForCategory({ categoryId: '123', page: 1 }),
       });
       const expectedValues = {
         b: loadProductSuccess({ product: { sku: 'P222' } as Product }),
@@ -169,7 +169,7 @@ describe('Products Effects', () => {
           1: ['P222', 'P333'],
         }),
       };
-      expect(effects.loadCategoryProducts$).toBeObservable(cold('(bcd)', expectedValues));
+      expect(effects.loadProductsForCategory$).toBeObservable(cold('(bcd)', expectedValues));
     });
 
     it('should not die if repeating errors are encountered', () => {
@@ -177,9 +177,9 @@ describe('Products Effects', () => {
         throwError(makeHttpError({ message: 'ERROR' }))
       );
       actions$ = hot('-a-a-a', {
-        a: loadCategoryProducts({ categoryId: '123', page: 1 }),
+        a: loadProductsForCategory({ categoryId: '123', page: 1 }),
       });
-      expect(effects.loadCategoryProducts$).toBeObservable(
+      expect(effects.loadProductsForCategory$).toBeObservable(
         cold('-a-a-a', {
           a: loadProductsForCategoryFail({
             error: makeHttpError({ message: 'ERROR' }),
