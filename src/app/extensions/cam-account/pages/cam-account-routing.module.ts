@@ -3,6 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { AuthGuard } from 'ish-core/guards/auth.guard';
 import { FeatureToggleGuard } from 'ish-core/guards/feature-toggle.guard';
+import { IdentityProviderLoginGuard } from 'ish-core/guards/identity-provider-login.guard';
+import { IdentityProviderRegisterGuard } from 'ish-core/guards/identity-provider-register.guard';
 
 const routes: Routes = [
   {
@@ -20,7 +22,7 @@ const routes: Routes = [
   },
   {
     path: 'login',
-    canActivate: [FeatureToggleGuard],
+    canActivate: [FeatureToggleGuard, IdentityProviderLoginGuard],
     data: {
       meta: {
         robots: 'noindex, nofollow',
@@ -33,7 +35,7 @@ const routes: Routes = [
   {
     path: 'register',
     pathMatch: 'full',
-    canActivate: [FeatureToggleGuard],
+    canActivate: [FeatureToggleGuard, IdentityProviderRegisterGuard],
     data: {
       meta: {
         robots: 'noindex, nofollow',
@@ -46,7 +48,7 @@ const routes: Routes = [
 
   {
     path: 'forgotPassword',
-    canActivate: [FeatureToggleGuard],
+    canActivate: [FeatureToggleGuard, IdentityProviderLoginGuard],
     data: {
       feature: 'camAccount',
       breadcrumbData: [],
@@ -57,7 +59,7 @@ const routes: Routes = [
 
   {
     path: 'forgotUsername',
-    canActivate: [FeatureToggleGuard],
+    canActivate: [FeatureToggleGuard, IdentityProviderLoginGuard],
     data: {
       feature: 'camAccount',
       breadcrumbData: [],

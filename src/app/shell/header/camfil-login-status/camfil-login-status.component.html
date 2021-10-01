@@ -1,18 +1,18 @@
 <ng-container *ngIf="logoutOnly; else loginStatus">
   <ng-container *ngIf="user$ | async as user; else notLoggedIn">
-    <a routerLink="/logout" data-testing-id="link-logout">
-      <mat-icon svgIcon="profile-fab" class="header-icon"></mat-icon>
+    <a data-testing-id="link-logout" routerLink="/logout">
+      <mat-icon class="header-icon" svgIcon="profile-fab"></mat-icon>
       <span *ngIf="view != 'small'"> {{ 'account.logout.link' | translate }} </span>
     </a>
   </ng-container>
-  <ng-template #notLoggedIn> &nbsp; </ng-template>
+  <ng-template #notLoggedIn> &nbsp;</ng-template>
 </ng-container>
 
 <ng-template #loginStatus>
   <!-- logged in -->
   <ng-container *ngIf="user$ | async as user; else notLoggedIn">
-    <a routerLink="/account" class="my-account-link" data-testing-id="link-myaccount">
-      <mat-icon svgIcon="profile-fab" class="header-icon"></mat-icon>
+    <a class="my-account-link" data-testing-id="link-myaccount" routerLink="/account">
+      <mat-icon class="header-icon" svgIcon="profile-fab"></mat-icon>
       <span *ngIf="user.lastName; else nameNotDisplayed" class="login-name">{{
         'camfil.account.login_status.my_pages' | translate
       }}</span>
@@ -22,10 +22,10 @@
     </a>
     <span class="separator">&#124;</span>
     <a
-      routerLink="/logout"
-      [queryParams]="redirectParam"
+      [queryParams]="{ returnUrl: returnUrl }"
       class="my-account-link my-account-logout"
       data-testing-id="link-logout"
+      routerLink="/logout"
     >
       <span>{{ 'account.logout.link' | translate }}</span>
     </a>
@@ -33,20 +33,20 @@
   <!-- not logged in -->
   <ng-template #notLoggedIn>
     <a
-      routerLink="/login"
-      [queryParams]="{ returnUrl: '/home' }"
+      [queryParams]="{ returnUrl: returnUrl }"
       class="my-account-link my-account-login"
       rel="nofollow"
+      routerLink="/login"
     >
-      <mat-icon svgIcon="profile-fab" class="header-icon"></mat-icon>
+      <mat-icon class="header-icon" svgIcon="profile-fab"></mat-icon>
       <span>{{ 'account.login.link' | translate }}</span>
     </a>
     <span class="separator">&#124;</span
     ><a
-      routerLink="/register"
       [queryParams]="{ returnUrl: '/account' }"
       class="my-account-link my-account-register"
       rel="nofollow"
+      routerLink="/register"
       ><span>{{ 'account.register.link' | translate }}</span>
     </a>
   </ng-template>
