@@ -9,7 +9,7 @@
   <mat-card-content>
     <camfil-account-cam-card-toolbar
       (addCamCard)="add($event)"
-      (addSelectedItemsToCart)="addToCart(notBuyableElemntsDialog)"
+      (addSelectedItemsToCart)="handleSelectedCamCardsOnAddToCart(selectedCamCardsOnAddToCart, notBuyableElemntsDialog)"
       (openMoveCamCardDialog)="move()"
       (openImportCamCardDialog)="importCamCard()"
       (copyCamCard)="copyCamCard()"
@@ -325,18 +325,24 @@
 
 <camfil-modal-dialog
   #notBuyableElemntsDialog
-  (confirmed)="addSelectedItemsToCart()"
+  (confirmed)="noErpIdCamCardsInSelectedProducts.length || noPostCodeCamCardsInSelectedProducts.length ? dialog.closeAll() : addSelectedItemsToCart()"
   [options]="{
     titleText: 'camfil.account.cam_card.trying_add_to_cart_not_buyable_elements.header' | translate,
     confirmText: 'camfil.account.cam_card.trying_add_to_cart_not_buyable_elements.btn' | translate
   }"
 >
-  <ng-container *ngIf="noErpIdCamCardsInSelectedProducts.length">
-    {{ 'camfil.account.cam_card.trying_add_to_cart_no_erp_id_elements.text' | translate }}<br />
-    <b *ngFor="let cc of noErpIdCamCardsInSelectedProducts; last as isLast">
-      {{ cc.name }}<ng-container *ngIf="!isLast">, </ng-container>
-    </b>
-  </ng-container>
+<ng-container *ngIf="noErpIdCamCardsInSelectedProducts.length">
+  {{ 'camfil.account.cam_card.trying_add_to_cart_no_erp_id_elements.text' | translate }}<br />
+  <b *ngFor="let cc of noErpIdCamCardsInSelectedProducts; last as isLast">
+    {{ cc.name }}<ng-container *ngIf="!isLast">, </ng-container>
+  </b>
+</ng-container>
+<ng-container *ngIf="noPostCodeCamCardsInSelectedProducts.length">
+  {{ 'camfil.account.cam_card.trying_add_to_cart_no_post_code_elements.text' | translate }}<br />
+  <b *ngFor="let cc of noPostCodeCamCardsInSelectedProducts; last as isLast">
+    {{ cc.name }}<ng-container *ngIf="!isLast">, </ng-container>
+  </b>
+</ng-container>
 
   <p class="font-weight-bold" *ngIf="notBuyableElemnts?.length">
     {{ 'camfil.account.cam_card.trying_add_to_cart_not_buyable_elements.text' | translate }}
@@ -371,6 +377,25 @@
   </div>
 </camfil-modal-dialog>
 
-<div *ngIf="loading || productAddingInProgress" class="loader-container">
+<camfil-modal-dialog
+  #selectedCamCardsOnAddToCart
+  (confirmed)="addToCart(notBuyableElemntsDialog)"
+  (onClosed)="addSelectedAndFilteredItemsToCart(notBuyableElemntsDialog)"
+  [options]="{
+    titleText: 'camfil.account.cam_card.in.basket.title' | translate,
+    confirmText: 'camfil.account.cam_card.in.basket.btn.confirm_text' | translate,
+    rejectText: 'camfil.account.cam_card.in.basket.btn.reject_text' | translate
+  }"
+>
+
+  {{ 'camfil.account.cam_card.in.basket.text' | translate }}<br />
+  <ul class="text-left">
+    <li *ngFor="let id of camCardsInBasketsForAllUsers">
+      <b>{{ getCamCardNameById(id) }}</b>
+    </li>
+  </ul>
+</camfil-modal-dialog>
+
+<div *ngIf="loading || productAddingInProgress || (camCardsInBasketsForAllUsersLoading$ | async)" class="loader-container">
   <camfil-loading></camfil-loading>
 </div>

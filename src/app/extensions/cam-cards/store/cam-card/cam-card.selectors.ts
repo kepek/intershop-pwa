@@ -57,3 +57,13 @@ export const getValidationErrors = createSelector(getCamCardState, state => stat
 export const getValidationResponse = createSelector(getCamCardState, state => state.validationResponse);
 
 export const getAddProductSuccess = createSelector(getCamCardState, state => state.addProductSuccess);
+
+export const getCamCardsInBasketsForAllUsersLoading = createSelector(
+  getCamCardState,
+  state => state.camCardsInBasketsForAllUsers.loading
+);
+
+export const getCamCardsInBasketsForAllUsers = createSelector(
+  getCamCardState,
+  state => state.camCardsInBasketsForAllUsers.list
+);

@@ -630,6 +630,7 @@
   "camfil.account.cam_card.selectAll": "Select all",
   "camfil.account.cam_card.trying_add_to_cart_invalid_measurements_elements.text": "You are trying add to cart a whole CamCard or CamCard section which contains product/s with material measurements higher than allowed maxiumum.  These products will be not added:",
   "camfil.account.cam_card.trying_add_to_cart_no_erp_id_elements.text": "These CamCards cannot be placed yet, please try again in a few minutes: ",
+  "camfil.account.cam_card.trying_add_to_cart_no_post_code_elements.text": "Camcard(s) can’t be added to shopping cart due to missing postal code. Please add postal code and try again.",
   "camfil.account.cam_card.trying_add_to_cart_not_buyable_elements.btn": "Ok",
   "camfil.account.cam_card.trying_add_to_cart_not_buyable_elements.header": "Attention",
   "camfil.account.cam_card.trying_add_to_cart_not_buyable_elements.section": "Section",
@@ -1617,5 +1618,9 @@
   "tacton.submit.error.message": "A technical error occurred while processing your request. Please try again later.",
   "tacton.submit.success.message": "Your request has been successfully submitted. We will e-mail <strong>{{0}}</strong> to keep you updated on the status of your request.",
   "tacton.undo.tooltip": "Undo",
-  "textarea.max_limit": "Your message: {{0}} characters remaining."
+  "textarea.max_limit": "Your message: {{0}} characters remaining.",
+  "camfil.account.cam_card.in.basket.title": "Attention",
+  "camfil.account.cam_card.in.basket.text": "Another user with access to below CamCard has already added it to cart, are you sure you want to add it anyway?",
+  "camfil.account.cam_card.in.basket.btn.confirm_text": "OK",
+  "camfil.account.cam_card.in.basket.btn.reject_text": "No"
 }

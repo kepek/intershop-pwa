@@ -392,3 +392,15 @@ export const updateCamCardAttributeSuccess = createAction(
 );
 
 export const updateCamCardAttributeFail = createAction('[Cam Cards API] Update Cam Card Attribute Fail', httpError());
+
+export const checkCamCardsInBasketsForAllUsers = createAction(
+  '[Cam Cards] check Cam Cards In Baskets',
+  payload<{ camCardsId: string[] }>()
+);
+
+export const checkCamCardsInBasketsForAllUsersSuccess = createAction(
+  '[Cam Cards API] check Cam Cards In Baskets Success',
+  payload<{ camCardsId: string[] }>()
+);
+
+export const checkCamCardsInBasketsForAllUsersFail = createAction('[Cam Cards API] check Cam Cards In Baskets Fail', httpError());
