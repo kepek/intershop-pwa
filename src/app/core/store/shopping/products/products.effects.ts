@@ -422,6 +422,7 @@ export class ProductsEffects {
           mergeMap(products => [
             loadCustomerPricesSuccess({ customerId, products }),
             getCustomerPricesForProductsSuccess({ products }),
+            ...products.map(({ sku, ...changes }) => updateProduct({ sku, changes })),
           ]),
           mapErrorToAction(loadCustomerPricesFail, { customerId })
         );
