@@ -63,6 +63,8 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
   @Input() isConfirmed;
   @Input() lineItem: LineItemView;
   @Output() openDeleteModalAction = new EventEmitter();
+  @Output() resizeLineItemOnBlur = new EventEmitter();
+  @Output() addHeightToViewport = new EventEmitter<string>();
 
   earliestDeliveryDate: Date;
   boxLabel: string;
@@ -199,6 +201,9 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
 
     if (ifLabel) {
       this.boxLabel = value as string;
+      this.boxLabel?.length > 28
+        ? this.resizeLineItemOnBlur.emit('increase')
+        : this.resizeLineItemOnBlur.emit('decrease');
     } else {
       this.measurements[name] = value as number;
     }

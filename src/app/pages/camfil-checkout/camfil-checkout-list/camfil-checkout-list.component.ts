@@ -245,12 +245,31 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
       const isMoreThanLimit = lineItems?.length >= this.numberOfVisibleLineItems;
       const numberOfItems = isMoreThanLimit ? this.numberOfVisibleLineItems : lineItems?.length;
       const viewportElement = this.virtualScrollViewport?.elementRef?.nativeElement;
+      const bigLineItems = this.calculateLineItemHeight(lineItems)?.length;
 
       if (viewportElement) {
         // @ts-ignore
-        viewportElement.style.height = `${numberOfItems * this.itemSize}px`;
+        viewportElement.style.height = `${numberOfItems * this.itemSize + bigLineItems * 12}px`;
         viewportElement.style.overflowY = isMoreThanLimit ? 'auto' : 'hidden';
       }
+    }
+  }
+
+  calculateLineItemHeight(lineItems: LineItemView[]) {
+    return lineItems
+      .map(li => {
+        if (li.attributes.find(att => att.name === 'boxLabel' && att.value.toString().length > 28)) {
+          return li;
+        }
+      })
+      .filter(li => li);
+  }
+
+  changeViewportHeightOnBlur(type: string) {
+    const viewportElement = this.virtualScrollViewport?.elementRef?.nativeElement;
+    if (viewportElement) {
+      viewportElement.style.height =
+        type === 'increase' ? `${viewportElement.offsetHeight + 12}px` : `${viewportElement.offsetHeight - 12}px`;
     }
   }
 
