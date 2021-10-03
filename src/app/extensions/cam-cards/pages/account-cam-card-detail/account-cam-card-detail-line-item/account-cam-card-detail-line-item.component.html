@@ -1,17 +1,17 @@
 <ng-container *ngIf="product$ | async as product">
   <div
-    class="line-item d-flex align-items-center align-self-start align-self-md-center text-left"
     [ngClass]="{ 'justify-content-between': isEditMode }"
+    class="line-item d-flex align-items-center align-self-start align-self-md-center text-left"
   >
     <ng-container *ngIf="isViewMode">{{ index }}</ng-container>
     <div class="d-flex align-items-center">
-      <a class="image ml-0 mx-md-3" [routerLink]="product | ishProductRoute">
-        <camfil-product-image [product]="product" imageType="images" class="product-image"></camfil-product-image>
+      <a [routerLink]="product | ishProductRoute" class="image ml-0 mx-md-3">
+        <camfil-product-image [product]="product" class="product-image" imageType="images"></camfil-product-image>
       </a>
       <div class="my-2 my-md-0">
         <div class="d-flex flex-row">
-          <camfil-product-title [product]="product" [class]="'text-truncate'"></camfil-product-title>
-          <camfil-product-inventory class="px-2" [product]="product"></camfil-product-inventory>
+          <camfil-product-title [class]="'text-truncate'" [product]="product"></camfil-product-title>
+          <camfil-product-inventory [product]="product" class="px-2"></camfil-product-inventory>
         </div>
         <div class="attributes">
           <camfil-product-attribute
@@ -19,32 +19,32 @@
             [value]="product.sku"
           ></camfil-product-attribute>
           <camfil-product-attribute
-            identifier="iso_class"
             [name]="'camfil.product.class_and_efficiency.label' | translate"
             [value]="product | camfilProductAttributeVal: 'IsoClassAndEfficiency'"
+            identifier="iso_class"
           ></camfil-product-attribute>
           <ng-container *ngIf="isViewMode">
             <camfil-product-attribute
-              identifier="quantity"
               [name]="'camfil.cam_card.product.quantity' | translate"
               [value]="camCardItemData.quantity"
+              identifier="quantity"
             ></camfil-product-attribute>
             <ng-container *ngTemplateOutlet="price"></ng-container>
             <camfil-product-attribute
-              identifier="label"
+              *ngIf="camCardItemData.comment.label"
               [name]="'camfil.cam_card.product.comment.label' | translate"
               [value]="camCardItemData.comment.label"
-              *ngIf="camCardItemData.comment.label"
+              identifier="label"
             ></camfil-product-attribute>
           </ng-container>
           <camfil-product-attribute
             *ngIf="measurementToShow()"
-            identifier="measurement"
             [name]="'camfil.cam_card.product.measurements.label' | translate"
             [value]="measurementToShow()"
+            identifier="measurement"
           ></camfil-product-attribute>
-          <a class="quick-view text-nowrap" (click)="openQuickViewDialog(camCardItemData); $event.stopPropagation()">
-            <mat-icon svgIcon="search" class="size-16"></mat-icon>
+          <a (click)="openQuickViewDialog(camCardItemData); $event.stopPropagation()" class="quick-view text-nowrap">
+            <mat-icon class="size-16" svgIcon="search"></mat-icon>
             {{ 'Quickview' | translate }}
           </a>
         </div>
@@ -52,24 +52,24 @@
     </div>
     <camfil-cam-card-product-comment
       *ngIf="isEditMode || camCardItemData.comment?.label"
-      [ngClass]="{ 'align-self-end': isViewMode }"
-      [currentCamCard]="currentCamCard"
       [camCardItem]="camCardItemData"
+      [currentCamCard]="currentCamCard"
       [mode]="mode"
+      [ngClass]="{ 'align-self-end': isViewMode }"
     ></camfil-cam-card-product-comment>
     <ng-container *ngIf="isEditMode">
       <div class="quantity-row d-flex justify-content-between align-items-center py-3 py-md-0">
         <div class="d-flex justify-content-between align-items-center">
-          <a class="btn-tool" (click)="removeProductFromCamCard(camCardItemData)" data-testing-id="delete-cam-card">
+          <a (click)="removeProductFromCamCard(camCardItemData)" class="btn-tool" data-testing-id="delete-cam-card">
             <mat-icon svgIcon="delete"></mat-icon>
           </a>
           <form [formGroup]="addToCartForm">
             <camfil-product-quantity
               [allowZeroQuantity]="false"
-              [quantityLabel]="''"
-              [product]="product"
-              [parentForm]="addToCartForm"
               [ngClass]="{ 'ml-md-auto': isEditMode }"
+              [parentForm]="addToCartForm"
+              [product]="product"
+              [quantityLabel]="''"
               controlName="quantity"
             ></camfil-product-quantity>
           </form>
@@ -81,10 +81,10 @@
     </ng-container>
 
     <mat-checkbox
-      color="primary"
+      (change)="changeCheck($event)"
       *ngIf="showCheckbox && product.availability"
       [checked]="checked"
-      (change)="changeCheck($event)"
+      color="primary"
     ></mat-checkbox>
   </div>
 
@@ -92,21 +92,21 @@
     <ng-container *ngIf="showPrice">
       <camfil-product-attribute
         [name]="'camfil.cam_card.product.list_price.label' | translate"
-        [value]="getListPrice(product.listPrice) | camfilPriceSummary: camCardItemData.quantity | ishPrice"
         [overflowVisible]="true"
+        [value]="getListPrice(product.listPrice) | camfilPriceSummary: camCardItemData.quantity | ishPrice"
       ></camfil-product-attribute>
       <camfil-product-attribute
         [name]="'camfil.cam_card.product.your_price.label' | translate"
-        [value]="getSalePrice(product.salePrice) | camfilPriceSummary: camCardItemData.quantity | ishPrice"
         [overflowVisible]="true"
+        [value]="getSalePrice(product.salePrice) | camfilPriceSummary: camCardItemData.quantity | ishPrice"
       ></camfil-product-attribute>
     </ng-container>
   </ng-template>
 
   <camfil-add-product-to-cam-card-modal
     #moveDialog
-    addMoveProduct="move"
-    [product]="product"
     (submitEmitter)="moveItemToOtherCamCard(camCardItemData?.id, product.sku, $event)"
+    [product]="product"
+    addMoveProduct="move"
   ></camfil-add-product-to-cam-card-modal>
 </ng-container>

@@ -14,7 +14,7 @@ import {
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Observable, ReplaySubject, Subject } from 'rxjs';
-import { debounceTime, takeUntil } from 'rxjs/operators';
+import { debounceTime, takeUntil, withLatestFrom } from 'rxjs/operators';
 
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
@@ -38,19 +38,9 @@ import { CamCardMeasurement } from '../../../extensions/cam-cards/models/cam-car
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDestroy {
-  constructor(
-    private shoppingFacade: ShoppingFacade,
-    private checkoutFacade: CheckoutFacade,
-    public dialog: MatDialog
-  ) {}
-
   private static REQUIRED_COMPLETENESS_LEVEL = ProductCompletenessLevel.List;
-  private destroy$ = new Subject<void>();
-  private sku$ = new ReplaySubject<string>(1);
-
   @ViewChild(CamfilSmallCtaModalComponent) modal: CamfilSmallCtaModalComponent;
   @ViewChild('autosize') autosize: CdkTextareaAutosize;
-
   @Input() selectedItemsForm?: FormArray;
   @Input() index: number;
   @Input() basketId: string;
@@ -65,7 +55,6 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
   @Output() openDeleteModalAction = new EventEmitter();
   @Output() resizeLineItemOnBlur = new EventEmitter();
   @Output() addHeightToViewport = new EventEmitter<string>();
-
   earliestDeliveryDate: Date;
   boxLabel: string;
   measurementsValues = ['width', 'height', 'diameter'];
@@ -73,12 +62,18 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
   attrsValidator = {
     boxLabel: [{ error: 'maxlength', message: 'MAX length exceeded' }],
   };
-
   product$: Observable<ProductView>;
-
   addToCartForm: FormGroup;
   addToCartQuantityControl: FormControl;
   boxLabelForm: FormGroup;
+  private destroy$ = new Subject<void>();
+  private sku$ = new ReplaySubject<string>(1);
+
+  constructor(
+    private shoppingFacade: ShoppingFacade,
+    private checkoutFacade: CheckoutFacade,
+    public dialog: MatDialog
+  ) {}
 
   ngOnInit() {
     this.product$ = this.shoppingFacade.product$(
@@ -93,8 +88,18 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
     });
 
     this.addToCartQuantityControl?.valueChanges
-      .pipe(debounceTime(500), takeUntil(this.destroy$))
-      .subscribe(quantity => {
+      .pipe(debounceTime(500), withLatestFrom(this.product$), takeUntil(this.destroy$))
+      .subscribe(([quantity, product]) => {
+        const { minOrderQuantity, maxOrderQuantity } = product;
+
+        if (quantity < minOrderQuantity) {
+          return;
+        }
+
+        if (quantity >= maxOrderQuantity) {
+          return;
+        }
+
         if (this.addToCartQuantityControl?.value !== this.lineItem?.quantity?.value) {
           this.updateBasketItem({ itemId: this.lineItem.id, quantity });
         }
@@ -106,22 +111,6 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
 
     this.applyLineItemParameters(this.lineItem);
     this.calculateDeliveryDate();
-  }
-
-  private applyLineItemParameters(lineItem: LineItem) {
-    const boxLabel = (this.getValFromAttrs(lineItem, 'boxLabel') as string) || '';
-    const width = (this.getValFromAttrs(lineItem, 'width') as number) || undefined;
-    const height = (this.getValFromAttrs(lineItem, 'height') as number) || undefined;
-    const diameter = (this.getValFromAttrs(lineItem, 'diameter') as number) || undefined;
-
-    this.boxLabel = boxLabel;
-    this.measurements = {
-      [this.measurementsValues[0]]: width,
-      [this.measurementsValues[1]]: height,
-      [this.measurementsValues[2]]: diameter,
-    };
-
-    this.boxLabelForm?.get('boxLabel').setValue(boxLabel);
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -157,10 +146,6 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
   removeProduct(itemId: string) {
     this.checkoutFacade.deleteBasketItem(itemId);
     this.modal.hide();
-  }
-
-  private getValFromAttrs(lineItem: LineItem, name: string) {
-    return lineItem?.attributes?.find(att => att.name === name)?.value;
   }
 
   getField(name: string, form: FormGroup) {
@@ -274,5 +259,25 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
 
   getBoxLabelValue() {
     return this.lineItem?.attributes?.find(att => att.name === 'boxLabel')?.value;
+  }
+
+  private applyLineItemParameters(lineItem: LineItem) {
+    const boxLabel = (this.getValFromAttrs(lineItem, 'boxLabel') as string) || '';
+    const width = (this.getValFromAttrs(lineItem, 'width') as number) || undefined;
+    const height = (this.getValFromAttrs(lineItem, 'height') as number) || undefined;
+    const diameter = (this.getValFromAttrs(lineItem, 'diameter') as number) || undefined;
+
+    this.boxLabel = boxLabel;
+    this.measurements = {
+      [this.measurementsValues[0]]: width,
+      [this.measurementsValues[1]]: height,
+      [this.measurementsValues[2]]: diameter,
+    };
+
+    this.boxLabelForm?.get('boxLabel').setValue(boxLabel);
+  }
+
+  private getValFromAttrs(lineItem: LineItem, name: string) {
+    return lineItem?.attributes?.find(att => att.name === name)?.value;
   }
 }
