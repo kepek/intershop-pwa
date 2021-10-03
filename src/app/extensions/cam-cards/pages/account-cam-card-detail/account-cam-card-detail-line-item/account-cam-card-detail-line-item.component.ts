@@ -33,13 +33,6 @@ import { CamCard, CamCardCustomer, CamCardItem } from '../../../models/cam-card/
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AccountCamCardDetailLineItemComponent implements OnChanges, OnInit, OnDestroy {
-  constructor(
-    private productFacade: ShoppingFacade,
-    private camCardsFacade: CamCardsFacade,
-    private appFacade: AppFacade,
-    public dialog: MatDialog
-  ) {}
-
   private static REQUIRED_COMPLETENESS_LEVEL = ProductCompletenessLevel.List;
   @Input() camCardItemData: CamCardItem;
   @Input() currentCamCard: CamCard;
@@ -50,20 +43,31 @@ export class AccountCamCardDetailLineItemComponent implements OnChanges, OnInit,
   @Output() handleLoad = new EventEmitter<{ res: ProductView; quantity: number }>();
   @Output() handleUpdate = new EventEmitter<{ res: ProductView; quantity: number }>();
   @Output() delete = new EventEmitter<CamCardItem>();
-
   quantity = 0;
   showPrice: boolean;
-
   addToCartForm: FormGroup;
   selectItemForm: FormGroup;
   product$: Observable<ProductView>;
   customers: CamCardCustomer[];
-
   @Input() showCheckbox: boolean;
   @Input() checked: boolean;
   @Output() changeCheckbox = new EventEmitter<Event>();
-
   private destroy$ = new Subject<void>();
+
+  constructor(
+    private productFacade: ShoppingFacade,
+    private camCardsFacade: CamCardsFacade,
+    private appFacade: AppFacade,
+    public dialog: MatDialog
+  ) {}
+
+  get isEditMode() {
+    return this.mode === 'edit';
+  }
+
+  get isViewMode() {
+    return this.mode === 'view';
+  }
 
   ngOnInit() {
     this.initForm();
@@ -95,22 +99,6 @@ export class AccountCamCardDetailLineItemComponent implements OnChanges, OnInit,
 
   changeCheck(event) {
     this.changeCheckbox.emit(event);
-  }
-
-  /** init form in the beginning */
-  private initForm() {
-    this.addToCartForm = new FormGroup({
-      quantity: new FormControl(this.camCardItemData.quantity || 1),
-    });
-
-    if (this.selectedItemsForm) {
-      this.selectItemForm = new FormGroup({
-        productCheckbox: new FormControl(true),
-        sku: new FormControl(this.camCardItemData.product.sku),
-      });
-
-      this.selectedItemsForm.push(this.selectItemForm);
-    }
   }
 
   getListPrice(listPrice) {
@@ -160,22 +148,58 @@ export class AccountCamCardDetailLineItemComponent implements OnChanges, OnInit,
   }
 
   updateProductQuantity(camCardItem: CamCardItem, quantity: number) {
-    const newItem = {
-      ...camCardItem,
-      quantity,
-    };
-    const difference = quantity - this.quantity;
+    this.product$.pipe(take(1), takeUntil(this.destroy$)).subscribe((res: ProductView) => {
+      const { maxOrderQuantity, minOrderQuantity } = res;
 
-    this.quantity = quantity;
+      if (quantity < minOrderQuantity) {
+        return;
+      }
 
-    this.camCardsFacade.updateCamCardProduct(this.currentCamCard.rootCamCard, this.currentCamCard.id, newItem);
-    this.product$
-      .pipe(take(1), takeUntil(this.destroy$))
-      .subscribe((res: ProductView) => this.handleUpdate.emit({ res, quantity: difference }));
+      if (quantity >= maxOrderQuantity) {
+        return;
+      }
+
+      const difference = quantity - this.quantity;
+
+      this.quantity = quantity;
+
+      const newItem = {
+        ...camCardItem,
+        quantity,
+      };
+
+      this.camCardsFacade.updateCamCardProduct(this.currentCamCard.rootCamCard, this.currentCamCard.id, newItem);
+      this.handleUpdate.emit({ res, quantity: difference });
+    });
   }
 
   removeProductFromCamCard(camCardItem: CamCardItem) {
     this.delete.emit(camCardItem);
+  }
+
+  /** Determine the heading of the delete modal and opens the modal. */
+  openQuickViewDialog(camCardItemData: CamCardItem) {
+    this.dialog.open(CamfilQuickViewModalComponent, {
+      width: '768px',
+      autoFocus: false,
+      data: { sku: camCardItemData.product.sku },
+    });
+  }
+
+  /** init form in the beginning */
+  private initForm() {
+    this.addToCartForm = new FormGroup({
+      quantity: new FormControl(this.camCardItemData.quantity || 1),
+    });
+
+    if (this.selectedItemsForm) {
+      this.selectItemForm = new FormGroup({
+        productCheckbox: new FormControl(true),
+        sku: new FormControl(this.camCardItemData.product.sku),
+      });
+
+      this.selectedItemsForm.push(this.selectItemForm);
+    }
   }
 
   /**if the camCardItem is loaded, get product details*/
@@ -190,22 +214,5 @@ export class AccountCamCardDetailLineItemComponent implements OnChanges, OnInit,
         .pipe(take(1), takeUntil(this.destroy$))
         .subscribe((res: ProductView) => this.handleLoad.emit({ res, quantity: this.camCardItemData.quantity }));
     }
-  }
-
-  /** Determine the heading of the delete modal and opens the modal. */
-  openQuickViewDialog(camCardItemData: CamCardItem) {
-    this.dialog.open(CamfilQuickViewModalComponent, {
-      width: '768px',
-      autoFocus: false,
-      data: { sku: camCardItemData.product.sku },
-    });
-  }
-
-  get isEditMode() {
-    return this.mode === 'edit';
-  }
-
-  get isViewMode() {
-    return this.mode === 'view';
   }
 }
