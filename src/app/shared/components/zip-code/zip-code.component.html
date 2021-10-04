@@ -12,7 +12,7 @@
   <camfil-error
     [errorValidators]="errorValidator"
     [errors]="formField.errors"
-    [touched]="formField.touched"
+    [touched]="formField.touched || formField.dirty"
   ></camfil-error>
 </mat-form-field>
 
