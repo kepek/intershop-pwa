@@ -11,7 +11,7 @@
       [ngClass]="{ open: isOpened(category.uniqueId) }"
       (mouseover)="subMenuShow(submenu)"
       (mouseleave)="subMenuHide(submenu)"
-      (click)="subMenuHide(submenu)"
+      (click)="$event.preventDefault(); $event.stopPropagation(); toggleSubMenu(submenu)"
     >
       <a
         [routerLink]="category.url"

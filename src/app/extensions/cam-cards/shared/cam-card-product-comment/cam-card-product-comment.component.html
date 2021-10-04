@@ -8,15 +8,22 @@
         ngClass="field_{{ input }}"
       >
         <mat-label>{{ 'camfil.dynamic.account.cam_card.edit.comment.' + input + '.label' | translate }}</mat-label>
-        <input
+        <textarea
+          #autosize="cdkTextareaAutosize"
+          class="overflow-hidden"
           (blur)="onBlur($event.target, input)"
           (keyup.enter)="keyupEnter($event.target)"
           [camfilMaxLength]="'BoxLabel'"
           attr.data-testing-id="cam-card-edit-comment-{{ input }}"
           formControlName="{{ input }}"
           markRequiredLabel="off"
+          cdkAutosizeMaxRows="3"
+          cdkAutosizeMinRows="1"
+          cdkTextareaAutosize
           matInput
-        />
+          name="boxLabel"
+          type="text"
+        ></textarea>
       </mat-form-field>
     </ng-container>
   </form>

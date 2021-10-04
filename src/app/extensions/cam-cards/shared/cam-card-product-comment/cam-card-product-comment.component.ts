@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { CdkTextareaAutosize } from '@angular/cdk/text-field';
+import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Subject } from 'rxjs';
 
@@ -15,6 +16,7 @@ export class CamCardProductCommentComponent implements OnInit, OnDestroy {
   @Input() currentCamCard?: CamCard;
   @Input() camCardItem: CamCardItem;
   @Input() mode: 'edit' | 'view';
+  @ViewChild('autosize') autosize: CdkTextareaAutosize;
 
   commentForm: FormGroup;
   inputs = [];

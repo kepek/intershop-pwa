@@ -30,6 +30,7 @@ import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfi
 import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
 
 import { CamCardMeasurement } from '../../../extensions/cam-cards/models/cam-card/cam-card.model';
+import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
 
 @Component({
   selector: 'camfil-checkout-line-item',
@@ -55,6 +56,7 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
   @Output() openDeleteModalAction = new EventEmitter();
   @Output() resizeLineItemOnBlur = new EventEmitter();
   @Output() addHeightToViewport = new EventEmitter<string>();
+  @Input() deviceType: DeviceType;
   earliestDeliveryDate: Date;
   boxLabel: string;
   measurementsValues = ['width', 'height', 'diameter'];
@@ -66,6 +68,7 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
   addToCartForm: FormGroup;
   addToCartQuantityControl: FormControl;
   boxLabelForm: FormGroup;
+  isMobileView = false;
   private destroy$ = new Subject<void>();
   private sku$ = new ReplaySubject<string>(1);
 
@@ -76,6 +79,7 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
   ) {}
 
   ngOnInit() {
+    this.isMobileView = this.deviceType === 'tablet' || this.deviceType === 'mobile';
     this.product$ = this.shoppingFacade.product$(
       this.sku$,
       CamfilCheckoutLineItemComponent.REQUIRED_COMPLETENESS_LEVEL

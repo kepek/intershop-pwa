@@ -5,7 +5,7 @@ import { AccountFacade } from 'ish-core/facades/account.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { NavigationCategory } from 'ish-core/models/navigation-category/navigation-category.model';
 import { User } from 'ish-core/models/user/user.model';
-import { NextOpenLevelOnMobileNavType } from 'ish-core/models/viewtype/viewtype.types';
+import { DeviceType, NextOpenLevelOnMobileNavType } from 'ish-core/models/viewtype/viewtype.types';
 import { AuthorizationToggleService } from 'ish-core/utils/authorization-toggle/authorization-toggle.service';
 
 import { environment } from '../../../../environments/environment';
@@ -19,10 +19,11 @@ import { environment } from '../../../../environments/environment';
 export class CamfilHeaderNavigationComponent implements OnInit {
   @Input() view: 'auto' | 'small' | 'full' = 'auto';
   @Output() isClosedCat = new EventEmitter<NextOpenLevelOnMobileNavType>();
-
+  @Input() deviceType: DeviceType;
   categories$: Observable<NavigationCategory[]>;
   user$: Observable<User>;
-
+  isMobileView = false;
+  isDropDownOpened = false;
   openedCategories = [];
 
   isProdEnv = environment.production;
@@ -36,6 +37,7 @@ export class CamfilHeaderNavigationComponent implements OnInit {
   ngOnInit() {
     this.categories$ = this.shoppingFacade.navigationCategories$();
     this.user$ = this.accountFacade.user$;
+    this.isMobileView = this.deviceType === 'tablet' || this.deviceType === 'mobile';
   }
 
   authorization$(permissions: string[]) {
@@ -82,5 +84,14 @@ export class CamfilHeaderNavigationComponent implements OnInit {
 
   isOpenCat(uniqueId: string) {
     return !this.openedCategories.length || this.isOpened(uniqueId);
+  }
+
+  toggleSubMenu(submenu) {
+    if (!this.isMobileView || this.isDropDownOpened) {
+      this.subMenuHide(submenu);
+    } else {
+      this.subMenuShow(submenu);
+      this.isDropDownOpened = true;
+    }
   }
 }
