@@ -252,6 +252,7 @@
         [isPartialDelivery]="isPartialDelivery"
         [lineItem]="item"
         [orderDeliveryDate]="deliveryDate"
+        [deviceType]="deviceType$ | async"
         (openDeleteModalAction)="changeScrollIndex()"
         (resizeLineItemOnBlur)="changeViewportHeightOnBlur($event)"
       ></camfil-checkout-line-item>

@@ -5,7 +5,12 @@
   align-items: center;
 
   .field_label {
-    width: 300px;
+    width: auto;
+    min-width: 200px;
+    overflow: hidden;
+    @media (min-width: $screen-lg-max) {
+      width: 300px;
+    }
   }
   ::ng-deep {
     .mat-icon {

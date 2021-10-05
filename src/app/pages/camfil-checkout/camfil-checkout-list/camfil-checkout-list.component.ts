@@ -41,6 +41,7 @@ import { Basket } from 'ish-core/models/basket/basket.model';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { AppFacade } from 'ish-core/facades/app.facade';
 import { Channel } from 'ish-core/models/channel/channel.types';
+import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
 
 @Component({
   selector: 'camfil-checkout-list',
@@ -84,7 +85,7 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
   forceUpdateForm = false;
   hideRecipientButton = false;
   itemSize = 91;
-
+  deviceType$: Observable<DeviceType>;
   private destroy$ = new Subject<void>();
   private numberOfVisibleLineItems = 20;
 
@@ -196,6 +197,11 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
       if (channel === Channel.FI) {
         this.hideRecipientButton = true;
       }
+    });
+
+    this.deviceType$ = this.appFacade.deviceType$;
+    this.deviceType$?.pipe(takeUntil(this.destroy$)).subscribe(deviceType => {
+      this.itemSize = deviceType === 'mobile' ? 255 : deviceType === 'tablet' ? 155 : 91;
     });
   }
 

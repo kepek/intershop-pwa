@@ -25,6 +25,7 @@ import { LineItem, LineItemView } from 'ish-core/models/line-item/line-item.mode
 import { ProductView } from 'ish-core/models/product-view/product-view.model';
 import { ProductCompletenessLevel } from 'ish-core/models/product/product.model';
 import { CheckoutFocusedElement } from 'ish-core/models/scroll-info copy/checkout-focused-element.interface';
+import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
 import { CamfilQuickViewModalComponent } from 'ish-shared/components/common/camfil-quick-view-modal/camfil-quick-view-modal.component';
 import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
 import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
@@ -55,6 +56,7 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
   @Output() openDeleteModalAction = new EventEmitter();
   @Output() resizeLineItemOnBlur = new EventEmitter();
   @Output() addHeightToViewport = new EventEmitter<string>();
+  @Input() deviceType: DeviceType;
   earliestDeliveryDate: Date;
   boxLabel: string;
   measurementsValues = ['width', 'height', 'diameter'];
@@ -66,6 +68,7 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
   addToCartForm: FormGroup;
   addToCartQuantityControl: FormControl;
   boxLabelForm: FormGroup;
+  isMobileView = false;
   private destroy$ = new Subject<void>();
   private sku$ = new ReplaySubject<string>(1);
 
@@ -76,6 +79,7 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
   ) {}
 
   ngOnInit() {
+    this.isMobileView = this.deviceType === 'tablet' || this.deviceType === 'mobile';
     this.product$ = this.shoppingFacade.product$(
       this.sku$,
       CamfilCheckoutLineItemComponent.REQUIRED_COMPLETENESS_LEVEL

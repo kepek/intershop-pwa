@@ -95,6 +95,7 @@
         <camfil-header-navigation
           *ngIf="nextOpenLevelOnMobileNav !== 'userLinks'"
           (isClosedCat)="isClosedNav($event)"
+          [deviceType]="deviceType"
         ></camfil-header-navigation>
         <camfil-user-links
           (isClosedNextLevel)="isClosedNav($event)"

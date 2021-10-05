@@ -1,8 +1,15 @@
 <ng-template #noProduct>...</ng-template>
 
 <ng-container *ngIf="product$ | async as product; else noProduct">
-  <div [class]="{ 'line-item__confirmed': isConfirmed }" class="line-item d-flex align-items-center text-left">
-    <div class="d-flex align-items-center align-self-start align-self-md-center text-left w-100">
+  <div
+    [class]="{ 'line-item__confirmed': isConfirmed }"
+    [ngClass]="!isMobileView ? 'd-flex' : 'line-item-grid'"
+    class="line-item align-items-center text-left"
+  >
+    <div
+      [class]="{ 'grid-area-image': isMobileView }"
+      class="d-flex align-items-center align-self-start align-self-md-center text-left w-100"
+    >
       <a [routerLink]="product | ishProductRoute" class="image ml-0 mx-md-3">
         <camfil-product-image
           [imageView]="'default'"
@@ -48,7 +55,7 @@
         </div>
       </div>
     </div>
-    <div *ngIf="!isConfirmed" class="box-label">
+    <div *ngIf="!isConfirmed" [class]="{ 'grid-area-label': isMobileView }" class="box-label">
       <form [formGroup]="boxLabelForm" class="box-label__form">
         <mat-form-field appearance="outline" class="box-label__form--field">
           <mat-label>{{ 'camfil.cam_card.product.comment.label' | translate }}</mat-label>
@@ -76,7 +83,7 @@
       </form>
     </div>
     <ng-container *ngIf="!product.failed; else productNotAvailable">
-      <div class="delivery-date-container">
+      <div class="delivery-date-container" [class]="{ 'grid-area-deliverydate': isMobileView }">
         <p class="delivery-date-para">
           <strong>{{ 'camfil.checkout.order.earliest_delivery_date.text' | translate }}</strong>
         </p>
@@ -87,7 +94,10 @@
           <p class="delivery-date-para">{{ earliestDeliveryDate | ishDate }}</p>
         </ng-template>
       </div>
-      <div class="quantity-row d-flex flex-row justify-content-between align-items-center py-3 py-md-0">
+      <div
+        [ngClass]="{ 'd-flex': !isMobileView, 'grid-area-actions': isMobileView }"
+        class="quantity-row flex-row justify-content-between align-items-center py-3 py-md-0"
+      >
         <span *ngIf="isConfirmed" class="quantity-confirmed">{{ lineItem.quantity.value }}</span>
         <a
           (click)="openDeleteModal()"
