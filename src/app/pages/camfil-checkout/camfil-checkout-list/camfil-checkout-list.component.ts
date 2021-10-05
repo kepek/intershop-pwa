@@ -200,6 +200,9 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
     });
 
     this.deviceType$ = this.appFacade.deviceType$;
+    this.deviceType$?.pipe(takeUntil(this.destroy$)).subscribe(deviceType => {
+      this.itemSize = deviceType === 'mobile' ? 255 : deviceType === 'tablet' ? 155 : 91;
+    });
   }
 
   getBoxLabel(lineItem: LineItem) {
