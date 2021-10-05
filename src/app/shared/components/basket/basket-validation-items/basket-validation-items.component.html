@@ -17,7 +17,7 @@
         <!---Product Description --->
         <div class="col-5 col-md-4 list-item">
           <a [routerLink]="product | ishProductRoute">{{ product.name }}</a>
-          <p class="product-id">{{ 'product.itemNumber.label' | translate }}&nbsp;{{ pli.productSKU }}</p>
+          <p class="product-id">{{ 'product.itemNumber.label' | translate }}: {{ pli.productSKU }}</p>
 
           <!---Out of Stock --->
           <camfil-product-inventory [product]="product"></camfil-product-inventory>
