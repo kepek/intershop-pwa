@@ -34,8 +34,11 @@
     </th>
     <td mat-cell *matCellDef="let pli">
       <div>
-        {{ pli.articleName }},
-        <camfil-line-item-measurements [linetItem]="pli" class="d-inline-block ml-1"></camfil-line-item-measurements>
+        {{ pli.articleName }}
+        <ng-container *ngIf="pli.width || pli.height"
+          >,
+          <camfil-line-item-measurements [linetItem]="pli" class="d-inline-block ml-1"></camfil-line-item-measurements
+        ></ng-container>
       </div>
     </td>
   </ng-container>
