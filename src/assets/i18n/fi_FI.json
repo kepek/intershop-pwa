@@ -1404,7 +1404,7 @@
   "product.email_a_friend.link": "Lähetä ystävälle sähköpostitse",
   "product.image.text.alttext": "tuotekuva",
   "product.instock.text": "Varastossa",
-  "product.itemNumber.label": "Tuotenumero:",
+  "product.itemNumber.label": "Tuotenumero",
   "product.items.label": {
     "=0": "0 luettelokohdettat",
     "=1": "1 luettelokohde",

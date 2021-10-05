@@ -1404,7 +1404,7 @@
   "product.email_a_friend.link": "fr_E-mail a friend",
   "product.image.text.alttext": "fr_product photo",
   "product.instock.text": "fr_In Stock",
-  "product.itemNumber.label": "fr_Product ID:",
+  "product.itemNumber.label": "fr_Product ID",
   "product.items.label": {
     "=0": "fr_0 list items",
     "=1": "fr_1 list item",

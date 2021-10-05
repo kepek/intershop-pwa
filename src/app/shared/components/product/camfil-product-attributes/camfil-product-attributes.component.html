@@ -1,6 +1,6 @@
 <dl *ngIf="productListAttributes && productListAttributes.length" class="product-attributes row px-4">
   <ng-container *ngFor="let attribute of productListAttributes | slice: 0:1000">
-    <dt class="attribute-type col-sm-6">{{ attribute.name }}:</dt>
+    <dt class="attribute-type col-sm-6">{{ attribute.name }}</dt>
     <dd
       class="attribute-value col-sm-6 text-right"
       [innerHTML]="attribute | ishAttribute: multipleValuesSeparator"

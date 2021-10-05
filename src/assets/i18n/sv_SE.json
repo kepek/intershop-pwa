@@ -1404,7 +1404,7 @@
   "product.email_a_friend.link": "Mejla en vän",
   "product.image.text.alttext": "Produktfoto",
   "product.instock.text": "I lager",
-  "product.itemNumber.label": "Produkt ID:",
+  "product.itemNumber.label": "Produkt ID",
   "product.items.label": {
     "=0": "0 produkter",
     "=1": "1 produkter",

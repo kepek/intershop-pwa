@@ -59,14 +59,14 @@ describe('Camfil Product Attributes Component', () => {
 
   it('should render product attributes name and value when available', () => {
     fixture.detectChanges();
-    expect(element.querySelector('.attribute-type').textContent).toEqual('A1:');
+    expect(element.querySelector('.attribute-type').textContent).toEqual('A1');
     expect(element.querySelector('.attribute-value').textContent).toEqual('Value1');
   });
 
   it('should render product attributes name and multiple value when available', () => {
     component.multipleValuesSeparator = ':::';
     fixture.detectChanges();
-    expect(element.querySelectorAll('.attribute-type')[1].textContent).toEqual('B1:');
+    expect(element.querySelectorAll('.attribute-type')[1].textContent).toEqual('B1');
     expect(element.querySelectorAll('.attribute-value')[1].textContent).toEqual('hallo:::welt');
   });
 });
