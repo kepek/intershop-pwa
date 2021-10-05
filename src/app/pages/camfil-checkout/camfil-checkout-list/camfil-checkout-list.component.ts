@@ -272,7 +272,7 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
   calculateLineItemHeight(lineItems: LineItemView[]) {
     return lineItems
       .map(li => {
-        if (li.attributes.find(att => att.name === 'boxLabel' && att.value.toString().length > 28)) {
+        if (li.attributes.find(att => att.name === 'boxLabel' && att.value?.toString().length > 28)) {
           return li;
         }
       })

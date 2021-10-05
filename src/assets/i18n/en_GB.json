@@ -854,6 +854,7 @@
   "camfil.checkout.cta.separate_multiple_addresses": "Separate multiple addresses with a comma sign",
   "camfil.checkout.excl_vat": "excl. VAT",
   "camfil.checkout.form.delivery_date": "Choose delivery date",
+  "camfil.checkout.desired_delivery_date": "Desired delivery date",
   "camfil.checkout.form.invoice_mark": "Invoice mark",
   "camfil.checkout.form.note": "Add note to the customer service",
   "camfil.checkout.form.order_mark": "Order mark",

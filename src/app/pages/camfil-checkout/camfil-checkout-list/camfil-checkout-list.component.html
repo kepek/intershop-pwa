@@ -69,7 +69,7 @@
             <dd class="col-6 p-0 invoice-label-value text-right text-break" data-testing-id="order-customer_id">
               {{ order?.invoiceLabel || '-' }}
             </dd>
-            <dt class="col-6 p-0">{{ 'camfil.checkout.form.delivery_date' | translate }}</dt>
+            <dt class="col-6 p-0">{{ 'camfil.checkout.desired_delivery_date' | translate }}</dt>
 
             <ng-container *ngIf="deliveryDaysForItemsAfterConfirmation?.length > 1; else fullDeliveryDate">
               <dd class="col-6 p-0 text-right">

@@ -854,6 +854,7 @@
   "camfil.checkout.cta.separate_multiple_addresses": "sv_Separate multiple addresses with a comma sign",
   "camfil.checkout.excl_vat": "exklusive moms",
   "camfil.checkout.form.delivery_date": "Välj leveransdatum",
+  "camfil.checkout.desired_delivery_date": "Önskat leveransdatum",
   "camfil.checkout.form.invoice_mark": "Fakturamärkning",
   "camfil.checkout.form.note": "Lägg till notering till kundtjänst",
   "camfil.checkout.form.order_mark": "Ordermärke",
