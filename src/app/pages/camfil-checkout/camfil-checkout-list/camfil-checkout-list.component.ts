@@ -219,6 +219,14 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
       this.virtualScrollViewport?.checkViewportSize();
     }
 
+    const prev = s?.order?.previousValue?.deliveryDate;
+    const current = s?.order?.currentValue?.deliveryDate;
+    if (prev && current && prev !== current) {
+      this.orderForm.patchValue({
+        deliveryDate: this.toDate(this.order.deliveryDate),
+      });
+    }
+
     const scroll = this.currentScrollIndex || this.order.currentScrollIndex;
     setTimeout(() => this.virtualScrollViewport?.scrollToIndex(scroll));
   }
@@ -547,14 +555,16 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
       isPartialDelivery: isPartial,
     };
 
-    // CAM-1504: Only display popup when bucket contains more then one line items
-    if (this.order.lineItems?.length > 1) {
-      this.dialog.open(this.modal?.show());
-    }
+    if (this.modal) {
+      // CAM-1504: Only display popup when bucket contains more then one line items
+      if (this.order.lineItems?.length > 1) {
+        this.dialog.open(this.modal?.show());
+      }
 
-    this.modal.hide = () => {
-      this.dialog.closeAll();
-    };
+      this.modal.hide = () => {
+        this.dialog.closeAll();
+      };
+    }
 
     /* call c after dialog is closed either by click, backdrop click, or ESC press */
     this.dialog.afterAllClosed.pipe(first(), takeUntil(this.destroy$)).subscribe(() => {
