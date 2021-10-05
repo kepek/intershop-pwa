@@ -23,14 +23,19 @@ export class BasketMapper {
       included && included.lineItems && data.lineItems && data.lineItems.length
         ? data.lineItems
             .map(lineItemId => LineItemMapper.fromData(included.lineItems[lineItemId], included.lineItems_discounts))
-            .map(item =>
-              included.camfilProductLineItems?.[item.id]
-                ? {
-                    ...item,
-                    earliestDeliveryDate: included.camfilProductLineItems[item.id].productInfo?.earliestDeliveryDate,
-                  }
-                : item
-            )
+            .map(item => {
+              const camfilLineItem = included?.camfilProductLineItems?.[item.id];
+              const earliestDeliveryDate = camfilLineItem?.productInfo?.earliestDeliveryDate;
+              const listPrice = PriceItemMapper.fromPriceItem(camfilLineItem?.pricing?.listPrice);
+              const salePrice = PriceItemMapper.fromPriceItem(camfilLineItem?.pricing?.salePrice);
+
+              return {
+                ...item,
+                earliestDeliveryDate,
+                listPrice,
+                salePrice,
+              };
+            })
         : [];
 
     return {

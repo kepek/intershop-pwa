@@ -5,7 +5,7 @@ import { BasketApproval } from 'ish-core/models/basket-approval/basket-approval.
 import { BasketInfo } from 'ish-core/models/basket-info/basket-info.model';
 import { BasketRebateData } from 'ish-core/models/basket-rebate/basket-rebate.interface';
 import { BasketTotalData } from 'ish-core/models/basket-total/basket-total.interface';
-import { CamfilProductLineItemData, LineItemData } from 'ish-core/models/line-item/line-item.interface';
+import { CamfilLineItemData, LineItemData } from 'ish-core/models/line-item/line-item.interface';
 import { PaymentInstrument } from 'ish-core/models/payment-instrument/payment-instrument.model';
 import { PaymentMethodBaseData } from 'ish-core/models/payment-method/payment-method.interface';
 import { PaymentData } from 'ish-core/models/payment/payment.interface';
@@ -64,7 +64,7 @@ export interface BasketData {
     payments?: { [id: string]: PaymentData };
     payments_paymentMethod?: { [id: string]: PaymentMethodBaseData };
     payments_paymentInstrument?: { [id: string]: PaymentInstrument };
-    camfilProductLineItems?: { [id: string]: CamfilProductLineItemData };
+    camfilProductLineItems?: { [id: string]: CamfilLineItemData };
   };
   infos?: BasketInfo[];
 }
