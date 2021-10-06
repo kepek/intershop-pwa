@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Dictionary } from '@ngrx/entity';
 import { routerNavigatedAction } from '@ngrx/router-store';
-import { Store, select } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 import { identity } from 'rxjs';
 import {
   concatMap,
@@ -28,7 +28,7 @@ import { VariationProduct } from 'ish-core/models/product/product-variation.mode
 import { Product, ProductCompletenessLevel, ProductHelper } from 'ish-core/models/product/product.model';
 import { ofProductUrl } from 'ish-core/routing/product/product.route';
 import { ProductsService } from 'ish-core/services/products/products.service';
-import { getCurrentLocale } from 'ish-core/store/core/configuration';
+import { getCurrentLocale, setCurrentLocale } from 'ish-core/store/core/configuration';
 import { selectQueryParam, selectRouteParam } from 'ish-core/store/core/router';
 import { setBreadcrumbData } from 'ish-core/store/core/viewconf';
 import { getLoggedInCustomer, loginUserSuccess, setPGID } from 'ish-core/store/customer/user';
@@ -56,14 +56,14 @@ import {
   loadProductLinks,
   loadProductLinksFail,
   loadProductLinksSuccess,
-  loadProductSuccess,
-  loadProductVariations,
-  loadProductVariationsFail,
-  loadProductVariationsSuccess,
   loadProductsForCategory,
   loadProductsForCategoryFail,
   loadProductsForMaster,
   loadProductsForMasterFail,
+  loadProductSuccess,
+  loadProductVariations,
+  loadProductVariationsFail,
+  loadProductVariationsSuccess,
   loadRetailSetSuccess,
   updateProduct,
 } from './products.actions';
@@ -446,6 +446,21 @@ export class ProductsEffects {
       map(([, categoryId, currentPage, sorting]) => {
         const page = currentPage && Number(currentPage);
         return loadProductsForCategory({ categoryId, page, sorting });
+      })
+    )
+  );
+
+  // Fetch and update exisiting product entities when language is changed
+  refreshProductsAfterLangChange$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(setCurrentLocale),
+      mapToPayloadProperty('lang'),
+      withLatestFrom(this.store.pipe(select(getProductEntities))),
+      filter(([, entities]) => !!Object.keys(entities).length),
+      mergeMap(([, entities]) => {
+        const skus = Object.keys(entities);
+
+        return [...skus.map(sku => loadProduct({ sku }))];
       })
     )
   );
