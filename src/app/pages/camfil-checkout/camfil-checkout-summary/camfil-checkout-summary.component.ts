@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
+import { BasketValidationResultType } from 'ish-core/models/basket-validation/basket-validation.model';
 import { BasketView } from 'ish-core/models/basket/basket.model';
 import { PriceHelper } from 'ish-core/models/price/price.helper';
 
@@ -21,6 +22,7 @@ export class CamfilCheckoutSummaryComponent implements OnInit, OnChanges {
 
   productsReadyToPlaceOrder$: Observable<boolean>;
   bucketsVolumeDiscounts$: Observable<number>;
+  validationResults$: Observable<BasketValidationResultType>;
 
   private isTracked = false;
 
@@ -32,8 +34,9 @@ export class CamfilCheckoutSummaryComponent implements OnInit, OnChanges {
   ) {}
 
   ngOnInit() {
-    this.productsReadyToPlaceOrder$ = this.shoppingFacade.productsReadyToPlaceOrder$;
     this.bucketsVolumeDiscounts$ = this.checkoutFacade.bucketsVolumeDiscounts$;
+    this.validationResults$ = this.checkoutFacade.basketValidationResults$;
+    this.productsReadyToPlaceOrder$ = this.shoppingFacade.productsReadyToPlaceOrder$;
   }
 
   ngOnChanges() {
@@ -47,13 +50,18 @@ export class CamfilCheckoutSummaryComponent implements OnInit, OnChanges {
     this.update.emit();
 
     // In case of user from ICM back office, add employeeID as externalOrderReference
-    const erpEmployeeId = localStorage.getItem('erpEmployeeId');
+    let erpEmployeeId;
+
+    try {
+      erpEmployeeId = JSON.parse(localStorage.getItem('erpEmployeeId'));
+    } catch (err) {
+      // NOOP
+    }
 
     if (erpEmployeeId) {
       this.checkoutFacade.updateBasketExternalOrderReference(erpEmployeeId);
     }
 
-    this.checkoutFacade.setBasketPayment('ISH_INVOICE');
     this.checkoutFacade.continue(5);
   }
 

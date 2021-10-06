@@ -119,7 +119,11 @@ export const isProductsReadyToPlaceOrder = createSelector(
       return false;
     }
 
-    return (validation.valid || !validation?.errors?.length) && lastAdded ? added && updated : true;
+    if (validation.valid || !validation?.errors?.length) {
+      return lastAdded ? added && updated : true;
+    }
+
+    return true;
   }
 );
 
