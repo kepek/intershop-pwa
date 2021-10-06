@@ -61,7 +61,7 @@ exports[`Camfil Header Default Component should render normal header adequately 
   <div class="global-nav-container">
     <nav class="global-nav navbar-expand-md" ng-reflect-collapsed="false">
       <div class="main-navigation" role="navigation">
-        <camfil-header-navigation></camfil-header-navigation>
+        <camfil-header-navigation ng-reflect-device-type="desktop"></camfil-header-navigation>
       </div>
     </nav>
   </div>
@@ -129,7 +129,7 @@ exports[`Camfil Header Default Component should render normal header adequately 
   <div class="global-nav-container">
     <nav class="global-nav navbar-expand-md" ng-reflect-collapsed="false">
       <div class="main-navigation" role="navigation">
-        <camfil-header-navigation></camfil-header-navigation>
+        <camfil-header-navigation ng-reflect-device-type="tablet"></camfil-header-navigation>
       </div>
     </nav>
   </div>
@@ -176,7 +176,7 @@ exports[`Camfil Header Default Component should render sticky header adequately 
   <div class="global-nav-container">
     <nav class="global-nav navbar-expand-md" ng-reflect-collapsed="false">
       <div class="main-navigation" role="navigation">
-        <camfil-header-navigation></camfil-header-navigation>
+        <camfil-header-navigation ng-reflect-device-type="desktop"></camfil-header-navigation>
       </div>
     </nav>
   </div>
@@ -245,7 +245,7 @@ exports[`Camfil Header Default Component should render sticky header adequately 
   <div class="global-nav-container">
     <nav class="global-nav navbar-expand-md" ng-reflect-collapsed="true">
       <div class="main-navigation" role="navigation">
-        <camfil-header-navigation></camfil-header-navigation
+        <camfil-header-navigation ng-reflect-device-type="mobile"></camfil-header-navigation
         ><camfil-user-links
           ng-reflect-device-type="mobile"
           ng-reflect-next-open-level-on-mobile-nav=""
@@ -296,7 +296,7 @@ exports[`Camfil Header Default Component should render sticky header adequately 
   <div class="global-nav-container">
     <nav class="global-nav navbar-expand-md" ng-reflect-collapsed="false">
       <div class="main-navigation" role="navigation">
-        <camfil-header-navigation></camfil-header-navigation>
+        <camfil-header-navigation ng-reflect-device-type="tablet"></camfil-header-navigation>
       </div>
     </nav>
   </div>
