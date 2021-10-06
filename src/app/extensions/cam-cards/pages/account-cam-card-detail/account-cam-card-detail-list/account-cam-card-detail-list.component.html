@@ -149,13 +149,18 @@
 
 <camfil-modal-dialog
   #needToCompleteAddress
-  (confirmed)="dialog.closeAll()"
+  (confirmed)="measurementsInvalid.length ? addToCart() : dialog.closeAll()"
   [options]="{
     titleText: handleModalTexts.titleText | translate,
     confirmText: handleModalTexts.confirmText | translate
   }"
 >
-  {{ handleModalTexts.content | translate }}
+  <p>{{ handleModalTexts.content | translate }}</p>
+  <div class="mt-3" *ngIf="modalType === 'invalidMeasurements'">
+    <div *ngFor="let item of measurementsInvalid">
+      {{ item.product.name }} ({{ 'camfil.cam_card.product.id.label' | translate }}: {{ item.product.sku }})
+    </div>
+  </div>
 </camfil-modal-dialog>
 
 <div *ngIf="loading" class="loader-container">
