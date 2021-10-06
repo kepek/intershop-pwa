@@ -243,7 +243,6 @@ export const camCardReducer = createReducer(
     addBasketToNewCamCardSuccess,
     createCamCardSuccess,
     updateCamCardSuccess,
-    updateCamCardAttributeSuccess,
     updateSubCamCardSuccess,
     deleteSubCamCardSuccess,
     moveCamCardSuccess,
@@ -257,6 +256,16 @@ export const camCardReducer = createReducer(
       });
     }
   ),
+  on(updateCamCardAttributeSuccess, (state: CamCardState, action) => {
+    const { camCard } = action.payload;
+    return camCardAdapter.updateOne(
+      {
+        id: camCard.id,
+        changes: camCard,
+      },
+      { ...state, loading: false }
+    );
+  }),
   on(addProductToCamCard, (state: CamCardState) => ({
     ...state,
     addProductSuccess: false,

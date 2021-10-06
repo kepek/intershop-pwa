@@ -118,7 +118,13 @@ export class CamfilCheckoutPageComponent implements OnInit, OnDestroy {
       this.isConfirmed = true;
       this.confirmedBuckets$
         .pipe(
-          map(confirmedBuckets => confirmedBuckets.map(bucket => bucket.createdFromCamCardId)),
+          map(confirmedBuckets =>
+            confirmedBuckets.reduce(
+              (acc, { createdFromCamCardId }) => (createdFromCamCardId ? [...acc, createdFromCamCardId] : acc),
+              []
+            )
+          ),
+          whenTruthy(),
           take(1)
         )
         .subscribe(camCardIds => {

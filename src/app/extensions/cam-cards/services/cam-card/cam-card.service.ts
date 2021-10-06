@@ -423,6 +423,9 @@ export class CamCardService {
    * @returns          The updated cam_card.
    */
   updateCamCardAttribute(camCardId: string, camCardAttribute): Observable<CamCard> {
+    if (!camCardId) {
+      return throwError('updateCamCardAttribute() called without camCardId');
+    }
     return this.apiService
       .patch(`camcards/${camCardId}`, camCardAttribute)
       .pipe(map((response: CamCard) => this.camCardMapper.fromUpdate(response, camCardId)));
