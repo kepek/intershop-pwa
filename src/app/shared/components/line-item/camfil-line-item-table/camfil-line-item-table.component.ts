@@ -62,7 +62,6 @@ export class CamfilLineItemTableComponent implements OnInit, OnChanges, AfterVie
   ];
   lineItemsProcessed: MatTableDataSource<Partial<OrderLineItem>>;
   isMobileView = false;
-  hasMeasurements = false;
 
   constructor(private shoppingFacade: ShoppingFacade) {}
 
