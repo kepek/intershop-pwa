@@ -85,7 +85,7 @@
     <ng-container *ngIf="!product.failed; else productNotAvailable">
       <div class="delivery-date-container" [class]="{ 'grid-area-deliverydate': isMobileView }">
         <p class="delivery-date-para">
-          <strong>{{ 'camfil.checkout.order.earliest_delivery_date.text' | translate }}</strong>
+          <strong>{{ 'camfil.checkout.desired_delivery_date' | translate }}</strong>
         </p>
         <p *ngIf="isConfirmed; else earliestDelivery" class="delivery-date-para">
           {{ deliveryAfterOrderConfirmed() | ishDate }}
