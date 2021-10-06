@@ -85,6 +85,9 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges, OnD
   showPrice = true;
   newSkusAfterUpdate = [];
 
+  measurementsInvalid = [];
+  modalType: 'noErpNoAddress' | 'invalidMeasurements';
+
   private destroy$ = new Subject();
 
   constructor(
@@ -152,6 +155,13 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges, OnD
           this.changeDetectorRefs.detectChanges();
         });
     });
+
+    const fromSubCC =
+      this.camCard.subCamCards?.reduce((acc, scc) => {
+        const newEl = scc.camCardItems.filter(el => !el.measurement?.valid);
+        return newEl.length ? [...acc, ...newEl] : acc;
+      }, []) || [];
+    this.measurementsInvalid = [...this.camCard.camCardItems.filter(el => !el.measurement?.valid), ...fromSubCC];
   }
 
   ngOnDestroy() {
@@ -244,7 +254,12 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges, OnD
   }
 
   get handleModalTexts() {
-    const type = this.camCard.erpId ? 'with_no_completed_address' : 'no_erp_id';
+    const type =
+      this.modalType === 'noErpNoAddress'
+        ? this.camCard.erpId
+          ? 'with_no_completed_address'
+          : 'no_erp_id'
+        : 'invalid_measurements';
     return {
       titleText: `camfil.dynamic.cam_card.${type}.header`,
       confirmText: `camfil.dynamic.cam_card.${type}.btn`,
@@ -254,11 +269,18 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges, OnD
 
   addItemsToCart(modal: CamfilModalDialogComponent<any>) {
     const { postalCode, city } = this.camCard.deliveryAddress;
-    if (!this.camCard.erpId || !postalCode || !city) {
+    const noErpNoAddress = !this.camCard.erpId || !postalCode || !city;
+
+    if (noErpNoAddress || this.measurementsInvalid.length) {
+      this.modalType = noErpNoAddress ? 'noErpNoAddress' : 'invalidMeasurements';
       modal.show();
       return;
     }
 
+    this.addToCart();
+  }
+
+  addToCart() {
     const ccId = this.camCard.id;
     const products = this.camCard.camCardItems
       ?.filter(cc => cc.measurement.valid && cc.product.available)
