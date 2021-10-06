@@ -43,6 +43,8 @@ export interface LineItem {
 
   // CAMFIL
   attributes?: Attribute[];
+  listPrice?: PriceItem;
+  salePrice?: PriceItem;
   earliestDeliveryDate?: string;
 }
 

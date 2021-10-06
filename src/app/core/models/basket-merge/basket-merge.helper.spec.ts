@@ -1,6 +1,6 @@
 import { AddressData } from 'ish-core/models/address/address.interface';
 import { BasketBaseData, BasketData } from 'ish-core/models/basket/basket.interface';
-import { LineItemData } from 'ish-core/models/line-item/line-item.interface';
+import { CamfilLineItemData, LineItemData } from 'ish-core/models/line-item/line-item.interface';
 import { ShippingMethodData } from 'ish-core/models/shipping-method/shipping-method.interface';
 
 import { BasketMergeHelper } from './basket-merge.helper';
@@ -164,7 +164,7 @@ describe('Basket Merge Helper', () => {
             productInfo: {
               earliestDeliveryDate: '2021-09-10',
             },
-          },
+          } as CamfilLineItemData,
         },
       },
     } as BasketMergeData;
