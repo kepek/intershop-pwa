@@ -89,6 +89,7 @@ export class CamfilHeaderNavigationComponent implements OnInit {
   toggleSubMenu(submenu) {
     if (!this.isMobileView || this.isDropDownOpened) {
       this.subMenuHide(submenu);
+      this.isDropDownOpened = false;
     } else {
       this.subMenuShow(submenu);
       this.isDropDownOpened = true;
