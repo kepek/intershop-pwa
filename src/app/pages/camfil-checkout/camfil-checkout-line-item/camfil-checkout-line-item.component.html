@@ -83,7 +83,7 @@
       </form>
     </div>
     <ng-container *ngIf="!product.failed; else productNotAvailable">
-      <div class="delivery-date-container" [class]="{ 'grid-area-deliverydate': isMobileView }">
+      <div [class]="{ 'grid-area-deliverydate': isMobileView }" class="delivery-date-container">
         <p class="delivery-date-para">
           <strong>{{ 'camfil.checkout.desired_delivery_date' | translate }}</strong>
         </p>
@@ -142,12 +142,12 @@
     <camfil-product-attribute
       [name]="'camfil.cam_card.product.list_price.label' | translate"
       [overflowVisible]="true"
-      [value]="lineItem?.listPrice || product.listPrice | camfilPriceSummary: lineItem?.quantity?.value | ishPrice"
+      [value]="lineItem?.listPrice | camfilPriceSummary: lineItem?.quantity?.value | ishPrice"
     ></camfil-product-attribute>
     <camfil-product-attribute
       [name]="'camfil.cam_card.product.your_price.label' | translate"
       [overflowVisible]="true"
-      [value]="lineItem?.salePrice || product.salePrice | camfilPriceSummary: lineItem?.quantity?.value | ishPrice"
+      [value]="lineItem?.salePrice | camfilPriceSummary: lineItem?.quantity?.value | ishPrice"
     ></camfil-product-attribute>
   </ng-template>
 </ng-container>
