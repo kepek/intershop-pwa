@@ -1,4 +1,12 @@
-import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  Input,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
@@ -45,7 +53,8 @@ export class ProductAddToCamCardComponent implements OnInit, OnDestroy {
     private camCardsFacade: CamCardsFacade,
     private accountFacade: AccountFacade,
     private router: Router,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
@@ -106,6 +115,7 @@ export class ProductAddToCamCardComponent implements OnInit, OnDestroy {
       } else {
         this.buttonTranslationKey = this.translationKey;
       }
+      this.cdr.detectChanges();
     });
   }
 }
