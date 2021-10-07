@@ -21,22 +21,24 @@
   ::ng-deep {
     th,
     td {
-      padding-right: 4px;
-      text-align: left;
-      &:first-child {
-        padding-left: $space-box;
-      }
-      &:last-child {
-        padding-right: $space-default;
-      }
-      .mat-sort-header-container {
-        display: inline-block;
-      }
-      .mat-sort-header-content {
+      @media (max-width: $screen-md-max) {
+        padding-right: 4px;
         text-align: left;
-      }
-      .mat-sort-header-arrow {
-        margin: 0 0 $space-box-half 0;
+        &:first-child {
+          padding-left: $space-box;
+        }
+        &:last-child {
+          padding-right: $space-default;
+        }
+        .mat-sort-header-container {
+          display: inline-block;
+        }
+        .mat-sort-header-content {
+          text-align: left;
+        }
+        .mat-sort-header-arrow {
+          margin: 0 0 $space-box-half 0;
+        }
       }
     }
   }

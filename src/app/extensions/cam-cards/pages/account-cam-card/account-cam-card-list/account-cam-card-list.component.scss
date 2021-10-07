@@ -33,6 +33,11 @@
         transform: rotate(-270deg);
       }
     }
+    .checkbox-header-container > div:first-of-type {
+      @media (min-width: $screen-md-max) {
+        display: inline-block;
+      }
+    }
 
     ::ng-deep {
       th,
@@ -46,12 +51,17 @@
           padding-right: $space-default;
         }
         .mat-sort-header-container {
-          display: inline-block;
+          @media (max-width: $screen-md-max) {
+            display: inline-block;
+          }
         }
       }
       th.mat-header-cell.no-sort {
-        padding-bottom: 38px;
+        @media (max-width: $screen-md-max) {
+          padding-bottom: 38px;
+        }
       }
+
       .mat-column {
         &-customer,
         &-name {
@@ -82,9 +92,11 @@
         padding: 0;
       }
       .mat-sort-header-content {
-        display: inherit;
-        margin-bottom: $space-default/2;
-        line-height: normal;
+        @media (max-width: $screen-md-max) {
+          display: inherit;
+          margin-bottom: $space-default/2;
+          line-height: normal;
+        }
       }
     }
   }
