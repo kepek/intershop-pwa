@@ -59,8 +59,19 @@ export class CamfilCheckoutPageComponent implements OnInit, OnDestroy {
       });
 
     this.initBasket();
+  }
 
-    this.checkoutFacade.start();
+  // only rerender the whole bucket when number of included lineItems changes
+  trackByLineItems(_, bucket: Bucket): number {
+    return bucket.lineItems.length;
+  }
+
+  // tslint:disable-next-line:force-jsdoc-comments
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
+    this.checkoutFacade.setCheckoutFocusedElement('');
   }
 
   private initBasket() {
@@ -135,17 +146,5 @@ export class CamfilCheckoutPageComponent implements OnInit, OnDestroy {
           });
         });
     });
-  }
-
-  // tslint:disable-next-line:force-jsdoc-comments
-  // only rerender the whole bucket when number of included lineItems changes
-  trackByLineItems(_, bucket: Bucket): number {
-    return bucket.lineItems.length;
-  }
-
-  ngOnDestroy() {
-    this.destroy$.next();
-    this.destroy$.complete();
-    this.checkoutFacade.setCheckoutFocusedElement('');
   }
 }
