@@ -24,6 +24,7 @@ import {
   addProductToNewSubCamCard,
   addProductToSubCamCard,
   addToNewCamCardWithNewSubCamCard,
+  checkCamCardsInBasketsForAllUsers,
   clearVirtualCamCard,
   cloneAndEditCamCard,
   copyCamCard,
@@ -39,6 +40,8 @@ import {
   getCamCardDetails,
   getCamCardError,
   getCamCardLoading,
+  getCamCardsInBasketsForAllUsers,
+  getCamCardsInBasketsForAllUsersLoading,
   getCamCardsLoading,
   getContactsbyCustomerId,
   getCustomerAddresses,
@@ -84,6 +87,9 @@ export class CamCardsFacade {
   validationErrors$: Observable<HttpError> = this.store.pipe(select(getValidationErrors));
   validationResponse$: Observable<CamCardImportValidationResponse> = this.store.pipe(select(getValidationResponse));
   getAddProductSuccess$: Observable<boolean> = this.store.pipe(select(getAddProductSuccess));
+
+  getCamCardsInBasketsForAllUsers$: Observable<string[]> = this.store.pipe(select(getCamCardsInBasketsForAllUsers));
+  getCamCardsInBasketsForAllUsersLoading$: Observable<boolean> = this.store.pipe(select(getCamCardsInBasketsForAllUsersLoading));
 
   getCamCardDetails$(id: string | Observable<string>) {
     return toObservable(id).pipe(
@@ -307,5 +313,9 @@ export class CamCardsFacade {
 
   updateCamCardAttribute(camCardId: string, camCardAttribute) {
     this.store.dispatch(updateCamCardAttribute({ camCardId, camCardAttribute }));
+  }
+
+  checkCamCardsInBasketsForAllUsers(camCardsId: string[]): void | HttpError {
+    this.store.dispatch(checkCamCardsInBasketsForAllUsers({ camCardsId }));
   }
 }

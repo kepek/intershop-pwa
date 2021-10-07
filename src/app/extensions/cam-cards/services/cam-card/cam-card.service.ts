@@ -430,4 +430,13 @@ export class CamCardService {
       .patch(`camcards/${camCardId}`, camCardAttribute)
       .pipe(map((response: CamCard) => this.camCardMapper.fromUpdate(response, camCardId)));
   }
+
+  /**
+   * For checking a baskets for the presence of cam_cards ids
+   * @param   camCardsId
+   * @returns The cam_cards Ids existing in baskets.
+   */
+  checkCamCardsInBasketsForAllUsers(camCardsId: string[]): Observable<string[]> {
+    return this.apiService.post('camcardusage', camCardsId).pipe(map(response => response as string[]));
+  }
 }

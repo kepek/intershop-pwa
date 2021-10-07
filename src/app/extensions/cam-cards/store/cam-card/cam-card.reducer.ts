@@ -19,6 +19,9 @@ import {
   addBasketToNewCamCardSuccess,
   addProductToCamCard,
   addProductToCamCardSuccess,
+  checkCamCardsInBasketsForAllUsers,
+  checkCamCardsInBasketsForAllUsersFail,
+  checkCamCardsInBasketsForAllUsersSuccess,
   clearVirtualCamCard,
   copyCamCard,
   copyCamCardFail,
@@ -92,6 +95,10 @@ export interface CamCardState extends EntityState<CamCard> {
   };
   addresses?: CamCardCustomersAddresses;
   virtualCamCard: CamCard;
+  camCardsInBasketsForAllUsers: {
+    loading: boolean;
+    list?: string[];
+  };
   validationErrors: HttpError;
   validationResponse: CamCardImportValidationResponse;
 }
@@ -112,6 +119,7 @@ export const initialState: CamCardState = camCardAdapter.getInitialState({
   addresses: {},
   stickyToolbar: false,
   virtualCamCard: undefined,
+  camCardsInBasketsForAllUsers: { loading: false },
   validationErrors: undefined,
   validationResponse: undefined,
 });
@@ -178,6 +186,7 @@ export const camCardReducer = createReducer(
     updateSubCamCardFail,
     importCamCardFail,
     validateCamCardImportFail,
+    checkCamCardsInBasketsForAllUsersFail,
     (state: CamCardState, action) => {
       const { error } = action.payload;
       return {
@@ -379,19 +388,26 @@ export const camCardReducer = createReducer(
   }),
   on(importCamCardSuccess, (state: CamCardState, action) => {
     const { camCardData } = action.payload;
-
     const importedCamCard = camCardData.elements[0];
-
     const itemsCount = importedCamCard.camCardItems?.length;
-
     const camCardObj = {
       ...importedCamCard,
       itemsCount,
     };
-
     return camCardAdapter.upsertOne(camCardObj, {
       ...state,
       loading: false,
     });
+  }),
+  on(checkCamCardsInBasketsForAllUsers, (state: CamCardState) => ({
+    ...state,
+    camCardsInBasketsForAllUsers: { loading: true },
+  })),
+  on(checkCamCardsInBasketsForAllUsersSuccess, (state: CamCardState, action) => {
+    const { camCardsId } = action.payload;
+    return {
+      ...state,
+      camCardsInBasketsForAllUsers: { loading: false, list: camCardsId },
+    };
   })
 );

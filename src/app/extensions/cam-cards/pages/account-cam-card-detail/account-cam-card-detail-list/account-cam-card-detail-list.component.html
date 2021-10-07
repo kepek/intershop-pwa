@@ -1,7 +1,7 @@
 <mat-card class="mat-elevation-z px-0 {{ isMobileView ? 'cam-cards-mobile' : 'box-shadow box-shadow--dark' }}">
   <mat-card-content>
     <camfil-account-cam-card-detail-toolbar
-      (addItemsToCart)="addItemsToCart(needToCompleteAddress)"
+      (addItemsToCart)="handleSelectedCamCardsOnAddToCart(checkCamCardInBaskets, needToCompleteAddress)"
       (deleteCamCard)="openDeleteConfirmationDialog(deleteDialog, camCard, 'cc')"
       [isSticky]="isStickyCamCardToolbar$ | async"
       [title]="getCamCardName()"
@@ -149,20 +149,48 @@
 
 <camfil-modal-dialog
   #needToCompleteAddress
-  (confirmed)="measurementsInvalid.length ? addToCart() : dialog.closeAll()"
+  (confirmed)="modalType === 'invalidProducts' ? addToCart() : dialog.closeAll()"
   [options]="{
     titleText: handleModalTexts.titleText | translate,
     confirmText: handleModalTexts.confirmText | translate
   }"
 >
-  <p>{{ handleModalTexts.content | translate }}</p>
-  <div class="mt-3" *ngIf="modalType === 'invalidMeasurements'">
-    <div *ngFor="let item of measurementsInvalid">
+  <p *ngIf="invalidProducts.measurements.length || modalType === 'noErpNoAddress'">
+    {{ handleModalTexts.content | translate }}
+  </p>
+
+  <!-- invalidProducts.measurements list -->
+  <div class="mt-3" *ngIf="modalType === 'invalidProducts' && invalidProducts.measurements.length">
+    <div *ngFor="let item of invalidProducts.measurements">
       {{ item.product.name }} ({{ 'camfil.cam_card.product.id.label' | translate }}: {{ item.product.sku }})
     </div>
   </div>
+
+  <!-- invalidProducts.notAvailable list -->
+  <ng-container *ngIf="invalidProducts.notAvailable.length && modalType === 'invalidProducts'">
+    <p>
+      {{ 'camfil.account.cam_card.trying_add_to_cart_not_buyable_elements.text' | translate }}
+    </p>
+    <div class="mt-3">
+      <div *ngFor="let item of invalidProducts.notAvailable">
+        {{ item.product.name }} ({{ 'camfil.cam_card.product.id.label' | translate }}: {{ item.product.sku }})
+      </div>
+    </div>
+  </ng-container>
 </camfil-modal-dialog>
 
-<div *ngIf="loading" class="loader-container">
+<camfil-modal-dialog
+  #checkCamCardInBaskets
+  (confirmed)="addItemsToCart(needToCompleteAddress)"
+  [options]="{
+    titleText: 'camfil.account.cam_card.in.basket.title' | translate,
+    confirmText: 'camfil.account.cam_card.in.basket.btn.confirm_text' | translate,
+    rejectText: 'camfil.account.cam_card.in.basket.btn.reject_text' | translate
+  }"
+>
+  {{ 'camfil.account.cam_card.in.basket.text' | translate }}
+</camfil-modal-dialog>
+
+<div *ngIf="loading || (camCardsInBasketsForAllUsersLoading$ | async)" class="loader-container">
   <camfil-loading></camfil-loading>
 </div>

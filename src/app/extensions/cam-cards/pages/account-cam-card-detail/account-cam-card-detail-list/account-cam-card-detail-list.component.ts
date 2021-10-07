@@ -46,6 +46,11 @@ export interface Prices {
   [id: string]: [Price, string, number];
 }
 
+export interface InvalidProducts {
+  measurements: CamCardItem[];
+  notAvailable: CamCardItem[];
+}
+
 @Component({
   selector: 'camfil-account-cam-card-detail-list',
   templateUrl: './account-cam-card-detail-list.component.html',
@@ -85,8 +90,10 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges, OnD
   showPrice = true;
   newSkusAfterUpdate = [];
 
-  measurementsInvalid = [];
-  modalType: 'noErpNoAddress' | 'invalidMeasurements';
+  invalidProducts: InvalidProducts = { measurements: [], notAvailable: [] };
+  modalType: 'noErpNoAddress' | 'invalidProducts';
+  camCardsInBasketsForAllUsersLoading$: Observable<boolean>;
+  camCardsInBasketsForAllUsers: string[];
 
   private destroy$ = new Subject();
 
@@ -124,6 +131,7 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges, OnD
     this.shoppingFacade.loadBasketAddresses();
     this.basket$ = this.checkoutFacade.basket$;
     this.buckets$ = this.checkoutFacade.buckets$;
+    this.camCardsInBasketsForAllUsersLoading$ = this.camCardsFacade.getCamCardsInBasketsForAllUsersLoading$;
 
     this.basket$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe((basket: BasketView) => {
       this.basketId = basket.id;
@@ -134,6 +142,9 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges, OnD
     });
     this.shoppingFacade.basketAddresses$.pipe(takeUntil(this.destroy$)).subscribe((basketAddresses: Address[]) => {
       this.basketAddresses = basketAddresses;
+    });
+    this.camCardsFacade.getCamCardsInBasketsForAllUsers$.pipe(takeUntil(this.destroy$)).subscribe(list => {
+      this.camCardsInBasketsForAllUsers = list;
     });
 
     const { id, parent } = this.camCard.customer;
@@ -157,11 +168,18 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges, OnD
     });
 
     const fromSubCC =
-      this.camCard.subCamCards?.reduce((acc, scc) => {
-        const newEl = scc.camCardItems.filter(el => !el.measurement?.valid);
-        return newEl.length ? [...acc, ...newEl] : acc;
-      }, []) || [];
-    this.measurementsInvalid = [...this.camCard.camCardItems.filter(el => !el.measurement?.valid), ...fromSubCC];
+      this.camCard.subCamCards?.reduce(({ measurements, notAvailable }, scc) => {
+        const newMes = scc.camCardItems.filter(el => !el.measurement?.valid);
+        const notAv = scc.camCardItems.filter(el => !el.product.available);
+        return {
+          measurements: newMes.length ? [...measurements, ...newMes] : measurements,
+          notAvailable: notAv.length ? [...notAvailable, ...notAv] : notAvailable,
+        };
+      }, this.invalidProducts) || this.invalidProducts;
+    this.invalidProducts = {
+      measurements: [...this.camCard.camCardItems.filter(el => !el.measurement?.valid), ...fromSubCC.measurements],
+      notAvailable: [...this.camCard.camCardItems.filter(el => !el.product.available), ...fromSubCC.notAvailable],
+    };
   }
 
   ngOnDestroy() {
@@ -267,16 +285,43 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges, OnD
     };
   }
 
-  addItemsToCart(modal: CamfilModalDialogComponent<any>) {
+  handleSelectedCamCardsOnAddToCart(
+    // tslint:disable-next-line:variable-name
+    _checkInBasketModal: CamfilModalDialogComponent<any>,
+    addToCartFlowModal: CamfilModalDialogComponent<any>
+  ) {
     const { postalCode, city } = this.camCard.deliveryAddress;
     const noErpNoAddress = !this.camCard.erpId || !postalCode || !city;
 
-    if (noErpNoAddress || this.measurementsInvalid.length) {
-      this.modalType = noErpNoAddress ? 'noErpNoAddress' : 'invalidMeasurements';
-      modal.show();
+    if (noErpNoAddress) {
+      this.modalType = 'noErpNoAddress';
+      addToCartFlowModal.show();
       return;
     }
 
+    /**
+     * TMP untill checkCamCardsInBasketsForAllUsers endpoint is invalid
+     */
+    // this.camCardsFacade.checkCamCardsInBasketsForAllUsers([this.camCard.id]);
+    // this.camCardsInBasketsForAllUsersLoading$.pipe(whenTruthy(), take(1)).subscribe(() => {
+    //   if (this.camCardsInBasketsForAllUsers.length) {
+    //     checkInBasketModal.show();
+    //   } else {
+    //     this.addItemsToCart(addToCartFlowModal);
+    //   }
+    // });
+
+    // TMP (to remove later)
+    this.addItemsToCart(addToCartFlowModal);
+  }
+
+  addItemsToCart(modal: CamfilModalDialogComponent<any>) {
+    const { measurements, notAvailable } = this.invalidProducts;
+    if (measurements.length || notAvailable.length) {
+      this.modalType = 'invalidProducts';
+      modal.show();
+      return;
+    }
     this.addToCart();
   }
 

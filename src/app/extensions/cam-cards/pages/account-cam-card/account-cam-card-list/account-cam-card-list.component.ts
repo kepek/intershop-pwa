@@ -102,6 +102,8 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
   totalProductsInBasket: number;
   productAddingInProgress = false;
   camCardsWithNoCompleteAddresses: CamCard[];
+  camCardsInBasketsForAllUsersLoading$: Observable<boolean>;
+  camCardsInBasketsForAllUsers: string[];
   productsCustomerPrices: {
     [customerId: string]: Product[];
   };
@@ -122,7 +124,7 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
     private authorizationToggle: AuthorizationToggleService
   ) {}
 
-  get checkedCamCards() {
+  get checkedCamCards(): CamCard[] {
     return this.camCards ? this.camCards.filter(camCard => this.isCamCardChecked(camCard)) : [];
   }
 
@@ -130,6 +132,16 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
     return (
       this.camCards?.filter(
         cc => !cc.erpId && Object.values(this.productsChecked)?.find((p: CamCamProductChecked) => cc.id === p.camCardId)
+      ) || []
+    );
+  }
+
+  get noPostCodeCamCardsInSelectedProducts() {
+    return (
+      this.camCards?.filter(
+        cc =>
+          (!cc.deliveryAddress.postalCode || !cc.deliveryAddress.city) &&
+          Object.values(this.productsChecked)?.find((p: CamCamProductChecked) => cc.id === p.camCardId)
       ) || []
     );
   }
@@ -155,6 +167,7 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
     this.productFacade.loadBasketAddresses();
     this.basket$ = this.checkoutFacade.basket$;
     this.buckets$ = this.checkoutFacade.buckets$;
+    this.camCardsInBasketsForAllUsersLoading$ = this.camCardsFacade.getCamCardsInBasketsForAllUsersLoading$;
 
     this.basket$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe((basket: BasketView) => {
       this.basketId = basket.id;
@@ -166,9 +179,11 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
     this.productFacade.basketAddresses$.pipe(takeUntil(this.destroy$)).subscribe((basketAddresses: Address[]) => {
       this.basketAddresses = basketAddresses;
     });
-
     this.checkoutFacade.basketLoading$.pipe(takeUntil(this.destroy$)).subscribe(value => {
       this.basketLoading = value;
+    });
+    this.camCardsFacade.getCamCardsInBasketsForAllUsers$.pipe(takeUntil(this.destroy$)).subscribe(list => {
+      this.camCardsInBasketsForAllUsers = list;
     });
 
     this.productFacade.getProductAddingError$?.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(error => {
@@ -376,22 +391,41 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
   }
 
   /** addToCartItems */
+  handleSelectedCamCardsOnAddToCart(
+    // tslint:disable-next-line:variable-name
+    _checkInBasketModal: CamfilModalDialogComponent<any>,
+    addToCartFlowModal: CamfilModalDialogComponent<any>
+  ) {
+    const noErpIds = this.noErpIdCamCardsInSelectedProducts;
+    const noPostCode = this.noPostCodeCamCardsInSelectedProducts;
+
+    if (noErpIds.length || noPostCode.length) {
+      addToCartFlowModal.show();
+      return;
+    }
+
+    // const ids = this.checkedCamCards.map(cc => cc.id);
+    // this.camCardsFacade.checkCamCardsInBasketsForAllUsers(ids);
+    // this.camCardsInBasketsForAllUsersLoading$.pipe(whenFalsy(), take(1)).subscribe(() => {
+    //   if (this.camCardsInBasketsForAllUsers.length) {
+    //     checkInBasketModal.show();
+    //   } else {
+    //     this.addToCart(addToCartFlowModal);
+    //   }
+    // });
+    this.addToCart(addToCartFlowModal);
+  }
+
   addToCart(modal: CamfilModalDialogComponent<any>) {
     const incorrectElemetns = {
       notBuyableElemnts: this.getIncorrectCamCardsElements('inactive'),
       invalidMesurementsElements: this.getIncorrectCamCardsElements('measurements'),
     };
 
-    const noEroId = this.noErpIdCamCardsInSelectedProducts;
-
-    if (
-      noEroId.length ||
-      incorrectElemetns.notBuyableElemnts.length ||
-      incorrectElemetns.invalidMesurementsElements.length
-    ) {
+    if (incorrectElemetns.notBuyableElemnts.length || incorrectElemetns.invalidMesurementsElements.length) {
       this.notBuyableElemnts = incorrectElemetns.notBuyableElemnts;
       this.invalidMesurementsElements = incorrectElemetns.invalidMesurementsElements;
-      this.notAvailbaleProdList(modal);
+      modal.show();
     } else {
       this.addSelectedItemsToCart();
     }
@@ -445,12 +479,14 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
     });
   }
 
-  notAvailbaleProdList(modal: CamfilModalDialogComponent<any>) {
-    modal.show();
-  }
-
-  invalidMeasurementsProdList(modal: CamfilModalDialogComponent<any>) {
-    modal.show();
+  addSelectedAndFilteredItemsToCart(modal: CamfilModalDialogComponent<any>) {
+    // tslint:disable-next-line: ish-no-object-literal-type-assertion
+    const event = { checked: false } as MatCheckboxChange;
+    this.camCardsInBasketsForAllUsers.forEach(id => {
+      const camCard = this.camCards.find(cc => cc.id === id);
+      this.camCardToggle(camCard, event);
+    });
+    this.addToCart(modal);
   }
 
   /** Emits the camCard to add new one. */
@@ -542,6 +578,10 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
       const sumItem = this.getInvalidMeasurements(sub.camCardItems);
       return sumItem.length ? [...arr, ...sumItem] : arr;
     }, invalidMeasurements);
+  }
+
+  getCamCardNameById(id: string) {
+    return this.camCards?.find(cc => cc.id === id)?.name || '';
   }
 
   isProductChecked(id: string) {

@@ -1,3 +1,4 @@
+// tslint:disable: ish-ordered-imports project-structure
 import { isPlatformBrowser } from '@angular/common';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { Router } from '@angular/router';

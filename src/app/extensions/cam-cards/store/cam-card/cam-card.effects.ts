@@ -51,6 +51,9 @@ import {
   addProductToNewSubCamCard,
   addProductToSubCamCard,
   addToNewCamCardWithNewSubCamCard,
+  checkCamCardsInBasketsForAllUsers,
+  checkCamCardsInBasketsForAllUsersFail,
+  checkCamCardsInBasketsForAllUsersSuccess,
   copyCamCard,
   copyCamCardFail,
   createCamCard,
@@ -925,6 +928,19 @@ export class CamCardEffects {
         this.camCardService.updateCamCardAttribute(camCardId, camCardAttribute).pipe(
           map(camCard => updateCamCardAttributeSuccess({ camCard })),
           mapErrorToAction(updateCamCardFail)
+        )
+      )
+    )
+  );
+
+  checkCamCardsInBasketsForAllUsers$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(checkCamCardsInBasketsForAllUsers),
+      mapToPayload(),
+      mergeMap(({ camCardsId }) =>
+        this.camCardService.checkCamCardsInBasketsForAllUsers(camCardsId).pipe(
+          map(ids => checkCamCardsInBasketsForAllUsersSuccess({ camCardsId: ids })),
+          mapErrorToAction(checkCamCardsInBasketsForAllUsersFail)
         )
       )
     )
