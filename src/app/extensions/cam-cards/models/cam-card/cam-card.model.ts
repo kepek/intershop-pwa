@@ -130,7 +130,8 @@ export interface CamCamProductsAddToCart {
 }
 
 export interface CamCardMeasurement {
-  [key: string]: number;
+  [key: string]: number | boolean;
+  valid?: boolean;
 }
 
 export interface CamCardImportValidationResponse {
