@@ -1,47 +1,47 @@
-<div class="row toolbar-container" [ngClass]="{ 'sticky box-shadow': isSticky }">
+<div [ngClass]="{ 'sticky box-shadow': isSticky }" class="row toolbar-container">
   <div class="{{ isSticky ? 'container' : 'col-12' }} text-right">
     <button
-      mat-stroked-button
-      color="primary"
-      class="btn-tool secondary-button"
-      data-testing-id="import-cam-card"
       (click)="importCamCard($event)"
+      class="btn-tool secondary-button"
+      color="primary"
+      data-testing-id="import-cam-card"
+      mat-stroked-button
     >
-      <mat-icon svgIcon="create-camcard" class="size-15"></mat-icon>
+      <mat-icon class="size-15" svgIcon="create-camcard"></mat-icon>
       {{ 'camfil.account.import.header.text' | translate }}
     </button>
     <button
-      mat-stroked-button
-      color="primary"
       class="btn-tool secondary-button"
+      color="primary"
       data-testing-id="add-cam-card"
+      mat-stroked-button
       routerLink="/account/camcards/create"
     >
-      <mat-icon svgIcon="plus" class="crop"></mat-icon>
+      <mat-icon class="crop" svgIcon="plus"></mat-icon>
       {{ 'camfil.account.cam_card.list.button.add_cam_card.label' | translate }}
     </button>
     <button
-      mat-stroked-button
-      color="primary"
-      class="btn-tool secondary-button"
-      disabled="{{ checkedCamCards?.length !== 1 }}"
-      data-testing-id="copy-cam-card"
       (click)="copy($event)"
+      class="btn-tool secondary-button"
+      color="primary"
+      data-testing-id="copy-cam-card"
+      disabled="{{ checkedCamCards?.length !== 1 }}"
+      mat-stroked-button
     >
-      <mat-icon svgIcon="copy" class="size-15"></mat-icon>
+      <mat-icon class="size-15" svgIcon="copy"></mat-icon>
       <span class="d-none d-lg-inline-block pl-1">{{
         'camfil.account.cam_card.list.button.copy.label' | translate
       }}</span>
     </button>
     <button
-      mat-stroked-button
-      color="primary"
-      class="btn-tool secondary-button"
-      disabled="{{ !checkedCamCards?.length }}"
-      data-testing-id="move-cam-card"
       (click)="move($event)"
+      class="btn-tool secondary-button"
+      color="primary"
+      data-testing-id="move-cam-card"
+      disabled="{{ !checkedCamCards?.length }}"
+      mat-stroked-button
     >
-      <mat-icon svgIcon="move" class="size-15"></mat-icon>
+      <mat-icon class="size-15" svgIcon="move"></mat-icon>
       <span class="d-none d-lg-inline-block pl-1">{{
         'camfil.account.cam_card.list.button.move.label' | translate
       }}</span>
@@ -52,17 +52,25 @@
     ></camfil-account-cam-card-pdf>
 
     <button
-      mat-stroked-button
-      color="primary"
-      class="btn-tool secondary-button"
-      data-testing-id="add-cam-card"
       (click)="addToCart()"
       [disabled]="isAddToCartBtnDisabled()"
+      class="btn-tool secondary-button"
+      color="primary"
+      data-testing-id="add-cam-card"
+      mat-stroked-button
+      matTooltipPosition="below"
     >
-      <mat-icon svgIcon="cart" class="size-15"></mat-icon>
+      <mat-icon
+        *ngIf="this.isProductsChecked && productAddingInProgress; else cartIcon"
+        class="size-15"
+        svgIcon="spinner"
+      ></mat-icon>
+      <ng-template #cartIcon>
+        <mat-icon class="size-15" svgIcon="cart"></mat-icon>
+      </ng-template>
       {{ 'camfil.account.cam_card.list.button.add_to_cart.label' | translate }}
     </button>
-    <camfil-loading *ngIf="basketLoading || productAddingInProgress"></camfil-loading>
+    <camfil-loading *ngIf="productAddingInProgress"></camfil-loading>
   </div>
 </div>
-<camfil-cam-card-preferences-dialog #addCamCardDialog (submit)="add($event)"></camfil-cam-card-preferences-dialog>
+<camfil-cam-card-preferences-dialog (submit)="add($event)"></camfil-cam-card-preferences-dialog>

@@ -15,12 +15,13 @@
 
   .counter {
     display: inline-block;
-    width: 24px;
     height: 24px;
+    min-width: 24px;
     font-size: 14px;
     line-height: 1.8;
     color: $grey88;
     background: $camfil-color-light;
-    border-radius: 50%;
+    border-radius: 13px;
+    padding: 0 5px;
   }
 }
