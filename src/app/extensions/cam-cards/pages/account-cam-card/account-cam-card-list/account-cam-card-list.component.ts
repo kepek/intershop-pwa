@@ -581,7 +581,7 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
   }
 
   getInvalidMeasurements(items) {
-    return this.mapEmptyMeasurementsValidation(items)?.filter(el => el.measurement?.valid === false) || [];
+    return this.mapEmptyMeasurementsValidation(items)?.filter(el => !el.measurement?.valid) || [];
   }
 
   mapEmptyMeasurementsValidation(items: CamCardItem[]) {
