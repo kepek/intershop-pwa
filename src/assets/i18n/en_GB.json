@@ -569,6 +569,10 @@
   "camfil.account.cam_card.form.name.error.required": "Please enter an CamCard name.",
   "camfil.account.cam_card.form.name.label": "CamCard Name",
   "camfil.account.cam_card.heading": "My CamCards",
+  "camfil.account.cam_card.in.basket.btn.confirm_text": "OK",
+  "camfil.account.cam_card.in.basket.btn.reject_text": "No",
+  "camfil.account.cam_card.in.basket.text": "Another user with access to below CamCard has already added it to cart, are you sure you want to add it anyway?",
+  "camfil.account.cam_card.in.basket.title": "Attention",
   "camfil.account.cam_card.itemsCount": "Rows",
   "camfil.account.cam_card.lastDeliveryDate": "Last Order",
   "camfil.account.cam_card.link": "My CamCards",
@@ -601,7 +605,6 @@
   "camfil.account.cam_card.new_from_order.button.create.label": "Create",
   "camfil.account.cam_card.nextDelivery": "Next Order",
   "camfil.account.cam_card.nextDeliveryDate": "Next Order Date",
-  "camfil.account.cam_card.no.erpId.tooltip": "The CamCard cannot be placed yet, please try again in a few minutes.",
   "camfil.account.cam_card.no_entries": "There are currently no items in this cam card.",
   "camfil.account.cam_card.order_template.no_selection.error": "You have not selected any items. Please select at least one item you want to add to your shopping cart.",
   "camfil.account.cam_card.pdf.art_nr": "Art nr:",
@@ -1618,9 +1621,5 @@
   "tacton.submit.error.message": "A technical error occurred while processing your request. Please try again later.",
   "tacton.submit.success.message": "Your request has been successfully submitted. We will e-mail <strong>{{0}}</strong> to keep you updated on the status of your request.",
   "tacton.undo.tooltip": "Undo",
-  "textarea.max_limit": "Your message: {{0}} characters remaining.",
-  "camfil.account.cam_card.in.basket.title": "Attention",
-  "camfil.account.cam_card.in.basket.text": "Another user with access to below CamCard has already added it to cart, are you sure you want to add it anyway?",
-  "camfil.account.cam_card.in.basket.btn.confirm_text": "OK",
-  "camfil.account.cam_card.in.basket.btn.reject_text": "No"
+  "textarea.max_limit": "Your message: {{0}} characters remaining."
 }

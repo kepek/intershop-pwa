@@ -1,8 +1,15 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
+import { MatTooltip } from '@angular/material/tooltip';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
-
-import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 
 import { CamCardsFacade } from '../../../facades/cam-cards.facade';
 import { CamCard } from '../../../models/cam-card/cam-card.model';
@@ -22,18 +29,20 @@ export class AccountCamCardToolbarComponent implements OnInit, OnDestroy {
   @Input() isSticky: boolean;
   @Input() checkedCamCards: CamCard[];
   @Input() productsChecked = {};
-  basketLoading = false;
   @Input() productAddingInProgress: boolean;
+
+  @ViewChild(MatTooltip) addToCamCardTooltip: MatTooltip;
 
   private destroy$ = new Subject<void>();
 
-  constructor(private camCardsFacade: CamCardsFacade, private checkoutFacade: CheckoutFacade) {}
+  constructor(private camCardsFacade: CamCardsFacade) {}
+
+  get isProductsChecked() {
+    return Object.keys(this.productsChecked).length;
+  }
 
   ngOnInit() {
     this.camCardsFacade.detectCamCardToolbar();
-    this.checkoutFacade.basketLoading$.pipe(takeUntil(this.destroy$)).subscribe(bl => {
-      this.basketLoading = bl;
-    });
   }
 
   add(camCard: CamCard) {
@@ -52,12 +61,8 @@ export class AccountCamCardToolbarComponent implements OnInit, OnDestroy {
     this.addSelectedItemsToCart.emit();
   }
 
-  isProductsChecked() {
-    return Object.keys(this.productsChecked).length;
-  }
-
   isAddToCartBtnDisabled() {
-    return this.basketLoading || !this.isProductsChecked() || this.productAddingInProgress;
+    return !this.isProductsChecked || this.productAddingInProgress;
   }
 
   importCamCard(event: Event) {
