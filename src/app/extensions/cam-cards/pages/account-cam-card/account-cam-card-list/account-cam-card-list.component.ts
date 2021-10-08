@@ -433,6 +433,19 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
 
   addSelectedItemsToCart() {
     const list = Object.values(this.productsChecked)
+      .map((item: CamCamProductChecked) => {
+        if (item.measurement?.valid === undefined || item.measurement?.valid === null) {
+          return {
+            ...item,
+            measurement: {
+              ...item.measurement,
+              valid: true,
+            },
+          };
+        } else {
+          return item;
+        }
+      })
       .filter((item: CamCamProductChecked) => item.measurement.valid && item.camCardErpId)
       .reduce((acc, val: CamCamProductChecked) => {
         const key = val.camCardRoot || val.camCardId;
@@ -543,7 +556,6 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
             type === 'inactive'
               ? this.getInactiveProductsInCamCard(cc)
               : this.getInvalidMeasurementsProductsInCamCard(cc);
-
           // clean up duplicate products
           const items = allInvalidElements.filter(
             (item, i, arr) => arr.findIndex(el => el.product.sku === item.product.sku) === i
@@ -568,8 +580,24 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
     }, inactive);
   }
 
-  getInvalidMeasurements(items: CamCardItem[]) {
-    return items?.filter(el => !el.measurement.valid) || [];
+  getInvalidMeasurements(items) {
+    return this.mapEmptyMeasurementsValidation(items)?.filter(el => !el.measurement?.valid) || [];
+  }
+
+  mapEmptyMeasurementsValidation(items: CamCardItem[]) {
+    return items?.map(item => {
+      if (item.measurement?.valid === undefined || item.measurement?.valid === null) {
+        return {
+          ...item,
+          measurement: {
+            ...item.measurement,
+            valid: true,
+          },
+        };
+      } else {
+        return item;
+      }
+    });
   }
 
   getInvalidMeasurementsProductsInCamCard(camCard: CamCard) {
