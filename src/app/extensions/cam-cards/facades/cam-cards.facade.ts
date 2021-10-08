@@ -89,7 +89,9 @@ export class CamCardsFacade {
   getAddProductSuccess$: Observable<boolean> = this.store.pipe(select(getAddProductSuccess));
 
   getCamCardsInBasketsForAllUsers$: Observable<string[]> = this.store.pipe(select(getCamCardsInBasketsForAllUsers));
-  getCamCardsInBasketsForAllUsersLoading$: Observable<boolean> = this.store.pipe(select(getCamCardsInBasketsForAllUsersLoading));
+  getCamCardsInBasketsForAllUsersLoading$: Observable<boolean> = this.store.pipe(
+    select(getCamCardsInBasketsForAllUsersLoading)
+  );
 
   getCamCardDetails$(id: string | Observable<string>) {
     return toObservable(id).pipe(

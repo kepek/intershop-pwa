@@ -13,13 +13,20 @@
       (mouseleave)="subMenuHide(submenu)"
       (click)="$event.preventDefault(); $event.stopPropagation(); toggleSubMenu(submenu)"
     >
-      <a
-        [routerLink]="category.url"
-        [attr.data-testing-id]="category.uniqueId + '-link'"
-        [ngStyle]="{ width: !category.hasChildren ? '100%' : '' }"
-      >
-        {{ category.name }}
-      </a>
+      <ng-container *ngIf="isMobileView; else desktopLink">
+        <p class="pseudo-mobile-link">
+          {{ category.name }}
+        </p>
+      </ng-container>
+      <ng-template #desktopLink>
+        <a
+          [routerLink]="category.url"
+          [attr.data-testing-id]="category.uniqueId + '-link'"
+          [ngStyle]="{ width: !category.hasChildren ? '100%' : '' }"
+        >
+          {{ category.name }}
+        </a>
+      </ng-template>
       <ng-container *ngIf="category.hasChildren">
         <a class="dropdown-toggle" (click)="toggleOpen(category.uniqueId)">
           <mat-icon>arrow_{{ isOpened(category.uniqueId) ? 'left' : 'right' }}</mat-icon>

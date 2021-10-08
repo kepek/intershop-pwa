@@ -44,7 +44,8 @@
       }
     }
 
-    a {
+    a,
+    .pseudo-mobile-link {
       font-size: 14px;
       font-weight: 600;
       color: $camfil-color-primary;

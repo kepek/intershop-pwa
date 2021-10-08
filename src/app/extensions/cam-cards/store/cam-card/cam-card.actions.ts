@@ -403,4 +403,7 @@ export const checkCamCardsInBasketsForAllUsersSuccess = createAction(
   payload<{ camCardsId: string[] }>()
 );
 
-export const checkCamCardsInBasketsForAllUsersFail = createAction('[Cam Cards API] check Cam Cards In Baskets Fail', httpError());
+export const checkCamCardsInBasketsForAllUsersFail = createAction(
+  '[Cam Cards API] check Cam Cards In Baskets Fail',
+  httpError()
+);
