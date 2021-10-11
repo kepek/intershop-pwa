@@ -21,6 +21,8 @@ import { Product } from 'ish-core/models/product/product.model';
 import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
 
 import { AddProductToCartModalComponent } from '../../../../../extensions/cam-cards/shared/add-product-to-cart-modal/add-product-to-cart-modal.component';
+import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
+import { ConfigurationService } from 'src/app/extensions/cam-configuration/services/configuration/configuration.service';
 
 @Component({
   selector: 'camfil-product-add-to-basket-modal',
@@ -54,6 +56,7 @@ export class CamfilProductAddToBasketModalComponent implements OnInit, OnDestroy
   @Input() translationKey = 'product.add_to_cart.link';
 
   basket$: Observable<BasketView>;
+  isFrenchChannel = true;
 
   @Input() quantity: number;
 
@@ -70,7 +73,9 @@ export class CamfilProductAddToBasketModalComponent implements OnInit, OnDestroy
     public dialog: MatDialog,
     protected accountFacade: AccountFacade,
     protected router: Router,
-    protected checkoutFacade: CheckoutFacade
+    protected checkoutFacade: CheckoutFacade,
+    protected shoppingFacade: ShoppingFacade,
+    protected configuration: ConfigurationService
   ) {}
 
   get displayIcon(): boolean {
@@ -94,10 +99,16 @@ export class CamfilProductAddToBasketModalComponent implements OnInit, OnDestroy
     this.accountFacade.isLoggedIn$.pipe(take(1), takeUntil(this.destroy$)).subscribe(isLoggedIn => {
       if (isLoggedIn) {
         this.quantity >= this.product?.minOrderQuantity ? this.openModal(modal) : this.openErrorModal();
+      } else if (this.configuration.isEnabled('FR')) {
+        this.quantity >= this.product?.minOrderQuantity ? this.addToCartForNotLogged() : this.openErrorModal();
       } else {
         this.navigateToLogin();
       }
     });
+  }
+
+  addToCartForNotLogged() {
+    this.shoppingFacade.addProductToBasket(this.product.sku, this.quantity);
   }
 
   openErrorModal() {

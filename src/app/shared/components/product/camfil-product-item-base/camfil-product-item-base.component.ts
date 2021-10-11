@@ -70,6 +70,7 @@ export class CamfilProductItemBaseComponent implements OnInit, OnDestroy {
   @Input() userPermissions$: Observable<string[]>;
   @Output() resetQuantityValue = new EventEmitter<FormGroup>();
   @Input() categoryFilterParams?: string;
+
   isMasterProduct = ProductHelper.isMasterProduct;
   updatedQuantity: number;
   productItemForm: FormGroup;
@@ -132,6 +133,11 @@ export class CamfilProductItemBaseComponent implements OnInit, OnDestroy {
     } else {
       return { filters: this.categoryFilterParams + productFilter + category };
     }
+  }
+
+  hideAddToCamCardsBtn() {
+    //Is not logged in
+    return;
   }
 
   ngOnDestroy() {

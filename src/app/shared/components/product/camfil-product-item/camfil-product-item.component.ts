@@ -126,6 +126,7 @@ export class CamfilProductItemComponent implements OnInit, OnChanges, OnDestroy 
   currentLocale$: Observable<Locale>;
   userPermissions$: Observable<string[]>;
   filterParams: string;
+  isFrenchChannel = true;
 
   private sku$ = new ReplaySubject<string>(1);
   private destroy$ = new Subject();

@@ -118,6 +118,17 @@
   </div>
 </div>
 <ng-template #canAddToCC>
+  <ng-container *ngIf="isLoggedIn$ | async; else notLoggedIn">
+    <ng-container *ngTemplateOutlet="camCardButton"> </ng-container>
+  </ng-container>
+</ng-template>
+
+<ng-template #notLoggedIn>
+  <ng-container *camfilChannelToggle="'showAddToCamCardButtonForNonLoggedInUser'">
+    <ng-container *ngTemplateOutlet="camCardButton"> </ng-container>
+  </ng-container>
+</ng-template>
+<ng-template #camCardButton>
   <camfil-lazy-product-add-to-cam-card
     [product]="product"
     [quantity]="quantity"

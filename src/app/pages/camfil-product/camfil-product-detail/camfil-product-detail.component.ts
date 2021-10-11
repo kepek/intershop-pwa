@@ -42,6 +42,8 @@ export class CamfilProductDetailComponent implements OnInit, OnDestroy {
   isInCompareList: boolean;
   showAddToCompare = false;
   productDetailForm: FormGroup;
+  isFrenchChannel = true;
+  isLoggedIn$: Observable<boolean>;
   isVariationProduct = ProductHelper.isVariationProduct;
   isMasterProduct = ProductHelper.isMasterProduct;
   isRetailSet = ProductHelper.isRetailSet;
@@ -90,6 +92,7 @@ export class CamfilProductDetailComponent implements OnInit, OnDestroy {
         this.resetProductDetailForm();
       }
     });
+    this.isLoggedIn$ = this.accountFacade.isLoggedIn$;
   }
 
   ngOnDestroy() {

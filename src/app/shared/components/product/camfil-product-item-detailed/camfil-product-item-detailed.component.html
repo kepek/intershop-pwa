@@ -111,13 +111,12 @@
               displayType="button"
               (resetQuantityValue)="resetFormValues()"
             ></camfil-product-add-to-basket>
-            <camfil-lazy-product-add-to-cam-card
-              *ngIf="configuration.displayAddToCamCard"
-              [quantity]="updatedQuantity"
-              class="btn-link cart-big-round-btn"
-              [product]="product"
-              displayType="round-btn"
-            ></camfil-lazy-product-add-to-cam-card>
+
+            <ng-container *ngIf="!isLoggedIn; else loggedIn">
+              <ng-container *camfilChannelToggle="'showAddToCamCardButtonForNonLoggedInUser'">
+                <ng-container *ngTemplateOutlet="camCardButton"> </ng-container>
+              </ng-container>
+            </ng-container>
           </div>
         </form>
       </ng-container>
@@ -133,6 +132,20 @@
             {{ 'product.choose_variation.link' | translate }}
           </a>
         </div>
+      </ng-template>
+
+      <ng-template #loggedIn>
+        <ng-container *ngTemplateOutlet="camCardButton"> </ng-container>
+      </ng-template>
+
+      <ng-template #camCardButton>
+        <camfil-lazy-product-add-to-cam-card
+          *ngIf="configuration.displayAddToCamCard"
+          [quantity]="updatedQuantity"
+          class="btn-link cart-big-round-btn"
+          [product]="product"
+          displayType="round-btn"
+        ></camfil-lazy-product-add-to-cam-card>
       </ng-template>
     </div>
   </div>
