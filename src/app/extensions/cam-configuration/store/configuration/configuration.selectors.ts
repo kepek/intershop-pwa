@@ -8,9 +8,9 @@ const getConfigurationState = createSelector(getCamConfigurationState, state =>
   state ? state.configuration : initialState
 );
 
-const getCamfilConfiguration = createSelector(getConfigurationState, state => state?.configuration);
+const getCamfilConfiguration = createSelector(getConfigurationState, state => state);
 
-export const isCamfilConfigurationLoaded = createSelector(getCamfilConfiguration, configuration => !!configuration);
+export const isCamfilConfigurationInitialized = createSelector(getCamfilConfiguration, state => state.initialized);
 
 export const getCamfilConfigurationParameter = <T>(path: string) =>
   createSelector(

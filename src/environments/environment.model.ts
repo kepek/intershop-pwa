@@ -138,6 +138,7 @@ export const ENVIRONMENT_DEFAULTS: Environment = {
     /* Google Tag Manager */
     'tracking',
     /* Camfil features */
+    'camConfiguration',
     'camIcc',
     'camAccount',
     'camOrganizationManagement',
