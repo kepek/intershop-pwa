@@ -3,18 +3,14 @@ import { createReducer, on } from '@ngrx/store';
 import { HttpError } from 'ish-core/models/http-error/http-error.model';
 import { setErrorOn, setLoadingOn, unsetLoadingAndErrorOn } from 'ish-core/utils/ngrx-creators';
 
+import { ChannelConfiguration } from '../../settings';
+
 import {
   applyCamfilConfiguration,
   loadCamfilConfiguration,
   loadCamfilConfigurationFail,
   loadCamfilConfigurationSuccess,
 } from './configuration.actions';
-
-export interface ChannelConfiguration {
-  countryCode: string;
-  currency: string;
-  icmChannel: string;
-}
 
 export interface ConfigurationState extends ChannelConfiguration {
   initialized: boolean;

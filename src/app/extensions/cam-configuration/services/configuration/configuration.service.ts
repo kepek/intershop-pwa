@@ -1,5 +1,6 @@
 import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Store, select } from '@ngrx/store';
 import { Observable, from, of } from 'rxjs';
 import { map, withLatestFrom } from 'rxjs/operators';
 
@@ -8,18 +9,25 @@ import { ServerConfigData } from 'ish-core/models/server-config/server-config.in
 import { ServerConfigMapper } from 'ish-core/models/server-config/server-config.mapper';
 import { ServerConfig } from 'ish-core/models/server-config/server-config.model';
 import { ApiService } from 'ish-core/services/api/api.service';
+import { whenTruthy } from 'ish-core/utils/operators';
 
-import { ChannelConfiguration } from '../../store/configuration/configuration.reducer';
+import { ChannelConfiguration, ChannelSetting, ChannelSettings } from '../../settings';
+import { getCamfilSettings } from '../../store/configuration';
 
 @Injectable({ providedIn: 'root' })
 export class ConfigurationService {
-  private modeValue: 'server' | 'file' = 'file';
   private configHeaders = new HttpHeaders({
     'content-type': 'application/json',
     Accept: 'application/vnd.intershop.configuration.v1+json',
   });
 
-  constructor(private apiService: ApiService, private appFacade: AppFacade) {}
+  private modeValue: 'server' | 'file' = 'file';
+
+  private settings$: Observable<Partial<ChannelSettings>>;
+
+  constructor(private apiService: ApiService, private appFacade: AppFacade, store: Store) {
+    this.settings$ = store.pipe(select(getCamfilSettings));
+  }
 
   get mode() {
     return this.modeValue;
@@ -27,6 +35,14 @@ export class ConfigurationService {
 
   set mode(mode) {
     this.modeValue = mode;
+  }
+
+  isEnabled(setting: ChannelSetting): Observable<boolean> {
+    return this.settings$.pipe(
+      // wait for permissions to be loaded
+      whenTruthy(),
+      map(settings => !!settings?.[setting])
+    );
   }
 
   getCamfilConfiguration() {

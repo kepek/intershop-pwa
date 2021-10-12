@@ -10,6 +10,7 @@ import {
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
+import { ChannelSetting } from 'src/app/extensions/cam-configuration/settings';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
 import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
@@ -21,6 +22,7 @@ interface NavigationItems {
     localizationKey: string;
     dataTestingId?: string;
     feature?: string;
+    channelSetting?: ChannelSetting;
     permissions?: string[];
     children?: NavigationItems;
   };
@@ -60,7 +62,16 @@ export class CamfilAccountNavigationComponent implements OnInit, AfterViewInit, 
   permissions: string[] = [];
 
   private destroy$ = new Subject();
+
   constructor(private router: Router, private cdr: ChangeDetectorRef, private accountFacade: AccountFacade) {}
+
+  get currentPath() {
+    return location.pathname;
+  }
+
+  get unsorted() {
+    return () => 0;
+  }
 
   ngOnInit() {
     this.isMobileView = this.deviceType === 'tablet' || this.deviceType === 'mobile';
@@ -96,18 +107,10 @@ export class CamfilAccountNavigationComponent implements OnInit, AfterViewInit, 
     return checkPermission(this.permissions, permission);
   }
 
-  get currentPath() {
-    return location.pathname;
-  }
-
   navigateTo(link) {
     if (link) {
       this.router.navigate([link]);
     }
-  }
-
-  get unsorted() {
-    return () => 0;
   }
 
   ngOnDestroy() {

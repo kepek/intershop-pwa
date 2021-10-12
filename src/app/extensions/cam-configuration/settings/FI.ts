@@ -1,10 +1,12 @@
 // tslint:disable: project-structure ish-ordered-imports
-import { ChannelConfiguration } from '../store/configuration/configuration.reducer';
+import { ChannelConfiguration } from './index';
 
 const camfilConfiguration: ChannelConfiguration = {
   countryCode: 'FI',
   currency: 'EUR',
   icmChannel: 'Camfil-CamfilFI-Site',
+  showCountryFieldOnAddressForms: false,
+  showAddToCamCardButtonForNonLoggedInUser: true,
 };
 
 export default camfilConfiguration;
