@@ -13,16 +13,16 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
+import { ConfigurationService } from 'src/app/extensions/cam-configuration/services/configuration/configuration.service';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
+import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { BasketView } from 'ish-core/models/basket/basket.model';
 import { Product } from 'ish-core/models/product/product.model';
 import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
 
 import { AddProductToCartModalComponent } from '../../../../../extensions/cam-cards/shared/add-product-to-cart-modal/add-product-to-cart-modal.component';
-import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
-import { ConfigurationService } from 'src/app/extensions/cam-configuration/services/configuration/configuration.service';
 
 @Component({
   selector: 'camfil-product-add-to-basket-modal',

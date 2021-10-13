@@ -135,11 +135,6 @@ export class CamfilProductItemBaseComponent implements OnInit, OnDestroy {
     }
   }
 
-  hideAddToCamCardsBtn() {
-    //Is not logged in
-    return;
-  }
-
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
