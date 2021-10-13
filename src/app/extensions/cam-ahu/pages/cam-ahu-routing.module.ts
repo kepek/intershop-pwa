@@ -5,21 +5,27 @@ import { AuthGuard } from 'ish-core/guards/auth.guard';
 
 import { SelectedUnitGuard } from '../guards/selected-unit.guard';
 import { CamUrlSerializer } from '../serializers/cam-url-serializer';
+import { ChannelToggleGuard } from '../../cam-configuration/guards/channel-toggle.guard';
 
 const routes: Routes = [
   {
     path: 'air-handling-unit-guide',
     loadChildren: () => import('./camfil-ahu/camfil-ahu-page.module').then(m => m.CamfilAHUPageModule),
-    canActivate: [AuthGuard],
-    data: { feature: 'camAhu', breadcrumbData: [{ key: 'camfil.ahu.link' }] },
+    canActivate: [AuthGuard, ChannelToggleGuard],
+    data: {
+      feature: 'camAhu',
+      channelSetting: 'FR',
+      breadcrumbData: [{ key: 'camfil.ahu.link' }],
+    },
   },
   {
     path: 'air-handling-unit-guide/detail',
     loadChildren: () =>
       import('./camfil-ahu-detail/camfil-ahu-page-detail.module').then(m => m.CamfilAHUPageDetailModule),
-    canActivate: [AuthGuard, SelectedUnitGuard],
+    canActivate: [AuthGuard, SelectedUnitGuard, ChannelToggleGuard],
     data: {
       feature: 'camAhu',
+      channelSetting: 'FR',
       breadcrumbData: [{ key: 'camfil.ahu.link', link: '/air-handling-unit-guide' }],
     },
   },

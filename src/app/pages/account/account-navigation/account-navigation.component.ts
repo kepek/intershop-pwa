@@ -63,6 +63,10 @@ export class AccountNavigationComponent implements OnInit, OnChanges {
 
   constructor(private router: Router) {}
 
+  get unsorted() {
+    return () => 0;
+  }
+
   ngOnInit() {
     this.isMobileView = this.deviceType === 'tablet' || this.deviceType === 'mobile';
   }
@@ -76,10 +80,6 @@ export class AccountNavigationComponent implements OnInit, OnChanges {
       // tslint:disable-next-line: no-string-literal
       this.router.navigate([target['value']]);
     }
-  }
-
-  get unsorted() {
-    return () => 0;
   }
 
   isSelected(itemValueLink: string): string {

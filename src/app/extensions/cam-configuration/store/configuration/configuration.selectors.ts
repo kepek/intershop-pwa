@@ -1,20 +1,33 @@
 import { createSelector } from '@ngrx/store';
+import { isBoolean } from 'lodash-es';
 
 import { getCamConfigurationState } from '../cam-configuration-store';
 
-import { initialState } from './configuration.reducer';
+export const getConfigurationState = createSelector(getCamConfigurationState, state => state.configuration);
 
-const getConfigurationState = createSelector(getCamConfigurationState, state =>
-  state ? state.configuration : initialState
-);
+export const getCamfilSettings = createSelector(getConfigurationState, state => {
+  const { countryCode } = state;
+  const countryCodeObject = {};
 
-const getCamfilConfiguration = createSelector(getConfigurationState, state => state?.configuration);
+  if (countryCode) {
+    countryCodeObject[countryCode] = true;
+  }
 
-export const isCamfilConfigurationLoaded = createSelector(getCamfilConfiguration, configuration => !!configuration);
+  return Object.entries(state)
+    .map(([key, value]) => {
+      if (isBoolean(value)) {
+        return { [key]: value };
+      }
+    })
+    .filter(Boolean)
+    .reduce((acc, val) => ({ ...acc, ...val, ...countryCodeObject }), {});
+});
+
+export const isCamfilConfigurationInitialized = createSelector(getConfigurationState, state => state.initialized);
 
 export const getCamfilConfigurationParameter = <T>(path: string) =>
   createSelector(
-    getCamfilConfiguration,
+    getConfigurationState,
     (serverConfig): T =>
       path
         .split('.')

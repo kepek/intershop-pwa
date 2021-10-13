@@ -1,20 +1,44 @@
 import { createReducer, on } from '@ngrx/store';
 
-import { ServerConfig } from 'ish-core/models/server-config/server-config.model';
+import { HttpError } from 'ish-core/models/http-error/http-error.model';
+import { setErrorOn, setLoadingOn, unsetLoadingAndErrorOn } from 'ish-core/utils/ngrx-creators';
 
-import { loadCamfilConfigurationSuccess } from './configuration.actions';
+import { ChannelConfiguration } from '../../settings';
 
-export interface ConfigurationState {
-  configuration: ServerConfig;
+import {
+  applyCamfilConfiguration,
+  loadCamfilConfiguration,
+  loadCamfilConfigurationFail,
+  loadCamfilConfigurationSuccess,
+} from './configuration.actions';
+
+export interface ConfigurationState extends ChannelConfiguration {
+  initialized: boolean;
+  loading: boolean;
+  error: HttpError;
 }
 
 export const initialState: ConfigurationState = {
-  configuration: undefined,
+  initialized: false,
+  loading: false,
+  error: undefined,
+  countryCode: undefined,
+  currency: undefined,
+  icmChannel: undefined,
 };
 
 export const configurationReducer = createReducer(
   initialState,
-  on(loadCamfilConfigurationSuccess, (_, action) => ({
-    configuration: action.payload.configuration,
+  setLoadingOn(loadCamfilConfiguration),
+  setErrorOn(loadCamfilConfigurationFail),
+  unsetLoadingAndErrorOn(loadCamfilConfigurationSuccess),
+  on(loadCamfilConfigurationSuccess, state => ({ ...state, initialized: true })),
+  on(loadCamfilConfigurationSuccess, (state, action) => ({
+    ...state,
+    ...action.payload.configuration,
+  })),
+  on(applyCamfilConfiguration, (state: ConfigurationState, action) => ({
+    ...state,
+    ...action.payload,
   }))
 );

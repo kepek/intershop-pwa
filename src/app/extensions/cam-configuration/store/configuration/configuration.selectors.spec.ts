@@ -6,7 +6,7 @@ import { StoreWithSnapshots, provideStoreSnapshots } from 'ish-core/utils/dev/ng
 import { CamConfigurationStoreModule } from '../cam-configuration-store.module';
 
 import { loadCamfilConfigurationSuccess } from './configuration.actions';
-import { getCamfilConfigurationParameter, isCamfilConfigurationLoaded } from './configuration.selectors';
+import { getCamfilConfigurationParameter, isCamfilConfigurationInitialized } from './configuration.selectors';
 
 describe('Configuration Selectors', () => {
   let store$: StoreWithSnapshots;
@@ -22,7 +22,7 @@ describe('Configuration Selectors', () => {
 
   describe('initial state', () => {
     it('should be undefined or empty values for most selectors', () => {
-      expect(isCamfilConfigurationLoaded(store$.state)).toBeFalsy();
+      expect(isCamfilConfigurationInitialized(store$.state)).toBeFalsy();
       expect(getCamfilConfigurationParameter('someApi.someApiBaseURL')(store$.state)).toMatchInlineSnapshot(
         `undefined`
       );
@@ -45,7 +45,7 @@ describe('Configuration Selectors', () => {
     });
 
     it('should set serverConfig to state', () => {
-      expect(isCamfilConfigurationLoaded(store$.state)).toBeTruthy();
+      expect(isCamfilConfigurationInitialized(store$.state)).toBeTruthy();
       expect(getCamfilConfigurationParameter('someApi.someApiBaseURL')(store$.state)).toMatchInlineSnapshot(
         `undefined`
       );

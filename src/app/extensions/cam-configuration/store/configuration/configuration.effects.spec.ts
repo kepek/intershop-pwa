@@ -7,12 +7,12 @@ import { instance, mock, when } from 'ts-mockito';
 
 import { CoreStoreModule } from 'ish-core/store/core/core-store.module';
 import { makeHttpError } from 'ish-core/utils/dev/api-service-utils';
-import { routerTestNavigationAction } from 'ish-core/utils/dev/routing';
 
 import { ConfigurationService } from '../../services/configuration/configuration.service';
 import { CamConfigurationStoreModule } from '../cam-configuration-store.module';
 
 import {
+  initCamfilConfiguration,
   loadCamfilConfiguration,
   loadCamfilConfigurationFail,
   loadCamfilConfigurationSuccess,
@@ -43,7 +43,7 @@ describe('Configuration Effects', () => {
 
   describe('loadCamfilConfigurationOnInit$', () => {
     it('should trigger the loading of configuration data on the first page', () => {
-      const action = routerTestNavigationAction({});
+      const action = initCamfilConfiguration();
       const expected = loadCamfilConfiguration();
 
       actions$ = hot('a', { a: action });
@@ -57,7 +57,7 @@ describe('Configuration Effects', () => {
         })
       );
 
-      const action = routerTestNavigationAction({});
+      const action = initCamfilConfiguration();
       actions$ = hot('        ----a---a--a', { a: action });
       const expected$ = cold('------------');
 
@@ -67,7 +67,7 @@ describe('Configuration Effects', () => {
 
   describe('loadCamfilConfiguration$', () => {
     beforeEach(() => {
-      when(configurationServiceMock.getCamfilServerConfiguration()).thenReturn(of({}));
+      when(configurationServiceMock.getCamfilConfiguration()).thenReturn(of({}));
     });
 
     it('should map to action of type ApplyConfiguration', () => {
@@ -81,7 +81,7 @@ describe('Configuration Effects', () => {
     });
 
     it('should map invalid request to action of type LoadServerConfigFail', () => {
-      when(configurationServiceMock.getCamfilServerConfiguration()).thenReturn(
+      when(configurationServiceMock.getCamfilConfiguration()).thenReturn(
         throwError(makeHttpError({ message: 'invalid' }))
       );
 

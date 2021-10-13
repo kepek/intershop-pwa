@@ -12,7 +12,7 @@
           <form [formGroup]="ahuForm">
             <mat-form-field appearance="fill">
               <mat-label>Manufacturer</mat-label>
-              <mat-select formControlName="manufacturer" (selectionChange)="selectAhuManufacturer($event)">
+              <mat-select (selectionChange)="selectAhuManufacturer($event)" formControlName="manufacturer">
                 <mat-option [value]="undefined">None</mat-option>
                 <ng-container *ngIf="ahuManufacturers$ | async as ahuManufacturers">
                   <mat-option *ngFor="let manufacturer of ahuManufacturers" [value]="manufacturer.id">
@@ -23,7 +23,7 @@
             </mat-form-field>
             <mat-form-field appearance="fill">
               <mat-label>Model</mat-label>
-              <mat-select formControlName="unit" (selectionChange)="selectAhuUnit($event)">
+              <mat-select (selectionChange)="selectAhuUnit($event)" formControlName="unit">
                 <mat-option [value]="undefined">None</mat-option>
                 <ng-container *ngIf="ahuUnitsByManufacturerId$ | async as ahuUnitsByManufacturerId">
                   <mat-option *ngFor="let unit of ahuUnitsByManufacturerId" [value]="unit.ahu.id">
@@ -88,7 +88,37 @@
           <pre>ahuUnitsError$ {{ ahuUnitsError$ | async | json }}</pre>
           <pre>selectedAhuUnitAirSlotTypes$ {{ selectedAhuUnitAirSlotTypes$ | async | json }}</pre>
           <pre>selectedAhuUnit$ {{ selectedAhuUnit$ | async | json }}</pre>
-          <ng-template #ahuLoading>Loading AHU Data... </ng-template>
+          <ng-template #ahuLoading>Loading AHU Data...</ng-template>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </mat-sidenav-container>
+</ng-container>
+
+<ng-container>
+  <mat-sidenav-container>
+    <mat-toolbar color="primary">
+      <span class="title">CamfilConfiguration Demo</span>
+    </mat-toolbar>
+    <div class="demo-content">
+      <mat-card>
+        <mat-card-content>
+          <h2 class="example-h2">Directive Usage</h2>
+          <div *camfilChannelToggle="'FI'">
+            Finland 🥃🥴🇫🇮
+          </div>
+          <div *camfilChannelToggle="'FR'">
+            France 🍷🥴🇫🇷
+            <div *camfilChannelToggle="'showCountryFieldOnAddressForms'">
+            </div>
+            Show Country Field on Address Form.
+          </div>
+          <div *camfilChannelToggle="'showAddToCamCardButtonForNonLoggedInUser'">
+            Show Add To CamCard button for non-logged-in user.
+          </div>
+          <div *camfilChannelToggle="'dummySetting'">
+            Hide, since such setting does not exist.
+          </div>
         </mat-card-content>
       </mat-card>
     </div>
@@ -105,18 +135,18 @@
         <mat-form-field appearance="fill">
           <mat-label>Different Locale</mat-label>
           <input
-            matInput
-            [matDatepicker]="dp"
-            [formControl]="currentDate"
-            (dateInput)="onDateInput($event.value)"
             (dateChange)="onDateChange($event.value)"
+            (dateInput)="onDateInput($event.value)"
+            [formControl]="currentDate"
+            [matDatepicker]="dp"
+            matInput
           />
-          <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+          <mat-datepicker-toggle [for]="dp" matSuffix></mat-datepicker-toggle>
           <mat-datepicker #dp></mat-datepicker>
         </mat-form-field>
         <hr />
-        <mat-button-toggle-group [value]="locales[0]" name="locale" aria-label="DatePicker Locale">
-          <mat-button-toggle *ngFor="let locale of locales" (click)="onChangeLocale(locale)" value="locale">
+        <mat-button-toggle-group [value]="locales[0]" aria-label="DatePicker Locale" name="locale">
+          <mat-button-toggle (click)="onChangeLocale(locale)" *ngFor="let locale of locales" value="locale">
             {{ locale }}
           </mat-button-toggle>
         </mat-button-toggle-group>
@@ -162,7 +192,7 @@
         <mat-card>
           <mat-card-content>
             <h2 class="example-h2">camfil-product-title</h2>
-            <camfil-product-title [product]="product" [category]="category"></camfil-product-title>
+            <camfil-product-title [category]="category" [product]="product"></camfil-product-title>
           </mat-card-content>
         </mat-card>
         <!-- CamfilProductAttributeComponent -->
@@ -180,9 +210,9 @@
             ></camfil-product-attribute>
             |
             <camfil-product-attribute
-              identifier="dimensions"
               [name]="'camfil.product.dimensions.label' | translate"
               [value]="product | camfilDimension"
+              identifier="dimensions"
             ></camfil-product-attribute>
           </mat-card-content>
         </mat-card>
@@ -202,30 +232,30 @@
           <mat-card-content>
             <h2 class="example-h2">camfil-product-quantity</h2>
             <camfil-product-quantity
+              [allowZeroQuantity]="false"
+              [controlName]="quantityControlName"
+              [parentForm]="productItemForm"
+              [product]="product"
+              [quantityLabel]="'camfil.product.quantity.label' | translate"
               [type]="'counter'"
-              [allowZeroQuantity]="false"
-              [quantityLabel]="'camfil.product.quantity.label' | translate"
-              [product]="product"
-              [parentForm]="productItemForm"
-              [controlName]="quantityControlName"
             ></camfil-product-quantity>
             <hr />
             <camfil-product-quantity
+              [allowZeroQuantity]="false"
+              [controlName]="quantityControlName"
+              [parentForm]="productItemForm"
+              [product]="product"
+              [quantityLabel]="'camfil.product.quantity.label' | translate"
               [type]="'select'"
-              [allowZeroQuantity]="false"
-              [quantityLabel]="'camfil.product.quantity.label' | translate"
-              [product]="product"
-              [parentForm]="productItemForm"
-              [controlName]="quantityControlName"
             ></camfil-product-quantity>
             <hr />
             <camfil-product-quantity
-              [type]="'input'"
               [allowZeroQuantity]="false"
-              [quantityLabel]="'camfil.product.quantity.label' | translate"
-              [product]="product"
-              [parentForm]="productItemForm"
               [controlName]="quantityControlName"
+              [parentForm]="productItemForm"
+              [product]="product"
+              [quantityLabel]="'camfil.product.quantity.label' | translate"
+              [type]="'input'"
             ></camfil-product-quantity>
           </mat-card-content>
         </mat-card>
@@ -234,12 +264,12 @@
   </ng-container>
 </ng-container>
 
-<ng-template #loading> Loading Demo of Camfil Components... </ng-template>
+<ng-template #loading> Loading Demo of Camfil Components...</ng-template>
 
 <hr />
 
 <mat-sidenav-container [class.m2demo-dark]="isDarkTheme">
-  <mat-sidenav #sidenav mode="over" class="demo-sidenav" color="primary">
+  <mat-sidenav #sidenav class="demo-sidenav" color="primary" mode="over">
     <mat-toolbar>
       <mat-toolbar-row>
         <span>Settings</span>
@@ -248,7 +278,7 @@
       </mat-toolbar-row>
 
       <mat-toolbar-row>
-        <button mat-button (click)="isDarkTheme = !isDarkTheme" class="demo-sidebar-button">TOGGLE THEME</button>
+        <button (click)="isDarkTheme = !isDarkTheme" class="demo-sidebar-button" mat-button>TOGGLE THEME</button>
       </mat-toolbar-row>
 
       <mat-toolbar-row>
@@ -258,7 +288,7 @@
       </mat-toolbar-row>
 
       <mat-toolbar-row>
-        <button mat-raised-button color="accent" class="demo-sidebar-button">
+        <button class="demo-sidebar-button" color="accent" mat-raised-button>
           <mat-icon class="example-icon">verified_user</mat-icon>
           Login
         </button>
@@ -271,7 +301,7 @@
       </mat-toolbar-row>
 
       <mat-toolbar-row>
-        <button mat-raised-button color="warn" class="demo-sidebar-button">
+        <button class="demo-sidebar-button" color="warn" mat-raised-button>
           <mat-icon class="example-icon">delete</mat-icon>
           Delete
         </button>
@@ -280,7 +310,7 @@
   </mat-sidenav>
 
   <mat-toolbar color="primary">
-    <button mat-button class="demo-menu-button" (click)="sidenav.toggle()">
+    <button (click)="sidenav.toggle()" class="demo-menu-button" mat-button>
       <i class="material-icons">menu</i>
     </button>
     <span class="title">Angular Material Demo</span>
@@ -292,17 +322,17 @@
       <mat-card-content>
         <h2 class="example-h2">Camfil Icons</h2>
         <button
-          mat-fab
-          color="accent"
-          *ngFor="let camfilIcon of camfilIcons"
-          class="example-icon"
           (click)="iconSnippetSnackbar()"
+          *ngFor="let camfilIcon of camfilIcons"
           [cdkCopyToClipboard]="'<mat-icon svgIcon=&quot;' + camfilIcon.name + '&quot;></mat-icon>'"
+          class="example-icon"
+          color="accent"
+          mat-fab
         >
           <mat-icon
+            [attr.aria-label]="'Example ' + camfilIcon.name + ' SVG icon'"
             [matTooltip]="camfilIcon.name"
             [svgIcon]="camfilIcon.name"
-            [attr.aria-label]="'Example ' + camfilIcon.name + ' SVG icon'"
           ></mat-icon>
         </button>
       </mat-card-content>
@@ -312,29 +342,29 @@
     <mat-card>
       <mat-card-content>
         <h2 class="example-h2">Material Table</h2>
-        <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+        <table [dataSource]="dataSource" class="mat-elevation-z8" mat-table matSort>
           <!-- Position Column -->
           <ng-container matColumnDef="position">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>No.</th>
-            <td mat-cell *matCellDef="let element">{{ element.position }}</td>
+            <th *matHeaderCellDef mat-header-cell mat-sort-header>No.</th>
+            <td *matCellDef="let element" mat-cell>{{ element.position }}</td>
           </ng-container>
           <!-- Name Column -->
           <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
-            <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+            <th *matHeaderCellDef mat-header-cell mat-sort-header>Name</th>
+            <td *matCellDef="let element" mat-cell>{{ element.name }}</td>
           </ng-container>
           <!-- Weight Column -->
           <ng-container matColumnDef="weight">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Weight</th>
-            <td mat-cell *matCellDef="let element">{{ element.weight }}</td>
+            <th *matHeaderCellDef mat-header-cell mat-sort-header>Weight</th>
+            <td *matCellDef="let element" mat-cell>{{ element.weight }}</td>
           </ng-container>
           <!-- Symbol Column -->
           <ng-container matColumnDef="symbol">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Symbol</th>
-            <td mat-cell *matCellDef="let element">{{ element.symbol }}</td>
+            <th *matHeaderCellDef mat-header-cell mat-sort-header>Symbol</th>
+            <td *matCellDef="let element" mat-cell>{{ element.symbol }}</td>
           </ng-container>
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+          <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+          <tr *matRowDef="let row; columns: displayedColumns" mat-row></tr>
         </table>
       </mat-card-content>
     </mat-card>
@@ -347,14 +377,14 @@
         <form class="example-form">
           <mat-form-field class="example-full-width">
             <input
-              type="text"
-              placeholder="Pick one"
-              aria-label="Number"
-              matInput
               [formControl]="autocompleteControl"
               [matAutocomplete]="auto"
+              aria-label="Number"
+              matInput
+              placeholder="Pick one"
+              type="text"
             />
-            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+            <mat-autocomplete #auto="matAutocomplete" autoActiveFirstOption>
               <mat-option *ngFor="let option of filteredAutocompleteOptions | async" [value]="option">
                 {{ option }}
               </mat-option>
@@ -370,7 +400,7 @@
         <h2 class="example-h2">Material Button Toggle</h2>
         <p>
           Default appearance:
-          <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
+          <mat-button-toggle-group aria-label="Font Style" name="fontStyle">
             <mat-button-toggle value="bold">Bold</mat-button-toggle>
             <mat-button-toggle value="italic">Italic</mat-button-toggle>
             <mat-button-toggle value="underline">Underline</mat-button-toggle>
@@ -379,7 +409,7 @@
 
         <p>
           Legacy appearance:
-          <mat-button-toggle-group appearance="legacy" name="fontStyle" aria-label="Font Style">
+          <mat-button-toggle-group appearance="legacy" aria-label="Font Style" name="fontStyle">
             <mat-button-toggle value="bold">Bold</mat-button-toggle>
             <mat-button-toggle value="italic">Italic</mat-button-toggle>
             <mat-button-toggle value="underline">Underline</mat-button-toggle>
@@ -393,14 +423,14 @@
         <h2 class="example-h2">Material Card</h2>
         <mat-card class="example-card">
           <mat-card-header>
-            <div mat-card-avatar class="example-header-image"></div>
+            <div class="example-header-image" mat-card-avatar></div>
             <mat-card-title>Shiba Inu</mat-card-title>
             <mat-card-subtitle>Dog Breed</mat-card-subtitle>
           </mat-card-header>
           <img
+            alt="Photo of a Shiba Inu"
             mat-card-image
             src="https://material.angular.io/assets/img/examples/shiba2.jpg"
-            alt="Photo of a Shiba Inu"
           />
           <mat-card-content>
             <p>
@@ -433,9 +463,9 @@
       <mat-card-content>
         <h2 class="example-h2">Material Expansion Panel</h2>
         <mat-accordion class="example-headers-align">
-          <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle>
+          <mat-expansion-panel (opened)="setStep(0)" [expanded]="step === 0" hideToggle>
             <mat-expansion-panel-header>
-              <mat-panel-title> Personal data </mat-panel-title>
+              <mat-panel-title> Personal data</mat-panel-title>
               <mat-panel-description>
                 Type your name and age
                 <mat-icon>account_circle</mat-icon>
@@ -449,16 +479,16 @@
 
             <mat-form-field>
               <mat-label>Age</mat-label>
-              <input matInput type="number" min="1" />
+              <input matInput min="1" type="number" />
             </mat-form-field>
             <mat-action-row>
-              <button mat-button color="primary" (click)="nextStep()">Next</button>
+              <button (click)="nextStep()" color="primary" mat-button>Next</button>
             </mat-action-row>
           </mat-expansion-panel>
 
-          <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle>
+          <mat-expansion-panel (opened)="setStep(1)" [expanded]="step === 1" hideToggle>
             <mat-expansion-panel-header>
-              <mat-panel-title> Destination </mat-panel-title>
+              <mat-panel-title> Destination</mat-panel-title>
               <mat-panel-description>
                 Type the country name
                 <mat-icon>map</mat-icon>
@@ -471,14 +501,14 @@
             </mat-form-field>
 
             <mat-action-row>
-              <button mat-button color="warn" (click)="prevStep()">Previous</button>
-              <button mat-button color="primary" (click)="nextStep()">Next</button>
+              <button (click)="prevStep()" color="warn" mat-button>Previous</button>
+              <button (click)="nextStep()" color="primary" mat-button>Next</button>
             </mat-action-row>
           </mat-expansion-panel>
 
-          <mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)" hideToggle>
+          <mat-expansion-panel (opened)="setStep(2)" [expanded]="step === 2" hideToggle>
             <mat-expansion-panel-header>
-              <mat-panel-title> Day of the trip </mat-panel-title>
+              <mat-panel-title> Day of the trip</mat-panel-title>
               <mat-panel-description>
                 Inform the date you wish to travel
                 <mat-icon>date_range</mat-icon>
@@ -487,13 +517,13 @@
 
             <mat-form-field>
               <mat-label>Date</mat-label>
-              <input matInput [matDatepicker]="picker" (focus)="picker.open()" readonly />
+              <input (focus)="picker.open()" [matDatepicker]="picker" matInput readonly />
             </mat-form-field>
             <mat-datepicker #picker></mat-datepicker>
 
             <mat-action-row>
-              <button mat-button color="warn" (click)="prevStep()">Previous</button>
-              <button mat-button color="primary" (click)="nextStep()">End</button>
+              <button (click)="prevStep()" color="warn" mat-button>Previous</button>
+              <button (click)="nextStep()" color="primary" mat-button>End</button>
             </mat-action-row>
           </mat-expansion-panel>
         </mat-accordion>
@@ -505,7 +535,7 @@
         <h2 class="example-h2">Material BottomSheet</h2>
         <p>You have received a file called "cat-picture.jpeg".</p>
 
-        <button mat-raised-button (click)="openBottomSheet()">Open file</button>
+        <button (click)="openBottomSheet()" mat-raised-button>Open file</button>
       </mat-card-content>
     </mat-card>
 
@@ -517,11 +547,11 @@
           <div class="example-label">Basic</div>
           <div class="example-button-row">
             <button mat-button>Basic</button>
-            <button mat-button color="primary">Primary</button>
-            <button mat-button color="accent">Accent</button>
-            <button mat-button color="warn">Warn</button>
-            <button mat-button disabled>Disabled</button>
-            <a mat-button href="https://www.google.com/" target="_blank">Link</a>
+            <button color="primary" mat-button>Primary</button>
+            <button color="accent" mat-button>Accent</button>
+            <button color="warn" mat-button>Warn</button>
+            <button disabled mat-button>Disabled</button>
+            <a href="https://www.google.com/" mat-button target="_blank">Link</a>
           </div>
         </section>
         <mat-divider></mat-divider>
@@ -529,11 +559,11 @@
           <div class="example-label">Raised</div>
           <div class="example-button-row">
             <button mat-raised-button>Basic</button>
-            <button mat-raised-button color="primary">Primary</button>
-            <button mat-raised-button color="accent">Accent</button>
-            <button mat-raised-button color="warn">Warn</button>
-            <button mat-raised-button disabled>Disabled</button>
-            <a mat-raised-button href="https://www.google.com/" target="_blank">Link</a>
+            <button color="primary" mat-raised-button>Primary</button>
+            <button color="accent" mat-raised-button>Accent</button>
+            <button color="warn" mat-raised-button>Warn</button>
+            <button disabled mat-raised-button>Disabled</button>
+            <a href="https://www.google.com/" mat-raised-button target="_blank">Link</a>
           </div>
         </section>
         <mat-divider></mat-divider>
@@ -541,11 +571,11 @@
           <div class="example-label">Stroked</div>
           <div class="example-button-row">
             <button mat-stroked-button>Basic</button>
-            <button mat-stroked-button color="primary">Primary</button>
-            <button mat-stroked-button color="accent">Accent</button>
-            <button mat-stroked-button color="warn">Warn</button>
-            <button mat-stroked-button disabled>Disabled</button>
-            <a mat-stroked-button href="https://www.google.com/" target="_blank">Link</a>
+            <button color="primary" mat-stroked-button>Primary</button>
+            <button color="accent" mat-stroked-button>Accent</button>
+            <button color="warn" mat-stroked-button>Warn</button>
+            <button disabled mat-stroked-button>Disabled</button>
+            <a href="https://www.google.com/" mat-stroked-button target="_blank">Link</a>
           </div>
         </section>
         <mat-divider></mat-divider>
@@ -553,11 +583,11 @@
           <div class="example-label">Flat</div>
           <div class="example-button-row">
             <button mat-flat-button>Basic</button>
-            <button mat-flat-button color="primary">Primary</button>
-            <button mat-flat-button color="accent">Accent</button>
-            <button mat-flat-button color="warn">Warn</button>
-            <button mat-flat-button disabled>Disabled</button>
-            <a mat-flat-button href="https://www.google.com/" target="_blank">Link</a>
+            <button color="primary" mat-flat-button>Primary</button>
+            <button color="accent" mat-flat-button>Accent</button>
+            <button color="warn" mat-flat-button>Warn</button>
+            <button disabled mat-flat-button>Disabled</button>
+            <a href="https://www.google.com/" mat-flat-button target="_blank">Link</a>
           </div>
         </section>
         <mat-divider></mat-divider>
@@ -565,19 +595,19 @@
           <div class="example-label">Icon</div>
           <div class="example-button-row">
             <div class="example-flex-container">
-              <button mat-icon-button aria-label="Example icon button with a vertical three dot icon">
+              <button aria-label="Example icon button with a vertical three dot icon" mat-icon-button>
                 <mat-icon>more_vert</mat-icon>
               </button>
-              <button mat-icon-button color="primary" aria-label="Example icon button with a home icon">
+              <button aria-label="Example icon button with a home icon" color="primary" mat-icon-button>
                 <mat-icon>home</mat-icon>
               </button>
-              <button mat-icon-button color="accent" aria-label="Example icon button with a menu icon">
+              <button aria-label="Example icon button with a menu icon" color="accent" mat-icon-button>
                 <mat-icon>menu</mat-icon>
               </button>
-              <button mat-icon-button color="warn" aria-label="Example icon button with a heart icon">
+              <button aria-label="Example icon button with a heart icon" color="warn" mat-icon-button>
                 <mat-icon>favorite</mat-icon>
               </button>
-              <button mat-icon-button disabled aria-label="Example icon button with a open in new tab icon">
+              <button aria-label="Example icon button with a open in new tab icon" disabled mat-icon-button>
                 <mat-icon>open_in_new</mat-icon>
               </button>
             </div>
@@ -589,22 +619,22 @@
           <div class="example-button-row">
             <div class="example-flex-container">
               <div class="example-button-container">
-                <button mat-fab color="primary" aria-label="Example icon button with a delete icon">
+                <button aria-label="Example icon button with a delete icon" color="primary" mat-fab>
                   <mat-icon>delete</mat-icon>
                 </button>
               </div>
               <div class="example-button-container">
-                <button mat-fab color="accent" aria-label="Example icon button with a bookmark icon">
+                <button aria-label="Example icon button with a bookmark icon" color="accent" mat-fab>
                   <mat-icon>bookmark</mat-icon>
                 </button>
               </div>
               <div class="example-button-container">
-                <button mat-fab color="warn" aria-label="Example icon button with a home icon">
+                <button aria-label="Example icon button with a home icon" color="warn" mat-fab>
                   <mat-icon>home</mat-icon>
                 </button>
               </div>
               <div class="example-button-container">
-                <button mat-fab disabled aria-label="Example icon button with a heart icon">
+                <button aria-label="Example icon button with a heart icon" disabled mat-fab>
                   <mat-icon>favorite</mat-icon>
                 </button>
               </div>
@@ -617,27 +647,27 @@
           <div class="example-button-row">
             <div class="example-flex-container">
               <div class="example-button-container">
-                <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon">
+                <button aria-label="Example icon button with a menu icon" color="primary" mat-mini-fab>
                   <mat-icon>menu</mat-icon>
                 </button>
               </div>
               <div class="example-button-container">
-                <button mat-mini-fab color="accent" aria-label="Example icon button with a plus one icon">
+                <button aria-label="Example icon button with a plus one icon" color="accent" mat-mini-fab>
                   <mat-icon>plus_one</mat-icon>
                 </button>
               </div>
               <div class="example-button-container">
-                <button mat-mini-fab color="warn" aria-label="Example icon button with a filter list icon">
+                <button aria-label="Example icon button with a filter list icon" color="warn" mat-mini-fab>
                   <mat-icon>filter_list</mat-icon>
                 </button>
               </div>
               <div class="example-button-container">
-                <button mat-mini-fab aria-label="Example icon button with a date_range icon">
+                <button aria-label="Example icon button with a date_range icon" mat-mini-fab>
                   <mat-icon>date_range</mat-icon>
                 </button>
               </div>
               <div class="example-button-container">
-                <button mat-mini-fab disabled aria-label="Example icon button with a home icon">
+                <button aria-label="Example icon button with a home icon" disabled mat-mini-fab>
                   <mat-icon>home</mat-icon>
                 </button>
               </div>
@@ -661,14 +691,14 @@
 
         <p>
           Button with a badge on the left
-          <button mat-raised-button color="primary" matBadge="8" matBadgePosition="before" matBadgeColor="accent">
+          <button color="primary" mat-raised-button matBadge="8" matBadgeColor="accent" matBadgePosition="before">
             Action
           </button>
         </p>
 
         <p>
           Button toggles badge visibility
-          <button mat-raised-button matBadge="7" [matBadgeHidden]="hiddenBadge" (click)="toggleBadgeVisibility()">
+          <button (click)="toggleBadgeVisibility()" [matBadgeHidden]="hiddenBadge" mat-raised-button matBadge="7">
             Hide
           </button>
         </p>
@@ -688,8 +718,8 @@
         <h2 class="example-h2">Material Datepicker</h2>
         <mat-form-field appearance="fill">
           <mat-label>Choose a date</mat-label>
-          <input matInput [matDatepicker]="picker1" />
-          <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+          <input [matDatepicker]="picker1" matInput />
+          <mat-datepicker-toggle [for]="picker1" matSuffix></mat-datepicker-toggle>
           <mat-datepicker #picker1></mat-datepicker>
         </mat-form-field>
       </mat-card-content>
@@ -701,29 +731,29 @@
         <h2 class="example-h2">Material Paginator</h2>
         <mat-form-field>
           <mat-label>List length</mat-label>
-          <input matInput [(ngModel)]="length" type="number" />
+          <input [(ngModel)]="length" matInput type="number" />
         </mat-form-field>
 
         <mat-form-field>
           <mat-label>Page size</mat-label>
-          <input matInput [(ngModel)]="pageSize" type="number" />
+          <input [(ngModel)]="pageSize" matInput type="number" />
         </mat-form-field>
         <mat-form-field>
           <mat-label>Page size options</mat-label>
           <input
-            matInput
-            [ngModel]="pageSizeOptions"
             (ngModelChange)="setPageSizeOptions($event)"
             [ngModelOptions]="{ updateOn: 'blur' }"
+            [ngModel]="pageSizeOptions"
+            matInput
             placeholder="Ex. 10,25,50"
           />
         </mat-form-field>
 
         <mat-paginator
-          [length]="length"
-          [pageSize]="pageSize"
-          [pageSizeOptions]="pageSizeOptions"
           (page)="pageEvent = $event"
+          [length]="length"
+          [pageSizeOptions]="pageSizeOptions"
+          [pageSize]="pageSize"
         >
         </mat-paginator>
 
@@ -764,7 +794,7 @@
         <h2 class="example-h2">Material Input</h2>
         <mat-expansion-panel [expanded]="true">
           <mat-expansion-panel-header>
-            <mat-panel-title> Basic </mat-panel-title>
+            <mat-panel-title> Basic</mat-panel-title>
           </mat-expansion-panel-header>
           <form class="example-form">
             <mat-form-field class="example-full-width">
@@ -780,48 +810,48 @@
         </mat-expansion-panel>
         <mat-expansion-panel [expanded]="true">
           <mat-expansion-panel-header>
-            <mat-panel-title> Clearable </mat-panel-title>
+            <mat-panel-title> Clearable</mat-panel-title>
           </mat-expansion-panel-header>
           <mat-form-field class="example-form-field">
             <mat-label>Clearable input</mat-label>
-            <input matInput type="text" [(ngModel)]="value" />
-            <button mat-button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value = ''">
+            <input [(ngModel)]="value" matInput type="text" />
+            <button (click)="value = ''" *ngIf="value" aria-label="Clear" mat-button mat-icon-button matSuffix>
               <mat-icon>close</mat-icon>
             </button>
           </mat-form-field>
         </mat-expansion-panel>
         <mat-expansion-panel [expanded]="true">
           <mat-expansion-panel-header>
-            <mat-panel-title> With Error Message </mat-panel-title>
+            <mat-panel-title> With Error Message</mat-panel-title>
           </mat-expansion-panel-header>
           <form class="example-form">
             <mat-form-field class="example-full-width">
               <mat-label>Email</mat-label>
               <input
-                matInput
-                [formControl]="emailFormControl"
                 [errorStateMatcher]="matcher"
+                [formControl]="emailFormControl"
+                matInput
                 placeholder="Ex. pat@example.com"
               />
               <mat-hint>Errors appear instantly!</mat-hint>
               <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
                 Please enter a valid email address
               </mat-error>
-              <mat-error *ngIf="emailFormControl.hasError('required')"> Email is <strong>required</strong> </mat-error>
+              <mat-error *ngIf="emailFormControl.hasError('required')"> Email is <strong>required</strong></mat-error>
             </mat-form-field>
           </form>
         </mat-expansion-panel>
         <mat-expansion-panel [expanded]="true">
           <mat-expansion-panel-header>
-            <mat-panel-title> In Form </mat-panel-title>
+            <mat-panel-title> In Form</mat-panel-title>
           </mat-expansion-panel-header>
           <form class="example-form">
             <mat-form-field class="example-full-width">
               <mat-label>Company (disabled)</mat-label>
-              <input matInput disabled value="Google" />
+              <input disabled matInput value="Google" />
             </mat-form-field>
 
-            <table class="example-full-width" cellspacing="0">
+            <table cellspacing="0" class="example-full-width">
               <tr>
                 <td>
                   <mat-form-field class="example-full-width">
@@ -849,7 +879,7 @@
               </mat-form-field>
             </p>
 
-            <table class="example-full-width" cellspacing="0">
+            <table cellspacing="0" class="example-full-width">
               <tr>
                 <td>
                   <mat-form-field class="example-full-width">
@@ -866,7 +896,7 @@
                 <td>
                   <mat-form-field class="example-full-width">
                     <mat-label>Postal Code</mat-label>
-                    <input matInput #postalCode maxlength="5" placeholder="Ex. 94105" value="94043" />
+                    <input #postalCode matInput maxlength="5" placeholder="Ex. 94105" value="94043" />
                     <mat-hint align="end">{{ postalCode.value.length }} / 5</mat-hint>
                   </mat-form-field>
                 </td>
@@ -882,7 +912,7 @@
       <mat-card-content>
         <h2 class="example-h2">Material Chips</h2>
         <mat-chip-list>
-          <mat-chip *ngFor="let chipColor of availableColors" selected="true" color="{{ chipColor.color }}">
+          <mat-chip *ngFor="let chipColor of availableColors" color="{{ chipColor.color }}" selected="true">
             {{ chipColor.name }}
           </mat-chip>
         </mat-chip-list>
@@ -896,20 +926,20 @@
         <mat-form-field class="demo-chip-list">
           <mat-chip-list #chipList aria-label="Fruit selection">
             <mat-chip
-              *ngFor="let fruit of fruits"
-              [selectable]="selectableFruits"
-              [removable]="removableFruits"
               (removed)="removeFruit(fruit)"
+              *ngFor="let fruit of fruits"
+              [removable]="removableFruits"
+              [selectable]="selectableFruits"
             >
               {{ fruit.name }}
-              <mat-icon matChipRemove *ngIf="removableFruits">cancel</mat-icon>
+              <mat-icon *ngIf="removableFruits" matChipRemove>cancel</mat-icon>
             </mat-chip>
             <input
-              placeholder="New fruit..."
+              (matChipInputTokenEnd)="addFruit($event)"
+              [matChipInputAddOnBlur]="addOnBlurFruits"
               [matChipInputFor]="chipList"
               [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-              [matChipInputAddOnBlur]="addOnBlurFruits"
-              (matChipInputTokenEnd)="addFruit($event)"
+              placeholder="New fruit..."
             />
           </mat-chip-list>
         </mat-form-field>
@@ -922,7 +952,7 @@
         <h2 class="example-h2">Material Checkbox</h2>
         <ng-container *ngFor="let checkboxColor of availableColors">
           <mat-checkbox [color]="checkboxColor.color">Unchecked</mat-checkbox>
-          <mat-checkbox [color]="checkboxColor.color" [checked]="true">Checked</mat-checkbox>
+          <mat-checkbox [checked]="true" [color]="checkboxColor.color">Checked</mat-checkbox>
           <mat-checkbox [color]="checkboxColor.color" [indeterminate]="true">Indeterminate</mat-checkbox>
           <mat-checkbox [color]="checkboxColor.color" [disabled]="true">Disabled</mat-checkbox>
           <hr />
@@ -937,7 +967,7 @@
         <h2 class="example-h2">Material Radio Button</h2>
         <mat-radio-button name="symbol">Alpha</mat-radio-button>
         <mat-radio-button name="symbol">Beta</mat-radio-button>
-        <mat-radio-button name="symbol" disabled>Disabled</mat-radio-button>
+        <mat-radio-button disabled name="symbol">Disabled</mat-radio-button>
       </mat-card-content>
     </mat-card>
     <!-- /Material Radio Button -->
@@ -983,15 +1013,15 @@
           <input matInput placeholder="First name" />
         </mat-form-field>
         <mat-form-field>
-          <input matInput #nickname placeholder="Nickname" maxlength="50" />
-          <mat-hint align="end"> {{ nickname.value.length }} / 50 </mat-hint>
+          <input #nickname matInput maxlength="50" placeholder="Nickname" />
+          <mat-hint align="end"> {{ nickname.value.length }} / 50</mat-hint>
         </mat-form-field>
         <mat-form-field>
-          <mat-icon matPrefix class="demo-input-icon">android</mat-icon>
+          <mat-icon class="demo-input-icon" matPrefix>android</mat-icon>
           <input matInput placeholder="Favorite phone" />
         </mat-form-field>
         <mat-form-field>
-          <mat-icon matPrefix class="demo-input-icon">motorcycle</mat-icon>
+          <mat-icon class="demo-input-icon" matPrefix>motorcycle</mat-icon>
           <input matInput placeholder="Motorcycle model" />
         </mat-form-field>
       </mat-card-content>
@@ -1003,7 +1033,7 @@
       <mat-card-content>
         <h2 class="example-h2">Material Select</h2>
         <mat-form-field>
-          <mat-select placeholder="Favorite game" [(ngModel)]="selectedValue" name="game">
+          <mat-select [(ngModel)]="selectedValue" name="game" placeholder="Favorite game">
             <mat-option *ngFor="let game of games" [value]="game.value">
               {{ game.viewValue }}
             </mat-option>
@@ -1021,7 +1051,7 @@
         <mat-list class="demo-list">
           <mat-list-item *ngFor="let food of foods">
             <h3 mat-line>{{ food.name }}</h3>
-            <p mat-line class="demo-secondary-text">{{ food.rating }}</p>
+            <p class="demo-secondary-text" mat-line>{{ food.rating }}</p>
           </mat-list-item>
         </mat-list>
       </mat-card-content>
@@ -1060,11 +1090,11 @@
         <h2 class="example-h2">Material Grid List</h2>
         <mat-grid-list cols="4" rowHeight="100px">
           <mat-grid-tile
-            class="grid-test-1"
             *ngFor="let tile of tiles"
             [colspan]="tile.cols"
             [rowspan]="tile.rows"
             [style.background]="tile.color"
+            class="grid-test-1"
           >
             {{ tile.text }}
           </mat-grid-tile>
@@ -1081,23 +1111,23 @@
         <section class="example-section">
           <label class="example-margin">Color:</label>
           <mat-radio-group [(ngModel)]="color">
-            <mat-radio-button class="example-margin" value="primary"> Primary </mat-radio-button>
-            <mat-radio-button class="example-margin" value="accent"> Accent </mat-radio-button>
-            <mat-radio-button class="example-margin" value="warn"> Warn </mat-radio-button>
+            <mat-radio-button class="example-margin" value="primary"> Primary</mat-radio-button>
+            <mat-radio-button class="example-margin" value="accent"> Accent</mat-radio-button>
+            <mat-radio-button class="example-margin" value="warn"> Warn</mat-radio-button>
           </mat-radio-group>
         </section>
 
         <section class="example-section">
           <label class="example-margin">Mode:</label>
           <mat-radio-group [(ngModel)]="mode">
-            <mat-radio-button class="example-margin" value="determinate"> Determinate </mat-radio-button>
-            <mat-radio-button class="example-margin" value="indeterminate"> Indeterminate </mat-radio-button>
+            <mat-radio-button class="example-margin" value="determinate"> Determinate</mat-radio-button>
+            <mat-radio-button class="example-margin" value="indeterminate"> Indeterminate</mat-radio-button>
           </mat-radio-group>
         </section>
 
-        <section class="example-section" *ngIf="mode === 'determinate'">
+        <section *ngIf="mode === 'determinate'" class="example-section">
           <label class="example-margin">Progress:</label>
-          <mat-slider class="example-margin" [(ngModel)]="value"></mat-slider>
+          <mat-slider [(ngModel)]="value" class="example-margin"></mat-slider>
         </section>
       </mat-card-content>
     </mat-card>
@@ -1105,7 +1135,7 @@
       <mat-card-content>
         <h2 class="example-h2">Result</h2>
 
-        <mat-progress-spinner class="example-margin" [color]="color" [mode]="mode" [value]="value">
+        <mat-progress-spinner [color]="color" [mode]="mode" [value]="value" class="example-margin">
         </mat-progress-spinner>
       </mat-card-content>
     </mat-card>
@@ -1118,19 +1148,19 @@
         <label>
           Indeterminate progress-bar
           <mat-progress-bar
+            aria-label="Indeterminate progress-bar example"
             class="demo-progress"
             mode="indeterminate"
-            aria-label="Indeterminate progress-bar example"
           ></mat-progress-bar>
         </label>
         <label>
           Determinate progress bar - {{ progress }}%
           <mat-progress-bar
+            [value]="progress"
+            aria-label="Determinate progress-bar example"
             class="demo-progress"
             color="accent"
             mode="determinate"
-            [value]="progress"
-            aria-label="Determinate progress-bar example"
           ></mat-progress-bar>
         </label>
       </mat-card-content>
@@ -1186,9 +1216,9 @@
       <mat-card-content>
         <h2 class="example-h2">Material Tooltip</h2>
         <button
+          aria-label="Button that displays a tooltip when focused or hovered over"
           mat-raised-button
           matTooltip="Info about the action"
-          aria-label="Button that displays a tooltip when focused or hovered over"
         >
           Action
         </button>
@@ -1211,53 +1241,53 @@
 
         <section class="example-section">
           <mat-form-field class="example-margin">
-            <input matInput type="number" placeholder="Value" [(ngModel)]="slider.value" />
+            <input [(ngModel)]="slider.value" matInput placeholder="Value" type="number" />
           </mat-form-field>
           <mat-form-field class="example-margin">
-            <input matInput type="number" placeholder="Min value" [(ngModel)]="slider.min" />
+            <input [(ngModel)]="slider.min" matInput placeholder="Min value" type="number" />
           </mat-form-field>
           <mat-form-field class="example-margin">
-            <input matInput type="number" placeholder="Max value" [(ngModel)]="slider.max" />
+            <input [(ngModel)]="slider.max" matInput placeholder="Max value" type="number" />
           </mat-form-field>
           <mat-form-field class="example-margin">
-            <input matInput type="number" placeholder="Step size" [(ngModel)]="slider.step" />
+            <input [(ngModel)]="slider.step" matInput placeholder="Step size" type="number" />
           </mat-form-field>
         </section>
 
         <section class="example-section">
-          <mat-checkbox color="primary" class="example-margin" [(ngModel)]="slider.showTicks">Show ticks</mat-checkbox>
-          <mat-checkbox color="primary" class="example-margin" [(ngModel)]="slider.autoTicks" *ngIf="slider.showTicks">
+          <mat-checkbox [(ngModel)]="slider.showTicks" class="example-margin" color="primary">Show ticks</mat-checkbox>
+          <mat-checkbox *ngIf="slider.showTicks" [(ngModel)]="slider.autoTicks" class="example-margin" color="primary">
             Auto ticks
           </mat-checkbox>
-          <mat-form-field class="example-margin" *ngIf="slider.showTicks && !slider.autoTicks">
-            <input matInput type="number" placeholder="Tick interval" [(ngModel)]="slider.tickInterval" />
+          <mat-form-field *ngIf="slider.showTicks && !slider.autoTicks" class="example-margin">
+            <input [(ngModel)]="slider.tickInterval" matInput placeholder="Tick interval" type="number" />
           </mat-form-field>
         </section>
 
         <section class="example-section">
-          <mat-checkbox color="primary" class="example-margin" [(ngModel)]="slider.thumbLabel"
-            >Show thumb label</mat-checkbox
+          <mat-checkbox [(ngModel)]="slider.thumbLabel" class="example-margin" color="primary"
+          >Show thumb label
+          </mat-checkbox
           >
         </section>
 
         <section class="example-section">
-          <mat-checkbox color="primary" class="example-margin" [(ngModel)]="slider.checked">Checked</mat-checkbox>
+          <mat-checkbox [(ngModel)]="slider.checked" class="example-margin" color="primary">Checked</mat-checkbox>
         </section>
 
         <section class="example-section">
-          <mat-checkbox color="primary" class="example-margin" [(ngModel)]="slider.vertical">Vertical</mat-checkbox>
-          <mat-checkbox color="primary" class="example-margin" [(ngModel)]="slider.invert">Inverted</mat-checkbox>
+          <mat-checkbox [(ngModel)]="slider.vertical" class="example-margin" color="primary">Vertical</mat-checkbox>
+          <mat-checkbox [(ngModel)]="slider.invert" class="example-margin" color="primary">Inverted</mat-checkbox>
         </section>
 
         <section class="example-section">
-          <mat-checkbox color="primary" class="example-margin" [(ngModel)]="slider.disabled">Disabled</mat-checkbox>
+          <mat-checkbox [(ngModel)]="slider.disabled" class="example-margin" color="primary">Disabled</mat-checkbox>
         </section>
       </mat-card-content>
 
       <mat-card-content>
         <h2 class="example-h2">Slider Result</h2>
         <mat-slider
-          class="example-margin"
           [disabled]="slider.disabled"
           [invert]="slider.invert"
           [max]="slider.max"
@@ -1267,6 +1297,7 @@
           [tickInterval]="slider.tickInterval"
           [value]="slider.value"
           [vertical]="slider.vertical"
+          class="example-margin"
         >
         </mat-slider>
       </mat-card-content>
@@ -1274,10 +1305,11 @@
       <mat-card-content>
         <h2 class="example-h2">Slider Toggle Result</h2>
         <mat-slide-toggle
-          [disabled]="slider.disabled"
-          [checked]="slider.checked"
           (change)="slider.checked = !slider.checked"
-          >Slide me!</mat-slide-toggle
+          [checked]="slider.checked"
+          [disabled]="slider.disabled"
+        >Slide me!
+        </mat-slide-toggle
         >
       </mat-card-content>
     </mat-card>
@@ -1287,7 +1319,7 @@
     <mat-card>
       <mat-card-content>
         <h2 class="example-h2">Material Menu</h2>
-        <button mat-icon-button [matMenuTriggerFor]="menu">
+        <button [matMenuTriggerFor]="menu" mat-icon-button>
           <mat-icon>more_vert</mat-icon>
         </button>
         <mat-menu #menu="matMenu">
@@ -1295,7 +1327,7 @@
             <mat-icon>dialpad</mat-icon>
             <span>Redial</span>
           </button>
-          <button mat-menu-item disabled>
+          <button disabled mat-menu-item>
             <mat-icon>voicemail</mat-icon>
             <span>Check voicemail</span>
           </button>
@@ -1313,13 +1345,13 @@
       <mat-card-content>
         <h2 class="example-h2">Material Dialog</h2>
         <p>Last dialog result: {{ lastDialogResult }}</p>
-        <button mat-raised-button (click)="openDialog()">DIALOG</button>
-        <button mat-raised-button (click)="showSnackbar()">SNACKBAR</button>
+        <button (click)="openDialog()" mat-raised-button>DIALOG</button>
+        <button (click)="showSnackbar()" mat-raised-button>SNACKBAR</button>
       </mat-card-content>
     </mat-card>
     <!-- /Material Dialog-->
     <!-- Material Fab-->
-    <button mat-fab class="demo-fab">
+    <button class="demo-fab" mat-fab>
       <mat-icon aria-label="Example icon-button with a heart icon">favorite</mat-icon>
     </button>
     <!-- /Material Fab-->
