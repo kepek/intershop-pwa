@@ -3,7 +3,6 @@ import { RouterModule, Routes, UrlSerializer } from '@angular/router';
 
 import { AuthGuard } from 'ish-core/guards/auth.guard';
 
-import { ChannelToggleGuard } from '../../cam-configuration/guards/channel-toggle.guard';
 import { SelectedUnitGuard } from '../guards/selected-unit.guard';
 import { CamUrlSerializer } from '../serializers/cam-url-serializer';
 
@@ -11,10 +10,9 @@ const routes: Routes = [
   {
     path: 'air-handling-unit-guide',
     loadChildren: () => import('./camfil-ahu/camfil-ahu-page.module').then(m => m.CamfilAHUPageModule),
-    canActivate: [AuthGuard, ChannelToggleGuard],
+    canActivate: [AuthGuard],
     data: {
       feature: 'camAhu',
-      channelSetting: 'FR',
       breadcrumbData: [{ key: 'camfil.ahu.link' }],
     },
   },
@@ -22,10 +20,9 @@ const routes: Routes = [
     path: 'air-handling-unit-guide/detail',
     loadChildren: () =>
       import('./camfil-ahu-detail/camfil-ahu-page-detail.module').then(m => m.CamfilAHUPageDetailModule),
-    canActivate: [AuthGuard, SelectedUnitGuard, ChannelToggleGuard],
+    canActivate: [AuthGuard, SelectedUnitGuard],
     data: {
       feature: 'camAhu',
-      channelSetting: 'FR',
       breadcrumbData: [{ key: 'camfil.ahu.link', link: '/air-handling-unit-guide' }],
     },
   },
