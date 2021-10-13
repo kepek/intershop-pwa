@@ -104,21 +104,13 @@
       <mat-card>
         <mat-card-content>
           <h2 class="example-h2">Directive Usage</h2>
-          <div *camfilChannelToggle="'FI'">
-            Finland 🥃🥴🇫🇮
-          </div>
-          <div *camfilChannelToggle="'FR'">
-            France 🍷🥴🇫🇷
-            <div *camfilChannelToggle="'showCountryFieldOnAddressForms'">
-            </div>
-            Show Country Field on Address Form.
-          </div>
+          <div *camfilChannelToggle="'FI'">Finland 🥃🥴🇫🇮</div>
+          <div *camfilChannelToggle="'FR'">France 🍷🥴🇫🇷</div>
+          <div *camfilChannelToggle="'showCountryFieldOnAddressForms'">Show Country Field on Address Form.</div>
           <div *camfilChannelToggle="'showAddToCamCardButtonForNonLoggedInUser'">
             Show Add To CamCard button for non-logged-in user.
           </div>
-          <div *camfilChannelToggle="'dummySetting'">
-            Hide, since such setting does not exist.
-          </div>
+          <div *camfilChannelToggle="'dummySetting'">Hide, since such setting does not exist.</div>
         </mat-card-content>
       </mat-card>
     </div>
@@ -1266,9 +1258,8 @@
 
         <section class="example-section">
           <mat-checkbox [(ngModel)]="slider.thumbLabel" class="example-margin" color="primary"
-          >Show thumb label
-          </mat-checkbox
-          >
+            >Show thumb label
+          </mat-checkbox>
         </section>
 
         <section class="example-section">
@@ -1308,9 +1299,8 @@
           (change)="slider.checked = !slider.checked"
           [checked]="slider.checked"
           [disabled]="slider.disabled"
-        >Slide me!
-        </mat-slide-toggle
-        >
+          >Slide me!
+        </mat-slide-toggle>
       </mat-card-content>
     </mat-card>
     <!-- /Material Slider -->

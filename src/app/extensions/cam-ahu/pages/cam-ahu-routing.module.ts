@@ -3,9 +3,9 @@ import { RouterModule, Routes, UrlSerializer } from '@angular/router';
 
 import { AuthGuard } from 'ish-core/guards/auth.guard';
 
+import { ChannelToggleGuard } from '../../cam-configuration/guards/channel-toggle.guard';
 import { SelectedUnitGuard } from '../guards/selected-unit.guard';
 import { CamUrlSerializer } from '../serializers/cam-url-serializer';
-import { ChannelToggleGuard } from '../../cam-configuration/guards/channel-toggle.guard';
 
 const routes: Routes = [
   {
