@@ -2,9 +2,9 @@ import { isPlatformBrowser } from '@angular/common';
 import { HttpErrorResponse, HttpEvent, HttpHandler, HttpRequest, HttpResponse } from '@angular/common/http';
 import { ApplicationRef, Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { Router } from '@angular/router';
-import { Store, select } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 import { isEqual } from 'lodash-es';
-import { Observable, ReplaySubject, Subject, combineLatest, interval, of, race, throwError, timer } from 'rxjs';
+import { combineLatest, interval, Observable, of, race, ReplaySubject, Subject, throwError, timer } from 'rxjs';
 import {
   catchError,
   concatMap,
@@ -167,6 +167,31 @@ export class ApiTokenService {
     );
   }
 
+  removeApiToken() {
+    this.apiToken$.next(undefined);
+  }
+
+  intercept(req: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+    return this.appendAuthentication(req).pipe(
+      concatMap(request =>
+        next.handle(request).pipe(
+          catchError(err => {
+            if (this.isAuthTokenError(err)) {
+              this.invalidateApiToken();
+
+              // retry request without auth token
+              const retryRequest = request.clone({ headers: request.headers.delete(ApiService.TOKEN_HEADER_KEY) });
+              // timer introduced for testability
+              return timer(500).pipe(switchMapTo(next.handle(retryRequest)));
+            }
+            return throwError(err);
+          }),
+          tap(event => this.setTokenFromResponse(event))
+        )
+      )
+    );
+  }
+
   private parseCookie() {
     const cookieContent = this.cookiesService.get('apiToken');
     if (cookieContent) {
@@ -186,11 +211,7 @@ export class ApiTokenService {
     this.apiToken$.next(apiToken);
   }
 
-  removeApiToken() {
-    this.apiToken$.next(undefined);
-  }
-
-  invalidateApiToken() {
+  private invalidateApiToken() {
     const cookie = this.parseCookie();
 
     this.removeApiToken();
@@ -213,9 +234,7 @@ export class ApiTokenService {
         if (apiToken.startsWith('AuthenticationTokenOutdated') || apiToken.startsWith('AuthenticationTokenInvalid')) {
           this.invalidateApiToken();
         } else if (!event.url.endsWith('/configurations')) {
-          this.store.pipe(select(getUserAuthorized), whenTruthy(), take(1)).subscribe(() => {
-            this.setApiToken(apiToken);
-          });
+          this.setApiToken(apiToken);
         }
       }
     }
@@ -229,27 +248,6 @@ export class ApiTokenService {
           : req
       ),
       first()
-    );
-  }
-
-  intercept(req: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    return this.appendAuthentication(req).pipe(
-      concatMap(request =>
-        next.handle(request).pipe(
-          catchError(err => {
-            if (this.isAuthTokenError(err)) {
-              this.invalidateApiToken();
-
-              // retry request without auth token
-              const retryRequest = request.clone({ headers: request.headers.delete(ApiService.TOKEN_HEADER_KEY) });
-              // timer introduced for testability
-              return timer(500).pipe(switchMapTo(next.handle(retryRequest)));
-            }
-            return throwError(err);
-          }),
-          tap(event => this.setTokenFromResponse(event))
-        )
-      )
     );
   }
 }
