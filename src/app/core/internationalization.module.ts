@@ -6,7 +6,7 @@ import localeSv from '@angular/common/locales/sv';
 import { Inject, LOCALE_ID, NgModule } from '@angular/core';
 import { MAT_MOMENT_DATE_FORMATS } from '@angular/material-moment-adapter';
 import { MatDateFormats } from '@angular/material/core';
-import { select, Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { take } from 'rxjs/operators';

@@ -33,6 +33,7 @@ import { CamfilProductVariationSelectComponent } from 'ish-shared/components/pro
 
 import { LazyProductAddToCamCardComponent } from '../../../../extensions/cam-cards/exports/lazy-product-add-to-cam-card/lazy-product-add-to-cam-card.component';
 import { CamCardsFacade } from '../../../../extensions/cam-cards/facades/cam-cards.facade';
+import { ChannelToggleDirective } from '../../../../extensions/cam-configuration/directives/channel-toggle.directive';
 import { LazyProductAddToOrderTemplateComponent } from '../../../../extensions/order-templates/exports/lazy-product-add-to-order-template/lazy-product-add-to-order-template.component';
 import { LazyProductAddToQuoteComponent } from '../../../../extensions/quoting/exports/lazy-product-add-to-quote/lazy-product-add-to-quote.component';
 import { LazyProductAddToWishlistComponent } from '../../../../extensions/wishlists/exports/lazy-product-add-to-wishlist/lazy-product-add-to-wishlist.component';
@@ -72,6 +73,7 @@ describe('Camfil Product Item Simple Component', () => {
         MockComponent(LazyProductAddToOrderTemplateComponent),
         MockComponent(LazyProductAddToQuoteComponent),
         MockComponent(LazyProductAddToWishlistComponent),
+        MockDirective(ChannelToggleDirective),
         MockDirective(FeatureToggleDirective),
         MockPipe(CamfilDimensionPipe),
         MockPipe(CamfilProductAttributeValPipe),
@@ -110,7 +112,6 @@ describe('Camfil Product Item Simple Component', () => {
         "camfil-product-quickview",
         "camfil-product-inventory",
         "camfil-product-quantity",
-        "camfil-lazy-product-add-to-cam-card",
         "camfil-product-add-to-basket",
       ]
     `);
@@ -125,7 +126,6 @@ describe('Camfil Product Item Simple Component', () => {
         "camfil-product-quickview",
         "camfil-product-inventory",
         "camfil-product-quantity",
-        "camfil-lazy-product-add-to-cam-card",
         "camfil-product-add-to-basket",
       ]
     `);

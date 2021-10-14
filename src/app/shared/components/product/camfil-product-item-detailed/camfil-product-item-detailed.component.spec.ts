@@ -33,6 +33,7 @@ import { CamfilProductTitleComponent } from 'ish-shared/components/product/camfi
 import { CamfilProductVariationSelectComponent } from 'ish-shared/components/product/camfil-product-variation-select/camfil-product-variation-select.component';
 
 import { LazyProductAddToCamCardComponent } from '../../../../extensions/cam-cards/exports/lazy-product-add-to-cam-card/lazy-product-add-to-cam-card.component';
+import { ChannelToggleDirective } from '../../../../extensions/cam-configuration/directives/channel-toggle.directive';
 import { LazyProductAddToOrderTemplateComponent } from '../../../../extensions/order-templates/exports/lazy-product-add-to-order-template/lazy-product-add-to-order-template.component';
 import { LazyProductAddToQuoteComponent } from '../../../../extensions/quoting/exports/lazy-product-add-to-quote/lazy-product-add-to-quote.component';
 import { LazyProductAddToWishlistComponent } from '../../../../extensions/wishlists/exports/lazy-product-add-to-wishlist/lazy-product-add-to-wishlist.component';
@@ -69,6 +70,7 @@ describe('Camfil Product Item Detailed Component', () => {
         MockComponent(LazyProductAddToOrderTemplateComponent),
         MockComponent(LazyProductAddToQuoteComponent),
         MockComponent(LazyProductAddToWishlistComponent),
+        MockDirective(ChannelToggleDirective),
         MockDirective(FeatureToggleDirective),
         MockPipe(CamfilDimensionPipe),
         MockPipe(CamfilProductAttributeValPipe),
@@ -116,7 +118,6 @@ describe('Camfil Product Item Detailed Component', () => {
         "camfil-product-attribute",
         "camfil-product-quantity",
         "camfil-product-add-to-basket",
-        "camfil-lazy-product-add-to-cam-card",
       ]
     `);
     expect(findAllCustomElements(element)).toMatchInlineSnapshot(`
@@ -130,7 +131,6 @@ describe('Camfil Product Item Detailed Component', () => {
         "camfil-product-attribute",
         "camfil-product-quantity",
         "camfil-product-add-to-basket",
-        "camfil-lazy-product-add-to-cam-card",
       ]
     `);
   });

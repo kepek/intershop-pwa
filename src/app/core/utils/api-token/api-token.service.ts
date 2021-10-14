@@ -2,9 +2,9 @@ import { isPlatformBrowser } from '@angular/common';
 import { HttpErrorResponse, HttpEvent, HttpHandler, HttpRequest, HttpResponse } from '@angular/common/http';
 import { ApplicationRef, Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { Router } from '@angular/router';
-import { select, Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import { isEqual } from 'lodash-es';
-import { combineLatest, interval, Observable, of, race, ReplaySubject, Subject, throwError, timer } from 'rxjs';
+import { Observable, ReplaySubject, Subject, combineLatest, interval, of, race, throwError, timer } from 'rxjs';
 import {
   catchError,
   concatMap,

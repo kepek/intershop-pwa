@@ -222,11 +222,18 @@ describe('Customer Store', () => {
               sku: "test"
               quantity: 1
               shippingMethod: "STD_GROUND"
-            [Basket Internal] Add Items To Basket from CamCard:
+            [Basket Internal] Add Items To Basket:
               items: [{"sku":"test","quantity":1,"shippingMethod":"STD_GROUND","u...
+            [Basket API] Add Items To Basket Success:
+              info: undefined
+            [Products Internal] Load Product:
+              sku: "test"
             [Basket Internal] Load Basket
-            [Basket API] Load Basket Addresses
-            [Basket API] Add Items To Basket from CamCard Success
+            [Products API] Load Product Success:
+              product: {"name":"test","shortDescription":"test","longDescription":"...
+            [Products Internal] Update Product:
+              sku: "test"
+              changes: {}
           `);
           done();
         }, 1000);

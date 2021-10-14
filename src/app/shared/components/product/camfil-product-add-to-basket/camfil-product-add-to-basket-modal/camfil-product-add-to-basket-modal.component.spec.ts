@@ -29,9 +29,9 @@ import { CamCardModalDetailsComponent } from '../../../../../extensions/cam-card
 import { CreateOrderProductModalComponent } from '../../../../../extensions/cam-cards/shared/add-product-to-cart-modal/create-order-product-modal/create-order-product-modal.component';
 import { OrderFormComponent } from '../../../../../extensions/cam-cards/shared/add-product-to-cart-modal/create-order-product-modal/order-form/order-form.component';
 import { CreateOrderProductSuccessComponent } from '../../../../../extensions/cam-cards/shared/add-product-to-cart-modal/create-order-product-success/create-order-product-success.component';
+import { ConfigurationService } from '../../../../../extensions/cam-configuration/services/configuration/configuration.service';
 
 import { CamfilProductAddToBasketModalComponent } from './camfil-product-add-to-basket-modal.component';
-import { ConfigurationService } from 'src/app/extensions/cam-configuration/services/configuration/configuration.service';
 
 describe('Camfil Product Add To Basket Modal Component', () => {
   let component: CamfilProductAddToBasketModalComponent;
