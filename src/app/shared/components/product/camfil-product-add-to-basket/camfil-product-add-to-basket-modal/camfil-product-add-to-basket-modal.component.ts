@@ -12,7 +12,7 @@ import { ThemePalette } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { take, takeUntil } from 'rxjs/operators';
+import { take, takeUntil, withLatestFrom } from 'rxjs/operators';
 import { ConfigurationService } from 'src/app/extensions/cam-configuration/services/configuration/configuration.service';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
@@ -56,7 +56,6 @@ export class CamfilProductAddToBasketModalComponent implements OnInit, OnDestroy
   @Input() translationKey = 'product.add_to_cart.link';
 
   basket$: Observable<BasketView>;
-  hideAddToCardLightboxForNonLoggedInUser = false;
   @Input() quantity: number;
 
   @Output() resetQuantityValue = new EventEmitter<void>();
@@ -83,9 +82,6 @@ export class CamfilProductAddToBasketModalComponent implements OnInit, OnDestroy
 
   ngOnInit() {
     this.basket$ = this.checkoutFacade.basket$;
-    this.configuration.isEnabled('hideAddToCardLightboxForNonLoggedInUser')?.subscribe(val => {
-      this.hideAddToCardLightboxForNonLoggedInUser = val;
-    });
   }
 
   openModal(modal: AddProductToCartModalComponent) {
@@ -98,17 +94,23 @@ export class CamfilProductAddToBasketModalComponent implements OnInit, OnDestroy
   }
 
   openModalIfLoggedIn(modal: AddProductToCartModalComponent) {
-    this.accountFacade.isLoggedIn$.pipe(take(1), takeUntil(this.destroy$)).subscribe(isLoggedIn => {
-      if (isLoggedIn) {
-        this.quantity >= this.product?.minOrderQuantity ? this.openModal(modal) : this.openErrorModal();
-      } else if (this.hideAddToCardLightboxForNonLoggedInUser) {
-        this.quantity >= this.product?.minOrderQuantity
-          ? this.shoppingFacade.addProductToBasket(this.product.sku, this.quantity)
-          : this.openErrorModal();
-      } else {
-        this.navigateToLogin();
-      }
-    });
+    this.accountFacade.isLoggedIn$
+      .pipe(
+        take(1),
+        withLatestFrom(this.configuration.isEnabled('hideAddToBasketLightboxForNonLoggedInUser')),
+        takeUntil(this.destroy$)
+      )
+      .subscribe(([isLoggedIn, hideAddToBasketLightboxForNonLoggedInUser]) => {
+        if (isLoggedIn) {
+          this.quantity >= this.product?.minOrderQuantity ? this.openModal(modal) : this.openErrorModal();
+        } else if (hideAddToBasketLightboxForNonLoggedInUser) {
+          this.quantity >= this.product?.minOrderQuantity
+            ? this.shoppingFacade.addProductToBasket(this.product.sku, this.quantity)
+            : this.openErrorModal();
+        } else {
+          this.navigateToLogin();
+        }
+      });
   }
 
   openErrorModal() {

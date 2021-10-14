@@ -5,7 +5,7 @@ const camfilConfiguration: ChannelConfiguration = {
   countryCode: 'SE',
   currency: 'EUR',
   icmChannel: 'Camfil-CamfilSE-Site',
-  hideAddToCardLightboxForNonLoggedInUser: false,
+  hideAddToBasketLightboxForNonLoggedInUser: false,
   showCountryFieldOnAddressForms: false,
   showAddToCamCardButtonForNonLoggedInUser: true,
 };
