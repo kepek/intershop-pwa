@@ -14,6 +14,7 @@ export interface ChannelSettings {
   allowInvoicePaymentIfCreditLimitIsNotReached: boolean;
   createDynamicAnonymousAddressForNonLoggedInUser: boolean;
   createDynamicAnonymousBasketForNonLoggedInInUser: boolean;
+  hideAddToCardLightboxForNonLoggedInUser: boolean;
   showAddToCamCardButtonForNonLoggedInUser: boolean;
   showAddToCartButtonForNonLoggedInUser: boolean;
   showAllCamCardsButtonForOrganizationAdmin: boolean;

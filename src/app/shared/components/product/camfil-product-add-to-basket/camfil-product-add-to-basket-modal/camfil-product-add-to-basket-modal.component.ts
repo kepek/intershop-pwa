@@ -56,8 +56,7 @@ export class CamfilProductAddToBasketModalComponent implements OnInit, OnDestroy
   @Input() translationKey = 'product.add_to_cart.link';
 
   basket$: Observable<BasketView>;
-  isFrenchChannel = true;
-
+  hideAddToCardLightboxForNonLoggedInUser = false;
   @Input() quantity: number;
 
   @Output() resetQuantityValue = new EventEmitter<void>();
@@ -84,6 +83,9 @@ export class CamfilProductAddToBasketModalComponent implements OnInit, OnDestroy
 
   ngOnInit() {
     this.basket$ = this.checkoutFacade.basket$;
+    this.configuration.isEnabled('hideAddToCardLightboxForNonLoggedInUser')?.subscribe(val => {
+      this.hideAddToCardLightboxForNonLoggedInUser = val;
+    });
   }
 
   openModal(modal: AddProductToCartModalComponent) {
@@ -99,16 +101,14 @@ export class CamfilProductAddToBasketModalComponent implements OnInit, OnDestroy
     this.accountFacade.isLoggedIn$.pipe(take(1), takeUntil(this.destroy$)).subscribe(isLoggedIn => {
       if (isLoggedIn) {
         this.quantity >= this.product?.minOrderQuantity ? this.openModal(modal) : this.openErrorModal();
-      } else if (this.configuration.isEnabled('FR')) {
-        this.quantity >= this.product?.minOrderQuantity ? this.addToCartForNotLogged() : this.openErrorModal();
+      } else if (this.hideAddToCardLightboxForNonLoggedInUser) {
+        this.quantity >= this.product?.minOrderQuantity
+          ? this.shoppingFacade.addProductToBasket(this.product.sku, this.quantity)
+          : this.openErrorModal();
       } else {
         this.navigateToLogin();
       }
     });
-  }
-
-  addToCartForNotLogged() {
-    this.shoppingFacade.addProductToBasket(this.product.sku, this.quantity);
   }
 
   openErrorModal() {
