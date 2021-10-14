@@ -13,6 +13,7 @@ import {
   mapTo,
   mergeMap,
   reduce,
+  switchMap,
   tap,
   window,
   withLatestFrom,
@@ -88,13 +89,6 @@ const STANDARD_SHIPPING_METHOD = 'STD_GROUND';
 
 @Injectable()
 export class BasketItemsEffects {
-  constructor(
-    private actions$: Actions,
-    private router: Router,
-    private store: Store,
-    private basketService: BasketService
-  ) {}
-
   /**
    * Add a product to the current basket.
    * Triggers the internal AddItemsToBasket action that handles the actual adding of the product to the basket.
@@ -146,7 +140,6 @@ export class BasketItemsEffects {
       )
     )
   );
-
   addProductToBucketWithUrn$ = createEffect(() =>
     this.actions$.pipe(
       ofType(addProductToBucketWithUrn),
@@ -163,7 +156,6 @@ export class BasketItemsEffects {
       ])
     )
   );
-
   addProductToBucket$ = createEffect(() =>
     this.actions$.pipe(
       ofType(addProductToBucket),
@@ -188,7 +180,6 @@ export class BasketItemsEffects {
       })
     )
   );
-
   addProductToBucketWithBasketId$ = createEffect(() =>
     this.actions$.pipe(
       ofType(addProductToBucketWithBasketId),
@@ -217,7 +208,6 @@ export class BasketItemsEffects {
       )
     )
   );
-
   updateBucket$ = createEffect(() =>
     this.actions$.pipe(
       ofType(updateBucket),
@@ -234,25 +224,30 @@ export class BasketItemsEffects {
       )
     )
   );
-
   addItemsToBasket$ = createEffect(() =>
     this.actions$.pipe(
       ofType(addItemsToBasket),
       mapToPayload(),
-      mergeMap(payload =>
-        this.basketService.addItemsToBasket(payload.items).pipe(
-          mergeMap(info => [
-            addItemsToBasketSuccess({ info }),
-            displaySuccessMessage({
-              message: 'camfil.add_items_to_basket.camfil.message.success',
-            }),
-          ]),
-          mapErrorToAction(addItemsToBasketFail)
-        )
-      )
+      withLatestFrom(this.store.pipe(select(getCurrentBasketId))),
+      concatMap(([payload, basketId]) => {
+        if (basketId) {
+          return this.basketService.addItemsToBasket(payload.items).pipe(
+            map(info => addItemsToBasketSuccess({ info })),
+            mapErrorToAction(addItemsToBasketFail)
+          );
+        } else {
+          return this.basketService.createBasket().pipe(
+            switchMap(() =>
+              this.basketService.addItemsToBasket(payload.items).pipe(
+                map(info => addItemsToBasketSuccess({ info })),
+                mapErrorToAction(addItemsToBasketFail)
+              )
+            )
+          );
+        }
+      })
     )
   );
-
   /**
    * Reload products when they are added to basket to update price and inStock information
    */
@@ -263,7 +258,6 @@ export class BasketItemsEffects {
       concatMap(payload => [...payload.items.map(item => loadProduct({ sku: item.sku }))])
     )
   );
-
   /**
    * Update basket items effect.
    * Triggers update item request if item quantity has changed and is greater zero
@@ -299,7 +293,6 @@ export class BasketItemsEffects {
       )
     )
   );
-
   /**
    * Validates the basket after an update item error occurred
    */
@@ -311,7 +304,6 @@ export class BasketItemsEffects {
       mapTo(validateBasket({ scopes: ['Products'] }))
     )
   );
-
   /**
    * Validates the basket after an update item error occurred
    */
@@ -326,7 +318,6 @@ export class BasketItemsEffects {
       ])
     )
   );
-
   /**
    * Delete basket item effect.
    */
@@ -342,7 +333,6 @@ export class BasketItemsEffects {
       )
     )
   );
-
   deleteBasketItemSuccess$ = createEffect(() =>
     this.actions$.pipe(
       ofType(deleteBasketItemSuccess),
@@ -353,7 +343,6 @@ export class BasketItemsEffects {
       )
     )
   );
-
   deleteBucket$ = createEffect(() =>
     this.actions$.pipe(
       ofType(deleteBucket),
@@ -365,7 +354,6 @@ export class BasketItemsEffects {
       )
     )
   );
-
   deleteBucketSuccess$ = createEffect(() =>
     this.actions$.pipe(
       ofType(deleteBucketSuccess),
@@ -376,7 +364,6 @@ export class BasketItemsEffects {
       )
     )
   );
-
   /**
    * Triggers a LoadBasket action after successful interaction with the Basket API.
    */
@@ -388,7 +375,6 @@ export class BasketItemsEffects {
       mapTo(loadBasket())
     )
   );
-
   loadBucket$ = createEffect(() =>
     this.actions$.pipe(
       ofType(loadBuckets),
@@ -400,13 +386,9 @@ export class BasketItemsEffects {
       )
     )
   );
-
   loadBasketAfterBucketChangeSuccess$ = createEffect(() =>
     this.actions$.pipe(ofType(deleteBucketSuccess), mapTo(loadBasket()))
   );
-
-  // CAMFIL
-
   addLineItemAttribute$ = createEffect(() =>
     this.actions$.pipe(
       ofType(addBasketItemAttributes),
@@ -419,6 +401,7 @@ export class BasketItemsEffects {
     )
   );
 
+  // CAMFIL
   updateLineItemAttributtes$ = createEffect(() =>
     this.actions$.pipe(
       ofType(updateBasketItemAttributes),
@@ -430,7 +413,6 @@ export class BasketItemsEffects {
       )
     )
   );
-
   deleteLineItemAttributte$ = createEffect(() =>
     this.actions$.pipe(
       ofType(deleteBasketItemAttributes),
@@ -442,7 +424,6 @@ export class BasketItemsEffects {
       )
     )
   );
-
   addProductsFromCamCard$ = createEffect(() =>
     this.actions$.pipe(
       ofType(addProductsFromCamCard),
@@ -469,7 +450,6 @@ export class BasketItemsEffects {
       )
     )
   );
-
   addProductsToBasketFromCamCard$ = createEffect(() =>
     this.actions$.pipe(
       ofType(addProductsToBasketFromCamCard),
@@ -512,7 +492,6 @@ export class BasketItemsEffects {
       )
     )
   );
-
   updateBucketsQueue$ = createEffect(() =>
     this.actions$.pipe(
       ofType(updateBucketsQueue),
@@ -531,7 +510,6 @@ export class BasketItemsEffects {
       )
     )
   );
-
   addItemsToBasketFromCamCard$ = createEffect(() =>
     this.actions$.pipe(
       ofType(addItemsToBasketFromCamCard),
@@ -566,7 +544,6 @@ export class BasketItemsEffects {
       )
     )
   );
-
   doubleBucketItemsQuantityItems$ = createEffect(() =>
     this.actions$.pipe(
       ofType(doubleBucketItemsQuantity),
@@ -579,4 +556,11 @@ export class BasketItemsEffects {
       )
     )
   );
+
+  constructor(
+    private actions$: Actions,
+    private router: Router,
+    private store: Store,
+    private basketService: BasketService
+  ) {}
 }
