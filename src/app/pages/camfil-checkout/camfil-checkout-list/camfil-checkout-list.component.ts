@@ -58,9 +58,11 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
   @Input() basket: Basket;
   @Input() isConfirmed: boolean;
   @Input() index: number;
+  @Input() isLoggedIn = false;
   currentScrollIndex?: number;
   isOrderOpen = true;
   orderForm: FormGroup;
+  anonymousOrderForm: FormGroup;
   validators = ORDER_HEADER_VALIDATORS;
   selectedDeliveryDate: number;
   firstAvailableDelivery: string;
@@ -86,6 +88,7 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
   hideRecipientButton = false;
   itemSize = 91;
   deviceType$: Observable<DeviceType>;
+
   private destroy$ = new Subject<void>();
   private numberOfVisibleLineItems = 20;
 
@@ -146,63 +149,69 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
   }
 
   ngOnInit(): void {
-    this.calendarExceptions$ = this.checkoutFacade.calendarExceptions$;
+    if (!this.isLoggedIn) {
+      this.initAnonymousForm();
+    } else {
+      this.calendarExceptions$ = this.checkoutFacade.calendarExceptions$;
 
-    this.orderAddress = this.shipToAddress;
-    this.emailRecipients$ = this.checkoutFacade.getBucketEmailRecipients$(this.order?.shipToAddressFull?.id);
+      this.orderAddress = this.shipToAddress;
+      this.emailRecipients$ = this.checkoutFacade.getBucketEmailRecipients$(this.order?.shipToAddressFull?.id);
 
-    this.emailRecipients$?.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(value => {
-      this.emailRecipients = value?.filter(er => er !== '');
-    });
-
-    this.calendarExceptions$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(exceptions => {
-      this.calendarException = exceptions.map((element: { date: string }) => {
-        const date = new Date(element.date);
-        date.setHours(0, 0, 0);
-        return date.getTime();
+      this.emailRecipients$?.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(value => {
+        this.emailRecipients = value?.filter(er => er !== '');
       });
 
-      const deliveryDateControl = this.orderForm?.get('deliveryDate');
+      this.calendarExceptions$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(exceptions => {
+        this.calendarException = exceptions.map((element: { date: string }) => {
+          const date = new Date(element.date);
+          date.setHours(0, 0, 0);
+          return date.getTime();
+        });
 
-      if (deliveryDateControl) {
-        if (!this.calendarException.length) {
-          deliveryDateControl.disable();
-        } else {
-          deliveryDateControl.enable();
+        const deliveryDateControl = this.orderForm?.get('deliveryDate');
+
+        if (deliveryDateControl) {
+          if (!this.calendarException.length) {
+            deliveryDateControl.disable();
+          } else {
+            deliveryDateControl.enable();
+          }
         }
-      }
-    });
-
-    this.focusedCheckoutElement$ = this.checkoutFacade.getFocusedCheckoutElement$;
-
-    this.focusedCheckoutElement$.pipe(takeUntil(this.destroy$)).subscribe((focusedElement: CheckoutFocusedElement) => {
-      if (focusedElement) {
-        this.focusedElement = focusedElement;
-        this.focusedElementId = focusedElement.elementId;
-      }
-    });
-
-    if (this.order) {
-      this.checkoutFacade.basketInvoiceAddress$
-        .pipe(whenTruthy(), takeUntil(this.destroy$))
-        .subscribe(address => (this.basketInvoiceAddress = address));
-      this.initForm();
-      this.checkoutFacade.getCustomersDeliveryTerms$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(terms => {
-        this.deliveryTerm = terms[this.order?.customer?.id];
       });
-      this.handleDeliveryDateIfOutOfDate();
-    }
 
-    this.appFacade.getChannel$?.pipe(takeUntil(this.destroy$)).subscribe(channel => {
-      if (channel === Channel.FI) {
-        this.hideRecipientButton = true;
+      this.focusedCheckoutElement$ = this.checkoutFacade.getFocusedCheckoutElement$;
+
+      this.focusedCheckoutElement$
+        .pipe(takeUntil(this.destroy$))
+        .subscribe((focusedElement: CheckoutFocusedElement) => {
+          if (focusedElement) {
+            this.focusedElement = focusedElement;
+            this.focusedElementId = focusedElement.elementId;
+          }
+        });
+
+      if (this.order) {
+        this.checkoutFacade.basketInvoiceAddress$
+          .pipe(whenTruthy(), takeUntil(this.destroy$))
+          .subscribe(address => (this.basketInvoiceAddress = address));
+        this.initForm();
+        this.checkoutFacade.getCustomersDeliveryTerms$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(terms => {
+          this.deliveryTerm = terms[this.order?.customer?.id];
+        });
+        this.handleDeliveryDateIfOutOfDate();
       }
-    });
 
-    this.deviceType$ = this.appFacade.deviceType$;
-    this.deviceType$?.pipe(takeUntil(this.destroy$)).subscribe(deviceType => {
-      this.itemSize = deviceType === 'mobile' ? 255 : deviceType === 'tablet' ? 155 : 91;
-    });
+      this.appFacade.getChannel$?.pipe(takeUntil(this.destroy$)).subscribe(channel => {
+        if (channel === Channel.FI) {
+          this.hideRecipientButton = true;
+        }
+      });
+
+      this.deviceType$ = this.appFacade.deviceType$;
+      this.deviceType$?.pipe(takeUntil(this.destroy$)).subscribe(deviceType => {
+        this.itemSize = deviceType === 'mobile' ? 255 : deviceType === 'tablet' ? 155 : 91;
+      });
+    }
   }
 
   getBoxLabel(lineItem: LineItem) {
@@ -232,26 +241,29 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
         deliveryDate: this.toDate(this.order.deliveryDate),
       });
     }
-
-    const scroll = this.currentScrollIndex || this.order.currentScrollIndex;
-    setTimeout(() => this.virtualScrollViewport?.scrollToIndex(scroll));
+    if (this.isLoggedIn) {
+      const scroll = this.currentScrollIndex || this.order.currentScrollIndex;
+      setTimeout(() => this.virtualScrollViewport?.scrollToIndex(scroll));
+    }
   }
 
   ngAfterViewInit() {
-    this.handleHeightItemsContainer(this.order?.lineItems);
+    if (this.isLoggedIn) {
+      this.handleHeightItemsContainer(this.order?.lineItems);
 
-    if (this.focusedElementId) {
-      const focusTimeout = setTimeout(() => {
-        const element = document.querySelector(`#${this.focusedElementId}`) as HTMLElement;
-        element?.focus();
-      }, 300);
+      if (this.focusedElementId) {
+        const focusTimeout = setTimeout(() => {
+          const element = document.querySelector(`#${this.focusedElementId}`) as HTMLElement;
+          element?.focus();
+        }, 300);
 
-      clearTimeout(focusTimeout);
+        clearTimeout(focusTimeout);
+      }
+
+      this.virtualScrollViewport?.scrolledIndexChange.pipe(skip(1), takeUntil(this.destroy$)).subscribe(el => {
+        this.currentScrollIndex = el;
+      });
     }
-
-    this.virtualScrollViewport?.scrolledIndexChange.pipe(skip(1), takeUntil(this.destroy$)).subscribe(el => {
-      this.currentScrollIndex = el;
-    });
   }
 
   handleHeightItemsContainer(lineItems: LineItemView[]) {
@@ -307,9 +319,21 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
         [Validators.maxLength(35)],
       ],
     });
-
     this.selectedDeliveryDate = defaultDeliveryDate;
     this.isPartialDelivery = true;
+  }
+
+  initAnonymousForm() {
+    this.anonymousOrderForm = this.fb.group({
+      firstName: ['', [Validators.maxLength(60)]],
+      lastName: ['', [Validators.maxLength(60)]],
+      email: [''],
+      phone: [''],
+      jobTitle: [''],
+      companyName: ['', [Validators.maxLength(60)]],
+      vat: [''],
+      siret: [''],
+    });
   }
 
   onBlurSubmit(field: string) {

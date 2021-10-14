@@ -2,6 +2,7 @@
 import { ChannelConfiguration } from './index';
 
 const camfilConfiguration: ChannelConfiguration = {
+  allowAnonymusUserToNavigateToCheckoutPage: true,
   countryCode: 'FR',
   currency: 'EUR',
   icmChannel: 'Camfil-CamfilFR-Site',

@@ -21,7 +21,13 @@
       <camfil-checkout-validation></camfil-checkout-validation>
     </div>
 
-    <ng-template #noBucket></ng-template>
+    <ng-template #noBucket>
+      <ng-container *ngIf="!isLoggedIn">
+        <ng-container *camfilChannelToggle="'allowAnonymusUserToNavigateToCheckoutPage'">
+          <camfil-checkout-list [isLoggedIn]="false"></camfil-checkout-list>
+        </ng-container>
+      </ng-container>
+    </ng-template>
 
     <div cdkDropListGroup>
       <ng-container *ngIf="emptyBuckets$ | async as emptyBuckets; else noBucket">

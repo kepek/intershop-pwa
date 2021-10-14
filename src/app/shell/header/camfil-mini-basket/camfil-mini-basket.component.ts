@@ -1,12 +1,13 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { take } from 'rxjs/operators';
+import { take, withLatestFrom } from 'rxjs/operators';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { Bucket } from 'ish-core/models/basket/bucket.model';
 import { User } from 'ish-core/models/user/user.model';
+import { ConfigurationService } from 'src/app/extensions/cam-configuration/services/configuration/configuration.service';
 
 @Component({
   selector: 'camfil-mini-basket',
@@ -20,7 +21,12 @@ export class CamfilMiniBasketComponent implements OnInit {
   buckets: Bucket[];
   total = 0;
 
-  constructor(private checkoutFacade: CheckoutFacade, private accountFacade: AccountFacade, private router: Router) {}
+  constructor(
+    private checkoutFacade: CheckoutFacade,
+    private accountFacade: AccountFacade,
+    private router: Router,
+    private configuration: ConfigurationService
+  ) {}
 
   ngOnInit() {
     this.user$ = this.accountFacade.user$;
@@ -32,12 +38,14 @@ export class CamfilMiniBasketComponent implements OnInit {
   }
 
   goToBasket() {
-    this.user$.pipe(take(1)).subscribe(user => {
-      if (user) {
-        this.router.navigate(['/checkout']);
-      } else {
-        this.router.navigate(['/login']);
-      }
-    });
+    this.user$
+      .pipe(take(1), withLatestFrom(this.configuration.isEnabled('allowAnonymusUserToNavigateToCheckoutPage')))
+      .subscribe(([user, allowAnonymusUserToNavigateToCheckoutPage]) => {
+        if (user || allowAnonymusUserToNavigateToCheckoutPage) {
+          this.router.navigate(['/checkout']);
+        } else {
+          this.router.navigate(['/login']);
+        }
+      });
   }
 }

@@ -1,5 +1,5 @@
 <div class="mat-elevation-z2 camfil-checkout-list">
-  <mat-action-row>
+  <mat-action-row *ngIf="isLoggedIn; else anonymousCheckoutList">
     <strong (click)="toggleOrder()" class="d-flex align-items-center">
       <mat-icon [class.arrow_down--expanded]="isOrderOpen" class="arrow_down">arrow_left</mat-icon>
       <ng-container *ngTemplateOutlet="orderHeader"></ng-container>
@@ -39,6 +39,119 @@
       >{{ order?.customer?.customerNo }}, {{ order?.customer?.companyName }}</span
     >
   </div>
+</ng-template>
+
+<ng-template #anonymousCheckoutList>
+  <mat-action-row>
+    <strong (click)="toggleOrder()" class="d-flex align-items-center">
+      <div class="d-inline-flex">
+        <strong>Your Details</strong>
+      </div>
+    </strong>
+  </mat-action-row>
+  <mat-card class="d-flex justify-content-center mb-2 mat-elevation-z clearfix">
+    <form
+      *ngIf="anonymousOrderForm"
+      [formGroup]="anonymousOrderForm"
+      novalidate="novalidate"
+      class="w-100 mt-3 justify-content-around"
+    >
+      <div class="row">
+        <div class="col-6 border-right-light">
+          <div class="mat-form-field__wrapper">
+            <mat-form-field appearance="fill" class="form-field">
+              <mat-label>First Name</mat-label>
+              <input
+                (change)="onBlurSubmit('firstName')"
+                formControlName="firstName"
+                label="camfil.checkout.form.order_mark"
+                matInput
+              />
+            </mat-form-field>
+          </div>
+          <div class="mat-form-field__wrapper">
+            <mat-form-field appearance="fill" class="form-field">
+              <mat-label>Last Name</mat-label>
+              <input
+                (change)="onBlurSubmit('lastName')"
+                formControlName="lastName"
+                label="camfil.checkout.form.order_mark"
+                matInput
+              />
+            </mat-form-field>
+          </div>
+          <div class="mat-form-field__wrapper">
+            <mat-form-field appearance="fill" class="form-field">
+              <mat-label>Email address</mat-label>
+              <input
+                (change)="onBlurSubmit('emailAddress')"
+                formControlName="emailAddress"
+                label="camfil.checkout.form.order_mark"
+                matInput
+              />
+            </mat-form-field>
+          </div>
+          <div class="mat-form-field__wrapper">
+            <mat-form-field appearance="fill" class="form-field">
+              <mat-label>Telephone number</mat-label>
+              <input
+                (change)="onBlurSubmit('phone')"
+                formControlName="phone"
+                label="camfil.checkout.form.order_mark"
+                matInput
+              />
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="mat-form-field__wrapper">
+            <mat-form-field appearance="fill" class="form-field">
+              <mat-label>Job title</mat-label>
+              <input
+                (change)="onBlurSubmit('jobTitle')"
+                formControlName="jobTitle"
+                label="camfil.checkout.form.order_mark"
+                matInput
+              />
+            </mat-form-field>
+          </div>
+          <div class="mat-form-field__wrapper">
+            <mat-form-field appearance="fill" class="form-field">
+              <mat-label>Company Name</mat-label>
+              <input
+                (change)="onBlurSubmit('companyName')"
+                formControlName="companyName"
+                label="camfil.checkout.form.order_mark"
+                matInput
+              />
+            </mat-form-field>
+          </div>
+          <div class="mat-form-field__wrapper">
+            <mat-form-field appearance="fill" class="form-field">
+              <mat-label>VAT Number</mat-label>
+              <input
+                (change)="onBlurSubmit('vat')"
+                formControlName="vat"
+                label="camfil.checkout.form.order_mark"
+                matInput
+              />
+            </mat-form-field>
+          </div>
+          <div class="mat-form-field__wrapper">
+            <mat-form-field appearance="fill" class="form-field">
+              <mat-label>SIRET Number</mat-label>
+              <input
+                (change)="onBlurSubmit('siret')"
+                formControlName="siret"
+                label="camfil.checkout.form.order_mark"
+                matInput
+              />
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+    </form>
+  </mat-card>
 </ng-template>
 
 <ng-template #orderContent>

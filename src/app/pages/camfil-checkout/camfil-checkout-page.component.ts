@@ -9,6 +9,7 @@ import { BasketView } from 'ish-core/models/basket/basket.model';
 import { Bucket } from 'ish-core/models/basket/bucket.model';
 import { Order } from 'ish-core/models/order/order.model';
 import { whenTruthy } from 'ish-core/utils/operators';
+import { AccountFacade } from 'ish-core/facades/account.facade';
 
 import { CamCardsFacade } from '../../extensions/cam-cards/facades/cam-cards.facade';
 
@@ -26,21 +27,25 @@ export class CamfilCheckoutPageComponent implements OnInit, OnDestroy {
   basketLoading$: Observable<boolean>;
   ordersLoading$: Observable<boolean>;
   validationResults$: Observable<BasketValidationResultType>;
-  isConfirmed = false;
-
+  isLoggedIn$: Observable<boolean>;
   createdOrder$: Observable<Order>;
 
-  private isValid = false;
+  isConfirmed = false;
+  isLoggedIn = false;
 
+  private isValid = false;
   private destroy$ = new Subject<void>();
 
   constructor(
+    private accountFacade: AccountFacade,
     private checkoutFacade: CheckoutFacade,
     private shoppingFacade: ShoppingFacade,
     private camCardsFacade: CamCardsFacade
   ) {}
 
   ngOnInit() {
+    this.isLoggedIn$ = this.accountFacade.isLoggedIn$;
+    this.isLoggedIn$.pipe(take(1), takeUntil(this.destroy$)).subscribe(isLoggedIn => (this.isLoggedIn = isLoggedIn));
     this.basket$ = this.checkoutFacade.basket$;
     this.basketLoading$ = this.checkoutFacade.basketLoading$;
     this.buckets$ = this.checkoutFacade.buckets$;
