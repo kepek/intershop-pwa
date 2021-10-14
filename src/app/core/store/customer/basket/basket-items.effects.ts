@@ -28,6 +28,7 @@ import {
 } from 'ish-core/models/line-item-update/line-item-update.helper';
 import { BasketService } from 'ish-core/services/basket/basket.service';
 import { displayErrorMessage, displaySuccessMessage } from 'ish-core/store/core/messages';
+import { getUserAuthorized } from 'ish-core/store/customer/user';
 import { getProductEntities, loadProduct } from 'ish-core/store/shopping/products';
 import { mapErrorToAction, mapToPayload, mapToPayloadProperty } from 'ish-core/utils/operators';
 
@@ -131,11 +132,17 @@ export class BasketItemsEffects {
             );
             return { ...infoToAdd, extensions };
           }),
-          map(info =>
-            Object.values(info.extensions).length
-              ? updateBucketsQueue(info)
-              : addItemsToBasketFromCamCard({ items: info.items })
-          )
+          withLatestFrom(this.store.pipe(select(getUserAuthorized))),
+          mergeMap(([info, authorized]) => {
+            const { items } = info;
+            const hasExtensions = Object.values(info?.extensions)?.length;
+
+            if (authorized) {
+              return [hasExtensions ? updateBucketsQueue(info) : addItemsToBasketFromCamCard({ items: info.items })];
+            } else {
+              return [addItemsToBasket({ items })];
+            }
+          })
         )
       )
     )
