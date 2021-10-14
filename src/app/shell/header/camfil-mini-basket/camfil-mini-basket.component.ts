@@ -2,8 +2,18 @@
 
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
+<<<<<<< HEAD
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { map } from 'rxjs/operators';
+=======
+import { take, withLatestFrom } from 'rxjs/operators';
+
+import { AccountFacade } from 'ish-core/facades/account.facade';
+import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
+import { Bucket } from 'ish-core/models/basket/bucket.model';
+import { User } from 'ish-core/models/user/user.model';
+import { ConfigurationService } from 'src/app/extensions/cam-configuration/services/configuration/configuration.service';
+>>>>>>> 36de7b784 (your detail form for non logged in user)
 
 @Component({
   selector: 'camfil-mini-basket',
