@@ -7,6 +7,7 @@ import { of } from 'rxjs';
 import { instance, mock, when } from 'ts-mockito';
 
 import { FeatureToggleDirective } from 'ish-core/directives/feature-toggle.directive';
+import { AccountFacade } from 'ish-core/facades/account.facade';
 import { PricePipe } from 'ish-core/models/price/price.pipe';
 import { ProductView } from 'ish-core/models/product-view/product-view.model';
 import { CamfilDimensionPipe } from 'ish-core/pipes/camfil-dimension.pipe';
@@ -45,10 +46,11 @@ describe('Camfil Product Item Simple Component', () => {
   let fixture: ComponentFixture<CamfilProductItemSimpleComponent>;
   let element: HTMLElement;
   let camCardFacadeMock: CamCardsFacade;
+  let accountFacadeMock: AccountFacade;
 
   beforeEach(async () => {
     camCardFacadeMock = mock(CamCardsFacade);
-    when(camCardFacadeMock.getAddProductSuccess$).thenReturn(of(true));
+    accountFacadeMock = mock(AccountFacade);
 
     await TestBed.configureTestingModule({
       imports: [ReactiveFormsModule, RouterTestingModule, TranslateModule.forRoot()],
@@ -81,7 +83,10 @@ describe('Camfil Product Item Simple Component', () => {
         MockPipe(PricePipe),
         MockPipe(ProductRoutePipe),
       ],
-      providers: [{ provide: CamCardsFacade, useFactory: () => instance(camCardFacadeMock) }],
+      providers: [
+        { provide: CamCardsFacade, useFactory: () => instance(camCardFacadeMock) },
+        { provide: AccountFacade, useFactory: () => instance(accountFacadeMock) },
+      ],
     }).compileComponents();
   });
 
@@ -90,6 +95,9 @@ describe('Camfil Product Item Simple Component', () => {
     component = fixture.componentInstance;
     element = fixture.nativeElement;
     component.product = { sku: 'sku' } as ProductView;
+
+    when(camCardFacadeMock.getAddProductSuccess$).thenReturn(of(true));
+    when(accountFacadeMock.isLoggedIn$).thenReturn(of(true));
   });
 
   it('should be created', () => {
@@ -111,7 +119,9 @@ describe('Camfil Product Item Simple Component', () => {
         "camfil-product-attribute",
         "camfil-product-quickview",
         "camfil-product-inventory",
+        "camfil-product-price",
         "camfil-product-quantity",
+        "camfil-lazy-product-add-to-cam-card",
         "camfil-product-add-to-basket",
       ]
     `);
@@ -125,7 +135,9 @@ describe('Camfil Product Item Simple Component', () => {
         "camfil-product-attribute",
         "camfil-product-quickview",
         "camfil-product-inventory",
+        "camfil-product-price",
         "camfil-product-quantity",
+        "camfil-lazy-product-add-to-cam-card",
         "camfil-product-add-to-basket",
       ]
     `);
@@ -141,6 +153,7 @@ describe('Camfil Product Item Simple Component', () => {
         "camfil-product-attribute",
         "camfil-product-attribute",
         "camfil-product-quickview",
+        "camfil-product-price",
       ]
     `);
   });

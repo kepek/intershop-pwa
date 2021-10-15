@@ -12,10 +12,8 @@
     (compareToggle)="toggleCompare()"
     (selectVariation)="replaceVariation($event)"
     [isMobileView]="isMobileView"
-    [isLoggedIn]="isLoggedIn$ | async"
     [hideAttributeName]="true"
     [actionTemplate]="actionTemplate"
-    [userPermissions$]="userPermissions$"
     (resetQuantityValue)="resetFormValues($event)"
     [categoryFilterParams]="filterParams"
   ></camfil-product-item-simple>
@@ -32,10 +30,8 @@
     (productToBasket)="addToBasket($event)"
     (compareToggle)="toggleCompare()"
     (selectVariation)="replaceVariation($event)"
-    [isLoggedIn]="isLoggedIn$ | async"
     [hideAttributeName]="hideAttributeName"
     [actionTemplate]="actionTemplate"
-    [userPermissions$]="userPermissions$"
     (resetQuantityValue)="resetFormValues($event)"
     [categoryFilterParams]="filterParams"
   ></camfil-product-item-detailed>

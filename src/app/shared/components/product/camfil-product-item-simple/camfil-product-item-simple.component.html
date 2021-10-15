@@ -48,9 +48,7 @@
             class="d-inline-flex align-items-center"
           ></camfil-product-quickview>
         </div>
-        <ng-container *ngIf="userPermissions$ | async">
-          <camfil-product-price [product]="product"></camfil-product-price>
-        </ng-container>
+        <camfil-product-price [product]="product"></camfil-product-price>
       </div>
     </div>
     <div class="product-actions-container">
@@ -172,7 +170,8 @@
         </div>
       </div>
     </div>
-    <div *ngIf="userPermissions$ | async" class="product-prices-container d-flex flex-column justify-content-between">
+
+    <div class="product-prices-container d-flex flex-column justify-content-between">
       <camfil-product-price [product]="product"></camfil-product-price>
     </div>
 

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 
 import { getCamConfigurationState } from '../store/cam-configuration-store';
+import { getShowPricesForNonLoggedInUser } from '../store/configuration';
 
 // tslint:disable:member-ordering
 @Injectable({ providedIn: 'root' })
@@ -12,4 +13,6 @@ export class CamConfigurationFacade {
    * example for debugging
    */
   camConfigurationState$ = this.store.pipe(select(getCamConfigurationState));
+
+  showPricesForNonLoggedInUser$ = this.store.pipe(select(getShowPricesForNonLoggedInUser));
 }

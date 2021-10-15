@@ -9,10 +9,11 @@ import {
   TemplateRef,
 } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
 import { CamCardsFacade } from 'src/app/extensions/cam-cards/facades/cam-cards.facade';
 
+import { AccountFacade } from 'ish-core/facades/account.facade';
 import { CategoryView } from 'ish-core/models/category-view/category-view.model';
 import { VariationOptionGroup } from 'ish-core/models/product-variation/variation-option-group.model';
 import { VariationSelection } from 'ish-core/models/product-variation/variation-selection.model';
@@ -64,13 +65,12 @@ export class CamfilProductItemBaseComponent implements OnInit, OnDestroy {
   @Output() productToBasket = new EventEmitter<number>();
   @Output() selectVariation = new EventEmitter<{ selection: VariationSelection; changedAttribute?: string }>();
   @Input() isMobileView: boolean;
-  @Input() isLoggedIn: boolean;
   @Input() hideAttributeName?: boolean;
   @Input() actionTemplate?: TemplateRef<unknown>;
-  @Input() userPermissions$: Observable<string[]>;
   @Output() resetQuantityValue = new EventEmitter<FormGroup>();
   @Input() categoryFilterParams?: string;
 
+  isLoggedIn: boolean;
   isMasterProduct = ProductHelper.isMasterProduct;
   updatedQuantity: number;
   productItemForm: FormGroup;
@@ -80,7 +80,7 @@ export class CamfilProductItemBaseComponent implements OnInit, OnDestroy {
   // tslint:disable-next-line: private-destroy-field
   protected destroy$ = new Subject();
 
-  constructor(private camCardsFacade: CamCardsFacade) {}
+  constructor(private camCardsFacade: CamCardsFacade, private accountFacade: AccountFacade) {}
 
   ngOnInit() {
     this.updatedQuantity = this.quantity || 0;
@@ -103,6 +103,9 @@ export class CamfilProductItemBaseComponent implements OnInit, OnDestroy {
       if (value) {
         this.resetFormValues();
       }
+    });
+    this.accountFacade.isLoggedIn$.pipe(takeUntil(this.destroy$)).subscribe(value => {
+      this.isLoggedIn = value;
     });
   }
 

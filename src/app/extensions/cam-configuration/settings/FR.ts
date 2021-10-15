@@ -8,6 +8,7 @@ const camfilConfiguration: ChannelConfiguration = {
   hideAddToBasketLightboxForNonLoggedInUser: true,
   showCountryFieldOnAddressForms: true,
   showAddToCamCardButtonForNonLoggedInUser: false,
+  showPricesForNonLoggedInUser: true,
 };
 
 export default camfilConfiguration;

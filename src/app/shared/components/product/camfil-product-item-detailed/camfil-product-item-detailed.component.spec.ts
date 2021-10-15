@@ -116,6 +116,7 @@ describe('Camfil Product Item Detailed Component', () => {
         "camfil-product-quickview",
         "camfil-product-id",
         "camfil-product-attribute",
+        "camfil-product-price",
         "camfil-product-quantity",
         "camfil-product-add-to-basket",
       ]
@@ -129,6 +130,7 @@ describe('Camfil Product Item Detailed Component', () => {
         "camfil-product-quickview",
         "camfil-product-id",
         "camfil-product-attribute",
+        "camfil-product-price",
         "camfil-product-quantity",
         "camfil-product-add-to-basket",
       ]
@@ -144,6 +146,7 @@ describe('Camfil Product Item Detailed Component', () => {
         "camfil-product-label",
         "camfil-product-quickview",
         "camfil-product-attribute",
+        "camfil-product-price",
       ]
     `);
   });

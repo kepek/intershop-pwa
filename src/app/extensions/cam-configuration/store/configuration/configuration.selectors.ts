@@ -33,3 +33,8 @@ export const getCamfilConfigurationParameter = <T>(path: string) =>
         .split('.')
         .reduce((obj, key) => (obj && obj[key] !== undefined ? obj[key] : undefined), serverConfig as unknown) as T
   );
+
+export const getShowPricesForNonLoggedInUser = createSelector(
+  getConfigurationState,
+  state => state.showPricesForNonLoggedInUser
+);
