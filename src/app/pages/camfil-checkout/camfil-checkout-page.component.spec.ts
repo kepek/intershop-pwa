@@ -2,7 +2,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { Action } from '@ngrx/store';
-import { MockComponent } from 'ng-mocks';
+import { provideMockStore } from '@ngrx/store/testing';
+import { MockComponent, MockDirective } from 'ng-mocks';
 import { Observable, of } from 'rxjs';
 import { instance, mock, when } from 'ts-mockito';
 
@@ -17,6 +18,10 @@ import { CamfilBasketValidationResultsComponent } from 'ish-shared/components/ba
 import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
 
 import { CamCardsFacade } from '../../extensions/cam-cards/facades/cam-cards.facade';
+import { ChannelToggleDirective } from '../../extensions/cam-configuration/directives/channel-toggle.directive';
+import { ConfigurationService } from '../../extensions/cam-configuration/services/configuration/configuration.service';
+import { ChannelConfiguration } from '../../extensions/cam-configuration/settings';
+import { getConfigurationState } from '../../extensions/cam-configuration/store/configuration';
 
 import { CamfilCheckoutHeaderComponent } from './camfil-checkout-header/camfil-checkout-header.component';
 import { CamfilCheckoutListComponent } from './camfil-checkout-list/camfil-checkout-list.component';
@@ -32,7 +37,16 @@ describe('Camfil Checkout Page Component', () => {
   let checkoutFacade: CheckoutFacade;
   let camCardFacadeMock: CamCardsFacade;
   let shoppingFacadeMock: ShoppingFacade;
+  let configurationServiceMock: ConfigurationService;
   let actions$: Observable<Action>;
+
+  const configuration: ChannelConfiguration = {
+    countryCode: 'SE',
+    currency: 'SEK',
+    icmChannel: 'Camfil-CamfilSE-Site',
+    showCountryFieldOnAddressForms: false,
+    showAddToCamCardButtonForNonLoggedInUser: true,
+  };
 
   const camCardDetails = {
     name: 'testing cam cards',
@@ -90,6 +104,11 @@ describe('Camfil Checkout Page Component', () => {
     camCardFacadeMock = mock(CamCardsFacade);
     checkoutFacade = mock(CheckoutFacade);
     shoppingFacadeMock = mock(ShoppingFacade);
+    configurationServiceMock = mock(ConfigurationService);
+
+    TestBed.configureTestingModule({
+      providers: [{ provide: ConfigurationService, useFactory: () => instance(configurationServiceMock) }],
+    });
 
     await TestBed.configureTestingModule({
       declarations: [
@@ -102,6 +121,7 @@ describe('Camfil Checkout Page Component', () => {
         MockComponent(CamfilCheckoutToolbarComponent),
         MockComponent(CamfilCheckoutValidationComponent),
         MockComponent(CamfilLoadingComponent),
+        MockDirective(ChannelToggleDirective),
       ],
       imports: [RouterTestingModule],
       providers: [
@@ -109,7 +129,9 @@ describe('Camfil Checkout Page Component', () => {
         { provide: CamCardsFacade, useFactory: () => instance(camCardFacadeMock) },
         { provide: ShoppingFacade, useFactory: () => instance(shoppingFacadeMock) },
         { provide: AppFacade, useFactory: () => instance(mock(AppFacade)) },
-        { provide: AppFacade, useFactory: () => instance(mock(AppFacade)) },
+        provideMockStore({
+          selectors: [{ selector: getConfigurationState, value: configuration }],
+        }),
         provideMockActions(() => actions$),
       ],
     }).compileComponents();

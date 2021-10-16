@@ -1,13 +1,12 @@
 <div class="quick-cart-link">
-  <button mat-flat-button color="primary" (click)="goToBasket()">
-    <mat-icon svgIcon="cart" class="color-light"></mat-icon>
+  <button color="primary" mat-flat-button routerLink="/checkout">
+    <mat-icon class="color-light" svgIcon="cart"></mat-icon>
     &nbsp;&nbsp;
     <span class="d-none d-lg-none d-md-inline d-xl-inline">
       {{ 'camfil.shopping_cart.ministatus.items.label' | translate }}&nbsp;&nbsp;
     </span>
     <span class="counter">
-      <ng-container *ngIf="buckets$ | async as buckets; else zero">{{ totalProductQuantity(buckets) }}</ng-container>
-      <ng-template #zero>0</ng-template>
+      {{ totalProductQuantity$ | async }}
     </span>
   </button>
 </div>

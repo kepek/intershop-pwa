@@ -1,13 +1,9 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { take, withLatestFrom } from 'rxjs/operators';
+// tslint:disable: ish-ordered-imports ban-specific-imports
 
-import { AccountFacade } from 'ish-core/facades/account.facade';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
-import { Bucket } from 'ish-core/models/basket/bucket.model';
-import { User } from 'ish-core/models/user/user.model';
-import { ConfigurationService } from 'src/app/extensions/cam-configuration/services/configuration/configuration.service';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'camfil-mini-basket',
@@ -16,36 +12,24 @@ import { ConfigurationService } from 'src/app/extensions/cam-configuration/servi
   styleUrls: ['./camfil-mini-basket.scss'],
 })
 export class CamfilMiniBasketComponent implements OnInit {
-  user$: Observable<User>;
-  buckets$: Observable<any[]>;
-  buckets: Bucket[];
-  total = 0;
+  private static DEFAULT_VALUE = 0;
 
-  constructor(
-    private checkoutFacade: CheckoutFacade,
-    private accountFacade: AccountFacade,
-    private router: Router,
-    private configuration: ConfigurationService
-  ) {}
+  totalProductQuantity$: Observable<number>;
+
+  constructor(private checkoutFacade: CheckoutFacade) {}
 
   ngOnInit() {
-    this.user$ = this.accountFacade.user$;
-    this.buckets$ = this.checkoutFacade.buckets$;
-  }
-
-  totalProductQuantity(buckets: Bucket[]) {
-    return buckets?.reduce((a, b) => a + b.lineItems?.reduce((c, d) => c + d.quantity.value, 0), 0);
-  }
-
-  goToBasket() {
-    this.user$
-      .pipe(take(1), withLatestFrom(this.configuration.isEnabled('allowAnonymusUserToNavigateToCheckoutPage')))
-      .subscribe(([user, allowAnonymusUserToNavigateToCheckoutPage]) => {
-        if (user || allowAnonymusUserToNavigateToCheckoutPage) {
-          this.router.navigate(['/checkout']);
-        } else {
-          this.router.navigate(['/login']);
+    this.totalProductQuantity$ = this.checkoutFacade.buckets$.pipe(
+      map(buckets => {
+        if (buckets) {
+          return buckets?.reduce(
+            (a, b) => a + b.lineItems?.reduce((c, d) => c + d.quantity.value, CamfilMiniBasketComponent.DEFAULT_VALUE),
+            CamfilMiniBasketComponent.DEFAULT_VALUE
+          );
         }
-      });
+
+        return CamfilMiniBasketComponent.DEFAULT_VALUE;
+      })
+    );
   }
 }

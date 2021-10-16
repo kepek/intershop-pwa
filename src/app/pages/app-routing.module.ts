@@ -6,6 +6,8 @@ import { IdentityProviderLoginGuard } from 'ish-core/guards/identity-provider-lo
 import { IdentityProviderLogoutGuard } from 'ish-core/guards/identity-provider-logout.guard';
 import { IdentityProviderRegisterGuard } from 'ish-core/guards/identity-provider-register.guard';
 
+import { CheckoutGuard } from '../extensions/cam-configuration/guards/checkout.guard';
+
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'loading', loadChildren: () => import('./loading/loading-page.module').then(m => m.LoadingPageModule) },
@@ -80,8 +82,10 @@ const routes: Routes = [
   {
     path: 'checkout',
     loadChildren: () => import('./checkout/checkout-page.module').then(m => m.CheckoutPageModule),
+    canActivate: [CheckoutGuard],
     data: {
       headerType: 'checkout',
+      breadCrumbData: [],
       meta: {
         title: 'seo.title.checkout',
         robots: 'noindex, nofollow',

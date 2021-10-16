@@ -23,7 +23,7 @@
 
     <ng-template #noBucket>
       <ng-container *ngIf="!isLoggedIn">
-        <ng-container *camfilChannelToggle="'allowAnonymusUserToNavigateToCheckoutPage'">
+        <ng-container *camfilChannelToggle="'guestCheckout'">
           <camfil-checkout-list [isLoggedIn]="false"></camfil-checkout-list>
         </ng-container>
       </ng-container>
