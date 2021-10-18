@@ -1,5 +1,5 @@
-<div class="mat-elevation-z2 camfil-checkout-list" [ngClass]="{ 'mat-elevation-z2': isLoggedIn }">
-  <mat-action-row *ngIf="isLoggedIn; else guestCheckoutForm">
+<div class="mat-elevation-z2 camfil-checkout-list" [ngClass]="{ 'mat-elevation-z2': isLoggedIn } *ngIf="isLoggedIn; else anonymousCheckout">
+  <mat-action-row>
     <strong (click)="toggleOrder()" class="d-flex align-items-center">
       <mat-icon [class.arrow_down--expanded]="isOrderOpen" class="arrow_down">arrow_left</mat-icon>
       <ng-container *ngTemplateOutlet="orderHeader"></ng-container>
@@ -12,23 +12,10 @@
   </mat-accordion>
 </div>
 
-<camfil-modal-add-new-product
-  #addNewProductModal
-  [addToOrder]="true"
-  [order]="order"
-  [shippingMethodId]="basket?.commonShippingMethod?.id"
->
-</camfil-modal-add-new-product>
-
-<camfil-edit-order-modal #editModal [order]="order"></camfil-edit-order-modal>
-
-<camfil-small-cta-modal
-  actionButtonTitle="{{ 'camfil.checkout.create_new_order.temporary_order.ok' | translate }}"
-  actionTitle="{{ modalDeliveryText | translate }}"
-  icon="calendar"
-  onlyAccept="true"
->
-</camfil-small-cta-modal>
+<ng-template #anonymousCheckout>
+  <ng-container *ngTemplateOutlet="anonymousCheckoutHeader"></ng-container>
+  <ng-container *ngTemplateOutlet="anonymousCheckoutList"></ng-container>
+</ng-template>
 
 <ng-template #orderHeader>
   <div class="d-inline-flex">
@@ -39,10 +26,6 @@
       >{{ order?.customer?.customerNo }}, {{ order?.customer?.companyName }}</span
     >
   </div>
-</ng-template>
-
-<ng-template #guestCheckoutForm>
-  <camfil-camfil-guest-form (submit)="submitGuestCheckout($event)"></camfil-camfil-guest-form>
 </ng-template>
 
 <ng-template #orderContent>
@@ -242,57 +225,9 @@
     </div>
   </mat-card>
 
-  <ng-template #bucketListItem let-i="i" let-item="item">
-    <div class="d-flex align-items-center">
-      <span class="d-flex align-items-center justify-content-center line-item-index">
-        {{ i + 1 }}
-      </span>
-      <mat-icon *ngIf="!isConfirmed" cdkDragHandle class="size-24 d-none d-md-block handle" svgIcon="move"></mat-icon>
-      <camfil-checkout-line-item
-        [basketId]="order?.basket"
-        [bucketId]="order?.id"
-        [index]="i + 1"
-        [isConfirmed]="isConfirmed"
-        [isPartialDelivery]="isPartialDelivery"
-        [lineItem]="item"
-        [orderDeliveryDate]="deliveryDate"
-        [deviceType]="deviceType$ | async"
-        (openDeleteModalAction)="changeScrollIndex()"
-        (resizeLineItemOnBlur)="changeViewportHeightOnBlur($event)"
-      ></camfil-checkout-line-item>
-    </div>
-  </ng-template>
-
   <ng-container *ngIf="order">
     <!-- Line Items -->
-    <div
-      (cdkDropListDropped)="drop($event, order)"
-      [cdkDropListData]="order.lineItems"
-      cdkDropList
-      class="bucket_list-container"
-    >
-      <ng-container *ngIf="isConfirmed; else noConfirmed">
-        <div *ngFor="let item of order.lineItems; index as i; trackBy: trackBy">
-          <div class="list-item-row list-item-row-big px-4 py-1 mt-2 line-item-container">
-            <ng-container *ngTemplateOutlet="bucketListItem; context: { item: item, i: i }"></ng-container>
-          </div>
-        </div>
-      </ng-container>
-      <ng-template #noConfirmed>
-        <cdk-virtual-scroll-viewport [itemSize]="itemSize">
-          <div *cdkVirtualFor="let item of order.lineItems; index as i; trackBy: trackBy">
-            <div
-              [cdkDragData]="item"
-              [cdkDragDisabled]="isConfirmed"
-              cdkDrag
-              class="list-item-row list-item-row-big px-4 py-1 mt-2 line-item-container"
-            >
-              <ng-container *ngTemplateOutlet="bucketListItem; context: { item: item, i: i }"></ng-container>
-            </div>
-          </div>
-        </cdk-virtual-scroll-viewport>
-      </ng-template>
-    </div>
+    <ng-container *ngTemplateOutlet="orderList"></ng-container>
 
     <div *ngIf="deliveryTerm" class="bg-light p-2 box-shadow d-flex align-items-center">
       <mat-icon class="size-35 ml-2 mr-4" svgIcon="delivery"></mat-icon>
@@ -328,3 +263,98 @@
     </div>
   </ng-container>
 </ng-template>
+
+<ng-template #anonymousCheckoutHeader>
+  <div class="mat-elevation-z2 camfil-checkout-list">
+    <mat-action-row class="d-flex">
+      <strong>Your Details</strong>
+    </mat-action-row>
+    <mat-card class="d-flex justify-content-center mb-2 mat-elevation-z clearfix">
+      <ng-container *ngTemplateOutlet="guestCheckoutForm"></ng-container>
+    </mat-card>
+  </div>
+</ng-template>
+
+<ng-template #guestCheckoutForm>
+  <camfil-camfil-guest-form (submit)="submitGuestCheckout($event)"></camfil-camfil-guest-form>
+</ng-template>
+
+<ng-template #anonymousCheckoutList>
+  <div *ngIf="order" class="loggedIn">
+    <mat-action-row class="d-flex mt-4">
+      <strong>Your Cart</strong>
+    </mat-action-row>
+    <ng-container *ngTemplateOutlet="orderList"></ng-container>
+  </div>
+</ng-template>
+
+<ng-template #bucketListItem let-i="i" let-item="item">
+  <div class="d-flex align-items-center">
+    <span class="d-flex align-items-center justify-content-center line-item-index">
+      {{ i + 1 }}
+    </span>
+    <mat-icon *ngIf="!isConfirmed" cdkDragHandle class="size-24 d-none d-md-block handle" svgIcon="move"></mat-icon>
+    <camfil-checkout-line-item
+      [basketId]="order?.basket"
+      [bucketId]="order?.id"
+      [index]="i + 1"
+      [isConfirmed]="isConfirmed"
+      [isPartialDelivery]="isPartialDelivery"
+      [lineItem]="item"
+      [orderDeliveryDate]="deliveryDate"
+      [deviceType]="deviceType$ | async"
+      (openDeleteModalAction)="changeScrollIndex()"
+      (resizeLineItemOnBlur)="changeViewportHeightOnBlur($event)"
+    ></camfil-checkout-line-item>
+  </div>
+</ng-template>
+
+<ng-template #orderList>
+  <!-- Line Items -->
+  <div
+    (cdkDropListDropped)="drop($event, order)"
+    [cdkDropListData]="order.lineItems"
+    cdkDropList
+    class="bucket_list-container"
+  >
+    <ng-container *ngIf="isConfirmed; else noConfirmed">
+      <div *ngFor="let item of order.lineItems; index as i; trackBy: trackBy">
+        <div class="list-item-row list-item-row-big px-4 py-1 mt-2 line-item-container">
+          <ng-container *ngTemplateOutlet="bucketListItem; context: { item: item, i: i }"></ng-container>
+        </div>
+      </div>
+    </ng-container>
+    <ng-template #noConfirmed>
+      <cdk-virtual-scroll-viewport [itemSize]="itemSize">
+        <div *cdkVirtualFor="let item of order.lineItems; index as i; trackBy: trackBy">
+          <div
+            [cdkDragData]="item"
+            [cdkDragDisabled]="isConfirmed"
+            cdkDrag
+            class="list-item-row list-item-row-big px-4 py-1 mt-2 line-item-container"
+          >
+            <ng-container *ngTemplateOutlet="bucketListItem; context: { item: item, i: i }"></ng-container>
+          </div>
+        </div>
+      </cdk-virtual-scroll-viewport>
+    </ng-template>
+  </div>
+</ng-template>
+
+<camfil-modal-add-new-product
+  #addNewProductModal
+  [addToOrder]="true"
+  [order]="order"
+  [shippingMethodId]="basket?.commonShippingMethod?.id"
+>
+</camfil-modal-add-new-product>
+
+<camfil-edit-order-modal #editModal [order]="order"></camfil-edit-order-modal>
+
+<camfil-small-cta-modal
+  actionButtonTitle="{{ 'camfil.checkout.create_new_order.temporary_order.ok' | translate }}"
+  actionTitle="{{ modalDeliveryText | translate }}"
+  icon="calendar"
+  onlyAccept="true"
+>
+</camfil-small-cta-modal>

@@ -176,7 +176,6 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
     });
 
     this.focusedCheckoutElement$ = this.checkoutFacade.getFocusedCheckoutElement$;
-
     this.focusedCheckoutElement$.pipe(takeUntil(this.destroy$)).subscribe((focusedElement: CheckoutFocusedElement) => {
       if (focusedElement) {
         this.focusedElement = focusedElement;
@@ -234,29 +233,23 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
         deliveryDate: this.toDate(this.order.deliveryDate),
       });
     }
-    if (this.isLoggedIn) {
-      const scroll = this.currentScrollIndex || this.order.currentScrollIndex;
-      setTimeout(() => this.virtualScrollViewport?.scrollToIndex(scroll));
-    }
+    const scroll = this.currentScrollIndex || this.order.currentScrollIndex;
+    setTimeout(() => this.virtualScrollViewport?.scrollToIndex(scroll));
   }
 
   ngAfterViewInit() {
-    if (this.isLoggedIn) {
-      this.handleHeightItemsContainer(this.order?.lineItems);
+    this.handleHeightItemsContainer(this.order?.lineItems);
+    if (this.focusedElementId) {
+      const focusTimeout = setTimeout(() => {
+        const element = document.querySelector(`#${this.focusedElementId}`) as HTMLElement;
+        element?.focus();
+      }, 300);
 
-      if (this.focusedElementId) {
-        const focusTimeout = setTimeout(() => {
-          const element = document.querySelector(`#${this.focusedElementId}`) as HTMLElement;
-          element?.focus();
-        }, 300);
-
-        clearTimeout(focusTimeout);
-      }
-
-      this.virtualScrollViewport?.scrolledIndexChange.pipe(skip(1), takeUntil(this.destroy$)).subscribe(el => {
-        this.currentScrollIndex = el;
-      });
+      clearTimeout(focusTimeout);
     }
+    this.virtualScrollViewport?.scrolledIndexChange.pipe(skip(1), takeUntil(this.destroy$)).subscribe(el => {
+      this.currentScrollIndex = el;
+    });
   }
 
   handleHeightItemsContainer(lineItems: LineItemView[]) {
