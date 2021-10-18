@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Inject, Input, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { take } from 'rxjs/operators';
+import { Observable, Subject } from 'rxjs';
+import { take, takeUntil } from 'rxjs/operators';
 
 import { PRODUCT_LISTING_ITEMS_PER_PAGE } from 'ish-core/configurations/injection-keys';
 import { AccountFacade } from 'ish-core/facades/account.facade';
@@ -34,8 +34,13 @@ export class CamfilProductListComponent implements OnInit {
   @Input() limit?: number;
   @Input() isInSearchBox = false;
   @Input() searchTerm?: string;
+
   listingLoading$: Observable<boolean>;
+  deviceType$: Observable<DeviceType>;
+
   minForBottomLoading: number;
+
+  private destroy$ = new Subject();
 
   constructor(
     private shoppingFacade: ShoppingFacade,
@@ -44,9 +49,17 @@ export class CamfilProductListComponent implements OnInit {
     private accountFacade: AccountFacade,
     @Inject(PRODUCT_LISTING_ITEMS_PER_PAGE) private itemsPerPage: number
   ) {}
-  deviceType$: Observable<DeviceType>;
+
+  get isSimpleView() {
+    return this.viewType === 'simple';
+  }
+
+  get isDetailedView() {
+    return this.viewType === 'detailed';
+  }
+
   ngOnInit(): void {
-    this.accountFacade.user$.pipe(whenTruthy(), take(1)).subscribe(() => {
+    this.accountFacade.user$.pipe(whenTruthy(), take(1), takeUntil(this.destroy$)).subscribe(() => {
       this.checkoutFacade.loadBuckets();
       this.shoppingFacade.loadBasketAddresses();
     });
@@ -55,14 +68,6 @@ export class CamfilProductListComponent implements OnInit {
     this.deviceType$ = this.appFacade.deviceType$;
 
     this.minForBottomLoading = this.itemsPerPage - 2;
-  }
-
-  get isSimpleView() {
-    return this.viewType === 'simple';
-  }
-
-  get isDetailedView() {
-    return this.viewType === 'detailed';
   }
 
   ifLimit(idx: number) {

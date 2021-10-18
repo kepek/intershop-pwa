@@ -24,6 +24,7 @@ import { Basket } from 'ish-core/models/basket/basket.model';
 import { BasketService } from 'ish-core/services/basket/basket.service';
 import { RouterState } from 'ish-core/store/core/router/router.reducer';
 import { setCheckoutFocusedElement } from 'ish-core/store/core/viewconf/viewconf.actions';
+import { setCreatedOrderId } from 'ish-core/store/customer/orders';
 import {
   createUser,
   getUserAuthorized,
@@ -75,14 +76,6 @@ import { getCurrentBasket, getCurrentBasketId, getCustomersDeliveryTerms } from 
 
 @Injectable()
 export class BasketEffects {
-  constructor(
-    private actions$: Actions,
-    private basketService: BasketService,
-    private apiTokenService: ApiTokenService,
-    private router: Router,
-    private store: Store
-  ) {}
-
   /**
    * The load basket effect.
    */
@@ -99,9 +92,12 @@ export class BasketEffects {
       )
     )
   );
-
-  loadBasketSuccess$ = createEffect(() => this.actions$.pipe(ofType(loadBasketSuccess), map(loadBuckets)));
-
+  loadBasketSuccess$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loadBasketSuccess),
+      mergeMap(() => [loadBuckets(), setCreatedOrderId({ orderId: undefined })])
+    )
+  );
   loadBasketByAPIToken$ = createEffect(() =>
     this.actions$.pipe(
       ofType(loadBasketByAPIToken),
@@ -111,7 +107,6 @@ export class BasketEffects {
       )
     )
   );
-
   /**
    * The load basket eligible shipping methods effect.
    */
@@ -127,7 +122,6 @@ export class BasketEffects {
       )
     )
   );
-
   /**
    * Update basket effect.
    */
@@ -143,7 +137,6 @@ export class BasketEffects {
       )
     )
   );
-
   /**
    * Updates the common shipping method of the basket.
    * Works currently only if the basket has one bucket
@@ -155,7 +148,6 @@ export class BasketEffects {
       map(commonShippingMethod => updateBasket({ update: { commonShippingMethod } }))
     )
   );
-
   /**
    * Updates the order reference of the basket.
    */
@@ -166,7 +158,6 @@ export class BasketEffects {
       map(externalOrderReference => updateBasket({ update: { externalOrderReference } }))
     )
   );
-
   /**
    * Add or update an attribute at the basket.
    */
@@ -183,7 +174,6 @@ export class BasketEffects {
       )
     )
   );
-
   /**
    * Delete an attribute from the basket. If the attribute doesn't exist, ignore it and return with the success action.
    */
@@ -204,7 +194,92 @@ export class BasketEffects {
       )
     )
   );
+  /**
+   * loading and handling merges of the users baskets, when the user logs in
+   */
+  loadOrMergeBasketAfterLogin$ = createEffect(() =>
+    this.actions$.pipe(ofType(loginUserSuccess), map(checkCurrentBasket))
+  );
+  /**
+   * Trigger ResetBasketErrors after the user navigated to another basket/checkout route
+   * Add queryParam error=true to the route to prevent resetting errors.
+   *
+   */
+  routeListenerForResettingBasketErrors$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(routerNavigatedAction),
+      mapToPayloadProperty<RouterNavigatedPayload<RouterState>>('routerState'),
+      filter(
+        (routerState: RouterState) => /^\/(basket|checkout.*)/.test(routerState.url) && !routerState.queryParams?.error
+      ),
+      mapTo(resetBasketErrors())
+    )
+  );
+  /**
+   * Creates a requisition based on the given basket, if approval is required
+   */
+  createRequisition$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(submitBasket),
+      withLatestFrom(this.store.select(getCurrentBasketId)),
+      concatMap(([, basketId]) =>
+        this.basketService.createRequisition(basketId).pipe(
+          tap(() => this.router.navigate(['/checkout/receipt'])),
+          map(submitBasketSuccess),
+          mapErrorToAction(submitBasketFail)
+        )
+      )
+    )
+  );
+  camfilDragLineItem$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(camfilDragLineItem),
+      mapToPayload(),
+      mergeMap(payload =>
+        this.basketService.camfilDragLineItem(payload.basketId, payload.updatedLineItem, payload.targetBucket).pipe(
+          mergeMap(updatedBasket => [camfilDragLineItemSuccess({ updatedBasket }), loadBuckets()]),
+          mapErrorToAction(camfilDragLineItemFail)
+        )
+      )
+    )
+  );
+  loadCustomerDeliveryTerm$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loadCustomerDeliveryTerm),
+      mapToPayload(),
+      withLatestFrom(this.store.select(getCustomersDeliveryTerms)),
+      filter(([{ customerId }, terms]) => !terms[customerId]),
+      concatMap(([{ customerId }]) =>
+        this.basketService.loadCustomerDeliveryTerm(customerId).pipe(
+          mergeMap(term => [loadCustomerDeliveryTermSuccess({ customerId, term })]),
+          mapErrorToAction(loadCustomerDeliveryTermFail)
+        )
+      )
+    )
+  );
+  createBasket$ = createEffect(() => this.actions$.pipe(ofType(createBasket), map(checkCurrentBasket)));
 
+  // CAMFIL
+  getWarehouseCalendar$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(getWarehouseCalendar),
+      mergeMap(() =>
+        this.basketService.getWarehouseCalendar().pipe(
+          map((dates: []) => getWarehouseCalendarSuccess({ dates })),
+          mapErrorToAction(loadBasketFail)
+        )
+      )
+    )
+  );
+  setCheckoutFocusedElement$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(focusedCheckoutElement),
+      debounceTime(300),
+      distinctUntilChanged(),
+      mapToPayload(),
+      map(setCheckoutFocusedElement)
+    )
+  );
   /**
    * dummy effect keeping the anonymous basket with the corresponding apiToken for the basket merge call
    */
@@ -216,14 +291,6 @@ export class BasketEffects {
       ),
     { dispatch: false }
   );
-
-  /**
-   * loading and handling merges of the users baskets, when the user logs in
-   */
-  loadOrMergeBasketAfterLogin$ = createEffect(() =>
-    this.actions$.pipe(ofType(loginUserSuccess), map(checkCurrentBasket))
-  );
-
   checkCurrentBasket$ = createEffect(() =>
     this.actions$.pipe(
       ofType(checkCurrentBasket),
@@ -259,92 +326,13 @@ export class BasketEffects {
     )
   );
 
-  /**
-   * Trigger ResetBasketErrors after the user navigated to another basket/checkout route
-   * Add queryParam error=true to the route to prevent resetting errors.
-   *
-   */
-  routeListenerForResettingBasketErrors$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(routerNavigatedAction),
-      mapToPayloadProperty<RouterNavigatedPayload<RouterState>>('routerState'),
-      filter(
-        (routerState: RouterState) => /^\/(basket|checkout.*)/.test(routerState.url) && !routerState.queryParams?.error
-      ),
-      mapTo(resetBasketErrors())
-    )
-  );
-
-  /**
-   * Creates a requisition based on the given basket, if approval is required
-   */
-  createRequisition$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(submitBasket),
-      withLatestFrom(this.store.select(getCurrentBasketId)),
-      concatMap(([, basketId]) =>
-        this.basketService.createRequisition(basketId).pipe(
-          tap(() => this.router.navigate(['/checkout/receipt'])),
-          map(submitBasketSuccess),
-          mapErrorToAction(submitBasketFail)
-        )
-      )
-    )
-  );
-
-  // CAMFIL
-
-  camfilDragLineItem$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(camfilDragLineItem),
-      mapToPayload(),
-      mergeMap(payload =>
-        this.basketService.camfilDragLineItem(payload.basketId, payload.updatedLineItem, payload.targetBucket).pipe(
-          mergeMap(updatedBasket => [camfilDragLineItemSuccess({ updatedBasket }), loadBuckets()]),
-          mapErrorToAction(camfilDragLineItemFail)
-        )
-      )
-    )
-  );
-
-  loadCustomerDeliveryTerm$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(loadCustomerDeliveryTerm),
-      mapToPayload(),
-      withLatestFrom(this.store.select(getCustomersDeliveryTerms)),
-      filter(([{ customerId }, terms]) => !terms[customerId]),
-      concatMap(([{ customerId }]) =>
-        this.basketService.loadCustomerDeliveryTerm(customerId).pipe(
-          mergeMap(term => [loadCustomerDeliveryTermSuccess({ customerId, term })]),
-          mapErrorToAction(loadCustomerDeliveryTermFail)
-        )
-      )
-    )
-  );
-
-  createBasket$ = createEffect(() => this.actions$.pipe(ofType(createBasket), map(checkCurrentBasket)));
-
-  getWarehouseCalendar$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(getWarehouseCalendar),
-      mergeMap(() =>
-        this.basketService.getWarehouseCalendar().pipe(
-          map((dates: []) => getWarehouseCalendarSuccess({ dates })),
-          mapErrorToAction(loadBasketFail)
-        )
-      )
-    )
-  );
-
-  setCheckoutFocusedElement$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(focusedCheckoutElement),
-      debounceTime(300),
-      distinctUntilChanged(),
-      mapToPayload(),
-      map(setCheckoutFocusedElement)
-    )
-  );
+  constructor(
+    private actions$: Actions,
+    private basketService: BasketService,
+    private apiTokenService: ApiTokenService,
+    private router: Router,
+    private store: Store
+  ) {}
 
   /** check whether a specific custom attribute exists at basket.
    * @param basket

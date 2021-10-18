@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Store, createSelector, select } from '@ngrx/store';
 import { merge } from 'rxjs';
 import { map, switchMap, take, tap } from 'rxjs/operators';
-import { TrackingService } from 'src/app/extensions/tracking/services/tracking.service';
 
 import { Address } from 'ish-core/models/address/address.model';
 import { Attribute } from 'ish-core/models/attribute/attribute.model';
@@ -72,36 +71,23 @@ import {
   updateEmptyBucket,
   validateBasket,
 } from 'ish-core/store/customer/basket';
-import { getOrdersError, getOrdersLoading, getSelectedOrder } from 'ish-core/store/customer/orders';
+import { getCreatedOrder, getOrdersError, getOrdersLoading, getSelectedOrder } from 'ish-core/store/customer/orders';
 import { getLoggedInUser } from 'ish-core/store/customer/user';
 import { getServerConfigParameter } from 'ish-core/store/general/server-config';
 import { whenTruthy } from 'ish-core/utils/operators';
 
+import { TrackingService } from '../../extensions/tracking/services/tracking.service';
+
 // tslint:disable:member-ordering
 @Injectable({ providedIn: 'root' })
 export class CheckoutFacade {
-  constructor(private store: Store, private tracking: TrackingService) {}
-
   checkoutStep$ = this.store.pipe(select(selectRouteData<number>('checkoutStep')));
-
-  start() {
-    this.store.dispatch(startCheckout());
-  }
-
-  continue(targetStep: number) {
-    this.store.dispatch(continueCheckout({ targetStep }));
-  }
-
-  validate(scopes: BasketValidationScopeType[]) {
-    this.store.dispatch(validateBasket({ scopes }));
-  }
-
-  // BASKET
-
   basket$ = this.store.pipe(select(getCurrentBasket));
   basketChange$ = this.store.pipe(select(getBasketLastTimeProductAdded));
   basketError$ = this.store.pipe(select(getBasketError));
   basketInfo$ = this.store.pipe(select(getBasketInfo));
+
+  // BASKET
   basketLoading$ = this.store.pipe(select(getBasketLoading));
   basketValidationResults$ = this.store.pipe(select(getBasketValidationResults));
   basketItemCount$ = this.basket$.pipe(map(basket => (basket && basket.totalProductQuantity) || 0));
@@ -112,83 +98,10 @@ export class CheckoutFacade {
   submittedBasket$ = this.store.pipe(select(getSubmittedBasket));
   calendarExceptions$ = this.store.pipe(select(getCalendarExceptions));
   getFocusedCheckoutElement$ = this.store.pipe(select(getFocusedCheckoutElement));
-
-  getBucketEmailRecipients$(urn: string) {
-    return this.store.pipe(select(getBucketEmailRecipients(urn)));
-  }
-
-  deleteBasketItem(itemId: string) {
-    this.store.dispatch(deleteBasketItem({ itemId }));
-  }
-
-  updateBasketItem(update: LineItemUpdate) {
-    this.store.dispatch(updateBasketItems({ lineItemUpdates: [update] }));
-  }
-
-  updateBasketShippingMethod(shippingId: string) {
-    this.store.dispatch(updateBasketShippingMethod({ shippingId }));
-  }
-
-  updateBasketExternalOrderReference(externalOrderReference: string) {
-    this.store.dispatch(updateBasketExternalOrderReference({ externalOrderReference }));
-  }
-
-  setBasketCustomAttribute(attribute: Attribute): void {
-    this.store.dispatch(setBasketAttribute({ attribute }));
-  }
-
-  deleteBasketCustomAttribute(attributeName: string): void {
-    this.store.dispatch(deleteBasketAttribute({ attributeName }));
-  }
-
-  checkCurrentBasket() {
-    this.store.dispatch(checkCurrentBasket());
-  }
-
-  // ORDERS
-
-  private ordersError$ = this.store.pipe(select(getOrdersError));
-  basketOrOrdersError$ = merge(this.basketError$, this.ordersError$);
+  createdOrder$ = this.store.pipe(select(getCreatedOrder));
   selectedOrder$ = this.store.pipe(select(getSelectedOrder));
   ordersLoading$ = this.store.pipe(select(getOrdersLoading));
-
-  // SHIPPING
-
-  eligibleShippingMethods$() {
-    return this.basket$.pipe(
-      whenTruthy(),
-      take(1),
-      tap(() => this.store.dispatch(loadBasketEligibleShippingMethods())),
-      switchMap(() => this.store.pipe(select(getBasketEligibleShippingMethods)))
-    );
-  }
-
-  // PAYMENT
-
-  eligiblePaymentMethods$() {
-    return this.basket$.pipe(
-      whenTruthy(),
-      take(1),
-      tap(() => this.store.dispatch(loadBasketEligiblePaymentMethods())),
-      switchMap(() => this.store.pipe(select(getBasketEligiblePaymentMethods)))
-    );
-  }
   priceType$ = this.store.pipe(select(getServerConfigParameter<'gross' | 'net'>('pricing.priceType')));
-
-  setBasketPayment(paymentName: string) {
-    this.store.dispatch(setBasketPayment({ id: paymentName }));
-  }
-
-  createBasketPayment(paymentInstrument: PaymentInstrument, saveForLater = false) {
-    this.store.dispatch(createBasketPayment({ paymentInstrument, saveForLater }));
-  }
-
-  deleteBasketPayment(paymentInstrument: PaymentInstrument) {
-    this.store.dispatch(deleteBasketPayment({ paymentInstrument }));
-  }
-
-  // ADDRESSES
-
   basketInvoiceAddress$ = this.store.pipe(select(getBasketInvoiceAddress));
   basketShippingAddress$ = this.store.pipe(select(getBasketShippingAddress));
   basketInvoiceAndShippingAddressEqual$ = this.store.pipe(select(isBasketInvoiceAndShippingAddressEqual));
@@ -207,6 +120,99 @@ export class CheckoutFacade {
       )
     )
   );
+  promotionError$ = this.store.pipe(select(getBasketPromotionError));
+  buckets$ = this.store.pipe(select(getCurrentBuckets));
+  emptyBuckets$ = this.store.pipe(select(getEmptyBuckets));
+  bucketsVolumeDiscounts$ = this.store.pipe(select(getBucketsVolumeDiscounts));
+  getCustomersDeliveryTerms$ = this.store.pipe(select(getCustomersDeliveryTerms));
+
+  // ORDERS
+  private ordersError$ = this.store.pipe(select(getOrdersError));
+  basketOrOrdersError$ = merge(this.basketError$, this.ordersError$);
+
+  constructor(private store: Store, private tracking: TrackingService) {}
+
+  start() {
+    this.store.dispatch(startCheckout());
+  }
+
+  // SHIPPING
+
+  continue(targetStep: number) {
+    this.store.dispatch(continueCheckout({ targetStep }));
+  }
+
+  // PAYMENT
+
+  validate(scopes: BasketValidationScopeType[]) {
+    this.store.dispatch(validateBasket({ scopes }));
+  }
+
+  getBucketEmailRecipients$(urn: string) {
+    return this.store.pipe(select(getBucketEmailRecipients(urn)));
+  }
+
+  deleteBasketItem(itemId: string) {
+    this.store.dispatch(deleteBasketItem({ itemId }));
+  }
+
+  updateBasketItem(update: LineItemUpdate) {
+    this.store.dispatch(updateBasketItems({ lineItemUpdates: [update] }));
+  }
+
+  updateBasketShippingMethod(shippingId: string) {
+    this.store.dispatch(updateBasketShippingMethod({ shippingId }));
+  }
+
+  // ADDRESSES
+
+  updateBasketExternalOrderReference(externalOrderReference: string) {
+    this.store.dispatch(updateBasketExternalOrderReference({ externalOrderReference }));
+  }
+
+  setBasketCustomAttribute(attribute: Attribute): void {
+    this.store.dispatch(setBasketAttribute({ attribute }));
+  }
+
+  deleteBasketCustomAttribute(attributeName: string): void {
+    this.store.dispatch(deleteBasketAttribute({ attributeName }));
+  }
+
+  checkCurrentBasket() {
+    this.store.dispatch(checkCurrentBasket());
+  }
+
+  eligibleShippingMethods$() {
+    return this.basket$.pipe(
+      whenTruthy(),
+      take(1),
+      tap(() => this.store.dispatch(loadBasketEligibleShippingMethods())),
+      switchMap(() => this.store.pipe(select(getBasketEligibleShippingMethods)))
+    );
+  }
+
+  eligiblePaymentMethods$() {
+    return this.basket$.pipe(
+      whenTruthy(),
+      take(1),
+      tap(() => this.store.dispatch(loadBasketEligiblePaymentMethods())),
+      switchMap(() => this.store.pipe(select(getBasketEligiblePaymentMethods)))
+    );
+  }
+
+  setBasketPayment(paymentName: string) {
+    this.store.dispatch(setBasketPayment({ id: paymentName }));
+  }
+
+  createBasketPayment(paymentInstrument: PaymentInstrument, saveForLater = false) {
+    this.store.dispatch(createBasketPayment({ paymentInstrument, saveForLater }));
+  }
+
+  // PROMOTIONS
+
+  deleteBasketPayment(paymentInstrument: PaymentInstrument) {
+    this.store.dispatch(deleteBasketPayment({ paymentInstrument }));
+  }
 
   assignBasketAddress(addressId: string, scope: 'invoice' | 'shipping' | 'any') {
     this.store.dispatch(assignBasketAddress({ addressId, scope }));
@@ -224,13 +230,11 @@ export class CheckoutFacade {
     this.store.dispatch(updateBasketAddress({ address }));
   }
 
+  // TODO: CAMFIL Additions, it should be separated to avoid core modifications;
+
   deleteBasketAddress(addressId: string) {
     this.store.dispatch(deleteBasketShippingAddress({ addressId }));
   }
-
-  // PROMOTIONS
-
-  promotionError$ = this.store.pipe(select(getBasketPromotionError));
 
   addPromotionCodeToBasket(code: string) {
     this.store.dispatch(addPromotionCodeToBasket({ code }));
@@ -243,12 +247,6 @@ export class CheckoutFacade {
   updateConcardisCvcLastUpdated(paymentInstrument: PaymentInstrument) {
     this.store.dispatch(updateConcardisCvcLastUpdated({ paymentInstrument }));
   }
-
-  // TODO: CAMFIL Additions, it should be separated to avoid core modifications;
-
-  buckets$ = this.store.pipe(select(getCurrentBuckets));
-  emptyBuckets$ = this.store.pipe(select(getEmptyBuckets));
-  bucketsVolumeDiscounts$ = this.store.pipe(select(getBucketsVolumeDiscounts));
 
   loadBuckets() {
     this.store.dispatch(loadBuckets());
@@ -289,8 +287,6 @@ export class CheckoutFacade {
   deleteOrder(basketId: string, bucketId: string) {
     this.store.dispatch(deleteBucket({ basketId, bucketId }));
   }
-
-  getCustomersDeliveryTerms$ = this.store.pipe(select(getCustomersDeliveryTerms));
 
   loadCustomerDeliveryTerm(customerId: string) {
     this.store.dispatch(loadCustomerDeliveryTerm({ customerId }));

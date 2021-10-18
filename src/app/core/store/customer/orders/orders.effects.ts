@@ -43,20 +43,12 @@ import {
   selectOrder,
   selectOrderAfterRedirect,
   selectOrderAfterRedirectFail,
+  setCreatedOrderId,
 } from './orders.actions';
 import { getOrder, getSelectedOrder, getSelectedOrderId } from './orders.selectors';
 
 @Injectable()
 export class OrdersEffects {
-  constructor(
-    private actions$: Actions,
-    private orderService: OrderService,
-    private router: Router,
-    @Inject(PLATFORM_ID) private platformId: string,
-    private store: Store,
-    private translateService: TranslateService
-  ) {}
-
   /**
    * Creates an order based on the given basket.
    */
@@ -80,7 +72,6 @@ export class OrdersEffects {
       })
     )
   );
-
   /**
    * After order creation either redirect to a payment provider or show checkout receipt page.
    */
@@ -105,7 +96,6 @@ export class OrdersEffects {
       ),
     { dispatch: false }
   );
-
   rollbackAfterOrderCreation$ = createEffect(() =>
     this.actions$.pipe(
       ofType(createOrderSuccess),
@@ -128,7 +118,6 @@ export class OrdersEffects {
       ])
     )
   );
-
   loadOrders$ = createEffect(() =>
     this.actions$.pipe(
       ofType(loadOrders),
@@ -140,7 +129,6 @@ export class OrdersEffects {
       )
     )
   );
-
   notificationAfterOrderCreation$ = createEffect(() =>
     this.actions$.pipe(
       ofType(createOrderSuccess),
@@ -151,7 +139,6 @@ export class OrdersEffects {
       )
     )
   );
-
   notificationAfterOrderCreationError$ = createEffect(() =>
     this.actions$.pipe(
       ofType(createOrderFail),
@@ -162,7 +149,6 @@ export class OrdersEffects {
       )
     )
   );
-
   loadOrder$ = createEffect(() =>
     this.actions$.pipe(
       ofType(loadOrder),
@@ -175,7 +161,6 @@ export class OrdersEffects {
       )
     )
   );
-
   /**
    * Loads an anonymous user`s order using the given api token and orderId.
    */
@@ -191,7 +176,6 @@ export class OrdersEffects {
       )
     )
   );
-
   /**
    * Selects and loads an order.
    */
@@ -206,7 +190,6 @@ export class OrdersEffects {
       )
     )
   );
-
   /**
    * Triggers a SelectOrder action if route contains orderId parameter ( for order detail page ).
    */
@@ -221,7 +204,6 @@ export class OrdersEffects {
       map(orderId => selectOrder({ orderId }))
     )
   );
-
   /**
    * Returning from redirect after checkout (before customer is logged in).
    * Waits until the customer is logged in and triggers the handleOrderAfterRedirect action afterwards.
@@ -241,7 +223,6 @@ export class OrdersEffects {
       )
     )
   );
-
   /**
    * Returning from redirect after checkout success case (after customer is logged in).
    * Sends success state with payment query params to the server and selects/loads order.
@@ -264,7 +245,6 @@ export class OrdersEffects {
       )
     )
   );
-
   selectOrderAfterRedirectFailed$ = createEffect(() =>
     this.actions$.pipe(
       ofType(selectOrderAfterRedirectFail),
@@ -276,7 +256,6 @@ export class OrdersEffects {
       mapTo(loadBasket())
     )
   );
-
   setOrderBreadcrumb$ = createEffect(() =>
     this.actions$.pipe(
       ofType(routerNavigatedAction),
@@ -297,4 +276,24 @@ export class OrdersEffects {
       )
     )
   );
+  setCreatedOrderIdAfterOrderCreation$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(createOrderSuccess),
+      mapToPayloadProperty('order'),
+      map(order =>
+        setCreatedOrderId({
+          orderId: order.id,
+        })
+      )
+    )
+  );
+
+  constructor(
+    private actions$: Actions,
+    private orderService: OrderService,
+    private router: Router,
+    @Inject(PLATFORM_ID) private platformId: string,
+    private store: Store,
+    private translateService: TranslateService
+  ) {}
 }

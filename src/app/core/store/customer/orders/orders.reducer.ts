@@ -16,6 +16,7 @@ import {
   loadOrdersFail,
   loadOrdersSuccess,
   selectOrder,
+  setCreatedOrderId,
 } from './orders.actions';
 
 export const orderAdapter = createEntityAdapter<Order>({
@@ -24,12 +25,14 @@ export const orderAdapter = createEntityAdapter<Order>({
 
 export interface OrdersState extends EntityState<Order> {
   loading: boolean;
+  created: string;
   selected: string;
   error: HttpError;
 }
 
 export const initialState: OrdersState = orderAdapter.getInitialState({
   loading: false,
+  created: undefined,
   selected: undefined,
   error: undefined,
 });
@@ -43,7 +46,10 @@ export const ordersReducer = createReducer(
     ...state,
     selected: action.payload.orderId,
   })),
-
+  on(setCreatedOrderId, (state: OrdersState, action) => ({
+    ...state,
+    created: action.payload.orderId,
+  })),
   on(createOrderSuccess, loadOrderSuccess, (state: OrdersState, action) => {
     const { order } = action.payload;
 

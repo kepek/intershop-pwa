@@ -1,14 +1,16 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { Observable, ReplaySubject, Subject } from 'rxjs';
 import { distinct, distinctUntilChanged, filter, map, take, takeUntil, takeWhile } from 'rxjs/operators';
-import { CamCardsFacade } from 'src/app/extensions/cam-cards/facades/cam-cards.facade';
 
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { BasketValidationResultType } from 'ish-core/models/basket-validation/basket-validation.model';
 import { BasketView } from 'ish-core/models/basket/basket.model';
 import { Bucket } from 'ish-core/models/basket/bucket.model';
+import { Order } from 'ish-core/models/order/order.model';
 import { whenTruthy } from 'ish-core/utils/operators';
+
+import { CamCardsFacade } from '../../extensions/cam-cards/facades/cam-cards.facade';
 
 @Component({
   templateUrl: './camfil-checkout-page.component.html',
@@ -25,6 +27,8 @@ export class CamfilCheckoutPageComponent implements OnInit, OnDestroy {
   ordersLoading$: Observable<boolean>;
   validationResults$: Observable<BasketValidationResultType>;
   isConfirmed = false;
+
+  createdOrder$: Observable<Order>;
 
   private isValid = false;
 
@@ -43,6 +47,7 @@ export class CamfilCheckoutPageComponent implements OnInit, OnDestroy {
     this.emptyBuckets$ = this.checkoutFacade.emptyBuckets$;
     this.ordersLoading$ = this.checkoutFacade.ordersLoading$;
     this.validationResults$ = this.checkoutFacade.basketValidationResults$;
+    this.createdOrder$ = this.checkoutFacade.createdOrder$;
 
     // because of editOrderForm
     this.camCardsFacade.customers$
@@ -53,6 +58,10 @@ export class CamfilCheckoutPageComponent implements OnInit, OnDestroy {
       .subscribe(() => {
         this.camCardsFacade.loadCustomers();
       });
+
+    this.createdOrder$.pipe(takeUntil(this.destroy$)).subscribe(createdOrder => {
+      this.isConfirmed = !!createdOrder;
+    });
 
     this.initBasket();
   }
@@ -109,7 +118,7 @@ export class CamfilCheckoutPageComponent implements OnInit, OnDestroy {
 
     this.confirmedBuckets$
       .pipe(
-        map(buckets => [...new Set(...buckets.map(bucket => bucket?.customer?.id))]),
+        map(buckets => [...new Set(buckets.map(bucket => bucket?.customer?.id))]),
         distinct(),
         distinctUntilChanged((prev, curr) => JSON.stringify(prev) === JSON.stringify(curr)),
         takeUntil(this.destroy$)
