@@ -20,7 +20,7 @@ import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { AttributeHelper } from 'ish-core/models/attribute/attribute.helper';
 import { BasketExtensions } from 'ish-core/models/basket/basket.interface';
-import { Bucket } from 'ish-core/models/basket/bucket.model';
+import { Bucket, GuestBucketAddress } from 'ish-core/models/basket/bucket.model';
 import { CustomerDeliveryTerm } from 'ish-core/models/customer/customer.interface';
 import { LineItemData } from 'ish-core/models/line-item/line-item.interface';
 import { LineItem, LineItemView } from 'ish-core/models/line-item/line-item.model';
@@ -62,7 +62,6 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
   currentScrollIndex?: number;
   isOrderOpen = true;
   orderForm: FormGroup;
-  anonymousOrderForm: FormGroup;
   validators = ORDER_HEADER_VALIDATORS;
   selectedDeliveryDate: number;
   firstAvailableDelivery: string;
@@ -120,7 +119,7 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
   }
 
   get shipToAddress() {
-    return { ...this.order.shipToAddressFull, countryCode: '' };
+    return { ...this.order?.shipToAddressFull, countryCode: '' };
   }
 
   get freeDelivery() {
@@ -149,69 +148,63 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
   }
 
   ngOnInit(): void {
-    if (!this.isLoggedIn) {
-      this.initAnonymousForm();
-    } else {
-      this.calendarExceptions$ = this.checkoutFacade.calendarExceptions$;
+    this.calendarExceptions$ = this.checkoutFacade.calendarExceptions$;
 
-      this.orderAddress = this.shipToAddress;
-      this.emailRecipients$ = this.checkoutFacade.getBucketEmailRecipients$(this.order?.shipToAddressFull?.id);
+    this.orderAddress = this.shipToAddress;
+    this.emailRecipients$ = this.checkoutFacade.getBucketEmailRecipients$(this.order?.shipToAddressFull?.id);
 
-      this.emailRecipients$?.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(value => {
-        this.emailRecipients = value?.filter(er => er !== '');
+    this.emailRecipients$?.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(value => {
+      this.emailRecipients = value?.filter(er => er !== '');
+    });
+
+    this.calendarExceptions$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(exceptions => {
+      this.calendarException = exceptions.map((element: { date: string }) => {
+        const date = new Date(element.date);
+        date.setHours(0, 0, 0);
+        return date.getTime();
       });
 
-      this.calendarExceptions$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(exceptions => {
-        this.calendarException = exceptions.map((element: { date: string }) => {
-          const date = new Date(element.date);
-          date.setHours(0, 0, 0);
-          return date.getTime();
-        });
+      const deliveryDateControl = this.orderForm?.get('deliveryDate');
 
-        const deliveryDateControl = this.orderForm?.get('deliveryDate');
-
-        if (deliveryDateControl) {
-          if (!this.calendarException.length) {
-            deliveryDateControl.disable();
-          } else {
-            deliveryDateControl.enable();
-          }
+      if (deliveryDateControl) {
+        if (!this.calendarException.length) {
+          deliveryDateControl.disable();
+        } else {
+          deliveryDateControl.enable();
         }
-      });
-
-      this.focusedCheckoutElement$ = this.checkoutFacade.getFocusedCheckoutElement$;
-
-      this.focusedCheckoutElement$
-        .pipe(takeUntil(this.destroy$))
-        .subscribe((focusedElement: CheckoutFocusedElement) => {
-          if (focusedElement) {
-            this.focusedElement = focusedElement;
-            this.focusedElementId = focusedElement.elementId;
-          }
-        });
-
-      if (this.order) {
-        this.checkoutFacade.basketInvoiceAddress$
-          .pipe(whenTruthy(), takeUntil(this.destroy$))
-          .subscribe(address => (this.basketInvoiceAddress = address));
-        this.initForm();
-        this.checkoutFacade.getCustomersDeliveryTerms$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(terms => {
-          this.deliveryTerm = terms[this.order?.customer?.id];
-        });
-        this.handleDeliveryDateIfOutOfDate();
       }
+    });
 
-      this.appFacade.getChannel$?.pipe(takeUntil(this.destroy$)).subscribe(channel => {
-        if (channel === Channel.FI) {
-          this.hideRecipientButton = true;
-        }
-      });
+    this.focusedCheckoutElement$ = this.checkoutFacade.getFocusedCheckoutElement$;
 
-      this.deviceType$ = this.appFacade.deviceType$;
-      this.deviceType$?.pipe(takeUntil(this.destroy$)).subscribe(deviceType => {
-        this.itemSize = deviceType === 'mobile' ? 255 : deviceType === 'tablet' ? 155 : 91;
+    this.focusedCheckoutElement$.pipe(takeUntil(this.destroy$)).subscribe((focusedElement: CheckoutFocusedElement) => {
+      if (focusedElement) {
+        this.focusedElement = focusedElement;
+        this.focusedElementId = focusedElement.elementId;
+      }
+    });
+
+    if (this.order) {
+      this.checkoutFacade.basketInvoiceAddress$
+        .pipe(whenTruthy(), takeUntil(this.destroy$))
+        .subscribe(address => (this.basketInvoiceAddress = address));
+      this.initForm();
+      this.checkoutFacade.getCustomersDeliveryTerms$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(terms => {
+        this.deliveryTerm = terms[this.order?.customer?.id];
       });
+      this.handleDeliveryDateIfOutOfDate();
     }
+
+    this.appFacade.getChannel$?.pipe(takeUntil(this.destroy$)).subscribe(channel => {
+      if (channel === Channel.FI) {
+        this.hideRecipientButton = true;
+      }
+    });
+
+    this.deviceType$ = this.appFacade.deviceType$;
+    this.deviceType$?.pipe(takeUntil(this.destroy$)).subscribe(deviceType => {
+      this.itemSize = deviceType === 'mobile' ? 255 : deviceType === 'tablet' ? 155 : 91;
+    });
   }
 
   getBoxLabel(lineItem: LineItem) {
@@ -323,19 +316,6 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
     this.isPartialDelivery = true;
   }
 
-  initAnonymousForm() {
-    this.anonymousOrderForm = this.fb.group({
-      firstName: ['', [Validators.maxLength(60)]],
-      lastName: ['', [Validators.maxLength(60)]],
-      email: [''],
-      phone: [''],
-      jobTitle: [''],
-      companyName: ['', [Validators.maxLength(60)]],
-      vat: [''],
-      siret: [''],
-    });
-  }
-
   onBlurSubmit(field: string) {
     const formField = this.getField(field);
     if (!formField.errors) {
@@ -348,6 +328,10 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
 
       this.shoppingFacade.updateBucket(basket, deliveryAddressId, updated);
     }
+  }
+
+  submitGuestCheckout(guestBucketAddressData: GuestBucketAddress) {
+    console.log('guestBucketAddressData', guestBucketAddressData);
   }
 
   // tslint:disable-next-line:force-jsdoc-comments

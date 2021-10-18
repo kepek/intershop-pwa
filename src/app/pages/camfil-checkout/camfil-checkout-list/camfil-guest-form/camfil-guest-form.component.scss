@@ -1,0 +1,33 @@
+@import '~src/styles/themes/camfil/variables';
+@import '~src/styles/themes/camfil/colors';
+
+:host {
+  .mat-action-row {
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 $space-default;
+    line-height: $common-height;
+    background-color: rgba($color-corporate, 0.1);
+    border: none;
+
+    &:nth-of-type(2) {
+      margin-top: 24px;
+    }
+  }
+  .form-group-container {
+    padding: 24px 0;
+    .border-right-light {
+      margin-right: 80px;
+      border-right: 1px solid #eaeaea;
+    }
+    .mat-form-field {
+      width: 100%;
+      max-width: 328px;
+
+      &__wrapper {
+        width: 100%;
+        margin-bottom: 20px;
+      }
+    }
+  }
+}

@@ -1,0 +1,295 @@
+<form [formGroup]="guestForm">
+  <mat-action-row>
+    <strong class="d-flex align-items-center">
+      <div class="d-inline-flex">
+        <strong>Your Details</strong>
+      </div>
+    </strong>
+  </mat-action-row>
+  <mat-card class="d-flex justify-content-center mb-2 mat-elevation-z2 clearfix">
+    <div formGroupName="userDetailsFormGroup" class="form-group-container w-100">
+      <div class="row">
+        <div class="col-6 border-right-light">
+          <div class="mat-form-field__wrapper">
+            <mat-form-field appearance="fill" class="form-field">
+              <mat-label>{{ 'camfil.checkout.guest_form.first_name' | translate }}</mat-label>
+              <input
+                (change)="onBlurSubmit('firstName')"
+                formControlName="firstName"
+                label="camfil.checkout.form.order_mark"
+                matInput
+              />
+            </mat-form-field>
+          </div>
+          <div class="mat-form-field__wrapper">
+            <mat-form-field appearance="fill" class="form-field">
+              <mat-label>{{ 'camfil.checkout.guest_form.last_name' | translate }}</mat-label>
+              <input
+                (change)="onBlurSubmit('lastName')"
+                formControlName="lastName"
+                label="camfil.checkout.form.order_mark"
+                matInput
+              />
+            </mat-form-field>
+          </div>
+          <div class="mat-form-field__wrapper">
+            <mat-form-field appearance="fill" class="form-field">
+              <mat-label>{{ 'camfil.checkout.guest_form.email_address' | translate }}</mat-label>
+              <input
+                (change)="onBlurSubmit('email')"
+                formControlName="email"
+                label="camfil.checkout.form.order_mark"
+                matInput
+              />
+            </mat-form-field>
+          </div>
+          <div class="mat-form-field__wrapper">
+            <mat-form-field appearance="fill" class="form-field">
+              <mat-label>{{ 'camfil.checkout.guest_form.telephone_number' | translate }}</mat-label>
+              <input
+                (change)="onBlurSubmit('phone')"
+                formControlName="phone"
+                label="camfil.checkout.form.order_mark"
+                matInput
+              />
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="col-5">
+          <div class="mat-form-field__wrapper">
+            <mat-form-field appearance="fill" class="form-field">
+              <mat-label>{{ 'camfil.checkout.guest_form.job_title' | translate }}</mat-label>
+              <input
+                (change)="onBlurSubmit('jobTitle')"
+                formControlName="jobTitle"
+                label="camfil.checkout.form.order_mark"
+                matInput
+              />
+            </mat-form-field>
+          </div>
+          <div class="mat-form-field__wrapper">
+            <mat-form-field appearance="fill" class="form-field">
+              <mat-label>{{ 'camfil.checkout.guest_form.company_name' | translate }}</mat-label>
+              <input
+                (change)="onBlurSubmit('companyName')"
+                formControlName="companyName"
+                label="camfil.checkout.form.order_mark"
+                matInput
+              />
+            </mat-form-field>
+          </div>
+          <div class="mat-form-field__wrapper">
+            <mat-form-field appearance="fill" class="form-field">
+              <mat-label>{{ 'camfil.checkout.guest_form.vat_number' | translate }}</mat-label>
+              <input
+                (change)="onBlurSubmit('vat')"
+                formControlName="vat"
+                label="camfil.checkout.form.order_mark"
+                matInput
+              />
+            </mat-form-field>
+          </div>
+          <div class="mat-form-field__wrapper">
+            <mat-form-field appearance="fill" class="form-field">
+              <mat-label>{{ 'camfil.checkout.guest_form.siret_number' | translate }}</mat-label>
+              <input
+                (change)="onBlurSubmit('siret')"
+                formControlName="siret"
+                label="camfil.checkout.form.order_mark"
+                matInput
+              />
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-card>
+
+  <mat-action-row>
+    <strong class="d-flex align-items-center">
+      <div class="d-inline-flex">
+        <strong>{{ 'camfil.checkout.guest_form.delivery_info' | translate }}</strong>
+      </div>
+    </strong>
+  </mat-action-row>
+  <mat-card class="d-flex justify-content-center mb-2 mat-elevation-z2 clearfix">
+    <div formGroupName="deliveryInfoFromGroup" class="form-group-container w-100">
+      <div class="row">
+        <div class="col-6 border-right-light">
+          <div class="mat-form-field__wrapper">
+            <mat-form-field appearance="fill" class="form-field">
+              <mat-label>{{ 'camfil.checkout.guest_form.street_address' | translate }}</mat-label>
+              <input
+                (change)="onBlurSubmit('streetAddress')"
+                formControlName="streetAddress"
+                label="camfil.checkout.form.order_mark"
+                matInput
+              />
+            </mat-form-field>
+          </div>
+          <div class="mat-form-field__wrapper">
+            <mat-form-field appearance="fill" class="form-field">
+              <mat-label>{{ 'camfil.checkout.guest_form.zip_code' | translate }}</mat-label>
+              <input
+                (change)="onBlurSubmit('zipCode')"
+                formControlName="zipCode"
+                label="camfil.checkout.form.order_mark"
+                matInput
+              />
+            </mat-form-field>
+          </div>
+          <div class="mat-form-field__wrapper">
+            <mat-form-field appearance="fill" class="form-field">
+              <mat-label>{{ 'camfil.account.apply_form.city' | translate }}</mat-label>
+              <input
+                (change)="onBlurSubmit('city')"
+                formControlName="city"
+                label="camfil.checkout.form.order_mark"
+                matInput
+              />
+            </mat-form-field>
+          </div>
+          <div class="mat-form-field__wrapper">
+            <mat-form-field appearance="fill" class="form-field">
+              <mat-label>{{ 'camfil.account.cam_card.add_to_form.country' | translate }}</mat-label>
+              <input
+                (change)="onBlurSubmit('country')"
+                formControlName="country"
+                label="camfil.checkout.form.order_mark"
+                matInput
+              />
+            </mat-form-field>
+          </div>
+          <mat-checkbox
+            (change)="toggleInvoiceAddressForm()"
+            class="example-margin"
+            color="primary"
+            formControlName="sameAddressAsInvoice"
+          >
+            {{ 'camfil.checkout.guest_form.same_as_invoice_address' | translate }}
+          </mat-checkbox>
+        </div>
+        <div class="col-5">
+          <div class="mat-form-field__wrapper">
+            <mat-form-field appearance="fill" class="form-field">
+              <mat-label>{{ 'camfil.account.orderdetails.goods_mark.label' | translate }}</mat-label>
+              <input
+                (change)="onBlurSubmit('boxLabel')"
+                formControlName="boxLabel"
+                label="camfil.checkout.form.order_mark"
+                matInput
+                [camfilMaxLength]="'OrderMark'"
+              />
+            </mat-form-field>
+          </div>
+          <div class="mat-form-field__wrapper">
+            <mat-form-field appearance="fill" class="form-field">
+              <mat-label>{{ 'camfil.checkout.form.invoice_mark' | translate }}</mat-label>
+              <input
+                (change)="onBlurSubmit('invoiceMark')"
+                formControlName="invoiceMark"
+                label="camfil.checkout.form.order_mark"
+                matInput
+                [camfilMaxLength]="'InvoiceLabel'"
+              />
+            </mat-form-field>
+          </div>
+          <div class="mat-form-field__wrapper">
+            <mat-form-field appearance="fill" class="form-field">
+              <mat-label>{{ 'camfil.checkout.guest_form.delivery_info' | translate }}</mat-label>
+              <textarea
+                (change)="onBlurSubmit('deliveryInfo')"
+                formControlName="deliveryInfo"
+                label="camfil.checkout.form.note"
+                matInput
+              ></textarea>
+            </mat-form-field>
+          </div>
+          <div class="mat-form-field__wrapper">
+            <mat-form-field appearance="fill" class="form-field">
+              <mat-label>{{ 'camfil.checkout.form.note' | translate }}</mat-label>
+              <textarea
+                (change)="onBlurSubmit('customerNote')"
+                formControlName="customerNote"
+                label="camfil.checkout.form.note"
+                matInput
+                [camfilMaxLength]="'CustomerNote'"
+              ></textarea>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-card>
+
+  <ng-container *ngIf="showInvoiceAddressForm">
+    <mat-action-row>
+      <strong class="d-flex align-items-center">
+        <div class="d-inline-flex">
+          <strong>Invoice Address</strong>
+        </div>
+      </strong>
+    </mat-action-row>
+    <mat-card class="d-flex justify-content-center mb-2 mat-elevation-z2 clearfix">
+      <div formGroupName="invoiceAddressFormGroup" class="form-group-container w-100">
+        <div class="row">
+          <div class="col-6">
+            <div class="mat-form-field__wrapper">
+              <mat-form-field appearance="fill" class="form-field">
+                <mat-label>{{ 'camfil.checkout.guest_form.street_address' | translate }}</mat-label>
+                <input
+                  (change)="onBlurSubmit('streetAddress')"
+                  formControlName="streetAddress"
+                  label="camfil.checkout.form.order_mark"
+                  matInput
+                />
+              </mat-form-field>
+            </div>
+            <div class="mat-form-field__wrapper">
+              <mat-form-field appearance="fill" class="form-field">
+                <mat-label>{{ 'camfil.checkout.guest_form.zip_code' | translate }}</mat-label>
+                <input
+                  (change)="onBlurSubmit('zipCode')"
+                  formControlName="zipCode"
+                  label="camfil.checkout.form.order_mark"
+                  matInput
+                />
+              </mat-form-field>
+            </div>
+            <div class="mat-form-field__wrapper">
+              <mat-form-field appearance="fill" class="form-field">
+                <mat-label>{{ 'camfil.account.apply_form.city' | translate }}</mat-label>
+                <input
+                  (change)="onBlurSubmit('city')"
+                  formControlName="city"
+                  label="camfil.checkout.form.order_mark"
+                  matInput
+                />
+              </mat-form-field>
+            </div>
+            <div class="mat-form-field__wrapper">
+              <mat-form-field appearance="fill" class="form-field">
+                <mat-label>{{ 'camfil.account.cam_card.add_to_form.country' | translate }}</mat-label>
+                <input
+                  (change)="onBlurSubmit('country')"
+                  formControlName="country"
+                  label="camfil.checkout.form.order_mark"
+                  matInput
+                />
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-card>
+  </ng-container>
+
+  <!-- TODO: Remove this button and use submit orders from summary component instead -->
+  <button
+    (click)="submitGuestForm()"
+    color="primary"
+    class="mat-focus-indicator mat-flat-button mat-button-base mat-primary ng-star-inserted"
+  >
+    <span class="mat-button-wrapper">Submit</span>
+  </button>
+</form>

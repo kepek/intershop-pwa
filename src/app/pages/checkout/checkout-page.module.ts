@@ -9,6 +9,7 @@ import { CamfilCheckoutHeaderComponent } from '../camfil-checkout/camfil-checkou
 import { CamfilCheckoutLineItemComponent } from '../camfil-checkout/camfil-checkout-line-item/camfil-checkout-line-item.component';
 import { CamfilCheckoutListComponent } from '../camfil-checkout/camfil-checkout-list/camfil-checkout-list.component';
 import { CamfilDeleteOrderComponent } from '../camfil-checkout/camfil-checkout-list/camfil-delete-order/camfil-delete-order.component';
+import { CamfilGuestFormComponent } from '../camfil-checkout/camfil-checkout-list/camfil-guest-form/camfil-guest-form.component';
 import { EditOrderModalComponent } from '../camfil-checkout/camfil-checkout-list/edit-order-modal/edit-order-modal.component';
 import { CamfilCheckoutPageComponent } from '../camfil-checkout/camfil-checkout-page.component';
 import { CamfilCheckoutSummaryComponent } from '../camfil-checkout/camfil-checkout-summary/camfil-checkout-summary.component';
@@ -43,6 +44,7 @@ const checkoutPageRoutes: Routes = [
     CamfilCheckoutToolbarComponent,
     CamfilCheckoutValidationComponent,
     CamfilDeleteOrderComponent,
+    CamfilGuestFormComponent,
     CreateNewCamcardComponent,
     CreateOrderButtonComponent,
     EditOrderModalComponent,
