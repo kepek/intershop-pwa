@@ -29,6 +29,8 @@ export const loadOrderSuccess = createAction('[Orders API] Load Order Success', 
 
 export const selectOrder = createAction('[Orders] Select Order', payload<{ orderId: string }>());
 
+export const setCreatedOrderId = createAction('[Orders] Set Created Order Id', payload<{ orderId: string }>());
+
 export const selectOrderAfterRedirect = createAction(
   '[Orders Internal] Select Order After Checkout Redirect',
   payload<{ params: Params }>()

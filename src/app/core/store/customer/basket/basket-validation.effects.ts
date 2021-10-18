@@ -33,22 +33,6 @@ import { getCurrentBasket } from './basket.selectors';
 
 @Injectable()
 export class BasketValidationEffects {
-  constructor(
-    private actions$: Actions,
-    private store: Store,
-    private router: Router,
-    private basketService: BasketService
-  ) {}
-
-  private validationSteps: { scopes: BasketValidationScopeType[]; route: string }[] = [
-    { scopes: ['Products', 'Value', 'Camfil'], route: '/checkout' },
-    { scopes: ['InvoiceAddress', 'ShippingAddress', 'Addresses'], route: '/checkout' },
-    { scopes: ['Shipping'], route: '/checkout/shipping' },
-    { scopes: ['Payment'], route: '/checkout/payment' },
-    { scopes: ['Products', 'Value', 'Camfil'], route: '/checkout' },
-    { scopes: ['All'], route: 'auto' }, // targetRoute will be calculated in dependence of the validation result
-  ];
-
   /**
    * Jumps to the first checkout step (no basket acceleration)
    */
@@ -60,48 +44,6 @@ export class BasketValidationEffects {
       mapTo(continueCheckout({ targetStep: 1 }))
     )
   );
-
-  /**
-   * Check the basket before starting the basket acceleration
-   */
-  startCheckoutWithAcceleration$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(startCheckout),
-      withLatestFrom(this.store.pipe(select(getServerConfigParameter<boolean>('basket.acceleration')))),
-      filter(([, acc]) => acc),
-      concatMap(() =>
-        this.basketService.validateBasket(this.validationSteps[0].scopes).pipe(
-          map(basketValidation => startCheckoutSuccess({ basketValidation })),
-          mapErrorToAction(startCheckoutFail)
-        )
-      )
-    )
-  );
-
-  /**
-   * Validates the basket and jumps to the next possible checkout step (basket acceleration)
-   */
-  continueCheckoutWithAcceleration$ = createEffect(
-    () =>
-      this.actions$.pipe(
-        ofType(startCheckoutSuccess),
-        mapToPayload(),
-        map(payload => payload.basketValidation.results),
-        filter(results => results.valid && !results.adjusted),
-        concatMap(() =>
-          this.basketService.validateBasket(this.validationSteps[4].scopes).pipe(
-            tap(basketValidation => {
-              if (basketValidation?.results?.valid) {
-                this.router.navigate([this.validationSteps[4].route]);
-              }
-              this.jumpToTargetRoute('auto', basketValidation?.results);
-            })
-          )
-        )
-      ),
-    { dispatch: false }
-  );
-
   /**
    * validates the basket but doesn't change the route
    */
@@ -122,39 +64,9 @@ export class BasketValidationEffects {
       )
     )
   );
-
-  /**
-   * Validates the basket before the user is allowed to jump to the next basket step
-   */
-  validateBasketAndContinueCheckout$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(continueCheckout),
-      mapToPayloadProperty('targetStep'),
-      whenTruthy(),
-      concatMap(targetStep => {
-        const targetRoute = this.validationSteps[targetStep].route;
-
-        return this.basketService.validateBasket(this.validationSteps[targetStep - 1].scopes).pipe(
-          withLatestFrom(this.store.pipe(select(getCurrentBasket))),
-          concatMap(([basketValidation, basket]) =>
-            basketValidation.results.valid
-              ? targetStep === 5 && !basketValidation.results.adjusted
-                ? basket.approval?.approvalRequired
-                  ? [continueCheckoutSuccess({ targetRoute: undefined, basketValidation }), submitBasket()]
-                  : [continueCheckoutSuccess({ targetRoute: undefined, basketValidation }), createOrder()]
-                : [continueCheckoutSuccess({ targetRoute, basketValidation })]
-              : [continueCheckoutWithIssues({ targetRoute, basketValidation })]
-          ),
-          mapErrorToAction(continueCheckoutFail)
-        );
-      })
-    )
-  );
-
   continueCheckoutSuccess$ = createEffect(() =>
     this.actions$.pipe(ofType(continueCheckoutSuccess), mapToPayload(), map(loadBuckets))
   );
-
   /**
    * Jumps to the next checkout step after basket validation. In case of adjustments related data like product data, eligible shipping methods etc. are loaded.
    */
@@ -189,6 +101,87 @@ export class BasketValidationEffects {
       })
     )
   );
+  private validationSteps: { scopes: BasketValidationScopeType[]; route: string }[] = [
+    { scopes: ['Products', 'Value', 'Camfil'], route: '/checkout' },
+    { scopes: ['InvoiceAddress', 'ShippingAddress', 'Addresses'], route: '/checkout' },
+    { scopes: ['Shipping'], route: '/checkout/shipping' },
+    { scopes: ['Payment'], route: '/checkout/payment' },
+    { scopes: ['Products', 'Value', 'Camfil'], route: '/checkout' },
+    { scopes: ['All'], route: 'auto' }, // targetRoute will be calculated in dependence of the validation result
+  ];
+  /**
+   * Check the basket before starting the basket acceleration
+   */
+  startCheckoutWithAcceleration$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(startCheckout),
+      withLatestFrom(this.store.pipe(select(getServerConfigParameter<boolean>('basket.acceleration')))),
+      filter(([, acc]) => acc),
+      concatMap(() =>
+        this.basketService.validateBasket(this.validationSteps[0].scopes).pipe(
+          map(basketValidation => startCheckoutSuccess({ basketValidation })),
+          mapErrorToAction(startCheckoutFail)
+        )
+      )
+    )
+  );
+  /**
+   * Validates the basket and jumps to the next possible checkout step (basket acceleration)
+   */
+  continueCheckoutWithAcceleration$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(startCheckoutSuccess),
+        mapToPayload(),
+        map(payload => payload.basketValidation.results),
+        filter(results => results.valid && !results.adjusted),
+        concatMap(() =>
+          this.basketService.validateBasket(this.validationSteps[4].scopes).pipe(
+            tap(basketValidation => {
+              if (basketValidation?.results?.valid) {
+                this.router.navigate([this.validationSteps[4].route]);
+              }
+              this.jumpToTargetRoute('auto', basketValidation?.results);
+            })
+          )
+        )
+      ),
+    { dispatch: false }
+  );
+  /**
+   * Validates the basket before the user is allowed to jump to the next basket step
+   */
+  validateBasketAndContinueCheckout$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(continueCheckout),
+      mapToPayloadProperty('targetStep'),
+      whenTruthy(),
+      concatMap(targetStep => {
+        const targetRoute = this.validationSteps[targetStep].route;
+
+        return this.basketService.validateBasket(this.validationSteps[targetStep - 1].scopes).pipe(
+          withLatestFrom(this.store.pipe(select(getCurrentBasket))),
+          concatMap(([basketValidation, basket]) =>
+            basketValidation.results.valid
+              ? targetStep === 5 && !basketValidation.results.adjusted
+                ? basket.approval?.approvalRequired
+                  ? [continueCheckoutSuccess({ targetRoute: undefined, basketValidation }), submitBasket()]
+                  : [continueCheckoutSuccess({ targetRoute: undefined, basketValidation }), createOrder()]
+                : [continueCheckoutSuccess({ targetRoute, basketValidation })]
+              : [continueCheckoutWithIssues({ targetRoute, basketValidation })]
+          ),
+          mapErrorToAction(continueCheckoutFail)
+        );
+      })
+    )
+  );
+
+  constructor(
+    private actions$: Actions,
+    private store: Store,
+    private router: Router,
+    private basketService: BasketService
+  ) {}
 
   /**
    * Navigates to the target route, in case targetRoute equals 'auto' the target route will be calculated based on the calculation result

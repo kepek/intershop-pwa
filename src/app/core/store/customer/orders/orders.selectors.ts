@@ -17,6 +17,14 @@ export const getSelectedOrder = createSelector(
   (entities, id): Order => id && entities[id]
 );
 
+export const getCreatedOrderId = createSelector(getOrdersState, state => state.created);
+
+export const getCreatedOrder = createSelector(
+  selectEntities,
+  getCreatedOrderId,
+  (entities, id): Order => id && entities[id]
+);
+
 export const getOrders = selectAll;
 
 export const getOrder = createSelector(

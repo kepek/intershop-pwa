@@ -127,6 +127,7 @@ describe('Camfil Checkout Page Component', () => {
     when(camCardFacadeMock.customers$).thenReturn(of([]));
 
     when(checkoutFacade.buckets$).thenReturn(of([]));
+    when(checkoutFacade.createdOrder$).thenReturn(of(undefined));
     when(checkoutFacade.basketValidationResults$).thenReturn(
       of({
         valid: false,
