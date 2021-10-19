@@ -1,10 +1,6 @@
 <form [formGroup]="guestForm">
-  <mat-action-row>
-    <strong class="d-flex align-items-center">
-      <div class="d-inline-flex">
-        <strong>Your Details</strong>
-      </div>
-    </strong>
+  <mat-action-row class="d-flex">
+    <strong>Your Details</strong>
   </mat-action-row>
   <mat-card class="d-flex justify-content-center mb-2 mat-elevation-z2 clearfix">
     <div formGroupName="userDetailsFormGroup" class="form-group-container w-100">
@@ -65,12 +61,8 @@
     </div>
   </mat-card>
 
-  <mat-action-row>
-    <strong class="d-flex align-items-center">
-      <div class="d-inline-flex">
-        <strong>{{ 'camfil.checkout.guest_form.delivery_info' | translate }}</strong>
-      </div>
-    </strong>
+  <mat-action-row class="d-flex mt-4">
+    <strong>{{ 'camfil.checkout.guest_form.delivery_info' | translate }}</strong>
   </mat-action-row>
   <mat-card class="d-flex justify-content-center mb-2 mat-elevation-z2 clearfix">
     <div formGroupName="deliveryInfoFromGroup" class="form-group-container w-100">
@@ -155,12 +147,8 @@
   </mat-card>
 
   <ng-container *ngIf="showInvoiceAddressForm">
-    <mat-action-row>
-      <strong class="d-flex align-items-center">
-        <div class="d-inline-flex">
-          <strong>Invoice Address</strong>
-        </div>
-      </strong>
+    <mat-action-row class="d-flex mt-4">
+      <strong>Invoice Address</strong>
     </mat-action-row>
     <mat-card class="d-flex justify-content-center mb-2 mat-elevation-z2 clearfix">
       <div formGroupName="invoiceAddressFormGroup" class="form-group-container w-100">

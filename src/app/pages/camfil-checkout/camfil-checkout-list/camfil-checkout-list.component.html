@@ -1,21 +1,18 @@
-<div class="mat-elevation-z2 camfil-checkout-list" [ngClass]="{ 'mat-elevation-z2': isLoggedIn } *ngIf="isLoggedIn; else anonymousCheckout">
-  <mat-action-row>
-    <strong (click)="toggleOrder()" class="d-flex align-items-center">
-      <mat-icon [class.arrow_down--expanded]="isOrderOpen" class="arrow_down">arrow_left</mat-icon>
-      <ng-container *ngTemplateOutlet="orderHeader"></ng-container>
-    </strong>
-  </mat-action-row>
-  <mat-accordion>
-    <mat-expansion-panel [expanded]="isOrderOpen">
-      <ng-container *ngTemplateOutlet="orderContent"></ng-container>
-    </mat-expansion-panel>
-  </mat-accordion>
+<div class="mat-elevation-z2 camfil-checkout-list" [ngClass]="{ 'mat-elevation-z2': isLoggedIn }">
+  <ng-container *ngIf="isLoggedIn; else guestCheckout">
+    <mat-action-row>
+      <strong (click)="toggleOrder()" class="d-flex align-items-center">
+        <mat-icon [class.arrow_down--expanded]="isOrderOpen" class="arrow_down">arrow_left</mat-icon>
+        <ng-container *ngTemplateOutlet="orderHeader"></ng-container>
+      </strong>
+    </mat-action-row>
+    <mat-accordion>
+      <mat-expansion-panel [expanded]="isOrderOpen">
+        <ng-container *ngTemplateOutlet="orderContent"></ng-container>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </ng-container>
 </div>
-
-<ng-template #anonymousCheckout>
-  <ng-container *ngTemplateOutlet="anonymousCheckoutHeader"></ng-container>
-  <ng-container *ngTemplateOutlet="anonymousCheckoutList"></ng-container>
-</ng-template>
 
 <ng-template #orderHeader>
   <div class="d-inline-flex">
@@ -264,30 +261,6 @@
   </ng-container>
 </ng-template>
 
-<ng-template #anonymousCheckoutHeader>
-  <div class="mat-elevation-z2 camfil-checkout-list">
-    <mat-action-row class="d-flex">
-      <strong>Your Details</strong>
-    </mat-action-row>
-    <mat-card class="d-flex justify-content-center mb-2 mat-elevation-z clearfix">
-      <ng-container *ngTemplateOutlet="guestCheckoutForm"></ng-container>
-    </mat-card>
-  </div>
-</ng-template>
-
-<ng-template #guestCheckoutForm>
-  <camfil-camfil-guest-form (submit)="submitGuestCheckout($event)"></camfil-camfil-guest-form>
-</ng-template>
-
-<ng-template #anonymousCheckoutList>
-  <div *ngIf="order" class="loggedIn">
-    <mat-action-row class="d-flex mt-4">
-      <strong>Your Cart</strong>
-    </mat-action-row>
-    <ng-container *ngTemplateOutlet="orderList"></ng-container>
-  </div>
-</ng-template>
-
 <ng-template #bucketListItem let-i="i" let-item="item">
   <div class="d-flex align-items-center">
     <span class="d-flex align-items-center justify-content-center line-item-index">
@@ -338,6 +311,25 @@
         </div>
       </cdk-virtual-scroll-viewport>
     </ng-template>
+  </div>
+</ng-template>
+
+<!-- guest -->
+<ng-template #guestCheckout>
+  <ng-container *ngTemplateOutlet="guestCheckoutForm"></ng-container>
+  <ng-container *ngTemplateOutlet="guestCheckoutList"></ng-container>
+</ng-template>
+
+<ng-template #guestCheckoutForm>
+  <camfil-camfil-guest-form (submit)="submitGuestCheckout($event)"></camfil-camfil-guest-form>
+</ng-template>
+
+<ng-template #guestCheckoutList>
+  <div *ngIf="order" class="loggedIn">
+    <mat-action-row class="d-flex mt-4">
+      <strong>Your Cart</strong>
+    </mat-action-row>
+    <ng-container *ngTemplateOutlet="orderList"></ng-container>
   </div>
 </ng-template>
 

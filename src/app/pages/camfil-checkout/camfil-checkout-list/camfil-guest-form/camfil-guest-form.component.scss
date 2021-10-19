@@ -9,10 +9,6 @@
     line-height: $common-height;
     background-color: rgba($color-corporate, 0.1);
     border: none;
-
-    &:nth-of-type(2) {
-      margin-top: 24px;
-    }
   }
   .form-group-container {
     padding: 24px 0;
