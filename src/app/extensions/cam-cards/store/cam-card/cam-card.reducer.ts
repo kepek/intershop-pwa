@@ -297,7 +297,18 @@ export const camCardReducer = createReducer(
     const oldSub = oldSubs.find(sub => sub.id === camCardId);
     const oldItems = rootCamCard ? [...oldSub.camCardItems] : [...entities[camCardId].camCardItems];
 
-    let items: CamCard[] | CamCardItem[] = oldItems.map(item => (item.id === camCardItem.id ? camCardItem : item));
+    const newCamCardItem = camCardItem?.measurement.hasOwnProperty('valid')
+      ? camCardItem
+      : {
+          ...camCardItem,
+          measurement: {
+            ...camCardItem.measurement,
+            valid: true,
+          },
+        };
+    let items: CamCard[] | CamCardItem[] = oldItems.map(item =>
+      item.id === newCamCardItem.id ? newCamCardItem : item
+    );
 
     if (rootCamCard) {
       const newSub = { ...oldSub, camCardItems: items };

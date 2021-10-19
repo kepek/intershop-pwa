@@ -20,15 +20,23 @@ export class CamCardHelper {
     return camCards.filter(camCard => !camCard.transient);
   }
 
-  static getItems(items: CamCardItem[], onlyAvailable: boolean) {
-    return items?.reduce((acc, item) => (onlyAvailable && !item.product.available ? acc : [...acc, item]), []) || [];
+  static getItems(items: CamCardItem[], onlyAvailable: boolean, validMeasurement: boolean) {
+    return (
+      items
+        ?.filter(item => !onlyAvailable || (onlyAvailable && item.product.available))
+        ?.filter(item => !validMeasurement || (validMeasurement && item.measurement?.valid)) || []
+    );
   }
 
-  static getCamCardItemsIds(camCard: CamCard, onlyAvailable = false) {
+  static getInvalidItems(items: CamCardItem[], prop: 'available' | 'measurement') {
+    return items?.filter(item => (prop === 'available' ? !item.product.available : !item.measurement?.valid)) || [];
+  }
+
+  static getCamCardItemsIds(camCard: CamCard, onlyAvailable = false, validMeasurement = false) {
     return camCard.subCamCards
       ?.reduce(
-        (acc, { camCardItems }) => [...acc, ...CamCardHelper.getItems(camCardItems, onlyAvailable)],
-        CamCardHelper.getItems(camCard.camCardItems, onlyAvailable)
+        (acc, { camCardItems }) => [...acc, ...CamCardHelper.getItems(camCardItems, onlyAvailable, validMeasurement)],
+        CamCardHelper.getItems(camCard.camCardItems, onlyAvailable, validMeasurement)
       )
       .map(({ id }) => id);
   }

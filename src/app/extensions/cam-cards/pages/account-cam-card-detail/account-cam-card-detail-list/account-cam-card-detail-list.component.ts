@@ -167,19 +167,7 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges, OnD
         });
     });
 
-    const fromSubCC =
-      this.camCard.subCamCards?.reduce(({ measurements, notAvailable }, scc) => {
-        const newMes = scc.camCardItems.filter(el => !el.measurement?.valid);
-        const notAv = scc.camCardItems.filter(el => !el.product.available);
-        return {
-          measurements: newMes.length ? [...measurements, ...newMes] : measurements,
-          notAvailable: notAv.length ? [...notAvailable, ...notAv] : notAvailable,
-        };
-      }, this.invalidProducts) || this.invalidProducts;
-    this.invalidProducts = {
-      measurements: [...this.camCard.camCardItems.filter(el => !el.measurement?.valid), ...fromSubCC.measurements],
-      notAvailable: [...this.camCard.camCardItems.filter(el => !el.product.available), ...fromSubCC.notAvailable],
-    };
+    this.calculateInvalidProducts();
   }
 
   ngOnDestroy() {
@@ -215,6 +203,8 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges, OnD
             this.isSubOpen = this.isSubOpen.concat(difference);
           }
         }
+
+        this.calculateInvalidProducts();
       }
 
       this.changeDetectorRefs.detectChanges();
@@ -283,6 +273,25 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges, OnD
       confirmText: `camfil.dynamic.cam_card.${type}.btn`,
       content: `camfil.dynamic.cam_card.${type}.text`,
     };
+  }
+
+  calculateInvalidProducts() {
+    const { camCardItems } = this.camCard;
+    this.invalidProducts =
+      this.camCard.subCamCards?.reduce(
+        ({ measurements, notAvailable }, subCC) => {
+          const newMes = CamCardHelper.getInvalidItems(subCC.camCardItems, 'measurement');
+          const notAv = CamCardHelper.getInvalidItems(subCC.camCardItems, 'available');
+          return {
+            measurements: [...measurements, ...newMes],
+            notAvailable: [...notAvailable, ...notAv],
+          };
+        },
+        {
+          measurements: [...CamCardHelper.getInvalidItems(camCardItems, 'measurement')],
+          notAvailable: [...CamCardHelper.getInvalidItems(camCardItems, 'available')],
+        }
+      ) || this.invalidProducts;
   }
 
   handleSelectedCamCardsOnAddToCart(
