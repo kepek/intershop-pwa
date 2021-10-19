@@ -1,9 +1,10 @@
 import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { BasketExtensions } from 'ish-core/models/basket/basket.interface';
-import { SpecialValidators } from 'ish-shared/forms/validators/special-validators';
 import { Subject } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
+
+import { BasketExtensions } from 'ish-core/models/basket/basket.interface';
+import { SpecialValidators } from 'ish-shared/forms/validators/special-validators';
 
 @Component({
   selector: 'camfil-camfil-guest-form',
@@ -120,8 +121,8 @@ export class CamfilGuestFormComponent implements OnInit, OnDestroy {
           shipToAddress: false,
         };
     this.submit.emit({
-      deliveryAddress: deliveryAddress,
-      invoiceAddress: invoiceAddress,
+      deliveryAddress,
+      invoiceAddress,
       vat: this.guestForm.get(['userDetailsFormGroup', 'vat']).value,
       jobTitle: this.guestForm.get(['userDetailsFormGroup', 'jobTitle']).value,
       siret: this.guestForm.get(['userDetailsFormGroup', 'siret']).value,
