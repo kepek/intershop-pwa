@@ -80,9 +80,15 @@ export interface BasketExtensions {
   invoiceLabel?: string;
   deliveryAddress?: Address;
   shippingAddress?: Address;
+  invoiceAddress?: Address;
   deliveryDate?: string;
   isPartialDelivery?: boolean;
   createdFromCamCardId?: string;
   emailRecipients?: string[];
   volumeDiscount?: number;
+  // Additional for France
+  vat?: string;
+  siret?: string;
+  jobTitle?: string;
+  customerNote?: string;
 }

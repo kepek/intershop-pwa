@@ -61,23 +61,3 @@ export interface EditBucket extends Bucket {
   zipCode?: string;
   area?: string;
 }
-
-export interface GuestBucketAddress {
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone: string;
-  jobTitle?: string;
-  companyName?: string;
-  vat?: string;
-  siret?: string;
-  streetAddress: string;
-  zipCode: string;
-  city: string;
-  country: string;
-  sameAddressAsInvoice: boolean;
-  boxLabel?: string;
-  invoiceMark?: string;
-  deliveryInfo?: string;
-  customerNote?: string;
-}

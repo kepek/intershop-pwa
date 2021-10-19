@@ -20,7 +20,7 @@ import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { AttributeHelper } from 'ish-core/models/attribute/attribute.helper';
 import { BasketExtensions } from 'ish-core/models/basket/basket.interface';
-import { Bucket, GuestBucketAddress } from 'ish-core/models/basket/bucket.model';
+import { Bucket } from 'ish-core/models/basket/bucket.model';
 import { CustomerDeliveryTerm } from 'ish-core/models/customer/customer.interface';
 import { LineItemData } from 'ish-core/models/line-item/line-item.interface';
 import { LineItem, LineItemView } from 'ish-core/models/line-item/line-item.model';
@@ -330,8 +330,15 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
     }
   }
 
-  submitGuestCheckout(guestBucketAddressData: GuestBucketAddress) {
-    console.log('guestBucketAddressData', guestBucketAddressData);
+  submitGuestCheckout(guestBucketAddressData: BasketExtensions) {
+    const { basket, deliveryAddressId } = this.order;
+
+    const updated: BasketExtensions = {
+      ...this.currentBasketExtensions,
+      ...guestBucketAddressData,
+    };
+
+    this.shoppingFacade.updateBucket(basket, deliveryAddressId, updated);
   }
 
   // tslint:disable-next-line:force-jsdoc-comments
