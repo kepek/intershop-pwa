@@ -233,7 +233,7 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
         deliveryDate: this.toDate(this.order.deliveryDate),
       });
     }
-    const scroll = this.currentScrollIndex || this.order.currentScrollIndex;
+    const scroll = this.currentScrollIndex || this.order?.currentScrollIndex;
     setTimeout(() => this.virtualScrollViewport?.scrollToIndex(scroll));
   }
 
@@ -268,13 +268,15 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
   }
 
   calculateLineItemHeight(lineItems: LineItemView[]) {
-    return lineItems
-      .map(li => {
-        if (li.attributes.find(att => att.name === 'boxLabel' && att.value?.toString().length > 28)) {
-          return li;
-        }
-      })
-      .filter(li => li);
+    return (
+      lineItems
+        ?.map(li => {
+          if (li.attributes.find(att => att.name === 'boxLabel' && att.value?.toString().length > 28)) {
+            return li;
+          }
+        })
+        ?.filter(li => li) || []
+    );
   }
 
   changeViewportHeightOnBlur(type: string) {
