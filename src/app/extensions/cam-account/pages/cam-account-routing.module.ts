@@ -11,6 +11,7 @@ const routes: Routes = [
     path: 'account',
     loadChildren: () => import('./account/camfil-account-page.module').then(m => m.CamfilAccountPageModule),
     canActivate: [AuthGuard],
+    canActivateChild: [AuthGuard],
     data: {
       meta: {
         title: 'account.my_account.heading',
