@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { FeatureToggleGuard } from 'ish-core/feature-toggle.module';
 import { AuthGuard } from 'ish-core/guards/auth.guard';
 import { IdentityProviderLoginGuard } from 'ish-core/guards/identity-provider-login.guard';
 import { IdentityProviderLogoutGuard } from 'ish-core/guards/identity-provider-logout.guard';
@@ -41,44 +40,42 @@ const routes: Routes = [
       },
     },
   },
-  {
-    path: 'compare',
-    loadChildren: () => import('./compare/compare-page.module').then(m => m.ComparePageModule),
-    canActivate: [FeatureToggleGuard],
-    data: {
-      feature: 'compare',
-      meta: {
-        title: 'product.compare.link',
-        robots: 'noindex, nofollow',
-      },
-    },
-  },
-  {
-    path: 'recently',
-    loadChildren: () => import('./recently/recently-page.module').then(m => m.RecentlyPageModule),
-    canActivate: [FeatureToggleGuard],
-    data: {
-      feature: 'recently',
-      meta: {
-        title: 'application.recentlyViewed.heading',
-        robots: 'noindex, nofollow',
-      },
-      breadcrumbData: [{ key: 'application.recentlyViewed.breadcrumb.label' }],
-    },
-  },
+  // Not used
+  // {
+  //   path: 'compare',
+  //   loadChildren: () => import('./compare/compare-page.module').then(m => m.ComparePageModule),
+  //   canActivate: [FeatureToggleGuard],
+  //   data: {
+  //     feature: 'compare',
+  //     meta: {
+  //       title: 'product.compare.link',
+  //       robots: 'noindex, nofollow',
+  //     },
+  //   },
+  // },
+  // Not used
+  // {
+  //   path: 'recently',
+  //   loadChildren: () => import('./recently/recently-page.module').then(m => m.RecentlyPageModule),
+  //   canActivate: [FeatureToggleGuard],
+  //   data: {
+  //     feature: 'recently',
+  //     meta: {
+  //       title: 'application.recentlyViewed.heading',
+  //       robots: 'noindex, nofollow',
+  //     },
+  //     breadcrumbData: [{ key: 'application.recentlyViewed.breadcrumb.label' }],
+  //   },
+  // },
   {
     path: 'search',
     loadChildren: () => import('./search/search-page.module').then(m => m.SearchPageModule),
   },
+  // We don't need basket since we have one-step checkout.
   {
     path: 'basket',
-    loadChildren: () => import('./basket/basket-page.module').then(m => m.BasketPageModule),
-    data: {
-      meta: {
-        title: 'shopping_cart.heading',
-        robots: 'noindex, nofollow',
-      },
-    },
+    redirectTo: 'checkout',
+    pathMatch: 'full',
   },
   {
     path: 'checkout',
