@@ -1,8 +1,8 @@
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Observable, of } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { Observable, of, race, timer } from 'rxjs';
+import { mapTo, switchMap } from 'rxjs/operators';
 
 import { AuthGuard } from 'ish-core/guards/auth.guard';
 import { CookiesService } from 'ish-core/utils/cookies/cookies.service';
@@ -30,10 +30,14 @@ export class CheckoutGuard extends AuthGuard implements CanActivate {
   }
 
   private canCheckout(fn: () => {}): Observable<boolean | UrlTree> {
-    return this.configurationService.isEnabled('guestCheckout').pipe(
-      switchMap(guestCheckoutEnabled => {
-        if (guestCheckoutEnabled) {
-          return of(guestCheckoutEnabled);
+    return race(
+      this.configurationService.isEnabled('guestCheckout'),
+      // timeout and forbid visiting page
+      timer(4000).pipe(mapTo(false))
+    ).pipe(
+      switchMap(guestCheckout => {
+        if (guestCheckout) {
+          return of(guestCheckout);
         }
 
         return fn() as Observable<boolean | UrlTree>;
