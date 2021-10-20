@@ -39,6 +39,7 @@ import { CamfilCheckoutLineItemComponent } from '../camfil-checkout-line-item/ca
 
 import { CamfilCheckoutListComponent } from './camfil-checkout-list.component';
 import { CamfilDeleteOrderComponent } from './camfil-delete-order/camfil-delete-order.component';
+import { CamfilGuestFormComponent } from './camfil-guest-form/camfil-guest-form.component';
 import { EditOrderModalComponent } from './edit-order-modal/edit-order-modal.component';
 
 describe('Camfil Checkout List Component', () => {
@@ -65,6 +66,7 @@ describe('Camfil Checkout List Component', () => {
         CamfilContactSortPipe,
         CamfilCounterComponent,
         CamfilDeleteOrderComponent,
+        CamfilGuestFormComponent,
         CamfilMaxLengthAttributeCreateDirective,
         CamfilProductQuantityComponent,
         CamfilSmallCtaModalComponent,

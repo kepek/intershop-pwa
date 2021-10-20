@@ -15,8 +15,6 @@ import { whenTruthy } from 'ish-core/utils/operators';
 
 import { CamCardsFacade } from '../../extensions/cam-cards/facades/cam-cards.facade';
 
-import { CamCardsFacade } from '../../extensions/cam-cards/facades/cam-cards.facade';
-
 @Component({
   templateUrl: './camfil-checkout-page.component.html',
   styleUrls: ['./camfil-checkout-page.component.scss'],
