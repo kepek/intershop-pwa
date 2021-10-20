@@ -231,9 +231,12 @@ describe('Customer Store', () => {
             [Basket Internal] Load Basket
             [Products API] Load Product Success:
               product: {"name":"test","shortDescription":"test","longDescription":"...
+            [Basket API] Load Basket Success:
+              basket: {"id":"test","lineItems":[1]}
             [Products Internal] Update Product:
               sku: "test"
               changes: {}
+            [Basket] Load Buckets
           `);
           done();
         }, 1000);
