@@ -13,6 +13,7 @@ export class CamfilCheckoutHeaderComponent implements OnInit, OnChanges {
   @Input() basket: BasketView;
   @Input() buckets: Bucket[];
   @Input() isConfirmed;
+  @Input() isLoggedIn = false;
 
   quantity = 0;
 

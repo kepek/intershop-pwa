@@ -19,7 +19,7 @@ import { first, skip, take, takeUntil } from 'rxjs/operators';
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { AttributeHelper } from 'ish-core/models/attribute/attribute.helper';
-import { BasketExtensions } from 'ish-core/models/basket/basket.interface';
+import { BasketExtensions, GuestBasketExtensions } from 'ish-core/models/basket/basket.interface';
 import { Bucket } from 'ish-core/models/basket/bucket.model';
 import { CustomerDeliveryTerm } from 'ish-core/models/customer/customer.interface';
 import { LineItemData } from 'ish-core/models/line-item/line-item.interface';
@@ -205,6 +205,8 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
     this.deviceType$?.pipe(takeUntil(this.destroy$)).subscribe(deviceType => {
       this.itemSize = deviceType === 'mobile' ? 255 : deviceType === 'tablet' ? 155 : 91;
     });
+
+    console.log('basket', this.basket);
   }
 
   getBoxLabel(lineItem: LineItem) {
@@ -339,7 +341,7 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
     }
   }
 
-  submitGuestCheckout(guestBucketAddressData: BasketExtensions) {
+  submitGuestCheckout(guestBucketAddressData: GuestBasketExtensions) {
     const { basket, deliveryAddressId } = this.order;
 
     const updated: BasketExtensions = {

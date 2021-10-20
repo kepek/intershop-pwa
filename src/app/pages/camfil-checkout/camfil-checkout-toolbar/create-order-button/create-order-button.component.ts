@@ -2,7 +2,9 @@ import { ChangeDetectionStrategy, Component, Input, ViewChild } from '@angular/c
 import { MatDialog } from '@angular/material/dialog';
 
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
+import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { Bucket } from 'ish-core/models/basket/bucket.model';
+import { whenFalsy } from 'ish-core/utils/operators';
 import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
 
 import { CreateOrderProductModalComponent } from '../../../../extensions/cam-cards/shared/add-product-to-cart-modal/create-order-product-modal/create-order-product-modal.component';
@@ -16,10 +18,15 @@ import { CreateOrderProductModalComponent } from '../../../../extensions/cam-car
 export class CreateOrderButtonComponent {
   @Input() basketId: string;
   @Input() shippingMethodId: string;
+  @Input() guestCheckoutToolbar = false;
 
   @ViewChild(CamfilSmallCtaModalComponent) modal: CamfilSmallCtaModalComponent;
 
-  constructor(public dialog: MatDialog, private checkoutFacade: CheckoutFacade) {}
+  constructor(
+    public dialog: MatDialog,
+    private checkoutFacade: CheckoutFacade,
+    private shoppingFacade: ShoppingFacade
+  ) {}
 
   createVirtualOrder(virtualBucket: Bucket) {
     const bucket: Bucket = {
@@ -40,6 +47,12 @@ export class CreateOrderButtonComponent {
     this.checkoutFacade.addEmptyBucket(bucket);
     this.dialog.closeAll();
     this.openSuccessModal();
+  }
+
+  createGuestOrder() {
+    this.checkoutFacade.basket$.pipe(whenFalsy()).subscribe(() => {
+      this.shoppingFacade.createBasket$();
+    });
   }
 
   openModal(modal: CreateOrderProductModalComponent) {

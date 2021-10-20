@@ -434,7 +434,9 @@
 </ng-template>
 
 <ng-template #guestCheckoutForm>
-  <camfil-camfil-guest-form (submit)="submitGuestCheckout($event)"></camfil-camfil-guest-form>
+  <ng-container *ngIf="basket">
+    <camfil-camfil-guest-form (submit)="submitGuestCheckout($event)"></camfil-camfil-guest-form>
+  </ng-container>
 </ng-template>
 
 <ng-template #guestCheckoutList>

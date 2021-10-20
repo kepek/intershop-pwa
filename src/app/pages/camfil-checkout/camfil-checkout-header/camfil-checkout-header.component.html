@@ -7,7 +7,7 @@
     {{ 'camfil.checkout.confirmation.title' | translate }}
   </h1>
   <div class="row align-items-end" *ngIf="!isConfirmed">
-    <div class="col-md-3" *ngIf="buckets">
+    <div class="col-md-3" *ngIf="buckets; else noBuckets">
       <p>
         <span>{{ 'camfil.checkout.number_of_orders' | translate }}:</span>
         <span class="checkout-header-number">{{ buckets?.length }}</span>
@@ -18,13 +18,43 @@
       </p>
     </div>
     <div class="col-md-9">
-      <div *ngIf="buckets">
-        <camfil-checkout-toolbar
-          [buckets]="buckets"
-          [basketId]="basket.id"
-          [shippingMethodId]="basket.commonShippingMethod?.id"
-        ></camfil-checkout-toolbar>
+      <div *ngIf="buckets; else noBucketsToolbar">
+        <ng-container *ngIf="isLoggedIn; else nonLoggedToolbar">
+          <camfil-checkout-toolbar
+            [buckets]="buckets"
+            [basketId]="basket.id"
+            [shippingMethodId]="basket.commonShippingMethod?.id"
+          ></camfil-checkout-toolbar>
+        </ng-container>
+        <ng-template #nonLoggedToolbar>
+          <camfil-checkout-toolbar
+            [buckets]="buckets"
+            [basketId]="basket.id"
+            [shippingMethodId]="basket.commonShippingMethod?.id"
+            [guestCheckoutToolbar]="true"
+          ></camfil-checkout-toolbar>
+        </ng-template>
       </div>
     </div>
   </div>
+
+  <ng-template #noBuckets>
+    <ng-container *ngIf="!isLoggedIn">
+      <ng-container *camfilChannelToggle="'guestCheckout'">
+        <div class="col-md-3">
+          <p>
+            <span>{{ 'camfil.checkout.number_of_products' | translate }}:</span>
+            <span class="checkout-header-number">0</span>
+          </p>
+        </div>
+      </ng-container>
+    </ng-container>
+  </ng-template>
+  <ng-template #noBucketsToolbar>
+    <ng-container *ngIf="!isLoggedIn">
+      <ng-container *camfilChannelToggle="'guestCheckout'">
+        <camfil-checkout-toolbar [guestCheckoutToolbar]="true"></camfil-checkout-toolbar>
+      </ng-container>
+    </ng-container>
+  </ng-template>
 </div>

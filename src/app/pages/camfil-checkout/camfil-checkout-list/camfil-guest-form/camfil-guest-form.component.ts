@@ -2,8 +2,9 @@ import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/cor
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
+import { CamConfigurationFacade } from 'src/app/extensions/cam-configuration/facades/cam-configuration.facade';
 
-import { BasketExtensions } from 'ish-core/models/basket/basket.interface';
+import { GuestBasketExtensions } from 'ish-core/models/basket/basket.interface';
 import { SpecialValidators } from 'ish-shared/forms/validators/special-validators';
 
 @Component({
@@ -16,13 +17,17 @@ export class CamfilGuestFormComponent implements OnInit, OnDestroy {
   deliveryInfoFromGroup: FormGroup;
   guestForm: FormGroup;
   showInvoiceAddressForm = false;
-  @Output() submit = new EventEmitter<BasketExtensions>();
+  countryCode: string;
+  @Output() submit = new EventEmitter<GuestBasketExtensions>();
 
   private destroy$ = new Subject();
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private camConfigurationFacade: CamConfigurationFacade) {}
 
   ngOnInit() {
+    this.camConfigurationFacade.camCountryCodeFromConfig$.pipe(takeUntil(this.destroy$)).subscribe(value => {
+      this.countryCode = value;
+    });
     this.guestForm = this.fb.group({
       userDetailsFormGroup: this.initUserDetailsForm(),
       deliveryInfoFromGroup: this.initDeliveryInfoForm(),
@@ -85,42 +90,32 @@ export class CamfilGuestFormComponent implements OnInit, OnDestroy {
   submitGuestForm() {
     const sameAsDelivery = this.guestForm.get(['deliveryInfoFromGroup', 'sameAddressAsInvoice']).value;
     const deliveryAddress = {
-      id: 'deliveryAddressId',
-      urn: 'deliveryAddressURN',
-      addressName: 'deliveryAddress',
-      firstName: this.guestForm.get(['userDetailsFormGroup', 'firstName']).value,
-      lastName: this.guestForm.get(['userDetailsFormGroup', 'lastName']).value,
-      email: this.guestForm.get(['userDetailsFormGroup', 'email']).value,
-      phoneHome: this.guestForm.get(['userDetailsFormGroup', 'phone']).value,
-      companyName1: this.guestForm.get(['userDetailsFormGroup', 'companyName']).value,
       addressLine1: this.guestForm.get(['invoiceAddressFormGroup', 'streetAddress']).value,
       postalCode: this.guestForm.get(['invoiceAddressFormGroup', 'zipCode']).value,
       city: this.guestForm.get(['invoiceAddressFormGroup', 'city']).value,
       country: this.guestForm.get(['invoiceAddressFormGroup', 'country']).value,
+      countryCode: this.countryCode,
       invoiceToAddress: false,
-      countryCode: 'FR',
       shipToAddress: true,
     };
 
     const invoiceAddress = sameAsDelivery
       ? deliveryAddress
       : {
-          id: 'invoiceAddressId',
-          urn: 'invoiceAddressURN',
-          addressName: 'invoiceAddress',
-          firstName: this.guestForm.get(['userDetailsFormGroup', 'firstName']).value,
-          lastName: this.guestForm.get(['userDetailsFormGroup', 'lastName']).value,
-          email: this.guestForm.get(['userDetailsFormGroup', 'email']).value,
-          phoneHome: this.guestForm.get(['userDetailsFormGroup', 'phone']).value,
           addressLine1: this.guestForm.get(['deliveryInfoFromGroup', 'streetAddress']).value,
           postalCode: this.guestForm.get(['deliveryInfoFromGroup', 'zipCode']).value,
           city: this.guestForm.get(['deliveryInfoFromGroup', 'city']).value,
           country: this.guestForm.get(['deliveryInfoFromGroup', 'country']).value,
+          countryCode: this.countryCode,
           invoiceToAddress: true,
-          countryCode: 'FR',
           shipToAddress: false,
         };
     this.submit.emit({
+      firstName: this.guestForm.get(['userDetailsFormGroup', 'firstName']).value,
+      lastName: this.guestForm.get(['userDetailsFormGroup', 'lastName']).value,
+      companyName: this.guestForm.get(['userDetailsFormGroup', 'companyName']).value,
+      email: this.guestForm.get(['userDetailsFormGroup', 'email']).value,
+      phone: this.guestForm.get(['userDetailsFormGroup', 'phone']).value,
       deliveryAddress,
       invoiceAddress,
       vat: this.guestForm.get(['userDetailsFormGroup', 'vat']).value,
@@ -128,7 +123,7 @@ export class CamfilGuestFormComponent implements OnInit, OnDestroy {
       siret: this.guestForm.get(['userDetailsFormGroup', 'siret']).value,
       orderMark: this.guestForm.get(['deliveryInfoFromGroup', 'boxLabel']).value,
       invoiceLabel: this.guestForm.get(['deliveryInfoFromGroup', 'invoiceMark']).value,
-      info: this.guestForm.get(['deliveryInfoFromGroup', 'deliveryInfo']).value,
+      deliveryInfo: this.guestForm.get(['deliveryInfoFromGroup', 'deliveryInfo']).value,
       customerNote: this.guestForm.get(['deliveryInfoFromGroup', 'customerNote']).value,
     });
   }

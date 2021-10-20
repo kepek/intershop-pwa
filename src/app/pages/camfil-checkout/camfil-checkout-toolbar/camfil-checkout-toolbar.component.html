@@ -1,7 +1,15 @@
-<div class="text-right toolbar-container">
-  <camfil-create-order-button [basketId]="basketId" [shippingMethodId]="shippingMethodId"></camfil-create-order-button>
-  <span class="spacer"></span>
-  <camfil-create-new-camcard [buckets]="buckets"></camfil-create-new-camcard>
-  <span class="spacer"></span>
-  <camfil-print-order [buckets]="buckets"></camfil-print-order>
+<div class="text-right toolbar-container" [ngClass]="{ 'p-0': guestCheckoutToolbar }">
+  <ng-container *ngIf="!guestCheckoutToolbar; else guestCheckoutToolbarTemplate">
+    <camfil-create-order-button
+      [basketId]="basketId"
+      [shippingMethodId]="shippingMethodId"
+    ></camfil-create-order-button>
+    <span class="spacer"></span>
+    <camfil-create-new-camcard [buckets]="buckets"></camfil-create-new-camcard>
+    <span class="spacer"></span>
+    <camfil-print-order [buckets]="buckets"></camfil-print-order>
+  </ng-container>
+  <ng-template #guestCheckoutToolbarTemplate>
+    <camfil-create-order-button [guestCheckoutToolbar]="guestCheckoutToolbar"></camfil-create-order-button>
+  </ng-template>
 </div>
