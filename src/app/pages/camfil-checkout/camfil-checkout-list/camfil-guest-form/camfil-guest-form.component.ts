@@ -18,6 +18,7 @@ export class CamfilGuestFormComponent implements OnInit, OnDestroy {
   guestForm: FormGroup;
   showInvoiceAddressForm = false;
   countryCode: string;
+  showForm = false;
   @Output() submit = new EventEmitter<GuestBasketExtensions>();
 
   private destroy$ = new Subject();
@@ -28,6 +29,7 @@ export class CamfilGuestFormComponent implements OnInit, OnDestroy {
     this.camConfigurationFacade.camCountryCodeFromConfig$.pipe(takeUntil(this.destroy$)).subscribe(value => {
       this.countryCode = value;
     });
+
     this.guestForm = this.fb.group({
       userDetailsFormGroup: this.initUserDetailsForm(),
       deliveryInfoFromGroup: this.initDeliveryInfoForm(),

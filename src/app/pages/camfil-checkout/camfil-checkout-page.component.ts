@@ -10,10 +10,7 @@ import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { BasketValidationResultType } from 'ish-core/models/basket-validation/basket-validation.model';
 import { BasketView } from 'ish-core/models/basket/basket.model';
 import { Bucket } from 'ish-core/models/basket/bucket.model';
-import { Order } from 'ish-core/models/order/order.model';
 import { whenTruthy } from 'ish-core/utils/operators';
-
-import { CamCardsFacade } from '../../extensions/cam-cards/facades/cam-cards.facade';
 
 import { CamCardsFacade } from '../../extensions/cam-cards/facades/cam-cards.facade';
 
@@ -31,13 +28,11 @@ export class CamfilCheckoutPageComponent implements OnInit, OnDestroy {
   basketLoading$: Observable<boolean>;
   ordersLoading$: Observable<boolean>;
   validationResults$: Observable<BasketValidationResultType>;
-  isLoggedIn$: Observable<boolean>;
-  createdOrder$: Observable<Order>;
-
   isConfirmed = false;
+  isLoggedIn$: Observable<boolean>;
   isLoggedIn = false;
-
   private isValid = false;
+
   private destroy$ = new Subject<void>();
 
   constructor(
@@ -56,7 +51,6 @@ export class CamfilCheckoutPageComponent implements OnInit, OnDestroy {
     this.emptyBuckets$ = this.checkoutFacade.emptyBuckets$;
     this.ordersLoading$ = this.checkoutFacade.ordersLoading$;
     this.validationResults$ = this.checkoutFacade.basketValidationResults$;
-    this.createdOrder$ = this.checkoutFacade.createdOrder$;
 
     // because of editOrderForm
     this.camCardsFacade.customers$
@@ -67,10 +61,6 @@ export class CamfilCheckoutPageComponent implements OnInit, OnDestroy {
       .subscribe(() => {
         this.camCardsFacade.loadCustomers();
       });
-
-    this.createdOrder$.pipe(takeUntil(this.destroy$)).subscribe(createdOrder => {
-      this.isConfirmed = !!createdOrder;
-    });
 
     this.initBasket();
   }
@@ -127,7 +117,7 @@ export class CamfilCheckoutPageComponent implements OnInit, OnDestroy {
 
     this.confirmedBuckets$
       .pipe(
-        map(buckets => [...new Set(buckets.map(bucket => bucket?.customer?.id))]),
+        map(buckets => [...new Set(...buckets.map(bucket => bucket?.customer?.id))]),
         distinct(),
         distinctUntilChanged((prev, curr) => JSON.stringify(prev) === JSON.stringify(curr)),
         takeUntil(this.destroy$)
