@@ -12,5 +12,5 @@ export class CamfilCheckoutToolbarComponent {
   @Input() buckets: Bucket[];
   @Input() basketId: string;
   @Input() shippingMethodId: string;
-  @Input() guestCheckoutToolbar = false;
+  @Input() isGuestCheckout = false;
 }

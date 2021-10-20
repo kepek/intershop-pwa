@@ -62,7 +62,6 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
   currentScrollIndex?: number;
   isOrderOpen = true;
   orderForm: FormGroup;
-  anonymousOrderForm: FormGroup;
   validators = ORDER_HEADER_VALIDATORS;
   selectedDeliveryDate: number;
   firstAvailableDelivery: string;
@@ -310,19 +309,6 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
     });
     this.selectedDeliveryDate = defaultDeliveryDate;
     this.isPartialDelivery = true;
-  }
-
-  initAnonymousForm() {
-    this.anonymousOrderForm = this.fb.group({
-      firstName: ['', [Validators.maxLength(60)]],
-      lastName: ['', [Validators.maxLength(60)]],
-      email: [''],
-      phone: [''],
-      jobTitle: [''],
-      companyName: ['', [Validators.maxLength(60)]],
-      vat: [''],
-      siret: [''],
-    });
   }
 
   onBlurSubmit(field: string) {

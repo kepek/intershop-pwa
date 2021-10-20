@@ -39,4 +39,4 @@ export const getShowPricesForNonLoggedInUser = createSelector(
   state => state.showPricesForNonLoggedInUser
 );
 
-export const getCountryCodeFromConfiguration = createSelector(getConfigurationState, state => state.countryCode);
+export const getCountryCode = createSelector(getConfigurationState, state => state.countryCode);

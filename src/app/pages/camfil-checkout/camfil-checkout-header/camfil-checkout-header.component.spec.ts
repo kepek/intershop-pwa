@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MockComponent } from 'ng-mocks';
+import { MockComponent, MockDirective } from 'ng-mocks';
 import { of } from 'rxjs';
+import { ChannelToggleDirective } from 'src/app/extensions/cam-configuration/directives/channel-toggle.directive';
 import { instance, mock, when } from 'ts-mockito';
 
 import { CamfilMaxLengthAttributeCreateDirective } from 'ish-core/directives/camfil-max-length-attribute-create.directive';
@@ -86,6 +87,7 @@ describe('Camfil Checkout Header Component', () => {
         MockComponent(OrderFormComponent),
         MockComponent(PrintOrderComponent),
         MockComponent(ZipCodeComponent),
+        MockDirective(ChannelToggleDirective),
       ],
       providers: [
         { provide: CamCardsFacade, useFactory: () => instance(camCardFacadeMock) },

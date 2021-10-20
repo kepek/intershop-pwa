@@ -1,7 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { MockComponent, MockPipe } from 'ng-mocks';
+import { MockComponent, MockDirective, MockPipe } from 'ng-mocks';
 import { of } from 'rxjs';
+import { ChannelToggleDirective } from 'src/app/extensions/cam-configuration/directives/channel-toggle.directive';
 import { instance, mock, when } from 'ts-mockito';
 
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
@@ -25,7 +26,12 @@ describe('Camfil Checkout Summary Component', () => {
     shoppingFacade = mock(ShoppingFacade);
 
     await TestBed.configureTestingModule({
-      declarations: [CamfilCheckoutSummaryComponent, MockComponent(ContentIncludeComponent), MockPipe(PricePipe)],
+      declarations: [
+        CamfilCheckoutSummaryComponent,
+        MockComponent(ContentIncludeComponent),
+        MockDirective(ChannelToggleDirective),
+        MockPipe(PricePipe),
+      ],
       imports: [RouterTestingModule],
       providers: [
         { provide: CheckoutFacade, useFactory: () => instance(checkoutFacade) },

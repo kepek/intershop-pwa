@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MockComponent } from 'ng-mocks';
 import { of } from 'rxjs';
+import { ConfigurationService } from 'src/app/extensions/cam-configuration/services/configuration/configuration.service';
 import { instance, mock, when } from 'ts-mockito';
 
 import { CamfilMaxLengthAttributeCreateDirective } from 'ish-core/directives/camfil-max-length-attribute-create.directive';
@@ -30,6 +31,7 @@ describe('Create Order Button Component', () => {
   let camCardFacadeMock: CamCardsFacade;
   let checkoutFacadeMock: CheckoutFacade;
   let shoppingFacadeMock: ShoppingFacade;
+  let configurationServiceMock: ConfigurationService;
 
   const camCardDetails = {
     name: 'testing cam cards',
@@ -60,6 +62,7 @@ describe('Create Order Button Component', () => {
     camCardFacadeMock = mock(CamCardsFacade);
     checkoutFacadeMock = mock(CheckoutFacade);
     shoppingFacadeMock = mock(ShoppingFacade);
+    configurationServiceMock = mock(ConfigurationService);
 
     await TestBed.configureTestingModule({
       declarations: [
@@ -81,6 +84,7 @@ describe('Create Order Button Component', () => {
         { provide: CamCardsFacade, useFactory: () => instance(camCardFacadeMock) },
         { provide: CheckoutFacade, useFactory: () => instance(checkoutFacadeMock) },
         { provide: ShoppingFacade, useFactory: () => instance(shoppingFacadeMock) },
+        { provide: ConfigurationService, useFactory: () => instance(configurationServiceMock) },
       ],
     }).compileComponents();
   });

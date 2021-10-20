@@ -19,21 +19,12 @@
     </div>
     <div class="col-md-9">
       <div *ngIf="buckets; else noBucketsToolbar">
-        <ng-container *ngIf="isLoggedIn; else nonLoggedToolbar">
-          <camfil-checkout-toolbar
-            [buckets]="buckets"
-            [basketId]="basket.id"
-            [shippingMethodId]="basket.commonShippingMethod?.id"
-          ></camfil-checkout-toolbar>
-        </ng-container>
-        <ng-template #nonLoggedToolbar>
-          <camfil-checkout-toolbar
-            [buckets]="buckets"
-            [basketId]="basket.id"
-            [shippingMethodId]="basket.commonShippingMethod?.id"
-            [guestCheckoutToolbar]="true"
-          ></camfil-checkout-toolbar>
-        </ng-template>
+        <camfil-checkout-toolbar
+          [buckets]="buckets"
+          [basketId]="basket.id"
+          [shippingMethodId]="basket.commonShippingMethod?.id"
+          [isGuestCheckout]="!isLoggedIn"
+        ></camfil-checkout-toolbar>
       </div>
     </div>
   </div>
@@ -44,7 +35,7 @@
         <div class="col-md-3">
           <p>
             <span>{{ 'camfil.checkout.number_of_products' | translate }}:</span>
-            <span class="checkout-header-number">0</span>
+            <span class="checkout-header-number">{{ quantity }}</span>
           </p>
         </div>
       </ng-container>
@@ -53,7 +44,7 @@
   <ng-template #noBucketsToolbar>
     <ng-container *ngIf="!isLoggedIn">
       <ng-container *camfilChannelToggle="'guestCheckout'">
-        <camfil-checkout-toolbar [guestCheckoutToolbar]="true"></camfil-checkout-toolbar>
+        <camfil-checkout-toolbar [isGuestCheckout]="true"></camfil-checkout-toolbar>
       </ng-container>
     </ng-container>
   </ng-template>

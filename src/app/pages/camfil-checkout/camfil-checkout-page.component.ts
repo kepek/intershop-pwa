@@ -10,6 +10,7 @@ import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { BasketValidationResultType } from 'ish-core/models/basket-validation/basket-validation.model';
 import { BasketView } from 'ish-core/models/basket/basket.model';
 import { Bucket } from 'ish-core/models/basket/bucket.model';
+import { Order } from 'ish-core/models/order/order.model';
 import { whenTruthy } from 'ish-core/utils/operators';
 
 import { CamCardsFacade } from '../../extensions/cam-cards/facades/cam-cards.facade';
@@ -31,6 +32,7 @@ export class CamfilCheckoutPageComponent implements OnInit, OnDestroy {
   isConfirmed = false;
   isLoggedIn$: Observable<boolean>;
   isLoggedIn = false;
+  createdOrder$: Observable<Order>;
   private isValid = false;
 
   private destroy$ = new Subject<void>();
@@ -51,6 +53,10 @@ export class CamfilCheckoutPageComponent implements OnInit, OnDestroy {
     this.emptyBuckets$ = this.checkoutFacade.emptyBuckets$;
     this.ordersLoading$ = this.checkoutFacade.ordersLoading$;
     this.validationResults$ = this.checkoutFacade.basketValidationResults$;
+    this.createdOrder$ = this.checkoutFacade.createdOrder$;
+    this.createdOrder$.pipe(takeUntil(this.destroy$)).subscribe(createdOrder => {
+      this.isConfirmed = !!createdOrder;
+    });
 
     // because of editOrderForm
     this.camCardsFacade.customers$

@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MockComponent, MockDirective, MockPipe } from 'ng-mocks';
 import { of } from 'rxjs';
+import { CamConfigurationFacade } from 'src/app/extensions/cam-configuration/facades/cam-configuration.facade';
 import { instance, mock, when } from 'ts-mockito';
 
 import { CamfilMaxLengthAttributeCreateDirective } from 'ish-core/directives/camfil-max-length-attribute-create.directive';
@@ -50,13 +51,14 @@ describe('Camfil Checkout List Component', () => {
   let shoppingFacadeMock: ShoppingFacade;
   let checkoutFacadeMock: CheckoutFacade;
   let appFacadeMock: AppFacade;
+  let camConfigurationFacadeMock: CamConfigurationFacade;
 
   beforeEach(async () => {
     appFacadeMock = mock(AppFacade);
     camCardFacadeMock = mock(CamCardsFacade);
     shoppingFacadeMock = mock(ShoppingFacade);
     checkoutFacadeMock = mock(CheckoutFacade);
-
+    camConfigurationFacadeMock = mock(CamConfigurationFacade);
     await TestBed.configureTestingModule({
       declarations: [
         ArticleDetailsComponent,
@@ -96,6 +98,7 @@ describe('Camfil Checkout List Component', () => {
         { provide: CamCardsFacade, useFactory: () => instance(camCardFacadeMock) },
         { provide: ShoppingFacade, useFactory: () => instance(shoppingFacadeMock) },
         { provide: CheckoutFacade, useFactory: () => instance(checkoutFacadeMock) },
+        { provide: CamConfigurationFacade, useFactory: () => instance(camConfigurationFacadeMock) },
         { provide: AppFacade, useFactory: () => instance(appFacadeMock) },
       ],
     }).compileComponents();

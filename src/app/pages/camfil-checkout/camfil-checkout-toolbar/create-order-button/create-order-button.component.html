@@ -1,4 +1,4 @@
-<ng-container *ngIf="!guestCheckoutToolbar; else createGuestOrderButton">
+<ng-container *ngIf="!isGuestCheckout; else createGuestOrderButton">
   <button
     mat-stroked-button
     color="primary"

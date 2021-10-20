@@ -8,7 +8,7 @@ import { GuestBasketExtensions } from 'ish-core/models/basket/basket.interface';
 import { SpecialValidators } from 'ish-shared/forms/validators/special-validators';
 
 @Component({
-  selector: 'camfil-camfil-guest-form',
+  selector: 'camfil-guest-form',
   templateUrl: './camfil-guest-form.component.html',
   styleUrls: ['./camfil-guest-form.component.scss'],
 })
@@ -26,7 +26,7 @@ export class CamfilGuestFormComponent implements OnInit, OnDestroy {
   constructor(private fb: FormBuilder, private camConfigurationFacade: CamConfigurationFacade) {}
 
   ngOnInit() {
-    this.camConfigurationFacade.camCountryCodeFromConfig$.pipe(takeUntil(this.destroy$)).subscribe(value => {
+    this.camConfigurationFacade.countryCode$?.pipe(takeUntil(this.destroy$)).subscribe(value => {
       this.countryCode = value;
     });
 
