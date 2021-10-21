@@ -1,4 +1,4 @@
-<div class="mat-elevation-z2 camfil-checkout-list" [ngClass]="{ 'mat-elevation-z2': isLoggedIn }">
+<div [ngClass]="{ 'mat-elevation-z2': isLoggedIn }" class="mat-elevation-z2 camfil-checkout-list">
   <ng-container *ngIf="isLoggedIn; else guestCheckout">
     <mat-action-row>
       <strong (click)="toggleOrder()" class="d-flex align-items-center">
@@ -20,7 +20,7 @@
       {{ 'camfil.checkout.order' | translate }} {{ !!buckets?.length ? index + ' / ' + buckets?.length : '' }}</strong
     >
     <span class="order-number" data-id-id="order-number"
-      >{{ order?.customer?.customerNo }}, {{ order?.customer?.companyName }}</span
+    >{{ order?.customer?.customerNo }}, {{ order?.customer?.companyName }}</span
     >
   </div>
 </ng-template>
@@ -65,7 +65,7 @@
               </dd>
             </ng-container>
             <ng-template #fullDeliveryDate>
-              <dd class="col-6 p-0" data-testing-id="order-customer_id" *ngIf="order?.deliveryDate">
+              <dd *ngIf="order?.deliveryDate" class="col-6 p-0" data-testing-id="order-customer_id">
                 {{ order?.deliveryDate || '-' | ishDate }}
               </dd>
             </ng-template>
@@ -88,7 +88,7 @@
                       class="notranslate material-icons color-light"
                       data-mat-icon-type="font"
                       role="img"
-                      >close
+                    >close
                     </mat-icon>
                   </span>
                 </button>
@@ -109,11 +109,11 @@
               <input
                 (change)="onBlurSubmit('orderMark')"
                 (focus)="setFocusedElement($event.target)"
+                [camfilMaxLength]="'OrderMark'"
                 [id]="'orderMark-' + order.id"
                 formControlName="orderMark"
                 label="camfil.checkout.form.order_mark"
                 matInput
-                [camfilMaxLength]="'OrderMark'"
               />
             </mat-form-field>
           </div>
@@ -124,11 +124,11 @@
               <input
                 (change)="onBlurSubmit('invoiceLabel')"
                 (focus)="setFocusedElement($event.target)"
+                [camfilMaxLength]="'InvoiceLabel'"
                 [id]="'invoiceLabel-' + order.id"
                 formControlName="invoiceLabel"
                 label="camfil.checkout.form.invoice_mark"
                 matInput
-                [camfilMaxLength]="'InvoiceLabel'"
               />
             </mat-form-field>
           </div>
@@ -205,11 +205,11 @@
             <textarea
               (change)="onBlurSubmit('info')"
               (focus)="setFocusedElement($event.target)"
+              [camfilMaxLength]="'CustomerNote'"
               [id]="'info-' + order.id"
               formControlName="info"
               label="camfil.checkout.form.note"
               matInput
-              [camfilMaxLength]="'CustomerNote'"
             ></textarea>
             <camfil-error
               [errorValidators]="validators.info"
@@ -230,13 +230,13 @@
       <mat-icon class="size-35 ml-2 mr-4" svgIcon="delivery"></mat-icon>
       <div class="w-100">
         <b>{{ deliveryTerm.description }}</b>
-        <hr class="m-1" *ngIf="deliveryTerm.id !== 'CPT-RL'" />
+        <hr *ngIf="deliveryTerm.id !== 'CPT-RL'" class="m-1" />
         <b *ngIf="freeDelivery.value > 0">{{
           'camfil.checkout.free_delivery.threshold' | translate: { '0': (freeDelivery | ishPrice) }
-        }}</b>
+          }}</b>
         <b *ngIf="!(freeDelivery.value > 0) && deliveryTerm.id !== 'CPT-RL'">{{
           'camfil.checkout.free_delivery' | translate
-        }}</b>
+          }}</b>
       </div>
     </div>
 
@@ -268,16 +268,16 @@
     </span>
     <mat-icon *ngIf="!isConfirmed" cdkDragHandle class="size-24 d-none d-md-block handle" svgIcon="move"></mat-icon>
     <camfil-checkout-line-item
+      (openDeleteModalAction)="changeScrollIndex()"
+      (resizeLineItemOnBlur)="changeViewportHeightOnBlur($event)"
       [basketId]="order?.basket"
       [bucketId]="order?.id"
+      [deviceType]="deviceType$ | async"
       [index]="i + 1"
       [isConfirmed]="isConfirmed"
       [isPartialDelivery]="isPartialDelivery"
       [lineItem]="item"
       [orderDeliveryDate]="deliveryDate"
-      [deviceType]="deviceType$ | async"
-      (openDeleteModalAction)="changeScrollIndex()"
-      (resizeLineItemOnBlur)="changeViewportHeightOnBlur($event)"
     ></camfil-checkout-line-item>
   </div>
 </ng-template>
@@ -328,10 +328,17 @@
 
 <ng-template #guestCheckoutList>
   <div *ngIf="order" class="loggedIn">
-    <mat-action-row class="d-flex mt-4">
-      <strong>Your Cart</strong>
-    </mat-action-row>
-    <ng-container *ngTemplateOutlet="orderList"></ng-container>
+    <mat-expansion-panel [expanded]="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{ 'shopping_cart.heading' | translate }}
+        </mat-panel-title>
+        <mat-panel-description>
+          <mat-icon svgIcon="cart"></mat-icon>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <ng-container *ngTemplateOutlet="orderList"></ng-container>
+    </mat-expansion-panel>
   </div>
 </ng-template>
 

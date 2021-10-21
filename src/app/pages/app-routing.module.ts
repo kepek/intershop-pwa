@@ -85,9 +85,8 @@ const routes: Routes = [
     canActivate: [CheckoutGuard],
     data: {
       headerType: 'checkout',
-      breadCrumbData: [],
+      breadcrumbData: [{ key: 'seo.title.checkout' }],
       meta: {
-        title: 'seo.title.checkout',
         robots: 'noindex, nofollow',
       },
     },

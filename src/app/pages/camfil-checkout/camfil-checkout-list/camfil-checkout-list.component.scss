@@ -1,7 +1,11 @@
 @import '~src/styles/themes/camfil/variables';
+@import '~src/styles/themes/camfil/mixins';
 @import '~src/styles/themes/camfil/colors';
 
 :host {
+
+  @include expansion_panel;
+
   ::ng-deep {
     .cdk-drag-preview {
       box-sizing: border-box;
@@ -66,6 +70,12 @@
 
     .mat-expansion-panel-body {
       padding: 0;
+
+      ::ng-deep {
+        .list-item-row.line-item-container {
+          box-shadow: none;
+        }
+      }
     }
   }
 
@@ -267,14 +277,6 @@
       label {
         margin-bottom: 0;
       }
-    }
-  }
-
-  .mat-expansion-panel {
-    box-shadow: none;
-
-    &.mat-expanded {
-      border-bottom: $border-width-default solid $border-color-light;
     }
   }
 

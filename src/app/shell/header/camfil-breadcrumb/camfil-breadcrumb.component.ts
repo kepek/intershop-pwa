@@ -21,7 +21,6 @@ import { BreadcrumbItem } from 'ish-core/models/breadcrumb-item/breadcrumb-item.
 export class CamfilBreadcrumbComponent implements OnInit {
   @Input() separator = '❭';
   @Input() showHome = true;
-  @Input() checkout: boolean;
   @Input() url: string;
   @Input() productDetail: boolean;
 
