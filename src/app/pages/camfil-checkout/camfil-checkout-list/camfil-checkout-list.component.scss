@@ -8,7 +8,7 @@
       background-color: rgb(128, 0, 107);
       border-radius: 4px;
       box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 8px 10px 1px rgba(0, 0, 0, 0.14),
-        0 3px 14px 2px rgba(0, 0, 0, 0.12);
+      0 3px 14px 2px rgba(0, 0, 0, 0.12);
     }
 
     .cdk-drop-list {
@@ -27,12 +27,13 @@
         box-shadow: 0 -3px 35px 5px rgb(0 0 0 / 20%);
       }
     }
-    
+
     .loggedIn {
       .cdk-drop-list {
         &::after {
           display: none;
         }
+
         .cdk-virtual-scroll-content-wrapper {
           padding: 2px;
         }
@@ -158,7 +159,7 @@
     }
   }
 
-  .border-right-light {
+  .col-border {
     border-right: 1px solid #eaeaea;
   }
 

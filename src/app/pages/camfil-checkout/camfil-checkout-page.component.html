@@ -9,7 +9,6 @@
         [basket]="basket$ | async"
         [buckets]="buckets$ | async"
         [isConfirmed]="isConfirmed"
-        [isLoggedIn]="isLoggedIn"
       ></camfil-checkout-header>
       <mat-divider></mat-divider>
     </div>
@@ -25,7 +24,7 @@
     <ng-template #noBucket>
       <ng-container *ngIf="!isLoggedIn">
         <ng-container *camfilChannelToggle="'guestCheckout'">
-          <camfil-checkout-list [isLoggedIn]="false" [basket]="basket$ | async"></camfil-checkout-list>
+          <camfil-checkout-list [basket]="basket$ | async" [isLoggedIn]="false"></camfil-checkout-list>
         </ng-container>
       </ng-container>
     </ng-template>
@@ -34,9 +33,9 @@
       <ng-container *ngIf="emptyBuckets$ | async as emptyBuckets; else noBucket">
         <ng-container *ngFor="let emptyBucket of emptyBuckets; trackBy: trackByLineItems">
           <camfil-checkout-list
-            [order]="emptyBucket"
             [basket]="basket$ | async"
             [isLoggedIn]="isLoggedIn"
+            [order]="emptyBucket"
           ></camfil-checkout-list>
         </ng-container>
       </ng-container>
@@ -58,7 +57,7 @@
           <ng-container *ngIf="!buckets.length; else notEmptyBuckets">
             <ng-container *ngIf="!isLoggedIn">
               <ng-container *camfilChannelToggle="'guestCheckout'">
-                <camfil-checkout-list [isLoggedIn]="false" [basket]="basket$ | async"></camfil-checkout-list>
+                <camfil-checkout-list [basket]="basket$ | async" [isLoggedIn]="false"></camfil-checkout-list>
               </ng-container>
             </ng-container>
           </ng-container>

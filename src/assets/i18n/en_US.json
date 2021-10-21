@@ -873,6 +873,7 @@
   "camfil.checkout.guest_form.street_address": "Street address",
   "camfil.checkout.guest_form.same_as_invoice_address": "Use same adress as Invoice Address",
   "camfil.checkout.guest_form.zip_code": "ZIP Code",
+  "camfil.checkout.guest_form.your_details": "Your details",
   "camfil.checkout.guest_form.delivery_info": "Delivery info",
   "camfil.checkout.guest_form.goods_mark": "Goods Mark",
   "camfil.checkout.free_delivery": "Free shipping",

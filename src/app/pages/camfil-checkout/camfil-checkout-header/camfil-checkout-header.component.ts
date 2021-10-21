@@ -2,6 +2,8 @@ import { ChangeDetectionStrategy, Component, Input, OnChanges, OnInit } from '@a
 
 import { BasketView } from 'ish-core/models/basket/basket.model';
 import { Bucket } from 'ish-core/models/basket/bucket.model';
+import { Observable } from 'rxjs';
+import { AccountFacade } from 'ish-core/facades/account.facade';
 
 @Component({
   selector: 'camfil-checkout-header',
@@ -13,12 +15,16 @@ export class CamfilCheckoutHeaderComponent implements OnInit, OnChanges {
   @Input() basket: BasketView;
   @Input() buckets: Bucket[];
   @Input() isConfirmed;
-  @Input() isLoggedIn = false;
+
+  isLoggedIn$: Observable<boolean>;
 
   quantity = 0;
 
+  constructor(private accountFacade: AccountFacade) {}
+
   ngOnInit() {
     this.quantity = this.totalProductQuantity();
+    this.isLoggedIn$ = this.accountFacade.isLoggedIn$;
   }
 
   ngOnChanges() {

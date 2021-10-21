@@ -873,6 +873,7 @@
   "camfil.checkout.guest_form.street_address": "fi_Street address",
   "camfil.checkout.guest_form.same_as_invoice_address": "fi_Use same adress as Invoice Address",
   "camfil.checkout.guest_form.zip_code": "fi_ZIP Code",
+  "camfil.checkout.guest_form.your_details": "fi_Your details",
   "camfil.checkout.guest_form.delivery_info": "fi_Delivery info",
   "camfil.checkout.guest_form.goods_mark": "fi_Goods Mark",
   "camfil.checkout.free_delivery": "Rahtivapaa toimitus",
