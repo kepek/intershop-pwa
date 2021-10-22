@@ -2,7 +2,7 @@
 
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { Observable, ReplaySubject, Subject } from 'rxjs';
-import { distinct, distinctUntilChanged, filter, map, take, takeUntil, takeWhile } from 'rxjs/operators';
+import { distinctUntilChanged, filter, map, take, takeUntil, takeWhile, withLatestFrom } from 'rxjs/operators';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
@@ -123,8 +123,11 @@ export class CamfilCheckoutPageComponent implements OnInit, OnDestroy {
 
     this.confirmedBuckets$
       .pipe(
-        map(buckets => [...new Set(...buckets.map(bucket => bucket?.customer?.id))]),
-        distinct(),
+        withLatestFrom(this.isLoggedIn$),
+        map(([buckets, isLoggedIn]) =>
+          isLoggedIn ? [...new Set(buckets.map(bucket => bucket?.customer?.id))] : undefined
+        ),
+        whenTruthy(),
         distinctUntilChanged((prev, curr) => JSON.stringify(prev) === JSON.stringify(curr)),
         takeUntil(this.destroy$)
       )

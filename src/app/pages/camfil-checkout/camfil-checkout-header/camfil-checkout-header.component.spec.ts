@@ -5,6 +5,7 @@ import { ChannelToggleDirective } from 'src/app/extensions/cam-configuration/dir
 import { instance, mock, when } from 'ts-mockito';
 
 import { CamfilMaxLengthAttributeCreateDirective } from 'ish-core/directives/camfil-max-length-attribute-create.directive';
+import { AccountFacade } from 'ish-core/facades/account.facade';
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { Basket, BasketView } from 'ish-core/models/basket/basket.model';
@@ -37,6 +38,7 @@ describe('Camfil Checkout Header Component', () => {
   let camCardFacadeMock: CamCardsFacade;
   let checkoutFacadeMock: CheckoutFacade;
   let shoppingFacadeMock: ShoppingFacade;
+  let accountFacadeMock: AccountFacade;
 
   const camCardDetails = {
     name: 'testing cam cards',
@@ -67,6 +69,7 @@ describe('Camfil Checkout Header Component', () => {
     camCardFacadeMock = mock(CamCardsFacade);
     checkoutFacadeMock = mock(CheckoutFacade);
     shoppingFacadeMock = mock(ShoppingFacade);
+    accountFacadeMock = mock(AccountFacade);
 
     await TestBed.configureTestingModule({
       declarations: [
@@ -93,6 +96,7 @@ describe('Camfil Checkout Header Component', () => {
         { provide: CamCardsFacade, useFactory: () => instance(camCardFacadeMock) },
         { provide: CheckoutFacade, useFactory: () => instance(checkoutFacadeMock) },
         { provide: ShoppingFacade, useFactory: () => instance(shoppingFacadeMock) },
+        { provide: AccountFacade, useFactory: () => instance(accountFacadeMock) },
       ],
     }).compileComponents();
   });
@@ -109,6 +113,7 @@ describe('Camfil Checkout Header Component', () => {
 
     component.basket = basket;
     component.buckets = buckets;
+
     when(camCardFacadeMock.camCard$).thenReturn(of([camCardDetails]));
     when(camCardFacadeMock.virtualCamCard$).thenReturn(of(camCardDetails));
     when(checkoutFacadeMock.buckets$).thenReturn(of([]));
@@ -116,6 +121,7 @@ describe('Camfil Checkout Header Component', () => {
     when(shoppingFacadeMock.productAdded$).thenReturn(of(true));
     when(shoppingFacadeMock.basketAddresses$).thenReturn(of([]));
     when(shoppingFacadeMock.productUpdated$).thenReturn(of(false));
+    when(accountFacadeMock.isLoggedIn$).thenReturn(of(false));
   });
 
   it('should be created', () => {

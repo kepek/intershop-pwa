@@ -1,6 +1,8 @@
 <ng-template #noProduct>...</ng-template>
 
 <ng-container *ngIf="product$ | async as product; else noProduct">
+  <ng-container [ngTemplateOutlet]="beforeTemplate"></ng-container>
+
   <div
     [class]="{ 'line-item__confirmed': isConfirmed }"
     [ngClass]="!isMobileView ? 'd-flex' : 'line-item-grid'"
@@ -137,6 +139,8 @@
       </a>
     </ng-template>
   </div>
+
+  <ng-container [ngTemplateOutlet]="afterTemplate"></ng-container>
 
   <ng-template #price>
     <camfil-product-attribute

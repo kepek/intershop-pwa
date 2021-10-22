@@ -1,4 +1,4 @@
-<div [ngClass]="{ 'mat-elevation-z2': isLoggedIn }" class="mat-elevation-z2 camfil-checkout-list">
+<div [ngClass]="{ 'mat-elevation-z2': isLoggedIn }" class="camfil-checkout-list">
   <ng-container *ngIf="isLoggedIn; else guestCheckout">
     <mat-action-row>
       <strong (click)="toggleOrder()" class="d-flex align-items-center">
@@ -327,7 +327,7 @@
 </ng-template>
 
 <ng-template #guestCheckoutList>
-  <div *ngIf="order" class="loggedIn">
+  <div *ngIf="order">
     <mat-expansion-panel [expanded]="true">
       <mat-expansion-panel-header>
         <mat-panel-title>

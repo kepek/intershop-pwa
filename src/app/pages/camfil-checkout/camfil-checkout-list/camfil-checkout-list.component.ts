@@ -4,6 +4,7 @@ import {
   AfterViewInit,
   ChangeDetectionStrategy,
   Component,
+  ElementRef,
   Input,
   OnChanges,
   OnDestroy,
@@ -52,6 +53,7 @@ import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
 export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDestroy, OnChanges {
   @ViewChild(CamfilSmallCtaModalComponent) modal: CamfilSmallCtaModalComponent;
   @ViewChild(CdkVirtualScrollViewport, { static: false }) virtualScrollViewport: CdkVirtualScrollViewport;
+  @ViewChild('bucketListItem') bucketListItem: ElementRef;
 
   @Input() order: Bucket;
   @Input() buckets: Bucket[];
@@ -85,7 +87,7 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
   focusedElementId: string;
   forceUpdateForm = false;
   hideRecipientButton = false;
-  itemSize = 91;
+  itemSize = 90;
   deviceType$: Observable<DeviceType>;
 
   private destroy$ = new Subject<void>();
@@ -202,7 +204,7 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
 
     this.deviceType$ = this.appFacade.deviceType$;
     this.deviceType$?.pipe(takeUntil(this.destroy$)).subscribe(deviceType => {
-      this.itemSize = deviceType === 'mobile' ? 255 : deviceType === 'tablet' ? 155 : 91;
+      this.itemSize = deviceType === 'mobile' ? 255 : deviceType === 'tablet' ? 155 : 90;
     });
   }
 
@@ -239,6 +241,7 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
 
   ngAfterViewInit() {
     this.handleHeightItemsContainer(this.order?.lineItems);
+
     if (this.focusedElementId) {
       const focusTimeout = setTimeout(() => {
         const element = document.querySelector(`#${this.focusedElementId}`) as HTMLElement;
@@ -247,9 +250,12 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
 
       clearTimeout(focusTimeout);
     }
+
     this.virtualScrollViewport?.scrolledIndexChange.pipe(skip(1), takeUntil(this.destroy$)).subscribe(el => {
       this.currentScrollIndex = el;
     });
+
+    console.log('test', this.bucketListItem.nativeElement);
   }
 
   handleHeightItemsContainer(lineItems: LineItemView[]) {
@@ -263,6 +269,7 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
         // @ts-ignore
         viewportElement.style.height = `${numberOfItems * this.itemSize + bigLineItems * 12}px`;
         viewportElement.style.overflowY = isMoreThanLimit ? 'auto' : 'hidden';
+        viewportElement.parentElement.classList.toggle('show-shadow', isMoreThanLimit);
       }
     }
   }

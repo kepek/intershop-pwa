@@ -9,8 +9,6 @@
   </ng-container>
 
   <ng-template #guest>
-    <pre>Guest Header</pre>
-
     <h1 class="d-flex align-items-center">
       <mat-icon *ngIf="!isConfirmed" class="size-37" svgIcon="cart"></mat-icon> &nbsp;
       {{ (isConfirmed ? 'camfil.checkout.confirmation.title' : 'checkout.addresses.checkout_as_guest.heading') | translate }}
@@ -25,11 +23,10 @@
       </div>
       <div class="col-md-9">
         <camfil-checkout-toolbar
-          *ngIf="basket"
-          [basketId]="basket.id"
+          [basketId]="basket?.id"
           [buckets]="buckets"
-          [isGuestCheckout]="true"
-          [shippingMethodId]="basket.commonShippingMethod?.id"
+          [isGuestCheckout]="!(isLoggedIn$ | async)"
+          [shippingMethodId]="basket?.commonShippingMethod?.id"
         ></camfil-checkout-toolbar>
       </div>
     </div>
@@ -37,8 +34,6 @@
   </ng-template>
 
   <ng-template #default>
-    <pre>Default Header</pre>
-
     <h1 class="d-flex align-items-center">
       <mat-icon *ngIf="!isConfirmed" class="size-37" svgIcon="cart"></mat-icon> &nbsp;
       {{ (isConfirmed ? 'camfil.checkout.confirmation.title' : 'shopping_cart.proceed_to_checkout.button.label') | translate }}
@@ -57,10 +52,10 @@
       </div>
       <div class="col-md-9">
         <camfil-checkout-toolbar
-          [basketId]="basket.id"
+          [basketId]="basket?.id"
           [buckets]="buckets"
           [isGuestCheckout]="!(isLoggedIn$ | async)"
-          [shippingMethodId]="basket.commonShippingMethod?.id"
+          [shippingMethodId]="basket?.commonShippingMethod?.id"
         ></camfil-checkout-toolbar>
       </div>
     </div>
