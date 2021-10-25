@@ -909,6 +909,7 @@
   "camfil.checkout.volume_discount": "Volume discount",
   "camfil.checkout.wait_till_validation.button.text": "Please wait till the system has validated your cart",
   "camfil.checkout.your_total_price": "Your total price",
+  "camfil.checkout.gdpr_form.gdpr.error.required": "Please consent to GDPR by checking the checkbox.",
   "camfil.common.button.navbarCollapsed.close.text": "Close",
   "camfil.common.button.navbarCollapsed.menu.aria_label": "Button with a menu icon for close/open navigation",
   "camfil.common.button.navbarCollapsed.text": "Menu",

@@ -43,4 +43,15 @@
       margin-left: -30px;
     }
   }
+
+  .summary-gpdr-form {
+    &::ng-deep {
+      .mat-checkbox-layout {
+        white-space: normal;
+      }
+      .mat-checkbox-label {
+        word-wrap: break-word;
+      }
+    }
+  }
 }

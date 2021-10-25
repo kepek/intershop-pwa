@@ -909,6 +909,7 @@
   "camfil.checkout.volume_discount": "Rabatt",
   "camfil.checkout.wait_till_validation.button.text": "sv_Please wait till the system has validated your cart",
   "camfil.checkout.your_total_price": "Ditt totala pris",
+  "camfil.checkout.gdpr_form.gdpr.error.required": "sv_Please consent to GDPR by checking the checkbox.",
   "camfil.common.button.navbarCollapsed.close.text": "Stäng",
   "camfil.common.button.navbarCollapsed.menu.aria_label": "Knapp med meny ikon för att öppna/stänga navigation",
   "camfil.common.button.navbarCollapsed.text": "Meny",

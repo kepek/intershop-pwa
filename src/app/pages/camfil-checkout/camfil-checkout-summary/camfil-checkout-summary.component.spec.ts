@@ -3,6 +3,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { MockComponent, MockDirective, MockPipe } from 'ng-mocks';
 import { of } from 'rxjs';
 import { ChannelToggleDirective } from 'src/app/extensions/cam-configuration/directives/channel-toggle.directive';
+import { ConfigurationService } from 'src/app/extensions/cam-configuration/services/configuration/configuration.service';
 import { instance, mock, when } from 'ts-mockito';
 
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
@@ -10,6 +11,7 @@ import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { Basket } from 'ish-core/models/basket/basket.model';
 import { PricePipe } from 'ish-core/models/price/price.pipe';
 import { ContentIncludeComponent } from 'ish-shared/cms/components/content-include/content-include.component';
+import { CamfilModalDialogComponent } from 'ish-shared/components/common/camfil-modal-dialog/camfil-modal-dialog.component';
 
 import { CamfilCheckoutSummaryComponent } from './camfil-checkout-summary.component';
 
@@ -20,14 +22,17 @@ describe('Camfil Checkout Summary Component', () => {
   let basket: Basket;
   let checkoutFacade: CheckoutFacade;
   let shoppingFacade: ShoppingFacade;
+  let configurationServiceMock: ConfigurationService;
 
   beforeEach(async () => {
     checkoutFacade = mock(CheckoutFacade);
     shoppingFacade = mock(ShoppingFacade);
+    configurationServiceMock = mock(ConfigurationService);
 
     await TestBed.configureTestingModule({
       declarations: [
         CamfilCheckoutSummaryComponent,
+        MockComponent(CamfilModalDialogComponent),
         MockComponent(ContentIncludeComponent),
         MockDirective(ChannelToggleDirective),
         MockPipe(PricePipe),
@@ -36,6 +41,7 @@ describe('Camfil Checkout Summary Component', () => {
       providers: [
         { provide: CheckoutFacade, useFactory: () => instance(checkoutFacade) },
         { provide: ShoppingFacade, useFactory: () => instance(shoppingFacade) },
+        { provide: ConfigurationService, useFactory: () => instance(configurationServiceMock) },
       ],
     }).compileComponents();
   });
