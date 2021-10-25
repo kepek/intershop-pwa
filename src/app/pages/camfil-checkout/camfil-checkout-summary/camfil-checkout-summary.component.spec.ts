@@ -12,6 +12,7 @@ import { Basket } from 'ish-core/models/basket/basket.model';
 import { PricePipe } from 'ish-core/models/price/price.pipe';
 import { ContentIncludeComponent } from 'ish-shared/cms/components/content-include/content-include.component';
 import { CamfilModalDialogComponent } from 'ish-shared/components/common/camfil-modal-dialog/camfil-modal-dialog.component';
+import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
 
 import { CamfilCheckoutSummaryComponent } from './camfil-checkout-summary.component';
 
@@ -32,6 +33,7 @@ describe('Camfil Checkout Summary Component', () => {
     await TestBed.configureTestingModule({
       declarations: [
         CamfilCheckoutSummaryComponent,
+        CamfilSmallCtaModalComponent,
         MockComponent(CamfilModalDialogComponent),
         MockComponent(ContentIncludeComponent),
         MockDirective(ChannelToggleDirective),
