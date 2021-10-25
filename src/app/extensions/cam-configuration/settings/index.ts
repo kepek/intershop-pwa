@@ -3,7 +3,7 @@ import FI from './FI';
 import FR from './FR';
 import SE from './SE';
 
-const channelConfig = { FI, FR, SE };
+export const channelConfig = { FI, FR, SE };
 
 export type Channel = keyof typeof channelConfig;
 
