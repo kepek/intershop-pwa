@@ -1,17 +1,17 @@
 import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Store, select } from '@ngrx/store';
-import { Observable, from, of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { map, withLatestFrom } from 'rxjs/operators';
 
-import { AppFacade } from 'ish-core/facades/app.facade';
 import { ServerConfigData } from 'ish-core/models/server-config/server-config.interface';
 import { ServerConfigMapper } from 'ish-core/models/server-config/server-config.mapper';
 import { ServerConfig } from 'ish-core/models/server-config/server-config.model';
 import { ApiService } from 'ish-core/services/api/api.service';
 import { whenTruthy } from 'ish-core/utils/operators';
+import { StatePropertiesService } from 'ish-core/utils/state-transfer/state-properties.service';
 
-import { ChannelConfiguration, ChannelSetting, ChannelSettings } from '../../settings';
+import { ChannelConfiguration, ChannelSetting, ChannelSettings, channelConfig } from '../../settings';
 import { getCamfilSettings } from '../../store/configuration';
 
 @Injectable({ providedIn: 'root' })
@@ -25,7 +25,7 @@ export class ConfigurationService {
 
   private settings$: Observable<Partial<ChannelSettings>>;
 
-  constructor(private apiService: ApiService, private appFacade: AppFacade, store: Store) {
+  constructor(private apiService: ApiService, private stateProperties: StatePropertiesService, store: Store) {
     this.settings$ = store.pipe(select(getCamfilSettings));
   }
 
@@ -75,9 +75,9 @@ export class ConfigurationService {
    * @returns           The configuration object.
    */
   private getCamfilConfigurationFromFile(): Observable<ServerConfig> {
-    return from(import('../../settings')).pipe(
-      withLatestFrom(this.appFacade.getChannel$),
-      map(([module, channel]) => ({ data: { ...this.getSettingsByChannelName(module.default, channel) } })),
+    return of(channelConfig).pipe(
+      withLatestFrom(this.stateProperties.getStateOrEnvOrDefault<string>('ICM_CHANNEL', 'icmChannel')),
+      map(([settings, channel]) => ({ data: { ...this.getSettingsByChannelName(settings, channel) } })),
       map(ServerConfigMapper.fromData)
     );
   }
