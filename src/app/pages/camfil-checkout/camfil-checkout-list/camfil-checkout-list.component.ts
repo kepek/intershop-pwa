@@ -254,8 +254,6 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
     this.virtualScrollViewport?.scrolledIndexChange.pipe(skip(1), takeUntil(this.destroy$)).subscribe(el => {
       this.currentScrollIndex = el;
     });
-
-    console.log('test', this.bucketListItem.nativeElement);
   }
 
   handleHeightItemsContainer(lineItems: LineItemView[]) {

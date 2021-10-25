@@ -1,4 +1,4 @@
-import { CdkTextareaAutosize } from "@angular/cdk/text-field";
+import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -10,39 +10,39 @@ import {
   Output,
   SimpleChanges,
   TemplateRef,
-  ViewChild
-} from "@angular/core";
-import { FormArray, FormControl, FormGroup, Validators } from "@angular/forms";
-import { MatDialog } from "@angular/material/dialog";
-import { Observable, ReplaySubject, Subject } from "rxjs";
-import { debounceTime, takeUntil, withLatestFrom } from "rxjs/operators";
+  ViewChild,
+} from '@angular/core';
+import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { Observable, ReplaySubject, Subject } from 'rxjs';
+import { debounceTime, takeUntil, withLatestFrom } from 'rxjs/operators';
 
-import { CheckoutFacade } from "ish-core/facades/checkout.facade";
-import { ShoppingFacade } from "ish-core/facades/shopping.facade";
-import { AttributeHelper } from "ish-core/models/attribute/attribute.helper";
-import { Attribute } from "ish-core/models/attribute/attribute.model";
-import { LineItemUpdate } from "ish-core/models/line-item-update/line-item-update.model";
-import { LineItem, LineItemView } from "ish-core/models/line-item/line-item.model";
-import { ProductView } from "ish-core/models/product-view/product-view.model";
-import { ProductCompletenessLevel } from "ish-core/models/product/product.model";
-import { CheckoutFocusedElement } from "ish-core/models/scroll-info copy/checkout-focused-element.interface";
-import { DeviceType } from "ish-core/models/viewtype/viewtype.types";
-import { CamfilQuickViewModalComponent } from "ish-shared/components/common/camfil-quick-view-modal/camfil-quick-view-modal.component";
-import { CamfilSmallCtaModalComponent } from "ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component";
-import { markAsDirtyRecursive } from "ish-shared/forms/utils/form-utils";
+import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
+import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
+import { AttributeHelper } from 'ish-core/models/attribute/attribute.helper';
+import { Attribute } from 'ish-core/models/attribute/attribute.model';
+import { LineItemUpdate } from 'ish-core/models/line-item-update/line-item-update.model';
+import { LineItem, LineItemView } from 'ish-core/models/line-item/line-item.model';
+import { ProductView } from 'ish-core/models/product-view/product-view.model';
+import { ProductCompletenessLevel } from 'ish-core/models/product/product.model';
+import { CheckoutFocusedElement } from 'ish-core/models/scroll-info copy/checkout-focused-element.interface';
+import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
+import { CamfilQuickViewModalComponent } from 'ish-shared/components/common/camfil-quick-view-modal/camfil-quick-view-modal.component';
+import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
+import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
 
-import { CamCardMeasurement } from "../../../extensions/cam-cards/models/cam-card/cam-card.model";
+import { CamCardMeasurement } from '../../../extensions/cam-cards/models/cam-card/cam-card.model';
 
 @Component({
-  selector: "camfil-checkout-line-item",
-  templateUrl: "./camfil-checkout-line-item.component.html",
-  styleUrls: ["./camfil-checkout-line-item.component.scss"],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  selector: 'camfil-checkout-line-item',
+  templateUrl: './camfil-checkout-line-item.component.html',
+  styleUrls: ['./camfil-checkout-line-item.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDestroy {
   private static REQUIRED_COMPLETENESS_LEVEL = ProductCompletenessLevel.List;
   @ViewChild(CamfilSmallCtaModalComponent) modal: CamfilSmallCtaModalComponent;
-  @ViewChild("autosize") autosize: CdkTextareaAutosize;
+  @ViewChild('autosize') autosize: CdkTextareaAutosize;
 
   @Input() selectedItemsForm?: FormArray;
   @Input() index: number;
@@ -65,10 +65,10 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
 
   earliestDeliveryDate: Date;
   boxLabel: string;
-  measurementsValues = ["width", "height", "diameter"];
+  measurementsValues = ['width', 'height', 'diameter'];
   measurements: CamCardMeasurement;
   attrsValidator = {
-    boxLabel: [{ error: "maxlength", message: "MAX length exceeded" }]
+    boxLabel: [{ error: 'maxlength', message: 'MAX length exceeded' }],
   };
   product$: Observable<ProductView>;
   addToCartForm: FormGroup;
@@ -83,11 +83,10 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
     private shoppingFacade: ShoppingFacade,
     private checkoutFacade: CheckoutFacade,
     public dialog: MatDialog
-  ) {
-  }
+  ) {}
 
   ngOnInit() {
-    this.isMobileView = this.deviceType === "tablet" || this.deviceType === "mobile";
+    this.isMobileView = this.deviceType === 'tablet' || this.deviceType === 'mobile';
     this.product$ = this.shoppingFacade.product$(
       this.sku$,
       CamfilCheckoutLineItemComponent.REQUIRED_COMPLETENESS_LEVEL
@@ -96,7 +95,7 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
     this.addToCartQuantityControl = new FormControl(this.lineItem?.quantity?.value || 1);
 
     this.addToCartForm = new FormGroup({
-      quantity: this.addToCartQuantityControl
+      quantity: this.addToCartQuantityControl,
     });
 
     this.addToCartQuantityControl?.valueChanges
@@ -118,7 +117,7 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
       });
 
     this.boxLabelForm = new FormGroup({
-      boxLabel: new FormControl("", [Validators.maxLength(60)])
+      boxLabel: new FormControl('', [Validators.maxLength(60)]),
     });
 
     this.applyLineItemParameters(this.lineItem);
@@ -169,15 +168,15 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
       markAsDirtyRecursive(form);
       return;
     }
-    const name = target.getAttribute("name");
-    const ifLabel = name === "boxLabel";
+    const name = target.getAttribute('name');
+    const ifLabel = name === 'boxLabel';
 
     const oldValue = ifLabel ? this.boxLabel : this.measurements[name];
     let value: string | number = target.value;
     if (!ifLabel && value) {
       value = +value;
     }
-    const boxLabelAttribute: Attribute = { name, type: ifLabel ? "String" : "Double", value };
+    const boxLabelAttribute: Attribute = { name, type: ifLabel ? 'String' : 'Double', value };
 
     if (oldValue) {
       if (!value) {
@@ -199,8 +198,8 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
     if (ifLabel) {
       this.boxLabel = value as string;
       this.boxLabel?.length > 28
-        ? this.resizeLineItemOnBlur.emit("increase")
-        : this.resizeLineItemOnBlur.emit("decrease");
+        ? this.resizeLineItemOnBlur.emit('increase')
+        : this.resizeLineItemOnBlur.emit('decrease');
     } else {
       this.measurements[name] = value as number;
     }
@@ -252,10 +251,10 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
 
   openQuickViewDialog() {
     this.dialog.open(CamfilQuickViewModalComponent, {
-      width: "768px",
+      width: '768px',
       autoFocus: false,
-      maxHeight: "80vh",
-      data: { sku: this.lineItem.productSKU }
+      maxHeight: '80vh',
+      data: { sku: this.lineItem.productSKU },
     });
   }
 
@@ -270,23 +269,23 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
   }
 
   getBoxLabelValue() {
-    return this.lineItem?.attributes?.find(att => att.name === "boxLabel")?.value;
+    return this.lineItem?.attributes?.find(att => att.name === 'boxLabel')?.value;
   }
 
   private applyLineItemParameters(lineItem: LineItem) {
-    const boxLabel = (this.getValFromAttrs(lineItem, "boxLabel") as string) || "";
-    const width = (this.getValFromAttrs(lineItem, "width") as number) || undefined;
-    const height = (this.getValFromAttrs(lineItem, "height") as number) || undefined;
-    const diameter = (this.getValFromAttrs(lineItem, "diameter") as number) || undefined;
+    const boxLabel = (this.getValFromAttrs(lineItem, 'boxLabel') as string) || '';
+    const width = (this.getValFromAttrs(lineItem, 'width') as number) || undefined;
+    const height = (this.getValFromAttrs(lineItem, 'height') as number) || undefined;
+    const diameter = (this.getValFromAttrs(lineItem, 'diameter') as number) || undefined;
 
     this.boxLabel = boxLabel;
     this.measurements = {
       [this.measurementsValues[0]]: width,
       [this.measurementsValues[1]]: height,
-      [this.measurementsValues[2]]: diameter
+      [this.measurementsValues[2]]: diameter,
     };
 
-    this.boxLabelForm?.get("boxLabel").setValue(boxLabel);
+    this.boxLabelForm?.get('boxLabel').setValue(boxLabel);
   }
 
   private getValFromAttrs(lineItem: LineItem, name: string) {

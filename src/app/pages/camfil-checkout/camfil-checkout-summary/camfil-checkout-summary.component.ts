@@ -32,6 +32,7 @@ export class CamfilCheckoutSummaryComponent implements OnInit, OnChanges {
   @Input() basket: BasketView;
   @Input() isConfirmed;
   @Output() update = new EventEmitter();
+  @Input() isLoggedIn = false;
 
   productsReadyToPlaceOrder$: Observable<boolean>;
   bucketsVolumeDiscounts$: Observable<number>;
@@ -57,10 +58,6 @@ export class CamfilCheckoutSummaryComponent implements OnInit, OnChanges {
     this.validationResults$ = this.checkoutFacade.basketValidationResults$;
     this.productsReadyToPlaceOrder$ = this.shoppingFacade.productsReadyToPlaceOrder$;
 
-    if (this.configurationService.isEnabled('guestCheckout')) {
-      return;
-    }
-
     this.createGuestGdprForm();
   }
 
@@ -71,8 +68,12 @@ export class CamfilCheckoutSummaryComponent implements OnInit, OnChanges {
     }
   }
 
+  get isGuestCheckout() {
+    return this.configurationService.isEnabled('guestCheckout') && !this.isLoggedIn;
+  }
+
   submitOrder() {
-    if (this.guestGdprForm && this.guestGdprForm.invalid) {
+    if (this.isGuestCheckout && this.guestGdprForm?.invalid) {
       this.openGpdrErrorModal();
 
       return;

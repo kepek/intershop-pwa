@@ -31,11 +31,13 @@
       <mat-divider></mat-divider>
       <br />
       <ng-template #noConfirmed>
-        <form [formGroup]="guestGdprForm" class="summary-gpdr-form">
-          <mat-checkbox color="primary" [formControlName]="'gdprAcceptance'">
-            <span>{{ 'camfil.account.apply_form.gdpr' | translate }}</span>
-          </mat-checkbox>
-        </form>
+        <ng-container *camfilChannelToggle="'guestCheckout'">
+          <form [formGroup]="guestGdprForm" class="summary-gpdr-form">
+            <mat-checkbox color="primary" formControlName="gdprAcceptance">
+              <span>{{ 'camfil.account.apply_form.gdpr' | translate }}</span>
+            </mat-checkbox>
+          </form>
+        </ng-container>
         <br />
         <button
           (click)="submitOrder()"
@@ -133,7 +135,7 @@
 </ng-template>
 
 <camfil-small-cta-modal
-  actionTitle="{{ 'camfil.account.apply_form.gdpr.error.required' | translate }}"
+  actionTitle="{{ 'camfil.checkout.gdpr_form.gdpr.error.required' | translate }}"
   actionButtonTitle="{{ 'camfil.modal.cta.button.ok' | translate }}"
   onlyAccept="true"
   hasError="true"

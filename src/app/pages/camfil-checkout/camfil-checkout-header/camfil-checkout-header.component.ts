@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component, Input, OnChanges, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 
+import { AccountFacade } from 'ish-core/facades/account.facade';
 import { BasketView } from 'ish-core/models/basket/basket.model';
 import { Bucket } from 'ish-core/models/basket/bucket.model';
-import { Observable } from 'rxjs';
-import { AccountFacade } from 'ish-core/facades/account.facade';
 
 @Component({
   selector: 'camfil-checkout-header',
