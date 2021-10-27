@@ -7,8 +7,6 @@ import { ConfigurationState } from './configuration.reducer';
 
 type ConfigurationType = Partial<ConfigurationState>;
 
-export const initCamfilConfiguration = createAction('[Camfil Configuration Internal] Init the Camfil configuration');
-
 export const loadCamfilConfiguration = createAction('[Camfil Configuration Internal] Get the Camfil configuration');
 
 export const loadCamfilConfigurationSuccess = createAction(

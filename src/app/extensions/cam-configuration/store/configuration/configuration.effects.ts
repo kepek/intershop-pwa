@@ -1,14 +1,16 @@
-import { Injectable } from '@angular/core';
-import { Actions, OnInitEffects, createEffect, ofType } from '@ngrx/effects';
-import { Action, Store, select } from '@ngrx/store';
-import { concatMap, map, mapTo, switchMapTo } from 'rxjs/operators';
+import { isPlatformServer } from '@angular/common';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { routerNavigationAction } from '@ngrx/router-store';
+import { Store, select } from '@ngrx/store';
+import { identity } from 'rxjs';
+import { concatMap, first, map, mapTo, switchMapTo } from 'rxjs/operators';
 
 import { mapErrorToAction, whenFalsy } from 'ish-core/utils/operators';
 
 import { ConfigurationService } from '../../services/configuration/configuration.service';
 
 import {
-  initCamfilConfiguration,
   loadCamfilConfiguration,
   loadCamfilConfigurationFail,
   loadCamfilConfigurationSuccess,
@@ -16,10 +18,11 @@ import {
 import { isCamfilConfigurationInitialized } from './configuration.selectors';
 
 @Injectable()
-export class ConfigurationEffects implements OnInitEffects {
+export class ConfigurationEffects {
   loadCamfilConfigurationOnInit$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(initCamfilConfiguration),
+      ofType(routerNavigationAction),
+      isPlatformServer(this.platformId) ? first() : identity,
       switchMapTo(this.store.pipe(select(isCamfilConfigurationInitialized))),
       whenFalsy(),
       mapTo(loadCamfilConfiguration())
@@ -38,9 +41,10 @@ export class ConfigurationEffects implements OnInitEffects {
     )
   );
 
-  constructor(private actions$: Actions, private store: Store, private configService: ConfigurationService) {}
-
-  ngrxOnInitEffects(): Action {
-    return initCamfilConfiguration();
-  }
+  constructor(
+    private actions$: Actions,
+    private store: Store,
+    private configService: ConfigurationService,
+    @Inject(PLATFORM_ID) private platformId: string
+  ) {}
 }

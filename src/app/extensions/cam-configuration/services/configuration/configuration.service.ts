@@ -1,15 +1,15 @@
-import { HttpHeaders } from '@angular/common/http';
+import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
-import { map, withLatestFrom } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 
+import { AppFacade } from 'ish-core/facades/app.facade';
 import { ServerConfigData } from 'ish-core/models/server-config/server-config.interface';
 import { ServerConfigMapper } from 'ish-core/models/server-config/server-config.mapper';
 import { ServerConfig } from 'ish-core/models/server-config/server-config.model';
 import { ApiService } from 'ish-core/services/api/api.service';
 import { whenTruthy } from 'ish-core/utils/operators';
-import { StatePropertiesService } from 'ish-core/utils/state-transfer/state-properties.service';
 
 import { ChannelConfiguration, ChannelSetting, ChannelSettings, channelConfig } from '../../settings';
 import { getCamfilSettings } from '../../store/configuration';
@@ -25,7 +25,7 @@ export class ConfigurationService {
 
   private settings$: Observable<Partial<ChannelSettings>>;
 
-  constructor(private apiService: ApiService, private stateProperties: StatePropertiesService, store: Store) {
+  constructor(private apiService: ApiService, private appFacade: AppFacade, store: Store) {
     this.settings$ = store.pipe(select(getCamfilSettings));
   }
 
@@ -46,14 +46,19 @@ export class ConfigurationService {
   }
 
   getCamfilConfiguration() {
-    switch (this.mode) {
-      case 'file':
-        return this.getCamfilConfigurationFromFile();
-      case 'server':
-        return this.getCamfilConfigurationFromServer();
-      default:
-        return of(undefined);
-    }
+    return this.appFacade.getChannel$.pipe(
+      whenTruthy(),
+      switchMap(channelName => {
+        switch (this.mode) {
+          case 'file':
+            return this.getCamfilConfigurationFromFile(channelName);
+          case 'server':
+            return this.getCamfilConfigurationFromServer(channelName);
+          default:
+            return of(undefined);
+        }
+      })
+    );
   }
 
   /**
@@ -61,10 +66,11 @@ export class ConfigurationService {
    * @private
    * @returns           The configuration object.
    */
-  private getCamfilConfigurationFromServer(): Observable<ServerConfig> {
+  private getCamfilConfigurationFromServer(channelName: string): Observable<ServerConfig> {
     return this.apiService
       .get<ServerConfigData>(`camfil_configurations`, {
         headers: this.configHeaders,
+        params: new HttpParams({ fromObject: { channelName } }),
       })
       .pipe(map(serverConfigData => ServerConfigMapper.fromData(serverConfigData)));
   }
@@ -74,10 +80,9 @@ export class ConfigurationService {
    * @private
    * @returns           The configuration object.
    */
-  private getCamfilConfigurationFromFile(): Observable<ServerConfig> {
+  private getCamfilConfigurationFromFile(channelName: string): Observable<ServerConfig> {
     return of(channelConfig).pipe(
-      withLatestFrom(this.stateProperties.getStateOrEnvOrDefault<string>('ICM_CHANNEL', 'icmChannel')),
-      map(([settings, channel]) => ({ data: { ...this.getSettingsByChannelName(settings, channel) } })),
+      map(settings => ({ data: { ...this.getSettingsByChannelName(settings, channelName) } })),
       map(ServerConfigMapper.fromData)
     );
   }
