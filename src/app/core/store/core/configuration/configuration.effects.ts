@@ -18,18 +18,6 @@ import { getCurrentLocale, getDeviceType } from './configuration.selectors';
 
 @Injectable()
 export class ConfigurationEffects {
-  constructor(
-    private actions$: Actions,
-    private store: Store,
-    private translateService: TranslateService,
-    private stateProperties: StatePropertiesService,
-    private transferState: TransferState,
-    @Inject(PLATFORM_ID) private platformId: string,
-    private appRef: ApplicationRef,
-    @Inject(MEDIUM_BREAKPOINT_WIDTH) private mediumBreakpointWidth: number,
-    @Inject(LARGE_BREAKPOINT_WIDTH) private largeBreakpointWidth: number
-  ) {}
-
   $stable = createEffect(
     () =>
       this.appRef.isStable.pipe(
@@ -39,7 +27,6 @@ export class ConfigurationEffects {
       ),
     { dispatch: false }
   );
-
   setInitialRestEndpoint$ = createEffect(() =>
     iif(
       () => !this.transferState.hasKey(NGRX_STATE_SK),
@@ -91,7 +78,6 @@ export class ConfigurationEffects {
       )
     )
   );
-
   setLocale$ = createEffect(
     () =>
       this.store.pipe(
@@ -105,7 +91,6 @@ export class ConfigurationEffects {
       ),
     { dispatch: false }
   );
-
   setDeviceType$ = createEffect(() =>
     iif(
       () => isPlatformBrowser(this.platformId),
@@ -126,4 +111,16 @@ export class ConfigurationEffects {
       )
     )
   );
+
+  constructor(
+    private actions$: Actions,
+    private store: Store,
+    private translateService: TranslateService,
+    private stateProperties: StatePropertiesService,
+    private transferState: TransferState,
+    @Inject(PLATFORM_ID) private platformId: string,
+    private appRef: ApplicationRef,
+    @Inject(MEDIUM_BREAKPOINT_WIDTH) private mediumBreakpointWidth: number,
+    @Inject(LARGE_BREAKPOINT_WIDTH) private largeBreakpointWidth: number
+  ) {}
 }

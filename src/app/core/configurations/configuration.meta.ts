@@ -10,9 +10,11 @@ import { mergeDeep } from 'ish-core/utils/functions';
 
 class SimpleParamMap {
   constructor(private obj: Params) {}
+
   has(key: string): boolean {
     return this.obj[key] !== undefined;
   }
+
   get<T>(key: string): T {
     return this.obj[key];
   }

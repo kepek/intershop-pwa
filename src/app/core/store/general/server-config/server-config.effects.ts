@@ -14,13 +14,6 @@ import { isServerConfigurationLoaded } from './server-config.selectors';
 
 @Injectable()
 export class ServerConfigEffects {
-  constructor(
-    private actions$: Actions,
-    private store: Store,
-    private configService: ConfigurationService,
-    @Inject(PLATFORM_ID) private platformId: string
-  ) {}
-
   /**
    * get server configuration on routing event, if it is not already loaded
    */
@@ -33,7 +26,6 @@ export class ServerConfigEffects {
       mapTo(loadServerConfig())
     )
   );
-
   loadServerConfig$ = createEffect(() =>
     this.actions$.pipe(
       ofType(loadServerConfig),
@@ -45,4 +37,11 @@ export class ServerConfigEffects {
       )
     )
   );
+
+  constructor(
+    private actions$: Actions,
+    private store: Store,
+    private configService: ConfigurationService,
+    @Inject(PLATFORM_ID) private platformId: string
+  ) {}
 }
