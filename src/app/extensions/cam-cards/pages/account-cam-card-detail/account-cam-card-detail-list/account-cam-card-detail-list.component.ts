@@ -30,7 +30,7 @@ import { Channel } from 'ish-core/models/channel/channel.types';
 import { Price } from 'ish-core/models/price/price.model';
 import { Product } from 'ish-core/models/product/product.model';
 import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
-import { whenTruthy } from 'ish-core/utils/operators';
+import { whenFalsy, whenTruthy } from 'ish-core/utils/operators';
 import { CamfilModalDialogComponent } from 'ish-shared/components/common/camfil-modal-dialog/camfil-modal-dialog.component';
 
 import { CamCardsFacade } from '../../../facades/cam-cards.facade';
@@ -89,6 +89,8 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges, OnD
   loading = false;
   showPrice = true;
   newSkusAfterUpdate = [];
+
+  freshErpInfo = false;
 
   invalidProducts: InvalidProducts = { measurements: [], notAvailable: [] };
   modalType: 'noErpNoAddress' | 'invalidProducts';
@@ -300,6 +302,16 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges, OnD
   ) {
     const { postalCode, city } = this.camCard.deliveryAddress;
     const noErpNoAddress = !this.camCard.erpId || !postalCode || !city;
+
+    if (!this.camCard.erpId && !this.freshErpInfo) {
+      this.camCardsFacade.loadCamCards();
+      this.camCardsFacade.camCardsLoading$.pipe(whenFalsy(), take(1)).subscribe(() => {
+        this.freshErpInfo = true;
+        this.handleSelectedCamCardsOnAddToCart(checkInBasketModal, addToCartFlowModal);
+      });
+      return;
+    }
+    this.freshErpInfo = false;
 
     if (noErpNoAddress) {
       this.modalType = 'noErpNoAddress';
