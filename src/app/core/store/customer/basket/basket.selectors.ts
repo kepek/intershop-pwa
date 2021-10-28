@@ -149,3 +149,9 @@ export const getBucketsVolumeDiscounts = createSelector(getBasketState, basket =
 export const getProductAddingError = createSelector(getBasketState, basket => basket.error);
 
 export const getFailedCamCardName = createSelector(getBasketState, basket => basket.failedCamCardName);
+
+export const getAnonymousBasketDataRO = createSelector(
+  getBasketState,
+  /* tslint:disable:no-string-literal */
+  basket => basket.basket?.basketExtensions?.[0]['anonymousBasketDataRO']
+);

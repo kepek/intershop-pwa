@@ -2,7 +2,7 @@ import { AddressMapper } from 'ish-core/models/address/address.mapper';
 import { BasketRebateData } from 'ish-core/models/basket-rebate/basket-rebate.interface';
 import { BasketRebateMapper } from 'ish-core/models/basket-rebate/basket-rebate.mapper';
 import { BasketTotal } from 'ish-core/models/basket-total/basket-total.model';
-import { BasketBaseData, BasketData } from 'ish-core/models/basket/basket.interface';
+import { BasketBaseData, BasketData, GuestBasketExtensions } from 'ish-core/models/basket/basket.interface';
 import { LineItemMapper } from 'ish-core/models/line-item/line-item.mapper';
 import { PaymentMapper } from 'ish-core/models/payment/payment.mapper';
 import { PriceItemMapper } from 'ish-core/models/price-item/price-item.mapper';
@@ -37,7 +37,6 @@ export class BasketMapper {
               };
             })
         : [];
-
     return {
       id: data.id,
       bucketId: data.buckets && data.buckets.length === 1 && data.buckets[0],
@@ -136,5 +135,85 @@ export class BasketMapper {
           isEstimated: false,
         }
       : undefined;
+  }
+
+  static getAnonymousBasket(data: GuestBasketExtensions) {
+    const deliveryAddress = {
+      streetAddress: data.dlvStreetAddress,
+      zipCode: data.dlvZipCode,
+      city: data.dlvCity,
+      country: data.dlvCountry,
+    };
+    const invoiceAddress = {
+      streetAddress: data.invStreetAddress,
+      zipCode: data.invZipCode,
+      city: data.invCity,
+      country: data.invCountry,
+    };
+    return {
+      userDetailsFormGroup: {
+        firstName: data.firstName,
+        lastName: data.lastName,
+        email: data.emailAddress,
+        phone: data.phoneNumber,
+        siret: data.siretNumber,
+        companyName: data.companyName,
+        jobTitle: data.jobTitle,
+        vat: data.vatNumber,
+      },
+      deliveryInfoFromGroup: {
+        boxLabel: data.dlvGoodsMark,
+        invoiceMark: data.dlvInvoiceMark,
+        deliveryInfo: data.dlvInfo,
+        customerNote: data.dlvNote,
+        streetAddress: data.dlvStreetAddress,
+        zipCode: data.dlvZipCode,
+        city: data.dlvCity,
+        country: data.dlvCountry,
+        sameAddressAsInvoice: BasketMapper.compareAddressFormGroups(deliveryAddress, invoiceAddress),
+      },
+      invoiceAddressFormGroup: {
+        streetAddress: data.invStreetAddress,
+        zipCode: data.invZipCode,
+        city: data.invCity,
+        country: data.invCountry,
+      },
+    };
+  }
+
+  static compareAddressFormGroups(deliveryAddress, invoiceAddress): boolean {
+    return (
+      deliveryAddress.streetAddress === invoiceAddress.streetAddress &&
+      deliveryAddress.zipCode === invoiceAddress.zipCode &&
+      deliveryAddress.city === invoiceAddress.city &&
+      deliveryAddress.country === invoiceAddress.country
+    );
+  }
+
+  static convertFormDataToAnonymousBasketData(data): GuestBasketExtensions {
+    const { userDetailsFormGroup, deliveryInfoFromGroup, invoiceAddressFormGroup } = data;
+    const sameAsDelivery = deliveryInfoFromGroup.sameAddressAsInvoice;
+    return {
+      firstName: userDetailsFormGroup.firstName,
+      lastName: userDetailsFormGroup.lastName,
+      emailAddress: userDetailsFormGroup.email,
+      phoneNumber: userDetailsFormGroup.phone,
+      companyName: userDetailsFormGroup.companyName,
+      vatNumber: userDetailsFormGroup.vat,
+      siretNumber: userDetailsFormGroup.siret,
+      jobTitle: userDetailsFormGroup.jobTitle,
+      dlvGoodsMark: deliveryInfoFromGroup.boxLabel,
+      dlvInvoiceMark: deliveryInfoFromGroup.invoiceMark,
+      dlvInfo: deliveryInfoFromGroup.deliveryInfo,
+      dlvNote: deliveryInfoFromGroup.customerNote,
+      dlvStreetAddress: deliveryInfoFromGroup.streetAddress,
+      dlvZipCode: deliveryInfoFromGroup.zipCode,
+      dlvCity: deliveryInfoFromGroup.city,
+      dlvCountry: deliveryInfoFromGroup.country,
+      invStreetAddress: sameAsDelivery ? deliveryInfoFromGroup.streetAddress : invoiceAddressFormGroup.streetAddress,
+      invZipCode: sameAsDelivery ? deliveryInfoFromGroup.zipCode : invoiceAddressFormGroup.zipCode,
+      invCity: sameAsDelivery ? deliveryInfoFromGroup.city : invoiceAddressFormGroup.city,
+      invCountry: sameAsDelivery ? deliveryInfoFromGroup.country : invoiceAddressFormGroup.country,
+    };
   }
 }

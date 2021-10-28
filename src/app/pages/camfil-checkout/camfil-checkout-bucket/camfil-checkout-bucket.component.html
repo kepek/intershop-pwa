@@ -44,7 +44,7 @@
       {{ 'camfil.checkout.order' | translate }} {{ !!buckets?.length ? index + ' / ' + buckets?.length : '' }}</strong
     >
     <span class="order-number" data-id-id="order-number"
-    >{{ order?.customer?.customerNo }}, {{ order?.customer?.companyName }}</span
+      >{{ order?.customer?.customerNo }}, {{ order?.customer?.companyName }}</span
     >
   </div>
 </ng-template>
@@ -112,7 +112,7 @@
                       class="notranslate material-icons color-light"
                       data-mat-icon-type="font"
                       role="img"
-                    >close
+                      >close
                     </mat-icon>
                   </span>
                 </button>
@@ -257,10 +257,10 @@
         <hr *ngIf="deliveryTerm.id !== 'CPT-RL'" class="m-1" />
         <b *ngIf="freeDelivery.value > 0">{{
           'camfil.checkout.free_delivery.threshold' | translate: { '0': (freeDelivery | ishPrice) }
-          }}</b>
+        }}</b>
         <b *ngIf="!(freeDelivery.value > 0) && deliveryTerm.id !== 'CPT-RL'">{{
           'camfil.checkout.free_delivery' | translate
-          }}</b>
+        }}</b>
       </div>
     </div>
 

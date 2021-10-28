@@ -338,10 +338,9 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
 
   submitGuestCheckout(guestBucketAddressData: GuestBasketExtensions) {
     const { basket, deliveryAddressId } = this.order;
-
     const updated: BasketExtensions = {
       ...this.currentBasketExtensions,
-      ...guestBucketAddressData,
+      anonymousBasketDataRO: guestBucketAddressData,
     };
 
     this.shoppingFacade.updateBucket(basket, deliveryAddressId, updated);

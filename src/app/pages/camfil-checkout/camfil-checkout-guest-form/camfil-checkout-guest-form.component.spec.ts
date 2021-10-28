@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { instance, mock } from 'ts-mockito';
 
 import { CamfilMaxLengthAttributeCreateDirective } from 'ish-core/directives/camfil-max-length-attribute-create.directive';
+import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 
 import { CamConfigurationFacade } from '../../../extensions/cam-configuration/facades/cam-configuration.facade';
 
@@ -12,12 +13,17 @@ describe('Camfil Checkout Guest Form Component', () => {
   let fixture: ComponentFixture<CamfilCheckoutGuestFormComponent>;
   let element: HTMLElement;
   let camConfigurationFacade: CamConfigurationFacade;
+  let checkoutFacadeMock: CheckoutFacade;
 
   beforeEach(async () => {
     camConfigurationFacade = mock(CamConfigurationFacade);
+    checkoutFacadeMock = mock(CheckoutFacade);
     await TestBed.configureTestingModule({
-      declarations: [CamfilCheckoutGuestFormComponent, CamfilMaxLengthAttributeCreateDirective],
-      providers: [{ provide: CamConfigurationFacade, useFactory: () => instance(camConfigurationFacade) }],
+      declarations: [CamfilGuestFormComponent, CamfilMaxLengthAttributeCreateDirective],
+      providers: [
+        { provide: CamConfigurationFacade, useFactory: () => instance(camConfigurationFacade) },
+        { provide: CheckoutFacade, useFactory: () => instance(checkoutFacadeMock) },
+      ],
     }).compileComponents();
   });
 

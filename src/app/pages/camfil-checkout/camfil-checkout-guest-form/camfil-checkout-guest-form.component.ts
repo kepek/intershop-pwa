@@ -4,7 +4,10 @@ import { Subject } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 import { CamConfigurationFacade } from 'src/app/extensions/cam-configuration/facades/cam-configuration.facade';
 
+import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { GuestBasketExtensions } from 'ish-core/models/basket/basket.interface';
+import { BasketMapper } from 'ish-core/models/basket/basket.mapper';
+import { whenTruthy } from 'ish-core/utils/operators';
 import { SpecialValidators } from 'ish-shared/forms/validators/special-validators';
 
 @Component({
@@ -18,17 +21,27 @@ export class CamfilCheckoutGuestFormComponent implements OnInit, OnDestroy {
   guestForm: FormGroup;
   showInvoiceAddressForm = false;
   countryCode: string;
-  showForm = false;
+  anonymousBasketDataRO;
   @Output() submit = new EventEmitter<GuestBasketExtensions>();
 
   private destroy$ = new Subject();
 
-  constructor(private fb: FormBuilder, private camConfigurationFacade: CamConfigurationFacade) {}
+  constructor(
+    private fb: FormBuilder,
+    private camConfigurationFacade: CamConfigurationFacade,
+    private checkoutFacade: CheckoutFacade
+  ) {}
 
   ngOnInit() {
     this.camConfigurationFacade.countryCode$?.pipe(takeUntil(this.destroy$)).subscribe(value => {
       this.countryCode = value;
     });
+
+    this.checkoutFacade.anonymousBasketDataRO$
+      ?.pipe(whenTruthy(), takeUntil(this.destroy$))
+      .subscribe(anonymousBasketDataRO => {
+        this.anonymousBasketDataRO = BasketMapper.getAnonymousBasket(anonymousBasketDataRO);
+      });
 
     this.guestForm = this.fb.group({
       userDetailsFormGroup: this.initUserDetailsForm(),
@@ -36,7 +49,8 @@ export class CamfilCheckoutGuestFormComponent implements OnInit, OnDestroy {
     });
 
     if (this.guestForm) {
-      this.guestForm.valueChanges.pipe(debounceTime(500), takeUntil(this.destroy$)).subscribe(() => {
+      this.patchGuestForm();
+      this.guestForm?.valueChanges.pipe(debounceTime(500), takeUntil(this.destroy$)).subscribe(() => {
         this.submitGuestForm();
       });
     }
@@ -90,44 +104,30 @@ export class CamfilCheckoutGuestFormComponent implements OnInit, OnDestroy {
   }
 
   submitGuestForm() {
-    const sameAsDelivery = this.guestForm.get(['deliveryInfoFromGroup', 'sameAddressAsInvoice']).value;
-    const deliveryAddress = {
-      addressLine1: this.guestForm.get(['invoiceAddressFormGroup', 'streetAddress']).value,
-      postalCode: this.guestForm.get(['invoiceAddressFormGroup', 'zipCode']).value,
-      city: this.guestForm.get(['invoiceAddressFormGroup', 'city']).value,
-      country: this.guestForm.get(['invoiceAddressFormGroup', 'country']).value,
-      countryCode: this.countryCode,
-      invoiceToAddress: false,
-      shipToAddress: true,
-    };
+    const anonymousBasketDataFromFormValues = BasketMapper.convertFormDataToAnonymousBasketData(this.guestForm.value);
 
-    const invoiceAddress = sameAsDelivery
-      ? deliveryAddress
-      : {
-          addressLine1: this.guestForm.get(['deliveryInfoFromGroup', 'streetAddress']).value,
-          postalCode: this.guestForm.get(['deliveryInfoFromGroup', 'zipCode']).value,
-          city: this.guestForm.get(['deliveryInfoFromGroup', 'city']).value,
-          country: this.guestForm.get(['deliveryInfoFromGroup', 'country']).value,
-          countryCode: this.countryCode,
-          invoiceToAddress: true,
-          shipToAddress: false,
-        };
-    this.submit.emit({
-      firstName: this.guestForm.get(['userDetailsFormGroup', 'firstName']).value,
-      lastName: this.guestForm.get(['userDetailsFormGroup', 'lastName']).value,
-      companyName: this.guestForm.get(['userDetailsFormGroup', 'companyName']).value,
-      email: this.guestForm.get(['userDetailsFormGroup', 'email']).value,
-      phone: this.guestForm.get(['userDetailsFormGroup', 'phone']).value,
-      deliveryAddress,
-      invoiceAddress,
-      vat: this.guestForm.get(['userDetailsFormGroup', 'vat']).value,
-      jobTitle: this.guestForm.get(['userDetailsFormGroup', 'jobTitle']).value,
-      siret: this.guestForm.get(['userDetailsFormGroup', 'siret']).value,
-      orderMark: this.guestForm.get(['deliveryInfoFromGroup', 'boxLabel']).value,
-      invoiceLabel: this.guestForm.get(['deliveryInfoFromGroup', 'invoiceMark']).value,
-      deliveryInfo: this.guestForm.get(['deliveryInfoFromGroup', 'deliveryInfo']).value,
-      customerNote: this.guestForm.get(['deliveryInfoFromGroup', 'customerNote']).value,
-    });
+    this.submit.emit(anonymousBasketDataFromFormValues);
+  }
+
+  patchGuestForm() {
+    if (this.anonymousBasketDataRO) {
+      const { userDetailsFormGroup, deliveryInfoFromGroup, invoiceAddressFormGroup } = this.anonymousBasketDataRO;
+
+      this.guestForm.controls.userDetailsFormGroup.patchValue({
+        ...userDetailsFormGroup,
+      });
+
+      this.guestForm.controls.deliveryInfoFromGroup.patchValue({
+        ...deliveryInfoFromGroup,
+      });
+
+      if (!deliveryInfoFromGroup.sameAddressAsInvoice) {
+        this.toggleInvoiceAddressForm();
+        this.guestForm.controls.invoiceAddressFormGroup.patchValue({
+          ...invoiceAddressFormGroup,
+        });
+      }
+    }
   }
 
   ngOnDestroy() {

@@ -30,5 +30,3 @@ export interface Address {
   installToAddress?: boolean;
   eligibleShipToAddress?: boolean;
 }
-
-export interface GuestAddress extends Partial<Address> {}

@@ -1,5 +1,5 @@
 import { AddressData } from 'ish-core/models/address/address.interface';
-import { Address, GuestAddress } from 'ish-core/models/address/address.model';
+import { Address } from 'ish-core/models/address/address.model';
 import { Attribute } from 'ish-core/models/attribute/attribute.model';
 import { BasketApproval } from 'ish-core/models/basket-approval/basket-approval.model';
 import { BasketInfo } from 'ish-core/models/basket-info/basket-info.model';
@@ -91,22 +91,29 @@ export interface BasketExtensions {
   siret?: string;
   jobTitle?: string;
   customerNote?: string;
+  anonymousBasketDataRO?: GuestBasketExtensions;
 }
 
 // GUEST basket extensions
 export interface GuestBasketExtensions {
   firstName: string;
   lastName: string;
-  email: string;
-  phone: string;
-  orderMark?: string;
-  invoiceLabel?: string;
+  emailAddress: string;
+  phoneNumber: string;
+  dlvGoodsMark?: string;
+  dlvInvoiceMark?: string;
   companyName?: string;
-  vat?: string;
-  siret?: string;
+  vatNumber?: string;
+  siretNumber?: string;
   jobTitle?: string;
-  customerNote?: string;
-  deliveryInfo?: string;
-  deliveryAddress?: GuestAddress;
-  invoiceAddress?: GuestAddress;
+  dlvInfo?: string;
+  dlvNote?: string;
+  dlvStreetAddress: string;
+  dlvZipCode: string;
+  dlvCity: string;
+  dlvCountry: string;
+  invStreetAddress?: string;
+  invZipCode?: string;
+  invCity?: string;
+  invCountry?: string;
 }
