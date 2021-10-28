@@ -15,6 +15,7 @@ import { Order } from 'ish-core/models/order/order.model';
 import { createOrderSuccess } from 'ish-core/store/customer/orders/orders.actions';
 import { BasketInfoComponent } from 'ish-shared/components/basket/basket-info/basket-info.component';
 import { CamfilBasketValidationResultsComponent } from 'ish-shared/components/basket/camfil-basket-validation-results/camfil-basket-validation-results.component';
+import { CamfilErrorMessageComponent } from 'ish-shared/components/common/camfil-error-message/camfil-error-message.component';
 import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
 
 import { CamCardsFacade } from '../../extensions/cam-cards/facades/cam-cards.facade';
@@ -23,9 +24,11 @@ import { ConfigurationService } from '../../extensions/cam-configuration/service
 import { ChannelConfiguration } from '../../extensions/cam-configuration/settings';
 import { getConfigurationState } from '../../extensions/cam-configuration/store/configuration';
 
+import { CamfilCheckoutBucketComponent } from './camfil-checkout-bucket/camfil-checkout-bucket.component';
+import { CamfilCheckoutGuestFormComponent } from './camfil-checkout-guest-form/camfil-checkout-guest-form.component';
 import { CamfilCheckoutHeaderComponent } from './camfil-checkout-header/camfil-checkout-header.component';
-import { CamfilCheckoutListComponent } from './camfil-checkout-list/camfil-checkout-list.component';
 import { CamfilCheckoutPageComponent } from './camfil-checkout-page.component';
+import { CamfilCheckoutPaymentComponent } from './camfil-checkout-payment/camfil-checkout-payment.component';
 import { CamfilCheckoutSummaryComponent } from './camfil-checkout-summary/camfil-checkout-summary.component';
 import { CamfilCheckoutToolbarComponent } from './camfil-checkout-toolbar/camfil-checkout-toolbar.component';
 import { CamfilCheckoutValidationComponent } from './camfil-checkout-validation/camfil-checkout-validation.component';
@@ -115,12 +118,15 @@ describe('Camfil Checkout Page Component', () => {
         CamfilCheckoutPageComponent,
         MockComponent(BasketInfoComponent),
         MockComponent(CamfilBasketValidationResultsComponent),
+        MockComponent(CamfilCheckoutBucketComponent),
         MockComponent(CamfilCheckoutHeaderComponent),
-        MockComponent(CamfilCheckoutListComponent),
         MockComponent(CamfilCheckoutSummaryComponent),
         MockComponent(CamfilCheckoutToolbarComponent),
         MockComponent(CamfilCheckoutValidationComponent),
         MockComponent(CamfilLoadingComponent),
+        MockDirective(CamfilCheckoutGuestFormComponent),
+        MockDirective(CamfilCheckoutPaymentComponent),
+        MockDirective(CamfilErrorMessageComponent),
         MockDirective(ChannelToggleDirective),
       ],
       imports: [RouterTestingModule],
@@ -159,6 +165,7 @@ describe('Camfil Checkout Page Component', () => {
     when(checkoutFacade.emptyBuckets$).thenReturn(of([]));
     when(checkoutFacade.selectedOrder$).thenReturn(of(selectedOrder));
     when(checkoutFacade.basket$).thenReturn(of(basketDetails));
+    when(checkoutFacade.eligiblePaymentMethods$()).thenReturn(of([]));
   });
 
   it('should be created', () => {

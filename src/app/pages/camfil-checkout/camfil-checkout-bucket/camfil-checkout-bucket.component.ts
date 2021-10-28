@@ -43,14 +43,15 @@ import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { AppFacade } from 'ish-core/facades/app.facade';
 import { Channel } from 'ish-core/models/channel/channel.types';
 import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
+import { AccountFacade } from 'ish-core/facades/account.facade';
 
 @Component({
-  selector: 'camfil-checkout-list',
-  templateUrl: './camfil-checkout-list.component.html',
+  selector: 'camfil-checkout-bucket',
+  templateUrl: './camfil-checkout-bucket.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  styleUrls: ['./camfil-checkout-list.component.scss'],
+  styleUrls: ['./camfil-checkout-bucket.component.scss'],
 })
-export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDestroy, OnChanges {
+export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnDestroy, OnChanges {
   @ViewChild(CamfilSmallCtaModalComponent) modal: CamfilSmallCtaModalComponent;
   @ViewChild(CdkVirtualScrollViewport, { static: false }) virtualScrollViewport: CdkVirtualScrollViewport;
   @ViewChild('bucketListItem') bucketListItem: ElementRef;
@@ -61,6 +62,7 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
   @Input() isConfirmed: boolean;
   @Input() index: number;
   @Input() isLoggedIn = false;
+
   currentScrollIndex?: number;
   isOrderOpen = true;
   orderForm: FormGroup;
@@ -75,19 +77,21 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
   deliveryTerm: CustomerDeliveryTerm;
   basketInvoiceAddress: Address;
   closedDates;
-  calendarExceptions$: Observable<[]>;
   calendarException = [];
   orderAddress = {};
   emailRecipients: string[];
-  emailRecipients$: Observable<string[]>;
   basketExtensions: BasketExtensions[];
   deliveryDateValue: string;
-  focusedCheckoutElement$: Observable<CheckoutFocusedElement>;
   focusedElement: CheckoutFocusedElement;
   focusedElementId: string;
   forceUpdateForm = false;
   hideRecipientButton = false;
   itemSize = 90;
+
+  calendarExceptions$: Observable<[]>;
+  emailRecipients$: Observable<string[]>;
+  focusedCheckoutElement$: Observable<CheckoutFocusedElement>;
+  isLoggedIn$: Observable<boolean>;
   deviceType$: Observable<DeviceType>;
 
   private destroy$ = new Subject<void>();
@@ -99,7 +103,8 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
     private checkoutFacade: CheckoutFacade,
     private shoppingFacade: ShoppingFacade,
     private translate: TranslateService,
-    private appFacade: AppFacade
+    private appFacade: AppFacade,
+    private accountFacade: AccountFacade
   ) {}
 
   get currentBasketExtensions() {
@@ -150,6 +155,7 @@ export class CamfilCheckoutListComponent implements OnInit, AfterViewInit, OnDes
   }
 
   ngOnInit(): void {
+    this.isLoggedIn$ = this.accountFacade.isLoggedIn$;
     this.calendarExceptions$ = this.checkoutFacade.calendarExceptions$;
 
     this.orderAddress = this.shipToAddress;

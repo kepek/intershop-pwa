@@ -1,0 +1,287 @@
+{
+  "data": [
+    {
+      "approval": {
+        "approvalRequired": false
+      },
+      "attributes": [
+        {
+          "name": "CAMFIL_CONTACT_ERPID_7YgKAQFEy9oAAAF8MpMYAOTN",
+          "type": "String",
+          "value": "CO-012407"
+        },
+        {
+          "name": "CAMFIL_CUSTOMER_ID_7YgKAQFEy9oAAAF8MpMYAOTN",
+          "type": "String",
+          "value": "vXMKAQFELS8AAAF4fWAh4_ju"
+        },
+        {
+          "name": "CAMFIL_EMAIL_RECIPIENTS_7YgKAQFEy9oAAAF8MpMYAOTN",
+          "type": "String"
+        },
+        {
+          "name": "CAMFIL_INFO_7YgKAQFEy9oAAAF8MpMYAOTN",
+          "type": "String"
+        },
+        {
+          "name": "CAMFIL_INVOICE_LABEL_7YgKAQFEy9oAAAF8MpMYAOTN",
+          "type": "String"
+        },
+        {
+          "name": "CAMFIL_ORDER_MARK_7YgKAQFEy9oAAAF8MpMYAOTN",
+          "type": "String"
+        },
+        {
+          "name": "CAMFIL_PHONE_NUMBER_7YgKAQFEy9oAAAF8MpMYAOTN",
+          "type": "String"
+        }
+      ],
+      "basketExtensions": [
+        {
+          "type": "CamfilBasketExtensionRO",
+          "shippingAddress": {
+            "type": "Address",
+            "urn": "urn:address:basket:oHYKAQFE28EAAAF8olQYAOTN:7YgKAQFEy9oAAAF8MpMYAOTN",
+            "id": "7YgKAQFEy9oAAAF8MpMYAOTN",
+            "firstName": "Tero",
+            "lastName": "Sihvo",
+            "companyName1": "Euran Ilma ja Pelti",
+            "addressLine1": "Inkimäentie 111",
+            "postalCode": "27510",
+            "countryCode": "FI",
+            "city": "EURA",
+            "usage": [
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "street": "Inkimäentie 111",
+            "invoiceToAddress": true,
+            "shipToAddress": true,
+            "shipFromAddress": true,
+            "serviceToAddress": true,
+            "installToAddress": true,
+            "company": "Euran Ilma ja Pelti"
+          },
+          "contactPerson": {
+            "type": "Contact",
+            "profileId": "dPgKAQFEpIcAAAF4qHQh4_ju",
+            "email": "tero.sihvo@ahlsell.fi",
+            "firstName": "Tero",
+            "lastName": "Sihvo",
+            "erpId": "CO-012407",
+            "login": "84a80c18-3ad2-e511-80dd-d89d67630e38"
+          },
+          "info": "",
+          "phoneNumber": "",
+          "deliveryDate": "2021-11-08",
+          "orderMark": "",
+          "invoiceLabel": "",
+          "customer": {
+            "type": "SMBCustomer",
+            "customerNo": "120033",
+            "customerType": "SMB",
+            "preferredInvoiceToAddress": {
+              "type": "Address",
+              "urn": "urn:address:customer:vXMKAQFELS8AAAF4fWAh4_ju:4UoKAQFEcqAAAAF4h2Ah4_ju",
+              "id": "4UoKAQFEcqAAAAF4h2Ah4_ju",
+              "addressName": "Ahlsell Oy",
+              "companyName1": "Ahlsell Oy",
+              "addressLine1": "Kallionopontie 1",
+              "postalCode": "05620",
+              "countryCode": "FI",
+              "city": "HYVINKÄÄ",
+              "usage": [
+                true
+              ],
+              "street": "Kallionopontie 1",
+              "invoiceToAddress": true,
+              "shipToAddress": false,
+              "shipFromAddress": false,
+              "serviceToAddress": false,
+              "installToAddress": false,
+              "company": "Ahlsell Oy"
+            },
+            "companyName": "Ahlsell Oy",
+            "companyName2": "",
+            "taxationID": "",
+            "industry": "",
+            "description": "",
+            "id": "vXMKAQFELS8AAAF4fWAh4_ju",
+            "contacts": [
+              {
+                "type": "Contact",
+                "profileId": "dPgKAQFEpIcAAAF4qHQh4_ju",
+                "email": "tero.sihvo@ahlsell.fi",
+                "firstName": "Tero",
+                "lastName": "Sihvo",
+                "erpId": "CO-012407",
+                "login": "84a80c18-3ad2-e511-80dd-d89d67630e38"
+              },
+              {
+                "type": "Contact",
+                "profileId": "eoEKAQFEj.oAAAF4lHMh4_ju",
+                "email": "sami.pylvalainen@ahlsell.fi",
+                "firstName": "Sami",
+                "lastName": "Pylväläinen",
+                "erpId": "CO-050480",
+                "login": "6b852a1e-3ad2-e511-80dc-6c3be5beee0c"
+              },
+              {
+                "type": "Contact",
+                "profileId": "0YkKAQFElegAAAF4EHUh4_ju",
+                "email": "sisko.ojala@ahlsell.fi",
+                "firstName": "Sisko",
+                "lastName": "Ojala",
+                "erpId": "CO-057841",
+                "login": "b8b41339-493f-e911-a983-000d3a38a95d"
+              },
+              {
+                "type": "Contact",
+                "profileId": "q5QKAQFEiWwAAAF4YHQh4_ju",
+                "email": "niko.aavikko@ahlsell.fi",
+                "firstName": "Niko",
+                "lastName": "Aavikko",
+                "erpId": "CO-057953",
+                "login": "a4081835-8234-e611-80e7-6c3be5beee0c"
+              },
+              {
+                "type": "Contact",
+                "profileId": "TV8KAQFEejgAAAF5S18Swj0G",
+                "email": "olli.valila@ahlsell.fi",
+                "firstName": "Olli",
+                "lastName": "Välilä",
+                "erpId": "CO-058804",
+                "login": "628bdab0-7351-ea11-a812-000d3a25bb0d"
+              }
+            ],
+            "department": "Test department",
+            "priceGroup": "gross",
+            "parent": true
+          },
+          "emailRecipients": [
+            ""
+          ],
+          "volumeDiscount": 0,
+          "acceptanceTimes": {
+            "type": "AcceptanceTimesRO"
+          },
+          "anonymousBasketDataRO": {
+            "type": "AnonymousBasketDataRO"
+          }
+        }
+      ],
+      "buckets": [
+        "573323046"
+      ],
+      "calculated": true,
+      "commonShipToAddress": "urn:address:basket:oHYKAQFE28EAAAF8olQYAOTN:7YgKAQFEy9oAAAF8MpMYAOTN",
+      "commonShippingMethod": "STD_GROUND",
+      "coveredByLimitedTenders": false,
+      "customer": "120033",
+      "discounts": {},
+      "id": "oHYKAQFE28EAAAF8olQYAOTN",
+      "invoiceToAddress": "urn:address:customer:vXMKAQFELS8AAAF4fWAh4_ju:4UoKAQFEcqAAAAF4h2Ah4_ju",
+      "lineItems": [
+        "oBYKAQFEmH4AAAF8vZsYAOTN"
+      ],
+      "purchaseCurrency": "EUR",
+      "totalProductQuantity": 1,
+      "totals": {
+        "grandTotal": {
+          "gross": {
+            "currency": "EUR",
+            "value": 68.41999999999999971578290569595992565155029296875
+          },
+          "net": {
+            "currency": "EUR",
+            "value": 55.17999999999999971578290569595992565155029296875
+          },
+          "tax": {
+            "currency": "EUR",
+            "value": 13.24
+          }
+        },
+        "paymentCostsTotal": {},
+        "undiscountedItemTotal": {
+          "gross": {
+            "currency": "EUR",
+            "value": 68.42
+          },
+          "net": {
+            "currency": "EUR",
+            "value": 55.18
+          }
+        },
+        "undiscountedShippingTotal": {
+          "gross": {
+            "currency": "EUR",
+            "value": 0.00
+          },
+          "net": {
+            "currency": "EUR",
+            "value": 0.00
+          },
+          "tax": {
+            "currency": "EUR",
+            "value": 0.00
+          }
+        },
+        "itemTotal": {
+          "gross": {
+            "currency": "EUR",
+            "value": 68.41999999999999971578290569595992565155029296875
+          },
+          "net": {
+            "currency": "EUR",
+            "value": 55.17999999999999971578290569595992565155029296875
+          }
+        },
+        "salesTaxTotalsByTaxRate": [
+          {
+            "calculatedTax": {
+              "currency": "EUR",
+              "value": 13.24
+            },
+            "effectiveTaxRate": 24.000000,
+            "taxableAmount": {
+              "currency": "EUR",
+              "value": 13.24
+            }
+          }
+        ],
+        "shippingTotal": {
+          "gross": {
+            "currency": "EUR",
+            "value": 0.00
+          },
+          "net": {
+            "currency": "EUR",
+            "value": 0.00
+          }
+        },
+        "taxTotalsByTaxRate": [
+          {
+            "calculatedTax": {
+              "currency": "EUR",
+              "value": 13.24
+            },
+            "effectiveTaxRate": 24.000000,
+            "taxableAmount": {
+              "currency": "EUR",
+              "value": 55.17999999999999971578290569595992565155029296875
+            }
+          }
+        ]
+      },
+      "user": "120033-arnbom"
+    }
+  ],
+  "links": {
+    "self": {
+      "oHYKAQFE28EAAAF8olQYAOTN": "https://ish35-cmflzicmint-lv.westeurope.cloudapp.azure.com/INTERSHOP/rest/WFS/Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/baskets/oHYKAQFE28EAAAF8olQYAOTN"
+    }
+  }
+}

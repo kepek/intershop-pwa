@@ -1,0 +1,5 @@
+<ng-container *ngIf="control.dirty && control.validator">
+  <mat-error *ngFor="let error of errors | slice: 0:1">
+    {{ error | translate }}
+  </mat-error>
+</ng-container>

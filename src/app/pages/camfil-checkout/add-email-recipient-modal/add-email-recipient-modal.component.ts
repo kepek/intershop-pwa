@@ -8,7 +8,7 @@ import { Bucket } from 'ish-core/models/basket/bucket.model';
 import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
 import { SpecialValidators } from 'ish-shared/forms/validators/special-validators';
 
-import { ORDER_HEADER_VALIDATORS } from '../camfil-checkout-list/validators';
+import { ORDER_HEADER_VALIDATORS } from '../camfil-checkout-bucket/validators';
 
 @Component({
   selector: 'camfil-add-email-recipient-modal',
@@ -19,6 +19,7 @@ import { ORDER_HEADER_VALIDATORS } from '../camfil-checkout-list/validators';
 export class AddEmailRecipientModalComponent implements OnInit {
   recipientsForm: FormGroup;
   validators = ORDER_HEADER_VALIDATORS;
+
   constructor(
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<AddEmailRecipientModalComponent>,
@@ -28,12 +29,6 @@ export class AddEmailRecipientModalComponent implements OnInit {
 
   ngOnInit() {
     this.initForm();
-  }
-
-  private initForm() {
-    this.recipientsForm = this.fb.group({
-      emailRecipients: ['', [Validators.required, SpecialValidators.commaSeparatedEmailValidator]],
-    });
   }
 
   hide() {
@@ -61,5 +56,11 @@ export class AddEmailRecipientModalComponent implements OnInit {
     } else {
       markAsDirtyRecursive(this.recipientsForm);
     }
+  }
+
+  private initForm() {
+    this.recipientsForm = this.fb.group({
+      emailRecipients: ['', [Validators.required, SpecialValidators.commaSeparatedEmailValidator]],
+    });
   }
 }

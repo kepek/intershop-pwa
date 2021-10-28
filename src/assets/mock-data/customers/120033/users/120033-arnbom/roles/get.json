@@ -1,0 +1,79 @@
+{
+  "type": "UserRoles",
+  "userRoles": [
+    {
+      "type": "UserRole",
+      "roleID": "APP_B2B_VIEW_PRICES_USER",
+      "roleDisplayName": "Customer price user",
+      "roleDescription": "The customer price user shall be able to see all orders that belong to the customers he is assigned to, is allowed to buy on behalf of his customers and sees prices.",
+      "fixed": false,
+      "permissions": [
+        {
+          "type": "RolePermission",
+          "permissionID": "APP_B2B_MANAGE_ALL_ORDERS",
+          "permissionDisplayName": "Manage all orders"
+        },
+        {
+          "type": "RolePermission",
+          "permissionID": "APP_B2B_PURCHASE",
+          "permissionDisplayName": "Manage purchases (incl. requisitions, order templates and orders)"
+        },
+        {
+          "type": "RolePermission",
+          "permissionID": "APP_B2B_VIEW_PRICES",
+          "permissionDisplayName": "View prices"
+        }
+      ]
+    },
+    {
+      "type": "UserRole",
+      "roleID": "APP_B2B_BUYER",
+      "fixed": false,
+      "permissions": []
+    },
+    {
+      "type": "UserRole",
+      "roleID": "APP_B2B_CUSTOMER_ADMIN_USER",
+      "roleDisplayName": "Customer Admin user",
+      "roleDescription": "The customer admin user shall be able to see all orders that belong to the customers he is assigned to, is allowed to buy on behalf of his customers, does not see prices, is allowed to manage customer users (external and internal).",
+      "fixed": false,
+      "permissions": [
+        {
+          "type": "RolePermission",
+          "permissionID": "APP_B2B_MANAGE_ALL_ORDERS",
+          "permissionDisplayName": "Manage all orders"
+        },
+        {
+          "type": "RolePermission",
+          "permissionID": "APP_B2B_MANAGE_USERS",
+          "permissionDisplayName": "Manage users"
+        },
+        {
+          "type": "RolePermission",
+          "permissionID": "APP_B2B_PURCHASE",
+          "permissionDisplayName": "Manage purchases (incl. requisitions, order templates and orders)"
+        }
+      ]
+    },
+    {
+      "type": "UserRole",
+      "roleID": "APP_B2B_PRINT_WITH_PRICES_USER",
+      "roleDisplayName": "Customer print with prices user",
+      "roleDescription": "The customer print with price user shall be able to print camcards with prices.",
+      "fixed": false,
+      "permissions": [
+        {
+          "type": "RolePermission",
+          "permissionID": "APP_B2B_PRINT_PRICES",
+          "permissionDisplayName": "Print CamCards with prices"
+        }
+      ]
+    },
+    {
+      "type": "UserRole",
+      "roleID": "APP_B2B_ACCOUNT_OWNER",
+      "fixed": false,
+      "permissions": []
+    }
+  ]
+}

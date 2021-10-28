@@ -4,60 +4,78 @@
 
 <div class="checkout row">
   <div class="col-sm-12 col-lg-9">
+
     <div [ngClass]="{ 'header-divider-container': isConfirmed }">
       <camfil-checkout-header
         [basket]="basket$ | async"
         [buckets]="buckets$ | async"
         [isConfirmed]="isConfirmed"
       ></camfil-checkout-header>
-      <mat-divider></mat-divider>
     </div>
 
-    <div>
-      <ish-basket-info></ish-basket-info>
-      <ng-container *ngIf="!(emptyBuckets$ | async)?.length">
-        <camfil-basket-validation-results></camfil-basket-validation-results>
-      </ng-container>
-      <camfil-checkout-validation></camfil-checkout-validation>
-    </div>
+    <ish-basket-info></ish-basket-info>
+
+    <camfil-error-message [error]="basketError$ | async" [toast]="false"></camfil-error-message>
+
+    <ng-container *ngIf="!(emptyBuckets$ | async)?.length">
+      <camfil-basket-validation-results></camfil-basket-validation-results>
+    </ng-container>
+
+    <camfil-checkout-validation></camfil-checkout-validation>
 
     <ng-template #empty></ng-template>
+
+    <ng-container *ngIf="!(isLoggedIn$ | async)">
+      <ng-container *ngIf="basket$ | async">
+        <camfil-checkout-guest-form (submit)="submitGuestCheckout($event)"></camfil-checkout-guest-form>
+      </ng-container>
+      <camfil-checkout-payment
+        (createPaymentInstrument)="createPaymentInstrument($event)"
+        (deletePaymentInstrument)="deletePaymentInstrument($event)"
+        (nextStep)="nextStep()"
+        (updatePaymentMethod)="updateBasketPaymentMethod($event)"
+        [basket]="basket$ | async"
+        [error]="basketError$ | async"
+        [paymentMethods]="paymentMethods$ | async"
+        [priceType]="priceType$ | async"
+      ></camfil-checkout-payment>
+    </ng-container>
 
     <div cdkDropListGroup>
       <ng-container *ngIf="emptyBuckets$ | async as emptyBuckets; else empty">
         <ng-container *ngFor="let emptyBucket of emptyBuckets; trackBy: trackByLineItems">
-          <camfil-checkout-list
+          <camfil-checkout-bucket
             [basket]="basket$ | async"
             [isLoggedIn]="isLoggedIn$ | async"
             [order]="emptyBucket"
-          ></camfil-checkout-list>
+          ></camfil-checkout-bucket>
         </ng-container>
       </ng-container>
       <ng-container *ngIf="isConfirmed; else notConfirmed">
         <ng-container *ngIf="confirmedBuckets$ | async as confirmedBuckets; else empty">
           <ng-container *ngFor="let confirmedBucket of confirmedBuckets; index as i; trackBy: trackByLineItems">
-            <camfil-checkout-list
+            <camfil-checkout-bucket
               [basket]="basket$ | async"
               [buckets]="confirmedBuckets"
               [index]="i + 1"
               [isConfirmed]="isConfirmed"
               [isLoggedIn]="isLoggedIn$ | async"
               [order]="confirmedBucket"
-            ></camfil-checkout-list>
+            ></camfil-checkout-bucket>
           </ng-container>
         </ng-container>
       </ng-container>
       <ng-template #notConfirmed>
         <ng-container *ngIf="buckets$ | async as buckets; else empty">
           <ng-container *ngFor="let bucket of buckets; index as i; trackBy: trackByLineItems">
-            <camfil-checkout-list
+            <camfil-checkout-bucket
               [basket]="basket$ | async"
               [buckets]="buckets"
               [index]="i + 1"
               [isConfirmed]="isConfirmed"
               [isLoggedIn]="isLoggedIn$ | async"
               [order]="bucket"
-            ></camfil-checkout-list>
+            ></camfil-checkout-bucket>
           </ng-container>
         </ng-container>
       </ng-template>

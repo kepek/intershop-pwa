@@ -1,0 +1,183 @@
+{
+  "data": [
+    {
+      "capabilities": [
+        "RedirectAfterCheckout"
+      ],
+      "default": true,
+      "description": "Paiement par Carte de Crédit via Concardis",
+      "displayName": "Carte de crédit Concardis",
+      "hostedPaymentPageParameters": [
+        {
+          "name": "intershop.payment.Concardis_CreditCard.cvcmaxage",
+          "value": "25"
+        },
+        {
+          "name": "ConcardisPaymentService.CVCStyleId",
+          "value": "customstyle_gz9xzqa8ph"
+        },
+        {
+          "name": "ConcardisPaymentService.MerchantID",
+          "value": "merchant_rm6sw1rgac"
+        },
+        {
+          "name": "ConcardisPaymentService.CreditCardStyleId",
+          "value": "customstyle_gz9xzqa8ph"
+        },
+        {
+          "name": "ConcardisPaymentService.Environment",
+          "value": "LIVE"
+        }
+      ],
+      "id": "Credit Card",
+      "parameterDefinitions": [
+        {
+          "hidden": true,
+          "name": "paymentInstrumentId",
+          "type": "string",
+          "updatable": false
+        },
+        {
+          "displayName": "Type de carte",
+          "hidden": false,
+          "name": "cardType",
+          "type": "string",
+          "updatable": false
+        },
+        {
+          "displayName": "Numéro de carte",
+          "hidden": false,
+          "name": "maskedCardNumber",
+          "type": "string",
+          "updatable": false
+        },
+        {
+          "displayName": "Date d’expiration",
+          "hidden": false,
+          "name": "expirationDate",
+          "type": "string",
+          "updatable": false
+        },
+        {
+          "hidden": true,
+          "name": "browserInfoId",
+          "type": "string",
+          "updatable": false
+        },
+        {
+          "constraints": {
+            "pattern": {
+              "message": "The CVC's 'last-updated' time is invalid. It must represent a UTC date-time string (e.g. 2020-04-30T11:41:45Z).",
+              "regexp": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:.\\d{1,9})?Z$"
+            }
+          },
+          "hidden": true,
+          "name": "cvcLastUpdated",
+          "type": "string",
+          "updatable": true
+        },
+        {
+          "hidden": true,
+          "name": "token",
+          "type": "string",
+          "updatable": false
+        }
+      ],
+      "paymentInstruments": [
+        "pHQKsQNE6MUAAAF8sQBE38xF",
+        "nKEKsQNENQkAAAF8tD5E38w."
+      ],
+      "restricted": false,
+      "saveAllowed": false,
+      "serviceID": "Concardis_CreditCard"
+    },
+    {
+      "capabilities": [
+        "RedirectAfterCheckout"
+      ],
+      "default": false,
+      "description": "Paiement avec PayPal via Concardis",
+      "displayName": "Concardis PayPal",
+      "id": "PayPal",
+      "paymentInstruments": [
+        "PayPal"
+      ],
+      "restricted": false,
+      "saveAllowed": true,
+      "serviceID": "Concardis_PayPal"
+    }
+  ],
+  "included": {
+    "paymentInstruments": {
+      "PayPal": {
+        "id": "PayPal"
+      },
+      "pHQKsQNE6MUAAAF8sQBE38xF": {
+        "accountIdentifier": "AMEX ***********8431 02/24",
+        "id": "pHQKsQNE6MUAAAF8sQBE38xF",
+        "numberOfPayments": 0,
+        "parameters": [
+          {
+            "name": "paymentInstrumentId",
+            "value": "****************************"
+          },
+          {
+            "name": "cardType",
+            "value": "AMEX"
+          },
+          {
+            "name": "maskedCardNumber",
+            "value": "***********8431"
+          },
+          {
+            "name": "expirationDate",
+            "value": "02/24"
+          },
+          {
+            "name": "cvcLastUpdated",
+            "value": "2021-10-29T13:37:26.135Z"
+          },
+          {
+            "name": "token",
+            "value": "paymentinstrument_y9awma28wn"
+          }
+        ],
+        "paymentMethod": "Credit Card",
+        "urn": "urn:payment-instrument:basket:5SkKsQNE_LAAAAF8DoVE38di:pHQKsQNE6MUAAAF8sQBE38xF"
+      },
+      "nKEKsQNENQkAAAF8tD5E38w.": {
+        "accountIdentifier": "VISA ************0000 02/25",
+        "id": "nKEKsQNENQkAAAF8tD5E38w.",
+        "numberOfPayments": 0,
+        "parameters": [
+          {
+            "name": "paymentInstrumentId",
+            "value": "****************************"
+          },
+          {
+            "name": "cardType",
+            "value": "VISA"
+          },
+          {
+            "name": "maskedCardNumber",
+            "value": "************0000"
+          },
+          {
+            "name": "expirationDate",
+            "value": "02/25"
+          },
+          {
+            "name": "cvcLastUpdated",
+            "value": "2021-10-29T13:30:03.322Z"
+          },
+          {
+            "name": "token",
+            "value": "paymentinstrument_w6syibauwr"
+          }
+        ],
+        "paymentMethod": "Credit Card",
+        "urn": "urn:payment-instrument:basket:5SkKsQNE_LAAAAF8DoVE38di:nKEKsQNENQkAAAF8tD5E38w."
+      }
+    }
+  }
+}

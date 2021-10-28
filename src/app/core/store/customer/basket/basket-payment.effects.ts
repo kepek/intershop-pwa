@@ -5,6 +5,7 @@ import { Store, select } from '@ngrx/store';
 import { concatMap, filter, map, mapTo, switchMap, take, withLatestFrom } from 'rxjs/operators';
 
 import { PaymentService } from 'ish-core/services/payment/payment.service';
+import { setCurrentLocale } from 'ish-core/store/core/configuration';
 import { RouterState } from 'ish-core/store/core/router/router.reducer';
 import { getLoggedInCustomer } from 'ish-core/store/customer/user';
 import { mapErrorToAction, mapToPayload, mapToPayloadProperty, whenTruthy } from 'ish-core/utils/operators';
@@ -34,15 +35,13 @@ import { getCurrentBasket, getCurrentBasketId } from './basket.selectors';
 
 @Injectable()
 export class BasketPaymentEffects {
-  constructor(private actions$: Actions, private store: Store, private paymentService: PaymentService) {}
-
   /**
    * The load basket eligible payment methods effect.
    */
   loadBasketEligiblePaymentMethods$ = createEffect(() =>
     this.actions$.pipe(
       ofType(loadBasketEligiblePaymentMethods),
-      concatMap(() =>
+      switchMap(() =>
         this.paymentService.getBasketEligiblePaymentMethods().pipe(
           map(result => loadBasketEligiblePaymentMethodsSuccess({ paymentMethods: result })),
           mapErrorToAction(loadBasketEligiblePaymentMethodsFail)
@@ -50,7 +49,9 @@ export class BasketPaymentEffects {
       )
     )
   );
-
+  refreshBasketEligiblePaymentMethods$ = createEffect(() =>
+    this.actions$.pipe(ofType(setCurrentLocale), mapTo(loadBasketEligiblePaymentMethods()))
+  );
   /**
    * Sets a payment at the current basket.
    */
@@ -65,7 +66,6 @@ export class BasketPaymentEffects {
       )
     )
   );
-
   /**
    * Creates a payment instrument at the current basket or user respectively - and saves it as payment at basket.
    */
@@ -92,7 +92,6 @@ export class BasketPaymentEffects {
       })
     )
   );
-
   /**
    * Checks, if the page is called with redirect query params and sends them to the server ( only RedirectBeforeCheckout)
    */
@@ -117,7 +116,6 @@ export class BasketPaymentEffects {
       )
     )
   );
-
   /**
    * Updates a basket payment concerning redirect data.
    */
@@ -132,7 +130,6 @@ export class BasketPaymentEffects {
       )
     )
   );
-
   /**
    * Deletes a payment instrument and the related payment at the current basket.
    */
@@ -148,7 +145,6 @@ export class BasketPaymentEffects {
       )
     )
   );
-
   /**
    * Triggers a LoadBasket action after successful interaction with the Basket API.
    */
@@ -158,7 +154,6 @@ export class BasketPaymentEffects {
       mapTo(loadBasket())
     )
   );
-
   /**
    * Triggers a LoadEligiblePaymentMethods action after successful delete a eligible Payment Instrument.
    */
@@ -183,4 +178,6 @@ export class BasketPaymentEffects {
       )
     )
   );
+
+  constructor(private actions$: Actions, private store: Store, private paymentService: PaymentService) {}
 }

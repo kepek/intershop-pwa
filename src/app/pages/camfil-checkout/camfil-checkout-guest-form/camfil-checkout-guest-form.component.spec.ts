@@ -1,27 +1,28 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { CamConfigurationFacade } from 'src/app/extensions/cam-configuration/facades/cam-configuration.facade';
 import { instance, mock } from 'ts-mockito';
 
 import { CamfilMaxLengthAttributeCreateDirective } from 'ish-core/directives/camfil-max-length-attribute-create.directive';
 
-import { CamfilGuestFormComponent } from './camfil-guest-form.component';
+import { CamConfigurationFacade } from '../../../extensions/cam-configuration/facades/cam-configuration.facade';
 
-describe('Camfil Guest Form Component', () => {
-  let component: CamfilGuestFormComponent;
-  let fixture: ComponentFixture<CamfilGuestFormComponent>;
+import { CamfilCheckoutGuestFormComponent } from './camfil-checkout-guest-form.component';
+
+describe('Camfil Checkout Guest Form Component', () => {
+  let component: CamfilCheckoutGuestFormComponent;
+  let fixture: ComponentFixture<CamfilCheckoutGuestFormComponent>;
   let element: HTMLElement;
   let camConfigurationFacade: CamConfigurationFacade;
 
   beforeEach(async () => {
     camConfigurationFacade = mock(CamConfigurationFacade);
     await TestBed.configureTestingModule({
-      declarations: [CamfilGuestFormComponent, CamfilMaxLengthAttributeCreateDirective],
+      declarations: [CamfilCheckoutGuestFormComponent, CamfilMaxLengthAttributeCreateDirective],
       providers: [{ provide: CamConfigurationFacade, useFactory: () => instance(camConfigurationFacade) }],
     }).compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CamfilGuestFormComponent);
+    fixture = TestBed.createComponent(CamfilCheckoutGuestFormComponent);
     component = fixture.componentInstance;
     element = fixture.nativeElement;
     fixture.detectChanges();

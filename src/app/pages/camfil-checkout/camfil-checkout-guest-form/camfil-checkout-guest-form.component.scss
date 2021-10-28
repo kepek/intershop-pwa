@@ -1,0 +1,17 @@
+@import '../../../../styles/themes/camfil/variables';
+@import '../../../../styles/themes/camfil/mixins';
+@import '../../../../styles/themes/camfil/colors';
+
+:host {
+  .mat-action-row {
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 $space-default;
+    line-height: $common-height;
+    background-color: rgba($color-corporate, 0.1);
+    border: none;
+  }
+
+  @include form_group_container;
+  @include expansion_panel;
+}

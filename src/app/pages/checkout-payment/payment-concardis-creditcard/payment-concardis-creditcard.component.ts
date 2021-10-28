@@ -20,7 +20,7 @@ declare var PayEngine: any;
  [activated]="i === openFormIndex"
  (submit)="createNewPaymentInstrument($event)"
  (cancel)="cancelNewPaymentInstrument()"
-></ish-payment-concardis-creditcard>
+ ></ish-payment-concardis-creditcard>
  */
 @Component({
   selector: 'ish-payment-concardis-creditcard',
@@ -29,15 +29,15 @@ declare var PayEngine: any;
 })
 // tslint:disable-next-line: rxjs-prefer-angular-takeuntil
 export class PaymentConcardisCreditcardComponent extends PaymentConcardisComponent implements OnInit {
-  constructor(protected scriptLoader: ScriptLoaderService, protected cd: ChangeDetectorRef) {
-    super(scriptLoader, cd);
-  }
-
   iframesReference: {
     // iframesReference, id needed by the payment host
     creditCardIframeName: string;
     verificationIframeName: string;
   };
+
+  constructor(protected scriptLoader: ScriptLoaderService, protected cd: ChangeDetectorRef) {
+    super(scriptLoader, cd);
+  }
 
   ngOnInit() {
     super.formInit();

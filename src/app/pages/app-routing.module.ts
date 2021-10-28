@@ -81,7 +81,7 @@ const routes: Routes = [
   },
   {
     path: 'checkout',
-    loadChildren: () => import('./checkout/checkout-page.module').then(m => m.CheckoutPageModule),
+    loadChildren: () => import('./camfil-checkout/camfil-checkout-page.module').then(m => m.CamfilCheckoutPageModule),
     canActivate: [CheckoutGuard],
     data: {
       headerType: 'checkout',

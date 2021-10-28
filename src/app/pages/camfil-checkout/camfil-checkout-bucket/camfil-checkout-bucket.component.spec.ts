@@ -7,6 +7,7 @@ import { instance, mock, when } from 'ts-mockito';
 
 import { CamfilMaxLengthAttributeCreateDirective } from 'ish-core/directives/camfil-max-length-attribute-create.directive';
 import { ServerHtmlDirective } from 'ish-core/directives/server-html.directive';
+import { AccountFacade } from 'ish-core/facades/account.facade';
 import { AppFacade } from 'ish-core/facades/app.facade';
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
@@ -36,22 +37,23 @@ import { ModalAddNewProductComponent } from '../../../extensions/cam-cards/pages
 import { ArticleDetailsComponent } from '../../../extensions/cam-cards/shared/add-product-to-cam-card-modal/article-details/article-details.component';
 import { OrderFormComponent } from '../../../extensions/cam-cards/shared/add-product-to-cart-modal/create-order-product-modal/order-form/order-form.component';
 import { AddEmailRecipientModalComponent } from '../add-email-recipient-modal/add-email-recipient-modal.component';
+import { CamfilCheckoutGuestFormComponent } from '../camfil-checkout-guest-form/camfil-checkout-guest-form.component';
 import { CamfilCheckoutLineItemComponent } from '../camfil-checkout-line-item/camfil-checkout-line-item.component';
 
-import { CamfilCheckoutListComponent } from './camfil-checkout-list.component';
+import { CamfilCheckoutBucketComponent } from './camfil-checkout-bucket.component';
 import { CamfilDeleteOrderComponent } from './camfil-delete-order/camfil-delete-order.component';
-import { CamfilGuestFormComponent } from './camfil-guest-form/camfil-guest-form.component';
 import { EditOrderModalComponent } from './edit-order-modal/edit-order-modal.component';
 
-describe('Camfil Checkout List Component', () => {
-  let component: CamfilCheckoutListComponent;
-  let fixture: ComponentFixture<CamfilCheckoutListComponent>;
+describe('Camfil Checkout Bucket Component', () => {
+  let component: CamfilCheckoutBucketComponent;
+  let fixture: ComponentFixture<CamfilCheckoutBucketComponent>;
   let element: HTMLElement;
   let camCardFacadeMock: CamCardsFacade;
   let shoppingFacadeMock: ShoppingFacade;
   let checkoutFacadeMock: CheckoutFacade;
   let appFacadeMock: AppFacade;
   let camConfigurationFacadeMock: CamConfigurationFacade;
+  let accountFacadeMock: AccountFacade;
 
   beforeEach(async () => {
     appFacadeMock = mock(AppFacade);
@@ -59,16 +61,18 @@ describe('Camfil Checkout List Component', () => {
     shoppingFacadeMock = mock(ShoppingFacade);
     checkoutFacadeMock = mock(CheckoutFacade);
     camConfigurationFacadeMock = mock(CamConfigurationFacade);
+    accountFacadeMock = mock(AccountFacade);
+
     await TestBed.configureTestingModule({
       declarations: [
         ArticleDetailsComponent,
         CamfilAddressComponent,
         CamfilCamCardModalComponent,
-        CamfilCheckoutListComponent,
+        CamfilCheckoutBucketComponent,
+        CamfilCheckoutGuestFormComponent,
         CamfilContactSortPipe,
         CamfilCounterComponent,
         CamfilDeleteOrderComponent,
-        CamfilGuestFormComponent,
         CamfilMaxLengthAttributeCreateDirective,
         CamfilProductQuantityComponent,
         CamfilSmallCtaModalComponent,
@@ -100,12 +104,13 @@ describe('Camfil Checkout List Component', () => {
         { provide: CheckoutFacade, useFactory: () => instance(checkoutFacadeMock) },
         { provide: CamConfigurationFacade, useFactory: () => instance(camConfigurationFacadeMock) },
         { provide: AppFacade, useFactory: () => instance(appFacadeMock) },
+        { provide: AccountFacade, useFactory: () => instance(accountFacadeMock) },
       ],
     }).compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CamfilCheckoutListComponent);
+    fixture = TestBed.createComponent(CamfilCheckoutBucketComponent);
     component = fixture.componentInstance;
 
     component.order = {
@@ -145,6 +150,7 @@ describe('Camfil Checkout List Component', () => {
     when(checkoutFacadeMock.getCustomersDeliveryTerms$).thenReturn(of({}));
     when(checkoutFacadeMock.basketInvoiceAddress$).thenReturn(of({}));
     when(checkoutFacadeMock.getFocusedCheckoutElement$).thenReturn(of({}));
+    when(accountFacadeMock.isLoggedIn$).thenReturn(of(false));
   });
 
   it('should be created', () => {

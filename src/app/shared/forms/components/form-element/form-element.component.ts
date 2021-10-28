@@ -24,46 +24,24 @@ export abstract class FormElementComponent {
    */
   @Input() label: string;
   /**
-    css-class for the label (default: 'col-md-4')
-  */
+   css-class for the label (default: 'col-md-4')
+   */
   @Input() labelClass = 'col-md-4';
   /**
-    css-class for the input/select field (default: 'col-md-8')
-  */
+   css-class for the input/select field (default: 'col-md-8')
+   */
   @Input() inputClass = 'col-md-8';
   /**
    * decides whether to show a required sign after the label
    * values: 'auto' (default) - label is marked, if an required validator is set
-  /*         'on' (label is always marked as required),
-  /*         'off' (label is never marked as required)
+   /*         'on' (label is always marked as required),
+   /*         'off' (label is never marked as required)
    */
   @Input() markRequiredLabel = 'auto';
 
   uuid: string;
 
   constructor(protected translate: TranslateService) {}
-
-  init() {
-    if (!this.form) {
-      throw new Error('required input parameter <form> is missing for FormElementComponent');
-    }
-    if (!this.controlName) {
-      throw new Error('required input parameter <controlName> is missing for FormElementComponent');
-    }
-    if (!this.formControl) {
-      throw new Error(
-        `input parameter <controlName> with value '${this.getControlName()}' does not exist in the given form for FormElementComponent`
-      );
-    }
-
-    if (Array.isArray(this.controlName) && this.formControlArray.some(el => !el)) {
-      throw new Error(
-        `one of the input parameter <controlName> do not exist in the given form for FormElementComponent`
-      );
-    }
-
-    this.uuid = UUID.UUID(); // uuid to make the id of the control unique
-  }
 
   /**
    * get the form control according to the controlName or first element of the controlName array
@@ -108,6 +86,28 @@ export abstract class FormElementComponent {
         return required;
       }
     }
+  }
+
+  init() {
+    if (!this.form) {
+      throw new Error('required input parameter <form> is missing for FormElementComponent');
+    }
+    if (!this.controlName) {
+      throw new Error('required input parameter <controlName> is missing for FormElementComponent');
+    }
+    if (!this.formControl) {
+      throw new Error(
+        `input parameter <controlName> with value '${this.getControlName()}' does not exist in the given form for FormElementComponent`
+      );
+    }
+
+    if (Array.isArray(this.controlName) && this.formControlArray.some(el => !el)) {
+      throw new Error(
+        `one of the input parameter <controlName> do not exist in the given form for FormElementComponent`
+      );
+    }
+
+    this.uuid = UUID.UUID(); // uuid to make the id of the control unique
   }
 
   /**

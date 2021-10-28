@@ -8,11 +8,11 @@ import { GuestBasketExtensions } from 'ish-core/models/basket/basket.interface';
 import { SpecialValidators } from 'ish-shared/forms/validators/special-validators';
 
 @Component({
-  selector: 'camfil-guest-form',
-  templateUrl: './camfil-guest-form.component.html',
-  styleUrls: ['./camfil-guest-form.component.scss'],
+  selector: 'camfil-checkout-guest-form',
+  templateUrl: './camfil-checkout-guest-form.component.html',
+  styleUrls: ['./camfil-checkout-guest-form.component.scss'],
 })
-export class CamfilGuestFormComponent implements OnInit, OnDestroy {
+export class CamfilCheckoutGuestFormComponent implements OnInit, OnDestroy {
   userDetailsFormGroup: FormGroup;
   deliveryInfoFromGroup: FormGroup;
   guestForm: FormGroup;

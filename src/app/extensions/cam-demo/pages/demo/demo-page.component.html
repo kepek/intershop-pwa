@@ -957,9 +957,12 @@
     <mat-card>
       <mat-card-content>
         <h2 class="example-h2">Material Radio Button</h2>
-        <mat-radio-button name="symbol">Alpha</mat-radio-button>
-        <mat-radio-button name="symbol">Beta</mat-radio-button>
-        <mat-radio-button disabled name="symbol">Disabled</mat-radio-button>
+        <ng-container *ngFor="let radioColor of availableColors">
+          <mat-radio-button [color]="radioColor.color" name="symbol">Alpha</mat-radio-button>
+          <mat-radio-button [color]="radioColor.color" name="symbol">Beta</mat-radio-button>
+          <mat-radio-button [color]="radioColor.color" disabled name="symbol">Disabled</mat-radio-button>
+          <hr />
+        </ng-container>
       </mat-card-content>
     </mat-card>
     <!-- /Material Radio Button -->
@@ -1258,7 +1261,7 @@
 
         <section class="example-section">
           <mat-checkbox [(ngModel)]="slider.thumbLabel" class="example-margin" color="primary"
-            >Show thumb label
+          >Show thumb label
           </mat-checkbox>
         </section>
 
@@ -1299,7 +1302,7 @@
           (change)="slider.checked = !slider.checked"
           [checked]="slider.checked"
           [disabled]="slider.disabled"
-          >Slide me!
+        >Slide me!
         </mat-slide-toggle>
       </mat-card-content>
     </mat-card>

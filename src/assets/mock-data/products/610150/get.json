@@ -1,0 +1,326 @@
+{
+  "name": "HI-FLO XLT 6 HFGX-M6-592/592/370-10-25 XLT",
+  "type": "Product",
+  "attributes": [
+    {
+      "name": "IsoEfficiency",
+      "type": "String",
+      "value": "50%"
+    },
+    {
+      "name": "FrameProduct",
+      "type": "String",
+      "value": "Valettu muovikehys"
+    },
+    {
+      "name": "Filterbags",
+      "type": "Integer",
+      "value": 10
+    },
+    {
+      "name": "Depth",
+      "type": "Integer",
+      "value": 370
+    },
+    {
+      "name": "Width",
+      "type": "Integer",
+      "value": 592
+    },
+    {
+      "name": "IsoClass",
+      "type": "String",
+      "value": "ePM2.5"
+    },
+    {
+      "name": "Height",
+      "type": "Integer",
+      "value": 592
+    },
+    {
+      "name": "Energyclass",
+      "type": "String",
+      "value": "D"
+    },
+    {
+      "name": "Arrigocode",
+      "type": "String",
+      "value": "A1"
+    }
+  ],
+  "sku": "610150",
+  "productName": "HI-FLO XLT 6 HFGX-M6-592/592/370-10-25 XLT",
+  "shortDescription": "Ensiluokkainen lasikuitupussisuodatin, aerodynaaminen ja tukeva valumuovikehys. XLT-suodattimilla on paras energiatehokkuus ja pisin käyttöikä. Kokonaistaloudellisesti edullisin vaihtoehto. Saatavana kaikissa ISO16890:n mukaisissa suodatinluokissa. ",
+  "productTypes": [
+    "PRODUCT"
+  ],
+  "availability": true,
+  "retailSet": false,
+  "inStock": true,
+  "availableStock": 0,
+  "productMaster": false,
+  "mastered": false,
+  "roundedAverageRating": "0.0",
+  "readyForShipmentMin": 3,
+  "readyForShipmentMax": 7,
+  "minOrderQuantity": 1,
+  "productBundle": false,
+  "manufacturer": "",
+  "listPrice": {
+    "type": "ProductPrice",
+    "value": 128.330000000000012505552149377763271331787109375,
+    "currencyMnemonic": "EUR",
+    "currency": "EUR"
+  },
+  "salePrice": {
+    "type": "ProductPrice",
+    "value": 55.17999999999999971578290569595992565155029296875,
+    "currencyMnemonic": "EUR",
+    "currency": "EUR"
+  },
+  "maxOrderQuantity": 0,
+  "stepOrderQuantity": 1,
+  "packingUnit": "",
+  "shippingMethods": [
+    {
+      "name": "Default Camfil Shipping Method",
+      "type": "ShippingMethod",
+      "id": "STD_GROUND",
+      "shippingTimeMin": -1,
+      "shippingTimeMax": -1
+    }
+  ],
+  "images": [
+    {
+      "name": "default badges",
+      "type": "Image",
+      "effectiveUrl": "https://www.camfil.com/product/assets/image/90577/ICON31.png",
+      "viewID": "default",
+      "typeID": "badges",
+      "primaryImage": true
+    },
+    {
+      "name": "view1 badges",
+      "type": "Image",
+      "effectiveUrl": "https://www.camfil.com/product/assets/image/90575/ICON23.png",
+      "viewID": "view1",
+      "typeID": "badges",
+      "primaryImage": false
+    },
+    {
+      "name": "view2 badges",
+      "type": "Image",
+      "effectiveUrl": "https://www.camfil.com/product/assets/image/1223254/icon-efficiency-guarantee.png",
+      "viewID": "view2",
+      "typeID": "badges",
+      "primaryImage": false
+    },
+    {
+      "name": "view3 badges",
+      "type": "Image",
+      "effectiveUrl": "https://www.camfil.com/product/assets/image/90578/ICON32.png",
+      "viewID": "view3",
+      "typeID": "badges",
+      "primaryImage": false
+    },
+    {
+      "name": "view4 badges",
+      "type": "Image",
+      "effectiveUrl": "https://www.camfil.com/product/assets/image/90252/ICON7.png",
+      "viewID": "view4",
+      "typeID": "badges",
+      "primaryImage": false
+    },
+    {
+      "name": "default images",
+      "type": "Image",
+      "effectiveUrl": "https://www.camfil.com/product/assets/image/90181/Hi-Flo_XLT_F7_592x592x520_10.png",
+      "viewID": "default",
+      "typeID": "images",
+      "primaryImage": true
+    },
+    {
+      "name": "view1 images",
+      "type": "Image",
+      "effectiveUrl": "https://www.camfil.com/product/assets/image/89936/794893_bild_12.png",
+      "viewID": "view1",
+      "typeID": "images",
+      "primaryImage": false
+    },
+    {
+      "name": "default RTYP15",
+      "type": "Image",
+      "effectiveUrl": "https://www.camfil.com/damdocuments/38257/86286/Ohjeet-K%c3%a4ytt%c3%b6-ja-Huolto-Pussisuodattimet-FIN.pdf",
+      "viewID": "default",
+      "typeID": "RTYP15",
+      "primaryImage": true
+    },
+    {
+      "name": "default RTYP12",
+      "type": "Image",
+      "effectiveUrl": "https://www.camfil.com/damdocuments/31663/1132368/Data-Sheet---Finland-(fi)---Hi-Flo-XLT.pdf",
+      "viewID": "default",
+      "typeID": "RTYP12",
+      "primaryImage": true
+    }
+  ],
+  "defaultCategory": {
+    "name": "Pussisuodattimet",
+    "type": "DefaultCategory",
+    "id": "45049",
+    "categoryPath": [
+      {
+        "name": "Products",
+        "type": "CategoryPath",
+        "id": "Products",
+        "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories;spgid=4J2O32BG22aRpGeENS_b1IlT0000/Products"
+      },
+      {
+        "name": "Yleisilmanvaihdon suodattimet",
+        "type": "CategoryPath",
+        "id": "45048",
+        "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories;spgid=4J2O32BG22aRpGeENS_b1IlT0000/Products/45048"
+      },
+      {
+        "name": "Pussisuodattimet",
+        "type": "CategoryPath",
+        "id": "45049",
+        "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories;spgid=4J2O32BG22aRpGeENS_b1IlT0000/Products/45048/45049"
+      }
+    ],
+    "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories;spgid=4J2O32BG22aRpGeENS_b1IlT0000/Products/45048/45049"
+  },
+  "attributeGroups": {
+    "PRODUCT_DETAIL_ATTRIBUTES": {
+      "name": "PRODUCT_DETAIL_ATTRIBUTES",
+      "attributes": [
+        {
+          "name": "IsoEfficiency",
+          "type": "String",
+          "value": "50%"
+        },
+        {
+          "name": "FrameProduct",
+          "type": "String",
+          "value": "Valettu muovikehys"
+        },
+        {
+          "name": "Filterbags",
+          "type": "Integer",
+          "value": 10
+        },
+        {
+          "name": "Depth",
+          "type": "Integer",
+          "value": 370
+        },
+        {
+          "name": "Width",
+          "type": "Integer",
+          "value": 592
+        },
+        {
+          "name": "IsoClass",
+          "type": "String",
+          "value": "ePM2.5"
+        },
+        {
+          "name": "Height",
+          "type": "Integer",
+          "value": 592
+        },
+        {
+          "name": "Energyclass",
+          "type": "String",
+          "value": "D"
+        },
+        {
+          "name": "Arrigocode",
+          "type": "String",
+          "value": "A1"
+        }
+      ]
+    },
+    "PRODUCT_LIST_LABEL_ATTRIBUTES": {
+      "name": "PRODUCT_LIST_LABEL_ATTRIBUTES",
+      "attributes": [
+        {
+          "name": "IsoEfficiency",
+          "type": "String",
+          "value": "50%"
+        },
+        {
+          "name": "FrameProduct",
+          "type": "String",
+          "value": "Valettu muovikehys"
+        },
+        {
+          "name": "Filterbags",
+          "type": "Integer",
+          "value": 10
+        },
+        {
+          "name": "Depth",
+          "type": "Integer",
+          "value": 370
+        },
+        {
+          "name": "Width",
+          "type": "Integer",
+          "value": 592
+        },
+        {
+          "name": "IsoClass",
+          "type": "String",
+          "value": "ePM2.5"
+        },
+        {
+          "name": "Height",
+          "type": "Integer",
+          "value": 592
+        },
+        {
+          "name": "Energyclass",
+          "type": "String",
+          "value": "D"
+        },
+        {
+          "name": "Requiresmeasures",
+          "type": "Boolean",
+          "value": false
+        },
+        {
+          "name": "Arrigocode",
+          "type": "String",
+          "value": "A1"
+        },
+        {
+          "name": "IsoClassAndEfficiency",
+          "type": "String",
+          "value": "ePM2.5 50%"
+        },
+        {
+          "name": "Deliverydays",
+          "type": "Integer",
+          "value": 3
+        },
+        {
+          "name": "FilterArea",
+          "type": "BigDecimal",
+          "value": 4.30
+        }
+      ],
+      "displayName": "Product list ATTRS"
+    }
+  },
+  "seoAttributes": {
+    "metaTitle": "HI-FLO XLT 6 HFGX-M6-592/592/370-10-25 XLT - Pussisuodattimet",
+    "metaDescription": "HI-FLO XLT 6 HFGX-M6-592/592/370-10-25 XLT - Ensiluokkainen lasikuitupussisuodatin, aerodynaaminen ja tukeva valumuovikehys. XLT-suodattimilla on paras energiatehokkuus ja pisin käyttöikä. Kokonaistaloudellisesti edullisin vaihtoehto. Saatavana kaikissa ISO16890:n mukaisissa suodatinluokissa. ",
+    "robots": [
+      "index",
+      "follow"
+    ]
+  },
+  "numberOfReviews": 0,
+  "supplierSKU": ""
+}

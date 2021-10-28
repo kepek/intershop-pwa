@@ -1,18 +1,42 @@
-<div [ngClass]="{ 'mat-elevation-z2': isLoggedIn }" class="camfil-checkout-list">
-  <ng-container *ngIf="isLoggedIn; else guestCheckout">
-    <mat-action-row>
-      <strong (click)="toggleOrder()" class="d-flex align-items-center">
-        <mat-icon [class.arrow_down--expanded]="isOrderOpen" class="arrow_down">arrow_left</mat-icon>
-        <ng-container *ngTemplateOutlet="orderHeader"></ng-container>
-      </strong>
-    </mat-action-row>
-    <mat-accordion>
-      <mat-expansion-panel [expanded]="isOrderOpen">
-        <ng-container *ngTemplateOutlet="orderContent"></ng-container>
-      </mat-expansion-panel>
-    </mat-accordion>
+<div [ngClass]="{ 'mat-elevation-z2': (isLoggedIn$ | async) }" class="camfil-checkout-bucket">
+  <ng-container *ngIf="!(isLoggedIn$ | async)">
+    <ng-container *ngTemplateOutlet="guest"></ng-container>
+  </ng-container>
+
+  <ng-container *ngIf="(isLoggedIn$ | async)">
+    <ng-container *ngTemplateOutlet="default"></ng-container>
   </ng-container>
 </div>
+
+<ng-template #guest>
+  <div *ngIf="order">
+    <mat-expansion-panel [expanded]="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{ 'shopping_cart.heading' | translate }}
+        </mat-panel-title>
+        <mat-panel-description>
+          <mat-icon svgIcon="cart"></mat-icon>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <ng-container *ngTemplateOutlet="orderList"></ng-container>
+    </mat-expansion-panel>
+  </div>
+</ng-template>
+
+<ng-template #default>
+  <mat-action-row>
+    <strong (click)="toggleOrder()" class="d-flex align-items-center">
+      <mat-icon [class.arrow_down--expanded]="isOrderOpen" class="arrow_down">arrow_left</mat-icon>
+      <ng-container *ngTemplateOutlet="orderHeader"></ng-container>
+    </strong>
+  </mat-action-row>
+  <mat-accordion>
+    <mat-expansion-panel [expanded]="isOrderOpen">
+      <ng-container *ngTemplateOutlet="orderContent"></ng-container>
+    </mat-expansion-panel>
+  </mat-accordion>
+</ng-template>
 
 <ng-template #orderHeader>
   <div class="d-inline-flex">
@@ -292,7 +316,9 @@
   >
     <ng-container *ngIf="isConfirmed; else noConfirmed">
       <div *ngFor="let item of order.lineItems; index as i; trackBy: trackBy">
-        <div class="list-item-row list-item-row-big px-4 py-1 mt-2 line-item-container">
+        <div
+          [ngClass]="{ 'list-item-row list-item-row-big mt-2': (isLoggedIn$ | async) }"
+          class="px-4 py-1 line-item-container">
           <ng-container *ngTemplateOutlet="bucketListItem; context: { item: item, i: i }"></ng-container>
         </div>
       </div>
@@ -303,42 +329,15 @@
           <div
             [cdkDragData]="item"
             [cdkDragDisabled]="isConfirmed"
+            [ngClass]="{ 'list-item-row list-item-row-big mt-2': (isLoggedIn$ | async) }"
             cdkDrag
-            class="list-item-row list-item-row-big px-4 py-1 mt-2 line-item-container"
+            class="px-4 py-1 line-item-container"
           >
             <ng-container *ngTemplateOutlet="bucketListItem; context: { item: item, i: i }"></ng-container>
           </div>
         </div>
       </cdk-virtual-scroll-viewport>
     </ng-template>
-  </div>
-</ng-template>
-
-<!-- guest -->
-<ng-template #guestCheckout>
-  <ng-container *ngTemplateOutlet="guestCheckoutForm"></ng-container>
-  <ng-container *ngTemplateOutlet="guestCheckoutList"></ng-container>
-</ng-template>
-
-<ng-template #guestCheckoutForm>
-  <ng-container *ngIf="basket">
-    <camfil-guest-form (submit)="submitGuestCheckout($event)"></camfil-guest-form>
-  </ng-container>
-</ng-template>
-
-<ng-template #guestCheckoutList>
-  <div *ngIf="order">
-    <mat-expansion-panel [expanded]="true">
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          {{ 'shopping_cart.heading' | translate }}
-        </mat-panel-title>
-        <mat-panel-description>
-          <mat-icon svgIcon="cart"></mat-icon>
-        </mat-panel-description>
-      </mat-expansion-panel-header>
-      <ng-container *ngTemplateOutlet="orderList"></ng-container>
-    </mat-expansion-panel>
   </div>
 </ng-template>
 
