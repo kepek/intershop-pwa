@@ -31,7 +31,7 @@
       <mat-divider></mat-divider>
       <br />
       <ng-template #noConfirmed>
-        <ng-container *camfilChannelToggle="'guestCheckout'">
+        <ng-container *ngIf="!isLoggedIn">
           <form [formGroup]="guestGdprForm" class="summary-gpdr-form">
             <mat-checkbox color="primary" formControlName="gdprAcceptance">
               <span>{{ 'camfil.account.apply_form.gdpr' | translate }}</span>

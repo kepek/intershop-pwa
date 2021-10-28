@@ -58,7 +58,9 @@ export class CamfilCheckoutSummaryComponent implements OnInit, OnChanges {
     this.validationResults$ = this.checkoutFacade.basketValidationResults$;
     this.productsReadyToPlaceOrder$ = this.shoppingFacade.productsReadyToPlaceOrder$;
 
-    this.createGuestGdprForm();
+    if (!this.isLoggedIn) {
+      this.createGuestGdprForm();
+    }
   }
 
   ngOnChanges() {
@@ -73,25 +75,11 @@ export class CamfilCheckoutSummaryComponent implements OnInit, OnChanges {
   }
 
   submitOrder() {
-    if (this.isGuestCheckout && this.guestGdprForm?.invalid) {
-      this.openGpdrErrorModal();
-
-      return;
-    }
-    this.update.emit();
+    // Check if guest user checked GDPR agreement
+    this.checkGpdrForNonLogged();
 
     // In case of user from ICM back office, add employeeID as externalOrderReference
-    let erpEmployeeId;
-
-    try {
-      erpEmployeeId = JSON.parse(localStorage.getItem('erpEmployeeId'));
-    } catch (err) {
-      // NOOP
-    }
-
-    if (erpEmployeeId) {
-      this.checkoutFacade.updateBasketExternalOrderReference(erpEmployeeId);
-    }
+    this.checkErpEmployeeIdExists();
 
     this.checkoutFacade.continue(5);
   }
@@ -107,6 +95,27 @@ export class CamfilCheckoutSummaryComponent implements OnInit, OnChanges {
     this.gdprErrorModal.hide = () => {
       gpdrErrorDialogModal.close();
     };
+  }
+
+  checkErpEmployeeIdExists() {
+    let erpEmployeeId;
+
+    try {
+      erpEmployeeId = JSON.parse(localStorage.getItem('erpEmployeeId'));
+    } catch (err) {
+      // NOOP
+    }
+
+    if (erpEmployeeId) {
+      this.checkoutFacade.updateBasketExternalOrderReference(erpEmployeeId);
+    }
+  }
+
+  private checkGpdrForNonLogged() {
+    if (!this.isLoggedIn && this.isGuestCheckout && this.guestGdprForm?.invalid) {
+      this.openGpdrErrorModal();
+      return;
+    }
   }
 
   continueShopping() {
