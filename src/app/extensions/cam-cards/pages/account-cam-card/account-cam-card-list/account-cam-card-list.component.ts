@@ -31,7 +31,7 @@ import { BasketView } from 'ish-core/models/basket/basket.model';
 import { Bucket } from 'ish-core/models/basket/bucket.model';
 import { Product } from 'ish-core/models/product/product.model';
 import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
-import { whenTruthy } from 'ish-core/utils/operators';
+import { whenFalsy, whenTruthy } from 'ish-core/utils/operators';
 import { CamfilModalDialogComponent } from 'ish-shared/components/common/camfil-modal-dialog/camfil-modal-dialog.component';
 
 import { CamCardsFacade } from '../../../facades/cam-cards.facade';
@@ -392,7 +392,7 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
   /** addToCartItems */
   handleSelectedCamCardsOnAddToCart(
     // tslint:disable-next-line:variable-name
-    _checkInBasketModal: CamfilModalDialogComponent<any>,
+    checkInBasketModal: CamfilModalDialogComponent<any>,
     addToCartFlowModal: CamfilModalDialogComponent<any>
   ) {
     const noErpIds = this.noErpIdCamCardsInSelectedProducts;
@@ -403,17 +403,15 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
       return;
     }
 
-    // DO NOT REMOVE / CAM-1515
-    // const ids = this.checkedCamCards.map(cc => cc.id);
-    // this.camCardsFacade.checkCamCardsInBasketsForAllUsers(ids);
-    // this.camCardsInBasketsForAllUsersLoading$.pipe(whenFalsy(), take(1)).subscribe(() => {
-    //   if (this.camCardsInBasketsForAllUsers.length) {
-    //     checkInBasketModal.show();
-    //   } else {
-    //     this.addToCart(addToCartFlowModal);
-    //   }
-    // });
-    this.addToCart(addToCartFlowModal);
+    const ids = this.checkedCamCards.map(cc => cc.id);
+    this.camCardsFacade.checkCamCardsInBasketsForAllUsers(ids);
+    this.camCardsInBasketsForAllUsersLoading$.pipe(whenFalsy(), take(1)).subscribe(() => {
+      if (this.camCardsInBasketsForAllUsers.length) {
+        checkInBasketModal.show();
+      } else {
+        this.addToCart(addToCartFlowModal);
+      }
+    });
   }
 
   addToCart(modal: CamfilModalDialogComponent<any>) {

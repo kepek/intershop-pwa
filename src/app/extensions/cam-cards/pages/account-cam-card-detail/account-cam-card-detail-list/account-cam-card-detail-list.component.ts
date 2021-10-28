@@ -295,8 +295,7 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges, OnD
   }
 
   handleSelectedCamCardsOnAddToCart(
-    // tslint:disable-next-line:variable-name
-    _checkInBasketModal: CamfilModalDialogComponent<any>,
+    checkInBasketModal: CamfilModalDialogComponent<any>,
     addToCartFlowModal: CamfilModalDialogComponent<any>
   ) {
     const { postalCode, city } = this.camCard.deliveryAddress;
@@ -308,20 +307,14 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges, OnD
       return;
     }
 
-    /**
-     * TMP untill checkCamCardsInBasketsForAllUsers endpoint is invalid
-     */
-    // this.camCardsFacade.checkCamCardsInBasketsForAllUsers([this.camCard.id]);
-    // this.camCardsInBasketsForAllUsersLoading$.pipe(whenTruthy(), take(1)).subscribe(() => {
-    //   if (this.camCardsInBasketsForAllUsers.length) {
-    //     checkInBasketModal.show();
-    //   } else {
-    //     this.addItemsToCart(addToCartFlowModal);
-    //   }
-    // });
-
-    // TMP (to remove later)
-    this.addItemsToCart(addToCartFlowModal);
+    this.camCardsFacade.checkCamCardsInBasketsForAllUsers([this.camCard.id]);
+    this.camCardsInBasketsForAllUsersLoading$.pipe(whenTruthy(), take(1)).subscribe(() => {
+      if (this.camCardsInBasketsForAllUsers.length) {
+        checkInBasketModal.show();
+      } else {
+        this.addItemsToCart(addToCartFlowModal);
+      }
+    });
   }
 
   addItemsToCart(modal: CamfilModalDialogComponent<any>) {
