@@ -106,6 +106,9 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
   productsCustomerPrices: {
     [customerId: string]: Product[];
   };
+
+  freshErpInfo = false;
+
   private selectedCamCardCustomer: CamCardCustomer;
   private fragment: string;
   private destroy$ = new Subject();
@@ -397,6 +400,18 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
   ) {
     const noErpIds = this.noErpIdCamCardsInSelectedProducts;
     const noPostCode = this.noPostCodeCamCardsInSelectedProducts;
+
+    if (noErpIds.length && !this.freshErpInfo) {
+      this.productAddingInProgress = true;
+      this.camCardsFacade.loadCamCards();
+      this.camCardsFacade.camCardsLoading$.pipe(whenFalsy(), take(1)).subscribe(() => {
+        this.freshErpInfo = true;
+        this.handleSelectedCamCardsOnAddToCart(checkInBasketModal, addToCartFlowModal);
+      });
+      return;
+    }
+    this.productAddingInProgress = false;
+    this.freshErpInfo = false;
 
     if (noErpIds.length || noPostCode.length) {
       addToCartFlowModal.show();
