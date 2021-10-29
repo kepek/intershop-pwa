@@ -92,7 +92,7 @@ export class CreateNewCamcardComponent implements OnInit, OnDestroy {
   }
 
   getNewName(oldName: string, idx: number): string {
-    return `${oldName} ${this.getTimestamp()}_${idx}`;
+    return `${oldName || this.getTimestamp()}_${idx}`;
   }
 
   openModal() {
