@@ -65,5 +65,5 @@ export const getCamCardsInBasketsForAllUsersLoading = createSelector(
 
 export const getCamCardsInBasketsForAllUsers = createSelector(
   getCamCardState,
-  state => state.camCardsInBasketsForAllUsers.list
+  state => state.camCardsInBasketsForAllUsers.list || []
 );
