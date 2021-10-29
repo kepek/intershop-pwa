@@ -2,10 +2,12 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store, select } from '@ngrx/store';
 import { identity } from 'rxjs';
-import { groupBy, map, mapTo, mergeMap, switchMap, take, tap } from 'rxjs/operators';
+import { filter, groupBy, map, mapTo, mergeMap, switchMap, take, tap, withLatestFrom } from 'rxjs/operators';
 
 import { CMSService } from 'ish-core/services/cms/cms.service';
 import { setCurrentLocale } from 'ish-core/store/core/configuration';
+import { selectPath } from 'ish-core/store/core/router';
+import { loginUserSuccess } from 'ish-core/store/customer/user';
 import { mapErrorToAction, mapToPayloadProperty, whenTruthy } from 'ish-core/utils/operators';
 
 import {
@@ -40,7 +42,9 @@ export class IncludesEffects {
   reloadCmsData$ = createEffect(() => {
     const contentIncludeIds$ = this.store.pipe(select(getAllContentIncludeIds), whenTruthy(), take(1));
     return this.actions$.pipe(
-      ofType(setCurrentLocale),
+      ofType(setCurrentLocale, loginUserSuccess),
+      withLatestFrom(this.store.pipe(select(selectPath))),
+      filter(([{ payload }, login]) => login === 'login' || payload.hasOwnProperty('lang')),
       mapTo(flushCmsData()),
       tap(() => {
         contentIncludeIds$.subscribe(includeIds => {
