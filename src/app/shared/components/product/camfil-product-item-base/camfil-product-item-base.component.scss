@@ -9,6 +9,15 @@
     display: block;
     width: $common-height;
     height: $common-height;
+    ::ng-deep {
+      .product-image__wrapper {
+        width: $common-height;
+        height: $common-height;
+        img {
+          max-height: 100%;
+        }
+      }
+    }
   }
   .product-item-details-container {
     @media (min-width: $screen-lg-min) {
