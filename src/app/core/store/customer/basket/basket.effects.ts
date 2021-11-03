@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { RouterNavigatedPayload, routerNavigatedAction, routerNavigationAction } from '@ngrx/router-store';
+import { RouterNavigatedPayload, routerNavigatedAction } from '@ngrx/router-store';
 import { Store, select } from '@ngrx/store';
 import { combineLatest, iif, of } from 'rxjs';
 import {
@@ -16,7 +16,6 @@ import {
   sample,
   startWith,
   switchMap,
-  switchMapTo,
   tap,
   withLatestFrom,
 } from 'rxjs/operators';
@@ -25,7 +24,7 @@ import { Basket } from 'ish-core/models/basket/basket.model';
 import { BasketService } from 'ish-core/services/basket/basket.service';
 import { RouterState } from 'ish-core/store/core/router/router.reducer';
 import { setCheckoutFocusedElement } from 'ish-core/store/core/viewconf/viewconf.actions';
-import { setCreatedOrderId } from 'ish-core/store/customer/orders';
+import { getCreatedOrder, setCreatedOrderId } from 'ish-core/store/customer/orders';
 import {
   createUser,
   getUserAuthorized,
@@ -34,7 +33,7 @@ import {
   loginUserSuccess,
 } from 'ish-core/store/customer/user';
 import { ApiTokenService } from 'ish-core/utils/api-token/api-token.service';
-import { mapErrorToAction, mapToPayload, mapToPayloadProperty, whenFalsy } from 'ish-core/utils/operators';
+import { mapErrorToAction, mapToPayload, mapToPayloadProperty } from 'ish-core/utils/operators';
 
 import {
   camfilDragLineItem,
@@ -327,13 +326,15 @@ export class BasketEffects {
     )
   );
 
-  createBasaketOnRouteChange$ = createEffect(() =>
+  createBasketWhenLeavingCheckoutConfirmationPage$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(routerNavigationAction),
+      ofType(routerNavigatedAction),
       mapToPayloadProperty<RouterNavigatedPayload<RouterState>>('routerState'),
-      filter((routerState: RouterState) => !/^(\/checkout)/.test(routerState.url)),
-      switchMapTo(this.store.pipe(select(getCurrentBasket))),
-      whenFalsy(),
+      filter(
+        (routerState: RouterState) => !/^\/(basket|checkout.*)/.test(routerState.url) && !routerState.queryParams?.error
+      ),
+      withLatestFrom(this.store.pipe(select(getCreatedOrder)), this.store.pipe(select(getCurrentBasketId))),
+      filter(([, createdOrder, basket]) => createdOrder && !basket),
       map(createBasket)
     )
   );
