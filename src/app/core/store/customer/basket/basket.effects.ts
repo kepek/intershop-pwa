@@ -24,7 +24,7 @@ import { Basket } from 'ish-core/models/basket/basket.model';
 import { BasketService } from 'ish-core/services/basket/basket.service';
 import { RouterState } from 'ish-core/store/core/router/router.reducer';
 import { setCheckoutFocusedElement } from 'ish-core/store/core/viewconf/viewconf.actions';
-import { setCreatedOrderId } from 'ish-core/store/customer/orders';
+import { getCreatedOrder, setCreatedOrderId } from 'ish-core/store/customer/orders';
 import {
   createUser,
   getUserAuthorized,
@@ -323,6 +323,19 @@ export class BasketEffects {
           })
         )
       )
+    )
+  );
+
+  createBasketWhenLeavingCheckoutConfirmationPage$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(routerNavigatedAction),
+      mapToPayloadProperty<RouterNavigatedPayload<RouterState>>('routerState'),
+      filter(
+        (routerState: RouterState) => !/^\/(basket|checkout.*)/.test(routerState.url) && !routerState.queryParams?.error
+      ),
+      withLatestFrom(this.store.pipe(select(getCreatedOrder)), this.store.pipe(select(getCurrentBasketId))),
+      filter(([, createdOrder, basket]) => createdOrder && !basket),
+      map(createBasket)
     )
   );
 
