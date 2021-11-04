@@ -4,6 +4,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MockComponent, MockPipe } from 'ng-mocks';
 import { ToastrModule } from 'ngx-toastr';
 import { of } from 'rxjs';
+import { ConfigurationService } from 'src/app/extensions/cam-configuration/services/configuration/configuration.service';
 import { instance, mock, when } from 'ts-mockito';
 
 import { CamfilMaxLengthAttributeCreateDirective } from 'ish-core/directives/camfil-max-length-attribute-create.directive';
@@ -31,7 +32,6 @@ import { OrderFormComponent } from '../../../../extensions/cam-cards/shared/add-
 import { CreateOrderProductSuccessComponent } from '../../../../extensions/cam-cards/shared/add-product-to-cart-modal/create-order-product-success/create-order-product-success.component';
 
 import { CamfilProductAddToBasketComponent } from './camfil-product-add-to-basket.component';
-import { ConfigurationService } from 'src/app/extensions/cam-configuration/services/configuration/configuration.service';
 
 describe('Camfil Product Add To Basket Component', () => {
   let component: CamfilProductAddToBasketComponent;
