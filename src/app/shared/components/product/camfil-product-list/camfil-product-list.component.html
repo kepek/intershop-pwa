@@ -1,8 +1,8 @@
+<camfil-loading *ngIf="loading$ | async"></camfil-loading>
 <div class="product-list row">
   <div *ngIf="!products.length && !(listingLoading$ | async)" class="p-4 bg-secondary w-100">
     {{ 'search.noresult.filtered_products.message' | translate }}
   </div>
-
   <ng-container *ngIf="showLoader()">
     <div *ngIf="listingLoading$ | async" class="product-list-loading">
       <camfil-loading [standalone]="true"></camfil-loading>

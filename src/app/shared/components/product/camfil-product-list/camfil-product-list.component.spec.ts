@@ -17,6 +17,7 @@ import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-load
 import { CamfilProductItemComponent } from 'ish-shared/components/product/camfil-product-item/camfil-product-item.component';
 
 import { CamfilProductListComponent } from './camfil-product-list.component';
+import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 
 describe('Camfil Product List Component', () => {
   let component: CamfilProductListComponent;
@@ -24,10 +25,12 @@ describe('Camfil Product List Component', () => {
   let element: HTMLElement;
   let shoppingFacade: ShoppingFacade;
   let accountFacade: AccountFacade;
+  let checkoutFacade: CheckoutFacade;
 
   beforeEach(async () => {
     shoppingFacade = mock(ShoppingFacade);
     accountFacade = mock(AccountFacade);
+    checkoutFacade = mock(CheckoutFacade);
     await TestBed.configureTestingModule({
       imports: [
         CoreStoreModule.forTesting(),
@@ -44,6 +47,7 @@ describe('Camfil Product List Component', () => {
       providers: [
         { provide: ShoppingFacade, useFactory: () => instance(shoppingFacade) },
         { provide: AccountFacade, useFactory: () => instance(accountFacade) },
+        { provide: CheckoutFacade, useFactory: () => instance(checkoutFacade) },
       ],
     }).compileComponents();
 

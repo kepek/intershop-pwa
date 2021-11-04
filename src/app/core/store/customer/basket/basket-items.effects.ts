@@ -325,6 +325,18 @@ export class BasketItemsEffects {
       ])
     )
   );
+
+  addItemsToBasketSuccess$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(addItemsToBasketSuccess),
+      map(() =>
+        displaySuccessMessage({
+          message: 'camfil.add_items_to_basket.camfil.message.success',
+        })
+      )
+    )
+  );
+
   /**
    * Delete basket item effect.
    */

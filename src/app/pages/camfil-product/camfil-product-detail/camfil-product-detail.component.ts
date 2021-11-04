@@ -16,6 +16,7 @@ import {
 } from 'ish-core/models/product-view/product-view.model';
 import { ProductHelper, ProductPrices } from 'ish-core/models/product/product.model';
 import { whenTruthy } from 'ish-core/utils/operators';
+import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 
 @Component({
   selector: 'camfil-product-detail',
@@ -43,6 +44,7 @@ export class CamfilProductDetailComponent implements OnInit, OnDestroy {
   showAddToCompare = false;
   productDetailForm: FormGroup;
   isLoggedIn$: Observable<boolean>;
+  loading$: Observable<boolean>;
   isVariationProduct = ProductHelper.isVariationProduct;
   isMasterProduct = ProductHelper.isMasterProduct;
   isRetailSet = ProductHelper.isRetailSet;
@@ -52,6 +54,7 @@ export class CamfilProductDetailComponent implements OnInit, OnDestroy {
 
   constructor(
     private shoppingFacade: ShoppingFacade,
+    private checkoutFacade: CheckoutFacade,
     private accountFacade: AccountFacade,
     private camCardsFacade: CamCardsFacade
   ) {}
@@ -92,6 +95,7 @@ export class CamfilProductDetailComponent implements OnInit, OnDestroy {
       }
     });
     this.isLoggedIn$ = this.accountFacade.isLoggedIn$;
+    this.loading$ = this.checkoutFacade.basketLoading$;
   }
 
   ngOnDestroy() {
