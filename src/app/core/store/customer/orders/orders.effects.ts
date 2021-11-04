@@ -22,7 +22,7 @@ import {
 } from 'rxjs/operators';
 
 import { OrderService } from 'ish-core/services/order/order.service';
-import { displaySuccessMessage } from 'ish-core/store/core/messages';
+import { displayErrorMessage, displaySuccessMessage } from 'ish-core/store/core/messages';
 import { ofUrl, selectQueryParams, selectRouteParam } from 'ish-core/store/core/router';
 import { setBreadcrumbData } from 'ish-core/store/core/viewconf';
 import { continueCheckoutWithIssues, getCurrentBasketId, loadBasket } from 'ish-core/store/customer/basket';
@@ -143,7 +143,7 @@ export class OrdersEffects {
     this.actions$.pipe(
       ofType(createOrderFail),
       map(() =>
-        displaySuccessMessage({
+        displayErrorMessage({
           message: 'camfil.checkout.message.order_failed',
         })
       )
