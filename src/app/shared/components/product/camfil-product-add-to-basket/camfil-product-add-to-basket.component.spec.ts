@@ -31,6 +31,7 @@ import { OrderFormComponent } from '../../../../extensions/cam-cards/shared/add-
 import { CreateOrderProductSuccessComponent } from '../../../../extensions/cam-cards/shared/add-product-to-cart-modal/create-order-product-success/create-order-product-success.component';
 
 import { CamfilProductAddToBasketComponent } from './camfil-product-add-to-basket.component';
+import { ConfigurationService } from 'src/app/extensions/cam-configuration/services/configuration/configuration.service';
 
 describe('Camfil Product Add To Basket Component', () => {
   let component: CamfilProductAddToBasketComponent;
@@ -38,10 +39,12 @@ describe('Camfil Product Add To Basket Component', () => {
   let product: Product;
   let translate: TranslateService;
   let element: HTMLElement;
+  let configurationServiceMock: ConfigurationService;
 
   beforeEach(async () => {
     const checkoutFacade = mock(CheckoutFacade);
     const accountFacadeMock = mock(AccountFacade);
+    configurationServiceMock = mock(ConfigurationService);
     when(checkoutFacade.basketLoading$).thenReturn(of(false));
     when(accountFacadeMock.isLoggedIn$).thenReturn(of(false));
 
@@ -73,6 +76,7 @@ describe('Camfil Product Add To Basket Component', () => {
       providers: [
         { provide: CheckoutFacade, useFactory: () => instance(checkoutFacade) },
         { provide: AccountFacade, useFactory: () => instance(accountFacadeMock) },
+        { provide: ConfigurationService, useFactory: () => instance(configurationServiceMock) },
       ],
     }).compileComponents();
   });

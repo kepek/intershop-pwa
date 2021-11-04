@@ -7,6 +7,7 @@ import { of } from 'rxjs';
 import { instance, mock, when } from 'ts-mockito';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
+import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { PricePipe } from 'ish-core/models/price/price.pipe';
 import { User } from 'ish-core/models/user/user.model';
@@ -17,7 +18,6 @@ import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-load
 import { CamfilProductItemComponent } from 'ish-shared/components/product/camfil-product-item/camfil-product-item.component';
 
 import { CamfilProductListComponent } from './camfil-product-list.component';
-import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 
 describe('Camfil Product List Component', () => {
   let component: CamfilProductListComponent;

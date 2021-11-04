@@ -5,6 +5,7 @@ import { startWith, take, takeUntil } from 'rxjs/operators';
 import { CamCardsFacade } from 'src/app/extensions/cam-cards/facades/cam-cards.facade';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
+import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { CategoryView } from 'ish-core/models/category-view/category-view.model';
 import { VariationOptionGroup } from 'ish-core/models/product-variation/variation-option-group.model';
@@ -16,7 +17,6 @@ import {
 } from 'ish-core/models/product-view/product-view.model';
 import { ProductHelper, ProductPrices } from 'ish-core/models/product/product.model';
 import { whenTruthy } from 'ish-core/utils/operators';
-import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 
 @Component({
   selector: 'camfil-product-detail',

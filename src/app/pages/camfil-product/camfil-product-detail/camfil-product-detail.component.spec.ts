@@ -37,6 +37,7 @@ import { CamfilProductBadgesComponent } from '../camfil-product-badges/camfil-pr
 import { CamfilProductImagesComponent } from '../camfil-product-images/camfil-product-images.component';
 
 import { CamfilProductDetailComponent } from './camfil-product-detail.component';
+import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
 
 describe('Camfil Product Detail Component', () => {
   let component: CamfilProductDetailComponent;
@@ -60,6 +61,7 @@ describe('Camfil Product Detail Component', () => {
         CamfilProductDetailComponent,
         MockComponent(AccordionComponent),
         MockComponent(AccordionItemComponent),
+        MockComponent(CamfilLoadingComponent),
         MockComponent(CamfilProductAddToBasketComponent),
         MockComponent(CamfilProductAddToCompareComponent),
         MockComponent(CamfilProductAttributeComponent),
