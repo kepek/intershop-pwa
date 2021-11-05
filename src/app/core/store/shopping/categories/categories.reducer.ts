@@ -23,6 +23,7 @@ function mergeCategories(
 ) {
   const loadedTree = action.payload.categories;
   const categories = CategoryTreeHelper.merge(state.categories, loadedTree);
+
   return {
     ...state,
     categories,
