@@ -4,6 +4,7 @@
       <mat-chip
         *ngIf="
           selected.length >= 2 ||
+          (!selected.length && appliedFilters) ||
           countNotNull([width, height, depth]) >= 2 ||
           (selected.length >= 1 && countNotNull([width, height, depth]) >= 1)
         "
