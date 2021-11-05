@@ -11,27 +11,26 @@
       [value]="'product.price.listPriceFallback.text' | translate: { '0': product.listPrice | ishPrice }"
     ></camfil-product-attribute>
 
-    <ng-container *ngIf="isLoggedIn$ | async">
-      <ng-container *ngIf="product.salePrice; else salePriceNotAvailable">
-        <camfil-product-attribute
-          class="current-price"
-          data-testing-id="current-price"
-          [ngClass]="{
-            'sale-price': showInformationalPrice && isListPriceGreaterThanSalePrice,
-            'sale-price-higher': showInformationalPrice && isListPriceLessThanSalePrice
-          }"
-          [attr.data-current-price]="product.salePrice | ishPrice"
-          [name]="'camfil.product.your_price.label' | translate"
-          [value]="
-            (isListPriceGreaterThanSalePrice
-              ? 'product.price.salePricePrefix.text'
-              : 'product.price.salePriceFallback.text'
-            ) | translate: { '0': product.salePrice | ishPrice }
-          "
-        ></camfil-product-attribute>
-        <meta itemprop="price" [attr.content]="product.salePrice.value | number: '1.2-2':'en_US'" />
-        <meta itemprop="priceCurrency" [attr.content]="product.salePrice.currency" /> </ng-container
-    ></ng-container>
+    <ng-container *ngIf="product.salePrice; else salePriceNotAvailable">
+      <camfil-product-attribute
+        class="current-price"
+        data-testing-id="current-price"
+        [ngClass]="{
+          'sale-price': showInformationalPrice && isListPriceGreaterThanSalePrice,
+          'sale-price-higher': showInformationalPrice && isListPriceLessThanSalePrice
+        }"
+        [attr.data-current-price]="product.salePrice | ishPrice"
+        [name]="'camfil.product.your_price.label' | translate"
+        [value]="
+          (isListPriceGreaterThanSalePrice
+            ? 'product.price.salePricePrefix.text'
+            : 'product.price.salePriceFallback.text'
+          ) | translate: { '0': product.salePrice | ishPrice }
+        "
+      ></camfil-product-attribute>
+      <meta itemprop="price" [attr.content]="product.salePrice.value | number: '1.2-2':'en_US'" />
+      <meta itemprop="priceCurrency" [attr.content]="product.salePrice.currency" />
+    </ng-container>
 
     <ng-template #salePriceNotAvailable>
       <camfil-product-attribute
