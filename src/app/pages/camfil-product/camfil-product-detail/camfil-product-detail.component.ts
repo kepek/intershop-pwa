@@ -38,7 +38,6 @@ export class CamfilProductDetailComponent implements OnInit, OnDestroy {
   @Input() productSku: string;
   @Output() productSkuChange = new EventEmitter<string>();
   readonly quantityControlName = 'quantity';
-  userPermissions$: Observable<string[]>;
   isInCompareList$: Observable<boolean>;
   isInCompareList: boolean;
   showAddToCompare = false;
@@ -86,8 +85,6 @@ export class CamfilProductDetailComponent implements OnInit, OnDestroy {
         this.isInCompareList = isInCompare;
       });
     }
-
-    this.userPermissions$ = this.accountFacade.userPermissions$.pipe(takeUntil(this.destroy$));
 
     this.camCardsFacade.getAddProductSuccess$.pipe(takeUntil(this.destroy$)).subscribe(value => {
       if (value) {

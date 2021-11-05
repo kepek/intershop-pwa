@@ -2,14 +2,16 @@
   <ng-container *ngIf="isPriceRange; then priceRange; else singlePrice"></ng-container>
 
   <ng-template #singlePrice>
-    <camfil-product-attribute
-      *ngIf="showInformationalPrice; else emptyBlock"
-      class="old-price"
-      data-testing-id="old-price"
-      [attr.data-old-price]="product.listPrice | ishPrice"
-      [name]="'camfil.product.list_price.label' | translate"
-      [value]="'product.price.listPriceFallback.text' | translate: { '0': product.listPrice | ishPrice }"
-    ></camfil-product-attribute>
+    <ng-container *ngIf="isLoggedIn$ | async">
+      <camfil-product-attribute
+        *ngIf="showInformationalPrice; else emptyBlock"
+        class="old-price"
+        data-testing-id="old-price"
+        [attr.data-old-price]="product.listPrice | ishPrice"
+        [name]="'camfil.product.list_price.label' | translate"
+        [value]="'product.price.listPriceFallback.text' | translate: { '0': product.listPrice | ishPrice }"
+      ></camfil-product-attribute
+    ></ng-container>
 
     <ng-container *ngIf="product.salePrice; else salePriceNotAvailable">
       <camfil-product-attribute
