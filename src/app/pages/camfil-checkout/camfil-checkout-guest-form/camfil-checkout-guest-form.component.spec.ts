@@ -19,7 +19,7 @@ describe('Camfil Checkout Guest Form Component', () => {
     camConfigurationFacade = mock(CamConfigurationFacade);
     checkoutFacadeMock = mock(CheckoutFacade);
     await TestBed.configureTestingModule({
-      declarations: [CamfilGuestFormComponent, CamfilMaxLengthAttributeCreateDirective],
+      declarations: [CamfilCheckoutGuestFormComponent, CamfilMaxLengthAttributeCreateDirective],
       providers: [
         { provide: CamConfigurationFacade, useFactory: () => instance(camConfigurationFacade) },
         { provide: CheckoutFacade, useFactory: () => instance(checkoutFacadeMock) },
