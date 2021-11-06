@@ -182,12 +182,11 @@ export class CamfilCheckoutPageComponent implements OnInit, OnDestroy {
         map(([buckets, isLoggedIn]) =>
           isLoggedIn ? [...new Set(buckets.map(bucket => bucket?.customer?.id))] : undefined
         ),
-        whenTruthy(),
         distinctUntilChanged((prev, curr) => JSON.stringify(prev) === JSON.stringify(curr)),
         takeUntil(this.destroy$)
       )
       .subscribe(customerIds => {
-        customerIds.forEach(customerId => {
+        customerIds.filter(Boolean).forEach(customerId => {
           this.checkoutFacade.loadCustomerDeliveryTerm(customerId);
         });
       });

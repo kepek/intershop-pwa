@@ -479,6 +479,8 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
       const datesList = [
         ...new Set(
           items
+            // Stop if no earliestDeliveryDate available?
+            .filter(o => !!o?.earliestDeliveryDate)
             .map(o => {
               let delivery = new Date(o.earliestDeliveryDate);
               delivery = this.checkIfWeekend(delivery) ? this.setToClosestMonday(delivery) : delivery;
@@ -487,8 +489,14 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
             .sort()
         ),
       ];
+
       const min = datesList[0];
       const max = datesList[datesList.length - 1];
+
+      // TODO (extMlk): Not sure if we should display N/A or try to predict the date?
+      if (!min || !max) {
+        return new Date().getTime();
+      }
 
       if (min !== max) {
         this.setDaysClass(min, new Date(max));

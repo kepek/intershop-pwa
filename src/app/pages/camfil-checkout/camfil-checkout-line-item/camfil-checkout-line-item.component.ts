@@ -206,7 +206,14 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
   }
 
   calculateDeliveryDate() {
-    let delivery = new Date(this.lineItem.earliestDeliveryDate);
+    const { earliestDeliveryDate } = this.lineItem;
+
+    // TODO (extMlk): Not sure if we should display N/A or try to predict the date?
+    let delivery = new Date();
+
+    if (earliestDeliveryDate) {
+      delivery = new Date(earliestDeliveryDate);
+    }
 
     if (this.checkIfWeekend(delivery)) {
       delivery = this.setToClosestMonday(delivery);
