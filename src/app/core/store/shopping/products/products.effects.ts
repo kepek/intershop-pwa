@@ -32,7 +32,7 @@ import { ProductsService } from 'ish-core/services/products/products.service';
 import { getCurrentLocale, setCurrentLocale } from 'ish-core/store/core/configuration';
 import { selectQueryParam, selectRouteParam } from 'ish-core/store/core/router';
 import { setBreadcrumbData } from 'ish-core/store/core/viewconf';
-import { getLoggedInCustomer, loginUserSuccess, setPGID } from 'ish-core/store/customer/user';
+import { getLoggedInCustomer, getUserLoading, loginUserSuccess, setPGID } from 'ish-core/store/customer/user';
 import { getServerConfigParameter } from 'ish-core/store/general/server-config';
 import { loadCategory } from 'ish-core/store/shopping/categories';
 import { setProductListingPages } from 'ish-core/store/shopping/product-listing';
@@ -81,7 +81,9 @@ export class ProductsEffects {
     this.actions$.pipe(
       ofType(loadProduct),
       mapToPayloadProperty('sku'),
-      mergeMap(sku =>
+      withLatestFrom(this.store.pipe(select(getUserLoading))),
+      filter(([, loading]) => !loading),
+      mergeMap(([sku]) =>
         this.productsService.getProduct(sku).pipe(
           map(product => loadProductSuccess({ product })),
           mapErrorToAction(loadProductFail, { sku })
@@ -416,7 +418,7 @@ export class ProductsEffects {
         this.store.pipe(select(getLoggedInCustomer))
       ),
       filter(([, entities]) => !!Object.keys(entities).length),
-      concatMap(([, entities, { currency }, customer]) => {
+      mergeMap(([, entities, { currency }, customer]) => {
         const skus = Object.keys(entities);
         const customerId = customer.customerNo;
         return this.productsService.loadCustomerPrices(customerId, skus, currency).pipe(
