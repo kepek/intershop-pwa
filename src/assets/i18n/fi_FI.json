@@ -856,7 +856,7 @@
   "camfil.checkout.cta.enter_email_address": "Syötä sähköpostiosoite",
   "camfil.checkout.cta.recipients_save": "Tallenna",
   "camfil.checkout.cta.separate_multiple_addresses": "Erota sähköpostiosoitteet pilkulla",
-  "camfil.checkout.desired_delivery_date": "Haluttu toimituspäivä",
+  "camfil.checkout.desired_delivery_date": "Aikaisin toimituspäivä",
   "camfil.checkout.excl_vat": "ilman ALV",
   "camfil.checkout.form.delivery_date": "Valittu toimituspäivä",
   "camfil.checkout.form.invoice_mark": "Tilausnumero",
