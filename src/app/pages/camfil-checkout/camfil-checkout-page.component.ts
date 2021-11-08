@@ -186,7 +186,7 @@ export class CamfilCheckoutPageComponent implements OnInit, OnDestroy {
         takeUntil(this.destroy$)
       )
       .subscribe(customerIds => {
-        customerIds.filter(Boolean).forEach(customerId => {
+        customerIds?.filter(Boolean)?.forEach(customerId => {
           this.checkoutFacade.loadCustomerDeliveryTerm(customerId);
         });
       });
