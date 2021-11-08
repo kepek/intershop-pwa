@@ -15,6 +15,7 @@ import { URLFormParams, stringToFormParams } from 'ish-core/utils/url-form-param
 })
 export class CamfilFilterNavigationBadgesComponent implements OnInit, OnChanges {
   @Input() filterNavigation: FilterNavigation;
+  @Input() appliedFilters: string;
   @Output() applyFilter = new EventEmitter<{ searchParameter: URLFormParams }>();
   @Output() clearFilters = new EventEmitter<void>();
   selected: { searchParameter: URLFormParams; displayName: string; filterName: string; filterId: string }[];
