@@ -26,10 +26,7 @@
 
     <ng-container *ngIf="!(isLoggedIn$ | async)">
       <ng-container *ngIf="basket$ | async">
-        <camfil-checkout-guest-form
-          [basket]="basket$ | async"
-          (submit)="submitGuestCheckout($event)"
-        ></camfil-checkout-guest-form>
+        <camfil-checkout-guest-form (submit)="submitGuestCheckout($event)"></camfil-checkout-guest-form>
       </ng-container>
       <camfil-checkout-payment
         (createPaymentInstrument)="createPaymentInstrument($event)"
