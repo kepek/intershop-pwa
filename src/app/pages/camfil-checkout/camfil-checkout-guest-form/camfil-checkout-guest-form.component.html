@@ -1,5 +1,4 @@
 <form [formGroup]="guestForm">
-
   <!-- Your Details -->
 
   <mat-expansion-panel [expanded]="true">
@@ -18,24 +17,54 @@
             <mat-form-field appearance="fill" class="form-field">
               <mat-label>{{ 'camfil.checkout.guest_form.first_name' | translate }}</mat-label>
               <input formControlName="firstName" label="camfil.checkout.form.order_mark" matInput />
+              <camfil-error
+                [errorValidators]="validators.firstName"
+                [errors]="getField('userDetailsFormGroup', 'firstName').errors"
+                [touched]="
+                  getField('userDetailsFormGroup', 'firstName').touched ||
+                  getField('userDetailsFormGroup', 'firstName').dirty
+                "
+              ></camfil-error>
             </mat-form-field>
           </div>
           <div class="mat-form-field__wrapper">
             <mat-form-field appearance="fill" class="form-field">
               <mat-label>{{ 'camfil.checkout.guest_form.last_name' | translate }}</mat-label>
               <input formControlName="lastName" label="camfil.checkout.form.order_mark" matInput />
+              <camfil-error
+                [errorValidators]="validators.lastName"
+                [errors]="getField('userDetailsFormGroup', 'lastName').errors"
+                [touched]="
+                  getField('userDetailsFormGroup', 'lastName').touched ||
+                  getField('userDetailsFormGroup', 'lastName').dirty
+                "
+              ></camfil-error>
             </mat-form-field>
           </div>
           <div class="mat-form-field__wrapper">
             <mat-form-field appearance="fill" class="form-field">
               <mat-label>{{ 'camfil.checkout.guest_form.email_address' | translate }}</mat-label>
               <input formControlName="email" label="camfil.checkout.form.order_mark" matInput />
+              <camfil-error
+                [errorValidators]="validators.email"
+                [errors]="getField('userDetailsFormGroup', 'email').errors"
+                [touched]="
+                  getField('userDetailsFormGroup', 'email').touched || getField('userDetailsFormGroup', 'email').dirty
+                "
+              ></camfil-error>
             </mat-form-field>
           </div>
           <div class="mat-form-field__wrapper">
             <mat-form-field appearance="fill" class="form-field">
               <mat-label>{{ 'camfil.checkout.guest_form.telephone_number' | translate }}</mat-label>
               <input formControlName="phone" label="camfil.checkout.form.order_mark" matInput />
+              <camfil-error
+                [errorValidators]="validators.phone"
+                [errors]="getField('userDetailsFormGroup', 'phone').errors"
+                [touched]="
+                  getField('userDetailsFormGroup', 'phone').touched || getField('userDetailsFormGroup', 'phone').dirty
+                "
+              ></camfil-error>
             </mat-form-field>
           </div>
         </div>
@@ -87,24 +116,55 @@
             <mat-form-field appearance="fill" class="form-field">
               <mat-label>{{ 'camfil.checkout.guest_form.street_address' | translate }}</mat-label>
               <input formControlName="streetAddress" label="camfil.checkout.form.order_mark" matInput />
+              <camfil-error
+                [errorValidators]="validators.streetAddress"
+                [errors]="getField('deliveryInfoFromGroup', 'streetAddress').errors"
+                [touched]="
+                  getField('deliveryInfoFromGroup', 'streetAddress').touched ||
+                  getField('deliveryInfoFromGroup', 'streetAddress').dirty
+                "
+              ></camfil-error>
             </mat-form-field>
           </div>
           <div class="mat-form-field__wrapper">
             <mat-form-field appearance="fill" class="form-field">
               <mat-label>{{ 'camfil.checkout.guest_form.zip_code' | translate }}</mat-label>
               <input formControlName="zipCode" label="camfil.checkout.form.order_mark" matInput />
+              <camfil-error
+                [errorValidators]="validators.zipCode"
+                [errors]="getField('deliveryInfoFromGroup', 'zipCode').errors"
+                [touched]="
+                  getField('deliveryInfoFromGroup', 'zipCode').touched ||
+                  getField('deliveryInfoFromGroup', 'zipCode').dirty
+                "
+              ></camfil-error>
             </mat-form-field>
           </div>
           <div class="mat-form-field__wrapper">
             <mat-form-field appearance="fill" class="form-field">
               <mat-label>{{ 'camfil.account.apply_form.city' | translate }}</mat-label>
               <input formControlName="city" label="camfil.checkout.form.order_mark" matInput />
+              <camfil-error
+                [errorValidators]="validators.city"
+                [errors]="getField('deliveryInfoFromGroup', 'city').errors"
+                [touched]="
+                  getField('deliveryInfoFromGroup', 'city').touched || getField('deliveryInfoFromGroup', 'city').dirty
+                "
+              ></camfil-error>
             </mat-form-field>
           </div>
           <div class="mat-form-field__wrapper">
             <mat-form-field appearance="fill" class="form-field">
               <mat-label>{{ 'camfil.account.cam_card.add_to_form.country' | translate }}</mat-label>
               <input formControlName="country" label="camfil.checkout.form.order_mark" matInput />
+              <camfil-error
+                [errorValidators]="validators.country"
+                [errors]="getField('deliveryInfoFromGroup', 'country').errors"
+                [touched]="
+                  getField('deliveryInfoFromGroup', 'country').touched ||
+                  getField('deliveryInfoFromGroup', 'country').dirty
+                "
+              ></camfil-error>
             </mat-form-field>
           </div>
           <mat-checkbox
@@ -179,29 +239,60 @@
             <mat-form-field appearance="fill" class="form-field">
               <mat-label>{{ 'camfil.checkout.guest_form.street_address' | translate }}</mat-label>
               <input formControlName="streetAddress" label="camfil.checkout.form.order_mark" matInput />
+              <camfil-error
+                [errorValidators]="validators.streetAddress"
+                [errors]="getField('invoiceAddressFormGroup', 'streetAddress').errors"
+                [touched]="
+                  getField('invoiceAddressFormGroup', 'streetAddress').touched ||
+                  getField('invoiceAddressFormGroup', 'streetAddress').dirty
+                "
+              ></camfil-error>
             </mat-form-field>
           </div>
           <div class="mat-form-field__wrapper">
             <mat-form-field appearance="fill" class="form-field">
               <mat-label>{{ 'camfil.checkout.guest_form.zip_code' | translate }}</mat-label>
               <input formControlName="zipCode" label="camfil.checkout.form.order_mark" matInput />
+              <camfil-error
+                [errorValidators]="validators.zipCode"
+                [errors]="getField('invoiceAddressFormGroup', 'zipCode').errors"
+                [touched]="
+                  getField('invoiceAddressFormGroup', 'zipCode').touched ||
+                  getField('invoiceAddressFormGroup', 'zipCode').dirty
+                "
+              ></camfil-error>
             </mat-form-field>
           </div>
           <div class="mat-form-field__wrapper">
             <mat-form-field appearance="fill" class="form-field">
               <mat-label>{{ 'camfil.account.apply_form.city' | translate }}</mat-label>
               <input formControlName="city" label="camfil.checkout.form.order_mark" matInput />
+              <camfil-error
+                [errorValidators]="validators.city"
+                [errors]="getField('invoiceAddressFormGroup', 'city').errors"
+                [touched]="
+                  getField('invoiceAddressFormGroup', 'city').touched ||
+                  getField('invoiceAddressFormGroup', 'city').dirty
+                "
+              ></camfil-error>
             </mat-form-field>
           </div>
           <div class="mat-form-field__wrapper">
             <mat-form-field appearance="fill" class="form-field">
               <mat-label>{{ 'camfil.account.cam_card.add_to_form.country' | translate }}</mat-label>
               <input formControlName="country" label="camfil.checkout.form.order_mark" matInput />
+              <camfil-error
+                [errorValidators]="validators.country"
+                [errors]="getField('invoiceAddressFormGroup', 'country').errors"
+                [touched]="
+                  getField('invoiceAddressFormGroup', 'country').touched ||
+                  getField('invoiceAddressFormGroup', 'country').dirty
+                "
+              ></camfil-error>
             </mat-form-field>
           </div>
         </div>
       </div>
     </div>
   </mat-expansion-panel>
-
 </form>

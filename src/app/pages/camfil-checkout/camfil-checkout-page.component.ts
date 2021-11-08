@@ -17,7 +17,8 @@ import { CamCardsFacade } from '../../extensions/cam-cards/facades/cam-cards.fac
 import { PaymentMethod } from 'ish-core/models/payment-method/payment-method.model';
 import { HttpError } from 'ish-core/models/http-error/http-error.model';
 import { PaymentInstrument } from 'ish-core/models/payment-instrument/payment-instrument.model';
-import { GuestBasketExtensions } from 'ish-core/models/basket/basket.interface';
+import { BasketExtensions, GuestBasketExtensions } from 'ish-core/models/basket/basket.interface';
+import { ConfigurationService } from 'src/app/extensions/cam-configuration/services/configuration/configuration.service';
 
 @Component({
   templateUrl: './camfil-checkout-page.component.html',
@@ -41,6 +42,8 @@ export class CamfilCheckoutPageComponent implements OnInit, OnDestroy {
 
   isConfirmed = false;
   isLoggedIn = false;
+  basketId: string;
+  guestBucket: Bucket;
 
   private isValid = false;
   private destroy$ = new Subject<void>();
@@ -49,7 +52,8 @@ export class CamfilCheckoutPageComponent implements OnInit, OnDestroy {
     private accountFacade: AccountFacade,
     private checkoutFacade: CheckoutFacade,
     private shoppingFacade: ShoppingFacade,
-    private camCardsFacade: CamCardsFacade
+    private camCardsFacade: CamCardsFacade,
+    private configurationService: ConfigurationService
   ) {}
 
   ngOnInit() {
@@ -136,7 +140,19 @@ export class CamfilCheckoutPageComponent implements OnInit, OnDestroy {
   }
 
   submitGuestCheckout(guestBucketAddressData: GuestBasketExtensions) {
-    console.log('submitGuestCheckout', guestBucketAddressData);
+    const { deliveryAddressId } = this.guestBucket;
+    const updated: BasketExtensions = {
+      ...this.guestBucket,
+      ...guestBucketAddressData,
+
+      anonymousBasketDataRO: guestBucketAddressData,
+    };
+
+    this.shoppingFacade.updateBucket(this.basketId, deliveryAddressId, updated);
+  }
+
+  get isGuestCheckout() {
+    return this.configurationService.isEnabled('guestCheckout') && !this.isLoggedIn;
   }
 
   private initBasket() {
@@ -160,6 +176,9 @@ export class CamfilCheckoutPageComponent implements OnInit, OnDestroy {
         takeUntil(this.destroy$)
       )
       .subscribe((basket: BasketView) => {
+        if (this.isGuestCheckout) {
+          this.basketId = basket.id;
+        }
         if (!this.isConfirmed) {
           this.confirmedBasket$.next(basket);
         }
@@ -173,6 +192,9 @@ export class CamfilCheckoutPageComponent implements OnInit, OnDestroy {
         takeUntil(this.destroy$)
       )
       .subscribe((buckets: Bucket[]) => {
+        if (this.isGuestCheckout) {
+          this.guestBucket = buckets[0];
+        }
         this.confirmedBuckets$.next(buckets);
       });
 

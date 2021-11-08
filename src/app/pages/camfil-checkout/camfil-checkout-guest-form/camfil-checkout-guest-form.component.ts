@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
@@ -7,8 +7,12 @@ import { CamConfigurationFacade } from 'src/app/extensions/cam-configuration/fac
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { GuestBasketExtensions } from 'ish-core/models/basket/basket.interface';
 import { BasketMapper } from 'ish-core/models/basket/basket.mapper';
+import { Basket } from 'ish-core/models/basket/basket.model';
+import { Bucket } from 'ish-core/models/basket/bucket.model';
 import { whenTruthy } from 'ish-core/utils/operators';
 import { SpecialValidators } from 'ish-shared/forms/validators/special-validators';
+
+import { GUEST_FORM_VALIDATORS } from './validators';
 
 @Component({
   selector: 'camfil-checkout-guest-form',
@@ -22,8 +26,10 @@ export class CamfilCheckoutGuestFormComponent implements OnInit, OnDestroy {
   showInvoiceAddressForm = false;
   countryCode: string;
   anonymousBasketDataRO;
+  validators = GUEST_FORM_VALIDATORS;
   @Output() submit = new EventEmitter<GuestBasketExtensions>();
-
+  @Input() basket: Basket;
+  @Input() bucket: Bucket;
   private destroy$ = new Subject();
 
   constructor(
@@ -128,6 +134,10 @@ export class CamfilCheckoutGuestFormComponent implements OnInit, OnDestroy {
         });
       }
     }
+  }
+
+  getField(formName: string, fieldName: string) {
+    return this.guestForm?.get([formName, fieldName]);
   }
 
   ngOnDestroy() {
