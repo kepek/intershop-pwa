@@ -3,7 +3,7 @@ import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { routerNavigatedAction } from '@ngrx/router-store';
-import { select, Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import { EMPTY, from } from 'rxjs';
 import {
   catchError,
