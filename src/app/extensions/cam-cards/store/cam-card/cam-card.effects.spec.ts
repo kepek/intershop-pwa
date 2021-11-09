@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { Store } from '@ngrx/store';
-import { cold, hot } from 'jest-marbles';
+import { Scheduler, cold, hot } from 'jest-marbles';
 import { of, throwError } from 'rxjs';
 import { anyNumber, anyString, anything, instance, mock, verify, when } from 'ts-mockito';
 
@@ -137,27 +137,29 @@ describe('Cam Card Effects', () => {
     });
 
     it('should map to actions of type LoadCamCardsSuccess', () => {
+      const scheduler = Scheduler.get();
       const action = loadCamCards();
-      const completion = loadCamCardsSuccess({
-        camCards,
-      });
-      actions$ = hot('-a-a-a', { a: action });
-      const expected$ = cold('-c-c-c', { c: completion });
+      const completion = loadCamCardsSuccess({ camCards });
+      const expected$ = cold('502ms c', { c: completion });
 
-      expect(effects.loadCamCards$).toBeObservable(expected$);
+      scheduler.run(() => {
+        actions$ = hot('a a a', { a: action });
+        expect(effects.loadCamCards$).toBeObservable(expected$);
+      });
     });
 
     it('should map failed calls to actions of type LoadCamCardFail', () => {
-      const error = makeHttpError({ message: 'invalid' });
-      when(camCardServiceMock.getCamCards()).thenReturn(throwError(error));
+      const scheduler = Scheduler.get();
       const action = loadCamCards();
-      const completion = loadCamCardsFail({
-        error,
-      });
-      actions$ = hot('-a-a-a', { a: action });
-      const expected$ = cold('-c-c-c', { c: completion });
+      const error = makeHttpError({ message: 'invalid' });
+      const completion = loadCamCardsFail({ error });
+      const expected$ = cold('502ms c', { c: completion });
 
-      expect(effects.loadCamCards$).toBeObservable(expected$);
+      when(camCardServiceMock.getCamCards()).thenReturn(throwError(error));
+      scheduler.run(() => {
+        actions$ = hot('a a a', { a: action });
+        expect(effects.loadCamCards$).toBeObservable(expected$);
+      });
     });
   });
 
