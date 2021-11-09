@@ -34,7 +34,6 @@ export class CamfilProductListComponent implements OnInit {
   @Input() limit?: number;
   @Input() isInSearchBox = false;
   @Input() searchTerm?: string;
-  loading$: Observable<boolean>;
   listingLoading$: Observable<boolean>;
   deviceType$: Observable<DeviceType>;
 
@@ -66,7 +65,6 @@ export class CamfilProductListComponent implements OnInit {
 
     this.listingLoading$ = this.shoppingFacade.productListingLoading$;
     this.deviceType$ = this.appFacade.deviceType$;
-    this.loading$ = this.checkoutFacade.basketLoading$;
     this.minForBottomLoading = this.itemsPerPage - 2;
   }
 

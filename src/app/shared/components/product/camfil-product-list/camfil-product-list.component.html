@@ -1,4 +1,3 @@
-<camfil-loading *ngIf="loading$ | async"></camfil-loading>
 <div class="product-list row">
   <div *ngIf="!products.length && !(listingLoading$ | async)" class="p-4 bg-secondary w-100">
     {{ 'search.noresult.filtered_products.message' | translate }}
