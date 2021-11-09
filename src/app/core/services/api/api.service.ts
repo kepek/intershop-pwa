@@ -1,17 +1,17 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Store, select } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 import {
-  MonoTypeOperatorFunction,
-  Observable,
-  OperatorFunction,
-  Subject,
   combineLatest,
   defer,
   forkJoin,
   identity,
   iif,
+  MonoTypeOperatorFunction,
+  Observable,
   of,
+  OperatorFunction,
+  Subject,
   throwError,
 } from 'rxjs';
 import { concatMap, filter, first, map, take, tap, withLatestFrom } from 'rxjs/operators';
@@ -131,7 +131,9 @@ export class ApiService {
       // pgid
       this.store.pipe(
         select(getPGID),
-        map(pgid => (options?.sendPGID ? `;pgid=${pgid}` : options?.sendSPGID ? `;spgid=${pgid}` : ''))
+        map(pgid =>
+          options?.sendPGID && !!pgid ? `;pgid=${pgid}` : options?.sendSPGID && pgid ? `;spgid=${pgid}` : ''
+        )
       ),
       // remaining path
       of(path.includes('/') ? path.substr(path.indexOf('/')) : ''),
