@@ -3,7 +3,7 @@ import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { routerNavigatedAction } from '@ngrx/router-store';
-import { Store, select } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 import { EMPTY, from } from 'rxjs';
 import {
   catchError,
@@ -46,6 +46,7 @@ import {
   loginUserFail,
   loginUserSuccess,
   loginUserWithToken,
+  logoutUser,
   requestPasswordReminder,
   requestPasswordReminderFail,
   requestPasswordReminderSuccess,
@@ -257,6 +258,10 @@ export class UserEffects {
         )
       )
     )
+  );
+
+  unsetPGIDWhenLogoutUser$ = createEffect(() =>
+    this.actions$.pipe(ofType(logoutUser), mapTo(setPGID({ pgid: undefined })))
   );
 
   loadUserPaymentMethods$ = createEffect(() =>
