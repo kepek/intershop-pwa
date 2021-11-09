@@ -189,6 +189,7 @@ export class ShoppingFacade {
       switchMap(plainSKU =>
         this.store.pipe(
           select(getProduct, { sku: plainSKU }),
+          whenTruthy(),
           map(p => !ProductHelper.isReadyForDisplay(p, level))
         )
       )
