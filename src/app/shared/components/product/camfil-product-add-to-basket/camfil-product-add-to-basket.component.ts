@@ -56,7 +56,7 @@ export class CamfilProductAddToBasketComponent implements OnInit, OnDestroy {
    */
   @Input() translationKey = 'product.add_to_cart.link';
 
-  buttonTranslationKey = 'product.add_to_cart.link';
+  buttonTranslationKey = 'camfil.product.add_to_cart.not_logged.label';
   /**
    * button was clicked event
    */
@@ -79,10 +79,10 @@ export class CamfilProductAddToBasketComponent implements OnInit, OnDestroy {
     // update emitted to display spinning animation
     this.basketLoading$.pipe(whenFalsy(), takeUntil(this.destroy$)).subscribe(this.displaySpinner$); // false
     this.accountFacade.isLoggedIn$.pipe(takeUntil(this.destroy$)).subscribe(isLoggedIn => {
-      if (!isLoggedIn) {
-        this.buttonTranslationKey = 'camfil.product.add_to_cart.not_logged.label';
-      } else {
+      if (isLoggedIn) {
         this.buttonTranslationKey = this.translationKey;
+      } else {
+        this.buttonTranslationKey = 'camfil.product.add_to_cart.not_logged.label';
       }
     });
   }

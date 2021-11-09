@@ -50,8 +50,8 @@ export class CreateNewCamcardComponent implements OnInit, OnDestroy {
   }
 
   convertToPermanent() {
-    const newCamCards = this.buckets.map((bucket, idx) => {
-      const name = this.getNewName(bucket.orderMark, idx);
+    const newCamCards = this.buckets.map(bucket => {
+      const name = this.getNewName(bucket.orderMark);
       const { addressLine1, addressLine2, city, countryCode, postalCode } = bucket.shipToAddressFull;
       const camCardItems = bucket.lineItems.map(item => {
         const label = this.getValFromAttr<string>(item, 'boxLabel');
@@ -91,8 +91,8 @@ export class CreateNewCamcardComponent implements OnInit, OnDestroy {
     });
   }
 
-  getNewName(oldName: string, idx: number): string {
-    return `${oldName || this.getTimestamp()}_${idx}`;
+  getNewName(oldName: string): string {
+    return `${oldName || this.getTimestamp()}`;
   }
 
   openModal() {
