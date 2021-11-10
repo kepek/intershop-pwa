@@ -1084,6 +1084,8 @@
   "camfil.modal.createOrder.order-form.input.phone_number": "Phone number",
   "camfil.modal.createOrder.order-form.input.phone_number.error.pattern": "Please enter a valid phone number.",
   "camfil.modal.createOrder.order-form.input.phone_number.error.required": "Please enter phone number.",
+  "camfil.modal.createOrder.order-form.input.siret.error.required": "Please enter SIRET number.",
+  "camfil.modal.createOrder.order-form.input.siret.error.pattern": "SIRET number must contain 14 digits.",
   "camfil.guest-form.input.street_address.errror.required": "Please enter street address.",
   "camfil.guest-form.input.zip_code.errror.required": "Please enter postal code.",
   "camfil.guest-form.input.city.errror.required": "Please enter city.",

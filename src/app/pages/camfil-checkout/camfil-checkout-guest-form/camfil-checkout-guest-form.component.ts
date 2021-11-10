@@ -70,14 +70,14 @@ export class CamfilCheckoutGuestFormComponent implements OnInit, OnDestroy {
       jobTitle: [''],
       companyName: [''],
       vat: [''],
-      siret: [''],
+      siret: ['', [Validators.required, Validators.pattern('[0-9]{14}')]],
     });
   }
 
   initDeliveryInfoForm() {
     return this.fb.group({
       streetAddress: ['', [Validators.required]],
-      zipCode: ['', [Validators.required]],
+      zipCode: ['', [Validators.required, Validators.pattern('[0-9]{5}')]],
       city: ['', [Validators.required]],
       country: ['', [Validators.required]],
       sameAddressAsInvoice: [true],
@@ -91,7 +91,7 @@ export class CamfilCheckoutGuestFormComponent implements OnInit, OnDestroy {
   initInvoiceAddressForm() {
     return this.fb.group({
       streetAddress: ['', [Validators.required]],
-      zipCode: ['', [Validators.required]],
+      zipCode: ['', [Validators.required, Validators.pattern('[0-9]{5}')]],
       city: ['', [Validators.required]],
       country: ['', [Validators.required]],
     });

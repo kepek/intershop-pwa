@@ -37,6 +37,16 @@ export const GUEST_FORM_VALIDATORS = {
       message: 'camfil.modal.createOrder.order-form.input.phone_number.error.required',
     },
   ],
+  siret: [
+    {
+      error: 'required',
+      message: 'camfil.modal.createOrder.order-form.input.siret.error.required',
+    },
+    {
+      error: 'pattern',
+      message: 'camfil.modal.createOrder.order-form.input.siret.error.pattern',
+    },
+  ],
   // Validators for Delivery form
   streetAddress: [
     {
@@ -48,6 +58,14 @@ export const GUEST_FORM_VALIDATORS = {
     {
       error: 'required',
       message: 'camfil.guest-form.input.zip_code.errror.required',
+    },
+    {
+      error: 'pattern',
+      message: 'camfil.modal.createOrder.order-form.input.zipcode.error.pattern',
+    },
+    {
+      error: 'incorrect',
+      message: 'camfil.address_form.post_code.invalid',
     },
   ],
   city: [

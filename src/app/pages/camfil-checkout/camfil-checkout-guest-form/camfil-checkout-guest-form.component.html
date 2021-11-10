@@ -91,6 +91,13 @@
             <mat-form-field appearance="fill" class="form-field">
               <mat-label>{{ 'camfil.checkout.guest_form.siret_number' | translate }}</mat-label>
               <input formControlName="siret" label="camfil.checkout.form.order_mark" matInput />
+              <camfil-error
+                [errorValidators]="validators.siret"
+                [errors]="getField('userDetailsFormGroup', 'siret').errors"
+                [touched]="
+                  getField('userDetailsFormGroup', 'siret').touched || getField('userDetailsFormGroup', 'siret').dirty
+                "
+              ></camfil-error>
             </mat-form-field>
           </div>
         </div>
