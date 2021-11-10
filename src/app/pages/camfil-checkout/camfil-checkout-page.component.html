@@ -1,5 +1,17 @@
 <camfil-loading *ngIf="(ordersLoading$ | async) || (basketLoading$ | async)" fixed="true"></camfil-loading>
 
+<ng-container *ngIf="basket$ | async as basket">
+  <ng-container *ngIf="basket.lineItems.length; else emptyBasket">
+    <pre>basket.lineItems: {{basket.lineItems.length |json}}</pre>
+  </ng-container>
+</ng-container>
+
+<ng-template #emptyBasket>
+  <camfil-shopping-basket-empty [error]="basketError$ | async"></camfil-shopping-basket-empty>
+</ng-template>
+
+<camfil-loading *ngIf="basketLoading$ | async"></camfil-loading>
+
 <br />
 
 <div class="checkout row">

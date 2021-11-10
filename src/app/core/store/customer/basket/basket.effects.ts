@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { RouterNavigatedPayload, routerNavigatedAction } from '@ngrx/router-store';
-import { Store, select } from '@ngrx/store';
-import { combineLatest, iif, of } from 'rxjs';
+import { routerNavigatedAction, RouterNavigatedPayload } from '@ngrx/router-store';
+import { select, Store } from '@ngrx/store';
+import { combineLatest, EMPTY, iif, of } from 'rxjs';
 import {
   concatMap,
   concatMapTo,
@@ -52,8 +52,6 @@ import {
   loadCustomerDeliveryTerm,
   loadCustomerDeliveryTermFail,
   loadCustomerDeliveryTermSuccess,
-  mergeBasketFail,
-  mergeBasketSuccess,
   resetBasketErrors,
   setBasketAttribute,
   setBasketAttributeFail,
@@ -287,7 +285,7 @@ export class BasketEffects {
     this.actions$.pipe(
       ofType(checkCurrentBasket),
       withLatestFrom(this.anonymousBasket$),
-      switchMap(([, [sourceBasketId, sourceApiToken]]) =>
+      switchMap(([, [sourceBasketId]]) =>
         this.basketService.getBaskets().pipe(
           switchMap(baskets => {
             if (sourceBasketId) {
@@ -297,20 +295,15 @@ export class BasketEffects {
                 this.basketService.getBasket(),
                 this.basketService.createBasket()
               ).pipe(
-                switchMap(newOrCurrentUserBasket =>
-                  this.basketService
-                    .mergeBasket(sourceBasketId, sourceApiToken, newOrCurrentUserBasket.id)
-                    .pipe(map(basket => mergeBasketSuccess({ basket })))
-                ),
-                mapErrorToAction(mergeBasketFail)
+                map(basket => loadBasketSuccess({ basket })),
+                mapErrorToAction(loadBasketFail)
               );
             } else if (baskets.length) {
               // no anonymous basket exists and user already has a basket -> load it
               return of(loadBasket());
             } else {
               // no anonymous or user basket -> do nothing
-              // TODO: this is tmp solution to fix CAM-789 - Multiple baskets are created
-              return this.basketService.createBasket().pipe(map(basket => loadBasketSuccess({ basket })));
+              return EMPTY;
             }
           })
         )
