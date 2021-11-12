@@ -123,7 +123,7 @@ export const isProductsReadyToPlaceOrder = createSelector(
       return lastAdded ? added && updated : true;
     }
 
-    return true;
+    return validation.valid;
   }
 );
 

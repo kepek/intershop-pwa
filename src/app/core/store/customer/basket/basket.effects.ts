@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { routerNavigatedAction, RouterNavigatedPayload } from '@ngrx/router-store';
-import { select, Store } from '@ngrx/store';
-import { combineLatest, EMPTY, iif, of } from 'rxjs';
+import { RouterNavigatedPayload, routerNavigatedAction } from '@ngrx/router-store';
+import { Store, select } from '@ngrx/store';
+import { EMPTY, combineLatest, iif, of } from 'rxjs';
 import {
   concatMap,
   concatMapTo,
