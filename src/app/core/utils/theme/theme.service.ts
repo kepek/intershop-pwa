@@ -74,7 +74,7 @@ export class ThemeService {
           this.trySetAttribute(
             'meta[name="camfil-pwa-version"]',
             'content',
-            `${this.transferState.get(DISPLAY_VERSION, 'development')}`
+            `${this.transferState.get(DISPLAY_VERSION, '')}`
           );
         }
 
