@@ -1,15 +1,5 @@
 <camfil-loading *ngIf="(ordersLoading$ | async) || (basketLoading$ | async)" fixed="true"></camfil-loading>
 
-<ng-container *ngIf="basket$ | async as basket">
-  <ng-container *ngIf="basket.lineItems.length; else emptyBasket">
-    <pre>basket.lineItems: {{basket.lineItems.length |json}}</pre>
-  </ng-container>
-</ng-container>
-
-<ng-template #emptyBasket>
-  <camfil-shopping-basket-empty [error]="basketError$ | async"></camfil-shopping-basket-empty>
-</ng-template>
-
 <camfil-loading *ngIf="basketLoading$ | async"></camfil-loading>
 
 <br />
@@ -26,7 +16,7 @@
 
     <ish-basket-info></ish-basket-info>
 
-    <camfil-error-message [error]="basketError$ | async" [toast]="false"></camfil-error-message>
+    <camfil-error-message [error]="basketError$ | async" [toast]="true"></camfil-error-message>
 
     <ng-container *ngIf="!(emptyBuckets$ | async)?.length">
       <camfil-basket-validation-results></camfil-basket-validation-results>
@@ -34,10 +24,12 @@
 
     <camfil-checkout-validation></camfil-checkout-validation>
 
-    <ng-template #empty></ng-template>
+    <ng-template #empty>
+      <camfil-shopping-bucket-empty [error]="basketError$ | async"></camfil-shopping-bucket-empty>
+    </ng-template>
 
     <ng-container *ngIf="!(isLoggedIn$ | async)">
-      <ng-container *ngIf="basket$ | async">
+      <ng-container *ngIf="buckets$ | async">
         <camfil-checkout-guest-form (submit)="submitGuestCheckout($event)"></camfil-checkout-guest-form>
       </ng-container>
       <camfil-checkout-payment
@@ -53,7 +45,8 @@
     </ng-container>
 
     <div cdkDropListGroup>
-      <ng-container *ngIf="emptyBuckets$ | async as emptyBuckets; else empty">
+      <ng-container *ngIf="emptyBuckets$ | async as emptyBuckets">
+        <p>emptyBuckets$: {{emptyBuckets|json}}</p>
         <ng-container *ngFor="let emptyBucket of emptyBuckets; trackBy: trackByLineItems">
           <camfil-checkout-bucket
             [basket]="basket$ | async"
@@ -63,7 +56,7 @@
         </ng-container>
       </ng-container>
       <ng-container *ngIf="isConfirmed; else notConfirmed">
-        <ng-container *ngIf="confirmedBuckets$ | async as confirmedBuckets; else empty">
+        <ng-container *ngIf="confirmedBuckets$ | async as confirmedBuckets">
           <ng-container *ngFor="let confirmedBucket of confirmedBuckets; index as i; trackBy: trackByLineItems">
             <camfil-checkout-bucket
               [basket]="basket$ | async"

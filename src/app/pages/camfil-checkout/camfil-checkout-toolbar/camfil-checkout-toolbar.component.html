@@ -1,5 +1,5 @@
 <div [ngClass]="{ 'p-0': isGuestCheckout }" class="text-right toolbar-container">
-  <ng-container *ngIf="!isGuestCheckout; else isGuestCheckoutTemplate">
+  <ng-container *ngIf="!isGuestCheckout;">
     <camfil-create-order-button
       [basketId]="basketId"
       [shippingMethodId]="shippingMethodId"
@@ -9,9 +9,4 @@
     <span class="spacer"></span>
     <camfil-print-order [buckets]="buckets"></camfil-print-order>
   </ng-container>
-  <ng-template #isGuestCheckoutTemplate>
-    <ng-container *ngIf="!basketId">
-      <camfil-create-order-button [isGuestCheckout]="isGuestCheckout"></camfil-create-order-button>
-    </ng-container>
-  </ng-template>
 </div>

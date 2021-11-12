@@ -259,8 +259,11 @@ describe('Customer Store', () => {
             customer: {"isBusinessCustomer":false,"customerNo":"test"}
             user: {"title":"","firstName":"test","lastName":"test","phoneHome"...
           [Basket API] Check Current Basket
-          [Basket API] Merge two baskets Success:
+          [Basket API] Load Basket Success:
             basket: {"id":"test","lineItems":[1]}
+          [Basket] Load Buckets
+          [Orders] Set Created Order Id:
+            orderId: undefined
         `);
       });
 

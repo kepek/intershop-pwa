@@ -1,4 +1,4 @@
-<ng-container *ngIf="basket">
+<ng-container *ngIf="basket?.lineItems?.length">
 
   <ng-template #paymentErrors>
     <div *ngIf="nextDisabled && !error" class="alert alert-danger" role="alert">

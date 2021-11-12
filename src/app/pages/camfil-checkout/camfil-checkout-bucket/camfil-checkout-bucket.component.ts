@@ -282,7 +282,7 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
     return (
       lineItems
         ?.map(li => {
-          if (li.attributes.find(att => att.name === 'boxLabel' && att.value?.toString().length > 28)) {
+          if (li.attributes.find(att => att.name === 'boxLabel' && Number(att?.value?.toString()?.length) > 28)) {
             return li;
           }
         })

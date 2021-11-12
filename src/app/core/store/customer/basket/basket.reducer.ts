@@ -25,11 +25,11 @@ import {
   addItemsToBasketFromCamCardFail,
   addItemsToBasketFromCamCardSuccess,
   addItemsToBasketSuccess,
-  addProductToBasket,
-  addProductToBucketAddressFromCamCardFail,
   addProductsFromCamCard,
   addProductsFromCamCardFail,
   addProductsToBasketFromCamCard,
+  addProductToBasket,
+  addProductToBucketAddressFromCamCardFail,
   addPromotionCodeToBasket,
   addPromotionCodeToBasketFail,
   addPromotionCodeToBasketSuccess,
@@ -158,7 +158,7 @@ export const initialState: BasketState = {
   // TODO: CAMFIL Additions, it should be separated to avoid core modifications;
   buckets: undefined,
   productAdded: false,
-  emptyBuckets: [],
+  emptyBuckets: undefined,
   productUpdated: false,
   basketAddresses: [],
   deliveryTerms: {},
@@ -276,7 +276,7 @@ export const basketReducer = createReducer(
   })),
   on(loadBucketsSuccess, (state: BasketState, action) => {
     const addresses = action.payload.buckets.map(bucket => bucket.shipToAddressFull);
-    const onlyEmpty = state.emptyBuckets.filter(emptyBucket =>
+    const onlyEmpty = state.emptyBuckets?.filter(emptyBucket =>
       AddressHelper.isNewAddress(emptyBucket.shipToAddressFull as Address, addresses)
     );
     const buckets = action.payload.buckets?.map(b => {
@@ -288,14 +288,18 @@ export const basketReducer = createReducer(
 
     return {
       ...state,
-      buckets,
+      buckets: buckets?.length ? buckets : undefined,
       emptyBuckets: onlyEmpty,
     };
   }),
-  on(addEmptyBucket, (state: BasketState, action) => ({
-    ...state,
-    emptyBuckets: [action.payload.bucket, ...state.emptyBuckets],
-  })),
+  on(addEmptyBucket, (state: BasketState, action) => {
+    const emptyBuckets = [].concat(state?.emptyBuckets)?.filter(Boolean);
+
+    return {
+      ...state,
+      emptyBuckets: [action.payload.bucket, ...emptyBuckets],
+    };
+  }),
   on(deleteEmptyBucket, (state: BasketState, action) => ({
     ...state,
     emptyBuckets: state.emptyBuckets.reduce((acc, cur) => {
