@@ -18,11 +18,9 @@ import '@angular/localize/init';
  *
  * Learn more in https://angular.io/guide/browser-support
  */
-
 /***************************************************************************************************
  * BROWSER POLYFILLS
  */
-
 /** IE9, IE10 and IE11 requires all of the following polyfills. **/
 import 'core-js/es/symbol';
 import 'core-js/es/object';
@@ -43,14 +41,12 @@ import 'url-polyfill/url-polyfill.js';
 
 /** IE10 and IE11 requires the following for NgClass support on SVG elements */
 // import 'classlist.js';  // Run `npm install --save classlist.js`.
-
 /**
  * Web Animations `@angular/platform-browser/animations`
  * Only required if AnimationBuilder is used within the application and using IE/Edge or Safari.
  * Standard animation support in Angular DOES NOT require any polyfills (as of Angular 6.0).
  */
 // import 'web-animations-js';  // Run `npm install --save web-animations-js`.
-
 /**
  * By default, zone.js will patch all possible macroTask and DomEvents
  * user can disable parts of macroTask/DomEvents patch by setting following flags
@@ -74,7 +70,6 @@ import 'url-polyfill/url-polyfill.js';
  *  (window as any).__Zone_enable_cross_context_check = true;
  *
  */
-
 /***************************************************************************************************
  * Zone JS is required by default for Angular itself.
  */
@@ -88,3 +83,8 @@ import 'zone.js/dist/zone'; // Included with Angular CLI.
 (window as any).global = window;
 
 global.Buffer = global.Buffer || require('buffer').Buffer;
+
+(global as any).version = () => ({
+  displayVersion: JSON.parse(document.querySelector('#intershop-pwa-state')?.textContent?.replace(/&q;/g, '"') || '{}')
+    .displayVersion,
+});
