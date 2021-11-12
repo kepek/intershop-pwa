@@ -159,10 +159,11 @@ export class CamfilCheckoutPageComponent implements OnInit, OnDestroy {
     this.validationResults$
       .pipe(
         takeWhile(() => !this.isValid),
+        withLatestFrom(this.isLoggedIn$),
         takeUntil(this.destroy$)
       )
-      .subscribe(result => {
-        if (result?.valid) {
+      .subscribe(([result, isLoggedIn]) => {
+        if (result?.valid && isLoggedIn) {
           this.checkoutFacade.getWarehouseCalendar();
           this.shoppingFacade.loadBasketAddresses();
           this.isValid = true;

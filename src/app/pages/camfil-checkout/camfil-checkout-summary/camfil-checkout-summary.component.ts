@@ -12,14 +12,16 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { Observable } from 'rxjs';
-import { ConfigurationService } from 'src/app/extensions/cam-configuration/services/configuration/configuration.service';
+import { Observable, Subject } from 'rxjs';
+import { map, startWith, takeUntil, withLatestFrom } from 'rxjs/operators';
 
+import { AccountFacade } from 'ish-core/facades/account.facade';
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { BasketValidationResultType } from 'ish-core/models/basket-validation/basket-validation.model';
 import { BasketView } from 'ish-core/models/basket/basket.model';
 import { PriceHelper } from 'ish-core/models/price/price.helper';
+import { whenFalsy } from 'ish-core/utils/operators';
 import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
 
 @Component({
@@ -32,35 +34,41 @@ export class CamfilCheckoutSummaryComponent implements OnInit, OnChanges {
   @Input() basket: BasketView;
   @Input() isConfirmed;
   @Output() update = new EventEmitter();
-  @Input() isLoggedIn = false;
 
-  productsReadyToPlaceOrder$: Observable<boolean>;
   bucketsVolumeDiscounts$: Observable<number>;
   validationResults$: Observable<BasketValidationResultType>;
+  productsReadyToPlaceOrder$: Observable<boolean>;
+  canSubmitOrder$: Observable<boolean>;
+  isLoggedIn$: Observable<boolean>;
+
   guestGdprForm: FormGroup;
 
   @ViewChild(CamfilSmallCtaModalComponent) gdprErrorModal: CamfilSmallCtaModalComponent;
 
   private isTracked = false;
 
+  private destroy$ = new Subject();
+
   constructor(
     private checkoutFacade: CheckoutFacade,
     private shoppingFacade: ShoppingFacade,
+    private accountFacade: AccountFacade,
     private router: Router,
     private translate: TranslateService,
     private fb: FormBuilder,
-    private dialog: MatDialog,
-    private configurationService: ConfigurationService
+    private dialog: MatDialog
   ) {}
 
   ngOnInit() {
     this.bucketsVolumeDiscounts$ = this.checkoutFacade.bucketsVolumeDiscounts$;
     this.validationResults$ = this.checkoutFacade.basketValidationResults$;
     this.productsReadyToPlaceOrder$ = this.shoppingFacade.productsReadyToPlaceOrder$;
+    this.canSubmitOrder$ = this.productsReadyToPlaceOrder$;
+    this.isLoggedIn$ = this.accountFacade.isLoggedIn$;
 
-    if (!this.isLoggedIn) {
+    this.isLoggedIn$.pipe(whenFalsy(), takeUntil(this.destroy$)).subscribe(() => {
       this.createGuestGdprForm();
-    }
+    });
   }
 
   ngOnChanges() {
@@ -70,34 +78,19 @@ export class CamfilCheckoutSummaryComponent implements OnInit, OnChanges {
     }
   }
 
-  get isGuestCheckout() {
-    return this.configurationService.isEnabled('guestCheckout') && !this.isLoggedIn;
-  }
-
   submitOrder() {
-    // Check if guest user checked GDPR agreement
-    this.checkGpdrForNonLogged();
-
-    // In case of user from ICM back office, add employeeID as externalOrderReference
-    this.checkErpEmployeeIdExists();
-
-    this.checkoutFacade.continue(5);
-  }
-
-  private createGuestGdprForm(): void {
-    this.guestGdprForm = this.fb.group({
-      gdprAcceptance: ['', [Validators.requiredTrue]],
+    this.isLoggedIn$.pipe(takeUntil(this.destroy$)).subscribe(isLoggedIn => {
+      if (isLoggedIn) {
+        this.placeOrder();
+      } else if (this.guestGdprForm?.valid) {
+        this.placeOrder();
+      } else {
+        this.openGDPRErrorModal();
+      }
     });
   }
 
-  private openGpdrErrorModal() {
-    const gpdrErrorDialogModal = this.dialog.open(this.gdprErrorModal?.show());
-    this.gdprErrorModal.hide = () => {
-      gpdrErrorDialogModal.close();
-    };
-  }
-
-  checkErpEmployeeIdExists() {
+  private checkErpEmployeeIdExists() {
     let erpEmployeeId;
 
     try {
@@ -111,15 +104,34 @@ export class CamfilCheckoutSummaryComponent implements OnInit, OnChanges {
     }
   }
 
-  private checkGpdrForNonLogged() {
-    if (!this.isLoggedIn && this.isGuestCheckout && this.guestGdprForm?.invalid) {
-      this.openGpdrErrorModal();
-      return;
-    }
-  }
-
   continueShopping() {
     this.router.navigate(['/account/camcards']);
+  }
+
+  private placeOrder() {
+    this.checkErpEmployeeIdExists();
+    this.checkoutFacade.continue(5);
+  }
+
+  private createGuestGdprForm(): void {
+    const gdprAcceptanceDefaultValue = false;
+
+    this.guestGdprForm = this.fb.group({
+      gdprAcceptance: [gdprAcceptanceDefaultValue, [Validators.requiredTrue]],
+    });
+
+    this.canSubmitOrder$ = this.guestGdprForm.get('gdprAcceptance').valueChanges.pipe(
+      startWith(gdprAcceptanceDefaultValue),
+      withLatestFrom(this.productsReadyToPlaceOrder$),
+      map(([gdprAcceptance, readyToOrder]) => gdprAcceptance && readyToOrder)
+    );
+  }
+
+  private openGDPRErrorModal() {
+    const gdprErrorDialogModal = this.dialog.open(this.gdprErrorModal?.show());
+    this.gdprErrorModal.hide = () => {
+      gdprErrorDialogModal.close();
+    };
   }
 
   getVolumeDiscountPrice(value, currency) {

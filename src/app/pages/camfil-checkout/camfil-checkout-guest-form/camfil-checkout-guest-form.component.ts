@@ -8,6 +8,7 @@ import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { GuestBasketExtensions } from 'ish-core/models/basket/basket.interface';
 import { BasketMapper } from 'ish-core/models/basket/basket.mapper';
 import { whenTruthy } from 'ish-core/utils/operators';
+import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
 import { SpecialValidators } from 'ish-shared/forms/validators/special-validators';
 
 import { GUEST_FORM_VALIDATORS } from './validators';
@@ -24,6 +25,7 @@ export class CamfilCheckoutGuestFormComponent implements OnInit, OnDestroy {
   showInvoiceAddressForm = false;
   countryCode: string;
   anonymousBasketDataRO;
+  submitted = false;
   validators = GUEST_FORM_VALIDATORS;
   @Output() submit = new EventEmitter<GuestBasketExtensions>();
 
@@ -107,6 +109,12 @@ export class CamfilCheckoutGuestFormComponent implements OnInit, OnDestroy {
   }
 
   submitGuestForm() {
+    if (this.guestForm.invalid) {
+      this.submitted = true;
+      markAsDirtyRecursive(this.guestForm);
+      return;
+    }
+
     const anonymousBasketDataFromFormValues = BasketMapper.convertFormDataToAnonymousBasketData(this.guestForm.value);
 
     this.submit.emit(anonymousBasketDataFromFormValues);

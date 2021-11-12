@@ -6,6 +6,7 @@ import { ChannelToggleDirective } from 'src/app/extensions/cam-configuration/dir
 import { ConfigurationService } from 'src/app/extensions/cam-configuration/services/configuration/configuration.service';
 import { instance, mock, when } from 'ts-mockito';
 
+import { AccountFacade } from 'ish-core/facades/account.facade';
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { Basket } from 'ish-core/models/basket/basket.model';
@@ -23,11 +24,13 @@ describe('Camfil Checkout Summary Component', () => {
   let basket: Basket;
   let checkoutFacade: CheckoutFacade;
   let shoppingFacade: ShoppingFacade;
+  let accountFacade: AccountFacade;
   let configurationServiceMock: ConfigurationService;
 
   beforeEach(async () => {
     checkoutFacade = mock(CheckoutFacade);
     shoppingFacade = mock(ShoppingFacade);
+    accountFacade = mock(AccountFacade);
     configurationServiceMock = mock(ConfigurationService);
 
     await TestBed.configureTestingModule({
@@ -43,6 +46,7 @@ describe('Camfil Checkout Summary Component', () => {
       providers: [
         { provide: CheckoutFacade, useFactory: () => instance(checkoutFacade) },
         { provide: ShoppingFacade, useFactory: () => instance(shoppingFacade) },
+        { provide: AccountFacade, useFactory: () => instance(accountFacade) },
         { provide: ConfigurationService, useFactory: () => instance(configurationServiceMock) },
       ],
     }).compileComponents();
@@ -65,6 +69,7 @@ describe('Camfil Checkout Summary Component', () => {
       })
     );
     when(shoppingFacade.productsReadyToPlaceOrder$).thenReturn(of(true));
+    when(accountFacade.isLoggedIn$).thenReturn(of(false));
   });
 
   it('should be created', () => {
