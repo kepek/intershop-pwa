@@ -134,18 +134,6 @@
             </mat-form-field>
           </div>
           <div class="mat-form-field__wrapper">
-            <!-- <mat-form-field appearance="fill" class="form-field">
-              <mat-label>{{ 'camfil.checkout.guest_form.zip_code' | translate }}</mat-label>
-              <input formControlName="zipCode" label="camfil.checkout.form.order_mark" matInput />
-              <camfil-error
-                [errorValidators]="validators.zipCode"
-                [errors]="getField('deliveryInfoFromGroup', 'zipCode').errors"
-                [touched]="
-                  getField('deliveryInfoFromGroup', 'zipCode').touched ||
-                  getField('deliveryInfoFromGroup', 'zipCode').dirty
-                "
-              ></camfil-error>
-            </mat-form-field> -->
             <camfil-zip-code
               fieldName="zipCode"
               fieldCity="city"
@@ -266,18 +254,15 @@
             </mat-form-field>
           </div>
           <div class="mat-form-field__wrapper">
-            <mat-form-field appearance="fill" class="form-field">
-              <mat-label>{{ 'camfil.checkout.guest_form.zip_code' | translate }}</mat-label>
-              <input formControlName="zipCode" label="camfil.checkout.form.order_mark" matInput />
-              <camfil-error
-                [errorValidators]="validators.zipCode"
-                [errors]="getField('invoiceAddressFormGroup', 'zipCode').errors"
-                [touched]="
-                  getField('invoiceAddressFormGroup', 'zipCode').touched ||
-                  getField('invoiceAddressFormGroup', 'zipCode').dirty
-                "
-              ></camfil-error>
-            </mat-form-field>
+            <camfil-zip-code
+              fieldName="zipCode"
+              fieldCity="city"
+              appearance="fill"
+              [errorValidator]="validators.zipCode"
+              [form]="guestForm.controls['invoiceAddressFormGroup']"
+              [countryChangeDetect]="countryChangeDetect$"
+              (zipCodeErrorEmit)="setZipCodeError($event, 'invoiceAddressFormGroup')"
+            ></camfil-zip-code>
           </div>
           <div class="mat-form-field__wrapper">
             <mat-form-field appearance="fill" class="form-field">
