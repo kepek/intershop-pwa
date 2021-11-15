@@ -905,7 +905,7 @@
   "camfil.checkout.tax_amount": "Momsbelopp",
   "camfil.checkout.total_order_summary": "Total ordersumma",
   "camfil.checkout.total_price_after": "Totalt pris efter rabatt",
-  "camfil.checkout.validation.for_order": "för order",
+  "camfil.checkout.validation.for_order": "{{0}} för order {{1}}",
   "camfil.checkout.volume_discount": "Rabatt",
   "camfil.checkout.wait_till_validation.button.text": "sv_Please wait till the system has validated your cart",
   "camfil.checkout.your_total_price": "Ditt totala pris",

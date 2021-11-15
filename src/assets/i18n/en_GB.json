@@ -905,7 +905,7 @@
   "camfil.checkout.tax_amount": "Tax amount",
   "camfil.checkout.total_order_summary": "Total order summary",
   "camfil.checkout.total_price_after": "Total price after volume discount",
-  "camfil.checkout.validation.for_order": "for order",
+  "camfil.checkout.validation.for_order": "{{0}} for order {{1}}",
   "camfil.checkout.volume_discount": "Volume discount",
   "camfil.checkout.wait_till_validation.button.text": "Please wait till the system has validated your cart",
   "camfil.checkout.your_total_price": "Your total price",

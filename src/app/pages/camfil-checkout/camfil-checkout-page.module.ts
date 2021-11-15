@@ -18,7 +18,6 @@ import { CamfilCheckoutToolbarComponent } from './camfil-checkout-toolbar/camfil
 import { CreateNewCamcardComponent } from './camfil-checkout-toolbar/create-new-camcard/create-new-camcard.component';
 import { CreateOrderButtonComponent } from './camfil-checkout-toolbar/create-order-button/create-order-button.component';
 import { PrintOrderComponent } from './camfil-checkout-toolbar/print-order/print-order.component';
-import { CamfilCheckoutValidationComponent } from './camfil-checkout-validation/camfil-checkout-validation.component';
 import { CamfilPaymentConcardisComponent } from './camfil-payment-concardis/camfil-payment-concardis.component';
 import { CamfilPaymentConcardisCreditCardComponent } from './camfil-payment-concardis-creditcard/camfil-payment-concardis-creditcard.component';
 import { CamfilPaymentConcardisCreditcardCvcDetailComponent } from './camfil-payment-concardis-creditcard-cvc-detail/camfil-payment-concardis-creditcard-cvc-detail.component';
@@ -52,7 +51,6 @@ const camfilCheckoutPageRoutes: Routes = [
     CamfilCheckoutPaymentComponent,
     CamfilCheckoutSummaryComponent,
     CamfilCheckoutToolbarComponent,
-    CamfilCheckoutValidationComponent,
     CamfilDeleteOrderComponent,
     CamfilPaymentConcardisComponent,
     CamfilPaymentConcardisCreditCardComponent,

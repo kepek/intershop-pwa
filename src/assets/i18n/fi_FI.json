@@ -905,7 +905,7 @@
   "camfil.checkout.tax_amount": "ALV",
   "camfil.checkout.total_order_summary": "Tilauksen yhteenveto",
   "camfil.checkout.total_price_after": "Yhteensä",
-  "camfil.checkout.validation.for_order": "tilaukselle",
+  "camfil.checkout.validation.for_order": "{{0}} tilaukselle {{1}}",
   "camfil.checkout.volume_discount": "Määräalennus",
   "camfil.checkout.wait_till_validation.button.text": "Odota, kunnes järjestelmä on vahvistanut ostoskorisi",
   "camfil.checkout.your_total_price": "Yhteensä (ALV 24%)",

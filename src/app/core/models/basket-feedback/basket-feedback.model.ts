@@ -8,6 +8,7 @@ export interface BasketFeedback {
     productSku?: string;
     shippingRestriction?: string;
     scopes?: string; // data type will change IS-28602
+    addressId?: string; // (CAMFIL) delivery date validation
   };
 }
 

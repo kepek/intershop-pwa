@@ -31,7 +31,6 @@ import { CamfilCheckoutPageComponent } from './camfil-checkout-page.component';
 import { CamfilCheckoutPaymentComponent } from './camfil-checkout-payment/camfil-checkout-payment.component';
 import { CamfilCheckoutSummaryComponent } from './camfil-checkout-summary/camfil-checkout-summary.component';
 import { CamfilCheckoutToolbarComponent } from './camfil-checkout-toolbar/camfil-checkout-toolbar.component';
-import { CamfilCheckoutValidationComponent } from './camfil-checkout-validation/camfil-checkout-validation.component';
 
 describe('Camfil Checkout Page Component', () => {
   let fixture: ComponentFixture<CamfilCheckoutPageComponent>;
@@ -122,7 +121,6 @@ describe('Camfil Checkout Page Component', () => {
         MockComponent(CamfilCheckoutHeaderComponent),
         MockComponent(CamfilCheckoutSummaryComponent),
         MockComponent(CamfilCheckoutToolbarComponent),
-        MockComponent(CamfilCheckoutValidationComponent),
         MockComponent(CamfilLoadingComponent),
         MockDirective(CamfilCheckoutGuestFormComponent),
         MockDirective(CamfilCheckoutPaymentComponent),

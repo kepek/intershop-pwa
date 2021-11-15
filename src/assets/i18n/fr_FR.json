@@ -905,7 +905,7 @@
   "camfil.checkout.tax_amount": "Montant de la taxe",
   "camfil.checkout.total_order_summary": "Récapitulatif global de la commande",
   "camfil.checkout.total_price_after": "Prix total après remise sur volume",
-  "camfil.checkout.validation.for_order": "pour la commande",
+  "camfil.checkout.validation.for_order": "{{0}} pour la commande {{1}}",
   "camfil.checkout.volume_discount": "Remise sur volume",
   "camfil.checkout.wait_till_validation.button.text": "Veuillez attendre que le système ait validé votre panier",
   "camfil.checkout.your_total_price": "Votre prix total",

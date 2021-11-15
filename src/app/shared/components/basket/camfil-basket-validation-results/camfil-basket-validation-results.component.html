@@ -54,3 +54,14 @@
   </div>
   <ish-basket-validation-products [items]="removedItems"></ish-basket-validation-products>
 </ng-container>
+
+<!-- deliveryDate messages -->
+
+<div
+  *ngFor="let message of deliveryDateErrorMessages$ | async"
+  class="alert alert-danger"
+  data-testing-id="validation-deliveryDate-message"
+  role="alert"
+>
+  {{ message }}
+</div>

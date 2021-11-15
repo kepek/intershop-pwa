@@ -20,6 +20,7 @@ describe('Camfil Basket Validation Results Component', () => {
   beforeEach(async () => {
     checkoutFacadeMock = mock(CheckoutFacade);
     when(checkoutFacadeMock.basketValidationResults$).thenReturn(of(undefined));
+    when(checkoutFacadeMock.buckets$).thenReturn(of([]));
 
     await TestBed.configureTestingModule({
       declarations: [
