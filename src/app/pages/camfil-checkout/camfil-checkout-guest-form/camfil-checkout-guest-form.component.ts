@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
@@ -27,6 +27,30 @@ export class CamfilCheckoutGuestFormComponent implements OnInit, OnDestroy {
   anonymousBasketDataRO;
   submitted = false;
   validators = GUEST_FORM_VALIDATORS;
+  confirmedGuestOrder = {
+    firstName: 'Tester',
+    lastName: 'Testowski',
+    email: 'tester.testowski@mail.com',
+    phone: '123321213',
+    jobTitle: 'Tester',
+    companyName: 'Tester',
+    vat: 'FR12345678901',
+    siret: '732 829 320 00074',
+    streetAddress: 'testowa 12/5',
+    zipCode: '00123',
+    city: 'Paris',
+    country: 'France',
+    boxLabel: 'test label',
+    invoiceMark: 'test invoice mark',
+    deliveryInfo: 'Send to Tester Testowski',
+    customerNote: 'Send ASAP',
+    sameAddressAsInvoice: false,
+    invoiceStreetAddress: 'invoice 4/20',
+    invoiceZipCode: '12456',
+    invoiceCity: 'Angers',
+    invoiceCountry: 'France',
+  };
+  @Input() isConfirmed: boolean;
   @Output() submit = new EventEmitter<GuestBasketExtensions>();
 
   countryChangeDetect$: Subject<boolean> = new Subject();

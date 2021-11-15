@@ -5,9 +5,7 @@
 <br />
 
 <div class="checkout row">
-
   <div [ngClass]="{ 'col-lg-9': (basket$ | async) }" class="col-sm-12">
-
     <div [ngClass]="{ 'header-divider-container': isConfirmed }">
       <camfil-checkout-header
         [basket]="basket$ | async"
@@ -28,7 +26,10 @@
 
     <ng-container *ngIf="!(isLoggedIn$ | async)">
       <ng-container *ngIf="buckets$ | async">
-        <camfil-checkout-guest-form (submit)="submitGuestCheckout($event)"></camfil-checkout-guest-form>
+        <camfil-checkout-guest-form
+          (submit)="submitGuestCheckout($event)"
+          [isConfirmed]="isConfirmed"
+        ></camfil-checkout-guest-form>
       </ng-container>
       <camfil-checkout-payment
         (createPaymentInstrument)="createPaymentInstrument($event)"
@@ -43,7 +44,6 @@
     </ng-container>
 
     <div cdkDropListGroup>
-
       <ng-container *ngIf="emptyBuckets$ | async as emptyBuckets">
         <ng-container *ngFor="let emptyBucket of emptyBuckets; trackBy: trackByLineItems">
           <camfil-checkout-bucket
@@ -83,9 +83,7 @@
           </ng-container>
         </ng-container>
       </ng-template>
-
     </div>
-
   </div>
 
   <ng-container *ngIf="basket$ | async as basket">
@@ -97,5 +95,4 @@
       ></camfil-checkout-summary>
     </div>
   </ng-container>
-
 </div>
