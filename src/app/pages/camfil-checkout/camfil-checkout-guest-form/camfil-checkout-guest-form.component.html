@@ -134,7 +134,7 @@
             </mat-form-field>
           </div>
           <div class="mat-form-field__wrapper">
-            <mat-form-field appearance="fill" class="form-field">
+            <!-- <mat-form-field appearance="fill" class="form-field">
               <mat-label>{{ 'camfil.checkout.guest_form.zip_code' | translate }}</mat-label>
               <input formControlName="zipCode" label="camfil.checkout.form.order_mark" matInput />
               <camfil-error
@@ -145,7 +145,16 @@
                   getField('deliveryInfoFromGroup', 'zipCode').dirty
                 "
               ></camfil-error>
-            </mat-form-field>
+            </mat-form-field> -->
+            <camfil-zip-code
+              fieldName="zipCode"
+              fieldCity="city"
+              appearance="fill"
+              [errorValidator]="validators.zipCode"
+              [form]="guestForm.controls['deliveryInfoFromGroup']"
+              [countryChangeDetect]="countryChangeDetect$"
+              (zipCodeErrorEmit)="setZipCodeError($event, 'deliveryInfoFromGroup')"
+            ></camfil-zip-code>
           </div>
           <div class="mat-form-field__wrapper">
             <mat-form-field appearance="fill" class="form-field">

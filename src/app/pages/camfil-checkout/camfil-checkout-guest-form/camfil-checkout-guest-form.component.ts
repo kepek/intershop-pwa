@@ -29,6 +29,8 @@ export class CamfilCheckoutGuestFormComponent implements OnInit, OnDestroy {
   validators = GUEST_FORM_VALIDATORS;
   @Output() submit = new EventEmitter<GuestBasketExtensions>();
 
+  countryChangeDetect$: Subject<boolean> = new Subject();
+
   private destroy$ = new Subject();
 
   constructor(
@@ -143,6 +145,15 @@ export class CamfilCheckoutGuestFormComponent implements OnInit, OnDestroy {
 
   getField(formName: string, fieldName: string) {
     return this.guestForm?.get([formName, fieldName]);
+  }
+
+  checkZipCode() {
+    this.countryChangeDetect$.next(true);
+  }
+
+  setZipCodeError(event, formGroup) {
+    this.guestForm.controls[formGroup]['controls'].zipCode.setErrors(event);
+    this.guestForm.controls[formGroup].updateValueAndValidity();
   }
 
   ngOnDestroy() {
