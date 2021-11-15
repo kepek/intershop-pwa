@@ -5,6 +5,7 @@ import { instance, mock } from 'ts-mockito';
 import { CamfilMaxLengthAttributeCreateDirective } from 'ish-core/directives/camfil-max-length-attribute-create.directive';
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { CamfilErrorComponent } from 'ish-shared/components/common/camfil-error/camfil-error.component';
+import { ZipCodeComponent } from 'ish-shared/components/zip-code/zip-code.component';
 
 import { CamConfigurationFacade } from '../../../extensions/cam-configuration/facades/cam-configuration.facade';
 
@@ -25,6 +26,7 @@ describe('Camfil Checkout Guest Form Component', () => {
         CamfilCheckoutGuestFormComponent,
         CamfilMaxLengthAttributeCreateDirective,
         MockComponent(CamfilErrorComponent),
+        MockComponent(ZipCodeComponent),
       ],
       providers: [
         { provide: CamConfigurationFacade, useFactory: () => instance(camConfigurationFacade) },
