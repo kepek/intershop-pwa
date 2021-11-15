@@ -152,6 +152,7 @@ export class CamfilCheckoutGuestFormComponent implements OnInit, OnDestroy {
   }
 
   setZipCodeError(event, formGroup) {
+    /* tslint:disable:no-string-literal */
     this.guestForm.controls[formGroup]['controls'].zipCode.setErrors(event);
     this.guestForm.controls[formGroup].updateValueAndValidity();
   }
