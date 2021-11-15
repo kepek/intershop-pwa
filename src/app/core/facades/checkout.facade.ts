@@ -33,7 +33,7 @@ import {
   deleteEmptyBucket,
   doubleBucketItemsQuantity,
   focusedCheckoutElement,
-  getAnonymousBasketDataRO,
+  getAnonymousBaskeExtension,
   getBasketEligiblePaymentMethods,
   getBasketEligibleShippingMethods,
   getBasketError,
@@ -51,6 +51,7 @@ import {
   getCurrentBuckets,
   getCustomersDeliveryTerms,
   getEmptyBuckets,
+  getSubmittedAnonymousBaskeExtension,
   getSubmittedBasket,
   getWarehouseCalendar,
   isBasketInvoiceAndShippingAddressEqual,
@@ -126,7 +127,8 @@ export class CheckoutFacade {
   emptyBuckets$ = this.store.pipe(select(getEmptyBuckets));
   bucketsVolumeDiscounts$ = this.store.pipe(select(getBucketsVolumeDiscounts));
   getCustomersDeliveryTerms$ = this.store.pipe(select(getCustomersDeliveryTerms));
-  anonymousBasketDataRO$ = this.store.pipe(select(getAnonymousBasketDataRO));
+  anonymousBaskeExtension$ = this.store.pipe(select(getAnonymousBaskeExtension));
+  submittedAnonymousBaskeExtension$ = this.store.pipe(select(getSubmittedAnonymousBaskeExtension));
 
   // ORDERS
   private ordersError$ = this.store.pipe(select(getOrdersError));

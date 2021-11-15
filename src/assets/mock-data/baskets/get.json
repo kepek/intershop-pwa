@@ -50,13 +50,7 @@
             "postalCode": "27510",
             "countryCode": "FI",
             "city": "EURA",
-            "usage": [
-              true,
-              true,
-              true,
-              true,
-              true
-            ],
+            "usage": [true, true, true, true, true],
             "street": "Inkimäentie 111",
             "invoiceToAddress": true,
             "shipToAddress": true,
@@ -93,9 +87,7 @@
               "postalCode": "05620",
               "countryCode": "FI",
               "city": "HYVINKÄÄ",
-              "usage": [
-                true
-              ],
+              "usage": [true],
               "street": "Kallionopontie 1",
               "invoiceToAddress": true,
               "shipToAddress": false,
@@ -161,9 +153,7 @@
             "priceGroup": "gross",
             "parent": true
           },
-          "emailRecipients": [
-            ""
-          ],
+          "emailRecipients": [""],
           "volumeDiscount": 0,
           "acceptanceTimes": {
             "type": "AcceptanceTimesRO"
@@ -173,9 +163,7 @@
           }
         }
       ],
-      "buckets": [
-        "573323046"
-      ],
+      "buckets": ["573323046"],
       "calculated": true,
       "commonShipToAddress": "urn:address:basket:oHYKAQFE28EAAAF8olQYAOTN:7YgKAQFEy9oAAAF8MpMYAOTN",
       "commonShippingMethod": "STD_GROUND",
@@ -184,9 +172,7 @@
       "discounts": {},
       "id": "oHYKAQFE28EAAAF8olQYAOTN",
       "invoiceToAddress": "urn:address:customer:vXMKAQFELS8AAAF4fWAh4_ju:4UoKAQFEcqAAAAF4h2Ah4_ju",
-      "lineItems": [
-        "oBYKAQFEmH4AAAF8vZsYAOTN"
-      ],
+      "lineItems": ["oBYKAQFEmH4AAAF8vZsYAOTN"],
       "purchaseCurrency": "EUR",
       "totalProductQuantity": 1,
       "totals": {
@@ -218,15 +204,15 @@
         "undiscountedShippingTotal": {
           "gross": {
             "currency": "EUR",
-            "value": 0.00
+            "value": 0.0
           },
           "net": {
             "currency": "EUR",
-            "value": 0.00
+            "value": 0.0
           },
           "tax": {
             "currency": "EUR",
-            "value": 0.00
+            "value": 0.0
           }
         },
         "itemTotal": {
@@ -245,7 +231,7 @@
               "currency": "EUR",
               "value": 13.24
             },
-            "effectiveTaxRate": 24.000000,
+            "effectiveTaxRate": 24.0,
             "taxableAmount": {
               "currency": "EUR",
               "value": 13.24
@@ -255,11 +241,11 @@
         "shippingTotal": {
           "gross": {
             "currency": "EUR",
-            "value": 0.00
+            "value": 0.0
           },
           "net": {
             "currency": "EUR",
-            "value": 0.00
+            "value": 0.0
           }
         },
         "taxTotalsByTaxRate": [
@@ -268,7 +254,7 @@
               "currency": "EUR",
               "value": 13.24
             },
-            "effectiveTaxRate": 24.000000,
+            "effectiveTaxRate": 24.0,
             "taxableAmount": {
               "currency": "EUR",
               "value": 55.17999999999999971578290569595992565155029296875

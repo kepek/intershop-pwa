@@ -40,7 +40,7 @@ export class CamfilCheckoutPageComponent implements OnInit, OnDestroy {
   paymentMethods$: Observable<PaymentMethod[]>;
   priceType$: Observable<'gross' | 'net'>;
 
-  isConfirmed = true;
+  isConfirmed = false;
   isLoggedIn = false;
   basketId: string;
   guestBucket: Bucket;
@@ -69,9 +69,9 @@ export class CamfilCheckoutPageComponent implements OnInit, OnDestroy {
     this.priceType$ = this.checkoutFacade.priceType$;
     this.paymentMethods$ = this.checkoutFacade.eligiblePaymentMethods$();
 
-    // this.createdOrder$.pipe(takeUntil(this.destroy$)).subscribe(createdOrder => {
-    //   this.isConfirmed = !!createdOrder;
-    // });
+    this.createdOrder$.pipe(takeUntil(this.destroy$)).subscribe(createdOrder => {
+      this.isConfirmed = !!createdOrder;
+    });
 
     this.isLoggedIn$.pipe(take(1), takeUntil(this.destroy$)).subscribe(isLoggedIn => (this.isLoggedIn = isLoggedIn));
 

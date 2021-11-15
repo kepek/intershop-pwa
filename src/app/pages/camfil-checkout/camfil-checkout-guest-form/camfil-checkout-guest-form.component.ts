@@ -1,13 +1,12 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Subject } from 'rxjs';
-import { debounceTime, takeUntil } from 'rxjs/operators';
+import { Observable, Subject, combineLatest } from 'rxjs';
+import { debounceTime, map, takeUntil } from 'rxjs/operators';
 import { CamConfigurationFacade } from 'src/app/extensions/cam-configuration/facades/cam-configuration.facade';
 
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { GuestBasketExtensions } from 'ish-core/models/basket/basket.interface';
 import { BasketMapper } from 'ish-core/models/basket/basket.mapper';
-import { whenTruthy } from 'ish-core/utils/operators';
 import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
 import { SpecialValidators } from 'ish-shared/forms/validators/special-validators';
 
@@ -24,32 +23,10 @@ export class CamfilCheckoutGuestFormComponent implements OnInit, OnDestroy {
   guestForm: FormGroup;
   showInvoiceAddressForm = false;
   countryCode: string;
-  anonymousBasketDataRO;
+  anonymousBasketExtensionData;
   submitted = false;
   validators = GUEST_FORM_VALIDATORS;
-  confirmedGuestOrder = {
-    firstName: 'Tester',
-    lastName: 'Testowski',
-    email: 'tester.testowski@mail.com',
-    phone: '123321213',
-    jobTitle: 'Tester',
-    companyName: 'Tester',
-    vat: 'FR12345678901',
-    siret: '732 829 320 00074',
-    streetAddress: 'testowa 12/5',
-    zipCode: '00123',
-    city: 'Paris',
-    country: 'France',
-    boxLabel: 'test label',
-    invoiceMark: 'test invoice mark',
-    deliveryInfo: 'Send to Tester Testowski',
-    customerNote: 'Send ASAP',
-    sameAddressAsInvoice: false,
-    invoiceStreetAddress: 'invoice 4/20',
-    invoiceZipCode: '12456',
-    invoiceCity: 'Angers',
-    invoiceCountry: 'France',
-  };
+  anonymousBasektExtension$: Observable<GuestBasketExtensions>;
   @Input() isConfirmed: boolean;
   @Output() submit = new EventEmitter<GuestBasketExtensions>();
 
@@ -68,11 +45,19 @@ export class CamfilCheckoutGuestFormComponent implements OnInit, OnDestroy {
       this.countryCode = value;
     });
 
-    this.checkoutFacade.anonymousBasketDataRO$
-      ?.pipe(whenTruthy(), takeUntil(this.destroy$))
-      .subscribe(anonymousBasketDataRO => {
-        this.anonymousBasketDataRO = BasketMapper.getAnonymousBasket(anonymousBasketDataRO);
-      });
+    // combineLatest x2 slector map -> array
+    this.anonymousBasektExtension$ = combineLatest([
+      this.checkoutFacade.submittedAnonymousBaskeExtension$,
+      this.checkoutFacade.anonymousBaskeExtension$,
+    ]).pipe(
+      map(([submittedBasketExtension, anonymousBasektExtension]) =>
+        this.isConfirmed ? submittedBasketExtension : anonymousBasektExtension
+      )
+    );
+
+    this.anonymousBasektExtension$.subscribe(value => {
+      this.anonymousBasketExtensionData = BasketMapper.getAnonymousBasket(value);
+    });
 
     this.guestForm = this.fb.group({
       userDetailsFormGroup: this.initUserDetailsForm(),
@@ -147,8 +132,12 @@ export class CamfilCheckoutGuestFormComponent implements OnInit, OnDestroy {
   }
 
   patchGuestForm() {
-    if (this.anonymousBasketDataRO) {
-      const { userDetailsFormGroup, deliveryInfoFromGroup, invoiceAddressFormGroup } = this.anonymousBasketDataRO;
+    if (this.anonymousBasketExtensionData) {
+      const {
+        userDetailsFormGroup,
+        deliveryInfoFromGroup,
+        invoiceAddressFormGroup,
+      } = this.anonymousBasketExtensionData;
 
       this.guestForm.controls.userDetailsFormGroup.patchValue({
         ...userDetailsFormGroup,

@@ -150,8 +150,14 @@ export const getProductAddingError = createSelector(getBasketState, basket => ba
 
 export const getFailedCamCardName = createSelector(getBasketState, basket => basket.failedCamCardName);
 
-export const getAnonymousBasketDataRO = createSelector(
+export const getAnonymousBaskeExtension = createSelector(
   getBasketState,
   /* tslint:disable:no-string-literal */
   basket => basket.basket?.basketExtensions?.[0]['anonymousBasketDataRO']
+);
+
+export const getSubmittedAnonymousBaskeExtension = createSelector(
+  getBasketState,
+  /* tslint:disable:no-string-literal */
+  basket => basket.submittedBasket?.basketExtensions?.[0]['anonymousBasketDataRO']
 );

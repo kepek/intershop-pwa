@@ -5,7 +5,7 @@
 <br />
 
 <div class="checkout row">
-  <div [ngClass]="{ 'col-lg-9': (basket$ | async) }" class="col-sm-12">
+  <div [ngClass]="{ 'col-lg-9': (confirmedBasket$ | async) }" class="col-sm-12">
     <div [ngClass]="{ 'header-divider-container': isConfirmed }">
       <camfil-checkout-header
         [basket]="basket$ | async"
@@ -25,7 +25,7 @@
     </ng-template>
 
     <ng-container *ngIf="!(isLoggedIn$ | async)">
-      <ng-container *ngIf="buckets$ | async">
+      <ng-container *ngIf="confirmedBasket$ | async">
         <camfil-checkout-guest-form
           (submit)="submitGuestCheckout($event)"
           [isConfirmed]="isConfirmed"
@@ -86,7 +86,7 @@
     </div>
   </div>
 
-  <ng-container *ngIf="basket$ | async as basket">
+  <ng-container *ngIf="confirmedBasket$ | async as basket">
     <div class="col-sm-12 col-lg-3">
       <camfil-checkout-summary
         [purchaseCurrency]="basket.purchaseCurrency"
