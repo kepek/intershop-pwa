@@ -435,7 +435,10 @@ export const basketReducer = createReducer(
     };
   }),
 
-  on(createOrderSuccess, () => initialState),
+  on(createOrderSuccess, (state: BasketState) => ({
+    ...initialState,
+    submittedBasket: state.basket,
+  })),
   on(submitBasketSuccess, (state: BasketState) => ({
     ...state,
     submittedBasket: state.basket,
