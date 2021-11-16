@@ -68,7 +68,7 @@
           <dd class="col-6 p-0" data-testing-id="order-delivery_address">
             <camfil-address [address]="orderAddress"></camfil-address>
           </dd>
-          <ng-container *ngIf="isConfirmed">
+          <ng-container *ngIf="isSubmitted">
             <dt class="col-6 p-0">{{ 'camfil.account.orderdetails.goods_mark.label' | translate }}</dt>
             <dd class="col-6 p-0 text-right text-break" data-testing-id="order-customer_id">
               {{ order?.orderMark || '-' }}
@@ -115,7 +115,7 @@
         </ng-container>
       </div>
       <div
-        *ngIf="!isConfirmed"
+        *ngIf="!isSubmitted"
         class="order-summary-info col-sm-3 border-sm-right"
         data-testing-id="order-summary-info"
       >
@@ -170,13 +170,13 @@
           </div>
         </form>
       </div>
-      <div *ngIf="isConfirmed" class="order-summary-info text-left col-sm-6" data-testing-id="order-summary-info">
+      <div *ngIf="isSubmitted" class="order-summary-info text-left col-sm-6" data-testing-id="order-summary-info">
         <dl class="row dl-horizontal dl-separator mb-0">
           <dt class="col-6 p-0" data-testing-id="order-form-note">{{ 'camfil.checkout.form.note' | translate }}</dt>
           <dd class="col-6 p-0 text-break" data-testing-id="order-customer_id">{{ order?.info || '-' }}</dd>
         </dl>
       </div>
-      <div *ngIf="!isConfirmed" class="order-summary-info col-sm-4" data-testing-id="order-summary-info">
+      <div *ngIf="!isSubmitted" class="order-summary-info col-sm-4" data-testing-id="order-summary-info">
         <div [formGroup]="orderForm" class="order-cta-container">
           <ul class="order-cta">
             <li *ngIf="!hideRecipientButton">
@@ -289,7 +289,7 @@
     <span class="d-flex align-items-center justify-content-center line-item-index">
       {{ i + 1 }}
     </span>
-    <mat-icon *ngIf="!isConfirmed" cdkDragHandle class="size-24 d-none d-md-block handle" svgIcon="move"></mat-icon>
+    <mat-icon *ngIf="!isSubmitted" cdkDragHandle class="size-24 d-none d-md-block handle" svgIcon="move"></mat-icon>
     <camfil-checkout-line-item
       (openDeleteModalAction)="changeScrollIndex()"
       (resizeLineItemOnBoxLabelChange)="changeViewportHeightOnBoxLabelChange($event)"
@@ -297,7 +297,7 @@
       [bucketId]="order?.id"
       [deviceType]="deviceType$ | async"
       [index]="i + 1"
-      [isConfirmed]="isConfirmed"
+      [isSubmitted]="isSubmitted"
       [isPartialDelivery]="isPartialDelivery"
       [lineItem]="item"
       [orderDeliveryDate]="deliveryDate"
@@ -313,7 +313,7 @@
     cdkDropList
     class="bucket_list-container"
   >
-    <ng-container *ngIf="isConfirmed; else noConfirmed">
+    <ng-container *ngIf="isSubmitted; else noConfirmed">
       <div *ngFor="let item of order.lineItems; index as i; trackBy: trackBy">
         <div
           [ngClass]="{ 'list-item-row list-item-row-big mt-2': (isLoggedIn$ | async) }"
@@ -328,7 +328,7 @@
         <div *cdkVirtualFor="let item of order.lineItems; index as i; trackBy: trackBy">
           <div
             [cdkDragData]="item"
-            [cdkDragDisabled]="isConfirmed"
+            [cdkDragDisabled]="isSubmitted"
             [ngClass]="{ 'list-item-row list-item-row-big mt-2': (isLoggedIn$ | async) }"
             cdkDrag
             class="px-4 py-1 line-item-container"

@@ -155,7 +155,6 @@ describe('Camfil Checkout Page Component', () => {
     when(camCardFacadeMock.customers$).thenReturn(of([]));
 
     when(checkoutFacade.buckets$).thenReturn(of([]));
-    when(checkoutFacade.createdOrder$).thenReturn(of(undefined));
     when(checkoutFacade.basketValidationResults$).thenReturn(
       of({
         valid: false,
@@ -165,6 +164,8 @@ describe('Camfil Checkout Page Component', () => {
     when(checkoutFacade.emptyBuckets$).thenReturn(of([]));
     when(checkoutFacade.selectedOrder$).thenReturn(of(selectedOrder));
     when(checkoutFacade.basket$).thenReturn(of(basketDetails));
+    when(checkoutFacade.submittedBasket$).thenReturn(of(undefined));
+    when(checkoutFacade.submittedBuckets$).thenReturn(of(undefined));
     when(checkoutFacade.eligiblePaymentMethods$()).thenReturn(of([]));
   });
 

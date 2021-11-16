@@ -33,7 +33,7 @@ import {
   deleteEmptyBucket,
   doubleBucketItemsQuantity,
   focusedCheckoutElement,
-  getAnonymousBaskeExtension,
+  getAnonymousBasketExtensions,
   getBasketEligiblePaymentMethods,
   getBasketEligibleShippingMethods,
   getBasketError,
@@ -51,8 +51,9 @@ import {
   getCurrentBuckets,
   getCustomersDeliveryTerms,
   getEmptyBuckets,
-  getSubmittedAnonymousBaskeExtension,
+  getSubmittedAnonymousBasketExtensions,
   getSubmittedBasket,
+  getSubmittedBuckets,
   getWarehouseCalendar,
   isBasketInvoiceAndShippingAddressEqual,
   loadBasketEligiblePaymentMethods,
@@ -73,7 +74,7 @@ import {
   updateEmptyBucket,
   validateBasket,
 } from 'ish-core/store/customer/basket';
-import { getCreatedOrder, getOrdersError, getOrdersLoading, getSelectedOrder } from 'ish-core/store/customer/orders';
+import { getOrdersError, getOrdersLoading, getSelectedOrder } from 'ish-core/store/customer/orders';
 import { getLoggedInUser } from 'ish-core/store/customer/user';
 import { getServerConfigParameter } from 'ish-core/store/general/server-config';
 import { whenTruthy } from 'ish-core/utils/operators';
@@ -98,9 +99,9 @@ export class CheckoutFacade {
     map(basket => (basket && basket.lineItems && basket.lineItems.length ? basket.lineItems : undefined))
   );
   submittedBasket$ = this.store.pipe(select(getSubmittedBasket));
+  submittedBuckets$ = this.store.pipe(select(getSubmittedBuckets));
   calendarExceptions$ = this.store.pipe(select(getCalendarExceptions));
   getFocusedCheckoutElement$ = this.store.pipe(select(getFocusedCheckoutElement));
-  createdOrder$ = this.store.pipe(select(getCreatedOrder));
   selectedOrder$ = this.store.pipe(select(getSelectedOrder));
   ordersLoading$ = this.store.pipe(select(getOrdersLoading));
   priceType$ = this.store.pipe(select(getServerConfigParameter<'gross' | 'net'>('pricing.priceType')));
@@ -127,8 +128,8 @@ export class CheckoutFacade {
   emptyBuckets$ = this.store.pipe(select(getEmptyBuckets));
   bucketsVolumeDiscounts$ = this.store.pipe(select(getBucketsVolumeDiscounts));
   getCustomersDeliveryTerms$ = this.store.pipe(select(getCustomersDeliveryTerms));
-  anonymousBaskeExtension$ = this.store.pipe(select(getAnonymousBaskeExtension));
-  submittedAnonymousBaskeExtension$ = this.store.pipe(select(getSubmittedAnonymousBaskeExtension));
+  anonymousBasketExtension$ = this.store.pipe(select(getAnonymousBasketExtensions));
+  submittedAnonymousBasketExtension$ = this.store.pipe(select(getSubmittedAnonymousBasketExtensions));
 
   // ORDERS
   private ordersError$ = this.store.pipe(select(getOrdersError));

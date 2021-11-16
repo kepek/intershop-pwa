@@ -262,8 +262,6 @@ describe('Customer Store', () => {
           [Basket API] Load Basket Success:
             basket: {"id":"test","lineItems":[1]}
           [Basket] Load Buckets
-          [Orders] Set Created Order Id:
-            orderId: undefined
         `);
       });
 

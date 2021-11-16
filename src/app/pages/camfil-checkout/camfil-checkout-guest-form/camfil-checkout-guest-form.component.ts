@@ -7,6 +7,8 @@ import { CamConfigurationFacade } from 'src/app/extensions/cam-configuration/fac
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { GuestBasketExtensions } from 'ish-core/models/basket/basket.interface';
 import { BasketMapper } from 'ish-core/models/basket/basket.mapper';
+import { Basket } from 'ish-core/models/basket/basket.model';
+import { whenTruthy } from 'ish-core/utils/operators';
 import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
 import { SpecialValidators } from 'ish-shared/forms/validators/special-validators';
 
@@ -23,14 +25,19 @@ export class CamfilCheckoutGuestFormComponent implements OnInit, OnDestroy {
   guestForm: FormGroup;
   showInvoiceAddressForm = false;
   countryCode: string;
-  anonymousBasketExtensionData;
+  anonymousBasketExtensionData: ReturnType<typeof BasketMapper.getAnonymousBasket>;
   submitted = false;
+  hideRequiredMarker = false;
   validators = GUEST_FORM_VALIDATORS;
-  anonymousBasektExtension$: Observable<GuestBasketExtensions>;
-  @Input() isConfirmed: boolean;
-  @Output() submit = new EventEmitter<GuestBasketExtensions>();
 
+  anonymousBasketExtension$: Observable<GuestBasketExtensions>;
   countryChangeDetect$: Subject<boolean> = new Subject();
+
+  @Input() basket: Basket;
+  @Input() isSubmitted: boolean;
+  @Input() markRequiredLabel = true;
+
+  @Output() submit = new EventEmitter<GuestBasketExtensions>();
 
   private destroy$ = new Subject();
 
@@ -45,16 +52,16 @@ export class CamfilCheckoutGuestFormComponent implements OnInit, OnDestroy {
       this.countryCode = value;
     });
 
-    this.anonymousBasektExtension$ = combineLatest([
-      this.checkoutFacade.submittedAnonymousBaskeExtension$,
-      this.checkoutFacade.anonymousBaskeExtension$,
+    this.anonymousBasketExtension$ = combineLatest([
+      this.checkoutFacade.submittedAnonymousBasketExtension$,
+      this.checkoutFacade.anonymousBasketExtension$,
     ]).pipe(
       map(([submittedBasketExtension, anonymousBasektExtension]) =>
-        this.isConfirmed ? submittedBasketExtension : anonymousBasektExtension
+        this.isSubmitted ? submittedBasketExtension : anonymousBasektExtension
       )
     );
 
-    this.anonymousBasektExtension$.subscribe(value => {
+    this.anonymousBasketExtension$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(value => {
       this.anonymousBasketExtensionData = BasketMapper.getAnonymousBasket(value);
     });
 
@@ -65,7 +72,7 @@ export class CamfilCheckoutGuestFormComponent implements OnInit, OnDestroy {
 
     if (this.guestForm) {
       this.patchGuestForm();
-      this.guestForm?.valueChanges.pipe(debounceTime(500), takeUntil(this.destroy$)).subscribe(() => {
+      this.guestForm?.valueChanges.pipe(debounceTime(400), takeUntil(this.destroy$)).subscribe(() => {
         this.submitGuestForm();
       });
     }

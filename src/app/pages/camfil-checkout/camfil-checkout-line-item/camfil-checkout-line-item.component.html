@@ -4,7 +4,7 @@
   <ng-container [ngTemplateOutlet]="beforeTemplate"></ng-container>
 
   <div
-    [class]="{ 'line-item__confirmed': isConfirmed }"
+    [class]="{ 'line-item__confirmed': isSubmitted }"
     [ngClass]="!isMobileView ? 'd-flex' : 'line-item-grid'"
     class="line-item align-items-center text-left"
   >
@@ -24,7 +24,7 @@
         <div class="d-flex line-item-data-container">
           <div class="flex-row line-item-data-top">
             <camfil-product-title
-              [class.confirmed-product-title]="isConfirmed"
+              [class.confirmed-product-title]="isSubmitted"
               [class]="'text-truncate'"
               [matTooltip]="product.name"
               [product]="product"
@@ -36,7 +36,7 @@
               [value]="product.sku"
             ></camfil-product-attribute>
             <camfil-product-attribute
-              *ngIf="isConfirmed"
+              *ngIf="isSubmitted"
               [name]="'camfil.cam_card.product.comment.label' | translate"
               [value]="getBoxLabelValue()"
               class="box-label-attribute"
@@ -57,7 +57,7 @@
         </div>
       </div>
     </div>
-    <div *ngIf="!isConfirmed" [class]="{ 'grid-area-label': isMobileView }" class="box-label">
+    <div *ngIf="!isSubmitted" [class]="{ 'grid-area-label': isMobileView }" class="box-label">
       <form [formGroup]="boxLabelForm" class="box-label__form">
         <mat-form-field appearance="outline" class="box-label__form--field">
           <mat-label>{{ 'camfil.cam_card.product.comment.label' | translate }}</mat-label>
@@ -90,7 +90,7 @@
         <p class="delivery-date-para">
           <strong>{{ 'camfil.checkout.desired_delivery_date' | translate }}</strong>
         </p>
-        <p *ngIf="isConfirmed; else earliestDelivery" class="delivery-date-para">
+        <p *ngIf="isSubmitted; else earliestDelivery" class="delivery-date-para">
           {{ deliveryAfterOrderConfirmed() | ishDate }}
         </p>
         <ng-template #earliestDelivery>
@@ -101,16 +101,16 @@
         [ngClass]="{ 'd-flex': !isMobileView, 'grid-area-actions': isMobileView }"
         class="quantity-row flex-row justify-content-between align-items-center py-3 py-md-0"
       >
-        <span *ngIf="isConfirmed" class="quantity-confirmed">{{ lineItem.quantity.value }}</span>
+        <span *ngIf="isSubmitted" class="quantity-confirmed">{{ lineItem.quantity.value }}</span>
         <a
           (click)="openDeleteModal()"
-          *ngIf="!isConfirmed"
+          *ngIf="!isSubmitted"
           class="btn-tool delete-cam-card"
           data-testing-id="delete-cam-card"
         >
           <mat-icon class="size-16 mx-2" svgIcon="delete"></mat-icon>
         </a>
-        <form *ngIf="product.inStock && product.availability && !isConfirmed" [formGroup]="addToCartForm">
+        <form *ngIf="product.inStock && product.availability && !isSubmitted" [formGroup]="addToCartForm">
           <camfil-product-quantity
             [allowZeroQuantity]="false"
             [isInLineItem]="true"
@@ -132,7 +132,7 @@
       </p>
       <a
         (click)="openDeleteModal()"
-        *ngIf="!isConfirmed"
+        *ngIf="!isSubmitted"
         class="btn-tool delete-cam-card"
         data-testing-id="delete-cam-card"
       >

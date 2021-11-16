@@ -59,7 +59,7 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
   @Input() order: Bucket;
   @Input() buckets: Bucket[];
   @Input() basket: Basket;
-  @Input() isConfirmed: boolean;
+  @Input() isSubmitted: boolean;
   @Input() index: number;
   @Input() isLoggedIn = false;
 
@@ -263,7 +263,7 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
   }
 
   handleHeightItemsContainer(lineItems: LineItemView[]) {
-    if (!this.isConfirmed) {
+    if (!this.isSubmitted) {
       const isMoreThanLimit = lineItems?.length >= this.numberOfVisibleLineItems;
       const numberOfItems = isMoreThanLimit ? this.numberOfVisibleLineItems : lineItems?.length;
       const viewportElement = this.virtualScrollViewport?.elementRef?.nativeElement;

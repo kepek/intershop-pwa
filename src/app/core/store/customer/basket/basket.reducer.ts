@@ -127,6 +127,7 @@ export interface BasketState {
   // TODO: CAMFIL Additions, it should be separated to avoid core modifications;
   productAdded: boolean;
   buckets: Bucket[];
+  submittedBuckets: Bucket[];
   emptyBuckets: Bucket[];
   productUpdated: boolean;
   basketAddresses: Address[];
@@ -157,6 +158,7 @@ export const initialState: BasketState = {
   submittedBasket: undefined,
   // TODO: CAMFIL Additions, it should be separated to avoid core modifications;
   buckets: undefined,
+  submittedBuckets: undefined,
   productAdded: false,
   emptyBuckets: undefined,
   productUpdated: false,
@@ -349,6 +351,7 @@ export const basketReducer = createReducer(
     info: action.payload.info,
     lastTimeProductAdded: new Date().getTime(),
     submittedBasket: undefined,
+    submittedBuckets: undefined,
     loading: false,
     error: undefined,
     productAdded: true,
@@ -358,6 +361,7 @@ export const basketReducer = createReducer(
     ...state,
     lastTimeProductAdded: new Date().getTime(),
     submittedBasket: undefined,
+    submittedBuckets: undefined,
     loading: false,
     error: undefined,
     productAdded: true,
@@ -378,6 +382,7 @@ export const basketReducer = createReducer(
       loading: false,
       error: undefined,
       submittedBasket: undefined,
+      submittedBuckets: undefined,
     };
   }),
   on(startCheckoutSuccess, continueCheckoutSuccess, continueCheckoutWithIssues, (state: BasketState, action) => {
@@ -389,6 +394,7 @@ export const basketReducer = createReducer(
       basket,
       info: undefined,
       submittedBasket: undefined,
+      submittedBuckets: undefined,
       validationResults: validation && validation.results,
     };
   }),
@@ -438,11 +444,14 @@ export const basketReducer = createReducer(
   on(createOrderSuccess, (state: BasketState) => ({
     ...initialState,
     submittedBasket: state.basket,
+    submittedBuckets: state.buckets,
   })),
   on(submitBasketSuccess, (state: BasketState) => ({
     ...state,
     submittedBasket: state.basket,
+    submittedBuckets: state.buckets,
     basket: undefined,
+    buckets: undefined,
     info: undefined,
     promotionError: undefined,
     validationResults: initialValidationResults,

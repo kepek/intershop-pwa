@@ -43,7 +43,6 @@ import {
   selectOrder,
   selectOrderAfterRedirect,
   selectOrderAfterRedirectFail,
-  setCreatedOrderId,
 } from './orders.actions';
 import { getOrder, getSelectedOrder, getSelectedOrderId } from './orders.selectors';
 
@@ -273,17 +272,6 @@ export class OrdersEffects {
             })
           )
         )
-      )
-    )
-  );
-  setCreatedOrderIdAfterOrderCreation$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(createOrderSuccess),
-      mapToPayloadProperty('order'),
-      map(order =>
-        setCreatedOrderId({
-          orderId: order.id,
-        })
       )
     )
   );

@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable, Subject } from 'rxjs';
-import { map, startWith, takeUntil, withLatestFrom } from 'rxjs/operators';
+import { map, startWith, take, takeUntil, withLatestFrom } from 'rxjs/operators';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
@@ -23,8 +23,7 @@ import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfi
 })
 export class CamfilCheckoutSummaryComponent extends CamfilBasketCostSummaryComponent {
   @Input() purchaseCurrency: string;
-  @Input() isConfirmed;
-
+  @Input() isSubmitted;
   @Output() update = new EventEmitter();
 
   @ViewChild(CamfilSmallCtaModalComponent) gdprErrorModal: CamfilSmallCtaModalComponent;
@@ -60,6 +59,7 @@ export class CamfilCheckoutSummaryComponent extends CamfilBasketCostSummaryCompo
     this.productsReadyToPlaceOrder$ = this.shoppingFacade.productsReadyToPlaceOrder$;
     this.canSubmitOrder$ = this.productsReadyToPlaceOrder$;
     this.isLoggedIn$ = this.accountFacade.isLoggedIn$;
+    // this.countries$ = this.appFacade.countries$();
 
     this.isLoggedIn$.pipe(whenFalsy(), takeUntil(this.destroy$)).subscribe(() => {
       this.initGDPRForm();
@@ -67,7 +67,7 @@ export class CamfilCheckoutSummaryComponent extends CamfilBasketCostSummaryCompo
   }
 
   submitOrder() {
-    this.isLoggedIn$.pipe(takeUntil(this.destroy$)).subscribe(isLoggedIn => {
+    this.isLoggedIn$.pipe(take(1), takeUntil(this.destroy$)).subscribe(isLoggedIn => {
       if (isLoggedIn) {
         this.placeOrder();
       } else if (this.guestGdprForm?.valid) {

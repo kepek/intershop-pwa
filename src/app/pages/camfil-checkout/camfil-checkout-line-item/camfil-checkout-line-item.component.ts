@@ -55,7 +55,7 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
   @Input() focusedCheckoutElement: CheckoutFocusedElement;
   @Input() focusedElement: CheckoutFocusedElement;
   @Input() focusedElementId: string;
-  @Input() isConfirmed;
+  @Input() isSubmitted;
   @Input() lineItem: LineItemView;
   @Input() deviceType: DeviceType;
   @Input() beforeTemplate?: TemplateRef<any>;
@@ -140,7 +140,7 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
       this.addToCartQuantityControl?.setValue(this.lineItem?.quantity?.value);
     }
 
-    if (changes.isConfirmed || changes.orderDeliveryDate) {
+    if (changes.isSubmitted || changes.orderDeliveryDate) {
       this.deliveryAfterOrderConfirmed();
     }
   }

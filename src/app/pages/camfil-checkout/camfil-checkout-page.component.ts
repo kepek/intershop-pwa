@@ -1,24 +1,21 @@
 // tslint:disable: ish-ordered-imports ban-specific-imports
 
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
-import { Observable, ReplaySubject, Subject } from 'rxjs';
+import { combineLatest, Observable, Subject } from 'rxjs';
 import { distinctUntilChanged, filter, first, map, take, takeUntil, takeWhile, withLatestFrom } from 'rxjs/operators';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { BasketValidationResultType } from 'ish-core/models/basket-validation/basket-validation.model';
-import { BasketView } from 'ish-core/models/basket/basket.model';
+import { Basket, BasketView } from 'ish-core/models/basket/basket.model';
 import { Bucket } from 'ish-core/models/basket/bucket.model';
-import { Order } from 'ish-core/models/order/order.model';
-import { whenTruthy } from 'ish-core/utils/operators';
 
 import { CamCardsFacade } from '../../extensions/cam-cards/facades/cam-cards.facade';
 import { PaymentMethod } from 'ish-core/models/payment-method/payment-method.model';
 import { HttpError } from 'ish-core/models/http-error/http-error.model';
 import { PaymentInstrument } from 'ish-core/models/payment-instrument/payment-instrument.model';
 import { BasketExtensions, GuestBasketExtensions } from 'ish-core/models/basket/basket.interface';
-import { ConfigurationService } from 'src/app/extensions/cam-configuration/services/configuration/configuration.service';
 
 @Component({
   templateUrl: './camfil-checkout-page.component.html',
@@ -27,23 +24,18 @@ import { ConfigurationService } from 'src/app/extensions/cam-configuration/servi
 })
 export class CamfilCheckoutPageComponent implements OnInit, OnDestroy {
   basket$: Observable<BasketView>;
+  basketError$: Observable<HttpError>;
+  basketLoading$: Observable<boolean>;
   buckets$: Observable<Bucket[]>;
   emptyBuckets$: Observable<Bucket[]>;
-  confirmedBasket$ = new ReplaySubject<BasketView>(1);
-  confirmedBuckets$ = new ReplaySubject<Bucket[]>(1);
-  basketLoading$: Observable<boolean>;
-  ordersLoading$: Observable<boolean>;
-  validationResults$: Observable<BasketValidationResultType>;
+  isSubmitted$: Observable<boolean>;
   isLoggedIn$: Observable<boolean>;
-  createdOrder$: Observable<Order>;
-  basketError$: Observable<HttpError>;
+  ordersLoading$: Observable<boolean>;
   paymentMethods$: Observable<PaymentMethod[]>;
   priceType$: Observable<'gross' | 'net'>;
-
-  isConfirmed = false;
-  isLoggedIn = false;
-  basketId: string;
-  guestBucket: Bucket;
+  submittedBasket$: Observable<Basket>;
+  submittedBuckets$: Observable<Bucket[]>;
+  validationResults$: Observable<BasketValidationResultType>;
 
   private isValid = false;
   private destroy$ = new Subject<void>();
@@ -52,28 +44,24 @@ export class CamfilCheckoutPageComponent implements OnInit, OnDestroy {
     private accountFacade: AccountFacade,
     private checkoutFacade: CheckoutFacade,
     private shoppingFacade: ShoppingFacade,
-    private camCardsFacade: CamCardsFacade,
-    private configurationService: ConfigurationService
+    private camCardsFacade: CamCardsFacade
   ) {}
 
   ngOnInit() {
-    this.isLoggedIn$ = this.accountFacade.isLoggedIn$;
     this.basket$ = this.checkoutFacade.basket$;
+    this.basketError$ = this.checkoutFacade.basketError$;
     this.basketLoading$ = this.checkoutFacade.basketLoading$;
     this.buckets$ = this.checkoutFacade.buckets$;
     this.emptyBuckets$ = this.checkoutFacade.emptyBuckets$;
+    this.isLoggedIn$ = this.accountFacade.isLoggedIn$;
     this.ordersLoading$ = this.checkoutFacade.ordersLoading$;
-    this.validationResults$ = this.checkoutFacade.basketValidationResults$;
-    this.createdOrder$ = this.checkoutFacade.createdOrder$;
-    this.basketError$ = this.checkoutFacade.basketError$;
-    this.priceType$ = this.checkoutFacade.priceType$;
     this.paymentMethods$ = this.checkoutFacade.eligiblePaymentMethods$();
+    this.priceType$ = this.checkoutFacade.priceType$;
+    this.submittedBasket$ = this.checkoutFacade.submittedBasket$;
+    this.submittedBuckets$ = this.checkoutFacade.submittedBuckets$;
+    this.validationResults$ = this.checkoutFacade.basketValidationResults$;
 
-    this.createdOrder$.pipe(takeUntil(this.destroy$)).subscribe(createdOrder => {
-      this.isConfirmed = !!createdOrder;
-    });
-
-    this.isLoggedIn$.pipe(take(1), takeUntil(this.destroy$)).subscribe(isLoggedIn => (this.isLoggedIn = isLoggedIn));
+    this.isSubmitted$ = this.submittedBasket$.pipe(map(basket => !!basket));
 
     // because of editOrderForm
     this.camCardsFacade.customers$
@@ -140,19 +128,25 @@ export class CamfilCheckoutPageComponent implements OnInit, OnDestroy {
   }
 
   submitGuestCheckout(guestBucketAddressData: GuestBasketExtensions) {
-    const { deliveryAddressId } = this.guestBucket;
-    const updated: BasketExtensions = {
-      ...this.guestBucket,
-      ...guestBucketAddressData,
+    combineLatest([
+      this.isLoggedIn$,
+      this.basket$.pipe(map(basket => basket?.id)),
+      this.buckets$.pipe(map(buckets => buckets?.[0])),
+    ])
+      .pipe(
+        take(1),
+        takeWhile(([isLoggedIn]) => !isLoggedIn),
+        takeUntil(this.destroy$)
+      )
+      .subscribe(([, basketId, bucket]) => {
+        const updated: BasketExtensions = {
+          ...bucket,
+          ...guestBucketAddressData,
+          anonymousBasketDataRO: guestBucketAddressData,
+        };
 
-      anonymousBasketDataRO: guestBucketAddressData,
-    };
-
-    this.shoppingFacade.updateBucket(this.basketId, deliveryAddressId, updated);
-  }
-
-  get isGuestCheckout() {
-    return this.configurationService.isEnabled('guestCheckout') && !this.isLoggedIn;
+        this.shoppingFacade.updateBucket(basketId, bucket?.deliveryAddressId, updated);
+      });
   }
 
   private initBasket() {
@@ -170,36 +164,7 @@ export class CamfilCheckoutPageComponent implements OnInit, OnDestroy {
         }
       });
 
-    this.basket$
-      .pipe(
-        whenTruthy(),
-        filter(basket => !!basket),
-        takeUntil(this.destroy$)
-      )
-      .subscribe((basket: BasketView) => {
-        if (this.isGuestCheckout) {
-          this.basketId = basket.id;
-        }
-        if (!this.isConfirmed) {
-          this.confirmedBasket$.next(basket);
-        }
-      });
-
-    this.buckets$
-      .pipe(
-        whenTruthy(),
-        filter(buckets => !!buckets?.length),
-        takeWhile(() => !this.isConfirmed),
-        takeUntil(this.destroy$)
-      )
-      .subscribe((buckets: Bucket[]) => {
-        if (this.isGuestCheckout) {
-          this.guestBucket = buckets[0];
-        }
-        this.confirmedBuckets$.next(buckets);
-      });
-
-    this.confirmedBuckets$
+    this.submittedBuckets$
       .pipe(
         withLatestFrom(this.isLoggedIn$),
         map(([buckets, isLoggedIn]) =>

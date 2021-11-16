@@ -57,7 +57,7 @@ export const GUEST_FORM_VALIDATORS = {
   zipCode: [
     {
       error: 'required',
-      message: 'camfil.guest-form.input.zip_code.errror.required',
+      message: 'camfil.modal.createOrder.order-form.input.zipcode.error.required',
     },
     {
       error: 'pattern',
@@ -65,19 +65,19 @@ export const GUEST_FORM_VALIDATORS = {
     },
     {
       error: 'incorrect',
-      message: 'camfil.address_form.post_code.invalid',
+      message: 'camfil.modal.createOrder.order-form.input.zipcode.error.invalid',
     },
   ],
   city: [
     {
       error: 'required',
-      message: 'camfil.guest-form.input.city.errror.required',
+      message: 'camfil.modal.createOrder.order-form.input.city.error.required',
     },
   ],
   country: [
     {
       error: 'required',
-      message: 'camfil.guest-form.input.country.errror.required',
+      message: 'camfil.modal.createOrder.order-form.country.error.required',
     },
   ],
 };

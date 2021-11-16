@@ -1,16 +1,14 @@
 <camfil-loading *ngIf="(ordersLoading$ | async) || (basketLoading$ | async)" fixed="true"></camfil-loading>
 
-<camfil-loading *ngIf="basketLoading$ | async"></camfil-loading>
-
 <br />
 
 <div class="checkout row">
-  <div [ngClass]="{ 'col-lg-9': (confirmedBasket$ | async) }" class="col-sm-12">
-    <div [ngClass]="{ 'header-divider-container': isConfirmed }">
+  <div [ngClass]="{ 'col-lg-9': ((basket$ | async) || (submittedBasket$ | async)) }" class="col-sm-12">
+    <div [ngClass]="{ 'header-divider-container': isSubmitted$ | async }">
       <camfil-checkout-header
         [basket]="basket$ | async"
         [buckets]="buckets$ | async"
-        [isConfirmed]="isConfirmed"
+        [isSubmitted]="isSubmitted$ | async"
       ></camfil-checkout-header>
     </div>
 
@@ -25,12 +23,11 @@
     </ng-template>
 
     <ng-container *ngIf="!(isLoggedIn$ | async)">
-      <ng-container *ngIf="confirmedBasket$ | async">
-        <camfil-checkout-guest-form
-          (submit)="submitGuestCheckout($event)"
-          [isConfirmed]="isConfirmed"
-        ></camfil-checkout-guest-form>
-      </ng-container>
+      <camfil-checkout-guest-form
+        (submit)="submitGuestCheckout($event)"
+        [basket]="((basket$ | async) || (submittedBasket$ | async))"
+        [isSubmitted]="isSubmitted$ | async"
+      ></camfil-checkout-guest-form>
       <camfil-checkout-payment
         (createPaymentInstrument)="createPaymentInstrument($event)"
         (deletePaymentInstrument)="deletePaymentInstrument($event)"
@@ -54,14 +51,14 @@
         </ng-container>
       </ng-container>
 
-      <ng-container *ngIf="isConfirmed; else notConfirmed">
-        <ng-container *ngIf="confirmedBuckets$ | async as confirmedBuckets">
-          <ng-container *ngFor="let confirmedBucket of confirmedBuckets; index as i; trackBy: trackByLineItems">
+      <ng-container *ngIf="isSubmitted$ | async as isSubmitted; else notConfirmed">
+        <ng-container *ngIf="submittedBuckets$ | async as submittedBuckets">
+          <ng-container *ngFor="let confirmedBucket of submittedBuckets; index as i; trackBy: trackByLineItems">
             <camfil-checkout-bucket
               [basket]="basket$ | async"
-              [buckets]="confirmedBuckets"
+              [buckets]="submittedBuckets"
               [index]="i + 1"
-              [isConfirmed]="isConfirmed"
+              [isSubmitted]="isSubmitted"
               [isLoggedIn]="isLoggedIn$ | async"
               [order]="confirmedBucket"
             ></camfil-checkout-bucket>
@@ -76,7 +73,7 @@
               [basket]="basket$ | async"
               [buckets]="buckets"
               [index]="i + 1"
-              [isConfirmed]="isConfirmed"
+              [isSubmitted]="isSubmitted$ | async"
               [isLoggedIn]="isLoggedIn$ | async"
               [order]="bucket"
             ></camfil-checkout-bucket>
@@ -86,7 +83,7 @@
     </div>
   </div>
 
-  <ng-container *ngIf="confirmedBasket$ | async as basket">
+  <ng-container *ngIf="((basket$ | async) || (submittedBasket$ | async)) as basket">
     <div class="col-sm-12 col-lg-3">
       <camfil-checkout-summary
         [purchaseCurrency]="basket.purchaseCurrency"

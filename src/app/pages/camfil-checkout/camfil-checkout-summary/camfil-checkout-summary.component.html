@@ -116,8 +116,7 @@
         </ng-container>
       </button>
     </ng-template>
-
-    <ng-container *ngIf="isConfirmed; else noConfirmed">
+    <ng-container *ngIf="isSubmitted; else noConfirmed">
       <button (click)="continueShopping()" color="primary" mat-flat-button>
         {{ 'camfil.checkout.confirmation.continue_shopping' | translate }}
       </button>

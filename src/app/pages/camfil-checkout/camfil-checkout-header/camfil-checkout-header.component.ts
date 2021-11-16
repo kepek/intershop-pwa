@@ -14,7 +14,7 @@ import { Bucket } from 'ish-core/models/basket/bucket.model';
 export class CamfilCheckoutHeaderComponent implements OnInit, OnChanges {
   @Input() basket: BasketView;
   @Input() buckets: Bucket[];
-  @Input() isConfirmed;
+  @Input() isSubmitted;
 
   isLoggedIn$: Observable<boolean>;
 

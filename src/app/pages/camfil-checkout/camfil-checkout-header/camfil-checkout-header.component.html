@@ -9,18 +9,18 @@
   </ng-container>
 
   <ng-template #guest>
-    <h1 *ngIf="isConfirmed" class="d-flex align-items-center">
+    <h1 *ngIf="isSubmitted" class="d-flex align-items-center">
       {{ 'camfil.checkout.confirmation.title' | translate }}
     </h1>
   </ng-template>
 
   <ng-template #default>
     <h1 class="d-flex align-items-center">
-      <mat-icon *ngIf="!isConfirmed" class="size-37" svgIcon="cart"></mat-icon> &nbsp;
-      {{ (isConfirmed ? 'camfil.checkout.confirmation.title' : 'shopping_cart.proceed_to_checkout.button.label') | translate }}
+      <mat-icon *ngIf="!isSubmitted" class="size-37" svgIcon="cart"></mat-icon> &nbsp;
+      {{ (isSubmitted ? 'camfil.checkout.confirmation.title' : 'shopping_cart.proceed_to_checkout.button.label') | translate }}
     </h1>
 
-    <div *ngIf="!isConfirmed" class="row align-items-end">
+    <div *ngIf="!isSubmitted" class="row align-items-end">
       <div class="col-md-3">
         <p>
           <span>{{ 'camfil.checkout.number_of_orders' | translate }}:</span>

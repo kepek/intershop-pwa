@@ -16,9 +16,14 @@ export class BasketMapper {
     const totals = data.calculated
       ? BasketMapper.getTotals(data, included ? included.discounts : undefined)
       : undefined;
+
+    const basketExtensions =
+      Object.keys({ ...data?.basketExtensions })?.length >= 2 ? data?.basketExtensions : undefined;
+
     if (totals) {
       totals.isEstimated = !data.invoiceToAddress || !data.commonShipToAddress || !data.commonShippingMethod;
     }
+
     const lineItems =
       included && included.lineItems && data.lineItems && data.lineItems.length
         ? data.lineItems
@@ -37,11 +42,12 @@ export class BasketMapper {
               };
             })
         : [];
+
     return {
       id: data.id,
       bucketId: data.buckets && data.buckets.length === 1 && data.buckets[0],
       buckets: data.buckets,
-      basketExtensions: data.basketExtensions,
+      basketExtensions,
       purchaseCurrency: data.purchaseCurrency,
       dynamicMessages: data.discounts ? data.discounts.dynamicMessages : undefined,
       invoiceToAddress:
