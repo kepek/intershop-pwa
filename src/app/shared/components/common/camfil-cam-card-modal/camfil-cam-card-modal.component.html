@@ -50,6 +50,7 @@
       mat-raised-button
       (click)="emitSecondary()"
       [disabled]="secondaryDisabled"
+      [tabindex]="secondaryTabIndex"
     >
       {{ secondaryButtonTitle }}
     </button>
@@ -62,6 +63,7 @@
       color="primary"
       (click)="emitPrimary()"
       [disabled]="primaryDisabled"
+      [tabindex]="primaryTabIndex"
     >
       {{ primaryButtonTitle }}
     </button>

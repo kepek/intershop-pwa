@@ -7,6 +7,18 @@
   .line-item {
     justify-content: space-between;
     justify-content: flex-end;
+    ::ng-deep {
+      camfil-product-title {
+        height: 3em;
+        line-height: 1em;
+        .camfil-product-title {
+          height: 3em;
+          overflow: hidden;
+          line-height: 1.2em;
+          white-space: normal;
+        }
+      }
+    }
   }
 
   .line-item-grid {
