@@ -45,7 +45,6 @@ export class CamfilCheckoutGuestFormComponent implements OnInit, OnDestroy {
       this.countryCode = value;
     });
 
-    // combineLatest x2 slector map -> array
     this.anonymousBasektExtension$ = combineLatest([
       this.checkoutFacade.submittedAnonymousBaskeExtension$,
       this.checkoutFacade.anonymousBaskeExtension$,
