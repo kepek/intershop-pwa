@@ -34,6 +34,8 @@ export class CamfilCamCardModalComponent implements AfterViewInit {
   @Input() secondaryButtonTitle?: string;
   @Input() secondaryDisabled?: boolean;
   @Input() primaryDisabled?: boolean;
+  @Input() secondaryTabIndex = 0;
+  @Input() primaryTabIndex = 0;
 
   @Output() primaryButtonClicked = new EventEmitter<any>();
   @Output() secondaryButtonClicked = new EventEmitter<any>();
