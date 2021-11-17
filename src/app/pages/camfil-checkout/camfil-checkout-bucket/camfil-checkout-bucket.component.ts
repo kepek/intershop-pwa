@@ -20,7 +20,7 @@ import { first, skip, take, takeUntil } from 'rxjs/operators';
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { AttributeHelper } from 'ish-core/models/attribute/attribute.helper';
-import { BasketExtensions, GuestBasketExtensions } from 'ish-core/models/basket/basket.interface';
+import { BasketExtension, GuestBasketData } from 'ish-core/models/basket/basket.interface';
 import { Bucket } from 'ish-core/models/basket/bucket.model';
 import { CustomerDeliveryTerm } from 'ish-core/models/customer/customer.interface';
 import { LineItemData } from 'ish-core/models/line-item/line-item.interface';
@@ -80,7 +80,7 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
   calendarException = [];
   orderAddress = {};
   emailRecipients: string[];
-  basketExtensions: BasketExtensions[];
+  basketExtensions: BasketExtension[];
   deliveryDateValue: string;
   focusedElement: CheckoutFocusedElement;
   focusedElementId: string;
@@ -327,7 +327,7 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
     if (!formField.errors) {
       const { basket, deliveryAddressId } = this.order;
 
-      const updated: BasketExtensions = {
+      const updated: BasketExtension = {
         ...this.currentBasketExtensions,
         [field]: formField.value,
       };
@@ -336,9 +336,9 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
     }
   }
 
-  submitGuestCheckout(guestBucketAddressData: GuestBasketExtensions) {
+  submitGuestCheckout(guestBucketAddressData: GuestBasketData) {
     const { basket, deliveryAddressId } = this.order;
-    const updated: BasketExtensions = {
+    const updated: BasketExtension = {
       ...this.currentBasketExtensions,
       anonymousBasketExtensionData: guestBucketAddressData,
     };
@@ -654,7 +654,7 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
     const updatedRecipients = this.emailRecipients.filter(er => er !== recipient);
 
     const { basket, deliveryAddressId } = this.order;
-    const basketExtensionUpdate: BasketExtensions = {
+    const basketExtensionUpdate: BasketExtension = {
       ...this.order,
       ...this.currentBasketExtensions,
       emailRecipients: updatedRecipients,

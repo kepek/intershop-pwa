@@ -331,6 +331,7 @@
                   appearance="fill"
                   fieldCity="city"
                   fieldName="zipCode"
+                  fixedLoader="true"
                 ></camfil-zip-code>
               </div>
               <div class="mat-form-field__wrapper">
@@ -416,7 +417,8 @@
 
       <!-- Invoice Address -->
 
-      <mat-expansion-panel *ngIf="showInvoiceAddressForm" [expanded]="true">
+      <mat-expansion-panel *ngIf="showInvoiceAddressForm && guestForm.controls.invoiceAddressFormGroup"
+                           [expanded]="true">
         <mat-expansion-panel-header>
           <mat-panel-title>
             {{ 'checkout.address.billing.label' | translate }}

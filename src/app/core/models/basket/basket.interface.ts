@@ -29,7 +29,7 @@ export interface BasketBaseData {
     valueBasedDiscounts?: string[];
   };
   buckets?: string[];
-  basketExtensions?: BasketExtensions[];
+  basketExtensions?: BasketExtension[];
   lineItems?: string[];
   payments?: string[];
   promotionCodes?: string[];
@@ -69,7 +69,8 @@ export interface BasketData {
   infos?: BasketInfo[];
 }
 
-export interface BasketExtensions {
+export interface BasketExtension {
+  type?: string;
   name?: string;
   customer?: CamCardCustomer;
   contactPerson?: CamCardContact;
@@ -87,15 +88,10 @@ export interface BasketExtensions {
   emailRecipients?: string[];
   volumeDiscount?: number;
   // Additional for France
-  vat?: string;
-  siret?: string;
-  jobTitle?: string;
-  customerNote?: string;
-  anonymousBasketDataRO?: GuestBasketExtensions;
+  anonymousBasketDataRO?: GuestBasketData;
 }
 
-// GUEST basket extensions
-export interface GuestBasketExtensions {
+export interface GuestBasketData {
   firstName: string;
   lastName: string;
   emailAddress: string;

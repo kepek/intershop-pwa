@@ -2,7 +2,7 @@ import { AddressMapper } from 'ish-core/models/address/address.mapper';
 import { BasketRebateData } from 'ish-core/models/basket-rebate/basket-rebate.interface';
 import { BasketRebateMapper } from 'ish-core/models/basket-rebate/basket-rebate.mapper';
 import { BasketTotal } from 'ish-core/models/basket-total/basket-total.model';
-import { BasketBaseData, BasketData, GuestBasketExtensions } from 'ish-core/models/basket/basket.interface';
+import { BasketBaseData, BasketData, GuestBasketData } from 'ish-core/models/basket/basket.interface';
 import { LineItemMapper } from 'ish-core/models/line-item/line-item.mapper';
 import { PaymentMapper } from 'ish-core/models/payment/payment.mapper';
 import { PriceItemMapper } from 'ish-core/models/price-item/price-item.mapper';
@@ -17,8 +17,12 @@ export class BasketMapper {
       ? BasketMapper.getTotals(data, included ? included.discounts : undefined)
       : undefined;
 
-    const basketExtensions =
-      Object.keys({ ...data?.basketExtensions })?.length >= 2 ? data?.basketExtensions : undefined;
+    const basketExtensions = data?.basketExtensions
+      ?.map(extension => {
+        delete extension.type;
+        return Object.keys(extension)?.length ? extension : undefined;
+      })
+      .filter(Boolean);
 
     if (totals) {
       totals.isEstimated = !data.invoiceToAddress || !data.commonShipToAddress || !data.commonShippingMethod;
@@ -47,7 +51,7 @@ export class BasketMapper {
       id: data.id,
       bucketId: data.buckets && data.buckets.length === 1 && data.buckets[0],
       buckets: data.buckets,
-      basketExtensions,
+      basketExtensions: basketExtensions?.length ? basketExtensions : undefined,
       purchaseCurrency: data.purchaseCurrency,
       dynamicMessages: data.discounts ? data.discounts.dynamicMessages : undefined,
       invoiceToAddress:
@@ -143,7 +147,7 @@ export class BasketMapper {
       : undefined;
   }
 
-  static getAnonymousBasket(data: GuestBasketExtensions) {
+  static getAnonymousBasket(data: GuestBasketData) {
     const deliveryAddress = {
       streetAddress: data.dlvStreetAddress,
       zipCode: data.dlvZipCode,
@@ -196,7 +200,7 @@ export class BasketMapper {
     );
   }
 
-  static convertFormDataToAnonymousBasketData(data): GuestBasketExtensions {
+  static convertFormDataToAnonymousBasketData(data): GuestBasketData {
     const { userDetailsFormGroup, deliveryInfoFromGroup, invoiceAddressFormGroup } = data;
     const sameAsDelivery = deliveryInfoFromGroup.sameAddressAsInvoice;
     return {

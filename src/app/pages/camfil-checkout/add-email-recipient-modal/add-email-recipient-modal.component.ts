@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
-import { BasketExtensions } from 'ish-core/models/basket/basket.interface';
+import { BasketExtension } from 'ish-core/models/basket/basket.interface';
 import { Bucket } from 'ish-core/models/basket/bucket.model';
 import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
 import { SpecialValidators } from 'ish-shared/forms/validators/special-validators';
@@ -46,7 +46,7 @@ export class AddEmailRecipientModalComponent implements OnInit {
 
       const emailRecipients = this.bucket?.emailRecipients || [];
 
-      const basketExtensionUpdate: BasketExtensions = {
+      const basketExtensionUpdate: BasketExtension = {
         ...this.bucket,
         emailRecipients: [...emailRecipients, ...addedEmailRecipients],
       };

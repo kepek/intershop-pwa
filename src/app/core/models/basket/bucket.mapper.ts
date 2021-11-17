@@ -1,10 +1,10 @@
-import { BasketExtensions } from 'ish-core/models/basket/basket.interface';
+import { BasketExtension } from 'ish-core/models/basket/basket.interface';
 import { LineItemView } from 'ish-core/models/line-item/line-item.model';
 
 import { Bucket, BucketData, Buckets } from './bucket.model';
 
 export class BucketMapper {
-  static fromData(payload: Buckets, lineItems: LineItemView[], basketExtensions: BasketExtensions[]): Bucket[] {
+  static fromData(payload: Buckets, lineItems: LineItemView[], basketExtensions: BasketExtension[]): Bucket[] {
     const { data, included } = payload;
 
     return data.map((bucketData: BucketData) => {

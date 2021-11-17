@@ -9,7 +9,7 @@ import { Address } from 'ish-core/models/address/address.model';
 import { Attribute } from 'ish-core/models/attribute/attribute.model';
 import { BasketInfo } from 'ish-core/models/basket-info/basket-info.model';
 import { BasketValidation, BasketValidationScopeType } from 'ish-core/models/basket-validation/basket-validation.model';
-import { BasketExtensions } from 'ish-core/models/basket/basket.interface';
+import { BasketExtension } from 'ish-core/models/basket/basket.interface';
 import { Basket } from 'ish-core/models/basket/basket.model';
 import { Bucket } from 'ish-core/models/basket/bucket.model';
 import { CustomerDeliveryTerm } from 'ish-core/models/customer/customer.interface';
@@ -80,7 +80,7 @@ export const addProductToBucket = createAction(
     sku: string;
     quantity: number;
     basketId?: string;
-    basketExtension: BasketExtensions;
+    basketExtension: BasketExtension;
     lineItemAttributes?: Attribute[];
     bucketId?: string;
   }>()
@@ -94,7 +94,7 @@ export const addProductToBucketWithBasketId = createAction(
     sku: string;
     quantity: number;
     basketId: string;
-    basketExtension: BasketExtensions;
+    basketExtension: BasketExtension;
     lineItemAttributes?: Attribute[];
     bucketId?: string;
   }>()
@@ -124,7 +124,7 @@ export const addProductToBasket = createAction(
     quantity: number;
     shippingMethod?: string;
     shipToAddress?: string;
-    basketExtension?: BasketExtensions;
+    basketExtension?: BasketExtension;
     addressId?: string;
     lineItemAttributes?: Attribute[];
     bucketId?: string;
@@ -136,7 +136,7 @@ export const updateBucket = createAction(
   payload<{
     basketId: string;
     addressId: string;
-    basketExtension: BasketExtensions;
+    basketExtension: BasketExtension;
     address?: Address;
   }>()
 );
@@ -170,7 +170,7 @@ export const addItemsToBasket = createAction(
       unit: string;
       shippingMethod?: string;
       shipToAddress?: string;
-      basketExtension?: BasketExtensions;
+      basketExtension?: BasketExtension;
       addressId?: string;
       lineItemAttributes?: Attribute[];
     }[];
@@ -466,7 +466,7 @@ export const addProductsToBasketFromCamCard = createAction(
     products: CamCamProductChecked[];
     shippingMethod?: string;
     shipToAddress?: string;
-    basketExtension?: BasketExtensions;
+    basketExtension?: BasketExtension;
     addressId?: string;
     camCardName?: string;
   }>()
@@ -513,7 +513,7 @@ export const updateBucketsQueue = createAction(
     }[];
     extensions: {
       addressId: string;
-      basketExtension: BasketExtensions;
+      basketExtension: BasketExtension;
     }[];
     bucketIds?: string[];
     camCardName?: string;

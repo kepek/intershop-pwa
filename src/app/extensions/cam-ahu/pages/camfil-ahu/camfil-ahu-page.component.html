@@ -23,7 +23,7 @@
                   {{ manufacturer.name }}
                 </mat-option>
               </mat-select>
-              <mat-error *ngIf="ahuForm.controls.manufacturer.validator">
+              <mat-error *ngIf="ahuForm.controls.manufacturer.hasError('required')">
                 {{ 'camfil.ahu.form.select.manufacturer.error.required' | translate }}
               </mat-error>
             </mat-form-field>
