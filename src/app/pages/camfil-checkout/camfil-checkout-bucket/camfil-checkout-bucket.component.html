@@ -3,7 +3,7 @@
     <ng-container *ngTemplateOutlet="guest"></ng-container>
   </ng-container>
 
-  <ng-container *ngIf="(isLoggedIn$ | async)">
+  <ng-container *ngIf="isLoggedIn$ | async">
     <ng-container *ngTemplateOutlet="default"></ng-container>
   </ng-container>
 </div>
@@ -269,6 +269,12 @@
           <dd class="col-4">{{ totalPrice() | ishPrice }}</dd>
           <dt class="col-6">{{ 'camfil.checkout.tax_amount' | translate }}</dt>
           <dd class="col-6">{{ totalTax() | ishPrice }}</dd>
+          <ng-container *ngIf="order.surcharges">
+            <ng-container *ngFor="let surcharge of order.surcharges">
+              <dt class="col-6">{{ surcharge.name | slugify: 'camfil.dynamic' | translate }}</dt>
+              <dd class="col-6">{{ surcharge.amount.gross | ishPrice }}</dd>
+            </ng-container>
+          </ng-container>
           <dt class="col-6">{{ 'camfil.checkout.order_total_price' | translate }}</dt>
           <dd class="col-6">{{ totalPrice('gross') | ishPrice }}</dd>
         </dl>
@@ -311,7 +317,8 @@
       <div *ngFor="let item of order.lineItems; index as i; trackBy: trackBy">
         <div
           [ngClass]="{ 'list-item-row list-item-row-big mt-2': (isLoggedIn$ | async) }"
-          class="px-4 py-1 line-item-container">
+          class="px-4 py-1 line-item-container"
+        >
           <ng-container *ngTemplateOutlet="bucketListItem; context: { item: item, i: i }"></ng-container>
         </div>
       </div>

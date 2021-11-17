@@ -970,6 +970,7 @@
   "camfil.dynamic.salutation.mrs": "Mrs",
   "camfil.dynamic.salutation.ms": "Ms",
   "camfil.dynamic.the.cart.is.empty": "The cart is empty.",
+  "camfil.dynamic.camfil_box_label_fee": "Box label fee",
   "camfil.forgot_password.form.send.button.label": "Send",
   "camfil.forgot_username.form.send.button.label": "Send",
   "camfil.form.error.maxLength": "The field must not exceed {{0}} characters.",

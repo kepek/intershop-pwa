@@ -575,6 +575,15 @@ export class BasketItemsEffects {
       )
     )
   );
+  /**
+   * Triggers a LoadBasket action after successful attribute change for Item
+   */
+  loadBasketAfterLineItemAttributeChangeSuccess$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(addBasketItemAttributesSuccess, updateBasketItemAttributesSuccess, deleteBasketItemAttributesSuccess),
+      mapTo(loadBasket())
+    )
+  );
 
   constructor(
     private actions$: Actions,

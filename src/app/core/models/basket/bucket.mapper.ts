@@ -21,6 +21,7 @@ export class BucketMapper {
           .filter(element => !!element)
           .sort((a, b) => (a.position < b.position ? -1 : 1)),
         shippingMethod: bucketData.shippingMethod,
+        surcharges: bucketData.surcharges,
         deliveryAddressId: shipToAddress ? shipToAddress.id : '',
         shipToAddress: extension ? extension.shippingAddress.urn : '',
         shipToAddressFull: extension ? extension.shippingAddress : undefined,

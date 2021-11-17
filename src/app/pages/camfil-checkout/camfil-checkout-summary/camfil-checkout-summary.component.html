@@ -14,6 +14,12 @@
       </p>
       <p>{{ basket.totals?.total | ishPrice }}</p>
     </div>
+    <ng-container *ngIf="basket.totals?.bucketSurchargeTotalsByType">
+      <div *ngFor="let basketSurcharge of basket.totals.bucketSurchargeTotalsByType" class="summary-line">
+        <p>{{ basketSurcharge.displayName | slugify: 'camfil.dynamic' | translate }}</p>
+        <p>{{ basketSurcharge.amount | ishPrice: 'gross' }}</p>
+      </div>
+    </ng-container>
     <div class="summary-line">
       <p>{{ 'camfil.checkout.tax_amount' | translate }}</p>
       <p>{{ basket.totals?.taxTotal | ishPrice }}</p>
@@ -34,12 +40,7 @@
         </form>
       </ng-container>
       <br />
-      <button
-        (click)="submitOrder()"
-        [disabled]="!(canSubmitOrder$ | async)"
-        color="primary"
-        mat-flat-button
-      >
+      <button (click)="submitOrder()" [disabled]="!(canSubmitOrder$ | async)" color="primary" mat-flat-button>
         <ng-container *ngIf="productsReadyToPlaceOrder$ | async as readyToOrder">
           <ng-template #notReadyToOrder>
             {{ 'camfil.checkout.wait_till_validation.button.text' | translate }}

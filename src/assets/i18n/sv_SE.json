@@ -970,6 +970,7 @@
   "camfil.dynamic.salutation.mrs": "sv_Mrs",
   "camfil.dynamic.salutation.ms": "sv_Ms",
   "camfil.dynamic.the.cart.is.empty": "Varukorgen är tom.",
+  "camfil.dynamic.camfil_box_label_fee": "sv_Box label fee",
   "camfil.forgot_password.form.send.button.label": "Skickat",
   "camfil.forgot_username.form.send.button.label": "Skicka",
   "camfil.form.error.maxLength": "Fältet får inte överstiga {{0}} tecken.",
