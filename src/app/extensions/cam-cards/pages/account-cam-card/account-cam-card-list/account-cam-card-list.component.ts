@@ -166,7 +166,6 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
       this.goToExpandedCamCard();
     });
 
-    this.productFacade.loadBasketAddresses();
     this.basket$ = this.checkoutFacade.basket$;
     this.buckets$ = this.checkoutFacade.buckets$;
     this.camCardsInBasketsForAllUsersLoading$ = this.camCardsFacade.getCamCardsInBasketsForAllUsersLoading$;
@@ -177,9 +176,6 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
     });
     this.buckets$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe((buckets: Bucket[]) => {
       this.buckets = buckets;
-    });
-    this.productFacade.basketAddresses$.pipe(takeUntil(this.destroy$)).subscribe((basketAddresses: Address[]) => {
-      this.basketAddresses = basketAddresses;
     });
     this.checkoutFacade.basketLoading$.pipe(takeUntil(this.destroy$)).subscribe(value => {
       this.basketLoading = value;
@@ -255,8 +251,6 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
             this.goToExpandedCamCard();
             this.loading = this.camCardLoading;
           });
-
-        this.loadCustomerPrices();
       } else {
         this.loading = this.camCardLoading;
       }
@@ -270,36 +264,38 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
   }
 
   loadCustomerPrices() {
-    this.authorizationToggle
-      .isAuthorizedToCheckArrAll(AccountCamCardListComponent.PRICE_PERMISSIONS)
-      .pipe(take(1))
-      .subscribe(permitted => {
-        if (permitted && !this.productsCustomerPrices) {
-          this.productsCustomerPrices = {};
-          const customersAndSkus = this.camCards.reduce((acc, cc) => {
-            const skus = CamCardHelper.getCamCardSkus(cc);
-            const currentSkus = acc?.[cc.customer.id] || [];
+    if (!this.productsCustomerPrices && this.camCards.length) {
+      this.productsCustomerPrices = {};
+      this.authorizationToggle
+        .isAuthorizedToCheckArrAll(AccountCamCardListComponent.PRICE_PERMISSIONS)
+        .pipe(take(1))
+        .subscribe(permitted => {
+          if (permitted) {
+            const customersAndSkus = this.camCards.reduce((acc, cc) => {
+              const skus = CamCardHelper.getCamCardSkus(cc);
+              const currentSkus = acc?.[cc.customer.id] || [];
 
-            return {
-              ...acc,
-              [cc.customer.id]: [...new Set([...currentSkus, ...skus])],
-            };
-          }, {}) as { key: string[] };
+              return {
+                ...acc,
+                [cc.customer.id]: [...new Set([...currentSkus, ...skus])],
+              };
+            }, {}) as { key: string[] };
 
-          Object.entries(customersAndSkus).forEach(([customerId, skus]) => {
-            const { parent } = this.camCards.find(cc => cc.customer.id === customerId).customer;
-            if (!parent) {
-              this.productFacade.loadCustomerPrices(customerId, skus);
-              this.productFacade
-                .getCustomerPrices$(customerId)
-                .pipe(whenTruthy(), take(1))
-                .subscribe(prices => {
-                  this.productsCustomerPrices[customerId] = prices;
-                });
-            }
-          });
-        }
-      });
+            Object.entries(customersAndSkus).forEach(([customerId, skus]) => {
+              const { parent } = this.camCards.find(cc => cc.customer.id === customerId).customer;
+              if (!parent) {
+                this.productFacade.loadCustomerPrices(customerId, skus);
+                this.productFacade
+                  .getCustomerPrices$(customerId)
+                  .pipe(whenTruthy(), take(1))
+                  .subscribe(prices => {
+                    this.productsCustomerPrices[customerId] = prices;
+                  });
+              }
+            });
+          }
+        });
+    }
   }
 
   getCustomerPriceForSkuInCustomer(id: string, sku: string) {
@@ -344,6 +340,7 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
 
   handleExpandedCamCard(camCard: CamCard, rowId) {
     const isExpanded = this.expandedCamCard && this.expandedCamCard.id === camCard.id;
+    this.loadCustomerPrices();
     this.expandedCamCard = isExpanded ? undefined : camCard;
     setTimeout(() => {
       this.scrollToSelectedRow(rowId);
@@ -383,6 +380,7 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
         this.scroller.scrollToPosition([0, top]);
         this.expandCamCardByFragment();
       }
+      this.loadCustomerPrices();
     }
   }
 
@@ -617,6 +615,7 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
   handleProductCheck(item: CamCardItem, camCard: CamCard, event: MatCheckboxChange) {
     const productOnList = this.productsChecked[item.id];
     if (event.checked && !productOnList && item.product.available) {
+      this.loadCustomerPrices();
       const element: CamCamProductChecked = {
         camCardId: camCard.id,
         camCardErpId: !!camCard.erpId,
