@@ -11,6 +11,7 @@ import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { Basket } from 'ish-core/models/basket/basket.model';
 import { PricePipe } from 'ish-core/models/price/price.pipe';
+import { CamfilSlugifyPipe } from 'ish-core/pipes/camfil-slugify.pipe';
 import { ContentIncludeComponent } from 'ish-shared/cms/components/content-include/content-include.component';
 import { CamfilModalDialogComponent } from 'ish-shared/components/common/camfil-modal-dialog/camfil-modal-dialog.component';
 import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
@@ -40,6 +41,7 @@ describe('Camfil Checkout Summary Component', () => {
         MockComponent(CamfilModalDialogComponent),
         MockComponent(ContentIncludeComponent),
         MockDirective(ChannelToggleDirective),
+        MockPipe(CamfilSlugifyPipe),
         MockPipe(PricePipe),
       ],
       imports: [RouterTestingModule],
