@@ -88,7 +88,7 @@
       <camfil-checkout-summary
         [purchaseCurrency]="basket.purchaseCurrency"
         [totals]="basket.totals"
-        [isConfirmed]="isConfirmed"
+        [isSubmitted]="isSubmitted$ | async"
       ></camfil-checkout-summary>
     </div>
   </ng-container>

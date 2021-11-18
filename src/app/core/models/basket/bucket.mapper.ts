@@ -1,5 +1,6 @@
 import { BasketExtension } from 'ish-core/models/basket/basket.interface';
 import { LineItemView } from 'ish-core/models/line-item/line-item.model';
+import { PriceItemMapper } from 'ish-core/models/price-item/price-item.mapper';
 
 import { Bucket, BucketData, Buckets } from './bucket.model';
 
@@ -21,7 +22,13 @@ export class BucketMapper {
           .filter(element => !!element)
           .sort((a, b) => (a.position < b.position ? -1 : 1)),
         shippingMethod: bucketData.shippingMethod,
-        surcharges: bucketData.surcharges,
+        surcharges: bucketData.surcharges
+          ? bucketData.surcharges.map(surcharge => ({
+              amount: PriceItemMapper.fromPriceItem(surcharge.amount),
+              description: surcharge.description,
+              displayName: surcharge.name,
+            }))
+          : undefined,
         deliveryAddressId: shipToAddress ? shipToAddress.id : '',
         shipToAddress: extension ? extension.shippingAddress.urn : '',
         shipToAddressFull: extension ? extension.shippingAddress : undefined,

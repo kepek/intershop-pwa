@@ -271,7 +271,7 @@
           <dd class="col-6">{{ totalTax() | ishPrice }}</dd>
           <ng-container *ngIf="order.surcharges">
             <ng-container *ngFor="let surcharge of order.surcharges">
-              <dt class="col-6">{{ surcharge.name | slugify: 'camfil.dynamic' | translate }}</dt>
+              <dt class="col-6">{{ surcharge.displayName | slugify: 'camfil.dynamic' | translate }}</dt>
               <dd class="col-6">{{ surcharge.amount | ishPrice }}</dd>
             </ng-container>
           </ng-container>

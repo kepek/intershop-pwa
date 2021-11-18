@@ -16,6 +16,8 @@ import { PaymentMethod } from 'ish-core/models/payment-method/payment-method.mod
 import { HttpError } from 'ish-core/models/http-error/http-error.model';
 import { PaymentInstrument } from 'ish-core/models/payment-instrument/payment-instrument.model';
 import { BasketExtension, GuestBasketData } from 'ish-core/models/basket/basket.interface';
+import { whenTruthy } from 'ish-core/utils/operators';
+import { isEqual } from 'lodash-es';
 
 @Component({
   templateUrl: './camfil-checkout-page.component.html',
@@ -166,11 +168,12 @@ export class CamfilCheckoutPageComponent implements OnInit, OnDestroy {
 
     this.submittedBuckets$
       .pipe(
+        whenTruthy(),
         withLatestFrom(this.isLoggedIn$),
         map(([buckets, isLoggedIn]) =>
           isLoggedIn ? [...new Set(buckets.map(bucket => bucket?.customer?.id))] : undefined
         ),
-        distinctUntilChanged((prev, curr) => JSON.stringify(prev) === JSON.stringify(curr)),
+        distinctUntilChanged(isEqual),
         takeUntil(this.destroy$)
       )
       .subscribe(customerIds => {

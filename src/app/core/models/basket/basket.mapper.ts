@@ -2,7 +2,7 @@ import { AddressMapper } from 'ish-core/models/address/address.mapper';
 import { BasketRebateData } from 'ish-core/models/basket-rebate/basket-rebate.interface';
 import { BasketRebateMapper } from 'ish-core/models/basket-rebate/basket-rebate.mapper';
 import { BasketTotal } from 'ish-core/models/basket-total/basket-total.model';
-import { BasketBaseData, BasketData, GuestBasketData } from 'ish-core/models/basket/basket.interface';
+import { BasketBaseData, BasketData, BasketExtension, GuestBasketData } from 'ish-core/models/basket/basket.interface';
 import { LineItemMapper } from 'ish-core/models/line-item/line-item.mapper';
 import { PaymentMapper } from 'ish-core/models/payment/payment.mapper';
 import { PriceItemMapper } from 'ish-core/models/price-item/price-item.mapper';
@@ -16,13 +16,6 @@ export class BasketMapper {
     const totals = data.calculated
       ? BasketMapper.getTotals(data, included ? included.discounts : undefined)
       : undefined;
-
-    const basketExtensions = data?.basketExtensions
-      ?.map(extension => {
-        delete extension.type;
-        return Object.keys(extension)?.length ? extension : undefined;
-      })
-      .filter(Boolean);
 
     if (totals) {
       totals.isEstimated = !data.invoiceToAddress || !data.commonShipToAddress || !data.commonShippingMethod;
@@ -51,7 +44,7 @@ export class BasketMapper {
       id: data.id,
       bucketId: data.buckets && data.buckets.length === 1 && data.buckets[0],
       buckets: data.buckets,
-      basketExtensions: basketExtensions?.length ? basketExtensions : undefined,
+      basketExtensions: BasketMapper.getBasketExtensions(data.basketExtensions),
       purchaseCurrency: data.purchaseCurrency,
       dynamicMessages: data.discounts ? data.discounts.dynamicMessages : undefined,
       invoiceToAddress:
@@ -225,5 +218,16 @@ export class BasketMapper {
       invCity: sameAsDelivery ? deliveryInfoFromGroup.city : invoiceAddressFormGroup.city,
       invCountry: sameAsDelivery ? deliveryInfoFromGroup.country : invoiceAddressFormGroup.country,
     };
+  }
+
+  static getBasketExtensions(data: BasketExtension[]): BasketExtension[] {
+    const basketExtensions = data
+      ?.map(extension => {
+        delete extension.type;
+        return Object.keys(extension)?.length ? extension : undefined;
+      })
+      .filter(Boolean);
+
+    return basketExtensions?.length ? basketExtensions : undefined;
   }
 }
