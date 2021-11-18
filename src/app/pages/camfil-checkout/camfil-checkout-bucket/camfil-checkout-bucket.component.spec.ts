@@ -15,6 +15,7 @@ import { BasketTotal } from 'ish-core/models/basket-total/basket-total.model';
 import { PricePipe } from 'ish-core/models/price/price.pipe';
 import { AddressSortPipe } from 'ish-core/pipes/camfil-address-sort.pipe';
 import { CamfilContactSortPipe } from 'ish-core/pipes/camfil-contact-sort.pipe';
+import { CamfilSlugifyPipe } from 'ish-core/pipes/camfil-slugify.pipe';
 import { DatePipe } from 'ish-core/pipes/date.pipe';
 import { HighlightPipe } from 'ish-core/pipes/highlight.pipe';
 import { ProductRoutePipe } from 'ish-core/routing/product/product-route.pipe';
@@ -91,6 +92,7 @@ describe('Camfil Checkout Bucket Component', () => {
         MockDirective(ServerHtmlDirective),
         MockPipe(AddressSortPipe),
         MockPipe(CamfilContactSortPipe),
+        MockPipe(CamfilSlugifyPipe),
         MockPipe(DatePipe),
         MockPipe(HighlightPipe),
         MockPipe(PricePipe),

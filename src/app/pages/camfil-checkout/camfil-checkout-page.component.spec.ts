@@ -23,6 +23,7 @@ import { ChannelToggleDirective } from '../../extensions/cam-configuration/direc
 import { ConfigurationService } from '../../extensions/cam-configuration/services/configuration/configuration.service';
 import { ChannelConfiguration } from '../../extensions/cam-configuration/settings';
 import { getConfigurationState } from '../../extensions/cam-configuration/store/configuration';
+import { CamfilShoppingBucketEmptyComponent } from '../basket/camfil-shopping-bucket-empty/camfil-shopping-bucket-empty.component';
 
 import { CamfilCheckoutBucketComponent } from './camfil-checkout-bucket/camfil-checkout-bucket.component';
 import { CamfilCheckoutGuestFormComponent } from './camfil-checkout-guest-form/camfil-checkout-guest-form.component';
@@ -122,6 +123,7 @@ describe('Camfil Checkout Page Component', () => {
         MockComponent(CamfilCheckoutSummaryComponent),
         MockComponent(CamfilCheckoutToolbarComponent),
         MockComponent(CamfilLoadingComponent),
+        MockComponent(CamfilShoppingBucketEmptyComponent),
         MockDirective(CamfilCheckoutGuestFormComponent),
         MockDirective(CamfilCheckoutPaymentComponent),
         MockDirective(CamfilErrorMessageComponent),
