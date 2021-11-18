@@ -1,7 +1,7 @@
-import { ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { isEqual } from 'lodash-es';
-import { combineLatest, Observable, Subject } from 'rxjs';
+import { Observable, Subject, combineLatest } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map, takeUntil, tap } from 'rxjs/operators';
 
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
@@ -39,7 +39,7 @@ export class CamfilCheckoutGuestFormComponent implements OnInit, OnDestroy {
 
   private destroy$ = new Subject();
 
-  constructor(private fb: FormBuilder, private checkoutFacade: CheckoutFacade, private cdRef: ChangeDetectorRef) {}
+  constructor(private fb: FormBuilder, private checkoutFacade: CheckoutFacade) {}
 
   ngOnInit() {
     this.anonymousBasketExtension$ = combineLatest([

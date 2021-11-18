@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { select, Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import { Observable, throwError } from 'rxjs';
 import { concatMap, first, map, mapTo, switchMap, withLatestFrom } from 'rxjs/operators';
 
@@ -120,25 +120,14 @@ export class AddressService {
     return this.getCountryISO3$.pipe(
       switchMap(getCountryISO3 => {
         const data = {
-          country: 'FIN',
+          country: countryCode.length === 2 ? getCountryISO3(countryCode) : countryCode,
           zipCode: code.replace(' ', ''),
         };
 
         return this.apiService.post<ZipCodeData[]>(`zipcodequery`, data).pipe(
           withLatestFrom(this.store.pipe(select(getCurrentLocale)), this.store.pipe(select(getCountryCodeByChannel))),
           map(([info, currentLocale, countryChannel]) =>
-            AddressMapper.zipCodefromData(
-              code,
-              info,
-              {
-                lang: 'fi_FI',
-                currency: 'EUR',
-                value: 'fi',
-                displayName: 'FI',
-                displayLong: 'Finland',
-              },
-              'FI'
-            )
+            AddressMapper.zipCodefromData(code, info, currentLocale, countryChannel)
           )
         );
       })
