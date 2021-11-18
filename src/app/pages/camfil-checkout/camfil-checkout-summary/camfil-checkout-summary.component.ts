@@ -1,13 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  OnInit,
-  Output,
-  ViewChild,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
@@ -19,9 +10,9 @@ import { AccountFacade } from 'ish-core/facades/account.facade';
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { BasketValidationResultType } from 'ish-core/models/basket-validation/basket-validation.model';
-import { BasketView } from 'ish-core/models/basket/basket.model';
 import { PriceHelper } from 'ish-core/models/price/price.helper';
 import { whenFalsy } from 'ish-core/utils/operators';
+import { CamfilBasketCostSummaryComponent } from 'ish-shared/components/basket/camfil-basket-cost-summary/camfil-basket-cost-summary.component';
 import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
 
 @Component({
@@ -30,10 +21,13 @@ import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfi
   styleUrls: ['./camfil-checkout-summary.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CamfilCheckoutSummaryComponent implements OnInit, OnChanges {
-  @Input() basket: BasketView;
+export class CamfilCheckoutSummaryComponent extends CamfilBasketCostSummaryComponent {
+  @Input() purchaseCurrency: string;
   @Input() isConfirmed;
+
   @Output() update = new EventEmitter();
+
+  @ViewChild(CamfilSmallCtaModalComponent) gdprErrorModal: CamfilSmallCtaModalComponent;
 
   bucketsVolumeDiscounts$: Observable<number>;
   validationResults$: Observable<BasketValidationResultType>;
@@ -42,24 +36,25 @@ export class CamfilCheckoutSummaryComponent implements OnInit, OnChanges {
   isLoggedIn$: Observable<boolean>;
 
   guestGdprForm: FormGroup;
-
-  @ViewChild(CamfilSmallCtaModalComponent) gdprErrorModal: CamfilSmallCtaModalComponent;
-
-  private isTracked = false;
+  checkIfZeroPrice = PriceHelper.checkIfZeroPrice;
 
   private destroy$ = new Subject();
 
   constructor(
+    protected accountFacade: AccountFacade,
     private checkoutFacade: CheckoutFacade,
     private shoppingFacade: ShoppingFacade,
-    private accountFacade: AccountFacade,
     private router: Router,
     private translate: TranslateService,
     private fb: FormBuilder,
     private dialog: MatDialog
-  ) {}
+  ) {
+    super(accountFacade);
+  }
 
-  ngOnInit() {
+  init() {
+    super.init();
+
     this.bucketsVolumeDiscounts$ = this.checkoutFacade.bucketsVolumeDiscounts$;
     this.validationResults$ = this.checkoutFacade.basketValidationResults$;
     this.productsReadyToPlaceOrder$ = this.shoppingFacade.productsReadyToPlaceOrder$;
@@ -67,15 +62,8 @@ export class CamfilCheckoutSummaryComponent implements OnInit, OnChanges {
     this.isLoggedIn$ = this.accountFacade.isLoggedIn$;
 
     this.isLoggedIn$.pipe(whenFalsy(), takeUntil(this.destroy$)).subscribe(() => {
-      this.createGuestGdprForm();
+      this.initGDPRForm();
     });
-  }
-
-  ngOnChanges() {
-    if (this.isConfirmed && !this.isTracked) {
-      this.checkoutFacade.trackPurchase(this.basket);
-      this.isTracked = true;
-    }
   }
 
   submitOrder() {
@@ -111,9 +99,10 @@ export class CamfilCheckoutSummaryComponent implements OnInit, OnChanges {
   private placeOrder() {
     this.checkErpEmployeeIdExists();
     this.checkoutFacade.continue(5);
+    // TODO (extMlk): Trigger this.checkoutFacade.trackPurchase(this.basket); when submitted;
   }
 
-  private createGuestGdprForm(): void {
+  private initGDPRForm(): void {
     const gdprAcceptanceDefaultValue = false;
 
     this.guestGdprForm = this.fb.group({

@@ -45,7 +45,6 @@
     <div cdkDropListGroup>
 
       <ng-container *ngIf="emptyBuckets$ | async as emptyBuckets">
-        <p>emptyBuckets$: {{emptyBuckets|json}}</p>
         <ng-container *ngFor="let emptyBucket of emptyBuckets; trackBy: trackByLineItems">
           <camfil-checkout-bucket
             [basket]="basket$ | async"
@@ -92,7 +91,8 @@
   <ng-container *ngIf="basket$ | async as basket">
     <div class="col-sm-12 col-lg-3">
       <camfil-checkout-summary
-        [basket]="basket"
+        [purchaseCurrency]="basket.purchaseCurrency"
+        [totals]="basket.totals"
         [isConfirmed]="isConfirmed"
       ></camfil-checkout-summary>
     </div>

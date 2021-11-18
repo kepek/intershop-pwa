@@ -900,7 +900,7 @@
   "camfil.checkout.phone": "Puhelinilmoitus",
   "camfil.checkout.place_your_orders": "Tee tilaus",
   "camfil.checkout.product.measurements.label": "Mitat",
-  "camfil.checkout.single_total_price_after": "Yhteensä (ilman ALV)",
+  "camfil.checkout.single_total_price_net": "Yhteensä (ilman ALV)",
   "camfil.checkout.tax.text": "ALV",
   "camfil.checkout.tax_amount": "ALV",
   "camfil.checkout.total_order_summary": "Tilauksen yhteenveto",

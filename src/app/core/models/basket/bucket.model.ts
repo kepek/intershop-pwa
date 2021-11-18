@@ -68,6 +68,7 @@ export interface EditBucket extends Bucket {
 
 export interface BucketSurcharge {
   amount: PriceItem;
+  description?: string;
   name: string;
   taxes?: Price[];
 }

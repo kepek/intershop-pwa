@@ -6,6 +6,7 @@ import { map } from 'rxjs/operators';
 
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { BasketFeedback, BasketFeedbackView } from 'ish-core/models/basket-feedback/basket-feedback.model';
+import { whenTruthy } from 'ish-core/utils/operators';
 import { BasketValidationResultsComponent } from 'ish-shared/components/basket/basket-validation-results/basket-validation-results.component';
 
 @Component({
@@ -25,7 +26,10 @@ export class CamfilBasketValidationResultsComponent extends BasketValidationResu
 
     this.deliveryDateErrorMessages$ = combineLatest([
       this.validationResults$.pipe(map(results => uniq<BasketFeedbackView>(results?.errors))),
-      this.checkoutFacade.buckets$.pipe(map(buckets => buckets.map(bucket => bucket.deliveryAddressId))),
+      this.checkoutFacade.buckets$.pipe(
+        whenTruthy(),
+        map(buckets => buckets.map(bucket => bucket.deliveryAddressId))
+      ),
     ]).pipe(
       map(([errors, bucketDeliveryAddressIds]) =>
         errors.filter(error => this.isDeliveryDateMessage(error, bucketDeliveryAddressIds))
