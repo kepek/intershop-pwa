@@ -2,6 +2,8 @@
 
 <br />
 
+<pre>isSubmitted$: {{isSubmitted$ | async}}</pre>
+
 <div class="checkout row">
   <div [ngClass]="{ 'col-lg-9': ((basket$ | async) || (submittedBasket$ | async)) }" class="col-sm-12">
     <div [ngClass]="{ 'header-divider-container': isSubmitted$ | async }">
@@ -26,7 +28,6 @@
       <camfil-checkout-guest-form
         (submit)="submitGuestCheckout($event)"
         [basket]="((basket$ | async) || (submittedBasket$ | async))"
-        [isSubmitted]="isSubmitted$ | async"
       ></camfil-checkout-guest-form>
       <camfil-checkout-payment
         (createPaymentInstrument)="createPaymentInstrument($event)"

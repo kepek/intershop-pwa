@@ -2,7 +2,13 @@ import { AddressMapper } from 'ish-core/models/address/address.mapper';
 import { BasketRebateData } from 'ish-core/models/basket-rebate/basket-rebate.interface';
 import { BasketRebateMapper } from 'ish-core/models/basket-rebate/basket-rebate.mapper';
 import { BasketTotal } from 'ish-core/models/basket-total/basket-total.model';
-import { BasketBaseData, BasketData, BasketExtension, GuestBasketData } from 'ish-core/models/basket/basket.interface';
+import {
+  BasketBaseData,
+  BasketData,
+  BasketExtension,
+  GuestBasket,
+  GuestBasketData,
+} from 'ish-core/models/basket/basket.interface';
 import { LineItemMapper } from 'ish-core/models/line-item/line-item.mapper';
 import { PaymentMapper } from 'ish-core/models/payment/payment.mapper';
 import { PriceItemMapper } from 'ish-core/models/price-item/price-item.mapper';
@@ -140,7 +146,7 @@ export class BasketMapper {
       : undefined;
   }
 
-  static getAnonymousBasket(data: GuestBasketData) {
+  static getAnonymousBasket(data: GuestBasketData): GuestBasket {
     const deliveryAddress = {
       streetAddress: data.dlvStreetAddress,
       zipCode: data.dlvZipCode,

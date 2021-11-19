@@ -1,0 +1,242 @@
+{
+  "name": "Filtres de ventilation générale",
+  "type": "Category",
+  "attributes": [{
+    "name": "ShowInMenu",
+    "type": "String",
+    "value": "True"
+  }],
+  "hasOnlineProducts": false,
+  "hasOnlineSubCategories": true,
+  "online": "1",
+  "description": "Nos filtres haute qualité et basse consommation d'énergie contribuent à protéger les personnes, process et produits contre les particules. Choisissez parmi une large gamme de filtres de conception et de classes de filtration différentes : de ePM10 à ePM1. Nos filtres sont conformes aux normes ISO 16890 et ASHRAE 52.2.",
+  "subCategoriesCount": 5,
+  "images": [{
+    "name": "default images",
+    "type": "Image",
+    "effectiveUrl": "https://www.camfil.com/product/assets/image/1129457/PC_Coarse_medium_fine_4_3.png",
+    "viewID": "default",
+    "typeID": "images",
+    "primaryImage": true
+  }],
+  "categoryPath": [{
+    "name": "Products",
+    "type": "CategoryPath",
+    "id": "Products",
+    "uri": "Camfil-CamfilFR-Site/rest;loc=fr_FR;cur=EUR/categories/Products"
+  }, {
+    "name": "Filtres de ventilation générale",
+    "type": "CategoryPath",
+    "id": "fake_45048",
+    "uri": "Camfil-CamfilFR-Site/rest;loc=fr_FR;cur=EUR/categories/Products/45048"
+  }],
+  "id": "fake_45048",
+  "categoryRef": "45048@Camfil-CamfilFR-Products",
+  "subCategories": [{
+    "name": "Découpe média",
+    "type": "Category",
+    "attributes": [{
+      "name": "ShowInMenu",
+      "type": "String",
+      "value": "True"
+    }],
+    "hasOnlineProducts": true,
+    "hasOnlineSubCategories": false,
+    "onlineProductsCountInSubCategories": 20,
+    "online": "1",
+    "description": "Les découpes et rouleaux de média peuvent être utilisés en tant que préfiltres dans les unités de traitement d'air et en tant que filtres dans les cabines de peinture et applications similaires.",
+    "images": [{
+      "name": "default images",
+      "type": "Image",
+      "effectiveUrl": "https://www.camfil.com/product/assets/image/90121/PT_Media-pads.png",
+      "viewID": "default",
+      "typeID": "images",
+      "primaryImage": true
+    }],
+    "categoryPath": [{
+      "name": "Products",
+      "type": "CategoryPath",
+      "id": "Products",
+      "uri": "Camfil-CamfilFR-Site/rest;loc=fr_FR;cur=EUR/categories/Products"
+    }, {
+      "name": "Filtres de ventilation générale",
+      "type": "CategoryPath",
+      "id": "fake_45048",
+      "uri": "Camfil-CamfilFR-Site/rest;loc=fr_FR;cur=EUR/categories/Products/45048"
+    }, {
+      "name": "Découpe média",
+      "type": "CategoryPath",
+      "id": "fake_45077",
+      "uri": "Camfil-CamfilFR-Site/rest;loc=fr_FR;cur=EUR/categories/Products/45048/45077"
+    }],
+    "id": "fake_45077",
+    "categoryRef": "45077@Camfil-CamfilFR-Products",
+    "uri": "Camfil-CamfilFR-Site/rest;loc=fr_FR;cur=EUR/categories/Products/45048/45077"
+  }, {
+    "name": "Filtres compacts (cadre à bride)",
+    "type": "Category",
+    "attributes": [{
+      "name": "ShowInMenu",
+      "type": "String",
+      "value": "True"
+    }],
+    "hasOnlineProducts": true,
+    "hasOnlineSubCategories": false,
+    "onlineProductsCountInSubCategories": 86,
+    "online": "1",
+    "description": "Ces filtres polydièdres à cadre à bride sont souvent utilisés en deuxième étage de filtration d'entrée d'air, soit en tant que dernier étage pour les applications industrielles, commerciales et résidentielles, soit en tant que second préfiltre dans les applications de salles propres.",
+    "images": [{
+      "name": "default images",
+      "type": "Image",
+      "effectiveUrl": "https://www.camfil.com/product/assets/image/89910/PT_Header-frame-filters.png",
+      "viewID": "default",
+      "typeID": "images",
+      "primaryImage": true
+    }],
+    "categoryPath": [{
+      "name": "Products",
+      "type": "CategoryPath",
+      "id": "Products",
+      "uri": "Camfil-CamfilFR-Site/rest;loc=fr_FR;cur=EUR/categories/Products"
+    }, {
+      "name": "Filtres de ventilation générale",
+      "type": "CategoryPath",
+      "id": "fake_45048",
+      "uri": "Camfil-CamfilFR-Site/rest;loc=fr_FR;cur=EUR/categories/Products/45048"
+    }, {
+      "name": "Filtres compacts (cadre à bride)",
+      "type": "CategoryPath",
+      "id": "fake_45051",
+      "uri": "Camfil-CamfilFR-Site/rest;loc=fr_FR;cur=EUR/categories/Products/45048/45051"
+    }],
+    "id": "fake_45051",
+    "categoryRef": "45051@Camfil-CamfilFR-Products",
+    "uri": "Camfil-CamfilFR-Site/rest;loc=fr_FR;cur=EUR/categories/Products/45048/45051"
+  }, {
+    "name": "Filtres compacts (type cellules)",
+    "type": "Category",
+    "attributes": [{
+      "name": "ShowInMenu",
+      "type": "String",
+      "value": "True"
+    }],
+    "hasOnlineProducts": true,
+    "hasOnlineSubCategories": false,
+    "onlineProductsCountInSubCategories": 7,
+    "online": "1",
+    "description": "Les filtres compacts sont des filtres à plis profonds ou polydièdres utilisés dans les applications nécessitant une bonne QAI et de hauts niveaux de confort et en tant que filtration préparatoire en salles propres.",
+    "images": [{
+      "name": "default images",
+      "type": "Image",
+      "effectiveUrl": "https://www.camfil.com/product/assets/image/89898/PT_Box-type-filters_120.png",
+      "viewID": "default",
+      "typeID": "images",
+      "primaryImage": true
+    }],
+    "categoryPath": [{
+      "name": "Products",
+      "type": "CategoryPath",
+      "id": "Products",
+      "uri": "Camfil-CamfilFR-Site/rest;loc=fr_FR;cur=EUR/categories/Products"
+    }, {
+      "name": "Filtres de ventilation générale",
+      "type": "CategoryPath",
+      "id": "fake_45048",
+      "uri": "Camfil-CamfilFR-Site/rest;loc=fr_FR;cur=EUR/categories/Products/45048"
+    }, {
+      "name": "Filtres compacts (type cellules)",
+      "type": "CategoryPath",
+      "id": "fake_45076",
+      "uri": "Camfil-CamfilFR-Site/rest;loc=fr_FR;cur=EUR/categories/Products/45048/45076"
+    }],
+    "id": "fake_45076",
+    "categoryRef": "45076@Camfil-CamfilFR-Products",
+    "uri": "Camfil-CamfilFR-Site/rest;loc=fr_FR;cur=EUR/categories/Products/45048/45076"
+  }, {
+    "name": "Filtres panneaux",
+    "type": "Category",
+    "attributes": [{
+      "name": "ShowInMenu",
+      "type": "String",
+      "value": "True"
+    }],
+    "hasOnlineProducts": true,
+    "hasOnlineSubCategories": false,
+    "onlineProductsCountInSubCategories": 202,
+    "online": "1",
+    "description": "Les filtres panneaux jouent un rôle important dans l'allongement de la durée de vie et la QAI des unités de traitement d'air des bâtiments résidentiels et commerciaux et dans les hôpitaux, ainsi qu'en tant qu'unité d'air neuf en salles propres. ",
+    "images": [{
+      "name": "default images",
+      "type": "Image",
+      "effectiveUrl": "https://www.camfil.com/product/assets/image/89893/PT_Panel-filters.png",
+      "viewID": "default",
+      "typeID": "images",
+      "primaryImage": true
+    }],
+    "categoryPath": [{
+      "name": "Products",
+      "type": "CategoryPath",
+      "id": "Products",
+      "uri": "Camfil-CamfilFR-Site/rest;loc=fr_FR;cur=EUR/categories/Products"
+    }, {
+      "name": "Filtres de ventilation générale",
+      "type": "CategoryPath",
+      "id": "fake_45048",
+      "uri": "Camfil-CamfilFR-Site/rest;loc=fr_FR;cur=EUR/categories/Products/45048"
+    }, {
+      "name": "Filtres panneaux",
+      "type": "CategoryPath",
+      "id": "fake_45050",
+      "uri": "Camfil-CamfilFR-Site/rest;loc=fr_FR;cur=EUR/categories/Products/45048/45050"
+    }],
+    "id": "fake_45050",
+    "categoryRef": "45050@Camfil-CamfilFR-Products",
+    "uri": "Camfil-CamfilFR-Site/rest;loc=fr_FR;cur=EUR/categories/Products/45048/45050"
+  }, {
+    "name": "Filtres à poches",
+    "type": "Category",
+    "attributes": [{
+      "name": "ShowInMenu",
+      "type": "String",
+      "value": "True"
+    }],
+    "hasOnlineProducts": true,
+    "hasOnlineSubCategories": false,
+    "onlineProductsCountInSubCategories": 172,
+    "online": "1",
+    "description": "Les filtres à poches sont utilisés en dernier étage dans les applications CVC industrielles, commerciales et résidentielles, et en tant que préfiltres dans les installations HEPA. ",
+    "images": [{
+      "name": "default images",
+      "type": "Image",
+      "effectiveUrl": "https://www.camfil.com/product/assets/image/89899/PT_Bag-filters.png",
+      "viewID": "default",
+      "typeID": "images",
+      "primaryImage": true
+    }],
+    "categoryPath": [{
+      "name": "Products",
+      "type": "CategoryPath",
+      "id": "Products",
+      "uri": "Camfil-CamfilFR-Site/rest;loc=fr_FR;cur=EUR/categories/Products"
+    }, {
+      "name": "Filtres de ventilation générale",
+      "type": "CategoryPath",
+      "id": "fake_45048",
+      "uri": "Camfil-CamfilFR-Site/rest;loc=fr_FR;cur=EUR/categories/Products/45048"
+    }, {
+      "name": "Filtres à poches",
+      "type": "CategoryPath",
+      "id": "fake_45049",
+      "uri": "Camfil-CamfilFR-Site/rest;loc=fr_FR;cur=EUR/categories/Products/45048/45049"
+    }],
+    "id": "fake_45049",
+    "categoryRef": "45049@Camfil-CamfilFR-Products",
+    "uri": "Camfil-CamfilFR-Site/rest;loc=fr_FR;cur=EUR/categories/Products/45048/45049"
+  }],
+  "uri": "Camfil-CamfilFR-Site/rest;loc=fr_FR;cur=EUR/categories/Products/45048",
+  "seoAttributes": {
+    "metaTitle": "Filtres de ventilation générale - Products",
+    "metaDescription": "Filtres de ventilation générale, Filtres à poches, Filtres compacts (type cellules), Découpe média, Screens d'entrée d'air, Filtres compacts (cadre à bride), Filtres panneaux, AccessoriesFiltres de ventilation généraleProducts",
+    "robots": ["index", "follow"]
+  }
+}

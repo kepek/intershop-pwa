@@ -226,8 +226,8 @@ export class DemoPageComponent extends CamAhuAbstractComponent implements AfterV
       });
 
     this.now = new Date();
-    this.product$ = this.shoppingFacade.product$('1004670', ProductCompletenessLevel.List);
-    this.category$ = this.shoppingFacade.category$('Products.45048.45050');
+    this.product$ = this.shoppingFacade.product$('fake_13450027', ProductCompletenessLevel.Detail);
+    this.category$ = this.shoppingFacade.category$('Products.fake_45048.fake_45050');
 
     this.category$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(category => {
       this.category = category;

@@ -1,0 +1,45 @@
+{
+  "name": "Filtres à poches",
+  "type": "Category",
+  "attributes": [{
+    "name": "ShowInMenu",
+    "type": "String",
+    "value": "True"
+  }],
+  "hasOnlineProducts": true,
+  "hasOnlineSubCategories": false,
+  "online": "1",
+  "description": "Les filtres à poches sont utilisés en dernier étage dans les applications CVC industrielles, commerciales et résidentielles, et en tant que préfiltres dans les installations HEPA. ",
+  "images": [{
+    "name": "default images",
+    "type": "Image",
+    "effectiveUrl": "https://www.camfil.com/product/assets/image/89899/PT_Bag-filters.png",
+    "viewID": "default",
+    "typeID": "images",
+    "primaryImage": true
+  }],
+  "categoryPath": [{
+    "name": "Products",
+    "type": "CategoryPath",
+    "id": "Products",
+    "uri": "Camfil-CamfilFR-Site/rest;loc=fr_FR;cur=EUR/categories/Products"
+  }, {
+    "name": "Filtres de ventilation générale",
+    "type": "CategoryPath",
+    "id": "fake_45048",
+    "uri": "Camfil-CamfilFR-Site/rest;loc=fr_FR;cur=EUR/categories/Products/45048"
+  }, {
+    "name": "Filtres à poches",
+    "type": "CategoryPath",
+    "id": "fake_45049",
+    "uri": "Camfil-CamfilFR-Site/rest;loc=fr_FR;cur=EUR/categories/Products/45048/45049"
+  }],
+  "id": "fake_45049",
+  "categoryRef": "45049@Camfil-CamfilFR-Products",
+  "uri": "Camfil-CamfilFR-Site/rest;loc=fr_FR;cur=EUR/categories/Products/45048/45049",
+  "seoAttributes": {
+    "metaTitle": "Filtres à poches - Filtres de ventilation générale",
+    "metaDescription": "Filtres à poches, Ce filtre à poches est équipé d'un média optimisé en fibre de verre pour atteindre une filtration ePM1 50% selon la norme ISO16890 tout en offrant une faible perte de charge initiale. Grâce au média filtrant optimisé et aux poches coniques, il est possible d'obtenir un équilibre optimal entre le coût et le coût total d'exploitation du filtre. Filtres à pochesFiltres de ventilation générale",
+    "robots": ["index", "follow"]
+  }
+}

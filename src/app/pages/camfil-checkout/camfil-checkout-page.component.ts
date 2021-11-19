@@ -2,7 +2,17 @@
 
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { combineLatest, Observable, Subject } from 'rxjs';
-import { distinctUntilChanged, filter, first, map, take, takeUntil, takeWhile, withLatestFrom } from 'rxjs/operators';
+import {
+  distinctUntilChanged,
+  filter,
+  first,
+  map,
+  startWith,
+  take,
+  takeUntil,
+  takeWhile,
+  withLatestFrom,
+} from 'rxjs/operators';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
@@ -63,7 +73,10 @@ export class CamfilCheckoutPageComponent implements OnInit, OnDestroy {
     this.submittedBuckets$ = this.checkoutFacade.submittedBuckets$;
     this.validationResults$ = this.checkoutFacade.basketValidationResults$;
 
-    this.isSubmitted$ = this.submittedBasket$.pipe(map(basket => !!basket));
+    this.isSubmitted$ = this.submittedBasket$.pipe(
+      startWith(false),
+      map(basket => !!basket)
+    );
 
     // because of editOrderForm
     this.camCardsFacade.customers$

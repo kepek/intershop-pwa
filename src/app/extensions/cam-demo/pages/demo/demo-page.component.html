@@ -151,109 +151,107 @@
   </div>
 </mat-sidenav-container>
 
-<ng-container *ngIf="category && product; else loading">
-  <ng-container *ngIf="product$ | async as product; else loading">
-    <mat-sidenav-container>
-      <mat-toolbar color="primary">
-        <span class="title">Camfil Demo</span>
-      </mat-toolbar>
-      <div class="demo-content">
-        <mat-card>
-          <mat-card-content>
-            <h2 class="example-h2">Date Formatting</h2>
-            <ul>
-              <li>{{ now | date }} <small>date</small></li>
-              <li>{{ now | camfilDate }} <small>camfilDate</small></li>
-              <li>{{ now | ishDate: 'shortDate' }} <small>ishDate 'shortDate'</small></li>
-              <li>{{ now | ishDate: 'mediumDate' }} <small>ishDate 'mediumDate'</small></li>
-              <li>{{ now | ishDate: 'mediumTime' }} <small>ishDate 'mediumTime'</small></li>
-              <li>{{ now | ishDate: 'fullDate' }} <small>ishDate 'fullDate'</small></li>
-              <li>{{ now | ishDate: 'YYYY-MM-dd' }} <small>ishDate 'YYYY-MM-dd'</small></li>
-              <li>{{ now | ishDate: 'dd-MM-YY' }} <small>ishDate 'dd-MM-YY'</small></li>
-            </ul>
-          </mat-card-content>
-        </mat-card>
-        <!-- CamfilProductId -->
-        <mat-card>
-          <mat-card-content>
-            <h2 class="example-h2">camfil-product-id</h2>
-            <camfil-product-id [product]="product"></camfil-product-id>
-          </mat-card-content>
-        </mat-card>
-        <!-- CamfilProductTitleComponent -->
-        <mat-card>
-          <mat-card-content>
-            <h2 class="example-h2">camfil-product-title</h2>
-            <camfil-product-title [category]="category" [product]="product"></camfil-product-title>
-          </mat-card-content>
-        </mat-card>
-        <!-- CamfilProductAttributeComponent -->
-        <mat-card>
-          <mat-card-content>
-            <h2 class="example-h2">camfil-product-attribute</h2>
-            <camfil-product-attribute
-              [name]="'camfil.product.your_price.label' | translate"
-              [value]="product.salePrice | ishPrice"
-            ></camfil-product-attribute>
-            |
-            <camfil-product-attribute
-              [name]="'camfil.product.id.label' | translate"
-              [value]="product.sku"
-            ></camfil-product-attribute>
-            |
-            <camfil-product-attribute
-              [name]="'camfil.product.dimensions.label' | translate"
-              [value]="product | camfilDimension"
-              identifier="dimensions"
-            ></camfil-product-attribute>
-          </mat-card-content>
-        </mat-card>
-        <mat-card>
-          <mat-card-content>
-            <h2 class="example-h2">camfil-product-inventory</h2>
-            <camfil-product-inventory [product]="product"></camfil-product-inventory>
-          </mat-card-content>
-        </mat-card>
-        <mat-card>
-          <mat-card-content>
-            <h2 class="example-h2">camfil-product-price</h2>
-            <camfil-product-price [product]="product"></camfil-product-price>
-          </mat-card-content>
-        </mat-card>
-        <mat-card>
-          <mat-card-content>
-            <h2 class="example-h2">camfil-product-quantity</h2>
-            <camfil-product-quantity
-              [allowZeroQuantity]="false"
-              [controlName]="quantityControlName"
-              [parentForm]="productItemForm"
-              [product]="product"
-              [quantityLabel]="'camfil.product.quantity.label' | translate"
-              [type]="'counter'"
-            ></camfil-product-quantity>
-            <hr />
-            <camfil-product-quantity
-              [allowZeroQuantity]="false"
-              [controlName]="quantityControlName"
-              [parentForm]="productItemForm"
-              [product]="product"
-              [quantityLabel]="'camfil.product.quantity.label' | translate"
-              [type]="'select'"
-            ></camfil-product-quantity>
-            <hr />
-            <camfil-product-quantity
-              [allowZeroQuantity]="false"
-              [controlName]="quantityControlName"
-              [parentForm]="productItemForm"
-              [product]="product"
-              [quantityLabel]="'camfil.product.quantity.label' | translate"
-              [type]="'input'"
-            ></camfil-product-quantity>
-          </mat-card-content>
-        </mat-card>
-      </div>
-    </mat-sidenav-container>
-  </ng-container>
+<ng-container *ngIf="product$ | async as product; else loading">
+  <mat-sidenav-container>
+    <mat-toolbar color="primary">
+      <span class="title">Camfil Demo</span>
+    </mat-toolbar>
+    <div class="demo-content">
+      <mat-card>
+        <mat-card-content>
+          <h2 class="example-h2">Date Formatting</h2>
+          <ul>
+            <li>{{ now | date }} <small>date</small></li>
+            <li>{{ now | camfilDate }} <small>camfilDate</small></li>
+            <li>{{ now | ishDate: 'shortDate' }} <small>ishDate 'shortDate'</small></li>
+            <li>{{ now | ishDate: 'mediumDate' }} <small>ishDate 'mediumDate'</small></li>
+            <li>{{ now | ishDate: 'mediumTime' }} <small>ishDate 'mediumTime'</small></li>
+            <li>{{ now | ishDate: 'fullDate' }} <small>ishDate 'fullDate'</small></li>
+            <li>{{ now | ishDate: 'YYYY-MM-dd' }} <small>ishDate 'YYYY-MM-dd'</small></li>
+            <li>{{ now | ishDate: 'dd-MM-YY' }} <small>ishDate 'dd-MM-YY'</small></li>
+          </ul>
+        </mat-card-content>
+      </mat-card>
+      <!-- CamfilProductId -->
+      <mat-card>
+        <mat-card-content>
+          <h2 class="example-h2">camfil-product-id</h2>
+          <camfil-product-id [product]="product"></camfil-product-id>
+        </mat-card-content>
+      </mat-card>
+      <!-- CamfilProductTitleComponent -->
+      <mat-card>
+        <mat-card-content>
+          <h2 class="example-h2">camfil-product-title</h2>
+          <camfil-product-title [product]="product"></camfil-product-title>
+        </mat-card-content>
+      </mat-card>
+      <!-- CamfilProductAttributeComponent -->
+      <mat-card>
+        <mat-card-content>
+          <h2 class="example-h2">camfil-product-attribute</h2>
+          <camfil-product-attribute
+            [name]="'camfil.product.your_price.label' | translate"
+            [value]="product.salePrice | ishPrice"
+          ></camfil-product-attribute>
+          |
+          <camfil-product-attribute
+            [name]="'camfil.product.id.label' | translate"
+            [value]="product.sku"
+          ></camfil-product-attribute>
+          |
+          <camfil-product-attribute
+            [name]="'camfil.product.dimensions.label' | translate"
+            [value]="product | camfilDimension"
+            identifier="dimensions"
+          ></camfil-product-attribute>
+        </mat-card-content>
+      </mat-card>
+      <mat-card>
+        <mat-card-content>
+          <h2 class="example-h2">camfil-product-inventory</h2>
+          <camfil-product-inventory [product]="product"></camfil-product-inventory>
+        </mat-card-content>
+      </mat-card>
+      <mat-card>
+        <mat-card-content>
+          <h2 class="example-h2">camfil-product-price</h2>
+          <camfil-product-price [product]="product"></camfil-product-price>
+        </mat-card-content>
+      </mat-card>
+      <mat-card>
+        <mat-card-content>
+          <h2 class="example-h2">camfil-product-quantity</h2>
+          <camfil-product-quantity
+            [allowZeroQuantity]="false"
+            [controlName]="quantityControlName"
+            [parentForm]="productItemForm"
+            [product]="product"
+            [quantityLabel]="'camfil.product.quantity.label' | translate"
+            [type]="'counter'"
+          ></camfil-product-quantity>
+          <hr />
+          <camfil-product-quantity
+            [allowZeroQuantity]="false"
+            [controlName]="quantityControlName"
+            [parentForm]="productItemForm"
+            [product]="product"
+            [quantityLabel]="'camfil.product.quantity.label' | translate"
+            [type]="'select'"
+          ></camfil-product-quantity>
+          <hr />
+          <camfil-product-quantity
+            [allowZeroQuantity]="false"
+            [controlName]="quantityControlName"
+            [parentForm]="productItemForm"
+            [product]="product"
+            [quantityLabel]="'camfil.product.quantity.label' | translate"
+            [type]="'input'"
+          ></camfil-product-quantity>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </mat-sidenav-container>
 </ng-container>
 
 <ng-template #loading> Loading Demo of Camfil Components...</ng-template>

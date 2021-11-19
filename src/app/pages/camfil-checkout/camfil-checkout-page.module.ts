@@ -25,6 +25,7 @@ import { CamfilPaymentConcardisDirectdebitComponent } from './camfil-payment-con
 import { CamfilCheckoutGuestFormComponent } from './camfil-checkout-guest-form/camfil-checkout-guest-form.component';
 import { CheckoutPaymentPageModule } from '../checkout-payment/checkout-payment-page.module';
 import { CamfilShoppingBucketEmptyComponent } from '../basket/camfil-shopping-bucket-empty/camfil-shopping-bucket-empty.component';
+import { CheckoutReceiptPageModule } from '../checkout-receipt/checkout-receipt-page.module';
 
 const camfilCheckoutPageRoutes: Routes = [
   {
@@ -32,8 +33,9 @@ const camfilCheckoutPageRoutes: Routes = [
     component: CamfilCheckoutPageComponent,
     children: [
       {
-        path: '**',
-        component: CamfilCheckoutPageComponent,
+        path: 'receipt',
+        data: { checkoutStep: 5 },
+        component: CheckoutReceiptPageModule.component,
       },
     ],
   },

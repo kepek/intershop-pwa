@@ -1,147 +1,144 @@
 <ng-container *ngIf="basket?.lineItems?.length">
 
-  <ng-container *ngIf="isSubmitted; else notConfirmedForm">
+  <ng-container *ngIf="isSubmitted$ | async; else notConfirmedForm">
     <!-- Your Details Confirmed -->
-
-    <mat-expansion-panel [expanded]="true">
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          {{ 'camfil.checkout.guest_form.your_details' | translate }}
-        </mat-panel-title>
-        <mat-panel-description>
-          <mat-icon svgIcon="profile-fab"></mat-icon>
-        </mat-panel-description>
-      </mat-expansion-panel-header>
-      <div class="form-group-container w-100">
-        <div class="row">
-          <div class="col-md-6">
-            <div class="guest-confirmed-value___container d-flex">
-              <dt class="col-6 p-0">{{ 'camfil.checkout.guest_form.first_name' | translate }}</dt>
-              <dd class="col-6 p-0 text-right text-break">
-                {{ anonymousBasketExtensionData?.firstName || '-' }}
-              </dd>
+    <ng-container *ngIf="guestBasket$ | async as guestBasket">
+      <mat-expansion-panel [expanded]="true">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            {{ 'camfil.checkout.guest_form.your_details' | translate }}
+          </mat-panel-title>
+          <mat-panel-description>
+            <mat-icon svgIcon="profile-fab"></mat-icon>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <div class="form-group-container w-100">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="guest-confirmed-value___container d-flex">
+                <dt class="col-6 p-0">{{ 'camfil.checkout.guest_form.first_name' | translate }}</dt>
+                <dd class="col-6 p-0 text-right text-break">
+                  {{ guestBasket?.userDetailsFormGroup?.firstName || '-' }}
+                </dd>
+              </div>
+              <div class="guest-confirmed-value___container d-flex">
+                <dt class="col-6 p-0">{{ 'camfil.checkout.guest_form.last_name' | translate }}</dt>
+                <dd class="col-6 p-0 text-right text-break">
+                  {{ guestBasket?.userDetailsFormGroup?.lastName || '-' }}
+                </dd>
+              </div>
+              <div class="guest-confirmed-value___container d-flex">
+                <dt class="col-6 p-0">{{ 'camfil.checkout.guest_form.email_address' | translate }}</dt>
+                <dd class="col-6 p-0 text-right text-break">
+                  {{ guestBasket?.userDetailsFormGroup?.email || '-' }}
+                </dd>
+              </div>
+              <div class="guest-confirmed-value___container d-flex">
+                <dt class="col-6 p-0">{{ 'camfil.checkout.guest_form.telephone_number' | translate }}</dt>
+                <dd class="col-6 p-0 text-right text-break">
+                  {{ guestBasket?.userDetailsFormGroup?.phone || '-' }}
+                </dd>
+              </div>
             </div>
-            <div class="guest-confirmed-value___container d-flex">
-              <dt class="col-6 p-0">{{ 'camfil.checkout.guest_form.last_name' | translate }}</dt>
-              <dd class="col-6 p-0 text-right text-break">
-                {{ anonymousBasketExtensionData?.lastName || '-' }}
-              </dd>
-            </div>
-            <div class="guest-confirmed-value___container d-flex">
-              <dt class="col-6 p-0">{{ 'camfil.checkout.guest_form.email_address' | translate }}</dt>
-              <dd class="col-6 p-0 text-right text-break">
-                {{ anonymousBasketExtensionData?.email || '-' }}
-              </dd>
-            </div>
-            <div class="guest-confirmed-value___container d-flex">
-              <dt class="col-6 p-0">{{ 'camfil.checkout.guest_form.telephone_number' | translate }}</dt>
-              <dd class="col-6 p-0 text-right text-break">
-                {{ anonymousBasketExtensionData?.phone || '-' }}
-              </dd>
-            </div>
-          </div>
-          <div class="col-md-6 col-border">
-            <div class="guest-confirmed-value___container d-flex">
-              <dt class="col-6 p-0">{{ 'camfil.checkout.guest_form.job_title' | translate }}</dt>
-              <dd class="col-6 p-0 text-right text-break">
-                {{ anonymousBasketExtensionData?.jobTitle || '-' }}
-              </dd>
-            </div>
-            <div class="guest-confirmed-value___container d-flex">
-              <dt class="col-6 p-0">{{ 'camfil.checkout.guest_form.company_name' | translate }}</dt>
-              <dd class="col-6 p-0 text-right text-break">
-                {{ anonymousBasketExtensionData?.companyName || '-' }}
-              </dd>
-            </div>
-            <div class="guest-confirmed-value___container d-flex">
-              <dt class="col-6 p-0">{{ 'camfil.checkout.guest_form.vat_number' | translate }}</dt>
-              <dd class="col-6 p-0 text-right text-break">
-                {{ anonymousBasketExtensionData?.vat || '-' }}
-              </dd>
-            </div>
-            <div class="guest-confirmed-value___container d-flex">
-              <dt class="col-6 p-0">{{ 'camfil.checkout.guest_form.siret_number' | translate }}</dt>
-              <dd class="col-6 p-0 text-right text-break">
-                {{ anonymousBasketExtensionData?.siret || '-' }}
-              </dd>
+            <div class="col-md-6 col-border">
+              <div class="guest-confirmed-value___container d-flex">
+                <dt class="col-6 p-0">{{ 'camfil.checkout.guest_form.job_title' | translate }}</dt>
+                <dd class="col-6 p-0 text-right text-break">
+                  {{ guestBasket?.userDetailsFormGroup?.jobTitle || '-' }}
+                </dd>
+              </div>
+              <div class="guest-confirmed-value___container d-flex">
+                <dt class="col-6 p-0">{{ 'camfil.checkout.guest_form.company_name' | translate }}</dt>
+                <dd class="col-6 p-0 text-right text-break">
+                  {{ guestBasket?.userDetailsFormGroup?.companyName || '-' }}
+                </dd>
+              </div>
+              <div class="guest-confirmed-value___container d-flex">
+                <dt class="col-6 p-0">{{ 'camfil.checkout.guest_form.vat_number' | translate }}</dt>
+                <dd class="col-6 p-0 text-right text-break">
+                  {{ guestBasket?.userDetailsFormGroup?.vat || '-' }}
+                </dd>
+              </div>
+              <div class="guest-confirmed-value___container d-flex">
+                <dt class="col-6 p-0">{{ 'camfil.checkout.guest_form.siret_number' | translate }}</dt>
+                <dd class="col-6 p-0 text-right text-break">
+                  {{ guestBasket?.userDetailsFormGroup?.siret || '-' }}
+                </dd>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </mat-expansion-panel>
+      </mat-expansion-panel>
 
-    <!-- Delivery Info  Confirmed -->
-
-    <mat-expansion-panel [expanded]="true">
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          {{ 'camfil.checkout.guest_form.delivery_info' | translate }}
-        </mat-panel-title>
-        <mat-panel-description>
-          <mat-icon svgIcon="delivery-time"></mat-icon>
-        </mat-panel-description>
-      </mat-expansion-panel-header>
-      <div class="form-group-container w-100">
-        <div class="row">
-          <div class="col-md-6">
-            <div class="guest-confirmed-value___container d-flex">
-              <dt class="col-6 p-0">{{ 'camfil.checkout.guest_form.street_address' | translate }}</dt>
-              <dd class="col-6 p-0 text-right text-break">
-                {{ anonymousBasketExtensionData?.streetAddress || '-' }}
-              </dd>
-            </div>
-            <div class="guest-confirmed-value___container d-flex">
-              <dt class="col-6 p-0">{{ 'camfil.checkout.guest_form.zip_code' | translate }}</dt>
-              <dd class="col-6 p-0 text-right text-break">
-                {{ anonymousBasketExtensionData?.zipCode || '-' }}
-              </dd>
-            </div>
-            <div class="guest-confirmed-value___container d-flex">
-              <dt class="col-6 p-0">{{ 'camfil.account.apply_form.city' | translate }}</dt>
-              <dd class="col-6 p-0 text-right text-break">
-                {{ anonymousBasketExtensionData?.city || '-' }}
-              </dd>
-            </div>
-            <div class="guest-confirmed-value___container d-flex">
-              <dt class="col-6 p-0">{{ 'camfil.account.cam_card.add_to_form.country' | translate }}</dt>
-              <dd class="col-6 p-0 text-right text-break">
-                {{ anonymousBasketExtensionData?.country || '-' }}
-              </dd>
+      <!-- Delivery Info  Confirmed -->
+      <mat-expansion-panel [expanded]="true">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            {{ 'camfil.checkout.guest_form.delivery_info' | translate }}
+          </mat-panel-title>
+          <mat-panel-description>
+            <mat-icon svgIcon="delivery-time"></mat-icon>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <div class="form-group-container w-100">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="guest-confirmed-value___container d-flex">
+                <dt class="col-6 p-0">{{ 'camfil.checkout.guest_form.street_address' | translate }}</dt>
+                <dd class="col-6 p-0 text-right text-break">
+                  {{ guestBasket?.deliveryInfoFromGroup?.streetAddress || '-' }}
+                </dd>
+              </div>
+              <div class="guest-confirmed-value___container d-flex">
+                <dt class="col-6 p-0">{{ 'camfil.checkout.guest_form.zip_code' | translate }}</dt>
+                <dd class="col-6 p-0 text-right text-break">
+                  {{ guestBasket?.deliveryInfoFromGroup?.zipCode || '-' }}
+                </dd>
+              </div>
+              <div class="guest-confirmed-value___container d-flex">
+                <dt class="col-6 p-0">{{ 'camfil.account.apply_form.city' | translate }}</dt>
+                <dd class="col-6 p-0 text-right text-break">
+                  {{ guestBasket?.deliveryInfoFromGroup?.city || '-' }}
+                </dd>
+              </div>
+              <div class="guest-confirmed-value___container d-flex">
+                <dt class="col-6 p-0">{{ 'camfil.account.cam_card.add_to_form.country' | translate }}</dt>
+                <dd class="col-6 p-0 text-right text-break">
+                  {{ guestBasket?.deliveryInfoFromGroup?.country || '-' }}
+                </dd>
             </div>
           </div>
           <div class="col-md-6 col-border">
             <div class="guest-confirmed-value___container d-flex">
               <dt class="col-6 p-0">{{ 'camfil.account.orderdetails.goods_mark.label' | translate }}</dt>
               <dd class="col-6 p-0 text-right text-break">
-                {{ anonymousBasketExtensionData?.boxLabel || '-' }}
+                {{ guestBasket?.deliveryInfoFromGroup?.boxLabel || '-' }}
               </dd>
             </div>
             <div class="guest-confirmed-value___container d-flex">
               <dt class="col-6 p-0">{{ 'camfil.checkout.guest_form.company_name' | translate }}</dt>
               <dd class="col-6 p-0 text-right text-break">
-                {{ anonymousBasketExtensionData?.invoiceMark || '-' }}
+                {{ guestBasket?.deliveryInfoFromGroup?.invoiceMark || '-' }}
               </dd>
             </div>
             <div class="guest-confirmed-value___container d-flex">
               <dt class="col-6 p-0">{{ 'camfil.checkout.guest_form.vat_number' | translate }}</dt>
               <dd class="col-6 p-0 text-right text-break">
-                {{ anonymousBasketExtensionData?.deliveryInfo || '-' }}
+                {{ guestBasket?.deliveryInfoFromGroup?.deliveryInfo || '-' }}
               </dd>
             </div>
             <div class="guest-confirmed-value___container d-flex">
               <dt class="col-6 p-0">{{ 'camfil.checkout.guest_form.siret_number' | translate }}</dt>
               <dd class="col-6 p-0 text-right text-break">
-                {{ anonymousBasketExtensionData?.customerNote || '-' }}
+                {{ guestBasket?.deliveryInfoFromGroup?.customerNote || '-' }}
               </dd>
             </div>
           </div>
+          </div>
         </div>
-      </div>
-    </mat-expansion-panel>
+      </mat-expansion-panel>
 
-    <!-- Delivery Info  Confirmed -->
-
-    <ng-container>
+      <!-- Invoice Info  Confirmed -->
       <mat-expansion-panel [expanded]="true">
         <mat-expansion-panel-header>
           <mat-panel-title>
@@ -157,25 +154,25 @@
               <div class="guest-confirmed-value___container d-flex">
                 <dt class="col-6 p-0">{{ 'camfil.checkout.guest_form.street_address' | translate }}</dt>
                 <dd class="col-6 p-0 text-right text-break">
-                  {{ anonymousBasketExtensionData?.invoiceStreetAddress || '-' }}
+                  {{ guestBasket?.invoiceAddressFormGroup?.streetAddress || '-' }}
                 </dd>
               </div>
               <div class="guest-confirmed-value___container d-flex">
                 <dt class="col-6 p-0">{{ 'camfil.checkout.guest_form.zip_code' | translate }}</dt>
                 <dd class="col-6 p-0 text-right text-break">
-                  {{ anonymousBasketExtensionData?.invoiceZipCode || '-' }}
+                  {{ guestBasket?.invoiceAddressFormGroup?.zipCode || '-' }}
                 </dd>
               </div>
               <div class="guest-confirmed-value___container d-flex">
                 <dt class="col-6 p-0">{{ 'camfil.account.apply_form.city' | translate }}</dt>
                 <dd class="col-6 p-0 text-right text-break">
-                  {{ anonymousBasketExtensionData?.invoiceCity || '-' }}
+                  {{ guestBasket?.invoiceAddressFormGroup?.city || '-' }}
                 </dd>
               </div>
               <div class="guest-confirmed-value___container d-flex">
                 <dt class="col-6 p-0">{{ 'camfil.account.cam_card.add_to_form.country' | translate }}</dt>
                 <dd class="col-6 p-0 text-right text-break">
-                  {{ anonymousBasketExtensionData?.invoiceCountry || '-' }}
+                  {{ guestBasket?.invoiceAddressFormGroup?.country || '-' }}
                 </dd>
               </div>
             </div>
@@ -362,7 +359,6 @@
                 </mat-form-field>
               </div>
               <mat-checkbox
-                (change)="toggleInvoiceAddressForm()"
                 class="example-margin"
                 color="primary"
                 formControlName="sameAddressAsInvoice"
@@ -417,8 +413,7 @@
 
       <!-- Invoice Address -->
 
-      <mat-expansion-panel *ngIf="showInvoiceAddressForm && guestForm.controls.invoiceAddressFormGroup"
-                           [expanded]="true">
+      <mat-expansion-panel *ngIf="showInvoiceAddressForm$ | async" [expanded]="true">
         <mat-expansion-panel-header>
           <mat-panel-title>
             {{ 'checkout.address.billing.label' | translate }}

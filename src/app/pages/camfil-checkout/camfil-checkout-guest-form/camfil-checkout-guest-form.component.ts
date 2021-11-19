@@ -1,11 +1,11 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { isEqual } from 'lodash-es';
-import { Observable, Subject, combineLatest } from 'rxjs';
-import { debounceTime, distinctUntilChanged, map, takeUntil, tap } from 'rxjs/operators';
+import { BehaviorSubject, combineLatest, Observable, Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged, map, startWith, takeUntil, tap } from 'rxjs/operators';
 
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
-import { GuestBasketData } from 'ish-core/models/basket/basket.interface';
+import { GuestBasket, GuestBasketData } from 'ish-core/models/basket/basket.interface';
 import { BasketMapper } from 'ish-core/models/basket/basket.mapper';
 import { Basket } from 'ish-core/models/basket/basket.model';
 import { whenTruthy } from 'ish-core/utils/operators';
@@ -23,16 +23,16 @@ export class CamfilCheckoutGuestFormComponent implements OnInit, OnDestroy {
   userDetailsFormGroup: FormGroup;
   deliveryInfoFromGroup: FormGroup;
   guestForm: FormGroup;
-  showInvoiceAddressForm = false;
-  submitted = false;
+  guestFormSubmitted = false;
   hideRequiredMarker = false;
   validators = GUEST_FORM_VALIDATORS;
 
-  anonymousBasketExtension$: Observable<GuestBasketData>;
+  guestBasket$: Observable<GuestBasket>;
   countryChangeDetect$: Subject<boolean> = new Subject();
+  showInvoiceAddressForm$ = new BehaviorSubject(false);
+  isSubmitted$: Observable<boolean>;
 
   @Input() basket: Basket;
-  @Input() isSubmitted: boolean;
   @Input() markRequiredLabel = true;
 
   @Output() submit = new EventEmitter<GuestBasketData>();
@@ -42,12 +42,18 @@ export class CamfilCheckoutGuestFormComponent implements OnInit, OnDestroy {
   constructor(private fb: FormBuilder, private checkoutFacade: CheckoutFacade) {}
 
   ngOnInit() {
-    this.anonymousBasketExtension$ = combineLatest([
+    this.isSubmitted$ = this.checkoutFacade.submittedAnonymousBasketExtension$.pipe(
+      startWith(false),
+      map(basketExtension => !!basketExtension)
+    );
+
+    this.guestBasket$ = combineLatest([
+      this.isSubmitted$,
       this.checkoutFacade.submittedAnonymousBasketExtension$,
       this.checkoutFacade.anonymousBasketExtension$,
     ]).pipe(
-      map(([submittedBasketExtension, anonymousBasektExtension]) =>
-        this.isSubmitted ? submittedBasketExtension : anonymousBasektExtension
+      map(([isSubmitted, submittedBasketExtension, anonymousBasektExtension]) =>
+        BasketMapper.getAnonymousBasket(isSubmitted ? submittedBasketExtension : anonymousBasektExtension)
       ),
       whenTruthy(),
       tap(() => {
@@ -55,53 +61,33 @@ export class CamfilCheckoutGuestFormComponent implements OnInit, OnDestroy {
       })
     );
 
-    this.anonymousBasketExtension$
+    this.guestBasket$
       .pipe(whenTruthy(), distinctUntilChanged(isEqual), takeUntil(this.destroy$))
-      .subscribe(value => {
-        this.patchGuestForm(BasketMapper.getAnonymousBasket(value));
+      .subscribe(guestBasket => {
+        this.patchGuestForm(guestBasket);
       });
   }
 
   toggleInvoiceAddressForm(value: boolean) {
-    this.showInvoiceAddressForm = !value;
+    this.showInvoiceAddressForm$.next(!value);
 
-    if (this.showInvoiceAddressForm) {
+    if (!value) {
       this.guestForm.get('invoiceAddressFormGroup').enable();
     } else {
       this.guestForm.get('invoiceAddressFormGroup').disable();
     }
   }
 
-  private initGuestForm() {
-    if (this.guestForm) {
+  submitGuestForm() {
+    if (this.guestForm.invalid) {
+      this.guestFormSubmitted = true;
+      markAsDirtyRecursive(this.guestForm);
       return;
     }
 
-    this.guestForm = this.fb.group({
-      userDetailsFormGroup: this.initUserDetailsForm(),
-      deliveryInfoFromGroup: this.initDeliveryInfoForm(),
-      invoiceAddressFormGroup: this.initInvoiceAddressForm(),
-    });
+    const anonymousBasketDataFromFormValues = BasketMapper.convertFormDataToAnonymousBasketData(this.guestForm.value);
 
-    this.guestForm.valueChanges
-      .pipe(
-        debounceTime(400),
-        whenTruthy(),
-        distinctUntilChanged(isEqual),
-        tap(x => console.log('x', x)),
-        takeUntil(this.destroy$)
-      )
-      .subscribe(() => {
-        this.submitGuestForm();
-      });
-
-    this.guestForm
-      ?.get('deliveryInfoFromGroup')
-      ?.get('sameAddressAsInvoice')
-      .valueChanges.pipe(takeUntil(this.destroy$))
-      .subscribe((value: boolean) => {
-        this.toggleInvoiceAddressForm(!!value);
-      });
+    this.submit.emit(anonymousBasketDataFromFormValues);
   }
 
   private initUserDetailsForm() {
@@ -140,23 +126,37 @@ export class CamfilCheckoutGuestFormComponent implements OnInit, OnDestroy {
     });
   }
 
-  submitGuestForm() {
-    if (this.guestForm.invalid) {
-      this.submitted = true;
-      markAsDirtyRecursive(this.guestForm);
+  private initGuestForm() {
+    if (this.guestForm) {
       return;
     }
 
-    const anonymousBasketDataFromFormValues = BasketMapper.convertFormDataToAnonymousBasketData(this.guestForm.value);
+    this.guestForm = this.fb.group({
+      userDetailsFormGroup: this.initUserDetailsForm(),
+      deliveryInfoFromGroup: this.initDeliveryInfoForm(),
+      invoiceAddressFormGroup: this.initInvoiceAddressForm(),
+    });
 
-    this.submit.emit(anonymousBasketDataFromFormValues);
+    this.guestForm.valueChanges
+      .pipe(debounceTime(800), whenTruthy(), distinctUntilChanged(isEqual), takeUntil(this.destroy$))
+      .subscribe(() => {
+        this.submitGuestForm();
+      });
+
+    this.guestForm
+      ?.get('deliveryInfoFromGroup')
+      ?.get('sameAddressAsInvoice')
+      .valueChanges.pipe(takeUntil(this.destroy$))
+      .subscribe((value: boolean) => {
+        this.toggleInvoiceAddressForm(!!value);
+      });
   }
 
   // tslint:disable-next-line:no-any
   private patchGuestForm(guestFormValues: any) {
     const { userDetailsFormGroup, deliveryInfoFromGroup, invoiceAddressFormGroup } = guestFormValues;
 
-    delete deliveryInfoFromGroup.sameAddressAsInvoice;
+    this.showInvoiceAddressForm$.next(!deliveryInfoFromGroup.sameAddressAsInvoice);
 
     this.guestForm.patchValue(
       {
