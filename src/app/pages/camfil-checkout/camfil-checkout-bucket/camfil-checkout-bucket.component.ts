@@ -86,7 +86,7 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
   focusedElementId: string;
   forceUpdateForm = false;
   hideRecipientButton = false;
-  itemSize = 90;
+  itemSize = 100;
 
   calendarExceptions$: Observable<[]>;
   emailRecipients$: Observable<string[]>;
@@ -210,7 +210,7 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
 
     this.deviceType$ = this.appFacade.deviceType$;
     this.deviceType$?.pipe(takeUntil(this.destroy$)).subscribe(deviceType => {
-      this.itemSize = deviceType === 'mobile' ? 255 : deviceType === 'tablet' ? 155 : 90;
+      this.itemSize = deviceType === 'mobile' ? 255 : deviceType === 'tablet' ? 155 : 100;
     });
   }
 
@@ -290,11 +290,11 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
     );
   }
 
-  changeViewportHeightOnBlur(type: string) {
+  changeViewportHeightOnBoxLabelChange(type: string) {
     const viewportElement = this.virtualScrollViewport?.elementRef?.nativeElement;
     if (viewportElement) {
       viewportElement.style.height =
-        type === 'increase' ? `${viewportElement.offsetHeight + 12}px` : `${viewportElement.offsetHeight - 12}px`;
+        type === 'increase' ? `${viewportElement.offsetHeight + 50}px` : `${viewportElement.offsetHeight - 50}px`;
     }
   }
 

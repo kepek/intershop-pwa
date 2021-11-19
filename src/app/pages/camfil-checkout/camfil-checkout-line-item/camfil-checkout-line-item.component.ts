@@ -23,6 +23,7 @@ import { AttributeHelper } from 'ish-core/models/attribute/attribute.helper';
 import { Attribute } from 'ish-core/models/attribute/attribute.model';
 import { LineItemUpdate } from 'ish-core/models/line-item-update/line-item-update.model';
 import { LineItem, LineItemView } from 'ish-core/models/line-item/line-item.model';
+import { MaxLengthFieldsValues } from 'ish-core/models/max-length-validator/max-length-fields-values';
 import { ProductView } from 'ish-core/models/product-view/product-view.model';
 import { ProductCompletenessLevel } from 'ish-core/models/product/product.model';
 import { CheckoutFocusedElement } from 'ish-core/models/scroll-info copy/checkout-focused-element.interface';
@@ -41,6 +42,7 @@ import { CamCardMeasurement } from '../../../extensions/cam-cards/models/cam-car
 })
 export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDestroy {
   private static REQUIRED_COMPLETENESS_LEVEL = ProductCompletenessLevel.List;
+  private maxLengthValues = MaxLengthFieldsValues;
   @ViewChild(CamfilSmallCtaModalComponent) modal: CamfilSmallCtaModalComponent;
   @ViewChild('autosize') autosize: CdkTextareaAutosize;
 
@@ -62,6 +64,7 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
   @Output() openDeleteModalAction = new EventEmitter();
   @Output() resizeLineItemOnBlur = new EventEmitter();
   @Output() addHeightToViewport = new EventEmitter<string>();
+  @Output() resizeLineItemOnBoxLabelChange = new EventEmitter();
 
   earliestDeliveryDate: Date;
   boxLabel: string;
@@ -75,6 +78,7 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
   addToCartQuantityControl: FormControl;
   boxLabelForm: FormGroup;
   isMobileView = false;
+  wasIncreased = false;
 
   private destroy$ = new Subject<void>();
   private sku$ = new ReplaySubject<string>(1);
@@ -197,9 +201,10 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
 
     if (ifLabel) {
       this.boxLabel = value as string;
-      this.boxLabel?.length > 28
-        ? this.resizeLineItemOnBlur.emit('increase')
-        : this.resizeLineItemOnBlur.emit('decrease');
+      if (this.boxLabel?.length === this.maxLengthValues.BoxLabel && this.wasIncreased) {
+        this.resizeLineItemOnBoxLabelChange.emit('decrease');
+        this.wasIncreased = false;
+      }
     } else {
       this.measurements[name] = value as number;
     }
@@ -273,6 +278,19 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
 
   setFocusedElement(target: HTMLDataElement) {
     this.checkoutFacade.setCheckoutFocusedElement(target.id);
+    const boxLabelLen = this.boxLabel?.length;
+    if (boxLabelLen === this.maxLengthValues.BoxLabel && !this.wasIncreased) {
+      this.resizeLineItemOnBoxLabelChange.emit('increase');
+      this.wasIncreased = true;
+    }
+  }
+
+  resizeLineItemOnLabelChange() {
+    const boxLabelLen = this.boxLabel?.length;
+    if (boxLabelLen === this.maxLengthValues.BoxLabel && !this.wasIncreased) {
+      this.resizeLineItemOnBoxLabelChange.emit('increase');
+      this.wasIncreased = true;
+    }
   }
 
   getBoxLabelValue() {

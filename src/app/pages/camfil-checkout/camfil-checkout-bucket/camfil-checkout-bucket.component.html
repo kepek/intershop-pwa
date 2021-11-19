@@ -292,7 +292,7 @@
     <mat-icon *ngIf="!isConfirmed" cdkDragHandle class="size-24 d-none d-md-block handle" svgIcon="move"></mat-icon>
     <camfil-checkout-line-item
       (openDeleteModalAction)="changeScrollIndex()"
-      (resizeLineItemOnBlur)="changeViewportHeightOnBlur($event)"
+      (resizeLineItemOnBoxLabelChange)="changeViewportHeightOnBoxLabelChange($event)"
       [basketId]="order?.basket"
       [bucketId]="order?.id"
       [deviceType]="deviceType$ | async"
