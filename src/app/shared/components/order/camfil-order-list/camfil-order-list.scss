@@ -64,6 +64,9 @@ table {
   td {
     word-break: break-word;
   }
+  .order-list-cell__divider {
+    padding-left: $space-detail-item-margin;
+  }
 }
 
 .search-container {

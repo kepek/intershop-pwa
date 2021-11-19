@@ -120,7 +120,7 @@
         <th *matHeaderCellDef mat-header-cell mat-sort-header>
           {{ 'account.orderlist.table.order_number' | translate }}
         </th>
-        <td *matCellDef="let order" mat-cell>{{ order.orderNumber || '---' }}</td>
+        <td *matCellDef="let order" mat-cell class="order-list-cell__divider">{{ order.orderNumber || '---' }}</td>
       </ng-container>
 
       <!-- Camfil Order No. Column -->
