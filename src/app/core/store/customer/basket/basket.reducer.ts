@@ -107,6 +107,7 @@ import {
   updateBasketPaymentSuccess,
   updateBasketShippingMethod,
   updateBucketFail,
+  updateBucketSuccess,
   updateConcardisCvcLastUpdated,
   updateConcardisCvcLastUpdatedFail,
   updateConcardisCvcLastUpdatedSuccess,
@@ -335,6 +336,7 @@ export const basketReducer = createReducer(
     removePromotionCodeFromBasketSuccess,
     setBasketAttributeSuccess,
     deleteBasketAttributeSuccess,
+    updateBucketSuccess,
     (state: BasketState) => ({
       ...state,
       validationResults: initialValidationResults,

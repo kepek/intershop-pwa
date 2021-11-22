@@ -25,9 +25,12 @@ import { CamCardsFacade } from '../../extensions/cam-cards/facades/cam-cards.fac
 import { PaymentMethod } from 'ish-core/models/payment-method/payment-method.model';
 import { HttpError } from 'ish-core/models/http-error/http-error.model';
 import { PaymentInstrument } from 'ish-core/models/payment-instrument/payment-instrument.model';
-import { BasketExtension, GuestBasketData } from 'ish-core/models/basket/basket.interface';
 import { whenTruthy } from 'ish-core/utils/operators';
 import { isEqual } from 'lodash-es';
+import {
+  BasketExtensionData,
+  BasketExtensionGuestData,
+} from 'ish-core/models/basket-extension/basket-extension.interface';
 
 @Component({
   templateUrl: './camfil-checkout-page.component.html',
@@ -142,7 +145,7 @@ export class CamfilCheckoutPageComponent implements OnInit, OnDestroy {
     this.checkoutFacade.continue(4);
   }
 
-  submitGuestCheckout(guestBucketAddressData: GuestBasketData) {
+  submitGuestCheckout(guestBucketAddressData: BasketExtensionGuestData) {
     combineLatest([
       this.isLoggedIn$,
       this.basket$.pipe(map(basket => basket?.id)),
@@ -154,13 +157,13 @@ export class CamfilCheckoutPageComponent implements OnInit, OnDestroy {
         takeUntil(this.destroy$)
       )
       .subscribe(([, basketId, bucket]) => {
-        const basketExtension: BasketExtension = {
+        const basketExtensionData: BasketExtensionData = {
           contactPerson: bucket?.contactPerson,
           customer: bucket?.customer,
-          anonymousBasketDataRO: guestBucketAddressData,
+          anonymousBasketData: guestBucketAddressData,
         };
 
-        this.shoppingFacade.updateBucket(basketId, bucket?.deliveryAddressId, basketExtension);
+        this.shoppingFacade.updateBucket(basketId, bucket?.deliveryAddressId, basketExtensionData);
       });
   }
 

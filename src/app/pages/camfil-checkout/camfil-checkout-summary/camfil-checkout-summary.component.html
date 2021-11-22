@@ -106,11 +106,13 @@
         </form>
       </ng-container>
       <button (click)="submitOrder()" [disabled]="!(canSubmitOrder$ | async)" color="primary" mat-flat-button>
-        <ng-container *ngIf="productsReadyToPlaceOrder$ | async as readyToOrder">
+        <ng-container *ngIf="canSubmitOrder$ | async as readyToOrder">
           <ng-template #notReadyToOrder>
+            A
             {{ 'camfil.checkout.wait_till_validation.button.text' | translate }}
           </ng-template>
           <ng-container *ngIf="readyToOrder; else notReadyToOrder">
+            B
             {{ 'camfil.checkout.place_your_orders' | translate }}
           </ng-container>
         </ng-container>

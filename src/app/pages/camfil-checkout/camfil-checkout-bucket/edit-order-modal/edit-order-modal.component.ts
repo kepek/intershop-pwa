@@ -5,7 +5,7 @@ import { Subject } from 'rxjs';
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { Address } from 'ish-core/models/address/address.model';
-import { BasketExtension } from 'ish-core/models/basket/basket.interface';
+import { BasketExtension } from 'ish-core/models/basket-extension/basket-extension.model';
 import { Bucket, EditBucket } from 'ish-core/models/basket/bucket.model';
 import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
 

@@ -153,13 +153,13 @@ export const getFailedCamCardName = createSelector(getBasketState, basket => bas
 export const getAnonymousBasketExtensions = createSelector(
   getBasketState,
   /* tslint:disable:no-string-literal */
-  basket => basket.basket?.basketExtensions?.[0]['anonymousBasketDataRO']
+  basket => basket.basket?.basketExtensions?.[0]?.guestBasket
 );
 
 export const getSubmittedAnonymousBasketExtensions = createSelector(
   getBasketState,
   /* tslint:disable:no-string-literal */
-  basket => basket.submittedBasket?.basketExtensions?.[0]['anonymousBasketDataRO']
+  basket => basket.submittedBasket?.basketExtensions?.[0]?.guestBasket
 );
 
 export const getSubmittedBuckets = createSelector(getBasketState, basket => basket.submittedBuckets);

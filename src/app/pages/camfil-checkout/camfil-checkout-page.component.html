@@ -2,8 +2,6 @@
 
 <br />
 
-<pre>isSubmitted$: {{isSubmitted$ | async}}</pre>
-
 <div class="checkout row">
   <div [ngClass]="{ 'col-lg-9': ((basket$ | async) || (submittedBasket$ | async)) }" class="col-sm-12">
     <div [ngClass]="{ 'header-divider-container': isSubmitted$ | async }">

@@ -1,5 +1,5 @@
 import { Address } from 'ish-core/models/address/address.model';
-import { BasketExtension } from 'ish-core/models/basket/basket.interface';
+import { BasketExtension } from 'ish-core/models/basket-extension/basket-extension.model';
 import { LineItemView } from 'ish-core/models/line-item/line-item.model';
 import { PriceItemData } from 'ish-core/models/price-item/price-item.interface';
 import { PriceItem } from 'ish-core/models/price-item/price-item.model';

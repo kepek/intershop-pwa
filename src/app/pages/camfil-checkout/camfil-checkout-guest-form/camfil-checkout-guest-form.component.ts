@@ -1,11 +1,12 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { isEqual } from 'lodash-es';
-import { BehaviorSubject, combineLatest, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, combineLatest } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map, startWith, takeUntil, tap } from 'rxjs/operators';
 
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
-import { GuestBasket, GuestBasketData } from 'ish-core/models/basket/basket.interface';
+import { BasketExtensionGuestData } from 'ish-core/models/basket-extension/basket-extension.interface';
+import { BasketExtensionGuestForm } from 'ish-core/models/basket-extension/basket-extension.model';
 import { BasketMapper } from 'ish-core/models/basket/basket.mapper';
 import { Basket } from 'ish-core/models/basket/basket.model';
 import { whenTruthy } from 'ish-core/utils/operators';
@@ -27,7 +28,7 @@ export class CamfilCheckoutGuestFormComponent implements OnInit, OnDestroy {
   hideRequiredMarker = false;
   validators = GUEST_FORM_VALIDATORS;
 
-  guestBasket$: Observable<GuestBasket>;
+  basketGuestForm$: Observable<BasketExtensionGuestForm>;
   countryChangeDetect$: Subject<boolean> = new Subject();
   showInvoiceAddressForm$ = new BehaviorSubject(false);
   isSubmitted$: Observable<boolean>;
@@ -35,7 +36,7 @@ export class CamfilCheckoutGuestFormComponent implements OnInit, OnDestroy {
   @Input() basket: Basket;
   @Input() markRequiredLabel = true;
 
-  @Output() submit = new EventEmitter<GuestBasketData>();
+  @Output() submit = new EventEmitter<BasketExtensionGuestData>();
 
   private destroy$ = new Subject();
 
@@ -47,13 +48,13 @@ export class CamfilCheckoutGuestFormComponent implements OnInit, OnDestroy {
       map(basketExtension => !!basketExtension)
     );
 
-    this.guestBasket$ = combineLatest([
+    this.basketGuestForm$ = combineLatest([
       this.isSubmitted$,
       this.checkoutFacade.submittedAnonymousBasketExtension$,
       this.checkoutFacade.anonymousBasketExtension$,
     ]).pipe(
-      map(([isSubmitted, submittedBasketExtension, anonymousBasektExtension]) =>
-        BasketMapper.getAnonymousBasket(isSubmitted ? submittedBasketExtension : anonymousBasektExtension)
+      map(([isSubmitted, submittedBasketExtension, anonymousBasketExtension]) =>
+        isSubmitted ? submittedBasketExtension : anonymousBasketExtension
       ),
       whenTruthy(),
       tap(() => {
@@ -61,7 +62,7 @@ export class CamfilCheckoutGuestFormComponent implements OnInit, OnDestroy {
       })
     );
 
-    this.guestBasket$
+    this.basketGuestForm$
       .pipe(whenTruthy(), distinctUntilChanged(isEqual), takeUntil(this.destroy$))
       .subscribe(guestBasket => {
         this.patchGuestForm(guestBasket);

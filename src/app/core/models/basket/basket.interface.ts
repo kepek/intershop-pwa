@@ -1,7 +1,7 @@
 import { AddressData } from 'ish-core/models/address/address.interface';
-import { Address } from 'ish-core/models/address/address.model';
 import { Attribute } from 'ish-core/models/attribute/attribute.model';
 import { BasketApproval } from 'ish-core/models/basket-approval/basket-approval.model';
+import { BasketExtension } from 'ish-core/models/basket-extension/basket-extension.model';
 import { BasketInfo } from 'ish-core/models/basket-info/basket-info.model';
 import { BasketRebateData } from 'ish-core/models/basket-rebate/basket-rebate.interface';
 import { BasketTotalData } from 'ish-core/models/basket-total/basket-total.interface';
@@ -11,8 +11,6 @@ import { PaymentMethodBaseData } from 'ish-core/models/payment-method/payment-me
 import { PaymentData } from 'ish-core/models/payment/payment.interface';
 import { PriceItemData } from 'ish-core/models/price-item/price-item.interface';
 import { ShippingMethodData } from 'ish-core/models/shipping-method/shipping-method.interface';
-
-import { CamCardContact, CamCardCustomer } from '../../../extensions/cam-cards/models/cam-card/cam-card.model';
 
 export interface BasketBaseData {
   id: string;
@@ -67,79 +65,4 @@ export interface BasketData {
     camfilProductLineItems?: { [id: string]: CamfilLineItemData };
   };
   infos?: BasketInfo[];
-}
-
-export interface BasketExtension {
-  type?: string;
-  name?: string;
-  customer?: CamCardCustomer;
-  contactPerson?: CamCardContact;
-  info?: string;
-  phoneNumber?: string;
-  isPartial?: boolean;
-  orderMark?: string;
-  invoiceLabel?: string;
-  deliveryAddress?: Address;
-  shippingAddress?: Address;
-  invoiceAddress?: Address;
-  deliveryDate?: string;
-  isPartialDelivery?: boolean;
-  createdFromCamCardId?: string;
-  emailRecipients?: string[];
-  volumeDiscount?: number;
-  // Additional for France
-  anonymousBasketDataRO?: GuestBasketData;
-}
-
-export interface GuestBasketData {
-  firstName: string;
-  lastName: string;
-  emailAddress: string;
-  phoneNumber: string;
-  dlvGoodsMark?: string;
-  dlvInvoiceMark?: string;
-  companyName?: string;
-  vatNumber?: string;
-  siretNumber?: string;
-  jobTitle?: string;
-  dlvInfo?: string;
-  dlvNote?: string;
-  dlvStreetAddress: string;
-  dlvZipCode: string;
-  dlvCity: string;
-  dlvCountry: string;
-  invStreetAddress?: string;
-  invZipCode?: string;
-  invCity?: string;
-  invCountry?: string;
-}
-
-export interface GuestBasket {
-  userDetailsFormGroup: {
-    firstName: string;
-    lastName: string;
-    email: string;
-    phone: string;
-    siret: string;
-    companyName: string;
-    jobTitle: string;
-    vat: string;
-  };
-  deliveryInfoFromGroup: {
-    boxLabel: string;
-    invoiceMark: string;
-    deliveryInfo: string;
-    customerNote: string;
-    streetAddress: string;
-    zipCode: string;
-    city: string;
-    country: string;
-    sameAddressAsInvoice: boolean;
-  };
-  invoiceAddressFormGroup: {
-    streetAddress: string;
-    zipCode: string;
-    city: string;
-    country: string;
-  };
 }

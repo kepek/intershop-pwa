@@ -23,6 +23,7 @@ import { loginUserSuccess } from 'ish-core/store/customer/user';
 import { makeHttpError } from 'ish-core/utils/dev/api-service-utils';
 import { BasketMockData } from 'ish-core/utils/dev/basket-mock-data';
 import { routerTestNavigatedAction } from 'ish-core/utils/dev/routing';
+import { FeatureToggleService } from 'ish-core/utils/feature-toggle/feature-toggle.service';
 
 import {
   createOrder,
@@ -45,6 +46,7 @@ describe('Orders Effects', () => {
   let actions$: Observable<Action>;
   let effects: OrdersEffects;
   let orderServiceMock: OrderService;
+  let featureToggleServiceMock: FeatureToggleService;
   let store$: Store;
   let location: Location;
   let router: Router;
@@ -60,6 +62,9 @@ describe('Orders Effects', () => {
     when(orderServiceMock.getOrders()).thenReturn(of(orders));
     when(orderServiceMock.getOrder(anyString())).thenReturn(of(order));
     when(orderServiceMock.getOrderByToken(anyString(), anyString())).thenReturn(of(order));
+
+    featureToggleServiceMock = mock(FeatureToggleService);
+    when(featureToggleServiceMock.enabled('feature1')).thenReturn(true);
 
     TestBed.configureTestingModule({
       declarations: [DummyComponent],
@@ -83,6 +88,7 @@ describe('Orders Effects', () => {
         OrdersEffects,
         provideMockActions(() => actions$),
         { provide: OrderService, useFactory: () => instance(orderServiceMock) },
+        { provide: FeatureToggleService, useFactory: () => instance(featureToggleServiceMock) },
       ],
     });
 
@@ -137,7 +143,7 @@ describe('Orders Effects', () => {
   });
 
   describe('continueAfterOrderCreation', () => {
-    xit('should navigate to /checkout/receipt after CreateOrderSuccess if there is no redirect required', fakeAsync(() => {
+    it('should navigate to /checkout/receipt after CreateOrderSuccess if there is no redirect required', fakeAsync(() => {
       const action = createOrderSuccess({ order: { id: '123' } as Order });
       actions$ = of(action);
 

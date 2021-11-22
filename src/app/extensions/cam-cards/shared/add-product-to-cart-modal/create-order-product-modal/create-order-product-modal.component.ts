@@ -20,7 +20,7 @@ import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { AddressHelper } from 'ish-core/models/address/address.helper';
 import { Address } from 'ish-core/models/address/address.model';
 import { AttributeHelper } from 'ish-core/models/attribute/attribute.helper';
-import { BasketExtension } from 'ish-core/models/basket/basket.interface';
+import { BasketExtension } from 'ish-core/models/basket-extension/basket-extension.model';
 import { BasketView } from 'ish-core/models/basket/basket.model';
 import { Bucket } from 'ish-core/models/basket/bucket.model';
 import { Product, ProductHelper } from 'ish-core/models/product/product.model';

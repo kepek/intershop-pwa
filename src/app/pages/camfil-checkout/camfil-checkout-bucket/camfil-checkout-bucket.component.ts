@@ -20,7 +20,6 @@ import { first, skip, take, takeUntil } from 'rxjs/operators';
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { AttributeHelper } from 'ish-core/models/attribute/attribute.helper';
-import { BasketExtension, GuestBasketData } from 'ish-core/models/basket/basket.interface';
 import { Bucket } from 'ish-core/models/basket/bucket.model';
 import { CustomerDeliveryTerm } from 'ish-core/models/customer/customer.interface';
 import { LineItemData } from 'ish-core/models/line-item/line-item.interface';
@@ -44,6 +43,11 @@ import { AppFacade } from 'ish-core/facades/app.facade';
 import { Channel } from 'ish-core/models/channel/channel.types';
 import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
 import { AccountFacade } from 'ish-core/facades/account.facade';
+import {
+  BasketExtensionData,
+  BasketExtensionGuestData,
+} from 'ish-core/models/basket-extension/basket-extension.interface';
+import { BasketExtension } from 'ish-core/models/basket-extension/basket-extension.model';
 
 @Component({
   selector: 'camfil-checkout-bucket',
@@ -327,7 +331,7 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
     if (!formField.errors) {
       const { basket, deliveryAddressId } = this.order;
 
-      const updated: BasketExtension = {
+      const updated: BasketExtensionData = {
         ...this.currentBasketExtensions,
         [field]: formField.value,
       };
@@ -336,11 +340,11 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
     }
   }
 
-  submitGuestCheckout(guestBucketAddressData: GuestBasketData) {
+  submitGuestCheckout(guestBucketAddressData: BasketExtensionGuestData) {
     const { basket, deliveryAddressId } = this.order;
-    const updated: BasketExtension = {
+    const updated: BasketExtensionData = {
       ...this.currentBasketExtensions,
-      anonymousBasketExtensionData: guestBucketAddressData,
+      anonymousBasketData: guestBucketAddressData,
     };
 
     this.shoppingFacade.updateBucket(basket, deliveryAddressId, updated);
@@ -654,7 +658,7 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
     const updatedRecipients = this.emailRecipients.filter(er => er !== recipient);
 
     const { basket, deliveryAddressId } = this.order;
-    const basketExtensionUpdate: BasketExtension = {
+    const basketExtensionUpdate: BasketExtensionData = {
       ...this.order,
       ...this.currentBasketExtensions,
       emailRecipients: updatedRecipients,

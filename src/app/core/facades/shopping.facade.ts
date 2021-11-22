@@ -7,7 +7,6 @@ import { debounce, filter, map, switchMap, tap } from 'rxjs/operators';
 
 import { Address } from 'ish-core/models/address/address.model';
 import { Attribute } from 'ish-core/models/attribute/attribute.model';
-import { BasketExtension } from 'ish-core/models/basket/basket.interface';
 import { CategoryHelper } from 'ish-core/models/category/category.helper';
 import { ProductListingID } from 'ish-core/models/product-listing/product-listing.model';
 import { ProductCompletenessLevel, ProductHelper } from 'ish-core/models/product/product.model';
@@ -87,6 +86,8 @@ import { toObservable } from 'ish-core/utils/functions';
 import { whenFalsy, whenTruthy } from 'ish-core/utils/operators';
 
 import { CamCamProductsAddToCartItems } from '../../extensions/cam-cards/models/cam-card/cam-card.model';
+import { BasketExtension } from 'ish-core/models/basket-extension/basket-extension.model';
+import { BasketExtensionData } from 'ish-core/models/basket-extension/basket-extension.interface';
 
 // tslint:disable:member-ordering
 @Injectable({ providedIn: 'root' })
@@ -252,7 +253,7 @@ export class ShoppingFacade {
     this.store.dispatch(addProductToBasket({ sku, quantity, shippingMethod, shipToAddress, lineItemAttributes }));
   }
 
-  updateBucket(basketId: string, addressId: string, basketExtension: BasketExtension, address?: Address) {
+  updateBucket(basketId: string, addressId: string, basketExtension: BasketExtensionData, address?: Address) {
     this.store.dispatch(
       updateBucket({
         basketId,

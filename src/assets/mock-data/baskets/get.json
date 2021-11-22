@@ -158,7 +158,7 @@
           "acceptanceTimes": {
             "type": "AcceptanceTimesRO"
           },
-          "anonymousBasketDataRO": {
+          "anonymousBasketData": {
             "type": "AnonymousBasketDataRO"
           }
         }

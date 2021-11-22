@@ -1,15 +1,12 @@
 import { Params } from '@angular/router';
 import { createAction } from '@ngrx/store';
-import {
-  CamCamProductChecked,
-  CamCamProductsAddToCartItems,
-} from 'src/app/extensions/cam-cards/models/cam-card/cam-card.model';
 
 import { Address } from 'ish-core/models/address/address.model';
 import { Attribute } from 'ish-core/models/attribute/attribute.model';
+import { BasketExtensionData } from 'ish-core/models/basket-extension/basket-extension.interface';
+import { BasketExtension } from 'ish-core/models/basket-extension/basket-extension.model';
 import { BasketInfo } from 'ish-core/models/basket-info/basket-info.model';
 import { BasketValidation, BasketValidationScopeType } from 'ish-core/models/basket-validation/basket-validation.model';
-import { BasketExtension } from 'ish-core/models/basket/basket.interface';
 import { Basket } from 'ish-core/models/basket/basket.model';
 import { Bucket } from 'ish-core/models/basket/bucket.model';
 import { CustomerDeliveryTerm } from 'ish-core/models/customer/customer.interface';
@@ -21,6 +18,11 @@ import { PaymentMethod } from 'ish-core/models/payment-method/payment-method.mod
 import { ShippingMethod } from 'ish-core/models/shipping-method/shipping-method.model';
 import { BasketUpdateType } from 'ish-core/services/basket/basket.service';
 import { httpError, payload } from 'ish-core/utils/ngrx-creators';
+
+import {
+  CamCamProductChecked,
+  CamCamProductsAddToCartItems,
+} from '../../../../extensions/cam-cards/models/cam-card/cam-card.model';
 
 export const loadBasket = createAction('[Basket Internal] Load Basket');
 
@@ -136,7 +138,7 @@ export const updateBucket = createAction(
   payload<{
     basketId: string;
     addressId: string;
-    basketExtension: BasketExtension;
+    basketExtension: BasketExtensionData;
     address?: Address;
   }>()
 );

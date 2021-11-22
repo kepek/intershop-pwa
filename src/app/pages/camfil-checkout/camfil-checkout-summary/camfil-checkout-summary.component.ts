@@ -99,7 +99,6 @@ export class CamfilCheckoutSummaryComponent extends CamfilBasketCostSummaryCompo
   private placeOrder() {
     this.checkErpEmployeeIdExists();
     this.checkoutFacade.continue(5);
-    // TODO (extMlk): Trigger this.checkoutFacade.trackPurchase(this.basket); when submitted;
   }
 
   private initGDPRForm(): void {

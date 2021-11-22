@@ -6,7 +6,6 @@ import { map, switchMap, take, tap } from 'rxjs/operators';
 import { Address } from 'ish-core/models/address/address.model';
 import { Attribute } from 'ish-core/models/attribute/attribute.model';
 import { BasketValidationScopeType } from 'ish-core/models/basket-validation/basket-validation.model';
-import { BasketView } from 'ish-core/models/basket/basket.model';
 import { Bucket } from 'ish-core/models/basket/bucket.model';
 import { LineItemUpdate } from 'ish-core/models/line-item-update/line-item-update.model';
 import { LineItem } from 'ish-core/models/line-item/line-item.model';
@@ -79,8 +78,6 @@ import { getLoggedInUser } from 'ish-core/store/customer/user';
 import { getServerConfigParameter } from 'ish-core/store/general/server-config';
 import { whenTruthy } from 'ish-core/utils/operators';
 
-import { TrackingService } from '../../extensions/tracking/services/tracking.service';
-
 // tslint:disable:member-ordering
 @Injectable({ providedIn: 'root' })
 export class CheckoutFacade {
@@ -135,7 +132,7 @@ export class CheckoutFacade {
   private ordersError$ = this.store.pipe(select(getOrdersError));
   basketOrOrdersError$ = merge(this.basketError$, this.ordersError$);
 
-  constructor(private store: Store, private tracking: TrackingService) {}
+  constructor(private store: Store) {}
 
   start() {
     this.store.dispatch(startCheckout());
@@ -299,10 +296,6 @@ export class CheckoutFacade {
 
   getWarehouseCalendar() {
     this.store.dispatch(getWarehouseCalendar());
-  }
-
-  trackPurchase(basket: BasketView) {
-    this.tracking.trackPurchase(basket);
   }
 
   setCheckoutFocusedElement(elementId: string) {

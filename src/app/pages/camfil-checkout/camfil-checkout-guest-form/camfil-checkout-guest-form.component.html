@@ -2,7 +2,7 @@
 
   <ng-container *ngIf="isSubmitted$ | async; else notConfirmedForm">
     <!-- Your Details Confirmed -->
-    <ng-container *ngIf="guestBasket$ | async as guestBasket">
+    <ng-container *ngIf="basketGuestForm$ | async as guestBasket">
       <mat-expansion-panel [expanded]="true">
         <mat-expansion-panel-header>
           <mat-panel-title>

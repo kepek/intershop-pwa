@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MockComponent } from 'ng-mocks';
-import { instance, mock } from 'ts-mockito';
+import { of } from 'rxjs';
+import { instance, mock, when } from 'ts-mockito';
 
 import { CamfilMaxLengthAttributeCreateDirective } from 'ish-core/directives/camfil-max-length-attribute-create.directive';
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
@@ -36,6 +37,9 @@ describe('Camfil Checkout Guest Form Component', () => {
   });
 
   beforeEach(() => {
+    when(checkoutFacadeMock.submittedAnonymousBasketExtension$).thenReturn(of(undefined));
+    when(checkoutFacadeMock.anonymousBasketExtension$).thenReturn(of(undefined));
+
     fixture = TestBed.createComponent(CamfilCheckoutGuestFormComponent);
     component = fixture.componentInstance;
     element = fixture.nativeElement;

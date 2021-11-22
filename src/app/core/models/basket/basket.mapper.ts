@@ -1,14 +1,14 @@
 import { AddressMapper } from 'ish-core/models/address/address.mapper';
+import {
+  BasketExtensionData,
+  BasketExtensionGuestData,
+} from 'ish-core/models/basket-extension/basket-extension.interface';
+import { BasketExtensionMapper } from 'ish-core/models/basket-extension/basket-extension.mapper';
+import { BasketExtension, BasketExtensionGuestForm } from 'ish-core/models/basket-extension/basket-extension.model';
 import { BasketRebateData } from 'ish-core/models/basket-rebate/basket-rebate.interface';
 import { BasketRebateMapper } from 'ish-core/models/basket-rebate/basket-rebate.mapper';
 import { BasketTotal } from 'ish-core/models/basket-total/basket-total.model';
-import {
-  BasketBaseData,
-  BasketData,
-  BasketExtension,
-  GuestBasket,
-  GuestBasketData,
-} from 'ish-core/models/basket/basket.interface';
+import { BasketBaseData, BasketData } from 'ish-core/models/basket/basket.interface';
 import { LineItemMapper } from 'ish-core/models/line-item/line-item.mapper';
 import { PaymentMapper } from 'ish-core/models/payment/payment.mapper';
 import { PriceItemMapper } from 'ish-core/models/price-item/price-item.mapper';
@@ -146,60 +146,7 @@ export class BasketMapper {
       : undefined;
   }
 
-  static getAnonymousBasket(data: GuestBasketData): GuestBasket {
-    const deliveryAddress = {
-      streetAddress: data.dlvStreetAddress,
-      zipCode: data.dlvZipCode,
-      city: data.dlvCity,
-      country: data.dlvCountry,
-    };
-    const invoiceAddress = {
-      streetAddress: data.invStreetAddress,
-      zipCode: data.invZipCode,
-      city: data.invCity,
-      country: data.invCountry,
-    };
-    return {
-      userDetailsFormGroup: {
-        firstName: data.firstName,
-        lastName: data.lastName,
-        email: data.emailAddress,
-        phone: data.phoneNumber,
-        siret: data.siretNumber,
-        companyName: data.companyName,
-        jobTitle: data.jobTitle,
-        vat: data.vatNumber,
-      },
-      deliveryInfoFromGroup: {
-        boxLabel: data.dlvGoodsMark,
-        invoiceMark: data.dlvInvoiceMark,
-        deliveryInfo: data.dlvInfo,
-        customerNote: data.dlvNote,
-        streetAddress: data.dlvStreetAddress,
-        zipCode: data.dlvZipCode,
-        city: data.dlvCity,
-        country: data.dlvCountry,
-        sameAddressAsInvoice: BasketMapper.compareAddressFormGroups(deliveryAddress, invoiceAddress),
-      },
-      invoiceAddressFormGroup: {
-        streetAddress: data.invStreetAddress,
-        zipCode: data.invZipCode,
-        city: data.invCity,
-        country: data.invCountry,
-      },
-    };
-  }
-
-  static compareAddressFormGroups(deliveryAddress, invoiceAddress): boolean {
-    return (
-      deliveryAddress.streetAddress === invoiceAddress.streetAddress &&
-      deliveryAddress.zipCode === invoiceAddress.zipCode &&
-      deliveryAddress.city === invoiceAddress.city &&
-      deliveryAddress.country === invoiceAddress.country
-    );
-  }
-
-  static convertFormDataToAnonymousBasketData(data): GuestBasketData {
+  static convertFormDataToAnonymousBasketData(data: BasketExtensionGuestForm): BasketExtensionGuestData {
     const { userDetailsFormGroup, deliveryInfoFromGroup, invoiceAddressFormGroup } = data;
     const sameAsDelivery = deliveryInfoFromGroup.sameAddressAsInvoice;
     return {
@@ -226,13 +173,14 @@ export class BasketMapper {
     };
   }
 
-  static getBasketExtensions(data: BasketExtension[]): BasketExtension[] {
+  static getBasketExtensions(data: BasketExtensionData[]): BasketExtension[] {
     const basketExtensions = data
       ?.map(extension => {
         delete extension.type;
         return Object.keys(extension)?.length ? extension : undefined;
       })
-      .filter(Boolean);
+      .filter(Boolean)
+      .map(BasketExtensionMapper.fromData);
 
     return basketExtensions?.length ? basketExtensions : undefined;
   }

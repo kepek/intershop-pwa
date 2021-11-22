@@ -101,12 +101,14 @@ export class BasketValidationEffects {
       })
     )
   );
+  // tslint:disable-next-line:force-jsdoc-comments
+  // Note: due to fact that Camilf's are using `one-step` checkout we need to validate "All" no matter what.
   private validationSteps: { scopes: BasketValidationScopeType[]; route: string }[] = [
-    { scopes: ['Products', 'Value', 'Camfil'], route: '/checkout' },
-    { scopes: ['InvoiceAddress', 'ShippingAddress', 'Addresses'], route: '/checkout' },
-    { scopes: ['Shipping'], route: '/checkout/shipping' },
-    { scopes: ['Payment'], route: '/checkout/payment' },
-    { scopes: ['Products', 'Value', 'Camfil'], route: '/checkout' },
+    { scopes: ['All'], route: '/checkout' },
+    { scopes: ['All'], route: '/checkout' },
+    { scopes: ['All'], route: '/checkout/shipping' },
+    { scopes: ['All'], route: '/checkout/payment' },
+    { scopes: ['All'], route: '/checkout' },
     { scopes: ['All'], route: 'auto' }, // targetRoute will be calculated in dependence of the validation result
   ];
   /**

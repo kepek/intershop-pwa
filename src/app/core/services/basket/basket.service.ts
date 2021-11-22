@@ -8,6 +8,8 @@ import { AppFacade } from 'ish-core/facades/app.facade';
 import { AddressMapper } from 'ish-core/models/address/address.mapper';
 import { Address } from 'ish-core/models/address/address.model';
 import { Attribute } from 'ish-core/models/attribute/attribute.model';
+import { BasketExtensionData } from 'ish-core/models/basket-extension/basket-extension.interface';
+import { BasketExtension } from 'ish-core/models/basket-extension/basket-extension.model';
 import { BasketInfoMapper } from 'ish-core/models/basket-info/basket-info.mapper';
 import { BasketInfo } from 'ish-core/models/basket-info/basket-info.model';
 import { BasketMergeHelper } from 'ish-core/models/basket-merge/basket-merge.helper';
@@ -15,7 +17,7 @@ import { BasketMergeData } from 'ish-core/models/basket-merge/basket-merge.inter
 import { BasketValidationData } from 'ish-core/models/basket-validation/basket-validation.interface';
 import { BasketValidationMapper } from 'ish-core/models/basket-validation/basket-validation.mapper';
 import { BasketValidation, BasketValidationScopeType } from 'ish-core/models/basket-validation/basket-validation.model';
-import { BasketBaseData, BasketData, BasketExtension } from 'ish-core/models/basket/basket.interface';
+import { BasketBaseData, BasketData } from 'ish-core/models/basket/basket.interface';
 import { BasketMapper } from 'ish-core/models/basket/basket.mapper';
 import { Basket } from 'ish-core/models/basket/basket.model';
 import { BucketMapper } from 'ish-core/models/basket/bucket.mapper';
@@ -516,7 +518,7 @@ export class BasketService {
       .pipe(map(addresses => addresses.data));
   }
 
-  updateBucket(basketId: string, addressId: string, basketExtension: BasketExtension): Observable<BasketExtension> {
+  updateBucket(basketId: string, addressId: string, basketExtension: BasketExtension): Observable<BasketExtensionData> {
     return this.apiService.post(`baskets/${basketId}/camfil/${addressId}`, {
       ...basketExtension,
     });

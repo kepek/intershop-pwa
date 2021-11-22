@@ -21,7 +21,7 @@ declare var dataLayer: any;
 export class TrackingService {
   constructor(private store: Store, private featureToggleService: FeatureToggleService) {}
 
-  trackPurchase(basket: BasketView) {
+  trackOrder(basket: BasketView) {
     const event: DataLayerEvent = {
       event: DataLayerEventType.Purchase,
       ecommerce: {
