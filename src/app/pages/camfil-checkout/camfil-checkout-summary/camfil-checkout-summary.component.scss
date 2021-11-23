@@ -73,4 +73,9 @@
     margin: ($space-sm) 0;
   }
 
+  .submit-button {
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 }

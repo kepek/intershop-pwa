@@ -105,16 +105,16 @@
           </mat-checkbox>
         </form>
       </ng-container>
-      <button (click)="submitOrder()" [disabled]="!(canSubmitOrder$ | async)" color="primary" mat-flat-button>
-        <ng-container *ngIf="canSubmitOrder$ | async as readyToOrder">
-          <ng-template #notReadyToOrder>
-            A
-            {{ 'camfil.checkout.wait_till_validation.button.text' | translate }}
-          </ng-template>
-          <ng-container *ngIf="readyToOrder; else notReadyToOrder">
-            B
-            {{ 'camfil.checkout.place_your_orders' | translate }}
-          </ng-container>
+      <button (click)="submitOrder()" [disabled]="!(canSubmitOrder$ | async)" class="submit-button" color="primary"
+              mat-flat-button>
+        <ng-template #readyToOrder>
+          {{ 'camfil.checkout.place_your_orders' | translate }}
+        </ng-template>
+        <ng-template #notReadyToOrder>
+          {{ 'camfil.checkout.wait_till_validation.button.text' | translate }}
+        </ng-template>
+        <ng-container *ngIf="canSubmitOrder$ | async; else notReadyToOrder">
+          <ng-container *ngTemplateOutlet="readyToOrder"></ng-container>
         </ng-container>
       </button>
     </ng-template>
