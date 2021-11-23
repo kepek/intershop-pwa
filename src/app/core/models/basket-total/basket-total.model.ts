@@ -3,6 +3,7 @@ import { PriceItem } from 'ish-core/models/price-item/price-item.model';
 import { Price } from 'ish-core/models/price/price.model';
 
 export interface BasketTotal {
+  discountTotal: PriceItem;
   itemTotal: PriceItem;
   undiscountedItemTotal?: PriceItem;
   shippingTotal?: PriceItem;

@@ -100,6 +100,7 @@ export class BasketMapper {
 
     return totalsData
       ? {
+          discountTotal: PriceItemMapper.fromPriceItem(totalsData.discountTotal),
           itemTotal: PriceItemMapper.fromPriceItem(totalsData.itemTotal),
           undiscountedItemTotal: PriceItemMapper.fromPriceItem(totalsData.undiscountedItemTotal),
           shippingTotal: PriceItemMapper.fromPriceItem(totalsData.shippingTotal),
