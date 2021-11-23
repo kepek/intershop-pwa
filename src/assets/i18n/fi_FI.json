@@ -971,6 +971,8 @@
   "camfil.dynamic.salutation.ms": "Neiti",
   "camfil.dynamic.the.cart.is.empty": "Ostoskori on tyhjä.",
   "camfil.dynamic.camfil_box_label_fee": "fi_Box label fee",
+  "camfil.dynamic.camfil_extra_freight_cost_rule": "fi_Extra freight fee",
+  "camfil.dynamic.camfil_minimum_order_topup": "fi_Minimum order top up fee",
   "camfil.forgot_password.form.send.button.label": "Lähetä",
   "camfil.forgot_username.form.send.button.label": "Lähetä",
   "camfil.form.error.maxLength": "Kenttä ei voi ylittää {{0}} merkkiä.",
