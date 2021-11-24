@@ -201,7 +201,7 @@
               <div class="mat-form-field__wrapper">
                 <mat-form-field [hideRequiredMarker]="hideRequiredMarker" appearance="fill" class="form-field">
                   <mat-label>{{ 'camfil.checkout.guest_form.first_name' | translate }}</mat-label>
-                  <input formControlName="firstName" label="camfil.checkout.form.order_mark" matInput required />
+                  <input formControlName="firstName" matInput required />
                   <camfil-error
                     [errorValidators]="validators.firstName"
                     [errors]="getField('userDetailsFormGroup', 'firstName').errors"
@@ -215,7 +215,7 @@
               <div class="mat-form-field__wrapper">
                 <mat-form-field [hideRequiredMarker]="hideRequiredMarker" appearance="fill" class="form-field">
                   <mat-label>{{ 'camfil.checkout.guest_form.last_name' | translate }}</mat-label>
-                  <input formControlName="lastName" label="camfil.checkout.form.order_mark" matInput required />
+                  <input formControlName="lastName" matInput required />
                   <camfil-error
                     [errorValidators]="validators.lastName"
                     [errors]="getField('userDetailsFormGroup', 'lastName').errors"
@@ -229,7 +229,7 @@
               <div class="mat-form-field__wrapper">
                 <mat-form-field [hideRequiredMarker]="hideRequiredMarker" appearance="fill" class="form-field">
                   <mat-label>{{ 'camfil.checkout.guest_form.email_address' | translate }}</mat-label>
-                  <input formControlName="email" label="camfil.checkout.form.order_mark" matInput required />
+                  <input formControlName="email" matInput required />
                   <camfil-error
                     [errorValidators]="validators.email"
                     [errors]="getField('userDetailsFormGroup', 'email').errors"
@@ -242,7 +242,7 @@
               <div class="mat-form-field__wrapper">
                 <mat-form-field [hideRequiredMarker]="hideRequiredMarker" appearance="fill" class="form-field">
                   <mat-label>{{ 'camfil.checkout.guest_form.telephone_number' | translate }}</mat-label>
-                  <input formControlName="phone" label="camfil.checkout.form.order_mark" matInput required />
+                  <input formControlName="phone" matInput required />
                   <camfil-error
                     [errorValidators]="validators.phone"
                     [errors]="getField('userDetailsFormGroup', 'phone').errors"
@@ -257,13 +257,13 @@
               <div class="mat-form-field__wrapper">
                 <mat-form-field [hideRequiredMarker]="hideRequiredMarker" appearance="fill" class="form-field">
                   <mat-label>{{ 'camfil.checkout.guest_form.job_title' | translate }}</mat-label>
-                  <input formControlName="jobTitle" label="camfil.checkout.form.order_mark" matInput />
+                  <input formControlName="jobTitle" matInput />
                 </mat-form-field>
               </div>
               <div class="mat-form-field__wrapper">
                 <mat-form-field [hideRequiredMarker]="hideRequiredMarker" appearance="fill" class="form-field">
                   <mat-label>{{ 'camfil.checkout.guest_form.company_name' | translate }}</mat-label>
-                  <input formControlName="companyName" label="camfil.checkout.form.order_mark" matInput required />
+                  <input formControlName="companyName" matInput required />
                   <camfil-error
                     [errorValidators]="validators.companyName"
                     [errors]="getField('userDetailsFormGroup', 'companyName').errors"
@@ -277,13 +277,13 @@
               <div class="mat-form-field__wrapper">
                 <mat-form-field [hideRequiredMarker]="hideRequiredMarker" appearance="fill" class="form-field">
                   <mat-label>{{ 'camfil.checkout.guest_form.vat_number' | translate }}</mat-label>
-                  <input formControlName="vat" label="camfil.checkout.form.order_mark" matInput />
+                  <input formControlName="vat" matInput />
                 </mat-form-field>
               </div>
               <div class="mat-form-field__wrapper">
                 <mat-form-field [hideRequiredMarker]="hideRequiredMarker" appearance="fill" class="form-field">
                   <mat-label>{{ 'camfil.checkout.guest_form.siret_number' | translate }}</mat-label>
-                  <input formControlName="siret" label="camfil.checkout.form.order_mark" matInput required />
+                  <input formControlName="siret" matInput required />
                   <camfil-error
                     [errorValidators]="validators.siret"
                     [errors]="getField('userDetailsFormGroup', 'siret').errors"
@@ -316,7 +316,7 @@
               <div class="mat-form-field__wrapper">
                 <mat-form-field [hideRequiredMarker]="hideRequiredMarker" appearance="fill" class="form-field">
                   <mat-label>{{ 'camfil.checkout.guest_form.street_address' | translate }}</mat-label>
-                  <input formControlName="streetAddress" label="camfil.checkout.form.order_mark" matInput required />
+                  <input formControlName="streetAddress" matInput required />
                   <camfil-error
                     [errorValidators]="validators.streetAddress"
                     [errors]="getField('deliveryInfoFromGroup', 'streetAddress').errors"
@@ -342,7 +342,7 @@
               <div class="mat-form-field__wrapper">
                 <mat-form-field [hideRequiredMarker]="hideRequiredMarker" appearance="fill" class="form-field">
                   <mat-label>{{ 'camfil.account.apply_form.city' | translate }}</mat-label>
-                  <input formControlName="city" label="camfil.checkout.form.order_mark" matInput required />
+                  <input formControlName="city" matInput required />
                   <camfil-error
                     [errorValidators]="validators.city"
                     [errors]="getField('deliveryInfoFromGroup', 'city').errors"
@@ -355,7 +355,7 @@
               <div class="mat-form-field__wrapper">
                 <mat-form-field [hideRequiredMarker]="hideRequiredMarker" appearance="fill" class="form-field">
                   <mat-label>{{ 'camfil.account.cam_card.add_to_form.country' | translate }}</mat-label>
-                  <input formControlName="country" label="camfil.checkout.form.order_mark" matInput required />
+                  <input formControlName="country" matInput required />
                   <camfil-error
                     [errorValidators]="validators.country"
                     [errors]="getField('deliveryInfoFromGroup', 'country').errors"
@@ -381,7 +381,7 @@
                   <input
                     [camfilMaxLength]="'OrderMark'"
                     formControlName="boxLabel"
-                    label="camfil.checkout.form.order_mark"
+
                     matInput
                   />
                 </mat-form-field>
@@ -392,7 +392,7 @@
                   <input
                     [camfilMaxLength]="'InvoiceLabel'"
                     formControlName="invoiceMark"
-                    label="camfil.checkout.form.order_mark"
+
                     matInput
                   />
                 </mat-form-field>
@@ -436,7 +436,8 @@
               <div class="mat-form-field__wrapper">
                 <mat-form-field [hideRequiredMarker]="hideRequiredMarker" appearance="fill" class="form-field">
                   <mat-label>{{ 'camfil.checkout.guest_form.street_address' | translate }}</mat-label>
-                  <input formControlName="streetAddress" label="camfil.checkout.form.order_mark" matInput />
+                  <input formControlName="streetAddress" label="camfil.checkout.guest_form.street_address" matInput
+                         required />
                   <camfil-error
                     [errorValidators]="validators.streetAddress"
                     [errors]="getField('invoiceAddressFormGroup', 'streetAddress').errors"
@@ -461,7 +462,7 @@
               <div class="mat-form-field__wrapper">
                 <mat-form-field [hideRequiredMarker]="hideRequiredMarker" appearance="fill" class="form-field">
                   <mat-label>{{ 'camfil.account.apply_form.city' | translate }}</mat-label>
-                  <input formControlName="city" label="camfil.checkout.form.order_mark" matInput />
+                  <input formControlName="city" matInput required />
                   <camfil-error
                     [errorValidators]="validators.city"
                     [errors]="getField('invoiceAddressFormGroup', 'city').errors"
@@ -475,7 +476,7 @@
               <div class="mat-form-field__wrapper">
                 <mat-form-field [hideRequiredMarker]="hideRequiredMarker" appearance="fill" class="form-field">
                   <mat-label>{{ 'camfil.account.cam_card.add_to_form.country' | translate }}</mat-label>
-                  <input formControlName="country" label="camfil.checkout.form.order_mark" matInput />
+                  <input formControlName="country" matInput required />
                   <camfil-error
                     [errorValidators]="validators.country"
                     [errors]="getField('invoiceAddressFormGroup', 'country').errors"

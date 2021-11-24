@@ -9,9 +9,19 @@
   </ng-container>
 
   <ng-template #guest>
-    <h1 *ngIf="isSubmitted" class="d-flex align-items-center">
-      {{ 'camfil.checkout.confirmation.title' | translate }}
+    <h1 *ngIf="!isSubmitted" class="d-flex align-items-center">
+      <mat-icon class="size-37" svgIcon="cart"></mat-icon> &nbsp;
+      {{ (isSubmitted ? 'camfil.checkout.confirmation.title' : 'shopping_cart.proceed_to_checkout.button.label') | translate }}
     </h1>
+
+    <div *ngIf="!isSubmitted" class="row align-items-end">
+      <div class="col-md-3">
+        <p>
+          <span>{{ 'camfil.checkout.number_of_products' | translate }}:</span>
+          <span class="checkout-header-number">{{ quantity }}</span>
+        </p>
+      </div>
+    </div>
   </ng-template>
 
   <ng-template #default>
@@ -40,6 +50,9 @@
         ></camfil-checkout-toolbar>
       </div>
     </div>
+
   </ng-template>
 
 </div>
+
+<mat-divider></mat-divider>

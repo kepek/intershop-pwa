@@ -32,6 +32,9 @@ import {
   BasketExtensionGuestData,
 } from 'ish-core/models/basket-extension/basket-extension.interface';
 import { CamfilCheckoutGuestFormComponent } from './camfil-checkout-guest-form/camfil-checkout-guest-form.component';
+import { AppFacade } from 'ish-core/facades/app.facade';
+import { BasketMockData } from 'ish-core/utils/dev/basket-mock-data';
+import { BasketTotal } from 'ish-core/models/basket-total/basket-total.model';
 
 @Component({
   templateUrl: './camfil-checkout-page.component.html',
@@ -46,11 +49,13 @@ export class CamfilCheckoutPageComponent implements OnInit, OnDestroy {
   emptyBuckets$: Observable<Bucket[]>;
   isSubmitted$: Observable<boolean>;
   isLoggedIn$: Observable<boolean>;
+  isEmpty$: Observable<boolean>;
   ordersLoading$: Observable<boolean>;
   paymentMethods$: Observable<PaymentMethod[]>;
   priceType$: Observable<'gross' | 'net'>;
   submittedBasket$: Observable<Basket>;
   submittedBuckets$: Observable<Bucket[]>;
+  basketTotals$: Observable<BasketTotal>;
   validationResults$: Observable<BasketValidationResultType>;
 
   private isValid = false;
@@ -59,6 +64,7 @@ export class CamfilCheckoutPageComponent implements OnInit, OnDestroy {
   @ViewChild('guestForm') guestForm: CamfilCheckoutGuestFormComponent;
 
   constructor(
+    private appFacade: AppFacade,
     private accountFacade: AccountFacade,
     private checkoutFacade: CheckoutFacade,
     private shoppingFacade: ShoppingFacade,
@@ -66,7 +72,6 @@ export class CamfilCheckoutPageComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.basket$ = this.checkoutFacade.basket$;
     this.basketError$ = this.checkoutFacade.basketError$;
     this.basketLoading$ = this.checkoutFacade.basketLoading$;
     this.buckets$ = this.checkoutFacade.buckets$;
@@ -78,6 +83,20 @@ export class CamfilCheckoutPageComponent implements OnInit, OnDestroy {
     this.submittedBasket$ = this.checkoutFacade.submittedBasket$;
     this.submittedBuckets$ = this.checkoutFacade.submittedBuckets$;
     this.validationResults$ = this.checkoutFacade.basketValidationResults$;
+
+    this.basket$ = combineLatest([this.checkoutFacade.basket$, this.checkoutFacade.submittedBasket$]).pipe(
+      map(([basket, submittedBasket]) => basket || submittedBasket)
+    );
+
+    this.basketTotals$ = this.basket$.pipe(
+      withLatestFrom(this.appFacade.getCurrencyByChannel$),
+      map(([basket, currency]) => (basket?.totals?.itemTotal ? basket.totals : BasketMockData.getEmptyTotals(currency)))
+    );
+
+    this.isEmpty$ = combineLatest([this.checkoutFacade.buckets$, this.checkoutFacade.emptyBuckets$]).pipe(
+      map(([buckets, emptyBuckets]) => buckets || emptyBuckets),
+      map(buckets => !buckets)
+    );
 
     this.isSubmitted$ = this.submittedBasket$.pipe(
       startWith(false),
@@ -101,7 +120,7 @@ export class CamfilCheckoutPageComponent implements OnInit, OnDestroy {
         map(methods => methods?.[0]),
         filter(pm => !pm.parameters),
         first(),
-        withLatestFrom(this.basket$),
+        withLatestFrom(this.checkoutFacade.basket$),
         filter(([, basket]) => !basket?.payment),
         takeUntil(this.destroy$)
       )
@@ -155,7 +174,7 @@ export class CamfilCheckoutPageComponent implements OnInit, OnDestroy {
   submitGuestCheckout(guestBucketAddressData: BasketExtensionGuestData) {
     combineLatest([
       this.isLoggedIn$,
-      this.basket$.pipe(map(basket => basket?.id)),
+      this.checkoutFacade.basket$.pipe(map(basket => basket?.id)),
       this.buckets$.pipe(map(buckets => buckets?.[0])),
     ])
       .pipe(

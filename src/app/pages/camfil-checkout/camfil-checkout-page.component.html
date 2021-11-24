@@ -3,7 +3,15 @@
 <br />
 
 <div class="checkout row">
-  <div [ngClass]="{ 'col-lg-9': ((basket$ | async) || (submittedBasket$ | async)) }" class="col-sm-12">
+
+  <div [ngClass]="{ 'col-lg-9': (basket$ | async) }" class="col-sm-12">
+
+    <ish-basket-info></ish-basket-info>
+
+    <camfil-error-message [error]="basketError$ | async" [toast]="true"></camfil-error-message>
+
+    <camfil-basket-validation-results></camfil-basket-validation-results>
+
     <div [ngClass]="{ 'header-divider-container': isSubmitted$ | async }">
       <camfil-checkout-header
         [basket]="basket$ | async"
@@ -12,21 +20,19 @@
       ></camfil-checkout-header>
     </div>
 
-    <ish-basket-info></ish-basket-info>
-
-    <camfil-error-message [error]="basketError$ | async" [toast]="true"></camfil-error-message>
-
-    <camfil-basket-validation-results></camfil-basket-validation-results>
-
-    <ng-template #empty>
+    <ng-template #emptyBasket>
       <camfil-shopping-bucket-empty [error]="basketError$ | async"></camfil-shopping-bucket-empty>
     </ng-template>
+
+    <ng-container *ngIf="isEmpty$ | async">
+      <ng-container *ngTemplateOutlet="emptyBasket"></ng-container>
+    </ng-container>
 
     <ng-container *ngIf="!(isLoggedIn$ | async)">
       <camfil-checkout-guest-form
         #guestForm
         (submit)="submitGuestCheckout($event)"
-        [basket]="((basket$ | async) || (submittedBasket$ | async))"
+        [basket]="basket$ | async"
       ></camfil-checkout-guest-form>
       <camfil-checkout-payment
         (createPaymentInstrument)="createPaymentInstrument($event)"
@@ -67,7 +73,7 @@
       </ng-container>
 
       <ng-template #notConfirmed>
-        <ng-container *ngIf="buckets$ | async as buckets; else empty">
+        <ng-container *ngIf="buckets$ | async as buckets;">
           <ng-container *ngFor="let bucket of buckets; index as i; trackBy: trackByLineItems">
             <camfil-checkout-bucket
               [basket]="basket$ | async"
@@ -81,16 +87,18 @@
         </ng-container>
       </ng-template>
     </div>
+
   </div>
 
-  <ng-container *ngIf="((basket$ | async) || (submittedBasket$ | async)) as basket">
+  <ng-container *ngIf="basket$ | async as basket">
     <div class="col-sm-12 col-lg-3">
       <camfil-checkout-summary
         (submit)="submit()"
         [purchaseCurrency]="basket.purchaseCurrency"
-        [totals]="basket.totals"
+        [totals]="basketTotals$ | async"
         [isSubmitted]="isSubmitted$ | async"
       ></camfil-checkout-summary>
     </div>
   </ng-container>
+
 </div>
