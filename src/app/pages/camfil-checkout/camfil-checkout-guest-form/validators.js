@@ -36,6 +36,16 @@ export const GUEST_FORM_VALIDATORS = {
       error: 'required',
       message: 'camfil.modal.createOrder.order-form.input.phone_number.error.required',
     },
+    {
+      error: 'pattern',
+      message: 'camfil.modal.createOrder.order-form.input.phone_number.error.pattern',
+    },
+  ],
+  companyName: [
+    {
+      error: 'required',
+      message: 'camfil.modal.createOrder.order-form.input.company_name.error.required',
+    },
   ],
   siret: [
     {

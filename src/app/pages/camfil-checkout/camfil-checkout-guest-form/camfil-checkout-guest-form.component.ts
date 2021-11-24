@@ -79,6 +79,13 @@ export class CamfilCheckoutGuestFormComponent implements OnInit, OnDestroy {
     }
   }
 
+  validateGuestForm() {
+    if (!this.guestFormSubmitted) {
+      this.guestForm.markAllAsTouched();
+      markAsDirtyRecursive(this.guestForm);
+    }
+  }
+
   submitGuestForm() {
     if (this.guestForm.invalid) {
       this.guestFormSubmitted = true;
@@ -96,9 +103,9 @@ export class CamfilCheckoutGuestFormComponent implements OnInit, OnDestroy {
       firstName: ['', [Validators.required]],
       lastName: ['', [Validators.required]],
       email: ['', [Validators.required, SpecialValidators.email]],
-      phone: ['', [Validators.required]],
+      phone: ['', [Validators.required, Validators.pattern('[0-9+-/]*')]],
       jobTitle: [''],
-      companyName: [''],
+      companyName: ['', [Validators.required]],
       vat: [''],
       siret: ['', [Validators.required, Validators.pattern('[0-9]{14}')]],
     });

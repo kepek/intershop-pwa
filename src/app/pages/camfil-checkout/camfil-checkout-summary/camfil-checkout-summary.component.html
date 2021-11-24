@@ -78,6 +78,18 @@
       <p>{{ totals.paymentCostsTotal | ishPrice }}</p>
     </ng-container>
 
+    <!-- Discount total -->
+    <ng-container *ngIf="totals.discountTotal">
+      <div class="summary-line">
+        <p>
+          {{ 'checkout.widget.promotion.discount' | translate }}
+        </p>
+        <p>
+          {{ totals.discountTotal | ishPrice }}
+        </p>
+      </div>
+    </ng-container>
+
     <!-- Tax -->
     <ng-container *ngIf="totals.taxTotal && totals.taxTotal.value">
       <div class="summary-line">
@@ -118,6 +130,7 @@
         </ng-container>
       </button>
     </ng-template>
+
     <ng-container *ngIf="isSubmitted; else noConfirmed">
       <button (click)="continueShopping()" color="primary" mat-flat-button>
         {{ 'camfil.checkout.confirmation.continue_shopping' | translate }}

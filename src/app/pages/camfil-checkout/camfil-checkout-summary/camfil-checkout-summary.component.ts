@@ -24,7 +24,7 @@ import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfi
 export class CamfilCheckoutSummaryComponent extends CamfilBasketCostSummaryComponent {
   @Input() purchaseCurrency: string;
   @Input() isSubmitted;
-  @Output() update = new EventEmitter();
+  @Output() submit = new EventEmitter();
 
   @ViewChild(CamfilSmallCtaModalComponent) gdprErrorModal: CamfilSmallCtaModalComponent;
 
@@ -59,7 +59,6 @@ export class CamfilCheckoutSummaryComponent extends CamfilBasketCostSummaryCompo
     this.productsReadyToPlaceOrder$ = this.shoppingFacade.productsReadyToPlaceOrder$;
     this.canSubmitOrder$ = this.productsReadyToPlaceOrder$;
     this.isLoggedIn$ = this.accountFacade.isLoggedIn$;
-    // this.countries$ = this.appFacade.countries$();
 
     this.isLoggedIn$.pipe(whenFalsy(), takeUntil(this.destroy$)).subscribe(() => {
       this.initGDPRForm();
@@ -99,6 +98,7 @@ export class CamfilCheckoutSummaryComponent extends CamfilBasketCostSummaryCompo
   private placeOrder() {
     this.checkErpEmployeeIdExists();
     this.checkoutFacade.continue(5);
+    this.submit.emit();
   }
 
   private initGDPRForm(): void {

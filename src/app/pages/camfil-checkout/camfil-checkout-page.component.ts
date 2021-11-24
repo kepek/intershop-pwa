@@ -1,6 +1,6 @@
 // tslint:disable: ish-ordered-imports ban-specific-imports
 
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { combineLatest, Observable, Subject } from 'rxjs';
 import {
   distinctUntilChanged,
@@ -31,6 +31,7 @@ import {
   BasketExtensionData,
   BasketExtensionGuestData,
 } from 'ish-core/models/basket-extension/basket-extension.interface';
+import { CamfilCheckoutGuestFormComponent } from './camfil-checkout-guest-form/camfil-checkout-guest-form.component';
 
 @Component({
   templateUrl: './camfil-checkout-page.component.html',
@@ -54,6 +55,8 @@ export class CamfilCheckoutPageComponent implements OnInit, OnDestroy {
 
   private isValid = false;
   private destroy$ = new Subject<void>();
+
+  @ViewChild('guestForm') guestForm: CamfilCheckoutGuestFormComponent;
 
   constructor(
     private accountFacade: AccountFacade,
@@ -117,6 +120,10 @@ export class CamfilCheckoutPageComponent implements OnInit, OnDestroy {
     this.destroy$.next();
     this.destroy$.complete();
     this.checkoutFacade.setCheckoutFocusedElement('');
+  }
+
+  submit() {
+    this.guestForm?.validateGuestForm();
   }
 
   updateBasketPaymentMethod(paymentName: string) {
