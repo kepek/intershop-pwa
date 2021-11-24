@@ -1103,6 +1103,7 @@
   "camfil.modal.createOrder.order-form.country.error.required": "sv_Please select a country.",
   "camfil.modal.createOrder.order-form.input.city.error.required": "sv_Please enter your city name.",
   "camfil.modal.createOrder.order-form.input.street_address.error.required": "sv_Please enter your street address.",
+  "camfil.modal.createOrder.order-form.input.company_name.error.required": "Ange företagsnamn.",
   "camfil.modal.createOrder.success.title": "Tillagd i din varukorg",
   "camfil.modal.cta.button.cancel": "Avbryt ",
   "camfil.modal.cta.button.ok": "OK",

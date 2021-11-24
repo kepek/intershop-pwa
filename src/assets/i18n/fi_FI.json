@@ -1103,6 +1103,7 @@
   "camfil.modal.createOrder.order-form.country.error.required": "fi_Please select a country.",
   "camfil.modal.createOrder.order-form.input.city.error.required": "fi_Please enter your city name.",
   "camfil.modal.createOrder.order-form.input.street_address.error.required": "fi_Please enter your street address.",
+  "camfil.modal.createOrder.order-form.input.company_name.error.required": "Syötä yrityksesi nimi.",
   "camfil.modal.createOrder.success.title": "Lisätty onnistuneesti ostoskoriisi",
   "camfil.modal.cta.button.cancel": "Peruuta",
   "camfil.modal.cta.button.ok": "OK",

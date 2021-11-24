@@ -1103,6 +1103,7 @@
   "camfil.modal.createOrder.order-form.country.error.required": "Please select a country.",
   "camfil.modal.createOrder.order-form.input.city.error.required": "Please enter your city name.",
   "camfil.modal.createOrder.order-form.input.street_address.error.required": "Please enter your street address.",
+  "camfil.modal.createOrder.order-form.input.company_name.error.required": "Please enter your company name.",
   "camfil.modal.createOrder.success.title": "Successfully added to your shopping cart",
   "camfil.modal.cta.button.cancel": "Cancel",
   "camfil.modal.cta.button.ok": "OK",

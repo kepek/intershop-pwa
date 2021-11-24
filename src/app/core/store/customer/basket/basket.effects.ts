@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { RouterNavigatedPayload, routerNavigatedAction } from '@ngrx/router-store';
-import { Store, select } from '@ngrx/store';
-import { EMPTY, combineLatest, iif, of } from 'rxjs';
+import { routerNavigatedAction, RouterNavigatedPayload } from '@ngrx/router-store';
+import { select, Store } from '@ngrx/store';
+import { combineLatest, iif, of } from 'rxjs';
 import {
   concatMap,
   concatMapTo,
@@ -303,11 +303,14 @@ export class BasketEffects {
                 mapErrorToAction(loadBasketFail)
               );
             } else if (baskets.length) {
-              // no anonymous basket exists and user already has a basket -> load it
+              // basket exists and user (both logged in & anonymous) already has a basket -> load it
               return of(loadBasket());
             } else {
-              // no anonymous or user basket -> do nothing
-              return EMPTY;
+              // is logged user but does not have basket -> create basket
+              return this.basketService.createBasket().pipe(
+                map(basket => loadBasketSuccess({ basket })),
+                mapErrorToAction(loadBasketFail)
+              );
             }
           })
         )

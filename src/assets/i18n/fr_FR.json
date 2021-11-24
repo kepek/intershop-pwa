@@ -1103,6 +1103,7 @@
   "camfil.modal.createOrder.order-form.country.error.required": "fr_Please select a country.",
   "camfil.modal.createOrder.order-form.input.city.error.required": "fr_Please enter your city name.",
   "camfil.modal.createOrder.order-form.input.street_address.error.required": "fr_Please enter your street address.",
+  "camfil.modal.createOrder.order-form.input.company_name.error.required": "Veuillez saisir le nom de votre société.",
   "camfil.modal.createOrder.success.title": "Ajouté avec succès à votre panier",
   "camfil.modal.cta.button.cancel": "Annuler",
   "camfil.modal.cta.button.ok": "OK",
