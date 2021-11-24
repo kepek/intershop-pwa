@@ -4,6 +4,6 @@ export enum MaxLengthFieldsValues {
   Company = 60,
   BoxLabel = 40,
   Name = 40,
-  CamcardTitle = 60,
+  CamCardTitle = 60,
   CustomerNote = 150,
 }

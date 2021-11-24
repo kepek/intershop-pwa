@@ -40,7 +40,7 @@
       <!--name-->
       <mat-form-field appearance="outline" class="col-sm-12 form__field">
         <mat-label>{{ 'camfil.modal.createCamcard.input.name' | translate }}</mat-label>
-        <input #name [camfilMaxLength]="'CamcardTitle'" formControlName="name" matInput type="text" />
+        <input #name [camfilMaxLength]="'CamCardTitle'" formControlName="name" matInput type="text" />
         <camfil-error
           [errorValidators]="validators.name"
           [errors]="getField('name').errors"
