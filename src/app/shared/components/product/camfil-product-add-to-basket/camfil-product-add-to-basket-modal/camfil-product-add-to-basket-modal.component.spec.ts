@@ -52,6 +52,12 @@ describe('Camfil Product Add To Basket Modal Component', () => {
   const basketDetails: BasketView = {
     id: 'basket_test',
     totals: {
+      discountTotal: {
+        type: 'PriceItem',
+        gross: 100,
+        net: 80,
+        currency: '',
+      },
       itemTotal: {
         type: 'PriceItem',
         gross: 100,

@@ -53,6 +53,9 @@ export class RequisitionMapper {
           .map(data => ({
             ...this.fromData({ ...payload, data }),
             totals: {
+              discountTotal: data.totals.discountTotal
+                ? PriceItemMapper.fromPriceItem(data.totals.discountTotal)
+                : undefined,
               itemTotal: data.totals ? PriceItemMapper.fromPriceItem(data.totals.itemTotal) : undefined,
               total: data.totals
                 ? PriceItemMapper.fromPriceItem(data.totals.grandTotal)

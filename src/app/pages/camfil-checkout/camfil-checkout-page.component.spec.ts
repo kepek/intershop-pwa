@@ -37,8 +37,9 @@ describe('Camfil Checkout Page Component', () => {
   let fixture: ComponentFixture<CamfilCheckoutPageComponent>;
   let component: CamfilCheckoutPageComponent;
   let element: HTMLElement;
-  let checkoutFacade: CheckoutFacade;
+  let appFacadeMock: AppFacade;
   let camCardFacadeMock: CamCardsFacade;
+  let checkoutFacade: CheckoutFacade;
   let shoppingFacadeMock: ShoppingFacade;
   let configurationServiceMock: ConfigurationService;
   let actions$: Observable<Action>;
@@ -60,6 +61,12 @@ describe('Camfil Checkout Page Component', () => {
   const basketDetails: BasketView = {
     id: 'basket_test',
     totals: {
+      discountTotal: {
+        type: 'PriceItem',
+        gross: 100,
+        net: 80,
+        currency: '',
+      },
       itemTotal: {
         type: 'PriceItem',
         gross: 100,
@@ -93,6 +100,12 @@ describe('Camfil Checkout Page Component', () => {
         type: 'PriceItem',
         currency: 'USD',
       },
+      discountTotal: {
+        gross: 141796.98,
+        net: 141796.98,
+        type: 'PriceItem',
+        currency: 'USD',
+      },
       itemTotal: {
         gross: 141796.98,
         net: 141796.98,
@@ -104,6 +117,7 @@ describe('Camfil Checkout Page Component', () => {
   };
 
   beforeEach(async () => {
+    appFacadeMock = mock(AppFacade);
     camCardFacadeMock = mock(CamCardsFacade);
     checkoutFacade = mock(CheckoutFacade);
     shoppingFacadeMock = mock(ShoppingFacade);
@@ -131,10 +145,10 @@ describe('Camfil Checkout Page Component', () => {
       ],
       imports: [RouterTestingModule],
       providers: [
-        { provide: CheckoutFacade, useFactory: () => instance(checkoutFacade) },
+        { provide: AppFacade, useFactory: () => instance(appFacadeMock) },
         { provide: CamCardsFacade, useFactory: () => instance(camCardFacadeMock) },
+        { provide: CheckoutFacade, useFactory: () => instance(checkoutFacade) },
         { provide: ShoppingFacade, useFactory: () => instance(shoppingFacadeMock) },
-        { provide: AppFacade, useFactory: () => instance(mock(AppFacade)) },
         provideMockStore({
           selectors: [{ selector: getConfigurationState, value: configuration }],
         }),
@@ -148,6 +162,7 @@ describe('Camfil Checkout Page Component', () => {
     component = fixture.componentInstance;
     element = fixture.nativeElement;
 
+    when(appFacadeMock.getCurrencyByChannel$).thenReturn(of('EUR'));
     when(shoppingFacadeMock.productAdded$).thenReturn(of(true));
 
     when(camCardFacadeMock.currentCamCard$).thenReturn(of(camCardDetails));
