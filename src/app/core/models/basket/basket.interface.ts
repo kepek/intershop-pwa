@@ -4,12 +4,12 @@ import { BasketApproval } from 'ish-core/models/basket-approval/basket-approval.
 import { BasketExtension } from 'ish-core/models/basket-extension/basket-extension.model';
 import { BasketInfo } from 'ish-core/models/basket-info/basket-info.model';
 import { BasketRebateData } from 'ish-core/models/basket-rebate/basket-rebate.interface';
+import { BasketSurchargeData } from 'ish-core/models/basket-surcharge/basket-surcharge.interface';
 import { BasketTotalData } from 'ish-core/models/basket-total/basket-total.interface';
 import { CamfilLineItemData, LineItemData } from 'ish-core/models/line-item/line-item.interface';
 import { PaymentInstrument } from 'ish-core/models/payment-instrument/payment-instrument.model';
 import { PaymentMethodBaseData } from 'ish-core/models/payment-method/payment-method.interface';
 import { PaymentData } from 'ish-core/models/payment/payment.interface';
-import { PriceItemData } from 'ish-core/models/price-item/price-item.interface';
 import { ShippingMethodData } from 'ish-core/models/shipping-method/shipping-method.interface';
 
 export interface BasketBaseData {
@@ -34,16 +34,8 @@ export interface BasketBaseData {
   totals: BasketTotalData;
   totalProductQuantity?: number;
   surcharges?: {
-    itemSurcharges?: {
-      amount: PriceItemData;
-      description: string;
-      name: string;
-    }[];
-    bucketSurcharges?: {
-      amount: PriceItemData;
-      description: string;
-      name: string;
-    }[];
+    itemSurcharges?: BasketSurchargeData[];
+    bucketSurcharges?: BasketSurchargeData[];
   };
   approval?: BasketApproval;
   attributes?: Attribute[];

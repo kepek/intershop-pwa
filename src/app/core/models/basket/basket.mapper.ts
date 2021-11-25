@@ -7,6 +7,7 @@ import { BasketExtensionMapper } from 'ish-core/models/basket-extension/basket-e
 import { BasketExtension, BasketExtensionGuestForm } from 'ish-core/models/basket-extension/basket-extension.model';
 import { BasketRebateData } from 'ish-core/models/basket-rebate/basket-rebate.interface';
 import { BasketRebateMapper } from 'ish-core/models/basket-rebate/basket-rebate.mapper';
+import { BasketSurchargeMapper } from 'ish-core/models/basket-surcharge/basket-surcharge.mapper';
 import { BasketTotal } from 'ish-core/models/basket-total/basket-total.model';
 import { BasketBaseData, BasketData } from 'ish-core/models/basket/basket.interface';
 import { LineItemMapper } from 'ish-core/models/line-item/line-item.mapper';
@@ -98,53 +99,43 @@ export class BasketMapper {
   static getTotals(data: BasketBaseData, discounts?: { [id: string]: BasketRebateData }): BasketTotal {
     const totalsData = data?.totals;
 
-    return totalsData
-      ? {
-          discountTotal: PriceItemMapper.fromPriceItem(totalsData.discountTotal),
-          itemTotal: PriceItemMapper.fromPriceItem(totalsData.itemTotal),
-          undiscountedItemTotal: PriceItemMapper.fromPriceItem(totalsData.undiscountedItemTotal),
-          shippingTotal: PriceItemMapper.fromPriceItem(totalsData.shippingTotal),
-          undiscountedShippingTotal: PriceItemMapper.fromPriceItem(totalsData.undiscountedShippingTotal),
-          paymentCostsTotal: PriceItemMapper.fromPriceItem(totalsData.paymentCostsTotal),
-          dutiesAndSurchargesTotal: PriceItemMapper.fromPriceItem(totalsData.surchargeTotal),
-          taxTotal: PriceItemMapper.fromSpecificPriceItem(totalsData.grandTotal, 'tax'),
-          total: PriceItemMapper.fromPriceItem(totalsData.grandTotal),
+    if (!totalsData) {
+      return;
+    }
 
-          itemRebatesTotal: PriceItemMapper.fromPriceItem(totalsData.itemValueDiscountsTotal),
-          valueRebatesTotal: PriceItemMapper.fromPriceItem(totalsData.basketValueDiscountsTotal),
-          valueRebates:
-            data.discounts && data.discounts.valueBasedDiscounts && discounts
-              ? data.discounts.valueBasedDiscounts.map(discountId => BasketRebateMapper.fromData(discounts[discountId]))
-              : undefined,
+    const shippingRebates =
+      data.discounts && data.discounts.shippingBasedDiscounts && discounts
+        ? data.discounts.shippingBasedDiscounts.map(discountId => BasketRebateMapper.fromData(discounts[discountId]))
+        : undefined;
 
-          itemShippingRebatesTotal: PriceItemMapper.fromPriceItem(totalsData.itemShippingDiscountsTotal),
-          shippingRebatesTotal: PriceItemMapper.fromPriceItem(totalsData.basketShippingDiscountsTotal),
-          shippingRebates:
-            data.discounts && data.discounts.shippingBasedDiscounts && discounts
-              ? data.discounts.shippingBasedDiscounts.map(discountId =>
-                  BasketRebateMapper.fromData(discounts[discountId])
-                )
-              : undefined,
+    const itemSurchargeTotalsByType = BasketSurchargeMapper.fromListData(data?.surcharges?.itemSurcharges);
+    const bucketSurchargeTotalsByType = BasketSurchargeMapper.fromListData(data?.surcharges?.bucketSurcharges);
 
-          itemSurchargeTotalsByType:
-            data.surcharges && data.surcharges.itemSurcharges
-              ? data.surcharges.itemSurcharges.map(surcharge => ({
-                  amount: PriceItemMapper.fromPriceItem(surcharge.amount),
-                  displayName: surcharge.name,
-                  description: surcharge.description,
-                }))
-              : undefined,
-          bucketSurchargeTotalsByType:
-            data.surcharges && data.surcharges.bucketSurcharges
-              ? data.surcharges.bucketSurcharges.map(surcharge => ({
-                  amount: PriceItemMapper.fromPriceItem(surcharge.amount),
-                  displayName: surcharge.name,
-                  description: surcharge.description,
-                }))
-              : undefined,
-          isEstimated: false,
-        }
-      : undefined;
+    return {
+      discountTotal: PriceItemMapper.fromPriceItem(totalsData.discountTotal),
+      itemTotal: PriceItemMapper.fromPriceItem(totalsData.itemTotal),
+      undiscountedItemTotal: PriceItemMapper.fromPriceItem(totalsData.undiscountedItemTotal),
+      shippingTotal: PriceItemMapper.fromPriceItem(totalsData.shippingTotal),
+      undiscountedShippingTotal: PriceItemMapper.fromPriceItem(totalsData.undiscountedShippingTotal),
+      paymentCostsTotal: PriceItemMapper.fromPriceItem(totalsData.paymentCostsTotal),
+      dutiesAndSurchargesTotal: PriceItemMapper.fromPriceItem(totalsData.surchargeTotal),
+      taxTotal: PriceItemMapper.fromSpecificPriceItem(totalsData.grandTotal, 'tax'),
+      total: PriceItemMapper.fromPriceItem(totalsData.grandTotal),
+
+      itemRebatesTotal: PriceItemMapper.fromPriceItem(totalsData.itemValueDiscountsTotal),
+      valueRebatesTotal: PriceItemMapper.fromPriceItem(totalsData.basketValueDiscountsTotal),
+      valueRebates:
+        data.discounts && data.discounts.valueBasedDiscounts && discounts
+          ? data.discounts.valueBasedDiscounts.map(discountId => BasketRebateMapper.fromData(discounts[discountId]))
+          : undefined,
+
+      itemShippingRebatesTotal: PriceItemMapper.fromPriceItem(totalsData.itemShippingDiscountsTotal),
+      shippingRebatesTotal: PriceItemMapper.fromPriceItem(totalsData.basketShippingDiscountsTotal),
+      isEstimated: false,
+      shippingRebates,
+      itemSurchargeTotalsByType,
+      bucketSurchargeTotalsByType,
+    };
   }
 
   static convertFormDataToAnonymousBasketData(data: BasketExtensionGuestForm): BasketExtensionGuestData {
