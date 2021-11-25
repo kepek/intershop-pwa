@@ -110,3 +110,8 @@ header {
     outline: 0;
   }
 }
+
+.border-bottom {
+  padding-bottom: $space-box;
+  border-bottom: $border-width-default solid $border-color-lighter;
+}

@@ -12,6 +12,7 @@ import { CamfilSlugifyPipe } from 'ish-core/pipes/camfil-slugify.pipe';
 import { ConfigurationService } from 'ish-core/services/configuration/configuration.service';
 import { BasketMockData } from 'ish-core/utils/dev/basket-mock-data';
 import { ContentIncludeComponent } from 'ish-shared/cms/components/content-include/content-include.component';
+import { BasketPromotionComponent } from 'ish-shared/components/basket/basket-promotion/basket-promotion.component';
 import { CamfilModalDialogComponent } from 'ish-shared/components/common/camfil-modal-dialog/camfil-modal-dialog.component';
 import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
 
@@ -38,6 +39,7 @@ describe('Camfil Checkout Summary Component', () => {
       declarations: [
         CamfilCheckoutSummaryComponent,
         CamfilSmallCtaModalComponent,
+        MockComponent(BasketPromotionComponent),
         MockComponent(CamfilModalDialogComponent),
         MockComponent(ContentIncludeComponent),
         MockDirective(ChannelToggleDirective),

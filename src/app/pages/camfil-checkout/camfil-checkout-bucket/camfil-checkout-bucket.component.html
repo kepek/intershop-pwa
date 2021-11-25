@@ -261,22 +261,25 @@
     <div *ngIf="order">
       <div class="section cost-summary float-right box-shadow--dark mat-elevation-z">
         <dl class="row dl-horizontal dl-separator mb-0">
-          <ng-container *ngIf="order.volumeDiscount">
-            <dt class="col-6">{{ 'camfil.checkout.volume_discount' | translate }}</dt>
-            <dd class="col-6">{{ getVolumeDiscountPrice(order.volumeDiscount, basket?.purchaseCurrency) }}</dd>
-          </ng-container>
           <dt class="col-8">{{ 'camfil.checkout.single_total_price_net' | translate }}</dt>
           <dd class="col-4">{{ totalPrice() | ishPrice }}</dd>
           <dt class="col-6">{{ 'camfil.checkout.tax_amount' | translate }}</dt>
           <dd class="col-6">{{ totalTax() | ishPrice }}</dd>
+          <dt class="col-6">{{ 'camfil.checkout.order_total_price' | translate }}</dt>
+          <dd class="col-6">{{ totalPrice('gross') | ishPrice }}</dd>
+          <dt class="col-7 font-weight-bold pb-1 mb-2 border-bottom" *ngIf="order.surcharges || order.volumeDiscount">
+            {{ 'camfil.checkout.additional_fees.text' | translate }}
+          </dt>
+          <ng-container *ngIf="order.volumeDiscount">
+            <dt class="col-6">{{ 'camfil.checkout.volume_discount' | translate }}</dt>
+            <dd class="col-6">{{ getVolumeDiscountPrice(order.volumeDiscount, basket?.purchaseCurrency) }}</dd>
+          </ng-container>
           <ng-container *ngIf="order.surcharges">
             <ng-container *ngFor="let surcharge of order.surcharges">
               <dt class="col-6">{{ surcharge.displayName | slugify: 'camfil.dynamic' | translate }}</dt>
               <dd class="col-6">{{ surcharge.amount | ishPrice }}</dd>
             </ng-container>
           </ng-container>
-          <dt class="col-6">{{ 'camfil.checkout.order_total_price' | translate }}</dt>
-          <dd class="col-6">{{ totalPrice('gross') | ishPrice }}</dd>
         </dl>
         <camfil-basket-cost-summary></camfil-basket-cost-summary>
       </div>
