@@ -1,11 +1,12 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { uniq } from 'lodash-es';
-import { Observable, combineLatest } from 'rxjs';
+import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { BasketFeedback, BasketFeedbackView } from 'ish-core/models/basket-feedback/basket-feedback.model';
+import { interpolateParams } from 'ish-core/utils/functions';
 import { whenTruthy } from 'ish-core/utils/operators';
 import { BasketValidationResultsComponent } from 'ish-shared/components/basket/basket-validation-results/basket-validation-results.component';
 
@@ -41,6 +42,20 @@ export class CamfilBasketValidationResultsComponent extends BasketValidationResu
             1: error?.parameters?.addressId,
           })
         )
+      )
+    );
+
+    this.infoMessages$ = this.validationResults$.pipe(
+      map(results =>
+        uniq(
+          results &&
+            results.infos &&
+            results.infos.map(info => {
+              // tslint:disable-next-line:no-unused
+              const { scopes, ...params } = info.parameters;
+              return interpolateParams(info.message, { ...params });
+            })
+        ).filter(message => !!message)
       )
     );
   }
