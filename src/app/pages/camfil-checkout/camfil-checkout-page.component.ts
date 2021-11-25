@@ -93,14 +93,20 @@ export class CamfilCheckoutPageComponent implements OnInit, OnDestroy {
       map(([basket, currency]) => (basket?.totals?.itemTotal ? basket.totals : BasketMockData.getEmptyTotals(currency)))
     );
 
-    this.isEmpty$ = combineLatest([this.checkoutFacade.buckets$, this.checkoutFacade.emptyBuckets$]).pipe(
-      map(([buckets, emptyBuckets]) => buckets || emptyBuckets),
-      map(buckets => !buckets)
-    );
-
     this.isSubmitted$ = this.submittedBasket$.pipe(
       startWith(false),
       map(basket => !!basket)
+    );
+
+    this.isEmpty$ = combineLatest([
+      this.checkoutFacade.buckets$,
+      this.checkoutFacade.emptyBuckets$,
+      this.isSubmitted$,
+    ]).pipe(
+      map(([buckets, emptyBuckets, isSubmitted]) => {
+        const b = buckets || emptyBuckets;
+        return isSubmitted ? false : !b || b?.length === 0;
+      })
     );
 
     // because of editOrderForm

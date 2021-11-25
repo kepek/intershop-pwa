@@ -34,16 +34,18 @@
         (submit)="submitGuestCheckout($event)"
         [basket]="basket$ | async"
       ></camfil-checkout-guest-form>
-      <camfil-checkout-payment
-        (createPaymentInstrument)="createPaymentInstrument($event)"
-        (deletePaymentInstrument)="deletePaymentInstrument($event)"
-        (nextStep)="nextStep()"
-        (updatePaymentMethod)="updateBasketPaymentMethod($event)"
-        [basket]="basket$ | async"
-        [error]="basketError$ | async"
-        [paymentMethods]="paymentMethods$ | async"
-        [priceType]="priceType$ | async"
-      ></camfil-checkout-payment>
+      <ng-container *ngIf="!(isSubmitted$ | async)">
+        <camfil-checkout-payment
+          (createPaymentInstrument)="createPaymentInstrument($event)"
+          (deletePaymentInstrument)="deletePaymentInstrument($event)"
+          (nextStep)="nextStep()"
+          (updatePaymentMethod)="updateBasketPaymentMethod($event)"
+          [basket]="basket$ | async"
+          [error]="basketError$ | async"
+          [paymentMethods]="paymentMethods$ | async"
+          [priceType]="priceType$ | async"
+        ></camfil-checkout-payment>
+      </ng-container>
     </ng-container>
 
     <div cdkDropListGroup>

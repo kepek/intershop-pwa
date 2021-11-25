@@ -9,8 +9,8 @@
   </ng-container>
 
   <ng-template #guest>
-    <h1 *ngIf="!isSubmitted" class="d-flex align-items-center">
-      <mat-icon class="size-37" svgIcon="cart"></mat-icon> &nbsp;
+    <h1 class="d-flex align-items-center">
+      <mat-icon *ngIf="!isSubmitted" class="size-37" svgIcon="cart"></mat-icon> &nbsp;
       {{ (isSubmitted ? 'camfil.checkout.confirmation.title' : 'shopping_cart.proceed_to_checkout.button.label') | translate }}
     </h1>
 
