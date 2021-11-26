@@ -35,6 +35,9 @@ import { CamfilCheckoutGuestFormComponent } from './camfil-checkout-guest-form/c
 import { AppFacade } from 'ish-core/facades/app.facade';
 import { BasketMockData } from 'ish-core/utils/dev/basket-mock-data';
 import { BasketTotal } from 'ish-core/models/basket-total/basket-total.model';
+import { BasketSurchargeTypes } from 'ish-core/models/basket-surcharge/basket-surcharge.types';
+import { BasketSurchargeHelper } from 'ish-core/models/basket-surcharge/basket-surcharge.helper';
+import { PriceHelper } from 'ish-core/models/price/price.helper';
 
 @Component({
   templateUrl: './camfil-checkout-page.component.html',
@@ -90,7 +93,40 @@ export class CamfilCheckoutPageComponent implements OnInit, OnDestroy {
 
     this.basketTotals$ = this.basket$.pipe(
       withLatestFrom(this.appFacade.getCurrencyByChannel$),
-      map(([basket, currency]) => (basket?.totals?.itemTotal ? basket.totals : BasketMockData.getEmptyTotals(currency)))
+      map(([basket, currency]) =>
+        basket?.totals?.itemTotal ? basket.totals : BasketMockData.getEmptyTotals(currency)
+      ),
+      map(totals => {
+        let bucketSurchargeTotalsByType = totals?.bucketSurchargeTotalsByType;
+
+        const shippingDiscountSurcharge = BasketSurchargeHelper.select(
+          bucketSurchargeTotalsByType,
+          BasketSurchargeTypes.ShippingDiscount
+        );
+
+        const shippingFeeSurcharge = BasketSurchargeHelper.select(
+          bucketSurchargeTotalsByType,
+          BasketSurchargeTypes.ShippingDiscount
+        );
+
+        if (BasketSurchargeHelper.equal(shippingDiscountSurcharge, shippingFeeSurcharge)) {
+          bucketSurchargeTotalsByType = bucketSurchargeTotalsByType
+            ?.map(surcharge => ({ ...surcharge, strikethrough: surcharge?.amount.net <= 0 }))
+            ?.map(surcharge => {
+              switch (surcharge.displayName) {
+                case BasketSurchargeTypes.ShippingFee:
+                  return;
+                case BasketSurchargeTypes.ShippingDiscount:
+                  return { ...surcharge, amount: PriceHelper.invert(surcharge.amount) };
+                default:
+                  return surcharge;
+              }
+            })
+            .filter(Boolean);
+        }
+
+        return { ...totals, bucketSurchargeTotalsByType };
+      })
     );
 
     this.isSubmitted$ = this.submittedBasket$.pipe(

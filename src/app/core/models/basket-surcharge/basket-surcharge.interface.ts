@@ -1,4 +1,4 @@
-import { PriceItemData } from "../price-item/price-item.interface";
+import { PriceItemData } from 'ish-core/models/price-item/price-item.interface';
 
 export interface BasketSurchargeData {
   amount: PriceItemData;

@@ -973,6 +973,7 @@
   "camfil.dynamic.the.cart.is.empty": "Varukorgen är tom.",
   "camfil.dynamic.camfil_box_label_fee": "sv_Box label fee",
   "camfil.dynamic.camfil_extra_freight_cost_rule": "sv_Shipping fee",
+  "camfil.dynamic.camfil_extra_freight_discount": "sv_Free shipping",
   "camfil.dynamic.camfil_minimum_order_topup": "sv_Order threshold fee",
   "camfil.forgot_password.form.send.button.label": "Skickat",
   "camfil.forgot_username.form.send.button.label": "Skicka",

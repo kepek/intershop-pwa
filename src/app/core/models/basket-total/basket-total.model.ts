@@ -1,4 +1,5 @@
 import { BasketRebate } from 'ish-core/models/basket-rebate/basket-rebate.model';
+import { BasketSurcharge } from 'ish-core/models/basket-surcharge/basket-surcharge.model';
 import { PriceItem } from 'ish-core/models/price-item/price-item.model';
 import { Price } from 'ish-core/models/price/price.model';
 
@@ -12,25 +13,13 @@ export interface BasketTotal {
   dutiesAndSurchargesTotal?: PriceItem;
   taxTotal?: Price;
   total: PriceItem;
-
   itemRebatesTotal?: PriceItem;
   valueRebatesTotal?: PriceItem;
   valueRebates?: BasketRebate[];
-
   itemShippingRebatesTotal?: PriceItem;
   shippingRebatesTotal?: PriceItem;
   shippingRebates?: BasketRebate[];
-
-  itemSurchargeTotalsByType?: {
-    amount: PriceItem;
-    description: string;
-    displayName: string;
-  }[];
-
-  bucketSurchargeTotalsByType?: {
-    amount: PriceItem;
-    description: string;
-    displayName: string;
-  }[];
+  itemSurchargeTotalsByType?: BasketSurcharge[];
+  bucketSurchargeTotalsByType?: BasketSurcharge[];
   isEstimated: boolean;
 }

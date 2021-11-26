@@ -161,6 +161,7 @@
       <mat-icon *ngIf="surcharge.description" [matTooltip]="surcharge.description"
                 svgIcon="question-mark"></mat-icon>
     </p>
-    <p>{{ surcharge.amount | ishPrice }}</p>
+    <p *ngIf="!surcharge?.strikethrough">{{ surcharge.amount | ishPrice }}</p>
+    <p *ngIf="surcharge?.strikethrough"><s>{{ surcharge.amount | ishPrice }}</s></p>
   </div>
 </ng-template>

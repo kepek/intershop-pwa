@@ -973,6 +973,7 @@
   "camfil.dynamic.the.cart.is.empty": "Ostoskori on tyhjä.",
   "camfil.dynamic.camfil_box_label_fee": "fi_Box label fee",
   "camfil.dynamic.camfil_extra_freight_cost_rule": "fi_Shipping fee",
+  "camfil.dynamic.camfil_extra_freight_discount": "fi_Free shipping",
   "camfil.dynamic.camfil_minimum_order_topup": "fi_Order threshold fee",
   "camfil.forgot_password.form.send.button.label": "Lähetä",
   "camfil.forgot_username.form.send.button.label": "Lähetä",

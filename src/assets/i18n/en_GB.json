@@ -948,6 +948,7 @@
   "camfil.dynamic.cam_card.with_no_completed_address.text": "Please change/add it and add to cart again.",
   "camfil.dynamic.camfil_box_label_fee": "Box label fee",
   "camfil.dynamic.camfil_extra_freight_cost_rule": "Shipping fee",
+  "camfil.dynamic.camfil_extra_freight_discount": "Free shipping",
   "camfil.dynamic.camfil_minimum_order_topup": "Order threshold fee",
   "camfil.dynamic.cart.product.diameter.label": "Diameter",
   "camfil.dynamic.cart.product.height.label": "Height",
