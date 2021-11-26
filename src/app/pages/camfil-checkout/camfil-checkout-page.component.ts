@@ -19,7 +19,7 @@ import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { BasketValidationResultType } from 'ish-core/models/basket-validation/basket-validation.model';
 import { Basket, BasketView } from 'ish-core/models/basket/basket.model';
-import { Bucket } from 'ish-core/models/basket/bucket.model';
+import { Bucket } from 'ish-core/models/bucket/bucket.model';
 
 import { CamCardsFacade } from '../../extensions/cam-cards/facades/cam-cards.facade';
 import { PaymentMethod } from 'ish-core/models/payment-method/payment-method.model';
@@ -145,29 +145,6 @@ export class CamfilCheckoutPageComponent implements OnInit, OnDestroy {
       })
     );
 
-    // because of editOrderForm
-    this.camCardsFacade.customers$
-      .pipe(
-        filter(customers => !customers.length),
-        take(1)
-      )
-      .subscribe(() => {
-        this.camCardsFacade.loadCustomers();
-      });
-
-    // if there is only one eligible payment method without parameters, assign it automatically to the basket
-    this.paymentMethods$
-      .pipe(
-        filter(methods => methods?.length === 1),
-        map(methods => methods?.[0]),
-        filter(pm => !pm.parameters),
-        first(),
-        withLatestFrom(this.checkoutFacade.basket$),
-        filter(([, basket]) => !basket?.payment),
-        takeUntil(this.destroy$)
-      )
-      .subscribe(([pm]) => this.updateBasketPaymentMethod(pm.id));
-
     this.initBasket();
   }
 
@@ -236,6 +213,41 @@ export class CamfilCheckoutPageComponent implements OnInit, OnDestroy {
   }
 
   private initBasket() {
+    // because of editOrderForm
+    this.camCardsFacade.customers$
+      .pipe(
+        filter(customers => !customers.length),
+        take(1)
+      )
+      .subscribe(() => {
+        this.camCardsFacade.loadCustomers();
+      });
+
+    // if there is only one eligible payment method without parameters, assign it automatically to the basket
+    this.paymentMethods$
+      .pipe(
+        filter(methods => methods?.length === 1),
+        map(methods => methods?.[0]),
+        filter(pm => !pm.parameters),
+        first(),
+        withLatestFrom(this.checkoutFacade.basket$),
+        filter(([, basket]) => !basket?.payment),
+        takeUntil(this.destroy$)
+      )
+      .subscribe(([pm]) => this.updateBasketPaymentMethod(pm.id));
+
+    // if there is more than one eligible payment method set default as per configuration for logged in user
+    this.paymentMethods$
+      .pipe(
+        filter(methods => methods?.length > 1),
+        map(methods => methods.find(p => p.default)),
+        first(),
+        withLatestFrom(this.checkoutFacade.basket$, this.isLoggedIn$),
+        filter(([, basket, isLoggedIn]) => !basket?.payment && isLoggedIn),
+        takeUntil(this.destroy$)
+      )
+      .subscribe(([pm]) => this.updateBasketPaymentMethod(pm.id));
+
     this.validationResults$
       .pipe(
         takeWhile(() => !this.isValid),
@@ -265,5 +277,8 @@ export class CamfilCheckoutPageComponent implements OnInit, OnDestroy {
           this.checkoutFacade.loadCustomerDeliveryTerm(customerId);
         });
       });
+
+    // TODO (extMlk): Replace `All` with `CamfilInfo`;
+    this.checkoutFacade.validate(['All']);
   }
 }

@@ -6,7 +6,7 @@ import { ConfigurationService } from 'src/app/extensions/cam-configuration/servi
 
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
-import { Bucket } from 'ish-core/models/basket/bucket.model';
+import { Bucket } from 'ish-core/models/bucket/bucket.model';
 import { whenTruthy } from 'ish-core/utils/operators';
 import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
 

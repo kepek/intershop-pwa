@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable, Subject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
 
-import { EditBucket } from 'ish-core/models/basket/bucket.model';
+import { EditBucket } from 'ish-core/models/bucket/bucket.model';
 import { ProductHelper } from 'ish-core/models/product/product.helper';
 import { whenTruthy } from 'ish-core/utils/operators';
 

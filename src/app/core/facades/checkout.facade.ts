@@ -6,7 +6,7 @@ import { map, switchMap, take, tap } from 'rxjs/operators';
 import { Address } from 'ish-core/models/address/address.model';
 import { Attribute } from 'ish-core/models/attribute/attribute.model';
 import { BasketValidationScopeType } from 'ish-core/models/basket-validation/basket-validation.model';
-import { Bucket } from 'ish-core/models/basket/bucket.model';
+import { Bucket } from 'ish-core/models/bucket/bucket.model';
 import { LineItemUpdate } from 'ish-core/models/line-item-update/line-item-update.model';
 import { LineItem } from 'ish-core/models/line-item/line-item.model';
 import { PaymentInstrument } from 'ish-core/models/payment-instrument/payment-instrument.model';

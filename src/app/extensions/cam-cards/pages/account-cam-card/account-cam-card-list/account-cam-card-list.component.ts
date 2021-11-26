@@ -28,7 +28,7 @@ import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { Address } from 'ish-core/models/address/address.model';
 import { BasketView } from 'ish-core/models/basket/basket.model';
-import { Bucket } from 'ish-core/models/basket/bucket.model';
+import { Bucket } from 'ish-core/models/bucket/bucket.model';
 import { Product } from 'ish-core/models/product/product.model';
 import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
 import { whenFalsy, whenTruthy } from 'ish-core/utils/operators';

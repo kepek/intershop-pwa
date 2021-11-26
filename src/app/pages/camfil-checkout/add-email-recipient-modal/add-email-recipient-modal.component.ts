@@ -4,7 +4,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { BasketExtensionData } from 'ish-core/models/basket-extension/basket-extension.interface';
-import { Bucket } from 'ish-core/models/basket/bucket.model';
+import { Bucket } from 'ish-core/models/bucket/bucket.model';
 import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
 import { SpecialValidators } from 'ish-shared/forms/validators/special-validators';
 

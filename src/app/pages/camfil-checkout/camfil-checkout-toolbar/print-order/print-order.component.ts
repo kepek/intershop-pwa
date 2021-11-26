@@ -9,7 +9,7 @@ import { CamPdfService } from 'src/app/extensions/cam-pdf/services/cam-pdf/cam-p
 import { AccountFacade } from 'ish-core/facades/account.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { AttributeHelper } from 'ish-core/models/attribute/attribute.helper';
-import { Bucket } from 'ish-core/models/basket/bucket.model';
+import { Bucket } from 'ish-core/models/bucket/bucket.model';
 import { LineItemView } from 'ish-core/models/line-item/line-item.model';
 import { PriceHelper } from 'ish-core/models/price/price.helper';
 import { Price } from 'ish-core/models/price/price.model';

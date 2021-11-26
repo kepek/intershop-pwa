@@ -20,7 +20,7 @@ import { first, skip, take, takeUntil } from 'rxjs/operators';
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { AttributeHelper } from 'ish-core/models/attribute/attribute.helper';
-import { Bucket } from 'ish-core/models/basket/bucket.model';
+import { Bucket } from 'ish-core/models/bucket/bucket.model';
 import { CustomerDeliveryTerm } from 'ish-core/models/customer/customer.interface';
 import { LineItemData } from 'ish-core/models/line-item/line-item.interface';
 import { LineItem, LineItemView } from 'ish-core/models/line-item/line-item.model';

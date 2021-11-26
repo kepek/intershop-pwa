@@ -1,7 +1,6 @@
 import { Address } from 'ish-core/models/address/address.model';
 import { BasketExtension } from 'ish-core/models/basket-extension/basket-extension.model';
 import { LineItemView } from 'ish-core/models/line-item/line-item.model';
-import { PriceItemData } from 'ish-core/models/price-item/price-item.interface';
 import { PriceItem } from 'ish-core/models/price-item/price-item.model';
 import { Price } from 'ish-core/models/price/price.model';
 
@@ -36,26 +35,12 @@ export interface Bucket extends BasketExtension {
   surcharges?: BucketSurcharge[];
 }
 
-export interface BucketData {
-  basket: string;
-  lineItems?: string[];
-  id: string;
-  shipToAddress?: string;
-  shippingMethod?: string;
-  surcharges?: BucketSurchargeData[];
-}
-
 export interface BucketIncluded {
   shipToAddress: {
     [key: string]: {
       id: string;
     };
   };
-}
-
-export interface Buckets {
-  data: BucketData[];
-  included: BucketIncluded;
 }
 
 export interface EditBucket extends Bucket {
@@ -65,13 +50,6 @@ export interface EditBucket extends Bucket {
   address?: string;
   zipCode?: string;
   area?: string;
-}
-
-export interface BucketSurchargeData {
-  amount: PriceItemData;
-  description?: string;
-  name: string;
-  taxes?: Price[];
 }
 
 export interface BucketSurcharge {

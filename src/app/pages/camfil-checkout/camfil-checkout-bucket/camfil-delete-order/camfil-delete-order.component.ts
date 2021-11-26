@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, Input, ViewChild } from '@angular/c
 import { MatDialog } from '@angular/material/dialog';
 
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
-import { Bucket } from 'ish-core/models/basket/bucket.model';
+import { Bucket } from 'ish-core/models/bucket/bucket.model';
 import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
 
 @Component({

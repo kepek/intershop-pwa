@@ -1,11 +1,13 @@
 import { BasketExtensionData } from 'ish-core/models/basket-extension/basket-extension.interface';
+import { BucketData, BucketsData } from 'ish-core/models/bucket/bucket.interface';
 import { LineItemView } from 'ish-core/models/line-item/line-item.model';
 import { PriceItemMapper } from 'ish-core/models/price-item/price-item.mapper';
+import { PriceMapper } from 'ish-core/models/price/price.mapper';
 
-import { Bucket, BucketData, Buckets } from './bucket.model';
+import { Bucket } from './bucket.model';
 
 export class BucketMapper {
-  static fromData(payload: Buckets, lineItems: LineItemView[], basketExtensions: BasketExtensionData[]): Bucket[] {
+  static fromData(payload: BucketsData, lineItems: LineItemView[], basketExtensions: BasketExtensionData[]): Bucket[] {
     const { data, included } = payload;
 
     return data.map((bucketData: BucketData) => {
@@ -27,6 +29,7 @@ export class BucketMapper {
               amount: PriceItemMapper.fromPriceItem(surcharge.amount),
               description: surcharge.description,
               displayName: surcharge.name,
+              taxes: surcharge?.taxes?.map(PriceMapper.fromData),
             }))
           : undefined,
         deliveryAddressId: shipToAddress ? shipToAddress.id : '',

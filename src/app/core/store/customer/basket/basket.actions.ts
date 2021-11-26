@@ -8,7 +8,7 @@ import { BasketExtension } from 'ish-core/models/basket-extension/basket-extensi
 import { BasketInfo } from 'ish-core/models/basket-info/basket-info.model';
 import { BasketValidation, BasketValidationScopeType } from 'ish-core/models/basket-validation/basket-validation.model';
 import { Basket } from 'ish-core/models/basket/basket.model';
-import { Bucket } from 'ish-core/models/basket/bucket.model';
+import { Bucket } from 'ish-core/models/bucket/bucket.model';
 import { CustomerDeliveryTerm } from 'ish-core/models/customer/customer.interface';
 import { HttpError } from 'ish-core/models/http-error/http-error.model';
 import { LineItemUpdate } from 'ish-core/models/line-item-update/line-item-update.model';

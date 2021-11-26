@@ -21,7 +21,7 @@ import {
 
 import { Address } from 'ish-core/models/address/address.model';
 import { AttributeHelper } from 'ish-core/models/attribute/attribute.helper';
-import { Bucket } from 'ish-core/models/basket/bucket.model';
+import { Bucket } from 'ish-core/models/bucket/bucket.model';
 import {
   LineItemUpdateHelper,
   LineItemUpdateHelperItem,

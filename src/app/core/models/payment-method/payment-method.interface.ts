@@ -30,6 +30,7 @@ export interface PaymentMethodBaseData {
   paymentInstruments?: string[];
   parameterDefinitions?: PaymentMethodParameterType[];
   hostedPaymentPageParameters?: { name: string; value: string }[];
+  default?: boolean;
 }
 
 export interface PaymentMethodData {

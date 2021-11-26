@@ -22,7 +22,7 @@ import { Address } from 'ish-core/models/address/address.model';
 import { AttributeHelper } from 'ish-core/models/attribute/attribute.helper';
 import { BasketExtension } from 'ish-core/models/basket-extension/basket-extension.model';
 import { BasketView } from 'ish-core/models/basket/basket.model';
-import { Bucket } from 'ish-core/models/basket/bucket.model';
+import { Bucket } from 'ish-core/models/bucket/bucket.model';
 import { Product, ProductHelper } from 'ish-core/models/product/product.model';
 import { whenTruthy } from 'ish-core/utils/operators';
 import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';

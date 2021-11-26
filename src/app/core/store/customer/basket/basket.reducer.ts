@@ -5,7 +5,7 @@ import { Address } from 'ish-core/models/address/address.model';
 import { BasketInfo } from 'ish-core/models/basket-info/basket-info.model';
 import { BasketValidationResultType } from 'ish-core/models/basket-validation/basket-validation.model';
 import { Basket } from 'ish-core/models/basket/basket.model';
-import { Bucket } from 'ish-core/models/basket/bucket.model';
+import { Bucket } from 'ish-core/models/bucket/bucket.model';
 import { CustomerDeliveryTerm } from 'ish-core/models/customer/customer.interface';
 import { HttpError } from 'ish-core/models/http-error/http-error.model';
 import { LineItemView } from 'ish-core/models/line-item/line-item.model';
