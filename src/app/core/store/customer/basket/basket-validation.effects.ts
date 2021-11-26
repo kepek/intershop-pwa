@@ -52,7 +52,10 @@ export class BasketValidationEffects {
       ofType(validateBasket),
       mapToPayloadProperty('scopes'),
       whenTruthy(),
-      concatMap(scopes =>
+      // TODO; fast patching solution for CAM-1796
+      withLatestFrom(this.store.pipe(select(getCurrentBasket))),
+      filter(([, basket]) => !!basket),
+      concatMap(([scopes]) =>
         this.basketService.validateBasket(scopes).pipe(
           map(basketValidation =>
             basketValidation.results.valid

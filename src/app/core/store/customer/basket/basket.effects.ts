@@ -241,8 +241,8 @@ export class BasketEffects {
     this.actions$.pipe(
       ofType(loadCustomerDeliveryTerm),
       mapToPayload(),
-      withLatestFrom(this.store.select(getCustomersDeliveryTerms)),
-      filter(([{ customerId }, terms]) => !terms[customerId]),
+      withLatestFrom(this.store.select(getCustomersDeliveryTerms), this.store.pipe(select(getCurrentBasket))),
+      filter(([{ customerId }, terms, basket]) => !terms[customerId] && !!basket),
       concatMap(([{ customerId }]) =>
         this.basketService.loadCustomerDeliveryTerm(customerId).pipe(
           mergeMap(term => [loadCustomerDeliveryTermSuccess({ customerId, term })]),
