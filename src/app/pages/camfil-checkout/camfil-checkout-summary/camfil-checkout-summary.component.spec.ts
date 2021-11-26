@@ -19,7 +19,6 @@ import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfi
 import { ChannelToggleDirective } from '../../../extensions/cam-configuration/directives/channel-toggle.directive';
 
 import { CamfilCheckoutSummaryComponent } from './camfil-checkout-summary.component';
-import { BasketPromotionComponent } from 'ish-shared/components/basket/basket-promotion/basket-promotion.component';
 
 describe('Camfil Checkout Summary Component', () => {
   let component: CamfilCheckoutSummaryComponent;
