@@ -278,7 +278,6 @@ export class CamfilCheckoutPageComponent implements OnInit, OnDestroy {
         });
       });
 
-    // TODO (extMlk): Replace `All` with `CamfilInfo`;
-    this.checkoutFacade.validate(['All']);
+    this.checkoutFacade.validate(['CamfilInfo']);
   }
 }
