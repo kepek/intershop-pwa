@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { RouterNavigatedPayload, routerNavigatedAction } from '@ngrx/router-store';
-import { Store, select } from '@ngrx/store';
+import { routerNavigatedAction, RouterNavigatedPayload } from '@ngrx/router-store';
+import { select, Store } from '@ngrx/store';
 import { combineLatest, iif, of } from 'rxjs';
 import {
   concatMap,
@@ -241,8 +241,8 @@ export class BasketEffects {
     this.actions$.pipe(
       ofType(loadCustomerDeliveryTerm),
       mapToPayload(),
-      withLatestFrom(this.store.select(getCustomersDeliveryTerms), this.store.pipe(select(getCurrentBasket))),
-      filter(([{ customerId }, terms, basket]) => !terms[customerId] && !!basket),
+      withLatestFrom(this.store.select(getCustomersDeliveryTerms)),
+      filter(([{ customerId }, terms]) => !terms[customerId]),
       concatMap(([{ customerId }]) =>
         this.basketService.loadCustomerDeliveryTerm(customerId).pipe(
           mergeMap(term => [loadCustomerDeliveryTermSuccess({ customerId, term })]),

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { Store, select } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 import { intersection } from 'lodash-es';
 import { concatMap, filter, map, mapTo, tap, withLatestFrom } from 'rxjs/operators';
 
@@ -52,10 +52,7 @@ export class BasketValidationEffects {
       ofType(validateBasket),
       mapToPayloadProperty('scopes'),
       whenTruthy(),
-      // TODO; fast patching solution for CAM-1796
-      withLatestFrom(this.store.pipe(select(getCurrentBasket))),
-      filter(([, basket]) => !!basket),
-      concatMap(([scopes]) =>
+      concatMap(scopes =>
         this.basketService.validateBasket(scopes).pipe(
           map(basketValidation =>
             basketValidation.results.valid
