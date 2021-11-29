@@ -31,7 +31,7 @@
     <ng-container *ngIf="!(isLoggedIn$ | async)">
       <camfil-checkout-guest-form
         #guestForm
-        (submit)="submitGuestCheckout($event)"
+        (submit)="updateGuestBucketAddress($event)"
         [basket]="basket$ | async"
       ></camfil-checkout-guest-form>
       <ng-container *ngIf="!(isSubmitted$ | async)">
@@ -42,7 +42,7 @@
           (updatePaymentMethod)="updateBasketPaymentMethod($event)"
           [basket]="basket$ | async"
           [error]="basketError$ | async"
-          [paymentMethods]="paymentMethods$ | async"
+          [paymentMethods]=""
           [priceType]="priceType$ | async"
         ></camfil-checkout-payment>
       </ng-container>

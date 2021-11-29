@@ -1,14 +1,14 @@
  <ng-container *ngIf="basket?.lineItems?.length && filteredPaymentMethods?.length">
 
-  <ng-template #paymentErrors>
-    <div *ngIf="nextDisabled && !error" class="alert alert-danger" role="alert">
-      {{ 'checkout.payment.no_Selection.error' | translate }}
-    </div>
+   <ng-template #paymentErrors>
+     <div *ngIf="nextDisabled && !error" class="alert alert-danger" role="alert">
+       {{ 'checkout.payment.no_Selection.error' | translate }}
+     </div>
 
-    <div *ngIf="redirectStatus" class="alert alert-danger" role="alert">
-      {{ 'checkout.payment.sorry_message.text' | translate }}
-      <ng-container *ngIf="redirectStatus === 'cancel'">
-        {{ 'checkout.payment.canceled.text' | translate }}
+     <div *ngIf="redirectStatus" class="alert alert-danger" role="alert">
+       {{ 'checkout.payment.sorry_message.text' | translate }}
+       <ng-container *ngIf="redirectStatus === 'cancel'">
+         {{ 'checkout.payment.canceled.text' | translate }}
       </ng-container>
       <ng-container *ngIf="redirectStatus === 'failure'">
         {{ 'checkout.payment.failed.text' | translate }}

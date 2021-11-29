@@ -2,17 +2,7 @@
 
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { combineLatest, Observable, Subject } from 'rxjs';
-import {
-  distinctUntilChanged,
-  filter,
-  first,
-  map,
-  startWith,
-  take,
-  takeUntil,
-  takeWhile,
-  withLatestFrom,
-} from 'rxjs/operators';
+import { filter, first, map, startWith, take, takeUntil, takeWhile, withLatestFrom } from 'rxjs/operators';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
@@ -26,7 +16,6 @@ import { PaymentMethod } from 'ish-core/models/payment-method/payment-method.mod
 import { HttpError } from 'ish-core/models/http-error/http-error.model';
 import { PaymentInstrument } from 'ish-core/models/payment-instrument/payment-instrument.model';
 import { whenTruthy } from 'ish-core/utils/operators';
-import { isEqual } from 'lodash-es';
 import {
   BasketExtensionData,
   BasketExtensionGuestData,
@@ -160,10 +149,6 @@ export class CamfilCheckoutPageComponent implements OnInit, OnDestroy {
     this.checkoutFacade.setCheckoutFocusedElement('');
   }
 
-  submit() {
-    this.guestForm?.validateGuestForm();
-  }
-
   updateBasketPaymentMethod(paymentName: string) {
     this.checkoutFacade.setBasketPayment(paymentName);
   }
@@ -190,7 +175,13 @@ export class CamfilCheckoutPageComponent implements OnInit, OnDestroy {
     this.checkoutFacade.continue(4);
   }
 
-  submitGuestCheckout(guestBucketAddressData: BasketExtensionGuestData) {
+  submit() {
+    this.guestForm?.validateGuestForm();
+    this.checkErpEmployeeIdExists();
+    this.checkoutFacade.continue(5);
+  }
+
+  updateGuestBucketAddress(guestBucketAddressData: BasketExtensionGuestData) {
     combineLatest([
       this.isLoggedIn$,
       this.checkoutFacade.basket$.pipe(map(basket => basket?.id)),
@@ -210,6 +201,20 @@ export class CamfilCheckoutPageComponent implements OnInit, OnDestroy {
 
         this.shoppingFacade.updateBucket(basketId, bucket?.deliveryAddressId, basketExtensionData);
       });
+  }
+
+  private checkErpEmployeeIdExists() {
+    let erpEmployeeId;
+
+    try {
+      erpEmployeeId = JSON.parse(localStorage.getItem('erpEmployeeId'));
+    } catch (err) {
+      // NOOP
+    }
+
+    if (erpEmployeeId) {
+      this.checkoutFacade.updateBasketExternalOrderReference(erpEmployeeId);
+    }
   }
 
   private initBasket() {
@@ -267,17 +272,15 @@ export class CamfilCheckoutPageComponent implements OnInit, OnDestroy {
         whenTruthy(),
         withLatestFrom(this.isLoggedIn$),
         map(([buckets, isLoggedIn]) =>
-          isLoggedIn ? [...new Set(buckets.map(bucket => bucket?.customer?.id))] : undefined
+          isLoggedIn ? [...new Set(buckets.map(bucket => bucket?.customer?.id))].filter(Boolean) : []
         ),
-        distinctUntilChanged(isEqual),
+        filter(customerIds => customerIds?.length > 0),
         takeUntil(this.destroy$)
       )
       .subscribe(customerIds => {
-        customerIds?.filter(Boolean)?.forEach(customerId => {
+        customerIds.forEach(customerId => {
           this.checkoutFacade.loadCustomerDeliveryTerm(customerId);
         });
       });
-
-    this.checkoutFacade.validate(['CamfilInfo']);
   }
 }

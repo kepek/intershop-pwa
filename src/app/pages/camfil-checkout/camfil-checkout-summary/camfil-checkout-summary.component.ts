@@ -68,37 +68,17 @@ export class CamfilCheckoutSummaryComponent extends CamfilBasketCostSummaryCompo
   submitOrder() {
     this.isLoggedIn$.pipe(take(1), takeUntil(this.destroy$)).subscribe(isLoggedIn => {
       if (isLoggedIn) {
-        this.placeOrder();
+        this.submit.emit();
       } else if (this.guestGdprForm?.valid) {
-        this.placeOrder();
+        this.submit.emit();
       } else {
         this.openGDPRErrorModal();
       }
     });
   }
 
-  private checkErpEmployeeIdExists() {
-    let erpEmployeeId;
-
-    try {
-      erpEmployeeId = JSON.parse(localStorage.getItem('erpEmployeeId'));
-    } catch (err) {
-      // NOOP
-    }
-
-    if (erpEmployeeId) {
-      this.checkoutFacade.updateBasketExternalOrderReference(erpEmployeeId);
-    }
-  }
-
   continueShopping() {
     this.router.navigate(['/account/camcards']);
-  }
-
-  private placeOrder() {
-    this.checkErpEmployeeIdExists();
-    this.checkoutFacade.continue(5);
-    this.submit.emit();
   }
 
   private initGDPRForm(): void {

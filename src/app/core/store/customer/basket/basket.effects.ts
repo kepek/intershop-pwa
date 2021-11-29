@@ -26,7 +26,7 @@ import { RouterState } from 'ish-core/store/core/router/router.reducer';
 import { setCheckoutFocusedElement } from 'ish-core/store/core/viewconf/viewconf.actions';
 import { createUser, loadUserByAPIToken, loginUser, loginUserSuccess } from 'ish-core/store/customer/user';
 import { ApiTokenService } from 'ish-core/utils/api-token/api-token.service';
-import { mapErrorToAction, mapToPayload, mapToPayloadProperty } from 'ish-core/utils/operators';
+import { mapErrorToAction, mapToPayload, mapToPayloadProperty, whenTruthy } from 'ish-core/utils/operators';
 
 import {
   camfilDragLineItem,
@@ -62,6 +62,7 @@ import {
   updateBasketExternalOrderReference,
   updateBasketFail,
   updateBasketShippingMethod,
+  validateBasket,
 } from './basket.actions';
 import {
   getCurrentBasket,
@@ -199,6 +200,10 @@ export class BasketEffects {
    * Add queryParam error=true to the route to prevent resetting errors.
    *
    */
+  // tslint:disable-next-line:force-jsdoc-comments
+  // We don't need to reset basket errors since we do have one-step checkout here in Camfil.
+  // tslint:disable-next-line:force-jsdoc-comments no-commented-out-code
+  /*
   routeListenerForResettingBasketErrors$ = createEffect(() =>
     this.actions$.pipe(
       ofType(routerNavigatedAction),
@@ -209,6 +214,7 @@ export class BasketEffects {
       mapTo(resetBasketErrors())
     )
   );
+  */
   /**
    * Creates a requisition based on the given basket, if approval is required
    */
@@ -328,6 +334,16 @@ export class BasketEffects {
       withLatestFrom(this.store.pipe(select(getSubmittedBasketId)), this.store.pipe(select(getCurrentBasketId))),
       filter(([, submittedBasket, basket]) => !submittedBasket || !basket),
       map(createBasket)
+    )
+  );
+
+  validateBasketAfterLoadBasketSuccess$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loadBasketSuccess),
+      mapToPayload(),
+      withLatestFrom(this.store.pipe(select(getCurrentBasket))),
+      whenTruthy(),
+      mapTo(validateBasket({ scopes: ['CamfilInfo'] }))
     )
   );
 
