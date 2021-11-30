@@ -14,7 +14,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { flatten } from 'lodash-es';
 import { Subject, combineLatest } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { map, takeUntil } from 'rxjs/operators';
 
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
@@ -80,13 +80,13 @@ export class AddProductToCartModalComponent implements OnInit, OnDestroy {
       this.commonShippingMethodId = basket.commonShippingMethod?.id;
     });
 
-    combineLatest([
-      this.checkoutFacade.buckets$.pipe(whenTruthy()),
-      this.checkoutFacade.emptyBuckets$?.pipe(whenTruthy()),
-    ])
-      .pipe(whenTruthy(), takeUntil(this.destroy$))
-      .subscribe(res => {
-        this.buckets = flatten(res);
+    combineLatest([this.checkoutFacade.buckets$, this.checkoutFacade.emptyBuckets$])
+      .pipe(
+        map(buckets => flatten(buckets)?.filter(Boolean)),
+        takeUntil(this.destroy$)
+      )
+      .subscribe(buckets => {
+        this.buckets = buckets;
       });
 
     this.shoppingFacade.basketAddresses$.pipe(takeUntil(this.destroy$)).subscribe((basketAddresses: Address[]) => {
