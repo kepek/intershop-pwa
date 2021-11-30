@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { select, Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import { intersection } from 'lodash-es';
 import { concatMap, filter, map, mapTo, tap, withLatestFrom } from 'rxjs/operators';
 
@@ -107,13 +107,13 @@ export class BasketValidationEffects {
     /* targetStep: 1, index: 0 */
     { scopes: ['Products', 'Value', 'Camfil', 'CamfilInfo'], route: '/checkout' },
     /* targetStep: 2, index: 1 */
-    { scopes: ['InvoiceAddress', 'ShippingAddress', 'Addresses'], route: '/checkout' },
+    { scopes: ['InvoiceAddress', 'ShippingAddress', 'Addresses'], route: '/checkout/address' },
     /* targetStep: 3, index: 2 */
     { scopes: ['Shipping'], route: '/checkout/shipping' },
     /* targetStep: 4, index: 3 */
     { scopes: ['Payment'], route: '/checkout/payment' },
     /* targetStep: 5, index: 4 */
-    { scopes: ['Products', 'Value', 'InvoiceAddress', 'Shipping', 'Payment', 'Camfil'], route: '/checkout' },
+    { scopes: ['Products', 'Value', 'InvoiceAddress', 'Shipping', 'Payment', 'Camfil'], route: '/checkout/review' },
     /* targetStep: 6, index: 5 */
     { scopes: ['All'], route: 'auto' }, // targetRoute will be calculated in dependence of the validation result
   ];

@@ -313,7 +313,7 @@ describe('Basket Validation Effects', () => {
     it('should map to action of type ContinueCheckoutSuccess if targetStep is not 5 (order creation)', () => {
       const action = continueCheckout({ targetStep: 1 });
       const completion = continueCheckoutSuccess({
-        targetRoute: '/checkout',
+        targetRoute: '/checkout/address',
         basketValidation,
       });
       actions$ = hot('-a-a-a', { a: action });
@@ -376,7 +376,7 @@ describe('Basket Validation Effects', () => {
         results: {
           valid: false,
           adjusted: false,
-          errors: [{ code: '1234', message: 'error', parameters: { scopes: 'All' } }],
+          errors: [{ code: '1234', message: 'error', parameters: { scopes: 'Addresses' } }],
         },
       };
       const action = continueCheckoutWithIssues({
@@ -389,14 +389,14 @@ describe('Basket Validation Effects', () => {
 
       tick(500);
 
-      expect(location.path()).toEqual('/checkout?error=true');
+      expect(location.path()).toEqual('/checkout/address?error=true');
     }));
 
     it('should map to action of type ContinueCheckoutWithIssues if basket is not valid', () => {
       const action = continueCheckout({ targetStep: 1 });
       basketValidation.results.valid = false;
       const completion = continueCheckoutWithIssues({
-        targetRoute: '/checkout',
+        targetRoute: '/checkout/address',
         basketValidation,
       });
       actions$ = hot('-a', { a: action });

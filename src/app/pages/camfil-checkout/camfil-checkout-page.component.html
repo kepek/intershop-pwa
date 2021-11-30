@@ -3,9 +3,7 @@
 <br />
 
 <div class="checkout row">
-
   <div [ngClass]="{ 'col-lg-9': (basket$ | async) }" class="col-sm-12">
-
     <ish-basket-info></ish-basket-info>
 
     <camfil-error-message [error]="basketError$ | async" [toast]="true"></camfil-error-message>
@@ -42,7 +40,7 @@
           (updatePaymentMethod)="updateBasketPaymentMethod($event)"
           [basket]="basket$ | async"
           [error]="basketError$ | async"
-          [paymentMethods]=""
+          [paymentMethods]="paymentMethods$ | async"
           [priceType]="priceType$ | async"
         ></camfil-checkout-payment>
       </ng-container>
@@ -75,7 +73,7 @@
       </ng-container>
 
       <ng-template #notConfirmed>
-        <ng-container *ngIf="buckets$ | async as buckets;">
+        <ng-container *ngIf="buckets$ | async as buckets">
           <ng-container *ngFor="let bucket of buckets; index as i; trackBy: trackByLineItems">
             <camfil-checkout-bucket
               [basket]="basket$ | async"
@@ -89,7 +87,6 @@
         </ng-container>
       </ng-template>
     </div>
-
   </div>
 
   <ng-container *ngIf="basket$ | async as basket">
@@ -102,5 +99,4 @@
       ></camfil-checkout-summary>
     </div>
   </ng-container>
-
 </div>

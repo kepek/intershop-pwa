@@ -237,6 +237,12 @@ describe('Customer Store', () => {
               sku: "test"
               changes: {}
             [Basket] Load Buckets
+            [Basket Internal] Validate Basket:
+              scopes: ["CamfilInfo"]
+            [Basket API] Validate Basket and continue with success:
+              targetRoute: undefined
+              basketValidation: {"basket":{"id":"test","lineItems":[1]},"results":{"valid":t...
+            [Basket] Load Buckets
           `);
           done();
         }, 1000);
@@ -262,6 +268,12 @@ describe('Customer Store', () => {
           [Basket API] Load Basket Success:
             basket: {"id":"test","lineItems":[1]}
           [Basket] Load Buckets
+          [Basket Internal] Validate Basket:
+            scopes: ["CamfilInfo"]
+          [Basket API] Validate Basket and continue with success:
+            targetRoute: undefined
+            basketValidation: {"basket":{"id":"test","lineItems":[1]},"results":{"valid":t...
+          [Basket] Load Buckets
         `);
       });
 
@@ -272,7 +284,7 @@ describe('Customer Store', () => {
           [Basket] Validate Basket and continue checkout:
             targetStep: 1
           [Basket API] Validate Basket and continue with success:
-            targetRoute: "/checkout"
+            targetRoute: "/checkout/address"
             basketValidation: {"basket":{"id":"test","lineItems":[1]},"results":{"valid":t...
           [Basket] Load Buckets
         `);

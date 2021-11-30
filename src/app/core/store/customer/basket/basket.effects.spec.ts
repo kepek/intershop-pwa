@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { Action, Store } from '@ngrx/store';
@@ -17,7 +16,6 @@ import { loginUserSuccess } from 'ish-core/store/customer/user';
 import { ApiTokenService } from 'ish-core/utils/api-token/api-token.service';
 import { makeHttpError } from 'ish-core/utils/dev/api-service-utils';
 import { BasketMockData } from 'ish-core/utils/dev/basket-mock-data';
-import { routerTestNavigatedAction } from 'ish-core/utils/dev/routing';
 
 import {
   deleteBasketAttribute,
@@ -48,7 +46,6 @@ describe('Basket Effects', () => {
   let basketServiceMock: BasketService;
   let effects: BasketEffects;
   let store$: Store;
-  let router: Router;
 
   beforeEach(() => {
     basketServiceMock = mock(BasketService);
@@ -73,7 +70,6 @@ describe('Basket Effects', () => {
 
     effects = TestBed.inject(BasketEffects);
     store$ = TestBed.inject(Store);
-    router = TestBed.inject(Router);
   });
 
   describe('loadBasket$', () => {
@@ -404,6 +400,8 @@ describe('Basket Effects', () => {
     });
   });
 
+  // tslint:disable-next-line:no-commented-out-tests no-commented-out-code
+  /*
   describe('routeListenerForResettingBasketErrors$', () => {
     it('should fire ResetBasketErrors when route basket or checkout/* is navigated', done => {
       router.navigateByUrl('/checkout/payment');
@@ -441,6 +439,7 @@ describe('Basket Effects', () => {
       expect(effects.routeListenerForResettingBasketErrors$).toBeObservable(cold('|'));
     });
   });
+  */
 
   describe('submitBasket$', () => {
     beforeEach(() => {
@@ -459,7 +458,7 @@ describe('Basket Effects', () => {
       });
     });
 
-    it('should map a valid request to action of type SubmitBasketBuccess', () => {
+    it('should map a valid request to action of type SubmitBasketSuccess', () => {
       when(basketServiceMock.createRequisition(anyString())).thenReturn(of(undefined));
 
       const action = submitBasket();
