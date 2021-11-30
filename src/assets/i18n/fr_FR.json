@@ -1576,7 +1576,7 @@
   "search.noResult.heading": "La recherche ne correspond à aucun résultat.",
   "search.noResult.message": "Votre recherche pour <span>\"{{0}}\"</span> a donné 0 résultat(s).",
   "search.noresult.filtered_products.message": "Nous sommes désolés, nous n'avons pu trouver aucun produit correspondant au filtre choisi.",
-  "search.noresult.guidelines": "<h4>Conseils de recherche &amp; Instructions</h4><ol><li>Vérifier l'orthographe. Essayez de varier l'orthographe ou parcourez les listes de catégories de produits qui apparaissent sur notre page d'accueil.</li><li>Limitez la recherche à un ou deux termes.</li><li>Soyez moins spécifique dans la terminologie employée. L'utilisation d'un(de) terme(s) plus général(aux) peut vous conduire à des produits similaires et apparentés.</li></ol>",
+  "search.noresult.guidelines": "<h4>Conseils de recherche &amp; Instructions</h4><ol><li>Vérifiez l'orthographe. Essayez de varier l'orthographe ou parcourez les listes de catégories de produits qui apparaissent sur notre page d'accueil.</li><li>Limitez la recherche à un ou deux termes.</li><li>Soyez moins spécifique dans la terminologie employée. L'utilisation d'un(de) terme(s) plus général(aux) peut vous conduire à des produits similaires et apparentés.</li></ol>",
   "search.searchbox.button.reset.title": "Supprimer le terme de recherche",
   "search.searchbox.button.title": "Démarrer la recherche",
   "search.searchbox.instructional_text": "Rechercher",
