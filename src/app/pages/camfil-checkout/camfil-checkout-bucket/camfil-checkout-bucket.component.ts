@@ -3,6 +3,7 @@ import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   ElementRef,
   Input,
@@ -108,7 +109,8 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
     private shoppingFacade: ShoppingFacade,
     private translate: TranslateService,
     private appFacade: AppFacade,
-    private accountFacade: AccountFacade
+    private accountFacade: AccountFacade,
+    private cdRef: ChangeDetectorRef
   ) {}
 
   get currentBasketExtensions() {
@@ -236,6 +238,11 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
     if (s?.buckets?.previousValue?.length !== s?.buckets?.currentValue?.length) {
       this.handleHeightItemsContainer(this.order?.lineItems);
       this.virtualScrollViewport?.checkViewportSize();
+      this.orderForm?.patchValue({
+        orderMark: this.order.orderMark,
+        invoiceLabel: this.order.invoiceLabel,
+        info: this.order.info,
+      });
     }
 
     const prev = s?.order?.previousValue?.deliveryDate;
@@ -247,6 +254,7 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
     }
     const scroll = this.currentScrollIndex || this.order?.currentScrollIndex;
     setTimeout(() => this.virtualScrollViewport?.scrollToIndex(scroll));
+    this.cdRef.detectChanges();
   }
 
   ngAfterViewInit() {
