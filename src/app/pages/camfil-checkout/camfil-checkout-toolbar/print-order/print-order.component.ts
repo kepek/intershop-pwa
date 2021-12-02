@@ -6,6 +6,7 @@ import { PdfHelper } from 'src/app/extensions/cam-pdf/models/pdf.helper';
 import { DataToPdf } from 'src/app/extensions/cam-pdf/models/pdf.interface';
 import { CamPdfService } from 'src/app/extensions/cam-pdf/services/cam-pdf/cam-pdf.service';
 
+import { AuthorizationToggleService } from 'ish-core/authorization-toggle.module';
 import { AccountFacade } from 'ish-core/facades/account.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { AttributeHelper } from 'ish-core/models/attribute/attribute.helper';
@@ -37,7 +38,8 @@ export class PrintOrderComponent implements OnInit {
     private pdfService: CamPdfService,
     private accountFacade: AccountFacade,
     public dialog: MatDialog,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private authorizationToggle: AuthorizationToggleService
   ) {}
 
   private static REQUIRED_COMPLETENESS_LEVEL = ProductCompletenessLevel.List;
@@ -56,6 +58,7 @@ export class PrintOrderComponent implements OnInit {
     );
   }
   @Input() buckets: Bucket[];
+  showPrice = false;
   user: User;
   productsInfo: {
     [sku: string]: PdfProductInfo;
@@ -87,6 +90,10 @@ export class PrintOrderComponent implements OnInit {
     this.accountFacade.user$.pipe(whenTruthy(), take(1)).subscribe(user => {
       this.user = user;
     });
+    this.authorizationToggle
+      .isAuthorizedTo('APP_B2B_PRINT_PRICES')
+      .pipe(take(1))
+      .subscribe(permission => (this.showPrice = permission));
   }
 
   calculateDeliveryDate(product: ProductView) {
@@ -129,7 +136,12 @@ export class PrintOrderComponent implements OnInit {
   preparePdfContent() {
     return this.buckets.reduce((res, bucket, i) => {
       const items = [PdfHelper.pdfTable(this.pdfItemsRow(bucket))];
-      res.push(this.pdfHeader(i), this.pdfInfoPart(bucket, i), items, this.pdfTotal(bucket.deliveryAddressId));
+      res.push(
+        this.pdfHeader(i),
+        this.pdfInfoPart(bucket, i),
+        items,
+        this.showPrice ? this.pdfTotal(bucket.deliveryAddressId) : ''
+      );
       return res;
     }, []);
   }
