@@ -75,6 +75,10 @@
 
     .mat-expansion-panel-body {
       padding: 0;
+
+      .alert {
+        margin-bottom: 0;
+      }
     }
   }
 

@@ -227,6 +227,7 @@ import { LoadingComponent } from './components/common/loading/loading.component'
 import { CamfilErrorMessageComponent } from './components/common/camfil-error-message/camfil-error-message.component';
 import { CamfilLineItemMeasurementsComponent } from './components/line-item/camfil-line-item-table/camfil-line-item-measurements/camfil-line-item-measurements.component';
 import { CamfilAddressComponent } from 'ish-shared/components/camfil-address/camfil-address.component';
+import { CamfilBucketValidationResultsComponent } from 'ish-shared/components/basket/camfil-bucket-validation-results/camfil-bucket-validation-results.component';
 
 const importExportModules = [
   AddressFormsSharedModule,
@@ -293,6 +294,7 @@ const declaredComponents = [
   CamCardModalDetailsComponent,
   CamfilBannerComponent,
   CamfilBasketValidationResultsComponent,
+  CamfilBucketValidationResultsComponent,
   CamfilBulletListComponent,
   CamfilCMSBigBannerWithButtonComponent,
   CamfilCMSImageTextButtonComponent,
@@ -388,6 +390,7 @@ const exportedComponents = [
   CamfilBannerComponent,
   CamfilBasketCostSummaryComponent,
   CamfilBasketValidationResultsComponent,
+  CamfilBucketValidationResultsComponent,
   CamfilBulletListComponent,
   CamfilCamCardModalComponent,
   CamfilCategoryBoxComponent,
