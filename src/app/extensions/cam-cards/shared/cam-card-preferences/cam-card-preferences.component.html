@@ -51,8 +51,6 @@
               <mat-label>{{ 'camfil.account.cam_card.add_to_form.order_mark' | translate }}</mat-label>
               <input
                 (change)="onBlurSubmit()"
-                (change)="onBlurSubmit()"
-                [camfilMaxLength]="'OrderMark'"
                 [camfilMaxLength]="'OrderMark'"
                 formControlName="orderMark"
                 label="camfil.account.cam_card.add_to_form.order_mark"
@@ -64,7 +62,6 @@
               <mat-label>{{ 'camfil.account.cam_card.add_to_form.invoice_mark' | translate }}</mat-label>
               <input
                 (change)="onBlurSubmit()"
-                [camfilMaxLength]="'InvoiceLabel'"
                 [camfilMaxLength]="'InvoiceLabel'"
                 formControlName="invoiceMark"
                 label="camfil.account.cam_card.add_to_form.invoice_mark"
@@ -99,7 +96,6 @@
               <mat-label>{{ 'camfil.account.cam_card.add_to_form.company_name' | translate }}</mat-label>
               <input
                 (change)="onBlurSubmit()"
-                [camfilMaxLength]="'Company'"
                 [camfilMaxLength]="'Company'"
                 formControlName="companyName1"
                 label="camfil.account.cam_card.add_to_form.company_name"
@@ -225,7 +221,6 @@
             color="primary"
             data-testing-id="cam-card-dialog-submit"
             mat-raised-button
-            type="submit"
             type="submit"
           >
             {{ primaryButton | translate }}
