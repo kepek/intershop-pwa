@@ -32,18 +32,23 @@ export class BasketMapper {
       included && included.lineItems && data.lineItems && data.lineItems.length
         ? data.lineItems
             .map(lineItemId => LineItemMapper.fromData(included.lineItems[lineItemId], included.lineItems_discounts))
-            .map(item => {
-              const camfilLineItem = included?.camfilProductLineItems?.[item.id];
-              const earliestDeliveryDate = camfilLineItem?.productInfo?.earliestDeliveryDate;
-              const listPrice = PriceItemMapper.fromPriceItem(camfilLineItem?.pricing?.listPrice);
-              const salePrice = PriceItemMapper.fromPriceItem(camfilLineItem?.pricing?.salePrice);
+            .map(lineItem => {
+              const camfilLineItem = included?.camfilProductLineItems?.[lineItem.id];
 
-              return {
-                ...item,
-                earliestDeliveryDate,
-                listPrice,
-                salePrice,
-              };
+              if (camfilLineItem) {
+                const earliestDeliveryDate = camfilLineItem?.productInfo?.earliestDeliveryDate;
+                const listPrice = PriceItemMapper.fromPriceItem(camfilLineItem?.pricing?.listPrice);
+                const salePrice = PriceItemMapper.fromPriceItem(camfilLineItem?.pricing?.salePrice);
+
+                return {
+                  ...lineItem,
+                  earliestDeliveryDate,
+                  listPrice,
+                  salePrice,
+                };
+              } else {
+                return lineItem;
+              }
             })
         : [];
 

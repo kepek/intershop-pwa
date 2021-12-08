@@ -48,7 +48,7 @@ export class AppFacade {
 
             additionalCountryCodes.push('gb');
 
-            return [countryCode.toLowerCase(), ...additionalCountryCodes].includes(loc.value);
+            return [countryCode?.toLowerCase(), ...additionalCountryCodes].includes(loc.value);
           })
         )
       )

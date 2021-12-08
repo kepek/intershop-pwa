@@ -27,14 +27,11 @@ export class CamfilBasketValidationResultsComponent extends BasketValidationResu
   }
 
   private static isDeliveryDateMessage(error: BasketFeedback, bucketDeliveryAddressIds: string[]): boolean {
-    const { addressId } = error?.parameters;
-    const { code } = error;
-
-    if (!addressId || !code || bucketDeliveryAddressIds?.length === 0) {
+    if (!error?.parameters?.addressId || !error?.code || bucketDeliveryAddressIds?.length === 0) {
       return false;
     }
 
-    return bucketDeliveryAddressIds.indexOf(addressId) !== -1;
+    return bucketDeliveryAddressIds.indexOf(error?.parameters?.addressId) !== -1;
   }
 
   init() {
