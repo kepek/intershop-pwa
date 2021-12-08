@@ -278,15 +278,20 @@ export class PrintOrderComponent implements OnInit {
           currency: item.totals.total.currency,
           type: 'Money',
         });
-    const priceLabel = this.texts.price;
-    const price = { text: priceVal, bold: true };
-    const arrRightInfo = [qty, qtyVal, priceLabel, price];
+
+    const priceLabel = this.showPrice ? this.texts.price : '';
+    const price = this.showPrice ? { text: priceVal, bold: true } : '';
+
+    const arrRightInfo = [qty, qtyVal];
+    if (this.showPrice) {
+      arrRightInfo.push(priceLabel, price);
+    }
 
     const name = {
       text: [this.productsInfo[sku].name, measurementsText, { text: measurementsToShow, bold: true }],
     };
 
-    return PdfHelper.pdfProductRow(index, name, arrLeftInfo, arrRightInfo, item.id, false, true);
+    return PdfHelper.pdfProductRow(index, name, arrLeftInfo, arrRightInfo, item.id, false, this.showPrice);
   }
 
   pdfItemsRow(bucket: Bucket) {
