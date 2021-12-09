@@ -1,6 +1,9 @@
+import { APP_BASE_HREF, DOCUMENT } from '@angular/common';
 import { HttpHeaders, HttpParams } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Inject, Injectable, Optional } from '@angular/core';
 import { Store, select } from '@ngrx/store';
+import { REQUEST } from '@nguniversal/express-engine/tokens';
+import { Request } from 'express';
 import { EMPTY, Observable, of, throwError } from 'rxjs';
 import { catchError, concatMap, map, mapTo, withLatestFrom } from 'rxjs/operators';
 
@@ -26,7 +29,13 @@ type OrderIncludeType =
  */
 @Injectable({ providedIn: 'root' })
 export class OrderService {
-  constructor(private apiService: ApiService, private store: Store) {}
+  constructor(
+    private apiService: ApiService,
+    private store: Store,
+    @Inject(DOCUMENT) private doc: Document,
+    @Optional() @Inject(REQUEST) private request: Request,
+    @Inject(APP_BASE_HREF) private baseHref: string
+  ) {}
 
   private orderHeaders = new HttpHeaders({
     'content-type': 'application/json',
@@ -92,7 +101,7 @@ export class OrderService {
    * @returns               The (updated) order.
    */
   private sendRedirectUrlsIfRequired(order: Order, lang: string): Observable<Order> {
-    const loc = location.origin;
+    const loc = this.baseURL(true);
     if (
       order.orderCreation &&
       order.orderCreation.status === 'STOPPED' &&
@@ -189,7 +198,7 @@ export class OrderService {
    * Updates a payment for an order. Used to set redirect query parameters and status after redirect.
    * If cancel/failure is sent back as redirect status, the order doesn't exist any more.
    * @param orderId      The (uuid) of the order.
-     @param queryParams  The payment redirect information (parameters and status).
+   @param queryParams  The payment redirect information (parameters and status).
    * @returns            The orderId
    */
   updateOrderPayment(orderId: string, queryParams: { [key: string]: string }): Observable<string> {
@@ -227,5 +236,17 @@ export class OrderService {
         }
       )
       .pipe(mapTo(orderId));
+  }
+
+  private baseURL(includeBaseHref = true) {
+    let url: string;
+
+    if (this.request) {
+      url = `${this.request.protocol}://${this.request.get('host')}${includeBaseHref ? this.baseHref : ''}`;
+    } else {
+      url = includeBaseHref ? this.doc.baseURI : this.doc.baseURI.replace(new RegExp(`${this.baseHref}$`), '');
+    }
+
+    return new URL(url)?.toString()?.replace(/\/$/, '');
   }
 }

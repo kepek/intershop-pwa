@@ -1,6 +1,9 @@
+import { APP_BASE_HREF, DOCUMENT } from '@angular/common';
 import { HttpHeaders, HttpParams } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Inject, Injectable, Optional } from '@angular/core';
 import { Store, select } from '@ngrx/store';
+import { REQUEST } from '@nguniversal/express-engine/tokens';
+import { Request } from 'express';
 import { Observable, of, throwError } from 'rxjs';
 import { concatMap, first, map, mapTo, withLatestFrom } from 'rxjs/operators';
 
@@ -30,7 +33,14 @@ export class PaymentService {
     Accept: 'application/vnd.intershop.basket.v1+json',
   });
 
-  constructor(private apiService: ApiService, private store: Store, private appFacade: AppFacade) {}
+  constructor(
+    private apiService: ApiService,
+    private store: Store,
+    private appFacade: AppFacade,
+    @Inject(DOCUMENT) private doc: Document,
+    @Optional() @Inject(REQUEST) private request: Request,
+    @Inject(APP_BASE_HREF) private baseHref: string
+  ) {}
 
   /**
    * Get eligible payment methods for selected basket.
@@ -321,7 +331,7 @@ export class PaymentService {
     paymentInstrument: string,
     lang: string
   ): Observable<string> {
-    const loc = location.origin;
+    const loc = this.baseURL(true);
     if (!pm || !pm.capabilities || !pm.capabilities.some(data => ['RedirectBeforeCheckout'].includes(data))) {
       return of(paymentInstrument);
       // send redirect urls if there is a redirect required
@@ -350,5 +360,17 @@ export class PaymentService {
         })
         .pipe(mapTo(paymentInstrument));
     }
+  }
+
+  private baseURL(includeBaseHref = true) {
+    let url: string;
+
+    if (this.request) {
+      url = `${this.request.protocol}://${this.request.get('host')}${includeBaseHref ? this.baseHref : ''}`;
+    } else {
+      url = includeBaseHref ? this.doc.baseURI : this.doc.baseURI.replace(new RegExp(`${this.baseHref}$`), '');
+    }
+
+    return new URL(url)?.toString()?.replace(/\/$/, '');
   }
 }

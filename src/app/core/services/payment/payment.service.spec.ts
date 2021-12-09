@@ -1,3 +1,4 @@
+import { APP_BASE_HREF } from '@angular/common';
 import { TestBed } from '@angular/core/testing';
 import { provideMockStore } from '@ngrx/store/testing';
 import { of } from 'rxjs';
@@ -93,6 +94,7 @@ describe('Payment Service', () => {
 
     TestBed.configureTestingModule({
       providers: [
+        { provide: APP_BASE_HREF, useValue: '/' },
         { provide: ApiService, useFactory: () => instance(apiService) },
         { provide: AppFacade, useFactory: () => instance(appFacade) },
         provideMockStore({
