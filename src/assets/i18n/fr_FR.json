@@ -1024,7 +1024,7 @@
   "camfil.modal.addToCart.button.create_new_order": "Créer une nouvelle commande",
   "camfil.modal.addToCart.order-list.title": "Sélectionner ou créer une nouvelle commande",
   "camfil.modal.addToCart.title": "Ajouter au panier",
-  "camfil.modal.checkout.full-delivery.title": "La livraison conjointe a été sélectionnée",
+  "camfil.modal.checkout.full-delivery.title": "La livraison complète a été sélectionnée",
   "camfil.modal.checkout.partial-delivery.title": "La livraison partielle a été sélectionnée.",
   "camfil.modal.createCamcard.button.add_section": "Ajouter une nouvelle section de CamCard",
   "camfil.modal.createCamcard.button.cancel": "Annuler",
