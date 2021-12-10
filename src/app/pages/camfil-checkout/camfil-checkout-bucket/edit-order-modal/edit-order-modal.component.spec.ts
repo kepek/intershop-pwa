@@ -8,6 +8,7 @@ import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { AddressSortPipe } from 'ish-core/pipes/camfil-address-sort.pipe';
 import { CamfilContactSortPipe } from 'ish-core/pipes/camfil-contact-sort.pipe';
 import { CamfilCamCardModalComponent } from 'ish-shared/components/common/camfil-cam-card-modal/camfil-cam-card-modal.component';
+import { CamfilCityFieldComponent } from 'ish-shared/components/common/camfil-city-field/camfil-city-field.component';
 import { CamfilErrorComponent } from 'ish-shared/components/common/camfil-error/camfil-error.component';
 import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
 import { ZipCodeComponent } from 'ish-shared/components/zip-code/zip-code.component';
@@ -31,6 +32,7 @@ describe('Edit Order Modal Component', () => {
         CamfilErrorComponent,
         CamfilMaxLengthAttributeCreateDirective,
         EditOrderModalComponent,
+        MockComponent(CamfilCityFieldComponent),
         MockComponent(CamfilLoadingComponent),
         MockComponent(ZipCodeComponent),
         MockPipe(AddressSortPipe),

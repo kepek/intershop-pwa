@@ -15,6 +15,7 @@ import { AddressSortPipe } from 'ish-core/pipes/camfil-address-sort.pipe';
 import { CamfilSlugifyPipe } from 'ish-core/pipes/camfil-slugify.pipe';
 import { CoreStoreModule } from 'ish-core/store/core/core-store.module';
 import { CamfilCamCardModalComponent } from 'ish-shared/components/common/camfil-cam-card-modal/camfil-cam-card-modal.component';
+import { CamfilCityFieldComponent } from 'ish-shared/components/common/camfil-city-field/camfil-city-field.component';
 import { CamfilErrorComponent } from 'ish-shared/components/common/camfil-error/camfil-error.component';
 import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
 import { CamfilProductQuantityComponent } from 'ish-shared/components/product/camfil-product-quantity/camfil-product-quantity.component';
@@ -54,6 +55,7 @@ describe('Add Product To Cam Card Modal Component', () => {
         CamfilMaxLengthAttributeCreateDirective,
         CamfilProductQuantityComponent,
         CreateProductCamCardModalComponent,
+        MockComponent(CamfilCityFieldComponent),
         MockComponent(CamfilLoadingComponent),
         MockComponent(InputComponent),
         MockComponent(ZipCodeComponent),

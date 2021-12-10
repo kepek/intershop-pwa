@@ -29,7 +29,6 @@ export class CamfilCheckoutGuestFormComponent implements OnInit, OnDestroy {
   validators = GUEST_FORM_VALIDATORS;
 
   basketGuestForm$: Observable<BasketExtensionGuestForm>;
-  countryChangeDetect$: Subject<boolean> = new Subject();
   showInvoiceAddressForm$ = new BehaviorSubject(false);
   isSubmitted$: Observable<boolean>;
 
@@ -115,7 +114,8 @@ export class CamfilCheckoutGuestFormComponent implements OnInit, OnDestroy {
     return this.fb.group({
       streetAddress: ['', [Validators.required]],
       zipCode: ['', [Validators.required, Validators.pattern('[0-9]{5}')]],
-      city: ['', [Validators.required]],
+      citySelect: [''],
+      city: [{ value: '', disabled: true }, [Validators.required]],
       country: ['', [Validators.required]],
       sameAddressAsInvoice: [true],
       boxLabel: [''],
@@ -129,7 +129,8 @@ export class CamfilCheckoutGuestFormComponent implements OnInit, OnDestroy {
     return this.fb.group({
       streetAddress: ['', [Validators.required]],
       zipCode: ['', [Validators.required, Validators.pattern('[0-9]{5}')]],
-      city: ['', [Validators.required]],
+      citySelect: [''],
+      city: [{ value: '', disabled: true }, [Validators.required]],
       country: ['', [Validators.required]],
     });
   }
@@ -178,16 +179,6 @@ export class CamfilCheckoutGuestFormComponent implements OnInit, OnDestroy {
 
   getField(formName: string, fieldName: string) {
     return this.guestForm?.get([formName, fieldName]);
-  }
-
-  checkZipCode() {
-    this.countryChangeDetect$.next(true);
-  }
-
-  setZipCodeError(event, formGroup) {
-    /* tslint:disable:no-string-literal */
-    this.guestForm.controls[formGroup]['controls'].zipCode.setErrors(event);
-    this.guestForm.controls[formGroup].updateValueAndValidity();
   }
 
   ngOnDestroy() {

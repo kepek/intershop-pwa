@@ -111,10 +111,10 @@
       </mat-form-field>
 
       <!--zip code-->
+      create-products-cam-card-modal.component.html
       <div class="col-sm-12 col-md-5 form__field form__field--neighbour">
         <camfil-zip-code
-          (zipCodeErrorEmit)="setZipCodeError($event)"
-          [countryChangeDetect]="countryChangeDetect$"
+          [forceCheck]="forcePostcodeCheck$"
           [errorValidator]="validators.zipCode"
           [form]="camCardForm"
           appearance="outline"
@@ -126,15 +126,12 @@
 
       <!--area-->
       <div class="col-sm-12 col-md-7 form__field form__field--neighbour form__field--neighbour-right">
-        <mat-form-field appearance="outline" class="form__field--area">
-          <mat-label>{{ 'camfil.modal.createCamcard.input.area' | translate }}</mat-label>
-          <input formControlName="area" matInput type="text" />
-          <camfil-error
-            [errorValidators]="validators.area"
-            [errors]="getField('area').errors"
-            [touched]="getField('area').touched || getField('area').dirty"
-          ></camfil-error>
-        </mat-form-field>
+        <camfil-city-field
+        [form]="camCardForm"
+        fieldCode="zipCode"
+        fieldCity="area"
+        fieldSelect="citySelect"
+      ></camfil-city-field>
       </div>
 
       <!--

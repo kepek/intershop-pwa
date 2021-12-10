@@ -26,12 +26,7 @@ import { whenTruthy } from 'ish-core/utils/operators';
 import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
 
 import { CamCardsFacade } from '../../facades/cam-cards.facade';
-import {
-  CamCard,
-  CamCardAddress,
-  CamCardCustomer,
-  CamCardCustomersAddresses,
-} from '../../models/cam-card/cam-card.model';
+import { CamCard, CamCardCustomer, CamCardCustomersAddresses } from '../../models/cam-card/cam-card.model';
 
 /**
  * The Cam Cards Preferences Dialog shows the modal to create/edit a cam_cards.
@@ -71,8 +66,7 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit, AfterView
   addresses$: Observable<CamCardCustomersAddresses>;
   countries$: Observable<Country[]>;
   customers: CamCardCustomer[];
-  selectedAddress: CamCardAddress;
-  countryChangeDetect$: Subject<boolean> = new Subject();
+  forcePostcodeCheck$: Subject<boolean> = new Subject();
   defaultCountryCode: string;
   deliveryIntervalOptions: string[] = [...Array(CamCardPreferencesComponent.deliveryIntervalOptions).keys()].map(i =>
     i === 0 ? '--' : i.toString()
@@ -236,6 +230,7 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit, AfterView
       addressLine1: ['', [Validators.maxLength(250)]],
       postalCode: ['', [Validators.required, Validators.maxLength(maxL)]],
       city: [{ value: '', disabled: true }, [Validators.maxLength(maxL)]],
+      citySelect: [''],
       lastDelivery: ['', [Validators.maxLength(maxL)]],
       deliveryInterval: ['', [Validators.maxLength(maxL)]],
       nextDelivery: [{ value: '', disabled: true }, [Validators.maxLength(maxL)]],
@@ -293,13 +288,8 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit, AfterView
     }
   }
 
-  setZipCodeError(event) {
-    this.camCardForm.controls.postalCode.setErrors(event);
-    this.camCardForm.updateValueAndValidity();
-  }
-
   checkZipCode() {
-    this.countryChangeDetect$.next(true);
+    this.forcePostcodeCheck$.next(true);
   }
 
   /** Emits the cam cards data, when the form was valid. */
@@ -357,24 +347,21 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit, AfterView
 
   pickAddress(event) {
     const id = event.value;
-    this.addresses$.subscribe(addresses => {
+    this.addresses$.pipe(take(1)).subscribe(addresses => {
       const customerId = this.customerId;
       const address = addresses[customerId]?.filter(element => element.id === id)[0];
       if (address) {
-        this.selectedAddress = address;
+        const { city, postalCode, addressLine1, companyName1 } = address;
+        this.camCardForm.patchValue({
+          deliveryAddress: address.id,
+          companyName1,
+          addressLine1,
+          postalCode,
+          city,
+        });
+        this.checkZipCode();
       }
     });
-
-    if (this.selectedAddress) {
-      this.camCardForm.patchValue({
-        deliveryAddress: this.selectedAddress.id,
-        companyName1: this.selectedAddress.companyName1,
-        addressLine1: this.selectedAddress.addressLine1,
-        postalCode: this.selectedAddress.postalCode,
-        city: this.selectedAddress.city,
-      });
-      this.onBlurSubmit();
-    }
   }
 
   pickOrder() {

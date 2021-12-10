@@ -109,9 +109,8 @@
       <!--zip code-->
       <div class="delivery-address__form--zipcode col-sm-12 col-md-5">
         <camfil-zip-code
-          (zipCodeErrorEmit)="setZipCodeError($event)"
           [checkOnInitObj]="orderToEdit"
-          [countryChangeDetect]="countryChangeDetect$"
+          [forceCheck]="forcePostcodeCheck$"
           [errorValidator]="validators.zipCode"
           [form]="addressForm"
           appearance="outline"
@@ -123,15 +122,12 @@
 
       <!--area-->
       <div class="col-sm-12 col-md-7 delivery-address__form--area">
-        <mat-form-field appearance="outline" class="delivery-address__form--field delivery-address__form--field-small">
-          <mat-label>{{ 'camfil.modal.createOrder.order-form.input.area' | translate }}</mat-label>
-          <input formControlName="area" matInput type="text" />
-          <camfil-error
-            [errorValidators]="validators.area"
-            [errors]="getField('area').errors"
-            [touched]="getField('area').touched || getField('area').dirty"
-          ></camfil-error>
-        </mat-form-field>
+        <camfil-city-field
+          [form]="addressForm"
+          fieldCode="zipCode"
+          fieldCity="area"
+          fieldSelect="citySelect"
+        ></camfil-city-field>
       </div>
     </div>
 

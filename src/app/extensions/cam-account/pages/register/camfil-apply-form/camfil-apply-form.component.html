@@ -43,8 +43,7 @@
         appearance="fill"
         [errorValidator]="validators.zipCode"
         [form]="form"
-        [countryChangeDetect]="countryChangeDetect$"
-        (zipCodeErrorEmit)="setZipCodeError($event)"
+        [forceCheck]="forcePostcodeCheck$"
       ></camfil-zip-code>
     </div>
 

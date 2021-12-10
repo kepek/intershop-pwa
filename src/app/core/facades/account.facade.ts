@@ -205,8 +205,11 @@ export class AccountFacade {
   // CAMFIL CUSTOM
 
   zipCodesLoading$ = this.store.pipe(select(getZipCodesLoading));
-  getZipCode$(code: string, countryCode: string) {
+  loadZipCode$(code: string, countryCode: string) {
     this.store.dispatch(loadZipCode({ code, countryCode }));
+  }
+
+  getZipCode$(code: string) {
     return this.store.pipe(select(getZipCode(code)));
   }
 }

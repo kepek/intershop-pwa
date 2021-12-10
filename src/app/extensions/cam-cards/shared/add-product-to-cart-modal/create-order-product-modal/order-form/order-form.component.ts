@@ -27,7 +27,7 @@ export class OrderFormComponent implements OnInit, OnDestroy {
   customersArr: CamCardCustomer[];
   contacts: CamCardContact[];
 
-  countryChangeDetect$: Subject<boolean> = new Subject();
+  forcePostcodeCheck$: Subject<boolean> = new Subject();
 
   @Input() orderToEdit?: EditBucket;
   @Input() edit?: boolean;
@@ -56,6 +56,7 @@ export class OrderFormComponent implements OnInit, OnDestroy {
       deliveryAddressSelect: [this.orderToEdit?.deliveryAddressId || '', []],
       company: [this.orderToEdit?.company || ''],
       address: [this.orderToEdit?.address || ''],
+      citySelect: [],
       zipCode: [this.orderToEdit?.zipCode || '', [Validators.required, Validators.pattern('[0-9]{5}')]],
       area: [{ value: this.orderToEdit?.area || '', disabled: true }, [Validators.required]],
       info: [this.orderToEdit?.info || '', [Validators.maxLength(150)]],
@@ -85,6 +86,7 @@ export class OrderFormComponent implements OnInit, OnDestroy {
           area: address?.city,
           addressFull: address,
         });
+        this.forcePostcodeCheck$.next(true);
       }
     });
   }
@@ -123,15 +125,6 @@ export class OrderFormComponent implements OnInit, OnDestroy {
   pickContact(event) {
     const selectedContact = this.contacts?.find(contact => contact.erpId === event.value);
     this.addressForm?.patchValue({ contactFull: selectedContact });
-  }
-
-  setZipCodeError(event) {
-    this.addressForm.controls.zipCode.setErrors(event);
-    this.addressForm.updateValueAndValidity();
-  }
-
-  checkZipCode() {
-    this.countryChangeDetect$.next(true);
   }
 
   ngOnDestroy() {

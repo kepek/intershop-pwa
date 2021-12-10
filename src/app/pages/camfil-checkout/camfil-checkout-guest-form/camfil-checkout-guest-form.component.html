@@ -1,5 +1,4 @@
 <ng-container *ngIf="basket?.lineItems?.length">
-
   <ng-container *ngIf="isSubmitted$ | async; else notConfirmedForm">
     <!-- Your Details Confirmed -->
     <ng-container *ngIf="basketGuestForm$ | async as guestBasket">
@@ -106,34 +105,34 @@
                 <dd class="col-6 p-0 text-right text-break">
                   {{ guestBasket?.deliveryInfoFromGroup?.country || '-' }}
                 </dd>
+              </div>
             </div>
-          </div>
-          <div class="col-md-6 col-border">
-            <div class="guest-confirmed-value___container d-flex">
-              <dt class="col-6 p-0">{{ 'camfil.account.orderdetails.goods_mark.label' | translate }}</dt>
-              <dd class="col-6 p-0 text-right text-break">
-                {{ guestBasket?.deliveryInfoFromGroup?.boxLabel || '-' }}
-              </dd>
+            <div class="col-md-6 col-border">
+              <div class="guest-confirmed-value___container d-flex">
+                <dt class="col-6 p-0">{{ 'camfil.account.orderdetails.goods_mark.label' | translate }}</dt>
+                <dd class="col-6 p-0 text-right text-break">
+                  {{ guestBasket?.deliveryInfoFromGroup?.boxLabel || '-' }}
+                </dd>
+              </div>
+              <div class="guest-confirmed-value___container d-flex">
+                <dt class="col-6 p-0">{{ 'camfil.checkout.form.invoice_mark' | translate }}</dt>
+                <dd class="col-6 p-0 text-right text-break">
+                  {{ guestBasket?.deliveryInfoFromGroup?.invoiceMark || '-' }}
+                </dd>
+              </div>
+              <div class="guest-confirmed-value___container d-flex">
+                <dt class="col-6 p-0">{{ 'camfil.checkout.guest_form.delivery_info' | translate }}</dt>
+                <dd class="col-6 p-0 text-right text-break">
+                  {{ guestBasket?.deliveryInfoFromGroup?.deliveryInfo || '-' }}
+                </dd>
+              </div>
+              <div class="guest-confirmed-value___container d-flex">
+                <dt class="col-6 p-0">{{ 'camfil.checkout.form.note' | translate }}</dt>
+                <dd class="col-6 p-0 text-right text-break">
+                  {{ guestBasket?.deliveryInfoFromGroup?.customerNote || '-' }}
+                </dd>
+              </div>
             </div>
-            <div class="guest-confirmed-value___container d-flex">
-              <dt class="col-6 p-0">{{ 'camfil.checkout.form.invoice_mark' | translate }}</dt>
-              <dd class="col-6 p-0 text-right text-break">
-                {{ guestBasket?.deliveryInfoFromGroup?.invoiceMark || '-' }}
-              </dd>
-            </div>
-            <div class="guest-confirmed-value___container d-flex">
-              <dt class="col-6 p-0">{{ 'camfil.checkout.guest_form.delivery_info' | translate }}</dt>
-              <dd class="col-6 p-0 text-right text-break">
-                {{ guestBasket?.deliveryInfoFromGroup?.deliveryInfo || '-' }}
-              </dd>
-            </div>
-            <div class="guest-confirmed-value___container d-flex">
-              <dt class="col-6 p-0">{{ 'camfil.checkout.form.note' | translate }}</dt>
-              <dd class="col-6 p-0 text-right text-break">
-                {{ guestBasket?.deliveryInfoFromGroup?.customerNote || '-' }}
-              </dd>
-            </div>
-          </div>
           </div>
         </div>
       </mat-expansion-panel>
@@ -180,7 +179,7 @@
         </div>
       </mat-expansion-panel>
     </ng-container>
-</ng-container>
+  </ng-container>
 
   <ng-template #notConfirmedForm>
     <form [formGroup]="guestForm">
@@ -206,9 +205,9 @@
                     [errorValidators]="validators.firstName"
                     [errors]="getField('userDetailsFormGroup', 'firstName').errors"
                     [touched]="
-                    getField('userDetailsFormGroup', 'firstName').touched ||
-                    getField('userDetailsFormGroup', 'firstName').dirty
-                  "
+                      getField('userDetailsFormGroup', 'firstName').touched ||
+                      getField('userDetailsFormGroup', 'firstName').dirty
+                    "
                   ></camfil-error>
                 </mat-form-field>
               </div>
@@ -220,9 +219,9 @@
                     [errorValidators]="validators.lastName"
                     [errors]="getField('userDetailsFormGroup', 'lastName').errors"
                     [touched]="
-                    getField('userDetailsFormGroup', 'lastName').touched ||
-                    getField('userDetailsFormGroup', 'lastName').dirty
-                  "
+                      getField('userDetailsFormGroup', 'lastName').touched ||
+                      getField('userDetailsFormGroup', 'lastName').dirty
+                    "
                   ></camfil-error>
                 </mat-form-field>
               </div>
@@ -234,8 +233,9 @@
                     [errorValidators]="validators.email"
                     [errors]="getField('userDetailsFormGroup', 'email').errors"
                     [touched]="
-                    getField('userDetailsFormGroup', 'email').touched || getField('userDetailsFormGroup', 'email').dirty
-                  "
+                      getField('userDetailsFormGroup', 'email').touched ||
+                      getField('userDetailsFormGroup', 'email').dirty
+                    "
                   ></camfil-error>
                 </mat-form-field>
               </div>
@@ -247,8 +247,9 @@
                     [errorValidators]="validators.phone"
                     [errors]="getField('userDetailsFormGroup', 'phone').errors"
                     [touched]="
-                    getField('userDetailsFormGroup', 'phone').touched || getField('userDetailsFormGroup', 'phone').dirty
-                  "
+                      getField('userDetailsFormGroup', 'phone').touched ||
+                      getField('userDetailsFormGroup', 'phone').dirty
+                    "
                   ></camfil-error>
                 </mat-form-field>
               </div>
@@ -268,9 +269,9 @@
                     [errorValidators]="validators.companyName"
                     [errors]="getField('userDetailsFormGroup', 'companyName').errors"
                     [touched]="
-                    getField('userDetailsFormGroup', 'companyName').touched ||
-                    getField('userDetailsFormGroup', 'companyName').dirty
-                  "
+                      getField('userDetailsFormGroup', 'companyName').touched ||
+                      getField('userDetailsFormGroup', 'companyName').dirty
+                    "
                   ></camfil-error>
                 </mat-form-field>
               </div>
@@ -288,9 +289,9 @@
                     [errorValidators]="validators.siret"
                     [errors]="getField('userDetailsFormGroup', 'siret').errors"
                     [touched]="
-                    getField('userDetailsFormGroup', 'siret').touched ||
-                    getField('userDetailsFormGroup', 'siret').dirty
-                  "
+                      getField('userDetailsFormGroup', 'siret').touched ||
+                      getField('userDetailsFormGroup', 'siret').dirty
+                    "
                   ></camfil-error>
                 </mat-form-field>
               </div>
@@ -321,16 +322,15 @@
                     [errorValidators]="validators.streetAddress"
                     [errors]="getField('deliveryInfoFromGroup', 'streetAddress').errors"
                     [touched]="
-                    getField('deliveryInfoFromGroup', 'streetAddress').touched ||
-                    getField('deliveryInfoFromGroup', 'streetAddress').dirty
-                  "
+                      getField('deliveryInfoFromGroup', 'streetAddress').touched ||
+                      getField('deliveryInfoFromGroup', 'streetAddress').dirty
+                    "
                   ></camfil-error>
                 </mat-form-field>
               </div>
+              camfil-checkout-guest-form.component.html
               <div class="mat-form-field__wrapper">
                 <camfil-zip-code
-                  (zipCodeErrorEmit)="setZipCodeError($event, 'deliveryInfoFromGroup')"
-                  [countryChangeDetect]="countryChangeDetect$"
                   [errorValidator]="validators.zipCode"
                   [form]="guestForm.controls['deliveryInfoFromGroup']"
                   appearance="fill"
@@ -340,17 +340,12 @@
                 ></camfil-zip-code>
               </div>
               <div class="mat-form-field__wrapper">
-                <mat-form-field [hideRequiredMarker]="hideRequiredMarker" appearance="fill" class="form-field">
-                  <mat-label>{{ 'camfil.account.apply_form.city' | translate }}</mat-label>
-                  <input formControlName="city" matInput required />
-                  <camfil-error
-                    [errorValidators]="validators.city"
-                    [errors]="getField('deliveryInfoFromGroup', 'city').errors"
-                    [touched]="
-                    getField('deliveryInfoFromGroup', 'city').touched || getField('deliveryInfoFromGroup', 'city').dirty
-                  "
-                  ></camfil-error>
-                </mat-form-field>
+                <camfil-city-field
+                  [form]="guestForm.controls['deliveryInfoFromGroup']"
+                  fieldCode="zipCode"
+                  fieldCity="city"
+                  fieldSelect="citySelect"
+                ></camfil-city-field>
               </div>
               <div class="mat-form-field__wrapper">
                 <mat-form-field [hideRequiredMarker]="hideRequiredMarker" appearance="fill" class="form-field">
@@ -360,17 +355,13 @@
                     [errorValidators]="validators.country"
                     [errors]="getField('deliveryInfoFromGroup', 'country').errors"
                     [touched]="
-                    getField('deliveryInfoFromGroup', 'country').touched ||
-                    getField('deliveryInfoFromGroup', 'country').dirty
-                  "
+                      getField('deliveryInfoFromGroup', 'country').touched ||
+                      getField('deliveryInfoFromGroup', 'country').dirty
+                    "
                   ></camfil-error>
                 </mat-form-field>
               </div>
-              <mat-checkbox
-                class="example-margin"
-                color="primary"
-                formControlName="sameAddressAsInvoice"
-              >
+              <mat-checkbox class="example-margin" color="primary" formControlName="sameAddressAsInvoice">
                 {{ 'camfil.checkout.guest_form.same_as_invoice_address' | translate }}
               </mat-checkbox>
             </div>
@@ -378,23 +369,13 @@
               <div class="mat-form-field__wrapper">
                 <mat-form-field [hideRequiredMarker]="hideRequiredMarker" appearance="fill" class="form-field">
                   <mat-label>{{ 'camfil.account.orderdetails.goods_mark.label' | translate }}</mat-label>
-                  <input
-                    [camfilMaxLength]="'OrderMark'"
-                    formControlName="boxLabel"
-
-                    matInput
-                  />
+                  <input [camfilMaxLength]="'OrderMark'" formControlName="boxLabel" matInput />
                 </mat-form-field>
               </div>
               <div class="mat-form-field__wrapper">
                 <mat-form-field [hideRequiredMarker]="hideRequiredMarker" appearance="fill" class="form-field">
                   <mat-label>{{ 'camfil.checkout.form.invoice_mark' | translate }}</mat-label>
-                  <input
-                    [camfilMaxLength]="'InvoiceLabel'"
-                    formControlName="invoiceMark"
-
-                    matInput
-                  />
+                  <input [camfilMaxLength]="'InvoiceLabel'" formControlName="invoiceMark" matInput />
                 </mat-form-field>
               </div>
               <div class="mat-form-field__wrapper">
@@ -436,22 +417,25 @@
               <div class="mat-form-field__wrapper">
                 <mat-form-field [hideRequiredMarker]="hideRequiredMarker" appearance="fill" class="form-field">
                   <mat-label>{{ 'camfil.checkout.guest_form.street_address' | translate }}</mat-label>
-                  <input formControlName="streetAddress" label="camfil.checkout.guest_form.street_address" matInput
-                         required />
+                  <input
+                    formControlName="streetAddress"
+                    label="camfil.checkout.guest_form.street_address"
+                    matInput
+                    required
+                  />
                   <camfil-error
                     [errorValidators]="validators.streetAddress"
                     [errors]="getField('invoiceAddressFormGroup', 'streetAddress').errors"
                     [touched]="
-                    getField('invoiceAddressFormGroup', 'streetAddress').touched ||
-                    getField('invoiceAddressFormGroup', 'streetAddress').dirty
-                  "
+                      getField('invoiceAddressFormGroup', 'streetAddress').touched ||
+                      getField('invoiceAddressFormGroup', 'streetAddress').dirty
+                    "
                   ></camfil-error>
                 </mat-form-field>
               </div>
+              camfil-checkout-guest-form.component.html
               <div class="mat-form-field__wrapper">
                 <camfil-zip-code
-                  (zipCodeErrorEmit)="setZipCodeError($event, 'invoiceAddressFormGroup')"
-                  [countryChangeDetect]="countryChangeDetect$"
                   [errorValidator]="validators.zipCode"
                   [form]="guestForm.controls['invoiceAddressFormGroup']"
                   appearance="fill"
@@ -460,18 +444,12 @@
                 ></camfil-zip-code>
               </div>
               <div class="mat-form-field__wrapper">
-                <mat-form-field [hideRequiredMarker]="hideRequiredMarker" appearance="fill" class="form-field">
-                  <mat-label>{{ 'camfil.account.apply_form.city' | translate }}</mat-label>
-                  <input formControlName="city" matInput required />
-                  <camfil-error
-                    [errorValidators]="validators.city"
-                    [errors]="getField('invoiceAddressFormGroup', 'city').errors"
-                    [touched]="
-                    getField('invoiceAddressFormGroup', 'city').touched ||
-                    getField('invoiceAddressFormGroup', 'city').dirty
-                  "
-                  ></camfil-error>
-                </mat-form-field>
+                <camfil-city-field
+                  [form]="guestForm.controls['invoiceAddressFormGroup']"
+                  fieldCode="zipCode"
+                  fieldCity="city"
+                  fieldSelect="citySelect"
+                ></camfil-city-field>
               </div>
               <div class="mat-form-field__wrapper">
                 <mat-form-field [hideRequiredMarker]="hideRequiredMarker" appearance="fill" class="form-field">
@@ -481,9 +459,9 @@
                     [errorValidators]="validators.country"
                     [errors]="getField('invoiceAddressFormGroup', 'country').errors"
                     [touched]="
-                    getField('invoiceAddressFormGroup', 'country').touched ||
-                    getField('invoiceAddressFormGroup', 'country').dirty
-                  "
+                      getField('invoiceAddressFormGroup', 'country').touched ||
+                      getField('invoiceAddressFormGroup', 'country').dirty
+                    "
                   ></camfil-error>
                 </mat-form-field>
               </div>
@@ -493,5 +471,4 @@
       </mat-expansion-panel>
     </form>
   </ng-template>
-
 </ng-container>

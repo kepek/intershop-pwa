@@ -6,6 +6,7 @@ import { MockComponent, MockPipe } from 'ng-mocks';
 
 import { CamfilMaxLengthAttributeCreateDirective } from 'ish-core/directives/camfil-max-length-attribute-create.directive';
 import { AddressSortPipe } from 'ish-core/pipes/camfil-address-sort.pipe';
+import { CamfilCityFieldComponent } from 'ish-shared/components/common/camfil-city-field/camfil-city-field.component';
 import { CamfilErrorComponent } from 'ish-shared/components/common/camfil-error/camfil-error.component';
 import { ZipCodeComponent } from 'ish-shared/components/zip-code/zip-code.component';
 
@@ -22,11 +23,13 @@ describe('Cam Card Preferences Component', () => {
         CamCardPreferencesComponent,
         CamfilErrorComponent,
         CamfilMaxLengthAttributeCreateDirective,
+        MockComponent(CamfilCityFieldComponent),
         MockComponent(NgbCollapse),
         MockComponent(ZipCodeComponent),
         MockPipe(AddressSortPipe),
       ],
       imports: [RouterTestingModule],
+      // tslint:disable-next-line: no-intelligence-in-artifacts
       providers: [provideMockStore({})],
     }).compileComponents();
   });

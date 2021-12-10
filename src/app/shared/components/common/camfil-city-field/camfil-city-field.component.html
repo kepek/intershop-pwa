@@ -1,0 +1,29 @@
+<mat-form-field
+  [formGroup]="form"
+  appearance="fill"
+  class="w-100"
+  *ngIf="!((citiesList$ | async)?.length > 1) || form.get(fieldCode).hasError('incorrect'); else citiesSelect"
+>
+  <mat-label>{{ 'camfil.account.cam_card.add_to_form.city' | translate }}</mat-label>
+  <input
+    formControlName="{{ fieldCity }}"
+    label="camfil.account.cam_card.add_to_form.city"
+    markRequiredLabel="off"
+    matInput
+    maxlength="35"
+  />
+</mat-form-field>
+
+<ng-template #citiesSelect>
+  <mat-form-field appearance="fill" [formGroup]="form" class="w-100">
+    <mat-label>{{ 'camfil.form.pick_city' | translate }}</mat-label>
+    <mat-select (selectionChange)="pickCity($event)" formControlName="{{ fieldSelect }}">
+      <mat-option *ngFor="let city of (citiesList$ | async)" [value]="city.city">
+        {{ city.city }}
+      </mat-option>
+    </mat-select>
+    <small class="text-warning" *ngIf="!(this.form.get(fieldCity).value)">
+      {{ 'camfil.form.warning.pick_city' | translate }}
+    </small>
+  </mat-form-field>
+</ng-template>

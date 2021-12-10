@@ -3,6 +3,7 @@ export interface ZipCodeInfo {
   city: string;
   country?: string;
   zipCode: string;
+  language?: string;
 }
 
 export interface ZipCodeData {

@@ -129,11 +129,10 @@
             </mat-form-field>
             <div class="row no-gutters">
               <div class="col-md-3">
-                <camfil-zip-code
+                <camfil-zip-code 
                   (submitEmitter)="onBlurSubmit()"
-                  (zipCodeErrorEmit)="setZipCodeError($event)"
                   [checkOnInitObj]="camCard"
-                  [countryChangeDetect]="countryChangeDetect$"
+                  [forceCheck]="forcePostcodeCheck$"
                   [errorValidator]="errorValidator"
                   [form]="camCardForm"
                   fieldCity="city"
@@ -142,17 +141,13 @@
                 ></camfil-zip-code>
               </div>
               <div class="col-md-9 pl-md-3">
-                <mat-form-field appearance="fill">
-                  <mat-label>{{ 'camfil.account.cam_card.add_to_form.city' | translate }}</mat-label>
-                  <input
-                    data-testing-id="cam-card-dialog-name"
-                    formControlName="city"
-                    label="camfil.account.cam_card.add_to_form.city"
-                    markRequiredLabel="off"
-                    matInput
-                    maxlength="35"
-                  />
-                </mat-form-field>
+                <camfil-city-field
+                  (pickCityEmit)="onBlurSubmit()"
+                  [form]="camCardForm"
+                  fieldCode="postalCode"
+                  fieldCity="city"
+                  fieldSelect="citySelect"
+                ></camfil-city-field>
               </div>
             </div>
           </div>

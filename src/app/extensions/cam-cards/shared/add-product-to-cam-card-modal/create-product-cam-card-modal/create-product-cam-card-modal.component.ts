@@ -66,7 +66,7 @@ export class CreateProductCamCardModalComponent implements OnInit, OnDestroy {
   customers: CamCardCustomer[];
   defaultCountryCode: string;
   showNewSegment = false;
-  countryChangeDetect$: Subject<boolean> = new Subject();
+  forcePostcodeCheck$: Subject<boolean> = new Subject();
   @Output() createAndEditEmitter = new EventEmitter<CreateProductCamCardAndEmitter>();
   @Output() createAndContinueEmitter = new EventEmitter<CreateProductCamCardAndEmitter>();
   @ViewChild('modal', { static: false }) modalTemplate: TemplateRef<unknown>;
@@ -117,6 +117,7 @@ export class CreateProductCamCardModalComponent implements OnInit, OnDestroy {
       deliveryAddressSelect: ['', []],
       company: [''],
       address: [''],
+      citySelect: [''],
       zipCode: ['', [Validators.required, Validators.pattern('[0-9]{5}')]],
       area: [{ value: '', disabled: true }, [Validators.required]],
       countryCode: [{ value: this.defaultCountryCode }, [Validators.maxLength(35)]],
@@ -200,6 +201,7 @@ export class CreateProductCamCardModalComponent implements OnInit, OnDestroy {
           area: address.city,
           countryCode: address.countryCode || this.defaultCountryCode,
         });
+        this.forcePostcodeCheck$.next(true);
       }
     });
   }
@@ -278,11 +280,6 @@ export class CreateProductCamCardModalComponent implements OnInit, OnDestroy {
 
   getField(name: string) {
     return this.camCardForm.get(name);
-  }
-
-  setZipCodeError(event) {
-    this.camCardForm.controls.zipCode.setErrors(event);
-    this.camCardForm.updateValueAndValidity();
   }
 
   /** close modal */

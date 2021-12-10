@@ -228,6 +228,7 @@ import { CamfilErrorMessageComponent } from './components/common/camfil-error-me
 import { CamfilLineItemMeasurementsComponent } from './components/line-item/camfil-line-item-table/camfil-line-item-measurements/camfil-line-item-measurements.component';
 import { CamfilAddressComponent } from 'ish-shared/components/camfil-address/camfil-address.component';
 import { CamfilBucketValidationResultsComponent } from 'ish-shared/components/basket/camfil-bucket-validation-results/camfil-bucket-validation-results.component';
+import { CamfilCityFieldComponent } from './components/common/camfil-city-field/camfil-city-field.component';
 
 const importExportModules = [
   AddressFormsSharedModule,
@@ -394,6 +395,7 @@ const exportedComponents = [
   CamfilBulletListComponent,
   CamfilCamCardModalComponent,
   CamfilCategoryBoxComponent,
+  CamfilCityFieldComponent,
   CamfilErrorComponent,
   CamfilErrorMessageComponent,
   CamfilFilterInfoComponent,

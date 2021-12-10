@@ -25,6 +25,7 @@ import { CamfilBasketCostSummaryComponent } from 'ish-shared/components/basket/c
 import { CamfilBucketValidationResultsComponent } from 'ish-shared/components/basket/camfil-bucket-validation-results/camfil-bucket-validation-results.component';
 import { CamfilAddressComponent } from 'ish-shared/components/camfil-address/camfil-address.component';
 import { CamfilCamCardModalComponent } from 'ish-shared/components/common/camfil-cam-card-modal/camfil-cam-card-modal.component';
+import { CamfilCityFieldComponent } from 'ish-shared/components/common/camfil-city-field/camfil-city-field.component';
 import { CamfilErrorComponent } from 'ish-shared/components/common/camfil-error/camfil-error.component';
 import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
 import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
@@ -84,6 +85,7 @@ describe('Camfil Checkout Bucket Component', () => {
         MockComponent(CamfilBasketCostSummaryComponent),
         MockComponent(CamfilBucketValidationResultsComponent),
         MockComponent(CamfilCheckoutLineItemComponent),
+        MockComponent(CamfilCityFieldComponent),
         MockComponent(CamfilErrorComponent),
         MockComponent(CamfilLoadingComponent),
         MockComponent(CamfilProductAddToBasketComponent),

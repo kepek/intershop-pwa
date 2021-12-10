@@ -43,7 +43,7 @@ export class CamfilApplyFormComponent implements OnInit {
 
   hideTitleField = false;
 
-  countryChangeDetect$: Subject<boolean> = new Subject();
+  forcePostcodeCheck$: Subject<boolean> = new Subject();
 
   constructor(
     private appFacade: AppFacade,
@@ -99,13 +99,8 @@ export class CamfilApplyFormComponent implements OnInit {
     };
   }
 
-  setZipCodeError(event) {
-    this.form.controls.zipCode.setErrors(event);
-    this.form.updateValueAndValidity();
-  }
-
   checkZipCode() {
-    this.countryChangeDetect$.next(true);
+    this.forcePostcodeCheck$.next(true);
   }
 
   /**

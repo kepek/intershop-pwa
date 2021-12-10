@@ -41,7 +41,7 @@ describe('Zip Code Component', () => {
     component.form = fb.group({
       zipCode: ['123', [Validators.required]],
     });
-    component.countryChangeDetect = of(false) as Subject<boolean>;
+    component.forceCheck = of(false) as Subject<boolean>;
 
     when(accountFacade.zipCodesLoading$).thenReturn(of(false));
     when(appFacade.getChannel$).thenReturn(of('SE'));
