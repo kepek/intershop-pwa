@@ -11,6 +11,7 @@ import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { Price } from 'ish-core/models/price/price.model';
 import { PricePipe } from 'ish-core/models/price/price.pipe';
 import { ProductView } from 'ish-core/models/product-view/product-view.model';
+import { CamfilSlugifyPipe } from 'ish-core/pipes/camfil-slugify.pipe';
 import { DatePipe } from 'ish-core/pipes/date.pipe';
 import { OrderLineMockData } from 'ish-core/utils/dev/orderline-mock-data';
 import { AddressComponent } from 'ish-shared/components/address/address/address.component';
@@ -46,6 +47,7 @@ describe('Camfil Account Order Component', () => {
         MockComponent(CamfilLoadingComponent),
         MockComponent(FaIconComponent),
         MockComponent(InfoBoxComponent),
+        MockPipe(CamfilSlugifyPipe),
         MockPipe(DatePipe),
         MockPipe(PricePipe, (price: Price) => `${price.currency} ${price.value}`),
       ],

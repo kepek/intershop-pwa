@@ -6,10 +6,7 @@
   <div class="wrapper">
     <ng-container *ngIf="!isIeBrowser; else ieBlock">
       <div class="container main-container" role="main" style="position: relative; min-height: 200px">
-        <camfil-breadcrumb
-          [productDetail]="isProductDetailPage()"
-          [url]="_router.url"
-        ></camfil-breadcrumb>
+        <camfil-breadcrumb [productDetail]="isProductDetailPage()" [url]="_router.url"></camfil-breadcrumb>
         <router-outlet></router-outlet>
       </div>
     </ng-container>
@@ -22,4 +19,3 @@
     <camfil-footer [deviceType]="deviceType$ | async"></camfil-footer>
   </footer>
 </div>
-

@@ -2,6 +2,7 @@ import { createAction } from '@ngrx/store';
 
 import { httpError, payload } from 'ish-core/utils/ngrx-creators';
 
+import { OrderLineItem } from '../../models/order-line-item/order-line-item.model';
 import { Order } from '../../models/order/order.model';
 
 export const loadOrder = createAction('[Order Camfil API] Load Order', payload<{ orderId: string }>());
@@ -30,7 +31,7 @@ export const loadOrderLineItemsFail = createAction('[Orders Camfil API] Load Ord
 
 export const loadOrderLineItemsSuccess = createAction(
   '[Orders Camfil API] Load Order LineItems Success',
-  payload<{ orderId: string; lineItems }>()
+  payload<{ orderId: string; lineItems: OrderLineItem[] }>()
 );
 
 export const loadOrderTrackAndTrace = createAction(
@@ -71,3 +72,5 @@ export const createOrderDuplicateSuccess = createAction(
   '[Orders Camfil API] Create order duplicate Success',
   payload<{ orderId: string; createdOrder }>()
 );
+
+export const updateOrder = createAction('[Orders Camfil] Update Order', payload<{ order: Order }>());

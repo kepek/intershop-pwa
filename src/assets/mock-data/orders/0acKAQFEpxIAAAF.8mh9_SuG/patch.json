@@ -1,0 +1,415 @@
+{
+  "data": {
+    "attributes": [{
+      "name": "CAMFIL_CONTACT_ERPID_0MwKAQFEIWcAAAF.t199_SuG",
+      "type": "String",
+      "value": "660293_002"
+    }, {
+      "name": "CAMFIL_CREDIT_LIMIT_REACHED_0MwKAQFEIWcAAAF.t199_SuG",
+      "type": "Boolean",
+      "value": false
+    }, {
+      "name": "CAMFIL_CUSTOMER_ID_0MwKAQFEIWcAAAF.t199_SuG",
+      "type": "String",
+      "value": "iVgKAQFEai4AAAF8JBRvaF7Q"
+    }, {
+      "name": "CAMFIL_DELIVERY_DATE_0MwKAQFEIWcAAAF.t199_SuG",
+      "type": "Date",
+      "value": "2022-01-31T12:00:00Z"
+    }, {
+      "name": "CAMFIL_EMAIL_RECIPIENTS_0MwKAQFEIWcAAAF.t199_SuG",
+      "type": "String"
+    }, {
+      "name": "CAMFIL_INFO_0MwKAQFEIWcAAAF.t199_SuG",
+      "type": "String"
+    }, {
+      "name": "CAMFIL_INVOICE_LABEL_0MwKAQFEIWcAAAF.t199_SuG",
+      "type": "String"
+    }, {
+      "name": "CAMFIL_ORDER_MARK_0MwKAQFEIWcAAAF.t199_SuG",
+      "type": "String"
+    }, {
+      "name": "CAMFIL_PHONE_NUMBER_0MwKAQFEIWcAAAF.t199_SuG",
+      "type": "String"
+    }, {
+      "name": "CAMFIL_VOLUME_DISCOUNT0MwKAQFEIWcAAAF.t199_SuG",
+      "type": "Decimal",
+      "value": 0.000000
+    }],
+    "basket": "SNcKAQFEzpIAAAF.f199_SuG",
+    "buckets": ["0"],
+    "commonShipToAddress": "IFcKAQFE_EkAAAF._mh9_SuG",
+    "commonShippingMethod": "STD_GROUND",
+    "creationDate": "2022-01-05T18:35:36Z",
+    "customer": "13320",
+    "discounts": {},
+    "documentNumber": "00000762",
+    "id": "0acKAQFEpxIAAAF.8mh9_SuG",
+    "invoiceToAddress": "F4MKAQFEOIoAAAF._Gh9_SuG",
+    "lineItems": ["khUKAQFEunkAAAF._2h9_SuG"],
+    "orderCreation": {
+      "status": "COMPLETED"
+    },
+    "payments": ["7mAKAQFEunoAAAF._2h9_SuG"],
+    "purchaseCurrency": "EUR",
+    "status": "Exportée",
+    "statusCode": "EXPORTED",
+    "surcharges": {
+      "bucketSurcharges": [{
+        "amount": {
+          "gross": {
+            "currency": "EUR",
+            "value": 42.00
+          },
+          "net": {
+            "currency": "EUR",
+            "value": 35
+          }
+        },
+        "name": "CAMFIL_EXTRA_FREIGHT_COST_RULE",
+        "taxes": [{
+          "calculatedTax": {
+            "currency": "EUR",
+            "value": 7.00
+          },
+          "effectiveTaxRate": 0.200000
+        }]
+      }, {
+        "amount": {
+          "gross": {
+            "currency": "EUR",
+            "value": 131.16
+          },
+          "net": {
+            "currency": "EUR",
+            "value": 109.30
+          }
+        },
+        "name": "CAMFIL_MINIMUM_ORDER_TOPUP",
+        "taxes": [{
+          "calculatedTax": {
+            "currency": "EUR",
+            "value": 21.86
+          },
+          "effectiveTaxRate": 0.200000
+        }]
+      }]
+    },
+    "termsAndConditionsAccepted": true,
+    "totalProductQuantity": 2.000000,
+    "totals": {
+      "grandTotal": {
+        "gross": {
+          "currency": "EUR",
+          "value": 222.00000000000000284217094304040074348449707031250
+        },
+        "net": {
+          "currency": "EUR",
+          "value": 185.00000000000000284217094304040074348449707031250
+        },
+        "tax": {
+          "currency": "EUR",
+          "value": 37.00
+        }
+      },
+      "paymentCostsTotal": {
+        "gross": {
+          "currency": "EUR",
+          "value": 0.00
+        },
+        "net": {
+          "currency": "EUR",
+          "value": 0.0
+        },
+        "tax": {
+          "currency": "EUR",
+          "value": 0.00
+        }
+      },
+      "undiscountedItemTotal": {
+        "gross": {
+          "currency": "EUR",
+          "value": 48.84
+        },
+        "net": {
+          "currency": "EUR",
+          "value": 40.70
+        }
+      },
+      "undiscountedShippingTotal": {
+        "gross": {
+          "currency": "EUR",
+          "value": 0.00
+        },
+        "net": {
+          "currency": "EUR",
+          "value": 0.00
+        },
+        "tax": {
+          "currency": "EUR",
+          "value": 0.00
+        }
+      },
+      "itemTotal": {
+        "gross": {
+          "currency": "EUR",
+          "value": 48.84000000000000284217094304040074348449707031250
+        },
+        "net": {
+          "currency": "EUR",
+          "value": 40.70000000000000284217094304040074348449707031250
+        }
+      },
+      "salesTaxTotalsByTaxRate": [{
+        "calculatedTax": {
+          "currency": "EUR",
+          "value": 8.14
+        },
+        "effectiveTaxRate": 20.000000,
+        "taxableAmount": {
+          "currency": "EUR",
+          "value": 8.14
+        }
+      }],
+      "shippingTotal": {
+        "gross": {
+          "currency": "EUR",
+          "value": 0.00
+        },
+        "net": {
+          "currency": "EUR",
+          "value": 0.00
+        }
+      },
+      "surchargeTotal": {
+        "gross": {
+          "currency": "EUR",
+          "value": 173.16
+        },
+        "net": {
+          "currency": "EUR",
+          "value": 144.30
+        },
+        "tax": {
+          "currency": "EUR",
+          "value": 28.86
+        }
+      },
+      "taxTotalsByTaxRate": [{
+        "calculatedTax": {
+          "currency": "EUR",
+          "value": 37.00
+        },
+        "effectiveTaxRate": 20.000000,
+        "taxableAmount": {
+          "currency": "EUR",
+          "value": 185.00000000000000284217094304040074348449707031250
+        }
+      }]
+    },
+    "user": "bartek.lisek"
+  },
+  "included": {
+    "commonShipToAddress": {
+      "IFcKAQFE_EkAAAF._mh9_SuG": {
+        "addressLine1": "2 RUE GUSTAVE EIFFEL",
+        "city": "CHATEAU GONTIER",
+        "companyName1": "SODISTRA",
+        "country": "France",
+        "countryCode": "FR",
+        "eligibleInstallToAddress": true,
+        "eligibleInvoiceToAddress": true,
+        "eligibleServiceToAddress": true,
+        "eligibleShipFromAddress": true,
+        "eligibleShipToAddress": true,
+        "id": "IFcKAQFE_EkAAAF._mh9_SuG",
+        "lastName": "RUSSIER",
+        "postalCode": "53200",
+        "urn": "IFcKAQFE_EkAAAF._mh9_SuG",
+        "usage": [true, true, true, true, true]
+      }
+    },
+    "commonShippingMethod": {
+      "STD_GROUND": {
+        "attributes": [{
+          "name": "description",
+          "type": "String"
+        }, {
+          "name": "displayName",
+          "type": "String",
+          "value": "Default Camfil Shipping Method"
+        }, {
+          "name": "shortName",
+          "type": "String"
+        }],
+        "digitalDelivery": false,
+        "id": "STD_GROUND",
+        "name": "Default Camfil Shipping Method"
+      }
+    },
+    "discounts": {},
+    "invoiceToAddress": {
+      "F4MKAQFEOIoAAAF._Gh9_SuG": {
+        "addressLine1": "7 RUE DE L'INDUSTRIE\r\nSERVICE COMPTABILITE FOURNISSEURS CS80219\r\n",
+        "addressLine2": "SERVICE COMPTABILITE FOURNISSEURS CS80219\r\n",
+        "city": "BRIGNAIS",
+        "companyName1": "CLAUGER SA",
+        "country": "France",
+        "countryCode": "FR",
+        "eligibleInstallToAddress": false,
+        "eligibleInvoiceToAddress": true,
+        "eligibleServiceToAddress": false,
+        "eligibleShipFromAddress": false,
+        "eligibleShipToAddress": false,
+        "email": "bartlomiej.lisek@columbusglobal.com",
+        "id": "F4MKAQFEOIoAAAF._Gh9_SuG",
+        "postalCode": "69530",
+        "urn": "F4MKAQFEOIoAAAF._Gh9_SuG",
+        "usage": [true]
+      }
+    },
+    "lineItems": {
+      "khUKAQFEunkAAAF._2h9_SuG": {
+        "attributes": [{
+          "name": "ShippingMethodDisplayName",
+          "type": "String",
+          "value": "Default Camfil Shipping Method"
+        }],
+        "description": "Ce filtre à poches est équipé d'un média synthétique dans un cadre en acier. Il est disponible en efficacités ePM1, ePM2.5 et ePM10 selon la norme ISO16890. Cette gamme de produits est conçue avec un nombre réduit de poches pour une optimisation des coûts. ",
+        "displayName": "BASIC-FLO B6 490X592X370-5-25 B6/370",
+        "freeGift": false,
+        "fulfillmentStatus": "NEW",
+        "hiddenGift": false,
+        "id": "khUKAQFEunkAAAF._2h9_SuG",
+        "order": "0acKAQFEpxIAAAF.8mh9_SuG",
+        "position": 1,
+        "pricing": {
+          "giftingTotal": {},
+          "price": {
+            "gross": {
+              "currency": "EUR",
+              "value": 48.84000000000000284217094304040074348449707031250
+            },
+            "net": {
+              "currency": "EUR",
+              "value": 40.70000000000000284217094304040074348449707031250
+            }
+          },
+          "salesTaxTotal": {
+            "currency": "EUR",
+            "value": 8.14
+          },
+          "shippingRebatesTotal": {},
+          "shippingTaxTotal": {
+            "currency": "EUR",
+            "value": 0.00
+          },
+          "singleBasePrice": {
+            "gross": {
+              "currency": "EUR",
+              "value": 24.42000000000000142108547152020037174224853515625
+            },
+            "net": {
+              "currency": "EUR",
+              "value": 20.35000000000000142108547152020037174224853515625
+            }
+          },
+          "undiscountedPrice": {
+            "gross": {
+              "currency": "EUR",
+              "value": 48.84
+            },
+            "net": {
+              "currency": "EUR",
+              "value": 40.70
+            }
+          },
+          "undiscountedShippingTotal": {
+            "gross": {
+              "currency": "EUR",
+              "value": 0.00
+            },
+            "net": {
+              "currency": "EUR",
+              "value": 0.00
+            }
+          },
+          "undiscountedSingleBasePrice": {
+            "gross": {
+              "currency": "EUR",
+              "value": 24.42000000000000142108547152020037174224853515625
+            },
+            "net": {
+              "currency": "EUR",
+              "value": 20.35000000000000142108547152020037174224853515625
+            }
+          },
+          "valueRebatesTotal": {}
+        },
+        "product": "13420002",
+        "quantity": {
+          "value": 2.000000
+        },
+        "shipToAddress": "IFcKAQFE_EkAAAF._mh9_SuG",
+        "shippingMethod": "STD_GROUND"
+      }
+    },
+    "lineItems_discounts": {},
+    "payments": {
+      "7mAKAQFEunoAAAF._2h9_SuG": {
+        "baseAmount": {
+          "currency": "EUR",
+          "value": 222.00000000000000284217094304040074348449707031250
+        },
+        "id": "7mAKAQFEunoAAAF._2h9_SuG",
+        "openTender": true,
+        "paymentCosts": {
+          "gross": {
+            "currency": "EUR",
+            "value": 0.00
+          },
+          "net": {
+            "currency": "EUR",
+            "value": 0.0
+          },
+          "tax": {
+            "currency": "EUR",
+            "value": 0.00
+          }
+        },
+        "paymentInstrument": "ISH_INVOICE",
+        "paymentMethod": "ISH_INVOICE",
+        "redirectRequired": false,
+        "status": "Non traitéE",
+        "totalAmount": {
+          "currency": "EUR",
+          "value": 222.00000000000000284217094304040074348449707031250
+        }
+      }
+    },
+    "payments_paymentInstrument": {
+      "ISH_INVOICE": {
+        "id": "ISH_INVOICE"
+      }
+    },
+    "payments_paymentMethod": {
+      "ISH_INVOICE": {
+        "default": true,
+        "description": "Le paiement par facture, simple et pratique – essayez-le vous aussi !",
+        "displayName": "Facture",
+        "id": "ISH_INVOICE",
+        "paymentInstruments": ["ISH_INVOICE"],
+        "saveAllowed": true,
+        "serviceID": "ISH_INVOICE"
+      }
+    }
+  },
+  "links": {
+    "self": "https://ish35-cmflzicmint-lv.westeurope.cloudapp.azure.com/INTERSHOP/rest/WFS/Camfil-CamfilFR-Site/rest;loc=fr_FR;cur=EUR/orders/0acKAQFEpxIAAAF.8mh9_SuG",
+    "included": {
+      "lineItems": {
+        "khUKAQFEunkAAAF._2h9_SuG": "https://ish35-cmflzicmint-lv.westeurope.cloudapp.azure.com/INTERSHOP/rest/WFS/Camfil-CamfilFR-Site/rest;loc=fr_FR;cur=EUR/orders/0acKAQFEpxIAAAF.8mh9_SuG/items/khUKAQFEunkAAAF._2h9_SuG"
+      }
+    }
+  }
+}

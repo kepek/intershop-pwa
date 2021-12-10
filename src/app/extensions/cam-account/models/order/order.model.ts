@@ -1,9 +1,11 @@
-import { AdditionalTotalCost } from '../additionalTotalCost/additionalTotalCost.interface';
-import { DeliveryAddress } from '../deliveryAddress/deliveryAddress.interface';
-import { OrderLineItem } from '../orderLineItem/orderLineItem.interface';
-import { TrackAndTrace } from '../trackAndTrace/trackAndTrace.interface';
+import { BasketTotal } from 'ish-core/models/basket-total/basket-total.model';
 
-export interface Order {
+import { AdditionalTotalCost } from '../additional-total-cost/additional-total-cost.model';
+import { DeliveryAddress } from '../delivery-address/delivery-address.model';
+import { OrderLineItem } from '../order-line-item/order-line-item.model';
+import { TrackAndTrace } from '../track-and-trace/track-and-trace.model';
+
+export interface Order extends Pick<BasketTotal, 'itemSurchargeTotalsByType' | 'bucketSurchargeTotalsByType'> {
   id: string;
   contactPerson?: string;
   currency?: string;
@@ -31,4 +33,8 @@ export interface Order {
   additionalTotalCost?: AdditionalTotalCost[];
   phoneNotification: string;
   volumeDiscount: number;
+  // UI
+  deliveryDates?: number[];
+  isPartialDelivery?: boolean;
+  canReOrder?: boolean;
 }

@@ -4,6 +4,7 @@ import { BrowserModule, TransferState } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormlyModule } from '@ngx-formly/core';
 import { FormlyMaterialModule } from '@ngx-formly/material';
+import { CamfilPwaExportsModule } from 'camfil-pwa';
 
 import { COOKIE_CONSENT_VERSION } from 'ish-core/configurations/state-keys';
 import { CoreModule } from 'ish-core/core.module';
@@ -43,6 +44,7 @@ import { ShellModule } from './shell/shell.module';
     ReactiveFormsModule,
     FormlyModule.forRoot(),
     FormlyMaterialModule,
+    CamfilPwaExportsModule,
   ],
   bootstrap: [AppComponent],
 })

@@ -1,9 +1,10 @@
+import { OrderMapper } from 'camfil-pwa/models/order/order.mapper';
+
 import { AddressData } from 'ish-core/models/address/address.interface';
 import { OrderItemData } from 'ish-core/models/order-item/order-item.interface';
 import { ShippingMethodData } from 'ish-core/models/shipping-method/shipping-method.interface';
 
 import { OrderBaseData, OrderData } from './order.interface';
-import { OrderMapper } from './order.mapper';
 
 describe('Order Mapper', () => {
   const orderBaseData = {

@@ -4,11 +4,13 @@ import { defaultIfEmpty, map } from 'rxjs/operators';
 
 import { ApiService, unpackEnvelope } from 'ish-core/services/api/api.service';
 
+import { OrderLineItemData } from '../../models/order-line-item/order-line-item.interface';
+import { OrderLineItemMapper } from '../../models/order-line-item/order-line-item.mapper';
+import { OrderLineItem } from '../../models/order-line-item/order-line-item.model';
 import { OrderData } from '../../models/order/order.interface';
 import { OrderMapper } from '../../models/order/order.mapper';
 import { Order } from '../../models/order/order.model';
-import { OrderLineItem } from '../../models/orderLineItem/orderLineItem.interface';
-import { TrackAndTracesMapper } from '../../models/trackAndTrace/trackAndTrace.mapper';
+import { TrackAndTracesMapper } from '../../models/track-and-trace/track-and-trace.mapper';
 
 @Injectable({ providedIn: 'root' })
 export class OrderService {
@@ -39,8 +41,10 @@ export class OrderService {
 
     return this.apiService.get<OrderData>(`camfilorder/${orderId}/camfilorderline`).pipe(
       unpackEnvelope(),
-      map((lineItemsData: OrderLineItem[]) => lineItemsData.map(lineItem => OrderMapper.fromLineItemData(lineItem))),
-      defaultIfEmpty([])
+      map((lineItemsData: OrderLineItemData[]) =>
+        lineItemsData.map(lineItem => OrderLineItemMapper.fromData(lineItem))
+      ),
+      defaultIfEmpty<OrderLineItem[]>([])
     );
   }
 

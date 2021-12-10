@@ -58,38 +58,6 @@ import { getOrder, getSelectedOrder, getSelectedOrderId } from './orders.selecto
 @Injectable()
 export class OrdersEffects {
   /**
-   * Creates an order based on the given basket.
-   */
-  createOrder$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(createOrder),
-      withLatestFrom(this.store.select(getCurrentBasketId)),
-      mergeMap(([, basketId]) => {
-        const erpEmployeeId = localStorage?.getItem('erpEmployeeId');
-
-        let createOrder$ = this.orderService.createOrder(basketId, true);
-
-        if (erpEmployeeId) {
-          createOrder$ = this.orderService.createOrder(basketId, true, erpEmployeeId);
-        }
-
-        return createOrder$.pipe(
-          withLatestFrom(this.store.select(getCurrentBasket)),
-          mergeMap(([order, { basketExtensions }]) => {
-            const create = [createOrderSuccess({ order }), loadCamCards()];
-
-            if (basketExtensions?.find(e => !e.createdFromCamCardId)) {
-              create.slice(0, 1);
-            }
-
-            return create;
-          }),
-          mapErrorToAction(createOrderFail)
-        );
-      })
-    )
-  );
-  /**
    * After order creation either redirect to a payment provider or show checkout receipt page.
    */
   continueAfterOrderCreation$ = createEffect(
@@ -112,6 +80,38 @@ export class OrdersEffects {
         })
       ),
     { dispatch: false }
+  );
+  /**
+   * Creates an order based on the given basket.
+   */
+  createOrder$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(createOrder),
+      withLatestFrom(this.store.select(getCurrentBasketId)),
+      mergeMap(([, basketId]) => {
+        const erpEmployeeId = localStorage?.getItem('erpEmployeeId');
+
+        let createOrder$ = this.orderService.createOrder(basketId, true);
+
+        if (erpEmployeeId) {
+          createOrder$ = this.orderService.createOrder(basketId, true, erpEmployeeId);
+        }
+
+        return createOrder$.pipe(
+          withLatestFrom(this.store.select(getCurrentBasket)),
+          mergeMap(([order, basket]) => {
+            const create = [createOrderSuccess({ order }), loadCamCards()];
+
+            if (basket?.basketExtensions?.find(e => !e.createdFromCamCardId)) {
+              create.slice(0, 1);
+            }
+
+            return create;
+          }),
+          mapErrorToAction(createOrderFail)
+        );
+      })
+    )
   );
   rollbackAfterOrderCreation$ = createEffect(() =>
     this.actions$.pipe(

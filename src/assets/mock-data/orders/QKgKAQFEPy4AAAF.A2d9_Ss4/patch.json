@@ -1,0 +1,217 @@
+{
+  "data": {
+    "attributes": [{
+      "name": "CAMFIL_CONTACT_ERPID_LkEKAQFEz.sAAAF.BGN9_Ss4",
+      "type": "String",
+      "value": "584259_002"
+    }, {
+      "name": "CAMFIL_CREDIT_LIMIT_REACHED_LkEKAQFEz.sAAAF.BGN9_Ss4",
+      "type": "Boolean",
+      "value": false
+    }, {
+      "name": "CAMFIL_CUSTOMER_ID_LkEKAQFEz.sAAAF.BGN9_Ss4",
+      "type": "String",
+      "value": "iVgKAQFEai4AAAF8JBRvaF7Q"
+    }, {
+      "name": "CAMFIL_DELIVERY_DATE_LkEKAQFEz.sAAAF.BGN9_Ss4",
+      "type": "Date",
+      "value": "2022-01-31T12:00:00Z"
+    }, {
+      "name": "CAMFIL_EMAIL_RECIPIENTS_LkEKAQFEz.sAAAF.BGN9_Ss4",
+      "type": "String"
+    }, {
+      "name": "CAMFIL_INFO_LkEKAQFEz.sAAAF.BGN9_Ss4",
+      "type": "String"
+    }, {
+      "name": "CAMFIL_INVOICE_LABEL_LkEKAQFEz.sAAAF.BGN9_Ss4",
+      "type": "String"
+    }, {
+      "name": "CAMFIL_ORDER_MARK_LkEKAQFEz.sAAAF.BGN9_Ss4",
+      "type": "String"
+    }, {
+      "name": "CAMFIL_PHONE_NUMBER_LkEKAQFEz.sAAAF.BGN9_Ss4",
+      "type": "String"
+    }, {
+      "name": "CAMFIL_VOLUME_DISCOUNTLkEKAQFEz.sAAAF.BGN9_Ss4",
+      "type": "Decimal",
+      "value": 0
+    }],
+    "basket": "YJ0KAQFEqYYAAAF.4GJ9_Ss4",
+    "buckets": ["0"],
+    "commonShipToAddress": "7yQKAQFE00MAAAF.C2d9_Ss4",
+    "commonShippingMethod": "STD_GROUND",
+    "creationDate": "2022-01-05T17:10:23Z",
+    "customer": "13320",
+    "discounts": {},
+    "documentNumber": "00000759",
+    "id": "QKgKAQFEPy4AAAF.A2d9_Ss4",
+    "invoiceToAddress": "gyYKAQFE00IAAAF.C2d9_Ss4",
+    "lineItems": ["r9QKAQFEXRUAAAF.DGd9_Ss4"],
+    "orderCreation": {
+      "status": "COMPLETED"
+    },
+    "payments": ["RroKAQFEXRYAAAF.DGd9_Ss4"],
+    "purchaseCurrency": "EUR",
+    "status": "Nouveau",
+    "statusCode": "NEW",
+    "surcharges": {
+      "bucketSurcharges": [{
+        "amount": {
+          "gross": {
+            "currency": "EUR",
+            "value": 42.00
+          },
+          "net": {
+            "currency": "EUR",
+            "value": 35
+          }
+        },
+        "name": "CAMFIL_EXTRA_FREIGHT_COST_RULE",
+        "taxes": [{
+          "calculatedTax": {
+            "currency": "EUR",
+            "value": 7.00
+          },
+          "effectiveTaxRate": 0.200000
+        }]
+      }, {
+        "amount": {
+          "gross": {
+            "currency": "EUR",
+            "value": 131.16
+          },
+          "net": {
+            "currency": "EUR",
+            "value": 109.30
+          }
+        },
+        "name": "CAMFIL_MINIMUM_ORDER_TOPUP",
+        "taxes": [{
+          "calculatedTax": {
+            "currency": "EUR",
+            "value": 21.86
+          },
+          "effectiveTaxRate": 0.200000
+        }]
+      }]
+    },
+    "termsAndConditionsAccepted": true,
+    "totalProductQuantity": 2,
+    "totals": {
+      "grandTotal": {
+        "gross": {
+          "currency": "EUR",
+          "value": 222.00000000000000284217094304040074348449707031250
+        },
+        "net": {
+          "currency": "EUR",
+          "value": 185.00000000000000284217094304040074348449707031250
+        },
+        "tax": {
+          "currency": "EUR",
+          "value": 37.00
+        }
+      },
+      "paymentCostsTotal": {
+        "gross": {
+          "currency": "EUR",
+          "value": 0.00
+        },
+        "net": {
+          "currency": "EUR",
+          "value": 0.0
+        },
+        "tax": {
+          "currency": "EUR",
+          "value": 0.00
+        }
+      },
+      "undiscountedItemTotal": {
+        "gross": {
+          "currency": "EUR",
+          "value": 48.84
+        },
+        "net": {
+          "currency": "EUR",
+          "value": 40.70
+        }
+      },
+      "undiscountedShippingTotal": {
+        "gross": {
+          "currency": "EUR",
+          "value": 0.00
+        },
+        "net": {
+          "currency": "EUR",
+          "value": 0.00
+        },
+        "tax": {
+          "currency": "EUR",
+          "value": 0.00
+        }
+      },
+      "itemTotal": {
+        "gross": {
+          "currency": "EUR",
+          "value": 48.84000000000000284217094304040074348449707031250
+        },
+        "net": {
+          "currency": "EUR",
+          "value": 40.70000000000000284217094304040074348449707031250
+        }
+      },
+      "salesTaxTotalsByTaxRate": [{
+        "calculatedTax": {
+          "currency": "EUR",
+          "value": 8.14
+        },
+        "effectiveTaxRate": 20.000000,
+        "taxableAmount": {
+          "currency": "EUR",
+          "value": 8.14
+        }
+      }],
+      "shippingTotal": {
+        "gross": {
+          "currency": "EUR",
+          "value": 0.00
+        },
+        "net": {
+          "currency": "EUR",
+          "value": 0.00
+        }
+      },
+      "surchargeTotal": {
+        "gross": {
+          "currency": "EUR",
+          "value": 173.16
+        },
+        "net": {
+          "currency": "EUR",
+          "value": 144.30
+        },
+        "tax": {
+          "currency": "EUR",
+          "value": 28.86
+        }
+      },
+      "taxTotalsByTaxRate": [{
+        "calculatedTax": {
+          "currency": "EUR",
+          "value": 37.00
+        },
+        "effectiveTaxRate": 20.000000,
+        "taxableAmount": {
+          "currency": "EUR",
+          "value": 185.00000000000000284217094304040074348449707031250
+        }
+      }]
+    },
+    "user": "bartek.lisek"
+  },
+  "links": {
+    "self": {
+      "QKgKAQFEPy4AAAF.A2d9_Ss4": "https://ish35-cmflzicmint-lv.westeurope.cloudapp.azure.com/INTERSHOP/rest/WFS/Camfil-CamfilFR-Site/rest;loc=fr_FR;cur=EUR/orders/QKgKAQFEPy4AAAF.A2d9_Ss4"
+    }
+  }
+}

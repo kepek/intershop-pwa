@@ -345,6 +345,92 @@
           }
         }
       }
+    },
+    "camfil-pwa": {
+      "projectType": "application",
+      "cli": {
+        "defaultCollection": "intershop-schematics"
+      },
+      "schematics": {
+        "intershop-schematics:page": {
+          "lazy": false
+        }
+      },
+      "root": "projects/camfil-pwa",
+      "sourceRoot": "projects/camfil-pwa/src",
+      "prefix": "camfil",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/camfil-pwa",
+            "index": "projects/camfil-pwa/src/index.html",
+            "main": "projects/camfil-pwa/src/main.ts",
+            "polyfills": "src/polyfills.ts",
+            "tsConfig": "projects/camfil-pwa/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              { "glob": "**/*", "input": "src/assets/", "output": "/assets/" }
+            ],
+            "styles": [
+              "projects/camfil-pwa/src/styles.scss"
+            ],
+            "scripts": [],
+            "fileReplacements": [
+              {
+                "replace": "src/environments/environment.ts",
+                "with": "src/environments/environment.local.ts"
+              }
+            ]
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "camfil-pwa:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "camfil-pwa:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "camfil-pwa:build"
+          }
+        }
+      }
     }
   },
   "defaultProject": "intershop-pwa",

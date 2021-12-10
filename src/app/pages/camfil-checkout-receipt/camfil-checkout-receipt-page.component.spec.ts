@@ -1,0 +1,84 @@
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { CheckoutFacade as CamfilCheckoutFacade } from 'camfil-pwa/facades/checkout.facade';
+import { MockComponent } from 'ng-mocks';
+import { LazyCheckoutReceiptRequisitionComponent } from 'requisition-management';
+import { of } from 'rxjs';
+import { instance, mock, when } from 'ts-mockito';
+
+import { Order } from 'ish-core/models/order/order.model';
+import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
+
+import { CamfilCheckoutReceiptOrderComponent } from './camfil-checkout-receipt-order/camfil-checkout-receipt-order.component';
+import { CamfilCheckoutReceiptPageComponent } from './camfil-checkout-receipt-page.component';
+import { CamfilCheckoutReceiptComponent } from './camfil-checkout-receipt/camfil-checkout-receipt.component';
+
+describe('Camfil Checkout Receipt Page Component', () => {
+  let component: CamfilCheckoutReceiptPageComponent;
+  let fixture: ComponentFixture<CamfilCheckoutReceiptPageComponent>;
+  let element: HTMLElement;
+  let camfilCheckoutFacade: CamfilCheckoutFacade;
+
+  const selectedOrder: Order = {
+    id: '1',
+    documentNo: '1',
+    creationDate: 1,
+    customer: '1',
+    orderCreation: {
+      status: 'COMPLETED',
+    },
+    statusCode: '1',
+    status: '1',
+    totals: {
+      total: {
+        gross: 141796.98,
+        net: 141796.98,
+        type: 'PriceItem',
+        currency: 'USD',
+      },
+      discountTotal: {
+        gross: 141796.98,
+        net: 141796.98,
+        type: 'PriceItem',
+        currency: 'USD',
+      },
+      itemTotal: {
+        gross: 141796.98,
+        net: 141796.98,
+        type: 'PriceItem',
+        currency: 'USD',
+      },
+      isEstimated: false,
+    },
+  };
+
+  beforeEach(async () => {
+    camfilCheckoutFacade = mock(CamfilCheckoutFacade);
+
+    await TestBed.configureTestingModule({
+      declarations: [
+        CamfilCheckoutReceiptPageComponent,
+        MockComponent(CamfilCheckoutReceiptComponent),
+        MockComponent(CamfilCheckoutReceiptOrderComponent),
+        MockComponent(CamfilLoadingComponent),
+        MockComponent(LazyCheckoutReceiptRequisitionComponent),
+      ],
+      providers: [{ provide: CamfilCheckoutFacade, useFactory: () => instance(camfilCheckoutFacade) }],
+    }).compileComponents();
+  });
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(CamfilCheckoutReceiptPageComponent);
+    component = fixture.componentInstance;
+    element = fixture.nativeElement;
+
+    when(camfilCheckoutFacade.selectedOrder$).thenReturn(of(selectedOrder));
+    when(camfilCheckoutFacade.basketLoading$).thenReturn(of(false));
+    when(camfilCheckoutFacade.submittedBasket$).thenReturn(of(undefined));
+  });
+
+  it('should be created', () => {
+    expect(component).toBeTruthy();
+    expect(element).toBeTruthy();
+    expect(() => fixture.detectChanges()).not.toThrow();
+  });
+});

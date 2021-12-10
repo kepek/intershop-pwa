@@ -1,0 +1,60 @@
+<div class="camfil-checkout-header">
+  <div class="cart-header">
+    <h1 class="d-flex flex-wrap align-items-baseline">
+      <span class="cart-header-title">
+        <mat-icon *ngIf="editable" class="size-37 mr-2" svgIcon="cart"></mat-icon>
+        {{
+          (editable ? 'shopping_cart.proceed_to_checkout.button.label' : 'camfil.checkout.confirmation.title')
+            | translate
+        }}
+      </span>
+      <span class="header-note">
+        <span>{{ 'shopping_cart.transaction.text' | translate }}</span>
+      </span>
+    </h1>
+  </div>
+
+  <ng-container *ngIf="!(isLoggedIn$ | async)">
+    <ng-container *ngTemplateOutlet="guestTemplate"></ng-container>
+  </ng-container>
+
+  <ng-container *ngIf="isLoggedIn$ | async">
+    <ng-container *ngTemplateOutlet="defaultTemplate"></ng-container>
+  </ng-container>
+</div>
+
+<mat-divider></mat-divider>
+
+<ng-template #guestTemplate>
+  <div *ngIf="editable" class="row align-items-end">
+    <div class="col-md-3">
+      <p>
+        <span>{{'camfil.checkout.number_of_products' | translate }}:</span>
+        <span class="checkout-header-number">{{ quantity }}</span>
+      </p>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #defaultTemplate>
+  <div *ngIf="editable" class="row align-items-end">
+    <div class="col-md-3">
+      <p>
+        <span>{{ 'camfil.checkout.number_of_orders' | translate }}:</span>
+        <span class="checkout-header-number">{{ buckets?.length }}</span>
+      </p>
+      <p>
+        <span>{{ 'camfil.checkout.number_of_products' | translate }}:</span>
+        <span class="checkout-header-number">{{ quantity }}</span>
+      </p>
+    </div>
+    <div class="col-md-9">
+      <camfil-checkout-toolbar
+        [basketId]="basket?.id"
+        [buckets]="buckets"
+        [isGuestCheckout]="!(isLoggedIn$ | async)"
+        [shippingMethodId]="basket?.commonShippingMethod?.id"
+      ></camfil-checkout-toolbar>
+    </div>
+  </div>
+</ng-template>

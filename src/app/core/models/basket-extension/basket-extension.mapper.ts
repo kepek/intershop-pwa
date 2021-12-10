@@ -17,26 +17,26 @@ export class BasketExtensionMapper {
     invoiceAddress: BasketExtensionGuestFormAddress
   ): boolean {
     return (
-      deliveryAddress.streetAddress === invoiceAddress.streetAddress &&
-      deliveryAddress.zipCode === invoiceAddress.zipCode &&
+      deliveryAddress.addressLine1 === invoiceAddress.addressLine1 &&
+      deliveryAddress.postalCode === invoiceAddress.postalCode &&
       deliveryAddress.city === invoiceAddress.city &&
-      deliveryAddress.country === invoiceAddress.country
+      deliveryAddress.countryCode === invoiceAddress.countryCode
     );
   }
 
   static createGuestBasket(data: BasketExtensionGuestData): BasketExtensionGuestForm {
     const deliveryAddress: BasketExtensionGuestFormAddress = {
-      streetAddress: data.dlvStreetAddress,
-      zipCode: data.dlvZipCode,
+      addressLine1: data.dlvStreetAddress,
+      postalCode: data.dlvZipCode,
       city: data.dlvCity,
-      country: data.dlvCountry,
+      countryCode: data.dlvCountry,
     };
 
     const invoiceAddress: BasketExtensionGuestFormAddress = {
-      streetAddress: data.invStreetAddress,
-      zipCode: data.invZipCode,
+      addressLine1: data.invStreetAddress,
+      postalCode: data.invZipCode,
       city: data.invCity,
-      country: data.invCountry,
+      countryCode: data.invCountry,
     };
 
     return {
@@ -44,9 +44,9 @@ export class BasketExtensionMapper {
         firstName: data.firstName,
         lastName: data.lastName,
         email: data.emailAddress,
-        phone: data.phoneNumber,
+        phoneHome: data.phoneNumber,
         siret: data.siretNumber,
-        companyName: data.companyName,
+        companyName1: data.companyName,
         jobTitle: data.jobTitle,
         vat: data.vatNumber,
       },
@@ -55,17 +55,17 @@ export class BasketExtensionMapper {
         invoiceMark: data.dlvInvoiceMark,
         deliveryInfo: data.dlvInfo,
         customerNote: data.dlvNote,
-        streetAddress: data.dlvStreetAddress,
-        zipCode: data.dlvZipCode,
+        addressLine1: data.dlvStreetAddress,
+        postalCode: data.dlvZipCode,
         city: data.dlvCity,
-        country: data.dlvCountry,
+        countryCode: data.dlvCountry,
         sameAddressAsInvoice: BasketExtensionMapper.compareGuestBasketAddresses(deliveryAddress, invoiceAddress),
       },
       invoiceAddressFormGroup: {
-        streetAddress: data.invStreetAddress,
-        zipCode: data.invZipCode,
+        addressLine1: data.invStreetAddress,
+        postalCode: data.invZipCode,
         city: data.invCity,
-        country: data.invCountry,
+        countryCode: data.invCountry,
       },
     };
   }

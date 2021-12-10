@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
-import { DeliveryAddress } from '../../models/deliveryAddress/deliveryAddress.interface';
+import { DeliveryAddressData } from '../../models/delivery-address/delivery-address.interface';
 
 /**
  * The Address Component displays an address. The readout is country-dependent.
@@ -20,5 +20,5 @@ export class CamfilDeliveryAddressComponent {
    * The Address to be displayed.
    *
    */
-  @Input() deliveryAddress: DeliveryAddress;
+  @Input() deliveryAddress: DeliveryAddressData;
 }

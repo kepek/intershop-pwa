@@ -1,4 +1,6 @@
-export interface OrderData {
+import { BasketBaseData } from 'ish-core/models/basket/basket.interface';
+
+export interface OrderData extends Pick<BasketBaseData, 'surcharges'> {
   id: string;
   contactPerson?: string;
   currency?: string;

@@ -1,0 +1,28 @@
+@import '../../../styles/themes/camfil/variables';
+@import '../../../styles/themes/camfil/colors';
+
+:host {
+  .summary-line {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .filter-info__title {
+    display: flex;
+    align-items: center;
+    font-weight: 700;
+
+    span {
+      margin-left: 5px;
+    }
+  }
+
+  .header-divider-container {
+    position: sticky;
+    top: 0;
+    z-index: $confirmation-header-zindex;
+    padding-top: $space-box;
+    background-color: $camfil-white;
+    border-radius: 4px;
+  }
+}

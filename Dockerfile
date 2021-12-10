@@ -6,6 +6,7 @@ RUN npm i --ignore-scripts
 COPY projects/organization-management/src/app /workspace/projects/organization-management/src/app/
 COPY projects/requisition-management/src/app /workspace/projects/requisition-management/src/app/
 COPY projects/camfil-icons /workspace/projects/camfil-icons/
+COPY projects/camfil-pwa /workspace/projects/camfil-pwa/
 COPY src /workspace/src/
 COPY tsconfig.app.json tsconfig.base.json ngsw-config.json .browserslistrc angular.json /workspace/
 RUN npm run build:schematics && npm run synchronize-lazy-components -- --ci

@@ -23,7 +23,9 @@
       "requisition-management": [
         "projects/requisition-management/src/app/exports"
       ],
-      "camfil-icons": ["projects/camfil-icons/src/public-api"]
+      "camfil-icons": ["projects/camfil-icons/src/public-api"],
+      "camfil-pwa": ["projects/camfil-pwa/src/app/exports"],
+      "camfil-pwa/*": ["projects/camfil-pwa/src/app/*"]
     },
     "lib": ["es2018", "dom", "es2020.string"],
     "noUnusedLocals": true,

@@ -113,6 +113,7 @@ import { CamfilModalDialogComponent } from './components/common/camfil-modal-dia
 import { CamfilQuickViewModalComponent } from './components/common/camfil-quick-view-modal/camfil-quick-view-modal.component';
 import { ErrorMessageComponent } from './components/common/error-message/error-message.component';
 import { InfoBoxComponent } from './components/common/info-box/info-box.component';
+import { CamfilInfoBoxComponent } from './components/common/camfil-info-box/camfil-info-box.component';
 import { InplaceEditComponent } from './components/common/inplace-edit/inplace-edit.component';
 import { CamfilLoadingComponent } from './components/common/camfil-loading/camfil-loading.component';
 import { ModalDialogLinkComponent } from './components/common/modal-dialog-link/modal-dialog-link.component';
@@ -229,6 +230,12 @@ import { CamfilLineItemMeasurementsComponent } from './components/line-item/camf
 import { CamfilAddressComponent } from 'ish-shared/components/camfil-address/camfil-address.component';
 import { CamfilBucketValidationResultsComponent } from 'ish-shared/components/basket/camfil-bucket-validation-results/camfil-bucket-validation-results.component';
 import { CamfilCityFieldComponent } from './components/common/camfil-city-field/camfil-city-field.component';
+import { CamfilCheckoutSummaryComponent } from 'ish-shared/components/camfil-checkout-summary/camfil-checkout-summary.component';
+import { CamfilCheckoutLineItemComponent } from 'ish-shared/components/camfil-checkout-line-item/camfil-checkout-line-item.component';
+import { CamfilCheckoutBucketComponent } from 'ish-shared/components/camfil-checkout-bucket/camfil-checkout-bucket.component';
+import { CamfilEditOrderModalComponent } from 'ish-shared/components/camfil-checkout-bucket/camfil-edit-order-modal/camfil-edit-order-modal.component';
+import { CamfilDeleteOrderComponent } from 'ish-shared/components/camfil-checkout-bucket/camfil-delete-order/camfil-delete-order.component';
+import { CamfilShoppingBucketEmptyComponent } from 'ish-shared/components/camfil-shopping-bucket-empty/camfil-shopping-bucket-empty.component';
 
 const importExportModules = [
   AddressFormsSharedModule,
@@ -395,13 +402,19 @@ const exportedComponents = [
   CamfilBulletListComponent,
   CamfilCamCardModalComponent,
   CamfilCategoryBoxComponent,
+  CamfilCheckoutBucketComponent,
+  CamfilCheckoutLineItemComponent,
+  CamfilCheckoutSummaryComponent,
   CamfilCityFieldComponent,
+  CamfilDeleteOrderComponent,
+  CamfilEditOrderModalComponent,
   CamfilErrorComponent,
   CamfilErrorMessageComponent,
   CamfilFilterInfoComponent,
   CamfilFilterMeasurementsComponent,
   CamfilFilterNavigationComponent,
   CamfilHeaderBoxComponent,
+  CamfilInfoBoxComponent,
   CamfilLineItemTableComponent,
   CamfilLinksBlockComponent,
   CamfilLoadingComponent,
@@ -433,6 +446,7 @@ const exportedComponents = [
   CamfilProductVariationSelectComponent,
   CamfilProductsAddToBasketComponent,
   CamfilQuickViewModalComponent,
+  CamfilShoppingBucketEmptyComponent,
   CamfilSmallCtaModalComponent,
   ContentIncludeComponent,
   ContentNavigationComponent,

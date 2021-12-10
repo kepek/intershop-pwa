@@ -3,12 +3,12 @@ import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { Inject, Injectable, Optional } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { REQUEST } from '@nguniversal/express-engine/tokens';
+import { OrderMapper } from 'camfil-pwa/models/order/order.mapper';
 import { Request } from 'express';
-import { EMPTY, Observable, of, throwError } from 'rxjs';
-import { catchError, concatMap, map, mapTo, withLatestFrom } from 'rxjs/operators';
+import { EMPTY, Observable, forkJoin, of, throwError } from 'rxjs';
+import { catchError, concatMap, map, mapTo, mergeAll, withLatestFrom } from 'rxjs/operators';
 
 import { OrderData } from 'ish-core/models/order/order.interface';
-import { OrderMapper } from 'ish-core/models/order/order.mapper';
 import { Order } from 'ish-core/models/order/order.model';
 import { ApiService } from 'ish-core/services/api/api.service';
 import { getCurrentLocale } from 'ish-core/store/core/configuration';
@@ -86,11 +86,22 @@ export class OrderService {
         }
       )
       .pipe(
-        map(payload => OrderMapper.fromData({ data: payload?.data?.[0] })),
+        map(payload => {
+          if (Array.isArray(payload?.data)) {
+            return OrderMapper.fromListData(payload);
+          } else {
+            return OrderMapper.fromData(payload);
+          }
+        }),
         withLatestFrom(this.store.pipe(select(getCurrentLocale))),
-        concatMap(([order, currentLocale]) =>
-          this.sendRedirectUrlsIfRequired(order, currentLocale && currentLocale.lang)
-        )
+        concatMap(([orderOrOrders, currentLocale]) => {
+          if (Array.isArray(orderOrOrders)) {
+            const tasks$ = orderOrOrders.map(order => this.sendRedirectUrlsIfRequired(order, currentLocale?.lang));
+            return forkJoin([...tasks$]).pipe(mergeAll());
+          } else {
+            return this.sendRedirectUrlsIfRequired(orderOrOrders, currentLocale?.lang);
+          }
+        })
       );
   }
 

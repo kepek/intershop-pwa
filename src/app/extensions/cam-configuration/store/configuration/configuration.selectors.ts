@@ -42,3 +42,5 @@ export const getShowPricesForNonLoggedInUser = createSelector(
 export const getCountryCode = createSelector(getConfigurationState, state => state.countryCode);
 
 export const getUseSecondAddressLine = createSelector(getConfigurationState, state => state.useSecondAddressLine);
+
+export const getContinueShoppingUrl = createSelector(getConfigurationState, state => state.continueShoppingUrl);

@@ -1,7 +1,7 @@
-import { OrderLineItem } from 'src/app/extensions/cam-account/models/orderLineItem/orderLineItem.interface';
-import { CamCamProductChecked, CamCardItem } from 'src/app/extensions/cam-cards/models/cam-card/cam-card.model';
-
 import { LineItem, LineItemView } from 'ish-core/models/line-item/line-item.model';
+
+import { OrderLineItem } from '../../../extensions/cam-account/models/order-line-item/order-line-item.model';
+import { CamCamProductChecked, CamCardItem } from '../../../extensions/cam-cards/models/cam-card/cam-card.model';
 
 import { Attribute } from './attribute.model';
 

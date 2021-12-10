@@ -1,65 +1,49 @@
 import { Injectable } from '@angular/core';
 
-import { DeliveryAddressMapper } from '../deliveryAddress/deliveryAddress.mapper';
-import { OrderLineItem } from '../orderLineItem/orderLineItem.interface';
+import { BasketSurchargeMapper } from 'ish-core/models/basket-surcharge/basket-surcharge.mapper';
+
+import { DeliveryAddressMapper } from '../delivery-address/delivery-address.mapper';
 
 import { OrderData } from './order.interface';
 import { Order } from './order.model';
 
 @Injectable({ providedIn: 'root' })
 export class OrderMapper {
-  static fromData(orderData: OrderData): Order {
-    if (orderData) {
-      return {
-        id: orderData.id,
-        contactPerson: orderData.contactPerson,
-        deliveryDate: orderData.deliveryDate,
-        camfilNo: orderData.customerOrderNumber,
-        currency: orderData.currency,
-        customerName: orderData.customerName,
-        customerNo: orderData.customerNo,
-        customerOrderNumber: orderData.customerOrderNumber,
-        customerDepartment: orderData.customerDepartment,
-        ishOrderUUID: orderData.ishOrderUUID,
-        orderChannel: orderData.orderChannel,
-        orderComment: orderData.orderComment,
-        orderDate: orderData.orderDate,
-        orderGoodsMark: orderData.orderGoodsMark,
-        // If there is no order status then use default status
-        orderStatus: orderData.orderStatus ? orderData.orderStatus : 'Created',
-        orderNumber: orderData.orderNumber,
-        deliveryAddress: DeliveryAddressMapper.fromData(orderData),
-        taxAmount: orderData.taxAmount,
-        totalCustomerPriceSum: orderData.totalCustomerPriceSum,
-        totalDeliveredQty: orderData.totalDeliveredQty,
-        totalOrderedQty: orderData.totalOrderedQty,
-        totalPriceAfterDiscountExVAT: orderData.totalPriceAfterDiscountExVAT,
-        phoneNotification: orderData.phoneNotification,
-        volumeDiscount: orderData.volumeDiscount,
-      };
-    }
-  }
+  static fromData(data: OrderData): Order {
+    if (data) {
+      const camfilNo = data.customerOrderNumber;
+      const orderStatus = data?.orderStatus || 'Created';
+      const deliveryAddress = DeliveryAddressMapper.fromData(data);
+      const itemSurchargeTotalsByType = BasketSurchargeMapper.fromListData(data?.surcharges?.itemSurcharges);
+      const bucketSurchargeTotalsByType = BasketSurchargeMapper.fromListData(data?.surcharges?.bucketSurcharges);
 
-  static fromLineItemData(lineItemData: OrderLineItem): OrderLineItem {
-    if (lineItemData) {
       return {
-        articleName: lineItemData.articleName,
-        boxLabel: lineItemData.boxLabel,
-        currency: lineItemData.currency,
-        deliveredQty: lineItemData.deliveredQty,
-        deliveryDate: lineItemData.deliveryDate,
-        id: lineItemData.id,
-        name: lineItemData.name,
-        orderedQty: lineItemData.orderedQty,
-        ownerId: lineItemData.ownerId,
-        sku: lineItemData.sku,
-        totalRowCustomerPrice: lineItemData.totalRowCustomerPrice,
-        type: lineItemData.type,
-        rowNumber: lineItemData.rowNumber,
-        diameter: lineItemData.diameter,
-        width: lineItemData.width,
-        height: lineItemData.height,
-        depth: lineItemData.depth,
+        id: data.id,
+        contactPerson: data.contactPerson,
+        deliveryDate: data.deliveryDate,
+        currency: data.currency,
+        customerName: data.customerName,
+        customerNo: data.customerNo,
+        customerOrderNumber: data.customerOrderNumber,
+        customerDepartment: data.customerDepartment,
+        ishOrderUUID: data.ishOrderUUID,
+        orderChannel: data.orderChannel,
+        orderComment: data.orderComment,
+        orderDate: data.orderDate,
+        orderGoodsMark: data.orderGoodsMark,
+        orderNumber: data.orderNumber,
+        taxAmount: data.taxAmount,
+        totalCustomerPriceSum: data.totalCustomerPriceSum,
+        totalDeliveredQty: data.totalDeliveredQty,
+        totalOrderedQty: data.totalOrderedQty,
+        totalPriceAfterDiscountExVAT: data.totalPriceAfterDiscountExVAT,
+        phoneNotification: data.phoneNotification,
+        volumeDiscount: data.volumeDiscount,
+        camfilNo,
+        orderStatus, // If there is no order status then use default status
+        deliveryAddress,
+        itemSurchargeTotalsByType,
+        bucketSurchargeTotalsByType,
       };
     }
   }

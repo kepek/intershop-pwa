@@ -15,7 +15,7 @@
       <span data-testing-id="order-number">{{ order.orderNumber }}</span>
     </h1>
   </div>
-  <div class="">
+  <div>
     <button (click)="placeReOrder()" color="primary" data-testing-id="order-again" mat-flat-button>
       {{ 'camfil.account.orderdetails.links.order_again' | translate }}
     </button>
@@ -49,10 +49,10 @@
         <dd class="col-6 p-0" data-testing-id="order-creationDate">{{ order.orderDate | ishDate }}</dd>
         <dt class="col-6 p-0">{{ 'camfil.account.orderdetails.delivery_date.label' | translate }}</dt>
         <dd class="col-6 p-0" data-testing-id="order-deliveryDate">
-          <ng-container *ngIf="lineItems?.length">
-            <ng-container *ngIf="isDeliveryPartial(); else orderDeliveryDate">
+          <ng-container *ngIf="order?.lineItems?.length">
+            <ng-container *ngIf="order?.isPartialDelivery; else orderDeliveryDate">
               {{ 'camfil.account.orderdetails.delivery_date.split.label' | translate }}
-              <ng-container *ngFor="let item of deliveryDatesForItems; last as isLast">
+              <ng-container *ngFor="let item of order?.deliveryDates; last as isLast">
                 {{ item | ishDate }}
                 <ng-container *ngIf="!isLast">,</ng-container>
               </ng-container>
@@ -74,7 +74,7 @@
         <dd class="col-6 p-0" data-testing-id="order-phone_notification">{{ order.phoneNotification || '-' }}</dd>
         <dt class="col-6 p-0">{{ 'camfil.account.orderdetails.delivery_address.label' | translate }}</dt>
         <dd class="col-6 p-0 order-delivery_address" data-testing-id="order-delivery_address">
-          <camfil-delivery-address [deliveryAddress]="deliveryAddress"></camfil-delivery-address>
+          <camfil-delivery-address [deliveryAddress]="order?.deliveryAddress"></camfil-delivery-address>
         </dd>
         <dt class="col-6 p-0">{{ 'camfil.account.orderdetails.order_comment.label' | translate }}</dt>
         <dd class="col-6 p-0 text-break text-right" data-testing-id="order-contact_person">
@@ -100,9 +100,9 @@
 <ng-container *ngIf="order">
   <!-- Line Items -->
   <camfil-line-item-table
-    *ngIf="lineItems?.length > 0"
+    *ngIf="order?.lineItems?.length > 0"
     [deviceType]="deviceType"
-    [lineItems]="lineItems"
+    [lineItems]="order?.lineItems"
     lineItemViewType="simple"
   ></camfil-line-item-table>
   <!-- Cost Summary -->
@@ -129,6 +129,14 @@
           <dt class="col-8">{{ 'camfil.checkout.volume_discount' | translate }}</dt>
           <dd class="col-4">{{ handlePrice(order.volumeDiscount, order.currency) | ishPrice }}</dd>
         </ng-container>
+        <!-- Item Surcharges -->
+        <ng-container *ngFor="let surcharge of order.itemSurchargeTotalsByType">
+          <ng-container *ngTemplateOutlet="surchargeItemTemplate; context: { surcharge: surcharge }"></ng-container>
+        </ng-container>
+        <!-- Bucket Surcharges -->
+        <ng-container *ngFor="let surcharge of order.bucketSurchargeTotalsByType">
+          <ng-container *ngTemplateOutlet="surchargeItemTemplate; context: { surcharge: surcharge }"></ng-container>
+        </ng-container>
         <dt class="col-8">
           {{ 'camfil.account.orderdetails.your.tax_amount.text' | translate }}
         </dt>
@@ -148,9 +156,20 @@
 
 <camfil-small-cta-modal
   actionButtonTitle="{{ 'camfil.checkout.create_new_order.temporary_order.ok' | translate }}"
-  actionTitle="{{ reOrderText | translate }}"
+  actionTitle="{{ 'camfil.modal.place_reorder_fail.text' | translate }}"
   onlyAccept="true"
 >
 </camfil-small-cta-modal>
 
 <camfil-loading *ngIf="orderLoading$ | async"></camfil-loading>
+
+<ng-template #surchargeItemTemplate let-surcharge="surcharge">
+  <dt class="col-8">
+    {{ surcharge.displayName | slugify: 'camfil.dynamic' | translate }}
+    <mat-icon *ngIf="surcharge.description" [matTooltip]="surcharge.description" svgIcon="question-mark"></mat-icon>
+  </dt>
+  <dd class="col-4" *ngIf="!surcharge?.strikethrough">{{ surcharge.amount | ishPrice }}</dd>
+  <dd class="col-4" *ngIf="surcharge?.strikethrough">
+    <s>{{ surcharge.amount | ishPrice }}</s>
+  </dd>
+</ng-template>

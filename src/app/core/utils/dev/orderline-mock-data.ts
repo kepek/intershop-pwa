@@ -1,7 +1,7 @@
-import { DeliveryAddress } from 'src/app/extensions/cam-account/models/deliveryAddress/deliveryAddress.interface';
-import { Order } from 'src/app/extensions/cam-account/models/order/order.model';
-import { OrderLineItem } from 'src/app/extensions/cam-account/models/orderLineItem/orderLineItem.interface';
-import { TrackAndTrace } from 'src/app/extensions/cam-account/models/trackAndTrace/trackAndTrace.interface';
+import { DeliveryAddress } from '../../../extensions/cam-account/models/delivery-address/delivery-address.model';
+import { OrderLineItem } from '../../../extensions/cam-account/models/order-line-item/order-line-item.model';
+import { Order } from '../../../extensions/cam-account/models/order/order.model';
+import { TrackAndTrace } from '../../../extensions/cam-account/models/track-and-trace/track-and-trace.model';
 
 export class OrderLineMockData {
   static getOrder() {
@@ -32,7 +32,7 @@ export class OrderLineMockData {
     } as Order;
   }
 
-  static getAddress(): DeliveryAddress {
+  static getAddress() {
     return {
       deliveryAddressName: 'Tony Halik',
       deliveryAddressAddress: 'Test 5/2',
@@ -41,16 +41,16 @@ export class OrderLineMockData {
     } as DeliveryAddress;
   }
 
-  static getTrackAndTrace(): TrackAndTrace {
+  static getTrackAndTrace() {
     return {
       name: 'Track 1',
       id: '123sa',
       ownerId: '4711',
       linkText: 'DHL track',
       link: 'https://www.dhl.com/se-en/home/tracking.html',
-    };
+    } as TrackAndTrace;
   }
-  static getOrderLineItems(): OrderLineItem[] {
+  static getOrderLineItems() {
     return [
       {
         articleName: 'Test article',
@@ -67,6 +67,6 @@ export class OrderLineMockData {
         rowNumber: 2,
         type: 'Type',
       },
-    ];
+    ] as OrderLineItem[];
   }
 }

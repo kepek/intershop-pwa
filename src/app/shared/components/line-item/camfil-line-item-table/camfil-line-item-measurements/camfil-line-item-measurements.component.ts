@@ -1,8 +1,9 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
-import { OrderLineItem } from 'src/app/extensions/cam-account/models/orderLineItem/orderLineItem.interface';
 
 import { AttributeHelper } from 'ish-core/models/attribute/attribute.helper';
 import { LineItem } from 'ish-core/models/line-item/line-item.model';
+
+import { OrderLineItem } from '../../../../../extensions/cam-account/models/order-line-item/order-line-item.model';
 
 @Component({
   selector: 'camfil-line-item-measurements',

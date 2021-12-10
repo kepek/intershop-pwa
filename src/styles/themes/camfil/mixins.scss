@@ -1,3 +1,6 @@
+@import '~src/styles/themes/camfil/colors.scss';
+@import '~src/styles/themes/camfil/variables.scss';
+
 @mixin triangle($direction, $sizeH, $sizeV, $color) {
   display: block;
   width: 0;
@@ -247,6 +250,29 @@
           font-size: 75%;
         }
       }
+    }
+  }
+}
+
+@mixin product_attributes {
+  .product-item-attributes {
+    line-height: $line-height-overline;
+    @media (max-width: $screen-md-max) {
+      flex-wrap: wrap;
+      width: 100%;
+      height: auto;
+    }
+  }
+  .product-item-attributes > * {
+    padding-right: $space-box-half;
+    margin-right: $space-box-half;
+    line-height: $line-height-overline;
+    border-right: $border-width-default solid $gray-600;
+    &:last-child {
+      border-right: none;
+    }
+    &:not(:empty) {
+      display: inline-block;
     }
   }
 }

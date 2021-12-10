@@ -1,0 +1,355 @@
+<div [ngClass]="{ 'mat-elevation-z2': (isLoggedIn$ | async) }" class="camfil-checkout-bucket">
+  <ng-container *ngIf="!(isLoggedIn$ | async)">
+    <ng-container *ngTemplateOutlet="guest"></ng-container>
+  </ng-container>
+
+  <ng-container *ngIf="isLoggedIn$ | async">
+    <ng-container *ngTemplateOutlet="default"></ng-container>
+  </ng-container>
+</div>
+
+<ng-template #guest>
+  <div *ngIf="bucket">
+    <mat-expansion-panel [expanded]="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{ 'shopping_cart.heading' | translate }}
+        </mat-panel-title>
+        <mat-panel-description>
+          <mat-icon svgIcon="cart"></mat-icon>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <camfil-bucket-validation-results [bucket]="bucket"></camfil-bucket-validation-results>
+      <ng-container *ngTemplateOutlet="orderList"></ng-container>
+    </mat-expansion-panel>
+  </div>
+</ng-template>
+
+<ng-template #default>
+  <mat-action-row>
+    <strong (click)="toggleOrder()" class="d-flex align-items-center">
+      <mat-icon [class.arrow_down--expanded]="isOrderOpen" class="arrow_down">arrow_left</mat-icon>
+      <ng-container *ngTemplateOutlet="orderHeader"></ng-container>
+    </strong>
+  </mat-action-row>
+  <mat-accordion>
+    <mat-expansion-panel [expanded]="isOrderOpen">
+      <camfil-bucket-validation-results [bucket]="bucket"></camfil-bucket-validation-results>
+      <ng-container *ngTemplateOutlet="orderContent"></ng-container>
+    </mat-expansion-panel>
+  </mat-accordion>
+</ng-template>
+
+<ng-template #orderHeader>
+  <div class="d-inline-flex">
+    <strong *ngIf="bucket">
+      {{ 'camfil.checkout.order' | translate }} {{ !!totalBuckets ? index + ' / ' + totalBuckets : '' }}</strong
+    >
+    <span class="order-number" data-id-id="order-number"
+      >{{ bucket?.customer?.customerNo }}, {{ bucket?.customer?.companyName }}</span
+    >
+  </div>
+</ng-template>
+
+<ng-template #orderContent>
+  <mat-card *ngIf="bucket" class="mb-2 box-shadow--dark mat-elevation-z clearfix">
+    <div class="row">
+      <div class="order-summary-info text-right col-sm-5 border-sm-right" data-testing-id="order-summary-info">
+        <dl class="row dl-horizontal dl-separator">
+          <dt class="col-6 p-0">{{ 'camfil.account.orderdetails.customer_id.label' | translate }}</dt>
+          <dd class="col-6 p-0" data-testing-id="order-customer_id">{{ bucket?.customer?.customerNo }}</dd>
+          <dt class="col-6 p-0 pb-4">{{ 'camfil.account.orderdetails.customer_name.label' | translate }}</dt>
+          <dd class="col-6 p-0" data-testing-id="order-customer_name">{{ bucket?.customer?.companyName }}</dd>
+          <dt class="col-6 p-0">{{ 'camfil.account.orderdetails.contact_person.label' | translate }}</dt>
+          <dd class="col-6 p-0" data-testing-id="order-contact_person">
+            {{ bucket.contactPerson?.firstName }} {{ bucket.contactPerson?.lastName }}
+          </dd>
+          <dt class="col-6 p-0">{{ 'camfil.checkout.phone' | translate }}</dt>
+          <dd class="col-6 p-0" data-testing-id="order-camfil_no">{{ bucket?.phoneNumber || '-' }}</dd>
+          <dt class="col-6 p-0">{{ 'camfil.account.orderdetails.delivery_address.label' | translate }}</dt>
+          <dd class="col-6 p-0" data-testing-id="order-delivery_address">
+            <camfil-address [address]="orderAddress"></camfil-address>
+          </dd>
+          <ng-container *ngIf="!editable">
+            <dt class="col-6 p-0">{{ 'camfil.account.orderdetails.goods_mark.label' | translate }}</dt>
+            <dd class="col-6 p-0 text-right text-break" data-testing-id="order-customer_id">
+              {{ bucket?.orderMark || '-' }}
+            </dd>
+            <dt class="col-6 p-0">{{ 'camfil.checkout.form.invoice_mark' | translate }}</dt>
+            <dd class="col-6 p-0 invoice-label-value text-right text-break" data-testing-id="order-customer_id">
+              {{ bucket?.invoiceLabel || '-' }}
+            </dd>
+            <dt class="col-6 p-0">{{ 'camfil.checkout.desired_delivery_date' | translate }}</dt>
+
+            <ng-container *ngIf="deliveryDaysForItemsAfterConfirmation?.length > 1; else fullDeliveryDate">
+              <dd class="col-6 p-0 text-right">
+                {{ 'camfil.account.orderdetails.delivery_date.split.label' | translate }}
+                <ng-container *ngFor="let item of deliveryDaysForItemsAfterConfirmation; last as isLast">
+                  {{ item | ishDate }}
+                  <ng-container *ngIf="!isLast">,</ng-container>
+                </ng-container>
+              </dd>
+            </ng-container>
+            <ng-template #fullDeliveryDate>
+              <dd *ngIf="bucket?.deliveryDate" class="col-6 p-0" data-testing-id="order-customer_id">
+                {{ bucket?.deliveryDate || '-' | ishDate }}
+              </dd>
+            </ng-template>
+          </ng-container>
+        </dl>
+        <ng-container *ngIf="emailRecipients?.length">
+          <div class="row recipients-container">
+            <dt class="col-12 p-0">{{ 'camfil.checkout.cta.email_recipients' | translate }}</dt>
+            <dd class="col-12 p-0 d-flex flex-column">
+              <div *ngFor="let recipient of emailRecipients">
+                <button class="recipient-button d-flex align-items-center" color="primary" mat-stroked-button>
+                  {{ recipient }}
+                  <span
+                    (click)="removeSelectedRecipient(recipient)"
+                    class="delete-recipient-icon-wrapper d-inline-flex align-items-center justify-content-center"
+                  >
+                    <mat-icon>close</mat-icon>
+                  </span>
+                </button>
+              </div>
+            </dd>
+          </div>
+        </ng-container>
+      </div>
+      <div *ngIf="editable" class="order-summary-info col-sm-3 border-sm-right" data-testing-id="order-summary-info">
+        <form *ngIf="orderForm" [formGroup]="orderForm" class="form-horizontal" novalidate="novalidate">
+          <div class="mat-form-field__wrapper">
+            <mat-form-field appearance="fill" class="form-field">
+              <mat-label>{{ 'camfil.checkout.form.order_mark' | translate }}</mat-label>
+              <input
+                (change)="onBlurSubmit('orderMark')"
+                (focus)="setFocusedElement($event.target)"
+                [camfilMaxLength]="'OrderMark'"
+                [id]="'orderMark-' + bucket.id"
+                formControlName="orderMark"
+                label="camfil.checkout.form.order_mark"
+                matInput
+              />
+            </mat-form-field>
+          </div>
+
+          <div class="mat-form-field__wrapper">
+            <mat-form-field appearance="fill" class="form-field">
+              <mat-label>{{ 'camfil.checkout.form.invoice_mark' | translate }}</mat-label>
+              <input
+                (change)="onBlurSubmit('invoiceLabel')"
+                (focus)="setFocusedElement($event.target)"
+                [camfilMaxLength]="'InvoiceLabel'"
+                [id]="'invoiceLabel-' + bucket.id"
+                formControlName="invoiceLabel"
+                label="camfil.checkout.form.invoice_mark"
+                matInput
+              />
+            </mat-form-field>
+          </div>
+
+          <div class="mat-form-field__wrapper">
+            <mat-form-field appearance="fill">
+              <mat-label>{{ 'camfil.checkout.form.delivery_date' | translate }}</mat-label>
+              <input
+                (dateChange)="changeDeliveryDate($event)"
+                [matDatepickerFilter]="filterDates.bind(this)"
+                [matDatepicker]="pickerLast"
+                [min]="firstAvailableDelivery"
+                [value]="orderFullDeliveryDate"
+                formControlName="deliveryDate"
+                matInput
+              />
+              <mat-datepicker-toggle [for]="pickerLast" matSuffix>
+                <mat-icon matDatepickerToggleIcon svgIcon="calendar"></mat-icon>
+              </mat-datepicker-toggle>
+              <mat-datepicker #pickerLast [dateClass]="dateClass"></mat-datepicker>
+            </mat-form-field>
+          </div>
+        </form>
+      </div>
+      <div *ngIf="!editable" class="order-summary-info text-left col-sm-6" data-testing-id="order-summary-info">
+        <dl class="row dl-horizontal dl-separator mb-0">
+          <dt class="col-6 p-0" data-testing-id="order-form-note">{{ 'camfil.checkout.form.note' | translate }}</dt>
+          <dd class="col-6 p-0 text-break" data-testing-id="order-customer_id">{{ bucket?.info || '-' }}</dd>
+        </dl>
+      </div>
+      <div *ngIf="editable" class="order-summary-info col-sm-4" data-testing-id="order-summary-info">
+        <div [formGroup]="orderForm" class="order-cta-container">
+          <ul class="order-cta">
+            <li *ngIf="!hideRecipientButton">
+              <a (click)="openAddEmailRecipientModal()">
+                <mat-icon class="add-email-recipient-icon" svgIcon="contact"></mat-icon>
+                {{ 'camfil.checkout.cta.add_email_recipient' | translate }}
+              </a>
+            </li>
+            <li>
+              <a (click)="openAddToProductModal(addNewProductModal)">
+                <mat-icon class="add-icon" svgIcon="plus"></mat-icon>
+                {{ 'camfil.checkout.cta.add_product' | translate }}
+              </a>
+            </li>
+            <li>
+              <button
+                (click)="doubleArticlesQuantity()"
+                [disabled]="!bucket.lineItems?.length"
+                [ngClass]="{ 'mat-button-disabled': !bucket.lineItems?.length }"
+                class="mat-button mat-button-base double-qty-btn"
+              >
+                <mat-icon
+                  [ngClass]="{ 'mat-icon-no-color': !bucket.lineItems?.length }"
+                  class="double-add-icon"
+                  svgIcon="copy"
+                ></mat-icon>
+                {{ 'camfil.checkout.cta.double_quantity' | translate }}
+              </button>
+            </li>
+            <li>
+              <a (click)="openEditModal(editModal)">
+                <mat-icon class="edit-icon" svgIcon="edit"></mat-icon>
+                {{ 'camfil.checkout.cta.edit_details' | translate }}</a
+              >
+            </li>
+            <li>
+              <camfil-delete-order [order]="bucket"></camfil-delete-order>
+            </li>
+          </ul>
+
+          <mat-form-field appearance="fill" class="form-field">
+            <mat-label>{{ 'camfil.checkout.form.note' | translate }}</mat-label>
+            <textarea
+              (change)="onBlurSubmit('info')"
+              (focus)="setFocusedElement($event.target)"
+              [camfilMaxLength]="'CustomerNote'"
+              [id]="'info-' + bucket.id"
+              formControlName="info"
+              label="camfil.checkout.form.note"
+              matInput
+            ></textarea>
+            <camfil-error
+              [errorValidators]="validators.info"
+              [errors]="getField('info').errors"
+              [touched]="getField('info').touched || getField('info').dirty"
+            ></camfil-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+  </mat-card>
+
+  <ng-container *ngIf="bucket">
+    <!-- Line Items -->
+    <ng-container *ngTemplateOutlet="orderList"></ng-container>
+
+    <div *ngIf="deliveryTerm" class="bg-light p-2 box-shadow d-flex align-items-center">
+      <mat-icon class="size-35 ml-2 mr-4" svgIcon="delivery"></mat-icon>
+      <div class="w-100">
+        <b>{{ deliveryTerm.description }}</b>
+        <hr *ngIf="deliveryTerm.id !== 'CPT-RL'" class="m-1" />
+        <b *ngIf="freeDelivery.value > 0">
+          {{ 'camfil.checkout.free_delivery.threshold' | translate: { '0': (freeDelivery | ishPrice) } }}
+        </b>
+        <b *ngIf="!(freeDelivery.value > 0) && deliveryTerm.id !== 'CPT-RL'">{{
+          'camfil.checkout.free_delivery' | translate
+        }}</b>
+      </div>
+    </div>
+
+    <!-- Cost Summary -->
+    <div *ngIf="bucket">
+      <div class="section cost-summary float-right box-shadow--dark mat-elevation-z">
+        <dl class="row dl-horizontal dl-separator mb-0">
+          <dt class="col-8">{{ 'camfil.checkout.single_total_price_net' | translate }}</dt>
+          <dd class="col-4">{{ totalPrice() | ishPrice }}</dd>
+          <dt class="col-6">{{ 'camfil.checkout.tax_amount' | translate }}</dt>
+          <dd class="col-6">{{ totalTax() | ishPrice }}</dd>
+          <dt class="col-6">{{ 'camfil.checkout.order_total_price' | translate }}</dt>
+          <dd class="col-6">{{ totalPrice('gross') | ishPrice }}</dd>
+          <dt class="col-7 font-weight-bold pb-1 mb-2 border-bottom" *ngIf="bucket.surcharges || bucket.volumeDiscount">
+            {{ 'camfil.checkout.additional_fees.text' | translate }}
+          </dt>
+          <ng-container *ngIf="bucket.volumeDiscount">
+            <dt class="col-6">{{ 'camfil.checkout.volume_discount' | translate }}</dt>
+            <dd class="col-6">{{ getVolumeDiscountPrice(bucket.volumeDiscount, basket?.purchaseCurrency) }}</dd>
+          </ng-container>
+          <ng-container *ngIf="bucket.surcharges">
+            <ng-container *ngFor="let surcharge of bucket.surcharges">
+              <dt class="col-6">{{ surcharge.displayName | slugify: 'camfil.dynamic' | translate }}</dt>
+              <dd class="col-6">{{ surcharge.amount | ishPrice }}</dd>
+            </ng-container>
+          </ng-container>
+        </dl>
+        <camfil-basket-cost-summary></camfil-basket-cost-summary>
+      </div>
+    </div>
+  </ng-container>
+</ng-template>
+
+<ng-template #bucketListItem let-i="i" let-item="item">
+  <camfil-checkout-line-item
+    (openDeleteModalAction)="changeScrollIndex()"
+    (resizeLineItemOnBoxLabelChange)="changeViewportHeightOnBoxLabelChange($event)"
+    [basketId]="bucket?.basket"
+    [bucketId]="bucket?.id"
+    [deviceType]="deviceType$ | async"
+    [index]="i + 1"
+    [editable]="editable"
+    [draggable]="editable"
+    [isPartialDelivery]="isPartialDelivery"
+    [lineItem]="item"
+    [orderDeliveryDate]="deliveryDate"
+  ></camfil-checkout-line-item>
+</ng-template>
+
+<ng-template #orderList>
+  <!-- Line Items -->
+  <div
+    (cdkDropListDropped)="drop($event, bucket)"
+    [cdkDropListData]="bucket.lineItems"
+    cdkDropList
+    class="bucket_list-container"
+  >
+    <ng-container *ngIf="editable; else notEditableTemplate">
+      <cdk-virtual-scroll-viewport [itemSize]="itemSize">
+        <div *cdkVirtualFor="let item of bucket.lineItems; index as i; trackBy: trackBy">
+          <div
+            [cdkDragData]="item"
+            [cdkDragDisabled]="!editable"
+            [ngClass]="{ 'list-item-row list-item-row-big mt-2': (isLoggedIn$ | async) }"
+            cdkDrag
+          >
+            <ng-container *ngTemplateOutlet="bucketListItem; context: { item: item, i: i }"></ng-container>
+          </div>
+        </div>
+      </cdk-virtual-scroll-viewport>
+    </ng-container>
+    <ng-template #notEditableTemplate>
+      <div *ngFor="let item of bucket.lineItems; index as i; trackBy: trackBy">
+        <div
+          [ngClass]="{ 'list-item-row list-item-row-big mt-2': (isLoggedIn$ | async) }"
+          class="px-4 py-1 line-item-container"
+        >
+          <ng-container *ngTemplateOutlet="bucketListItem; context: { item: item, i: i }"></ng-container>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+</ng-template>
+
+<camfil-modal-add-new-product
+  #addNewProductModal
+  [addToOrder]="true"
+  [order]="bucket"
+  [shippingMethodId]="basket?.commonShippingMethod?.id"
+>
+</camfil-modal-add-new-product>
+
+<camfil-edit-order-modal #editModal [order]="bucket"></camfil-edit-order-modal>
+
+<camfil-small-cta-modal
+  actionButtonTitle="{{ 'camfil.checkout.create_new_order.temporary_order.ok' | translate }}"
+  actionTitle="{{ modalDeliveryText | translate }}"
+  icon="calendar"
+  onlyAccept="true"
+>
+</camfil-small-cta-modal>

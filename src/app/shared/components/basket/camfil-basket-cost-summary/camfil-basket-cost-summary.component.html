@@ -23,7 +23,7 @@
     <dd class="col-6">{{ totals.undiscountedShippingTotal | ishPrice }}</dd>
 
     <!-- Shipping promotions -->
-    <ng-container *ngIf="totals.shippingRebates && totals.shippingRebates.length > 0">
+    <ng-container *ngIf="totals?.shippingRebates?.length > 0">
       <ng-container *ngFor="let rebate of totals.shippingRebates">
         <dt class="col-6">
           <ish-basket-promotion [rebate]="rebate"></ish-basket-promotion>

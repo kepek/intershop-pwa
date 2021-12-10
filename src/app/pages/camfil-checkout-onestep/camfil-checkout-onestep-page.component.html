@@ -1,0 +1,83 @@
+<camfil-loading *ngIf="(ordersLoading$ | async) || (basketLoading$ | async)" fixed="true"></camfil-loading>
+
+<div class="row mt-4">
+  <div [ngClass]="{ 'col-lg-9': !(isEmpty$ | async) }" class="col-sm-12">
+    <ish-basket-info></ish-basket-info>
+
+    <camfil-error-message [error]="basketError$ | async" [toast]="true"></camfil-error-message>
+
+    <camfil-basket-validation-results></camfil-basket-validation-results>
+
+    <div [ngClass]="{ 'header-divider-container': !(isEditable$ | async) }">
+      <camfil-checkout-header
+        [basket]="basket$ | async"
+        [buckets]="buckets$ | async"
+        [editable]='isEditable$ | async'
+      ></camfil-checkout-header>
+    </div>
+
+    <ng-template #emptyBasket>
+      <camfil-shopping-bucket-empty [error]="basketError$ | async"></camfil-shopping-bucket-empty>
+    </ng-template>
+
+    <ng-container *ngIf="isEmpty$ | async">
+      <ng-container *ngTemplateOutlet="emptyBasket"></ng-container>
+    </ng-container>
+
+    <ng-container *ngIf="!(isLoggedIn$ | async)">
+      <camfil-checkout-guest-form
+        #guestForm
+        (submit)="updateGuestBucketAddress($event)"
+        [basket]="basket$ | async"
+      ></camfil-checkout-guest-form>
+      <ng-container *ngIf="isEditable$ | async">
+        <camfil-checkout-payment
+          (createPaymentInstrument)="createPaymentInstrument($event)"
+          (deletePaymentInstrument)="deletePaymentInstrument($event)"
+          (nextStep)="nextStep()"
+          (updatePaymentMethod)="updateBasketPaymentMethod($event)"
+          [basket]="basket$ | async"
+          [error]="basketError$ | async"
+          [paymentMethods]="paymentMethods$ | async"
+          [priceType]="priceType$ | async"
+        ></camfil-checkout-payment>
+      </ng-container>
+    </ng-container>
+
+    <div cdkDropListGroup>
+      <ng-container *ngIf="emptyBuckets$ | async as emptyBuckets">
+        <ng-container *ngFor="let emptyBucket of emptyBuckets; trackBy: trackByLineItems">
+          <camfil-checkout-bucket
+            [basket]="basket$ | async"
+            [bucket]='emptyBucket'
+          ></camfil-checkout-bucket>
+        </ng-container>
+      </ng-container>
+
+      <ng-container *ngIf="buckets$ | async as buckets">
+        <ng-container *ngFor="let bucket of buckets; index as i; trackBy: trackByLineItems">
+          <camfil-checkout-bucket
+            [basket]="basket$ | async"
+            [totalBuckets]="buckets?.length"
+            [index]="i + 1"
+            [editable]='isEditable$ | async'
+            [bucket]="bucket"
+          ></camfil-checkout-bucket>
+        </ng-container>
+      </ng-container>
+    </div>
+  </div>
+
+  <ng-container *ngIf="!(isEmpty$ | async)">
+    <div class="col-sm-12 col-lg-3">
+      <camfil-checkout-summary
+        (submit)="submit()"
+        [purchaseCurrency]="(basket$ | async).purchaseCurrency"
+        [totals]="basketTotals$ | async"
+        [editable]='isEditable$ | async'
+      ></camfil-checkout-summary>
+    </div>
+  </ng-container>
+</div>
+
+<router-outlet></router-outlet>
