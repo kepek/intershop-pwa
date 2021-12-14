@@ -47,6 +47,7 @@ import { ProductAddingErrorDialogComponent } from '../../../shared/cam-card-prod
 import { ImportCamCardDialogComponent } from '../../../shared/import-cam-card-dialog/import-cam-card-dialog.component';
 import { MoveCamCardDialogComponent } from '../../../shared/move-cam-card-dialog/move-cam-card-dialog.component';
 import { UserAccessCamCardDialogComponent } from '../../../shared/user-access-cam-card-dialog/user-access-cam-card-dialog.component';
+import { ConfigurationService } from 'src/app/extensions/cam-configuration/services/configuration/configuration.service';
 
 @Component({
   selector: 'camfil-account-cam-card-list',
@@ -108,6 +109,7 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
   };
 
   freshErpInfo = false;
+  preventCamCardERPIdValidation = false;
 
   private selectedCamCardCustomer: CamCardCustomer;
   private fragment: string;
@@ -123,7 +125,8 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
     private scroller: ViewportScroller,
     private translate: TranslateService,
     private location: Location,
-    private authorizationToggle: AuthorizationToggleService
+    private authorizationToggle: AuthorizationToggleService,
+    private configurationService: ConfigurationService
   ) {}
 
   get checkedCamCards(): CamCard[] {
@@ -193,6 +196,12 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
         });
       }
     });
+    this.configurationService
+      .isEnabled('preventCamCardERPIdValidation')
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(val => {
+        this.preventCamCardERPIdValidation = val;
+      });
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -396,7 +405,7 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
     checkInBasketModal: CamfilModalDialogComponent<any>,
     addToCartFlowModal: CamfilModalDialogComponent<any>
   ) {
-    const noErpIds = this.noErpIdCamCardsInSelectedProducts;
+    const noErpIds = this.preventCamCardERPIdValidation ? [] : this.noErpIdCamCardsInSelectedProducts;
     const noPostCode = this.noPostCodeCamCardsInSelectedProducts;
 
     if (noErpIds.length && !this.freshErpInfo) {

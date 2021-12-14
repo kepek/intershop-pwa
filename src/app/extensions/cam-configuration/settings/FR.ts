@@ -10,6 +10,7 @@ const camfilConfiguration: ChannelConfiguration = {
   showCountryFieldOnAddressForms: true,
   showAddToCamCardButtonForNonLoggedInUser: false,
   showPricesForNonLoggedInUser: true,
+  preventCamCardERPIdValidation: true,
 };
 
 export default camfilConfiguration;

@@ -16,6 +16,7 @@ export interface ChannelSettings {
   createDynamicAnonymousAddressForNonLoggedInUser: boolean;
   createDynamicAnonymousBasketForNonLoggedInInUser: boolean;
   hideAddToBasketLightboxForNonLoggedInUser: boolean;
+  preventCamCardERPIdValidation: boolean;
   showAddToCamCardButtonForNonLoggedInUser: boolean;
   showAddToCartButtonForNonLoggedInUser: boolean;
   showAllCamCardsButtonForOrganizationAdmin: boolean;

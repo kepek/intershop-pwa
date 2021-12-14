@@ -20,12 +20,14 @@ import { AccountCamCardToolbarComponent } from '../account-cam-card-toolbar/acco
 import { CamfilCamCardsSearchComponent } from '../camfil-cam-cards-search/camfil-cam-cards-search.component';
 
 import { AccountCamCardListComponent } from './account-cam-card-list.component';
+import { ConfigurationService } from 'src/app/extensions/cam-configuration/services/configuration/configuration.service';
 
 describe('Account Cam Card List Component', () => {
   let component: AccountCamCardListComponent;
   let fixture: ComponentFixture<AccountCamCardListComponent>;
   let element: HTMLElement;
   let shoppingFacadeMock: ShoppingFacade;
+  let configurationServiceMock: ConfigurationService;
 
   const camCardDetails: CamCard[] = [
     {
@@ -57,6 +59,7 @@ describe('Account Cam Card List Component', () => {
 
   beforeEach(async () => {
     shoppingFacadeMock = mock(ShoppingFacade);
+    configurationServiceMock = mock(ConfigurationService);
 
     await TestBed.configureTestingModule({
       declarations: [
@@ -72,7 +75,11 @@ describe('Account Cam Card List Component', () => {
         MockPipe(DatePipe),
       ],
       imports: [RouterTestingModule, TranslateModule.forRoot()],
-      providers: [{ provide: ShoppingFacade, useFactory: () => instance(shoppingFacadeMock) }, provideMockStore({})],
+      providers: [
+        { provide: ConfigurationService, useFactory: () => instance(configurationServiceMock) },
+        { provide: ShoppingFacade, useFactory: () => instance(shoppingFacadeMock) },
+        provideMockStore({}),
+      ],
     }).compileComponents();
   });
 
