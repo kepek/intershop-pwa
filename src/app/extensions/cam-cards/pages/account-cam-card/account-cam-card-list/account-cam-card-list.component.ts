@@ -22,6 +22,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { flatten, groupBy, toArray } from 'lodash-es';
 import { Observable, Subject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
+import { ConfigurationService } from 'src/app/extensions/cam-configuration/services/configuration/configuration.service';
 
 import { AuthorizationToggleService } from 'ish-core/authorization-toggle.module';
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
@@ -47,7 +48,6 @@ import { ProductAddingErrorDialogComponent } from '../../../shared/cam-card-prod
 import { ImportCamCardDialogComponent } from '../../../shared/import-cam-card-dialog/import-cam-card-dialog.component';
 import { MoveCamCardDialogComponent } from '../../../shared/move-cam-card-dialog/move-cam-card-dialog.component';
 import { UserAccessCamCardDialogComponent } from '../../../shared/user-access-cam-card-dialog/user-access-cam-card-dialog.component';
-import { ConfigurationService } from 'src/app/extensions/cam-configuration/services/configuration/configuration.service';
 
 @Component({
   selector: 'camfil-account-cam-card-list',
@@ -198,7 +198,7 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
     });
     this.configurationService
       .isEnabled('preventCamCardERPIdValidation')
-      .pipe(takeUntil(this.destroy$))
+      ?.pipe(takeUntil(this.destroy$))
       .subscribe(val => {
         this.preventCamCardERPIdValidation = val;
       });
