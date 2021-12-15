@@ -5,6 +5,7 @@ import { provideMockStore } from '@ngrx/store/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { MockComponent, MockPipe } from 'ng-mocks';
 import { of } from 'rxjs';
+import { ConfigurationService } from 'src/app/extensions/cam-configuration/services/configuration/configuration.service';
 import { instance, mock, when } from 'ts-mockito';
 
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
@@ -27,6 +28,7 @@ describe('Account Cam Card Detail List Component', () => {
   let fixture: ComponentFixture<AccountCamCardDetailListComponent>;
   let element: HTMLElement;
   let shoppingFacadeMock: ShoppingFacade;
+  let configurationServiceMock: ConfigurationService;
 
   const camCard: CamCard = {
     name: 'testing cam cards',
@@ -51,6 +53,7 @@ describe('Account Cam Card Detail List Component', () => {
 
   beforeEach(async () => {
     shoppingFacadeMock = mock(ShoppingFacade);
+    configurationServiceMock = mock(ConfigurationService);
     await TestBed.configureTestingModule({
       declarations: [
         AccountCamCardDetailListComponent,
@@ -66,7 +69,11 @@ describe('Account Cam Card Detail List Component', () => {
         MockPipe(PricePipe),
       ],
       imports: [RouterTestingModule, TranslateModule.forRoot()],
-      providers: [{ provide: ShoppingFacade, useFactory: () => instance(shoppingFacadeMock) }, provideMockStore({})],
+      providers: [
+        { provide: ConfigurationService, useFactory: () => instance(configurationServiceMock) },
+        { provide: ShoppingFacade, useFactory: () => instance(shoppingFacadeMock) },
+        provideMockStore({}),
+      ],
     }).compileComponents();
   });
 
