@@ -234,7 +234,10 @@ export class ApiTokenService {
         if (apiToken.startsWith('AuthenticationTokenOutdated') || apiToken.startsWith('AuthenticationTokenInvalid')) {
           this.invalidateApiToken();
         } else if (!event.url.endsWith('/configurations')) {
-          this.setApiToken(apiToken);
+          // This is required for login on behalf work correctly
+          this.store.pipe(select(getUserAuthorized), whenTruthy(), take(1)).subscribe(() => {
+            this.setApiToken(apiToken);
+          });
         }
       }
     }
