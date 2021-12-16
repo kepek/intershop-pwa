@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed, inject } from '@angular/core/testing';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MockComponent } from 'ng-mocks';
-import { Subject, of } from 'rxjs';
+import { of } from 'rxjs';
 import { instance, mock, when } from 'ts-mockito';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
@@ -41,7 +41,6 @@ describe('Zip Code Component', () => {
     component.form = fb.group({
       zipCode: ['123', [Validators.required]],
     });
-    component.forceCheck = of(false) as Subject<boolean>;
 
     when(accountFacade.zipCodesLoading$).thenReturn(of(false));
     when(appFacade.getChannel$).thenReturn(of('SE'));
