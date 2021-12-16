@@ -68,6 +68,7 @@ export class CamfilBucketValidationResultsComponent
 
     this.infoMessages$ = this.validationResults$.pipe(
       mapToProperty('infos'),
+      map(infos => infos.filter(i => !!i?.message)),
       map(infos =>
         infos
           .map(info => {

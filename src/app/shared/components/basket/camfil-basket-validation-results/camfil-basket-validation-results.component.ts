@@ -26,6 +26,10 @@ export class CamfilBasketValidationResultsComponent extends BasketValidationResu
     return info?.code === 'basket.validation.camfil.threshold_not_met.info';
   }
 
+  private static isCamfilCreditLimitReachedMessage(info: BasketFeedback) {
+    return info?.code === 'basket.validation.camfil.credit_limit_reached.info';
+  }
+
   private static isDeliveryDateMessage(error: BasketFeedback, bucketDeliveryAddressIds: string[]): boolean {
     if (!error?.parameters?.addressId || !error?.code || bucketDeliveryAddressIds?.length === 0) {
       return false;
@@ -61,7 +65,9 @@ export class CamfilBasketValidationResultsComponent extends BasketValidationResu
 
     this.infoMessages$ = this.validationResults$.pipe(
       mapToProperty('infos'),
-      map(infos => infos.filter(info => !CamfilBasketValidationResultsComponent.isCamfilThresholdMessage(info))),
+      map(infos => infos.filter(i => !CamfilBasketValidationResultsComponent.isCamfilThresholdMessage(i))),
+      map(infos => infos.filter(i => !CamfilBasketValidationResultsComponent.isCamfilCreditLimitReachedMessage(i))),
+      map(infos => infos.filter(i => !!i?.message)),
       map(infos =>
         infos
           .map(info => {
