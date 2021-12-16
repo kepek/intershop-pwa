@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
 import { Observable, Subject } from 'rxjs';
-import { take, takeUntil } from 'rxjs/operators';
+import { distinctUntilChanged, take, takeUntil } from 'rxjs/operators';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
 import { AppFacade } from 'ish-core/facades/app.facade';
@@ -30,7 +30,6 @@ export class ZipCodeComponent implements OnInit, OnDestroy {
   @Input() checkOnInitObj: any;
   @Input() form: FormGroup;
   @Input() errorValidator: any[];
-  @Input() forceCheck?: Subject<boolean>;
   @Input() appearance = 'fill';
 
   @Output() submitEmitter = new EventEmitter();
@@ -50,9 +49,6 @@ export class ZipCodeComponent implements OnInit, OnDestroy {
       .subscribe(code => (this.countryByChannel = code));
 
     this.formField = this.form.controls[this.fieldName];
-    this.forceCheck.pipe(takeUntil(this.destroy$)).subscribe(() => {
-      this.checkZipCode();
-    });
 
     if (this.checkOnInitObj) {
       this.checkZipCode();
@@ -76,7 +72,7 @@ export class ZipCodeComponent implements OnInit, OnDestroy {
       this.accountFacade.loadZipCode$(code, countryCode);
       this.accountFacade
         .getZipCode$(code)
-        .pipe(whenTruthy(), take(1))
+        .pipe(whenTruthy(), distinctUntilChanged(), take(1))
         .subscribe(data => {
           const cityAtAll = data?.[0].city || data?.[0].id;
           if (cityAtAll) {
@@ -94,12 +90,12 @@ export class ZipCodeComponent implements OnInit, OnDestroy {
               this.form.patchValue({ citySelect: '', [this.fieldCity]: city });
               this.submitEmitter.emit();
             }
-            this.cdRef.markForCheck();
+            this.cdRef.detectChanges();
           } else {
             this.zipCodesLoading$.pipe(take(1)).subscribe(loading => {
               if (!loading) {
                 this.form.patchValue({ [this.fieldCity]: '' });
-                this.form.controls.postalCode.setErrors({ incorrect: true });
+                this.formField.setErrors({ incorrect: true });
                 this.form.updateValueAndValidity();
               }
             });

@@ -105,28 +105,27 @@
       ></camfil-error>
     </mat-form-field>
 
-    <div class="delivery-address__form--field-wrapper">
+    <div class="row no-gutters mt-3">
       <!--zip code-->
-      <div class="delivery-address__form--zipcode col-sm-12 col-md-5">
+      <div class="col-sm-12 col-md-5">
         <camfil-zip-code
           [checkOnInitObj]="orderToEdit"
-          [forceCheck]="forcePostcodeCheck$"
           [errorValidator]="validators.zipCode"
           [form]="addressForm"
           appearance="outline"
-          classes="delivery-address__form--field delivery-address__form--field-small"
           fieldCity="area"
           fieldName="zipCode"
         ></camfil-zip-code>
       </div>
 
       <!--area-->
-      <div class="col-sm-12 col-md-7 delivery-address__form--area">
+      <div class="col-sm-12 col-md-7 pl-md-3">
         <camfil-city-field
           [form]="addressForm"
           fieldCode="zipCode"
           fieldCity="area"
           fieldSelect="citySelect"
+          appearance="outline"
         ></camfil-city-field>
       </div>
     </div>

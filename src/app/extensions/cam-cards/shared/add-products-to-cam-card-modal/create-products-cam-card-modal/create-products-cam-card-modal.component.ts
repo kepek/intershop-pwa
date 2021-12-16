@@ -16,7 +16,6 @@ export class CreateProductsCamCardModalComponent extends CreateProductCamCardMod
   private itemsValues: (ProductItem & { quantityForm: FormGroup })[] = [];
 
   @Input() products: ProductItem[];
-
   @Input() set items(items: (ProductItem & { quantityForm: FormGroup })[]) {
     this.itemsValues = items;
   }

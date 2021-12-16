@@ -23,6 +23,7 @@ import { AppFacade } from 'ish-core/facades/app.facade';
 import { Country } from 'ish-core/models/country/country.model';
 import { ProductHelper } from 'ish-core/models/product/product.helper';
 import { whenTruthy } from 'ish-core/utils/operators';
+import { ZipCodeComponent } from 'ish-shared/components/zip-code/zip-code.component';
 import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
 
 import { CamCardsFacade } from '../../facades/cam-cards.facade';
@@ -45,6 +46,7 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit, AfterView
   private static deliveryIntervalOptions = 100;
   @ViewChild('title') titleInput: ElementRef;
   @ViewChild('modal', { static: false }) modalTemplate: TemplateRef<unknown>;
+  @ViewChild(ZipCodeComponent) zipCodeComponent: ZipCodeComponent;
 
   /**
    * Predefined cam cards to fill the form with, if there is no cam cards a new cam cards will be created
@@ -66,7 +68,6 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit, AfterView
   addresses$: Observable<CamCardCustomersAddresses>;
   countries$: Observable<Country[]>;
   customers: CamCardCustomer[];
-  forcePostcodeCheck$: Subject<boolean> = new Subject();
   defaultCountryCode: string;
   deliveryIntervalOptions: string[] = [...Array(CamCardPreferencesComponent.deliveryIntervalOptions).keys()].map(i =>
     i === 0 ? '--' : i.toString()
@@ -288,10 +289,6 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit, AfterView
     }
   }
 
-  checkZipCode() {
-    this.forcePostcodeCheck$.next(true);
-  }
-
   /** Emits the cam cards data, when the form was valid. */
   submitCamCardForm() {
     if (this.camCardForm.valid) {
@@ -359,7 +356,7 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit, AfterView
           postalCode,
           city,
         });
-        this.checkZipCode();
+        this.zipCodeComponent.checkZipCode();
       }
     });
   }

@@ -18,6 +18,8 @@ export class CamfilCityFieldComponent implements OnInit, OnDestroy {
   @Input() fieldCity: string;
   @Input() fieldSelect: string;
   @Input() fieldCode: string;
+  @Input() appearance = 'fill';
+
   citiesList$: Observable<ZipCodeInfo[]>;
 
   @Output() pickCityEmit = new EventEmitter();
@@ -26,6 +28,11 @@ export class CamfilCityFieldComponent implements OnInit, OnDestroy {
   constructor(private accountFacade: AccountFacade) {}
 
   ngOnInit() {
+    const zip = this.form.get(this.fieldCode)?.value;
+    if (zip) {
+      this.citiesList$ = this.accountFacade.getZipCode$(zip).pipe(whenTruthy(), take(1));
+    }
+
     this.form
       .get(this.fieldCode)
       ?.valueChanges.pipe(takeUntil(this.destroy$))
@@ -41,7 +48,7 @@ export class CamfilCityFieldComponent implements OnInit, OnDestroy {
 
   pickCity({ value }: MatSelect) {
     if (value) {
-      this.form.patchValue({ city: value });
+      this.form.patchValue({ [this.fieldCity]: value });
       this.pickCityEmit.emit();
     }
   }

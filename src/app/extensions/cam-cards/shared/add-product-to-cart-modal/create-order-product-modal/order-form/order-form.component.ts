@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable, Subject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
@@ -6,6 +6,7 @@ import { take, takeUntil } from 'rxjs/operators';
 import { EditBucket } from 'ish-core/models/bucket/bucket.model';
 import { ProductHelper } from 'ish-core/models/product/product.helper';
 import { whenTruthy } from 'ish-core/utils/operators';
+import { ZipCodeComponent } from 'ish-shared/components/zip-code/zip-code.component';
 
 import { CamCardsFacade } from '../../../../facades/cam-cards.facade';
 import { CamCardContact, CamCardCustomer, CamCardCustomersAddresses } from '../../../../models/cam-card/cam-card.model';
@@ -27,7 +28,7 @@ export class OrderFormComponent implements OnInit, OnDestroy {
   customersArr: CamCardCustomer[];
   contacts: CamCardContact[];
 
-  forcePostcodeCheck$: Subject<boolean> = new Subject();
+  @ViewChild(ZipCodeComponent) zipCodeComponent: ZipCodeComponent;
 
   @Input() orderToEdit?: EditBucket;
   @Input() edit?: boolean;
@@ -86,7 +87,7 @@ export class OrderFormComponent implements OnInit, OnDestroy {
           area: address?.city,
           addressFull: address,
         });
-        this.forcePostcodeCheck$.next(true);
+        this.zipCodeComponent.checkZipCode();
       }
     });
   }

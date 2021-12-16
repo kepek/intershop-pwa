@@ -76,6 +76,7 @@ export class CamfilCheckoutGuestFormComponent implements OnInit, OnDestroy {
     } else {
       this.guestForm.get('invoiceAddressFormGroup').disable();
     }
+    this.getField('invoiceAddressFormGroup', 'city').disable();
   }
 
   validateGuestForm() {
