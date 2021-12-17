@@ -3,50 +3,64 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { SharedModule } from 'ish-shared/shared.module';
 
-import { CamCardsModule } from '../../extensions/cam-cards/cam-cards.module';
-import { AddEmailRecipientModalComponent } from '../camfil-checkout/add-email-recipient-modal/add-email-recipient-modal.component';
-import { CamfilCheckoutHeaderComponent } from '../camfil-checkout/camfil-checkout-header/camfil-checkout-header.component';
-import { CamfilCheckoutLineItemComponent } from '../camfil-checkout/camfil-checkout-line-item/camfil-checkout-line-item.component';
-import { CamfilCheckoutListComponent } from '../camfil-checkout/camfil-checkout-list/camfil-checkout-list.component';
-import { CamfilDeleteOrderComponent } from '../camfil-checkout/camfil-checkout-list/camfil-delete-order/camfil-delete-order.component';
-import { EditOrderModalComponent } from '../camfil-checkout/camfil-checkout-list/edit-order-modal/edit-order-modal.component';
-import { CamfilCheckoutPageComponent } from '../camfil-checkout/camfil-checkout-page.component';
-import { CamfilCheckoutSummaryComponent } from '../camfil-checkout/camfil-checkout-summary/camfil-checkout-summary.component';
-import { CamfilCheckoutToolbarComponent } from '../camfil-checkout/camfil-checkout-toolbar/camfil-checkout-toolbar.component';
-import { CreateNewCamcardComponent } from '../camfil-checkout/camfil-checkout-toolbar/create-new-camcard/create-new-camcard.component';
-import { CreateOrderButtonComponent } from '../camfil-checkout/camfil-checkout-toolbar/create-order-button/create-order-button.component';
-import { PrintOrderComponent } from '../camfil-checkout/camfil-checkout-toolbar/print-order/print-order.component';
-import { CamfilCheckoutValidationComponent } from '../camfil-checkout/camfil-checkout-validation/camfil-checkout-validation.component';
+import { CheckoutAddressPageModule } from '../checkout-address/checkout-address-page.module';
+import { CheckoutPaymentPageModule } from '../checkout-payment/checkout-payment-page.module';
+import { CheckoutReceiptPageModule } from '../checkout-receipt/checkout-receipt-page.module';
+import { CheckoutReviewPageModule } from '../checkout-review/checkout-review-page.module';
+import { CheckoutShippingPageModule } from '../checkout-shipping/checkout-shipping-page.module';
+
+import { CheckoutPageComponent } from './checkout-page.component';
+import { CheckoutProgressBarComponent } from './checkout-progress-bar/checkout-progress-bar.component';
 
 const checkoutPageRoutes: Routes = [
   {
     path: '',
-    component: CamfilCheckoutPageComponent,
+    component: CheckoutPageComponent,
     children: [
       {
-        path: '**',
-        component: CamfilCheckoutPageComponent,
+        path: 'address',
+        data: { checkoutStep: 1 },
+        component: CheckoutAddressPageModule.component,
+      },
+      {
+        path: 'shipping',
+        data: { checkoutStep: 2 },
+        component: CheckoutShippingPageModule.component,
+      },
+      {
+        path: 'payment',
+        data: { checkoutStep: 3 },
+        component: CheckoutPaymentPageModule.component,
+      },
+      {
+        path: 'review',
+        data: { checkoutStep: 4 },
+        component: CheckoutReviewPageModule.component,
+      },
+      {
+        path: 'receipt',
+        data: { checkoutStep: 5 },
+        component: CheckoutReceiptPageModule.component,
+      },
+      {
+        path: '',
+        pathMatch: 'full',
+        redirectTo: 'address',
       },
     ],
   },
 ];
 
 @NgModule({
-  imports: [CamCardsModule, RouterModule.forChild(checkoutPageRoutes), SharedModule],
-  declarations: [
-    AddEmailRecipientModalComponent,
-    CamfilCheckoutHeaderComponent,
-    CamfilCheckoutLineItemComponent,
-    CamfilCheckoutListComponent,
-    CamfilCheckoutPageComponent,
-    CamfilCheckoutSummaryComponent,
-    CamfilCheckoutToolbarComponent,
-    CamfilCheckoutValidationComponent,
-    CamfilDeleteOrderComponent,
-    CreateNewCamcardComponent,
-    CreateOrderButtonComponent,
-    EditOrderModalComponent,
-    PrintOrderComponent,
+  imports: [
+    CheckoutAddressPageModule,
+    CheckoutPaymentPageModule,
+    CheckoutReceiptPageModule,
+    CheckoutReviewPageModule,
+    CheckoutShippingPageModule,
+    RouterModule.forChild(checkoutPageRoutes),
+    SharedModule,
   ],
+  declarations: [CheckoutPageComponent, CheckoutProgressBarComponent],
 })
 export class CheckoutPageModule {}

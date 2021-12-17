@@ -1,17 +1,14 @@
 import { Params } from '@angular/router';
 import { createAction } from '@ngrx/store';
-import {
-  CamCamProductChecked,
-  CamCamProductsAddToCartItems,
-} from 'src/app/extensions/cam-cards/models/cam-card/cam-card.model';
 
 import { Address } from 'ish-core/models/address/address.model';
 import { Attribute } from 'ish-core/models/attribute/attribute.model';
+import { BasketExtensionData } from 'ish-core/models/basket-extension/basket-extension.interface';
+import { BasketExtension } from 'ish-core/models/basket-extension/basket-extension.model';
 import { BasketInfo } from 'ish-core/models/basket-info/basket-info.model';
 import { BasketValidation, BasketValidationScopeType } from 'ish-core/models/basket-validation/basket-validation.model';
-import { BasketExtensions } from 'ish-core/models/basket/basket.interface';
 import { Basket } from 'ish-core/models/basket/basket.model';
-import { Bucket } from 'ish-core/models/basket/bucket.model';
+import { Bucket } from 'ish-core/models/bucket/bucket.model';
 import { CustomerDeliveryTerm } from 'ish-core/models/customer/customer.interface';
 import { HttpError } from 'ish-core/models/http-error/http-error.model';
 import { LineItemUpdate } from 'ish-core/models/line-item-update/line-item-update.model';
@@ -21,6 +18,11 @@ import { PaymentMethod } from 'ish-core/models/payment-method/payment-method.mod
 import { ShippingMethod } from 'ish-core/models/shipping-method/shipping-method.model';
 import { BasketUpdateType } from 'ish-core/services/basket/basket.service';
 import { httpError, payload } from 'ish-core/utils/ngrx-creators';
+
+import {
+  CamCamProductChecked,
+  CamCamProductsAddToCartItems,
+} from '../../../../extensions/cam-cards/models/cam-card/cam-card.model';
 
 export const loadBasket = createAction('[Basket Internal] Load Basket');
 
@@ -80,7 +82,7 @@ export const addProductToBucket = createAction(
     sku: string;
     quantity: number;
     basketId?: string;
-    basketExtension: BasketExtensions;
+    basketExtension: BasketExtension;
     lineItemAttributes?: Attribute[];
     bucketId?: string;
   }>()
@@ -94,7 +96,7 @@ export const addProductToBucketWithBasketId = createAction(
     sku: string;
     quantity: number;
     basketId: string;
-    basketExtension: BasketExtensions;
+    basketExtension: BasketExtension;
     lineItemAttributes?: Attribute[];
     bucketId?: string;
   }>()
@@ -124,7 +126,7 @@ export const addProductToBasket = createAction(
     quantity: number;
     shippingMethod?: string;
     shipToAddress?: string;
-    basketExtension?: BasketExtensions;
+    basketExtension?: BasketExtension;
     addressId?: string;
     lineItemAttributes?: Attribute[];
     bucketId?: string;
@@ -136,7 +138,7 @@ export const updateBucket = createAction(
   payload<{
     basketId: string;
     addressId: string;
-    basketExtension: BasketExtensions;
+    basketExtension: BasketExtensionData;
     address?: Address;
   }>()
 );
@@ -170,7 +172,7 @@ export const addItemsToBasket = createAction(
       unit: string;
       shippingMethod?: string;
       shipToAddress?: string;
-      basketExtension?: BasketExtensions;
+      basketExtension?: BasketExtension;
       addressId?: string;
       lineItemAttributes?: Attribute[];
     }[];
@@ -466,7 +468,7 @@ export const addProductsToBasketFromCamCard = createAction(
     products: CamCamProductChecked[];
     shippingMethod?: string;
     shipToAddress?: string;
-    basketExtension?: BasketExtensions;
+    basketExtension?: BasketExtension;
     addressId?: string;
     camCardName?: string;
   }>()
@@ -513,7 +515,7 @@ export const updateBucketsQueue = createAction(
     }[];
     extensions: {
       addressId: string;
-      basketExtension: BasketExtensions;
+      basketExtension: BasketExtension;
     }[];
     bucketIds?: string[];
     camCardName?: string;

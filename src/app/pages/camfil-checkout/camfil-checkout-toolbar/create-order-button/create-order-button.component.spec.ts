@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MockComponent } from 'ng-mocks';
 import { of } from 'rxjs';
+import { ConfigurationService } from 'src/app/extensions/cam-configuration/services/configuration/configuration.service';
 import { instance, mock, when } from 'ts-mockito';
 
 import { CamfilMaxLengthAttributeCreateDirective } from 'ish-core/directives/camfil-max-length-attribute-create.directive';
@@ -8,6 +9,7 @@ import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { BasketView } from 'ish-core/models/basket/basket.model';
 import { CamfilCamCardModalComponent } from 'ish-shared/components/common/camfil-cam-card-modal/camfil-cam-card-modal.component';
+import { CamfilCityFieldComponent } from 'ish-shared/components/common/camfil-city-field/camfil-city-field.component';
 import { CamfilErrorComponent } from 'ish-shared/components/common/camfil-error/camfil-error.component';
 import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
 import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
@@ -30,6 +32,7 @@ describe('Create Order Button Component', () => {
   let camCardFacadeMock: CamCardsFacade;
   let checkoutFacadeMock: CheckoutFacade;
   let shoppingFacadeMock: ShoppingFacade;
+  let configurationServiceMock: ConfigurationService;
 
   const camCardDetails = {
     name: 'testing cam cards',
@@ -40,6 +43,12 @@ describe('Create Order Button Component', () => {
   const basketDetails: BasketView = {
     id: 'basket_test',
     totals: {
+      discountTotal: {
+        type: 'PriceItem',
+        gross: 100,
+        net: 80,
+        currency: '',
+      },
       itemTotal: {
         type: 'PriceItem',
         gross: 100,
@@ -60,6 +69,7 @@ describe('Create Order Button Component', () => {
     camCardFacadeMock = mock(CamCardsFacade);
     checkoutFacadeMock = mock(CheckoutFacade);
     shoppingFacadeMock = mock(ShoppingFacade);
+    configurationServiceMock = mock(ConfigurationService);
 
     await TestBed.configureTestingModule({
       declarations: [
@@ -70,6 +80,7 @@ describe('Create Order Button Component', () => {
         CamfilMaxLengthAttributeCreateDirective,
         CamfilProductQuantityComponent,
         CreateOrderButtonComponent,
+        MockComponent(CamfilCityFieldComponent),
         MockComponent(CamfilLoadingComponent),
         MockComponent(CamfilSmallCtaModalComponent),
         MockComponent(CreateOrderProductModalComponent),
@@ -81,6 +92,7 @@ describe('Create Order Button Component', () => {
         { provide: CamCardsFacade, useFactory: () => instance(camCardFacadeMock) },
         { provide: CheckoutFacade, useFactory: () => instance(checkoutFacadeMock) },
         { provide: ShoppingFacade, useFactory: () => instance(shoppingFacadeMock) },
+        { provide: ConfigurationService, useFactory: () => instance(configurationServiceMock) },
       ],
     }).compileComponents();
   });

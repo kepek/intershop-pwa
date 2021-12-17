@@ -1,13 +1,15 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MockComponent } from 'ng-mocks';
+import { MockComponent, MockDirective } from 'ng-mocks';
 import { of } from 'rxjs';
 import { instance, mock, when } from 'ts-mockito';
 
 import { CamfilMaxLengthAttributeCreateDirective } from 'ish-core/directives/camfil-max-length-attribute-create.directive';
+import { AccountFacade } from 'ish-core/facades/account.facade';
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { Basket, BasketView } from 'ish-core/models/basket/basket.model';
 import { CamfilCamCardModalComponent } from 'ish-shared/components/common/camfil-cam-card-modal/camfil-cam-card-modal.component';
+import { CamfilCityFieldComponent } from 'ish-shared/components/common/camfil-city-field/camfil-city-field.component';
 import { CamfilErrorComponent } from 'ish-shared/components/common/camfil-error/camfil-error.component';
 import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
 import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
@@ -20,6 +22,7 @@ import { ArticleDetailsComponent } from '../../../extensions/cam-cards/shared/ad
 import { CreateOrderProductModalComponent } from '../../../extensions/cam-cards/shared/add-product-to-cart-modal/create-order-product-modal/create-order-product-modal.component';
 import { OrderFormComponent } from '../../../extensions/cam-cards/shared/add-product-to-cart-modal/create-order-product-modal/order-form/order-form.component';
 import { CreateOrderProductSuccessComponent } from '../../../extensions/cam-cards/shared/add-product-to-cart-modal/create-order-product-success/create-order-product-success.component';
+import { ChannelToggleDirective } from '../../../extensions/cam-configuration/directives/channel-toggle.directive';
 import { CamfilCheckoutToolbarComponent } from '../camfil-checkout-toolbar/camfil-checkout-toolbar.component';
 import { CreateNewCamcardComponent } from '../camfil-checkout-toolbar/create-new-camcard/create-new-camcard.component';
 import { CreateOrderButtonComponent } from '../camfil-checkout-toolbar/create-order-button/create-order-button.component';
@@ -36,6 +39,7 @@ describe('Camfil Checkout Header Component', () => {
   let camCardFacadeMock: CamCardsFacade;
   let checkoutFacadeMock: CheckoutFacade;
   let shoppingFacadeMock: ShoppingFacade;
+  let accountFacadeMock: AccountFacade;
 
   const camCardDetails = {
     name: 'testing cam cards',
@@ -46,6 +50,12 @@ describe('Camfil Checkout Header Component', () => {
   const basketDetails: BasketView = {
     id: 'basket_test',
     totals: {
+      discountTotal: {
+        type: 'PriceItem',
+        gross: 100,
+        net: 80,
+        currency: '',
+      },
       itemTotal: {
         type: 'PriceItem',
         gross: 100,
@@ -66,6 +76,7 @@ describe('Camfil Checkout Header Component', () => {
     camCardFacadeMock = mock(CamCardsFacade);
     checkoutFacadeMock = mock(CheckoutFacade);
     shoppingFacadeMock = mock(ShoppingFacade);
+    accountFacadeMock = mock(AccountFacade);
 
     await TestBed.configureTestingModule({
       declarations: [
@@ -78,6 +89,7 @@ describe('Camfil Checkout Header Component', () => {
         CamfilMaxLengthAttributeCreateDirective,
         CamfilProductQuantityComponent,
         CamfilSmallCtaModalComponent,
+        MockComponent(CamfilCityFieldComponent),
         MockComponent(CamfilLoadingComponent),
         MockComponent(CreateNewCamcardComponent),
         MockComponent(CreateOrderButtonComponent),
@@ -86,11 +98,13 @@ describe('Camfil Checkout Header Component', () => {
         MockComponent(OrderFormComponent),
         MockComponent(PrintOrderComponent),
         MockComponent(ZipCodeComponent),
+        MockDirective(ChannelToggleDirective),
       ],
       providers: [
         { provide: CamCardsFacade, useFactory: () => instance(camCardFacadeMock) },
         { provide: CheckoutFacade, useFactory: () => instance(checkoutFacadeMock) },
         { provide: ShoppingFacade, useFactory: () => instance(shoppingFacadeMock) },
+        { provide: AccountFacade, useFactory: () => instance(accountFacadeMock) },
       ],
     }).compileComponents();
   });
@@ -107,6 +121,7 @@ describe('Camfil Checkout Header Component', () => {
 
     component.basket = basket;
     component.buckets = buckets;
+
     when(camCardFacadeMock.camCard$).thenReturn(of([camCardDetails]));
     when(camCardFacadeMock.virtualCamCard$).thenReturn(of(camCardDetails));
     when(checkoutFacadeMock.buckets$).thenReturn(of([]));
@@ -114,6 +129,7 @@ describe('Camfil Checkout Header Component', () => {
     when(shoppingFacadeMock.productAdded$).thenReturn(of(true));
     when(shoppingFacadeMock.basketAddresses$).thenReturn(of([]));
     when(shoppingFacadeMock.productUpdated$).thenReturn(of(false));
+    when(accountFacadeMock.isLoggedIn$).thenReturn(of(false));
   });
 
   it('should be created', () => {

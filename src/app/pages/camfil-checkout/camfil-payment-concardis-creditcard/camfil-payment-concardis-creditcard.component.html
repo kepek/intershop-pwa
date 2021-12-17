@@ -1,0 +1,119 @@
+<mat-divider></mat-divider>
+
+<div class="form-group-container">
+
+  <div *ngIf="errorMessage.general.message" class="alert alert-danger" role="alert">
+    {{ errorMessage.general.message | translate }}
+  </div>
+
+  <div [formGroup]="parameterForm">
+
+    <!-- Credit card number Iframe -->
+    <ng-template #cardNumberIframe>
+      <div class="iframe-container" id="a_credit_card_number_container"></div>
+      <mat-error *ngIf="errorMessage.cardNumber?.messageKey">
+        {{ errorMessage.cardNumber.messageKey | translate}}
+      </mat-error>
+    </ng-template>
+
+    <!-- Credit card number -->
+    <ng-container *ngIf="hiddenParameterForm?.controls?.hiddenCardNumber; else cardNumberIframe">
+      <div [formGroup]="hiddenParameterForm" class="mat-form-field__wrapper">
+        <mat-form-field #cardNumberField [floatLabel]="floatLabel" appearance="fill">
+          <mat-label>
+            {{ 'checkout.credit_card.number.label' | translate }}
+          </mat-label>
+          <ng-container *ngTemplateOutlet="cardNumberIframe"></ng-container>
+          <input formControlName="hiddenCardNumber" hidden matInput readonly required type="text" />
+        </mat-form-field>
+      </div>
+    </ng-container>
+
+    <!-- Expiration date (month/Year)  -->
+    <ng-container *ngIf="parameterForm?.controls?.expirationMonth && parameterForm?.controls?.expirationYear">
+      <camfil-select-year-month
+        #expirationMonthYearField
+        [controlName]="['expirationMonth', 'expirationYear']"
+        [floatLabel]="floatLabel"
+        [form]="parameterForm"
+        [ngClass]="{ 'has-error': errorMessage.expiryMonth?.message }"
+      >
+        <mat-error *ngIf="errorMessage.expiryMonth?.messageKey">
+          {{ errorMessage.expiryMonth.messageKey | translate }}
+        </mat-error>
+      </camfil-select-year-month>
+    </ng-container>
+
+    <!-- CVC Iframe -->
+    <ng-template #cvcIframe>
+      <div class="iframe-container" id="a_verification_container"></div>
+      <mat-error *ngIf="errorMessage.cvc?.message">
+        {{ errorMessage.cvc.messageKey | translate }}
+      </mat-error>
+    </ng-template>
+
+    <!-- CVC -->
+    <ng-container *ngIf="hiddenParameterForm?.controls?.hiddenCVC; else cvcIframe">
+      <div [formGroup]="hiddenParameterForm" class="mat-form-field__wrapper">
+        <mat-form-field #cvcField [floatLabel]="floatLabel" appearance="fill">
+          <mat-label>
+            {{ 'checkout.credit_card.cvc.label' | translate }}
+          </mat-label>
+          <ng-container *ngTemplateOutlet="cvcIframe"></ng-container>
+          <input formControlName="hiddenCVC" hidden matInput readonly required type="text" />
+          <mat-icon [matTooltip]="'checkout.credit_card.cvc.popover.content' | translate" matSuffix
+                    svgIcon="question-mark"></mat-icon>
+        </mat-form-field>
+      </div>
+    </ng-container>
+
+    <!-- Save For Later -->
+    <ng-container *ngIf="parameterForm?.controls?.saveForLater">
+      <mat-form-field #saveAllowedField *ngIf="paymentMethod && paymentMethod.saveAllowed" [formGroup]="parameterForm"
+                      appearance="fill">
+        <mat-checkbox color="primary" data-testing-id="save-for-later-input" formControlName="saveForLater">
+          <small>{{ 'checkout.save_edit.checkbox.label' | translate }}</small>
+        </mat-checkbox>
+      </mat-form-field>
+    </ng-container>
+
+  </div>
+
+  <!-- Buttons -->
+
+  <div>
+    <button (click)="submitNewPaymentInstrument()" color="primary" mat-flat-button type="button">
+      {{ 'checkout.account.submit.button.label' | translate }}
+    </button>
+    <button (click)="cancelNewPaymentInstrument()" color="accent" mat-flat-button type="button">
+      {{ 'checkout.cancel.button.label' | translate }}
+    </button>
+  </div>
+
+</div>
+
+<!-- Default Form -->
+
+<!--
+
+<div [formGroup]="parameterForm">
+  <div class="iframe-container" id="a_credit_card_number_container"></div>
+  <ish-select-year-month
+    [controlName]="['expirationMonth', 'expirationYear']"
+    [form]="parameterForm"
+    label="checkout.credit_card.expiration_date.label"
+  >
+  </ish-select-year-month>
+  <div class="iframe-container" id="a_verification_container"></div>
+</div>
+
+<div>
+  <button (click)="submitNewPaymentInstrument()" color="primary" mat-flat-button type="button">
+    {{ 'checkout.account.submit.button.label' | translate }}
+  </button>
+  <button (click)="cancelNewPaymentInstrument()" color="accent" mat-flat-button type="button">
+    {{ 'checkout.cancel.button.label' | translate }}
+  </button>
+</div>
+
+-->

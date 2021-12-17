@@ -18,6 +18,7 @@ import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable, Subject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
+import { ConfigurationService } from 'src/app/extensions/cam-configuration/services/configuration/configuration.service';
 
 import { AuthorizationToggleService } from 'ish-core/authorization-toggle.module';
 import { AppFacade } from 'ish-core/facades/app.facade';
@@ -25,7 +26,7 @@ import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { Address } from 'ish-core/models/address/address.model';
 import { BasketView } from 'ish-core/models/basket/basket.model';
-import { Bucket } from 'ish-core/models/basket/bucket.model';
+import { Bucket } from 'ish-core/models/bucket/bucket.model';
 import { Channel } from 'ish-core/models/channel/channel.types';
 import { Price } from 'ish-core/models/price/price.model';
 import { Product } from 'ish-core/models/product/product.model';
@@ -91,6 +92,7 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges, OnD
   newSkusAfterUpdate = [];
 
   freshErpInfo = false;
+  preventCamCardERPIdValidation = false;
 
   invalidProducts: InvalidProducts = { measurements: [], notAvailable: [] };
   modalType: 'noErpNoAddress' | 'invalidProducts';
@@ -108,7 +110,8 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges, OnD
     private changeDetectorRefs: ChangeDetectorRef,
     public router: Router,
     public dialog: MatDialog,
-    private authorizationToggle: AuthorizationToggleService
+    private authorizationToggle: AuthorizationToggleService,
+    private configurationService: ConfigurationService
   ) {}
 
   get totalPrice(): Price {
@@ -170,6 +173,12 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges, OnD
     });
 
     this.calculateInvalidProducts();
+    this.configurationService
+      .isEnabled('preventCamCardERPIdValidation')
+      ?.pipe(takeUntil(this.destroy$))
+      .subscribe(val => {
+        this.preventCamCardERPIdValidation = val;
+      });
   }
 
   ngOnDestroy() {
@@ -303,7 +312,7 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges, OnD
     const { postalCode, city } = this.camCard.deliveryAddress;
     const noErpNoAddress = !this.camCard.erpId || !postalCode || !city;
 
-    if (!this.camCard.erpId && !this.freshErpInfo) {
+    if (!this.camCard.erpId && !this.freshErpInfo && !this.preventCamCardERPIdValidation) {
       this.camCardsFacade.loadCamCards();
       this.camCardsFacade.camCardsLoading$.pipe(whenFalsy(), take(1)).subscribe(() => {
         this.freshErpInfo = true;
@@ -313,7 +322,7 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges, OnD
     }
     this.freshErpInfo = false;
 
-    if (noErpNoAddress) {
+    if (noErpNoAddress && !this.preventCamCardERPIdValidation) {
       this.modalType = 'noErpNoAddress';
       addToCartFlowModal.show();
       return;

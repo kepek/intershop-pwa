@@ -1,0 +1,113 @@
+{
+  "data": [
+    {
+      "capabilities": [
+        "RedirectAfterCheckout"
+      ],
+      "default": true,
+      "description": "Payment with Credit Card via Concardis",
+      "displayName": "Concardis Credit Card",
+      "hostedPaymentPageParameters": [
+        {
+          "name": "intershop.payment.Concardis_CreditCard.cvcmaxage",
+          "value": "25"
+        },
+        {
+          "name": "ConcardisPaymentService.CVCStyleId",
+          "value": "customstyle_gz9xzqa8ph"
+        },
+        {
+          "name": "ConcardisPaymentService.MerchantID",
+          "value": "merchant_rm6sw1rgac"
+        },
+        {
+          "name": "ConcardisPaymentService.CreditCardStyleId",
+          "value": "customstyle_gz9xzqa8ph"
+        },
+        {
+          "name": "ConcardisPaymentService.Environment",
+          "value": "LIVE"
+        }
+      ],
+      "id": "Credit Card",
+      "parameterDefinitions": [
+        {
+          "hidden": true,
+          "name": "paymentInstrumentId",
+          "type": "string",
+          "updatable": false
+        },
+        {
+          "displayName": "Card Type",
+          "hidden": false,
+          "name": "cardType",
+          "type": "string",
+          "updatable": false
+        },
+        {
+          "displayName": "Card Number",
+          "hidden": false,
+          "name": "maskedCardNumber",
+          "type": "string",
+          "updatable": false
+        },
+        {
+          "displayName": "Expiration Date",
+          "hidden": false,
+          "name": "expirationDate",
+          "type": "string",
+          "updatable": false
+        },
+        {
+          "hidden": true,
+          "name": "browserInfoId",
+          "type": "string",
+          "updatable": false
+        },
+        {
+          "constraints": {
+            "pattern": {
+              "message": "The CVC's 'last-updated' time is invalid. It must represent a UTC date-time string (e.g. 2020-04-30T11:41:45Z).",
+              "regexp": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:.\\d{1,9})?Z$"
+            }
+          },
+          "hidden": true,
+          "name": "cvcLastUpdated",
+          "type": "string",
+          "updatable": true
+        },
+        {
+          "hidden": true,
+          "name": "token",
+          "type": "string",
+          "updatable": false
+        }
+      ],
+      "restricted": false,
+      "saveAllowed": false,
+      "serviceID": "Concardis_CreditCard"
+    },
+    {
+      "capabilities": [
+        "RedirectAfterCheckout"
+      ],
+      "default": false,
+      "description": "Payment with PayPal via Concardis",
+      "displayName": "PayPal",
+      "id": "PayPal",
+      "paymentInstruments": [
+        "PayPal"
+      ],
+      "restricted": false,
+      "saveAllowed": true,
+      "serviceID": "Concardis_PayPal"
+    }
+  ],
+  "included": {
+    "paymentInstruments": {
+      "PayPal": {
+        "id": "PayPal"
+      }
+    }
+  }
+}

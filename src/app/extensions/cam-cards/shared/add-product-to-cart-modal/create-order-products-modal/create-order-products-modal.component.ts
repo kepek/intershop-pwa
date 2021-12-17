@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, Input, OnChanges } from '@angular/c
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { AttributeHelper } from 'ish-core/models/attribute/attribute.helper';
-import { Bucket } from 'ish-core/models/basket/bucket.model';
+import { Bucket } from 'ish-core/models/bucket/bucket.model';
 import { ProductItem } from 'ish-core/models/product/product-item';
 import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
 

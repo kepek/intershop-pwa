@@ -11,6 +11,7 @@ import { ProductView } from 'ish-core/models/product-view/product-view.model';
 import { ContentViewcontextComponent } from 'ish-shared/cms/components/content-viewcontext/content-viewcontext.component';
 import { AccordionItemComponent } from 'ish-shared/components/common/accordion-item/accordion-item.component';
 import { AccordionComponent } from 'ish-shared/components/common/accordion/accordion.component';
+import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
 import { CamfilProductTechnicalDocumentsComponent } from 'ish-shared/components/common/camfil-product-technical-documents/camfil-product-technical-documents.component';
 import { CamfilProductAddToBasketComponent } from 'ish-shared/components/product/camfil-product-add-to-basket/camfil-product-add-to-basket.component';
 import { CamfilProductAddToCompareComponent } from 'ish-shared/components/product/camfil-product-add-to-compare/camfil-product-add-to-compare.component';
@@ -27,6 +28,7 @@ import { CamfilProductVariationSelectComponent } from 'ish-shared/components/pro
 import { ProductAttributesComponent } from 'ish-shared/components/product/product-attributes/product-attributes.component';
 
 import { LazyProductAddToCamCardComponent } from '../../../extensions/cam-cards/exports/lazy-product-add-to-cam-card/lazy-product-add-to-cam-card.component';
+import { ChannelToggleDirective } from '../../../extensions/cam-configuration/directives/channel-toggle.directive';
 import { LazyProductAddToOrderTemplateComponent } from '../../../extensions/order-templates/exports/lazy-product-add-to-order-template/lazy-product-add-to-order-template.component';
 import { LazyProductAddToQuoteComponent } from '../../../extensions/quoting/exports/lazy-product-add-to-quote/lazy-product-add-to-quote.component';
 import { ProductDetailActionsComponent } from '../../product/product-detail-actions/product-detail-actions.component';
@@ -59,6 +61,7 @@ describe('Camfil Product Detail Component', () => {
         CamfilProductDetailComponent,
         MockComponent(AccordionComponent),
         MockComponent(AccordionItemComponent),
+        MockComponent(CamfilLoadingComponent),
         MockComponent(CamfilProductAddToBasketComponent),
         MockComponent(CamfilProductAddToCompareComponent),
         MockComponent(CamfilProductAttributeComponent),
@@ -82,6 +85,7 @@ describe('Camfil Product Detail Component', () => {
         MockComponent(ProductAttributesComponent),
         MockComponent(ProductDetailActionsComponent),
         MockComponent(ProductImagesComponent),
+        MockDirective(ChannelToggleDirective),
         MockDirective(FeatureToggleDirective),
         MockPipe(PricePipe),
       ],

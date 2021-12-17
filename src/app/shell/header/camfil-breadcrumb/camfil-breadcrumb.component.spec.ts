@@ -44,7 +44,7 @@ describe('Camfil Breadcrumb Component', () => {
       when(appFacade.breadcrumbData$).thenReturn(of([{ key: 'KEY' }, { key: 'KEY2' }]));
       fixture.detectChanges();
       expect(element.textContent).toMatchInlineSnapshot(
-        `" camfil.common.home.link  navigate_next KEY navigate_next KEY2"`
+        `" camfil.common.home.link  navigate_nextKEY navigate_next KEY2"`
       );
     });
 
@@ -52,7 +52,7 @@ describe('Camfil Breadcrumb Component', () => {
       when(appFacade.breadcrumbData$).thenReturn(of([{ text: 'TEXT' }, { text: 'TEXT2' }]));
       fixture.detectChanges();
       expect(element.textContent).toMatchInlineSnapshot(
-        `" camfil.common.home.link  navigate_next TEXT navigate_next TEXT2"`
+        `" camfil.common.home.link  navigate_nextTEXT navigate_next TEXT2"`
       );
     });
 
@@ -65,7 +65,7 @@ describe('Camfil Breadcrumb Component', () => {
       );
       fixture.detectChanges();
       expect(element.textContent).toMatchInlineSnapshot(
-        `" camfil.common.home.link  navigate_next  L1  navigate_next  L2 "`
+        `" camfil.common.home.link  navigate_next L1  navigate_next  L2 "`
       );
     });
   });

@@ -14,7 +14,7 @@ import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
 export class CamfilCategoryPageComponent implements OnInit {
   category$: Observable<CategoryView>;
   deviceType$: Observable<DeviceType>;
-
+  loading$: Observable<boolean>;
   constructor(private shoppingFacade: ShoppingFacade, private appFacade: AppFacade) {}
 
   ngOnInit() {

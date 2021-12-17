@@ -6,8 +6,7 @@ import { map, switchMap, take, tap } from 'rxjs/operators';
 import { Address } from 'ish-core/models/address/address.model';
 import { Attribute } from 'ish-core/models/attribute/attribute.model';
 import { BasketValidationScopeType } from 'ish-core/models/basket-validation/basket-validation.model';
-import { BasketView } from 'ish-core/models/basket/basket.model';
-import { Bucket } from 'ish-core/models/basket/bucket.model';
+import { Bucket } from 'ish-core/models/bucket/bucket.model';
 import { LineItemUpdate } from 'ish-core/models/line-item-update/line-item-update.model';
 import { LineItem } from 'ish-core/models/line-item/line-item.model';
 import { PaymentInstrument } from 'ish-core/models/payment-instrument/payment-instrument.model';
@@ -33,6 +32,7 @@ import {
   deleteEmptyBucket,
   doubleBucketItemsQuantity,
   focusedCheckoutElement,
+  getAnonymousBasketExtensions,
   getBasketEligiblePaymentMethods,
   getBasketEligibleShippingMethods,
   getBasketError,
@@ -50,7 +50,9 @@ import {
   getCurrentBuckets,
   getCustomersDeliveryTerms,
   getEmptyBuckets,
+  getSubmittedAnonymousBasketExtensions,
   getSubmittedBasket,
+  getSubmittedBuckets,
   getWarehouseCalendar,
   isBasketInvoiceAndShippingAddressEqual,
   loadBasketEligiblePaymentMethods,
@@ -71,12 +73,10 @@ import {
   updateEmptyBucket,
   validateBasket,
 } from 'ish-core/store/customer/basket';
-import { getCreatedOrder, getOrdersError, getOrdersLoading, getSelectedOrder } from 'ish-core/store/customer/orders';
+import { getOrdersError, getOrdersLoading, getSelectedOrder } from 'ish-core/store/customer/orders';
 import { getLoggedInUser } from 'ish-core/store/customer/user';
 import { getServerConfigParameter } from 'ish-core/store/general/server-config';
 import { whenTruthy } from 'ish-core/utils/operators';
-
-import { TrackingService } from '../../extensions/tracking/services/tracking.service';
 
 // tslint:disable:member-ordering
 @Injectable({ providedIn: 'root' })
@@ -96,9 +96,9 @@ export class CheckoutFacade {
     map(basket => (basket && basket.lineItems && basket.lineItems.length ? basket.lineItems : undefined))
   );
   submittedBasket$ = this.store.pipe(select(getSubmittedBasket));
+  submittedBuckets$ = this.store.pipe(select(getSubmittedBuckets));
   calendarExceptions$ = this.store.pipe(select(getCalendarExceptions));
   getFocusedCheckoutElement$ = this.store.pipe(select(getFocusedCheckoutElement));
-  createdOrder$ = this.store.pipe(select(getCreatedOrder));
   selectedOrder$ = this.store.pipe(select(getSelectedOrder));
   ordersLoading$ = this.store.pipe(select(getOrdersLoading));
   priceType$ = this.store.pipe(select(getServerConfigParameter<'gross' | 'net'>('pricing.priceType')));
@@ -125,12 +125,14 @@ export class CheckoutFacade {
   emptyBuckets$ = this.store.pipe(select(getEmptyBuckets));
   bucketsVolumeDiscounts$ = this.store.pipe(select(getBucketsVolumeDiscounts));
   getCustomersDeliveryTerms$ = this.store.pipe(select(getCustomersDeliveryTerms));
+  anonymousBasketExtension$ = this.store.pipe(select(getAnonymousBasketExtensions));
+  submittedAnonymousBasketExtension$ = this.store.pipe(select(getSubmittedAnonymousBasketExtensions));
 
   // ORDERS
   private ordersError$ = this.store.pipe(select(getOrdersError));
   basketOrOrdersError$ = merge(this.basketError$, this.ordersError$);
 
-  constructor(private store: Store, private tracking: TrackingService) {}
+  constructor(private store: Store) {}
 
   start() {
     this.store.dispatch(startCheckout());
@@ -294,10 +296,6 @@ export class CheckoutFacade {
 
   getWarehouseCalendar() {
     this.store.dispatch(getWarehouseCalendar());
-  }
-
-  trackPurchase(basket: BasketView) {
-    this.tracking.trackPurchase(basket);
   }
 
   setCheckoutFocusedElement(elementId: string) {

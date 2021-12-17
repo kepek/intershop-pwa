@@ -1,11 +1,12 @@
-import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable, Subject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
 
-import { EditBucket } from 'ish-core/models/basket/bucket.model';
+import { EditBucket } from 'ish-core/models/bucket/bucket.model';
 import { ProductHelper } from 'ish-core/models/product/product.helper';
 import { whenTruthy } from 'ish-core/utils/operators';
+import { ZipCodeComponent } from 'ish-shared/components/zip-code/zip-code.component';
 
 import { CamCardsFacade } from '../../../../facades/cam-cards.facade';
 import { CamCardContact, CamCardCustomer, CamCardCustomersAddresses } from '../../../../models/cam-card/cam-card.model';
@@ -27,7 +28,7 @@ export class OrderFormComponent implements OnInit, OnDestroy {
   customersArr: CamCardCustomer[];
   contacts: CamCardContact[];
 
-  countryChangeDetect$: Subject<boolean> = new Subject();
+  @ViewChild(ZipCodeComponent) zipCodeComponent: ZipCodeComponent;
 
   @Input() orderToEdit?: EditBucket;
   @Input() edit?: boolean;
@@ -56,6 +57,7 @@ export class OrderFormComponent implements OnInit, OnDestroy {
       deliveryAddressSelect: [this.orderToEdit?.deliveryAddressId || '', []],
       company: [this.orderToEdit?.company || ''],
       address: [this.orderToEdit?.address || ''],
+      citySelect: [],
       zipCode: [this.orderToEdit?.zipCode || '', [Validators.required, Validators.pattern('[0-9]{5}')]],
       area: [{ value: this.orderToEdit?.area || '', disabled: true }, [Validators.required]],
       info: [this.orderToEdit?.info || '', [Validators.maxLength(150)]],
@@ -85,6 +87,7 @@ export class OrderFormComponent implements OnInit, OnDestroy {
           area: address?.city,
           addressFull: address,
         });
+        this.zipCodeComponent.checkZipCode();
       }
     });
   }
@@ -123,15 +126,6 @@ export class OrderFormComponent implements OnInit, OnDestroy {
   pickContact(event) {
     const selectedContact = this.contacts?.find(contact => contact.erpId === event.value);
     this.addressForm?.patchValue({ contactFull: selectedContact });
-  }
-
-  setZipCodeError(event) {
-    this.addressForm.controls.zipCode.setErrors(event);
-    this.addressForm.updateValueAndValidity();
-  }
-
-  checkZipCode() {
-    this.countryChangeDetect$.next(true);
   }
 
   ngOnDestroy() {

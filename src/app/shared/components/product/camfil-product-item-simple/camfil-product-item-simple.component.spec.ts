@@ -7,6 +7,7 @@ import { of } from 'rxjs';
 import { instance, mock, when } from 'ts-mockito';
 
 import { FeatureToggleDirective } from 'ish-core/directives/feature-toggle.directive';
+import { AccountFacade } from 'ish-core/facades/account.facade';
 import { PricePipe } from 'ish-core/models/price/price.pipe';
 import { ProductView } from 'ish-core/models/product-view/product-view.model';
 import { CamfilDimensionPipe } from 'ish-core/pipes/camfil-dimension.pipe';
@@ -33,6 +34,7 @@ import { CamfilProductVariationSelectComponent } from 'ish-shared/components/pro
 
 import { LazyProductAddToCamCardComponent } from '../../../../extensions/cam-cards/exports/lazy-product-add-to-cam-card/lazy-product-add-to-cam-card.component';
 import { CamCardsFacade } from '../../../../extensions/cam-cards/facades/cam-cards.facade';
+import { ChannelToggleDirective } from '../../../../extensions/cam-configuration/directives/channel-toggle.directive';
 import { LazyProductAddToOrderTemplateComponent } from '../../../../extensions/order-templates/exports/lazy-product-add-to-order-template/lazy-product-add-to-order-template.component';
 import { LazyProductAddToQuoteComponent } from '../../../../extensions/quoting/exports/lazy-product-add-to-quote/lazy-product-add-to-quote.component';
 import { LazyProductAddToWishlistComponent } from '../../../../extensions/wishlists/exports/lazy-product-add-to-wishlist/lazy-product-add-to-wishlist.component';
@@ -44,10 +46,11 @@ describe('Camfil Product Item Simple Component', () => {
   let fixture: ComponentFixture<CamfilProductItemSimpleComponent>;
   let element: HTMLElement;
   let camCardFacadeMock: CamCardsFacade;
+  let accountFacadeMock: AccountFacade;
 
   beforeEach(async () => {
     camCardFacadeMock = mock(CamCardsFacade);
-    when(camCardFacadeMock.getAddProductSuccess$).thenReturn(of(true));
+    accountFacadeMock = mock(AccountFacade);
 
     await TestBed.configureTestingModule({
       imports: [ReactiveFormsModule, RouterTestingModule, TranslateModule.forRoot()],
@@ -72,6 +75,7 @@ describe('Camfil Product Item Simple Component', () => {
         MockComponent(LazyProductAddToOrderTemplateComponent),
         MockComponent(LazyProductAddToQuoteComponent),
         MockComponent(LazyProductAddToWishlistComponent),
+        MockDirective(ChannelToggleDirective),
         MockDirective(FeatureToggleDirective),
         MockPipe(CamfilDimensionPipe),
         MockPipe(CamfilProductAttributeValPipe),
@@ -79,7 +83,10 @@ describe('Camfil Product Item Simple Component', () => {
         MockPipe(PricePipe),
         MockPipe(ProductRoutePipe),
       ],
-      providers: [{ provide: CamCardsFacade, useFactory: () => instance(camCardFacadeMock) }],
+      providers: [
+        { provide: CamCardsFacade, useFactory: () => instance(camCardFacadeMock) },
+        { provide: AccountFacade, useFactory: () => instance(accountFacadeMock) },
+      ],
     }).compileComponents();
   });
 
@@ -88,6 +95,9 @@ describe('Camfil Product Item Simple Component', () => {
     component = fixture.componentInstance;
     element = fixture.nativeElement;
     component.product = { sku: 'sku' } as ProductView;
+
+    when(camCardFacadeMock.getAddProductSuccess$).thenReturn(of(true));
+    when(accountFacadeMock.isLoggedIn$).thenReturn(of(true));
   });
 
   it('should be created', () => {
@@ -109,6 +119,7 @@ describe('Camfil Product Item Simple Component', () => {
         "camfil-product-attribute",
         "camfil-product-quickview",
         "camfil-product-inventory",
+        "camfil-product-price",
         "camfil-product-quantity",
         "camfil-lazy-product-add-to-cam-card",
         "camfil-product-add-to-basket",
@@ -124,6 +135,7 @@ describe('Camfil Product Item Simple Component', () => {
         "camfil-product-attribute",
         "camfil-product-quickview",
         "camfil-product-inventory",
+        "camfil-product-price",
         "camfil-product-quantity",
         "camfil-lazy-product-add-to-cam-card",
         "camfil-product-add-to-basket",
@@ -141,6 +153,7 @@ describe('Camfil Product Item Simple Component', () => {
         "camfil-product-attribute",
         "camfil-product-attribute",
         "camfil-product-quickview",
+        "camfil-product-price",
       ]
     `);
   });

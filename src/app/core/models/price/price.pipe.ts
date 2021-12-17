@@ -3,6 +3,7 @@ import { ChangeDetectorRef, OnDestroy, Pipe, PipeTransform } from '@angular/core
 import { TranslateService } from '@ngx-translate/core';
 import { Subject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
+import { CamConfigurationFacade } from 'src/app/extensions/cam-configuration/facades/cam-configuration.facade';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
 import { AppFacade } from 'ish-core/facades/app.facade';
@@ -24,7 +25,8 @@ export function formatPrice(price: Price, lang: string, currencyForChanel?: stri
 export class PricePipe implements PipeTransform, OnDestroy {
   displayText: string;
   viewPricesPermissions = ['APP_B2B_VIEW_PRICES'];
-  isAuthorizedToViewPrices = false;
+  isViewPrices = false;
+  logIn = false;
   currencyForChanel = 'USD';
 
   private destroy$ = new Subject();
@@ -34,7 +36,8 @@ export class PricePipe implements PipeTransform, OnDestroy {
     private cdRef: ChangeDetectorRef,
     private accountFacade: AccountFacade,
     private authorizationToggle: AuthorizationToggleService,
-    private appFacade: AppFacade
+    private appFacade: AppFacade,
+    private camConfFacade: CamConfigurationFacade
   ) {}
   ngOnDestroy() {
     this.destroy$.next();
@@ -46,8 +49,16 @@ export class PricePipe implements PipeTransform, OnDestroy {
       .isAuthorizedToCheckArrAll(this.viewPricesPermissions)
       .pipe(take(1))
       .subscribe(permitted => {
-        this.isAuthorizedToViewPrices = permitted;
+        this.isViewPrices = permitted;
+        this.logIn = true;
+        this.cdRef.markForCheck();
       });
+
+    if (!this.logIn) {
+      this.camConfFacade.showPricesForNonLoggedInUser$.pipe(take(1)).subscribe(val => {
+        this.isViewPrices = val;
+      });
+    }
 
     this.appFacade.getCurrencyByChannel$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(currencyForChanel => {
       this.currencyForChanel = currencyForChanel;
@@ -57,7 +68,7 @@ export class PricePipe implements PipeTransform, OnDestroy {
       ('value' in priceData && priceData.value === 0) ||
       ('gross' in priceData && priceData.gross === 0 && 'net' in priceData && priceData.net === 0);
 
-    if (!this.isAuthorizedToViewPrices || !data || checkIfZeroPrice(data)) {
+    if (!this.isViewPrices || !data || checkIfZeroPrice(data)) {
       return '-';
     }
 

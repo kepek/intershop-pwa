@@ -21,9 +21,10 @@ describe('Camfil Product Price Component', () => {
   let element: HTMLElement;
   let translate: TranslateService;
   let product: AnyProductType;
+  let accountFacade: AccountFacade;
 
   beforeEach(async () => {
-    const accountFacade = mock(AccountFacade);
+    accountFacade = mock(AccountFacade);
     const appFacade = mock(AppFacade);
 
     when(accountFacade.userPriceDisplayType$).thenReturn(of('gross'));
@@ -59,6 +60,8 @@ describe('Camfil Product Price Component', () => {
     };
     component.product = product;
     element = fixture.nativeElement;
+
+    when(accountFacade.isLoggedIn$).thenReturn(of(true));
   });
 
   it('should be created', () => {

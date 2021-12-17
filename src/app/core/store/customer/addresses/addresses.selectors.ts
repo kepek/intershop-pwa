@@ -20,4 +20,4 @@ export const getZipCodes = createSelector(getAddressesState, addresses => addres
 export const getZipCodesLoading = createSelector(getAddressesState, addresses => addresses.zipCodesLoading);
 
 export const getZipCode = (code: string) =>
-  createSelector(getZipCodes, (zipCodes): ZipCodeInfo => zipCodes && zipCodes[code]);
+  createSelector(getZipCodes, (zipCodes): ZipCodeInfo[] => zipCodes && zipCodes[code]);

@@ -48,9 +48,7 @@
             class="d-inline-flex align-items-center"
           ></camfil-product-quickview>
         </div>
-        <ng-container *ngIf="userPermissions$ | async">
-          <camfil-product-price [product]="product"></camfil-product-price>
-        </ng-container>
+        <camfil-product-price [product]="product"></camfil-product-price>
       </div>
     </div>
     <div class="product-actions-container">
@@ -172,7 +170,8 @@
         </div>
       </div>
     </div>
-    <div *ngIf="userPermissions$ | async" class="product-prices-container d-flex flex-column justify-content-between">
+
+    <div class="product-prices-container d-flex flex-column justify-content-between">
       <camfil-product-price [product]="product"></camfil-product-price>
     </div>
 
@@ -246,6 +245,18 @@
 </ng-template>
 
 <ng-template #canAddToCC>
+  <ng-container *ngIf="!isLoggedIn; else loggedIn">
+    <ng-container *camfilChannelToggle="'showAddToCamCardButtonForNonLoggedInUser'">
+      <ng-container *ngTemplateOutlet="camCardButton"> </ng-container>
+    </ng-container>
+  </ng-container>
+</ng-template>
+
+<ng-template #loggedIn>
+  <ng-container *ngTemplateOutlet="camCardButton"> </ng-container>
+</ng-template>
+
+<ng-template #camCardButton>
   <camfil-lazy-product-add-to-cam-card
     *ngIf="configuration.displayAddToCamCard"
     [product]="product"

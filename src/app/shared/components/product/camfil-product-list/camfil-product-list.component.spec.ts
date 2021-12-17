@@ -7,6 +7,7 @@ import { of } from 'rxjs';
 import { instance, mock, when } from 'ts-mockito';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
+import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { PricePipe } from 'ish-core/models/price/price.pipe';
 import { User } from 'ish-core/models/user/user.model';
@@ -24,10 +25,12 @@ describe('Camfil Product List Component', () => {
   let element: HTMLElement;
   let shoppingFacade: ShoppingFacade;
   let accountFacade: AccountFacade;
+  let checkoutFacade: CheckoutFacade;
 
   beforeEach(async () => {
     shoppingFacade = mock(ShoppingFacade);
     accountFacade = mock(AccountFacade);
+    checkoutFacade = mock(CheckoutFacade);
     await TestBed.configureTestingModule({
       imports: [
         CoreStoreModule.forTesting(),
@@ -44,6 +47,7 @@ describe('Camfil Product List Component', () => {
       providers: [
         { provide: ShoppingFacade, useFactory: () => instance(shoppingFacade) },
         { provide: AccountFacade, useFactory: () => instance(accountFacade) },
+        { provide: CheckoutFacade, useFactory: () => instance(checkoutFacade) },
       ],
     }).compileComponents();
 

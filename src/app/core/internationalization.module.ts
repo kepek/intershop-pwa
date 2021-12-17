@@ -1,6 +1,7 @@
 import { registerLocaleData } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import localeFi from '@angular/common/locales/fi';
+import localeFr from '@angular/common/locales/fr';
 import localeSv from '@angular/common/locales/sv';
 import { Inject, LOCALE_ID, NgModule } from '@angular/core';
 import { MAT_MOMENT_DATE_FORMATS } from '@angular/material-moment-adapter';
@@ -44,23 +45,23 @@ export const CAMFIL_FORMATS: MatDateFormats = {
   ],
 })
 export class InternationalizationModule {
-  get lang(): string {
-    return this.langValue;
-  }
-
-  set lang(value: string) {
-    this.langValue = value;
-  }
-
   private langValue = CAMFIL_DEFAULT_LANG;
 
   constructor(@Inject(LOCALE_ID) lang: string, translateService: TranslateService, store: Store) {
-    [localeSv, localeFi].map(registerLocaleData);
+    [localeFi, localeFr, localeSv].map(registerLocaleData);
 
     store
       .pipe(select(getCurrentLocale), mapToProperty('lang'), take(1))
       .subscribe(currentLang => (this.lang = currentLang?.replace(/_/, '-') || lang));
 
     translateService.setDefaultLang(this.lang.replace(/-/, '_'));
+  }
+
+  get lang(): string {
+    return this.langValue;
+  }
+
+  set lang(value: string) {
+    this.langValue = value;
   }
 }

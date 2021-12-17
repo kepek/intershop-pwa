@@ -16,6 +16,7 @@ import { VariationProduct } from 'ish-core/models/product/product-variation.mode
 import { Product, ProductCompletenessLevel } from 'ish-core/models/product/product.model';
 import { ProductsService } from 'ish-core/services/products/products.service';
 import { CoreStoreModule } from 'ish-core/store/core/core-store.module';
+import { CustomerStoreModule } from 'ish-core/store/customer/customer-store.module';
 import { loadCategory } from 'ish-core/store/shopping/categories';
 import { setProductListingPageSize, setProductListingPages } from 'ish-core/store/shopping/product-listing';
 import { ShoppingStoreModule } from 'ish-core/store/shopping/shopping-store.module';
@@ -78,6 +79,7 @@ describe('Products Effects', () => {
       declarations: [DummyComponent],
       imports: [
         CoreStoreModule.forTesting(['router']),
+        CustomerStoreModule.forTesting('user'),
         RouterTestingModule.withRoutes([
           { path: 'category/:categoryUniqueId/product/:sku', component: DummyComponent },
           { path: 'product/:sku', component: DummyComponent },

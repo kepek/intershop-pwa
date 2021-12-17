@@ -1,0 +1,35 @@
+<div
+  [formGroup]="form"
+  [ishShowFormFeedback]="formControlArray"
+  [ngClass]="cssClass"
+>
+  <mat-form-field [floatLabel]="floatLabel" [hideRequiredMarker]="!required" [ngClass]="inputClass" appearance="fill"
+                  class="form-field">
+    <mat-label>{{ 'account.date.month' | translate }}</mat-label>
+    <mat-select [attr.data-testing-id]="controlName[0]" [formControlName]="controlName[0]" [id]="'month-' + uuid">
+      <mat-option *ngFor="let option of monthOptions" [value]="option.value">
+        {{ option.label | translate }}
+      </mat-option>
+    </mat-select>
+    <camfil-form-control-feedback
+      [control]="formControlArray[0]"
+      [messages]="errorMessages[0]"
+    ></camfil-form-control-feedback>
+  </mat-form-field>
+
+  <mat-form-field [floatLabel]="floatLabel" [hideRequiredMarker]="!required" [ngClass]="inputClass" appearance="fill"
+                  class="form-field">
+    <mat-label>{{ 'account.date.year' | translate }}</mat-label>
+    <mat-select [attr.data-testing-id]="controlName[1]" [formControlName]="controlName[1]" [id]="'year-' + uuid">
+      <mat-option *ngFor="let option of yearOptions" [value]="option.value">
+        {{ option.label | translate }}
+      </mat-option>
+    </mat-select>
+    <camfil-form-control-feedback
+      [control]="formControlArray[1]"
+      [messages]="errorMessages[1]"
+    ></camfil-form-control-feedback>
+  </mat-form-field>
+
+  <ng-content></ng-content>
+</div>

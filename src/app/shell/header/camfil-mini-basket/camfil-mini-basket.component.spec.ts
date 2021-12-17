@@ -29,6 +29,7 @@ describe('Camfil Mini Basket Component', () => {
 
     when(accountFacade.userPriceDisplayType$).thenReturn(of('gross'));
     when(appFacade.getCurrencyByChannel$).thenReturn(of('EUR'));
+    when(checkoutFacade.buckets$).thenReturn(of([]));
 
     await TestBed.configureTestingModule({
       declarations: [CamfilMiniBasketComponent, MockPipe(ProductRoutePipe)],

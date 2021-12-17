@@ -1,18 +1,16 @@
 import { AddressData } from 'ish-core/models/address/address.interface';
-import { Address } from 'ish-core/models/address/address.model';
 import { Attribute } from 'ish-core/models/attribute/attribute.model';
 import { BasketApproval } from 'ish-core/models/basket-approval/basket-approval.model';
+import { BasketExtension } from 'ish-core/models/basket-extension/basket-extension.model';
 import { BasketInfo } from 'ish-core/models/basket-info/basket-info.model';
 import { BasketRebateData } from 'ish-core/models/basket-rebate/basket-rebate.interface';
+import { BasketSurchargeData } from 'ish-core/models/basket-surcharge/basket-surcharge.interface';
 import { BasketTotalData } from 'ish-core/models/basket-total/basket-total.interface';
 import { CamfilLineItemData, LineItemData } from 'ish-core/models/line-item/line-item.interface';
 import { PaymentInstrument } from 'ish-core/models/payment-instrument/payment-instrument.model';
 import { PaymentMethodBaseData } from 'ish-core/models/payment-method/payment-method.interface';
 import { PaymentData } from 'ish-core/models/payment/payment.interface';
-import { PriceItemData } from 'ish-core/models/price-item/price-item.interface';
 import { ShippingMethodData } from 'ish-core/models/shipping-method/shipping-method.interface';
-
-import { CamCardContact, CamCardCustomer } from '../../../extensions/cam-cards/models/cam-card/cam-card.model';
 
 export interface BasketBaseData {
   id: string;
@@ -29,23 +27,15 @@ export interface BasketBaseData {
     valueBasedDiscounts?: string[];
   };
   buckets?: string[];
-  basketExtensions?: BasketExtensions[];
+  basketExtensions?: BasketExtension[];
   lineItems?: string[];
   payments?: string[];
   promotionCodes?: string[];
   totals: BasketTotalData;
   totalProductQuantity?: number;
   surcharges?: {
-    itemSurcharges?: {
-      amount: PriceItemData;
-      description: string;
-      name: string;
-    }[];
-    bucketSurcharges?: {
-      amount: PriceItemData;
-      description: string;
-      name: string;
-    }[];
+    itemSurcharges?: BasketSurchargeData[];
+    bucketSurcharges?: BasketSurchargeData[];
   };
   approval?: BasketApproval;
   attributes?: Attribute[];
@@ -67,22 +57,4 @@ export interface BasketData {
     camfilProductLineItems?: { [id: string]: CamfilLineItemData };
   };
   infos?: BasketInfo[];
-}
-
-export interface BasketExtensions {
-  name?: string;
-  customer?: CamCardCustomer;
-  contactPerson?: CamCardContact;
-  info?: string;
-  phoneNumber?: string;
-  isPartial?: boolean;
-  orderMark?: string;
-  invoiceLabel?: string;
-  deliveryAddress?: Address;
-  shippingAddress?: Address;
-  deliveryDate?: string;
-  isPartialDelivery?: boolean;
-  createdFromCamCardId?: string;
-  emailRecipients?: string[];
-  volumeDiscount?: number;
 }

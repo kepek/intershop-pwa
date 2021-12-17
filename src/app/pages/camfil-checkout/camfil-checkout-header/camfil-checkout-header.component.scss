@@ -5,6 +5,10 @@
     margin-bottom: 11px;
   }
 
+  .mat-divider {
+    margin: ($space-sm) 0;
+  }
+
   p {
     display: flex;
     justify-content: space-between;

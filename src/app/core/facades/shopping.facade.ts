@@ -1,20 +1,20 @@
+// tslint:disable: ish-ordered-imports project-structure ban-specific-imports
+
 import { Injectable } from '@angular/core';
-import { Store, select } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { debounce, filter, map, switchMap, tap } from 'rxjs/operators';
-import { CamCamProductsAddToCartItems } from 'src/app/extensions/cam-cards/models/cam-card/cam-card.model';
 
 import { Address } from 'ish-core/models/address/address.model';
 import { Attribute } from 'ish-core/models/attribute/attribute.model';
-import { BasketExtensions } from 'ish-core/models/basket/basket.interface';
 import { CategoryHelper } from 'ish-core/models/category/category.helper';
 import { ProductListingID } from 'ish-core/models/product-listing/product-listing.model';
 import { ProductCompletenessLevel, ProductHelper } from 'ish-core/models/product/product.model';
 import {
+  addProductsFromCamCard,
   addProductToBasket,
   addProductToBucket,
   addProductToBucketWithUrn,
-  addProductsFromCamCard,
   createBasket,
   getBasketAddresses,
   getCurrentBasket,
@@ -58,9 +58,9 @@ import {
   getProduct,
   getProductBundleParts,
   getProductLinks,
+  getProducts,
   getProductVariationCount,
   getProductVariationOptions,
-  getProducts,
   getSelectedProduct,
   getSelectedProductVariationOptions,
   loadCustomerPrices,
@@ -85,18 +85,60 @@ import {
 import { toObservable } from 'ish-core/utils/functions';
 import { whenFalsy, whenTruthy } from 'ish-core/utils/operators';
 
+import { CamCamProductsAddToCartItems } from '../../extensions/cam-cards/models/cam-card/cam-card.model';
+import { BasketExtension } from 'ish-core/models/basket-extension/basket-extension.model';
+import { BasketExtensionData } from 'ish-core/models/basket-extension/basket-extension.interface';
+
 // tslint:disable:member-ordering
 @Injectable({ providedIn: 'root' })
 export class ShoppingFacade {
-  constructor(private store: Store) {}
+  selectedCategory$ = this.store.pipe(select(getSelectedCategory));
 
   // CATEGORY
+  selectedProduct$ = this.store.pipe(select(getSelectedProduct));
+  selectedProductVariationOptions$ = this.store.pipe(select(getSelectedProductVariationOptions));
+  productDetailLoading$ = this.selectedProduct$.pipe(
+    map(p => !ProductHelper.isReadyForDisplay(p, ProductCompletenessLevel.Detail))
+  );
 
-  selectedCategory$ = this.store.pipe(select(getSelectedCategory));
+  // PRODUCT
+  productListingViewType$ = this.store.pipe(select(getProductListingViewType));
+  productListingLoading$ = this.store.pipe(select(getProductListingLoading));
+  searchTerm$ = this.store.pipe(select(getSearchTerm));
+  searchLoading$ = this.store.pipe(select(getProductListingLoading));
+  searchItemsCount$ = this.searchTerm$.pipe(
+    debounce(() => this.store.pipe(select(getProductListingLoading), whenFalsy())),
+    switchMap(term =>
+      this.store.pipe(
+        select(getProductListingView, { type: 'search', value: term }),
+        map(view => view.itemCount)
+      )
+    )
+  );
+  compareProducts$ = this.store.pipe(select(getCompareProductsSKUs));
+  compareProductsCount$ = this.store.pipe(select(getCompareProductsCount));
+  recentlyViewedProducts$ = this.store.pipe(select(getRecentlyViewedProducts));
+  mostRecentlyViewedProducts$ = this.store.pipe(select(getMostRecentlyViewedProducts));
+
+  // CHECKOUT
+  productAdded$ = this.store.pipe(select(getProductAdded));
+  productUpdated$ = this.store.pipe(select(getProductUpdated));
+  basketAddresses$ = this.store.pipe(select(getBasketAddresses));
+  productsReadyToPlaceOrder$ = this.store.pipe(select(isProductsReadyToPlaceOrder));
+  getProductAddingError$ = this.store.pipe(select(getProductAddingError));
+  getFailedCamCardName$ = this.store.pipe(select(getFailedCamCardName));
+
+  // PRODUCT LISTING
+  getAllCategoriesTree$ = this.store.pipe(select(getCategoryEntities));
+  getCurrentTerm$ = this.store.pipe(select(getCurrentTerm));
+
+  constructor(private store: Store) {}
 
   category$(uniqueId: string) {
     return this.store.pipe(select(getCategory(uniqueId)));
   }
+
+  // PRODUCT LINKS
 
   navigationCategories$(uniqueId?: string) {
     if (!uniqueId) {
@@ -105,13 +147,7 @@ export class ShoppingFacade {
     return this.store.pipe(select(getNavigationCategories(uniqueId)));
   }
 
-  // PRODUCT
-
-  selectedProduct$ = this.store.pipe(select(getSelectedProduct));
-  selectedProductVariationOptions$ = this.store.pipe(select(getSelectedProductVariationOptions));
-  productDetailLoading$ = this.selectedProduct$.pipe(
-    map(p => !ProductHelper.isReadyForDisplay(p, ProductCompletenessLevel.Detail))
-  );
+  // SEARCH
 
   product$(sku: string | Observable<string>, level: ProductCompletenessLevel) {
     return toObservable(sku).pipe(
@@ -141,22 +177,25 @@ export class ShoppingFacade {
     );
   }
 
+  // FILTER
+
   productBundleParts$(sku: string) {
     return this.store.pipe(select(getProductBundleParts, { sku }));
   }
+
+  // COMPARE
 
   productNotReady$(sku: string | Observable<string>, level: ProductCompletenessLevel) {
     return toObservable(sku).pipe(
       switchMap(plainSKU =>
         this.store.pipe(
           select(getProduct, { sku: plainSKU }),
+          whenTruthy(),
           map(p => !ProductHelper.isReadyForDisplay(p, level))
         )
       )
     );
   }
-
-  // CHECKOUT
 
   addProductToBucket(
     address: Address,
@@ -164,7 +203,7 @@ export class ShoppingFacade {
     sku: string,
     quantity: number,
     basketId: string,
-    basketExtension: BasketExtensions,
+    basketExtension: BasketExtension,
     lineItemAttributes?: Attribute[],
     bucketId?: string
   ) {
@@ -214,7 +253,7 @@ export class ShoppingFacade {
     this.store.dispatch(addProductToBasket({ sku, quantity, shippingMethod, shipToAddress, lineItemAttributes }));
   }
 
-  updateBucket(basketId: string, addressId: string, basketExtension: BasketExtensions, address?: Address) {
+  updateBucket(basketId: string, addressId: string, basketExtension: BasketExtensionData, address?: Address) {
     this.store.dispatch(
       updateBucket({
         basketId,
@@ -229,52 +268,35 @@ export class ShoppingFacade {
     this.store.dispatch(updateBucketsQueue(buckets));
   }
 
+  // RECENTLY
+
   resetProductAdded() {
     this.store.dispatch(resetProductAdded());
   }
-
-  // PRODUCT LISTING
 
   productListingView$(id: ProductListingID) {
     return this.store.pipe(select(getProductListingView, id));
   }
 
-  productListingViewType$ = this.store.pipe(select(getProductListingViewType));
-  productListingLoading$ = this.store.pipe(select(getProductListingLoading));
-
   loadMoreProducts(id: ProductListingID, page: number) {
     this.store.dispatch(loadMoreProducts({ id, page }));
   }
 
-  // PRODUCT LINKS
+  // PROMOTIONS
 
   productLinks$(sku: string) {
     this.store.dispatch(loadProductLinks({ sku }));
     return this.store.pipe(select(getProductLinks, { sku }));
   }
 
-  // SEARCH
-
-  searchTerm$ = this.store.pipe(select(getSearchTerm));
   searchResults$(searchTerm: Observable<string>) {
     return searchTerm.pipe(
       tap(term => this.store.dispatch(suggestSearch({ searchTerm: term }))),
       switchMap(term => this.store.pipe(select(getSuggestSearchResults(term))))
     );
   }
-  searchLoading$ = this.store.pipe(select(getProductListingLoading));
 
-  searchItemsCount$ = this.searchTerm$.pipe(
-    debounce(() => this.store.pipe(select(getProductListingLoading), whenFalsy())),
-    switchMap(term =>
-      this.store.pipe(
-        select(getProductListingView, { type: 'search', value: term }),
-        map(view => view.itemCount)
-      )
-    )
-  );
-
-  // FILTER
+  // TODO: CAMFIL Additions, it should be separated to avoid core modifications;
 
   currentFilter$(withCategoryFilter: boolean) {
     return this.store.pipe(
@@ -283,11 +305,6 @@ export class ShoppingFacade {
       map(x => (withCategoryFilter ? x : { ...x, filter: x.filter?.filter(f => f.id !== 'CategoryUUIDLevelMulti') }))
     );
   }
-
-  // COMPARE
-
-  compareProducts$ = this.store.pipe(select(getCompareProductsSKUs));
-  compareProductsCount$ = this.store.pipe(select(getCompareProductsCount));
 
   inCompareProducts$(sku: string | Observable<string>) {
     return toObservable(sku).pipe(switchMap(plainSKU => this.store.pipe(select(isInCompareProducts(plainSKU)))));
@@ -305,16 +322,9 @@ export class ShoppingFacade {
     this.store.dispatch(removeFromCompare({ sku }));
   }
 
-  // RECENTLY
-
-  recentlyViewedProducts$ = this.store.pipe(select(getRecentlyViewedProducts));
-  mostRecentlyViewedProducts$ = this.store.pipe(select(getMostRecentlyViewedProducts));
-
   clearRecentlyViewedProducts() {
     this.store.dispatch(clearRecently());
   }
-
-  // PROMOTIONS
 
   promotion$(promotionId: string) {
     this.store.dispatch(loadPromotion({ promoId: promotionId }));
@@ -327,15 +337,6 @@ export class ShoppingFacade {
     });
     return this.store.pipe(select(getPromotions(), { promotionIds }));
   }
-
-  // TODO: CAMFIL Additions, it should be separated to avoid core modifications;
-
-  productAdded$ = this.store.pipe(select(getProductAdded));
-  productUpdated$ = this.store.pipe(select(getProductUpdated));
-  basketAddresses$ = this.store.pipe(select(getBasketAddresses));
-  productsReadyToPlaceOrder$ = this.store.pipe(select(isProductsReadyToPlaceOrder));
-  getProductAddingError$ = this.store.pipe(select(getProductAddingError));
-  getFailedCamCardName$ = this.store.pipe(select(getFailedCamCardName));
 
   categories$(ids: string[]) {
     return this.store.pipe(
@@ -378,10 +379,6 @@ export class ShoppingFacade {
   getProductListing(id: ProductListingID) {
     return this.store.pipe(select(getProductListing, id));
   }
-
-  getAllCategoriesTree$ = this.store.pipe(select(getCategoryEntities));
-
-  getCurrentTerm$ = this.store.pipe(select(getCurrentTerm));
 
   setCurrentTerm(searchTerm: string) {
     this.store.dispatch(setCurrentTerm({ searchTerm }));

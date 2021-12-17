@@ -26,6 +26,7 @@ export class PaymentMethodMapper {
       .filter(data => PaymentMethodMapper.isPaymentMethodValid(data))
       .map(data => ({
         id: data.id,
+        default: !!data?.default,
         serviceId: data.serviceID,
         displayName: data.displayName,
         description: data.description,
@@ -66,6 +67,7 @@ export class PaymentMethodMapper {
     return options.methods[0].payments
       .map(pm => ({
         id: pm.id,
+        default: !!pm?.default,
         serviceId: pm.id, // is missing
         displayName: pm.displayName,
         restrictionCauses: pm.restrictions,

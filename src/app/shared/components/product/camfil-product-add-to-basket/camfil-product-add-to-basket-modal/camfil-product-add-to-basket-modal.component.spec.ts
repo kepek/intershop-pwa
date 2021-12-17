@@ -15,6 +15,7 @@ import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { BasketView } from 'ish-core/models/basket/basket.model';
 import { Product } from 'ish-core/models/product/product.model';
 import { CamfilCamCardModalComponent } from 'ish-shared/components/common/camfil-cam-card-modal/camfil-cam-card-modal.component';
+import { CamfilCityFieldComponent } from 'ish-shared/components/common/camfil-city-field/camfil-city-field.component';
 import { CamfilErrorComponent } from 'ish-shared/components/common/camfil-error/camfil-error.component';
 import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
 import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
@@ -29,6 +30,7 @@ import { CamCardModalDetailsComponent } from '../../../../../extensions/cam-card
 import { CreateOrderProductModalComponent } from '../../../../../extensions/cam-cards/shared/add-product-to-cart-modal/create-order-product-modal/create-order-product-modal.component';
 import { OrderFormComponent } from '../../../../../extensions/cam-cards/shared/add-product-to-cart-modal/create-order-product-modal/order-form/order-form.component';
 import { CreateOrderProductSuccessComponent } from '../../../../../extensions/cam-cards/shared/add-product-to-cart-modal/create-order-product-success/create-order-product-success.component';
+import { ConfigurationService } from '../../../../../extensions/cam-configuration/services/configuration/configuration.service';
 
 import { CamfilProductAddToBasketModalComponent } from './camfil-product-add-to-basket-modal.component';
 
@@ -40,6 +42,7 @@ describe('Camfil Product Add To Basket Modal Component', () => {
   let checkoutFacadeMock: CheckoutFacade;
   let accountFacadeMock: AccountFacade;
   let camCardFacadeMock: CamCardsFacade;
+  let configurationServiceMock: ConfigurationService;
 
   const camCardDetails = {
     name: 'testing cam cards',
@@ -50,6 +53,12 @@ describe('Camfil Product Add To Basket Modal Component', () => {
   const basketDetails: BasketView = {
     id: 'basket_test',
     totals: {
+      discountTotal: {
+        type: 'PriceItem',
+        gross: 100,
+        net: 80,
+        currency: '',
+      },
       itemTotal: {
         type: 'PriceItem',
         gross: 100,
@@ -71,6 +80,7 @@ describe('Camfil Product Add To Basket Modal Component', () => {
     checkoutFacadeMock = mock(CheckoutFacade);
     accountFacadeMock = mock(AccountFacade);
     camCardFacadeMock = mock(CamCardsFacade);
+    configurationServiceMock = mock(ConfigurationService);
 
     await TestBed.configureTestingModule({
       declarations: [
@@ -84,6 +94,7 @@ describe('Camfil Product Add To Basket Modal Component', () => {
         CamfilProductAddToBasketModalComponent,
         CamfilProductQuantityComponent,
         FaIconComponent,
+        MockComponent(CamfilCityFieldComponent),
         MockComponent(CamfilLoadingComponent),
         MockComponent(CamfilSmallCtaModalComponent),
         MockComponent(CreateOrderProductModalComponent),
@@ -97,6 +108,7 @@ describe('Camfil Product Add To Basket Modal Component', () => {
         { provide: CheckoutFacade, useFactory: () => instance(checkoutFacadeMock) },
         { provide: AccountFacade, useFactory: () => instance(accountFacadeMock) },
         { provide: CamCardsFacade, useFactory: () => instance(camCardFacadeMock) },
+        { provide: ConfigurationService, useFactory: () => instance(configurationServiceMock) },
       ],
     }).compileComponents();
   });

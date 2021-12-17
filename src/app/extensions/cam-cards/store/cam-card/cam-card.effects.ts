@@ -173,18 +173,24 @@ export class CamCardEffects {
   loadCamCards$ = createEffect(() =>
     this.actions$.pipe(
       ofType(loadCamCards),
-      withLatestFrom(this.store.pipe(select(getUserAuthorized))),
-      mergeMap(([, authorized]) =>
-        authorized
-          ? this.camCardService.getCamCards().pipe(
-              map(items => {
-                // TODO: to improve - move filter to selectors like getRootCamCards
-                const camCards = items.filter(item => !item.rootCamCard);
-                return loadCamCardsSuccess({ camCards });
-              }),
-              mapErrorToAction(loadCamCardsFail)
-            )
-          : [loadCamCardsSuccess({ camCards: [] })]
+      windowRxOperator(this.actions$.pipe(ofType(loadCamCards), debounceTime(500))),
+      mergeMap(window$ =>
+        window$.pipe(
+          last(),
+          withLatestFrom(this.store.pipe(select(getUserAuthorized))),
+          mergeMap(([, authorized]) =>
+            authorized
+              ? this.camCardService.getCamCards().pipe(
+                  map(items => {
+                    // TODO: to improve - move filter to selectors like getRootCamCards
+                    const camCards = items.filter(item => !item.rootCamCard);
+                    return loadCamCardsSuccess({ camCards });
+                  }),
+                  mapErrorToAction(loadCamCardsFail)
+                )
+              : [loadCamCardsSuccess({ camCards: [] })]
+          )
+        )
       )
     )
   );

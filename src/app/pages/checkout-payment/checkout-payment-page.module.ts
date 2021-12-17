@@ -19,6 +19,7 @@ import { PaymentConcardisComponent } from './payment-concardis/payment-concardis
     PaymentConcardisCreditcardCvcDetailComponent,
     PaymentConcardisDirectdebitComponent,
   ],
+  exports: [PaymentConcardisCreditcardComponent],
 })
 export class CheckoutPaymentPageModule {
   static component = CheckoutPaymentPageComponent;

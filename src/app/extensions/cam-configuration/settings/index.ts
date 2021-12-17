@@ -12,8 +12,11 @@ export type ChannelSetting = Channel | keyof ChannelSettings;
 export interface ChannelSettings {
   allowCreditCardPaymentsIfTheCreditLimitIsReached: boolean;
   allowInvoicePaymentIfCreditLimitIsNotReached: boolean;
+  guestCheckout: boolean;
   createDynamicAnonymousAddressForNonLoggedInUser: boolean;
   createDynamicAnonymousBasketForNonLoggedInInUser: boolean;
+  hideAddToBasketLightboxForNonLoggedInUser: boolean;
+  preventCamCardERPIdValidation: boolean;
   showAddToCamCardButtonForNonLoggedInUser: boolean;
   showAddToCartButtonForNonLoggedInUser: boolean;
   showAllCamCardsButtonForOrganizationAdmin: boolean;

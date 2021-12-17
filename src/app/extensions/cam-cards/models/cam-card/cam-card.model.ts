@@ -1,5 +1,5 @@
 import { Address } from 'ish-core/models/address/address.model';
-import { BasketExtensions } from 'ish-core/models/basket/basket.interface';
+import { BasketExtension } from 'ish-core/models/basket-extension/basket-extension.model';
 import { CustomerData } from 'ish-core/models/customer/customer.interface';
 import { Customer } from 'ish-core/models/customer/customer.model';
 import { SelectOption } from 'ish-shared/forms/components/select/select.component';
@@ -120,7 +120,7 @@ export interface CamCamProductChecked {
 
 export interface CamCamProductsAddToCartItems {
   products: CamCamProductChecked[];
-  extensions?: BasketExtensions;
+  extensions?: BasketExtension;
   address?: Address;
   allProductsSelected?: boolean;
 }

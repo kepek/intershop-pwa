@@ -4,6 +4,7 @@ import { of } from 'rxjs';
 import { instance, mock, when } from 'ts-mockito';
 
 import { FeatureToggleDirective } from 'ish-core/directives/feature-toggle.directive';
+import { AccountFacade } from 'ish-core/facades/account.facade';
 import { PricePipe } from 'ish-core/models/price/price.pipe';
 import { ProductView } from 'ish-core/models/product-view/product-view.model';
 import { ProductRoutePipe } from 'ish-core/routing/product/product-route.pipe';
@@ -38,10 +39,11 @@ describe('Camfil Product Item Base Component', () => {
   let fixture: ComponentFixture<CamfilProductItemBaseComponent>;
   let element: HTMLElement;
   let camCardFacadeMock: CamCardsFacade;
+  let accountFacadeMock: AccountFacade;
 
   beforeEach(async () => {
     camCardFacadeMock = mock(CamCardsFacade);
-    when(camCardFacadeMock.getAddProductSuccess$).thenReturn(of(true));
+    accountFacadeMock = mock(AccountFacade);
 
     await TestBed.configureTestingModule({
       declarations: [
@@ -69,7 +71,10 @@ describe('Camfil Product Item Base Component', () => {
         MockPipe(PricePipe),
         MockPipe(ProductRoutePipe),
       ],
-      providers: [{ provide: CamCardsFacade, useFactory: () => instance(camCardFacadeMock) }],
+      providers: [
+        { provide: CamCardsFacade, useFactory: () => instance(camCardFacadeMock) },
+        { provide: AccountFacade, useFactory: () => instance(accountFacadeMock) },
+      ],
     }).compileComponents();
   });
 
@@ -78,6 +83,9 @@ describe('Camfil Product Item Base Component', () => {
     component = fixture.componentInstance;
     element = fixture.nativeElement;
     component.product = { sku: 'sku' } as ProductView;
+
+    when(camCardFacadeMock.getAddProductSuccess$).thenReturn(of(true));
+    when(accountFacadeMock.isLoggedIn$).thenReturn(of(true));
   });
 
   it('should be created', () => {

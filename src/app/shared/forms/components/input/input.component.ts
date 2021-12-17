@@ -13,7 +13,7 @@ export class InputComponent extends FormElementComponent implements OnInit {
    * values: 'text' (default), 'password', 'email'
    */
   @Input() type = 'text';
-  @Input() maxlength = '60';
+  @Input() maxlength = 60;
   /**
    * default = undefined  for input type 'text' and 'email' (autocomplete not set)
    * 'off' for input type 'password'
@@ -33,6 +33,10 @@ export class InputComponent extends FormElementComponent implements OnInit {
     super(translate);
   }
 
+  get disAbled(): boolean {
+    return !this.disabled ? undefined : true;
+  }
+
   ngOnInit() {
     super.init();
 
@@ -46,10 +50,6 @@ export class InputComponent extends FormElementComponent implements OnInit {
         'input parameter <type> is not valid for InputComponent, only text, email, password and number are possible types'
       );
     }
-  }
-
-  get disAbled(): boolean {
-    return !this.disabled ? undefined : true;
   }
 
   /**

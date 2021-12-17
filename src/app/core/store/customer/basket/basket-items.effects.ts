@@ -13,6 +13,7 @@ import {
   mapTo,
   mergeMap,
   reduce,
+  switchMap,
   tap,
   window,
   withLatestFrom,
@@ -20,13 +21,14 @@ import {
 
 import { Address } from 'ish-core/models/address/address.model';
 import { AttributeHelper } from 'ish-core/models/attribute/attribute.helper';
-import { Bucket } from 'ish-core/models/basket/bucket.model';
+import { Bucket } from 'ish-core/models/bucket/bucket.model';
 import {
   LineItemUpdateHelper,
   LineItemUpdateHelperItem,
 } from 'ish-core/models/line-item-update/line-item-update.helper';
 import { BasketService } from 'ish-core/services/basket/basket.service';
 import { displayErrorMessage, displaySuccessMessage } from 'ish-core/store/core/messages';
+import { getUserAuthorized } from 'ish-core/store/customer/user';
 import { getProductEntities, loadProduct } from 'ish-core/store/shopping/products';
 import { mapErrorToAction, mapToPayload, mapToPayloadProperty } from 'ish-core/utils/operators';
 
@@ -88,13 +90,6 @@ const STANDARD_SHIPPING_METHOD = 'STD_GROUND';
 
 @Injectable()
 export class BasketItemsEffects {
-  constructor(
-    private actions$: Actions,
-    private router: Router,
-    private store: Store,
-    private basketService: BasketService
-  ) {}
-
   /**
    * Add a product to the current basket.
    * Triggers the internal AddItemsToBasket action that handles the actual adding of the product to the basket.
@@ -137,16 +132,21 @@ export class BasketItemsEffects {
             );
             return { ...infoToAdd, extensions };
           }),
-          map(info =>
-            Object.values(info.extensions).length
-              ? updateBucketsQueue(info)
-              : addItemsToBasketFromCamCard({ items: info.items })
-          )
+          withLatestFrom(this.store.pipe(select(getUserAuthorized))),
+          mergeMap(([info, authorized]) => {
+            const { items } = info;
+            const hasExtensions = Object.values(info?.extensions)?.length;
+
+            if (authorized) {
+              return [hasExtensions ? updateBucketsQueue(info) : addItemsToBasketFromCamCard({ items: info.items })];
+            } else {
+              return [addItemsToBasket({ items })];
+            }
+          })
         )
       )
     )
   );
-
   addProductToBucketWithUrn$ = createEffect(() =>
     this.actions$.pipe(
       ofType(addProductToBucketWithUrn),
@@ -163,7 +163,6 @@ export class BasketItemsEffects {
       ])
     )
   );
-
   addProductToBucket$ = createEffect(() =>
     this.actions$.pipe(
       ofType(addProductToBucket),
@@ -188,7 +187,6 @@ export class BasketItemsEffects {
       })
     )
   );
-
   addProductToBucketWithBasketId$ = createEffect(() =>
     this.actions$.pipe(
       ofType(addProductToBucketWithBasketId),
@@ -217,7 +215,6 @@ export class BasketItemsEffects {
       )
     )
   );
-
   updateBucket$ = createEffect(() =>
     this.actions$.pipe(
       ofType(updateBucket),
@@ -234,25 +231,30 @@ export class BasketItemsEffects {
       )
     )
   );
-
   addItemsToBasket$ = createEffect(() =>
     this.actions$.pipe(
       ofType(addItemsToBasket),
       mapToPayload(),
-      mergeMap(payload =>
-        this.basketService.addItemsToBasket(payload.items).pipe(
-          mergeMap(info => [
-            addItemsToBasketSuccess({ info }),
-            displaySuccessMessage({
-              message: 'camfil.add_items_to_basket.camfil.message.success',
-            }),
-          ]),
-          mapErrorToAction(addItemsToBasketFail)
-        )
-      )
+      withLatestFrom(this.store.pipe(select(getCurrentBasketId))),
+      concatMap(([payload, basketId]) => {
+        if (basketId) {
+          return this.basketService.addItemsToBasket(payload.items).pipe(
+            map(info => addItemsToBasketSuccess({ info })),
+            mapErrorToAction(addItemsToBasketFail)
+          );
+        } else {
+          return this.basketService.createBasket().pipe(
+            switchMap(() =>
+              this.basketService.addItemsToBasket(payload.items).pipe(
+                map(info => addItemsToBasketSuccess({ info })),
+                mapErrorToAction(addItemsToBasketFail)
+              )
+            )
+          );
+        }
+      })
     )
   );
-
   /**
    * Reload products when they are added to basket to update price and inStock information
    */
@@ -263,7 +265,6 @@ export class BasketItemsEffects {
       concatMap(payload => [...payload.items.map(item => loadProduct({ sku: item.sku }))])
     )
   );
-
   /**
    * Update basket items effect.
    * Triggers update item request if item quantity has changed and is greater zero
@@ -299,7 +300,6 @@ export class BasketItemsEffects {
       )
     )
   );
-
   /**
    * Validates the basket after an update item error occurred
    */
@@ -311,7 +311,6 @@ export class BasketItemsEffects {
       mapTo(validateBasket({ scopes: ['Products'] }))
     )
   );
-
   /**
    * Validates the basket after an update item error occurred
    */
@@ -324,6 +323,17 @@ export class BasketItemsEffects {
           message: error.message,
         }),
       ])
+    )
+  );
+
+  addItemsToBasketSuccess$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(addItemsToBasketSuccess),
+      map(() =>
+        displaySuccessMessage({
+          message: 'camfil.add_items_to_basket.camfil.message.success',
+        })
+      )
     )
   );
 
@@ -342,7 +352,6 @@ export class BasketItemsEffects {
       )
     )
   );
-
   deleteBasketItemSuccess$ = createEffect(() =>
     this.actions$.pipe(
       ofType(deleteBasketItemSuccess),
@@ -353,7 +362,6 @@ export class BasketItemsEffects {
       )
     )
   );
-
   deleteBucket$ = createEffect(() =>
     this.actions$.pipe(
       ofType(deleteBucket),
@@ -365,7 +373,6 @@ export class BasketItemsEffects {
       )
     )
   );
-
   deleteBucketSuccess$ = createEffect(() =>
     this.actions$.pipe(
       ofType(deleteBucketSuccess),
@@ -376,7 +383,6 @@ export class BasketItemsEffects {
       )
     )
   );
-
   /**
    * Triggers a LoadBasket action after successful interaction with the Basket API.
    */
@@ -388,7 +394,6 @@ export class BasketItemsEffects {
       mapTo(loadBasket())
     )
   );
-
   loadBucket$ = createEffect(() =>
     this.actions$.pipe(
       ofType(loadBuckets),
@@ -400,13 +405,9 @@ export class BasketItemsEffects {
       )
     )
   );
-
   loadBasketAfterBucketChangeSuccess$ = createEffect(() =>
     this.actions$.pipe(ofType(deleteBucketSuccess), mapTo(loadBasket()))
   );
-
-  // CAMFIL
-
   addLineItemAttribute$ = createEffect(() =>
     this.actions$.pipe(
       ofType(addBasketItemAttributes),
@@ -419,6 +420,7 @@ export class BasketItemsEffects {
     )
   );
 
+  // CAMFIL
   updateLineItemAttributtes$ = createEffect(() =>
     this.actions$.pipe(
       ofType(updateBasketItemAttributes),
@@ -430,7 +432,6 @@ export class BasketItemsEffects {
       )
     )
   );
-
   deleteLineItemAttributte$ = createEffect(() =>
     this.actions$.pipe(
       ofType(deleteBasketItemAttributes),
@@ -442,7 +443,6 @@ export class BasketItemsEffects {
       )
     )
   );
-
   addProductsFromCamCard$ = createEffect(() =>
     this.actions$.pipe(
       ofType(addProductsFromCamCard),
@@ -469,7 +469,6 @@ export class BasketItemsEffects {
       )
     )
   );
-
   addProductsToBasketFromCamCard$ = createEffect(() =>
     this.actions$.pipe(
       ofType(addProductsToBasketFromCamCard),
@@ -512,7 +511,6 @@ export class BasketItemsEffects {
       )
     )
   );
-
   updateBucketsQueue$ = createEffect(() =>
     this.actions$.pipe(
       ofType(updateBucketsQueue),
@@ -531,7 +529,6 @@ export class BasketItemsEffects {
       )
     )
   );
-
   addItemsToBasketFromCamCard$ = createEffect(() =>
     this.actions$.pipe(
       ofType(addItemsToBasketFromCamCard),
@@ -566,7 +563,6 @@ export class BasketItemsEffects {
       )
     )
   );
-
   doubleBucketItemsQuantityItems$ = createEffect(() =>
     this.actions$.pipe(
       ofType(doubleBucketItemsQuantity),
@@ -579,4 +575,20 @@ export class BasketItemsEffects {
       )
     )
   );
+  /**
+   * Triggers a LoadBasket action after successful attribute change for Item
+   */
+  loadBasketAfterLineItemAttributeChangeSuccess$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(addBasketItemAttributesSuccess, updateBasketItemAttributesSuccess, deleteBasketItemAttributesSuccess),
+      mapTo(loadBasket())
+    )
+  );
+
+  constructor(
+    private actions$: Actions,
+    private router: Router,
+    private store: Store,
+    private basketService: BasketService
+  ) {}
 }

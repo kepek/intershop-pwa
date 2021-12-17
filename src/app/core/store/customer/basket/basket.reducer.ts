@@ -5,7 +5,7 @@ import { Address } from 'ish-core/models/address/address.model';
 import { BasketInfo } from 'ish-core/models/basket-info/basket-info.model';
 import { BasketValidationResultType } from 'ish-core/models/basket-validation/basket-validation.model';
 import { Basket } from 'ish-core/models/basket/basket.model';
-import { Bucket } from 'ish-core/models/basket/bucket.model';
+import { Bucket } from 'ish-core/models/bucket/bucket.model';
 import { CustomerDeliveryTerm } from 'ish-core/models/customer/customer.interface';
 import { HttpError } from 'ish-core/models/http-error/http-error.model';
 import { LineItemView } from 'ish-core/models/line-item/line-item.model';
@@ -107,6 +107,7 @@ import {
   updateBasketPaymentSuccess,
   updateBasketShippingMethod,
   updateBucketFail,
+  updateBucketSuccess,
   updateConcardisCvcLastUpdated,
   updateConcardisCvcLastUpdatedFail,
   updateConcardisCvcLastUpdatedSuccess,
@@ -127,6 +128,7 @@ export interface BasketState {
   // TODO: CAMFIL Additions, it should be separated to avoid core modifications;
   productAdded: boolean;
   buckets: Bucket[];
+  submittedBuckets: Bucket[];
   emptyBuckets: Bucket[];
   productUpdated: boolean;
   basketAddresses: Address[];
@@ -157,8 +159,9 @@ export const initialState: BasketState = {
   submittedBasket: undefined,
   // TODO: CAMFIL Additions, it should be separated to avoid core modifications;
   buckets: undefined,
+  submittedBuckets: undefined,
   productAdded: false,
-  emptyBuckets: [],
+  emptyBuckets: undefined,
   productUpdated: false,
   basketAddresses: [],
   deliveryTerms: {},
@@ -276,7 +279,7 @@ export const basketReducer = createReducer(
   })),
   on(loadBucketsSuccess, (state: BasketState, action) => {
     const addresses = action.payload.buckets.map(bucket => bucket.shipToAddressFull);
-    const onlyEmpty = state.emptyBuckets.filter(emptyBucket =>
+    const onlyEmpty = state.emptyBuckets?.filter(emptyBucket =>
       AddressHelper.isNewAddress(emptyBucket.shipToAddressFull as Address, addresses)
     );
     const buckets = action.payload.buckets?.map(b => {
@@ -288,14 +291,18 @@ export const basketReducer = createReducer(
 
     return {
       ...state,
-      buckets,
+      buckets: buckets?.length ? buckets : undefined,
       emptyBuckets: onlyEmpty,
     };
   }),
-  on(addEmptyBucket, (state: BasketState, action) => ({
-    ...state,
-    emptyBuckets: [action.payload.bucket, ...state.emptyBuckets],
-  })),
+  on(addEmptyBucket, (state: BasketState, action) => {
+    const emptyBuckets = [].concat(state?.emptyBuckets)?.filter(Boolean);
+
+    return {
+      ...state,
+      emptyBuckets: [action.payload.bucket, ...emptyBuckets],
+    };
+  }),
   on(deleteEmptyBucket, (state: BasketState, action) => ({
     ...state,
     emptyBuckets: state.emptyBuckets.reduce((acc, cur) => {
@@ -329,6 +336,7 @@ export const basketReducer = createReducer(
     removePromotionCodeFromBasketSuccess,
     setBasketAttributeSuccess,
     deleteBasketAttributeSuccess,
+    updateBucketSuccess,
     (state: BasketState) => ({
       ...state,
       validationResults: initialValidationResults,
@@ -345,6 +353,7 @@ export const basketReducer = createReducer(
     info: action.payload.info,
     lastTimeProductAdded: new Date().getTime(),
     submittedBasket: undefined,
+    submittedBuckets: undefined,
     loading: false,
     error: undefined,
     productAdded: true,
@@ -354,6 +363,7 @@ export const basketReducer = createReducer(
     ...state,
     lastTimeProductAdded: new Date().getTime(),
     submittedBasket: undefined,
+    submittedBuckets: undefined,
     loading: false,
     error: undefined,
     productAdded: true,
@@ -374,6 +384,7 @@ export const basketReducer = createReducer(
       loading: false,
       error: undefined,
       submittedBasket: undefined,
+      submittedBuckets: undefined,
     };
   }),
   on(startCheckoutSuccess, continueCheckoutSuccess, continueCheckoutWithIssues, (state: BasketState, action) => {
@@ -385,6 +396,7 @@ export const basketReducer = createReducer(
       basket,
       info: undefined,
       submittedBasket: undefined,
+      submittedBuckets: undefined,
       validationResults: validation && validation.results,
     };
   }),
@@ -431,11 +443,17 @@ export const basketReducer = createReducer(
     };
   }),
 
-  on(createOrderSuccess, () => initialState),
+  on(createOrderSuccess, (state: BasketState) => ({
+    ...initialState,
+    submittedBasket: state.basket,
+    submittedBuckets: state.buckets,
+  })),
   on(submitBasketSuccess, (state: BasketState) => ({
     ...state,
     submittedBasket: state.basket,
+    submittedBuckets: state.buckets,
     basket: undefined,
+    buckets: undefined,
     info: undefined,
     promotionError: undefined,
     validationResults: initialValidationResults,

@@ -21,6 +21,7 @@ import { AppFacade } from 'ish-core/facades/app.facade';
 import { Country } from 'ish-core/models/country/country.model';
 import { Product, ProductHelper } from 'ish-core/models/product/product.model';
 import { whenTruthy } from 'ish-core/utils/operators';
+import { ZipCodeComponent } from 'ish-shared/components/zip-code/zip-code.component';
 import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
 
 import { CamCardsFacade } from '../../../facades/cam-cards.facade';
@@ -54,8 +55,14 @@ export class CreateProductCamCardModalComponent implements OnInit, OnDestroy {
   @Input() rootCamCardAddress: CamCardAddress;
   @Input() parentForm: FormGroup;
 
+  @Output() createAndEditEmitter = new EventEmitter<CreateProductCamCardAndEmitter>();
+  @Output() createAndContinueEmitter = new EventEmitter<CreateProductCamCardAndEmitter>();
+
   @ViewChild('name') nameInput: ElementRef;
   @ViewChild('newSubCamCard') newSubCamCardInput: ElementRef;
+  @ViewChild('modal', { static: false }) modalTemplate: TemplateRef<unknown>;
+  @ViewChild(ZipCodeComponent) zipCodeComponent: ZipCodeComponent;
+
   modal: NgbModalRef;
   camCardForm: FormGroup;
   quantityForm: FormGroup;
@@ -66,10 +73,7 @@ export class CreateProductCamCardModalComponent implements OnInit, OnDestroy {
   customers: CamCardCustomer[];
   defaultCountryCode: string;
   showNewSegment = false;
-  countryChangeDetect$: Subject<boolean> = new Subject();
-  @Output() createAndEditEmitter = new EventEmitter<CreateProductCamCardAndEmitter>();
-  @Output() createAndContinueEmitter = new EventEmitter<CreateProductCamCardAndEmitter>();
-  @ViewChild('modal', { static: false }) modalTemplate: TemplateRef<unknown>;
+
   validateFilterArea = ProductHelper.validateFilterArea;
   setMaxLengthValidation = ProductHelper.setMaxLengthValidation;
   disableActionButton = ProductHelper.disableActionButton;
@@ -117,6 +121,7 @@ export class CreateProductCamCardModalComponent implements OnInit, OnDestroy {
       deliveryAddressSelect: ['', []],
       company: [''],
       address: [''],
+      citySelect: [''],
       zipCode: ['', [Validators.required, Validators.pattern('[0-9]{5}')]],
       area: [{ value: '', disabled: true }, [Validators.required]],
       countryCode: [{ value: this.defaultCountryCode }, [Validators.maxLength(35)]],
@@ -200,6 +205,7 @@ export class CreateProductCamCardModalComponent implements OnInit, OnDestroy {
           area: address.city,
           countryCode: address.countryCode || this.defaultCountryCode,
         });
+        this.zipCodeComponent.checkZipCode();
       }
     });
   }
@@ -278,11 +284,6 @@ export class CreateProductCamCardModalComponent implements OnInit, OnDestroy {
 
   getField(name: string) {
     return this.camCardForm.get(name);
-  }
-
-  setZipCodeError(event) {
-    this.camCardForm.controls.zipCode.setErrors(event);
-    this.camCardForm.updateValueAndValidity();
   }
 
   /** close modal */

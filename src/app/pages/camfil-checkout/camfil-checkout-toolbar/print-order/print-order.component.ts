@@ -6,10 +6,11 @@ import { PdfHelper } from 'src/app/extensions/cam-pdf/models/pdf.helper';
 import { DataToPdf } from 'src/app/extensions/cam-pdf/models/pdf.interface';
 import { CamPdfService } from 'src/app/extensions/cam-pdf/services/cam-pdf/cam-pdf.service';
 
+import { AuthorizationToggleService } from 'ish-core/authorization-toggle.module';
 import { AccountFacade } from 'ish-core/facades/account.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { AttributeHelper } from 'ish-core/models/attribute/attribute.helper';
-import { Bucket } from 'ish-core/models/basket/bucket.model';
+import { Bucket } from 'ish-core/models/bucket/bucket.model';
 import { LineItemView } from 'ish-core/models/line-item/line-item.model';
 import { PriceHelper } from 'ish-core/models/price/price.helper';
 import { Price } from 'ish-core/models/price/price.model';
@@ -37,7 +38,8 @@ export class PrintOrderComponent implements OnInit {
     private pdfService: CamPdfService,
     private accountFacade: AccountFacade,
     public dialog: MatDialog,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private authorizationToggle: AuthorizationToggleService
   ) {}
 
   private static REQUIRED_COMPLETENESS_LEVEL = ProductCompletenessLevel.List;
@@ -56,6 +58,7 @@ export class PrintOrderComponent implements OnInit {
     );
   }
   @Input() buckets: Bucket[];
+  showPrice = false;
   user: User;
   productsInfo: {
     [sku: string]: PdfProductInfo;
@@ -87,6 +90,10 @@ export class PrintOrderComponent implements OnInit {
     this.accountFacade.user$.pipe(whenTruthy(), take(1)).subscribe(user => {
       this.user = user;
     });
+    this.authorizationToggle
+      .isAuthorizedTo('APP_B2B_PRINT_PRICES')
+      .pipe(take(1))
+      .subscribe(permission => (this.showPrice = permission));
   }
 
   calculateDeliveryDate(product: ProductView) {
@@ -129,7 +136,12 @@ export class PrintOrderComponent implements OnInit {
   preparePdfContent() {
     return this.buckets.reduce((res, bucket, i) => {
       const items = [PdfHelper.pdfTable(this.pdfItemsRow(bucket))];
-      res.push(this.pdfHeader(i), this.pdfInfoPart(bucket, i), items, this.pdfTotal(bucket.deliveryAddressId));
+      res.push(
+        this.pdfHeader(i),
+        this.pdfInfoPart(bucket, i),
+        items,
+        this.showPrice ? this.pdfTotal(bucket.deliveryAddressId) : ''
+      );
       return res;
     }, []);
   }
@@ -266,15 +278,20 @@ export class PrintOrderComponent implements OnInit {
           currency: item.totals.total.currency,
           type: 'Money',
         });
-    const priceLabel = this.texts.price;
-    const price = { text: priceVal, bold: true };
-    const arrRightInfo = [qty, qtyVal, priceLabel, price];
+
+    const priceLabel = this.showPrice ? this.texts.price : '';
+    const price = this.showPrice ? { text: priceVal, bold: true } : '';
+
+    const arrRightInfo = [qty, qtyVal];
+    if (this.showPrice) {
+      arrRightInfo.push(priceLabel, price);
+    }
 
     const name = {
       text: [this.productsInfo[sku].name, measurementsText, { text: measurementsToShow, bold: true }],
     };
 
-    return PdfHelper.pdfProductRow(index, name, arrLeftInfo, arrRightInfo, item.id, false, true);
+    return PdfHelper.pdfProductRow(index, name, arrLeftInfo, arrRightInfo, item.id, false, this.showPrice);
   }
 
   pdfItemsRow(bucket: Bucket) {

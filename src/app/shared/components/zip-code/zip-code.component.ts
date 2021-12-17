@@ -1,10 +1,21 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
+import { AbstractControl, FormGroup } from '@angular/forms';
 import { Observable, Subject } from 'rxjs';
 import { distinctUntilChanged, take, takeUntil } from 'rxjs/operators';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
 import { AppFacade } from 'ish-core/facades/app.facade';
+import { ZipCodeInfo } from 'ish-core/models/zip-codes/zip-codes.interface';
+import { whenTruthy } from 'ish-core/utils/operators';
 
 @Component({
   selector: 'camfil-zip-code',
@@ -19,36 +30,29 @@ export class ZipCodeComponent implements OnInit, OnDestroy {
   @Input() checkOnInitObj: any;
   @Input() form: FormGroup;
   @Input() errorValidator: any[];
-  @Input() countryChangeDetect: Subject<boolean>;
   @Input() appearance = 'fill';
 
   @Output() submitEmitter = new EventEmitter();
-  @Output() zipCodeErrorEmit = new EventEmitter<{}>();
 
   zipCodesLoading$: Observable<boolean>;
   zipCodesError = false;
-  formField;
+  formField: AbstractControl;
   countryByChannel: string;
-
   private destroy$ = new Subject();
 
-  constructor(private accountFacade: AccountFacade, private appFacade: AppFacade) {}
+  constructor(private accountFacade: AccountFacade, private appFacade: AppFacade, private cdRef: ChangeDetectorRef) {}
 
   ngOnInit() {
+    this.zipCodesLoading$ = this.accountFacade.zipCodesLoading$;
     this.appFacade.getCountryCodeByChannel$
       .pipe(takeUntil(this.destroy$))
       .subscribe(code => (this.countryByChannel = code));
 
-    this.zipCodesLoading$ = this.accountFacade.zipCodesLoading$;
-    this.countryChangeDetect.pipe(takeUntil(this.destroy$)).subscribe(() => {
-      this.checkZipCode();
-    });
+    this.formField = this.form.controls[this.fieldName];
 
     if (this.checkOnInitObj) {
       this.checkZipCode();
     }
-
-    this.formField = this.form.controls[this.fieldName];
   }
 
   ngOnDestroy() {
@@ -56,27 +60,43 @@ export class ZipCodeComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
+  currentCityOnList(list: ZipCodeInfo[]) {
+    return list.find(({ city }) => city === this.form.get([this.fieldCity]).value);
+  }
+
   checkZipCode() {
     const code = this.form.get(this.fieldName).value;
     const countryCode = this.form.get('countryCode')?.value || this.countryByChannel;
 
     if (code && countryCode) {
+      this.accountFacade.loadZipCode$(code, countryCode);
       this.accountFacade
-        .getZipCode$(code, countryCode)
-        .pipe(distinctUntilChanged())
+        .getZipCode$(code)
+        .pipe(whenTruthy(), distinctUntilChanged(), take(1))
         .subscribe(data => {
-          const city = data?.city || data?.id;
-          const formCity = this.form.get('city')?.value;
-          if (city) {
-            if (city !== formCity) {
-              this.form.patchValue({ [this.fieldCity]: city });
+          const cityAtAll = data?.[0].city || data?.[0].id;
+          if (cityAtAll) {
+            const cityOnList = this.currentCityOnList(data);
+            const city = cityOnList?.city || cityOnList?.id || cityAtAll;
+
+            if (data?.length > 1) {
+              if (cityOnList) {
+                this.form.patchValue({ citySelect: city, [this.fieldCity]: city });
+                this.submitEmitter.emit();
+              } else {
+                this.form.patchValue({ citySelect: '', [this.fieldCity]: '' });
+              }
+            } else {
+              this.form.patchValue({ citySelect: '', [this.fieldCity]: city });
               this.submitEmitter.emit();
             }
+            this.cdRef.detectChanges();
           } else {
             this.zipCodesLoading$.pipe(take(1)).subscribe(loading => {
               if (!loading) {
                 this.form.patchValue({ [this.fieldCity]: '' });
-                this.zipCodeErrorEmit.emit({ incorrect: true });
+                this.formField.setErrors({ incorrect: true });
+                this.form.updateValueAndValidity();
               }
             });
           }

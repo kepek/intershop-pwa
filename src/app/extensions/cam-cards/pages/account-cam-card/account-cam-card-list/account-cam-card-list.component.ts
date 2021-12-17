@@ -22,13 +22,14 @@ import { TranslateService } from '@ngx-translate/core';
 import { flatten, groupBy, toArray } from 'lodash-es';
 import { Observable, Subject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
+import { ConfigurationService } from 'src/app/extensions/cam-configuration/services/configuration/configuration.service';
 
 import { AuthorizationToggleService } from 'ish-core/authorization-toggle.module';
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { Address } from 'ish-core/models/address/address.model';
 import { BasketView } from 'ish-core/models/basket/basket.model';
-import { Bucket } from 'ish-core/models/basket/bucket.model';
+import { Bucket } from 'ish-core/models/bucket/bucket.model';
 import { Product } from 'ish-core/models/product/product.model';
 import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
 import { whenFalsy, whenTruthy } from 'ish-core/utils/operators';
@@ -108,6 +109,7 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
   };
 
   freshErpInfo = false;
+  preventCamCardERPIdValidation = false;
 
   private selectedCamCardCustomer: CamCardCustomer;
   private fragment: string;
@@ -123,7 +125,8 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
     private scroller: ViewportScroller,
     private translate: TranslateService,
     private location: Location,
-    private authorizationToggle: AuthorizationToggleService
+    private authorizationToggle: AuthorizationToggleService,
+    private configurationService: ConfigurationService
   ) {}
 
   get checkedCamCards(): CamCard[] {
@@ -193,6 +196,12 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
         });
       }
     });
+    this.configurationService
+      .isEnabled('preventCamCardERPIdValidation')
+      ?.pipe(takeUntil(this.destroy$))
+      .subscribe(val => {
+        this.preventCamCardERPIdValidation = val;
+      });
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -396,7 +405,7 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
     checkInBasketModal: CamfilModalDialogComponent<any>,
     addToCartFlowModal: CamfilModalDialogComponent<any>
   ) {
-    const noErpIds = this.noErpIdCamCardsInSelectedProducts;
+    const noErpIds = this.preventCamCardERPIdValidation ? [] : this.noErpIdCamCardsInSelectedProducts;
     const noPostCode = this.noPostCodeCamCardsInSelectedProducts;
 
     if (noErpIds.length && !this.freshErpInfo) {

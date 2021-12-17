@@ -1,0 +1,34 @@
+@import '~src/styles/themes/camfil/variables';
+@import '~src/styles/themes/camfil/mixins';
+@import '~src/styles/themes/camfil/colors';
+
+:host {
+  &::ng-deep {
+    @include form_group_container;
+
+    .form-group-container {
+      padding-right: 0;
+      padding-bottom: 0;
+      padding-left: 0;
+    }
+
+    button + button {
+      margin-left: $space-sm;
+    }
+  }
+}
+
+// Below Custom Styles Needs to be applied in Concarids Merchant Center
+// @see https://merchanttest.payengine.de/#!/u/0/m/0/custom_styles
+
+#payengine-credit-card-input,
+#payengine-verification-input {
+  width: 100%;
+  height: 19px;
+  font-size: 13px;
+  line-height: 24px;
+  color: rgba(34, 34, 34, 0.87);
+  background: transparent;
+  border: 0;
+  outline: 0;
+}

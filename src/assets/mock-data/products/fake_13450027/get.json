@@ -1,0 +1,166 @@
+{
+  "name": "STANDARD-FLO A7 592X592X370-6 A7/370 E 35+",
+  "type": "Product",
+  "attributes": [{
+    "name": "IsoEfficiency",
+    "type": "String",
+    "value": "50%"
+  }, {
+    "name": "FrameProduct",
+    "type": "String",
+    "value": "Acier galvanisé"
+  }, {
+    "name": "Filterbags",
+    "type": "Integer",
+    "value": 6
+  }, {
+    "name": "Depth",
+    "type": "Integer",
+    "value": 370
+  }, {
+    "name": "Width",
+    "type": "Integer",
+    "value": 592
+  }, {
+    "name": "IsoClass",
+    "type": "String",
+    "value": "ePM1"
+  }, {
+    "name": "Height",
+    "type": "Integer",
+    "value": 592
+  }, {
+    "name": "Arrigocode",
+    "type": "String",
+    "value": "A1"
+  }],
+  "sku": "fake_13450027",
+  "productName": "STANDARD-FLO A7 592X592X370-6 A7/370 E 35+",
+  "shortDescription": "Ce filtre à poches est équipé d'un média optimisé en fibre de verre pour atteindre une filtration ePM1 50% selon la norme ISO16890 tout en offrant une faible perte de charge initiale. Grâce au média filtrant optimisé et aux poches coniques, il est possible d'obtenir un équilibre optimal entre le coût et le coût total d'exploitation du filtre. ",
+  "productTypes": ["PRODUCT"],
+  "availability": true,
+  "retailSet": false,
+  "inStock": true,
+  "availableStock": 0,
+  "productMaster": false,
+  "mastered": false,
+  "roundedAverageRating": "0.0",
+  "readyForShipmentMin": 3,
+  "readyForShipmentMax": 7,
+  "minOrderQuantity": 1,
+  "productBundle": false,
+  "manufacturer": "",
+  "salePrice": {
+    "type": "ProductPrice",
+    "value": 57.06000000000000227373675443232059478759765625,
+    "currencyMnemonic": "EUR",
+    "currency": "EUR"
+  },
+  "maxOrderQuantity": 0,
+  "stepOrderQuantity": 1,
+  "packingUnit": "",
+  "shippingMethods": [{
+    "name": "Default Camfil Shipping Method",
+    "type": "ShippingMethod",
+    "id": "STD_GROUND",
+    "shippingTimeMin": -1,
+    "shippingTimeMax": -1
+  }],
+  "images": [{
+    "name": "default badges",
+    "type": "Image",
+    "effectiveUrl": "https://www.camfil.com/product/assets/image/90575/ICON23.png",
+    "viewID": "default",
+    "typeID": "badges",
+    "primaryImage": true
+  }, {
+    "name": "view1 badges",
+    "type": "Image",
+    "effectiveUrl": "https://www.camfil.com/product/assets/image/90252/ICON7.png",
+    "viewID": "view1",
+    "typeID": "badges",
+    "primaryImage": false
+  }, {
+    "name": "view2 badges",
+    "type": "Image",
+    "effectiveUrl": "https://www.camfil.com/product/assets/image/90577/ICON31.png",
+    "viewID": "view2",
+    "typeID": "badges",
+    "primaryImage": false
+  }, {
+    "name": "default images",
+    "type": "Image",
+    "effectiveUrl": "https://www.camfil.com/product/assets/image/90178/basic_standard_a_uf_cam_flo.png",
+    "viewID": "default",
+    "typeID": "images",
+    "primaryImage": true
+  }],
+  "defaultCategory": {
+    "name": "Filtres à poches",
+    "type": "DefaultCategory",
+    "id": "45049",
+    "categoryPath": [{
+      "name": "Products",
+      "type": "CategoryPath",
+      "id": "Products",
+      "uri": "Camfil-CamfilFR-Site/rest;loc=fr_FR;cur=EUR/categories/Products"
+    }, {
+      "name": "Filtres de ventilation générale",
+      "type": "CategoryPath",
+      "id": "45048",
+      "uri": "Camfil-CamfilFR-Site/rest;loc=fr_FR;cur=EUR/categories/Products/45048"
+    }, {
+      "name": "Filtres à poches",
+      "type": "CategoryPath",
+      "id": "45049",
+      "uri": "Camfil-CamfilFR-Site/rest;loc=fr_FR;cur=EUR/categories/Products/45048/45049"
+    }],
+    "uri": "Camfil-CamfilFR-Site/rest;loc=fr_FR;cur=EUR/categories/Products/45048/45049"
+  },
+  "attributeGroups": {
+    "PRODUCT_LIST_LABEL_ATTRIBUTES": {
+      "name": "PRODUCT_LIST_LABEL_ATTRIBUTES",
+      "attributes": [{
+        "name": "IsoEfficiency",
+        "type": "String",
+        "value": "50%"
+      }, {
+        "name": "FrameProduct",
+        "type": "String",
+        "value": "Acier galvanisé"
+      }, {
+        "name": "Filterbags",
+        "type": "Integer",
+        "value": 6
+      }, {
+        "name": "Depth",
+        "type": "Integer",
+        "value": 370
+      }, {
+        "name": "Width",
+        "type": "Integer",
+        "value": 592
+      }, {
+        "name": "IsoClass",
+        "type": "String",
+        "value": "ePM1"
+      }, {
+        "name": "Height",
+        "type": "Integer",
+        "value": 592
+      }, {
+        "name": "Arrigocode",
+        "type": "String",
+        "value": "A1"
+      }],
+      "displayName": "Product list ATTRS"
+    }
+  },
+  "seoAttributes": {
+    "metaTitle": "STANDARD-FLO A7 592X592X370-6 A7/370 E 35+ - Filtres à poches",
+    "metaDescription": "STANDARD-FLO A7 592X592X370-6 A7/370 E 35+ - Ce filtre à poches est équipé d'un média optimisé en fibre de verre pour atteindre une filtration ePM1 50% selon la norme ISO16890 tout en offrant une faible perte de charge initiale. Grâce au média filtrant optimisé et aux poches coniques, il est possible d'obtenir un équilibre optimal entre le coût et le coût total d'exploitation du filtre. ",
+    "robots": ["index", "follow"]
+  },
+  "numberOfReviews": 0,
+  "supplierSKU": ""
+}

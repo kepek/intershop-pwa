@@ -46,6 +46,7 @@ import {
   loginUserFail,
   loginUserSuccess,
   loginUserWithToken,
+  logoutUser,
   requestPasswordReminder,
   requestPasswordReminderFail,
   requestPasswordReminderSuccess,
@@ -257,6 +258,10 @@ export class UserEffects {
         )
       )
     )
+  );
+
+  unsetPGIDWhenLogoutUser$ = createEffect(() =>
+    this.actions$.pipe(ofType(logoutUser), mapTo(setPGID({ pgid: undefined })))
   );
 
   loadUserPaymentMethods$ = createEffect(() =>

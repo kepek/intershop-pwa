@@ -126,11 +126,13 @@ export const productsReducer = createReducer(
   }),
   on(getCustomerPricesForProductsSuccess, (state: ProductsState, action) => {
     const { products } = action.payload;
-    const entities = products.reduce((acc, val) => {
-      const { currency, value } = val?.salePrice;
-      const salePrice = { type: 'Money', currency, value };
-      const product = state.entities[val.sku];
-      return { ...acc, [val.sku]: { ...product, salePrice } };
+    const entities = products.reduce((acc, { sku, salePrice }) => {
+      if (salePrice) {
+        const { currency, value } = salePrice;
+        return { ...acc, [sku]: { ...state.entities[sku], salePrice: { type: 'Money', currency, value } } };
+      } else {
+        return acc;
+      }
     }, {});
 
     return {

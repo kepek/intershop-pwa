@@ -15,7 +15,6 @@ import {
   selectOrder,
   selectOrderAfterRedirect,
   selectOrderAfterRedirectFail,
-  setCreatedOrderId,
 } from './orders.actions';
 import { initialState, ordersReducer } from './orders.reducer';
 
@@ -36,7 +35,6 @@ describe('Orders Reducer', () => {
         | typeof selectOrder
         | typeof selectOrderAfterRedirect
         | typeof selectOrderAfterRedirectFail
-        | typeof setCreatedOrderId
       >;
       const state = ordersReducer(undefined, action);
 
@@ -172,16 +170,6 @@ describe('Orders Reducer', () => {
       const state = ordersReducer(initialState, action);
 
       expect(state.selected).toEqual(order.id);
-    });
-  });
-
-  describe('SetCreatedOrderId action', () => {
-    it('should write the created order id to the state', () => {
-      const order = { id: 'orderid' } as Order;
-      const action = setCreatedOrderId({ orderId: order.id });
-      const state = ordersReducer(initialState, action);
-
-      expect(state.created).toEqual(order.id);
     });
   });
 });

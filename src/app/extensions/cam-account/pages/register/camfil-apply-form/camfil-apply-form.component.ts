@@ -2,7 +2,6 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
-import { Subject } from 'rxjs';
 import { take } from 'rxjs/operators';
 
 import { AppFacade } from 'ish-core/facades/app.facade';
@@ -42,8 +41,6 @@ export class CamfilApplyFormComponent implements OnInit {
   validators = APPLY_VALIDATORS;
 
   hideTitleField = false;
-
-  countryChangeDetect$: Subject<boolean> = new Subject();
 
   constructor(
     private appFacade: AppFacade,
@@ -97,15 +94,6 @@ export class CamfilApplyFormComponent implements OnInit {
     this.errorModal.hide = () => {
       refErrorModalDialog.close();
     };
-  }
-
-  setZipCodeError(event) {
-    this.form.controls.zipCode.setErrors(event);
-    this.form.updateValueAndValidity();
-  }
-
-  checkZipCode() {
-    this.countryChangeDetect$.next(true);
   }
 
   /**

@@ -24,23 +24,22 @@ export class CamfilBasketCostSummaryComponent implements OnInit {
   @Input() totals: BasketTotal;
 
   taxTranslation$: Observable<string>;
-  totalPriceTranslation$: Observable<string>;
   invert = PriceHelper.invert;
 
-  constructor(private accountFacade: AccountFacade) {}
-
-  ngOnInit() {
-    this.taxTranslation$ = this.accountFacade.userPriceDisplayType$.pipe(
-      map(type => (type === 'net' ? 'camfil.checkout.tax.text' : 'checkout.tax.TaxesLabel.TotalOrderVat'))
-    );
-
-    this.totalPriceTranslation$ = this.accountFacade.userPriceDisplayType$.pipe(
-      map(type => (type === 'net' ? 'camfil.checkout.order.total_cost_net.label' : 'checkout.order.total_cost.label'))
-    );
-  }
+  constructor(protected accountFacade: AccountFacade) {}
 
   get hasPaymentCostsTotal(): boolean {
     const paymentCosts = PriceItemHelper.selectType(this.totals && this.totals.paymentCostsTotal, 'gross');
     return !!paymentCosts && !!paymentCosts.value;
+  }
+
+  ngOnInit() {
+    this.init();
+  }
+
+  protected init() {
+    this.taxTranslation$ = this.accountFacade.userPriceDisplayType$.pipe(
+      map(type => (type === 'net' ? 'camfil.checkout.tax.text' : 'checkout.tax.TaxesLabel.TotalOrderVat'))
+    );
   }
 }

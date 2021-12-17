@@ -23,15 +23,11 @@ import { AppFacade } from 'ish-core/facades/app.facade';
 import { Country } from 'ish-core/models/country/country.model';
 import { ProductHelper } from 'ish-core/models/product/product.helper';
 import { whenTruthy } from 'ish-core/utils/operators';
+import { ZipCodeComponent } from 'ish-shared/components/zip-code/zip-code.component';
 import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
 
 import { CamCardsFacade } from '../../facades/cam-cards.facade';
-import {
-  CamCard,
-  CamCardAddress,
-  CamCardCustomer,
-  CamCardCustomersAddresses,
-} from '../../models/cam-card/cam-card.model';
+import { CamCard, CamCardCustomer, CamCardCustomersAddresses } from '../../models/cam-card/cam-card.model';
 
 /**
  * The Cam Cards Preferences Dialog shows the modal to create/edit a cam_cards.
@@ -50,6 +46,7 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit, AfterView
   private static deliveryIntervalOptions = 100;
   @ViewChild('title') titleInput: ElementRef;
   @ViewChild('modal', { static: false }) modalTemplate: TemplateRef<unknown>;
+  @ViewChild(ZipCodeComponent) zipCodeComponent: ZipCodeComponent;
 
   /**
    * Predefined cam cards to fill the form with, if there is no cam cards a new cam cards will be created
@@ -71,8 +68,6 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit, AfterView
   addresses$: Observable<CamCardCustomersAddresses>;
   countries$: Observable<Country[]>;
   customers: CamCardCustomer[];
-  selectedAddress: CamCardAddress;
-  countryChangeDetect$: Subject<boolean> = new Subject();
   defaultCountryCode: string;
   deliveryIntervalOptions: string[] = [...Array(CamCardPreferencesComponent.deliveryIntervalOptions).keys()].map(i =>
     i === 0 ? '--' : i.toString()
@@ -236,6 +231,7 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit, AfterView
       addressLine1: ['', [Validators.maxLength(250)]],
       postalCode: ['', [Validators.required, Validators.maxLength(maxL)]],
       city: [{ value: '', disabled: true }, [Validators.maxLength(maxL)]],
+      citySelect: [''],
       lastDelivery: ['', [Validators.maxLength(maxL)]],
       deliveryInterval: ['', [Validators.maxLength(maxL)]],
       nextDelivery: [{ value: '', disabled: true }, [Validators.maxLength(maxL)]],
@@ -293,15 +289,6 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit, AfterView
     }
   }
 
-  setZipCodeError(event) {
-    this.camCardForm.controls.postalCode.setErrors(event);
-    this.camCardForm.updateValueAndValidity();
-  }
-
-  checkZipCode() {
-    this.countryChangeDetect$.next(true);
-  }
-
   /** Emits the cam cards data, when the form was valid. */
   submitCamCardForm() {
     if (this.camCardForm.valid) {
@@ -357,24 +344,21 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit, AfterView
 
   pickAddress(event) {
     const id = event.value;
-    this.addresses$.subscribe(addresses => {
+    this.addresses$.pipe(take(1)).subscribe(addresses => {
       const customerId = this.customerId;
       const address = addresses[customerId]?.filter(element => element.id === id)[0];
       if (address) {
-        this.selectedAddress = address;
+        const { city, postalCode, addressLine1, companyName1 } = address;
+        this.camCardForm.patchValue({
+          deliveryAddress: address.id,
+          companyName1,
+          addressLine1,
+          postalCode,
+          city,
+        });
+        this.zipCodeComponent.checkZipCode();
       }
     });
-
-    if (this.selectedAddress) {
-      this.camCardForm.patchValue({
-        deliveryAddress: this.selectedAddress.id,
-        companyName1: this.selectedAddress.companyName1,
-        addressLine1: this.selectedAddress.addressLine1,
-        postalCode: this.selectedAddress.postalCode,
-        city: this.selectedAddress.city,
-      });
-      this.onBlurSubmit();
-    }
   }
 
   pickOrder() {

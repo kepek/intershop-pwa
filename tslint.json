@@ -349,7 +349,7 @@
           "from": "lodash.*"
         },
         {
-          "import": "^(?!(range|uniq|memoize|once|groupBy|countBy|flatten|isEqual|intersection|omit|pick)$).*",
+          "import": "^(?!(range|uniq|memoize|once|groupBy|countBy|flatten|isEqual|intersection|omit|pick|isArray|isObject|mapValues|mapKeys)$).*",
           "from": "lodash.*"
         },
         {

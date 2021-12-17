@@ -10,6 +10,8 @@ import { CamfilProductAddToBasketModalComponent } from 'ish-shared/components/pr
 
 import { AddProductsToCartModalComponent } from '../../../../../extensions/cam-cards/shared/add-products-to-cart-modal/add-products-to-cart-modal.component';
 import { ProductItem } from 'ish-core/models/product/product-item';
+import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
+import { ConfigurationService } from 'src/app/extensions/cam-configuration/services/configuration/configuration.service';
 
 @Component({
   selector: 'camfil-products-add-to-basket-modal',
@@ -23,9 +25,11 @@ export class CamfilProductsAddToBasketModalComponent extends CamfilProductAddToB
     public dialog: MatDialog,
     protected accountFacade: AccountFacade,
     protected router: Router,
-    protected checkoutFacade: CheckoutFacade
+    protected checkoutFacade: CheckoutFacade,
+    protected shoppingFacade: ShoppingFacade,
+    protected configuration: ConfigurationService
   ) {
-    super(dialog, accountFacade, router, checkoutFacade);
+    super(dialog, accountFacade, router, checkoutFacade, shoppingFacade, configuration);
   }
 
   @Input() products: ProductItem[];

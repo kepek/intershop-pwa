@@ -7,8 +7,14 @@ import { BasketValidation } from './basket-validation.model';
 export class BasketValidationMapper {
   static fromData(data: BasketValidationData): BasketValidation {
     if (data) {
+      // Do not update basket cuz we just want to display validation infos.
+      // @see CAM-1809
+      const basket = data?.data?.scopes?.includes('CamfilInfo')
+        ? undefined
+        : BasketMapper.fromData(BasketValidationMapper.transform(data));
+
       return {
-        basket: BasketMapper.fromData(BasketValidationMapper.transform(data)),
+        basket,
         results: {
           valid: data.data.results && data.data.results.valid,
           adjusted: data.data.results && data.data.results.adjusted,

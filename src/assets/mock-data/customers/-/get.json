@@ -1,0 +1,31 @@
+{
+  "type": "SMBCustomer",
+  "customerNo": "120033",
+  "customerType": "SMB",
+  "preferredInvoiceToAddress": {
+    "type": "Address",
+    "urn": "urn:address:customer:vXMKAQFELS8AAAF4fWAh4_ju:4UoKAQFEcqAAAAF4h2Ah4_ju",
+    "id": "4UoKAQFEcqAAAAF4h2Ah4_ju",
+    "addressName": "Ahlsell Oy",
+    "companyName1": "Ahlsell Oy",
+    "addressLine1": "Kallionopontie 1",
+    "postalCode": "05620",
+    "countryCode": "FI",
+    "city": "HYVINKÄÄ",
+    "usage": [
+      true
+    ],
+    "street": "Kallionopontie 1",
+    "invoiceToAddress": true,
+    "shipToAddress": false,
+    "shipFromAddress": false,
+    "serviceToAddress": false,
+    "installToAddress": false,
+    "company": "Ahlsell Oy"
+  },
+  "companyName": "Ahlsell Oy",
+  "companyName2": "",
+  "taxationID": "",
+  "industry": "",
+  "description": ""
+}

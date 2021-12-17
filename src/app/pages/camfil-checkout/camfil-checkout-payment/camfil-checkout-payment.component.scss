@@ -1,0 +1,38 @@
+@import '../../../../styles/themes/camfil/variables';
+@import '../../../../styles/themes/camfil/mixins';
+@import '../../../../styles/themes/camfil/colors';
+
+:host {
+  @include expansion_panel;
+
+  .payment-radio-group {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .payment-radio-button {
+    min-width: 284px;
+    margin: 4px;
+  }
+
+  .payment-card-title {
+    font-size: $font-size-lg;
+  }
+
+  &::ng-deep {
+    .iframe-container {
+      height: 19px;
+      outline: 0;
+    }
+
+    .mat-card {
+      padding-right: $space-default;
+      padding-left: $space-default;
+    }
+  }
+
+  .payment-card {
+    border-radius: 0;
+    box-shadow: unset;
+  }
+}

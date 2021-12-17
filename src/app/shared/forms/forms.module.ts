@@ -11,6 +11,8 @@ import { PipesModule } from 'ish-core/pipes.module';
 import { MaterialModule } from 'ish-shared/material/material.module';
 
 import { CamfilCounterComponent } from './components/camfil-counter/camfil-counter.component';
+import { CamfilFormControlFeedbackComponent } from './components/camfil-form-control-feedback/camfil-form-control-feedback.component';
+import { CamfilSelectYearMonthComponent } from './components/camfil-select-year-month/camfil-select-year-month.component';
 import { CheckboxComponent } from './components/checkbox/checkbox.component';
 import { CounterComponent } from './components/counter/counter.component';
 import { FormControlFeedbackComponent } from './components/form-control-feedback/form-control-feedback.component';
@@ -28,6 +30,8 @@ import { ShowFormFeedbackDirective } from './directives/show-form-feedback.direc
 
 const exportedComponents = [
   CamfilCounterComponent,
+  CamfilFormControlFeedbackComponent,
+  CamfilSelectYearMonthComponent,
   CheckboxComponent,
   CounterComponent,
   FormControlFeedbackComponent,

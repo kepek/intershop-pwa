@@ -20,9 +20,9 @@ import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { AddressHelper } from 'ish-core/models/address/address.helper';
 import { Address } from 'ish-core/models/address/address.model';
 import { AttributeHelper } from 'ish-core/models/attribute/attribute.helper';
-import { BasketExtensions } from 'ish-core/models/basket/basket.interface';
+import { BasketExtension } from 'ish-core/models/basket-extension/basket-extension.model';
 import { BasketView } from 'ish-core/models/basket/basket.model';
-import { Bucket } from 'ish-core/models/basket/bucket.model';
+import { Bucket } from 'ish-core/models/bucket/bucket.model';
 import { Product, ProductHelper } from 'ish-core/models/product/product.model';
 import { whenTruthy } from 'ish-core/utils/operators';
 import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
@@ -220,7 +220,7 @@ export class CreateOrderProductModalComponent implements OnInit, OnDestroy {
     return AddressHelper.isNewAddress(currentAddress, this.basketAddresses);
   }
 
-  getBasketExtension(): BasketExtensions {
+  getBasketExtension(): BasketExtension {
     const addressForm = this.orderFormCmp.addressForm;
     const customer = addressForm.get('customerFull').value;
 

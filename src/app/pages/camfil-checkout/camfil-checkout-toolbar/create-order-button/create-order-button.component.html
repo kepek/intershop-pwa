@@ -1,13 +1,28 @@
-<button
-  mat-stroked-button
-  color="primary"
-  data-testing-id="add-cam-card"
-  class="button-bold"
-  (click)="openModal(createModal)"
->
-  <mat-icon svgIcon="plus" class="size-31"></mat-icon>
-  {{ 'camfil.checkout.create_new_order' | translate }}
-</button>
+<ng-container *ngIf="!isGuestCheckout; else createGuestOrderButton">
+  <button
+    mat-stroked-button
+    color="primary"
+    data-testing-id="add-cam-card"
+    class="button-bold"
+    (click)="openModal(createModal)"
+  >
+    <mat-icon svgIcon="plus" class="size-31"></mat-icon>
+    {{ 'camfil.checkout.create_new_order' | translate }}
+  </button>
+</ng-container>
+<ng-template #createGuestOrderButton>
+  <button
+    mat-stroked-button
+    color="primary"
+    data-testing-id="add-cam-card"
+    class="button-bold"
+    [disabled]="basketId"
+    (click)="createGuestOrder()"
+  >
+    <mat-icon svgIcon="plus" class="size-31"></mat-icon>
+    {{ 'camfil.checkout.create_new_order' | translate }}
+  </button>
+</ng-template>
 
 <camfil-create-order-product-modal
   #createModal

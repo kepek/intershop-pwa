@@ -1,0 +1,231 @@
+<ng-container *ngIf="basket?.lineItems?.length">
+  <ng-template #paymentErrors>
+    <div *ngIf="nextDisabled && !error" class="alert alert-danger" role="alert">
+      {{ 'checkout.payment.no_Selection.error' | translate }}
+    </div>
+
+    <div *ngIf="redirectStatus" class="alert alert-danger" role="alert">
+      {{ 'checkout.payment.sorry_message.text' | translate }}
+      <ng-container *ngIf="redirectStatus === 'cancel'">
+        {{ 'checkout.payment.canceled.text' | translate }}
+      </ng-container>
+      <ng-container *ngIf="redirectStatus === 'failure'">
+        {{ 'checkout.payment.failed.text' | translate }}
+      </ng-container>
+    </div>
+  </ng-template>
+
+  <mat-expansion-panel [expanded]="true">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        {{ 'checkout.payment.method.select.heading' | translate }}
+      </mat-panel-title>
+      <mat-panel-description>
+        <mat-icon svgIcon="quote"></mat-icon>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <ng-container *ngTemplateOutlet="paymentErrors"></ng-container>
+    <ng-container *ngTemplateOutlet="paymentMethods"></ng-container>
+  </mat-expansion-panel>
+
+  <ng-template #paymentMethods>
+    <form (ngSubmit)="submitParameterForm()" [formGroup]="paymentForm">
+      <mat-radio-group
+        *ngIf="hasPaymentMethods"
+        class="payment-radio-group"
+        formControlName="name"
+        id="payment-accordion"
+      >
+        <ng-container *ngFor="let paymentMethod of filteredPaymentMethods; index as i">
+          <!-- Title -->
+          <ng-template #paymentTitle>
+            {{ paymentMethod.displayName }}
+            <ng-container *ngIf="!paymentMethod.displayName">{{ paymentMethod.id }}</ng-container>
+          </ng-template>
+          <!-- Description -->
+          <ng-template #paymentDescription>
+            <p>{{ paymentMethod.description }}</p>
+          </ng-template>
+          <!-- Details -->
+          <ng-template #paymentDetails>
+            <mat-card class="payment-card">
+              <mat-card-title class="payment-card-title">
+                <ng-container *ngTemplateOutlet="paymentTitle"></ng-container>
+              </mat-card-title>
+              <mat-card-subtitle class="payment-card-subtitle">
+                <ng-container *ngTemplateOutlet="paymentDescription"></ng-container>
+                <ng-container *ngTemplateOutlet="paymentThresholdOrPaymentCostsAndRestrictions"></ng-container>
+              </mat-card-subtitle>
+              <mat-card-content class="payment-card-content">
+                <ng-container *ngTemplateOutlet="paymentWithoutParameters"></ng-container>
+                <ng-container *ngTemplateOutlet="paymentInstruments"></ng-container>
+                <ng-container *ngTemplateOutlet="newPaymentInstrumentButton"></ng-container>
+                <ng-container *ngTemplateOutlet="newPaymentInstrumentForm"></ng-container>
+              </mat-card-content>
+            </mat-card>
+            <mat-divider></mat-divider>
+          </ng-template>
+          <!-- Threshold -->
+          <ng-template #paymentThresholdOrPaymentCostsAndRestrictions>
+            <p *ngIf="paymentCostThresholdReached(paymentMethod); else paymentCostsOrRestrictions">
+              {{ 'checkout.payment.payment_cost_threshold.amount_reached' | translate }}
+              {{ basket.totals.total | ishPrice }}
+            </p>
+          </ng-template>
+          <!-- Costs -->
+          <ng-template #paymentCostsOrRestrictions>
+            <div *ngIf="!paymentMethod.isRestricted; else paymentRestrictions">
+              <p *ngIf="paymentMethod.paymentCosts">
+                {{ 'checkout.payment.method.charges.text' | translate }}&nbsp;{{
+                  paymentMethod.paymentCosts | ishPrice
+                }}&nbsp;
+                <span *ngIf="paymentMethod.paymentCostsThreshold">
+                  <span class="hidden-xs">-&nbsp;</span>{{ 'checkout.payment.payment_cost_threshold.text' | translate }}
+                  <span class="text-nowrap">{{ paymentMethod.paymentCostsThreshold | ishPrice }}</span>
+                </span>
+              </p>
+            </div>
+          </ng-template>
+          <!-- Restrictions -->
+          <ng-template #paymentRestrictions>
+            <p>
+              {{ 'checkout.payment.method.charges.text' | translate }}&nbsp;{{ paymentMethod.paymentCosts | ishPrice }}
+            </p>
+            <p *ngFor="let restriction of paymentMethod.restrictionCauses">
+              {{ restriction.message }}
+            </p>
+          </ng-template>
+          <!-- Payment Without Parameters -->
+          <ng-template #paymentWithoutParameters>
+            <ng-container *ngIf="!paymentMethod.parameters && !paymentMethod.isRestricted">
+              <mat-radio-button
+                [id]="'paymentOption_' + paymentMethod.id"
+                [value]="paymentMethod.id"
+                class="payment-radio-button"
+                color="primary"
+              >
+                {{ 'checkout.payment.payWith.link' | translate: { '0': paymentMethod.displayName } }}
+              </mat-radio-button>
+            </ng-container>
+          </ng-template>
+          <!-- New Payment Instrument Button -->
+          <ng-template #newPaymentInstrumentButton>
+            <p *ngIf="paymentMethod.parameters && paymentMethod.parameters.length">
+              <a (click)="openPaymentParameterForm(i)" *ngIf="!formIsOpen(i)">
+                {{ 'checkout.payment.addPayment.link' | translate }}
+              </a>
+            </p>
+          </ng-template>
+          <!-- New Payment Instrument Form -->
+          <ng-template #newPaymentInstrumentForm>
+            <div [ngbCollapse]="!formIsOpen(i)">
+              <ng-container [ngSwitch]="paymentMethod.serviceId">
+                <!-- Concardis Credit Card -->
+                <ng-template [ngSwitchCase]="'Concardis_CreditCard'">
+                  <mat-divider></mat-divider>
+                  <camfil-payment-concardis-creditcard
+                    (cancel)="cancelNewPaymentInstrument()"
+                    (submit)="createNewPaymentInstrument($event)"
+                    [activated]="formIsOpen(i)"
+                    [paymentMethod]="paymentMethod"
+                  ></camfil-payment-concardis-creditcard>
+                </ng-template>
+                <!-- Concardis Debit Card -->
+                <ng-template [ngSwitchCase]="'Concardis_DirectDebit'">
+                  <mat-divider></mat-divider>
+                  <camfil-payment-concardis-directdebit
+                    (cancel)="cancelNewPaymentInstrument()"
+                    (submit)="createNewPaymentInstrument($event)"
+                    [activated]="formIsOpen(i)"
+                    [paymentMethod]="paymentMethod"
+                  ></camfil-payment-concardis-directdebit>
+                </ng-template>
+
+                <ng-template ngSwitchDefault>
+                  <formly-form
+                    [fields]="paymentMethod.parameters"
+                    [form]="parameterForm"
+                    [model]="model"
+                    [options]="options"
+                  >
+                    Elo?
+                    <div class="offset-md-4 col-md-8">
+                      <ng-container *ngIf="paymentMethod.saveAllowed">
+                        <ng-container *ngTemplateOutlet="saveForLaterTemplate"></ng-container>
+                      </ng-container>
+                      <div class="form-group">
+                        <button [disabled]="submitDisabled" class="btn btn-primary" type="submit">
+                          {{ 'checkout.account.submit.button.label' | translate }}
+                        </button>
+                        <button (click)="cancelNewPaymentInstrument()" class="btn btn-secondary" type="button">
+                          {{ 'checkout.cancel.button.label' | translate }}
+                        </button>
+                      </div>
+                    </div>
+                  </formly-form>
+                </ng-template>
+              </ng-container>
+            </div>
+          </ng-template>
+          <!-- Instruments -->
+          <ng-template #paymentInstruments>
+            <ng-container *ngIf="paymentMethod.parameters && paymentMethod.parameters.length">
+              <div [attr.data-testing-id]="'payment-parameter-form-' + paymentMethod.id">
+                <ng-container *ngFor="let paymentInstrument of paymentMethod.paymentInstruments">
+                  <div>
+                    <mat-radio-button
+                      [id]="'paymentOption_' + paymentInstrument.id"
+                      [value]="paymentInstrument.id"
+                      class="payment-radio-button"
+                      color="primary"
+                    >
+                      {{ paymentInstrument.accountIdentifier }}
+                    </mat-radio-button>
+                    <a
+                      (click)="deleteBasketPayment(paymentInstrument)"
+                      [matTooltip]="'checkout.payment.method.delete.link' | translate"
+                      class="ml-2"
+                    >
+                      <mat-icon svgIcon="delete"></mat-icon>
+                    </a>
+                  </div>
+                  <ng-container
+                    *ngIf="
+                      paymentMethod.serviceId === 'Concardis_CreditCard' &&
+                      basket.payment &&
+                      paymentInstrument.id === basket.payment.paymentInstrument.id
+                    "
+                  >
+                    <camfil-payment-concardis-creditcard-cvc-detail
+                      [paymentInstrument]="basket.payment.paymentInstrument"
+                      [paymentMethod]="paymentMethod"
+                    >
+                    </camfil-payment-concardis-creditcard-cvc-detail>
+                  </ng-container>
+                </ng-container>
+              </div>
+            </ng-container>
+          </ng-template>
+          <!-- Details -->
+          <ng-container *ngTemplateOutlet="paymentDetails"></ng-container>
+        </ng-container>
+      </mat-radio-group>
+    </form>
+  </ng-template>
+
+  <ng-template #saveForLaterTemplate>
+    <div class="form-group">
+      <ish-checkbox
+        [form]="paymentForm"
+        controlName="saveForLater"
+        label="checkout.save_edit.checkbox.label"
+      ></ish-checkbox>
+    </div>
+  </ng-template>
+
+  <ng-template #zeroTotalInfo>
+    <p class="alert alert-info">
+      {{ 'checkout.payment.no_selection_required.info' | translate: { '0': basket.totals?.total | ishPrice } }}
+    </p>
+  </ng-template>
+</ng-container>

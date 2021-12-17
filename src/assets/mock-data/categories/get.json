@@ -1,0 +1,1144 @@
+{
+  "elements": [
+    {
+      "name": "Products",
+      "type": "Category",
+      "attributes": [
+        {
+          "name": "ShowInMenu",
+          "type": "String",
+          "value": "True"
+        }
+      ],
+      "hasOnlineProducts": false,
+      "hasOnlineSubCategories": true,
+      "onlineProductsCountInSubCategories": 5607,
+      "online": "1",
+      "description": "The Camfil Products catalog.",
+      "subCategoriesCount": 7,
+      "categoryPath": [
+        {
+          "name": "Products",
+          "type": "CategoryPath",
+          "id": "Products",
+          "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products"
+        }
+      ],
+      "id": "Products",
+      "categoryRef": "Products@Camfil-CamfilFI-Products",
+      "subCategories": [
+        {
+          "name": "EPA, HEPA ja ULPA suodattimet",
+          "type": "Category",
+          "attributes": [
+            {
+              "name": "ShowInMenu",
+              "type": "String",
+              "value": "True"
+            }
+          ],
+          "hasOnlineProducts": false,
+          "hasOnlineSubCategories": true,
+          "onlineProductsCountInSubCategories": 87,
+          "online": "1",
+          "description": "Camfilin puhdasilmaratkaisut auttavat suojelemaan herkkiä tuotantoprosesseja, estämään mikrobiologista kontaminaatiota tutkimuslaboratorioissa sekä suodattamaan terveydenhuollossa ilman välityksellä leviävät tartuntavaaralliset kontaminaatit. Suodattimemme testataan EN 1822 - ja ISO 29463 ‑standardien mukaisesti.",
+          "subCategoriesCount": 3,
+          "categoryPath": [
+            {
+              "name": "Products",
+              "type": "CategoryPath",
+              "id": "Products",
+              "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products"
+            },
+            {
+              "name": "EPA, HEPA ja ULPA suodattimet",
+              "type": "CategoryPath",
+              "id": "45045",
+              "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products/45045"
+            }
+          ],
+          "id": "45045",
+          "categoryRef": "45045@Camfil-CamfilFI-Products",
+          "subCategories": [
+            {
+              "name": "Kehykselliset kompaktisuodattimet",
+              "type": "Category",
+              "attributes": [
+                {
+                  "name": "ShowInMenu",
+                  "type": "String",
+                  "value": "True"
+                }
+              ],
+              "hasOnlineProducts": true,
+              "hasOnlineSubCategories": false,
+              "onlineProductsCountInSubCategories": 10,
+              "online": "1",
+              "description": "Kehyksellisiä kompaktisuodattimia käytetään ilmansuodattamiseen erittäin puhtaissa tiloissa. Ne sopivat järjestelmiin, joissa on suuri ilmavirtaus – enimmillään 5 000 m3/h.",
+              "categoryPath": [
+                {
+                  "name": "Products",
+                  "type": "CategoryPath",
+                  "id": "Products",
+                  "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products"
+                },
+                {
+                  "name": "EPA, HEPA ja ULPA suodattimet",
+                  "type": "CategoryPath",
+                  "id": "45045",
+                  "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products/45045"
+                },
+                {
+                  "name": "Kehykselliset kompaktisuodattimet",
+                  "type": "CategoryPath",
+                  "id": "45078",
+                  "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products/45045/45078"
+                }
+              ],
+              "id": "45078",
+              "categoryRef": "45078@Camfil-CamfilFI-Products",
+              "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products/45045/45078"
+            },
+            {
+              "name": "Kompaktisuodattimet",
+              "type": "Category",
+              "attributes": [
+                {
+                  "name": "ShowInMenu",
+                  "type": "String",
+                  "value": "True"
+                }
+              ],
+              "hasOnlineProducts": true,
+              "hasOnlineSubCategories": false,
+              "onlineProductsCountInSubCategories": 51,
+              "online": "1",
+              "description": "Kompaktisuodattimia käytetään yleensä tulo- ja kiertoilmakoneissa HEPA-loppusuodatusportaana. Sopivat hyvin haastavimpiin ympäristöihin aina elintarvike- ja lääketehtaista mikroelektroniikan tuotantolaitoksiin.",
+              "categoryPath": [
+                {
+                  "name": "Products",
+                  "type": "CategoryPath",
+                  "id": "Products",
+                  "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products"
+                },
+                {
+                  "name": "EPA, HEPA ja ULPA suodattimet",
+                  "type": "CategoryPath",
+                  "id": "45045",
+                  "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products/45045"
+                },
+                {
+                  "name": "Kompaktisuodattimet",
+                  "type": "CategoryPath",
+                  "id": "45046",
+                  "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products/45045/45046"
+                }
+              ],
+              "id": "45046",
+              "categoryRef": "45046@Camfil-CamfilFI-Products",
+              "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products/45045/45046"
+            },
+            {
+              "name": "Paneelisuodattimet puhdastiloihin",
+              "type": "Category",
+              "attributes": [
+                {
+                  "name": "ShowInMenu",
+                  "type": "String",
+                  "value": "True"
+                }
+              ],
+              "hasOnlineProducts": true,
+              "hasOnlineSubCategories": false,
+              "onlineProductsCountInSubCategories": 26,
+              "online": "1",
+              "description": "Camfilin HEPA- ja ULPA-paneelisuodattimet soveltuvat loppusuodatukseen eri käyttöympäristöissä aina puhdastiloista puolijohteiden valmistusympäristöihin ja elintarvikkeiden valmistuslaitoksista lääketehtaisiin.",
+              "categoryPath": [
+                {
+                  "name": "Products",
+                  "type": "CategoryPath",
+                  "id": "Products",
+                  "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products"
+                },
+                {
+                  "name": "EPA, HEPA ja ULPA suodattimet",
+                  "type": "CategoryPath",
+                  "id": "45045",
+                  "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products/45045"
+                },
+                {
+                  "name": "Paneelisuodattimet puhdastiloihin",
+                  "type": "CategoryPath",
+                  "id": "45047",
+                  "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products/45045/45047"
+                }
+              ],
+              "id": "45047",
+              "categoryRef": "45047@Camfil-CamfilFI-Products",
+              "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products/45045/45047"
+            }
+          ],
+          "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products/45045"
+        },
+        {
+          "name": "Ilmanpuhdistimet",
+          "type": "Category",
+          "attributes": [
+            {
+              "name": "ShowInMenu",
+              "type": "String",
+              "value": "True"
+            }
+          ],
+          "hasOnlineProducts": false,
+          "hasOnlineSubCategories": true,
+          "onlineProductsCountInSubCategories": 1,
+          "online": "1",
+          "description": "Camfil-ilmanpuhdistimet - markkinoiden parhaat tuotteet puhtaamman ilman ja paremman ilmanlaadun takaamiseksi. Puhdistimemme on varustettu HEPA-suodattimilla parhaan mahdollisen erotusasteen saavuttamiseksi.",
+          "subCategoriesCount": 2,
+          "categoryPath": [
+            {
+              "name": "Products",
+              "type": "CategoryPath",
+              "id": "Products",
+              "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products"
+            },
+            {
+              "name": "Ilmanpuhdistimet",
+              "type": "CategoryPath",
+              "id": "45054",
+              "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products/45054"
+            }
+          ],
+          "id": "45054",
+          "categoryRef": "45054@Camfil-CamfilFI-Products",
+          "subCategories": [
+            {
+              "name": "City ilmanpuhdistimet",
+              "type": "Category",
+              "attributes": [
+                {
+                  "name": "ShowInMenu",
+                  "type": "String",
+                  "value": "True"
+                }
+              ],
+              "hasOnlineProducts": true,
+              "hasOnlineSubCategories": false,
+              "onlineProductsCountInSubCategories": 1,
+              "online": "1",
+              "description": "Camfilin City-ilmanpuhdistimet ovat erinomainen ratkaisu ilmanlaadun ongelmiin koti- ja toimistoympäristöissä. HEPA- ja molekyylisuodattimet poistavat yhdessä helposti ilman epäpuhtaudet.",
+              "categoryPath": [
+                {
+                  "name": "Products",
+                  "type": "CategoryPath",
+                  "id": "Products",
+                  "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products"
+                },
+                {
+                  "name": "Ilmanpuhdistimet",
+                  "type": "CategoryPath",
+                  "id": "45054",
+                  "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products/45054"
+                },
+                {
+                  "name": "City ilmanpuhdistimet",
+                  "type": "CategoryPath",
+                  "id": "45055",
+                  "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products/45054/45055"
+                }
+              ],
+              "id": "45055",
+              "categoryRef": "45055@Camfil-CamfilFI-Products",
+              "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products/45054/45055"
+            },
+            {
+              "name": "Teolliset ilmanpuhdistimet",
+              "type": "Category",
+              "attributes": [
+                {
+                  "name": "ShowInMenu",
+                  "type": "String",
+                  "value": "True"
+                }
+              ],
+              "hasOnlineProducts": false,
+              "hasOnlineSubCategories": false,
+              "online": "1",
+              "description": "Camfilin teolliset ilmanpuhdistimet ovat erinomainen ratkaisu ilmanlaadun ongelmiin teollisuuslaitoksissa. Sertifioituja HEPA- ja molekyylisuodattimia käyttävät Camfilin ilmanpuhdistimet poistavat ilmasta pölyhiukkasten lisäksi myös hajut ja kaasut.",
+              "categoryPath": [
+                {
+                  "name": "Products",
+                  "type": "CategoryPath",
+                  "id": "Products",
+                  "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products"
+                },
+                {
+                  "name": "Ilmanpuhdistimet",
+                  "type": "CategoryPath",
+                  "id": "45054",
+                  "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products/45054"
+                },
+                {
+                  "name": "Teolliset ilmanpuhdistimet",
+                  "type": "CategoryPath",
+                  "id": "45097",
+                  "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products/45054/45097"
+                }
+              ],
+              "id": "45097",
+              "categoryRef": "45097@Camfil-CamfilFI-Products",
+              "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products/45054/45097"
+            }
+          ],
+          "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products/45054"
+        },
+        {
+          "name": "Korkean lämpötilan suodattimet",
+          "type": "Category",
+          "attributes": [
+            {
+              "name": "ShowInMenu",
+              "type": "String",
+              "value": "True"
+            }
+          ],
+          "hasOnlineProducts": false,
+          "hasOnlineSubCategories": true,
+          "onlineProductsCountInSubCategories": 7,
+          "online": "1",
+          "description": "Camfilin korkean lämpötilan suodattimet ovat suunniteltu suojaamaan erityisesti prosesseja, jotka tapahtuvat korkeissa lämpötiloissa. Ne noudattavat kaikkein tiukimpia vaatimuksia, ja niiden toiminta- ja suorituskyky säilyy myös äärilämpötiloissa. Korkean lämpötilan suodattimet testataan joko ISO 16890 ‑standardin tai EN 1822:2009- ja ISO 29463 ‑standardien mukaisesti.",
+          "subCategoriesCount": 1,
+          "categoryPath": [
+            {
+              "name": "Products",
+              "type": "CategoryPath",
+              "id": "Products",
+              "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products"
+            },
+            {
+              "name": "Korkean lämpötilan suodattimet",
+              "type": "CategoryPath",
+              "id": "45079",
+              "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products/45079"
+            }
+          ],
+          "id": "45079",
+          "categoryRef": "45079@Camfil-CamfilFI-Products",
+          "subCategories": [
+            {
+              "name": "Kompaktisuodattimet (250 °C)",
+              "type": "Category",
+              "attributes": [
+                {
+                  "name": "ShowInMenu",
+                  "type": "String",
+                  "value": "True"
+                }
+              ],
+              "hasOnlineProducts": true,
+              "hasOnlineSubCategories": false,
+              "onlineProductsCountInSubCategories": 7,
+              "online": "1",
+              "description": "Kehykselliset kompaktisuodattimet ovat korkean lämpötilan suodattimia, jotka noudattavat FDA:n tiukkoja hyvän tuotantotavan vaatimuksia sekä soveltuvat asennettavaksi järjestelmiin, joissa toimintalämpötila on enintään 250 °C.",
+              "categoryPath": [
+                {
+                  "name": "Products",
+                  "type": "CategoryPath",
+                  "id": "Products",
+                  "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products"
+                },
+                {
+                  "name": "Korkean lämpötilan suodattimet",
+                  "type": "CategoryPath",
+                  "id": "45079",
+                  "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products/45079"
+                },
+                {
+                  "name": "Kompaktisuodattimet (250 °C)",
+                  "type": "CategoryPath",
+                  "id": "45081",
+                  "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products/45079/45081"
+                }
+              ],
+              "id": "45081",
+              "categoryRef": "45081@Camfil-CamfilFI-Products",
+              "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products/45079/45081"
+            }
+          ],
+          "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products/45079"
+        },
+        {
+          "name": "Kotelot, kehykset & säleiköt",
+          "type": "Category",
+          "attributes": [
+            {
+              "name": "ShowInMenu",
+              "type": "String",
+              "value": "True"
+            }
+          ],
+          "hasOnlineProducts": false,
+          "hasOnlineSubCategories": true,
+          "onlineProductsCountInSubCategories": 17,
+          "online": "1",
+          "description": "Camfilin laadukkaat suodattimet ja päätelaitteet ovat äärimmäisen tärkeitä, kun halutaan optimaalinen suodatusratkaisu. Niiden korkeat tiiviys- ja vuotoluokitukset on taattu tarvittavien standardien, kuten ISO 10648, ISO 14644, EN 15722 ja EN 1886, mukaisilla testeillä.",
+          "subCategoriesCount": 3,
+          "categoryPath": [
+            {
+              "name": "Products",
+              "type": "CategoryPath",
+              "id": "Products",
+              "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products"
+            },
+            {
+              "name": "Kotelot, kehykset & säleiköt",
+              "type": "CategoryPath",
+              "id": "45056",
+              "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products/45056"
+            }
+          ],
+          "id": "45056",
+          "categoryRef": "45056@Camfil-CamfilFI-Products",
+          "subCategories": [
+            {
+              "name": "Asennuskehykset",
+              "type": "Category",
+              "attributes": [
+                {
+                  "name": "ShowInMenu",
+                  "type": "String",
+                  "value": "True"
+                }
+              ],
+              "hasOnlineProducts": true,
+              "hasOnlineSubCategories": false,
+              "onlineProductsCountInSubCategories": 12,
+              "online": "1",
+              "description": "Asennuskehykset toimivat ilmastointi- ja ilmanvaihtojärjestelmien suodattimien pidikkeinä, joko yksittäin tai osana suodatinseinää.",
+              "categoryPath": [
+                {
+                  "name": "Products",
+                  "type": "CategoryPath",
+                  "id": "Products",
+                  "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products"
+                },
+                {
+                  "name": "Kotelot, kehykset & säleiköt",
+                  "type": "CategoryPath",
+                  "id": "45056",
+                  "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products/45056"
+                },
+                {
+                  "name": "Asennuskehykset",
+                  "type": "CategoryPath",
+                  "id": "45095",
+                  "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products/45056/45095"
+                }
+              ],
+              "id": "45095",
+              "categoryRef": "45095@Camfil-CamfilFI-Products",
+              "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products/45056/45095"
+            },
+            {
+              "name": "Kanava-asennuskotelot",
+              "type": "Category",
+              "attributes": [
+                {
+                  "name": "ShowInMenu",
+                  "type": "String",
+                  "value": "True"
+                }
+              ],
+              "hasOnlineProducts": true,
+              "hasOnlineSubCategories": false,
+              "onlineProductsCountInSubCategories": 3,
+              "online": "1",
+              "description": "Kanava-asennuskoteloita käytetään pääasiassa tuloilman suodattamisessa eri käyttötilanteissa, mutta niitä voi käyttää myös poistoilman suodattamisessa tilanteissa, joissa kontaminaatioriski ei edellytä suodattimen vaihtoa muovipussin avulla.",
+              "categoryPath": [
+                {
+                  "name": "Products",
+                  "type": "CategoryPath",
+                  "id": "Products",
+                  "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products"
+                },
+                {
+                  "name": "Kotelot, kehykset & säleiköt",
+                  "type": "CategoryPath",
+                  "id": "45056",
+                  "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products/45056"
+                },
+                {
+                  "name": "Kanava-asennuskotelot",
+                  "type": "CategoryPath",
+                  "id": "45059",
+                  "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products/45056/45059"
+                }
+              ],
+              "id": "45059",
+              "categoryRef": "45059@Camfil-CamfilFI-Products",
+              "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products/45056/45059"
+            },
+            {
+              "name": "Turvavaihtokotelot",
+              "type": "Category",
+              "attributes": [
+                {
+                  "name": "ShowInMenu",
+                  "type": "String",
+                  "value": "True"
+                }
+              ],
+              "hasOnlineProducts": true,
+              "hasOnlineSubCategories": false,
+              "onlineProductsCountInSubCategories": 2,
+              "online": "1",
+              "description": "Suodattimien turvavaihtokoteloita käytetään erityisesti bioturvallisuuslaboratorioiden ja sairaaloiden poistoilman suodatuksessa ja muissa käyttötarkoituksissa, joissa suodattimen vaihtaminen ei saa aiheuttaa kontaminaatioriskiä. ",
+              "categoryPath": [
+                {
+                  "name": "Products",
+                  "type": "CategoryPath",
+                  "id": "Products",
+                  "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products"
+                },
+                {
+                  "name": "Kotelot, kehykset & säleiköt",
+                  "type": "CategoryPath",
+                  "id": "45056",
+                  "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products/45056"
+                },
+                {
+                  "name": "Turvavaihtokotelot",
+                  "type": "CategoryPath",
+                  "id": "45058",
+                  "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products/45056/45058"
+                }
+              ],
+              "id": "45058",
+              "categoryRef": "45058@Camfil-CamfilFI-Products",
+              "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products/45056/45058"
+            }
+          ],
+          "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products/45056"
+        },
+        {
+          "name": "Molekyylisuodattimet",
+          "type": "Category",
+          "attributes": [
+            {
+              "name": "ShowInMenu",
+              "type": "String",
+              "value": "True"
+            }
+          ],
+          "hasOnlineProducts": false,
+          "hasOnlineSubCategories": true,
+          "onlineProductsCountInSubCategories": 90,
+          "online": "1",
+          "description": "Camfil valmistaa suodattimia, joilla voi erotella ilmasta molekyylejä, kaasuja ja hajuja molekyylisuodatuksen avulla. Molekyylisuodattimet on testattu joko ISO 10121- tai ASHRAE 145.2 ‑standardin mukaisesti.",
+          "subCategoriesCount": 6,
+          "categoryPath": [
+            {
+              "name": "Products",
+              "type": "CategoryPath",
+              "id": "Products",
+              "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products"
+            },
+            {
+              "name": "Molekyylisuodattimet",
+              "type": "CategoryPath",
+              "id": "45042",
+              "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products/45042"
+            }
+          ],
+          "id": "45042",
+          "categoryRef": "45042@Camfil-CamfilFI-Products",
+          "subCategories": [
+            {
+              "name": "Kasettisuodattimet",
+              "type": "Category",
+              "attributes": [
+                {
+                  "name": "ShowInMenu",
+                  "type": "String",
+                  "value": "True"
+                }
+              ],
+              "hasOnlineProducts": true,
+              "hasOnlineSubCategories": false,
+              "onlineProductsCountInSubCategories": 2,
+              "online": "1",
+              "description": "Vekatut tai massatäytteiset kasetit.",
+              "categoryPath": [
+                {
+                  "name": "Products",
+                  "type": "CategoryPath",
+                  "id": "Products",
+                  "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products"
+                },
+                {
+                  "name": "Molekyylisuodattimet",
+                  "type": "CategoryPath",
+                  "id": "45042",
+                  "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products/45042"
+                },
+                {
+                  "name": "Kasettisuodattimet",
+                  "type": "CategoryPath",
+                  "id": "45083",
+                  "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products/45042/45083"
+                }
+              ],
+              "id": "45083",
+              "categoryRef": "45083@Camfil-CamfilFI-Products",
+              "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products/45042/45083"
+            },
+            {
+              "name": "Kehykselliset kompaktisuodattimet",
+              "type": "Category",
+              "attributes": [
+                {
+                  "name": "ShowInMenu",
+                  "type": "String",
+                  "value": "True"
+                }
+              ],
+              "hasOnlineProducts": true,
+              "hasOnlineSubCategories": false,
+              "onlineProductsCountInSubCategories": 4,
+              "online": "1",
+              "description": "Vekatut tai massatäytteiset kehykselliset molekyylisuodattimet, jotka voidaan asentaa kiinnittimillä vakiomallisiin asennuskehyksiin ja koteloihin.",
+              "categoryPath": [
+                {
+                  "name": "Products",
+                  "type": "CategoryPath",
+                  "id": "Products",
+                  "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products"
+                },
+                {
+                  "name": "Molekyylisuodattimet",
+                  "type": "CategoryPath",
+                  "id": "45042",
+                  "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products/45042"
+                },
+                {
+                  "name": "Kehykselliset kompaktisuodattimet",
+                  "type": "CategoryPath",
+                  "id": "45085",
+                  "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products/45042/45085"
+                }
+              ],
+              "id": "45085",
+              "categoryRef": "45085@Camfil-CamfilFI-Products",
+              "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products/45042/45085"
+            },
+            {
+              "name": "Kompaktisuodattimet",
+              "type": "Category",
+              "attributes": [
+                {
+                  "name": "ShowInMenu",
+                  "type": "String",
+                  "value": "True"
+                }
+              ],
+              "hasOnlineProducts": true,
+              "hasOnlineSubCategories": false,
+              "onlineProductsCountInSubCategories": 3,
+              "online": "1",
+              "description": "Vekatut tai massatäytteiset molekyylisuodattimet, jotka voidaan asentaa edestä tai sivulta avattaviin koteloihin.",
+              "categoryPath": [
+                {
+                  "name": "Products",
+                  "type": "CategoryPath",
+                  "id": "Products",
+                  "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products"
+                },
+                {
+                  "name": "Molekyylisuodattimet",
+                  "type": "CategoryPath",
+                  "id": "45042",
+                  "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products/45042"
+                },
+                {
+                  "name": "Kompaktisuodattimet",
+                  "type": "CategoryPath",
+                  "id": "45084",
+                  "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products/45042/45084"
+                }
+              ],
+              "id": "45084",
+              "categoryRef": "45084@Camfil-CamfilFI-Products",
+              "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products/45042/45084"
+            },
+            {
+              "name": "Pussisuodattimet",
+              "type": "Category",
+              "attributes": [
+                {
+                  "name": "ShowInMenu",
+                  "type": "String",
+                  "value": "True"
+                }
+              ],
+              "hasOnlineProducts": true,
+              "hasOnlineSubCategories": false,
+              "onlineProductsCountInSubCategories": 70,
+              "online": "1",
+              "description": "Yhdistelmäpussisuodattimet, joiden kaksitoiminen materiaali suodattaa sekä hiukkaset että molekyylit.",
+              "categoryPath": [
+                {
+                  "name": "Products",
+                  "type": "CategoryPath",
+                  "id": "Products",
+                  "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products"
+                },
+                {
+                  "name": "Molekyylisuodattimet",
+                  "type": "CategoryPath",
+                  "id": "45042",
+                  "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products/45042"
+                },
+                {
+                  "name": "Pussisuodattimet",
+                  "type": "CategoryPath",
+                  "id": "45044",
+                  "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products/45042/45044"
+                }
+              ],
+              "id": "45044",
+              "categoryRef": "45044@Camfil-CamfilFI-Products",
+              "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products/45042/45044"
+            },
+            {
+              "name": "Suodatusmassat",
+              "type": "Category",
+              "attributes": [
+                {
+                  "name": "ShowInMenu",
+                  "type": "String",
+                  "value": "True"
+                }
+              ],
+              "hasOnlineProducts": true,
+              "hasOnlineSubCategories": false,
+              "onlineProductsCountInSubCategories": 5,
+              "online": "1",
+              "description": "Irtosuodatusmassat kaasumaisten molekyylitason epäpuhtauksien suodattamiseen.",
+              "categoryPath": [
+                {
+                  "name": "Products",
+                  "type": "CategoryPath",
+                  "id": "Products",
+                  "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products"
+                },
+                {
+                  "name": "Molekyylisuodattimet",
+                  "type": "CategoryPath",
+                  "id": "45042",
+                  "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products/45042"
+                },
+                {
+                  "name": "Suodatusmassat",
+                  "type": "CategoryPath",
+                  "id": "45087",
+                  "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products/45042/45087"
+                }
+              ],
+              "id": "45087",
+              "categoryRef": "45087@Camfil-CamfilFI-Products",
+              "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products/45042/45087"
+            },
+            {
+              "name": "Sylinterit",
+              "type": "Category",
+              "attributes": [
+                {
+                  "name": "ShowInMenu",
+                  "type": "String",
+                  "value": "True"
+                }
+              ],
+              "hasOnlineProducts": true,
+              "hasOnlineSubCategories": false,
+              "onlineProductsCountInSubCategories": 6,
+              "online": "1",
+              "description": "Suodatusmassasylintereillämme voit poistaa kohtuullisia määriä kaasumaisia/molekyylitason epäpuhtauksia ilmanvaihtojärjestelmistä.",
+              "categoryPath": [
+                {
+                  "name": "Products",
+                  "type": "CategoryPath",
+                  "id": "Products",
+                  "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products"
+                },
+                {
+                  "name": "Molekyylisuodattimet",
+                  "type": "CategoryPath",
+                  "id": "45042",
+                  "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products/45042"
+                },
+                {
+                  "name": "Sylinterit",
+                  "type": "CategoryPath",
+                  "id": "45043",
+                  "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products/45042/45043"
+                }
+              ],
+              "id": "45043",
+              "categoryRef": "45043@Camfil-CamfilFI-Products",
+              "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products/45042/45043"
+            }
+          ],
+          "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products/45042"
+        },
+        {
+          "name": "Turbiinikoneistojen suodattimet",
+          "type": "Category",
+          "attributes": [
+            {
+              "name": "ShowInMenu",
+              "type": "String",
+              "value": "True"
+            }
+          ],
+          "hasOnlineProducts": false,
+          "hasOnlineSubCategories": true,
+          "onlineProductsCountInSubCategories": 7,
+          "online": "1",
+          "description": "​​​Tuloilman suodatusjärjestelmät ovat välttämättömiä kaasuturbiinien ja muiden turbiinikoneistojen toiminnalle. Ihminen hengittää vuorokaudessa noin 25 kg ilmaa, kun taas 15 MW:n moottori vetää sisäänsä yhden vuorokauden aikana noin 4 300 tonnia ilmaa.",
+          "subCategoriesCount": 2,
+          "categoryPath": [
+            {
+              "name": "Products",
+              "type": "CategoryPath",
+              "id": "Products",
+              "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products"
+            },
+            {
+              "name": "Turbiinikoneistojen suodattimet",
+              "type": "CategoryPath",
+              "id": "45088",
+              "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products/45088"
+            }
+          ],
+          "id": "45088",
+          "categoryRef": "45088@Camfil-CamfilFI-Products",
+          "subCategories": [
+            {
+              "name": "Kehykselliset kompaktisuodattimet",
+              "type": "Category",
+              "attributes": [
+                {
+                  "name": "ShowInMenu",
+                  "type": "String",
+                  "value": "True"
+                }
+              ],
+              "hasOnlineProducts": true,
+              "hasOnlineSubCategories": false,
+              "onlineProductsCountInSubCategories": 2,
+              "online": "1",
+              "description": "Kompaktisuodattimet ovat tehokkaita imuilmasuodattimia, joita käytetään kaasuturbiinin imuilmajärjestelmästä riippuen toisessa ja/tai kolmannessa suodatusportaassa.",
+              "categoryPath": [
+                {
+                  "name": "Products",
+                  "type": "CategoryPath",
+                  "id": "Products",
+                  "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products"
+                },
+                {
+                  "name": "Turbiinikoneistojen suodattimet",
+                  "type": "CategoryPath",
+                  "id": "45088",
+                  "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products/45088"
+                },
+                {
+                  "name": "Kehykselliset kompaktisuodattimet",
+                  "type": "CategoryPath",
+                  "id": "45092",
+                  "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products/45088/45092"
+                }
+              ],
+              "id": "45092",
+              "categoryRef": "45092@Camfil-CamfilFI-Products",
+              "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products/45088/45092"
+            },
+            {
+              "name": "Pussisuodattimet",
+              "type": "Category",
+              "attributes": [
+                {
+                  "name": "ShowInMenu",
+                  "type": "String",
+                  "value": "True"
+                }
+              ],
+              "hasOnlineProducts": true,
+              "hasOnlineSubCategories": false,
+              "onlineProductsCountInSubCategories": 5,
+              "online": "1",
+              "description": "Pussisuodattimia käytetään pääasiassa kaasuturbiinien imuilmassa esisuodattimina tai ensimmäisen portaan suodattimina, jotka poistavat ilmavirrasta karkeat epäpuhtaudet ja vesipisarat.",
+              "categoryPath": [
+                {
+                  "name": "Products",
+                  "type": "CategoryPath",
+                  "id": "Products",
+                  "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products"
+                },
+                {
+                  "name": "Turbiinikoneistojen suodattimet",
+                  "type": "CategoryPath",
+                  "id": "45088",
+                  "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products/45088"
+                },
+                {
+                  "name": "Pussisuodattimet",
+                  "type": "CategoryPath",
+                  "id": "45090",
+                  "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products/45088/45090"
+                }
+              ],
+              "id": "45090",
+              "categoryRef": "45090@Camfil-CamfilFI-Products",
+              "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products/45088/45090"
+            }
+          ],
+          "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products/45088"
+        },
+        {
+          "name": "Yleisilmanvaihdon suodattimet",
+          "type": "Category",
+          "attributes": [
+            {
+              "name": "ShowInMenu",
+              "type": "String",
+              "value": "True"
+            }
+          ],
+          "hasOnlineProducts": false,
+          "hasOnlineSubCategories": true,
+          "onlineProductsCountInSubCategories": 5481,
+          "online": "1",
+          "description": "Camfilin laadukkaat, energiaa säästävät suodattimet auttavat suojelemaan ihmisiä, prosesseja ja tuotteita erilaisilta hiukkasilta. Voit valita laajasta mallien ja suodatusluokkien (karkea-ePM1) valikoimasta juuri sellaisen suodattimen, joka vastaa sinun tarpeitasi. Suodattimemme täyttävät ISO 16890 -standardin vaatimukset.",
+          "subCategoriesCount": 5,
+          "categoryPath": [
+            {
+              "name": "Products",
+              "type": "CategoryPath",
+              "id": "Products",
+              "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products"
+            },
+            {
+              "name": "Yleisilmanvaihdon suodattimet",
+              "type": "CategoryPath",
+              "id": "45048",
+              "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products/45048"
+            }
+          ],
+          "id": "45048",
+          "categoryRef": "45048@Camfil-CamfilFI-Products",
+          "subCategories": [
+            {
+              "name": "Kasettisuodattimet",
+              "type": "Category",
+              "attributes": [
+                {
+                  "name": "ShowInMenu",
+                  "type": "String",
+                  "value": "True"
+                }
+              ],
+              "hasOnlineProducts": true,
+              "hasOnlineSubCategories": false,
+              "onlineProductsCountInSubCategories": 2240,
+              "online": "1",
+              "description": "Kasettisuodattimilla pidennetään ilmanvaihtokoneiden käyttöikää ja parannetaan ilmanlaatua asuin- ja liikekiinteistöissä sekä sairaaloissa.",
+              "categoryPath": [
+                {
+                  "name": "Products",
+                  "type": "CategoryPath",
+                  "id": "Products",
+                  "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products"
+                },
+                {
+                  "name": "Yleisilmanvaihdon suodattimet",
+                  "type": "CategoryPath",
+                  "id": "45048",
+                  "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products/45048"
+                },
+                {
+                  "name": "Kasettisuodattimet",
+                  "type": "CategoryPath",
+                  "id": "45050",
+                  "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products/45048/45050"
+                }
+              ],
+              "id": "45050",
+              "categoryRef": "45050@Camfil-CamfilFI-Products",
+              "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products/45048/45050"
+            },
+            {
+              "name": "Kehykselliset kompaktisuodattimet",
+              "type": "Category",
+              "attributes": [
+                {
+                  "name": "ShowInMenu",
+                  "type": "String",
+                  "value": "True"
+                }
+              ],
+              "hasOnlineProducts": true,
+              "hasOnlineSubCategories": false,
+              "onlineProductsCountInSubCategories": 37,
+              "online": "1",
+              "description": "Kehyksellisiä kompaktisuodattimia käytetään yleensä joko loppusuodattimena teollisuus-, liike- ja asuinkiinteistöissä tai toisena esisuodattimena puhdastilajärjestelmissä ennen HEPA-suodatinta.",
+              "categoryPath": [
+                {
+                  "name": "Products",
+                  "type": "CategoryPath",
+                  "id": "Products",
+                  "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products"
+                },
+                {
+                  "name": "Yleisilmanvaihdon suodattimet",
+                  "type": "CategoryPath",
+                  "id": "45048",
+                  "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products/45048"
+                },
+                {
+                  "name": "Kehykselliset kompaktisuodattimet",
+                  "type": "CategoryPath",
+                  "id": "45051",
+                  "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products/45048/45051"
+                }
+              ],
+              "id": "45051",
+              "categoryRef": "45051@Camfil-CamfilFI-Products",
+              "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products/45048/45051"
+            },
+            {
+              "name": "Kompaktisuodattimet",
+              "type": "Category",
+              "attributes": [
+                {
+                  "name": "ShowInMenu",
+                  "type": "String",
+                  "value": "True"
+                }
+              ],
+              "hasOnlineProducts": true,
+              "hasOnlineSubCategories": false,
+              "onlineProductsCountInSubCategories": 15,
+              "online": "1",
+              "description": "Kompaktisuodattimet ovat syvään vekattuja tai V-rakenteisia suodattimia. Ne sopivat erinomaisesti esimerkiksi esisuodattimiksi puhdastiloihin.",
+              "categoryPath": [
+                {
+                  "name": "Products",
+                  "type": "CategoryPath",
+                  "id": "Products",
+                  "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products"
+                },
+                {
+                  "name": "Yleisilmanvaihdon suodattimet",
+                  "type": "CategoryPath",
+                  "id": "45048",
+                  "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products/45048"
+                },
+                {
+                  "name": "Kompaktisuodattimet",
+                  "type": "CategoryPath",
+                  "id": "45076",
+                  "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products/45048/45076"
+                }
+              ],
+              "id": "45076",
+              "categoryRef": "45076@Camfil-CamfilFI-Products",
+              "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products/45048/45076"
+            },
+            {
+              "name": "Pussisuodattimet",
+              "type": "Category",
+              "attributes": [
+                {
+                  "name": "ShowInMenu",
+                  "type": "String",
+                  "value": "True"
+                }
+              ],
+              "hasOnlineProducts": true,
+              "hasOnlineSubCategories": false,
+              "onlineProductsCountInSubCategories": 2998,
+              "online": "1",
+              "description": "Pussisuodattimia käytetään teollisuus-, liike- ja asuinkiinteistöjen sekä puhdastilojen ilmanvaihtojärjestelmissä.",
+              "categoryPath": [
+                {
+                  "name": "Products",
+                  "type": "CategoryPath",
+                  "id": "Products",
+                  "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products"
+                },
+                {
+                  "name": "Yleisilmanvaihdon suodattimet",
+                  "type": "CategoryPath",
+                  "id": "45048",
+                  "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products/45048"
+                },
+                {
+                  "name": "Pussisuodattimet",
+                  "type": "CategoryPath",
+                  "id": "45049",
+                  "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products/45048/45049"
+                }
+              ],
+              "id": "45049",
+              "categoryRef": "45049@Camfil-CamfilFI-Products",
+              "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products/45048/45049"
+            },
+            {
+              "name": "Suodatinmattorullat",
+              "type": "Category",
+              "attributes": [
+                {
+                  "name": "ShowInMenu",
+                  "type": "String",
+                  "value": "True"
+                }
+              ],
+              "hasOnlineProducts": true,
+              "hasOnlineSubCategories": false,
+              "onlineProductsCountInSubCategories": 191,
+              "online": "1",
+              "description": "Suodatinmattopaloja ja -rullia voi käyttää esisuodattimina ilmanvaihtokoneissa, mutta myös suodattimina esimerkiksi maalauskaapeissa.",
+              "categoryPath": [
+                {
+                  "name": "Products",
+                  "type": "CategoryPath",
+                  "id": "Products",
+                  "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products"
+                },
+                {
+                  "name": "Yleisilmanvaihdon suodattimet",
+                  "type": "CategoryPath",
+                  "id": "45048",
+                  "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products/45048"
+                },
+                {
+                  "name": "Suodatinmattorullat",
+                  "type": "CategoryPath",
+                  "id": "45077",
+                  "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products/45048/45077"
+                }
+              ],
+              "id": "45077",
+              "categoryRef": "45077@Camfil-CamfilFI-Products",
+              "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products/45048/45077"
+            }
+          ],
+          "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products/45048"
+        }
+      ],
+      "uri": "Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/categories/Products"
+    }
+  ],
+  "type": "Categories"
+}

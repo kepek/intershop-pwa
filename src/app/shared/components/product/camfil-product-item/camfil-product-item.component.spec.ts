@@ -4,7 +4,6 @@ import { MockComponent } from 'ng-mocks';
 import { of } from 'rxjs';
 import { anything, capture, instance, mock, spy, verify, when } from 'ts-mockito';
 
-import { AccountFacade } from 'ish-core/facades/account.facade';
 import { AppFacade } from 'ish-core/facades/app.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { VariationProductView } from 'ish-core/models/product-view/product-view.model';
@@ -19,12 +18,10 @@ describe('Camfil Product Item Component', () => {
   let fixture: ComponentFixture<CamfilProductItemComponent>;
   let element: HTMLElement;
   let shoppingFacade: ShoppingFacade;
-  let accountFacade: AccountFacade;
   let appFacade: AppFacade;
 
   beforeEach(async () => {
     shoppingFacade = mock(ShoppingFacade);
-    accountFacade = mock(AccountFacade);
     appFacade = mock(AppFacade);
     await TestBed.configureTestingModule({
       imports: [RouterTestingModule],
@@ -36,7 +33,6 @@ describe('Camfil Product Item Component', () => {
       ],
       providers: [
         { provide: ShoppingFacade, useFactory: () => instance(shoppingFacade) },
-        { provide: AccountFacade, useFactory: () => instance(accountFacade) },
         { provide: AppFacade, useFactory: () => instance(appFacade) },
       ],
     }).compileComponents();
@@ -48,8 +44,6 @@ describe('Camfil Product Item Component', () => {
     element = fixture.nativeElement;
     component.productSku = 'sku';
     component.hideAttributeName = true;
-
-    when(accountFacade.userPermissions$).thenReturn(of([]));
   });
 
   it('should be created', () => {

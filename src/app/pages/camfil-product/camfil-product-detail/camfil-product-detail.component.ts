@@ -5,6 +5,7 @@ import { startWith, take, takeUntil } from 'rxjs/operators';
 import { CamCardsFacade } from 'src/app/extensions/cam-cards/facades/cam-cards.facade';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
+import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { CategoryView } from 'ish-core/models/category-view/category-view.model';
 import { VariationOptionGroup } from 'ish-core/models/product-variation/variation-option-group.model';
@@ -37,11 +38,12 @@ export class CamfilProductDetailComponent implements OnInit, OnDestroy {
   @Input() productSku: string;
   @Output() productSkuChange = new EventEmitter<string>();
   readonly quantityControlName = 'quantity';
-  userPermissions$: Observable<string[]>;
   isInCompareList$: Observable<boolean>;
   isInCompareList: boolean;
   showAddToCompare = false;
   productDetailForm: FormGroup;
+  isLoggedIn$: Observable<boolean>;
+  loading$: Observable<boolean>;
   isVariationProduct = ProductHelper.isVariationProduct;
   isMasterProduct = ProductHelper.isMasterProduct;
   isRetailSet = ProductHelper.isRetailSet;
@@ -51,6 +53,7 @@ export class CamfilProductDetailComponent implements OnInit, OnDestroy {
 
   constructor(
     private shoppingFacade: ShoppingFacade,
+    private checkoutFacade: CheckoutFacade,
     private accountFacade: AccountFacade,
     private camCardsFacade: CamCardsFacade
   ) {}
@@ -83,13 +86,13 @@ export class CamfilProductDetailComponent implements OnInit, OnDestroy {
       });
     }
 
-    this.userPermissions$ = this.accountFacade.userPermissions$.pipe(takeUntil(this.destroy$));
-
     this.camCardsFacade.getAddProductSuccess$.pipe(takeUntil(this.destroy$)).subscribe(value => {
       if (value) {
         this.resetProductDetailForm();
       }
     });
+    this.isLoggedIn$ = this.accountFacade.isLoggedIn$;
+    this.loading$ = this.checkoutFacade.basketLoading$;
   }
 
   ngOnDestroy() {

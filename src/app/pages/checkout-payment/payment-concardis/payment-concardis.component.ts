@@ -23,37 +23,30 @@ import { ScriptLoaderService } from 'ish-core/utils/script-loader/script-loader.
   changeDetection: ChangeDetectionStrategy.Default,
 })
 export class PaymentConcardisComponent implements OnInit, OnChanges, OnDestroy {
-  constructor(protected scriptLoader: ScriptLoaderService, protected cd: ChangeDetectorRef) {}
   /**
    * concardis payment method, needed to get configuration parameters
    */
   @Input() paymentMethod: PaymentMethod;
-
   /**
    * should be set to true by the parent, if component is visible
    */
   @Input() activated = false;
-
   @Output() cancel = new EventEmitter<void>();
   @Output() submit = new EventEmitter<{ parameters: Attribute[]; saveAllowed: boolean }>();
-
   /**
    * flag to make sure that the init script is executed only once
    */
   scriptLoaded = false;
-
   /**
    * flag for displaying error messages after form submit
    */
   formSubmitted = false;
-
   /**
    * form for parameters which don't come form payment host
    */
   parameterForm: FormGroup;
   model = {};
   options: FormlyFormOptions = {};
-
   /**
    * error messages from host
    */
@@ -66,9 +59,10 @@ export class PaymentConcardisComponent implements OnInit, OnChanges, OnDestroy {
     cvc: { messageKey: '', message: '', code: 0 },
     expiryMonth: { messageKey: '', message: '', code: 0 },
   };
-
   // tslint:disable-next-line: private-destroy-field
   protected destroy$ = new Subject();
+
+  constructor(protected scriptLoader: ScriptLoaderService, protected cd: ChangeDetectorRef) {}
 
   getPayEngineURL() {
     return this.getParamValue('ConcardisPaymentService.Environment', '') === 'LIVE'
@@ -104,19 +98,6 @@ export class PaymentConcardisComponent implements OnInit, OnChanges, OnDestroy {
 
   // tslint:disable-next-line:no-empty
   loadScript() {}
-
-  /**
-   * gets a parameter value from payment method
-   * sets the general error message (key) if the parameter is not available
-   */
-  protected getParamValue(name: string, errorMessage: string): string {
-    const parameter = this.paymentMethod.hostedPaymentPageParameters.find(param => param.name === name);
-    if (!parameter || !parameter.value) {
-      this.errorMessage.general.message = errorMessage;
-      return;
-    }
-    return parameter.value;
-  }
 
   /**
    * determine errorMessages on the basis of the error code
@@ -233,5 +214,18 @@ export class PaymentConcardisComponent implements OnInit, OnChanges, OnDestroy {
     }
     this.resetErrors();
     this.cancel.emit();
+  }
+
+  /**
+   * gets a parameter value from payment method
+   * sets the general error message (key) if the parameter is not available
+   */
+  protected getParamValue(name: string, errorMessage: string): string {
+    const parameter = this.paymentMethod.hostedPaymentPageParameters.find(param => param.name === name);
+    if (!parameter || !parameter.value) {
+      this.errorMessage.general.message = errorMessage;
+      return;
+    }
+    return parameter.value;
   }
 }

@@ -28,5 +28,6 @@ module.exports = {
     './src/jest-serializer/CategoryTreeSerializer.js',
     './src/jest-serializer/NgrxActionSerializer.js',
     './src/jest-serializer/NgrxActionArraySerializer.js',
+    'jest-serializer-html',
   ],
 };

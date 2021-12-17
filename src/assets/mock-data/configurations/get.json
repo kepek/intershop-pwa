@@ -1,0 +1,96 @@
+{
+  "data": {
+    "application": {
+      "id": "application",
+      "applicationId": null,
+      "applicationType": "intershop.REST",
+      "displayName": null,
+      "urlIdentifier": "-",
+      "default": true
+    },
+    "basket": {
+      "id": "basket",
+      "expirationType": "Time",
+      "addProductBehaviour": "AllowRepeats",
+      "lifetime": "28800",
+      "maxItemSize": "1000",
+      "maxItemQuantity": "5000",
+      "acceleration": true,
+      "termsAndConditions": true,
+      "emailOptIn": false,
+      "displayTaxesAndFees": "ConsolidatedTaxes",
+      "desiredDeliveryDate": true,
+      "deliveryExcludeSaturday": true,
+      "deliveryExcludeSunday": true,
+      "packSlipMessage": true,
+      "packSlipMessageMaxLength": "1000",
+      "giftWrap": false,
+      "giftMessage": false,
+      "giftMessageMaxLength": null
+    },
+    "captcha": {
+      "id": "captcha",
+      "redemptionOfGiftCardsAndCertificates": false,
+      "forgotPassword": false,
+      "contactUs": false,
+      "emailShoppingCart": false,
+      "register": false
+    },
+    "general": {
+      "id": "general",
+      "defaultCurrency": "EUR",
+      "defaultLocale": "fi_FI",
+      "currencies": [
+        "EUR"
+      ],
+      "locales": [
+        "fi_FI"
+      ]
+    },
+    "preferences": {
+      "id": "preferences",
+      "ChannelPreferences": {
+        "id": "ChannelPreferences",
+        "PasswordRetrievalEmailSubject": "Password Retrieval",
+        "ContactFormUserServiceEmailFrom": "Setr-eCommerce-uat@camfilonline.onmicrosoft.com",
+        "PasswordReminderEmailFrom": "Setr-eCommerce-uat@camfilonline.onmicrosoft.com"
+      },
+      "ShippingPreferences": {
+        "id": "ShippingPreferences",
+        "MultipleShipmentsSupported": "true"
+      }
+    },
+    "pricing": {
+      "id": "pricing",
+      "priceType": "net",
+      "privateCustomerPriceDisplayType": "net",
+      "smbCustomerPriceDisplayType": "net",
+      "defaultCustomerTypeForPriceDisplay": "SMB"
+    },
+    "services": {
+      "id": "services",
+      "Address_Check_Services": {
+        "id": "Address_Check_Services",
+        "runnable": "true"
+      },
+      "ReCaptchaV3ServiceDefinition": {
+        "id": "ReCaptchaV3ServiceDefinition",
+        "runnable": "true",
+        "ScoreThreshold": "0.5",
+        "VerificationURL": "https://www.google.com/recaptcha/api/siteverify",
+        "SiteKey": ""
+      },
+      "OrderApprovalServiceDefinition": {
+        "id": "OrderApprovalServiceDefinition",
+        "runnable": "true"
+      }
+    },
+    "shipping": {
+      "id": "shipping",
+      "multipleShipmentsSupported": true,
+      "pickupInStoreEnabled": false,
+      "readyForShipmentMaximumTime": "7",
+      "readyForShipmentMinimumTime": "3"
+    }
+  }
+}

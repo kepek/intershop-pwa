@@ -7,6 +7,7 @@ import { MockComponent } from 'ng-mocks';
 
 import { Product } from 'ish-core/models/product/product.model';
 import { CamfilCamCardModalComponent } from 'ish-shared/components/common/camfil-cam-card-modal/camfil-cam-card-modal.component';
+import { CamfilCityFieldComponent } from 'ish-shared/components/common/camfil-city-field/camfil-city-field.component';
 import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
 import { ZipCodeComponent } from 'ish-shared/components/zip-code/zip-code.component';
 
@@ -22,6 +23,7 @@ describe('Create Order Product Success Component', () => {
       declarations: [
         CamfilCamCardModalComponent,
         CreateOrderProductSuccessComponent,
+        MockComponent(CamfilCityFieldComponent),
         MockComponent(CamfilLoadingComponent),
         MockComponent(ZipCodeComponent),
       ],

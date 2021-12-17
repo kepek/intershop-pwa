@@ -7,6 +7,7 @@ import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { BasketFeedback } from 'ish-core/models/basket-feedback/basket-feedback.model';
 import { BasketValidationResultType } from 'ish-core/models/basket-validation/basket-validation.model';
 import { LineItemView } from 'ish-core/models/line-item/line-item.model';
+import { PriceItem } from 'ish-core/models/price-item/price-item.model';
 
 /**
  * Displays the basket validation result messages. In case of basket adjustments removed or undeliverable items are
@@ -26,18 +27,33 @@ export class BasketValidationResultsComponent implements OnInit, OnDestroy {
   errorMessages$: Observable<string[]>;
   infoMessages$: Observable<string[]>;
   undeliverableItems$: Observable<LineItemView[]>;
-  removedItems$: Observable<{ message: string; productSKU: string }[]>;
+  removedItems$: Observable<{ message: string; productSKU: string; price: PriceItem }[]>;
 
   itemHasBeenRemoved = false;
 
   private destroy$ = new Subject();
 
-  constructor(private checkoutFacade: CheckoutFacade) {}
+  constructor(protected checkoutFacade: CheckoutFacade) {}
 
   @Output() continueCheckout = new EventEmitter<void>();
 
   ngOnInit() {
+    this.init();
+  }
+
+  isLineItemMessage(error: BasketFeedback): boolean {
+    return !!(
+      error.parameters &&
+      error.code !== 'basket.validation.line_item_shipping_restrictions.error' &&
+      error.parameters.scopes &&
+      (error.parameters.scopes.includes('Addresses') || error.parameters.scopes.includes('Products')) &&
+      error.parameters.lineItemId
+    );
+  }
+
+  protected init() {
     this.validationResults$ = this.checkoutFacade.basketValidationResults$;
+
     // update emitted to display spinning animation
     this.validationResults$.pipe(takeUntil(this.destroy$)).subscribe(() => {
       if (this.itemHasBeenRemoved) {
@@ -59,7 +75,10 @@ export class BasketValidationResultsComponent implements OnInit, OnDestroy {
               .filter(
                 error =>
                   !this.isLineItemMessage(error) &&
-                  error.code !== 'basket.validation.line_item_shipping_restrictions.error'
+                  ![
+                    'basket.validation.line_item_shipping_restrictions.error',
+                    'basket.validation.basket_not_covered.error',
+                  ].includes(error.code)
               )
               .map(error =>
                 error.parameters && error.parameters.shippingRestriction
@@ -90,6 +109,7 @@ export class BasketValidationResultsComponent implements OnInit, OnDestroy {
             .map(info => ({
               message: info.message,
               productSKU: info.parameters?.productSku,
+              price: info.lineItem?.price,
             }))
             .filter(info => !!info.productSKU)
       )
@@ -99,16 +119,6 @@ export class BasketValidationResultsComponent implements OnInit, OnDestroy {
       map(results =>
         uniq(results && results.infos && results.infos.map(info => info.message)).filter(message => !!message)
       )
-    );
-  }
-
-  isLineItemMessage(error: BasketFeedback): boolean {
-    return !!(
-      error.parameters &&
-      error.code !== 'basket.validation.line_item_shipping_restrictions.error' &&
-      error.parameters.scopes &&
-      (error.parameters.scopes.includes('Addresses') || error.parameters.scopes.includes('Products')) &&
-      error.parameters.lineItemId
     );
   }
 

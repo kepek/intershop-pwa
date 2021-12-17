@@ -1,13 +1,19 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
+import { map, startWith, take, takeUntil, withLatestFrom } from 'rxjs/operators';
 
+import { AccountFacade } from 'ish-core/facades/account.facade';
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { BasketValidationResultType } from 'ish-core/models/basket-validation/basket-validation.model';
-import { BasketView } from 'ish-core/models/basket/basket.model';
 import { PriceHelper } from 'ish-core/models/price/price.helper';
+import { whenFalsy } from 'ish-core/utils/operators';
+import { CamfilBasketCostSummaryComponent } from 'ish-shared/components/basket/camfil-basket-cost-summary/camfil-basket-cost-summary.component';
+import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
 
 @Component({
   selector: 'camfil-checkout-summary',
@@ -15,58 +21,85 @@ import { PriceHelper } from 'ish-core/models/price/price.helper';
   styleUrls: ['./camfil-checkout-summary.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CamfilCheckoutSummaryComponent implements OnInit, OnChanges {
-  @Input() basket: BasketView;
-  @Input() isConfirmed;
-  @Output() update = new EventEmitter();
+export class CamfilCheckoutSummaryComponent extends CamfilBasketCostSummaryComponent {
+  @Input() purchaseCurrency: string;
+  @Input() isSubmitted;
+  @Output() submit = new EventEmitter();
 
-  productsReadyToPlaceOrder$: Observable<boolean>;
+  @ViewChild(CamfilSmallCtaModalComponent) gdprErrorModal: CamfilSmallCtaModalComponent;
+
   bucketsVolumeDiscounts$: Observable<number>;
   validationResults$: Observable<BasketValidationResultType>;
+  productsReadyToPlaceOrder$: Observable<boolean>;
+  canSubmitOrder$: Observable<boolean>;
+  isLoggedIn$: Observable<boolean>;
 
-  private isTracked = false;
+  guestGdprForm: FormGroup;
+  checkIfZeroPrice = PriceHelper.checkIfZeroPrice;
+
+  private destroy$ = new Subject();
 
   constructor(
+    protected accountFacade: AccountFacade,
     private checkoutFacade: CheckoutFacade,
     private shoppingFacade: ShoppingFacade,
     private router: Router,
-    private translate: TranslateService
-  ) {}
+    private translate: TranslateService,
+    private fb: FormBuilder,
+    private dialog: MatDialog
+  ) {
+    super(accountFacade);
+  }
 
-  ngOnInit() {
+  init() {
+    super.init();
+
     this.bucketsVolumeDiscounts$ = this.checkoutFacade.bucketsVolumeDiscounts$;
     this.validationResults$ = this.checkoutFacade.basketValidationResults$;
     this.productsReadyToPlaceOrder$ = this.shoppingFacade.productsReadyToPlaceOrder$;
-  }
+    this.canSubmitOrder$ = this.productsReadyToPlaceOrder$;
+    this.isLoggedIn$ = this.accountFacade.isLoggedIn$;
 
-  ngOnChanges() {
-    if (this.isConfirmed && !this.isTracked) {
-      this.checkoutFacade.trackPurchase(this.basket);
-      this.isTracked = true;
-    }
+    this.isLoggedIn$.pipe(whenFalsy(), takeUntil(this.destroy$)).subscribe(() => {
+      this.initGDPRForm();
+    });
   }
 
   submitOrder() {
-    this.update.emit();
-
-    // In case of user from ICM back office, add employeeID as externalOrderReference
-    let erpEmployeeId;
-
-    try {
-      erpEmployeeId = JSON.parse(localStorage.getItem('erpEmployeeId'));
-    } catch (err) {
-      // NOOP
-    }
-
-    if (erpEmployeeId) {
-      this.checkoutFacade.updateBasketExternalOrderReference(erpEmployeeId);
-    }
-
-    this.checkoutFacade.continue(5);
+    this.isLoggedIn$.pipe(take(1), takeUntil(this.destroy$)).subscribe(isLoggedIn => {
+      if (isLoggedIn) {
+        this.submit.emit();
+      } else if (this.guestGdprForm?.valid) {
+        this.submit.emit();
+      } else {
+        this.openGDPRErrorModal();
+      }
+    });
   }
 
   continueShopping() {
     this.router.navigate(['/account/camcards']);
+  }
+
+  private initGDPRForm(): void {
+    const gdprAcceptanceDefaultValue = false;
+
+    this.guestGdprForm = this.fb.group({
+      gdprAcceptance: [gdprAcceptanceDefaultValue, [Validators.requiredTrue]],
+    });
+
+    this.canSubmitOrder$ = this.guestGdprForm.get('gdprAcceptance').valueChanges.pipe(
+      startWith(gdprAcceptanceDefaultValue),
+      withLatestFrom(this.productsReadyToPlaceOrder$),
+      map(([gdprAcceptance, readyToOrder]) => gdprAcceptance && readyToOrder)
+    );
+  }
+
+  private openGDPRErrorModal() {
+    const gdprErrorDialogModal = this.dialog.open(this.gdprErrorModal?.show());
+    this.gdprErrorModal.hide = () => {
+      gdprErrorDialogModal.close();
+    };
   }
 
   getVolumeDiscountPrice(value, currency) {

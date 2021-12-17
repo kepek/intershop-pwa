@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, OnI
 import { MatDialog } from '@angular/material/dialog';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { ConfigurationService } from 'src/app/extensions/cam-configuration/services/configuration/configuration.service';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
@@ -57,6 +58,7 @@ export class CamfilProductAddToBasketComponent implements OnInit, OnDestroy {
   @Input() translationKey = 'product.add_to_cart.link';
 
   buttonTranslationKey = 'camfil.product.add_to_cart.not_logged.label';
+  isGuestCheckoutEnabled = false;
   /**
    * button was clicked event
    */
@@ -64,7 +66,12 @@ export class CamfilProductAddToBasketComponent implements OnInit, OnDestroy {
   @Output() resetQuantityValue = new EventEmitter<void>();
 
   @Input() quantity?: number;
-  constructor(private checkoutFacade: CheckoutFacade, public dialog: MatDialog, private accountFacade: AccountFacade) {}
+  constructor(
+    private checkoutFacade: CheckoutFacade,
+    public dialog: MatDialog,
+    private accountFacade: AccountFacade,
+    private configurationService: ConfigurationService
+  ) {}
 
   /**
    * fires 'true' after add To Cart is clicked and basket is loading
@@ -75,14 +82,18 @@ export class CamfilProductAddToBasketComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.basketLoading$ = this.checkoutFacade.basketLoading$;
-
+    this.configurationService.isEnabled('guestCheckout')?.subscribe(value => {
+      this.isGuestCheckoutEnabled = value;
+    });
     // update emitted to display spinning animation
     this.basketLoading$.pipe(whenFalsy(), takeUntil(this.destroy$)).subscribe(this.displaySpinner$); // false
     this.accountFacade.isLoggedIn$.pipe(takeUntil(this.destroy$)).subscribe(isLoggedIn => {
       if (isLoggedIn) {
         this.buttonTranslationKey = this.translationKey;
       } else {
-        this.buttonTranslationKey = 'camfil.product.add_to_cart.not_logged.label';
+        this.buttonTranslationKey = this.isGuestCheckoutEnabled
+          ? 'product.add_to_cart.link'
+          : 'camfil.product.add_to_cart.not_logged.label';
       }
     });
   }

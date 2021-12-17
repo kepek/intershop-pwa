@@ -50,5 +50,5 @@ export const loadZipCodeFail = createAction('[Address API] load Zip Code Fail', 
 
 export const loadZipCodeSuccess = createAction(
   '[Address API] load Zip Code Success',
-  payload<{ codeInfo: ZipCodeInfo }>()
+  payload<{ codeInfo: ZipCodeInfo[] }>()
 );

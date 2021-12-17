@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
-import { Bucket } from 'ish-core/models/basket/bucket.model';
+import { Bucket } from 'ish-core/models/bucket/bucket.model';
 
 @Component({
   selector: 'camfil-checkout-toolbar',
@@ -12,4 +12,5 @@ export class CamfilCheckoutToolbarComponent {
   @Input() buckets: Bucket[];
   @Input() basketId: string;
   @Input() shippingMethodId: string;
+  @Input() isGuestCheckout = false;
 }

@@ -12,10 +12,12 @@ import { ThemePalette } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { take, takeUntil } from 'rxjs/operators';
+import { take, takeUntil, withLatestFrom } from 'rxjs/operators';
+import { ConfigurationService } from 'src/app/extensions/cam-configuration/services/configuration/configuration.service';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
+import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { BasketView } from 'ish-core/models/basket/basket.model';
 import { Product } from 'ish-core/models/product/product.model';
 import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
@@ -54,7 +56,6 @@ export class CamfilProductAddToBasketModalComponent implements OnInit, OnDestroy
   @Input() translationKey = 'product.add_to_cart.link';
 
   basket$: Observable<BasketView>;
-
   @Input() quantity: number;
 
   @Output() resetQuantityValue = new EventEmitter<void>();
@@ -70,7 +71,9 @@ export class CamfilProductAddToBasketModalComponent implements OnInit, OnDestroy
     public dialog: MatDialog,
     protected accountFacade: AccountFacade,
     protected router: Router,
-    protected checkoutFacade: CheckoutFacade
+    protected checkoutFacade: CheckoutFacade,
+    protected shoppingFacade: ShoppingFacade,
+    protected configuration: ConfigurationService
   ) {}
 
   get displayIcon(): boolean {
@@ -91,13 +94,23 @@ export class CamfilProductAddToBasketModalComponent implements OnInit, OnDestroy
   }
 
   openModalIfLoggedIn(modal: AddProductToCartModalComponent) {
-    this.accountFacade.isLoggedIn$.pipe(take(1), takeUntil(this.destroy$)).subscribe(isLoggedIn => {
-      if (isLoggedIn) {
-        this.quantity >= this.product?.minOrderQuantity ? this.openModal(modal) : this.openErrorModal();
-      } else {
-        this.navigateToLogin();
-      }
-    });
+    this.accountFacade.isLoggedIn$
+      .pipe(
+        take(1),
+        withLatestFrom(this.configuration.isEnabled('hideAddToBasketLightboxForNonLoggedInUser')),
+        takeUntil(this.destroy$)
+      )
+      .subscribe(([isLoggedIn, hideAddToBasketLightboxForNonLoggedInUser]) => {
+        if (isLoggedIn) {
+          this.quantity >= this.product?.minOrderQuantity ? this.openModal(modal) : this.openErrorModal();
+        } else if (hideAddToBasketLightboxForNonLoggedInUser) {
+          this.quantity >= this.product?.minOrderQuantity
+            ? this.shoppingFacade.addProductToBasket(this.product.sku, this.quantity)
+            : this.openErrorModal();
+        } else {
+          this.navigateToLogin();
+        }
+      });
   }
 
   openErrorModal() {

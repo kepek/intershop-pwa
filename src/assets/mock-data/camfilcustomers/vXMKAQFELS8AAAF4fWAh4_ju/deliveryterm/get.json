@@ -1,0 +1,6 @@
+{
+  "type": "DeliveryTerm",
+  "id": "CPT-RL",
+  "threshold": 0,
+  "description": "CPT rahti laskussa"
+}

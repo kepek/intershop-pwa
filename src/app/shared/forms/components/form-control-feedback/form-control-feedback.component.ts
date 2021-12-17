@@ -17,7 +17,7 @@ export class FormControlFeedbackComponent implements DoCheck {
   errors: string[];
 
   ngDoCheck() {
-    if (this.control.dirty) {
+    if (this.control?.dirty) {
       this.errors = this.getErrorList();
     }
   }

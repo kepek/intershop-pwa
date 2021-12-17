@@ -2,11 +2,15 @@
 import { ChannelConfiguration } from './index';
 
 const camfilConfiguration: ChannelConfiguration = {
+  guestCheckout: true,
   countryCode: 'FR',
   currency: 'EUR',
   icmChannel: 'Camfil-CamfilFR-Site',
+  hideAddToBasketLightboxForNonLoggedInUser: true,
   showCountryFieldOnAddressForms: true,
   showAddToCamCardButtonForNonLoggedInUser: false,
+  showPricesForNonLoggedInUser: true,
+  preventCamCardERPIdValidation: true,
 };
 
 export default camfilConfiguration;

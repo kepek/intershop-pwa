@@ -1,8 +1,13 @@
 import { ChangeDetectionStrategy, Component, Input, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { combineLatest } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { ConfigurationService } from 'src/app/extensions/cam-configuration/services/configuration/configuration.service';
 
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
-import { Bucket } from 'ish-core/models/basket/bucket.model';
+import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
+import { Bucket } from 'ish-core/models/bucket/bucket.model';
+import { whenTruthy } from 'ish-core/utils/operators';
 import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
 
 import { CreateOrderProductModalComponent } from '../../../../extensions/cam-cards/shared/add-product-to-cart-modal/create-order-product-modal/create-order-product-modal.component';
@@ -16,10 +21,16 @@ import { CreateOrderProductModalComponent } from '../../../../extensions/cam-car
 export class CreateOrderButtonComponent {
   @Input() basketId: string;
   @Input() shippingMethodId: string;
+  @Input() isGuestCheckout = false;
 
   @ViewChild(CamfilSmallCtaModalComponent) modal: CamfilSmallCtaModalComponent;
 
-  constructor(public dialog: MatDialog, private checkoutFacade: CheckoutFacade) {}
+  constructor(
+    public dialog: MatDialog,
+    private checkoutFacade: CheckoutFacade,
+    private shoppingFacade: ShoppingFacade,
+    private configurationService: ConfigurationService
+  ) {}
 
   createVirtualOrder(virtualBucket: Bucket) {
     const bucket: Bucket = {
@@ -40,6 +51,20 @@ export class CreateOrderButtonComponent {
     this.checkoutFacade.addEmptyBucket(bucket);
     this.dialog.closeAll();
     this.openSuccessModal();
+  }
+
+  createGuestOrder() {
+    combineLatest([
+      this.configurationService.isEnabled('guestCheckout'),
+      this.checkoutFacade.basket$.pipe(map(basket => !!basket?.id)),
+    ])
+      .pipe(
+        map(([isGuestCheckout, hasBasketId]) => isGuestCheckout && !hasBasketId),
+        whenTruthy()
+      )
+      .subscribe(() => {
+        this.shoppingFacade.createBasket$();
+      });
   }
 
   openModal(modal: CreateOrderProductModalComponent) {

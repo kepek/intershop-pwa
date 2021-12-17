@@ -30,11 +30,11 @@ import { Product, ProductCompletenessLevel, ProductHelper } from 'ish-core/model
 import { ofProductUrl } from 'ish-core/routing/product/product.route';
 import { ProductsService } from 'ish-core/services/products/products.service';
 import { getCurrentLocale, setCurrentLocale } from 'ish-core/store/core/configuration';
-import { selectQueryParam, selectRouteParam } from 'ish-core/store/core/router';
+import { selectRouteParam } from 'ish-core/store/core/router';
 import { setBreadcrumbData } from 'ish-core/store/core/viewconf';
-import { getLoggedInCustomer, loginUserSuccess, setPGID } from 'ish-core/store/customer/user';
+import { getLoggedInCustomer, getUserLoading, loginUserSuccess, setPGID } from 'ish-core/store/customer/user';
 import { getServerConfigParameter } from 'ish-core/store/general/server-config';
-import { loadCategory } from 'ish-core/store/shopping/categories';
+import { getCategoryEntities, loadCategory } from 'ish-core/store/shopping/categories';
 import { setProductListingPages } from 'ish-core/store/shopping/product-listing';
 import { HttpStatusCodeService } from 'ish-core/utils/http-status-code/http-status-code.service';
 import {
@@ -74,6 +74,7 @@ import {
   getProductEntities,
   getSelectedProduct,
 } from './products.selectors';
+import { CategoryHelper } from 'ish-core/models/category/category.helper';
 
 @Injectable()
 export class ProductsEffects {
@@ -81,7 +82,9 @@ export class ProductsEffects {
     this.actions$.pipe(
       ofType(loadProduct),
       mapToPayloadProperty('sku'),
-      mergeMap(sku =>
+      withLatestFrom(this.store.pipe(select(getUserLoading))),
+      filter(([, loading]) => !loading),
+      mergeMap(([sku]) =>
         this.productsService.getProduct(sku).pipe(
           map(product => loadProductSuccess({ product })),
           mapErrorToAction(loadProductFail, { sku })
@@ -416,7 +419,7 @@ export class ProductsEffects {
         this.store.pipe(select(getLoggedInCustomer))
       ),
       filter(([, entities]) => !!Object.keys(entities).length),
-      concatMap(([, entities, { currency }, customer]) => {
+      mergeMap(([, entities, { currency }, customer]) => {
         const skus = Object.keys(entities);
         const customerId = customer.customerNo;
         return this.productsService.loadCustomerPrices(customerId, skus, currency).pipe(
@@ -430,28 +433,20 @@ export class ProductsEffects {
       })
     )
   );
-  /**
-   * extra getCategoryProducts when user on catPage after login (set PGID; onLoad),
-   * because of prices
-   */
-  logInOnCatPage$ = createEffect(() =>
+
+  refreshProductsWhenUnsetPGID$ = createEffect(() =>
     this.actions$.pipe(
       ofType(setPGID),
       mapToPayloadProperty('pgid'),
-      withLatestFrom(
-        this.store.pipe(select(selectRouteParam('categoryUniqueId'))),
-        this.store.pipe(select(selectQueryParam('page'))),
-        this.store.pipe(select(selectQueryParam('sorting')))
+      withLatestFrom(this.store.pipe(select(getCategoryEntities))),
+      map(([, entities]) =>
+        Object.values(entities)?.filter(entity => CategoryHelper.isCategoryCompletelyLoaded(entity))
       ),
-      filter(([, categoryId]) => !!categoryId),
-      map(([, categoryId, currentPage, sorting]) => {
-        const page = currentPage && Number(currentPage);
-        return loadProductsForCategory({ categoryId, page, sorting });
-      })
+      map(categories => categories?.map(category => category?.uniqueId)?.filter(Boolean)),
+      mergeMap(categoryIDs => categoryIDs.map(categoryId => loadProductsForCategory({ categoryId })))
     )
   );
 
-  // Fetch and update exisiting product entities when language is changed
   refreshProductsAfterLangChange$ = createEffect(() =>
     this.actions$.pipe(
       ofType(setCurrentLocale),

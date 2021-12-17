@@ -1,0 +1,95 @@
+{
+  "data": [
+    {
+      "basket": "oHYKAQFE28EAAAF8olQYAOTN",
+      "calculated": true,
+      "deliveryTimeMax": "P7D",
+      "deliveryTimeMin": "P3D",
+      "id": "573323046",
+      "lineItems": [
+        "oBYKAQFEmH4AAAF8vZsYAOTN"
+      ],
+      "shipToAddress": "urn:address:basket:oHYKAQFE28EAAAF8olQYAOTN:7YgKAQFEy9oAAAF8MpMYAOTN",
+      "shippingCosts": {
+        "gross": {
+          "currency": "EUR",
+          "value": 0.00
+        },
+        "net": {
+          "currency": "EUR",
+          "value": 0.00
+        }
+      },
+      "shippingMethod": "STD_GROUND"
+    }
+  ],
+  "included": {
+    "shipToAddress": {
+      "urn:address:basket:oHYKAQFE28EAAAF8olQYAOTN:7YgKAQFEy9oAAAF8MpMYAOTN": {
+        "addressLine1": "Inkimäentie 111",
+        "city": "EURA",
+        "companyName1": "Euran Ilma ja Pelti",
+        "countryCode": "FI",
+        "eligibleInstallToAddress": true,
+        "eligibleInvoiceToAddress": true,
+        "eligibleServiceToAddress": true,
+        "eligibleShipFromAddress": true,
+        "eligibleShipToAddress": true,
+        "firstName": "Tero",
+        "id": "7YgKAQFEy9oAAAF8MpMYAOTN",
+        "lastName": "Sihvo",
+        "postalCode": "27510",
+        "urn": "urn:address:basket:oHYKAQFE28EAAAF8olQYAOTN:7YgKAQFEy9oAAAF8MpMYAOTN",
+        "usage": [
+          true,
+          true,
+          true,
+          true,
+          true
+        ]
+      }
+    },
+    "shippingMethod": {
+      "STD_GROUND": {
+        "attributes": [
+          {
+            "name": "description",
+            "type": "String"
+          },
+          {
+            "name": "displayName",
+            "type": "String",
+            "value": "Default Camfil Shipping Method"
+          },
+          {
+            "name": "shortName",
+            "type": "String"
+          }
+        ],
+        "digitalDelivery": false,
+        "id": "STD_GROUND",
+        "name": "Default Camfil Shipping Method",
+        "shippingInstructionsSupported": true
+      }
+    }
+  },
+  "infos": [
+    {
+      "code": "include.not_resolved.error",
+      "message": "The requested include <discounts> could not be provided.",
+      "parameters": {
+        "include": "discounts"
+      }
+    }
+  ],
+  "links": {
+    "self": {
+      "573323046": "https://ish35-cmflzicmint-lv.westeurope.cloudapp.azure.com/INTERSHOP/rest/WFS/Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/baskets/oHYKAQFE28EAAAF8olQYAOTN/buckets/573323046"
+    },
+    "included": {
+      "shipToAddress": {
+        "urn:address:basket:oHYKAQFE28EAAAF8olQYAOTN:7YgKAQFEy9oAAAF8MpMYAOTN": "https://ish35-cmflzicmint-lv.westeurope.cloudapp.azure.com/INTERSHOP/rest/WFS/Camfil-CamfilFI-Site/rest;loc=fi_FI;cur=EUR/baskets/oHYKAQFE28EAAAF8olQYAOTN/addresses/7YgKAQFEy9oAAAF8MpMYAOTN"
+      }
+    }
+  }
+}

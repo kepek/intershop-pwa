@@ -6,6 +6,7 @@ import { PriceItem } from 'ish-core/models/price-item/price-item.model';
 
 export interface PaymentMethod {
   id: string;
+  default?: boolean;
   displayName: string;
   serviceId: string;
   saveAllowed?: boolean;

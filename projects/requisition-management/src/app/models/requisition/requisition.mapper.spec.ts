@@ -80,6 +80,7 @@ describe('Requisition Mapper', () => {
           "totalProductQuantity": undefined,
           "totals": Object {
             "bucketSurchargeTotalsByType": undefined,
+            "discountTotal": undefined,
             "dutiesAndSurchargesTotal": undefined,
             "isEstimated": false,
             "itemRebatesTotal": undefined,

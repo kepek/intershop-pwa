@@ -15,7 +15,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, ReplaySubject, Subject } from 'rxjs';
 import { filter, startWith, take, takeUntil } from 'rxjs/operators';
 
-import { AccountFacade } from 'ish-core/facades/account.facade';
 import { AppFacade } from 'ish-core/facades/app.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { Category } from 'ish-core/models/category/category.model';
@@ -72,7 +71,6 @@ export const DEFAULT_CONFIGURATION: Readonly<ProductItemContainerConfiguration> 
 export class CamfilProductItemComponent implements OnInit, OnChanges, OnDestroy {
   constructor(
     private shoppingFacade: ShoppingFacade,
-    private accountFacade: AccountFacade,
     private appFacade: AppFacade,
     private router: Router,
     private activatedRoute: ActivatedRoute
@@ -121,10 +119,8 @@ export class CamfilProductItemComponent implements OnInit, OnChanges, OnDestroy 
   loading$: Observable<boolean>;
   productVariationOptions$: Observable<VariationOptionGroup[]>;
   isInCompareList$: Observable<boolean>;
-  isLoggedIn$: Observable<boolean>;
   hideAttributeName = false;
   currentLocale$: Observable<Locale>;
-  userPermissions$: Observable<string[]>;
   filterParams: string;
 
   private sku$ = new ReplaySubject<string>(1);
@@ -150,15 +146,11 @@ export class CamfilProductItemComponent implements OnInit, OnChanges, OnDestroy 
     this.isInCompareList$ = this.shoppingFacade.inCompareProducts$(this.sku$);
     this.isMobileView = this.deviceType === 'mobile';
 
-    this.isLoggedIn$ = this.accountFacade.isLoggedIn$;
-
     this.currentLocale$ = this.appFacade.currentLocale$;
 
     this.currentLocale$?.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(locale => {
       this.hideAttributeName = locale?.value === 'fi';
     });
-
-    this.userPermissions$ = this.accountFacade.userPermissions$.pipe(takeUntil(this.destroy$));
 
     this.activatedRoute.queryParams.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(params => {
       if (params.filters) {

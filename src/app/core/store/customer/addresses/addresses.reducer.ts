@@ -36,7 +36,7 @@ export interface AddressesState extends EntityState<Address> {
   error: HttpError;
   createdAddress: Address;
   zipCodes?: {
-    [code: string]: ZipCodeInfo;
+    [code: string]: ZipCodeInfo[];
   };
   zipCodesLoading?: boolean;
 }
@@ -104,7 +104,7 @@ export const addressesReducer = createReducer(
     ...state,
     zipCodes: {
       ...state.zipCodes,
-      [payload.codeInfo.zipCode]: payload.codeInfo,
+      [payload.codeInfo[0].zipCode]: payload.codeInfo,
     },
     zipCodesLoading: false,
   }))

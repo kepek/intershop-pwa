@@ -1,0 +1,87 @@
+{
+  "elements": [
+    {
+      "type": "SMBCustomer",
+      "customerNo": "120033",
+      "customerType": "SMB",
+      "preferredInvoiceToAddress": {
+        "type": "Address",
+        "urn": "urn:address:customer:vXMKAQFELS8AAAF4fWAh4_ju:4UoKAQFEcqAAAAF4h2Ah4_ju",
+        "id": "4UoKAQFEcqAAAAF4h2Ah4_ju",
+        "addressName": "Ahlsell Oy",
+        "companyName1": "Ahlsell Oy",
+        "addressLine1": "Kallionopontie 1",
+        "postalCode": "05620",
+        "countryCode": "FI",
+        "city": "HYVINKÄÄ",
+        "usage": [
+          true
+        ],
+        "street": "Kallionopontie 1",
+        "invoiceToAddress": true,
+        "shipToAddress": false,
+        "shipFromAddress": false,
+        "serviceToAddress": false,
+        "installToAddress": false,
+        "company": "Ahlsell Oy"
+      },
+      "companyName": "Ahlsell Oy",
+      "companyName2": "",
+      "taxationID": "",
+      "industry": "",
+      "description": "",
+      "id": "vXMKAQFELS8AAAF4fWAh4_ju",
+      "contacts": [
+        {
+          "type": "Contact",
+          "profileId": "dPgKAQFEpIcAAAF4qHQh4_ju",
+          "email": "tero.sihvo@ahlsell.fi",
+          "firstName": "Tero",
+          "lastName": "Sihvo",
+          "erpId": "CO-012407",
+          "login": "84a80c18-3ad2-e511-80dd-d89d67630e38"
+        },
+        {
+          "type": "Contact",
+          "profileId": "eoEKAQFEj.oAAAF4lHMh4_ju",
+          "email": "sami.pylvalainen@ahlsell.fi",
+          "firstName": "Sami",
+          "lastName": "Pylväläinen",
+          "erpId": "CO-050480",
+          "login": "6b852a1e-3ad2-e511-80dc-6c3be5beee0c"
+        },
+        {
+          "type": "Contact",
+          "profileId": "0YkKAQFElegAAAF4EHUh4_ju",
+          "email": "sisko.ojala@ahlsell.fi",
+          "firstName": "Sisko",
+          "lastName": "Ojala",
+          "erpId": "CO-057841",
+          "login": "b8b41339-493f-e911-a983-000d3a38a95d"
+        },
+        {
+          "type": "Contact",
+          "profileId": "q5QKAQFEiWwAAAF4YHQh4_ju",
+          "email": "niko.aavikko@ahlsell.fi",
+          "firstName": "Niko",
+          "lastName": "Aavikko",
+          "erpId": "CO-057953",
+          "login": "a4081835-8234-e611-80e7-6c3be5beee0c"
+        },
+        {
+          "type": "Contact",
+          "profileId": "TV8KAQFEejgAAAF5S18Swj0G",
+          "email": "olli.valila@ahlsell.fi",
+          "firstName": "Olli",
+          "lastName": "Välilä",
+          "erpId": "CO-058804",
+          "login": "628bdab0-7351-ea11-a812-000d3a25bb0d"
+        }
+      ],
+      "department": "Test department",
+      "priceGroup": "gross",
+      "parent": true
+    }
+  ],
+  "type": "ResourceCollection"
+}

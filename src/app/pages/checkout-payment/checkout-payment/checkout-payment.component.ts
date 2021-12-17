@@ -62,6 +62,35 @@ export class CheckoutPaymentComponent implements OnInit, OnChanges, OnDestroy {
 
   constructor(private route: ActivatedRoute) {}
 
+  get parameterForm(): FormGroup {
+    return this.paymentForm.get('parameters') as FormGroup;
+  }
+
+  /**
+   * Determine whether there are payment methods present
+   * for usage in template
+   */
+  get hasPaymentMethods() {
+    return this.filteredPaymentMethods && this.filteredPaymentMethods.length > 0;
+  }
+
+  get paymentRedirectRequired() {
+    return (
+      this.basket.payment.capabilities &&
+      this.basket.payment.capabilities.includes('RedirectBeforeCheckout') &&
+      this.basket.payment.redirectUrl &&
+      this.basket.payment.redirectRequired
+    );
+  }
+
+  get nextDisabled() {
+    return (!this.basket || !this.basket.payment) && this.nextSubmitted;
+  }
+
+  get submitDisabled() {
+    return this.paymentForm.invalid && this.formSubmitted;
+  }
+
   /**
    * create payment form
    */
@@ -91,14 +120,6 @@ export class CheckoutPaymentComponent implements OnInit, OnChanges, OnDestroy {
     });
   }
 
-  get parameterForm(): FormGroup {
-    return this.paymentForm.get('parameters') as FormGroup;
-  }
-
-  private getBasketPayment(): string {
-    return this.basket && this.basket.payment ? this.basket.payment.paymentInstrument.id : '';
-  }
-
   ngOnChanges(c: SimpleChanges) {
     this.setPaymentSelectionFromBasket(c);
 
@@ -106,21 +127,6 @@ export class CheckoutPaymentComponent implements OnInit, OnChanges, OnDestroy {
       // copy objects for runtime checks because formly modifies them, TODO: refactor
       this.filteredPaymentMethods = this.paymentMethods && this.paymentMethods.map(x => JSON.parse(JSON.stringify(x)));
     }
-  }
-
-  /**
-   * Reset payment selection with current values from basket
-   * Should be used for initialization when basket data is changed
-   * invoked by `ngOnChanges()`, important in case of an error
-   */
-  private setPaymentSelectionFromBasket(c: SimpleChanges) {
-    if (c.basket && !this.paymentForm) {
-      return;
-    }
-
-    this.paymentForm.get('name').setValue(this.getBasketPayment(), { emitEvent: false });
-    this.openFormIndex = -1; // close parameter form after successfully basket changed
-    this.parameterForm.reset();
   }
 
   /**
@@ -144,14 +150,6 @@ export class CheckoutPaymentComponent implements OnInit, OnChanges, OnDestroy {
       );
     }
     return false;
-  }
-
-  /**
-   * Determine whether there are payment methods present
-   * for usage in template
-   */
-  get hasPaymentMethods() {
-    return this.filteredPaymentMethods && this.filteredPaymentMethods.length > 0;
   }
 
   /**
@@ -239,25 +237,27 @@ export class CheckoutPaymentComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
-  get paymentRedirectRequired() {
-    return (
-      this.basket.payment.capabilities &&
-      this.basket.payment.capabilities.includes('RedirectBeforeCheckout') &&
-      this.basket.payment.redirectUrl &&
-      this.basket.payment.redirectRequired
-    );
-  }
-
-  get nextDisabled() {
-    return (!this.basket || !this.basket.payment) && this.nextSubmitted;
-  }
-
-  get submitDisabled() {
-    return this.paymentForm.invalid && this.formSubmitted;
-  }
-
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  private getBasketPayment(): string {
+    return this.basket && this.basket.payment ? this.basket.payment.paymentInstrument.id : '';
+  }
+
+  /**
+   * Reset payment selection with current values from basket
+   * Should be used for initialization when basket data is changed
+   * invoked by `ngOnChanges()`, important in case of an error
+   */
+  private setPaymentSelectionFromBasket(c: SimpleChanges) {
+    if (c.basket && !this.paymentForm) {
+      return;
+    }
+
+    this.paymentForm.get('name').setValue(this.getBasketPayment(), { emitEvent: false });
+    this.openFormIndex = -1; // close parameter form after successfully basket changed
+    this.parameterForm.reset();
   }
 }

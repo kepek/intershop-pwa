@@ -1,0 +1,13 @@
+@import '~src/styles/themes/camfil/variables';
+@import '~src/styles/themes/camfil/mixins';
+@import '~src/styles/themes/camfil/colors';
+
+:host {
+  .mat-form-field {
+    max-width: 156px;
+  }
+
+  .mat-form-field + .mat-form-field {
+    margin-left: $space-sm;
+  }
+}

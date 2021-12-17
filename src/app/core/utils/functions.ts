@@ -47,3 +47,15 @@ export function mergeDeep(target, source) {
   }
   return output;
 }
+
+/**
+ * Interpolate params in string template.
+ * @param template
+ * @param params
+ */
+export const interpolateParams = (template: string, params: Record<string, string | number> = {}) =>
+  Object.entries(params).reduce((res, [key, value]) => {
+    const mainRe = new RegExp(`(?<!\\\\){{\\s*${key}\\s*}}`, 'g');
+    const escapeRe = new RegExp(`\\\\({{\\s*${key}\\s*}})`, 'g');
+    return res.replace(mainRe, value.toString()).replace(escapeRe, '$1');
+  }, template);

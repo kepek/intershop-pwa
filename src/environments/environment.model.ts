@@ -200,4 +200,8 @@ export const ENVIRONMENT_DEFAULTS: Environment = {
   iccToken: 'NOT SET',
   iccTokenHeaderKey: 'Ocp-Apim-Subscription-Key',
   iccServer: 'ICC',
+
+  /* Mocks for Demo */
+
+  apiMockPaths: ['^products/fake_13450027'],
 };

@@ -27,7 +27,6 @@ import {
 @Component({ template: '' })
 // tslint:disable-next-line: component-creation-test project-structure
 export abstract class CamAhuAbstractComponent implements OnInit, OnDestroy {
-  isLoggedIn$: Observable<boolean>;
   ahuManufacturers$: Observable<Manufacturer[]>;
   ahuManufacturersLoading$: Observable<boolean>;
   ahuManufacturersError$: Observable<HttpError>;
@@ -62,8 +61,6 @@ export abstract class CamAhuAbstractComponent implements OnInit, OnDestroy {
   protected destroy$ = new Subject();
 
   init() {
-    // Is LoggedIn?
-    this.isLoggedIn$ = this.accountFacade.isLoggedIn$;
     // AHU-Manufacturers
     this.ahuManufacturers$ = this.ahuFacade.ahuManufacturers$;
     this.ahuManufacturersLoading$ = this.ahuFacade.ahuManufacturersLoading$;

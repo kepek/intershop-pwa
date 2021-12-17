@@ -222,11 +222,27 @@ describe('Customer Store', () => {
               sku: "test"
               quantity: 1
               shippingMethod: "STD_GROUND"
-            [Basket Internal] Add Items To Basket from CamCard:
+            [Basket Internal] Add Items To Basket:
               items: [{"sku":"test","quantity":1,"shippingMethod":"STD_GROUND","u...
+            [Basket API] Add Items To Basket Success:
+              info: undefined
+            [Products Internal] Load Product:
+              sku: "test"
             [Basket Internal] Load Basket
-            [Basket API] Load Basket Addresses
-            [Basket API] Add Items To Basket from CamCard Success
+            [Products API] Load Product Success:
+              product: {"name":"test","shortDescription":"test","longDescription":"...
+            [Basket API] Load Basket Success:
+              basket: {"id":"test","lineItems":[1]}
+            [Products Internal] Update Product:
+              sku: "test"
+              changes: {}
+            [Basket] Load Buckets
+            [Basket Internal] Validate Basket:
+              scopes: ["CamfilInfo"]
+            [Basket API] Validate Basket and continue with success:
+              targetRoute: undefined
+              basketValidation: {"basket":{"id":"test","lineItems":[1]},"results":{"valid":t...
+            [Basket] Load Buckets
           `);
           done();
         }, 1000);
@@ -249,8 +265,15 @@ describe('Customer Store', () => {
             customer: {"isBusinessCustomer":false,"customerNo":"test"}
             user: {"title":"","firstName":"test","lastName":"test","phoneHome"...
           [Basket API] Check Current Basket
-          [Basket API] Merge two baskets Success:
+          [Basket API] Load Basket Success:
             basket: {"id":"test","lineItems":[1]}
+          [Basket] Load Buckets
+          [Basket Internal] Validate Basket:
+            scopes: ["CamfilInfo"]
+          [Basket API] Validate Basket and continue with success:
+            targetRoute: undefined
+            basketValidation: {"basket":{"id":"test","lineItems":[1]},"results":{"valid":t...
+          [Basket] Load Buckets
         `);
       });
 
@@ -261,7 +284,7 @@ describe('Customer Store', () => {
           [Basket] Validate Basket and continue checkout:
             targetStep: 1
           [Basket API] Validate Basket and continue with success:
-            targetRoute: "/checkout"
+            targetRoute: "/checkout/address"
             basketValidation: {"basket":{"id":"test","lineItems":[1]},"results":{"valid":t...
           [Basket] Load Buckets
         `);

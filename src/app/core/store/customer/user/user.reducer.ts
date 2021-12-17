@@ -151,10 +151,13 @@ export const userReducer = createReducer(
       error: undefined,
     };
   }),
-  on(setPGID, (state: UserState, action) => ({
-    ...state,
-    pgid: action.payload.pgid,
-  })),
+  on(setPGID, (state: UserState, action) => {
+    const { pgid } = action.payload;
+    return {
+      ...state,
+      pgid,
+    };
+  }),
   on(loadUserPaymentMethodsSuccess, (state: UserState, action) => ({
     ...state,
     paymentMethods: action.payload.paymentMethods,

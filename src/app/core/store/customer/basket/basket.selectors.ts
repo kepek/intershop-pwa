@@ -45,6 +45,10 @@ export const getCurrentBasket = createSelector(
   (basket, validationResults, basketInfo): BasketView => createBasketView(basket.basket, validationResults, basketInfo)
 );
 
+export const getCurrentBasketId = createSelector(getBasketState, basket =>
+  basket.basket ? basket.basket.id : undefined
+);
+
 export const getSubmittedBasket = createSelector(
   getBasketState,
   getBasketValidationResults,
@@ -53,8 +57,8 @@ export const getSubmittedBasket = createSelector(
     createBasketView(basket.submittedBasket, validationResults, basketInfo)
 );
 
-export const getCurrentBasketId = createSelector(getBasketState, basket =>
-  basket.basket ? basket.basket.id : undefined
+export const getSubmittedBasketId = createSelector(getBasketState, basket =>
+  basket.submittedBasket ? basket.submittedBasket.id : undefined
 );
 
 export const getBasketLoading = createSelector(getBasketState, basket => basket.loading);
@@ -123,7 +127,7 @@ export const isProductsReadyToPlaceOrder = createSelector(
       return lastAdded ? added && updated : true;
     }
 
-    return true;
+    return validation.valid;
   }
 );
 
@@ -149,3 +153,17 @@ export const getBucketsVolumeDiscounts = createSelector(getBasketState, basket =
 export const getProductAddingError = createSelector(getBasketState, basket => basket.error);
 
 export const getFailedCamCardName = createSelector(getBasketState, basket => basket.failedCamCardName);
+
+export const getAnonymousBasketExtensions = createSelector(
+  getBasketState,
+  /* tslint:disable:no-string-literal */
+  basket => basket.basket?.basketExtensions?.[0]?.guestBasket
+);
+
+export const getSubmittedAnonymousBasketExtensions = createSelector(
+  getBasketState,
+  /* tslint:disable:no-string-literal */
+  basket => basket.submittedBasket?.basketExtensions?.[0]?.guestBasket
+);
+
+export const getSubmittedBuckets = createSelector(getBasketState, basket => basket.submittedBuckets);

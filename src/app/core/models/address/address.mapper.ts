@@ -1,6 +1,5 @@
 import { CamCard } from 'src/app/extensions/cam-cards/models/cam-card/cam-card.model';
 
-import { Locale } from 'ish-core/models/locale/locale.model';
 import { ZipCodeData, ZipCodeInfo } from 'ish-core/models/zip-codes/zip-codes.interface';
 
 import { AddressData } from './address.interface';
@@ -74,26 +73,17 @@ export class AddressMapper {
       throw new Error(`'camCard' is required for the mapping`);
     }
   }
-  static zipCodefromData(
-    code: string,
-    data: ZipCodeData[],
-    { value }: Locale,
-    countryFromChannel: string
-  ): ZipCodeInfo {
+  static zipCodefromData(code: string, data: ZipCodeData[]): ZipCodeInfo[] {
     if (!data.length) {
-      return { city: undefined, zipCode: code };
+      return [{ city: undefined, zipCode: code }];
     }
 
-    const info =
-      data.find(el => el.language === value.toUpperCase()) ||
-      data.find(el => el.language === countryFromChannel) ||
-      data[0];
-
-    return {
-      id: info.cityAlias || info.cityId,
-      city: info.cityId,
-      country: info.countryRegionId,
-      zipCode: info.zipCode || code,
-    };
+    return data.map(item => ({
+      id: item.cityAlias || item.cityId,
+      city: item.cityId,
+      country: item.countryRegionId,
+      zipCode: item.zipCode || code,
+      language: item.language,
+    }));
   }
 }

@@ -1,0 +1,267 @@
+{
+  "data": [
+    {
+      "capabilities": [
+        "RedirectBeforeCheckout"
+      ],
+      "default": false,
+      "description": "Pay with the great credit cards.",
+      "displayName": "ISH Demo Credit Card",
+      "id": "ISH_CREDITCARD",
+      "parameterDefinitions": [
+        {
+          "constraints": {
+            "pattern": {
+              "message": "The credit card number must be 13 to 16 numeric characters long.",
+              "regexp": "\\d{13,16}"
+            },
+            "required": {
+              "message": "The credit card number is missing."
+            }
+          },
+          "displayName": "Card Number",
+          "hidden": false,
+          "name": "creditCardNumber",
+          "type": "string",
+          "updatable": false
+        },
+        {
+          "constraints": {
+            "required": {
+              "message": "The credit card type is missing."
+            }
+          },
+          "displayName": "Card Type",
+          "hidden": false,
+          "name": "creditCardType",
+          "options": [
+            {
+              "displayName": "American Express",
+              "id": "amx"
+            },
+            {
+              "displayName": "Master Card",
+              "id": "mas"
+            },
+            {
+              "displayName": "Visa",
+              "id": "vsa"
+            },
+            {
+              "displayName": "Discover",
+              "id": "dcv"
+            },
+            {
+              "displayName": "JCB",
+              "id": "jcb"
+            }
+          ],
+          "type": "creditcardtype",
+          "updatable": false
+        },
+        {
+          "constraints": {
+            "pattern": {
+              "message": "The credit card expiration date must be 5 characters long and in the format nn/nn, where n is a number.",
+              "regexp": "[01]\\d/\\d{2}"
+            },
+            "required": {
+              "message": "The date of credit cards expiration is missing."
+            }
+          },
+          "description": "mm/yy",
+          "displayName": "Expiration Date",
+          "hidden": false,
+          "name": "creditCardExpiryDate",
+          "type": "string",
+          "updatable": false
+        }
+      ],
+      "restricted": false,
+      "saveAllowed": true,
+      "serviceID": "ISH_CREDITCARD"
+    },
+    {
+      "capabilities": [
+        "RedirectAfterCheckout"
+      ],
+      "default": false,
+      "description": "You will be redirected to the ISH Online Pay page after you submit your order.",
+      "displayName": "ISH Demo Online Pay",
+      "id": "ISH_ONLINEPAY",
+      "paymentInstruments": [
+        "ISH_ONLINEPAY"
+      ],
+      "restricted": false,
+      "saveAllowed": true,
+      "serviceID": "ISH_ONLINEPAY"
+    },
+    {
+      "default": false,
+      "description": "Just pay your order directly when it gets delivered!",
+      "displayName": "Cash on Delivery",
+      "id": "ISH_CASH_ON_DELIVERY",
+      "paymentInstruments": [
+        "ISH_CASH_ON_DELIVERY"
+      ],
+      "restricted": false,
+      "saveAllowed": true,
+      "serviceID": "ISH_CASH_ON_DELIVERY"
+    },
+    {
+      "default": false,
+      "description": "The easy way to pay...",
+      "displayName": "Direct Debit Transfer",
+      "id": "ISH_DEBIT_TRANSFER",
+      "parameterDefinitions": [
+        {
+          "constraints": {
+            "pattern": {
+              "message": "The name of the account holder is invalid. The name must have a minimum length of 2 characters and must not contain any special characters.",
+              "regexp": "^[^0-9_!¡?÷?¿\\\\+=@#$%ˆ&*(){}|~<>;:]{2,}$"
+            },
+            "required": {
+              "message": "The name of the account holder is missing."
+            }
+          },
+          "displayName": "Account Holder",
+          "hidden": false,
+          "name": "holder",
+          "type": "string",
+          "updatable": false
+        },
+        {
+          "constraints": {
+            "required": {
+              "message": "The IBAN (International Bank Account Number) is missing."
+            },
+            "size": {
+              "max": 34,
+              "message": "The IBAN (International Bank Account Number) must have a length of 15 to 34 characters.",
+              "min": 15
+            }
+          },
+          "displayName": "IBAN",
+          "hidden": false,
+          "name": "IBAN",
+          "type": "string",
+          "updatable": false
+        },
+        {
+          "constraints": {
+            "pattern": {
+              "message": "The BIC (Bank Identifier Code) must have a length of 8 or 11 characters.",
+              "regexp": "([A-Z0-9]{11}|[A-Z0-9]{8})"
+            }
+          },
+          "displayName": "BIC",
+          "hidden": false,
+          "name": "BIC",
+          "type": "string",
+          "updatable": false
+        }
+      ],
+      "restricted": false,
+      "saveAllowed": false,
+      "serviceID": "ISH_DEBIT_TRANSFER"
+    },
+    {
+      "default": false,
+      "description": "Paying by invoice is easy and comfortable - give it a try!",
+      "displayName": "Invoice",
+      "id": "ISH_INVOICE",
+      "paymentInstruments": [
+        "ISH_INVOICE"
+      ],
+      "restricted": false,
+      "saveAllowed": true,
+      "serviceID": "ISH_INVOICE"
+    },
+    {
+      "capabilities": [
+        "LimitedTender"
+      ],
+      "default": false,
+      "displayName": "Gift Card / Certificate",
+      "id": "ISH_GIFT_CARD",
+      "parameterDefinitions": [
+        {
+          "constraints": {
+            "size": {
+              "max": 11,
+              "message": "The gift card/certificate number must not exceed 11 characters.",
+              "min": 0
+            }
+          },
+          "displayName": "Gift Card / Certificate Number",
+          "hidden": false,
+          "name": "giftCardNumber",
+          "type": "string",
+          "updatable": false
+        },
+        {
+          "constraints": {
+            "size": {
+              "max": 4,
+              "message": "The gift card PIN must not exceed 4 characters.",
+              "min": 0
+            }
+          },
+          "displayName": "PIN",
+          "hidden": false,
+          "name": "giftCardPIN",
+          "type": "string",
+          "updatable": false
+        }
+      ],
+      "restricted": false,
+      "saveAllowed": false,
+      "serviceID": "ISH_GIFT_CARD"
+    },
+    {
+      "default": false,
+      "displayName": "Cash in Advance",
+      "id": "ISH_CASH_IN_ADVANCE",
+      "paymentInstruments": [
+        "ISH_CASH_IN_ADVANCE"
+      ],
+      "restricted": false,
+      "saveAllowed": true,
+      "serviceID": "ISH_CASH_IN_ADVANCE"
+    },
+    {
+      "capabilities": [
+        "FastCheckout",
+        "RedirectBeforeCheckout"
+      ],
+      "default": false,
+      "displayName": "ISH Demo Fast Pay",
+      "id": "ISH_FASTPAY",
+      "paymentInstruments": [
+        "ISH_FASTPAY"
+      ],
+      "restricted": false,
+      "saveAllowed": true,
+      "serviceID": "ISH_FASTPAY"
+    }
+  ],
+  "included": {
+    "paymentInstruments": {
+      "ISH_CASH_ON_DELIVERY": {
+        "id": "ISH_CASH_ON_DELIVERY"
+      },
+      "ISH_FASTPAY": {
+        "id": "ISH_FASTPAY"
+      },
+      "ISH_CASH_IN_ADVANCE": {
+        "id": "ISH_CASH_IN_ADVANCE"
+      },
+      "ISH_INVOICE": {
+        "id": "ISH_INVOICE"
+      },
+      "ISH_ONLINEPAY": {
+        "id": "ISH_ONLINEPAY"
+      }
+    }
+  }
+}

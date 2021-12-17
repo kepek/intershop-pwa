@@ -25,9 +25,16 @@ import { OrderService } from 'ish-core/services/order/order.service';
 import { displayErrorMessage, displaySuccessMessage } from 'ish-core/store/core/messages';
 import { ofUrl, selectQueryParams, selectRouteParam } from 'ish-core/store/core/router';
 import { setBreadcrumbData } from 'ish-core/store/core/viewconf';
-import { continueCheckoutWithIssues, getCurrentBasketId, loadBasket } from 'ish-core/store/customer/basket';
+import {
+  continueCheckoutWithIssues,
+  getCurrentBasketId,
+  getSubmittedBasket,
+  loadBasket,
+} from 'ish-core/store/customer/basket';
 import { getLoggedInUser } from 'ish-core/store/customer/user';
 import { mapErrorToAction, mapToPayload, mapToPayloadProperty, whenTruthy } from 'ish-core/utils/operators';
+
+import { TrackingService } from '../../../../extensions/tracking/services/tracking.service';
 
 import {
   createOrder,
@@ -43,7 +50,6 @@ import {
   selectOrder,
   selectOrderAfterRedirect,
   selectOrderAfterRedirectFail,
-  setCreatedOrderId,
 } from './orders.actions';
 import { getOrder, getSelectedOrder, getSelectedOrderId } from './orders.selectors';
 
@@ -90,7 +96,7 @@ export class OrdersEffects {
           ) {
             location.assign(order.orderCreation.stopAction.redirectUrl);
           } else {
-            // this.router.navigate(['/checkout/receipt']); // we need to disable this action because of custom checkout behaviour in Camfil
+            this.router.navigate(['/checkout/receipt']); // we need to disable this action because of custom checkout behaviour in Camfil
           }
         })
       ),
@@ -276,21 +282,23 @@ export class OrdersEffects {
       )
     )
   );
-  setCreatedOrderIdAfterOrderCreation$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(createOrderSuccess),
-      mapToPayloadProperty('order'),
-      map(order =>
-        setCreatedOrderId({
-          orderId: order.id,
-        })
-      )
-    )
+
+  trackOrder$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(createOrderSuccess),
+        withLatestFrom(this.store.select(getSubmittedBasket)),
+        map(([, submittedBasket]) => submittedBasket),
+        whenTruthy(),
+        tap(submittedBasket => this.trackingService.trackOrder(submittedBasket))
+      ),
+    { dispatch: false }
   );
 
   constructor(
     private actions$: Actions,
     private orderService: OrderService,
+    private trackingService: TrackingService,
     private router: Router,
     @Inject(PLATFORM_ID) private platformId: string,
     private store: Store,

@@ -13,6 +13,7 @@ import { AddressFormContainerComponent } from 'ish-shared/address-forms/componen
 import { AddressFormFactory } from 'ish-shared/address-forms/components/address-form/address-form.factory';
 import { AddressFormFactoryProvider } from 'ish-shared/address-forms/configurations/address-form-factory.provider';
 import { ContentIncludeComponent } from 'ish-shared/cms/components/content-include/content-include.component';
+import { CamfilCityFieldComponent } from 'ish-shared/components/common/camfil-city-field/camfil-city-field.component';
 import { CamfilErrorMessageComponent } from 'ish-shared/components/common/camfil-error-message/camfil-error-message.component';
 import { CamfilHeaderBoxComponent } from 'ish-shared/components/common/camfil-header-box/camfil-header-box.component';
 import { CamfilModalDialogComponent } from 'ish-shared/components/common/camfil-modal-dialog/camfil-modal-dialog.component';
@@ -48,6 +49,7 @@ describe('Camfil Apply Form Component', () => {
         CamfilHeaderBoxComponent,
         CamfilSmallCtaModalComponent,
         MockComponent(AddressFormContainerComponent),
+        MockComponent(CamfilCityFieldComponent),
         MockComponent(CamfilErrorMessageComponent),
         MockComponent(CamfilModalDialogComponent),
         MockComponent(CheckboxComponent),

@@ -52,7 +52,7 @@
     <!-- Cart total -->
     <dt class="col-6 total-price">
       <span *ngIf="totals.isEstimated">{{ 'checkout.cart.estimated_total.label' | translate }}</span>
-      <span *ngIf="!totals.isEstimated">{{ totalPriceTranslation$ | async | translate }}</span>
+      <span *ngIf="!totals.isEstimated">{{ 'checkout.order.total_cost.label' | translate }}</span>
     </dt>
     <dd class="col-6 total-price">{{ totals.total | ishPrice: 'gross' }}</dd>
 

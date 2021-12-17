@@ -1,30 +1,58 @@
 <div class="camfil-checkout-header">
-  <h1 class="d-flex align-items-center" *ngIf="!isConfirmed">
-    <mat-icon svgIcon="cart" class="size-37"></mat-icon> &nbsp;
-    {{ 'shopping_cart.proceed_to_checkout.button.label' | translate }}
-  </h1>
-  <h1 class="d-flex align-items-center" *ngIf="isConfirmed">
-    {{ 'camfil.checkout.confirmation.title' | translate }}
-  </h1>
-  <div class="row align-items-end" *ngIf="!isConfirmed">
-    <div class="col-md-3" *ngIf="buckets">
-      <p>
-        <span>{{ 'camfil.checkout.number_of_orders' | translate }}:</span>
-        <span class="checkout-header-number">{{ buckets?.length }}</span>
-      </p>
-      <p>
-        <span>{{ 'camfil.checkout.number_of_products' | translate }}:</span>
-        <span class="checkout-header-number">{{ quantity }}</span>
-      </p>
+
+  <ng-container *ngIf="!(isLoggedIn$ | async)">
+    <ng-container *ngTemplateOutlet="guest"></ng-container>
+  </ng-container>
+
+  <ng-container *ngIf="(isLoggedIn$ | async)">
+    <ng-container *ngTemplateOutlet="default"></ng-container>
+  </ng-container>
+
+  <ng-template #guest>
+    <h1 class="d-flex align-items-center">
+      <mat-icon *ngIf="!isSubmitted" class="size-37" svgIcon="cart"></mat-icon> &nbsp;
+      {{ (isSubmitted ? 'camfil.checkout.confirmation.title' : 'shopping_cart.proceed_to_checkout.button.label') | translate }}
+    </h1>
+
+    <div *ngIf="!isSubmitted" class="row align-items-end">
+      <div class="col-md-3">
+        <p>
+          <span>{{ 'camfil.checkout.number_of_products' | translate }}:</span>
+          <span class="checkout-header-number">{{ quantity }}</span>
+        </p>
+      </div>
     </div>
-    <div class="col-md-9">
-      <div *ngIf="buckets">
+  </ng-template>
+
+  <ng-template #default>
+    <h1 class="d-flex align-items-center">
+      <mat-icon *ngIf="!isSubmitted" class="size-37" svgIcon="cart"></mat-icon> &nbsp;
+      {{ (isSubmitted ? 'camfil.checkout.confirmation.title' : 'shopping_cart.proceed_to_checkout.button.label') | translate }}
+    </h1>
+
+    <div *ngIf="!isSubmitted" class="row align-items-end">
+      <div class="col-md-3">
+        <p>
+          <span>{{ 'camfil.checkout.number_of_orders' | translate }}:</span>
+          <span class="checkout-header-number">{{ buckets?.length }}</span>
+        </p>
+        <p>
+          <span>{{ 'camfil.checkout.number_of_products' | translate }}:</span>
+          <span class="checkout-header-number">{{ quantity }}</span>
+        </p>
+      </div>
+      <div class="col-md-9">
         <camfil-checkout-toolbar
+          [basketId]="basket?.id"
           [buckets]="buckets"
-          [basketId]="basket.id"
-          [shippingMethodId]="basket.commonShippingMethod?.id"
+          [isGuestCheckout]="!(isLoggedIn$ | async)"
+          [shippingMethodId]="basket?.commonShippingMethod?.id"
         ></camfil-checkout-toolbar>
       </div>
     </div>
-  </div>
+
+  </ng-template>
+
 </div>
+
+<mat-divider></mat-divider>
