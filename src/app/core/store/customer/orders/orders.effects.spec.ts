@@ -8,6 +8,7 @@ import { Action, Store } from '@ngrx/store';
 import { TranslateModule } from '@ngx-translate/core';
 import { cold, hot } from 'jest-marbles';
 import { Observable, noop, of, throwError } from 'rxjs';
+import { loadCamCards } from 'src/app/extensions/cam-cards/store/cam-card';
 import { anyString, anything, instance, mock, verify, when } from 'ts-mockito';
 
 import { BasketFeedback } from 'ish-core/models/basket-feedback/basket-feedback.model';
@@ -123,8 +124,10 @@ describe('Orders Effects', () => {
       const newOrder = { id: basketId } as Order;
       const action = createOrder();
       const completion = createOrderSuccess({ order: newOrder });
-      actions$ = hot('-a-a-a', { a: action });
-      const expected$ = cold('-c-c-c', { c: completion });
+      const completion2 = loadCamCards();
+
+      actions$ = hot('-a----a----a', { a: action });
+      const expected$ = cold('-(cd)-(cd)-(cd)', { c: completion, d: completion2 });
 
       expect(effects.createOrder$).toBeObservable(expected$);
     });

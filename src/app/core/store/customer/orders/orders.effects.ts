@@ -20,6 +20,7 @@ import {
   tap,
   withLatestFrom,
 } from 'rxjs/operators';
+import { loadCamCards } from 'src/app/extensions/cam-cards/store/cam-card';
 
 import { OrderService } from 'ish-core/services/order/order.service';
 import { displayErrorMessage, displaySuccessMessage } from 'ish-core/store/core/messages';
@@ -27,6 +28,7 @@ import { ofUrl, selectQueryParams, selectRouteParam } from 'ish-core/store/core/
 import { setBreadcrumbData } from 'ish-core/store/core/viewconf';
 import {
   continueCheckoutWithIssues,
+  getCurrentBasket,
   getCurrentBasketId,
   getSubmittedBasket,
   loadBasket,
@@ -72,7 +74,16 @@ export class OrdersEffects {
         }
 
         return createOrder$.pipe(
-          map(order => createOrderSuccess({ order })),
+          withLatestFrom(this.store.select(getCurrentBasket)),
+          mergeMap(([order, { basketExtensions }]) => {
+            const create = [createOrderSuccess({ order }), loadCamCards()];
+
+            if (basketExtensions?.find(e => !e.createdFromCamCardId)) {
+              create.slice(0, 1);
+            }
+
+            return create;
+          }),
           mapErrorToAction(createOrderFail)
         );
       })
