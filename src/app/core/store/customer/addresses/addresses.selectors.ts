@@ -1,6 +1,7 @@
 import { createSelector } from '@ngrx/store';
 
 import { ZipCodeInfo } from 'ish-core/models/zip-codes/zip-codes.interface';
+import { getCountryCodeByChannel } from 'ish-core/store/core/configuration';
 import { getCustomerState } from 'ish-core/store/customer/customer-store';
 
 import { addressAdapter } from './addresses.reducer';
@@ -20,4 +21,10 @@ export const getZipCodes = createSelector(getAddressesState, addresses => addres
 export const getZipCodesLoading = createSelector(getAddressesState, addresses => addresses.zipCodesLoading);
 
 export const getZipCode = (code: string) =>
-  createSelector(getZipCodes, (zipCodes): ZipCodeInfo[] => zipCodes && zipCodes[code]);
+  createSelector(getCountryCodeByChannel, getZipCodes, (country, zipCodes): ZipCodeInfo[] => {
+    let list = zipCodes && zipCodes[code];
+    if (country && list?.find(c => c.language === country)) {
+      list = list.filter(c => c.language === country);
+    }
+    return list;
+  });
