@@ -38,6 +38,7 @@ export class ZipCodeComponent implements OnInit, OnDestroy {
   zipCodesError = false;
   formField: AbstractControl;
   countryByChannel: string;
+  checkOnInit = false;
   private destroy$ = new Subject();
 
   constructor(private accountFacade: AccountFacade, private appFacade: AppFacade, private cdRef: ChangeDetectorRef) {}
@@ -51,6 +52,7 @@ export class ZipCodeComponent implements OnInit, OnDestroy {
     this.formField = this.form.controls[this.fieldName];
 
     if (this.checkOnInitObj) {
+      this.checkOnInit = true;
       this.checkZipCode();
     }
   }
@@ -82,13 +84,18 @@ export class ZipCodeComponent implements OnInit, OnDestroy {
             if (data?.length > 1) {
               if (cityOnList) {
                 this.form.patchValue({ citySelect: city, [this.fieldCity]: city });
-                this.submitEmitter.emit();
+                if (!this.checkOnInit) {
+                  this.submitEmitter.emit();
+                }
               } else {
                 this.form.patchValue({ citySelect: '', [this.fieldCity]: '' });
               }
             } else {
+              const ccCity = this.form.get(this.fieldCity).value;
               this.form.patchValue({ citySelect: '', [this.fieldCity]: city });
-              this.submitEmitter.emit();
+              if (!this.checkOnInit || ccCity !== city) {
+                this.submitEmitter.emit();
+              }
             }
             this.cdRef.detectChanges();
           } else {
@@ -100,6 +107,7 @@ export class ZipCodeComponent implements OnInit, OnDestroy {
               }
             });
           }
+          this.checkOnInit = false;
         });
     }
   }
