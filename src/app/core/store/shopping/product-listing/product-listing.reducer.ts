@@ -3,6 +3,7 @@ import { createReducer, on } from '@ngrx/store';
 
 import { ProductListingID, ProductListingType } from 'ish-core/models/product-listing/product-listing.model';
 import { ViewType } from 'ish-core/models/viewtype/viewtype.types';
+import { logoutUser } from 'ish-core/store/customer/user';
 import { loadProductsForFilter } from 'ish-core/store/shopping/filter';
 import {
   loadProductsForCategory,
@@ -85,6 +86,16 @@ export const productListingReducer = createReducer(
   on(setViewType, (state: ProductListingState, action) => ({ ...state, viewType: action.payload.viewType })),
   setLoadingOn(searchProducts, loadProductsForCategory, loadProductsForFilter, loadProductsForMaster),
   unsetLoadingAndErrorOn(searchProductsFail, loadProductsForCategoryFail, loadProductsForMasterFail),
+  on(logoutUser, (state: ProductListingState) => {
+    const entities = Object.entries(state.entities).reduce((acc, prod) => {
+      const { id, itemCount, sortableAttributes } = prod[1];
+      return { ...acc, [prod[0]]: { id, itemCount, sortableAttributes } };
+    }, {});
+    return {
+      ...state,
+      entities,
+    };
+  }),
   on(setProductListingPages, (state: ProductListingState, action) => {
     const pages =
       action.payload.pages ||

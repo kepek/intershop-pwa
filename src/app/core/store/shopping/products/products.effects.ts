@@ -32,7 +32,13 @@ import { ProductsService } from 'ish-core/services/products/products.service';
 import { getCurrentLocale, setCurrentLocale } from 'ish-core/store/core/configuration';
 import { selectRouteParam } from 'ish-core/store/core/router';
 import { setBreadcrumbData } from 'ish-core/store/core/viewconf';
-import { getLoggedInCustomer, getUserLoading, loginUserSuccess, setPGID } from 'ish-core/store/customer/user';
+import {
+  getLoggedInCustomer,
+  getUserLoading,
+  loginUserSuccess,
+  logoutUser,
+  setPGID,
+} from 'ish-core/store/customer/user';
 import { getServerConfigParameter } from 'ish-core/store/general/server-config';
 import { getCategoryEntities, loadCategory } from 'ish-core/store/shopping/categories';
 import { setProductListingPages } from 'ish-core/store/shopping/product-listing';
@@ -412,7 +418,7 @@ export class ProductsEffects {
   );
   loginUserSuccess$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(loginUserSuccess),
+      ofType(loginUserSuccess, logoutUser),
       withLatestFrom(
         this.store.pipe(select(getProductEntities)),
         this.store.pipe(select(getCurrentLocale)),
@@ -421,7 +427,7 @@ export class ProductsEffects {
       filter(([, entities]) => !!Object.keys(entities).length),
       mergeMap(([, entities, { currency }, customer]) => {
         const skus = Object.keys(entities);
-        const customerId = customer.customerNo;
+        const customerId = customer?.customerNo || '-';
         return this.productsService.loadCustomerPrices(customerId, skus, currency).pipe(
           mergeMap(products => [
             loadCustomerPricesSuccess({ customerId, products }),
