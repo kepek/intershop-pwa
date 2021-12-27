@@ -1,6 +1,6 @@
 import { HttpEvent, HttpHandler, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRouteSnapshot, Router } from '@angular/router';
 import { Store, select } from '@ngrx/store';
 import { Observable, noop } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -9,7 +9,7 @@ import { selectQueryParam } from 'ish-core/store/core/router';
 import { logoutUser } from 'ish-core/store/customer/user';
 import { ApiTokenService } from 'ish-core/utils/api-token/api-token.service';
 
-import { IdentityProvider } from './identity-provider.interface';
+import { IdentityProvider, TriggerReturnType } from './identity-provider.interface';
 
 @Injectable({ providedIn: 'root' })
 export class ICMIdentityProvider implements IdentityProvider {
@@ -36,7 +36,10 @@ export class ICMIdentityProvider implements IdentityProvider {
     });
   }
 
-  triggerLogin() {
+  // tslint:disable-next-line:force-jsdoc-comments
+  // @ts-ignore
+  // tslint:disable-next-line:no-unused
+  triggerLogin(route: ActivatedRouteSnapshot): TriggerReturnType {
     return true;
   }
 
