@@ -3,6 +3,8 @@ import { OAuthModule } from 'angular-oauth2-oidc';
 import { NgModuleWithProviders } from 'ng-mocks';
 import { noop } from 'rxjs';
 
+import { CAMFILIdentityProvider } from 'ish-core/identity-provider/camfil.identity-provider';
+
 import { Auth0IdentityProvider } from './identity-provider/auth0.identity-provider';
 import { ICMIdentityProvider } from './identity-provider/icm.identity-provider';
 import { IDENTITY_PROVIDER_IMPLEMENTOR, IdentityProviderFactory } from './identity-provider/identity-provider.factory';
@@ -25,6 +27,14 @@ import { IdentityProviderCapabilities } from './identity-provider/identity-provi
       useValue: {
         type: 'auth0',
         implementor: Auth0IdentityProvider,
+      },
+    },
+    {
+      provide: IDENTITY_PROVIDER_IMPLEMENTOR,
+      multi: true,
+      useValue: {
+        type: 'CAMFIL',
+        implementor: CAMFILIdentityProvider,
       },
     },
   ],
