@@ -71,14 +71,14 @@ export class PriceHelper {
 
   static totalPrice(items: LineItemView[], type = 'net'): Price {
     const getCurrency = element => element.price?.currency;
-    const getValue = element => element.totals?.total[type];
+    const getValue = element => element.totals?.total?.[type];
 
     return PriceHelper.getPrice(getCurrency, getValue, items);
   }
 
   static totalTax(items: LineItemView[]): Price {
-    const getCurrency = element => element.totals?.salesTaxTotal.currency;
-    const getValue = element => element.totals?.salesTaxTotal.value;
+    const getCurrency = element => element.totals?.salesTaxTotal?.currency;
+    const getValue = element => element.totals?.salesTaxTotal?.value;
 
     return PriceHelper.getPrice(getCurrency, getValue, items);
   }
@@ -92,7 +92,7 @@ export class PriceHelper {
 
   static discount(items: LineItemView[]): Price {
     const getCurrency = element => element.price?.currency;
-    const getValue = element => element.totals?.total.gross - element.totals?.undiscountedTotal.gross;
+    const getValue = element => element.totals?.total.gross - element.totals?.undiscountedTotal?.gross;
 
     return PriceHelper.getPrice(getCurrency, getValue, items);
   }

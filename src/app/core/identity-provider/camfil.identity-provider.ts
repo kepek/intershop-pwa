@@ -29,15 +29,16 @@ export class CAMFILIdentityProvider extends ICMIdentityProvider implements Ident
   }
 
   triggerLogin(route: ActivatedRouteSnapshot) {
-    const hasAccessToken = route.queryParamMap.has(CamfilIdentityParams.AccessToken);
-
     let accessToken = route.queryParamMap.get(CamfilIdentityParams.AccessToken);
-    accessToken = accessToken?.split(' ')?.join('+');
+    // token is not encoded by ICM URL, so we need to reinsert '+'
+    accessToken = decodeURIComponent(accessToken?.replace(/\s/g, '+'));
 
-    const hasErpEmployeeId = route.queryParamMap.has(CamfilIdentityParams.ERPEmployeeID);
+    let hasAccessToken = route.queryParamMap.has(CamfilIdentityParams.AccessToken);
+    hasAccessToken = hasAccessToken && accessToken !== 'null';
 
-    let erpEmployeeId = route.queryParamMap.get(CamfilIdentityParams.ERPEmployeeID);
-    erpEmployeeId = erpEmployeeId === 'null' ? undefined : erpEmployeeId;
+    const erpEmployeeId = decodeURIComponent(route.queryParamMap.get(CamfilIdentityParams.ERPEmployeeID));
+    let hasErpEmployeeId = route.queryParamMap.has(CamfilIdentityParams.ERPEmployeeID);
+    hasErpEmployeeId = hasErpEmployeeId && erpEmployeeId !== 'null';
 
     const returnUrl = route?.queryParamMap?.get(CamfilIdentityParams.ReturnUrl) || '/home';
 
@@ -48,6 +49,7 @@ export class CAMFILIdentityProvider extends ICMIdentityProvider implements Ident
 
     // initiate the user login with the access-token (cXML)
     if (hasAccessToken) {
+      this.apiTokenService.removeApiToken();
       this.accountFacade.loginUserWithToken(accessToken);
     }
 
