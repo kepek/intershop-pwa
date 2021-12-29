@@ -1,4 +1,4 @@
-import { isPlatformBrowser } from '@angular/common';
+import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 import { HttpErrorResponse, HttpEvent, HttpHandler, HttpRequest, HttpResponse } from '@angular/common/http';
 import { ApplicationRef, Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { Router } from '@angular/router';
@@ -47,7 +47,7 @@ export class ApiTokenService {
 
   constructor(
     private cookiesService: CookiesService,
-    @Inject(PLATFORM_ID) platformId: string,
+    @Inject(PLATFORM_ID) private platformId: string,
     private router: Router,
     private store: Store,
     appRef: ApplicationRef
@@ -85,7 +85,7 @@ export class ApiTokenService {
           if (cookieContent) {
             cookiesService.put('apiToken', cookieContent, {
               expires: new Date(Date.now() + 3600000),
-              secure: (isPlatformBrowser(platformId) && location.protocol === 'https:') || false,
+              secure: true,
             });
           } else {
             cookiesService.remove('apiToken');
@@ -133,6 +133,9 @@ export class ApiTokenService {
   }
 
   restore$(types: ApiTokenCookieType[] = ['user', 'basket', 'order']): Observable<boolean> {
+    if (isPlatformServer(this.platformId)) {
+      return of(true);
+    }
     return timer(500, 200).pipe(
       filter(() => this.router.navigated),
       first(),
@@ -167,31 +170,6 @@ export class ApiTokenService {
     );
   }
 
-  removeApiToken() {
-    this.apiToken$.next(undefined);
-  }
-
-  intercept(req: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    return this.appendAuthentication(req).pipe(
-      concatMap(request =>
-        next.handle(request).pipe(
-          catchError(err => {
-            if (this.isAuthTokenError(err)) {
-              this.invalidateApiToken();
-
-              // retry request without auth token
-              const retryRequest = request.clone({ headers: request.headers.delete(ApiService.TOKEN_HEADER_KEY) });
-              // timer introduced for testability
-              return timer(500).pipe(switchMapTo(next.handle(retryRequest)));
-            }
-            return throwError(err);
-          }),
-          tap(event => this.setTokenFromResponse(event))
-        )
-      )
-    );
-  }
-
   private parseCookie() {
     const cookieContent = this.cookiesService.get('apiToken');
     if (cookieContent) {
@@ -209,6 +187,10 @@ export class ApiTokenService {
       console.warn('do not use setApiToken to unset token, use remove or invalidate instead');
     }
     this.apiToken$.next(apiToken);
+  }
+
+  removeApiToken() {
+    this.apiToken$.next(undefined);
   }
 
   private invalidateApiToken() {
@@ -233,11 +215,8 @@ export class ApiTokenService {
       if (apiToken) {
         if (apiToken.startsWith('AuthenticationTokenOutdated') || apiToken.startsWith('AuthenticationTokenInvalid')) {
           this.invalidateApiToken();
-        } else if (!event.url.endsWith('/configurations')) {
-          // This is required for login on behalf work correctly
-          this.store.pipe(select(getUserAuthorized), whenTruthy(), take(1)).subscribe(() => {
-            this.setApiToken(apiToken);
-          });
+        } else if (!event.url.endsWith('/configurations') && !event.url.endsWith('/contact')) {
+          this.setApiToken(apiToken);
         }
       }
     }
@@ -251,6 +230,27 @@ export class ApiTokenService {
           : req
       ),
       first()
+    );
+  }
+
+  intercept(req: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+    return this.appendAuthentication(req).pipe(
+      concatMap(request =>
+        next.handle(request).pipe(
+          catchError(err => {
+            if (this.isAuthTokenError(err)) {
+              this.invalidateApiToken();
+
+              // retry request without auth token
+              const retryRequest = request.clone({ headers: request.headers.delete(ApiService.TOKEN_HEADER_KEY) });
+              // timer introduced for testability
+              return timer(500).pipe(switchMapTo(next.handle(retryRequest)));
+            }
+            return throwError(err);
+          }),
+          tap(event => this.setTokenFromResponse(event))
+        )
+      )
     );
   }
 }
