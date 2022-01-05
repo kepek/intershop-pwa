@@ -3,6 +3,7 @@ import { createReducer, on } from '@ngrx/store';
 
 import { CallParameters } from 'ish-core/models/call-parameters/call-parameters.model';
 import { ContentPageletEntryPoint } from 'ish-core/models/content-pagelet-entry-point/content-pagelet-entry-point.model';
+import { flushCmsData } from 'ish-core/store/content/includes';
 
 import { loadViewContextEntrypointSuccess } from './viewcontexts.actions';
 
@@ -38,5 +39,6 @@ export const viewcontextsReducer = createReducer(
     return {
       ...viewcontextsAdapter.upsertOne({ ...entrypoint, viewContextId, callParameters }, state),
     };
-  })
+  }),
+  on(flushCmsData, () => ({ ...initialState }))
 );

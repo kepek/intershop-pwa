@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { Store, select } from '@ngrx/store';
+import { ActionType, Store, select } from '@ngrx/store';
 import { identity } from 'rxjs';
-import { filter, groupBy, map, mapTo, mergeMap, switchMap, take, tap, withLatestFrom } from 'rxjs/operators';
+import { filter, groupBy, map, mergeMap, switchMap, withLatestFrom } from 'rxjs/operators';
 
 import { CMSService } from 'ish-core/services/cms/cms.service';
+import { getAllViewcontextsBasicInfo, loadViewContextEntrypoint } from 'ish-core/store/content/viewcontexts';
 import { setCurrentLocale } from 'ish-core/store/core/configuration';
 import { selectPath } from 'ish-core/store/core/router';
 import { loginUserSuccess } from 'ish-core/store/customer/user';
-import { mapErrorToAction, mapToPayloadProperty, whenTruthy } from 'ish-core/utils/operators';
+import { mapErrorToAction, mapToPayloadProperty } from 'ish-core/utils/operators';
 
 import {
   flushCmsData,
@@ -39,20 +40,33 @@ export class IncludesEffects {
     )
   );
 
-  reloadCmsData$ = createEffect(() => {
-    const contentIncludeIds$ = this.store.pipe(select(getAllContentIncludeIds), whenTruthy(), take(1));
-    return this.actions$.pipe(
+  reloadCmsData$ = createEffect(() =>
+    this.actions$.pipe(
       ofType(setCurrentLocale, loginUserSuccess),
       withLatestFrom(this.store.pipe(select(selectPath))),
       filter(([{ payload }, login]) => login === 'login' || payload.hasOwnProperty('lang')),
-      mapTo(flushCmsData()),
-      tap(() => {
-        contentIncludeIds$.subscribe(includeIds => {
+      withLatestFrom(
+        this.store.pipe(select(getAllContentIncludeIds)),
+        this.store.pipe(select(getAllViewcontextsBasicInfo))
+      ),
+      mergeMap(([, includeIds, infos]) => {
+        // tslint:disable-next-line: no-any
+        const actions = [flushCmsData()] as ActionType<any>[];
+
+        if (includeIds.length) {
           includeIds.forEach(includeId => {
-            this.store.dispatch(loadContentInclude({ includeId }));
+            actions.push(loadContentInclude({ includeId }));
           });
-        });
+        }
+
+        if (infos.length) {
+          infos.forEach(({ viewContextId, callParameters }) => {
+            actions.push(loadViewContextEntrypoint({ viewContextId, callParameters }));
+          });
+        }
+
+        return actions;
       })
-    );
-  });
+    )
+  );
 }

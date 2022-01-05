@@ -1,6 +1,7 @@
 import { createReducer, on } from '@ngrx/store';
 
 import { CategoryTree, CategoryTreeHelper } from 'ish-core/models/category-tree/category-tree.model';
+import { setCurrentLocale } from 'ish-core/store/core/configuration';
 
 import {
   loadCategoryFail,
@@ -35,5 +36,19 @@ export const categoriesReducer = createReducer(
   on(loadCategoryFail, (state: CategoriesState) => ({
     ...state,
   })),
-  on(loadCategorySuccess, loadTopLevelCategoriesSuccess, updateCategorySuccess, mergeCategories)
+  on(loadCategorySuccess, loadTopLevelCategoriesSuccess, updateCategorySuccess, mergeCategories),
+  on(setCurrentLocale, (state: CategoriesState) => {
+    const nodes = Object.entries(state.categories.nodes).reduce(
+      (acc, item) => ({ ...acc, [item[0]]: { ...item[1], completenessLevel: 1 } }),
+      {}
+    );
+
+    return {
+      ...state,
+      categories: {
+        ...state.categories,
+        nodes,
+      },
+    };
+  })
 );
