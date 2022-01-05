@@ -12,6 +12,7 @@
         [attr.data-testing-id]="'decrease-' + controlName"
         [attr.id]="isInLineItem ? 'decrease-' + lineItemId : null"
         (focus)="setFocusedElement($event.target)"
+        (keydown)="$event.preventDefault()"
       >
         <mat-icon svgIcon="minus"></mat-icon>
       </button>
@@ -38,6 +39,7 @@
         [attr.data-testing-id]="'increase-' + controlName"
         [attr.id]="isInLineItem ? 'increase-' + lineItemId : null"
         (focus)="setFocusedElement($event.target)"
+        (keydown)="$event.preventDefault()"
       >
         <mat-icon svgIcon="plus"></mat-icon>
       </button>
