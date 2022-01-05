@@ -18,3 +18,7 @@ const getViewContextMemoized = (viewContextId: string, callParameters: CallParam
 
 export const getViewContext = (viewContextId: string, callParameters: CallParameters) =>
   createSelector(getViewContextMemoized(viewContextId, callParameters), createContentPageletEntryPointView);
+
+export const getAllViewcontextsBasicInfo = createSelector(getViewContextEntities, entities =>
+  Object.values(entities).map(({ viewContextId, callParameters }) => ({ viewContextId, callParameters }))
+);

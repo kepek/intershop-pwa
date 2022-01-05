@@ -40,6 +40,5 @@ export const includesReducer = createReducer(
   }),
   on(flushCmsData, () => ({
     ...initialState,
-    loading: false,
   }))
 );
