@@ -44,7 +44,7 @@ export class CAMFILIdentityProvider extends ICMIdentityProvider implements Ident
 
     // check for required start parameters before doing anything
     if (!hasAccessToken) {
-      return false;
+      return true;
     }
 
     // initiate the user login with the access-token (cXML)
