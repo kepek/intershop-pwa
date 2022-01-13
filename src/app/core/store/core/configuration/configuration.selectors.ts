@@ -1,8 +1,10 @@
+// tslint:disable-next-line: ish-ordered-imports
 import { createSelector, createSelectorFactory, defaultMemoize } from '@ngrx/store';
 import { isEqual } from 'lodash-es';
 
 import { Channel } from 'ish-core/models/channel/channel.types';
 import { getCoreState } from 'ish-core/store/core/core-store';
+import { getServerConfigParameter } from 'ish-core/store/general/server-config';
 
 import { ConfigurationState } from './configuration.reducer';
 
@@ -58,10 +60,12 @@ export const getCurrentLocale = createSelector(
   getLang,
   getAvailableLocales,
   getCountryCodeByChannel,
-  (lang, availableLocales, countryCode) =>
-    availableLocales.find(l => l.lang === lang) ||
-    availableLocales.find(l => l.value === countryCode?.toLowerCase()) ||
-    availableLocales[0]
+  getServerConfigParameter<string>('general.defaultLocale'),
+  (lang, availableLocales, countryCode, defaultLocale) =>
+    availableLocales?.find(l => l.lang === lang) ??
+    availableLocales?.find(l => l.value === countryCode?.toLowerCase()) ??
+    availableLocales?.find(l => l.lang === defaultLocale) ??
+    availableLocales?.[0]
 );
 
 export const getCurrencyByChannel = createSelector(getCurrentLocale, locale => locale?.currency);

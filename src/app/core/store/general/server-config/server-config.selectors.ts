@@ -2,9 +2,9 @@ import { createSelector } from '@ngrx/store';
 
 import { getGeneralState } from 'ish-core/store/general/general-store';
 
-const getServerConfigState = createSelector(getGeneralState, state => state.serverConfig);
+const getServerConfigState = createSelector(getGeneralState, state => state?.serverConfig);
 
-const getServerConfig = createSelector(getServerConfigState, state => state._config);
+const getServerConfig = createSelector(getServerConfigState, state => state?._config);
 
 export const isServerConfigurationLoaded = createSelector(getServerConfig, serverConfig => !!serverConfig);
 
