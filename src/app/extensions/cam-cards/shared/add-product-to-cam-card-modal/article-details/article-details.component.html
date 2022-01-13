@@ -19,7 +19,12 @@
           <mat-label>{{ 'camfil.modal.addToCamcard.height.label' | translate }}</mat-label>
           <input (keyup)="validateVal()" formControlName="measurementHeight" matInput type="number" />
         </mat-form-field>
-
+        <ng-container *ngIf="depth">
+          <mat-form-field [formGroup]="quantityForm" appearance="outline">
+            <mat-label>{{ 'camfil.modal.addToCamcard.depth.label' | translate }}</mat-label>
+            <input matInput type="number" formControlName="measurementDepth" disabled />
+          </mat-form-field>
+        </ng-container>
         <div class="w-100">
           <div *ngIf="showError" class="text-danger">
             {{ 'camfil.modal.measurement.error' | translate: { '0': maxVal } }}
@@ -72,7 +77,12 @@
         <mat-label>{{ 'camfil.modal.addToCamcard.height.label' | translate }}</mat-label>
         <input (keyup)="validateVal()" formControlName="measurementHeight" matInput type="number" />
       </mat-form-field>
-
+      <ng-container *ngIf="depth">
+        <mat-form-field [formGroup]="quantityForm" appearance="outline">
+          <mat-label>{{ 'camfil.modal.addToCamcard.depth.label' | translate }}</mat-label>
+          <input matInput type="number" formControlName="measurementDepth" disabled />
+        </mat-form-field>
+      </ng-container>
       <div class="w-100">
         <div *ngIf="showError" class="text-danger">
           {{ 'camfil.modal.measurement.error' | translate: { '0': maxVal } }}

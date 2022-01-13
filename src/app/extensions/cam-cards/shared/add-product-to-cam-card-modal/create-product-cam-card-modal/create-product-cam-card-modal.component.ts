@@ -239,6 +239,7 @@ export class CreateProductCamCardModalComponent implements OnInit, OnDestroy {
       width: this.quantityForm.get('measurementWidth').value,
       height: this.quantityForm.get('measurementHeight').value,
       diameter: this.quantityForm.get('measurementDiameter').value,
+      depth: this.quantityForm.get('measurementDepth').value,
     };
 
     return {

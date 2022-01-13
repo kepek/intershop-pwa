@@ -1031,6 +1031,7 @@
   "camfil.modal.addToCamcard.camcard.sublist.title": "Lägg till i CamCard segment",
   "camfil.modal.addToCamcard.header": "Lägg till i CamCard",
   "camfil.modal.addToCamcard.height.label": "Höjd (mm)",
+  "camfil.modal.addToCamcard.depth.label": "sv_Depth (mm)",
   "camfil.modal.addToCamcard.measurement.choose.header": "Ange mått",
   "camfil.modal.addToCamcard.quantity.label": "Ändra antal",
   "camfil.modal.addToCamcard.success.button.continue": "Fortsätt söka",

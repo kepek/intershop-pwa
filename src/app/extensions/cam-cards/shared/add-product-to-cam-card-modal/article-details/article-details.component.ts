@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
 
@@ -12,7 +12,7 @@ import { Product, ProductHelper } from 'ish-core/models/product/product.model';
   styleUrls: ['./article-details.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ArticleDetailsComponent implements OnInit {
+export class ArticleDetailsComponent implements OnInit, OnChanges {
   @Input() product: Product;
   @Input() quantityForm: FormGroup;
   @Input() showProductName?: boolean;
@@ -26,6 +26,7 @@ export class ArticleDetailsComponent implements OnInit {
   filledMeasurements: any[];
   requiresMeasurement: boolean;
   filterArea: number;
+  depth: number;
   filterAreaValidated = true;
   validators = {
     boxLabel: [
@@ -45,6 +46,18 @@ export class ArticleDetailsComponent implements OnInit {
     this.requiresMeasurement = ProductHelper.getRequiresMeasurement(this.product);
     this.filterArea = ProductHelper.getFilterArea(this.product);
     this.measurementGlobalError$ = this.quantityForm.get('measurementErrorInfo')?.valueChanges;
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.product) {
+      const attributes =
+        this.product.attributeGroups?.[AttributeGroupTypes.ProductsListLabelAttributes]?.attributes ||
+        this.product.attributes ||
+        [];
+
+      this.depth = AttributeHelper.getAttributeValueByAttributeName(attributes, 'MediaDepth') || undefined;
+      this.quantityForm?.patchValue({ measurementDepth: this.depth });
+    }
   }
 
   get diameterDisabled() {

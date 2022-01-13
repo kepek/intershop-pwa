@@ -1031,6 +1031,7 @@
   "camfil.modal.addToCamcard.camcard.sublist.title": "Lisää tiettyyn Suodatinluettelo-osioon",
   "camfil.modal.addToCamcard.header": "Lisää Suodatinluetteloon",
   "camfil.modal.addToCamcard.height.label": "Korkeus (mm)",
+  "camfil.modal.addToCamcard.depth.label": "fi_Depth (mm)",
   "camfil.modal.addToCamcard.measurement.choose.header": "Valitse mitat",
   "camfil.modal.addToCamcard.quantity.label": "Muuta määrää",
   "camfil.modal.addToCamcard.success.button.continue": "Jatka selaamista",
