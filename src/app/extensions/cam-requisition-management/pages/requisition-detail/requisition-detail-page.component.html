@@ -1,0 +1,109 @@
+<div *ngIf="view$ | async as view">
+  <ng-container *ngIf="requisition$ | async as requisition">
+    <div class="d-flex align-items-center justify-content-between flex-wrap mb-2">
+      <div class="d-flex align-items-baseline approval-header-left__container">
+        <camfil-my-page-header>
+          <ng-container slot="back">
+            <button
+              mat-stroked-button
+              [routerLink]="['/account/requisitions/approver']"
+              queryParamsHandling="preserve"
+              color="primary"
+            >
+              <mat-icon class="mt-n1">arrow_left</mat-icon>
+              {{ 'approval.detailspage.links.return_to_approvals' | translate }}
+            </button>
+          </ng-container>
+          <ng-container slot="title">
+            {{ 'camfil.approval.detailspage.order.approval_id' | translate }} {{ requisition.requisitionNo }}
+          </ng-container>
+        </camfil-my-page-header>
+        <h1 class="requisition-detail-badge__header">
+          <span
+            class="border border-secondary badge badge-secondary text-capitalize"
+            [ngClass]="{
+              'border-warning badge-warning': requisition.approval.statusCode === 'PENDING',
+              'border-success badge-success': requisition.approval.statusCode === 'APPROVED',
+              'border-danger badge-danger': requisition.approval.statusCode === 'REJECTED'
+            }"
+          >
+            {{ requisition.approval.status | translate }}</span
+          >
+        </h1>
+      </div>
+      <ng-container *ngIf="view === 'approver'">
+        <div class="approval-header-right__container">
+          <ng-container *ngTemplateOutlet="approvalButtonBar; context: { requisition: requisition }"></ng-container>
+        </div>
+      </ng-container>
+    </div>
+  </ng-container>
+
+  <camfil-error-message [error]="error$ | async"></camfil-error-message>
+
+  <div
+    *ngIf="requisition$ | async as requisition"
+    class="section loading-container"
+    data-testing-id="order-summary-info"
+  >
+    <camfil-requisition-summary
+      [requisition]="requisition"
+      [view]="view"
+      [user]="user$ | async"
+      [userPermissions]="userPermissions$ | async"
+    ></camfil-requisition-summary>
+
+    <camfil-requisition-detail-toolbar
+      (openAddToProductModal)="openAddToProductModal($event)"
+      (removeSelectedProducts)="removeSelectedLineItems()"
+      (approveSelectedProducts)="approveSelectedLineItems()"
+      [requisition]="requisition"
+      [lineItemsChecked]="lineItemsChecked"
+    ></camfil-requisition-detail-toolbar>
+
+    <!-- Line Items -->
+    <camfil-requisition-line-item-table
+      [requisition]="requisition"
+      [lineItems]="requisition.lineItems"
+      [lineItemsChecked]="lineItemsChecked"
+      [deviceType]="deviceType$ | async"
+      (checkAllLineItems)="toggleAllLineItems($event)"
+      (removeSelectedProducts)="removeSelectedLineItems()"
+      (removeSelectedProduct)="removeSelectedLineItem($event)"
+    ></camfil-requisition-line-item-table>
+
+    <!-- <camfil-requisition-buyer-approval [requisition]="requisition"></camfil-requisition-buyer-approval> -->
+    <!-- order summary -->
+    <mat-card class="mb-3 clearfix">
+      <mat-card-content class="pl-2 pr-2 pb-4">
+        <div class="row">
+          <div class="col-12 col-md-6 offset-md-6">
+            <div class="cost-summary">
+              <camfil-basket-cost-summary [totals]="requisition.totals"></camfil-basket-cost-summary>
+            </div>
+          </div>
+        </div>
+        <mat-divider class="mb-3 horizontal-divider"></mat-divider>
+
+        <ng-container *ngTemplateOutlet="approvalButtonBar; context: { requisition: requisition }"></ng-container>
+      </mat-card-content>
+    </mat-card>
+
+    <camfil-loading *ngIf="loading$ | async"></camfil-loading>
+  </div>
+  <ng-template #approvalButtonBar let-requisition="requisition">
+    <div *ngIf="requisition.approval?.statusCode === 'PENDING' && view === 'approver'" class="text-right">
+      <button mat-stroked-button (click)="rejectDialog.show()">
+        {{ 'approval.detailspage.reject.button.label' | translate }}
+      </button>
+      <button (click)="approveRequisition()" mat-flat-button class="ml-2" color="primary">
+        {{ 'approval.detailspage.approve.button.label' | translate }}
+      </button>
+    </div>
+  </ng-template>
+
+  <camfil-requisition-reject-dialog
+    #rejectDialog
+    (submit)="rejectRequisition($event)"
+  ></camfil-requisition-reject-dialog>
+</div>

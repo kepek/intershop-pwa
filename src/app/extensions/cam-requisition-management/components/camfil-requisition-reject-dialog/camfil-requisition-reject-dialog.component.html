@@ -1,0 +1,45 @@
+<ng-template #modal let-rejectModal>
+  <div class="reject-modal__content mat-dialog-container">
+    <div class="reject-modal__header">
+      <h2 class="reject-modal__header--text">Please type in a reason in order to reject</h2>
+      <button
+        type="button"
+        class="close reject-modal__close-icon"
+        [title]="'dialog.close.text' | translate"
+        [attr.aria-label]="'dialog.close.text' | translate"
+        (click)="hide()"
+      >
+        <mat-icon svgIcon="inactive" aria-hidden="true"></mat-icon>
+      </button>
+    </div>
+
+    <div class="modal-body">
+      <form [formGroup]="rejectForm" (ngSubmit)="submitForm()">
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>{{ 'camfil.cam_card.product.comment.label' | translate }}</mat-label>
+          <textarea
+            formControlName="comment"
+            matInput
+            [camfilMaxLength]="'CustomerNote'"
+            class="overflow-hidden"
+            type="text"
+          ></textarea>
+          <camfil-error
+            [errorValidators]="validators.comment"
+            [errors]="getField('comment').errors"
+            [touched]="getField('comment').touched || getField('comment').dirty"
+          ></camfil-error>
+        </mat-form-field>
+      </form>
+    </div>
+
+    <div class="modal-footer">
+      <button mat-flat-button type="submit" (click)="submitForm()" [disabled]="formDisabled" color="primary">
+        {{ 'approval.rejectform.button.reject.label' | translate }}
+      </button>
+      <button mat-stroked-button class="ml-2" (click)="rejectModal.close('')">
+        {{ 'approval.rejectform.button.cancel.label' | translate }}
+      </button>
+    </div>
+  </div>
+</ng-template>

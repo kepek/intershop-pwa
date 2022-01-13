@@ -1,0 +1,394 @@
+{
+  "data": {
+    "approval": {
+      "approvalRequired": true,
+      "customerApproval": {
+        "approvers": [
+          {
+            "customer": "BioTech",
+            "email": "ckitera@test.intershop.de",
+            "firstName": "Conny",
+            "lastName": "Kitera"
+          },
+          {
+            "customer": "BioTech",
+            "email": "bassange@test.intershop.de",
+            "firstName": "Bernhard",
+            "lastName": "Assange"
+          }
+        ]
+      }
+    },
+    "approvalStatus": {
+      "type": "ApprovalStatus",
+      "status": "pending",
+      "statusCode": "PENDING",
+      "approver": {}
+    },
+    "buckets": ["-589653890"],
+    "commonShipToAddress": "urn:address:customer:cLEKKi8k9gQAAAF844lqow8n:A_gKKi8k93AAAAF89dhqow8z",
+    "commonShippingMethod": "STD_GROUND",
+    "creationDate": 1637749166176,
+    "customer": "BioTech",
+    "discounts": {
+      "freeGiftDiscounts": [
+        "GCIKCgoEuBEAAAF9M9dnlDL6_wycKKi8kUwMAAAF8hrtqow8z_qSUKKi8kg1MAAAF8gbtqow8z"
+      ]
+    },
+    "id": "GCIKCgoEuBEAAAF9M9dnlDL6",
+    "invoiceToAddress": "urn:address:customer:cLEKKi8k9gQAAAF844lqow8n:Jh8KKi8k93EAAAF89dhqow8z",
+    "lineItemCount": 4,
+    "lineItems": [
+      "QR0KCgoEKW4AAAF9YLBnlFFP",
+      "8GgKCgoE.XQAAAF9mLBnlFFP",
+      "4xQKCgoEloEAAAF9mpdnlFFz",
+      "XQAAAF9mLBnlFFPAAF9mpdnlFFz"
+    ],
+    "payments": ["78gKCgoEjroAAAF9cpdnlFFz"],
+    "purchaseCurrency": "EUR",
+    "requisitionNo": "00000062",
+    "totalGross": { "currency": "EUR", "value": 4765.81 },
+    "totalNet": { "currency": "EUR", "value": 4004.86 },
+    "totalProductQuantity": 8,
+    "totals": {
+      "grandTotal": {
+        "gross": { "currency": "EUR", "value": 4765.81 },
+        "net": { "currency": "EUR", "value": 4004.86 },
+        "tax": { "currency": "EUR", "value": 760.95 }
+      },
+      "paymentCostsTotal": {
+        "gross": { "currency": "EUR", "value": 0.0 },
+        "net": { "currency": "EUR", "value": 0.0 },
+        "tax": { "currency": "EUR", "value": 0.0 }
+      },
+      "undiscountedItemTotal": {
+        "gross": { "currency": "EUR", "value": 4726.98 },
+        "net": { "currency": "EUR", "value": 3972.23 }
+      },
+      "undiscountedShippingTotal": {
+        "gross": { "currency": "EUR", "value": 38.83 },
+        "net": { "currency": "EUR", "value": 32.63 },
+        "tax": { "currency": "EUR", "value": 6.2 }
+      },
+      "itemTotal": {
+        "gross": { "currency": "EUR", "value": 4726.98 },
+        "net": { "currency": "EUR", "value": 3972.23 }
+      },
+      "salesTaxTotalsByTaxRate": [
+        {
+          "calculatedTax": { "currency": "EUR", "value": 754.75 },
+          "effectiveTaxRate": 19.0,
+          "taxableAmount": { "currency": "EUR", "value": 754.75 }
+        }
+      ],
+      "shippingTaxTotalsByTaxRate": [
+        {
+          "calculatedTax": { "currency": "EUR", "value": 6.2 },
+          "effectiveTaxRate": 19.0,
+          "taxableAmount": { "currency": "EUR", "value": 32.63 }
+        }
+      ],
+      "shippingTotal": {
+        "gross": { "currency": "EUR", "value": 38.83 },
+        "net": { "currency": "EUR", "value": 32.63 }
+      },
+      "taxTotalsByTaxRate": [
+        {
+          "calculatedTax": { "currency": "EUR", "value": 760.95 },
+          "effectiveTaxRate": 19.0,
+          "taxableAmount": { "currency": "EUR", "value": 4004.86 }
+        }
+      ]
+    },
+    "user": "agoro@test.intershop.de",
+    "userBudgets": {
+      "type": "UserBudgets",
+      "orderSpentLimit": { "currency": "EUR", "value": 500 },
+      "remainingBudget": { "currency": "EUR", "value": 500 },
+      "budget": { "currency": "EUR", "value": 500 },
+      "budgetPeriod": "quarterly",
+      "remainingBudgetIncludingThisRequisition": {
+        "currency": "EUR",
+        "value": -4265.81
+      },
+      "spentBudgetIncludingThisRequisition": {
+        "currency": "EUR",
+        "value": 0.0
+      }
+    },
+    "userInformation": {
+      "customer": "BioTech",
+      "email": "agoro@test.intershop.de",
+      "firstName": "Al",
+      "lastName": "Goro",
+      "login": "agoro@test.intershop.de"
+    }
+  },
+  "included": {
+    "commonShipToAddress": {
+      "urn:address:customer:cLEKKi8k9gQAAAF844lqow8n:A_gKKi8k93AAAAF89dhqow8z": {
+        "addressLine1": "Am Platz der Kosmonauten 1",
+        "city": "Jena",
+        "companyName1": "Bio Tech",
+        "country": "Germany",
+        "countryCode": "DE",
+        "eligibleInstallToAddress": false,
+        "eligibleInvoiceToAddress": true,
+        "eligibleServiceToAddress": false,
+        "eligibleShipFromAddress": false,
+        "eligibleShipToAddress": true,
+        "firstName": "Mohamed",
+        "id": "A_gKKi8k93AAAAF89dhqow8z",
+        "lastName": "Ali",
+        "postalCode": "07745",
+        "urn": "urn:address:customer:cLEKKi8k9gQAAAF844lqow8n:A_gKKi8k93AAAAF89dhqow8z",
+        "usage": [true, true]
+      }
+    },
+    "commonShippingMethod": {
+      "STD_GROUND": {
+        "attributes": [
+          {
+            "name": "description",
+            "type": "String",
+            "value": "3-7 Day Ground - Delivered to you 3-7 business days after we process your order."
+          },
+          {
+            "name": "displayName",
+            "type": "String",
+            "value": "Standard Ground"
+          }
+        ],
+        "description": "3-7 Day Ground - Delivered to you 3-7 business days after we process your order.",
+        "digitalDelivery": false,
+        "id": "STD_GROUND",
+        "name": "Standard Ground",
+        "shippingInstructionsSupported": true
+      }
+    },
+    "discounts": {
+      "GCIKCgoEuBEAAAF9M9dnlDL6_wycKKi8kUwMAAAF8hrtqow8z_qSUKKi8kg1MAAAF8gbtqow8z": {
+        "id": "GCIKCgoEuBEAAAF9M9dnlDL6_wycKKi8kUwMAAAF8hrtqow8z_qSUKKi8kg1MAAAF8gbtqow8z",
+        "promotion": "FreeErgonomicWristRest"
+      }
+    },
+    "invoiceToAddress": {
+      "urn:address:customer:cLEKKi8k9gQAAAF844lqow8n:Jh8KKi8k93EAAAF89dhqow8z": {
+        "addressLine1": "Main Street 12",
+        "city": "Heidelberg",
+        "companyName1": "Bio Tech",
+        "country": "Germany",
+        "countryCode": "DE",
+        "eligibleInstallToAddress": false,
+        "eligibleInvoiceToAddress": true,
+        "eligibleServiceToAddress": false,
+        "eligibleShipFromAddress": false,
+        "eligibleShipToAddress": true,
+        "firstName": "Al",
+        "id": "Jh8KKi8k93EAAAF89dhqow8z",
+        "lastName": "Goro",
+        "postalCode": "53268",
+        "urn": "urn:address:customer:cLEKKi8k9gQAAAF844lqow8n:Jh8KKi8k93EAAAF89dhqow8z",
+        "usage": [true, true]
+      }
+    },
+    "lineItems": {
+      "QR0KCgoEKW4AAAF9YLBnlFFP": {
+        "calculated": true,
+        "freeGift": false,
+        "hiddenGift": false,
+        "id": "QR0KCgoEKW4AAAF9YLBnlFFP",
+        "position": 1,
+        "pricing": {
+          "giftingTotal": {},
+          "price": {
+            "gross": { "currency": "EUR", "value": 1142.38 },
+            "net": { "currency": "EUR", "value": 959.98 }
+          },
+          "salesTaxTotal": { "currency": "EUR", "value": 182.4 },
+          "shippingRebatesTotal": {},
+          "shippingTaxTotal": { "currency": "EUR", "value": 0.54 },
+          "singleBasePrice": {
+            "gross": { "currency": "EUR", "value": 571.19 },
+            "net": { "currency": "EUR", "value": 479.99 }
+          },
+          "undiscountedPrice": {
+            "gross": { "currency": "EUR", "value": 1142.38 },
+            "net": { "currency": "EUR", "value": 959.98 }
+          },
+          "undiscountedShippingTotal": {
+            "gross": { "currency": "EUR", "value": 3.37 },
+            "net": { "currency": "EUR", "value": 2.83 }
+          },
+          "undiscountedSingleBasePrice": {
+            "gross": { "currency": "EUR", "value": 571.19 },
+            "net": { "currency": "EUR", "value": 479.99 }
+          },
+          "valueRebatesTotal": {}
+        },
+        "product": "610150",
+        "quantity": { "value": 2 },
+        "requisition": "GCIKCgoEuBEAAAF9M9dnlDL6",
+        "shipToAddress": "urn:address:customer:cLEKKi8k9gQAAAF844lqow8n:A_gKKi8k93AAAAF89dhqow8z",
+        "shippingMethod": "STD_GROUND"
+      },
+      "4xQKCgoEloEAAAF9mpdnlFFz": {
+        "calculated": true,
+        "freeGift": true,
+        "hiddenGift": false,
+        "id": "4xQKCgoEloEAAAF9mpdnlFFz",
+        "position": 4,
+        "pricing": {
+          "giftingTotal": {},
+          "price": {
+            "gross": { "currency": "EUR", "value": 0.0 },
+            "net": { "currency": "EUR", "value": 0.0 }
+          },
+          "shippingRebatesTotal": {},
+          "singleBasePrice": {
+            "gross": { "currency": "EUR", "value": 0.0 },
+            "net": { "currency": "EUR", "value": 0.0 }
+          },
+          "undiscountedPrice": {
+            "gross": { "currency": "EUR", "value": 0.0 },
+            "net": { "currency": "EUR", "value": 0.0 }
+          },
+          "undiscountedShippingTotal": {},
+          "undiscountedSingleBasePrice": {
+            "gross": { "currency": "EUR", "value": 0.0 },
+            "net": { "currency": "EUR", "value": 0.0 }
+          },
+          "valueRebatesTotal": {}
+        },
+        "product": "600525",
+        "quantity": { "value": 1 },
+        "quantityFixed": true,
+        "requisition": "GCIKCgoEuBEAAAF9M9dnlDL6",
+        "shipToAddress": "urn:address:customer:cLEKKi8k9gQAAAF844lqow8n:A_gKKi8k93AAAAF89dhqow8z",
+        "shippingMethod": "STD_GROUND"
+      },
+      "8GgKCgoE.XQAAAF9mLBnlFFP": {
+        "calculated": true,
+        "freeGift": false,
+        "hiddenGift": false,
+        "id": "8GgKCgoE.XQAAAF9mLBnlFFP",
+        "position": 3,
+        "pricing": {
+          "giftingTotal": {},
+          "price": {
+            "gross": { "currency": "EUR", "value": 3584.6 },
+            "net": { "currency": "EUR", "value": 3012.25 }
+          },
+          "salesTaxTotal": { "currency": "EUR", "value": 572.35 },
+          "shippingRebatesTotal": {},
+          "shippingTaxTotal": { "currency": "EUR", "value": 5.66 },
+          "singleBasePrice": {
+            "gross": { "currency": "EUR", "value": 716.92 },
+            "net": { "currency": "EUR", "value": 602.45 }
+          },
+          "undiscountedPrice": {
+            "gross": { "currency": "EUR", "value": 3584.6 },
+            "net": { "currency": "EUR", "value": 3012.25 }
+          },
+          "undiscountedShippingTotal": {
+            "gross": { "currency": "EUR", "value": 35.46 },
+            "net": { "currency": "EUR", "value": 29.8 }
+          },
+          "undiscountedSingleBasePrice": {
+            "gross": { "currency": "EUR", "value": 716.92 },
+            "net": { "currency": "EUR", "value": 602.45 }
+          },
+          "valueRebatesTotal": {}
+        },
+        "product": "601760",
+        "quantity": { "value": 5 },
+        "requisition": "GCIKCgoEuBEAAAF9M9dnlDL6",
+        "shipToAddress": "urn:address:customer:cLEKKi8k9gQAAAF844lqow8n:A_gKKi8k93AAAAF89dhqow8z",
+        "shippingMethod": "STD_GROUND"
+      },
+      "XQAAAF9mLBnlFFPAAF9mpdnlFFz": {
+        "calculated": true,
+        "freeGift": true,
+        "hiddenGift": false,
+        "id": "XQAAAF9mLBnlFFPAAF9mpdnlFFz",
+        "position": 4,
+        "pricing": {
+          "giftingTotal": {},
+          "price": {
+            "gross": { "currency": "EUR", "value": 0.0 },
+            "net": { "currency": "EUR", "value": 0.0 }
+          },
+          "shippingRebatesTotal": {},
+          "singleBasePrice": {
+            "gross": { "currency": "EUR", "value": 0.0 },
+            "net": { "currency": "EUR", "value": 0.0 }
+          },
+          "undiscountedPrice": {
+            "gross": { "currency": "EUR", "value": 0.0 },
+            "net": { "currency": "EUR", "value": 0.0 }
+          },
+          "undiscountedShippingTotal": {},
+          "undiscountedSingleBasePrice": {
+            "gross": { "currency": "EUR", "value": 0.0 },
+            "net": { "currency": "EUR", "value": 0.0 }
+          },
+          "valueRebatesTotal": {}
+        },
+        "product": "200854",
+        "quantity": { "value": 5 },
+        "quantityFixed": true,
+        "requisition": "GCIKCgoEuBEAAAF9M9dnlDL6",
+        "shipToAddress": "urn:address:customer:cLEKKi8k9gQAAAF844lqow8n:A_gKKi8k93AAAAF89dhqow8z",
+        "shippingMethod": "STD_GROUND"
+      }
+    },
+    "payments": {
+      "78gKCgoEjroAAAF9cpdnlFFz": {
+        "baseAmount": { "currency": "EUR", "value": 4765.81 },
+        "id": "78gKCgoEjroAAAF9cpdnlFFz",
+        "openTender": true,
+        "paymentCosts": {
+          "gross": { "currency": "EUR", "value": 0.0 },
+          "net": { "currency": "EUR", "value": 0.0 },
+          "tax": { "currency": "EUR", "value": 0.0 }
+        },
+        "paymentInstrument": "ISH_INVOICE",
+        "paymentMethod": "ISH_INVOICE",
+        "redirectRequired": false,
+        "status": "Unprocessed",
+        "totalAmount": { "currency": "EUR", "value": 4765.81 }
+      }
+    },
+    "payments_paymentInstrument": { "ISH_INVOICE": { "id": "ISH_INVOICE" } },
+    "payments_paymentMethod": {
+      "ISH_INVOICE": {
+        "default": false,
+        "description": "Paying by invoice is easy and comfortable - give it a try!",
+        "displayName": "Invoice",
+        "id": "ISH_INVOICE",
+        "paymentInstruments": ["ISH_INVOICE"],
+        "restricted": false,
+        "saveAllowed": true,
+        "serviceID": "ISH_INVOICE"
+      }
+    }
+  },
+  "infos": [
+    {
+      "code": "include.not_resolved.error",
+      "message": "The requested include <lineItems_discounts> could not be provided.",
+      "parameters": { "include": "lineItems_discounts" }
+    }
+  ],
+  "links": {
+    "self": "http://pwa-public-demo.test.intershop.com/INTERSHOP/rest/WFS/inSPIRED-inTRONICS_Business-Site/rest;loc=en_US;cur=USD/customers/BioTech/users/agoro@test.intershop.de/requisitions/GCIKCgoEuBEAAAF9M9dnlDL6",
+    "included": {
+      "invoiceToAddress": {
+        "urn:address:customer:cLEKKi8k9gQAAAF844lqow8n:Jh8KKi8k93EAAAF89dhqow8z": "http://pwa-public-demo.test.intershop.com/INTERSHOP/rest/WFS/inSPIRED-inTRONICS_Business-Site/rest;loc=en_US;cur=USD/customers/cLEKKi8k9gQAAAF844lqow8n/addresses/Jh8KKi8k93EAAAF89dhqow8z"
+      },
+      "commonShipToAddress": {
+        "urn:address:customer:cLEKKi8k9gQAAAF844lqow8n:A_gKKi8k93AAAAF89dhqow8z": "http://pwa-public-demo.test.intershop.com/INTERSHOP/rest/WFS/inSPIRED-inTRONICS_Business-Site/rest;loc=en_US;cur=USD/customers/cLEKKi8k9gQAAAF844lqow8n/addresses/A_gKKi8k93AAAAF89dhqow8z"
+      }
+    }
+  }
+}

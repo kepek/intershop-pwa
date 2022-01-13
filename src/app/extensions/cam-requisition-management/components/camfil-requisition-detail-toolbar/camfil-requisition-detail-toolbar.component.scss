@@ -1,0 +1,15 @@
+@import '~src/styles/themes/camfil/colors.scss';
+@import '~src/styles/themes/camfil/mixins.scss';
+@import '~src/styles/themes/camfil/variables.scss';
+
+:host {
+  .aprroval-detail-toolbar__container {
+    @media (max-width: $screen-sm-max) {
+      display: flex;
+      overflow: scroll;
+      button {
+        min-width: 180px;
+      }
+    }
+  }
+}

@@ -1,0 +1,51 @@
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
+
+import { AppFacade } from 'ish-core/facades/app.facade';
+import { HttpError } from 'ish-core/models/http-error/http-error.model';
+import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
+
+import { CamRequisitionManagementFacade } from '../../facades/cam-requisition-management.facade';
+import { RequisitionContextFacade } from '../../facades/requisition-context.facade';
+
+@Component({
+  selector: 'camfil-approver-page',
+  templateUrl: './approver-page.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [RequisitionContextFacade],
+})
+export class ApproverPageComponent implements OnInit, OnDestroy {
+  error$: Observable<HttpError>;
+  loading$: Observable<boolean>;
+  deviceType$: Observable<DeviceType>;
+  view$: Observable<'buyer' | 'approver'>;
+  constructor(
+    private camRequisitionManagementFacade: CamRequisitionManagementFacade,
+    private context: RequisitionContextFacade,
+    private appFacade: AppFacade
+  ) {}
+
+  columnsToDisplay: string[];
+  private destroy$ = new Subject();
+
+  ngOnInit() {
+    this.error$ = this.camRequisitionManagementFacade.requisitionsError$;
+    this.view$ = this.context.select('view');
+    this.loading$ = this.camRequisitionManagementFacade.requisitionsLoading$;
+    this.deviceType$ = this.appFacade.deviceType$;
+    this.columnsToDisplay = [
+      'customerNumberAndName',
+      'orderNo',
+      'orderGoodsMark',
+      'creationDate',
+      'buyer',
+      'status',
+      'orderChannel',
+    ];
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+}

@@ -1,0 +1,23 @@
+<camfil-my-page-header>
+  <ng-container slot="back">
+    <button mat-stroked-button [routerLink]="['/account']" queryParamsHandling="preserve" color="primary">
+      <mat-icon class="mt-n1">arrow_left</mat-icon>
+      {{ 'camfil.approval_list.back_to_my_pages.text' | translate }}
+    </button>
+  </ng-container>
+  <ng-container slot="title">
+    {{ 'account.requisitions.approvals' | translate }}
+  </ng-container>
+</camfil-my-page-header>
+
+<div class="section loading-container">
+  <camfil-error-message [error]="error$ | async"></camfil-error-message>
+
+  <camfil-requisitions-list
+    [columnsToDisplay]="columnsToDisplay"
+    [deviceType]="deviceType$ | async"
+    [view]="view$ | async"
+  ></camfil-requisitions-list>
+
+  <camfil-loading *ngIf="loading$ | async"></camfil-loading>
+</div>

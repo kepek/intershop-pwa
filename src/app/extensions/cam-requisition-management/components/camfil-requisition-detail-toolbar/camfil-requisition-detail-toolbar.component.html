@@ -1,0 +1,40 @@
+<div class="aprroval-detail-toolbar__container mb-2">
+  <button type="button" mat-stroked-button class="mr-2" (click)="openActionModal(removeProductsModal)">
+    Delete product row
+  </button>
+  <button type="button" mat-stroked-button class="mr-2" (click)="showAddToProductModal(addNewProductModal)">
+    Add product row
+  </button>
+  <button type="button" mat-stroked-button class="mr-2" (click)="openActionModal(approveProductsModal)">
+    Approve product
+  </button>
+</div>
+
+<camfil-modal-add-new-product #addNewProductModal [addToRequisition]="true" [requisition]="requisition">
+</camfil-modal-add-new-product>
+
+<camfil-small-cta-modal
+  #removeProductsModal
+  (actionClicked)="removeProducts(removeProductsModal)"
+  [actionTemplate]="actionTemplate"
+  actionButtonTitle="{{ 'camfil.checkout.order.delete_order.modal.yes' | translate }}"
+  cancelButtonTitle="{{ 'camfil.checkout.order.delete_order.modal.no' | translate }}"
+  hideIcon="true"
+  showCloseIcon="true"
+>
+</camfil-small-cta-modal>
+
+<ng-template #actionTemplate>
+  <div>{{ 'camfil.checkout.order.delete_line_item.modal.subheading' | translate }}</div>
+</ng-template>
+
+<camfil-small-cta-modal
+  #approveProductsModal
+  (actionClicked)="approveProducts(approveProductsModal)"
+  [actionTemplate]="actionTemplate"
+  actionButtonTitle="{{ 'camfil.checkout.order.delete_order.modal.yes' | translate }}"
+  cancelButtonTitle="{{ 'camfil.checkout.order.delete_order.modal.no' | translate }}"
+  hideIcon="true"
+  showCloseIcon="true"
+>
+</camfil-small-cta-modal>

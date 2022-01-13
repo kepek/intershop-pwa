@@ -1,0 +1,278 @@
+<ng-container *ngIf="lineItems?.length">
+  <table
+    mat-table
+    *ngIf="!isMobileView"
+    [dataSource]="lineItemsProcessed"
+    matSort
+    matSortActive="rowNumber"
+    matSortDirection="asc"
+    class="w-100 mt-4 mb-2 box-shadow--dark"
+  >
+    <!-- Checkbox  Column -->
+    <ng-container matColumnDef="checkbox">
+      <th mat-header-cell *matHeaderCellDef>
+        <mat-checkbox color="primary" (click)="$event.stopPropagation()" (change)="toggleAllLineItems($event)">
+        </mat-checkbox>
+      </th>
+      <td mat-cell *matCellDef="let pli">
+        <mat-checkbox
+          color="primary"
+          (click)="$event.stopPropagation()"
+          (change)="toggleLineItemCheck(pli, $event)"
+          [checked]="isLineItemchecked(pli.id)"
+        >
+        </mat-checkbox>
+      </td>
+    </ng-container>
+
+    <!-- Row number  Column -->
+    <ng-container matColumnDef="rowNumber">
+      <th mat-header-cell *matHeaderCellDef>
+        {{ 'camfil.lineitem.table.row_number' | translate }}
+      </th>
+      <td mat-cell *matCellDef="let pli; let i = index">
+        {{ i + 1 }}
+      </td>
+    </ng-container>
+
+    <!-- Product thumbnail  Column -->
+    <ng-container matColumnDef="image">
+      <th mat-header-cell *matHeaderCellDef>Image</th>
+      <td mat-cell *matCellDef="let pli">
+        <div class="image">
+          <camfil-product-image
+            [imageView]="'default'"
+            [product]="product$(pli.productSKU) | async"
+            class="product-image"
+            imageType="images"
+          ></camfil-product-image>
+        </div>
+      </td>
+    </ng-container>
+
+    <!-- Product Name Column -->
+    <ng-container matColumnDef="articleName">
+      <th mat-header-cell *matHeaderCellDef>
+        {{ 'camfil.lineitem.table.product' | translate }}
+      </th>
+      <td mat-cell *matCellDef="let pli">
+        <div>
+          <camfil-product-title
+            [class]="'text-truncate'"
+            [product]="product$(pli.productSKU) | async"
+          ></camfil-product-title>
+        </div>
+      </td>
+    </ng-container>
+
+    <!-- Art Nr. Column -->
+    <ng-container matColumnDef="sku">
+      <th mat-header-cell *matHeaderCellDef>
+        {{ 'camfil.lineitem.table.art_nr' | translate }}
+      </th>
+      <td mat-cell *matCellDef="let pli">
+        {{ pli.productSKU }}
+      </td>
+    </ng-container>
+
+    <!-- Quickview Column -->
+    <ng-container matColumnDef="quickView">
+      <th mat-header-cell *matHeaderCellDef>Quick view</th>
+      <td mat-cell *matCellDef="let pli">
+        <camfil-product-quickview
+          [hideText]="true"
+          [product]="product$(pli.productSKU) | async"
+          class="d-inline-flex align-items-center"
+        ></camfil-product-quickview>
+      </td>
+    </ng-container>
+
+    <!-- In stock Column -->
+    <ng-container matColumnDef="inventory">
+      <th mat-header-cell *matHeaderCellDef>In stock</th>
+      <td mat-cell *matCellDef="let pli">
+        <ng-container *ngIf="product$(pli.productSKU) | async as product">
+          <camfil-product-inventory [product]="product"></camfil-product-inventory>
+        </ng-container>
+      </td>
+    </ng-container>
+
+    <!-- Box label Column -->
+    <ng-container matColumnDef="boxLabel">
+      <th mat-header-cell *matHeaderCellDef>
+        {{ 'camfil.lineitem.table.box_label' | translate }}
+      </th>
+      <td mat-cell *matCellDef="let pli">
+        <div>{{ pli.boxLabel || '---' }}</div>
+      </td>
+    </ng-container>
+
+    <!-- Delivery Date Column -->
+    <ng-container matColumnDef="earliestDeliveryDate">
+      <th mat-header-cell *matHeaderCellDef>
+        {{ 'camfil.lineitem.table.delivery_date' | translate }}
+      </th>
+      <td mat-cell *matCellDef="let pli">
+        <strong>{{ todayDate | ishDate }}</strong>
+      </td>
+    </ng-container>
+
+    <!-- Delete product Column -->
+    <ng-container matColumnDef="deleteRow">
+      <th mat-header-cell *matHeaderCellDef>Delete product</th>
+      <td mat-cell *matCellDef="let pli">
+        <a
+          (click)="openDeleteModal(removeProductsModal, pli.id)"
+          class="btn-tool delete-cam-card"
+          data-testing-id="delete-cam-card"
+        >
+          <mat-icon class="size-16 mx-2" svgIcon="delete"></mat-icon>
+        </a>
+      </td>
+    </ng-container>
+
+    <!-- Quantity product Column -->
+    <ng-container matColumnDef="quantity">
+      <th mat-header-cell *matHeaderCellDef>Quantity</th>
+      <td mat-cell *matCellDef="let pli">
+        <ng-container *ngIf="product$(pli.productSKU) | async as product">
+          <camfil-requisition-line-item-quantity
+            [product]="product"
+            [lineItem]="pli"
+          ></camfil-requisition-line-item-quantity>
+        </ng-container>
+      </td>
+    </ng-container>
+
+    <!-- Price Column -->
+    <ng-container matColumnDef="listPrice">
+      <th mat-header-cell *matHeaderCellDef>
+        {{ 'camfil.lineitem.table.price' | translate }}
+      </th>
+      <td mat-cell *matCellDef="let pli">
+        <camfil-product-attribute
+          [name]="'camfil.cam_card.product.list_price.label' | translate"
+          [overflowVisible]="true"
+          [value]="pli?.price | camfilPriceSummary: pli?.quantity?.value | ishPrice"
+        ></camfil-product-attribute>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="yourPrice">
+      <th mat-header-cell *matHeaderCellDef>
+        {{ 'camfil.lineitem.table.price' | translate }}
+      </th>
+      <td mat-cell *matCellDef="let pli">
+        <camfil-product-attribute
+          [name]="'camfil.cam_card.product.list_price.label' | translate"
+          [overflowVisible]="true"
+          [value]="pli?.price | camfilPriceSummary: pli?.quantity?.value | ishPrice"
+        ></camfil-product-attribute>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let pli; columns: displayedColumns; let i = index" class="orderlist-row"></tr>
+  </table>
+
+  <ng-container *ngIf="isMobileView">
+    <ng-container *ngFor="let pli of lineItemsProcessed.data; let i = index">
+      <ng-container *ngTemplateOutlet="lineItemsMobileRow; context: { pli: pli, i: i }"></ng-container>
+    </ng-container>
+  </ng-container>
+
+  <ng-template #lineItemsMobileRow let-pli="pli" let-i="i">
+    <mat-card *ngIf="pli" class="mat-elevation-z box-shadow box-shadow--dark">
+      <mat-card-content data-testing-id="line-item-container" class="pli-mobile">
+        <div class="row text-center">
+          <div class="col-4">
+            <div class="text-truncate">
+              <mat-checkbox
+                color="primary"
+                (click)="$event.stopPropagation()"
+                (change)="toggleLineItemCheck(pli, $event)"
+                [checked]="isLineItemchecked(pli.id)"
+              >
+              </mat-checkbox>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="text-truncate">
+              <div class="image">
+                <camfil-product-image
+                  [imageView]="'default'"
+                  [product]="product$(pli.productSKU) | async"
+                  class="product-image"
+                  imageType="images"
+                ></camfil-product-image>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-4">
+            <div class="text-truncate">
+              {{ pli.productSKU }}
+            </div>
+          </div>
+        </div>
+        <div class="row text-center"></div>
+        <div class="col-12 d-flex justify-content-center">
+          <camfil-product-title [product]="product$(pli.productSKU) | async"></camfil-product-title>
+        </div>
+        <div class="row text-center">
+          <div class="col-4">
+            <div>{{ pli.boxLabel || '---' }}</div>
+          </div>
+          <div class="col-4">
+            <strong>
+              <ng-container *ngIf="product$(pli.productSKU) | async as product">
+                <camfil-product-inventory [product]="product"></camfil-product-inventory>
+              </ng-container>
+            </strong>
+          </div>
+          <div class="col-4">
+            <camfil-product-quickview
+              [hideText]="true"
+              [product]="product$(pli.productSKU) | async"
+              class="d-inline-flex align-items-center"
+            ></camfil-product-quickview>
+          </div>
+        </div>
+
+        <div class="row text-center">
+          <div class="col-5">
+            <ng-container *ngIf="product$(pli.productSKU) | async as product">
+              <camfil-requisition-line-item-quantity
+                [product]="product"
+                [lineItem]="pli"
+              ></camfil-requisition-line-item-quantity>
+            </ng-container>
+          </div>
+          <div class="col-7 d-flex align-items-center">
+            <camfil-product-attribute
+              [name]="'camfil.cam_card.product.list_price.label' | translate"
+              [overflowVisible]="true"
+              [value]="pli?.price | camfilPriceSummary: pli?.quantity?.value | ishPrice"
+            ></camfil-product-attribute>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+    <br />
+  </ng-template>
+
+  <camfil-small-cta-modal
+    #removeProductsModal
+    (actionClicked)="removeProduct(removeProductsModal)"
+    [actionTemplate]="actionTemplate"
+    actionButtonTitle="{{ 'camfil.checkout.order.delete_order.modal.yes' | translate }}"
+    cancelButtonTitle="{{ 'camfil.checkout.order.delete_order.modal.no' | translate }}"
+    hideIcon="true"
+    showCloseIcon="true"
+  >
+  </camfil-small-cta-modal>
+
+  <ng-template #actionTemplate>
+    <div>{{ 'camfil.checkout.order.delete_line_item.modal.subheading' | translate }}</div>
+  </ng-template>
+</ng-container>

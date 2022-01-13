@@ -2,7 +2,9 @@
   <div
     class="row account-main"
     *ngIf="
-      !_router.url.startsWith('/account/camcards') && !_router.url.startsWith('/account/orders');
+      !_router.url.startsWith('/account/camcards') &&
+        !_router.url.startsWith('/account/orders') &&
+        !_router.url.startsWith('/account/requisitions');
       else noAccountNavigation
     "
   >

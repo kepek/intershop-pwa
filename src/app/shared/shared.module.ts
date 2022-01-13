@@ -237,6 +237,7 @@ import { CamfilEditOrderModalComponent } from 'ish-shared/components/camfil-chec
 import { CamfilDeleteOrderComponent } from 'ish-shared/components/camfil-checkout-bucket/camfil-delete-order/camfil-delete-order.component';
 import { CamfilShoppingBucketEmptyComponent } from 'ish-shared/components/camfil-shopping-bucket-empty/camfil-shopping-bucket-empty.component';
 import { CamfilCheckoutBucketSummaryComponent } from 'ish-shared/components/camfil-checkout-bucket-summary/camfil-checkout-bucket-summary.component';
+import { CamRequisitionManagementExportsModule } from '../extensions/cam-requisition-management/exports/cam-requisition-management-exports.module';
 
 const importExportModules = [
   AddressFormsSharedModule,
@@ -250,6 +251,7 @@ const importExportModules = [
   CamDemoExportsModule,
   CamIccExportsModule,
   CamOrganizationManagementExportsModule,
+  CamRequisitionManagementExportsModule,
   CamfilIconsModule,
   CaptchaExportsModule,
   CommonModule,

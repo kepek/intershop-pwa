@@ -1,0 +1,25 @@
+import { createSelector } from '@ngrx/store';
+
+import { RequisitionStatus, RequisitionViewer } from '../../models/requisition/requisition.model';
+import { getCamRequisitionManagementState } from '../cam-requisition-management-store';
+
+import { initialState, requisitionsAdapter } from './requisitions.reducer';
+
+const getRequisitionsState = createSelector(getCamRequisitionManagementState, state =>
+  state ? state?.requisitions : initialState
+);
+
+export const getRequisitionsLoading = createSelector(getRequisitionsState, state => state?.loading);
+
+export const getRequisitionsError = createSelector(getRequisitionsState, state => state?.error);
+
+const getRequisitionsFilters = createSelector(getRequisitionsState, state => state?.filters);
+
+export const { selectEntities } = requisitionsAdapter.getSelectors(getRequisitionsState);
+
+export const getRequisitions = (view: RequisitionViewer, status: RequisitionStatus) =>
+  createSelector(selectEntities, getRequisitionsFilters, (requisitions, filters) =>
+    filters[view + status].map(id => requisitions[id])
+  );
+
+export const getRequisition = (id: string) => createSelector(selectEntities, requisitions => requisitions[id]);

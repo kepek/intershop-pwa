@@ -1,0 +1,268 @@
+<ng-container>
+  <mat-card class="mb-3 clearfix">
+    <mat-card-content data-testing-id="orders-list-item-container">
+      <div class="row align-items-center">
+        <!-- Search Box -->
+        <div class="col-12 col-md-6 col-lg-3 d-flex align-items-center pr-0 mb-2 mt-0">
+          <div class="search-container">
+            <mat-icon class="search__icon background-icon" svgIcon="search"></mat-icon>
+            <input
+              #searchInput
+              (focus)="isActive = !isActive"
+              (focusout)="isActive = !isActive"
+              [class.mat-elevation-z2]="!isActive"
+              [class.mat-elevation-z4]="isActive"
+              [formControl]="searchForm"
+              [placeholder]="'camfil.account.orderlist.search.placeholder.text' | translate"
+              autocomplete="off"
+              class="search-input"
+              matInput
+              type="text"
+            />
+            <div class="buttons">
+              <button
+                [title]="'camfil.account.orderlist.search.button.title' | translate"
+                color="primary"
+                mat-flat-button
+                name="search"
+                type="submit"
+              >
+                {{ 'camfil.account.orderlist.search.button.title' | translate }}
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-md-6 col-lg-3 d-flex align-items-center mb-2 mt-2 mt-md-0 px-lg-2">
+          <!-- Customer Filter -->
+          <mat-form-field appearance="fill" class="select-filter w-100 w-md-auto">
+            <mat-label>{{ 'camfil.account.orderlist.filter.customer.title' | translate }}</mat-label>
+            <mat-select [formControl]="customerFilter">
+              <mat-option *ngFor="let customer of customers" [value]="customer?.customerNo">
+                {{ customer?.customerName || 'camfil.common.label.none' | translate }}, {{ customer?.customerNo }}
+                <ng-container *ngIf="customer?.customerDepartment">, {{ customer.customerDepartment }}</ng-container>
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-md-6 col-lg-3 d-flex align-items-center mb-2 mt-2 mt-md-0 pr-md-0 px-lg-2">
+          <!-- Date Picker From -->
+          <mat-form-field appearance="fill" class="select-filter w-100 w-md-auto">
+            <mat-label>{{ 'camfil.account.orderlist.filter.fromDate.title' | translate }}</mat-label>
+            <input
+              [formControl]="dateFromFilter"
+              [matDatepicker]="dateFromPicker"
+              [max]="dateToFilter.value"
+              matInput
+            />
+            <mat-datepicker-toggle [for]="dateFromPicker" matSuffix></mat-datepicker-toggle>
+            <mat-datepicker #dateFromPicker></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-md-6 col-lg-3 d-flex align-items-center mb-0 mt-2 mt-md-0 mb-md-2 pl-lg-2">
+          <!-- Date Picker To -->
+          <mat-form-field appearance="fill" class="select-filter w-100 w-md-auto">
+            <mat-label>{{ 'camfil.account.orderlist.filter.toDate.title' | translate }}</mat-label>
+            <input [formControl]="dateToFilter" [matDatepicker]="dateToPicker" [min]="dateFromFilter.value" matInput />
+            <mat-datepicker-toggle [for]="dateToPicker" matSuffix></mat-datepicker-toggle>
+            <mat-datepicker #dateToPicker></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row align-items-center">
+        <div class="col-12 col-md-6 col-lg-3 d-flex align-items-center pr-0 mt-2">
+          <mat-checkbox
+            #statusFilters
+            (change)="addStatusFilter($event)"
+            *ngFor="let status of statuses"
+            [checked]="isStatusFilterActive(status.value)"
+            class="mr-3"
+            color="primary"
+            value="{{ status.value }}"
+          >
+            {{
+              view === 'buyer' ? (status.requisitionStatusName | translate) : (status.approvalStatusName | translate)
+            }}</mat-checkbox
+          >
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+  <table
+    mat-table
+    *ngIf="!isMobileView"
+    matSort
+    matSortActive="creationDate"
+    matSortDirection="desc"
+    [dataSource]="dataSource"
+    class="mat-elevation-z2"
+    data-testing-id="requisition-list"
+  >
+    <!-- Customer Number and Name Column -->
+    <ng-container matColumnDef="customerNumberAndName">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header>
+        {{ 'camfil.account.orderlist.table.customer' | translate }}
+      </th>
+      <td *matCellDef="let requisition" mat-cell>
+        {{ requisition.user.firstName }} {{ requisition.user.lastName }}, {{ requisition.customerNo }}
+      </td>
+    </ng-container>
+
+    <!-- Order No Column -->
+    <ng-container cdkColumnDef="orderNo">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header data-testing-id="th-order-no">
+        {{ 'account.approvallist.table.no_of_order' | translate }}
+      </th>
+      <td
+        mat-cell
+        *matCellDef="let requisition"
+        [attr.data-label]="'account.approvallist.table.no_of_order' | translate"
+      >
+        {{ requisition.orderNo }}
+      </td>
+    </ng-container>
+
+    <!-- BoxLabel Column -->
+    <ng-container cdkColumnDef="orderGoodsMark">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header data-testing-id="th-order-box-label">
+        {{ 'camfil.account.approvallist.table.box_label' | translate }}
+      </th>
+      <td
+        mat-cell
+        *matCellDef="let requisition"
+        [attr.data-label]="'camfil.account.approvallist.table.box_label' | translate"
+      >
+        {{ requisition.orderGoodsMark || '---' }}
+      </td>
+    </ng-container>
+
+    <!-- Creation Date -->
+    <ng-container cdkColumnDef="creationDate">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header data-testing-id="th-creation-date">
+        {{ 'account.approvallist.table.date_of_order' | translate }}
+      </th>
+      <td
+        mat-cell
+        *matCellDef="let requisition"
+        [attr.data-label]="'account.approvallist.table.date_of_order' | translate"
+      >
+        {{ requisition.creationDate | ishDate }}
+      </td>
+    </ng-container>
+
+    <!-- Requested by Column -->
+    <ng-container cdkColumnDef="buyer">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header data-testing-id="th-buyer">
+        {{ 'account.approvallist.table.buyer' | translate }}
+      </th>
+      <td mat-cell *matCellDef="let requisition" [attr.data-label]="'account.approvallist.table.buyer' | translate">
+        {{ requisition.user.firstName }} {{ requisition.user.lastName }}
+      </td>
+    </ng-container>
+
+    <!-- Status Column -->
+    <ng-container cdkColumnDef="status">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header data-testing-id="th-status">
+        {{ 'approval.detailspage.approval_status.label' | translate }}
+      </th>
+      <td
+        mat-cell
+        *matCellDef="let requisition"
+        [attr.data-label]="'approval.detailspage.approval_status.label' | translate"
+      >
+        {{ requisition.approval.status || '---' }}
+      </td>
+    </ng-container>
+
+    <!-- Order Channel Column -->
+    <ng-container cdkColumnDef="orderChannel">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header data-testing-id="th-order-channel">
+        {{ 'camfil.account.approvallist.table.order_channel' | translate }}
+      </th>
+      <td
+        mat-cell
+        *matCellDef="let requisition"
+        [attr.data-label]="'camfil.account.approvallist.table.order_channel' | translate"
+      >
+        {{ requisition.orderChannel || '---' }}
+      </td>
+    </ng-container>
+
+    <!-- Header and Row Declarations -->
+    <tr *matHeaderRowDef="columnsToDisplay" mat-header-row></tr>
+    <tr *matRowDef="let requisition; columns: columnsToDisplay" (click)="navigateTo(requisition)" mat-row></tr>
+  </table>
+
+  <div
+    *ngIf="displayShowMoreLink()"
+    class="show-more-overlay col-12 d-flex flex-row justify-content-center align-items-center"
+  >
+    <div class="my-auto text-center p-1">
+      <button (click)="showAllOrders()" color="primary" mat-stroked-button type="button">
+        {{ 'camfil.account.orderlist.show_more' | translate }}
+      </button>
+    </div>
+  </div>
+
+  <ng-container *ngIf="isMobileView">
+    <ng-container *ngFor="let requisition of requisitions">
+      <ng-container *ngTemplateOutlet="requisitionsMobileRow; context: { requisition: requisition }"></ng-container>
+    </ng-container>
+  </ng-container>
+  <ng-template #requisitionsMobileRow let-requisition="requisition">
+    <mat-card *ngIf="requisition" class="mat-elevation-z box-shadow box-shadow--dark">
+      <mat-card-content class="orders-item">
+        <b>{{ 'camfil.account.orderlist.table.customer' | translate }}</b
+        ><br />
+        {{ requisition.user.firstName }} {{ requisition.user.lastName }}, {{ requisition.customerNo }}<br />
+        <b>{{ 'account.orderlist.table.order_number' | translate }}</b
+        ><br />
+        {{ requisition.orderNo || '---' }}<br />
+
+        <div class="row text-center">
+          <div class="col-4">{{ 'camfil.account.orderlist.table.camfil_order_number' | translate }}</div>
+          <div class="col-4">{{ 'camfil.account.orderlist.table.goods_mark' | translate }}</div>
+          <div class="col-4">{{ 'account.orderlist.table.date_of_order' | translate }}</div>
+        </div>
+        <div class="row text-center">
+          <div class="col-4">{{ requisition.camfilNo || '---' }}</div>
+          <div class="col-4">{{ requisition.orderGoodsMark || '---' }}</div>
+          <div class="col-4">{{ requisition.creationDate | ishDate }}</div>
+        </div>
+        <div class="row text-center">
+          <div class="col-4">{{ 'account.approvallist.table.buyer' | translate }}</div>
+          <div class="col-4">{{ 'account.orderlist.table.order_status' | translate }}</div>
+          <div class="col-4">{{ 'camfil.account.orderlist.order_channel' | translate }}</div>
+        </div>
+        <div class="row text-center">
+          <div class="col-4">{{ requisition.user.firstName }} {{ requisition.user.lastName }}</div>
+          <div class="col-4">
+            {{
+              view === 'buyer'
+                ? ('account.requisitions.requisitions.navtab.' + requisition.approval.status | translate)
+                : ('account.requisitions.approvals.navtab.' + requisition.approval.status | translate) || '---'
+            }}
+          </div>
+          <div class="col-4">{{ requisition.orderChannel || '---' }}</div>
+        </div>
+        <hr />
+        <div class="text-right">
+          <button
+            (click)="navigateTo(requisition)"
+            [id]="'order_' + requisition.id"
+            [title]="'camfil.account.orderlist.show_more' | translate"
+            color="primary"
+            mat-stroked-button
+          >
+            <b>{{ 'camfil.account.orderlist.show_more' | translate }}</b>
+          </button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+    <br />
+  </ng-template>
+</ng-container>
+
+<ng-template #emptyList>
+  <p data-testing-id="emptyList">{{ 'account.approvallist.no_items_message' | translate }}</p>
+</ng-template>

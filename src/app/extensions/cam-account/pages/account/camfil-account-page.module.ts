@@ -24,7 +24,6 @@ const accountPageRoutes: Routes = [
       { path: 'quotes', redirectTo: '/account' },
       { path: 'wishlists', redirectTo: '/account' },
       { path: 'order-templates', redirectTo: '/account' },
-      { path: 'requisitions', redirectTo: '/account' },
       {
         path: 'profile',
         loadChildren: () =>
@@ -52,6 +51,13 @@ const accountPageRoutes: Routes = [
         data: {
           permission: 'APP_B2B_MANAGE_USERS',
         },
+      },
+      {
+        path: 'requisitions',
+        loadChildren: () =>
+          import('../../../cam-requisition-management/pages/cam-requisition-management-routing.module').then(
+            m => m.CamRequisitionManagementRoutingModule
+          ),
       },
     ],
   },

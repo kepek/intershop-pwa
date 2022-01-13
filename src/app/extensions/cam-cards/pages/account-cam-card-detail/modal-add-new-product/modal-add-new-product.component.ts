@@ -14,6 +14,8 @@ import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { isEmpty } from 'lodash-es';
 import { Observable, ReplaySubject, Subject, of } from 'rxjs';
 import { catchError, debounceTime, map, switchMap, take, takeUntil, tap, withLatestFrom } from 'rxjs/operators';
+import { CamRequisitionManagementFacade } from 'src/app/extensions/cam-requisition-management/facades/cam-requisition-management.facade';
+import { Requisition } from 'src/app/extensions/cam-requisition-management/models/requisition/requisition.model';
 
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { AddressHelper } from 'ish-core/models/address/address.helper';
@@ -59,6 +61,7 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy, AfterView
   constructor(
     private shoppingFacade: ShoppingFacade,
     private camCardsFacade: CamCardsFacade,
+    private requisitionsFacade: CamRequisitionManagementFacade,
     public dialog: MatDialog
   ) {}
 
@@ -85,7 +88,9 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy, AfterView
   currentCamCard$: Observable<CamCard>;
 
   @Input() addToOrder = false;
+  @Input() addToRequisition = false;
   @Input() order?: Bucket;
+  @Input() requisition?: Requisition;
   @Input() shippingMethodId?: string;
 
   @ViewChild('modal', { static: false }) modalTemplate: TemplateRef<unknown>;
@@ -191,6 +196,9 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy, AfterView
       this.shoppingFacade.productAdded$.pipe(whenTruthy(), take(1)).subscribe(() => {
         this.hide();
       });
+      // } else if (this.addToRequisition) {
+      //   console.log('Add to requisiiton');
+      // }
     } else {
       this.currentCamCard$?.pipe(takeUntil(this.destroy$)).subscribe(camCard => {
         this.rootCamCardId = camCard?.id || undefined;
@@ -223,6 +231,10 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy, AfterView
           const deliveryAddress = this.order.shipToAddressFull as Address;
           this.addToNewOrder(sku, quantity, deliveryAddress, this.order.id, lineItemAttributes);
         }
+      } else if (this.addToRequisition) {
+        this.addproductToRequisition(sku, quantity, this.requisition.id);
+        this.hide();
+        this.reset();
       } else {
         const measurement = {
           width: this.productForm.get('measurementWidth').value,
@@ -268,6 +280,10 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy, AfterView
         lineItemAttributes
       );
     }
+  }
+
+  addproductToRequisition(sku, quantity, requisitionId) {
+    this.requisitionsFacade.addProductToRequisition(sku, quantity, requisitionId);
   }
 
   getUrn(currentAddress: Address): string {

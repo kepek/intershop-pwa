@@ -1,0 +1,37 @@
+@import '~src/styles/themes/camfil/mixins';
+@import '~src/styles/themes/camfil/variables';
+
+:host {
+  table {
+    th {
+      color: $text-color-primary;
+      background-color: rgba($color-corporate, 0.1);
+    }
+    td {
+      padding-top: $space-default/2;
+      padding-bottom: $space-default/2;
+    }
+  }
+  ::ng-deep {
+    camfil-product-image {
+      display: block;
+      width: 40px;
+      height: 40px;
+    }
+
+    camfil-product-quantity {
+      .form-group {
+        margin-bottom: 0;
+      }
+    }
+
+    .mat-checkbox-layout {
+      display: inline;
+      margin: 0 0 0 8px;
+    }
+  }
+  .qty-form_container {
+    display: flex;
+    width: auto;
+  }
+}
