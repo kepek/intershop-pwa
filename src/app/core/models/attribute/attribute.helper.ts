@@ -61,6 +61,7 @@ export class AttributeHelper {
       width: form.get('measurementWidth')?.value,
       height: form.get('measurementHeight')?.value,
       diameter: form.get('measurementDiameter')?.value,
+      depth: form.get('measurementDepth')?.value,
     };
     return AttributeHelper.getAttrsBeforeAddToCart(measurements, boxLabel);
   }
