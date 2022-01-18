@@ -61,6 +61,7 @@ export class AttributeHelper {
       width: form.get('measurementWidth')?.value,
       height: form.get('measurementHeight')?.value,
       diameter: form.get('measurementDiameter')?.value,
+      depth: form.get('measurementDepth')?.value,
     };
     return AttributeHelper.getAttrsBeforeAddToCart(measurements, boxLabel);
   }
@@ -85,7 +86,7 @@ export class AttributeHelper {
 
   static getMeasurementsText(lineItem) {
     if (AttributeHelper.determineLineItemType(lineItem)) {
-      const measurementsNames = ['width', 'height', 'diameter'];
+      const measurementsNames = ['width', 'height', 'diameter', 'depth'];
       const measurementValues = lineItem?.attributes.map(att => {
         if (measurementsNames.includes(att.name) && att.value) {
           return att.value;
@@ -98,7 +99,7 @@ export class AttributeHelper {
             .join('x')
         : '';
     } else if (AttributeHelper.determineIfCamCardItem(lineItem)) {
-      const measurementsNames = ['width', 'height', 'diameter'];
+      const measurementsNames = ['width', 'height', 'diameter', 'depth'];
       const measurementValues = [];
 
       Object.keys(lineItem?.measurement).map(key => {
@@ -114,11 +115,11 @@ export class AttributeHelper {
             .join('x')
         : '';
     } else {
-      const { width, height, diameter } = lineItem;
-      if (!width && !height && !diameter) {
+      const { width, height, diameter, depth } = lineItem;
+      if (!width && !height && !diameter && !depth) {
         return '---';
       }
-      return [width, height, diameter].filter(e => e).join('x');
+      return [width, height, diameter, depth].filter(e => e).join('x');
     }
   }
 }

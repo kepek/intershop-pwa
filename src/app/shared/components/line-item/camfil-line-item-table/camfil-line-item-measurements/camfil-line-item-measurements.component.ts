@@ -10,7 +10,7 @@ import { LineItem } from 'ish-core/models/line-item/line-item.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CamfilLineItemMeasurementsComponent implements OnInit {
-  @Input() linetItem: Pick<OrderLineItem, 'width' | 'height' | 'diameter'> | Pick<LineItem, 'attributes'>;
+  @Input() linetItem: Pick<OrderLineItem, 'width' | 'height' | 'diameter' | 'depth'> | Pick<LineItem, 'attributes'>;
   measurementText: string;
 
   ngOnInit() {

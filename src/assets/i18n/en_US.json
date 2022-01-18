@@ -1031,6 +1031,7 @@
   "camfil.modal.addToCamcard.camcard.sublist.title": "Add to specific Camcard segment",
   "camfil.modal.addToCamcard.header": "Add to Camcard",
   "camfil.modal.addToCamcard.height.label": "Height (mm)",
+  "camfil.modal.addToCamcard.depth.label": "Depth (mm)",
   "camfil.modal.addToCamcard.measurement.choose.header": "Choose your dimensions",
   "camfil.modal.addToCamcard.quantity.label": "Change quantity",
   "camfil.modal.addToCamcard.success.button.continue": "Continue browsing",

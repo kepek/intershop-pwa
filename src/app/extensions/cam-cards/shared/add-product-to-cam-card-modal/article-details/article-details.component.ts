@@ -1,9 +1,10 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnChanges, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
 
 import { AttributeGroupTypes } from 'ish-core/models/attribute-group/attribute-group.types';
 import { AttributeHelper } from 'ish-core/models/attribute/attribute.helper';
+import { Attribute } from 'ish-core/models/attribute/attribute.model';
 import { Product, ProductHelper } from 'ish-core/models/product/product.model';
 
 @Component({
@@ -12,7 +13,7 @@ import { Product, ProductHelper } from 'ish-core/models/product/product.model';
   styleUrls: ['./article-details.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ArticleDetailsComponent implements OnInit {
+export class ArticleDetailsComponent implements OnInit, OnChanges {
   @Input() product: Product;
   @Input() quantityForm: FormGroup;
   @Input() showProductName?: boolean;
@@ -26,6 +27,7 @@ export class ArticleDetailsComponent implements OnInit {
   filledMeasurements: any[];
   requiresMeasurement: boolean;
   filterArea: number;
+  depth: number;
   filterAreaValidated = true;
   validators = {
     boxLabel: [
@@ -35,16 +37,41 @@ export class ArticleDetailsComponent implements OnInit {
       },
     ],
   };
+  attributes: Attribute<unknown>[];
+
+  private patchAttributes(product: Product) {
+    return product.attributeGroups?.[AttributeGroupTypes.ProductsListLabelAttributes]?.attributes || product.attributes;
+  }
+
+  private patchMaxVal() {
+    const maxVal = AttributeHelper.getAttributeValueByAttributeName(this.attributes, 'Width');
+    return maxVal ? (maxVal as number) : undefined;
+  }
+
+  private patchRequiresMeasurement(product) {
+    return ProductHelper.getRequiresMeasurement(product);
+  }
+
+  private patchFilterArea(product) {
+    return ProductHelper.getFilterArea(product);
+  }
+
+  private patchDepth(attributes) {
+    const depth = AttributeHelper.getAttributeValueByAttributeName(attributes, 'MediaDepth');
+    return depth ? (depth as number) : undefined;
+  }
 
   ngOnInit() {
-    const attributes =
-      this.product.attributeGroups?.[AttributeGroupTypes.ProductsListLabelAttributes]?.attributes ||
-      this.product.attributes ||
-      [];
-    this.maxVal = AttributeHelper.getAttributeValueByAttributeName(attributes, 'Width') || undefined;
-    this.requiresMeasurement = ProductHelper.getRequiresMeasurement(this.product);
-    this.filterArea = ProductHelper.getFilterArea(this.product);
     this.measurementGlobalError$ = this.quantityForm.get('measurementErrorInfo')?.valueChanges;
+  }
+
+  ngOnChanges(): void {
+    this.attributes = this.patchAttributes(this.product);
+    this.maxVal = this.patchMaxVal();
+    this.requiresMeasurement = this.patchRequiresMeasurement(this.product);
+    this.filterArea = this.patchFilterArea(this.product);
+    this.depth = this.patchDepth(this.attributes);
+    this.quantityForm?.patchValue({ measurementDepth: this.depth });
   }
 
   get diameterDisabled() {

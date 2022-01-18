@@ -198,6 +198,7 @@ export class AddProductToCamCardModalComponent implements OnInit, OnDestroy, OnC
       measurementWidth: new FormControl(),
       measurementHeight: new FormControl(),
       measurementDiameter: new FormControl(),
+      measurementDepth: new FormControl(),
       measurementErrorInfo: new FormControl(),
     });
   }
@@ -291,9 +292,9 @@ export class AddProductToCamCardModalComponent implements OnInit, OnDestroy, OnC
       width: this.quantityForm.get('measurementWidth').value,
       height: this.quantityForm.get('measurementHeight').value,
       diameter: this.quantityForm.get('measurementDiameter').value,
+      depth: this.quantityForm.get('measurementDepth').value,
     };
     const requiresMeasurement = ProductHelper.getRequiresMeasurement(this.product);
-
     if (requiresMeasurement && !Object.values(measurement).find(e => e)) {
       this.quantityForm.patchValue({ measurementErrorInfo: true });
       return;

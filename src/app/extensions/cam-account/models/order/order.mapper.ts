@@ -59,6 +59,7 @@ export class OrderMapper {
         diameter: lineItemData.diameter,
         width: lineItemData.width,
         height: lineItemData.height,
+        depth: lineItemData.depth,
       };
     }
   }

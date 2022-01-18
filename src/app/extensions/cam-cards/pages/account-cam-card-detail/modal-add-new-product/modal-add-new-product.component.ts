@@ -107,6 +107,7 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy, AfterView
       measurementWidth: new FormControl(),
       measurementHeight: new FormControl(),
       measurementDiameter: new FormControl(),
+      measurementDepth: new FormControl(),
       measurementErrorInfo: new FormControl(),
     });
 
@@ -157,6 +158,7 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy, AfterView
         this.productForm?.get('measurementWidth').reset();
         this.productForm?.get('measurementHeight').reset();
         this.productForm?.get('measurementDiameter').reset();
+        this.productForm?.get('measurementDepth').reset();
         this.productForm?.get('measurementErrorInfo').reset();
       })
     );
@@ -226,6 +228,7 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy, AfterView
           width: this.productForm.get('measurementWidth').value,
           height: this.productForm.get('measurementHeight').value,
           diameter: this.productForm.get('measurementDiameter').value,
+          depth: this.productForm.get('measurementDepth').value,
         };
         this.camCardsFacade.addProductToCamCard(this.rootCamCardId, sku, quantity, comment, measurement, 0, true);
         this.hide();
