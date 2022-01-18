@@ -4,8 +4,8 @@ import { Observable } from 'rxjs';
 
 import { AttributeGroupTypes } from 'ish-core/models/attribute-group/attribute-group.types';
 import { AttributeHelper } from 'ish-core/models/attribute/attribute.helper';
-import { Product, ProductHelper } from 'ish-core/models/product/product.model';
 import { Attribute } from 'ish-core/models/attribute/attribute.model';
+import { Product, ProductHelper } from 'ish-core/models/product/product.model';
 
 @Component({
   selector: 'camfil-article-details',
