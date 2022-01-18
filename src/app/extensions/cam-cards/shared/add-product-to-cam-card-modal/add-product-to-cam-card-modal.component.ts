@@ -295,8 +295,6 @@ export class AddProductToCamCardModalComponent implements OnInit, OnDestroy, OnC
       depth: this.quantityForm.get('measurementDepth').value,
     };
     const requiresMeasurement = ProductHelper.getRequiresMeasurement(this.product);
-    console.log('measurement', measurement);
-    console.log('quantityForm', this.quantityForm);
     if (requiresMeasurement && !Object.values(measurement).find(e => e)) {
       this.quantityForm.patchValue({ measurementErrorInfo: true });
       return;
