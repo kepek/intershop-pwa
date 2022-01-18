@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit, ViewChild
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable, Subject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
+import { CamConfigurationFacade } from 'src/app/extensions/cam-configuration/facades/cam-configuration.facade';
 
 import { EditBucket } from 'ish-core/models/bucket/bucket.model';
 import { ProductHelper } from 'ish-core/models/product/product.helper';
@@ -33,9 +34,15 @@ export class OrderFormComponent implements OnInit, OnDestroy {
   @Input() orderToEdit?: EditBucket;
   @Input() edit?: boolean;
   setMaxLengthValidation = ProductHelper.setMaxLengthValidation;
+  useSecondAddressLine: boolean;
+
   private destroy$ = new Subject<void>();
 
-  constructor(private fb: FormBuilder, private camCardsFacade: CamCardsFacade) {}
+  constructor(
+    private fb: FormBuilder,
+    private camCardsFacade: CamCardsFacade,
+    private camConfFacade: CamConfigurationFacade
+  ) {}
 
   get customerId() {
     return this.addressForm?.get('customer')?.value || '';
@@ -48,6 +55,10 @@ export class OrderFormComponent implements OnInit, OnDestroy {
       this.customersArr = customers;
     });
 
+    this.camConfFacade.useSecondAddressLine$.pipe(whenTruthy(), take(1)).subscribe(val => {
+      this.useSecondAddressLine = val;
+    });
+
     this.addressForm = this.fb.group({
       customer: [this.orderToEdit?.customerId || this.setDefaultCustomer(this.customersArr)],
       contact: [this.orderToEdit?.contactPerson?.erpId || '', Validators.required],
@@ -57,6 +68,7 @@ export class OrderFormComponent implements OnInit, OnDestroy {
       deliveryAddressSelect: [this.orderToEdit?.deliveryAddressId || '', []],
       company: [this.orderToEdit?.company || ''],
       address: [this.orderToEdit?.address || ''],
+      addressLine2: [this.orderToEdit?.addressLine2 || ''],
       citySelect: [],
       zipCode: [this.orderToEdit?.zipCode || '', [Validators.required, Validators.pattern('[0-9]{5}')]],
       area: [{ value: this.orderToEdit?.area || '', disabled: true }, [Validators.required]],
@@ -83,6 +95,7 @@ export class OrderFormComponent implements OnInit, OnDestroy {
         this.addressForm?.patchValue({
           company: address?.addressName,
           address: address?.addressLine1,
+          addressLine2: address?.addressLine2,
           zipCode: address?.postalCode,
           area: address?.city,
           addressFull: address,

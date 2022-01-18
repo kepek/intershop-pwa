@@ -48,6 +48,7 @@ export interface EditBucket extends Bucket {
   company?: string;
   building?: string;
   address?: string;
+  addressLine2?: string;
   zipCode?: string;
   area?: string;
 }

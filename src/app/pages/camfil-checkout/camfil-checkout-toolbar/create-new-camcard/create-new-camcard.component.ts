@@ -79,7 +79,12 @@ export class CreateNewCamcardComponent implements OnInit, OnDestroy {
       return {
         name,
         customer: bucket.customer,
-        deliveryAddress: { addressLine1, addressLine2, city, countryCode, postalCode },
+        deliveryAddress: {
+          addressLine1: addressLine2 ? `${addressLine1} ${addressLine2}` : addressLine1,
+          city,
+          countryCode,
+          postalCode,
+        },
         invoiceLabel: bucket.invoiceLabel,
         orderLabel: bucket.orderMark,
         reminderFlag: 1,
