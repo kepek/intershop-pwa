@@ -348,11 +348,11 @@ export class CamCardPreferencesComponent implements OnChanges, OnInit, AfterView
       const customerId = this.customerId;
       const address = addresses[customerId]?.filter(element => element.id === id)[0];
       if (address) {
-        const { city, postalCode, addressLine1, companyName1 } = address;
+        const { city, postalCode, addressLine1, addressLine2, companyName1 } = address;
         this.camCardForm.patchValue({
           deliveryAddress: address.id,
           companyName1,
-          addressLine1,
+          addressLine1: addressLine2 ? `${addressLine1} ${addressLine2}` : addressLine1,
           postalCode,
           city,
         });

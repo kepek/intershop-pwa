@@ -11,6 +11,7 @@ const camfilConfiguration: ChannelConfiguration = {
   showAddToCamCardButtonForNonLoggedInUser: false,
   showPricesForNonLoggedInUser: true,
   preventCamCardERPIdValidation: true,
+  useSecondAddressLine: true,
 };
 
 export default camfilConfiguration;

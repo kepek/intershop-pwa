@@ -96,7 +96,7 @@
         markRequiredLabel="off"
         matInput
         maxlength="250"
-        rows="5"
+        rows="{{ useSecondAddressLine ? 3 : 5 }}"
       ></textarea>
       <camfil-error
         [errorValidators]="validators.address"
@@ -104,6 +104,21 @@
         [touched]="getField('address').touched || getField('address').dirty"
       ></camfil-error>
     </mat-form-field>
+
+    <ng-container *ngIf="useSecondAddressLine">
+      <!--addressLine2-->
+      <mat-form-field appearance="outline" class="delivery-address__form--field">
+        <mat-label>{{ 'camfil.modal.createOrder.order-form.input.addressLine2' | translate }}</mat-label>
+        <textarea
+          formControlName="addressLine2"
+          label="camfil.modal.createOrder.order-form.input.addressLine2"
+          markRequiredLabel="off"
+          matInput
+          maxlength="250"
+          rows="3"
+        ></textarea>
+      </mat-form-field>
+    </ng-container>
 
     <div class="row no-gutters mt-3">
       <!--zip code-->
