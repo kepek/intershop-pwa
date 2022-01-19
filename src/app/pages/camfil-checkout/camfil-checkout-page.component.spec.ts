@@ -20,8 +20,8 @@ import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-load
 
 import { CamCardsFacade } from '../../extensions/cam-cards/facades/cam-cards.facade';
 import { ChannelToggleDirective } from '../../extensions/cam-configuration/directives/channel-toggle.directive';
+import { ChannelConfiguration } from '../../extensions/cam-configuration/models/channel-configuration/channel-configuration.model';
 import { ConfigurationService } from '../../extensions/cam-configuration/services/configuration/configuration.service';
-import { ChannelConfiguration } from '../../extensions/cam-configuration/settings';
 import { getConfigurationState } from '../../extensions/cam-configuration/store/configuration';
 import { CamfilShoppingBucketEmptyComponent } from '../basket/camfil-shopping-bucket-empty/camfil-shopping-bucket-empty.component';
 

@@ -10,8 +10,8 @@ import { CoreStoreModule } from 'ish-core/store/core/core-store.module';
 import { makeHttpError } from 'ish-core/utils/dev/api-service-utils';
 import { routerTestNavigationAction } from 'ish-core/utils/dev/routing';
 
+import { ChannelConfiguration, ChannelSettings } from '../../models/channel-configuration/channel-configuration.model';
 import { ConfigurationService } from '../../services/configuration/configuration.service';
-import { ChannelConfiguration, ChannelSettings } from '../../settings';
 import { CamConfigurationStoreModule } from '../cam-configuration-store.module';
 
 import {

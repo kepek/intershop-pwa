@@ -2,8 +2,8 @@ import { Directive, Input, OnDestroy, TemplateRef, ViewContainerRef } from '@ang
 import { ReplaySubject, Subject, Subscription } from 'rxjs';
 import { distinctUntilChanged, takeUntil } from 'rxjs/operators';
 
+import { ChannelSetting } from '../models/channel-configuration/channel-configuration.model';
 import { ConfigurationService } from '../services/configuration/configuration.service';
-import { ChannelSetting } from '../settings';
 
 /**
  * Structural directive.

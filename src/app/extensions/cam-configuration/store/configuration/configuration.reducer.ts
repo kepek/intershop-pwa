@@ -3,7 +3,7 @@ import { createReducer, on } from '@ngrx/store';
 import { HttpError } from 'ish-core/models/http-error/http-error.model';
 import { setErrorOn, setLoadingOn, unsetLoadingAndErrorOn } from 'ish-core/utils/ngrx-creators';
 
-import { ChannelConfiguration } from '../../settings';
+import { ChannelConfiguration } from '../../models/channel-configuration/channel-configuration.model';
 
 import {
   applyCamfilConfiguration,

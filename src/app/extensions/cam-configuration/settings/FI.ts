@@ -1,5 +1,5 @@
 // tslint:disable: project-structure ish-ordered-imports
-import { ChannelConfiguration } from './index';
+import { ChannelConfiguration } from '../models/channel-configuration/channel-configuration.model';
 
 const camfilConfiguration: ChannelConfiguration = {
   guestCheckout: false,

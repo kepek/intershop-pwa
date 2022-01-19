@@ -11,7 +11,9 @@ import { ServerConfig } from 'ish-core/models/server-config/server-config.model'
 import { ApiService } from 'ish-core/services/api/api.service';
 import { whenTruthy } from 'ish-core/utils/operators';
 
-import { ChannelConfiguration, ChannelSetting, ChannelSettings, channelConfig } from '../../settings';
+import { ChannelConfigurationHelper } from '../../models/channel-configuration/channel-configuration.helper';
+import { ChannelSetting, ChannelSettings } from '../../models/channel-configuration/channel-configuration.model';
+import channelSettings from '../../settings';
 import { getCamfilSettings } from '../../store/configuration';
 
 @Injectable({ providedIn: 'root' })
@@ -81,33 +83,9 @@ export class ConfigurationService {
    * @returns           The configuration object.
    */
   private getCamfilConfigurationFromFile(channelName: string): Observable<ServerConfig> {
-    return of(channelConfig).pipe(
-      map(settings => ({ data: { ...this.getSettingsByChannelName(settings, channelName) } })),
+    return of(channelSettings).pipe(
+      map(settings => ({ data: { ...ChannelConfigurationHelper.getSettingsByChannelName(settings, channelName) } })),
       map(ServerConfigMapper.fromData)
     );
-  }
-
-  private getSettingsByChannelName(
-    settings: { [key: string]: ChannelConfiguration } | ChannelConfiguration,
-    channelName: string,
-    channelKey: keyof ChannelConfiguration = 'icmChannel'
-  ) {
-    if (settings[channelKey] === channelName) {
-      return settings;
-    }
-
-    // tslint:disable-next-line:one-variable-per-declaration
-    let result, p;
-
-    for (p in settings) {
-      if (settings.hasOwnProperty(p) && typeof settings[p] === 'object') {
-        result = this.getSettingsByChannelName(settings[p], channelName);
-        if (result) {
-          return result;
-        }
-      }
-    }
-
-    return result;
   }
 }
