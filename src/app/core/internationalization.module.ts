@@ -6,13 +6,11 @@ import localeSv from '@angular/common/locales/sv';
 import { Inject, LOCALE_ID, NgModule } from '@angular/core';
 import { MAT_MOMENT_DATE_FORMATS } from '@angular/material-moment-adapter';
 import { MatDateFormats } from '@angular/material/core';
-import { Store, select } from '@ngrx/store';
+import { TransferState } from '@angular/platform-browser';
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { take } from 'rxjs/operators';
 
-import { getCurrentLocale } from 'ish-core/store/core/configuration';
-import { mapToProperty } from 'ish-core/utils/operators';
+import { SSR_LOCALE } from './configurations/state-keys';
 
 export function translateFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
@@ -41,27 +39,25 @@ export const CAMFIL_FORMATS: MatDateFormats = {
         useFactory: translateFactory,
         deps: [HttpClient],
       },
+      useDefaultLang: false,
     }),
   ],
 })
 export class InternationalizationModule {
-  private langValue = CAMFIL_DEFAULT_LANG;
-
-  constructor(@Inject(LOCALE_ID) lang: string, translateService: TranslateService, store: Store) {
+  constructor(
+    @Inject(LOCALE_ID) angularDefaultLocale: string,
+    translateService: TranslateService,
+    transferState: TransferState
+  ) {
     [localeFi, localeFr, localeSv].map(registerLocaleData);
 
-    store
-      .pipe(select(getCurrentLocale), mapToProperty('lang'), take(1))
-      .subscribe(currentLang => (this.lang = currentLang?.replace(/_/, '-') || lang));
+    let defaultLang = angularDefaultLocale.replace(/\-/, '_');
 
-    translateService.setDefaultLang(this.lang.replace(/-/, '_'));
-  }
+    if (transferState.hasKey(SSR_LOCALE)) {
+      defaultLang = transferState.get(SSR_LOCALE, defaultLang);
+    }
 
-  get lang(): string {
-    return this.langValue;
-  }
-
-  set lang(value: string) {
-    this.langValue = value;
+    translateService.setDefaultLang(defaultLang);
+    translateService.use(defaultLang);
   }
 }

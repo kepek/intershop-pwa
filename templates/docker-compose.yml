@@ -17,6 +17,8 @@ services:
       - ICC_TOKEN=${ICC_TOKEN}
       - ICC_PROXY_URL=${ICC_PROXY_URL}
       - TRUST_ICM=true
+      - PROXY_ICM=${PROXY_ICM}
+      - SSR_HYBRID=true
       - GTM_TOKEN=${GTM_TOKEN}
       # - PROMETHEUS=on
   nginx:

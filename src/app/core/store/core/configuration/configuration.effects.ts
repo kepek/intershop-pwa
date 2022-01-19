@@ -1,5 +1,5 @@
-import { isPlatformBrowser } from '@angular/common';
-import { ApplicationRef, Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser, isPlatformServer } from '@angular/common';
+import { ApplicationRef, Inject, Injectable, PLATFORM_ID, isDevMode } from '@angular/core';
 import { TransferState } from '@angular/platform-browser';
 import { Actions, ROOT_EFFECTS_INIT, createEffect, ofType } from '@ngrx/effects';
 import { Store, select } from '@ngrx/store';
@@ -9,6 +9,7 @@ import { debounceTime, distinctUntilChanged, map, take, takeWhile, tap, withLate
 
 import { LARGE_BREAKPOINT_WIDTH, MEDIUM_BREAKPOINT_WIDTH } from 'ish-core/configurations/injection-keys';
 import { NGRX_STATE_SK } from 'ish-core/configurations/ngrx-state-transfer';
+import { SSR_LOCALE } from 'ish-core/configurations/state-keys';
 import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
 import { distinctCompareWith, mapToProperty, whenTruthy } from 'ish-core/utils/operators';
 import { StatePropertiesService } from 'ish-core/utils/state-transfer/state-properties.service';
@@ -122,5 +123,20 @@ export class ConfigurationEffects {
     private appRef: ApplicationRef,
     @Inject(MEDIUM_BREAKPOINT_WIDTH) private mediumBreakpointWidth: number,
     @Inject(LARGE_BREAKPOINT_WIDTH) private largeBreakpointWidth: number
-  ) {}
+  ) {
+    store
+      .pipe(
+        takeWhile(() => isPlatformServer(this.platformId) || isDevMode()),
+        select(getCurrentLocale),
+        mapToProperty('lang'),
+        distinctUntilChanged(),
+        debounceTime(0),
+        whenTruthy()
+      )
+      .subscribe(lang => {
+        this.transferState.set(SSR_LOCALE, lang);
+        translateService.use(lang);
+        document.querySelector('html').setAttribute('lang', lang.replace('_', '-'));
+      });
+  }
 }

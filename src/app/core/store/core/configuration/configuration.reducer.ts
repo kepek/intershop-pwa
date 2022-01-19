@@ -1,12 +1,15 @@
+// tslint:disable: ish-ordered-imports project-structure ban-specific-imports
 import { createReducer, on } from '@ngrx/store';
 
-import { Channel, ChannelCurrency } from 'ish-core/models/channel/channel.types';
 import { Locale } from 'ish-core/models/locale/locale.model';
 import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
 
 import { environment } from '../../../../../environments/environment';
 
+import { ChannelConfigurationHelper } from '../../../../extensions/cam-configuration/models/channel-configuration/channel-configuration.helper';
+
 import { applyConfiguration, setCurrentLocale } from './configuration.actions';
+import channelSettings from '../../../../extensions/cam-configuration/settings';
 
 export interface ConfigurationState {
   baseURL?: string;
@@ -37,34 +40,37 @@ const initialState: ConfigurationState = {
   _deviceType: environment.defaultDeviceType,
 };
 
-const updateLocalesAndLang = (state: ConfigurationState, payload: Partial<ConfigurationState>) => {
-  const channelCode = Object.entries(Channel).find(([, val]) => val === payload.channel || val === state.channel)?.[0];
+const overrideLocalesCurrency = (state: ConfigurationState) => {
+  const settings = ChannelConfigurationHelper.getSettingsByChannelName(channelSettings, state.channel);
 
-  const locales = state.locales.map(l => {
-    const currency = l.lang === payload.lang ? ChannelCurrency[channelCode] || l.currency : l.currency;
-    return {
-      ...l,
-      currency,
-    };
-  });
+  if (settings?.currency && state?.locales?.length) {
+    const locales = state.locales.map(locale => ({
+      ...locale,
+      currency: settings.currency,
+    }));
 
-  const lang = payload?.lang || locales?.find(l => l?.value === channelCode?.toLowerCase())?.lang;
+    return { locales };
+  }
 
-  return {
-    locales,
-    lang,
-  };
+  return {};
 };
 
 export const configurationReducer = createReducer(
   initialState,
-  on(applyConfiguration, (state: ConfigurationState, action) => ({
-    ...state,
-    ...action.payload,
-    ...updateLocalesAndLang(state, action.payload),
-  })),
-  on(setCurrentLocale, (state: ConfigurationState, action) => ({
-    ...state,
-    ...updateLocalesAndLang(state, action.payload),
-  }))
+  on(applyConfiguration, (state: ConfigurationState, action) => {
+    const newState = {
+      ...state,
+      ...action.payload,
+    };
+
+    return {
+      ...newState,
+      ...overrideLocalesCurrency(newState),
+    };
+  }),
+  on(setCurrentLocale, (state: ConfigurationState, action) => {
+    const { lang } = action.payload;
+
+    return { ...state, lang };
+  })
 );

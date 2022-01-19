@@ -7,7 +7,7 @@ import { anything, instance, mock, verify, when } from 'ts-mockito';
 import { AppFacade } from 'ish-core/facades/app.facade';
 import { ApiService } from 'ish-core/services/api/api.service';
 
-import { ChannelConfiguration } from '../../settings';
+import { ChannelConfiguration } from '../../models/channel-configuration/channel-configuration.model';
 import { getConfigurationState } from '../../store/configuration';
 
 import { ConfigurationService } from './configuration.service';

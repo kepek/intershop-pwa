@@ -10,12 +10,13 @@ import {
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
-import { ChannelSetting } from 'src/app/extensions/cam-configuration/settings';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
 import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
 import { checkPermission } from 'ish-core/utils/authorization-toggle/authorization-toggle.service';
 import { whenTruthy } from 'ish-core/utils/operators';
+
+import { ChannelSetting } from '../../../../cam-configuration/models/channel-configuration/channel-configuration.model';
 
 interface NavigationItems {
   [link: string]: {
