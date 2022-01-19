@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { RouterNavigatedPayload, routerNavigatedAction } from '@ngrx/router-store';
 import { Store, select } from '@ngrx/store';
-import { EMPTY, fromEvent, identity } from 'rxjs';
+import { EMPTY, fromEvent, identity, iif } from 'rxjs';
 import {
   concatMap,
   debounceTime,
@@ -849,28 +849,31 @@ export class CamCardEffects {
   );
 
   decetctCamCardToolbar$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(detectCamCardToolbar),
-      mergeMap(() =>
-        this.store.pipe(
-          select(getDeviceType),
-          mergeMap(device =>
-            fromEvent(window, 'scroll').pipe(
-              map(() => {
-                const bar = document.getElementsByTagName('camfil-account-cam-card-toolbar')[0] as HTMLElement;
-                if (bar) {
-                  const barBounding = bar.getBoundingClientRect();
-                  if (device === 'mobile') {
-                    return window.innerHeight > barBounding.top + barBounding.height;
+    iif(
+      () => isPlatformBrowser(this.platformId),
+      this.actions$.pipe(
+        ofType(detectCamCardToolbar),
+        mergeMap(() =>
+          this.store.pipe(
+            select(getDeviceType),
+            mergeMap(device =>
+              fromEvent(window, 'scroll').pipe(
+                map(() => {
+                  const bar = document.getElementsByTagName('camfil-account-cam-card-toolbar')[0] as HTMLElement;
+                  if (bar) {
+                    const barBounding = bar.getBoundingClientRect();
+                    if (device === 'mobile') {
+                      return window.innerHeight > barBounding.top + barBounding.height;
+                    } else {
+                      return barBounding.top < barBounding.height + bar.offsetTop;
+                    }
                   } else {
-                    return barBounding.top < barBounding.height + bar.offsetTop;
+                    return false;
                   }
-                } else {
-                  return false;
-                }
-              }),
-              distinctUntilChanged(),
-              map(sticky => setStickyCamCardToolbar({ sticky }))
+                }),
+                distinctUntilChanged(),
+                map(sticky => setStickyCamCardToolbar({ sticky }))
+              )
             )
           )
         )
