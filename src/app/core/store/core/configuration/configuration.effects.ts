@@ -136,6 +136,7 @@ export class ConfigurationEffects {
       .subscribe(lang => {
         this.transferState.set(SSR_LOCALE, lang);
         translateService.use(lang);
+        document.querySelector('html').setAttribute('lang', lang.replace('_', '-'));
       });
   }
 }
