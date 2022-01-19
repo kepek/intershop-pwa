@@ -77,7 +77,7 @@ export function createProxiesConfig(env: Environment): Config {
    **/
 
   // Route -> /INTERSHOP/*
-  const ICM_TARGET = getSysEnvOrAppEnv('ICM_PROXY_URL', 'icmProxyURL');
+  const ICM_TARGET = getSysEnvOrAppEnv('PROXY_ICM', 'icmProxyURL');
 
   config.proxies.push({
     route: getSysEnvOrAppEnv('ICM_SERVER', 'icmServer').split('/')[0],
