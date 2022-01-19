@@ -19,6 +19,7 @@ export interface ChannelSettings {
   showQuestionIfUserWantsToCreateCamCardsBasedOnPurchasedItemsOnCheckoutConfirmationPage: boolean;
   useHardcodedAnonymousCustomerForNonLoggedInUser: boolean;
   useHardcodedContactAnonymousCustomerForNonLoggedInUser: boolean;
+  useSecondAddressLine: boolean;
 }
 
 export interface ChannelConfiguration extends Partial<ChannelSettings> {
