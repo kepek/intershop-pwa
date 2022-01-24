@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MockComponent } from 'ng-mocks';
 import { CamCardsFacade } from 'src/app/extensions/cam-cards/facades/cam-cards.facade';
 import { ModalAddNewProductComponent } from 'src/app/extensions/cam-cards/pages/account-cam-card-detail/modal-add-new-product/modal-add-new-product.component';
+import { ArticleDetailsComponent } from 'src/app/extensions/cam-cards/shared/add-product-to-cam-card-modal/article-details/article-details.component';
 import { instance, mock } from 'ts-mockito';
 
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
@@ -27,6 +28,7 @@ describe('Camfil Requisition Detail Toolbar Component', () => {
     camRequisitionManagementFacade = mock(CamRequisitionManagementFacade);
     await TestBed.configureTestingModule({
       declarations: [
+        ArticleDetailsComponent,
         CamfilRequisitionDetailToolbarComponent,
         CamfilSmallCtaModalComponent,
         MockComponent(CamfilLoadingComponent),

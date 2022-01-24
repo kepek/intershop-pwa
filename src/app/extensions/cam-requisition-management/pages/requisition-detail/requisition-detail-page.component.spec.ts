@@ -13,6 +13,8 @@ import { AccountFacade } from 'ish-core/facades/account.facade';
 import { AppFacade } from 'ish-core/facades/app.facade';
 import { AddressComponent } from 'ish-shared/components/address/address/address.component';
 import { BasketCostSummaryComponent } from 'ish-shared/components/basket/basket-cost-summary/basket-cost-summary.component';
+import { CamfilBasketCostSummaryComponent } from 'ish-shared/components/basket/camfil-basket-cost-summary/camfil-basket-cost-summary.component';
+import { CamfilMyPageHeaderComponent } from 'ish-shared/components/camfil-my-page-header/camfil-my-page-header.component';
 import { CamfilErrorMessageComponent } from 'ish-shared/components/common/camfil-error-message/camfil-error-message.component';
 import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
 import { InfoBoxComponent } from 'ish-shared/components/common/info-box/info-box.component';
@@ -20,6 +22,8 @@ import { LineItemListComponent } from 'ish-shared/components/line-item/line-item
 import { CamfilProductQuantityComponent } from 'ish-shared/components/product/camfil-product-quantity/camfil-product-quantity.component';
 
 import { CamfilRequisitionBuyerApprovalComponent } from '../../components/camfil-requisition-buyer-approval/camfil-requisition-buyer-approval.component';
+import { CamfilRequisitionDetailToolbarComponent } from '../../components/camfil-requisition-detail-toolbar/camfil-requisition-detail-toolbar.component';
+import { CamfilRequisitionLineItemTableComponent } from '../../components/camfil-requisition-line-item-table/camfil-requisition-line-item-table.component';
 import { CamfilRequisitionRejectDialogComponent } from '../../components/camfil-requisition-reject-dialog/camfil-requisition-reject-dialog.component';
 import { CamfilRequisitionSummaryComponent } from '../../components/camfil-requisition-summary/camfil-requisition-summary.component';
 import { CamRequisitionManagementFacade } from '../../facades/cam-requisition-management.facade';
@@ -48,10 +52,14 @@ describe('Requisition Detail Page Component', () => {
         CamfilMaxLengthAttributeCreateDirective,
         MockComponent(AddressComponent),
         MockComponent(BasketCostSummaryComponent),
+        MockComponent(CamfilBasketCostSummaryComponent),
         MockComponent(CamfilErrorMessageComponent),
         MockComponent(CamfilLoadingComponent),
+        MockComponent(CamfilMyPageHeaderComponent),
         MockComponent(CamfilProductQuantityComponent),
         MockComponent(CamfilRequisitionBuyerApprovalComponent),
+        MockComponent(CamfilRequisitionDetailToolbarComponent),
+        MockComponent(CamfilRequisitionLineItemTableComponent),
         MockComponent(CamfilRequisitionRejectDialogComponent),
         MockComponent(CamfilRequisitionSummaryComponent),
         MockComponent(FaIconComponent),
