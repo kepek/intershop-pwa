@@ -47,6 +47,7 @@ export class CamfilCheckoutOnestepPageComponent implements OnInit, OnDestroy {
   buckets$: Observable<Bucket[]>;
   checkoutStep$: Observable<number>;
   emptyBuckets$: Observable<Bucket[]>;
+  allBuckets$: Observable<Bucket[]>;
   isEditable$: Observable<boolean>;
   isLoggedIn$: Observable<boolean>;
   isEmpty$: Observable<boolean>;
@@ -85,8 +86,6 @@ export class CamfilCheckoutOnestepPageComponent implements OnInit, OnDestroy {
     this.submittedBuckets$ = this.checkoutFacade.submittedBuckets$;
     this.validationResults$ = this.checkoutFacade.basketValidationResults$;
 
-    // this.checkoutFacade.loadOrder$('QKgKAQFEPy4AAAF.A2d9_Ss4');
-
     this.basket$ = this.checkoutFacade.basket$;
 
     this.basketTotals$ = this.basket$.pipe(
@@ -94,17 +93,14 @@ export class CamfilCheckoutOnestepPageComponent implements OnInit, OnDestroy {
       map(([basket, currency]) => (basket?.totals?.itemTotal ? basket.totals : BasketMockData.getEmptyTotals(currency)))
     );
 
+    this.allBuckets$ = this.checkoutFacade.allBuckets$;
+
     this.isEditable$ = this.submittedBasket$.pipe(
       startWith(false),
       map(submittedBasket => !submittedBasket)
     );
 
-    this.isEmpty$ = combineLatest([this.checkoutFacade.buckets$, this.checkoutFacade.emptyBuckets$]).pipe(
-      map(([buckets, emptyBuckets]) => {
-        const b = buckets || emptyBuckets;
-        return !b || b?.length === 0;
-      })
-    );
+    this.isEmpty$ = this.allBuckets$.pipe(map(allBuckets => allBuckets?.length === 0));
 
     this.initBasket();
   }

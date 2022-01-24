@@ -12,7 +12,7 @@
       <camfil-checkout-header
         [basket]="basket$ | async"
         [buckets]="buckets$ | async"
-        [editable]='isEditable$ | async'
+        [editable]="isEditable$ | async"
       ></camfil-checkout-header>
     </div>
 
@@ -45,36 +45,27 @@
     </ng-container>
 
     <div cdkDropListGroup>
-      <ng-container *ngIf="emptyBuckets$ | async as emptyBuckets">
-        <ng-container *ngFor="let emptyBucket of emptyBuckets; trackBy: trackByLineItems">
+      <ng-container *ngIf="allBuckets$ | async as allBuckets">
+        <ng-container *ngFor="let bucket of allBuckets; index as i; trackBy: trackByLineItems">
           <camfil-checkout-bucket
             [basket]="basket$ | async"
-            [bucket]='emptyBucket'
-          ></camfil-checkout-bucket>
-        </ng-container>
-      </ng-container>
-
-      <ng-container *ngIf="buckets$ | async as buckets">
-        <ng-container *ngFor="let bucket of buckets; index as i; trackBy: trackByLineItems">
-          <camfil-checkout-bucket
-            [basket]="basket$ | async"
-            [totalBuckets]="buckets?.length"
-            [index]="i + 1"
-            [editable]='isEditable$ | async'
             [bucket]="bucket"
+            [index]="i + 1"
+            [totalBuckets]="allBuckets?.length"
+            [editable]="isEditable$ | async"
           ></camfil-checkout-bucket>
         </ng-container>
       </ng-container>
     </div>
   </div>
 
-  <ng-container *ngIf="!(isEmpty$ | async)">
+  <ng-container *ngIf="!(isEmpty$ | async) && (basket$ | async) as basket">
     <div class="col-sm-12 col-lg-3">
       <camfil-checkout-summary
         (submit)="submit()"
-        [purchaseCurrency]="(basket$ | async).purchaseCurrency"
+        [purchaseCurrency]="basket.purchaseCurrency"
         [totals]="basketTotals$ | async"
-        [editable]='isEditable$ | async'
+        [editable]="isEditable$ | async"
       ></camfil-checkout-summary>
     </div>
   </ng-container>

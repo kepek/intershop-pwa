@@ -79,6 +79,20 @@ export const getCurrentBuckets = createSelector(getBasketState, basket => basket
 
 export const getEmptyBuckets = createSelector(getBasketState, basket => basket.emptyBuckets);
 
+export const getAllBuckets = createSelector(getBasketState, basket => {
+  const allBuckets = [];
+
+  if (basket?.emptyBuckets) {
+    allBuckets.push(...basket.emptyBuckets);
+  }
+
+  if (basket?.buckets) {
+    allBuckets.push(...basket.buckets);
+  }
+
+  return allBuckets?.length ? allBuckets : undefined;
+});
+
 export const getBasketEligibleShippingMethods = createSelector(
   getBasketState,
   basket => basket.eligibleShippingMethods
