@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable, Subject } from 'rxjs';
-import { take, takeUntil } from 'rxjs/operators';
+import { distinctUntilChanged, take, takeUntil } from 'rxjs/operators';
 import { CamConfigurationFacade } from 'src/app/extensions/cam-configuration/facades/cam-configuration.facade';
 
 import { EditBucket } from 'ish-core/models/bucket/bucket.model';
@@ -51,16 +51,13 @@ export class OrderFormComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.addresses$ = this.camCardsFacade.addresses$;
     this.customers$ = this.camCardsFacade.customers$;
-    this.customers$?.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(customers => {
-      this.customersArr = customers;
-    });
 
     this.camConfFacade.useSecondAddressLine$.pipe(whenTruthy(), take(1)).subscribe(val => {
       this.useSecondAddressLine = val;
     });
 
     this.addressForm = this.fb.group({
-      customer: [this.orderToEdit?.customerId || this.setDefaultCustomer(this.customersArr)],
+      customer: [this.orderToEdit?.customerId],
       contact: [this.orderToEdit?.contactPerson?.erpId || '', Validators.required],
       invoiceLabel: [this.orderToEdit?.invoiceLabel || ''],
       phoneNumber: [this.orderToEdit?.phoneNumber || '', Validators.pattern('[0-9+-/]*')],
@@ -78,9 +75,19 @@ export class OrderFormComponent implements OnInit, OnDestroy {
       customerFull: [],
     });
 
-    if (!this.orderToEdit && this.customersArr?.length === 1) {
-      this.setDefaultFullCustomer(this.setDefaultCustomer(this.customersArr));
-    }
+    this.customers$?.pipe(whenTruthy(), distinctUntilChanged(), takeUntil(this.destroy$)).subscribe(customers => {
+      this.customersArr = customers;
+
+      const defaultCustomerId = this.setDefaultCustomer(this.customersArr);
+
+      if (!this.orderToEdit && customers?.length === 1) {
+        this.setDefaultFullCustomer(defaultCustomerId);
+      }
+
+      if (!this.orderToEdit?.customerId) {
+        this.addressForm?.patchValue({ customer: defaultCustomerId });
+      }
+    });
 
     if (this.orderToEdit && this.orderToEdit.customerId) {
       this.pickCustomer({ value: this.orderToEdit.customerId });
@@ -127,7 +134,7 @@ export class OrderFormComponent implements OnInit, OnDestroy {
         } else {
           this.camCardsFacade
             .getUserContactForCustomer$(event.value)
-            .pipe(take(1))
+            .pipe(whenTruthy(), take(1))
             .subscribe((contactPerson: CamCardContact) => {
               this.addressForm?.patchValue({ contact: contactPerson.erpId });
               this.pickContact({ value: contactPerson.erpId });

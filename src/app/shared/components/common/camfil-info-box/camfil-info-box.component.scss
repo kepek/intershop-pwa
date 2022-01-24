@@ -1,0 +1,10 @@
+@import '~src/styles/themes/camfil/variables';
+@import '~src/styles/themes/camfil/mixins';
+@import '~src/styles/themes/camfil/colors';
+
+:host {
+  @include expansion_panel;
+  .mat-expansion-panel {
+    width: 100%;
+  }
+}

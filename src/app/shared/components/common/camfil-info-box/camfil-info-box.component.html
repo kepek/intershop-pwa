@@ -1,0 +1,19 @@
+<mat-expansion-panel [expanded]="expanded" [ngClass]="cssClass">
+  <mat-expansion-panel-header>
+    <mat-panel-title>{{ heading | translate }}</mat-panel-title>
+    <mat-panel-description>
+      {{ description | translate }}
+      <a
+        *ngIf="editRouterLink"
+        class="float-right btn-tool"
+        [routerLink]="editRouterLink"
+        [title]="'checkout.address.update.label' | translate"
+      >
+        <mat-icon svgIcon="edit"></mat-icon>
+      </a>
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+  <div class="px-4 pb-2 pt-3">
+    <ng-content></ng-content>
+  </div>
+</mat-expansion-panel>

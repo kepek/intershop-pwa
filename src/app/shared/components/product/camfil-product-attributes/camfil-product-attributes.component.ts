@@ -27,7 +27,7 @@ export class CamfilProductAttributesComponent implements OnInit {
 
   ngOnInit(): void {
     const attributes = (this.productListAttributes =
-      this.product?.attributeGroups[AttributeGroupTypes.ProductsDetailAttributes]?.attributes ||
+      this.product?.attributeGroups?.[AttributeGroupTypes.ProductsDetailAttributes]?.attributes ||
       this.product?.attributes);
 
     this.productListAttributes = attributes.filter(attribute => ProductHelper.isNotZero(attribute.value));

@@ -1,3 +1,5 @@
+import { Injectable } from '@angular/core';
+
 import { AddressMapper } from 'ish-core/models/address/address.mapper';
 import { AttributeHelper } from 'ish-core/models/attribute/attribute.helper';
 import { BasketMapper } from 'ish-core/models/basket/basket.mapper';
@@ -8,6 +10,7 @@ import { ShippingMethodMapper } from 'ish-core/models/shipping-method/shipping-m
 import { OrderData } from './order.interface';
 import { Order } from './order.model';
 
+@Injectable({ providedIn: 'root' })
 export class OrderMapper {
   static fromData(payload: OrderData): Order {
     if (!Array.isArray(payload.data)) {

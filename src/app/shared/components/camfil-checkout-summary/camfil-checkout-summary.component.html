@@ -1,0 +1,170 @@
+<mat-card class="mat-elevation-z4 summary-container sticky-container">
+  <h2 class="summary-title">{{ 'camfil.checkout.total_order_summary' | translate }}</h2>
+
+  <mat-card-content>
+    <mat-divider></mat-divider>
+
+    <!-- SubTotal -->
+    <ng-container *ngIf="totals?.itemTotal">
+      <div class="summary-line">
+        <p>
+          {{ 'checkout.cart.subtotal.heading' | translate }}
+        </p>
+        <p>{{ totals?.itemTotal | ishPrice }}</p>
+      </div>
+    </ng-container>
+
+    <!-- Volume Discount -->
+    <!-- TODO (extMlk): Current implementation does not make sense since volumeDiscount is not applied in BE when calculating totals -->
+    <div *ngIf="bucketsVolumeDiscounts$ | async" class="summary-line">
+      <p>{{ 'camfil.checkout.volume_discount' | translate }}</p>
+      <p>{{ getVolumeDiscountPrice(bucketsVolumeDiscounts$ | async, purchaseCurrency) }}</p>
+    </div>
+
+    <!-- list all applied order level promotions -->
+    <ng-container *ngIf="totals?.valueRebates?.length > 0">
+      <ng-container *ngFor="let rebate of totals.valueRebates">
+        <div class="summary-line">
+          <p *ngIf="rebate.promotionId">
+            <ish-basket-promotion [rebate]="rebate"></ish-basket-promotion>
+            <ng-template #default>{{ 'checkout.widget.promotion.discount' | translate }}</ng-template>
+          </p>
+          <p>{{ invert(rebate.amount) | ishPrice }}</p>
+        </div>
+      </ng-container>
+    </ng-container>
+
+    <!-- Shipping -->
+    <ng-container *ngIf="!checkIfZeroPrice(totals?.undiscountedShippingTotal)">
+      <div class="summary-line">
+        <p *ngIf="totals?.isEstimated">{{ 'checkout.cart.estimated_shipping_handling.label' | translate }}</p>
+        <p *ngIf="!totals?.isEstimated">{{ 'checkout.order.shipping.label' | translate }}</p>
+        <p>
+          {{ totals.undiscountedShippingTotal | ishPrice }}
+        </p>
+      </div>
+    </ng-container>
+
+    <!-- Shipping promotions -->
+    <ng-container *ngIf="totals?.shippingRebates?.length > 0">
+      <ng-container *ngFor="let rebate of totals.shippingRebates">
+        <div class="summary-line">
+          <div>
+            <ish-basket-promotion [rebate]="rebate"></ish-basket-promotion>
+            <ng-template #default>{{ 'checkout.widget.promotion.discount' | translate }}</ng-template>
+          </div>
+          <p>
+            {{ invert(rebate.amount) | ishPrice }}
+          </p>
+        </div>
+      </ng-container>
+    </ng-container>
+
+    <!-- Item Surcharges -->
+    <ng-container *ngFor="let surcharge of totals.itemSurchargeTotalsByType">
+      <ng-container *ngTemplateOutlet="surchargeItemTemplate; context: { surcharge: surcharge }"></ng-container>
+    </ng-container>
+
+    <!-- Bucket Surcharges -->
+    <ng-container *ngFor="let surcharge of totals.bucketSurchargeTotalsByType">
+      <ng-container *ngTemplateOutlet="surchargeItemTemplate; context: { surcharge: surcharge }"></ng-container>
+    </ng-container>
+
+    <!-- Payment costs -->
+    <ng-container *ngIf="hasPaymentCostsTotal">
+      <p>{{ 'checkout.cart.payment_cost.label' | translate }}</p>
+      <p>{{ totals.paymentCostsTotal | ishPrice }}</p>
+    </ng-container>
+
+    <!-- Discount total -->
+    <ng-container *ngIf="totals.discountTotal">
+      <div class="summary-line">
+        <p>
+          {{ 'checkout.widget.promotion.discount' | translate }}
+        </p>
+        <p>
+          {{ totals.discountTotal | ishPrice }}
+        </p>
+      </div>
+    </ng-container>
+
+    <!-- Tax -->
+    <ng-container *ngIf="totals.taxTotal && totals.taxTotal.value">
+      <div class="summary-line">
+        <p>{{ taxTranslation$ | async | translate }}</p>
+        <p>{{ totals?.taxTotal | ishPrice }}</p>
+      </div>
+    </ng-container>
+
+    <!-- Cart total -->
+    <ng-container *ngIf="totals?.total">
+      <div class="summary-line font-weight-bold lead">
+        <span *ngIf="totals.isEstimated">{{ 'checkout.cart.estimated_total.label' | translate }}</span>
+        <span *ngIf="!totals.isEstimated">{{ 'checkout.order.total_cost.label' | translate }}</span>
+        <p>{{ totals?.total | ishPrice: 'gross' }}</p>
+      </div>
+    </ng-container>
+
+    <mat-divider></mat-divider>
+
+    <ng-template #noConfirmed>
+      <ng-container *ngIf="!(isLoggedIn$ | async)">
+        <form [formGroup]="guestGdprForm" class="summary-gpdr-form">
+          <mat-checkbox color="primary" formControlName="gdprAcceptance">
+            <span>{{ 'camfil.account.apply_form.gdpr' | translate }}</span>
+          </mat-checkbox>
+        </form>
+      </ng-container>
+      <button
+        (click)="submitOrder()"
+        [disabled]="!(canSubmitOrder$ | async)"
+        class="submit-button"
+        color="primary"
+        mat-flat-button
+      >
+        <ng-template #readyToOrder>
+          {{ 'camfil.checkout.place_your_orders' | translate }}
+        </ng-template>
+        <ng-template #notReadyToOrder>
+          {{ 'camfil.checkout.wait_till_validation.button.text' | translate }}
+        </ng-template>
+        <ng-container *ngIf="canSubmitOrder$ | async; else notReadyToOrder">
+          <ng-container *ngTemplateOutlet="readyToOrder"></ng-container>
+        </ng-container>
+      </button>
+    </ng-template>
+
+    <ng-container *ngIf="!editable; else noConfirmed">
+      <button (click)="continueShopping()" color="primary" mat-flat-button>
+        {{ 'camfil.checkout.confirmation.continue_shopping' | translate }}
+      </button>
+    </ng-container>
+
+    <mat-divider></mat-divider>
+
+    <ish-content-include includeId="camfil.include.checkout.content.pagelet2-Include"></ish-content-include>
+  </mat-card-content>
+</mat-card>
+
+<camfil-small-cta-modal
+  actionTitle="{{ 'camfil.checkout.gdpr_form.gdpr.error.required' | translate }}"
+  actionButtonTitle="{{ 'camfil.modal.cta.button.ok' | translate }}"
+  onlyAccept="true"
+  hasError="true"
+>
+</camfil-small-cta-modal>
+
+<!-- Surcharge outlet template -->
+
+<ng-template #surchargeItemTemplate let-surcharge="surcharge">
+  <div class="summary-line">
+    <p>
+      {{ surcharge.displayName | slugify: 'camfil.dynamic' | translate }}
+      <mat-icon *ngIf="surcharge.description" [matTooltip]="surcharge.description" svgIcon="question-mark"></mat-icon>
+    </p>
+    <p *ngIf="!surcharge?.strikethrough">{{ surcharge.amount | ishPrice }}</p>
+    <p *ngIf="surcharge?.strikethrough">
+      <s>{{ surcharge.amount | ishPrice }}</s>
+    </p>
+  </div>
+</ng-template>

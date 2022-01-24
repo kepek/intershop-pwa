@@ -37,6 +37,7 @@ describe('Configuration Effects', () => {
     countryCode: 'SE',
     currency: 'SEK',
     icmChannel: 'Camfil-CamfilSE-Site',
+    continueShoppingUrl: '/account/camcards',
     ...settings,
   };
 

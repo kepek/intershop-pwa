@@ -49,6 +49,7 @@ export class CAMFILIdentityProvider extends ICMIdentityProvider implements Ident
 
     // initiate the user login with the access-token (cXML)
     if (hasAccessToken) {
+      this.router.navigateByUrl('/loading', { replaceUrl: false, skipLocationChange: true });
       this.apiTokenService.removeApiToken();
       this.accountFacade.loginUserWithToken(accessToken);
     }

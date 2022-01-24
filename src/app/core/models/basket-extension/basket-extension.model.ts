@@ -5,9 +5,9 @@ export interface BasketExtensionGuestForm {
     firstName: string;
     lastName: string;
     email: string;
-    phone: string;
+    phoneHome: string;
     siret: string;
-    companyName: string;
+    companyName1: string;
     jobTitle: string;
     vat: string;
   };
@@ -16,25 +16,25 @@ export interface BasketExtensionGuestForm {
     invoiceMark: string;
     deliveryInfo: string;
     customerNote: string;
-    streetAddress: string;
-    zipCode: string;
+    addressLine1: string;
+    postalCode: string;
     city: string;
-    country: string;
+    countryCode: string;
     sameAddressAsInvoice: boolean;
   };
   invoiceAddressFormGroup: {
-    streetAddress: string;
-    zipCode: string;
+    addressLine1: string;
+    postalCode: string;
     city: string;
-    country: string;
+    countryCode: string;
   };
 }
 
 export interface BasketExtensionGuestFormAddress {
-  streetAddress: string;
-  zipCode: string;
+  addressLine1: string;
+  postalCode: string;
   city: string;
-  country: string;
+  countryCode: string;
 }
 
 export interface BasketExtension extends Omit<BasketExtensionData, 'anonymousBasketData'> {

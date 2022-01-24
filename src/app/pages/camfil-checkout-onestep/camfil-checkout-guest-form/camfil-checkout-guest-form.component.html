@@ -1,0 +1,296 @@
+<ng-container *ngIf="basket?.lineItems?.length">
+  <form [formGroup]="guestForm">
+    <!-- Your Details -->
+    <mat-expansion-panel [expanded]="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{ 'camfil.checkout.guest_form.your_details' | translate }}
+        </mat-panel-title>
+        <mat-panel-description>
+          <mat-icon svgIcon="profile-fab"></mat-icon>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <div class="form-group-container w-100" formGroupName="userDetailsFormGroup">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="mat-form-field__wrapper">
+              <mat-form-field [hideRequiredMarker]="hideRequiredMarker" appearance="fill" class="form-field">
+                <mat-label>{{ 'camfil.checkout.guest_form.first_name' | translate }}</mat-label>
+                <input formControlName="firstName" matInput required />
+                <camfil-error
+                  [errorValidators]="validators.firstName"
+                  [errors]="getField('userDetailsFormGroup', 'firstName').errors"
+                  [touched]="
+                    getField('userDetailsFormGroup', 'firstName').touched ||
+                    getField('userDetailsFormGroup', 'firstName').dirty
+                  "
+                ></camfil-error>
+              </mat-form-field>
+            </div>
+            <div class="mat-form-field__wrapper">
+              <mat-form-field [hideRequiredMarker]="hideRequiredMarker" appearance="fill" class="form-field">
+                <mat-label>{{ 'camfil.checkout.guest_form.last_name' | translate }}</mat-label>
+                <input formControlName="lastName" matInput required />
+                <camfil-error
+                  [errorValidators]="validators.lastName"
+                  [errors]="getField('userDetailsFormGroup', 'lastName').errors"
+                  [touched]="
+                    getField('userDetailsFormGroup', 'lastName').touched ||
+                    getField('userDetailsFormGroup', 'lastName').dirty
+                  "
+                ></camfil-error>
+              </mat-form-field>
+            </div>
+            <div class="mat-form-field__wrapper">
+              <mat-form-field [hideRequiredMarker]="hideRequiredMarker" appearance="fill" class="form-field">
+                <mat-label>{{ 'camfil.checkout.guest_form.email_address' | translate }}</mat-label>
+                <input formControlName="email" matInput required />
+                <camfil-error
+                  [errorValidators]="validators.email"
+                  [errors]="getField('userDetailsFormGroup', 'email').errors"
+                  [touched]="
+                    getField('userDetailsFormGroup', 'email').touched || getField('userDetailsFormGroup', 'email').dirty
+                  "
+                ></camfil-error>
+              </mat-form-field>
+            </div>
+            <div class="mat-form-field__wrapper">
+              <mat-form-field [hideRequiredMarker]="hideRequiredMarker" appearance="fill" class="form-field">
+                <mat-label>{{ 'camfil.checkout.guest_form.telephone_number' | translate }}</mat-label>
+                <input formControlName="phoneHome" matInput required />
+                <camfil-error
+                  [errorValidators]="validators.phoneHome"
+                  [errors]="getField('userDetailsFormGroup', 'phoneHome').errors"
+                  [touched]="
+                    getField('userDetailsFormGroup', 'phoneHome').touched ||
+                    getField('userDetailsFormGroup', 'phoneHome').dirty
+                  "
+                ></camfil-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="col-md-4 offset-md-2 col-border">
+            <div class="mat-form-field__wrapper">
+              <mat-form-field [hideRequiredMarker]="hideRequiredMarker" appearance="fill" class="form-field">
+                <mat-label>{{ 'camfil.checkout.guest_form.job_title' | translate }}</mat-label>
+                <input formControlName="jobTitle" matInput />
+              </mat-form-field>
+            </div>
+            <div class="mat-form-field__wrapper">
+              <mat-form-field [hideRequiredMarker]="hideRequiredMarker" appearance="fill" class="form-field">
+                <mat-label>{{ 'camfil.checkout.guest_form.company_name' | translate }}</mat-label>
+                <input formControlName="companyName1" matInput required />
+                <camfil-error
+                  [errorValidators]="validators.companyName1"
+                  [errors]="getField('userDetailsFormGroup', 'companyName1').errors"
+                  [touched]="
+                    getField('userDetailsFormGroup', 'companyName1').touched ||
+                    getField('userDetailsFormGroup', 'companyName1').dirty
+                  "
+                ></camfil-error>
+              </mat-form-field>
+            </div>
+            <div class="mat-form-field__wrapper">
+              <mat-form-field [hideRequiredMarker]="hideRequiredMarker" appearance="fill" class="form-field">
+                <mat-label>{{ 'camfil.checkout.guest_form.vat_number' | translate }}</mat-label>
+                <input formControlName="vat" matInput />
+              </mat-form-field>
+            </div>
+            <div class="mat-form-field__wrapper">
+              <mat-form-field [hideRequiredMarker]="hideRequiredMarker" appearance="fill" class="form-field">
+                <mat-label>{{ 'camfil.checkout.guest_form.siret_number' | translate }}</mat-label>
+                <input formControlName="siret" matInput required />
+                <camfil-error
+                  [errorValidators]="validators.siret"
+                  [errors]="getField('userDetailsFormGroup', 'siret').errors"
+                  [touched]="
+                    getField('userDetailsFormGroup', 'siret').touched || getField('userDetailsFormGroup', 'siret').dirty
+                  "
+                ></camfil-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-expansion-panel>
+    <!-- Delivery Info -->
+    <mat-expansion-panel [expanded]="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{ 'camfil.checkout.guest_form.delivery_info' | translate }}
+        </mat-panel-title>
+        <mat-panel-description>
+          <mat-icon svgIcon="delivery-time"></mat-icon>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <div class="form-group-container w-100" formGroupName="deliveryInfoFromGroup">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="mat-form-field__wrapper">
+              <mat-form-field [hideRequiredMarker]="hideRequiredMarker" appearance="fill" class="form-field">
+                <mat-label>{{ 'camfil.checkout.guest_form.street_address' | translate }}</mat-label>
+                <input formControlName="addressLine1" matInput required />
+                <camfil-error
+                  [errorValidators]="validators.addressLine1"
+                  [errors]="getField('deliveryInfoFromGroup', 'addressLine1').errors"
+                  [touched]="
+                    getField('deliveryInfoFromGroup', 'addressLine1').touched ||
+                    getField('deliveryInfoFromGroup', 'addressLine1').dirty
+                  "
+                ></camfil-error>
+              </mat-form-field>
+            </div>
+            <div class="mat-form-field__wrapper">
+              <camfil-zip-code
+                [errorValidator]="validators.zipCode"
+                [form]="guestForm.controls['deliveryInfoFromGroup']"
+                appearance="fill"
+                fieldCity="city"
+                fieldName="postalCode"
+                fixedLoader="true"
+              ></camfil-zip-code>
+            </div>
+            <div class="mat-form-field__wrapper">
+              <mat-form-field [hideRequiredMarker]="hideRequiredMarker" appearance="fill" class="form-field">
+                <mat-label>{{ 'camfil.account.apply_form.city' | translate }}</mat-label>
+                <input formControlName="city" matInput required readonly />
+                <camfil-error
+                  [errorValidators]="validators.city"
+                  [errors]="getField('deliveryInfoFromGroup', 'city').errors"
+                  [touched]="
+                    getField('deliveryInfoFromGroup', 'city').touched || getField('deliveryInfoFromGroup', 'city').dirty
+                  "
+                ></camfil-error>
+              </mat-form-field>
+            </div>
+            <div class="mat-form-field__wrapper">
+              <mat-form-field [hideRequiredMarker]="hideRequiredMarker" appearance="fill" class="form-field">
+                <mat-label>{{ 'camfil.account.cam_card.add_to_form.country' | translate }}</mat-label>
+                <mat-select formControlName="countryCode">
+                  <mat-option>--</mat-option>
+                  <mat-option *ngFor="let country of countries$ | async" [value]="country.countryCode">
+                    {{ country.name }}
+                  </mat-option>
+                </mat-select>
+                <camfil-error
+                  [errorValidators]="validators.countryCode"
+                  [errors]="getField('deliveryInfoFromGroup', 'countryCode').errors"
+                  [touched]="
+                    getField('deliveryInfoFromGroup', 'countryCode').touched ||
+                    getField('deliveryInfoFromGroup', 'countryCode').dirty
+                  "
+                ></camfil-error>
+              </mat-form-field>
+            </div>
+            <mat-checkbox class="example-margin" color="primary" formControlName="sameAddressAsInvoice">
+              {{ 'camfil.checkout.guest_form.same_as_invoice_address' | translate }}
+            </mat-checkbox>
+          </div>
+          <div class="col-md-4 offset-md-2 col-border">
+            <div class="mat-form-field__wrapper">
+              <mat-form-field [hideRequiredMarker]="hideRequiredMarker" appearance="fill" class="form-field">
+                <mat-label>{{ 'camfil.account.orderdetails.goods_mark.label' | translate }}</mat-label>
+                <input [camfilMaxLength]="'OrderMark'" formControlName="boxLabel" matInput />
+              </mat-form-field>
+            </div>
+            <div class="mat-form-field__wrapper">
+              <mat-form-field [hideRequiredMarker]="hideRequiredMarker" appearance="fill" class="form-field">
+                <mat-label>{{ 'camfil.checkout.form.invoice_mark' | translate }}</mat-label>
+                <input [camfilMaxLength]="'InvoiceLabel'" formControlName="invoiceMark" matInput />
+              </mat-form-field>
+            </div>
+            <div class="mat-form-field__wrapper">
+              <mat-form-field [hideRequiredMarker]="hideRequiredMarker" appearance="fill" class="form-field">
+                <mat-label>{{ 'camfil.checkout.guest_form.delivery_info' | translate }}</mat-label>
+                <textarea formControlName="deliveryInfo" label="camfil.checkout.form.note" matInput></textarea>
+              </mat-form-field>
+            </div>
+            <div class="mat-form-field__wrapper">
+              <mat-form-field [hideRequiredMarker]="hideRequiredMarker" appearance="fill" class="form-field">
+                <mat-label>{{ 'camfil.checkout.form.note' | translate }}</mat-label>
+                <textarea
+                  [camfilMaxLength]="'CustomerNote'"
+                  formControlName="customerNote"
+                  label="camfil.checkout.form.note"
+                  matInput
+                ></textarea>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-expansion-panel>
+    <!-- Invoice Address -->
+    <mat-expansion-panel *ngIf="showInvoiceAddressForm$ | async" [expanded]="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{ 'checkout.address.billing.label' | translate }}
+        </mat-panel-title>
+        <mat-panel-description>
+          <mat-icon svgIcon="quote"></mat-icon>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <div class="form-group-container w-100" formGroupName="invoiceAddressFormGroup">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="mat-form-field__wrapper">
+              <mat-form-field [hideRequiredMarker]="hideRequiredMarker" appearance="fill" class="form-field">
+                <mat-label>{{ 'camfil.checkout.guest_form.street_address' | translate }}</mat-label>
+                <input
+                  formControlName="addressLine1"
+                  label="camfil.checkout.guest_form.street_address"
+                  matInput
+                  required
+                />
+                <camfil-error
+                  [errorValidators]="validators.addressLine1"
+                  [errors]="getField('invoiceAddressFormGroup', 'addressLine1').errors"
+                  [touched]="
+                    getField('invoiceAddressFormGroup', 'addressLine1').touched ||
+                    getField('invoiceAddressFormGroup', 'addressLine1').dirty
+                  "
+                ></camfil-error>
+              </mat-form-field>
+            </div>
+            <div class="mat-form-field__wrapper">
+              <camfil-zip-code
+                [errorValidator]="validators.zipCode"
+                [form]="guestForm.controls['invoiceAddressFormGroup']"
+                appearance="fill"
+                fieldCity="city"
+                fieldName="postalCode"
+              ></camfil-zip-code>
+            </div>
+            <div class="mat-form-field__wrapper">
+              <camfil-city-field
+                [form]="guestForm.controls['invoiceAddressFormGroup']"
+                fieldCode="zipCode"
+                fieldCity="city"
+                fieldSelect="citySelect"
+              ></camfil-city-field>
+            </div>
+            <div class="mat-form-field__wrapper">
+              <mat-form-field [hideRequiredMarker]="hideRequiredMarker" appearance="fill" class="form-field">
+                <mat-label>{{ 'camfil.account.cam_card.add_to_form.country' | translate }}</mat-label>
+                <mat-select formControlName="countryCode">
+                  <mat-option>--</mat-option>
+                  <mat-option *ngFor="let country of countries$ | async" [value]="country.countryCode">
+                    {{ country.name }}
+                  </mat-option>
+                </mat-select>
+                <camfil-error
+                  [errorValidators]="validators.countryCode"
+                  [errors]="getField('invoiceAddressFormGroup', 'countryCode').errors"
+                  [touched]="
+                    getField('invoiceAddressFormGroup', 'countryCode').touched ||
+                    getField('invoiceAddressFormGroup', 'countryCode').dirty
+                  "
+                ></camfil-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-expansion-panel>
+  </form>
+</ng-container>

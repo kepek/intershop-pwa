@@ -125,10 +125,7 @@ describe('Configuration Integration', () => {
     expect(getCurrentLocale(store$.state)).toMatchInlineSnapshot(`
       Object {
         "currency": "EUR",
-        "displayLong": "Finnish",
-        "displayName": "FI",
-        "lang": "fi_FI",
-        "value": "fi",
+        "lang": "de_DE",
       }
     `);
   }));
@@ -137,41 +134,18 @@ describe('Configuration Integration', () => {
     expect(getCurrentLocale(store$.state)).toMatchInlineSnapshot(`
       Object {
         "currency": "EUR",
-        "displayLong": "Finnish",
-        "displayName": "FI",
-        "lang": "fi_FI",
-        "value": "fi",
+        "lang": "en_US",
       }
     `);
     expect(getAvailableLocales(store$.state)).toMatchInlineSnapshot(`
       Array [
         Object {
           "currency": "EUR",
-          "displayLong": "Finnish",
-          "displayName": "FI",
-          "lang": "fi_FI",
-          "value": "fi",
+          "lang": "en_US",
         },
         Object {
           "currency": "EUR",
-          "displayLong": "French",
-          "displayName": "FR",
-          "lang": "fr_FR",
-          "value": "fr",
-        },
-        Object {
-          "currency": "SEK",
-          "displayLong": "Swedish",
-          "displayName": "SV",
-          "lang": "sv_SE",
-          "value": "se",
-        },
-        Object {
-          "currency": "GBP",
-          "displayLong": "English",
-          "displayName": "EN",
-          "lang": "en_GB",
-          "value": "gb",
+          "lang": "de_DE",
         },
       ]
     `);

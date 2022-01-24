@@ -3,12 +3,27 @@ import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store, select } from '@ngrx/store';
-import { concatMap, filter, map, takeWhile, tap, withLatestFrom } from 'rxjs/operators';
+import { iif } from 'rxjs';
+import {
+  concatMap,
+  debounceTime,
+  distinctUntilChanged,
+  filter,
+  map,
+  mergeMap,
+  switchMap,
+  takeWhile,
+  tap,
+  window,
+  withLatestFrom,
+} from 'rxjs/operators';
 
+import { ProductCompletenessLevel } from 'ish-core/models/product/product.helper';
 import { displayErrorMessage } from 'ish-core/store/core/messages';
 import { ofUrl, selectRouteParam } from 'ish-core/store/core/router';
 import { loadBasket } from 'ish-core/store/customer/basket';
-import { mapErrorToAction, mapToPayloadProperty, whenTruthy } from 'ish-core/utils/operators';
+import { getProducts, loadProductIfNotLoaded, loadProductSuccess } from 'ish-core/store/shopping/products';
+import { mapErrorToAction, mapToPayload, mapToPayloadProperty, whenTruthy } from 'ish-core/utils/operators';
 
 import { OrderService } from '../../services/order/order.service';
 
@@ -32,8 +47,9 @@ import {
   loadOrdersFail,
   loadOrdersSuccess,
   selectOrder,
+  updateOrder,
 } from './order.actions';
-import { getSelectedOrderId } from './order.selectors';
+import { getSelectedOrder, getSelectedOrderId } from './order.selectors';
 
 @Injectable()
 export class OrderEffects {
@@ -54,6 +70,54 @@ export class OrderEffects {
           map(order => loadOrderSuccess({ order })),
           mapErrorToAction(loadOrderFail)
         )
+      )
+    )
+  );
+
+  loadOrderSuccess$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loadOrderSuccess),
+      mapToPayloadProperty('order'),
+      map(order => order?.id),
+      whenTruthy(),
+      mergeMap(orderId => [loadOrderLineItems({ orderId })])
+    )
+  );
+
+  loadTrackAndTraceForSelectedOrder$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loadOrderLineItemsSuccess),
+      mapToPayload(),
+      switchMap(({ orderId }) => [loadOrderTrackAndTrace({ orderId })])
+    )
+  );
+
+  loadAdditionalCostForSelectedOrder$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loadOrderLineItemsSuccess),
+      mapToPayload(),
+      switchMap(({ orderId }) => [loadOrderAdditionalTotalCost({ orderId })])
+    )
+  );
+
+  loadProductsForSelectedOrder$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loadOrderLineItemsSuccess),
+      mapToPayload(),
+      switchMap(({ lineItems }) => [
+        ...lineItems.map(({ sku }) => loadProductIfNotLoaded({ sku, level: ProductCompletenessLevel.List })),
+      ])
+    )
+  );
+
+  loadOrderForSelectedOrder$ = createEffect(() =>
+    iif(
+      () => isPlatformBrowser(this.platformId),
+      this.actions$.pipe(
+        ofType(selectOrder),
+        mapToPayloadProperty('orderId'),
+        whenTruthy(),
+        mergeMap(orderId => [loadOrder({ orderId })])
       )
     )
   );
@@ -155,6 +219,41 @@ export class OrderEffects {
         displayErrorMessage({
           message: error?.message || error?.code,
         })
+      )
+    )
+  );
+
+  loadProductsForSelectedOrderSuccess$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loadProductSuccess),
+      mapToPayload(),
+      // accumulate all actions
+      window(this.actions$.pipe(ofType(loadProductSuccess), debounceTime(1000))),
+      mergeMap(window$ =>
+        window$.pipe(
+          withLatestFrom(
+            this.store.pipe(
+              select(getSelectedOrder),
+              map(order =>
+                order?.lineItems?.reduce<string[]>((acc, val) => {
+                  acc.push(val?.sku);
+                  return acc;
+                }, [])
+              )
+            )
+          ),
+          filter(([, skus]) => !!skus?.length),
+          switchMap(([, skus]) => this.store.pipe(select(getProducts, { skus }))),
+          // check whether product failed or availability when not failed
+          map(products =>
+            products.map(({ availability, failed, sku }) => ({ sku, availability: failed ? false : availability }))
+          ),
+          // check if all products are available, if not user should not be able to re-order
+          map(availabilities => availabilities.every(({ availability }) => !!availability)),
+          distinctUntilChanged(),
+          withLatestFrom(this.store.pipe(select(getSelectedOrder))),
+          mergeMap(([canReOrder, order]) => [updateOrder({ order: { ...order, canReOrder } })])
+        )
       )
     )
   );

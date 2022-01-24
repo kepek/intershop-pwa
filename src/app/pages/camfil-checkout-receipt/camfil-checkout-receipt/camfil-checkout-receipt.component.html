@@ -1,0 +1,88 @@
+<div *ngIf="order" class="row">
+  <div class="col-md-12 col-lg-9">
+    <!-- header as content -->
+    <ng-content></ng-content>
+    <ng-container *ngIf="buckets?.length" [ngTemplateOutlet]="bucketsViewTemplate"></ng-container>
+    <ng-container *ngIf="order && !buckets?.length" [ngTemplateOutlet]="orderViewTemplate"></ng-container>
+  </div>
+  <!-- order summary -->
+  <div class="col-md-12 col-lg-3" *ngIf="order">
+    <camfil-checkout-summary
+      [purchaseCurrency]="order.purchaseCurrency"
+      [totals]="order.totals"
+    ></camfil-checkout-summary>
+  </div>
+</div>
+
+<ng-container *ngIf="!buckets?.length && !order" [ngTemplateOutlet]="emptyBasketTemplate"></ng-container>
+
+<ng-template #emptyBasketTemplate>
+  <camfil-shopping-bucket-empty [error]="basketError"></camfil-shopping-bucket-empty>
+</ng-template>
+
+<ng-template #bucketsViewTemplate>
+  <p *ngIf="buckets?.length === 0 && !order" class="alert alert-info">
+    {{ 'checkout.receipt.order_pending.message' | translate }}
+  </p>
+
+  <ng-container *ngFor="let bucket of buckets; index as i">
+    <camfil-checkout-bucket
+      [basket]="order"
+      [totalBuckets]="buckets?.length"
+      [index]="i + 1"
+      [editable]="false"
+      [bucket]="bucket"
+    ></camfil-checkout-bucket>
+  </ng-container>
+</ng-template>
+
+<ng-template #orderViewTemplate>
+  <div *ishFeature="'businessCustomerRegistration'" class="row">
+    <!-- Buyer-->
+    <camfil-info-box heading="checkout.widget.buyer.heading" class="col-md-6">
+      <ish-basket-buyer [object]="order"></ish-basket-buyer>
+    </camfil-info-box>
+  </div>
+
+  <div class="row d-flex">
+    <!-- Invoice Address -->
+    <camfil-info-box heading="checkout.widget.billing-address.heading" class="col-md-6">
+      <ish-address [address]="order.invoiceToAddress"></ish-address>
+    </camfil-info-box>
+
+    <!-- Shipping Address -->
+    <camfil-info-box heading="checkout.widget.shipping-address.heading" class="col-md-6">
+      <ish-address [address]="order.commonShipToAddress"></ish-address>
+    </camfil-info-box>
+  </div>
+
+  <div class="row d-flex">
+    <!-- Shipping Method -->
+    <camfil-info-box
+      heading="checkout.widget.shipping_method.heading"
+      class="col-md-6"
+      *ngIf="order.commonShippingMethod"
+    >
+      <p>{{ order.commonShippingMethod.name }}</p>
+    </camfil-info-box>
+
+    <!-- Payment Method -->
+    <camfil-info-box heading="checkout.widget.payment_method.heading" class="col-md-6" *ngIf="order.payment">
+      <p>
+        {{ order.payment.displayName }}<br />{{ order.payment.paymentInstrument.accountIdentifier }}
+        <ng-container *ngIf="!order.payment.displayName && !order.payment.paymentInstrument.accountIdentifier">
+          {{ order.payment.paymentInstrument }}
+        </ng-container>
+      </p>
+    </camfil-info-box>
+  </div>
+
+  <!-- Line Items -->
+  <camfil-info-box heading="account.approvallist.table.line_items" *ngIf="order?.lineItems?.length">
+    <camfil-checkout-line-item
+      *ngFor="let item of order.lineItems; index as i"
+      [index]="i + 1"
+      [lineItem]="item"
+    ></camfil-checkout-line-item>
+  </camfil-info-box>
+</ng-template>

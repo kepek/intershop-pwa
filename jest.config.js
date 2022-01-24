@@ -22,6 +22,8 @@ module.exports = {
     '^organization-management$': '<rootDir>/projects/organization-management/src/app/exports',
     '^requisition-management$': '<rootDir>/projects/requisition-management/src/app/exports',
     '^camfil-icons$': '<rootDir>/projects/camfil-icons/src/public-api.ts',
+    '^camfil-pwa$': '<rootDir>/projects/camfil-icons/src/app/exports',
+    '^camfil-pwa/(.*)$': '<rootDir>/projects/camfil-pwa/src/app/$1',
   },
   snapshotSerializers: [
     './src/jest-serializer/AngularHTMLSerializer.js',

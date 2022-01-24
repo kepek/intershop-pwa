@@ -25,6 +25,7 @@ export const initialState: ConfigurationState = {
   countryCode: undefined,
   currency: undefined,
   icmChannel: undefined,
+  continueShoppingUrl: undefined,
 };
 
 export const configurationReducer = createReducer(

@@ -21,6 +21,7 @@ describe('Configuration Service', () => {
     countryCode: 'SE',
     currency: 'SEK',
     icmChannel: 'Camfil-CamfilSE-Site',
+    continueShoppingUrl: '/account/camcards',
     showCountryFieldOnAddressForms: false,
     showAddToCamCardButtonForNonLoggedInUser: true,
   };

@@ -2,8 +2,10 @@ import { EntityState, createEntityAdapter } from '@ngrx/entity';
 import { createReducer, on } from '@ngrx/store';
 
 import { HttpError } from 'ish-core/models/http-error/http-error.model';
-import { setLoadingOn, unsetLoadingAndErrorOn } from 'ish-core/utils/ngrx-creators';
+import { loadOrderFail } from 'ish-core/store/customer/orders';
+import { setErrorOn, setLoadingOn, unsetLoadingAndErrorOn } from 'ish-core/utils/ngrx-creators';
 
+import { OrderHelper } from '../../models/order/order.helper';
 import { Order } from '../../models/order/order.model';
 
 import {
@@ -21,6 +23,7 @@ import {
   loadOrders,
   loadOrdersSuccess,
   selectOrder,
+  updateOrder,
 } from './order.actions';
 
 export const orderAdapter = createEntityAdapter<Order>({
@@ -58,10 +61,19 @@ export const orderReducer = createReducer(
     loadOrderTrackAndTraceSuccess,
     loadOrderAdditionalTotalCostSuccess
   ),
+  setErrorOn(loadOrderFail),
   on(selectOrder, (state: OrdersState, action) => ({
     ...state,
     selected: action.payload.orderId,
   })),
+  on(loadOrderSuccess, (state: OrdersState, action) => {
+    const { order } = action.payload;
+
+    return {
+      ...orderAdapter.upsertOne(order, state),
+      selected: order.id,
+    };
+  }),
   on(loadOrdersSuccess, (state: OrdersState, action) => {
     const { orders } = action.payload;
 
@@ -71,8 +83,11 @@ export const orderReducer = createReducer(
   }),
   on(loadOrderLineItemsSuccess, (state: OrdersState, action) => {
     const { lineItems, orderId } = action.payload;
-    const totalDeliveredQty = lineItems.reduce((total, current) => total + current.deliveredQty, 0);
-    const totalOrderedQty = lineItems.reduce((total, current) => total + current.orderedQty, 0);
+    const order = state.entities?.[orderId];
+    const totalDeliveredQty = OrderHelper.getTotalDeliveredQty(lineItems);
+    const totalOrderedQty = OrderHelper.getTotalOrderedQty(lineItems);
+    const isPartialDelivery = OrderHelper.isPartialDelivery(order, lineItems);
+    const deliveryDates = OrderHelper.getDeliveryDates(lineItems);
 
     return {
       ...orderAdapter.updateOne(
@@ -82,6 +97,8 @@ export const orderReducer = createReducer(
             lineItems,
             totalDeliveredQty,
             totalOrderedQty,
+            deliveryDates,
+            isPartialDelivery,
           },
         },
         state
@@ -98,6 +115,12 @@ export const orderReducer = createReducer(
     const { additionalTotalCost, orderId } = action.payload;
     return {
       ...orderAdapter.updateOne({ id: orderId, changes: { additionalTotalCost: additionalTotalCost.elements } }, state),
+    };
+  }),
+  on(updateOrder, (state: OrdersState, action) => {
+    const { order } = action.payload;
+    return {
+      ...orderAdapter.updateOne({ id: order?.id, changes: order }, state),
     };
   })
 );

@@ -26,6 +26,7 @@ export interface ChannelConfiguration extends Partial<ChannelSettings> {
   countryCode: string;
   currency: string;
   icmChannel: string;
+  continueShoppingUrl: string;
 }
 
 export type Channel = keyof typeof channelConfig;

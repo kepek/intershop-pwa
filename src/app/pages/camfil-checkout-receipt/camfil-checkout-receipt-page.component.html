@@ -1,0 +1,28 @@
+<div
+  class="mt-4"
+  *ngIf="{
+    order: order$ | async,
+    basket: submittedBasket$ | async,
+    buckets: submittedBuckets$ | async
+  } as data"
+  data-testing-id="checkout-receipt-page"
+>
+  <camfil-checkout-receipt
+    [order]="data.basket || data.order"
+    [buckets]="data.buckets"
+    [basketError]="basketError$ | async"
+  >
+    <ng-container *ngIf="data?.basket?.approval?.approvalRequired; else orderReceiptHeader">
+      <ish-lazy-checkout-receipt-requisition [basket]="data.basket"></ish-lazy-checkout-receipt-requisition>
+      <mat-divider></mat-divider>
+      <br />
+    </ng-container>
+    <ng-template #orderReceiptHeader>
+      <camfil-checkout-receipt-order [order]="data.order"></camfil-checkout-receipt-order>
+      <mat-divider></mat-divider>
+      <br />
+    </ng-template>
+  </camfil-checkout-receipt>
+
+  <camfil-loading *ngIf="loading$ | async" [standalone]="true"></camfil-loading>
+</div>

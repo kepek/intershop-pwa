@@ -132,7 +132,7 @@ export class CheckoutFacade {
   private ordersError$ = this.store.pipe(select(getOrdersError));
   basketOrOrdersError$ = merge(this.basketError$, this.ordersError$);
 
-  constructor(private store: Store) {}
+  constructor(protected store: Store) {}
 
   start() {
     this.store.dispatch(startCheckout());
