@@ -1,7 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { MockPipe } from 'ng-mocks';
+import { MockComponent, MockPipe } from 'ng-mocks';
+import { OrderFormComponent } from 'src/app/extensions/cam-cards/shared/add-product-to-cart-modal/create-order-product-modal/order-form/order-form.component';
 import { instance, mock } from 'ts-mockito';
 
 import { CamfilMaxLengthAttributeCreateDirective } from 'ish-core/directives/camfil-max-length-attribute-create.directive';
@@ -34,6 +35,7 @@ describe('Camfil Requisition Summary Component', () => {
         CamfilMaxLengthAttributeCreateDirective,
         CamfilRequisitionSummaryComponent,
         EditApprovalDetailsModalComponent,
+        MockComponent(OrderFormComponent),
         MockPipe(DatePipe),
         MockPipe(PricePipe),
       ],

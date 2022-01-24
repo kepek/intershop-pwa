@@ -2,6 +2,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MockComponent, MockDirective, MockPipe } from 'ng-mocks';
 import { of } from 'rxjs';
+import { CamConfigurationFacade } from 'src/app/extensions/cam-configuration/facades/cam-configuration.facade';
+import { CamRequisitionManagementFacade } from 'src/app/extensions/cam-requisition-management/facades/cam-requisition-management.facade';
 import { instance, mock, when } from 'ts-mockito';
 
 import { CamfilMaxLengthAttributeCreateDirective } from 'ish-core/directives/camfil-max-length-attribute-create.directive';
@@ -40,13 +42,11 @@ import { CamCardsFacade } from '../../../extensions/cam-cards/facades/cam-cards.
 import { ModalAddNewProductComponent } from '../../../extensions/cam-cards/pages/account-cam-card-detail/modal-add-new-product/modal-add-new-product.component';
 import { ArticleDetailsComponent } from '../../../extensions/cam-cards/shared/add-product-to-cam-card-modal/article-details/article-details.component';
 import { OrderFormComponent } from '../../../extensions/cam-cards/shared/add-product-to-cart-modal/create-order-product-modal/order-form/order-form.component';
-import { CamConfigurationFacade } from '../../../extensions/cam-configuration/facades/cam-configuration.facade';
 import { CamfilCheckoutGuestFormComponent } from '../../../pages/camfil-checkout-onestep/camfil-checkout-guest-form/camfil-checkout-guest-form.component';
 
 import { CamfilCheckoutBucketComponent } from './camfil-checkout-bucket.component';
 import { CamfilDeleteOrderComponent } from './camfil-delete-order/camfil-delete-order.component';
 import { CamfilEditOrderModalComponent } from './camfil-edit-order-modal/camfil-edit-order-modal.component';
-import { CamRequisitionManagementFacade } from 'src/app/extensions/cam-requisition-management/facades/cam-requisition-management.facade';
 
 describe('Camfil Checkout Bucket Component', () => {
   let component: CamfilCheckoutBucketComponent;

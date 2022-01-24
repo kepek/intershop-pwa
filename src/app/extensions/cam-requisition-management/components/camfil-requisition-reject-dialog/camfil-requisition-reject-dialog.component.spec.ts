@@ -5,7 +5,7 @@ import { MockComponent } from 'ng-mocks';
 import { instance, mock, spy, verify } from 'ts-mockito';
 
 import { CamfilMaxLengthAttributeCreateDirective } from 'ish-core/directives/camfil-max-length-attribute-create.directive';
-import { CamfilErrorMessageComponent } from 'ish-shared/components/common/camfil-error-message/camfil-error-message.component';
+import { CamfilErrorComponent } from 'ish-shared/components/common/camfil-error/camfil-error.component';
 import { TextareaComponent } from 'ish-shared/forms/components/textarea/textarea.component';
 
 import { CamRequisitionManagementFacade } from '../../facades/cam-requisition-management.facade';
@@ -22,9 +22,9 @@ describe('Camfil Requisition Reject Dialog Component', () => {
     camRequisitionManagementFacade = mock(CamRequisitionManagementFacade);
     await TestBed.configureTestingModule({
       declarations: [
+        CamfilErrorComponent,
         CamfilMaxLengthAttributeCreateDirective,
         CamfilRequisitionRejectDialogComponent,
-        MockComponent(CamfilErrorMessageComponent),
         MockComponent(TextareaComponent),
       ],
       imports: [ReactiveFormsModule, TranslateModule.forRoot()],

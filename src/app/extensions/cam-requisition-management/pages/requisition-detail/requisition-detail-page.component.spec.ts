@@ -8,6 +8,7 @@ import { ModalAddNewProductComponent } from 'src/app/extensions/cam-cards/pages/
 import { ArticleDetailsComponent } from 'src/app/extensions/cam-cards/shared/add-product-to-cam-card-modal/article-details/article-details.component';
 import { instance, mock, when } from 'ts-mockito';
 
+import { CamfilMaxLengthAttributeCreateDirective } from 'ish-core/directives/camfil-max-length-attribute-create.directive';
 import { AccountFacade } from 'ish-core/facades/account.facade';
 import { AppFacade } from 'ish-core/facades/app.facade';
 import { AddressComponent } from 'ish-shared/components/address/address/address.component';
@@ -44,6 +45,7 @@ describe('Requisition Detail Page Component', () => {
       imports: [RouterTestingModule, TranslateModule.forRoot()],
       declarations: [
         ArticleDetailsComponent,
+        CamfilMaxLengthAttributeCreateDirective,
         MockComponent(AddressComponent),
         MockComponent(BasketCostSummaryComponent),
         MockComponent(CamfilErrorMessageComponent),

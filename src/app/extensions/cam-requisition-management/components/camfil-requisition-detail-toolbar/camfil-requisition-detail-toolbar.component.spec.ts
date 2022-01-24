@@ -1,10 +1,13 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MockComponent } from 'ng-mocks';
 import { CamCardsFacade } from 'src/app/extensions/cam-cards/facades/cam-cards.facade';
 import { ModalAddNewProductComponent } from 'src/app/extensions/cam-cards/pages/account-cam-card-detail/modal-add-new-product/modal-add-new-product.component';
 import { instance, mock } from 'ts-mockito';
 
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
+import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
 import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
+import { CamfilProductQuantityComponent } from 'ish-shared/components/product/camfil-product-quantity/camfil-product-quantity.component';
 
 import { CamRequisitionManagementFacade } from '../../facades/cam-requisition-management.facade';
 
@@ -26,6 +29,8 @@ describe('Camfil Requisition Detail Toolbar Component', () => {
       declarations: [
         CamfilRequisitionDetailToolbarComponent,
         CamfilSmallCtaModalComponent,
+        MockComponent(CamfilLoadingComponent),
+        MockComponent(CamfilProductQuantityComponent),
         ModalAddNewProductComponent,
       ],
     })
