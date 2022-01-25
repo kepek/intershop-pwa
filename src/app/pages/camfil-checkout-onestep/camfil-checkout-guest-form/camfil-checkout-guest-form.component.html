@@ -151,17 +151,12 @@
               ></camfil-zip-code>
             </div>
             <div class="mat-form-field__wrapper">
-              <mat-form-field [hideRequiredMarker]="hideRequiredMarker" appearance="fill" class="form-field">
-                <mat-label>{{ 'camfil.account.apply_form.city' | translate }}</mat-label>
-                <input formControlName="city" matInput required readonly />
-                <camfil-error
-                  [errorValidators]="validators.city"
-                  [errors]="getField('deliveryInfoFromGroup', 'city').errors"
-                  [touched]="
-                    getField('deliveryInfoFromGroup', 'city').touched || getField('deliveryInfoFromGroup', 'city').dirty
-                  "
-                ></camfil-error>
-              </mat-form-field>
+              <camfil-city-field
+                [form]="guestForm.controls['deliveryInfoFromGroup']"
+                fieldCode="postalCode"
+                fieldCity="city"
+                fieldSelect="citySelect"
+              ></camfil-city-field>
             </div>
             <div class="mat-form-field__wrapper">
               <mat-form-field [hideRequiredMarker]="hideRequiredMarker" appearance="fill" class="form-field">
@@ -264,7 +259,7 @@
             <div class="mat-form-field__wrapper">
               <camfil-city-field
                 [form]="guestForm.controls['invoiceAddressFormGroup']"
-                fieldCode="zipCode"
+                fieldCode="postalCode"
                 fieldCity="city"
                 fieldSelect="citySelect"
               ></camfil-city-field>
