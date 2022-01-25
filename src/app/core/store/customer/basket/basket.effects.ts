@@ -26,7 +26,7 @@ import { RouterState } from 'ish-core/store/core/router/router.reducer';
 import { setCheckoutFocusedElement } from 'ish-core/store/core/viewconf/viewconf.actions';
 import { createUser, loadUserByAPIToken, loginUser, loginUserSuccess } from 'ish-core/store/customer/user';
 import { ApiTokenService } from 'ish-core/utils/api-token/api-token.service';
-import { mapErrorToAction, mapToPayload, mapToPayloadProperty, whenTruthy } from 'ish-core/utils/operators';
+import { mapErrorToAction, mapToPayload, mapToPayloadProperty } from 'ish-core/utils/operators';
 
 import {
   camfilDragLineItem,
@@ -342,7 +342,6 @@ export class BasketEffects {
       ofType(loadBasketSuccess),
       mapToPayload(),
       withLatestFrom(this.store.pipe(select(getCurrentBasket))),
-      whenTruthy(),
       mapTo(validateBasket({ scopes: ['CamfilInfo'] }))
     )
   );

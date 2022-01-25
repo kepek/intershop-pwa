@@ -138,9 +138,12 @@ export class BasketItemsEffects {
             const hasExtensions = Object.values(info?.extensions)?.length;
 
             if (authorized) {
-              return [hasExtensions ? updateBucketsQueue(info) : addItemsToBasketFromCamCard({ items: info.items })];
+              return [
+                hasExtensions ? updateBucketsQueue(info) : addItemsToBasketFromCamCard({ items: info.items }),
+                validateBasket({ scopes: ['CamfilInfo'] }),
+              ];
             } else {
-              return [addItemsToBasket({ items })];
+              return [addItemsToBasket({ items }), validateBasket({ scopes: ['CamfilInfo'] })];
             }
           })
         )
