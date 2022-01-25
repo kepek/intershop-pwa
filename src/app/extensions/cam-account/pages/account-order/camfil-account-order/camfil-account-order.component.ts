@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Observable, Subject } from 'rxjs';
 
 import { OrderHelper } from 'ish-core/models/order/order.helper';
+import { Order as IshOrder } from 'ish-core/models/order/order.model';
 import { Price } from 'ish-core/models/price/price.model';
 import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
 import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
@@ -27,6 +28,7 @@ export class CamfilAccountOrderComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject();
 
   @Input() order: Order;
+  @Input() ishOrder: IshOrder;
   @Input() deviceType: DeviceType;
 
   orderLoading$: Observable<boolean>;

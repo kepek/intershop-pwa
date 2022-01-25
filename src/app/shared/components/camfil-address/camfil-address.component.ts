@@ -21,4 +21,10 @@ export class CamfilAddressComponent {
    *
    */
   @Input() address: Address;
+
+  /**
+   * If set to true, the email is displayed as part of the address.
+   *
+   */
+  @Input() displayEmail = false;
 }
