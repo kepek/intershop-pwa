@@ -5,6 +5,7 @@ import { ModalAddNewProductComponent } from 'src/app/extensions/cam-cards/pages/
 import { ArticleDetailsComponent } from 'src/app/extensions/cam-cards/shared/add-product-to-cam-card-modal/article-details/article-details.component';
 import { instance, mock } from 'ts-mockito';
 
+import { CamfilMaxLengthAttributeCreateDirective } from 'ish-core/directives/camfil-max-length-attribute-create.directive';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
 import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
@@ -29,6 +30,7 @@ describe('Camfil Requisition Detail Toolbar Component', () => {
     await TestBed.configureTestingModule({
       declarations: [
         ArticleDetailsComponent,
+        CamfilMaxLengthAttributeCreateDirective,
         CamfilRequisitionDetailToolbarComponent,
         CamfilSmallCtaModalComponent,
         MockComponent(CamfilLoadingComponent),
