@@ -41,7 +41,7 @@ export class BasketPaymentEffects {
   loadBasketEligiblePaymentMethods$ = createEffect(() =>
     this.actions$.pipe(
       ofType(loadBasketEligiblePaymentMethods),
-      switchMap(() =>
+      concatMap(() =>
         this.paymentService.getBasketEligiblePaymentMethods().pipe(
           map(result => loadBasketEligiblePaymentMethodsSuccess({ paymentMethods: result })),
           mapErrorToAction(loadBasketEligiblePaymentMethodsFail)

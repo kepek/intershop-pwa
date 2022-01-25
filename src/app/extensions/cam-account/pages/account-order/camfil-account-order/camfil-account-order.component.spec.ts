@@ -16,6 +16,7 @@ import { DatePipe } from 'ish-core/pipes/date.pipe';
 import { OrderLineMockData } from 'ish-core/utils/dev/orderline-mock-data';
 import { AddressComponent } from 'ish-shared/components/address/address/address.component';
 import { CamfilBasketCostSummaryComponent } from 'ish-shared/components/basket/camfil-basket-cost-summary/camfil-basket-cost-summary.component';
+import { CamfilAddressComponent } from 'ish-shared/components/camfil-address/camfil-address.component';
 import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
 import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
 import { InfoBoxComponent } from 'ish-shared/components/common/info-box/info-box.component';
@@ -42,6 +43,7 @@ describe('Camfil Account Order Component', () => {
         CamfilDeliveryAddressComponent,
         CamfilSmallCtaModalComponent,
         MockComponent(AddressComponent),
+        MockComponent(CamfilAddressComponent),
         MockComponent(CamfilBasketCostSummaryComponent),
         MockComponent(CamfilLineItemTableComponent),
         MockComponent(CamfilLoadingComponent),

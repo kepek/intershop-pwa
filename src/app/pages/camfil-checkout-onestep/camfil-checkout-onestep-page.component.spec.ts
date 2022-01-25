@@ -177,6 +177,7 @@ describe('Camfil Checkout Onestep Page Component', () => {
         adjusted: false,
       })
     );
+    when(checkoutFacade.allBuckets$).thenReturn(of([]));
     when(checkoutFacade.emptyBuckets$).thenReturn(of([]));
     when(checkoutFacade.selectedOrder$).thenReturn(of(selectedOrder));
     when(checkoutFacade.basket$).thenReturn(of(basketDetails));

@@ -32,6 +32,7 @@ import {
   deleteEmptyBucket,
   doubleBucketItemsQuantity,
   focusedCheckoutElement,
+  getAllBuckets,
   getAnonymousBasketExtensions,
   getBasketEligiblePaymentMethods,
   getBasketEligibleShippingMethods,
@@ -123,6 +124,7 @@ export class CheckoutFacade {
   promotionError$ = this.store.pipe(select(getBasketPromotionError));
   buckets$ = this.store.pipe(select(getCurrentBuckets));
   emptyBuckets$ = this.store.pipe(select(getEmptyBuckets));
+  allBuckets$ = this.store.pipe(select(getAllBuckets));
   bucketsVolumeDiscounts$ = this.store.pipe(select(getBucketsVolumeDiscounts));
   getCustomersDeliveryTerms$ = this.store.pipe(select(getCustomersDeliveryTerms));
   anonymousBasketExtension$ = this.store.pipe(select(getAnonymousBasketExtensions));

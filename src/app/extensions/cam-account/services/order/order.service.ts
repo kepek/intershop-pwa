@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { defaultIfEmpty, map } from 'rxjs/operators';
 
+import { BasketData } from 'ish-core/models/basket/basket.interface';
+import { BasketMapper } from 'ish-core/models/basket/basket.mapper';
+import { Basket } from 'ish-core/models/basket/basket.model';
 import { ApiService, unpackEnvelope } from 'ish-core/services/api/api.service';
 
 import { OrderLineItemData } from '../../models/order-line-item/order-line-item.interface';
@@ -68,11 +71,13 @@ export class OrderService {
       .pipe(map(additionalTotalCost => additionalTotalCost));
   }
 
-  createOrderDuplicate(orderId: string) {
+  createOrderDuplicate(orderId: string): Observable<Basket> {
     if (!orderId) {
       return throwError('createOrderDuplicate() called without orderId');
     }
 
-    return this.apiService.post(`camfilorder/${orderId}/`).pipe(map(createdOrder => createdOrder));
+    return this.apiService
+      .post<BasketData>(`camfilorder/${orderId}/`)
+      .pipe(map(orderData => BasketMapper.fromData(orderData)));
   }
 }

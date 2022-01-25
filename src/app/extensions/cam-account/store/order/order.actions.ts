@@ -1,5 +1,6 @@
 import { createAction } from '@ngrx/store';
 
+import { Basket } from 'ish-core/models/basket/basket.model';
 import { httpError, payload } from 'ish-core/utils/ngrx-creators';
 
 import { OrderLineItem } from '../../models/order-line-item/order-line-item.model';
@@ -70,7 +71,7 @@ export const createOrderDuplicateFail = createAction('[Orders Camfil API] Create
 
 export const createOrderDuplicateSuccess = createAction(
   '[Orders Camfil API] Create order duplicate Success',
-  payload<{ orderId: string; createdOrder }>()
+  payload<{ basket: Basket }>()
 );
 
 export const updateOrder = createAction('[Orders Camfil] Update Order', payload<{ order: Order }>());

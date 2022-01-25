@@ -16,7 +16,13 @@
     </h1>
   </div>
   <div>
-    <button (click)="placeReOrder()" color="primary" data-testing-id="order-again" mat-flat-button>
+    <button
+      (click)="placeReOrder()"
+      [disabled]="!order?.canReOrder"
+      color="primary"
+      data-testing-id="order-again"
+      mat-flat-button
+    >
       {{ 'camfil.account.orderdetails.links.order_again' | translate }}
     </button>
   </div>
@@ -74,7 +80,7 @@
         <dd class="col-6 p-0" data-testing-id="order-phone_notification">{{ order.phoneNotification || '-' }}</dd>
         <dt class="col-6 p-0">{{ 'camfil.account.orderdetails.delivery_address.label' | translate }}</dt>
         <dd class="col-6 p-0 order-delivery_address" data-testing-id="order-delivery_address">
-          <camfil-delivery-address [deliveryAddress]="order?.deliveryAddress"></camfil-delivery-address>
+          <camfil-address [address]="ishOrder?.commonShipToAddress"></camfil-address>
         </dd>
         <dt class="col-6 p-0">{{ 'camfil.account.orderdetails.order_comment.label' | translate }}</dt>
         <dd class="col-6 p-0 text-break text-right" data-testing-id="order-contact_person">

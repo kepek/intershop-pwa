@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store, select } from '@ngrx/store';
 import { intersection } from 'lodash-es';
-import { concatMap, filter, map, mapTo, tap, withLatestFrom } from 'rxjs/operators';
+import { concatMap, filter, map, mapTo, mergeMap, tap, withLatestFrom } from 'rxjs/operators';
 
 import {
   BasketValidationResultType,
@@ -51,8 +51,7 @@ export class BasketValidationEffects {
     this.actions$.pipe(
       ofType(validateBasket),
       mapToPayloadProperty('scopes'),
-      whenTruthy(),
-      concatMap(scopes =>
+      mergeMap(scopes =>
         this.basketService.validateBasket(scopes).pipe(
           map(basketValidation =>
             basketValidation.results.valid

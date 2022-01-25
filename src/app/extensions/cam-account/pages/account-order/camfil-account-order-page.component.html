@@ -1,5 +1,7 @@
 <div class="clearfix" data-testing-id="order-detail-page">
-  <ng-container *ngIf="order$ | async as order">
-    <camfil-account-order [order]="order" [deviceType]="deviceType$ | async"></camfil-account-order>
-  </ng-container>
+  <camfil-account-order
+    [order]="order$ | async"
+    [ishOrder]="ishOrder$ | async"
+    [deviceType]="deviceType$ | async"
+  ></camfil-account-order>
 </div>

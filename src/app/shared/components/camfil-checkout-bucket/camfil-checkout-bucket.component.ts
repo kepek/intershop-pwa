@@ -225,8 +225,11 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
         invoiceLabel: this.bucket.invoiceLabel,
         info: this.bucket.info,
       });
-      this.orderAddress = this.shipToAddress;
       this.forceUpdateForm = false;
+    }
+
+    if (s.bucket) {
+      this.orderAddress = this.shipToAddress;
     }
 
     if (s?.totalBuckets?.previousValue !== s?.totalBuckets?.currentValue) {
