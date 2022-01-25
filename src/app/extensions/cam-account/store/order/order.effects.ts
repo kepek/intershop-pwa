@@ -3,6 +3,7 @@ import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store, select } from '@ngrx/store';
+import { isEqual } from 'lodash-es';
 import { iif } from 'rxjs';
 import {
   concatMap,
@@ -189,9 +190,10 @@ export class OrderEffects {
       ofType(createOrderDuplicate),
       mapToPayloadProperty('orderId'),
       concatMap(orderId =>
-        this.camfilOrderService
-          .createOrderDuplicate(orderId)
-          .pipe(map(createOrderDuplicateSuccess), mapErrorToAction(createOrderDuplicateFail))
+        this.camfilOrderService.createOrderDuplicate(orderId).pipe(
+          map(basket => createOrderDuplicateSuccess({ basket })),
+          mapErrorToAction(createOrderDuplicateFail)
+        )
       )
     )
   );
@@ -250,7 +252,7 @@ export class OrderEffects {
           ),
           // check if all products are available, if not user should not be able to re-order
           map(availabilities => availabilities.every(({ availability }) => !!availability)),
-          distinctUntilChanged(),
+          distinctUntilChanged(isEqual),
           withLatestFrom(this.store.pipe(select(getSelectedOrder))),
           mergeMap(([canReOrder, order]) => [updateOrder({ order: { ...order, canReOrder } })])
         )
