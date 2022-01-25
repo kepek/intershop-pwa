@@ -198,7 +198,7 @@ export class AddProductToCamCardModalComponent implements OnInit, OnDestroy, OnC
       measurementWidth: new FormControl(),
       measurementHeight: new FormControl(),
       measurementDiameter: new FormControl(),
-      measurementDepth: new FormControl(),
+      measurementDepth: new FormControl({ disabled: true }),
       measurementErrorInfo: new FormControl(),
     });
   }

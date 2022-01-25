@@ -22,7 +22,7 @@
         <ng-container *ngIf="depth">
           <mat-form-field [formGroup]="quantityForm" appearance="outline">
             <mat-label>{{ 'camfil.modal.addToCamcard.depth.label' | translate }}</mat-label>
-            <input matInput type="number" formControlName="measurementDepth" disabled />
+            <input matInput type="number" formControlName="measurementDepth" disabled [readonly]="true" />
           </mat-form-field>
         </ng-container>
         <div class="w-100">
@@ -80,7 +80,7 @@
       <ng-container *ngIf="depth">
         <mat-form-field [formGroup]="quantityForm" appearance="outline">
           <mat-label>{{ 'camfil.modal.addToCamcard.depth.label' | translate }}</mat-label>
-          <input matInput type="number" formControlName="measurementDepth" disabled />
+          <input matInput type="number" formControlName="measurementDepth" disabled [readonly]="true" />
         </mat-form-field>
       </ng-container>
       <div class="w-100">

@@ -107,7 +107,7 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy, AfterView
       measurementWidth: new FormControl(),
       measurementHeight: new FormControl(),
       measurementDiameter: new FormControl(),
-      measurementDepth: new FormControl(),
+      measurementDepth: new FormControl({ disabled: true }),
       measurementErrorInfo: new FormControl(),
     });
 
