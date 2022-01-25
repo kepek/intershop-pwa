@@ -16,7 +16,13 @@
     </h1>
   </div>
   <div>
-    <button (click)="placeReOrder()" color="primary" data-testing-id="order-again" mat-flat-button>
+    <button
+      (click)="placeReOrder()"
+      [disabled]="!order?.canReOrder"
+      color="primary"
+      data-testing-id="order-again"
+      mat-flat-button
+    >
       {{ 'camfil.account.orderdetails.links.order_again' | translate }}
     </button>
   </div>
