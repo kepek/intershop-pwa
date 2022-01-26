@@ -33,7 +33,7 @@ export interface RequisitionsState extends EntityState<Requisition> {
   };
 }
 
-const initialState: RequisitionsState = requisitionsAdapter.getInitialState({
+export const initialState: RequisitionsState = requisitionsAdapter.getInitialState({
   loading: false,
   error: undefined,
   filters: {

@@ -3,9 +3,11 @@ import { createSelector } from '@ngrx/store';
 import { RequisitionStatus, RequisitionViewer } from '../../models/requisition/requisition.model';
 import { getRequisitionManagementState } from '../requisition-management-store';
 
-import { requisitionsAdapter } from './requisitions.reducer';
+import { initialState, requisitionsAdapter } from './requisitions.reducer';
 
-const getRequisitionsState = createSelector(getRequisitionManagementState, state => state.requisitions);
+const getRequisitionsState = createSelector(getRequisitionManagementState, state =>
+  state ? state.requisitions : initialState
+);
 
 export const getRequisitionsLoading = createSelector(getRequisitionsState, state => state.loading);
 
