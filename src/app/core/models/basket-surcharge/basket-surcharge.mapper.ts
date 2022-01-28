@@ -13,6 +13,7 @@ export class BasketSurchargeMapper {
         amount: PriceItemMapper.fromPriceItem(data.amount),
         displayName: data.name,
         description: data.description,
+        taxes: data?.taxes?.map(PriceItemMapper.fromPriceItem)?.filter(Boolean),
       };
     }
   }

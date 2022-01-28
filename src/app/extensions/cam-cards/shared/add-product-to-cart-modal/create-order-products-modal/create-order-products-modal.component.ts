@@ -79,6 +79,7 @@ export class CreateOrderProductsModalComponent extends CreateOrderProductModalCo
         id: '',
         ...this.getBasketExtension(),
         shippingAddress: this.getAddress(),
+        totals: undefined,
       };
 
       this.products?.length ? this.addProductsToBucket() : this.submitWithoutProduct(bucket);

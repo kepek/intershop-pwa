@@ -2,7 +2,6 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, ViewCh
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
 import { Observable, Subject } from 'rxjs';
 import { map, startWith, take, takeUntil, withLatestFrom } from 'rxjs/operators';
 
@@ -11,6 +10,7 @@ import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { BasketValidationResultType } from 'ish-core/models/basket-validation/basket-validation.model';
 import { PriceHelper } from 'ish-core/models/price/price.helper';
+import { Price } from 'ish-core/models/price/price.model';
 import { whenFalsy } from 'ish-core/utils/operators';
 import { CamfilBasketCostSummaryComponent } from 'ish-shared/components/basket/camfil-basket-cost-summary/camfil-basket-cost-summary.component';
 import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
@@ -30,7 +30,7 @@ export class CamfilCheckoutSummaryComponent extends CamfilBasketCostSummaryCompo
 
   @ViewChild(CamfilSmallCtaModalComponent) gdprErrorModal: CamfilSmallCtaModalComponent;
 
-  bucketsVolumeDiscounts$: Observable<number>;
+  bucketsVolumeDiscounts$: Observable<Price>;
   validationResults$: Observable<BasketValidationResultType>;
   productsReadyToPlaceOrder$: Observable<boolean>;
   canSubmitOrder$: Observable<boolean>;
@@ -47,7 +47,6 @@ export class CamfilCheckoutSummaryComponent extends CamfilBasketCostSummaryCompo
     private shoppingFacade: ShoppingFacade,
     private camConfFacade: CamConfigurationFacade,
     private router: Router,
-    private translate: TranslateService,
     private fb: FormBuilder,
     private dialog: MatDialog
   ) {
@@ -105,9 +104,5 @@ export class CamfilCheckoutSummaryComponent extends CamfilBasketCostSummaryCompo
     this.gdprErrorModal.hide = () => {
       gdprErrorDialogModal.close();
     };
-  }
-
-  getVolumeDiscountPrice(value, currency) {
-    return PriceHelper.getVolumeDiscountPrice(value, currency, this.translate.currentLang);
   }
 }

@@ -24,7 +24,6 @@ import { Bucket } from 'ish-core/models/bucket/bucket.model';
 import { CustomerDeliveryTerm } from 'ish-core/models/customer/customer.interface';
 import { LineItemData } from 'ish-core/models/line-item/line-item.interface';
 import { LineItem, LineItemView } from 'ish-core/models/line-item/line-item.model';
-import { Price, PriceHelper } from 'ish-core/models/price/price.model';
 import { ProductCompletenessLevel } from 'ish-core/models/product/product.model';
 import { whenTruthy } from 'ish-core/utils/operators';
 import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
@@ -34,7 +33,6 @@ import { ModalAddNewProductComponent } from '../../../extensions/cam-cards/pages
 import { CamfilEditOrderModalComponent } from './camfil-edit-order-modal/camfil-edit-order-modal.component';
 import { ORDER_HEADER_VALIDATORS } from './validators';
 import { Address } from 'ish-core/models/address/address.model';
-import { TranslateService } from '@ngx-translate/core';
 import { CheckoutFocusedElement } from 'ish-core/models/scroll-info copy/checkout-focused-element.interface';
 import { Basket } from 'ish-core/models/basket/basket.model';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
@@ -45,6 +43,7 @@ import { AccountFacade } from 'ish-core/facades/account.facade';
 import { BasketExtensionData } from 'ish-core/models/basket-extension/basket-extension.interface';
 import { BasketExtension } from 'ish-core/models/basket-extension/basket-extension.model';
 import { CamfilCheckoutAddEmailRecipientModalComponent } from '../../../pages/camfil-checkout-onestep/camfil-checkout-add-email-recipient-modal/camfil-checkout-add-email-recipient-modal.component';
+import { Price } from 'ish-core/models/price/price.model';
 
 @Component({
   selector: 'camfil-checkout-bucket',
@@ -102,7 +101,6 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
     public dialog: MatDialog,
     private checkoutFacade: CheckoutFacade,
     private shoppingFacade: ShoppingFacade,
-    private translate: TranslateService,
     private appFacade: AppFacade,
     private accountFacade: AccountFacade
   ) {}
@@ -129,10 +127,10 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
     return { ...this.bucket?.shipToAddressFull, countryCode: '' };
   }
 
-  get freeDelivery() {
-    const total = this.totalPrice();
+  get freeDelivery(): Price {
+    const { total } = this.bucket?.totals;
     const threshold = this.deliveryTerm.threshold;
-    return { ...total, value: threshold - total.value };
+    return { type: 'Money', currency: total?.currency, value: threshold - total.net };
   }
 
   get deliveryDaysForItemsAfterConfirmation() {
@@ -350,31 +348,6 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
 
   toggleOrder() {
     this.isOrderOpen = !this.isOrderOpen;
-  }
-
-  // TODO (extMlk): PERFORMANCE - it should be moved to applyPricing method instead of calling fn in template
-  totalPrice(type = 'net'): Price {
-    return PriceHelper.totalPrice(this.bucket?.lineItems, type);
-  }
-
-  // TODO (extMlk): PERFORMANCE - it should be moved to applyPricing method instead of calling fn in template
-  totalTax(): Price {
-    return PriceHelper.totalTax(this.bucket?.lineItems);
-  }
-
-  // TODO (extMlk): PERFORMANCE - it should be moved to applyPricing method instead of calling fn in template
-  savedAmount(): Price {
-    return PriceHelper.savedAmount(this.bucket?.lineItems);
-  }
-
-  // TODO (extMlk): PERFORMANCE - it should be moved to applyPricing method instead of calling fn in template
-  discount(): Price {
-    return PriceHelper.discount(this.bucket?.lineItems);
-  }
-
-  // TODO (extMlk) it should be moved to applyPricing method instead of calling fn in template
-  getVolumeDiscountPrice(value, currency) {
-    return PriceHelper.getVolumeDiscountPrice(value, currency, this.translate.currentLang);
   }
 
   openAddToProductModal(modal: ModalAddNewProductComponent) {

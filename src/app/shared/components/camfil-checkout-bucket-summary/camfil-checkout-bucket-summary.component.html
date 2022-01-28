@@ -1,0 +1,26 @@
+<dl [ngClass]="cssClass">
+  <!-- Subtotal -->
+  <dt class="col-8">{{ 'camfil.checkout.single_total_price_net' | translate }}</dt>
+  <dd class="col-4">{{ totals.total | ishPrice }}</dd>
+  <!-- VolumeDiscount -->
+  <ng-container *ngIf="totals?.volumeDiscount?.value">
+    <dt class="col-6">{{ 'camfil.checkout.volume_discount' | translate }}</dt>
+    <dd class="col-6">{{ totals.volumeDiscount | ishPrice }}</dd>
+  </ng-container>
+  <!-- Surcharges -->
+  <ng-container *ngFor="let surcharge of totals.surcharges">
+    <dt class="col-6">
+      {{ surcharge.displayName | slugify: 'camfil.dynamic' | translate }}
+      <mat-icon *ngIf="surcharge.description" [matTooltip]="surcharge.description" svgIcon="question-mark"></mat-icon>
+    </dt>
+    <dd class="col-6" [class.text-line-through]="surcharge?.strikethrough">
+      {{ surcharge.amount | ishPrice }}
+    </dd>
+  </ng-container>
+  <!-- Tax -->
+  <dt class="col-6">{{ 'camfil.checkout.tax_amount' | translate }}</dt>
+  <dd class="col-6">{{ totals.salesTaxTotal | ishPrice }}</dd>
+  <!-- Bucket Total -->
+  <dt class="col-6">{{ 'camfil.checkout.order_total_price' | translate }}</dt>
+  <dd class="col-6">{{ totals.total | ishPrice: 'gross' }}</dd>
+</dl>

@@ -46,6 +46,7 @@ export class CreateOrderButtonComponent {
       shippingMethod: this.shippingMethodId,
       phoneNumber: virtualBucket.phoneNumber,
       info: virtualBucket.info,
+      totals: undefined,
     };
 
     this.checkoutFacade.addEmptyBucket(bucket);

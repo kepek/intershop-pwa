@@ -22,4 +22,5 @@ export interface BasketTotal {
   itemSurchargeTotalsByType?: BasketSurcharge[];
   bucketSurchargeTotalsByType?: BasketSurcharge[];
   isEstimated: boolean;
+  volumeDiscount?: Price;
 }

@@ -20,7 +20,7 @@ import { BasketValidation, BasketValidationScopeType } from 'ish-core/models/bas
 import { BasketBaseData, BasketData } from 'ish-core/models/basket/basket.interface';
 import { BasketMapper } from 'ish-core/models/basket/basket.mapper';
 import { Basket } from 'ish-core/models/basket/basket.model';
-import { BucketsData } from 'ish-core/models/bucket/bucket.interface';
+import { BucketData } from 'ish-core/models/bucket/bucket.interface';
 import { BucketMapper } from 'ish-core/models/bucket/bucket.mapper';
 import { Bucket } from 'ish-core/models/bucket/bucket.model';
 import { CustomerDeliveryTerm } from 'ish-core/models/customer/customer.interface';
@@ -487,9 +487,7 @@ export class BasketService {
             headers: this.basketHeaders,
             params,
           })
-          .pipe(
-            map((payload: BucketsData) => BucketMapper.fromData(payload, basket.lineItems, basket.basketExtensions))
-          )
+          .pipe(map((payload: BucketData) => BucketMapper.fromListData(payload, basket)))
       )
     );
   }

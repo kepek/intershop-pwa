@@ -7,6 +7,7 @@ import { BasketTotal } from 'ish-core/models/basket-total/basket-total.model';
 import { BasketValidationResultType } from 'ish-core/models/basket-validation/basket-validation.model';
 import { LineItem, LineItemView } from 'ish-core/models/line-item/line-item.model';
 import { Payment } from 'ish-core/models/payment/payment.model';
+import { Price } from 'ish-core/models/price/price.model';
 import { ShippingMethod } from 'ish-core/models/shipping-method/shipping-method.model';
 
 export interface AbstractBasket<T> {
@@ -30,7 +31,7 @@ export interface AbstractBasket<T> {
   approval?: BasketApproval;
   attributes?: Attribute[];
   externalOrderReference?: string;
-  volumeDiscount?: number;
+  volumeDiscount?: Price;
 }
 
 export interface Basket extends AbstractBasket<LineItem> {}

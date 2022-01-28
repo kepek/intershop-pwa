@@ -160,8 +160,21 @@ export const getBucketEmailRecipients = (addressId: string) =>
     allRecipients => allRecipients?.find(ar => ar.urn === addressId)?.emailRecipients || []
   );
 
-export const getBucketsVolumeDiscounts = createSelector(getBasketState, basket =>
-  basket.basket?.basketExtensions?.map(be => be.volumeDiscount).reduce((prev, next) => prev + next)
+export const getBucketsVolumeDiscounts = createSelector(getBasketState, state =>
+  state.basket?.basketExtensions
+    ?.map(be => be.volumeDiscount)
+    .reduce(
+      (prev, next) => ({
+        type: 'Money',
+        currency: state?.basket?.purchaseCurrency,
+        value: prev?.value + next?.value,
+      }),
+      {
+        type: 'Money',
+        currency: 'N/A',
+        value: 0,
+      }
+    )
 );
 
 export const getProductAddingError = createSelector(getBasketState, basket => basket.error);
