@@ -9,13 +9,18 @@
   </ng-container>
   <!-- Surcharges -->
   <ng-container *ngFor="let surcharge of totals.surcharges">
-    <dt class="col-6">
+    <dt class="col-6" [class.font-weight-bold]="surcharge?.bold">
       {{ surcharge.displayName | slugify: 'camfil.dynamic' | translate }}
       <mat-icon *ngIf="surcharge.description" [matTooltip]="surcharge.description" svgIcon="question-mark"></mat-icon>
     </dt>
-    <dd class="col-6" [class.text-line-through]="surcharge?.strikethrough">
+    <dd class="col-6" [class.text-line-through]="surcharge?.strikethrough" [class.font-weight-bold]="surcharge?.bold">
       {{ surcharge.amount | ishPrice }}
     </dd>
+  </ng-container>
+  <!-- Surcharges Total -->
+  <ng-container *ngIf="totals.surchargeTotal">
+    <dt class="col-6">{{ 'camfil.checkout.surcharge_total_amount' | translate }}</dt>
+    <dd class="col-6">{{ totals.surchargeTotal | ishPrice }}</dd>
   </ng-container>
   <!-- Tax -->
   <dt class="col-6">{{ 'camfil.checkout.tax_amount' | translate }}</dt>

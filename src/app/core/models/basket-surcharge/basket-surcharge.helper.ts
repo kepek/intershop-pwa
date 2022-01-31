@@ -1,3 +1,5 @@
+import { PriceItem } from 'ish-core/models/price-item/price-item.model';
+
 import { BasketSurcharge } from './basket-surcharge.model';
 import { BasketSurchargeTypes } from './basket-surcharge.types';
 

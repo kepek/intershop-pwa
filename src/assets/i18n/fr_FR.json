@@ -946,6 +946,7 @@
   "camfil.dynamic.camfil_extra_freight_cost_rule": "Frais d'expédition",
   "camfil.dynamic.camfil_extra_freight_discount": "Frais d'expédition",
   "camfil.dynamic.camfil_minimum_order_topup": "Frais de seuil de commande",
+  "camfil.checkout.surcharge_total_amount": "fr_Surcharges Total Value",
   "camfil.dynamic.cart.product.diameter.label": "Diamètre",
   "camfil.dynamic.cart.product.height.label": "Hauteur",
   "camfil.dynamic.cart.product.width.label": "Largeur",

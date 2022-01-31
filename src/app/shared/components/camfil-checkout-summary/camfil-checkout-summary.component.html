@@ -158,11 +158,11 @@
 
 <ng-template #surchargeItemTemplate let-surcharge="surcharge">
   <div class="summary-line">
-    <p>
+    <p [class.font-weight-bold]="surcharge?.bold">
       {{ surcharge.displayName | slugify: 'camfil.dynamic' | translate }}
       <mat-icon *ngIf="surcharge.description" [matTooltip]="surcharge.description" svgIcon="question-mark"></mat-icon>
     </p>
-    <p [class.text-line-through]="surcharge?.strikethrough">
+    <p [class.text-line-through]="surcharge?.strikethrough" [class.font-weight-bold]="surcharge?.bold">
       {{ surcharge.amount | ishPrice }}
     </p>
   </div>

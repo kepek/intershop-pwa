@@ -12,4 +12,5 @@ export interface BucketTotal {
   originTotal?: PriceItem;
   volumeDiscount?: Price;
   surcharges: BasketSurcharge[];
+  surchargeTotal: PriceItem;
 }

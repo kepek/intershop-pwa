@@ -1,3 +1,5 @@
+import { sortBy } from 'lodash-es';
+
 import { BasketSurchargeHelper } from 'ish-core/models/basket-surcharge/basket-surcharge.helper';
 import { BasketSurchargeTypes } from 'ish-core/models/basket-surcharge/basket-surcharge.types';
 import { PriceItemMapper } from 'ish-core/models/price-item/price-item.mapper';
@@ -41,7 +43,7 @@ export class BasketSurchargeMapper {
           .filter(Boolean);
       }
 
-      return surcharges;
+      return sortBy(surcharges, 'displayName');
     }
   }
 }

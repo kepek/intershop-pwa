@@ -6,4 +6,5 @@ export interface BasketSurcharge {
   description: string;
   taxes?: PriceItem[];
   strikethrough?: boolean;
+  bold?: boolean;
 }

@@ -3,6 +3,7 @@ import { AddressMapper } from 'ish-core/models/address/address.mapper';
 import { BasketExtension } from 'ish-core/models/basket-extension/basket-extension.model';
 import { BasketSurchargeMapper } from 'ish-core/models/basket-surcharge/basket-surcharge.mapper';
 import { BasketView } from 'ish-core/models/basket/basket.model';
+import { BucketTotalHelper } from 'ish-core/models/bucket-total/bucket-total.helper';
 import { BucketTotal } from 'ish-core/models/bucket-total/bucket-total.model';
 import { BucketBaseData, BucketData } from 'ish-core/models/bucket/bucket.interface';
 import { LineItem, LineItemView } from 'ish-core/models/line-item/line-item.model';
@@ -129,9 +130,12 @@ export class BucketMapper {
         // tslint:disable-next-line:ish-no-object-literal-type-assertion
       }, {} as TotalsType);
 
+    const surchargeTotal = BucketTotalHelper.getSurchargeTotal(surcharges);
+
     return {
       ...totals,
       surcharges,
+      surchargeTotal,
       volumeDiscount,
     };
   }

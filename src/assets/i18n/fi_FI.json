@@ -946,6 +946,7 @@
   "camfil.dynamic.camfil_extra_freight_cost_rule": "fi_Shipping fee",
   "camfil.dynamic.camfil_extra_freight_discount": "fi_Free shipping",
   "camfil.dynamic.camfil_minimum_order_topup": "fi_Order threshold fee",
+  "camfil.checkout.surcharge_total_amount": "fi_Surcharges Total Value",
   "camfil.dynamic.cart.product.diameter.label": "Halkaisija",
   "camfil.dynamic.cart.product.height.label": "Korkeus",
   "camfil.dynamic.cart.product.width.label": "Leveys",
