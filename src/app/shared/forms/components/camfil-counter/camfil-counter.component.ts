@@ -32,7 +32,7 @@ export class CamfilCounterComponent extends FormElementComponent implements OnIn
     if (event.target.value > this.max) {
       this.formControl.setValue(this.max);
     }
-    if (event.keyCode === 13) {
+    if (event.code === 'Enter' || event.code === 'NumpadEnter') {
       event.preventDefault();
       event.target.blur();
     }
