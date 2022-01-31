@@ -18,7 +18,10 @@ const initialState: ICCState = {
 
 export const iccReducer = createReducer(
   initialState,
-  on(applyIccConfiguration, (state: ICCState, action) => ({ ...state, ...action.payload })),
+  on(applyIccConfiguration, (state: ICCState, action) => {
+    const { iccProxyURL, iccServer, iccToken, iccTokenHeaderKey } = action.payload;
+    return { ...state, iccProxyURL, iccServer, iccToken, iccTokenHeaderKey };
+  }),
   on(setIccToken, (state: ICCState, action) => {
     const { iccToken } = action.payload;
     return { ...state, iccToken };
