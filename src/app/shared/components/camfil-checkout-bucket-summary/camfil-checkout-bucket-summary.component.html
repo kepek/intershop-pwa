@@ -18,8 +18,10 @@
     </dd>
   </ng-container>
   <!-- Total (w/o taxes) -->
-  <dt class="col-6 font-weight-bold">{{ 'camfil.checkout.order_total_price_net' | translate }}</dt>
-  <dd class="col-6 font-weight-bold">{{ totals.total | ishPrice }}</dd>
+  <ng-container *camfilChannelToggle="'showTotalWithoutTaxInBucketSummary'">
+    <dt class="col-6 font-weight-bold">{{ 'camfil.checkout.order_total_price_net' | translate }}</dt>
+    <dd class="col-6 font-weight-bold">{{ totals.total | ishPrice: 'net' }}</dd>
+  </ng-container>
   <!-- Tax -->
   <dt class="col-6">{{ 'camfil.checkout.tax_amount' | translate }}</dt>
   <dd class="col-6">{{ totals.taxTotal | ishPrice }}</dd>

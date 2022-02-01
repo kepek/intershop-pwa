@@ -1223,6 +1223,7 @@
   "checkout.cancel.button.label": "Annuler",
   "checkout.cart.estimated_shipping_handling.label": "Frais d'expédition estimés",
   "checkout.cart.estimated_total.label": "Montant total estimé",
+  "checkout.cart.estimated_total_net.label": "Montant total estimé (HT)",
   "checkout.cart.payment_cost.label": "Frais de paiement",
   "checkout.cart.subtotal.heading": "Sous-total",
   "checkout.cart_for_approval.title": "Nous vous remercions pour votre demande d’achat",

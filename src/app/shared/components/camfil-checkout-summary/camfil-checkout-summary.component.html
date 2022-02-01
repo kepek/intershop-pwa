@@ -5,13 +5,15 @@
     <mat-divider></mat-divider>
 
     <!-- SubTotal -->
-    <ng-container *ngIf="totals?.itemTotal">
-      <div class="summary-line">
-        <p>
-          {{ 'checkout.cart.subtotal.heading' | translate }}
-        </p>
-        <p>{{ totals?.itemTotal | ishPrice }}</p>
-      </div>
+    <ng-container *camfilChannelToggle="'showSubTotalInBasketSummary'">
+      <ng-container *ngIf="totals?.itemTotal">
+        <div class="summary-line">
+          <p>
+            {{ 'checkout.cart.subtotal.heading' | translate }}
+          </p>
+          <p>{{ totals?.itemTotal | ishPrice }}</p>
+        </div>
+      </ng-container>
     </ng-container>
 
     <!-- Volume Discount -->
@@ -60,14 +62,15 @@
       </ng-container>
     </ng-container>
 
-    <!-- Item Surcharges -->
-    <ng-container *ngFor="let surcharge of totals.itemSurchargeTotalsByType">
-      <ng-container *ngTemplateOutlet="surchargeItemTemplate; context: { surcharge: surcharge }"></ng-container>
-    </ng-container>
-
-    <!-- Bucket Surcharges -->
-    <ng-container *ngFor="let surcharge of totals.bucketSurchargeTotalsByType">
-      <ng-container *ngTemplateOutlet="surchargeItemTemplate; context: { surcharge: surcharge }"></ng-container>
+    <ng-container *camfilChannelToggle="'showDutiesAndSurchargesTotalInBasketSummary'">
+      <!-- Item Surcharges -->
+      <ng-container *ngFor="let surcharge of totals.itemSurchargeTotalsByType">
+        <ng-container *ngTemplateOutlet="surchargeItemTemplate; context: { surcharge: surcharge }"></ng-container>
+      </ng-container>
+      <!-- Bucket Surcharges -->
+      <ng-container *ngFor="let surcharge of totals.bucketSurchargeTotalsByType">
+        <ng-container *ngTemplateOutlet="surchargeItemTemplate; context: { surcharge: surcharge }"></ng-container>
+      </ng-container>
     </ng-container>
 
     <!-- Payment costs -->
@@ -86,6 +89,16 @@
           {{ totals.discountTotal | ishPrice }}
         </p>
       </div>
+    </ng-container>
+
+    <ng-container *camfilChannelToggle="'showTotalWithoutTaxInBasketSummary'">
+      <ng-container *ngIf="totals?.total">
+        <div class="summary-line font-weight-bold">
+          <span *ngIf="totals.isEstimated">{{ 'checkout.cart.estimated_total_net.label' | translate }}</span>
+          <span *ngIf="!totals.isEstimated">{{ 'checkout.order.total_cost_net.label' | translate }}</span>
+          <p>{{ totals?.total | ishPrice: 'net' }}</p>
+        </div>
+      </ng-container>
     </ng-container>
 
     <!-- Tax -->
