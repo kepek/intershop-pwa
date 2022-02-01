@@ -131,11 +131,13 @@ export class BucketMapper {
         // tslint:disable-next-line:ish-no-object-literal-type-assertion
       }, {} as TotalsType);
 
-    const surchargeTotal = PriceItemHelper.sumUp(surcharges?.filter(s => !s?.strikethrough)?.map(s => s?.amount));
+    const dutiesAndSurchargesTotal = PriceItemHelper.sumUp(
+      surcharges?.filter(s => !s?.strikethrough)?.map(s => s?.amount)
+    );
 
     const itemTotal = PriceItemHelper.addTaxIfMissing(lineItemsTotals?.total);
 
-    const grandTotal = PriceItemHelper.sumUp([itemTotal, surchargeTotal]);
+    const grandTotal = PriceItemHelper.sumUp([itemTotal, dutiesAndSurchargesTotal]);
 
     const grandTotalData = PriceItemMapper.toPriceItem(grandTotal);
 
@@ -145,7 +147,7 @@ export class BucketMapper {
 
     return {
       ...lineItemsTotals,
-      surchargeTotal,
+      dutiesAndSurchargesTotal,
       itemTotal,
       total,
       taxTotal,
