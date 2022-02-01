@@ -23,6 +23,7 @@ import { AddressComponent } from 'ish-shared/components/address/address/address.
 import { CamfilBasketCostSummaryComponent } from 'ish-shared/components/basket/camfil-basket-cost-summary/camfil-basket-cost-summary.component';
 import { CamfilBucketValidationResultsComponent } from 'ish-shared/components/basket/camfil-bucket-validation-results/camfil-bucket-validation-results.component';
 import { CamfilAddressComponent } from 'ish-shared/components/camfil-address/camfil-address.component';
+import { CamfilCheckoutBucketSummaryComponent } from 'ish-shared/components/camfil-checkout-bucket-summary/camfil-checkout-bucket-summary.component';
 import { CamfilCheckoutLineItemComponent } from 'ish-shared/components/camfil-checkout-line-item/camfil-checkout-line-item.component';
 import { CamfilCamCardModalComponent } from 'ish-shared/components/common/camfil-cam-card-modal/camfil-cam-card-modal.component';
 import { CamfilCityFieldComponent } from 'ish-shared/components/common/camfil-city-field/camfil-city-field.component';
@@ -82,6 +83,7 @@ describe('Camfil Checkout Bucket Component', () => {
         MockComponent(AddressComponent),
         MockComponent(CamfilBasketCostSummaryComponent),
         MockComponent(CamfilBucketValidationResultsComponent),
+        MockComponent(CamfilCheckoutBucketSummaryComponent),
         MockComponent(CamfilCheckoutLineItemComponent),
         MockComponent(CamfilCityFieldComponent),
         MockComponent(CamfilErrorComponent),
@@ -131,6 +133,7 @@ describe('Camfil Checkout Bucket Component', () => {
         },
       ],
       lineItems: [],
+      totals: undefined,
     };
 
     component.basket = {

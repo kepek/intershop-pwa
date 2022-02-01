@@ -65,6 +65,7 @@ describe('Camfil Edit Order Modal Component', () => {
           lastName: 'test',
         },
       ],
+      totals: undefined,
     };
   });
 

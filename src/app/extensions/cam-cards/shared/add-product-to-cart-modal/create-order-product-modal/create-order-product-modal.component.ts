@@ -142,6 +142,7 @@ export class CreateOrderProductModalComponent implements OnInit, OnDestroy {
         id: '',
         ...this.getBasketExtension(),
         shippingAddress: this.getAddress(),
+        totals: undefined,
       };
 
       this.product ? this.addProductToBucket() : this.submitWithoutProduct(bucket);

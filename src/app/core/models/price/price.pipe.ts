@@ -3,7 +3,6 @@ import { ChangeDetectorRef, OnDestroy, Pipe, PipeTransform } from '@angular/core
 import { TranslateService } from '@ngx-translate/core';
 import { Subject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
-import { CamConfigurationFacade } from 'src/app/extensions/cam-configuration/facades/cam-configuration.facade';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
 import { AppFacade } from 'ish-core/facades/app.facade';
@@ -11,6 +10,8 @@ import { PriceItemHelper } from 'ish-core/models/price-item/price-item.helper';
 import { PriceItem } from 'ish-core/models/price-item/price-item.model';
 import { AuthorizationToggleService } from 'ish-core/utils/authorization-toggle/authorization-toggle.service';
 import { whenTruthy } from 'ish-core/utils/operators';
+
+import { CamConfigurationFacade } from '../../../extensions/cam-configuration/facades/cam-configuration.facade';
 
 import { Price } from './price.model';
 

@@ -115,3 +115,7 @@ header {
   padding-bottom: $space-box;
   border-bottom: $border-width-default solid $border-color-lighter;
 }
+
+.text-line-through {
+  text-decoration-line: line-through;
+}

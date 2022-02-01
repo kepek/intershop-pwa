@@ -1,7 +1,8 @@
+import { AddressData } from 'ish-core/models/address/address.interface';
+import { Attribute } from 'ish-core/models/attribute/attribute.model';
 import { BasketSurchargeData } from 'ish-core/models/basket-surcharge/basket-surcharge.interface';
-import { BucketIncluded } from 'ish-core/models/bucket/bucket.model';
 
-export interface BucketData {
+export interface BucketBaseData {
   basket: string;
   lineItems?: string[];
   id: string;
@@ -10,7 +11,18 @@ export interface BucketData {
   surcharges?: BasketSurchargeData[];
 }
 
-export interface BucketsData {
-  data: BucketData[];
-  included: BucketIncluded;
+export interface BucketData {
+  data: BucketBaseData[];
+  included?: {
+    shipToAddress?: { [urn: string]: AddressData };
+    shippingMethod?: {
+      [name: string]: {
+        attributes: Attribute[];
+        digitalDelivery: boolean;
+        id: string;
+        name: string;
+        shippingInstructionsSupported: boolean;
+      };
+    };
+  };
 }

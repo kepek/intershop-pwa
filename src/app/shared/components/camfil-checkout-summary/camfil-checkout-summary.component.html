@@ -5,20 +5,22 @@
     <mat-divider></mat-divider>
 
     <!-- SubTotal -->
-    <ng-container *ngIf="totals?.itemTotal">
-      <div class="summary-line">
-        <p>
-          {{ 'checkout.cart.subtotal.heading' | translate }}
-        </p>
-        <p>{{ totals?.itemTotal | ishPrice }}</p>
-      </div>
+    <ng-container *camfilChannelToggle="'showSubTotalInBasketSummary'">
+      <ng-container *ngIf="totals?.itemTotal">
+        <div class="summary-line">
+          <p>
+            {{ 'checkout.cart.subtotal.heading' | translate }}
+          </p>
+          <p>{{ totals?.itemTotal | ishPrice }}</p>
+        </div>
+      </ng-container>
     </ng-container>
 
     <!-- Volume Discount -->
     <!-- TODO (extMlk): Current implementation does not make sense since volumeDiscount is not applied in BE when calculating totals -->
-    <div *ngIf="bucketsVolumeDiscounts$ | async" class="summary-line">
+    <div *ngIf="(bucketsVolumeDiscounts$ | async)?.value as bucketsVolumeDiscounts" class="summary-line">
       <p>{{ 'camfil.checkout.volume_discount' | translate }}</p>
-      <p>{{ getVolumeDiscountPrice(bucketsVolumeDiscounts$ | async, purchaseCurrency) }}</p>
+      <p>{{ bucketsVolumeDiscounts | ishPrice }}</p>
     </div>
 
     <!-- list all applied order level promotions -->
@@ -60,14 +62,15 @@
       </ng-container>
     </ng-container>
 
-    <!-- Item Surcharges -->
-    <ng-container *ngFor="let surcharge of totals.itemSurchargeTotalsByType">
-      <ng-container *ngTemplateOutlet="surchargeItemTemplate; context: { surcharge: surcharge }"></ng-container>
-    </ng-container>
-
-    <!-- Bucket Surcharges -->
-    <ng-container *ngFor="let surcharge of totals.bucketSurchargeTotalsByType">
-      <ng-container *ngTemplateOutlet="surchargeItemTemplate; context: { surcharge: surcharge }"></ng-container>
+    <ng-container *camfilChannelToggle="'showDutiesAndSurchargesTotalInBasketSummary'">
+      <!-- Item Surcharges -->
+      <ng-container *ngFor="let surcharge of totals.itemSurchargeTotalsByType">
+        <ng-container *ngTemplateOutlet="surchargeItemTemplate; context: { surcharge: surcharge }"></ng-container>
+      </ng-container>
+      <!-- Bucket Surcharges -->
+      <ng-container *ngFor="let surcharge of totals.bucketSurchargeTotalsByType">
+        <ng-container *ngTemplateOutlet="surchargeItemTemplate; context: { surcharge: surcharge }"></ng-container>
+      </ng-container>
     </ng-container>
 
     <!-- Payment costs -->
@@ -86,6 +89,16 @@
           {{ totals.discountTotal | ishPrice }}
         </p>
       </div>
+    </ng-container>
+
+    <ng-container *camfilChannelToggle="'showTotalWithoutTaxInBasketSummary'">
+      <ng-container *ngIf="totals?.total">
+        <div class="summary-line font-weight-bold">
+          <span *ngIf="totals.isEstimated">{{ 'checkout.cart.estimated_total_net.label' | translate }}</span>
+          <span *ngIf="!totals.isEstimated">{{ 'checkout.order.total_cost_net.label' | translate }}</span>
+          <p>{{ totals?.total | ishPrice: 'net' }}</p>
+        </div>
+      </ng-container>
     </ng-container>
 
     <!-- Tax -->
@@ -158,13 +171,12 @@
 
 <ng-template #surchargeItemTemplate let-surcharge="surcharge">
   <div class="summary-line">
-    <p>
+    <p [class.font-weight-bold]="surcharge?.bold">
       {{ surcharge.displayName | slugify: 'camfil.dynamic' | translate }}
       <mat-icon *ngIf="surcharge.description" [matTooltip]="surcharge.description" svgIcon="question-mark"></mat-icon>
     </p>
-    <p *ngIf="!surcharge?.strikethrough">{{ surcharge.amount | ishPrice }}</p>
-    <p *ngIf="surcharge?.strikethrough">
-      <s>{{ surcharge.amount | ishPrice }}</s>
+    <p [class.text-line-through]="surcharge?.strikethrough" [class.font-weight-bold]="surcharge?.bold">
+      {{ surcharge.amount | ishPrice }}
     </p>
   </div>
 </ng-template>

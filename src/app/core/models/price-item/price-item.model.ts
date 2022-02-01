@@ -4,4 +4,5 @@ export interface PriceItem extends Pick<Price, 'currency'> {
   type: 'PriceItem';
   gross: number;
   net: number;
+  tax?: number;
 }

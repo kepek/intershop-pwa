@@ -15,7 +15,22 @@ export class PriceItemMapper {
         type: 'PriceItem',
         gross: priceItem.gross.value,
         net: priceItem.net.value,
+        tax: priceItem?.tax?.value,
         currency: priceItem.gross.currency,
+      };
+    }
+  }
+
+  static toPriceItem(price: PriceItem): PriceItemData {
+    const { gross, net, currency } = price;
+
+    if (gross && net) {
+      const tax = price?.tax ? { value: price.tax, currency } : undefined;
+
+      return {
+        gross: { value: gross, currency },
+        net: { value: gross, currency },
+        tax,
       };
     }
   }

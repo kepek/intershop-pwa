@@ -4,5 +4,7 @@ export interface BasketSurcharge {
   amount: PriceItem;
   displayName: string;
   description: string;
+  taxes?: PriceItem[];
   strikethrough?: boolean;
+  bold?: boolean;
 }

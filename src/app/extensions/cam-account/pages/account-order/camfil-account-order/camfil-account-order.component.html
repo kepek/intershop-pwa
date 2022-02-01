@@ -170,12 +170,11 @@
 <camfil-loading *ngIf="orderLoading$ | async"></camfil-loading>
 
 <ng-template #surchargeItemTemplate let-surcharge="surcharge">
-  <dt class="col-8">
+  <dt class="col-8" [class.font-weight-bold]="surcharge?.bold">
     {{ surcharge.displayName | slugify: 'camfil.dynamic' | translate }}
     <mat-icon *ngIf="surcharge.description" [matTooltip]="surcharge.description" svgIcon="question-mark"></mat-icon>
   </dt>
-  <dd class="col-4" *ngIf="!surcharge?.strikethrough">{{ surcharge.amount | ishPrice }}</dd>
-  <dd class="col-4" *ngIf="surcharge?.strikethrough">
-    <s>{{ surcharge.amount | ishPrice }}</s>
+  <dd class="col-4" [class.text-line-through]="surcharge?.strikethrough" [class.font-weight-bold]="surcharge?.bold">
+    {{ surcharge.amount | ishPrice }}
   </dd>
 </ng-template>

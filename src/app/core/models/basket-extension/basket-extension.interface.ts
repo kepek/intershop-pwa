@@ -3,6 +3,7 @@
 import { Address } from 'ish-core/models/address/address.model';
 
 import { CamCardContact, CamCardCustomer } from '../../../extensions/cam-cards/models/cam-card/cam-card.model';
+import { Price } from 'ish-core/models/price/price.model';
 
 export interface BasketExtensionGuestData {
   type?: string;
@@ -45,7 +46,7 @@ export interface BasketExtensionData {
   isPartialDelivery?: boolean;
   createdFromCamCardId?: string;
   emailRecipients?: string[];
-  volumeDiscount?: number;
+  volumeDiscount?: Price;
   // Additional for France
   anonymousBasketData?: BasketExtensionGuestData;
 }

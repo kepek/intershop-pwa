@@ -27,6 +27,7 @@ describe('Basket Rebate Mapper', () => {
             "currency": "USD",
             "gross": 43.34,
             "net": 40.34,
+            "tax": undefined,
             "type": "PriceItem",
           },
           "code": "CODE5433",
