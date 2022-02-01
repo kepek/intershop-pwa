@@ -25,6 +25,7 @@ export class IccEffects implements OnInitEffects {
     iif(
       () => !this.transferState.hasKey(NGRX_STATE_SK),
       this.actions$.pipe(
+        takeWhile(() => isPlatformServer(this.platformId)),
         ofType(initIcc),
         take(1),
         withLatestFrom(
