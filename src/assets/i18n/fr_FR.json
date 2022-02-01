@@ -895,6 +895,7 @@
   "camfil.checkout.order_header.note.error.maxLength": "L’information ne doit pas dépasser 150caractères.",
   "camfil.checkout.order_header.order_mark.error.maxLength": "La note de commande ne doit pas dépasser 60 caractères.",
   "camfil.checkout.order_header.order_mark.error.required": "Veuillez saisir la note de commande",
+  "camfil.checkout.order_total_price_net": "Prix total de la commande (HT)",
   "camfil.checkout.order_total_price": "Prix total de la commande",
   "camfil.checkout.phone": "Notification téléphonique",
   "camfil.checkout.place_your_orders": "Passer vos commandes",

@@ -3,10 +3,11 @@ import { AddressMapper } from 'ish-core/models/address/address.mapper';
 import { BasketExtension } from 'ish-core/models/basket-extension/basket-extension.model';
 import { BasketSurchargeMapper } from 'ish-core/models/basket-surcharge/basket-surcharge.mapper';
 import { BasketView } from 'ish-core/models/basket/basket.model';
-import { BucketTotalHelper } from 'ish-core/models/bucket-total/bucket-total.helper';
 import { BucketTotal } from 'ish-core/models/bucket-total/bucket-total.model';
 import { BucketBaseData, BucketData } from 'ish-core/models/bucket/bucket.interface';
 import { LineItem, LineItemView } from 'ish-core/models/line-item/line-item.model';
+import { PriceItemHelper } from 'ish-core/models/price-item/price-item.helper';
+import { PriceItemMapper } from 'ish-core/models/price-item/price-item.mapper';
 import { PriceItem } from 'ish-core/models/price-item/price-item.model';
 import { Price } from 'ish-core/models/price/price.model';
 
@@ -99,7 +100,7 @@ export class BucketMapper {
 
     type TotalsType = PropType<LineItem, 'totals'>;
 
-    const totals = lineItems
+    const lineItemsTotals = lineItems
       ?.map(lineItem => lineItem?.totals)
       ?.reduce<TotalsType>((prevTotals, currentTotals) => {
         const keys = Object.keys({ ...prevTotals, ...currentTotals });
@@ -130,12 +131,25 @@ export class BucketMapper {
         // tslint:disable-next-line:ish-no-object-literal-type-assertion
       }, {} as TotalsType);
 
-    const surchargeTotal = BucketTotalHelper.getSurchargeTotal(surcharges);
+    const surchargeTotal = PriceItemHelper.sumUp(surcharges?.filter(s => !s?.strikethrough)?.map(s => s?.amount));
+
+    const itemTotal = PriceItemHelper.addTaxIfMissing(lineItemsTotals?.total);
+
+    const grandTotal = PriceItemHelper.sumUp([itemTotal, surchargeTotal]);
+
+    const grandTotalData = PriceItemMapper.toPriceItem(grandTotal);
+
+    const total = grandTotal;
+
+    const taxTotal = PriceItemMapper.fromSpecificPriceItem(grandTotalData, 'tax');
 
     return {
-      ...totals,
-      surcharges,
+      ...lineItemsTotals,
       surchargeTotal,
+      itemTotal,
+      total,
+      taxTotal,
+      surcharges,
       volumeDiscount,
     };
   }

@@ -116,8 +116,6 @@ export class BasketMapper {
     const itemSurchargeTotalsByType = BasketSurchargeMapper.fromListData(data?.surcharges?.itemSurcharges);
     const bucketSurchargeTotalsByType = BasketSurchargeMapper.fromListData(data?.surcharges?.bucketSurcharges);
 
-    console.log('elo', totalsData.surchargeTotal)
-
     return {
       discountTotal: PriceItemMapper.fromPriceItem(totalsData.discountTotal),
       itemTotal: PriceItemMapper.fromPriceItem(totalsData.itemTotal),

@@ -7,6 +7,8 @@ export interface BucketTotal {
   shippingTaxTotal?: Price;
   shippingTotal: PriceItem;
   total: PriceItem;
+  taxTotal: Price;
+  itemTotal: PriceItem;
   undiscountedTotal?: PriceItem;
   valueRebatesTotal?: PriceItem;
   originTotal?: PriceItem;
