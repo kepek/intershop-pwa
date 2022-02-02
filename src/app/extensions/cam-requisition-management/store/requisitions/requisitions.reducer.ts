@@ -3,6 +3,7 @@ import { createReducer, on } from '@ngrx/store';
 
 import { HttpError } from 'ish-core/models/http-error/http-error.model';
 import { setErrorOn, setLoadingOn, unsetLoadingAndErrorOn } from 'ish-core/utils/ngrx-creators';
+import { createRequisitionFail } from '.';
 
 import { Requisition } from '../../models/requisition/requisition.model';
 
@@ -19,6 +20,8 @@ import {
   updateRequisitionStatusFail,
   updateRequisitionStatusSuccess,
   updateRequisitionSuccess,
+  createRequisition,
+  createRequisitionSuccess,
 } from './requisitions.actions';
 
 export const requisitionsAdapter = createEntityAdapter<Requisition>();
@@ -51,9 +54,20 @@ export const initialState: RequisitionsState = requisitionsAdapter.getInitialSta
 
 export const requisitionsReducer = createReducer(
   initialState,
-  setLoadingOn(loadRequisitions, loadRequisition, updateRequisitionStatus),
-  unsetLoadingAndErrorOn(loadRequisitionsSuccess, loadRequisitionSuccess, updateRequisitionStatusSuccess),
-  setErrorOn(loadRequisitionsFail, loadRequisitionFail, updateRequisitionStatusFail, updateRequisitionFail),
+  setLoadingOn(loadRequisitions, loadRequisition, updateRequisitionStatus, createRequisition),
+  unsetLoadingAndErrorOn(
+    loadRequisitionsSuccess,
+    loadRequisitionSuccess,
+    updateRequisitionStatusSuccess,
+    createRequisitionSuccess
+  ),
+  setErrorOn(
+    loadRequisitionsFail,
+    loadRequisitionFail,
+    updateRequisitionStatusFail,
+    updateRequisitionFail,
+    createRequisitionFail
+  ),
   on(loadRequisitionsSuccess, (state: RequisitionsState, action) =>
     requisitionsAdapter.upsertMany(action.payload.requisitions, {
       ...state,
@@ -66,7 +80,10 @@ export const requisitionsReducer = createReducer(
   on(loadRequisitionSuccess, updateRequisitionStatusSuccess, (state: RequisitionsState, action) =>
     requisitionsAdapter.upsertOne(action.payload.requisition, state)
   ),
-  on(addProductToRequisitionSuccess, updateRequisitionSuccess, (state: RequisitionsState, action) =>
-    requisitionsAdapter.upsertOne(action.payload.requisition, state)
+  on(
+    addProductToRequisitionSuccess,
+    updateRequisitionSuccess,
+    createRequisitionSuccess,
+    (state: RequisitionsState, action) => requisitionsAdapter.upsertOne(action.payload.requisition, state)
   )
 );

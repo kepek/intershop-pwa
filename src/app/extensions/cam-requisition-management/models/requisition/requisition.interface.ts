@@ -13,7 +13,8 @@ import { User } from 'ish-core/models/user/user.model';
 import { RequisitionApproval, RequisitionUserBudget } from './requisition.model';
 
 export interface RequisitionBaseData extends BasketBaseData {
-  requisitionNo: string;
+  // Adjust to BE response
+  requisitionNo?: string;
   orderNo?: string;
   order?: {
     itemId: string;
@@ -24,6 +25,7 @@ export interface RequisitionBaseData extends BasketBaseData {
   totalNet: PriceData;
 
   userInformation: User;
+  // ToDO: remove unnecessary
   userBudgets: RequisitionUserBudget;
 
   approvalStatus: RequisitionApproval;

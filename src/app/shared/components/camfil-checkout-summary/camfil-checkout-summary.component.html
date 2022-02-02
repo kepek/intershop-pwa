@@ -128,6 +128,7 @@
           </mat-checkbox>
         </form>
       </ng-container>
+
       <button
         (click)="submitOrder()"
         [disabled]="!(canSubmitOrder$ | async)"
@@ -141,9 +142,12 @@
         <ng-template #notReadyToOrder>
           {{ 'camfil.checkout.wait_till_validation.button.text' | translate }}
         </ng-template>
-        <ng-container *ngIf="canSubmitOrder$ | async; else notReadyToOrder">
-          <ng-container *ngTemplateOutlet="readyToOrder"></ng-container>
-        </ng-container>
+        <ng-container *ngIf="approvalRequired; else standardPurchase"> Send for approval </ng-container>
+        <ng-template #standardPurchase>
+          <ng-container *ngIf="canSubmitOrder$ | async; else notReadyToOrder">
+            <ng-container *ngTemplateOutlet="readyToOrder"></ng-container>
+          </ng-container>
+        </ng-template>
       </button>
     </ng-template>
 

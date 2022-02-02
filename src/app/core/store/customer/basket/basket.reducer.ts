@@ -114,6 +114,8 @@ import {
   updateEmptyBucket,
 } from './basket.actions';
 
+import { createRequisitionSuccess } from '../../../../extensions/cam-requisition-management/store/requisitions/requisitions.actions';
+
 export interface BasketState {
   basket: Basket;
   eligibleShippingMethods: ShippingMethod[];
@@ -448,7 +450,7 @@ export const basketReducer = createReducer(
     submittedBasket: state.basket,
     submittedBuckets: state.buckets,
   })),
-  on(submitBasketSuccess, (state: BasketState) => ({
+  on(submitBasketSuccess, createRequisitionSuccess, (state: BasketState) => ({
     ...state,
     submittedBasket: state.basket,
     submittedBuckets: state.buckets,

@@ -46,10 +46,11 @@ export class RequisitionMapper {
 
   fromListData(payload: RequisitionData): Requisition[] {
     if (Array.isArray(payload.data)) {
+      console.log('fromListData', payload);
       return (
         payload.data
           /* filter requisitions that didn't need an approval */
-          .filter(data => data.requisitionNo)
+          // .filter(data => data.requisitionNo)
           .map(data => ({
             ...this.fromData({ ...payload, data }),
             totals: {
@@ -65,9 +66,9 @@ export class RequisitionMapper {
               isEstimated: false,
               discountTotal: {
                 type: 'PriceItem',
-                gross: data.totalGross.value,
-                net: data.totalNet.value,
-                currency: data.totalGross.currency,
+                gross: 0,
+                net: 0,
+                currency: 'EUR',
               },
             },
           }))

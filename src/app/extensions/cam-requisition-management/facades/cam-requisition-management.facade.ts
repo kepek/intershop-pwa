@@ -11,6 +11,7 @@ import { whenTruthy } from 'ish-core/utils/operators';
 import { RequisitionStatus, RequisitionViewer } from '../models/requisition/requisition.model';
 import {
   addProductToRequisition,
+  createRequisition,
   getRequisition,
   getRequisitions,
   getRequisitionsError,
@@ -73,6 +74,10 @@ export class CamRequisitionManagementFacade {
   );
 
   // CAMFIL Line Items
+  createRequisition() {
+    this.store.dispatch(createRequisition());
+  }
+
   addProductToRequisition(sku: string, quantity: number, requisitionId: string) {
     this.store.dispatch(
       addProductToRequisition({

@@ -35,6 +35,8 @@ export class CamfilCheckoutSummaryComponent extends CamfilBasketCostSummaryCompo
   productsReadyToPlaceOrder$: Observable<boolean>;
   canSubmitOrder$: Observable<boolean>;
   isLoggedIn$: Observable<boolean>;
+  permissions: string[];
+  approvalRequired = false;
 
   guestGdprForm: FormGroup;
   checkIfZeroPrice = PriceHelper.checkIfZeroPrice;

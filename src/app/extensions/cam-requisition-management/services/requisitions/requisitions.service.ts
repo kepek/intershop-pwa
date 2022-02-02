@@ -129,7 +129,7 @@ export class RequisitionsService {
 
     if (!Array.isArray(payload.data)) {
       const requisitionData = payload.data;
-
+      console.log('requisitionData', requisitionData);
       if (requisitionData.order?.itemId) {
         return this.apiService
           .get<OrderData>(`orders/${requisitionData.order.itemId}`, {
@@ -139,7 +139,7 @@ export class RequisitionsService {
           .pipe(map(data => this.requisitionMapper.fromData(payload, data)));
       }
     }
-
+    console.log('this.requisitionMapper.fromData(payload)', this.requisitionMapper.fromData(payload));
     return of(this.requisitionMapper.fromData(payload));
   }
 
@@ -214,5 +214,27 @@ export class RequisitionsService {
         params,
       })
       .pipe(map(() => requisition));
+  }
+
+  createRequisition(basketId: string): Observable<Requisition> {
+    const params = new HttpParams().set('include', this.allIncludes.join());
+
+    if (!basketId) {
+      return throwError('createRequisition() called without basketId');
+    }
+
+    const body = {
+      basketID: basketId,
+    };
+    return this.apiService
+      .post<RequisitionData>(`camfilrequisitions`, body, {
+        params,
+      })
+      .pipe(
+        concatMap(payload => {
+          console.log('payload', payload);
+          return this.requisitionMapper.fromListData(payload);
+        })
+      );
   }
 }

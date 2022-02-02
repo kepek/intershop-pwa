@@ -104,3 +104,12 @@ export const updateRequisitionSuccess = createAction(
 );
 
 export const updateRequisitionFail = createAction('[Camfil Requisitions API] Update Requisition Fail', httpError());
+
+export const createRequisition = createAction('[Camfil Requisitions API] Create Requisition');
+
+export const createRequisitionFail = createAction('[Camfil Requisitions API] Create Requisition Fail', httpError());
+
+export const createRequisitionSuccess = createAction(
+  '[Camfil Requisitions API] Create Requisition Success',
+  payload<{ requisition: Requisition }>()
+);

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { concatMap, map, mergeMap, switchMap, tap } from 'rxjs/operators';
+import { concatMap, map, mergeMap, switchMap, tap, withLatestFrom } from 'rxjs/operators';
 
 import { ProductCompletenessLevel } from 'ish-core/models/product/product.model';
 import { displaySuccessMessage } from 'ish-core/store/core/messages';
@@ -30,11 +30,21 @@ import {
   updateRequisitionStatusFail,
   updateRequisitionStatusSuccess,
   updateRequisitionSuccess,
+  createRequisition,
+  createRequisitionFail,
+  createRequisitionSuccess,
 } from './requisitions.actions';
+import { Store } from '@ngrx/store';
+import { getCurrentBasketId } from 'ish-core/store/customer/basket';
 
 @Injectable()
 export class RequisitionsEffects {
-  constructor(private actions$: Actions, private requisitionsService: RequisitionsService, private router: Router) {}
+  constructor(
+    private actions$: Actions,
+    private requisitionsService: RequisitionsService,
+    private router: Router,
+    private store: Store
+  ) {}
 
   loadRequisitions$ = createEffect(() =>
     this.actions$.pipe(
@@ -203,6 +213,20 @@ export class RequisitionsEffects {
         displaySuccessMessage({
           message: 'camfil.account.approvals.requisition_updated.text',
         })
+      )
+    )
+  );
+
+  createRequisition = createEffect(() =>
+    this.actions$.pipe(
+      ofType(createRequisition),
+      withLatestFrom(this.store.select(getCurrentBasketId)),
+      mergeMap(([, basketId]) =>
+        this.requisitionsService.createRequisition(basketId).pipe(
+          tap(() => this.router.navigate(['/checkout/receipt'])),
+          concatMap(requisition => [createRequisitionSuccess({ requisition })]),
+          mapErrorToAction(createRequisitionFail)
+        )
       )
     )
   );
