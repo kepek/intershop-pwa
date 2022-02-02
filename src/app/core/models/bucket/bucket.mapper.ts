@@ -13,6 +13,19 @@ import { Price } from 'ish-core/models/price/price.model';
 
 import { Bucket } from './bucket.model';
 
+const emptyPrice: Price = {
+  type: 'Money',
+  value: 0,
+  currency: 'N/A',
+};
+
+const emptyPriceItem: PriceItem = {
+  type: 'PriceItem',
+  gross: 0,
+  net: 0,
+  currency: 'N/A',
+};
+
 export class BucketMapper {
   static fromListData(payload: BucketData, basket: BasketView): Bucket[] {
     const { data, included } = payload;
@@ -64,6 +77,15 @@ export class BucketMapper {
   }
 
   static getTotals(bucketData: BucketBaseData, basket: BasketView): BucketTotal {
+    const initialTotalsValue: BucketTotal = {
+      dutiesAndSurchargesTotal: emptyPriceItem,
+      itemTotal: emptyPriceItem,
+      shippingTotal: emptyPriceItem,
+      surcharges: [],
+      taxTotal: emptyPrice,
+      total: emptyPriceItem,
+    };
+
     const lineItems = BucketMapper.getLineItems(bucketData, basket);
     const surcharges = BasketSurchargeMapper.fromListData(bucketData?.surcharges);
 
@@ -101,7 +123,8 @@ export class BucketMapper {
     type TotalsType = PropType<LineItem, 'totals'>;
 
     const lineItemsTotals = lineItems
-      ?.map(lineItem => lineItem?.totals)
+      ?.map(lineItem => ({ ...initialTotalsValue, ...lineItem?.totals }))
+      ?.filter(Boolean)
       ?.reduce<TotalsType>((prevTotals, currentTotals) => {
         const keys = Object.keys({ ...prevTotals, ...currentTotals });
         const newTotals = keys.reduce((acc, name) => {

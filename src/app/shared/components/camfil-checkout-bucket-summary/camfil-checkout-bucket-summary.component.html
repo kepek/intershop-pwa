@@ -1,4 +1,4 @@
-<dl [ngClass]="cssClass">
+<dl *ngIf="totals" [ngClass]="cssClass">
   <!-- ItemTotal -->
   <dt class="col-8">{{ 'camfil.checkout.single_total_price_net' | translate }}</dt>
   <dd class="col-4">{{ totals.itemTotal | ishPrice }}</dd>
