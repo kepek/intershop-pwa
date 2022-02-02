@@ -1265,6 +1265,7 @@
   "checkout.order.number.label": "Votre numéro de commande est :",
   "checkout.order.shipping.label": "Expédition",
   "checkout.order.total_cost.label": "Coût total",
+  "checkout.order.total_cost_net.label": "Coût total (HT)",
   "checkout.order_details.heading": "Récapitulatif de la commande",
   "checkout.order_review.heading.text": "Vérifiez les détails de votre commande ci-dessous et modifiez-la si nécessaire. Cliquez sur \"Soumettre la commande\" pour terminer votre achat.",
   "checkout.order_review.heading.title": "Vérifiez les détails de votre commande",
