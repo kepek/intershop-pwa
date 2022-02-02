@@ -3,16 +3,16 @@ import { PriceItem } from 'ish-core/models/price-item/price-item.model';
 import { Price } from 'ish-core/models/price/price.model';
 
 export interface BucketTotal {
+  dutiesAndSurchargesTotal: PriceItem;
+  itemTotal: PriceItem;
+  originTotal?: PriceItem;
   salesTaxTotal?: Price;
   shippingTaxTotal?: Price;
   shippingTotal: PriceItem;
-  total: PriceItem;
+  surcharges: BasketSurcharge[];
   taxTotal: Price;
-  itemTotal: PriceItem;
+  total: PriceItem;
   undiscountedTotal?: PriceItem;
   valueRebatesTotal?: PriceItem;
-  originTotal?: PriceItem;
   volumeDiscount?: Price;
-  surcharges: BasketSurcharge[];
-  dutiesAndSurchargesTotal: PriceItem;
 }
