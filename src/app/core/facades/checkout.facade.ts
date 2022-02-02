@@ -187,7 +187,7 @@ export class CheckoutFacade {
   }
 
   eligibleShippingMethods$() {
-    return this.basket$.pipe(
+    return this.basketLineItems$.pipe(
       whenTruthy(),
       take(1),
       tap(() => this.store.dispatch(loadBasketEligibleShippingMethods())),
@@ -196,7 +196,7 @@ export class CheckoutFacade {
   }
 
   eligiblePaymentMethods$() {
-    return this.basket$.pipe(
+    return this.basketLineItems$.pipe(
       whenTruthy(),
       take(1),
       tap(() => this.store.dispatch(loadBasketEligiblePaymentMethods())),
