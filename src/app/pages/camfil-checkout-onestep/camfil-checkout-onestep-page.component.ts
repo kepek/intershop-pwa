@@ -34,7 +34,6 @@ import { CamCardsFacade } from '../../extensions/cam-cards/facades/cam-cards.fac
 import { CamfilCheckoutGuestFormComponent } from './camfil-checkout-guest-form/camfil-checkout-guest-form.component';
 import { BasketMapper } from 'ish-core/models/basket/basket.mapper';
 import { isEqual } from 'lodash-es';
-import { CamRequisitionManagementFacade } from 'src/app/extensions/cam-requisition-management/facades/cam-requisition-management.facade';
 
 @Component({
   templateUrl: './camfil-checkout-onestep-page.component.html',
@@ -59,8 +58,6 @@ export class CamfilCheckoutOnestepPageComponent implements OnInit, OnDestroy {
   submittedBuckets$: Observable<Bucket[]>;
   basketTotals$: Observable<BasketTotal>;
   validationResults$: Observable<BasketValidationResultType>;
-  permissions: string[];
-  approvalRequired = false;
 
   private isValid = false;
   private destroy$ = new Subject<void>();
@@ -72,8 +69,7 @@ export class CamfilCheckoutOnestepPageComponent implements OnInit, OnDestroy {
     private accountFacade: AccountFacade,
     private checkoutFacade: CheckoutFacade,
     private shoppingFacade: ShoppingFacade,
-    private camCardsFacade: CamCardsFacade,
-    private camRequisitionManagementFacade: CamRequisitionManagementFacade
+    private camCardsFacade: CamCardsFacade
   ) {}
 
   ngOnInit() {
@@ -91,13 +87,6 @@ export class CamfilCheckoutOnestepPageComponent implements OnInit, OnDestroy {
     this.validationResults$ = this.checkoutFacade.basketValidationResults$;
 
     this.basket$ = this.checkoutFacade.basket$;
-
-    this.accountFacade.userPermissions$.pipe(whenTruthy()).subscribe(permissions => {
-      this.permissions = permissions;
-      if (permissions?.includes('APP_B2B_MAKE_REQUISITION')) {
-        this.approvalRequired = true;
-      }
-    });
 
     this.basketTotals$ = this.basket$.pipe(
       withLatestFrom(this.appFacade.getCurrencyByChannel$),
@@ -155,17 +144,9 @@ export class CamfilCheckoutOnestepPageComponent implements OnInit, OnDestroy {
   }
 
   submit() {
-    if (this.approvalRequired) {
-      this.camRequisitionManagementFacade.createRequisition();
-    } else {
-      this.guestForm?.validateGuestForm();
-      this.checkErpEmployeeIdExists();
-      this.checkoutFacade.continue(5);
-    }
-  }
-
-  sendToApproval() {
-    console.log('sendToApproval');
+    this.guestForm?.validateGuestForm();
+    this.checkErpEmployeeIdExists();
+    this.checkoutFacade.continue(5);
   }
 
   // tslint:disable-next-line:no-any

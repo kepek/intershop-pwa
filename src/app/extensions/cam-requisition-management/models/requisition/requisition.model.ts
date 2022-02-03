@@ -43,3 +43,13 @@ export interface RequisitionListFilter {
   dateTo?: string;
   requisitionStatus?: string[];
 }
+
+export interface EditRequisition extends Requisition {
+  customerId?: string;
+  company?: string;
+  building?: string;
+  address?: string;
+  addressLine2?: string;
+  zipCode?: string;
+  area?: string;
+}

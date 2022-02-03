@@ -49,7 +49,7 @@ describe('Requisitions Selectors', () => {
   });
 
   describe('LoadRequisitions', () => {
-    const action = loadRequisitions({ view: 'buyer', status: 'PENDING' });
+    const action = loadRequisitions();
 
     beforeEach(() => {
       store$.dispatch(action);
@@ -176,7 +176,7 @@ describe('Requisitions Selectors', () => {
     });
 
     it('should return correct buyer requisitions for the user', () => {
-      expect(getRequisitions('buyer', 'PENDING')(store$.state)).toEqual(requisitions);
+      expect(getRequisitions(store$.state)).toEqual(requisitions);
     });
   });
 });

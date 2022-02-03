@@ -104,7 +104,7 @@
         {{ 'camfil.account.orderlist.table.customer' | translate }}
       </th>
       <td *matCellDef="let requisition" mat-cell>
-        {{ requisition.user.firstName }} {{ requisition.user.lastName }}, {{ requisition.customerNo }}
+        {{ requisition.customerNo.companyName }} {{ requisition.customerNo.customerNo }}
       </td>
     </ng-container>
 
@@ -118,7 +118,7 @@
         *matCellDef="let requisition"
         [attr.data-label]="'account.approvallist.table.no_of_order' | translate"
       >
-        {{ requisition.orderNo }}
+        {{ requisition.orderNo || '---' }}
       </td>
     </ng-container>
 

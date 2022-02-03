@@ -32,7 +32,6 @@ export class BuyerPageComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.requisitions$ = this.camRequisitionManagementFacade.requisitionsByRoute$;
     this.error$ = this.camRequisitionManagementFacade.requisitionsError$;
     this.view$ = this.context.select('view');
     this.loading$ = this.camRequisitionManagementFacade.requisitionsLoading$;

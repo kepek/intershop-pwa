@@ -1,9 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+import { FeatureToggleGuard } from 'ish-core/feature-toggle.module';
+
 const routes: Routes = [
   {
     path: 'approver',
+    canActivate: [FeatureToggleGuard],
     data: {
       feature: 'camRequisitionManagement',
     },
@@ -11,6 +14,7 @@ const routes: Routes = [
   },
   {
     path: 'buyer',
+    canActivate: [FeatureToggleGuard],
     data: {
       feature: 'camRequisitionManagement',
     },
@@ -18,6 +22,7 @@ const routes: Routes = [
   },
   {
     path: 'approver/:requisitionId',
+    canActivate: [FeatureToggleGuard],
     data: {
       feature: 'camRequisitionManagement',
     },
@@ -26,6 +31,7 @@ const routes: Routes = [
   },
   {
     path: 'buyer/:requisitionId',
+    canActivate: [FeatureToggleGuard],
     data: {
       feature: 'camRequisitionManagement',
     },

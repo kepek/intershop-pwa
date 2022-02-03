@@ -1,9 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input, TemplateRef, ViewChild } from '@angular/core';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
-import { EditBucket } from 'ish-core/models/bucket/bucket.model';
-
-import { Requisition } from '../../../models/requisition/requisition.model';
+import { EditRequisition, Requisition } from '../../../models/requisition/requisition.model';
 
 @Component({
   selector: 'camfil-edit-approval-details-modal',
@@ -16,7 +14,7 @@ export class EditApprovalDetailsModalComponent {
   modal: NgbModalRef;
   @ViewChild('modal', { static: false }) modalTemplate: TemplateRef<unknown>;
 
-  approvalDetails: EditBucket;
+  approvalDetails: EditRequisition;
 
   constructor() {}
 

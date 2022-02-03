@@ -27,8 +27,69 @@ describe('Requisitions Service', () => {
   });
 
   it('should call the getRequisitions of customer API when fetching requisitions', done => {
-    requisitionsService.getRequisitions('buyer', 'PENDING').subscribe(() => {
-      verify(apiServiceMock.get('requisitions', anything())).once();
+    when(apiServiceMock.get('camfilrequisitions')).thenReturn(of({ elements: [{ id: '1234' }] }));
+    requisitionsService.getRequisitions().subscribe(data => {
+      verify(apiServiceMock.get('camfilrequisitions')).once();
+      expect(data).toMatchInlineSnapshot(`
+        Array [
+          Object {
+            "approval": Object {
+              "status": "pending",
+              "statusCode": "PENDING",
+            },
+            "attributes": undefined,
+            "basketExtensions": undefined,
+            "bucketId": undefined,
+            "buckets": undefined,
+            "commonShipToAddress": undefined,
+            "commonShippingMethod": undefined,
+            "creationDate": 1643974213863,
+            "customerNo": undefined,
+            "dynamicMessages": undefined,
+            "email": undefined,
+            "externalOrderReference": undefined,
+            "id": "1234",
+            "infos": undefined,
+            "invoiceToAddress": undefined,
+            "lineItemCount": undefined,
+            "lineItems": Array [],
+            "orderNo": undefined,
+            "payment": undefined,
+            "promotionCodes": undefined,
+            "purchaseCurrency": undefined,
+            "requisitionNo": undefined,
+            "totalProductQuantity": undefined,
+            "totals": Object {
+              "discountTotal": Object {
+                "currency": "EUR",
+                "gross": 0,
+                "net": 0,
+                "type": "PriceItem",
+              },
+              "isEstimated": false,
+              "itemTotal": undefined,
+              "total": Object {
+                "currency": "N/A",
+                "gross": 0,
+                "net": 0,
+                "type": "PriceItem",
+              },
+            },
+            "user": Object {
+              "email": "test.user@mail.com",
+              "firstName": "Test",
+              "lastName": "User",
+            },
+            "userBudget": Object {
+              "spentBudget": Object {
+                "currency": undefined,
+                "type": "Money",
+                "value": 0,
+              },
+            },
+          },
+        ]
+      `);
       done();
     });
   });

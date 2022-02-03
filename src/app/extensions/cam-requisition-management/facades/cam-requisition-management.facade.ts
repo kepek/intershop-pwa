@@ -8,7 +8,6 @@ import { Attribute } from 'ish-core/models/attribute/attribute.model';
 import { selectRouteParam, selectUrl } from 'ish-core/store/core/router';
 import { whenTruthy } from 'ish-core/utils/operators';
 
-import { RequisitionStatus, RequisitionViewer } from '../models/requisition/requisition.model';
 import {
   addProductToRequisition,
   createRequisition,
@@ -47,9 +46,9 @@ export class CamRequisitionManagementFacade {
     return this.store.pipe(select(getRequisition(requisitionId)));
   }
 
-  requisitions$(view: RequisitionViewer, status: RequisitionStatus) {
-    this.store.dispatch(loadRequisitions({ view, status }));
-    return this.store.pipe(select(getRequisitions(view, status)));
+  requisitions$() {
+    this.store.dispatch(loadRequisitions());
+    return this.store.pipe(select(getRequisitions));
   }
 
   requisitionsByRoute$ = combineLatest([
@@ -68,9 +67,7 @@ export class CamRequisitionManagementFacade {
         startWith({})
       )
     ),
-    switchMap(([view, status]) =>
-      this.requisitions$(view as RequisitionViewer, (status as RequisitionStatus) || 'PENDING')
-    )
+    switchMap(() => this.requisitions$())
   );
 
   // CAMFIL Line Items

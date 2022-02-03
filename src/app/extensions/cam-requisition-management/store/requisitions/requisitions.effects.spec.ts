@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { provideMockActions } from '@ngrx/effects/testing';
-import { Action } from '@ngrx/store';
+import { Action, StoreModule } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
-import { anyString, anything, instance, mock, verify, when } from 'ts-mockito';
+import { anyString, instance, mock, verify, when } from 'ts-mockito';
 
 import { LineItem } from 'ish-core/models/line-item/line-item.model';
 
@@ -54,7 +54,7 @@ describe('Requisitions Effects', () => {
 
   beforeEach(() => {
     requisitionsService = mock(RequisitionsService);
-    when(requisitionsService.getRequisitions(anything(), anything())).thenReturn(of(requisitions));
+    when(requisitionsService.getRequisitions()).thenReturn(of(requisitions));
     when(requisitionsService.getRequisition(anyString())).thenReturn(of(requisitions[0]));
     when(requisitionsService.updateRequisitionStatus(anyString(), anyString(), anyString())).thenReturn(
       of(requisitions[0])
@@ -62,36 +62,33 @@ describe('Requisitions Effects', () => {
 
     TestBed.configureTestingModule({
       declarations: [DummyComponent],
-      imports: [RouterTestingModule.withRoutes([{ path: '**', component: DummyComponent }])],
+      imports: [RouterTestingModule.withRoutes([{ path: '**', component: DummyComponent }]), StoreModule.forRoot({})],
       providers: [
         RequisitionsEffects,
         provideMockActions(() => actions$),
         { provide: RequisitionsService, useFactory: () => instance(requisitionsService) },
       ],
     });
-
     effects = TestBed.inject(RequisitionsEffects);
   });
 
   describe('loadRequisitions$', () => {
     it('should call the service for retrieving requisitions', done => {
-      actions$ = of(loadRequisitions({ view: 'buyer', status: 'PENDING' }));
+      actions$ = of(loadRequisitions());
 
       effects.loadRequisitions$.subscribe(() => {
-        verify(requisitionsService.getRequisitions(anything(), anything())).once();
+        verify(requisitionsService.getRequisitions()).once();
         done();
       });
     });
 
     it('should retrieve requisitions when triggered', done => {
-      actions$ = of(loadRequisitions({ view: 'buyer', status: 'PENDING' }));
+      actions$ = of(loadRequisitions());
 
       effects.loadRequisitions$.subscribe(action => {
         expect(action).toMatchInlineSnapshot(`
           [Camfil Requisitions API] Load Requisitions Success:
             requisitions: [{"id":"testUUID","requisitionNo":"0001","user":{"firstName"...
-            view: "buyer"
-            status: "PENDING"
         `);
         done();
       });

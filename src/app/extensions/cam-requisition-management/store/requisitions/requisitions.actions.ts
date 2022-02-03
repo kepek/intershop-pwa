@@ -5,10 +5,7 @@ import { httpError, payload } from 'ish-core/utils/ngrx-creators';
 
 import { Requisition, RequisitionStatus, RequisitionViewer } from '../../models/requisition/requisition.model';
 
-export const loadRequisitions = createAction(
-  '[Camfil Requisitions] Load Requisitions',
-  payload<{ view?: RequisitionViewer; status?: RequisitionStatus }>()
-);
+export const loadRequisitions = createAction('[Camfil Requisitions] Load Requisitions');
 
 export const loadRequisitionsFail = createAction('[Camfil Requisitions API] Load Requisitions Fail', httpError());
 

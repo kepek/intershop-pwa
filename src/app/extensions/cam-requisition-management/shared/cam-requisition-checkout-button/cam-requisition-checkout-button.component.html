@@ -1,0 +1,9 @@
+<button
+  (click)="submit()"
+  [disabled]="!(disabledButton$ | async)"
+  class="submit-button"
+  color="primary"
+  mat-flat-button
+>
+  Send for approval
+</button>

@@ -24,7 +24,7 @@ type RequisitionIncludeType =
 
 @Injectable({ providedIn: 'root' })
 export class RequisitionsService {
-  constructor(private apiService: ApiService, private requisitionMapper: RequisitionMapper) {}
+  constructor(private apiService: ApiService) {}
 
   private allIncludes: RequisitionIncludeType[] = [
     'invoiceToAddress',
@@ -59,9 +59,8 @@ export class RequisitionsService {
     }
 
     return this.apiService
-      .b2bUserEndpoint()
-      .get<RequisitionData>(`requisitions`, { params })
-      .pipe(map(data => this.requisitionMapper.fromListData(data)));
+      .get(`camfilrequisitions`)
+      .pipe(map(RequisitionMapper.fromElemenetsToListData), map(RequisitionMapper.fromListData));
   }
 
   /**
@@ -129,18 +128,18 @@ export class RequisitionsService {
 
     if (!Array.isArray(payload.data)) {
       const requisitionData = payload.data;
-      console.log('requisitionData', requisitionData);
+
       if (requisitionData.order?.itemId) {
         return this.apiService
           .get<OrderData>(`orders/${requisitionData.order.itemId}`, {
             headers: this.orderHeaders,
             params,
           })
-          .pipe(map(data => this.requisitionMapper.fromData(payload, data)));
+          .pipe(map(data => RequisitionMapper.fromData(payload, data)));
       }
     }
-    console.log('this.requisitionMapper.fromData(payload)', this.requisitionMapper.fromData(payload));
-    return of(this.requisitionMapper.fromData(payload));
+
+    return of(RequisitionMapper.fromData(payload));
   }
 
   // Add product to requisition
@@ -230,11 +229,6 @@ export class RequisitionsService {
       .post<RequisitionData>(`camfilrequisitions`, body, {
         params,
       })
-      .pipe(
-        concatMap(payload => {
-          console.log('payload', payload);
-          return this.requisitionMapper.fromListData(payload);
-        })
-      );
+      .pipe(concatMap(payload => RequisitionMapper.fromListData(payload)));
   }
 }

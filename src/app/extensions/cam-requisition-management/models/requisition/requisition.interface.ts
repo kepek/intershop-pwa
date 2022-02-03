@@ -1,4 +1,5 @@
 import { AddressData } from 'ish-core/models/address/address.interface';
+import { Address } from 'ish-core/models/address/address.model';
 import { BasketInfo } from 'ish-core/models/basket-info/basket-info.model';
 import { BasketRebateData } from 'ish-core/models/basket-rebate/basket-rebate.interface';
 import { BasketBaseData } from 'ish-core/models/basket/basket.interface';
@@ -6,7 +7,6 @@ import { LineItemData } from 'ish-core/models/line-item/line-item.interface';
 import { PaymentInstrument } from 'ish-core/models/payment-instrument/payment-instrument.model';
 import { PaymentMethodBaseData } from 'ish-core/models/payment-method/payment-method.interface';
 import { PaymentData } from 'ish-core/models/payment/payment.interface';
-import { PriceData } from 'ish-core/models/price/price.interface';
 import { ShippingMethodData } from 'ish-core/models/shipping-method/shipping-method.interface';
 import { User } from 'ish-core/models/user/user.model';
 
@@ -21,12 +21,10 @@ export interface RequisitionBaseData extends BasketBaseData {
   };
   creationDate: number;
   lineItemCount: number;
-  totalGross: PriceData;
-  totalNet: PriceData;
-
   userInformation: User;
   // ToDO: remove unnecessary
   userBudgets: RequisitionUserBudget;
+  shippingAddress: Address;
 
   approvalStatus: RequisitionApproval;
 }

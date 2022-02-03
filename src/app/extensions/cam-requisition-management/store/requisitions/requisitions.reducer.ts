@@ -3,12 +3,14 @@ import { createReducer, on } from '@ngrx/store';
 
 import { HttpError } from 'ish-core/models/http-error/http-error.model';
 import { setErrorOn, setLoadingOn, unsetLoadingAndErrorOn } from 'ish-core/utils/ngrx-creators';
-import { createRequisitionFail } from '.';
 
 import { Requisition } from '../../models/requisition/requisition.model';
 
 import {
   addProductToRequisitionSuccess,
+  createRequisition,
+  createRequisitionFail,
+  createRequisitionSuccess,
   loadRequisition,
   loadRequisitionFail,
   loadRequisitionSuccess,
@@ -20,8 +22,6 @@ import {
   updateRequisitionStatusFail,
   updateRequisitionStatusSuccess,
   updateRequisitionSuccess,
-  createRequisition,
-  createRequisitionSuccess,
 } from './requisitions.actions';
 
 export const requisitionsAdapter = createEntityAdapter<Requisition>();

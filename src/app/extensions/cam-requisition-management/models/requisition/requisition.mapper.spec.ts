@@ -4,16 +4,13 @@ import { RequisitionBaseData } from './requisition.interface';
 import { RequisitionMapper } from './requisition.mapper';
 
 describe('Requisition Mapper', () => {
-  let requisitionMapper: RequisitionMapper;
-
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    requisitionMapper = TestBed.inject(RequisitionMapper);
   });
 
   describe('fromData', () => {
     it('should throw when input is falsy', () => {
-      expect(() => requisitionMapper.fromData(undefined)).toThrow();
+      expect(() => RequisitionMapper.fromData(undefined)).toThrow();
     });
 
     it('should map incoming data to model data', () => {
@@ -40,11 +37,9 @@ describe('Requisition Mapper', () => {
           budget: { currency: 'USD', value: 3000, type: 'Money' },
         },
         totals: {},
-        totalGross: { currency: 'USD', value: 2000 },
-        totalNet: { currency: 'USD', value: 1890 },
       } as RequisitionBaseData;
 
-      const mapped = requisitionMapper.fromData({ data });
+      const mapped = RequisitionMapper.fromData({ data });
       expect(mapped).toMatchInlineSnapshot(`
         Object {
           "approval": Object {

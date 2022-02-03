@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { Store } from '@ngrx/store';
 import { concatMap, map, mergeMap, switchMap, tap, withLatestFrom } from 'rxjs/operators';
 
 import { ProductCompletenessLevel } from 'ish-core/models/product/product.model';
 import { displaySuccessMessage } from 'ish-core/store/core/messages';
+import { getCurrentBasketId, submitBasketSuccess } from 'ish-core/store/customer/basket';
 import { loadProductIfNotLoaded } from 'ish-core/store/shopping/products';
 import { mapErrorToAction, mapToPayload, mapToPayloadProperty } from 'ish-core/utils/operators';
 
@@ -13,6 +15,9 @@ import { RequisitionsService } from '../../services/requisitions/requisitions.se
 import {
   addProductToRequisition,
   addProductToRequisitionSuccess,
+  createRequisition,
+  createRequisitionFail,
+  createRequisitionSuccess,
   loadRequisition,
   loadRequisitionFail,
   loadRequisitionSuccess,
@@ -30,12 +35,7 @@ import {
   updateRequisitionStatusFail,
   updateRequisitionStatusSuccess,
   updateRequisitionSuccess,
-  createRequisition,
-  createRequisitionFail,
-  createRequisitionSuccess,
 } from './requisitions.actions';
-import { Store } from '@ngrx/store';
-import { getCurrentBasketId } from 'ish-core/store/customer/basket';
 
 @Injectable()
 export class RequisitionsEffects {
@@ -49,10 +49,9 @@ export class RequisitionsEffects {
   loadRequisitions$ = createEffect(() =>
     this.actions$.pipe(
       ofType(loadRequisitions),
-      mapToPayload(),
-      concatMap(({ view, status }) =>
-        this.requisitionsService.getRequisitions(view, status).pipe(
-          map(requisitions => loadRequisitionsSuccess({ requisitions, view, status })),
+      concatMap(() =>
+        this.requisitionsService.getRequisitions().pipe(
+          map(requisitions => loadRequisitionsSuccess({ requisitions })),
           mapErrorToAction(loadRequisitionsFail)
         )
       )
@@ -224,7 +223,7 @@ export class RequisitionsEffects {
       mergeMap(([, basketId]) =>
         this.requisitionsService.createRequisition(basketId).pipe(
           tap(() => this.router.navigate(['/checkout/receipt'])),
-          concatMap(requisition => [createRequisitionSuccess({ requisition })]),
+          concatMap(requisition => [createRequisitionSuccess({ requisition }), submitBasketSuccess()]),
           mapErrorToAction(createRequisitionFail)
         )
       )
