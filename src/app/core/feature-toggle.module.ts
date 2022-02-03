@@ -1,13 +1,12 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
 
 import { FeatureToggleDirective } from './directives/feature-toggle.directive';
-import { NotAuthorizationToggleDirective } from './directives/not-authorization-toggle.directive';
 import { NotFeatureToggleDirective } from './directives/not-feature-toggle.directive';
 import { FeatureToggleService, checkFeature } from './utils/feature-toggle/feature-toggle.service';
 
 @NgModule({
-  declarations: [FeatureToggleDirective, NotAuthorizationToggleDirective, NotFeatureToggleDirective],
-  exports: [FeatureToggleDirective, NotAuthorizationToggleDirective, NotFeatureToggleDirective],
+  declarations: [FeatureToggleDirective, NotFeatureToggleDirective],
+  exports: [FeatureToggleDirective, NotFeatureToggleDirective],
 })
 export class FeatureToggleModule {
   private static features: string[];
