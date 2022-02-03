@@ -4,6 +4,7 @@ import { map } from 'rxjs/operators';
 
 import { AuthorizationToggleDirective } from './directives/authorization-toggle.directive';
 import { CamfilAuthorizationToggleDirective } from './directives/camfil-authorization-toggle.directive';
+import { NotAuthorizationToggleDirective } from './directives/not-authorization-toggle.directive';
 import {
   AuthorizationToggleService,
   checkPermission,
@@ -12,8 +13,8 @@ import {
 import { whenTruthy } from './utils/operators';
 
 @NgModule({
-  declarations: [AuthorizationToggleDirective, CamfilAuthorizationToggleDirective],
-  exports: [AuthorizationToggleDirective, CamfilAuthorizationToggleDirective],
+  declarations: [AuthorizationToggleDirective, CamfilAuthorizationToggleDirective, NotAuthorizationToggleDirective],
+  exports: [AuthorizationToggleDirective, CamfilAuthorizationToggleDirective, NotAuthorizationToggleDirective],
 })
 export class AuthorizationToggleModule {
   private static permissions = new ReplaySubject<string[]>(1);
