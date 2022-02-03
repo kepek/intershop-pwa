@@ -20,9 +20,9 @@ export class NotAuthorizationToggleDirective implements OnDestroy {
   ) {
     this.disabled$.pipe(distinctUntilChanged(), takeUntil(this.destroy$)).subscribe(disabled => {
       if (disabled) {
-        this.viewContainer.clear();
-      } else {
         this.viewContainer.createEmbeddedView(this.templateRef);
+      } else {
+        this.viewContainer.clear();
       }
     });
   }
