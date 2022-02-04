@@ -43,7 +43,6 @@ import { CamfilProductAddToBasketModalComponent } from 'ish-shared/components/pr
 import { CamfilProductGuidesComponent } from 'ish-shared/components/product/camfil-product-guides/camfil-product-guides.component';
 import { MaterialModule } from 'ish-shared/material/material.module';
 
-import { CamAccountExportsModule } from '../extensions/cam-account/exports/cam-account-exports.module';
 import { CamAhuExportsModule } from '../extensions/cam-ahu/exports/cam-ahu-exports.module';
 import { CamCaptchaExportsModule } from '../extensions/cam-captcha/exports/cam-captcha-exports.module';
 import { CamCardsExportsModule } from '../extensions/cam-cards/exports/cam-cards-exports.module';
@@ -143,7 +142,6 @@ import { Auth0SigninComponent } from './components/login/auth0-signin/auth0-sign
 import { IdentityProviderLoginComponent } from './components/login/identity-provider-login/identity-provider-login.component';
 import { LoginFormComponent } from './components/login/login-form/login-form.component';
 import { LoginModalComponent } from './components/login/login-modal/login-modal.component';
-import { CamfilOrderListComponent } from './components/order/camfil-order-list/camfil-order-list.component';
 import { OrderListComponent } from './components/order/order-list/order-list.component';
 import { OrderWidgetComponent } from './components/order/order-widget/order-widget.component';
 import { CamfilProductAddToBasketComponent } from './components/product/camfil-product-add-to-basket/camfil-product-add-to-basket.component';
@@ -243,7 +241,6 @@ const importExportModules = [
   AddressFormsSharedModule,
   AuthorizationToggleModule,
   CMSModule,
-  CamAccountExportsModule,
   CamAhuExportsModule,
   CamCaptchaExportsModule,
   CamCardsExportsModule,
@@ -424,7 +421,6 @@ const exportedComponents = [
   CamfilLoadingComponent,
   CamfilModalDialogComponent,
   CamfilMyPageHeaderComponent,
-  CamfilOrderListComponent,
   CamfilProductAddToBasketComponent,
   CamfilProductAddToCompareComponent,
   CamfilProductAttributeComponent,

@@ -1,9 +1,8 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { CamfilOrderLineItem } from 'camfil-pwa/models/camfil-order-line-item/camfil-order-line-item.model';
 
 import { AttributeHelper } from 'ish-core/models/attribute/attribute.helper';
 import { LineItem } from 'ish-core/models/line-item/line-item.model';
-
-import { OrderLineItem } from '../../../../../extensions/cam-account/models/order-line-item/order-line-item.model';
 
 @Component({
   selector: 'camfil-line-item-measurements',
@@ -11,7 +10,9 @@ import { OrderLineItem } from '../../../../../extensions/cam-account/models/orde
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CamfilLineItemMeasurementsComponent implements OnInit {
-  @Input() linetItem: Pick<OrderLineItem, 'width' | 'height' | 'diameter' | 'depth'> | Pick<LineItem, 'attributes'>;
+  @Input() linetItem:
+    | Pick<CamfilOrderLineItem, 'width' | 'height' | 'diameter' | 'depth'>
+    | Pick<LineItem, 'attributes'>;
   measurementText: string;
 
   ngOnInit() {

@@ -1,0 +1,18 @@
+@import '../../../../../../../src/styles/themes/camfil/mixins';
+@import '../../../../../../../src/styles/themes/camfil/variables';
+
+:host {
+  .new-customer {
+    &__wrapper {
+      padding: $space-default 40px;
+
+      @media (min-width: $screen-lg-min) {
+        border-right: 1px solid $camfil-color-border;
+      }
+    }
+  }
+
+  .link {
+    margin-top: 12px;
+  }
+}

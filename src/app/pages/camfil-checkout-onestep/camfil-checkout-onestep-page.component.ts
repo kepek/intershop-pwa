@@ -34,6 +34,7 @@ import { CamCardsFacade } from '../../extensions/cam-cards/facades/cam-cards.fac
 import { CamfilCheckoutGuestFormComponent } from './camfil-checkout-guest-form/camfil-checkout-guest-form.component';
 import { BasketMapper } from 'ish-core/models/basket/basket.mapper';
 import { isEqual } from 'lodash-es';
+import { CamfilIdentityParams } from 'ish-core/identity-provider/camfil.identity-provider';
 
 @Component({
   templateUrl: './camfil-checkout-onestep-page.component.html',
@@ -174,16 +175,14 @@ export class CamfilCheckoutOnestepPageComponent implements OnInit, OnDestroy {
   }
 
   private checkErpEmployeeIdExists() {
-    let erpEmployeeId;
-
     try {
-      erpEmployeeId = JSON.parse(localStorage.getItem('erpEmployeeId'));
+      const erpEmployeeId = localStorage?.getItem(CamfilIdentityParams.ERPEmployeeID) || undefined;
+
+      if (erpEmployeeId) {
+        this.checkoutFacade.updateBasketExternalOrderReference(erpEmployeeId);
+      }
     } catch (err) {
       // NOOP
-    }
-
-    if (erpEmployeeId) {
-      this.checkoutFacade.updateBasketExternalOrderReference(erpEmployeeId);
     }
   }
 

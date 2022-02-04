@@ -1,6 +1,6 @@
 import { createSelector } from '@ngrx/store';
+import { Order } from 'camfil-pwa/models/order/order.model';
 
-import { Order } from 'ish-core/models/order/order.model';
 import { getCustomerState } from 'ish-core/store/customer/customer-store';
 
 import { orderAdapter } from './orders.reducer';

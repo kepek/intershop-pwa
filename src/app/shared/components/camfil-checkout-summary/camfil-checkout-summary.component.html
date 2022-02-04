@@ -122,7 +122,7 @@
 
     <ng-template #noConfirmed>
       <ng-container *ngIf="!(isLoggedIn$ | async)">
-        <form [formGroup]="guestGdprForm" class="summary-gpdr-form">
+        <form [formGroup]="guestGdprForm" class="summary-gdpr-form">
           <mat-checkbox color="primary" formControlName="gdprAcceptance">
             <span>{{ 'camfil.account.apply_form.gdpr' | translate }}</span>
           </mat-checkbox>

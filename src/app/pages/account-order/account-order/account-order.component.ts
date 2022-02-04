@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-
-import { Order } from 'ish-core/models/order/order.model';
+import { Order } from 'camfil-pwa/models/order/order.model';
 
 /**
  * The Order Page Component displays the details of an order. See also {@link OrderPageContainerComponent}

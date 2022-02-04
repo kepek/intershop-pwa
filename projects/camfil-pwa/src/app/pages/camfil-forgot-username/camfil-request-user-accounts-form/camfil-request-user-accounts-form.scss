@@ -1,0 +1,16 @@
+@import '../../../../../../../src/styles/themes/camfil/mixins';
+@import '../../../../../../../src/styles/themes/camfil/variables';
+
+:host {
+  .form-field {
+    width: 100%;
+  }
+
+  .form-button {
+    margin-top: $space-sm;
+  }
+
+  .error-field {
+    @include error;
+  }
+}

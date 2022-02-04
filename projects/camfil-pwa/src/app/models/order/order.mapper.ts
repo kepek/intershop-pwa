@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
 import * as camelcaseKeys from 'camelcase-keys';
-import { GuestAttributePrefix, GuestBuyer } from 'camfil-pwa/models/order/order.interface';
+import { GuestAttributePrefix, GuestBuyer, OrderData } from 'camfil-pwa/models/order/order.interface';
+import { Order } from 'camfil-pwa/models/order/order.model';
 
 import { AddressData } from 'ish-core/models/address/address.interface';
 import { Attribute } from 'ish-core/models/attribute/attribute.model';
-import { OrderData } from 'ish-core/models/order/order.interface';
 import { OrderMapper as IshOrderMapper } from 'ish-core/models/order/order.mapper';
-import { Order } from 'ish-core/models/order/order.model';
 
 export function omitCustomGuestAttributes(attributes: Attribute[]) {
   return attributes?.filter(
@@ -28,7 +27,11 @@ export class OrderMapper extends IshOrderMapper {
       return OrderMapper.fromGuestData(payload);
     }
 
-    return IshOrderMapper.fromData(payload);
+    const ishOrder = IshOrderMapper.fromData(payload);
+
+    const { camfilOrderId, readToken } = payload;
+
+    return { ...ishOrder, camfilOrderUUID: camfilOrderId, readToken };
   }
 
   static fromListData(payload: OrderData): Order[] {

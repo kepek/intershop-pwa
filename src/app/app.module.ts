@@ -4,7 +4,7 @@ import { BrowserModule, TransferState } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormlyModule } from '@ngx-formly/core';
 import { FormlyMaterialModule } from '@ngx-formly/material';
-import { CamfilPwaExportsModule } from 'camfil-pwa';
+import { CamfilPwaModule } from 'camfil-pwa';
 
 import { COOKIE_CONSENT_VERSION } from 'ish-core/configurations/state-keys';
 import { CoreModule } from 'ish-core/core.module';
@@ -12,7 +12,6 @@ import { CoreModule } from 'ish-core/core.module';
 import { environment } from '../environments/environment';
 
 import { AppComponent } from './app.component';
-import { CamAccountRoutingModule } from './extensions/cam-account/pages/cam-account-routing.module';
 import { CamAhuRoutingModule } from './extensions/cam-ahu/pages/cam-ahu-routing.module';
 import { CamConfigurationRoutingModule } from './extensions/cam-configuration/pages/cam-configuration-routing.module';
 import { CamDemoRoutingModule } from './extensions/cam-demo/pages/cam-demo-routing.module';
@@ -31,7 +30,7 @@ import { ShellModule } from './shell/shell.module';
     BrowserAnimationsModule,
     CoreModule,
     ShellModule,
-    CamAccountRoutingModule,
+    CamfilPwaModule,
     AppRoutingModule,
     QuickorderRoutingModule,
     TactonRoutingModule,
@@ -44,7 +43,6 @@ import { ShellModule } from './shell/shell.module';
     ReactiveFormsModule,
     FormlyModule.forRoot(),
     FormlyMaterialModule,
-    CamfilPwaExportsModule,
   ],
   bootstrap: [AppComponent],
 })

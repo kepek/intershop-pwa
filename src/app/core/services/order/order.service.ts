@@ -1,15 +1,12 @@
-import { APP_BASE_HREF, DOCUMENT } from '@angular/common';
 import { HttpHeaders, HttpParams } from '@angular/common/http';
-import { Inject, Injectable, Optional } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Store, select } from '@ngrx/store';
-import { REQUEST } from '@nguniversal/express-engine/tokens';
 import { OrderMapper } from 'camfil-pwa/models/order/order.mapper';
-import { Request } from 'express';
+import { Order } from 'camfil-pwa/models/order/order.model';
 import { EMPTY, Observable, of, throwError } from 'rxjs';
 import { catchError, concatMap, map, mapTo, withLatestFrom } from 'rxjs/operators';
 
 import { OrderData } from 'ish-core/models/order/order.interface';
-import { Order } from 'ish-core/models/order/order.model';
 import { ApiService } from 'ish-core/services/api/api.service';
 import { getCurrentLocale } from 'ish-core/store/core/configuration';
 
@@ -29,20 +26,14 @@ type OrderIncludeType =
  */
 @Injectable({ providedIn: 'root' })
 export class OrderService {
-  constructor(
-    private apiService: ApiService,
-    private store: Store,
-    @Inject(DOCUMENT) private doc: Document,
-    @Optional() @Inject(REQUEST) private request: Request,
-    @Inject(APP_BASE_HREF) private baseHref: string
-  ) {}
+  constructor(protected apiService: ApiService, protected store: Store) {}
 
-  private orderHeaders = new HttpHeaders({
+  protected orderHeaders = new HttpHeaders({
     'content-type': 'application/json',
     Accept: 'application/vnd.intershop.order.v1+json',
   });
 
-  private allOrderIncludes: OrderIncludeType[] = [
+  protected allOrderIncludes: OrderIncludeType[] = [
     'invoiceToAddress',
     'commonShipToAddress',
     'commonShippingMethod',
@@ -56,20 +47,16 @@ export class OrderService {
 
   /**
    * Creates an order based on the given basket. If a redirect is necessary for payment, the return URLs will be sent after order creation in case they are required.
-   * @param basketId
+   *
+   * @param basketId                    The (current) basket.
    * @param termsAndConditionsAccepted  indicates whether the user has accepted terms and conditions
-   * @param externalOrderReference
    * @returns                           The order.
    */
-  createOrder(
-    basketId: string,
-    termsAndConditionsAccepted: boolean = false,
-    externalOrderReference?: string
-  ): Observable<Order> {
+  createOrder(basketId: string, termsAndConditionsAccepted: boolean = false): Observable<Order> {
     const params = new HttpParams().set('include', this.allOrderIncludes.join());
 
     if (!basketId) {
-      return throwError('createOrder() called without basketId');
+      return throwError(() => new Error('createOrder() called without basketId'));
     }
 
     return this.apiService
@@ -78,7 +65,6 @@ export class OrderService {
         {
           basket: basketId,
           termsAndConditionsAccepted,
-          externalOrderReference,
         },
         {
           headers: this.orderHeaders,
@@ -86,11 +72,9 @@ export class OrderService {
         }
       )
       .pipe(
-        map(payload => OrderMapper.fromData({ data: payload?.data?.[0] })),
+        map(OrderMapper.fromData),
         withLatestFrom(this.store.pipe(select(getCurrentLocale))),
-        concatMap(([order, currentLocale]) =>
-          this.sendRedirectUrlsIfRequired(order, currentLocale && currentLocale.lang)
-        )
+        concatMap(([order, currentLocale]) => this.sendRedirectUrlsIfRequired(order, currentLocale?.lang))
       );
   }
 
@@ -100,8 +84,8 @@ export class OrderService {
    * @param lang            The language code of the current locale, e.g. en_US
    * @returns               The (updated) order.
    */
-  private sendRedirectUrlsIfRequired(order: Order, lang: string): Observable<Order> {
-    const loc = this.baseURL(true);
+  protected sendRedirectUrlsIfRequired(order: Order, lang: string): Observable<Order> {
+    const loc = location.origin;
     if (
       order.orderCreation &&
       order.orderCreation.status === 'STOPPED' &&
@@ -236,17 +220,5 @@ export class OrderService {
         }
       )
       .pipe(mapTo(orderId));
-  }
-
-  private baseURL(includeBaseHref = true) {
-    let url: string;
-
-    if (this.request) {
-      url = `${this.request.protocol}://${this.request.get('host')}${includeBaseHref ? this.baseHref : ''}`;
-    } else {
-      url = includeBaseHref ? this.doc.baseURI : this.doc.baseURI.replace(new RegExp(`${this.baseHref}$`), '');
-    }
-
-    return new URL(url)?.toString()?.replace(/\/$/, '');
   }
 }

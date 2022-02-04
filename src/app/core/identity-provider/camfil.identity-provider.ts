@@ -55,7 +55,7 @@ export class CAMFILIdentityProvider extends ICMIdentityProvider implements Ident
     }
 
     if (hasErpEmployeeId) {
-      window.localStorage.setItem(CamfilIdentityParams.ERPEmployeeID, erpEmployeeId);
+      localStorage?.setItem(CamfilIdentityParams.ERPEmployeeID, erpEmployeeId);
     }
 
     return race(
@@ -96,7 +96,7 @@ export class CAMFILIdentityProvider extends ICMIdentityProvider implements Ident
   }
 
   triggerLogout(): Observable<UrlTree> {
-    window.localStorage.removeItem(CamfilIdentityParams.ERPEmployeeID);
+    localStorage?.removeItem(CamfilIdentityParams.ERPEmployeeID);
 
     return super.triggerLogout();
   }

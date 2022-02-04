@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-
-import { Order } from 'ish-core/models/order/order.model';
+import { Order } from 'camfil-pwa/models/order/order.model';
 
 @Component({
   selector: 'ish-checkout-receipt-order',

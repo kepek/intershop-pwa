@@ -1,3 +1,4 @@
+import { Order } from 'camfil-pwa/models/order/order.model';
 import { isArray, isObject, mapValues } from 'lodash-es';
 
 import { Address } from 'ish-core/models/address/address.model';
@@ -5,7 +6,6 @@ import { BasketRebate } from 'ish-core/models/basket-rebate/basket-rebate.model'
 import { BasketTotal } from 'ish-core/models/basket-total/basket-total.model';
 import { BasketView } from 'ish-core/models/basket/basket.model';
 import { LineItemView } from 'ish-core/models/line-item/line-item.model';
-import { Order } from 'ish-core/models/order/order.model';
 import { PaymentMethod } from 'ish-core/models/payment-method/payment-method.model';
 import { Payment } from 'ish-core/models/payment/payment.model';
 import { PriceItem } from 'ish-core/models/price-item/price-item.model';

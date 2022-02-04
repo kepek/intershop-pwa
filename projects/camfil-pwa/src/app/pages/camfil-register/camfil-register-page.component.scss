@@ -1,0 +1,15 @@
+@import '../../../../../../src/styles/themes/camfil/variables';
+
+.registration__wrapper {
+  display: flex;
+  width: 100%;
+  max-width: 1280px;
+
+  @media (max-width: $screen-md-max) {
+    flex-direction: column;
+  }
+
+  &--section {
+    padding: 40px;
+  }
+}
