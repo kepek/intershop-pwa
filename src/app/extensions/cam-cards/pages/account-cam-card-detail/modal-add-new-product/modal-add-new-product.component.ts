@@ -196,9 +196,6 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy, AfterView
       this.shoppingFacade.productAdded$.pipe(whenTruthy(), take(1)).subscribe(() => {
         this.hide();
       });
-      // } else if (this.addToRequisition) {
-      //   console.log('Add to requisiiton');
-      // }
     } else {
       this.currentCamCard$?.pipe(takeUntil(this.destroy$)).subscribe(camCard => {
         this.rootCamCardId = camCard?.id || undefined;
@@ -211,6 +208,12 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy, AfterView
   }
 
   submitForm() {
+    /* TODO: Replace with event emitters and submit in parent components
+        To be replaced in:
+        1. camfil-checkout-bucket
+        2. account-cam-card-detail-toolbar
+        3. camfil-requisition-detail-toolbar
+    */
     if (this.productForm.valid) {
       const sku = this.productForm?.get('sku')?.value ? String(this.productForm?.get('sku').value) : undefined;
       const quantity = this.productForm?.get('quantity')?.value ? Number(this.productForm?.get('quantity')?.value) : 1;

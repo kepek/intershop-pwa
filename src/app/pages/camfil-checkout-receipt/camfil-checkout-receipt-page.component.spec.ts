@@ -1,10 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CheckoutFacade as CamfilCheckoutFacade } from 'camfil-pwa/facades/checkout.facade';
-import { MockComponent } from 'ng-mocks';
-import { LazyCheckoutReceiptRequisitionComponent } from 'requisition-management';
+import { MockComponent, MockDirective } from 'ng-mocks';
 import { of } from 'rxjs';
+import { LazyCamfilCheckoutReceiptRequisitionComponent } from 'src/app/extensions/cam-requisition-management/exports/lazy-camfil-checkout-receipt-requisition/lazy-camfil-checkout-receipt-requisition.component';
 import { instance, mock, when } from 'ts-mockito';
 
+import { AuthorizationToggleDirective } from 'ish-core/directives/authorization-toggle.directive';
+import { NotAuthorizationToggleDirective } from 'ish-core/directives/not-authorization-toggle.directive';
 import { Order } from 'ish-core/models/order/order.model';
 import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
 
@@ -60,7 +62,9 @@ describe('Camfil Checkout Receipt Page Component', () => {
         MockComponent(CamfilCheckoutReceiptComponent),
         MockComponent(CamfilCheckoutReceiptOrderComponent),
         MockComponent(CamfilLoadingComponent),
-        MockComponent(LazyCheckoutReceiptRequisitionComponent),
+        MockComponent(LazyCamfilCheckoutReceiptRequisitionComponent),
+        MockDirective(AuthorizationToggleDirective),
+        MockDirective(NotAuthorizationToggleDirective),
       ],
       providers: [{ provide: CamfilCheckoutFacade, useFactory: () => instance(camfilCheckoutFacade) }],
     }).compileComponents();

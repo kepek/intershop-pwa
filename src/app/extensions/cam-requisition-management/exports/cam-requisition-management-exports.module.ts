@@ -4,6 +4,7 @@ import { FeatureToggleModule } from 'ish-core/feature-toggle.module';
 import { LAZY_FEATURE_MODULE } from 'ish-core/utils/module-loader/module-loader.service';
 
 import { LazyCamRequisitionCheckoutButtonComponent } from './lazy-cam-requisition-checkout-button/lazy-cam-requisition-checkout-button.component';
+import { LazyCamfilCheckoutReceiptRequisitionComponent } from './lazy-camfil-checkout-receipt-requisition/lazy-camfil-checkout-receipt-requisition.component';
 
 @NgModule({
   imports: [FeatureToggleModule],
@@ -17,7 +18,7 @@ import { LazyCamRequisitionCheckoutButtonComponent } from './lazy-cam-requisitio
       multi: true,
     },
   ],
-  declarations: [LazyCamRequisitionCheckoutButtonComponent],
-  exports: [LazyCamRequisitionCheckoutButtonComponent],
+  declarations: [LazyCamRequisitionCheckoutButtonComponent, LazyCamfilCheckoutReceiptRequisitionComponent],
+  exports: [LazyCamRequisitionCheckoutButtonComponent, LazyCamfilCheckoutReceiptRequisitionComponent],
 })
 export class CamRequisitionManagementExportsModule {}
