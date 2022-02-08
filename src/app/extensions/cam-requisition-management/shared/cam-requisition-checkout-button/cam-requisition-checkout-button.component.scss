@@ -1,0 +1,14 @@
+:host {
+  .submit-button {
+    width: 100%;
+    height: 40px;
+    text-align: center;
+  }
+  &::ng-deep {
+    .submit-button {
+      width: 100%;
+      height: 40px;
+      text-align: center;
+    }
+  }
+}

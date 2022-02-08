@@ -1,0 +1,91 @@
+<mat-card class="mb-3 clearfix">
+  <mat-card-content>
+    <div *ngIf="requisition" class="row justify-content-center">
+      <div class="offset-2"></div>
+      <div class="col-md-8">
+        <div class="row">
+          <div class="col-md-6 col-border">
+            <dl class="row dl-horizontal dl-separator">
+              <dt class="col-6">{{ 'approval.detailspage.buyer.label' | translate }}</dt>
+              <dd class="col-6 text-right text-break font-weight-bold">
+                {{ requisition.user?.firstName }} {{ requisition.user?.lastName }} {{ requisition.customerNo }}
+              </dd>
+              <dt class="col-6">{{ 'approval.detailspage.order_reference_id.label' | translate }}</dt>
+              <dd class="col-6 text-right text-break font-weight-bold">
+                {{ requisition.orderNo || '---' }}
+              </dd>
+              <dt class="col-6">{{ 'camfil.account.requisitions.approvals.approval.reference' | translate }}</dt>
+              <dd class="col-6 text-right text-break font-weight-bold">
+                {{ '---' }}
+              </dd>
+              <dt class="col-6">{{ 'approval.detailspage.approval_status.label' | translate }}</dt>
+              <dd class="col-6 text-right text-break font-weight-bold">
+                {{ requisition.approval.status }}
+              </dd>
+              <dt class="col-6">{{ 'approval.detailspage.order_date.label' | translate }}</dt>
+              <dd class="col-6 text-right text-break font-weight-bold">
+                {{ requisition.creationDate | ishDate }}
+              </dd>
+              <dt class="col-6">{{ 'camfil.account.orderdetails.order_channel.label' | translate }}</dt>
+              <dd class="col-6 text-right text-break font-weight-bold">
+                {{ '---' }}
+              </dd>
+            </dl>
+          </div>
+          <div class="col-md-5 offset-md-1 col-sm-6">
+            <dl class="row dl-horizontal dl-separator">
+              <dt class="col-6">{{ 'camfil.account.requisitions.approvals.requestedby' | translate }}</dt>
+              <dd class="col-6 text-right text-break font-weight-bold">
+                {{ requisition.user?.firstName }} {{ requisition.user?.lastName }}
+              </dd>
+              <ng-container *ngIf="requisition.approval?.statusCode === 'APPROVED'">
+                <dt class="col-6">{{ 'camfil.account.requisitions.approvals.approvedby' | translate }}</dt>
+                <dd class="col-6 text-right text-break font-weight-bold">
+                  {{ requisition.approval?.approver?.firstName }} {{ requisition.approval?.approver?.lastName }}
+                </dd>
+              </ng-container>
+              <ng-container *ngIf="requisition.approval?.statusCode === 'REJECTED'">
+                <dt class="col-6">{{ 'camfil.account.requisitions.approvals.rejectedby' | translate }}</dt>
+                <dd class="col-6 text-right text-break font-weight-bold">
+                  {{ requisition.approval?.approver?.firstName }} {{ requisition.approval?.approver?.lastName }}
+                </dd>
+              </ng-container>
+              <dt class="col-6">{{ 'camfil.modal.createOrder.order-form.input.phone_number' | translate }}</dt>
+              <dd class="col-6 text-right text-break font-weight-bold">
+                {{ '---' }}
+              </dd>
+              <dt class="col-6">{{ 'camfil.account.orderdetails.delivery_address.label' | translate }}</dt>
+              <dd class="col-6 text-right text-break font-weight-bold">
+                <camfil-address [address]="requisition.commonShipToAddress"></camfil-address>
+              </dd>
+              <dd class="col-12 text-right text-break font-weight-bold">
+                <form [formGroup]="customerNoteForm">
+                  <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>{{ 'camfil.cam_card.product.comment.label' | translate }}</mat-label>
+                    <textarea
+                      (blur)="onBlur($event.target)"
+                      [camfilMaxLength]="'CustomerNote'"
+                      class="overflow-hidden"
+                      formControlName="customerNote"
+                      matInput
+                      name="customerNote"
+                      type="text"
+                    ></textarea>
+                  </mat-form-field>
+                </form>
+              </dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-2 text-right">
+        <a (click)="openEditApprovalDetailsModal(editModal)">
+          <mat-icon class="edit-icon" svgIcon="edit"></mat-icon>
+          {{ 'camfil.modal.edit_order.button.header' | translate }}
+        </a>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>
+
+<camfil-edit-approval-details-modal #editModal [requisition]="requisition"></camfil-edit-approval-details-modal>

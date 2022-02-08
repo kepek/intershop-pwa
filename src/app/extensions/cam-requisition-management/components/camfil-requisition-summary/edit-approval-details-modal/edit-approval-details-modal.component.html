@@ -1,0 +1,26 @@
+<ng-template #modal>
+  <div class="camfil-approval-edit-modal">
+    <button
+      type="button"
+      class="close"
+      [title]="'dialog.close.text' | translate"
+      [attr.aria-label]="'dialog.close.text' | translate"
+      (click)="hide()"
+    >
+      <mat-icon svgIcon="inactive"></mat-icon>
+    </button>
+
+    <div class="border-bottom">
+      <div class="camfil-approval-edit-modal__title">
+        <mat-icon
+          [svgIcon]="'edit'"
+          class="edit-icon camfil-approval-edit-modal__title--svg-icon size-24 color-dark"
+        ></mat-icon>
+        <h2 mat-dialog-title class="camfil-approval-edit-modal__title--text">Edit approval details</h2>
+      </div>
+    </div>
+    <ng-container>
+      <camfil-order-form [orderToEdit]="approvalDetails" [edit]="false"></camfil-order-form>
+    </ng-container>
+  </div>
+</ng-template>

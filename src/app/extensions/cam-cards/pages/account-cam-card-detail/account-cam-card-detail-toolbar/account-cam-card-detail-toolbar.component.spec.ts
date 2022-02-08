@@ -2,6 +2,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideMockStore } from '@ngrx/store/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { MockComponent } from 'ng-mocks';
+import { CamRequisitionManagementFacade } from 'src/app/extensions/cam-requisition-management/facades/cam-requisition-management.facade';
+import { instance, mock } from 'ts-mockito';
 
 import { CamfilMaxLengthAttributeCreateDirective } from 'ish-core/directives/camfil-max-length-attribute-create.directive';
 import { CamfilErrorComponent } from 'ish-shared/components/common/camfil-error/camfil-error.component';
@@ -21,8 +23,10 @@ describe('Account Cam Card Detail Toolbar Component', () => {
   let component: AccountCamCardDetailToolbarComponent;
   let fixture: ComponentFixture<AccountCamCardDetailToolbarComponent>;
   let element: HTMLElement;
+  let camRequisitionManagementFacade: CamRequisitionManagementFacade;
 
   beforeEach(async () => {
+    camRequisitionManagementFacade = mock(CamRequisitionManagementFacade);
     await TestBed.configureTestingModule({
       declarations: [
         AccountCamCardDetailToolbarComponent,
@@ -38,7 +42,10 @@ describe('Account Cam Card Detail Toolbar Component', () => {
         ModalAddNewSectionComponent,
       ],
       imports: [TranslateModule.forRoot()],
-      providers: [provideMockStore()],
+      providers: [
+        { provide: CamRequisitionManagementFacade, useFactory: () => instance(camRequisitionManagementFacade) },
+        provideMockStore(),
+      ],
     }).compileComponents();
   });
 

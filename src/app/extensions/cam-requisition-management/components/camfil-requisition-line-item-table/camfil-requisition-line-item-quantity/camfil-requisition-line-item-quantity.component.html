@@ -1,0 +1,11 @@
+<form class="qty-form_container" [formGroup]="productItemForm">
+  <camfil-product-quantity
+    [allowZeroQuantity]="false"
+    [isInLineItem]="true"
+    [lineItemId]="lineItem?.id | slugify: 'line-item-box-label'"
+    [parentForm]="productItemForm"
+    [product]="product"
+    [quantityLabel]="''"
+    controlName="quantity"
+  ></camfil-product-quantity>
+</form>

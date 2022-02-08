@@ -1,0 +1,20 @@
+@import '~src/styles/themes/camfil/colors.scss';
+@import '~src/styles/themes/camfil/mixins.scss';
+@import '~src/styles/themes/camfil/variables.scss';
+
+:host {
+  .requisition-detail-badge__header {
+    margin-left: $space-box;
+    font-weight: 500;
+  }
+  .cost-summary {
+    background: $camfil-color-light;
+    @media (max-width: $screen-sm-max) {
+      padding: 0;
+    }
+  }
+
+  .horizontal-divider {
+    position: static;
+  }
+}

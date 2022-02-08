@@ -12,16 +12,16 @@
     [buckets]="data.buckets"
     [basketError]="basketError$ | async"
   >
-    <ng-container *ngIf="data?.basket?.approval?.approvalRequired; else orderReceiptHeader">
-      <ish-lazy-checkout-receipt-requisition [basket]="data.basket"></ish-lazy-checkout-receipt-requisition>
+    <ng-container *ishIsAuthorizedTo="'APP_B2B_MAKE_REQUISITION'">
+      <camfil-lazy-checkout-receipt-requisition [basket]="data.basket"></camfil-lazy-checkout-receipt-requisition>
       <mat-divider></mat-divider>
       <br />
     </ng-container>
-    <ng-template #orderReceiptHeader>
+    <ng-container *ishIsNotAuthorizedTo="'APP_B2B_MAKE_REQUISITION'">
       <camfil-checkout-receipt-order [order]="data.order"></camfil-checkout-receipt-order>
       <mat-divider></mat-divider>
       <br />
-    </ng-template>
+    </ng-container>
   </camfil-checkout-receipt>
 
   <camfil-loading *ngIf="loading$ | async" [standalone]="true"></camfil-loading>

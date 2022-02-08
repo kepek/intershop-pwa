@@ -1,0 +1,3953 @@
+{
+  "data": [
+    {
+      "basket": "klUKCgoEuMMAAAF0m9NY9Njk",
+      "buckets": ["0"],
+      "commonShipToAddress": "pqYKCgoEKAAAAAF0n4pY9N.K",
+      "commonShippingMethod": "STD_GROUND",
+      "creationDate": "2020-09-30T15:03:52Z",
+      "customer": "Patricia",
+      "discounts": {},
+      "documentNumber": "00000058",
+      "id": "5ZMKCgoEKH4AAAF0nYpY9N.K",
+      "invoiceToAddress": "pqYKCgoEKAAAAAF0n4pY9N.K",
+      "lineItems": ["aWEKCgoE0lYAAAF0o4pY9N.K", "r4AKCgoEEn0AAAF0oopY9N.K"],
+      "orderCreation": { "status": "COMPLETED" },
+      "payments": ["qYEKCgoE0lcAAAF0o4pY9N.K"],
+      "purchaseCurrency": "USD",
+      "status": "New",
+      "statusCode": "NEW",
+      "termsAndConditionsAccepted": true,
+      "totalProductQuantity": 2,
+      "totals": {
+        "grandTotal": {
+          "gross": { "currency": "USD", "value": 5118.22 },
+          "net": { "currency": "USD", "value": 4301.02 },
+          "tax": { "currency": "USD", "value": 817.2 }
+        },
+        "paymentCostsTotal": {
+          "gross": { "currency": "USD", "value": 0.0 },
+          "net": { "currency": "USD", "value": 0.0 },
+          "tax": { "currency": "USD", "value": 0.0 }
+        },
+        "undiscountedItemTotal": {
+          "gross": { "currency": "USD", "value": 5114.62 },
+          "net": { "currency": "USD", "value": 4298.0 }
+        },
+        "undiscountedShippingTotal": {
+          "gross": { "currency": "USD", "value": 3.6 },
+          "net": { "currency": "USD", "value": 3.02 },
+          "tax": { "currency": "USD", "value": 0.58 }
+        },
+        "itemTotal": {
+          "gross": { "currency": "USD", "value": 5114.62 },
+          "net": { "currency": "USD", "value": 4298.0 }
+        },
+        "salesTaxTotalsByTaxRate": [
+          {
+            "calculatedTax": { "currency": "USD", "value": 816.62 },
+            "effectiveTaxRate": 19.0,
+            "taxableAmount": { "currency": "USD", "value": 816.62 }
+          }
+        ],
+        "shippingTaxTotalsByTaxRate": [
+          {
+            "calculatedTax": { "currency": "USD", "value": 0.58 },
+            "effectiveTaxRate": 19.0,
+            "taxableAmount": { "currency": "USD", "value": 3.02 }
+          }
+        ],
+        "shippingTotal": {
+          "gross": { "currency": "USD", "value": 3.6 },
+          "net": { "currency": "USD", "value": 3.02 }
+        },
+        "taxTotalsByTaxRate": [
+          {
+            "calculatedTax": { "currency": "USD", "value": 817.2 },
+            "effectiveTaxRate": 19.0,
+            "taxableAmount": { "currency": "USD", "value": 4301.02 }
+          }
+        ]
+      },
+      "user": "patricia@test.intershop.de"
+    },
+    {
+      "basket": "hlEKCgoE01YAAAF00xNY9M_H",
+      "buckets": ["0"],
+      "commonShipToAddress": "NAwKCgoExFUAAAF0N2dY9M_Q",
+      "commonShippingMethod": "STD_GROUND",
+      "creationDate": "2020-09-27T13:46:15Z",
+      "customer": "Patricia",
+      "discounts": {},
+      "documentNumber": "00000055",
+      "id": "APYKCgoECloAAAF0NGdY9M_Q",
+      "invoiceToAddress": "NAwKCgoExFUAAAF0N2dY9M_Q",
+      "lineItems": [".lAKCgoEvr8AAAF0OWdY9M_Q"],
+      "orderCreation": { "status": "COMPLETED" },
+      "payments": ["kKsKCgoEKLQAAAF0OmdY9M_Q"],
+      "purchaseCurrency": "USD",
+      "status": "New",
+      "statusCode": "NEW",
+      "termsAndConditionsAccepted": true,
+      "totalProductQuantity": 1,
+      "totals": {
+        "grandTotal": {
+          "gross": { "currency": "USD", "value": 211.84 },
+          "net": { "currency": "USD", "value": 178.02 },
+          "tax": { "currency": "USD", "value": 33.82 }
+        },
+        "paymentCostsTotal": {
+          "gross": { "currency": "USD", "value": 0.0 },
+          "net": { "currency": "USD", "value": 0.0 },
+          "tax": { "currency": "USD", "value": 0.0 }
+        },
+        "undiscountedItemTotal": {
+          "gross": { "currency": "USD", "value": 208.25 },
+          "net": { "currency": "USD", "value": 175.0 }
+        },
+        "undiscountedShippingTotal": {
+          "gross": { "currency": "USD", "value": 3.59 },
+          "net": { "currency": "USD", "value": 3.02 },
+          "tax": { "currency": "USD", "value": 0.57 }
+        },
+        "itemTotal": {
+          "gross": { "currency": "USD", "value": 208.25 },
+          "net": { "currency": "USD", "value": 175.0 }
+        },
+        "salesTaxTotalsByTaxRate": [
+          {
+            "calculatedTax": { "currency": "USD", "value": 33.25 },
+            "effectiveTaxRate": 19.0,
+            "taxableAmount": { "currency": "USD", "value": 33.25 }
+          }
+        ],
+        "shippingTaxTotalsByTaxRate": [
+          {
+            "calculatedTax": { "currency": "USD", "value": 0.57 },
+            "effectiveTaxRate": 19.0,
+            "taxableAmount": { "currency": "USD", "value": 3.02 }
+          }
+        ],
+        "shippingTotal": {
+          "gross": { "currency": "USD", "value": 3.59 },
+          "net": { "currency": "USD", "value": 3.02 }
+        },
+        "taxTotalsByTaxRate": [
+          {
+            "calculatedTax": { "currency": "USD", "value": 33.82 },
+            "effectiveTaxRate": 19.0,
+            "taxableAmount": { "currency": "USD", "value": 178.02 }
+          }
+        ]
+      },
+      "user": "patricia@test.intershop.de"
+    },
+    {
+      "basket": "jMEKCgoE.YoAAAF0Y8FY9KBR",
+      "buckets": ["0"],
+      "commonShipToAddress": "et8KCgoESygAAAF0r1lY9M_G",
+      "commonShippingMethod": "STD_GROUND",
+      "creationDate": "2020-09-27T13:35:16Z",
+      "customer": "Patricia",
+      "discounts": {},
+      "documentNumber": "00000054",
+      "id": "8_4KCgoEc5IAAAF0qFlY9M_G",
+      "invoiceToAddress": "vn8KCgoEDdsAAAF0rVlY9M_G",
+      "lineItems": [
+        "rFkKCgoEcBgAAAF0vllY9M_G",
+        "fHMKCgoEb5sAAAF0sFlY9M_G",
+        ".b0KCgoEcBcAAAF0vllY9M_G",
+        "pfsKCgoEWRkAAAF0vVlY9M_G"
+      ],
+      "orderCreation": { "status": "COMPLETED" },
+      "payments": ["vkcKCgoENe4AAAF0v1lY9M_G"],
+      "purchaseCurrency": "USD",
+      "status": "Received",
+      "statusCode": "NEW",
+      "termsAndConditionsAccepted": true,
+      "totalProductQuantity": 8,
+      "totals": {
+        "grandTotal": {
+          "gross": { "currency": "USD", "value": 1525.33 },
+          "net": { "currency": "USD", "value": 1284.29 },
+          "tax": { "currency": "USD", "value": 241.04 }
+        },
+        "paymentCostsTotal": {
+          "gross": { "currency": "USD", "value": 0.0 },
+          "net": { "currency": "USD", "value": 0.0 },
+          "tax": { "currency": "USD", "value": 0.0 }
+        },
+        "undiscountedItemTotal": {
+          "gross": { "currency": "USD", "value": 1538.79 },
+          "net": { "currency": "USD", "value": 1295.71 }
+        },
+        "undiscountedShippingTotal": {
+          "gross": { "currency": "USD", "value": 9.94 },
+          "net": { "currency": "USD", "value": 8.37 },
+          "tax": { "currency": "USD", "value": 1.57 }
+        },
+        "discountTotal": {
+          "gross": { "currency": "USD", "value": 23.4 },
+          "net": { "currency": "USD", "value": 19.79 }
+        },
+        "itemTotal": {
+          "gross": { "currency": "USD", "value": 1515.39 },
+          "net": { "currency": "USD", "value": 1275.92 }
+        },
+        "itemValueDiscountsTotal": {
+          "gross": { "currency": "USD", "value": 23.4 },
+          "net": { "currency": "USD", "value": 19.79 }
+        },
+        "salesTaxTotalsByTaxRate": [
+          {
+            "calculatedTax": { "currency": "USD", "value": 1.72 },
+            "effectiveTaxRate": 7.0,
+            "taxableAmount": { "currency": "USD", "value": 1.72 }
+          },
+          {
+            "calculatedTax": { "currency": "USD", "value": 237.75 },
+            "effectiveTaxRate": 19.0,
+            "taxableAmount": { "currency": "USD", "value": 237.75 }
+          }
+        ],
+        "shippingTaxTotalsByTaxRate": [
+          {
+            "calculatedTax": { "currency": "USD", "value": 0.01 },
+            "effectiveTaxRate": 7.0,
+            "taxableAmount": { "currency": "USD", "value": 0.17 }
+          },
+          {
+            "calculatedTax": { "currency": "USD", "value": 1.56 },
+            "effectiveTaxRate": 19.0,
+            "taxableAmount": { "currency": "USD", "value": 8.2 }
+          }
+        ],
+        "shippingTotal": {
+          "gross": { "currency": "USD", "value": 9.94 },
+          "net": { "currency": "USD", "value": 8.37 }
+        },
+        "taxTotalsByTaxRate": [
+          {
+            "calculatedTax": { "currency": "USD", "value": 1.73 },
+            "effectiveTaxRate": 7.0,
+            "taxableAmount": { "currency": "USD", "value": 24.81 }
+          },
+          {
+            "calculatedTax": { "currency": "USD", "value": 239.31 },
+            "effectiveTaxRate": 19.0,
+            "taxableAmount": { "currency": "USD", "value": 1259.48 }
+          }
+        ],
+        "valueDiscountsTotal": {
+          "gross": { "currency": "USD", "value": 23.4 },
+          "net": { "currency": "USD", "value": 19.79 }
+        }
+      },
+      "user": "patricia@test.intershop.de"
+    },
+    {
+      "basket": "LmwKCgoE9ToAAAF0hMRY9KBC",
+      "buckets": ["0"],
+      "commonShipToAddress": "pfwKCgoE3JsAAAF0LvpY9KBC",
+      "commonShippingMethod": "STD_GROUND",
+      "creationDate": "2020-09-18T08:09:38Z",
+      "customer": "Patricia",
+      "discounts": {},
+      "documentNumber": "00000046",
+      "id": "c7wKCgoEpoUAAAF0LPpY9KBC",
+      "invoiceToAddress": "pfwKCgoE3JsAAAF0LvpY9KBC",
+      "lineItems": ["MtkKCgoERIUAAAF0MPpY9KBC"],
+      "orderCreation": { "status": "COMPLETED" },
+      "payments": ["t9QKCgoEa9sAAAF0MfpY9KBC"],
+      "purchaseCurrency": "USD",
+      "status": "Received",
+      "statusCode": "NEW",
+      "termsAndConditionsAccepted": true,
+      "totalProductQuantity": 1,
+      "totals": {
+        "grandTotal": {
+          "gross": { "currency": "USD", "value": 211.84 },
+          "net": { "currency": "USD", "value": 178.02 },
+          "tax": { "currency": "USD", "value": 33.82 }
+        },
+        "paymentCostsTotal": {
+          "gross": { "currency": "USD", "value": 0.0 },
+          "net": { "currency": "USD", "value": 0.0 },
+          "tax": { "currency": "USD", "value": 0.0 }
+        },
+        "undiscountedItemTotal": {
+          "gross": { "currency": "USD", "value": 208.25 },
+          "net": { "currency": "USD", "value": 175.0 }
+        },
+        "undiscountedShippingTotal": {
+          "gross": { "currency": "USD", "value": 3.59 },
+          "net": { "currency": "USD", "value": 3.02 },
+          "tax": { "currency": "USD", "value": 0.57 }
+        },
+        "itemTotal": {
+          "gross": { "currency": "USD", "value": 208.25 },
+          "net": { "currency": "USD", "value": 175.0 }
+        },
+        "salesTaxTotalsByTaxRate": [
+          {
+            "calculatedTax": { "currency": "USD", "value": 33.25 },
+            "effectiveTaxRate": 19.0,
+            "taxableAmount": { "currency": "USD", "value": 33.25 }
+          }
+        ],
+        "shippingTaxTotalsByTaxRate": [
+          {
+            "calculatedTax": { "currency": "USD", "value": 0.57 },
+            "effectiveTaxRate": 19.0,
+            "taxableAmount": { "currency": "USD", "value": 3.02 }
+          }
+        ],
+        "shippingTotal": {
+          "gross": { "currency": "USD", "value": 3.59 },
+          "net": { "currency": "USD", "value": 3.02 }
+        },
+        "taxTotalsByTaxRate": [
+          {
+            "calculatedTax": { "currency": "USD", "value": 33.82 },
+            "effectiveTaxRate": 19.0,
+            "taxableAmount": { "currency": "USD", "value": 178.02 }
+          }
+        ]
+      },
+      "user": "patricia@test.intershop.de"
+    },
+    {
+      "basket": "LtYKCgoEr1gAAAF0xM1Y9KA7",
+      "buckets": ["0"],
+      "commonShipToAddress": "C1gKCgoESnEAAAF00TNY9KA8",
+      "commonShippingMethod": "STD_GROUND",
+      "creationDate": "2020-09-18T08:02:14Z",
+      "customer": "Patricia",
+      "discounts": {},
+      "documentNumber": "00000045",
+      "id": "FVQKCgoEvvoAAAF0zDNY9KA8",
+      "invoiceToAddress": "S3oKCgoEaZQAAAF0zzNY9KA8",
+      "lineItems": ["zJAKCgoEhEkAAAF00jNY9KA8"],
+      "orderCreation": { "status": "COMPLETED" },
+      "payments": ["m7gKCgoEf18AAAF00zNY9KA8"],
+      "purchaseCurrency": "USD",
+      "status": "New",
+      "statusCode": "NEW",
+      "termsAndConditionsAccepted": true,
+      "totalProductQuantity": 1,
+      "totals": {
+        "grandTotal": {
+          "gross": { "currency": "USD", "value": 211.84 },
+          "net": { "currency": "USD", "value": 178.02 },
+          "tax": { "currency": "USD", "value": 33.82 }
+        },
+        "paymentCostsTotal": {
+          "gross": { "currency": "USD", "value": 0.0 },
+          "net": { "currency": "USD", "value": 0.0 },
+          "tax": { "currency": "USD", "value": 0.0 }
+        },
+        "undiscountedItemTotal": {
+          "gross": { "currency": "USD", "value": 208.25 },
+          "net": { "currency": "USD", "value": 175.0 }
+        },
+        "undiscountedShippingTotal": {
+          "gross": { "currency": "USD", "value": 3.59 },
+          "net": { "currency": "USD", "value": 3.02 },
+          "tax": { "currency": "USD", "value": 0.57 }
+        },
+        "itemTotal": {
+          "gross": { "currency": "USD", "value": 208.25 },
+          "net": { "currency": "USD", "value": 175.0 }
+        },
+        "salesTaxTotalsByTaxRate": [
+          {
+            "calculatedTax": { "currency": "USD", "value": 33.25 },
+            "effectiveTaxRate": 19.0,
+            "taxableAmount": { "currency": "USD", "value": 33.25 }
+          }
+        ],
+        "shippingTaxTotalsByTaxRate": [
+          {
+            "calculatedTax": { "currency": "USD", "value": 0.57 },
+            "effectiveTaxRate": 19.0,
+            "taxableAmount": { "currency": "USD", "value": 3.02 }
+          }
+        ],
+        "shippingTotal": {
+          "gross": { "currency": "USD", "value": 3.59 },
+          "net": { "currency": "USD", "value": 3.02 }
+        },
+        "taxTotalsByTaxRate": [
+          {
+            "calculatedTax": { "currency": "USD", "value": 33.82 },
+            "effectiveTaxRate": 19.0,
+            "taxableAmount": { "currency": "USD", "value": 178.02 }
+          }
+        ]
+      },
+      "user": "patricia@test.intershop.de"
+    },
+    {
+      "attributes": [{ "name": "BasketStep", "type": "Integer", "value": 4 }],
+      "basket": "o.EKCgoEBtIAAAF0CctY9JcA",
+      "buckets": ["0"],
+      "commonShipToAddress": "F4kKCgoE2BQAAAF0yshY9Jqs",
+      "commonShippingMethod": "SHIPTOSTORE",
+      "creationDate": "2020-09-17T06:07:28Z",
+      "customer": "Patricia",
+      "discounts": {},
+      "documentNumber": "00000044",
+      "id": ".VsKCgoErmgAAAF0x8hY9Jqs",
+      "invoiceToAddress": "zVQKCgoEJlwAAAF0ychY9Jqs",
+      "lineItems": ["7sYKCgoENIcAAAF0zchY9Jqs", "ePMKCgoENIgAAAF0zchY9Jqs"],
+      "orderCreation": { "status": "COMPLETED" },
+      "payments": ["gCwKCgoEqOMAAAF0z8hY9Jqs"],
+      "purchaseCurrency": "USD",
+      "status": "New",
+      "statusCode": "NEW",
+      "termsAndConditionsAccepted": true,
+      "totalProductQuantity": 3,
+      "totals": {
+        "grandTotal": {
+          "gross": { "currency": "USD", "value": 3390.31 },
+          "net": { "currency": "USD", "value": 2849.0 },
+          "tax": { "currency": "USD", "value": 541.31 }
+        },
+        "paymentCostsTotal": {
+          "gross": { "currency": "USD", "value": 0.0 },
+          "net": { "currency": "USD", "value": 0.0 },
+          "tax": { "currency": "USD", "value": 0.0 }
+        },
+        "undiscountedItemTotal": {
+          "gross": { "currency": "USD", "value": 3390.31 },
+          "net": { "currency": "USD", "value": 2849.0 }
+        },
+        "undiscountedShippingTotal": {
+          "gross": { "currency": "USD", "value": 0.0 },
+          "net": { "currency": "USD", "value": 0.0 },
+          "tax": { "currency": "USD", "value": 0.0 }
+        },
+        "itemTotal": {
+          "gross": { "currency": "USD", "value": 3390.31 },
+          "net": { "currency": "USD", "value": 2849.0 }
+        },
+        "salesTaxTotalsByTaxRate": [
+          {
+            "calculatedTax": { "currency": "USD", "value": 541.31 },
+            "effectiveTaxRate": 19.0,
+            "taxableAmount": { "currency": "USD", "value": 541.31 }
+          }
+        ],
+        "shippingTotal": {
+          "gross": { "currency": "USD", "value": 0.0 },
+          "net": { "currency": "USD", "value": 0.0 }
+        },
+        "taxTotalsByTaxRate": [
+          {
+            "calculatedTax": { "currency": "USD", "value": 541.31 },
+            "effectiveTaxRate": 19.0,
+            "taxableAmount": { "currency": "USD", "value": 2849.0 }
+          }
+        ]
+      },
+      "user": "patricia@test.intershop.de"
+    },
+    {
+      "basket": "h9sKCgoEGfoAAAF0YPBY9Jbh",
+      "buckets": ["0"],
+      "commonShipToAddress": "SScKCgoE59cAAAF0_35Y9Jb8",
+      "commonShippingMethod": "STD_GROUND",
+      "creationDate": "2020-09-16T12:56:04Z",
+      "customer": "Patricia",
+      "discounts": {},
+      "documentNumber": "00000042",
+      "id": "x1EKCgoEnp8AAAF0_H5Y9Jb8",
+      "invoiceToAddress": "SScKCgoE59cAAAF0_35Y9Jb8",
+      "lineItems": ["n6IKCgoExtYAAAF0AX9Y9Jb8", "r8kKCgoExtcAAAF0AX9Y9Jb8"],
+      "orderCreation": { "status": "COMPLETED" },
+      "payments": ["p38KCgoELhkAAAF0An9Y9Jb8"],
+      "purchaseCurrency": "USD",
+      "status": "New",
+      "statusCode": "NEW",
+      "termsAndConditionsAccepted": true,
+      "totalProductQuantity": 2,
+      "totals": {
+        "grandTotal": {
+          "gross": { "currency": "USD", "value": 1757.66 },
+          "net": { "currency": "USD", "value": 1477.02 },
+          "tax": { "currency": "USD", "value": 280.64 }
+        },
+        "paymentCostsTotal": {
+          "gross": { "currency": "USD", "value": 0.0 },
+          "net": { "currency": "USD", "value": 0.0 },
+          "tax": { "currency": "USD", "value": 0.0 }
+        },
+        "undiscountedItemTotal": {
+          "gross": { "currency": "USD", "value": 1754.06 },
+          "net": { "currency": "USD", "value": 1474.0 }
+        },
+        "undiscountedShippingTotal": {
+          "gross": { "currency": "USD", "value": 3.6 },
+          "net": { "currency": "USD", "value": 3.02 },
+          "tax": { "currency": "USD", "value": 0.58 }
+        },
+        "itemTotal": {
+          "gross": { "currency": "USD", "value": 1754.06 },
+          "net": { "currency": "USD", "value": 1474.0 }
+        },
+        "salesTaxTotalsByTaxRate": [
+          {
+            "calculatedTax": { "currency": "USD", "value": 280.06 },
+            "effectiveTaxRate": 19.0,
+            "taxableAmount": { "currency": "USD", "value": 280.06 }
+          }
+        ],
+        "shippingTaxTotalsByTaxRate": [
+          {
+            "calculatedTax": { "currency": "USD", "value": 0.58 },
+            "effectiveTaxRate": 19.0,
+            "taxableAmount": { "currency": "USD", "value": 3.02 }
+          }
+        ],
+        "shippingTotal": {
+          "gross": { "currency": "USD", "value": 3.6 },
+          "net": { "currency": "USD", "value": 3.02 }
+        },
+        "taxTotalsByTaxRate": [
+          {
+            "calculatedTax": { "currency": "USD", "value": 280.64 },
+            "effectiveTaxRate": 19.0,
+            "taxableAmount": { "currency": "USD", "value": 1477.02 }
+          }
+        ]
+      },
+      "user": "patricia@test.intershop.de"
+    },
+    {
+      "basket": "zh8KCgoEiBoAAAF0cERY9JbA",
+      "buckets": ["0"],
+      "commonShipToAddress": "4WIKCgoEy.0AAAF0WjpY9Jbh",
+      "commonShippingMethod": "STD_GROUND",
+      "creationDate": "2020-09-16T12:26:17Z",
+      "customer": "Bernd",
+      "discounts": {},
+      "documentNumber": "00000041",
+      "id": "nXMKCgoEU0kAAAF0VTpY9Jbh",
+      "invoiceToAddress": "Q_UKCgoEmIAAAAF0WDpY9Jbh",
+      "lineItems": ["Ck0KCgoEy.4AAAF0WjpY9Jbh"],
+      "orderCreation": { "status": "COMPLETED" },
+      "payments": ["e04KCgoEDLcAAAF0XDpY9Jbh"],
+      "purchaseCurrency": "USD",
+      "status": "Received",
+      "statusCode": "NEW",
+      "termsAndConditionsAccepted": true,
+      "totalProductQuantity": 2,
+      "totals": {
+        "grandTotal": {
+          "gross": { "currency": "USD", "value": 839.69 },
+          "net": { "currency": "USD", "value": 705.62 },
+          "tax": { "currency": "USD", "value": 134.07 }
+        },
+        "paymentCostsTotal": {
+          "gross": { "currency": "USD", "value": 0.0 },
+          "net": { "currency": "USD", "value": 0.0 },
+          "tax": { "currency": "USD", "value": 0.0 }
+        },
+        "undiscountedItemTotal": {
+          "gross": { "currency": "USD", "value": 880.1 },
+          "net": { "currency": "USD", "value": 739.58 }
+        },
+        "undiscountedShippingTotal": {
+          "gross": { "currency": "USD", "value": 3.59 },
+          "net": { "currency": "USD", "value": 3.02 },
+          "tax": { "currency": "USD", "value": 0.57 }
+        },
+        "discountTotal": {
+          "gross": { "currency": "USD", "value": 44.0 },
+          "net": { "currency": "USD", "value": 36.98 }
+        },
+        "itemTotal": {
+          "gross": { "currency": "USD", "value": 836.1 },
+          "net": { "currency": "USD", "value": 702.6 }
+        },
+        "itemValueDiscountsTotal": {
+          "gross": { "currency": "USD", "value": 44.0 },
+          "net": { "currency": "USD", "value": 36.98 }
+        },
+        "salesTaxTotalsByTaxRate": [
+          {
+            "calculatedTax": { "currency": "USD", "value": 133.5 },
+            "effectiveTaxRate": 19.0,
+            "taxableAmount": { "currency": "USD", "value": 133.5 }
+          }
+        ],
+        "shippingTaxTotalsByTaxRate": [
+          {
+            "calculatedTax": { "currency": "USD", "value": 0.57 },
+            "effectiveTaxRate": 19.0,
+            "taxableAmount": { "currency": "USD", "value": 3.02 }
+          }
+        ],
+        "shippingTotal": {
+          "gross": { "currency": "USD", "value": 3.59 },
+          "net": { "currency": "USD", "value": 3.02 }
+        },
+        "taxTotalsByTaxRate": [
+          {
+            "calculatedTax": { "currency": "USD", "value": 134.07 },
+            "effectiveTaxRate": 19.0,
+            "taxableAmount": { "currency": "USD", "value": 705.62 }
+          }
+        ],
+        "valueDiscountsTotal": {
+          "gross": { "currency": "USD", "value": 44.0 },
+          "net": { "currency": "USD", "value": 36.98 }
+        }
+      },
+      "user": "patricia@test.intershop.de"
+    },
+    {
+      "basket": "GG4KCgoE_pEAAAF0sytY9JDD",
+      "buckets": ["0"],
+      "commonShipToAddress": "A9QKCgoEKYYAAAF0zu9Y9JMZ",
+      "commonShippingMethod": "STD_GROUND",
+      "creationDate": "2020-09-15T18:49:44Z",
+      "customer": "Patricia",
+      "discounts": {},
+      "documentNumber": "00000040",
+      "id": "bn4KCgoE8eoAAAF0y.9Y9JMZ",
+      "invoiceToAddress": "znwKCgoEfEIAAAF0ze9Y9JMZ",
+      "lineItems": ["W8cKCgoENfIAAAF0z.9Y9JMZ"],
+      "orderCreation": { "status": "COMPLETED" },
+      "payments": ["i7QKCgoENi8AAAF00O9Y9JMZ"],
+      "purchaseCurrency": "USD",
+      "status": "New",
+      "statusCode": "NEW",
+      "termsAndConditionsAccepted": true,
+      "totalProductQuantity": 2,
+      "totals": {
+        "grandTotal": {
+          "gross": { "currency": "USD", "value": 839.69 },
+          "net": { "currency": "USD", "value": 705.62 },
+          "tax": { "currency": "USD", "value": 134.07 }
+        },
+        "paymentCostsTotal": {
+          "gross": { "currency": "USD", "value": 0.0 },
+          "net": { "currency": "USD", "value": 0.0 },
+          "tax": { "currency": "USD", "value": 0.0 }
+        },
+        "undiscountedItemTotal": {
+          "gross": { "currency": "USD", "value": 880.1 },
+          "net": { "currency": "USD", "value": 739.58 }
+        },
+        "undiscountedShippingTotal": {
+          "gross": { "currency": "USD", "value": 3.59 },
+          "net": { "currency": "USD", "value": 3.02 },
+          "tax": { "currency": "USD", "value": 0.57 }
+        },
+        "discountTotal": {
+          "gross": { "currency": "USD", "value": 44.0 },
+          "net": { "currency": "USD", "value": 36.98 }
+        },
+        "itemTotal": {
+          "gross": { "currency": "USD", "value": 836.1 },
+          "net": { "currency": "USD", "value": 702.6 }
+        },
+        "itemValueDiscountsTotal": {
+          "gross": { "currency": "USD", "value": 44.0 },
+          "net": { "currency": "USD", "value": 36.98 }
+        },
+        "salesTaxTotalsByTaxRate": [
+          {
+            "calculatedTax": { "currency": "USD", "value": 133.5 },
+            "effectiveTaxRate": 19.0,
+            "taxableAmount": { "currency": "USD", "value": 133.5 }
+          }
+        ],
+        "shippingTaxTotalsByTaxRate": [
+          {
+            "calculatedTax": { "currency": "USD", "value": 0.57 },
+            "effectiveTaxRate": 19.0,
+            "taxableAmount": { "currency": "USD", "value": 3.02 }
+          }
+        ],
+        "shippingTotal": {
+          "gross": { "currency": "USD", "value": 3.59 },
+          "net": { "currency": "USD", "value": 3.02 }
+        },
+        "taxTotalsByTaxRate": [
+          {
+            "calculatedTax": { "currency": "USD", "value": 134.07 },
+            "effectiveTaxRate": 19.0,
+            "taxableAmount": { "currency": "USD", "value": 705.62 }
+          }
+        ],
+        "valueDiscountsTotal": {
+          "gross": { "currency": "USD", "value": 44.0 },
+          "net": { "currency": "USD", "value": 36.98 }
+        }
+      },
+      "user": "patricia@test.intershop.de"
+    },
+    {
+      "basket": "y_sKCgoELU0AAAF06VpY9I1k",
+      "buckets": ["0"],
+      "commonShipToAddress": "a68KCgoEuSkAAAF0csdY9JCp",
+      "commonShippingMethod": "STD_GROUND",
+      "creationDate": "2020-09-15T07:27:59Z",
+      "customer": "Bernd",
+      "discounts": {},
+      "documentNumber": "00000039",
+      "id": "8OEKCgoEC0MAAAF0bcdY9JCp",
+      "invoiceToAddress": "JcMKCgoEcWEAAAF0cMdY9JCp",
+      "lineItems": [
+        "5K8KCgoE_OEAAAF0dsdY9JCp",
+        "I1IKCgoEWu4AAAF0dMdY9JCp",
+        "WwcKCgoEQSkAAAF0c8dY9JCp"
+      ],
+      "orderCreation": { "status": "COMPLETED" },
+      "payments": ["B.sKCgoE_OIAAAF0dsdY9JCp"],
+      "purchaseCurrency": "USD",
+      "status": "New",
+      "statusCode": "NEW",
+      "termsAndConditionsAccepted": true,
+      "totalProductQuantity": 3,
+      "totals": {
+        "grandTotal": {
+          "gross": { "currency": "USD", "value": 748.89 },
+          "net": { "currency": "USD", "value": 629.31 },
+          "tax": { "currency": "USD", "value": 119.58 }
+        },
+        "paymentCostsTotal": {
+          "gross": { "currency": "USD", "value": 0.0 },
+          "net": { "currency": "USD", "value": 0.0 },
+          "tax": { "currency": "USD", "value": 0.0 }
+        },
+        "undiscountedItemTotal": {
+          "gross": { "currency": "USD", "value": 767.29 },
+          "net": { "currency": "USD", "value": 644.78 }
+        },
+        "undiscountedShippingTotal": {
+          "gross": { "currency": "USD", "value": 3.6 },
+          "net": { "currency": "USD", "value": 3.02 },
+          "tax": { "currency": "USD", "value": 0.58 }
+        },
+        "discountTotal": {
+          "gross": { "currency": "USD", "value": 22.0 },
+          "net": { "currency": "USD", "value": 18.49 }
+        },
+        "itemTotal": {
+          "gross": { "currency": "USD", "value": 745.29 },
+          "net": { "currency": "USD", "value": 626.29 }
+        },
+        "itemValueDiscountsTotal": {
+          "gross": { "currency": "USD", "value": 22.0 },
+          "net": { "currency": "USD", "value": 18.49 }
+        },
+        "salesTaxTotalsByTaxRate": [
+          {
+            "calculatedTax": { "currency": "USD", "value": 119.0 },
+            "effectiveTaxRate": 19.0,
+            "taxableAmount": { "currency": "USD", "value": 119.0 }
+          }
+        ],
+        "shippingTaxTotalsByTaxRate": [
+          {
+            "calculatedTax": { "currency": "USD", "value": 0.58 },
+            "effectiveTaxRate": 19.0,
+            "taxableAmount": { "currency": "USD", "value": 3.02 }
+          }
+        ],
+        "shippingTotal": {
+          "gross": { "currency": "USD", "value": 3.6 },
+          "net": { "currency": "USD", "value": 3.02 }
+        },
+        "taxTotalsByTaxRate": [
+          {
+            "calculatedTax": { "currency": "USD", "value": 119.58 },
+            "effectiveTaxRate": 19.0,
+            "taxableAmount": { "currency": "USD", "value": 629.31 }
+          }
+        ],
+        "valueDiscountsTotal": {
+          "gross": { "currency": "USD", "value": 22.0 },
+          "net": { "currency": "USD", "value": 18.49 }
+        }
+      },
+      "user": "patricia@test.intershop.de"
+    },
+    {
+      "basket": "locKCgoEngAAAAF0KKlY9ERI",
+      "buckets": ["0"],
+      "commonShipToAddress": "crAKCgoE_DcAAAF0rANY9I1k",
+      "commonShippingMethod": "STD_GROUND",
+      "creationDate": "2020-09-14T16:12:56Z",
+      "customer": "Patricia",
+      "discounts": {},
+      "documentNumber": "00000038",
+      "id": "JIcKCgoEwb4AAAF0qANY9I1k",
+      "invoiceToAddress": "tpIKCgoEtJMAAAF0qgNY9I1k",
+      "lineItems": [
+        "M3kKCgoE5WEAAAF0rQNY9I1k",
+        "O9oKCgoE5WMAAAF0rQNY9I1k",
+        "8VUKCgoE5WIAAAF0rQNY9I1k",
+        "F6MKCgoEvdcAAAF0sANY9I1k",
+        "qToKCgoEvdYAAAF0sANY9I1k"
+      ],
+      "orderCreation": { "status": "COMPLETED" },
+      "payments": ["uMoKCgoEUoUAAAF0sQNY9I1k"],
+      "purchaseCurrency": "USD",
+      "status": "New",
+      "statusCode": "NEW",
+      "termsAndConditionsAccepted": true,
+      "totalProductQuantity": 10,
+      "totals": {
+        "grandTotal": {
+          "gross": { "currency": "USD", "value": 9833.58 },
+          "net": { "currency": "USD", "value": 8263.5 },
+          "tax": { "currency": "USD", "value": 1570.08 }
+        },
+        "paymentCostsTotal": {
+          "gross": { "currency": "USD", "value": 0.0 },
+          "net": { "currency": "USD", "value": 0.0 },
+          "tax": { "currency": "USD", "value": 0.0 }
+        },
+        "undiscountedItemTotal": {
+          "gross": { "currency": "USD", "value": 9818.68 },
+          "net": { "currency": "USD", "value": 8250.98 }
+        },
+        "undiscountedShippingTotal": {
+          "gross": { "currency": "USD", "value": 14.9 },
+          "net": { "currency": "USD", "value": 12.52 },
+          "tax": { "currency": "USD", "value": 2.38 }
+        },
+        "itemTotal": {
+          "gross": { "currency": "USD", "value": 9818.68 },
+          "net": { "currency": "USD", "value": 8250.98 }
+        },
+        "salesTaxTotalsByTaxRate": [
+          {
+            "calculatedTax": { "currency": "USD", "value": 1567.7 },
+            "effectiveTaxRate": 19.0,
+            "taxableAmount": { "currency": "USD", "value": 1567.7 }
+          }
+        ],
+        "shippingTaxTotalsByTaxRate": [
+          {
+            "calculatedTax": { "currency": "USD", "value": 2.38 },
+            "effectiveTaxRate": 19.0,
+            "taxableAmount": { "currency": "USD", "value": 12.52 }
+          }
+        ],
+        "shippingTotal": {
+          "gross": { "currency": "USD", "value": 14.9 },
+          "net": { "currency": "USD", "value": 12.52 }
+        },
+        "taxTotalsByTaxRate": [
+          {
+            "calculatedTax": { "currency": "USD", "value": 1570.08 },
+            "effectiveTaxRate": 19.0,
+            "taxableAmount": { "currency": "USD", "value": 8263.5 }
+          }
+        ]
+      },
+      "user": "patricia@test.intershop.de"
+    },
+    {
+      "basket": "locKCgoEngAAAAF0KKlY9ERI",
+      "buckets": ["0"],
+      "commonShipToAddress": "crAKCgoE_DcAAAF0rANY9I1k",
+      "commonShippingMethod": "STD_GROUND",
+      "creationDate": "2020-09-14T16:12:56Z",
+      "customer": "Patricia",
+      "discounts": {},
+      "documentNumber": "00000037",
+      "id": "JIcKCgoEwb4AAAF0qANY9I1k37",
+      "invoiceToAddress": "tpIKCgoEtJMAAAF0qgNY9I1k",
+      "lineItems": [
+        "M3kKCgoE5WEAAAF0rQNY9I1k",
+        "O9oKCgoE5WMAAAF0rQNY9I1k",
+        "8VUKCgoE5WIAAAF0rQNY9I1k",
+        "F6MKCgoEvdcAAAF0sANY9I1k",
+        "qToKCgoEvdYAAAF0sANY9I1k"
+      ],
+      "orderCreation": { "status": "COMPLETED" },
+      "payments": ["uMoKCgoEUoUAAAF0sQNY9I1k"],
+      "purchaseCurrency": "USD",
+      "status": "New",
+      "statusCode": "NEW",
+      "termsAndConditionsAccepted": true,
+      "totalProductQuantity": 10,
+      "totals": {
+        "grandTotal": {
+          "gross": { "currency": "USD", "value": 9833.58 },
+          "net": { "currency": "USD", "value": 8263.5 },
+          "tax": { "currency": "USD", "value": 1570.08 }
+        },
+        "paymentCostsTotal": {
+          "gross": { "currency": "USD", "value": 0.0 },
+          "net": { "currency": "USD", "value": 0.0 },
+          "tax": { "currency": "USD", "value": 0.0 }
+        },
+        "undiscountedItemTotal": {
+          "gross": { "currency": "USD", "value": 9818.68 },
+          "net": { "currency": "USD", "value": 8250.98 }
+        },
+        "undiscountedShippingTotal": {
+          "gross": { "currency": "USD", "value": 14.9 },
+          "net": { "currency": "USD", "value": 12.52 },
+          "tax": { "currency": "USD", "value": 2.38 }
+        },
+        "itemTotal": {
+          "gross": { "currency": "USD", "value": 9818.68 },
+          "net": { "currency": "USD", "value": 8250.98 }
+        },
+        "salesTaxTotalsByTaxRate": [
+          {
+            "calculatedTax": { "currency": "USD", "value": 1567.7 },
+            "effectiveTaxRate": 19.0,
+            "taxableAmount": { "currency": "USD", "value": 1567.7 }
+          }
+        ],
+        "shippingTaxTotalsByTaxRate": [
+          {
+            "calculatedTax": { "currency": "USD", "value": 2.38 },
+            "effectiveTaxRate": 19.0,
+            "taxableAmount": { "currency": "USD", "value": 12.52 }
+          }
+        ],
+        "shippingTotal": {
+          "gross": { "currency": "USD", "value": 14.9 },
+          "net": { "currency": "USD", "value": 12.52 }
+        },
+        "taxTotalsByTaxRate": [
+          {
+            "calculatedTax": { "currency": "USD", "value": 1570.08 },
+            "effectiveTaxRate": 19.0,
+            "taxableAmount": { "currency": "USD", "value": 8263.5 }
+          }
+        ]
+      },
+      "user": "patricia@test.intershop.de"
+    },
+    {
+      "basket": "locKCgoEngAAAAF0KKlY9ERI",
+      "buckets": ["0"],
+      "commonShipToAddress": "crAKCgoE_DcAAAF0rANY9I1k",
+      "commonShippingMethod": "STD_GROUND",
+      "creationDate": "2020-09-14T16:12:56Z",
+      "customer": "Patricia",
+      "discounts": {},
+      "documentNumber": "00000036",
+      "id": "JIcKCgoEwb4AAAF0qANY9I1k36",
+      "invoiceToAddress": "tpIKCgoEtJMAAAF0qgNY9I1k",
+      "lineItems": [
+        "M3kKCgoE5WEAAAF0rQNY9I1k",
+        "O9oKCgoE5WMAAAF0rQNY9I1k",
+        "8VUKCgoE5WIAAAF0rQNY9I1k",
+        "F6MKCgoEvdcAAAF0sANY9I1k",
+        "qToKCgoEvdYAAAF0sANY9I1k"
+      ],
+      "orderCreation": { "status": "COMPLETED" },
+      "payments": ["uMoKCgoEUoUAAAF0sQNY9I1k"],
+      "purchaseCurrency": "USD",
+      "status": "New",
+      "statusCode": "NEW",
+      "termsAndConditionsAccepted": true,
+      "totalProductQuantity": 10,
+      "totals": {
+        "grandTotal": {
+          "gross": { "currency": "USD", "value": 9833.58 },
+          "net": { "currency": "USD", "value": 8263.5 },
+          "tax": { "currency": "USD", "value": 1570.08 }
+        },
+        "paymentCostsTotal": {
+          "gross": { "currency": "USD", "value": 0.0 },
+          "net": { "currency": "USD", "value": 0.0 },
+          "tax": { "currency": "USD", "value": 0.0 }
+        },
+        "undiscountedItemTotal": {
+          "gross": { "currency": "USD", "value": 9818.68 },
+          "net": { "currency": "USD", "value": 8250.98 }
+        },
+        "undiscountedShippingTotal": {
+          "gross": { "currency": "USD", "value": 14.9 },
+          "net": { "currency": "USD", "value": 12.52 },
+          "tax": { "currency": "USD", "value": 2.38 }
+        },
+        "itemTotal": {
+          "gross": { "currency": "USD", "value": 9818.68 },
+          "net": { "currency": "USD", "value": 8250.98 }
+        },
+        "salesTaxTotalsByTaxRate": [
+          {
+            "calculatedTax": { "currency": "USD", "value": 1567.7 },
+            "effectiveTaxRate": 19.0,
+            "taxableAmount": { "currency": "USD", "value": 1567.7 }
+          }
+        ],
+        "shippingTaxTotalsByTaxRate": [
+          {
+            "calculatedTax": { "currency": "USD", "value": 2.38 },
+            "effectiveTaxRate": 19.0,
+            "taxableAmount": { "currency": "USD", "value": 12.52 }
+          }
+        ],
+        "shippingTotal": {
+          "gross": { "currency": "USD", "value": 14.9 },
+          "net": { "currency": "USD", "value": 12.52 }
+        },
+        "taxTotalsByTaxRate": [
+          {
+            "calculatedTax": { "currency": "USD", "value": 1570.08 },
+            "effectiveTaxRate": 19.0,
+            "taxableAmount": { "currency": "USD", "value": 8263.5 }
+          }
+        ]
+      },
+      "user": "patricia@test.intershop.de"
+    },
+    {
+      "basket": "locKCgoEngAAAAF0KKlY9ERI",
+      "buckets": ["0"],
+      "commonShipToAddress": "crAKCgoE_DcAAAF0rANY9I1k",
+      "commonShippingMethod": "STD_GROUND",
+      "creationDate": "2020-09-14T16:12:56Z",
+      "customer": "Patricia",
+      "discounts": {},
+      "documentNumber": "00000035",
+      "id": "JIcKCgoEwb4AAAF0qANY9I1k35",
+      "invoiceToAddress": "tpIKCgoEtJMAAAF0qgNY9I1k",
+      "lineItems": [
+        "M3kKCgoE5WEAAAF0rQNY9I1k",
+        "O9oKCgoE5WMAAAF0rQNY9I1k",
+        "8VUKCgoE5WIAAAF0rQNY9I1k",
+        "F6MKCgoEvdcAAAF0sANY9I1k",
+        "qToKCgoEvdYAAAF0sANY9I1k"
+      ],
+      "orderCreation": { "status": "COMPLETED" },
+      "payments": ["uMoKCgoEUoUAAAF0sQNY9I1k"],
+      "purchaseCurrency": "USD",
+      "status": "New",
+      "statusCode": "NEW",
+      "termsAndConditionsAccepted": true,
+      "totalProductQuantity": 10,
+      "totals": {
+        "grandTotal": {
+          "gross": { "currency": "USD", "value": 9833.58 },
+          "net": { "currency": "USD", "value": 8263.5 },
+          "tax": { "currency": "USD", "value": 1570.08 }
+        },
+        "paymentCostsTotal": {
+          "gross": { "currency": "USD", "value": 0.0 },
+          "net": { "currency": "USD", "value": 0.0 },
+          "tax": { "currency": "USD", "value": 0.0 }
+        },
+        "undiscountedItemTotal": {
+          "gross": { "currency": "USD", "value": 9818.68 },
+          "net": { "currency": "USD", "value": 8250.98 }
+        },
+        "undiscountedShippingTotal": {
+          "gross": { "currency": "USD", "value": 14.9 },
+          "net": { "currency": "USD", "value": 12.52 },
+          "tax": { "currency": "USD", "value": 2.38 }
+        },
+        "itemTotal": {
+          "gross": { "currency": "USD", "value": 9818.68 },
+          "net": { "currency": "USD", "value": 8250.98 }
+        },
+        "salesTaxTotalsByTaxRate": [
+          {
+            "calculatedTax": { "currency": "USD", "value": 1567.7 },
+            "effectiveTaxRate": 19.0,
+            "taxableAmount": { "currency": "USD", "value": 1567.7 }
+          }
+        ],
+        "shippingTaxTotalsByTaxRate": [
+          {
+            "calculatedTax": { "currency": "USD", "value": 2.38 },
+            "effectiveTaxRate": 19.0,
+            "taxableAmount": { "currency": "USD", "value": 12.52 }
+          }
+        ],
+        "shippingTotal": {
+          "gross": { "currency": "USD", "value": 14.9 },
+          "net": { "currency": "USD", "value": 12.52 }
+        },
+        "taxTotalsByTaxRate": [
+          {
+            "calculatedTax": { "currency": "USD", "value": 1570.08 },
+            "effectiveTaxRate": 19.0,
+            "taxableAmount": { "currency": "USD", "value": 8263.5 }
+          }
+        ]
+      },
+      "user": "patricia@test.intershop.de"
+    },
+    {
+      "basket": "locKCgoEngAAAAF0KKlY9ERI",
+      "buckets": ["0"],
+      "commonShipToAddress": "crAKCgoE_DcAAAF0rANY9I1k",
+      "commonShippingMethod": "STD_GROUND",
+      "creationDate": "2020-09-14T16:12:56Z",
+      "customer": "Patricia",
+      "discounts": {},
+      "documentNumber": "00000034",
+      "id": "JIcKCgoEwb4AAAF0qANY9I1k34",
+      "invoiceToAddress": "tpIKCgoEtJMAAAF0qgNY9I1k",
+      "lineItems": [
+        "M3kKCgoE5WEAAAF0rQNY9I1k",
+        "O9oKCgoE5WMAAAF0rQNY9I1k",
+        "8VUKCgoE5WIAAAF0rQNY9I1k",
+        "F6MKCgoEvdcAAAF0sANY9I1k",
+        "qToKCgoEvdYAAAF0sANY9I1k"
+      ],
+      "orderCreation": { "status": "COMPLETED" },
+      "payments": ["uMoKCgoEUoUAAAF0sQNY9I1k"],
+      "purchaseCurrency": "USD",
+      "status": "New",
+      "statusCode": "NEW",
+      "termsAndConditionsAccepted": true,
+      "totalProductQuantity": 10,
+      "totals": {
+        "grandTotal": {
+          "gross": { "currency": "USD", "value": 9833.58 },
+          "net": { "currency": "USD", "value": 8263.5 },
+          "tax": { "currency": "USD", "value": 1570.08 }
+        },
+        "paymentCostsTotal": {
+          "gross": { "currency": "USD", "value": 0.0 },
+          "net": { "currency": "USD", "value": 0.0 },
+          "tax": { "currency": "USD", "value": 0.0 }
+        },
+        "undiscountedItemTotal": {
+          "gross": { "currency": "USD", "value": 9818.68 },
+          "net": { "currency": "USD", "value": 8250.98 }
+        },
+        "undiscountedShippingTotal": {
+          "gross": { "currency": "USD", "value": 14.9 },
+          "net": { "currency": "USD", "value": 12.52 },
+          "tax": { "currency": "USD", "value": 2.38 }
+        },
+        "itemTotal": {
+          "gross": { "currency": "USD", "value": 9818.68 },
+          "net": { "currency": "USD", "value": 8250.98 }
+        },
+        "salesTaxTotalsByTaxRate": [
+          {
+            "calculatedTax": { "currency": "USD", "value": 1567.7 },
+            "effectiveTaxRate": 19.0,
+            "taxableAmount": { "currency": "USD", "value": 1567.7 }
+          }
+        ],
+        "shippingTaxTotalsByTaxRate": [
+          {
+            "calculatedTax": { "currency": "USD", "value": 2.38 },
+            "effectiveTaxRate": 19.0,
+            "taxableAmount": { "currency": "USD", "value": 12.52 }
+          }
+        ],
+        "shippingTotal": {
+          "gross": { "currency": "USD", "value": 14.9 },
+          "net": { "currency": "USD", "value": 12.52 }
+        },
+        "taxTotalsByTaxRate": [
+          {
+            "calculatedTax": { "currency": "USD", "value": 1570.08 },
+            "effectiveTaxRate": 19.0,
+            "taxableAmount": { "currency": "USD", "value": 8263.5 }
+          }
+        ]
+      },
+      "user": "patricia@test.intershop.de"
+    },
+    {
+      "basket": "locKCgoEngAAAAF0KKlY9ERI",
+      "buckets": ["0"],
+      "commonShipToAddress": "crAKCgoE_DcAAAF0rANY9I1k",
+      "commonShippingMethod": "STD_GROUND",
+      "creationDate": "2020-09-14T16:12:56Z",
+      "customer": "Patricia",
+      "discounts": {},
+      "documentNumber": "00000033",
+      "id": "JIcKCgoEwb4AAAF0qANY9I1k33",
+      "invoiceToAddress": "tpIKCgoEtJMAAAF0qgNY9I1k",
+      "lineItems": [
+        "M3kKCgoE5WEAAAF0rQNY9I1k",
+        "O9oKCgoE5WMAAAF0rQNY9I1k",
+        "8VUKCgoE5WIAAAF0rQNY9I1k",
+        "F6MKCgoEvdcAAAF0sANY9I1k",
+        "qToKCgoEvdYAAAF0sANY9I1k"
+      ],
+      "orderCreation": { "status": "COMPLETED" },
+      "payments": ["uMoKCgoEUoUAAAF0sQNY9I1k"],
+      "purchaseCurrency": "USD",
+      "status": "New",
+      "statusCode": "NEW",
+      "termsAndConditionsAccepted": true,
+      "totalProductQuantity": 10,
+      "totals": {
+        "grandTotal": {
+          "gross": { "currency": "USD", "value": 9833.58 },
+          "net": { "currency": "USD", "value": 8263.5 },
+          "tax": { "currency": "USD", "value": 1570.08 }
+        },
+        "paymentCostsTotal": {
+          "gross": { "currency": "USD", "value": 0.0 },
+          "net": { "currency": "USD", "value": 0.0 },
+          "tax": { "currency": "USD", "value": 0.0 }
+        },
+        "undiscountedItemTotal": {
+          "gross": { "currency": "USD", "value": 9818.68 },
+          "net": { "currency": "USD", "value": 8250.98 }
+        },
+        "undiscountedShippingTotal": {
+          "gross": { "currency": "USD", "value": 14.9 },
+          "net": { "currency": "USD", "value": 12.52 },
+          "tax": { "currency": "USD", "value": 2.38 }
+        },
+        "itemTotal": {
+          "gross": { "currency": "USD", "value": 9818.68 },
+          "net": { "currency": "USD", "value": 8250.98 }
+        },
+        "salesTaxTotalsByTaxRate": [
+          {
+            "calculatedTax": { "currency": "USD", "value": 1567.7 },
+            "effectiveTaxRate": 19.0,
+            "taxableAmount": { "currency": "USD", "value": 1567.7 }
+          }
+        ],
+        "shippingTaxTotalsByTaxRate": [
+          {
+            "calculatedTax": { "currency": "USD", "value": 2.38 },
+            "effectiveTaxRate": 19.0,
+            "taxableAmount": { "currency": "USD", "value": 12.52 }
+          }
+        ],
+        "shippingTotal": {
+          "gross": { "currency": "USD", "value": 14.9 },
+          "net": { "currency": "USD", "value": 12.52 }
+        },
+        "taxTotalsByTaxRate": [
+          {
+            "calculatedTax": { "currency": "USD", "value": 1570.08 },
+            "effectiveTaxRate": 19.0,
+            "taxableAmount": { "currency": "USD", "value": 8263.5 }
+          }
+        ]
+      },
+      "user": "patricia@test.intershop.de"
+    },
+    {
+      "basket": "locKCgoEngAAAAF0KKlY9ERI",
+      "buckets": ["0"],
+      "commonShipToAddress": "crAKCgoE_DcAAAF0rANY9I1k",
+      "commonShippingMethod": "STD_GROUND",
+      "creationDate": "2020-09-14T16:12:56Z",
+      "customer": "Patricia",
+      "discounts": {},
+      "documentNumber": "00000032",
+      "id": "JIcKCgoEwb4AAAF0qANY9I1k32",
+      "invoiceToAddress": "tpIKCgoEtJMAAAF0qgNY9I1k",
+      "lineItems": [
+        "M3kKCgoE5WEAAAF0rQNY9I1k",
+        "O9oKCgoE5WMAAAF0rQNY9I1k",
+        "8VUKCgoE5WIAAAF0rQNY9I1k",
+        "F6MKCgoEvdcAAAF0sANY9I1k",
+        "qToKCgoEvdYAAAF0sANY9I1k"
+      ],
+      "orderCreation": { "status": "COMPLETED" },
+      "payments": ["uMoKCgoEUoUAAAF0sQNY9I1k"],
+      "purchaseCurrency": "USD",
+      "status": "New",
+      "statusCode": "NEW",
+      "termsAndConditionsAccepted": true,
+      "totalProductQuantity": 10,
+      "totals": {
+        "grandTotal": {
+          "gross": { "currency": "USD", "value": 9833.58 },
+          "net": { "currency": "USD", "value": 8263.5 },
+          "tax": { "currency": "USD", "value": 1570.08 }
+        },
+        "paymentCostsTotal": {
+          "gross": { "currency": "USD", "value": 0.0 },
+          "net": { "currency": "USD", "value": 0.0 },
+          "tax": { "currency": "USD", "value": 0.0 }
+        },
+        "undiscountedItemTotal": {
+          "gross": { "currency": "USD", "value": 9818.68 },
+          "net": { "currency": "USD", "value": 8250.98 }
+        },
+        "undiscountedShippingTotal": {
+          "gross": { "currency": "USD", "value": 14.9 },
+          "net": { "currency": "USD", "value": 12.52 },
+          "tax": { "currency": "USD", "value": 2.38 }
+        },
+        "itemTotal": {
+          "gross": { "currency": "USD", "value": 9818.68 },
+          "net": { "currency": "USD", "value": 8250.98 }
+        },
+        "salesTaxTotalsByTaxRate": [
+          {
+            "calculatedTax": { "currency": "USD", "value": 1567.7 },
+            "effectiveTaxRate": 19.0,
+            "taxableAmount": { "currency": "USD", "value": 1567.7 }
+          }
+        ],
+        "shippingTaxTotalsByTaxRate": [
+          {
+            "calculatedTax": { "currency": "USD", "value": 2.38 },
+            "effectiveTaxRate": 19.0,
+            "taxableAmount": { "currency": "USD", "value": 12.52 }
+          }
+        ],
+        "shippingTotal": {
+          "gross": { "currency": "USD", "value": 14.9 },
+          "net": { "currency": "USD", "value": 12.52 }
+        },
+        "taxTotalsByTaxRate": [
+          {
+            "calculatedTax": { "currency": "USD", "value": 1570.08 },
+            "effectiveTaxRate": 19.0,
+            "taxableAmount": { "currency": "USD", "value": 8263.5 }
+          }
+        ]
+      },
+      "user": "patricia@test.intershop.de"
+    },
+    {
+      "basket": "locKCgoEngAAAAF0KKlY9ERI",
+      "buckets": ["0"],
+      "commonShipToAddress": "crAKCgoE_DcAAAF0rANY9I1k",
+      "commonShippingMethod": "STD_GROUND",
+      "creationDate": "2020-09-14T16:12:56Z",
+      "customer": "Patricia",
+      "discounts": {},
+      "documentNumber": "00000031",
+      "id": "JIcKCgoEwb4AAAF0qANY9I1k31",
+      "invoiceToAddress": "tpIKCgoEtJMAAAF0qgNY9I1k",
+      "lineItems": [
+        "M3kKCgoE5WEAAAF0rQNY9I1k",
+        "O9oKCgoE5WMAAAF0rQNY9I1k",
+        "8VUKCgoE5WIAAAF0rQNY9I1k",
+        "F6MKCgoEvdcAAAF0sANY9I1k",
+        "qToKCgoEvdYAAAF0sANY9I1k"
+      ],
+      "orderCreation": { "status": "COMPLETED" },
+      "payments": ["uMoKCgoEUoUAAAF0sQNY9I1k"],
+      "purchaseCurrency": "USD",
+      "status": "New",
+      "statusCode": "NEW",
+      "termsAndConditionsAccepted": true,
+      "totalProductQuantity": 10,
+      "totals": {
+        "grandTotal": {
+          "gross": { "currency": "USD", "value": 9833.58 },
+          "net": { "currency": "USD", "value": 8263.5 },
+          "tax": { "currency": "USD", "value": 1570.08 }
+        },
+        "paymentCostsTotal": {
+          "gross": { "currency": "USD", "value": 0.0 },
+          "net": { "currency": "USD", "value": 0.0 },
+          "tax": { "currency": "USD", "value": 0.0 }
+        },
+        "undiscountedItemTotal": {
+          "gross": { "currency": "USD", "value": 9818.68 },
+          "net": { "currency": "USD", "value": 8250.98 }
+        },
+        "undiscountedShippingTotal": {
+          "gross": { "currency": "USD", "value": 14.9 },
+          "net": { "currency": "USD", "value": 12.52 },
+          "tax": { "currency": "USD", "value": 2.38 }
+        },
+        "itemTotal": {
+          "gross": { "currency": "USD", "value": 9818.68 },
+          "net": { "currency": "USD", "value": 8250.98 }
+        },
+        "salesTaxTotalsByTaxRate": [
+          {
+            "calculatedTax": { "currency": "USD", "value": 1567.7 },
+            "effectiveTaxRate": 19.0,
+            "taxableAmount": { "currency": "USD", "value": 1567.7 }
+          }
+        ],
+        "shippingTaxTotalsByTaxRate": [
+          {
+            "calculatedTax": { "currency": "USD", "value": 2.38 },
+            "effectiveTaxRate": 19.0,
+            "taxableAmount": { "currency": "USD", "value": 12.52 }
+          }
+        ],
+        "shippingTotal": {
+          "gross": { "currency": "USD", "value": 14.9 },
+          "net": { "currency": "USD", "value": 12.52 }
+        },
+        "taxTotalsByTaxRate": [
+          {
+            "calculatedTax": { "currency": "USD", "value": 1570.08 },
+            "effectiveTaxRate": 19.0,
+            "taxableAmount": { "currency": "USD", "value": 8263.5 }
+          }
+        ]
+      },
+      "user": "patricia@test.intershop.de"
+    },
+    {
+      "basket": "locKCgoEngAAAAF0KKlY9ERI",
+      "buckets": ["0"],
+      "commonShipToAddress": "crAKCgoE_DcAAAF0rANY9I1k",
+      "commonShippingMethod": "STD_GROUND",
+      "creationDate": "2020-09-14T16:12:56Z",
+      "customer": "Patricia",
+      "discounts": {},
+      "documentNumber": "00000030",
+      "id": "JIcKCgoEwb4AAAF0qANY9I1k30",
+      "invoiceToAddress": "tpIKCgoEtJMAAAF0qgNY9I1k",
+      "lineItems": [
+        "M3kKCgoE5WEAAAF0rQNY9I1k",
+        "O9oKCgoE5WMAAAF0rQNY9I1k",
+        "8VUKCgoE5WIAAAF0rQNY9I1k",
+        "F6MKCgoEvdcAAAF0sANY9I1k",
+        "qToKCgoEvdYAAAF0sANY9I1k"
+      ],
+      "orderCreation": { "status": "COMPLETED" },
+      "payments": ["uMoKCgoEUoUAAAF0sQNY9I1k"],
+      "purchaseCurrency": "USD",
+      "status": "New",
+      "statusCode": "NEW",
+      "termsAndConditionsAccepted": true,
+      "totalProductQuantity": 10,
+      "totals": {
+        "grandTotal": {
+          "gross": { "currency": "USD", "value": 9833.58 },
+          "net": { "currency": "USD", "value": 8263.5 },
+          "tax": { "currency": "USD", "value": 1570.08 }
+        },
+        "paymentCostsTotal": {
+          "gross": { "currency": "USD", "value": 0.0 },
+          "net": { "currency": "USD", "value": 0.0 },
+          "tax": { "currency": "USD", "value": 0.0 }
+        },
+        "undiscountedItemTotal": {
+          "gross": { "currency": "USD", "value": 9818.68 },
+          "net": { "currency": "USD", "value": 8250.98 }
+        },
+        "undiscountedShippingTotal": {
+          "gross": { "currency": "USD", "value": 14.9 },
+          "net": { "currency": "USD", "value": 12.52 },
+          "tax": { "currency": "USD", "value": 2.38 }
+        },
+        "itemTotal": {
+          "gross": { "currency": "USD", "value": 9818.68 },
+          "net": { "currency": "USD", "value": 8250.98 }
+        },
+        "salesTaxTotalsByTaxRate": [
+          {
+            "calculatedTax": { "currency": "USD", "value": 1567.7 },
+            "effectiveTaxRate": 19.0,
+            "taxableAmount": { "currency": "USD", "value": 1567.7 }
+          }
+        ],
+        "shippingTaxTotalsByTaxRate": [
+          {
+            "calculatedTax": { "currency": "USD", "value": 2.38 },
+            "effectiveTaxRate": 19.0,
+            "taxableAmount": { "currency": "USD", "value": 12.52 }
+          }
+        ],
+        "shippingTotal": {
+          "gross": { "currency": "USD", "value": 14.9 },
+          "net": { "currency": "USD", "value": 12.52 }
+        },
+        "taxTotalsByTaxRate": [
+          {
+            "calculatedTax": { "currency": "USD", "value": 1570.08 },
+            "effectiveTaxRate": 19.0,
+            "taxableAmount": { "currency": "USD", "value": 8263.5 }
+          }
+        ]
+      },
+      "user": "patricia@test.intershop.de"
+    },
+    {
+      "basket": "locKCgoEngAAAAF0KKlY9ERI",
+      "buckets": ["0"],
+      "commonShipToAddress": "crAKCgoE_DcAAAF0rANY9I1k",
+      "commonShippingMethod": "STD_GROUND",
+      "creationDate": "2020-09-14T16:12:56Z",
+      "customer": "Patricia",
+      "discounts": {},
+      "documentNumber": "00000029",
+      "id": "JIcKCgoEwb4AAAF0qANY9I1k29",
+      "invoiceToAddress": "tpIKCgoEtJMAAAF0qgNY9I1k",
+      "lineItems": [
+        "M3kKCgoE5WEAAAF0rQNY9I1k",
+        "O9oKCgoE5WMAAAF0rQNY9I1k",
+        "8VUKCgoE5WIAAAF0rQNY9I1k",
+        "F6MKCgoEvdcAAAF0sANY9I1k",
+        "qToKCgoEvdYAAAF0sANY9I1k"
+      ],
+      "orderCreation": { "status": "COMPLETED" },
+      "payments": ["uMoKCgoEUoUAAAF0sQNY9I1k"],
+      "purchaseCurrency": "USD",
+      "status": "New",
+      "statusCode": "NEW",
+      "termsAndConditionsAccepted": true,
+      "totalProductQuantity": 10,
+      "totals": {
+        "grandTotal": {
+          "gross": { "currency": "USD", "value": 9833.58 },
+          "net": { "currency": "USD", "value": 8263.5 },
+          "tax": { "currency": "USD", "value": 1570.08 }
+        },
+        "paymentCostsTotal": {
+          "gross": { "currency": "USD", "value": 0.0 },
+          "net": { "currency": "USD", "value": 0.0 },
+          "tax": { "currency": "USD", "value": 0.0 }
+        },
+        "undiscountedItemTotal": {
+          "gross": { "currency": "USD", "value": 9818.68 },
+          "net": { "currency": "USD", "value": 8250.98 }
+        },
+        "undiscountedShippingTotal": {
+          "gross": { "currency": "USD", "value": 14.9 },
+          "net": { "currency": "USD", "value": 12.52 },
+          "tax": { "currency": "USD", "value": 2.38 }
+        },
+        "itemTotal": {
+          "gross": { "currency": "USD", "value": 9818.68 },
+          "net": { "currency": "USD", "value": 8250.98 }
+        },
+        "salesTaxTotalsByTaxRate": [
+          {
+            "calculatedTax": { "currency": "USD", "value": 1567.7 },
+            "effectiveTaxRate": 19.0,
+            "taxableAmount": { "currency": "USD", "value": 1567.7 }
+          }
+        ],
+        "shippingTaxTotalsByTaxRate": [
+          {
+            "calculatedTax": { "currency": "USD", "value": 2.38 },
+            "effectiveTaxRate": 19.0,
+            "taxableAmount": { "currency": "USD", "value": 12.52 }
+          }
+        ],
+        "shippingTotal": {
+          "gross": { "currency": "USD", "value": 14.9 },
+          "net": { "currency": "USD", "value": 12.52 }
+        },
+        "taxTotalsByTaxRate": [
+          {
+            "calculatedTax": { "currency": "USD", "value": 1570.08 },
+            "effectiveTaxRate": 19.0,
+            "taxableAmount": { "currency": "USD", "value": 8263.5 }
+          }
+        ]
+      },
+      "user": "patricia@test.intershop.de"
+    },
+    {
+      "basket": "locKCgoEngAAAAF0KKlY9ERI",
+      "buckets": ["0"],
+      "commonShipToAddress": "crAKCgoE_DcAAAF0rANY9I1k",
+      "commonShippingMethod": "STD_GROUND",
+      "creationDate": "2020-09-14T16:12:56Z",
+      "customer": "Patricia",
+      "discounts": {},
+      "documentNumber": "00000028",
+      "id": "JIcKCgoEwb4AAAF0qANY9I1k28",
+      "invoiceToAddress": "tpIKCgoEtJMAAAF0qgNY9I1k",
+      "lineItems": [
+        "M3kKCgoE5WEAAAF0rQNY9I1k",
+        "O9oKCgoE5WMAAAF0rQNY9I1k",
+        "8VUKCgoE5WIAAAF0rQNY9I1k",
+        "F6MKCgoEvdcAAAF0sANY9I1k",
+        "qToKCgoEvdYAAAF0sANY9I1k"
+      ],
+      "orderCreation": { "status": "COMPLETED" },
+      "payments": ["uMoKCgoEUoUAAAF0sQNY9I1k"],
+      "purchaseCurrency": "USD",
+      "status": "New",
+      "statusCode": "NEW",
+      "termsAndConditionsAccepted": true,
+      "totalProductQuantity": 10,
+      "totals": {
+        "grandTotal": {
+          "gross": { "currency": "USD", "value": 9833.58 },
+          "net": { "currency": "USD", "value": 8263.5 },
+          "tax": { "currency": "USD", "value": 1570.08 }
+        },
+        "paymentCostsTotal": {
+          "gross": { "currency": "USD", "value": 0.0 },
+          "net": { "currency": "USD", "value": 0.0 },
+          "tax": { "currency": "USD", "value": 0.0 }
+        },
+        "undiscountedItemTotal": {
+          "gross": { "currency": "USD", "value": 9818.68 },
+          "net": { "currency": "USD", "value": 8250.98 }
+        },
+        "undiscountedShippingTotal": {
+          "gross": { "currency": "USD", "value": 14.9 },
+          "net": { "currency": "USD", "value": 12.52 },
+          "tax": { "currency": "USD", "value": 2.38 }
+        },
+        "itemTotal": {
+          "gross": { "currency": "USD", "value": 9818.68 },
+          "net": { "currency": "USD", "value": 8250.98 }
+        },
+        "salesTaxTotalsByTaxRate": [
+          {
+            "calculatedTax": { "currency": "USD", "value": 1567.7 },
+            "effectiveTaxRate": 19.0,
+            "taxableAmount": { "currency": "USD", "value": 1567.7 }
+          }
+        ],
+        "shippingTaxTotalsByTaxRate": [
+          {
+            "calculatedTax": { "currency": "USD", "value": 2.38 },
+            "effectiveTaxRate": 19.0,
+            "taxableAmount": { "currency": "USD", "value": 12.52 }
+          }
+        ],
+        "shippingTotal": {
+          "gross": { "currency": "USD", "value": 14.9 },
+          "net": { "currency": "USD", "value": 12.52 }
+        },
+        "taxTotalsByTaxRate": [
+          {
+            "calculatedTax": { "currency": "USD", "value": 1570.08 },
+            "effectiveTaxRate": 19.0,
+            "taxableAmount": { "currency": "USD", "value": 8263.5 }
+          }
+        ]
+      },
+      "user": "patricia@test.intershop.de"
+    },
+    {
+      "basket": "locKCgoEngAAAAF0KKlY9ERI",
+      "buckets": ["0"],
+      "commonShipToAddress": "crAKCgoE_DcAAAF0rANY9I1k",
+      "commonShippingMethod": "STD_GROUND",
+      "creationDate": "2020-09-14T16:12:56Z",
+      "customer": "Patricia",
+      "discounts": {},
+      "documentNumber": "00000027",
+      "id": "JIcKCgoEwb4AAAF0qANY9I1k27",
+      "invoiceToAddress": "tpIKCgoEtJMAAAF0qgNY9I1k",
+      "lineItems": [
+        "M3kKCgoE5WEAAAF0rQNY9I1k",
+        "O9oKCgoE5WMAAAF0rQNY9I1k",
+        "8VUKCgoE5WIAAAF0rQNY9I1k",
+        "F6MKCgoEvdcAAAF0sANY9I1k",
+        "qToKCgoEvdYAAAF0sANY9I1k"
+      ],
+      "orderCreation": { "status": "COMPLETED" },
+      "payments": ["uMoKCgoEUoUAAAF0sQNY9I1k"],
+      "purchaseCurrency": "USD",
+      "status": "New",
+      "statusCode": "NEW",
+      "termsAndConditionsAccepted": true,
+      "totalProductQuantity": 10,
+      "totals": {
+        "grandTotal": {
+          "gross": { "currency": "USD", "value": 9833.58 },
+          "net": { "currency": "USD", "value": 8263.5 },
+          "tax": { "currency": "USD", "value": 1570.08 }
+        },
+        "paymentCostsTotal": {
+          "gross": { "currency": "USD", "value": 0.0 },
+          "net": { "currency": "USD", "value": 0.0 },
+          "tax": { "currency": "USD", "value": 0.0 }
+        },
+        "undiscountedItemTotal": {
+          "gross": { "currency": "USD", "value": 9818.68 },
+          "net": { "currency": "USD", "value": 8250.98 }
+        },
+        "undiscountedShippingTotal": {
+          "gross": { "currency": "USD", "value": 14.9 },
+          "net": { "currency": "USD", "value": 12.52 },
+          "tax": { "currency": "USD", "value": 2.38 }
+        },
+        "itemTotal": {
+          "gross": { "currency": "USD", "value": 9818.68 },
+          "net": { "currency": "USD", "value": 8250.98 }
+        },
+        "salesTaxTotalsByTaxRate": [
+          {
+            "calculatedTax": { "currency": "USD", "value": 1567.7 },
+            "effectiveTaxRate": 19.0,
+            "taxableAmount": { "currency": "USD", "value": 1567.7 }
+          }
+        ],
+        "shippingTaxTotalsByTaxRate": [
+          {
+            "calculatedTax": { "currency": "USD", "value": 2.38 },
+            "effectiveTaxRate": 19.0,
+            "taxableAmount": { "currency": "USD", "value": 12.52 }
+          }
+        ],
+        "shippingTotal": {
+          "gross": { "currency": "USD", "value": 14.9 },
+          "net": { "currency": "USD", "value": 12.52 }
+        },
+        "taxTotalsByTaxRate": [
+          {
+            "calculatedTax": { "currency": "USD", "value": 1570.08 },
+            "effectiveTaxRate": 19.0,
+            "taxableAmount": { "currency": "USD", "value": 8263.5 }
+          }
+        ]
+      },
+      "user": "patricia@test.intershop.de"
+    },
+    {
+      "basket": "locKCgoEngAAAAF0KKlY9ERI",
+      "buckets": ["0"],
+      "commonShipToAddress": "crAKCgoE_DcAAAF0rANY9I1k",
+      "commonShippingMethod": "STD_GROUND",
+      "creationDate": "2020-09-14T16:12:56Z",
+      "customer": "Patricia",
+      "discounts": {},
+      "documentNumber": "00000026",
+      "id": "JIcKCgoEwb4AAAF0qANY9I1k26",
+      "invoiceToAddress": "tpIKCgoEtJMAAAF0qgNY9I1k",
+      "lineItems": [
+        "M3kKCgoE5WEAAAF0rQNY9I1k",
+        "O9oKCgoE5WMAAAF0rQNY9I1k",
+        "8VUKCgoE5WIAAAF0rQNY9I1k",
+        "F6MKCgoEvdcAAAF0sANY9I1k",
+        "qToKCgoEvdYAAAF0sANY9I1k"
+      ],
+      "orderCreation": { "status": "COMPLETED" },
+      "payments": ["uMoKCgoEUoUAAAF0sQNY9I1k"],
+      "purchaseCurrency": "USD",
+      "status": "New",
+      "statusCode": "NEW",
+      "termsAndConditionsAccepted": true,
+      "totalProductQuantity": 10,
+      "totals": {
+        "grandTotal": {
+          "gross": { "currency": "USD", "value": 9833.58 },
+          "net": { "currency": "USD", "value": 8263.5 },
+          "tax": { "currency": "USD", "value": 1570.08 }
+        },
+        "paymentCostsTotal": {
+          "gross": { "currency": "USD", "value": 0.0 },
+          "net": { "currency": "USD", "value": 0.0 },
+          "tax": { "currency": "USD", "value": 0.0 }
+        },
+        "undiscountedItemTotal": {
+          "gross": { "currency": "USD", "value": 9818.68 },
+          "net": { "currency": "USD", "value": 8250.98 }
+        },
+        "undiscountedShippingTotal": {
+          "gross": { "currency": "USD", "value": 14.9 },
+          "net": { "currency": "USD", "value": 12.52 },
+          "tax": { "currency": "USD", "value": 2.38 }
+        },
+        "itemTotal": {
+          "gross": { "currency": "USD", "value": 9818.68 },
+          "net": { "currency": "USD", "value": 8250.98 }
+        },
+        "salesTaxTotalsByTaxRate": [
+          {
+            "calculatedTax": { "currency": "USD", "value": 1567.7 },
+            "effectiveTaxRate": 19.0,
+            "taxableAmount": { "currency": "USD", "value": 1567.7 }
+          }
+        ],
+        "shippingTaxTotalsByTaxRate": [
+          {
+            "calculatedTax": { "currency": "USD", "value": 2.38 },
+            "effectiveTaxRate": 19.0,
+            "taxableAmount": { "currency": "USD", "value": 12.52 }
+          }
+        ],
+        "shippingTotal": {
+          "gross": { "currency": "USD", "value": 14.9 },
+          "net": { "currency": "USD", "value": 12.52 }
+        },
+        "taxTotalsByTaxRate": [
+          {
+            "calculatedTax": { "currency": "USD", "value": 1570.08 },
+            "effectiveTaxRate": 19.0,
+            "taxableAmount": { "currency": "USD", "value": 8263.5 }
+          }
+        ]
+      },
+      "user": "patricia@test.intershop.de"
+    },
+    {
+      "basket": "locKCgoEngAAAAF0KKlY9ERI",
+      "buckets": ["0"],
+      "commonShipToAddress": "crAKCgoE_DcAAAF0rANY9I1k",
+      "commonShippingMethod": "STD_GROUND",
+      "creationDate": "2020-09-14T16:12:56Z",
+      "customer": "Patricia",
+      "discounts": {},
+      "documentNumber": "00000025",
+      "id": "JIcKCgoEwb4AAAF0qANY9I1k25",
+      "invoiceToAddress": "tpIKCgoEtJMAAAF0qgNY9I1k",
+      "lineItems": [
+        "M3kKCgoE5WEAAAF0rQNY9I1k",
+        "O9oKCgoE5WMAAAF0rQNY9I1k",
+        "8VUKCgoE5WIAAAF0rQNY9I1k",
+        "F6MKCgoEvdcAAAF0sANY9I1k",
+        "qToKCgoEvdYAAAF0sANY9I1k"
+      ],
+      "orderCreation": { "status": "COMPLETED" },
+      "payments": ["uMoKCgoEUoUAAAF0sQNY9I1k"],
+      "purchaseCurrency": "USD",
+      "status": "New",
+      "statusCode": "NEW",
+      "termsAndConditionsAccepted": true,
+      "totalProductQuantity": 10,
+      "totals": {
+        "grandTotal": {
+          "gross": { "currency": "USD", "value": 9833.58 },
+          "net": { "currency": "USD", "value": 8263.5 },
+          "tax": { "currency": "USD", "value": 1570.08 }
+        },
+        "paymentCostsTotal": {
+          "gross": { "currency": "USD", "value": 0.0 },
+          "net": { "currency": "USD", "value": 0.0 },
+          "tax": { "currency": "USD", "value": 0.0 }
+        },
+        "undiscountedItemTotal": {
+          "gross": { "currency": "USD", "value": 9818.68 },
+          "net": { "currency": "USD", "value": 8250.98 }
+        },
+        "undiscountedShippingTotal": {
+          "gross": { "currency": "USD", "value": 14.9 },
+          "net": { "currency": "USD", "value": 12.52 },
+          "tax": { "currency": "USD", "value": 2.38 }
+        },
+        "itemTotal": {
+          "gross": { "currency": "USD", "value": 9818.68 },
+          "net": { "currency": "USD", "value": 8250.98 }
+        },
+        "salesTaxTotalsByTaxRate": [
+          {
+            "calculatedTax": { "currency": "USD", "value": 1567.7 },
+            "effectiveTaxRate": 19.0,
+            "taxableAmount": { "currency": "USD", "value": 1567.7 }
+          }
+        ],
+        "shippingTaxTotalsByTaxRate": [
+          {
+            "calculatedTax": { "currency": "USD", "value": 2.38 },
+            "effectiveTaxRate": 19.0,
+            "taxableAmount": { "currency": "USD", "value": 12.52 }
+          }
+        ],
+        "shippingTotal": {
+          "gross": { "currency": "USD", "value": 14.9 },
+          "net": { "currency": "USD", "value": 12.52 }
+        },
+        "taxTotalsByTaxRate": [
+          {
+            "calculatedTax": { "currency": "USD", "value": 1570.08 },
+            "effectiveTaxRate": 19.0,
+            "taxableAmount": { "currency": "USD", "value": 8263.5 }
+          }
+        ]
+      },
+      "user": "patricia@test.intershop.de"
+    },
+    {
+      "buckets": ["0"],
+      "commonShipToAddress": "jxcKCgoEIH0AAAF0qXVY9ERI",
+      "commonShippingMethod": "STD_GROUND",
+      "creationDate": "2020-08-31T11:30:33Z",
+      "customer": "Patricia",
+      "discounts": {},
+      "documentNumber": "00000001",
+      "id": "Of8KCgoEiVwAAAF0WHVY9ERI",
+      "invoiceToAddress": "wNoKCgoEpdcAAAF0p3VY9ERI",
+      "lineItems": ["dVoKCgoEIH4AAAF0qXVY9ERI"],
+      "orderCreation": { "status": "COMPLETED" },
+      "payments": ["i4MKCgoE.3AAAAF0qnVY9ERI"],
+      "purchaseCurrency": "USD",
+      "status": "New",
+      "statusCode": "NEW",
+      "termsAndConditionsAccepted": true,
+      "totalProductQuantity": 1,
+      "totals": {
+        "grandTotal": {
+          "gross": { "currency": "USD", "value": 211.84 },
+          "net": { "currency": "USD", "value": 178.02 },
+          "tax": { "currency": "USD", "value": 33.82 }
+        },
+        "paymentCostsTotal": {
+          "gross": { "currency": "USD", "value": 0.0 },
+          "net": { "currency": "USD", "value": 0.0 },
+          "tax": { "currency": "USD", "value": 0.0 }
+        },
+        "undiscountedItemTotal": {
+          "gross": { "currency": "USD", "value": 208.25 },
+          "net": { "currency": "USD", "value": 175.0 }
+        },
+        "undiscountedShippingTotal": {
+          "gross": { "currency": "USD", "value": 3.59 },
+          "net": { "currency": "USD", "value": 3.02 },
+          "tax": { "currency": "USD", "value": 0.57 }
+        },
+        "itemTotal": {
+          "gross": { "currency": "USD", "value": 208.25 },
+          "net": { "currency": "USD", "value": 175.0 }
+        },
+        "salesTaxTotalsByTaxRate": [
+          {
+            "calculatedTax": { "currency": "USD", "value": 33.25 },
+            "effectiveTaxRate": 19.0,
+            "taxableAmount": { "currency": "USD", "value": 33.25 }
+          }
+        ],
+        "shippingTaxTotalsByTaxRate": [
+          {
+            "calculatedTax": { "currency": "USD", "value": 0.57 },
+            "effectiveTaxRate": 19.0,
+            "taxableAmount": { "currency": "USD", "value": 3.02 }
+          }
+        ],
+        "shippingTotal": {
+          "gross": { "currency": "USD", "value": 3.59 },
+          "net": { "currency": "USD", "value": 3.02 }
+        },
+        "taxTotalsByTaxRate": [
+          {
+            "calculatedTax": { "currency": "USD", "value": 33.82 },
+            "effectiveTaxRate": 19.0,
+            "taxableAmount": { "currency": "USD", "value": 178.02 }
+          }
+        ]
+      },
+      "user": "patricia@test.intershop.de"
+    }
+  ],
+  "included": {
+    "lineItems": {
+      "aWEKCgoE0lYAAAF0o4pY9N.K": {
+        "attributes": [
+          {
+            "name": "ShippingMethodDisplayName",
+            "type": "String",
+            "value": "Standard Ground"
+          }
+        ],
+        "description": "The most powerful Surface ever",
+        "displayName": "Microsoft Surface Book 2",
+        "freeGift": false,
+        "fulfillmentStatus": "NEW",
+        "hiddenGift": false,
+        "id": "aWEKCgoE0lYAAAF0o4pY9N.K",
+        "order": "5ZMKCgoEKH4AAAF0nYpY9N.K",
+        "position": 1,
+        "pricing": {
+          "giftingTotal": {},
+          "price": {
+            "gross": { "currency": "USD", "value": 3568.81 },
+            "net": { "currency": "USD", "value": 2999.0 }
+          },
+          "salesTaxTotal": { "currency": "USD", "value": 569.81 },
+          "shippingRebatesTotal": {},
+          "shippingTaxTotal": { "currency": "USD", "value": 0.29 },
+          "singleBasePrice": {
+            "gross": { "currency": "USD", "value": 3568.81 },
+            "net": { "currency": "USD", "value": 2999.0 }
+          },
+          "undiscountedPrice": {
+            "gross": { "currency": "USD", "value": 3568.81 },
+            "net": { "currency": "USD", "value": 2999.0 }
+          },
+          "undiscountedShippingTotal": {
+            "gross": { "currency": "USD", "value": 1.8 },
+            "net": { "currency": "USD", "value": 1.51 }
+          },
+          "undiscountedSingleBasePrice": {
+            "gross": { "currency": "USD", "value": 3568.81 },
+            "net": { "currency": "USD", "value": 2999 }
+          },
+          "valueRebatesTotal": {}
+        },
+        "product": "201807231-03",
+        "quantity": { "value": 1 },
+        "shipToAddress": "pqYKCgoEKAAAAAF0n4pY9N.K",
+        "shippingMethod": "STD_GROUND"
+      },
+      "rFkKCgoEcBgAAAF0vllY9M_G": {
+        "attributes": [
+          {
+            "name": "ShippingMethodDisplayName",
+            "type": "String",
+            "value": "Standard Ground"
+          }
+        ],
+        "description": "Bietet Videoauflösungen von 1080p60 und 720p120, 12-MP-Fotos mit bis zu 30",
+        "discounts": ["4eYKKol_5hQAAAFzB7xmvcTH_5PercentOnActionCams"],
+        "displayName": "GoPro HERO4 Silver",
+        "freeGift": false,
+        "fulfillmentStatus": "NEW",
+        "hiddenGift": false,
+        "id": "rFkKCgoEcBgAAAF0vllY9M_G",
+        "order": "8_4KCgoEc5IAAAF0qFlY9M_G",
+        "position": 1,
+        "pricing": {
+          "giftingTotal": {},
+          "price": {
+            "gross": { "currency": "USD", "value": 418.05 },
+            "net": { "currency": "USD", "value": 351.3 }
+          },
+          "salesTaxTotal": { "currency": "USD", "value": 66.75 },
+          "shippingRebatesTotal": {},
+          "shippingTaxTotal": { "currency": "USD", "value": 0.45 },
+          "singleBasePrice": {
+            "gross": { "currency": "USD", "value": 418.05 },
+            "net": { "currency": "USD", "value": 351.3 }
+          },
+          "undiscountedPrice": {
+            "gross": { "currency": "USD", "value": 440.05 },
+            "net": { "currency": "USD", "value": 369.79 }
+          },
+          "undiscountedShippingTotal": {
+            "gross": { "currency": "USD", "value": 2.84 },
+            "net": { "currency": "USD", "value": 2.39 }
+          },
+          "undiscountedSingleBasePrice": {
+            "gross": { "currency": "USD", "value": 440.05 },
+            "net": { "currency": "USD", "value": 369.79 }
+          },
+          "valueRebatesTotal": {
+            "gross": { "currency": "USD", "value": 22.0 },
+            "net": { "currency": "USD", "value": 18.49 }
+          }
+        },
+        "product": "8182790134362",
+        "quantity": { "value": 1 },
+        "shipToAddress": "et8KCgoESygAAAF0r1lY9M_G",
+        "shippingMethod": "STD_GROUND"
+      },
+      "MtkKCgoERIUAAAF0MPpY9KBC": {
+        "attributes": [
+          {
+            "name": "ShippingMethodDisplayName",
+            "type": "String",
+            "value": "Standard Ground"
+          }
+        ],
+        "description": "Hands-free help from the Google Assistant",
+        "displayName": "Google Home",
+        "freeGift": false,
+        "fulfillmentStatus": "NEW",
+        "hiddenGift": false,
+        "id": "MtkKCgoERIUAAAF0MPpY9KBC",
+        "order": "c7wKCgoEpoUAAAF0LPpY9KBC",
+        "position": 1,
+        "pricing": {
+          "giftingTotal": {},
+          "price": {
+            "gross": { "currency": "USD", "value": 208.25 },
+            "net": { "currency": "USD", "value": 175.0 }
+          },
+          "salesTaxTotal": { "currency": "USD", "value": 33.25 },
+          "shippingRebatesTotal": {},
+          "shippingTaxTotal": { "currency": "USD", "value": 0.57 },
+          "singleBasePrice": {
+            "gross": { "currency": "USD", "value": 208.25 },
+            "net": { "currency": "USD", "value": 175.0 }
+          },
+          "undiscountedPrice": {
+            "gross": { "currency": "USD", "value": 208.25 },
+            "net": { "currency": "USD", "value": 175.0 }
+          },
+          "undiscountedShippingTotal": {
+            "gross": { "currency": "USD", "value": 3.59 },
+            "net": { "currency": "USD", "value": 3.02 }
+          },
+          "undiscountedSingleBasePrice": {
+            "gross": { "currency": "USD", "value": 208.25 },
+            "net": { "currency": "USD", "value": 175 }
+          },
+          "valueRebatesTotal": {}
+        },
+        "product": "201807171",
+        "quantity": { "value": 1 },
+        "shipToAddress": "pfwKCgoE3JsAAAF0LvpY9KBC",
+        "shippingMethod": "STD_GROUND"
+      },
+      ".b0KCgoEcBcAAAF0vllY9M_G": {
+        "attributes": [
+          {
+            "name": "ShippingMethodDisplayName",
+            "type": "String",
+            "value": "Standard Ground"
+          }
+        ],
+        "description": "Hands-free help from the Google Assistant",
+        "displayName": "Google Home",
+        "freeGift": false,
+        "fulfillmentStatus": "NEW",
+        "hiddenGift": false,
+        "id": ".b0KCgoEcBcAAAF0vllY9M_G",
+        "order": "8_4KCgoEc5IAAAF0qFlY9M_G",
+        "position": 3,
+        "pricing": {
+          "giftingTotal": {},
+          "price": {
+            "gross": { "currency": "USD", "value": 833.0 },
+            "net": { "currency": "USD", "value": 700.0 }
+          },
+          "salesTaxTotal": { "currency": "USD", "value": 133.0 },
+          "shippingRebatesTotal": {},
+          "shippingTaxTotal": { "currency": "USD", "value": 0.86 },
+          "singleBasePrice": {
+            "gross": { "currency": "USD", "value": 208.25 },
+            "net": { "currency": "USD", "value": 175.0 }
+          },
+          "undiscountedPrice": {
+            "gross": { "currency": "USD", "value": 833.0 },
+            "net": { "currency": "USD", "value": 700.0 }
+          },
+          "undiscountedShippingTotal": {
+            "gross": { "currency": "USD", "value": 5.38 },
+            "net": { "currency": "USD", "value": 4.52 }
+          },
+          "undiscountedSingleBasePrice": {
+            "gross": { "currency": "USD", "value": 208.25 },
+            "net": { "currency": "USD", "value": 175 }
+          },
+          "valueRebatesTotal": {}
+        },
+        "product": "201807171",
+        "quantity": { "value": 4 },
+        "shipToAddress": "et8KCgoESygAAAF0r1lY9M_G",
+        "shippingMethod": "STD_GROUND"
+      },
+      "I1IKCgoEWu4AAAF0dMdY9JCp": {
+        "attributes": [
+          {
+            "name": "ShippingMethodDisplayName",
+            "type": "String",
+            "value": "Standard Ground"
+          }
+        ],
+        "description": "Automate your lamps for easy control and convenience",
+        "displayName": "Philips Hue White Starter Kit",
+        "freeGift": false,
+        "fulfillmentStatus": "NEW",
+        "hiddenGift": false,
+        "id": "I1IKCgoEWu4AAAF0dMdY9JCp",
+        "order": "8OEKCgoEC0MAAAF0bcdY9JCp",
+        "position": 2,
+        "pricing": {
+          "giftingTotal": {},
+          "price": {
+            "gross": { "currency": "USD", "value": 118.99 },
+            "net": { "currency": "USD", "value": 99.99 }
+          },
+          "salesTaxTotal": { "currency": "USD", "value": 19.0 },
+          "shippingRebatesTotal": {},
+          "shippingTaxTotal": { "currency": "USD", "value": 0.09 },
+          "singleBasePrice": {
+            "gross": { "currency": "USD", "value": 118.99 },
+            "net": { "currency": "USD", "value": 99.99 }
+          },
+          "undiscountedPrice": {
+            "gross": { "currency": "USD", "value": 118.99 },
+            "net": { "currency": "USD", "value": 99.99 }
+          },
+          "undiscountedShippingTotal": {
+            "gross": { "currency": "USD", "value": 0.56 },
+            "net": { "currency": "USD", "value": 0.47 }
+          },
+          "undiscountedSingleBasePrice": {
+            "gross": { "currency": "USD", "value": 118.99 },
+            "net": { "currency": "USD", "value": 99.99 }
+          },
+          "valueRebatesTotal": {}
+        },
+        "product": "201807194",
+        "quantity": { "value": 1 },
+        "shipToAddress": "a68KCgoEuSkAAAF0csdY9JCp",
+        "shippingMethod": "STD_GROUND"
+      },
+      "5K8KCgoE_OEAAAF0dsdY9JCp": {
+        "attributes": [
+          {
+            "name": "ShippingMethodDisplayName",
+            "type": "String",
+            "value": "Standard Ground"
+          }
+        ],
+        "description": "High-performance capture. Touch-display convenience. - Features 1080p60 and",
+        "discounts": ["4eYKKol_5hQAAAFzB7xmvcTH_5PercentOnActionCams"],
+        "displayName": "GoPro HERO4 Silver",
+        "freeGift": false,
+        "fulfillmentStatus": "NEW",
+        "hiddenGift": false,
+        "id": "5K8KCgoE_OEAAAF0dsdY9JCp",
+        "order": "8OEKCgoEC0MAAAF0bcdY9JCp",
+        "position": 1,
+        "pricing": {
+          "giftingTotal": {},
+          "price": {
+            "gross": { "currency": "USD", "value": 418.05 },
+            "net": { "currency": "USD", "value": 351.3 }
+          },
+          "salesTaxTotal": { "currency": "USD", "value": 66.75 },
+          "shippingRebatesTotal": {},
+          "shippingTaxTotal": { "currency": "USD", "value": 0.33 },
+          "singleBasePrice": {
+            "gross": { "currency": "USD", "value": 418.05 },
+            "net": { "currency": "USD", "value": 351.3 }
+          },
+          "undiscountedPrice": {
+            "gross": { "currency": "USD", "value": 440.05 },
+            "net": { "currency": "USD", "value": 369.79 }
+          },
+          "undiscountedShippingTotal": {
+            "gross": { "currency": "USD", "value": 2.06 },
+            "net": { "currency": "USD", "value": 1.73 }
+          },
+          "undiscountedSingleBasePrice": {
+            "gross": { "currency": "USD", "value": 440.05 },
+            "net": { "currency": "USD", "value": 369.79 }
+          },
+          "valueRebatesTotal": {
+            "gross": { "currency": "USD", "value": 22.0 },
+            "net": { "currency": "USD", "value": 18.49 }
+          }
+        },
+        "product": "8182790134362",
+        "quantity": { "value": 1 },
+        "shipToAddress": "a68KCgoEuSkAAAF0csdY9JCp",
+        "shippingMethod": "STD_GROUND"
+      },
+      "Ck0KCgoEy.4AAAF0WjpY9Jbh": {
+        "attributes": [
+          {
+            "name": "ShippingMethodDisplayName",
+            "type": "String",
+            "value": "Standard Ground"
+          }
+        ],
+        "description": "Bietet Videoauflösungen von 1080p60 und 720p120, 12-MP-Fotos mit bis zu 30",
+        "discounts": ["4eYKKol_5hQAAAFzB7xmvcTH_5PercentOnActionCams"],
+        "displayName": "GoPro HERO4 Silver",
+        "freeGift": false,
+        "fulfillmentStatus": "NEW",
+        "hiddenGift": false,
+        "id": "Ck0KCgoEy.4AAAF0WjpY9Jbh",
+        "order": "nXMKCgoEU0kAAAF0VTpY9Jbh",
+        "position": 1,
+        "pricing": {
+          "giftingTotal": {},
+          "price": {
+            "gross": { "currency": "USD", "value": 836.1 },
+            "net": { "currency": "USD", "value": 702.6 }
+          },
+          "salesTaxTotal": { "currency": "USD", "value": 133.5 },
+          "shippingRebatesTotal": {},
+          "shippingTaxTotal": { "currency": "USD", "value": 0.57 },
+          "singleBasePrice": {
+            "gross": { "currency": "USD", "value": 418.05 },
+            "net": { "currency": "USD", "value": 351.3 }
+          },
+          "undiscountedPrice": {
+            "gross": { "currency": "USD", "value": 880.1 },
+            "net": { "currency": "USD", "value": 739.58 }
+          },
+          "undiscountedShippingTotal": {
+            "gross": { "currency": "USD", "value": 3.59 },
+            "net": { "currency": "USD", "value": 3.02 }
+          },
+          "undiscountedSingleBasePrice": {
+            "gross": { "currency": "USD", "value": 440.05 },
+            "net": { "currency": "USD", "value": 369.79 }
+          },
+          "valueRebatesTotal": {
+            "gross": { "currency": "USD", "value": 44.0 },
+            "net": { "currency": "USD", "value": 36.98 }
+          }
+        },
+        "product": "8182790134362",
+        "quantity": { "value": 2 },
+        "shipToAddress": "4WIKCgoEy.0AAAF0WjpY9Jbh",
+        "shippingMethod": "STD_GROUND"
+      },
+      "F6MKCgoEvdcAAAF0sANY9I1k": {
+        "attributes": [
+          {
+            "name": "ShippingMethodDisplayName",
+            "type": "String",
+            "value": "Standard Ground"
+          }
+        ],
+        "description": "AMD Dual-Core C-50 (1.0GHz, 1MB L2)",
+        "displayName": "Acer ICONIA W501P",
+        "freeGift": false,
+        "fulfillmentStatus": "NEW",
+        "hiddenGift": false,
+        "id": "F6MKCgoEvdcAAAF0sANY9I1k",
+        "order": "JIcKCgoEwb4AAAF0qANY9I1k",
+        "position": 4,
+        "pricing": {
+          "giftingTotal": {},
+          "price": {
+            "gross": { "currency": "USD", "value": 2295.52 },
+            "net": { "currency": "USD", "value": 1929.0 }
+          },
+          "salesTaxTotal": { "currency": "USD", "value": 366.52 },
+          "shippingRebatesTotal": {},
+          "shippingTaxTotal": { "currency": "USD", "value": 0.56 },
+          "singleBasePrice": {
+            "gross": { "currency": "USD", "value": 1147.76 },
+            "net": { "currency": "USD", "value": 964.5 }
+          },
+          "undiscountedPrice": {
+            "gross": { "currency": "USD", "value": 2295.52 },
+            "net": { "currency": "USD", "value": 1929.0 }
+          },
+          "undiscountedShippingTotal": {
+            "gross": { "currency": "USD", "value": 3.49 },
+            "net": { "currency": "USD", "value": 2.93 }
+          },
+          "undiscountedSingleBasePrice": {
+            "gross": { "currency": "USD", "value": 1147.76 },
+            "net": { "currency": "USD", "value": 964.5 }
+          },
+          "valueRebatesTotal": {}
+        },
+        "product": "8899566",
+        "quantity": { "value": 2 },
+        "shipToAddress": "crAKCgoE_DcAAAF0rANY9I1k",
+        "shippingMethod": "STD_GROUND"
+      },
+      "O9oKCgoE5WMAAAF0rQNY9I1k": {
+        "attributes": [
+          {
+            "name": "ShippingMethodDisplayName",
+            "type": "String",
+            "value": "Standard Ground"
+          }
+        ],
+        "description": "Automate your lamps for easy control and convenience",
+        "displayName": "Philips Hue White Starter Kit",
+        "freeGift": false,
+        "fulfillmentStatus": "NEW",
+        "hiddenGift": false,
+        "id": "O9oKCgoE5WMAAAF0rQNY9I1k",
+        "order": "JIcKCgoEwb4AAAF0qANY9I1k",
+        "position": 2,
+        "pricing": {
+          "giftingTotal": {},
+          "price": {
+            "gross": { "currency": "USD", "value": 237.98 },
+            "net": { "currency": "USD", "value": 199.98 }
+          },
+          "salesTaxTotal": { "currency": "USD", "value": 38.0 },
+          "shippingRebatesTotal": {},
+          "shippingTaxTotal": { "currency": "USD", "value": 0.06 },
+          "singleBasePrice": {
+            "gross": { "currency": "USD", "value": 118.99 },
+            "net": { "currency": "USD", "value": 99.99 }
+          },
+          "undiscountedPrice": {
+            "gross": { "currency": "USD", "value": 237.98 },
+            "net": { "currency": "USD", "value": 199.98 }
+          },
+          "undiscountedShippingTotal": {
+            "gross": { "currency": "USD", "value": 0.36 },
+            "net": { "currency": "USD", "value": 0.3 }
+          },
+          "undiscountedSingleBasePrice": {
+            "gross": { "currency": "USD", "value": 118.99 },
+            "net": { "currency": "USD", "value": 99.99 }
+          },
+          "valueRebatesTotal": {}
+        },
+        "product": "201807194",
+        "quantity": { "value": 2 },
+        "shipToAddress": "crAKCgoE_DcAAAF0rANY9I1k",
+        "shippingMethod": "STD_GROUND"
+      },
+      "8VUKCgoE5WIAAAF0rQNY9I1k": {
+        "attributes": [
+          {
+            "name": "ShippingMethodDisplayName",
+            "type": "String",
+            "value": "Standard Ground"
+          }
+        ],
+        "description": "Style and speed: Power through your day beautifully with up to 14.5 hours of battery life, Intel Core processor, and stunning touchscreen in a thin, light design and rich colors.",
+        "displayName": "Microsoft Surface Laptop",
+        "freeGift": false,
+        "fulfillmentStatus": "NEW",
+        "hiddenGift": false,
+        "id": "8VUKCgoE5WIAAAF0rQNY9I1k",
+        "order": "JIcKCgoEwb4AAAF0qANY9I1k",
+        "position": 3,
+        "pricing": {
+          "giftingTotal": {},
+          "price": {
+            "gross": { "currency": "USD", "value": 3091.62 },
+            "net": { "currency": "USD", "value": 2598.0 }
+          },
+          "salesTaxTotal": { "currency": "USD", "value": 493.62 },
+          "shippingRebatesTotal": {},
+          "shippingTaxTotal": { "currency": "USD", "value": 0.75 },
+          "singleBasePrice": {
+            "gross": { "currency": "USD", "value": 1545.81 },
+            "net": { "currency": "USD", "value": 1299.0 }
+          },
+          "undiscountedPrice": {
+            "gross": { "currency": "USD", "value": 3091.62 },
+            "net": { "currency": "USD", "value": 2598.0 }
+          },
+          "undiscountedShippingTotal": {
+            "gross": { "currency": "USD", "value": 4.69 },
+            "net": { "currency": "USD", "value": 3.94 }
+          },
+          "undiscountedSingleBasePrice": {
+            "gross": { "currency": "USD", "value": 1545.81 },
+            "net": { "currency": "USD", "value": 1299 }
+          },
+          "valueRebatesTotal": {}
+        },
+        "product": "201807204-01",
+        "quantity": { "value": 2 },
+        "shipToAddress": "crAKCgoE_DcAAAF0rANY9I1k",
+        "shippingMethod": "STD_GROUND"
+      },
+      ".lAKCgoEvr8AAAF0OWdY9M_Q": {
+        "attributes": [
+          {
+            "name": "ShippingMethodDisplayName",
+            "type": "String",
+            "value": "Standard Ground"
+          }
+        ],
+        "description": "Hands-free help from the Google Assistant",
+        "displayName": "Google Home",
+        "freeGift": false,
+        "fulfillmentStatus": "NEW",
+        "hiddenGift": false,
+        "id": ".lAKCgoEvr8AAAF0OWdY9M_Q",
+        "order": "APYKCgoECloAAAF0NGdY9M_Q",
+        "position": 1,
+        "pricing": {
+          "giftingTotal": {},
+          "price": {
+            "gross": { "currency": "USD", "value": 208.25 },
+            "net": { "currency": "USD", "value": 175.0 }
+          },
+          "salesTaxTotal": { "currency": "USD", "value": 33.25 },
+          "shippingRebatesTotal": {},
+          "shippingTaxTotal": { "currency": "USD", "value": 0.57 },
+          "singleBasePrice": {
+            "gross": { "currency": "USD", "value": 208.25 },
+            "net": { "currency": "USD", "value": 175.0 }
+          },
+          "undiscountedPrice": {
+            "gross": { "currency": "USD", "value": 208.25 },
+            "net": { "currency": "USD", "value": 175.0 }
+          },
+          "undiscountedShippingTotal": {
+            "gross": { "currency": "USD", "value": 3.59 },
+            "net": { "currency": "USD", "value": 3.02 }
+          },
+          "undiscountedSingleBasePrice": {
+            "gross": { "currency": "USD", "value": 208.25 },
+            "net": { "currency": "USD", "value": 175 }
+          },
+          "valueRebatesTotal": {}
+        },
+        "product": "201807171",
+        "quantity": { "value": 1 },
+        "shipToAddress": "NAwKCgoExFUAAAF0N2dY9M_Q",
+        "shippingMethod": "STD_GROUND"
+      },
+      "7sYKCgoENIcAAAF0zchY9Jqs": {
+        "attributes": [
+          { "name": "GiftOptionMarker", "type": "Boolean", "value": false },
+          {
+            "name": "ShippingMethodDisplayName",
+            "type": "String",
+            "value": "Ship To Store Delivery"
+          }
+        ],
+        "description": "The most powerful Surface ever",
+        "displayName": "Microsoft Surface Book 2",
+        "freeGift": false,
+        "fulfillmentStatus": "NEW",
+        "hiddenGift": false,
+        "id": "7sYKCgoENIcAAAF0zchY9Jqs",
+        "order": ".VsKCgoErmgAAAF0x8hY9Jqs",
+        "position": 1,
+        "pricing": {
+          "giftingTotal": {},
+          "price": {
+            "gross": { "currency": "USD", "value": 2973.81 },
+            "net": { "currency": "USD", "value": 2499.0 }
+          },
+          "salesTaxTotal": { "currency": "USD", "value": 474.81 },
+          "shippingRebatesTotal": {},
+          "shippingTaxTotal": { "currency": "USD", "value": 0.0 },
+          "singleBasePrice": {
+            "gross": { "currency": "USD", "value": 2973.81 },
+            "net": { "currency": "USD", "value": 2499.0 }
+          },
+          "undiscountedPrice": {
+            "gross": { "currency": "USD", "value": 2973.81 },
+            "net": { "currency": "USD", "value": 2499.0 }
+          },
+          "undiscountedShippingTotal": {
+            "gross": { "currency": "USD", "value": 0.0 },
+            "net": { "currency": "USD", "value": 0.0 }
+          },
+          "undiscountedSingleBasePrice": {
+            "gross": { "currency": "USD", "value": 2973.81 },
+            "net": { "currency": "USD", "value": 2499 }
+          },
+          "valueRebatesTotal": {}
+        },
+        "product": "201807231-02",
+        "quantity": { "value": 1 },
+        "shipToAddress": "F4kKCgoE2BQAAAF0yshY9Jqs",
+        "shippingMethod": "SHIPTOSTORE"
+      },
+      "W8cKCgoENfIAAAF0z.9Y9JMZ": {
+        "attributes": [
+          {
+            "name": "ShippingMethodDisplayName",
+            "type": "String",
+            "value": "Standard Ground"
+          }
+        ],
+        "description": "Bietet Videoauflösungen von 1080p60 und 720p120, 12-MP-Fotos mit bis zu 30",
+        "discounts": ["4eYKKol_5hQAAAFzB7xmvcTH_5PercentOnActionCams"],
+        "displayName": "GoPro HERO4 Silver",
+        "freeGift": false,
+        "fulfillmentStatus": "Received",
+        "hiddenGift": false,
+        "id": "W8cKCgoENfIAAAF0z.9Y9JMZ",
+        "order": "bn4KCgoE8eoAAAF0y.9Y9JMZ",
+        "position": 1,
+        "pricing": {
+          "giftingTotal": {},
+          "price": {
+            "gross": { "currency": "USD", "value": 836.1 },
+            "net": { "currency": "USD", "value": 702.6 }
+          },
+          "salesTaxTotal": { "currency": "USD", "value": 133.5 },
+          "shippingRebatesTotal": {},
+          "shippingTaxTotal": { "currency": "USD", "value": 0.57 },
+          "singleBasePrice": {
+            "gross": { "currency": "USD", "value": 418.05 },
+            "net": { "currency": "USD", "value": 351.3 }
+          },
+          "undiscountedPrice": {
+            "gross": { "currency": "USD", "value": 880.1 },
+            "net": { "currency": "USD", "value": 739.58 }
+          },
+          "undiscountedShippingTotal": {
+            "gross": { "currency": "USD", "value": 3.59 },
+            "net": { "currency": "USD", "value": 3.02 }
+          },
+          "undiscountedSingleBasePrice": {
+            "gross": { "currency": "USD", "value": 440.05 },
+            "net": { "currency": "USD", "value": 369.79 }
+          },
+          "valueRebatesTotal": {
+            "gross": { "currency": "USD", "value": 44.0 },
+            "net": { "currency": "USD", "value": 36.98 }
+          }
+        },
+        "product": "8182790134362",
+        "quantity": { "value": 2 },
+        "shipToAddress": "A9QKCgoEKYYAAAF0zu9Y9JMZ",
+        "shippingMethod": "STD_GROUND"
+      },
+      "ePMKCgoENIgAAAF0zchY9Jqs": {
+        "attributes": [
+          {
+            "name": "ShippingMethodDisplayName",
+            "type": "String",
+            "value": "Ship To Store Delivery"
+          }
+        ],
+        "description": "Hands-free help from the Google Assistant",
+        "displayName": "Google Home",
+        "freeGift": false,
+        "fulfillmentStatus": "NEW",
+        "hiddenGift": false,
+        "id": "ePMKCgoENIgAAAF0zchY9Jqs",
+        "order": ".VsKCgoErmgAAAF0x8hY9Jqs",
+        "position": 2,
+        "pricing": {
+          "giftingTotal": {},
+          "price": {
+            "gross": { "currency": "USD", "value": 416.5 },
+            "net": { "currency": "USD", "value": 350.0 }
+          },
+          "salesTaxTotal": { "currency": "USD", "value": 66.5 },
+          "shippingRebatesTotal": {},
+          "shippingTaxTotal": { "currency": "USD", "value": 0.0 },
+          "singleBasePrice": {
+            "gross": { "currency": "USD", "value": 208.25 },
+            "net": { "currency": "USD", "value": 175.0 }
+          },
+          "undiscountedPrice": {
+            "gross": { "currency": "USD", "value": 416.5 },
+            "net": { "currency": "USD", "value": 350.0 }
+          },
+          "undiscountedShippingTotal": {
+            "gross": { "currency": "USD", "value": 0.0 },
+            "net": { "currency": "USD", "value": 0.0 }
+          },
+          "undiscountedSingleBasePrice": {
+            "gross": { "currency": "USD", "value": 208.25 },
+            "net": { "currency": "USD", "value": 175 }
+          },
+          "valueRebatesTotal": {}
+        },
+        "product": "201807171",
+        "quantity": { "value": 2 },
+        "shipToAddress": "F4kKCgoE2BQAAAF0yshY9Jqs",
+        "shippingMethod": "SHIPTOSTORE"
+      },
+      "n6IKCgoExtYAAAF0AX9Y9Jb8": {
+        "attributes": [
+          {
+            "name": "ShippingMethodDisplayName",
+            "type": "String",
+            "value": "Standard Ground"
+          }
+        ],
+        "description": "Hilfe per Sprachsteuerung von Google Assistant",
+        "displayName": "Google Home",
+        "freeGift": false,
+        "fulfillmentStatus": "NEW",
+        "hiddenGift": false,
+        "id": "n6IKCgoExtYAAAF0AX9Y9Jb8",
+        "order": "x1EKCgoEnp8AAAF0_H5Y9Jb8",
+        "position": 1,
+        "pricing": {
+          "giftingTotal": {},
+          "price": {
+            "gross": { "currency": "USD", "value": 208.25 },
+            "net": { "currency": "USD", "value": 175.0 }
+          },
+          "salesTaxTotal": { "currency": "USD", "value": 33.25 },
+          "shippingRebatesTotal": {},
+          "shippingTaxTotal": { "currency": "USD", "value": 0.29 },
+          "singleBasePrice": {
+            "gross": { "currency": "USD", "value": 208.25 },
+            "net": { "currency": "USD", "value": 175.0 }
+          },
+          "undiscountedPrice": {
+            "gross": { "currency": "USD", "value": 208.25 },
+            "net": { "currency": "USD", "value": 175.0 }
+          },
+          "undiscountedShippingTotal": {
+            "gross": { "currency": "USD", "value": 1.8 },
+            "net": { "currency": "USD", "value": 1.51 }
+          },
+          "undiscountedSingleBasePrice": {
+            "gross": { "currency": "USD", "value": 208.25 },
+            "net": { "currency": "USD", "value": 175 }
+          },
+          "valueRebatesTotal": {}
+        },
+        "product": "201807171",
+        "quantity": { "value": 1 },
+        "shipToAddress": "SScKCgoE59cAAAF0_35Y9Jb8",
+        "shippingMethod": "STD_GROUND"
+      },
+      "qToKCgoEvdYAAAF0sANY9I1k": {
+        "attributes": [
+          {
+            "name": "ShippingMethodDisplayName",
+            "type": "String",
+            "value": "Standard Ground"
+          }
+        ],
+        "description": "The most powerful Surface ever",
+        "displayName": "Microsoft Surface Book 2",
+        "freeGift": false,
+        "fulfillmentStatus": "NEW",
+        "hiddenGift": false,
+        "id": "qToKCgoEvdYAAAF0sANY9I1k",
+        "order": "JIcKCgoEwb4AAAF0qANY9I1k",
+        "position": 5,
+        "pricing": {
+          "giftingTotal": {},
+          "price": {
+            "gross": { "currency": "USD", "value": 3568.81 },
+            "net": { "currency": "USD", "value": 2999.0 }
+          },
+          "salesTaxTotal": { "currency": "USD", "value": 569.81 },
+          "shippingRebatesTotal": {},
+          "shippingTaxTotal": { "currency": "USD", "value": 0.86 },
+          "singleBasePrice": {
+            "gross": { "currency": "USD", "value": 3568.81 },
+            "net": { "currency": "USD", "value": 2999.0 }
+          },
+          "undiscountedPrice": {
+            "gross": { "currency": "USD", "value": 3568.81 },
+            "net": { "currency": "USD", "value": 2999.0 }
+          },
+          "undiscountedShippingTotal": {
+            "gross": { "currency": "USD", "value": 5.41 },
+            "net": { "currency": "USD", "value": 4.55 }
+          },
+          "undiscountedSingleBasePrice": {
+            "gross": { "currency": "USD", "value": 3568.81 },
+            "net": { "currency": "USD", "value": 2999 }
+          },
+          "valueRebatesTotal": {}
+        },
+        "product": "201807231-03",
+        "quantity": { "value": 1 },
+        "shipToAddress": "crAKCgoE_DcAAAF0rANY9I1k",
+        "shippingMethod": "STD_GROUND"
+      },
+      "dVoKCgoEIH4AAAF0qXVY9ERI": {
+        "attributes": [
+          {
+            "name": "ShippingMethodDisplayName",
+            "type": "String",
+            "value": "Standard Ground"
+          }
+        ],
+        "description": "Hands-free help from the Google Assistant",
+        "displayName": "Google Home",
+        "freeGift": false,
+        "fulfillmentStatus": "NEW",
+        "hiddenGift": false,
+        "id": "dVoKCgoEIH4AAAF0qXVY9ERI",
+        "order": "Of8KCgoEiVwAAAF0WHVY9ERI",
+        "position": 1,
+        "pricing": {
+          "giftingTotal": {},
+          "price": {
+            "gross": { "currency": "USD", "value": 208.25 },
+            "net": { "currency": "USD", "value": 175.0 }
+          },
+          "salesTaxTotal": { "currency": "USD", "value": 33.25 },
+          "shippingRebatesTotal": {},
+          "shippingTaxTotal": { "currency": "USD", "value": 0.57 },
+          "singleBasePrice": {
+            "gross": { "currency": "USD", "value": 208.25 },
+            "net": { "currency": "USD", "value": 175.0 }
+          },
+          "undiscountedPrice": {
+            "gross": { "currency": "USD", "value": 208.25 },
+            "net": { "currency": "USD", "value": 175.0 }
+          },
+          "undiscountedShippingTotal": {
+            "gross": { "currency": "USD", "value": 3.59 },
+            "net": { "currency": "USD", "value": 3.02 }
+          },
+          "undiscountedSingleBasePrice": {
+            "gross": { "currency": "USD", "value": 208.25 },
+            "net": { "currency": "USD", "value": 175 }
+          },
+          "valueRebatesTotal": {}
+        },
+        "product": "201807171",
+        "quantity": { "value": 1 },
+        "shipToAddress": "jxcKCgoEIH0AAAF0qXVY9ERI",
+        "shippingMethod": "STD_GROUND"
+      },
+      "pfsKCgoEWRkAAAF0vVlY9M_G": {
+        "attributes": [
+          {
+            "name": "ShippingMethodDisplayName",
+            "type": "String",
+            "value": "Standard Ground"
+          }
+        ],
+        "description": "This 296-page book features everything you need to know about how to shoot, edit",
+        "discounts": ["4eYKKol_5hQAAAFzB7xmvcTH_5PercentOnActionCams"],
+        "displayName": "GoPro: Professional Guide to Filmmaking",
+        "freeGift": false,
+        "fulfillmentStatus": "NEW",
+        "hiddenGift": false,
+        "id": "pfsKCgoEWRkAAAF0vVlY9M_G",
+        "order": "8_4KCgoEc5IAAAF0qFlY9M_G",
+        "position": 4,
+        "pricing": {
+          "giftingTotal": {},
+          "price": {
+            "gross": { "currency": "USD", "value": 26.36 },
+            "net": { "currency": "USD", "value": 24.64 }
+          },
+          "salesTaxTotal": { "currency": "USD", "value": 1.72 },
+          "shippingRebatesTotal": {},
+          "shippingTaxTotal": { "currency": "USD", "value": 0.01 },
+          "singleBasePrice": {
+            "gross": { "currency": "USD", "value": 26.36 },
+            "net": { "currency": "USD", "value": 24.64 }
+          },
+          "undiscountedPrice": {
+            "gross": { "currency": "USD", "value": 27.76 },
+            "net": { "currency": "USD", "value": 25.94 }
+          },
+          "undiscountedShippingTotal": {
+            "gross": { "currency": "USD", "value": 0.18 },
+            "net": { "currency": "USD", "value": 0.17 }
+          },
+          "undiscountedSingleBasePrice": {
+            "gross": { "currency": "USD", "value": 27.76 },
+            "net": { "currency": "USD", "value": 25.94 }
+          },
+          "valueRebatesTotal": {
+            "gross": { "currency": "USD", "value": 1.4 },
+            "net": { "currency": "USD", "value": 1.3 }
+          }
+        },
+        "product": "9780321934161",
+        "quantity": { "value": 1 },
+        "shipToAddress": "et8KCgoESygAAAF0r1lY9M_G",
+        "shippingMethod": "STD_GROUND"
+      },
+      "WwcKCgoEQSkAAAF0c8dY9JCp": {
+        "attributes": [
+          {
+            "name": "ShippingMethodDisplayName",
+            "type": "String",
+            "value": "Standard Ground"
+          }
+        ],
+        "description": "Hands-free help from the Google Assistant",
+        "displayName": "Google Home",
+        "freeGift": false,
+        "fulfillmentStatus": "NEW",
+        "hiddenGift": false,
+        "id": "WwcKCgoEQSkAAAF0c8dY9JCp",
+        "order": "8OEKCgoEC0MAAAF0bcdY9JCp",
+        "position": 3,
+        "pricing": {
+          "giftingTotal": {},
+          "price": {
+            "gross": { "currency": "USD", "value": 208.25 },
+            "net": { "currency": "USD", "value": 175.0 }
+          },
+          "salesTaxTotal": { "currency": "USD", "value": 33.25 },
+          "shippingRebatesTotal": {},
+          "shippingTaxTotal": { "currency": "USD", "value": 0.16 },
+          "singleBasePrice": {
+            "gross": { "currency": "USD", "value": 208.25 },
+            "net": { "currency": "USD", "value": 175.0 }
+          },
+          "undiscountedPrice": {
+            "gross": { "currency": "USD", "value": 208.25 },
+            "net": { "currency": "USD", "value": 175.0 }
+          },
+          "undiscountedShippingTotal": {
+            "gross": { "currency": "USD", "value": 0.98 },
+            "net": { "currency": "USD", "value": 0.82 }
+          },
+          "undiscountedSingleBasePrice": {
+            "gross": { "currency": "USD", "value": 208.25 },
+            "net": { "currency": "USD", "value": 175 }
+          },
+          "valueRebatesTotal": {}
+        },
+        "product": "201807171",
+        "quantity": { "value": 1 },
+        "shipToAddress": "a68KCgoEuSkAAAF0csdY9JCp",
+        "shippingMethod": "STD_GROUND"
+      },
+      "fHMKCgoEb5sAAAF0sFlY9M_G": {
+        "attributes": [
+          {
+            "name": "ShippingMethodDisplayName",
+            "type": "String",
+            "value": "Standard Ground"
+          }
+        ],
+        "description": "Automate your lamps for easy control and convenience",
+        "displayName": "Philips Hue White Starter Kit",
+        "freeGift": false,
+        "fulfillmentStatus": "NEW",
+        "hiddenGift": false,
+        "id": "fHMKCgoEb5sAAAF0sFlY9M_G",
+        "order": "8_4KCgoEc5IAAAF0qFlY9M_G",
+        "position": 2,
+        "pricing": {
+          "giftingTotal": {},
+          "price": {
+            "gross": { "currency": "USD", "value": 237.98 },
+            "net": { "currency": "USD", "value": 199.98 }
+          },
+          "salesTaxTotal": { "currency": "USD", "value": 38.0 },
+          "shippingRebatesTotal": {},
+          "shippingTaxTotal": { "currency": "USD", "value": 0.25 },
+          "singleBasePrice": {
+            "gross": { "currency": "USD", "value": 118.99 },
+            "net": { "currency": "USD", "value": 99.99 }
+          },
+          "undiscountedPrice": {
+            "gross": { "currency": "USD", "value": 237.98 },
+            "net": { "currency": "USD", "value": 199.98 }
+          },
+          "undiscountedShippingTotal": {
+            "gross": { "currency": "USD", "value": 1.54 },
+            "net": { "currency": "USD", "value": 1.29 }
+          },
+          "undiscountedSingleBasePrice": {
+            "gross": { "currency": "USD", "value": 118.99 },
+            "net": { "currency": "USD", "value": 99.99 }
+          },
+          "valueRebatesTotal": {}
+        },
+        "product": "201807194",
+        "quantity": { "value": 2 },
+        "shipToAddress": "et8KCgoESygAAAF0r1lY9M_G",
+        "shippingMethod": "STD_GROUND"
+      },
+      "r8kKCgoExtcAAAF0AX9Y9Jb8": {
+        "attributes": [
+          {
+            "name": "ShippingMethodDisplayName",
+            "type": "String",
+            "value": "Standard Ground"
+          }
+        ],
+        "description": "Style and speed: Power through your day beautifully with up to 14.5 hours of battery life, Intel Core processor, and stunning touchscreen in a thin, light design and rich colors.",
+        "displayName": "Microsoft Surface Laptop",
+        "freeGift": false,
+        "fulfillmentStatus": "NEW",
+        "hiddenGift": false,
+        "id": "r8kKCgoExtcAAAF0AX9Y9Jb8",
+        "order": "x1EKCgoEnp8AAAF0_H5Y9Jb8",
+        "position": 2,
+        "pricing": {
+          "giftingTotal": {},
+          "price": {
+            "gross": { "currency": "USD", "value": 1545.81 },
+            "net": { "currency": "USD", "value": 1299.0 }
+          },
+          "salesTaxTotal": { "currency": "USD", "value": 246.81 },
+          "shippingRebatesTotal": {},
+          "shippingTaxTotal": { "currency": "USD", "value": 0.29 },
+          "singleBasePrice": {
+            "gross": { "currency": "USD", "value": 1545.81 },
+            "net": { "currency": "USD", "value": 1299.0 }
+          },
+          "undiscountedPrice": {
+            "gross": { "currency": "USD", "value": 1545.81 },
+            "net": { "currency": "USD", "value": 1299.0 }
+          },
+          "undiscountedShippingTotal": {
+            "gross": { "currency": "USD", "value": 1.8 },
+            "net": { "currency": "USD", "value": 1.51 }
+          },
+          "undiscountedSingleBasePrice": {
+            "gross": { "currency": "USD", "value": 1545.81 },
+            "net": { "currency": "USD", "value": 1299 }
+          },
+          "valueRebatesTotal": {}
+        },
+        "product": "201807204-01",
+        "quantity": { "value": 1 },
+        "shipToAddress": "SScKCgoE59cAAAF0_35Y9Jb8",
+        "shippingMethod": "STD_GROUND"
+      },
+      "zJAKCgoEhEkAAAF00jNY9KA8": {
+        "attributes": [
+          {
+            "name": "ShippingMethodDisplayName",
+            "type": "String",
+            "value": "Standard Ground"
+          }
+        ],
+        "description": "Hands-free help from the Google Assistant",
+        "displayName": "Google Home",
+        "freeGift": false,
+        "fulfillmentStatus": "NEW",
+        "hiddenGift": false,
+        "id": "zJAKCgoEhEkAAAF00jNY9KA8",
+        "order": "FVQKCgoEvvoAAAF0zDNY9KA8",
+        "position": 1,
+        "pricing": {
+          "giftingTotal": {},
+          "price": {
+            "gross": { "currency": "USD", "value": 208.25 },
+            "net": { "currency": "USD", "value": 175.0 }
+          },
+          "salesTaxTotal": { "currency": "USD", "value": 33.25 },
+          "shippingRebatesTotal": {},
+          "shippingTaxTotal": { "currency": "USD", "value": 0.57 },
+          "singleBasePrice": {
+            "gross": { "currency": "USD", "value": 208.25 },
+            "net": { "currency": "USD", "value": 175.0 }
+          },
+          "undiscountedPrice": {
+            "gross": { "currency": "USD", "value": 208.25 },
+            "net": { "currency": "USD", "value": 175.0 }
+          },
+          "undiscountedShippingTotal": {
+            "gross": { "currency": "USD", "value": 3.59 },
+            "net": { "currency": "USD", "value": 3.02 }
+          },
+          "undiscountedSingleBasePrice": {
+            "gross": { "currency": "USD", "value": 208.25 },
+            "net": { "currency": "USD", "value": 175 }
+          },
+          "valueRebatesTotal": {}
+        },
+        "product": "201807171",
+        "quantity": { "value": 1 },
+        "shipToAddress": "C1gKCgoESnEAAAF00TNY9KA8",
+        "shippingMethod": "STD_GROUND"
+      },
+      "M3kKCgoE5WEAAAF0rQNY9I1k": {
+        "attributes": [
+          {
+            "name": "ShippingMethodDisplayName",
+            "type": "String",
+            "value": "Standard Ground"
+          }
+        ],
+        "description": "Hands-free help from the Google Assistant",
+        "displayName": "Google Home",
+        "freeGift": false,
+        "fulfillmentStatus": "NEW",
+        "hiddenGift": false,
+        "id": "M3kKCgoE5WEAAAF0rQNY9I1k",
+        "order": "JIcKCgoEwb4AAAF0qANY9I1k",
+        "position": 1,
+        "pricing": {
+          "giftingTotal": {},
+          "price": {
+            "gross": { "currency": "USD", "value": 624.75 },
+            "net": { "currency": "USD", "value": 525.0 }
+          },
+          "salesTaxTotal": { "currency": "USD", "value": 99.75 },
+          "shippingRebatesTotal": {},
+          "shippingTaxTotal": { "currency": "USD", "value": 0.15 },
+          "singleBasePrice": {
+            "gross": { "currency": "USD", "value": 208.25 },
+            "net": { "currency": "USD", "value": 175.0 }
+          },
+          "undiscountedPrice": {
+            "gross": { "currency": "USD", "value": 624.75 },
+            "net": { "currency": "USD", "value": 525.0 }
+          },
+          "undiscountedShippingTotal": {
+            "gross": { "currency": "USD", "value": 0.95 },
+            "net": { "currency": "USD", "value": 0.8 }
+          },
+          "undiscountedSingleBasePrice": {
+            "gross": { "currency": "USD", "value": 208.25 },
+            "net": { "currency": "USD", "value": 175 }
+          },
+          "valueRebatesTotal": {}
+        },
+        "product": "201807171",
+        "quantity": { "value": 3 },
+        "shipToAddress": "crAKCgoE_DcAAAF0rANY9I1k",
+        "shippingMethod": "STD_GROUND"
+      },
+      "r4AKCgoEEn0AAAF0oopY9N.K": {
+        "attributes": [
+          {
+            "name": "ShippingMethodDisplayName",
+            "type": "String",
+            "value": "Standard Ground"
+          }
+        ],
+        "description": "Style and speed: Power through your day beautifully with up to 14.5 hours of battery life, Intel Core processor, and stunning touchscreen in a thin, light design and rich colors.",
+        "displayName": "Microsoft Surface Laptop",
+        "freeGift": false,
+        "fulfillmentStatus": "NEW",
+        "hiddenGift": false,
+        "id": "r4AKCgoEEn0AAAF0oopY9N.K",
+        "order": "5ZMKCgoEKH4AAAF0nYpY9N.K",
+        "position": 2,
+        "pricing": {
+          "giftingTotal": {},
+          "price": {
+            "gross": { "currency": "USD", "value": 1545.81 },
+            "net": { "currency": "USD", "value": 1299.0 }
+          },
+          "salesTaxTotal": { "currency": "USD", "value": 246.81 },
+          "shippingRebatesTotal": {},
+          "shippingTaxTotal": { "currency": "USD", "value": 0.29 },
+          "singleBasePrice": {
+            "gross": { "currency": "USD", "value": 1545.81 },
+            "net": { "currency": "USD", "value": 1299.0 }
+          },
+          "undiscountedPrice": {
+            "gross": { "currency": "USD", "value": 1545.81 },
+            "net": { "currency": "USD", "value": 1299.0 }
+          },
+          "undiscountedShippingTotal": {
+            "gross": { "currency": "USD", "value": 1.8 },
+            "net": { "currency": "USD", "value": 1.51 }
+          },
+          "undiscountedSingleBasePrice": {
+            "gross": { "currency": "USD", "value": 1545.81 },
+            "net": { "currency": "USD", "value": 1299 }
+          },
+          "valueRebatesTotal": {}
+        },
+        "product": "201807204-01",
+        "quantity": { "value": 1 },
+        "shipToAddress": "pqYKCgoEKAAAAAF0n4pY9N.K",
+        "shippingMethod": "STD_GROUND"
+      }
+    },
+    "payments_paymentInstrument": {
+      "ISH_CASH_ON_DELIVERY": { "id": "ISH_CASH_ON_DELIVERY" },
+      "i4MKCgoE.3AAAAF0qnVY9ERI": {
+        "accountIdentifier": "************4441",
+        "id": "i4MKCgoE.3AAAAF0qnVY9ERI",
+        "numberOfPayments": 0,
+        "parameters": [
+          { "name": "holder", "value": "asd" },
+          { "name": "IBAN", "value": "************4441" },
+          { "name": "BIC", "value": "12345678" }
+        ],
+        "paymentMethod": "ISH_DEBIT_TRANSFER",
+        "urn": "urn:payment-instrument:order:Of8KCgoEiVwAAAF0WHVY9ERI:i4MKCgoE.3AAAAF0qnVY9ERI"
+      },
+      "ISH_INVOICE": { "id": "ISH_INVOICE" }
+    },
+    "discounts": {},
+    "lineItems_discounts": {
+      "4eYKKol_5hQAAAFzB7xmvcTH_5PercentOnActionCams": {
+        "id": "4eYKKol_5hQAAAFzB7xmvcTH_5PercentOnActionCams",
+        "amount": {
+          "gross": { "currency": "USD", "value": 1.4 },
+          "net": { "currency": "USD", "value": 1.3 }
+        },
+        "promotion": "5PercentOnActionCams"
+      }
+    },
+    "commonShippingMethod": {
+      "STD_GROUND": {
+        "attributes": [
+          {
+            "name": "description",
+            "type": "String",
+            "value": "3-7 Day Ground - Delivered to you 3-7 business days after we process your order."
+          },
+          {
+            "name": "displayName",
+            "type": "String",
+            "value": "Standard Ground"
+          }
+        ],
+        "description": "3-7 Day Ground - Delivered to you 3-7 business days after we process your order.",
+        "digitalDelivery": false,
+        "id": "STD_GROUND",
+        "name": "Standard Ground"
+      },
+      "SHIPTOSTORE": {
+        "attributes": [
+          {
+            "name": "description",
+            "type": "String",
+            "value": "Ship to Store, Delivered to the store 0-3 business days after we process your order."
+          },
+          {
+            "name": "displayName",
+            "type": "String",
+            "value": "Ship To Store Delivery"
+          }
+        ],
+        "description": "Ship to Store, Delivered to the store 0-3 business days after we process your order.",
+        "digitalDelivery": false,
+        "id": "SHIPTOSTORE",
+        "name": "Ship To Store Delivery"
+      }
+    },
+    "payments": {
+      "qYEKCgoE0lcAAAF0o4pY9N.K": {
+        "baseAmount": { "currency": "USD", "value": 5118.22 },
+        "id": "qYEKCgoE0lcAAAF0o4pY9N.K",
+        "openTender": true,
+        "paymentCosts": {
+          "gross": { "currency": "USD", "value": 0.0 },
+          "net": { "currency": "USD", "value": 0.0 },
+          "tax": { "currency": "USD", "value": 0.0 }
+        },
+        "paymentInstrument": "ISH_CASH_ON_DELIVERY",
+        "paymentMethod": "ISH_CASH_ON_DELIVERY",
+        "redirectRequired": false,
+        "status": "Unprocessed",
+        "totalAmount": { "currency": "USD", "value": 5118.22 }
+      },
+      "p38KCgoELhkAAAF0An9Y9Jb8": {
+        "baseAmount": { "currency": "USD", "value": 1757.66 },
+        "id": "p38KCgoELhkAAAF0An9Y9Jb8",
+        "openTender": true,
+        "paymentCosts": {
+          "gross": { "currency": "USD", "value": 0.0 },
+          "net": { "currency": "USD", "value": 0.0 },
+          "tax": { "currency": "USD", "value": 0.0 }
+        },
+        "paymentInstrument": "ISH_INVOICE",
+        "paymentMethod": "ISH_INVOICE",
+        "redirectRequired": false,
+        "status": "Unprocessed",
+        "totalAmount": { "currency": "USD", "value": 1757.66 }
+      },
+      "kKsKCgoEKLQAAAF0OmdY9M_Q": {
+        "baseAmount": { "currency": "USD", "value": 211.84 },
+        "id": "kKsKCgoEKLQAAAF0OmdY9M_Q",
+        "openTender": true,
+        "paymentCosts": {
+          "gross": { "currency": "USD", "value": 0.0 },
+          "net": { "currency": "USD", "value": 0.0 },
+          "tax": { "currency": "USD", "value": 0.0 }
+        },
+        "paymentInstrument": "ISH_INVOICE",
+        "paymentMethod": "ISH_INVOICE",
+        "redirectRequired": false,
+        "status": "Unprocessed",
+        "totalAmount": { "currency": "USD", "value": 211.84 }
+      },
+      "vkcKCgoENe4AAAF0v1lY9M_G": {
+        "baseAmount": { "currency": "USD", "value": 1525.33 },
+        "id": "vkcKCgoENe4AAAF0v1lY9M_G",
+        "openTender": true,
+        "paymentCosts": {
+          "gross": { "currency": "USD", "value": 0.0 },
+          "net": { "currency": "USD", "value": 0.0 },
+          "tax": { "currency": "USD", "value": 0.0 }
+        },
+        "paymentInstrument": "ISH_INVOICE",
+        "paymentMethod": "ISH_INVOICE",
+        "redirectRequired": false,
+        "status": "Unprocessed",
+        "totalAmount": { "currency": "USD", "value": 1525.33 }
+      },
+      "i4MKCgoE.3AAAAF0qnVY9ERI": {
+        "baseAmount": { "currency": "USD", "value": 211.84 },
+        "id": "i4MKCgoE.3AAAAF0qnVY9ERI",
+        "openTender": true,
+        "paymentCosts": {
+          "gross": { "currency": "USD", "value": 0.0 },
+          "net": { "currency": "USD", "value": 0.0 },
+          "tax": { "currency": "USD", "value": 0.0 }
+        },
+        "paymentInstrument": "i4MKCgoE.3AAAAF0qnVY9ERI",
+        "paymentMethod": "ISH_DEBIT_TRANSFER",
+        "redirectRequired": false,
+        "status": "Unprocessed",
+        "totalAmount": { "currency": "USD", "value": 211.84 }
+      },
+      "t9QKCgoEa9sAAAF0MfpY9KBC": {
+        "baseAmount": { "currency": "USD", "value": 211.84 },
+        "id": "t9QKCgoEa9sAAAF0MfpY9KBC",
+        "openTender": true,
+        "paymentCosts": {
+          "gross": { "currency": "USD", "value": 0.0 },
+          "net": { "currency": "USD", "value": 0.0 },
+          "tax": { "currency": "USD", "value": 0.0 }
+        },
+        "paymentInstrument": "ISH_INVOICE",
+        "paymentMethod": "ISH_INVOICE",
+        "redirectRequired": false,
+        "status": "Unprocessed",
+        "totalAmount": { "currency": "USD", "value": 211.84 }
+      },
+      "i7QKCgoENi8AAAF00O9Y9JMZ": {
+        "baseAmount": { "currency": "USD", "value": 839.69 },
+        "id": "i7QKCgoENi8AAAF00O9Y9JMZ",
+        "openTender": true,
+        "paymentCosts": {
+          "gross": { "currency": "USD", "value": 0.0 },
+          "net": { "currency": "USD", "value": 0.0 },
+          "tax": { "currency": "USD", "value": 0.0 }
+        },
+        "paymentInstrument": "ISH_INVOICE",
+        "paymentMethod": "ISH_INVOICE",
+        "redirectRequired": false,
+        "status": "Unprocessed",
+        "totalAmount": { "currency": "USD", "value": 839.69 }
+      },
+      "uMoKCgoEUoUAAAF0sQNY9I1k": {
+        "baseAmount": { "currency": "USD", "value": 9833.58 },
+        "id": "uMoKCgoEUoUAAAF0sQNY9I1k",
+        "openTender": true,
+        "paymentCosts": {
+          "gross": { "currency": "USD", "value": 0.0 },
+          "net": { "currency": "USD", "value": 0.0 },
+          "tax": { "currency": "USD", "value": 0.0 }
+        },
+        "paymentInstrument": "ISH_CASH_ON_DELIVERY",
+        "paymentMethod": "ISH_CASH_ON_DELIVERY",
+        "redirectRequired": false,
+        "status": "Unprocessed",
+        "totalAmount": { "currency": "USD", "value": 9833.58 }
+      },
+      "m7gKCgoEf18AAAF00zNY9KA8": {
+        "baseAmount": { "currency": "USD", "value": 211.84 },
+        "id": "m7gKCgoEf18AAAF00zNY9KA8",
+        "openTender": true,
+        "paymentCosts": {
+          "gross": { "currency": "USD", "value": 0.0 },
+          "net": { "currency": "USD", "value": 0.0 },
+          "tax": { "currency": "USD", "value": 0.0 }
+        },
+        "paymentInstrument": "ISH_INVOICE",
+        "paymentMethod": "ISH_INVOICE",
+        "redirectRequired": false,
+        "status": "Unprocessed",
+        "totalAmount": { "currency": "USD", "value": 211.84 }
+      },
+      "gCwKCgoEqOMAAAF0z8hY9Jqs": {
+        "baseAmount": { "currency": "USD", "value": 3390.31 },
+        "id": "gCwKCgoEqOMAAAF0z8hY9Jqs",
+        "openTender": true,
+        "paymentCosts": {
+          "gross": { "currency": "USD", "value": 0.0 },
+          "net": { "currency": "USD", "value": 0.0 },
+          "tax": { "currency": "USD", "value": 0.0 }
+        },
+        "paymentInstrument": "ISH_INVOICE",
+        "paymentMethod": "ISH_INVOICE",
+        "redirectRequired": false,
+        "status": "Unprocessed",
+        "totalAmount": { "currency": "USD", "value": 3390.31 }
+      },
+      "e04KCgoEDLcAAAF0XDpY9Jbh": {
+        "baseAmount": { "currency": "USD", "value": 839.69 },
+        "id": "e04KCgoEDLcAAAF0XDpY9Jbh",
+        "openTender": true,
+        "paymentCosts": {
+          "gross": { "currency": "USD", "value": 0.0 },
+          "net": { "currency": "USD", "value": 0.0 },
+          "tax": { "currency": "USD", "value": 0.0 }
+        },
+        "paymentInstrument": "ISH_INVOICE",
+        "paymentMethod": "ISH_INVOICE",
+        "redirectRequired": false,
+        "status": "Unprocessed",
+        "totalAmount": { "currency": "USD", "value": 839.69 }
+      },
+      "B.sKCgoE_OIAAAF0dsdY9JCp": {
+        "baseAmount": { "currency": "USD", "value": 748.89 },
+        "id": "B.sKCgoE_OIAAAF0dsdY9JCp",
+        "openTender": true,
+        "paymentCosts": {
+          "gross": { "currency": "USD", "value": 0.0 },
+          "net": { "currency": "USD", "value": 0.0 },
+          "tax": { "currency": "USD", "value": 0.0 }
+        },
+        "paymentInstrument": "ISH_INVOICE",
+        "paymentMethod": "ISH_INVOICE",
+        "redirectRequired": false,
+        "status": "Unprocessed",
+        "totalAmount": { "currency": "USD", "value": 748.89 }
+      }
+    },
+    "payments_paymentMethod": {
+      "ISH_CASH_ON_DELIVERY": {
+        "default": false,
+        "description": "Just pay your order directly when it gets delivered!",
+        "displayName": "Cash on Delivery",
+        "id": "ISH_CASH_ON_DELIVERY",
+        "paymentInstruments": ["ISH_CASH_ON_DELIVERY"],
+        "saveAllowed": true,
+        "serviceID": "ISH_CASH_ON_DELIVERY"
+      },
+      "ISH_DEBIT_TRANSFER": {
+        "default": false,
+        "description": "The easy way to pay...",
+        "displayName": "Direct Debit Transfer",
+        "id": "ISH_DEBIT_TRANSFER",
+        "parameterDefinitions": [
+          {
+            "constraints": {
+              "pattern": {
+                "message": "The name of the account holder is invalid. The name must have a minimum length of 2 characters and must not contain any special characters.",
+                "regexp": "^[^0-9_!¡?÷?¿\\\\+=@#$%ˆ&*(){}|~<>;:]{2,}$"
+              },
+              "required": {
+                "message": "The name of the account holder is missing."
+              }
+            },
+            "displayName": "Account Holder",
+            "hidden": false,
+            "name": "holder",
+            "type": "string",
+            "updatable": false
+          },
+          {
+            "constraints": {
+              "required": {
+                "message": "The IBAN (International Bank Account Number) is missing."
+              },
+              "size": {
+                "max": 34,
+                "message": "The IBAN (International Bank Account Number) must have a length of 15 to 34 characters.",
+                "min": 15
+              }
+            },
+            "displayName": "IBAN",
+            "hidden": false,
+            "name": "IBAN",
+            "type": "string",
+            "updatable": false
+          },
+          {
+            "constraints": {
+              "pattern": {
+                "message": "The BIC (Bank Identifier Code) must have a length of 8 or 11 characters.",
+                "regexp": "([A-Z0-9]{11}|[A-Z0-9]{8})"
+              }
+            },
+            "displayName": "BIC",
+            "hidden": false,
+            "name": "BIC",
+            "type": "string",
+            "updatable": false
+          }
+        ],
+        "paymentInstruments": ["i4MKCgoE.3AAAAF0qnVY9ERI"],
+        "saveAllowed": false,
+        "serviceID": "ISH_DEBIT_TRANSFER"
+      },
+      "ISH_INVOICE": {
+        "default": false,
+        "description": "Paying by invoice is easy and comfortable - give it a try!",
+        "displayName": "Invoice",
+        "id": "ISH_INVOICE",
+        "paymentInstruments": ["ISH_INVOICE"],
+        "saveAllowed": true,
+        "serviceID": "ISH_INVOICE"
+      }
+    },
+    "invoiceToAddress": {
+      "NAwKCgoExFUAAAF0N2dY9M_Q": {
+        "addressLine1": "Potsdamer Str. 20",
+        "city": "Berlin",
+        "country": "Germany",
+        "countryCode": "DE",
+        "eligibleInstallToAddress": false,
+        "eligibleInvoiceToAddress": true,
+        "eligibleServiceToAddress": false,
+        "eligibleShipFromAddress": false,
+        "eligibleShipToAddress": true,
+        "email": "patricia@test.intershop.de",
+        "firstName": "Patricia",
+        "id": "NAwKCgoExFUAAAF0N2dY9M_Q",
+        "lastName": "Miller",
+        "phoneHome": "049364112677",
+        "postalCode": "14483",
+        "title": "Ms.",
+        "urn": "NAwKCgoExFUAAAF0N2dY9M_Q",
+        "usage": [true, true]
+      },
+      "SScKCgoE59cAAAF0_35Y9Jb8": {
+        "addressLine1": "Potsdamer Str. 20",
+        "city": "Berlin",
+        "country": "Germany",
+        "countryCode": "DE",
+        "eligibleInstallToAddress": false,
+        "eligibleInvoiceToAddress": true,
+        "eligibleServiceToAddress": false,
+        "eligibleShipFromAddress": false,
+        "eligibleShipToAddress": true,
+        "email": "patricia@test.intershop.de",
+        "firstName": "Patricia",
+        "id": "SScKCgoE59cAAAF0_35Y9Jb8",
+        "lastName": "Miller",
+        "phoneHome": "049364112677",
+        "postalCode": "14483",
+        "title": "Ms.",
+        "urn": "SScKCgoE59cAAAF0_35Y9Jb8",
+        "usage": [true, true]
+      },
+      "znwKCgoEfEIAAAF0ze9Y9JMZ": {
+        "addressLine1": "Berliner Str. 20",
+        "city": "Potsdam",
+        "country": "Germany",
+        "countryCode": "DE",
+        "eligibleInstallToAddress": false,
+        "eligibleInvoiceToAddress": true,
+        "eligibleServiceToAddress": false,
+        "eligibleShipFromAddress": false,
+        "eligibleShipToAddress": true,
+        "email": "patricia@test.intershop.de",
+        "firstName": "Patricia",
+        "id": "znwKCgoEfEIAAAF0ze9Y9JMZ",
+        "lastName": "Miller",
+        "phoneHome": "049364112677",
+        "postalCode": "14482",
+        "title": "Ms.",
+        "urn": "znwKCgoEfEIAAAF0ze9Y9JMZ",
+        "usage": [true, true]
+      },
+      "tpIKCgoEtJMAAAF0qgNY9I1k": {
+        "addressLine1": "Potsdamer Str. 20",
+        "city": "Berlin",
+        "country": "Germany",
+        "countryCode": "DE",
+        "eligibleInstallToAddress": false,
+        "eligibleInvoiceToAddress": true,
+        "eligibleServiceToAddress": false,
+        "eligibleShipFromAddress": false,
+        "eligibleShipToAddress": true,
+        "email": "patricia@test.intershop.de",
+        "firstName": "Patricia",
+        "id": "tpIKCgoEtJMAAAF0qgNY9I1k",
+        "lastName": "Miller",
+        "phoneHome": "049364112677",
+        "postalCode": "14483",
+        "title": "Ms.",
+        "urn": "tpIKCgoEtJMAAAF0qgNY9I1k",
+        "usage": [true, true]
+      },
+      "Q_UKCgoEmIAAAAF0WDpY9Jbh": {
+        "addressLine1": "Berliner Str. 20",
+        "city": "Potsdam",
+        "country": "Germany",
+        "countryCode": "DE",
+        "eligibleInstallToAddress": false,
+        "eligibleInvoiceToAddress": true,
+        "eligibleServiceToAddress": false,
+        "eligibleShipFromAddress": false,
+        "eligibleShipToAddress": true,
+        "email": "patricia@test.intershop.de",
+        "firstName": "Patricia",
+        "id": "Q_UKCgoEmIAAAAF0WDpY9Jbh",
+        "lastName": "Miller",
+        "phoneHome": "049364112677",
+        "postalCode": "14482",
+        "title": "Ms.",
+        "urn": "Q_UKCgoEmIAAAAF0WDpY9Jbh",
+        "usage": [true, true]
+      },
+      "pfwKCgoE3JsAAAF0LvpY9KBC": {
+        "addressLine1": "Potsdamer Str. 20",
+        "city": "Berlin",
+        "country": "Germany",
+        "countryCode": "DE",
+        "eligibleInstallToAddress": false,
+        "eligibleInvoiceToAddress": true,
+        "eligibleServiceToAddress": false,
+        "eligibleShipFromAddress": false,
+        "eligibleShipToAddress": true,
+        "email": "patricia@test.intershop.de",
+        "firstName": "Patricia",
+        "id": "pfwKCgoE3JsAAAF0LvpY9KBC",
+        "lastName": "Miller",
+        "phoneHome": "049364112677",
+        "postalCode": "14483",
+        "title": "Ms.",
+        "urn": "pfwKCgoE3JsAAAF0LvpY9KBC",
+        "usage": [true, true]
+      },
+      "JcMKCgoEcWEAAAF0cMdY9JCp": {
+        "addressLine1": "Berliner Str. 20",
+        "city": "Potsdam",
+        "country": "Germany",
+        "countryCode": "DE",
+        "eligibleInstallToAddress": false,
+        "eligibleInvoiceToAddress": true,
+        "eligibleServiceToAddress": false,
+        "eligibleShipFromAddress": false,
+        "eligibleShipToAddress": true,
+        "email": "patricia@test.intershop.de",
+        "firstName": "Patricia",
+        "id": "JcMKCgoEcWEAAAF0cMdY9JCp",
+        "lastName": "Miller",
+        "phoneHome": "049364112677",
+        "postalCode": "14482",
+        "title": "Ms.",
+        "urn": "JcMKCgoEcWEAAAF0cMdY9JCp",
+        "usage": [true, true]
+      },
+      "pqYKCgoEKAAAAAF0n4pY9N.K": {
+        "addressLine1": "Potsdamer Str. 20",
+        "city": "Berlin",
+        "country": "Germany",
+        "countryCode": "DE",
+        "eligibleInstallToAddress": false,
+        "eligibleInvoiceToAddress": true,
+        "eligibleServiceToAddress": false,
+        "eligibleShipFromAddress": false,
+        "eligibleShipToAddress": true,
+        "email": "patricia@test.intershop.de",
+        "firstName": "Patricia",
+        "id": "pqYKCgoEKAAAAAF0n4pY9N.K",
+        "lastName": "Miller",
+        "phoneHome": "049364112677",
+        "postalCode": "14483",
+        "title": "Ms.",
+        "urn": "pqYKCgoEKAAAAAF0n4pY9N.K",
+        "usage": [true, true]
+      },
+      "vn8KCgoEDdsAAAF0rVlY9M_G": {
+        "addressLine1": "Potsdamer Str. 20",
+        "city": "Berlin",
+        "country": "Germany",
+        "countryCode": "DE",
+        "eligibleInstallToAddress": false,
+        "eligibleInvoiceToAddress": true,
+        "eligibleServiceToAddress": false,
+        "eligibleShipFromAddress": false,
+        "eligibleShipToAddress": true,
+        "email": "patricia@test.intershop.de",
+        "firstName": "Patricia",
+        "id": "vn8KCgoEDdsAAAF0rVlY9M_G",
+        "lastName": "Miller",
+        "phoneHome": "049364112677",
+        "postalCode": "14483",
+        "title": "Ms.",
+        "urn": "vn8KCgoEDdsAAAF0rVlY9M_G",
+        "usage": [true, true]
+      },
+      "zVQKCgoEJlwAAAF0ychY9Jqs": {
+        "addressLine1": "Berliner Str. 20",
+        "city": "Potsdam",
+        "country": "Germany",
+        "countryCode": "DE",
+        "eligibleInstallToAddress": false,
+        "eligibleInvoiceToAddress": true,
+        "eligibleServiceToAddress": false,
+        "eligibleShipFromAddress": false,
+        "eligibleShipToAddress": true,
+        "email": "patricia@test.intershop.de",
+        "firstName": "Patricia",
+        "id": "zVQKCgoEJlwAAAF0ychY9Jqs",
+        "lastName": "Miller",
+        "phoneHome": "049364112677",
+        "postalCode": "14482",
+        "title": "Ms.",
+        "urn": "zVQKCgoEJlwAAAF0ychY9Jqs",
+        "usage": [true, true]
+      },
+      "S3oKCgoEaZQAAAF0zzNY9KA8": {
+        "addressLine1": "Potsdamer Str. 20",
+        "city": "Berlin",
+        "country": "Germany",
+        "countryCode": "DE",
+        "eligibleInstallToAddress": false,
+        "eligibleInvoiceToAddress": true,
+        "eligibleServiceToAddress": false,
+        "eligibleShipFromAddress": false,
+        "eligibleShipToAddress": true,
+        "email": "patricia@test.intershop.de",
+        "firstName": "Patricia",
+        "id": "S3oKCgoEaZQAAAF0zzNY9KA8",
+        "lastName": "Miller",
+        "phoneHome": "049364112677",
+        "postalCode": "14483",
+        "title": "Ms.",
+        "urn": "S3oKCgoEaZQAAAF0zzNY9KA8",
+        "usage": [true, true]
+      },
+      "wNoKCgoEpdcAAAF0p3VY9ERI": {
+        "addressLine1": "Potsdamer Str. 20",
+        "city": "Berlin",
+        "country": "Germany",
+        "countryCode": "DE",
+        "eligibleInstallToAddress": false,
+        "eligibleInvoiceToAddress": true,
+        "eligibleServiceToAddress": false,
+        "eligibleShipFromAddress": false,
+        "eligibleShipToAddress": true,
+        "email": "patricia@test.intershop.de",
+        "firstName": "Patricia",
+        "id": "wNoKCgoEpdcAAAF0p3VY9ERI",
+        "lastName": "Miller",
+        "phoneHome": "049364112677",
+        "postalCode": "14483",
+        "title": "Ms.",
+        "urn": "wNoKCgoEpdcAAAF0p3VY9ERI",
+        "usage": [true, true]
+      }
+    },
+    "commonShipToAddress": {
+      "NAwKCgoExFUAAAF0N2dY9M_Q": {
+        "addressLine1": "Potsdamer Str. 20",
+        "city": "Berlin",
+        "country": "Germany",
+        "countryCode": "DE",
+        "eligibleInstallToAddress": false,
+        "eligibleInvoiceToAddress": true,
+        "eligibleServiceToAddress": false,
+        "eligibleShipFromAddress": false,
+        "eligibleShipToAddress": true,
+        "email": "patricia@test.intershop.de",
+        "firstName": "Patricia",
+        "id": "NAwKCgoExFUAAAF0N2dY9M_Q",
+        "lastName": "Miller",
+        "phoneHome": "049364112677",
+        "postalCode": "14483",
+        "title": "Ms.",
+        "urn": "NAwKCgoExFUAAAF0N2dY9M_Q",
+        "usage": [true, true]
+      },
+      "a68KCgoEuSkAAAF0csdY9JCp": {
+        "addressLine1": "Potsdamer Str. 20",
+        "city": "Berlin",
+        "country": "Germany",
+        "countryCode": "DE",
+        "eligibleInstallToAddress": false,
+        "eligibleInvoiceToAddress": true,
+        "eligibleServiceToAddress": false,
+        "eligibleShipFromAddress": false,
+        "eligibleShipToAddress": true,
+        "firstName": "Patricia",
+        "id": "a68KCgoEuSkAAAF0csdY9JCp",
+        "lastName": "Miller",
+        "phoneHome": "049364112677",
+        "postalCode": "14483",
+        "title": "Ms.",
+        "urn": "a68KCgoEuSkAAAF0csdY9JCp",
+        "usage": [true, true]
+      },
+      "F4kKCgoE2BQAAAF0yshY9Jqs": {
+        "addressLine1": "Marlene-Dietrich-Allee 44",
+        "attributes": [
+          { "name": "Field2", "type": "String", "value": "10th Floor" },
+          { "name": "Latitude", "type": "String", "value": "52.39063" },
+          { "name": "Longitude", "type": "String", "value": "13.12117" }
+        ],
+        "city": "Potsdam",
+        "country": "Germany",
+        "countryCode": "DE",
+        "eligibleInstallToAddress": false,
+        "eligibleInvoiceToAddress": false,
+        "eligibleServiceToAddress": false,
+        "eligibleShipFromAddress": true,
+        "eligibleShipToAddress": true,
+        "email": "mlehmann@test.intershop.de",
+        "fax": "035187756",
+        "id": "F4kKCgoE2BQAAAF0yshY9Jqs",
+        "phoneBusiness": "035187703",
+        "postalCode": "14482",
+        "urn": "F4kKCgoE2BQAAAF0yshY9Jqs",
+        "usage": [false, true, true, false, false, true]
+      },
+      "SScKCgoE59cAAAF0_35Y9Jb8": {
+        "addressLine1": "Potsdamer Str. 20",
+        "city": "Berlin",
+        "country": "Germany",
+        "countryCode": "DE",
+        "eligibleInstallToAddress": false,
+        "eligibleInvoiceToAddress": true,
+        "eligibleServiceToAddress": false,
+        "eligibleShipFromAddress": false,
+        "eligibleShipToAddress": true,
+        "email": "patricia@test.intershop.de",
+        "firstName": "Patricia",
+        "id": "SScKCgoE59cAAAF0_35Y9Jb8",
+        "lastName": "Miller",
+        "phoneHome": "049364112677",
+        "postalCode": "14483",
+        "title": "Ms.",
+        "urn": "SScKCgoE59cAAAF0_35Y9Jb8",
+        "usage": [true, true]
+      },
+      "crAKCgoE_DcAAAF0rANY9I1k": {
+        "addressLine1": "Berliner Str. 20",
+        "city": "Potsdam",
+        "country": "Germany",
+        "countryCode": "DE",
+        "eligibleInstallToAddress": false,
+        "eligibleInvoiceToAddress": true,
+        "eligibleServiceToAddress": false,
+        "eligibleShipFromAddress": false,
+        "eligibleShipToAddress": true,
+        "firstName": "Patricia",
+        "id": "crAKCgoE_DcAAAF0rANY9I1k",
+        "lastName": "Miller",
+        "phoneHome": "049364112677",
+        "postalCode": "14482",
+        "title": "Ms.",
+        "urn": "crAKCgoE_DcAAAF0rANY9I1k",
+        "usage": [true, true]
+      },
+      "pfwKCgoE3JsAAAF0LvpY9KBC": {
+        "addressLine1": "Potsdamer Str. 20",
+        "city": "Berlin",
+        "country": "Germany",
+        "countryCode": "DE",
+        "eligibleInstallToAddress": false,
+        "eligibleInvoiceToAddress": true,
+        "eligibleServiceToAddress": false,
+        "eligibleShipFromAddress": false,
+        "eligibleShipToAddress": true,
+        "email": "patricia@test.intershop.de",
+        "firstName": "Patricia",
+        "id": "pfwKCgoE3JsAAAF0LvpY9KBC",
+        "lastName": "Miller",
+        "phoneHome": "049364112677",
+        "postalCode": "14483",
+        "title": "Ms.",
+        "urn": "pfwKCgoE3JsAAAF0LvpY9KBC",
+        "usage": [true, true]
+      },
+      "4WIKCgoEy.0AAAF0WjpY9Jbh": {
+        "addressLine1": "Potsdamer Str. 20",
+        "city": "Berlin",
+        "country": "Germany",
+        "countryCode": "DE",
+        "eligibleInstallToAddress": false,
+        "eligibleInvoiceToAddress": true,
+        "eligibleServiceToAddress": false,
+        "eligibleShipFromAddress": false,
+        "eligibleShipToAddress": true,
+        "firstName": "Patricia",
+        "id": "4WIKCgoEy.0AAAF0WjpY9Jbh",
+        "lastName": "Miller",
+        "phoneHome": "049364112677",
+        "postalCode": "14483",
+        "title": "Ms.",
+        "urn": "4WIKCgoEy.0AAAF0WjpY9Jbh",
+        "usage": [true, true]
+      },
+      "et8KCgoESygAAAF0r1lY9M_G": {
+        "addressLine1": "Berliner Str. 20",
+        "city": "Potsdam",
+        "country": "Germany",
+        "countryCode": "DE",
+        "eligibleInstallToAddress": false,
+        "eligibleInvoiceToAddress": true,
+        "eligibleServiceToAddress": false,
+        "eligibleShipFromAddress": false,
+        "eligibleShipToAddress": true,
+        "firstName": "Patricia",
+        "id": "et8KCgoESygAAAF0r1lY9M_G",
+        "lastName": "Miller",
+        "phoneHome": "049364112677",
+        "postalCode": "14482",
+        "title": "Ms.",
+        "urn": "et8KCgoESygAAAF0r1lY9M_G",
+        "usage": [true, true]
+      },
+      "pqYKCgoEKAAAAAF0n4pY9N.K": {
+        "addressLine1": "Potsdamer Str. 20",
+        "city": "Berlin",
+        "country": "Germany",
+        "countryCode": "DE",
+        "eligibleInstallToAddress": false,
+        "eligibleInvoiceToAddress": true,
+        "eligibleServiceToAddress": false,
+        "eligibleShipFromAddress": false,
+        "eligibleShipToAddress": true,
+        "email": "patricia@test.intershop.de",
+        "firstName": "Patricia",
+        "id": "pqYKCgoEKAAAAAF0n4pY9N.K",
+        "lastName": "Miller",
+        "phoneHome": "049364112677",
+        "postalCode": "14483",
+        "title": "Ms.",
+        "urn": "pqYKCgoEKAAAAAF0n4pY9N.K",
+        "usage": [true, true]
+      },
+      "C1gKCgoESnEAAAF00TNY9KA8": {
+        "addressLine1": "Berliner Str. 20",
+        "city": "Potsdam",
+        "country": "Germany",
+        "countryCode": "DE",
+        "eligibleInstallToAddress": false,
+        "eligibleInvoiceToAddress": true,
+        "eligibleServiceToAddress": false,
+        "eligibleShipFromAddress": false,
+        "eligibleShipToAddress": true,
+        "firstName": "Patricia",
+        "id": "C1gKCgoESnEAAAF00TNY9KA8",
+        "lastName": "Miller",
+        "phoneHome": "049364112677",
+        "postalCode": "14482",
+        "title": "Ms.",
+        "urn": "C1gKCgoESnEAAAF00TNY9KA8",
+        "usage": [true, true]
+      },
+      "A9QKCgoEKYYAAAF0zu9Y9JMZ": {
+        "addressLine1": "Potsdamer Str. 20",
+        "city": "Berlin",
+        "country": "Germany",
+        "countryCode": "DE",
+        "eligibleInstallToAddress": false,
+        "eligibleInvoiceToAddress": true,
+        "eligibleServiceToAddress": false,
+        "eligibleShipFromAddress": false,
+        "eligibleShipToAddress": true,
+        "firstName": "Patricia",
+        "id": "A9QKCgoEKYYAAAF0zu9Y9JMZ",
+        "lastName": "Miller",
+        "phoneHome": "049364112677",
+        "postalCode": "14483",
+        "title": "Ms.",
+        "urn": "A9QKCgoEKYYAAAF0zu9Y9JMZ",
+        "usage": [true, true]
+      },
+      "jxcKCgoEIH0AAAF0qXVY9ERI": {
+        "addressLine1": "Berliner Str. 20",
+        "city": "Potsdam",
+        "country": "Germany",
+        "countryCode": "DE",
+        "eligibleInstallToAddress": false,
+        "eligibleInvoiceToAddress": true,
+        "eligibleServiceToAddress": false,
+        "eligibleShipFromAddress": false,
+        "eligibleShipToAddress": true,
+        "firstName": "Patricia",
+        "id": "jxcKCgoEIH0AAAF0qXVY9ERI",
+        "lastName": "Miller",
+        "phoneHome": "049364112677",
+        "postalCode": "14482",
+        "title": "Ms.",
+        "urn": "jxcKCgoEIH0AAAF0qXVY9ERI",
+        "usage": [true, true]
+      }
+    }
+  },
+  "links": {
+    "self": {
+      ".VsKCgoErmgAAAF0x8hY9Jqs": "http://pwa-public-demo.northeurope.cloudapp.azure.com/INTERSHOP/rest/WFS/inSPIRED-inTRONICS-Site/rest;loc=en_US;cur=USD/orders/.VsKCgoErmgAAAF0x8hY9Jqs",
+      "5ZMKCgoEKH4AAAF0nYpY9N.K": "http://pwa-public-demo.northeurope.cloudapp.azure.com/INTERSHOP/rest/WFS/inSPIRED-inTRONICS-Site/rest;loc=en_US;cur=USD/orders/5ZMKCgoEKH4AAAF0nYpY9N.K",
+      "8OEKCgoEC0MAAAF0bcdY9JCp": "http://pwa-public-demo.northeurope.cloudapp.azure.com/INTERSHOP/rest/WFS/inSPIRED-inTRONICS-Site/rest;loc=en_US;cur=USD/orders/8OEKCgoEC0MAAAF0bcdY9JCp",
+      "8_4KCgoEc5IAAAF0qFlY9M_G": "http://pwa-public-demo.northeurope.cloudapp.azure.com/INTERSHOP/rest/WFS/inSPIRED-inTRONICS-Site/rest;loc=en_US;cur=USD/orders/8_4KCgoEc5IAAAF0qFlY9M_G",
+      "APYKCgoECloAAAF0NGdY9M_Q": "http://pwa-public-demo.northeurope.cloudapp.azure.com/INTERSHOP/rest/WFS/inSPIRED-inTRONICS-Site/rest;loc=en_US;cur=USD/orders/APYKCgoECloAAAF0NGdY9M_Q",
+      "FVQKCgoEvvoAAAF0zDNY9KA8": "http://pwa-public-demo.northeurope.cloudapp.azure.com/INTERSHOP/rest/WFS/inSPIRED-inTRONICS-Site/rest;loc=en_US;cur=USD/orders/FVQKCgoEvvoAAAF0zDNY9KA8",
+      "JIcKCgoEwb4AAAF0qANY9I1k": "http://pwa-public-demo.northeurope.cloudapp.azure.com/INTERSHOP/rest/WFS/inSPIRED-inTRONICS-Site/rest;loc=en_US;cur=USD/orders/JIcKCgoEwb4AAAF0qANY9I1k",
+      "Of8KCgoEiVwAAAF0WHVY9ERI": "http://pwa-public-demo.northeurope.cloudapp.azure.com/INTERSHOP/rest/WFS/inSPIRED-inTRONICS-Site/rest;loc=en_US;cur=USD/orders/Of8KCgoEiVwAAAF0WHVY9ERI",
+      "bn4KCgoE8eoAAAF0y.9Y9JMZ": "http://pwa-public-demo.northeurope.cloudapp.azure.com/INTERSHOP/rest/WFS/inSPIRED-inTRONICS-Site/rest;loc=en_US;cur=USD/orders/bn4KCgoE8eoAAAF0y.9Y9JMZ",
+      "c7wKCgoEpoUAAAF0LPpY9KBC": "http://pwa-public-demo.northeurope.cloudapp.azure.com/INTERSHOP/rest/WFS/inSPIRED-inTRONICS-Site/rest;loc=en_US;cur=USD/orders/c7wKCgoEpoUAAAF0LPpY9KBC",
+      "nXMKCgoEU0kAAAF0VTpY9Jbh": "http://pwa-public-demo.northeurope.cloudapp.azure.com/INTERSHOP/rest/WFS/inSPIRED-inTRONICS-Site/rest;loc=en_US;cur=USD/orders/nXMKCgoEU0kAAAF0VTpY9Jbh",
+      "x1EKCgoEnp8AAAF0_H5Y9Jb8": "http://pwa-public-demo.northeurope.cloudapp.azure.com/INTERSHOP/rest/WFS/inSPIRED-inTRONICS-Site/rest;loc=en_US;cur=USD/orders/x1EKCgoEnp8AAAF0_H5Y9Jb8"
+    },
+    "included": {
+      "lineItems": {
+        "aWEKCgoE0lYAAAF0o4pY9N.K": "http://pwa-public-demo.northeurope.cloudapp.azure.com/INTERSHOP/rest/WFS/inSPIRED-inTRONICS-Site/rest;loc=en_US;cur=USD/orders/5ZMKCgoEKH4AAAF0nYpY9N.K/items/aWEKCgoE0lYAAAF0o4pY9N.K",
+        "rFkKCgoEcBgAAAF0vllY9M_G": "http://pwa-public-demo.northeurope.cloudapp.azure.com/INTERSHOP/rest/WFS/inSPIRED-inTRONICS-Site/rest;loc=en_US;cur=USD/orders/8_4KCgoEc5IAAAF0qFlY9M_G/items/rFkKCgoEcBgAAAF0vllY9M_G",
+        "MtkKCgoERIUAAAF0MPpY9KBC": "http://pwa-public-demo.northeurope.cloudapp.azure.com/INTERSHOP/rest/WFS/inSPIRED-inTRONICS-Site/rest;loc=en_US;cur=USD/orders/c7wKCgoEpoUAAAF0LPpY9KBC/items/MtkKCgoERIUAAAF0MPpY9KBC",
+        ".b0KCgoEcBcAAAF0vllY9M_G": "http://pwa-public-demo.northeurope.cloudapp.azure.com/INTERSHOP/rest/WFS/inSPIRED-inTRONICS-Site/rest;loc=en_US;cur=USD/orders/8_4KCgoEc5IAAAF0qFlY9M_G/items/.b0KCgoEcBcAAAF0vllY9M_G",
+        "I1IKCgoEWu4AAAF0dMdY9JCp": "http://pwa-public-demo.northeurope.cloudapp.azure.com/INTERSHOP/rest/WFS/inSPIRED-inTRONICS-Site/rest;loc=en_US;cur=USD/orders/8OEKCgoEC0MAAAF0bcdY9JCp/items/I1IKCgoEWu4AAAF0dMdY9JCp",
+        "5K8KCgoE_OEAAAF0dsdY9JCp": "http://pwa-public-demo.northeurope.cloudapp.azure.com/INTERSHOP/rest/WFS/inSPIRED-inTRONICS-Site/rest;loc=en_US;cur=USD/orders/8OEKCgoEC0MAAAF0bcdY9JCp/items/5K8KCgoE_OEAAAF0dsdY9JCp",
+        "Ck0KCgoEy.4AAAF0WjpY9Jbh": "http://pwa-public-demo.northeurope.cloudapp.azure.com/INTERSHOP/rest/WFS/inSPIRED-inTRONICS-Site/rest;loc=en_US;cur=USD/orders/nXMKCgoEU0kAAAF0VTpY9Jbh/items/Ck0KCgoEy.4AAAF0WjpY9Jbh",
+        "F6MKCgoEvdcAAAF0sANY9I1k": "http://pwa-public-demo.northeurope.cloudapp.azure.com/INTERSHOP/rest/WFS/inSPIRED-inTRONICS-Site/rest;loc=en_US;cur=USD/orders/JIcKCgoEwb4AAAF0qANY9I1k/items/F6MKCgoEvdcAAAF0sANY9I1k",
+        "O9oKCgoE5WMAAAF0rQNY9I1k": "http://pwa-public-demo.northeurope.cloudapp.azure.com/INTERSHOP/rest/WFS/inSPIRED-inTRONICS-Site/rest;loc=en_US;cur=USD/orders/JIcKCgoEwb4AAAF0qANY9I1k/items/O9oKCgoE5WMAAAF0rQNY9I1k",
+        "8VUKCgoE5WIAAAF0rQNY9I1k": "http://pwa-public-demo.northeurope.cloudapp.azure.com/INTERSHOP/rest/WFS/inSPIRED-inTRONICS-Site/rest;loc=en_US;cur=USD/orders/JIcKCgoEwb4AAAF0qANY9I1k/items/8VUKCgoE5WIAAAF0rQNY9I1k",
+        ".lAKCgoEvr8AAAF0OWdY9M_Q": "http://pwa-public-demo.northeurope.cloudapp.azure.com/INTERSHOP/rest/WFS/inSPIRED-inTRONICS-Site/rest;loc=en_US;cur=USD/orders/APYKCgoECloAAAF0NGdY9M_Q/items/.lAKCgoEvr8AAAF0OWdY9M_Q",
+        "7sYKCgoENIcAAAF0zchY9Jqs": "http://pwa-public-demo.northeurope.cloudapp.azure.com/INTERSHOP/rest/WFS/inSPIRED-inTRONICS-Site/rest;loc=en_US;cur=USD/orders/.VsKCgoErmgAAAF0x8hY9Jqs/items/7sYKCgoENIcAAAF0zchY9Jqs",
+        "W8cKCgoENfIAAAF0z.9Y9JMZ": "http://pwa-public-demo.northeurope.cloudapp.azure.com/INTERSHOP/rest/WFS/inSPIRED-inTRONICS-Site/rest;loc=en_US;cur=USD/orders/bn4KCgoE8eoAAAF0y.9Y9JMZ/items/W8cKCgoENfIAAAF0z.9Y9JMZ",
+        "ePMKCgoENIgAAAF0zchY9Jqs": "http://pwa-public-demo.northeurope.cloudapp.azure.com/INTERSHOP/rest/WFS/inSPIRED-inTRONICS-Site/rest;loc=en_US;cur=USD/orders/.VsKCgoErmgAAAF0x8hY9Jqs/items/ePMKCgoENIgAAAF0zchY9Jqs",
+        "n6IKCgoExtYAAAF0AX9Y9Jb8": "http://pwa-public-demo.northeurope.cloudapp.azure.com/INTERSHOP/rest/WFS/inSPIRED-inTRONICS-Site/rest;loc=en_US;cur=USD/orders/x1EKCgoEnp8AAAF0_H5Y9Jb8/items/n6IKCgoExtYAAAF0AX9Y9Jb8",
+        "qToKCgoEvdYAAAF0sANY9I1k": "http://pwa-public-demo.northeurope.cloudapp.azure.com/INTERSHOP/rest/WFS/inSPIRED-inTRONICS-Site/rest;loc=en_US;cur=USD/orders/JIcKCgoEwb4AAAF0qANY9I1k/items/qToKCgoEvdYAAAF0sANY9I1k",
+        "dVoKCgoEIH4AAAF0qXVY9ERI": "http://pwa-public-demo.northeurope.cloudapp.azure.com/INTERSHOP/rest/WFS/inSPIRED-inTRONICS-Site/rest;loc=en_US;cur=USD/orders/Of8KCgoEiVwAAAF0WHVY9ERI/items/dVoKCgoEIH4AAAF0qXVY9ERI",
+        "pfsKCgoEWRkAAAF0vVlY9M_G": "http://pwa-public-demo.northeurope.cloudapp.azure.com/INTERSHOP/rest/WFS/inSPIRED-inTRONICS-Site/rest;loc=en_US;cur=USD/orders/8_4KCgoEc5IAAAF0qFlY9M_G/items/pfsKCgoEWRkAAAF0vVlY9M_G",
+        "WwcKCgoEQSkAAAF0c8dY9JCp": "http://pwa-public-demo.northeurope.cloudapp.azure.com/INTERSHOP/rest/WFS/inSPIRED-inTRONICS-Site/rest;loc=en_US;cur=USD/orders/8OEKCgoEC0MAAAF0bcdY9JCp/items/WwcKCgoEQSkAAAF0c8dY9JCp",
+        "fHMKCgoEb5sAAAF0sFlY9M_G": "http://pwa-public-demo.northeurope.cloudapp.azure.com/INTERSHOP/rest/WFS/inSPIRED-inTRONICS-Site/rest;loc=en_US;cur=USD/orders/8_4KCgoEc5IAAAF0qFlY9M_G/items/fHMKCgoEb5sAAAF0sFlY9M_G",
+        "r8kKCgoExtcAAAF0AX9Y9Jb8": "http://pwa-public-demo.northeurope.cloudapp.azure.com/INTERSHOP/rest/WFS/inSPIRED-inTRONICS-Site/rest;loc=en_US;cur=USD/orders/x1EKCgoEnp8AAAF0_H5Y9Jb8/items/r8kKCgoExtcAAAF0AX9Y9Jb8",
+        "zJAKCgoEhEkAAAF00jNY9KA8": "http://pwa-public-demo.northeurope.cloudapp.azure.com/INTERSHOP/rest/WFS/inSPIRED-inTRONICS-Site/rest;loc=en_US;cur=USD/orders/FVQKCgoEvvoAAAF0zDNY9KA8/items/zJAKCgoEhEkAAAF00jNY9KA8",
+        "M3kKCgoE5WEAAAF0rQNY9I1k": "http://pwa-public-demo.northeurope.cloudapp.azure.com/INTERSHOP/rest/WFS/inSPIRED-inTRONICS-Site/rest;loc=en_US;cur=USD/orders/JIcKCgoEwb4AAAF0qANY9I1k/items/M3kKCgoE5WEAAAF0rQNY9I1k",
+        "r4AKCgoEEn0AAAF0oopY9N.K": "http://pwa-public-demo.northeurope.cloudapp.azure.com/INTERSHOP/rest/WFS/inSPIRED-inTRONICS-Site/rest;loc=en_US;cur=USD/orders/5ZMKCgoEKH4AAAF0nYpY9N.K/items/r4AKCgoEEn0AAAF0oopY9N.K"
+      }
+    }
+  }
+}

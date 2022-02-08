@@ -46,6 +46,7 @@ export interface Environment {
     | 'wishlists'
     /* Camfil features */
     | 'camOrganizationManagement'
+    | 'camRequisitionManagement'
     | 'camConfiguration'
     | 'camIcc'
     | 'camAccount'
@@ -148,6 +149,7 @@ export const ENVIRONMENT_DEFAULTS: Environment = {
     'camIcc',
     'camAccount',
     'camOrganizationManagement',
+    // 'camRequisitionManagement',
     'camCards',
     'camAhu',
     'camDemo',

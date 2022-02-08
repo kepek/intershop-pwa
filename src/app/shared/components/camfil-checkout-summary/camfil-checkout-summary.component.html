@@ -128,23 +128,31 @@
           </mat-checkbox>
         </form>
       </ng-container>
-      <button
-        (click)="submitOrder()"
-        [disabled]="!(canSubmitOrder$ | async)"
-        class="submit-button"
-        color="primary"
-        mat-flat-button
-      >
-        <ng-template #readyToOrder>
-          {{ 'camfil.checkout.place_your_orders' | translate }}
-        </ng-template>
-        <ng-template #notReadyToOrder>
-          {{ 'camfil.checkout.wait_till_validation.button.text' | translate }}
-        </ng-template>
-        <ng-container *ngIf="canSubmitOrder$ | async; else notReadyToOrder">
-          <ng-container *ngTemplateOutlet="readyToOrder"></ng-container>
-        </ng-container>
-      </button>
+      <ng-container *ishIsAuthorizedTo="'APP_B2B_MAKE_REQUISITION'">
+        <camfil-lazy-cam-requisition-checkout-button
+          [disabledButton$]="canSubmitOrder$"
+        ></camfil-lazy-cam-requisition-checkout-button>
+      </ng-container>
+      <ng-container *ishIsNotAuthorizedTo="'APP_B2B_MAKE_REQUISITION'">
+        <button
+          (click)="submitOrder()"
+          [disabled]="!(canSubmitOrder$ | async)"
+          class="submit-button"
+          color="primary"
+          mat-flat-button
+        >
+          <ng-template #readyToOrder>
+            {{ 'camfil.checkout.place_your_orders' | translate }}
+          </ng-template>
+          <ng-template #notReadyToOrder>
+            {{ 'camfil.checkout.wait_till_validation.button.text' | translate }}
+          </ng-template>
+
+          <ng-container *ngIf="canSubmitOrder$ | async; else notReadyToOrder">
+            <ng-container *ngTemplateOutlet="readyToOrder"></ng-container>
+          </ng-container>
+        </button>
+      </ng-container>
     </ng-template>
 
     <ng-container *ngIf="!editable; else noConfirmed">
