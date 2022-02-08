@@ -149,7 +149,7 @@ export const ENVIRONMENT_DEFAULTS: Environment = {
     'camIcc',
     'camAccount',
     'camOrganizationManagement',
-    'camRequisitionManagement',
+    // 'camRequisitionManagement',
     'camCards',
     'camAhu',
     'camDemo',
