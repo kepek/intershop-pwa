@@ -42,6 +42,7 @@ import {
   CamCard,
   CamCardItem,
 } from '../../../models/cam-card/cam-card.model';
+import { ProductAddFormData } from '../modal-add-new-product/productAddFormData.model';
 
 export interface Prices {
   [id: string]: [Price, string, number];
@@ -487,5 +488,13 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges, OnD
       const sourceCamCardId = document.getElementById(event.previousContainer.id).dataset.camCardId;
       this.camCardsFacade.moveCamCardItem(sourceCamCardId, targetCamCard.id, event.item.data, targetPos);
     }
+  }
+
+  /** Quick add product to CC */
+
+  sumbitAddProductToCamCard(quickAddData: ProductAddFormData) {
+    const { sku, quantity, boxLabel, measurements } = quickAddData;
+    const rootCamCardId = this.camCard?.id;
+    this.camCardsFacade.addProductToCamCard(rootCamCardId, sku, quantity, boxLabel, measurements, 0, true);
   }
 }

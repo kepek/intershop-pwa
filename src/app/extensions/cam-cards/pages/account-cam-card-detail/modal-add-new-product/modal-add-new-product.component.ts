@@ -2,9 +2,11 @@ import {
   AfterViewInit,
   ChangeDetectionStrategy,
   Component,
+  EventEmitter,
   Input,
   OnDestroy,
   OnInit,
+  Output,
   TemplateRef,
   ViewChild,
 } from '@angular/core';
@@ -13,25 +15,24 @@ import { MatDialog } from '@angular/material/dialog';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { isEmpty } from 'lodash-es';
 import { Observable, ReplaySubject, Subject, of } from 'rxjs';
-import { catchError, debounceTime, map, switchMap, take, takeUntil, tap, withLatestFrom } from 'rxjs/operators';
+import { catchError, debounceTime, map, switchMap, takeUntil, tap, withLatestFrom } from 'rxjs/operators';
 import { CamRequisitionManagementFacade } from 'src/app/extensions/cam-requisition-management/facades/cam-requisition-management.facade';
 import { CamfilRequisition } from 'src/app/extensions/cam-requisition-management/models/camfil-requisition/camfil-requisition.model';
 
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
-import { AddressHelper } from 'ish-core/models/address/address.helper';
 import { Address } from 'ish-core/models/address/address.model';
 import { AttributeHelper } from 'ish-core/models/attribute/attribute.helper';
 import { Bucket } from 'ish-core/models/bucket/bucket.model';
 import { CategoryTreeHelper } from 'ish-core/models/category-tree/category-tree.helper';
 import { ProductView, createProductView } from 'ish-core/models/product-view/product-view.model';
 import { Product, ProductCompletenessLevel, ProductHelper } from 'ish-core/models/product/product.model';
-import { whenTruthy } from 'ish-core/utils/operators';
+
 import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
 
-import { CamCardsFacade } from '../../../facades/cam-cards.facade';
 import { CamCard, CamCardItemComment } from '../../../models/cam-card/cam-card.model';
 
 import { ADD_NEW_PRODUCT_VALIDATORS } from './validators';
+import { ProductAddFormData } from './productAddFormData.model';
 
 const FAKE_SKU = '144c9defac04969c7bfad8efaa8ea194';
 
@@ -60,7 +61,6 @@ const createFakeProduct = (product?: Product) =>
 export class ModalAddNewProductComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(
     private shoppingFacade: ShoppingFacade,
-    private camCardsFacade: CamCardsFacade,
     private requisitionsFacade: CamRequisitionManagementFacade,
     public dialog: MatDialog
   ) {}
@@ -76,7 +76,6 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy, AfterView
 
   private static REQUIRED_COMPLETENESS_LEVEL = ProductCompletenessLevel.List;
 
-  private rootCamCardId: string;
   private destroy$ = new Subject();
 
   sku$ = new ReplaySubject<string>(1);
@@ -92,6 +91,7 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy, AfterView
   @Input() order?: Bucket;
   @Input() requisition?: CamfilRequisition;
   @Input() shippingMethodId?: string;
+  @Output() submitProductAdd = new EventEmitter<ProductAddFormData>();
 
   @ViewChild('modal', { static: false }) modalTemplate: TemplateRef<unknown>;
 
@@ -115,8 +115,6 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy, AfterView
       measurementDepth: new FormControl({ disabled: true }),
       measurementErrorInfo: new FormControl(),
     });
-
-    this.currentCamCard$ = this.camCardsFacade.currentCamCard$;
 
     this.product$ = this.sku$
       .pipe(
@@ -185,22 +183,6 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy, AfterView
       .subscribe(sku => {
         this.sku$.next(sku || FAKE_SKU);
       });
-
-    if (this.addToOrder) {
-      this.shoppingFacade.basketAddresses$.pipe(takeUntil(this.destroy$)).subscribe((basketAddresses: Address[]) => {
-        this.basketAddresses = basketAddresses;
-      });
-      this.shoppingFacade.productUpdated$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(() => {
-        this.hide();
-      });
-      this.shoppingFacade.productAdded$.pipe(whenTruthy(), take(1)).subscribe(() => {
-        this.hide();
-      });
-    } else {
-      this.currentCamCard$?.pipe(takeUntil(this.destroy$)).subscribe(camCard => {
-        this.rootCamCardId = camCard?.id || undefined;
-      });
-    }
   }
 
   ngAfterViewInit() {
@@ -210,8 +192,8 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy, AfterView
   submitForm() {
     /* TODO: Replace with event emitters and submit in parent components
         To be replaced in:
-        1. camfil-checkout-bucket
-        2. account-cam-card-detail-toolbar
+        1. camfil-checkout-bucket ---- done
+        2. account-cam-card-detail-toolbar ---- done
         3. camfil-requisition-detail-toolbar
     */
     if (this.productForm.valid) {
@@ -222,83 +204,29 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy, AfterView
         : undefined;
       const comment: CamCardItemComment = label ? { label } : undefined;
       const lineItemAttributes = AttributeHelper.calculateAttrsToAddFromForm(this.productForm);
+      const measurement = {
+        width: this.productForm.get('measurementWidth').value,
+        height: this.productForm.get('measurementHeight').value,
+        diameter: this.productForm.get('measurementDiameter').value,
+        depth: this.productForm.get('measurementDepth').value,
+      };
 
       this.isSubmitted = true;
 
-      if (this.addToOrder) {
-        const type = this.order?.id?.split('_')?.[0];
-
-        if (this.order?.id && type !== 'emptyBucket' && this.order?.shipToAddress) {
-          this.addToExistingOrder(sku, quantity, this.order.shipToAddress, lineItemAttributes);
-        } else {
-          const deliveryAddress = this.order.shipToAddressFull as Address;
-          this.addToNewOrder(sku, quantity, deliveryAddress, this.order.id, lineItemAttributes);
-        }
-      } else if (this.addToRequisition) {
-        this.addproductToRequisition(sku, quantity, this.requisition.id);
-        this.hide();
-        this.reset();
-      } else {
-        const measurement = {
-          width: this.productForm.get('measurementWidth').value,
-          height: this.productForm.get('measurementHeight').value,
-          diameter: this.productForm.get('measurementDiameter').value,
-          depth: this.productForm.get('measurementDepth').value,
-        };
-        this.camCardsFacade.addProductToCamCard(this.rootCamCardId, sku, quantity, comment, measurement, 0, true);
-        this.hide();
-        this.reset();
-      }
+      this.submitProductAdd.emit({
+        sku,
+        quantity,
+        lineItemAttributes,
+        boxLabel: comment,
+        measurements: measurement,
+      });
     } else {
       markAsDirtyRecursive(this.productForm);
     }
   }
 
-  addToExistingOrder(sku, quantity, shipToAddress, lineItemAttributes) {
-    this.shoppingFacade.addProductToBasket(sku, quantity, this.shippingMethodId, shipToAddress, lineItemAttributes);
-  }
-
-  addToNewOrder(sku, quantity, deliveryAddress, bucketId, lineItemAttributes) {
-    if (this.isNewAddress(deliveryAddress)) {
-      this.shoppingFacade.addProductToBucket(
-        deliveryAddress,
-        this.order.shippingMethod,
-        sku,
-        quantity,
-        this.order.basket,
-        {
-          ...this.order,
-        },
-        lineItemAttributes,
-        bucketId
-      );
-    } else {
-      this.shoppingFacade.addProductToBucketWithUrn(
-        this.getUrn(deliveryAddress),
-        this.getId(deliveryAddress),
-        this.order.shippingMethod,
-        sku,
-        quantity,
-        this.order.basket,
-        lineItemAttributes
-      );
-    }
-  }
-
   addproductToRequisition(sku, quantity, requisitionId) {
     this.requisitionsFacade.addProductToCamfilRequisition(sku, quantity, requisitionId);
-  }
-
-  getUrn(currentAddress: Address): string {
-    return AddressHelper.getUrn(currentAddress, this.basketAddresses);
-  }
-
-  getId(currentAddress: Address): string {
-    return AddressHelper.getId(currentAddress, this.basketAddresses);
-  }
-
-  isNewAddress(currentAddress: Address): boolean {
-    return AddressHelper.isNewAddress(currentAddress, this.basketAddresses);
   }
 
   reset() {

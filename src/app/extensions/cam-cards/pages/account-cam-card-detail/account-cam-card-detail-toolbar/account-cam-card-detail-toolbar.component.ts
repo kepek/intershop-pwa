@@ -5,6 +5,7 @@ import { take, takeUntil } from 'rxjs/operators';
 
 import { CamCardsFacade } from '../../../facades/cam-cards.facade';
 import { ModalAddNewProductComponent } from '../modal-add-new-product/modal-add-new-product.component';
+import { ProductAddFormData } from '../modal-add-new-product/productAddFormData.model';
 
 @Component({
   selector: 'camfil-account-cam-card-detail-toolbar',
@@ -19,6 +20,7 @@ export class AccountCamCardDetailToolbarComponent implements OnInit {
 
   @Output() deleteCamCard = new EventEmitter();
   @Output() addItemsToCart = new EventEmitter();
+  @Output() addItemsToCamCard = new EventEmitter<ProductAddFormData>();
   @Input() isSticky: boolean;
   @Input() title: string;
 
@@ -51,5 +53,13 @@ export class AccountCamCardDetailToolbarComponent implements OnInit {
   /** Emits the cam card to delete. */
   deleteCurrentCamCard() {
     this.deleteCamCard.emit();
+  }
+
+  addItemsToCurrentCamCard(quickAddData: ProductAddFormData, modal: ModalAddNewProductComponent) {
+    this.addItemsToCamCard.emit(quickAddData);
+    if (modal) {
+      modal.hide();
+      modal.reset();
+    }
   }
 }

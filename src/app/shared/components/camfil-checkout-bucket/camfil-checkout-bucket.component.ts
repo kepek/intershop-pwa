@@ -44,6 +44,8 @@ import { CamfilCheckoutAddEmailRecipientModalComponent } from '../../../pages/ca
 
 import { CamfilEditOrderModalComponent } from './camfil-edit-order-modal/camfil-edit-order-modal.component';
 import { ORDER_HEADER_VALIDATORS } from './validators';
+import { AddressHelper } from 'ish-core/models/address/address.helper';
+import { ProductAddFormData } from 'src/app/extensions/cam-cards/pages/account-cam-card-detail/modal-add-new-product/productAddFormData.model';
 
 @Component({
   selector: 'camfil-checkout-bucket',
@@ -85,6 +87,7 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
   forceUpdateForm = false;
   hideRecipientButton = false;
   itemSize = 100;
+  basketAddresses: Address[];
 
   calendarExceptions$: Observable<[]>;
   emailRecipients$: Observable<string[]>;
@@ -94,6 +97,10 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
   pageletIds$: Observable<string[]>;
   deliveryTerm$: Observable<CustomerDeliveryTerm>;
   deliveryPrice$: Observable<Price>;
+  showDeliveryTerm$: Observable<boolean>;
+  isNewAddress = AddressHelper.isNewAddress;
+  getUrn = AddressHelper.getUrn;
+  getId = AddressHelper.getId;
 
   private bucket$ = new ReplaySubject<Bucket>(1);
   private destroy$ = new Subject<void>();
@@ -243,6 +250,9 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
             : []
         )
       );
+    this.shoppingFacade.basketAddresses$.pipe(takeUntil(this.destroy$)).subscribe((basketAddresses: Address[]) => {
+      this.basketAddresses = basketAddresses;
+    });
   }
 
   getBoxLabel(lineItem: LineItem) {
@@ -673,4 +683,67 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
     const dd = date.getDate();
     return new Date(`${yyyy}-${mm}-${dd} 23:59`);
   }
+
+  // ------------ Quick add product Start ------------
+  addToExistingOrder(sku, quantity, shipToAddress, lineItemAttributes) {
+    this.shoppingFacade.addProductToBasket(
+      sku,
+      quantity,
+      this.basket?.commonShippingMethod?.id,
+      shipToAddress,
+      lineItemAttributes
+    );
+  }
+
+  addToNewOrder(sku, quantity, deliveryAddress, bucketId, lineItemAttributes, basketAddresses) {
+    if (this.isNewAddress(deliveryAddress, basketAddresses)) {
+      this.shoppingFacade.addProductToBucket(
+        deliveryAddress,
+        this.bucket.shippingMethod,
+        sku,
+        quantity,
+        this.bucket.basket,
+        {
+          ...this.bucket,
+        },
+        lineItemAttributes,
+        bucketId
+      );
+    } else {
+      this.shoppingFacade.addProductToBucketWithUrn(
+        this.getUrn(deliveryAddress, basketAddresses),
+        this.getId(deliveryAddress, basketAddresses),
+        this.bucket.shippingMethod,
+        sku,
+        quantity,
+        this.bucket.basket,
+        lineItemAttributes
+      );
+    }
+  }
+
+  submitQuickAddProd(quickAddData: ProductAddFormData, modal: ModalAddNewProductComponent) {
+    const type = this.bucket?.id?.split('_')?.[0];
+    const shipToAddress = this.bucket.shipToAddress;
+
+    const { sku, quantity, lineItemAttributes } = quickAddData;
+    if (this.bucket?.id && type !== 'emptyBucket' && this.bucket?.shipToAddress) {
+      this.addToExistingOrder(sku, quantity, shipToAddress, lineItemAttributes);
+    } else {
+      const deliveryAddress = this.bucket.shipToAddressFull as Address;
+      this.addToNewOrder(sku, quantity, deliveryAddress, this.bucket.id, lineItemAttributes, this.basketAddresses);
+    }
+
+    combineLatest([
+      this.shoppingFacade.productUpdated$.pipe(whenTruthy(), takeUntil(this.destroy$)),
+      this.shoppingFacade.productAdded$.pipe(whenTruthy(), take(1)),
+    ]).subscribe(() => {
+      if (modal) {
+        modal.hide();
+        modal.reset();
+      }
+    });
+  }
+
+  //  ------------ Quick add product End ------------
 }

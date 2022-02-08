@@ -329,6 +329,7 @@
   [addToOrder]="true"
   [order]="bucket"
   [shippingMethodId]="basket?.commonShippingMethod?.id"
+  (submitProductAdd)="submitQuickAddProd($event, addNewProductModal)"
 >
 </camfil-modal-add-new-product>
 
