@@ -44,6 +44,7 @@ import { BasketExtensionData } from 'ish-core/models/basket-extension/basket-ext
 import { BasketExtension } from 'ish-core/models/basket-extension/basket-extension.model';
 import { CamfilCheckoutAddEmailRecipientModalComponent } from '../../../pages/camfil-checkout-onestep/camfil-checkout-add-email-recipient-modal/camfil-checkout-add-email-recipient-modal.component';
 import { Price } from 'ish-core/models/price/price.model';
+import { PriceItem } from 'ish-core/models/price-item/price-item.model';
 
 @Component({
   selector: 'camfil-checkout-bucket',
@@ -128,7 +129,13 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
   }
 
   get freeDelivery(): Price {
-    const { total } = this.bucket?.totals;
+    const emptyTotal: PriceItem = {
+      type: 'PriceItem',
+      gross: 0,
+      net: 0,
+      currency: 'N/A',
+    };
+    const total = this.bucket?.totals ? this.bucket?.totals.total : emptyTotal;
     const threshold = this.deliveryTerm.threshold;
     return { type: 'Money', currency: total?.currency, value: threshold - total.net };
   }
