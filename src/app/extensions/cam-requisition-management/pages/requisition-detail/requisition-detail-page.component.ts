@@ -4,6 +4,7 @@ import { User } from '@sentry/browser';
 import { Observable, Subject } from 'rxjs';
 import { map, take, takeUntil, tap } from 'rxjs/operators';
 import { ModalAddNewProductComponent } from 'src/app/extensions/cam-cards/pages/account-cam-card-detail/modal-add-new-product/modal-add-new-product.component';
+import { ProductAddFormData } from 'src/app/extensions/cam-cards/pages/account-cam-card-detail/modal-add-new-product/productAddFormData.model';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
 import { AppFacade } from 'ish-core/facades/app.facade';
@@ -128,5 +129,18 @@ export class RequisitionDetailPageComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  sumbitAddProductToRequisition(quickAddData: ProductAddFormData) {
+    const { sku, quantity } = quickAddData;
+
+    this.requisition$.pipe(
+      take(1),
+      tap(({ approval, id }) => {
+        if (this.getIsCamfilRequisitionEditable(approval)) {
+          this.camRequisitionManagementFacade.addProductToCamfilRequisition(sku, quantity, id);
+        }
+      })
+    );
   }
 }

@@ -1,4 +1,5 @@
 import { Attribute } from 'ish-core/models/attribute/attribute.model';
+
 import { CamCardItemComment, CamCardMeasurement } from '../../../models/cam-card/cam-card.model';
 
 export interface ProductAddFormData {

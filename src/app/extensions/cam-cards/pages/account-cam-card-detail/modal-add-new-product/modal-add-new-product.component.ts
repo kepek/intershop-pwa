@@ -3,7 +3,6 @@ import {
   ChangeDetectionStrategy,
   Component,
   EventEmitter,
-  Input,
   OnDestroy,
   OnInit,
   Output,
@@ -16,23 +15,19 @@ import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { isEmpty } from 'lodash-es';
 import { Observable, ReplaySubject, Subject, of } from 'rxjs';
 import { catchError, debounceTime, map, switchMap, takeUntil, tap, withLatestFrom } from 'rxjs/operators';
-import { CamRequisitionManagementFacade } from 'src/app/extensions/cam-requisition-management/facades/cam-requisition-management.facade';
-import { CamfilRequisition } from 'src/app/extensions/cam-requisition-management/models/camfil-requisition/camfil-requisition.model';
 
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { Address } from 'ish-core/models/address/address.model';
 import { AttributeHelper } from 'ish-core/models/attribute/attribute.helper';
-import { Bucket } from 'ish-core/models/bucket/bucket.model';
 import { CategoryTreeHelper } from 'ish-core/models/category-tree/category-tree.helper';
 import { ProductView, createProductView } from 'ish-core/models/product-view/product-view.model';
 import { Product, ProductCompletenessLevel, ProductHelper } from 'ish-core/models/product/product.model';
-
 import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
 
 import { CamCard, CamCardItemComment } from '../../../models/cam-card/cam-card.model';
 
-import { ADD_NEW_PRODUCT_VALIDATORS } from './validators';
 import { ProductAddFormData } from './productAddFormData.model';
+import { ADD_NEW_PRODUCT_VALIDATORS } from './validators';
 
 const FAKE_SKU = '144c9defac04969c7bfad8efaa8ea194';
 
@@ -59,11 +54,7 @@ const createFakeProduct = (product?: Product) =>
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ModalAddNewProductComponent implements OnInit, OnDestroy, AfterViewInit {
-  constructor(
-    private shoppingFacade: ShoppingFacade,
-    private requisitionsFacade: CamRequisitionManagementFacade,
-    public dialog: MatDialog
-  ) {}
+  constructor(private shoppingFacade: ShoppingFacade, public dialog: MatDialog) {}
 
   /**
    * Callback function to hide modal dialog (used with ishServerHtml). - is needed for closing the dialog after the user clicks a message link
@@ -86,11 +77,6 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy, AfterView
   productFormIsDisabled$: Observable<boolean>;
   currentCamCard$: Observable<CamCard>;
 
-  @Input() addToOrder = false;
-  @Input() addToRequisition = false;
-  @Input() order?: Bucket;
-  @Input() requisition?: CamfilRequisition;
-  @Input() shippingMethodId?: string;
   @Output() submitProductAdd = new EventEmitter<ProductAddFormData>();
 
   @ViewChild('modal', { static: false }) modalTemplate: TemplateRef<unknown>;
@@ -223,10 +209,6 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy, AfterView
     } else {
       markAsDirtyRecursive(this.productForm);
     }
-  }
-
-  addproductToRequisition(sku, quantity, requisitionId) {
-    this.requisitionsFacade.addProductToCamfilRequisition(sku, quantity, requisitionId);
   }
 
   reset() {

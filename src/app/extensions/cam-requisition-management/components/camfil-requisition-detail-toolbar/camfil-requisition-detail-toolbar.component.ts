@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ModalAddNewProductComponent } from 'src/app/extensions/cam-cards/pages/account-cam-card-detail/modal-add-new-product/modal-add-new-product.component';
+import { ProductAddFormData } from 'src/app/extensions/cam-cards/pages/account-cam-card-detail/modal-add-new-product/productAddFormData.model';
 
 import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
 
@@ -18,6 +19,7 @@ export class CamfilRequisitionDetailToolbarComponent {
   @Output() openAddToProductModal = new EventEmitter<any>();
   @Output() removeSelectedProducts = new EventEmitter();
   @Output() approveSelectedProducts = new EventEmitter();
+  @Output() addProductToRequisition = new EventEmitter<ProductAddFormData>();
 
   constructor(public dialog: MatDialog) {}
 
@@ -38,5 +40,13 @@ export class CamfilRequisitionDetailToolbarComponent {
   approveProducts(modal: CamfilSmallCtaModalComponent) {
     this.approveSelectedProducts.emit();
     modal.hide();
+  }
+
+  quickAddProductToRequisition(quickAddData: ProductAddFormData, modal: ModalAddNewProductComponent) {
+    this.addProductToRequisition.emit(quickAddData);
+    if (modal) {
+      modal.hide();
+      modal.reset();
+    }
   }
 }
