@@ -16,6 +16,7 @@ const camfilConfiguration: ChannelConfiguration = {
   showSubTotalInBasketSummary: false,
   showTotalWithoutTaxInBasketSummary: true,
   showTotalWithoutTaxInBucketSummary: true,
+  showWarningMessageForPartialDelivery: true,
   useSecondAddressLine: true,
 };
 

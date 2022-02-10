@@ -45,6 +45,7 @@ import { BasketExtension } from 'ish-core/models/basket-extension/basket-extensi
 import { CamfilCheckoutAddEmailRecipientModalComponent } from '../../../pages/camfil-checkout-onestep/camfil-checkout-add-email-recipient-modal/camfil-checkout-add-email-recipient-modal.component';
 import { Price } from 'ish-core/models/price/price.model';
 import { PriceItem } from 'ish-core/models/price-item/price-item.model';
+import { ConfigurationService } from 'src/app/extensions/cam-configuration/services/configuration/configuration.service';
 
 @Component({
   selector: 'camfil-checkout-bucket',
@@ -103,7 +104,8 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
     private checkoutFacade: CheckoutFacade,
     private shoppingFacade: ShoppingFacade,
     private appFacade: AppFacade,
-    private accountFacade: AccountFacade
+    private accountFacade: AccountFacade,
+    private configurationService: ConfigurationService
   ) {}
 
   get currentBasketExtensions() {
@@ -536,8 +538,15 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
       this.modalDeliveryText = 'camfil.modal.checkout.full-delivery.title';
       this.updateBucketDeliveryDate(false, selectedDD);
     } else {
-      this.modalDeliveryText = 'camfil.modal.checkout.partial-delivery.title';
-      this.updateBucketDeliveryDate(true, selectedDD);
+      this.configurationService
+        .isEnabled('showWarningMessageForPartialDelivery')
+        .pipe(takeUntil(this.destroy$))
+        .subscribe(isShowWarningMessageForPartialDelivery => {
+          this.modalDeliveryText = isShowWarningMessageForPartialDelivery
+            ? 'camfil.modal.checkout.partial-delivery-warning.title'
+            : 'camfil.modal.checkout.partial-delivery.title';
+          this.updateBucketDeliveryDate(true, selectedDD);
+        });
     }
   }
 

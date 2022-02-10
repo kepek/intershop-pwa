@@ -1058,6 +1058,7 @@
   "camfil.modal.addToCart.title": "Lägg till i varukorgen",
   "camfil.modal.checkout.full-delivery.title": "Samleverans har valts",
   "camfil.modal.checkout.partial-delivery.title": "Delleverans har valts",
+  "camfil.modal.checkout.partial-delivery-warning.title": "sv_Partial delivery has been selected. <br /> If you need several shipments, Camfil will invoice each shipments",
   "camfil.modal.createCamcard.button.add_section": "Lägg till ny CamCard-sektion",
   "camfil.modal.createCamcard.button.cancel": "Avbryt",
   "camfil.modal.createCamcard.button.create_and_continue": "Skapa och fortsätt handla",

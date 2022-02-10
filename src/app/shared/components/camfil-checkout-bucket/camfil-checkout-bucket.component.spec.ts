@@ -47,6 +47,7 @@ import { CamfilCheckoutGuestFormComponent } from '../../../pages/camfil-checkout
 import { CamfilCheckoutBucketComponent } from './camfil-checkout-bucket.component';
 import { CamfilDeleteOrderComponent } from './camfil-delete-order/camfil-delete-order.component';
 import { CamfilEditOrderModalComponent } from './camfil-edit-order-modal/camfil-edit-order-modal.component';
+import { ConfigurationService } from 'src/app/extensions/cam-configuration/services/configuration/configuration.service';
 
 describe('Camfil Checkout Bucket Component', () => {
   let component: CamfilCheckoutBucketComponent;
@@ -59,6 +60,7 @@ describe('Camfil Checkout Bucket Component', () => {
   let camConfigurationFacadeMock: CamConfigurationFacade;
   let accountFacadeMock: AccountFacade;
   let reqFacade: CamRequisitionManagementFacade;
+  let configurationServiceMock: ConfigurationService;
 
   beforeEach(async () => {
     appFacadeMock = mock(AppFacade);
@@ -68,6 +70,7 @@ describe('Camfil Checkout Bucket Component', () => {
     camConfigurationFacadeMock = mock(CamConfigurationFacade);
     accountFacadeMock = mock(AccountFacade);
     reqFacade = mock(CamRequisitionManagementFacade);
+    configurationServiceMock = mock(ConfigurationService);
 
     await TestBed.configureTestingModule({
       declarations: [
@@ -115,6 +118,7 @@ describe('Camfil Checkout Bucket Component', () => {
         { provide: AppFacade, useFactory: () => instance(appFacadeMock) },
         { provide: AccountFacade, useFactory: () => instance(accountFacadeMock) },
         { provide: CamRequisitionManagementFacade, useFactory: () => instance(reqFacade) },
+        { provide: ConfigurationService, useFactory: () => instance(configurationServiceMock) },
       ],
     }).compileComponents();
   });
