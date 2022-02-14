@@ -45,7 +45,10 @@
         [form]="form"
       ></camfil-zip-code>
     </div>
-
+    <mat-form-field appearance="fill" class="form-field">
+      <mat-label>{{ 'camfil.account.apply_form.country' | translate }}</mat-label>
+      <input matInput required formControlName="country" />
+    </mat-form-field>
     <mat-form-field appearance="fill" class="form-field">
       <mat-label>{{ 'camfil.account.apply_form.phoneNumber' | translate }}</mat-label>
       <input matInput required formControlName="phoneNumber" />
