@@ -1058,7 +1058,6 @@
   "camfil.modal.addToCart.title": "Ajouter au panier",
   "camfil.modal.checkout.full-delivery.title": "La livraison complète a été sélectionnée",
   "camfil.modal.checkout.partial-delivery.title": "La livraison partielle a été sélectionnée.",
-  "camfil.modal.checkout.partial-delivery-warning.title": "La livraison partielle a été sélectionnée. <br /> Si vous souhaitez plusieurs livraisons, des frais vous seront facturés pour chaque expédition",
   "camfil.modal.createCamcard.button.add_section": "Ajouter une nouvelle section de CamCard",
   "camfil.modal.createCamcard.button.cancel": "Annuler",
   "camfil.modal.createCamcard.button.create_and_continue": "Créer et continuer les achats",

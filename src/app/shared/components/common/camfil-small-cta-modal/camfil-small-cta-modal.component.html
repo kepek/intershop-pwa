@@ -14,7 +14,12 @@
     <div class="cta-modal__header text-center">
       <mat-icon *ngIf="hasError" svgIcon="error"></mat-icon>
       <mat-icon *ngIf="!hasError && !hideIcon" svgIcon="{{ icon || 'add-camcard' }}"></mat-icon>
-      <h2 class="cta-modal__header--text" [ishServerHtml]="actionTitle"></h2>
+      <h2 class="cta-modal__header--text">{{ actionTitle }}</h2>
+      <ng-container *ngIf="pageletIds">
+        <ng-container *ngFor="let pageletId of pageletIds">
+          <ish-content-include class="cta-modal__pagelet--text" includeId="{{ pageletId }}"></ish-content-include>
+        </ng-container>
+      </ng-container>
     </div>
 
     <div class="cta-modal__action">

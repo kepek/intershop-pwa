@@ -1058,7 +1058,6 @@
   "camfil.modal.addToCart.title": "Lisää ostoskoriin",
   "camfil.modal.checkout.full-delivery.title": "Yhteistoimitus valittu tilauksen tuotteille",
   "camfil.modal.checkout.partial-delivery.title": "Osatoimitus valittu tilauksen tuotteille",
-  "camfil.modal.checkout.partial-delivery-warning.title": "fi_Partial delivery has been selected. <br /> If you need several shipments, Camfil will invoice each shipments",
   "camfil.modal.createCamcard.button.add_section": "Luo uusi Suodatinluettelo-osio",
   "camfil.modal.createCamcard.button.cancel": "Peruuta",
   "camfil.modal.createCamcard.button.create_and_continue": "Luo ja jatka ostoksia",

@@ -22,6 +22,7 @@ export class CamfilSmallCtaModalComponent {
   @Input() onlyAccept = false;
   @Input() hasError = false;
   @Input() hideIcon = false;
+  @Input() pageletIds?: string[];
 
   emitAction() {
     this.actionClicked.emit();

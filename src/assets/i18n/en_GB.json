@@ -1058,7 +1058,6 @@
   "camfil.modal.addToCart.title": "Add to Cart",
   "camfil.modal.checkout.full-delivery.title": "Joint delivery has been selected.",
   "camfil.modal.checkout.partial-delivery.title": "Partial delivery has been selected.",
-  "camfil.modal.checkout.partial-delivery-warning.title": "Partial delivery has been selected. <br /> If you need several shipments, Camfil will invoice each shipments",
   "camfil.modal.createCamcard.button.add_section": "Add new Camcard section",
   "camfil.modal.createCamcard.button.cancel": "Cancel",
   "camfil.modal.createCamcard.button.create_and_continue": "Create & continue shopping",

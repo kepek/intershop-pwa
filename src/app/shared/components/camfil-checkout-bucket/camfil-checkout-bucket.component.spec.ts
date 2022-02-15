@@ -3,6 +3,7 @@ import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MockComponent, MockDirective, MockPipe } from 'ng-mocks';
 import { of } from 'rxjs';
 import { CamConfigurationFacade } from 'src/app/extensions/cam-configuration/facades/cam-configuration.facade';
+import { ConfigurationService } from 'src/app/extensions/cam-configuration/services/configuration/configuration.service';
 import { CamRequisitionManagementFacade } from 'src/app/extensions/cam-requisition-management/facades/cam-requisition-management.facade';
 import { instance, mock, when } from 'ts-mockito';
 
@@ -47,7 +48,6 @@ import { CamfilCheckoutGuestFormComponent } from '../../../pages/camfil-checkout
 import { CamfilCheckoutBucketComponent } from './camfil-checkout-bucket.component';
 import { CamfilDeleteOrderComponent } from './camfil-delete-order/camfil-delete-order.component';
 import { CamfilEditOrderModalComponent } from './camfil-edit-order-modal/camfil-edit-order-modal.component';
-import { ConfigurationService } from 'src/app/extensions/cam-configuration/services/configuration/configuration.service';
 
 describe('Camfil Checkout Bucket Component', () => {
   let component: CamfilCheckoutBucketComponent;

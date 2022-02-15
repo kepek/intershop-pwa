@@ -3,14 +3,21 @@
 
 .cta-modal-container {
   .cta-modal {
-    &__header {
+    &__header,
+    &__pagelet {
       &--text {
         margin-top: $space-box;
         text-transform: none;
         @include font-size-subtitle1;
       }
     }
-
+    &__pagelet {
+      &--text {
+        display: block;
+        @include font-size-subtitle1;
+        margin-bottom: $space-box;
+      }
+    }
     &__links {
       display: flex;
       align-items: flex-end;

@@ -94,6 +94,7 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
   focusedCheckoutElement$: Observable<CheckoutFocusedElement>;
   isLoggedIn$: Observable<boolean>;
   deviceType$: Observable<DeviceType>;
+  pageletIds: string[];
 
   private destroy$ = new Subject<void>();
   private numberOfVisibleLineItems = 20;
@@ -541,10 +542,10 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
       this.configurationService
         .isEnabled('showWarningMessageForPartialDelivery')
         .pipe(takeUntil(this.destroy$))
-        .subscribe(isShowWarningMessageForPartialDelivery => {
-          this.modalDeliveryText = isShowWarningMessageForPartialDelivery
-            ? 'camfil.modal.checkout.partial-delivery-warning.title'
-            : 'camfil.modal.checkout.partial-delivery.title';
+        .subscribe(() => {
+          this.pageletIds = ['camfil.include.checkout.warning.message.content.pagelet2-Include'];
+          this.modalDeliveryText = 'camfil.modal.checkout.partial-delivery.title';
+
           this.updateBucketDeliveryDate(true, selectedDD);
         });
     }
