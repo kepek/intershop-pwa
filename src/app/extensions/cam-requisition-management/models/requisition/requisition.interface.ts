@@ -21,7 +21,9 @@ export interface RequisitionBaseData extends BasketBaseData {
   };
   creationDate: string;
   lineItemCount: number;
-  userInformation: User;
+  creator: User;
+  orderMark: string;
+  invoiceLabel: string;
   // ToDO: remove unnecessary
   userBudgets: RequisitionUserBudget;
   shippingAddress: Address;

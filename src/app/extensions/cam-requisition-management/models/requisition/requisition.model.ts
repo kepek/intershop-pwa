@@ -30,7 +30,8 @@ export interface Requisition extends RequisitionBasket {
   orderNo?: string;
   creationDate: number;
   lineItemCount: number;
-
+  orderMark: string;
+  invoiceLabel: string;
   user: User;
   userBudget: RequisitionUserBudget;
   approval: RequisitionApproval;

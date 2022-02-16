@@ -76,11 +76,10 @@ export class RequisitionsService {
     const params = new HttpParams().set('include', this.allIncludes.join());
 
     return this.apiService
-      .b2bUserEndpoint()
-      .get<RequisitionData>(`requisitions/${requisitionId}`, {
+      .get<RequisitionData>(`camfilrequisitions/${requisitionId}`, {
         params,
       })
-      .pipe(concatMap(payload => this.processRequisitionData(payload)));
+      .pipe(map(payload => RequisitionMapper.fromData(payload)));
   }
 
   /**
@@ -135,7 +134,7 @@ export class RequisitionsService {
             headers: this.orderHeaders,
             params,
           })
-          .pipe(map(data => RequisitionMapper.fromData(payload, data)));
+          .pipe(map(() => RequisitionMapper.fromData(payload)));
       }
     }
 
