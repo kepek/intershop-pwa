@@ -21,6 +21,7 @@ const emptyPriceItem: PriceItem = {
 @Injectable({ providedIn: 'root' })
 export class RequisitionMapper {
   static fromData(payload: RequisitionData, orderPayload?: OrderData): Requisition {
+    console.log('fromData', payload);
     if (!Array.isArray(payload.data)) {
       const { data } = payload;
       const emptyPrice: Price = {
