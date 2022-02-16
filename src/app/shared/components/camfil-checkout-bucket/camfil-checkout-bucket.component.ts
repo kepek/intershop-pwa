@@ -15,7 +15,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { MatDialog } from '@angular/material/dialog';
 import { Observable, Subject } from 'rxjs';
-import { first, skip, take, takeUntil } from 'rxjs/operators';
+import { first, map, skip, take, takeUntil } from 'rxjs/operators';
 
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
@@ -94,7 +94,7 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
   focusedCheckoutElement$: Observable<CheckoutFocusedElement>;
   isLoggedIn$: Observable<boolean>;
   deviceType$: Observable<DeviceType>;
-  pageletIds: string[];
+  pageletIds$: Observable<string[]>;
 
   private destroy$ = new Subject<void>();
   private numberOfVisibleLineItems = 20;
@@ -220,6 +220,14 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
     this.deviceType$?.pipe(takeUntil(this.destroy$)).subscribe(deviceType => {
       this.itemSize = deviceType === 'mobile' ? 255 : deviceType === 'tablet' ? 155 : 100;
     });
+
+    this.pageletIds$ = this.configurationService.isEnabled('showWarningMessageForPartialDelivery').pipe(
+      map(showWarningMessageForPartialDelivery => {
+        return showWarningMessageForPartialDelivery
+          ? ['camfil.include.checkout.warning.message.content.pagelet2-Include']
+          : [];
+      })
+    );
   }
 
   getBoxLabel(lineItem: LineItem) {
@@ -539,15 +547,8 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
       this.modalDeliveryText = 'camfil.modal.checkout.full-delivery.title';
       this.updateBucketDeliveryDate(false, selectedDD);
     } else {
-      this.configurationService
-        .isEnabled('showWarningMessageForPartialDelivery')
-        .pipe(takeUntil(this.destroy$))
-        .subscribe(() => {
-          this.pageletIds = ['camfil.include.checkout.warning.message.content.pagelet2-Include'];
-          this.modalDeliveryText = 'camfil.modal.checkout.partial-delivery.title';
-
-          this.updateBucketDeliveryDate(true, selectedDD);
-        });
+      this.modalDeliveryText = 'camfil.modal.checkout.partial-delivery.title';
+      this.updateBucketDeliveryDate(true, selectedDD);
     }
   }
 

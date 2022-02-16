@@ -229,6 +229,11 @@ export class RequisitionsService {
       .post<RequisitionData>(`camfilrequisitions`, body, {
         params,
       })
-      .pipe(concatMap(payload => RequisitionMapper.fromListData(payload)));
+      .pipe(
+        concatMap(payload => {
+          console.log('payload', payload);
+          return RequisitionMapper.fromListData(payload);
+        })
+      );
   }
 }

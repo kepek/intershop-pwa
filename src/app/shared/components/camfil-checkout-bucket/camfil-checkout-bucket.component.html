@@ -332,6 +332,6 @@
   actionTitle="{{ modalDeliveryText | translate }}"
   icon="calendar"
   onlyAccept="true"
-  [pageletIds]="pageletIds"
+  [pageletIds]="pageletIds$ | async"
 >
 </camfil-small-cta-modal>
