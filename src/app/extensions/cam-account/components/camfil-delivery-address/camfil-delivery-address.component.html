@@ -7,6 +7,9 @@
 <ng-container *ngIf="deliveryAddress.deliveryAddressAddress">
   <span [innerText]="deliveryAddress.deliveryAddressAddress"></span><br />
 </ng-container>
+<ng-container *ngIf="deliveryAddress.deliveryAddressAddressOptional">
+  <span [innerText]="deliveryAddress.deliveryAddressAddressOptional"></span><br />
+</ng-container>
 <ng-container *ngIf="deliveryAddress.deliveryAddressZipCode">
   {{ deliveryAddress.deliveryAddressZipCode }}<br />
 </ng-container>

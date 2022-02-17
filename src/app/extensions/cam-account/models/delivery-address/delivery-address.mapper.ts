@@ -12,8 +12,10 @@ export class DeliveryAddressMapper {
         deliveryAddressName: orderData.deliveryAddressName,
         deliveryAddressName2: orderData.deliveryAddressName2,
         deliveryAddressAddress: orderData.deliveryAddressAddress,
+        deliveryAddressAddressOptional: orderData.deliveryAddressAddressOptional,
         deliveryAddressZipCode: orderData.deliveryAddressZipCode,
         deliveryAddressCity: orderData.deliveryAddressCity,
+        deliveryAddressCountryCode: orderData.deliveryAddressCountryCode,
       };
     }
   }
