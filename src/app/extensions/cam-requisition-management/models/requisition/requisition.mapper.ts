@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { BasketData } from 'ish-core/models/basket/basket.interface';
 import { BasketMapper } from 'ish-core/models/basket/basket.mapper';
 import { LineItemMapper } from 'ish-core/models/line-item/line-item.mapper';
+import { LineItem } from 'ish-core/models/line-item/line-item.model';
 import { PriceItemMapper } from 'ish-core/models/price-item/price-item.mapper';
 import { PriceItem } from 'ish-core/models/price-item/price-item.model';
 import { Price } from 'ish-core/models/price/price.model';
@@ -22,12 +23,11 @@ export class RequisitionMapper {
   static fromData(payload: RequisitionData): Requisition {
     if (!Array.isArray(payload.data)) {
       const { data, included } = payload;
-      let lineItems = [];
-      if (included) {
-        Object?.keys(included?.lineItems).map(function (key) {
-          lineItems.push(LineItemMapper.fromData(included.lineItems[key], included.lineItems_discounts));
-        });
-      }
+      // const ishBasketData = {...BasketMapper.fromData(payloadData),
+      // check in static method
+
+      // ishBasketData.lineItems.length ?  ishBasketData.lineItems : static
+      const lineItems = included ? RequisitionMapper.getLineItemsData(included) : [];
 
       const emptyPrice: Price = {
         type: 'Money',
@@ -103,5 +103,14 @@ export class RequisitionMapper {
     const date = String(payloadData)?.split('T');
 
     return new Date(date[0]?.replace(/(\d{2})-(\d{2})-(\d{4})/, '$2/$1/$3')).getTime();
+  }
+
+  static getLineItemsData(included): LineItem[] {
+    let lineItems = [];
+    Object?.keys(included?.lineItems).map(function (key) {
+      lineItems.push(LineItemMapper.fromData(included.lineItems[key], included.lineItems_discounts));
+    });
+
+    return lineItems;
   }
 }
