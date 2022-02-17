@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 
+import { ChannelSettings } from '../models/channel-configuration/channel-configuration.model';
 import { getCamConfigurationState } from '../store/cam-configuration-store';
 import {
+  getCamfilConfigurationParameter,
   getContinueShoppingUrl,
   getCountryCode,
   getShowPricesForNonLoggedInUser,
@@ -13,6 +15,10 @@ import {
 @Injectable({ providedIn: 'root' })
 export class CamConfigurationFacade {
   constructor(private store: Store) {}
+
+  getChannelSetting$(path: keyof ChannelSettings) {
+    return this.store.pipe(select(getCamfilConfigurationParameter<boolean>(path)));
+  }
 
   /**
    * example for debugging

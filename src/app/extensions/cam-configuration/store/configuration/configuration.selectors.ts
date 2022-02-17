@@ -1,6 +1,7 @@
 import { createSelector } from '@ngrx/store';
 import { isBoolean } from 'lodash-es';
 
+import { ChannelSettings } from '../../models/channel-configuration/channel-configuration.model';
 import { getCamConfigurationState } from '../cam-configuration-store';
 
 export const getConfigurationState = createSelector(getCamConfigurationState, state => state.configuration);
@@ -25,13 +26,13 @@ export const getCamfilSettings = createSelector(getConfigurationState, state => 
 
 export const isCamfilConfigurationInitialized = createSelector(getConfigurationState, state => state.initialized);
 
-export const getCamfilConfigurationParameter = <T>(path: string) =>
+export const getCamfilConfigurationParameter = <T = boolean>(path: keyof ChannelSettings) =>
   createSelector(
     getConfigurationState,
-    (serverConfig): T =>
+    (state): T =>
       path
         .split('.')
-        .reduce((obj, key) => (obj && obj[key] !== undefined ? obj[key] : undefined), serverConfig as unknown) as T
+        .reduce((obj, key) => (obj && obj[key] !== undefined ? obj[key] : undefined), state as unknown) as T
   );
 
 export const getShowPricesForNonLoggedInUser = createSelector(
