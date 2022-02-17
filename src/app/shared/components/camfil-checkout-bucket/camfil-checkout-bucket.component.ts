@@ -221,13 +221,15 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
       this.itemSize = deviceType === 'mobile' ? 255 : deviceType === 'tablet' ? 155 : 100;
     });
 
-    this.pageletIds$ = this.configurationService.isEnabled('showWarningMessageForPartialDelivery').pipe(
-      map(showWarningMessageForPartialDelivery => {
-        return showWarningMessageForPartialDelivery
-          ? ['camfil.include.checkout.warning.message.content.pagelet2-Include']
-          : [];
-      })
-    );
+    this.pageletIds$ = this.configurationService
+      .isEnabled('showWarningMessageForPartialDelivery')
+      .pipe(
+        map(showWarningMessageForPartialDelivery =>
+          showWarningMessageForPartialDelivery
+            ? ['camfil.include.checkout.warning.message.content.pagelet2-Include']
+            : []
+        )
+      );
   }
 
   getBoxLabel(lineItem: LineItem) {
