@@ -24,10 +24,12 @@ export interface RequisitionBaseData extends BasketBaseData {
   creator: User;
   orderMark: string;
   invoiceLabel: string;
+
   // ToDO: remove unnecessary
   userBudgets: RequisitionUserBudget;
   shippingAddress: Address;
-
+  status: string;
+  info: string;
   approvalStatus: RequisitionApproval;
 }
 

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { BasketData } from 'ish-core/models/basket/basket.interface';
 import { BasketMapper } from 'ish-core/models/basket/basket.mapper';
+import { Customer } from 'ish-core/models/customer/customer.model';
 import { LineItemMapper } from 'ish-core/models/line-item/line-item.mapper';
 import { LineItem } from 'ish-core/models/line-item/line-item.model';
 import { PriceItemMapper } from 'ish-core/models/price-item/price-item.mapper';
@@ -27,7 +28,6 @@ export class RequisitionMapper {
       // check in static method
 
       // ishBasketData.lineItems.length ?  ishBasketData.lineItems : static
-      const lineItems = included ? RequisitionMapper.getLineItemsData(included) : [];
 
       const emptyPrice: Price = {
         type: 'Money',
@@ -42,8 +42,9 @@ export class RequisitionMapper {
 
       if (data) {
         const payloadData = payload as BasketData;
-        console.log('payloadData', payloadData);
         payloadData.data.calculated = true;
+        const lineItems = RequisitionMapper.getLineItemsData(included);
+        const approvalStatus: RequisitionApproval = RequisitionMapper.getApprovalStatus(data);
 
         return {
           ...BasketMapper.fromData(payloadData),
@@ -54,11 +55,15 @@ export class RequisitionMapper {
           user: data.creator,
           orderMark: data.orderMark,
           invoiceLabel: data.invoiceLabel,
+          info: data.info,
           lineItemCount: data.lineItemCount,
           lineItems: lineItems,
-          approval: data.approval
+          requisitionCustomer: RequisitionMapper.getCustomerData(data),
+          shippingAddress: data.shippingAddress,
+          approval: approvalStatus
             ? {
                 ...data.approvalStatus,
+                ...approvalStatus,
                 customerApprovers: data.approval?.customerApproval?.approvers,
               }
             : defaultApproval,
@@ -107,10 +112,36 @@ export class RequisitionMapper {
 
   static getLineItemsData(included): LineItem[] {
     let lineItems = [];
-    Object?.keys(included?.lineItems).map(function (key) {
-      lineItems.push(LineItemMapper.fromData(included.lineItems[key], included.lineItems_discounts));
-    });
-
+    if (included) {
+      Object?.keys(included?.lineItems).map(function (key) {
+        lineItems.push(LineItemMapper.fromData(included.lineItems[key], included.lineItems_discounts));
+      });
+    }
     return lineItems;
+  }
+
+  static getCustomerData(payloadData): Customer {
+    const { customer } = payloadData;
+    return customer;
+  }
+
+  static getApprovalStatus(payloadData): RequisitionApproval {
+    const { status } = payloadData;
+    const statusDictionary = {
+      SUBMITTED: {
+        status: 'Pending',
+        statusCode: 'PENDING',
+      },
+      APPROVED: {
+        status: 'Approved',
+        statusCode: 'Approved',
+      },
+      REJECTED: {
+        status: 'Rejected',
+        statusCode: 'REJECTED',
+      },
+    };
+
+    return statusDictionary[status];
   }
 }

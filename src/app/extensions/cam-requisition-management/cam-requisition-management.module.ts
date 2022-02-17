@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { SharedModule } from 'ish-shared/shared.module';
 
 import { CamfilRequisitionDetailToolbarComponent } from './components/camfil-requisition-detail-toolbar/camfil-requisition-detail-toolbar.component';
+import { CamfilRequisitionLineItemBoxLabelComponent } from './components/camfil-requisition-line-item-table/camfil-requisition-line-item-box-label/camfil-requisition-line-item-box-label.component';
 import { CamfilRequisitionLineItemQuantityComponent } from './components/camfil-requisition-line-item-table/camfil-requisition-line-item-quantity/camfil-requisition-line-item-quantity.component';
 import { CamfilRequisitionLineItemTableComponent } from './components/camfil-requisition-line-item-table/camfil-requisition-line-item-table.component';
 import { CamfilRequisitionRejectDialogComponent } from './components/camfil-requisition-reject-dialog/camfil-requisition-reject-dialog.component';
@@ -18,6 +19,7 @@ const exportedComponents = [
   CamfilCheckoutReceiptRequisitionComponent,
   CamfilRequisitionDetailToolbarComponent,
   CamfilRequisitionLineItemQuantityComponent,
+  CamfilRequisitionLineItemBoxLabelComponent,
   CamfilRequisitionLineItemTableComponent,
   CamfilRequisitionRejectDialogComponent,
   CamfilRequisitionSummaryComponent,

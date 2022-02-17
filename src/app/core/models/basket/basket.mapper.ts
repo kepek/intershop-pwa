@@ -27,7 +27,7 @@ export class BasketMapper {
     if (totals) {
       totals.isEstimated = !data.invoiceToAddress || !data.commonShipToAddress || !data.commonShippingMethod;
     }
-    console.log('BasketMapper', payload);
+
     const lineItems =
       included && included.lineItems && data.lineItems && data.lineItems.length
         ? data.lineItems

@@ -8,27 +8,23 @@
             <dl class="row dl-horizontal dl-separator">
               <dt class="col-6">{{ 'approval.detailspage.buyer.label' | translate }}</dt>
               <dd class="col-6 text-right text-break font-weight-bold">
-                {{ requisition.user?.firstName }} {{ requisition.user?.lastName }} {{ requisition.customerNo }}
-              </dd>
-              <dt class="col-6">{{ 'approval.detailspage.order_reference_id.label' | translate }}</dt>
-              <dd class="col-6 text-right text-break font-weight-bold">
-                {{ requisition.orderNo || '---' }}
+                {{ requisition.requisitionCustomer?.customerNo }} {{ requisition.requisitionCustomer?.companyName }}
               </dd>
               <dt class="col-6">{{ 'camfil.account.requisitions.approvals.approval.reference' | translate }}</dt>
               <dd class="col-6 text-right text-break font-weight-bold">
-                {{ '---' }}
+                {{ requisition.orderMark || '---' }}
               </dd>
               <dt class="col-6">{{ 'approval.detailspage.approval_status.label' | translate }}</dt>
-              <dd class="col-6 text-right text-break font-weight-bold">
+              <dd class="col-6 text-right text-break font-weight-bold text-capitalize">
                 {{ requisition.approval.status }}
               </dd>
               <dt class="col-6">{{ 'approval.detailspage.order_date.label' | translate }}</dt>
               <dd class="col-6 text-right text-break font-weight-bold">
                 {{ requisition.creationDate | ishDate }}
               </dd>
-              <dt class="col-6">{{ 'camfil.account.orderdetails.order_channel.label' | translate }}</dt>
+              <dt class="col-6">{{ 'camfil.account.orderdetails.camfil_no.label' | translate }}</dt>
               <dd class="col-6 text-right text-break font-weight-bold">
-                {{ '---' }}
+                {{ requisition.invoiceLabel }}
               </dd>
             </dl>
           </div>
@@ -56,12 +52,12 @@
               </dd>
               <dt class="col-6">{{ 'camfil.account.orderdetails.delivery_address.label' | translate }}</dt>
               <dd class="col-6 text-right text-break font-weight-bold">
-                <camfil-address [address]="requisition.commonShipToAddress"></camfil-address>
+                <camfil-address [address]="requisition.shippingAddress"></camfil-address>
               </dd>
               <dd class="col-12 text-right text-break font-weight-bold">
                 <form [formGroup]="customerNoteForm">
                   <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>{{ 'camfil.cam_card.product.comment.label' | translate }}</mat-label>
+                    <mat-label>{{ 'approval.detailspage.comment.label' | translate }}</mat-label>
                     <textarea
                       (blur)="onBlur($event.target)"
                       [camfilMaxLength]="'CustomerNote'"

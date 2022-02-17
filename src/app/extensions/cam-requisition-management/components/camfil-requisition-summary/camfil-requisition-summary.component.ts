@@ -29,7 +29,7 @@ export class CamfilRequisitionSummaryComponent implements OnInit {
 
   ngOnInit() {
     this.customerNoteForm = new FormGroup({
-      customerNote: new FormControl(''),
+      customerNote: new FormControl(this.requisition.info),
     });
   }
 

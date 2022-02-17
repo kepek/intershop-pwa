@@ -4,6 +4,8 @@ import { AbstractBasket } from 'ish-core/models/basket/basket.model';
 import { LineItem } from 'ish-core/models/line-item/line-item.model';
 import { Price } from 'ish-core/models/price/price.model';
 import { User } from 'ish-core/models/user/user.model';
+import { Customer } from 'ish-core/models/customer/customer.model';
+import { Address } from 'ish-core/models/address/address.model';
 
 export type RequisitionStatus = 'PENDING' | 'APPROVED' | 'REJECTED';
 
@@ -33,7 +35,10 @@ export interface Requisition extends RequisitionBasket {
   orderMark: string;
   invoiceLabel: string;
   user: User;
+  requisitionCustomer: Customer;
+  shippingAddress: Address;
   userBudget: RequisitionUserBudget;
+  info: string;
   approval: RequisitionApproval;
 }
 

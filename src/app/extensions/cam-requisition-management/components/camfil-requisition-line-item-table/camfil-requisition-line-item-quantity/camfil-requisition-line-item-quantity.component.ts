@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Subject } from 'rxjs';
-import { map, takeUntil } from 'rxjs/operators';
+import { debounceTime, takeUntil } from 'rxjs/operators';
 
 import { LineItem } from 'ish-core/models/line-item/line-item.model';
 import {
@@ -32,17 +32,26 @@ export class CamfilRequisitionLineItemQuantityComponent implements OnInit, OnDes
 
   ngOnInit() {
     this.productItemForm = new FormGroup({
-      [this.quantityControlName]: new FormControl(this.updatedQuantity),
+      [this.quantityControlName]: new FormControl(this.lineItem?.quantity?.value || 1),
     });
 
     this.productItemForm
       .get(this.quantityControlName)
-      .valueChanges.pipe(
-        map(val => +val),
-        takeUntil(this.destroy$)
-      )
-      .subscribe(quantity => {
-        this.updatedQuantity = quantity;
+      ?.valueChanges.pipe(debounceTime(500), takeUntil(this.destroy$))
+      .subscribe(([quantity]) => {
+        const { minOrderQuantity, maxOrderQuantity } = this.product;
+
+        if (quantity < minOrderQuantity) {
+          return;
+        }
+
+        if (quantity >= maxOrderQuantity) {
+          return;
+        }
+
+        if (this.productItemForm.get(this.quantityControlName)?.value !== this.lineItem?.quantity?.value) {
+          // this.updateBasketItem({ itemId: this.lineItem.id, quantity });
+        }
       });
   }
 
