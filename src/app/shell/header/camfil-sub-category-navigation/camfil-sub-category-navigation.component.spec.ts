@@ -66,17 +66,17 @@ describe('Camfil Sub Category Navigation Component', () => {
       <ul class="category-level1 dropdown-menu all-filters-menu">
         <li class="main-navigation-btn-item">
           <a
-            class="mat-focus-indicator mat-stroked-button mat-button-base _mat-animation-noopable"
             mat-stroked-button=""
+            class="mat-focus-indicator mat-stroked-button mat-button-base _mat-animation-noopable"
             tabindex="0"
             aria-disabled="false"
             href="/"
             ><span class="mat-button-wrapper"> camfil.navigation.see.all.airFilters </span
             ><span
-              class="mat-button-ripple mat-ripple"
               matripple=""
-              ng-reflect-centered="false"
+              class="mat-ripple mat-button-ripple"
               ng-reflect-disabled="false"
+              ng-reflect-centered="false"
               ng-reflect-trigger="http://localhost/"
             ></span
             ><span class="mat-button-focus-overlay"></span
@@ -91,7 +91,7 @@ describe('Camfil Sub Category Navigation Component', () => {
           ></ish-sub-category-navigation>
         </li>
         <li class="main-navigation-level1-item">
-          <a style="width: 100%" ng-reflect-router-link="/CAT_A2-catA.2" href="/CAT_A2-catA.2">CAT_A2</a>
+          <a ng-reflect-router-link="/CAT_A2-catA.2" style="width: 100%" href="/CAT_A2-catA.2">CAT_A2</a>
         </li>
       </ul>
     `);
