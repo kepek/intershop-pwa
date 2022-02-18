@@ -223,7 +223,7 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
 
     this.pageletIds$ = this.configurationService
       .isEnabled('showWarningMessageForPartialDelivery')
-      .pipe(
+      ?.pipe(
         map(showWarningMessageForPartialDelivery =>
           showWarningMessageForPartialDelivery
             ? ['camfil.include.checkout.warning.message.content.pagelet2-Include']

@@ -6,6 +6,7 @@ import { CamRequisitionManagementFacade } from 'src/app/extensions/cam-requisiti
 import { instance, mock } from 'ts-mockito';
 
 import { CamfilMaxLengthAttributeCreateDirective } from 'ish-core/directives/camfil-max-length-attribute-create.directive';
+import { ContentIncludeComponent } from 'ish-shared/cms/components/content-include/content-include.component';
 import { CamfilErrorComponent } from 'ish-shared/components/common/camfil-error/camfil-error.component';
 import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
 import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
@@ -38,6 +39,7 @@ describe('Account Cam Card Detail Toolbar Component', () => {
         CamfilSmallCtaModalComponent,
         MockComponent(CamCardPreferencesDialogComponent),
         MockComponent(CamfilLoadingComponent),
+        MockComponent(ContentIncludeComponent),
         ModalAddNewProductComponent,
         ModalAddNewSectionComponent,
       ],

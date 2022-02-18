@@ -7,6 +7,7 @@ import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { PricePipe } from 'ish-core/models/price/price.pipe';
 import { CamfilPriceSummaryPipe } from 'ish-core/pipes/camfil-price-summary.pipe';
 import { DatePipe } from 'ish-core/pipes/date.pipe';
+import { ContentIncludeComponent } from 'ish-shared/cms/components/content-include/content-include.component';
 import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
 import { CamfilProductAttributeComponent } from 'ish-shared/components/product/camfil-product-attribute/camfil-product-attribute.component';
 import { CamfilProductImageComponent } from 'ish-shared/components/product/camfil-product-image/camfil-product-image.component';
@@ -36,6 +37,7 @@ describe('Camfil Requisition Line Item Table Component', () => {
         MockComponent(CamfilProductQuickviewComponent),
         MockComponent(CamfilProductTitleComponent),
         MockComponent(CamfilRequisitionLineItemQuantityComponent),
+        MockComponent(ContentIncludeComponent),
         MockPipe(CamfilPriceSummaryPipe),
         MockPipe(DatePipe),
         MockPipe(PricePipe),

@@ -14,6 +14,7 @@ import { FeatureToggleModule } from 'ish-core/feature-toggle.module';
 import { Product } from 'ish-core/models/product/product.model';
 import { AddressSortPipe } from 'ish-core/pipes/camfil-address-sort.pipe';
 import { CamfilContactSortPipe } from 'ish-core/pipes/camfil-contact-sort.pipe';
+import { ContentIncludeComponent } from 'ish-shared/cms/components/content-include/content-include.component';
 import { CamfilCamCardModalComponent } from 'ish-shared/components/common/camfil-cam-card-modal/camfil-cam-card-modal.component';
 import { CamfilCityFieldComponent } from 'ish-shared/components/common/camfil-city-field/camfil-city-field.component';
 import { CamfilErrorComponent } from 'ish-shared/components/common/camfil-error/camfil-error.component';
@@ -68,6 +69,7 @@ describe('Camfil Product Add To Basket Component', () => {
         CreateOrderProductSuccessComponent,
         MockComponent(CamfilCityFieldComponent),
         MockComponent(CamfilLoadingComponent),
+        MockComponent(ContentIncludeComponent),
         MockComponent(FaIconComponent),
         MockComponent(ZipCodeComponent),
         MockPipe(AddressSortPipe),

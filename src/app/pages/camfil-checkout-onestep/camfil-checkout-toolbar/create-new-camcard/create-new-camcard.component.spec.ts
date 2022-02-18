@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MockComponent } from 'ng-mocks';
 import { instance, mock } from 'ts-mockito';
 
+import { ContentIncludeComponent } from 'ish-shared/cms/components/content-include/content-include.component';
 import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
 import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
 
@@ -19,7 +20,12 @@ describe('Create New Camcard Component', () => {
     camCardFacadeMock = mock(CamCardsFacade);
 
     await TestBed.configureTestingModule({
-      declarations: [CamfilSmallCtaModalComponent, CreateNewCamcardComponent, MockComponent(CamfilLoadingComponent)],
+      declarations: [
+        CamfilSmallCtaModalComponent,
+        CreateNewCamcardComponent,
+        MockComponent(CamfilLoadingComponent),
+        MockComponent(ContentIncludeComponent),
+      ],
       providers: [{ provide: CamCardsFacade, useFactory: () => instance(camCardFacadeMock) }],
     }).compileComponents();
   });
