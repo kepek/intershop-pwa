@@ -2,8 +2,8 @@ import { Directive, Input, OnDestroy, TemplateRef, ViewContainerRef } from '@ang
 import { ReplaySubject, Subject, Subscription } from 'rxjs';
 import { distinctUntilChanged, takeUntil } from 'rxjs/operators';
 
+import { CamfilConfigurationFacade } from '../facades/camfil-configuration.facade';
 import { ChannelSetting } from '../models/channel-configuration/channel-configuration.model';
-import { ConfigurationService } from '../services/configuration/configuration.service';
 
 /**
  * Structural directive.
@@ -25,7 +25,7 @@ export class ChannelToggleDirective implements OnDestroy {
   constructor(
     private templateRef: TemplateRef<unknown>,
     private viewContainer: ViewContainerRef,
-    private configuration: ConfigurationService
+    private camfilConfigurationFacade: CamfilConfigurationFacade
   ) {
     this.enabled$.pipe(distinctUntilChanged(), takeUntil(this.destroy$)).subscribe(enabled => {
       if (enabled) {
@@ -42,8 +42,8 @@ export class ChannelToggleDirective implements OnDestroy {
       // tslint:disable-next-line: ban
       this.subscription.unsubscribe();
     }
-    this.subscription = this.configuration
-      .isEnabled(channelSetting)
+    this.subscription = this.camfilConfigurationFacade
+      .isEnabled$(channelSetting)
       .pipe(takeUntil(this.destroy$))
       .subscribe({ next: val => this.enabled$.next(val) });
   }

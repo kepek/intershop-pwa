@@ -5,19 +5,19 @@ import { map, mapTo } from 'rxjs/operators';
 
 import { HttpStatusCodeService } from 'ish-core/utils/http-status-code/http-status-code.service';
 
-import { ConfigurationService } from '../services/configuration/configuration.service';
+import { CamfilConfigurationService } from '../services/camfil-configuration/camfil-configuration.service';
 
 @Injectable({ providedIn: 'root' })
 export class ChannelToggleGuard implements CanActivate {
   constructor(
-    private configurationService: ConfigurationService,
+    private camfilConfigurationService: CamfilConfigurationService,
     private router: Router,
     private httpStatusCodeService: HttpStatusCodeService
   ) {}
 
   canActivate(route: ActivatedRouteSnapshot, _: RouterStateSnapshot): Observable<boolean | UrlTree> {
     return race(
-      this.configurationService.isEnabled(route.data.channelSetting),
+      this.camfilConfigurationService.isEnabled(route.data.channelSetting),
       // timeout and forbid visiting page
       timer(4000).pipe(mapTo(false))
     ).pipe(

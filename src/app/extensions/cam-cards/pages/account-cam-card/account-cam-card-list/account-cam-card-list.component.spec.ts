@@ -5,7 +5,6 @@ import { provideMockStore } from '@ngrx/store/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { MockComponent, MockPipe } from 'ng-mocks';
 import { of } from 'rxjs';
-import { ConfigurationService } from 'src/app/extensions/cam-configuration/services/configuration/configuration.service';
 import { anything, capture, instance, mock, verify, when } from 'ts-mockito';
 
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
@@ -14,6 +13,7 @@ import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-load
 import { CamfilModalDialogComponent } from 'ish-shared/components/common/camfil-modal-dialog/camfil-modal-dialog.component';
 import { CamfilProductAddToBasketComponent } from 'ish-shared/components/product/camfil-product-add-to-basket/camfil-product-add-to-basket.component';
 
+import { CamfilConfigurationFacade } from '../../../../cam-configuration/facades/camfil-configuration.facade';
 import { CamCard } from '../../../models/cam-card/cam-card.model';
 import { CamCardProductCommentComponent } from '../../../shared/cam-card-product-comment/cam-card-product-comment.component';
 import { AccountCamCardDetailLineItemComponent } from '../../account-cam-card-detail/account-cam-card-detail-line-item/account-cam-card-detail-line-item.component';
@@ -27,7 +27,7 @@ describe('Account Cam Card List Component', () => {
   let fixture: ComponentFixture<AccountCamCardListComponent>;
   let element: HTMLElement;
   let shoppingFacadeMock: ShoppingFacade;
-  let configurationServiceMock: ConfigurationService;
+  let camfilConfigurationFacadeMock: CamfilConfigurationFacade;
 
   const camCardDetails: CamCard[] = [
     {
@@ -59,7 +59,7 @@ describe('Account Cam Card List Component', () => {
 
   beforeEach(async () => {
     shoppingFacadeMock = mock(ShoppingFacade);
-    configurationServiceMock = mock(ConfigurationService);
+    camfilConfigurationFacadeMock = mock(CamfilConfigurationFacade);
 
     await TestBed.configureTestingModule({
       declarations: [
@@ -76,7 +76,7 @@ describe('Account Cam Card List Component', () => {
       ],
       imports: [RouterTestingModule, TranslateModule.forRoot()],
       providers: [
-        { provide: ConfigurationService, useFactory: () => instance(configurationServiceMock) },
+        { provide: CamfilConfigurationFacade, useFactory: () => instance(camfilConfigurationFacadeMock) },
         { provide: ShoppingFacade, useFactory: () => instance(shoppingFacadeMock) },
         provideMockStore({}),
       ],

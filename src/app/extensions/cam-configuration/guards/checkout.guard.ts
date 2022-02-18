@@ -7,7 +7,7 @@ import { mapTo, switchMap } from 'rxjs/operators';
 import { AuthGuard } from 'ish-core/guards/auth.guard';
 import { CookiesService } from 'ish-core/utils/cookies/cookies.service';
 
-import { ConfigurationService } from '../services/configuration/configuration.service';
+import { CamfilConfigurationService } from '../services/camfil-configuration/camfil-configuration.service';
 
 @Injectable({ providedIn: 'root' })
 export class CheckoutGuard extends AuthGuard implements CanActivate {
@@ -16,7 +16,7 @@ export class CheckoutGuard extends AuthGuard implements CanActivate {
     protected router: Router,
     @Inject(PLATFORM_ID) protected platformId: string,
     protected cookieService: CookiesService,
-    private configurationService: ConfigurationService
+    protected camfilConfigurationService: CamfilConfigurationService
   ) {
     super(store, router, platformId, cookieService);
   }
@@ -31,7 +31,7 @@ export class CheckoutGuard extends AuthGuard implements CanActivate {
 
   private canCheckout(fn: () => {}): Observable<boolean | UrlTree> {
     return race(
-      this.configurationService.isEnabled('guestCheckout'),
+      this.camfilConfigurationService.isEnabled('guestCheckout'),
       // timeout and forbid visiting page
       timer(4000).pipe(mapTo(false))
     ).pipe(

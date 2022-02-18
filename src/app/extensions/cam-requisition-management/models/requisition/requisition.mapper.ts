@@ -97,7 +97,12 @@ export class RequisitionMapper {
   }
 
   static convertToData(payloadData: string): number {
+    if (!payloadData) {
+      return;
+    }
+
     const date = String(payloadData)?.split('T');
+
     return new Date(date[0]?.replace(/(\d{2})-(\d{2})-(\d{4})/, '$2/$1/$3')).getTime();
   }
 }

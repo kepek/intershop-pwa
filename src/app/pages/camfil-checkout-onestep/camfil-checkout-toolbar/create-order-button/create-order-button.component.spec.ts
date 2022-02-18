@@ -1,7 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MockComponent } from 'ng-mocks';
 import { of } from 'rxjs';
-import { ConfigurationService } from 'src/app/extensions/cam-configuration/services/configuration/configuration.service';
 import { instance, mock, when } from 'ts-mockito';
 
 import { CamfilMaxLengthAttributeCreateDirective } from 'ish-core/directives/camfil-max-length-attribute-create.directive';
@@ -22,6 +21,7 @@ import { ArticleDetailsComponent } from '../../../../extensions/cam-cards/shared
 import { CreateOrderProductModalComponent } from '../../../../extensions/cam-cards/shared/add-product-to-cart-modal/create-order-product-modal/create-order-product-modal.component';
 import { OrderFormComponent } from '../../../../extensions/cam-cards/shared/add-product-to-cart-modal/create-order-product-modal/order-form/order-form.component';
 import { CreateOrderProductSuccessComponent } from '../../../../extensions/cam-cards/shared/add-product-to-cart-modal/create-order-product-success/create-order-product-success.component';
+import { CamfilConfigurationFacade } from '../../../../extensions/cam-configuration/facades/camfil-configuration.facade';
 
 import { CreateOrderButtonComponent } from './create-order-button.component';
 
@@ -32,7 +32,7 @@ describe('Create Order Button Component', () => {
   let camCardFacadeMock: CamCardsFacade;
   let checkoutFacadeMock: CheckoutFacade;
   let shoppingFacadeMock: ShoppingFacade;
-  let configurationServiceMock: ConfigurationService;
+  let camfilConfigurationFacadeMock: CamfilConfigurationFacade;
 
   const camCardDetails = {
     name: 'testing cam cards',
@@ -69,7 +69,7 @@ describe('Create Order Button Component', () => {
     camCardFacadeMock = mock(CamCardsFacade);
     checkoutFacadeMock = mock(CheckoutFacade);
     shoppingFacadeMock = mock(ShoppingFacade);
-    configurationServiceMock = mock(ConfigurationService);
+    camfilConfigurationFacadeMock = mock(CamfilConfigurationFacade);
 
     await TestBed.configureTestingModule({
       declarations: [
@@ -92,7 +92,7 @@ describe('Create Order Button Component', () => {
         { provide: CamCardsFacade, useFactory: () => instance(camCardFacadeMock) },
         { provide: CheckoutFacade, useFactory: () => instance(checkoutFacadeMock) },
         { provide: ShoppingFacade, useFactory: () => instance(shoppingFacadeMock) },
-        { provide: ConfigurationService, useFactory: () => instance(configurationServiceMock) },
+        { provide: CamfilConfigurationFacade, useFactory: () => instance(camfilConfigurationFacadeMock) },
       ],
     }).compileComponents();
   });

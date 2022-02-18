@@ -23,10 +23,8 @@ describe('Configuration Selectors', () => {
   describe('initial state', () => {
     it('should be undefined or empty values for most selectors', () => {
       expect(isCamfilConfigurationInitialized(store$.state)).toBeFalsy();
-      expect(getCamfilConfigurationParameter('someApi.someApiBaseURL')(store$.state)).toMatchInlineSnapshot(
-        `undefined`
-      );
-      expect(getCamfilConfigurationParameter('someApi.someApiToken')(store$.state)).toMatchInlineSnapshot(`undefined`);
+      expect(getCamfilConfigurationParameter('useSecondAddressLine')(store$.state)).toMatchInlineSnapshot(`undefined`);
+      expect(getCamfilConfigurationParameter('useSecondAddressLine')(store$.state)).toMatchInlineSnapshot(`undefined`);
     });
   });
 
@@ -46,10 +44,8 @@ describe('Configuration Selectors', () => {
 
     it('should set serverConfig to state', () => {
       expect(isCamfilConfigurationInitialized(store$.state)).toBeTruthy();
-      expect(getCamfilConfigurationParameter('someApi.someApiBaseURL')(store$.state)).toMatchInlineSnapshot(
-        `undefined`
-      );
-      expect(getCamfilConfigurationParameter('someApi.someApiToken')(store$.state)).toMatchInlineSnapshot(`undefined`);
+      expect(getCamfilConfigurationParameter('useSecondAddressLine')(store$.state)).toMatchInlineSnapshot(`undefined`);
+      expect(getCamfilConfigurationParameter('useSecondAddressLine')(store$.state)).toMatchInlineSnapshot(`undefined`);
     });
   });
 });

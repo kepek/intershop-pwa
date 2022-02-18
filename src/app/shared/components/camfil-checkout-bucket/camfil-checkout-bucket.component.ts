@@ -15,7 +15,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { MatDialog } from '@angular/material/dialog';
 import { Observable, Subject } from 'rxjs';
-import { first, skip, take, takeUntil } from 'rxjs/operators';
+import { first, map, skip, take, takeUntil } from 'rxjs/operators';
 
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
@@ -45,6 +45,7 @@ import { BasketExtension } from 'ish-core/models/basket-extension/basket-extensi
 import { CamfilCheckoutAddEmailRecipientModalComponent } from '../../../pages/camfil-checkout-onestep/camfil-checkout-add-email-recipient-modal/camfil-checkout-add-email-recipient-modal.component';
 import { Price } from 'ish-core/models/price/price.model';
 import { PriceItem } from 'ish-core/models/price-item/price-item.model';
+import { CamfilConfigurationFacade } from '../../../extensions/cam-configuration/facades/camfil-configuration.facade';
 
 @Component({
   selector: 'camfil-checkout-bucket',
@@ -93,6 +94,7 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
   focusedCheckoutElement$: Observable<CheckoutFocusedElement>;
   isLoggedIn$: Observable<boolean>;
   deviceType$: Observable<DeviceType>;
+  pageletIds$: Observable<string[]>;
 
   private destroy$ = new Subject<void>();
   private numberOfVisibleLineItems = 20;
@@ -103,7 +105,8 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
     private checkoutFacade: CheckoutFacade,
     private shoppingFacade: ShoppingFacade,
     private appFacade: AppFacade,
-    private accountFacade: AccountFacade
+    private accountFacade: AccountFacade,
+    private camfilConfigurationFacade: CamfilConfigurationFacade
   ) {}
 
   get currentBasketExtensions() {
@@ -217,6 +220,16 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
     this.deviceType$?.pipe(takeUntil(this.destroy$)).subscribe(deviceType => {
       this.itemSize = deviceType === 'mobile' ? 255 : deviceType === 'tablet' ? 155 : 100;
     });
+
+    this.pageletIds$ = this.camfilConfigurationFacade
+      .isEnabled$('showWarningMessageForPartialDelivery')
+      .pipe(
+        map(showWarningMessageForPartialDelivery =>
+          showWarningMessageForPartialDelivery
+            ? ['camfil.include.checkout.warning.message.content.pagelet2-Include']
+            : []
+        )
+      );
   }
 
   getBoxLabel(lineItem: LineItem) {

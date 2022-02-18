@@ -25,22 +25,19 @@ export const getCamfilSettings = createSelector(getConfigurationState, state => 
 
 export const isCamfilConfigurationInitialized = createSelector(getConfigurationState, state => state.initialized);
 
-export const getCamfilConfigurationParameter = <T>(path: string) =>
+export const getCamfilConfigurationParameter = <T, O extends string>(path: O) =>
   createSelector(
     getConfigurationState,
-    (serverConfig): T =>
+    (state): T =>
       path
         .split('.')
-        .reduce((obj, key) => (obj && obj[key] !== undefined ? obj[key] : undefined), serverConfig as unknown) as T
+        .reduce((obj, key) => (obj && obj[key] !== undefined ? obj[key] : undefined), state as unknown) as T
   );
-
-export const getShowPricesForNonLoggedInUser = createSelector(
-  getConfigurationState,
-  state => state.showPricesForNonLoggedInUser
-);
 
 export const getCountryCode = createSelector(getConfigurationState, state => state.countryCode);
 
-export const getUseSecondAddressLine = createSelector(getConfigurationState, state => state.useSecondAddressLine);
+export const getCurrency = createSelector(getConfigurationState, state => state.currency);
+
+export const getICMChannel = createSelector(getConfigurationState, state => state.icmChannel);
 
 export const getContinueShoppingUrl = createSelector(getConfigurationState, state => state.continueShoppingUrl);

@@ -41,12 +41,12 @@ describe('Camfil Account Order Component', () => {
       declarations: [
         CamfilAccountOrderComponent,
         CamfilDeliveryAddressComponent,
-        CamfilSmallCtaModalComponent,
         MockComponent(AddressComponent),
         MockComponent(CamfilAddressComponent),
         MockComponent(CamfilBasketCostSummaryComponent),
         MockComponent(CamfilLineItemTableComponent),
         MockComponent(CamfilLoadingComponent),
+        MockComponent(CamfilSmallCtaModalComponent),
         MockComponent(FaIconComponent),
         MockComponent(InfoBoxComponent),
         MockPipe(CamfilSlugifyPipe),

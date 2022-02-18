@@ -12,15 +12,15 @@ import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { PricePipe } from 'ish-core/models/price/price.pipe';
 import { CamfilSlugifyPipe } from 'ish-core/pipes/camfil-slugify.pipe';
-import { ConfigurationService } from 'ish-core/services/configuration/configuration.service';
 import { BasketMockData } from 'ish-core/utils/dev/basket-mock-data';
 import { ContentIncludeComponent } from 'ish-shared/cms/components/content-include/content-include.component';
+import { ContentPageletComponent } from 'ish-shared/cms/components/content-pagelet/content-pagelet.component';
 import { BasketPromotionComponent } from 'ish-shared/components/basket/basket-promotion/basket-promotion.component';
 import { CamfilModalDialogComponent } from 'ish-shared/components/common/camfil-modal-dialog/camfil-modal-dialog.component';
 import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
 
 import { ChannelToggleDirective } from '../../../extensions/cam-configuration/directives/channel-toggle.directive';
-import { CamConfigurationFacade } from '../../../extensions/cam-configuration/facades/cam-configuration.facade';
+import { CamfilConfigurationFacade } from '../../../extensions/cam-configuration/facades/camfil-configuration.facade';
 
 import { CamfilCheckoutSummaryComponent } from './camfil-checkout-summary.component';
 
@@ -31,23 +31,22 @@ describe('Camfil Checkout Summary Component', () => {
   let accountFacade: AccountFacade;
   let checkoutFacade: CheckoutFacade;
   let shoppingFacade: ShoppingFacade;
-  let camConfFacade: CamConfigurationFacade;
-  let configurationServiceMock: ConfigurationService;
+  let camConfFacade: CamfilConfigurationFacade;
 
   beforeEach(async () => {
     accountFacade = mock(AccountFacade);
     checkoutFacade = mock(CheckoutFacade);
     shoppingFacade = mock(ShoppingFacade);
-    camConfFacade = mock(CamConfigurationFacade);
-    configurationServiceMock = mock(ConfigurationService);
+    camConfFacade = mock(CamfilConfigurationFacade);
 
     await TestBed.configureTestingModule({
       declarations: [
         CamfilCheckoutSummaryComponent,
-        CamfilSmallCtaModalComponent,
         MockComponent(BasketPromotionComponent),
         MockComponent(CamfilModalDialogComponent),
+        MockComponent(CamfilSmallCtaModalComponent),
         MockComponent(ContentIncludeComponent),
+        MockComponent(ContentPageletComponent),
         MockComponent(LazyCamRequisitionCheckoutButtonComponent),
         MockDirective(AuthorizationToggleDirective),
         MockDirective(ChannelToggleDirective),
@@ -60,8 +59,7 @@ describe('Camfil Checkout Summary Component', () => {
         { provide: AccountFacade, useFactory: () => instance(accountFacade) },
         { provide: CheckoutFacade, useFactory: () => instance(checkoutFacade) },
         { provide: ShoppingFacade, useFactory: () => instance(shoppingFacade) },
-        { provide: CamConfigurationFacade, useFactory: () => instance(camConfFacade) },
-        { provide: ConfigurationService, useFactory: () => instance(configurationServiceMock) },
+        { provide: CamfilConfigurationFacade, useFactory: () => instance(camConfFacade) },
       ],
     }).compileComponents();
   });

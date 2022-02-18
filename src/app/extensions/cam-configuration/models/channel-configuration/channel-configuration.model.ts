@@ -21,6 +21,7 @@ export interface ChannelSettings {
   showPricesForNonLoggedInUser: boolean;
   showQuestionIfUserWantsToCreateCamCardsBasedOnPurchasedItemsOnCheckoutConfirmationPage: boolean;
   showSubTotalInBasketSummary: boolean;
+  showWarningMessageForPartialDelivery: boolean;
   useHardcodedAnonymousCustomerForNonLoggedInUser: boolean;
   useHardcodedContactAnonymousCustomerForNonLoggedInUser: boolean;
   useSecondAddressLine: boolean;

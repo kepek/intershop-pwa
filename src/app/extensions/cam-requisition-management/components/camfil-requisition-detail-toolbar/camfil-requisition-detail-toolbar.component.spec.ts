@@ -32,9 +32,9 @@ describe('Camfil Requisition Detail Toolbar Component', () => {
         ArticleDetailsComponent,
         CamfilMaxLengthAttributeCreateDirective,
         CamfilRequisitionDetailToolbarComponent,
-        CamfilSmallCtaModalComponent,
         MockComponent(CamfilLoadingComponent),
         MockComponent(CamfilProductQuantityComponent),
+        MockComponent(CamfilSmallCtaModalComponent),
         ModalAddNewProductComponent,
       ],
     })

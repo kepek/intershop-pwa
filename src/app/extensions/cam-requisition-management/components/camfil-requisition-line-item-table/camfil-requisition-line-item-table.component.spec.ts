@@ -29,13 +29,13 @@ describe('Camfil Requisition Line Item Table Component', () => {
     await TestBed.configureTestingModule({
       declarations: [
         CamfilRequisitionLineItemTableComponent,
-        CamfilSmallCtaModalComponent,
         MockComponent(CamfilProductAttributeComponent),
         MockComponent(CamfilProductImageComponent),
         MockComponent(CamfilProductInventoryComponent),
         MockComponent(CamfilProductQuickviewComponent),
         MockComponent(CamfilProductTitleComponent),
         MockComponent(CamfilRequisitionLineItemQuantityComponent),
+        MockComponent(CamfilSmallCtaModalComponent),
         MockPipe(CamfilPriceSummaryPipe),
         MockPipe(DatePipe),
         MockPipe(PricePipe),

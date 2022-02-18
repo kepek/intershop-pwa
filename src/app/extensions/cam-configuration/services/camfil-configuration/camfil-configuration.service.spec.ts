@@ -10,12 +10,12 @@ import { ApiService } from 'ish-core/services/api/api.service';
 import { ChannelConfiguration } from '../../models/channel-configuration/channel-configuration.model';
 import { getConfigurationState } from '../../store/configuration';
 
-import { ConfigurationService } from './configuration.service';
+import { CamfilConfigurationService } from './camfil-configuration.service';
 
-describe('Configuration Service', () => {
+describe('Camfil Configuration Service', () => {
   let appFacade: AppFacade;
   let apiServiceMock: ApiService;
-  let configurationService: ConfigurationService;
+  let camfilConfigurationService: CamfilConfigurationService;
 
   const configuration: ChannelConfiguration = {
     countryCode: 'SE',
@@ -41,22 +41,22 @@ describe('Configuration Service', () => {
         }),
       ],
     });
-    configurationService = TestBed.inject(ConfigurationService);
-    configurationService.mode = 'server';
+    camfilConfigurationService = TestBed.inject(CamfilConfigurationService);
+    camfilConfigurationService.mode = 'server';
   });
 
   it('should be created', () => {
-    expect(configurationService).toBeTruthy();
+    expect(camfilConfigurationService).toBeTruthy();
   });
 
   it('should report channelSetting as deactivated, when no setting is defined', async () => {
-    await expect(configurationService.isEnabled('FR').pipe(first()).toPromise()).resolves.toBeFalse();
+    await expect(camfilConfigurationService.isEnabled('FR').pipe(first()).toPromise()).resolves.toBeFalse();
   });
 
   it("should get the camfil server configuration when 'getCamfilConfiguration' is called", done => {
     when(apiServiceMock.get(`camfil_configurations`, anything())).thenReturn(of({}));
 
-    configurationService.getCamfilConfiguration().subscribe(() => {
+    camfilConfigurationService.getCamfilConfiguration().subscribe(() => {
       verify(apiServiceMock.get(`camfil_configurations`, anything())).once();
       done();
     });

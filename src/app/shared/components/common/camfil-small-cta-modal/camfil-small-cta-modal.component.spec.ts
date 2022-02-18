@@ -1,4 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MockComponent } from 'ng-mocks';
+
+import { ContentIncludeComponent } from 'ish-shared/cms/components/content-include/content-include.component';
 
 import { CamfilSmallCtaModalComponent } from './camfil-small-cta-modal.component';
 
@@ -9,7 +12,7 @@ describe('Camfil Small Cta Modal Component', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CamfilSmallCtaModalComponent],
+      declarations: [CamfilSmallCtaModalComponent, MockComponent(ContentIncludeComponent)],
     }).compileComponents();
   });
 

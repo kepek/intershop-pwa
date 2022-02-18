@@ -19,7 +19,11 @@ describe('Create New Camcard Component', () => {
     camCardFacadeMock = mock(CamCardsFacade);
 
     await TestBed.configureTestingModule({
-      declarations: [CamfilSmallCtaModalComponent, CreateNewCamcardComponent, MockComponent(CamfilLoadingComponent)],
+      declarations: [
+        CreateNewCamcardComponent,
+        MockComponent(CamfilLoadingComponent),
+        MockComponent(CamfilSmallCtaModalComponent),
+      ],
       providers: [{ provide: CamCardsFacade, useFactory: () => instance(camCardFacadeMock) }],
     }).compileComponents();
   });

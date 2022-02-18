@@ -47,8 +47,8 @@ describe('Product Add To Cam Card Component', () => {
 
     await TestBed.configureTestingModule({
       declarations: [
-        CamfilSmallCtaModalComponent,
         MockComponent(AddProductToCamCardModalComponent),
+        MockComponent(CamfilSmallCtaModalComponent),
         MockComponent(FaIconComponent),
         ProductAddToCamCardComponent,
       ],

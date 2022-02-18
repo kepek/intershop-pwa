@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MockComponent } from 'ng-mocks';
 import { EMPTY, Subject } from 'rxjs';
 import { instance, mock, when } from 'ts-mockito';
 
@@ -20,7 +21,7 @@ describe('Modal Add New Section Component', () => {
     when(camCardFacadeMock.currentCamCard$).thenReturn(EMPTY);
 
     await TestBed.configureTestingModule({
-      declarations: [CamfilErrorComponent, CamfilSmallCtaModalComponent, ModalAddNewSectionComponent],
+      declarations: [CamfilErrorComponent, MockComponent(CamfilSmallCtaModalComponent), ModalAddNewSectionComponent],
       providers: [{ provide: CamCardsFacade, useFactory: () => instance(camCardFacadeMock) }],
     }).compileComponents();
   });

@@ -15,7 +15,7 @@ import { whenFalsy } from 'ish-core/utils/operators';
 import { CamfilBasketCostSummaryComponent } from 'ish-shared/components/basket/camfil-basket-cost-summary/camfil-basket-cost-summary.component';
 import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
 
-import { CamConfigurationFacade } from '../../../extensions/cam-configuration/facades/cam-configuration.facade';
+import { CamfilConfigurationFacade } from '../../../extensions/cam-configuration/facades/camfil-configuration.facade';
 
 @Component({
   selector: 'camfil-checkout-summary',
@@ -45,7 +45,7 @@ export class CamfilCheckoutSummaryComponent extends CamfilBasketCostSummaryCompo
     protected accountFacade: AccountFacade,
     private checkoutFacade: CheckoutFacade,
     private shoppingFacade: ShoppingFacade,
-    private camConfFacade: CamConfigurationFacade,
+    private camConfFacade: CamfilConfigurationFacade,
     private router: Router,
     private fb: FormBuilder,
     private dialog: MatDialog

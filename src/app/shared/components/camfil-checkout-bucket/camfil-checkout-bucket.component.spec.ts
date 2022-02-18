@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { MockComponent, MockDirective, MockPipe } from 'ng-mocks';
 import { of } from 'rxjs';
-import { CamConfigurationFacade } from 'src/app/extensions/cam-configuration/facades/cam-configuration.facade';
+import { CamfilConfigurationFacade } from 'src/app/extensions/cam-configuration/facades/camfil-configuration.facade';
 import { CamRequisitionManagementFacade } from 'src/app/extensions/cam-requisition-management/facades/cam-requisition-management.facade';
 import { instance, mock, when } from 'ts-mockito';
 
@@ -56,18 +56,18 @@ describe('Camfil Checkout Bucket Component', () => {
   let shoppingFacadeMock: ShoppingFacade;
   let checkoutFacadeMock: CheckoutFacade;
   let appFacadeMock: AppFacade;
-  let camConfigurationFacadeMock: CamConfigurationFacade;
   let accountFacadeMock: AccountFacade;
   let reqFacade: CamRequisitionManagementFacade;
+  let camfilConfigurationFacadeMock: CamfilConfigurationFacade;
 
   beforeEach(async () => {
     appFacadeMock = mock(AppFacade);
     camCardFacadeMock = mock(CamCardsFacade);
     shoppingFacadeMock = mock(ShoppingFacade);
     checkoutFacadeMock = mock(CheckoutFacade);
-    camConfigurationFacadeMock = mock(CamConfigurationFacade);
     accountFacadeMock = mock(AccountFacade);
     reqFacade = mock(CamRequisitionManagementFacade);
+    camfilConfigurationFacadeMock = mock(CamfilConfigurationFacade);
 
     await TestBed.configureTestingModule({
       declarations: [
@@ -82,7 +82,6 @@ describe('Camfil Checkout Bucket Component', () => {
         CamfilEditOrderModalComponent,
         CamfilMaxLengthAttributeCreateDirective,
         CamfilProductQuantityComponent,
-        CamfilSmallCtaModalComponent,
         MockComponent(AddressComponent),
         MockComponent(CamfilBasketCostSummaryComponent),
         MockComponent(CamfilBucketValidationResultsComponent),
@@ -93,6 +92,7 @@ describe('Camfil Checkout Bucket Component', () => {
         MockComponent(CamfilLoadingComponent),
         MockComponent(CamfilProductAddToBasketComponent),
         MockComponent(CamfilSearchBoxComponent),
+        MockComponent(CamfilSmallCtaModalComponent),
         MockComponent(ContentIncludeComponent),
         MockComponent(FaIconComponent),
         MockComponent(ZipCodeComponent),
@@ -111,10 +111,10 @@ describe('Camfil Checkout Bucket Component', () => {
         { provide: CamCardsFacade, useFactory: () => instance(camCardFacadeMock) },
         { provide: ShoppingFacade, useFactory: () => instance(shoppingFacadeMock) },
         { provide: CheckoutFacade, useFactory: () => instance(checkoutFacadeMock) },
-        { provide: CamConfigurationFacade, useFactory: () => instance(camConfigurationFacadeMock) },
         { provide: AppFacade, useFactory: () => instance(appFacadeMock) },
         { provide: AccountFacade, useFactory: () => instance(accountFacadeMock) },
         { provide: CamRequisitionManagementFacade, useFactory: () => instance(reqFacade) },
+        { provide: CamfilConfigurationFacade, useFactory: () => instance(camfilConfigurationFacadeMock) },
       ],
     }).compileComponents();
   });
@@ -162,6 +162,7 @@ describe('Camfil Checkout Bucket Component', () => {
     when(checkoutFacadeMock.basketInvoiceAddress$).thenReturn(of({}));
     when(checkoutFacadeMock.getFocusedCheckoutElement$).thenReturn(of({}));
     when(accountFacadeMock.isLoggedIn$).thenReturn(of(false));
+    when(camfilConfigurationFacadeMock.isEnabled$('showWarningMessageForPartialDelivery')).thenReturn(of(false));
   });
 
   it('should be created', () => {

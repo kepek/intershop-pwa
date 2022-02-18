@@ -18,6 +18,7 @@ import { CamfilProductAttributeValPipe } from 'ish-core/pipes/camfil-product-att
 import { CamfilSlugifyPipe } from 'ish-core/pipes/camfil-slugify.pipe';
 import { DatePipe } from 'ish-core/pipes/date.pipe';
 import { ProductRoutePipe } from 'ish-core/routing/product/product-route.pipe';
+import { ContentIncludeComponent } from 'ish-shared/cms/components/content-include/content-include.component';
 import { CamfilErrorComponent } from 'ish-shared/components/common/camfil-error/camfil-error.component';
 import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
 import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
@@ -53,7 +54,6 @@ describe('Camfil Checkout Line Item Component', () => {
         CamfilCheckoutLineItemComponent,
         CamfilErrorComponent,
         CamfilMaxLengthAttributeCreateDirective,
-        CamfilSmallCtaModalComponent,
         MockComponent(CamfilLoadingComponent),
         MockComponent(CamfilProductAddToBasketComponent),
         MockComponent(CamfilProductAttributeComponent),
@@ -63,7 +63,9 @@ describe('Camfil Checkout Line Item Component', () => {
         MockComponent(CamfilProductPriceComponent),
         MockComponent(CamfilProductQuantityComponent),
         MockComponent(CamfilProductTitleComponent),
+        MockComponent(CamfilSmallCtaModalComponent),
         MockComponent(CheckboxComponent),
+        MockComponent(ContentIncludeComponent),
         MockComponent(FaIconComponent),
         MockComponent(InputComponent),
         MockComponent(ProductBundleDisplayComponent),

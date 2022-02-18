@@ -47,11 +47,11 @@ describe('Camfil Apply Form Component', () => {
       declarations: [
         CamfilApplyFormComponent,
         CamfilHeaderBoxComponent,
-        CamfilSmallCtaModalComponent,
         MockComponent(AddressFormContainerComponent),
         MockComponent(CamfilCityFieldComponent),
         MockComponent(CamfilErrorMessageComponent),
         MockComponent(CamfilModalDialogComponent),
+        MockComponent(CamfilSmallCtaModalComponent),
         MockComponent(CheckboxComponent),
         MockComponent(ContentIncludeComponent),
         MockComponent(LazyCamCaptchaComponent),

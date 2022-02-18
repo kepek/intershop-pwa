@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideMockStore } from '@ngrx/store/testing';
 import { TranslateModule } from '@ngx-translate/core';
-import { MockPipe } from 'ng-mocks';
+import { MockComponent, MockPipe } from 'ng-mocks';
 
 import { PricePipe } from 'ish-core/models/price/price.pipe';
 import { CamfilPriceSummaryPipe } from 'ish-core/pipes/camfil-price-summary.pipe';
@@ -21,7 +21,7 @@ describe('Account Cam Card Pdf Component', () => {
       declarations: [
         AccountCamCardPdfComponent,
         CamfilLoadingComponent,
-        CamfilSmallCtaModalComponent,
+        MockComponent(CamfilSmallCtaModalComponent),
         MockPipe(CamfilPriceSummaryPipe),
         MockPipe(DatePipe),
         MockPipe(PricePipe),

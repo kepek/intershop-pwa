@@ -18,7 +18,11 @@ describe('Camfil Delete Order Component', () => {
     checkoutFacadeMock = mock(CheckoutFacade);
 
     await TestBed.configureTestingModule({
-      declarations: [CamfilDeleteOrderComponent, CamfilSmallCtaModalComponent, MockComponent(CamfilLoadingComponent)],
+      declarations: [
+        CamfilDeleteOrderComponent,
+        MockComponent(CamfilLoadingComponent),
+        MockComponent(CamfilSmallCtaModalComponent),
+      ],
       providers: [{ provide: CheckoutFacade, useFactory: () => instance(checkoutFacadeMock) }],
     }).compileComponents();
   });
