@@ -135,9 +135,9 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
       net: 0,
       currency: 'N/A',
     };
-    const total = this.bucket?.totals ? this.bucket?.totals.total : emptyTotal;
+    const itemTotal = this.bucket?.totals?.itemTotal || emptyTotal;
     const threshold = this.deliveryTerm.threshold;
-    return { type: 'Money', currency: total?.currency, value: threshold - total.net };
+    return { type: 'Money', currency: itemTotal?.currency, value: threshold - itemTotal.net };
   }
 
   get deliveryDaysForItemsAfterConfirmation() {
