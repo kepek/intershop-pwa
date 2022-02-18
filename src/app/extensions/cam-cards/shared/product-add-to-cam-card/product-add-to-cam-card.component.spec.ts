@@ -8,7 +8,6 @@ import { anyNumber, anyString, instance, mock, verify, when } from 'ts-mockito';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
 import { Product } from 'ish-core/models/product/product.model';
-import { ContentIncludeComponent } from 'ish-shared/cms/components/content-include/content-include.component';
 import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
 
 import { CamCardsFacade } from '../../facades/cam-cards.facade';
@@ -48,9 +47,8 @@ describe('Product Add To Cam Card Component', () => {
 
     await TestBed.configureTestingModule({
       declarations: [
-        CamfilSmallCtaModalComponent,
         MockComponent(AddProductToCamCardModalComponent),
-        MockComponent(ContentIncludeComponent),
+        MockComponent(CamfilSmallCtaModalComponent),
         MockComponent(FaIconComponent),
         ProductAddToCamCardComponent,
       ],

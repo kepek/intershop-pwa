@@ -22,7 +22,6 @@ import { TranslateService } from '@ngx-translate/core';
 import { flatten, groupBy, toArray } from 'lodash-es';
 import { Observable, Subject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
-import { ConfigurationService } from 'src/app/extensions/cam-configuration/services/configuration/configuration.service';
 
 import { AuthorizationToggleService } from 'ish-core/authorization-toggle.module';
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
@@ -35,6 +34,7 @@ import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
 import { whenFalsy, whenTruthy } from 'ish-core/utils/operators';
 import { CamfilModalDialogComponent } from 'ish-shared/components/common/camfil-modal-dialog/camfil-modal-dialog.component';
 
+import { CamfilConfigurationFacade } from '../../../../cam-configuration/facades/camfil-configuration.facade';
 import { CamCardsFacade } from '../../../facades/cam-cards.facade';
 import { CamCardHelper } from '../../../models/cam-card/cam-card.helper';
 import {
@@ -126,7 +126,7 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
     private translate: TranslateService,
     private location: Location,
     private authorizationToggle: AuthorizationToggleService,
-    private configurationService: ConfigurationService
+    private camfilConfigurationFacade: CamfilConfigurationFacade
   ) {}
 
   get checkedCamCards(): CamCard[] {
@@ -196,8 +196,8 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
         });
       }
     });
-    this.configurationService
-      .isEnabled('preventCamCardERPIdValidation')
+    this.camfilConfigurationFacade
+      .isEnabled$('preventCamCardERPIdValidation')
       ?.pipe(takeUntil(this.destroy$))
       .subscribe(val => {
         this.preventCamCardERPIdValidation = val;

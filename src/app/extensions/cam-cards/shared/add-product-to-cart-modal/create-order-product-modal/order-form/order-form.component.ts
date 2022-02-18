@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit, ViewChild
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable, Subject } from 'rxjs';
 import { distinctUntilChanged, take, takeUntil } from 'rxjs/operators';
-import { CamConfigurationFacade } from 'src/app/extensions/cam-configuration/facades/cam-configuration.facade';
+import { CamfilConfigurationFacade } from 'src/app/extensions/cam-configuration/facades/camfil-configuration.facade';
 
 import { EditBucket } from 'ish-core/models/bucket/bucket.model';
 import { ProductHelper } from 'ish-core/models/product/product.helper';
@@ -41,7 +41,7 @@ export class OrderFormComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private camCardsFacade: CamCardsFacade,
-    private camConfFacade: CamConfigurationFacade
+    private camConfFacade: CamfilConfigurationFacade
   ) {}
 
   get customerId() {
@@ -52,9 +52,12 @@ export class OrderFormComponent implements OnInit, OnDestroy {
     this.addresses$ = this.camCardsFacade.addresses$;
     this.customers$ = this.camCardsFacade.customers$;
 
-    this.camConfFacade.useSecondAddressLine$.pipe(whenTruthy(), take(1)).subscribe(val => {
-      this.useSecondAddressLine = val;
-    });
+    this.camConfFacade
+      .isEnabled$('useSecondAddressLine')
+      .pipe(take(1))
+      .subscribe(val => {
+        this.useSecondAddressLine = val;
+      });
 
     this.addressForm = this.fb.group({
       customer: [this.orderToEdit?.customerId],

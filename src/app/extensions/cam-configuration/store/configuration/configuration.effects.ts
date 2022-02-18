@@ -8,7 +8,7 @@ import { concatMap, first, map, mapTo, switchMapTo } from 'rxjs/operators';
 
 import { mapErrorToAction, whenFalsy } from 'ish-core/utils/operators';
 
-import { ConfigurationService } from '../../services/configuration/configuration.service';
+import { CamfilConfigurationService } from '../../services/camfil-configuration/camfil-configuration.service';
 
 import {
   loadCamfilConfiguration,
@@ -33,7 +33,7 @@ export class ConfigurationEffects {
     this.actions$.pipe(
       ofType(loadCamfilConfiguration),
       concatMap(() =>
-        this.configService.getCamfilConfiguration().pipe(
+        this.camfilConfigurationService.getCamfilConfiguration().pipe(
           map(configuration => loadCamfilConfigurationSuccess({ configuration })),
           mapErrorToAction(loadCamfilConfigurationFail)
         )
@@ -44,7 +44,7 @@ export class ConfigurationEffects {
   constructor(
     private actions$: Actions,
     private store: Store,
-    private configService: ConfigurationService,
+    private camfilConfigurationService: CamfilConfigurationService,
     @Inject(PLATFORM_ID) private platformId: string
   ) {}
 }

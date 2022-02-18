@@ -23,8 +23,8 @@ import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-load
 
 import { CamCardsFacade } from '../../extensions/cam-cards/facades/cam-cards.facade';
 import { ChannelToggleDirective } from '../../extensions/cam-configuration/directives/channel-toggle.directive';
+import { CamfilConfigurationFacade } from '../../extensions/cam-configuration/facades/camfil-configuration.facade';
 import { ChannelConfiguration } from '../../extensions/cam-configuration/models/channel-configuration/channel-configuration.model';
-import { ConfigurationService } from '../../extensions/cam-configuration/services/configuration/configuration.service';
 import { getConfigurationState } from '../../extensions/cam-configuration/store/configuration';
 
 import { CamfilCheckoutGuestFormComponent } from './camfil-checkout-guest-form/camfil-checkout-guest-form.component';
@@ -41,7 +41,7 @@ describe('Camfil Checkout Onestep Page Component', () => {
   let camCardFacadeMock: CamCardsFacade;
   let checkoutFacade: CheckoutFacade;
   let shoppingFacadeMock: ShoppingFacade;
-  let configurationServiceMock: ConfigurationService;
+  let camfilConfigurationFacadeMock: CamfilConfigurationFacade;
   let actions$: Observable<Action>;
 
   const configuration: ChannelConfiguration = {
@@ -122,10 +122,10 @@ describe('Camfil Checkout Onestep Page Component', () => {
     camCardFacadeMock = mock(CamCardsFacade);
     checkoutFacade = mock(CheckoutFacade);
     shoppingFacadeMock = mock(ShoppingFacade);
-    configurationServiceMock = mock(ConfigurationService);
+    camfilConfigurationFacadeMock = mock(CamfilConfigurationFacade);
 
     TestBed.configureTestingModule({
-      providers: [{ provide: ConfigurationService, useFactory: () => instance(configurationServiceMock) }],
+      providers: [{ provide: CamfilConfigurationFacade, useFactory: () => instance(camfilConfigurationFacadeMock) }],
     });
 
     await TestBed.configureTestingModule({

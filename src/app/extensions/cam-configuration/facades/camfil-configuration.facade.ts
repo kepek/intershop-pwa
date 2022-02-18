@@ -1,35 +1,32 @@
 import { Injectable } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 
-import { ChannelSettings } from '../models/channel-configuration/channel-configuration.model';
+import { ChannelSetting } from '../models/channel-configuration/channel-configuration.model';
 import { getCamConfigurationState } from '../store/cam-configuration-store';
 import {
   getCamfilConfigurationParameter,
   getContinueShoppingUrl,
   getCountryCode,
-  getShowPricesForNonLoggedInUser,
-  getUseSecondAddressLine,
+  getCurrency,
+  getICMChannel,
 } from '../store/configuration';
 
 // tslint:disable:member-ordering
 @Injectable({ providedIn: 'root' })
-export class CamConfigurationFacade {
+export class CamfilConfigurationFacade {
   constructor(private store: Store) {}
 
-  getChannelSetting$(path: keyof ChannelSettings) {
-    return this.store.pipe(select(getCamfilConfigurationParameter<boolean>(path)));
+  isEnabled$(setting: ChannelSetting) {
+    return this.store.pipe(select(getCamfilConfigurationParameter<boolean, ChannelSetting>(setting)));
   }
 
-  /**
-   * example for debugging
-   */
   camConfigurationState$ = this.store.pipe(select(getCamConfigurationState));
-
-  showPricesForNonLoggedInUser$ = this.store.pipe(select(getShowPricesForNonLoggedInUser));
 
   countryCode$ = this.store.pipe(select(getCountryCode));
 
-  useSecondAddressLine$ = this.store.pipe(select(getUseSecondAddressLine));
+  currency$ = this.store.pipe(select(getCurrency));
+
+  icmChannel$ = this.store.pipe(select(getICMChannel));
 
   continueShoppingUrl$ = this.store.pipe(select(getContinueShoppingUrl));
 }

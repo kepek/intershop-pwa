@@ -14,7 +14,6 @@ import { ProductView } from 'ish-core/models/product-view/product-view.model';
 import { CamfilSlugifyPipe } from 'ish-core/pipes/camfil-slugify.pipe';
 import { DatePipe } from 'ish-core/pipes/date.pipe';
 import { OrderLineMockData } from 'ish-core/utils/dev/orderline-mock-data';
-import { ContentIncludeComponent } from 'ish-shared/cms/components/content-include/content-include.component';
 import { AddressComponent } from 'ish-shared/components/address/address/address.component';
 import { CamfilBasketCostSummaryComponent } from 'ish-shared/components/basket/camfil-basket-cost-summary/camfil-basket-cost-summary.component';
 import { CamfilAddressComponent } from 'ish-shared/components/camfil-address/camfil-address.component';
@@ -42,13 +41,12 @@ describe('Camfil Account Order Component', () => {
       declarations: [
         CamfilAccountOrderComponent,
         CamfilDeliveryAddressComponent,
-        CamfilSmallCtaModalComponent,
         MockComponent(AddressComponent),
         MockComponent(CamfilAddressComponent),
         MockComponent(CamfilBasketCostSummaryComponent),
         MockComponent(CamfilLineItemTableComponent),
         MockComponent(CamfilLoadingComponent),
-        MockComponent(ContentIncludeComponent),
+        MockComponent(CamfilSmallCtaModalComponent),
         MockComponent(FaIconComponent),
         MockComponent(InfoBoxComponent),
         MockPipe(CamfilSlugifyPipe),

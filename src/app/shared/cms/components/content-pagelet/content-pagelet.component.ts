@@ -39,7 +39,7 @@ import { SfeMapper } from 'ish-shared/cms/sfe-adapter/sfe.mapper';
 })
 export class ContentPageletComponent extends SfeMetadataWrapper implements OnChanges, OnInit, OnDestroy {
   /**
-   * The Id of the Pagelet that is to be rendered.
+   * The Id of the Pagelezt that is to be rendered.
    */
   @Input() pageletId: string;
 

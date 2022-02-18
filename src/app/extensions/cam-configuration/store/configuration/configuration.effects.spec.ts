@@ -11,7 +11,7 @@ import { makeHttpError } from 'ish-core/utils/dev/api-service-utils';
 import { routerTestNavigationAction } from 'ish-core/utils/dev/routing';
 
 import { ChannelConfiguration, ChannelSettings } from '../../models/channel-configuration/channel-configuration.model';
-import { ConfigurationService } from '../../services/configuration/configuration.service';
+import { CamfilConfigurationService } from '../../services/camfil-configuration/camfil-configuration.service';
 import { CamConfigurationStoreModule } from '../cam-configuration-store.module';
 
 import {
@@ -26,7 +26,7 @@ describe('Configuration Effects', () => {
   let actions$: Observable<Action>;
   let effects: ConfigurationEffects;
   let store$: Store;
-  let configurationServiceMock: ConfigurationService;
+  let camfilConfigurationServiceMock: CamfilConfigurationService;
 
   const settings: Partial<ChannelSettings> = {
     showCountryFieldOnAddressForms: false,
@@ -43,7 +43,7 @@ describe('Configuration Effects', () => {
 
   beforeEach(() => {
     appFacade = mock(AppFacade);
-    configurationServiceMock = mock(ConfigurationService);
+    camfilConfigurationServiceMock = mock(CamfilConfigurationService);
 
     when(appFacade.getChannel$).thenReturn(of(configuration.countryCode));
 
@@ -53,7 +53,7 @@ describe('Configuration Effects', () => {
         ConfigurationEffects,
         provideMockActions(() => actions$),
         { provide: AppFacade, useFactory: () => instance(appFacade) },
-        { provide: ConfigurationService, useFactory: () => instance(configurationServiceMock) },
+        { provide: CamfilConfigurationService, useFactory: () => instance(camfilConfigurationServiceMock) },
       ],
     });
 
@@ -87,7 +87,7 @@ describe('Configuration Effects', () => {
 
   describe('loadCamfilConfiguration$', () => {
     beforeEach(() => {
-      when(configurationServiceMock.getCamfilConfiguration()).thenReturn(of({}));
+      when(camfilConfigurationServiceMock.getCamfilConfiguration()).thenReturn(of({}));
     });
 
     it('should map to action of type ApplyCamfilConfiguration', () => {
@@ -101,7 +101,7 @@ describe('Configuration Effects', () => {
     });
 
     it('should map invalid request to action of type loadCamfilConfigurationFail', () => {
-      when(configurationServiceMock.getCamfilConfiguration()).thenReturn(
+      when(camfilConfigurationServiceMock.getCamfilConfiguration()).thenReturn(
         throwError(makeHttpError({ message: 'invalid' }))
       );
 

@@ -4,7 +4,6 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MockComponent, MockPipe } from 'ng-mocks';
 import { ToastrModule } from 'ngx-toastr';
 import { of } from 'rxjs';
-import { ConfigurationService } from 'src/app/extensions/cam-configuration/services/configuration/configuration.service';
 import { instance, mock, when } from 'ts-mockito';
 
 import { CamfilMaxLengthAttributeCreateDirective } from 'ish-core/directives/camfil-max-length-attribute-create.directive';
@@ -14,7 +13,6 @@ import { FeatureToggleModule } from 'ish-core/feature-toggle.module';
 import { Product } from 'ish-core/models/product/product.model';
 import { AddressSortPipe } from 'ish-core/pipes/camfil-address-sort.pipe';
 import { CamfilContactSortPipe } from 'ish-core/pipes/camfil-contact-sort.pipe';
-import { ContentIncludeComponent } from 'ish-shared/cms/components/content-include/content-include.component';
 import { CamfilCamCardModalComponent } from 'ish-shared/components/common/camfil-cam-card-modal/camfil-cam-card-modal.component';
 import { CamfilCityFieldComponent } from 'ish-shared/components/common/camfil-city-field/camfil-city-field.component';
 import { CamfilErrorComponent } from 'ish-shared/components/common/camfil-error/camfil-error.component';
@@ -32,6 +30,7 @@ import { CamCardModalDetailsComponent } from '../../../../extensions/cam-cards/s
 import { CreateOrderProductModalComponent } from '../../../../extensions/cam-cards/shared/add-product-to-cart-modal/create-order-product-modal/create-order-product-modal.component';
 import { OrderFormComponent } from '../../../../extensions/cam-cards/shared/add-product-to-cart-modal/create-order-product-modal/order-form/order-form.component';
 import { CreateOrderProductSuccessComponent } from '../../../../extensions/cam-cards/shared/add-product-to-cart-modal/create-order-product-success/create-order-product-success.component';
+import { CamfilConfigurationFacade } from '../../../../extensions/cam-configuration/facades/camfil-configuration.facade';
 
 import { CamfilProductAddToBasketComponent } from './camfil-product-add-to-basket.component';
 
@@ -41,14 +40,15 @@ describe('Camfil Product Add To Basket Component', () => {
   let product: Product;
   let translate: TranslateService;
   let element: HTMLElement;
-  let configurationServiceMock: ConfigurationService;
 
   beforeEach(async () => {
     const checkoutFacade = mock(CheckoutFacade);
     const accountFacadeMock = mock(AccountFacade);
-    configurationServiceMock = mock(ConfigurationService);
+    const camfilConfigurationFacadeMock = mock(CamfilConfigurationFacade);
+
     when(checkoutFacade.basketLoading$).thenReturn(of(false));
     when(accountFacadeMock.isLoggedIn$).thenReturn(of(false));
+    when(camfilConfigurationFacadeMock.isEnabled$('hideAddToBasketLightboxForNonLoggedInUser')).thenReturn(of(false));
 
     await TestBed.configureTestingModule({
       imports: [FeatureToggleModule.forTesting(), ToastrModule.forRoot(), TranslateModule.forRoot()],
@@ -64,12 +64,11 @@ describe('Camfil Product Add To Basket Component', () => {
         CamfilProductAddToBasketComponent,
         CamfilProductAddToBasketModalComponent,
         CamfilProductQuantityComponent,
-        CamfilSmallCtaModalComponent,
         CreateOrderProductModalComponent,
         CreateOrderProductSuccessComponent,
         MockComponent(CamfilCityFieldComponent),
         MockComponent(CamfilLoadingComponent),
-        MockComponent(ContentIncludeComponent),
+        MockComponent(CamfilSmallCtaModalComponent),
         MockComponent(FaIconComponent),
         MockComponent(ZipCodeComponent),
         MockPipe(AddressSortPipe),
@@ -80,7 +79,7 @@ describe('Camfil Product Add To Basket Component', () => {
       providers: [
         { provide: CheckoutFacade, useFactory: () => instance(checkoutFacade) },
         { provide: AccountFacade, useFactory: () => instance(accountFacadeMock) },
-        { provide: ConfigurationService, useFactory: () => instance(configurationServiceMock) },
+        { provide: CamfilConfigurationFacade, useFactory: () => instance(camfilConfigurationFacadeMock) },
       ],
     }).compileComponents();
   });

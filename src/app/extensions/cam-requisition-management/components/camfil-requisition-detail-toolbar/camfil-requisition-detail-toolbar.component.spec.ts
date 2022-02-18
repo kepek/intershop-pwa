@@ -7,7 +7,6 @@ import { instance, mock } from 'ts-mockito';
 
 import { CamfilMaxLengthAttributeCreateDirective } from 'ish-core/directives/camfil-max-length-attribute-create.directive';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
-import { ContentIncludeComponent } from 'ish-shared/cms/components/content-include/content-include.component';
 import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
 import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
 import { CamfilProductQuantityComponent } from 'ish-shared/components/product/camfil-product-quantity/camfil-product-quantity.component';
@@ -33,10 +32,9 @@ describe('Camfil Requisition Detail Toolbar Component', () => {
         ArticleDetailsComponent,
         CamfilMaxLengthAttributeCreateDirective,
         CamfilRequisitionDetailToolbarComponent,
-        CamfilSmallCtaModalComponent,
         MockComponent(CamfilLoadingComponent),
         MockComponent(CamfilProductQuantityComponent),
-        MockComponent(ContentIncludeComponent),
+        MockComponent(CamfilSmallCtaModalComponent),
         ModalAddNewProductComponent,
       ],
     })

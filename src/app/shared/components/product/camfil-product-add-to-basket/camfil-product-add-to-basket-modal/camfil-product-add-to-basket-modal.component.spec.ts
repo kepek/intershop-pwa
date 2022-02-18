@@ -30,7 +30,7 @@ import { CamCardModalDetailsComponent } from '../../../../../extensions/cam-card
 import { CreateOrderProductModalComponent } from '../../../../../extensions/cam-cards/shared/add-product-to-cart-modal/create-order-product-modal/create-order-product-modal.component';
 import { OrderFormComponent } from '../../../../../extensions/cam-cards/shared/add-product-to-cart-modal/create-order-product-modal/order-form/order-form.component';
 import { CreateOrderProductSuccessComponent } from '../../../../../extensions/cam-cards/shared/add-product-to-cart-modal/create-order-product-success/create-order-product-success.component';
-import { ConfigurationService } from '../../../../../extensions/cam-configuration/services/configuration/configuration.service';
+import { CamfilConfigurationFacade } from '../../../../../extensions/cam-configuration/facades/camfil-configuration.facade';
 
 import { CamfilProductAddToBasketModalComponent } from './camfil-product-add-to-basket-modal.component';
 
@@ -42,7 +42,7 @@ describe('Camfil Product Add To Basket Modal Component', () => {
   let checkoutFacadeMock: CheckoutFacade;
   let accountFacadeMock: AccountFacade;
   let camCardFacadeMock: CamCardsFacade;
-  let configurationServiceMock: ConfigurationService;
+  let camfilConfigurationFacadeMock: CamfilConfigurationFacade;
 
   const camCardDetails = {
     name: 'testing cam cards',
@@ -80,7 +80,7 @@ describe('Camfil Product Add To Basket Modal Component', () => {
     checkoutFacadeMock = mock(CheckoutFacade);
     accountFacadeMock = mock(AccountFacade);
     camCardFacadeMock = mock(CamCardsFacade);
-    configurationServiceMock = mock(ConfigurationService);
+    camfilConfigurationFacadeMock = mock(CamfilConfigurationFacade);
 
     await TestBed.configureTestingModule({
       declarations: [
@@ -108,7 +108,7 @@ describe('Camfil Product Add To Basket Modal Component', () => {
         { provide: CheckoutFacade, useFactory: () => instance(checkoutFacadeMock) },
         { provide: AccountFacade, useFactory: () => instance(accountFacadeMock) },
         { provide: CamCardsFacade, useFactory: () => instance(camCardFacadeMock) },
-        { provide: ConfigurationService, useFactory: () => instance(configurationServiceMock) },
+        { provide: CamfilConfigurationFacade, useFactory: () => instance(camfilConfigurationFacadeMock) },
       ],
     }).compileComponents();
   });

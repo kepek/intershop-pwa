@@ -45,7 +45,7 @@ import { BasketExtension } from 'ish-core/models/basket-extension/basket-extensi
 import { CamfilCheckoutAddEmailRecipientModalComponent } from '../../../pages/camfil-checkout-onestep/camfil-checkout-add-email-recipient-modal/camfil-checkout-add-email-recipient-modal.component';
 import { Price } from 'ish-core/models/price/price.model';
 import { PriceItem } from 'ish-core/models/price-item/price-item.model';
-import { ConfigurationService } from 'src/app/extensions/cam-configuration/services/configuration/configuration.service';
+import { CamfilConfigurationFacade } from '../../../extensions/cam-configuration/facades/camfil-configuration.facade';
 
 @Component({
   selector: 'camfil-checkout-bucket',
@@ -106,7 +106,7 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
     private shoppingFacade: ShoppingFacade,
     private appFacade: AppFacade,
     private accountFacade: AccountFacade,
-    private configurationService: ConfigurationService
+    private camfilConfigurationFacade: CamfilConfigurationFacade
   ) {}
 
   get currentBasketExtensions() {
@@ -221,9 +221,9 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
       this.itemSize = deviceType === 'mobile' ? 255 : deviceType === 'tablet' ? 155 : 100;
     });
 
-    this.pageletIds$ = this.configurationService
-      .isEnabled('showWarningMessageForPartialDelivery')
-      ?.pipe(
+    this.pageletIds$ = this.camfilConfigurationFacade
+      .isEnabled$('showWarningMessageForPartialDelivery')
+      .pipe(
         map(showWarningMessageForPartialDelivery =>
           showWarningMessageForPartialDelivery
             ? ['camfil.include.checkout.warning.message.content.pagelet2-Include']

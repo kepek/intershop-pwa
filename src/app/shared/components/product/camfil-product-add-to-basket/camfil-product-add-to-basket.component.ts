@@ -2,12 +2,13 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, OnI
 import { MatDialog } from '@angular/material/dialog';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { ConfigurationService } from 'src/app/extensions/cam-configuration/services/configuration/configuration.service';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { Product } from 'ish-core/models/product/product.model';
 import { whenFalsy } from 'ish-core/utils/operators';
+
+import { CamfilConfigurationFacade } from '../../../../extensions/cam-configuration/facades/camfil-configuration.facade';
 
 /**
  * Displays an add to cart button with an icon or a text label. After clicking the button a loading animation is displayed
@@ -70,7 +71,7 @@ export class CamfilProductAddToBasketComponent implements OnInit, OnDestroy {
     private checkoutFacade: CheckoutFacade,
     public dialog: MatDialog,
     private accountFacade: AccountFacade,
-    private configurationService: ConfigurationService
+    private camfilConfigurationFacade: CamfilConfigurationFacade
   ) {}
 
   /**
@@ -82,7 +83,7 @@ export class CamfilProductAddToBasketComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.basketLoading$ = this.checkoutFacade.basketLoading$;
-    this.configurationService.isEnabled('guestCheckout')?.subscribe(value => {
+    this.camfilConfigurationFacade.isEnabled$('guestCheckout')?.subscribe(value => {
       this.isGuestCheckoutEnabled = value;
     });
     // update emitted to display spinning animation

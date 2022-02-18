@@ -8,7 +8,6 @@ import { AccountFacade } from 'ish-core/facades/account.facade';
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { Basket, BasketView } from 'ish-core/models/basket/basket.model';
-import { ContentIncludeComponent } from 'ish-shared/cms/components/content-include/content-include.component';
 import { CamfilCamCardModalComponent } from 'ish-shared/components/common/camfil-cam-card-modal/camfil-cam-card-modal.component';
 import { CamfilCityFieldComponent } from 'ish-shared/components/common/camfil-city-field/camfil-city-field.component';
 import { CamfilErrorComponent } from 'ish-shared/components/common/camfil-error/camfil-error.component';
@@ -89,10 +88,9 @@ describe('Camfil Checkout Header Component', () => {
         CamfilErrorComponent,
         CamfilMaxLengthAttributeCreateDirective,
         CamfilProductQuantityComponent,
-        CamfilSmallCtaModalComponent,
         MockComponent(CamfilCityFieldComponent),
         MockComponent(CamfilLoadingComponent),
-        MockComponent(ContentIncludeComponent),
+        MockComponent(CamfilSmallCtaModalComponent),
         MockComponent(CreateNewCamcardComponent),
         MockComponent(CreateOrderButtonComponent),
         MockComponent(CreateOrderProductModalComponent),

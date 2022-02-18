@@ -11,7 +11,7 @@ import { PriceItem } from 'ish-core/models/price-item/price-item.model';
 import { AuthorizationToggleService } from 'ish-core/utils/authorization-toggle/authorization-toggle.service';
 import { whenTruthy } from 'ish-core/utils/operators';
 
-import { CamConfigurationFacade } from '../../../extensions/cam-configuration/facades/cam-configuration.facade';
+import { CamfilConfigurationFacade } from '../../../extensions/cam-configuration/facades/camfil-configuration.facade';
 
 import { Price } from './price.model';
 
@@ -38,7 +38,7 @@ export class PricePipe implements PipeTransform, OnDestroy {
     private accountFacade: AccountFacade,
     private authorizationToggle: AuthorizationToggleService,
     private appFacade: AppFacade,
-    private camConfFacade: CamConfigurationFacade
+    private camConfFacade: CamfilConfigurationFacade
   ) {}
   ngOnDestroy() {
     this.destroy$.next();
@@ -56,9 +56,12 @@ export class PricePipe implements PipeTransform, OnDestroy {
       });
 
     if (!this.logIn) {
-      this.camConfFacade.showPricesForNonLoggedInUser$.pipe(take(1)).subscribe(val => {
-        this.isViewPrices = val;
-      });
+      this.camConfFacade
+        .isEnabled$('showPricesForNonLoggedInUser')
+        .pipe(take(1))
+        .subscribe(val => {
+          this.isViewPrices = val;
+        });
     }
 
     this.appFacade.getCurrencyByChannel$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(currencyForChanel => {

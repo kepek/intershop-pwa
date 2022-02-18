@@ -18,7 +18,6 @@ import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable, Subject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
-import { ConfigurationService } from 'src/app/extensions/cam-configuration/services/configuration/configuration.service';
 
 import { AuthorizationToggleService } from 'ish-core/authorization-toggle.module';
 import { AppFacade } from 'ish-core/facades/app.facade';
@@ -34,6 +33,7 @@ import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
 import { whenFalsy, whenTruthy } from 'ish-core/utils/operators';
 import { CamfilModalDialogComponent } from 'ish-shared/components/common/camfil-modal-dialog/camfil-modal-dialog.component';
 
+import { CamfilConfigurationFacade } from '../../../../cam-configuration/facades/camfil-configuration.facade';
 import { CamCardsFacade } from '../../../facades/cam-cards.facade';
 import { CamCardHelper } from '../../../models/cam-card/cam-card.helper';
 import {
@@ -111,7 +111,7 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges, OnD
     public router: Router,
     public dialog: MatDialog,
     private authorizationToggle: AuthorizationToggleService,
-    private configurationService: ConfigurationService
+    private camConfFacade: CamfilConfigurationFacade
   ) {}
 
   get totalPrice(): Price {
@@ -173,8 +173,8 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges, OnD
     });
 
     this.calculateInvalidProducts();
-    this.configurationService
-      .isEnabled('preventCamCardERPIdValidation')
+    this.camConfFacade
+      .isEnabled$('preventCamCardERPIdValidation')
       ?.pipe(takeUntil(this.destroy$))
       .subscribe(val => {
         this.preventCamCardERPIdValidation = val;

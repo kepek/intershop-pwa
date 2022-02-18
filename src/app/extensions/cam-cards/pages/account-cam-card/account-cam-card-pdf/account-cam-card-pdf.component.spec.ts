@@ -6,7 +6,6 @@ import { MockComponent, MockPipe } from 'ng-mocks';
 import { PricePipe } from 'ish-core/models/price/price.pipe';
 import { CamfilPriceSummaryPipe } from 'ish-core/pipes/camfil-price-summary.pipe';
 import { DatePipe } from 'ish-core/pipes/date.pipe';
-import { ContentIncludeComponent } from 'ish-shared/cms/components/content-include/content-include.component';
 import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
 import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
 
@@ -22,8 +21,7 @@ describe('Account Cam Card Pdf Component', () => {
       declarations: [
         AccountCamCardPdfComponent,
         CamfilLoadingComponent,
-        CamfilSmallCtaModalComponent,
-        MockComponent(ContentIncludeComponent),
+        MockComponent(CamfilSmallCtaModalComponent),
         MockPipe(CamfilPriceSummaryPipe),
         MockPipe(DatePipe),
         MockPipe(PricePipe),

@@ -17,7 +17,7 @@ import channelSettings from '../../settings';
 import { getCamfilSettings } from '../../store/configuration';
 
 @Injectable({ providedIn: 'root' })
-export class ConfigurationService {
+export class CamfilConfigurationService {
   private configHeaders = new HttpHeaders({
     'content-type': 'application/json',
     Accept: 'application/vnd.intershop.configuration.v1+json',

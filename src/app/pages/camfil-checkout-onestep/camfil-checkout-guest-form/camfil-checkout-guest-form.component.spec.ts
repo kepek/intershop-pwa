@@ -11,7 +11,7 @@ import { CamfilCityFieldComponent } from 'ish-shared/components/common/camfil-ci
 import { CamfilErrorComponent } from 'ish-shared/components/common/camfil-error/camfil-error.component';
 import { ZipCodeComponent } from 'ish-shared/components/zip-code/zip-code.component';
 
-import { CamConfigurationFacade } from '../../../extensions/cam-configuration/facades/cam-configuration.facade';
+import { CamfilConfigurationFacade } from '../../../extensions/cam-configuration/facades/camfil-configuration.facade';
 
 import { CamfilCheckoutGuestFormComponent } from './camfil-checkout-guest-form.component';
 
@@ -19,13 +19,13 @@ describe('Camfil Checkout Guest Form Component', () => {
   let component: CamfilCheckoutGuestFormComponent;
   let fixture: ComponentFixture<CamfilCheckoutGuestFormComponent>;
   let element: HTMLElement;
-  let camConfigurationFacade: CamConfigurationFacade;
+  let camConfigurationFacade: CamfilConfigurationFacade;
   let checkoutFacadeMock: CheckoutFacade;
   let shoppingFacade: ShoppingFacade;
   let appFacade: AppFacade;
 
   beforeEach(async () => {
-    camConfigurationFacade = mock(CamConfigurationFacade);
+    camConfigurationFacade = mock(CamfilConfigurationFacade);
     checkoutFacadeMock = mock(CheckoutFacade);
     shoppingFacade = mock(ShoppingFacade);
     appFacade = mock(AppFacade);
@@ -38,7 +38,7 @@ describe('Camfil Checkout Guest Form Component', () => {
         MockComponent(ZipCodeComponent),
       ],
       providers: [
-        { provide: CamConfigurationFacade, useFactory: () => instance(camConfigurationFacade) },
+        { provide: CamfilConfigurationFacade, useFactory: () => instance(camConfigurationFacade) },
         { provide: CheckoutFacade, useFactory: () => instance(checkoutFacadeMock) },
         { provide: ShoppingFacade, useFactory: () => instance(shoppingFacade) },
         { provide: AppFacade, useFactory: () => instance(appFacade) },

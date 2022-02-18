@@ -2,7 +2,6 @@ import { ChangeDetectionStrategy, Component, Input, ViewChild } from '@angular/c
 import { MatDialog } from '@angular/material/dialog';
 import { combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { ConfigurationService } from 'src/app/extensions/cam-configuration/services/configuration/configuration.service';
 
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
@@ -11,6 +10,7 @@ import { whenTruthy } from 'ish-core/utils/operators';
 import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
 
 import { CreateOrderProductModalComponent } from '../../../../extensions/cam-cards/shared/add-product-to-cart-modal/create-order-product-modal/create-order-product-modal.component';
+import { CamfilConfigurationFacade } from '../../../../extensions/cam-configuration/facades/camfil-configuration.facade';
 
 @Component({
   selector: 'camfil-create-order-button',
@@ -29,7 +29,7 @@ export class CreateOrderButtonComponent {
     public dialog: MatDialog,
     private checkoutFacade: CheckoutFacade,
     private shoppingFacade: ShoppingFacade,
-    private configurationService: ConfigurationService
+    private camfilConfigurationFacade: CamfilConfigurationFacade
   ) {}
 
   createVirtualOrder(virtualBucket: Bucket) {
@@ -56,7 +56,7 @@ export class CreateOrderButtonComponent {
 
   createGuestOrder() {
     combineLatest([
-      this.configurationService.isEnabled('guestCheckout'),
+      this.camfilConfigurationFacade.isEnabled$('guestCheckout'),
       this.checkoutFacade.basket$.pipe(map(basket => !!basket?.id)),
     ])
       .pipe(

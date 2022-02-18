@@ -3,7 +3,6 @@ import { MockComponent } from 'ng-mocks';
 import { EMPTY, Subject } from 'rxjs';
 import { instance, mock, when } from 'ts-mockito';
 
-import { ContentIncludeComponent } from 'ish-shared/cms/components/content-include/content-include.component';
 import { CamfilErrorComponent } from 'ish-shared/components/common/camfil-error/camfil-error.component';
 import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
 
@@ -22,12 +21,7 @@ describe('Modal Add New Section Component', () => {
     when(camCardFacadeMock.currentCamCard$).thenReturn(EMPTY);
 
     await TestBed.configureTestingModule({
-      declarations: [
-        CamfilErrorComponent,
-        CamfilSmallCtaModalComponent,
-        MockComponent(ContentIncludeComponent),
-        ModalAddNewSectionComponent,
-      ],
+      declarations: [CamfilErrorComponent, MockComponent(CamfilSmallCtaModalComponent), ModalAddNewSectionComponent],
       providers: [{ provide: CamCardsFacade, useFactory: () => instance(camCardFacadeMock) }],
     }).compileComponents();
   });

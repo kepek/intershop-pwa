@@ -1,7 +1,6 @@
 import { createSelector } from '@ngrx/store';
 import { isBoolean } from 'lodash-es';
 
-import { ChannelSettings } from '../../models/channel-configuration/channel-configuration.model';
 import { getCamConfigurationState } from '../cam-configuration-store';
 
 export const getConfigurationState = createSelector(getCamConfigurationState, state => state.configuration);
@@ -26,7 +25,7 @@ export const getCamfilSettings = createSelector(getConfigurationState, state => 
 
 export const isCamfilConfigurationInitialized = createSelector(getConfigurationState, state => state.initialized);
 
-export const getCamfilConfigurationParameter = <T = boolean>(path: keyof ChannelSettings) =>
+export const getCamfilConfigurationParameter = <T, O extends string>(path: O) =>
   createSelector(
     getConfigurationState,
     (state): T =>
@@ -35,13 +34,10 @@ export const getCamfilConfigurationParameter = <T = boolean>(path: keyof Channel
         .reduce((obj, key) => (obj && obj[key] !== undefined ? obj[key] : undefined), state as unknown) as T
   );
 
-export const getShowPricesForNonLoggedInUser = createSelector(
-  getConfigurationState,
-  state => state.showPricesForNonLoggedInUser
-);
-
 export const getCountryCode = createSelector(getConfigurationState, state => state.countryCode);
 
-export const getUseSecondAddressLine = createSelector(getConfigurationState, state => state.useSecondAddressLine);
+export const getCurrency = createSelector(getConfigurationState, state => state.currency);
+
+export const getICMChannel = createSelector(getConfigurationState, state => state.icmChannel);
 
 export const getContinueShoppingUrl = createSelector(getConfigurationState, state => state.continueShoppingUrl);
