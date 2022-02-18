@@ -12,7 +12,7 @@ describe('Camfil Small Cta Modal Component', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [MockComponent(CamfilSmallCtaModalComponent), MockComponent(ContentIncludeComponent)],
+      declarations: [CamfilSmallCtaModalComponent, MockComponent(ContentIncludeComponent)],
     }).compileComponents();
   });
 
