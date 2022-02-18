@@ -23,7 +23,7 @@ describe('Requisition Mapper', () => {
         commonShippingMethod: 'shipping_method_123',
         customer: 'OilCorp',
         user: 'bboldner@test.intershop.de',
-        creationDate: 12345678,
+        creationDate: '12-02-2022T:11:11:11',
         lineItemCount: 2,
         approvalStatus: {
           status: 'APPROVED',
@@ -43,13 +43,8 @@ describe('Requisition Mapper', () => {
       expect(mapped).toMatchInlineSnapshot(`
         Object {
           "approval": Object {
-            "approvalDate": 76543627,
-            "approver": Object {
-              "firstName": "Bernhard",
-              "lastName": "Boldner",
-            },
-            "customerApprovers": undefined,
-            "status": "APPROVED",
+            "status": "pending",
+            "statusCode": "PENDING",
           },
           "attributes": undefined,
           "basketExtensions": undefined,
@@ -57,7 +52,7 @@ describe('Requisition Mapper', () => {
           "buckets": undefined,
           "commonShipToAddress": undefined,
           "commonShippingMethod": undefined,
-          "creationDate": 12345678,
+          "creationDate": 1644620400000,
           "customerNo": "OilCorp",
           "dynamicMessages": undefined,
           "email": "bboldner@test.intershop.de",

@@ -40,8 +40,6 @@ export class RequisitionMapper {
         email: 'test.user@mail.com',
       };
 
-      const today = new Date().getTime();
-
       if (data) {
         const payloadData = (orderPayload ? orderPayload : payload) as BasketData;
         payloadData.data.calculated = true;
@@ -51,7 +49,7 @@ export class RequisitionMapper {
           id: data.id ? data.id : data.shippingAddress?.id,
           requisitionNo: data.requisitionNo ? data.requisitionNo : data.shippingAddress?.id,
           orderNo: data.orderNo,
-          creationDate: data.creationDate ? data.creationDate : today,
+          creationDate: RequisitionMapper.convertToData(data.creationDate),
           userBudget: { ...data.userBudgets, spentBudget: data.userBudgets?.spentBudget || emptyPrice },
           user: data.userInformation ? data.userInformation : defaultUser,
           lineItemCount: data.lineItemCount,
@@ -96,5 +94,10 @@ export class RequisitionMapper {
           }))
       );
     }
+  }
+
+  static convertToData(payloadData: string): number {
+    const date = String(payloadData)?.split('T');
+    return new Date(date[0]?.replace(/(\d{2})-(\d{2})-(\d{4})/, '$2/$1/$3')).getTime();
   }
 }
