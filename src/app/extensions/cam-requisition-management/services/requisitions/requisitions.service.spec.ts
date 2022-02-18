@@ -96,7 +96,7 @@ describe('Requisitions Service', () => {
 
   it('should call getRequisition of customer API when fetching a requisition', done => {
     requisitionsService.getRequisition('4712').subscribe(() => {
-      verify(apiServiceMock.get('requisitions/4712', anything())).once();
+      verify(apiServiceMock.get('camfilrequisitions/4712', anything())).once();
       done();
     });
   });

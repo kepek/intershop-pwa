@@ -1,5 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
+import { CamfilMaxLengthAttributeCreateDirective } from 'ish-core/directives/camfil-max-length-attribute-create.directive';
+
 import { CamfilRequisitionLineItemBoxLabelComponent } from './camfil-requisition-line-item-box-label.component';
 
 describe('Camfil Requisition Line Item Box Label Component', () => {
@@ -9,7 +11,7 @@ describe('Camfil Requisition Line Item Box Label Component', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CamfilRequisitionLineItemBoxLabelComponent],
+      declarations: [CamfilMaxLengthAttributeCreateDirective, CamfilRequisitionLineItemBoxLabelComponent],
     }).compileComponents();
   });
 

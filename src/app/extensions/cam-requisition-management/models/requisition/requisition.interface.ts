@@ -15,6 +15,7 @@ import { RequisitionApproval, RequisitionUserBudget } from './requisition.model'
 export interface RequisitionBaseData extends BasketBaseData {
   // Adjust to BE response
   requisitionNo?: string;
+  basketId: string;
   orderNo?: string;
   order?: {
     itemId: string;
@@ -27,9 +28,9 @@ export interface RequisitionBaseData extends BasketBaseData {
 
   // ToDO: remove unnecessary
   userBudgets: RequisitionUserBudget;
-  shippingAddress: Address;
+  shippingAddress?: Address;
   status: string;
-  info: string;
+  info?: string;
   approvalStatus: RequisitionApproval;
 }
 

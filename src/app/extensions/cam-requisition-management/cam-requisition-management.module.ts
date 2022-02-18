@@ -18,8 +18,8 @@ import { CamRequisitionManagementStoreModule } from './store/cam-requisition-man
 const exportedComponents = [
   CamfilCheckoutReceiptRequisitionComponent,
   CamfilRequisitionDetailToolbarComponent,
-  CamfilRequisitionLineItemQuantityComponent,
   CamfilRequisitionLineItemBoxLabelComponent,
+  CamfilRequisitionLineItemQuantityComponent,
   CamfilRequisitionLineItemTableComponent,
   CamfilRequisitionRejectDialogComponent,
   CamfilRequisitionSummaryComponent,

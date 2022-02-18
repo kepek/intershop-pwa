@@ -45,7 +45,6 @@ export class RequisitionDetailPageComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.requisition$ = this.context.select('entity');
     this.requisition$.pipe(takeUntil(this.destroy$)).subscribe(req => {
-      console.log('req', req);
       this.requisitionId = req.id;
     });
     this.loading$ = this.context.select('loading');

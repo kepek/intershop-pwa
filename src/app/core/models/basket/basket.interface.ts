@@ -14,7 +14,6 @@ import { ShippingMethodData } from 'ish-core/models/shipping-method/shipping-met
 
 export interface BasketBaseData {
   id: string;
-  basketId: string;
   purchaseCurrency?: string;
   calculated: boolean;
   invoiceToAddress?: string;

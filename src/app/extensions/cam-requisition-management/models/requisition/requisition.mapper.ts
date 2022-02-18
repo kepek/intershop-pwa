@@ -24,10 +24,6 @@ export class RequisitionMapper {
   static fromData(payload: RequisitionData): Requisition {
     if (!Array.isArray(payload.data)) {
       const { data, included } = payload;
-      // const ishBasketData = {...BasketMapper.fromData(payloadData),
-      // check in static method
-
-      // ishBasketData.lineItems.length ?  ishBasketData.lineItems : static
 
       const emptyPrice: Price = {
         type: 'Money',
@@ -44,7 +40,7 @@ export class RequisitionMapper {
         const payloadData = payload as BasketData;
         payloadData.data.calculated = true;
         const lineItems = RequisitionMapper.getLineItemsData(included);
-        const approvalStatus: RequisitionApproval = RequisitionMapper.getApprovalStatus(data);
+        const approvalStatus = RequisitionMapper.getApprovalStatus(data);
 
         return {
           ...BasketMapper.fromData(payloadData),
@@ -57,12 +53,11 @@ export class RequisitionMapper {
           invoiceLabel: data.invoiceLabel,
           info: data.info,
           lineItemCount: data.lineItemCount,
-          lineItems: lineItems,
+          lineItems,
           requisitionCustomer: RequisitionMapper.getCustomerData(data),
           shippingAddress: data.shippingAddress,
           approval: approvalStatus
             ? {
-                ...data.approvalStatus,
                 ...approvalStatus,
                 customerApprovers: data.approval?.customerApproval?.approvers,
               }
@@ -111,9 +106,9 @@ export class RequisitionMapper {
   }
 
   static getLineItemsData(included): LineItem[] {
-    let lineItems = [];
+    const lineItems = [];
     if (included) {
-      Object?.keys(included?.lineItems).map(function (key) {
+      Object?.keys(included?.lineItems).map(key => {
         lineItems.push(LineItemMapper.fromData(included.lineItems[key], included.lineItems_discounts));
       });
     }
@@ -121,8 +116,7 @@ export class RequisitionMapper {
   }
 
   static getCustomerData(payloadData): Customer {
-    const { customer } = payloadData;
-    return customer;
+    return payloadData.customer;
   }
 
   static getApprovalStatus(payloadData): RequisitionApproval {

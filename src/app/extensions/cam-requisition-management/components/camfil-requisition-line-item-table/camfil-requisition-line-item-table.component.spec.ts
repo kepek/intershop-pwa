@@ -14,8 +14,8 @@ import { CamfilProductInventoryComponent } from 'ish-shared/components/product/c
 import { CamfilProductQuickviewComponent } from 'ish-shared/components/product/camfil-product-quickview/camfil-product-quickview.component';
 import { CamfilProductTitleComponent } from 'ish-shared/components/product/camfil-product-title/camfil-product-title.component';
 
-import { CamfilRequisitionLineItemQuantityComponent } from './camfil-requisition-line-item-quantity/camfil-requisition-line-item-quantity.component';
 import { CamfilRequisitionLineItemBoxLabelComponent } from './camfil-requisition-line-item-box-label/camfil-requisition-line-item-box-label.component';
+import { CamfilRequisitionLineItemQuantityComponent } from './camfil-requisition-line-item-quantity/camfil-requisition-line-item-quantity.component';
 import { CamfilRequisitionLineItemTableComponent } from './camfil-requisition-line-item-table.component';
 
 describe('Camfil Requisition Line Item Table Component', () => {
