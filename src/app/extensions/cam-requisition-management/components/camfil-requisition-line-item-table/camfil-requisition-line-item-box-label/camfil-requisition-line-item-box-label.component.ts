@@ -16,7 +16,6 @@ export class CamfilRequisitionLineItemBoxLabelComponent implements OnInit {
 
   constructor() {}
   ngOnInit() {
-    console.log('siema CamfilRequisitionLineItemBoxLabelComponent');
     this.boxLabelForm = new FormGroup({
       boxLabel: new FormControl(''),
     });
