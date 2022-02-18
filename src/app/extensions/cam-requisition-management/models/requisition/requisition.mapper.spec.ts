@@ -52,7 +52,7 @@ describe('Requisition Mapper', () => {
           "buckets": undefined,
           "commonShipToAddress": undefined,
           "commonShippingMethod": undefined,
-          "creationDate": NaN,
+          "creationDate": 1644620400000,
           "customerNo": "OilCorp",
           "dynamicMessages": undefined,
           "email": "bboldner@test.intershop.de",
