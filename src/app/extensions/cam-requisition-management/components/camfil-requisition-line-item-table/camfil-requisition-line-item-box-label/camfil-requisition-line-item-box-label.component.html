@@ -1,0 +1,19 @@
+<div>
+  <form [formGroup]="boxLabelForm" class="box-label__form">
+    <mat-form-field appearance="outline" class="box-label__form--field">
+      <mat-label>{{ 'camfil.cam_card.product.comment.label' | translate }}</mat-label>
+      <textarea
+        #autosize="cdkTextareaAutosize"
+        [camfilMaxLength]="'BoxLabel'"
+        cdkAutosizeMaxRows="3"
+        cdkAutosizeMinRows="1"
+        cdkTextareaAutosize
+        class="overflow-hidden"
+        formControlName="boxLabel"
+        matInput
+        name="boxLabel"
+        type="text"
+      ></textarea>
+    </mat-form-field>
+  </form>
+</div>

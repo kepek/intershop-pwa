@@ -53,7 +53,6 @@ describe('Camfil Requisitions List Component', () => {
     fixture.detectChanges();
 
     expect(element.querySelector('[data-testing-id=th-requisition-no]')).toBeFalsy();
-    expect(element.querySelector('[data-testing-id=th-order-no]')).toBeFalsy();
     expect(element.querySelector('[data-testing-id=th-creation-date]')).toBeFalsy();
     expect(element.querySelector('[data-testing-id=th-approver]')).toBeFalsy();
     expect(element.querySelector('[data-testing-id=th-buyer]')).toBeFalsy();
@@ -66,7 +65,6 @@ describe('Camfil Requisitions List Component', () => {
   it('should display table columns if they are configured', () => {
     component.columnsToDisplay = [
       'customerNumberAndName',
-      'orderNo',
       'orderGoodsMark',
       'creationDate',
       'buyer',
@@ -75,7 +73,6 @@ describe('Camfil Requisitions List Component', () => {
     ];
     fixture.detectChanges();
 
-    expect(element.querySelector('[data-testing-id=th-order-no]')).toBeTruthy();
     expect(element.querySelector('[data-testing-id=th-creation-date]')).toBeTruthy();
     expect(element.querySelector('[data-testing-id=th-buyer]')).toBeTruthy();
   });

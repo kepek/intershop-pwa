@@ -15,17 +15,22 @@ import { RequisitionApproval, RequisitionUserBudget } from './requisition.model'
 export interface RequisitionBaseData extends BasketBaseData {
   // Adjust to BE response
   requisitionNo?: string;
+  basketId: string;
   orderNo?: string;
   order?: {
     itemId: string;
   };
   creationDate: string;
   lineItemCount: number;
-  userInformation: User;
+  creator: User;
+  orderMark: string;
+  invoiceLabel: string;
+
   // ToDO: remove unnecessary
   userBudgets: RequisitionUserBudget;
-  shippingAddress: Address;
-
+  shippingAddress?: Address;
+  status: string;
+  info?: string;
   approvalStatus: RequisitionApproval;
 }
 

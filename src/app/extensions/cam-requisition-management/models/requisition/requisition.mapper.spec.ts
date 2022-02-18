@@ -1,5 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 
+import { BasketTotalData } from 'ish-core/models/basket-total/basket-total.interface';
+
 import { RequisitionBaseData } from './requisition.interface';
 import { RequisitionMapper } from './requisition.mapper';
 
@@ -16,8 +18,10 @@ describe('Requisition Mapper', () => {
     it('should map incoming data to model data', () => {
       const data = {
         id: 'testUUDI',
+        basketId: 'testUUDI',
         requisitionNo: '0001',
         orderNo: '10001',
+        calculated: false,
         invoiceToAddress: 'urn_invoiceToAddress_123',
         commonShipToAddress: 'urn_commonShipToAddress_123',
         commonShippingMethod: 'shipping_method_123',
@@ -30,13 +34,42 @@ describe('Requisition Mapper', () => {
           approver: { firstName: 'Bernhard', lastName: 'Boldner' },
           approvalDate: 76543627,
         },
+        status: 'SUBMITTED',
+        creator: { firstName: 'Patricia', lastName: 'Miller', email: 'pmiller@test.intershop.de' },
+        orderMark: 'Order mark',
+        invoiceLabel: 'Invoice mark',
         userInformation: { firstName: 'Patricia', lastName: 'Miller', email: 'pmiller@test.intershop.de' },
         userBudgets: {
           budgetPeriod: 'weekly',
           orderSpentLimit: { currency: 'USD', value: 500, type: 'Money' },
           budget: { currency: 'USD', value: 3000, type: 'Money' },
         },
-        totals: {},
+        totals: {
+          grandTotal: {
+            gross: {
+              value: 141796.98,
+              currency: 'USD',
+            },
+            net: {
+              value: 141796.98,
+              currency: 'USD',
+            },
+            tax: {
+              value: 543.65,
+              currency: 'USD',
+            },
+          },
+          itemTotal: {
+            gross: {
+              value: 141796.98,
+              currency: 'USD',
+            },
+            net: {
+              value: 141796.98,
+              currency: 'USD',
+            },
+          },
+        } as BasketTotalData,
       } as RequisitionBaseData;
 
       const mapped = RequisitionMapper.fromData({ data });

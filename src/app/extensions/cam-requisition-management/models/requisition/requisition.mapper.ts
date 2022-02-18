@@ -2,11 +2,12 @@ import { Injectable } from '@angular/core';
 
 import { BasketData } from 'ish-core/models/basket/basket.interface';
 import { BasketMapper } from 'ish-core/models/basket/basket.mapper';
-import { OrderData } from 'ish-core/models/order/order.interface';
+import { Customer } from 'ish-core/models/customer/customer.model';
+import { LineItemMapper } from 'ish-core/models/line-item/line-item.mapper';
+import { LineItem } from 'ish-core/models/line-item/line-item.model';
 import { PriceItemMapper } from 'ish-core/models/price-item/price-item.mapper';
 import { PriceItem } from 'ish-core/models/price-item/price-item.model';
 import { Price } from 'ish-core/models/price/price.model';
-import { User } from 'ish-core/models/user/user.model';
 
 import { RequisitionBaseData, RequisitionData } from './requisition.interface';
 import { Requisition, RequisitionApproval } from './requisition.model';
@@ -20,9 +21,10 @@ const emptyPriceItem: PriceItem = {
 
 @Injectable({ providedIn: 'root' })
 export class RequisitionMapper {
-  static fromData(payload: RequisitionData, orderPayload?: OrderData): Requisition {
+  static fromData(payload: RequisitionData): Requisition {
     if (!Array.isArray(payload.data)) {
-      const { data } = payload;
+      const { data, included } = payload;
+
       const emptyPrice: Price = {
         type: 'Money',
         value: 0,
@@ -34,28 +36,29 @@ export class RequisitionMapper {
         statusCode: 'PENDING',
       };
 
-      const defaultUser: User = {
-        firstName: 'Test',
-        lastName: 'User',
-        email: 'test.user@mail.com',
-      };
-
       if (data) {
-        const payloadData = (orderPayload ? orderPayload : payload) as BasketData;
+        const payloadData = payload as BasketData;
         payloadData.data.calculated = true;
+        const lineItems = RequisitionMapper.getLineItemsData(included);
+        const approvalStatus = RequisitionMapper.getApprovalStatus(data);
 
         return {
           ...BasketMapper.fromData(payloadData),
-          id: data.id ? data.id : data.shippingAddress?.id,
-          requisitionNo: data.requisitionNo ? data.requisitionNo : data.shippingAddress?.id,
-          orderNo: data.orderNo,
+          id: data.basketId,
+          requisitionNo: data.requisitionNo,
           creationDate: RequisitionMapper.convertToData(data.creationDate),
           userBudget: { ...data.userBudgets, spentBudget: data.userBudgets?.spentBudget || emptyPrice },
-          user: data.userInformation ? data.userInformation : defaultUser,
+          user: data.creator,
+          orderMark: data.orderMark,
+          invoiceLabel: data.invoiceLabel,
+          info: data.info,
           lineItemCount: data.lineItemCount,
-          approval: data.approval
+          lineItems,
+          requisitionCustomer: RequisitionMapper.getCustomerData(data),
+          shippingAddress: data.shippingAddress,
+          approval: approvalStatus
             ? {
-                ...data.approvalStatus,
+                ...approvalStatus,
                 customerApprovers: data.approval?.customerApproval?.approvers,
               }
             : defaultApproval,
@@ -73,26 +76,22 @@ export class RequisitionMapper {
 
   static fromListData(payload: RequisitionData): Requisition[] {
     if (Array.isArray(payload.data)) {
-      return (
-        payload.data
-          /* filter requisitions that didn't need an approval */
-          // TODO: Enable when there is all data coming from endpoint
-          // .filter(data => data.requisitionNo)
-          .map(data => ({
-            ...RequisitionMapper.fromData({ ...payload, data }),
-            totals: {
-              itemTotal: data.totals ? PriceItemMapper.fromPriceItem(data.totals.itemTotal) : undefined,
-              total: data.totals ? PriceItemMapper.fromPriceItem(data.totals.grandTotal) : emptyPriceItem,
-              isEstimated: false,
-              discountTotal: {
-                type: 'PriceItem',
-                gross: 0,
-                net: 0,
-                currency: 'EUR',
-              },
+      return payload.data
+        .filter(data => data.requisitionNo)
+        .map(data => ({
+          ...RequisitionMapper.fromData({ ...payload, data }),
+          totals: {
+            itemTotal: data.totals ? PriceItemMapper.fromPriceItem(data.totals.itemTotal) : undefined,
+            total: data.totals ? PriceItemMapper.fromPriceItem(data.totals.grandTotal) : emptyPriceItem,
+            isEstimated: false,
+            discountTotal: {
+              type: 'PriceItem',
+              gross: 0,
+              net: 0,
+              currency: 'EUR',
             },
-          }))
-      );
+          },
+        }));
     }
   }
 
@@ -104,5 +103,39 @@ export class RequisitionMapper {
     const date = String(payloadData)?.split('T');
 
     return new Date(date[0]?.replace(/(\d{2})-(\d{2})-(\d{4})/, '$2/$1/$3')).getTime();
+  }
+
+  static getLineItemsData(included): LineItem[] {
+    const lineItems = [];
+    if (included) {
+      Object?.keys(included?.lineItems).map(key => {
+        lineItems.push(LineItemMapper.fromData(included.lineItems[key], included.lineItems_discounts));
+      });
+    }
+    return lineItems;
+  }
+
+  static getCustomerData(payloadData): Customer {
+    return payloadData.customer;
+  }
+
+  static getApprovalStatus(payloadData): RequisitionApproval {
+    const { status } = payloadData;
+    const statusDictionary = {
+      SUBMITTED: {
+        status: 'Pending',
+        statusCode: 'PENDING',
+      },
+      APPROVED: {
+        status: 'Approved',
+        statusCode: 'Approved',
+      },
+      REJECTED: {
+        status: 'Rejected',
+        statusCode: 'REJECTED',
+      },
+    };
+
+    return statusDictionary[status];
   }
 }
