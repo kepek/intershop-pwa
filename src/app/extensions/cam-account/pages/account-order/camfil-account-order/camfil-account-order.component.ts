@@ -8,7 +8,6 @@ import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
 import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
 
 import { CamAccountFacade } from '../../../facades/cam-account.facade';
-import { Address } from 'ish-core/models/address/address.model';
 import { Order } from '../../../models/order/order.model';
 
 /**
@@ -33,22 +32,11 @@ export class CamfilAccountOrderComponent implements OnInit, OnDestroy {
   orderLoading$: Observable<boolean>;
 
   getOrderStatusText = OrderHelper.getOrderStatusText;
-  commonShipToAddress: Address;
 
   @ViewChild(CamfilSmallCtaModalComponent) modal: CamfilSmallCtaModalComponent;
 
   ngOnInit() {
     this.orderLoading$ = this.camAccountFacade.ordersLoading$;
-    const addr = this.order.deliveryAddress;
-    // tslint:disable-next-line:ish-no-object-literal-type-assertion
-    this.commonShipToAddress = {
-      companyName1: addr.deliveryAddressName,
-      companyName2: addr.deliveryAddressName2,
-      addressLine1: addr.deliveryAddressAddress,
-      addressLine2: addr.deliveryAddressAddressOptional || '',
-      postalCode: addr.deliveryAddressZipCode,
-      city: addr.deliveryAddressCity,
-    } as Address;
   }
 
   placeReOrder() {
