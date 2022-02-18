@@ -43,13 +43,8 @@ describe('Requisition Mapper', () => {
       expect(mapped).toMatchInlineSnapshot(`
         Object {
           "approval": Object {
-            "approvalDate": 76543627,
-            "approver": Object {
-              "firstName": "Bernhard",
-              "lastName": "Boldner",
-            },
-            "customerApprovers": undefined,
-            "status": "APPROVED",
+            "status": "pending",
+            "statusCode": "PENDING",
           },
           "attributes": undefined,
           "basketExtensions": undefined,
@@ -57,7 +52,7 @@ describe('Requisition Mapper', () => {
           "buckets": undefined,
           "commonShipToAddress": undefined,
           "commonShippingMethod": undefined,
-          "creationDate": 12345678,
+          "creationDate": NaN,
           "customerNo": "OilCorp",
           "dynamicMessages": undefined,
           "email": "bboldner@test.intershop.de",
