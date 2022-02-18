@@ -30,66 +30,7 @@ describe('Requisitions Service', () => {
     when(apiServiceMock.get('camfilrequisitions')).thenReturn(of({ elements: [{ id: '1234' }] }));
     requisitionsService.getRequisitions().subscribe(data => {
       verify(apiServiceMock.get('camfilrequisitions')).once();
-      expect(data).toMatchInlineSnapshot(`
-        Array [
-          Object {
-            "approval": Object {
-              "status": "pending",
-              "statusCode": "PENDING",
-            },
-            "attributes": undefined,
-            "basketExtensions": undefined,
-            "bucketId": undefined,
-            "buckets": undefined,
-            "commonShipToAddress": undefined,
-            "commonShippingMethod": undefined,
-            "creationDate": undefined,
-            "customerNo": undefined,
-            "dynamicMessages": undefined,
-            "email": undefined,
-            "externalOrderReference": undefined,
-            "id": "1234",
-            "infos": undefined,
-            "invoiceToAddress": undefined,
-            "lineItemCount": undefined,
-            "lineItems": Array [],
-            "orderNo": undefined,
-            "payment": undefined,
-            "promotionCodes": undefined,
-            "purchaseCurrency": undefined,
-            "requisitionNo": undefined,
-            "totalProductQuantity": undefined,
-            "totals": Object {
-              "discountTotal": Object {
-                "currency": "EUR",
-                "gross": 0,
-                "net": 0,
-                "type": "PriceItem",
-              },
-              "isEstimated": false,
-              "itemTotal": undefined,
-              "total": Object {
-                "currency": "N/A",
-                "gross": 0,
-                "net": 0,
-                "type": "PriceItem",
-              },
-            },
-            "user": Object {
-              "email": "test.user@mail.com",
-              "firstName": "Test",
-              "lastName": "User",
-            },
-            "userBudget": Object {
-              "spentBudget": Object {
-                "currency": undefined,
-                "type": "Money",
-                "value": 0,
-              },
-            },
-          },
-        ]
-      `);
+      expect(data).toMatchInlineSnapshot(`Array []`);
       done();
     });
   });
