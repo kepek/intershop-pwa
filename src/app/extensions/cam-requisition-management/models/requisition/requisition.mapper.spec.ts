@@ -23,7 +23,7 @@ describe('Requisition Mapper', () => {
         commonShippingMethod: 'shipping_method_123',
         customer: 'OilCorp',
         user: 'bboldner@test.intershop.de',
-        creationDate: 12345678,
+        creationDate: '12-02-2022T:11:11:11',
         lineItemCount: 2,
         approvalStatus: {
           status: 'APPROVED',

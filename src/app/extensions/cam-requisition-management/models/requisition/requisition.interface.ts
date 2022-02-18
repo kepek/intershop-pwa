@@ -19,7 +19,7 @@ export interface RequisitionBaseData extends BasketBaseData {
   order?: {
     itemId: string;
   };
-  creationDate: number;
+  creationDate: string;
   lineItemCount: number;
   userInformation: User;
   // ToDO: remove unnecessary
