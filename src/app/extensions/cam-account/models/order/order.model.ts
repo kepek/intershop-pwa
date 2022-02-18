@@ -1,3 +1,4 @@
+import { Address } from 'ish-core/models/address/address.model';
 import { BasketTotal } from 'ish-core/models/basket-total/basket-total.model';
 
 import { AdditionalTotalCost } from '../additional-total-cost/additional-total-cost.model';
@@ -37,4 +38,5 @@ export interface Order extends Pick<BasketTotal, 'itemSurchargeTotalsByType' | '
   deliveryDates?: number[];
   isPartialDelivery?: boolean;
   canReOrder?: boolean;
+  commonDeliveryAddress?: Address;
 }

@@ -19,8 +19,10 @@ export interface OrderData extends Pick<BasketBaseData, 'surcharges'> {
   deliveryAddressName: string;
   deliveryAddressName2?: string;
   deliveryAddressAddress: string;
+  deliveryAddressAddressOptional?: string;
   deliveryAddressZipCode: string;
   deliveryAddressCity: string;
+  deliveryAddressCountryCode?: string;
   phoneNotification: string;
   taxAmount: number;
   totalCustomerPriceSum: number;

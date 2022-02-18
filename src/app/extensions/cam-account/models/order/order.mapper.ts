@@ -14,6 +14,7 @@ export class OrderMapper {
       const camfilNo = data.customerOrderNumber;
       const orderStatus = data?.orderStatus || 'Created';
       const deliveryAddress = DeliveryAddressMapper.fromData(data);
+      const commonDeliveryAddress = DeliveryAddressMapper.addressFromDeliveryAddress(deliveryAddress);
       const itemSurchargeTotalsByType = BasketSurchargeMapper.fromListData(data?.surcharges?.itemSurcharges);
       const bucketSurchargeTotalsByType = BasketSurchargeMapper.fromListData(data?.surcharges?.bucketSurcharges);
 
@@ -42,6 +43,7 @@ export class OrderMapper {
         camfilNo,
         orderStatus, // If there is no order status then use default status
         deliveryAddress,
+        commonDeliveryAddress,
         itemSurchargeTotalsByType,
         bucketSurchargeTotalsByType,
       };

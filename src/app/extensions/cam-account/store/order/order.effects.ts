@@ -23,7 +23,6 @@ import { ProductCompletenessLevel } from 'ish-core/models/product/product.helper
 import { displayErrorMessage } from 'ish-core/store/core/messages';
 import { ofUrl, selectRouteParam } from 'ish-core/store/core/router';
 import { loadBasket } from 'ish-core/store/customer/basket';
-import { loadOrder as loadIshOrder } from 'ish-core/store/customer/orders';
 import { getProducts, loadProductIfNotLoaded, loadProductSuccess } from 'ish-core/store/shopping/products';
 import { mapErrorToAction, mapToPayload, mapToPayloadProperty, whenTruthy } from 'ish-core/utils/operators';
 
@@ -81,7 +80,7 @@ export class OrderEffects {
       ofType(loadOrderSuccess),
       mapToPayloadProperty('order'),
       whenTruthy(),
-      mergeMap(order => [loadOrderLineItems({ orderId: order.id }), loadIshOrder({ orderId: order.ishOrderUUID })])
+      map(order => loadOrderLineItems({ orderId: order.id }))
     )
   );
 
