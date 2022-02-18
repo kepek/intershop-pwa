@@ -1,0 +1,18 @@
+<ng-container *ngIf="deliveryAddress.deliveryAddressName">
+  {{ deliveryAddress.deliveryAddressName }}<br />
+</ng-container>
+<ng-container *ngIf="deliveryAddress.deliveryAddressName2">
+  <span [innerText]="deliveryAddress.deliveryAddressName2"></span><br />
+</ng-container>
+<ng-container *ngIf="deliveryAddress.deliveryAddressAddress">
+  <span [innerText]="deliveryAddress.deliveryAddressAddress"></span><br />
+</ng-container>
+<ng-container *ngIf="deliveryAddress.deliveryAddressAddressOptional">
+  <span [innerText]="deliveryAddress.deliveryAddressAddressOptional"></span><br />
+</ng-container>
+<ng-container *ngIf="deliveryAddress.deliveryAddressZipCode">
+  {{ deliveryAddress.deliveryAddressZipCode }}<br />
+</ng-container>
+<ng-container *ngIf="deliveryAddress.deliveryAddressCity">
+  {{ deliveryAddress.deliveryAddressCity }}<br />
+</ng-container>

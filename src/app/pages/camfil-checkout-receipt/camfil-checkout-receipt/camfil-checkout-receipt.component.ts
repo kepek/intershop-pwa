@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { Order } from 'camfil-pwa/models/order/order.model';
 
 import { Basket } from 'ish-core/models/basket/basket.model';
 import { Bucket } from 'ish-core/models/bucket/bucket.model';
 import { HttpError } from 'ish-core/models/http-error/http-error.model';
-import { Order } from 'ish-core/models/order/order.model';
 
 @Component({
   selector: 'camfil-checkout-receipt',

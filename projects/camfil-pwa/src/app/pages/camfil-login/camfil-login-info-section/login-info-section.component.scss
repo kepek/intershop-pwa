@@ -1,0 +1,23 @@
+@import '../../../../../../../src/styles/themes/camfil/mixins';
+@import '../../../../../../../src/styles/themes/camfil/variables';
+
+:host {
+  .login-info {
+    width: 100%;
+    padding: 40px;
+
+    &__icon-list {
+      margin-top: 44px;
+      margin-bottom: 32px;
+
+      @media (min-width: $screen-lg-min) {
+        columns: auto 2;
+      }
+
+      camfil-details-box {
+        display: block;
+        margin-bottom: $space-default;
+      }
+    }
+  }
+}

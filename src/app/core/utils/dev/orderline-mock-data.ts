@@ -1,7 +1,7 @@
-import { DeliveryAddress } from '../../../extensions/cam-account/models/delivery-address/delivery-address.model';
-import { OrderLineItem } from '../../../extensions/cam-account/models/order-line-item/order-line-item.model';
-import { Order } from '../../../extensions/cam-account/models/order/order.model';
-import { TrackAndTrace } from '../../../extensions/cam-account/models/track-and-trace/track-and-trace.model';
+import { CamfilOrderDeliveryAddress } from 'camfil-pwa/models/camfil-order-delivery-address/camfil-order-delivery-address.model';
+import { CamfilOrderLineItem } from 'camfil-pwa/models/camfil-order-line-item/camfil-order-line-item.model';
+import { CamfilOrderTrackAndTrace } from 'camfil-pwa/models/camfil-order-track-and-trace/camfil-order-track-and-trace.model';
+import { CamfilOrder } from 'camfil-pwa/models/camfil-order/camfil-order.model';
 
 export class OrderLineMockData {
   static getOrder() {
@@ -29,7 +29,7 @@ export class OrderLineMockData {
       volumeDiscount: 1,
       trackAndTrace: OrderLineMockData.getTrackAndTrace(),
       lineItems: OrderLineMockData.getOrderLineItems(),
-    } as Order;
+    } as CamfilOrder;
   }
 
   static getAddress() {
@@ -38,7 +38,7 @@ export class OrderLineMockData {
       deliveryAddressAddress: 'Test 5/2',
       deliveryAddressZipCode: '12-234',
       deliveryAddressCity: 'Testcity',
-    } as DeliveryAddress;
+    } as CamfilOrderDeliveryAddress;
   }
 
   static getTrackAndTrace() {
@@ -48,7 +48,7 @@ export class OrderLineMockData {
       ownerId: '4711',
       linkText: 'DHL track',
       link: 'https://www.dhl.com/se-en/home/tracking.html',
-    } as TrackAndTrace;
+    } as CamfilOrderTrackAndTrace;
   }
   static getOrderLineItems() {
     return [
@@ -67,6 +67,6 @@ export class OrderLineMockData {
         rowNumber: 2,
         type: 'Type',
       },
-    ] as OrderLineItem[];
+    ] as CamfilOrderLineItem[];
   }
 }

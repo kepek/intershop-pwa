@@ -1,8 +1,8 @@
 import { EntityState, createEntityAdapter } from '@ngrx/entity';
 import { createReducer, on } from '@ngrx/store';
+import { Order } from 'camfil-pwa/models/order/order.model';
 
 import { HttpError } from 'ish-core/models/http-error/http-error.model';
-import { Order } from 'ish-core/models/order/order.model';
 import { setErrorOn, setLoadingOn, unsetLoadingAndErrorOn } from 'ish-core/utils/ngrx-creators';
 
 import {

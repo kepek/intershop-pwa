@@ -18,11 +18,12 @@ export class NotAuthorizationToggleDirective implements OnDestroy {
     private viewContainer: ViewContainerRef,
     private authorizationToggle: AuthorizationToggleService
   ) {
+    this.disabled$.next(false);
     this.disabled$.pipe(distinctUntilChanged(), takeUntil(this.destroy$)).subscribe(disabled => {
       if (disabled) {
-        this.viewContainer.createEmbeddedView(this.templateRef);
-      } else {
         this.viewContainer.clear();
+      } else {
+        this.viewContainer.createEmbeddedView(this.templateRef);
       }
     });
   }
@@ -36,7 +37,7 @@ export class NotAuthorizationToggleDirective implements OnDestroy {
     this.subscription = this.authorizationToggle
       .isAuthorizedTo(permission)
       .pipe(takeUntil(this.destroy$))
-      .subscribe({ next: val => this.disabled$.next(!val) });
+      .subscribe({ next: val => this.disabled$.next(val) });
   }
 
   ngOnDestroy(): void {

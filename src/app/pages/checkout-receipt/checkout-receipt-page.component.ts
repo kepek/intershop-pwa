@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { Order } from 'camfil-pwa/models/order/order.model';
 import { Observable } from 'rxjs';
 
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { Basket } from 'ish-core/models/basket/basket.model';
-import { Order } from 'ish-core/models/order/order.model';
 
 @Component({
   selector: 'ish-checkout-receipt-page',

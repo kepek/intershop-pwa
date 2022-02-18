@@ -12,14 +12,13 @@ import {
 } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { CamfilOrderLineItem } from 'camfil-pwa/models/camfil-order-line-item/camfil-order-line-item.model';
 
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { LineItemUpdate } from 'ish-core/models/line-item-update/line-item-update.model';
 import { Price } from 'ish-core/models/price/price.model';
 import { ProductCompletenessLevel } from 'ish-core/models/product/product.model';
 import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
-
-import { OrderLineItem } from '../../../../extensions/cam-account/models/order-line-item/order-line-item.model';
 
 /**
  * The Line Item table Component displays a line items.
@@ -43,7 +42,7 @@ import { OrderLineItem } from '../../../../extensions/cam-account/models/order-l
   styleUrls: ['./camfil-line-item-table.component.scss'],
 })
 export class CamfilLineItemTableComponent implements OnInit, OnChanges, AfterViewInit {
-  @Input() lineItems: Partial<OrderLineItem>[];
+  @Input() lineItems: Partial<CamfilOrderLineItem>[];
   @Input() total: Price;
   @Input() lineItemViewType?: 'simple' | 'availability';
   @Input() deviceType: DeviceType;
@@ -61,7 +60,7 @@ export class CamfilLineItemTableComponent implements OnInit, OnChanges, AfterVie
     'deliveryDate',
     'totalRowCustomerPrice',
   ];
-  lineItemsProcessed: MatTableDataSource<Partial<OrderLineItem>>;
+  lineItemsProcessed: MatTableDataSource<Partial<CamfilOrderLineItem>>;
   isMobileView = false;
 
   constructor(private shoppingFacade: ShoppingFacade) {}
@@ -87,7 +86,7 @@ export class CamfilLineItemTableComponent implements OnInit, OnChanges, AfterVie
     return this.shoppingFacade.product$(sku, ProductCompletenessLevel.List);
   }
 
-  measurement({ width, height, diameter }: OrderLineItem) {
+  measurement({ width, height, diameter }: CamfilOrderLineItem) {
     if (!width && !height && !diameter) {
       return;
     }

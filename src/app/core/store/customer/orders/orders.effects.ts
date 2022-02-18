@@ -5,10 +5,12 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { routerNavigatedAction } from '@ngrx/router-store';
 import { Store, select } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
+import { OrderService } from 'camfil-pwa/services/order/order.service';
 import { isEqual } from 'lodash-es';
-import { iif, race } from 'rxjs';
+import { EMPTY, from, iif, race } from 'rxjs';
 import {
   concatMap,
+  concatMapTo,
   distinctUntilChanged,
   filter,
   map,
@@ -17,26 +19,14 @@ import {
   switchMap,
   switchMapTo,
   take,
-  tap,
   withLatestFrom,
 } from 'rxjs/operators';
-import { loadCamCards } from 'src/app/extensions/cam-cards/store/cam-card';
 
-import { OrderService } from 'ish-core/services/order/order.service';
-import { displayErrorMessage, displaySuccessMessage } from 'ish-core/store/core/messages';
 import { ofUrl, selectQueryParams, selectRouteParam } from 'ish-core/store/core/router';
 import { setBreadcrumbData } from 'ish-core/store/core/viewconf';
-import {
-  continueCheckoutWithIssues,
-  getCurrentBasket,
-  getCurrentBasketId,
-  getSubmittedBasket,
-  loadBasket,
-} from 'ish-core/store/customer/basket';
+import { continueCheckoutWithIssues, getCurrentBasketId, loadBasket } from 'ish-core/store/customer/basket';
 import { getLoggedInUser } from 'ish-core/store/customer/user';
 import { mapErrorToAction, mapToPayload, mapToPayloadProperty, whenTruthy } from 'ish-core/utils/operators';
-
-import { TrackingService } from '../../../../extensions/tracking/services/tracking.service';
 
 import {
   createOrder,
@@ -57,6 +47,31 @@ import { getOrder, getSelectedOrder, getSelectedOrderId } from './orders.selecto
 
 @Injectable()
 export class OrdersEffects {
+  constructor(
+    protected actions$: Actions,
+    protected orderService: OrderService,
+    protected router: Router,
+    @Inject(PLATFORM_ID) protected platformId: string,
+    protected store: Store,
+    protected translateService: TranslateService
+  ) {}
+
+  /**
+   * Creates an order based on the given basket.
+   */
+  createOrder$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(createOrder),
+      withLatestFrom(this.store.select(getCurrentBasketId)),
+      mergeMap(([, basketId]) =>
+        this.orderService.createOrder(basketId, true).pipe(
+          map(order => createOrderSuccess({ order })),
+          mapErrorToAction(createOrderFail)
+        )
+      )
+    )
+  );
+
   /**
    * After order creation either redirect to a payment provider or show checkout receipt page.
    */
@@ -66,7 +81,7 @@ export class OrdersEffects {
         ofType(createOrderSuccess),
         mapToPayloadProperty('order'),
         filter(order => !order || !order.orderCreation || order.orderCreation.status !== 'ROLLED_BACK'),
-        tap(order => {
+        concatMap(order => {
           if (
             order.orderCreation &&
             order.orderCreation.status === 'STOPPED' &&
@@ -74,67 +89,41 @@ export class OrdersEffects {
             order.orderCreation.stopAction.redirectUrl
           ) {
             location.assign(order.orderCreation.stopAction.redirectUrl);
+            return EMPTY;
           } else {
-            this.router.navigate(['/checkout/receipt']); // we need to disable this action because of custom checkout behaviour in Camfil
+            return from(this.router.navigate(['/checkout/receipt']));
           }
         })
       ),
     { dispatch: false }
   );
-  /**
-   * Creates an order based on the given basket.
-   */
-  createOrder$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(createOrder),
-      withLatestFrom(this.store.select(getCurrentBasketId)),
-      mergeMap(([, basketId]) => {
-        const erpEmployeeId = localStorage?.getItem('erpEmployeeId');
 
-        let createOrder$ = this.orderService.createOrder(basketId, true);
-
-        if (erpEmployeeId) {
-          createOrder$ = this.orderService.createOrder(basketId, true, erpEmployeeId);
-        }
-
-        return createOrder$.pipe(
-          withLatestFrom(this.store.select(getCurrentBasket)),
-          mergeMap(([order, basket]) => {
-            const create = [createOrderSuccess({ order }), loadCamCards()];
-
-            if (basket?.basketExtensions?.find(e => !e.createdFromCamCardId)) {
-              create.slice(0, 1);
-            }
-
-            return create;
-          }),
-          mapErrorToAction(createOrderFail)
-        );
-      })
-    )
-  );
   rollbackAfterOrderCreation$ = createEffect(() =>
     this.actions$.pipe(
       ofType(createOrderSuccess),
       mapToPayloadProperty('order'),
       filter(order => order.orderCreation && order.orderCreation.status === 'ROLLED_BACK'),
-      tap(() => this.router.navigate(['/checkout/payment'], { queryParams: { error: true } })),
-      concatMap(order => [
-        loadBasket(),
-        continueCheckoutWithIssues({
-          targetRoute: undefined,
-          basketValidation: {
-            basket: undefined,
-            results: {
-              valid: false,
-              adjusted: false,
-              errors: order.infos,
-            },
-          },
-        }),
-      ])
+      concatMap(order =>
+        from(this.router.navigate(['/checkout/payment'], { queryParams: { error: true } })).pipe(
+          concatMapTo([
+            loadBasket(),
+            continueCheckoutWithIssues({
+              targetRoute: undefined,
+              basketValidation: {
+                basket: undefined,
+                results: {
+                  valid: false,
+                  adjusted: false,
+                  errors: order.infos,
+                },
+              },
+            }),
+          ])
+        )
+      )
     )
   );
+
   loadOrders$ = createEffect(() =>
     this.actions$.pipe(
       ofType(loadOrders),
@@ -146,26 +135,7 @@ export class OrdersEffects {
       )
     )
   );
-  notificationAfterOrderCreation$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(createOrderSuccess),
-      map(() =>
-        displaySuccessMessage({
-          message: 'camfil.checkout.message.order_created',
-        })
-      )
-    )
-  );
-  notificationAfterOrderCreationError$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(createOrderFail),
-      map(() =>
-        displayErrorMessage({
-          message: 'camfil.checkout.message.order_failed',
-        })
-      )
-    )
-  );
+
   loadOrder$ = createEffect(() =>
     this.actions$.pipe(
       ofType(loadOrder),
@@ -178,6 +148,7 @@ export class OrdersEffects {
       )
     )
   );
+
   /**
    * Loads an anonymous user`s order using the given api token and orderId.
    */
@@ -193,6 +164,7 @@ export class OrdersEffects {
       )
     )
   );
+
   /**
    * Selects and loads an order.
    */
@@ -207,13 +179,13 @@ export class OrdersEffects {
       )
     )
   );
+
   /**
    * Triggers a SelectOrder action if route contains orderId parameter ( for order detail page ).
    */
   routeListenerForSelectingOrder$ = createEffect(() =>
     this.store.pipe(
-      // ofUrl(/^\/(account\/orders.*|checkout\/receipt)/), // CAM-1018
-      ofUrl(/^\/checkout\/receipt/),
+      ofUrl(/^\/(account\/orders.*|checkout\/receipt)/),
       select(selectRouteParam('orderId')),
       withLatestFrom(this.store.pipe(select(getSelectedOrderId))),
       filter(([fromAction, selectedOrderId]) => fromAction && fromAction !== selectedOrderId),
@@ -221,6 +193,7 @@ export class OrdersEffects {
       map(orderId => selectOrder({ orderId }))
     )
   );
+
   /**
    * Returning from redirect after checkout (before customer is logged in).
    * Waits until the customer is logged in and triggers the handleOrderAfterRedirect action afterwards.
@@ -240,6 +213,7 @@ export class OrdersEffects {
       )
     )
   );
+
   /**
    * Returning from redirect after checkout success case (after customer is logged in).
    * Sends success state with payment query params to the server and selects/loads order.
@@ -262,17 +236,20 @@ export class OrdersEffects {
       )
     )
   );
+
   selectOrderAfterRedirectFailed$ = createEffect(() =>
     this.actions$.pipe(
       ofType(selectOrderAfterRedirectFail),
-      tap(() =>
-        this.router.navigate(['/checkout/payment'], {
-          queryParams: { redirect: 'failure' },
-        })
-      ),
-      mapTo(loadBasket())
+      concatMap(() =>
+        from(
+          this.router.navigate(['/checkout/payment'], {
+            queryParams: { redirect: 'failure' },
+          })
+        ).pipe(mapTo(loadBasket()))
+      )
     )
   );
+
   setOrderBreadcrumb$ = createEffect(() =>
     this.actions$.pipe(
       ofType(routerNavigatedAction),
@@ -293,26 +270,4 @@ export class OrdersEffects {
       )
     )
   );
-
-  trackOrder$ = createEffect(
-    () =>
-      this.actions$.pipe(
-        ofType(createOrderSuccess),
-        withLatestFrom(this.store.select(getSubmittedBasket)),
-        map(([, submittedBasket]) => submittedBasket),
-        whenTruthy(),
-        tap(submittedBasket => this.trackingService.trackOrder(submittedBasket))
-      ),
-    { dispatch: false }
-  );
-
-  constructor(
-    private actions$: Actions,
-    private orderService: OrderService,
-    private trackingService: TrackingService,
-    private router: Router,
-    @Inject(PLATFORM_ID) private platformId: string,
-    private store: Store,
-    private translateService: TranslateService
-  ) {}
 }

@@ -1,15 +1,19 @@
 import { isPlatformServer } from '@angular/common';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { Actions, createEffect } from '@ngrx/effects';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store, select } from '@ngrx/store';
 import { Angulartics2GoogleTagManager } from 'angulartics2/gtm';
-import { filter, first, map, take, takeWhile, withLatestFrom } from 'rxjs/operators';
+import { filter, first, map, take, takeWhile, tap, withLatestFrom } from 'rxjs/operators';
 
 import { FeatureToggleService } from 'ish-core/feature-toggle.module';
+import { getSubmittedBasket } from 'ish-core/store/customer/basket';
+import { createOrderSuccess } from 'ish-core/store/customer/orders';
 import { CookiesService } from 'ish-core/utils/cookies/cookies.service';
 import { whenTruthy } from 'ish-core/utils/operators';
 import { StatePropertiesService } from 'ish-core/utils/state-transfer/state-properties.service';
+
+import { TrackingService } from '../../services/tracking.service';
 
 import { setGTMToken } from './tracking-config.actions';
 import { getGTMToken } from './tracking-config.selectors';
@@ -24,7 +28,8 @@ export class TrackingConfigEffects {
     private store: Store,
     private cookiesService: CookiesService,
     private router: Router,
-    @Inject(PLATFORM_ID) private platformId: string
+    @Inject(PLATFORM_ID) private platformId: string,
+    private trackingService: TrackingService
   ) {
     if (this.isTrackingAllowed()) {
       this.startTracking();
@@ -50,6 +55,18 @@ export class TrackingConfigEffects {
       whenTruthy(),
       map(gtmToken => setGTMToken({ gtmToken }))
     )
+  );
+
+  trackOrder$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(createOrderSuccess),
+        withLatestFrom(this.store.select(getSubmittedBasket)),
+        map(([, submittedBasket]) => submittedBasket),
+        whenTruthy(),
+        tap(submittedBasket => this.trackingService.trackOrder(submittedBasket))
+      ),
+    { dispatch: false }
   );
 
   private isTrackingAllowed() {

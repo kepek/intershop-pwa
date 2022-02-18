@@ -1,4 +1,5 @@
 import { AddressData } from 'ish-core/models/address/address.interface';
+import { OrderData as IshOrderData } from 'ish-core/models/order/order.interface';
 
 export enum GuestAttributePrefix {
   CustomerId = 'CAMFIL_CUSTOMER_ID',
@@ -18,4 +19,9 @@ export interface GuestBuyer extends Partial<AddressData> {
   jobTitle?: string;
   origin?: boolean;
   taxationID?: string;
+}
+
+export interface OrderData extends IshOrderData {
+  camfilOrderId?: string;
+  readToken?: string;
 }

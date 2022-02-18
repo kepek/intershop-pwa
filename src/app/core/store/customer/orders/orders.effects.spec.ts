@@ -6,19 +6,19 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { Action, Store } from '@ngrx/store';
 import { TranslateModule } from '@ngx-translate/core';
+import { OrderService } from 'camfil-pwa/services/order/order.service';
+import { OrdersEffects } from 'camfil-pwa/store/customer/orders/orders.effects';
 import { cold, hot } from 'jest-marbles';
 import { Observable, noop, of, throwError } from 'rxjs';
-import { loadCamCards } from 'src/app/extensions/cam-cards/store/cam-card';
+import { toArray } from 'rxjs/operators';
 import { anyString, anything, instance, mock, verify, when } from 'ts-mockito';
 
-import { BasketFeedback } from 'ish-core/models/basket-feedback/basket-feedback.model';
 import { Basket } from 'ish-core/models/basket/basket.model';
 import { Customer } from 'ish-core/models/customer/customer.model';
 import { Order } from 'ish-core/models/order/order.model';
 import { User } from 'ish-core/models/user/user.model';
-import { OrderService } from 'ish-core/services/order/order.service';
 import { CoreStoreModule } from 'ish-core/store/core/core-store.module';
-import { continueCheckoutWithIssues, loadBasket, loadBasketSuccess } from 'ish-core/store/customer/basket';
+import { loadBasket, loadBasketSuccess } from 'ish-core/store/customer/basket';
 import { CustomerStoreModule } from 'ish-core/store/customer/customer-store.module';
 import { loginUserSuccess } from 'ish-core/store/customer/user';
 import { makeHttpError } from 'ish-core/utils/dev/api-service-utils';
@@ -41,7 +41,6 @@ import {
   selectOrderAfterRedirect,
   selectOrderAfterRedirectFail,
 } from './orders.actions';
-import { OrdersEffects } from './orders.effects';
 
 describe('Orders Effects', () => {
   let actions$: Observable<Action>;
@@ -124,10 +123,8 @@ describe('Orders Effects', () => {
       const newOrder = { id: basketId } as Order;
       const action = createOrder();
       const completion = createOrderSuccess({ order: newOrder });
-      const completion2 = loadCamCards();
-
-      actions$ = hot('-a----a----a', { a: action });
-      const expected$ = cold('-(cd)-(cd)-(cd)', { c: completion, d: completion2 });
+      actions$ = hot('-a-a-a', { a: action });
+      const expected$ = cold('-c-c-c', { c: completion });
 
       expect(effects.createOrder$).toBeObservable(expected$);
     });
@@ -181,7 +178,7 @@ describe('Orders Effects', () => {
   });
 
   describe('rollbackAfterOrderCreation', () => {
-    it('should navigate to /checkout/payment after CreateOrderSuccess if order creation was rolled back', () => {
+    it('should navigate to /checkout/payment after CreateOrderSuccess if order creation was rolled back', done => {
       const action = createOrderSuccess({
         order: {
           id: '123',
@@ -191,22 +188,22 @@ describe('Orders Effects', () => {
       });
       actions$ = of(action);
 
-      const completion1 = loadBasket();
-      const completion2 = continueCheckoutWithIssues({
-        targetRoute: undefined,
-        basketValidation: {
-          basket: undefined,
-          results: {
-            valid: false,
-            adjusted: false,
-            errors: [{ message: 'Info' } as BasketFeedback],
-          },
-        },
-      });
-      actions$ = hot('-a', { a: action });
-      const expected$ = cold('-(cd)', { c: completion1, d: completion2 });
+      effects.rollbackAfterOrderCreation$.pipe(toArray()).subscribe({
+        next: actions => {
+          expect(actions).toMatchInlineSnapshot(`
+            [Basket Internal] Load Basket
+            [Basket API] Validate Basket and continue with issues:
+              targetRoute: undefined
+              basketValidation: {"results":{"valid":false,"adjusted":false,"errors":[1]}}
+          `);
 
-      expect(effects.rollbackAfterOrderCreation$).toBeObservable(expected$);
+          expect(location.path()).toMatchInlineSnapshot(`"/checkout/payment?error=true"`);
+
+          done();
+        },
+        error: fail,
+        complete: noop,
+      });
     });
   });
 
@@ -321,8 +318,9 @@ describe('Orders Effects', () => {
   });
 
   describe('routeListenerForSelectingOrder$', () => {
-    // CAM-1018
-    xit('should fire SelectOrder when route account/order/XXX is navigated', done => {
+    // tslint:disable-next-line:no-commented-out-code
+    /**
+    it('should fire SelectOrder when route account/order/XXX is navigated', done => {
       router.navigateByUrl('/account/orders/123');
 
       effects.routeListenerForSelectingOrder$.subscribe(action => {
@@ -333,6 +331,7 @@ describe('Orders Effects', () => {
         done();
       });
     });
+    **/
 
     it('should not fire SelectOrder when route /something is navigated', done => {
       router.navigateByUrl('/something');
@@ -443,24 +442,18 @@ describe('Orders Effects', () => {
   });
 
   describe('selectOrderAfterRedirectFailed', () => {
-    it('should navigate to /checkout/payment if order creation failed after redirect', fakeAsync(() => {
-      const action = selectOrderAfterRedirectFail(undefined);
-      actions$ = of(action);
+    it('should navigate to /checkout/payment if order creation failed after redirect', done => {
+      actions$ = of(selectOrderAfterRedirectFail(undefined));
 
-      effects.selectOrderAfterRedirectFailed$.subscribe(noop, fail, noop);
-
-      tick(500);
-
-      expect(location.path()).toEqual('/checkout/payment?redirect=failure');
-    }));
-
-    it('should map to action of type LoadBasket', () => {
-      const action = selectOrderAfterRedirectFail(undefined);
-      const completion = loadBasket();
-      actions$ = hot('-a-a-a', { a: action });
-      const expected$ = cold('-c-c-c', { c: completion });
-
-      expect(effects.selectOrderAfterRedirectFailed$).toBeObservable(expected$);
+      effects.selectOrderAfterRedirectFailed$.subscribe({
+        next: action => {
+          expect(action).toMatchInlineSnapshot(`[Basket Internal] Load Basket`);
+          expect(location.path()).toEqual('/checkout/payment?redirect=failure');
+          done();
+        },
+        error: fail,
+        complete: noop,
+      });
     });
   });
 

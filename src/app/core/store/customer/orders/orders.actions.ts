@@ -1,7 +1,7 @@
 import { Params } from '@angular/router';
 import { createAction } from '@ngrx/store';
+import { Order } from 'camfil-pwa/models/order/order.model';
 
-import { Order } from 'ish-core/models/order/order.model';
 import { httpError, payload } from 'ish-core/utils/ngrx-creators';
 
 export const createOrder = createAction('[Orders] Create Order');

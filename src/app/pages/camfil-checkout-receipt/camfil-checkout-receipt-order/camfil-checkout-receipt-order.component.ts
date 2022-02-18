@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { Order } from 'camfil-pwa/models/order/order.model';
 import { Observable } from 'rxjs';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
-import { Order } from 'ish-core/models/order/order.model';
 
 @Component({
   selector: 'camfil-checkout-receipt-order',

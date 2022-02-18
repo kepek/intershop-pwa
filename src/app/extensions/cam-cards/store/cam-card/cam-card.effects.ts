@@ -27,6 +27,8 @@ import { displayErrorMessage, displaySuccessMessage } from 'ish-core/store/core/
 import { ofUrl, selectRouteParam } from 'ish-core/store/core/router';
 import { RouterState } from 'ish-core/store/core/router/router.reducer';
 import { setBreadcrumbData } from 'ish-core/store/core/viewconf';
+import { getSubmittedBasket } from 'ish-core/store/customer/basket';
+import { createOrderSuccess } from 'ish-core/store/customer/orders';
 import { getUserAuthorized } from 'ish-core/store/customer/user';
 import {
   distinctCompareWith,
@@ -955,9 +957,23 @@ export class CamCardEffects {
     )
   );
 
+  loadCamCardsAfterOrderCreation = createEffect(() =>
+    this.actions$.pipe(
+      ofType(createOrderSuccess),
+      mapToPayloadProperty('order'),
+      withLatestFrom(this.store.select(getSubmittedBasket)),
+      filter(
+        ([order, basket]) =>
+          (!order || !order.orderCreation || order.orderCreation.status !== 'ROLLED_BACK') &&
+          !!basket?.basketExtensions?.find(e => e?.createdFromCamCardId)
+      ),
+      mapTo(loadCamCards())
+    )
+  );
+
   /** Action after update CamCard Contacts
    * @param camCardId
-   * @param newContacts
+   * @param contacts
    * @param contact
    */
   private handleCamCardContactsSuccess(camCardId: string, contacts: CamCardContact[], contact: CamCardContact) {

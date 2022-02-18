@@ -1,4 +1,8 @@
 import { createReducer, on } from '@ngrx/store';
+import {
+  updateCustomerUserPreferredLanguage,
+  updateCustomerUserPreferredLanguageSuccess,
+} from 'camfil-pwa/store/camfil-user';
 
 import { Customer } from 'ish-core/models/customer/customer.model';
 import { HttpError } from 'ish-core/models/http-error/http-error.model';
@@ -6,11 +10,6 @@ import { PaymentMethod } from 'ish-core/models/payment-method/payment-method.mod
 import { User } from 'ish-core/models/user/user.model';
 import { loadRolesAndPermissionsFail } from 'ish-core/store/customer/authorization';
 import { setErrorOn, setLoadingOn } from 'ish-core/utils/ngrx-creators';
-
-import {
-  updateCustomerUserPreferredLanguage,
-  updateCustomerUserPreferredLanguageSuccess,
-} from '../../../../extensions/cam-account/store/user';
 
 import {
   createUser,

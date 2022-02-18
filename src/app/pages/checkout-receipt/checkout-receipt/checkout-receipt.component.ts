@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { Order } from 'camfil-pwa/models/order/order.model';
 
 import { Basket } from 'ish-core/models/basket/basket.model';
-import { Order } from 'ish-core/models/order/order.model';
 
 @Component({
   selector: 'ish-checkout-receipt',

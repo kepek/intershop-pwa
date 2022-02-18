@@ -18,6 +18,7 @@ export class AuthorizationToggleDirective implements OnDestroy {
     private viewContainer: ViewContainerRef,
     private authorizationToggle: AuthorizationToggleService
   ) {
+    this.enabled$.next(false);
     this.enabled$.pipe(distinctUntilChanged(), takeUntil(this.destroy$)).subscribe(enabled => {
       if (enabled) {
         this.viewContainer.createEmbeddedView(this.templateRef);

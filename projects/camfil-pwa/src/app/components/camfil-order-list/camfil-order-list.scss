@@ -1,0 +1,172 @@
+@import '../../../../../../src/styles/themes/camfil/colors';
+@import '../../../../../../src/styles/themes/camfil/mixins';
+@import '../../../../../../src/styles/themes/camfil/variables';
+
+:host {
+  // reduce height of filter select boxes
+  ::ng-deep .mat-form-field-appearance-fill {
+    .mat-form-field-flex {
+      padding: 0.25em 0.75em 0 0.75em;
+    }
+    .mat-form-field-infix {
+      padding: 0.25em 0 0.25em 0;
+    }
+  }
+
+  ::ng-deep div.show-more-overlay .mat-stroked-button {
+    padding: 0 28px;
+    font-size: 12px;
+  }
+
+  ::ng-deep {
+    th,
+    td {
+      @media (max-width: $screen-md-max) {
+        padding-right: 4px;
+        text-align: left;
+        &:first-child {
+          padding-left: $space-box;
+        }
+        &:last-child {
+          padding-right: $space-default;
+        }
+        .mat-sort-header-container {
+          display: inline-block;
+        }
+        .mat-sort-header-content {
+          text-align: left;
+        }
+        .mat-sort-header-arrow {
+          margin: 0 0 $space-box-half 0;
+        }
+      }
+    }
+  }
+}
+
+table {
+  width: 100%;
+
+  th {
+    height: 45px;
+    padding-right: $space-box;
+    font-size: $font-size-corporate;
+    color: #000;
+    background-color: $greyF5;
+  }
+  tr.orderlist-row:hover {
+    cursor: pointer;
+    background: $greyF5;
+  }
+  tr.orderlist-row:active {
+    background: $greyEF;
+  }
+  td {
+    word-break: break-word;
+  }
+  .order-list-cell__divider {
+    padding-left: $space-detail-item-margin;
+  }
+}
+
+.search-container {
+  width: 100%;
+  margin-right: 16px;
+}
+
+.search-input {
+  width: 100%;
+  height: 40px;
+  padding: 8px 8px 8px 46px;
+  border: none;
+  border-radius: 30px;
+
+  &:focus {
+    outline: none;
+
+    + .buttons {
+      button {
+        color: $camfil-color-light;
+      }
+    }
+  }
+}
+button {
+  &[type='submit'] {
+    position: absolute;
+    top: $space-box / 4;
+    right: $space-box / 2;
+    padding-right: $space-box / 2;
+    padding-left: $space-box / 2;
+    line-height: 26px;
+  }
+
+  &.btn-reset {
+    display: none;
+  }
+}
+
+.background-icon {
+  position: absolute;
+  top: 5px;
+  left: 12px;
+}
+
+.orders-count {
+  font-size: 16px;
+}
+
+.show-more-overlay {
+  position: relative;
+  top: -80px;
+  min-height: 80px;
+  margin-bottom: -80px;
+  background-color: rgb(255 255 255 / 90%);
+  mat-stroked-button {
+    padding: 0 28px;
+    font-size: 12px;
+  }
+}
+@media (min-width: $screen-md-min) {
+  mat-form-field.select-filter {
+    margin-right: 16px;
+    font-size: 12px;
+    letter-spacing: 1px;
+  }
+}
+
+::ng-deep {
+  .mat-sort-header-arrow {
+    @include table-sort-arrow;
+  }
+  div.cam-card-tooltip {
+    min-width: 100px;
+    max-width: 200px;
+    margin: $space-box 0 0;
+    font-size: $font-size-base;
+    line-height: 1.4em;
+  }
+}
+
+// for mobile
+@media (max-width: $screen-sm-max) {
+  .orders-item {
+    line-height: 24px;
+    color: $camfil-text-color-tertiary;
+    .row:nth-of-type(2n + 1) {
+      margin-top: $space-box/2;
+      margin-bottom: $space-box/2;
+      font-size: $font-size-xs;
+      font-weight: 600;
+      color: $camfil-text-color-primary;
+      background-color: rgba($color-corporate, 0.1);
+    }
+
+    ::ng-deep {
+      .mat-expansion-panel-body {
+        padding: 0;
+      }
+    }
+  }
+}
+// EOF for mobile

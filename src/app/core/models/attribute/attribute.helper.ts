@@ -1,6 +1,7 @@
+import { CamfilOrderLineItem } from 'camfil-pwa/models/camfil-order-line-item/camfil-order-line-item.model';
+
 import { LineItem, LineItemView } from 'ish-core/models/line-item/line-item.model';
 
-import { OrderLineItem } from '../../../extensions/cam-account/models/order-line-item/order-line-item.model';
 import { CamCamProductChecked, CamCardItem } from '../../../extensions/cam-cards/models/cam-card/cam-card.model';
 
 import { Attribute } from './attribute.model';
@@ -72,13 +73,13 @@ export class AttributeHelper {
     return AttributeHelper.getAttrsBeforeAddToCart(measurements, boxLabel);
   }
 
-  static determineLineItemType(lineItem: OrderLineItem | LineItemView | CamCardItem) {
+  static determineLineItemType(lineItem: CamfilOrderLineItem | LineItemView | CamCardItem) {
     const isLineItem = (item: any): item is LineItem => 'attributes' in item;
 
     return isLineItem(lineItem);
   }
 
-  static determineIfCamCardItem(lineItem: OrderLineItem | LineItemView | CamCardItem) {
+  static determineIfCamCardItem(lineItem: CamfilOrderLineItem | LineItemView | CamCardItem) {
     const isCamCardItem = (item: any): item is CamCardItem => 'measurement' in item;
 
     return isCamCardItem(lineItem);

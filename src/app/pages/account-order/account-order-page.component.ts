@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { Order } from 'camfil-pwa/models/order/order.model';
 import { Observable } from 'rxjs';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
-import { Order } from 'ish-core/models/order/order.model';
 
 /**
  * The Order Page Container reads order data from store and displays them using the {@link OrderPageComponent}
