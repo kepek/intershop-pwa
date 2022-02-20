@@ -50,7 +50,6 @@ const routes: Routes = [
 
   {
     path: 'forgotPassword',
-    canActivate: [IdentityProviderLoginGuard],
     data: {
       feature: 'camAccount',
       breadcrumbData: [],
@@ -63,7 +62,6 @@ const routes: Routes = [
 
   {
     path: 'forgotUsername',
-    canActivate: [IdentityProviderLoginGuard],
     data: {
       feature: 'camAccount',
       breadcrumbData: [],
