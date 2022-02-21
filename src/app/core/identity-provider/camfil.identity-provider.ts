@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Router, UrlTree } from '@angular/router';
 import { Store, select } from '@ngrx/store';
-import { Observable, of, race, throwError } from 'rxjs';
-import { catchError, concatMap, delay, first, map, switchMap, take } from 'rxjs/operators';
+import { Observable, noop, of, race, throwError } from 'rxjs';
+import { catchError, concatMap, map, mapTo, take } from 'rxjs/operators';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
 import { IdentityProvider } from 'ish-core/identity-provider/identity-provider.interface';
@@ -30,6 +30,15 @@ export class CAMFILIdentityProvider extends ICMIdentityProvider implements Ident
     super(router, store, apiTokenService);
   }
 
+  init() {
+    this.apiTokenService.restore$(['user', 'basket', 'order']).subscribe(noop);
+    this.apiTokenService.cookieVanishes$.subscribe(type => {
+      if (type === 'user') {
+        this.store.dispatch(logoutUser());
+      }
+    });
+  }
+
   triggerLogin(route: ActivatedRouteSnapshot) {
     this.apiTokenService.removeApiToken();
 
@@ -49,7 +58,7 @@ export class CAMFILIdentityProvider extends ICMIdentityProvider implements Ident
 
     // check for required start parameters before doing anything
     if (!hasAccessToken) {
-      return true;
+      return false;
     }
 
     if (hasErpEmployeeId) {
@@ -71,26 +80,8 @@ export class CAMFILIdentityProvider extends ICMIdentityProvider implements Ident
         // tslint:disable-next-line: no-unnecessary-callback-wrapper
         concatMap(userError => throwError(userError))
       ),
-
-      // handle anything once the camfil user is logged in
-      this.accountFacade.isLoggedIn$.pipe(
-        whenTruthy(),
-        take(1),
-        switchMap(() => of(this.router.parseUrl(returnUrl))),
-        // camfil error after successful authentication (needs to logout)
-        catchError(error =>
-          this.accountFacade.userLoading$.pipe(
-            first(loading => !loading),
-            delay(0),
-            switchMap(() => {
-              this.accountFacade.logoutUser();
-              this.apiTokenService.removeApiToken();
-              console.error('catchError', error);
-              return of(this.router.parseUrl('/error'));
-            })
-          )
-        )
-      )
+      // redirect to returnUrl once the camfil user is logged in
+      this.accountFacade.isLoggedIn$.pipe(whenTruthy(), take(1), mapTo(this.router.parseUrl(returnUrl)))
     ).pipe(
       // general error handling (parameter missing, authentication error)
       catchError(error => {
