@@ -42,10 +42,9 @@ export class CAMFILIdentityProvider extends ICMIdentityProvider implements Ident
   triggerLogin(route: ActivatedRouteSnapshot) {
     this.apiTokenService.removeApiToken();
 
-    const accessToken = route.queryParamMap.get(CamfilIdentityParams.AccessToken);
+    let accessToken = route.queryParamMap.get(CamfilIdentityParams.AccessToken);
     // token is not encoded by ICM URL, so we need to reinsert '+'
-    // tslint:disable-next-line:no-commented-out-code
-    // accessToken = decodeURIComponent(accessToken?.replace(/\s/g, '+'));
+    accessToken = decodeURIComponent(accessToken?.replace(/\s/g, '+'));
 
     let hasAccessToken = route.queryParamMap.has(CamfilIdentityParams.AccessToken);
     hasAccessToken = hasAccessToken && accessToken !== 'null';
