@@ -10,11 +10,11 @@ export interface IdentityProviderCapabilities {
   editProfile?: boolean;
 }
 
-export interface IdentityProvider {
+export interface IdentityProvider<ConfigType = never> {
   /**
    * Initialization logic.
    */
-  init(config): void;
+  init(config: ConfigType): void;
 
   /**
    * Capabilities for the identity provider.
@@ -32,9 +32,14 @@ export interface IdentityProvider {
   triggerRegister?(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): TriggerReturnType;
 
   /**
-   * Route guard for logout
+   * Route guard for inviting.
    */
-  triggerLogout(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): TriggerReturnType;
+  triggerInvite?(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): TriggerReturnType;
+
+  /**
+   * Logout method (can be used by route guard or otherwise)
+   */
+  triggerLogout(): TriggerReturnType;
 
   /**
    * Interceptor for all API requests directed to the ICM
