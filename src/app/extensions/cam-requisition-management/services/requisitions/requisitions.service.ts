@@ -207,6 +207,7 @@ export class RequisitionsService {
     const body = {
       requisition,
     };
+
     return this.apiService
       .patch(`requisitions/${requisition.id}`, body, {
         params,

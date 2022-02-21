@@ -2,7 +2,7 @@
 @import '~src/styles/themes/camfil/mixins.scss';
 @import '~src/styles/themes/camfil/variables.scss';
 
-.camfil-approval-edit-modal {
+.camfil-edit-requisition-modal {
   position: relative;
   display: flex;
   flex-direction: column;
@@ -35,6 +35,16 @@
     &--svg-icon {
       display: inline-flex;
       margin-right: 16px;
+    }
+  }
+
+  &__buttons-wrapper {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 36px;
+
+    &--button {
+      width: 200px;
     }
   }
 

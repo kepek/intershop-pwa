@@ -58,7 +58,6 @@ export class OrderFormComponent implements OnInit, OnDestroy {
       .subscribe(val => {
         this.useSecondAddressLine = val;
       });
-
     this.addressForm = this.fb.group({
       customer: [this.orderToEdit?.customerId],
       contact: [this.orderToEdit?.contactPerson?.erpId || '', Validators.required],
@@ -80,7 +79,7 @@ export class OrderFormComponent implements OnInit, OnDestroy {
 
     this.customers$?.pipe(whenTruthy(), distinctUntilChanged(), takeUntil(this.destroy$)).subscribe(customers => {
       this.customersArr = customers;
-
+      console.log(' this.customersArr', this.customersArr);
       const defaultCustomerId = this.setDefaultCustomer(this.customersArr);
 
       if (!this.orderToEdit && customers?.length === 1) {

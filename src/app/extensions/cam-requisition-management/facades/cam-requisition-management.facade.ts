@@ -21,6 +21,7 @@ import {
   updateRequisition,
   updateRequisitionLineItemAttribute,
 } from '../store/requisitions';
+import { Requisition } from '../models/requisition/requisition.model';
 
 // tslint:disable:member-ordering
 @Injectable({ providedIn: 'root' })
@@ -104,7 +105,7 @@ export class CamRequisitionManagementFacade {
     );
   }
 
-  updateRequisition(requisition) {
-    this.store.dispatch(updateRequisition(requisition));
+  updateRequisition(requisition: Requisition) {
+    this.store.dispatch(updateRequisition({ requisition }));
   }
 }

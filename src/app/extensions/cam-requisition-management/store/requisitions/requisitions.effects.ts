@@ -196,12 +196,13 @@ export class RequisitionsEffects {
     this.actions$.pipe(
       ofType(updateRequisition),
       mapToPayload(),
-      mergeMap(payload =>
-        this.requisitionsService.updateRequisition(payload.requisition).pipe(
+      mergeMap(payload => {
+        const { requisition } = payload;
+        return this.requisitionsService.updateRequisition(requisition).pipe(
           map(requisition => updateRequisitionSuccess({ requisition })),
           mapErrorToAction(updateRequisitionFail)
-        )
-      )
+        );
+      })
     )
   );
 

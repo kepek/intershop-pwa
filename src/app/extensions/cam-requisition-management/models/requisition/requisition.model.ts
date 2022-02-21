@@ -34,6 +34,7 @@ export interface Requisition extends RequisitionBasket {
   lineItemCount: number;
   orderMark: string;
   invoiceLabel: string;
+  phoneNumber: string;
   user: User;
   requisitionCustomer: Customer;
   shippingAddress: Address;

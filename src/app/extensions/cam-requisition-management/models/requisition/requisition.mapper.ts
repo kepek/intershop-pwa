@@ -51,6 +51,7 @@ export class RequisitionMapper {
           user: data.creator,
           orderMark: data.orderMark,
           invoiceLabel: data.invoiceLabel,
+          phoneNumber: data.phoneNumber,
           info: data.info,
           lineItemCount: data.lineItemCount,
           lineItems,
