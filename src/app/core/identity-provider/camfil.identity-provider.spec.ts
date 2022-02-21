@@ -15,7 +15,6 @@ import { selectQueryParam } from 'ish-core/store/core/router';
 import { ApiTokenService } from 'ish-core/utils/api-token/api-token.service';
 import { CookiesService } from 'ish-core/utils/cookies/cookies.service';
 import { makeHttpError } from 'ish-core/utils/dev/api-service-utils';
-import { BasketMockData } from 'ish-core/utils/dev/basket-mock-data';
 
 import { CAMFILIdentityProvider, CamfilIdentityParams } from './camfil.identity-provider';
 
@@ -74,7 +73,6 @@ describe('Camfil Identity Provider', () => {
   beforeEach(() => {
     cookieVanishes$ = new Subject<ApiTokenCookieType>();
     when(apiTokenService.restore$(anything())).thenReturn(of(true));
-    when(checkoutFacade.basket$).thenReturn(EMPTY);
     when(apiTokenService.cookieVanishes$).thenReturn(cookieVanishes$);
 
     resetCalls(apiService);
@@ -90,7 +88,7 @@ describe('Camfil Identity Provider', () => {
   describe('init', () => {
     it('should restore apiToken on startup', () => {
       camfilIdentityProvider.init();
-      verify(apiTokenService.restore$(anything())).once();
+      verify(apiTokenService.cookieVanishes$).once();
       verify(apiTokenService.removeApiToken()).never();
     });
   });
@@ -98,12 +96,11 @@ describe('Camfil Identity Provider', () => {
   describe('triggerLogout', () => {
     beforeEach(() => {
       window.sessionStorage.setItem(CamfilIdentityParams.ERPEmployeeID, 'test-erp-id');
-      when(checkoutFacade.basket$).thenReturn(of(BasketMockData.getBasket()));
       store$.overrideSelector(selectQueryParam(anything()), undefined);
       camfilIdentityProvider.init();
     });
 
-    it('should remove api token and basket-id on logout', () => {
+    it('should remove apiToken cookie and ERPEmployeeID from session storage on logout', () => {
       expect(window.sessionStorage.getItem(CamfilIdentityParams.ERPEmployeeID)).toEqual('test-erp-id');
 
       camfilIdentityProvider.triggerLogout();
@@ -136,12 +133,12 @@ describe('Camfil Identity Provider', () => {
       when(accountFacade.isLoggedIn$).thenReturn(EMPTY);
     });
 
-    it('should stop authentication process without query params on login', () => {
+    it('should continue process without query params required to login on behalf', () => {
       const result$ = camfilIdentityProvider.triggerLogin(getSnapshot(queryParams));
-      expect(result$).toBeFalsy();
+      expect(result$).toBeTruthy();
     });
 
-    describe('hasAccessToken', () => {
+    describe('should try to login user on behalf with access-token from queryParams', () => {
       const accessToken = 'login-access-token';
 
       beforeEach(() => {

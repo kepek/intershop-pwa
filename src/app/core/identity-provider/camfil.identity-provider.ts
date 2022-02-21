@@ -31,11 +31,6 @@ export class CAMFILIdentityProvider extends ICMIdentityProvider implements Ident
   }
 
   init() {
-    // this.apiTokenService.restore$(['user']).subscribe(x => {
-    // tslint:disable-next-line:no-commented-out-code
-    //   this.apiTokenService.removeApiToken();
-    // });
-
     this.apiTokenService.cookieVanishes$.subscribe(type => {
       if (type === 'user') {
         this.store.dispatch(logoutUser());
@@ -44,8 +39,6 @@ export class CAMFILIdentityProvider extends ICMIdentityProvider implements Ident
   }
 
   triggerLogin(route: ActivatedRouteSnapshot) {
-    this.apiTokenService.removeApiToken();
-
     let accessToken = route.queryParamMap.get(CamfilIdentityParams.AccessToken);
     // token is not encoded by ICM URL, so we need to reinsert '+'
     accessToken = decodeURIComponent(accessToken?.replace(/\s/g, '+'));
