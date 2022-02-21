@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Router, UrlTree } from '@angular/router';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import { Observable, of, race, throwError } from 'rxjs';
-import { catchError, concatMap, delay, first, switchMap, take } from 'rxjs/operators';
+import { catchError, concatMap, map, mapTo, take } from 'rxjs/operators';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
 import { IdentityProvider } from 'ish-core/identity-provider/identity-provider.interface';
+import { selectQueryParam } from 'ish-core/store/core/router';
+import { logoutUser } from 'ish-core/store/customer/user';
 import { ApiTokenService } from 'ish-core/utils/api-token/api-token.service';
 import { whenTruthy } from 'ish-core/utils/operators';
 
@@ -28,6 +30,14 @@ export class CAMFILIdentityProvider extends ICMIdentityProvider implements Ident
     super(router, store, apiTokenService);
   }
 
+  init() {
+    this.apiTokenService.cookieVanishes$.subscribe(type => {
+      if (type === 'user') {
+        this.store.dispatch(logoutUser());
+      }
+    });
+  }
+
   triggerLogin(route: ActivatedRouteSnapshot) {
     let accessToken = route.queryParamMap.get(CamfilIdentityParams.AccessToken);
     // token is not encoded by ICM URL, so we need to reinsert '+'
@@ -47,15 +57,15 @@ export class CAMFILIdentityProvider extends ICMIdentityProvider implements Ident
       return true;
     }
 
+    if (hasErpEmployeeId) {
+      window?.sessionStorage?.setItem(CamfilIdentityParams.ERPEmployeeID, erpEmployeeId);
+    }
+
     // initiate the user login with the access-token (cXML)
     if (hasAccessToken) {
       this.router.navigateByUrl('/loading', { replaceUrl: false, skipLocationChange: true });
       this.apiTokenService.removeApiToken();
       this.accountFacade.loginUserWithToken(accessToken);
-    }
-
-    if (hasErpEmployeeId) {
-      localStorage?.setItem(CamfilIdentityParams.ERPEmployeeID, erpEmployeeId);
     }
 
     return race(
@@ -66,26 +76,8 @@ export class CAMFILIdentityProvider extends ICMIdentityProvider implements Ident
         // tslint:disable-next-line: no-unnecessary-callback-wrapper
         concatMap(userError => throwError(userError))
       ),
-
-      // handle anything once the camfil user is logged in
-      this.accountFacade.isLoggedIn$.pipe(
-        whenTruthy(),
-        take(1),
-        switchMap(() => of(this.router.parseUrl(returnUrl))),
-        // camfil error after successful authentication (needs to logout)
-        catchError(error =>
-          this.accountFacade.userLoading$.pipe(
-            first(loading => !loading),
-            delay(0),
-            switchMap(() => {
-              this.accountFacade.logoutUser();
-              this.apiTokenService.removeApiToken();
-              console.error(error);
-              return of(this.router.parseUrl('/error'));
-            })
-          )
-        )
-      )
+      // redirect to returnUrl once the camfil user is logged in
+      this.accountFacade.isLoggedIn$.pipe(whenTruthy(), take(1), mapTo(this.router.parseUrl(returnUrl)))
     ).pipe(
       // general error handling (parameter missing, authentication error)
       catchError(error => {
@@ -96,8 +88,13 @@ export class CAMFILIdentityProvider extends ICMIdentityProvider implements Ident
   }
 
   triggerLogout(): Observable<UrlTree> {
-    localStorage?.removeItem(CamfilIdentityParams.ERPEmployeeID);
-
-    return super.triggerLogout();
+    window?.sessionStorage?.removeItem(CamfilIdentityParams.ERPEmployeeID);
+    this.store.dispatch(logoutUser());
+    this.apiTokenService.removeApiToken();
+    return this.store.pipe(
+      select(selectQueryParam('returnUrl')),
+      map(returnUrl => returnUrl || '/home'),
+      map(returnUrl => this.router.parseUrl(returnUrl))
+    );
   }
 }

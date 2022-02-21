@@ -176,7 +176,7 @@ export class CamfilCheckoutOnestepPageComponent implements OnInit, OnDestroy {
 
   private checkErpEmployeeIdExists() {
     try {
-      const erpEmployeeId = localStorage?.getItem(CamfilIdentityParams.ERPEmployeeID) || undefined;
+      const erpEmployeeId = window.sessionStorage?.getItem(CamfilIdentityParams.ERPEmployeeID) || undefined;
 
       if (erpEmployeeId) {
         this.checkoutFacade.updateBasketExternalOrderReference(erpEmployeeId);

@@ -60,7 +60,7 @@ export class OrderService extends IshOrderService {
       return throwError('createOrder() called without basketId');
     }
 
-    const externalOrderReference = localStorage?.getItem(CamfilIdentityParams.ERPEmployeeID) || undefined;
+    const externalOrderReference = window?.sessionStorage?.getItem(CamfilIdentityParams.ERPEmployeeID) || undefined;
 
     const body = {
       basket: basketId,
