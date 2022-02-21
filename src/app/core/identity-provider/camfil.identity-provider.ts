@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Router, UrlTree } from '@angular/router';
 import { Store, select } from '@ngrx/store';
-import { Observable, noop, of, race, throwError } from 'rxjs';
+import { Observable, of, race, throwError } from 'rxjs';
 import { catchError, concatMap, map, mapTo, take } from 'rxjs/operators';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
@@ -31,7 +31,11 @@ export class CAMFILIdentityProvider extends ICMIdentityProvider implements Ident
   }
 
   init() {
-    this.apiTokenService.restore$(['user', 'basket', 'order']).subscribe(noop);
+    // this.apiTokenService.restore$(['user']).subscribe(x => {
+    // tslint:disable-next-line:no-commented-out-code
+    //   this.apiTokenService.removeApiToken();
+    // });
+
     this.apiTokenService.cookieVanishes$.subscribe(type => {
       if (type === 'user') {
         this.store.dispatch(logoutUser());
