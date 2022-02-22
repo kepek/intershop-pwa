@@ -8,6 +8,7 @@ import { Attribute } from 'ish-core/models/attribute/attribute.model';
 import { selectRouteParam, selectUrl } from 'ish-core/store/core/router';
 import { whenTruthy } from 'ish-core/utils/operators';
 
+import { Requisition } from '../models/requisition/requisition.model';
 import {
   addProductToRequisition,
   createRequisition,
@@ -21,7 +22,6 @@ import {
   updateRequisition,
   updateRequisitionLineItemAttribute,
 } from '../store/requisitions';
-import { Requisition } from '../models/requisition/requisition.model';
 
 // tslint:disable:member-ordering
 @Injectable({ providedIn: 'root' })

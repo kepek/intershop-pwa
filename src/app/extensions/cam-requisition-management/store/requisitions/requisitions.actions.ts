@@ -26,6 +26,11 @@ export const loadRequisitionSuccess = createAction(
   payload<{ requisition: Requisition }>()
 );
 
+export const getRequisitionData = createAction(
+  '[Camfil Requisitions] Get Requisition',
+  payload<{ requisitionId: string }>()
+);
+
 export const updateRequisitionStatus = createAction(
   '[Camfil Requisitions] Update Requisition Status',
   payload<{ requisitionId: string; status: RequisitionStatus; approvalComment?: string }>()

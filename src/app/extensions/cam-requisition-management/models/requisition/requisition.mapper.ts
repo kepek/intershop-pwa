@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 
 import { BasketData } from 'ish-core/models/basket/basket.interface';
 import { BasketMapper } from 'ish-core/models/basket/basket.mapper';
-import { Customer } from 'ish-core/models/customer/customer.model';
 import { LineItemMapper } from 'ish-core/models/line-item/line-item.mapper';
 import { LineItem } from 'ish-core/models/line-item/line-item.model';
 import { PriceItemMapper } from 'ish-core/models/price-item/price-item.mapper';
@@ -10,7 +9,7 @@ import { PriceItem } from 'ish-core/models/price-item/price-item.model';
 import { Price } from 'ish-core/models/price/price.model';
 
 import { RequisitionBaseData, RequisitionData } from './requisition.interface';
-import { Requisition, RequisitionApproval } from './requisition.model';
+import { Requisition, RequisitionApproval, RequisitionCustomer } from './requisition.model';
 
 const emptyPriceItem: PriceItem = {
   type: 'PriceItem',
@@ -116,7 +115,7 @@ export class RequisitionMapper {
     return lineItems;
   }
 
-  static getCustomerData(payloadData): Customer {
+  static getCustomerData(payloadData): RequisitionCustomer {
     return payloadData.customer;
   }
 

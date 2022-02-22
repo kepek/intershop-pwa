@@ -1,11 +1,12 @@
 import { ChangeDetectionStrategy, Component, Input, TemplateRef, ViewChild } from '@angular/core';
 import { MatButton } from '@angular/material/button';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { OrderFormComponent } from 'src/app/extensions/cam-cards/shared/add-product-to-cart-modal/create-order-product-modal/order-form/order-form.component';
+
 import { Address } from 'ish-core/models/address/address.model';
 import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
-import { OrderFormComponent } from 'src/app/extensions/cam-cards/shared/add-product-to-cart-modal/create-order-product-modal/order-form/order-form.component';
-import { CamRequisitionManagementFacade } from '../../../facades/cam-requisition-management.facade';
 
+import { CamRequisitionManagementFacade } from '../../../facades/cam-requisition-management.facade';
 import { EditRequisition, Requisition } from '../../../models/requisition/requisition.model';
 
 @Component({
@@ -31,7 +32,7 @@ export class EditApprovalDetailsModalComponent {
     return {
       ...this.requisition,
       basket: this.requisition.id,
-      customerId: this.requisition.requisitionCustomer ? this.requisition.requisitionCustomer['id'] : '',
+      customerId: this.requisition.requisitionCustomer ? this.requisition.requisitionCustomer.id : '',
       invoiceLabel: this.requisition.invoiceLabel,
       phoneNumber: this.requisition.phoneNumber,
       orderMark: this.requisition.orderMark,

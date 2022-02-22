@@ -38,6 +38,7 @@ describe('Requisition Mapper', () => {
         creator: { firstName: 'Patricia', lastName: 'Miller', email: 'pmiller@test.intershop.de' },
         orderMark: 'Order mark',
         invoiceLabel: 'Invoice mark',
+        phoneNumber: '123132132',
         userInformation: { firstName: 'Patricia', lastName: 'Miller', email: 'pmiller@test.intershop.de' },
         userBudgets: {
           budgetPeriod: 'weekly',
@@ -100,6 +101,7 @@ describe('Requisition Mapper', () => {
           "lineItems": Array [],
           "orderMark": "Order mark",
           "payment": undefined,
+          "phoneNumber": "123132132",
           "promotionCodes": undefined,
           "purchaseCurrency": undefined,
           "requisitionCustomer": "OilCorp",

@@ -36,7 +36,7 @@ export interface Requisition extends RequisitionBasket {
   invoiceLabel: string;
   phoneNumber: string;
   user: User;
-  requisitionCustomer: Customer;
+  requisitionCustomer: RequisitionCustomer;
   shippingAddress: Address;
   userBudget: RequisitionUserBudget;
   info: string;
@@ -59,4 +59,8 @@ export interface EditRequisition extends Requisition {
   addressLine2?: string;
   zipCode?: string;
   area?: string;
+}
+
+export interface RequisitionCustomer extends Customer {
+  id: string;
 }

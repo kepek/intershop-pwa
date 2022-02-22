@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import { concatMap, map, mergeMap, switchMap, tap, withLatestFrom } from 'rxjs/operators';
+import { getCamCardCustomers, loadCustomers } from 'src/app/extensions/cam-cards/store/cam-card';
 
 import { ProductCompletenessLevel } from 'ish-core/models/product/product.model';
 import { displaySuccessMessage } from 'ish-core/store/core/messages';
@@ -18,6 +19,7 @@ import {
   createRequisition,
   createRequisitionFail,
   createRequisitionSuccess,
+  getRequisitionData,
   loadRequisition,
   loadRequisitionFail,
   loadRequisitionSuccess,
@@ -58,16 +60,32 @@ export class RequisitionsEffects {
     )
   );
 
-  loadRequisition$ = createEffect(() =>
+  getRequisitionData$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(loadRequisition),
+      ofType(getRequisitionData),
       mapToPayload(),
-      switchMap(({ requisitionId }) =>
+      mergeMap(({ requisitionId }) =>
         this.requisitionsService.getRequisition(requisitionId).pipe(
           map(requisition => loadRequisitionSuccess({ requisition })),
           mapErrorToAction(loadRequisitionFail)
         )
       )
+    )
+  );
+
+  loadRequisition$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loadRequisition),
+      mapToPayload(),
+      withLatestFrom(this.store.pipe(select(getCamCardCustomers))),
+      mergeMap(([requisitionId, customers]) => {
+        const actions = [getRequisitionData(requisitionId)] as any[];
+
+        if (!customers.length) {
+          actions.push(loadCustomers());
+        }
+        return actions;
+      })
     )
   );
 
@@ -199,7 +217,7 @@ export class RequisitionsEffects {
       mergeMap(payload => {
         const { requisition } = payload;
         return this.requisitionsService.updateRequisition(requisition).pipe(
-          map(requisition => updateRequisitionSuccess({ requisition })),
+          map(req => updateRequisitionSuccess({ requisition: req })),
           mapErrorToAction(updateRequisitionFail)
         );
       })

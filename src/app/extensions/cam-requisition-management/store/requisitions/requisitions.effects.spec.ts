@@ -12,7 +12,7 @@ import { Requisition } from '../../models/requisition/requisition.model';
 import { RequisitionsService } from '../../services/requisitions/requisitions.service';
 
 import {
-  loadRequisition,
+  getRequisitionData,
   loadRequisitionSuccess,
   loadRequisitions,
   updateRequisitionStatus,
@@ -96,19 +96,19 @@ describe('Requisitions Effects', () => {
   });
 
   describe('loadRequisition$', () => {
-    it('should call the service for retrieving a requisition', done => {
-      actions$ = of(loadRequisition({ requisitionId: '12345' }));
+    it('should call the service  for retrieving a requisition', done => {
+      actions$ = of(getRequisitionData({ requisitionId: '12345' }));
 
-      effects.loadRequisition$.subscribe(() => {
+      effects.getRequisitionData$.subscribe(() => {
         verify(requisitionsService.getRequisition('12345')).once();
         done();
       });
     });
 
     it('should retrieve a requisition when triggered', done => {
-      actions$ = of(loadRequisition({ requisitionId: '12345' }));
+      actions$ = of(getRequisitionData({ requisitionId: '12345' }));
 
-      effects.loadRequisition$.subscribe(action => {
+      effects.getRequisitionData$.subscribe(action => {
         expect(action).toMatchInlineSnapshot(`
           [Camfil Requisitions API] Load Requisition Success:
             requisition: {"id":"testUUID","requisitionNo":"0001","user":{"firstName":...
