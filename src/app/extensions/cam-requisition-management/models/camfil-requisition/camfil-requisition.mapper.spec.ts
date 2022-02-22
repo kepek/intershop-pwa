@@ -2,17 +2,17 @@ import { TestBed } from '@angular/core/testing';
 
 import { BasketTotalData } from 'ish-core/models/basket-total/basket-total.interface';
 
-import { RequisitionBaseData } from './requisition.interface';
-import { RequisitionMapper } from './requisition.mapper';
+import { CamfilRequisitionBaseData } from './camfil-requisition.interface';
+import { CamfilRequisitionMapper } from './camfil-requisition.mapper';
 
-describe('Requisition Mapper', () => {
+describe('Camfil Requisition Mapper', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({});
   });
 
   describe('fromData', () => {
     it('should throw when input is falsy', () => {
-      expect(() => RequisitionMapper.fromData(undefined)).toThrow();
+      expect(() => CamfilRequisitionMapper.fromData(undefined)).toThrow();
     });
 
     it('should map incoming data to model data', () => {
@@ -71,9 +71,9 @@ describe('Requisition Mapper', () => {
             },
           },
         } as BasketTotalData,
-      } as RequisitionBaseData;
+      } as CamfilRequisitionBaseData;
 
-      const mapped = RequisitionMapper.fromData({ data });
+      const mapped = CamfilRequisitionMapper.fromData({ data });
       expect(mapped).toMatchInlineSnapshot(`
         Object {
           "approval": Object {

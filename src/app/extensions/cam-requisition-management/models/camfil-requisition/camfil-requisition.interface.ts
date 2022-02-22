@@ -10,9 +10,9 @@ import { PaymentData } from 'ish-core/models/payment/payment.interface';
 import { ShippingMethodData } from 'ish-core/models/shipping-method/shipping-method.interface';
 import { User } from 'ish-core/models/user/user.model';
 
-import { RequisitionApproval, RequisitionUserBudget } from './requisition.model';
+import { CamfilRequisitionApproval, RequisitionUserBudget } from './camfil-requisition.model';
 
-export interface RequisitionBaseData extends BasketBaseData {
+export interface CamfilRequisitionBaseData extends BasketBaseData {
   // Adjust to BE response
   requisitionNo?: string;
   basketId: string;
@@ -30,11 +30,11 @@ export interface RequisitionBaseData extends BasketBaseData {
   shippingAddress?: Address;
   status: string;
   info?: string;
-  approvalStatus: RequisitionApproval;
+  approvalStatus: CamfilRequisitionApproval;
 }
 
-export interface RequisitionData {
-  data: RequisitionBaseData | RequisitionBaseData[];
+export interface CamfilRequisitionData {
+  data: CamfilRequisitionBaseData | CamfilRequisitionBaseData[];
   included?: {
     invoiceToAddress?: { [urn: string]: AddressData };
     lineItems?: { [id: string]: LineItemData };

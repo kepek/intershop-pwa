@@ -18,7 +18,7 @@ import { ProductCompletenessLevel } from 'ish-core/models/product/product.model'
 import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
 import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
 
-import { Requisition } from '../../models/requisition/requisition.model';
+import { CamfilRequisition } from '../../models/camfil-requisition/camfil-requisition.model';
 
 @Component({
   selector: 'camfil-requisition-line-item-table',
@@ -27,7 +27,7 @@ import { Requisition } from '../../models/requisition/requisition.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CamfilRequisitionLineItemTableComponent implements OnInit, OnChanges {
-  @Input() requisition: Requisition;
+  @Input() requisition: CamfilRequisition;
   @Input() lineItems: LineItem[];
   @Input() lineItemsChecked: string[];
   @Input() deviceType: DeviceType;

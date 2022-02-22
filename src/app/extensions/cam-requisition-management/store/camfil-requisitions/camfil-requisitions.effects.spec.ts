@@ -8,16 +8,16 @@ import { anyString, instance, mock, verify, when } from 'ts-mockito';
 
 import { LineItem } from 'ish-core/models/line-item/line-item.model';
 
-import { Requisition } from '../../models/requisition/requisition.model';
-import { RequisitionsService } from '../../services/requisitions/requisitions.service';
+import { CamfilRequisition } from '../../models/camfil-requisition/camfil-requisition.model';
+import { CamfilRequisitionsService } from '../../services/requisitions/camfil-requisitions.service';
 
 import {
-  getRequisitionData,
-  loadRequisitionSuccess,
-  loadRequisitions,
-  updateRequisitionStatus,
-} from './requisitions.actions';
-import { RequisitionsEffects } from './requisitions.effects';
+  getCamfilRequisitionData,
+  loadCamfilRequisitions,
+  loadCamfilRequisitionsuccess,
+  updateCamfilRequisitionStatus,
+} from './camfil-requisitions.actions';
+import { CamfilRequisitionsEffects } from './camfil-requisitions.effects';
 
 @Component({ template: 'dummy' })
 class DummyComponent {}
@@ -45,18 +45,18 @@ const requisitions = [
     user: { firstName: 'Jack', lastName: 'Miller' },
     approval: { status: 'pending', statusCode: 'PENDING' },
   },
-] as Requisition[];
+] as CamfilRequisition[];
 
-describe('Requisitions Effects', () => {
+describe('Camfil Requisitions Effects', () => {
   let actions$: Observable<Action>;
-  let effects: RequisitionsEffects;
-  let requisitionsService: RequisitionsService;
+  let effects: CamfilRequisitionsEffects;
+  let requisitionsService: CamfilRequisitionsService;
 
   beforeEach(() => {
-    requisitionsService = mock(RequisitionsService);
-    when(requisitionsService.getRequisitions()).thenReturn(of(requisitions));
-    when(requisitionsService.getRequisition(anyString())).thenReturn(of(requisitions[0]));
-    when(requisitionsService.updateRequisitionStatus(anyString(), anyString(), anyString())).thenReturn(
+    requisitionsService = mock(CamfilRequisitionsService);
+    when(requisitionsService.getCamfilRequisitions()).thenReturn(of(requisitions));
+    when(requisitionsService.getCamfilRequisition(anyString())).thenReturn(of(requisitions[0]));
+    when(requisitionsService.updateCamfilRequisitionStatus(anyString(), anyString(), anyString())).thenReturn(
       of(requisitions[0])
     );
 
@@ -64,28 +64,28 @@ describe('Requisitions Effects', () => {
       declarations: [DummyComponent],
       imports: [RouterTestingModule.withRoutes([{ path: '**', component: DummyComponent }]), StoreModule.forRoot({})],
       providers: [
-        RequisitionsEffects,
+        CamfilRequisitionsEffects,
         provideMockActions(() => actions$),
-        { provide: RequisitionsService, useFactory: () => instance(requisitionsService) },
+        { provide: CamfilRequisitionsService, useFactory: () => instance(requisitionsService) },
       ],
     });
-    effects = TestBed.inject(RequisitionsEffects);
+    effects = TestBed.inject(CamfilRequisitionsEffects);
   });
 
-  describe('loadRequisitions$', () => {
+  describe('loadCamfilRequisitions$', () => {
     it('should call the service for retrieving requisitions', done => {
-      actions$ = of(loadRequisitions());
+      actions$ = of(loadCamfilRequisitions());
 
-      effects.loadRequisitions$.subscribe(() => {
-        verify(requisitionsService.getRequisitions()).once();
+      effects.loadCamfilRequisitions$.subscribe(() => {
+        verify(requisitionsService.getCamfilRequisitions()).once();
         done();
       });
     });
 
     it('should retrieve requisitions when triggered', done => {
-      actions$ = of(loadRequisitions());
+      actions$ = of(loadCamfilRequisitions());
 
-      effects.loadRequisitions$.subscribe(action => {
+      effects.loadCamfilRequisitions$.subscribe(action => {
         expect(action).toMatchInlineSnapshot(`
           [Camfil Requisitions API] Load Requisitions Success:
             requisitions: [{"id":"testUUID","requisitionNo":"0001","user":{"firstName"...
@@ -95,20 +95,20 @@ describe('Requisitions Effects', () => {
     });
   });
 
-  describe('loadRequisition$', () => {
+  describe('loadCamfilRequisition$', () => {
     it('should call the service  for retrieving a requisition', done => {
-      actions$ = of(getRequisitionData({ requisitionId: '12345' }));
+      actions$ = of(getCamfilRequisitionData({ requisitionId: '12345' }));
 
-      effects.getRequisitionData$.subscribe(() => {
-        verify(requisitionsService.getRequisition('12345')).once();
+      effects.getCamfilRequisitionData$.subscribe(() => {
+        verify(requisitionsService.getCamfilRequisition('12345')).once();
         done();
       });
     });
 
     it('should retrieve a requisition when triggered', done => {
-      actions$ = of(getRequisitionData({ requisitionId: '12345' }));
+      actions$ = of(getCamfilRequisitionData({ requisitionId: '12345' }));
 
-      effects.getRequisitionData$.subscribe(action => {
+      effects.getCamfilRequisitionData$.subscribe(action => {
         expect(action).toMatchInlineSnapshot(`
           [Camfil Requisitions API] Load Requisition Success:
             requisition: {"id":"testUUID","requisitionNo":"0001","user":{"firstName":...
@@ -118,7 +118,7 @@ describe('Requisitions Effects', () => {
     });
 
     it('should load products of a requisition if there are not loaded yet', done => {
-      actions$ = of(loadRequisitionSuccess({ requisition: requisitions[0] }));
+      actions$ = of(loadCamfilRequisitionsuccess({ requisition: requisitions[0] }));
 
       effects.loadProductsForSelectedRequisition$.subscribe(action => {
         expect(action).toMatchInlineSnapshot(`
@@ -131,28 +131,36 @@ describe('Requisitions Effects', () => {
     });
   });
 
-  describe('updateRequisitionStatus$', () => {
+  describe('updateCamfilRequisitionStatus$', () => {
     it('should call the service for updating the status of a requisition', done => {
       actions$ = of(
-        updateRequisitionStatus({ requisitionId: '4711', status: 'APPROVED', approvalComment: 'test comment' })
+        updateCamfilRequisitionStatus({
+          requisitionId: '4711',
+          status: 'APPROVED',
+          approvalComment: 'test comment',
+        })
       );
 
-      effects.updateRequisitionStatus$.subscribe(() => {
-        verify(requisitionsService.updateRequisitionStatus('4711', 'APPROVED', 'test comment')).once();
+      effects.updateCamfilRequisitionStatus$.subscribe(() => {
+        verify(requisitionsService.updateCamfilRequisitionStatus('4711', 'APPROVED', 'test comment')).once();
         done();
       });
     });
 
     it('should retrieve the requisition after updating the status', done => {
       actions$ = of(
-        updateRequisitionStatus({ requisitionId: '4711', status: 'APPROVED', approvalComment: 'test comment' })
+        updateCamfilRequisitionStatus({
+          requisitionId: '4711',
+          status: 'APPROVED',
+          approvalComment: 'test comment',
+        })
       );
 
-      effects.updateRequisitionStatus$.subscribe(action => {
+      effects.updateCamfilRequisitionStatus$.subscribe(action => {
         expect(action).toMatchInlineSnapshot(`
           [Camfil Requisitions API] Update Requisition Status Success:
             requisition: {"id":"testUUID","requisitionNo":"0001","user":{"firstName":...
-            requisitionStatus: "pending"
+            status: "pending"
         `);
         done();
       });

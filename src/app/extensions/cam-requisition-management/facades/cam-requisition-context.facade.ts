@@ -7,22 +7,22 @@ import { HttpError } from 'ish-core/models/http-error/http-error.model';
 import { selectRouteParam, selectUrl } from 'ish-core/store/core/router';
 import { whenTruthy } from 'ish-core/utils/operators';
 
-import { Requisition } from '../models/requisition/requisition.model';
+import { CamfilRequisition } from '../models/camfil-requisition/camfil-requisition.model';
 import {
-  getRequisition,
-  getRequisitionsError,
-  getRequisitionsLoading,
-  loadRequisition,
-  updateRequisitionStatus,
-} from '../store/requisitions';
+  getCamfilRequisition,
+  getCamfilRequisitionsError,
+  getCamfilRequisitionsLoading,
+  loadCamfilRequisition,
+  updateCamfilRequisitionStatus,
+} from '../store/camfil-requisitions';
 
 @Injectable()
-export class RequisitionContextFacade
+export class CamfilRequisitionContextFacade
   extends RxState<{
     id: string;
     loading: boolean;
     error: HttpError;
-    entity: Requisition;
+    entity: CamfilRequisition;
     view: 'buyer' | 'approver';
   }>
   implements OnDestroy {
@@ -31,21 +31,21 @@ export class RequisitionContextFacade
 
     this.connect('id', this.store.pipe(select(selectRouteParam('requisitionId'))));
 
-    this.connect('loading', this.store.pipe(select(getRequisitionsLoading)));
+    this.connect('loading', this.store.pipe(select(getCamfilRequisitionsLoading)));
 
-    this.connect('error', this.store.pipe(select(getRequisitionsError)));
+    this.connect('error', this.store.pipe(select(getCamfilRequisitionsError)));
 
     this.connect(
       'entity',
       this.select('id').pipe(
         whenTruthy(),
         distinctUntilChanged(),
-        tap(requisitionId => this.store.dispatch(loadRequisition({ requisitionId }))),
+        tap(requisitionId => this.store.dispatch(loadCamfilRequisition({ requisitionId }))),
         switchMap(requisitionId =>
           this.store.pipe(
-            select(getRequisition(requisitionId)),
+            select(getCamfilRequisition(requisitionId)),
             whenTruthy(),
-            map(entity => entity as Requisition)
+            map(entity => entity as CamfilRequisition)
           )
         ),
         whenTruthy()
@@ -63,7 +63,7 @@ export class RequisitionContextFacade
 
   approveRequisition$() {
     this.store.dispatch(
-      updateRequisitionStatus({
+      updateCamfilRequisitionStatus({
         requisitionId: this.get('entity', 'id'),
         status: 'APPROVED',
       })
@@ -72,7 +72,7 @@ export class RequisitionContextFacade
 
   rejectRequisition$(comment?: string) {
     this.store.dispatch(
-      updateRequisitionStatus({
+      updateCamfilRequisitionStatus({
         requisitionId: this.get('entity', 'id'),
         status: 'REJECTED',
         approvalComment: comment,

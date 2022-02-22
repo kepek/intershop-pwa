@@ -7,11 +7,11 @@ import { LineItem } from 'ish-core/models/line-item/line-item.model';
 import { Price } from 'ish-core/models/price/price.model';
 import { User } from 'ish-core/models/user/user.model';
 
-export type RequisitionStatus = 'PENDING' | 'APPROVED' | 'REJECTED';
+export type CamfilRequisitionStatus = 'PENDING' | 'APPROVED' | 'REJECTED';
 
-export type RequisitionViewer = 'buyer' | 'approver';
+export type CamfilRequisitionViewer = 'buyer' | 'approver';
 
-export interface RequisitionApproval {
+export interface CamfilRequisitionApproval {
   status: string;
   statusCode?: string;
   approvalDate?: number;
@@ -25,9 +25,9 @@ export interface RequisitionUserBudget extends UserBudget {
   remainingBudgetIncludingThisRequisition?: Price;
 }
 
-type RequisitionBasket = Omit<AbstractBasket<LineItem>, 'approval'>;
+type CamfilRequisitionBasket = Omit<AbstractBasket<LineItem>, 'approval'>;
 
-export interface Requisition extends RequisitionBasket {
+export interface CamfilRequisition extends CamfilRequisitionBasket {
   requisitionNo: string;
   orderNo?: string;
   creationDate: number;
@@ -36,22 +36,22 @@ export interface Requisition extends RequisitionBasket {
   invoiceLabel: string;
   phoneNumber: string;
   user: User;
-  requisitionCustomer: RequisitionCustomer;
+  requisitionCustomer: CamfilRequisitionCustomer;
   shippingAddress: Address;
   userBudget: RequisitionUserBudget;
   info: string;
-  approval: RequisitionApproval;
+  approval: CamfilRequisitionApproval;
 }
 
-export interface RequisitionListFilter {
+export interface CamfilRequisitionListFilter {
   customer?: string;
   search?: string;
   dateFrom?: string;
   dateTo?: string;
-  requisitionStatus?: string[];
+  camfilRequisitionStatus?: string[];
 }
 
-export interface EditRequisition extends Requisition {
+export interface CamfilEditRequisition extends CamfilRequisition {
   customerId?: string;
   company?: string;
   building?: string;
@@ -61,6 +61,6 @@ export interface EditRequisition extends Requisition {
   area?: string;
 }
 
-export interface RequisitionCustomer extends Customer {
+export interface CamfilRequisitionCustomer extends Customer {
   id: string;
 }

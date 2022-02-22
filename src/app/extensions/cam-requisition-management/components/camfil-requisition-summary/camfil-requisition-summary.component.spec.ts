@@ -12,7 +12,7 @@ import { CamfilToastrService } from 'ish-core/store/core/messages/CamfilToastrSe
 import { CamfilAddressComponent } from 'ish-shared/components/camfil-address/camfil-address.component';
 
 import { CamRequisitionManagementFacade } from '../../facades/cam-requisition-management.facade';
-import { Requisition } from '../../models/requisition/requisition.model';
+import { Requisition } from '../../models/camfil-requisition/camfil-requisition.model';
 
 import { CamfilRequisitionSummaryComponent } from './camfil-requisition-summary.component';
 import { EditApprovalDetailsModalComponent } from './edit-approval-details-modal/edit-approval-details-modal.component';

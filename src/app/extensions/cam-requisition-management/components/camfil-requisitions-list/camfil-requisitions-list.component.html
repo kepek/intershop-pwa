@@ -81,7 +81,9 @@
             value="{{ status.value }}"
           >
             {{
-              view === 'buyer' ? (status.requisitionStatusName | translate) : (status.approvalStatusName | translate)
+              view === 'buyer'
+                ? (status.camfilRequisitionStatusName | translate)
+                : (status.approvalStatusName | translate)
             }}</mat-checkbox
           >
         </div>

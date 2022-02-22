@@ -10,7 +10,7 @@ import { BasketMockData } from 'ish-core/utils/dev/basket-mock-data';
 import { BasketApprovalInfoComponent } from 'ish-shared/components/basket/basket-approval-info/basket-approval-info.component';
 
 import { CamRequisitionManagementFacade } from '../../facades/cam-requisition-management.facade';
-import { Requisition } from '../../models/requisition/requisition.model';
+import { Requisition } from '../../models/camfil-requisition/camfil-requisition.model';
 
 import { CamfilCheckoutReceiptRequisitionComponent } from './camfil-checkout-receipt-requisition.component';
 

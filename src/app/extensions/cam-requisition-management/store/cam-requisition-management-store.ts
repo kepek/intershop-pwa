@@ -1,9 +1,9 @@
 import { createFeatureSelector } from '@ngrx/store';
 
-import { RequisitionsState } from './requisitions/requisitions.reducer';
+import { CamfilRequisitionsState } from './camfil-requisitions/camfil-requisitions.reducer';
 
 export interface CamRequisitionManagementState {
-  requisitions: RequisitionsState;
+  requisitions: CamfilRequisitionsState;
 }
 
 export const getCamRequisitionManagementState = createFeatureSelector<CamRequisitionManagementState>(

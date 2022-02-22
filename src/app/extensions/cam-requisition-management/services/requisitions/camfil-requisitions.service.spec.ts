@@ -4,11 +4,11 @@ import { anything, instance, mock, verify, when } from 'ts-mockito';
 
 import { ApiService } from 'ish-core/services/api/api.service';
 
-import { RequisitionsService } from './requisitions.service';
+import { CamfilRequisitionsService } from './camfil-requisitions.service';
 
-describe('Requisitions Service', () => {
+describe('Camfil Requisitions Service', () => {
   let apiServiceMock: ApiService;
-  let requisitionsService: RequisitionsService;
+  let requisitionsService: CamfilRequisitionsService;
 
   beforeEach(() => {
     apiServiceMock = mock(ApiService);
@@ -16,7 +16,7 @@ describe('Requisitions Service', () => {
     TestBed.configureTestingModule({
       providers: [{ provide: ApiService, useFactory: () => instance(apiServiceMock) }],
     });
-    requisitionsService = TestBed.inject(RequisitionsService);
+    requisitionsService = TestBed.inject(CamfilRequisitionsService);
 
     when(apiServiceMock.get(anything(), anything())).thenReturn(of({ data: {} }));
     when(apiServiceMock.patch(anything(), anything(), anything())).thenReturn(of({ data: {} }));
@@ -26,24 +26,24 @@ describe('Requisitions Service', () => {
     expect(requisitionsService).toBeTruthy();
   });
 
-  it('should call the getRequisitions of customer API when fetching requisitions', done => {
+  it('should call the getCamfilRequisitions of customer API when fetching requisitions', done => {
     when(apiServiceMock.get('camfilrequisitions')).thenReturn(of({ elements: [{ id: '1234' }] }));
-    requisitionsService.getRequisitions().subscribe(data => {
+    requisitionsService.getCamfilRequisitions().subscribe(data => {
       verify(apiServiceMock.get('camfilrequisitions')).once();
       expect(data).toMatchInlineSnapshot(`Array []`);
       done();
     });
   });
 
-  it('should call getRequisition of customer API when fetching a requisition', done => {
-    requisitionsService.getRequisition('4712').subscribe(() => {
+  it('should call getCamfilRequisition of customer API when fetching a requisition', done => {
+    requisitionsService.getCamfilRequisition('4712').subscribe(() => {
       verify(apiServiceMock.get('camfilrequisitions/4712', anything())).once();
       done();
     });
   });
 
-  it('should call updateRequisitionStatus of customer API when patching a requisition status', done => {
-    requisitionsService.updateRequisitionStatus('4712', 'APPROVED').subscribe(() => {
+  it('should call updateCamfilRequisitionStatus of customer API when patching a requisition status', done => {
+    requisitionsService.updateCamfilRequisitionStatus('4712', 'APPROVED').subscribe(() => {
       verify(apiServiceMock.patch('requisitions/4712', anything(), anything())).once();
       done();
     });

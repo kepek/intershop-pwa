@@ -10,19 +10,19 @@ import { AppFacade } from 'ish-core/facades/app.facade';
 import { HttpError } from 'ish-core/models/http-error/http-error.model';
 import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
 
+import { CamfilRequisitionContextFacade } from '../../facades/cam-requisition-context.facade';
 import { CamRequisitionManagementFacade } from '../../facades/cam-requisition-management.facade';
-import { RequisitionContextFacade } from '../../facades/requisition-context.facade';
-import { Requisition } from '../../models/requisition/requisition.model';
+import { CamfilRequisition } from '../../models/camfil-requisition/camfil-requisition.model';
 
 @Component({
   selector: 'camfil-requisition-detail-page',
   templateUrl: './requisition-detail-page.component.html',
   styleUrls: ['./requisition-detail-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [RequisitionContextFacade],
+  providers: [CamfilRequisitionContextFacade],
 })
 export class RequisitionDetailPageComponent implements OnInit, OnDestroy {
-  requisition$: Observable<Requisition>;
+  requisition$: Observable<CamfilRequisition>;
   deviceType$: Observable<DeviceType>;
   requisitionId: string;
   error$: Observable<HttpError>;
@@ -35,7 +35,7 @@ export class RequisitionDetailPageComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
 
   constructor(
-    private context: RequisitionContextFacade,
+    private context: CamfilRequisitionContextFacade,
     public dialog: MatDialog,
     private camRequisitionManagementFacade: CamRequisitionManagementFacade,
     private appFacade: AppFacade,
@@ -81,18 +81,22 @@ export class RequisitionDetailPageComponent implements OnInit, OnDestroy {
   }
 
   removeSelectedLineItems() {
-    this.camRequisitionManagementFacade.removeProductsFromRequisition(this.lineItemsChecked, this.requisitionId);
+    this.camRequisitionManagementFacade.removeProductsFromCamfilRequisition(this.lineItemsChecked, this.requisitionId);
   }
 
   removeSelectedLineItem(lineItemId) {
-    this.camRequisitionManagementFacade.removeProductsFromRequisition([lineItemId], this.requisitionId);
+    this.camRequisitionManagementFacade.removeProductsFromCamfilRequisition([lineItemId], this.requisitionId);
   }
 
   approveSelectedLineItems() {
-    this.camRequisitionManagementFacade.updateRequisitionLineItemAttribute(this.lineItemsChecked, this.requisitionId, {
-      name: 'approved',
-      value: true,
-    });
+    this.camRequisitionManagementFacade.updateCamfilRequisitionLineItemAttribute(
+      this.lineItemsChecked,
+      this.requisitionId,
+      {
+        name: 'approved',
+        value: true,
+      }
+    );
   }
 
   ngOnDestroy() {

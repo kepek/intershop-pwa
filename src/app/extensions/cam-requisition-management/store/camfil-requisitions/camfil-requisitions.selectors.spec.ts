@@ -5,24 +5,24 @@ import { CoreStoreModule } from 'ish-core/store/core/core-store.module';
 import { makeHttpError } from 'ish-core/utils/dev/api-service-utils';
 import { StoreWithSnapshots, provideStoreSnapshots } from 'ish-core/utils/dev/ngrx-testing';
 
-import { Requisition, RequisitionApproval } from '../../models/requisition/requisition.model';
+import { CamfilRequisition, CamfilRequisitionApproval } from '../../models/camfil-requisition/camfil-requisition.model';
 import { CamRequisitionManagementStoreModule } from '../cam-requisition-management-store.module';
 
 import {
-  loadRequisition,
-  loadRequisitionSuccess,
-  loadRequisitions,
-  loadRequisitionsFail,
-  loadRequisitionsSuccess,
-} from './requisitions.actions';
+  loadCamfilRequisition,
+  loadCamfilRequisitions,
+  loadCamfilRequisitionsFail,
+  loadCamfilRequisitionsSuccess,
+  loadCamfilRequisitionsuccess,
+} from './camfil-requisitions.actions';
 import {
-  getRequisitions,
-  getRequisitionsError,
-  getRequisitionsLoading,
+  getCamfilRequisitions,
+  getCamfilRequisitionsError,
+  getCamfilRequisitionsLoading,
   selectEntities,
-} from './requisitions.selectors';
+} from './camfil-requisitions.selectors';
 
-describe('Requisitions Selectors', () => {
+describe('Camfil Requisitions Selectors', () => {
   let store$: StoreWithSnapshots;
 
   beforeEach(() => {
@@ -36,11 +36,11 @@ describe('Requisitions Selectors', () => {
 
   describe('initial state', () => {
     it('should not be loading when in initial state', () => {
-      expect(getRequisitionsLoading(store$.state)).toBeFalse();
+      expect(getCamfilRequisitionsLoading(store$.state)).toBeFalse();
     });
 
     it('should not have an error when in initial state', () => {
-      expect(getRequisitionsError(store$.state)).toBeUndefined();
+      expect(getCamfilRequisitionsError(store$.state)).toBeUndefined();
     });
 
     it('should not have entities when in initial state', () => {
@@ -48,31 +48,31 @@ describe('Requisitions Selectors', () => {
     });
   });
 
-  describe('LoadRequisitions', () => {
-    const action = loadRequisitions();
+  describe('loadCamfilRequisitions', () => {
+    const action = loadCamfilRequisitions();
 
     beforeEach(() => {
       store$.dispatch(action);
     });
 
     it('should set loading to true', () => {
-      expect(getRequisitionsLoading(store$.state)).toBeTrue();
+      expect(getCamfilRequisitionsLoading(store$.state)).toBeTrue();
     });
 
-    describe('loadRequisitionsSuccess', () => {
-      const requisitions = [{ id: '1' }, { id: '2' }] as Requisition[];
-      const successAction = loadRequisitionsSuccess({ requisitions });
+    describe('loadCamfilRequisitionsSuccess', () => {
+      const requisitions = [{ id: '1' }, { id: '2' }] as CamfilRequisition[];
+      const successAction = loadCamfilRequisitionsSuccess({ requisitions });
 
       beforeEach(() => {
         store$.dispatch(successAction);
       });
 
       it('should set loading to false', () => {
-        expect(getRequisitionsLoading(store$.state)).toBeFalse();
+        expect(getCamfilRequisitionsLoading(store$.state)).toBeFalse();
       });
 
       it('should not have an error when successfully loaded entities', () => {
-        expect(getRequisitionsError(store$.state)).toBeUndefined();
+        expect(getCamfilRequisitionsError(store$.state)).toBeUndefined();
       });
 
       it('should have entities when successfully loading', () => {
@@ -80,17 +80,17 @@ describe('Requisitions Selectors', () => {
       });
     });
 
-    describe('loadRequisitionsFail', () => {
+    describe('loadCamfilRequisitionsFail', () => {
       beforeEach(() => {
-        store$.dispatch(loadRequisitionsFail({ error: makeHttpError({ message: 'error' }) }));
+        store$.dispatch(loadCamfilRequisitionsFail({ error: makeHttpError({ message: 'error' }) }));
       });
 
       it('should set loading to false', () => {
-        expect(getRequisitionsLoading(store$.state)).toBeFalse();
+        expect(getCamfilRequisitionsLoading(store$.state)).toBeFalse();
       });
 
       it('should have an error when reducing', () => {
-        expect(getRequisitionsError(store$.state)).toBeTruthy();
+        expect(getCamfilRequisitionsError(store$.state)).toBeTruthy();
       });
 
       it('should not have entities when reducing error', () => {
@@ -99,34 +99,34 @@ describe('Requisitions Selectors', () => {
     });
   });
 
-  describe('LoadRequisition', () => {
-    const action = loadRequisition({ requisitionId: '12345' });
+  describe('loadCamfilRequisition', () => {
+    const action = loadCamfilRequisition({ requisitionId: '12345' });
 
     beforeEach(() => {
       store$.dispatch(action);
     });
 
     it('should set loading to true', () => {
-      expect(getRequisitionsLoading(store$.state)).toBeTrue();
+      expect(getCamfilRequisitionsLoading(store$.state)).toBeTrue();
     });
 
-    describe('loadRequisitionSuccess', () => {
+    describe('loadCamfilRequisitionsuccess', () => {
       const requisition = {
         id: '1',
         lineItems: [{ id: 'test', productSKU: 'sku', quantity: { value: 5 } } as LineItem],
-      } as Requisition;
-      const successAction = loadRequisitionSuccess({ requisition });
+      } as CamfilRequisition;
+      const successAction = loadCamfilRequisitionsuccess({ requisition });
 
       beforeEach(() => {
         store$.dispatch(successAction);
       });
 
       it('should set loading to false', () => {
-        expect(getRequisitionsLoading(store$.state)).toBeFalse();
+        expect(getCamfilRequisitionsLoading(store$.state)).toBeFalse();
       });
 
       it('should not have an error when successfully loaded entities', () => {
-        expect(getRequisitionsError(store$.state)).toBeUndefined();
+        expect(getCamfilRequisitionsError(store$.state)).toBeUndefined();
       });
 
       it('should have entities when successfully loading', () => {
@@ -134,17 +134,17 @@ describe('Requisitions Selectors', () => {
       });
     });
 
-    describe('loadRequisitionFail', () => {
+    describe('loadCamfilRequisitionFail', () => {
       beforeEach(() => {
-        store$.dispatch(loadRequisitionsFail({ error: makeHttpError({ message: 'error' }) }));
+        store$.dispatch(loadCamfilRequisitionsFail({ error: makeHttpError({ message: 'error' }) }));
       });
 
       it('should set loading to false', () => {
-        expect(getRequisitionsLoading(store$.state)).toBeFalse();
+        expect(getCamfilRequisitionsLoading(store$.state)).toBeFalse();
       });
 
       it('should have an error when reducing', () => {
-        expect(getRequisitionsError(store$.state)).toBeTruthy();
+        expect(getCamfilRequisitionsError(store$.state)).toBeTruthy();
       });
     });
   });
@@ -158,8 +158,8 @@ describe('Requisitions Selectors', () => {
         approval: {
           statusCode: 'PENDING',
           status: 'pending',
-        } as RequisitionApproval,
-      } as Requisition,
+        } as CamfilRequisitionApproval,
+      } as CamfilRequisition,
       {
         id: '2',
         lineItems: [{ id: 'test2', productSKU: 'sku2', quantity: { value: 1 } } as LineItem],
@@ -167,16 +167,16 @@ describe('Requisitions Selectors', () => {
         approval: {
           statusCode: 'PENDING',
           status: 'pending',
-        } as RequisitionApproval,
-      } as Requisition,
+        } as CamfilRequisitionApproval,
+      } as CamfilRequisition,
     ];
 
     beforeEach(() => {
-      store$.dispatch(loadRequisitionsSuccess({ requisitions, view: 'buyer', status: 'PENDING' }));
+      store$.dispatch(loadCamfilRequisitionsSuccess({ requisitions, view: 'buyer', status: 'PENDING' }));
     });
 
     it('should return correct buyer requisitions for the user', () => {
-      expect(getRequisitions(store$.state)).toEqual(requisitions);
+      expect(getCamfilRequisitions(store$.state)).toEqual(requisitions);
     });
   });
 });

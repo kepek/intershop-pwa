@@ -5,14 +5,14 @@ import { AppFacade } from 'ish-core/facades/app.facade';
 import { HttpError } from 'ish-core/models/http-error/http-error.model';
 import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
 
+import { CamfilRequisitionContextFacade } from '../../facades/cam-requisition-context.facade';
 import { CamRequisitionManagementFacade } from '../../facades/cam-requisition-management.facade';
-import { RequisitionContextFacade } from '../../facades/requisition-context.facade';
 
 @Component({
   selector: 'camfil-approver-page',
   templateUrl: './approver-page.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [RequisitionContextFacade],
+  providers: [CamfilRequisitionContextFacade],
 })
 export class ApproverPageComponent implements OnInit, OnDestroy {
   error$: Observable<HttpError>;
@@ -21,7 +21,7 @@ export class ApproverPageComponent implements OnInit, OnDestroy {
   view$: Observable<'buyer' | 'approver'>;
   constructor(
     private camRequisitionManagementFacade: CamRequisitionManagementFacade,
-    private context: RequisitionContextFacade,
+    private context: CamfilRequisitionContextFacade,
     private appFacade: AppFacade
   ) {}
 

@@ -7,7 +7,7 @@ import { Address } from 'ish-core/models/address/address.model';
 import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
 
 import { CamRequisitionManagementFacade } from '../../../facades/cam-requisition-management.facade';
-import { EditRequisition, Requisition } from '../../../models/requisition/requisition.model';
+import { CamfilEditRequisition, CamfilRequisition } from '../../../models/camfil-requisition/camfil-requisition.model';
 
 @Component({
   selector: 'camfil-edit-approval-details-modal',
@@ -16,7 +16,7 @@ import { EditRequisition, Requisition } from '../../../models/requisition/requis
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EditApprovalDetailsModalComponent {
-  @Input() requisition: Requisition;
+  @Input() requisition: CamfilRequisition;
   modal: NgbModalRef;
   @ViewChild('modal', { static: false }) modalTemplate: TemplateRef<unknown>;
   @ViewChild(OrderFormComponent) orderForm: OrderFormComponent;
@@ -24,7 +24,7 @@ export class EditApprovalDetailsModalComponent {
   @ViewChild('secondaryButton') secondaryButton: MatButton;
   @ViewChild('primaryButton') primaryButton: MatButton;
 
-  approvalDetails: EditRequisition;
+  approvalDetails: CamfilEditRequisition;
 
   constructor(private camRequisitionManagementFacade: CamRequisitionManagementFacade) {}
 
@@ -74,7 +74,7 @@ export class EditApprovalDetailsModalComponent {
         phoneNumber: form.get('phoneNumber').value,
       };
 
-      this.camRequisitionManagementFacade.updateRequisition(requisition);
+      this.camRequisitionManagementFacade.updateCamfilRequisition(requisition);
       this.hide();
     }
   }

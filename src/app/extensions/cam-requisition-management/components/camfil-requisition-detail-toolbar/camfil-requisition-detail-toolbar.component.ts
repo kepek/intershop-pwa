@@ -4,7 +4,7 @@ import { ModalAddNewProductComponent } from 'src/app/extensions/cam-cards/pages/
 
 import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
 
-import { Requisition } from '../../models/requisition/requisition.model';
+import { CamfilRequisition } from '../../models/camfil-requisition/camfil-requisition.model';
 
 @Component({
   selector: 'camfil-requisition-detail-toolbar',
@@ -13,7 +13,7 @@ import { Requisition } from '../../models/requisition/requisition.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CamfilRequisitionDetailToolbarComponent {
-  @Input() requisition: Requisition;
+  @Input() requisition: CamfilRequisition;
   @Input() lineItemsChecked: string[];
   @Output() openAddToProductModal = new EventEmitter<any>();
   @Output() removeSelectedProducts = new EventEmitter();

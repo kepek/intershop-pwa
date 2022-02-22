@@ -4,23 +4,23 @@ import { Observable, Subject } from 'rxjs';
 import { HttpError } from 'ish-core/models/http-error/http-error.model';
 import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
 
+import { CamfilRequisitionContextFacade } from '../../facades/cam-requisition-context.facade';
 import { CamRequisitionManagementFacade } from '../../facades/cam-requisition-management.facade';
-import { RequisitionContextFacade } from '../../facades/requisition-context.facade';
-import { Requisition, RequisitionStatus } from '../../models/requisition/requisition.model';
+import { CamfilRequisition, CamfilRequisitionStatus } from '../../models/camfil-requisition/camfil-requisition.model';
 
 @Component({
   selector: 'camfil-buyer-page',
   templateUrl: './buyer-page.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [RequisitionContextFacade],
+  providers: [CamfilRequisitionContextFacade],
 })
 export class BuyerPageComponent implements OnInit, OnDestroy {
-  requisitions$: Observable<Requisition[]>;
+  requisitions$: Observable<CamfilRequisition[]>;
   error$: Observable<HttpError>;
   loading$: Observable<boolean>;
-  status$: Observable<RequisitionStatus>;
+  status$: Observable<CamfilRequisitionStatus>;
 
-  status: RequisitionStatus;
+  status: CamfilRequisitionStatus;
   columnsToDisplay: string[];
   deviceType$: Observable<DeviceType>;
   view$: Observable<'buyer' | 'approver'>;
@@ -28,14 +28,14 @@ export class BuyerPageComponent implements OnInit, OnDestroy {
 
   constructor(
     private camRequisitionManagementFacade: CamRequisitionManagementFacade,
-    private context: RequisitionContextFacade
+    private context: CamfilRequisitionContextFacade
   ) {}
 
   ngOnInit() {
     this.error$ = this.camRequisitionManagementFacade.requisitionsError$;
     this.view$ = this.context.select('view');
     this.loading$ = this.camRequisitionManagementFacade.requisitionsLoading$;
-    this.status$ = this.camRequisitionManagementFacade.requisitionsStatus$ as Observable<RequisitionStatus>;
+    this.status$ = this.camRequisitionManagementFacade.requisitionsStatus$ as Observable<CamfilRequisitionStatus>;
 
     this.columnsToDisplay = [
       'customerNumberAndName',

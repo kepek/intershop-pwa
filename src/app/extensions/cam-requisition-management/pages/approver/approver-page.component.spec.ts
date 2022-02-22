@@ -12,8 +12,8 @@ import { CamfilErrorMessageComponent } from 'ish-shared/components/common/camfil
 import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
 
 import { CamfilRequisitionsListComponent } from '../../components/camfil-requisitions-list/camfil-requisitions-list.component';
+import { CamfilRequisitionContextFacade } from '../../facades/cam-requisition-context.facade';
 import { CamRequisitionManagementFacade } from '../../facades/cam-requisition-management.facade';
-import { RequisitionContextFacade } from '../../facades/requisition-context.facade';
 
 import { ApproverPageComponent } from './approver-page.component';
 
@@ -22,13 +22,13 @@ describe('Approver Page Component', () => {
   let fixture: ComponentFixture<ApproverPageComponent>;
   let element: HTMLElement;
   let reqFacade: CamRequisitionManagementFacade;
-  let contextFacade: RequisitionContextFacade;
+  let contextFacade: CamfilRequisitionContextFacade;
   let appFacade: AppFacade;
 
   beforeEach(async () => {
     reqFacade = mock(CamRequisitionManagementFacade);
     appFacade = mock(AppFacade);
-    contextFacade = mock(RequisitionContextFacade);
+    contextFacade = mock(CamfilRequisitionContextFacade);
 
     await TestBed.configureTestingModule({
       imports: [NgbNavModule, RouterTestingModule, TranslateModule.forRoot()],
@@ -45,7 +45,7 @@ describe('Approver Page Component', () => {
       ],
     })
       .overrideComponent(ApproverPageComponent, {
-        set: { providers: [{ provide: RequisitionContextFacade, useFactory: () => instance(contextFacade) }] },
+        set: { providers: [{ provide: CamfilRequisitionContextFacade, useFactory: () => instance(contextFacade) }] },
       })
       .compileComponents();
   });
