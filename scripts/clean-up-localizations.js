@@ -2,12 +2,23 @@ const _ = require('lodash');
 const fs = require('fs');
 const glob = require('glob');
 const { execSync } = require('child_process');
+const { createFallbackLocalizations } = require("./create-fallback-localizations");
+const cfl = process.argv.length > 2 && process.argv[2] === '-cfl';
 
 const localizationFile_default = 'src/assets/i18n/en_GB.json';
 
 // regular expression for patterns of not explicitly used localization keys (dynamic created keys, error keys from REST calls)
 // ADDITIONAL PATTERNS HAVE TO BE ADDED HERE
-const regEx = /account\.login\..*\.message|.*budget.period..*|account\.budget\.type\..*|.*\.error.*|camfil.dynamic.*/i;
+const regExps = [
+  /^account\.login\..*\.message/i,
+  /^account\.budget\.type\..*/i,
+  /^subject.*/i,
+  /.*budget.period..*/i,
+  /.*\.error.*/i,
+  /^locale\..*/i,
+  /^approval\.order_.*\.text/i,
+  /^camfil.dynamic.*/i,
+];
 
 // store localizations from default localization file in an object
 const localizations_default = JSON.parse(fs.readFileSync(localizationFile_default, 'utf8'));
@@ -16,7 +27,7 @@ console.log('Clean up file', localizationFile_default, 'as default localization 
 // add not explicitly used localization keys with their localization values
 const localizationsFound = {};
 Object.keys(localizations_default)
-  .filter(localization => regEx.test(localization))
+  .filter(localization => regExps.some(regEx => regEx.test(localization)))
   .map(localizationKey => {
     localizationsFound[localizationKey] = localizations_default[localizationKey];
     delete localizations_default[localizationKey];
@@ -25,11 +36,13 @@ Object.keys(localizations_default)
 // go through directory recursively and find files to be searched
 const filesToBeSearched = glob.sync('{src,projects}/**/!(*.spec).{ts,html}');
 
+const regex = _.memoize(key => new RegExp(`[^.-]\\b${key.replace(/[.]/g, '\\$&')}\\b[^.-]`));
+
 // add used localization keys with their localization values
 filesToBeSearched.forEach(filePath => {
   const fileContent = fs.readFileSync(filePath);
   for (const localizationKey in localizations_default) {
-    if (fileContent.includes(localizationKey)) {
+    if (regex(localizationKey).test(fileContent)) {
       // store found localizations
       localizationsFound[localizationKey] = localizations_default[localizationKey];
       delete localizations_default[localizationKey];
@@ -63,11 +76,17 @@ localizationFiles_lang.forEach(file => {
   console.log('\nClean up file', file);
   const localizations_lang = JSON.parse(fs.readFileSync(file, 'utf8'));
   // find missing localization keys
-  _.difference(Object.keys(localizationsFoundOrdered), Object.keys(localizations_lang)).forEach(key => {
-    console.log('\x1b[33m%s\x1b[0m', `  Localization key ${key} not found in ${file}`);
-  });
+  if (!cfl) {
+    _.difference(Object.keys(localizationsFoundOrdered), Object.keys(localizations_lang)).forEach(key => {
+      console.log('\x1b[33m%s\x1b[0m', `  Localization key ${key} not found in ${file}`);
+    });
+  }
   fs.writeFileSync(file, JSON.stringify(_.pick(localizations_lang, Object.keys(localizationsFoundOrdered)), null, 2));
 });
+
+if (cfl) {
+  createFallbackLocalizations(localizationFiles_lang, localizationsFoundOrdered);
+}
 
 // run prettier to fix any formatting or line and file ending inconsistencies
 execSync('npx prettier --write src/assets/i18n/*.*');
