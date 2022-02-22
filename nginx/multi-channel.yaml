@@ -5,6 +5,9 @@
   - baseHref: /fr
     channel: Camfil-CamfilFR-Site
     lang: fr_FR
+  - baseHref: /de
+    channel: Camfil-CamfilDE-Site
+    lang: de_DE
   - baseHref: /se
     channel: Camfil-CamfilSE-Site
     lang: sv_SE
