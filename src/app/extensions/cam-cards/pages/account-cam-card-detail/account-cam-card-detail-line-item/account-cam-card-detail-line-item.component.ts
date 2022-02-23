@@ -77,6 +77,7 @@ export class AccountCamCardDetailLineItemComponent implements OnChanges, OnInit,
 
     this.appFacade.getChannel$
       .pipe(whenTruthy(), take(1))
+      // TODO (extMlk): hidePricesCamCards settings
       .subscribe(channel => (this.showPrice = channel !== Channel.SE));
   }
 

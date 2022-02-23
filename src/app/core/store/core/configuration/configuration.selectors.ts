@@ -53,6 +53,7 @@ export const getChannel = createSelector(getConfigurationState, state => state?.
 
 export const getCountryCodeByChannel = createSelector(
   getChannel,
+  // TODO (extMlk): Replace with CamfilConfigurationFacade.countryCode$
   channel => Object.entries(Channel).find(([, val]) => val === channel)?.[0]
 );
 

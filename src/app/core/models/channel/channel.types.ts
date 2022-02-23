@@ -4,5 +4,7 @@ export enum Channel {
   FI = 'Camfil-CamfilFI-Site',
   FR = 'Camfil-CamfilFR-Site',
   DE = 'Camfil-CamfilDE-Site',
+  CH = 'Camfil-CamfilCH-Site',
+  AT = 'Camfil-CamfilAT-Site',
   SE = 'Camfil-CamfilSE-Site',
 }

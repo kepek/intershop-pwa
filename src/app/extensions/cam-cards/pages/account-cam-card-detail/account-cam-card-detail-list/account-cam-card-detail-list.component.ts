@@ -160,6 +160,7 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges, OnD
         .isAuthorizedToCheckArrAll(['APP_B2B_VIEW_PRICES'])
         .pipe(take(1))
         .subscribe(permitted => {
+          // TODO (extMlk): hidePricesCamCards settings
           this.showPrice = channel !== Channel.SE && permitted;
           if (this.showPrice && !parent) {
             this.shoppingFacade.loadCustomerPrices(id, CamCardHelper.getCamCardSkus(this.camCard));

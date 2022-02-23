@@ -13,6 +13,7 @@ const camfilConfiguration: ChannelConfiguration = {
   showDutiesAndSurchargesTotalInBasketSummary: true,
   showSubTotalInBasketSummary: true,
   showTotalWithoutTaxInBasketSummary: false,
+  hidePricesCamCards: true,
 };
 
 export default camfilConfiguration;

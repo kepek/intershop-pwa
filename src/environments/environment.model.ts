@@ -168,6 +168,7 @@ export const ENVIRONMENT_DEFAULTS: Environment = {
     { lang: 'fi_FI', currency: 'EUR', value: 'fi', displayName: 'FI', displayLong: 'Finnish' },
     { lang: 'fr_FR', currency: 'EUR', value: 'fr', displayName: 'FR', displayLong: 'French' },
     { lang: 'de_DE', currency: 'EUR', value: 'de', displayName: 'DE', displayLong: 'German' },
+    { lang: 'it_IT', currency: 'EUR', value: 'it', displayName: 'IT', displayLong: 'Italian' },
     { lang: 'sv_SE', currency: 'SEK', value: 'se', displayName: 'SV', displayLong: 'Swedish' },
     {
       lang: 'en_GB',

@@ -5,10 +5,13 @@ export type ChannelSetting = Channel | keyof ChannelSettings;
 export interface ChannelSettings {
   allowCreditCardPaymentsIfTheCreditLimitIsReached: boolean;
   allowInvoicePaymentIfCreditLimitIsNotReached: boolean;
+  allowToAddEmailRecipientsInCheckout: boolean;
   createDynamicAnonymousAddressForNonLoggedInUser: boolean;
   createDynamicAnonymousBasketForNonLoggedInInUser: boolean;
   guestCheckout: boolean;
   hideAddToBasketLightboxForNonLoggedInUser: boolean;
+  hidePricesCamCards: boolean;
+  hideTitleFieldOnRegisterForm: boolean;
   preventCamCardERPIdValidation: boolean;
   showAddToCamCardButtonForNonLoggedInUser: boolean;
   showAddToCartButtonForNonLoggedInUser: boolean;
@@ -16,11 +19,11 @@ export interface ChannelSettings {
   showCountryFieldOnAddressForms: boolean;
   showCustomProductAssortmentForNonLoggedInUser: boolean;
   showDutiesAndSurchargesTotalInBasketSummary: boolean;
-  showTotalWithoutTaxInBasketSummary: boolean;
-  showTotalWithoutTaxInBucketSummary: boolean;
   showPricesForNonLoggedInUser: boolean;
   showQuestionIfUserWantsToCreateCamCardsBasedOnPurchasedItemsOnCheckoutConfirmationPage: boolean;
   showSubTotalInBasketSummary: boolean;
+  showTotalWithoutTaxInBasketSummary: boolean;
+  showTotalWithoutTaxInBucketSummary: boolean;
   showWarningMessageForPartialDelivery: boolean;
   useHardcodedAnonymousCustomerForNonLoggedInUser: boolean;
   useHardcodedContactAnonymousCustomerForNonLoggedInUser: boolean;

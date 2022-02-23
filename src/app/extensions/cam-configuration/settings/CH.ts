@@ -3,17 +3,11 @@ import { ChannelConfiguration } from '../models/channel-configuration/channel-co
 
 const camfilConfiguration: ChannelConfiguration = {
   continueShoppingUrl: '/account/camcards',
-  countryCode: 'FI',
+  countryCode: 'CH',
   currency: 'EUR',
-  guestCheckout: false,
-  hideAddToBasketLightboxForNonLoggedInUser: false,
-  icmChannel: 'Camfil-CamfilFI-Site',
-  showAddToCamCardButtonForNonLoggedInUser: true,
-  showCountryFieldOnAddressForms: false,
+  icmChannel: 'Camfil-CamfilCH-Site',
   showDutiesAndSurchargesTotalInBasketSummary: true,
   showSubTotalInBasketSummary: true,
-  showTotalWithoutTaxInBasketSummary: false,
-  hideTitleFieldOnRegisterForm: true,
 };
 
 export default camfilConfiguration;
