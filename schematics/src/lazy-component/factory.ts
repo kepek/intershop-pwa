@@ -129,8 +129,8 @@ export function createLazyComponent(options: Options): Rule {
 
     const operations = [];
 
-    if (!options.ci) {
-      if (!exportsModuleExists) {
+    if (process.env.CI !== 'true') {
+      if (!isShared && !exportsModuleExists) {
         operations.push(
           schematic('module', {
             project: options.project,
@@ -195,8 +195,7 @@ export function createLazyComponent(options: Options): Rule {
       )
     );
 
-    if (!options.ci) {
-      operations.push(applyLintFix());
+    if (process.env.CI !== 'true') {
       operations.push(applyLintFix());
     }
 
