@@ -18,7 +18,7 @@ describe('Camfil Configuration Service', () => {
   let camfilConfigurationService: CamfilConfigurationService;
 
   const configuration: ChannelConfiguration = {
-    countryCode: 'SE',
+    channelCode: 'SE',
     currency: 'SEK',
     icmChannel: 'Camfil-CamfilSE-Site',
     continueShoppingUrl: '/account/camcards',

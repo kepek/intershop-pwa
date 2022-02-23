@@ -6,11 +6,11 @@ import { getCamConfigurationState } from '../cam-configuration-store';
 export const getConfigurationState = createSelector(getCamConfigurationState, state => state.configuration);
 
 export const getCamfilSettings = createSelector(getConfigurationState, state => {
-  const { countryCode } = state;
+  const { channelCode } = state;
   const countryCodeObject = {};
 
-  if (countryCode) {
-    countryCodeObject[countryCode] = true;
+  if (channelCode) {
+    countryCodeObject[channelCode] = true;
   }
 
   return Object.entries(state)
@@ -34,7 +34,9 @@ export const getCamfilConfigurationParameter = <T, O extends string>(path: O) =>
         .reduce((obj, key) => (obj && obj[key] !== undefined ? obj[key] : undefined), state as unknown) as T
   );
 
-export const getCountryCode = createSelector(getConfigurationState, state => state.countryCode);
+export const getLanguages = createSelector(getConfigurationState, state => state.languages);
+
+export const getChannelCode = createSelector(getConfigurationState, state => state.channelCode);
 
 export const getCurrency = createSelector(getConfigurationState, state => state.currency);
 

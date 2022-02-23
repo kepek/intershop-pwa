@@ -34,7 +34,8 @@ describe('Configuration Effects', () => {
   };
 
   const configuration: ChannelConfiguration = {
-    countryCode: 'SE',
+    languages: ['sv_SE', 'en_GB'],
+    channelCode: 'SE',
     currency: 'SEK',
     icmChannel: 'Camfil-CamfilSE-Site',
     continueShoppingUrl: '/account/camcards',
@@ -45,7 +46,7 @@ describe('Configuration Effects', () => {
     appFacade = mock(AppFacade);
     camfilConfigurationServiceMock = mock(CamfilConfigurationService);
 
-    when(appFacade.getChannel$).thenReturn(of(configuration.countryCode));
+    when(appFacade.getChannel$).thenReturn(of(configuration.channelCode));
 
     TestBed.configureTestingModule({
       imports: [CamConfigurationStoreModule.forTesting('configuration'), CoreStoreModule.forTesting()],

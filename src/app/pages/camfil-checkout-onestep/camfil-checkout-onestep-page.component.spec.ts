@@ -45,7 +45,8 @@ describe('Camfil Checkout Onestep Page Component', () => {
   let actions$: Observable<Action>;
 
   const configuration: ChannelConfiguration = {
-    countryCode: 'SE',
+    languages: ['sv_SE', 'en_GB'],
+    channelCode: 'SE',
     currency: 'SEK',
     icmChannel: 'Camfil-CamfilSE-Site',
     continueShoppingUrl: '/account/camcards',

@@ -12,6 +12,9 @@ import { AppFacade } from 'ish-core/facades/app.facade';
 import { Locale } from 'ish-core/models/locale/locale.model';
 import { MakeHrefPipe } from 'ish-core/pipes/make-href.pipe';
 
+import { CamfilConfigurationFacade } from '../../../extensions/cam-configuration/facades/camfil-configuration.facade';
+import { CamfilLang } from '../../../extensions/cam-configuration/models/channel-configuration/channel-configuration.model';
+
 import { CamfilLanguageSwitchComponent } from './camfil-language-switch.component';
 
 describe('Camfil Language Switch Component', () => {
@@ -19,25 +22,32 @@ describe('Camfil Language Switch Component', () => {
   let fixture: ComponentFixture<CamfilLanguageSwitchComponent>;
   let element: HTMLElement;
   let appFacade: AppFacade;
+  let camConfigurationFacade: CamfilConfigurationFacade;
+
   const locales = [
     { lang: 'en_US', value: 'en', displayName: 'English' },
     { lang: 'de_DE', value: 'de', displayName: 'Deutsch' },
     { lang: 'fr_FR', value: 'fr', displayName: 'Fran¢aise' },
   ] as Locale[];
 
+  const languages = ['en_US', 'de_DE'] as CamfilLang[];
+
   beforeEach(async () => {
     appFacade = mock(AppFacade);
+    camConfigurationFacade = mock(CamfilConfigurationFacade);
 
     await TestBed.configureTestingModule({
       declarations: [CamfilLanguageSwitchComponent, MakeHrefPipe, MockComponent(FaIconComponent)],
       imports: [NgbDropdownModule, RouterTestingModule],
       providers: [
         { provide: AppFacade, useFactory: () => instance(appFacade) },
+        { provide: CamfilConfigurationFacade, useFactory: () => instance(camConfigurationFacade) },
         { provide: APP_BASE_HREF, useValue: '/' },
       ],
     }).compileComponents();
 
     when(appFacade.availableLocales$).thenReturn(of(locales));
+    when(camConfigurationFacade.languages$).thenReturn(of(languages));
     when(appFacade.getChannel$).thenReturn(of('SEChannel'));
   });
 

@@ -16,6 +16,9 @@ import { Observable } from 'rxjs';
 import { AppFacade } from 'ish-core/facades/app.facade';
 import { Locale } from 'ish-core/models/locale/locale.model';
 
+import { CamfilConfigurationFacade } from '../../../extensions/cam-configuration/facades/camfil-configuration.facade';
+import { CamfilLang } from '../../../extensions/cam-configuration/models/channel-configuration/channel-configuration.model';
+
 @Component({
   selector: 'camfil-language-switch',
   templateUrl: './camfil-language-switch.component.html',
@@ -32,12 +35,12 @@ export class CamfilLanguageSwitchComponent implements OnInit {
   showList = false;
 
   locale$: Observable<Locale>;
-  availableLocales$: Observable<Locale[]>;
-  availableLocalesByCountryCode$: Observable<Locale[]>;
+  languages$: Observable<CamfilLang[]>;
 
   constructor(
     private appFacade: AppFacade,
     public location: Location,
+    private camfilConfigurationFacade: CamfilConfigurationFacade,
     @Inject(DOCUMENT) private doc: Document,
     @Optional() @Inject(REQUEST) private request: Request,
     @Inject(APP_BASE_HREF) private baseHref: string
@@ -45,24 +48,11 @@ export class CamfilLanguageSwitchComponent implements OnInit {
 
   ngOnInit() {
     this.locale$ = this.appFacade.currentLocale$;
-    this.availableLocales$ = this.appFacade.availableLocales$;
-    this.availableLocalesByCountryCode$ = this.appFacade.availableLocalesByCountryCode$;
+    this.languages$ = this.camfilConfigurationFacade.languages$;
   }
 
   toggleLevel(val: boolean) {
     this.isClosedLangList.emit(val);
-  }
-
-  getLanguageSwitchUrl(value: string = '', includeBaseHref = false) {
-    let url: string;
-
-    if (this.request) {
-      url = `${this.request.protocol}://${this.request.get('host')}${includeBaseHref ? this.baseHref : ''}`;
-    } else {
-      url = includeBaseHref ? this.doc.baseURI : this.doc.baseURI.replace(new RegExp(`${this.baseHref}$`), '');
-    }
-
-    return [url, value, this.location.path()].filter(Boolean).join('/');
   }
 
   getBaseUrl(urlParams: { [key: string]: string }) {
