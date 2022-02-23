@@ -1460,7 +1460,7 @@
   "product.email_a_friend.link": "Envoyer par e-mail à un.e ami.e",
   "product.image.text.alttext": "Photo du produit",
   "product.instock.text": "En stock",
-  "product.itemNumber.label": "Identifiant produit :",
+  "product.itemNumber.label": "Référence produit :",
   "product.items.label": {
     "=0": "0 poste",
     "=1": "1 poste",
