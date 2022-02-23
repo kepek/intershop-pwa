@@ -1,12 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { CamfilCheckoutGuard } from 'camfil-pwa/guards/camfil-checkout.guard';
 
 import { AuthGuard } from 'ish-core/guards/auth.guard';
 import { IdentityProviderLoginGuard } from 'ish-core/guards/identity-provider-login.guard';
 import { IdentityProviderLogoutGuard } from 'ish-core/guards/identity-provider-logout.guard';
 import { IdentityProviderRegisterGuard } from 'ish-core/guards/identity-provider-register.guard';
-
-import { CheckoutGuard } from '../extensions/cam-configuration/guards/checkout.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -82,7 +81,7 @@ const routes: Routes = [
   {
     path: 'checkout',
     loadChildren: () => import('./camfil-checkout/camfil-checkout-page.module').then(m => m.CamfilCheckoutPageModule),
-    canActivate: [CheckoutGuard],
+    canActivate: [CamfilCheckoutGuard],
     data: {
       headerType: 'checkout',
       breadcrumbData: [{ key: 'seo.title.checkout' }],

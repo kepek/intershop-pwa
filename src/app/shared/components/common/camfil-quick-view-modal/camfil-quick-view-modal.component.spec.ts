@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { provideMockStore } from '@ngrx/store/testing';
+import { CamfilChannelToggleDirective } from 'camfil-pwa/directives/camfil-channel-toggle.directive';
 import { MockComponent, MockDirective, MockPipe } from 'ng-mocks';
 import { LazyProductAddToCamCardComponent } from 'src/app/extensions/cam-cards/exports/lazy-product-add-to-cam-card/lazy-product-add-to-cam-card.component';
 
@@ -18,8 +19,6 @@ import { CamfilProductInventoryComponent } from 'ish-shared/components/product/c
 import { CamfilProductPriceComponent } from 'ish-shared/components/product/camfil-product-price/camfil-product-price.component';
 import { CamfilProductPromotionComponent } from 'ish-shared/components/product/camfil-product-promotion/camfil-product-promotion.component';
 import { CamfilProductQuantityComponent } from 'ish-shared/components/product/camfil-product-quantity/camfil-product-quantity.component';
-
-import { ChannelToggleDirective } from '../../../../extensions/cam-configuration/directives/channel-toggle.directive';
 
 import { CamfilQuickViewModalComponent } from './camfil-quick-view-modal.component';
 
@@ -44,7 +43,7 @@ describe('Camfil Quick View Modal Component', () => {
         MockComponent(ContentIncludeComponent),
         MockComponent(ContentViewcontextComponent),
         MockComponent(LazyProductAddToCamCardComponent),
-        MockDirective(ChannelToggleDirective),
+        MockDirective(CamfilChannelToggleDirective),
         MockPipe(CamfilDimensionPipe),
         MockPipe(PricePipe),
       ],

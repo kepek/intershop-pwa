@@ -46,7 +46,6 @@ import { MaterialModule } from 'ish-shared/material/material.module';
 import { CamAhuExportsModule } from '../extensions/cam-ahu/exports/cam-ahu-exports.module';
 import { CamCaptchaExportsModule } from '../extensions/cam-captcha/exports/cam-captcha-exports.module';
 import { CamCardsExportsModule } from '../extensions/cam-cards/exports/cam-cards-exports.module';
-import { CamConfigurationExportsModule } from '../extensions/cam-configuration/exports/cam-configuration-exports.module';
 import { CamDemoExportsModule } from '../extensions/cam-demo/exports/cam-demo-exports.module';
 import { CamIccExportsModule } from '../extensions/cam-icc/exports/cam-icc-exports.module';
 import { CamOrganizationManagementExportsModule } from '../extensions/cam-organization-management/exports/cam-organization-management-exports.module';
@@ -236,6 +235,7 @@ import { CamfilDeleteOrderComponent } from 'ish-shared/components/camfil-checkou
 import { CamfilShoppingBucketEmptyComponent } from 'ish-shared/components/camfil-shopping-bucket-empty/camfil-shopping-bucket-empty.component';
 import { CamfilCheckoutBucketSummaryComponent } from 'ish-shared/components/camfil-checkout-bucket-summary/camfil-checkout-bucket-summary.component';
 import { CamRequisitionManagementExportsModule } from '../extensions/cam-requisition-management/exports/cam-requisition-management-exports.module';
+import { CamfilPwaExportsModule } from 'camfil-pwa';
 
 const importExportModules = [
   AddressFormsSharedModule,
@@ -244,12 +244,12 @@ const importExportModules = [
   CamAhuExportsModule,
   CamCaptchaExportsModule,
   CamCardsExportsModule,
-  CamConfigurationExportsModule,
   CamDemoExportsModule,
   CamIccExportsModule,
   CamOrganizationManagementExportsModule,
   CamRequisitionManagementExportsModule,
   CamfilIconsModule,
+  CamfilPwaExportsModule,
   CaptchaExportsModule,
   CommonModule,
   DeferLoadModule,

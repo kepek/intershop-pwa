@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
+import { CamfilConfigurationFacade } from 'camfil-pwa/facades/camfil-configuration.facade';
+import { CamfilLang } from 'camfil-pwa/models/camfil-channel-configuration/camfil-channel-configuration.model';
 import { MockComponent } from 'ng-mocks';
 import { of } from 'rxjs';
 import { instance, mock, when } from 'ts-mockito';
@@ -12,9 +14,6 @@ import { AppFacade } from 'ish-core/facades/app.facade';
 import { Locale } from 'ish-core/models/locale/locale.model';
 import { MakeHrefPipe } from 'ish-core/pipes/make-href.pipe';
 
-import { CamfilConfigurationFacade } from '../../../extensions/cam-configuration/facades/camfil-configuration.facade';
-import { CamfilLang } from '../../../extensions/cam-configuration/models/channel-configuration/channel-configuration.model';
-
 import { CamfilLanguageSwitchComponent } from './camfil-language-switch.component';
 
 describe('Camfil Language Switch Component', () => {
@@ -22,7 +21,7 @@ describe('Camfil Language Switch Component', () => {
   let fixture: ComponentFixture<CamfilLanguageSwitchComponent>;
   let element: HTMLElement;
   let appFacade: AppFacade;
-  let camConfigurationFacade: CamfilConfigurationFacade;
+  let camfilConfigurationFacade: CamfilConfigurationFacade;
 
   const locales = [
     { lang: 'en_US', value: 'en', displayName: 'English' },
@@ -34,20 +33,20 @@ describe('Camfil Language Switch Component', () => {
 
   beforeEach(async () => {
     appFacade = mock(AppFacade);
-    camConfigurationFacade = mock(CamfilConfigurationFacade);
+    camfilConfigurationFacade = mock(CamfilConfigurationFacade);
 
     await TestBed.configureTestingModule({
       declarations: [CamfilLanguageSwitchComponent, MakeHrefPipe, MockComponent(FaIconComponent)],
       imports: [NgbDropdownModule, RouterTestingModule],
       providers: [
         { provide: AppFacade, useFactory: () => instance(appFacade) },
-        { provide: CamfilConfigurationFacade, useFactory: () => instance(camConfigurationFacade) },
+        { provide: CamfilConfigurationFacade, useFactory: () => instance(camfilConfigurationFacade) },
         { provide: APP_BASE_HREF, useValue: '/' },
       ],
     }).compileComponents();
 
     when(appFacade.availableLocales$).thenReturn(of(locales));
-    when(camConfigurationFacade.languages$).thenReturn(of(languages));
+    when(camfilConfigurationFacade.languages$).thenReturn(of(languages));
     when(appFacade.getChannel$).thenReturn(of('SEChannel'));
   });
 

@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
+import { CamfilConfigurationFacade } from 'camfil-pwa/facades/camfil-configuration.facade';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { CamfilConfigurationFacade } from 'src/app/extensions/cam-configuration/facades/camfil-configuration.facade';
 
 import { ProductTechnicalDocument } from 'ish-core/models/product-technical-document/product-technical-document.model';
 import { Product, ProductHelper } from 'ish-core/models/product/product.model';
@@ -18,15 +18,15 @@ export class CamfilProductTechnicalDocumentsComponent implements OnChanges, OnDe
   productDocuments: ProductTechnicalDocument[];
   private destroy$ = new Subject();
 
-  constructor(private camConfFacade: CamfilConfigurationFacade) {}
+  constructor(private camfilConfigurationFacade: CamfilConfigurationFacade) {}
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.product) {
-      this.camConfFacade
+      this.camfilConfigurationFacade
         .isEnabled$('showAllDocsType')
         .pipe(takeUntil(this.destroy$))
-        .subscribe(val => {
-          this.productDocuments = ProductHelper.getTechnicalDocuments(this.product, val);
+        .subscribe(showAllDocsType => {
+          this.productDocuments = ProductHelper.getTechnicalDocuments(this.product, showAllDocsType);
         });
     }
   }

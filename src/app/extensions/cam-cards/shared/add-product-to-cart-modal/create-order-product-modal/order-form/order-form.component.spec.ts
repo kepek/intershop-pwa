@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { CamfilConfigurationFacade } from 'camfil-pwa/facades/camfil-configuration.facade';
 import { MockComponent, MockPipe } from 'ng-mocks';
 import { of } from 'rxjs';
-import { CamfilConfigurationFacade } from 'src/app/extensions/cam-configuration/facades/camfil-configuration.facade';
 import { instance, mock, when } from 'ts-mockito';
 
 import { CamfilMaxLengthAttributeCreateDirective } from 'ish-core/directives/camfil-max-length-attribute-create.directive';
@@ -21,11 +21,11 @@ describe('Order Form Component', () => {
   let fixture: ComponentFixture<OrderFormComponent>;
   let element: HTMLElement;
   let camCardFacadeMock: CamCardsFacade;
-  let camConfFacade: CamfilConfigurationFacade;
+  let camfilConfigurationFacade: CamfilConfigurationFacade;
 
   beforeEach(async () => {
     camCardFacadeMock = mock(CamCardsFacade);
-    camConfFacade = mock(camConfFacade);
+    camfilConfigurationFacade = mock(camfilConfigurationFacade);
 
     await TestBed.configureTestingModule({
       declarations: [
@@ -40,7 +40,7 @@ describe('Order Form Component', () => {
       ],
       providers: [
         { provide: CamCardsFacade, useFactory: () => instance(camCardFacadeMock) },
-        { provide: CamfilConfigurationFacade, useFactory: () => instance(camConfFacade) },
+        { provide: CamfilConfigurationFacade, useFactory: () => instance(camfilConfigurationFacade) },
       ],
     }).compileComponents();
   });
@@ -52,7 +52,7 @@ describe('Order Form Component', () => {
 
     when(camCardFacadeMock.addresses$).thenReturn(of({}));
     when(camCardFacadeMock.customers$).thenReturn(of([]));
-    when(camConfFacade.isEnabled$('useSecondAddressLine')).thenReturn(of(false));
+    when(camfilConfigurationFacade.isEnabled$('useSecondAddressLine')).thenReturn(of(false));
   });
 
   it('should be created', () => {

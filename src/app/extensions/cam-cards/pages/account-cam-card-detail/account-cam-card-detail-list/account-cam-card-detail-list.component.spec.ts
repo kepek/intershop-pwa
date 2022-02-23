@@ -3,6 +3,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { provideMockStore } from '@ngrx/store/testing';
 import { TranslateModule } from '@ngx-translate/core';
+import { CamfilConfigurationFacade } from 'camfil-pwa/facades/camfil-configuration.facade';
 import { MockComponent, MockPipe } from 'ng-mocks';
 import { of } from 'rxjs';
 import { instance, mock, when } from 'ts-mockito';
@@ -14,7 +15,6 @@ import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-load
 import { CamfilModalDialogComponent } from 'ish-shared/components/common/camfil-modal-dialog/camfil-modal-dialog.component';
 import { CamfilProductAddToBasketComponent } from 'ish-shared/components/product/camfil-product-add-to-basket/camfil-product-add-to-basket.component';
 
-import { CamfilConfigurationFacade } from '../../../../cam-configuration/facades/camfil-configuration.facade';
 import { CamCard } from '../../../models/cam-card/cam-card.model';
 import { CamCardProductCommentComponent } from '../../../shared/cam-card-product-comment/cam-card-product-comment.component';
 import { AccountCamCardDetailLineItemComponent } from '../account-cam-card-detail-line-item/account-cam-card-detail-line-item.component';

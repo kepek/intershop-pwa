@@ -11,6 +11,7 @@ import {
 import { ThemePalette } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { CamfilConfigurationFacade } from 'camfil-pwa/facades/camfil-configuration.facade';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { take, takeUntil, withLatestFrom } from 'rxjs/operators';
 
@@ -22,7 +23,6 @@ import { Product } from 'ish-core/models/product/product.model';
 import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
 
 import { AddProductToCartModalComponent } from '../../../../../extensions/cam-cards/shared/add-product-to-cart-modal/add-product-to-cart-modal.component';
-import { CamfilConfigurationFacade } from '../../../../../extensions/cam-configuration/facades/camfil-configuration.facade';
 
 @Component({
   selector: 'camfil-product-add-to-basket-modal',

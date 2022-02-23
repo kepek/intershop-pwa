@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { CamfilConfigurationFacade } from 'camfil-pwa/facades/camfil-configuration.facade';
 import { MockComponent, MockPipe } from 'ng-mocks';
 import { ToastrModule } from 'ngx-toastr';
 import { of } from 'rxjs';
@@ -30,7 +31,6 @@ import { CamCardModalDetailsComponent } from '../../../../extensions/cam-cards/s
 import { CreateOrderProductModalComponent } from '../../../../extensions/cam-cards/shared/add-product-to-cart-modal/create-order-product-modal/create-order-product-modal.component';
 import { OrderFormComponent } from '../../../../extensions/cam-cards/shared/add-product-to-cart-modal/create-order-product-modal/order-form/order-form.component';
 import { CreateOrderProductSuccessComponent } from '../../../../extensions/cam-cards/shared/add-product-to-cart-modal/create-order-product-success/create-order-product-success.component';
-import { CamfilConfigurationFacade } from '../../../../extensions/cam-configuration/facades/camfil-configuration.facade';
 
 import { CamfilProductAddToBasketComponent } from './camfil-product-add-to-basket.component';
 

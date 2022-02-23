@@ -3,6 +3,8 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { TestBed } from '@angular/core/testing';
 import { Store } from '@ngrx/store';
 import { provideMockStore } from '@ngrx/store/testing';
+import { loadCamfilConfigurationSuccess } from 'camfil-pwa/store/camfil-configuration';
+import { CamfilPwaStoreModule } from 'camfil-pwa/store/camfil-pwa-store.module';
 import { noop } from 'rxjs';
 import { anything, capture, spy, verify } from 'ts-mockito';
 
@@ -10,8 +12,6 @@ import { CoreStoreModule } from 'ish-core/store/core/core-store.module';
 import { serverError } from 'ish-core/store/core/error';
 import { CustomerStoreModule } from 'ish-core/store/customer/customer-store.module';
 
-import { CamConfigurationStoreModule } from '../../../cam-configuration/store/cam-configuration-store.module';
-import { loadCamfilConfigurationSuccess } from '../../../cam-configuration/store/configuration';
 import { getIccRestEndpoint } from '../../store/icc';
 
 import { ApiService } from './api.service';
@@ -382,7 +382,7 @@ describe('Api Service', () => {
       TestBed.configureTestingModule({
         // https://angular.io/guide/http#testing-http-requests
         imports: [
-          CamConfigurationStoreModule.forTesting('configuration'),
+          CamfilPwaStoreModule.forTesting('camfilConfiguration'),
           CoreStoreModule.forTesting(['configuration']),
           CustomerStoreModule.forTesting('user'),
           HttpClientTestingModule,
@@ -462,7 +462,7 @@ describe('Api Service', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
         imports: [
-          CamConfigurationStoreModule.forTesting('configuration'),
+          CamfilPwaStoreModule.forTesting('camfilConfiguration'),
           CoreStoreModule.forTesting(['configuration']),
           HttpClientTestingModule,
         ],

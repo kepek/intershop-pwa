@@ -19,6 +19,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { CamfilConfigurationFacade } from 'camfil-pwa/facades/camfil-configuration.facade';
 import { flatten, groupBy, toArray } from 'lodash-es';
 import { Observable, Subject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
@@ -34,7 +35,6 @@ import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
 import { whenFalsy, whenTruthy } from 'ish-core/utils/operators';
 import { CamfilModalDialogComponent } from 'ish-shared/components/common/camfil-modal-dialog/camfil-modal-dialog.component';
 
-import { CamfilConfigurationFacade } from '../../../../cam-configuration/facades/camfil-configuration.facade';
 import { CamCardsFacade } from '../../../facades/cam-cards.facade';
 import { CamCardHelper } from '../../../models/cam-card/cam-card.helper';
 import {

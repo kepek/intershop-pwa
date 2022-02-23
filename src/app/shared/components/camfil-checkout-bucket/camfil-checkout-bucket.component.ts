@@ -45,7 +45,7 @@ import { BasketExtension } from 'ish-core/models/basket-extension/basket-extensi
 import { CamfilCheckoutAddEmailRecipientModalComponent } from '../../../pages/camfil-checkout-onestep/camfil-checkout-add-email-recipient-modal/camfil-checkout-add-email-recipient-modal.component';
 import { Price } from 'ish-core/models/price/price.model';
 import { PriceItem } from 'ish-core/models/price-item/price-item.model';
-import { CamfilConfigurationFacade } from '../../../extensions/cam-configuration/facades/camfil-configuration.facade';
+import { CamfilConfigurationFacade } from 'camfil-pwa/facades/camfil-configuration.facade';
 
 @Component({
   selector: 'camfil-checkout-bucket',

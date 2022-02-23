@@ -13,7 +13,6 @@ import { environment } from '../environments/environment';
 
 import { AppComponent } from './app.component';
 import { CamAhuRoutingModule } from './extensions/cam-ahu/pages/cam-ahu-routing.module';
-import { CamConfigurationRoutingModule } from './extensions/cam-configuration/pages/cam-configuration-routing.module';
 import { CamDemoRoutingModule } from './extensions/cam-demo/pages/cam-demo-routing.module';
 import { CamIccRoutingModule } from './extensions/cam-icc/pages/cam-icc-routing.module';
 import { QuickorderRoutingModule } from './extensions/quickorder/pages/quickorder-routing.module';
@@ -38,7 +37,6 @@ import { ShellModule } from './shell/shell.module';
     CamDemoRoutingModule,
     CamAhuRoutingModule,
     CamIccRoutingModule,
-    CamConfigurationRoutingModule,
     AppLastRoutingModule,
     ReactiveFormsModule,
     FormlyModule.forRoot(),

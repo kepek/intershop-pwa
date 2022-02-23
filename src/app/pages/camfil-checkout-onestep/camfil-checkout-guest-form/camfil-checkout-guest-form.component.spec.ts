@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { CamfilConfigurationFacade } from 'camfil-pwa/facades/camfil-configuration.facade';
 import { MockComponent } from 'ng-mocks';
 import { of } from 'rxjs';
 import { instance, mock, when } from 'ts-mockito';
@@ -11,21 +12,19 @@ import { CamfilCityFieldComponent } from 'ish-shared/components/common/camfil-ci
 import { CamfilErrorComponent } from 'ish-shared/components/common/camfil-error/camfil-error.component';
 import { ZipCodeComponent } from 'ish-shared/components/zip-code/zip-code.component';
 
-import { CamfilConfigurationFacade } from '../../../extensions/cam-configuration/facades/camfil-configuration.facade';
-
 import { CamfilCheckoutGuestFormComponent } from './camfil-checkout-guest-form.component';
 
 describe('Camfil Checkout Guest Form Component', () => {
   let component: CamfilCheckoutGuestFormComponent;
   let fixture: ComponentFixture<CamfilCheckoutGuestFormComponent>;
   let element: HTMLElement;
-  let camConfigurationFacade: CamfilConfigurationFacade;
+  let camfilConfigurationFacade: CamfilConfigurationFacade;
   let checkoutFacadeMock: CheckoutFacade;
   let shoppingFacade: ShoppingFacade;
   let appFacade: AppFacade;
 
   beforeEach(async () => {
-    camConfigurationFacade = mock(CamfilConfigurationFacade);
+    camfilConfigurationFacade = mock(CamfilConfigurationFacade);
     checkoutFacadeMock = mock(CheckoutFacade);
     shoppingFacade = mock(ShoppingFacade);
     appFacade = mock(AppFacade);
@@ -38,7 +37,7 @@ describe('Camfil Checkout Guest Form Component', () => {
         MockComponent(ZipCodeComponent),
       ],
       providers: [
-        { provide: CamfilConfigurationFacade, useFactory: () => instance(camConfigurationFacade) },
+        { provide: CamfilConfigurationFacade, useFactory: () => instance(camfilConfigurationFacade) },
         { provide: CheckoutFacade, useFactory: () => instance(checkoutFacadeMock) },
         { provide: ShoppingFacade, useFactory: () => instance(shoppingFacade) },
         { provide: AppFacade, useFactory: () => instance(appFacade) },

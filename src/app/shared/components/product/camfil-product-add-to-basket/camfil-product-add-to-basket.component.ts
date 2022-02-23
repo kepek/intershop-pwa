@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { CamfilConfigurationFacade } from 'camfil-pwa/facades/camfil-configuration.facade';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -7,8 +8,6 @@ import { AccountFacade } from 'ish-core/facades/account.facade';
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { Product } from 'ish-core/models/product/product.model';
 import { whenFalsy } from 'ish-core/utils/operators';
-
-import { CamfilConfigurationFacade } from '../../../../extensions/cam-configuration/facades/camfil-configuration.facade';
 
 /**
  * Displays an add to cart button with an icon or a text label. After clicking the button a loading animation is displayed
