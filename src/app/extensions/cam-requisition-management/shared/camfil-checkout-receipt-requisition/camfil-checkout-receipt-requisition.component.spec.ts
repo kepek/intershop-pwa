@@ -10,7 +10,7 @@ import { BasketMockData } from 'ish-core/utils/dev/basket-mock-data';
 import { BasketApprovalInfoComponent } from 'ish-shared/components/basket/basket-approval-info/basket-approval-info.component';
 
 import { CamRequisitionManagementFacade } from '../../facades/cam-requisition-management.facade';
-import { Requisition } from '../../models/requisition/requisition.model';
+import { CamfilRequisition } from '../../models/camfil-requisition/camfil-requisition.model';
 
 import { CamfilCheckoutReceiptRequisitionComponent } from './camfil-checkout-receipt-requisition.component';
 
@@ -39,7 +39,7 @@ describe('Camfil Checkout Receipt Requisition Component', () => {
     element = fixture.nativeElement;
     component.basket = BasketMockData.getBasket();
 
-    when(reqFacade.requisition$(component.basket.id)).thenReturn(of({ requisitionNo: 'req001' } as Requisition));
+    when(reqFacade.requisition$(component.basket.id)).thenReturn(of({ requisitionNo: 'req001' } as CamfilRequisition));
   });
 
   it('should be created', () => {

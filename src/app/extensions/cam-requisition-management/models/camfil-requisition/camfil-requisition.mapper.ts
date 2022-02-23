@@ -2,15 +2,14 @@ import { Injectable } from '@angular/core';
 
 import { BasketData } from 'ish-core/models/basket/basket.interface';
 import { BasketMapper } from 'ish-core/models/basket/basket.mapper';
-import { Customer } from 'ish-core/models/customer/customer.model';
 import { LineItemMapper } from 'ish-core/models/line-item/line-item.mapper';
 import { LineItem } from 'ish-core/models/line-item/line-item.model';
 import { PriceItemMapper } from 'ish-core/models/price-item/price-item.mapper';
 import { PriceItem } from 'ish-core/models/price-item/price-item.model';
 import { Price } from 'ish-core/models/price/price.model';
 
-import { RequisitionBaseData, RequisitionData } from './requisition.interface';
-import { Requisition, RequisitionApproval } from './requisition.model';
+import { CamfilRequisitionBaseData, CamfilRequisitionData } from './camfil-requisition.interface';
+import { CamfilRequisition, CamfilRequisitionApproval, CamfilRequisitionCustomer } from './camfil-requisition.model';
 
 const emptyPriceItem: PriceItem = {
   type: 'PriceItem',
@@ -20,8 +19,8 @@ const emptyPriceItem: PriceItem = {
 };
 
 @Injectable({ providedIn: 'root' })
-export class RequisitionMapper {
-  static fromData(payload: RequisitionData): Requisition {
+export class CamfilRequisitionMapper {
+  static fromData(payload: CamfilRequisitionData): CamfilRequisition {
     if (!Array.isArray(payload.data)) {
       const { data, included } = payload;
 
@@ -31,7 +30,7 @@ export class RequisitionMapper {
         currency: data.userBudgets?.budget?.currency,
       };
 
-      const defaultApproval: RequisitionApproval = {
+      const defaultApproval: CamfilRequisitionApproval = {
         status: 'pending',
         statusCode: 'PENDING',
       };
@@ -39,22 +38,23 @@ export class RequisitionMapper {
       if (data) {
         const payloadData = payload as BasketData;
         payloadData.data.calculated = true;
-        const lineItems = RequisitionMapper.getLineItemsData(included);
-        const approvalStatus = RequisitionMapper.getApprovalStatus(data);
+        const lineItems = CamfilRequisitionMapper.getLineItemsData(included);
+        const approvalStatus = CamfilRequisitionMapper.getApprovalStatus(data);
 
         return {
           ...BasketMapper.fromData(payloadData),
           id: data.basketId,
           requisitionNo: data.requisitionNo,
-          creationDate: RequisitionMapper.convertToData(data.creationDate),
+          creationDate: CamfilRequisitionMapper.convertToData(data.creationDate),
           userBudget: { ...data.userBudgets, spentBudget: data.userBudgets?.spentBudget || emptyPrice },
           user: data.creator,
           orderMark: data.orderMark,
           invoiceLabel: data.invoiceLabel,
+          phoneNumber: data.phoneNumber,
           info: data.info,
           lineItemCount: data.lineItemCount,
           lineItems,
-          requisitionCustomer: RequisitionMapper.getCustomerData(data),
+          requisitionCustomer: CamfilRequisitionMapper.getCustomer(data),
           shippingAddress: data.shippingAddress,
           approval: approvalStatus
             ? {
@@ -69,17 +69,17 @@ export class RequisitionMapper {
     }
   }
 
-  static fromElemenetsToListData(payload: { elements: RequisitionBaseData[] }): RequisitionData {
+  static fromElemenetsToListData(payload: { elements: CamfilRequisitionBaseData[] }): CamfilRequisitionData {
     const { elements, ...rest } = payload;
     return { ...rest, data: elements };
   }
 
-  static fromListData(payload: RequisitionData): Requisition[] {
+  static fromListData(payload: CamfilRequisitionData): CamfilRequisition[] {
     if (Array.isArray(payload.data)) {
       return payload.data
         .filter(data => data.requisitionNo)
         .map(data => ({
-          ...RequisitionMapper.fromData({ ...payload, data }),
+          ...CamfilRequisitionMapper.fromData({ ...payload, data }),
           totals: {
             itemTotal: data.totals ? PriceItemMapper.fromPriceItem(data.totals.itemTotal) : undefined,
             total: data.totals ? PriceItemMapper.fromPriceItem(data.totals.grandTotal) : emptyPriceItem,
@@ -115,11 +115,11 @@ export class RequisitionMapper {
     return lineItems;
   }
 
-  static getCustomerData(payloadData): Customer {
+  static getCustomer(payloadData): CamfilRequisitionCustomer {
     return payloadData.customer;
   }
 
-  static getApprovalStatus(payloadData): RequisitionApproval {
+  static getApprovalStatus(payloadData): CamfilRequisitionApproval {
     const { status } = payloadData;
     const statusDictionary = {
       SUBMITTED: {

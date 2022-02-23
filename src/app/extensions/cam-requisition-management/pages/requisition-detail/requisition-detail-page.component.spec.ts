@@ -25,8 +25,8 @@ import { CamfilRequisitionDetailToolbarComponent } from '../../components/camfil
 import { CamfilRequisitionLineItemTableComponent } from '../../components/camfil-requisition-line-item-table/camfil-requisition-line-item-table.component';
 import { CamfilRequisitionRejectDialogComponent } from '../../components/camfil-requisition-reject-dialog/camfil-requisition-reject-dialog.component';
 import { CamfilRequisitionSummaryComponent } from '../../components/camfil-requisition-summary/camfil-requisition-summary.component';
+import { CamfilRequisitionContextFacade } from '../../facades/cam-requisition-context.facade';
 import { CamRequisitionManagementFacade } from '../../facades/cam-requisition-management.facade';
-import { RequisitionContextFacade } from '../../facades/requisition-context.facade';
 
 import { RequisitionDetailPageComponent } from './requisition-detail-page.component';
 
@@ -34,13 +34,13 @@ describe('Requisition Detail Page Component', () => {
   let component: RequisitionDetailPageComponent;
   let fixture: ComponentFixture<RequisitionDetailPageComponent>;
   let element: HTMLElement;
-  let context: RequisitionContextFacade;
+  let context: CamfilRequisitionContextFacade;
   let camRequisitionManagementFacade: CamRequisitionManagementFacade;
   let appFacade: AppFacade;
   let accountFacade: AccountFacade;
 
   beforeEach(async () => {
-    context = mock(RequisitionContextFacade);
+    context = mock(CamfilRequisitionContextFacade);
     camRequisitionManagementFacade = mock(CamRequisitionManagementFacade);
     appFacade = mock(AppFacade);
     accountFacade = mock(AccountFacade);
@@ -70,7 +70,7 @@ describe('Requisition Detail Page Component', () => {
       .overrideComponent(RequisitionDetailPageComponent, {
         set: {
           providers: [
-            { provide: RequisitionContextFacade, useFactory: () => instance(context) },
+            { provide: CamfilRequisitionContextFacade, useFactory: () => instance(context) },
             { provide: CamRequisitionManagementFacade, useFactory: () => instance(camRequisitionManagementFacade) },
             { provide: AppFacade, useFactory: () => instance(appFacade) },
             { provide: AccountFacade, useFactory: () => instance(accountFacade) },

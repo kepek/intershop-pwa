@@ -15,7 +15,7 @@ import { isEmpty } from 'lodash-es';
 import { Observable, ReplaySubject, Subject, of } from 'rxjs';
 import { catchError, debounceTime, map, switchMap, take, takeUntil, tap, withLatestFrom } from 'rxjs/operators';
 import { CamRequisitionManagementFacade } from 'src/app/extensions/cam-requisition-management/facades/cam-requisition-management.facade';
-import { Requisition } from 'src/app/extensions/cam-requisition-management/models/requisition/requisition.model';
+import { CamfilRequisition } from 'src/app/extensions/cam-requisition-management/models/camfil-requisition/camfil-requisition.model';
 
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { AddressHelper } from 'ish-core/models/address/address.helper';
@@ -90,7 +90,7 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy, AfterView
   @Input() addToOrder = false;
   @Input() addToRequisition = false;
   @Input() order?: Bucket;
-  @Input() requisition?: Requisition;
+  @Input() requisition?: CamfilRequisition;
   @Input() shippingMethodId?: string;
 
   @ViewChild('modal', { static: false }) modalTemplate: TemplateRef<unknown>;
@@ -286,7 +286,7 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy, AfterView
   }
 
   addproductToRequisition(sku, quantity, requisitionId) {
-    this.requisitionsFacade.addProductToRequisition(sku, quantity, requisitionId);
+    this.requisitionsFacade.addProductToCamfilRequisition(sku, quantity, requisitionId);
   }
 
   getUrn(currentAddress: Address): string {

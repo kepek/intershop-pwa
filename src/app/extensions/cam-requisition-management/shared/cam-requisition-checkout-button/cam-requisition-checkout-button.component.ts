@@ -33,7 +33,7 @@ export class CamRequisitionCheckoutButtonComponent implements OnInit {
 
   submit() {
     if (this.approvalRequired) {
-      this.camRequisitionManagementFacade.createRequisition();
+      this.camRequisitionManagementFacade.createCamfilRequisition();
     }
   }
 }

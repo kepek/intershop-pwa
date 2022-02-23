@@ -8,27 +8,28 @@ import { Attribute } from 'ish-core/models/attribute/attribute.model';
 import { selectRouteParam, selectUrl } from 'ish-core/store/core/router';
 import { whenTruthy } from 'ish-core/utils/operators';
 
+import { CamfilRequisition } from '../models/camfil-requisition/camfil-requisition.model';
 import {
-  addProductToRequisition,
-  createRequisition,
-  getRequisition,
-  getRequisitions,
-  getRequisitionsError,
-  getRequisitionsLoading,
-  loadRequisition,
-  loadRequisitions,
-  removeProductsFromRequisition,
-  updateRequisition,
-  updateRequisitionLineItemAttribute,
-} from '../store/requisitions';
+  addProductToCamfilRequisition,
+  createCamfilRequisition,
+  getCamfilRequisition,
+  getCamfilRequisitions,
+  getCamfilRequisitionsError,
+  getCamfilRequisitionsLoading,
+  loadCamfilRequisition,
+  loadCamfilRequisitions,
+  removeProductsFromCamfilRequisition,
+  updateCamfilRequisition,
+  updateCamfilRequisitionLineItemAttribute,
+} from '../store/camfil-requisitions';
 
 // tslint:disable:member-ordering
 @Injectable({ providedIn: 'root' })
 export class CamRequisitionManagementFacade {
   constructor(private store: Store, private router: Router) {}
 
-  requisitionsError$ = this.store.pipe(select(getRequisitionsError));
-  requisitionsLoading$ = this.store.pipe(select(getRequisitionsLoading));
+  requisitionsError$ = this.store.pipe(select(getCamfilRequisitionsError));
+  requisitionsLoading$ = this.store.pipe(select(getCamfilRequisitionsLoading));
 
   requisitionsStatus$ = this.store.pipe(
     select(selectRouteParam('status')),
@@ -38,17 +39,17 @@ export class CamRequisitionManagementFacade {
   selectedRequisition$ = this.store.pipe(
     select(selectRouteParam('requisitionId')),
     whenTruthy(),
-    switchMap(requisitionId => this.store.pipe(select(getRequisition(requisitionId))))
+    switchMap(requisitionId => this.store.pipe(select(getCamfilRequisition(requisitionId))))
   );
 
   requisition$(requisitionId: string) {
-    this.store.dispatch(loadRequisition({ requisitionId }));
-    return this.store.pipe(select(getRequisition(requisitionId)));
+    this.store.dispatch(loadCamfilRequisition({ requisitionId }));
+    return this.store.pipe(select(getCamfilRequisition(requisitionId)));
   }
 
   requisitions$() {
-    this.store.dispatch(loadRequisitions());
-    return this.store.pipe(select(getRequisitions));
+    this.store.dispatch(loadCamfilRequisitions());
+    return this.store.pipe(select(getCamfilRequisitions));
   }
 
   requisitionsByRoute$ = combineLatest([
@@ -71,13 +72,13 @@ export class CamRequisitionManagementFacade {
   );
 
   // CAMFIL Line Items
-  createRequisition() {
-    this.store.dispatch(createRequisition());
+  createCamfilRequisition() {
+    this.store.dispatch(createCamfilRequisition());
   }
 
-  addProductToRequisition(sku: string, quantity: number, requisitionId: string) {
+  addProductToCamfilRequisition(sku: string, quantity: number, requisitionId: string) {
     this.store.dispatch(
-      addProductToRequisition({
+      addProductToCamfilRequisition({
         sku,
         quantity,
         requisitionId,
@@ -85,18 +86,18 @@ export class CamRequisitionManagementFacade {
     );
   }
 
-  removeProductsFromRequisition(lineItemIds: string[], requisitionId: string) {
+  removeProductsFromCamfilRequisition(lineItemIds: string[], requisitionId: string) {
     this.store.dispatch(
-      removeProductsFromRequisition({
+      removeProductsFromCamfilRequisition({
         lineItemIds,
         requisitionId,
       })
     );
   }
 
-  updateRequisitionLineItemAttribute(lineItemIds: string[], requisitionId: string, lineItemAttribute: Attribute) {
+  updateCamfilRequisitionLineItemAttribute(lineItemIds: string[], requisitionId: string, lineItemAttribute: Attribute) {
     this.store.dispatch(
-      updateRequisitionLineItemAttribute({
+      updateCamfilRequisitionLineItemAttribute({
         lineItemIds,
         requisitionId,
         lineItemAttribute,
@@ -104,7 +105,7 @@ export class CamRequisitionManagementFacade {
     );
   }
 
-  updateRequisition(requisition) {
-    this.store.dispatch(updateRequisition(requisition));
+  updateCamfilRequisition(requisition: CamfilRequisition) {
+    this.store.dispatch(updateCamfilRequisition({ requisition }));
   }
 }

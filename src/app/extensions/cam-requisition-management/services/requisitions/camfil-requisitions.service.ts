@@ -7,9 +7,13 @@ import { Attribute } from 'ish-core/models/attribute/attribute.model';
 import { OrderData } from 'ish-core/models/order/order.interface';
 import { ApiService } from 'ish-core/services/api/api.service';
 
-import { RequisitionData } from '../../models/requisition/requisition.interface';
-import { RequisitionMapper } from '../../models/requisition/requisition.mapper';
-import { Requisition, RequisitionStatus, RequisitionViewer } from '../../models/requisition/requisition.model';
+import { CamfilRequisitionData } from '../../models/camfil-requisition/camfil-requisition.interface';
+import { CamfilRequisitionMapper } from '../../models/camfil-requisition/camfil-requisition.mapper';
+import {
+  CamfilRequisition,
+  CamfilRequisitionStatus,
+  CamfilRequisitionViewer,
+} from '../../models/camfil-requisition/camfil-requisition.model';
 
 type RequisitionIncludeType =
   | 'invoiceToAddress'
@@ -23,7 +27,7 @@ type RequisitionIncludeType =
   | 'payments_paymentInstrument';
 
 @Injectable({ providedIn: 'root' })
-export class RequisitionsService {
+export class CamfilRequisitionsService {
   constructor(private apiService: ApiService) {}
 
   private allIncludes: RequisitionIncludeType[] = [
@@ -47,9 +51,12 @@ export class RequisitionsService {
    * Get all customer requisitions of a certain status and view. The current user is expected to have the approver permission.
    * @param  view    Defines whether the 'buyer' or 'approver' view is returned. Default: 'buyer'
    * @param  status  Approval status filter. Default: All requisitions are returned
-   * @returns        Requisitions of the customer with their main attributes. To get all properties the getRequisition call is needed.
+   * @returns        Requisitions of the customer with their main attributes. To get all properties the getCamfilRequisition call is needed.
    */
-  getRequisitions(view?: RequisitionViewer, status?: RequisitionStatus): Observable<Requisition[]> {
+  getCamfilRequisitions(
+    view?: CamfilRequisitionViewer,
+    status?: CamfilRequisitionStatus
+  ): Observable<CamfilRequisition[]> {
     let params = new HttpParams();
     if (view) {
       params = params.set('view', view);
@@ -60,7 +67,7 @@ export class RequisitionsService {
 
     return this.apiService
       .get(`camfilrequisitions`)
-      .pipe(map(RequisitionMapper.fromElemenetsToListData), map(RequisitionMapper.fromListData));
+      .pipe(map(CamfilRequisitionMapper.fromElemenetsToListData), map(CamfilRequisitionMapper.fromListData));
   }
 
   /**
@@ -68,18 +75,18 @@ export class RequisitionsService {
    * @param  id      Requisition id.
    * @returns        Requisition with all attributes. If the requisition is approved and the order is placed, also order data are returned as part of the requisition.
    */
-  getRequisition(requisitionId: string): Observable<Requisition> {
+  getCamfilRequisition(requisitionId: string): Observable<CamfilRequisition> {
     if (!requisitionId) {
-      return throwError('getRequisition() called without required id');
+      return throwError('getCamfilRequisition() called without required id');
     }
 
     const params = new HttpParams().set('include', this.allIncludes.join());
 
     return this.apiService
-      .get<RequisitionData>(`camfilrequisitions/${requisitionId}`, {
+      .get<CamfilRequisitionData>(`camfilrequisitions/${requisitionId}`, {
         params,
       })
-      .pipe(map(payload => RequisitionMapper.fromData(payload)));
+      .pipe(map(payload => CamfilRequisitionMapper.fromData(payload)));
   }
 
   /**
@@ -89,16 +96,16 @@ export class RequisitionsService {
    * @param comment     The approval comment
    * @returns           The updated requisition with all attributes. If the requisition is approved and the order is placed, also order data are returned as part of the requisition.
    */
-  updateRequisitionStatus(
+  updateCamfilRequisitionStatus(
     requisitionId: string,
-    statusCode: RequisitionStatus,
+    statusCode: CamfilRequisitionStatus,
     approvalComment?: string
-  ): Observable<Requisition> {
+  ): Observable<CamfilRequisition> {
     if (!requisitionId) {
-      return throwError('updateRequisitionStatus() called without required id');
+      return throwError('updateCamfilRequisitionStatus() called without required id');
     }
     if (!statusCode) {
-      return throwError('updateRequisitionStatus() called without required requisition status');
+      return throwError('updateCamfilRequisitionStatus() called without required requisition status');
     }
 
     const params = new HttpParams().set('include', this.allIncludes.join());
@@ -111,7 +118,7 @@ export class RequisitionsService {
 
     return this.apiService
       .b2bUserEndpoint()
-      .patch<RequisitionData>(`requisitions/${requisitionId}`, body, {
+      .patch<CamfilRequisitionData>(`requisitions/${requisitionId}`, body, {
         params,
       })
       .pipe(concatMap(payload => this.processRequisitionData(payload)));
@@ -122,7 +129,7 @@ export class RequisitionsService {
    * @param payload  The requisition row data returnedby the REST interface.
    * @returns        The requisition.
    */
-  private processRequisitionData(payload: RequisitionData): Observable<Requisition> {
+  private processRequisitionData(payload: CamfilRequisitionData): Observable<CamfilRequisition> {
     const params = new HttpParams().set('include', this.allIncludes.join());
 
     if (!Array.isArray(payload.data)) {
@@ -134,52 +141,52 @@ export class RequisitionsService {
             headers: this.orderHeaders,
             params,
           })
-          .pipe(map(() => RequisitionMapper.fromData(payload)));
+          .pipe(map(() => CamfilRequisitionMapper.fromData(payload)));
       }
     }
 
-    return of(RequisitionMapper.fromData(payload));
+    return of(CamfilRequisitionMapper.fromData(payload));
   }
 
   // Add product to requisition
 
-  addProductToRequisition(sku: string, quantity: number, requisitionId?: string): Observable<Requisition> {
+  addProductToCamfilRequisition(sku: string, quantity: number, requisitionId?: string): Observable<CamfilRequisition> {
     if (!requisitionId) {
-      return throwError('addProductToRequisition() called without required id');
+      return throwError('addProductToCamfilRequisition() called without required id');
     }
 
     const params = new HttpParams().set('include', this.allIncludes.join());
     const body = {
       name: 'string',
-      type: 'AddPRoductToRequisition',
+      type: 'addProductToCamfilRequisition',
       sku,
       quantity,
     };
 
     return this.apiService
       .b2bUserEndpoint()
-      .patch<RequisitionData>(`requisitions/${requisitionId}`, body, {
+      .patch<CamfilRequisitionData>(`requisitions/${requisitionId}`, body, {
         params,
       })
       .pipe(concatMap(payload => this.processRequisitionData(payload)));
   }
 
   // Remove products fromrequisition
-  removeProductsFromRequisition(lineItemsIds: string[], requisitionId?: string): Observable<Requisition> {
+  removeProductsFromCamfilRequisition(lineItemsIds: string[], requisitionId?: string): Observable<CamfilRequisition> {
     if (!requisitionId) {
-      return throwError('removeProductsFromRequisition() called without required id');
+      return throwError('removeProductsFromCamfilRequisition() called without required id');
     }
 
     const params = new HttpParams().set('include', this.allIncludes.join());
     const body = {
       name: 'string',
-      type: 'RemoveProductsFromRequisition',
+      type: 'removeProductsFromCamfilRequisition',
       lineItemsIds,
     };
 
     return this.apiService
       .b2bUserEndpoint()
-      .patch<RequisitionData>(`requisitions/delete-line-items/${requisitionId}`, body, {
+      .patch<CamfilRequisitionData>(`requisitions/delete-line-items/${requisitionId}`, body, {
         params,
       })
       .pipe(concatMap(payload => this.processRequisitionData(payload)));
@@ -202,11 +209,12 @@ export class RequisitionsService {
       .pipe(map(() => ({ requisitionId, lineItemsIds, attribute })));
   }
 
-  updateRequisition(requisition: Requisition): Observable<Requisition> {
+  updateCamfilRequisition(requisition: CamfilRequisition): Observable<CamfilRequisition> {
     const params = new HttpParams().set('include', this.allIncludes.join());
     const body = {
       requisition,
     };
+
     return this.apiService
       .patch(`requisitions/${requisition.id}`, body, {
         params,
@@ -214,20 +222,20 @@ export class RequisitionsService {
       .pipe(map(() => requisition));
   }
 
-  createRequisition(basketId: string): Observable<Requisition> {
+  createCamfilRequisition(basketId: string): Observable<CamfilRequisition> {
     const params = new HttpParams().set('include', this.allIncludes.join());
 
     if (!basketId) {
-      return throwError('createRequisition() called without basketId');
+      return throwError('createCamfilRequisition() called without basketId');
     }
 
     const body = {
       basketID: basketId,
     };
     return this.apiService
-      .post<RequisitionData>(`camfilrequisitions`, body, {
+      .post<CamfilRequisitionData>(`camfilrequisitions`, body, {
         params,
       })
-      .pipe(concatMap(payload => RequisitionMapper.fromListData(payload)));
+      .pipe(concatMap(payload => CamfilRequisitionMapper.fromListData(payload)));
   }
 }

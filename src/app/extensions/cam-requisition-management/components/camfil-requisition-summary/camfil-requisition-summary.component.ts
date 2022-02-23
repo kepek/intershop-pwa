@@ -7,7 +7,7 @@ import { User } from '@sentry/browser';
 import { CamfilToastrService } from 'ish-core/store/core/messages/CamfilToastrService';
 
 import { CamRequisitionManagementFacade } from '../../facades/cam-requisition-management.facade';
-import { Requisition, RequisitionViewer } from '../../models/requisition/requisition.model';
+import { CamfilRequisition, CamfilRequisitionViewer } from '../../models/camfil-requisition/camfil-requisition.model';
 
 import { EditApprovalDetailsModalComponent } from './edit-approval-details-modal/edit-approval-details-modal.component';
 
@@ -18,10 +18,10 @@ import { EditApprovalDetailsModalComponent } from './edit-approval-details-modal
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CamfilRequisitionSummaryComponent implements OnInit {
-  @Input() requisition: Requisition;
+  @Input() requisition: CamfilRequisition;
   @Input() user: User;
   @Input() userPermissions: string[];
-  @Input() view: RequisitionViewer = 'buyer';
+  @Input() view: CamfilRequisitionViewer = 'buyer';
   private camRequisitionManagementFacade: CamRequisitionManagementFacade;
   customerNoteForm: FormGroup;
 
@@ -42,7 +42,7 @@ export class CamfilRequisitionSummaryComponent implements OnInit {
         info: customerNoteValue,
       },
     };
-    this.camRequisitionManagementFacade?.updateRequisition(updatedRequisition);
+    this.camRequisitionManagementFacade?.updateCamfilRequisition(updatedRequisition);
   }
 
   canEditRequisition() {

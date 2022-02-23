@@ -1,5 +1,5 @@
 <ng-template #modal>
-  <div class="camfil-approval-edit-modal">
+  <div class="camfil-edit-requisition-modal">
     <button
       type="button"
       class="close"
@@ -11,16 +11,36 @@
     </button>
 
     <div class="border-bottom">
-      <div class="camfil-approval-edit-modal__title">
+      <div class="camfil-edit-requisition-modal__title">
         <mat-icon
           [svgIcon]="'edit'"
-          class="edit-icon camfil-approval-edit-modal__title--svg-icon size-24 color-dark"
+          class="edit-icon camfil-edit-requisition-modal__title--svg-icon size-24 color-dark"
         ></mat-icon>
-        <h2 mat-dialog-title class="camfil-approval-edit-modal__title--text">Edit approval details</h2>
+        <h2 mat-dialog-title class="camfil-edit-requisition-modal__title--text">Edit approval details</h2>
       </div>
     </div>
     <ng-container>
       <camfil-order-form [orderToEdit]="approvalDetails" [edit]="false"></camfil-order-form>
     </ng-container>
+    <div class="camfil-edit-requisition-modal__buttons-wrapper">
+      <button
+        #secondaryButton
+        class="camfil-edit-requisition-modal__buttons-wrapper--button secondary-button"
+        mat-raised-button
+        (click)="hide()"
+      >
+        Cancel
+      </button>
+
+      <button
+        #primaryButton
+        class="camfil-edit-requisition-modal__buttons-wrapper--button button__ghost"
+        mat-raised-button
+        color="primary"
+        (click)="submitEdit()"
+      >
+        Save
+      </button>
+    </div>
   </div>
 </ng-template>

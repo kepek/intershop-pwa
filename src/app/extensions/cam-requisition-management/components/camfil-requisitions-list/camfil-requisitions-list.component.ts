@@ -21,7 +21,11 @@ import { debounceTime, map, takeUntil } from 'rxjs/operators';
 import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
 
 import { CamRequisitionManagementFacade } from '../../facades/cam-requisition-management.facade';
-import { Requisition, RequisitionListFilter, RequisitionViewer } from '../../models/requisition/requisition.model';
+import {
+  CamfilRequisition,
+  CamfilRequisitionListFilter,
+  CamfilRequisitionViewer,
+} from '../../models/camfil-requisition/camfil-requisition.model';
 
 @Component({
   selector: 'camfil-requisitions-list',
@@ -37,12 +41,12 @@ export class CamfilRequisitionsListComponent implements OnInit, OnChanges, After
 
   @Input() columnsToDisplay: string[];
   @Input() deviceType: DeviceType;
-  @Input() view: RequisitionViewer = 'buyer';
-  requisitions$: Observable<Requisition[]>;
-  requisitions: Requisition[];
+  @Input() view: CamfilRequisitionViewer = 'buyer';
+  requisitions$: Observable<CamfilRequisition[]>;
+  requisitions: CamfilRequisition[];
   isActive = false;
-  filteredValues: RequisitionListFilter;
-  dataSource = new MatTableDataSource<Requisition>();
+  filteredValues: CamfilRequisitionListFilter;
+  dataSource = new MatTableDataSource<CamfilRequisition>();
   searchForm = new FormControl();
   customerFilter = new FormControl();
   statuses = [];
@@ -69,13 +73,13 @@ export class CamfilRequisitionsListComponent implements OnInit, OnChanges, After
       this.statuses = this.getStatuses();
       this.customers = this.getCustomers(this.dataSource.data);
 
-      if (!this.filteredValues?.requisitionStatus) {
+      if (!this.filteredValues?.camfilRequisitionStatus) {
         this.filteredValues = {
           ...this.filteredValues,
-          requisitionStatus: ['Pending', 'Approved'],
+          camfilRequisitionStatus: ['Pending', 'Approved'],
         };
 
-        if (this.filteredValues.requisitionStatus && this.filteredValues.requisitionStatus.length) {
+        if (this.filteredValues.camfilRequisitionStatus && this.filteredValues.camfilRequisitionStatus.length) {
           this.applyFilters();
         }
       }
@@ -107,11 +111,11 @@ export class CamfilRequisitionsListComponent implements OnInit, OnChanges, After
     this.statusFilters.changes.pipe(takeUntil(this.destroy$)).subscribe(() => {
       // set requisition status checkboxes according to url parameters
       this.statusFilters.forEach((checkbox: MatCheckbox) => {
-        if (this.filteredValues.requisitionStatus) {
-          this.filteredValues.requisitionStatus.forEach(status => {
+        if (this.filteredValues.camfilRequisitionStatus) {
+          this.filteredValues.camfilRequisitionStatus.forEach(status => {
             if (checkbox.value === status) {
               checkbox.checked = true;
-              this.filterCheckboxes$.next(this.filteredValues.requisitionStatus);
+              this.filterCheckboxes$.next(this.filteredValues.camfilRequisitionStatus);
             }
           });
         }
@@ -174,8 +178,8 @@ export class CamfilRequisitionsListComponent implements OnInit, OnChanges, After
   }
 
   requisitionFilterPredicate() {
-    return (data: Requisition, filterString: string): boolean => {
-      const filters = JSON.parse(filterString) as RequisitionListFilter;
+    return (data: CamfilRequisition, filterString: string): boolean => {
+      const filters = JSON.parse(filterString) as CamfilRequisitionListFilter;
       // Check search string
       const isSearchMatching = true;
       // TODO: Add requireds fields to filter requisitions list (Customer | Request number)
@@ -196,8 +200,8 @@ export class CamfilRequisitionsListComponent implements OnInit, OnChanges, After
 
       // Check status filter
       let isStatusMatching = false;
-      if (filters.requisitionStatus && filters.requisitionStatus.length) {
-        for (const status of filters.requisitionStatus) {
+      if (filters.camfilRequisitionStatus && filters.camfilRequisitionStatus.length) {
+        for (const status of filters.camfilRequisitionStatus) {
           if (data.approval.status.trim().toLowerCase() === status.trim().toLowerCase()) {
             isStatusMatching = true;
             break;
@@ -230,17 +234,17 @@ export class CamfilRequisitionsListComponent implements OnInit, OnChanges, After
     const correctValues = [
       {
         approvalStatusName: 'account.requisitions.approvals.navtab.waiting',
-        requisitionStatusName: 'account.requisitions.requisitions.navtab.pending',
+        camfilRequisitionStatusName: 'account.requisitions.requisitions.navtab.pending',
         value: 'Pending',
       },
       {
         approvalStatusName: 'account.requisitions.approvals.navtab.rejected',
-        requisitionStatusName: 'account.requisitions.requisitions.navtab.rejected',
+        camfilRequisitionStatusName: 'account.requisitions.requisitions.navtab.rejected',
         value: 'Rejected',
       },
       {
         approvalStatusName: 'account.requisitions.approvals.navtab.approved',
-        requisitionStatusName: 'account.requisitions.requisitions.navtab.approved',
+        camfilRequisitionStatusName: 'account.requisitions.requisitions.navtab.approved',
         value: 'Approved',
       },
     ];
@@ -258,14 +262,14 @@ export class CamfilRequisitionsListComponent implements OnInit, OnChanges, After
     if (change.source.checked) {
       this.filteredValues = {
         ...this.filteredValues,
-        requisitionStatus: this.filteredValues.requisitionStatus.concat(change.source.value),
+        camfilRequisitionStatus: this.filteredValues.camfilRequisitionStatus.concat(change.source.value),
       };
 
       this.applyFilters();
     } else if (!change.source.checked) {
       this.filteredValues = {
         ...this.filteredValues,
-        requisitionStatus: this.filteredValues.requisitionStatus.filter(
+        camfilRequisitionStatus: this.filteredValues.camfilRequisitionStatus.filter(
           (a: string) => a.toLowerCase().trim() !== change.source.value.toLowerCase().trim()
         ),
       };
@@ -276,7 +280,9 @@ export class CamfilRequisitionsListComponent implements OnInit, OnChanges, After
 
   isStatusFilterActive(status: string) {
     return (
-      (this.filteredValues.requisitionStatus && this.filteredValues.requisitionStatus.indexOf(status) > -1) || false
+      (this.filteredValues.camfilRequisitionStatus &&
+        this.filteredValues.camfilRequisitionStatus.indexOf(status) > -1) ||
+      false
     );
   }
 
