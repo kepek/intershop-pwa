@@ -1,14 +1,23 @@
 import channelConfig from '../../settings';
 
-export type ChannelSetting = Channel | keyof ChannelSettings;
+export type CamfilChannelCode = keyof typeof channelConfig;
+
+export type CamfilCurrency = 'EUR' | 'SEK' | 'CHF';
+
+export type CamfilLang = 'de_DE' | 'en_GB' | 'fi_FI' | 'fr_FR' | 'it_IT' | 'sv_SE';
+
+export type ChannelSetting = CamfilChannelCode | keyof ChannelSettings;
 
 export interface ChannelSettings {
   allowCreditCardPaymentsIfTheCreditLimitIsReached: boolean;
   allowInvoicePaymentIfCreditLimitIsNotReached: boolean;
+  allowToAddEmailRecipientsInCheckout: boolean;
   createDynamicAnonymousAddressForNonLoggedInUser: boolean;
   createDynamicAnonymousBasketForNonLoggedInInUser: boolean;
   guestCheckout: boolean;
   hideAddToBasketLightboxForNonLoggedInUser: boolean;
+  hidePricesCamCards: boolean;
+  hideTitleFieldOnRegisterForm: boolean;
   preventCamCardERPIdValidation: boolean;
   showAddToCamCardButtonForNonLoggedInUser: boolean;
   showAddToCartButtonForNonLoggedInUser: boolean;
@@ -16,11 +25,11 @@ export interface ChannelSettings {
   showCountryFieldOnAddressForms: boolean;
   showCustomProductAssortmentForNonLoggedInUser: boolean;
   showDutiesAndSurchargesTotalInBasketSummary: boolean;
-  showTotalWithoutTaxInBasketSummary: boolean;
-  showTotalWithoutTaxInBucketSummary: boolean;
   showPricesForNonLoggedInUser: boolean;
   showQuestionIfUserWantsToCreateCamCardsBasedOnPurchasedItemsOnCheckoutConfirmationPage: boolean;
   showSubTotalInBasketSummary: boolean;
+  showTotalWithoutTaxInBasketSummary: boolean;
+  showTotalWithoutTaxInBucketSummary: boolean;
   showWarningMessageForPartialDelivery: boolean;
   useHardcodedAnonymousCustomerForNonLoggedInUser: boolean;
   useHardcodedContactAnonymousCustomerForNonLoggedInUser: boolean;
@@ -28,10 +37,9 @@ export interface ChannelSettings {
 }
 
 export interface ChannelConfiguration extends Partial<ChannelSettings> {
-  countryCode: string;
-  currency: string;
+  channelCode: CamfilChannelCode;
+  currency: CamfilCurrency;
   icmChannel: string;
   continueShoppingUrl: string;
+  languages: CamfilLang[];
 }
-
-export type Channel = keyof typeof channelConfig;

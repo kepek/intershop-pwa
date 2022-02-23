@@ -212,6 +212,7 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
 
     this.appFacade.getChannel$?.pipe(takeUntil(this.destroy$)).subscribe(channel => {
       if (channel === Channel.FI) {
+        // TODO (extMlk): allowToAddEmailRecipientsInCheckout setting
         this.hideRecipientButton = true;
       }
     });

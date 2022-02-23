@@ -2,8 +2,9 @@
 import { ChannelConfiguration } from '../models/channel-configuration/channel-configuration.model';
 
 const camfilConfiguration: ChannelConfiguration = {
+  languages: ['fr_FR', 'en_GB'],
   continueShoppingUrl: '/home',
-  countryCode: 'FR',
+  channelCode: 'FR',
   currency: 'EUR',
   guestCheckout: true,
   hideAddToBasketLightboxForNonLoggedInUser: true,

@@ -57,6 +57,7 @@ export class CamfilApplyFormComponent implements OnInit {
     // Hide title field for FI channel
     this.appFacade.getChannel$?.pipe(whenTruthy(), take(1)).subscribe(channel => {
       if (channel === Channel.FI) {
+        // TODO (extMlk): hideTitleFieldOnRegisterForm setting
         this.hideTitleField = true;
       }
     });

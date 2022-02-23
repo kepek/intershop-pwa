@@ -45,6 +45,7 @@ describe('Camfil Login Status Component', () => {
     component = fixture.componentInstance;
     element = fixture.nativeElement;
 
+    // TODO (extMlk): Use PropType<ChannelSettings, 'countryCode'>
     when(appFacade.getChannel$).thenReturn(of('SE' as Channel));
     when(appFacade.getCountryCodeByChannel$).thenReturn(of('SE'));
     when(appFacade.currentLocale$).thenReturn(of({ value: 'gb' } as Locale));

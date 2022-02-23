@@ -6,7 +6,7 @@
   placement="{{ placement === 'up' ? 'top-right' : 'bottom-right' }}"
 >
   <ng-container *ngIf="view !== 'onMobile'; else inMobileNav">
-    <ng-container *ngIf="(availableLocalesByCountryCode$ | async)?.length > 1; else noDropDown">
+    <ng-container *ngIf="(languages$ | async)?.length > 1; else noDropDown">
       <a class="language-switch-link dropdown-toggle" [matMenuTriggerFor]="menu">
         <mat-icon svgIcon="globe" class="color-secondary language-switch--globe"></mat-icon>
         <span class="language-switch-current-selection d-inline">
@@ -15,17 +15,17 @@
         </span>
       </a>
       <mat-menu #menu="matMenu">
-        <ng-container *ngIf="availableLocalesByCountryCode$ | async as availableLocales">
-          <ng-container *ngFor="let l of availableLocales">
-            <ng-container *ngIf="l.lang !== locale.lang">
+        <ng-container *ngIf="languages$ | async as languages">
+          <ng-container *ngFor="let lang of languages">
+            <ng-container *ngIf="lang !== locale.lang">
               <a
                 mat-menu-item
-                (click)="changeLocale($event, l.lang)"
+                (click)="changeLocale($event, lang)"
                 [href]="
-                  getBaseUrl({ redirect: '1', lang: l.lang }) || (location | makeHref: { redirect: '1', lang: l.lang })
+                  getBaseUrl({ redirect: '1', lang: lang }) || (location | makeHref: { redirect: '1', lang: lang })
                 "
               >
-                {{ l.displayLong }}
+                {{ 'locale.' + lang + '.long' | translate }}
               </a>
             </ng-container>
           </ng-container>
@@ -44,17 +44,17 @@
       <span class="language-switch-current-selection d-inline">{{ locale.displayLong | translate }}</span>
       <mat-icon class="language-switch--arrow">arrow_{{ showList ? 'left' : 'right' }}</mat-icon>
     </a>
-    <ng-container *ngIf="availableLocalesByCountryCode$ | async as availableLocales">
-      <ul *ngIf="availableLocales.length && showList">
-        <ng-container *ngFor="let l of availableLocales">
-          <li *ngIf="l.lang !== locale.lang">
+    <ng-container *ngIf="languages$ | async as languages">
+      <ul *ngIf="languages.length && showList">
+        <ng-container *ngFor="let lang of languages">
+          <li *ngIf="lang !== locale.lang">
             <a
-              (click)="changeLocale($event, l.lang)"
+              (click)="changeLocale($event, lang)"
               [href]="
-                getBaseUrl({ redirect: '1', lang: l.lang }) || (location | makeHref: { redirect: '1', lang: l.lang })
+                getBaseUrl({ redirect: '1', lang: lang }) || (location | makeHref: { redirect: '1', lang: lang })
               "
             >
-              {{ l.displayLong | translate }}
+              {{ 'locale.' + lang + '.long' | translate }}
             </a>
           </li>
         </ng-container>

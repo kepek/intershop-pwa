@@ -5,10 +5,11 @@ import { ChannelSetting } from '../models/channel-configuration/channel-configur
 import { getCamConfigurationState } from '../store/cam-configuration-store';
 import {
   getCamfilConfigurationParameter,
+  getChannelCode,
   getContinueShoppingUrl,
-  getCountryCode,
   getCurrency,
   getICMChannel,
+  getLanguages,
 } from '../store/configuration';
 
 // tslint:disable:member-ordering
@@ -22,7 +23,9 @@ export class CamfilConfigurationFacade {
 
   camConfigurationState$ = this.store.pipe(select(getCamConfigurationState));
 
-  countryCode$ = this.store.pipe(select(getCountryCode));
+  languages$ = this.store.pipe(select(getLanguages));
+
+  channelCode$ = this.store.pipe(select(getChannelCode));
 
   currency$ = this.store.pipe(select(getCurrency));
 

@@ -8,6 +8,12 @@
   - baseHref: /de
     channel: Camfil-CamfilDE-Site
     lang: de_DE
+  - baseHref: /ch
+    channel: Camfil-CamfilCH-Site
+    lang: de_DE
+  - baseHref: /at
+    channel: Camfil-CamfilCH-Site
+    lang: de_DE
   - baseHref: /se
     channel: Camfil-CamfilSE-Site
     lang: sv_SE
