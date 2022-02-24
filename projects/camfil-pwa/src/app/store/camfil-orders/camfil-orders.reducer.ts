@@ -2,11 +2,11 @@ import { EntityState, createEntityAdapter } from '@ngrx/entity';
 import { createReducer, on } from '@ngrx/store';
 import { CamfilOrderHelper } from 'camfil-pwa/models/camfil-order/camfil-order.helper';
 import { CamfilOrder } from 'camfil-pwa/models/camfil-order/camfil-order.model';
+import { difference } from 'lodash-es';
 
 import { HttpError } from 'ish-core/models/http-error/http-error.model';
 import { loadOrderFail } from 'ish-core/store/customer/orders';
 import { setErrorOn, setLoadingOn, unsetLoadingAndErrorOn } from 'ish-core/utils/ngrx-creators';
-import { difference } from 'lodash-es';
 
 import {
   cloneCamfilOrder,
