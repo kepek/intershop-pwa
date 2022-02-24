@@ -1,0 +1,566 @@
+{
+  "data": {
+    "adjustmentsAllowed": true,
+    "basket": "UksKAQJEVT8AAAF_JmYERiY9",
+    "errorBehavior": "NeverStop",
+    "results": {
+      "adjusted": false,
+      "errors": [
+        {
+          "code": "basket.validation.invoice_to_address_missing.error",
+          "message": "Aucune adresse de facturation n’a été sélectionnée.",
+          "parameters": {
+            "scopes": ["InvoiceAddress", "Addresses"]
+          },
+          "paths": ["$.invoiceToAddress"]
+        }
+      ],
+      "valid": false
+    },
+    "scopes": [
+      "Products",
+      "Value",
+      "InvoiceAddress",
+      "Shipping",
+      "Payment",
+      "Camfil"
+    ]
+  },
+  "included": {
+    "basket": {
+      "UksKAQJEVT8AAAF_JmYERiY9": {
+        "approval": {
+          "approvalRequired": false
+        },
+        "attributes": [
+          {
+            "name": "CAMFIL_CONTACT_ERPID_HKMKAQJEkA8AAAF_JlgERiY.",
+            "type": "String",
+            "value": "665562_002"
+          },
+          {
+            "name": "CAMFIL_CREDIT_LIMIT_REACHED_HKMKAQJEkA8AAAF_JlgERiY.",
+            "type": "Boolean",
+            "value": false
+          },
+          {
+            "name": "CAMFIL_CUSTOMER_ID_HKMKAQJEkA8AAAF_JlgERiY.",
+            "type": "String",
+            "value": "f6QKAQJENx4AAAF89agmlnAb"
+          },
+          {
+            "name": "CAMFIL_EMAIL_RECIPIENTS_HKMKAQJEkA8AAAF_JlgERiY.",
+            "type": "String"
+          },
+          {
+            "name": "CAMFIL_INFO_HKMKAQJEkA8AAAF_JlgERiY.",
+            "type": "String"
+          },
+          {
+            "name": "CAMFIL_INVOICE_LABEL_HKMKAQJEkA8AAAF_JlgERiY.",
+            "type": "String"
+          },
+          {
+            "name": "CAMFIL_ORDER_MARK_HKMKAQJEkA8AAAF_JlgERiY.",
+            "type": "String"
+          },
+          {
+            "name": "CAMFIL_PHONE_NUMBER_HKMKAQJEkA8AAAF_JlgERiY.",
+            "type": "String"
+          },
+          {
+            "name": "CAMFIL_POSITION_HKMKAQJEkA8AAAF_JlgERiY.",
+            "type": "Integer",
+            "value": 1
+          }
+        ],
+        "basketExtensions": [
+          {
+            "type": "CamfilBasketExtensionRO",
+            "shippingAddress": {
+              "type": "Address",
+              "urn": "urn:address:basket:UksKAQJEVT8AAAF_JmYERiY9:HKMKAQJEkA8AAAF_JlgERiY.",
+              "id": "HKMKAQJEkA8AAAF_JlgERiY.",
+              "firstName": "Marion",
+              "lastName": "COLLEAUX",
+              "companyName1": "AQUALANDE",
+              "addressLine1": "1280 AVENUE DU MARSAN",
+              "addressLine2": "Tél : 05.58.05.50.96",
+              "postalCode": "40120",
+              "country": "France",
+              "countryCode": "FR",
+              "city": "SARBAZAN",
+              "usage": [true, true, true, true, true],
+              "street": "1280 AVENUE DU MARSAN",
+              "street2": "Tél : 05.58.05.50.96",
+              "invoiceToAddress": true,
+              "shipToAddress": true,
+              "shipFromAddress": true,
+              "serviceToAddress": true,
+              "installToAddress": true,
+              "company": "AQUALANDE"
+            },
+            "contactPerson": {
+              "type": "Contact",
+              "profileId": "ZMEKAQJEk6gAAAF8BbQmlnAb",
+              "email": "mcolleaux@aqualande.com",
+              "firstName": "Marion",
+              "lastName": "COLLEAUX",
+              "erpId": "665562_002",
+              "login": "c6947ee0-218e-e611-80f7-d89d67630e38"
+            },
+            "info": "",
+            "phoneNumber": "",
+            "deliveryDate": "2022-02-28",
+            "orderMark": "",
+            "invoiceLabel": "",
+            "customer": {
+              "type": "SMBCustomer",
+              "customerNo": "10398",
+              "customerType": "SMB",
+              "companyName": "AQUALANDE",
+              "companyName2": "",
+              "taxationID": "",
+              "industry": "",
+              "description": "",
+              "id": "f6QKAQJENx4AAAF89agmlnAb",
+              "contacts": [
+                {
+                  "type": "Contact",
+                  "profileId": "TWQKAQJEkGwAAAF8kbMmlnAb",
+                  "email": "fvallon@aqualande.com",
+                  "firstName": "Frédéric",
+                  "lastName": "VALLON",
+                  "erpId": "573445_002",
+                  "login": "b9947ee0-218e-e611-80f7-d89d67630e38"
+                },
+                {
+                  "type": "Contact",
+                  "profileId": "ZMEKAQJEk6gAAAF8BbQmlnAb",
+                  "email": "mcolleaux@aqualande.com",
+                  "firstName": "Marion",
+                  "lastName": "COLLEAUX",
+                  "erpId": "665562_002",
+                  "login": "c6947ee0-218e-e611-80f7-d89d67630e38"
+                },
+                {
+                  "type": "Contact",
+                  "profileId": "1sgKAQJEMuYAAAF8MrQmlnAb",
+                  "email": "yternois@aqualande.com",
+                  "firstName": "YVES",
+                  "lastName": "TERNOIS",
+                  "erpId": "680036_002",
+                  "login": "83c0485e-af1f-e811-8136-70106fa6e4c1"
+                },
+                {
+                  "type": "Contact",
+                  "profileId": "mbwKAQJE0zYAAAF8y7MmlnAb",
+                  "email": "aaubet@aqualande.com",
+                  "firstName": "Alain",
+                  "lastName": "Aubet",
+                  "erpId": "823957_002",
+                  "login": "5e7f68ff-9515-e911-a962-000d3a44bd9c"
+                }
+              ],
+              "priceGroup": "net",
+              "parent": true
+            },
+            "emailRecipients": [""],
+            "volumeDiscount": 0,
+            "acceptanceTimes": {
+              "type": "AcceptanceTimesRO"
+            },
+            "creditLimitReached": false,
+            "anonymousBasketData": {
+              "type": "AnonymousBasketDataRO"
+            }
+          }
+        ],
+        "buckets": ["860532396"],
+        "calculated": true,
+        "commonShipToAddress": "urn:address:basket:UksKAQJEVT8AAAF_JmYERiY9:HKMKAQJEkA8AAAF_JlgERiY.",
+        "commonShippingMethod": "STD_GROUND",
+        "coveredByLimitedTenders": false,
+        "customer": "10398",
+        "discounts": {},
+        "id": "UksKAQJEVT8AAAF_JmYERiY9",
+        "lineItems": [".4cKAQJEPsIAAAF_2V8ERiY."],
+        "payments": ["HqEKAQJEU9cAAAF_jmwERiY."],
+        "purchaseCurrency": "EUR",
+        "surcharges": {
+          "bucketSurcharges": [
+            {
+              "amount": {
+                "gross": {
+                  "currency": "EUR",
+                  "value": 69.6
+                },
+                "net": {
+                  "currency": "EUR",
+                  "value": 58
+                }
+              },
+              "name": "CAMFIL_EXTRA_FREIGHT_COST_RULE",
+              "taxes": [
+                {
+                  "calculatedTax": {
+                    "currency": "EUR",
+                    "value": 11.6
+                  },
+                  "effectiveTaxRate": 0.2
+                }
+              ]
+            },
+            {
+              "amount": {
+                "gross": {
+                  "currency": "EUR",
+                  "value": 6.78
+                },
+                "net": {
+                  "currency": "EUR",
+                  "value": 5.65
+                }
+              },
+              "name": "CAMFIL_BOX_LABEL_FEE",
+              "taxes": [
+                {
+                  "calculatedTax": {
+                    "currency": "EUR",
+                    "value": 1.13
+                  },
+                  "effectiveTaxRate": 0.2
+                }
+              ]
+            }
+          ]
+        },
+        "totalProductQuantity": 1,
+        "totals": {
+          "grandTotal": {
+            "gross": {
+              "currency": "EUR",
+              "value": 302.57
+            },
+            "net": {
+              "currency": "EUR",
+              "value": 252.14000000000001
+            },
+            "tax": {
+              "currency": "EUR",
+              "value": 50.43
+            }
+          },
+          "paymentCostsTotal": {
+            "gross": {
+              "currency": "EUR",
+              "value": 0
+            },
+            "net": {
+              "currency": "EUR",
+              "value": 0
+            },
+            "tax": {
+              "currency": "EUR",
+              "value": 0
+            }
+          },
+          "undiscountedItemTotal": {
+            "gross": {
+              "currency": "EUR",
+              "value": 226.19
+            },
+            "net": {
+              "currency": "EUR",
+              "value": 188.49
+            }
+          },
+          "undiscountedShippingTotal": {
+            "gross": {
+              "currency": "EUR",
+              "value": 0
+            },
+            "net": {
+              "currency": "EUR",
+              "value": 0
+            },
+            "tax": {
+              "currency": "EUR",
+              "value": 0
+            }
+          },
+          "itemTotal": {
+            "gross": {
+              "currency": "EUR",
+              "value": 226.19
+            },
+            "net": {
+              "currency": "EUR",
+              "value": 188.49
+            }
+          },
+          "salesTaxTotalsByTaxRate": [
+            {
+              "calculatedTax": {
+                "currency": "EUR",
+                "value": 37.7
+              },
+              "effectiveTaxRate": 20,
+              "taxableAmount": {
+                "currency": "EUR",
+                "value": 37.7
+              }
+            }
+          ],
+          "shippingTotal": {
+            "gross": {
+              "currency": "EUR",
+              "value": 0
+            },
+            "net": {
+              "currency": "EUR",
+              "value": 0
+            }
+          },
+          "surchargeTotal": {
+            "gross": {
+              "currency": "EUR",
+              "value": 76.38
+            },
+            "net": {
+              "currency": "EUR",
+              "value": 63.65
+            },
+            "tax": {
+              "currency": "EUR",
+              "value": 12.73
+            }
+          },
+          "taxTotalsByTaxRate": [
+            {
+              "calculatedTax": {
+                "currency": "EUR",
+                "value": 50.43
+              },
+              "effectiveTaxRate": 20,
+              "taxableAmount": {
+                "currency": "EUR",
+                "value": 252.14000000000001
+              }
+            }
+          ]
+        },
+        "user": "martin.arnbom-103900008"
+      }
+    },
+    "basket_commonShipToAddress": {
+      "urn:address:basket:UksKAQJEVT8AAAF_JmYERiY9:HKMKAQJEkA8AAAF_JlgERiY.": {
+        "addressLine1": "1280 AVENUE DU MARSAN",
+        "addressLine2": "Tél : 05.58.05.50.96",
+        "city": "SARBAZAN",
+        "companyName1": "AQUALANDE",
+        "country": "France",
+        "countryCode": "FR",
+        "eligibleInstallToAddress": true,
+        "eligibleInvoiceToAddress": true,
+        "eligibleServiceToAddress": true,
+        "eligibleShipFromAddress": true,
+        "eligibleShipToAddress": true,
+        "firstName": "Marion",
+        "id": "HKMKAQJEkA8AAAF_JlgERiY.",
+        "lastName": "COLLEAUX",
+        "postalCode": "40120",
+        "urn": "urn:address:basket:UksKAQJEVT8AAAF_JmYERiY9:HKMKAQJEkA8AAAF_JlgERiY.",
+        "usage": [true, true, true, true, true]
+      }
+    },
+    "basket_commonShippingMethod": {
+      "STD_GROUND": {
+        "attributes": [
+          {
+            "name": "description",
+            "type": "String"
+          },
+          {
+            "name": "displayName",
+            "type": "String",
+            "value": "Default Camfil Shipping Method"
+          },
+          {
+            "name": "shortName",
+            "type": "String"
+          }
+        ],
+        "digitalDelivery": false,
+        "id": "STD_GROUND",
+        "name": "Default Camfil Shipping Method",
+        "shippingInstructionsSupported": true
+      }
+    },
+    "basket_discounts": {},
+    "basket_lineItems": {
+      ".4cKAQJEPsIAAAF_2V8ERiY.": {
+        "attributes": [
+          {
+            "name": "boxLabel",
+            "type": "String",
+            "value": "jontest23feb"
+          }
+        ],
+        "basket": "UksKAQJEVT8AAAF_JmYERiY9",
+        "calculated": true,
+        "freeGift": false,
+        "hiddenGift": false,
+        "id": ".4cKAQJEPsIAAAF_2V8ERiY.",
+        "position": 1,
+        "pricing": {
+          "giftingTotal": {},
+          "price": {
+            "gross": {
+              "currency": "EUR",
+              "value": 226.19
+            },
+            "net": {
+              "currency": "EUR",
+              "value": 188.49
+            }
+          },
+          "salesTaxTotal": {
+            "currency": "EUR",
+            "value": 37.7
+          },
+          "shippingRebatesTotal": {},
+          "shippingTaxTotal": {
+            "currency": "EUR",
+            "value": 0
+          },
+          "singleBasePrice": {
+            "gross": {
+              "currency": "EUR",
+              "value": 226.19
+            },
+            "net": {
+              "currency": "EUR",
+              "value": 188.49
+            }
+          },
+          "undiscountedPrice": {
+            "gross": {
+              "currency": "EUR",
+              "value": 226.19
+            },
+            "net": {
+              "currency": "EUR",
+              "value": 188.49
+            }
+          },
+          "undiscountedShippingTotal": {
+            "gross": {
+              "currency": "EUR",
+              "value": 0
+            },
+            "net": {
+              "currency": "EUR",
+              "value": 0
+            }
+          },
+          "undiscountedSingleBasePrice": {
+            "gross": {
+              "currency": "EUR",
+              "value": 226.19
+            },
+            "net": {
+              "currency": "EUR",
+              "value": 188.49
+            }
+          },
+          "valueRebatesTotal": {}
+        },
+        "product": "2511355000",
+        "quantity": {
+          "value": 1
+        },
+        "shipToAddress": "urn:address:basket:UksKAQJEVT8AAAF_JmYERiY9:HKMKAQJEkA8AAAF_JlgERiY.",
+        "shippingMethod": "STD_GROUND"
+      }
+    },
+    "basket_payments": {
+      "HqEKAQJEU9cAAAF_jmwERiY.": {
+        "baseAmount": {
+          "currency": "EUR",
+          "value": 302.57
+        },
+        "id": "HqEKAQJEU9cAAAF_jmwERiY.",
+        "openTender": true,
+        "paymentCosts": {
+          "gross": {
+            "currency": "EUR",
+            "value": 0
+          },
+          "net": {
+            "currency": "EUR",
+            "value": 0
+          },
+          "tax": {
+            "currency": "EUR",
+            "value": 0
+          }
+        },
+        "paymentInstrument": "ISH_INVOICE",
+        "paymentMethod": "ISH_INVOICE",
+        "redirectRequired": false,
+        "status": "Non traitéE",
+        "totalAmount": {
+          "currency": "EUR",
+          "value": 302.57
+        }
+      }
+    },
+    "basket_payments_paymentInstrument": {
+      "ISH_INVOICE": {
+        "id": "ISH_INVOICE"
+      }
+    },
+    "basket_payments_paymentMethod": {
+      "ISH_INVOICE": {
+        "default": true,
+        "description": "Le paiement par facture, simple et pratique – essayez-le vous aussi !",
+        "displayName": "Facture",
+        "id": "ISH_INVOICE",
+        "paymentInstruments": ["ISH_INVOICE"],
+        "restricted": false,
+        "saveAllowed": true,
+        "serviceID": "ISH_INVOICE"
+      }
+    }
+  },
+  "infos": [
+    {
+      "code": "include.not_resolved.error",
+      "message": "L’include demandé <basket_invoiceToAddress> n’a pas pu être fourni.",
+      "parameters": {
+        "include": "basket_invoiceToAddress"
+      }
+    },
+    {
+      "code": "include.not_resolved.error",
+      "message": "L’include demandé <basket_lineItems_discounts> n’a pas pu être fourni.",
+      "parameters": {
+        "include": "basket_lineItems_discounts"
+      }
+    }
+  ],
+  "links": {
+    "included": {
+      "basket_lineItems": {
+        ".4cKAQJEPsIAAAF_2V8ERiY.": "https://ish35-cmflzicmpre-lv.westeurope.cloudapp.azure.com/INTERSHOP/rest/WFS/Camfil-CamfilFR-Site/rest;loc=fr_FR;cur=EUR/baskets/UksKAQJEVT8AAAF_JmYERiY9/items/.4cKAQJEPsIAAAF_2V8ERiY."
+      },
+      "basket": {
+        "UksKAQJEVT8AAAF_JmYERiY9": "https://ish35-cmflzicmpre-lv.westeurope.cloudapp.azure.com/INTERSHOP/rest/WFS/Camfil-CamfilFR-Site/rest;loc=fr_FR;cur=EUR/baskets/UksKAQJEVT8AAAF_JmYERiY9"
+      },
+      "basket_commonShipToAddress": {
+        "urn:address:basket:UksKAQJEVT8AAAF_JmYERiY9:HKMKAQJEkA8AAAF_JlgERiY.": "https://ish35-cmflzicmpre-lv.westeurope.cloudapp.azure.com/INTERSHOP/rest/WFS/Camfil-CamfilFR-Site/rest;loc=fr_FR;cur=EUR/baskets/UksKAQJEVT8AAAF_JmYERiY9/addresses/HKMKAQJEkA8AAAF_JlgERiY."
+      }
+    }
+  }
+}

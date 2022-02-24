@@ -22,7 +22,7 @@ const camfilCheckoutPageRoutes: Routes = [
         component: CamfilCheckoutReceiptPageModule.component,
       },
       {
-        path: '',
+        path: '**',
         pathMatch: 'full',
         redirectTo: 'onestep',
       },
