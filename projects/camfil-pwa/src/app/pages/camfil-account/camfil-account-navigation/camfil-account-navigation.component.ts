@@ -9,6 +9,7 @@ import {
   OnInit,
 } from '@angular/core';
 import { Router } from '@angular/router';
+import { CamfilChannelSetting } from 'camfil-pwa/models/camfil-channel-configuration/camfil-channel-configuration.model';
 import { Subject } from 'rxjs';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
@@ -16,14 +17,12 @@ import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
 import { checkPermission } from 'ish-core/utils/authorization-toggle/authorization-toggle.service';
 import { whenTruthy } from 'ish-core/utils/operators';
 
-import { ChannelSetting } from '../../../../../../../src/app/extensions/cam-configuration/models/channel-configuration/channel-configuration.model';
-
 interface NavigationItems {
   [link: string]: {
     localizationKey: string;
     dataTestingId?: string;
     feature?: string;
-    channelSetting?: ChannelSetting;
+    channelSetting?: CamfilChannelSetting;
     permissions?: string[];
     children?: NavigationItems;
   };

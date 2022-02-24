@@ -3,6 +3,10 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { Action } from '@ngrx/store';
 import { provideMockStore } from '@ngrx/store/testing';
+import { CamfilChannelToggleDirective } from 'camfil-pwa/directives/camfil-channel-toggle.directive';
+import { CamfilConfigurationFacade } from 'camfil-pwa/facades/camfil-configuration.facade';
+import { CamfilChannelConfiguration } from 'camfil-pwa/models/camfil-channel-configuration/camfil-channel-configuration.model';
+import { getCamfilConfigurationState } from 'camfil-pwa/store/camfil-configuration';
 import { MockComponent, MockDirective } from 'ng-mocks';
 import { Observable, of } from 'rxjs';
 import { instance, mock, when } from 'ts-mockito';
@@ -22,10 +26,6 @@ import { CamfilErrorMessageComponent } from 'ish-shared/components/common/camfil
 import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
 
 import { CamCardsFacade } from '../../extensions/cam-cards/facades/cam-cards.facade';
-import { ChannelToggleDirective } from '../../extensions/cam-configuration/directives/channel-toggle.directive';
-import { CamfilConfigurationFacade } from '../../extensions/cam-configuration/facades/camfil-configuration.facade';
-import { ChannelConfiguration } from '../../extensions/cam-configuration/models/channel-configuration/channel-configuration.model';
-import { getConfigurationState } from '../../extensions/cam-configuration/store/configuration';
 
 import { CamfilCheckoutGuestFormComponent } from './camfil-checkout-guest-form/camfil-checkout-guest-form.component';
 import { CamfilCheckoutHeaderComponent } from './camfil-checkout-header/camfil-checkout-header.component';
@@ -44,7 +44,7 @@ describe('Camfil Checkout Onestep Page Component', () => {
   let camfilConfigurationFacadeMock: CamfilConfigurationFacade;
   let actions$: Observable<Action>;
 
-  const configuration: ChannelConfiguration = {
+  const configuration: CamfilChannelConfiguration = {
     languages: ['sv_SE', 'en_GB'],
     channelCode: 'SE',
     currency: 'SEK',
@@ -140,10 +140,10 @@ describe('Camfil Checkout Onestep Page Component', () => {
         MockComponent(CamfilCheckoutToolbarComponent),
         MockComponent(CamfilLoadingComponent),
         MockComponent(CamfilShoppingBucketEmptyComponent),
+        MockDirective(CamfilChannelToggleDirective),
         MockDirective(CamfilCheckoutGuestFormComponent),
         MockDirective(CamfilCheckoutPaymentComponent),
         MockDirective(CamfilErrorMessageComponent),
-        MockDirective(ChannelToggleDirective),
       ],
       imports: [RouterTestingModule],
       providers: [
@@ -152,7 +152,7 @@ describe('Camfil Checkout Onestep Page Component', () => {
         { provide: CheckoutFacade, useFactory: () => instance(checkoutFacade) },
         { provide: ShoppingFacade, useFactory: () => instance(shoppingFacadeMock) },
         provideMockStore({
-          selectors: [{ selector: getConfigurationState, value: configuration }],
+          selectors: [{ selector: getCamfilConfigurationState, value: configuration }],
         }),
         provideMockActions(() => actions$),
       ],

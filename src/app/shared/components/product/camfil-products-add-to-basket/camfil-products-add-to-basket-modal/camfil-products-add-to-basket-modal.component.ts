@@ -11,7 +11,7 @@ import { CamfilProductAddToBasketModalComponent } from 'ish-shared/components/pr
 import { AddProductsToCartModalComponent } from '../../../../../extensions/cam-cards/shared/add-products-to-cart-modal/add-products-to-cart-modal.component';
 import { ProductItem } from 'ish-core/models/product/product-item';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
-import { CamfilConfigurationFacade } from '../../../../../extensions/cam-configuration/facades/camfil-configuration.facade';
+import { CamfilConfigurationFacade } from 'camfil-pwa/facades/camfil-configuration.facade';
 
 @Component({
   selector: 'camfil-products-add-to-basket-modal',

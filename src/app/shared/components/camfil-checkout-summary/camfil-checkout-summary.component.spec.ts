@@ -1,5 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { CamfilChannelToggleDirective } from 'camfil-pwa/directives/camfil-channel-toggle.directive';
+import { CamfilConfigurationFacade } from 'camfil-pwa/facades/camfil-configuration.facade';
 import { MockComponent, MockDirective, MockPipe } from 'ng-mocks';
 import { of } from 'rxjs';
 import { LazyCamRequisitionCheckoutButtonComponent } from 'src/app/extensions/cam-requisition-management/exports/lazy-cam-requisition-checkout-button/lazy-cam-requisition-checkout-button.component';
@@ -19,9 +21,6 @@ import { BasketPromotionComponent } from 'ish-shared/components/basket/basket-pr
 import { CamfilModalDialogComponent } from 'ish-shared/components/common/camfil-modal-dialog/camfil-modal-dialog.component';
 import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
 
-import { ChannelToggleDirective } from '../../../extensions/cam-configuration/directives/channel-toggle.directive';
-import { CamfilConfigurationFacade } from '../../../extensions/cam-configuration/facades/camfil-configuration.facade';
-
 import { CamfilCheckoutSummaryComponent } from './camfil-checkout-summary.component';
 
 describe('Camfil Checkout Summary Component', () => {
@@ -31,13 +30,13 @@ describe('Camfil Checkout Summary Component', () => {
   let accountFacade: AccountFacade;
   let checkoutFacade: CheckoutFacade;
   let shoppingFacade: ShoppingFacade;
-  let camConfFacade: CamfilConfigurationFacade;
+  let camfilConfigurationFacade: CamfilConfigurationFacade;
 
   beforeEach(async () => {
     accountFacade = mock(AccountFacade);
     checkoutFacade = mock(CheckoutFacade);
     shoppingFacade = mock(ShoppingFacade);
-    camConfFacade = mock(CamfilConfigurationFacade);
+    camfilConfigurationFacade = mock(CamfilConfigurationFacade);
 
     await TestBed.configureTestingModule({
       declarations: [
@@ -49,7 +48,7 @@ describe('Camfil Checkout Summary Component', () => {
         MockComponent(ContentPageletComponent),
         MockComponent(LazyCamRequisitionCheckoutButtonComponent),
         MockDirective(AuthorizationToggleDirective),
-        MockDirective(ChannelToggleDirective),
+        MockDirective(CamfilChannelToggleDirective),
         MockDirective(NotAuthorizationToggleDirective),
         MockPipe(CamfilSlugifyPipe),
         MockPipe(PricePipe),
@@ -59,7 +58,7 @@ describe('Camfil Checkout Summary Component', () => {
         { provide: AccountFacade, useFactory: () => instance(accountFacade) },
         { provide: CheckoutFacade, useFactory: () => instance(checkoutFacade) },
         { provide: ShoppingFacade, useFactory: () => instance(shoppingFacade) },
-        { provide: CamfilConfigurationFacade, useFactory: () => instance(camConfFacade) },
+        { provide: CamfilConfigurationFacade, useFactory: () => instance(camfilConfigurationFacade) },
       ],
     }).compileComponents();
   });

@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, ViewCh
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { CamfilConfigurationFacade } from 'camfil-pwa/facades/camfil-configuration.facade';
 import { Observable, Subject } from 'rxjs';
 import { map, startWith, take, takeUntil, withLatestFrom } from 'rxjs/operators';
 
@@ -14,8 +15,6 @@ import { Price } from 'ish-core/models/price/price.model';
 import { whenFalsy } from 'ish-core/utils/operators';
 import { CamfilBasketCostSummaryComponent } from 'ish-shared/components/basket/camfil-basket-cost-summary/camfil-basket-cost-summary.component';
 import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
-
-import { CamfilConfigurationFacade } from '../../../extensions/cam-configuration/facades/camfil-configuration.facade';
 
 @Component({
   selector: 'camfil-checkout-summary',
@@ -45,7 +44,7 @@ export class CamfilCheckoutSummaryComponent extends CamfilBasketCostSummaryCompo
     protected accountFacade: AccountFacade,
     private checkoutFacade: CheckoutFacade,
     private shoppingFacade: ShoppingFacade,
-    private camConfFacade: CamfilConfigurationFacade,
+    private camfilConfigurationFacade: CamfilConfigurationFacade,
     private router: Router,
     private fb: FormBuilder,
     private dialog: MatDialog
@@ -80,7 +79,7 @@ export class CamfilCheckoutSummaryComponent extends CamfilBasketCostSummaryCompo
   }
 
   continueShopping() {
-    this.camConfFacade.continueShoppingUrl$.pipe(take(1)).subscribe(continueShoppingUrl => {
+    this.camfilConfigurationFacade.continueShoppingUrl$.pipe(take(1)).subscribe(continueShoppingUrl => {
       this.router.navigate([continueShoppingUrl]);
     });
   }

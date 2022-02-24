@@ -10,14 +10,13 @@ import {
   Output,
 } from '@angular/core';
 import { REQUEST } from '@nguniversal/express-engine/tokens';
+import { CamfilConfigurationFacade } from 'camfil-pwa/facades/camfil-configuration.facade';
+import { CamfilLang } from 'camfil-pwa/models/camfil-channel-configuration/camfil-channel-configuration.model';
 import { Request } from 'express';
 import { Observable } from 'rxjs';
 
 import { AppFacade } from 'ish-core/facades/app.facade';
 import { Locale } from 'ish-core/models/locale/locale.model';
-
-import { CamfilConfigurationFacade } from '../../../extensions/cam-configuration/facades/camfil-configuration.facade';
-import { CamfilLang } from '../../../extensions/cam-configuration/models/channel-configuration/channel-configuration.model';
 
 @Component({
   selector: 'camfil-language-switch',

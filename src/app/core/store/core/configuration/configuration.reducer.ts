@@ -6,10 +6,10 @@ import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
 
 import { environment } from '../../../../../environments/environment';
 
-import { ChannelConfigurationHelper } from '../../../../extensions/cam-configuration/models/channel-configuration/channel-configuration.helper';
+import { CamfilChannelConfigurationHelper } from 'camfil-pwa/models/camfil-channel-configuration/camfil-channel-configuration.helper';
 
 import { applyConfiguration, setCurrentLocale } from './configuration.actions';
-import channelSettings from '../../../../extensions/cam-configuration/settings';
+import channelSettings from 'camfil-pwa/settings';
 
 export interface ConfigurationState {
   baseURL?: string;
@@ -41,7 +41,7 @@ const initialState: ConfigurationState = {
 };
 
 const overrideLocalesCurrency = (state: ConfigurationState) => {
-  const settings = ChannelConfigurationHelper.getSettingsByChannelName(channelSettings, state.channel);
+  const settings = CamfilChannelConfigurationHelper.getSettingsByChannelName(channelSettings, state.channel);
 
   if (settings?.currency && state?.locales?.length) {
     const locales = state.locales.map(locale => ({

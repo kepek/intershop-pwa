@@ -213,6 +213,7 @@ export class ProductHelper {
   /**
    * Get product technical documents
    * @param product   The Product for which to get the technical documents
+   * @param showAllDocsType
    * @returns         The matching product technical documents
    */
 

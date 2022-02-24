@@ -1,11 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CamfilPwaStoreModule } from 'camfil-pwa/store/camfil-pwa-store.module';
 
-import { SharedModule } from 'ish-shared/shared.module';
-
 import { CamfilPwaRoutingModule } from './pages/camfil-pwa-routing.module';
 
 @NgModule({
-  imports: [CamfilPwaRoutingModule, CamfilPwaStoreModule, SharedModule],
+  imports: [CamfilPwaRoutingModule, CamfilPwaStoreModule],
 })
 export class CamfilPwaModule {}

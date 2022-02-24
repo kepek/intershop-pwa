@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { CamfilChannelToggleDirective } from 'camfil-pwa/directives/camfil-channel-toggle.directive';
 import { MockComponent, MockDirective } from 'ng-mocks';
 import { of } from 'rxjs';
 import { instance, mock, when } from 'ts-mockito';
@@ -22,7 +23,6 @@ import { ArticleDetailsComponent } from '../../../extensions/cam-cards/shared/ad
 import { CreateOrderProductModalComponent } from '../../../extensions/cam-cards/shared/add-product-to-cart-modal/create-order-product-modal/create-order-product-modal.component';
 import { OrderFormComponent } from '../../../extensions/cam-cards/shared/add-product-to-cart-modal/create-order-product-modal/order-form/order-form.component';
 import { CreateOrderProductSuccessComponent } from '../../../extensions/cam-cards/shared/add-product-to-cart-modal/create-order-product-success/create-order-product-success.component';
-import { ChannelToggleDirective } from '../../../extensions/cam-configuration/directives/channel-toggle.directive';
 import { CamfilCheckoutToolbarComponent } from '../camfil-checkout-toolbar/camfil-checkout-toolbar.component';
 import { CreateNewCamcardComponent } from '../camfil-checkout-toolbar/create-new-camcard/create-new-camcard.component';
 import { CreateOrderButtonComponent } from '../camfil-checkout-toolbar/create-order-button/create-order-button.component';
@@ -98,7 +98,7 @@ describe('Camfil Checkout Header Component', () => {
         MockComponent(OrderFormComponent),
         MockComponent(PrintOrderComponent),
         MockComponent(ZipCodeComponent),
-        MockDirective(ChannelToggleDirective),
+        MockDirective(CamfilChannelToggleDirective),
       ],
       providers: [
         { provide: CamCardsFacade, useFactory: () => instance(camCardFacadeMock) },

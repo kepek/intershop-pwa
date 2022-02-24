@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { CamfilConfigurationFacade } from 'camfil-pwa/facades/camfil-configuration.facade';
 import { Observable, Subject } from 'rxjs';
 import { distinctUntilChanged, take, takeUntil } from 'rxjs/operators';
-import { CamfilConfigurationFacade } from 'src/app/extensions/cam-configuration/facades/camfil-configuration.facade';
 
 import { EditBucket } from 'ish-core/models/bucket/bucket.model';
 import { ProductHelper } from 'ish-core/models/product/product.helper';
@@ -41,7 +41,7 @@ export class OrderFormComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private camCardsFacade: CamCardsFacade,
-    private camConfFacade: CamfilConfigurationFacade
+    private camfilConfigurationFacade: CamfilConfigurationFacade
   ) {}
 
   get customerId() {
@@ -52,7 +52,7 @@ export class OrderFormComponent implements OnInit, OnDestroy {
     this.addresses$ = this.camCardsFacade.addresses$;
     this.customers$ = this.camCardsFacade.customers$;
 
-    this.camConfFacade
+    this.camfilConfigurationFacade
       .isEnabled$('useSecondAddressLine')
       .pipe(take(1))
       .subscribe(val => {

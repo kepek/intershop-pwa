@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { CamfilConfigurationFacade } from 'camfil-pwa/facades/camfil-configuration.facade';
 import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
-import { CamfilConfigurationFacade } from 'src/app/extensions/cam-configuration/facades/camfil-configuration.facade';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
 import { ProductPriceComponent } from 'ish-shared/components/product/product-price/product-price.component';
@@ -19,14 +19,14 @@ export class CamfilProductPriceComponent extends ProductPriceComponent implement
   isLoggedIn$: Observable<boolean>;
   showPricesForNonLoggedInUser: boolean;
 
-  constructor(private accountFacade: AccountFacade, private camConfFacade: CamfilConfigurationFacade) {
+  constructor(private accountFacade: AccountFacade, private camfilConfigurationFacade: CamfilConfigurationFacade) {
     super();
   }
 
   ngOnInit() {
     this.isLoggedIn$ = this.accountFacade.isLoggedIn$;
 
-    this.camConfFacade
+    this.camfilConfigurationFacade
       .isEnabled$('showPricesForNonLoggedInUser')
       .pipe(take(1))
       .subscribe(val => {

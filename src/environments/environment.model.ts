@@ -47,7 +47,6 @@ export interface Environment {
     /* Camfil features */
     | 'camOrganizationManagement'
     | 'camRequisitionManagement'
-    | 'camConfiguration'
     | 'camIcc'
     | 'camCards'
     | 'camDemo'
@@ -144,7 +143,6 @@ export const ENVIRONMENT_DEFAULTS: Environment = {
     /* Google Tag Manager */
     'tracking',
     /* Camfil features */
-    'camConfiguration',
     'camIcc',
     'camOrganizationManagement',
     'camRequisitionManagement',

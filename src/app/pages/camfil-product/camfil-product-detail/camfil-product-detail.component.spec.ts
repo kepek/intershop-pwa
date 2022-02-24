@@ -3,6 +3,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { provideMockStore } from '@ngrx/store/testing';
 import { TranslateModule } from '@ngx-translate/core';
+import { CamfilChannelToggleDirective } from 'camfil-pwa/directives/camfil-channel-toggle.directive';
 import { MockComponent, MockDirective, MockPipe } from 'ng-mocks';
 
 import { FeatureToggleDirective } from 'ish-core/directives/feature-toggle.directive';
@@ -28,7 +29,6 @@ import { CamfilProductVariationSelectComponent } from 'ish-shared/components/pro
 import { ProductAttributesComponent } from 'ish-shared/components/product/product-attributes/product-attributes.component';
 
 import { LazyProductAddToCamCardComponent } from '../../../extensions/cam-cards/exports/lazy-product-add-to-cam-card/lazy-product-add-to-cam-card.component';
-import { ChannelToggleDirective } from '../../../extensions/cam-configuration/directives/channel-toggle.directive';
 import { LazyProductAddToOrderTemplateComponent } from '../../../extensions/order-templates/exports/lazy-product-add-to-order-template/lazy-product-add-to-order-template.component';
 import { LazyProductAddToQuoteComponent } from '../../../extensions/quoting/exports/lazy-product-add-to-quote/lazy-product-add-to-quote.component';
 import { ProductDetailActionsComponent } from '../../product/product-detail-actions/product-detail-actions.component';
@@ -85,7 +85,7 @@ describe('Camfil Product Detail Component', () => {
         MockComponent(ProductAttributesComponent),
         MockComponent(ProductDetailActionsComponent),
         MockComponent(ProductImagesComponent),
-        MockDirective(ChannelToggleDirective),
+        MockDirective(CamfilChannelToggleDirective),
         MockDirective(FeatureToggleDirective),
         MockPipe(PricePipe),
       ],
