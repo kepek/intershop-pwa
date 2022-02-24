@@ -6,6 +6,7 @@ import { CamfilOrder } from 'camfil-pwa/models/camfil-order/camfil-order.model';
 import { HttpError } from 'ish-core/models/http-error/http-error.model';
 import { loadOrderFail } from 'ish-core/store/customer/orders';
 import { setErrorOn, setLoadingOn, unsetLoadingAndErrorOn } from 'ish-core/utils/ngrx-creators';
+import { difference } from 'lodash-es';
 
 import {
   cloneCamfilOrder,
@@ -75,9 +76,15 @@ export const camfilOrdersReducer = createReducer(
   }),
   on(loadCamfilOrdersSuccess, (state: CamfilOrdersState, action) => {
     const { orders } = action.payload;
-
+    const diff = difference(
+      Object.keys(state.entities),
+      orders.map(({ id }) => id)
+    );
+    const updatedState = {
+      ...orderAdapter.upsertMany(orders, state),
+    };
     return {
-      ...orderAdapter.setAll(orders, state),
+      ...orderAdapter.removeMany(diff, updatedState),
     };
   }),
   on(loadCamfilOrderLineItemsSuccess, (state: CamfilOrdersState, action) => {

@@ -26,8 +26,8 @@ export interface CamfilOrder extends Pick<BasketTotal, 'itemSurchargeTotalsByTyp
   orderNumber?: string;
   taxAmount?: number;
   totalCustomerPriceSum: number;
-  totalDeliveredQty: number;
-  totalOrderedQty: number;
+  totalDeliveredQty?: number;
+  totalOrderedQty?: number;
   totalPriceAfterDiscountExVAT: number;
   lineItems?: CamfilOrderLineItem[];
   trackAndTrace?: CamfilOrderTrackAndTrace;

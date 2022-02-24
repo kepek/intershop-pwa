@@ -34,8 +34,6 @@ export class CamfilOrderMapper {
         orderNumber: data.orderNumber,
         taxAmount: data.taxAmount,
         totalCustomerPriceSum: data.totalCustomerPriceSum,
-        totalDeliveredQty: data.totalDeliveredQty,
-        totalOrderedQty: data.totalOrderedQty,
         totalPriceAfterDiscountExVAT: data.totalPriceAfterDiscountExVAT,
         phoneNotification: data.phoneNotification,
         volumeDiscount: data.volumeDiscount,
