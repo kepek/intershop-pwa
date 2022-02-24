@@ -212,7 +212,11 @@ export class CamfilRequisitionsListComponent implements OnInit, OnChanges, After
       const isCustomerMatching = true;
       if (
         filters.customer &&
-        data.customerNo.toString().trim().toLowerCase().indexOf(filters.customer.trim().toLowerCase()) === -1
+        data.requisitionCustomer.customerNo
+          .toString()
+          .trim()
+          .toLowerCase()
+          .indexOf(filters.customer.toString().trim().toLowerCase()) === -1
       ) {
         return false;
       }
@@ -252,8 +256,10 @@ export class CamfilRequisitionsListComponent implements OnInit, OnChanges, After
     return [...new Set(correctValues)];
   }
 
-  getCustomers(data) {
-    const customers = [...new Map(data.map(item => [item.customerNo, item])).values()];
+  getCustomers(data: CamfilRequisition[]) {
+    const customers = [
+      ...new Map(data.map(item => [item.requisitionCustomer.customerNo, item.requisitionCustomer])).values(),
+    ];
 
     return [undefined, ...customers];
   }
