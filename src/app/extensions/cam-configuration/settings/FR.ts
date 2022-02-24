@@ -11,6 +11,7 @@ const camfilConfiguration: ChannelConfiguration = {
   icmChannel: 'Camfil-CamfilFR-Site',
   preventCamCardERPIdValidation: true,
   showAddToCamCardButtonForNonLoggedInUser: false,
+  showAllDocsType: true,
   showCountryFieldOnAddressForms: true,
   showDutiesAndSurchargesTotalInBasketSummary: false,
   showPricesForNonLoggedInUser: true,

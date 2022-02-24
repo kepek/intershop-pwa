@@ -22,6 +22,7 @@ export interface ChannelSettings {
   showAddToCamCardButtonForNonLoggedInUser: boolean;
   showAddToCartButtonForNonLoggedInUser: boolean;
   showAllCamCardsButtonForOrganizationAdmin: boolean;
+  showAllDocsType: boolean;
   showCountryFieldOnAddressForms: boolean;
   showCustomProductAssortmentForNonLoggedInUser: boolean;
   showDutiesAndSurchargesTotalInBasketSummary: boolean;
