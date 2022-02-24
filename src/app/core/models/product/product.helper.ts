@@ -216,7 +216,7 @@ export class ProductHelper {
    * @returns         The matching product technical documents
    */
 
-  static getTechnicalDocuments(product: Product): ProductTechnicalDocument[] {
+  static getTechnicalDocuments(product: Product, showAllDocsType: boolean): ProductTechnicalDocument[] {
     const productDocumentTypes = [
       {
         name: 'camfil.product.brochures.text',
@@ -232,7 +232,7 @@ export class ProductHelper {
       },
     ];
 
-    if (!(product && product.images)) {
+    if (!product?.images) {
       return;
     }
 
@@ -242,7 +242,7 @@ export class ProductHelper {
           (image.typeID === ImageTypes.Brochures ||
             image.typeID === ImageTypes.ProductPdf ||
             image.typeID === ImageTypes.HamdlingAndMaintenance) &&
-          image.viewID === 'default'
+          (showAllDocsType || image.viewID === 'default')
       )
       .map(document => ({
         name: productDocumentTypes.find(prodDoc => prodDoc.type === document.typeID)?.name,
