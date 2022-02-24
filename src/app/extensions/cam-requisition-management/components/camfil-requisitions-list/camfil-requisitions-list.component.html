@@ -39,7 +39,7 @@
             <mat-label>{{ 'camfil.account.orderlist.filter.customer.title' | translate }}</mat-label>
             <mat-select [formControl]="customerFilter">
               <mat-option *ngFor="let customer of customers" [value]="customer?.customerNo">
-                {{ customer?.customerName || 'camfil.common.label.none' | translate }}, {{ customer?.customerNo }}
+                {{ customer?.companyName || 'camfil.common.label.none' | translate }}, {{ customer?.customerNo }}
                 <ng-container *ngIf="customer?.customerDepartment">, {{ customer.customerDepartment }}</ng-container>
               </mat-option>
             </mat-select>
