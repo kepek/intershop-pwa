@@ -3,6 +3,9 @@
 
 :host {
   display: block;
+  .text-no-transform {
+    text-transform: none;
+  }
 }
 
 .article-product-name {
@@ -47,19 +50,18 @@
       }
       .mat-form-field-infix {
         width: 110px;
-        border-top-width: 0;
         padding: $space-box 0;
+        border-top-width: 0;
       }
       .mat-form-field-label {
         margin-top: 6px;
       }
       input {
-        -moz-appearance: textfield;
+        appearance: textfield;
         &::-webkit-outer-spin-button,
         &::-webkit-inner-spin-button {
           margin: 0;
-          -webkit-appearance: none;
-
+          appearance: none;
         }
       }
     }

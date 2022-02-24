@@ -77,4 +77,10 @@
     text-overflow: ellipsis;
     white-space: nowrap;
   }
+
+  &::ng-deep {
+    ish-content-include {
+      font-size: 16px;
+    }
+  }
 }

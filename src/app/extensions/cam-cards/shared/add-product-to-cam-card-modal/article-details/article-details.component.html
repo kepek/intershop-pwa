@@ -7,7 +7,7 @@
 
   <div [class.article-details--show-product-name]="showProductName" class="article-details">
     <ng-container *ngIf="requiresMeasurement">
-      <h3 class="m-0 text-center text-capitalize w-100">
+      <h3 class="m-0 text-center text-no-transform w-100">
         <b>{{ 'camfil.modal.addToCamcard.measurement.choose.header' | translate }}</b>
       </h3>
       <div class="article-details__measurement d-flex flex-wrap w-100 pt-1">
@@ -65,7 +65,7 @@
 </ng-container>
 <ng-template #measurementsOnly>
   <ng-container *ngIf="showMeasurementsForm">
-    <h3 class="m-0 text-center text-capitalize w-100">
+    <h3 class="m-0 text-center text-no-transform w-100">
       <b>{{ 'camfil.modal.addToCamcard.measurement.choose.header' | translate }}</b>
     </h3>
     <div class="article-details__measurement d-flex flex-wrap w-100 pt-1">

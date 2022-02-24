@@ -6,7 +6,7 @@
 
   &__header {
     margin-top: $space-box;
-    text-transform: capitalize;
+    text-transform: none;
     @include font-size-subtitle1;
   }
 
