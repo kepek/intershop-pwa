@@ -1,10 +1,9 @@
 import { TestBed } from '@angular/core/testing';
+import { CamfilIccService as IccApiService } from 'camfil-pwa/services/camfil-icc/camfil-icc.service';
 import { of } from 'rxjs';
 import { anything, instance, mock, verify, when } from 'ts-mockito';
 
 import { AppFacade } from 'ish-core/facades/app.facade';
-
-import { ApiService as IccApiService } from '../../../cam-icc/services/api/api.service';
 
 import { AhuService } from './ahu.service';
 

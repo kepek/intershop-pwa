@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
+import { CamfilIccService } from 'camfil-pwa/services/camfil-icc/camfil-icc.service';
 import { Observable, OperatorFunction, throwError } from 'rxjs';
 import { map, switchMap, take } from 'rxjs/operators';
 
 import { AppFacade } from 'ish-core/facades/app.facade';
 
-import { ApiService as IccApiService } from '../../../cam-icc/services/api/api.service';
 import { ManufacturerData } from '../../models/manufacturer/manufacturer.interface';
 import { ManufacturerMapper } from '../../models/manufacturer/manufacturer.mapper';
 import { Manufacturer } from '../../models/manufacturer/manufacturer.model';
@@ -18,7 +18,7 @@ export function unpackHeap<T>(): OperatorFunction<[], T[]> {
 
 @Injectable({ providedIn: 'root' })
 export class AhuService {
-  constructor(private iccApiService: IccApiService, private appFacade: AppFacade) {}
+  constructor(private camfilIccService: CamfilIccService, private appFacade: AppFacade) {}
 
   market$ = this.appFacade.getCountryCodeByChannel$.pipe(take(1));
 
@@ -31,7 +31,7 @@ export class AhuService {
       switchMap(countryCode => {
         const requestBody = { market: countryCode };
 
-        return this.iccApiService.post<ManufacturerData[]>('ahu/manufacturer', requestBody).pipe(
+        return this.camfilIccService.post<ManufacturerData[]>('ahu/manufacturer', requestBody).pipe(
           unpackHeap<ManufacturerData>(),
           map(data => {
             if (data && data.length) {
@@ -53,7 +53,7 @@ export class AhuService {
       switchMap(countryCode => {
         const requestBody = { id, market: countryCode };
 
-        return this.iccApiService.post<ManufacturerData>('ahu/manufacturer', requestBody).pipe(
+        return this.camfilIccService.post<ManufacturerData>('ahu/manufacturer', requestBody).pipe(
           map(data => {
             if (Array.isArray(data)) {
               return ManufacturerMapper.fromListData(data).find(m => m.id === id);
@@ -85,7 +85,7 @@ export class AhuService {
           Market: countryCode,
         };
 
-        return this.iccApiService.post<UnitData[]>('ahu/unit', requestBody).pipe(
+        return this.camfilIccService.post<UnitData[]>('ahu/unit', requestBody).pipe(
           unpackHeap<UnitData>(),
           map(data => {
             if (data && data.length) {
@@ -117,7 +117,7 @@ export class AhuService {
           Market: countryCode,
         };
 
-        return this.iccApiService.post<UnitData>('ahu/unit', requestBody).pipe(
+        return this.camfilIccService.post<UnitData>('ahu/unit', requestBody).pipe(
           map(data => {
             if (Array.isArray(data)) {
               return UnitMapper.fromListData(data).find(u => u?.ahu?.id === unitId);

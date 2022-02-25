@@ -1,29 +1,25 @@
 import { createReducer, on } from '@ngrx/store';
 
-import { applyIccConfiguration, setIccToken } from './icc.actions';
+import { applyIccConfiguration } from './camfil-icc.actions';
 
-export interface ICCState {
+export interface CamfilICCState {
   iccProxyURL: string;
   iccServer: string;
   iccToken: string;
   iccTokenHeaderKey: string;
 }
 
-const initialState: ICCState = {
+const initialState: CamfilICCState = {
   iccProxyURL: undefined,
   iccServer: undefined,
   iccToken: undefined,
   iccTokenHeaderKey: undefined,
 };
 
-export const iccReducer = createReducer(
+export const camfilIccReducer = createReducer(
   initialState,
-  on(applyIccConfiguration, (state: ICCState, action) => {
+  on(applyIccConfiguration, (state: CamfilICCState, action) => {
     const { iccProxyURL, iccServer, iccToken, iccTokenHeaderKey } = action.payload;
     return { ...state, iccProxyURL, iccServer, iccToken, iccTokenHeaderKey };
-  }),
-  on(setIccToken, (state: ICCState, action) => {
-    const { iccToken } = action.payload;
-    return { ...state, iccToken };
   })
 );

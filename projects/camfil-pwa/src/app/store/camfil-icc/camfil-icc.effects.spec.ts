@@ -1,9 +1,9 @@
 import { PLATFORM_ID } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { BrowserTransferStateModule } from '@angular/platform-browser';
-import { ROOT_EFFECTS_INIT } from '@ngrx/effects';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { Action } from '@ngrx/store';
+import { CamfilPwaStoreModule } from 'camfil-pwa/store/camfil-pwa-store.module';
 import { Observable, Subject, of } from 'rxjs';
 import { take } from 'rxjs/operators';
 
@@ -11,21 +11,19 @@ import { LARGE_BREAKPOINT_WIDTH, MEDIUM_BREAKPOINT_WIDTH } from 'ish-core/config
 import { ConfigurationEffects } from 'ish-core/store/core/configuration/configuration.effects';
 import { CoreStoreModule } from 'ish-core/store/core/core-store.module';
 
-import { CamIccStoreModule } from '../cam-icc-store.module';
+import { applyIccConfiguration, initIcc } from './camfil-icc.actions';
+import { CamfilIccEffects } from './camfil-icc.effects';
 
-import { applyIccConfiguration, initIcc, setIccToken } from './icc.actions';
-import { IccEffects } from './icc.effects';
-
-describe('Icc Effects', () => {
+describe('Camfil Icc Effects', () => {
   let actions$: Observable<Action>;
-  let effects: IccEffects;
+  let effects: CamfilIccEffects;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
         BrowserTransferStateModule,
-        CamIccStoreModule.forTesting('icc'),
-        CoreStoreModule.forTesting(['configuration'], [ConfigurationEffects, IccEffects]),
+        CamfilPwaStoreModule.forTesting('camfilIcc'),
+        CoreStoreModule.forTesting(['configuration'], [ConfigurationEffects, CamfilIccEffects]),
       ],
       providers: [
         provideMockActions(() => actions$),
@@ -35,7 +33,7 @@ describe('Icc Effects', () => {
       ],
     });
 
-    effects = TestBed.inject(IccEffects);
+    effects = TestBed.inject(CamfilIccEffects);
   });
 
   describe('initIcc$', () => {
@@ -50,37 +48,6 @@ describe('Icc Effects', () => {
       effects.initIcc$.subscribe(
         data => {
           expect(data.type).toEqual(applyIccConfiguration.type);
-          testComplete$.next();
-        },
-        fail,
-        () => testComplete$.next()
-      );
-      // tslint:enable:use-async-synchronization-in-tests
-    });
-  });
-
-  describe('setIccToken$', () => {
-    beforeEach(() => {
-      // on server
-      process.env.ICC_TOKEN = 'dummy';
-    });
-
-    afterEach(() => {
-      process.env.ICC_TOKEN = undefined;
-    });
-
-    it('should set the icc token once on effects init and complete', done => {
-      // tslint:disable:use-async-synchronization-in-tests
-      const testComplete$ = new Subject<void>();
-
-      actions$ = of({ type: ROOT_EFFECTS_INIT });
-
-      testComplete$.pipe(take(2)).subscribe({ complete: done });
-
-      effects.setIccToken$.subscribe(
-        data => {
-          expect(data.type).toEqual(setIccToken.type);
-          expect(data.payload).toHaveProperty('iccToken', 'dummy');
           testComplete$.next();
         },
         fail,
