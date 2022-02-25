@@ -110,6 +110,20 @@
       </td>
     </ng-container>
 
+    <!-- Requisition Number Column -->
+    <ng-container cdkColumnDef="requisitionNo">
+      <th *matHeaderCellDef mat-header-cell mat-sort-header data-testing-id="th-order-box-label">
+        {{ 'account.approvallist.table.id_of_order' | translate }}
+      </th>
+      <td
+        mat-cell
+        *matCellDef="let requisition"
+        [attr.data-label]="'account.approvallist.table.id_of_order' | translate"
+      >
+        {{ requisition.requisitionNo || '---' }}
+      </td>
+    </ng-container>
+
     <!-- BoxLabel Column -->
     <ng-container cdkColumnDef="orderGoodsMark">
       <th *matHeaderCellDef mat-header-cell mat-sort-header data-testing-id="th-order-box-label">

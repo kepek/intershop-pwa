@@ -182,9 +182,9 @@ export class CamfilRequisitionsListComponent implements OnInit, OnChanges, After
       const filters = JSON.parse(filterString) as CamfilRequisitionListFilter;
       // Check search string
       const isSearchMatching = true;
-      // TODO: Add requireds fields to filter requisitions list (Customer | Request number)
+
       const textSearchData = {
-        customerNo: data.customerNo,
+        customerNo: data.requisitionCustomer.customerNo,
         requisitionNo: data.requisitionNo,
       };
 
@@ -293,7 +293,9 @@ export class CamfilRequisitionsListComponent implements OnInit, OnChanges, After
   }
 
   navigateTo(requisition) {
-    this.router.navigate([`/account/requisitions/${this.view}/${requisition.id}`], { queryParamsHandling: 'preserve' });
+    this.router.navigate([`/account/requisitions/${this.view}/${requisition.id}`], {
+      queryParamsHandling: 'preserve',
+    });
   }
 
   setDataSourceAttributes() {

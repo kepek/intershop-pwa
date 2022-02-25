@@ -35,6 +35,7 @@ export class ApproverPageComponent implements OnInit, OnDestroy {
     this.deviceType$ = this.appFacade.deviceType$;
     this.columnsToDisplay = [
       'customerNumberAndName',
+      'requisitionNo',
       'orderGoodsMark',
       'creationDate',
       'buyer',
