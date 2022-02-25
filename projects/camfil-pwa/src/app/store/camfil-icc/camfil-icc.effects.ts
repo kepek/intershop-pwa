@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, OnInitEffects, createEffect, ofType } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
-import { map, tap, withLatestFrom } from 'rxjs/operators';
+import { map, withLatestFrom } from 'rxjs/operators';
 
 import { StatePropertiesService } from 'ish-core/utils/state-transfer/state-properties.service';
 
@@ -14,7 +14,6 @@ export class CamfilIccEffects implements OnInitEffects {
   initIcc$ = createEffect(() =>
     this.actions$.pipe(
       ofType(initIcc),
-      tap(x => console.log('x', x)),
       withLatestFrom(
         this.stateProperties.getStateOrEnvOrDefault<string>('ICC_PROXY_URL', 'iccProxyURL'),
         this.stateProperties.getStateOrEnvOrDefault<string>('ICC_SERVER', 'iccServer'),
