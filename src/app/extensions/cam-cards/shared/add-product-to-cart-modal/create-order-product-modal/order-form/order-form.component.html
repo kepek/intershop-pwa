@@ -1,4 +1,4 @@
-<div class="delivery-address" mat-dialog-content>
+<div class="delivery-address" mat-dialog-content [ngStyle]="{ 'max-height.vh': maxHeight }">
   <form [formGroup]="addressForm" class="delivery-address__form" novalidate="novalidate">
     <!--customer select-->
     <mat-form-field appearance="outline" class="delivery-address__form--field">
