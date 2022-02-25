@@ -4,6 +4,7 @@ import { TestBed } from '@angular/core/testing';
 import { Store } from '@ngrx/store';
 import { provideMockStore } from '@ngrx/store/testing';
 import { loadCamfilConfigurationSuccess } from 'camfil-pwa/store/camfil-configuration';
+import { getIccRestEndpoint } from 'camfil-pwa/store/camfil-icc';
 import { CamfilPwaStoreModule } from 'camfil-pwa/store/camfil-pwa-store.module';
 import { noop } from 'rxjs';
 import { anything, capture, spy, verify } from 'ts-mockito';
@@ -12,19 +13,17 @@ import { CoreStoreModule } from 'ish-core/store/core/core-store.module';
 import { serverError } from 'ish-core/store/core/error';
 import { CustomerStoreModule } from 'ish-core/store/customer/customer-store.module';
 
-import { getIccRestEndpoint } from '../../store/icc';
-
-import { ApiService } from './api.service';
+import { CamfilIccService } from './camfil-icc.service';
 
 // testing here is handled by http testing controller
 // tslint:disable: use-async-synchronization-in-tests
 
-describe('Api Service', () => {
+describe('Camfil Icc Service', () => {
   // TODO (extMlk): Replace with getIccRestEndpoint selector;
   const REST_URL = 'http://www.example.org/ICC';
 
   describe('ICC API Service Methods', () => {
-    let apiService: ApiService;
+    let apiService: CamfilIccService;
     let storeSpy$: Store;
     let httpTestingController: HttpTestingController;
 
@@ -37,7 +36,7 @@ describe('Api Service', () => {
         ],
       });
 
-      apiService = TestBed.inject(ApiService);
+      apiService = TestBed.inject(CamfilIccService);
       httpTestingController = TestBed.inject(HttpTestingController);
       storeSpy$ = spy(TestBed.inject(Store));
     });
@@ -162,7 +161,7 @@ describe('Api Service', () => {
 
   describe('ICC API Service Pipeable Operators', () => {
     let httpTestingController: HttpTestingController;
-    let apiService: ApiService;
+    let apiService: CamfilIccService;
 
     const ahuManufacturerPath = `${REST_URL}/ahu/manufacturer`;
     const ahuManufacturerResponse = [
@@ -237,7 +236,7 @@ describe('Api Service', () => {
           provideMockStore({ selectors: [{ selector: getIccRestEndpoint, value: 'http://www.example.org/ICC' }] }),
         ],
       });
-      apiService = TestBed.inject(ApiService);
+      apiService = TestBed.inject(CamfilIccService);
       httpTestingController = TestBed.inject(HttpTestingController);
     });
 
@@ -298,7 +297,7 @@ describe('Api Service', () => {
   });
 
   describe('ICC API Service URL construction', () => {
-    let apiService: ApiService;
+    let apiService: CamfilIccService;
     let httpTestingController: HttpTestingController;
 
     beforeEach(() => {
@@ -309,7 +308,7 @@ describe('Api Service', () => {
         ],
       });
 
-      apiService = TestBed.inject(ApiService);
+      apiService = TestBed.inject(CamfilIccService);
       httpTestingController = TestBed.inject(HttpTestingController);
     });
 
@@ -374,7 +373,7 @@ describe('Api Service', () => {
   });
 
   describe('ICC API Service Headers', () => {
-    let apiService: ApiService;
+    let apiService: CamfilIccService;
     let store$: Store;
     let httpTestingController: HttpTestingController;
 
@@ -392,7 +391,7 @@ describe('Api Service', () => {
         ],
       });
 
-      apiService = TestBed.inject(ApiService);
+      apiService = TestBed.inject(CamfilIccService);
       httpTestingController = TestBed.inject(HttpTestingController);
       store$ = TestBed.inject(Store);
       store$.dispatch(
@@ -455,7 +454,7 @@ describe('Api Service', () => {
   });
 
   describe('ICC API Service exclusive runs', () => {
-    let apiService: ApiService;
+    let apiService: CamfilIccService;
     let store$: Store;
     let httpTestingController: HttpTestingController;
 
@@ -471,7 +470,7 @@ describe('Api Service', () => {
         ],
       });
 
-      apiService = TestBed.inject(ApiService);
+      apiService = TestBed.inject(CamfilIccService);
       httpTestingController = TestBed.inject(HttpTestingController);
       store$ = TestBed.inject(Store);
       store$.dispatch(

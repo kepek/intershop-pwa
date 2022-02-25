@@ -7,6 +7,8 @@ import { pick } from 'lodash-es';
 import { resetOnLogoutMeta } from 'ish-core/utils/meta-reducers';
 
 import { camfilConfigurationReducer } from './camfil-configuration/camfil-configuration.reducer';
+import { CamfilIccEffects } from './camfil-icc/camfil-icc.effects';
+import { camfilIccReducer } from './camfil-icc/camfil-icc.reducer';
 import { CamfilOrdersEffects } from './camfil-orders/camfil-orders.effects';
 import { camfilOrdersReducer } from './camfil-orders/camfil-orders.reducer';
 import { CamfilPwaState } from './camfil-pwa-store';
@@ -17,9 +19,10 @@ const camfilPwaReducers: ActionReducerMap<CamfilPwaState> = {
   camfilUser: camfilUserReducer,
   camfilOrders: camfilOrdersReducer,
   camfilConfiguration: camfilConfigurationReducer,
+  camfilIcc: camfilIccReducer,
 };
 
-const camfilPwaEffects = [CamfilUserEffects, CamfilOrdersEffects, CamfilConfigurationEffects];
+const camfilPwaEffects = [CamfilUserEffects, CamfilOrdersEffects, CamfilConfigurationEffects, CamfilIccEffects];
 
 const metaReducers = [resetOnLogoutMeta];
 
