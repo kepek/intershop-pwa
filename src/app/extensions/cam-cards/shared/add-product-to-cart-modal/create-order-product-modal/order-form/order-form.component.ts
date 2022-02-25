@@ -19,6 +19,10 @@ import { ADDRESS_VALIDATORS } from './validators.js';
   templateUrl: './order-form.component.html',
   styleUrls: ['./order-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  // tslint:disable-next-line: no-host-metadata-property
+  host: {
+    '(window:resize)': 'onResize()',
+  },
 })
 export class OrderFormComponent implements OnInit, OnDestroy {
   addressForm: FormGroup;
@@ -35,6 +39,7 @@ export class OrderFormComponent implements OnInit, OnDestroy {
   @Input() edit?: boolean;
   setMaxLengthValidation = ProductHelper.setMaxLengthValidation;
   useSecondAddressLine: boolean;
+  maxHeight = 65;
 
   private destroy$ = new Subject<void>();
 
@@ -93,6 +98,8 @@ export class OrderFormComponent implements OnInit, OnDestroy {
     if (this.orderToEdit && this.orderToEdit.customerId) {
       this.pickCustomer({ value: this.orderToEdit.customerId });
     }
+
+    this.onResize();
   }
 
   pickAddress(event) {
@@ -173,5 +180,35 @@ export class OrderFormComponent implements OnInit, OnDestroy {
   setDefaultFullCustomer(customerId: string) {
     const selectedCustomer = this.customersArr?.find(customer => customer.id === customerId);
     this.addressForm?.patchValue({ customerFull: selectedCustomer });
+  }
+
+  onResize() {
+    let isMobileView = window.innerWidth <= 768;
+
+    const maxHeightSteps = [
+      {
+        heightTresholdMax: 700,
+        heightTresholdMin: 601,
+        heightValue: 55,
+      },
+      {
+        heightTresholdMax: 600,
+        heightTresholdMin: 501,
+        heightValue: 45,
+      },
+      {
+        heightTresholdMax: 500,
+        heightTresholdMin: 0,
+        heightValue: 35,
+      },
+    ];
+
+    if (!isMobileView) {
+      let heightValue = maxHeightSteps.find(
+        step => window.innerHeight <= step.heightTresholdMax && window.innerHeight >= step.heightTresholdMin
+      )?.heightValue;
+
+      this.maxHeight = heightValue ? heightValue : 65;
+    }
   }
 }
