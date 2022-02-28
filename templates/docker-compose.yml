@@ -26,11 +26,13 @@ services:
     depends_on:
       - pwa
     environment:
+      ICM_BASE_URL: ${ICM_BASE_URL}
       UPSTREAM_PWA: 'http://pwa:4200'
       DEBUG: 1
       CACHE: 0
       PAGESPEED: 0
       MULTI_CHANNEL_SOURCE: './multi-channel.yaml'
+      OVERRIDE_IDENTITY_PROVIDERS_SOURCE: './override-identity-providers.yaml'
       # PROMETHEUS: 1
       # COMPRESSION: 0
       # DEVICE_DETECTION: 0

@@ -7,6 +7,12 @@ import { IdentityProviderRegisterGuard } from 'ish-core/guards/identity-provider
 
 const routes: Routes = [
   {
+    path: 'camfil/login',
+    loadChildren: () =>
+      import('../../../../../src/app/pages/loading/loading-page.module').then(m => m.LoadingPageModule),
+    canActivate: [IdentityProviderLoginGuard],
+  },
+  {
     path: 'account',
     loadChildren: () =>
       import('../pages/camfil-account/camfil-account-page.module').then(m => m.CamfilAccountPageModule),

@@ -11,7 +11,6 @@ const loadingPageRoutes: Routes = [
     component: LoadingPageComponent,
     data: {
       wrapperClass: 'errorpage',
-      headerType: 'simple',
     },
   },
 ];

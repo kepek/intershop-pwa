@@ -123,7 +123,7 @@ export const ENVIRONMENT_DEFAULTS: Environment = {
   icmServer: 'INTERSHOP/rest/WFS',
   icmServerStatic: 'INTERSHOP/static/WFS',
   icmApplication: 'rest',
-  identityProvider: 'CAMFIL',
+  identityProvider: 'ICM',
   identityProviders: {
     // tslint:disable-next-line:use-camel-case-environment-properties
     CAMFIL: {

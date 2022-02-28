@@ -1,0 +1,3 @@
+'.+':
+  - path: /camfil/login
+    type: CAMFIL
