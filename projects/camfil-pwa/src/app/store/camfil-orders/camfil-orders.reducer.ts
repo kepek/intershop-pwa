@@ -125,6 +125,7 @@ export const camfilOrdersReducer = createReducer(
   }),
   on(updateCamfilOrder, (state: CamfilOrdersState, action) => {
     const { order } = action.payload;
+
     return {
       ...orderAdapter.updateOne({ id: order?.id, changes: order }, state),
     };

@@ -5,12 +5,9 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store, select } from '@ngrx/store';
 import { CamfilOrderService } from 'camfil-pwa/services/camfil-order/camfil-order.service';
 import { loadOrderIfNotLoaded } from 'camfil-pwa/store/customer/orders';
-import { isEqual } from 'lodash-es';
 import { identity, iif } from 'rxjs';
 import {
   concatMap,
-  debounceTime,
-  distinctUntilChanged,
   filter,
   groupBy,
   map,
@@ -19,7 +16,6 @@ import {
   takeWhile,
   tap,
   throttleTime,
-  window,
   withLatestFrom,
 } from 'rxjs/operators';
 
@@ -27,7 +23,7 @@ import { ProductCompletenessLevel } from 'ish-core/models/product/product.helper
 import { displayErrorMessage } from 'ish-core/store/core/messages';
 import { ofUrl, selectRouteParam } from 'ish-core/store/core/router';
 import { loadBasket } from 'ish-core/store/customer/basket';
-import { getProducts, loadProductIfNotLoaded, loadProductSuccess } from 'ish-core/store/shopping/products';
+import { getProducts, loadProductIfNotLoaded } from 'ish-core/store/shopping/products';
 import { mapErrorToAction, mapToPayload, mapToPayloadProperty, whenTruthy } from 'ish-core/utils/operators';
 
 import {
@@ -130,6 +126,30 @@ export class CamfilOrdersEffects {
       switchMap(({ lineItems }) => [
         ...lineItems.map(({ sku }) => loadProductIfNotLoaded({ sku, level: ProductCompletenessLevel.List })),
       ])
+    )
+  );
+
+  checkProductsAvailabilityForSelectedCamfilOrder$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loadCamfilOrderLineItemsSuccess),
+      mapToPayload(),
+      map(({ lineItems }) =>
+        lineItems.reduce<string[]>((acc, val) => (acc.find(sku => sku === val.sku) ? acc : [...acc, val.sku]), [])
+      ),
+      switchMap(skus =>
+        this.store.pipe(
+          select(getProducts, { skus }),
+          filter(products => products.length === skus.length)
+        )
+      ),
+      // check whether product failed or availability when not failed
+      map(products =>
+        products.map(({ availability, failed, sku }) => ({ sku, availability: failed ? false : availability }))
+      ),
+      // check if all products are available, if not user should not be able to re-order
+      map(availabilities => availabilities.every(({ availability }) => !!availability)),
+      withLatestFrom(this.store.pipe(select(getSelectedOrder))),
+      map(([canReOrder, order]) => updateCamfilOrder({ order: { ...order, canReOrder } }))
     )
   );
 
@@ -243,41 +263,6 @@ export class CamfilOrdersEffects {
         displayErrorMessage({
           message: error?.message || error?.code,
         })
-      )
-    )
-  );
-
-  loadProductsForSelectedCamfilOrder$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(loadProductSuccess),
-      mapToPayload(),
-      // accumulate all actions
-      window(this.actions$.pipe(ofType(loadProductSuccess), debounceTime(1000))),
-      mergeMap(window$ =>
-        window$.pipe(
-          withLatestFrom(
-            this.store.pipe(
-              select(getSelectedOrder),
-              map(order =>
-                order?.lineItems?.reduce<string[]>((acc, val) => {
-                  acc.push(val?.sku);
-                  return acc;
-                }, [])
-              )
-            )
-          ),
-          filter(([, skus]) => !!skus?.length),
-          switchMap(([, skus]) => this.store.pipe(select(getProducts, { skus }))),
-          // check whether product failed or availability when not failed
-          map(products =>
-            products.map(({ availability, failed, sku }) => ({ sku, availability: failed ? false : availability }))
-          ),
-          // check if all products are available, if not user should not be able to re-order
-          map(availabilities => availabilities.every(({ availability }) => !!availability)),
-          distinctUntilChanged(isEqual),
-          withLatestFrom(this.store.pipe(select(getSelectedOrder))),
-          mergeMap(([canReOrder, order]) => [updateCamfilOrder({ order: { ...order, canReOrder } })])
-        )
       )
     )
   );
