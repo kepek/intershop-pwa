@@ -41,8 +41,6 @@ export class IdentityProviderFactory {
           .filter(p => (p.feature ? this.featureToggleService.enabled(p.feature) : true))
           .find(p => p.type === config?.type);
 
-        console.log({ provider, config })
-
         if (!provider) {
           console.error('did not find identity provider for config', config);
         } else {

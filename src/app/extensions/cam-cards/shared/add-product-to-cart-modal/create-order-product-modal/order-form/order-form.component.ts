@@ -183,7 +183,7 @@ export class OrderFormComponent implements OnInit, OnDestroy {
   }
 
   onResize() {
-    let isMobileView = window.innerWidth <= 768;
+    const isMobileView = window.innerWidth <= 768;
 
     const maxHeightSteps = [
       {
@@ -204,7 +204,7 @@ export class OrderFormComponent implements OnInit, OnDestroy {
     ];
 
     if (!isMobileView) {
-      let heightValue = maxHeightSteps.find(
+      const heightValue = maxHeightSteps.find(
         step => window.innerHeight <= step.heightTresholdMax && window.innerHeight >= step.heightTresholdMin
       )?.heightValue;
 
