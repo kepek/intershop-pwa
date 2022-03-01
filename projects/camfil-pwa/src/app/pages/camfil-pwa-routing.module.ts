@@ -7,6 +7,18 @@ import { IdentityProviderRegisterGuard } from 'ish-core/guards/identity-provider
 
 const routes: Routes = [
   {
+    path: 'login-on-behalf',
+    loadChildren: () =>
+      import('../../../../../src/app/pages/loading/loading-page.module').then(m => m.LoadingPageModule),
+    canActivate: [IdentityProviderLoginGuard],
+    data: {
+      meta: {
+        robots: 'noindex, nofollow',
+      },
+      breadcrumbData: [],
+    },
+  },
+  {
     path: 'account',
     loadChildren: () =>
       import('../pages/camfil-account/camfil-account-page.module').then(m => m.CamfilAccountPageModule),
@@ -17,7 +29,6 @@ const routes: Routes = [
         title: 'account.my_account.heading',
         robots: 'noindex, nofollow',
       },
-      feature: 'camAccount',
       breadcrumbData: [],
     },
   },
@@ -28,7 +39,6 @@ const routes: Routes = [
       meta: {
         robots: 'noindex, nofollow',
       },
-      feature: 'camAccount',
       breadcrumbData: [],
     },
     loadChildren: () => import('../pages/camfil-login/camfil-login-page.module').then(m => m.CamfilLoginPageModule),
@@ -41,7 +51,6 @@ const routes: Routes = [
       meta: {
         robots: 'noindex, nofollow',
       },
-      feature: 'camAccount',
       breadcrumbData: [],
     },
     loadChildren: () =>
@@ -51,7 +60,6 @@ const routes: Routes = [
   {
     path: 'forgotPassword',
     data: {
-      feature: 'camAccount',
       breadcrumbData: [],
     },
     loadChildren: () =>
@@ -63,7 +71,6 @@ const routes: Routes = [
   {
     path: 'forgotUsername',
     data: {
-      feature: 'camAccount',
       breadcrumbData: [],
     },
     loadChildren: () =>
