@@ -54,6 +54,21 @@ export const updateCamfilRequisitionStatusSuccess = createAction(
   payload<{ requisition: CamfilRequisition; status: string }>()
 );
 
+export const createOrderFromApprovedRequisition = createAction(
+  '[Camfil Requisitions API] Create Order From Approved Requisition',
+  payload<{ requisitionId: string }>()
+);
+
+export const createOrderFromApprovedRequisitionSuccess = createAction(
+  '[Camfil Requisitions API] Create Order From Approved Requisition Success',
+  payload<{ requisition: CamfilRequisition }>()
+);
+
+export const createOrderFromApprovedRequisitionFail = createAction(
+  '[Camfil Requisitions API] Create Order From Approved Requisition Fail',
+  httpError()
+);
+
 export const addProductToCamfilRequisition = createAction(
   '[Camfil Requisitions API] Add Product To Requisition',
   payload<{

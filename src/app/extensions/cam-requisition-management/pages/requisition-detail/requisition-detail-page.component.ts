@@ -12,7 +12,8 @@ import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
 
 import { CamfilRequisitionContextFacade } from '../../facades/cam-requisition-context.facade';
 import { CamRequisitionManagementFacade } from '../../facades/cam-requisition-management.facade';
-import { CamfilRequisition } from '../../models/camfil-requisition/camfil-requisition.model';
+import { CamfilRequisitionHelper } from '../../models/camfil-requisition/camfil-requisition.helper';
+import { CamfilRequisition, CamfilRequisitionApproval } from '../../models/camfil-requisition/camfil-requisition.model';
 
 @Component({
   selector: 'camfil-requisition-detail-page',
@@ -31,6 +32,8 @@ export class RequisitionDetailPageComponent implements OnInit, OnDestroy {
   user$: Observable<User>;
   userPermissions$: Observable<string[]>;
   lineItemsChecked = [];
+  approval?: CamfilRequisitionApproval;
+  getIsCamfilRequisitionEditable = CamfilRequisitionHelper.getIsCamfilRequisitionEditable;
 
   private destroy$ = new Subject<void>();
 
@@ -46,6 +49,7 @@ export class RequisitionDetailPageComponent implements OnInit, OnDestroy {
     this.requisition$ = this.context.select('entity');
     this.requisition$.pipe(takeUntil(this.destroy$)).subscribe(req => {
       this.requisitionId = req.id;
+      this.approval = req.approval;
     });
     this.loading$ = this.context.select('loading');
     this.error$ = this.context.select('error');
@@ -65,15 +69,17 @@ export class RequisitionDetailPageComponent implements OnInit, OnDestroy {
   }
 
   openAddToProductModal(modal: ModalAddNewProductComponent) {
-    const dialogRef = this.dialog.open(modal.show());
-    modal.hide = () => this.dialog.closeAll();
+    if (this.getIsCamfilRequisitionEditable(this.approval)) {
+      const dialogRef = this.dialog.open(modal.show());
+      modal.hide = () => this.dialog.closeAll();
 
-    dialogRef
-      .afterClosed()
-      .pipe(take(1), takeUntil(this.destroy$))
-      .subscribe(() => {
-        modal.reset();
-      });
+      dialogRef
+        .afterClosed()
+        .pipe(take(1), takeUntil(this.destroy$))
+        .subscribe(() => {
+          modal.reset();
+        });
+    }
   }
 
   toggleAllLineItems(lineItemsIds: string[]) {
@@ -81,22 +87,31 @@ export class RequisitionDetailPageComponent implements OnInit, OnDestroy {
   }
 
   removeSelectedLineItems() {
-    this.camRequisitionManagementFacade.removeProductsFromCamfilRequisition(this.lineItemsChecked, this.requisitionId);
+    if (this.getIsCamfilRequisitionEditable(this.approval)) {
+      this.camRequisitionManagementFacade.removeProductsFromCamfilRequisition(
+        this.lineItemsChecked,
+        this.requisitionId
+      );
+    }
   }
 
   removeSelectedLineItem(lineItemId) {
-    this.camRequisitionManagementFacade.removeProductsFromCamfilRequisition([lineItemId], this.requisitionId);
+    if (this.getIsCamfilRequisitionEditable(this.approval)) {
+      this.camRequisitionManagementFacade.removeProductsFromCamfilRequisition([lineItemId], this.requisitionId);
+    }
   }
 
   approveSelectedLineItems() {
-    this.camRequisitionManagementFacade.updateCamfilRequisitionLineItemAttribute(
-      this.lineItemsChecked,
-      this.requisitionId,
-      {
-        name: 'approved',
-        value: true,
-      }
-    );
+    if (this.getIsCamfilRequisitionEditable(this.approval)) {
+      this.camRequisitionManagementFacade.updateCamfilRequisitionLineItemAttribute(
+        this.lineItemsChecked,
+        this.requisitionId,
+        {
+          name: 'approved',
+          value: true,
+        }
+      );
+    }
   }
 
   ngOnDestroy() {

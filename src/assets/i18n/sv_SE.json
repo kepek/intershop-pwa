@@ -786,6 +786,8 @@
   "camfil.account.register.password_confirmation.label": "Bekräfta lösenord",
   "camfil.account.remind_password.button.aria": "Skicka",
   "camfil.account.requisitions.approvals.approval.reference": "sv_Approval  reference",
+  "camfil.account.requisitions.approvals.approvedby": "(sv_SE)_Approved by",
+  "camfil.account.requisitions.approvals.rejected.comment": "(sv_SE)_Reject comment",
   "camfil.account.requisitions.approvals.rejectedby": "sv_Rejected by",
   "camfil.account.requisitions.approvals.requestedby": "sv_Requested by",
   "camfil.account.send_password.message": "Ett mail har skickats med en länk till din e-postadress. Klicka på länken för att ändra ditt lösenord.",

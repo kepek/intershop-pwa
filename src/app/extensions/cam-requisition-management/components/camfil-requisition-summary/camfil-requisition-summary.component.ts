@@ -7,6 +7,7 @@ import { User } from '@sentry/browser';
 import { CamfilToastrService } from 'ish-core/store/core/messages/CamfilToastrService';
 
 import { CamRequisitionManagementFacade } from '../../facades/cam-requisition-management.facade';
+import { CamfilRequisitionHelper } from '../../models/camfil-requisition/camfil-requisition.helper';
 import { CamfilRequisition, CamfilRequisitionViewer } from '../../models/camfil-requisition/camfil-requisition.model';
 
 import { EditApprovalDetailsModalComponent } from './edit-approval-details-modal/edit-approval-details-modal.component';
@@ -24,6 +25,7 @@ export class CamfilRequisitionSummaryComponent implements OnInit {
   @Input() view: CamfilRequisitionViewer = 'buyer';
   private camRequisitionManagementFacade: CamRequisitionManagementFacade;
   customerNoteForm: FormGroup;
+  getIsCamfilRequisitionEditable = CamfilRequisitionHelper.getIsCamfilRequisitionEditable;
 
   constructor(public dialog: MatDialog, private toast: CamfilToastrService, private translate: TranslateService) {}
 
@@ -34,19 +36,29 @@ export class CamfilRequisitionSummaryComponent implements OnInit {
   }
 
   onBlur(target: HTMLDataElement) {
-    const customerNoteValue = target.value;
-    const updatedRequisition = {
-      ...this.requisition,
-      basketExtensions: {
-        ...this.requisition.basketExtensions,
-        info: customerNoteValue,
-      },
-    };
-    this.camRequisitionManagementFacade?.updateCamfilRequisition(updatedRequisition);
+    if (this.canEditRequisition()) {
+      const customerNoteValue = target.value;
+      const updatedRequisition = {
+        ...this.requisition,
+        basketExtensions: {
+          ...this.requisition.basketExtensions,
+          info: customerNoteValue,
+        },
+      };
+      this.camRequisitionManagementFacade?.updateCamfilRequisition(updatedRequisition);
+    } else {
+      this.toast.error(this.translate.instant('camfil.approval.detailspage.edit.permission_denied.text'), '', {
+        timeOut: 3000,
+      });
+      return;
+    }
   }
 
   canEditRequisition() {
-    return this.userPermissions.includes('APP_B2B_APPROVE') || this.requisition?.user.login === this.user?.login;
+    return (
+      (this.userPermissions?.includes('APP_B2B_APPROVE') || this.requisition?.user.login === this.user?.login) &&
+      this.getIsCamfilRequisitionEditable(this.requisition?.approval)
+    );
   }
 
   openEditApprovalDetailsModal(modal: EditApprovalDetailsModalComponent) {

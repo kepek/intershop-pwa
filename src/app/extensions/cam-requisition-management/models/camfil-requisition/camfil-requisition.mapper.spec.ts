@@ -27,7 +27,7 @@ describe('Camfil Requisition Mapper', () => {
         commonShippingMethod: 'shipping_method_123',
         customer: 'OilCorp',
         user: 'bboldner@test.intershop.de',
-        creationDate: '12-02-2022T:11:11:11',
+        approvalCreationDate: '12-02-2022T:11:11:11',
         lineItemCount: 2,
         approvalStatus: {
           status: 'APPROVED',
@@ -77,8 +77,7 @@ describe('Camfil Requisition Mapper', () => {
       expect(mapped).toMatchInlineSnapshot(`
         Object {
           "approval": Object {
-            "customerApprovers": undefined,
-            "status": "Pending",
+            "status": "pending",
             "statusCode": "PENDING",
           },
           "attributes": undefined,
@@ -87,7 +86,7 @@ describe('Camfil Requisition Mapper', () => {
           "buckets": undefined,
           "commonShipToAddress": undefined,
           "commonShippingMethod": undefined,
-          "creationDate": 1644620400000,
+          "creationDate": NaN,
           "customerNo": "OilCorp",
           "dynamicMessages": undefined,
           "email": "bboldner@test.intershop.de",

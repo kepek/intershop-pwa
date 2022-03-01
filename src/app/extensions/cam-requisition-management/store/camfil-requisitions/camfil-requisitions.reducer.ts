@@ -11,6 +11,8 @@ import {
   createCamfilRequisition,
   createCamfilRequisitionFail,
   createCamfilRequisitionSuccess,
+  createOrderFromApprovedRequisitionFail,
+  createOrderFromApprovedRequisitionSuccess,
   loadCamfilRequisition,
   loadCamfilRequisitionFail,
   loadCamfilRequisitions,
@@ -59,14 +61,16 @@ export const requisitionsReducer = createReducer(
     loadCamfilRequisitionsSuccess,
     loadCamfilRequisitionsuccess,
     updateCamfilRequisitionStatusSuccess,
-    createCamfilRequisitionSuccess
+    createCamfilRequisitionSuccess,
+    createOrderFromApprovedRequisitionSuccess
   ),
   setErrorOn(
     loadCamfilRequisitionsFail,
     loadCamfilRequisitionFail,
     updateCamfilRequisitionStatusFail,
     updateCamfilRequisitionFail,
-    createCamfilRequisitionFail
+    createCamfilRequisitionFail,
+    createOrderFromApprovedRequisitionFail
   ),
   on(loadCamfilRequisitionsSuccess, (state: CamfilRequisitionsState, action) =>
     camfilRequisitionsAdapter.upsertMany(action.payload.requisitions, {
@@ -77,8 +81,22 @@ export const requisitionsReducer = createReducer(
       },
     })
   ),
-  on(loadCamfilRequisitionsuccess, updateCamfilRequisitionStatusSuccess, (state: CamfilRequisitionsState, action) =>
+  on(loadCamfilRequisitionsuccess, (state: CamfilRequisitionsState, action) =>
     camfilRequisitionsAdapter.upsertOne(action.payload.requisition, state)
+  ),
+  on(
+    updateCamfilRequisitionStatusSuccess,
+    createOrderFromApprovedRequisitionSuccess,
+    (state: CamfilRequisitionsState, action) => {
+      const { requisition } = action.payload;
+      const { approval } = requisition;
+      const approvedRequisition = {
+        ...state.entities[requisition?.id],
+        approval: approval,
+      };
+
+      return camfilRequisitionsAdapter.upsertOne(approvedRequisition, state);
+    }
   ),
   on(
     addProductToCamfilRequisitionSuccess,

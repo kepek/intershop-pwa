@@ -119,8 +119,28 @@ export class CamfilRequisitionsService {
     const type = statusCode === 'APPROVED' ? 'approve' : 'reject';
 
     return this.apiService
-      .b2bUserEndpoint()
       .patch<CamfilRequisitionData>(`camfilrequisitions/${requisitionId}/${type}`, body, {
+        params,
+      })
+      .pipe(map(payload => CamfilRequisitionMapper.fromData(payload)));
+  }
+
+  /**
+   * Updates the requisition status. The current user is expected to have the approver permission.
+   * @param id          Requisition id.
+   * @returns           The updated requisition with all attributes. If the requisition is approved and the order is placed, also order data are returned as part of the requisition.
+   */
+  createOrderFromApprovedRequisition(requisitionId: string): Observable<CamfilRequisition> {
+    if (!requisitionId) {
+      return throwError('createOrderFromApprovedRequisition() called without required id');
+    }
+    const params = new HttpParams().set('include', this.allIncludes.join());
+    const body = {
+      termsAndConditionsAccepted: true,
+    };
+
+    return this.apiService
+      .post<CamfilRequisitionData>(`camfilrequisitions/${requisitionId}/create-order`, body, {
         params,
       })
       .pipe(concatMap(payload => CamfilRequisitionMapper.fromListData(payload)));
@@ -236,16 +256,6 @@ export class CamfilRequisitionsService {
     };
     return this.apiService
       .post<CamfilRequisitionData>(`camfilrequisitions`, body, {
-        params,
-      })
-      .pipe(concatMap(payload => CamfilRequisitionMapper.fromListData(payload)));
-  }
-
-  approveCamfilRequisition(requisitionId: string): Observable<CamfilRequisition> {
-    const params = new HttpParams().set('include', this.allIncludes.join());
-
-    return this.apiService
-      .patch<CamfilRequisitionData>(`requisitions/${requisitionId}/approve`, {
         params,
       })
       .pipe(concatMap(payload => CamfilRequisitionMapper.fromListData(payload)));

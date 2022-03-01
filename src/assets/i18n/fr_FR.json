@@ -786,6 +786,8 @@
   "camfil.account.register.password_confirmation.label": "Confirmer le mot de passe",
   "camfil.account.remind_password.button.aria": "Envoyer",
   "camfil.account.requisitions.approvals.approval.reference": "fr_Approval  reference",
+  "camfil.account.requisitions.approvals.approvedby": "(fr_FR)_Approved by",
+  "camfil.account.requisitions.approvals.rejected.comment": "(fr_FR)_Reject comment",
   "camfil.account.requisitions.approvals.rejectedby": "fr_Rejected by",
   "camfil.account.requisitions.approvals.requestedby": "fr_Requested by",
   "camfil.account.send_password.message": "Un courriel contenant un lien a été envoyé à votre adresse électronique. Veuillez suivre ce lien pour modifier votre mot de passe.",

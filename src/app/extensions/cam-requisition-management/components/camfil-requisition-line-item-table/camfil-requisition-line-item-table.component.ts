@@ -18,6 +18,7 @@ import { ProductCompletenessLevel } from 'ish-core/models/product/product.model'
 import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
 import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
 
+import { CamfilRequisitionHelper } from '../../models/camfil-requisition/camfil-requisition.helper';
 import { CamfilRequisition } from '../../models/camfil-requisition/camfil-requisition.model';
 
 @Component({
@@ -53,12 +54,15 @@ export class CamfilRequisitionLineItemTableComponent implements OnInit, OnChange
     'yourPrice',
   ];
   isMobileView = false;
+  editable = true;
+  getIsCamfilRequisitionEditable = CamfilRequisitionHelper.getIsCamfilRequisitionEditable;
 
   constructor(private shoppingFacade: ShoppingFacade, public dialog: MatDialog) {}
 
   ngOnInit() {
     this.isMobileView = this.deviceType === 'tablet' || this.deviceType === 'mobile';
     this.lineItemsProcessed = new MatTableDataSource(this.lineItems);
+    this.editable = this.getIsCamfilRequisitionEditable(this.requisition?.approval);
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -102,13 +106,17 @@ export class CamfilRequisitionLineItemTableComponent implements OnInit, OnChange
   }
 
   openDeleteModal(modal: CamfilSmallCtaModalComponent, lineItemId) {
-    this.dialog.open(modal.show());
-    modal.hide = () => this.dialog.closeAll();
-    this.lineItemIdToDelete = lineItemId;
+    if (this.getIsCamfilRequisitionEditable(this.requisition.approval)) {
+      this.dialog.open(modal.show());
+      modal.hide = () => this.dialog.closeAll();
+      this.lineItemIdToDelete = lineItemId;
+    }
   }
 
   removeProduct(modal: CamfilSmallCtaModalComponent) {
-    this.removeSelectedProduct.emit(this.lineItemIdToDelete);
-    modal.hide();
+    if (this.getIsCamfilRequisitionEditable(this.requisition.approval)) {
+      this.removeSelectedProduct.emit(this.lineItemIdToDelete);
+      modal.hide();
+    }
   }
 }

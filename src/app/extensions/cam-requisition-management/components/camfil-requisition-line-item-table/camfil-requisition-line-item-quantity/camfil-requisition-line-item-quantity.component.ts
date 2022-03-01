@@ -19,7 +19,7 @@ import { ProductHelper } from 'ish-core/models/product/product.helper';
 export class CamfilRequisitionLineItemQuantityComponent implements OnInit, OnDestroy {
   @Input() product: ProductView | VariationProductView | VariationProductMasterView;
   @Input() lineItem: LineItem;
-
+  @Input() isEditable = false;
   productItemForm: FormGroup;
   isMasterProduct = ProductHelper.isMasterProduct;
   updatedQuantity: number;

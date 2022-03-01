@@ -1,4 +1,4 @@
-<div>
+<ng-container *ngIf="isEditable; else labelValue">
   <form [formGroup]="boxLabelForm" class="box-label__form">
     <mat-form-field appearance="outline" class="box-label__form--field">
       <mat-label>{{ 'camfil.cam_card.product.comment.label' | translate }}</mat-label>
@@ -16,4 +16,7 @@
       ></textarea>
     </mat-form-field>
   </form>
-</div>
+</ng-container>
+<ng-template #labelValue>
+  <span>{{ boxLabel || '---' }}</span>
+</ng-template>

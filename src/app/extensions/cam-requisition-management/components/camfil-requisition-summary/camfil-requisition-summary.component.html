@@ -46,6 +46,12 @@
                   {{ requisition.approval?.approver?.firstName }} {{ requisition.approval?.approver?.lastName }}
                 </dd>
               </ng-container>
+              <ng-container *ngIf="requisition.approval?.statusCode === 'REJECTED'">
+                <dt class="col-6">{{ 'camfil.account.requisitions.approvals.rejected.comment' | translate }}</dt>
+                <dd class="col-6 text-right text-break font-weight-bold">
+                  {{ requisition.approval?.approvalComment }}
+                </dd>
+              </ng-container>
               <dt class="col-6">{{ 'camfil.modal.createOrder.order-form.input.phone_number' | translate }}</dt>
               <dd class="col-6 text-right text-break font-weight-bold">
                 {{ '---' }}
@@ -61,6 +67,8 @@
                     <textarea
                       (blur)="onBlur($event.target)"
                       [camfilMaxLength]="'CustomerNote'"
+                      [disabled]="requisition.approval?.statusCode !== 'PENDING'"
+                      [readonly]="requisition.approval?.statusCode !== 'PENDING'"
                       class="overflow-hidden"
                       formControlName="customerNote"
                       matInput
@@ -74,12 +82,14 @@
           </div>
         </div>
       </div>
-      <div class="col-md-2 text-right">
-        <a (click)="openEditApprovalDetailsModal(editModal)">
-          <mat-icon class="edit-icon" svgIcon="edit"></mat-icon>
-          {{ 'camfil.modal.edit_order.button.header' | translate }}
-        </a>
-      </div>
+      <ng-container *ngIf="requisition.approval?.statusCode === 'PENDING'">
+        <div class="col-md-2 text-right">
+          <a (click)="openEditApprovalDetailsModal(editModal)">
+            <mat-icon class="edit-icon" svgIcon="edit"></mat-icon>
+            {{ 'camfil.modal.edit_order.button.header' | translate }}
+          </a>
+        </div>
+      </ng-container>
     </div>
   </mat-card-content>
 </mat-card>

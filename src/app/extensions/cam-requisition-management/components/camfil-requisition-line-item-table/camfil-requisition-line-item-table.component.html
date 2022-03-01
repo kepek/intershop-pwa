@@ -103,7 +103,10 @@
         {{ 'camfil.lineitem.table.box_label' | translate }}
       </th>
       <td mat-cell *matCellDef="let pli">
-        <camfil-requisition-line-item-box-label [lineItem]="pli"></camfil-requisition-line-item-box-label>
+        <camfil-requisition-line-item-box-label
+          [lineItem]="pli"
+          [isEditable]="editable"
+        ></camfil-requisition-line-item-box-label>
       </td>
     </ng-container>
 
@@ -118,16 +121,22 @@
     </ng-container>
 
     <!-- Delete product Column -->
+
     <ng-container matColumnDef="deleteRow">
       <th mat-header-cell *matHeaderCellDef>Delete product</th>
       <td mat-cell *matCellDef="let pli">
-        <a
-          (click)="openDeleteModal(removeProductsModal, pli.id)"
-          class="btn-tool delete-cam-card"
-          data-testing-id="delete-cam-card"
-        >
-          <mat-icon class="size-16 mx-2" svgIcon="delete"></mat-icon>
-        </a>
+        <ng-container *ngIf="editable; else emptyCell">
+          <a
+            (click)="openDeleteModal(removeProductsModal, pli.id)"
+            class="btn-tool delete-cam-card"
+            data-testing-id="delete-cam-card"
+          >
+            <mat-icon class="size-16 mx-2" svgIcon="delete"></mat-icon>
+          </a>
+        </ng-container>
+        <ng-template #emptyCell>
+          <span>---</span>
+        </ng-template>
       </td>
     </ng-container>
 
@@ -139,6 +148,7 @@
           <camfil-requisition-line-item-quantity
             [product]="product"
             [lineItem]="pli"
+            [isEditable]="editable"
           ></camfil-requisition-line-item-quantity>
         </ng-container>
       </td>

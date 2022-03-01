@@ -774,6 +774,8 @@
   "camfil.account.register.password_confirmation.label": "(de_DE)_Confirm Password",
   "camfil.account.remind_password.button.aria": "(de_DE)_Send",
   "camfil.account.requisitions.approvals.approval.reference": "(de_DE)_Approval  reference",
+  "camfil.account.requisitions.approvals.approvedby": "(de_DE)_Approved by",
+  "camfil.account.requisitions.approvals.rejected.comment": "(de_DE)_Reject comment",
   "camfil.account.requisitions.approvals.rejectedby": "(de_DE)_Rejected by",
   "camfil.account.requisitions.approvals.requestedby": "(de_DE)_Requested by",
   "camfil.account.send_password.message": "(de_DE)_An e-mail with a link has been sent to your e-mail address. Please follow this link to change your password.",
