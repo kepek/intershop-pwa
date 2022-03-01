@@ -116,12 +116,14 @@ export class CamfilRequisitionsService {
       approvalComment,
     };
 
+    const type = statusCode === 'APPROVED' ? 'approve' : 'reject';
+
     return this.apiService
       .b2bUserEndpoint()
-      .patch<CamfilRequisitionData>(`requisitions/${requisitionId}`, body, {
+      .patch<CamfilRequisitionData>(`camfilrequisitions/${requisitionId}/${type}`, body, {
         params,
       })
-      .pipe(concatMap(payload => this.processRequisitionData(payload)));
+      .pipe(concatMap(payload => CamfilRequisitionMapper.fromListData(payload)));
   }
 
   /**
@@ -234,6 +236,16 @@ export class CamfilRequisitionsService {
     };
     return this.apiService
       .post<CamfilRequisitionData>(`camfilrequisitions`, body, {
+        params,
+      })
+      .pipe(concatMap(payload => CamfilRequisitionMapper.fromListData(payload)));
+  }
+
+  approveCamfilRequisition(requisitionId: string): Observable<CamfilRequisition> {
+    const params = new HttpParams().set('include', this.allIncludes.join());
+
+    return this.apiService
+      .patch<CamfilRequisitionData>(`requisitions/${requisitionId}/approve`, {
         params,
       })
       .pipe(concatMap(payload => CamfilRequisitionMapper.fromListData(payload)));

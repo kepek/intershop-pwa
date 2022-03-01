@@ -113,13 +113,13 @@ export class CamfilRequisitionsEffects {
         this.requisitionsService
           .updateCamfilRequisitionStatus(payload.requisitionId, payload.status, payload.approvalComment)
           .pipe(
-            tap(requisition =>
-              /* ToDo: use only relative routes */
-              this.router.navigate([
-                `/account/requisitions/approver/${requisition.id}`,
-                { status: requisition.approval?.statusCode },
-              ])
-            ),
+            // tap(requisition =>
+            //   /* ToDo: use only relative routes */
+            //   this.router.navigate([
+            //     `/account/requisitions/approver/${requisition.id}`,
+            //     { status: requisition.approval?.statusCode },
+            //   ])
+            // ),
             map(requisition =>
               updateCamfilRequisitionStatusSuccess({
                 requisition,
