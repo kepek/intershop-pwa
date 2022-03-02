@@ -96,10 +96,13 @@ export class CamfilOrdersEffects {
       ofType(loadCamfilOrderSuccess),
       mapToPayloadProperty('order'),
       whenTruthy(),
-      mergeMap(order => [
-        loadCamfilOrderLineItems({ orderId: order.id }),
-        loadOrderIfNotLoaded({ orderId: order.ishOrderUUID }),
-      ])
+      mergeMap(({ id, ishOrderUUID }) => {
+        const actions = [loadOrderIfNotLoaded({ orderId: ishOrderUUID }), loadCamfilOrderLineItems({ orderId: id })];
+        if (!ishOrderUUID) {
+          actions.shift();
+        }
+        return actions;
+      })
     )
   );
 
