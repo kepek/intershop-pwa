@@ -27,6 +27,7 @@ import {
   LineItemUpdateHelperItem,
 } from 'ish-core/models/line-item-update/line-item-update.helper';
 import { BasketService } from 'ish-core/services/basket/basket.service';
+import { setCurrentLocale } from 'ish-core/store/core/configuration';
 import { displayErrorMessage, displaySuccessMessage } from 'ish-core/store/core/messages';
 import { getUserAuthorized } from 'ish-core/store/customer/user';
 import { getProductEntities, loadProduct } from 'ish-core/store/shopping/products';
@@ -582,6 +583,14 @@ export class BasketItemsEffects {
     this.actions$.pipe(
       ofType(addBasketItemAttributesSuccess, updateBasketItemAttributesSuccess, deleteBasketItemAttributesSuccess),
       mapTo(loadBasket())
+    )
+  );
+
+  reloadBasketAfterLocaleChange = createEffect(() =>
+    this.actions$.pipe(
+      ofType(setCurrentLocale),
+      withLatestFrom(this.store.pipe(select(getCurrentBasket))),
+      mergeMap(() => [validateBasket({ scopes: ['All'] }), loadBasket()])
     )
   );
 
