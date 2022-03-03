@@ -592,7 +592,6 @@ export class BasketItemsEffects {
       ofType(setCurrentLocale),
       withLatestFrom(this.store.pipe(select(selectUrl))),
       filter(([, url]) => url.startsWith('/checkout')),
-      withLatestFrom(this.store.pipe(select(getCurrentBasket))),
       mergeMap(() => [validateBasket({ scopes: ['All'] }), loadBasket()])
     )
   );
