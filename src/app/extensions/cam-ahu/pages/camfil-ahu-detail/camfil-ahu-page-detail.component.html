@@ -28,7 +28,7 @@
         <span itemprop="name">{{ selectedAhuUnit.ahu.airHandlingUnitName }}</span>
       </h1>
       <a
-        [routerLink]="['/air-handling-unit-guide']"
+        [routerLink]="['/page/air-handling-unit-guide']"
         [queryParams]="{ manufacturerId: selectedAhuUnit.ahu.ahuManufacturerId }"
       >
         {{ 'camfil.ahu.detail.select.unit' | translate }}
