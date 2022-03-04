@@ -112,7 +112,11 @@ export class BasketValidationEffects {
     /* targetStep: 4, index: 3 */
     { scopes: ['Payment'], route: '/checkout/payment' },
     /* targetStep: 5, index: 4 */
-    { scopes: ['Products', 'Value', 'InvoiceAddress', 'Shipping', 'Payment', 'Camfil'], route: '/checkout/review' },
+    // TODO: CAM-1901 disabled shipping since it returns 500 error
+    {
+      scopes: ['Products', 'Value', 'InvoiceAddress', /*'Shipping' */ 'Payment', 'Camfil', 'CamfilInfo'],
+      route: '/checkout/review',
+    },
     /* targetStep: 6, index: 5 */
     { scopes: ['All'], route: 'auto' }, // targetRoute will be calculated in dependence of the validation result
   ];

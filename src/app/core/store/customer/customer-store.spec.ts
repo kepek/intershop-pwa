@@ -237,12 +237,6 @@ describe('Customer Store', () => {
               sku: "test"
               changes: {}
             [Basket] Load Buckets
-            [Basket Internal] Validate Basket:
-              scopes: ["CamfilInfo"]
-            [Basket API] Validate Basket and continue with success:
-              targetRoute: undefined
-              basketValidation: {"basket":{"id":"test","lineItems":[1]},"results":{"valid":t...
-            [Basket] Load Buckets
           `);
           done();
         }, 1000);
@@ -267,12 +261,6 @@ describe('Customer Store', () => {
           [Basket API] Check Current Basket
           [Basket API] Load Basket Success:
             basket: {"id":"test","lineItems":[1]}
-          [Basket] Load Buckets
-          [Basket Internal] Validate Basket:
-            scopes: ["CamfilInfo"]
-          [Basket API] Validate Basket and continue with success:
-            targetRoute: undefined
-            basketValidation: {"basket":{"id":"test","lineItems":[1]},"results":{"valid":t...
           [Basket] Load Buckets
         `);
       });
