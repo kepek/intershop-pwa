@@ -339,9 +339,11 @@ export class BasketEffects {
 
   validateBasketAfterLoadBasketSuccess$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(loadBasketSuccess),
-      mapToPayload(),
-      withLatestFrom(this.store.pipe(select(getCurrentBasket))),
+      ofType(routerNavigatedAction),
+      mapToPayloadProperty<RouterNavigatedPayload<RouterState>>('routerState'),
+      filter(
+        (routerState: RouterState) => /^\/(checkout\/onestep)/.test(routerState.url) && !routerState.queryParams?.error
+      ),
       mapTo(validateBasket({ scopes: ['CamfilInfo'] }))
     )
   );
