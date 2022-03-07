@@ -13,7 +13,7 @@
   </div>
 
   <div class="modal-body">
-    <h2 class="text-capitalize mb-2">{{ 'cookies.modal.description.headline' | translate }}</h2>
+    <h2 class="text-no-transform mb-2">{{ 'cookies.modal.description.headline' | translate }}</h2>
     <p class="mb-3">
       {{ 'cookies.modal.description' | translate }}
       <a
@@ -26,7 +26,7 @@
       >
     </p>
     <button
-      class="text-capitalize xs-full-width mt-2 mb-4"
+      class="text-no-transform xs-full-width mt-2 mb-4"
       type="button"
       mat-flat-button
       color="primary"
@@ -34,7 +34,7 @@
     >
       {{ 'cookies.modal.accept_all' | translate }}
     </button>
-    <h2 class="text-capitalize mb-3">{{ 'cookies.modal.preferences.headline' | translate }}</h2>
+    <h2 class="text-no-transform mb-3">{{ 'cookies.modal.preferences.headline' | translate }}</h2>
 
     <div class="preference-accordion-wrapper"></div>
     <div *ngFor="let option of cookieConsentOptions?.options | keyvalue: unsorted; let i = index" class="cookie-option">
