@@ -7,15 +7,13 @@ import { map } from 'rxjs/operators';
 import { AccountFacade } from 'ish-core/facades/account.facade';
 import { AppFacade } from 'ish-core/facades/app.facade';
 
-/**
- * The Login Page Container displays the login page component {@link CamfilLoginPageComponent} as wrapper for the login form
- */
 @Component({
-  templateUrl: './camfil-login-page.component.html',
-  styleUrls: ['./camfil-login-page.component.scss'],
+  selector: 'camfil-login-on-behalf-page',
+  templateUrl: './camfil-login-on-behalf-page.component.html',
+  styleUrls: ['./camfil-login-on-behalf-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CamfilLoginPageComponent implements OnInit {
+export class CamfilLoginOnBehalfPageComponent implements OnInit {
   isLoggedIn$: Observable<boolean>;
   loginMessageKey$: Observable<string>;
   routingInProgress$: Observable<boolean>;
@@ -39,7 +37,7 @@ export class CamfilLoginPageComponent implements OnInit {
 
     this.loginMessageKey$ = this.route.queryParamMap.pipe(
       map(params => params.get('messageKey')),
-      map(messageKey => (messageKey ? `account.login.${messageKey}.message` : undefined))
+      map(messageKey => (messageKey ? `camfil.dynamic.login_on_behalf.error.${messageKey}.message` : undefined))
     );
   }
 }

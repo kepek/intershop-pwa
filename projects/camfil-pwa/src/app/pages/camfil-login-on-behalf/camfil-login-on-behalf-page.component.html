@@ -1,0 +1,25 @@
+<ng-container *ngIf="routingInProgress$ | async; else ready">
+  <ng-container *ngTemplateOutlet="inProgressTemplate"></ng-container>
+</ng-container>
+
+<ng-template #ready>
+  <div *ngIf="!(isLoggedIn$ | async)" class="mt-4">
+    <p *ngIf="loginMessageKey$ | async as loginMessageKey" class="alert alert-info">
+      {{ loginMessageKey | translate }}
+    </p>
+  </div>
+  <ng-container *ngTemplateOutlet="inProgressTemplate"></ng-container>
+</ng-template>
+
+<ng-template #inProgressTemplate>
+  <div class="mt-5 pt-5">
+    <camfil-loading [standalone]="true"></camfil-loading>
+    <button mat-button [disabled]="true" class="text-center mt-5 message-button">
+      {{
+        (loginMessageKey$ | async)
+          ? ('camfil.login_on_behalf.error.message' | translate)
+          : ('camfil.login_on_behalf.in_progress.message' | translate)
+      }}
+    </button>
+  </div>
+</ng-template>
