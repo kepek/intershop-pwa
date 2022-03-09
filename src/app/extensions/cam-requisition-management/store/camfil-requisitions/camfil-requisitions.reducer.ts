@@ -92,7 +92,7 @@ export const requisitionsReducer = createReducer(
       const { approval } = requisition;
       const approvedRequisition = {
         ...state.entities[requisition?.id],
-        approval: approval,
+        approval,
       };
 
       return camfilRequisitionsAdapter.upsertOne(approvedRequisition, state);
