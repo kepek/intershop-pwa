@@ -34,19 +34,19 @@
               <dd class="col-6 text-right text-break font-weight-bold">
                 {{ requisition.user?.firstName }} {{ requisition.user?.lastName }}
               </dd>
-              <ng-container *ngIf="requisition.approval?.statusCode === 'APPROVED'">
+              <ng-container *ngIf="isRequisitionApproved">
                 <dt class="col-6">{{ 'camfil.account.requisitions.approvals.approvedby' | translate }}</dt>
                 <dd class="col-6 text-right text-break font-weight-bold">
                   {{ requisition.approval?.approver?.firstName }} {{ requisition.approval?.approver?.lastName }}
                 </dd>
               </ng-container>
-              <ng-container *ngIf="requisition.approval?.statusCode === 'REJECTED'">
+              <ng-container *ngIf="isRequisitionRejected">
                 <dt class="col-6">{{ 'camfil.account.requisitions.approvals.rejectedby' | translate }}</dt>
                 <dd class="col-6 text-right text-break font-weight-bold">
                   {{ requisition.approval?.approver?.firstName }} {{ requisition.approval?.approver?.lastName }}
                 </dd>
               </ng-container>
-              <ng-container *ngIf="requisition.approval?.statusCode === 'REJECTED'">
+              <ng-container *ngIf="isRequisitionRejected">
                 <dt class="col-6">{{ 'camfil.account.requisitions.approvals.rejected.comment' | translate }}</dt>
                 <dd class="col-6 text-right text-break font-weight-bold">
                   {{ requisition.approval?.approvalComment }}
@@ -67,8 +67,8 @@
                     <textarea
                       (blur)="onBlur($event.target)"
                       [camfilMaxLength]="'CustomerNote'"
-                      [disabled]="requisition.approval?.statusCode !== 'PENDING'"
-                      [readonly]="requisition.approval?.statusCode !== 'PENDING'"
+                      [disabled]="!isEditable"
+                      [readonly]="!isEditable"
                       class="overflow-hidden"
                       formControlName="customerNote"
                       matInput
@@ -82,7 +82,7 @@
           </div>
         </div>
       </div>
-      <ng-container *ngIf="requisition.approval?.statusCode === 'PENDING'">
+      <ng-container *ngIf="isEditable">
         <div class="col-md-2 text-right">
           <a (click)="openEditApprovalDetailsModal(editModal)">
             <mat-icon class="edit-icon" svgIcon="edit"></mat-icon>

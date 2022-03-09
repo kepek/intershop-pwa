@@ -26,8 +26,25 @@ export class CamfilRequisitionSummaryComponent implements OnInit {
   private camRequisitionManagementFacade: CamRequisitionManagementFacade;
   customerNoteForm: FormGroup;
   getIsCamfilRequisitionEditable = CamfilRequisitionHelper.getIsCamfilRequisitionEditable;
+  getIsCamfilRequisitionApproved = CamfilRequisitionHelper.getIsCamfilRequisitionApproved;
+  getIsCamfilRequisitionRejected = CamfilRequisitionHelper.getIsCamfilRequisitionRejected;
 
   constructor(public dialog: MatDialog, private toast: CamfilToastrService, private translate: TranslateService) {}
+
+  get isEditable(): boolean {
+    const { approval } = this.requisition;
+    return this.getIsCamfilRequisitionEditable(approval);
+  }
+
+  get isRequisitionApproved(): boolean {
+    const { approval } = this.requisition;
+    return this.getIsCamfilRequisitionApproved(approval);
+  }
+
+  get isRequisitionRejected(): boolean {
+    const { approval } = this.requisition;
+    return this.getIsCamfilRequisitionRejected(approval);
+  }
 
   ngOnInit() {
     this.customerNoteForm = new FormGroup({
