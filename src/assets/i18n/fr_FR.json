@@ -1359,7 +1359,7 @@
   "checkout.widget.buyer.TaxationID": "N° d’identification fiscale :",
   "checkout.widget.buyer.heading": "Acheteur",
   "checkout.widget.payment_method.heading": "Moyen de paiement",
-  "checkout.widget.promotion.discount": "Remise",
+  "checkout.widget.promotion.discount": "Total de vos Remises",
   "checkout.widget.return_to_cart.link": "Retour au panier",
   "checkout.widget.security_privacy_policy.link": "<a href=\"{{0}}\" target=\"_blank\">Lire notre Politique de Sécurité et de Confidentialité </a>",
   "checkout.widget.shipping-address.heading": "Adresse d’expédition",
