@@ -27,10 +27,9 @@ describe('Camfil Requisitions Service', () => {
   });
 
   it('should call the getCamfilRequisitions of customer API when fetching requisitions', done => {
-    when(apiServiceMock.get('camfilrequisitions')).thenReturn(of({ elements: [{ id: '1234' }] }));
-    requisitionsService.getCamfilRequisitions().subscribe(data => {
-      verify(apiServiceMock.get('camfilrequisitions')).once();
-      expect(data).toMatchInlineSnapshot(`Array []`);
+    requisitionsService.getCamfilRequisitions('buyer').subscribe(data => {
+      verify(apiServiceMock.get('camfilrequisitions', anything())).once();
+      expect(data).toMatchInlineSnapshot(`undefined`);
       done();
     });
   });

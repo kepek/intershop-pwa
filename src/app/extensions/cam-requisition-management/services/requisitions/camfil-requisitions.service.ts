@@ -53,20 +53,13 @@ export class CamfilRequisitionsService {
    * @param  status  Approval status filter. Default: All requisitions are returned
    * @returns        Requisitions of the customer with their main attributes. To get all properties the getCamfilRequisition call is needed.
    */
-  getCamfilRequisitions(
-    view?: CamfilRequisitionViewer,
-    status?: CamfilRequisitionStatus
-  ): Observable<CamfilRequisition[]> {
+  getCamfilRequisitions(view?: CamfilRequisitionViewer): Observable<CamfilRequisition[]> {
     let params = new HttpParams();
     if (view) {
       params = params.set('view', view);
     }
-    if (status) {
-      params = params.set('status', status);
-    }
-
     return this.apiService
-      .get(`camfilrequisitions`)
+      .get(`camfilrequisitions`, { params })
       .pipe(map(CamfilRequisitionMapper.fromElemenetsToListData), map(CamfilRequisitionMapper.fromListData));
   }
 

@@ -9,7 +9,10 @@ import {
   CamfilRequisitionViewer,
 } from '../../models/camfil-requisition/camfil-requisition.model';
 
-export const loadCamfilRequisitions = createAction('[Camfil Requisitions] Load Requisitions');
+export const loadCamfilRequisitions = createAction(
+  '[Camfil Requisitions] Load Requisitions',
+  payload<{ view?: CamfilRequisitionViewer }>()
+);
 
 export const loadCamfilRequisitionsFail = createAction('[Camfil Requisitions API] Load Requisitions Fail', httpError());
 

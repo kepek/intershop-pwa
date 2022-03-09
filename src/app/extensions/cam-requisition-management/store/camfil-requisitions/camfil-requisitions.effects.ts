@@ -54,9 +54,10 @@ export class CamfilRequisitionsEffects {
   loadCamfilRequisitions$ = createEffect(() =>
     this.actions$.pipe(
       ofType(loadCamfilRequisitions),
-      concatMap(() =>
-        this.requisitionsService.getCamfilRequisitions().pipe(
-          map(requisitions => loadCamfilRequisitionsSuccess({ requisitions })),
+      mapToPayload(),
+      concatMap(({ view }) =>
+        this.requisitionsService.getCamfilRequisitions(view).pipe(
+          map(requisitions => loadCamfilRequisitionsSuccess({ requisitions, view })),
           mapErrorToAction(loadCamfilRequisitionsFail)
         )
       )
