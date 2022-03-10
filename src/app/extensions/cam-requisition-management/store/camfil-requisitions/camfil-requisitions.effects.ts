@@ -2,13 +2,13 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store, select } from '@ngrx/store';
-import { concatMap, map, mergeMap, switchMap, tap, withLatestFrom } from 'rxjs/operators';
+import { concatMap, filter, map, mergeMap, switchMap, tap, withLatestFrom } from 'rxjs/operators';
 import { getCamCardCustomers, loadCustomers } from 'src/app/extensions/cam-cards/store/cam-card';
 
 import { ProductCompletenessLevel } from 'ish-core/models/product/product.model';
 import { displaySuccessMessage } from 'ish-core/store/core/messages';
 import { getCurrentBasketId, submitBasketSuccess } from 'ish-core/store/customer/basket';
-import { loadProductIfNotLoaded } from 'ish-core/store/shopping/products';
+import { getProducts, loadProductIfNotLoaded } from 'ish-core/store/shopping/products';
 import { mapErrorToAction, mapToPayload, mapToPayloadProperty } from 'ish-core/utils/operators';
 
 import { CamfilRequisitionsService } from '../../services/requisitions/camfil-requisitions.service';
@@ -41,6 +41,8 @@ import {
   updateCamfilRequisitionStatusSuccess,
   updateCamfilRequisitionSuccess,
 } from './camfil-requisitions.actions';
+import { getSelectedCamfilRequisition, getSelectedCamfilRequisitionId } from './camfil-requisitions.selectors';
+import { ofUrl, selectRouteParam } from 'ish-core/store/core/router';
 
 @Injectable()
 export class CamfilRequisitionsEffects {
@@ -93,6 +95,17 @@ export class CamfilRequisitionsEffects {
     )
   );
 
+  routeListenerForSelectingCamfilRequisition$ = createEffect(() =>
+    this.store.pipe(
+      ofUrl(/^\/(account\/requisitions\/approver.*|account\/requisitions\/buyer.*)/),
+      select(selectRouteParam('orderId')),
+      withLatestFrom(this.store.pipe(select(getSelectedCamfilRequisitionId))),
+      filter(([fromAction, selectedOrderId]) => fromAction && fromAction !== selectedOrderId),
+      map(([orderId]) => orderId),
+      map(requisitionId => getCamfilRequisitionData({ requisitionId }))
+    )
+  );
+
   /**
    * After selecting and successfully loading a requisition, triggers a LoadProduct action
    * for each product that is missing in the current product entities state.
@@ -106,6 +119,37 @@ export class CamfilRequisitionsEffects {
           loadProductIfNotLoaded({ sku: productSKU, level: ProductCompletenessLevel.List })
         ),
       ])
+    )
+  );
+
+  checkProductsAvailabilityForSelectedCamfilOrder$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loadCamfilRequisitionsuccess),
+      mapToPayload(),
+      map(({ requisition }) =>
+        requisition?.lineItems.reduce<string[]>(
+          (acc, val) => (acc.find(sku => sku === val.productSKU) ? acc : [...acc, val.productSKU]),
+          []
+        )
+      ),
+      switchMap(skus =>
+        this.store.pipe(
+          select(getProducts, { skus }),
+          filter(products => products.length === skus.length)
+        )
+      ),
+      map(products =>
+        products.map(({ availability, failed, sku }) => ({ sku, availability: failed ? false : availability }))
+      ),
+      map(availabilities => availabilities.every(({ availability }) => !!availability)),
+      withLatestFrom(this.store.pipe(select(getSelectedCamfilRequisition))),
+      map(([canApprove, requisition]) => {
+        const newRequisition = {
+          ...requisition,
+          canApprove,
+        };
+        return updateCamfilRequisition({ requisition: newRequisition });
+      })
     )
   );
 

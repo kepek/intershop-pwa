@@ -1,4 +1,5 @@
 import { createSelector } from '@ngrx/store';
+import { CamfilRequisition } from '../../models/camfil-requisition/camfil-requisition.model';
 
 import { getCamRequisitionManagementState } from '../cam-requisition-management-store';
 
@@ -19,3 +20,14 @@ export const { selectEntities, selectAll } = camfilRequisitionsAdapter.getSelect
 export const getCamfilRequisitions = selectAll;
 
 export const getCamfilRequisition = (id: string) => createSelector(selectEntities, requisitions => requisitions[id]);
+
+export const getSelectedCamfilRequisitionId = createSelector(
+  getCamfilRequisitionsState,
+  state => state.selectedCamfilRequisition
+);
+
+export const getSelectedCamfilRequisition = createSelector(
+  selectEntities,
+  getSelectedCamfilRequisitionId,
+  (entities, id): CamfilRequisition => id && entities[id]
+);

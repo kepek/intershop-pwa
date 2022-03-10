@@ -25,6 +25,14 @@
       }
     }
 
+    camfil-product-title {
+      display: block;
+      max-width: 350px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
     .mat-checkbox-layout {
       display: inline;
       margin: 0 0 0 8px;

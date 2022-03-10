@@ -41,6 +41,7 @@ export interface CamfilRequisition extends CamfilRequisitionBasket {
   userBudget: RequisitionUserBudget;
   info: string;
   approval: CamfilRequisitionApproval;
+  canApprove?: boolean;
 }
 
 export interface CamfilRequisitionListFilter {

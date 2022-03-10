@@ -13,6 +13,7 @@ import {
   createCamfilRequisitionSuccess,
   createOrderFromApprovedRequisitionFail,
   createOrderFromApprovedRequisitionSuccess,
+  getCamfilRequisitionData,
   loadCamfilRequisition,
   loadCamfilRequisitionFail,
   loadCamfilRequisitions,
@@ -30,6 +31,7 @@ export const camfilRequisitionsAdapter = createEntityAdapter<CamfilRequisition>(
 
 export interface CamfilRequisitionsState extends EntityState<CamfilRequisition> {
   loading: boolean;
+  selectedCamfilRequisition: string;
   error: HttpError;
   filters: {
     buyerPENDING: string[];
@@ -43,6 +45,7 @@ export interface CamfilRequisitionsState extends EntityState<CamfilRequisition> 
 
 export const initialState: CamfilRequisitionsState = camfilRequisitionsAdapter.getInitialState({
   loading: false,
+  selectedCamfilRequisition: undefined,
   error: undefined,
   filters: {
     buyerPENDING: [],
@@ -72,6 +75,10 @@ export const requisitionsReducer = createReducer(
     createCamfilRequisitionFail,
     createOrderFromApprovedRequisitionFail
   ),
+  on(getCamfilRequisitionData, (state: CamfilRequisitionsState, action) => ({
+    ...state,
+    selectedCamfilRequisition: action.payload.requisitionId,
+  })),
   on(loadCamfilRequisitionsSuccess, (state: CamfilRequisitionsState, action) =>
     camfilRequisitionsAdapter.upsertMany(action.payload.requisitions, {
       ...state,
