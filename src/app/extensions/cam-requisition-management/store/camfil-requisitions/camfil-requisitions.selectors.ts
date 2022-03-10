@@ -1,6 +1,6 @@
 import { createSelector } from '@ngrx/store';
-import { CamfilRequisition } from '../../models/camfil-requisition/camfil-requisition.model';
 
+import { CamfilRequisition } from '../../models/camfil-requisition/camfil-requisition.model';
 import { getCamRequisitionManagementState } from '../cam-requisition-management-store';
 
 import { camfilRequisitionsAdapter, initialState } from './camfil-requisitions.reducer';
