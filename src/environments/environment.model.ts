@@ -126,8 +126,8 @@ export const ENVIRONMENT_DEFAULTS: Environment = {
   identityProvider: 'ICM',
   identityProviders: {
     // tslint:disable-next-line:use-camel-case-environment-properties
-    CAMFIL: {
-      type: 'CAMFIL',
+    camfil_login_on_behalf: {
+      type: 'camfil_login_on_behalf',
     },
   },
 

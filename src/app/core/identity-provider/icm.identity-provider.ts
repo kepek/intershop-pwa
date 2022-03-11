@@ -36,16 +36,13 @@ export class ICMIdentityProvider implements IdentityProvider {
     });
   }
 
-  // tslint:disable-next-line:force-jsdoc-comments
-  // @ts-ignore
-  // tslint:disable-next-line:no-unused
-  triggerLogin(route: ActivatedRouteSnapshot): TriggerReturnType {
+  triggerLogin(): TriggerReturnType {
     return true;
   }
 
-  triggerLogout() {
-    this.apiTokenService.removeApiToken();
+  triggerLogout(): TriggerReturnType {
     this.store.dispatch(logoutUser());
+    this.apiTokenService.removeApiToken();
     return this.store.pipe(
       select(selectQueryParam('returnUrl')),
       map(returnUrl => returnUrl || '/home'),
@@ -53,8 +50,14 @@ export class ICMIdentityProvider implements IdentityProvider {
     );
   }
 
-  triggerRegister() {
+  triggerRegister(): TriggerReturnType {
     return true;
+  }
+
+  triggerInvite(route: ActivatedRouteSnapshot): TriggerReturnType {
+    return this.router.createUrlTree(['forgotPassword', 'updatePassword'], {
+      queryParams: { uid: route.queryParams.uid, Hash: route.queryParams.Hash },
+    });
   }
 
   intercept(req: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {

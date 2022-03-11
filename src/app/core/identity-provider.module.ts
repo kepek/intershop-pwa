@@ -1,9 +1,8 @@
 import { NgModule } from '@angular/core';
 import { OAuthModule } from 'angular-oauth2-oidc';
+import { CamfilLoginOnBehalfIdentityProvider } from 'camfil-pwa/identity-provider/camfil-login-on-behalf-identity-provider';
 import { NgModuleWithProviders } from 'ng-mocks';
 import { noop } from 'rxjs';
-
-import { CAMFILIdentityProvider } from 'ish-core/identity-provider/camfil.identity-provider';
 
 import { Auth0IdentityProvider } from './identity-provider/auth0.identity-provider';
 import { ICMIdentityProvider } from './identity-provider/icm.identity-provider';
@@ -33,8 +32,8 @@ import { IdentityProviderCapabilities } from './identity-provider/identity-provi
       provide: IDENTITY_PROVIDER_IMPLEMENTOR,
       multi: true,
       useValue: {
-        type: 'CAMFIL',
-        implementor: CAMFILIdentityProvider,
+        type: 'camfil_login_on_behalf',
+        implementor: CamfilLoginOnBehalfIdentityProvider,
       },
     },
   ],

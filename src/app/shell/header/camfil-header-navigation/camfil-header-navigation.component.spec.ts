@@ -105,7 +105,7 @@ describe('Camfil Header Navigation Component', () => {
           </a>
         </li>
         <li class="dropdown with-separator">
-          <a ng-reflect-router-link="/air-handling-unit-guide" href="/air-handling-unit-guide"
+          <a ng-reflect-router-link="/page/air-handling-unit-guide" href="/page/air-handling-unit-guide"
             >camfil.ahu.link</a
           >
         </li>

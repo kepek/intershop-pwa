@@ -9,7 +9,9 @@ const routes: Routes = [
   {
     path: 'login-on-behalf',
     loadChildren: () =>
-      import('../../../../../src/app/pages/loading/loading-page.module').then(m => m.LoadingPageModule),
+      import('../pages/camfil-login-on-behalf/camfil-login-on-behalf-page.module').then(
+        m => m.CamfilLoginOnBehalfPageModule
+      ),
     canActivate: [IdentityProviderLoginGuard],
     data: {
       meta: {

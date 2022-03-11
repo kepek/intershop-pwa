@@ -1,13 +1,13 @@
 import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Store, select } from '@ngrx/store';
+import { CamfilLoginOnBehalfQueryParams } from 'camfil-pwa/identity-provider/camfil-login-on-behalf-identity-provider';
 import { OrderMapper } from 'camfil-pwa/models/order/order.mapper';
 import { Order } from 'camfil-pwa/models/order/order.model';
 import { CamfilUrlService } from 'camfil-pwa/services/camfil-url/camfil-url.service';
 import { Observable, of, throwError } from 'rxjs';
 import { concatMap, map, withLatestFrom } from 'rxjs/operators';
 
-import { CamfilIdentityParams } from 'ish-core/identity-provider/camfil.identity-provider';
 import { OrderData } from 'ish-core/models/order/order.interface';
 import { ApiService } from 'ish-core/services/api/api.service';
 import { OrderService as IshOrderService } from 'ish-core/services/order/order.service';
@@ -60,7 +60,8 @@ export class OrderService extends IshOrderService {
       return throwError('createOrder() called without basketId');
     }
 
-    const externalOrderReference = window?.sessionStorage?.getItem(CamfilIdentityParams.ERPEmployeeID) || undefined;
+    const externalOrderReference =
+      window?.sessionStorage?.getItem(CamfilLoginOnBehalfQueryParams.ERPEmployeeID) || undefined;
 
     const body = {
       basket: basketId,

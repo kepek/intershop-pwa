@@ -1,3 +1,3 @@
 .+:
   - path: /login-on-behalf
-    type: CAMFIL
+    type: camfil_login_on_behalf
