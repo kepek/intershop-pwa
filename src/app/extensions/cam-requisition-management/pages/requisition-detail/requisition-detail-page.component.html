@@ -22,9 +22,9 @@
           <span
             class="border border-secondary badge badge-secondary text-capitalize"
             [ngClass]="{
-              'border-warning badge-warning': requisition.approval.statusCode === 'PENDING',
-              'border-success badge-success': requisition.approval.statusCode === 'APPROVED',
-              'border-danger badge-danger': requisition.approval.statusCode === 'REJECTED'
+              'border-warning badge-warning': requisition.approval.statusCode === requisitionStatus.Pending,
+              'border-success badge-success': requisition.approval.statusCode === requisitionStatus.Approved,
+              'border-danger badge-danger': requisition.approval.statusCode === requisitionStatus.Rejected
             }"
           >
             {{ requisition.approval.status | translate }}</span
@@ -52,15 +52,15 @@
       [user]="user$ | async"
       [userPermissions]="userPermissions$ | async"
     ></camfil-requisition-summary>
-
-    <camfil-requisition-detail-toolbar
-      (openAddToProductModal)="openAddToProductModal($event)"
-      (removeSelectedProducts)="removeSelectedLineItems()"
-      (approveSelectedProducts)="approveSelectedLineItems()"
-      [requisition]="requisition"
-      [lineItemsChecked]="lineItemsChecked"
-    ></camfil-requisition-detail-toolbar>
-
+    <ng-container *ngIf="isEditable$ | async">
+      <camfil-requisition-detail-toolbar
+        (openAddToProductModal)="openAddToProductModal($event)"
+        (removeSelectedProducts)="removeSelectedLineItems()"
+        (approveSelectedProducts)="approveSelectedLineItems()"
+        [requisition]="requisition"
+        [lineItemsChecked]="lineItemsChecked"
+      ></camfil-requisition-detail-toolbar>
+    </ng-container>
     <!-- Line Items -->
     <camfil-requisition-line-item-table
       [requisition]="requisition"
@@ -92,14 +92,16 @@
     <camfil-loading *ngIf="loading$ | async"></camfil-loading>
   </div>
   <ng-template #approvalButtonBar let-requisition="requisition">
-    <div *ngIf="requisition.approval?.statusCode === 'PENDING' && view === 'approver'" class="text-right">
-      <button mat-stroked-button (click)="rejectDialog.show()">
-        {{ 'approval.detailspage.reject.button.label' | translate }}
-      </button>
-      <button (click)="approveRequisition()" mat-flat-button class="ml-2" color="primary">
-        {{ 'approval.detailspage.approve.button.label' | translate }}
-      </button>
-    </div>
+    <ng-container *ngIf="view === 'approver'">
+      <div *ngIf="isEditable$ | async" class="text-right">
+        <button mat-stroked-button (click)="rejectDialog.show()">
+          {{ 'approval.detailspage.reject.button.label' | translate }}
+        </button>
+        <button (click)="approveRequisition()" mat-flat-button class="ml-2" color="primary">
+          {{ 'approval.detailspage.approve.button.label' | translate }}
+        </button>
+      </div>
+    </ng-container>
   </ng-template>
 
   <camfil-requisition-reject-dialog

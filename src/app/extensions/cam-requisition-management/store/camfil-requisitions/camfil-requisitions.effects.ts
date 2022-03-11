@@ -19,6 +19,9 @@ import {
   createCamfilRequisition,
   createCamfilRequisitionFail,
   createCamfilRequisitionSuccess,
+  createOrderFromApprovedRequisition,
+  createOrderFromApprovedRequisitionFail,
+  createOrderFromApprovedRequisitionSuccess,
   getCamfilRequisitionData,
   loadCamfilRequisition,
   loadCamfilRequisitionFail,
@@ -51,9 +54,10 @@ export class CamfilRequisitionsEffects {
   loadCamfilRequisitions$ = createEffect(() =>
     this.actions$.pipe(
       ofType(loadCamfilRequisitions),
-      concatMap(() =>
-        this.requisitionsService.getCamfilRequisitions().pipe(
-          map(requisitions => loadCamfilRequisitionsSuccess({ requisitions })),
+      mapToPayload(),
+      concatMap(({ view }) =>
+        this.requisitionsService.getCamfilRequisitions(view).pipe(
+          map(requisitions => loadCamfilRequisitionsSuccess({ requisitions, view })),
           mapErrorToAction(loadCamfilRequisitionsFail)
         )
       )
@@ -113,21 +117,44 @@ export class CamfilRequisitionsEffects {
         this.requisitionsService
           .updateCamfilRequisitionStatus(payload.requisitionId, payload.status, payload.approvalComment)
           .pipe(
-            tap(requisition =>
-              /* ToDo: use only relative routes */
-              this.router.navigate([
-                `/account/requisitions/approver/${requisition.id}`,
-                { status: requisition.approval?.statusCode },
-              ])
-            ),
             map(requisition =>
-              updateCamfilRequisitionStatusSuccess({
-                requisition,
-                status: requisition.approval.status,
-              })
+              requisition.approval.statusCode === 'APPROVED'
+                ? createOrderFromApprovedRequisition({
+                    requisitionId: requisition.id,
+                  })
+                : updateCamfilRequisitionStatusSuccess({
+                    requisition,
+                    status: requisition.approval.status,
+                  })
             ),
             mapErrorToAction(updateCamfilRequisitionStatusFail)
           )
+      )
+    )
+  );
+
+  createOrderFromApprovedRequisition$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(createOrderFromApprovedRequisition),
+      mapToPayload(),
+      concatMap(payload =>
+        this.requisitionsService.createOrderFromApprovedRequisition(payload.requisitionId).pipe(
+          map(requisition => createOrderFromApprovedRequisitionSuccess({ requisition })),
+          mapErrorToAction(createOrderFromApprovedRequisitionFail)
+        )
+      )
+    )
+  );
+
+  createOrderFromApprovedRequisitionSuccess$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(createOrderFromApprovedRequisitionSuccess),
+      mapToPayload(),
+      map(payload =>
+        updateCamfilRequisitionStatusSuccess({
+          requisition: payload.requisition,
+          status: payload.requisition.approval.status,
+        })
       )
     )
   );
@@ -136,14 +163,14 @@ export class CamfilRequisitionsEffects {
     this.actions$.pipe(
       ofType(updateCamfilRequisitionStatusSuccess),
       mapToPayload(),
-      map(payload =>
+      mergeMap(payload => [
         displaySuccessMessage({
           message:
-            payload.status === 'approved'
+            payload.status === 'APPROVED'
               ? 'camfil.account.approvals.status_update.approved'
               : 'camfil.account.approvals.status_update.reject',
-        })
-      )
+        }),
+      ])
     )
   );
 

@@ -8,7 +8,7 @@ import { Attribute } from 'ish-core/models/attribute/attribute.model';
 import { selectRouteParam, selectUrl } from 'ish-core/store/core/router';
 import { whenTruthy } from 'ish-core/utils/operators';
 
-import { CamfilRequisition } from '../models/camfil-requisition/camfil-requisition.model';
+import { CamfilRequisition, CamfilRequisitionViewer } from '../models/camfil-requisition/camfil-requisition.model';
 import {
   addProductToCamfilRequisition,
   createCamfilRequisition,
@@ -47,8 +47,8 @@ export class CamRequisitionManagementFacade {
     return this.store.pipe(select(getCamfilRequisition(requisitionId)));
   }
 
-  requisitions$() {
-    this.store.dispatch(loadCamfilRequisitions());
+  requisitions$(view: CamfilRequisitionViewer) {
+    this.store.dispatch(loadCamfilRequisitions({ view }));
     return this.store.pipe(select(getCamfilRequisitions));
   }
 
@@ -68,7 +68,7 @@ export class CamRequisitionManagementFacade {
         startWith({})
       )
     ),
-    switchMap(() => this.requisitions$())
+    switchMap(([view]) => this.requisitions$(view as CamfilRequisitionViewer))
   );
 
   // CAMFIL Line Items

@@ -4,7 +4,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { Action, StoreModule } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
-import { anyString, instance, mock, verify, when } from 'ts-mockito';
+import { anyString, anything, instance, mock, verify, when } from 'ts-mockito';
 
 import { LineItem } from 'ish-core/models/line-item/line-item.model';
 
@@ -54,7 +54,7 @@ describe('Camfil Requisitions Effects', () => {
 
   beforeEach(() => {
     requisitionsService = mock(CamfilRequisitionsService);
-    when(requisitionsService.getCamfilRequisitions()).thenReturn(of(requisitions));
+    when(requisitionsService.getCamfilRequisitions(anything())).thenReturn(of(requisitions));
     when(requisitionsService.getCamfilRequisition(anyString())).thenReturn(of(requisitions[0]));
     when(requisitionsService.updateCamfilRequisitionStatus(anyString(), anyString(), anyString())).thenReturn(
       of(requisitions[0])
@@ -74,21 +74,22 @@ describe('Camfil Requisitions Effects', () => {
 
   describe('loadCamfilRequisitions$', () => {
     it('should call the service for retrieving requisitions', done => {
-      actions$ = of(loadCamfilRequisitions());
+      actions$ = of(loadCamfilRequisitions(anything()));
 
       effects.loadCamfilRequisitions$.subscribe(() => {
-        verify(requisitionsService.getCamfilRequisitions()).once();
+        verify(requisitionsService.getCamfilRequisitions(anything())).once();
         done();
       });
     });
 
     it('should retrieve requisitions when triggered', done => {
-      actions$ = of(loadCamfilRequisitions());
+      actions$ = of(loadCamfilRequisitions(anything()));
 
       effects.loadCamfilRequisitions$.subscribe(action => {
         expect(action).toMatchInlineSnapshot(`
           [Camfil Requisitions API] Load Requisitions Success:
             requisitions: [{"id":"testUUID","requisitionNo":"0001","user":{"firstName"...
+            view: undefined
         `);
         done();
       });

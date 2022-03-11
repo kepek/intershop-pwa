@@ -39,13 +39,12 @@ export class CamfilRequisitionMapper {
         const payloadData = payload as BasketData;
         payloadData.data.calculated = true;
         const lineItems = CamfilRequisitionMapper.getLineItemsData(included);
-        const approvalStatus = CamfilRequisitionMapper.getApprovalStatus(data);
-
+        const approvalStatus = CamfilRequisitionMapper.getApprovalStatus(data.approval);
         return {
           ...BasketMapper.fromData(payloadData),
           id: data.basketId,
           requisitionNo: data.requisitionNo,
-          creationDate: CamfilRequisitionMapper.convertToData(data.creationDate),
+          creationDate: CamfilRequisitionMapper.convertToData(data.approvalCreationDate),
           userBudget: { ...data.userBudgets, spentBudget: data.userBudgets?.spentBudget || emptyPrice },
           user: data.creator,
           orderMark: data.orderMark,
@@ -56,10 +55,10 @@ export class CamfilRequisitionMapper {
           lineItems,
           requisitionCustomer: CamfilRequisitionMapper.getCustomer(data),
           shippingAddress: data.shippingAddress,
-          approval: approvalStatus
+          approval: data.approval
             ? {
+                ...data.approval,
                 ...approvalStatus,
-                customerApprovers: data.approval?.customerApproval?.approvers,
               }
             : defaultApproval,
         };
@@ -100,9 +99,9 @@ export class CamfilRequisitionMapper {
       return;
     }
 
-    const date = String(payloadData)?.split('T');
+    const date = String(payloadData);
 
-    return new Date(date[0]?.replace(/(\d{2})-(\d{2})-(\d{4})/, '$2/$1/$3')).getTime();
+    return new Date(date.replace(/(\d{2})-(\d{2})-(\d{4})/, '$2/$1/$3')).getTime();
   }
 
   static getLineItemsData(included): LineItem[] {
@@ -120,7 +119,7 @@ export class CamfilRequisitionMapper {
   }
 
   static getApprovalStatus(payloadData): CamfilRequisitionApproval {
-    const { status } = payloadData;
+    const { status } = payloadData || {};
     const statusDictionary = {
       SUBMITTED: {
         status: 'Pending',
@@ -128,9 +127,13 @@ export class CamfilRequisitionMapper {
       },
       APPROVED: {
         status: 'Approved',
-        statusCode: 'Approved',
+        statusCode: 'APPROVED',
       },
-      REJECTED: {
+      COMPLETED: {
+        status: 'Approved',
+        statusCode: 'APPROVED',
+      },
+      REFUSED: {
         status: 'Rejected',
         statusCode: 'REJECTED',
       },

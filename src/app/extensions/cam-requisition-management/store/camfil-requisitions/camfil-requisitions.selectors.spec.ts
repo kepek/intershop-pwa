@@ -1,4 +1,5 @@
 import { TestBed } from '@angular/core/testing';
+import { anything } from 'ts-mockito';
 
 import { LineItem } from 'ish-core/models/line-item/line-item.model';
 import { CoreStoreModule } from 'ish-core/store/core/core-store.module';
@@ -49,7 +50,7 @@ describe('Camfil Requisitions Selectors', () => {
   });
 
   describe('loadCamfilRequisitions', () => {
-    const action = loadCamfilRequisitions();
+    const action = loadCamfilRequisitions(anything());
 
     beforeEach(() => {
       store$.dispatch(action);

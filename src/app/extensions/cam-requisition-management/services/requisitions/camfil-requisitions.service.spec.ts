@@ -27,10 +27,9 @@ describe('Camfil Requisitions Service', () => {
   });
 
   it('should call the getCamfilRequisitions of customer API when fetching requisitions', done => {
-    when(apiServiceMock.get('camfilrequisitions')).thenReturn(of({ elements: [{ id: '1234' }] }));
-    requisitionsService.getCamfilRequisitions().subscribe(data => {
-      verify(apiServiceMock.get('camfilrequisitions')).once();
-      expect(data).toMatchInlineSnapshot(`Array []`);
+    requisitionsService.getCamfilRequisitions('buyer').subscribe(data => {
+      verify(apiServiceMock.get('camfilrequisitions', anything())).once();
+      expect(data).toMatchInlineSnapshot(`undefined`);
       done();
     });
   });
@@ -44,7 +43,7 @@ describe('Camfil Requisitions Service', () => {
 
   it('should call updateCamfilRequisitionStatus of customer API when patching a requisition status', done => {
     requisitionsService.updateCamfilRequisitionStatus('4712', 'APPROVED').subscribe(() => {
-      verify(apiServiceMock.patch('requisitions/4712', anything(), anything())).once();
+      verify(apiServiceMock.patch('camfilrequisitions/4712/approve', anything(), anything())).once();
       done();
     });
   });

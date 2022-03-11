@@ -786,6 +786,8 @@
   "camfil.account.register.password_confirmation.label": "Vahvista salasana",
   "camfil.account.remind_password.button.aria": "Lähetä",
   "camfil.account.requisitions.approvals.approval.reference": "fi_Approval  reference",
+  "camfil.account.requisitions.approvals.approvedby": "(fi_FI)_Approved by",
+  "camfil.account.requisitions.approvals.rejected.comment": "(fi_FI)_Reject comment",
   "camfil.account.requisitions.approvals.rejectedby": "fi_Rejected by",
   "camfil.account.requisitions.approvals.requestedby": "fi_Requested by",
   "camfil.account.send_password.message": "Sähköpostiosoitteeseesi on lähetetty linkki. Seuraa linkkiä ja vaihda salasana.",

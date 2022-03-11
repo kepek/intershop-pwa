@@ -9,7 +9,10 @@ import {
   CamfilRequisitionViewer,
 } from '../../models/camfil-requisition/camfil-requisition.model';
 
-export const loadCamfilRequisitions = createAction('[Camfil Requisitions] Load Requisitions');
+export const loadCamfilRequisitions = createAction(
+  '[Camfil Requisitions] Load Requisitions',
+  payload<{ view?: CamfilRequisitionViewer }>()
+);
 
 export const loadCamfilRequisitionsFail = createAction('[Camfil Requisitions API] Load Requisitions Fail', httpError());
 
@@ -52,6 +55,21 @@ export const updateCamfilRequisitionStatusFail = createAction(
 export const updateCamfilRequisitionStatusSuccess = createAction(
   '[Camfil Requisitions API] Update Requisition Status Success',
   payload<{ requisition: CamfilRequisition; status: string }>()
+);
+
+export const createOrderFromApprovedRequisition = createAction(
+  '[Camfil Requisitions API] Create Order From Approved Requisition',
+  payload<{ requisitionId: string }>()
+);
+
+export const createOrderFromApprovedRequisitionSuccess = createAction(
+  '[Camfil Requisitions API] Create Order From Approved Requisition Success',
+  payload<{ requisition: CamfilRequisition }>()
+);
+
+export const createOrderFromApprovedRequisitionFail = createAction(
+  '[Camfil Requisitions API] Create Order From Approved Requisition Fail',
+  httpError()
 );
 
 export const addProductToCamfilRequisition = createAction(

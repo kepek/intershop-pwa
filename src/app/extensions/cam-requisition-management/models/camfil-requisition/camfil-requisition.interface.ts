@@ -20,7 +20,7 @@ export interface CamfilRequisitionBaseData extends BasketBaseData {
   order?: {
     itemId: string;
   };
-  creationDate: string;
+  approvalCreationDate: string;
   lineItemCount: number;
   creator: User;
   orderMark: string;

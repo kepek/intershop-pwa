@@ -786,6 +786,8 @@
   "camfil.account.register.password_confirmation.label": "Confirm Password",
   "camfil.account.remind_password.button.aria": "Send",
   "camfil.account.requisitions.approvals.approval.reference": "Approval  reference",
+  "camfil.account.requisitions.approvals.approvedby": "Approved by",
+  "camfil.account.requisitions.approvals.rejected.comment": "Reject comment",
   "camfil.account.requisitions.approvals.rejectedby": "Rejected by",
   "camfil.account.requisitions.approvals.requestedby": "Requested by",
   "camfil.account.send_password.message": "An e-mail with a link has been sent to your e-mail address. Please follow this link to change your password.",

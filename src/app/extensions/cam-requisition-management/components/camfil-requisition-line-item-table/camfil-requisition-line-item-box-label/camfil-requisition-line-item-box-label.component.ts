@@ -12,6 +12,7 @@ import { LineItem, LineItemView } from 'ish-core/models/line-item/line-item.mode
 export class CamfilRequisitionLineItemBoxLabelComponent implements OnInit {
   @ViewChild('autosize') autosize: CdkTextareaAutosize;
   @Input() lineItem: LineItemView;
+  @Input() isEditable = false;
   boxLabelForm: FormGroup;
   boxLabel: string;
 
