@@ -3,6 +3,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   EventEmitter,
+  Input,
   OnDestroy,
   OnInit,
   Output,
@@ -76,6 +77,8 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy, AfterView
   productRequiresMeasurement$: Observable<boolean>;
   productFormIsDisabled$: Observable<boolean>;
   currentCamCard$: Observable<CamCard>;
+
+  @Input() addToOrder = false;
 
   @Output() submitProductAdd = new EventEmitter<ProductAddFormData>();
 
