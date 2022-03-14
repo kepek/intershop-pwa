@@ -496,7 +496,7 @@
   "camfil.account.apply_form.customer_no": "Asiakasnumero",
   "camfil.account.apply_form.email": "Sähköpostiosoite",
   "camfil.account.apply_form.firstName": "Etunimi",
-  "camfil.account.apply_form.gdpr": "Valitsemalla tämän ruudun vahvistat, että olet lukenut ja hyväksyt GDPR -suostumuksen.",
+  "camfil.account.apply_form.gdpr": "Vahvistan että olen lukenut ja hyväksyn tietosuojakäytännöt sekä evästeiden käytön.",
   "camfil.account.apply_form.gdpr.error.required": "Hyväksy GDPR -suostumus.",
   "camfil.account.apply_form.lastName": "Sukunimi",
   "camfil.account.apply_form.phoneNumber": "Puhelinnumero",
