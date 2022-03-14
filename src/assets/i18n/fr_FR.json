@@ -106,6 +106,7 @@
   "account.login.email.label": "E-mail",
   "account.login.email_password.error.invalid": "La combinaison adresse électronique/mot de passe est incorrecte. Veuillez ré-essayer.",
   "account.login.link": "Connexion",
+  "account.login.login_to_continue.message": "(fr_FR)_Please log in to your account to continue...",
   "account.login.message": "Pour vous connecter à votre compte, veuillez saisir votre adresse électronique et votre mot de passe.",
   "account.login.non_approved_customer.error": "Votre compte client n'est pas approuvé.",
   "account.login.notifications.message": "Veuillez vous connecter à votre compte pour utiliser notre outil de notification.",

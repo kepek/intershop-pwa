@@ -106,6 +106,7 @@
   "account.login.email.label": "Sähköposti",
   "account.login.email_password.error.invalid": "Virheellinen käyttäjätunnus tai salasana. Tarkista, että syöttämäsi tiedot ovat oikein.",
   "account.login.link": "Kirjaudu sisään",
+  "account.login.login_to_continue.message": "(fi_FI)_Please log in to your account to continue...",
   "account.login.message": "Kirjaudu sisään tiliisi syöttämällä sähköpostiosoitteesi ja salasanasi.",
   "account.login.non_approved_customer.error": "Asiakastiliäsi ei ole hyväksytty.",
   "account.login.notifications.message": "Kirjaudu sisään tilillesi käyttääksesi ilmoitustyökalua.",
