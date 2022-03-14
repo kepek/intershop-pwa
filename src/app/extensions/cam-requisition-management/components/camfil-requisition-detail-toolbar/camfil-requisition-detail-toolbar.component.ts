@@ -24,7 +24,8 @@ export class CamfilRequisitionDetailToolbarComponent {
   constructor(public dialog: MatDialog) {}
 
   showAddToProductModal(modal: ModalAddNewProductComponent) {
-    this.openAddToProductModal.emit(modal);
+    this.dialog.open(modal.show());
+    modal.hide = () => this.dialog.closeAll();
   }
 
   openActionModal(modal: CamfilSmallCtaModalComponent) {

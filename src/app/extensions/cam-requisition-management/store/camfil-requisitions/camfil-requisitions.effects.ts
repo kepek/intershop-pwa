@@ -9,7 +9,7 @@ import { ProductCompletenessLevel } from 'ish-core/models/product/product.model'
 import { displaySuccessMessage } from 'ish-core/store/core/messages';
 import { ofUrl, selectRouteParam } from 'ish-core/store/core/router';
 import { getCurrentBasketId, submitBasketSuccess } from 'ish-core/store/customer/basket';
-import { getProducts, loadProductIfNotLoaded } from 'ish-core/store/shopping/products';
+import { getProduct, getProducts, loadProductIfNotLoaded } from 'ish-core/store/shopping/products';
 import { mapErrorToAction, mapToPayload, mapToPayloadProperty } from 'ish-core/utils/operators';
 
 import { CamfilRequisitionsService } from '../../services/requisitions/camfil-requisitions.service';
@@ -222,14 +222,24 @@ export class CamfilRequisitionsEffects {
     this.actions$.pipe(
       ofType(addProductToCamfilRequisition),
       mapToPayload(),
-      concatMap(payload =>
-        this.requisitionsService
-          .addProductToCamfilRequisition(payload.sku, payload.quantity, payload.requisitionId)
-          .pipe(
-            map(requisition => updateCamfilRequisitionSuccess({ requisition })),
-            mapErrorToAction(updateCamfilRequisitionStatusFail)
-          )
-      )
+      withLatestFrom(this.store.pipe(select(getProduct))),
+      concatMap(([payload, product]) => {
+        if (product.availability) {
+          return this.requisitionsService
+            .addProductToCamfilRequisition(product.sku, payload.quantity, payload.requisitionId)
+            .pipe(
+              map(requisition => updateCamfilRequisitionSuccess({ requisition })),
+              mapErrorToAction(updateCamfilRequisitionStatusFail)
+            );
+        } else {
+          return this.requisitionsService
+            .addProductToCamfilRequisition(product.sku, payload.quantity, payload.requisitionId)
+            .pipe(
+              map(requisition => updateCamfilRequisitionSuccess({ requisition })),
+              mapErrorToAction(updateCamfilRequisitionStatusFail)
+            );
+        }
+      })
     )
   );
 
