@@ -106,6 +106,7 @@
   "account.login.email.label": "(it_IT)_E-mail",
   "account.login.email_password.error.invalid": "(it_IT)_Your E-mail/Password combination is incorrect. Please try again.",
   "account.login.link": "(it_IT)_Sign In",
+  "account.login.login_to_continue.message": "(it_IT)_Please log in to your account to continue...",
   "account.login.message": "(it_IT)_To sign in to your account, please enter your e-mail address and password.",
   "account.login.non_approved_customer.error": "(it_IT)_Your customer account is not approved.",
   "account.login.notifications.message": "(it_IT)_Please login to your account to use our notification tool.",

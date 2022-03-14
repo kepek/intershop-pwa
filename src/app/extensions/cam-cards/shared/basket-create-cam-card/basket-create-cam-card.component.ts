@@ -36,7 +36,7 @@ export class BasketCreateCamCardComponent implements OnDestroy {
         modal.show();
       } else {
         // stay on the same page after login
-        const queryParams = { returnUrl: this.router.routerState.snapshot.url, messageKey: 'cam_cards' };
+        const queryParams = { returnUrl: this.router.routerState.snapshot.url, messageKey: 'login_to_continue' };
         this.router.navigate(['/login'], { queryParams });
       }
     });

@@ -106,6 +106,7 @@
   "account.login.email.label": "E-postadress",
   "account.login.email_password.error.invalid": "E-postadress eller lösenord är felaktigt, försök igen.",
   "account.login.link": "Logga in",
+  "account.login.login_to_continue.message": "(sv_SE)_Please log in to your account to continue...",
   "account.login.message": "För att logga in på ditt användarkonto, ange e-postadress och lösenord.",
   "account.login.non_approved_customer.error": "Ditt kundkonto är inte godkänt.",
   "account.login.notifications.message": "Logga in på ditt konto för att använda notifieringsfunktionen.",

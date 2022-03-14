@@ -90,7 +90,8 @@ export class CamfilProductAddToBasketModalComponent implements OnInit, OnDestroy
   }
 
   navigateToLogin() {
-    this.router.navigate(['/login']);
+    const queryParams = { returnUrl: this.router.routerState.snapshot.url, messageKey: 'login_to_continue' };
+    this.router.navigate(['/login'], { queryParams });
   }
 
   openModalIfLoggedIn(modal: AddProductToCartModalComponent) {
