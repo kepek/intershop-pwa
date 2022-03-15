@@ -44,9 +44,7 @@ import {
   updateCamfilRequisitionSuccess,
 } from './camfil-requisitions.actions';
 import { getSelectedCamfilRequisition, getSelectedCamfilRequisitionId } from './camfil-requisitions.selectors';
-import { payload } from 'ish-core/utils/ngrx-creators';
-import { combineLatest, concat, of } from 'rxjs';
-import { dispatch } from 'rxjs/internal/observable/pairs';
+import { combineLatest, of } from 'rxjs';
 
 @Injectable()
 export class CamfilRequisitionsEffects {
