@@ -157,7 +157,7 @@ export const selectEmailRecipients = createSelector(getBasketState, basket =>
 export const getBucketEmailRecipients = (addressId: string) =>
   createSelector(
     selectEmailRecipients,
-    allRecipients => allRecipients?.find(ar => ar.urn === addressId)?.emailRecipients || []
+    allRecipients => allRecipients?.find(ar => ar.urn === addressId)?.emailRecipients?.filter(er => er !== '') || []
   );
 
 export const getBucketsVolumeDiscounts = createSelector(getBasketState, state =>

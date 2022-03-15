@@ -1,5 +1,5 @@
-// tslint:disable: ish-ordered-imports ban-specific-imports
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
+import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
@@ -14,38 +14,36 @@ import {
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { MatDialog } from '@angular/material/dialog';
-import { Observable, Subject } from 'rxjs';
-import { first, map, skip, take, takeUntil } from 'rxjs/operators';
+import { CamfilConfigurationFacade } from 'camfil-pwa/facades/camfil-configuration.facade';
+import { Observable, ReplaySubject, Subject, combineLatest } from 'rxjs';
+import { first, map, skip, take, takeUntil, withLatestFrom } from 'rxjs/operators';
 
+import { AccountFacade } from 'ish-core/facades/account.facade';
+import { AppFacade } from 'ish-core/facades/app.facade';
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
+import { Address } from 'ish-core/models/address/address.model';
 import { AttributeHelper } from 'ish-core/models/attribute/attribute.helper';
+import { BasketExtensionData } from 'ish-core/models/basket-extension/basket-extension.interface';
+import { BasketExtension } from 'ish-core/models/basket-extension/basket-extension.model';
+import { Basket } from 'ish-core/models/basket/basket.model';
 import { Bucket } from 'ish-core/models/bucket/bucket.model';
+import { Channel } from 'ish-core/models/channel/channel.types';
 import { CustomerDeliveryTerm } from 'ish-core/models/customer/customer.interface';
 import { LineItemData } from 'ish-core/models/line-item/line-item.interface';
 import { LineItem, LineItemView } from 'ish-core/models/line-item/line-item.model';
+import { Price, PriceHelper } from 'ish-core/models/price/price.model';
 import { ProductCompletenessLevel } from 'ish-core/models/product/product.model';
+import { CheckoutFocusedElement } from 'ish-core/models/scroll-info copy/checkout-focused-element.interface';
+import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
 import { whenTruthy } from 'ish-core/utils/operators';
 import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
 
 import { ModalAddNewProductComponent } from '../../../extensions/cam-cards/pages/account-cam-card-detail/modal-add-new-product/modal-add-new-product.component';
+import { CamfilCheckoutAddEmailRecipientModalComponent } from '../../../pages/camfil-checkout-onestep/camfil-checkout-add-email-recipient-modal/camfil-checkout-add-email-recipient-modal.component';
 
 import { CamfilEditOrderModalComponent } from './camfil-edit-order-modal/camfil-edit-order-modal.component';
 import { ORDER_HEADER_VALIDATORS } from './validators';
-import { Address } from 'ish-core/models/address/address.model';
-import { CheckoutFocusedElement } from 'ish-core/models/scroll-info copy/checkout-focused-element.interface';
-import { Basket } from 'ish-core/models/basket/basket.model';
-import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
-import { AppFacade } from 'ish-core/facades/app.facade';
-import { Channel } from 'ish-core/models/channel/channel.types';
-import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
-import { AccountFacade } from 'ish-core/facades/account.facade';
-import { BasketExtensionData } from 'ish-core/models/basket-extension/basket-extension.interface';
-import { BasketExtension } from 'ish-core/models/basket-extension/basket-extension.model';
-import { CamfilCheckoutAddEmailRecipientModalComponent } from '../../../pages/camfil-checkout-onestep/camfil-checkout-add-email-recipient-modal/camfil-checkout-add-email-recipient-modal.component';
-import { Price } from 'ish-core/models/price/price.model';
-import { PriceItem } from 'ish-core/models/price-item/price-item.model';
-import { CamfilConfigurationFacade } from 'camfil-pwa/facades/camfil-configuration.facade';
 
 @Component({
   selector: 'camfil-checkout-bucket',
@@ -75,7 +73,6 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
   orderFullDeliveryDate: number;
   modalDeliveryText: string;
   isPartialDelivery = false;
-  deliveryTerm: CustomerDeliveryTerm;
   basketInvoiceAddress: Address;
   closedDates;
   calendarException = [];
@@ -95,7 +92,11 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
   isLoggedIn$: Observable<boolean>;
   deviceType$: Observable<DeviceType>;
   pageletIds$: Observable<string[]>;
+  deliveryTerm$: Observable<CustomerDeliveryTerm>;
+  deliveryPrice$: Observable<Price>;
+  showDeliveryTerm$: Observable<boolean>;
 
+  private bucket$ = new ReplaySubject<Bucket>(1);
   private destroy$ = new Subject<void>();
   private numberOfVisibleLineItems = 20;
 
@@ -131,18 +132,6 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
     return { ...this.bucket?.shipToAddressFull, countryCode: '' };
   }
 
-  get freeDelivery(): Price {
-    const emptyTotal: PriceItem = {
-      type: 'PriceItem',
-      gross: 0,
-      net: 0,
-      currency: 'N/A',
-    };
-    const itemTotal = this.bucket?.totals?.itemTotal || emptyTotal;
-    const threshold = this.deliveryTerm.threshold;
-    return { type: 'Money', currency: itemTotal?.currency, value: threshold - itemTotal.net };
-  }
-
   get deliveryDaysForItemsAfterConfirmation() {
     // Order delivery date
     const numDeliveryDate = this.getDateAt24(new Date(this.deliveryDate)).getTime();
@@ -163,15 +152,40 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
   }
 
   ngOnInit(): void {
+    this.orderAddress = this.shipToAddress;
+
     this.isLoggedIn$ = this.accountFacade.isLoggedIn$;
     this.calendarExceptions$ = this.checkoutFacade.calendarExceptions$;
 
-    this.orderAddress = this.shipToAddress;
-    this.emailRecipients$ = this.checkoutFacade.getBucketEmailRecipients$(this.bucket?.shipToAddressFull?.id);
+    this.checkoutFacade
+      .getBucketEmailRecipients$(this.bucket?.shipToAddressFull?.id)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(emailRecipients => {
+        this.emailRecipients = emailRecipients;
+      });
 
-    this.emailRecipients$?.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(value => {
-      this.emailRecipients = value?.filter(er => er !== '');
-    });
+    this.deliveryTerm$ = this.checkoutFacade.getCustomersDeliveryTerms$.pipe(
+      whenTruthy(),
+      withLatestFrom(this.bucket$),
+      map(([deliveryTerms, bucket]) => deliveryTerms?.[bucket?.customer?.id])
+    );
+
+    this.deliveryPrice$ = this.deliveryTerm$.pipe(
+      whenTruthy(),
+      withLatestFrom(this.bucket$),
+      map(([deliveryTerm, bucket]) => {
+        const emptyPrice = PriceHelper.empty();
+        const threshold = deliveryTerm?.threshold || 0;
+        const totalNetValue = bucket?.totals?.itemTotal?.net || 0;
+        const currency = bucket?.purchaseCurrency;
+        const value = deliveryTerm.freeShippingAllowed || threshold === 0 ? 0 : threshold - totalNetValue;
+        return { ...emptyPrice, value, currency };
+      })
+    );
+
+    this.showDeliveryTerm$ = combineLatest([this.deliveryTerm$, this.deliveryPrice$]).pipe(
+      map(([deliveryTerm, deliveryPrice]) => deliveryPrice?.value > 0 || deliveryTerm.freeShippingAllowed)
+    );
 
     this.calendarExceptions$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(exceptions => {
       this.calendarException = exceptions.map((element: { date: string }) => {
@@ -204,9 +218,6 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
         .pipe(whenTruthy(), takeUntil(this.destroy$))
         .subscribe(address => (this.basketInvoiceAddress = address));
       this.initForm();
-      this.checkoutFacade.getCustomersDeliveryTerms$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(terms => {
-        this.deliveryTerm = terms[this.bucket?.customer?.id];
-      });
       this.handleDeliveryDateIfOutOfDate();
     }
 
@@ -238,6 +249,8 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
   }
 
   ngOnChanges(s) {
+    this.bucket$.next(this.bucket);
+
     if (s.order && this.forceUpdateForm) {
       this.orderForm.patchValue({
         orderMark: this.bucket.orderMark,

@@ -34,4 +34,5 @@ export interface CustomerDeliveryTerm {
   id: string;
   threshold: number;
   description: string;
+  freeShippingAllowed: boolean;
 }
