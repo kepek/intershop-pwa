@@ -1388,7 +1388,7 @@
   "cookies.modal.description.headline": "Tietosuoja-asetuskeskus",
   "cookies.modal.description.more.aria_label": "Lisätietoa tietosuojakäytännöistä, avautuu uuteen ikkunaan",
   "cookies.modal.description.more.label": "Lisätietoja",
-  "cookies.modal.description.more.url": "https://www.camfil.com/fi-fi/privacy-policy",
+  "cookies.modal.description.more.url": "/fi/page/privacy-policy",
   "cookies.modal.preference.required": "Aina aktiivinen",
   "cookies.modal.preferences.headline": "Hallinnoi suostumusmäärityksiä",
   "cookies.modal.save": "Tallenna asetukset",

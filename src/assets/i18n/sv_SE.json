@@ -1388,7 +1388,7 @@
   "cookies.modal.description.headline": "sv_Privacy Preference Center",
   "cookies.modal.description.more.aria_label": "sv_More information about your privacy, opens in a new tab",
   "cookies.modal.description.more.label": "sv_More information",
-  "cookies.modal.description.more.url": "https://cookiepedia.co.uk/giving-consent-to-cookies",
+  "cookies.modal.description.more.url": "/se/page/privacy-policy",
   "cookies.modal.preference.required": "sv_Always Active",
   "cookies.modal.preferences.headline": "sv_Manage Consent Preferences",
   "cookies.modal.save": "Spara ändringar",
