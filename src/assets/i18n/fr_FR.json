@@ -1388,7 +1388,7 @@
   "cookies.modal.description.headline": "Centre de préférences sur les données personnelles",
   "cookies.modal.description.more.aria_label": "Donne des informations complémentaires sur vos données personnelles, s'ouvre dans un nouvel onglet",
   "cookies.modal.description.more.label": "Plus d'informations sur",
-  "cookies.modal.description.more.url": "/page/privacy-policy",
+  "cookies.modal.description.more.url": "/fr/page/privacy-policy",
   "cookies.modal.preference.required": "Toujours actif",
   "cookies.modal.preferences.headline": "Gérer les préférences de consentement",
   "cookies.modal.save": "Sauvegarder les paramètres",
