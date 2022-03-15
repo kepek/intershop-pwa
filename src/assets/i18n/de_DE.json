@@ -500,6 +500,7 @@
   "camfil.account.approvallist.table.order_channel": "(de_DE)_Order channel",
   "camfil.account.approvals.product_added.text": "(de_DE)_Product has been added to approval successfully",
   "camfil.account.approvals.product_removed.text": "(de_DE)_Product has been removed from approval successfully",
+  "camfil.account.approvals.product_validation_fail.text": "(de_DE)_Selected item is no longer for sale",
   "camfil.account.approvals.requisition_updated.text": "(de_DE)_The approval has been successfully updated",
   "camfil.account.approvals.status_update.reject": "(de_DE)_The approval request has been rejected successfully",
   "camfil.account.cam_card.access_user.dialog.btn.cancel": "(de_DE)_Cancel",

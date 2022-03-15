@@ -165,9 +165,18 @@ export class CamfilRequisitionsService {
 
   // Add product to requisition
 
-  addProductToCamfilRequisition(sku: string, quantity: number, requisitionId?: string): Observable<CamfilRequisition> {
+  addProductToCamfilRequisition(
+    sku: string,
+    quantity: number,
+    requisitionId?: string,
+    availability?: boolean
+  ): Observable<CamfilRequisition> {
     if (!requisitionId) {
       return throwError('addProductToCamfilRequisition() called without required id');
+    }
+
+    if (!availability) {
+      return throwError('addProductToCamfilRequisition() product not available');
     }
 
     const params = new HttpParams().set('include', this.allIncludes.join());

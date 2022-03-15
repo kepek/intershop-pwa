@@ -6,7 +6,7 @@ import { concatMap, filter, map, mergeMap, switchMap, tap, withLatestFrom } from
 import { getCamCardCustomers, loadCustomers } from 'src/app/extensions/cam-cards/store/cam-card';
 
 import { ProductCompletenessLevel } from 'ish-core/models/product/product.model';
-import { displaySuccessMessage } from 'ish-core/store/core/messages';
+import { displayErrorMessage, displaySuccessMessage } from 'ish-core/store/core/messages';
 import { ofUrl, selectRouteParam } from 'ish-core/store/core/router';
 import { getCurrentBasketId, submitBasketSuccess } from 'ish-core/store/customer/basket';
 import { getProduct, getProducts, loadProductIfNotLoaded } from 'ish-core/store/shopping/products';
@@ -17,6 +17,7 @@ import { CamfilRequisitionsService } from '../../services/requisitions/camfil-re
 import {
   addProductToCamfilRequisition,
   addProductToCamfilRequisitionSuccess,
+  checkProductAvailabilityFail,
   createCamfilRequisition,
   createCamfilRequisitionFail,
   createCamfilRequisitionSuccess,
@@ -43,6 +44,9 @@ import {
   updateCamfilRequisitionSuccess,
 } from './camfil-requisitions.actions';
 import { getSelectedCamfilRequisition, getSelectedCamfilRequisitionId } from './camfil-requisitions.selectors';
+import { payload } from 'ish-core/utils/ngrx-creators';
+import { combineLatest, concat, of } from 'rxjs';
+import { dispatch } from 'rxjs/internal/observable/pairs';
 
 @Injectable()
 export class CamfilRequisitionsEffects {
@@ -222,24 +226,30 @@ export class CamfilRequisitionsEffects {
     this.actions$.pipe(
       ofType(addProductToCamfilRequisition),
       mapToPayload(),
-      withLatestFrom(this.store.pipe(select(getProduct))),
+      switchMap(payload => combineLatest([of(payload), this.store.pipe(select(getProduct, { sku: payload.sku }))])),
       concatMap(([payload, product]) => {
-        if (product.availability) {
+        if (!product.availability) {
           return this.requisitionsService
-            .addProductToCamfilRequisition(product.sku, payload.quantity, payload.requisitionId)
+            .addProductToCamfilRequisition(payload.sku, payload.quantity, payload.requisitionId)
             .pipe(
               map(requisition => updateCamfilRequisitionSuccess({ requisition })),
               mapErrorToAction(updateCamfilRequisitionStatusFail)
             );
         } else {
-          return this.requisitionsService
-            .addProductToCamfilRequisition(product.sku, payload.quantity, payload.requisitionId)
-            .pipe(
-              map(requisition => updateCamfilRequisitionSuccess({ requisition })),
-              mapErrorToAction(updateCamfilRequisitionStatusFail)
-            );
+          return of(checkProductAvailabilityFail());
         }
       })
+    )
+  );
+
+  checkProductAvailabilityFail$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(checkProductAvailabilityFail),
+      mergeMap(() => [
+        displayErrorMessage({
+          message: 'camfil.account.approvals.product_validation_fail.text',
+        }),
+      ])
     )
   );
 

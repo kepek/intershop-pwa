@@ -8,6 +8,7 @@ import { CamfilRequisition } from '../../models/camfil-requisition/camfil-requis
 
 import {
   addProductToCamfilRequisitionSuccess,
+  checkProductAvailabilityFail,
   createCamfilRequisition,
   createCamfilRequisitionFail,
   createCamfilRequisitionSuccess,
@@ -73,7 +74,8 @@ export const requisitionsReducer = createReducer(
     updateCamfilRequisitionStatusFail,
     updateCamfilRequisitionFail,
     createCamfilRequisitionFail,
-    createOrderFromApprovedRequisitionFail
+    createOrderFromApprovedRequisitionFail,
+    checkProductAvailabilityFail
   ),
   on(getCamfilRequisitionData, (state: CamfilRequisitionsState, action) => ({
     ...state,

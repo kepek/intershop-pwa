@@ -512,6 +512,7 @@
   "camfil.account.approvallist.table.order_channel": "fi_Order channel",
   "camfil.account.approvals.product_added.text": "fi_Product has been added to approval successfully",
   "camfil.account.approvals.product_removed.text": "fi_Product has been removed from approval successfully",
+  "camfil.account.approvals.product_validation_fail.text": "(fi_FI)_Selected item is no longer for sale",
   "camfil.account.approvals.requisition_updated.text": "fi_The approval has been successfully updated",
   "camfil.account.approvals.status_update.reject": "fi_The approval request has been rejected successfully",
   "camfil.account.cam_card.access_user.dialog.btn.cancel": "Peruuta",

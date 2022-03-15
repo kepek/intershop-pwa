@@ -133,7 +133,6 @@ export class RequisitionDetailPageComponent implements OnInit, OnDestroy {
 
   sumbitAddProductToRequisition(quickAddData: ProductAddFormData) {
     const { sku, quantity } = quickAddData;
-    console.log('sumbitAddProductToRequisition', quickAddData);
     this.requisition$.pipe(take(1)).subscribe(({ approval, id }) => {
       if (this.getIsCamfilRequisitionEditable(approval)) {
         this.camRequisitionManagementFacade.addProductToCamfilRequisition(sku, quantity, id);

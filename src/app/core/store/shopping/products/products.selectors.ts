@@ -74,6 +74,7 @@ function createFailedOrProductView(sku: string, failed, entities, tree) {
     // tslint:disable-next-line: ish-no-object-literal-type-assertion
     return createProductView({ sku, failed: true } as Product, tree);
   }
+
   return createView(entities[sku], entities, tree);
 }
 
