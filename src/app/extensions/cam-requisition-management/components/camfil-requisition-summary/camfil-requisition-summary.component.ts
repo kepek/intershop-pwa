@@ -23,13 +23,18 @@ export class CamfilRequisitionSummaryComponent implements OnInit {
   @Input() user: User;
   @Input() userPermissions: string[];
   @Input() view: CamfilRequisitionViewer = 'buyer';
-  private camRequisitionManagementFacade: CamRequisitionManagementFacade;
+
   customerNoteForm: FormGroup;
   getIsCamfilRequisitionEditable = CamfilRequisitionHelper.getIsCamfilRequisitionEditable;
   getIsCamfilRequisitionApproved = CamfilRequisitionHelper.getIsCamfilRequisitionApproved;
   getIsCamfilRequisitionRejected = CamfilRequisitionHelper.getIsCamfilRequisitionRejected;
 
-  constructor(public dialog: MatDialog, private toast: CamfilToastrService, private translate: TranslateService) {}
+  constructor(
+    public dialog: MatDialog,
+    private toast: CamfilToastrService,
+    private translate: TranslateService,
+    private camRequisitionManagementFacade: CamRequisitionManagementFacade
+  ) {}
 
   get isEditable(): boolean {
     const { approval } = this.requisition;
@@ -48,7 +53,7 @@ export class CamfilRequisitionSummaryComponent implements OnInit {
 
   ngOnInit() {
     this.customerNoteForm = new FormGroup({
-      customerNote: new FormControl(this.requisition.info),
+      customerNote: new FormControl(this.requisition.userComment),
     });
   }
 
@@ -57,12 +62,9 @@ export class CamfilRequisitionSummaryComponent implements OnInit {
       const customerNoteValue = target.value;
       const updatedRequisition = {
         ...this.requisition,
-        basketExtensions: {
-          ...this.requisition.basketExtensions,
-          info: customerNoteValue,
-        },
+        userComment: customerNoteValue,
       };
-      this.camRequisitionManagementFacade?.updateCamfilRequisition(updatedRequisition);
+      this.camRequisitionManagementFacade.updateCamfilRequisition(updatedRequisition);
     } else {
       this.toast.error(this.translate.instant('camfil.approval.detailspage.edit.permission_denied.text'), '', {
         timeOut: 3000,

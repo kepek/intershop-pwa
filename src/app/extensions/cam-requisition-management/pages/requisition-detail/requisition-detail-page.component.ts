@@ -90,26 +90,24 @@ export class RequisitionDetailPageComponent implements OnInit, OnDestroy {
     this.lineItemsChecked = lineItemsIds;
   }
 
-  removeSelectedLineItems() {
-    this.requisition$.pipe(
-      take(1),
-      tap(({ approval, id }) => {
-        if (this.getIsCamfilRequisitionEditable(approval)) {
-          this.camRequisitionManagementFacade.removeProductsFromCamfilRequisition(this.lineItemsChecked, id);
-        }
-      })
-    );
-  }
+  // TODO: Update for multiple line items
+  // removeSelectedLineItems() {
+  //   this.requisition$.pipe(
+  //     take(1),
+  //     tap(({ approval, id }) => {
+  //       if (this.getIsCamfilRequisitionEditable(approval)) {
+  //         this.camRequisitionManagementFacade.removeProductsFromCamfilRequisition(this.lineItemsChecked, id);
+  //       }
+  //     })
+  //   );
+  // }
 
   removeSelectedLineItem(lineItemId) {
-    this.requisition$.pipe(
-      take(1),
-      tap(({ approval, id }) => {
-        if (this.getIsCamfilRequisitionEditable(approval)) {
-          this.camRequisitionManagementFacade.removeProductsFromCamfilRequisition([lineItemId], id);
-        }
-      })
-    );
+    this.requisition$.pipe(take(1)).subscribe(({ approval, id }) => {
+      if (this.getIsCamfilRequisitionEditable(approval)) {
+        this.camRequisitionManagementFacade.removeProductsFromCamfilRequisition(lineItemId, id);
+      }
+    });
   }
 
   approveSelectedLineItems() {
@@ -117,7 +115,7 @@ export class RequisitionDetailPageComponent implements OnInit, OnDestroy {
       take(1),
       tap(({ approval, id }) => {
         if (this.getIsCamfilRequisitionEditable(approval)) {
-          this.camRequisitionManagementFacade.updateCamfilRequisitionLineItemAttribute(this.lineItemsChecked, id, {
+          this.camRequisitionManagementFacade.approveCamfilRequisitionLineItem(id, this.lineItemsChecked, {
             name: 'approved',
             value: true,
           });
@@ -135,7 +133,7 @@ export class RequisitionDetailPageComponent implements OnInit, OnDestroy {
     const { sku, quantity } = quickAddData;
     this.requisition$.pipe(take(1)).subscribe(({ approval, id }) => {
       if (this.getIsCamfilRequisitionEditable(approval)) {
-        this.camRequisitionManagementFacade.addProductToCamfilRequisition(sku, quantity, id);
+        this.camRequisitionManagementFacade.addProductToCamfilRequisition(id, { sku, quantity });
       }
     });
   }

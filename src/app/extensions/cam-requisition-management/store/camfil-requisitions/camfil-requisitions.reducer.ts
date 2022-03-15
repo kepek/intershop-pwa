@@ -7,7 +7,6 @@ import { setErrorOn, setLoadingOn, unsetLoadingAndErrorOn } from 'ish-core/utils
 import { CamfilRequisition } from '../../models/camfil-requisition/camfil-requisition.model';
 
 import {
-  addProductToCamfilRequisitionSuccess,
   checkProductAvailabilityFail,
   createCamfilRequisition,
   createCamfilRequisitionFail,
@@ -21,6 +20,8 @@ import {
   loadCamfilRequisitionsFail,
   loadCamfilRequisitionsSuccess,
   loadCamfilRequisitionsuccess,
+  updateCamfilRequisition,
+  updateCamfilRequisitionAddressSuccess,
   updateCamfilRequisitionFail,
   updateCamfilRequisitionStatus,
   updateCamfilRequisitionStatusFail,
@@ -60,13 +61,21 @@ export const initialState: CamfilRequisitionsState = camfilRequisitionsAdapter.g
 
 export const requisitionsReducer = createReducer(
   initialState,
-  setLoadingOn(loadCamfilRequisitions, loadCamfilRequisition, updateCamfilRequisitionStatus, createCamfilRequisition),
+  setLoadingOn(
+    loadCamfilRequisitions,
+    loadCamfilRequisition,
+    updateCamfilRequisitionStatus,
+    createCamfilRequisition,
+    updateCamfilRequisition
+  ),
   unsetLoadingAndErrorOn(
     loadCamfilRequisitionsSuccess,
     loadCamfilRequisitionsuccess,
     updateCamfilRequisitionStatusSuccess,
     createCamfilRequisitionSuccess,
-    createOrderFromApprovedRequisitionSuccess
+    createOrderFromApprovedRequisitionSuccess,
+    updateCamfilRequisitionSuccess,
+    updateCamfilRequisitionAddressSuccess
   ),
   setErrorOn(
     loadCamfilRequisitionsFail,
@@ -107,10 +116,17 @@ export const requisitionsReducer = createReducer(
       return camfilRequisitionsAdapter.upsertOne(approvedRequisition, state);
     }
   ),
-  on(
-    addProductToCamfilRequisitionSuccess,
-    updateCamfilRequisitionSuccess,
-    createCamfilRequisitionSuccess,
-    (state: CamfilRequisitionsState, action) => camfilRequisitionsAdapter.upsertOne(action.payload.requisition, state)
-  )
+  on(updateCamfilRequisitionSuccess, createCamfilRequisitionSuccess, (state: CamfilRequisitionsState, action) =>
+    camfilRequisitionsAdapter.upsertOne(action.payload.requisition, state)
+  ),
+  on(updateCamfilRequisitionAddressSuccess, (state: CamfilRequisitionsState, action) => {
+    const { requisition, address } = action.payload;
+
+    const updatedRequisition = {
+      ...state.entities[requisition?.id],
+      shippingAddress: address,
+    };
+
+    return camfilRequisitionsAdapter.upsertOne(updatedRequisition, state);
+  })
 );

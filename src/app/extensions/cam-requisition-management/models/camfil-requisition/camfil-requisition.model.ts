@@ -40,6 +40,7 @@ export interface CamfilRequisition extends CamfilRequisitionBasket {
   shippingAddress: Address;
   userBudget: RequisitionUserBudget;
   info: string;
+  userComment: string;
   approval: CamfilRequisitionApproval;
   canApprove?: boolean;
 }
