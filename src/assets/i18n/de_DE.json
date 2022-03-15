@@ -1376,7 +1376,7 @@
   "cookies.modal.description.headline": "(de_DE)_Privacy Preference Center",
   "cookies.modal.description.more.aria_label": "(de_DE)_More information about your privacy, opens in a new tab",
   "cookies.modal.description.more.label": "(de_DE)_More information",
-  "cookies.modal.description.more.url": "(de_DE)_https://www.camfil.com/en/privacy-policy",
+  "cookies.modal.description.more.url": "/page/privacy-policy",
   "cookies.modal.preference.required": "(de_DE)_Always Active",
   "cookies.modal.preferences.headline": "(de_DE)_Manage Consent Preferences",
   "cookies.modal.save": "Einstellungen speichern",
