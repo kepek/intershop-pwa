@@ -630,11 +630,14 @@ export class BasketService {
     return this.apiService.patch(`baskets/${basketId}/buckets/${bucketId}`, body, options);
   }
 
+  // tslint:disable-next-line:force-jsdoc-comments
+  // TODO (extMlk): Make sure to abstract it from here to camfil-pwa
   loadCustomerDeliveryTerm(customerId: string): Observable<CustomerDeliveryTerm> {
     if (!customerId) {
       return throwError('loadCustomerDeliveryTerm() called without customerId');
     }
-    return this.apiService.get(`camfilcustomers/${customerId}/deliveryterm`);
+
+    return this.apiService.get<CustomerDeliveryTerm>(`camfilcustomers/${customerId}/deliveryterm`);
   }
 
   /**
