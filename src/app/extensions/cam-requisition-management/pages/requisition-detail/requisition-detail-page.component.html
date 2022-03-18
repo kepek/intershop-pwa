@@ -52,16 +52,15 @@
       [user]="user$ | async"
       [userPermissions]="userPermissions$ | async"
     ></camfil-requisition-summary>
-
-    <camfil-requisition-detail-toolbar
-      (openAddToProductModal)="openAddToProductModal($event)"
-      (removeSelectedProducts)="removeSelectedLineItems()"
-      (approveSelectedProducts)="approveSelectedLineItems()"
-      (addProductToRequisition)="sumbitAddProductToRequisition($event)"
-      [requisition]="requisition"
-      [lineItemsChecked]="lineItemsChecked"
-    ></camfil-requisition-detail-toolbar>
-
+    <ng-container *ngIf="isEditable$ | async">
+      <camfil-requisition-detail-toolbar
+        (openAddToProductModal)="openAddToProductModal($event)"
+        (approveSelectedProducts)="approveSelectedLineItems()"
+        (addProductToRequisition)="sumbitAddProductToRequisition($event)"
+        [requisition]="requisition"
+        [lineItemsChecked]="lineItemsChecked"
+      ></camfil-requisition-detail-toolbar>
+    </ng-container>
     <!-- Line Items -->
     <camfil-requisition-line-item-table
       [requisition]="requisition"
@@ -69,7 +68,6 @@
       [lineItemsChecked]="lineItemsChecked"
       [deviceType]="deviceType$ | async"
       (checkAllLineItems)="toggleAllLineItems($event)"
-      (removeSelectedProducts)="removeSelectedLineItems()"
       (removeSelectedProduct)="removeSelectedLineItem($event)"
     ></camfil-requisition-line-item-table>
 
