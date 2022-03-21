@@ -11,6 +11,7 @@ import { CamfilRequisitionData } from '../../models/camfil-requisition/camfil-re
 import { CamfilRequisitionMapper } from '../../models/camfil-requisition/camfil-requisition.mapper';
 import {
   CamfilRequisition,
+  CamfilRequisitionLineItemUpdate,
   CamfilRequisitionStatus,
   CamfilRequisitionViewer,
 } from '../../models/camfil-requisition/camfil-requisition.model';
@@ -206,6 +207,22 @@ export class CamfilRequisitionsService {
         params,
       })
       .pipe(map(() => ({ requisitionId, lineItemId, attribute })));
+  }
+
+  updateLineItem(requisitionId: string, lineItemUpdate: CamfilRequisitionLineItemUpdate) {
+    if (!requisitionId) {
+      return throwError('updateLineItem() called without required requisition id');
+    }
+
+    const params = new HttpParams().set('include', this.allIncludes.join());
+    const body = {
+      quantity: { value: lineItemUpdate.quantity },
+    };
+    return this.apiService
+      .put(`camfilrequisitions/${requisitionId}/items/${lineItemUpdate.lineItemId}`, body, {
+        params,
+      })
+      .pipe(map(() => ({ requisitionId, lineItemUpdate })));
   }
 
   updateCamfilRequisition(requisition: CamfilRequisition): Observable<CamfilRequisition> {

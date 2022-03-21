@@ -147,6 +147,7 @@
       <td mat-cell *matCellDef="let pli">
         <ng-container *ngIf="product$(pli.productSKU) | async as product">
           <camfil-requisition-line-item-quantity
+            [requisition]="requisition"
             [product]="product"
             [lineItem]="pli"
             [isEditable]="editable"
@@ -252,6 +253,7 @@
           <div class="col-5">
             <ng-container *ngIf="product$(pli.productSKU) | async as product">
               <camfil-requisition-line-item-quantity
+                [requisition]="requisition"
                 [product]="product"
                 [lineItem]="pli"
               ></camfil-requisition-line-item-quantity>

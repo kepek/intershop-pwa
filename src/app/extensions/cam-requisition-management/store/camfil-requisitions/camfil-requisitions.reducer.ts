@@ -23,6 +23,9 @@ import {
   updateCamfilRequisition,
   updateCamfilRequisitionAddressSuccess,
   updateCamfilRequisitionFail,
+  updateCamfilRequisitionLineItem,
+  updateCamfilRequisitionLineItemFail,
+  updateCamfilRequisitionLineItemSuccess,
   updateCamfilRequisitionStatus,
   updateCamfilRequisitionStatusFail,
   updateCamfilRequisitionStatusSuccess,
@@ -66,7 +69,8 @@ export const requisitionsReducer = createReducer(
     loadCamfilRequisition,
     updateCamfilRequisitionStatus,
     createCamfilRequisition,
-    updateCamfilRequisition
+    updateCamfilRequisition,
+    updateCamfilRequisitionLineItem
   ),
   unsetLoadingAndErrorOn(
     loadCamfilRequisitionsSuccess,
@@ -75,7 +79,8 @@ export const requisitionsReducer = createReducer(
     createCamfilRequisitionSuccess,
     createOrderFromApprovedRequisitionSuccess,
     updateCamfilRequisitionSuccess,
-    updateCamfilRequisitionAddressSuccess
+    updateCamfilRequisitionAddressSuccess,
+    updateCamfilRequisitionLineItemSuccess
   ),
   setErrorOn(
     loadCamfilRequisitionsFail,
@@ -84,7 +89,8 @@ export const requisitionsReducer = createReducer(
     updateCamfilRequisitionFail,
     createCamfilRequisitionFail,
     createOrderFromApprovedRequisitionFail,
-    checkProductAvailabilityFail
+    checkProductAvailabilityFail,
+    updateCamfilRequisitionLineItemFail
   ),
   on(getCamfilRequisitionData, (state: CamfilRequisitionsState, action) => ({
     ...state,

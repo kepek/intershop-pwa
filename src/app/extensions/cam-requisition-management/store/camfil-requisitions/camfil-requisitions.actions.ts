@@ -6,6 +6,7 @@ import { httpError, payload } from 'ish-core/utils/ngrx-creators';
 
 import {
   CamfilRequisition,
+  CamfilRequisitionLineItemUpdate,
   CamfilRequisitionStatus,
   CamfilRequisitionViewer,
 } from '../../models/camfil-requisition/camfil-requisition.model';
@@ -93,21 +94,41 @@ export const addProductToCamfilRequisitionSuccess = createAction(
   }>()
 );
 
-export const removeProductsFromCamfilRequisition = createAction(
-  '[Camfil Requisitions API] Remove Line Items From Requisition',
+// Deleting products from requisition
+
+export const removeProductFromCamfilRequisition = createAction(
+  '[Camfil Requisitions API] Remove Line Item From Requisition',
   payload<{
     lineItemId: string;
     requisitionId?: string;
   }>()
 );
 
-export const removeProductsFromCamfilRequisitionSuccess = createAction(
-  '[Camfil Requisitions API] Remove Line Items From Requisition Success',
+export const removeProductFromCamfilRequisitionSuccess = createAction(
+  '[Camfil Requisitions API] Remove Line Item From Requisition Success',
   payload<{ requisitionId: string }>()
 );
 
-export const removeProductToCamfilRequisitionFail = createAction(
-  '[Camfil Requisitions API] Remove Product To Requisition Fail',
+export const removeProductFromCamfilRequisitionFail = createAction(
+  '[Camfil Requisitions API] Remove  Line Item Requisition Fail',
+  httpError()
+);
+
+export const removeMultipleProductsFromCamfilRequisition = createAction(
+  '[Camfil Requisitions API] Remove Multiple Line Items From Requisition',
+  payload<{
+    lineItemsIds: string[];
+    requisitionId?: string;
+  }>()
+);
+
+export const removeMultipleProductsFromCamfilRequisitionSuccess = createAction(
+  '[Camfil Requisitions API] Remove Multiple Line Items From Requisition Success',
+  payload<{ requisitionId: string }>()
+);
+
+export const removeMultipleProductsFromCamfilRequisitionFail = createAction(
+  '[Camfil Requisitions API] Remove Multiple Line Items From Requisition Fail',
   httpError()
 );
 
@@ -231,5 +252,24 @@ export const approveCamfilRequisitionLineItemsSuccess = createAction(
 
 export const approveCamfilRequisitionLineItemsFail = createAction(
   '[Camfil Requisitions API] Approve Line Items Fail',
+  httpError()
+);
+
+// Quantiti update for Line items
+
+export const updateCamfilRequisitionLineItem = createAction(
+  '[Camfil Requisitions API] Update Line Item ',
+  payload<{
+    requisitionId?: string;
+    lineItemUpdate: CamfilRequisitionLineItemUpdate;
+  }>()
+);
+
+export const updateCamfilRequisitionLineItemSuccess = createAction(
+  '[Camfil Requisitions API] Update Line Item  Success'
+);
+
+export const updateCamfilRequisitionLineItemFail = createAction(
+  '[Camfil Requisitions API] Update Line Item  Fail',
   httpError()
 );

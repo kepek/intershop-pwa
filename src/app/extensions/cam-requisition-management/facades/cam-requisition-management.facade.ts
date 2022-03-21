@@ -9,7 +9,11 @@ import { Attribute } from 'ish-core/models/attribute/attribute.model';
 import { selectRouteParam, selectUrl } from 'ish-core/store/core/router';
 import { whenTruthy } from 'ish-core/utils/operators';
 
-import { CamfilRequisition, CamfilRequisitionViewer } from '../models/camfil-requisition/camfil-requisition.model';
+import {
+  CamfilRequisition,
+  CamfilRequisitionLineItemUpdate,
+  CamfilRequisitionViewer,
+} from '../models/camfil-requisition/camfil-requisition.model';
 import {
   addCamfilRequisitionLineItemAttribute,
   addProductToCamfilRequisition,
@@ -22,8 +26,10 @@ import {
   getCamfilRequisitionsLoading,
   loadCamfilRequisition,
   loadCamfilRequisitions,
-  removeProductsFromCamfilRequisition,
+  removeMultipleProductsFromCamfilRequisition,
+  removeProductFromCamfilRequisition,
   updateCamfilRequisition,
+  updateCamfilRequisitionLineItem,
   updateCamfilRequisitionLineItemAttribute,
 } from '../store/camfil-requisitions';
 
@@ -88,19 +94,36 @@ export class CamRequisitionManagementFacade {
     );
   }
 
-  removeProductsFromCamfilRequisition(lineItemId: string, requisitionId: string) {
-    console.log('fasada removeProductsFromCamfilRequisition');
+  removeProductFromCamfilRequisition(lineItemId: string, requisitionId: string) {
     this.store.dispatch(
-      removeProductsFromCamfilRequisition({
+      removeProductFromCamfilRequisition({
         lineItemId,
         requisitionId,
       })
     );
   }
 
+  removeMultipleProductsFromCamfilRequisition(lineItemsIds: string[], requisitionId: string) {
+    this.store.dispatch(
+      removeMultipleProductsFromCamfilRequisition({
+        lineItemsIds,
+        requisitionId,
+      })
+    );
+  }
+
   updateCamfilRequisition(requisition: CamfilRequisition, addressId?: string, address?: Address) {
-    console.log('updateCamfilRequisition', updateCamfilRequisition);
     this.store.dispatch(updateCamfilRequisition({ requisition, addressId, address }));
+  }
+
+  // Line items quantity
+  updateCamfilRequisitionLineItem(requisitionId: string, lineItemUpdate: CamfilRequisitionLineItemUpdate) {
+    this.store.dispatch(
+      updateCamfilRequisitionLineItem({
+        requisitionId,
+        lineItemUpdate,
+      })
+    );
   }
 
   // Line items attributes

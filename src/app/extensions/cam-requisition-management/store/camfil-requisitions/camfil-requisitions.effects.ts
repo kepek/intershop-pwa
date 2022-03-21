@@ -39,15 +39,19 @@ import {
   loadCamfilRequisitionsFail,
   loadCamfilRequisitionsSuccess,
   loadCamfilRequisitionsuccess,
-  removeProductsFromCamfilRequisition,
-  removeProductsFromCamfilRequisitionSuccess,
+  removeProductFromCamfilRequisition,
+  removeProductFromCamfilRequisitionFail,
+  removeProductFromCamfilRequisitionSuccess,
   updateCamfilRequisition,
   updateCamfilRequisitionAddress,
   updateCamfilRequisitionAddressSuccess,
   updateCamfilRequisitionFail,
+  updateCamfilRequisitionLineItem,
   updateCamfilRequisitionLineItemAttribute,
   updateCamfilRequisitionLineItemAttributeFail,
   updateCamfilRequisitionLineItemAttributeSuccess,
+  updateCamfilRequisitionLineItemFail,
+  updateCamfilRequisitionLineItemSuccess,
   updateCamfilRequisitionStatus,
   updateCamfilRequisitionStatusFail,
   updateCamfilRequisitionStatusSuccess,
@@ -132,37 +136,6 @@ export class CamfilRequisitionsEffects {
       ])
     )
   );
-
-  // checkProductsAvailabilityForSelectedCamfilOrder$ = createEffect(() =>
-  //   this.actions$.pipe(
-  //     ofType(loadCamfilRequisitionsuccess),
-  //     mapToPayload(),
-  //     map(({ requisition }) =>
-  //       requisition?.lineItems.reduce<string[]>(
-  //         (acc, val) => (acc.find(sku => sku === val.productSKU) ? acc : [...acc, val.productSKU]),
-  //         []
-  //       )
-  //     ),
-  //     switchMap(skus =>
-  //       this.store.pipe(
-  //         select(getProducts, { skus }),
-  //         filter(products => products.length === skus.length)
-  //       )
-  //     ),
-  //     map(products =>
-  //       products.map(({ availability, failed, sku }) => ({ sku, availability: failed ? false : availability }))
-  //     ),
-  //     map(availabilities => availabilities.every(({ availability }) => !!availability)),
-  //     withLatestFrom(this.store.pipe(select(getSelectedCamfilRequisition))),
-  //     map(([canApprove, requisition]) => {
-  //       const newRequisition = {
-  //         ...requisition,
-  //         canApprove,
-  //       };
-  //       return updateCamfilRequisition({ requisition: newRequisition });
-  //     })
-  //   )
-  // );
 
   updateCamfilRequisitionStatus$ = createEffect(() =>
     this.actions$.pipe(
@@ -271,33 +244,9 @@ export class CamfilRequisitionsEffects {
 
   loadCamfilRequisitionAfterRequisitonItemsChangedSuccess$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(addProductToCamfilRequisitionSuccess, removeProductsFromCamfilRequisitionSuccess),
+      ofType(addProductToCamfilRequisitionSuccess, removeProductFromCamfilRequisitionSuccess),
       mapToPayload(),
       map(loadCamfilRequisition)
-    )
-  );
-
-  removeProductsFromCamfilRequisition$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(removeProductsFromCamfilRequisition),
-      mapToPayload(),
-      concatMap(({ lineItemId, requisitionId }) =>
-        this.requisitionsService.removeProductsFromCamfilRequisition(lineItemId, requisitionId).pipe(
-          map(() => removeProductsFromCamfilRequisitionSuccess({ requisitionId })),
-          mapErrorToAction(updateCamfilRequisitionStatusFail)
-        )
-      )
-    )
-  );
-
-  removeProductsFromCamfilRequisitionSuccess$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(removeProductsFromCamfilRequisitionSuccess),
-      map(() =>
-        displaySuccessMessage({
-          message: 'camfil.account.approvals.product_removed.text',
-        })
-      )
     )
   );
 
@@ -356,7 +305,31 @@ export class CamfilRequisitionsEffects {
     )
   );
 
-  // ------- Line Items -------
+  removeProductsFromCamfilRequisition$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(removeProductFromCamfilRequisition),
+      mapToPayload(),
+      concatMap(({ lineItemId, requisitionId }) =>
+        this.requisitionsService.removeProductsFromCamfilRequisition(lineItemId, requisitionId).pipe(
+          map(() => removeProductFromCamfilRequisitionSuccess({ requisitionId })),
+          mapErrorToAction(removeProductFromCamfilRequisitionFail)
+        )
+      )
+    )
+  );
+
+  removeProductsFromCamfilRequisitionSuccess$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(removeProductFromCamfilRequisitionSuccess),
+      map(() =>
+        displaySuccessMessage({
+          message: 'camfil.account.approvals.product_removed.text',
+        })
+      )
+    )
+  );
+
+  // ------- Line Items Attributes -------
   addCamfilRequisitionLineItemAttribute$ = createEffect(() =>
     this.actions$.pipe(
       ofType(addCamfilRequisitionLineItemAttribute),
@@ -398,6 +371,20 @@ export class CamfilRequisitionsEffects {
             map(deleteCamfilRequisitionLineItemAttributeSuccess),
             mapErrorToAction(deleteCamfilRequisitionLineItemAttributeFail)
           )
+      )
+    )
+  );
+
+  // Line items quantity update
+
+  updateCamfilRequisitionLineItem$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(updateCamfilRequisitionLineItem),
+      mapToPayload(),
+      mergeMap(({ requisitionId, lineItemUpdate }) =>
+        this.requisitionsService
+          .updateLineItem(requisitionId, lineItemUpdate)
+          .pipe(map(updateCamfilRequisitionLineItemSuccess), mapErrorToAction(updateCamfilRequisitionLineItemFail))
       )
     )
   );

@@ -66,3 +66,8 @@ export interface CamfilEditRequisition extends CamfilRequisition {
 export interface CamfilRequisitionCustomer extends Customer {
   id: string;
 }
+
+export interface CamfilRequisitionLineItemUpdate {
+  lineItemId: string;
+  quantity?: number;
+}

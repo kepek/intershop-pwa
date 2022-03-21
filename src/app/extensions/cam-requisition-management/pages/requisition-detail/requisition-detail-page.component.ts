@@ -90,22 +90,21 @@ export class RequisitionDetailPageComponent implements OnInit, OnDestroy {
     this.lineItemsChecked = lineItemsIds;
   }
 
-  // TODO: Update for multiple line items
-  // removeSelectedLineItems() {
-  //   this.requisition$.pipe(
-  //     take(1),
-  //     tap(({ approval, id }) => {
-  //       if (this.getIsCamfilRequisitionEditable(approval)) {
-  //         this.camRequisitionManagementFacade.removeProductsFromCamfilRequisition(this.lineItemsChecked, id);
-  //       }
-  //     })
-  //   );
-  // }
+  removeMultipleSelectedLineItems() {
+    this.requisition$.pipe(
+      take(1),
+      tap(({ approval, id }) => {
+        if (this.getIsCamfilRequisitionEditable(approval)) {
+          this.camRequisitionManagementFacade.removeMultipleProductsFromCamfilRequisition(this.lineItemsChecked, id);
+        }
+      })
+    );
+  }
 
   removeSelectedLineItem(lineItemId) {
     this.requisition$.pipe(take(1)).subscribe(({ approval, id }) => {
       if (this.getIsCamfilRequisitionEditable(approval)) {
-        this.camRequisitionManagementFacade.removeProductsFromCamfilRequisition(lineItemId, id);
+        this.camRequisitionManagementFacade.removeProductFromCamfilRequisition(lineItemId, id);
       }
     });
   }

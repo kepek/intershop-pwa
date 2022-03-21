@@ -11,6 +11,9 @@ import {
 } from 'ish-core/models/product-view/product-view.model';
 import { ProductHelper } from 'ish-core/models/product/product.helper';
 
+import { CamRequisitionManagementFacade } from '../../../facades/cam-requisition-management.facade';
+import { CamfilRequisition } from '../../../models/camfil-requisition/camfil-requisition.model';
+
 @Component({
   selector: 'camfil-requisition-line-item-quantity',
   templateUrl: './camfil-requisition-line-item-quantity.component.html',
@@ -20,6 +23,7 @@ export class CamfilRequisitionLineItemQuantityComponent implements OnInit, OnDes
   @Input() product: ProductView | VariationProductView | VariationProductMasterView;
   @Input() lineItem: LineItem;
   @Input() isEditable = false;
+  @Input() requisition: CamfilRequisition;
   productItemForm: FormGroup;
   isMasterProduct = ProductHelper.isMasterProduct;
   updatedQuantity: number;
@@ -28,7 +32,7 @@ export class CamfilRequisitionLineItemQuantityComponent implements OnInit, OnDes
 
   private destroy$ = new Subject();
 
-  constructor() {}
+  constructor(private camRequisitionManagementFacade: CamRequisitionManagementFacade) {}
 
   ngOnInit() {
     this.productItemForm = new FormGroup({
@@ -38,7 +42,7 @@ export class CamfilRequisitionLineItemQuantityComponent implements OnInit, OnDes
     this.productItemForm
       .get(this.quantityControlName)
       ?.valueChanges.pipe(debounceTime(500), takeUntil(this.destroy$))
-      .subscribe(([quantity]) => {
+      .subscribe(quantity => {
         const { minOrderQuantity, maxOrderQuantity } = this.product;
 
         if (quantity < minOrderQuantity) {
@@ -49,8 +53,12 @@ export class CamfilRequisitionLineItemQuantityComponent implements OnInit, OnDes
           return;
         }
 
+        const lineItemUpdate = {
+          lineItemId: this.lineItem.id,
+          quantity,
+        };
         if (this.productItemForm.get(this.quantityControlName)?.value !== this.lineItem?.quantity?.value) {
-          // this.updateBasketItem({ itemId: this.lineItem.id, quantity });
+          this.camRequisitionManagementFacade.updateCamfilRequisitionLineItem(this.requisition.id, lineItemUpdate);
         }
       });
   }

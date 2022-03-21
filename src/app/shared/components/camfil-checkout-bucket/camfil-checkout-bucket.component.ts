@@ -17,11 +17,12 @@ import { MatDialog } from '@angular/material/dialog';
 import { CamfilConfigurationFacade } from 'camfil-pwa/facades/camfil-configuration.facade';
 import { Observable, ReplaySubject, Subject, combineLatest } from 'rxjs';
 import { first, map, skip, take, takeUntil } from 'rxjs/operators';
-
+import { ProductAddFormData } from 'src/app/extensions/cam-cards/pages/account-cam-card-detail/modal-add-new-product/productAddFormData.model';
 import { AccountFacade } from 'ish-core/facades/account.facade';
 import { AppFacade } from 'ish-core/facades/app.facade';
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
+import { AddressHelper } from 'ish-core/models/address/address.helper';
 import { Address } from 'ish-core/models/address/address.model';
 import { AttributeHelper } from 'ish-core/models/attribute/attribute.helper';
 import { BasketExtensionData } from 'ish-core/models/basket-extension/basket-extension.interface';
@@ -44,8 +45,6 @@ import { CamfilCheckoutAddEmailRecipientModalComponent } from '../../../pages/ca
 
 import { CamfilEditOrderModalComponent } from './camfil-edit-order-modal/camfil-edit-order-modal.component';
 import { ORDER_HEADER_VALIDATORS } from './validators';
-import { AddressHelper } from 'ish-core/models/address/address.helper';
-import { ProductAddFormData } from 'src/app/extensions/cam-cards/pages/account-cam-card-detail/modal-add-new-product/productAddFormData.model';
 
 @Component({
   selector: 'camfil-checkout-bucket',
@@ -250,6 +249,7 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
             : []
         )
       );
+
     this.shoppingFacade.basketAddresses$.pipe(takeUntil(this.destroy$)).subscribe((basketAddresses: Address[]) => {
       this.basketAddresses = basketAddresses;
     });
