@@ -158,19 +158,19 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
     this.calendarExceptions$ = this.checkoutFacade.calendarExceptions$;
 
     this.checkoutFacade
-      .getBucketEmailRecipients$(this.bucket?.shipToAddressFull?.id)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(emailRecipients => {
+      ?.getBucketEmailRecipients$(this.bucket?.shipToAddressFull?.id)
+      ?.pipe(takeUntil(this.destroy$))
+      ?.subscribe(emailRecipients => {
         this.emailRecipients = emailRecipients;
       });
 
-    this.deliveryTerm$ = this.checkoutFacade.getCustomersDeliveryTerms$.pipe(
+    this.deliveryTerm$ = this.checkoutFacade.getCustomersDeliveryTerms$?.pipe(
       whenTruthy(),
       withLatestFrom(this.bucket$),
       map(([deliveryTerms, bucket]) => deliveryTerms?.[bucket?.customer?.id])
     );
 
-    this.deliveryPrice$ = this.deliveryTerm$.pipe(
+    this.deliveryPrice$ = this.deliveryTerm$?.pipe(
       whenTruthy(),
       withLatestFrom(this.bucket$),
       map(([deliveryTerm, bucket]) => {
@@ -183,11 +183,11 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
       })
     );
 
-    this.showDeliveryTerm$ = combineLatest([this.deliveryTerm$, this.deliveryPrice$]).pipe(
+    this.showDeliveryTerm$ = combineLatest([this.deliveryTerm$, this.deliveryPrice$])?.pipe(
       map(([deliveryTerm, deliveryPrice]) => deliveryPrice?.value > 0 || deliveryTerm.freeShippingAllowed)
     );
 
-    this.calendarExceptions$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(exceptions => {
+    this.calendarExceptions$?.pipe(whenTruthy(), takeUntil(this.destroy$))?.subscribe(exceptions => {
       this.calendarException = exceptions.map((element: { date: string }) => {
         const date = new Date(element.date);
         date.setHours(0, 0, 0);
@@ -206,22 +206,24 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
     });
 
     this.focusedCheckoutElement$ = this.checkoutFacade.getFocusedCheckoutElement$;
-    this.focusedCheckoutElement$.pipe(takeUntil(this.destroy$)).subscribe((focusedElement: CheckoutFocusedElement) => {
-      if (focusedElement) {
-        this.focusedElement = focusedElement;
-        this.focusedElementId = focusedElement.elementId;
-      }
-    });
+    this.focusedCheckoutElement$
+      ?.pipe(takeUntil(this.destroy$))
+      ?.subscribe((focusedElement: CheckoutFocusedElement) => {
+        if (focusedElement) {
+          this.focusedElement = focusedElement;
+          this.focusedElementId = focusedElement.elementId;
+        }
+      });
 
     if (this.bucket) {
       this.checkoutFacade.basketInvoiceAddress$
-        .pipe(whenTruthy(), takeUntil(this.destroy$))
-        .subscribe(address => (this.basketInvoiceAddress = address));
+        ?.pipe(whenTruthy(), takeUntil(this.destroy$))
+        ?.subscribe(address => (this.basketInvoiceAddress = address));
       this.initForm();
       this.handleDeliveryDateIfOutOfDate();
     }
 
-    this.appFacade.getChannel$?.pipe(takeUntil(this.destroy$)).subscribe(channel => {
+    this.appFacade.getChannel$?.pipe(takeUntil(this.destroy$))?.subscribe(channel => {
       if (channel === Channel.FI) {
         // TODO (extMlk): allowToAddEmailRecipientsInCheckout setting
         this.hideRecipientButton = true;
@@ -229,13 +231,13 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
     });
 
     this.deviceType$ = this.appFacade.deviceType$;
-    this.deviceType$?.pipe(takeUntil(this.destroy$)).subscribe(deviceType => {
+    this.deviceType$?.pipe(takeUntil(this.destroy$))?.subscribe(deviceType => {
       this.itemSize = deviceType === 'mobile' ? 255 : deviceType === 'tablet' ? 155 : 100;
     });
 
     this.pageletIds$ = this.camfilConfigurationFacade
-      .isEnabled$('showWarningMessageForPartialDelivery')
-      .pipe(
+      ?.isEnabled$('showWarningMessageForPartialDelivery')
+      ?.pipe(
         map(showWarningMessageForPartialDelivery =>
           showWarningMessageForPartialDelivery
             ? ['camfil.include.checkout.warning.message.content.pagelet2-Include']
@@ -297,7 +299,7 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
       clearTimeout(focusTimeout);
     }
 
-    this.virtualScrollViewport?.scrolledIndexChange.pipe(skip(1), takeUntil(this.destroy$)).subscribe(el => {
+    this.virtualScrollViewport?.scrolledIndexChange?.pipe(skip(1), takeUntil(this.destroy$))?.subscribe(el => {
       this.currentScrollIndex = el;
     });
   }
@@ -389,9 +391,9 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
     modal.hide = () => this.dialog.closeAll();
 
     dialogRef
-      .afterClosed()
-      .pipe(take(1), takeUntil(this.destroy$))
-      .subscribe(() => {
+      ?.afterClosed()
+      ?.pipe(take(1), takeUntil(this.destroy$))
+      ?.subscribe(() => {
         modal.reset();
       });
   }
@@ -596,7 +598,7 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
     }
 
     /* call c after dialog is closed either by click, backdrop click, or ESC press */
-    this.dialog.afterAllClosed.pipe(first(), takeUntil(this.destroy$)).subscribe(() => {
+    this.dialog.afterAllClosed?.pipe(first(), takeUntil(this.destroy$))?.subscribe(() => {
       this.shoppingFacade.updateBucket(basketId, shipAddressId, basketExtensionUpdate);
     });
   }

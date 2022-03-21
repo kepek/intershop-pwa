@@ -162,6 +162,7 @@ describe('Camfil Checkout Bucket Component', () => {
     when(checkoutFacadeMock.basketInvoiceAddress$).thenReturn(of({}));
     when(checkoutFacadeMock.getFocusedCheckoutElement$).thenReturn(of({}));
     when(accountFacadeMock.isLoggedIn$).thenReturn(of(false));
+    when(appFacadeMock.getChannel$).thenReturn(of('SE'));
     when(camfilConfigurationFacadeMock.isEnabled$('showWarningMessageForPartialDelivery')).thenReturn(of(false));
   });
 
