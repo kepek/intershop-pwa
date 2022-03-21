@@ -242,25 +242,23 @@
     <!-- Line Items -->
     <ng-container *ngTemplateOutlet="orderList"></ng-container>
     <!-- Delivery Terms -->
-    <ng-container *ngIf="showDeliveryTerm$ | async">
-      <ng-container *ngIf="deliveryPrice$ | async as deliveryPrice">
-        <ng-container *ngIf="deliveryTerm$ | async as deliveryTerm">
-          <div class="bg-light p-2 box-shadow d-flex align-items-center">
-            <mat-icon class="size-35 ml-2 mr-4" svgIcon="delivery"></mat-icon>
-            <div class="w-100">
-              <b *ngIf="deliveryTerm.description">
-                {{ deliveryTerm.description }}
-              </b>
-              <hr class="m-1" />
-              <b *ngIf="deliveryPrice.value">
-                {{ 'camfil.checkout.free_delivery.threshold' | translate: { '0': (deliveryPrice | ishPrice) } }}
-              </b>
-              <b *ngIf="deliveryTerm.freeShippingAllowed">
-                {{ 'camfil.checkout.free_delivery' | translate }}
-              </b>
-            </div>
+    <ng-container *ngIf="deliveryPrice$ | async as deliveryPrice">
+      <ng-container *ngIf="deliveryTerm$ | async as deliveryTerm">
+        <div class="bg-light p-2 box-shadow d-flex align-items-center">
+          <mat-icon class="size-35 ml-2 mr-4" svgIcon="delivery"></mat-icon>
+          <div class="w-100">
+            <b>
+              {{ deliveryTerm.description || deliveryTerm.id }}
+            </b>
+            <hr class="m-1" *ngIf="deliveryPrice.value || deliveryTerm.freeShippingAllowed" />
+            <b *ngIf="deliveryPrice.value">
+              {{ 'camfil.checkout.free_delivery.threshold' | translate: { '0': (deliveryPrice | ishPrice) } }}
+            </b>
+            <b *ngIf="deliveryTerm.freeShippingAllowed">
+              {{ 'camfil.checkout.free_delivery' | translate }}
+            </b>
           </div>
-        </ng-container>
+        </div>
       </ng-container>
     </ng-container>
     <!-- Cost Summary -->

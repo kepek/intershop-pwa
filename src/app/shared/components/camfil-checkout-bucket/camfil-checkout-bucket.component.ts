@@ -94,7 +94,6 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
   pageletIds$: Observable<string[]>;
   deliveryTerm$: Observable<CustomerDeliveryTerm>;
   deliveryPrice$: Observable<Price>;
-  showDeliveryTerm$: Observable<boolean>;
 
   private bucket$ = new ReplaySubject<Bucket>(1);
   private destroy$ = new Subject<void>();
@@ -170,21 +169,15 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
       map(([deliveryTerms, bucket]) => deliveryTerms?.[bucket?.customer?.id])
     );
 
-    this.deliveryPrice$ = this.deliveryTerm$?.pipe(
-      whenTruthy(),
-      withLatestFrom(this.bucket$),
+    this.deliveryPrice$ = combineLatest([this.deliveryTerm$.pipe(whenTruthy()), this.bucket$])?.pipe(
       map(([deliveryTerm, bucket]) => {
         const emptyPrice = PriceHelper.empty();
         const threshold = deliveryTerm?.threshold || 0;
         const totalNetValue = bucket?.totals?.itemTotal?.net || 0;
         const currency = bucket?.purchaseCurrency;
-        const value = deliveryTerm.freeShippingAllowed || threshold === 0 ? 0 : threshold - totalNetValue;
-        return { ...emptyPrice, value, currency };
+        const price = deliveryTerm.freeShippingAllowed || threshold === 0 ? 0 : threshold - totalNetValue;
+        return { ...emptyPrice, value: price > 0 ? price : 0, currency };
       })
-    );
-
-    this.showDeliveryTerm$ = combineLatest([this.deliveryTerm$, this.deliveryPrice$])?.pipe(
-      map(([deliveryTerm, deliveryPrice]) => deliveryPrice?.value > 0 || deliveryTerm.freeShippingAllowed)
     );
 
     this.calendarExceptions$?.pipe(whenTruthy(), takeUntil(this.destroy$))?.subscribe(exceptions => {
