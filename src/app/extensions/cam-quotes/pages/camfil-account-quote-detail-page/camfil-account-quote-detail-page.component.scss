@@ -1,0 +1,60 @@
+@import '~src/styles/themes/camfil/variables';
+@import '~src/styles/themes/camfil/colors';
+
+:host {
+  display: flex;
+  flex-direction: column;
+  margin-top: 1rem;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+
+  .left-items,
+  .right-items {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .left-items {
+    flex-wrap: wrap;
+
+    h1 {
+      padding: 0;
+      margin: 0;
+      text-transform: none;
+      @media (max-width: $screen-md-max) {
+        font-size: $font-size-base * 1.25;
+      }
+
+      white-space: nowrap;
+    }
+
+    .status {
+      font-weight: bold;
+      padding: 0.5rem 1rem;
+      border: 2px solid $camfil-color-primary;
+    }
+  }
+}
+
+camfil-quote-details {
+  margin-bottom: 1rem;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-start;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.item-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}

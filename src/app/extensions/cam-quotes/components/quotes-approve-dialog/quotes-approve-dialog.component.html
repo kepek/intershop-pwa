@@ -1,0 +1,10 @@
+<!-- <h2>{{data.title | translate}}</h2> -->
+<h2>{{ 'camfil.quotes.quoteslist.approve_quotes_modal.title' | translate }}</h2>
+<div class="actions">
+  <button (click)="cancel()" class="btn btn-link add-new-product__buttons--link">
+    {{ 'camfil.quotes.quoteslist.approve_quotes_modal.cancel' | translate }}
+  </button>
+  <button (click)="confirm()" class="btn btn-link add-new-product__buttons--link" routerLink="/account/orders">
+    {{ 'camfil.quotes.quoteslist.approve_quotes_modal.confirm' | translate }}
+  </button>
+</div>

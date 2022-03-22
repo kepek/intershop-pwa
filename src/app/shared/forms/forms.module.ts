@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -18,6 +18,7 @@ import { CounterComponent } from './components/counter/counter.component';
 import { FormControlFeedbackComponent } from './components/form-control-feedback/form-control-feedback.component';
 import { InputBirthdayComponent } from './components/input-birthday/input-birthday.component';
 import { InputComponent } from './components/input/input.component';
+import { SearchInputComponent } from './components/search-input/search-input.component';
 import { SelectAddressComponent } from './components/select-address/select-address.component';
 import { SelectCountryComponent } from './components/select-country/select-country.component';
 import { SelectRegionComponent } from './components/select-region/select-region.component';
@@ -37,6 +38,7 @@ const exportedComponents = [
   FormControlFeedbackComponent,
   InputBirthdayComponent,
   InputComponent,
+  SearchInputComponent,
   SelectAddressComponent,
   SelectComponent,
   SelectCountryComponent,
@@ -56,6 +58,7 @@ const exportedComponents = [
     IconModule,
     MaterialModule,
     PipesModule,
+    FormsModule,
     ReactiveFormsModule,
     RouterModule,
     TranslateModule,
@@ -63,4 +66,4 @@ const exportedComponents = [
   declarations: [...exportedComponents],
   exports: [...exportedComponents],
 })
-export class FormsSharedModule {}
+export class FormsSharedModule { }

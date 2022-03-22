@@ -1,0 +1,9 @@
+<mat-icon class="search__icon background-icon" svgIcon="search"></mat-icon>
+<input
+  type='text'
+  matInput [placeholder]='placeholder'
+  [ngModel]='searchText'
+  (ngModelChange)='this.onChange($event)'
+  (focus)='hasFocus = true'
+  (blur)='hasFocus = false'
+><button mat-flat-button color="primary">Search</button>

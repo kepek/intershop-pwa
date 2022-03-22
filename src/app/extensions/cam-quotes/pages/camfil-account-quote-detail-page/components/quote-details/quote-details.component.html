@@ -1,0 +1,80 @@
+<mat-card class="mat-elevation-z2">
+  <div class="column left-column">
+    <div class="fields-group">
+      <div class="field">
+        <span class="label">Customer name</span>
+        <span class="value">{{ details.customerName }}</span>
+      </div>
+      <div class="field">
+        <span class="label">Customer number</span>
+        <span class="value">{{ details.customerNumber }}</span>
+      </div>
+      <div class="field">
+        <span class="label">Customer Departament</span>
+        <span class="value">{{ details.customerDepartment }}</span>
+      </div>
+    </div>
+    <div class="fields-group">
+      <div class="field">
+        <span class="label">Camfil quotation number</span>
+        <span class="value">{{ details.camfilQuoteNumber }}</span>
+      </div>
+      <div class="field">
+        <span class="label">Customer quotation number</span>
+        <span class="value">{{ details.customerQuoteNumber }}</span>
+      </div>
+      <div class="field">
+        <span class="label">Quotation reference</span>
+        <span class="value">???</span>
+      </div>
+    </div>
+    <div class="fields-group">
+      <div class="field">
+        <span class="label">Status</span>
+        <span class="value">{{ details.statusText }}</span>
+      </div>
+      <div class="field">
+        <span class="label">Request date</span>
+        <span class="value">{{ details.requestedDate | camfilDate }}</span>
+      </div>
+      <div class="field">
+        <span class="label">Expiration date</span>
+        <span class="value">??</span>
+      </div>
+    </div>
+  </div>
+  <div class="divider"></div>
+  <div class="column right-column">
+    <div class="fields-group">
+      <div class="field">
+        <span class="label">Requested by</span>
+        <span class="value">{{ details.requestedBy }}</span>
+      </div>
+      <div class="field">
+        <span class="label">Order channel</span>
+        <span class="value">{{ details.orderChannel }}</span>
+      </div>
+      <div class="field">
+        <span class="label">Phone notification</span>
+        <span class="value">{{ details.phone }}</span>
+      </div>
+    </div>
+    <div class="fields-group">
+      <div class="field">
+        <span class="label">Delivery address</span>
+        <span *ngIf="details.deliveryAddress" class="value">
+          {{ details.deliveryAddress.addressLine1 }}
+          <br />
+          {{ details.deliveryAddress.addressLine2 }}
+          <br />
+          {{ details.deliveryAddress.addressLine3 }}
+          <br />
+          {{ details.deliveryAddress.city }} {{ details.deliveryAddress.country }}
+        </span>
+      </div>
+    </div>
+    <div class="fields-group">
+      <textarea placeholder="Add note to customer service" rows="3"></textarea>
+    </div>
+  </div>
+</mat-card>

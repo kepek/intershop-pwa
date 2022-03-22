@@ -148,11 +148,11 @@ $mat-primary: (
   200: $camfil-color-primary,
   // For slide toggle,
   contrast:
-  (
-    main: $light-primary-text,
-    lighter: $dark-primary-text,
-    darker: $light-primary-text,
-  ),
+    (
+      main: $light-primary-text,
+      lighter: $dark-primary-text,
+      darker: $light-primary-text,
+    ),
 );
 $mat-accent: (
   main: $camfil-color-secondary,
@@ -161,11 +161,11 @@ $mat-accent: (
   200: $camfil-color-secondary,
   // For slide toggle,
   contrast:
-  (
-    main: $light-primary-text,
-    lighter: $dark-primary-text,
-    darker: $light-primary-text,
-  ),
+    (
+      main: $light-primary-text,
+      lighter: $dark-primary-text,
+      darker: $light-primary-text,
+    ),
 );
 $mat-warn: (
   main: #ff6961,
@@ -174,11 +174,11 @@ $mat-warn: (
   200: #ff6961,
   // For slide toggle,
   contrast:
-  (
-    main: $dark-primary-text,
-    lighter: $dark-primary-text,
-    darker: $dark-primary-text,
-  ),
+    (
+      main: $dark-primary-text,
+      lighter: $dark-primary-text,
+      darker: $dark-primary-text,
+    ),
 );
 
 body {

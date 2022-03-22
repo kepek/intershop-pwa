@@ -1,0 +1,42 @@
+<ng-container *ngIf="quoteDetails">
+  <div class="header">
+    <div class="left-items">
+      <a color="primary" mat-stroked-button queryParamsHandling="preserve" routerLink="/account/quotes">
+        <mat-icon class="mt-n1">arrow_left</mat-icon>
+        {{ 'camfil.quotes.quote_detail.back_to_quotes' | translate }}</a
+      >
+
+      <h1>
+        {{ 'camfil.quotes.quote_detail.quotation_number' | translate }}:
+        <span>{{ quoteDetails?.camfilQuoteNumber }}</span>
+      </h1>
+
+      <div class="status">{{ quoteDetails?.statusText }}</div>
+    </div>
+
+    <div class="right-items">
+      <a mat-stroked-button color="primary">{{ 'camfil.quotes.quote_detail.reject_quote' | translate }}</a>
+      <a mat-flat-button color="primary">{{ 'camfil.quotes.quote_detail.approve_quote' | translate }}</a>
+    </div>
+  </div>
+
+  <camfil-quote-details [details]="quoteDetails"></camfil-quote-details>
+
+  <div class="actions">
+    <a mat-stroked-button [disabled]="!selectedItems.length" color="primary">Delete product rows</a>
+    <a mat-stroked-button color="primary" (click)="showAddProductModal()">Add new product</a>
+    <a mat-stroked-button [disabled]="!selectedItems.length" color="primary">Approve products</a>
+  </div>
+
+  <div class="item-rows">
+    <camfil-quote-line-item
+      *ngFor="let item of this.quoteDetails.items"
+      class="item"
+      [item]="item"
+      (selected)="onChangeItemSelection(item, $event)"
+      (deleted)="deleteItem(item)"
+    ></camfil-quote-line-item>
+  </div>
+</ng-container>
+
+<camfil-loading *ngIf="loading" fixed="true"></camfil-loading>

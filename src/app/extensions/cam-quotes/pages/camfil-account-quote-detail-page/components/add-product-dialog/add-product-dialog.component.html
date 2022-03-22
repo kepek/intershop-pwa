@@ -1,0 +1,36 @@
+<button class="close" (click)="hide()">
+  <mat-icon svgIcon="inactive"></mat-icon>
+</button>
+<mat-icon svgIcon="add-camcard"></mat-icon>
+<h2 class="add-product--header">Add new product to Quote</h2>
+<form [formGroup]="form" class="product-form">
+  <mat-form-field appearance="fill">
+    <mat-label>Enter product SKU</mat-label>
+    <input matInput type="text" formControlName="productSKU" [errorStateMatcher]="instantErrorMatcher" />
+    <mat-icon *ngIf="form.controls.productSKU.valid" matSuffix svgIcon="checkmark"></mat-icon>
+    <mat-error *ngIf="form.controls.productSKU.hasError('skuNotExist')">
+      {{ 'camfil.modal.addNewProduct.error' | translate }}
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Add box label (optional)</mat-label>
+    <input matInput type="text" formControlName="boxLabel" />
+  </mat-form-field>
+  <div class="quantity-field">
+    <mat-label class="label">Select quantity</mat-label>
+    <camfil-counter class="counter" [form]="form" controlName="quantity" [min]="1"></camfil-counter>
+  </div>
+</form>
+<div class="actions">
+  <button (mousedown)="hide()" class="btn btn-link add-new-product__buttons--link">
+    {{ 'camfil.modal.addNewProduct.button.cancel' | translate }}
+  </button>
+  <button
+    (click)="submit()"
+    [disabled]="form.invalid"
+    class="btn btn-link add-new-product__buttons--link"
+    type="submit"
+  >
+    {{ 'camfil.modal.addNewProduct.button.add_product' | translate }}
+  </button>
+</div>
