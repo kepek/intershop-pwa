@@ -375,16 +375,17 @@ export class CamfilRequisitionsEffects {
     )
   );
 
-  // Line items quantity update
+  // Line items update
 
   updateCamfilRequisitionLineItem$ = createEffect(() =>
     this.actions$.pipe(
       ofType(updateCamfilRequisitionLineItem),
       mapToPayload(),
       mergeMap(({ requisitionId, lineItemUpdate }) =>
-        this.requisitionsService
-          .updateLineItem(requisitionId, lineItemUpdate)
-          .pipe(map(updateCamfilRequisitionLineItemSuccess), mapErrorToAction(updateCamfilRequisitionLineItemFail))
+        this.requisitionsService.updateLineItem(requisitionId, lineItemUpdate).pipe(
+          map(() => updateCamfilRequisitionLineItemSuccess({ requisitionId, lineItemUpdate })),
+          mapErrorToAction(updateCamfilRequisitionLineItemFail)
+        )
       )
     )
   );

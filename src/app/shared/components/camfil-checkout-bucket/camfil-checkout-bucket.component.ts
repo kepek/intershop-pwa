@@ -684,8 +684,8 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
     return new Date(`${yyyy}-${mm}-${dd} 23:59`);
   }
 
-  // ------------ Quick add product Start ------------
-  addToExistingOrder(sku, quantity, shipToAddress, lineItemAttributes) {
+  // ------------ Quick add product Functions ------------
+  addProductToExistingOrder(sku, quantity, shipToAddress, lineItemAttributes) {
     this.shoppingFacade.addProductToBasket(
       sku,
       quantity,
@@ -695,7 +695,7 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
     );
   }
 
-  addToNewOrder(sku, quantity, deliveryAddress, bucketId, lineItemAttributes, basketAddresses) {
+  addProductToNewOrder(sku, quantity, deliveryAddress, bucketId, lineItemAttributes, basketAddresses) {
     if (this.isNewAddress(deliveryAddress, basketAddresses)) {
       this.shoppingFacade.addProductToBucket(
         deliveryAddress,
@@ -728,22 +728,26 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
 
     const { sku, quantity, lineItemAttributes } = quickAddData;
     if (this.bucket?.id && type !== 'emptyBucket' && this.bucket?.shipToAddress) {
-      this.addToExistingOrder(sku, quantity, shipToAddress, lineItemAttributes);
+      this.addProductToExistingOrder(sku, quantity, shipToAddress, lineItemAttributes);
     } else {
       const deliveryAddress = this.bucket.shipToAddressFull as Address;
-      this.addToNewOrder(sku, quantity, deliveryAddress, this.bucket.id, lineItemAttributes, this.basketAddresses);
+      this.addProductToNewOrder(
+        sku,
+        quantity,
+        deliveryAddress,
+        this.bucket.id,
+        lineItemAttributes,
+        this.basketAddresses
+      );
     }
 
-    combineLatest([
-      this.shoppingFacade.productUpdated$.pipe(whenTruthy(), takeUntil(this.destroy$)),
-      this.shoppingFacade.productAdded$.pipe(whenTruthy(), take(1)),
-    ]).subscribe(() => {
-      if (modal) {
-        modal.hide();
-        modal.reset();
-      }
-    });
+    combineLatest([this.shoppingFacade.productUpdated$.pipe(take(1)), this.shoppingFacade.productAdded$.pipe(take(1))])
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => {
+        if (modal) {
+          modal.hide();
+          modal.reset();
+        }
+      });
   }
-
-  //  ------------ Quick add product End ------------
 }

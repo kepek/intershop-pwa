@@ -134,5 +134,24 @@ export const requisitionsReducer = createReducer(
     };
 
     return camfilRequisitionsAdapter.upsertOne(updatedRequisition, state);
+  }),
+  on(updateCamfilRequisitionLineItemSuccess, (state: CamfilRequisitionsState, action) => {
+    const { requisitionId, lineItemUpdate } = action.payload;
+    const updateLineItem = {
+      ...state.entities[requisitionId].lineItems[lineItemUpdate.lineItemId],
+      quantity: {
+        value: lineItemUpdate.quantity,
+      },
+    };
+
+    const updatedRequisition = {
+      ...state.entities[requisitionId],
+      lineItems: {
+        ...state.entities[requisitionId].lineItems,
+        updateLineItem,
+      },
+    };
+
+    return camfilRequisitionsAdapter.upsertOne(updatedRequisition, state);
   })
 );

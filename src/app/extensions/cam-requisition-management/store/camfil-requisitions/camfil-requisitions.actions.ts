@@ -260,13 +260,17 @@ export const approveCamfilRequisitionLineItemsFail = createAction(
 export const updateCamfilRequisitionLineItem = createAction(
   '[Camfil Requisitions API] Update Line Item ',
   payload<{
-    requisitionId?: string;
+    requisitionId: string;
     lineItemUpdate: CamfilRequisitionLineItemUpdate;
   }>()
 );
 
 export const updateCamfilRequisitionLineItemSuccess = createAction(
-  '[Camfil Requisitions API] Update Line Item  Success'
+  '[Camfil Requisitions API] Update Line Item  Success',
+  payload<{
+    requisitionId: string;
+    lineItemUpdate: CamfilRequisitionLineItemUpdate;
+  }>()
 );
 
 export const updateCamfilRequisitionLineItemFail = createAction(

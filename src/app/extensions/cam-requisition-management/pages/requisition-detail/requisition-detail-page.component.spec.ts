@@ -26,7 +26,6 @@ import { CamfilRequisitionLineItemTableComponent } from '../../components/camfil
 import { CamfilRequisitionRejectDialogComponent } from '../../components/camfil-requisition-reject-dialog/camfil-requisition-reject-dialog.component';
 import { CamfilRequisitionSummaryComponent } from '../../components/camfil-requisition-summary/camfil-requisition-summary.component';
 import { CamfilRequisitionContextFacade } from '../../facades/cam-requisition-context.facade';
-import { CamRequisitionManagementFacade } from '../../facades/cam-requisition-management.facade';
 
 import { RequisitionDetailPageComponent } from './requisition-detail-page.component';
 
@@ -35,13 +34,11 @@ describe('Requisition Detail Page Component', () => {
   let fixture: ComponentFixture<RequisitionDetailPageComponent>;
   let element: HTMLElement;
   let context: CamfilRequisitionContextFacade;
-  let camRequisitionManagementFacade: CamRequisitionManagementFacade;
   let appFacade: AppFacade;
   let accountFacade: AccountFacade;
 
   beforeEach(async () => {
     context = mock(CamfilRequisitionContextFacade);
-    camRequisitionManagementFacade = mock(CamRequisitionManagementFacade);
     appFacade = mock(AppFacade);
     accountFacade = mock(AccountFacade);
     await TestBed.configureTestingModule({
@@ -71,7 +68,6 @@ describe('Requisition Detail Page Component', () => {
         set: {
           providers: [
             { provide: CamfilRequisitionContextFacade, useFactory: () => instance(context) },
-            { provide: CamRequisitionManagementFacade, useFactory: () => instance(camRequisitionManagementFacade) },
             { provide: AppFacade, useFactory: () => instance(appFacade) },
             { provide: AccountFacade, useFactory: () => instance(accountFacade) },
           ],

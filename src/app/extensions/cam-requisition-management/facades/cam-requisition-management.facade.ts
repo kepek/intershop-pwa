@@ -16,8 +16,6 @@ import {
 } from '../models/camfil-requisition/camfil-requisition.model';
 import {
   addCamfilRequisitionLineItemAttribute,
-  addProductToCamfilRequisition,
-  approveCamfilRequisitionLineItems,
   createCamfilRequisition,
   deleteCamfilRequisitionLineItemAttribute,
   getCamfilRequisition,
@@ -26,8 +24,6 @@ import {
   getCamfilRequisitionsLoading,
   loadCamfilRequisition,
   loadCamfilRequisitions,
-  removeMultipleProductsFromCamfilRequisition,
-  removeProductFromCamfilRequisition,
   updateCamfilRequisition,
   updateCamfilRequisitionLineItem,
   updateCamfilRequisitionLineItemAttribute,
@@ -85,33 +81,6 @@ export class CamRequisitionManagementFacade {
     this.store.dispatch(createCamfilRequisition());
   }
 
-  addProductToCamfilRequisition(requisitionId: string, item: { sku: string; quantity: number }) {
-    this.store.dispatch(
-      addProductToCamfilRequisition({
-        requisitionId,
-        item,
-      })
-    );
-  }
-
-  removeProductFromCamfilRequisition(lineItemId: string, requisitionId: string) {
-    this.store.dispatch(
-      removeProductFromCamfilRequisition({
-        lineItemId,
-        requisitionId,
-      })
-    );
-  }
-
-  removeMultipleProductsFromCamfilRequisition(lineItemsIds: string[], requisitionId: string) {
-    this.store.dispatch(
-      removeMultipleProductsFromCamfilRequisition({
-        lineItemsIds,
-        requisitionId,
-      })
-    );
-  }
-
   updateCamfilRequisition(requisition: CamfilRequisition, addressId?: string, address?: Address) {
     this.store.dispatch(updateCamfilRequisition({ requisition, addressId, address }));
   }
@@ -140,16 +109,6 @@ export class CamRequisitionManagementFacade {
       updateCamfilRequisitionLineItemAttribute({
         requisitionId,
         lineItemId,
-        lineItemAttribute,
-      })
-    );
-  }
-
-  approveCamfilRequisitionLineItem(requisitionId: string, lineItemIds: string[], lineItemAttribute: Attribute) {
-    this.store.dispatch(
-      approveCamfilRequisitionLineItems({
-        requisitionId,
-        lineItemIds,
         lineItemAttribute,
       })
     );
