@@ -16,7 +16,7 @@ import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { MatDialog } from '@angular/material/dialog';
 import { CamfilConfigurationFacade } from 'camfil-pwa/facades/camfil-configuration.facade';
 import { Observable, ReplaySubject, Subject, combineLatest } from 'rxjs';
-import { first, map, skip, take, takeUntil, withLatestFrom } from 'rxjs/operators';
+import { first, map, skip, take, takeUntil } from 'rxjs/operators';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
 import { AppFacade } from 'ish-core/facades/app.facade';
@@ -163,10 +163,16 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
         this.emailRecipients = emailRecipients;
       });
 
-    this.deliveryTerm$ = this.checkoutFacade.getCustomersDeliveryTerms$?.pipe(
-      whenTruthy(),
-      withLatestFrom(this.bucket$),
-      map(([deliveryTerms, bucket]) => deliveryTerms?.[bucket?.customer?.id])
+    this.deliveryTerm$ = combineLatest([
+      this.checkoutFacade.getCustomersDeliveryTerms$.pipe(whenTruthy()),
+      this.bucket$,
+    ])?.pipe(
+      map(([deliveryTerms, bucket]) => ({ deliveryTerm: deliveryTerms?.[bucket?.customer?.id], bucket })),
+      map(({ deliveryTerm, bucket }) => ({
+        ...deliveryTerm,
+        freeShippingAllowed:
+          deliveryTerm?.freeShippingAllowed && bucket?.totals?.itemTotal?.net > deliveryTerm?.threshold,
+      }))
     );
 
     this.deliveryPrice$ = combineLatest([this.deliveryTerm$.pipe(whenTruthy()), this.bucket$])?.pipe(
