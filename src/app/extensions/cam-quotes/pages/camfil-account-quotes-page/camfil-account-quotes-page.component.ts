@@ -41,7 +41,7 @@ export class CamfilAccountQuotesPageComponent implements OnInit {
   filteredQuotes: Quote[];
   dataSource: MatTableDataSource<Quote>;
   @ViewChild(MatSort) matSort: MatSort;
-  previewNumRows = 5;
+  previewNumRows = 16;
   showAll = false;
   displayedColumns = [
     'check',
@@ -104,7 +104,16 @@ export class CamfilAccountQuotesPageComponent implements OnInit {
         })
       )
       .subscribe(quotes => {
-        this.allQuotes = quotes;
+        this.allQuotes = [
+          ...quotes,
+          ...quotes,
+          ...quotes,
+          ...quotes,
+          ...quotes,
+          ...quotes,
+          ...quotes,
+          ...quotes
+        ];
         this.filteredQuotes = this.filterQuotes(this.filtersForm.value, this.allQuotes);
         this.loadQuotesInTable(this.filteredQuotes);
       });
@@ -121,6 +130,9 @@ export class CamfilAccountQuotesPageComponent implements OnInit {
     this.store.pipe(select(getUserPermissions)).subscribe(roles => {
       console.log('permissions', roles);
     });
+
+    this.matSort.direction = 'desc';
+    this.matSort.active = 'requestedDate';
 
     this.onResize();
   }
@@ -168,7 +180,6 @@ export class CamfilAccountQuotesPageComponent implements OnInit {
     if (quotes.length > this.previewNumRows && !this.showAll) {
       this.dataSource.data = quotes.slice(0, this.previewNumRows + 2);
     } else {
-      this.showAll = true;
       this.dataSource.data = quotes;
     }
     this.dataSource.sort = this.matSort;
@@ -203,7 +214,8 @@ export class CamfilAccountQuotesPageComponent implements OnInit {
 
   showAllQuotes() {
     this.showAll = true;
-    this.dataSource.data = this.allQuotes;
+    this.filteredQuotes = this.filterQuotes(this.filtersForm.value, this.allQuotes);
+    this.loadQuotesInTable(this.filteredQuotes);
   }
 
   setSelectedQuote(quoteId: string, selected: boolean) {
