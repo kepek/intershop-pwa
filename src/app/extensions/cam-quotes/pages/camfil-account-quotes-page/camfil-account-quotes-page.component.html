@@ -52,6 +52,10 @@
             {{ 'camfil.quotes.quoteslist.approve_quotes' | translate }}
             ({{ selectedQuotes.length }})
           </a>
+          <a mat-stroked-button color="primary" (click)="rejectSelectedQuotes()">
+            {{ 'camfil.quotes.quoteslist.reject_quotes' | translate }}
+            ({{ selectedQuotes.length }})
+          </a>
         </div>
         <div class="elements-count">
           Quotes: <strong>{{ filteredQuotesCount() }}</strong>

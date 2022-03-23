@@ -1,7 +1,7 @@
 import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { defaultIfEmpty, map } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { debounceTime, defaultIfEmpty, map } from 'rxjs/operators';
 
 import { ApiService, unpackEnvelope } from 'ish-core/services/api/api.service';
 
@@ -76,5 +76,11 @@ export class QuotesService {
 
   deleteQuoteItem(quoteId: string, quoteItemId: string): Observable<any> {
     return this.apiSrv.b2bUserEndpoint().delete<QuoteItemCreated>(`camfilquotation/${quoteId}/items/${quoteItemId}`);
+  }
+
+  approveQuote(quoteId: string): Observable<any> {
+    // TODO: Waiting for real api call
+    // return this.apiSrv.b2bUserEndpoint().post<QuoteItemCreated>(`camfilquotation/${quoteId}/approve`);
+    return of({ id: quoteId }).pipe(debounceTime(250));
   }
 }

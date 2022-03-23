@@ -2,6 +2,10 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { QuotesService } from '../services/quotes/quotes.service';
 import {
+  approveQuote,
+  approveQuotes,
+  approveQuotesSuccess,
+  approveQuoteSuccess,
   createQuoteItem,
   createQuoteItemSuccess, deleteQuoteItem, deleteQuoteItemSuccess,
   loadQuoteDetails,
@@ -11,6 +15,7 @@ import {
 } from './cam-quotes.actions';
 import { map, mergeMap } from 'rxjs/operators';
 import { mapToPayload, mapToPayloadProperty } from 'ish-core/utils/operators';
+import { forkJoin } from 'rxjs';
 
 @Injectable()
 export class CamQuotesEffects {
@@ -70,5 +75,36 @@ export class CamQuotesEffects {
           ]));
       })
     );
+  });
+
+  approveCamQuote$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(approveQuote),
+      mapToPayload(),
+      mergeMap(({ quoteId }) => {
+        return this.camQuotesSrv.approveQuote(quoteId)
+          .pipe(mergeMap(response => [
+            approveQuoteSuccess({ response }),
+            loadQuoteDetails({ quoteId })
+          ]))
+      }),
+    )
+  });
+
+  approveCamQuotes$ = createEffect(() => {
+    console.log('approveCamQuotes$ running');
+    return this.actions$.pipe(
+      ofType(approveQuotes),
+      mapToPayload(),
+      mergeMap(({ quoteIds }) => {
+        console.log('api call running', quoteIds);
+        return forkJoin(
+          quoteIds.map(quoteId => this.camQuotesSrv.approveQuote(quoteId))
+        ).pipe(mergeMap(response => [
+          approveQuotesSuccess({ response }),
+          loadQuotes()
+        ]))
+      }),
+    )
   });
 }

@@ -28,3 +28,8 @@ export const getCamQuoteDetailsLoading = createSelector(
   getCamQuoteDetailsState,
   (state: CamQuoteDetailState) => state.loading
 );
+
+export const getCamQuotesApprovedSuccess = createSelector(
+  getCamQuotesListState,
+  (state: CamQuotesListState) => state.approvedQuotesSuccess
+);

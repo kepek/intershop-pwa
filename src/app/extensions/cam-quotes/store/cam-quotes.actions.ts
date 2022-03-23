@@ -38,6 +38,26 @@ export const deleteQuoteItemSuccess = createAction(
   payload<{ response: any }>()
 );
 
+export const approveQuote = createAction(
+  '[Cam Quotes] Approve Quote',
+  payload<{ quoteId: string }>()
+);
+
+export const approveQuoteSuccess = createAction(
+  '[Cam Quotes] Approve Quote Success',
+  payload<{ response: any }>()
+);
+
+export const approveQuotes = createAction(
+  '[Cam Quotes] Approve Quotes',
+  payload<{ quoteIds: string[] }>()
+);
+
+export const approveQuotesSuccess = createAction(
+  '[Cam Quotes] Approve Quotes Success',
+  payload<{ response: any }>()
+);
+
 // export const loadQuoteItems = createAction('[Cam Quotes] Load Camfil Quote Items', payload<{ quoteId: string }>());
 //
 // export const loadQuoteItemsSuccess = createAction(

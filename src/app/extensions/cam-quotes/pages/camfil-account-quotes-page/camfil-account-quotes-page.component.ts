@@ -4,8 +4,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Store, select } from '@ngrx/store';
-import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { Observable, Subject } from 'rxjs';
+import { filter, takeUntil, tap } from 'rxjs/operators';
 
 import { getUserPermissions, getUserRoles } from 'ish-core/store/customer/authorization';
 import { QuotesApproveDialogComponent } from '../../components/quotes-approve-dialog/quotes-approve-dialog.component';
@@ -39,6 +39,8 @@ interface QuotesFilters {
 export class CamfilAccountQuotesPageComponent implements OnInit {
   allQuotes: Quote[];
   filteredQuotes: Quote[];
+  private destroy$: Subject<boolean> = new Subject<boolean>();
+
   dataSource: MatTableDataSource<Quote>;
   @ViewChild(MatSort) matSort: MatSort;
   previewNumRows = 16;
@@ -70,6 +72,7 @@ export class CamfilAccountQuotesPageComponent implements OnInit {
   } = {};
 
   isMobileView = false;
+
 
   constructor(
     private cd: ChangeDetectorRef,
@@ -104,19 +107,14 @@ export class CamfilAccountQuotesPageComponent implements OnInit {
         })
       )
       .subscribe(quotes => {
-        this.allQuotes = [
-          ...quotes,
-          ...quotes,
-          ...quotes,
-          ...quotes,
-          ...quotes,
-          ...quotes,
-          ...quotes,
-          ...quotes
-        ];
+        this.allQuotes = quotes;
         this.filteredQuotes = this.filterQuotes(this.filtersForm.value, this.allQuotes);
         this.loadQuotesInTable(this.filteredQuotes);
       });
+
+    this.quotesFacade.approvedQuotesSuccess$
+      .pipe(filter(success => success), takeUntil(this.destroy$))
+      .subscribe(() => this.approveSelectedQuotesSuccess());
 
     this.filtersForm.valueChanges.subscribe((filters: QuotesFilters) => {
       this.filteredQuotes = this.filterQuotes(filters, this.allQuotes);
@@ -135,6 +133,10 @@ export class CamfilAccountQuotesPageComponent implements OnInit {
     this.matSort.active = 'requestedDate';
 
     this.onResize();
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next(true);
   }
 
   private filterQuotes(filters: QuotesFilters, quotes: Quote[]): Quote[] {
@@ -225,10 +227,20 @@ export class CamfilAccountQuotesPageComponent implements OnInit {
   }
 
   approveSelectedQuotes() {
+    this.quotesFacade.approveQuotes(this.selectedQuotes.map(q => q.id));
+  }
+
+  approveSelectedQuotesSuccess() {
     this.dialog.open(QuotesApproveDialogComponent);
+    this.selectedQuotes = [];
+    this.selectedQuotesMap = {};
   }
 
   onResize() {
     this.isMobileView = window.innerWidth <= 768;
+  }
+
+  rejectSelectedQuotes() {
+
   }
 }
