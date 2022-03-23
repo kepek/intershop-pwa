@@ -137,19 +137,20 @@ export const requisitionsReducer = createReducer(
   }),
   on(updateCamfilRequisitionLineItemSuccess, (state: CamfilRequisitionsState, action) => {
     const { requisitionId, lineItemUpdate } = action.payload;
-    const updateLineItem = {
-      ...state.entities[requisitionId].lineItems[lineItemUpdate.lineItemId],
-      quantity: {
-        value: lineItemUpdate.quantity,
-      },
-    };
+    const updateLineItems = state.entities[requisitionId].lineItems.map(lineItem =>
+      lineItem.id === lineItemUpdate.lineItemId
+        ? {
+            ...lineItem,
+            quantity: {
+              value: lineItemUpdate.quantity,
+            },
+          }
+        : lineItem
+    );
 
     const updatedRequisition = {
       ...state.entities[requisitionId],
-      lineItems: {
-        ...state.entities[requisitionId].lineItems,
-        updateLineItem,
-      },
+      lineItems: updateLineItems,
     };
 
     return camfilRequisitionsAdapter.upsertOne(updatedRequisition, state);
