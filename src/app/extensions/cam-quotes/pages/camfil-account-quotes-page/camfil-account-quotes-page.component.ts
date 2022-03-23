@@ -5,26 +5,29 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Store, select } from '@ngrx/store';
 import { Observable, Subject } from 'rxjs';
-import { filter, takeUntil, tap } from 'rxjs/operators';
+import { filter, map, take, takeUntil, tap } from 'rxjs/operators';
 
 import { getUserPermissions, getUserRoles } from 'ish-core/store/customer/authorization';
 import { QuotesApproveDialogComponent } from '../../components/quotes-approve-dialog/quotes-approve-dialog.component';
 import { CamQuotesFacade } from '../../facades/cam-quotes.facade';
 import { Quote, QuoteStatus as QuoteStatusEnum } from '../../models/quote/quote.model';
 import { QuotesRejectDialogComponent } from '../../components/quotes-reject-dialog/quotes-reject-dialog.component';
+import { Router, ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
+import { HttpParams } from '@angular/common/http';
 
 interface QuotesFilters {
-  search: string;
-  customer: string;
-  requestor: string;
-  type: string;
-  fromDate: Date | null;
-  toDate: Date | null;
-  stateRequested: boolean;
-  stateReceived: boolean;
-  stateApproved: boolean;
-  stateRejected: boolean;
-  stateExpired: boolean;
+  search?: string;
+  customer?: string;
+  requestor?: string;
+  type?: string;
+  fromDate?: Date | null;
+  toDate?: Date | null;
+  stateRequested?: boolean;
+  stateReceived?: boolean;
+  stateApproved?: boolean;
+  stateRejected?: boolean;
+  stateExpired?: boolean;
 }
 
 @Component({
@@ -63,6 +66,7 @@ export class CamfilAccountQuotesPageComponent implements OnInit {
 
   filtersForm: FormGroup;
   filters$: Observable<QuotesFilters>;
+  filtersQueryParams: any;
 
   customers: string[];
   requestors: string[];
@@ -80,7 +84,10 @@ export class CamfilAccountQuotesPageComponent implements OnInit {
     private quotesFacade: CamQuotesFacade,
     private fb: FormBuilder,
     private dialog: MatDialog,
-    private store: Store
+    private store: Store,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private location: Location
   ) {
     this.dataSource = new MatTableDataSource<Quote>([]);
     this.filtersForm = this.fb.group({
@@ -113,6 +120,15 @@ export class CamfilAccountQuotesPageComponent implements OnInit {
         this.loadQuotesInTable(this.filteredQuotes);
       });
 
+    this.activatedRoute.queryParams
+      .pipe(
+        map(({ filter }) => filter || '{}'),
+        take(1)
+      ).subscribe(filter => {
+        console.log('filters from url', filter);
+        this.filtersForm.patchValue(JSON.parse(filter));
+      });
+
     this.quotesFacade.approvedQuotesSuccess$
       .pipe(filter(success => success), takeUntil(this.destroy$))
       .subscribe(() => this.approveSelectedQuotesSuccess());
@@ -124,6 +140,14 @@ export class CamfilAccountQuotesPageComponent implements OnInit {
     this.filtersForm.valueChanges.subscribe((filters: QuotesFilters) => {
       this.filteredQuotes = this.filterQuotes(filters, this.allQuotes);
       this.loadQuotesInTable(this.filteredQuotes);
+
+      this.filtersQueryParams = { filter: JSON.stringify(filters) };
+      this.location.replaceState(
+        location.pathname,
+        new HttpParams({
+          fromObject: this.filtersQueryParams
+        }).toString());
+      console.log(this.filtersQueryParams);
     });
 
     this.store.pipe(select(getUserRoles)).subscribe(roles => {

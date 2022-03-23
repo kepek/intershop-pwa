@@ -79,7 +79,8 @@
 
       <ng-container matColumnDef="customer">
         <th mat-header-cell *matHeaderCellDef mat-sort-header="customerName">Customer</th>
-        <td mat-cell *matCellDef="let quote" [routerLink]="['./', quote.id]">
+        <td mat-cell *matCellDef="let quote" [routerLink]="['./', quote.id]" [queryParams]="filtersQueryParams"
+          queryParamsHandling="merge">
           {{ quote.customerName || '---' }}, {{ quote.customerNumber }}
           <ng-container *ngIf="quote.customerDepartment">, {{ quote.customerDepartment }}</ng-container>
         </td>
@@ -87,28 +88,32 @@
 
       <ng-container matColumnDef="camfilQuoteNumber">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Camfil Quotation No.</th>
-        <td mat-cell *matCellDef="let quote" [routerLink]="['./', quote.id]">
+        <td mat-cell *matCellDef="let quote" [routerLink]="['./', quote.id]" [queryParams]="filtersQueryParams"
+          queryParamsHandling="merge">
           {{ quote.camfilQuoteNumber }}
         </td>
       </ng-container>
 
       <ng-container matColumnDef="customerQuoteNumber">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Customer Quotation No.</th>
-        <td mat-cell *matCellDef="let quote" [routerLink]="['./', quote.id]">
+        <td mat-cell *matCellDef="let quote" [routerLink]="['./', quote.id]" [queryParams]="filtersQueryParams"
+          queryParamsHandling="merge">
           {{ quote.customerQuoteNumber }}
         </td>
       </ng-container>
 
       <ng-container matColumnDef="requestedBy">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Requested By</th>
-        <td mat-cell *matCellDef="let quote" [routerLink]="['./', quote.id]">
+        <td mat-cell *matCellDef="let quote" [routerLink]="['./', quote.id]" [queryParams]="filtersQueryParams"
+          queryParamsHandling="merge">
           {{ quote.requestedBy }}
         </td>
       </ng-container>
 
       <ng-container matColumnDef="requestedDate">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Requested Date</th>
-        <td mat-cell *matCellDef="let quote" [routerLink]="['./', quote.id]">
+        <td mat-cell *matCellDef="let quote" [routerLink]="['./', quote.id]" [queryParams]="filtersQueryParams"
+          queryParamsHandling="merge">
           <ng-container *ngIf="quote.requestedDate">
             {{ quote.requestedDate | date }}
           </ng-container>
@@ -118,7 +123,8 @@
 
       <ng-container matColumnDef="quotationDate">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Quotation Date</th>
-        <td mat-cell *matCellDef="let quote" [routerLink]="['./', quote.id]">
+        <td mat-cell *matCellDef="let quote" [routerLink]="['./', quote.id]" [queryParams]="filtersQueryParams"
+          queryParamsHandling="merge">
           <ng-container *ngIf="quote.quotationDate">
             {{ quote.quotationDate | date }}
           </ng-container>
@@ -128,14 +134,16 @@
 
       <ng-container matColumnDef="status">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
-        <td mat-cell *matCellDef="let quote" [routerLink]="['./', quote.id]">
+        <td mat-cell *matCellDef="let quote" [routerLink]="['./', quote.id]" [queryParams]="filtersQueryParams"
+          queryParamsHandling="merge">
           {{ statusEnum[quote.status] }}
         </td>
       </ng-container>
 
       <ng-container matColumnDef="orderChannel">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Order Channel</th>
-        <td mat-cell *matCellDef="let quote" [routerLink]="['./', quote.id]">
+        <td mat-cell *matCellDef="let quote" [routerLink]="['./', quote.id]" [queryParams]="filtersQueryParams"
+          queryParamsHandling="merge">
           {{ quote.orderChannel }}
         </td>
       </ng-container>
@@ -195,8 +203,9 @@
         <mat-checkbox [checked]="selectedQuotesMap[quote.id]" color="primary"
           (change)="setSelectedQuote(quote.id, $event.checked)"></mat-checkbox>
 
-        <button [routerLink]="['./', quote.id]" [id]="'quote_' + quote.id"
-          [title]="'camfil.account.orderlist.show_more' | translate" color="primary" mat-stroked-button>
+        <button [routerLink]="['./', quote.id]" [id]="'quote_' + quote.id" [queryParams]="filtersQueryParams"
+          queryParamsHandling="merge" [title]="'camfil.account.orderlist.show_more' | translate" color="primary"
+          mat-stroked-button>
           <b>{{ 'camfil.account.orderlist.show_more' | translate }}</b>
         </button>
       </div>
