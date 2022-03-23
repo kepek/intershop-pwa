@@ -33,3 +33,8 @@ export const getCamQuotesApprovedSuccess = createSelector(
   getCamQuotesListState,
   (state: CamQuotesListState) => state.approvedQuotesSuccess
 );
+
+export const getCamQuotesRejectedSuccess = createSelector(
+  getCamQuotesListState,
+  (state: CamQuotesListState) => state.rejectedQuotesSuccess
+);

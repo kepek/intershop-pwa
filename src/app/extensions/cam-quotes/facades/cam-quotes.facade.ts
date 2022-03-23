@@ -4,8 +4,8 @@ import { Observable } from 'rxjs';
 
 import { QuoteDetails } from '../models/quote-details/quote-details.model';
 import { Quote } from '../models/quote/quote.model';
-import { approveQuote, approveQuotes, createQuoteItem, deleteQuoteItem, loadQuoteDetails, loadQuotes } from '../store/cam-quotes.actions';
-import { getCamQuoteDetails, getCamQuoteDetailsLoading, getCamQuotesApprovedSuccess, getCamQuotesList } from '../store/cam-quotes.selectors';
+import { approveQuote, approveQuotes, createQuoteItem, deleteQuoteItem, loadQuoteDetails, loadQuotes, rejectQuote, rejectQuotes } from '../store/cam-quotes.actions';
+import { getCamQuoteDetails, getCamQuoteDetailsLoading, getCamQuotesApprovedSuccess, getCamQuotesList, getCamQuotesRejectedSuccess } from '../store/cam-quotes.selectors';
 
 // tslint:disable:member-ordering
 @Injectable({ providedIn: 'root' })
@@ -16,6 +16,7 @@ export class CamQuotesFacade {
   quoteDetailsLoading$: Observable<boolean> = this.store.pipe(select(getCamQuoteDetailsLoading));
 
   approvedQuotesSuccess$: Observable<boolean> = this.store.pipe(select(getCamQuotesApprovedSuccess));
+  rejectedQuotesSuccess$: Observable<boolean> = this.store.pipe(select(getCamQuotesRejectedSuccess));
 
   constructor(private store: Store) { }
 
@@ -41,5 +42,13 @@ export class CamQuotesFacade {
 
   approveQuotes(quoteIds: string[]): void {
     this.store.dispatch(approveQuotes({ quoteIds }));
+  }
+
+  rejectQuote(quoteId: string, reason: string): void {
+    this.store.dispatch(rejectQuote({ quoteId, reason }));
+  }
+
+  rejectQuotes(quoteIds: string[], reason: string): void {
+    this.store.dispatch(rejectQuotes({ quoteIds, reason }));
   }
 }

@@ -58,6 +58,26 @@ export const approveQuotesSuccess = createAction(
   payload<{ response: any }>()
 );
 
+export const rejectQuote = createAction(
+  '[Cam Quotes] Reject Quote',
+  payload<{ quoteId: string, reason: string }>()
+);
+
+export const rejectQuoteSuccess = createAction(
+  '[Cam Quotes] Reject Quote Success',
+  payload<{ response: any }>()
+);
+
+export const rejectQuotes = createAction(
+  '[Cam Quotes] Reject Quotes',
+  payload<{ quoteIds: string[], reason: string }>()
+);
+
+export const rejectQuotesSuccess = createAction(
+  '[Cam Quotes] Reject Quotes Success',
+  payload<{ response: any }>()
+);
+
 // export const loadQuoteItems = createAction('[Cam Quotes] Load Camfil Quote Items', payload<{ quoteId: string }>());
 //
 // export const loadQuoteItemsSuccess = createAction(

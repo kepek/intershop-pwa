@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { displaySuccessMessage } from 'ish-core/store/core/messages';
 import { QuotesService } from '../services/quotes/quotes.service';
 import {
   approveQuote,
@@ -12,6 +13,10 @@ import {
   loadQuoteDetailsSuccess,
   loadQuotes,
   loadQuotesSuccess,
+  rejectQuote,
+  rejectQuotes,
+  rejectQuotesSuccess,
+  rejectQuoteSuccess,
 } from './cam-quotes.actions';
 import { map, mergeMap } from 'rxjs/operators';
 import { mapToPayload, mapToPayloadProperty } from 'ish-core/utils/operators';
@@ -92,17 +97,47 @@ export class CamQuotesEffects {
   });
 
   approveCamQuotes$ = createEffect(() => {
-    console.log('approveCamQuotes$ running');
     return this.actions$.pipe(
       ofType(approveQuotes),
       mapToPayload(),
       mergeMap(({ quoteIds }) => {
-        console.log('api call running', quoteIds);
         return forkJoin(
           quoteIds.map(quoteId => this.camQuotesSrv.approveQuote(quoteId))
         ).pipe(mergeMap(response => [
           approveQuotesSuccess({ response }),
           loadQuotes()
+        ]))
+      }),
+    )
+  });
+
+  rejectCamQuote$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(rejectQuote),
+      mapToPayload(),
+      mergeMap(({ quoteId, reason }) => {
+        return this.camQuotesSrv.rejectQuote(quoteId, reason)
+          .pipe(mergeMap(response => [
+            rejectQuoteSuccess({ response }),
+            loadQuoteDetails({ quoteId })
+          ]))
+      }),
+    )
+  });
+
+  rejectCamQuotes$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(rejectQuotes),
+      mapToPayload(),
+      mergeMap(({ quoteIds, reason }) => {
+        return forkJoin(
+          quoteIds.map(quoteId => this.camQuotesSrv.rejectQuote(quoteId, reason))
+        ).pipe(mergeMap(response => [
+          rejectQuotesSuccess({ response }),
+          loadQuotes(),
+          displaySuccessMessage({
+            message: 'camfil.quotes.quoteslist.reject_quotes_modal.success'
+          }),
         ]))
       }),
     )

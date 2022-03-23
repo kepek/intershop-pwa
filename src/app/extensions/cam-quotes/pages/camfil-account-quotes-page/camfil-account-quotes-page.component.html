@@ -47,7 +47,7 @@
         </mat-checkbox>
       </div>
       <div class="table-actions">
-        <div class="selection-actions" *ngIf="selectedQuotes.length">
+        <ng-container *ngIf="selectedQuotes.length">
           <a mat-flat-button color="primary" (click)="approveSelectedQuotes()">
             {{ 'camfil.quotes.quoteslist.approve_quotes' | translate }}
             ({{ selectedQuotes.length }})
@@ -56,7 +56,7 @@
             {{ 'camfil.quotes.quoteslist.reject_quotes' | translate }}
             ({{ selectedQuotes.length }})
           </a>
-        </div>
+        </ng-container>
         <div class="elements-count">
           Quotes: <strong>{{ filteredQuotesCount() }}</strong>
         </div>

@@ -11,6 +11,7 @@ import { getUserPermissions, getUserRoles } from 'ish-core/store/customer/author
 import { QuotesApproveDialogComponent } from '../../components/quotes-approve-dialog/quotes-approve-dialog.component';
 import { CamQuotesFacade } from '../../facades/cam-quotes.facade';
 import { Quote, QuoteStatus as QuoteStatusEnum } from '../../models/quote/quote.model';
+import { QuotesRejectDialogComponent } from '../../components/quotes-reject-dialog/quotes-reject-dialog.component';
 
 interface QuotesFilters {
   search: string;
@@ -115,6 +116,10 @@ export class CamfilAccountQuotesPageComponent implements OnInit {
     this.quotesFacade.approvedQuotesSuccess$
       .pipe(filter(success => success), takeUntil(this.destroy$))
       .subscribe(() => this.approveSelectedQuotesSuccess());
+
+    this.quotesFacade.rejectedQuotesSuccess$
+      .pipe(filter(success => success), takeUntil(this.destroy$))
+      .subscribe(() => this.rejectSelectedQuotesSuccess());
 
     this.filtersForm.valueChanges.subscribe((filters: QuotesFilters) => {
       this.filteredQuotes = this.filterQuotes(filters, this.allQuotes);
@@ -223,7 +228,11 @@ export class CamfilAccountQuotesPageComponent implements OnInit {
   setSelectedQuote(quoteId: string, selected: boolean) {
     this.selectedQuotesMap[quoteId] = selected;
     this.selectedQuotes = this.allQuotes.filter(q => !!this.selectedQuotesMap[q.id]);
-    console.log(this.selectedQuotes);
+  }
+
+  clearSelection() {
+    this.selectedQuotes = [];
+    this.selectedQuotesMap = {};
   }
 
   approveSelectedQuotes() {
@@ -232,8 +241,7 @@ export class CamfilAccountQuotesPageComponent implements OnInit {
 
   approveSelectedQuotesSuccess() {
     this.dialog.open(QuotesApproveDialogComponent);
-    this.selectedQuotes = [];
-    this.selectedQuotesMap = {};
+    this.clearSelection();
   }
 
   onResize() {
@@ -241,6 +249,13 @@ export class CamfilAccountQuotesPageComponent implements OnInit {
   }
 
   rejectSelectedQuotes() {
+    const dialog = this.dialog.open(QuotesRejectDialogComponent);
+    dialog.componentInstance.onConfirm.subscribe(result => {
+      this.quotesFacade.rejectQuotes(this.selectedQuotes.map(q => q.id), result.reason);
+    });
+  }
 
+  rejectSelectedQuotesSuccess() {
+    this.clearSelection();
   }
 }
