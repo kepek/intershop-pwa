@@ -29,6 +29,7 @@
           [lineItemId]="lineItemId"
           [max]="product.maxOrderQuantity"
           [min]="allowZeroQuantity ? 0 : product.minOrderQuantity"
+          [stepQuantityValue]="product.stepQuantity"
           inputClass=""
         ></camfil-counter>
       </ng-container>

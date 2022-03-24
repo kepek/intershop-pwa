@@ -1028,6 +1028,7 @@
   "camfil.modal.addNewProduct.error.max.quantity": "La quantité saisie est trop grande.",
   "camfil.modal.addNewProduct.error.min.quantity": "La quantité saisie est trop petite.",
   "camfil.modal.addNewProduct.error.required.sku": "Veuillez saisir l’UGS du produit",
+  "camfil.modal.addNewProduct.error.step.quantity": "(fr_FR)_this product can only be bought in packages by {{0}}. ",
   "camfil.modal.addNewProduct.input.box_label": "Marquage produit (option)",
   "camfil.modal.addNewProduct.input.product_sku": "Saisir la référence",
   "camfil.modal.addNewProduct.input.quantity": "Sélectionner la quantité",

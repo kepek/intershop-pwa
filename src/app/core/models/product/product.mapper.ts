@@ -197,6 +197,7 @@ export class ProductMapper {
       completenessLevel: 3,
       failed: false,
       seoAttributes: SeoAttributesMapper.fromData(data.seoAttributes),
+      stepQuantity: data.stepOrderQuantity,
     };
 
     if (data.productMaster) {

@@ -18,6 +18,7 @@ export class CamfilCounterComponent extends FormElementComponent implements OnIn
   @Input() max: number;
   @Input() isInLineItem = false;
   @Input() lineItemId?: string;
+  @Input() stepQuantityValue = 1;
   value$ = new ReplaySubject<number>(1);
   cannotDecrease$: Observable<boolean>;
   cannotIncrease$: Observable<boolean>;
@@ -60,11 +61,21 @@ export class CamfilCounterComponent extends FormElementComponent implements OnIn
   }
 
   increase() {
-    (this.formControl as FormControl).setValue(this.value + 1, { emitEvent: true });
+    (this.formControl as FormControl).setValue(
+      this.value + (isNaN(this.stepQuantityValue) ? 1 : this.stepQuantityValue),
+      {
+        emitEvent: true,
+      }
+    );
   }
 
   decrease() {
-    (this.formControl as FormControl).setValue(this.value - 1, { emitEvent: true });
+    (this.formControl as FormControl).setValue(
+      this.value - (isNaN(this.stepQuantityValue) ? 1 : this.stepQuantityValue),
+      {
+        emitEvent: true,
+      }
+    );
   }
 
   get displayLabel(): boolean {

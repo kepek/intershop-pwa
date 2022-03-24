@@ -1028,6 +1028,7 @@
   "camfil.modal.addNewProduct.error.max.quantity": "The quantity you entered is too large. ",
   "camfil.modal.addNewProduct.error.min.quantity": "The quantity you entered is too small. ",
   "camfil.modal.addNewProduct.error.required.sku": "Please enter product's sku",
+  "camfil.modal.addNewProduct.error.step.quantity": "(en_US)_this product can only be bought in packages by {{0}}. ",
   "camfil.modal.addNewProduct.input.box_label": "Add box label (optional)",
   "camfil.modal.addNewProduct.input.product_sku": "Enter product SKU",
   "camfil.modal.addNewProduct.input.quantity": "Select quantity",

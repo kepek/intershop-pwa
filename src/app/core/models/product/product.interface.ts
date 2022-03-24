@@ -71,6 +71,7 @@ export interface ProductData {
   promotions?: Link[];
 
   seoAttributes: SeoAttributesData;
+  stepOrderQuantity?: number;
 }
 
 export interface ProductDataStub {

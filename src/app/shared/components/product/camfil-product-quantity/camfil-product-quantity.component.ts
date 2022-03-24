@@ -7,7 +7,7 @@ import {
   SimpleChange,
   SimpleChanges,
 } from '@angular/core';
-import { FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { range } from 'lodash-es';
 
 import { Product } from 'ish-core/models/product/product.model';
@@ -71,6 +71,7 @@ export class CamfilProductQuantityComponent implements OnInit, OnChanges {
         Validators.min(this.allowZeroQuantity ? 0 : this.product.minOrderQuantity),
         Validators.max(this.product.maxOrderQuantity),
         SpecialValidators.integer,
+        CamfilProductQuantityComponent.validateValueWithQuantityStep(this.product.stepQuantity),
       ]);
     }
   }
@@ -78,6 +79,20 @@ export class CamfilProductQuantityComponent implements OnInit, OnChanges {
   ngOnChanges(change: SimpleChanges) {
     if (this.type === 'select') {
       this.createSelectOptions(change.product);
+    }
+    if (change.product) {
+      const quantityValidator = this.validators.quantity?.map(validator =>
+        validator.error === 'stepQuantityValue'
+          ? {
+              ...validator,
+              messageVariables: [`${this.product.stepQuantity}`],
+            }
+          : validator
+      );
+      this.validators = {
+        ...this.validators,
+        quantity: [...quantityValidator],
+      };
     }
   }
 
@@ -88,5 +103,19 @@ export class CamfilProductQuantityComponent implements OnInit, OnChanges {
         this.product.maxOrderQuantity
       );
     }
+  }
+
+  static validateValueWithQuantityStep(stepQuantity = 1) {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const value = control.value;
+
+      if (!value) {
+        return null;
+      }
+
+      const isValueMultipliedCorrectly = value % stepQuantity === 0;
+
+      return !isValueMultipliedCorrectly ? { stepQuantityValue: true } : null;
+    };
   }
 }
