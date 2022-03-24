@@ -13,6 +13,7 @@ import {
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { QuickAddProduct } from 'camfil-pwa/models/camfil-quick-add-product/camfil-quick-add-product.model';
 import { isEmpty } from 'lodash-es';
 import { Observable, ReplaySubject, Subject, of } from 'rxjs';
 import { catchError, debounceTime, map, switchMap, takeUntil, tap, withLatestFrom } from 'rxjs/operators';
@@ -27,7 +28,6 @@ import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
 
 import { CamCard, CamCardItemComment } from '../../../models/cam-card/cam-card.model';
 
-import { ProductAddFormData } from './productAddFormData.model';
 import { ADD_NEW_PRODUCT_VALIDATORS } from './validators';
 
 const FAKE_SKU = '144c9defac04969c7bfad8efaa8ea194';
@@ -80,7 +80,7 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy, AfterView
 
   @Input() addToOrder = false;
 
-  @Output() submitProductAdd = new EventEmitter<ProductAddFormData>();
+  @Output() submitProductAdd = new EventEmitter<QuickAddProduct>();
 
   @ViewChild('modal', { static: false }) modalTemplate: TemplateRef<unknown>;
 

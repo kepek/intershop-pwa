@@ -1,11 +1,11 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { QuickAddProduct } from 'camfil-pwa/models/camfil-quick-add-product/camfil-quick-add-product.model';
 import { Subject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
 
 import { CamCardsFacade } from '../../../facades/cam-cards.facade';
 import { ModalAddNewProductComponent } from '../modal-add-new-product/modal-add-new-product.component';
-import { ProductAddFormData } from '../modal-add-new-product/productAddFormData.model';
 
 @Component({
   selector: 'camfil-account-cam-card-detail-toolbar',
@@ -20,7 +20,7 @@ export class AccountCamCardDetailToolbarComponent implements OnInit {
 
   @Output() deleteCamCard = new EventEmitter();
   @Output() addItemsToCart = new EventEmitter();
-  @Output() addItemsToCamCard = new EventEmitter<ProductAddFormData>();
+  @Output() addItemsToCamCard = new EventEmitter<QuickAddProduct>();
   @Input() isSticky: boolean;
   @Input() title: string;
 
@@ -55,7 +55,7 @@ export class AccountCamCardDetailToolbarComponent implements OnInit {
     this.deleteCamCard.emit();
   }
 
-  addItemsToCurrentCamCard(quickAddData: ProductAddFormData, modal: ModalAddNewProductComponent) {
+  addItemsToCurrentCamCard(quickAddData: QuickAddProduct, modal: ModalAddNewProductComponent) {
     this.addItemsToCamCard.emit(quickAddData);
     if (modal) {
       modal.hide();

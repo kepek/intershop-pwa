@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { User } from '@sentry/browser';
+import { QuickAddProduct } from 'camfil-pwa/models/camfil-quick-add-product/camfil-quick-add-product.model';
 import { Observable, Subject } from 'rxjs';
 import { map, take, takeUntil } from 'rxjs/operators';
 import { ModalAddNewProductComponent } from 'src/app/extensions/cam-cards/pages/account-cam-card-detail/modal-add-new-product/modal-add-new-product.component';
-import { ProductAddFormData } from 'src/app/extensions/cam-cards/pages/account-cam-card-detail/modal-add-new-product/productAddFormData.model';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
 import { AppFacade } from 'ish-core/facades/app.facade';
@@ -114,7 +114,7 @@ export class RequisitionDetailPageComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  sumbitAddProductToRequisition(quickAddData: ProductAddFormData, requisition: CamfilRequisition) {
+  sumbitAddProductToRequisition(quickAddData: QuickAddProduct, requisition: CamfilRequisition) {
     const { sku, quantity } = quickAddData;
     const { approval } = requisition;
     if (this.getIsCamfilRequisitionEditable(approval)) {

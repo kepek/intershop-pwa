@@ -15,9 +15,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { MatDialog } from '@angular/material/dialog';
 import { CamfilConfigurationFacade } from 'camfil-pwa/facades/camfil-configuration.facade';
+import { QuickAddProduct } from 'camfil-pwa/models/camfil-quick-add-product/camfil-quick-add-product.model';
 import { Observable, ReplaySubject, Subject, combineLatest } from 'rxjs';
 import { first, map, skip, take, takeUntil } from 'rxjs/operators';
-import { ProductAddFormData } from 'src/app/extensions/cam-cards/pages/account-cam-card-detail/modal-add-new-product/productAddFormData.model';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
 import { AppFacade } from 'ish-core/facades/app.facade';
@@ -723,7 +723,7 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
     }
   }
 
-  submitQuickAddProd(quickAddData: ProductAddFormData, modal: ModalAddNewProductComponent) {
+  submitQuickAddProd(quickAddData: QuickAddProduct, modal: ModalAddNewProductComponent) {
     const type = this.bucket?.id?.split('_')?.[0];
     const shipToAddress = this.bucket.shipToAddress;
 

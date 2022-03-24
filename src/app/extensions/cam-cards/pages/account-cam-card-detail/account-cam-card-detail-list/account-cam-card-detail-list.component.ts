@@ -17,6 +17,7 @@ import { MatSort } from '@angular/material/sort';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { CamfilConfigurationFacade } from 'camfil-pwa/facades/camfil-configuration.facade';
+import { QuickAddProduct } from 'camfil-pwa/models/camfil-quick-add-product/camfil-quick-add-product.model';
 import { Observable, Subject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
 
@@ -42,7 +43,6 @@ import {
   CamCard,
   CamCardItem,
 } from '../../../models/cam-card/cam-card.model';
-import { ProductAddFormData } from '../modal-add-new-product/productAddFormData.model';
 
 export interface Prices {
   [id: string]: [Price, string, number];
@@ -492,7 +492,7 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges, OnD
 
   /** Quick add product to CC */
 
-  sumbitAddProductToCamCard(quickAddData: ProductAddFormData) {
+  sumbitAddProductToCamCard(quickAddData: QuickAddProduct) {
     const { sku, quantity, boxLabel, measurements } = quickAddData;
     const rootCamCardId = this.camCard?.id;
     this.camCardsFacade.addProductToCamCard(rootCamCardId, sku, quantity, boxLabel, measurements, 0, true);
