@@ -912,6 +912,7 @@
   "camfil.checkout.phone": "Phone notification",
   "camfil.checkout.place_your_orders": "Place your orders",
   "camfil.checkout.product.measurements.label": "Measurements",
+  "camfil.checkout.request_quotation": "Request quotation",
   "camfil.checkout.single_total_price_net": "Order price (excl. VAT)",
   "camfil.checkout.tax.text": "Tax amount",
   "camfil.checkout.tax_amount": "Tax amount",

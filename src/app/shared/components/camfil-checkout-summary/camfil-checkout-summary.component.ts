@@ -78,6 +78,19 @@ export class CamfilCheckoutSummaryComponent extends CamfilBasketCostSummaryCompo
     });
   }
 
+  requestQuote() {
+    // TODO: Add a param to differentiate between order and quote
+    this.isLoggedIn$.pipe(take(1), takeUntil(this.destroy$)).subscribe(isLoggedIn => {
+      if (isLoggedIn) {
+        this.submit.emit();
+      } else if (this.guestGdprForm?.valid) {
+        this.submit.emit();
+      } else {
+        this.openGDPRErrorModal();
+      }
+    });
+  }
+
   continueShopping() {
     this.camfilConfigurationFacade.continueShoppingUrl$.pipe(take(1)).subscribe(continueShoppingUrl => {
       this.router.navigate([continueShoppingUrl]);

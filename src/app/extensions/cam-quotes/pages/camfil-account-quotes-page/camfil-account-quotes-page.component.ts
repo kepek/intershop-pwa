@@ -12,7 +12,7 @@ import { QuotesApproveDialogComponent } from '../../components/quotes-approve-di
 import { CamQuotesFacade } from '../../facades/cam-quotes.facade';
 import { Quote, QuoteStatus as QuoteStatusEnum } from '../../models/quote/quote.model';
 import { QuotesRejectDialogComponent } from '../../components/quotes-reject-dialog/quotes-reject-dialog.component';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { HttpParams } from '@angular/common/http';
 
@@ -85,7 +85,6 @@ export class CamfilAccountQuotesPageComponent implements OnInit {
     private fb: FormBuilder,
     private dialog: MatDialog,
     private store: Store,
-    private router: Router,
     private activatedRoute: ActivatedRoute,
     private location: Location
   ) {
