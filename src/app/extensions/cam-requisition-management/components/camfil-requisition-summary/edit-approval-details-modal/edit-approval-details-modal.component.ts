@@ -74,7 +74,11 @@ export class EditApprovalDetailsModalComponent {
         phoneNumber: form.get('phoneNumber').value,
       };
 
-      this.camRequisitionManagementFacade.updateCamfilRequisition(requisition);
+      this.camRequisitionManagementFacade.updateCamfilRequisition(
+        requisition,
+        requisition.shipToAddressFull.id,
+        address
+      );
       this.hide();
     }
   }

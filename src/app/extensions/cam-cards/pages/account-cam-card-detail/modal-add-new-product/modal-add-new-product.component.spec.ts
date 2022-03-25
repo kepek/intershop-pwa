@@ -1,7 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MockComponent } from 'ng-mocks';
 import { EMPTY, of } from 'rxjs';
-import { CamRequisitionManagementFacade } from 'src/app/extensions/cam-requisition-management/facades/cam-requisition-management.facade';
 import { instance, mock, when } from 'ts-mockito';
 
 import { CamfilMaxLengthAttributeCreateDirective } from 'ish-core/directives/camfil-max-length-attribute-create.directive';
@@ -22,13 +21,11 @@ describe('Modal Add New Product Component', () => {
   let fixture: ComponentFixture<ModalAddNewProductComponent>;
   let element: HTMLElement;
   let shoppingFacadeMock: ShoppingFacade;
-  let requisitionsFacadeMock: CamRequisitionManagementFacade;
 
   beforeEach(async () => {
     const camCardsFacade = mock(CamCardsFacade);
     when(camCardsFacade.currentCamCard$).thenReturn(EMPTY);
     shoppingFacadeMock = mock(ShoppingFacade);
-    requisitionsFacadeMock = mock(CamRequisitionManagementFacade);
 
     await TestBed.configureTestingModule({
       declarations: [
@@ -43,7 +40,6 @@ describe('Modal Add New Product Component', () => {
       providers: [
         { provide: CamCardsFacade, useFactory: () => instance(camCardsFacade) },
         { provide: ShoppingFacade, useFactory: () => instance(shoppingFacadeMock) },
-        { provide: CamRequisitionManagementFacade, useFactory: () => instance(requisitionsFacadeMock) },
         { provide: CheckoutFacade, useFactory: () => instance(CheckoutFacade) },
       ],
     }).compileComponents();

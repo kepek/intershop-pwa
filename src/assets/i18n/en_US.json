@@ -512,6 +512,7 @@
   "camfil.account.approvallist.table.order_channel": "Order channel",
   "camfil.account.approvals.product_added.text": "Product has been added to approval successfully",
   "camfil.account.approvals.product_removed.text": "Product has been removed from approval successfully",
+  "camfil.account.approvals.product_validation_fail.text": "(en_US)_Selected item is no longer for sale",
   "camfil.account.approvals.requisition_updated.text": "The approval has been successfully updated",
   "camfil.account.approvals.status_update.reject": "The approval request has been rejected successfully",
   "camfil.account.cam_card.access_user.dialog.btn.cancel": "Cancel",

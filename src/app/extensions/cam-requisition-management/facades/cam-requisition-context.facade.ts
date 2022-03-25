@@ -3,16 +3,21 @@ import { Store, select } from '@ngrx/store';
 import { RxState } from '@rx-angular/state';
 import { distinctUntilChanged, map, switchMap, tap } from 'rxjs/operators';
 
+import { Attribute } from 'ish-core/models/attribute/attribute.model';
 import { HttpError } from 'ish-core/models/http-error/http-error.model';
 import { selectRouteParam, selectUrl } from 'ish-core/store/core/router';
 import { whenTruthy } from 'ish-core/utils/operators';
 
 import { CamfilRequisition } from '../models/camfil-requisition/camfil-requisition.model';
 import {
+  addProductToCamfilRequisition,
+  approveCamfilRequisitionLineItems,
   getCamfilRequisition,
   getCamfilRequisitionsError,
   getCamfilRequisitionsLoading,
   loadCamfilRequisition,
+  removeMultipleProductsFromCamfilRequisition,
+  removeProductFromCamfilRequisition,
   updateCamfilRequisitionStatus,
 } from '../store/camfil-requisitions';
 
@@ -76,6 +81,43 @@ export class CamfilRequisitionContextFacade
         requisitionId: this.get('entity', 'id'),
         status: 'REJECTED',
         approvalComment: comment,
+      })
+    );
+  }
+
+  addProductToCamfilRequisition(item: { sku: string; quantity: number }) {
+    this.store.dispatch(
+      addProductToCamfilRequisition({
+        requisitionId: this.get('entity', 'id'),
+        item,
+      })
+    );
+  }
+
+  removeSelectedLineItem(lineItemId: string) {
+    this.store.dispatch(
+      removeProductFromCamfilRequisition({
+        lineItemId,
+        requisitionId: this.get('entity', 'id'),
+      })
+    );
+  }
+
+  removeMultipleProductsFromCamfilRequisition(lineItemsIds: string[]) {
+    this.store.dispatch(
+      removeMultipleProductsFromCamfilRequisition({
+        lineItemsIds,
+        requisitionId: this.get('entity', 'id'),
+      })
+    );
+  }
+
+  approveCamfilRequisitionLineItem(lineItemIds: string[], lineItemAttribute: Attribute) {
+    this.store.dispatch(
+      approveCamfilRequisitionLineItems({
+        requisitionId: this.get('entity', 'id'),
+        lineItemIds,
+        lineItemAttribute,
       })
     );
   }

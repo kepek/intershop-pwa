@@ -3,6 +3,7 @@
     <camfil-account-cam-card-detail-toolbar
       (addItemsToCart)="handleSelectedCamCardsOnAddToCart(checkCamCardInBaskets, needToCompleteAddress)"
       (deleteCamCard)="openDeleteConfirmationDialog(deleteDialog, camCard, 'cc')"
+      (addItemsToCamCard)="sumbitAddProductToCamCard($event)"
       [isSticky]="isStickyCamCardToolbar$ | async"
       [title]="getCamCardName()"
     ></camfil-account-cam-card-detail-toolbar>

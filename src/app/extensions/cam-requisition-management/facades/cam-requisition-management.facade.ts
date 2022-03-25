@@ -4,22 +4,28 @@ import { Store, select } from '@ngrx/store';
 import { combineLatest } from 'rxjs';
 import { distinctUntilChanged, filter, map, sample, startWith, switchMap } from 'rxjs/operators';
 
+import { Address } from 'ish-core/models/address/address.model';
 import { Attribute } from 'ish-core/models/attribute/attribute.model';
 import { selectRouteParam, selectUrl } from 'ish-core/store/core/router';
 import { whenTruthy } from 'ish-core/utils/operators';
 
-import { CamfilRequisition, CamfilRequisitionViewer } from '../models/camfil-requisition/camfil-requisition.model';
 import {
-  addProductToCamfilRequisition,
+  CamfilRequisition,
+  CamfilRequisitionLineItemUpdate,
+  CamfilRequisitionViewer,
+} from '../models/camfil-requisition/camfil-requisition.model';
+import {
+  addCamfilRequisitionLineItemAttribute,
   createCamfilRequisition,
+  deleteCamfilRequisitionLineItemAttribute,
   getCamfilRequisition,
   getCamfilRequisitions,
   getCamfilRequisitionsError,
   getCamfilRequisitionsLoading,
   loadCamfilRequisition,
   loadCamfilRequisitions,
-  removeProductsFromCamfilRequisition,
   updateCamfilRequisition,
+  updateCamfilRequisitionLineItem,
   updateCamfilRequisitionLineItemAttribute,
 } from '../store/camfil-requisitions';
 
@@ -71,41 +77,40 @@ export class CamRequisitionManagementFacade {
     switchMap(([view]) => this.requisitions$(view as CamfilRequisitionViewer))
   );
 
-  // CAMFIL Line Items
   createCamfilRequisition() {
     this.store.dispatch(createCamfilRequisition());
   }
 
-  addProductToCamfilRequisition(sku: string, quantity: number, requisitionId: string) {
+  updateCamfilRequisition(requisition: CamfilRequisition, addressId?: string, address?: Address) {
+    this.store.dispatch(updateCamfilRequisition({ requisition, addressId, address }));
+  }
+
+  // Line items quantity
+  updateCamfilRequisitionLineItem(requisitionId: string, lineItemUpdate: CamfilRequisitionLineItemUpdate) {
     this.store.dispatch(
-      addProductToCamfilRequisition({
-        sku,
-        quantity,
+      updateCamfilRequisitionLineItem({
         requisitionId,
+        lineItemUpdate,
       })
     );
   }
 
-  removeProductsFromCamfilRequisition(lineItemIds: string[], requisitionId: string) {
-    this.store.dispatch(
-      removeProductsFromCamfilRequisition({
-        lineItemIds,
-        requisitionId,
-      })
-    );
+  // Line items attributes
+  addCamfilRequisitionLineItemAttribute(requisitionId: string, lineItemId: string, lineItemAttribute: Attribute) {
+    this.store.dispatch(addCamfilRequisitionLineItemAttribute({ requisitionId, lineItemId, lineItemAttribute }));
   }
 
-  updateCamfilRequisitionLineItemAttribute(lineItemIds: string[], requisitionId: string, lineItemAttribute: Attribute) {
+  deleteCamfilRequisitionLineItemAttributes(requisitionId: string, lineItemId: string, lineItemAttribute: Attribute) {
+    this.store.dispatch(deleteCamfilRequisitionLineItemAttribute({ requisitionId, lineItemId, lineItemAttribute }));
+  }
+
+  updateCamfilRequisitionLineItemAttribute(requisitionId: string, lineItemId: string, lineItemAttribute: Attribute) {
     this.store.dispatch(
       updateCamfilRequisitionLineItemAttribute({
-        lineItemIds,
         requisitionId,
+        lineItemId,
         lineItemAttribute,
       })
     );
-  }
-
-  updateCamfilRequisition(requisition: CamfilRequisition) {
-    this.store.dispatch(updateCamfilRequisition({ requisition }));
   }
 }

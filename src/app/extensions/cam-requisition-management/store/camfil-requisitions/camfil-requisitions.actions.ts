@@ -1,10 +1,12 @@
 import { createAction } from '@ngrx/store';
 
+import { Address } from 'ish-core/models/address/address.model';
 import { Attribute } from 'ish-core/models/attribute/attribute.model';
 import { httpError, payload } from 'ish-core/utils/ngrx-creators';
 
 import {
   CamfilRequisition,
+  CamfilRequisitionLineItemUpdate,
   CamfilRequisitionStatus,
   CamfilRequisitionViewer,
 } from '../../models/camfil-requisition/camfil-requisition.model';
@@ -75,56 +77,69 @@ export const createOrderFromApprovedRequisitionFail = createAction(
 export const addProductToCamfilRequisition = createAction(
   '[Camfil Requisitions API] Add Product To Requisition',
   payload<{
-    sku: string;
-    quantity: number;
-    requisitionId?: string;
+    requisitionId: string;
+    item: { sku: string; quantity: number };
   }>()
 );
 
 export const addProductToCamfilRequisitionFail = createAction(
-  '[Camfil Requisitions API] Add Product To Requisition Fail'
+  '[Camfil Requisitions API] Add Product To Requisition Fail',
+  httpError()
 );
 
 export const addProductToCamfilRequisitionSuccess = createAction(
   '[Camfil Requisitions API] Add Product To Requisition Success',
-  payload<{ requisition: CamfilRequisition }>()
+  payload<{
+    requisitionId: string;
+  }>()
 );
 
-export const removeProductsFromCamfilRequisition = createAction(
-  '[Camfil Requisitions API] Remove Line Items From Requisition',
+// Deleting products from requisition
+
+export const removeProductFromCamfilRequisition = createAction(
+  '[Camfil Requisitions API] Remove Line Item From Requisition',
   payload<{
-    lineItemIds: string[];
+    lineItemId: string;
     requisitionId?: string;
   }>()
 );
 
-export const removeProductsFromCamfilRequisitionSuccess = createAction(
-  '[Camfil Requisitions API] Remove Line Items From Requisition Success',
-  payload<{ requisition: CamfilRequisition }>()
+export const removeProductFromCamfilRequisitionSuccess = createAction(
+  '[Camfil Requisitions API] Remove Line Item From Requisition Success',
+  payload<{ requisitionId: string }>()
 );
 
-export const updateCamfilRequisitionLineItemAttribute = createAction(
-  '[Camfil Requisitions API] Approve Line Items',
-  payload<{
-    lineItemIds: string[];
-    requisitionId?: string;
-    lineItemAttribute: Attribute;
-  }>()
-);
-
-export const updateCamfilRequisitionLineItemAttributeSuccess = createAction(
-  '[Camfil Requisitions API] Approve Line Items Success'
-);
-
-export const updateCamfilRequisitionLineItemAttributeFail = createAction(
-  '[Camfil Requisitions API] Approve Line Items Fail',
+export const removeProductFromCamfilRequisitionFail = createAction(
+  '[Camfil Requisitions API] Remove  Line Item Requisition Fail',
   httpError()
 );
+
+export const removeMultipleProductsFromCamfilRequisition = createAction(
+  '[Camfil Requisitions API] Remove Multiple Line Items From Requisition',
+  payload<{
+    lineItemsIds: string[];
+    requisitionId?: string;
+  }>()
+);
+
+export const removeMultipleProductsFromCamfilRequisitionSuccess = createAction(
+  '[Camfil Requisitions API] Remove Multiple Line Items From Requisition Success',
+  payload<{ requisitionId: string }>()
+);
+
+export const removeMultipleProductsFromCamfilRequisitionFail = createAction(
+  '[Camfil Requisitions API] Remove Multiple Line Items From Requisition Fail',
+  httpError()
+);
+
+// Requisition Update
 
 export const updateCamfilRequisition = createAction(
   '[Camfil Requisitions API] Update Requisition',
   payload<{
     requisition: CamfilRequisition;
+    addressId?: string;
+    address?: Address;
   }>()
 );
 
@@ -138,6 +153,24 @@ export const updateCamfilRequisitionFail = createAction(
   httpError()
 );
 
+// Address update
+export const updateCamfilRequisitionAddress = createAction(
+  '[Camfil Requisitions API] Update Requisition Address',
+  payload<{ requisition: CamfilRequisition; address: Address }>()
+);
+
+export const updateCamfilRequisitionAddressSuccess = createAction(
+  '[Camfil Requisitions API] Update Requisition Address Success',
+  payload<{ requisition: CamfilRequisition; address: Address }>()
+);
+
+export const updateCamfilRequisitionAddressFail = createAction(
+  '[Camfil Requisitions API] Update Requisition Address  Fail',
+  httpError()
+);
+
+// Requisition Creation
+
 export const createCamfilRequisition = createAction('[Camfil Requisitions API] Create Requisition');
 
 export const createCamfilRequisitionFail = createAction(
@@ -148,4 +181,99 @@ export const createCamfilRequisitionFail = createAction(
 export const createCamfilRequisitionSuccess = createAction(
   '[Camfil Requisitions API] Create Requisition Success',
   payload<{ requisition: CamfilRequisition }>()
+);
+
+export const checkProductAvailabilityFail = createAction('[Camfil Requisitions API] Check Product Availability Fail');
+
+// --------- Line items attributes ---------
+export const addCamfilRequisitionLineItemAttribute = createAction(
+  '[Camfil Requisitions API]  Add Attributes for selected line item ',
+  payload<{ requisitionId: string; lineItemId: string; lineItemAttribute: Attribute }>()
+);
+
+export const addCamfilRequisitionLineItemAttributeFail = createAction(
+  '[Camfil Requisitions API]  Add Attributes for selected line item Fail',
+  httpError()
+);
+
+export const addCamfilRequisitionLineItemAttributeSuccess = createAction(
+  '[Camfil Requisitions API]  Add Attributes for selected line item Success',
+  payload<{ requisitionId: string; lineItemId: string; attribute: Attribute }>()
+);
+
+// Update Line Item Attribute
+export const updateCamfilRequisitionLineItemAttribute = createAction(
+  '[Camfil Requisitions API] Update Line Item Atrtibute',
+  payload<{
+    requisitionId?: string;
+    lineItemId: string;
+    lineItemAttribute: Attribute;
+  }>()
+);
+
+export const updateCamfilRequisitionLineItemAttributeSuccess = createAction(
+  '[Camfil Requisitions API] Update Line Item Atrtibutes Success'
+);
+
+export const updateCamfilRequisitionLineItemAttributeFail = createAction(
+  '[Camfil Requisitions API] Update Line Item Atrtibutes Fail',
+  httpError()
+);
+
+// Delete Line Item Attribute
+export const deleteCamfilRequisitionLineItemAttribute = createAction(
+  '[Camfil Requisitions API] Delete Attributes for selected line item ',
+  payload<{ requisitionId: string; lineItemId: string; lineItemAttribute: Attribute }>()
+);
+
+export const deleteCamfilRequisitionLineItemAttributeFail = createAction(
+  '[Camfil Requisitions API] Delete Attributes for selected line item Fail',
+  httpError()
+);
+
+export const deleteCamfilRequisitionLineItemAttributeSuccess = createAction(
+  '[Camfil Requisitions API] Delete Attributes for selected line item Success'
+);
+
+// Approve Line Items
+
+export const approveCamfilRequisitionLineItems = createAction(
+  '[Camfil Requisitions API] Approve Line Items Atrtibute',
+  payload<{
+    requisitionId?: string;
+    lineItemIds: string[];
+    lineItemAttribute: Attribute;
+  }>()
+);
+
+export const approveCamfilRequisitionLineItemsSuccess = createAction(
+  '[Camfil Requisitions API] Approve Line Items Success'
+);
+
+export const approveCamfilRequisitionLineItemsFail = createAction(
+  '[Camfil Requisitions API] Approve Line Items Fail',
+  httpError()
+);
+
+// Quantiti update for Line items
+
+export const updateCamfilRequisitionLineItem = createAction(
+  '[Camfil Requisitions API] Update Line Item ',
+  payload<{
+    requisitionId: string;
+    lineItemUpdate: CamfilRequisitionLineItemUpdate;
+  }>()
+);
+
+export const updateCamfilRequisitionLineItemSuccess = createAction(
+  '[Camfil Requisitions API] Update Line Item  Success',
+  payload<{
+    requisitionId: string;
+    lineItemUpdate: CamfilRequisitionLineItemUpdate;
+  }>()
+);
+
+export const updateCamfilRequisitionLineItemFail = createAction(
+  '[Camfil Requisitions API] Update Line Item  Fail',
+  httpError()
 );

@@ -30,6 +30,7 @@ export interface CamfilRequisitionBaseData extends BasketBaseData {
   shippingAddress?: Address;
   status: string;
   info?: string;
+  userComment: string;
   approvalStatus: CamfilRequisitionApproval;
 }
 

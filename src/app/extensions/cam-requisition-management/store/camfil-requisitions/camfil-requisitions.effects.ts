@@ -2,26 +2,36 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store, select } from '@ngrx/store';
-import { concatMap, map, mergeMap, switchMap, tap, withLatestFrom } from 'rxjs/operators';
+import { combineLatest, of } from 'rxjs';
+import { concatMap, filter, map, mergeMap, switchMap, tap, withLatestFrom } from 'rxjs/operators';
 import { getCamCardCustomers, loadCustomers } from 'src/app/extensions/cam-cards/store/cam-card';
 
 import { ProductCompletenessLevel } from 'ish-core/models/product/product.model';
-import { displaySuccessMessage } from 'ish-core/store/core/messages';
+import { displayErrorMessage, displaySuccessMessage } from 'ish-core/store/core/messages';
+import { ofUrl, selectRouteParam } from 'ish-core/store/core/router';
 import { getCurrentBasketId, submitBasketSuccess } from 'ish-core/store/customer/basket';
-import { loadProductIfNotLoaded } from 'ish-core/store/shopping/products';
+import { getProduct, loadProductIfNotLoaded } from 'ish-core/store/shopping/products';
 import { mapErrorToAction, mapToPayload, mapToPayloadProperty } from 'ish-core/utils/operators';
 
 import { CamfilRequisitionsService } from '../../services/requisitions/camfil-requisitions.service';
 
 import {
+  addCamfilRequisitionLineItemAttribute,
+  addCamfilRequisitionLineItemAttributeFail,
+  addCamfilRequisitionLineItemAttributeSuccess,
   addProductToCamfilRequisition,
+  addProductToCamfilRequisitionFail,
   addProductToCamfilRequisitionSuccess,
+  checkProductAvailabilityFail,
   createCamfilRequisition,
   createCamfilRequisitionFail,
   createCamfilRequisitionSuccess,
   createOrderFromApprovedRequisition,
   createOrderFromApprovedRequisitionFail,
   createOrderFromApprovedRequisitionSuccess,
+  deleteCamfilRequisitionLineItemAttribute,
+  deleteCamfilRequisitionLineItemAttributeFail,
+  deleteCamfilRequisitionLineItemAttributeSuccess,
   getCamfilRequisitionData,
   loadCamfilRequisition,
   loadCamfilRequisitionFail,
@@ -29,18 +39,25 @@ import {
   loadCamfilRequisitionsFail,
   loadCamfilRequisitionsSuccess,
   loadCamfilRequisitionsuccess,
-  removeProductsFromCamfilRequisition,
-  removeProductsFromCamfilRequisitionSuccess,
+  removeProductFromCamfilRequisition,
+  removeProductFromCamfilRequisitionFail,
+  removeProductFromCamfilRequisitionSuccess,
   updateCamfilRequisition,
+  updateCamfilRequisitionAddress,
+  updateCamfilRequisitionAddressSuccess,
   updateCamfilRequisitionFail,
+  updateCamfilRequisitionLineItem,
   updateCamfilRequisitionLineItemAttribute,
   updateCamfilRequisitionLineItemAttributeFail,
   updateCamfilRequisitionLineItemAttributeSuccess,
+  updateCamfilRequisitionLineItemFail,
+  updateCamfilRequisitionLineItemSuccess,
   updateCamfilRequisitionStatus,
   updateCamfilRequisitionStatusFail,
   updateCamfilRequisitionStatusSuccess,
   updateCamfilRequisitionSuccess,
 } from './camfil-requisitions.actions';
+import { getSelectedCamfilRequisitionId } from './camfil-requisitions.selectors';
 
 @Injectable()
 export class CamfilRequisitionsEffects {
@@ -90,6 +107,17 @@ export class CamfilRequisitionsEffects {
         }
         return actions;
       })
+    )
+  );
+
+  routeListenerForSelectingCamfilRequisition$ = createEffect(() =>
+    this.store.pipe(
+      ofUrl(/^\/(account\/requisitions\/approver.*|account\/requisitions\/buyer.*)/),
+      select(selectRouteParam('orderId')),
+      withLatestFrom(this.store.pipe(select(getSelectedCamfilRequisitionId))),
+      filter(([fromAction, selectedOrderId]) => fromAction && fromAction !== selectedOrderId),
+      map(([orderId]) => orderId),
+      map(requisitionId => getCamfilRequisitionData({ requisitionId }))
     )
   );
 
@@ -178,14 +206,28 @@ export class CamfilRequisitionsEffects {
     this.actions$.pipe(
       ofType(addProductToCamfilRequisition),
       mapToPayload(),
-      concatMap(payload =>
-        this.requisitionsService
-          .addProductToCamfilRequisition(payload.sku, payload.quantity, payload.requisitionId)
-          .pipe(
-            map(requisition => updateCamfilRequisitionSuccess({ requisition })),
-            mapErrorToAction(updateCamfilRequisitionStatusFail)
-          )
-      )
+      mergeMap(payload => combineLatest([of(payload), this.store.pipe(select(getProduct, { sku: payload.item.sku }))])),
+      concatMap(([payload, product]) => {
+        if (product.availability) {
+          return this.requisitionsService.addProductToCamfilRequisition(payload.requisitionId, payload.item).pipe(
+            map(requisitionId => addProductToCamfilRequisitionSuccess({ requisitionId })),
+            mapErrorToAction(addProductToCamfilRequisitionFail)
+          );
+        } else {
+          return of(checkProductAvailabilityFail());
+        }
+      })
+    )
+  );
+
+  checkProductAvailabilityFail$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(checkProductAvailabilityFail),
+      mergeMap(() => [
+        displayErrorMessage({
+          message: 'camfil.account.approvals.product_validation_fail.text',
+        }),
+      ])
     )
   );
 
@@ -200,56 +242,28 @@ export class CamfilRequisitionsEffects {
     )
   );
 
-  removeProductsFromCamfilRequisition$ = createEffect(() =>
+  loadCamfilRequisitionAfterRequisitonItemsChangedSuccess$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(removeProductsFromCamfilRequisition),
+      ofType(addProductToCamfilRequisitionSuccess, removeProductFromCamfilRequisitionSuccess),
       mapToPayload(),
-      concatMap(payload =>
-        this.requisitionsService.removeProductsFromCamfilRequisition(payload.lineItemIds, payload.requisitionId).pipe(
-          map(requisition => removeProductsFromCamfilRequisitionSuccess({ requisition })),
-          mapErrorToAction(updateCamfilRequisitionStatusFail)
-        )
-      )
+      map(loadCamfilRequisition)
     )
   );
 
-  removeProductsFromCamfilRequisitionSuccess$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(removeProductsFromCamfilRequisitionSuccess),
-      map(() =>
-        displaySuccessMessage({
-          message: 'camfil.account.approvals.product_removed.text',
-        })
-      )
-    )
-  );
-
-  updateCamfilRequisitionLineItemAttribute$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(updateCamfilRequisitionLineItemAttribute),
-      mapToPayload(),
-      mergeMap(payload =>
-        this.requisitionsService
-          .updateLineItemAttribute(payload.requisitionId, payload.lineItemIds, payload.lineItemAttribute)
-          .pipe(
-            map(updateCamfilRequisitionLineItemAttributeSuccess),
-            mapErrorToAction(updateCamfilRequisitionLineItemAttributeFail)
-          )
-      )
-    )
-  );
-
-  updateCamfilRequisition = createEffect(() =>
+  updateCamfilRequisition$ = createEffect(() =>
     this.actions$.pipe(
       ofType(updateCamfilRequisition),
       mapToPayload(),
-      mergeMap(payload => {
-        const { requisition } = payload;
-        return this.requisitionsService.updateCamfilRequisition(requisition).pipe(
-          map(req => updateCamfilRequisitionSuccess({ requisition: req })),
+      mergeMap(({ requisition, address }) =>
+        this.requisitionsService.updateCamfilRequisition(requisition).pipe(
+          map(() =>
+            address
+              ? updateCamfilRequisitionAddress({ requisition, address })
+              : updateCamfilRequisitionSuccess({ requisition })
+          ),
           mapErrorToAction(updateCamfilRequisitionFail)
-        );
-      })
+        )
+      )
     )
   );
 
@@ -264,6 +278,19 @@ export class CamfilRequisitionsEffects {
     )
   );
 
+  updateCamfilRequisitionAddress$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(updateCamfilRequisitionAddress),
+      mapToPayload(),
+      mergeMap(({ requisition, address }) =>
+        this.requisitionsService.updateCamfilRequisitionAddress(requisition.id, address).pipe(
+          map(() => updateCamfilRequisitionAddressSuccess({ requisition, address })),
+          mapErrorToAction(updateCamfilRequisitionFail)
+        )
+      )
+    )
+  );
+
   createCamfilRequisition = createEffect(() =>
     this.actions$.pipe(
       ofType(createCamfilRequisition),
@@ -273,6 +300,91 @@ export class CamfilRequisitionsEffects {
           tap(() => this.router.navigate(['/checkout/receipt'])),
           concatMap(requisition => [createCamfilRequisitionSuccess({ requisition }), submitBasketSuccess()]),
           mapErrorToAction(createCamfilRequisitionFail)
+        )
+      )
+    )
+  );
+
+  removeProductsFromCamfilRequisition$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(removeProductFromCamfilRequisition),
+      mapToPayload(),
+      concatMap(({ lineItemId, requisitionId }) =>
+        this.requisitionsService.removeProductsFromCamfilRequisition(lineItemId, requisitionId).pipe(
+          map(() => removeProductFromCamfilRequisitionSuccess({ requisitionId })),
+          mapErrorToAction(removeProductFromCamfilRequisitionFail)
+        )
+      )
+    )
+  );
+
+  removeProductsFromCamfilRequisitionSuccess$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(removeProductFromCamfilRequisitionSuccess),
+      map(() =>
+        displaySuccessMessage({
+          message: 'camfil.account.approvals.product_removed.text',
+        })
+      )
+    )
+  );
+
+  // ------- Line Items Attributes -------
+  addCamfilRequisitionLineItemAttribute$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(addCamfilRequisitionLineItemAttribute),
+      mapToPayload(),
+      mergeMap(({ requisitionId, lineItemId, lineItemAttribute }) =>
+        this.requisitionsService
+          .addLineItemAttribute(requisitionId, lineItemId, lineItemAttribute)
+          .pipe(
+            map(addCamfilRequisitionLineItemAttributeSuccess),
+            mapErrorToAction(addCamfilRequisitionLineItemAttributeFail)
+          )
+      )
+    )
+  );
+
+  updateCamfilRequisitionLineItemAttribute$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(updateCamfilRequisitionLineItemAttribute),
+      mapToPayload(),
+      mergeMap(payload =>
+        this.requisitionsService
+          .updateLineItemAttribute(payload.requisitionId, payload.lineItemId, payload.lineItemAttribute)
+          .pipe(
+            map(updateCamfilRequisitionLineItemAttributeSuccess),
+            mapErrorToAction(updateCamfilRequisitionLineItemAttributeFail)
+          )
+      )
+    )
+  );
+
+  deleteLineItemAttributte$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(deleteCamfilRequisitionLineItemAttribute),
+      mapToPayload(),
+      mergeMap(({ requisitionId, lineItemId, lineItemAttribute }) =>
+        this.requisitionsService
+          .updateLineItemAttribute(requisitionId, lineItemId, lineItemAttribute)
+          .pipe(
+            map(deleteCamfilRequisitionLineItemAttributeSuccess),
+            mapErrorToAction(deleteCamfilRequisitionLineItemAttributeFail)
+          )
+      )
+    )
+  );
+
+  // Line items update
+
+  updateCamfilRequisitionLineItem$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(updateCamfilRequisitionLineItem),
+      mapToPayload(),
+      mergeMap(({ requisitionId, lineItemUpdate }) =>
+        this.requisitionsService.updateLineItem(requisitionId, lineItemUpdate).pipe(
+          map(() => updateCamfilRequisitionLineItemSuccess({ requisitionId, lineItemUpdate })),
+          mapErrorToAction(updateCamfilRequisitionLineItemFail)
         )
       )
     )

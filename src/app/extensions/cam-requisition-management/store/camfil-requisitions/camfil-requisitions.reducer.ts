@@ -7,19 +7,25 @@ import { setErrorOn, setLoadingOn, unsetLoadingAndErrorOn } from 'ish-core/utils
 import { CamfilRequisition } from '../../models/camfil-requisition/camfil-requisition.model';
 
 import {
-  addProductToCamfilRequisitionSuccess,
+  checkProductAvailabilityFail,
   createCamfilRequisition,
   createCamfilRequisitionFail,
   createCamfilRequisitionSuccess,
   createOrderFromApprovedRequisitionFail,
   createOrderFromApprovedRequisitionSuccess,
+  getCamfilRequisitionData,
   loadCamfilRequisition,
   loadCamfilRequisitionFail,
   loadCamfilRequisitions,
   loadCamfilRequisitionsFail,
   loadCamfilRequisitionsSuccess,
   loadCamfilRequisitionsuccess,
+  updateCamfilRequisition,
+  updateCamfilRequisitionAddressSuccess,
   updateCamfilRequisitionFail,
+  updateCamfilRequisitionLineItem,
+  updateCamfilRequisitionLineItemFail,
+  updateCamfilRequisitionLineItemSuccess,
   updateCamfilRequisitionStatus,
   updateCamfilRequisitionStatusFail,
   updateCamfilRequisitionStatusSuccess,
@@ -30,6 +36,7 @@ export const camfilRequisitionsAdapter = createEntityAdapter<CamfilRequisition>(
 
 export interface CamfilRequisitionsState extends EntityState<CamfilRequisition> {
   loading: boolean;
+  selectedCamfilRequisition: string;
   error: HttpError;
   filters: {
     buyerPENDING: string[];
@@ -43,6 +50,7 @@ export interface CamfilRequisitionsState extends EntityState<CamfilRequisition> 
 
 export const initialState: CamfilRequisitionsState = camfilRequisitionsAdapter.getInitialState({
   loading: false,
+  selectedCamfilRequisition: undefined,
   error: undefined,
   filters: {
     buyerPENDING: [],
@@ -56,13 +64,23 @@ export const initialState: CamfilRequisitionsState = camfilRequisitionsAdapter.g
 
 export const requisitionsReducer = createReducer(
   initialState,
-  setLoadingOn(loadCamfilRequisitions, loadCamfilRequisition, updateCamfilRequisitionStatus, createCamfilRequisition),
+  setLoadingOn(
+    loadCamfilRequisitions,
+    loadCamfilRequisition,
+    updateCamfilRequisitionStatus,
+    createCamfilRequisition,
+    updateCamfilRequisition,
+    updateCamfilRequisitionLineItem
+  ),
   unsetLoadingAndErrorOn(
     loadCamfilRequisitionsSuccess,
     loadCamfilRequisitionsuccess,
     updateCamfilRequisitionStatusSuccess,
     createCamfilRequisitionSuccess,
-    createOrderFromApprovedRequisitionSuccess
+    createOrderFromApprovedRequisitionSuccess,
+    updateCamfilRequisitionSuccess,
+    updateCamfilRequisitionAddressSuccess,
+    updateCamfilRequisitionLineItemSuccess
   ),
   setErrorOn(
     loadCamfilRequisitionsFail,
@@ -70,8 +88,14 @@ export const requisitionsReducer = createReducer(
     updateCamfilRequisitionStatusFail,
     updateCamfilRequisitionFail,
     createCamfilRequisitionFail,
-    createOrderFromApprovedRequisitionFail
+    createOrderFromApprovedRequisitionFail,
+    checkProductAvailabilityFail,
+    updateCamfilRequisitionLineItemFail
   ),
+  on(getCamfilRequisitionData, (state: CamfilRequisitionsState, action) => ({
+    ...state,
+    selectedCamfilRequisition: action.payload.requisitionId,
+  })),
   on(loadCamfilRequisitionsSuccess, (state: CamfilRequisitionsState, action) =>
     camfilRequisitionsAdapter.upsertMany(action.payload.requisitions, {
       ...state,
@@ -98,10 +122,37 @@ export const requisitionsReducer = createReducer(
       return camfilRequisitionsAdapter.upsertOne(approvedRequisition, state);
     }
   ),
-  on(
-    addProductToCamfilRequisitionSuccess,
-    updateCamfilRequisitionSuccess,
-    createCamfilRequisitionSuccess,
-    (state: CamfilRequisitionsState, action) => camfilRequisitionsAdapter.upsertOne(action.payload.requisition, state)
-  )
+  on(updateCamfilRequisitionSuccess, createCamfilRequisitionSuccess, (state: CamfilRequisitionsState, action) =>
+    camfilRequisitionsAdapter.upsertOne(action.payload.requisition, state)
+  ),
+  on(updateCamfilRequisitionAddressSuccess, (state: CamfilRequisitionsState, action) => {
+    const { requisition, address } = action.payload;
+
+    const updatedRequisition = {
+      ...state.entities[requisition?.id],
+      shippingAddress: address,
+    };
+
+    return camfilRequisitionsAdapter.upsertOne(updatedRequisition, state);
+  }),
+  on(updateCamfilRequisitionLineItemSuccess, (state: CamfilRequisitionsState, action) => {
+    const { requisitionId, lineItemUpdate } = action.payload;
+    const updateLineItems = state.entities[requisitionId].lineItems.map(lineItem =>
+      lineItem.id === lineItemUpdate.lineItemId
+        ? {
+            ...lineItem,
+            quantity: {
+              value: lineItemUpdate.quantity,
+            },
+          }
+        : lineItem
+    );
+
+    const updatedRequisition = {
+      ...state.entities[requisitionId],
+      lineItems: updateLineItems,
+    };
+
+    return camfilRequisitionsAdapter.upsertOne(updatedRequisition, state);
+  })
 );

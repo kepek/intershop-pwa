@@ -17,6 +17,7 @@ import { MatSort } from '@angular/material/sort';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { CamfilConfigurationFacade } from 'camfil-pwa/facades/camfil-configuration.facade';
+import { QuickAddProduct } from 'camfil-pwa/models/camfil-quick-add-product/camfil-quick-add-product.model';
 import { Observable, Subject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
 
@@ -487,5 +488,13 @@ export class AccountCamCardDetailListComponent implements OnInit, OnChanges, OnD
       const sourceCamCardId = document.getElementById(event.previousContainer.id).dataset.camCardId;
       this.camCardsFacade.moveCamCardItem(sourceCamCardId, targetCamCard.id, event.item.data, targetPos);
     }
+  }
+
+  /** Quick add product to CC */
+
+  sumbitAddProductToCamCard(quickAddData: QuickAddProduct) {
+    const { sku, quantity, boxLabel, measurements } = quickAddData;
+    const rootCamCardId = this.camCard?.id;
+    this.camCardsFacade.addProductToCamCard(rootCamCardId, sku, quantity, boxLabel, measurements, 0, true);
   }
 }
