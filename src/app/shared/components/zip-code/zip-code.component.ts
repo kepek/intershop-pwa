@@ -109,6 +109,8 @@ export class ZipCodeComponent implements OnInit, OnDestroy {
           }
           this.checkOnInit = false;
         });
+    } else {
+      this.checkOnInit = false;
     }
   }
 }
