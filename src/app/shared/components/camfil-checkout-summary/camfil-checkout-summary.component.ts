@@ -15,6 +15,7 @@ import { Price } from 'ish-core/models/price/price.model';
 import { whenFalsy } from 'ish-core/utils/operators';
 import { CamfilBasketCostSummaryComponent } from 'ish-shared/components/basket/camfil-basket-cost-summary/camfil-basket-cost-summary.component';
 import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
+import { CamfilModalDialogComponent, ModalOptions } from '../common/camfil-modal-dialog/camfil-modal-dialog.component';
 
 @Component({
   selector: 'camfil-checkout-summary',
@@ -39,6 +40,13 @@ export class CamfilCheckoutSummaryComponent extends CamfilBasketCostSummaryCompo
   checkIfZeroPrice = PriceHelper.checkIfZeroPrice;
 
   private destroy$ = new Subject();
+
+  @ViewChild('quoteCreatedModal') quoteCreatedModal: CamfilModalDialogComponent<any>;
+  quoteCreatedModalOptions: ModalOptions = {
+    titleText: 'The quotation request has been sent',
+    confirmText: 'Go to my Quotations',
+    rejectText: 'Stay at the checkout'
+  };
 
   constructor(
     protected accountFacade: AccountFacade,
@@ -80,15 +88,16 @@ export class CamfilCheckoutSummaryComponent extends CamfilBasketCostSummaryCompo
 
   requestQuote() {
     // TODO: Add a param to differentiate between order and quote
-    this.isLoggedIn$.pipe(take(1), takeUntil(this.destroy$)).subscribe(isLoggedIn => {
-      if (isLoggedIn) {
-        this.submit.emit();
-      } else if (this.guestGdprForm?.valid) {
-        this.submit.emit();
-      } else {
-        this.openGDPRErrorModal();
-      }
-    });
+    // this.isLoggedIn$.pipe(take(1), takeUntil(this.destroy$)).subscribe(isLoggedIn => {
+    //   if (isLoggedIn) {
+    //     this.submit.emit();
+    //   } else if (this.guestGdprForm?.valid) {
+    //     this.submit.emit();
+    //   } else {
+    //     this.openGDPRErrorModal();
+    //   }
+    // });
+    this.quoteCreatedModal.show();
   }
 
   continueShopping() {
@@ -116,5 +125,9 @@ export class CamfilCheckoutSummaryComponent extends CamfilBasketCostSummaryCompo
     this.gdprErrorModal.hide = () => {
       gdprErrorDialogModal.close();
     };
+  }
+
+  onQuoteCreatedModalConfirmed() {
+    this.router.navigate(['account', 'quotes']);
   }
 }

@@ -1,0 +1,23 @@
+@import '~src/styles/themes/camfil/variables';
+@import '~src/styles/themes/camfil/colors';
+
+.cost-summary {
+  padding: 24px;
+  margin-bottom: 24px;
+  font-size: 12px;
+  background: none;
+  border: none;
+  box-shadow: none;
+
+  @media (min-width: $screen-lg-min) {
+    width: 50%;
+  }
+
+  .total-price, .total-price-value {
+    font-size: 14px;
+  }
+
+  .total-price-value {
+    font-weight: 600;
+  }
+}

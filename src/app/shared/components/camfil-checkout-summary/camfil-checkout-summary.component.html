@@ -183,3 +183,7 @@
     </p>
   </div>
 </ng-template>
+
+<camfil-modal-dialog #quoteCreatedModal [options]="quoteCreatedModalOptions"
+  (confirmed)="onQuoteCreatedModalConfirmed()">
+</camfil-modal-dialog>

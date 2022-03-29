@@ -28,7 +28,7 @@ export class CamfilAccountQuoteDetailPageComponent implements OnInit, OnDestroy 
     private actRoute: ActivatedRoute,
     private cd: ChangeDetectorRef,
     private dialog: MatDialog
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.actRoute.params
@@ -84,5 +84,13 @@ export class CamfilAccountQuoteDetailPageComponent implements OnInit, OnDestroy 
           this.quotesFacade.deleteQuoteItem(this.quoteDetails.id, item.lineItemId);
         }
       });
+  }
+
+  reject() {
+    this.quotesFacade.rejectQuote(this.quoteDetails.id, '');
+  }
+
+  approve() {
+    this.quotesFacade.approveQuote(this.quoteDetails.id);
   }
 }

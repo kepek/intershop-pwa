@@ -5,6 +5,7 @@ import { SharedModule } from 'ish-shared/shared.module';
 import { QuoteDetailsComponent } from './components/quote-details/quote-details.component';
 import { QuoteLineItemComponent } from './components/quote-line-item/quote-line-item.component';
 import { AddProductDialogComponent } from './components/add-product-dialog/add-product-dialog.component';
+import { QuoteCostSummaryComponent } from './components/quote-cost-summary/quote-cost-summary.component';
 
 const routes: Routes = [
   {
@@ -20,6 +21,7 @@ const routes: Routes = [
     CamfilAccountQuoteDetailPageComponent,
     QuoteDetailsComponent,
     QuoteLineItemComponent,
+    QuoteCostSummaryComponent
   ],
 })
-export class CamfilAccountQuoteDetailPageModule {}
+export class CamfilAccountQuoteDetailPageModule { }
