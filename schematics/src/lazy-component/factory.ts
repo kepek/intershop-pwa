@@ -133,7 +133,7 @@ export function createLazyComponent(options: Options): Rule {
       if (!exportsModuleExists) {
         operations.push(
           schematic('module', {
-            ...options,
+            project: options.project,
             name: exportsModuleName,
             flat: true,
           })
@@ -141,7 +141,7 @@ export function createLazyComponent(options: Options): Rule {
         operations.push(updateModule(options));
         operations.push(
           addExportToBarrelFile({
-            ...options,
+            path: options.path,
             artifactName: strings.classify(`${exportsModuleName}-module`),
             moduleImportPath: `/${options.path}/${exportsModuleName}.module`,
           })
@@ -150,7 +150,7 @@ export function createLazyComponent(options: Options): Rule {
       operations.push(addDeclarationToNgModule(options));
       operations.push(addExportToNgModule(options));
       if (!gitignoreExists) {
-        operations.push(generateGitignore({ ...options, content: '/lazy**' }));
+        operations.push(generateGitignore({ path: options.path, content: '/lazy**' }));
       }
 
       if (isProject) {

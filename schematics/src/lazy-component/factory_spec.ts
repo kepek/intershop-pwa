@@ -19,18 +19,14 @@ describe('Lazy Component Schematic', () => {
 
   let appTree: UnitTestTree;
   beforeEach(async () => {
-    appTree = await createApplication(schematicRunner)
-      .pipe(
-        createModule(schematicRunner, { name: 'shell' }),
-        createAppLastRoutingModule(schematicRunner),
-        switchMap(tree => schematicRunner.runSchematicAsync('extension', { ...defaultOptions, name: 'ext' }, tree)),
-        switchMap(tree =>
-          schematicRunner.runSchematicAsync(
-            'component',
-            { ...defaultOptions, name: 'extensions/ext/shared/dummy' },
-            tree
-          )
-        )
+    const appTree$ = createApplication(schematicRunner).pipe(
+      createModule(schematicRunner, { name: 'shared' }),
+      createAppLastRoutingModule(schematicRunner),
+      switchMap(tree =>
+        schematicRunner.runSchematicAsync('extension', { project: defaultOptions.project, name: 'ext' }, tree)
+      ),
+      switchMap(tree =>
+        schematicRunner.runSchematicAsync('component', { ...defaultOptions, name: 'extensions/ext/shared/dummy' }, tree)
       )
       .toPromise();
   });
