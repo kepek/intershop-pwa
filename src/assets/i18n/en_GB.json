@@ -1192,7 +1192,7 @@
   "camfil.quotes.quote_detail.confirm_btn": "Confirm",
   "camfil.quotes.quote_detail.confirm_delete_item": "Confirm delete line item",
   "camfil.quotes.quote_detail.quotation_number": "Camfil quotation number",
-  "camfil.account.quote_details.summary.qty": "Total quantity",
+  "camfil.quotes.quote_details.summary.qty": "Total quantity",
   "camfil.quotes.quote_detail.reject_quote": "Reject Quote",
   "camfil.quotes.quoteslist.approve_quotes": "Approve quotes",
   "camfil.quotes.quoteslist.approve_quotes_modal.cancel": "Stay at this page",
