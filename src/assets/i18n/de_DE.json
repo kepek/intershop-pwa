@@ -1021,6 +1021,7 @@
   "camfil.modal.addNewProduct.input.quantity": "(de_DE)_Select quantity",
   "camfil.modal.addNewProduct.order_title": "(de_DE)_Add product to order",
   "camfil.modal.addNewProduct.title": "(de_DE)_Add product to CamCard",
+  "camfil.modal.addNewProduct.validation.error.step.quantity": "(de_DE)_Can not break QtyPerPackage. Next quantity to select is {{0}}.",
   "camfil.modal.addNewSection.button.confirm": "(de_DE)_Save section",
   "camfil.modal.addNewSection.header": "(de_DE)_Add new CamCard Section",
   "camfil.modal.addNewSection.input.label": "(de_DE)_Enter section name",

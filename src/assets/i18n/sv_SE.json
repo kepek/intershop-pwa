@@ -1034,6 +1034,7 @@
   "camfil.modal.addNewProduct.input.quantity": "Välj antal",
   "camfil.modal.addNewProduct.order_title": "sv_Add product to order",
   "camfil.modal.addNewProduct.title": "Lägg till produkt till CamCard",
+  "camfil.modal.addNewProduct.validation.error.step.quantity": "(sv_SE)_Can not break QtyPerPackage. Next quantity to select is {{0}}.",
   "camfil.modal.addNewSection.button.confirm": "Spara sektion",
   "camfil.modal.addNewSection.header": "Lägg till ny CamCard-sektion",
   "camfil.modal.addNewSection.input.label": "Lägg till namn",

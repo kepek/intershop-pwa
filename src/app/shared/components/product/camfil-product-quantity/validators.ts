@@ -18,7 +18,7 @@ export const ADD_NEW_PRODUCT_VALIDATORS: { [key: string]: CamfilErrorValidator[]
     },
     {
       error: 'stepQuantityValue',
-      message: 'camfil.modal.addNewProduct.error.step.quantity',
+      message: 'camfil.modal.addNewProduct.validation.error.step.quantity',
       messageVariables: [],
     },
   ],

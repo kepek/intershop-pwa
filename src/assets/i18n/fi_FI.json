@@ -1034,6 +1034,7 @@
   "camfil.modal.addNewProduct.input.quantity": "Valitse määrä",
   "camfil.modal.addNewProduct.order_title": "Lisää tuote tilaukselle",
   "camfil.modal.addNewProduct.title": "Lisää tuote Suodatinluetteloon",
+  "camfil.modal.addNewProduct.validation.error.step.quantity": "(fi_FI)_Can not break QtyPerPackage. Next quantity to select is {{0}}.",
   "camfil.modal.addNewSection.button.confirm": "Tallenna osio",
   "camfil.modal.addNewSection.header": "Luo uusi Suodatinluettelo-osio",
   "camfil.modal.addNewSection.input.label": "Syötä osion nimi",

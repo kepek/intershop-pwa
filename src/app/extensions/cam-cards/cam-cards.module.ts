@@ -12,6 +12,7 @@ import { CamCardPreferencesDialogComponent } from './shared/cam-card-preferences
 import { CamCardPreferencesComponent } from './shared/cam-card-preferences/cam-card-preferences.component';
 import { CamCardProductCommentComponent } from './shared/cam-card-product-comment/cam-card-product-comment.component';
 import { ProductAddingErrorDialogComponent } from './shared/cam-card-product-error-dialog/cam-card-product-error-dialog.component';
+import { CamStepQuantityErrorDialogComponent } from './shared/cam-step-quantity-error-dialog/cam-step-quantity-error-dialog.component';
 import { DndDirective } from './shared/import-cam-card-dialog/dnd.directive';
 import { ImportCamCardDialogComponent } from './shared/import-cam-card-dialog/import-cam-card-dialog.component';
 import { MoveCamCardDialogComponent } from './shared/move-cam-card-dialog/move-cam-card-dialog.component';
@@ -29,6 +30,7 @@ import { UserAccessCamCardDialogComponent } from './shared/user-access-cam-card-
     CamCardPreferencesComponent,
     CamCardPreferencesDialogComponent,
     CamCardProductCommentComponent,
+    CamStepQuantityErrorDialogComponent,
     CreateProductCamCardModalComponent,
     CreateProductsCamCardModalComponent,
     DndDirective,

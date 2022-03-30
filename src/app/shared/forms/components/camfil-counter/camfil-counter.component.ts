@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, Input, OnChanges, OnDestroy, OnInit
 import { FormControl } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable, ReplaySubject, Subject } from 'rxjs';
-import { map, takeUntil } from 'rxjs/operators';
+import { debounceTime, map, takeUntil } from 'rxjs/operators';
 
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { FormElementComponent } from 'ish-shared/forms/components/form-element/form-element.component';
@@ -34,8 +34,8 @@ export class CamfilCounterComponent extends FormElementComponent implements OnIn
       this.formControl.setValue(this.max);
     }
     if (event.code === 'Enter' || event.code === 'NumpadEnter') {
-      event.preventDefault();
       event.target.blur();
+      event.preventDefault();
     }
   }
 
@@ -57,25 +57,21 @@ export class CamfilCounterComponent extends FormElementComponent implements OnIn
     this.cannotDecrease$ = this.value$.pipe(map(value => this.min !== undefined && value <= this.min));
     this.cannotIncrease$ = this.value$.pipe(map(value => this.max !== undefined && value >= this.max));
 
-    this.formControl.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(this.value$);
+    this.formControl.valueChanges.pipe(debounceTime(500), takeUntil(this.destroy$)).subscribe(val => {
+      console.log('val', val);
+    });
   }
 
   increase() {
-    (this.formControl as FormControl).setValue(
-      this.value + (isNaN(this.stepQuantityValue) ? 1 : this.stepQuantityValue),
-      {
-        emitEvent: true,
-      }
-    );
+    (this.formControl as FormControl).setValue(this.calculateIncreaseValue(this.value, this.stepQuantityValue), {
+      emitEvent: true,
+    });
   }
 
   decrease() {
-    (this.formControl as FormControl).setValue(
-      this.value - (isNaN(this.stepQuantityValue) ? 1 : this.stepQuantityValue),
-      {
-        emitEvent: true,
-      }
-    );
+    (this.formControl as FormControl).setValue(this.calculateDecreaseValue(this.value, this.stepQuantityValue), {
+      emitEvent: true,
+    });
   }
 
   get displayLabel(): boolean {
@@ -84,5 +80,15 @@ export class CamfilCounterComponent extends FormElementComponent implements OnIn
 
   setFocusedElement(target: HTMLDataElement) {
     this.checkoutFacade.setCheckoutFocusedElement(target.id);
+  }
+
+  private calculateDecreaseValue(value, stepQuantityValue) {
+    return value - stepQuantityValue >= 0 ? value - stepQuantityValue : 0;
+  }
+
+  private calculateIncreaseValue(value, stepQuantityValue) {
+    return (value + stepQuantityValue) % stepQuantityValue === 0
+      ? value + stepQuantityValue
+      : Math.ceil(value / stepQuantityValue) * stepQuantityValue;
   }
 }

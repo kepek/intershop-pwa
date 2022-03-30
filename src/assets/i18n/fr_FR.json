@@ -1034,6 +1034,7 @@
   "camfil.modal.addNewProduct.input.quantity": "Sélectionner la quantité",
   "camfil.modal.addNewProduct.order_title": "Ajouter le produit à la commande",
   "camfil.modal.addNewProduct.title": "Ajouter le produit à la CamCard",
+  "camfil.modal.addNewProduct.validation.error.step.quantity": "(fr_FR)_Can not break QtyPerPackage. Next quantity to select is {{0}}.",
   "camfil.modal.addNewSection.button.confirm": "Ajouter à la CamCard",
   "camfil.modal.addNewSection.header": "Ajouter une nouvelle section de CamCard",
   "camfil.modal.addNewSection.input.label": "Saisir le nom de la section",

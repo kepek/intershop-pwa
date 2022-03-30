@@ -32,7 +32,7 @@ export class ProductsService {
   }
 
   static STUB_ATTRS =
-    'sku,salePrice,listPrice,availability,manufacturer,image,minOrderQuantity,inStock,promotions,packingUnit,mastered,productMaster,productMasterSKU,roundedAverageRating,retailSet';
+    'sku,salePrice,listPrice,availability,manufacturer,image,minOrderQuantity,inStock,promotions,packingUnit,mastered,productMaster,productMasterSKU,roundedAverageRating,retailSet,stepQuantity';
 
   private productsOptions: AvailableOptions = {
     sendSPGID: true,
