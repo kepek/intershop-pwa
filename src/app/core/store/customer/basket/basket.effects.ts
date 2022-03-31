@@ -16,6 +16,7 @@ import {
   sample,
   startWith,
   switchMap,
+  take,
   tap,
   withLatestFrom,
 } from 'rxjs/operators';
@@ -339,11 +340,10 @@ export class BasketEffects {
 
   validateBasketAfterLoadBasketSuccess$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(routerNavigatedAction),
-      mapToPayloadProperty<RouterNavigatedPayload<RouterState>>('routerState'),
-      filter(
-        (routerState: RouterState) => /^\/(checkout\/onestep)/.test(routerState.url) && !routerState.queryParams?.error
-      ),
+      ofType(loadBasketSuccess),
+      mapToPayloadProperty('basket'),
+      take(1),
+      filter(basket => !!basket?.payment?.paymentInstrument?.id),
       mapTo(validateBasket({ scopes: ['CamfilInfo'] }))
     )
   );
