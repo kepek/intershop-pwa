@@ -263,7 +263,7 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
   ngOnChanges(s) {
     this.bucket$.next(this.bucket);
 
-    if (s.order && this.forceUpdateForm) {
+    if (s.bucket && this.forceUpdateForm) {
       this.orderForm.patchValue({
         orderMark: this.bucket.orderMark,
         invoiceLabel: this.bucket.invoiceLabel,
