@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MockComponent } from 'ng-mocks';
 
+import { ContentIncludeComponent } from 'ish-shared/cms/components/content-include/content-include.component';
 import { CamfilLanguageSwitchComponent } from 'ish-shell/header/camfil-language-switch/camfil-language-switch.component';
-import { LazyContentIncludeComponent } from 'ish-shell/shared/lazy-content-include/lazy-content-include.component';
 
 import { CamfilUserLinksComponent } from './camfil-user-links.component';
 
@@ -15,8 +15,8 @@ describe('Camfil User Links Component', () => {
     await TestBed.configureTestingModule({
       declarations: [
         CamfilUserLinksComponent,
-        LazyContentIncludeComponent,
         MockComponent(CamfilLanguageSwitchComponent),
+        MockComponent(ContentIncludeComponent),
       ],
     }).compileComponents();
   });

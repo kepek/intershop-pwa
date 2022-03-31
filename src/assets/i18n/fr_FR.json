@@ -1431,6 +1431,8 @@
   "inplace_edit.cancel": "Annuler",
   "inplace_edit.click_to_edit": "Cliquer pour modifier",
   "inplace_edit.save": "Sauvegarder",
+  "locale.de_CH.long": "Deutsch",
+  "locale.de_CH.short": "de",
   "locale.de_DE.long": "Deutsch",
   "locale.de_DE.short": "de",
   "locale.en_GB.long": "English",

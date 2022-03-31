@@ -43,10 +43,10 @@ exports[`Camfil Header Default Component should render normal header adequately 
         ><span class="mat-button-focus-overlay"></span>
       </button>
       <div class="logo-wrapper">
-        <ish-lazy-content-include
+        <ish-content-include
           includeid="camfil.include.header.logo.content.pagelet2-Include"
           ng-reflect-include-id="camfil.include.header.logo.con"
-        ></ish-lazy-content-include>
+        ></ish-content-include>
       </div>
     </div>
     <div class="col-lg-5 col-xl-6 col-sm-12 search-container"></div>
@@ -111,10 +111,10 @@ exports[`Camfil Header Default Component should render normal header adequately 
         ><span class="mat-button-focus-overlay"></span>
       </button>
       <div class="logo-wrapper">
-        <ish-lazy-content-include
+        <ish-content-include
           includeid="camfil.include.header.logo.content.pagelet2-Include"
           ng-reflect-include-id="camfil.include.header.logo.con"
-        ></ish-lazy-content-include>
+        ></ish-content-include>
       </div>
     </div>
     <div class="col-lg-5 col-xl-6 col-sm-12 search-container"></div>
@@ -166,10 +166,10 @@ exports[`Camfil Header Default Component should render sticky header adequately 
         ><span class="mat-button-focus-overlay"></span>
       </button>
       <div class="logo-wrapper">
-        <ish-lazy-content-include
+        <ish-content-include
           includeid="camfil.include.header.mobileLogo.content.pagelet2-Include"
           ng-reflect-include-id="camfil.include.header.mobileLo"
-        ></ish-lazy-content-include>
+        ></ish-content-include>
       </div>
     </div>
   </div>
@@ -223,10 +223,10 @@ exports[`Camfil Header Default Component should render sticky header adequately 
         ><span class="mat-button-focus-overlay"></span>
       </button>
       <div class="logo-wrapper">
-        <ish-lazy-content-include
+        <ish-content-include
           includeid="camfil.include.header.mobileLogo.content.pagelet2-Include"
           ng-reflect-include-id="camfil.include.header.mobileLo"
-        ></ish-lazy-content-include>
+        ></ish-content-include>
       </div>
     </div>
     <div class="col-lg-5 col-xl-6 col-sm-12 search-container">
@@ -286,10 +286,10 @@ exports[`Camfil Header Default Component should render sticky header adequately 
         ><span class="mat-button-focus-overlay"></span>
       </button>
       <div class="logo-wrapper">
-        <ish-lazy-content-include
+        <ish-content-include
           includeid="camfil.include.header.mobileLogo.content.pagelet2-Include"
           ng-reflect-include-id="camfil.include.header.mobileLo"
-        ></ish-lazy-content-include>
+        ></ish-content-include>
       </div>
     </div>
   </div>

@@ -1,7 +1,11 @@
 import { registerLocaleData } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
+import localeDe from '@angular/common/locales/de';
+import localeDeAt from '@angular/common/locales/de-AT';
+import localeDeCh from '@angular/common/locales/de-CH';
 import localeFi from '@angular/common/locales/fi';
 import localeFr from '@angular/common/locales/fr';
+import localeIt from '@angular/common/locales/it';
 import localeSv from '@angular/common/locales/sv';
 import { Inject, LOCALE_ID, NgModule } from '@angular/core';
 import { MAT_MOMENT_DATE_FORMATS } from '@angular/material-moment-adapter';
@@ -16,7 +20,7 @@ export function translateFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
 }
 
-export const CAMFIL_DEFAULT_LANG = 'en-US';
+export const CAMFIL_DEFAULT_LANG = 'en-GB';
 
 export const CAMFIL_FORMATS: MatDateFormats = {
   ...MAT_MOMENT_DATE_FORMATS,
@@ -49,7 +53,7 @@ export class InternationalizationModule {
     translateService: TranslateService,
     transferState: TransferState
   ) {
-    [localeFi, localeFr, localeSv].map(registerLocaleData);
+    [localeFi, localeFr, localeSv, localeDe, localeDeAt, localeDeCh, localeIt].map(registerLocaleData);
 
     let defaultLang = angularDefaultLocale.replace(/\-/, '_');
 

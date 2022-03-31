@@ -10,9 +10,9 @@
     lang: de_DE
   - baseHref: /ch
     channel: Camfil-CamfilCH-Site
-    lang: de_DE
+    lang: de_CH
   - baseHref: /at
-    channel: Camfil-CamfilCH-Site
+    channel: Camfil-CamfilAT-Site
     lang: de_DE
   - baseHref: /se
     channel: Camfil-CamfilSE-Site

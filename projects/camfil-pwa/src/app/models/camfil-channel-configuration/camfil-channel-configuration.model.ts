@@ -4,7 +4,7 @@ export type CamfilChannelCode = keyof typeof channelConfig;
 
 export type CamfilCurrency = 'EUR' | 'SEK' | 'CHF';
 
-export type CamfilLang = 'de_DE' | 'en_GB' | 'fi_FI' | 'fr_FR' | 'it_IT' | 'sv_SE';
+export type CamfilLang = 'de_DE' | 'de_CH' | 'en_GB' | 'fi_FI' | 'fr_FR' | 'it_IT' | 'sv_SE';
 
 export type CamfilChannelSetting = CamfilChannelCode | keyof CamfilChannelSettings;
 
