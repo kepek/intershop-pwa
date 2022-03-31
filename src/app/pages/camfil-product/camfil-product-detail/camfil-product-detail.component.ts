@@ -60,7 +60,7 @@ export class CamfilProductDetailComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.productDetailForm = new FormGroup({
-      [this.quantityControlName]: new FormControl(0),
+      [this.quantityControlName]: new FormControl(0, { updateOn: 'blur' }),
     });
 
     this.productDetailForm

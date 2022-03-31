@@ -99,7 +99,7 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
       CamfilCheckoutLineItemComponent.REQUIRED_COMPLETENESS_LEVEL
     );
 
-    this.addToCartQuantityControl = new FormControl(this.lineItem?.quantity?.value || 1);
+    this.addToCartQuantityControl = new FormControl(this.lineItem?.quantity?.value || 1, { updateOn: 'blur' });
 
     this.addToCartForm = new FormGroup({
       quantity: this.addToCartQuantityControl,

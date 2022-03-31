@@ -44,7 +44,7 @@ export class CamfilProductItemDetailedComponent extends CamfilProductItemBaseCom
     this.updatedQuantity = this.quantity || 0;
 
     this.productItemForm = new FormGroup({
-      [this.quantityControlName]: new FormControl(this.updatedQuantity),
+      [this.quantityControlName]: new FormControl(this.updatedQuantity, { updateOn: 'blur' }),
     });
     this.productItemForm
       .get(this.quantityControlName)

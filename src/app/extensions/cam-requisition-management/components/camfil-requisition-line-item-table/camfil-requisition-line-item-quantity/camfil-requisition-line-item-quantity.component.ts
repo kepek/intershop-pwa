@@ -36,7 +36,7 @@ export class CamfilRequisitionLineItemQuantityComponent implements OnInit, OnDes
 
   ngOnInit() {
     this.productItemForm = new FormGroup({
-      [this.quantityControlName]: new FormControl(this.lineItem?.quantity?.value || 1),
+      [this.quantityControlName]: new FormControl(this.lineItem?.quantity?.value || 1, { updateOn: 'blur' }),
     });
 
     this.productItemForm

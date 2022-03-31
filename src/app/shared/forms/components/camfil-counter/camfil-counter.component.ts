@@ -18,6 +18,7 @@ export class CamfilCounterComponent extends FormElementComponent implements OnIn
   @Input() max: number;
   @Input() isInLineItem = false;
   @Input() lineItemId?: string;
+  @Input() stepQuantityValue = 1;
   value$ = new ReplaySubject<number>(1);
   cannotDecrease$: Observable<boolean>;
   cannotIncrease$: Observable<boolean>;
@@ -33,8 +34,8 @@ export class CamfilCounterComponent extends FormElementComponent implements OnIn
       this.formControl.setValue(this.max);
     }
     if (event.code === 'Enter' || event.code === 'NumpadEnter') {
-      event.preventDefault();
       event.target.blur();
+      event.preventDefault();
     }
   }
 
@@ -60,11 +61,15 @@ export class CamfilCounterComponent extends FormElementComponent implements OnIn
   }
 
   increase() {
-    (this.formControl as FormControl).setValue(this.value + 1, { emitEvent: true });
+    (this.formControl as FormControl).setValue(this.calculateIncreaseValue(this.value, this.stepQuantityValue), {
+      emitEvent: true,
+    });
   }
 
   decrease() {
-    (this.formControl as FormControl).setValue(this.value - 1, { emitEvent: true });
+    (this.formControl as FormControl).setValue(this.calculateDecreaseValue(this.value, this.stepQuantityValue), {
+      emitEvent: true,
+    });
   }
 
   get displayLabel(): boolean {
@@ -73,5 +78,15 @@ export class CamfilCounterComponent extends FormElementComponent implements OnIn
 
   setFocusedElement(target: HTMLDataElement) {
     this.checkoutFacade.setCheckoutFocusedElement(target.id);
+  }
+
+  private calculateDecreaseValue(value, stepQuantityValue) {
+    return value - stepQuantityValue >= 0 ? value - stepQuantityValue : 0;
+  }
+
+  private calculateIncreaseValue(value, stepQuantityValue) {
+    return (value + stepQuantityValue) % stepQuantityValue === 0
+      ? value + stepQuantityValue
+      : Math.ceil(value / stepQuantityValue) * stepQuantityValue;
   }
 }

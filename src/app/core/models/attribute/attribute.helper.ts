@@ -1,8 +1,7 @@
 import { CamfilOrderLineItem } from 'camfil-pwa/models/camfil-order-line-item/camfil-order-line-item.model';
+import { CamCamProductChecked, CamCardItem } from 'src/app/extensions/cam-cards/models/cam-card/cam-card.model';
 
 import { LineItem, LineItemView } from 'ish-core/models/line-item/line-item.model';
-
-import { CamCamProductChecked, CamCardItem } from '../../../extensions/cam-cards/models/cam-card/cam-card.model';
 
 import { Attribute } from './attribute.model';
 
