@@ -6,6 +6,7 @@ import { QuoteDetailsComponent } from './components/quote-details/quote-details.
 import { QuoteLineItemComponent } from './components/quote-line-item/quote-line-item.component';
 import { AddProductDialogComponent } from './components/add-product-dialog/add-product-dialog.component';
 import { QuoteCostSummaryComponent } from './components/quote-cost-summary/quote-cost-summary.component';
+import { QuoteLineItemTableComponent } from './components/quote-line-item-table/quote-line-item-table.component';
 
 const routes: Routes = [
   {
@@ -21,7 +22,8 @@ const routes: Routes = [
     CamfilAccountQuoteDetailPageComponent,
     QuoteDetailsComponent,
     QuoteLineItemComponent,
-    QuoteCostSummaryComponent
+    QuoteCostSummaryComponent,
+    QuoteLineItemTableComponent
   ],
 })
 export class CamfilAccountQuoteDetailPageModule { }

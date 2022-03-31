@@ -250,6 +250,7 @@
   "account.profile.update_email.message": "Your e-mail address has been updated.",
   "account.profile.update_password.message": "Your password has been updated.",
   "account.profile.update_profile.message": "Your profile information has been updated.",
+  "account.quotes.link": "My Quotes",
   "account.quotes.widget.my_quotes.heading": "My Quotes",
   "account.quotes.widget.responded.label": "Responded Quotes",
   "account.quotes.widget.submitted.label": "Sent Requests",

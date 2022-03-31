@@ -15,6 +15,9 @@ import { AddProductDialogComponent } from './components/add-product-dialog/add-p
   templateUrl: './camfil-account-quote-detail-page.component.html',
   styleUrls: ['./camfil-account-quote-detail-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {
+    '(window:resize)': 'onResize()',
+  },
 })
 export class CamfilAccountQuoteDetailPageComponent implements OnInit, OnDestroy {
   quoteDetails: QuoteDetails;
@@ -22,6 +25,8 @@ export class CamfilAccountQuoteDetailPageComponent implements OnInit, OnDestroy 
   loading: boolean;
   selectedItems: QuoteLineItem[] = [];
   private destroy$: Subject<boolean> = new Subject<boolean>();
+
+  isMobileView = false;
 
   constructor(
     private quotesFacade: CamQuotesFacade,
@@ -45,6 +50,8 @@ export class CamfilAccountQuoteDetailPageComponent implements OnInit, OnDestroy 
       this.loading = loading;
       this.cd.detectChanges();
     });
+
+    this.onResize();
   }
 
   ngOnDestroy(): void {
@@ -92,5 +99,9 @@ export class CamfilAccountQuoteDetailPageComponent implements OnInit, OnDestroy 
 
   approve() {
     this.quotesFacade.approveQuote(this.quoteDetails.id);
+  }
+
+  onResize() {
+    this.isMobileView = window.innerWidth <= 768;
   }
 }
