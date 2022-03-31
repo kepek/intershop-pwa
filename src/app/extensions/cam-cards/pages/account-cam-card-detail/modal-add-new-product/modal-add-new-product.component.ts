@@ -92,7 +92,7 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy, AfterView
 
   ngOnInit() {
     this.productForm = new FormGroup({
-      quantity: new FormControl(0),
+      quantity: new FormControl(0, { updateOn: 'blur' }),
       sku: new FormControl('', {
         validators: [Validators.required],
         updateOn: 'change',

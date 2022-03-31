@@ -47,17 +47,7 @@
       </div>
       <div class="row flex-wrap buttons-container">
         <div class="col-lg-6 col-12 d-flex justify-content-center align-items-center">
-          <!-- TODO: improve - add logic related with lazy component instead ngIf condition -->
-          <ng-container *ngIf="productDetailForm.invalid; else canAddToCC">
-            <camfil-lazy-product-add-to-cam-card
-              [product]="product"
-              [quantity]="quantity"
-              class="btn-link cart-big-round-btn secondary-button"
-              displayType="round-btn"
-              hasIcon="true"
-              [disabled]="true"
-            ></camfil-lazy-product-add-to-cam-card>
-          </ng-container>
+          <ng-container *ngTemplateOutlet="canAddToCC"> </ng-container>
         </div>
         <div class="col-lg-6 col-12 d-flex justify-content-center align-items-center">
           <camfil-product-add-to-basket
@@ -134,5 +124,6 @@
     class="btn-link cart-big-round-btn secondary-button"
     displayType="round-btn"
     hasIcon="true"
+    [disabled]="productDetailForm.invalid"
   ></camfil-lazy-product-add-to-cam-card>
 </ng-template>

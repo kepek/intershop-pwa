@@ -190,7 +190,7 @@ export class AccountCamCardDetailLineItemComponent implements OnChanges, OnInit,
   /** init form in the beginning */
   private initForm() {
     this.addToCartForm = new FormGroup({
-      quantity: new FormControl(this.camCardItemData.quantity || 1),
+      quantity: new FormControl(this.camCardItemData.quantity || 1, { updateOn: 'blur' }),
     });
 
     if (this.selectedItemsForm) {

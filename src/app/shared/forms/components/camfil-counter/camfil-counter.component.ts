@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, Input, OnChanges, OnDestroy, OnInit
 import { FormControl } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable, ReplaySubject, Subject } from 'rxjs';
-import { debounceTime, map, takeUntil } from 'rxjs/operators';
+import { map, takeUntil } from 'rxjs/operators';
 
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { FormElementComponent } from 'ish-shared/forms/components/form-element/form-element.component';
@@ -57,9 +57,7 @@ export class CamfilCounterComponent extends FormElementComponent implements OnIn
     this.cannotDecrease$ = this.value$.pipe(map(value => this.min !== undefined && value <= this.min));
     this.cannotIncrease$ = this.value$.pipe(map(value => this.max !== undefined && value >= this.max));
 
-    this.formControl.valueChanges.pipe(debounceTime(500), takeUntil(this.destroy$)).subscribe(val => {
-      console.log('val', val);
-    });
+    this.formControl.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(this.value$);
   }
 
   increase() {
