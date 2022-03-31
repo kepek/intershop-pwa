@@ -22,7 +22,6 @@ import { CamfilHeaderComponent } from 'ish-shell/header/camfil-header/camfil-hea
 import { CamfilUserLinksComponent } from 'ish-shell/header/camfil-user-links/camfil-user-links.component';
 import { CamfilSearchBoxComponent } from 'ish-shell/header/header/camfil-search-box/camfil-search-box.component';
 import { ProductCompareStatusComponent } from 'ish-shell/header/product-compare-status/product-compare-status.component';
-import { LazyContentIncludeComponent } from 'ish-shell/shared/lazy-content-include/lazy-content-include.component';
 
 import { QuickorderExportsModule } from '../extensions/quickorder/exports/quickorder-exports.module';
 import { WishlistsExportsModule } from '../extensions/wishlists/exports/wishlists-exports.module';
@@ -80,7 +79,6 @@ const exportedComponents = [
   FooterComponent,
   HeaderComponent,
   HeaderSimpleComponent,
-  LazyContentIncludeComponent,
   SearchBoxComponent,
 ];
 

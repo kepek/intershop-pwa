@@ -6,7 +6,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MockComponent, MockDirective } from 'ng-mocks';
 
 import { ServerHtmlDirective } from 'ish-core/directives/server-html.directive';
-import { LazyContentIncludeComponent } from 'ish-shell/shared/lazy-content-include/lazy-content-include.component';
+import { ContentIncludeComponent } from 'ish-shared/cms/components/content-include/content-include.component';
 
 import { CamfilFooterComponent } from './camfil-footer.component';
 
@@ -20,8 +20,8 @@ describe('Camfil Footer Component', () => {
       imports: [BrowserTransferStateModule, RouterTestingModule, TranslateModule.forRoot()],
       declarations: [
         CamfilFooterComponent,
+        MockComponent(ContentIncludeComponent),
         MockComponent(FaIconComponent),
-        MockComponent(LazyContentIncludeComponent),
         MockDirective(ServerHtmlDirective),
       ],
     }).compileComponents();

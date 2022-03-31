@@ -163,6 +163,8 @@ export const ENVIRONMENT_DEFAULTS: Environment = {
   locales: [
     { lang: 'fi_FI', currency: 'EUR', value: 'fi', displayName: 'FI', displayLong: 'Finnish' },
     { lang: 'fr_FR', currency: 'EUR', value: 'fr', displayName: 'FR', displayLong: 'French' },
+    { lang: 'de_AT', currency: 'EUR', value: 'at', displayName: 'AT', displayLong: 'Austrian German' },
+    { lang: 'de_CH', currency: 'CHF', value: 'ch', displayName: 'CH', displayLong: 'Swiss High German' },
     { lang: 'de_DE', currency: 'EUR', value: 'de', displayName: 'DE', displayLong: 'German' },
     { lang: 'it_IT', currency: 'EUR', value: 'it', displayName: 'IT', displayLong: 'Italian' },
     { lang: 'sv_SE', currency: 'SEK', value: 'se', displayName: 'SV', displayLong: 'Swedish' },
@@ -171,7 +173,7 @@ export const ENVIRONMENT_DEFAULTS: Environment = {
       currency: 'GBP',
       value: 'gb',
       displayName: 'EN',
-      displayLong: 'English',
+      displayLong: 'British English',
     },
   ],
   cookieConsentOptions: {
