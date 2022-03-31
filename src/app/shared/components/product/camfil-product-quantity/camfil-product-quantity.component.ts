@@ -8,19 +8,11 @@ import {
   SimpleChange,
   SimpleChanges,
 } from '@angular/core';
-import {
-  AbstractControl,
-  AsyncValidatorFn,
-  FormControl,
-  FormGroup,
-  ValidationErrors,
-  ValidatorFn,
-  Validators,
-} from '@angular/forms';
+import { AbstractControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { range } from 'lodash-es';
-import { EMPTY, Subject } from 'rxjs';
-import { debounceTime, mapTo, takeUntil, tap } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { CamStepQuantityErrorDialogComponent } from 'src/app/extensions/cam-cards/shared/cam-step-quantity-error-dialog/cam-step-quantity-error-dialog.component';
 
 import { Product } from 'ish-core/models/product/product.model';
@@ -90,7 +82,7 @@ export class CamfilProductQuantityComponent implements OnInit, OnChanges, OnDest
   }
 
   ngOnInit() {
-    this.parentForm.get(this.controlName).setValidators(this.getValidations());
+    this.parentForm.get(this.controlName).setValidators(this.getValidators());
 
     this.parentForm
       .get(this.controlName)
@@ -103,28 +95,7 @@ export class CamfilProductQuantityComponent implements OnInit, OnChanges, OnDest
       });
   }
 
-  getAsyncValidators(): AsyncValidatorFn {
-    return (control: FormGroup) =>
-      (control.valueChanges &&
-        control.valueChanges.pipe(
-          debounceTime(1000),
-          tap(quantity => {
-            console.log('quantity', quantity);
-            const quantityControl = control.get(this.controlName) as FormControl;
-            quantityControl.setValidators([
-              Validators.required,
-              Validators.min(this.allowZeroQuantity ? 0 : this.product.minOrderQuantity),
-              Validators.max(this.product.maxOrderQuantity),
-              SpecialValidators.integer,
-              CamfilProductQuantityComponent.validateValueWithQuantityStep(this.product.stepQuantity),
-            ]);
-          }),
-          mapTo(undefined)
-        )) ||
-      EMPTY;
-  }
-
-  getValidations(): ValidatorFn {
+  getValidators(): ValidatorFn {
     if (this.type === 'input' || this.type === 'counter') {
       return Validators.compose([
         Validators.required,
