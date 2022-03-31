@@ -10,7 +10,10 @@
   </button>
 </div>
 
-<camfil-modal-add-new-product #addNewProductModal [addToRequisition]="true" [requisition]="requisition">
+<camfil-modal-add-new-product
+  #addNewProductModal
+  (submitProductAdd)="quickAddProductToRequisition($event, addNewProductModal)"
+>
 </camfil-modal-add-new-product>
 
 <camfil-small-cta-modal

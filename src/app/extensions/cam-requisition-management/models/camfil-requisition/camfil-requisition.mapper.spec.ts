@@ -38,6 +38,7 @@ describe('Camfil Requisition Mapper', () => {
         creator: { firstName: 'Patricia', lastName: 'Miller', email: 'pmiller@test.intershop.de' },
         orderMark: 'Order mark',
         invoiceLabel: 'Invoice mark',
+        userComment: 'Comment',
         phoneNumber: '123132132',
         userInformation: { firstName: 'Patricia', lastName: 'Miller', email: 'pmiller@test.intershop.de' },
         userBudgets: {
@@ -166,6 +167,7 @@ describe('Camfil Requisition Mapper', () => {
               "value": 0,
             },
           },
+          "userComment": "Comment",
         }
       `);
     });

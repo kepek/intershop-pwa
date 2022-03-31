@@ -15,13 +15,15 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { MatDialog } from '@angular/material/dialog';
 import { CamfilConfigurationFacade } from 'camfil-pwa/facades/camfil-configuration.facade';
+import { QuickAddProduct } from 'camfil-pwa/models/camfil-quick-add-product/camfil-quick-add-product.model';
 import { Observable, ReplaySubject, Subject, combineLatest } from 'rxjs';
-import { first, map, skip, take, takeUntil, withLatestFrom } from 'rxjs/operators';
+import { first, map, skip, take, takeUntil } from 'rxjs/operators';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
 import { AppFacade } from 'ish-core/facades/app.facade';
 import { CheckoutFacade } from 'ish-core/facades/checkout.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
+import { AddressHelper } from 'ish-core/models/address/address.helper';
 import { Address } from 'ish-core/models/address/address.model';
 import { AttributeHelper } from 'ish-core/models/attribute/attribute.helper';
 import { BasketExtensionData } from 'ish-core/models/basket-extension/basket-extension.interface';
@@ -85,6 +87,7 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
   forceUpdateForm = false;
   hideRecipientButton = false;
   itemSize = 100;
+  basketAddresses: Address[];
 
   calendarExceptions$: Observable<[]>;
   emailRecipients$: Observable<string[]>;
@@ -94,6 +97,10 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
   pageletIds$: Observable<string[]>;
   deliveryTerm$: Observable<CustomerDeliveryTerm>;
   deliveryPrice$: Observable<Price>;
+  showDeliveryTerm$: Observable<boolean>;
+  isNewAddress = AddressHelper.isNewAddress;
+  getUrn = AddressHelper.getUrn;
+  getId = AddressHelper.getId;
 
   private bucket$ = new ReplaySubject<Bucket>(1);
   private destroy$ = new Subject<void>();
@@ -163,10 +170,16 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
         this.emailRecipients = emailRecipients;
       });
 
-    this.deliveryTerm$ = this.checkoutFacade.getCustomersDeliveryTerms$?.pipe(
-      whenTruthy(),
-      withLatestFrom(this.bucket$),
-      map(([deliveryTerms, bucket]) => deliveryTerms?.[bucket?.customer?.id])
+    this.deliveryTerm$ = combineLatest([
+      this.checkoutFacade.getCustomersDeliveryTerms$.pipe(whenTruthy()),
+      this.bucket$,
+    ])?.pipe(
+      map(([deliveryTerms, bucket]) => ({ deliveryTerm: deliveryTerms?.[bucket?.customer?.id], bucket })),
+      map(({ deliveryTerm, bucket }) => ({
+        ...deliveryTerm,
+        freeShippingAllowed:
+          deliveryTerm?.freeShippingAllowed && bucket?.totals?.itemTotal?.net > deliveryTerm?.threshold,
+      }))
     );
 
     this.deliveryPrice$ = combineLatest([this.deliveryTerm$.pipe(whenTruthy()), this.bucket$])?.pipe(
@@ -237,6 +250,10 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
             : []
         )
       );
+
+    this.shoppingFacade.basketAddresses$.pipe(takeUntil(this.destroy$)).subscribe((basketAddresses: Address[]) => {
+      this.basketAddresses = basketAddresses;
+    });
   }
 
   getBoxLabel(lineItem: LineItem) {
@@ -666,5 +683,72 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
     const mm = date.getMonth() + 1;
     const dd = date.getDate();
     return new Date(`${yyyy}-${mm}-${dd} 23:59`);
+  }
+
+  // ------------ Quick add product Functions ------------
+  addProductToExistingOrder(sku, quantity, shipToAddress, lineItemAttributes) {
+    this.shoppingFacade.addProductToBasket(
+      sku,
+      quantity,
+      this.basket?.commonShippingMethod?.id,
+      shipToAddress,
+      lineItemAttributes
+    );
+  }
+
+  addProductToNewOrder(sku, quantity, deliveryAddress, bucketId, lineItemAttributes, basketAddresses) {
+    if (this.isNewAddress(deliveryAddress, basketAddresses)) {
+      this.shoppingFacade.addProductToBucket(
+        deliveryAddress,
+        this.bucket.shippingMethod,
+        sku,
+        quantity,
+        this.bucket.basket,
+        {
+          ...this.bucket,
+        },
+        lineItemAttributes,
+        bucketId
+      );
+    } else {
+      this.shoppingFacade.addProductToBucketWithUrn(
+        this.getUrn(deliveryAddress, basketAddresses),
+        this.getId(deliveryAddress, basketAddresses),
+        this.bucket.shippingMethod,
+        sku,
+        quantity,
+        this.bucket.basket,
+        lineItemAttributes
+      );
+    }
+  }
+
+  submitQuickAddProd(quickAddData: QuickAddProduct, modal: ModalAddNewProductComponent) {
+    const type = this.bucket?.id?.split('_')?.[0];
+    const shipToAddress = this.bucket.shipToAddress;
+
+    const { sku, quantity, lineItemAttributes } = quickAddData;
+    if (this.bucket?.id && type !== 'emptyBucket' && this.bucket?.shipToAddress) {
+      this.addProductToExistingOrder(sku, quantity, shipToAddress, lineItemAttributes);
+    } else {
+      const deliveryAddress = this.bucket.shipToAddressFull as Address;
+      this.addProductToNewOrder(
+        sku,
+        quantity,
+        deliveryAddress,
+        this.bucket.id,
+        lineItemAttributes,
+        this.basketAddresses
+      );
+    }
+
+    combineLatest([this.shoppingFacade.productUpdated$.pipe(take(1)), this.shoppingFacade.productAdded$.pipe(take(1))])
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => {
+        if (modal) {
+          modal.hide();
+          modal.reset();
+        }
+      });
   }
 }

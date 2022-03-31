@@ -40,7 +40,9 @@ export interface CamfilRequisition extends CamfilRequisitionBasket {
   shippingAddress: Address;
   userBudget: RequisitionUserBudget;
   info: string;
+  userComment: string;
   approval: CamfilRequisitionApproval;
+  canApprove?: boolean;
 }
 
 export interface CamfilRequisitionListFilter {
@@ -63,4 +65,9 @@ export interface CamfilEditRequisition extends CamfilRequisition {
 
 export interface CamfilRequisitionCustomer extends Customer {
   id: string;
+}
+
+export interface CamfilRequisitionLineItemUpdate {
+  lineItemId: string;
+  quantity?: number;
 }

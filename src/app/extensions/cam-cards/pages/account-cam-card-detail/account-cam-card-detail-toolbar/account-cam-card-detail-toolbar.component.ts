@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { QuickAddProduct } from 'camfil-pwa/models/camfil-quick-add-product/camfil-quick-add-product.model';
 import { Subject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
 
@@ -19,6 +20,7 @@ export class AccountCamCardDetailToolbarComponent implements OnInit {
 
   @Output() deleteCamCard = new EventEmitter();
   @Output() addItemsToCart = new EventEmitter();
+  @Output() addItemsToCamCard = new EventEmitter<QuickAddProduct>();
   @Input() isSticky: boolean;
   @Input() title: string;
 
@@ -51,5 +53,13 @@ export class AccountCamCardDetailToolbarComponent implements OnInit {
   /** Emits the cam card to delete. */
   deleteCurrentCamCard() {
     this.deleteCamCard.emit();
+  }
+
+  addItemsToCurrentCamCard(quickAddData: QuickAddProduct, modal: ModalAddNewProductComponent) {
+    this.addItemsToCamCard.emit(quickAddData);
+    if (modal) {
+      modal.hide();
+      modal.reset();
+    }
   }
 }

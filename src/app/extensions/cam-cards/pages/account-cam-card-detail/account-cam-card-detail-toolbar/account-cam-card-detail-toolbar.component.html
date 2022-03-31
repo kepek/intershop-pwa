@@ -29,4 +29,8 @@
 
 <camfil-modal-add-new-section [events]="eventsSubject.asObservable()"></camfil-modal-add-new-section>
 
-<camfil-modal-add-new-product #addNewProductModal> </camfil-modal-add-new-product>
+<camfil-modal-add-new-product
+  #addNewProductModal
+  (submitProductAdd)="addItemsToCurrentCamCard($event, addNewProductModal)"
+>
+</camfil-modal-add-new-product>

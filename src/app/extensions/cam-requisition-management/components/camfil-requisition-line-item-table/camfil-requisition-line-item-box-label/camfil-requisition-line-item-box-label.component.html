@@ -4,6 +4,7 @@
       <mat-label>{{ 'camfil.cam_card.product.comment.label' | translate }}</mat-label>
       <textarea
         #autosize="cdkTextareaAutosize"
+        (blur)="onBlur($event.target, boxLabelForm)"
         [camfilMaxLength]="'BoxLabel'"
         cdkAutosizeMaxRows="3"
         cdkAutosizeMinRows="1"

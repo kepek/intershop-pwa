@@ -51,6 +51,7 @@ export class CamfilRequisitionMapper {
           invoiceLabel: data.invoiceLabel,
           phoneNumber: data.phoneNumber,
           info: data.info,
+          userComment: data.userComment,
           lineItemCount: data.lineItemCount,
           lineItems,
           requisitionCustomer: CamfilRequisitionMapper.getCustomer(data),
