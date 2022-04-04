@@ -14,6 +14,7 @@ const camfilConfiguration: CamfilChannelConfiguration = {
   showAllDocsType: true,
   showCountryFieldOnAddressForms: true,
   showDutiesAndSurchargesTotalInBasketSummary: false,
+  showGoodsAcceptanceIcon: true,
   showPricesForNonLoggedInUser: true,
   showSubTotalInBasketSummary: false,
   showTotalWithoutTaxInBasketSummary: true,

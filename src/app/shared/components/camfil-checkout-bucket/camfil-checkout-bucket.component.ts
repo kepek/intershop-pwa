@@ -46,6 +46,7 @@ import { CamfilCheckoutAddEmailRecipientModalComponent } from '../../../pages/ca
 
 import { CamfilEditOrderModalComponent } from './camfil-edit-order-modal/camfil-edit-order-modal.component';
 import { ORDER_HEADER_VALIDATORS } from './validators';
+import { CamfilCheckoutGoodsAcceptanceModalComponent } from 'src/app/pages/camfil-checkout-onestep/camfil-checkout-goods-acceptance-modal/camfil-checkout-goods-acceptance-modal.component';
 
 @Component({
   selector: 'camfil-checkout-bucket',
@@ -80,6 +81,7 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
   calendarException = [];
   orderAddress: Address;
   emailRecipients: string[];
+  goodsAcceptanceNote: string;
   basketExtensions: BasketExtension[];
   deliveryDateValue: string;
   focusedElement: CheckoutFocusedElement;
@@ -163,11 +165,14 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
     this.isLoggedIn$ = this.accountFacade.isLoggedIn$;
     this.calendarExceptions$ = this.checkoutFacade.calendarExceptions$;
 
-    this.checkoutFacade
-      ?.getBucketEmailRecipients$(this.bucket?.shipToAddressFull?.id)
-      ?.pipe(takeUntil(this.destroy$))
-      ?.subscribe(emailRecipients => {
+    combineLatest([
+      this.checkoutFacade.getBucketEmailRecipients$(this.bucket?.shipToAddressFull?.id),
+      this.checkoutFacade.getBucketGoodsAcceptanceNote$(this.bucket?.shipToAddressFull?.id),
+    ])
+      .pipe(takeUntil(this.destroy$))
+      ?.subscribe(([emailRecipients, goodsAcceptanceNote]) => {
         this.emailRecipients = emailRecipients;
+        this.goodsAcceptanceNote = goodsAcceptanceNote;
       });
 
     this.deliveryTerm$ = combineLatest([
@@ -750,5 +755,16 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
           modal.reset();
         }
       });
+  }
+
+  openEditGoodsAcceptanceTimeModal() {
+    this.dialog.open(CamfilCheckoutGoodsAcceptanceModalComponent, {
+      width: '360px',
+      autoFocus: false,
+      data: {
+        ...this.currentBasketExtensions,
+        goodsAcceptanceNote: this.currentBasketExtensions?.goodsAcceptanceNote || '',
+      },
+    });
   }
 }

@@ -45,6 +45,7 @@ import {
   getBasketShippingAddress,
   getBasketValidationResults,
   getBucketEmailRecipients,
+  getBucketGoodsAcceptanceNote,
   getBucketsVolumeDiscounts,
   getCalendarExceptions,
   getCurrentBasket,
@@ -314,5 +315,9 @@ export class CheckoutFacade {
 
   setBucketScrollIndex(urn: string, index: number) {
     this.store.dispatch(setBucketScrollIndex({ urn, index }));
+  }
+
+  getBucketGoodsAcceptanceNote$(urn: string) {
+    return this.store.pipe(select(getBucketGoodsAcceptanceNote(urn)));
   }
 }

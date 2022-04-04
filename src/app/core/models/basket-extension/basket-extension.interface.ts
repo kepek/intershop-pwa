@@ -47,6 +47,7 @@ export interface BasketExtensionData {
   createdFromCamCardId?: string;
   emailRecipients?: string[];
   volumeDiscount?: Price;
+  goodsAcceptanceNote?: string;
   // Additional for France
   anonymousBasketData?: BasketExtensionGuestData;
 }

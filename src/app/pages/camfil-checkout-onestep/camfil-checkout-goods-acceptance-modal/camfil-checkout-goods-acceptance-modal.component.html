@@ -1,0 +1,38 @@
+<button (click)="dialogRef.close()" aria-label="Close" class="close">
+  <mat-icon aria-hidden="true" svgIcon="inactive"></mat-icon>
+</button>
+<div class="text-center">
+  <mat-icon svgIcon="delivery-time"></mat-icon>
+</div>
+<p class="text-center">
+  <strong>{{ 'camfil.checkout.cta.select_goods_acceptace.header' | translate }}</strong>
+</p>
+
+<form (ngSubmit)="submitEditGoodsAcceptanceTime($event)" [formGroup]="goodsAcceptanceTimeForm">
+  <mat-form-field appearance="fill" class="d-block">
+    <mat-label>{{ 'camfil.checkout.form.goods_acceptance_note' | translate }}</mat-label>
+    <input
+      aria-controls="my-helper-id"
+      formControlName="goodsAcceptanceNote"
+      matInput
+      type="text"
+      [camfilMaxLength]="'GoodsAccepanceNote'"
+    />
+  </mat-form-field>
+  <div class="col-12 text-right p-0 mt-2">
+    <button (click)="dialogRef.close()" class="btn-tool text-primary" mat-flat-button type="button">
+      {{ 'camfil.account.cam_card.move.dialog.btn.cancel' | translate }}
+    </button>
+    <button
+      (click)="submitEditGoodsAcceptanceTime($event)"
+      attr.aria-label="{{ 'camfil.account.cam_card.move.dialog.btn.aria' | translate }}"
+      class="btn-tool text-primary"
+      data-testing-id="cam-card-dialog-move-submit"
+      mat-flat-button
+      type="submit"
+      type="submit"
+    >
+      {{ 'camfil.checkout.cta.recipients_save' | translate }}
+    </button>
+  </div>
+</form>

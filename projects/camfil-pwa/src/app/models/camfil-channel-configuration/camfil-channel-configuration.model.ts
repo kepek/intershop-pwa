@@ -26,6 +26,7 @@ export interface CamfilChannelSettings {
   showCountryFieldOnAddressForms: boolean;
   showCustomProductAssortmentForNonLoggedInUser: boolean;
   showDutiesAndSurchargesTotalInBasketSummary: boolean;
+  showGoodsAcceptanceIcon: boolean;
   showPricesForNonLoggedInUser: boolean;
   showQuestionIfUserWantsToCreateCamCardsBasedOnPurchasedItemsOnCheckoutConfirmationPage: boolean;
   showSubTotalInBasketSummary: boolean;
