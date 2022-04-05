@@ -869,6 +869,7 @@
   "camfil.checkout.cta.edit_details": "Edit order details",
   "camfil.checkout.cta.email_recipients": "Email recipients",
   "camfil.checkout.cta.enter_email_address": "Enter email address",
+  "camfil.checkout.cta.goods_acceptance": "Goods acceptance note",
   "camfil.checkout.cta.recipients_save": "Save",
   "camfil.checkout.cta.select_goods_acceptace.header": "Edit goods acceptance time",
   "camfil.checkout.cta.separate_multiple_addresses": "Separate multiple addresses with a comma sign",

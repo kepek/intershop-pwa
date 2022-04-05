@@ -42,6 +42,7 @@ export class AddressMapper {
           data.eligibleServiceToAddress !== undefined ? data.eligibleServiceToAddress : data.serviceToAddress,
         installToAddress:
           data.eligibleInstallToAddress !== undefined ? data.eligibleInstallToAddress : data.installToAddress,
+        goodsAcceptanceNote: data.goodsAcceptanceNote,
       };
     } else {
       throw new Error(`'addressData' is required for the mapping`);

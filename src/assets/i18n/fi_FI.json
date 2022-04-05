@@ -869,6 +869,7 @@
   "camfil.checkout.cta.edit_details": "Muokkaa tilauksen tietoja",
   "camfil.checkout.cta.email_recipients": "Vastaanottajat",
   "camfil.checkout.cta.enter_email_address": "Syötä sähköpostiosoite",
+  "camfil.checkout.cta.goods_acceptance": "(fi_FI)_Goods acceptance note",
   "camfil.checkout.cta.recipients_save": "Tallenna",
   "camfil.checkout.cta.select_goods_acceptace.header": "(fi_FI)_Edit goods acceptance time",
   "camfil.checkout.cta.separate_multiple_addresses": "Erota sähköpostiosoitteet pilkulla",

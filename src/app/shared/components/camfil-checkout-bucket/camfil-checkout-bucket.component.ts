@@ -18,6 +18,7 @@ import { CamfilConfigurationFacade } from 'camfil-pwa/facades/camfil-configurati
 import { QuickAddProduct } from 'camfil-pwa/models/camfil-quick-add-product/camfil-quick-add-product.model';
 import { Observable, ReplaySubject, Subject, combineLatest } from 'rxjs';
 import { first, map, skip, take, takeUntil } from 'rxjs/operators';
+import { CamfilCheckoutGoodsAcceptanceModalComponent } from 'src/app/pages/camfil-checkout-onestep/camfil-checkout-goods-acceptance-modal/camfil-checkout-goods-acceptance-modal.component';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
 import { AppFacade } from 'ish-core/facades/app.facade';
@@ -46,7 +47,6 @@ import { CamfilCheckoutAddEmailRecipientModalComponent } from '../../../pages/ca
 
 import { CamfilEditOrderModalComponent } from './camfil-edit-order-modal/camfil-edit-order-modal.component';
 import { ORDER_HEADER_VALIDATORS } from './validators';
-import { CamfilCheckoutGoodsAcceptanceModalComponent } from 'src/app/pages/camfil-checkout-onestep/camfil-checkout-goods-acceptance-modal/camfil-checkout-goods-acceptance-modal.component';
 
 @Component({
   selector: 'camfil-checkout-bucket',
@@ -758,11 +758,12 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
   }
 
   openEditGoodsAcceptanceTimeModal() {
+    const deliveryAddress = this.bucket.shipToAddressFull as Address;
     this.dialog.open(CamfilCheckoutGoodsAcceptanceModalComponent, {
       width: '360px',
       autoFocus: false,
       data: {
-        ...this.currentBasketExtensions,
+        ...deliveryAddress,
         goodsAcceptanceNote: this.currentBasketExtensions?.goodsAcceptanceNote || '',
       },
     });

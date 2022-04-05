@@ -195,15 +195,8 @@ export const getSubmittedAnonymousBasketExtensions = createSelector(
 
 export const getSubmittedBuckets = createSelector(getBasketState, basket => basket.submittedBuckets);
 
-export const selectBucketGoodsAcceptanceNote = createSelector(getBasketState, basket =>
-  basket.basket?.basketExtensions?.map(({ goodsAcceptanceNote, shippingAddress }) => ({
-    urn: shippingAddress?.id,
-    goodsAcceptanceNote,
-  }))
-);
-
 export const getBucketGoodsAcceptanceNote = (addressId: string) =>
   createSelector(
-    selectBucketGoodsAcceptanceNote,
-    allGoodsAcceptanceNotes => allGoodsAcceptanceNotes?.find(ar => ar.urn === addressId)?.goodsAcceptanceNote || ''
+    getBasketAddresses,
+    allAddress => allAddress?.find(ar => ar.id === addressId)?.goodsAcceptanceNote || ''
   );

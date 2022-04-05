@@ -869,6 +869,7 @@
   "camfil.checkout.cta.edit_details": "Modifier les détails de la commande",
   "camfil.checkout.cta.email_recipients": "Destinataires des e-mails",
   "camfil.checkout.cta.enter_email_address": "Saisir l’adresse e-mail",
+  "camfil.checkout.cta.goods_acceptance": "(fr_FR)_Goods acceptance note",
   "camfil.checkout.cta.recipients_save": "Sauvegarder",
   "camfil.checkout.cta.select_goods_acceptace.header": "(fr_FR)_Edit goods acceptance time",
   "camfil.checkout.cta.separate_multiple_addresses": "Séparer les différentes adresses par une virgule",

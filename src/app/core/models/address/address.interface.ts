@@ -29,6 +29,7 @@ export interface AddressData {
   eligibleShipFromAddress?: boolean;
   eligibleServiceToAddress?: boolean;
   eligibleInstallToAddress?: boolean;
+  goodsAcceptanceNote?: string;
 
   /* will be obsolete */
   invoiceToAddress: boolean;

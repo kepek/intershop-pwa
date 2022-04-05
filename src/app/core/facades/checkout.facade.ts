@@ -231,8 +231,8 @@ export class CheckoutFacade {
     this.store.dispatch(createBasketAddress({ address, scope }));
   }
 
-  updateBasketAddress(address: Address) {
-    this.store.dispatch(updateBasketAddress({ address }));
+  updateBasketAddress(address: Address, isBasket?: boolean) {
+    this.store.dispatch(updateBasketAddress({ address, isBasket }));
   }
 
   // TODO: CAMFIL Additions, it should be separated to avoid core modifications;

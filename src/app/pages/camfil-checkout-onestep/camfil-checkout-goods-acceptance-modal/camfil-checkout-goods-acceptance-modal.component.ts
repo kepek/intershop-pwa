@@ -1,11 +1,9 @@
 import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { CheckoutFacade } from 'camfil-pwa/facades/checkout.facade';
 
-import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
-import { BasketExtensionData } from 'ish-core/models/basket-extension/basket-extension.interface';
-import { Bucket } from 'ish-core/models/bucket/bucket.model';
-
+import { Address } from 'ish-core/models/address/address.model';
 import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
 
 @Component({
@@ -19,8 +17,8 @@ export class CamfilCheckoutGoodsAcceptanceModalComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<CamfilCheckoutGoodsAcceptanceModalComponent>,
-    private shoppingFacade: ShoppingFacade,
-    @Inject(MAT_DIALOG_DATA) public bucket: Bucket
+    private checkoutFacade: CheckoutFacade,
+    @Inject(MAT_DIALOG_DATA) public bucketAddress: Address
   ) {}
 
   ngOnInit() {
@@ -38,14 +36,12 @@ export class CamfilCheckoutGoodsAcceptanceModalComponent implements OnInit {
   submitEditGoodsAcceptanceTime(event) {
     if (this.goodsAcceptanceTimeForm.valid && event.type === 'submit') {
       const goodsAcceptanceNote = this.goodsAcceptanceTimeForm.get('goodsAcceptanceNote').value;
-      const { basket, deliveryAddressId } = this.bucket;
-
-      const basketExtensionUpdate: BasketExtensionData = {
-        ...this.bucket,
+      const updatedBasketAddress = {
+        ...this.bucketAddress,
         goodsAcceptanceNote,
       };
 
-      this.shoppingFacade.updateBucket(basket, deliveryAddressId, basketExtensionUpdate);
+      this.checkoutFacade.updateBasketAddress(updatedBasketAddress, true);
       this.hide();
     } else {
       markAsDirtyRecursive(this.goodsAcceptanceTimeForm);

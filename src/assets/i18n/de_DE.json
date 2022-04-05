@@ -857,6 +857,7 @@
   "camfil.checkout.cta.edit_details": "Bestellungsinformationen bearbeiten",
   "camfil.checkout.cta.email_recipients": "E-Mail Empfänger",
   "camfil.checkout.cta.enter_email_address": "Bitte geben Sie eine E-Mail-Adresse ein",
+  "camfil.checkout.cta.goods_acceptance": "(de_DE)_Goods acceptance note",
   "camfil.checkout.cta.recipients_save": "Speichern",
   "camfil.checkout.cta.select_goods_acceptace.header": "(de_DE)_Edit goods acceptance time",
   "camfil.checkout.cta.separate_multiple_addresses": "Trennen Sie mehrere Adressen mit einem Kommazeichen",
