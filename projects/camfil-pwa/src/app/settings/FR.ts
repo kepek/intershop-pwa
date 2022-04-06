@@ -20,6 +20,7 @@ const camfilConfiguration: CamfilChannelConfiguration = {
   showTotalWithoutTaxInBucketSummary: true,
   showWarningMessageForPartialDelivery: true,
   useSecondAddressLine: true,
+  showGoodsAcceptanceIcon: true,
 };
 
 export default camfilConfiguration;

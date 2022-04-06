@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { CheckoutFacade } from 'camfil-pwa/facades/checkout.facade';
+import { CheckoutFacade as CamfilCheckoutFacade } from 'camfil-pwa/facades/checkout.facade';
 
 import { Address } from 'ish-core/models/address/address.model';
 import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
@@ -17,7 +17,7 @@ export class CamfilCheckoutGoodsAcceptanceModalComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<CamfilCheckoutGoodsAcceptanceModalComponent>,
-    private checkoutFacade: CheckoutFacade,
+    private checkoutFacade: CamfilCheckoutFacade,
     @Inject(MAT_DIALOG_DATA) public bucketAddress: Address
   ) {}
 
@@ -41,7 +41,7 @@ export class CamfilCheckoutGoodsAcceptanceModalComponent implements OnInit {
         goodsAcceptanceNote,
       };
 
-      this.checkoutFacade.updateBasketAddress(updatedBasketAddress, true);
+      this.checkoutFacade.camfilUpdateBasketAddress(updatedBasketAddress, true);
       this.hide();
     } else {
       markAsDirtyRecursive(this.goodsAcceptanceTimeForm);
@@ -50,7 +50,7 @@ export class CamfilCheckoutGoodsAcceptanceModalComponent implements OnInit {
 
   private initForm() {
     this.goodsAcceptanceTimeForm = this.fb.group({
-      goodsAcceptanceNote: ['', [Validators.required]],
+      goodsAcceptanceNote: [this.bucketAddress.goodsAcceptanceNote, [Validators.required]],
     });
   }
 }
