@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { CamfilChannelToggleDirective } from 'camfil-pwa/directives/camfil-channel-toggle.directive';
 import { CamfilConfigurationFacade } from 'camfil-pwa/facades/camfil-configuration.facade';
 import { MockComponent, MockDirective, MockPipe } from 'ng-mocks';
 import { of } from 'rxjs';
@@ -96,6 +97,7 @@ describe('Camfil Checkout Bucket Component', () => {
         MockComponent(ContentIncludeComponent),
         MockComponent(FaIconComponent),
         MockComponent(ZipCodeComponent),
+        MockDirective(CamfilChannelToggleDirective),
         MockDirective(ServerHtmlDirective),
         MockPipe(AddressSortPipe),
         MockPipe(CamfilContactSortPipe),

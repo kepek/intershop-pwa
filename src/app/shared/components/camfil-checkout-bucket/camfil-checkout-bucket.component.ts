@@ -17,7 +17,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { CamfilConfigurationFacade } from 'camfil-pwa/facades/camfil-configuration.facade';
 import { QuickAddProduct } from 'camfil-pwa/models/camfil-quick-add-product/camfil-quick-add-product.model';
 import { Observable, ReplaySubject, Subject, combineLatest } from 'rxjs';
-import { first, map, skip, take, takeUntil } from 'rxjs/operators';
+import { first, map, skip, switchMap, take, takeUntil } from 'rxjs/operators';
+import { CamfilCheckoutGoodsAcceptanceModalComponent } from 'src/app/pages/camfil-checkout-onestep/camfil-checkout-goods-acceptance-modal/camfil-checkout-goods-acceptance-modal.component';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
 import { AppFacade } from 'ish-core/facades/app.facade';
@@ -80,6 +81,7 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
   calendarException = [];
   orderAddress: Address;
   emailRecipients: string[];
+  goodsAcceptanceNote: string;
   basketExtensions: BasketExtension[];
   deliveryDateValue: string;
   focusedElement: CheckoutFocusedElement;
@@ -103,6 +105,7 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
   getId = AddressHelper.getId;
 
   private bucket$ = new ReplaySubject<Bucket>(1);
+  private shipToAddressFullId$ = new ReplaySubject<string>(1);
   private destroy$ = new Subject<void>();
   private numberOfVisibleLineItems = 20;
 
@@ -163,11 +166,19 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
     this.isLoggedIn$ = this.accountFacade.isLoggedIn$;
     this.calendarExceptions$ = this.checkoutFacade.calendarExceptions$;
 
-    this.checkoutFacade
-      ?.getBucketEmailRecipients$(this.bucket?.shipToAddressFull?.id)
-      ?.pipe(takeUntil(this.destroy$))
-      ?.subscribe(emailRecipients => {
+    this.shipToAddressFullId$
+      .pipe(
+        switchMap(id =>
+          combineLatest([
+            this.checkoutFacade.getBucketEmailRecipients$(id),
+            this.checkoutFacade.getBucketGoodsAcceptanceNote$(id),
+          ])
+        )
+      )
+      .pipe(takeUntil(this.destroy$))
+      ?.subscribe(([emailRecipients, goodsAcceptanceNote]) => {
         this.emailRecipients = emailRecipients;
+        this.goodsAcceptanceNote = goodsAcceptanceNote;
       });
 
     this.deliveryTerm$ = combineLatest([
@@ -262,6 +273,7 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
 
   ngOnChanges(s) {
     this.bucket$.next(this.bucket);
+    this.shipToAddressFullId$.next(this.bucket?.shipToAddressFull?.id);
 
     if (s.bucket && this.forceUpdateForm) {
       this.orderForm.patchValue({
@@ -750,5 +762,17 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
           modal.reset();
         }
       });
+  }
+
+  openEditGoodsAcceptanceTimeModal() {
+    const deliveryAddress = this.bucket.shipToAddressFull as Address;
+    this.dialog.open(CamfilCheckoutGoodsAcceptanceModalComponent, {
+      width: '360px',
+      autoFocus: false,
+      data: {
+        ...deliveryAddress,
+        goodsAcceptanceNote: this.goodsAcceptanceNote || '',
+      },
+    });
   }
 }

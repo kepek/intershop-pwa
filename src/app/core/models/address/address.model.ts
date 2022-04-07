@@ -29,4 +29,5 @@ export interface Address {
   serviceToAddress?: boolean;
   installToAddress?: boolean;
   eligibleShipToAddress?: boolean;
+  goodsAcceptanceNote?: string;
 }

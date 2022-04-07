@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Store, createSelector, select } from '@ngrx/store';
+import { getBucketGoodsAcceptanceNote } from 'camfil-pwa/store/customer/ish-basket/ish-basket-addresses.selectors';
 import { merge } from 'rxjs';
 import { map, switchMap, take, tap } from 'rxjs/operators';
 
@@ -314,5 +315,9 @@ export class CheckoutFacade {
 
   setBucketScrollIndex(urn: string, index: number) {
     this.store.dispatch(setBucketScrollIndex({ urn, index }));
+  }
+
+  getBucketGoodsAcceptanceNote$(urn: string) {
+    return this.store.pipe(select(getBucketGoodsAcceptanceNote(urn)));
   }
 }
