@@ -194,9 +194,3 @@ export const getSubmittedAnonymousBasketExtensions = createSelector(
 );
 
 export const getSubmittedBuckets = createSelector(getBasketState, basket => basket.submittedBuckets);
-
-export const getBucketGoodsAcceptanceNote = (addressId: string) =>
-  createSelector(
-    getBasketAddresses,
-    allAddress => allAddress?.find(ar => ar.id === addressId)?.goodsAcceptanceNote || ''
-  );

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Store, createSelector, select } from '@ngrx/store';
+import { getBucketGoodsAcceptanceNote } from 'camfil-pwa/store/customer/ish-basket/ish-basket-addresses.selectors';
 import { merge } from 'rxjs';
 import { map, switchMap, take, tap } from 'rxjs/operators';
 
@@ -45,7 +46,6 @@ import {
   getBasketShippingAddress,
   getBasketValidationResults,
   getBucketEmailRecipients,
-  getBucketGoodsAcceptanceNote,
   getBucketsVolumeDiscounts,
   getCalendarExceptions,
   getCurrentBasket,
