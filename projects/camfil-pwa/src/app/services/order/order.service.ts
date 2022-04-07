@@ -61,7 +61,7 @@ export class OrderService extends IshOrderService {
     }
 
     const externalOrderReference =
-      window?.sessionStorage?.getItem(CamfilLoginOnBehalfQueryParams.ERPEmployeeID) || undefined;
+      window?.localStorage?.getItem(CamfilLoginOnBehalfQueryParams.ERPEmployeeID) || undefined;
 
     const body = {
       basket: basketId,
