@@ -146,7 +146,6 @@ export class CamfilCheckoutOnestepPageComponent implements OnInit, OnDestroy {
 
   submit() {
     this.guestForm?.validateGuestForm();
-    this.checkErpEmployeeIdExists();
     this.checkoutFacade.continue(5);
   }
 
@@ -176,7 +175,7 @@ export class CamfilCheckoutOnestepPageComponent implements OnInit, OnDestroy {
 
   private checkErpEmployeeIdExists() {
     try {
-      const erpEmployeeId = window.sessionStorage?.getItem(CamfilLoginOnBehalfQueryParams.ERPEmployeeID) || undefined;
+      const erpEmployeeId = window.localStorage?.getItem(CamfilLoginOnBehalfQueryParams.ERPEmployeeID) || undefined;
 
       if (erpEmployeeId) {
         this.checkoutFacade.updateBasketExternalOrderReference(erpEmployeeId);
@@ -251,6 +250,16 @@ export class CamfilCheckoutOnestepPageComponent implements OnInit, OnDestroy {
         customerIds.forEach(customerId => {
           this.checkoutFacade.loadCustomerDeliveryTerm(customerId);
         });
+      });
+
+    combineLatest([this.validationResults$, this.checkoutFacade.basket$])
+      .pipe(
+        filter(([validationResults, basket]) => validationResults?.valid && !basket?.externalOrderReference),
+        take(1),
+        takeUntil(this.destroy$)
+      )
+      .subscribe(() => {
+        this.checkErpEmployeeIdExists();
       });
   }
 }
