@@ -11,7 +11,7 @@
   <button (click)="cancel()" class="btn btn-link">
     {{ 'camfil.quotes.quoteslist.reject_quotes_modal.cancel' | translate }}
   </button>
-  <button (click)="confirm()" class="btn btn-link">
+  <button (click)="confirm()" class="btn btn-link" [disabled]="!form.valid">
     {{ 'camfil.quotes.quoteslist.reject_quotes_modal.confirm' | translate }}
   </button>
 </div>

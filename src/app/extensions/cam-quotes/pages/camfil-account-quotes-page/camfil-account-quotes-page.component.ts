@@ -3,11 +3,9 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Store, select } from '@ngrx/store';
 import { Observable, Subject } from 'rxjs';
 import { filter, map, take, takeUntil, tap } from 'rxjs/operators';
 
-import { getUserPermissions, getUserRoles } from 'ish-core/store/customer/authorization';
 import { QuotesApproveDialogComponent } from '../../components/quotes-approve-dialog/quotes-approve-dialog.component';
 import { CamQuotesFacade } from '../../facades/cam-quotes.facade';
 import { Quote, QuoteStatus as QuoteStatusEnum } from '../../models/quote/quote.model';
@@ -19,7 +17,7 @@ import { HttpParams } from '@angular/common/http';
 interface QuotesFilters {
   search?: string;
   customer?: string;
-  requestor?: string;
+  requestor?: string[];
   type?: string;
   fromDate?: Date | null;
   toDate?: Date | null;
@@ -78,24 +76,29 @@ export class CamfilAccountQuotesPageComponent implements OnInit {
 
   isMobileView = false;
 
+  lastRejectReason: string;
+
 
   constructor(
     private cd: ChangeDetectorRef,
     private quotesFacade: CamQuotesFacade,
     private fb: FormBuilder,
     private dialog: MatDialog,
-    private store: Store,
     private activatedRoute: ActivatedRoute,
     private location: Location
   ) {
     this.dataSource = new MatTableDataSource<Quote>([]);
+
+    const fromDate = new Date();
+    fromDate.setMonth(fromDate.getMonth() - 3);
+
     this.filtersForm = this.fb.group({
       search: this.fb.control(''),
       customer: this.fb.control(undefined),
       requestor: this.fb.control(undefined),
       type: this.fb.control(undefined),
-      fromDate: this.fb.control(undefined),
-      toDate: this.fb.control(undefined),
+      fromDate: this.fb.control(fromDate),
+      toDate: this.fb.control(new Date()),
       stateRequested: this.fb.control(true),
       stateReceived: this.fb.control(true),
       stateApproved: this.fb.control(true),
@@ -125,7 +128,14 @@ export class CamfilAccountQuotesPageComponent implements OnInit {
         take(1)
       ).subscribe(filter => {
         console.log('filters from url', filter);
-        this.filtersForm.patchValue(JSON.parse(filter));
+        const filters = JSON.parse(filter);
+        if (filters.fromDate && filters.fromDate.length > 0) {
+          filters.fromDate = new Date(filter.fromDate);
+        }
+        if (filters.toDate && filters.toDate.length > 0) {
+          filters.toDate = new Date(filters.toDate);
+        }
+        this.filtersForm.patchValue(filter);
       });
 
     this.quotesFacade.approvedQuotesSuccess$
@@ -147,14 +157,6 @@ export class CamfilAccountQuotesPageComponent implements OnInit {
           fromObject: this.filtersQueryParams
         }).toString());
       console.log(this.filtersQueryParams);
-    });
-
-    this.store.pipe(select(getUserRoles)).subscribe(roles => {
-      console.log('roles', roles);
-    });
-
-    this.store.pipe(select(getUserPermissions)).subscribe(roles => {
-      console.log('permissions', roles);
     });
 
     this.matSort.direction = 'desc';
@@ -181,11 +183,8 @@ export class CamfilAccountQuotesPageComponent implements OnInit {
     if (filters.customer) {
       filteredQuotes = filteredQuotes.filter(quote => quote.customerName === filters.customer);
     }
-    if (filters.requestor) {
-      filteredQuotes = filteredQuotes.filter(quote => quote.requestedBy === filters.requestor);
-    }
-    if (filters.requestor) {
-      filteredQuotes = filteredQuotes.filter(quote => quote.requestedBy === filters.requestor);
+    if (filters.requestor && filters.requestor.length > 0) {
+      filteredQuotes = filteredQuotes.filter(quote => filters.requestor.includes(quote.requestedBy));
     }
     if (filters.type === '2') {
       filteredQuotes = filteredQuotes.filter(quote => quote.quotationType === 'quotation');
@@ -227,7 +226,7 @@ export class CamfilAccountQuotesPageComponent implements OnInit {
     const recuestors = quotes
       .map(quote => quote.requestedBy)
       .filter((value, index, self) => self.indexOf(value) === index);
-    this.requestors = recuestors;
+    this.requestors = [...recuestors, 'fake 1', 'fake 2'];
   }
 
   showedQuotesCount(): number {
@@ -246,6 +245,10 @@ export class CamfilAccountQuotesPageComponent implements OnInit {
     this.showAll = true;
     this.filteredQuotes = this.filterQuotes(this.filtersForm.value, this.allQuotes);
     this.loadQuotesInTable(this.filteredQuotes);
+  }
+
+  quoteIsSelectable(quote: Quote) {
+    return quote.status === QuoteStatusEnum.Requested || quote.status === QuoteStatusEnum.Received;
   }
 
   setSelectedQuote(quoteId: string, selected: boolean) {
@@ -273,6 +276,8 @@ export class CamfilAccountQuotesPageComponent implements OnInit {
 
   rejectSelectedQuotes() {
     const dialog = this.dialog.open(QuotesRejectDialogComponent);
+    dialog.componentInstance.reason = this.lastRejectReason;
+    dialog.componentInstance.onChange.subscribe(({ reason }) => this.lastRejectReason = reason);
     dialog.componentInstance.onConfirm.subscribe(result => {
       this.quotesFacade.rejectQuotes(this.selectedQuotes.map(q => q.id), result.reason);
     });

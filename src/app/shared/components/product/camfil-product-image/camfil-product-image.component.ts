@@ -45,7 +45,7 @@ export class CamfilProductImageComponent implements OnChanges {
    */
   showImage = false;
 
-  constructor(private translateService: TranslateService) {}
+  constructor(private translateService: TranslateService) { }
 
   ngOnChanges() {
     this.productImage = this.imageView

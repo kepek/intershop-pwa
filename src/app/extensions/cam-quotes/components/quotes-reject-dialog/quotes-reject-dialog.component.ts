@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
@@ -9,6 +9,8 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 })
 export class QuotesRejectDialogComponent implements OnInit {
 
+  @Input() reason: string;
+  @Output() onChange = new EventEmitter<{ reason: string }>();
   @Output() onConfirm = new EventEmitter<{ reason: string }>();
   form: FormGroup;
 
@@ -20,8 +22,9 @@ export class QuotesRejectDialogComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = this.builder.group({
-      reason: ['', Validators.required]
+      reason: [this.reason, Validators.required]
     });
+    this.form.valueChanges.subscribe(value => this.onChange.emit(value));
   }
 
   cancel(): void {

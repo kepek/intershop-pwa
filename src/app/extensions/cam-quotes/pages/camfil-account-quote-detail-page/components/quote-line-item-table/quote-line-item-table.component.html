@@ -3,17 +3,26 @@
   <!-- rowNum Column -->
   <ng-container matColumnDef="rowNumber">
     <th mat-header-cell *matHeaderCellDef>
-      Row number
+      {{'camfil.lineitem.table.row_number' | translate}}
     </th>
     <td mat-cell *matCellDef="let pli">
       {{ getRowNumber(pli) }}
     </td>
   </ng-container>
 
+  <ng-container matColumnDef="thumbnail">
+    <th mat-header-cell *matHeaderCellDef>
+
+    </th>
+    <td mat-cell *matCellDef="let pli">
+      <camfil-product-image [product]="pli.product" class="product-image" imageType="images"></camfil-product-image>
+    </td>
+  </ng-container>
+
   <!-- Art Nr. Column -->
   <ng-container matColumnDef="sku">
     <th mat-header-cell *matHeaderCellDef>
-      Art. nr.
+      {{'camfil.lineitem.table.art_nr' | translate}}
     </th>
     <td mat-cell *matCellDef="let pli">
       {{ pli.product.sku }}
@@ -23,17 +32,21 @@
   <!-- Product Name Column -->
   <ng-container matColumnDef="articleName">
     <th mat-header-cell *matHeaderCellDef>
-      Product
+      {{'camfil.lineitem.table.product' | translate}}
     </th>
     <td mat-cell *matCellDef="let pli">
-      {{ pli.product.name }}
+      <span>{{ pli.product.name }}</span>
+      <a (click)="openQuickViewDialog(pli.productSKU)" class="quick-view text-nowrap">
+        <mat-icon class="size-16" svgIcon="search"></mat-icon>
+        {{ 'Quickview' | translate }}
+      </a>
     </td>
   </ng-container>
 
   <!-- Origin Price Column -->
   <ng-container matColumnDef="originPrice">
     <th mat-header-cell *matHeaderCellDef>
-      List Price
+      {{'camfil.product.list_price.label' | translate}}
     </th>
     <td mat-cell *matCellDef="let pli">
       <strong>{{ pli.originSinglePrice | ishPrice }}</strong>
@@ -43,7 +56,7 @@
   <!-- Customer Price Column -->
   <ng-container matColumnDef="customerPrice">
     <th mat-header-cell *matHeaderCellDef>
-      Your Price
+      {{'camfil.product.your_price.label' | translate}}
     </th>
     <td mat-cell *matCellDef="let pli">
       <strong>{{ pli.singlePrice | ishPrice }}</strong>
@@ -53,7 +66,7 @@
   <!-- Qty Column -->
   <ng-container matColumnDef="qty">
     <th mat-header-cell *matHeaderCellDef>
-      Qty
+      {{'shopping_cart.qty.heading' | translate}}
     </th>
     <td mat-cell *matCellDef="let pli">
       <div class="text-truncate">{{ pli.quantity.value }}</div>
@@ -63,7 +76,7 @@
   <!-- Total Price Column -->
   <ng-container matColumnDef="totalPrice">
     <th mat-header-cell *matHeaderCellDef>
-      Total Price
+      {{'camfil.quotes.quote_detail.total_price' | translate}}
     </th>
     <td mat-cell *matCellDef="let pli">
       <strong>{{ pli.totalPrice | ishPrice }}</strong>
@@ -83,24 +96,29 @@
 <ng-template #mobileRow let-pli="pli">
   <mat-card *ngIf="pli" class="mat-elevation-z box-shadow box-shadow--dark">
     <mat-card-content data-testing-id="line-item-container" class="pli-mobile">
-      <b>Art. nr.</b><br />
+      <camfil-product-image [product]="pli.product" class="product-image" imageType="images"></camfil-product-image>
+      <b>{{'camfil.lineitem.table.art_nr' | translate}}</b><br />
       {{ pli.product.sku || '---' }}<br />
       <div class="row text-center">
-        <div class="col-9">Product</div>
-        <div class="col-3">Qty</div>
+        <div class="col-9">{{'camfil.lineitem.table.product' | translate}}</div>
+        <div class="col-3">{{'shopping_cart.qty.heading' | translate}}</div>
       </div>
       <div class="row text-center">
         <div class="col-9">
-          {{ pli.product.name }}
+          <span>{{ pli.product.name }}</span>
+          <a (click)="openQuickViewDialog(pli.productSKU)" class="quick-view text-nowrap">
+            <mat-icon class="size-16" svgIcon="search"></mat-icon>
+            {{ 'Quickview' | translate }}
+          </a>
         </div>
         <div class="col-3">
           <div class="text-truncate">{{ pli.quantity.value }}</div>
         </div>
       </div>
       <div class="row text-center">
-        <div class="col-4">List Price</div>
-        <div class="col-4">Your Price</div>
-        <div class="col-4">Total Price</div>
+        <div class="col-4">{{'camfil.product.list_price.label' | translate}}</div>
+        <div class="col-4">{{'camfil.product.your_price.label' | translate}}</div>
+        <div class="col-4">{{'camfil.quotes.quote_detail.total_price' | translate}}</div>
       </div>
       <div class="row text-center">
         <div class="col-12"></div>

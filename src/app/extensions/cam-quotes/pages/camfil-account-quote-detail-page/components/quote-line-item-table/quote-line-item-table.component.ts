@@ -10,11 +10,13 @@ import {
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 
 import { LineItemUpdate } from 'ish-core/models/line-item-update/line-item-update.model';
 import { Price } from 'ish-core/models/price/price.model';
+import { CamfilQuickViewModalComponent } from '../../../../../../shared/components/common/camfil-quick-view-modal/camfil-quick-view-modal.component';
 import { QuoteLineItem } from '../../../../models/quote-details/quote-details.model';
 
 @Component({
@@ -32,6 +34,7 @@ export class QuoteLineItemTableComponent implements OnInit, OnChanges, AfterView
 
   displayedColumns: string[] = [
     'rowNumber',
+    'thumbnail',
     'sku',
     'articleName',
     'originPrice',
@@ -40,6 +43,8 @@ export class QuoteLineItemTableComponent implements OnInit, OnChanges, AfterView
     'totalPrice'
   ];
   lineItemsProcessed: MatTableDataSource<Partial<QuoteLineItem>>;
+
+  constructor(public dialog: MatDialog) { }
 
   ngOnInit() {
     this.lineItemsProcessed = new MatTableDataSource(this.lineItems);
@@ -66,5 +71,13 @@ export class QuoteLineItemTableComponent implements OnInit, OnChanges, AfterView
 
   getRowNumber(item: QuoteLineItem) {
     return this.lineItems.findIndex(i => i.lineItemId === item.lineItemId) + 1;
+  }
+
+  openQuickViewDialog(sku: string) {
+    this.dialog.open(CamfilQuickViewModalComponent, {
+      width: '768px',
+      autoFocus: false,
+      data: { sku },
+    });
   }
 }
