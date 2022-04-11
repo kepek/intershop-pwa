@@ -478,6 +478,8 @@
   "approval.detailspage.reject.button.label": "Hylkää",
   "approval.detailspage.rejection_date.label": "Hylkäyspäivä",
   "approval.detailspage.requisition.heading": "Pyynnön tiedot",
+  "approval.detailspage.unavailable_products.modal.btn.confirm_text": "(fi_FI)_Ok",
+  "approval.detailspage.unavailable_products.modal.header": "(fi_FI)_Some of products are no longer available for sale. Please remove them to be able to approve.",
   "approval.rejectform.add_a_comment.label": "Lisää kommentti",
   "approval.rejectform.button.cancel.label": "Peruuta",
   "approval.rejectform.button.reject.label": "Hylkää",

@@ -1,7 +1,7 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { RxState } from '@rx-angular/state';
-import { distinctUntilChanged, map, switchMap, tap } from 'rxjs/operators';
+import { distinctUntilChanged, filter, map, switchMap, tap } from 'rxjs/operators';
 
 import { Attribute } from 'ish-core/models/attribute/attribute.model';
 import { HttpError } from 'ish-core/models/http-error/http-error.model';
@@ -20,6 +20,7 @@ import {
   removeProductFromCamfilRequisition,
   updateCamfilRequisitionStatus,
 } from '../store/camfil-requisitions';
+import { getProducts } from 'ish-core/store/shopping/products';
 
 @Injectable()
 export class CamfilRequisitionContextFacade
@@ -28,6 +29,7 @@ export class CamfilRequisitionContextFacade
     loading: boolean;
     error: HttpError;
     entity: CamfilRequisition;
+    unavailableProducts: { sku: string; availability: boolean }[];
     view: 'buyer' | 'approver';
   }>
   implements OnDestroy {
@@ -54,6 +56,30 @@ export class CamfilRequisitionContextFacade
           )
         ),
         whenTruthy()
+      )
+    );
+
+    this.connect(
+      'unavailableProducts',
+      this.select('entity').pipe(
+        whenTruthy(),
+        distinctUntilChanged(),
+        map(({ lineItems }) =>
+          lineItems?.reduce<string[]>(
+            (acc, val) => (acc.find(sku => sku === val.productSKU) ? acc : [...acc, val.productSKU]),
+            []
+          )
+        ),
+        switchMap(skus =>
+          this.store.pipe(
+            select(getProducts, { skus }),
+            filter(products => products.length === skus.length)
+          )
+        ),
+        map(products =>
+          products.map(({ availability, failed, sku }) => ({ sku, availability: failed ? false : availability }))
+        ),
+        map(unavailableProducts => unavailableProducts)
       )
     );
 

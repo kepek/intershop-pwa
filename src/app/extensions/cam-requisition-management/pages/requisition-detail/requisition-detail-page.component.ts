@@ -1,9 +1,9 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { User } from '@sentry/browser';
 import { QuickAddProduct } from 'camfil-pwa/models/camfil-quick-add-product/camfil-quick-add-product.model';
 import { Observable, Subject } from 'rxjs';
-import { map, take, takeUntil } from 'rxjs/operators';
+import { distinctUntilChanged, map, take, takeUntil } from 'rxjs/operators';
 import { ModalAddNewProductComponent } from 'src/app/extensions/cam-cards/pages/account-cam-card-detail/modal-add-new-product/modal-add-new-product.component';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
@@ -15,6 +15,7 @@ import { CamfilRequisitionContextFacade } from '../../facades/cam-requisition-co
 import { CamRequisitionStatusValues } from '../../models/camfil-requisition/camfil-requisition-status-values';
 import { CamfilRequisitionHelper } from '../../models/camfil-requisition/camfil-requisition.helper';
 import { CamfilRequisition } from '../../models/camfil-requisition/camfil-requisition.model';
+import { CamfilModalDialogComponent } from 'ish-shared/components/common/camfil-modal-dialog/camfil-modal-dialog.component';
 
 @Component({
   selector: 'camfil-requisition-detail-page',
@@ -34,7 +35,9 @@ export class RequisitionDetailPageComponent implements OnInit, OnDestroy {
   lineItemsChecked = [];
   requisitionStatus = CamRequisitionStatusValues;
   isEditable$: Observable<boolean>;
+  unavailableProducts$: Observable<{ sku: string; availability: boolean }[]>;
   getIsCamfilRequisitionEditable = CamfilRequisitionHelper.getIsCamfilRequisitionEditable;
+  @ViewChild('unavailableProductsModal') unavailableProductsModal: CamfilModalDialogComponent<any>;
 
   private destroy$ = new Subject<void>();
 
@@ -54,10 +57,22 @@ export class RequisitionDetailPageComponent implements OnInit, OnDestroy {
     this.user$ = this.accountFacade.user$;
     this.userPermissions$ = this.accountFacade.userPermissions$;
     this.isEditable$ = this.requisition$.pipe(map(({ approval }) => this.getIsCamfilRequisitionEditable(approval)));
+    this.unavailableProducts$ = this.context.select('unavailableProducts');
+    this.unavailableProducts$.pipe(takeUntil(this.destroy$), distinctUntilChanged()).subscribe(unavailableProducts => {
+      if (unavailableProducts?.length) {
+        this.unavailableProductsModal?.show();
+      }
+    });
   }
 
   approveRequisition() {
-    this.context.approveRequisition$();
+    this.unavailableProducts$.pipe(take(1)).subscribe(unavailableProducts => {
+      if (unavailableProducts) {
+        this.unavailableProductsModal?.show();
+      } else {
+        this.context.approveRequisition$();
+      }
+    });
   }
 
   rejectRequisition(comment: string) {

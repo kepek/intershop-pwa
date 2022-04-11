@@ -478,6 +478,8 @@
   "approval.detailspage.reject.button.label": "Avslå",
   "approval.detailspage.rejection_date.label": "Datum för nekande",
   "approval.detailspage.requisition.heading": "Beställningsdetaljer",
+  "approval.detailspage.unavailable_products.modal.btn.confirm_text": "(sv_SE)_Ok",
+  "approval.detailspage.unavailable_products.modal.header": "(sv_SE)_Some of products are no longer available for sale. Please remove them to be able to approve.",
   "approval.rejectform.add_a_comment.label": "Lägg till kommentar",
   "approval.rejectform.button.cancel.label": "Avbryt",
   "approval.rejectform.button.reject.label": "Avslå",

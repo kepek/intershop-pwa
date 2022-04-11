@@ -478,6 +478,8 @@
   "approval.detailspage.reject.button.label": "(it_IT)_Reject",
   "approval.detailspage.rejection_date.label": "(it_IT)_Date of Rejection",
   "approval.detailspage.requisition.heading": "(it_IT)_Requisition Details",
+  "approval.detailspage.unavailable_products.modal.btn.confirm_text": "(it_IT)_Ok",
+  "approval.detailspage.unavailable_products.modal.header": "(it_IT)_Some of products are no longer available for sale. Please remove them to be able to approve.",
   "approval.rejectform.add_a_comment.label": "(it_IT)_Add a Comment",
   "approval.rejectform.button.cancel.label": "(it_IT)_Cancel",
   "approval.rejectform.button.reject.label": "(it_IT)_Reject",
