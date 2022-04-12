@@ -80,6 +80,7 @@ export class OrderFormComponent implements OnInit, OnDestroy {
       contactFull: [],
       addressFull: [],
       customerFull: [],
+      goodsAcceptanceNote: '',
     });
 
     this.customers$?.pipe(whenTruthy(), distinctUntilChanged(), takeUntil(this.destroy$)).subscribe(customers => {
@@ -114,6 +115,7 @@ export class OrderFormComponent implements OnInit, OnDestroy {
           zipCode: address?.postalCode,
           area: address?.city,
           addressFull: address,
+          goodsAcceptanceNote: address?.goodsAcceptanceNote,
         });
         this.zipCodeComponent.checkZipCode();
       }

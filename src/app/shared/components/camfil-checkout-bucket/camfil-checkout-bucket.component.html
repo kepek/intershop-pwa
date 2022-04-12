@@ -115,13 +115,15 @@
             </dd>
           </div>
         </ng-container>
-        <ng-container *ngIf="goodsAcceptanceNote">
-          <div class="row recipients-container">
-            <dt class="col-12 p-0">{{ 'camfil.checkout.cta.goods_acceptance' | translate }}</dt>
-            <dd class="col-12 p-0 d-flex flex-column">
-              {{ goodsAcceptanceNote }}
-            </dd>
-          </div>
+        <ng-container *camfilChannelToggle="'showGoodsAcceptanceIcon'">
+          <ng-container *ngIf="goodsAcceptanceNote">
+            <div class="row recipients-container">
+              <dt class="col-12 p-0">{{ 'camfil.checkout.cta.goods_acceptance' | translate }}</dt>
+              <dd class="col-12 p-0 d-flex flex-column">
+                {{ goodsAcceptanceNote }}
+              </dd>
+            </div>
+          </ng-container>
         </ng-container>
       </div>
       <div *ngIf="editable" class="order-summary-info col-sm-3 border-sm-right" data-testing-id="order-summary-info">
