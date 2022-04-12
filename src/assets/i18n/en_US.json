@@ -672,6 +672,7 @@
   "camfil.account.import.line_header_cam_card.text": "CamCard row ",
   "camfil.account.import.line_header_line.text": "Line ",
   "camfil.account.import.parameter_error.text": "  for following paramater:",
+  "camfil.account.import.show_all_customer_cc.checkbox.text": "(en_US)_Show all Cam Cards for customer",
   "camfil.account.login.button.label": "Log in",
   "camfil.account.login.forgotPassword": "I've forgot my password",
   "camfil.account.login.forgotUsername": "I've forgot my user name",

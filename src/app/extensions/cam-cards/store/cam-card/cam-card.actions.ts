@@ -13,7 +13,10 @@ import {
   CamCardMeasurement,
 } from '../../models/cam-card/cam-card.model';
 
-export const loadCamCards = createAction('[Cam Cards Internal] Load Cam Cards');
+export const loadCamCards = createAction(
+  '[Cam Cards Internal] Load Cam Cards',
+  payload<{ includeAllCustomerCamCards: boolean }>()
+);
 
 export const loadCamCardsSuccess = createAction(
   '[Cam Cards API] Load Cam Cards Success',

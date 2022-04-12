@@ -660,6 +660,7 @@
   "camfil.account.import.line_header_cam_card.text": "CamCard Zeile ",
   "camfil.account.import.line_header_line.text": "Zeile ",
   "camfil.account.import.parameter_error.text": "Für folgende Parameter:",
+  "camfil.account.import.show_all_customer_cc.checkbox.text": "(de_DE)_Show all Cam Cards for customer",
   "camfil.account.login.button.label": "Einloggen",
   "camfil.account.login.forgotPassword": "Ich habe mein Passwort vergessen",
   "camfil.account.login.forgotUsername": "Ich habe meinen Benutzernamen vergessen",

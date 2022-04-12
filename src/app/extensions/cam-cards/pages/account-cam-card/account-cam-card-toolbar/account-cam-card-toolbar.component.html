@@ -1,5 +1,15 @@
 <div [ngClass]="{ 'sticky box-shadow': isSticky }" class="row toolbar-container">
   <div class="{{ isSticky ? 'container' : 'col-12' }} text-right">
+    <ng-container *ishIsAuthorizedTo="'APP_B2B_MANAGE_USERS'">
+      <mat-checkbox
+        color="primary"
+        class="customer-cc__checkbox mr-4 d-inline-flex align-items-center"
+        (click)="$event.stopPropagation()"
+        (change)="showAllCustomerCamCars($event)"
+      >
+        {{ 'camfil.account.import.show_all_customer_cc.checkbox.text' | translate }}
+      </mat-checkbox>
+    </ng-container>
     <button
       (click)="importCamCard($event)"
       class="btn-tool secondary-button"
@@ -70,6 +80,7 @@
       </ng-template>
       {{ 'camfil.account.cam_card.list.button.add_to_cart.label' | translate }}
     </button>
+
     <camfil-loading *ngIf="productAddingInProgress"></camfil-loading>
   </div>
 </div>
