@@ -79,7 +79,7 @@ export class CamfilRequisitionContextFacade
         map(products =>
           products.map(({ availability, failed, sku }) => ({ sku, availability: failed ? false : availability }))
         ),
-        map(unavailableProducts => unavailableProducts)
+        map(unavailableProducts => unavailableProducts.filter(product => !product.availability))
       )
     );
 
