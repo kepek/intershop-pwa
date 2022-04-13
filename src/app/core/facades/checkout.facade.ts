@@ -67,7 +67,6 @@ import {
   setBucketScrollIndex,
   startCheckout,
   updateBasketAddress,
-  updateBasketExternalOrderReference,
   updateBasketItemAttributes,
   updateBasketItems,
   updateBasketShippingMethod,
@@ -170,10 +169,6 @@ export class CheckoutFacade {
   }
 
   // ADDRESSES
-
-  updateBasketExternalOrderReference(externalOrderReference: string) {
-    this.store.dispatch(updateBasketExternalOrderReference({ externalOrderReference }));
-  }
 
   setBasketCustomAttribute(attribute: Attribute): void {
     this.store.dispatch(setBasketAttribute({ attribute }));
