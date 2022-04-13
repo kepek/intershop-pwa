@@ -34,7 +34,6 @@ import { CamCardsFacade } from '../../extensions/cam-cards/facades/cam-cards.fac
 import { CamfilCheckoutGuestFormComponent } from './camfil-checkout-guest-form/camfil-checkout-guest-form.component';
 import { BasketMapper } from 'ish-core/models/basket/basket.mapper';
 import { isEqual } from 'lodash-es';
-import { CamfilLoginOnBehalfQueryParams } from 'camfil-pwa/identity-provider/camfil-login-on-behalf-identity-provider';
 
 @Component({
   templateUrl: './camfil-checkout-onestep-page.component.html',
@@ -173,18 +172,6 @@ export class CamfilCheckoutOnestepPageComponent implements OnInit, OnDestroy {
       });
   }
 
-  private checkErpEmployeeIdExists() {
-    try {
-      const erpEmployeeId = window.localStorage?.getItem(CamfilLoginOnBehalfQueryParams.ERPEmployeeID) || undefined;
-
-      if (erpEmployeeId) {
-        this.checkoutFacade.updateBasketExternalOrderReference(erpEmployeeId);
-      }
-    } catch (err) {
-      // NOOP
-    }
-  }
-
   private initBasket() {
     // because of editOrderForm
     this.camCardsFacade.customers$
@@ -250,16 +237,6 @@ export class CamfilCheckoutOnestepPageComponent implements OnInit, OnDestroy {
         customerIds.forEach(customerId => {
           this.checkoutFacade.loadCustomerDeliveryTerm(customerId);
         });
-      });
-
-    combineLatest([this.validationResults$, this.checkoutFacade.basket$])
-      .pipe(
-        filter(([validationResults, basket]) => validationResults?.valid && !basket?.externalOrderReference),
-        take(1),
-        takeUntil(this.destroy$)
-      )
-      .subscribe(() => {
-        this.checkErpEmployeeIdExists();
       });
   }
 }

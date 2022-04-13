@@ -137,6 +137,7 @@ export interface BasketState {
   };
   calendarExceptions: [];
   failedCamCardName: string;
+  externalOrderReference?: string;
 }
 
 const initialValidationResults: BasketValidationResultType = {
@@ -166,6 +167,7 @@ export const initialState: BasketState = {
   basketAddresses: [],
   deliveryTerms: {},
   calendarExceptions: [],
+  externalOrderReference: undefined,
 };
 
 export const basketReducer = createReducer(
