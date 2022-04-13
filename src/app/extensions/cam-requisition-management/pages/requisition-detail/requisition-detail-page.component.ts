@@ -58,7 +58,7 @@ export class RequisitionDetailPageComponent implements OnInit, OnDestroy {
     this.userPermissions$ = this.accountFacade.userPermissions$;
     this.isEditable$ = this.requisition$.pipe(map(({ approval }) => this.getIsCamfilRequisitionEditable(approval)));
     this.unavailableProducts$ = this.context.select('unavailableProducts');
-    this.unavailableProducts$.pipe(distinctUntilChanged(), takeUntil(this.destroy$)).subscribe(unavailableProducts => {
+    this.unavailableProducts$?.pipe(distinctUntilChanged(), takeUntil(this.destroy$)).subscribe(unavailableProducts => {
       if (unavailableProducts?.length) {
         this.unavailableProductsModal?.show();
       }

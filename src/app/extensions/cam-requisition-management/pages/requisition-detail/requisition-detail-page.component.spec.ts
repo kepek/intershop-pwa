@@ -17,6 +17,7 @@ import { CamfilBasketCostSummaryComponent } from 'ish-shared/components/basket/c
 import { CamfilMyPageHeaderComponent } from 'ish-shared/components/camfil-my-page-header/camfil-my-page-header.component';
 import { CamfilErrorMessageComponent } from 'ish-shared/components/common/camfil-error-message/camfil-error-message.component';
 import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
+import { CamfilModalDialogComponent } from 'ish-shared/components/common/camfil-modal-dialog/camfil-modal-dialog.component';
 import { InfoBoxComponent } from 'ish-shared/components/common/info-box/info-box.component';
 import { LineItemListComponent } from 'ish-shared/components/line-item/line-item-list/line-item-list.component';
 import { CamfilProductQuantityComponent } from 'ish-shared/components/product/camfil-product-quantity/camfil-product-quantity.component';
@@ -51,6 +52,7 @@ describe('Requisition Detail Page Component', () => {
         MockComponent(CamfilBasketCostSummaryComponent),
         MockComponent(CamfilErrorMessageComponent),
         MockComponent(CamfilLoadingComponent),
+        MockComponent(CamfilModalDialogComponent),
         MockComponent(CamfilMyPageHeaderComponent),
         MockComponent(CamfilProductQuantityComponent),
         MockComponent(CamfilRequisitionDetailToolbarComponent),
