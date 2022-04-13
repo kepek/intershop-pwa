@@ -1,3 +1,4 @@
+import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, forkJoin, throwError } from 'rxjs';
 import { concatMap, defaultIfEmpty, map, switchMap } from 'rxjs/operators';
@@ -27,8 +28,9 @@ export class CamCardService {
    * Gets a list of cam cards for the current user.
    * @returns           The customer's cam_cards.
    */
-  getCamCards(): Observable<CamCard[]> {
-    return this.apiService.get('camcards').pipe(
+  getCamCards(includeAllCustomerCamCards = false): Observable<CamCard[]> {
+    const params = new HttpParams().set('includeAllCustomerCamCards', String(includeAllCustomerCamCards));
+    return this.apiService.get('camcards', { params }).pipe(
       unpackEnvelope(),
       map((camCards: CamCardData[]) => camCards.map(camCard => this.camCardMapper.fromData(camCard))),
       defaultIfEmpty([])

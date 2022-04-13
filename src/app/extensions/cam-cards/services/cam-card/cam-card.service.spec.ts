@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
-import { anything, instance, mock, verify, when } from 'ts-mockito';
+import { anything, capture, instance, mock, verify, when } from 'ts-mockito';
 
 import { ApiService } from 'ish-core/services/api/api.service';
 
@@ -27,11 +27,14 @@ describe('Cam Card Service', () => {
   });
 
   it("should get cam cards when 'getCamCards' is called", done => {
-    when(apiServiceMock.get('camcards')).thenReturn(of({ elements: [{ id: '1234' }] }));
-    when(apiServiceMock.get('camcards/1234')).thenReturn(of({ id: '1234' }));
+    when(apiServiceMock.get('camcards', anything())).thenReturn(of({ elements: [{ id: '1234' }] }));
 
-    camCardService.getCamCards().subscribe(data => {
-      verify(apiServiceMock.get('camcards')).once();
+    camCardService.getCamCards(false).subscribe(data => {
+      verify(apiServiceMock.get('camcards', anything())).once();
+      const args = capture(apiServiceMock.get).last();
+      expect(args?.[0]).toMatchInlineSnapshot(`"camcards"`);
+      // tslint:disable-next-line: no-string-literal
+      expect(args?.[1]?.['params']?.toString()).toMatchInlineSnapshot(`"includeAllCustomerCamCards=false"`);
       expect(data).toMatchInlineSnapshot(`
         Array [
           Object {

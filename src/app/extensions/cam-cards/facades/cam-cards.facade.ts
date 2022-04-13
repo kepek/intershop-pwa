@@ -112,8 +112,8 @@ export class CamCardsFacade {
     return this.store.pipe(select(getUserContactForCustomer, { customerId }));
   }
 
-  loadCamCards() {
-    this.store.dispatch(loadCamCards());
+  loadCamCards(includeAllCustomerCamCards = false) {
+    this.store.dispatch(loadCamCards({ includeAllCustomerCamCards }));
   }
 
   loadCustomers() {

@@ -672,6 +672,7 @@
   "camfil.account.import.line_header_cam_card.text": "sv_CamCard row",
   "camfil.account.import.line_header_line.text": "sv_Line",
   "camfil.account.import.parameter_error.text": "sv_  for following paramater:",
+  "camfil.account.import.show_all_customer_cc.checkbox.text": "(sv_SE)_Show all Cam Cards for customer",
   "camfil.account.login.button.label": "Logga in",
   "camfil.account.login.forgotPassword": "Jag har glömt mitt lösenord",
   "camfil.account.login.forgotUsername": "Jag har glömt mitt användarnamn",

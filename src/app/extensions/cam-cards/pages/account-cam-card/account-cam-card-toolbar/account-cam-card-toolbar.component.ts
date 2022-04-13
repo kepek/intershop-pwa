@@ -26,6 +26,7 @@ export class AccountCamCardToolbarComponent implements OnInit, OnDestroy {
   @Output() openImportCamCardDialog = new EventEmitter<Event>();
   @Output() addSelectedItemsToCart = new EventEmitter();
   @Output() copyCamCard = new EventEmitter<Event>();
+  @Output() toggleShowAllCustomerCamCards = new EventEmitter<Event>();
   @Input() isSticky: boolean;
   @Input() checkedCamCards: CamCard[];
   @Input() productsChecked = {};
@@ -67,6 +68,10 @@ export class AccountCamCardToolbarComponent implements OnInit, OnDestroy {
 
   importCamCard(event: Event) {
     this.openImportCamCardDialog.emit(event);
+  }
+
+  showAllCustomerCamCars(event: Event) {
+    this.toggleShowAllCustomerCamCards.emit(event);
   }
 
   ngOnDestroy() {
