@@ -6,6 +6,7 @@ import { distinctUntilChanged, filter, map, switchMap, tap } from 'rxjs/operator
 import { Attribute } from 'ish-core/models/attribute/attribute.model';
 import { HttpError } from 'ish-core/models/http-error/http-error.model';
 import { selectRouteParam, selectUrl } from 'ish-core/store/core/router';
+import { getProducts } from 'ish-core/store/shopping/products';
 import { whenTruthy } from 'ish-core/utils/operators';
 
 import { CamfilRequisition } from '../models/camfil-requisition/camfil-requisition.model';
@@ -20,7 +21,6 @@ import {
   removeProductFromCamfilRequisition,
   updateCamfilRequisitionStatus,
 } from '../store/camfil-requisitions';
-import { getProducts } from 'ish-core/store/shopping/products';
 
 @Injectable()
 export class CamfilRequisitionContextFacade

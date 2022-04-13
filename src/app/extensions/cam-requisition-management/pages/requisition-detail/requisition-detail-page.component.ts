@@ -10,12 +10,12 @@ import { AccountFacade } from 'ish-core/facades/account.facade';
 import { AppFacade } from 'ish-core/facades/app.facade';
 import { HttpError } from 'ish-core/models/http-error/http-error.model';
 import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
+import { CamfilModalDialogComponent } from 'ish-shared/components/common/camfil-modal-dialog/camfil-modal-dialog.component';
 
 import { CamfilRequisitionContextFacade } from '../../facades/cam-requisition-context.facade';
 import { CamRequisitionStatusValues } from '../../models/camfil-requisition/camfil-requisition-status-values';
 import { CamfilRequisitionHelper } from '../../models/camfil-requisition/camfil-requisition.helper';
 import { CamfilRequisition } from '../../models/camfil-requisition/camfil-requisition.model';
-import { CamfilModalDialogComponent } from 'ish-shared/components/common/camfil-modal-dialog/camfil-modal-dialog.component';
 
 @Component({
   selector: 'camfil-requisition-detail-page',
@@ -58,7 +58,7 @@ export class RequisitionDetailPageComponent implements OnInit, OnDestroy {
     this.userPermissions$ = this.accountFacade.userPermissions$;
     this.isEditable$ = this.requisition$.pipe(map(({ approval }) => this.getIsCamfilRequisitionEditable(approval)));
     this.unavailableProducts$ = this.context.select('unavailableProducts');
-    this.unavailableProducts$.pipe(takeUntil(this.destroy$), distinctUntilChanged()).subscribe(unavailableProducts => {
+    this.unavailableProducts$.pipe(distinctUntilChanged(), takeUntil(this.destroy$)).subscribe(unavailableProducts => {
       if (unavailableProducts?.length) {
         this.unavailableProductsModal?.show();
       }
