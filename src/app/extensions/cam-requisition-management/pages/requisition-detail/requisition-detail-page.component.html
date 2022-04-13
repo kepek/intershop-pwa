@@ -102,7 +102,21 @@
       </div>
     </ng-container>
   </ng-template>
-
+  <camfil-modal-dialog
+    #unavailableProductsModal
+    [options]="{
+      titleText: 'approval.detailspage.unavailable_products.modal.header' | translate,
+      confirmText: 'approval.detailspage.unavailable_products.modal.btn.confirm_text' | translate
+    }"
+  >
+    <ng-container *ngIf="unavailableProducts$ | async as unavailableProducts">
+      <ng-container *ngIf="unavailableProducts.length">
+        <b *ngFor="let product of unavailableProducts; last as isLast">
+          {{ product.sku }}<ng-container *ngIf="!isLast">, </ng-container>
+        </b>
+      </ng-container>
+    </ng-container>
+  </camfil-modal-dialog>
   <camfil-requisition-reject-dialog
     #rejectDialog
     (submit)="rejectRequisition($event)"

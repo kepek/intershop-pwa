@@ -478,6 +478,8 @@
   "approval.detailspage.reject.button.label": "Reject",
   "approval.detailspage.rejection_date.label": "Date of Rejection",
   "approval.detailspage.requisition.heading": "Requisition Details",
+  "approval.detailspage.unavailable_products.modal.btn.confirm_text": "Ok",
+  "approval.detailspage.unavailable_products.modal.header": "Some of products are no longer available for sale. Please remove them to be able to approve.",
   "approval.rejectform.add_a_comment.label": "Add a Comment",
   "approval.rejectform.button.cancel.label": "Cancel",
   "approval.rejectform.button.reject.label": "Reject",

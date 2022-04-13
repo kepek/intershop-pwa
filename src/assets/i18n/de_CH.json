@@ -466,6 +466,8 @@
   "approval.detailspage.reject.button.label": "Ablehnen",
   "approval.detailspage.rejection_date.label": "Datum der Ablehnung",
   "approval.detailspage.requisition.heading": "Bestellanfrage-Details",
+  "approval.detailspage.unavailable_products.modal.btn.confirm_text": "(de_CH)_Ok",
+  "approval.detailspage.unavailable_products.modal.header": "(de_CH)_Some of products are no longer available for sale. Please remove them to be able to approve.",
   "approval.rejectform.add_a_comment.label": "Kommentar hinzufügen",
   "approval.rejectform.button.cancel.label": "Abbrechen",
   "approval.rejectform.button.reject.label": "Ablehnen",

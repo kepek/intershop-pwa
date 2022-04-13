@@ -255,7 +255,7 @@ export const approveCamfilRequisitionLineItemsFail = createAction(
   httpError()
 );
 
-// Quantiti update for Line items
+// Quantity update for Line items
 
 export const updateCamfilRequisitionLineItem = createAction(
   '[Camfil Requisitions API] Update Line Item ',
