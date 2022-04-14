@@ -13,7 +13,7 @@ const camfilConfiguration: CamfilChannelConfiguration = {
   showAddToCamCardButtonForNonLoggedInUser: false,
   showAllDocsType: true,
   showCountryFieldOnAddressForms: true,
-  showDutiesAndSurchargesTotalInBasketSummary: false,
+  showDutiesAndSurchargesTotalInBasketSummary: true,
   showPricesForNonLoggedInUser: true,
   showSubTotalInBasketSummary: false,
   showTotalWithoutTaxInBasketSummary: true,
