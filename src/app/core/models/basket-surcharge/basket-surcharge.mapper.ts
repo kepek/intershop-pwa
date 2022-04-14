@@ -24,17 +24,23 @@ export class BasketSurchargeMapper {
     if (data?.length) {
       let surcharges = data.map(BasketSurchargeMapper.fromData);
 
-      const shippingDiscountSurcharge = BasketSurchargeHelper.select(surcharges, BasketSurchargeTypes.ShippingDiscount);
-      const shippingFeeSurcharge = BasketSurchargeHelper.select(surcharges, BasketSurchargeTypes.ShippingDiscount);
+      const shippingDiscountSurcharge = BasketSurchargeHelper.select(
+        surcharges,
+        BasketSurchargeTypes.CamfilExtraFreightDiscount
+      );
+      const shippingFeeSurcharge = BasketSurchargeHelper.select(
+        surcharges,
+        BasketSurchargeTypes.CamfilExtraFreightDiscount
+      );
 
       if (BasketSurchargeHelper.equal(shippingDiscountSurcharge, shippingFeeSurcharge)) {
         surcharges = surcharges
           ?.map(surcharge => ({ ...surcharge, strikethrough: surcharge?.amount.net <= 0 }))
           ?.map(surcharge => {
             switch (surcharge.displayName) {
-              case BasketSurchargeTypes.ShippingFee:
+              case BasketSurchargeTypes.ExtraFreightCostRule:
                 return;
-              case BasketSurchargeTypes.ShippingDiscount:
+              case BasketSurchargeTypes.CamfilExtraFreightDiscount:
                 return { ...surcharge, amount: PriceHelper.invert(surcharge.amount) };
               default:
                 return surcharge;
