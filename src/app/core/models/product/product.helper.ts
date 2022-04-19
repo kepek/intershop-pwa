@@ -217,7 +217,11 @@ export class ProductHelper {
    * @returns         The matching product technical documents
    */
 
-  static getTechnicalDocuments(product: Product, showAllDocsType: boolean): ProductTechnicalDocument[] {
+  static getTechnicalDocuments(
+    product: Product,
+    showAllDocsType: boolean,
+    langPrefix: string
+  ): ProductTechnicalDocument[] {
     const productDocumentTypes = [
       {
         name: 'camfil.product.brochures.text',
@@ -248,7 +252,8 @@ export class ProductHelper {
       .map(document => ({
         name: productDocumentTypes.find(prodDoc => prodDoc.type === document.typeID)?.name,
         effectiveUrl: ProductHelper.getImageCdnUrl(product, document.typeID, document.viewID),
-      }));
+      }))
+      .filter(doc => doc.effectiveUrl.includes(langPrefix));
   }
 
   /**

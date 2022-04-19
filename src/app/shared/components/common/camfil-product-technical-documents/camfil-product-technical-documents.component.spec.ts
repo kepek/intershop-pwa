@@ -4,6 +4,7 @@ import { MockComponent } from 'ng-mocks';
 import { of } from 'rxjs';
 import { instance, mock, when } from 'ts-mockito';
 
+import { AppFacade } from 'ish-core/facades/app.facade';
 import { ContentViewcontextComponent } from 'ish-shared/cms/components/content-viewcontext/content-viewcontext.component';
 
 import { CamfilProductTechnicalDocumentsComponent } from './camfil-product-technical-documents.component';
@@ -13,13 +14,18 @@ describe('Camfil Product Technical Documents Component', () => {
   let fixture: ComponentFixture<CamfilProductTechnicalDocumentsComponent>;
   let element: HTMLElement;
   let camfilConfigurationFacade: CamfilConfigurationFacade;
+  let appFacade: AppFacade;
 
   beforeEach(async () => {
     camfilConfigurationFacade = mock(CamfilConfigurationFacade);
+    appFacade = mock(AppFacade);
 
     await TestBed.configureTestingModule({
       declarations: [CamfilProductTechnicalDocumentsComponent, MockComponent(ContentViewcontextComponent)],
-      providers: [{ provide: CamfilConfigurationFacade, useFactory: () => instance(camfilConfigurationFacade) }],
+      providers: [
+        { provide: CamfilConfigurationFacade, useFactory: () => instance(camfilConfigurationFacade) },
+        { provide: AppFacade, useFactory: () => instance(appFacade) },
+      ],
     }).compileComponents();
   });
 
