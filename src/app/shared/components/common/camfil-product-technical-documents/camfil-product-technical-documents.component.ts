@@ -1,11 +1,11 @@
 import { ChangeDetectionStrategy, Component, Input, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
 import { CamfilConfigurationFacade } from 'camfil-pwa/facades/camfil-configuration.facade';
-import { combineLatest, Subject } from 'rxjs';
+import { Subject, combineLatest } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
+import { AppFacade } from 'ish-core/facades/app.facade';
 import { ProductTechnicalDocument } from 'ish-core/models/product-technical-document/product-technical-document.model';
 import { Product, ProductHelper } from 'ish-core/models/product/product.model';
-import { AppFacade } from 'ish-core/facades/app.facade';
 
 @Component({
   selector: 'camfil-product-technical-documents',

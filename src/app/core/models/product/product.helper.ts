@@ -222,7 +222,6 @@ export class ProductHelper {
     showAllDocsType: boolean,
     langPrefix: string
   ): ProductTechnicalDocument[] {
-    console.log(langPrefix);
     const productDocumentTypes = [
       {
         name: 'camfil.product.brochures.text',
