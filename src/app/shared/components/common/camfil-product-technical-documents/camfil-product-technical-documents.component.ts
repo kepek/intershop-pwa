@@ -1,10 +1,11 @@
 import { ChangeDetectionStrategy, Component, Input, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
 import { CamfilConfigurationFacade } from 'camfil-pwa/facades/camfil-configuration.facade';
-import { Subject } from 'rxjs';
+import { combineLatest, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { ProductTechnicalDocument } from 'ish-core/models/product-technical-document/product-technical-document.model';
 import { Product, ProductHelper } from 'ish-core/models/product/product.model';
+import { AppFacade } from 'ish-core/facades/app.facade';
 
 @Component({
   selector: 'camfil-product-technical-documents',
@@ -18,16 +19,16 @@ export class CamfilProductTechnicalDocumentsComponent implements OnChanges, OnDe
   productDocuments: ProductTechnicalDocument[];
   private destroy$ = new Subject();
 
-  constructor(private camfilConfigurationFacade: CamfilConfigurationFacade) {}
+  constructor(private camfilConfigurationFacade: CamfilConfigurationFacade, private appFacade: AppFacade) {}
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.product) {
-      this.camfilConfigurationFacade
-        .isEnabled$('showAllDocsType')
-        .pipe(takeUntil(this.destroy$))
-        .subscribe(showAllDocsType => {
-          this.productDocuments = ProductHelper.getTechnicalDocuments(this.product, showAllDocsType);
-        });
+      combineLatest([
+        this.camfilConfigurationFacade.isEnabled$('showAllDocsType').pipe(takeUntil(this.destroy$)),
+        this.appFacade.currentLocale$,
+      ])?.subscribe(([showAllDocsType, locale]) => {
+        this.productDocuments = ProductHelper.getTechnicalDocuments(this.product, showAllDocsType, locale.lang);
+      });
     }
   }
 
