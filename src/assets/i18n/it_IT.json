@@ -1545,7 +1545,6 @@
   "quote.edit.submitted.we_will_email.text": "Ti invieremo un'e-mail {{0}} per tenerti aggiornato sullo stato del tuo preventivo.",
   "quote.edit.submitted.your_quote_expired.text": "Il tuo preventivo è scaduto il {{0}} {{1}}.",
   "quote.edit.submitted.your_quote_number.text": "Il tuo numero di preventivo è:",
-  "quote.edit.submitted.your_quote_request.text": "La tua richiesta di preventivo è stata inoltrata.<br/>Puoi controllare lo stato della tua <a callback=\1}.",
   "quote.edit.submitted.your_quote_request_has_been_submitted.text": "La tua richiesta di preventivo è stata inoltrata al {{0}. Sarai informato di un preventivo via e-mail.",
   "quote.edit.unsubmitted.comment.label": "Commento:",
   "quote.edit.unsubmitted.enter_an_optional_name.text": "Inserisci il nome di una richiesta di preventivo (opzionale)",
