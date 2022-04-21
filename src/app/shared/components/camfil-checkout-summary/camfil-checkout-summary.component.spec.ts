@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { provideMockStore } from '@ngrx/store/testing';
 import { CamfilChannelToggleDirective } from 'camfil-pwa/directives/camfil-channel-toggle.directive';
 import { CamfilConfigurationFacade } from 'camfil-pwa/facades/camfil-configuration.facade';
 import { MockComponent, MockDirective, MockPipe } from 'ng-mocks';
@@ -59,6 +60,7 @@ describe('Camfil Checkout Summary Component', () => {
         { provide: CheckoutFacade, useFactory: () => instance(checkoutFacade) },
         { provide: ShoppingFacade, useFactory: () => instance(shoppingFacade) },
         { provide: CamfilConfigurationFacade, useFactory: () => instance(camfilConfigurationFacade) },
+        provideMockStore(),
       ],
     }).compileComponents();
   });
