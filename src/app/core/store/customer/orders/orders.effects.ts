@@ -24,7 +24,7 @@ import {
 
 import { ofUrl, selectQueryParams, selectRouteParam } from 'ish-core/store/core/router';
 import { setBreadcrumbData } from 'ish-core/store/core/viewconf';
-import { continueCheckoutWithIssues, getCurrentBasketId, getCurrentBasketOrderType, loadBasket } from 'ish-core/store/customer/basket';
+import { continueCheckoutWithIssues, getCurrentBasketOrderType, loadBasket } from 'ish-core/store/customer/basket';
 import { getLoggedInUser } from 'ish-core/store/customer/user';
 import { mapErrorToAction, mapToPayload, mapToPayloadProperty, whenTruthy } from 'ish-core/utils/operators';
 
