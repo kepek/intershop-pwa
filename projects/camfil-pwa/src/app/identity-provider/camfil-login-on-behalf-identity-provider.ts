@@ -56,7 +56,7 @@ export class CamfilLoginOnBehalfIdentityProvider implements IdentityProvider {
     const returnUrl = route?.queryParamMap?.get(CamfilLoginOnBehalfQueryParams.ReturnUrl) || '/dupa';
 
     if (hasErpEmployeeId) {
-      window?.sessionStorage?.setItem(CamfilLoginOnBehalfQueryParams.ERPEmployeeID, erpEmployeeId);
+      window?.localStorage?.setItem(CamfilLoginOnBehalfQueryParams.ERPEmployeeID, erpEmployeeId);
     }
 
     if (hasAccessToken) {
@@ -93,9 +93,11 @@ export class CamfilLoginOnBehalfIdentityProvider implements IdentityProvider {
   }
 
   triggerLogout(): TriggerReturnType {
-    window?.sessionStorage?.removeItem(CamfilLoginOnBehalfQueryParams.ERPEmployeeID);
+    window?.localStorage?.removeItem(CamfilLoginOnBehalfQueryParams.ERPEmployeeID);
+
     this.store.dispatch(logoutUser());
     this.apiTokenService.removeApiToken();
+
     return this.store.pipe(
       select(selectQueryParam('returnUrl')),
       map(returnUrl => returnUrl || '/home'),

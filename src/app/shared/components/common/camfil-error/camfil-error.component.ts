@@ -1,11 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-
-interface ErrorValidator {
-  error: string;
-  message: string;
-  ifNot?: string;
-  messageVariables?: string[];
-}
+import { CamfilErrorValidator } from 'camfil-pwa/models/camfil-error-valdiator/camfil-error-valdiator.model';
 
 @Component({
   selector: 'camfil-error',
@@ -14,13 +8,13 @@ interface ErrorValidator {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CamfilErrorComponent implements OnChanges {
-  @Input() errorValidators: ErrorValidator[];
+  @Input() errorValidators: CamfilErrorValidator[];
   @Input() touched: boolean;
   @Input() errors: {};
 
-  processedErrorValidators: ErrorValidator[];
+  processedErrorValidators: CamfilErrorValidator[];
 
-  getMessageVariables(validator: ErrorValidator) {
+  getMessageVariables(validator: CamfilErrorValidator) {
     return validator.messageVariables?.reduce((acc, item, index) => ({ ...acc, [index]: item }), {}) || {};
   }
 

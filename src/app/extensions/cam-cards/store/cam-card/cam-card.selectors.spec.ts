@@ -71,7 +71,7 @@ describe('Cam Card Selectors', () => {
 
   describe('loading cam cards', () => {
     describe('LoadCamCards', () => {
-      const loadCamCardAction = loadCamCards();
+      const loadCamCardAction = loadCamCards({ includeAllCustomerCamCards: false });
 
       beforeEach(() => {
         store$.dispatch(loadCamCardAction);

@@ -4,11 +4,25 @@ import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { routerNavigatedAction } from '@ngrx/router-store';
 import { Store, select } from '@ngrx/store';
-import { iif } from 'rxjs';
-import { concatMap, filter, first, map, mergeMap, switchMap, switchMapTo, tap, withLatestFrom } from 'rxjs/operators';
+import { CamfilLoginOnBehalfQueryParams } from 'camfil-pwa/identity-provider/camfil-login-on-behalf-identity-provider';
+import { iif, of } from 'rxjs';
+import {
+  concatMap,
+  filter,
+  first,
+  map,
+  mergeMap,
+  switchMap,
+  switchMapTo,
+  take,
+  tap,
+  withLatestFrom,
+} from 'rxjs/operators';
 
 import { displayErrorMessage, displaySuccessMessage } from 'ish-core/store/core/messages';
 import { ofUrl, selectRouteParam } from 'ish-core/store/core/router';
+import { loadBasketSuccess, updateBasketExternalOrderReference } from 'ish-core/store/customer/basket';
+import { getUserAuthorized } from 'ish-core/store/customer/user';
 import { mapErrorToAction, mapToPayload, mapToPayloadProperty, whenTruthy } from 'ish-core/utils/operators';
 
 import { CamOrganizationService } from '../../services/cam-organization/cam-organization.service';
@@ -329,6 +343,26 @@ export class UserEffects {
           ),
           mapErrorToAction(loadOrganizationUsersFail, { customerIDs })
         )
+      )
+    )
+  );
+
+  updateBasketExternalOrderReferenceAfterLogin$ = createEffect(() =>
+    iif(
+      () => isPlatformBrowser(this.platformId),
+      this.actions$.pipe(
+        ofType(loadBasketSuccess),
+        mapToPayloadProperty('basket'),
+        take(1),
+        withLatestFrom(
+          this.store.pipe(select(getUserAuthorized)),
+          of(window?.localStorage?.getItem(CamfilLoginOnBehalfQueryParams.ERPEmployeeID) || undefined)
+        ),
+        filter(
+          ([basket, authorized, externalOrderReference]) =>
+            authorized && basket?.externalOrderReference !== externalOrderReference
+        ),
+        map(([, , externalOrderReference]) => updateBasketExternalOrderReference({ externalOrderReference }))
       )
     )
   );

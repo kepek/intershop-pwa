@@ -3,6 +3,7 @@ import { provideMockStore } from '@ngrx/store/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { MockComponent } from 'ng-mocks';
 
+import { AuthorizationToggleModule } from 'ish-core/authorization-toggle.module';
 import { CamfilLoadingComponent } from 'ish-shared/components/common/camfil-loading/camfil-loading.component';
 
 import { CamCardPreferencesDialogComponent } from '../../../shared/cam-card-preferences-dialog/cam-card-preferences-dialog.component';
@@ -23,7 +24,7 @@ describe('Account Cam Card Toolbar Component', () => {
         MockComponent(CamCardPreferencesDialogComponent),
         MockComponent(CamfilLoadingComponent),
       ],
-      imports: [TranslateModule.forRoot()],
+      imports: [AuthorizationToggleModule.forTesting('APP_B2B_MANAGE_USERS'), TranslateModule.forRoot()],
       providers: [provideMockStore()],
     }).compileComponents();
   });

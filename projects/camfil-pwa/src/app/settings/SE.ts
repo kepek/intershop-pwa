@@ -6,7 +6,6 @@ const camfilConfiguration: CamfilChannelConfiguration = {
   continueShoppingUrl: '/account/camcards',
   channelCode: 'SE',
   currency: 'EUR',
-  guestCheckout: false,
   hideAddToBasketLightboxForNonLoggedInUser: false,
   icmChannel: 'Camfil-CamfilSE-Site',
   showAddToCamCardButtonForNonLoggedInUser: true,

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Store, createSelector, select } from '@ngrx/store';
+import { getBucketGoodsAcceptanceNote } from 'camfil-pwa/store/customer/ish-basket/ish-basket-addresses.selectors';
 import { merge } from 'rxjs';
 import { map, switchMap, take, tap } from 'rxjs/operators';
 
@@ -67,7 +68,6 @@ import {
   setBucketScrollIndex,
   startCheckout,
   updateBasketAddress,
-  updateBasketExternalOrderReference,
   updateBasketItemAttributes,
   updateBasketItems,
   updateBasketShippingMethod,
@@ -171,10 +171,6 @@ export class CheckoutFacade {
   }
 
   // ADDRESSES
-
-  updateBasketExternalOrderReference(externalOrderReference: string) {
-    this.store.dispatch(updateBasketExternalOrderReference({ externalOrderReference }));
-  }
 
   setBasketCustomAttribute(attribute: Attribute): void {
     this.store.dispatch(setBasketAttribute({ attribute }));
@@ -320,5 +316,9 @@ export class CheckoutFacade {
 
   setBasketOrderType(orderType?: string) {
     this.store.dispatch(setBasketOrderType({ orderType }));
+  }
+
+  getBucketGoodsAcceptanceNote$(urn: string) {
+    return this.store.pipe(select(getBucketGoodsAcceptanceNote(urn)));
   }
 }

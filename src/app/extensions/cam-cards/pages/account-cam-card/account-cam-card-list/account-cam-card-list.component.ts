@@ -410,7 +410,7 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
 
     if (noErpIds.length && !this.freshErpInfo) {
       this.productAddingInProgress = true;
-      this.camCardsFacade.loadCamCards();
+      this.camCardsFacade.loadCamCards(false);
       this.camCardsFacade.camCardsLoading$.pipe(whenFalsy(), take(1)).subscribe(() => {
         this.freshErpInfo = true;
         this.handleSelectedCamCardsOnAddToCart(checkInBasketModal, addToCartFlowModal);
@@ -720,5 +720,10 @@ export class AccountCamCardListComponent implements OnInit, OnChanges, OnDestroy
       autoFocus: false,
       data: { errorMessage: error.message, camCardName },
     });
+  }
+
+  showAllCustomerCamCards(event: MatCheckboxChange) {
+    this.loading = true;
+    this.camCardsFacade.loadCamCards(event.checked);
   }
 }

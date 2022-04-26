@@ -109,6 +109,8 @@ export class ProductMapper {
     const productMaster = retrieveStubAttributeValue<boolean>(data, 'productMaster');
     const productMasterSKU = retrieveStubAttributeValue<string>(data, 'productMasterSKU');
     const retailSet = retrieveStubAttributeValue<boolean>(data, 'retailSet');
+    const stepQuantityValue = retrieveStubAttributeValue<{ value: number }>(data, 'stepQuantity');
+    const stepQuantity = stepQuantityValue ? stepQuantityValue.value : undefined;
 
     const product: Partial<Product> = {
       shortDescription: data.description,
@@ -143,6 +145,7 @@ export class ProductMapper {
       promotionIds: mapPromotionIds(promotionLinks),
       completenessLevel: 2,
       failed: false,
+      stepQuantity,
     };
 
     if (productMaster) {
@@ -197,6 +200,7 @@ export class ProductMapper {
       completenessLevel: 3,
       failed: false,
       seoAttributes: SeoAttributesMapper.fromData(data.seoAttributes),
+      stepQuantity: data.stepOrderQuantity,
     };
 
     if (data.productMaster) {

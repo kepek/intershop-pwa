@@ -89,7 +89,7 @@ export class CamfilQuickViewModalComponent implements OnInit, OnDestroy {
     this.product$.pipe(whenTruthy(), takeUntil(this.destroy$)).subscribe(product => {
       this.quantity = 0;
       this.productDetailForm = new FormGroup({
-        [this.quantityControlName]: new FormControl(this.quantity),
+        [this.quantityControlName]: new FormControl(this.quantity, { updateOn: 'blur' }),
       });
 
       this.isShipmentInformationAvailable =

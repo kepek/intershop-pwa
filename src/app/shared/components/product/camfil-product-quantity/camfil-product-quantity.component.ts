@@ -3,12 +3,17 @@ import {
   Component,
   Input,
   OnChanges,
+  OnDestroy,
   OnInit,
   SimpleChange,
   SimpleChanges,
 } from '@angular/core';
-import { FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { range } from 'lodash-es';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { CamStepQuantityErrorDialogComponent } from 'src/app/extensions/cam-cards/shared/cam-step-quantity-error-dialog/cam-step-quantity-error-dialog.component';
 
 import { Product } from 'ish-core/models/product/product.model';
 import { SelectOption } from 'ish-shared/forms/components/select/select.component';
@@ -29,7 +34,22 @@ export type CamfilProductQuantityType = 'input' | 'select' | 'counter';
   templateUrl: './camfil-product-quantity.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CamfilProductQuantityComponent implements OnInit, OnChanges {
+export class CamfilProductQuantityComponent implements OnInit, OnChanges, OnDestroy {
+  get quantity() {
+    return this.parentForm.get(this.controlName) && this.parentForm.get(this.controlName).value;
+  }
+
+  get labelClass() {
+    return this.quantityLabel.trim() === '' ? 'col-0' : 'label-quantity col-6';
+  }
+
+  get inputClass() {
+    return this.quantityLabel.trim() === ''
+      ? 'col-12' + (this.class ? this.class : '')
+      : 'col-6' + (this.class ? this.class : '');
+  }
+
+  constructor(public dialog: MatDialog) {}
   @Input() showErrors = true;
   @Input() readOnly = false;
   @Input() allowZeroQuantity = false;
@@ -45,32 +65,44 @@ export class CamfilProductQuantityComponent implements OnInit, OnChanges {
   quantityOptions: SelectOption[];
 
   validators = ADD_NEW_PRODUCT_VALIDATORS;
+  private destroy$ = new Subject();
 
-  get quantity() {
-    return this.parentForm.get(this.controlName) && this.parentForm.get(this.controlName).value;
-  }
+  static validateValueWithQuantityStep(stepQuantity = 1) {
+    return (control: AbstractControl): ValidationErrors | undefined => {
+      const value = control.value;
 
-  get labelClass() {
-    return this.quantityLabel.trim() === '' ? 'col-0' : 'label-quantity col-6';
-  }
+      if (!value) {
+        return;
+      }
 
-  get inputClass() {
-    return this.quantityLabel.trim() === ''
-      ? 'col-12' + (this.class ? this.class : '')
-      : 'col-6' + (this.class ? this.class : '');
+      const isValueMultipliedCorrectly = value % stepQuantity === 0;
+
+      return !isValueMultipliedCorrectly ? { stepQuantityValue: true } : undefined;
+    };
   }
 
   ngOnInit() {
-    this.parentForm.get(this.controlName).setValidators(this.getValidations());
+    this.parentForm.get(this.controlName).setValidators(this.getValidators());
+
+    this.parentForm
+      .get(this.controlName)
+      .valueChanges.pipe(takeUntil(this.destroy$))
+      .subscribe(() => {
+        const quantityControlError = this.parentForm.get(this.controlName).errors;
+        if (quantityControlError && 'stepQuantityValue' in quantityControlError) {
+          this.showStepQuantityErrorModal(this.product.stepQuantity);
+        }
+      });
   }
 
-  getValidations(): ValidatorFn {
+  getValidators(): ValidatorFn {
     if (this.type === 'input' || this.type === 'counter') {
       return Validators.compose([
         Validators.required,
         Validators.min(this.allowZeroQuantity ? 0 : this.product.minOrderQuantity),
         Validators.max(this.product.maxOrderQuantity),
         SpecialValidators.integer,
+        CamfilProductQuantityComponent.validateValueWithQuantityStep(this.product.stepQuantity),
       ]);
     }
   }
@@ -78,6 +110,20 @@ export class CamfilProductQuantityComponent implements OnInit, OnChanges {
   ngOnChanges(change: SimpleChanges) {
     if (this.type === 'select') {
       this.createSelectOptions(change.product);
+    }
+    if (change.product) {
+      const quantityValidator = this.validators.quantity?.map(validator =>
+        validator.error === 'stepQuantityValue'
+          ? {
+              ...validator,
+              messageVariables: [`${this.product.stepQuantity}`],
+            }
+          : validator
+      );
+      this.validators = {
+        ...this.validators,
+        quantity: [...quantityValidator],
+      };
     }
   }
 
@@ -88,5 +134,18 @@ export class CamfilProductQuantityComponent implements OnInit, OnChanges {
         this.product.maxOrderQuantity
       );
     }
+  }
+
+  showStepQuantityErrorModal(stepQuantityValue): void {
+    this.dialog.open(CamStepQuantityErrorDialogComponent, {
+      width: '330px',
+      autoFocus: false,
+      data: { stepQuantityValue },
+    });
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

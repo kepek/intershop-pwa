@@ -1,4 +1,6 @@
-export const ADD_NEW_PRODUCT_VALIDATORS = {
+import { CamfilErrorValidator } from 'camfil-pwa/models/camfil-error-valdiator/camfil-error-valdiator.model';
+
+export const ADD_NEW_PRODUCT_VALIDATORS: { [key: string]: CamfilErrorValidator[] } = {
   sku: [
     {
       error: 'required',
@@ -13,6 +15,11 @@ export const ADD_NEW_PRODUCT_VALIDATORS = {
     {
       error: 'max',
       message: 'camfil.modal.addNewProduct.error.max.quantity',
+    },
+    {
+      error: 'stepQuantityValue',
+      message: 'camfil.modal.addNewProduct.validation.error.step.quantity',
+      messageVariables: [],
     },
   ],
 };

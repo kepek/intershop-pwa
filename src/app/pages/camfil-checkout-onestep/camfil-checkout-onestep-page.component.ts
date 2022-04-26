@@ -34,7 +34,6 @@ import { CamCardsFacade } from '../../extensions/cam-cards/facades/cam-cards.fac
 import { CamfilCheckoutGuestFormComponent } from './camfil-checkout-guest-form/camfil-checkout-guest-form.component';
 import { BasketMapper } from 'ish-core/models/basket/basket.mapper';
 import { isEqual } from 'lodash-es';
-import { CamfilLoginOnBehalfQueryParams } from 'camfil-pwa/identity-provider/camfil-login-on-behalf-identity-provider';
 
 @Component({
   templateUrl: './camfil-checkout-onestep-page.component.html',
@@ -146,7 +145,6 @@ export class CamfilCheckoutOnestepPageComponent implements OnInit, OnDestroy {
 
   submit(orderType?: string) {
     this.guestForm?.validateGuestForm();
-    this.checkErpEmployeeIdExists();
     if (orderType) {
       this.checkoutFacade.setBasketOrderType(orderType);
     }
@@ -175,18 +173,6 @@ export class CamfilCheckoutOnestepPageComponent implements OnInit, OnDestroy {
 
         this.shoppingFacade.updateBucket(basketId, bucket?.deliveryAddressId, basketExtensionData);
       });
-  }
-
-  private checkErpEmployeeIdExists() {
-    try {
-      const erpEmployeeId = window.sessionStorage?.getItem(CamfilLoginOnBehalfQueryParams.ERPEmployeeID) || undefined;
-
-      if (erpEmployeeId) {
-        this.checkoutFacade.updateBasketExternalOrderReference(erpEmployeeId);
-      }
-    } catch (err) {
-      // NOOP
-    }
   }
 
   private initBasket() {

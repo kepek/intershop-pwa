@@ -156,7 +156,9 @@ export class CamCardEffects {
       mapToPayloadProperty<RouterNavigatedPayload<RouterState>>('routerState'),
       filter((routerState: RouterState) => /^\/(account\/camcards)/.test(routerState.url)),
       withLatestFrom(this.store.pipe(select(getAllCamCards)), this.store.pipe(select(getCamCardCustomers))),
-      mergeMap(([, cc, customers]) => (cc.length && customers.length ? EMPTY : [loadCustomers(), loadCamCards()]))
+      mergeMap(([, cc, customers]) =>
+        cc.length && customers.length ? EMPTY : [loadCustomers(), loadCamCards({ includeAllCustomerCamCards: false })]
+      )
     )
   );
 
@@ -168,21 +170,22 @@ export class CamCardEffects {
       ofType(updateCamCardSuccess, createCamCardSuccess),
       mapToPayloadProperty('camCard'),
       filter(camCard => camCard && !!camCard.id),
-      mapTo(loadCamCards())
+      mapTo(loadCamCards({ includeAllCustomerCamCards: false }))
     )
   );
 
   loadCamCards$ = createEffect(() =>
     this.actions$.pipe(
       ofType(loadCamCards),
+      mapToPayloadProperty('includeAllCustomerCamCards'),
       windowRxOperator(this.actions$.pipe(ofType(loadCamCards), debounceTime(500))),
       mergeMap(window$ =>
         window$.pipe(
           last(),
           withLatestFrom(this.store.pipe(select(getUserAuthorized))),
-          mergeMap(([, authorized]) =>
+          mergeMap(([includeAllCustomerCamCards, authorized]) =>
             authorized
-              ? this.camCardService.getCamCards().pipe(
+              ? this.camCardService.getCamCards(includeAllCustomerCamCards).pipe(
                   map(items => {
                     // TODO: to improve - move filter to selectors like getRootCamCards
                     const camCards = items.filter(item => !item.rootCamCard);
@@ -967,7 +970,7 @@ export class CamCardEffects {
           (!order || !order.orderCreation || order.orderCreation.status !== 'ROLLED_BACK') &&
           !!basket?.basketExtensions?.find(e => e?.createdFromCamCardId)
       ),
-      mapTo(loadCamCards())
+      mapTo(loadCamCards({ includeAllCustomerCamCards: false }))
     )
   );
 

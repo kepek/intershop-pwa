@@ -54,7 +54,7 @@ export class AccountOrderTemplateDetailLineItemComponent implements OnChanges, O
   /** init form in the beginning */
   private initForm() {
     this.addToCartForm = new FormGroup({
-      quantity: new FormControl(this.orderTemplateItemData.desiredQuantity.value || 1),
+      quantity: new FormControl(this.orderTemplateItemData.desiredQuantity.value || 1, { updateOn: 'blur' }),
     });
 
     this.selectItemForm = new FormGroup({

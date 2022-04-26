@@ -33,6 +33,7 @@ export interface Product {
   failed: boolean;
   links?: ProductLinks;
   seoAttributes?: SeoAttributes;
+  stepQuantity?: number;
 }
 
 export * from './product.helper';

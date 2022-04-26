@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { CamfilConfigurationFacade } from 'camfil-pwa/facades/camfil-configuration.facade';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, combineLatest } from 'rxjs';
 import { map, startWith, take, takeUntil, withLatestFrom } from 'rxjs/operators';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
@@ -12,6 +12,7 @@ import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { BasketValidationResultType } from 'ish-core/models/basket-validation/basket-validation.model';
 import { PriceHelper } from 'ish-core/models/price/price.helper';
 import { Price } from 'ish-core/models/price/price.model';
+import { AuthorizationToggleService } from 'ish-core/utils/authorization-toggle/authorization-toggle.service';
 import { whenFalsy } from 'ish-core/utils/operators';
 import { CamfilBasketCostSummaryComponent } from 'ish-shared/components/basket/camfil-basket-cost-summary/camfil-basket-cost-summary.component';
 import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
@@ -53,6 +54,7 @@ export class CamfilCheckoutSummaryComponent extends CamfilBasketCostSummaryCompo
     private checkoutFacade: CheckoutFacade,
     private shoppingFacade: ShoppingFacade,
     private camfilConfigurationFacade: CamfilConfigurationFacade,
+    private authorizationToggle: AuthorizationToggleService,
     private router: Router,
     private fb: FormBuilder,
     private dialog: MatDialog
@@ -66,9 +68,13 @@ export class CamfilCheckoutSummaryComponent extends CamfilBasketCostSummaryCompo
     this.bucketsVolumeDiscounts$ = this.checkoutFacade.bucketsVolumeDiscounts$;
     this.validationResults$ = this.checkoutFacade.basketValidationResults$;
     this.productsReadyToPlaceOrder$ = this.shoppingFacade.productsReadyToPlaceOrder$;
-    this.canSubmitOrder$ = this.productsReadyToPlaceOrder$;
-    this.isLoggedIn$ = this.accountFacade.isLoggedIn$;
 
+    this.canSubmitOrder$ = combineLatest([
+      this.authorizationToggle.isAuthorizedTo('APP_B2B_NO_CHECKOUT_USER'),
+      this.productsReadyToPlaceOrder$,
+    ]).pipe(map(([isNoCheckoutUser, isReady]) => (isNoCheckoutUser ? false : isReady)));
+
+    this.isLoggedIn$ = this.accountFacade.isLoggedIn$;
     this.isLoggedIn$.pipe(whenFalsy(), takeUntil(this.destroy$)).subscribe(() => {
       this.initGDPRForm();
     });

@@ -35,10 +35,10 @@ import { getCurrentBasketId } from './basket.selectors';
 @Injectable()
 export class BasketAddressesEffects {
   constructor(
-    private actions$: Actions,
-    private store: Store,
-    private basketService: BasketService,
-    private addressService: AddressService
+    protected actions$: Actions,
+    protected store: Store,
+    protected basketService: BasketService,
+    protected addressService: AddressService
   ) {}
 
   /**

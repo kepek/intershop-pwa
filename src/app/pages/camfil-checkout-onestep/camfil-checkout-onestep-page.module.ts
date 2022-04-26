@@ -19,6 +19,7 @@ import { CheckoutPaymentPageModule } from '../checkout-payment/checkout-payment-
 
 import { CamfilCheckoutOnestepPageComponent } from './camfil-checkout-onestep-page.component';
 import { CamfilCheckoutAddEmailRecipientModalComponent } from './camfil-checkout-add-email-recipient-modal/camfil-checkout-add-email-recipient-modal.component';
+import { CamfilCheckoutGoodsAcceptanceModalComponent } from './camfil-checkout-goods-acceptance-modal/camfil-checkout-goods-acceptance-modal.component';
 
 const exportedComponents = [
   CamfilCheckoutAddEmailRecipientModalComponent,
@@ -37,7 +38,11 @@ const exportedComponents = [
 
 @NgModule({
   imports: [CamCardsModule, CheckoutPaymentPageModule, SharedModule],
-  declarations: [...exportedComponents, CamfilCheckoutOnestepPageComponent],
+  declarations: [
+    ...exportedComponents,
+    CamfilCheckoutGoodsAcceptanceModalComponent,
+    CamfilCheckoutOnestepPageComponent,
+  ],
   exports: [...exportedComponents],
 })
 export class CamfilCheckoutOnestepPageModule {

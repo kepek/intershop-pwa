@@ -1,5 +1,5 @@
 <div *ngIf="touched">
-  <div *ngFor="let errorValidator of (processedErrorValidators || errorValidators)">
+  <div *ngFor="let errorValidator of processedErrorValidators || errorValidators">
     <mat-error *ngIf="errors && errors[errorValidator.error] && !errors[errorValidator.ifNot]" class="error-field">
       {{ errorValidator.message | translate: getMessageVariables(errorValidator) }}
     </mat-error>

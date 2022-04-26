@@ -206,6 +206,7 @@ export class CreateOrderProductModalComponent implements OnInit, OnDestroy {
       companyName1: addressForm.get('company').value,
       countryCode: this.countryByChannel,
       eligibleShipToAddress: true,
+      goodsAcceptanceNote: addressForm.get('goodsAcceptanceNote').value || '',
     };
   }
 

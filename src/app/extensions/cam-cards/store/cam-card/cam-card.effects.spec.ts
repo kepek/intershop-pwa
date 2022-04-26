@@ -123,22 +123,22 @@ describe('Cam Card Effects', () => {
   describe('loadCamCard$', () => {
     beforeEach(() => {
       store$.dispatch(loginUserSuccess({ customer }));
-      when(camCardServiceMock.getCamCards()).thenReturn(of(camCards));
+      when(camCardServiceMock.getCamCards(false)).thenReturn(of(camCards));
     });
 
     it('should call the CamCardService for loadCamCard', done => {
-      const action = loadCamCards();
+      const action = loadCamCards({ includeAllCustomerCamCards: false });
       actions$ = of(action);
 
       effects.loadCamCards$.subscribe(() => {
-        verify(camCardServiceMock.getCamCards()).once();
+        verify(camCardServiceMock.getCamCards(false)).once();
         done();
       });
     });
 
     it('should map to actions of type LoadCamCardsSuccess', () => {
       const scheduler = Scheduler.get();
-      const action = loadCamCards();
+      const action = loadCamCards({ includeAllCustomerCamCards: false });
       const completion = loadCamCardsSuccess({ camCards });
       const expected$ = cold('502ms c', { c: completion });
 
@@ -150,12 +150,12 @@ describe('Cam Card Effects', () => {
 
     it('should map failed calls to actions of type LoadCamCardFail', () => {
       const scheduler = Scheduler.get();
-      const action = loadCamCards();
+      const action = loadCamCards({ includeAllCustomerCamCards: false });
       const error = makeHttpError({ message: 'invalid' });
       const completion = loadCamCardsFail({ error });
       const expected$ = cold('502ms c', { c: completion });
 
-      when(camCardServiceMock.getCamCards()).thenReturn(throwError(error));
+      when(camCardServiceMock.getCamCards(false)).thenReturn(throwError(error));
       scheduler.run(() => {
         actions$ = hot('a a a', { a: action });
         expect(effects.loadCamCards$).toBeObservable(expected$);

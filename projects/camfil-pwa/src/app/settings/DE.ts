@@ -8,6 +8,7 @@ const camfilConfiguration: CamfilChannelConfiguration = {
   currency: 'EUR',
   icmChannel: 'Camfil-CamfilDE-Site',
   showDutiesAndSurchargesTotalInBasketSummary: true,
+  showGoodsAcceptanceIcon: true,
   showSubTotalInBasketSummary: true,
 };
 
