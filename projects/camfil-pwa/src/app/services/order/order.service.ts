@@ -70,7 +70,7 @@ export class OrderService extends IshOrderService {
     };
 
     if (orderType) {
-      body.orderType = orderType;
+      body.statusCode = orderType;
     }
 
     return this.apiService
