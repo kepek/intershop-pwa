@@ -6,6 +6,7 @@ import { Quote, QuoteStatus, QuoteType } from './quote.model';
 @Injectable({ providedIn: 'root' })
 export class QuoteMapper {
   fromData(quoteData: QuoteData): Quote {
+    debugger;
     if (quoteData) {
       const statusId = this.getPropFromData(quoteData, 'status');
       const requestedDate = this.getPropFromData(quoteData, 'creationDate');

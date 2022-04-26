@@ -24,7 +24,7 @@ import {
 
 import { ofUrl, selectQueryParams, selectRouteParam } from 'ish-core/store/core/router';
 import { setBreadcrumbData } from 'ish-core/store/core/viewconf';
-import { continueCheckoutWithIssues, getCurrentBasketId, loadBasket } from 'ish-core/store/customer/basket';
+import { continueCheckoutWithIssues, getCurrentBasketId, getCurrentBasketOrderType, loadBasket } from 'ish-core/store/customer/basket';
 import { getLoggedInUser } from 'ish-core/store/customer/user';
 import { mapErrorToAction, mapToPayload, mapToPayloadProperty, whenTruthy } from 'ish-core/utils/operators';
 
@@ -54,7 +54,7 @@ export class OrdersEffects {
     @Inject(PLATFORM_ID) protected platformId: string,
     protected store: Store,
     protected translateService: TranslateService
-  ) {}
+  ) { }
 
   /**
    * Creates an order based on the given basket.
@@ -62,9 +62,10 @@ export class OrdersEffects {
   createOrder$ = createEffect(() =>
     this.actions$.pipe(
       ofType(createOrder),
-      withLatestFrom(this.store.select(getCurrentBasketId)),
-      mergeMap(([, basketId]) =>
-        this.orderService.createOrder(basketId, true).pipe(
+      // withLatestFrom(this.store.select(getCurrentBasketId)),
+      withLatestFrom(this.store.select(getCurrentBasketOrderType)),
+      mergeMap(([, basketOrderType]) =>
+        this.orderService.createOrder(basketOrderType.basket?.id, true, basketOrderType.orderType).pipe(
           map(order => createOrderSuccess({ order })),
           mapErrorToAction(createOrderFail)
         )

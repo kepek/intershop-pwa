@@ -34,9 +34,9 @@ export interface AbstractBasket<T> {
   volumeDiscount?: Price;
 }
 
-export interface Basket extends AbstractBasket<LineItem> {}
+export interface Basket extends AbstractBasket<LineItem> { }
 
-export interface BasketView extends AbstractBasket<LineItemView> {}
+export interface BasketView extends AbstractBasket<LineItemView> { }
 
 export const createBasketView = (
   basket: Basket,
@@ -47,15 +47,15 @@ export const createBasketView = (
     ...basket,
     lineItems: basket.lineItems
       ? basket.lineItems.map(li => ({
-          ...li,
-          validationError:
-            validationResults && !validationResults.valid && validationResults.errors
-              ? validationResults.errors.find(error => error.parameters && error.parameters.lineItemId === li.id)
-              : undefined,
-          info:
-            basketInfo && basketInfo.length && basketInfo[0].causes
-              ? basketInfo[0].causes.find(cause => cause.parameters && cause.parameters.lineItemId === li.id)
-              : undefined,
-        }))
+        ...li,
+        validationError:
+          validationResults && !validationResults.valid && validationResults.errors
+            ? validationResults.errors.find(error => error.parameters && error.parameters.lineItemId === li.id)
+            : undefined,
+        info:
+          basketInfo && basketInfo.length && basketInfo[0].causes
+            ? basketInfo[0].causes.find(cause => cause.parameters && cause.parameters.lineItemId === li.id)
+            : undefined,
+      }))
       : [],
   };

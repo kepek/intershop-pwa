@@ -26,7 +26,7 @@ import { CamfilModalDialogComponent, ModalOptions } from '../common/camfil-modal
 export class CamfilCheckoutSummaryComponent extends CamfilBasketCostSummaryComponent {
   @Input() purchaseCurrency: string;
   @Input() editable: boolean;
-  @Output() submit = new EventEmitter();
+  @Output() submit = new EventEmitter<string>();
 
   @ViewChild(CamfilSmallCtaModalComponent) gdprErrorModal: CamfilSmallCtaModalComponent;
 
@@ -88,16 +88,16 @@ export class CamfilCheckoutSummaryComponent extends CamfilBasketCostSummaryCompo
 
   requestQuote() {
     // TODO: Add a param to differentiate between order and quote
-    // this.isLoggedIn$.pipe(take(1), takeUntil(this.destroy$)).subscribe(isLoggedIn => {
-    //   if (isLoggedIn) {
-    //     this.submit.emit();
-    //   } else if (this.guestGdprForm?.valid) {
-    //     this.submit.emit();
-    //   } else {
-    //     this.openGDPRErrorModal();
-    //   }
-    // });
-    this.quoteCreatedModal.show();
+    this.isLoggedIn$.pipe(take(1), takeUntil(this.destroy$)).subscribe(isLoggedIn => {
+      if (isLoggedIn) {
+        this.submit.emit('RFQ');
+      } else if (this.guestGdprForm?.valid) {
+        this.submit.emit('RGQ');
+      } else {
+        this.openGDPRErrorModal();
+      }
+    });
+    // this.quoteCreatedModal.show();
   }
 
   continueShopping() {

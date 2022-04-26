@@ -71,7 +71,7 @@ export class CamfilCheckoutOnestepPageComponent implements OnInit, OnDestroy {
     private checkoutFacade: CheckoutFacade,
     private shoppingFacade: ShoppingFacade,
     private camCardsFacade: CamCardsFacade
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.basketError$ = this.checkoutFacade.basketError$;
@@ -144,9 +144,12 @@ export class CamfilCheckoutOnestepPageComponent implements OnInit, OnDestroy {
     this.checkoutFacade.continue(4);
   }
 
-  submit() {
+  submit(orderType?: string) {
     this.guestForm?.validateGuestForm();
     this.checkErpEmployeeIdExists();
+    if (orderType) {
+      this.checkoutFacade.setBasketOrderType(orderType);
+    }
     this.checkoutFacade.continue(5);
   }
 

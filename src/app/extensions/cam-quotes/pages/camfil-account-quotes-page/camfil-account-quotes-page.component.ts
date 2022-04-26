@@ -112,6 +112,7 @@ export class CamfilAccountQuotesPageComponent implements OnInit {
     this.quotesFacade.quotes$
       .pipe(
         tap(quotes => {
+          debugger;
           this.getCustomersFromQuotes(quotes);
           this.getRequestorsFromQuotes(quotes);
         })

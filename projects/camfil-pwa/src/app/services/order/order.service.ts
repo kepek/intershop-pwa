@@ -53,7 +53,7 @@ export class OrderService extends IshOrderService {
     }
   }
 
-  createOrder(basketId: string, termsAndConditionsAccepted: boolean = false): Observable<Order> {
+  createOrder(basketId: string, termsAndConditionsAccepted: boolean = false, orderType: string = null): Observable<Order> {
     const params = new HttpParams().set('include', this.allOrderIncludes.join());
 
     if (!basketId) {
@@ -63,11 +63,15 @@ export class OrderService extends IshOrderService {
     const externalOrderReference =
       window?.sessionStorage?.getItem(CamfilLoginOnBehalfQueryParams.ERPEmployeeID) || undefined;
 
-    const body = {
+    const body: any = {
       basket: basketId,
       termsAndConditionsAccepted,
       externalOrderReference,
     };
+
+    if (orderType) {
+      body.orderType = orderType;
+    }
 
     return this.apiService
       .post<OrderData>('orders', body, {
