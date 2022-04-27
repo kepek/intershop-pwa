@@ -67,23 +67,25 @@ export class ApiTokenService {
         this.apiToken$.pipe(skip(1)),
       ])
         .pipe(
-          map(([user, basket, orderId, apiToken]): ApiTokenCookie => {
-            if (user) {
-              return { type: 'user', apiToken };
-            } else if (basket) {
-              return { type: 'basket', apiToken };
-            } else if (orderId) {
-              return { type: 'order', apiToken, orderId };
-            } else {
-              const apiTokenCookieString = this.cookiesService.get('apiToken');
-              const apiTokenCookie: ApiTokenCookie = apiTokenCookieString
-                ? JSON.parse(apiTokenCookieString)
-                : undefined;
-              if (apiToken && apiTokenCookie) {
-                return { ...apiTokenCookie, apiToken };
+          map(
+            ([user, basket, orderId, apiToken]): ApiTokenCookie => {
+              if (user) {
+                return { type: 'user', apiToken };
+              } else if (basket) {
+                return { type: 'basket', apiToken };
+              } else if (orderId) {
+                return { type: 'order', apiToken, orderId };
+              } else {
+                const apiTokenCookieString = this.cookiesService.get('apiToken');
+                const apiTokenCookie: ApiTokenCookie = apiTokenCookieString
+                  ? JSON.parse(apiTokenCookieString)
+                  : undefined;
+                if (apiToken && apiTokenCookie) {
+                  return { ...apiTokenCookie, apiToken };
+                }
               }
             }
-          }),
+          ),
           distinctUntilChanged<ApiTokenCookie>(isEqual)
         )
         .subscribe(apiToken => {
