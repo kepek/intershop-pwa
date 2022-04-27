@@ -13,6 +13,7 @@ import { ExtrasModule } from 'ish-core/extras.module';
 import { FeatureToggleModule } from 'ish-core/feature-toggle.module';
 import { IconModule } from 'ish-core/icon.module';
 import { PipesModule } from 'ish-core/pipes.module';
+import { RoleToggleModule } from 'ish-core/role-toggle.module';
 import { MaterialModule } from 'ish-shared/material/material.module';
 import { SharedModule } from 'ish-shared/shared.module';
 import { CamfilFooterComponent } from 'ish-shell/footer/camfil-footer/camfil-footer.component';
@@ -96,6 +97,7 @@ const exportedComponents = [
     NgbCollapseModule,
     NgbDropdownModule,
     PipesModule.forRoot(),
+    RoleToggleModule,
     RouterModule,
     SharedModule,
     TranslateModule,
