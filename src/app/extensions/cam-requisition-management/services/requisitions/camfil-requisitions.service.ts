@@ -267,4 +267,25 @@ export class CamfilRequisitionsService {
       })
       .pipe(concatMap(payload => CamfilRequisitionMapper.fromListData(payload)));
   }
+
+  approveSelectedLineItems(
+    requisitionId: string,
+    lineItemIds: string[],
+    requisition: CamfilRequisition
+  ): Observable<CamfilRequisition> {
+    if (!requisitionId) {
+      return throwError('updateLineItem() called without required requisition id');
+    }
+
+    const params = new HttpParams().set('include', this.allIncludes.join());
+    const body = {
+      ...requisition,
+      lineItemIds,
+    };
+    return this.apiService
+      .patch(`camfilrequisitions/${requisitionId}/approve`, body, {
+        params,
+      })
+      .pipe(map(() => requisition));
+  }
 }

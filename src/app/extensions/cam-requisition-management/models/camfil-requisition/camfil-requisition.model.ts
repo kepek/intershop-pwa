@@ -43,6 +43,7 @@ export interface CamfilRequisition extends CamfilRequisitionBasket {
   userComment: string;
   approval: CamfilRequisitionApproval;
   canApprove?: boolean;
+  partiallyApproved?: boolean;
 }
 
 export interface CamfilRequisitionListFilter {

@@ -32,6 +32,7 @@ export class RequisitionDetailPageComponent implements OnInit, OnDestroy {
   view$: Observable<'buyer' | 'approver'>;
   user$: Observable<User>;
   userPermissions$: Observable<string[]>;
+  partiallyApproved$: Observable<boolean>;
   lineItemsChecked = [];
   requisitionStatus = CamRequisitionStatusValues;
   isEditable$: Observable<boolean>;
@@ -56,6 +57,12 @@ export class RequisitionDetailPageComponent implements OnInit, OnDestroy {
     this.deviceType$ = this.appFacade.deviceType$;
     this.user$ = this.accountFacade.user$;
     this.userPermissions$ = this.accountFacade.userPermissions$;
+    this.partiallyApproved$ = this.context.select('partiallyApproved');
+    this.partiallyApproved$.pipe(takeUntil(this.destroy$)).subscribe(partiallyApproved => {
+      if (partiallyApproved) {
+        this.unavailableProductsModal?.show();
+      }
+    });
     this.isEditable$ = this.requisition$.pipe(map(({ approval }) => this.getIsCamfilRequisitionEditable(approval)));
     this.unavailableProducts$ = this.context.select('unavailableProducts');
     this.unavailableProducts$?.pipe(distinctUntilChanged(), takeUntil(this.destroy$)).subscribe(unavailableProducts => {
@@ -117,10 +124,7 @@ export class RequisitionDetailPageComponent implements OnInit, OnDestroy {
   approveSelectedLineItems(requisition: CamfilRequisition) {
     const { approval } = requisition;
     if (this.getIsCamfilRequisitionEditable(approval)) {
-      this.context.approveCamfilRequisitionLineItem(this.lineItemsChecked, {
-        name: 'approved',
-        value: true,
-      });
+      this.context.approveCamfilRequisitionLineItem(this.lineItemsChecked);
     }
   }
 
