@@ -674,7 +674,7 @@
   "camfil.account.import.line_header_cam_card.text": "Suodatinluettelon rivi",
   "camfil.account.import.line_header_line.text": "Rivi",
   "camfil.account.import.parameter_error.text": "seuraaville parametreille:",
-  "camfil.account.import.show_all_customer_cc.checkbox.text": "(fi_FI)_Show all Cam Cards for customer",
+  "camfil.account.import.show_all_customer_cc.checkbox.text": "Näytä kaikkien käyttäjien suodatinluettelot",
   "camfil.account.login.button.label": "Kirjaudu sisään",
   "camfil.account.login.forgotPassword": "Unohdin salasanani",
   "camfil.account.login.forgotUsername": "Unohdin käyttäjätunnukseni",
