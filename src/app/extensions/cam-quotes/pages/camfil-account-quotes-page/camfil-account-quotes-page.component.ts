@@ -263,7 +263,7 @@ export class CamfilAccountQuotesPageComponent implements OnInit {
   }
 
   approveSelectedQuotes() {
-    this.quotesFacade.approveQuotes(this.selectedQuotes.map(q => q.id));
+    this.quotesFacade.approveQuotes(this.selectedQuotes.map(q => q.camfilQuoteNumber));
   }
 
   approveSelectedQuotesSuccess() {
@@ -280,7 +280,7 @@ export class CamfilAccountQuotesPageComponent implements OnInit {
     dialog.componentInstance.reason = this.lastRejectReason;
     dialog.componentInstance.onChange.subscribe(({ reason }) => this.lastRejectReason = reason);
     dialog.componentInstance.onConfirm.subscribe(result => {
-      this.quotesFacade.rejectQuotes(this.selectedQuotes.map(q => q.id), result.reason);
+      this.quotesFacade.rejectQuotes(this.selectedQuotes.map(q => q.camfilQuoteNumber), result.reason);
     });
   }
 

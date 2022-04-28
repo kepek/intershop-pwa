@@ -80,13 +80,17 @@ export class QuotesService {
 
   approveQuote(quoteId: string): Observable<any> {
     // TODO: Waiting for real api call
-    // return this.apiSrv.b2bUserEndpoint().post<QuoteItemCreated>(`camfilquotation/${quoteId}/approve`);
-    return of({ id: quoteId }).pipe(delay(500));
+    return this.apiSrv
+      .b2bUserEndpoint()
+      .post('camfilquotation', { number: quoteId, submitted: true });
+    // return of({ id: quoteId }).pipe(delay(500));
   }
 
   rejectQuote(quoteId: string, reason: string): Observable<any> {
     // TODO: Waiting for real api call
-    // return this.apiSrv.b2bUserEndpoint().post<QuoteItemCreated>(`camfilquotation/${quoteId}/reject`, { reason });
-    return of({ id: quoteId, reason }).pipe(delay(500));
+    return this.apiSrv
+      .b2bUserEndpoint()
+      .post('camfilquotation', { number: quoteId, rejected: true, sellerComment: reason });
+    // return of({ id: quoteId, reason }).pipe(delay(500));
   }
 }

@@ -94,11 +94,11 @@ export class CamfilAccountQuoteDetailPageComponent implements OnInit, OnDestroy 
   }
 
   reject() {
-    this.quotesFacade.rejectQuote(this.quoteDetails.id, '');
+    this.quotesFacade.rejectQuote(this.quoteDetails.camfilQuoteNumber, '');
   }
 
   approve() {
-    this.quotesFacade.approveQuote(this.quoteDetails.id);
+    this.quotesFacade.approveQuote(this.quoteDetails.camfilQuoteNumber);
   }
 
   onResize() {
