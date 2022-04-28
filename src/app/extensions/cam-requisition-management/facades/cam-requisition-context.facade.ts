@@ -20,6 +20,7 @@ import {
   removeProductFromCamfilRequisition,
   updateCamfilRequisitionStatus,
 } from '../store/camfil-requisitions';
+import { LineItem } from 'ish-core/models/line-item/line-item.model';
 
 @Injectable()
 export class CamfilRequisitionContextFacade
@@ -29,6 +30,7 @@ export class CamfilRequisitionContextFacade
     error: HttpError;
     entity: CamfilRequisition;
     partiallyApproved: boolean;
+    lineItems: LineItem[];
     unavailableProducts: { sku: string; availability: boolean }[];
     view: 'buyer' | 'approver';
   }>
@@ -97,6 +99,15 @@ export class CamfilRequisitionContextFacade
         whenTruthy(),
         distinctUntilChanged(),
         map(({ partiallyApproved }) => partiallyApproved)
+      )
+    );
+
+    this.connect(
+      'lineItems',
+      this.select('entity').pipe(
+        whenTruthy(),
+        distinctUntilChanged(),
+        map(({ lineItems }) => lineItems)
       )
     );
   }

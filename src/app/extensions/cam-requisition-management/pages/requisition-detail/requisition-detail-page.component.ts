@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild } from
 import { MatDialog } from '@angular/material/dialog';
 import { User } from '@sentry/browser';
 import { QuickAddProduct } from 'camfil-pwa/models/camfil-quick-add-product/camfil-quick-add-product.model';
-import { Observable, Subject } from 'rxjs';
+import { combineLatest, Observable, Subject } from 'rxjs';
 import { distinctUntilChanged, map, take, takeUntil } from 'rxjs/operators';
 import { ModalAddNewProductComponent } from 'src/app/extensions/cam-cards/pages/account-cam-card-detail/modal-add-new-product/modal-add-new-product.component';
 
@@ -16,6 +16,7 @@ import { CamfilRequisitionContextFacade } from '../../facades/cam-requisition-co
 import { CamRequisitionStatusValues } from '../../models/camfil-requisition/camfil-requisition-status-values';
 import { CamfilRequisitionHelper } from '../../models/camfil-requisition/camfil-requisition.helper';
 import { CamfilRequisition } from '../../models/camfil-requisition/camfil-requisition.model';
+import { LineItem } from 'ish-core/models/line-item/line-item.model';
 
 @Component({
   selector: 'camfil-requisition-detail-page',
@@ -37,6 +38,7 @@ export class RequisitionDetailPageComponent implements OnInit, OnDestroy {
   requisitionStatus = CamRequisitionStatusValues;
   isEditable$: Observable<boolean>;
   unavailableProducts$: Observable<{ sku: string; availability: boolean }[]>;
+  lineItems$: Observable<LineItem[]>;
   getIsCamfilRequisitionEditable = CamfilRequisitionHelper.getIsCamfilRequisitionEditable;
   @ViewChild('unavailableProductsModal') unavailableProductsModal: CamfilModalDialogComponent<any>;
 
@@ -58,11 +60,6 @@ export class RequisitionDetailPageComponent implements OnInit, OnDestroy {
     this.user$ = this.accountFacade.user$;
     this.userPermissions$ = this.accountFacade.userPermissions$;
     this.partiallyApproved$ = this.context.select('partiallyApproved');
-    this.partiallyApproved$.pipe(takeUntil(this.destroy$)).subscribe(partiallyApproved => {
-      if (partiallyApproved) {
-        this.unavailableProductsModal?.show();
-      }
-    });
     this.isEditable$ = this.requisition$.pipe(map(({ approval }) => this.getIsCamfilRequisitionEditable(approval)));
     this.unavailableProducts$ = this.context.select('unavailableProducts');
     this.unavailableProducts$?.pipe(distinctUntilChanged(), takeUntil(this.destroy$)).subscribe(unavailableProducts => {
@@ -70,6 +67,7 @@ export class RequisitionDetailPageComponent implements OnInit, OnDestroy {
         this.unavailableProductsModal?.show();
       }
     });
+    this.lineItems$ = this.context.select('lineItems');
   }
 
   approveRequisition() {
@@ -123,9 +121,30 @@ export class RequisitionDetailPageComponent implements OnInit, OnDestroy {
 
   approveSelectedLineItems(requisition: CamfilRequisition) {
     const { approval } = requisition;
+
     if (this.getIsCamfilRequisitionEditable(approval)) {
-      this.context.approveCamfilRequisitionLineItem(this.lineItemsChecked);
+      combineLatest([this.unavailableProducts$, this.lineItems$])
+        .pipe(take(1), takeUntil(this.destroy$))
+        .subscribe(([unavailableProducts, lineItems]) => {
+          if (unavailableProducts) {
+            const unavailableProductsSkus = unavailableProducts.map(product => product.sku);
+            const unavailableLineItems = lineItems.filter(li =>
+              this.isSelectedLineItemUnavailable(unavailableProductsSkus, li.productSKU)
+            );
+            if (unavailableLineItems.length) {
+              this.unavailableProductsModal?.show();
+            } else {
+              this.context.approveCamfilRequisitionLineItem(this.lineItemsChecked);
+            }
+          } else {
+            this.context.approveCamfilRequisitionLineItem(this.lineItemsChecked);
+          }
+        });
     }
+  }
+
+  isSelectedLineItemUnavailable(unavailableProductsSkus: string[], lineItemProductSku: string): boolean {
+    return unavailableProductsSkus.includes(lineItemProductSku);
   }
 
   ngOnDestroy() {
