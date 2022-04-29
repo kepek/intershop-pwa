@@ -1,7 +1,7 @@
 import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { defaultIfEmpty, delay, map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { defaultIfEmpty, map } from 'rxjs/operators';
 
 import { ApiService, unpackEnvelope } from 'ish-core/services/api/api.service';
 
