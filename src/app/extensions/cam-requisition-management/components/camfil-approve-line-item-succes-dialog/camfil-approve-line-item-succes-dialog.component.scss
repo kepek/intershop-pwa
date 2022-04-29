@@ -1,0 +1,36 @@
+@import '~src/styles/themes/camfil/mixins.scss';
+@import '~src/styles/themes/camfil/variables';
+
+.success-modal {
+  &__content {
+    padding: $space-box;
+  }
+  &__header {
+    position: relative;
+    text-align: center;
+    &--text {
+      display: inline-block;
+      margin-top: $space-box;
+      text-transform: none;
+      @include font-size-subtitle1;
+    }
+    .success-modal__close-icon {
+      position: absolute;
+      right: 0;
+      opacity: 1;
+    }
+  }
+
+  &__links {
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    margin-top: $space-box;
+
+    &--link {
+      margin-bottom: 0;
+      font-size: $font-size-base;
+      font-weight: 700;
+    }
+  }
+}

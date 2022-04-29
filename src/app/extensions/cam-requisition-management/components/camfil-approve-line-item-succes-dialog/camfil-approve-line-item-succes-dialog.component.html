@@ -1,0 +1,27 @@
+<ng-template #modal let-successModal>
+  <div class="success-modal__content mat-dialog-container">
+    <div class="success-modal__header">
+      <h2 class="success-modal__header--text mt-4">
+        {{ 'camfil.account.requisitions.approvals.approved.lineitems.success.header' | translate }}
+      </h2>
+      <button
+        type="button"
+        class="close success-modal__close-icon"
+        [title]="'dialog.close.text' | translate"
+        [attr.aria-label]="'dialog.close.text' | translate"
+        (click)="hide()"
+      >
+        <mat-icon svgIcon="inactive" aria-hidden="true"></mat-icon>
+      </button>
+    </div>
+
+    <div class="modal-footer justify-content-center">
+      <button mat-flat-button type="submit" (click)="goToOrderHistoryPage()" color="primary">
+        {{ 'camfil.account.requisitions.approvals.approved.lineitems.success.go_to_orders.button' | translate }}
+      </button>
+      <button mat-stroked-button class="ml-2" (click)="successModal.close('')">
+        {{ 'camfil.account.requisitions.approvals.approved.lineitems.success.stay_page.button' | translate }}
+      </button>
+    </div>
+  </div>
+</ng-template>

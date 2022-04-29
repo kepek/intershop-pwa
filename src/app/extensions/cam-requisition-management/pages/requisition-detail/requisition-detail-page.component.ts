@@ -2,21 +2,22 @@ import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild } from
 import { MatDialog } from '@angular/material/dialog';
 import { User } from '@sentry/browser';
 import { QuickAddProduct } from 'camfil-pwa/models/camfil-quick-add-product/camfil-quick-add-product.model';
-import { combineLatest, Observable, Subject } from 'rxjs';
+import { Observable, Subject, combineLatest } from 'rxjs';
 import { distinctUntilChanged, map, take, takeUntil } from 'rxjs/operators';
 import { ModalAddNewProductComponent } from 'src/app/extensions/cam-cards/pages/account-cam-card-detail/modal-add-new-product/modal-add-new-product.component';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
 import { AppFacade } from 'ish-core/facades/app.facade';
 import { HttpError } from 'ish-core/models/http-error/http-error.model';
+import { LineItem } from 'ish-core/models/line-item/line-item.model';
 import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
 import { CamfilModalDialogComponent } from 'ish-shared/components/common/camfil-modal-dialog/camfil-modal-dialog.component';
 
+import { CamfilApproveLineItemSuccesDialogComponent } from '../../components/camfil-approve-line-item-succes-dialog/camfil-approve-line-item-succes-dialog.component';
 import { CamfilRequisitionContextFacade } from '../../facades/cam-requisition-context.facade';
 import { CamRequisitionStatusValues } from '../../models/camfil-requisition/camfil-requisition-status-values';
 import { CamfilRequisitionHelper } from '../../models/camfil-requisition/camfil-requisition.helper';
 import { CamfilRequisition } from '../../models/camfil-requisition/camfil-requisition.model';
-import { LineItem } from 'ish-core/models/line-item/line-item.model';
 
 @Component({
   selector: 'camfil-requisition-detail-page',
@@ -41,6 +42,8 @@ export class RequisitionDetailPageComponent implements OnInit, OnDestroy {
   lineItems$: Observable<LineItem[]>;
   getIsCamfilRequisitionEditable = CamfilRequisitionHelper.getIsCamfilRequisitionEditable;
   @ViewChild('unavailableProductsModal') unavailableProductsModal: CamfilModalDialogComponent<any>;
+  @ViewChild('approveLineItemsSuccessDialog')
+  approveLineItemsSuccessDialog: CamfilApproveLineItemSuccesDialogComponent;
 
   private destroy$ = new Subject<void>();
 
@@ -60,6 +63,11 @@ export class RequisitionDetailPageComponent implements OnInit, OnDestroy {
     this.user$ = this.accountFacade.user$;
     this.userPermissions$ = this.accountFacade.userPermissions$;
     this.partiallyApproved$ = this.context.select('partiallyApproved');
+    this.partiallyApproved$.pipe(distinctUntilChanged(), takeUntil(this.destroy$)).subscribe(success => {
+      if (success) {
+        this.openApprovedLineItemsSuccessDialog();
+      }
+    });
     this.isEditable$ = this.requisition$.pipe(map(({ approval }) => this.getIsCamfilRequisitionEditable(approval)));
     this.unavailableProducts$ = this.context.select('unavailableProducts');
     this.unavailableProducts$?.pipe(distinctUntilChanged(), takeUntil(this.destroy$)).subscribe(unavailableProducts => {
@@ -102,6 +110,7 @@ export class RequisitionDetailPageComponent implements OnInit, OnDestroy {
   }
 
   toggleAllLineItems(lineItemsIds: string[]) {
+    console.log('lineItemsIds', lineItemsIds);
     this.lineItemsChecked = lineItemsIds;
   }
 
@@ -141,6 +150,10 @@ export class RequisitionDetailPageComponent implements OnInit, OnDestroy {
           }
         });
     }
+  }
+
+  openApprovedLineItemsSuccessDialog() {
+    this.approveLineItemsSuccessDialog?.show();
   }
 
   isSelectedLineItemUnavailable(unavailableProductsSkus: string[], lineItemProductSku: string): boolean {

@@ -4,6 +4,7 @@ import { RxState } from '@rx-angular/state';
 import { distinctUntilChanged, filter, map, switchMap, tap } from 'rxjs/operators';
 
 import { HttpError } from 'ish-core/models/http-error/http-error.model';
+import { LineItem } from 'ish-core/models/line-item/line-item.model';
 import { selectRouteParam, selectUrl } from 'ish-core/store/core/router';
 import { getProducts } from 'ish-core/store/shopping/products';
 import { whenTruthy } from 'ish-core/utils/operators';
@@ -20,7 +21,6 @@ import {
   removeProductFromCamfilRequisition,
   updateCamfilRequisitionStatus,
 } from '../store/camfil-requisitions';
-import { LineItem } from 'ish-core/models/line-item/line-item.model';
 
 @Injectable()
 export class CamfilRequisitionContextFacade
