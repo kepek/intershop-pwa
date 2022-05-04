@@ -1670,7 +1670,7 @@
   "shopping_cart.read_more.link": "Afficher plus",
   "shopping_cart.remove.item.button.label": "Supprimer",
   "shopping_cart.total.heading": "Total",
-  "shopping_cart.transaction.text": "Toutes les transactions sont sûres et sécurisées.",
+  "shopping_cart.transaction.text": "",
   "shopping_cart.variation.save.button.label": "Sauvegarder",
   "store.dialog.button.ok": "OK",
   "tacton.bom.name.label": "Identifiant produit :",
