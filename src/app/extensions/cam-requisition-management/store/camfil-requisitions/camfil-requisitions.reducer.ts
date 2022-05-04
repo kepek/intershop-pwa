@@ -7,6 +7,8 @@ import { setErrorOn, setLoadingOn, unsetLoadingAndErrorOn } from 'ish-core/utils
 import { CamfilRequisition } from '../../models/camfil-requisition/camfil-requisition.model';
 
 import {
+  approveCamfilRequisitionLineItems,
+  approveCamfilRequisitionLineItemsSuccess,
   checkProductAvailabilityFail,
   createCamfilRequisition,
   createCamfilRequisitionFail,
@@ -153,6 +155,22 @@ export const requisitionsReducer = createReducer(
       lineItems: updateLineItems,
     };
 
+    return camfilRequisitionsAdapter.upsertOne(updatedRequisition, state);
+  }),
+  on(approveCamfilRequisitionLineItems, (state: CamfilRequisitionsState, action) => {
+    const { requisition } = action.payload;
+    const updatedRequisition = {
+      ...requisition,
+      partiallyApproved: false,
+    };
+    return camfilRequisitionsAdapter.upsertOne(updatedRequisition, state);
+  }),
+  on(approveCamfilRequisitionLineItemsSuccess, (state: CamfilRequisitionsState, action) => {
+    const { requisition } = action.payload;
+    const updatedRequisition = {
+      ...requisition,
+      partiallyApproved: true,
+    };
     return camfilRequisitionsAdapter.upsertOne(updatedRequisition, state);
   })
 );

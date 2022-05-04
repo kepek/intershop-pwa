@@ -242,12 +242,15 @@ export const approveCamfilRequisitionLineItems = createAction(
   payload<{
     requisitionId?: string;
     lineItemIds: string[];
-    lineItemAttribute: Attribute;
+    requisition: CamfilRequisition;
   }>()
 );
 
 export const approveCamfilRequisitionLineItemsSuccess = createAction(
-  '[Camfil Requisitions API] Approve Line Items Success'
+  '[Camfil Requisitions API] Approve Line Items Success',
+  payload<{
+    requisition: CamfilRequisition;
+  }>()
 );
 
 export const approveCamfilRequisitionLineItemsFail = createAction(

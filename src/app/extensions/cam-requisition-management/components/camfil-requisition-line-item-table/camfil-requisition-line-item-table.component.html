@@ -165,7 +165,7 @@
         <camfil-product-attribute
           [name]="'camfil.cam_card.product.list_price.label' | translate"
           [overflowVisible]="true"
-          [value]="pli?.price | camfilPriceSummary: pli?.quantity?.value | ishPrice"
+          [value]="pli?.singleBasePrice | ishPrice"
         ></camfil-product-attribute>
       </td>
     </ng-container>
@@ -178,7 +178,7 @@
         <camfil-product-attribute
           [name]="'camfil.cam_card.product.your_price.label' | translate"
           [overflowVisible]="true"
-          [value]="pli?.price | camfilPriceSummary: pli?.quantity?.value | ishPrice"
+          [value]="pli?.singleBasePrice | ishPrice"
         ></camfil-product-attribute>
       </td>
     </ng-container>
@@ -259,16 +259,17 @@
               ></camfil-requisition-line-item-quantity>
             </ng-container>
           </div>
+
           <div class="col-7 d-flex align-items-center prices">
             <camfil-product-attribute
               [name]="'camfil.cam_card.product.list_price.label' | translate"
               [overflowVisible]="true"
-              [value]="pli?.listPrice | camfilPriceSummary: pli?.quantity?.value | ishPrice"
+              [value]="pli?.singleBasePrice | camfilPriceSummary: pli?.quantity?.value | ishPrice"
             ></camfil-product-attribute>
             <camfil-product-attribute
               [name]="'camfil.cam_card.product.your_price.label' | translate"
               [overflowVisible]="true"
-              [value]="pli.price | ishPrice"
+              [value]="pli.singleBasePrice | ishPrice"
             ></camfil-product-attribute>
           </div>
         </div>

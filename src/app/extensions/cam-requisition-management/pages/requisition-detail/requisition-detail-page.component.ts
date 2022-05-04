@@ -2,16 +2,18 @@ import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild } from
 import { MatDialog } from '@angular/material/dialog';
 import { User } from '@sentry/browser';
 import { QuickAddProduct } from 'camfil-pwa/models/camfil-quick-add-product/camfil-quick-add-product.model';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, combineLatest } from 'rxjs';
 import { distinctUntilChanged, map, take, takeUntil } from 'rxjs/operators';
 import { ModalAddNewProductComponent } from 'src/app/extensions/cam-cards/pages/account-cam-card-detail/modal-add-new-product/modal-add-new-product.component';
 
 import { AccountFacade } from 'ish-core/facades/account.facade';
 import { AppFacade } from 'ish-core/facades/app.facade';
 import { HttpError } from 'ish-core/models/http-error/http-error.model';
+import { LineItem } from 'ish-core/models/line-item/line-item.model';
 import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
 import { CamfilModalDialogComponent } from 'ish-shared/components/common/camfil-modal-dialog/camfil-modal-dialog.component';
 
+import { CamfilApproveLineItemSuccesDialogComponent } from '../../components/camfil-approve-line-item-succes-dialog/camfil-approve-line-item-succes-dialog.component';
 import { CamfilRequisitionContextFacade } from '../../facades/cam-requisition-context.facade';
 import { CamRequisitionStatusValues } from '../../models/camfil-requisition/camfil-requisition-status-values';
 import { CamfilRequisitionHelper } from '../../models/camfil-requisition/camfil-requisition.helper';
@@ -32,12 +34,16 @@ export class RequisitionDetailPageComponent implements OnInit, OnDestroy {
   view$: Observable<'buyer' | 'approver'>;
   user$: Observable<User>;
   userPermissions$: Observable<string[]>;
+  partiallyApproved$: Observable<boolean>;
   lineItemsChecked = [];
   requisitionStatus = CamRequisitionStatusValues;
   isEditable$: Observable<boolean>;
   unavailableProducts$: Observable<{ sku: string; availability: boolean }[]>;
+  lineItems$: Observable<LineItem[]>;
   getIsCamfilRequisitionEditable = CamfilRequisitionHelper.getIsCamfilRequisitionEditable;
   @ViewChild('unavailableProductsModal') unavailableProductsModal: CamfilModalDialogComponent<any>;
+  @ViewChild('approveLineItemsSuccessDialog')
+  approveLineItemsSuccessDialog: CamfilApproveLineItemSuccesDialogComponent;
 
   private destroy$ = new Subject<void>();
 
@@ -56,6 +62,12 @@ export class RequisitionDetailPageComponent implements OnInit, OnDestroy {
     this.deviceType$ = this.appFacade.deviceType$;
     this.user$ = this.accountFacade.user$;
     this.userPermissions$ = this.accountFacade.userPermissions$;
+    this.partiallyApproved$ = this.context.select('partiallyApproved');
+    this.partiallyApproved$?.pipe(distinctUntilChanged(), takeUntil(this.destroy$)).subscribe(success => {
+      if (success) {
+        this.openApprovedLineItemsSuccessDialog();
+      }
+    });
     this.isEditable$ = this.requisition$.pipe(map(({ approval }) => this.getIsCamfilRequisitionEditable(approval)));
     this.unavailableProducts$ = this.context.select('unavailableProducts');
     this.unavailableProducts$?.pipe(distinctUntilChanged(), takeUntil(this.destroy$)).subscribe(unavailableProducts => {
@@ -63,6 +75,7 @@ export class RequisitionDetailPageComponent implements OnInit, OnDestroy {
         this.unavailableProductsModal?.show();
       }
     });
+    this.lineItems$ = this.context.select('lineItems');
   }
 
   approveRequisition() {
@@ -97,6 +110,7 @@ export class RequisitionDetailPageComponent implements OnInit, OnDestroy {
   }
 
   toggleAllLineItems(lineItemsIds: string[]) {
+    console.log('lineItemsIds', lineItemsIds);
     this.lineItemsChecked = lineItemsIds;
   }
 
@@ -116,12 +130,34 @@ export class RequisitionDetailPageComponent implements OnInit, OnDestroy {
 
   approveSelectedLineItems(requisition: CamfilRequisition) {
     const { approval } = requisition;
+
     if (this.getIsCamfilRequisitionEditable(approval)) {
-      this.context.approveCamfilRequisitionLineItem(this.lineItemsChecked, {
-        name: 'approved',
-        value: true,
-      });
+      combineLatest([this.unavailableProducts$, this.lineItems$])
+        .pipe(take(1), takeUntil(this.destroy$))
+        .subscribe(([unavailableProducts, lineItems]) => {
+          if (unavailableProducts) {
+            const unavailableProductsSkus = unavailableProducts.map(product => product.sku);
+            const unavailableLineItems = lineItems.filter(li =>
+              this.isSelectedLineItemUnavailable(unavailableProductsSkus, li.productSKU)
+            );
+            if (unavailableLineItems.length) {
+              this.unavailableProductsModal?.show();
+            } else {
+              this.context.approveCamfilRequisitionLineItem(this.lineItemsChecked);
+            }
+          } else {
+            this.context.approveCamfilRequisitionLineItem(this.lineItemsChecked);
+          }
+        });
     }
+  }
+
+  openApprovedLineItemsSuccessDialog() {
+    this.approveLineItemsSuccessDialog?.show();
+  }
+
+  isSelectedLineItemUnavailable(unavailableProductsSkus: string[], lineItemProductSku: string): boolean {
+    return unavailableProductsSkus.includes(lineItemProductSku);
   }
 
   ngOnDestroy() {

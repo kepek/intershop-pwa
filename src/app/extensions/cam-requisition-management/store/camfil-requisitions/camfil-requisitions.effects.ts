@@ -22,6 +22,9 @@ import {
   addProductToCamfilRequisition,
   addProductToCamfilRequisitionFail,
   addProductToCamfilRequisitionSuccess,
+  approveCamfilRequisitionLineItems,
+  approveCamfilRequisitionLineItemsFail,
+  approveCamfilRequisitionLineItemsSuccess,
   checkProductAvailabilityFail,
   createCamfilRequisition,
   createCamfilRequisitionFail,
@@ -385,6 +388,19 @@ export class CamfilRequisitionsEffects {
         this.requisitionsService.updateLineItem(requisitionId, lineItemUpdate).pipe(
           map(() => updateCamfilRequisitionLineItemSuccess({ requisitionId, lineItemUpdate })),
           mapErrorToAction(updateCamfilRequisitionLineItemFail)
+        )
+      )
+    )
+  );
+
+  approveCamfilRequisitionLineItems$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(approveCamfilRequisitionLineItems),
+      mapToPayload(),
+      mergeMap(({ requisitionId, lineItemIds, requisition }) =>
+        this.requisitionsService.approveSelectedLineItems(requisitionId, lineItemIds, requisition).pipe(
+          map(() => approveCamfilRequisitionLineItemsSuccess({ requisition })),
+          mapErrorToAction(approveCamfilRequisitionLineItemsFail)
         )
       )
     )
