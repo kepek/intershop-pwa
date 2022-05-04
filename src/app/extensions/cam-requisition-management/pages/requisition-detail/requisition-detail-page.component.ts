@@ -63,7 +63,7 @@ export class RequisitionDetailPageComponent implements OnInit, OnDestroy {
     this.user$ = this.accountFacade.user$;
     this.userPermissions$ = this.accountFacade.userPermissions$;
     this.partiallyApproved$ = this.context.select('partiallyApproved');
-    this.partiallyApproved$.pipe(distinctUntilChanged(), takeUntil(this.destroy$)).subscribe(success => {
+    this.partiallyApproved$?.pipe(distinctUntilChanged(), takeUntil(this.destroy$)).subscribe(success => {
       if (success) {
         this.openApprovedLineItemsSuccessDialog();
       }
