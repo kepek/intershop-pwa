@@ -798,6 +798,7 @@
   "camfil.account.requisitions.approvals.rejected.comment": "(fi_FI)_Reject comment",
   "camfil.account.requisitions.approvals.rejectedby": "fi_Rejected by",
   "camfil.account.requisitions.approvals.requestedby": "fi_Requested by",
+  "camfil.account.requisitions.summary.total_quantity": "(fi_FI)_Total auantity",
   "camfil.account.send_password.message": "Sähköpostiosoitteeseesi on lähetetty linkki. Seuraa linkkiä ja vaihda salasana.",
   "camfil.account.send_username.message": "Käyttäjätunnus on lähetetty sähköpostiosoitteeseesi.",
   "camfil.account.update_password.button.aria": "Vaihda salasana",

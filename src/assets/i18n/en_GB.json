@@ -798,6 +798,7 @@
   "camfil.account.requisitions.approvals.rejected.comment": "Reject comment",
   "camfil.account.requisitions.approvals.rejectedby": "Rejected by",
   "camfil.account.requisitions.approvals.requestedby": "Requested by",
+  "camfil.account.requisitions.summary.total_quantity": "Total auantity",
   "camfil.account.send_password.message": "An e-mail with a link has been sent to your e-mail address. Please follow this link to change your password.",
   "camfil.account.send_username.message": "An e-mail with usernames has been sent to your e-mail address.",
   "camfil.account.update_password.button.aria": "Change Password",

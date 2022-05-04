@@ -22,6 +22,8 @@ import { PriceHelper } from 'ish-core/models/price/price.model';
 })
 export class CamfilBasketCostSummaryComponent implements OnInit {
   @Input() totals: BasketTotal;
+  @Input() lineItemCount?: number;
+  @Input() requisitionSummary = false;
 
   taxTranslation$: Observable<string>;
   invert = PriceHelper.invert;

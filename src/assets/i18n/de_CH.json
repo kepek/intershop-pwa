@@ -786,6 +786,7 @@
   "camfil.account.requisitions.approvals.rejected.comment": "Kommentar ablehnen",
   "camfil.account.requisitions.approvals.rejectedby": "Abgelehnt von",
   "camfil.account.requisitions.approvals.requestedby": "Angefordert von",
+  "camfil.account.requisitions.summary.total_quantity": "(de_CH)_Total auantity",
   "camfil.account.send_password.message": "Eine E-Mail mit einem Link wurde an Ihre E-Mail-Adresse gesendet. Bitte klicken Sie auf diesen Link um Ihr Passwort zu ändern.",
   "camfil.account.send_username.message": "Eine E-Mail mit Benutzernamen wurde an Ihre E-Mail-Adresse gesendet.",
   "camfil.account.update_password.button.aria": "Passwort ändern",

@@ -40,6 +40,8 @@ export class CamfilRequisitionMapper {
         payloadData.data.calculated = true;
         const lineItems = CamfilRequisitionMapper.getLineItemsData(included);
         const approvalStatus = CamfilRequisitionMapper.getApprovalStatus(data.approval);
+        const lineItemCount = CamfilRequisitionMapper.getLineItemsQuantityCount(lineItems);
+
         return {
           ...BasketMapper.fromData(payloadData),
           id: data.basketId,
@@ -52,7 +54,7 @@ export class CamfilRequisitionMapper {
           phoneNumber: data.phoneNumber,
           info: data.info,
           userComment: data.userComment,
-          lineItemCount: data.lineItemCount,
+          lineItemCount,
           lineItems,
           requisitionCustomer: CamfilRequisitionMapper.getCustomer(data),
           shippingAddress: data.shippingAddress,
@@ -81,6 +83,7 @@ export class CamfilRequisitionMapper {
         .map(data => ({
           ...CamfilRequisitionMapper.fromData({ ...payload, data }),
           totals: {
+            itemQuantityTotal: 0,
             itemTotal: data.totals ? PriceItemMapper.fromPriceItem(data.totals.itemTotal) : undefined,
             total: data.totals ? PriceItemMapper.fromPriceItem(data.totals.grandTotal) : emptyPriceItem,
             isEstimated: false,
@@ -141,5 +144,9 @@ export class CamfilRequisitionMapper {
     };
 
     return statusDictionary[status];
+  }
+
+  static getLineItemsQuantityCount(lineItemsData: LineItem[]) {
+    return lineItemsData.reduce((a, b) => a + b.quantity.value, 0);
   }
 }

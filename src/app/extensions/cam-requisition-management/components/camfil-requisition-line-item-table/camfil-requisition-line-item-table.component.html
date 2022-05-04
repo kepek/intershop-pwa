@@ -165,7 +165,7 @@
         <camfil-product-attribute
           [name]="'camfil.cam_card.product.list_price.label' | translate"
           [overflowVisible]="true"
-          [value]="pli?.singleBasePrice | camfilPriceSummary: pli?.quantity?.value | ishPrice"
+          [value]="pli?.singleBasePrice | ishPrice"
         ></camfil-product-attribute>
       </td>
     </ng-container>
@@ -178,7 +178,7 @@
         <camfil-product-attribute
           [name]="'camfil.cam_card.product.your_price.label' | translate"
           [overflowVisible]="true"
-          [value]="pli?.singleBasePrice | camfilPriceSummary: pli?.quantity?.value | ishPrice"
+          [value]="pli?.singleBasePrice | ishPrice"
         ></camfil-product-attribute>
       </td>
     </ng-container>

@@ -798,6 +798,7 @@
   "camfil.account.requisitions.approvals.rejected.comment": "(sv_SE)_Reject comment",
   "camfil.account.requisitions.approvals.rejectedby": "sv_Rejected by",
   "camfil.account.requisitions.approvals.requestedby": "sv_Requested by",
+  "camfil.account.requisitions.summary.total_quantity": "(sv_SE)_Total auantity",
   "camfil.account.send_password.message": "Ett mail har skickats med en länk till din e-postadress. Klicka på länken för att ändra ditt lösenord.",
   "camfil.account.send_username.message": "Ett mail med ditt användarnamn har skickats till din e-postadress.",
   "camfil.account.update_password.button.aria": "Ändra lösenord",

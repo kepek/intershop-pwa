@@ -798,6 +798,7 @@
   "camfil.account.requisitions.approvals.rejected.comment": "Rifiuta il commento",
   "camfil.account.requisitions.approvals.rejectedby": "Rifiutato da",
   "camfil.account.requisitions.approvals.requestedby": "Richiesto da",
+  "camfil.account.requisitions.summary.total_quantity": "(it_IT)_Total auantity",
   "camfil.account.send_password.message": "Una e-mail con un link è stata inviata al tuo indirizzo e-mail. Segui questo link per cambiare la tua password.",
   "camfil.account.send_username.message": "Una e-mail con i nomi utente è stata inviata al tuo indirizzo e-mail.",
   "camfil.account.update_password.button.aria": "Cambiare la password",
