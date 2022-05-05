@@ -76,7 +76,7 @@ export class CamfilRequisitionsListComponent implements OnInit, OnChanges, After
       if (!this.filteredValues?.camfilRequisitionStatus) {
         this.filteredValues = {
           ...this.filteredValues,
-          camfilRequisitionStatus: ['Pending', 'Approved'],
+          camfilRequisitionStatus: ['Pending', 'Approved', 'Partial Approved'],
         };
 
         if (this.filteredValues.camfilRequisitionStatus && this.filteredValues.camfilRequisitionStatus.length) {
@@ -240,6 +240,11 @@ export class CamfilRequisitionsListComponent implements OnInit, OnChanges, After
         approvalStatusName: 'account.requisitions.approvals.navtab.waiting',
         camfilRequisitionStatusName: 'account.requisitions.requisitions.navtab.pending',
         value: 'Pending',
+      },
+      {
+        approvalStatusName: 'account.requisitions.approvals.navtab.partially_approved',
+        camfilRequisitionStatusName: 'account.requisitions.requisitions.navtab.partly_approved',
+        value: 'Partial Approved',
       },
       {
         approvalStatusName: 'account.requisitions.approvals.navtab.rejected',

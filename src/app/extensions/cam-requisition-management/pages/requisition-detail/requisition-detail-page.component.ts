@@ -80,7 +80,7 @@ export class RequisitionDetailPageComponent implements OnInit, OnDestroy {
 
   approveRequisition() {
     this.unavailableProducts$.pipe(take(1)).subscribe(unavailableProducts => {
-      if (unavailableProducts) {
+      if (unavailableProducts?.length) {
         this.unavailableProductsModal?.show();
       } else {
         this.context.approveRequisition$();
@@ -110,7 +110,6 @@ export class RequisitionDetailPageComponent implements OnInit, OnDestroy {
   }
 
   toggleAllLineItems(lineItemsIds: string[]) {
-    console.log('lineItemsIds', lineItemsIds);
     this.lineItemsChecked = lineItemsIds;
   }
 

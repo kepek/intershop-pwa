@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { QuickAddProduct } from 'camfil-pwa/models/camfil-quick-add-product/camfil-quick-add-product.model';
 import { ModalAddNewProductComponent } from 'src/app/extensions/cam-cards/pages/account-cam-card-detail/modal-add-new-product/modal-add-new-product.component';
@@ -21,7 +21,11 @@ export class CamfilRequisitionDetailToolbarComponent {
   @Output() approveSelectedProducts = new EventEmitter();
   @Output() addProductToRequisition = new EventEmitter<QuickAddProduct>();
 
-  constructor(public dialog: MatDialog) {}
+  constructor(public dialog: MatDialog, private cdr: ChangeDetectorRef) {}
+
+  get isLineItemsChecked() {
+    return this.lineItemsChecked.length;
+  }
 
   showAddToProductModal(modal: ModalAddNewProductComponent) {
     this.dialog.open(modal.show());

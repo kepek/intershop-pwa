@@ -16,12 +16,14 @@
       </th>
       <td mat-cell *matCellDef="let pli">
         <mat-checkbox
+          *ngIf="pli.requisitionLineItemStatus !== 'APPROVED'"
           color="primary"
           (click)="$event.stopPropagation()"
           (change)="toggleLineItemCheck(pli, $event)"
           [checked]="isLineItemchecked(pli.id)"
         >
         </mat-checkbox>
+        <mat-icon *ngIf="pli.requisitionLineItemStatus === 'APPROVED'" svgIcon="checkmark"></mat-icon>
       </td>
     </ng-container>
 
@@ -126,14 +128,16 @@
     <ng-container matColumnDef="deleteRow">
       <th mat-header-cell *matHeaderCellDef>Delete product</th>
       <td mat-cell *matCellDef="let pli">
-        <ng-container *ngIf="editable; else emptyCell">
-          <a
-            (click)="openDeleteModal(removeProductsModal, pli.id)"
-            class="btn-tool delete-cam-card"
-            data-testing-id="delete-cam-card"
-          >
-            <mat-icon class="size-16 mx-2" svgIcon="delete"></mat-icon>
-          </a>
+        <ng-container *ngIf="pli.requisitionLineItemStatus !== 'APPROVED'; else emptyCell">
+          <ng-container *ngIf="editable; else emptyCell">
+            <a
+              (click)="openDeleteModal(removeProductsModal, pli.id)"
+              class="btn-tool delete-cam-card"
+              data-testing-id="delete-cam-card"
+            >
+              <mat-icon class="size-16 mx-2" svgIcon="delete"></mat-icon>
+            </a>
+          </ng-container>
         </ng-container>
         <ng-template #emptyCell>
           <span>---</span>

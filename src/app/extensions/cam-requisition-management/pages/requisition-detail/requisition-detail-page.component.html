@@ -22,7 +22,9 @@
           <span
             class="border border-secondary badge badge-secondary text-capitalize"
             [ngClass]="{
-              'border-warning badge-warning': requisition.approval.statusCode === requisitionStatus.Pending,
+              'border-warning badge-warning':
+                requisition.approval.statusCode === requisitionStatus.Pending ||
+                requisition.approval.statusCode === requisitionStatus.PartlyApproved,
               'border-success badge-success': requisition.approval.statusCode === requisitionStatus.Approved,
               'border-danger badge-danger': requisition.approval.statusCode === requisitionStatus.Rejected
             }"

@@ -1,11 +1,23 @@
 <div class="aprroval-detail-toolbar__container mb-2">
-  <button type="button" mat-stroked-button class="mr-2" (click)="openActionModal(removeProductsModal)">
+  <button
+    type="button"
+    mat-stroked-button
+    class="mr-2"
+    (click)="openActionModal(removeProductsModal)"
+    [disabled]="isLineItemsChecked !== 1"
+  >
     Delete product row
   </button>
   <button type="button" mat-stroked-button class="mr-2" (click)="showAddToProductModal(addNewProductModal)">
     Add product row
   </button>
-  <button type="button" mat-stroked-button class="mr-2" (click)="openActionModal(approveProductsModal)">
+  <button
+    type="button"
+    mat-stroked-button
+    class="mr-2"
+    (click)="openActionModal(approveProductsModal)"
+    [disabled]="!isLineItemsChecked"
+  >
     Approve product
   </button>
 </div>
