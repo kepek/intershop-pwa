@@ -6,10 +6,10 @@
     (click)="openActionModal(removeProductsModal)"
     [disabled]="isLineItemsChecked !== 1"
   >
-    Delete product row
+    {{ 'camfil.account.requisitions.approvals.delete_row.button' | translate }}
   </button>
   <button type="button" mat-stroked-button class="mr-2" (click)="showAddToProductModal(addNewProductModal)">
-    Add product row
+    {{ 'camfil.account.requisitions.approvals.add_row.button' | translate }}
   </button>
   <button
     type="button"
@@ -18,7 +18,7 @@
     (click)="openActionModal(approveProductsModal)"
     [disabled]="!isLineItemsChecked"
   >
-    Approve product
+    {{ 'camfil.account.requisitions.approvals.approve_product.button' | translate }}
   </button>
 </div>
 

@@ -42,6 +42,7 @@ export class CamfilRequisitionLineItemTableComponent implements OnInit, OnChange
     'checkbox',
     'rowNumber',
     'image',
+    'status',
     'articleName',
     'sku',
     'quickView',
@@ -51,7 +52,6 @@ export class CamfilRequisitionLineItemTableComponent implements OnInit, OnChange
     'deleteRow',
     'quantity',
     'listPrice',
-    'yourPrice',
   ];
   isMobileView = false;
   editable = true;
