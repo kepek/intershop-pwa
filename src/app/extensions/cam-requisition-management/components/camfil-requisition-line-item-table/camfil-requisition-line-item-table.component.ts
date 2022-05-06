@@ -68,7 +68,6 @@ export class CamfilRequisitionLineItemTableComponent implements OnInit, OnChange
   ngOnChanges(changes: SimpleChanges) {
     if (changes.lineItems) {
       this.lineItemsProcessed = new MatTableDataSource(this.lineItems);
-      console.log('this.lineItemsProcessed ', this.lineItemsProcessed);
     }
     this.isMobileView = this.deviceType === 'tablet' || this.deviceType === 'mobile';
   }
