@@ -24,7 +24,7 @@ export class CamfilRequisitionDetailToolbarComponent {
   constructor(public dialog: MatDialog) {}
 
   get isLineItemsChecked() {
-    return this.lineItemsChecked.length;
+    return this.lineItemsChecked?.length;
   }
 
   showAddToProductModal(modal: ModalAddNewProductComponent) {
