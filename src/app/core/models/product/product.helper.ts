@@ -220,6 +220,7 @@ export class ProductHelper {
   static getTechnicalDocuments(
     product: Product,
     showAllDocsType: boolean,
+    filterDocsByLanguage: boolean,
     langPrefix: string
   ): ProductTechnicalDocument[] {
     const productDocumentTypes = [
@@ -253,7 +254,7 @@ export class ProductHelper {
         name: productDocumentTypes.find(prodDoc => prodDoc.type === document.typeID)?.name,
         effectiveUrl: ProductHelper.getImageCdnUrl(product, document.typeID, document.viewID),
       }))
-      .filter(doc => doc.effectiveUrl.includes(langPrefix));
+      .filter(doc => (filterDocsByLanguage ? doc.effectiveUrl.includes(langPrefix) : Boolean));
   }
 
   /**

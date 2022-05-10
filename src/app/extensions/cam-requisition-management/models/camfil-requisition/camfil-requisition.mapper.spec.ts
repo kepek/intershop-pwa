@@ -97,7 +97,7 @@ describe('Camfil Requisition Mapper', () => {
           "infos": undefined,
           "invoiceLabel": "Invoice mark",
           "invoiceToAddress": undefined,
-          "lineItemCount": 2,
+          "lineItemCount": 0,
           "lineItems": Array [],
           "orderMark": "Order mark",
           "payment": undefined,

@@ -23,6 +23,7 @@ export interface CamfilChannelSettings {
   showAddToCartButtonForNonLoggedInUser: boolean;
   showAllCamCardsButtonForOrganizationAdmin: boolean;
   showAllDocsType: boolean;
+  filterDocsByLanguage: boolean;
   showCountryFieldOnAddressForms: boolean;
   showCustomProductAssortmentForNonLoggedInUser: boolean;
   showDutiesAndSurchargesTotalInBasketSummary: boolean;
