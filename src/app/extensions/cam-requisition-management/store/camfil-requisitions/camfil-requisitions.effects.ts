@@ -399,7 +399,20 @@ export class CamfilRequisitionsEffects {
       mapToPayload(),
       mergeMap(({ requisitionId, lineItemIds, requisition }) =>
         this.requisitionsService.approveSelectedLineItems(requisitionId, lineItemIds, requisition).pipe(
-          map(() => approveCamfilRequisitionLineItemsSuccess({ requisition })),
+          map(() => approveCamfilRequisitionLineItemsSuccess({ requisition, lineItemIds })),
+          mapErrorToAction(approveCamfilRequisitionLineItemsFail)
+        )
+      )
+    )
+  );
+
+  createOrderWithApprovedLineItems$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(approveCamfilRequisitionLineItemsSuccess),
+      mapToPayload(),
+      mergeMap(({ requisition, lineItemIds }) =>
+        this.requisitionsService.createOrderFromApprovedRequisition(requisition.id, lineItemIds).pipe(
+          map(() => approveCamfilRequisitionLineItemsSuccess({ requisition, lineItemIds })),
           mapErrorToAction(approveCamfilRequisitionLineItemsFail)
         )
       )

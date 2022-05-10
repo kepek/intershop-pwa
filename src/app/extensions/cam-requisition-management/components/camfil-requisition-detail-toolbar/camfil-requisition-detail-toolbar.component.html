@@ -1,12 +1,24 @@
 <div class="aprroval-detail-toolbar__container mb-2">
-  <button type="button" mat-stroked-button class="mr-2" (click)="openActionModal(removeProductsModal)">
-    Delete product row
+  <button
+    type="button"
+    mat-stroked-button
+    class="mr-2"
+    (click)="openActionModal(removeProductsModal)"
+    [disabled]="isLineItemsChecked !== 1"
+  >
+    {{ 'camfil.account.requisitions.approvals.delete_row.button' | translate }}
   </button>
   <button type="button" mat-stroked-button class="mr-2" (click)="showAddToProductModal(addNewProductModal)">
-    Add product row
+    {{ 'camfil.account.requisitions.approvals.add_row.button' | translate }}
   </button>
-  <button type="button" mat-stroked-button class="mr-2" (click)="openActionModal(approveProductsModal)">
-    Approve product
+  <button
+    type="button"
+    mat-stroked-button
+    class="mr-2"
+    (click)="openActionModal(approveProductsModal)"
+    [disabled]="!isLineItemsChecked"
+  >
+    {{ 'camfil.account.requisitions.approvals.approve_product.button' | translate }}
   </button>
 </div>
 

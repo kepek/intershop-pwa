@@ -18,6 +18,12 @@ export interface CamfilRequisitionApproval {
   approver?: { firstName: string; lastName: string };
   approvalComment?: string;
   customerApprovers?: { firstName: string; lastName: string; email: string }[];
+  lineItemStatuses?: LineItemStatus[];
+}
+
+export interface LineItemStatus {
+  lineItemId: string;
+  status: string;
 }
 
 export interface RequisitionUserBudget extends UserBudget {

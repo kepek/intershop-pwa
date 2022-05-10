@@ -38,7 +38,7 @@ export class CamfilRequisitionMapper {
       if (data) {
         const payloadData = payload as BasketData;
         payloadData.data.calculated = true;
-        const lineItems = CamfilRequisitionMapper.getLineItemsData(included);
+        const lineItems = CamfilRequisitionMapper.getLineItemsData(included, data.approval);
         const approvalStatus = CamfilRequisitionMapper.getApprovalStatus(data.approval);
         const lineItemCount = CamfilRequisitionMapper.getLineItemsQuantityCount(lineItems);
 
@@ -108,13 +108,26 @@ export class CamfilRequisitionMapper {
     return new Date(date.replace(/(\d{2})-(\d{2})-(\d{4})/, '$2/$1/$3')).getTime();
   }
 
-  static getLineItemsData(included): LineItem[] {
-    const lineItems = [];
+  static getLineItemsData(included, approvalData): LineItem[] {
+    let lineItems = [];
+    const { lineItemStatuses } = approvalData || [];
+
     if (included) {
       Object?.keys(included?.lineItems).map(key => {
         lineItems.push(LineItemMapper.fromData(included.lineItems[key], included.lineItems_discounts));
       });
     }
+    if (lineItemStatuses?.length) {
+      lineItems = lineItems.map(li => {
+        const requisitionLineItemStatus = lineItemStatuses.find(status => status.lineItemId === li.id).status;
+
+        return {
+          ...li,
+          requisitionLineItemStatus,
+        };
+      });
+    }
+
     return lineItems;
   }
 
@@ -128,6 +141,10 @@ export class CamfilRequisitionMapper {
       SUBMITTED: {
         status: 'Pending',
         statusCode: 'PENDING',
+      },
+      PARTLY_APPROVED: {
+        status: 'Partial Approved',
+        statusCode: 'PARTLY_APPROVED',
       },
       APPROVED: {
         status: 'Approved',

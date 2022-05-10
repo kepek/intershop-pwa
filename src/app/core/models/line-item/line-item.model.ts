@@ -46,6 +46,7 @@ export interface LineItem {
   listPrice?: PriceItem;
   salePrice?: PriceItem;
   earliestDeliveryDate?: string;
+  requisitionLineItemStatus?: string;
 }
 
 export interface LineItemView extends LineItem {

@@ -36,13 +36,15 @@
     </ng-container>
 
     <ng-container *ngIf="requisition.approval?.statusCode !== 'PENDING'">
-      <ng-container *ngIf="requisition.approval?.statusCode === 'APPROVED'; else labelDateRejected">
-        <dt class="col-6 col-sm-4 col-md-3">{{ 'approval.detailspage.approval_date.label' | translate }}</dt>
+      <ng-container *ngIf="requisition.approval?.statusCode !== 'PARTLY_APPROVED'">
+        <ng-container *ngIf="requisition.approval?.statusCode === 'APPROVED'; else labelDateRejected">
+          <dt class="col-6 col-sm-4 col-md-3">{{ 'approval.detailspage.approval_date.label' | translate }}</dt>
+        </ng-container>
+        <ng-template #labelDateRejected>
+          <dt class="col-6 col-sm-4 col-md-3">{{ 'approval.detailspage.rejection_date.label' | translate }}</dt>
+        </ng-template>
+        <dd class="col-6 col-sm-8 col-md-9">{{ requisition.approval.approvalDate | ishDate }}</dd>
       </ng-container>
-      <ng-template #labelDateRejected>
-        <dt class="col-6 col-sm-4 col-md-3">{{ 'approval.detailspage.rejection_date.label' | translate }}</dt>
-      </ng-template>
-      <dd class="col-6 col-sm-8 col-md-9">{{ requisition.approval.approvalDate | ishDate }}</dd>
     </ng-container>
 
     <dt class="col-6 col-sm-4 col-md-3">{{ 'approval.detailspage.order_total.label' | translate }}</dt>
@@ -53,7 +55,9 @@
       <span
         class="border border-secondary badge badge-secondary text-capitalize"
         [ngClass]="{
-          'border-warning badge-warning': requisition.approval.statusCode === 'PENDING',
+          'border-warning badge-warning':
+            requisition.approval.statusCode === 'PENDING' || requisition.approval.statusCode === 'PARTLY_APPROVED',
+
           'border-success badge-success': requisition.approval.statusCode === 'APPROVED',
           'border-danger badge-danger': requisition.approval.statusCode === 'REJECTED'
         }"

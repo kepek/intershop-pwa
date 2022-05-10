@@ -41,6 +41,11 @@
         white-space: normal;
       }
     }
+    camfil-requisition-line-item-box-label {
+      mat-form-field {
+        max-width: 125px;
+      }
+    }
 
     .mat-checkbox-layout {
       display: inline;

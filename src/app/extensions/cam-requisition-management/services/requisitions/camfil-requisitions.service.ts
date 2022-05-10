@@ -119,13 +119,14 @@ export class CamfilRequisitionsService {
    * @param id          Requisition id.
    * @returns           The updated requisition with all attributes. If the requisition is approved and the order is placed, also order data are returned as part of the requisition.
    */
-  createOrderFromApprovedRequisition(requisitionId: string): Observable<CamfilRequisition> {
+  createOrderFromApprovedRequisition(requisitionId: string, lineItemIds?: string[]): Observable<CamfilRequisition> {
     if (!requisitionId) {
       return throwError('createOrderFromApprovedRequisition() called without required id');
     }
     const params = new HttpParams().set('include', this.allIncludes.join());
     const body = {
       termsAndConditionsAccepted: true,
+      lineItemIds,
     };
 
     return this.apiService

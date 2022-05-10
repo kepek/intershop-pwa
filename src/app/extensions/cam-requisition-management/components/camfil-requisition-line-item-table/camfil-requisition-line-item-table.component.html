@@ -16,12 +16,14 @@
       </th>
       <td mat-cell *matCellDef="let pli">
         <mat-checkbox
+          *ngIf="pli.requisitionLineItemStatus !== 'APPROVED'"
           color="primary"
           (click)="$event.stopPropagation()"
           (change)="toggleLineItemCheck(pli, $event)"
           [checked]="isLineItemchecked(pli.id)"
         >
         </mat-checkbox>
+        <mat-icon *ngIf="pli.requisitionLineItemStatus === 'APPROVED'" svgIcon="checkmark"></mat-icon>
       </td>
     </ng-container>
 
@@ -37,7 +39,9 @@
 
     <!-- Product thumbnail  Column -->
     <ng-container matColumnDef="image">
-      <th mat-header-cell *matHeaderCellDef>Image</th>
+      <th mat-header-cell *matHeaderCellDef>
+        {{ 'camfil.account.requisitions.approvals.line_item_list.image.header' | translate }}
+      </th>
       <td mat-cell *matCellDef="let pli">
         <div class="image">
           <camfil-product-image
@@ -46,6 +50,21 @@
             class="product-image"
             imageType="images"
           ></camfil-product-image>
+        </div>
+      </td>
+    </ng-container>
+
+    <!-- Line Item Status Column -->
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef>
+        {{ 'camfil.account.requisitions.approvals.line_item_list.status.header' | translate }}
+      </th>
+      <td mat-cell *matCellDef="let pli">
+        <div *ngIf="pli.requisitionLineItemStatus">
+          {{ 'account.requisitions.requisitions.navtab.approved' | translate }}
+        </div>
+        <div *ngIf="!pli.requisitionLineItemStatus">
+          {{ 'account.requisitions.requisitions.navtab.pending' | translate }}
         </div>
       </td>
     </ng-container>
@@ -77,7 +96,9 @@
 
     <!-- Quickview Column -->
     <ng-container matColumnDef="quickView">
-      <th mat-header-cell *matHeaderCellDef>Quick view</th>
+      <th mat-header-cell *matHeaderCellDef>
+        {{ 'camfil.account.requisitions.approvals.line_item_list.quick_view.header' | translate }}
+      </th>
       <td mat-cell *matCellDef="let pli">
         <camfil-product-quickview
           [hideText]="true"
@@ -89,7 +110,9 @@
 
     <!-- In stock Column -->
     <ng-container matColumnDef="inventory">
-      <th mat-header-cell *matHeaderCellDef>In stock</th>
+      <th mat-header-cell *matHeaderCellDef>
+        {{ 'camfil.account.requisitions.approvals.line_item_list.in_stock.header' | translate }}
+      </th>
       <td mat-cell *matCellDef="let pli">
         <ng-container *ngIf="product$(pli.productSKU) | async as product">
           <camfil-product-inventory [product]="product"></camfil-product-inventory>
@@ -124,16 +147,20 @@
     <!-- Delete product Column -->
 
     <ng-container matColumnDef="deleteRow">
-      <th mat-header-cell *matHeaderCellDef>Delete product</th>
+      <th mat-header-cell *matHeaderCellDef>
+        {{ 'camfil.account.requisitions.approvals.line_item_list.delete_product.header' | translate }}
+      </th>
       <td mat-cell *matCellDef="let pli">
-        <ng-container *ngIf="editable; else emptyCell">
-          <a
-            (click)="openDeleteModal(removeProductsModal, pli.id)"
-            class="btn-tool delete-cam-card"
-            data-testing-id="delete-cam-card"
-          >
-            <mat-icon class="size-16 mx-2" svgIcon="delete"></mat-icon>
-          </a>
+        <ng-container *ngIf="pli.requisitionLineItemStatus !== 'APPROVED'; else emptyCell">
+          <ng-container *ngIf="editable; else emptyCell">
+            <a
+              (click)="openDeleteModal(removeProductsModal, pli.id)"
+              class="btn-tool delete-cam-card"
+              data-testing-id="delete-cam-card"
+            >
+              <mat-icon class="size-16 mx-2" svgIcon="delete"></mat-icon>
+            </a>
+          </ng-container>
         </ng-container>
         <ng-template #emptyCell>
           <span>---</span>
@@ -143,7 +170,9 @@
 
     <!-- Quantity product Column -->
     <ng-container matColumnDef="quantity">
-      <th mat-header-cell *matHeaderCellDef>Quantity</th>
+      <th mat-header-cell *matHeaderCellDef>
+        {{ 'camfil.account.requisitions.approvals.line_item_list.quantity.header' | translate }}
+      </th>
       <td mat-cell *matCellDef="let pli">
         <ng-container *ngIf="product$(pli.productSKU) | async as product">
           <camfil-requisition-line-item-quantity
@@ -162,24 +191,20 @@
         {{ 'camfil.lineitem.table.price' | translate }}
       </th>
       <td mat-cell *matCellDef="let pli">
-        <camfil-product-attribute
-          [name]="'camfil.cam_card.product.list_price.label' | translate"
-          [overflowVisible]="true"
-          [value]="pli?.singleBasePrice | ishPrice"
-        ></camfil-product-attribute>
-      </td>
-    </ng-container>
-
-    <ng-container matColumnDef="yourPrice">
-      <th mat-header-cell *matHeaderCellDef>
-        {{ 'camfil.lineitem.table.price' | translate }}
-      </th>
-      <td mat-cell *matCellDef="let pli">
-        <camfil-product-attribute
-          [name]="'camfil.cam_card.product.your_price.label' | translate"
-          [overflowVisible]="true"
-          [value]="pli?.singleBasePrice | ishPrice"
-        ></camfil-product-attribute>
+        <div>
+          <camfil-product-attribute
+            class="d-block"
+            [name]="'camfil.cam_card.product.list_price.label' | translate"
+            [overflowVisible]="true"
+            [value]="pli?.singleBasePrice | ishPrice"
+          ></camfil-product-attribute>
+          <camfil-product-attribute
+            class="d-block"
+            [name]="'camfil.cam_card.product.your_price.label' | translate"
+            [overflowVisible]="true"
+            [value]="pli?.singleBasePrice | ishPrice"
+          ></camfil-product-attribute>
+        </div>
       </td>
     </ng-container>
 
