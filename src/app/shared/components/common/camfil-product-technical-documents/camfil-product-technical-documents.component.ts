@@ -25,9 +25,15 @@ export class CamfilProductTechnicalDocumentsComponent implements OnChanges, OnDe
     if (changes.product) {
       combineLatest([
         this.camfilConfigurationFacade.isEnabled$('showAllDocsType').pipe(takeUntil(this.destroy$)),
+        this.camfilConfigurationFacade.isEnabled$('filterDocsByLanguage').pipe(takeUntil(this.destroy$)),
         this.appFacade.currentLocale$,
-      ])?.subscribe(([showAllDocsType, locale]) => {
-        this.productDocuments = ProductHelper.getTechnicalDocuments(this.product, showAllDocsType, locale.lang);
+      ])?.subscribe(([showAllDocsType, filterDocsByLanguage, locale]) => {
+        this.productDocuments = ProductHelper.getTechnicalDocuments(
+          this.product,
+          showAllDocsType,
+          filterDocsByLanguage,
+          locale.lang
+        );
       });
     }
   }
