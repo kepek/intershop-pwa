@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CamfilAccountQuoteDetailPageComponent } from './camfil-account-quote-detail-page/camfil-account-quote-detail-page.component';
 import { AuthGuard } from 'ish-core/guards/auth.guard';
+import { QuotesGuard } from '../guards/quotes.guard';
 
 const routes: Routes = [
   {
@@ -10,7 +11,7 @@ const routes: Routes = [
       import('./camfil-account-quotes-page/camfil-account-quotes-page.module').then(
         m => m.CamfilAccountQuotesPageModule
       ),
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard, QuotesGuard],
     data: {
       breadcrumbData: [{ key: 'account.quotes.link' }],
     },
@@ -21,7 +22,7 @@ const routes: Routes = [
       import('./camfil-account-quote-detail-page/camfil-account-quote-detail-page.module').then(
         m => m.CamfilAccountQuoteDetailPageModule
       ),
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard, QuotesGuard],
     data: {
       breadcrumbData: [{ key: 'account.quotes.link' }],
     },

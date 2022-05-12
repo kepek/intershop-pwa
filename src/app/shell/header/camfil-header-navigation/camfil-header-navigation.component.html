@@ -53,12 +53,14 @@
   >
     <a [routerLink]="['/account/orders']">{{ 'account.order_history.link' | translate }}</a>
   </li>
-  <li
-    *ngIf="authorization$(['APP_B2B_MANAGE_ALL_ORDERS', 'APP_B2B_MANAGE_OWN_ORDERS']) | async"
-    class="dropdown with-separator"
-  >
-    <a [routerLink]="['/account/quotes']">{{ 'account.quotes.link' | translate }}</a>
-  </li>
+  <ng-container *ngIf="isQuotesModuleEnabled$ | async">
+    <li
+      *ngIf="authorization$(['APP_B2B_MANAGE_ALL_ORDERS', 'APP_B2B_MANAGE_OWN_ORDERS']) | async"
+      class="dropdown with-separator"
+    >
+      <a [routerLink]="['/account/quotes']">{{ 'account.quotes.link' | translate }}</a>
+    </li>
+  </ng-container>
   <li *ngIf="!isProdEnv" class="dropdown with-separator">
     <a [routerLink]="['/demo']">Demo</a>
   </li>

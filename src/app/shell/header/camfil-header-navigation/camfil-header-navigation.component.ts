@@ -9,6 +9,7 @@ import { DeviceType, NextOpenLevelOnMobileNavType } from 'ish-core/models/viewty
 import { AuthorizationToggleService } from 'ish-core/utils/authorization-toggle/authorization-toggle.service';
 
 import { environment } from '../../../../environments/environment';
+import { CamQuotesFacade } from '../../../extensions/cam-quotes/facades/cam-quotes.facade';
 
 @Component({
   selector: 'camfil-header-navigation',
@@ -28,16 +29,20 @@ export class CamfilHeaderNavigationComponent implements OnInit {
 
   isProdEnv = environment.production;
 
+  isQuotesModuleEnabled$: Observable<boolean>;
+
   constructor(
     private shoppingFacade: ShoppingFacade,
     private accountFacade: AccountFacade,
-    private authorizationToggle: AuthorizationToggleService
+    private authorizationToggle: AuthorizationToggleService,
+    private camQuotesFacade: CamQuotesFacade
   ) {}
 
   ngOnInit() {
     this.categories$ = this.shoppingFacade.navigationCategories$();
     this.user$ = this.accountFacade.user$;
     this.isMobileView = this.deviceType === 'tablet' || this.deviceType === 'mobile';
+    this.isQuotesModuleEnabled$ = this.camQuotesFacade.isQuotesModuleEnabled$;
   }
 
   authorization$(permissions: string[]) {

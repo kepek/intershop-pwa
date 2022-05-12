@@ -1,11 +1,28 @@
 import { Injectable } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { getChannelCode } from '../../../../../projects/camfil-pwa/src/app/store/camfil-configuration';
 
 import { QuoteDetails } from '../models/quote-details/quote-details.model';
 import { Quote } from '../models/quote/quote.model';
-import { approveQuote, approveQuotes, createQuoteItem, deleteQuoteItem, loadQuoteDetails, loadQuotes, rejectQuote, rejectQuotes } from '../store/cam-quotes.actions';
-import { getCamQuoteDetails, getCamQuoteDetailsLoading, getCamQuotesApprovedSuccess, getCamQuotesList, getCamQuotesRejectedSuccess } from '../store/cam-quotes.selectors';
+import {
+  approveQuote,
+  approveQuotes,
+  createQuoteItem,
+  deleteQuoteItem,
+  loadQuoteDetails,
+  loadQuotes,
+  rejectQuote,
+  rejectQuotes,
+} from '../store/cam-quotes.actions';
+import {
+  getCamQuoteDetails,
+  getCamQuoteDetailsLoading,
+  getCamQuotesApprovedSuccess,
+  getCamQuotesList,
+  getCamQuotesRejectedSuccess,
+} from '../store/cam-quotes.selectors';
 
 // tslint:disable:member-ordering
 @Injectable({ providedIn: 'root' })
@@ -18,7 +35,9 @@ export class CamQuotesFacade {
   approvedQuotesSuccess$: Observable<boolean> = this.store.pipe(select(getCamQuotesApprovedSuccess));
   rejectedQuotesSuccess$: Observable<boolean> = this.store.pipe(select(getCamQuotesRejectedSuccess));
 
-  constructor(private store: Store) { }
+  constructor(private store: Store) {}
+
+  isQuotesModuleEnabled$ = this.store.pipe(select(getChannelCode)).pipe(map(code => ['FR', 'DE'].includes(code)));
 
   loadQuotes(): void {
     this.store.dispatch(loadQuotes());

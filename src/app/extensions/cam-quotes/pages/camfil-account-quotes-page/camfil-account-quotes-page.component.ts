@@ -78,7 +78,6 @@ export class CamfilAccountQuotesPageComponent implements OnInit {
 
   lastRejectReason: string;
 
-
   constructor(
     private cd: ChangeDetectorRef,
     private quotesFacade: CamQuotesFacade,
@@ -112,7 +111,6 @@ export class CamfilAccountQuotesPageComponent implements OnInit {
     this.quotesFacade.quotes$
       .pipe(
         tap(quotes => {
-          debugger;
           this.getCustomersFromQuotes(quotes);
           this.getRequestorsFromQuotes(quotes);
         })
@@ -127,7 +125,8 @@ export class CamfilAccountQuotesPageComponent implements OnInit {
       .pipe(
         map(({ filter }) => filter || '{}'),
         take(1)
-      ).subscribe(filter => {
+      )
+      .subscribe(filter => {
         console.log('filters from url', filter);
         const filters = JSON.parse(filter);
         if (filters.fromDate && filters.fromDate.length > 0) {
@@ -140,11 +139,17 @@ export class CamfilAccountQuotesPageComponent implements OnInit {
       });
 
     this.quotesFacade.approvedQuotesSuccess$
-      .pipe(filter(success => success), takeUntil(this.destroy$))
+      .pipe(
+        filter(success => success),
+        takeUntil(this.destroy$)
+      )
       .subscribe(() => this.approveSelectedQuotesSuccess());
 
     this.quotesFacade.rejectedQuotesSuccess$
-      .pipe(filter(success => success), takeUntil(this.destroy$))
+      .pipe(
+        filter(success => success),
+        takeUntil(this.destroy$)
+      )
       .subscribe(() => this.rejectSelectedQuotesSuccess());
 
     this.filtersForm.valueChanges.subscribe((filters: QuotesFilters) => {
@@ -155,8 +160,9 @@ export class CamfilAccountQuotesPageComponent implements OnInit {
       this.location.replaceState(
         location.pathname,
         new HttpParams({
-          fromObject: this.filtersQueryParams
-        }).toString());
+          fromObject: this.filtersQueryParams,
+        }).toString()
+      );
       console.log(this.filtersQueryParams);
     });
 
@@ -278,9 +284,12 @@ export class CamfilAccountQuotesPageComponent implements OnInit {
   rejectSelectedQuotes() {
     const dialog = this.dialog.open(QuotesRejectDialogComponent);
     dialog.componentInstance.reason = this.lastRejectReason;
-    dialog.componentInstance.onChange.subscribe(({ reason }) => this.lastRejectReason = reason);
+    dialog.componentInstance.onChange.subscribe(({ reason }) => (this.lastRejectReason = reason));
     dialog.componentInstance.onConfirm.subscribe(result => {
-      this.quotesFacade.rejectQuotes(this.selectedQuotes.map(q => q.camfilQuoteNumber), result.reason);
+      this.quotesFacade.rejectQuotes(
+        this.selectedQuotes.map(q => q.camfilQuoteNumber),
+        result.reason
+      );
     });
   }
 

@@ -17,6 +17,7 @@ import { whenFalsy } from 'ish-core/utils/operators';
 import { CamfilBasketCostSummaryComponent } from 'ish-shared/components/basket/camfil-basket-cost-summary/camfil-basket-cost-summary.component';
 import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
 import { CamfilModalDialogComponent, ModalOptions } from '../common/camfil-modal-dialog/camfil-modal-dialog.component';
+import { CamQuotesFacade } from '../../../extensions/cam-quotes/facades/cam-quotes.facade';
 
 @Component({
   selector: 'camfil-checkout-summary',
@@ -36,6 +37,7 @@ export class CamfilCheckoutSummaryComponent extends CamfilBasketCostSummaryCompo
   productsReadyToPlaceOrder$: Observable<boolean>;
   canSubmitOrder$: Observable<boolean>;
   isLoggedIn$: Observable<boolean>;
+  isQuotesModuleEnabled$: Observable<boolean>;
 
   guestGdprForm: FormGroup;
   checkIfZeroPrice = PriceHelper.checkIfZeroPrice;
@@ -46,7 +48,7 @@ export class CamfilCheckoutSummaryComponent extends CamfilBasketCostSummaryCompo
   quoteCreatedModalOptions: ModalOptions = {
     titleText: 'The quotation request has been sent',
     confirmText: 'Go to my Quotations',
-    rejectText: 'Stay at the checkout'
+    rejectText: 'Stay at the checkout',
   };
 
   constructor(
@@ -54,6 +56,7 @@ export class CamfilCheckoutSummaryComponent extends CamfilBasketCostSummaryCompo
     private checkoutFacade: CheckoutFacade,
     private shoppingFacade: ShoppingFacade,
     private camfilConfigurationFacade: CamfilConfigurationFacade,
+    private camQuotesFacade: CamQuotesFacade,
     private authorizationToggle: AuthorizationToggleService,
     private router: Router,
     private fb: FormBuilder,
@@ -78,6 +81,8 @@ export class CamfilCheckoutSummaryComponent extends CamfilBasketCostSummaryCompo
     this.isLoggedIn$.pipe(whenFalsy(), takeUntil(this.destroy$)).subscribe(() => {
       this.initGDPRForm();
     });
+
+    this.isQuotesModuleEnabled$ = this.camQuotesFacade.isQuotesModuleEnabled$;
   }
 
   submitOrder() {
