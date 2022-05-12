@@ -23,6 +23,10 @@ export class CamfilRequisitionDetailToolbarComponent {
 
   constructor(public dialog: MatDialog) {}
 
+  get isLineItemsChecked() {
+    return this.lineItemsChecked?.length;
+  }
+
   showAddToProductModal(modal: ModalAddNewProductComponent) {
     this.dialog.open(modal.show());
     modal.hide = () => this.dialog.closeAll();

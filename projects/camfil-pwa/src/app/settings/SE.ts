@@ -6,7 +6,6 @@ const camfilConfiguration: CamfilChannelConfiguration = {
   continueShoppingUrl: '/account/camcards',
   channelCode: 'SE',
   currency: 'EUR',
-  hideAddToBasketLightboxForNonLoggedInUser: false,
   icmChannel: 'Camfil-CamfilSE-Site',
   showAddToCamCardButtonForNonLoggedInUser: true,
   showCountryFieldOnAddressForms: false,
@@ -14,6 +13,7 @@ const camfilConfiguration: CamfilChannelConfiguration = {
   showSubTotalInBasketSummary: true,
   showTotalWithoutTaxInBasketSummary: false,
   hidePricesCamCards: true,
+  filterDocsByLanguage: false,
 };
 
 export default camfilConfiguration;

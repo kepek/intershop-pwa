@@ -143,7 +143,6 @@ export const ENVIRONMENT_DEFAULTS: Environment = {
     'tracking',
     /* Camfil features */
     'camOrganizationManagement',
-    'camRequisitionManagement',
     'camCards',
     'camAhu',
     'camDemo',

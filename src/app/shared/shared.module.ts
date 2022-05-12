@@ -33,6 +33,7 @@ import { AuthorizationToggleModule } from 'ish-core/authorization-toggle.module'
 import { FeatureToggleModule } from 'ish-core/feature-toggle.module';
 import { IconModule } from 'ish-core/icon.module';
 import { PipesModule } from 'ish-core/pipes.module';
+import { RoleToggleModule } from 'ish-core/role-toggle.module';
 import { CamfilBannerComponent } from 'ish-shared/components/camfil-banner/camfil-banner.component';
 import { CamfilBulletListComponent } from 'ish-shared/components/common/camfil-bullet-list/camfil-bullet-list.component';
 import { CamfilCamCardModalComponent } from 'ish-shared/components/common/camfil-cam-card-modal/camfil-cam-card-modal.component';
@@ -270,6 +271,7 @@ const importExportModules = [
   QuickorderExportsModule,
   QuotingExportsModule,
   ReactiveFormsModule,
+  RoleToggleModule,
   RouterModule,
   SwiperModule,
   TactonExportsModule,

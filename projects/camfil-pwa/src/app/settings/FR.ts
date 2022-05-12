@@ -6,7 +6,6 @@ const camfilConfiguration: CamfilChannelConfiguration = {
   continueShoppingUrl: '/home',
   channelCode: 'FR',
   currency: 'EUR',
-  hideAddToBasketLightboxForNonLoggedInUser: true,
   icmChannel: 'Camfil-CamfilFR-Site',
   preventCamCardERPIdValidation: true,
   showAddToCamCardButtonForNonLoggedInUser: false,
@@ -19,6 +18,7 @@ const camfilConfiguration: CamfilChannelConfiguration = {
   showTotalWithoutTaxInBucketSummary: true,
   showWarningMessageForPartialDelivery: true,
   useSecondAddressLine: true,
+  filterDocsByLanguage: false,
 };
 
 export default camfilConfiguration;

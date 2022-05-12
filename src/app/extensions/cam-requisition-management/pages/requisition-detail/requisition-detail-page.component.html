@@ -22,7 +22,9 @@
           <span
             class="border border-secondary badge badge-secondary text-capitalize"
             [ngClass]="{
-              'border-warning badge-warning': requisition.approval.statusCode === requisitionStatus.Pending,
+              'border-warning badge-warning':
+                requisition.approval.statusCode === requisitionStatus.Pending ||
+                requisition.approval.statusCode === requisitionStatus.PartlyApproved,
               'border-success badge-success': requisition.approval.statusCode === requisitionStatus.Approved,
               'border-danger badge-danger': requisition.approval.statusCode === requisitionStatus.Rejected
             }"
@@ -78,7 +80,11 @@
         <div class="row">
           <div class="col-12 col-md-6 offset-md-6">
             <div class="cost-summary">
-              <camfil-basket-cost-summary [totals]="requisition.totals"></camfil-basket-cost-summary>
+              <camfil-basket-cost-summary
+                [totals]="requisition.totals"
+                [lineItemCount]="requisition.lineItemCount"
+                [requisitionSummary]="true"
+              ></camfil-basket-cost-summary>
             </div>
           </div>
         </div>
@@ -121,4 +127,6 @@
     #rejectDialog
     (submit)="rejectRequisition($event)"
   ></camfil-requisition-reject-dialog>
+
+  <camfil-approve-line-item-succes-dialog #approveLineItemsSuccessDialog> </camfil-approve-line-item-succes-dialog>
 </div>

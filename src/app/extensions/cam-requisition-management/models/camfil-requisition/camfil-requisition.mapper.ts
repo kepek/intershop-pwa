@@ -38,8 +38,10 @@ export class CamfilRequisitionMapper {
       if (data) {
         const payloadData = payload as BasketData;
         payloadData.data.calculated = true;
-        const lineItems = CamfilRequisitionMapper.getLineItemsData(included);
+        const lineItems = CamfilRequisitionMapper.getLineItemsData(included, data.approval);
         const approvalStatus = CamfilRequisitionMapper.getApprovalStatus(data.approval);
+        const lineItemCount = CamfilRequisitionMapper.getLineItemsQuantityCount(lineItems);
+
         return {
           ...BasketMapper.fromData(payloadData),
           id: data.basketId,
@@ -52,7 +54,7 @@ export class CamfilRequisitionMapper {
           phoneNumber: data.phoneNumber,
           info: data.info,
           userComment: data.userComment,
-          lineItemCount: data.lineItemCount,
+          lineItemCount,
           lineItems,
           requisitionCustomer: CamfilRequisitionMapper.getCustomer(data),
           shippingAddress: data.shippingAddress,
@@ -81,6 +83,7 @@ export class CamfilRequisitionMapper {
         .map(data => ({
           ...CamfilRequisitionMapper.fromData({ ...payload, data }),
           totals: {
+            itemQuantityTotal: 0,
             itemTotal: data.totals ? PriceItemMapper.fromPriceItem(data.totals.itemTotal) : undefined,
             total: data.totals ? PriceItemMapper.fromPriceItem(data.totals.grandTotal) : emptyPriceItem,
             isEstimated: false,
@@ -105,13 +108,26 @@ export class CamfilRequisitionMapper {
     return new Date(date.replace(/(\d{2})-(\d{2})-(\d{4})/, '$2/$1/$3')).getTime();
   }
 
-  static getLineItemsData(included): LineItem[] {
-    const lineItems = [];
+  static getLineItemsData(included, approvalData): LineItem[] {
+    let lineItems = [];
+    const { lineItemStatuses } = approvalData || [];
+
     if (included) {
       Object?.keys(included?.lineItems).map(key => {
         lineItems.push(LineItemMapper.fromData(included.lineItems[key], included.lineItems_discounts));
       });
     }
+    if (lineItemStatuses?.length) {
+      lineItems = lineItems.map(li => {
+        const requisitionLineItemStatus = lineItemStatuses.find(status => status.lineItemId === li.id).status;
+
+        return {
+          ...li,
+          requisitionLineItemStatus,
+        };
+      });
+    }
+
     return lineItems;
   }
 
@@ -125,6 +141,10 @@ export class CamfilRequisitionMapper {
       SUBMITTED: {
         status: 'Pending',
         statusCode: 'PENDING',
+      },
+      PARTLY_APPROVED: {
+        status: 'Partial Approved',
+        statusCode: 'PARTLY_APPROVED',
       },
       APPROVED: {
         status: 'Approved',
@@ -141,5 +161,9 @@ export class CamfilRequisitionMapper {
     };
 
     return statusDictionary[status];
+  }
+
+  static getLineItemsQuantityCount(lineItemsData: LineItem[]) {
+    return lineItemsData.reduce((a, b) => a + b.quantity.value, 0);
   }
 }

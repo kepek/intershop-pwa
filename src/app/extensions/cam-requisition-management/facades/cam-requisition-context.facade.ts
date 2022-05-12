@@ -3,8 +3,8 @@ import { Store, select } from '@ngrx/store';
 import { RxState } from '@rx-angular/state';
 import { distinctUntilChanged, filter, map, switchMap, tap } from 'rxjs/operators';
 
-import { Attribute } from 'ish-core/models/attribute/attribute.model';
 import { HttpError } from 'ish-core/models/http-error/http-error.model';
+import { LineItem } from 'ish-core/models/line-item/line-item.model';
 import { selectRouteParam, selectUrl } from 'ish-core/store/core/router';
 import { getProducts } from 'ish-core/store/shopping/products';
 import { whenTruthy } from 'ish-core/utils/operators';
@@ -29,6 +29,8 @@ export class CamfilRequisitionContextFacade
     loading: boolean;
     error: HttpError;
     entity: CamfilRequisition;
+    partiallyApproved: boolean;
+    lineItems: LineItem[];
     unavailableProducts: { sku: string; availability: boolean }[];
     view: 'buyer' | 'approver';
   }>
@@ -90,6 +92,24 @@ export class CamfilRequisitionContextFacade
         map(url => (url.includes('/buyer') ? 'buyer' : 'approver'))
       )
     );
+
+    this.connect(
+      'partiallyApproved',
+      this.select('entity').pipe(
+        whenTruthy(),
+        distinctUntilChanged(),
+        map(({ partiallyApproved }) => partiallyApproved)
+      )
+    );
+
+    this.connect(
+      'lineItems',
+      this.select('entity').pipe(
+        whenTruthy(),
+        distinctUntilChanged(),
+        map(({ lineItems }) => lineItems)
+      )
+    );
   }
 
   approveRequisition$() {
@@ -138,12 +158,12 @@ export class CamfilRequisitionContextFacade
     );
   }
 
-  approveCamfilRequisitionLineItem(lineItemIds: string[], lineItemAttribute: Attribute) {
+  approveCamfilRequisitionLineItem(lineItemIds: string[]) {
     this.store.dispatch(
       approveCamfilRequisitionLineItems({
         requisitionId: this.get('entity', 'id'),
         lineItemIds,
-        lineItemAttribute,
+        requisition: this.get('entity'),
       })
     );
   }

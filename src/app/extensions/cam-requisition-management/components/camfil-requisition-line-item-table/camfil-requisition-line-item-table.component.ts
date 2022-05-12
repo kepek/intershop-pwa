@@ -42,6 +42,7 @@ export class CamfilRequisitionLineItemTableComponent implements OnInit, OnChange
     'checkbox',
     'rowNumber',
     'image',
+    'status',
     'articleName',
     'sku',
     'quickView',
@@ -51,7 +52,6 @@ export class CamfilRequisitionLineItemTableComponent implements OnInit, OnChange
     'deleteRow',
     'quantity',
     'listPrice',
-    'yourPrice',
   ];
   isMobileView = false;
   editable = true;
@@ -78,8 +78,10 @@ export class CamfilRequisitionLineItemTableComponent implements OnInit, OnChange
 
   toggleAllLineItems(event: MatCheckboxChange) {
     if (event.checked) {
-      const lineItemsChecked = this.lineItems.map(lineItem => lineItem.id);
-      this.checkAllLineItems.emit(lineItemsChecked);
+      const lineItemsChecked = this.lineItems
+        .filter(li => li.requisitionLineItemStatus !== 'APPROVED')
+        .map(lineItem => lineItem.id);
+      this.checkAllLineItems.emit([...lineItemsChecked]);
     } else {
       this.checkAllLineItems.emit([]);
     }
@@ -87,13 +89,9 @@ export class CamfilRequisitionLineItemTableComponent implements OnInit, OnChange
 
   toggleLineItemCheck(lineItem: LineItem, event: MatCheckboxChange) {
     if (event.checked) {
-      const checkedLineItems = this.lineItemsChecked;
-      checkedLineItems.push(lineItem.id);
-      this.checkAllLineItems.emit(checkedLineItems);
+      this.checkAllLineItems.emit([...new Set([...this.lineItemsChecked, lineItem.id])]);
     } else {
-      const checkedLineItems = this.lineItemsChecked;
-      checkedLineItems.filter(el => el !== lineItem.id);
-      this.checkAllLineItems.emit(checkedLineItems);
+      this.checkAllLineItems.emit([...this.lineItemsChecked].filter(el => el !== lineItem.id));
     }
   }
 

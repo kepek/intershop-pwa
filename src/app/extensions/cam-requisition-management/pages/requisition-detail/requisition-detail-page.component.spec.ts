@@ -22,6 +22,7 @@ import { InfoBoxComponent } from 'ish-shared/components/common/info-box/info-box
 import { LineItemListComponent } from 'ish-shared/components/line-item/line-item-list/line-item-list.component';
 import { CamfilProductQuantityComponent } from 'ish-shared/components/product/camfil-product-quantity/camfil-product-quantity.component';
 
+import { CamfilApproveLineItemSuccesDialogComponent } from '../../components/camfil-approve-line-item-succes-dialog/camfil-approve-line-item-succes-dialog.component';
 import { CamfilRequisitionDetailToolbarComponent } from '../../components/camfil-requisition-detail-toolbar/camfil-requisition-detail-toolbar.component';
 import { CamfilRequisitionLineItemTableComponent } from '../../components/camfil-requisition-line-item-table/camfil-requisition-line-item-table.component';
 import { CamfilRequisitionRejectDialogComponent } from '../../components/camfil-requisition-reject-dialog/camfil-requisition-reject-dialog.component';
@@ -49,6 +50,7 @@ describe('Requisition Detail Page Component', () => {
         CamfilMaxLengthAttributeCreateDirective,
         MockComponent(AddressComponent),
         MockComponent(BasketCostSummaryComponent),
+        MockComponent(CamfilApproveLineItemSuccesDialogComponent),
         MockComponent(CamfilBasketCostSummaryComponent),
         MockComponent(CamfilErrorMessageComponent),
         MockComponent(CamfilLoadingComponent),
