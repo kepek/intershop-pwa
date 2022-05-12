@@ -37,7 +37,7 @@ export class CamfilCheckoutSummaryComponent extends CamfilBasketCostSummaryCompo
   productsReadyToPlaceOrder$: Observable<boolean>;
   canSubmitOrder$: Observable<boolean>;
   isLoggedIn$: Observable<boolean>;
-  isQuotesModuleEnabled$: Observable<boolean>;
+  canRequestQuotations$: Observable<boolean>;
 
   guestGdprForm: FormGroup;
   checkIfZeroPrice = PriceHelper.checkIfZeroPrice;
@@ -82,7 +82,10 @@ export class CamfilCheckoutSummaryComponent extends CamfilBasketCostSummaryCompo
       this.initGDPRForm();
     });
 
-    this.isQuotesModuleEnabled$ = this.camQuotesFacade.isQuotesModuleEnabled$;
+    this.canRequestQuotations$ = combineLatest([
+      this.roleToggleService.hasRole('APP_B2B_REQUEST_QUOTATION'),
+      this.camQuotesFacade.isQuotesModuleEnabled$
+    ]).pipe(map(([hasRequestRole, isQuotesModuleEnabled]) => hasRequestRole && isQuotesModuleEnabled));
   }
 
   submitOrder() {
@@ -98,7 +101,6 @@ export class CamfilCheckoutSummaryComponent extends CamfilBasketCostSummaryCompo
   }
 
   requestQuote() {
-    // TODO: Add a param to differentiate between order and quote
     this.isLoggedIn$.pipe(take(1), takeUntil(this.destroy$)).subscribe(isLoggedIn => {
       if (isLoggedIn) {
         this.submit.emit('RFQ');
@@ -108,7 +110,6 @@ export class CamfilCheckoutSummaryComponent extends CamfilBasketCostSummaryCompo
         this.openGDPRErrorModal();
       }
     });
-    // this.quoteCreatedModal.show();
   }
 
   continueShopping() {
