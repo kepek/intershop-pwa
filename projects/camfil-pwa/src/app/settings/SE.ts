@@ -13,7 +13,7 @@ const camfilConfiguration: CamfilChannelConfiguration = {
   showSubTotalInBasketSummary: true,
   showTotalWithoutTaxInBasketSummary: false,
   hidePricesCamCards: true,
-  filterDocsByLanguage: false,
+  filterDocsByLanguage: true,
 };
 
 export default camfilConfiguration;

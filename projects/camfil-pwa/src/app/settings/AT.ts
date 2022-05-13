@@ -9,7 +9,7 @@ const camfilConfiguration: CamfilChannelConfiguration = {
   icmChannel: 'Camfil-CamfilAT-Site',
   showDutiesAndSurchargesTotalInBasketSummary: true,
   showSubTotalInBasketSummary: true,
-  filterDocsByLanguage: false,
+  filterDocsByLanguage: true,
 };
 
 export default camfilConfiguration;
