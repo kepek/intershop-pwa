@@ -18,7 +18,7 @@ const camfilConfiguration: CamfilChannelConfiguration = {
   showTotalWithoutTaxInBucketSummary: true,
   showWarningMessageForPartialDelivery: true,
   useSecondAddressLine: true,
-  filterDocsByLanguage: false,
+  filterDocsByLanguage: true,
 };
 
 export default camfilConfiguration;
