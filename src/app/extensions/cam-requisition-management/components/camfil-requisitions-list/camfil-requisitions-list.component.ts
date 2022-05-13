@@ -42,6 +42,7 @@ export class CamfilRequisitionsListComponent implements OnInit, OnChanges, After
   @Input() columnsToDisplay: string[];
   @Input() deviceType: DeviceType;
   @Input() view: CamfilRequisitionViewer = 'buyer';
+
   requisitions$: Observable<CamfilRequisition[]>;
   requisitions: CamfilRequisition[];
   isActive = false;
@@ -57,6 +58,7 @@ export class CamfilRequisitionsListComponent implements OnInit, OnChanges, After
   isMobileView = false;
   showPreview = true;
   tableSize = 4;
+  approvalsChecked = [];
   private destroy$ = new Subject();
 
   constructor(
@@ -318,5 +320,40 @@ export class CamfilRequisitionsListComponent implements OnInit, OnChanges, After
 
   isMaxTableLength() {
     return this.dataSource.filteredData.length >= this.tableSize;
+  }
+
+  toggleAllApprovalsCheck(event: MatCheckboxChange) {
+    if (event.checked) {
+      this.approvalsChecked = this.requisitions
+        .filter(
+          requisiton => requisiton.approval.status === 'Pending' || requisiton.approval.status === 'Partial Approved'
+        )
+        .map(lineItem => lineItem.id);
+    } else {
+      this.approvalsChecked = [];
+    }
+  }
+
+  toggleApprovalCheck(requisitionId: string, event: MatCheckboxChange) {
+    if (event.checked) {
+      this.approvalsChecked = [...new Set([...this.approvalsChecked, requisitionId])];
+    } else {
+      this.approvalsChecked = [...this.approvalsChecked].filter(el => el !== requisitionId);
+    }
+  }
+
+  isApprovalChecked(requisitionId: string) {
+    return this.approvalsChecked.findIndex(item => item === requisitionId) > -1;
+  }
+
+  approveMultipleRequisitions() {
+    this.camRequisitionManagementFacade.approveMultipleRequisitions$(this.approvalsChecked);
+    this.approvalsChecked = [];
+  }
+
+  rejectMultipleRequisitions(comment: string) {
+    this.camRequisitionManagementFacade.rejectMultipleRequisitions$(this.approvalsChecked, comment);
+    this.approvalsChecked = [];
+    return false;
   }
 }

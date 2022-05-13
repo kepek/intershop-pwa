@@ -289,4 +289,43 @@ export class CamfilRequisitionsService {
       })
       .pipe(map(() => requisition));
   }
+
+  /**
+   * Updates the requisition status. The current user is expected to have the approver permission.
+   * @param requisitionId          Requisitions ids.
+   * @param statusCode  The requisition approval status
+   * @param comment     The approval comment
+   * @returns           The updated requisition with all attributes. If the requisition is approved and the order is placed, also order data are returned as part of the requisition.
+   */
+  updateMultipleCamfilRequisitionStatus(
+    requisitionIds: string[],
+    statusCode: CamfilRequisitionStatus,
+    approvalComment?: string
+  ): Observable<CamfilRequisition> {
+    if (!requisitionIds.length) {
+      return throwError('updateCamfilRequisitionStatus() called without required ids');
+    }
+    if (!statusCode) {
+      return throwError('updateCamfilRequisitionStatus() called without required requisition status');
+    }
+
+    const params = new HttpParams().set('include', this.allIncludes.join());
+    const body = {
+      name: 'string',
+      type: 'ApprovalStatusChange',
+      statusCode,
+      approvalComment,
+    };
+
+    const type = statusCode === 'APPROVED' ? 'approve' : 'reject';
+
+    // TODO: Change endpoint to one provided by BE that can change multiple requisition statuses
+    const requisitionId = requisitionIds[0];
+
+    return this.apiService
+      .patch<CamfilRequisitionData>(`camfilrequisitions/${requisitionId}/${type}`, body, {
+        params,
+      })
+      .pipe(map(payload => CamfilRequisitionMapper.fromData(payload)));
+  }
 }

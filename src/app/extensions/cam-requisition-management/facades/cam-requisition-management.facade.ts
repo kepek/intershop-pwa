@@ -27,6 +27,7 @@ import {
   updateCamfilRequisition,
   updateCamfilRequisitionLineItem,
   updateCamfilRequisitionLineItemAttribute,
+  updateMultipleCamfilRequisitionStatus,
 } from '../store/camfil-requisitions';
 
 // tslint:disable:member-ordering
@@ -110,6 +111,26 @@ export class CamRequisitionManagementFacade {
         requisitionId,
         lineItemId,
         lineItemAttribute,
+      })
+    );
+  }
+
+  // Change status for multiple requisitions
+  approveMultipleRequisitions$(requisitionIds: string[]) {
+    this.store.dispatch(
+      updateMultipleCamfilRequisitionStatus({
+        requisitionIds,
+        status: 'APPROVED',
+      })
+    );
+  }
+
+  rejectMultipleRequisitions$(requisitionIds: string[], comment?: string) {
+    this.store.dispatch(
+      updateMultipleCamfilRequisitionStatus({
+        requisitionIds,
+        status: 'APPROVED',
+        approvalComment: comment,
       })
     );
   }

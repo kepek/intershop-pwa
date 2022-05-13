@@ -30,7 +30,7 @@ export class AccountNavigationComponent implements OnInit, OnChanges {
   navigationItems: NavigationItems = {
     '/account': { localizationKey: 'account.my_account.link' },
     '/account/requisitions/buyer': {
-      localizationKey: 'account.requisitions.requisitions',
+      localizationKey: 'camfil.account.requisitions.approval.requests',
       serverSetting: 'services.OrderApprovalServiceDefinition.runnable',
       permission: 'APP_B2B_PURCHASE',
     },

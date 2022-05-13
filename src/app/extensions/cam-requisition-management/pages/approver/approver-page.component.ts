@@ -34,6 +34,7 @@ export class ApproverPageComponent implements OnInit, OnDestroy {
     this.loading$ = this.camRequisitionManagementFacade.requisitionsLoading$;
     this.deviceType$ = this.appFacade.deviceType$;
     this.columnsToDisplay = [
+      'checkbox',
       'customerNumberAndName',
       'requisitionNo',
       'orderGoodsMark',

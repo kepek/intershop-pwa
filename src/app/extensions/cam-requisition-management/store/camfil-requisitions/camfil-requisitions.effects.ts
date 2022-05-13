@@ -11,7 +11,7 @@ import { displayErrorMessage, displaySuccessMessage } from 'ish-core/store/core/
 import { ofUrl, selectRouteParam } from 'ish-core/store/core/router';
 import { getCurrentBasketId, submitBasketSuccess } from 'ish-core/store/customer/basket';
 import { getProduct, loadProductIfNotLoaded } from 'ish-core/store/shopping/products';
-import { mapErrorToAction, mapToPayload, mapToPayloadProperty } from 'ish-core/utils/operators';
+import { mapErrorToAction, mapToPayload, mapToPayloadProperty, whenTruthy } from 'ish-core/utils/operators';
 
 import { CamfilRequisitionsService } from '../../services/requisitions/camfil-requisitions.service';
 
@@ -59,6 +59,8 @@ import {
   updateCamfilRequisitionStatusFail,
   updateCamfilRequisitionStatusSuccess,
   updateCamfilRequisitionSuccess,
+  updateMultipleCamfilRequisitionStatus,
+  updateMultipleCamfileRequisitionStatusFail,
 } from './camfil-requisitions.actions';
 import { getSelectedCamfilRequisitionId } from './camfil-requisitions.selectors';
 
@@ -185,6 +187,19 @@ export class CamfilRequisitionsEffects {
         updateCamfilRequisitionStatusSuccess({
           requisition: payload.requisition,
           status: payload.requisition.approval.status,
+        })
+      )
+    )
+  );
+
+  createOrderFromApprovedRequisitionFail$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(createOrderFromApprovedRequisitionFail),
+      mapToPayloadProperty('error'),
+      whenTruthy(),
+      map(error =>
+        displayErrorMessage({
+          message: error?.message || error?.code,
         })
       )
     )
@@ -415,6 +430,42 @@ export class CamfilRequisitionsEffects {
           map(() => approveCamfilRequisitionLineItemsSuccess({ requisition, lineItemIds })),
           mapErrorToAction(approveCamfilRequisitionLineItemsFail)
         )
+      )
+    )
+  );
+
+  updateMultipleCamfilRequisitionStatus$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(updateMultipleCamfilRequisitionStatus),
+      mapToPayload(),
+      concatMap(payload =>
+        this.requisitionsService
+          .updateMultipleCamfilRequisitionStatus(payload.requisitionIds, payload.status, payload.approvalComment)
+          .pipe(
+            // TODO: Change effect to createOrderFromMultipleApprovedRequisition
+            map(requisition =>
+              requisition.approval.statusCode === 'APPROVED'
+                ? createOrderFromApprovedRequisition({
+                    requisitionId: requisition.id,
+                  })
+                : updateCamfilRequisitionStatusSuccess({
+                    requisition,
+                    status: requisition.approval.status,
+                  })
+            ),
+            mapErrorToAction(updateMultipleCamfileRequisitionStatusFail)
+          )
+      )
+    )
+  );
+
+  updateMultipleCamfileRequisitionStatusFail$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(updateMultipleCamfileRequisitionStatusFail),
+      map(() =>
+        displayErrorMessage({
+          message: 'camfil.account.approvals.status_update.fail.text',
+        })
       )
     )
   );
