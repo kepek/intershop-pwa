@@ -10,6 +10,7 @@ const camfilConfiguration: CamfilChannelConfiguration = {
   showDutiesAndSurchargesTotalInBasketSummary: true,
   showSubTotalInBasketSummary: true,
   filterDocsByLanguage: true,
+  showAllDocsType: true,
 };
 
 export default camfilConfiguration;
