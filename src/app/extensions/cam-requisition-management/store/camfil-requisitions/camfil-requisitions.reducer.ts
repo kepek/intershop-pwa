@@ -35,6 +35,7 @@ import {
   updateMultipleCamfilRequisitionStatus,
   updateMultipleCamfilRequisitionStatusSuccess,
   updateMultipleCamfileRequisitionStatusFail,
+  updateCamfilRequisitionAddress,
 } from './camfil-requisitions.actions';
 
 export const camfilRequisitionsAdapter = createEntityAdapter<CamfilRequisition>();
@@ -76,7 +77,8 @@ export const requisitionsReducer = createReducer(
     updateMultipleCamfilRequisitionStatus,
     createCamfilRequisition,
     updateCamfilRequisition,
-    updateCamfilRequisitionLineItem
+    updateCamfilRequisitionLineItem,
+    updateCamfilRequisitionAddress
   ),
   unsetLoadingAndErrorOn(
     loadCamfilRequisitionsSuccess,
@@ -135,9 +137,9 @@ export const requisitionsReducer = createReducer(
   ),
   on(updateCamfilRequisitionAddressSuccess, (state: CamfilRequisitionsState, action) => {
     const { requisition, address } = action.payload;
-
+    console.log({ requisition });
     const updatedRequisition = {
-      ...state.entities[requisition?.id],
+      ...requisition,
       shippingAddress: address,
     };
 
