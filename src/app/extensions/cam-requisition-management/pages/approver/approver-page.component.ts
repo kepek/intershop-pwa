@@ -37,7 +37,7 @@ export class ApproverPageComponent implements OnInit, OnDestroy {
       'checkbox',
       'customerNumberAndName',
       'requisitionNo',
-      'orderGoodsMark',
+      'orderMark',
       'creationDate',
       'buyer',
       'status',

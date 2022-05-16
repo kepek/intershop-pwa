@@ -110,6 +110,22 @@ export class CamfilRequisitionsListComponent implements OnInit, OnChanges, After
 
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
+    this.dataSource.sortingDataAccessor = (item, property) => {
+      switch (property) {
+        case 'customerNumberAndName': {
+          return `${item.customerNo['companyName']} ${item.customerNo['customerNo']}`;
+        }
+        case 'buyer': {
+          return `${item.user.firstName} ${item.user.lastName}`;
+        }
+        case 'status': {
+          return `${item.approval.status}`;
+        }
+        default: {
+          return item[property];
+        }
+      }
+    };
     this.statusFilters.changes.pipe(takeUntil(this.destroy$)).subscribe(() => {
       // set requisition status checkboxes according to url parameters
       this.statusFilters.forEach((checkbox: MatCheckbox) => {

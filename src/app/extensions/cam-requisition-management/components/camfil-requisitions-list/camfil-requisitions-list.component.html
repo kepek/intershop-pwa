@@ -150,7 +150,7 @@
     </ng-container>
 
     <!-- BoxLabel Column -->
-    <ng-container cdkColumnDef="orderGoodsMark">
+    <ng-container cdkColumnDef="orderMark">
       <th *matHeaderCellDef mat-header-cell mat-sort-header data-testing-id="th-order-box-label">
         {{ 'camfil.account.approvallist.table.box_label' | translate }}
       </th>
@@ -253,7 +253,7 @@
         </div>
         <div class="row text-center">
           <div class="col-4">{{ requisition.camfilNo || '---' }}</div>
-          <div class="col-4">{{ requisition.orderGoodsMark || '---' }}</div>
+          <div class="col-4">{{ requisition.orderMark || '---' }}</div>
           <div class="col-4">{{ requisition.creationDate | ishDate }}</div>
         </div>
         <div class="row text-center">
