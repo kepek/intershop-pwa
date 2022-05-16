@@ -23,6 +23,7 @@ import {
   loadCamfilRequisitionsSuccess,
   loadCamfilRequisitionsuccess,
   updateCamfilRequisition,
+  updateCamfilRequisitionAddress,
   updateCamfilRequisitionAddressSuccess,
   updateCamfilRequisitionFail,
   updateCamfilRequisitionLineItem,
@@ -35,7 +36,6 @@ import {
   updateMultipleCamfilRequisitionStatus,
   updateMultipleCamfilRequisitionStatusSuccess,
   updateMultipleCamfileRequisitionStatusFail,
-  updateCamfilRequisitionAddress,
 } from './camfil-requisitions.actions';
 
 export const camfilRequisitionsAdapter = createEntityAdapter<CamfilRequisition>();
@@ -137,7 +137,7 @@ export const requisitionsReducer = createReducer(
   ),
   on(updateCamfilRequisitionAddressSuccess, (state: CamfilRequisitionsState, action) => {
     const { requisition, address } = action.payload;
-    console.log({ requisition });
+
     const updatedRequisition = {
       ...requisition,
       shippingAddress: address,
