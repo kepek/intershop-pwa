@@ -61,6 +61,6 @@ describe('Account Navigation Component', () => {
 
   it('should display link to requisition list if order approval service is enabled', () => {
     fixture.detectChanges();
-    expect(element.textContent).toContain('account.requisitions.requisitions');
+    expect(element.textContent).toContain('camfil.account.requisitions.approval.requests');
   });
 });
