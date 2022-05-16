@@ -113,6 +113,7 @@ export class CamfilRequisitionsListComponent implements OnInit, OnChanges, After
     this.dataSource.sortingDataAccessor = (item, property) => {
       switch (property) {
         case 'customerNumberAndName': {
+          /* tslint:disable:no-string-literal */
           return `${item.customerNo['companyName']} ${item.customerNo['customerNo']}`;
         }
         case 'buyer': {

@@ -71,7 +71,7 @@ describe('Camfil Requisitions List Component', () => {
   it('should display table columns if they are configured', () => {
     component.columnsToDisplay = [
       'customerNumberAndName',
-      'orderGoodsMark',
+      'orderMark',
       'creationDate',
       'buyer',
       'status',
