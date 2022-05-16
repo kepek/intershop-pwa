@@ -30,10 +30,12 @@ export class BucketMapper {
   static fromListData(payload: BucketData, basket: BasketView): Bucket[] {
     const { data, included } = payload;
 
-    return data.map((bucketData: BucketBaseData) => {
-      const shipToAddress = bucketData?.shipToAddress && included?.shipToAddress[bucketData?.shipToAddress];
-      return BucketMapper.fromData(bucketData, basket, shipToAddress);
-    });
+    return data
+      .map((bucketData: BucketBaseData) => {
+        const shipToAddress = bucketData?.shipToAddress && included?.shipToAddress[bucketData?.shipToAddress];
+        return BucketMapper.fromData(bucketData, basket, shipToAddress);
+      })
+      .sort((a, b) => basket.buckets.indexOf(a.id) - basket.buckets.indexOf(b.id));
   }
 
   static fromData(bucketData: BucketBaseData, basket: BasketView, shipToAddressData: AddressData): Bucket {
