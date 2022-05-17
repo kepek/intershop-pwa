@@ -119,6 +119,20 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
     private camfilConfigurationFacade: CamfilConfigurationFacade
   ) {}
 
+  get isMoreThanLimit() {
+    return this.bucket?.lineItems?.length >= this.numberOfVisibleLineItems;
+  }
+
+  get containerSize() {
+    let containerSize = this.bucket?.lineItems?.length * this.itemSize;
+
+    if (this.isMoreThanLimit) {
+      containerSize = this.numberOfVisibleLineItems * this.itemSize;
+    }
+
+    return containerSize + 2;
+  }
+
   get currentBasketExtensions() {
     return {
       ...this.bucket,
@@ -288,9 +302,7 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
       this.orderAddress = this.shipToAddress;
     }
 
-    if (s?.totalBuckets?.previousValue !== s?.totalBuckets?.currentValue) {
-      this.handleHeightItemsContainer(this.bucket?.lineItems);
-      this.virtualScrollViewport?.checkViewportSize();
+    if (!s?.totalBuckets?.firstChange && s?.totalBuckets?.previousValue !== s?.totalBuckets?.currentValue) {
       this.orderForm?.patchValue({
         orderMark: this.bucket.orderMark,
         invoiceLabel: this.bucket.invoiceLabel,
@@ -310,8 +322,6 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
   }
 
   ngAfterViewInit() {
-    this.handleHeightItemsContainer(this.bucket?.lineItems);
-
     if (this.focusedElementId) {
       const focusTimeout = setTimeout(() => {
         const element = document.querySelector(`#${this.focusedElementId}`) as HTMLElement;
@@ -324,21 +334,11 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
     this.virtualScrollViewport?.scrolledIndexChange?.pipe(skip(1), takeUntil(this.destroy$))?.subscribe(el => {
       this.currentScrollIndex = el;
     });
-  }
 
-  handleHeightItemsContainer(lineItems: LineItemView[]) {
-    if (this.editable) {
-      const isMoreThanLimit = lineItems?.length >= this.numberOfVisibleLineItems;
-      const numberOfItems = isMoreThanLimit ? this.numberOfVisibleLineItems : lineItems?.length;
-      const viewportElement = this.virtualScrollViewport?.elementRef?.nativeElement;
-      const bigLineItems = this.calculateLineItemHeight(lineItems)?.length;
+    const viewportElement = this.virtualScrollViewport?.elementRef?.nativeElement;
 
-      if (viewportElement) {
-        // @ts-ignore
-        viewportElement.style.height = `${numberOfItems * this.itemSize + bigLineItems * 12}px`;
-        viewportElement.style.overflowY = isMoreThanLimit ? 'auto' : 'hidden';
-        viewportElement.parentElement.classList.toggle('show-shadow', isMoreThanLimit);
-      }
+    if (viewportElement) {
+      viewportElement.parentElement.classList.toggle('show-shadow', this.isMoreThanLimit);
     }
   }
 
@@ -352,14 +352,6 @@ export class CamfilCheckoutBucketComponent implements OnInit, AfterViewInit, OnD
         })
         ?.filter(li => li) || []
     );
-  }
-
-  changeViewportHeightOnBoxLabelChange(type: string) {
-    const viewportElement = this.virtualScrollViewport?.elementRef?.nativeElement;
-    if (viewportElement) {
-      viewportElement.style.height =
-        type === 'increase' ? `${viewportElement.offsetHeight + 50}px` : `${viewportElement.offsetHeight - 50}px`;
-    }
   }
 
   changeScrollIndex() {
