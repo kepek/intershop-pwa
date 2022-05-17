@@ -23,6 +23,7 @@ import {
   loadCamfilRequisitionsSuccess,
   loadCamfilRequisitionsuccess,
   updateCamfilRequisition,
+  updateCamfilRequisitionAddress,
   updateCamfilRequisitionAddressSuccess,
   updateCamfilRequisitionFail,
   updateCamfilRequisitionLineItem,
@@ -32,6 +33,9 @@ import {
   updateCamfilRequisitionStatusFail,
   updateCamfilRequisitionStatusSuccess,
   updateCamfilRequisitionSuccess,
+  updateMultipleCamfilRequisitionStatus,
+  updateMultipleCamfilRequisitionStatusSuccess,
+  updateMultipleCamfileRequisitionStatusFail,
 } from './camfil-requisitions.actions';
 
 export const camfilRequisitionsAdapter = createEntityAdapter<CamfilRequisition>();
@@ -70,14 +74,17 @@ export const requisitionsReducer = createReducer(
     loadCamfilRequisitions,
     loadCamfilRequisition,
     updateCamfilRequisitionStatus,
+    updateMultipleCamfilRequisitionStatus,
     createCamfilRequisition,
     updateCamfilRequisition,
-    updateCamfilRequisitionLineItem
+    updateCamfilRequisitionLineItem,
+    updateCamfilRequisitionAddress
   ),
   unsetLoadingAndErrorOn(
     loadCamfilRequisitionsSuccess,
     loadCamfilRequisitionsuccess,
     updateCamfilRequisitionStatusSuccess,
+    updateMultipleCamfilRequisitionStatusSuccess,
     createCamfilRequisitionSuccess,
     createOrderFromApprovedRequisitionSuccess,
     updateCamfilRequisitionSuccess,
@@ -88,6 +95,7 @@ export const requisitionsReducer = createReducer(
     loadCamfilRequisitionsFail,
     loadCamfilRequisitionFail,
     updateCamfilRequisitionStatusFail,
+    updateMultipleCamfileRequisitionStatusFail,
     updateCamfilRequisitionFail,
     createCamfilRequisitionFail,
     createOrderFromApprovedRequisitionFail,
@@ -131,7 +139,7 @@ export const requisitionsReducer = createReducer(
     const { requisition, address } = action.payload;
 
     const updatedRequisition = {
-      ...state.entities[requisition?.id],
+      ...requisition,
       shippingAddress: address,
     };
 
@@ -172,5 +180,16 @@ export const requisitionsReducer = createReducer(
       partiallyApproved: true,
     };
     return camfilRequisitionsAdapter.upsertOne(updatedRequisition, state);
+  }),
+  // TODO: Update with upsert many
+  on(updateMultipleCamfilRequisitionStatusSuccess, (state: CamfilRequisitionsState, action) => {
+    const { requisition } = action.payload;
+    const { approval } = requisition;
+    const approvedRequisition = {
+      ...state.entities[requisition?.id],
+      approval,
+    };
+
+    return camfilRequisitionsAdapter.upsertOne(approvedRequisition, state);
   })
 );

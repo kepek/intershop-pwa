@@ -88,6 +88,11 @@
           >
         </div>
       </div>
+      <ng-container *ngIf="view === 'approver'">
+        <div class="approval-header-right__container">
+          <ng-container *ngTemplateOutlet="approvalButtonBar"></ng-container>
+        </div>
+      </ng-container>
     </mat-card-content>
   </mat-card>
   <table
@@ -100,6 +105,26 @@
     class="mat-elevation-z2"
     data-testing-id="requisition-list"
   >
+    <!-- Checkbox  Column -->
+    <ng-container *ngIf="view === 'approver'" matColumnDef="checkbox">
+      <th mat-header-cell *matHeaderCellDef>
+        <mat-checkbox color="primary" (click)="$event.stopPropagation()" (change)="toggleAllApprovalsCheck($event)">
+        </mat-checkbox>
+      </th>
+      <td mat-cell *matCellDef="let pli">
+        <ng-container *ngIf="pli.approval.status === 'Pending' || pli.approval.status === 'Partial Approved'">
+          <mat-checkbox
+            *ngIf="pli.requisitionLineItemStatus !== 'APPROVED'"
+            color="primary"
+            (click)="$event.stopPropagation()"
+            (change)="toggleApprovalCheck(pli.id, $event)"
+            [checked]="isApprovalChecked(pli.id)"
+          >
+          </mat-checkbox>
+          <mat-icon *ngIf="pli.requisitionLineItemStatus === 'APPROVED'" svgIcon="checkmark"></mat-icon>
+        </ng-container>
+      </td>
+    </ng-container>
     <!-- Customer Number and Name Column -->
     <ng-container matColumnDef="customerNumberAndName">
       <th *matHeaderCellDef mat-header-cell mat-sort-header>
@@ -125,7 +150,7 @@
     </ng-container>
 
     <!-- BoxLabel Column -->
-    <ng-container cdkColumnDef="orderGoodsMark">
+    <ng-container cdkColumnDef="orderMark">
       <th *matHeaderCellDef mat-header-cell mat-sort-header data-testing-id="th-order-box-label">
         {{ 'camfil.account.approvallist.table.box_label' | translate }}
       </th>
@@ -228,7 +253,7 @@
         </div>
         <div class="row text-center">
           <div class="col-4">{{ requisition.camfilNo || '---' }}</div>
-          <div class="col-4">{{ requisition.orderGoodsMark || '---' }}</div>
+          <div class="col-4">{{ requisition.orderMark || '---' }}</div>
           <div class="col-4">{{ requisition.creationDate | ishDate }}</div>
         </div>
         <div class="row text-center">
@@ -264,6 +289,29 @@
     <br />
   </ng-template>
 </ng-container>
+
+<ng-template #approvalButtonBar let-requisition="requisition">
+  <ng-container *ngIf="view === 'approver'">
+    <div class="text-right">
+      <button mat-stroked-button (click)="rejectDialog.show()" [disabled]="approvalsChecked?.length !== 1">
+        {{ 'approval.detailspage.reject.button.label' | translate }}
+      </button>
+      <button
+        (click)="approveMultipleRequisitions()"
+        mat-flat-button
+        class="ml-2"
+        color="primary"
+        [disabled]="approvalsChecked?.length !== 1"
+      >
+        {{ 'approval.detailspage.approve.button.label' | translate }}
+      </button>
+    </div>
+  </ng-container>
+</ng-template>
+<camfil-requisition-reject-dialog
+  #rejectDialog
+  (submit)="rejectMultipleRequisitions($event)"
+></camfil-requisition-reject-dialog>
 
 <ng-template #emptyList>
   <p data-testing-id="emptyList">{{ 'account.approvallist.no_items_message' | translate }}</p>

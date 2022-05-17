@@ -40,7 +40,7 @@ export class BuyerPageComponent implements OnInit, OnDestroy {
     this.columnsToDisplay = [
       'customerNumberAndName',
       'requisitionNo',
-      'orderGoodsMark',
+      'orderMark',
       'creationDate',
       'buyer',
       'status',

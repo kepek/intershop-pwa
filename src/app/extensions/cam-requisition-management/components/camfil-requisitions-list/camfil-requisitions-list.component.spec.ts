@@ -2,13 +2,14 @@ import { CdkTableModule } from '@angular/cdk/table';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { MockPipe } from 'ng-mocks';
+import { MockComponent, MockPipe } from 'ng-mocks';
 import { instance, mock } from 'ts-mockito';
 
 import { PricePipe } from 'ish-core/models/price/price.pipe';
 import { DatePipe } from 'ish-core/pipes/date.pipe';
 
 import { CamRequisitionManagementFacade } from '../../facades/cam-requisition-management.facade';
+import { CamfilRequisitionRejectDialogComponent } from '../camfil-requisition-reject-dialog/camfil-requisition-reject-dialog.component';
 
 import { CamfilRequisitionsListComponent } from './camfil-requisitions-list.component';
 
@@ -23,7 +24,12 @@ describe('Camfil Requisitions List Component', () => {
     camRequisitionManagementFacade = mock(CamRequisitionManagementFacade);
     await TestBed.configureTestingModule({
       imports: [CdkTableModule, RouterTestingModule, TranslateModule.forRoot()],
-      declarations: [CamfilRequisitionsListComponent, MockPipe(DatePipe), MockPipe(PricePipe)],
+      declarations: [
+        CamfilRequisitionsListComponent,
+        MockComponent(CamfilRequisitionRejectDialogComponent),
+        MockPipe(DatePipe),
+        MockPipe(PricePipe),
+      ],
       providers: [
         { provide: CamRequisitionManagementFacade, useFactory: () => instance(camRequisitionManagementFacade) },
       ],
@@ -65,7 +71,7 @@ describe('Camfil Requisitions List Component', () => {
   it('should display table columns if they are configured', () => {
     component.columnsToDisplay = [
       'customerNumberAndName',
-      'orderGoodsMark',
+      'orderMark',
       'creationDate',
       'buyer',
       'status',

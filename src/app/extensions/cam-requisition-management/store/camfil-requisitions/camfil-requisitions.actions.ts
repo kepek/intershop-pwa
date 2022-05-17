@@ -281,3 +281,20 @@ export const updateCamfilRequisitionLineItemFail = createAction(
   '[Camfil Requisitions API] Update Line Item  Fail',
   httpError()
 );
+
+// Change status for multiple requisitions
+
+export const updateMultipleCamfilRequisitionStatus = createAction(
+  '[Camfil Requisitions] Update Multiple Requisition Status',
+  payload<{ requisitionIds: string[]; status: CamfilRequisitionStatus; approvalComment?: string }>()
+);
+
+export const updateMultipleCamfileRequisitionStatusFail = createAction(
+  '[Camfil Requisitions API] Update MultipleRequisition Status Fail',
+  httpError()
+);
+
+export const updateMultipleCamfilRequisitionStatusSuccess = createAction(
+  '[Camfil Requisitions API] Update Multiple Requisition Status Success',
+  payload<{ requisition: CamfilRequisition; status: string }>()
+);
