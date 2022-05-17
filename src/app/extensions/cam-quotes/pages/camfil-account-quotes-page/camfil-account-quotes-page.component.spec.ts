@@ -2,6 +2,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 
+import { SharedModule } from 'ish-shared/shared.module';
+
 import { CamfilAccountQuotesPageComponent } from './camfil-account-quotes-page.component';
 
 describe('Camfil Account Quotes Page Component', () => {
@@ -12,7 +14,7 @@ describe('Camfil Account Quotes Page Component', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [CamfilAccountQuotesPageComponent],
-      imports: [NgbModalModule, RouterTestingModule],
+      imports: [NgbModalModule, RouterTestingModule, SharedModule],
     }).compileComponents();
   });
 
