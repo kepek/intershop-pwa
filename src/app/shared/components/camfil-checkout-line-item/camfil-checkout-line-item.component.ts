@@ -66,7 +66,6 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
   @Output() openDeleteModalAction = new EventEmitter();
   @Output() resizeLineItemOnBlur = new EventEmitter();
   @Output() addHeightToViewport = new EventEmitter<string>();
-  @Output() resizeLineItemOnBoxLabelChange = new EventEmitter();
 
   earliestDeliveryDate: Date;
   boxLabel: string;
@@ -205,7 +204,6 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
     if (ifLabel) {
       this.boxLabel = value as string;
       if (this.boxLabel?.length === this.maxLengthValues.BoxLabel && this.wasIncreased) {
-        this.resizeLineItemOnBoxLabelChange.emit('decrease');
         this.wasIncreased = false;
       }
     } else {
@@ -283,15 +281,6 @@ export class CamfilCheckoutLineItemComponent implements OnChanges, OnInit, OnDes
     this.checkoutFacade.setCheckoutFocusedElement(target.id);
     const boxLabelLen = this.boxLabel?.length;
     if (boxLabelLen === this.maxLengthValues.BoxLabel && !this.wasIncreased) {
-      this.resizeLineItemOnBoxLabelChange.emit('increase');
-      this.wasIncreased = true;
-    }
-  }
-
-  resizeLineItemOnLabelChange() {
-    const boxLabelLen = this.boxLabel?.length;
-    if (boxLabelLen === this.maxLengthValues.BoxLabel && !this.wasIncreased) {
-      this.resizeLineItemOnBoxLabelChange.emit('increase');
       this.wasIncreased = true;
     }
   }

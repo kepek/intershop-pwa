@@ -4,6 +4,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { PortalModule } from '@angular/cdk/portal';
 import { ScrollingModule } from '@angular/cdk/scrolling';
+import { ScrollingModule as ExperimentalScrollingModule} from '@angular/cdk-experimental/scrolling';
 import { CdkStepperModule } from '@angular/cdk/stepper';
 import { CdkTableModule } from '@angular/cdk/table';
 import { CdkTreeModule } from '@angular/cdk/tree';
@@ -90,6 +91,7 @@ const importExportModules = [
   OverlayModule,
   PortalModule,
   ScrollingModule,
+  ExperimentalScrollingModule
 ];
 
 @NgModule({

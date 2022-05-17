@@ -292,7 +292,6 @@
 <ng-template #bucketListItem let-i="i" let-item="item">
   <camfil-checkout-line-item
     (openDeleteModalAction)="changeScrollIndex()"
-    (resizeLineItemOnBoxLabelChange)="changeViewportHeightOnBoxLabelChange($event)"
     [basketId]="bucket?.basket"
     [bucketId]="bucket?.id"
     [deviceType]="deviceType$ | async"
@@ -314,12 +313,12 @@
     class="bucket_list-container"
   >
     <ng-container *ngIf="editable; else notEditableTemplate">
-      <cdk-virtual-scroll-viewport [itemSize]="itemSize">
-        <div *cdkVirtualFor="let item of bucket.lineItems; index as i; trackBy: trackBy">
+      <cdk-virtual-scroll-viewport autosize [style.height.px]="containerSize">
+        <div *cdkVirtualFor="let item of bucket.lineItems; index as i; trackBy: trackBy" [style.minHeight.px]="itemSize">
           <div
             [cdkDragData]="item"
             [cdkDragDisabled]="!editable"
-            [ngClass]="{ 'list-item-row list-item-row-big mt-2': (isLoggedIn$ | async) }"
+            [ngClass]="{ 'list-item-row list-item-row-big': (isLoggedIn$ | async) }"
             cdkDrag
           >
             <ng-container *ngTemplateOutlet="bucketListItem; context: { item: item, i: i }"></ng-container>
@@ -330,7 +329,7 @@
     <ng-template #notEditableTemplate>
       <div *ngFor="let item of bucket.lineItems; index as i; trackBy: trackBy">
         <div
-          [ngClass]="{ 'list-item-row list-item-row-big mt-2': (isLoggedIn$ | async) }"
+          [ngClass]="{ 'list-item-row list-item-row-big': (isLoggedIn$ | async) }"
           class="px-4 py-1 line-item-container"
         >
           <ng-container *ngTemplateOutlet="bucketListItem; context: { item: item, i: i }"></ng-container>

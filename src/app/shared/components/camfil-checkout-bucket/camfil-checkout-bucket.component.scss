@@ -230,9 +230,7 @@
   }
 
   .list-item-row {
-    margin-top: 12px;
-    background-color: $white;
-    @include mat-elevation(1);
+    height: 100%;
   }
 
   .camfil-checkout-bucket {

@@ -149,7 +149,6 @@
           #autosize="cdkTextareaAutosize"
           (blur)="onBlur($event.target, boxLabelForm)"
           (focus)="setFocusedElement($event.target)"
-          (ngModelChange)="resizeLineItemOnLabelChange()"
           [camfilMaxLength]="'BoxLabel'"
           [id]="lineItem?.id | slugify: 'line-item-box-label'"
           cdkAutosizeMaxRows="3"
