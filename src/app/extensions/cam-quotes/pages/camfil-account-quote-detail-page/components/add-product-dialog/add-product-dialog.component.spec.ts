@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AddProductDialogComponent } from './add-product-dialog.component';
 
-describe('AddProductDialogComponent', () => {
+describe('Add Product Dialog Component', () => {
   let component: AddProductDialogComponent;
   let fixture: ComponentFixture<AddProductDialogComponent>;
   let element: HTMLElement;

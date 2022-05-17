@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SearchInputComponent } from './search-input.component';
+import { QuoteLineItemComponent } from './quote-line-item.component';
 
-describe('Search Input Component', () => {
-  let component: SearchInputComponent;
-  let fixture: ComponentFixture<SearchInputComponent>;
+describe('Quote Line Item Component', () => {
+  let component: QuoteLineItemComponent;
+  let fixture: ComponentFixture<QuoteLineItemComponent>;
   let element: HTMLElement;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [SearchInputComponent],
+      declarations: [QuoteLineItemComponent],
     }).compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SearchInputComponent);
+    fixture = TestBed.createComponent(QuoteLineItemComponent);
     component = fixture.componentInstance;
     element = fixture.nativeElement;
   });

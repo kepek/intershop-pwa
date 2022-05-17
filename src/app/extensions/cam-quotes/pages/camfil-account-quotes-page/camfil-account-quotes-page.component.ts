@@ -1,18 +1,18 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { Location } from '@angular/common';
+import { HttpParams } from '@angular/common/http';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { ActivatedRoute } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 import { filter, map, take, takeUntil, tap } from 'rxjs/operators';
 
 import { QuotesApproveDialogComponent } from '../../components/quotes-approve-dialog/quotes-approve-dialog.component';
+import { QuotesRejectDialogComponent } from '../../components/quotes-reject-dialog/quotes-reject-dialog.component';
 import { CamQuotesFacade } from '../../facades/cam-quotes.facade';
 import { Quote, QuoteStatus as QuoteStatusEnum } from '../../models/quote/quote.model';
-import { QuotesRejectDialogComponent } from '../../components/quotes-reject-dialog/quotes-reject-dialog.component';
-import { ActivatedRoute } from '@angular/router';
-import { Location } from '@angular/common';
-import { HttpParams } from '@angular/common/http';
 
 interface QuotesFilters {
   search?: string;
@@ -38,7 +38,7 @@ interface QuotesFilters {
     '(window:resize)': 'onResize()',
   },
 })
-export class CamfilAccountQuotesPageComponent implements OnInit {
+export class CamfilAccountQuotesPageComponent implements OnInit, OnDestroy {
   allQuotes: Quote[];
   filteredQuotes: Quote[];
   private destroy$: Subject<boolean> = new Subject<boolean>();
@@ -123,19 +123,19 @@ export class CamfilAccountQuotesPageComponent implements OnInit {
 
     this.activatedRoute.queryParams
       .pipe(
-        map(({ filter }) => filter || '{}'),
+        map(value => value.filter || '{}'),
         take(1)
       )
-      .subscribe(filter => {
-        console.log('filters from url', filter);
-        const filters = JSON.parse(filter);
+      .subscribe(value => {
+        console.log('filters from url', value);
+        const filters = JSON.parse(value);
         if (filters.fromDate && filters.fromDate.length > 0) {
-          filters.fromDate = new Date(filter.fromDate);
+          filters.fromDate = new Date(filters.fromDate);
         }
         if (filters.toDate && filters.toDate.length > 0) {
           filters.toDate = new Date(filters.toDate);
         }
-        this.filtersForm.patchValue(filter);
+        this.filtersForm.patchValue(filters);
       });
 
     this.quotesFacade.approvedQuotesSuccess$

@@ -16,7 +16,8 @@ import { MatTableDataSource } from '@angular/material/table';
 
 import { LineItemUpdate } from 'ish-core/models/line-item-update/line-item-update.model';
 import { Price } from 'ish-core/models/price/price.model';
-import { CamfilQuickViewModalComponent } from '../../../../../../shared/components/common/camfil-quick-view-modal/camfil-quick-view-modal.component';
+import { CamfilQuickViewModalComponent } from 'ish-shared/components/common/camfil-quick-view-modal/camfil-quick-view-modal.component';
+
 import { QuoteLineItem } from '../../../../models/quote-details/quote-details.model';
 
 @Component({
@@ -27,7 +28,7 @@ import { QuoteLineItem } from '../../../../models/quote-details/quote-details.mo
 })
 export class QuoteLineItemTableComponent implements OnInit, OnChanges, AfterViewInit {
   @Input() lineItems: Partial<QuoteLineItem>[];
-  @Input() isMobileView: boolean = false;
+  @Input() isMobileView = false;
   @Output() updateItem = new EventEmitter<LineItemUpdate>();
   @Output() deleteItem = new EventEmitter<string>();
   @ViewChild(MatSort) sort: MatSort;
@@ -40,11 +41,11 @@ export class QuoteLineItemTableComponent implements OnInit, OnChanges, AfterView
     'originPrice',
     'customerPrice',
     'qty',
-    'totalPrice'
+    'totalPrice',
   ];
   lineItemsProcessed: MatTableDataSource<Partial<QuoteLineItem>>;
 
-  constructor(public dialog: MatDialog) { }
+  constructor(public dialog: MatDialog) {}
 
   ngOnInit() {
     this.lineItemsProcessed = new MatTableDataSource(this.lineItems);

@@ -15,8 +15,12 @@ import { Price } from 'ish-core/models/price/price.model';
 import { whenFalsy } from 'ish-core/utils/operators';
 import { RoleToggleService } from 'ish-core/utils/role-toggle/role-toggle.service';
 import { CamfilBasketCostSummaryComponent } from 'ish-shared/components/basket/camfil-basket-cost-summary/camfil-basket-cost-summary.component';
+import {
+  CamfilModalDialogComponent,
+  ModalOptions,
+} from 'ish-shared/components/common/camfil-modal-dialog/camfil-modal-dialog.component';
 import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
-import { CamfilModalDialogComponent, ModalOptions } from '../common/camfil-modal-dialog/camfil-modal-dialog.component';
+
 import { CamQuotesFacade } from '../../../extensions/cam-quotes/facades/cam-quotes.facade';
 
 @Component({
@@ -84,7 +88,7 @@ export class CamfilCheckoutSummaryComponent extends CamfilBasketCostSummaryCompo
 
     this.canRequestQuotations$ = combineLatest([
       this.roleToggleService.hasRole('APP_B2B_REQUEST_QUOTATION'),
-      this.camQuotesFacade.isQuotesModuleEnabled$
+      this.camQuotesFacade.isQuotesModuleEnabled$,
     ]).pipe(map(([hasRequestRole, isQuotesModuleEnabled]) => hasRequestRole && isQuotesModuleEnabled));
   }
 

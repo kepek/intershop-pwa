@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SearchInputComponent } from './search-input.component';
+import { QuoteCostSummaryComponent } from './quote-cost-summary.component';
 
-describe('Search Input Component', () => {
-  let component: SearchInputComponent;
-  let fixture: ComponentFixture<SearchInputComponent>;
+describe('Quote Cost Summary Component', () => {
+  let component: QuoteCostSummaryComponent;
+  let fixture: ComponentFixture<QuoteCostSummaryComponent>;
   let element: HTMLElement;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [SearchInputComponent],
+      declarations: [QuoteCostSummaryComponent],
     }).compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SearchInputComponent);
+    fixture = TestBed.createComponent(QuoteCostSummaryComponent);
     component = fixture.componentInstance;
     element = fixture.nativeElement;
   });

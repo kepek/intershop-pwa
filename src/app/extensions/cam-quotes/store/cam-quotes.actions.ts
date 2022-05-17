@@ -1,8 +1,10 @@
 import { createAction } from '@ngrx/store';
+
 import { payload } from 'ish-core/utils/ngrx-creators';
-import { Quote } from '../models/quote/quote.model';
+
 import { QuoteDetails } from '../models/quote-details/quote-details.model';
 import { QuoteItemCreated } from '../models/quote-item/quote-item.interface';
+import { Quote } from '../models/quote/quote.model';
 
 export const loadQuotes = createAction('[Cam Quotes] Load Camfil Quotes');
 
@@ -38,45 +40,24 @@ export const deleteQuoteItemSuccess = createAction(
   payload<{ response: any }>()
 );
 
-export const approveQuote = createAction(
-  '[Cam Quotes] Approve Quote',
-  payload<{ quoteId: string }>()
-);
+export const approveQuote = createAction('[Cam Quotes] Approve Quote', payload<{ quoteId: string }>());
 
-export const approveQuoteSuccess = createAction(
-  '[Cam Quotes] Approve Quote Success',
-  payload<{ response: any }>()
-);
+export const approveQuoteSuccess = createAction('[Cam Quotes] Approve Quote Success', payload<{ response: any }>());
 
-export const approveQuotes = createAction(
-  '[Cam Quotes] Approve Quotes',
-  payload<{ quoteIds: string[] }>()
-);
+export const approveQuotes = createAction('[Cam Quotes] Approve Quotes', payload<{ quoteIds: string[] }>());
 
-export const approveQuotesSuccess = createAction(
-  '[Cam Quotes] Approve Quotes Success',
-  payload<{ response: any }>()
-);
+export const approveQuotesSuccess = createAction('[Cam Quotes] Approve Quotes Success', payload<{ response: any }>());
 
-export const rejectQuote = createAction(
-  '[Cam Quotes] Reject Quote',
-  payload<{ quoteId: string, reason: string }>()
-);
+export const rejectQuote = createAction('[Cam Quotes] Reject Quote', payload<{ quoteId: string; reason: string }>());
 
-export const rejectQuoteSuccess = createAction(
-  '[Cam Quotes] Reject Quote Success',
-  payload<{ response: any }>()
-);
+export const rejectQuoteSuccess = createAction('[Cam Quotes] Reject Quote Success', payload<{ response: any }>());
 
 export const rejectQuotes = createAction(
   '[Cam Quotes] Reject Quotes',
-  payload<{ quoteIds: string[], reason: string }>()
+  payload<{ quoteIds: string[]; reason: string }>()
 );
 
-export const rejectQuotesSuccess = createAction(
-  '[Cam Quotes] Reject Quotes Success',
-  payload<{ response: any }>()
-);
+export const rejectQuotesSuccess = createAction('[Cam Quotes] Reject Quotes Success', payload<{ response: any }>());
 
 // export const loadQuoteItems = createAction('[Cam Quotes] Load Camfil Quote Items', payload<{ quoteId: string }>());
 //

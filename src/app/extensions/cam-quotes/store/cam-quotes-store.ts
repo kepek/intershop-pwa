@@ -1,6 +1,7 @@
 import { createFeatureSelector } from '@ngrx/store';
-import { CamQuotesListState } from './cam-quotes-list.reducer';
+
 import { CamQuoteDetailState } from './cam-quote-detail.reducer';
+import { CamQuotesListState } from './cam-quotes-list.reducer';
 
 export interface CamQuotesState {
   quotesList: CamQuotesListState;

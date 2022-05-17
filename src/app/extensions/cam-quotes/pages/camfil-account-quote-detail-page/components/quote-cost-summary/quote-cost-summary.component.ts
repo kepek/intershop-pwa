@@ -1,17 +1,18 @@
-import { Component, Input } from "@angular/core";
-import { Price } from "../../../../../../core/models/price/price.model";
-import { QuoteDetails } from "../../../../models/quote-details/quote-details.model";
+import { Component, Input, OnInit } from '@angular/core';
+
+import { Price } from 'ish-core/models/price/price.model';
+
+import { QuoteDetails } from '../../../../models/quote-details/quote-details.model';
 
 @Component({
   selector: 'camfil-quote-cost-summary',
   templateUrl: './quote-cost-summary.component.html',
-  styleUrls: ['./quote-cost-summary.component.scss']
+  styleUrls: ['./quote-cost-summary.component.scss'],
 })
-export class QuoteCostSummaryComponent {
-
+export class QuoteCostSummaryComponent implements OnInit {
   @Input() quote: QuoteDetails;
 
-  currency: string = 'N/A';
+  currency = 'N/A';
 
   totalQuantity: number;
   listPrice: number;
@@ -20,8 +21,6 @@ export class QuoteCostSummaryComponent {
   totalTaxes = 0;
 
   ngOnInit() {
-    console.log(this.quote);
-
     this.totalQuantity = 0;
     this.listPrice = 0;
     this.totalPrice = 0;
@@ -29,7 +28,7 @@ export class QuoteCostSummaryComponent {
     this.totalTaxes = 0;
 
     this.quote.items.forEach(item => {
-      if (item.totalPrice.currency != 'N/A') {
+      if (item.totalPrice.currency !== 'N/A') {
         this.currency = item.totalPrice.currency;
       }
 
@@ -46,5 +45,4 @@ export class QuoteCostSummaryComponent {
       type: 'Money',
     };
   }
-
 }

@@ -494,11 +494,11 @@ export const basketReducer = createReducer(
     const lineItems = state.basket.lineItems.map(li =>
       li.id === lineItemId
         ? {
-          ...li,
-          attributes: li.attributes.find(att => att.name === attribute.name)
-            ? li.attributes.map(att => (att.name === attribute.name ? attribute : att))
-            : [...li.attributes, attribute],
-        }
+            ...li,
+            attributes: li.attributes.find(att => att.name === attribute.name)
+              ? li.attributes.map(att => (att.name === attribute.name ? attribute : att))
+              : [...li.attributes, attribute],
+          }
         : li
     );
     const selectedBucket = state.buckets?.filter(b => b.id === bucketId)[0];
@@ -512,9 +512,9 @@ export const basketReducer = createReducer(
       buckets: state.buckets.map(b =>
         b.id === bucketId
           ? {
-            ...b,
-            selectedBucketLinetItems,
-          }
+              ...b,
+              selectedBucketLinetItems,
+            }
           : b
       ),
     };
@@ -525,9 +525,9 @@ export const basketReducer = createReducer(
       items?.map(li =>
         li.id === lineItemId
           ? {
-            ...li,
-            attributes: li.attributes.filter(att => att.name !== attributeName),
-          }
+              ...li,
+              attributes: li.attributes.filter(att => att.name !== attributeName),
+            }
           : li
       );
     return {
@@ -539,9 +539,9 @@ export const basketReducer = createReducer(
       buckets: state.buckets.map(b =>
         b.id === bucketId
           ? {
-            ...b,
-            lineItems: filteredItems(b.lineItems),
-          }
+              ...b,
+              lineItems: filteredItems(b.lineItems),
+            }
           : b
       ),
     };
@@ -561,6 +561,6 @@ export const basketReducer = createReducer(
   }),
   on(setBasketOrderType, (state: BasketState, action) => ({
     ...state,
-    orderType: action.payload.orderType
+    orderType: action.payload.orderType,
   }))
 );

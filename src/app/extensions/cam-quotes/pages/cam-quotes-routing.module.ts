@@ -1,8 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { CamfilAccountQuoteDetailPageComponent } from './camfil-account-quote-detail-page/camfil-account-quote-detail-page.component';
+
 import { AuthGuard } from 'ish-core/guards/auth.guard';
+
 import { QuotesGuard } from '../guards/quotes.guard';
+
+import { CamfilAccountQuoteDetailPageComponent } from './camfil-account-quote-detail-page/camfil-account-quote-detail-page.component';
 
 const routes: Routes = [
   {

@@ -54,7 +54,7 @@ export class OrdersEffects {
     @Inject(PLATFORM_ID) protected platformId: string,
     protected store: Store,
     protected translateService: TranslateService
-  ) { }
+  ) {}
 
   /**
    * Creates an order based on the given basket.

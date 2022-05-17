@@ -1,15 +1,15 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatCheckboxChange } from '@angular/material/checkbox';
+
 import { QuoteLineItem } from '../../../../models/quote-details/quote-details.model';
 
 @Component({
   selector: 'camfil-quote-line-item',
   templateUrl: './quote-line-item.component.html',
-  styleUrls: ['./quote-line-item.component.scss']
+  styleUrls: ['./quote-line-item.component.scss'],
 })
 export class QuoteLineItemComponent implements OnInit, OnChanges {
-
   @Input() item: QuoteLineItem;
   quantityForm: FormGroup;
   @Output() selected: EventEmitter<boolean> = new EventEmitter<boolean>();
@@ -21,8 +21,7 @@ export class QuoteLineItemComponent implements OnInit, OnChanges {
     });
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.item) {

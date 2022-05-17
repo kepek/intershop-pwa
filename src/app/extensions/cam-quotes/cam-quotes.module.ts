@@ -12,4 +12,4 @@ import { CamQuotesRoutingModule } from './pages/cam-quotes-routing.module';
   exports: [SharedModule],
   declarations: [ConfirmDialogComponent, QuotesApproveDialogComponent, QuotesRejectDialogComponent],
 })
-export class CamQuotesModule { }
+export class CamQuotesModule {}

@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Store, select } from '@ngrx/store';
+import { getChannelCode } from 'camfil-pwa/store/camfil-configuration';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { getChannelCode } from '../../../../../projects/camfil-pwa/src/app/store/camfil-configuration';
 
 import { QuoteDetails } from '../models/quote-details/quote-details.model';
 import { Quote } from '../models/quote/quote.model';

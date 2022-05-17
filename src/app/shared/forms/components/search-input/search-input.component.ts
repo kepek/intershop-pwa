@@ -22,10 +22,10 @@ export class SearchInputComponent implements OnInit, ControlValueAccessor {
   @Input() placeholder: string;
   hasFocus: boolean;
 
-  onChange = (_: any) => { };
-  onTouch = () => { };
+  onChange = (_: any) => {};
+  onTouch = () => {};
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit(): void {
     console.log('asd');

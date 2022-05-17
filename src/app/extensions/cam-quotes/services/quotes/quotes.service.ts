@@ -8,12 +8,12 @@ import { ApiService, unpackEnvelope } from 'ish-core/services/api/api.service';
 import { QuoteDetailsData } from '../../models/quote-details/quote-details.interface';
 import { QuoteDetailsMapper } from '../../models/quote-details/quote-details.mapper';
 import { QuoteDetails } from '../../models/quote-details/quote-details.model';
+import { QuoteItemCreated, QuoteItemData } from '../../models/quote-item/quote-item.interface';
+import { QuoteItemMapper } from '../../models/quote-item/quote-item.mapper';
+import { QuoteItem } from '../../models/quote-item/quote-item.model';
 import { QuoteData } from '../../models/quote/quote.interface';
 import { QuoteMapper } from '../../models/quote/quote.mapper';
 import { Quote } from '../../models/quote/quote.model';
-import { QuoteItem } from '../../models/quote-item/quote-item.model';
-import { QuoteItemCreated, QuoteItemData } from '../../models/quote-item/quote-item.interface';
-import { QuoteItemMapper } from '../../models/quote-item/quote-item.mapper';
 
 @Injectable({
   providedIn: 'root',
@@ -37,7 +37,7 @@ export class QuotesService {
     private apiSrv: ApiService,
     private quoteDetailMapper: QuoteDetailsMapper,
     private itemsMapper: QuoteItemMapper
-  ) { }
+  ) {}
 
   getQuotes(): Observable<Quote[]> {
     const params = {
@@ -49,7 +49,7 @@ export class QuotesService {
       .pipe(
         unpackEnvelope(),
         map((quotes: QuoteData[]) => quotes.map(quoteData => new QuoteMapper().fromData(quoteData))),
-        defaultIfEmpty([]),
+        defaultIfEmpty([])
       );
   }
 
@@ -66,7 +66,7 @@ export class QuotesService {
       .get<QuoteItemData>(`camfilquotation/${quoteId}/items`)
       .pipe(
         unpackEnvelope(),
-        map((items: QuoteItemData[]) => items.map(itemData => this.itemsMapper.fromData(itemData))),
+        map((items: QuoteItemData[]) => items.map(itemData => this.itemsMapper.fromData(itemData)))
       );
   }
 
@@ -80,9 +80,7 @@ export class QuotesService {
 
   approveQuote(quoteId: string): Observable<any> {
     // TODO: Waiting for real api call
-    return this.apiSrv
-      .b2bUserEndpoint()
-      .post('camfilquotation', { number: quoteId, submitted: true });
+    return this.apiSrv.b2bUserEndpoint().post('camfilquotation', { number: quoteId, submitted: true });
     // return of({ id: quoteId }).pipe(delay(500));
   }
 

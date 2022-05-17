@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
@@ -15,9 +15,6 @@ import { AddProductDialogComponent } from './components/add-product-dialog/add-p
   templateUrl: './camfil-account-quote-detail-page.component.html',
   styleUrls: ['./camfil-account-quote-detail-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  host: {
-    '(window:resize)': 'onResize()',
-  },
 })
 export class CamfilAccountQuoteDetailPageComponent implements OnInit, OnDestroy {
   quoteDetails: QuoteDetails;
@@ -28,12 +25,16 @@ export class CamfilAccountQuoteDetailPageComponent implements OnInit, OnDestroy 
 
   isMobileView = false;
 
+  @HostListener('window:resize') onWindowsResize() {
+    this.onResize();
+  }
+
   constructor(
     private quotesFacade: CamQuotesFacade,
     private actRoute: ActivatedRoute,
     private cd: ChangeDetectorRef,
     private dialog: MatDialog
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.actRoute.params

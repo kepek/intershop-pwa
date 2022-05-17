@@ -5,10 +5,9 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 @Component({
   selector: 'camfil-quotes-reject-dialog',
   templateUrl: './quotes-reject-dialog.component.html',
-  styleUrls: ['./quotes-reject-dialog.component.scss']
+  styleUrls: ['./quotes-reject-dialog.component.scss'],
 })
 export class QuotesRejectDialogComponent implements OnInit {
-
   @Input() reason: string;
   @Output() onChange = new EventEmitter<{ reason: string }>();
   @Output() onConfirm = new EventEmitter<{ reason: string }>();
@@ -18,11 +17,11 @@ export class QuotesRejectDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: { title: string },
     private dialogRef: MatDialogRef<QuotesRejectDialogComponent>,
     private readonly builder: FormBuilder
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.form = this.builder.group({
-      reason: [this.reason, Validators.required]
+      reason: [this.reason, Validators.required],
     });
     this.form.valueChanges.subscribe(value => this.onChange.emit(value));
   }

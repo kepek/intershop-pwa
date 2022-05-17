@@ -1,5 +1,7 @@
-import { Quote } from '../models/quote/quote.model';
 import { createReducer, on } from '@ngrx/store';
+
+import { Quote } from '../models/quote/quote.model';
+
 import { approveQuotesSuccess, loadQuotesSuccess, rejectQuotesSuccess } from './cam-quotes.actions';
 
 export interface CamQuotesListState {
@@ -11,7 +13,7 @@ export interface CamQuotesListState {
 export const initialState: CamQuotesListState = {
   quotes: [],
   approvedQuotesSuccess: false,
-  rejectedQuotesSuccess: false
+  rejectedQuotesSuccess: false,
 };
 
 export const camQuotesListReducer = createReducer(
@@ -22,13 +24,9 @@ export const camQuotesListReducer = createReducer(
       ...state,
       quotes,
       approvedQuotesSuccess: false,
-      rejectedQuotesSuccess: false
+      rejectedQuotesSuccess: false,
     };
   }),
-  on(approveQuotesSuccess, (state: CamQuotesListState) => {
-    return { ...state, approvedQuotesSuccess: true };
-  }),
-  on(rejectQuotesSuccess, (state: CamQuotesListState) => {
-    return { ...state, rejectedQuotesSuccess: true };
-  })
+  on(approveQuotesSuccess, (state: CamQuotesListState) => ({ ...state, approvedQuotesSuccess: true })),
+  on(rejectQuotesSuccess, (state: CamQuotesListState) => ({ ...state, rejectedQuotesSuccess: true }))
 );

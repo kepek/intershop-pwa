@@ -23,12 +23,12 @@ export const getBasketValidationResults = createSelector(
       infos: basketResults.infos || [],
       errors: basketResults.errors
         ? basketResults.errors.map(error => ({
-          ...error,
-          lineItem: error.parameters &&
-            error.parameters.lineItemId && {
-            ...basket.basket?.lineItems.find(item => item.id === error.parameters.lineItemId),
-          },
-        }))
+            ...error,
+            lineItem: error.parameters &&
+              error.parameters.lineItemId && {
+                ...basket.basket?.lineItems.find(item => item.id === error.parameters.lineItemId),
+              },
+          }))
         : [],
     };
   }
@@ -51,7 +51,7 @@ export const getCurrentBasketId = createSelector(getBasketState, basket =>
 
 export const getCurrentBasketOrderType = createSelector(getBasketState, basket => ({
   basket: basket.basket,
-  orderType: basket.orderType
+  orderType: basket.orderType,
 }));
 
 export const getSubmittedBasket = createSelector(

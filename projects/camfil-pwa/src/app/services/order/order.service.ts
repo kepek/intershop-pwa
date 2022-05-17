@@ -53,7 +53,7 @@ export class OrderService extends IshOrderService {
     }
   }
 
-  createOrder(basketId: string, termsAndConditionsAccepted: boolean = false, orderType: string = null): Observable<Order> {
+  createOrder(basketId: string, termsAndConditionsAccepted: boolean = false, orderType?: string): Observable<Order> {
     const params = new HttpParams().set('include', this.allOrderIncludes.join());
 
     if (!basketId) {

@@ -133,10 +133,7 @@ export const addProductToBasket = createAction(
   }>()
 );
 
-export const setBasketOrderType = createAction(
-  '[Basket] Set Basket Order Type',
-  payload<{ orderType?: string }>()
-);
+export const setBasketOrderType = createAction('[Basket] Set Basket Order Type', payload<{ orderType?: string }>());
 
 export const updateBucket = createAction(
   '[Bucket] Update Bucket',

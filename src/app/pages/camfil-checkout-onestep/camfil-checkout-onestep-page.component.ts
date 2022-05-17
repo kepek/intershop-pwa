@@ -70,7 +70,7 @@ export class CamfilCheckoutOnestepPageComponent implements OnInit, OnDestroy {
     private checkoutFacade: CheckoutFacade,
     private shoppingFacade: ShoppingFacade,
     private camCardsFacade: CamCardsFacade
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.basketError$ = this.checkoutFacade.basketError$;

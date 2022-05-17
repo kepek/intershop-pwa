@@ -23,15 +23,16 @@ describe('Quote Mapper', () => {
           {
             name: 'creationDate',
             value: '1995-12-17T13:24:00',
-            type: 'String'
-          }, {
+            type: 'String',
+          },
+          {
             name: 'quotationDate',
             value: '1995-12-17T13:24:00',
-            type: 'String'
-          }
+            type: 'String',
+          },
         ],
         type: 'Link',
-        uri: ''
+        uri: '',
       };
       const mapped = quoteMapper.fromData(data);
       expect(mapped).toHaveProperty('id', '3');

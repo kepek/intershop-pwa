@@ -55,10 +55,10 @@ const exportedComponents = [
     CommonModule,
     DirectivesModule,
     FeatureToggleModule,
+    FormsModule,
     IconModule,
     MaterialModule,
     PipesModule,
-    FormsModule,
     ReactiveFormsModule,
     RouterModule,
     TranslateModule,
@@ -66,4 +66,4 @@ const exportedComponents = [
   declarations: [...exportedComponents],
   exports: [...exportedComponents],
 })
-export class FormsSharedModule { }
+export class FormsSharedModule {}
