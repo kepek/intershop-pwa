@@ -19,6 +19,7 @@ const camfilConfiguration: CamfilChannelConfiguration = {
   showWarningMessageForPartialDelivery: true,
   useSecondAddressLine: true,
   filterDocsByLanguage: false,
+  allowQuotes: true,
 };
 
 export default camfilConfiguration;

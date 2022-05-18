@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Store, select } from '@ngrx/store';
-import { getChannelCode } from 'camfil-pwa/store/camfil-configuration';
+import { CamfilChannelSetting } from 'camfil-pwa/models/camfil-channel-configuration/camfil-channel-configuration.model';
+import { getCamfilConfigurationParameter } from 'camfil-pwa/store/camfil-configuration';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 
 import { QuoteDetails } from '../models/quote-details/quote-details.model';
 import { Quote } from '../models/quote/quote.model';
@@ -37,7 +37,9 @@ export class CamQuotesFacade {
 
   constructor(private store: Store) {}
 
-  isQuotesModuleEnabled$ = this.store.pipe(select(getChannelCode)).pipe(map(code => ['FR', 'DE'].includes(code)));
+  isQuotesModuleEnabled$ = this.store.pipe(
+    select(getCamfilConfigurationParameter<boolean, CamfilChannelSetting>('allowQuotes'))
+  );
 
   loadQuotes(): void {
     this.store.dispatch(loadQuotes());

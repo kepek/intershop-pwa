@@ -11,6 +11,7 @@ const camfilConfiguration: CamfilChannelConfiguration = {
   showGoodsAcceptanceIcon: true,
   showSubTotalInBasketSummary: true,
   filterDocsByLanguage: false,
+  allowQuotes: true,
 };
 
 export default camfilConfiguration;
