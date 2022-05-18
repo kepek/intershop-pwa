@@ -18,7 +18,6 @@ import { AddProductDialogComponent } from './components/add-product-dialog/add-p
 })
 export class CamfilAccountQuoteDetailPageComponent implements OnInit, OnDestroy {
   quoteDetails: QuoteDetails;
-  // quoteItems$: Observable<QuoteItem[]>;
   loading: boolean;
   selectedItems: QuoteLineItem[] = [];
   private destroy$: Subject<boolean> = new Subject<boolean>();
@@ -44,8 +43,6 @@ export class CamfilAccountQuoteDetailPageComponent implements OnInit, OnDestroy 
     this.quotesFacade.quoteDetails$.pipe(takeUntil(this.destroy$)).subscribe(details => {
       this.quoteDetails = details;
     });
-
-    // this.quoteItems$ = this.quotesFacade.quoteItems$;
 
     this.quotesFacade.quoteDetailsLoading$.pipe(takeUntil(this.destroy$)).subscribe(loading => {
       this.loading = loading;

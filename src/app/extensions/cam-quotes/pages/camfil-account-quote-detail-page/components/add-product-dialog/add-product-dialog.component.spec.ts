@@ -1,4 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MockComponent } from 'ng-mocks';
+
+import { CamfilCounterComponent } from 'ish-shared/forms/components/camfil-counter/camfil-counter.component';
 
 import { AddProductDialogComponent } from './add-product-dialog.component';
 
@@ -9,7 +12,7 @@ describe('Add Product Dialog Component', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [AddProductDialogComponent],
+      declarations: [AddProductDialogComponent, MockComponent(CamfilCounterComponent)],
     }).compileComponents();
   });
 

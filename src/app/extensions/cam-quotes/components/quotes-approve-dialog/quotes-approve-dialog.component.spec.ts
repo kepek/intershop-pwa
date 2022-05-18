@@ -3,6 +3,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { QuotesApproveDialogComponent } from './quotes-approve-dialog.component';
+import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 
 describe('Quotes Approve Dialog Component', () => {
   let component: QuotesApproveDialogComponent;
@@ -13,6 +14,10 @@ describe('Quotes Approve Dialog Component', () => {
     await TestBed.configureTestingModule({
       declarations: [QuotesApproveDialogComponent],
       imports: [NgbModalModule, RouterTestingModule],
+      providers: [
+        { provide: MAT_DIALOG_DATA, useValue: [] },
+        { provide: MatDialogRef, useValue: {} },
+      ],
     }).compileComponents();
   });
 

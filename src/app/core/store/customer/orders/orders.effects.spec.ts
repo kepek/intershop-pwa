@@ -104,19 +104,19 @@ describe('Orders Effects', () => {
     });
 
     it('should call the orderService for createOrder', done => {
-      when(orderServiceMock.createOrder(anything(), anything())).thenReturn(of(undefined));
+      when(orderServiceMock.createOrder(anything(), anything(), anything())).thenReturn(of(undefined));
       const payload = 'BID';
       const action = createOrder();
       actions$ = of(action);
 
       effects.createOrder$.subscribe(() => {
-        verify(orderServiceMock.createOrder(payload, true)).once();
+        verify(orderServiceMock.createOrder(payload, true, 'test')).once();
         done();
       });
     });
 
     it('should map a valid request to action of type CreateOrderSuccess', () => {
-      when(orderServiceMock.createOrder(anything(), anything())).thenReturn(
+      when(orderServiceMock.createOrder(anything(), anything(), anything())).thenReturn(
         of({ id: BasketMockData.getBasket().id } as Order)
       );
       const basketId = BasketMockData.getBasket().id;
@@ -130,7 +130,7 @@ describe('Orders Effects', () => {
     });
 
     it('should map an invalid request to action of type CreateOrderFail', () => {
-      when(orderServiceMock.createOrder(anything(), anything())).thenReturn(
+      when(orderServiceMock.createOrder(anything(), anything(), anything())).thenReturn(
         throwError(makeHttpError({ message: 'invalid' }))
       );
       const action = createOrder();

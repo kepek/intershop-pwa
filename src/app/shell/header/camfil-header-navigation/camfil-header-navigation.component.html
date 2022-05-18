@@ -53,7 +53,7 @@
   >
     <a [routerLink]="['/account/orders']">{{ 'account.order_history.link' | translate }}</a>
   </li>
-  <ng-container *ngIf="isQuotesModuleEnabled$ | async">
+  <ng-container *camfilChannelToggle="'allowQuotes'">
     <li
       *ngIf="authorization$(['APP_B2B_MANAGE_ALL_ORDERS', 'APP_B2B_MANAGE_OWN_ORDERS']) | async"
       class="dropdown with-separator"

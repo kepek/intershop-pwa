@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Store, select } from '@ngrx/store';
-import { CamfilChannelSetting } from 'camfil-pwa/models/camfil-channel-configuration/camfil-channel-configuration.model';
-import { getCamfilConfigurationParameter } from 'camfil-pwa/store/camfil-configuration';
 import { Observable } from 'rxjs';
 
 import { QuoteDetails } from '../models/quote-details/quote-details.model';
@@ -29,17 +27,12 @@ import {
 export class CamQuotesFacade {
   quotes$: Observable<Quote[]> = this.store.pipe(select(getCamQuotesList));
   quoteDetails$: Observable<QuoteDetails> = this.store.pipe(select(getCamQuoteDetails));
-  // quoteItems$: Observable<QuoteItem[]> = this.store.pipe(select(getCamQuoteItems));
   quoteDetailsLoading$: Observable<boolean> = this.store.pipe(select(getCamQuoteDetailsLoading));
 
   approvedQuotesSuccess$: Observable<boolean> = this.store.pipe(select(getCamQuotesApprovedSuccess));
   rejectedQuotesSuccess$: Observable<boolean> = this.store.pipe(select(getCamQuotesRejectedSuccess));
 
   constructor(private store: Store) {}
-
-  isQuotesModuleEnabled$ = this.store.pipe(
-    select(getCamfilConfigurationParameter<boolean, CamfilChannelSetting>('allowQuotes'))
-  );
 
   loadQuotes(): void {
     this.store.dispatch(loadQuotes());

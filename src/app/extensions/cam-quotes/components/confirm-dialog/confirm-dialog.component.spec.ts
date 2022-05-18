@@ -3,6 +3,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { ConfirmDialogComponent } from './confirm-dialog.component';
+import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 
 describe('Confirm Dialog Component', () => {
   let component: ConfirmDialogComponent;
@@ -13,6 +14,10 @@ describe('Confirm Dialog Component', () => {
     await TestBed.configureTestingModule({
       declarations: [ConfirmDialogComponent],
       imports: [NgbModalModule, RouterTestingModule],
+      providers: [
+        { provide: MAT_DIALOG_DATA, useValue: [] },
+        { provide: MatDialogRef, useValue: {} },
+      ],
     }).compileComponents();
   });
 

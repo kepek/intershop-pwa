@@ -109,7 +109,6 @@ export class CamfilAccountNavigationComponent implements OnInit, AfterViewInit, 
   }
 
   checkUserPermissionToLink(permission: string): boolean {
-    // const permObservable = toObservable(permission)
     if (permission === 'always' || permission === 'never') {
       return checkPermission([], permission);
     }

@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 
@@ -13,6 +14,10 @@ describe('Quotes Reject Dialog Component', () => {
     await TestBed.configureTestingModule({
       declarations: [QuotesRejectDialogComponent],
       imports: [NgbModalModule, RouterTestingModule],
+      providers: [
+        { provide: MAT_DIALOG_DATA, useValue: [] },
+        { provide: MatDialogRef, useValue: {} },
+      ],
     }).compileComponents();
   });
 

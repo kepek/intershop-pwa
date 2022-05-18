@@ -63,15 +63,12 @@ export class OrderService extends IshOrderService {
     const externalOrderReference =
       window?.localStorage?.getItem(CamfilLoginOnBehalfQueryParams.ERPEmployeeID) || undefined;
 
-    const body: any = {
+    const body = {
       basket: basketId,
       termsAndConditionsAccepted,
       externalOrderReference,
+      orderType
     };
-
-    if (orderType) {
-      body.statusCode = orderType;
-    }
 
     return this.apiService
       .post<OrderData>('orders', body, {

@@ -21,8 +21,6 @@ import {
 } from 'ish-shared/components/common/camfil-modal-dialog/camfil-modal-dialog.component';
 import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
 
-import { CamQuotesFacade } from '../../../extensions/cam-quotes/facades/cam-quotes.facade';
-
 @Component({
   selector: 'camfil-checkout-summary',
   templateUrl: './camfil-checkout-summary.component.html',
@@ -60,7 +58,6 @@ export class CamfilCheckoutSummaryComponent extends CamfilBasketCostSummaryCompo
     private checkoutFacade: CheckoutFacade,
     private shoppingFacade: ShoppingFacade,
     private camfilConfigurationFacade: CamfilConfigurationFacade,
-    private camQuotesFacade: CamQuotesFacade,
     private roleToggleService: RoleToggleService,
     private router: Router,
     private fb: FormBuilder,
@@ -88,7 +85,7 @@ export class CamfilCheckoutSummaryComponent extends CamfilBasketCostSummaryCompo
 
     this.canRequestQuotations$ = combineLatest([
       this.roleToggleService.hasRole('APP_B2B_REQUEST_QUOTATION'),
-      this.camQuotesFacade.isQuotesModuleEnabled$,
+      this.camfilConfigurationFacade.isEnabled$('allowQuotes'),
     ]).pipe(map(([hasRequestRole, isQuotesModuleEnabled]) => hasRequestRole && isQuotesModuleEnabled));
   }
 
