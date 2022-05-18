@@ -909,6 +909,7 @@
   "camfil.checkout.number_of_orders": "Anzahl der Bestellungen",
   "camfil.checkout.number_of_products": "Anzahl der Produkte",
   "camfil.checkout.order": "Bestellung",
+  "camfil.checkout.order.approve_line_item.modal.subheading": "(de_DE)_Do you want to apptove this order line?",
   "camfil.checkout.order.delete_line_item.modal.subheading": "Möchten Sie diese Auftragszeile löschen?",
   "camfil.checkout.order.delete_order.modal.no": "Nein",
   "camfil.checkout.order.delete_order.modal.subheading": "Sind Sie sicher das Sie die Bestellung löschen möchten?",

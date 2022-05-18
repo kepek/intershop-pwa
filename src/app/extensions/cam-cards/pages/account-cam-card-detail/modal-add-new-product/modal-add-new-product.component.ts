@@ -202,6 +202,7 @@ export class ModalAddNewProductComponent implements OnInit, OnDestroy, AfterView
 
       this.isSubmitted = true;
 
+      console.log({ comment });
       this.submitProductAdd.emit({
         sku,
         quantity,

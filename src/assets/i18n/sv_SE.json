@@ -921,6 +921,7 @@
   "camfil.checkout.number_of_orders": "Antal ordrar",
   "camfil.checkout.number_of_products": "Antal produkter",
   "camfil.checkout.order": "Order",
+  "camfil.checkout.order.approve_line_item.modal.subheading": "(sv_SE)_Do you want to apptove this order line?",
   "camfil.checkout.order.delete_line_item.modal.subheading": "Är du säker på att du vill radera orderraden?",
   "camfil.checkout.order.delete_order.modal.no": "Nej",
   "camfil.checkout.order.delete_order.modal.subheading": "Är du säker på att du vill radera ordern?",

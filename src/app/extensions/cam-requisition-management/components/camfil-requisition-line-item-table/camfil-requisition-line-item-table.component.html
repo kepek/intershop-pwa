@@ -60,10 +60,10 @@
         {{ 'camfil.account.requisitions.approvals.line_item_list.status.header' | translate }}
       </th>
       <td mat-cell *matCellDef="let pli">
-        <div *ngIf="pli.requisitionLineItemStatus">
+        <div *ngIf="pli.requisitionLineItemStatus === 'APPROVED'">
           {{ 'account.requisitions.requisitions.navtab.approved' | translate }}
         </div>
-        <div *ngIf="!pli.requisitionLineItemStatus">
+        <div *ngIf="pli.requisitionLineItemStatus === 'SUBMITTED'">
           {{ 'account.requisitions.requisitions.navtab.pending' | translate }}
         </div>
       </td>

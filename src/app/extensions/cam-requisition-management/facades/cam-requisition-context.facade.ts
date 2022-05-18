@@ -21,6 +21,7 @@ import {
   removeProductFromCamfilRequisition,
   updateCamfilRequisitionStatus,
 } from '../store/camfil-requisitions';
+import { CamCardItemComment, CamCardMeasurement } from '../../cam-cards/models/cam-card/cam-card.model';
 
 @Injectable()
 export class CamfilRequisitionContextFacade
@@ -131,7 +132,12 @@ export class CamfilRequisitionContextFacade
     );
   }
 
-  addProductToCamfilRequisition(item: { sku: string; quantity: number }) {
+  addProductToCamfilRequisition(item: {
+    sku: string;
+    quantity: number;
+    boxLabel?: CamCardItemComment;
+    measurements?: CamCardMeasurement;
+  }) {
     this.store.dispatch(
       addProductToCamfilRequisition({
         requisitionId: this.get('entity', 'id'),

@@ -3,6 +3,7 @@ import { createAction } from '@ngrx/store';
 import { Address } from 'ish-core/models/address/address.model';
 import { Attribute } from 'ish-core/models/attribute/attribute.model';
 import { httpError, payload } from 'ish-core/utils/ngrx-creators';
+import { CamCardItemComment, CamCardMeasurement } from 'src/app/extensions/cam-cards/models/cam-card/cam-card.model';
 
 import {
   CamfilRequisition,
@@ -78,7 +79,7 @@ export const addProductToCamfilRequisition = createAction(
   '[Camfil Requisitions API] Add Product To Requisition',
   payload<{
     requisitionId: string;
-    item: { sku: string; quantity: number };
+    item: { sku: string; quantity: number; boxLabel?: CamCardItemComment; measurements?: CamCardMeasurement };
   }>()
 );
 
