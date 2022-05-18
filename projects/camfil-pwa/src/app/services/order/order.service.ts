@@ -67,7 +67,7 @@ export class OrderService extends IshOrderService {
       basket: basketId,
       termsAndConditionsAccepted,
       externalOrderReference,
-      orderType
+      orderType,
     };
 
     return this.apiService

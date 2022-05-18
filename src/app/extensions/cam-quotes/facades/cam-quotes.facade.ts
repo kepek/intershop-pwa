@@ -7,8 +7,6 @@ import { Quote } from '../models/quote/quote.model';
 import {
   approveQuote,
   approveQuotes,
-  createQuoteItem,
-  deleteQuoteItem,
   loadQuoteDetails,
   loadQuotes,
   rejectQuote,
@@ -40,14 +38,6 @@ export class CamQuotesFacade {
 
   loadQuoteDetails(quoteId: string): void {
     this.store.dispatch(loadQuoteDetails({ quoteId }));
-  }
-
-  createQuoteItem(quoteId: string, data: any): void {
-    this.store.dispatch(createQuoteItem({ quoteId, data }));
-  }
-
-  deleteQuoteItem(quoteId: string, quoteItemId: string): void {
-    this.store.dispatch(deleteQuoteItem({ quoteId, quoteItemId }));
   }
 
   approveQuote(quoteId: string): void {

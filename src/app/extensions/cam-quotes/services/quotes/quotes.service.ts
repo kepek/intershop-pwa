@@ -8,7 +8,7 @@ import { ApiService, unpackEnvelope } from 'ish-core/services/api/api.service';
 import { QuoteDetailsData } from '../../models/quote-details/quote-details.interface';
 import { QuoteDetailsMapper } from '../../models/quote-details/quote-details.mapper';
 import { QuoteDetails } from '../../models/quote-details/quote-details.model';
-import { QuoteItemCreated, QuoteItemData } from '../../models/quote-item/quote-item.interface';
+import { QuoteItemData } from '../../models/quote-item/quote-item.interface';
 import { QuoteItemMapper } from '../../models/quote-item/quote-item.mapper';
 import { QuoteItem } from '../../models/quote-item/quote-item.model';
 import { QuoteData } from '../../models/quote/quote.interface';
@@ -70,25 +70,13 @@ export class QuotesService {
       );
   }
 
-  createQuoteItem(quoteId: string, data: any): Observable<QuoteItemCreated> {
-    return this.apiSrv.b2bUserEndpoint().post<QuoteItemCreated>(`camfilquotation/${quoteId}/items`, data);
-  }
-
-  deleteQuoteItem(quoteId: string, quoteItemId: string): Observable<any> {
-    return this.apiSrv.b2bUserEndpoint().delete<QuoteItemCreated>(`camfilquotation/${quoteId}/items/${quoteItemId}`);
-  }
-
   approveQuote(quoteId: string): Observable<any> {
-    // TODO: Waiting for real api call
     return this.apiSrv.b2bUserEndpoint().post('camfilquotation', { number: quoteId, submitted: true });
-    // return of({ id: quoteId }).pipe(delay(500));
   }
 
   rejectQuote(quoteId: string, reason: string): Observable<any> {
-    // TODO: Waiting for real api call
     return this.apiSrv
       .b2bUserEndpoint()
       .post('camfilquotation', { number: quoteId, rejected: true, sellerComment: reason });
-    // return of({ id: quoteId, reason }).pipe(delay(500));
   }
 }

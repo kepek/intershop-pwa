@@ -2,7 +2,7 @@ import { createReducer, on } from '@ngrx/store';
 
 import { QuoteDetails } from '../models/quote-details/quote-details.model';
 
-import { createQuoteItem, deleteQuoteItem, loadQuoteDetails, loadQuoteDetailsSuccess } from './cam-quotes.actions';
+import { loadQuoteDetails, loadQuoteDetailsSuccess } from './cam-quotes.actions';
 
 export interface CamQuoteDetailState {
   quoteDetails: QuoteDetails;
@@ -18,7 +18,7 @@ export const initialState: CamQuoteDetailState = {
 
 export const camQuoteDetailReducer = createReducer(
   initialState,
-  on(loadQuoteDetails, createQuoteItem, deleteQuoteItem, (state: CamQuoteDetailState) => ({ ...state, loading: true })),
+  on(loadQuoteDetails, (state: CamQuoteDetailState) => ({ ...state, loading: true })),
   on(loadQuoteDetailsSuccess, (state: CamQuoteDetailState, action) => {
     const { quoteDetails } = action.payload;
     return { ...state, quoteDetails, loading: false };
