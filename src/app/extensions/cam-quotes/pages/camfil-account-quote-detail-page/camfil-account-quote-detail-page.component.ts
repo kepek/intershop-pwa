@@ -1,14 +1,10 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostListener, OnDestroy, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
 import { pluck, takeUntil } from 'rxjs/operators';
 
-import { ConfirmDialogComponent } from '../../components/confirm-dialog/confirm-dialog.component';
 import { CamQuotesFacade } from '../../facades/cam-quotes.facade';
 import { QuoteDetails, QuoteLineItem } from '../../models/quote-details/quote-details.model';
-
-import { AddProductDialogComponent } from './components/add-product-dialog/add-product-dialog.component';
 
 @Component({
   selector: 'camfil-camfil-account-quote-detail-page',
@@ -28,12 +24,7 @@ export class CamfilAccountQuoteDetailPageComponent implements OnInit, OnDestroy 
     this.onResize();
   }
 
-  constructor(
-    private quotesFacade: CamQuotesFacade,
-    private actRoute: ActivatedRoute,
-    private cd: ChangeDetectorRef,
-    private dialog: MatDialog
-  ) {}
+  constructor(private quotesFacade: CamQuotesFacade, private actRoute: ActivatedRoute, private cd: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.actRoute.params
@@ -65,30 +56,6 @@ export class CamfilAccountQuoteDetailPageComponent implements OnInit, OnDestroy 
         this.selectedItems.splice(index, 1);
       }
     }
-  }
-
-  showAddProductModal() {
-    this.dialog
-      .open(AddProductDialogComponent, { minWidth: '300px' })
-      .afterClosed()
-      .subscribe(data => {
-        if (data) {
-          this.quotesFacade.createQuoteItem(this.quoteDetails.id, data);
-        }
-      });
-  }
-
-  deleteItem(item: QuoteLineItem) {
-    this.dialog
-      .open(ConfirmDialogComponent, {
-        data: { title: 'camfil.quotes.quote_detail.confirm_delete_item' },
-      })
-      .afterClosed()
-      .subscribe(confirmed => {
-        if (confirmed) {
-          this.quotesFacade.deleteQuoteItem(this.quoteDetails.id, item.lineItemId);
-        }
-      });
   }
 
   reject() {

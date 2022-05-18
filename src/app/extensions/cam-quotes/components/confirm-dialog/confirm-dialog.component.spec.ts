@@ -1,9 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { ConfirmDialogComponent } from './confirm-dialog.component';
-import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 
 describe('Confirm Dialog Component', () => {
   let component: ConfirmDialogComponent;

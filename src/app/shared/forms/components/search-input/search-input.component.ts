@@ -1,4 +1,4 @@
-import { Component, HostBinding, Input, OnInit, forwardRef } from '@angular/core';
+import { Component, HostBinding, Input, forwardRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
@@ -13,33 +13,27 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
     },
   ],
 })
-export class SearchInputComponent implements OnInit, ControlValueAccessor {
+export class SearchInputComponent implements ControlValueAccessor {
   @HostBinding('class') get hostClass() {
     return this.hasFocus ? 'mat-elevation-z4' : 'mat-elevation-z2';
   }
 
-  searchText: string;
   @Input() placeholder: string;
+
   hasFocus: boolean;
+  searchText: string;
 
-  onChange = (_: any) => {};
-  onTouch = () => {};
+  onChanged: Function;
+  onTouched: Function;
 
-  constructor() {}
-
-  ngOnInit(): void {
-    console.log('asd');
+  registerOnChange(fn: Function): void {
+    this.onChanged = fn;
+  }
+  registerOnTouched(fn: Function): void {
+    this.onTouched = fn;
   }
 
-  registerOnChange(fn: any): void {
-    this.onChange = fn;
-  }
-
-  registerOnTouched(fn: any): void {
-    this.onTouch = fn;
-  }
-
-  writeValue(obj: any): void {
+  writeValue(obj: string): void {
     this.searchText = obj;
   }
 }

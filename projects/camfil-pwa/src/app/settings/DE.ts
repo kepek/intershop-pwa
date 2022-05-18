@@ -10,7 +10,8 @@ const camfilConfiguration: CamfilChannelConfiguration = {
   showDutiesAndSurchargesTotalInBasketSummary: true,
   showGoodsAcceptanceIcon: true,
   showSubTotalInBasketSummary: true,
-  filterDocsByLanguage: false,
+  filterDocsByLanguage: true,
+  showAllDocsType: true,
   allowQuotes: true,
 };
 

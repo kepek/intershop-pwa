@@ -9,7 +9,6 @@ const camfilConfiguration: CamfilChannelConfiguration = {
   icmChannel: 'Camfil-CamfilFR-Site',
   preventCamCardERPIdValidation: true,
   showAddToCamCardButtonForNonLoggedInUser: false,
-  showAllDocsType: true,
   showCountryFieldOnAddressForms: true,
   showDutiesAndSurchargesTotalInBasketSummary: true,
   showPricesForNonLoggedInUser: true,
@@ -18,7 +17,8 @@ const camfilConfiguration: CamfilChannelConfiguration = {
   showTotalWithoutTaxInBucketSummary: true,
   showWarningMessageForPartialDelivery: true,
   useSecondAddressLine: true,
-  filterDocsByLanguage: false,
+  filterDocsByLanguage: true,
+  showAllDocsType: true,
   allowQuotes: true,
 };
 

@@ -13,10 +13,6 @@ import {
   approveQuoteSuccess,
   approveQuotes,
   approveQuotesSuccess,
-  createQuoteItem,
-  createQuoteItemSuccess,
-  deleteQuoteItem,
-  deleteQuoteItemSuccess,
   loadQuoteDetails,
   loadQuoteDetailsSuccess,
   loadQuotes,
@@ -46,30 +42,6 @@ export class CamQuotesEffects {
         this.camQuotesSrv
           .getQuoteDetails(quoteId)
           .pipe(mergeMap(quoteDetails => [loadQuoteDetailsSuccess({ quoteDetails })]))
-      )
-    )
-  );
-
-  createCamQuoteItem$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(createQuoteItem),
-      mapToPayload(),
-      mergeMap(({ quoteId, data }) =>
-        this.camQuotesSrv
-          .createQuoteItem(quoteId, data)
-          .pipe(mergeMap(response => [createQuoteItemSuccess({ response }), loadQuoteDetails({ quoteId })]))
-      )
-    )
-  );
-
-  deleteCamQuoteItem$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(deleteQuoteItem),
-      mapToPayload(),
-      mergeMap(({ quoteId, quoteItemId }) =>
-        this.camQuotesSrv
-          .deleteQuoteItem(quoteId, quoteItemId)
-          .pipe(mergeMap(response => [deleteQuoteItemSuccess({ response }), loadQuoteDetails({ quoteId })]))
       )
     )
   );
