@@ -1,6 +1,14 @@
 import { Location } from '@angular/common';
 import { HttpParams } from '@angular/common/http';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
@@ -38,7 +46,7 @@ interface QuotesFilters {
     '(window:resize)': 'onResize()',
   },
 })
-export class CamfilAccountQuotesPageComponent implements OnInit, OnDestroy {
+export class CamfilAccountQuotesPageComponent implements OnInit, OnDestroy, AfterViewInit {
   allQuotes: Quote[];
   filteredQuotes: Quote[];
   private destroy$: Subject<boolean> = new Subject<boolean>();
@@ -127,7 +135,6 @@ export class CamfilAccountQuotesPageComponent implements OnInit, OnDestroy {
         take(1)
       )
       .subscribe(value => {
-        console.log('filters from url', value);
         const filters = JSON.parse(value);
         if (filters.fromDate && filters.fromDate.length > 0) {
           filters.fromDate = new Date(filters.fromDate);
@@ -163,13 +170,16 @@ export class CamfilAccountQuotesPageComponent implements OnInit, OnDestroy {
           fromObject: this.filtersQueryParams,
         }).toString()
       );
-      console.log(this.filtersQueryParams);
     });
 
-    this.matSort.direction = 'desc';
-    this.matSort.active = 'requestedDate';
-
     this.onResize();
+  }
+
+  ngAfterViewInit() {
+    if (this.matSort) {
+      this.matSort.direction = 'desc';
+      this.matSort.active = 'requestedDate';
+    }
   }
 
   ngOnDestroy(): void {

@@ -2,7 +2,10 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 
+import { CoreStoreModule } from 'ish-core/store/core/core-store.module';
 import { SharedModule } from 'ish-shared/shared.module';
+
+import { CamQuotesStoreModule } from '../../store/cam-quotes-store.module';
 
 import { CamfilAccountQuotesPageComponent } from './camfil-account-quotes-page.component';
 
@@ -14,7 +17,13 @@ describe('Camfil Account Quotes Page Component', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [CamfilAccountQuotesPageComponent],
-      imports: [NgbModalModule, RouterTestingModule, SharedModule],
+      imports: [
+        CamQuotesStoreModule.forTesting(),
+        CoreStoreModule.forTesting(),
+        NgbModalModule,
+        RouterTestingModule,
+        SharedModule,
+      ],
     }).compileComponents();
   });
 

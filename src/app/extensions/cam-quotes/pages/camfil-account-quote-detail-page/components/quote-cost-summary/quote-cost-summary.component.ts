@@ -27,7 +27,7 @@ export class QuoteCostSummaryComponent implements OnInit {
     this.volumeDiscount = 0;
     this.totalTaxes = 0;
 
-    this.quote.items.forEach(item => {
+    this.quote?.items?.forEach(item => {
       if (item.totalPrice.currency !== 'N/A') {
         this.currency = item.totalPrice.currency;
       }

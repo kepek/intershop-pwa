@@ -18,7 +18,7 @@ import { Customer } from 'ish-core/models/customer/customer.model';
 import { Order } from 'ish-core/models/order/order.model';
 import { User } from 'ish-core/models/user/user.model';
 import { CoreStoreModule } from 'ish-core/store/core/core-store.module';
-import { loadBasket, loadBasketSuccess } from 'ish-core/store/customer/basket';
+import { loadBasket, loadBasketSuccess, setBasketOrderType } from 'ish-core/store/customer/basket';
 import { CustomerStoreModule } from 'ish-core/store/customer/customer-store.module';
 import { loginUserSuccess } from 'ish-core/store/customer/user';
 import { makeHttpError } from 'ish-core/utils/dev/api-service-utils';
@@ -101,6 +101,7 @@ describe('Orders Effects', () => {
   describe('createOrder$', () => {
     beforeEach(() => {
       store$.dispatch(loadBasketSuccess({ basket: { id: 'BID' } as Basket }));
+      store$.dispatch(setBasketOrderType({ orderType: 'oType' }));
     });
 
     it('should call the orderService for createOrder', done => {
@@ -110,7 +111,7 @@ describe('Orders Effects', () => {
       actions$ = of(action);
 
       effects.createOrder$.subscribe(() => {
-        verify(orderServiceMock.createOrder(payload, true, 'test')).once();
+        verify(orderServiceMock.createOrder(payload, true, 'oType')).once();
         done();
       });
     });

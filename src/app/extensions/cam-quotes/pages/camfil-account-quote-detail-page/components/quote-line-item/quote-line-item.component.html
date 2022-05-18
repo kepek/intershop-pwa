@@ -2,7 +2,7 @@
   <div class="article">
     <mat-checkbox (change)="onChangeSelection($event)" color="primary"></mat-checkbox>
     <img class="photo" src="https://via.placeholder.com/50" />
-    <div class="article-info">
+    <div class="article-info" *ngIf="item?.product">
       <div class="name">{{ item.product.name }}</div>
       <div class="details">
         <span>{{ item.product.sku }}</span>

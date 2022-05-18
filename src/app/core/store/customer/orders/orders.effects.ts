@@ -65,7 +65,7 @@ export class OrdersEffects {
       // withLatestFrom(this.store.select(getCurrentBasketId)),
       withLatestFrom(this.store.select(getCurrentBasketOrderType)),
       mergeMap(([, basketOrderType]) =>
-        this.orderService.createOrder(basketOrderType.basket?.id, true, basketOrderType.orderType).pipe(
+        this.orderService.createOrder(basketOrderType.basket?.id, true, basketOrderType?.orderType).pipe(
           map(order => createOrderSuccess({ order })),
           mapErrorToAction(createOrderFail)
         )
