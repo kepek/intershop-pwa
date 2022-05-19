@@ -2,6 +2,7 @@ import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { concatMap, map } from 'rxjs/operators';
+import { CamCardItemComment, CamCardMeasurement } from 'src/app/extensions/cam-cards/models/cam-card/cam-card.model';
 
 import { Address } from 'ish-core/models/address/address.model';
 import { Attribute } from 'ish-core/models/attribute/attribute.model';
@@ -15,7 +16,6 @@ import {
   CamfilRequisitionStatus,
   CamfilRequisitionViewer,
 } from '../../models/camfil-requisition/camfil-requisition.model';
-import { CamCardItemComment, CamCardMeasurement } from 'src/app/extensions/cam-cards/models/cam-card/cam-card.model';
 
 type RequisitionIncludeType =
   | 'invoiceToAddress'
@@ -155,7 +155,7 @@ export class CamfilRequisitionsService {
       {
         sku: item.sku,
         quantity: { value: item.quantity, unit: '' },
-        boxLabel: item.boxLabel,
+        boxLabel: item.boxLabel?.label,
         measurements: item.measurements,
       },
     ];

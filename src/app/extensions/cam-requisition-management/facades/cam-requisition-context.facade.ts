@@ -9,6 +9,7 @@ import { selectRouteParam, selectUrl } from 'ish-core/store/core/router';
 import { getProducts } from 'ish-core/store/shopping/products';
 import { whenTruthy } from 'ish-core/utils/operators';
 
+import { CamCardItemComment, CamCardMeasurement } from '../../cam-cards/models/cam-card/cam-card.model';
 import { CamfilRequisition } from '../models/camfil-requisition/camfil-requisition.model';
 import {
   addProductToCamfilRequisition,
@@ -21,7 +22,6 @@ import {
   removeProductFromCamfilRequisition,
   updateCamfilRequisitionStatus,
 } from '../store/camfil-requisitions';
-import { CamCardItemComment, CamCardMeasurement } from '../../cam-cards/models/cam-card/cam-card.model';
 
 @Injectable()
 export class CamfilRequisitionContextFacade

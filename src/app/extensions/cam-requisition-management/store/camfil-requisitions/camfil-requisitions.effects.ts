@@ -142,6 +142,14 @@ export class CamfilRequisitionsEffects {
     )
   );
 
+  loadRequisitionAfterRequisitionItemsChangeSuccess$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(updateCamfilRequisitionLineItemSuccess),
+      mapToPayload(),
+      map(payload => loadCamfilRequisition({ requisitionId: payload.requisitionId }))
+    )
+  );
+
   updateCamfilRequisitionStatus$ = createEffect(() =>
     this.actions$.pipe(
       ofType(updateCamfilRequisitionStatus),

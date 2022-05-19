@@ -811,7 +811,7 @@
   "camfil.account.requisitions.approvals.rejected.comment": "(fr_FR)_Reject comment",
   "camfil.account.requisitions.approvals.rejectedby": "fr_Rejected by",
   "camfil.account.requisitions.approvals.requestedby": "fr_Requested by",
-  "camfil.account.requisitions.summary.total_quantity": "(fr_FR)_Total auantity",
+  "camfil.account.requisitions.summary.total_quantity": "(fr_FR)_Total quantity",
   "camfil.account.send_password.message": "Un courriel contenant un lien a été envoyé à votre adresse électronique. Veuillez suivre ce lien pour modifier votre mot de passe.",
   "camfil.account.send_username.message": "Un courriel contenant les noms d’utilisateurs a été envoyé à votre adresse électronique.",
   "camfil.account.update_password.button.aria": "Modifier le mot de passe",

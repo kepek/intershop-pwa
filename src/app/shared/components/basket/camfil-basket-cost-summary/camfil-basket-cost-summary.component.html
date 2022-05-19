@@ -67,7 +67,49 @@
   </ng-container>
   <ng-container *ngIf="requisitionSummary">
     <dl class="row dl-horizontal">
-      <!-- Payment costs -->
+      <!-- SubTotal -->
+      <dt class="col-6">{{ 'checkout.cart.subtotal.heading' | translate }}</dt>
+      <dd class="col-6" data-testing-id="basket-subtotal">{{ totals.itemTotal | ishPrice }}</dd>
+
+      <!-- list all applied order level promotions -->
+      <ng-container *ngIf="totals.valueRebates && totals.valueRebates.length > 0">
+        <ng-container *ngFor="let rebate of totals.valueRebates">
+          <dt *ngIf="rebate.promotionId" class="col-6">
+            <ish-basket-promotion [rebate]="rebate"></ish-basket-promotion>
+            <ng-template #default>{{ 'checkout.widget.promotion.discount' | translate }}</ng-template>
+          </dt>
+          <dd class="col-6">{{ invert(rebate.amount) | ishPrice }}</dd>
+        </ng-container>
+      </ng-container>
+
+      <!-- Shipping -->
+      <dt class="col-6">
+        <span *ngIf="totals.isEstimated">{{ 'checkout.cart.estimated_shipping_handling.label' | translate }}</span>
+        <span *ngIf="!totals.isEstimated">{{ 'checkout.order.shipping.label' | translate }}</span>
+      </dt>
+      <dd class="col-6">{{ totals.undiscountedShippingTotal | ishPrice }}</dd>
+
+      <!-- Shipping promotions -->
+      <ng-container *ngIf="totals?.shippingRebates?.length > 0">
+        <ng-container *ngFor="let rebate of totals.shippingRebates">
+          <dt class="col-6">
+            <ish-basket-promotion [rebate]="rebate"></ish-basket-promotion>
+            <ng-template #default>{{ 'checkout.widget.promotion.discount' | translate }}</ng-template>
+          </dt>
+          <dd class="col-6">{{ invert(rebate.amount) | ishPrice }}</dd>
+        </ng-container>
+      </ng-container>
+
+      <!-- Item Surcharges -->
+      <ng-container *ngFor="let surcharge of totals.itemSurchargeTotalsByType">
+        <ng-container *ngTemplateOutlet="surchargeItemTemplate; context: { surcharge: surcharge }"></ng-container>
+      </ng-container>
+
+      <!-- Bucket Surcharges -->
+      <ng-container *ngFor="let surcharge of totals.bucketSurchargeTotalsByType">
+        <ng-container *ngTemplateOutlet="surchargeItemTemplate; context: { surcharge: surcharge }"></ng-container>
+      </ng-container>
+      <!-- Total quantity -->
       <ng-container *ngIf="lineItemCount">
         <dt class="col-6">{{ 'camfil.account.requisitions.summary.total_quantity' | translate }}</dt>
         <dd class="col-6">{{ lineItemCount }}</dd>

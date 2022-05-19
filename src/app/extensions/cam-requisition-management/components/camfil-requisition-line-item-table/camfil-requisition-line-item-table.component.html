@@ -194,12 +194,6 @@
         <div>
           <camfil-product-attribute
             class="d-block"
-            [name]="'camfil.cam_card.product.list_price.label' | translate"
-            [overflowVisible]="true"
-            [value]="pli?.singleBasePrice | ishPrice"
-          ></camfil-product-attribute>
-          <camfil-product-attribute
-            class="d-block"
             [name]="'camfil.cam_card.product.your_price.label' | translate"
             [overflowVisible]="true"
             [value]="pli?.singleBasePrice | ishPrice"
@@ -286,11 +280,6 @@
           </div>
 
           <div class="col-7 d-flex align-items-center prices">
-            <camfil-product-attribute
-              [name]="'camfil.cam_card.product.list_price.label' | translate"
-              [overflowVisible]="true"
-              [value]="pli?.singleBasePrice | camfilPriceSummary: pli?.quantity?.value | ishPrice"
-            ></camfil-product-attribute>
             <camfil-product-attribute
               [name]="'camfil.cam_card.product.your_price.label' | translate"
               [overflowVisible]="true"
