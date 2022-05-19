@@ -95,7 +95,7 @@
         label="camfil.modal.createOrder.order-form.input.address"
         markRequiredLabel="off"
         matInput
-        maxlength="250"
+        [camfilMaxLength]="'AddressLineOne'"
         rows="{{ useSecondAddressLine ? 3 : 5 }}"
       ></textarea>
       <camfil-error
@@ -114,7 +114,7 @@
           label="camfil.modal.createOrder.order-form.input.addressLine2"
           markRequiredLabel="off"
           matInput
-          maxlength="250"
+          [camfilMaxLength]="'AddressLineTwo'"
           rows="3"
         ></textarea>
       </mat-form-field>
