@@ -11,6 +11,7 @@ import { QuoteDetails } from '../../models/quote-details/quote-details.model';
 import { QuoteItemData } from '../../models/quote-item/quote-item.interface';
 import { QuoteItemMapper } from '../../models/quote-item/quote-item.mapper';
 import { QuoteItem } from '../../models/quote-item/quote-item.model';
+import { QuoteServiceResponse } from '../../models/quote-service-response/quote-service-response.model';
 import { QuoteData } from '../../models/quote/quote.interface';
 import { QuoteMapper } from '../../models/quote/quote.mapper';
 import { Quote } from '../../models/quote/quote.model';
@@ -70,11 +71,11 @@ export class QuotesService {
       );
   }
 
-  approveQuote(quoteId: string): Observable<any> {
+  approveQuote(quoteId: string): Observable<QuoteServiceResponse> {
     return this.apiSrv.b2bUserEndpoint().post('camfilquotation', { number: quoteId, submitted: true });
   }
 
-  rejectQuote(quoteId: string, reason: string): Observable<any> {
+  rejectQuote(quoteId: string, reason: string): Observable<QuoteServiceResponse> {
     return this.apiSrv
       .b2bUserEndpoint()
       .post('camfilquotation', { number: quoteId, rejected: true, sellerComment: reason });

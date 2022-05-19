@@ -72,7 +72,9 @@ export class CamfilAccountQuotesPageComponent implements OnInit, OnDestroy, Afte
 
   filtersForm: FormGroup;
   filters$: Observable<QuotesFilters>;
-  filtersQueryParams: any;
+  filtersQueryParams: {
+    filter: string;
+  };
 
   customers: string[];
   requestors: string[];
