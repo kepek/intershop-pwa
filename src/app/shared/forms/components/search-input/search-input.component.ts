@@ -23,8 +23,8 @@ export class SearchInputComponent implements ControlValueAccessor {
   hasFocus: boolean;
   searchText: string;
 
-  protected onChanged: Function;
-  protected onTouched: Function;
+  onChanged: Function;
+  onTouched: Function;
 
   registerOnChange(fn: Function): void {
     this.onChanged = fn;
