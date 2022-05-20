@@ -18,7 +18,7 @@ import { Customer } from 'ish-core/models/customer/customer.model';
 import { Order } from 'ish-core/models/order/order.model';
 import { User } from 'ish-core/models/user/user.model';
 import { CoreStoreModule } from 'ish-core/store/core/core-store.module';
-import { loadBasket, loadBasketSuccess } from 'ish-core/store/customer/basket';
+import { loadBasket, loadBasketSuccess, setBasketOrderType } from 'ish-core/store/customer/basket';
 import { CustomerStoreModule } from 'ish-core/store/customer/customer-store.module';
 import { loginUserSuccess } from 'ish-core/store/customer/user';
 import { makeHttpError } from 'ish-core/utils/dev/api-service-utils';
@@ -101,22 +101,23 @@ describe('Orders Effects', () => {
   describe('createOrder$', () => {
     beforeEach(() => {
       store$.dispatch(loadBasketSuccess({ basket: { id: 'BID' } as Basket }));
+      store$.dispatch(setBasketOrderType({ orderType: 'oType' }));
     });
 
     it('should call the orderService for createOrder', done => {
-      when(orderServiceMock.createOrder(anything(), anything())).thenReturn(of(undefined));
+      when(orderServiceMock.createOrder(anything(), anything(), anything())).thenReturn(of(undefined));
       const payload = 'BID';
       const action = createOrder();
       actions$ = of(action);
 
       effects.createOrder$.subscribe(() => {
-        verify(orderServiceMock.createOrder(payload, true)).once();
+        verify(orderServiceMock.createOrder(payload, true, 'oType')).once();
         done();
       });
     });
 
     it('should map a valid request to action of type CreateOrderSuccess', () => {
-      when(orderServiceMock.createOrder(anything(), anything())).thenReturn(
+      when(orderServiceMock.createOrder(anything(), anything(), anything())).thenReturn(
         of({ id: BasketMockData.getBasket().id } as Order)
       );
       const basketId = BasketMockData.getBasket().id;
@@ -130,7 +131,7 @@ describe('Orders Effects', () => {
     });
 
     it('should map an invalid request to action of type CreateOrderFail', () => {
-      when(orderServiceMock.createOrder(anything(), anything())).thenReturn(
+      when(orderServiceMock.createOrder(anything(), anything(), anything())).thenReturn(
         throwError(makeHttpError({ message: 'invalid' }))
       );
       const action = createOrder();

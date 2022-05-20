@@ -143,8 +143,11 @@ export class CamfilCheckoutOnestepPageComponent implements OnInit, OnDestroy {
     this.checkoutFacade.continue(4);
   }
 
-  submit() {
+  submit(orderType?: string) {
     this.guestForm?.validateGuestForm();
+    if (orderType) {
+      this.checkoutFacade.setBasketOrderType(orderType);
+    }
     this.checkoutFacade.continue(5);
   }
 

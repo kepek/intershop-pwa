@@ -2,7 +2,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { MockComponent } from 'ng-mocks';
+import { CamfilChannelToggleDirective } from 'camfil-pwa/directives/camfil-channel-toggle.directive';
+import { MockComponent, MockDirective } from 'ng-mocks';
 import { of } from 'rxjs';
 import { instance, mock, when } from 'ts-mockito';
 
@@ -39,6 +40,7 @@ describe('Camfil Header Navigation Component', () => {
         CategoryRoutePipe,
         MockComponent(CamfilSubCategoryNavigationComponent),
         MockComponent(FaIconComponent),
+        MockDirective(CamfilChannelToggleDirective),
       ],
       providers: [
         { provide: ShoppingFacade, useFactory: () => instance(shoppingFacade) },

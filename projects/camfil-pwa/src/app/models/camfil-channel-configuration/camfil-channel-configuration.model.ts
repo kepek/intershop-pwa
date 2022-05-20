@@ -12,6 +12,7 @@ export interface CamfilChannelSettings {
   allowCreditCardPaymentsIfTheCreditLimitIsReached: boolean;
   allowInvoicePaymentIfCreditLimitIsNotReached: boolean;
   allowToAddEmailRecipientsInCheckout: boolean;
+  allowQuotes: boolean;
   createDynamicAnonymousAddressForNonLoggedInUser: boolean;
   createDynamicAnonymousBasketForNonLoggedInInUser: boolean;
   guestCheckout: boolean;

@@ -84,6 +84,7 @@ import {
   setBasketAttribute,
   setBasketAttributeFail,
   setBasketAttributeSuccess,
+  setBasketOrderType,
   setBasketPayment,
   setBasketPaymentFail,
   setBasketPaymentSuccess,
@@ -137,6 +138,7 @@ export interface BasketState {
   };
   calendarExceptions: [];
   failedCamCardName: string;
+  orderType?: string;
   externalOrderReference?: string;
 }
 
@@ -556,5 +558,9 @@ export const basketReducer = createReducer(
       ...state,
       buckets,
     };
-  })
+  }),
+  on(setBasketOrderType, (state: BasketState, action) => ({
+    ...state,
+    orderType: action.payload.orderType,
+  }))
 );

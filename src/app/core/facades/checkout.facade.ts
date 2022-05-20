@@ -63,6 +63,7 @@ import {
   loadCustomerDeliveryTerm,
   removePromotionCodeFromBasket,
   setBasketAttribute,
+  setBasketOrderType,
   setBasketPayment,
   setBucketScrollIndex,
   startCheckout,
@@ -96,6 +97,7 @@ export class CheckoutFacade {
   basketLineItems$ = this.basket$.pipe(
     map(basket => (basket && basket.lineItems && basket.lineItems.length ? basket.lineItems : undefined))
   );
+  basketOrderType$ = this.store.pipe(select(getBasketLoading));
   submittedBasket$ = this.store.pipe(select(getSubmittedBasket));
   submittedBuckets$ = this.store.pipe(select(getSubmittedBuckets));
   calendarExceptions$ = this.store.pipe(select(getCalendarExceptions));
@@ -310,6 +312,10 @@ export class CheckoutFacade {
 
   setBucketScrollIndex(urn: string, index: number) {
     this.store.dispatch(setBucketScrollIndex({ urn, index }));
+  }
+
+  setBasketOrderType(orderType?: string) {
+    this.store.dispatch(setBasketOrderType({ orderType }));
   }
 
   getBucketGoodsAcceptanceNote$(urn: string) {

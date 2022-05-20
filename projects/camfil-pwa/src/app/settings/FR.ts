@@ -7,6 +7,7 @@ const camfilConfiguration: CamfilChannelConfiguration = {
   channelCode: 'FR',
   currency: 'EUR',
   icmChannel: 'Camfil-CamfilFR-Site',
+  allowQuotes: true,
   preventCamCardERPIdValidation: true,
   showAddToCamCardButtonForNonLoggedInUser: false,
   showCountryFieldOnAddressForms: true,

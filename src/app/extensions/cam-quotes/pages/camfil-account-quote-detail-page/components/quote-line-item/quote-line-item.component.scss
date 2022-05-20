@@ -1,0 +1,62 @@
+@import '~src/styles/themes/camfil/colors.scss';
+
+.line-item {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: space-between;
+
+  .article {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+
+    .name {
+      color: $camfil-color-primary;
+    }
+
+    .photo {
+      flex: 0 0;
+      align-self: flex-start;
+    }
+
+    .details {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+
+      .view-article-icon {
+        transform: scale(0.6);
+      }
+
+      .in-stock-icon {
+        display: block;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background-color: $camfil-color-primary;
+      }
+    }
+  }
+
+  .controls {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    .prices {
+      display: flex;
+      flex-direction: column;
+      width: 8rem;
+
+      > * {
+        display: flex;
+        justify-content: space-between;
+      }
+    }
+
+    .counter {
+      margin-bottom: -14px;
+    }
+  }
+}

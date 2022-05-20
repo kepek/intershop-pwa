@@ -129,18 +129,12 @@
         </form>
       </ng-container>
       <ng-container *ishIsAuthorizedTo="'APP_B2B_MAKE_REQUISITION'">
-        <camfil-lazy-cam-requisition-checkout-button
-          [disabledButton$]="canSubmitOrder$"
-        ></camfil-lazy-cam-requisition-checkout-button>
+        <camfil-lazy-cam-requisition-checkout-button [disabledButton$]="canSubmitOrder$">
+        </camfil-lazy-cam-requisition-checkout-button>
       </ng-container>
       <ng-container *ishIsNotAuthorizedTo="'APP_B2B_MAKE_REQUISITION'">
-        <button
-          (click)="submitOrder()"
-          [disabled]="!(canSubmitOrder$ | async)"
-          class="submit-button"
-          color="primary"
-          mat-flat-button
-        >
+        <button (click)="submitOrder()" [disabled]="!(canSubmitOrder$ | async)" class="submit-button" color="primary"
+          mat-flat-button>
           <ng-template #readyToOrder>
             {{ 'camfil.checkout.place_your_orders' | translate }}
           </ng-template>
@@ -152,6 +146,13 @@
             <ng-container *ngTemplateOutlet="readyToOrder"></ng-container>
           </ng-container>
         </button>
+
+        <ng-container *ngIf="canRequestQuotations$ | async">
+          <button *ngIf="canSubmitOrder$ | async" (click)="requestQuote()" class="request-quotation-button mt-2"
+            color="primary" mat-stroked-button>
+            {{ 'camfil.checkout.request_quotation' | translate }}
+          </button>
+        </ng-container>
       </ng-container>
     </ng-template>
 
@@ -167,12 +168,8 @@
   </mat-card-content>
 </mat-card>
 
-<camfil-small-cta-modal
-  actionTitle="{{ 'camfil.checkout.gdpr_form.gdpr.error.required' | translate }}"
-  actionButtonTitle="{{ 'camfil.modal.cta.button.ok' | translate }}"
-  onlyAccept="true"
-  hasError="true"
->
+<camfil-small-cta-modal actionTitle="{{ 'camfil.checkout.gdpr_form.gdpr.error.required' | translate }}"
+  actionButtonTitle="{{ 'camfil.modal.cta.button.ok' | translate }}" onlyAccept="true" hasError="true">
 </camfil-small-cta-modal>
 
 <!-- Surcharge outlet template -->
@@ -188,3 +185,7 @@
     </p>
   </div>
 </ng-template>
+
+<camfil-modal-dialog #quoteCreatedModal [options]="quoteCreatedModalOptions"
+  (confirmed)="onQuoteCreatedModalConfirmed()">
+</camfil-modal-dialog>

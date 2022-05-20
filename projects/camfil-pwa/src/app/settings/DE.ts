@@ -7,6 +7,7 @@ const camfilConfiguration: CamfilChannelConfiguration = {
   channelCode: 'DE',
   currency: 'EUR',
   icmChannel: 'Camfil-CamfilDE-Site',
+  allowQuotes: true,
   showDutiesAndSurchargesTotalInBasketSummary: true,
   showGoodsAcceptanceIcon: true,
   showSubTotalInBasketSummary: true,

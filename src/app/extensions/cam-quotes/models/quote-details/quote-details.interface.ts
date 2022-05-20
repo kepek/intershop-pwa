@@ -1,0 +1,50 @@
+import { AddressData } from 'ish-core/models/address/address.interface';
+import { Price } from 'ish-core/models/price/price.model';
+
+import { Quantity } from '../quote-item/quote-item.interface';
+
+export interface QuoteDetailsData {
+  id: string;
+  type: 'QuoteRequest';
+  quotationType: 'quotation' | 'proposal';
+  displayName: string;
+  number: string;
+  customerName: string;
+  customerDepartment: string;
+  customerId: string;
+  userFirstName: string;
+  userLastName: string;
+  phone: string;
+  customerServiceNote: string;
+  status: number;
+  editable: boolean;
+  submitted: boolean;
+  creationDate: number;
+  submittedDate: number;
+  total: {
+    type: 'Money';
+    value: number;
+    currencyMnemonic: string;
+    currency: string;
+  };
+  items: {
+    type: 'CamfilQuotationLineItem';
+    lineItemId: string;
+    originSinglePrice: Price;
+    originTotalPrice: Price;
+    quantity: Quantity;
+    singlePrice: Price;
+    totalPrice: Price;
+    productSKU: string;
+    product: {
+      name: string;
+      type: string;
+      sku: string;
+      longDescription: string;
+      available: boolean;
+    };
+  }[];
+  deliveryAddress: AddressData;
+  erpnumber: string;
+  orderChannel: string;
+}

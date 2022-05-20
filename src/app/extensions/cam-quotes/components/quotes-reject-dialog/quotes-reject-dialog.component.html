@@ -1,0 +1,17 @@
+<!-- <h2>{{data.title | translate}}</h2> -->
+<h2>{{ 'camfil.quotes.quoteslist.reject_quotes_modal.title' | translate }}</h2>
+<form [formGroup]="form" class="mt-3 mb-3">
+  <mat-form-field appearance="fill" class="w-100 w-md-auto">
+    <mat-label>{{ 'camfil.quotes.quoteslist.reject_quotes_modal.reason_label' | translate }}</mat-label>
+    <input formControlName="reason" matInput
+      [placeholder]="'camfil.quotes.quoteslist.reject_quotes_modal.reason_placeholder' | translate" />
+  </mat-form-field>
+</form>
+<div class="actions">
+  <button (click)="cancel()" class="btn btn-link">
+    {{ 'camfil.quotes.quoteslist.reject_quotes_modal.cancel' | translate }}
+  </button>
+  <button (click)="confirm()" class="btn btn-link" [disabled]="!form.valid">
+    {{ 'camfil.quotes.quoteslist.reject_quotes_modal.confirm' | translate }}
+  </button>
+</div>

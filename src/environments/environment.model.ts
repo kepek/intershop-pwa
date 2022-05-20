@@ -50,6 +50,7 @@ export interface Environment {
     | 'camCards'
     | 'camDemo'
     | 'camAhu'
+    | 'camQuotes'
   )[];
 
   /* ADDITIONAL FEATURE CONFIGURATIONS */
@@ -147,6 +148,7 @@ export const ENVIRONMENT_DEFAULTS: Environment = {
     'camCards',
     'camAhu',
     'camDemo',
+    'camQuotes',
   ],
 
   /* PROGRESSIVE WEB APP CONFIGURATIONS */

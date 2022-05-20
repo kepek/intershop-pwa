@@ -1,0 +1,234 @@
+<h1 class="mt-3">{{'camfil.quotes.quoteslist.title' | translate}}</h1>
+<mat-card class="mb-3">
+  <mat-card-content [formGroup]="filtersForm" class="filters">
+    <camfil-search-input [placeholder]="'camfil.quotes.quoteslist.filters.search' | translate" formControlName="search">
+    </camfil-search-input>
+    <mat-form-field appearance="fill">
+      <mat-label>{{'camfil.quotes.quoteslist.filters.customer' | translate}}</mat-label>
+      <mat-select formControlName="customer">
+        <mat-option *ngFor="let customer of customers" [value]="customer">{{ customer }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>{{'camfil.quotes.quoteslist.filters.requestor' | translate}}</mat-label>
+      <mat-select formControlName="requestor" multiple>
+        <mat-option *ngFor="let requestor of requestors" [value]="requestor">{{ requestor }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>{{'camfil.quotes.quoteslist.filters.type' | translate}}</mat-label>
+      <mat-select formControlName="type">
+        <mat-option value="1">Quotations & Proposals</mat-option>
+        <mat-option value="2">Quotations</mat-option>
+        <mat-option value="3">Proposals</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div class="date-filters">
+      <mat-form-field appearance="fill" class="select-filter w-100 w-md-auto">
+        <mat-label>{{'camfil.quotes.quoteslist.filters.date_from' | translate}}</mat-label>
+        <input formControlName="fromDate" [matDatepicker]="dateFromPicker" matInput [readonly]="true" />
+        <mat-datepicker-toggle [for]="dateFromPicker" matSuffix></mat-datepicker-toggle>
+        <mat-datepicker #dateFromPicker></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="select-filter w-100 w-md-auto">
+        <mat-label>{{'camfil.quotes.quoteslist.filters.date_to' | translate}}</mat-label>
+        <input formControlName="toDate" [matDatepicker]="dateToPicker" matInput [readonly]="true" />
+        <mat-datepicker-toggle [for]="dateToPicker" matSuffix></mat-datepicker-toggle>
+        <mat-datepicker #dateToPicker></mat-datepicker>
+      </mat-form-field>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="filters-bottom-section">
+      <div class="status-filters">
+        <mat-checkbox *ngFor="let state of states" color="primary" [formControlName]="'state' + state">{{ state }}
+        </mat-checkbox>
+      </div>
+      <div class="table-actions">
+        <ng-container *ngIf="selectedQuotes.length">
+          <a mat-flat-button color="primary" (click)="approveSelectedQuotes()">
+            {{ 'camfil.quotes.quoteslist.approve_quotes' | translate }}
+            ({{ selectedQuotes.length }})
+          </a>
+          <a mat-stroked-button color="primary" (click)="rejectSelectedQuotes()">
+            {{ 'camfil.quotes.quoteslist.reject_quotes' | translate }}
+            ({{ selectedQuotes.length }})
+          </a>
+        </ng-container>
+        <div class="elements-count">
+          Quotes: <strong>{{ filteredQuotesCount() }}</strong>
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>
+
+<div class="loading-container">
+  <div class="table-wrapper">
+    <table *ngIf="!isMobileView" [dataSource]="dataSource" class="mat-elevation-z2" mat-table matSort
+      matSortDisableClear>
+      <ng-container matColumnDef="check">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let quote">
+          <mat-checkbox [checked]="selectedQuotesMap[quote.id]" color="primary" *ngIf="quoteIsSelectable(quote)"
+            (change)="setSelectedQuote(quote.id, $event.checked)"></mat-checkbox>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="customer">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="customerName">
+          {{'camfil.quotes.quoteslist.columns.customer' | translate}}
+        </th>
+        <td mat-cell *matCellDef="let quote" [routerLink]="['./', quote.id]" [queryParams]="filtersQueryParams"
+          queryParamsHandling="merge">
+          {{ quote.customerName || '---' }}, {{ quote.customerNumber }}
+          <ng-container *ngIf="quote.customerDepartment">, {{ quote.customerDepartment }}</ng-container>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="camfilQuoteNumber">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{'camfil.quotes.quoteslist.columns.camfil_quotation_number' | translate}}
+        </th>
+        <td mat-cell *matCellDef="let quote" [routerLink]="['./', quote.id]" [queryParams]="filtersQueryParams"
+          queryParamsHandling="merge">
+          {{ quote.camfilQuoteNumber }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="customerQuoteNumber">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{'camfil.quotes.quoteslist.columns.customer_quotation_number' | translate}}
+        </th>
+        <td mat-cell *matCellDef="let quote" [routerLink]="['./', quote.id]" [queryParams]="filtersQueryParams"
+          queryParamsHandling="merge">
+          {{ quote.customerQuoteNumber }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="requestedBy">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{'camfil.quotes.quoteslist.columns.requested_by' | translate}}
+        </th>
+        <td mat-cell *matCellDef="let quote" [routerLink]="['./', quote.id]" [queryParams]="filtersQueryParams"
+          queryParamsHandling="merge">
+          {{ quote.requestedBy }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="requestedDate">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{'camfil.quotes.quoteslist.columns.requested_date' | translate}}
+        </th>
+        <td mat-cell *matCellDef="let quote" [routerLink]="['./', quote.id]" [queryParams]="filtersQueryParams"
+          queryParamsHandling="merge">
+          <ng-container *ngIf="quote.requestedDate">
+            {{ quote.requestedDate | date }}
+          </ng-container>
+          <ng-container *ngIf="!quote.requestedDate"> - </ng-container>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="quotationDate">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{'camfil.quotes.quoteslist.columns.quotation_date' | translate}}
+        </th>
+        <td mat-cell *matCellDef="let quote" [routerLink]="['./', quote.id]" [queryParams]="filtersQueryParams"
+          queryParamsHandling="merge">
+          <ng-container *ngIf="quote.quotationDate">
+            {{ quote.quotationDate | date }}
+          </ng-container>
+          <ng-container *ngIf="!quote.quotationDate"> - </ng-container>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{'camfil.quotes.quoteslist.columns.status' | translate}}
+        </th>
+        <td mat-cell *matCellDef="let quote" [routerLink]="['./', quote.id]" [queryParams]="filtersQueryParams"
+          queryParamsHandling="merge">
+          {{ statusEnum[quote.status] }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="orderChannel">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{'camfil.quotes.quoteslist.columns.channel' | translate}}
+        </th>
+        <td mat-cell *matCellDef="let quote" [routerLink]="['./', quote.id]" [queryParams]="filtersQueryParams"
+          queryParamsHandling="merge">
+          {{ quote.orderChannel }}
+        </td>
+      </ng-container>
+
+      <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+      <tr class="quote-row" *matRowDef="let quote; columns: displayedColumns; let i = index" mat-row></tr>
+    </table>
+
+    <ng-container *ngIf="isMobileView">
+      <ng-container *ngFor="let quote of dataSource.filteredData">
+        <ng-container *ngTemplateOutlet="quoteMobileRow; context: { quote: quote }"></ng-container>
+      </ng-container>
+    </ng-container>
+
+    <div class="show-more-overlay" *ngIf="!showAll && allQuotes?.length > previewNumRows + 2">
+      <button (click)="showAllQuotes()" color="primary" mat-stroked-button type="button">
+        {{'camfil.quotes.quoteslist.showing_of' | translate}}
+      </button>
+    </div>
+  </div>
+
+  <div class="my-3 text-center pt-1">
+    {{
+    'camfil.quotes.quoteslist.showing_of' | translate: { '0': showedQuotesCount(), '1': this.filteredQuotesCount() }
+    }}
+  </div>
+</div>
+
+<ng-template #quoteMobileRow let-quote="quote">
+  <mat-card *ngIf="quote" class="mat-elevation-z box-shadow box-shadow--dark">
+    <mat-card-content class="quote-item" data-testing-id="orders-list-item-container">
+      <b>{{'camfil.quotes.quoteslist.columns.customer' | translate}}</b><br />
+      {{ quote.customerName || '---' }}<br />
+      <b>{{'camfil.quotes.quoteslist.columns.camfil_quotation_number' | translate}}</b><br />
+      {{ quote.camfilQuoteNumber || '---' }}<br />
+
+      <div class="row text-center">
+        <div class="col-4">{{'camfil.quotes.quoteslist.columns.customer_quotation_number' | translate}}</div>
+        <div class="col-4">{{'camfil.quotes.quoteslist.columns.requested_by' | translate}}</div>
+        <div class="col-4">{{'camfil.quotes.quoteslist.columns.requested_date' | translate}}</div>
+      </div>
+      <div class="row text-center">
+        <div class="col-4">{{ quote.customerQuoteNumber || '---' }}</div>
+        <div class="col-4">{{ quote.requestedBy || '---' }}</div>
+        <div class="col-4">{{ quote.requestedDate | date }}</div>
+      </div>
+      <div class="row text-center">
+        <div class="col-4">{{'camfil.quotes.quoteslist.columns.quotation_date' | translate}}</div>
+        <div class="col-4">{{'camfil.quotes.quoteslist.columns.status' | translate}}</div>
+        <div class="col-4">{{'camfil.quotes.quoteslist.columns.channel' | translate}}</div>
+      </div>
+      <div class="row text-center">
+        <div class="col-4">{{ quote.quotationDate | date }}</div>
+        <div class="col-4">{{ statusEnum[quote.status] }}</div>
+        <div class="col-4">{{ quote.orderChannel }}</div>
+      </div>
+      <hr />
+      <div class="quote-item-actions">
+        <mat-checkbox [checked]="selectedQuotesMap[quote.id]" color="primary" *ngIf="quoteIsSelectable(quote)"
+          (change)="setSelectedQuote(quote.id, $event.checked)"></mat-checkbox>
+
+        <button [routerLink]="['./', quote.id]" [id]="'quote_' + quote.id" [queryParams]="filtersQueryParams"
+          queryParamsHandling="merge" [title]="'camfil.account.orderlist.show_more' | translate" color="primary"
+          mat-stroked-button>
+          <b>{{ 'camfil.account.orderlist.show_more' | translate }}</b>
+        </button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+  <br />
+</ng-template>

@@ -1,0 +1,31 @@
+@import '~src/styles/themes/camfil/variables';
+@import '~src/styles/themes/camfil/mixins.scss';
+
+.add-product--header {
+  margin-top: $space-box;
+  text-transform: capitalize;
+  @include font-size-subtitle1;
+}
+
+.product-form {
+  display: flex;
+  flex-direction: column;
+
+  mat-form-field {
+    margin-bottom: 1rem;
+  }
+}
+
+.quantity-field {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .label {
+    font-weight: bold;
+  }
+
+  .counter {
+    margin-bottom: -14px;
+  }
+}

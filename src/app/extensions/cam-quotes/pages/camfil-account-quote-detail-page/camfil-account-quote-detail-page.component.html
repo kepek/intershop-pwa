@@ -1,0 +1,35 @@
+<ng-container *ngIf="quoteDetails">
+  <div class="header">
+    <div class="left-items">
+      <a color="primary" mat-stroked-button queryParamsHandling="preserve" routerLink="/account/quotes">
+        <mat-icon class="mt-n1">arrow_left</mat-icon>
+        {{ 'camfil.quotes.quote_detail.back_to_quotes' | translate }}
+      </a>
+
+      <h1>
+        {{ 'camfil.quotes.quote_detail.quotation_number' | translate }}:
+        <span>{{ quoteDetails?.camfilQuoteNumber }}</span>
+      </h1>
+
+      <div class="status">{{ quoteDetails?.statusText }}</div>
+    </div>
+
+    <div class="right-items">
+      <a mat-stroked-button color="primary" (click)="reject()">
+        {{ 'camfil.quotes.quote_detail.reject_quote' | translate }}
+      </a>
+      <a mat-flat-button color="primary" (click)="approve()">
+        {{ 'camfil.quotes.quote_detail.approve_quote' | translate }}
+      </a>
+    </div>
+  </div>
+
+  <camfil-quote-details [details]="quoteDetails"></camfil-quote-details>
+
+  <camfil-quote-line-item-table [lineItems]="quoteDetails.items" [isMobileView]="isMobileView">
+  </camfil-quote-line-item-table>
+  <camfil-quote-cost-summary [quote]="quoteDetails"></camfil-quote-cost-summary>
+
+</ng-container>
+
+<camfil-loading *ngIf="loading" fixed="true"></camfil-loading>

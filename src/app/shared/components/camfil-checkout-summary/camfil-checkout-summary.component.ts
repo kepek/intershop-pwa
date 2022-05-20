@@ -15,6 +15,10 @@ import { Price } from 'ish-core/models/price/price.model';
 import { whenFalsy } from 'ish-core/utils/operators';
 import { RoleToggleService } from 'ish-core/utils/role-toggle/role-toggle.service';
 import { CamfilBasketCostSummaryComponent } from 'ish-shared/components/basket/camfil-basket-cost-summary/camfil-basket-cost-summary.component';
+import {
+  CamfilModalDialogComponent,
+  ModalOptions,
+} from 'ish-shared/components/common/camfil-modal-dialog/camfil-modal-dialog.component';
 import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfil-small-cta-modal/camfil-small-cta-modal.component';
 
 @Component({
@@ -26,7 +30,7 @@ import { CamfilSmallCtaModalComponent } from 'ish-shared/components/common/camfi
 export class CamfilCheckoutSummaryComponent extends CamfilBasketCostSummaryComponent {
   @Input() purchaseCurrency: string;
   @Input() editable: boolean;
-  @Output() submit = new EventEmitter();
+  @Output() submit = new EventEmitter<string>();
 
   @ViewChild(CamfilSmallCtaModalComponent) gdprErrorModal: CamfilSmallCtaModalComponent;
 
@@ -35,11 +39,19 @@ export class CamfilCheckoutSummaryComponent extends CamfilBasketCostSummaryCompo
   productsReadyToPlaceOrder$: Observable<boolean>;
   canSubmitOrder$: Observable<boolean>;
   isLoggedIn$: Observable<boolean>;
+  canRequestQuotations$: Observable<boolean>;
 
   guestGdprForm: FormGroup;
   checkIfZeroPrice = PriceHelper.checkIfZeroPrice;
 
   private destroy$ = new Subject();
+
+  @ViewChild('quoteCreatedModal') quoteCreatedModal: CamfilModalDialogComponent<any>;
+  quoteCreatedModalOptions: ModalOptions = {
+    titleText: 'The quotation request has been sent',
+    confirmText: 'Go to my Quotations',
+    rejectText: 'Stay at the checkout',
+  };
 
   constructor(
     protected accountFacade: AccountFacade,
@@ -70,6 +82,11 @@ export class CamfilCheckoutSummaryComponent extends CamfilBasketCostSummaryCompo
     this.isLoggedIn$.pipe(whenFalsy(), takeUntil(this.destroy$)).subscribe(() => {
       this.initGDPRForm();
     });
+
+    this.canRequestQuotations$ = combineLatest([
+      this.roleToggleService.hasRole('APP_B2B_REQUEST_QUOTATION'),
+      this.camfilConfigurationFacade.isEnabled$('allowQuotes'),
+    ]).pipe(map(([hasRequestRole, isQuotesModuleEnabled]) => hasRequestRole && isQuotesModuleEnabled));
   }
 
   submitOrder() {
@@ -78,6 +95,18 @@ export class CamfilCheckoutSummaryComponent extends CamfilBasketCostSummaryCompo
         this.submit.emit();
       } else if (this.guestGdprForm?.valid) {
         this.submit.emit();
+      } else {
+        this.openGDPRErrorModal();
+      }
+    });
+  }
+
+  requestQuote() {
+    this.isLoggedIn$.pipe(take(1), takeUntil(this.destroy$)).subscribe(isLoggedIn => {
+      if (isLoggedIn) {
+        this.submit.emit('RFQ');
+      } else if (this.guestGdprForm?.valid) {
+        this.submit.emit('RGQ');
       } else {
         this.openGDPRErrorModal();
       }
@@ -109,5 +138,9 @@ export class CamfilCheckoutSummaryComponent extends CamfilBasketCostSummaryCompo
     this.gdprErrorModal.hide = () => {
       gdprErrorDialogModal.close();
     };
+  }
+
+  onQuoteCreatedModalConfirmed() {
+    this.router.navigate(['account', 'quotes']);
   }
 }

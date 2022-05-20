@@ -20,7 +20,6 @@ const routes: Routes = [
       // Redirect below routes to /account
       { path: 'addresses', redirectTo: '/account' },
       { path: 'payment', redirectTo: '/account' },
-      { path: 'quotes', redirectTo: '/account' },
       { path: 'wishlists', redirectTo: '/account' },
       { path: 'order-templates', redirectTo: '/account' },
       {
@@ -43,6 +42,11 @@ const routes: Routes = [
           import('../camfil-account-order-history/camfil-account-order-history-page.module').then(
             m => m.CamfilAccountOrderHistoryPageModule
           ),
+      },
+      {
+        path: 'quotes',
+        loadChildren: () =>
+          import('../../../../../../src/app/extensions/cam-quotes/cam-quotes.module').then(m => m.CamQuotesModule),
       },
       {
         path: 'organization',

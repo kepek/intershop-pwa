@@ -1,0 +1,95 @@
+@import '~src/styles/themes/camfil/colors.scss';
+@import '~src/styles/themes/camfil/variables.scss';
+
+:host {
+  tr.mat-header-row {
+    height: 40px;
+  }
+
+  tr.mat-row {
+    height: 60px;
+  }
+
+  tr:last-child td {
+    border-bottom: none;
+  }
+
+  td div.text-truncate {
+    display: block;
+    width: 20ch;
+  }
+
+  ::ng-deep {
+    .mat-column {
+      &-price {
+        text-align: right;
+      }
+
+      &-orderedQty,
+      &-deliveredQty,
+      &-deliveryDate {
+        text-align: center;
+      }
+    }
+
+    .product-image {
+      max-width: 40px;
+      max-height: 40px;
+    }
+
+    .quick-view {
+      margin-left: 6px;
+    }
+  }
+}
+
+table {
+  width: 100%;
+
+  td,
+  th {
+    font-size: $font-size-base;
+  }
+
+  th {
+    height: 45px;
+    color: #000;
+    background-color: $greyD9;
+  }
+
+  tr.orderlist-row:hover {
+    background: $greyF5;
+  }
+
+  tr.orderlist-row:active {
+    background: $greyEF;
+  }
+}
+
+@media (max-width: $screen-sm-max) {
+  .pli-mobile {
+    line-height: 24px;
+    color: $camfil-text-color-tertiary;
+    position: relative;
+
+    .product-image {
+      position: absolute;
+      right: 0;
+    }
+
+    .row:nth-of-type(2n + 1) {
+      margin-top: $space-box/2;
+      margin-bottom: $space-box/2;
+      font-size: $font-size-xs;
+      font-weight: 600;
+      color: $camfil-text-color-primary;
+      background-color: rgba($color-corporate, 0.1);
+    }
+
+    ::ng-deep {
+      .mat-expansion-panel-body {
+        padding: 0;
+      }
+    }
+  }
+}

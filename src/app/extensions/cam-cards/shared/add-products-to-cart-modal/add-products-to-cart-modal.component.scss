@@ -5,10 +5,10 @@
     position: relative;
     max-height: 278px;
     overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
     background: radial-gradient(at 50% 0, rgba(0, 0, 0, 0.1), transparent 70%) top,
       radial-gradient(at 50% 100%, rgba(0, 0, 0, 0.1), transparent 70%) bottom;
-    background-size: 100% 15px;
     background-repeat: no-repeat;
+    background-size: 100% 15px;
+    -webkit-overflow-scrolling: touch;
   }
 }

@@ -1,0 +1,42 @@
+<mat-card class="line-item">
+  <div class="article">
+    <mat-checkbox (change)="onChangeSelection($event)" color="primary"></mat-checkbox>
+    <img class="photo" src="https://via.placeholder.com/50" />
+    <div class="article-info" *ngIf="item?.product">
+      <div class="name">{{ item.product.name }}</div>
+      <div class="details">
+        <span>{{ item.product.sku }}</span>
+        <span>|</span>
+        <mat-icon class="search__icon background-icon view-article-icon" svgIcon="search"></mat-icon>
+        <span>|</span>
+        <span *ngIf="item.product.available" class="in-stock-icon"></span>
+      </div>
+    </div>
+  </div>
+  <div class="controls">
+    <div class="prices">
+      <div>
+        <span>List Price:</span>
+        <span *ngIf="item.originSinglePrice"
+          >{{ item.originSinglePrice.value }} {{ item.originSinglePrice.currency }}</span
+        >
+        <span *ngIf="!item.originSinglePrice">-</span>
+      </div>
+      <div>
+        <span>Your Price:</span>
+        <span *ngIf="item.singlePrice">{{ item.singlePrice.value }} {{ item.singlePrice.currency }}</span>
+        <span *ngIf="!item.singlePrice">-</span>
+      </div>
+    </div>
+    <camfil-counter
+      class="counter"
+      [form]="quantityForm"
+      controlName="quantity"
+      [min]="0"
+      [isInLineItem]="true"
+    ></camfil-counter>
+    <button mat-mini-fab color="primary">
+      <mat-icon (click)="delete()">delete</mat-icon>
+    </button>
+  </div>
+</mat-card>
