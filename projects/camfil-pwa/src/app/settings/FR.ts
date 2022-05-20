@@ -7,6 +7,7 @@ const camfilConfiguration: CamfilChannelConfiguration = {
   channelCode: 'FR',
   currency: 'EUR',
   icmChannel: 'Camfil-CamfilFR-Site',
+  allowQuotes: true,
   preventCamCardERPIdValidation: true,
   showAddToCamCardButtonForNonLoggedInUser: false,
   showCountryFieldOnAddressForms: true,
@@ -19,7 +20,6 @@ const camfilConfiguration: CamfilChannelConfiguration = {
   useSecondAddressLine: true,
   filterDocsByLanguage: true,
   showAllDocsType: true,
-  allowQuotes: true,
 };
 
 export default camfilConfiguration;
