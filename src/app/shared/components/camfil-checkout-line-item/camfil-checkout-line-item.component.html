@@ -1,4 +1,6 @@
-<ng-template #noProduct>...</ng-template>
+<ng-template #noProduct>
+  <div class="line-item-container px-4 py-2"></div>
+</ng-template>
 
 <ng-container *ngIf="product$ | async as product; else noProduct">
   <div class="line-item-container px-4 py-2">
