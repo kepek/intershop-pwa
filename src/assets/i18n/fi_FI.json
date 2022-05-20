@@ -921,6 +921,7 @@
   "camfil.checkout.number_of_orders": "Tilausten lukumäärä",
   "camfil.checkout.number_of_products": "Tuotteiden lukumäärä",
   "camfil.checkout.order": "Tilaus",
+  "camfil.checkout.order.approve_line_item.modal.subheading": "(fi_FI)_Do you want to apptove this order line?",
   "camfil.checkout.order.delete_line_item.modal.subheading": "Haluatko poistaa tämän tilausrivin?",
   "camfil.checkout.order.delete_order.modal.no": "Ei",
   "camfil.checkout.order.delete_order.modal.subheading": "Haluatko varmasti poistaa tilauksesi?",

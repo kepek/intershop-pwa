@@ -105,7 +105,9 @@ export class CamfilRequisitionMapper {
 
     const date = String(payloadData);
 
-    return new Date(date.replace(/(\d{2})-(\d{2})-(\d{4})/, '$2/$1/$3')).getTime();
+    const dateFromString = new Date(date.replace(/(\d{2})-(\d{2})-(\d{4})/, '$2/$1/$3'));
+    dateFromString.setHours(23, 59, 59);
+    return dateFromString.getTime();
   }
 
   static getLineItemsData(included, approvalData): LineItem[] {

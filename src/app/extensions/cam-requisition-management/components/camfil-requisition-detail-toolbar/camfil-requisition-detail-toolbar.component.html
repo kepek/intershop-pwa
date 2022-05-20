@@ -43,10 +43,14 @@
   <div>{{ 'camfil.checkout.order.delete_line_item.modal.subheading' | translate }}</div>
 </ng-template>
 
+<ng-template #approveTemplate>
+  <div>{{ 'camfil.checkout.order.approve_line_item.modal.subheading' | translate }}</div>
+</ng-template>
+
 <camfil-small-cta-modal
   #approveProductsModal
   (actionClicked)="approveProducts(approveProductsModal)"
-  [actionTemplate]="actionTemplate"
+  [actionTemplate]="approveTemplate"
   actionButtonTitle="{{ 'camfil.checkout.order.delete_order.modal.yes' | translate }}"
   cancelButtonTitle="{{ 'camfil.checkout.order.delete_order.modal.no' | translate }}"
   hideIcon="true"

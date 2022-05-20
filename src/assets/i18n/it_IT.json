@@ -921,6 +921,7 @@
   "camfil.checkout.number_of_orders": "Numero di ordini",
   "camfil.checkout.number_of_products": "Numero di prodotti",
   "camfil.checkout.order": "Ordine",
+  "camfil.checkout.order.approve_line_item.modal.subheading": "(it_IT)_Do you want to apptove this order line?",
   "camfil.checkout.order.delete_line_item.modal.subheading": "Vuoi cancellare questa linea d'ordine?",
   "camfil.checkout.order.delete_order.modal.no": "No",
   "camfil.checkout.order.delete_order.modal.subheading": "Sei sicuro di voler cancellare il tuo ordine?",

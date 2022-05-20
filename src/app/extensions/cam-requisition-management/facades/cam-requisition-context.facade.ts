@@ -9,6 +9,7 @@ import { selectRouteParam, selectUrl } from 'ish-core/store/core/router';
 import { getProducts } from 'ish-core/store/shopping/products';
 import { whenTruthy } from 'ish-core/utils/operators';
 
+import { CamCardItemComment, CamCardMeasurement } from '../../cam-cards/models/cam-card/cam-card.model';
 import { CamfilRequisition } from '../models/camfil-requisition/camfil-requisition.model';
 import {
   addProductToCamfilRequisition,
@@ -131,7 +132,12 @@ export class CamfilRequisitionContextFacade
     );
   }
 
-  addProductToCamfilRequisition(item: { sku: string; quantity: number }) {
+  addProductToCamfilRequisition(item: {
+    sku: string;
+    quantity: number;
+    boxLabel?: CamCardItemComment;
+    measurements?: CamCardMeasurement;
+  }) {
     this.store.dispatch(
       addProductToCamfilRequisition({
         requisitionId: this.get('entity', 'id'),

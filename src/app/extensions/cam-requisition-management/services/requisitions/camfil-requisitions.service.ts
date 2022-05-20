@@ -2,6 +2,7 @@ import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { concatMap, map } from 'rxjs/operators';
+import { CamCardItemComment, CamCardMeasurement } from 'src/app/extensions/cam-cards/models/cam-card/cam-card.model';
 
 import { Address } from 'ish-core/models/address/address.model';
 import { Attribute } from 'ish-core/models/attribute/attribute.model';
@@ -138,7 +139,10 @@ export class CamfilRequisitionsService {
 
   // Add product to requisition
 
-  addProductToCamfilRequisition(requisitionId: string, item: { sku: string; quantity: number }): Observable<string> {
+  addProductToCamfilRequisition(
+    requisitionId: string,
+    item: { sku: string; quantity: number; boxLabel?: CamCardItemComment; measurements?: CamCardMeasurement }
+  ): Observable<string> {
     if (!requisitionId) {
       return throwError('addProductToCamfilRequisition() called without required id');
     }
@@ -147,7 +151,14 @@ export class CamfilRequisitionsService {
       return throwError('removeProductsFromCamfilRequisition() called without required item');
     }
 
-    const elements = [{ sku: item.sku, quantity: { value: item.quantity, unit: '' } }];
+    const elements = [
+      {
+        sku: item.sku,
+        quantity: { value: item.quantity, unit: '' },
+        boxLabel: item.boxLabel?.label,
+        measurements: item.measurements,
+      },
+    ];
     const body = {
       elements,
     };
