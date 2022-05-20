@@ -25,7 +25,7 @@ export class CamfilApproveLineItemSuccesDialogComponent {
   }
 
   goToOrderHistoryPage() {
-    this.router.navigate(['/orders']);
+    this.router.navigate(['/account/orders']);
     this.hide();
   }
 }

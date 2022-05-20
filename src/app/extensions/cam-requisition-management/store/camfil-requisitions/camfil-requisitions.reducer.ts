@@ -8,7 +8,6 @@ import { CamfilRequisition } from '../../models/camfil-requisition/camfil-requis
 
 import {
   approveCamfilRequisitionLineItems,
-  approveCamfilRequisitionLineItemsSuccess,
   checkProductAvailabilityFail,
   createCamfilRequisition,
   createCamfilRequisitionFail,
@@ -36,6 +35,8 @@ import {
   updateMultipleCamfilRequisitionStatus,
   updateMultipleCamfilRequisitionStatusSuccess,
   updateMultipleCamfileRequisitionStatusFail,
+  createOrderFromApprovedRequisitionLineItemsSuccess,
+  createOrderFromApprovedRequisitionLineItems,
 } from './camfil-requisitions.actions';
 
 export const camfilRequisitionsAdapter = createEntityAdapter<CamfilRequisition>();
@@ -78,7 +79,8 @@ export const requisitionsReducer = createReducer(
     createCamfilRequisition,
     updateCamfilRequisition,
     updateCamfilRequisitionLineItem,
-    updateCamfilRequisitionAddress
+    updateCamfilRequisitionAddress,
+    createOrderFromApprovedRequisitionLineItems
   ),
   unsetLoadingAndErrorOn(
     loadCamfilRequisitionsSuccess,
@@ -89,7 +91,8 @@ export const requisitionsReducer = createReducer(
     createOrderFromApprovedRequisitionSuccess,
     updateCamfilRequisitionSuccess,
     updateCamfilRequisitionAddressSuccess,
-    updateCamfilRequisitionLineItemSuccess
+    updateCamfilRequisitionLineItemSuccess,
+    createOrderFromApprovedRequisitionLineItemsSuccess
   ),
   setErrorOn(
     loadCamfilRequisitionsFail,
@@ -173,8 +176,9 @@ export const requisitionsReducer = createReducer(
     };
     return camfilRequisitionsAdapter.upsertOne(updatedRequisition, state);
   }),
-  on(approveCamfilRequisitionLineItemsSuccess, (state: CamfilRequisitionsState, action) => {
+  on(createOrderFromApprovedRequisitionLineItemsSuccess, (state: CamfilRequisitionsState, action) => {
     const { requisition } = action.payload;
+
     const updatedRequisition = {
       ...requisition,
       partiallyApproved: true,

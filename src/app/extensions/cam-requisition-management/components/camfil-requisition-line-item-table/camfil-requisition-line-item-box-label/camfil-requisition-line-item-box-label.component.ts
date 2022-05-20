@@ -2,7 +2,6 @@ import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { ChangeDetectionStrategy, Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 
-import { Attribute } from 'ish-core/models/attribute/attribute.model';
 import { LineItem, LineItemView } from 'ish-core/models/line-item/line-item.model';
 import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
 
@@ -48,36 +47,12 @@ export class CamfilRequisitionLineItemBoxLabelComponent implements OnInit {
       markAsDirtyRecursive(form);
       return;
     }
-    const name = target.getAttribute('name');
 
-    const oldValue = this.boxLabel;
-    let value: string | number = target.value;
-    if (value) {
-      value = +value;
-    }
+    let value: string = target.value;
 
-    const boxLabelAttribute: Attribute = { name, type: 'String', value };
-    // TODO: Verify with BE how line item's attributes are managed
-    if (oldValue) {
-      if (!value) {
-        this.camRequisitionManagementFacade.deleteCamfilRequisitionLineItemAttributes(
-          this.requisition.id,
-          this.lineItem.id,
-          boxLabelAttribute
-        );
-      } else if (value !== oldValue) {
-        this.camRequisitionManagementFacade.updateCamfilRequisitionLineItemAttribute(
-          this.requisition.id,
-          this.lineItem.id,
-          boxLabelAttribute
-        );
-      }
-    } else if (value) {
-      this.camRequisitionManagementFacade.addCamfilRequisitionLineItemAttribute(
-        this.requisition.id,
-        this.lineItem.id,
-        boxLabelAttribute
-      );
-    }
+    this.camRequisitionManagementFacade.updateCamfilRequisitionLineItem(this.requisition.id, {
+      lineItemId: this.lineItem.id,
+      boxLabel: value,
+    });
   }
 }

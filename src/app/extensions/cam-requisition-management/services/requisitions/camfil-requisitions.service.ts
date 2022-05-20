@@ -229,7 +229,11 @@ export class CamfilRequisitionsService {
     const params = new HttpParams().set('include', this.allIncludes.join());
     const body = {
       quantity: { value: lineItemUpdate.quantity },
+      boxLabel: lineItemUpdate.boxLabel,
     };
+    if (!lineItemUpdate.quantity) {
+      delete body.quantity;
+    }
     return this.apiService
       .put(`camfilrequisitions/${requisitionId}/items/${lineItemUpdate.lineItemId}`, body, {
         params,

@@ -61,6 +61,8 @@ import {
   updateCamfilRequisitionSuccess,
   updateMultipleCamfilRequisitionStatus,
   updateMultipleCamfileRequisitionStatusFail,
+  createOrderFromApprovedRequisitionLineItemsSuccess,
+  createOrderFromApprovedRequisitionLineItems,
 } from './camfil-requisitions.actions';
 import { getSelectedCamfilRequisitionId } from './camfil-requisitions.selectors';
 
@@ -220,7 +222,7 @@ export class CamfilRequisitionsEffects {
       mergeMap(payload => [
         displaySuccessMessage({
           message:
-            payload.status === 'APPROVED'
+            payload.status === 'APPROVED' || payload.status === 'COMPLETED'
               ? 'camfil.account.approvals.status_update.approved'
               : 'camfil.account.approvals.status_update.reject',
         }),
@@ -422,7 +424,7 @@ export class CamfilRequisitionsEffects {
       mapToPayload(),
       mergeMap(({ requisitionId, lineItemIds, requisition }) =>
         this.requisitionsService.approveSelectedLineItems(requisitionId, lineItemIds, requisition).pipe(
-          map(() => approveCamfilRequisitionLineItemsSuccess({ requisition, lineItemIds })),
+          map(() => createOrderFromApprovedRequisitionLineItems({ requisition, lineItemIds })),
           mapErrorToAction(approveCamfilRequisitionLineItemsFail)
         )
       )
@@ -431,12 +433,12 @@ export class CamfilRequisitionsEffects {
 
   createOrderWithApprovedLineItems$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(approveCamfilRequisitionLineItemsSuccess),
+      ofType(createOrderFromApprovedRequisitionLineItems),
       mapToPayload(),
       mergeMap(({ requisition, lineItemIds }) =>
         this.requisitionsService.createOrderFromApprovedRequisition(requisition.id, lineItemIds).pipe(
-          map(() => approveCamfilRequisitionLineItemsSuccess({ requisition, lineItemIds })),
-          mapErrorToAction(approveCamfilRequisitionLineItemsFail)
+          map(() => createOrderFromApprovedRequisitionLineItemsSuccess({ requisition })),
+          mapErrorToAction(createOrderFromApprovedRequisitionFail)
         )
       )
     )

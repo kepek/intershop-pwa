@@ -16,14 +16,17 @@
       </th>
       <td mat-cell *matCellDef="let pli">
         <mat-checkbox
-          *ngIf="pli.requisitionLineItemStatus !== 'APPROVED'"
+          *ngIf="pli.requisitionLineItemStatus == 'SUBMITTED'"
           color="primary"
           (click)="$event.stopPropagation()"
           (change)="toggleLineItemCheck(pli, $event)"
           [checked]="isLineItemchecked(pli.id)"
         >
         </mat-checkbox>
-        <mat-icon *ngIf="pli.requisitionLineItemStatus === 'APPROVED'" svgIcon="checkmark"></mat-icon>
+        <mat-icon
+          *ngIf="pli.requisitionLineItemStatus === 'APPROVED' || pli.requisitionLineItemStatus === 'ORDERED'"
+          svgIcon="checkmark"
+        ></mat-icon>
       </td>
     </ng-container>
 
@@ -60,7 +63,7 @@
         {{ 'camfil.account.requisitions.approvals.line_item_list.status.header' | translate }}
       </th>
       <td mat-cell *matCellDef="let pli">
-        <div *ngIf="pli.requisitionLineItemStatus === 'APPROVED'">
+        <div *ngIf="pli.requisitionLineItemStatus === 'APPROVED' || pli.requisitionLineItemStatus === 'ORDERED'">
           {{ 'account.requisitions.requisitions.navtab.approved' | translate }}
         </div>
         <div *ngIf="pli.requisitionLineItemStatus === 'SUBMITTED'">
@@ -151,7 +154,12 @@
         {{ 'camfil.account.requisitions.approvals.line_item_list.delete_product.header' | translate }}
       </th>
       <td mat-cell *matCellDef="let pli">
-        <ng-container *ngIf="pli.requisitionLineItemStatus !== 'APPROVED'; else emptyCell">
+        <ng-container
+          *ngIf="
+            pli.requisitionLineItemStatus !== 'APPROVED' || pli.requisitionLineItemStatus !== 'ORDERED';
+            else emptyCell
+          "
+        >
           <ng-container *ngIf="editable; else emptyCell">
             <a
               (click)="openDeleteModal(removeProductsModal, pli.id)"
@@ -196,7 +204,7 @@
             class="d-block"
             [name]="'camfil.cam_card.product.your_price.label' | translate"
             [overflowVisible]="true"
-            [value]="pli?.singleBasePrice | ishPrice"
+            [value]="pli?.price | ishPrice"
           ></camfil-product-attribute>
         </div>
       </td>
@@ -283,7 +291,7 @@
             <camfil-product-attribute
               [name]="'camfil.cam_card.product.your_price.label' | translate"
               [overflowVisible]="true"
-              [value]="pli.singleBasePrice | ishPrice"
+              [value]="pli.price | ishPrice"
             ></camfil-product-attribute>
           </div>
         </div>

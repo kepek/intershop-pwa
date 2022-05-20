@@ -77,4 +77,5 @@ export interface CamfilRequisitionCustomer extends Customer {
 export interface CamfilRequisitionLineItemUpdate {
   lineItemId: string;
   quantity?: number;
+  boxLabel?: string;
 }
