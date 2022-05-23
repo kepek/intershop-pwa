@@ -42,7 +42,6 @@ export class CamfilRequisitionMapper {
         const approvalStatus = CamfilRequisitionMapper.getApprovalStatus(data.approval);
         const lineItemCount = CamfilRequisitionMapper.getLineItemsQuantityCount(lineItems);
 
-        console.log({ data });
         return {
           ...BasketMapper.fromData(payloadData),
           id: data.basketId,
