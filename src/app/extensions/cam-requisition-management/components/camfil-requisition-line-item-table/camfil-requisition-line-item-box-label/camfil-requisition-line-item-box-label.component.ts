@@ -2,6 +2,7 @@ import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { ChangeDetectionStrategy, Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 
+import { Attribute } from 'ish-core/models/attribute/attribute.model';
 import { LineItem, LineItemView } from 'ish-core/models/line-item/line-item.model';
 import { markAsDirtyRecursive } from 'ish-shared/forms/utils/form-utils';
 
@@ -48,11 +49,20 @@ export class CamfilRequisitionLineItemBoxLabelComponent implements OnInit {
       return;
     }
 
-    let value: string = target.value;
+    const value = target.value;
+    const boxLabelAttribute: Attribute = { name: 'boxLabel', type: 'String', value };
 
-    this.camRequisitionManagementFacade.updateCamfilRequisitionLineItem(this.requisition.id, {
-      lineItemId: this.lineItem.id,
-      boxLabel: value,
-    });
+    if (!value) {
+      this.camRequisitionManagementFacade.deleteCamfilRequisitionLineItemAttributes(
+        this.requisition.id,
+        this.lineItem.id,
+        boxLabelAttribute
+      );
+    } else {
+      this.camRequisitionManagementFacade.updateCamfilRequisitionLineItem(this.requisition.id, {
+        lineItemId: this.lineItem.id,
+        boxLabel: value,
+      });
+    }
   }
 }

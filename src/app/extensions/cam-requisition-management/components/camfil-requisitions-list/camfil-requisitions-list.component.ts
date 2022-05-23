@@ -57,7 +57,7 @@ export class CamfilRequisitionsListComponent implements OnInit, OnChanges, After
   dateToFilter = new FormControl(new Date());
   isMobileView = false;
   showPreview = true;
-  tableSize = 4;
+  tableSize = 16;
   approvalsChecked = [];
   private destroy$ = new Subject();
 
@@ -336,7 +336,13 @@ export class CamfilRequisitionsListComponent implements OnInit, OnChanges, After
   }
 
   isMaxTableLength() {
-    return this.dataSource.filteredData.length >= this.tableSize;
+    return this.dataSource.filteredData.length >= this.tableSize + 2;
+  }
+
+  countRows() {
+    return this.dataSource.filteredData.length < this.tableSize + 2
+      ? this.dataSource.filteredData.length
+      : this.tableSize;
   }
 
   toggleAllApprovalsCheck(event: MatCheckboxChange) {

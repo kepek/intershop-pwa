@@ -217,7 +217,12 @@
 
     <!-- Header and Row Declarations -->
     <tr *matHeaderRowDef="columnsToDisplay" mat-header-row></tr>
-    <tr *matRowDef="let requisition; columns: columnsToDisplay" (click)="navigateTo(requisition)" mat-row></tr>
+    <tr
+      *matRowDef="let requisition; columns: columnsToDisplay; let i = index"
+      (click)="navigateTo(requisition)"
+      [class.d-none]="i >= tableSize + 2"
+      mat-row
+    ></tr>
   </table>
 
   <div

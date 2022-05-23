@@ -13,6 +13,8 @@ import {
   createCamfilRequisitionFail,
   createCamfilRequisitionSuccess,
   createOrderFromApprovedRequisitionFail,
+  createOrderFromApprovedRequisitionLineItems,
+  createOrderFromApprovedRequisitionLineItemsSuccess,
   createOrderFromApprovedRequisitionSuccess,
   getCamfilRequisitionData,
   loadCamfilRequisition,
@@ -35,8 +37,6 @@ import {
   updateMultipleCamfilRequisitionStatus,
   updateMultipleCamfilRequisitionStatusSuccess,
   updateMultipleCamfileRequisitionStatusFail,
-  createOrderFromApprovedRequisitionLineItemsSuccess,
-  createOrderFromApprovedRequisitionLineItems,
 } from './camfil-requisitions.actions';
 
 export const camfilRequisitionsAdapter = createEntityAdapter<CamfilRequisition>();
@@ -177,12 +177,24 @@ export const requisitionsReducer = createReducer(
     return camfilRequisitionsAdapter.upsertOne(updatedRequisition, state);
   }),
   on(createOrderFromApprovedRequisitionLineItemsSuccess, (state: CamfilRequisitionsState, action) => {
-    const { requisition } = action.payload;
+    const { requisition, lineItemIds } = action.payload;
 
     const updatedRequisition = {
       ...requisition,
+      approval: {
+        ...requisition.approval,
+        status: 'APPROVED',
+        statusCode: 'APPROVED',
+        lineItemStatuses: requisition.approval.lineItemStatuses.map(lineItem =>
+          lineItemIds.includes(lineItem.lineItemId) ? { ...lineItem, status: 'APPROVED' } : lineItem
+        ),
+      },
+      lineItems: requisition.lineItems.map(lineItem =>
+        lineItemIds.includes(lineItem.id) ? { ...lineItem, requisitionLineItemStatus: 'APPROVED' } : lineItem
+      ),
       partiallyApproved: true,
     };
+
     return camfilRequisitionsAdapter.upsertOne(updatedRequisition, state);
   }),
   // TODO: Update with upsert many

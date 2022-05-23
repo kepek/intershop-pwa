@@ -24,13 +24,14 @@ import {
   addProductToCamfilRequisitionSuccess,
   approveCamfilRequisitionLineItems,
   approveCamfilRequisitionLineItemsFail,
-  approveCamfilRequisitionLineItemsSuccess,
   checkProductAvailabilityFail,
   createCamfilRequisition,
   createCamfilRequisitionFail,
   createCamfilRequisitionSuccess,
   createOrderFromApprovedRequisition,
   createOrderFromApprovedRequisitionFail,
+  createOrderFromApprovedRequisitionLineItems,
+  createOrderFromApprovedRequisitionLineItemsSuccess,
   createOrderFromApprovedRequisitionSuccess,
   deleteCamfilRequisitionLineItemAttribute,
   deleteCamfilRequisitionLineItemAttributeFail,
@@ -61,8 +62,6 @@ import {
   updateCamfilRequisitionSuccess,
   updateMultipleCamfilRequisitionStatus,
   updateMultipleCamfileRequisitionStatusFail,
-  createOrderFromApprovedRequisitionLineItemsSuccess,
-  createOrderFromApprovedRequisitionLineItems,
 } from './camfil-requisitions.actions';
 import { getSelectedCamfilRequisitionId } from './camfil-requisitions.selectors';
 
@@ -394,7 +393,7 @@ export class CamfilRequisitionsEffects {
       mapToPayload(),
       mergeMap(({ requisitionId, lineItemId, lineItemAttribute }) =>
         this.requisitionsService
-          .updateLineItemAttribute(requisitionId, lineItemId, lineItemAttribute)
+          .deleteLineItemAttribute(requisitionId, lineItemId, lineItemAttribute)
           .pipe(
             map(deleteCamfilRequisitionLineItemAttributeSuccess),
             mapErrorToAction(deleteCamfilRequisitionLineItemAttributeFail)
@@ -437,7 +436,7 @@ export class CamfilRequisitionsEffects {
       mapToPayload(),
       mergeMap(({ requisition, lineItemIds }) =>
         this.requisitionsService.createOrderFromApprovedRequisition(requisition.id, lineItemIds).pipe(
-          map(() => createOrderFromApprovedRequisitionLineItemsSuccess({ requisition })),
+          map(() => createOrderFromApprovedRequisitionLineItemsSuccess({ requisition, lineItemIds })),
           mapErrorToAction(createOrderFromApprovedRequisitionFail)
         )
       )

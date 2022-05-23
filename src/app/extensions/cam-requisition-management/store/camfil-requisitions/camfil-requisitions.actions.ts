@@ -82,7 +82,7 @@ export const createOrderFromApprovedRequisitionLineItems = createAction(
 
 export const createOrderFromApprovedRequisitionLineItemsSuccess = createAction(
   '[Camfil Requisitions API] Create Order From Approved Requisition Line Items Success',
-  payload<{ requisition: CamfilRequisition }>()
+  payload<{ requisition: CamfilRequisition; lineItemIds: string[] }>()
 );
 
 export const addProductToCamfilRequisition = createAction(
@@ -243,7 +243,8 @@ export const deleteCamfilRequisitionLineItemAttributeFail = createAction(
 );
 
 export const deleteCamfilRequisitionLineItemAttributeSuccess = createAction(
-  '[Camfil Requisitions API] Delete Attributes for selected line item Success'
+  '[Camfil Requisitions API] Delete Attributes for selected line item Success',
+  payload<{ requisitionId: string; lineItemId: string; attributeName: string }>()
 );
 
 // Approve Line Items
